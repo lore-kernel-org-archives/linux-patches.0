@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A284B47A7F;
-	Wed, 20 Dec 2023 16:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFCD4779E;
+	Wed, 20 Dec 2023 16:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hleexT0d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32DFC433C7;
-	Wed, 20 Dec 2023 16:11:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqDVyPL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA9DC433C8;
+	Wed, 20 Dec 2023 16:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088678;
-	bh=/FOHTC83D3NFIa1P6KXJOiKiUjwEp3xDjR7utunOvys=;
+	s=korg; t=1703088680;
+	bh=+DkKvCNQJHO7rnPAw/fX1Y19Ls+76yajsYDyIrzaBWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hleexT0d7b2Gw3IP6doLFV9cwtSPljVjgRhDJ90uVvUfFhx8AgPCmAgZi2FGW/ZQF
-	 Kmfo9ZPZG2VkqJCZWINMyEcdsRK5kdTUrHGV0SGjw90FrI+OjJ7dbrjRWPjFQcXQo5
-	 1I6MUVOGAbp0IL+QzEU3hVRe6j2Nl/vSkSimPwiQ=
+	b=gqDVyPL4XVjqT/NcrL7MSR2qADAg4fBMerrlhlKWieiys3y+7UA9NupyyHGcax+IF
+	 FUpzFIXljDZw0ksLP3NRPbvKPxMtTryM41XutWD1vFaF0FMd+ehJKFx/4Q8DvQlsxO
+	 dZeWc+sSA3BOoTxNPqNE6r7gi0g0l2+wc8zs+tDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Tom Talpey <tom@talpey.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Steve French <smfrench@gmail.com>,
 	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Ralph Boehme <slow@samba.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 019/159] ksmbd: smbd: create MR pool
-Date: Wed, 20 Dec 2023 17:08:04 +0100
-Message-ID: <20231220160932.175980500@linuxfoundation.org>
+Subject: [PATCH 5.15 002/159] ksmdb: use cmd helper variable in smb2_get_ksmbd_tcon()
+Date: Wed, 20 Dec 2023 17:07:47 +0100
+Message-ID: <20231220160931.371814185@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -42,74 +46,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunchul Lee <hyc.lee@gmail.com>
+From: Ralph Boehme <slow@samba.org>
 
-[ Upstream commit c9f189271cff85d5d735e25dfa4bc95952ec12d8 ]
+[ Upstream commit 341b16014bf871115f0883e831372c4b76389d03 ]
 
-Create a memory region pool because rdma_rw_ctx_init()
-uses memory registration if memory registration yields
-better performance than using multiple SGE entries.
+Use cmd helper variable in smb2_get_ksmbd_tcon().
 
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Hyunchul Lee <hyc.lee@gmail.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Ralph Boehme <slow@samba.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/transport_rdma.c |   23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ fs/ksmbd/smb2pdu.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/ksmbd/transport_rdma.c
-+++ b/fs/ksmbd/transport_rdma.c
-@@ -434,6 +434,7 @@ static void free_transport(struct smb_di
- 
- 	if (t->qp) {
- 		ib_drain_qp(t->qp);
-+		ib_mr_pool_destroy(t->qp, &t->qp->rdma_mrs);
- 		ib_destroy_qp(t->qp);
- 	}
- 
-@@ -1714,7 +1715,9 @@ static int smb_direct_init_params(struct
- 	cap->max_send_sge = SMB_DIRECT_MAX_SEND_SGES;
- 	cap->max_recv_sge = SMB_DIRECT_MAX_RECV_SGES;
- 	cap->max_inline_data = 0;
--	cap->max_rdma_ctxs = 0;
-+	cap->max_rdma_ctxs =
-+		rdma_rw_mr_factor(device, t->cm_id->port_num, max_pages) *
-+		smb_direct_max_outstanding_rw_ops;
- 	return 0;
- }
- 
-@@ -1796,6 +1799,7 @@ static int smb_direct_create_qpair(struc
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -95,11 +95,12 @@ struct channel *lookup_chann_list(struct
+ int smb2_get_ksmbd_tcon(struct ksmbd_work *work)
  {
- 	int ret;
- 	struct ib_qp_init_attr qp_attr;
-+	int pages_per_rw;
+ 	struct smb2_hdr *req_hdr = work->request_buf;
++	unsigned int cmd = le16_to_cpu(req_hdr->Command);
+ 	int tree_id;
  
- 	t->pd = ib_alloc_pd(t->cm_id->device, 0);
- 	if (IS_ERR(t->pd)) {
-@@ -1843,6 +1847,23 @@ static int smb_direct_create_qpair(struc
- 	t->qp = t->cm_id->qp;
- 	t->cm_id->event_handler = smb_direct_cm_handler;
- 
-+	pages_per_rw = DIV_ROUND_UP(t->max_rdma_rw_size, PAGE_SIZE) + 1;
-+	if (pages_per_rw > t->cm_id->device->attrs.max_sgl_rd) {
-+		int pages_per_mr, mr_count;
-+
-+		pages_per_mr = min_t(int, pages_per_rw,
-+				     t->cm_id->device->attrs.max_fast_reg_page_list_len);
-+		mr_count = DIV_ROUND_UP(pages_per_rw, pages_per_mr) *
-+			atomic_read(&t->rw_avail_ops);
-+		ret = ib_mr_pool_init(t->qp, &t->qp->rdma_mrs, mr_count,
-+				      IB_MR_TYPE_MEM_REG, pages_per_mr, 0);
-+		if (ret) {
-+			pr_err("failed to init mr pool count %d pages %d\n",
-+			       mr_count, pages_per_mr);
-+			goto err;
-+		}
-+	}
-+
- 	return 0;
- err:
- 	if (t->qp) {
+-	if (work->conn->ops->get_cmd_val(work) == SMB2_TREE_CONNECT_HE ||
+-	    work->conn->ops->get_cmd_val(work) ==  SMB2_CANCEL_HE ||
+-	    work->conn->ops->get_cmd_val(work) ==  SMB2_LOGOFF_HE) {
++	if (cmd == SMB2_TREE_CONNECT_HE ||
++	    cmd ==  SMB2_CANCEL_HE ||
++	    cmd ==  SMB2_LOGOFF_HE) {
+ 		ksmbd_debug(SMB, "skip to check tree connect request\n");
+ 		return 0;
+ 	}
 
 
