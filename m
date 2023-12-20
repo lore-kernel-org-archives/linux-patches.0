@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE098487A9;
-	Wed, 20 Dec 2023 16:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284EE47F47;
+	Wed, 20 Dec 2023 16:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiQhFDqg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39D4C433C7;
-	Wed, 20 Dec 2023 16:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfxqU0Yz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1ECFC433C7;
+	Wed, 20 Dec 2023 16:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088686;
-	bh=kT2A1FaapFhyZcTkPSfj+QOPMao2BC9eWr63ceiH9PM=;
+	s=korg; t=1703088689;
+	bh=Bt2WSSBrqI1UIRo3y+M6yFdsmFwrPkSmUNfP+ttU2Dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UiQhFDqgGqeN3ojdNseerUaaahnv2zz6UCJQvT5p+k2YAsmBI+4sTykjWX1zRjisG
-	 TLCf6t06ikY4rFt4/8qAsnQzBlc2eLucyvdXaCFBy5rJfsFqLBEzXa43JRk9lZyhZw
-	 Iprvv9OXM0dTth3e7lBGU5428/nmuRpaUrKxL7JY=
+	b=XfxqU0YzFi7u2GvB6mfw99DeULYB1JZIAAE9XNIIT12FG1r1ARFB6s/r2QNf3a8/B
+	 7ZQvEqkj5ZTMnqeq8uHBi9LfZiU+LIN+ANhEX+i5Bsxc99Vhbe8GRNfs2kcxy54CKa
+	 LggUuFOTw7A1IcS3YbleAKZowXl8T1WwYLLXitkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yufan Chen <wiz.chen@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 021/159] ksmbd: add smb-direct shutdown
-Date: Wed, 20 Dec 2023 17:08:06 +0100
-Message-ID: <20231220160932.267735336@linuxfoundation.org>
+Subject: [PATCH 5.15 022/159] ksmbd: smbd: fix missing clients memory region invalidation
+Date: Wed, 20 Dec 2023 17:08:07 +0100
+Message-ID: <20231220160932.307506902@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -42,88 +42,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Hyunchul Lee <hyc.lee@gmail.com>
 
-[ Upstream commit 136dff3a6b71dc16c30b35cc390feb0bfc32ed50 ]
+[ Upstream commit 2fd5dcb1c8ef96c9f0fa8bda53ca480524b80ae7 ]
 
-When killing ksmbd server after connecting rdma, ksmbd threads does not
-terminate properly because the rdma connection is still alive.
-This patch add shutdown operation to disconnect rdma connection while
-ksmbd threads terminate.
+if the Channel of a SMB2 WRITE request is
+SMB2_CHANNEL_RDMA_V1_INVALIDTE, a client
+does not invalidate its memory regions but
+ksmbd must do it by sending a SMB2 WRITE response
+with IB_WR_SEND_WITH_INV.
 
-Signed-off-by: Yufan Chen <wiz.chen@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+But if errors occur while processing a SMB2
+READ/WRITE request, ksmbd sends a response
+with IB_WR_SEND. So a client could use memory
+regions already in use.
+
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/connection.c     |    9 ++++++++-
- fs/ksmbd/connection.h     |    1 +
- fs/ksmbd/transport_rdma.c |   10 ++++++++++
- 3 files changed, 19 insertions(+), 1 deletion(-)
+ fs/ksmbd/smb2pdu.c |   71 +++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 45 insertions(+), 26 deletions(-)
 
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -399,17 +399,24 @@ out:
- static void stop_sessions(void)
- {
- 	struct ksmbd_conn *conn;
-+	struct ksmbd_transport *t;
- 
- again:
- 	read_lock(&conn_list_lock);
- 	list_for_each_entry(conn, &conn_list, conns_list) {
- 		struct task_struct *task;
- 
--		task = conn->transport->handler;
-+		t = conn->transport;
-+		task = t->handler;
- 		if (task)
- 			ksmbd_debug(CONN, "Stop session handler %s/%d\n",
- 				    task->comm, task_pid_nr(task));
- 		conn->status = KSMBD_SESS_EXITING;
-+		if (t->ops->shutdown) {
-+			read_unlock(&conn_list_lock);
-+			t->ops->shutdown(t);
-+			read_lock(&conn_list_lock);
-+		}
- 	}
- 	read_unlock(&conn_list_lock);
- 
---- a/fs/ksmbd/connection.h
-+++ b/fs/ksmbd/connection.h
-@@ -110,6 +110,7 @@ struct ksmbd_conn_ops {
- struct ksmbd_transport_ops {
- 	int (*prepare)(struct ksmbd_transport *t);
- 	void (*disconnect)(struct ksmbd_transport *t);
-+	void (*shutdown)(struct ksmbd_transport *t);
- 	int (*read)(struct ksmbd_transport *t, char *buf,
- 		    unsigned int size, int max_retries);
- 	int (*writev)(struct ksmbd_transport *t, struct kvec *iovs, int niov,
---- a/fs/ksmbd/transport_rdma.c
-+++ b/fs/ksmbd/transport_rdma.c
-@@ -1459,6 +1459,15 @@ static void smb_direct_disconnect(struct
- 	free_transport(st);
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -6203,25 +6203,33 @@ out:
+ 	return err;
  }
  
-+static void smb_direct_shutdown(struct ksmbd_transport *t)
-+{
-+	struct smb_direct_transport *st = smb_trans_direct_transfort(t);
-+
-+	ksmbd_debug(RDMA, "smb-direct shutdown cm_id=%p\n", st->cm_id);
-+
-+	smb_direct_disconnect_rdma_work(&st->disconnect_work);
+-static ssize_t smb2_read_rdma_channel(struct ksmbd_work *work,
+-				      struct smb2_read_req *req, void *data_buf,
+-				      size_t length)
++static int smb2_set_remote_key_for_rdma(struct ksmbd_work *work,
++					struct smb2_buffer_desc_v1 *desc,
++					__le32 Channel,
++					__le16 ChannelInfoOffset,
++					__le16 ChannelInfoLength)
+ {
+-	struct smb2_buffer_desc_v1 *desc =
+-		(struct smb2_buffer_desc_v1 *)&req->Buffer[0];
+-	int err;
+-
+ 	if (work->conn->dialect == SMB30_PROT_ID &&
+-	    req->Channel != SMB2_CHANNEL_RDMA_V1)
++	    Channel != SMB2_CHANNEL_RDMA_V1)
+ 		return -EINVAL;
+ 
+-	if (req->ReadChannelInfoOffset == 0 ||
+-	    le16_to_cpu(req->ReadChannelInfoLength) < sizeof(*desc))
++	if (ChannelInfoOffset == 0 ||
++	    le16_to_cpu(ChannelInfoLength) < sizeof(*desc))
+ 		return -EINVAL;
+ 
+ 	work->need_invalidate_rkey =
+-		(req->Channel == SMB2_CHANNEL_RDMA_V1_INVALIDATE);
++		(Channel == SMB2_CHANNEL_RDMA_V1_INVALIDATE);
+ 	work->remote_key = le32_to_cpu(desc->token);
++	return 0;
 +}
 +
- static int smb_direct_cm_handler(struct rdma_cm_id *cm_id,
- 				 struct rdma_cm_event *event)
- {
-@@ -2207,6 +2216,7 @@ out:
- static struct ksmbd_transport_ops ksmbd_smb_direct_transport_ops = {
- 	.prepare	= smb_direct_prepare,
- 	.disconnect	= smb_direct_disconnect,
-+	.shutdown	= smb_direct_shutdown,
- 	.writev		= smb_direct_writev,
- 	.read		= smb_direct_read,
- 	.rdma_read	= smb_direct_rdma_read,
++static ssize_t smb2_read_rdma_channel(struct ksmbd_work *work,
++				      struct smb2_read_req *req, void *data_buf,
++				      size_t length)
++{
++	struct smb2_buffer_desc_v1 *desc =
++		(struct smb2_buffer_desc_v1 *)&req->Buffer[0];
++	int err;
+ 
+ 	err = ksmbd_conn_rdma_write(work->conn, data_buf, length,
+ 				    le32_to_cpu(desc->token),
+@@ -6263,6 +6271,18 @@ int smb2_read(struct ksmbd_work *work)
+ 		return smb2_read_pipe(work);
+ 	}
+ 
++	if (req->Channel == SMB2_CHANNEL_RDMA_V1_INVALIDATE ||
++	    req->Channel == SMB2_CHANNEL_RDMA_V1) {
++		err = smb2_set_remote_key_for_rdma(work,
++						   (struct smb2_buffer_desc_v1 *)
++						   &req->Buffer[0],
++						   req->Channel,
++						   req->ReadChannelInfoOffset,
++						   req->ReadChannelInfoLength);
++		if (err)
++			goto out;
++	}
++
+ 	fp = ksmbd_lookup_fd_slow(work, le64_to_cpu(req->VolatileFileId),
+ 				  le64_to_cpu(req->PersistentFileId));
+ 	if (!fp) {
+@@ -6448,21 +6468,6 @@ static ssize_t smb2_write_rdma_channel(s
+ 
+ 	desc = (struct smb2_buffer_desc_v1 *)&req->Buffer[0];
+ 
+-	if (work->conn->dialect == SMB30_PROT_ID &&
+-	    req->Channel != SMB2_CHANNEL_RDMA_V1)
+-		return -EINVAL;
+-
+-	if (req->Length != 0 || req->DataOffset != 0)
+-		return -EINVAL;
+-
+-	if (req->WriteChannelInfoOffset == 0 ||
+-	    le16_to_cpu(req->WriteChannelInfoLength) < sizeof(*desc))
+-		return -EINVAL;
+-
+-	work->need_invalidate_rkey =
+-		(req->Channel == SMB2_CHANNEL_RDMA_V1_INVALIDATE);
+-	work->remote_key = le32_to_cpu(desc->token);
+-
+ 	data_buf = kvmalloc(length, GFP_KERNEL | __GFP_ZERO);
+ 	if (!data_buf)
+ 		return -ENOMEM;
+@@ -6509,6 +6514,20 @@ int smb2_write(struct ksmbd_work *work)
+ 		return smb2_write_pipe(work);
+ 	}
+ 
++	if (req->Channel == SMB2_CHANNEL_RDMA_V1 ||
++	    req->Channel == SMB2_CHANNEL_RDMA_V1_INVALIDATE) {
++		if (req->Length != 0 || req->DataOffset != 0)
++			return -EINVAL;
++		err = smb2_set_remote_key_for_rdma(work,
++						   (struct smb2_buffer_desc_v1 *)
++						   &req->Buffer[0],
++						   req->Channel,
++						   req->WriteChannelInfoOffset,
++						   req->WriteChannelInfoLength);
++		if (err)
++			goto out;
++	}
++
+ 	if (!test_tree_conn_flag(work->tcon, KSMBD_TREE_CONN_FLAG_WRITABLE)) {
+ 		ksmbd_debug(SMB, "User does not have write permission\n");
+ 		err = -EACCES;
 
 
