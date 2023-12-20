@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25544482CB;
-	Wed, 20 Dec 2023 16:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF62495D6;
+	Wed, 20 Dec 2023 16:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JK84qdpr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E832C433C9;
-	Wed, 20 Dec 2023 16:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fN/3yFEi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0362BC433C8;
+	Wed, 20 Dec 2023 16:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703089004;
-	bh=VOkPobONuLKq/H7yLSwkczmtMG/4sF70H24xhoSg4hM=;
+	s=korg; t=1703089007;
+	bh=SjiFnn5S8PqySA+0i+cZ1eDQqZyE9RDKGXwO64Lu21w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JK84qdprNyH7qrbqyK7AuGPpHjGIiqijO3xGSSgIpKUv8eg+l6mU2wAHRe6yz1rjt
-	 1PxMIbM1oEQN5q2jiXHTXrQ1vnft58eiE9+SQycT4jkvkuP7pqV05NsdjcxZJSfrYF
-	 fhMeMcYAxIzqH0Kk/YK02GPsKzTRn4Tthxj6/XF8=
+	b=fN/3yFEit9y2e+vXJeDWFZeJdlrtVSs6E6+lNZTHM2jOlJUHDdJlFw/g3tY06E8Ba
+	 uj6H480ZUUvkhRsTAzHZFsEqJ4np/KKSCKuW6X+vM620f9g9VKeiHH2mhAtUZQ9WNl
+	 k5M78fKImSgvNHBrJycmwYc519Zu6BdocYLwHdTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Coverity Scan <scan-admin@coverity.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 136/159] ksmbd: fix wrong error response status by using set_smb2_rsp_status()
-Date: Wed, 20 Dec 2023 17:10:01 +0100
-Message-ID: <20231220160937.669771394@linuxfoundation.org>
+Subject: [PATCH 5.15 137/159] ksmbd: fix Null pointer dereferences in ksmbd_update_fstate()
+Date: Wed, 20 Dec 2023 17:10:02 +0100
+Message-ID: <20231220160937.719038167@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -43,38 +44,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit be0f89d4419dc5413a1cf06db3671c9949be0d52 ]
+[ Upstream commit 414849040fcf11d45025b8ae26c9fd91da1465da ]
 
-set_smb2_rsp_status() after __process_request() sets the wrong error
-status. This patch resets all iov vectors and sets the error status
-on clean one.
+Coverity Scan report the following one. This report is a false alarm.
+Because fp is never NULL when rc is zero. This patch add null check for fp
+in ksmbd_update_fstate to make alarm silence.
+
+*** CID 1568583:  Null pointer dereferences  (FORWARD_NULL)
+/fs/smb/server/smb2pdu.c: 3408 in smb2_open()
+3402                    path_put(&path);
+3403                    path_put(&parent_path);
+3404            }
+3405            ksmbd_revert_fsids(work);
+3406     err_out1:
+3407            if (!rc) {
+>>>     CID 1568583:  Null pointer dereferences  (FORWARD_NULL)
+>>>     Passing null pointer "fp" to "ksmbd_update_fstate", which dereferences it.
+3408                    ksmbd_update_fstate(&work->sess->file_table, fp, FP_INITED);
+3409                    rc = ksmbd_iov_pin_rsp(work, (void *)rsp, iov_len);
+3410            }
+3411            if (rc) {
+3412                    if (rc == -EINVAL)
+3413                            rsp->hdr.Status = STATUS_INVALID_PARAMETER;
 
 Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+Reported-by: Coverity Scan <scan-admin@coverity.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/ksmbd/vfs_cache.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -231,11 +231,12 @@ void set_smb2_rsp_status(struct ksmbd_wo
+--- a/fs/ksmbd/vfs_cache.c
++++ b/fs/ksmbd/vfs_cache.c
+@@ -602,6 +602,9 @@ err_out:
+ void ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
+ 			 unsigned int state)
  {
- 	struct smb2_hdr *rsp_hdr;
- 
--	if (work->next_smb2_rcv_hdr_off)
--		rsp_hdr = ksmbd_resp_buf_next(work);
--	else
--		rsp_hdr = smb2_get_msg(work->response_buf);
-+	rsp_hdr = smb2_get_msg(work->response_buf);
- 	rsp_hdr->Status = err;
++	if (!fp)
++		return;
 +
-+	work->iov_idx = 0;
-+	work->iov_cnt = 0;
-+	work->next_smb2_rcv_hdr_off = 0;
- 	smb2_set_err_rsp(work);
- }
- 
+ 	write_lock(&ft->lock);
+ 	fp->f_state = state;
+ 	write_unlock(&ft->lock);
 
 
