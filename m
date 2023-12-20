@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BAF4BAAF;
-	Wed, 20 Dec 2023 16:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E8A4BAA4;
+	Wed, 20 Dec 2023 16:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIgdBPIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659B9C433C8;
-	Wed, 20 Dec 2023 16:17:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01iB3rCv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34DBFC433C9;
+	Wed, 20 Dec 2023 16:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703089036;
-	bh=YMTalHL7NOCKT5Sfnzel98/ja94aurwAGWil0aIc69Q=;
+	s=korg; t=1703089039;
+	bh=z89P7zCIbe6E0oaKw7r/t0y31ir0TA339cbA4auE7t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIgdBPIKTYP/pNBcOaD8CRG9NW/8sgw3Ztjh8fT/516g2Kcoqae9iqfpWXdBDy+fY
-	 mOFA+GPLv6xJUsOlFoR7laXVFpqw/VHaX7A+hSpFdAPSNfgyr60NDr8OfeprsDqQcu
-	 AAlJz/sViZ2aIP6GgZUsHCU72rfoICPC1Z5DbWSw=
+	b=01iB3rCv+SiCOxB04zAS3O2y9iV31L3T51gxjFLhxxt/fKQufaKVg0xMb2XO7gFjh
+	 ip6SXPPZjWcQD7dBnS7Fg1CbqWzkbwN527icDz7FUb13jgy3sqprEfbiV+ynI7XeYu
+	 fwzd8GBvRIto8p+SqBP77tixN5HU6WilWNIns1vE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
+	Robert Morris <rtm@csail.mit.edu>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 146/159] ksmbd: fix kernel-doc comment of ksmbd_vfs_kern_path_locked()
-Date: Wed, 20 Dec 2023 17:10:11 +0100
-Message-ID: <20231220160938.134256986@linuxfoundation.org>
+Subject: [PATCH 5.15 147/159] ksmbd: handle malformed smb1 message
+Date: Wed, 20 Dec 2023 17:10:12 +0100
+Message-ID: <20231220160938.174761376@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -44,37 +44,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit f6049712e520287ad695e9d4f1572ab76807fa0c ]
+[ Upstream commit 5a5409d90bd05f87fe5623a749ccfbf3f7c7d400 ]
 
-Fix argument list that the kdoc format and script verified in
-ksmbd_vfs_kern_path_locked().
+If set_smb1_rsp_status() is not implemented, It will cause NULL pointer
+dereferece error when client send malformed smb1 message.
+This patch add set_smb1_rsp_status() to ignore malformed smb1 message.
 
-fs/smb/server/vfs.c:1207: warning: Function parameter or member 'parent_path'
-not described in 'ksmbd_vfs_kern_path_locked'
-
-Reported-by: kernel test robot <lkp@intel.com>
+Cc: stable@vger.kernel.org
+Reported-by: Robert Morris <rtm@csail.mit.edu>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/vfs.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/ksmbd/smb_common.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/ksmbd/vfs.c
-+++ b/fs/ksmbd/vfs.c
-@@ -1179,9 +1179,10 @@ static int ksmbd_vfs_lookup_in_dir(const
+--- a/fs/ksmbd/smb_common.c
++++ b/fs/ksmbd/smb_common.c
+@@ -366,11 +366,22 @@ static int smb1_allocate_rsp_buf(struct
+ 	return 0;
+ }
  
- /**
-  * ksmbd_vfs_kern_path_locked() - lookup a file and get path info
-- * @name:	file path that is relative to share
-- * @flags:	lookup flags
-- * @path:	if lookup succeed, return path info
-+ * @name:		file path that is relative to share
-+ * @flags:		lookup flags
-+ * @parent_path:	if lookup succeed, return parent_path info
-+ * @path:		if lookup succeed, return path info
-  * @caseless:	caseless filename lookup
-  *
-  * Return:	0 on success, otherwise error
++/**
++ * set_smb1_rsp_status() - set error type in smb response header
++ * @work:	smb work containing smb response header
++ * @err:	error code to set in response
++ */
++static void set_smb1_rsp_status(struct ksmbd_work *work, __le32 err)
++{
++	work->send_no_response = 1;
++}
++
+ static struct smb_version_ops smb1_server_ops = {
+ 	.get_cmd_val = get_smb1_cmd_val,
+ 	.init_rsp_hdr = init_smb1_rsp_hdr,
+ 	.allocate_rsp_buf = smb1_allocate_rsp_buf,
+ 	.check_user_session = smb1_check_user_session,
++	.set_rsp_status = set_smb1_rsp_status,
+ };
+ 
+ static int smb1_negotiate(struct ksmbd_work *work)
 
 
