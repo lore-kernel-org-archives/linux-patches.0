@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6DF482C2;
-	Wed, 20 Dec 2023 16:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271EC487A3;
+	Wed, 20 Dec 2023 16:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kKhhvlEz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72DCC433C7;
-	Wed, 20 Dec 2023 16:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdS5IGY5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DAAEC433C7;
+	Wed, 20 Dec 2023 16:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088980;
-	bh=b4A7TqhvpDdQvjZxRzn1tsOOEF/SIc5HaJV5s3t9EPo=;
+	s=korg; t=1703088983;
+	bh=+RZsJeBD2cZvIhcnPgpI4i6HzkykeEdDpx6dUJnXaQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kKhhvlEzkkjwV3G2v/VzQloUB4/0TnMPrQAY8E8+6vkdQAvMIGUr8Cv6Va4ZxyBVT
-	 ZhBAqWeVsA+vWNA/nLLtjBH/vUhmn9IYWLmI1hxe+J1EhImhob5eWrf+CgaeDn1iJF
-	 m7vMXwX+AyrNSibul1N7njgD+K9oVeaJhRYw9aRk=
+	b=PdS5IGY5sPjvJ6o2QwkFyc8VXSsFKqZAv0J3yc8tf41kheJZu36kgLf121N836R3y
+	 hMyKKlJp8DWHmXm8auU+a0YIbV2orxvACfr4Qlhq2shjeZec0qXpa7lu2LIbEq83FH
+	 E4sDEHMH9l8UteZ323eHakbe4pztEByYtBQCtV34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chih-Yen Chang <cc85nod@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 097/159] ksmbd: call putname after using the last component
-Date: Wed, 20 Dec 2023 17:09:22 +0100
-Message-ID: <20231220160935.879886675@linuxfoundation.org>
+Subject: [PATCH 5.15 098/159] ksmbd: fix out-of-bound read in deassemble_neg_contexts()
+Date: Wed, 20 Dec 2023 17:09:23 +0100
+Message-ID: <20231220160935.923558970@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -43,55 +44,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 6fe55c2799bc29624770c26f98ba7b06214f43e0 ]
+[ Upstream commit f1a411873c85b642f13b01f21b534c2bab81fc1b ]
 
-last component point filename struct. Currently putname is called after
-vfs_path_parent_lookup(). And then last component is used for
-lookup_one_qstr_excl(). name in last component is freed by previous
-calling putname(). And It cause file lookup failure when testing
-generic/464 test of xfstest.
+The check in the beginning is
+`clen + sizeof(struct smb2_neg_context) <= len_of_ctxts`,
+but in the end of loop, `len_of_ctxts` will subtract
+`((clen + 7) & ~0x7) + sizeof(struct smb2_neg_context)`, which causes
+integer underflow when clen does the 8 alignment. We should use
+`(clen + 7) & ~0x7` in the check to avoid underflow from happening.
 
-Fixes: 74d7970febf7 ("ksmbd: fix racy issue from using ->d_parent and ->d_name")
+Then there are some variables that need to be declared unsigned
+instead of signed.
+
+[   11.671070] BUG: KASAN: slab-out-of-bounds in smb2_handle_negotiate+0x799/0x1610
+[   11.671533] Read of size 2 at addr ffff888005e86cf2 by task kworker/0:0/7
+...
+[   11.673383] Call Trace:
+[   11.673541]  <TASK>
+[   11.673679]  dump_stack_lvl+0x33/0x50
+[   11.673913]  print_report+0xcc/0x620
+[   11.674671]  kasan_report+0xae/0xe0
+[   11.675171]  kasan_check_range+0x35/0x1b0
+[   11.675412]  smb2_handle_negotiate+0x799/0x1610
+[   11.676217]  ksmbd_smb_negotiate_common+0x526/0x770
+[   11.676795]  handle_ksmbd_work+0x274/0x810
+...
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Chih-Yen Chang <cc85nod@gmail.com>
+Tested-by: Chih-Yen Chang <cc85nod@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/vfs.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/ksmbd/smb2pdu.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/fs/ksmbd/vfs.c
-+++ b/fs/ksmbd/vfs.c
-@@ -86,12 +86,14 @@ static int ksmbd_vfs_path_lookup_locked(
- 	err = vfs_path_parent_lookup(filename, flags,
- 				     &parent_path, &last, &type,
- 				     root_share_path);
--	putname(filename);
--	if (err)
-+	if (err) {
-+		putname(filename);
- 		return err;
-+	}
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -997,13 +997,13 @@ static void decode_sign_cap_ctxt(struct
  
- 	if (unlikely(type != LAST_NORM)) {
- 		path_put(&parent_path);
-+		putname(filename);
- 		return -ENOENT;
+ static __le32 deassemble_neg_contexts(struct ksmbd_conn *conn,
+ 				      struct smb2_negotiate_req *req,
+-				      int len_of_smb)
++				      unsigned int len_of_smb)
+ {
+ 	/* +4 is to account for the RFC1001 len field */
+ 	struct smb2_neg_context *pctx = (struct smb2_neg_context *)req;
+ 	int i = 0, len_of_ctxts;
+-	int offset = le32_to_cpu(req->NegotiateContextOffset);
+-	int neg_ctxt_cnt = le16_to_cpu(req->NegotiateContextCount);
++	unsigned int offset = le32_to_cpu(req->NegotiateContextOffset);
++	unsigned int neg_ctxt_cnt = le16_to_cpu(req->NegotiateContextCount);
+ 	__le32 status = STATUS_INVALID_PARAMETER;
+ 
+ 	ksmbd_debug(SMB, "decoding %d negotiate contexts\n", neg_ctxt_cnt);
+@@ -1017,7 +1017,7 @@ static __le32 deassemble_neg_contexts(st
+ 	while (i++ < neg_ctxt_cnt) {
+ 		int clen, ctxt_len;
+ 
+-		if (len_of_ctxts < sizeof(struct smb2_neg_context))
++		if (len_of_ctxts < (int)sizeof(struct smb2_neg_context))
+ 			break;
+ 
+ 		pctx = (struct smb2_neg_context *)((char *)pctx + offset);
+@@ -1072,9 +1072,8 @@ static __le32 deassemble_neg_contexts(st
+ 		}
+ 
+ 		/* offsets must be 8 byte aligned */
+-		clen = (clen + 7) & ~0x7;
+-		offset = clen + sizeof(struct smb2_neg_context);
+-		len_of_ctxts -= clen + sizeof(struct smb2_neg_context);
++		offset = (ctxt_len + 7) & ~0x7;
++		len_of_ctxts -= offset;
  	}
- 
-@@ -108,12 +110,14 @@ static int ksmbd_vfs_path_lookup_locked(
- 	path->dentry = d;
- 	path->mnt = share_conf->vfs_path.mnt;
- 	path_put(&parent_path);
-+	putname(filename);
- 
- 	return 0;
- 
- err_out:
- 	inode_unlock(parent_path.dentry->d_inode);
- 	path_put(&parent_path);
-+	putname(filename);
- 	return -ENOENT;
+ 	return status;
  }
- 
 
 
