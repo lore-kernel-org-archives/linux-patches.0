@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508BD47A5F;
-	Wed, 20 Dec 2023 16:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE0F40BFC;
+	Wed, 20 Dec 2023 16:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRWdvrW7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5395DC433C8;
-	Wed, 20 Dec 2023 16:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mcPudXp3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2244FC433C9;
+	Wed, 20 Dec 2023 16:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088650;
-	bh=OzpPYPzK8iwTxzzGb9DKaoXmGXt8+8TeO+uspEErZEU=;
+	s=korg; t=1703088653;
+	bh=ImBiG/QNSLDj44Sw7pP36cvFXKUchnSgcNxhb7DVb9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YRWdvrW7toxshzZxOq998aDd3YWKgb6jP5a2lQWjLjslsBrjfyqZ5Ltoc6HXT3zWO
-	 fe883WzMuOUJ7WGANJfBFkGbMfATtEItT6DjhA/Jtl9ze6xLqAdnuSkotnosH1eK6v
-	 19HdaSw9W2WJ/J+rmCtnU6yg4aR6RXv+z8DdSKkw=
+	b=mcPudXp32UajTLoO5a7bIIZL2eIOSNxywoMa/7DYt54SI073/nJXUuXEFApfeS6PX
+	 Foi47NIk2XML24gdgKidtat4vRnttdb/6u2coJNvu6wmQXPp4r97cxNSHEfAAlpE3F
+	 qqxp8C+bDQn6PmbEZ7JLv6dVo8mW9uxT+m1SsCs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Ralph Boehme <slow@samba.org>,
+	Marios Makassikis <mmakassikis@freebox.fr>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 001/159] ksmbd: use ksmbd_req_buf_next() in ksmbd_verify_smb_message()
-Date: Wed, 20 Dec 2023 17:07:46 +0100
-Message-ID: <20231220160931.324891314@linuxfoundation.org>
+Subject: [PATCH 5.15 010/159] ksmbd: Remove unused fields from ksmbd_file struct definition
+Date: Wed, 20 Dec 2023 17:07:55 +0100
+Message-ID: <20231220160931.765061169@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -42,30 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralph Boehme <slow@samba.org>
+From: Marios Makassikis <mmakassikis@freebox.fr>
 
-[ Upstream commit a088ac859f8124d491f02a19d080fc5ee4dbd202 ]
+[ Upstream commit 305f8bda15ebbe4004681286a5c67d0dc296c771 ]
 
-Use ksmbd_req_buf_next() in ksmbd_verify_smb_message().
+These fields are remnants of the not upstreamed SMB1 code.
 
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Ralph Boehme <slow@samba.org>
+Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb_common.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ksmbd/vfs_cache.h |   10 ----------
+ 1 file changed, 10 deletions(-)
 
---- a/fs/ksmbd/smb_common.c
-+++ b/fs/ksmbd/smb_common.c
-@@ -134,7 +134,7 @@ int ksmbd_lookup_protocol_idx(char *str)
-  */
- int ksmbd_verify_smb_message(struct ksmbd_work *work)
- {
--	struct smb2_hdr *smb2_hdr = work->request_buf + work->next_smb2_rcv_hdr_off;
-+	struct smb2_hdr *smb2_hdr = ksmbd_req_buf_next(work);
- 	struct smb_hdr *hdr;
+--- a/fs/ksmbd/vfs_cache.h
++++ b/fs/ksmbd/vfs_cache.h
+@@ -96,16 +96,6 @@ struct ksmbd_file {
  
- 	if (smb2_hdr->ProtocolId == SMB2_PROTO_NUMBER)
+ 	int				durable_timeout;
+ 
+-	/* for SMB1 */
+-	int				pid;
+-
+-	/* conflict lock fail count for SMB1 */
+-	unsigned int			cflock_cnt;
+-	/* last lock failure start offset for SMB1 */
+-	unsigned long long		llock_fstart;
+-
+-	int				dirent_offset;
+-
+ 	/* if ls is happening on directory, below is valid*/
+ 	struct ksmbd_readdir_data	readdir_data;
+ 	int				dot_dotdot[2];
 
 
