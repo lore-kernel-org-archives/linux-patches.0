@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B866847F7D;
-	Wed, 20 Dec 2023 16:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE098487A9;
+	Wed, 20 Dec 2023 16:11:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bzY67/xI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D03FC433C8;
-	Wed, 20 Dec 2023 16:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiQhFDqg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39D4C433C7;
+	Wed, 20 Dec 2023 16:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088683;
-	bh=danh6PGY61sic5jqsqjnsMdgcy5JAW0wq/KedbjuVoA=;
+	s=korg; t=1703088686;
+	bh=kT2A1FaapFhyZcTkPSfj+QOPMao2BC9eWr63ceiH9PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bzY67/xId2qGw5BkR4AFEM0A6KzyEP5B+qlCnN//Uy5iOBbVa1ihoNkvPno5qNnb3
-	 YxG98XZHZxx4QDxh23DfvpDUZN+KJovjG5chLdAc0NCzhncJoM5uNTvk9YShK16he7
-	 qi11WQ8GQB0NTBt2WA8gKXTmfoQ8a5ZsSmxjFYL4=
+	b=UiQhFDqgGqeN3ojdNseerUaaahnv2zz6UCJQvT5p+k2YAsmBI+4sTykjWX1zRjisG
+	 TLCf6t06ikY4rFt4/8qAsnQzBlc2eLucyvdXaCFBy5rJfsFqLBEzXa43JRk9lZyhZw
+	 Iprvv9OXM0dTth3e7lBGU5428/nmuRpaUrKxL7JY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yufan Chen <wiz.chen@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 020/159] ksmbd: smbd: change the default maximum read/write, receive size
-Date: Wed, 20 Dec 2023 17:08:05 +0100
-Message-ID: <20231220160932.216682837@linuxfoundation.org>
+Subject: [PATCH 5.15 021/159] ksmbd: add smb-direct shutdown
+Date: Wed, 20 Dec 2023 17:08:06 +0100
+Message-ID: <20231220160932.267735336@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -42,37 +42,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunchul Lee <hyc.lee@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 4d02c4fdc0e256b493f9a3b604c7ff18f0019f17 ]
+[ Upstream commit 136dff3a6b71dc16c30b35cc390feb0bfc32ed50 ]
 
-Due to restriction that cannot handle multiple
-buffer descriptor structures, decrease the maximum
-read/write size for Windows clients.
+When killing ksmbd server after connecting rdma, ksmbd threads does not
+terminate properly because the rdma connection is still alive.
+This patch add shutdown operation to disconnect rdma connection while
+ksmbd threads terminate.
 
-And set the maximum fragmented receive size
-in consideration of the receive queue size.
-
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Yufan Chen <wiz.chen@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/transport_rdma.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ksmbd/connection.c     |    9 ++++++++-
+ fs/ksmbd/connection.h     |    1 +
+ fs/ksmbd/transport_rdma.c |   10 ++++++++++
+ 3 files changed, 19 insertions(+), 1 deletion(-)
 
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -399,17 +399,24 @@ out:
+ static void stop_sessions(void)
+ {
+ 	struct ksmbd_conn *conn;
++	struct ksmbd_transport *t;
+ 
+ again:
+ 	read_lock(&conn_list_lock);
+ 	list_for_each_entry(conn, &conn_list, conns_list) {
+ 		struct task_struct *task;
+ 
+-		task = conn->transport->handler;
++		t = conn->transport;
++		task = t->handler;
+ 		if (task)
+ 			ksmbd_debug(CONN, "Stop session handler %s/%d\n",
+ 				    task->comm, task_pid_nr(task));
+ 		conn->status = KSMBD_SESS_EXITING;
++		if (t->ops->shutdown) {
++			read_unlock(&conn_list_lock);
++			t->ops->shutdown(t);
++			read_lock(&conn_list_lock);
++		}
+ 	}
+ 	read_unlock(&conn_list_lock);
+ 
+--- a/fs/ksmbd/connection.h
++++ b/fs/ksmbd/connection.h
+@@ -110,6 +110,7 @@ struct ksmbd_conn_ops {
+ struct ksmbd_transport_ops {
+ 	int (*prepare)(struct ksmbd_transport *t);
+ 	void (*disconnect)(struct ksmbd_transport *t);
++	void (*shutdown)(struct ksmbd_transport *t);
+ 	int (*read)(struct ksmbd_transport *t, char *buf,
+ 		    unsigned int size, int max_retries);
+ 	int (*writev)(struct ksmbd_transport *t, struct kvec *iovs, int niov,
 --- a/fs/ksmbd/transport_rdma.c
 +++ b/fs/ksmbd/transport_rdma.c
-@@ -1914,7 +1914,9 @@ static int smb_direct_prepare(struct ksm
- 	st->max_send_size = min_t(int, st->max_send_size,
- 				  le32_to_cpu(req->max_receive_size));
- 	st->max_fragmented_send_size =
--			le32_to_cpu(req->max_fragmented_size);
-+		le32_to_cpu(req->max_fragmented_size);
-+	st->max_fragmented_recv_size =
-+		(st->recv_credit_max * st->max_recv_size) / 2;
+@@ -1459,6 +1459,15 @@ static void smb_direct_disconnect(struct
+ 	free_transport(st);
+ }
  
- 	ret = smb_direct_send_negotiate_response(st, ret);
- out:
++static void smb_direct_shutdown(struct ksmbd_transport *t)
++{
++	struct smb_direct_transport *st = smb_trans_direct_transfort(t);
++
++	ksmbd_debug(RDMA, "smb-direct shutdown cm_id=%p\n", st->cm_id);
++
++	smb_direct_disconnect_rdma_work(&st->disconnect_work);
++}
++
+ static int smb_direct_cm_handler(struct rdma_cm_id *cm_id,
+ 				 struct rdma_cm_event *event)
+ {
+@@ -2207,6 +2216,7 @@ out:
+ static struct ksmbd_transport_ops ksmbd_smb_direct_transport_ops = {
+ 	.prepare	= smb_direct_prepare,
+ 	.disconnect	= smb_direct_disconnect,
++	.shutdown	= smb_direct_shutdown,
+ 	.writev		= smb_direct_writev,
+ 	.read		= smb_direct_read,
+ 	.rdma_read	= smb_direct_rdma_read,
 
 
