@@ -1,28 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E514C3CC;
-	Wed, 20 Dec 2023 16:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3F44A997;
+	Wed, 20 Dec 2023 16:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DA/+rvdw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D97C433C7;
-	Wed, 20 Dec 2023 16:18:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQ10ylk3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38DF7C433C7;
+	Wed, 20 Dec 2023 16:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703089089;
-	bh=/ktQrckJrDWcgfDwta6JMoKXEnq/ebQAv4POd/ypDAY=;
+	s=korg; t=1703089091;
+	bh=hlTDTkxW7tZaEqRpc8PiODwlYe73RwKvmRz7MKs3/MY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DA/+rvdwJn0ZJTENeKBGbmO4CRuGYpatHdXGFEZWgksp3H21WHZFhrdX/eie1ZKgk
-	 xsArQyq5rllzVziK8hVdE+w20ZDsAxv34yxiOuOk2qjFQpF61GwtISNAKL0pRUkZ78
-	 ciPqZaKsKAy5q2ik0TgPJyeBDAHEiS79tYm3wCqE=
+	b=xQ10ylk3oLEIJw8xr23EsKej/EN45Q9HNUFkvbAVE46cxzATVHq+kpJ7CArq6ILFi
+	 QXpEpW/LDlcd5NrF53u+/FV/Ac2O1k3DTXOlUAePHw/CIzL3mZx8+l/fdnk9bICQxY
+	 u8rxUKbPPOaY46/6cxq656Ue+FOX8oYfRgaG6kMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Francis Laniel <flaniel@linux.microsoft.com>
-Subject: [PATCH 5.15 158/159] tracing/kprobes: Return EADDRNOTAVAIL when func matches several symbols
-Date: Wed, 20 Dec 2023 17:10:23 +0100
-Message-ID: <20231220160938.664649554@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Haibo Li <haibo.li@mediatek.com>,
+	Kees Cook <keescook@chromium.org>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Amit Pundir <amit.pundir@linaro.org>
+Subject: [PATCH 5.15 159/159] kasan: disable kasan_non_canonical_hook() for HW tags
+Date: Wed, 20 Dec 2023 17:10:24 +0100
+Message-ID: <20231220160938.705703230@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -41,149 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francis Laniel <flaniel@linux.microsoft.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit b022f0c7e404887a7c5229788fc99eff9f9a80d5 upstream.
+commit 17c17567fe510857b18fe01b7a88027600e76ac6 upstream.
 
-When a kprobe is attached to a function that's name is not unique (is
-static and shares the name with other functions in the kernel), the
-kprobe is attached to the first function it finds. This is a bug as the
-function that it is attaching to is not necessarily the one that the
-user wants to attach to.
+On arm64, building with CONFIG_KASAN_HW_TAGS now causes a compile-time
+error:
 
-Instead of blindly picking a function to attach to what is ambiguous,
-error with EADDRNOTAVAIL to let the user know that this function is not
-unique, and that the user must use another unique function with an
-address offset to get to the function they want to attach to.
+mm/kasan/report.c: In function 'kasan_non_canonical_hook':
+mm/kasan/report.c:637:20: error: 'KASAN_SHADOW_OFFSET' undeclared (first use in this function)
+  637 |         if (addr < KASAN_SHADOW_OFFSET)
+      |                    ^~~~~~~~~~~~~~~~~~~
+mm/kasan/report.c:637:20: note: each undeclared identifier is reported only once for each function it appears in
+mm/kasan/report.c:640:77: error: expected expression before ';' token
+  640 |         orig_addr = (addr - KASAN_SHADOW_OFFSET) << KASAN_SHADOW_SCALE_SHIFT;
 
-Link: https://lore.kernel.org/all/20231020104250.9537-2-flaniel@linux.microsoft.com/
+This was caused by removing the dependency on CONFIG_KASAN_INLINE that
+used to prevent this from happening. Use the more specific dependency
+on KASAN_SW_TAGS || KASAN_GENERIC to only ignore the function for hwasan
+mode.
 
-Cc: stable@vger.kernel.org
-Fixes: 413d37d1eb69 ("tracing: Add kprobe-based event tracer")
-Suggested-by: Masami Hiramatsu <mhiramat@kernel.org>
-Signed-off-by: Francis Laniel <flaniel@linux.microsoft.com>
-Link: https://lore.kernel.org/lkml/20230819101105.b0c104ae4494a7d1f2eea742@kernel.org/
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lkml.kernel.org/r/20231016200925.984439-1-arnd@kernel.org
+Fixes: 12ec6a919b0f ("kasan: print the original fault addr when access invalid shadow")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Haibo Li <haibo.li@mediatek.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_kprobe.c |   74 ++++++++++++++++++++++++++++++++++++++++++++
- kernel/trace/trace_probe.h  |    1 
- 2 files changed, 75 insertions(+)
+ include/linux/kasan.h |    6 +++---
+ mm/kasan/report.c     |    4 +++-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -708,6 +708,36 @@ static struct notifier_block trace_kprob
- 	.priority = 1	/* Invoked after kprobe module callback */
- };
+--- a/include/linux/kasan.h
++++ b/include/linux/kasan.h
+@@ -471,10 +471,10 @@ static inline void kasan_free_shadow(con
  
-+struct count_symbols_struct {
-+	const char *func_name;
-+	unsigned int count;
-+};
-+
-+static int count_symbols(void *data, const char *name, struct module *unused0,
-+			 unsigned long unused1)
-+{
-+	struct count_symbols_struct *args = data;
-+
-+	if (strcmp(args->func_name, name))
-+		return 0;
-+
-+	args->count++;
-+
-+	return 0;
-+}
-+
-+static unsigned int number_of_same_symbols(char *func_name)
-+{
-+	struct count_symbols_struct args = {
-+		.func_name = func_name,
-+		.count = 0,
-+	};
-+
-+	kallsyms_on_each_symbol(count_symbols, &args);
-+
-+	return args.count;
-+}
-+
- static int __trace_kprobe_create(int argc, const char *argv[])
- {
- 	/*
-@@ -836,6 +866,31 @@ static int __trace_kprobe_create(int arg
- 		}
- 	}
+ #endif /* (CONFIG_KASAN_GENERIC || CONFIG_KASAN_SW_TAGS) && !CONFIG_KASAN_VMALLOC */
  
-+	if (symbol && !strchr(symbol, ':')) {
-+		unsigned int count;
-+
-+		count = number_of_same_symbols(symbol);
-+		if (count > 1) {
-+			/*
-+			 * Users should use ADDR to remove the ambiguity of
-+			 * using KSYM only.
-+			 */
-+			trace_probe_log_err(0, NON_UNIQ_SYMBOL);
-+			ret = -EADDRNOTAVAIL;
-+
-+			goto error;
-+		} else if (count == 0) {
-+			/*
-+			 * We can return ENOENT earlier than when register the
-+			 * kprobe.
-+			 */
-+			trace_probe_log_err(0, BAD_PROBE_ADDR);
-+			ret = -ENOENT;
-+
-+			goto error;
-+		}
-+	}
-+
- 	trace_probe_log_set_index(0);
- 	if (event) {
- 		ret = traceprobe_parse_event_name(&event, &group, buf,
-@@ -1755,6 +1810,7 @@ static int unregister_kprobe_event(struc
+-#ifdef CONFIG_KASAN
++#if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
+ void kasan_non_canonical_hook(unsigned long addr);
+-#else /* CONFIG_KASAN */
++#else /* CONFIG_KASAN_GENERIC || CONFIG_KASAN_SW_TAGS */
+ static inline void kasan_non_canonical_hook(unsigned long addr) { }
+-#endif /* CONFIG_KASAN */
++#endif /* CONFIG_KASAN_GENERIC || CONFIG_KASAN_SW_TAGS */
+ 
+ #endif /* LINUX_KASAN_H */
+--- a/mm/kasan/report.c
++++ b/mm/kasan/report.c
+@@ -457,8 +457,9 @@ bool kasan_report(unsigned long addr, si
+ 	return ret;
  }
  
- #ifdef CONFIG_PERF_EVENTS
-+
- /* create a trace_kprobe, but don't add it to global lists */
- struct trace_event_call *
- create_local_trace_kprobe(char *func, void *addr, unsigned long offs,
-@@ -1765,6 +1821,24 @@ create_local_trace_kprobe(char *func, vo
- 	int ret;
- 	char *event;
- 
-+	if (func) {
-+		unsigned int count;
-+
-+		count = number_of_same_symbols(func);
-+		if (count > 1)
-+			/*
-+			 * Users should use addr to remove the ambiguity of
-+			 * using func only.
-+			 */
-+			return ERR_PTR(-EADDRNOTAVAIL);
-+		else if (count == 0)
-+			/*
-+			 * We can return ENOENT earlier than when register the
-+			 * kprobe.
-+			 */
-+			return ERR_PTR(-ENOENT);
-+	}
-+
- 	/*
- 	 * local trace_kprobes are not added to dyn_event, so they are never
- 	 * searched in find_trace_kprobe(). Therefore, there is no concern of
---- a/kernel/trace/trace_probe.h
-+++ b/kernel/trace/trace_probe.h
-@@ -405,6 +405,7 @@ extern int traceprobe_define_arg_fields(
- 	C(BAD_MAXACT,		"Invalid maxactive number"),		\
- 	C(MAXACT_TOO_BIG,	"Maxactive is too big"),		\
- 	C(BAD_PROBE_ADDR,	"Invalid probed address or symbol"),	\
-+	C(NON_UNIQ_SYMBOL,	"The symbol is not unique"),		\
- 	C(BAD_RETPROBE,		"Retprobe address must be an function entry"), \
- 	C(BAD_ADDR_SUFFIX,	"Invalid probed address suffix"), \
- 	C(NO_GROUP_NAME,	"Group name is not specified"),		\
++#if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
+ /*
+- * With CONFIG_KASAN, accesses to bogus pointers (outside the high
++ * With CONFIG_KASAN_INLINE, accesses to bogus pointers (outside the high
+  * canonical half of the address space) cause out-of-bounds shadow memory reads
+  * before the actual access. For addresses in the low canonical half of the
+  * address space, as well as most non-canonical addresses, that out-of-bounds
+@@ -494,3 +495,4 @@ void kasan_non_canonical_hook(unsigned l
+ 	pr_alert("KASAN: %s in range [0x%016lx-0x%016lx]\n", bug_type,
+ 		 orig_addr, orig_addr + KASAN_GRANULE_SIZE - 1);
+ }
++#endif
 
 
