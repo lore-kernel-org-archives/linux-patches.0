@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C804A99E;
-	Wed, 20 Dec 2023 16:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BAF4BAAF;
+	Wed, 20 Dec 2023 16:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQGipB/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD1FC433C8;
-	Wed, 20 Dec 2023 16:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIgdBPIK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659B9C433C8;
+	Wed, 20 Dec 2023 16:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703089034;
-	bh=P9UJZBpTVuWqE3B3sa/ScgV1ooxpdApARCH273kwYv4=;
+	s=korg; t=1703089036;
+	bh=YMTalHL7NOCKT5Sfnzel98/ja94aurwAGWil0aIc69Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQGipB/PWSci766orWaOR+MOwtuPap9QgMhFZVpcxrBkyUY5AnFtjQvpOzxGCeVvZ
-	 jVBTYsnTg3gmsjVyej+yEtliDoXHzH1S4BW0/dW9DjoIUfzwr26neGkLLfEV9oYf2G
-	 QLTYAbe4/PCJx2karTQe+5CwK8gbCceP995uyqY4=
+	b=rIgdBPIKTYP/pNBcOaD8CRG9NW/8sgw3Ztjh8fT/516g2Kcoqae9iqfpWXdBDy+fY
+	 mOFA+GPLv6xJUsOlFoR7laXVFpqw/VHaX7A+hSpFdAPSNfgyr60NDr8OfeprsDqQcu
+	 AAlJz/sViZ2aIP6GgZUsHCU72rfoICPC1Z5DbWSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 145/159] ksmbd: no need to wait for binded connection termination at logoff
-Date: Wed, 20 Dec 2023 17:10:10 +0100
-Message-ID: <20231220160938.085794187@linuxfoundation.org>
+Subject: [PATCH 5.15 146/159] ksmbd: fix kernel-doc comment of ksmbd_vfs_kern_path_locked()
+Date: Wed, 20 Dec 2023 17:10:11 +0100
+Message-ID: <20231220160938.134256986@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -43,44 +44,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 67797da8a4b82446d42c52b6ee1419a3100d78ff ]
+[ Upstream commit f6049712e520287ad695e9d4f1572ab76807fa0c ]
 
-The connection could be binded to the existing session for Multichannel.
-session will be destroyed when binded connections are released.
-So no need to wait for that's connection at logoff.
+Fix argument list that the kdoc format and script verified in
+ksmbd_vfs_kern_path_locked().
 
+fs/smb/server/vfs.c:1207: warning: Function parameter or member 'parent_path'
+not described in 'ksmbd_vfs_kern_path_locked'
+
+Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/connection.c |   16 ----------------
- 1 file changed, 16 deletions(-)
+ fs/ksmbd/vfs.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -167,23 +167,7 @@ void ksmbd_all_conn_set_status(u64 sess_
+--- a/fs/ksmbd/vfs.c
++++ b/fs/ksmbd/vfs.c
+@@ -1179,9 +1179,10 @@ static int ksmbd_vfs_lookup_in_dir(const
  
- void ksmbd_conn_wait_idle(struct ksmbd_conn *conn, u64 sess_id)
- {
--	struct ksmbd_conn *bind_conn;
--
- 	wait_event(conn->req_running_q, atomic_read(&conn->req_running) < 2);
--
--	down_read(&conn_list_lock);
--	list_for_each_entry(bind_conn, &conn_list, conns_list) {
--		if (bind_conn == conn)
--			continue;
--
--		if ((bind_conn->binding || xa_load(&bind_conn->sessions, sess_id)) &&
--		    !ksmbd_conn_releasing(bind_conn) &&
--		    atomic_read(&bind_conn->req_running)) {
--			wait_event(bind_conn->req_running_q,
--				atomic_read(&bind_conn->req_running) == 0);
--		}
--	}
--	up_read(&conn_list_lock);
- }
- 
- int ksmbd_conn_write(struct ksmbd_work *work)
+ /**
+  * ksmbd_vfs_kern_path_locked() - lookup a file and get path info
+- * @name:	file path that is relative to share
+- * @flags:	lookup flags
+- * @path:	if lookup succeed, return path info
++ * @name:		file path that is relative to share
++ * @flags:		lookup flags
++ * @parent_path:	if lookup succeed, return parent_path info
++ * @path:		if lookup succeed, return path info
+  * @caseless:	caseless filename lookup
+  *
+  * Return:	0 on success, otherwise error
 
 
