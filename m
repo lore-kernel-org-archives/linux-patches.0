@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2D44C623;
-	Wed, 20 Dec 2023 16:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F934C63B;
+	Wed, 20 Dec 2023 16:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FH2LKEVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E78C433C8;
-	Wed, 20 Dec 2023 16:12:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YVbPkQpb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6DBC433C8;
+	Wed, 20 Dec 2023 16:12:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088754;
-	bh=l8LfDieN5XQVolirVdw76eygsHiSP/OP7FWJ7bsUsGI=;
+	s=korg; t=1703088757;
+	bh=l6AdyH8qUnkqDP8fQSTmen5SBC16zGolF+62xq9Lzco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FH2LKEVdwrnaCrWKZcqXLJNkdxYuwwhmR2EIhrXN6VxWrm0QRFJe4ZV38/24srS0U
-	 HB6UauejBHZHh8Ran4DeeiqaFz04dWNxDuM298G0P05Kxexfj/S4mp8okyU3/QPlW5
-	 0tgJzXAfDG5tINJ52zMBd4QgIgyjctznxGGNbRT0=
+	b=YVbPkQpb8COnjDU4X5tpS7M6g7M59pAmSuSxSolMjaiaOocSNUXfXEM9C+aZlMeJE
+	 cuWreMwa79nGHptV/SqBN0i7rjiVTJEh/u2cRSK8LmaJLM3WEDI88ufg6DIR8HMb4l
+	 kRy2ZwxxxJlXSxvrwHflxITStLa4vbgeIaDr5aj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Koschel <jakobkoschel@gmail.com>,
 	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 029/159] ksmbd: replace usage of found with dedicated list iterator variable
-Date: Wed, 20 Dec 2023 17:08:14 +0100
-Message-ID: <20231220160932.638163907@linuxfoundation.org>
+Subject: [PATCH 5.15 047/159] ksmbd: remove unnecessary generic_fillattr in smb2_open
+Date: Wed, 20 Dec 2023 17:08:32 +0100
+Message-ID: <20231220160933.515662291@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -43,96 +42,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakob Koschel <jakobkoschel@gmail.com>
+From: Hyunchul Lee <hyc.lee@gmail.com>
 
-[ Upstream commit edf5f0548fbb77e20b898460dc25281b0f4d974d ]
+[ Upstream commit c90b31eaf9e77269d3803ed9223a2e0168b519ac ]
 
-To move the list iterator variable into the list_for_each_entry_*()
-macro in the future it should be avoided to use the list iterator
-variable after the loop body.
+Remove unnecessary generic_fillattr to fix wrong
+AllocationSize of SMB2_CREATE response, And
+Move the call of ksmbd_vfs_getattr above the place
+where stat is needed because of truncate.
 
-To *never* use the list iterator variable after the loop it was
-concluded to use a separate iterator variable instead of a
-found boolean [1].
+This patch fixes wrong AllocationSize of SMB2_CREATE
+response. Because ext4 updates inode->i_blocks only
+when disk space is allocated, generic_fillattr does
+not set stat.blocks properly for delayed allocation.
+But ext4 returns the blocks that include the delayed
+allocation blocks when getattr is called.
 
-This removes the need to use a found variable and simply checking if
-the variable was set, can determine if the break/goto was hit.
+The issue can be reproduced with commands below:
 
-Link: https://lore.kernel.org/all/CAHk-=wgRr_D8CB-D9Kg-c=EHreAsk5SqXPwr9Y7k9sA6cWXJ6w@mail.gmail.com/
-Signed-off-by: Jakob Koschel <jakobkoschel@gmail.com>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+touch ${FILENAME}
+xfs_io -c "pwrite -S 0xAB 0 40k" ${FILENAME}
+xfs_io -c "stat" ${FILENAME}
+
+40KB are written, but the count of blocks is 8.
+
+Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |   21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ fs/ksmbd/smb2pdu.c |   13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
 --- a/fs/ksmbd/smb2pdu.c
 +++ b/fs/ksmbd/smb2pdu.c
-@@ -6691,8 +6691,7 @@ int smb2_cancel(struct ksmbd_work *work)
- 	struct ksmbd_conn *conn = work->conn;
- 	struct smb2_hdr *hdr = smb2_get_msg(work->request_buf);
- 	struct smb2_hdr *chdr;
--	struct ksmbd_work *cancel_work = NULL;
--	int canceled = 0;
-+	struct ksmbd_work *cancel_work = NULL, *iter;
- 	struct list_head *command_list;
+@@ -3095,12 +3095,6 @@ int smb2_open(struct ksmbd_work *work)
+ 	list_add(&fp->node, &fp->f_ci->m_fp_list);
+ 	write_unlock(&fp->f_ci->m_lock);
  
- 	ksmbd_debug(SMB, "smb2 cancel called on mid %llu, async flags 0x%x\n",
-@@ -6702,11 +6701,11 @@ int smb2_cancel(struct ksmbd_work *work)
- 		command_list = &conn->async_requests;
- 
- 		spin_lock(&conn->request_lock);
--		list_for_each_entry(cancel_work, command_list,
-+		list_for_each_entry(iter, command_list,
- 				    async_request_entry) {
--			chdr = smb2_get_msg(cancel_work->request_buf);
-+			chdr = smb2_get_msg(iter->request_buf);
- 
--			if (cancel_work->async_id !=
-+			if (iter->async_id !=
- 			    le64_to_cpu(hdr->Id.AsyncId))
- 				continue;
- 
-@@ -6714,7 +6713,7 @@ int smb2_cancel(struct ksmbd_work *work)
- 				    "smb2 with AsyncId %llu cancelled command = 0x%x\n",
- 				    le64_to_cpu(hdr->Id.AsyncId),
- 				    le16_to_cpu(chdr->Command));
--			canceled = 1;
-+			cancel_work = iter;
- 			break;
+-	rc = ksmbd_vfs_getattr(&path, &stat);
+-	if (rc) {
+-		generic_fillattr(user_ns, d_inode(path.dentry), &stat);
+-		rc = 0;
+-	}
+-
+ 	/* Check delete pending among previous fp before oplock break */
+ 	if (ksmbd_inode_pending_delete(fp)) {
+ 		rc = -EBUSY;
+@@ -3187,6 +3181,10 @@ int smb2_open(struct ksmbd_work *work)
  		}
- 		spin_unlock(&conn->request_lock);
-@@ -6722,24 +6721,24 @@ int smb2_cancel(struct ksmbd_work *work)
- 		command_list = &conn->requests;
- 
- 		spin_lock(&conn->request_lock);
--		list_for_each_entry(cancel_work, command_list, request_entry) {
--			chdr = smb2_get_msg(cancel_work->request_buf);
-+		list_for_each_entry(iter, command_list, request_entry) {
-+			chdr = smb2_get_msg(iter->request_buf);
- 
- 			if (chdr->MessageId != hdr->MessageId ||
--			    cancel_work == work)
-+			    iter == work)
- 				continue;
- 
- 			ksmbd_debug(SMB,
- 				    "smb2 with mid %llu cancelled command = 0x%x\n",
- 				    le64_to_cpu(hdr->MessageId),
- 				    le16_to_cpu(chdr->Command));
--			canceled = 1;
-+			cancel_work = iter;
- 			break;
- 		}
- 		spin_unlock(&conn->request_lock);
  	}
  
--	if (canceled) {
-+	if (cancel_work) {
- 		cancel_work->state = KSMBD_WORK_CANCELLED;
- 		if (cancel_work->cancel_fn)
- 			cancel_work->cancel_fn(cancel_work->cancel_argv);
++	rc = ksmbd_vfs_getattr(&path, &stat);
++	if (rc)
++		goto err_out;
++
+ 	if (stat.result_mask & STATX_BTIME)
+ 		fp->create_time = ksmbd_UnixTimeToNT(stat.btime);
+ 	else
+@@ -3202,9 +3200,6 @@ int smb2_open(struct ksmbd_work *work)
+ 
+ 	memcpy(fp->client_guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE);
+ 
+-	generic_fillattr(user_ns, file_inode(fp->filp),
+-			 &stat);
+-
+ 	rsp->StructureSize = cpu_to_le16(89);
+ 	rcu_read_lock();
+ 	opinfo = rcu_dereference(fp->f_opinfo);
 
 
