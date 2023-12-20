@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05004B5A0;
-	Wed, 20 Dec 2023 16:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E904B5CA;
+	Wed, 20 Dec 2023 16:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjtLuQNd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4466CC433C8;
-	Wed, 20 Dec 2023 16:14:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rp38r/z6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2209C433C9;
+	Wed, 20 Dec 2023 16:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088850;
-	bh=AlkJNwi7zVWvLQfgDK8QWJAyw1hIAcvd0Ud2jIQDIyw=;
+	s=korg; t=1703088853;
+	bh=yz60FvZEGJaQUtQUz8UFfVcv7iXsNXT4gnqR2na2ZWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IjtLuQNdzIZuizAxy4YK5wvf/FwH1URMIIudLo65Ims0vG2b/6SGPL2EX8udeUA7E
-	 TSK8BUKVsq5FYBoVQxjPQSa697NIJksoIrBIwFzUS+c6bgiHHyc7MDC0TkyPZLjuIf
-	 y9HrctQQd3FQPaEHoWnyPCGIIdePU0YIFfjYtC+E=
+	b=Rp38r/z6gZ7bSIifnRtBW6TpRcKZM7iqvaPlrAH1h/wR970+fxR/ptj6WHnjsELlD
+	 M1CgdtfiOf8RRMgVfx1Rfv7H7crghKrwb5TZkxP65rJzhi1jSCiQD1WjgSwLIV7zPa
+	 dQ8kaLnAzYd3G+SXyjg9PNUr7l1xeTUMz/BSHZjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	David Disseldorp <ddiss@suse.de>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 081/159] ksmbd: fix slab-out-of-bounds in init_smb2_rsp_hdr
-Date: Wed, 20 Dec 2023 17:09:06 +0100
-Message-ID: <20231220160935.163550353@linuxfoundation.org>
+Subject: [PATCH 5.15 082/159] ksmbd: avoid out of bounds access in decode_preauth_ctxt()
+Date: Wed, 20 Dec 2023 17:09:07 +0100
+Message-ID: <20231220160935.203361228@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -41,279 +42,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: David Disseldorp <ddiss@suse.de>
 
-[ Upstream commit dc8289f912387c3bcfbc5d2db29c8947fa207c11 ]
+[ Upstream commit e7067a446264a7514fa1cfaa4052cdb6803bc6a2 ]
 
-When smb1 mount fails, KASAN detect slab-out-of-bounds in
-init_smb2_rsp_hdr like the following one.
-For smb1 negotiate(56bytes) , init_smb2_rsp_hdr() for smb2 is called.
-The issue occurs while handling smb1 negotiate as smb2 server operations.
-Add smb server operations for smb1 (get_cmd_val, init_rsp_hdr,
-allocate_rsp_buf, check_user_session) to handle smb1 negotiate so that
-smb2 server operation does not handle it.
+Confirm that the accessed pneg_ctxt->HashAlgorithms address sits within
+the SMB request boundary; deassemble_neg_contexts() only checks that the
+eight byte smb2_neg_context header + (client controlled) DataLength are
+within the packet boundary, which is insufficient.
 
-[  411.400423] CIFS: VFS: Use of the less secure dialect vers=1.0 is
-not recommended unless required for access to very old servers
-[  411.400452] CIFS: Attempting to mount \\192.168.45.139\homes
-[  411.479312] ksmbd: init_smb2_rsp_hdr : 492
-[  411.479323] ==================================================================
-[  411.479327] BUG: KASAN: slab-out-of-bounds in
-init_smb2_rsp_hdr+0x1e2/0x1f4 [ksmbd]
-[  411.479369] Read of size 16 at addr ffff888488ed0734 by task kworker/14:1/199
+Checking for sizeof(struct smb2_preauth_neg_context) is overkill given
+that the type currently assumes SMB311_SALT_SIZE bytes of trailing Salt.
 
-[  411.479379] CPU: 14 PID: 199 Comm: kworker/14:1 Tainted: G
- OE      6.1.21 #3
-[  411.479386] Hardware name: ASUSTeK COMPUTER INC. Z10PA-D8
-Series/Z10PA-D8 Series, BIOS 3801 08/23/2019
-[  411.479390] Workqueue: ksmbd-io handle_ksmbd_work [ksmbd]
-[  411.479425] Call Trace:
-[  411.479428]  <TASK>
-[  411.479432]  dump_stack_lvl+0x49/0x63
-[  411.479444]  print_report+0x171/0x4a8
-[  411.479452]  ? kasan_complete_mode_report_info+0x3c/0x200
-[  411.479463]  ? init_smb2_rsp_hdr+0x1e2/0x1f4 [ksmbd]
-[  411.479497]  kasan_report+0xb4/0x130
-[  411.479503]  ? init_smb2_rsp_hdr+0x1e2/0x1f4 [ksmbd]
-[  411.479537]  kasan_check_range+0x149/0x1e0
-[  411.479543]  memcpy+0x24/0x70
-[  411.479550]  init_smb2_rsp_hdr+0x1e2/0x1f4 [ksmbd]
-[  411.479585]  handle_ksmbd_work+0x109/0x760 [ksmbd]
-[  411.479616]  ? _raw_spin_unlock_irqrestore+0x50/0x50
-[  411.479624]  ? smb3_encrypt_resp+0x340/0x340 [ksmbd]
-[  411.479656]  process_one_work+0x49c/0x790
-[  411.479667]  worker_thread+0x2b1/0x6e0
-[  411.479674]  ? process_one_work+0x790/0x790
-[  411.479680]  kthread+0x177/0x1b0
-[  411.479686]  ? kthread_complete_and_exit+0x30/0x30
-[  411.479692]  ret_from_fork+0x22/0x30
-[  411.479702]  </TASK>
-
-Fixes: 39b291b86b59 ("ksmbd: return unsupported error on smb1 mount")
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/server.c     |    5 -
- fs/ksmbd/smb2pdu.c    |    3 -
- fs/ksmbd/smb_common.c |  138 +++++++++++++++++++++++++++++++++++++++-----------
- fs/ksmbd/smb_common.h |    2 
- 4 files changed, 111 insertions(+), 37 deletions(-)
+ fs/ksmbd/smb2pdu.c |   23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
---- a/fs/ksmbd/server.c
-+++ b/fs/ksmbd/server.c
-@@ -296,10 +296,7 @@ static int queue_ksmbd_work(struct ksmbd
- 	work->request_buf = conn->request_buf;
- 	conn->request_buf = NULL;
- 
--	if (ksmbd_init_smb_server(work)) {
--		ksmbd_free_work_struct(work);
--		return -EINVAL;
--	}
-+	ksmbd_init_smb_server(work);
- 
- 	ksmbd_conn_enqueue_request(work);
- 	atomic_inc(&conn->r_count);
 --- a/fs/ksmbd/smb2pdu.c
 +++ b/fs/ksmbd/smb2pdu.c
-@@ -246,9 +246,6 @@ int init_smb2_neg_rsp(struct ksmbd_work
- 	struct smb2_negotiate_rsp *rsp;
- 	struct ksmbd_conn *conn = work->conn;
- 
--	if (conn->need_neg == false)
--		return -EINVAL;
--
- 	*(__be32 *)work->response_buf =
- 		cpu_to_be32(conn->vals->header_size);
- 
---- a/fs/ksmbd/smb_common.c
-+++ b/fs/ksmbd/smb_common.c
-@@ -283,20 +283,121 @@ err_out:
- 	return BAD_PROT_ID;
+@@ -907,17 +907,21 @@ static void assemble_neg_contexts(struct
  }
  
--int ksmbd_init_smb_server(struct ksmbd_work *work)
-+#define SMB_COM_NEGOTIATE_EX	0x0
-+
-+/**
-+ * get_smb1_cmd_val() - get smb command value from smb header
-+ * @work:	smb work containing smb header
-+ *
-+ * Return:      smb command value
-+ */
-+static u16 get_smb1_cmd_val(struct ksmbd_work *work)
+ static __le32 decode_preauth_ctxt(struct ksmbd_conn *conn,
+-				  struct smb2_preauth_neg_context *pneg_ctxt)
++				  struct smb2_preauth_neg_context *pneg_ctxt,
++				  int len_of_ctxts)
  {
--	struct ksmbd_conn *conn = work->conn;
-+	return SMB_COM_NEGOTIATE_EX;
-+}
- 
--	if (conn->need_neg == false)
-+/**
-+ * init_smb1_rsp_hdr() - initialize smb negotiate response header
-+ * @work:	smb work containing smb request
-+ *
-+ * Return:      0 on success, otherwise -EINVAL
-+ */
-+static int init_smb1_rsp_hdr(struct ksmbd_work *work)
-+{
-+	struct smb_hdr *rsp_hdr = (struct smb_hdr *)work->response_buf;
-+	struct smb_hdr *rcv_hdr = (struct smb_hdr *)work->request_buf;
-+
+-	__le32 err = STATUS_NO_PREAUTH_INTEGRITY_HASH_OVERLAP;
 +	/*
-+	 * Remove 4 byte direct TCP header.
++	 * sizeof(smb2_preauth_neg_context) assumes SMB311_SALT_SIZE Salt,
++	 * which may not be present. Only check for used HashAlgorithms[1].
 +	 */
-+	*(__be32 *)work->response_buf =
-+		cpu_to_be32(sizeof(struct smb_hdr) - 4);
-+
-+	rsp_hdr->Command = SMB_COM_NEGOTIATE;
-+	*(__le32 *)rsp_hdr->Protocol = SMB1_PROTO_NUMBER;
-+	rsp_hdr->Flags = SMBFLG_RESPONSE;
-+	rsp_hdr->Flags2 = SMBFLG2_UNICODE | SMBFLG2_ERR_STATUS |
-+		SMBFLG2_EXT_SEC | SMBFLG2_IS_LONG_NAME;
-+	rsp_hdr->Pid = rcv_hdr->Pid;
-+	rsp_hdr->Mid = rcv_hdr->Mid;
-+	return 0;
-+}
-+
-+/**
-+ * smb1_check_user_session() - check for valid session for a user
-+ * @work:	smb work containing smb request buffer
-+ *
-+ * Return:      0 on success, otherwise error
-+ */
-+static int smb1_check_user_session(struct ksmbd_work *work)
-+{
-+	unsigned int cmd = work->conn->ops->get_cmd_val(work);
-+
-+	if (cmd == SMB_COM_NEGOTIATE_EX)
- 		return 0;
++	if (len_of_ctxts < 6)
++		return STATUS_INVALID_PARAMETER;
  
--	init_smb3_11_server(conn);
-+	return -EINVAL;
-+}
-+
-+/**
-+ * smb1_allocate_rsp_buf() - allocate response buffer for a command
-+ * @work:	smb work containing smb request
-+ *
-+ * Return:      0 on success, otherwise -ENOMEM
-+ */
-+static int smb1_allocate_rsp_buf(struct ksmbd_work *work)
-+{
-+	work->response_buf = kmalloc(MAX_CIFS_SMALL_BUFFER_SIZE,
-+			GFP_KERNEL | __GFP_ZERO);
-+	work->response_sz = MAX_CIFS_SMALL_BUFFER_SIZE;
-+
-+	if (!work->response_buf) {
-+		pr_err("Failed to allocate %u bytes buffer\n",
-+				MAX_CIFS_SMALL_BUFFER_SIZE);
-+		return -ENOMEM;
-+	}
+-	if (pneg_ctxt->HashAlgorithms == SMB2_PREAUTH_INTEGRITY_SHA512) {
+-		conn->preauth_info->Preauth_HashId =
+-			SMB2_PREAUTH_INTEGRITY_SHA512;
+-		err = STATUS_SUCCESS;
+-	}
++	if (pneg_ctxt->HashAlgorithms != SMB2_PREAUTH_INTEGRITY_SHA512)
++		return STATUS_NO_PREAUTH_INTEGRITY_HASH_OVERLAP;
  
--	if (conn->ops->get_cmd_val(work) != SMB_COM_NEGOTIATE)
--		conn->need_neg = false;
- 	return 0;
+-	return err;
++	conn->preauth_info->Preauth_HashId = SMB2_PREAUTH_INTEGRITY_SHA512;
++	return STATUS_SUCCESS;
  }
  
-+static struct smb_version_ops smb1_server_ops = {
-+	.get_cmd_val = get_smb1_cmd_val,
-+	.init_rsp_hdr = init_smb1_rsp_hdr,
-+	.allocate_rsp_buf = smb1_allocate_rsp_buf,
-+	.check_user_session = smb1_check_user_session,
-+};
-+
-+static int smb1_negotiate(struct ksmbd_work *work)
-+{
-+	return ksmbd_smb_negotiate_common(work, SMB_COM_NEGOTIATE);
-+}
-+
-+static struct smb_version_cmds smb1_server_cmds[1] = {
-+	[SMB_COM_NEGOTIATE_EX]	= { .proc = smb1_negotiate, },
-+};
-+
-+static void init_smb1_server(struct ksmbd_conn *conn)
-+{
-+	conn->ops = &smb1_server_ops;
-+	conn->cmds = smb1_server_cmds;
-+	conn->max_cmds = ARRAY_SIZE(smb1_server_cmds);
-+}
-+
-+void ksmbd_init_smb_server(struct ksmbd_work *work)
-+{
-+	struct ksmbd_conn *conn = work->conn;
-+	__le32 proto;
-+
-+	if (conn->need_neg == false)
-+		return;
-+
-+	proto = *(__le32 *)((struct smb_hdr *)work->request_buf)->Protocol;
-+	if (proto == SMB1_PROTO_NUMBER)
-+		init_smb1_server(conn);
-+	else
-+		init_smb3_11_server(conn);
-+}
-+
- int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work, int info_level,
- 				      struct ksmbd_file *dir,
- 				      struct ksmbd_dir_info *d_info,
-@@ -444,20 +545,10 @@ static int smb_handle_negotiate(struct k
+ static void decode_encrypt_ctxt(struct ksmbd_conn *conn,
+@@ -1045,7 +1049,8 @@ static __le32 deassemble_neg_contexts(st
+ 				break;
  
- 	ksmbd_debug(SMB, "Unsupported SMB1 protocol\n");
- 
--	/*
--	 * Remove 4 byte direct TCP header, add 2 byte bcc and
--	 * 2 byte DialectIndex.
--	 */
--	*(__be32 *)work->response_buf =
--		cpu_to_be32(sizeof(struct smb_hdr) - 4 + 2 + 2);
-+	/* Add 2 byte bcc and 2 byte DialectIndex. */
-+	inc_rfc1001_len(work->response_buf, 4);
- 	neg_rsp->hdr.Status.CifsError = STATUS_SUCCESS;
- 
--	neg_rsp->hdr.Command = SMB_COM_NEGOTIATE;
--	*(__le32 *)neg_rsp->hdr.Protocol = SMB1_PROTO_NUMBER;
--	neg_rsp->hdr.Flags = SMBFLG_RESPONSE;
--	neg_rsp->hdr.Flags2 = SMBFLG2_UNICODE | SMBFLG2_ERR_STATUS |
--		SMBFLG2_EXT_SEC | SMBFLG2_IS_LONG_NAME;
--
- 	neg_rsp->hdr.WordCount = 1;
- 	neg_rsp->DialectIndex = cpu_to_le16(work->conn->dialect);
- 	neg_rsp->ByteCount = 0;
-@@ -474,23 +565,12 @@ int ksmbd_smb_negotiate_common(struct ks
- 	ksmbd_debug(SMB, "conn->dialect 0x%x\n", conn->dialect);
- 
- 	if (command == SMB2_NEGOTIATE_HE) {
--		struct smb2_hdr *smb2_hdr = smb2_get_msg(work->request_buf);
--
--		if (smb2_hdr->ProtocolId != SMB2_PROTO_NUMBER) {
--			ksmbd_debug(SMB, "Downgrade to SMB1 negotiation\n");
--			command = SMB_COM_NEGOTIATE;
--		}
--	}
--
--	if (command == SMB2_NEGOTIATE_HE) {
- 		ret = smb2_handle_negotiate(work);
--		init_smb2_neg_rsp(work);
- 		return ret;
- 	}
- 
- 	if (command == SMB_COM_NEGOTIATE) {
- 		if (__smb2_negotiate(conn)) {
--			conn->need_neg = true;
- 			init_smb3_11_server(conn);
- 			init_smb2_neg_rsp(work);
- 			ksmbd_debug(SMB, "Upgrade to SMB2 negotiation\n");
---- a/fs/ksmbd/smb_common.h
-+++ b/fs/ksmbd/smb_common.h
-@@ -474,7 +474,7 @@ bool ksmbd_smb_request(struct ksmbd_conn
- 
- int ksmbd_lookup_dialect_by_id(__le16 *cli_dialects, __le16 dialects_count);
- 
--int ksmbd_init_smb_server(struct ksmbd_work *work);
-+void ksmbd_init_smb_server(struct ksmbd_work *work);
- 
- struct ksmbd_kstat;
- int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work,
+ 			status = decode_preauth_ctxt(conn,
+-						     (struct smb2_preauth_neg_context *)pctx);
++						     (struct smb2_preauth_neg_context *)pctx,
++						     len_of_ctxts);
+ 			if (status != STATUS_SUCCESS)
+ 				break;
+ 		} else if (pctx->ContextType == SMB2_ENCRYPTION_CAPABILITIES) {
 
 
