@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B857D4B146;
-	Wed, 20 Dec 2023 16:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791EE48784;
+	Wed, 20 Dec 2023 16:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5dbZhcP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6E8C433C8;
-	Wed, 20 Dec 2023 16:13:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHJAyfuU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75D7C433C7;
+	Wed, 20 Dec 2023 16:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088809;
-	bh=xNTwZO1aDAn9l/G3m52HPoLILUZfKHPjYrmnJGtshi0=;
+	s=korg; t=1703088812;
+	bh=z6HQWmTt5jIgxkJF55hIeHWndO1OulG6QnnJALsQziY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5dbZhcPfFMrUpIdc3f/7IGxg/ZdKpSXaOX2V9/pPSikSMqy3HwVHbS0ROeleUg1V
-	 lJtFi+JMlmFH9dlDRS0k01a7bpLLgOffDrdfL0fBVszyzqblnYQxXa5RFZss4HwpPI
-	 Nnll1q3pXE27v8M79tErRGp65kzO7iJk4Wja4uDw=
+	b=mHJAyfuUaHpaqfQjBmn5tWj3jU9lxxsIZ7AvvM770qUjBpoYyi+GQlUULgEhr43cq
+	 c7CGyp/UG0zpiSOPRKZpEIYpAumzBlWygtK1w4C9F4L5nS+IQONEU6LcDL0lC4MrTh
+	 WHblIwmaVIbQFZXBgIBVPEVaeSXG1Ztvj4TXmb7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
+	Tom Talpey <tom@talpey.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 027/159] ksmbd: shorten experimental warning on loading the module
-Date: Wed, 20 Dec 2023 17:08:12 +0100
-Message-ID: <20231220160932.549126530@linuxfoundation.org>
+Subject: [PATCH 5.15 060/159] ksmbd: hide socket error message when ipv6 config is disable
+Date: Wed, 20 Dec 2023 17:08:45 +0100
+Message-ID: <20231220160934.146099740@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -41,31 +42,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit adc32821409aef8d7f6d868c20a96f4901f48705 ]
+[ Upstream commit 5876e99611a91dfb2fb1f7af9d1ae5c017c8331c ]
 
-ksmbd is continuing to improve.  Shorten the warning message
-logged the first time it is loaded to:
-   "The ksmbd server is experimental"
+When ipv6 config is disable(CONFIG_IPV6 is not set), ksmbd fallback to
+create ipv4 socket. User reported that this error message lead to
+misunderstood some issue. Users have requested not to print this error
+message that occurs even though there is no problem.
 
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Acked-by: Tom Talpey <tom@talpey.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/server.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ksmbd/transport_tcp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ksmbd/server.c
-+++ b/fs/ksmbd/server.c
-@@ -590,7 +590,7 @@ static int __init ksmbd_server_init(void
- 	if (ret)
- 		goto err_crypto_destroy;
+--- a/fs/ksmbd/transport_tcp.c
++++ b/fs/ksmbd/transport_tcp.c
+@@ -428,7 +428,8 @@ static int create_socket(struct interfac
  
--	pr_warn_once("The ksmbd server is experimental, use at your own risk.\n");
-+	pr_warn_once("The ksmbd server is experimental\n");
- 
- 	return 0;
- 
+ 	ret = sock_create(PF_INET6, SOCK_STREAM, IPPROTO_TCP, &ksmbd_socket);
+ 	if (ret) {
+-		pr_err("Can't create socket for ipv6, try ipv4: %d\n", ret);
++		if (ret != -EAFNOSUPPORT)
++			pr_err("Can't create socket for ipv6, fallback to ipv4: %d\n", ret);
+ 		ret = sock_create(PF_INET, SOCK_STREAM, IPPROTO_TCP,
+ 				  &ksmbd_socket);
+ 		if (ret) {
 
 
