@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5DF41741;
-	Wed, 20 Dec 2023 16:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B857D4B146;
+	Wed, 20 Dec 2023 16:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGy/qxa3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF5EC433C8;
-	Wed, 20 Dec 2023 16:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5dbZhcP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6E8C433C8;
+	Wed, 20 Dec 2023 16:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088806;
-	bh=0f6TecS6z0bwVRwbJVckiJILRB6ErXUmA+ycnuKtAeY=;
+	s=korg; t=1703088809;
+	bh=xNTwZO1aDAn9l/G3m52HPoLILUZfKHPjYrmnJGtshi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fGy/qxa3TPS9Pf8Bc+D8FB3T9dnBXKBoqJgKT9yf8NNnwVP+F6JRoB8hKoHxjjmBb
-	 nXNLJdbSzZAjiASlFKy+dte9HVr703ul2C0FBWMqM32z2vhXoOE2P+LEmXsch1AdJi
-	 SJ55/Tqap2dux2efGn2g9ybR5M89kWePP7q7bDec=
+	b=r5dbZhcPfFMrUpIdc3f/7IGxg/ZdKpSXaOX2V9/pPSikSMqy3HwVHbS0ROeleUg1V
+	 lJtFi+JMlmFH9dlDRS0k01a7bpLLgOffDrdfL0fBVszyzqblnYQxXa5RFZss4HwpPI
+	 Nnll1q3pXE27v8M79tErRGp65kzO7iJk4Wja4uDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 036/159] ksmbd: smbd: change the return value of get_sg_list
-Date: Wed, 20 Dec 2023 17:08:21 +0100
-Message-ID: <20231220160932.972444084@linuxfoundation.org>
+Subject: [PATCH 5.15 027/159] ksmbd: shorten experimental warning on loading the module
+Date: Wed, 20 Dec 2023 17:08:12 +0100
+Message-ID: <20231220160932.549126530@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -42,40 +41,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunchul Lee <hyc.lee@gmail.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 4e3edd0092704b25626a0fe60a974f6f382ff93d ]
+[ Upstream commit adc32821409aef8d7f6d868c20a96f4901f48705 ]
 
-Make get_sg_list return EINVAL if there aren't
-mapped scatterlists.
+ksmbd is continuing to improve.  Shorten the warning message
+logged the first time it is loaded to:
+   "The ksmbd server is experimental"
 
-Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/transport_rdma.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ksmbd/server.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ksmbd/transport_rdma.c
-+++ b/fs/ksmbd/transport_rdma.c
-@@ -1085,7 +1085,7 @@ static int get_sg_list(void *buf, int si
- 	int offset, len;
- 	int i = 0;
+--- a/fs/ksmbd/server.c
++++ b/fs/ksmbd/server.c
+@@ -590,7 +590,7 @@ static int __init ksmbd_server_init(void
+ 	if (ret)
+ 		goto err_crypto_destroy;
  
--	if (nentries < get_buf_page_count(buf, size))
-+	if (size <= 0 || nentries < get_buf_page_count(buf, size))
- 		return -EINVAL;
+-	pr_warn_once("The ksmbd server is experimental, use at your own risk.\n");
++	pr_warn_once("The ksmbd server is experimental\n");
  
- 	offset = offset_in_page(buf);
-@@ -1117,7 +1117,7 @@ static int get_mapped_sg_list(struct ib_
- 	int npages;
+ 	return 0;
  
- 	npages = get_sg_list(buf, size, sg_list, nentries);
--	if (npages <= 0)
-+	if (npages < 0)
- 		return -EINVAL;
- 	return ib_dma_map_sg(device, sg_list, npages, dir);
- }
 
 
