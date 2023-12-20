@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791EE48784;
-	Wed, 20 Dec 2023 16:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8D74D12C;
+	Wed, 20 Dec 2023 16:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHJAyfuU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75D7C433C7;
-	Wed, 20 Dec 2023 16:13:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NzKMB4mK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDEEC433CB;
+	Wed, 20 Dec 2023 16:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088812;
-	bh=z6HQWmTt5jIgxkJF55hIeHWndO1OulG6QnnJALsQziY=;
+	s=korg; t=1703088814;
+	bh=2oV9YntNQK1HmueDpUfK0OEVvYS/YN9B78zvTUGyIog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHJAyfuUaHpaqfQjBmn5tWj3jU9lxxsIZ7AvvM770qUjBpoYyi+GQlUULgEhr43cq
-	 c7CGyp/UG0zpiSOPRKZpEIYpAumzBlWygtK1w4C9F4L5nS+IQONEU6LcDL0lC4MrTh
-	 WHblIwmaVIbQFZXBgIBVPEVaeSXG1Ztvj4TXmb7Y=
+	b=NzKMB4mK7eTfIO94W1AXkVQICEqY6IFGXqoNtZFFzl/G5HazjxT2yCkn9Q1AkC2hF
+	 ZmCN4Gxbb9QaZw/Z6jVyPe8/zwm+F55JNl7L1T0+FX6+ruCa57bjNDNshrM9okHm4Z
+	 ljqgZywFEqiRQZl39PqvYAEmKkG5jumCAFXnIamI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Marios Makassikis <mmakassikis@freebox.fr>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Tom Talpey <tom@talpey.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 060/159] ksmbd: hide socket error message when ipv6 config is disable
-Date: Wed, 20 Dec 2023 17:08:45 +0100
-Message-ID: <20231220160934.146099740@linuxfoundation.org>
+Subject: [PATCH 5.15 069/159] ksmbd: send proper error response in smb2_tree_connect()
+Date: Wed, 20 Dec 2023 17:08:54 +0100
+Message-ID: <20231220160934.586666574@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -42,34 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Marios Makassikis <mmakassikis@freebox.fr>
 
-[ Upstream commit 5876e99611a91dfb2fb1f7af9d1ae5c017c8331c ]
+[ Upstream commit cdfb2fef522d0c3f9cf293db51de88e9b3d46846 ]
 
-When ipv6 config is disable(CONFIG_IPV6 is not set), ksmbd fallback to
-create ipv4 socket. User reported that this error message lead to
-misunderstood some issue. Users have requested not to print this error
-message that occurs even though there is no problem.
+Currently, smb2_tree_connect doesn't send an error response packet on
+error.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Acked-by: Tom Talpey <tom@talpey.com>
+This causes libsmb2 to skip the specific error code and fail with the
+following:
+ smb2_service failed with : Failed to parse fixed part of command
+ payload. Unexpected size of Error reply. Expected 9, got 8
+
+Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/transport_tcp.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ksmbd/smb2pdu.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/ksmbd/transport_tcp.c
-+++ b/fs/ksmbd/transport_tcp.c
-@@ -428,7 +428,8 @@ static int create_socket(struct interfac
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -1969,13 +1969,13 @@ int smb2_tree_connect(struct ksmbd_work
+ 	if (conn->posix_ext_supported)
+ 		status.tree_conn->posix_extensions = true;
  
- 	ret = sock_create(PF_INET6, SOCK_STREAM, IPPROTO_TCP, &ksmbd_socket);
- 	if (ret) {
--		pr_err("Can't create socket for ipv6, try ipv4: %d\n", ret);
-+		if (ret != -EAFNOSUPPORT)
-+			pr_err("Can't create socket for ipv6, fallback to ipv4: %d\n", ret);
- 		ret = sock_create(PF_INET, SOCK_STREAM, IPPROTO_TCP,
- 				  &ksmbd_socket);
- 		if (ret) {
+-out_err1:
+ 	rsp->StructureSize = cpu_to_le16(16);
++	inc_rfc1001_len(work->response_buf, 16);
++out_err1:
+ 	rsp->Capabilities = 0;
+ 	rsp->Reserved = 0;
+ 	/* default manual caching */
+ 	rsp->ShareFlags = SMB2_SHAREFLAG_MANUAL_CACHING;
+-	inc_rfc1001_len(work->response_buf, 16);
+ 
+ 	if (!IS_ERR(treename))
+ 		kfree(treename);
+@@ -2008,6 +2008,9 @@ out_err1:
+ 		rsp->hdr.Status = STATUS_ACCESS_DENIED;
+ 	}
+ 
++	if (status.ret != KSMBD_TREE_CONN_STATUS_OK)
++		smb2_set_err_rsp(work);
++
+ 	return rc;
+ }
+ 
 
 
