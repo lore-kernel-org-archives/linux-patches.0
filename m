@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E343FB0B;
-	Wed, 20 Dec 2023 16:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6F641C96;
+	Wed, 20 Dec 2023 16:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qr/oXlZd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4EEC433C8;
-	Wed, 20 Dec 2023 16:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFgmDT+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9587AC433C8;
+	Wed, 20 Dec 2023 16:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088901;
-	bh=XYdAHVVMKjWAaNPfmofshOyx3w3CoK51g/QbhMn9FL0=;
+	s=korg; t=1703088903;
+	bh=aziT378+/tdB/TjCnplvY+AcfaJLVzHVO4aRh7/iEgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qr/oXlZdzF86n0WQmOZl7WUpx9mOHTvPiTL6XJFiJXRXAFwnL+qfMVUnEkZb5ZEOY
-	 MiUe+P0d23uoOp1/P+GNonos1cHsk/7cbD2KSXO8KlA5HAJd+zuE25UmGwJCR4+cuX
-	 m85Gy2OcHB10gx7PzTol83GGwpzBdJm6XQWaEDu0=
+	b=FFgmDT+W6Dq5U71V/DP62pHLt9kB5qY/9ZrYC0URZHitHJu5qL1aRh6CqO1vVK3LF
+	 PC02W7d6UJMzxPcoFBSxUNUeQWKHo75F0iGpZKadRJFhYWBlYSrJDn1CYV6fahw3Ro
+	 Bf+evj03S8p+opx+NIRBWO8t0O4tt4r2iF1GfXfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chih-Yen Chang <cc85nod@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 5.15 092/159] ksmbd: fix racy issue under cocurrent smb2 tree disconnect
-Date: Wed, 20 Dec 2023 17:09:17 +0100
-Message-ID: <20231220160935.666235852@linuxfoundation.org>
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.15 101/159] ksmbd: check the validation of pdu_size in ksmbd_conn_handler_loop
+Date: Wed, 20 Dec 2023 17:09:26 +0100
+Message-ID: <20231220160936.074009487@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -44,76 +44,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 30210947a343b6b3ca13adc9bfc88e1543e16dd5 ]
+[ Upstream commit 368ba06881c395f1c9a7ba22203cf8d78b4addc0 ]
 
-There is UAF issue under cocurrent smb2 tree disconnect.
-This patch introduce TREE_CONN_EXPIRE flags for tcon to avoid cocurrent
-access.
+The length field of netbios header must be greater than the SMB header
+sizes(smb1 or smb2 header), otherwise the packet is an invalid SMB packet.
+
+If `pdu_size` is 0, ksmbd allocates a 4 bytes chunk to `conn->request_buf`.
+In the function `get_smb2_cmd_val` ksmbd will read cmd from
+`rcv_hdr->Command`, which is `conn->request_buf + 12`, causing the KASAN
+detector to print the following error message:
+
+[    7.205018] BUG: KASAN: slab-out-of-bounds in get_smb2_cmd_val+0x45/0x60
+[    7.205423] Read of size 2 at addr ffff8880062d8b50 by task ksmbd:42632/248
+...
+[    7.207125]  <TASK>
+[    7.209191]  get_smb2_cmd_val+0x45/0x60
+[    7.209426]  ksmbd_conn_enqueue_request+0x3a/0x100
+[    7.209712]  ksmbd_server_process_request+0x72/0x160
+[    7.210295]  ksmbd_conn_handler_loop+0x30c/0x550
+[    7.212280]  kthread+0x160/0x190
+[    7.212762]  ret_from_fork+0x1f/0x30
+[    7.212981]  </TASK>
 
 Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-20592
+Reported-by: Chih-Yen Chang <cc85nod@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/mgmt/tree_connect.c |   10 +++++++++-
- fs/ksmbd/mgmt/tree_connect.h |    3 +++
- fs/ksmbd/smb2pdu.c           |    3 ++-
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ fs/ksmbd/connection.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/fs/ksmbd/mgmt/tree_connect.c
-+++ b/fs/ksmbd/mgmt/tree_connect.c
-@@ -109,7 +109,15 @@ int ksmbd_tree_conn_disconnect(struct ks
- struct ksmbd_tree_connect *ksmbd_tree_conn_lookup(struct ksmbd_session *sess,
- 						  unsigned int id)
- {
--	return xa_load(&sess->tree_conns, id);
-+	struct ksmbd_tree_connect *tcon;
-+
-+	tcon = xa_load(&sess->tree_conns, id);
-+	if (tcon) {
-+		if (test_bit(TREE_CONN_EXPIRE, &tcon->status))
-+			tcon = NULL;
-+	}
-+
-+	return tcon;
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -294,6 +294,9 @@ bool ksmbd_conn_alive(struct ksmbd_conn
+ 	return true;
  }
  
- struct ksmbd_share_config *ksmbd_tree_conn_share(struct ksmbd_session *sess,
---- a/fs/ksmbd/mgmt/tree_connect.h
-+++ b/fs/ksmbd/mgmt/tree_connect.h
-@@ -14,6 +14,8 @@ struct ksmbd_share_config;
- struct ksmbd_user;
- struct ksmbd_conn;
- 
-+#define TREE_CONN_EXPIRE		1
++#define SMB1_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb_hdr))
++#define SMB2_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb2_hdr) + 4)
 +
- struct ksmbd_tree_connect {
- 	int				id;
+ /**
+  * ksmbd_conn_handler_loop() - session thread to listen on new smb requests
+  * @p:		connection instance
+@@ -350,6 +353,9 @@ int ksmbd_conn_handler_loop(void *p)
+ 		if (pdu_size > MAX_STREAM_PROT_LEN)
+ 			break;
  
-@@ -25,6 +27,7 @@ struct ksmbd_tree_connect {
- 
- 	int				maximal_access;
- 	bool				posix_extensions;
-+	unsigned long			status;
- };
- 
- struct ksmbd_tree_conn_status {
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -2083,11 +2083,12 @@ int smb2_tree_disconnect(struct ksmbd_wo
- 
- 	ksmbd_debug(SMB, "request\n");
- 
--	if (!tcon) {
-+	if (!tcon || test_and_set_bit(TREE_CONN_EXPIRE, &tcon->status)) {
- 		struct smb2_tree_disconnect_req *req =
- 			smb2_get_msg(work->request_buf);
- 
- 		ksmbd_debug(SMB, "Invalid tid %d\n", req->hdr.Id.SyncId.TreeId);
++		if (pdu_size < SMB1_MIN_SUPPORTED_HEADER_SIZE)
++			break;
 +
- 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
- 		smb2_set_err_rsp(work);
- 		return 0;
+ 		/* 4 for rfc1002 length field */
+ 		/* 1 for implied bcc[0] */
+ 		size = pdu_size + 4 + 1;
+@@ -377,6 +383,12 @@ int ksmbd_conn_handler_loop(void *p)
+ 			continue;
+ 		}
+ 
++		if (((struct smb2_hdr *)smb2_get_msg(conn->request_buf))->ProtocolId ==
++		    SMB2_PROTO_NUMBER) {
++			if (pdu_size < SMB2_MIN_SUPPORTED_HEADER_SIZE)
++				break;
++		}
++
+ 		if (!default_conn_ops.process_fn) {
+ 			pr_err("No connection request callback\n");
+ 			break;
 
 
