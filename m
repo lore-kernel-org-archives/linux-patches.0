@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD8F482C2;
-	Wed, 20 Dec 2023 16:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFD840C04;
+	Wed, 20 Dec 2023 16:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRK9HEqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328BCC433C7;
-	Wed, 20 Dec 2023 16:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXOcmRye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102CDC433C8;
+	Wed, 20 Dec 2023 16:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703089017;
-	bh=taUBbjaRiPL7MkW4Ju6BOM6c88Y57hPHLEc8XhA3NHo=;
+	s=korg; t=1703089020;
+	bh=XIRT19rmLV4/ZcXtM3MxSFG+br3nk5Tg/BX8XMQWf8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZRK9HEqht4Hr6t3D9ExgQW8CoAzsi6rQXBU7xWJKdUFHDJWjMSn1O8g7ssJt/U4+K
-	 I9Ylxkl4C2zJQTKQzA4VyK+Qgc/1avi7437Pi8H9R13g6ejbWJyHAeMshjQlojmmXY
-	 Af9VRJV1ffdclicjb9xv0pJCQC7xat7g4A1cMXNY=
+	b=CXOcmRye2jSc6s0JSnGcwqK6x7StC2EpEXDAcqd/LSlUXK+gww2cidqlP28lMzdop
+	 d/mMMDFy8for7UXEsaYRca+1eB+0RrjmixYO35/j4j/xB4Fo5G48B39OPh+DdPJyvk
+	 sFXR75yxARX7bIchJA+pUVPoP+AqgvNCV7Ho/qDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 140/159] ksmbd: reorganize ksmbd_iov_pin_rsp()
-Date: Wed, 20 Dec 2023 17:10:05 +0100
-Message-ID: <20231220160937.868067735@linuxfoundation.org>
+Subject: [PATCH 5.15 141/159] ksmbd: fix kernel-doc comment of ksmbd_vfs_setxattr()
+Date: Wed, 20 Dec 2023 17:10:06 +0100
+Message-ID: <20231220160937.907720032@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -43,92 +44,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1819a904299942b309f687cc0f08b123500aa178 ]
+[ Upstream commit 3354db668808d5b6d7c5e0cb19ff4c9da4bb5e58 ]
 
-If ksmbd_iov_pin_rsp fail, io vertor should be rollback.
-This patch moves memory allocations to before setting the io vector
-to avoid rollbacks.
+Fix argument list that the kdoc format and script verified in
+ksmbd_vfs_setxattr().
 
-Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+fs/smb/server/vfs.c:929: warning: Function parameter or member 'path'
+not described in 'ksmbd_vfs_setxattr'
+
+Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/ksmbd_work.c |   43 ++++++++++++++++++++++---------------------
- 1 file changed, 22 insertions(+), 21 deletions(-)
+ fs/ksmbd/vfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ksmbd/ksmbd_work.c
-+++ b/fs/ksmbd/ksmbd_work.c
-@@ -95,11 +95,28 @@ bool ksmbd_queue_work(struct ksmbd_work
- 	return queue_work(ksmbd_wq, &work->work);
- }
- 
--static int ksmbd_realloc_iov_pin(struct ksmbd_work *work, void *ib,
--				 unsigned int ib_len)
-+static inline void __ksmbd_iov_pin(struct ksmbd_work *work, void *ib,
-+				   unsigned int ib_len)
- {
-+	work->iov[++work->iov_idx].iov_base = ib;
-+	work->iov[work->iov_idx].iov_len = ib_len;
-+	work->iov_cnt++;
-+}
-+
-+static int __ksmbd_iov_pin_rsp(struct ksmbd_work *work, void *ib, int len,
-+			       void *aux_buf, unsigned int aux_size)
-+{
-+	struct aux_read *ar;
-+	int need_iov_cnt = 1;
-+
-+	if (aux_size) {
-+		need_iov_cnt++;
-+		ar = kmalloc(sizeof(struct aux_read), GFP_KERNEL);
-+		if (!ar)
-+			return -ENOMEM;
-+	}
- 
--	if (work->iov_alloc_cnt <= work->iov_cnt) {
-+	if (work->iov_alloc_cnt < work->iov_cnt + need_iov_cnt) {
- 		struct kvec *new;
- 
- 		work->iov_alloc_cnt += 4;
-@@ -111,16 +128,6 @@ static int ksmbd_realloc_iov_pin(struct
- 		work->iov = new;
- 	}
- 
--	work->iov[++work->iov_idx].iov_base = ib;
--	work->iov[work->iov_idx].iov_len = ib_len;
--	work->iov_cnt++;
--
--	return 0;
--}
--
--static int __ksmbd_iov_pin_rsp(struct ksmbd_work *work, void *ib, int len,
--			       void *aux_buf, unsigned int aux_size)
--{
- 	/* Plus rfc_length size on first iov */
- 	if (!work->iov_idx) {
- 		work->iov[work->iov_idx].iov_base = work->response_buf;
-@@ -129,19 +136,13 @@ static int __ksmbd_iov_pin_rsp(struct ks
- 		work->iov_cnt++;
- 	}
- 
--	ksmbd_realloc_iov_pin(work, ib, len);
-+	__ksmbd_iov_pin(work, ib, len);
- 	inc_rfc1001_len(work->iov[0].iov_base, len);
- 
- 	if (aux_size) {
--		struct aux_read *ar;
--
--		ksmbd_realloc_iov_pin(work, aux_buf, aux_size);
-+		__ksmbd_iov_pin(work, aux_buf, aux_size);
- 		inc_rfc1001_len(work->iov[0].iov_base, aux_size);
- 
--		ar = kmalloc(sizeof(struct aux_read), GFP_KERNEL);
--		if (!ar)
--			return -ENOMEM;
--
- 		ar->buf = aux_buf;
- 		list_add(&ar->entry, &work->aux_read_list);
- 	}
+--- a/fs/ksmbd/vfs.c
++++ b/fs/ksmbd/vfs.c
+@@ -919,7 +919,7 @@ ssize_t ksmbd_vfs_getxattr(struct user_n
+ /**
+  * ksmbd_vfs_setxattr() - vfs helper for smb set extended attributes value
+  * @user_ns:	user namespace
+- * @dentry:	dentry to set XATTR at
++ * @path:	path of dentry to set XATTR at
+  * @attr_name:	xattr name for setxattr
+  * @attr_value:	xattr value to set
+  * @attr_size:	size of xattr value
 
 
