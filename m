@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA38A41C96;
-	Wed, 20 Dec 2023 16:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CF84645F;
+	Wed, 20 Dec 2023 16:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCOtLqkP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611D1C433C8;
-	Wed, 20 Dec 2023 16:14:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWSpsn0H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D97BC433C7;
+	Wed, 20 Dec 2023 16:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088895;
-	bh=CkVe773od5zNwN1SymkEB6aPx2HgzogXUF/30/FBYqw=;
+	s=korg; t=1703088898;
+	bh=uag8lbc0CViuzSJS0DLQl8z4TbWgRbnG7DSlA+f58e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NCOtLqkPFpCzI7ak5P4U30HoirFU5gt7hLlD6RdefrfJFNWGQl/b9lI3GhL84ddRk
-	 vVZlqV+d4qUfM7wW1eccB7V8Q8+UTi/06ZcJ6IpQ7EuvEINWyM8yStvL99GY8L1MDf
-	 xMsVlBl2vI8HTrcZr9t5INLlB2F4hkvGwlMcAjtM=
+	b=XWSpsn0H+gyo3yskz/55/0plbGXWobrC7nJnhhPxme6DDVvGDbMTamTKljaADuT92
+	 wWEOYHfOhPuTBNEV7nl/MBPIki2UHaDtv694+/YKXfvs6lbUJ1tt7VpPGpsipfIn4o
+	 NhzBy4oASidflllidxsfBTrpm1xnpT7SihRAy7oU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ye xingchen <ye.xingchen@zte.com.cn>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Tom Talpey <tom@talpey.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 068/159] ksmbd: Convert to use sysfs_emit()/sysfs_emit_at() APIs
-Date: Wed, 20 Dec 2023 17:08:53 +0100
-Message-ID: <20231220160934.536490788@linuxfoundation.org>
+Subject: [PATCH 5.15 059/159] ksmbd: reduce server smbdirect max send/receive segment sizes
+Date: Wed, 20 Dec 2023 17:08:44 +0100
+Message-ID: <20231220160934.096829727@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -43,62 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ye xingchen <ye.xingchen@zte.com.cn>
+From: Tom Talpey <tom@talpey.com>
 
-[ Upstream commit 72ee45fd46d0d3578c4e6046f66fae3218543ce3 ]
+[ Upstream commit 78af146e109bef5b3c411964141c6f8adbccd3b0 ]
 
-Follow the advice of the Documentation/filesystems/sysfs.rst and show()
-should only use sysfs_emit() or sysfs_emit_at() when formatting the
-value to be returned to user space.
+Reduce ksmbd smbdirect max segment send and receive size to 1364
+to match protocol norms. Larger buffers are unnecessary and add
+significant memory overhead.
 
-Signed-off-by: ye xingchen <ye.xingchen@zte.com.cn>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Tom Talpey <tom@talpey.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/server.c |   20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ fs/ksmbd/transport_rdma.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ksmbd/server.c
-+++ b/fs/ksmbd/server.c
-@@ -439,11 +439,9 @@ static ssize_t stats_show(struct class *
- 		"reset",
- 		"shutdown"
- 	};
--
--	ssize_t sz = scnprintf(buf, PAGE_SIZE, "%d %s %d %lu\n", stats_version,
--			       state[server_conf.state], server_conf.tcp_port,
--			       server_conf.ipc_last_active / HZ);
--	return sz;
-+	return sysfs_emit(buf, "%d %s %d %lu\n", stats_version,
-+			  state[server_conf.state], server_conf.tcp_port,
-+			  server_conf.ipc_last_active / HZ);
- }
+--- a/fs/ksmbd/transport_rdma.c
++++ b/fs/ksmbd/transport_rdma.c
+@@ -62,13 +62,13 @@ static int smb_direct_receive_credit_max
+ static int smb_direct_send_credit_target = 255;
  
- static ssize_t kill_server_store(struct class *class,
-@@ -475,19 +473,13 @@ static ssize_t debug_show(struct class *
+ /* The maximum single message size can be sent to remote peer */
+-static int smb_direct_max_send_size = 8192;
++static int smb_direct_max_send_size = 1364;
  
- 	for (i = 0; i < ARRAY_SIZE(debug_type_strings); i++) {
- 		if ((ksmbd_debug_types >> i) & 1) {
--			pos = scnprintf(buf + sz,
--					PAGE_SIZE - sz,
--					"[%s] ",
--					debug_type_strings[i]);
-+			pos = sysfs_emit_at(buf, sz, "[%s] ", debug_type_strings[i]);
- 		} else {
--			pos = scnprintf(buf + sz,
--					PAGE_SIZE - sz,
--					"%s ",
--					debug_type_strings[i]);
-+			pos = sysfs_emit_at(buf, sz, "%s ", debug_type_strings[i]);
- 		}
- 		sz += pos;
- 	}
--	sz += scnprintf(buf + sz, PAGE_SIZE - sz, "\n");
-+	sz += sysfs_emit_at(buf, sz, "\n");
- 	return sz;
- }
+ /*  The maximum fragmented upper-layer payload receive size supported */
+ static int smb_direct_max_fragmented_recv_size = 1024 * 1024;
+ 
+ /*  The maximum single-message size which can be received */
+-static int smb_direct_max_receive_size = 8192;
++static int smb_direct_max_receive_size = 1364;
+ 
+ static int smb_direct_max_read_write_size = SMBD_DEFAULT_IOSIZE;
  
 
 
