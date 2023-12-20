@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B214CE15;
-	Wed, 20 Dec 2023 16:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2614D114;
+	Wed, 20 Dec 2023 16:13:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGz2ONWn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4A7C433C8;
-	Wed, 20 Dec 2023 16:12:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lstWtp5d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01AB5C433CB;
+	Wed, 20 Dec 2023 16:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088779;
-	bh=kRfRtORWGJVmVKMdN+zK1jrLHwH4DNFZzcSHuEeQdrQ=;
+	s=korg; t=1703088782;
+	bh=/P8DqtWEq0SGxh9rCWy+Jz6uaLieGvoAKOj7t5/ev3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MGz2ONWnmNh1igb9lsFOphTCg6c4DjwOZPI4o46P/ZaMI0urjSmo2TTh9hoHXbKy/
-	 Ho/f5NZ5KoBGHd5V6rUciUHkhuRbfKO+ju9E4C3bTazJ7cVLbfez+0QNF1LLzHQmNq
-	 VP+QYE7FKSqFJARRPjsaPuv1sUyswuG2agZHp7pI=
+	b=lstWtp5dqhG7piLqg1mXsCniPTimDg8RowWwYy5UcLyXfSPK2Tvuo2CwUZ+vkZpCN
+	 miUVHXJhmL+xEtCSjn3JIkE87Kp0Fpn5My9DlCPe6yD+19OLxT2sEAD+4RQn7StAZ0
+	 HSIjop4ex6QvvM/yx4g2v4shzFIUQvzjNlkE4T20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 055/159] ksmbd: fill sids in SMB_FIND_FILE_POSIX_INFO response
-Date: Wed, 20 Dec 2023 17:08:40 +0100
-Message-ID: <20231220160933.907553278@linuxfoundation.org>
+Subject: [PATCH 5.15 056/159] ksmbd: fix encryption failure issue for session logoff response
+Date: Wed, 20 Dec 2023 17:08:41 +0100
+Message-ID: <20231220160933.942578599@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -43,68 +43,120 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit d5919f2a1459083bd0aaede7fc44e945290e44df ]
+[ Upstream commit af705ef2b0ded0d8f54c238fdf3c17a1d47ad924 ]
 
-This patch fill missing sids in SMB_FIND_FILE_POSIX_INFO response.
+If client send encrypted session logoff request on seal mount,
+Encryption for that response fails.
+
+ksmbd: Could not get encryption key
+CIFS: VFS: cifs_put_smb_ses: Session Logoff failure rc=-512
+
+Session lookup fails in ksmbd_get_encryption_key() because sess->state is
+set to SMB2_SESSION_EXPIRED in session logoff. There is no need to do
+session lookup again to encrypt the response. This patch change to use
+ksmbd_session in ksmbd_work.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |   28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ fs/ksmbd/auth.c    |   12 ++++++++----
+ fs/ksmbd/auth.h    |    3 ++-
+ fs/ksmbd/smb2pdu.c |    7 +++----
+ 3 files changed, 13 insertions(+), 9 deletions(-)
 
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -4754,7 +4754,9 @@ static int find_file_posix_info(struct s
- {
- 	struct smb311_posix_qinfo *file_info;
- 	struct inode *inode = file_inode(fp->filp);
-+	struct user_namespace *user_ns = file_mnt_user_ns(fp->filp);
- 	u64 time;
-+	int out_buf_len = sizeof(struct smb311_posix_qinfo) + 32;
- 
- 	file_info = (struct smb311_posix_qinfo *)rsp->Buffer;
- 	file_info->CreationTime = cpu_to_le64(fp->create_time);
-@@ -4771,10 +4773,24 @@ static int find_file_posix_info(struct s
- 	file_info->HardLinks = cpu_to_le32(inode->i_nlink);
- 	file_info->Mode = cpu_to_le32(inode->i_mode & 0777);
- 	file_info->DeviceId = cpu_to_le32(inode->i_rdev);
--	rsp->OutputBufferLength =
--		cpu_to_le32(sizeof(struct smb311_posix_qinfo));
--	inc_rfc1001_len(rsp_org, sizeof(struct smb311_posix_qinfo));
--	return 0;
-+
-+	/*
-+	 * Sids(32) contain two sids(Domain sid(16), UNIX group sid(16)).
-+	 * UNIX sid(16) = revision(1) + num_subauth(1) + authority(6) +
-+	 *		  sub_auth(4 * 1(num_subauth)) + RID(4).
-+	 */
-+	id_to_sid(from_kuid_munged(&init_user_ns,
-+				   i_uid_into_mnt(user_ns, inode)),
-+				   SIDUNIX_USER,
-+				   (struct smb_sid *)&file_info->Sids[0]);
-+	id_to_sid(from_kgid_munged(&init_user_ns,
-+				   i_gid_into_mnt(user_ns, inode)),
-+				   SIDUNIX_GROUP,
-+				   (struct smb_sid *)&file_info->Sids[16]);
-+
-+	rsp->OutputBufferLength = cpu_to_le32(out_buf_len);
-+	inc_rfc1001_len(rsp_org, out_buf_len);
-+	return out_buf_len;
+--- a/fs/ksmbd/auth.c
++++ b/fs/ksmbd/auth.c
+@@ -988,13 +988,16 @@ out:
+ 	return rc;
  }
  
- static int smb2_get_info_file(struct ksmbd_work *work,
-@@ -4894,8 +4910,8 @@ static int smb2_get_info_file(struct ksm
- 			pr_err("client doesn't negotiate with SMB3.1.1 POSIX Extensions\n");
- 			rc = -EOPNOTSUPP;
- 		} else {
--			rc = find_file_posix_info(rsp, fp, work->response_buf);
--			file_infoclass_size = sizeof(struct smb311_posix_qinfo);
-+			file_infoclass_size = find_file_posix_info(rsp, fp,
-+					work->response_buf);
- 		}
- 		break;
- 	default:
+-static int ksmbd_get_encryption_key(struct ksmbd_conn *conn, __u64 ses_id,
++static int ksmbd_get_encryption_key(struct ksmbd_work *work, __u64 ses_id,
+ 				    int enc, u8 *key)
+ {
+ 	struct ksmbd_session *sess;
+ 	u8 *ses_enc_key;
+ 
+-	sess = ksmbd_session_lookup_all(conn, ses_id);
++	if (enc)
++		sess = work->sess;
++	else
++		sess = ksmbd_session_lookup_all(work->conn, ses_id);
+ 	if (!sess)
+ 		return -EINVAL;
+ 
+@@ -1082,9 +1085,10 @@ static struct scatterlist *ksmbd_init_sg
+ 	return sg;
+ }
+ 
+-int ksmbd_crypt_message(struct ksmbd_conn *conn, struct kvec *iov,
++int ksmbd_crypt_message(struct ksmbd_work *work, struct kvec *iov,
+ 			unsigned int nvec, int enc)
+ {
++	struct ksmbd_conn *conn = work->conn;
+ 	struct smb2_transform_hdr *tr_hdr = smb2_get_msg(iov[0].iov_base);
+ 	unsigned int assoc_data_len = sizeof(struct smb2_transform_hdr) - 20;
+ 	int rc;
+@@ -1098,7 +1102,7 @@ int ksmbd_crypt_message(struct ksmbd_con
+ 	unsigned int crypt_len = le32_to_cpu(tr_hdr->OriginalMessageSize);
+ 	struct ksmbd_crypto_ctx *ctx;
+ 
+-	rc = ksmbd_get_encryption_key(conn,
++	rc = ksmbd_get_encryption_key(work,
+ 				      le64_to_cpu(tr_hdr->SessionId),
+ 				      enc,
+ 				      key);
+--- a/fs/ksmbd/auth.h
++++ b/fs/ksmbd/auth.h
+@@ -33,9 +33,10 @@
+ 
+ struct ksmbd_session;
+ struct ksmbd_conn;
++struct ksmbd_work;
+ struct kvec;
+ 
+-int ksmbd_crypt_message(struct ksmbd_conn *conn, struct kvec *iov,
++int ksmbd_crypt_message(struct ksmbd_work *work, struct kvec *iov,
+ 			unsigned int nvec, int enc);
+ void ksmbd_copy_gss_neg_header(void *buf);
+ int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -8646,7 +8646,7 @@ int smb3_encrypt_resp(struct ksmbd_work
+ 	buf_size += iov[1].iov_len;
+ 	work->resp_hdr_sz = iov[1].iov_len;
+ 
+-	rc = ksmbd_crypt_message(work->conn, iov, rq_nvec, 1);
++	rc = ksmbd_crypt_message(work, iov, rq_nvec, 1);
+ 	if (rc)
+ 		return rc;
+ 
+@@ -8665,7 +8665,6 @@ bool smb3_is_transform_hdr(void *buf)
+ 
+ int smb3_decrypt_req(struct ksmbd_work *work)
+ {
+-	struct ksmbd_conn *conn = work->conn;
+ 	struct ksmbd_session *sess;
+ 	char *buf = work->request_buf;
+ 	unsigned int pdu_length = get_rfc1002_len(buf);
+@@ -8686,7 +8685,7 @@ int smb3_decrypt_req(struct ksmbd_work *
+ 		return -ECONNABORTED;
+ 	}
+ 
+-	sess = ksmbd_session_lookup_all(conn, le64_to_cpu(tr_hdr->SessionId));
++	sess = ksmbd_session_lookup_all(work->conn, le64_to_cpu(tr_hdr->SessionId));
+ 	if (!sess) {
+ 		pr_err("invalid session id(%llx) in transform header\n",
+ 		       le64_to_cpu(tr_hdr->SessionId));
+@@ -8697,7 +8696,7 @@ int smb3_decrypt_req(struct ksmbd_work *
+ 	iov[0].iov_len = sizeof(struct smb2_transform_hdr) + 4;
+ 	iov[1].iov_base = buf + sizeof(struct smb2_transform_hdr) + 4;
+ 	iov[1].iov_len = buf_data_size;
+-	rc = ksmbd_crypt_message(conn, iov, 2, 0);
++	rc = ksmbd_crypt_message(work, iov, 2, 0);
+ 	if (rc)
+ 		return rc;
+ 
 
 
