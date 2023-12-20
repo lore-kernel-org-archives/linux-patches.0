@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CF84645F;
-	Wed, 20 Dec 2023 16:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E343FB0B;
+	Wed, 20 Dec 2023 16:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWSpsn0H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D97BC433C7;
-	Wed, 20 Dec 2023 16:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qr/oXlZd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4EEC433C8;
+	Wed, 20 Dec 2023 16:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088898;
-	bh=uag8lbc0CViuzSJS0DLQl8z4TbWgRbnG7DSlA+f58e4=;
+	s=korg; t=1703088901;
+	bh=XYdAHVVMKjWAaNPfmofshOyx3w3CoK51g/QbhMn9FL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XWSpsn0H+gyo3yskz/55/0plbGXWobrC7nJnhhPxme6DDVvGDbMTamTKljaADuT92
-	 wWEOYHfOhPuTBNEV7nl/MBPIki2UHaDtv694+/YKXfvs6lbUJ1tt7VpPGpsipfIn4o
-	 NhzBy4oASidflllidxsfBTrpm1xnpT7SihRAy7oU=
+	b=qr/oXlZdzF86n0WQmOZl7WUpx9mOHTvPiTL6XJFiJXRXAFwnL+qfMVUnEkZb5ZEOY
+	 MiUe+P0d23uoOp1/P+GNonos1cHsk/7cbD2KSXO8KlA5HAJd+zuE25UmGwJCR4+cuX
+	 m85Gy2OcHB10gx7PzTol83GGwpzBdJm6XQWaEDu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Talpey <tom@talpey.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 059/159] ksmbd: reduce server smbdirect max send/receive segment sizes
-Date: Wed, 20 Dec 2023 17:08:44 +0100
-Message-ID: <20231220160934.096829727@linuxfoundation.org>
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 5.15 092/159] ksmbd: fix racy issue under cocurrent smb2 tree disconnect
+Date: Wed, 20 Dec 2023 17:09:17 +0100
+Message-ID: <20231220160935.666235852@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -42,39 +42,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Talpey <tom@talpey.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 78af146e109bef5b3c411964141c6f8adbccd3b0 ]
+[ Upstream commit 30210947a343b6b3ca13adc9bfc88e1543e16dd5 ]
 
-Reduce ksmbd smbdirect max segment send and receive size to 1364
-to match protocol norms. Larger buffers are unnecessary and add
-significant memory overhead.
+There is UAF issue under cocurrent smb2 tree disconnect.
+This patch introduce TREE_CONN_EXPIRE flags for tcon to avoid cocurrent
+access.
 
-Signed-off-by: Tom Talpey <tom@talpey.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-20592
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/transport_rdma.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ksmbd/mgmt/tree_connect.c |   10 +++++++++-
+ fs/ksmbd/mgmt/tree_connect.h |    3 +++
+ fs/ksmbd/smb2pdu.c           |    3 ++-
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
---- a/fs/ksmbd/transport_rdma.c
-+++ b/fs/ksmbd/transport_rdma.c
-@@ -62,13 +62,13 @@ static int smb_direct_receive_credit_max
- static int smb_direct_send_credit_target = 255;
+--- a/fs/ksmbd/mgmt/tree_connect.c
++++ b/fs/ksmbd/mgmt/tree_connect.c
+@@ -109,7 +109,15 @@ int ksmbd_tree_conn_disconnect(struct ks
+ struct ksmbd_tree_connect *ksmbd_tree_conn_lookup(struct ksmbd_session *sess,
+ 						  unsigned int id)
+ {
+-	return xa_load(&sess->tree_conns, id);
++	struct ksmbd_tree_connect *tcon;
++
++	tcon = xa_load(&sess->tree_conns, id);
++	if (tcon) {
++		if (test_bit(TREE_CONN_EXPIRE, &tcon->status))
++			tcon = NULL;
++	}
++
++	return tcon;
+ }
  
- /* The maximum single message size can be sent to remote peer */
--static int smb_direct_max_send_size = 8192;
-+static int smb_direct_max_send_size = 1364;
+ struct ksmbd_share_config *ksmbd_tree_conn_share(struct ksmbd_session *sess,
+--- a/fs/ksmbd/mgmt/tree_connect.h
++++ b/fs/ksmbd/mgmt/tree_connect.h
+@@ -14,6 +14,8 @@ struct ksmbd_share_config;
+ struct ksmbd_user;
+ struct ksmbd_conn;
  
- /*  The maximum fragmented upper-layer payload receive size supported */
- static int smb_direct_max_fragmented_recv_size = 1024 * 1024;
++#define TREE_CONN_EXPIRE		1
++
+ struct ksmbd_tree_connect {
+ 	int				id;
  
- /*  The maximum single-message size which can be received */
--static int smb_direct_max_receive_size = 8192;
-+static int smb_direct_max_receive_size = 1364;
+@@ -25,6 +27,7 @@ struct ksmbd_tree_connect {
  
- static int smb_direct_max_read_write_size = SMBD_DEFAULT_IOSIZE;
+ 	int				maximal_access;
+ 	bool				posix_extensions;
++	unsigned long			status;
+ };
  
+ struct ksmbd_tree_conn_status {
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -2083,11 +2083,12 @@ int smb2_tree_disconnect(struct ksmbd_wo
+ 
+ 	ksmbd_debug(SMB, "request\n");
+ 
+-	if (!tcon) {
++	if (!tcon || test_and_set_bit(TREE_CONN_EXPIRE, &tcon->status)) {
+ 		struct smb2_tree_disconnect_req *req =
+ 			smb2_get_msg(work->request_buf);
+ 
+ 		ksmbd_debug(SMB, "Invalid tid %d\n", req->hdr.Id.SyncId.TreeId);
++
+ 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
+ 		smb2_set_err_rsp(work);
+ 		return 0;
 
 
