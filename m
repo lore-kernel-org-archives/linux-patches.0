@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE7E495C8;
-	Wed, 20 Dec 2023 16:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8533E482C2;
+	Wed, 20 Dec 2023 16:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXwyJHfx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DDD9C433C8;
-	Wed, 20 Dec 2023 16:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Af1m6NzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BBA3C433C7;
+	Wed, 20 Dec 2023 16:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088985;
-	bh=1Xb2vydDABW8f3ZSL+ZlMY8Sx5mMS6kCnkhjkhn5T/Y=;
+	s=korg; t=1703088988;
+	bh=0JbdnZINc4+R6tf8ZvZLpVtvneel5PnIxVYOSv2mzlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FXwyJHfx+NUKP/wE9tJGvbfmyM0xwHkwhpsiodH+PHzqA9Y6w7asv5g/wMFsoUxlp
-	 DTCwoFuej1pqnu+bCC+VbdLS9NtNCgAZQPxI52Hrnvr2Dlq7I4zUqSBEY0OdJwaAFj
-	 hQJCpluBdxwYeMkj3FJbKNgEPylMoEYmUqxCjwKQ=
+	b=Af1m6NzU+3ryTFBP0mJwKP7E1UHlq6pbDKefeJ4R9b9CSZwCLwL5Rfv2g3qKR31jN
+	 7fEc7WsL9NvzPUeQ3rUdMyaDrfTywscIrEm8BTuVpToWJGl0bNhBRI2NpeblA1d0h6
+	 oixPCMfYGkV3ucbEwokMvhFtmuoBiXbv/fWBIOoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Yen Chang <cc85nod@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 099/159] ksmbd: fix out-of-bound read in parse_lease_state()
-Date: Wed, 20 Dec 2023 17:09:24 +0100
-Message-ID: <20231220160935.967406725@linuxfoundation.org>
+Subject: [PATCH 5.15 100/159] ksmbd: fix posix_acls and acls dereferencing possible ERR_PTR()
+Date: Wed, 20 Dec 2023 17:09:25 +0100
+Message-ID: <20231220160936.021439240@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -44,123 +44,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit fc6c6a3c324c1b3e93a03d0cfa3749c781f23de0 ]
+[ Upstream commit 25933573ef48f3586f559c2cac6c436c62dcf63f ]
 
-This bug is in parse_lease_state, and it is caused by the missing check
-of `struct create_context`. When the ksmbd traverses the create_contexts,
-it doesn't check if the field of `NameOffset` and `Next` is valid,
-The KASAN message is following:
+Dan reported the following error message:
 
-[    6.664323] BUG: KASAN: slab-out-of-bounds in parse_lease_state+0x7d/0x280
-[    6.664738] Read of size 2 at addr ffff888005c08988 by task kworker/0:3/103
-...
-[    6.666644] Call Trace:
-[    6.666796]  <TASK>
-[    6.666933]  dump_stack_lvl+0x33/0x50
-[    6.667167]  print_report+0xcc/0x620
-[    6.667903]  kasan_report+0xae/0xe0
-[    6.668374]  kasan_check_range+0x35/0x1b0
-[    6.668621]  parse_lease_state+0x7d/0x280
-[    6.668868]  smb2_open+0xbe8/0x4420
-[    6.675137]  handle_ksmbd_work+0x282/0x820
+fs/smb/server/smbacl.c:1296 smb_check_perm_dacl()
+    error: 'posix_acls' dereferencing possible ERR_PTR()
+fs/smb/server/vfs.c:1323 ksmbd_vfs_make_xattr_posix_acl()
+    error: 'posix_acls' dereferencing possible ERR_PTR()
+fs/smb/server/vfs.c:1830 ksmbd_vfs_inherit_posix_acl()
+    error: 'acls' dereferencing possible ERR_PTR()
 
-Use smb2_find_context_vals() to find smb2 create request lease context.
-smb2_find_context_vals validate create context fields.
+__get_acl() returns a mix of error pointers and NULL. This change it
+with IS_ERR_OR_NULL().
 
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Reported-by: Chih-Yen Chang <cc85nod@gmail.com>
-Tested-by: Chih-Yen Chang <cc85nod@gmail.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/oplock.c |   70 ++++++++++++++++++++----------------------------------
- 1 file changed, 26 insertions(+), 44 deletions(-)
+ fs/ksmbd/smbacl.c |    4 ++--
+ fs/ksmbd/vfs.c    |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/ksmbd/oplock.c
-+++ b/fs/ksmbd/oplock.c
-@@ -1415,56 +1415,38 @@ void create_lease_buf(u8 *rbuf, struct l
-  */
- struct lease_ctx_info *parse_lease_state(void *open_req)
- {
--	char *data_offset;
- 	struct create_context *cc;
--	unsigned int next = 0;
--	char *name;
--	bool found = false;
- 	struct smb2_create_req *req = (struct smb2_create_req *)open_req;
--	struct lease_ctx_info *lreq = kzalloc(sizeof(struct lease_ctx_info),
--		GFP_KERNEL);
-+	struct lease_ctx_info *lreq;
-+
-+	cc = smb2_find_context_vals(req, SMB2_CREATE_REQUEST_LEASE, 4);
-+	if (IS_ERR_OR_NULL(cc))
-+		return NULL;
-+
-+	lreq = kzalloc(sizeof(struct lease_ctx_info), GFP_KERNEL);
- 	if (!lreq)
+--- a/fs/ksmbd/smbacl.c
++++ b/fs/ksmbd/smbacl.c
+@@ -1311,7 +1311,7 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 
+ 	if (IS_ENABLED(CONFIG_FS_POSIX_ACL)) {
+ 		posix_acls = get_acl(d_inode(path->dentry), ACL_TYPE_ACCESS);
+-		if (posix_acls && !found) {
++		if (!IS_ERR_OR_NULL(posix_acls) && !found) {
+ 			unsigned int id = -1;
+ 
+ 			pa_entry = posix_acls->a_entries;
+@@ -1335,7 +1335,7 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 				}
+ 			}
+ 		}
+-		if (posix_acls)
++		if (!IS_ERR_OR_NULL(posix_acls))
+ 			posix_acl_release(posix_acls);
+ 	}
+ 
+--- a/fs/ksmbd/vfs.c
++++ b/fs/ksmbd/vfs.c
+@@ -1323,7 +1323,7 @@ static struct xattr_smb_acl *ksmbd_vfs_m
  		return NULL;
  
--	data_offset = (char *)req + le32_to_cpu(req->CreateContextsOffset);
--	cc = (struct create_context *)data_offset;
--	do {
--		cc = (struct create_context *)((char *)cc + next);
--		name = le16_to_cpu(cc->NameOffset) + (char *)cc;
--		if (le16_to_cpu(cc->NameLength) != 4 ||
--		    strncmp(name, SMB2_CREATE_REQUEST_LEASE, 4)) {
--			next = le32_to_cpu(cc->Next);
--			continue;
--		}
--		found = true;
--		break;
--	} while (next != 0);
--
--	if (found) {
--		if (sizeof(struct lease_context_v2) == le32_to_cpu(cc->DataLength)) {
--			struct create_lease_v2 *lc = (struct create_lease_v2 *)cc;
--
--			memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
--			lreq->req_state = lc->lcontext.LeaseState;
--			lreq->flags = lc->lcontext.LeaseFlags;
--			lreq->duration = lc->lcontext.LeaseDuration;
--			memcpy(lreq->parent_lease_key, lc->lcontext.ParentLeaseKey,
--			       SMB2_LEASE_KEY_SIZE);
--			lreq->version = 2;
--		} else {
--			struct create_lease *lc = (struct create_lease *)cc;
--
--			memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
--			lreq->req_state = lc->lcontext.LeaseState;
--			lreq->flags = lc->lcontext.LeaseFlags;
--			lreq->duration = lc->lcontext.LeaseDuration;
--			lreq->version = 1;
--		}
--		return lreq;
--	}
-+	if (sizeof(struct lease_context_v2) == le32_to_cpu(cc->DataLength)) {
-+		struct create_lease_v2 *lc = (struct create_lease_v2 *)cc;
+ 	posix_acls = get_acl(inode, acl_type);
+-	if (!posix_acls)
++	if (IS_ERR_OR_NULL(posix_acls))
+ 		return NULL;
  
--	kfree(lreq);
--	return NULL;
-+		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
-+		lreq->req_state = lc->lcontext.LeaseState;
-+		lreq->flags = lc->lcontext.LeaseFlags;
-+		lreq->duration = lc->lcontext.LeaseDuration;
-+		memcpy(lreq->parent_lease_key, lc->lcontext.ParentLeaseKey,
-+				SMB2_LEASE_KEY_SIZE);
-+		lreq->version = 2;
-+	} else {
-+		struct create_lease *lc = (struct create_lease *)cc;
-+
-+		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
-+		lreq->req_state = lc->lcontext.LeaseState;
-+		lreq->flags = lc->lcontext.LeaseFlags;
-+		lreq->duration = lc->lcontext.LeaseDuration;
-+		lreq->version = 1;
-+	}
-+	return lreq;
- }
+ 	smb_acl = kzalloc(sizeof(struct xattr_smb_acl) +
+@@ -1831,7 +1831,7 @@ int ksmbd_vfs_inherit_posix_acl(struct u
+ 		return -EOPNOTSUPP;
  
- /**
+ 	acls = get_acl(parent_inode, ACL_TYPE_DEFAULT);
+-	if (!acls)
++	if (IS_ERR_OR_NULL(acls))
+ 		return -ENOENT;
+ 	pace = acls->a_entries;
+ 
 
 
