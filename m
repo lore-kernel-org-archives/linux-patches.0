@@ -1,73 +1,106 @@
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188D076DD8
-	for <patches@lists.linux.dev>; Thu, 21 Dec 2023 21:42:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4018178E72;
+	Thu, 21 Dec 2023 23:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PLncX9s0"
-Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-dbdb12203b4so1232317276.0
-        for <patches@lists.linux.dev>; Thu, 21 Dec 2023 13:42:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703194962; x=1703799762; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qc6DvoHCBo6SR0ql109kb11eHuEG/z5z0j0o6Yh0aEs=;
-        b=PLncX9s0cx3ZViDHXxwZx741qtHFqVaySet0LD6Qm7oA0+5etCMQQY0V5Bvq24Fugj
-         XRBubqLL/8hNoiIvXhMNSsQFK1dZfoprPWJAkjJSUfh3BduwyWGBvkddQ3VZSCNH/rv8
-         7HVspalHIbXgi/NWp0SdBg/7pbNW/7pvZD/HMyZiXMjZ0Bmpvj0lYI3x7gRWlAbwU3S3
-         caTbUD+1vCwMTTSRU1sfIB+myEy03YAhSWOU9ybUdeNOXttehXby93GDjmvWuJI/nvX/
-         ioOsF2HuQ2JJG5Elgk/9ySbwa4sfZFC7+evknBfaqc7wWAGjMkeDoirwxSoxklcaw7aH
-         8KOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703194962; x=1703799762;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qc6DvoHCBo6SR0ql109kb11eHuEG/z5z0j0o6Yh0aEs=;
-        b=wnSK3Hp+wBbe4gnNLZ9IhjBn4f1M08mKVM3TuYQ0swBM/KR6Xm7X4/y1lVf3ZtCbqb
-         tMhoFMq5gS8k/MJdifjhhCIDEnZtSvYAyPMLvkx2zbBg8vPZVenPXol/9pyQvU4NILYJ
-         WVpRQa98zGdIBFnT65HXRGrNBCOJT/ydq1FiB1DoEGo0db4WfdEw6QeH7TBam9+I3cb0
-         BzBnW2C9V/+IaIiXQxLb2QNGCpCPXolQY43gkhzIJKjJlHQmwhdqd3Du//A8rKVcBL7E
-         jT7cxqsymBKSreXrCVfyUSUh26UpiJ3I7P0wHtBpQSVvETEnbpzaAJ7DeF3nQy1iO9lt
-         MN6w==
-X-Gm-Message-State: AOJu0Yz8C9+zLUyUUinYyeMgF8Ve1m4Cia341GLbX4EEgOIKzO79pU47
-	TM16uUAYJX7IanXEIMZFgvIQv300eJY8pXKFI1E=
-X-Google-Smtp-Source: AGHT+IEDxN5fCuZZQgeRAfx8XcLajEsgJW1NOnjf/1K4gD06U74Wnhm26W0sYXsjWx1oM6A96HMSn3m5EMWm/hq7iIU=
-X-Received: by 2002:a25:6914:0:b0:dbd:c9dc:8751 with SMTP id
- e20-20020a256914000000b00dbdc9dc8751mr380198ybc.102.1703194962157; Thu, 21
- Dec 2023 13:42:42 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IFPfwwSq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56196C433C8;
+	Thu, 21 Dec 2023 23:37:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1703201867;
+	bh=nnpMukxOhsVF7BzbFrvuDgvY90F7VruqUihV1nw0oCw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=IFPfwwSqoJx11Au4847wkAJ57ApKlof/puk9gHkjRB8F97pnhvsazcmVz2tVDkEg1
+	 5xO/fkD9XyOMF28iCK2tR3UAgw4N32m3/DCN3Ul2WdYyxhgziwcVHnqq3ecaZNBjKD
+	 YaFdTQi/AE3I67fXFgfMeZlc4ztBb7Qp1ig27TeOYBkhe0PW6pJ4uvGXLxAiKhIZPO
+	 l0eJDGkS3ah/b+jtafvBxpBYBr/hqoepIpANuJiXLK6vFV+SR4vwUa7ugvrBzEdzvy
+	 8DQNbedMvCz9zg1Ge30JrXLLnMenDxontZajN9DSBlZVZcwaxA7gHN1qkNnr3rJB1m
+	 8cfVWx3yuYhXQ==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 5.15 000/159] 5.15.145-rc1 review
+Date: Thu, 21 Dec 2023 23:37:44 +0000
+Message-Id: <20231221233744.43299-1-sj@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231214092958.377061-1-ojeda@kernel.org>
-In-Reply-To: <20231214092958.377061-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 21 Dec 2023 22:42:31 +0100
-Message-ID: <CANiq72mzBnHTZqsy+VN3dbHy1OF0DcSiknULpgMnxy_-FZRk4g@mail.gmail.com>
-Subject: Re: [PATCH] rust: upgrade to Rust 1.74.1
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Dec 14, 2023 at 10:30=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wr=
-ote:
->
-> This is the next upgrade to the Rust toolchain, from 1.73.0 to 1.74.1
-> (i.e. the latest) [1].
+Hello,
 
-Applied to `rust-next` -- thanks everyone!
 
-Cheers,
-Miguel
+On Wed, 20 Dec 2023 17:07:45 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 5.15.145 release.
+> There are 159 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 22 Dec 2023 16:08:59 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.145-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] e7911feb56b7 ("Linux 5.15.145-rc1")
+
+Thanks,
+SJ
+
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_i386_idle_flag.sh
+ok 13 selftests: damon-tests: build_i386_highpte.sh
+ok 14 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
