@@ -1,101 +1,90 @@
-Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5028153A03
-	for <patches@lists.linux.dev>; Thu, 21 Dec 2023 15:50:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD2E59910
+	for <patches@lists.linux.dev>; Thu, 21 Dec 2023 17:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WIazkKsG"
-Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-7b7117ca63eso11173839f.1
-        for <patches@lists.linux.dev>; Thu, 21 Dec 2023 07:50:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1703173811; x=1703778611; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NkVEjRBzIQTEE4egLQy5RyshAsIpIupPiuBcwMoryU8=;
-        b=WIazkKsGSdZKNnloXIO2X2FmEKmlcIQnEljek4Wr5q/dT9IcZDHnx9iP6GApvvBOGM
-         vuJETLyRg1sJzBBRRv4YkluyZNOiJxBOJLi4qk+QFjLZhVdhaRDjguIEkwVK8GU6vObf
-         NdggvpafwkllngehZ2yOc1Ep/Cws9cyjxGWU4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703173811; x=1703778611;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NkVEjRBzIQTEE4egLQy5RyshAsIpIupPiuBcwMoryU8=;
-        b=Oj4x6uuII2jp8D5gz1pJ51TR1su8zFmkIic0Wvd1AZEx5k0WRB4UFtfNwI/9MFPWlK
-         Dlu/Grk8JtR0na9KN1ccOkZ/o4BvFvc3l9YxNV7b6pOsfNPPhpwZHrg0NON9EN2FSoLS
-         yJUqQnG+hI0Te5IztDzTpSvddt6DExv+uuZ2n2l4Ra9WdmMJiidkmHyiHCvKiT/rsIIL
-         zYzGHWODLU7bdyIAXflRuBpoppnghOzKiuFMphTqzm1WqjaHL82OYu1mutMOtZBITnTp
-         1Ewm1tzgbqnpdbitoFI9LOyI4ppgREDX8ChmgiNoq0kjbGdV+P6WUY1wE4OjU1hZdudt
-         +dbQ==
-X-Gm-Message-State: AOJu0YxG1mjaE6ZomIGa8XrUc5yZiomAz/mdYFOnCTrnwmBbW3gS3dJj
-	UwbSNf2c4r5+lYB4R/xBzDdLzQ==
-X-Google-Smtp-Source: AGHT+IFVNi9BbVx1KB3mgTWEm8/3cTNGstNT+75OJZKC4iACYQXE+kxs92l37WjcMq/56d6xaePE2w==
-X-Received: by 2002:a5e:c80a:0:b0:7ba:72d9:394e with SMTP id y10-20020a5ec80a000000b007ba72d9394emr5696085iol.0.1703173811464;
-        Thu, 21 Dec 2023 07:50:11 -0800 (PST)
-Received: from [192.168.1.128] ([38.175.170.29])
-        by smtp.gmail.com with ESMTPSA id z26-20020a6be21a000000b007b3e44dc200sm553890ioc.42.2023.12.21.07.50.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Dec 2023 07:50:11 -0800 (PST)
-Message-ID: <79edf3da-d8f6-4e26-8fc7-cde71fc7c82c@linuxfoundation.org>
-Date: Thu, 21 Dec 2023 08:50:10 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vgr1nOMV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D8EC433C7;
+	Thu, 21 Dec 2023 17:26:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1703179620;
+	bh=j7IMo3IslfxSy6UdippjFzjMlbpaPfIPQIQ0OgZlg1w=;
+	h=From:Date:Subject:To:Cc:From;
+	b=Vgr1nOMVkPm9qdsHlovJ02nCyLGAxAAIdd2i9lihUPrGXC7l6I0OghRmacqVFFPxM
+	 jAGiEDzdgqW+95ZVl3jFjzwA782qUapXNin/1SY+4hAEihUU1kSjUEHaMSRyYBZlSB
+	 u6YpUTtWMAzJFOBtY2gj77+XGRqAMOEnbQeoAZ/V9LzbkrCl3Q1LEwuaiewKxPjsrf
+	 8uxkA8pWK+DnWayfXL9kIvGCb8+/059vCawCMD4SA9lPP6MnmaAtXGwPU2OtD7uOWN
+	 mPNvB2HQ1bBjdbJJyt0r2XSYaQjgOg/Jvi4BL336PkGHgPG6jROMXC2y3tqqTiMR1r
+	 812jAGEktzLTA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 21 Dec 2023 10:26:52 -0700
+Subject: [PATCH] kasan: Mark unpoison_slab_object() as static
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 00/62] 5.10.205-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20231218135046.178317233@linuxfoundation.org>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20231221-mark-unpoison_slab_object-as-static-v1-1-bf24f0982edc@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAFt1hGUC/x3N3QrCMAxA4VcZuTawZsrAVxEZaU23+NOOpoow9
+ u4WL7+bczYwKSoG526DIh81zanBHToIC6dZUG/NQD0Njsjhi8sD32nNajlN9mQ/ZX+XUJENrXL
+ VgIOPREdxJxojtNJaJOr3f7lc9/0HtDZ9DXUAAAA=
+To: akpm@linux-foundation.org, andreyknvl@gmail.com, ryabinin.a.a@gmail.com
+Cc: glider@google.com, dvyukov@google.com, vincenzo.frascino@arm.com, 
+ kasan-dev@googlegroups.com, linux-mm@kvack.org, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1506; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=j7IMo3IslfxSy6UdippjFzjMlbpaPfIPQIQ0OgZlg1w=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKktpcmvE2Ulrdl2PGyrXvBlhcbuZ6K5C74t2VYu42ZRF
+ TtHcbNmRykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZjIrTOMDA+btzpWWs18o6Ju
+ tDyp86WrKqNz1+FXL1oi7N5Kp27yuc7wv2TPynymQ72Lr/y08BNzFc4M8jn0RXyrw4Vyzu0vXO2
+ O8AEA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 12/18/23 06:51, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.205 release.
-> There are 62 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 20 Dec 2023 13:50:31 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.205-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+With -Wmissing-prototypes enabled, there is a warning that
+unpoison_slab_object() has no prototype, breaking the build with
+CONFIG_WERROR=y:
 
-Still doesn't boot on my test system. I am getting closer to finding
-the problem. The combination of ZSTD config options and compressed
-amdgpu firmware seems to be the trigger. I did find null pointer
-deferenece in amdgpu_gfx_rlc_setup_cp_table() related to compressed
-mce2_fw when renoir_mec2.bin load fails.
+  mm/kasan/common.c:271:6: error: no previous prototype for 'unpoison_slab_object' [-Werror=missing-prototypes]
+    271 | void unpoison_slab_object(struct kmem_cache *cache, void *object, gfp_t flags,
+        |      ^~~~~~~~~~~~~~~~~~~~
+  cc1: all warnings being treated as errors
 
-This fix will be in mainline - I still have to find why I don't see
-the null reference problem on mainline and all other stables. It could
-be that it is taking a different path to get to this point on 5.10
-when renoir_mec2.bin is compressed.
+Mark the function as static, as it is not used outside of this
+translation unit, clearing up the warning.
 
-I will keep you updated.
+Fixes: 3f38c3c5bc40 ("kasan: save alloc stack traces for mempool")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ mm/kasan/common.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-thanks,
--- Shuah
+diff --git a/mm/kasan/common.c b/mm/kasan/common.c
+index ebb1b23d6480..563cda95240b 100644
+--- a/mm/kasan/common.c
++++ b/mm/kasan/common.c
+@@ -277,8 +277,8 @@ void __kasan_kfree_large(void *ptr, unsigned long ip)
+ 	/* The object will be poisoned by kasan_poison_pages(). */
+ }
+ 
+-void unpoison_slab_object(struct kmem_cache *cache, void *object, gfp_t flags,
+-			  bool init)
++static void unpoison_slab_object(struct kmem_cache *cache, void *object,
++				 gfp_t flags, bool init)
+ {
+ 	/*
+ 	 * Unpoison the whole object. For kmalloc() allocations,
+
+---
+base-commit: eacce8189e28717da6f44ee492b7404c636ae0de
+change-id: 20231221-mark-unpoison_slab_object-as-static-3bf224e1527f
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
