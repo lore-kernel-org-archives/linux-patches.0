@@ -1,95 +1,84 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from helios.alatek.com.pl (helios.alatek.com.pl [85.14.123.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2952C194;
-	Fri, 22 Dec 2023 18:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17A22F868;
+	Fri, 22 Dec 2023 22:43:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alatek.krakow.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alatek.krakow.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SgLS30tP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B821C433CB;
-	Fri, 22 Dec 2023 18:27:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703269628;
-	bh=dS7mL9HhRhd3rfeEYnNgAVuQItdNhZxOHpOgKsRwE/0=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=SgLS30tPAiW6hJyUQ8uudxG05tAUc2wALMP3HrW4TjiRkJenslv47r3OQhHkX7u+T
-	 MBKu9x6HiL5H4etyXmjzFNJS5Wy94IXMWgVboiRixqfkGv7Gkj778nWIXmta1bdJkn
-	 gHChM3qHA+GsQbzTGSIJ0OnBK+soBs9GZa/aZYjr7mKPEhtgkPe38iZmXMbhkOQcEu
-	 t8DNjvalBEkVhKQFVNPpQ41/xlifpcbNh8I8HWPjMRso6Dy3y0X4ZgRGgH06iryH28
-	 NRHnbFSVv7UwEbludONdg68AkQB9cgRcz7quLu/2wiw9nb54eMDV17ULsaYl6ga5MT
-	 DygcGFet1Y5DQ==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Fri, 22 Dec 2023 11:27:02 -0700
-Subject: [PATCH 2/2] platform/x86/intel/pmc: Mark lnl_d3_fixup() and
- lnl_resume() as static
+	dkim=temperror (0-bit key) header.d=alatek.krakow.pl header.i=@alatek.krakow.pl header.b="Th/67DuH"
+Received: from localhost (localhost [127.0.0.1])
+	by helios.alatek.com.pl (Postfix) with ESMTP id 7D1642D20692;
+	Fri, 22 Dec 2023 23:43:44 +0100 (CET)
+Received: from helios.alatek.com.pl ([127.0.0.1])
+ by localhost (helios.alatek.com.pl [127.0.0.1]) (amavis, port 10032)
+ with ESMTP id QlR8na06gDHs; Fri, 22 Dec 2023 23:43:40 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by helios.alatek.com.pl (Postfix) with ESMTP id 129E12D20696;
+	Fri, 22 Dec 2023 23:43:40 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 helios.alatek.com.pl 129E12D20696
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alatek.krakow.pl;
+	s=99EE5E86-D06A-11EC-BE24-DBCCD0A148D3; t=1703285020;
+	bh=7hMMwVJ9BHPVf5oT5QW8fMTlzszBSOKi19RlT3xHXEw=;
+	h=Message-ID:Date:MIME-Version:To:From;
+	b=Th/67DuHWSEaat8POJCsMeJloAbaUh5yjzRzv6pqu6MKsQ1wAyXXm/nUtcjkUCU3+
+	 3ghaBoc+rZFbaHrkuvI/1Cn1D63D4n3R7DYBPTPYShz2Q9+PT9p6qljqBeJ741rCpq
+	 oRrAmJaAx6Pd7n6iN1eYBEIc7A38jEEzUkHm1fTsAgFZIU2j10kt1X6LkwNNXj5X+t
+	 4+NUtSXiwr4UrKrZ3lVtWQ01soUeU7v0kqSzuDha+I08/Y2R5Hxfj7eyBlZuaEPsXp
+	 sWqP3Pr7xmhdBJyyKL7CivG9mq+W3XLMkAkTo/Re0BOGyYNickK5NbQluleZgzU8LM
+	 DP67uFDArGfCg==
+X-Virus-Scanned: amavis at alatek.com.pl
+Received: from helios.alatek.com.pl ([127.0.0.1])
+ by localhost (helios.alatek.com.pl [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id jQavP4A7IbgG; Fri, 22 Dec 2023 23:43:40 +0100 (CET)
+Received: from [10.125.125.1] (unknown [10.125.125.1])
+	by helios.alatek.com.pl (Postfix) with ESMTPSA id 5B3032D20692;
+	Fri, 22 Dec 2023 23:43:39 +0100 (CET)
+Message-ID: <d3ada600-c0ed-486d-98d0-e161059099f3@alatek.krakow.pl>
+Date: Fri, 22 Dec 2023 23:43:38 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] dmaengine: xilinx: xdma: Fix two clang warnings
+To: Nathan Chancellor <nathan@kernel.org>, lizhi.hou@amd.com,
+ brian.xu@amd.com, raj.kumar.rampelli@amd.com, vkoul@kernel.org
+Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ llvm@lists.linux.dev, patches@lists.linux.dev
+References: <20231222-dma-xilinx-xdma-clang-fixes-v1-0-84a18ff184d2@kernel.org>
+Content-Language: en-US
+From: Jan Kuliga <jankul@alatek.krakow.pl>
+In-Reply-To: <20231222-dma-xilinx-xdma-clang-fixes-v1-0-84a18ff184d2@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231222-intel-pmc-missing-prototypes-v1-2-3f0d47377d4c@kernel.org>
-References: <20231222-intel-pmc-missing-prototypes-v1-0-3f0d47377d4c@kernel.org>
-In-Reply-To: <20231222-intel-pmc-missing-prototypes-v1-0-3f0d47377d4c@kernel.org>
-To: irenic.rajneesh@gmail.com, david.e.box@intel.com, hdegoede@redhat.com, 
- ilpo.jarvinen@linux.intel.com, rajvi.jingar@linux.intel.com
-Cc: platform-driver-x86@vger.kernel.org, patches@lists.linux.dev, 
- Stephen Rothwell <sfr@canb.auug.org.au>, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1756; i=nathan@kernel.org;
- h=from:subject:message-id; bh=dS7mL9HhRhd3rfeEYnNgAVuQItdNhZxOHpOgKsRwE/0=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKmtV35d51tyYvuM84cX5xtZnll6nzmUo8J95b8HZRaHD
- yuGOu270VHKwiDGxSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAm8nQ+w//yfq+pbh7VR14f
- +n/k8MPiO9c3rpsl8D4nn+n6Kzv1pZ9jGf77rfQqddRz03LfYap8KYLffObS4J6yxKUHXjW3Lfl
- +ZCsHAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-With -Wmissing-prototypes, there are two instances flagged with no
-prototypes:
+Hi all,
 
-  drivers/platform/x86/intel/pmc/lnl.c:503:6: error: no previous prototype for 'lnl_d3_fixup' [-Werror=missing-prototypes]
-    503 | void lnl_d3_fixup(void)
-        |      ^~~~~~~~~~~~
-  drivers/platform/x86/intel/pmc/lnl.c:509:5: error: no previous prototype for 'lnl_resume' [-Werror=missing-prototypes]
-    509 | int lnl_resume(struct pmc_dev *pmcdev)
-        |     ^~~~~~~~~~
-  cc1: all warnings being treated as errors
+On 22.12.2023 19:06, Nathan Chancellor wrote:
+> Hi all,
+> 
+> This series fixes two clang warnings that I see after
+> commit 2f8f90cd2f8d ("dmaengine: xilinx: xdma: Implement interleaved DMA
+> transfers"). They have just been build tested but I think the logic is
+> sound, please double check though.
+> 
+> ---
+> Nathan Chancellor (2):
+>       dmaengine: xilinx: xdma: Fix operator precedence in xdma_prep_interleaved_dma()
+>       dmaengine: xilinx: xdma: Fix initialization location of desc in xdma_channel_isr()
+> 
+>  drivers/dma/xilinx/xdma.c | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
+> ---
+> base-commit: 3d0b2176e04261ab4ac095ff2a17db077fc1e46d
+> change-id: 20231222-dma-xilinx-xdma-clang-fixes-b9c2c3f5d0f3
+> 
+> Best regards,
 
-These functions are not used outside of this translation unit, so mark
-them as static to fix the warning.
+Thanks for fixing my broken patches Nathan. Next time I submit any patch, I have to pay more attention to use proper compiler flags for sure (I didn't use those flags so I didn't get any warnings/errors). The logic is okay.
 
-Fixes: 119652b855e6 ("platform/x86/intel/pmc: Add Lunar Lake M support to intel_pmc_core driver")
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Closes: https://lore.kernel.org/all/20231222135412.6bd796cc@canb.auug.org.au/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/platform/x86/intel/pmc/lnl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/platform/x86/intel/pmc/lnl.c b/drivers/platform/x86/intel/pmc/lnl.c
-index 88b35931f5df..b5de569e6662 100644
---- a/drivers/platform/x86/intel/pmc/lnl.c
-+++ b/drivers/platform/x86/intel/pmc/lnl.c
-@@ -500,13 +500,13 @@ const struct pmc_reg_map lnl_socm_reg_map = {
-  * Set power state of select devices that do not have drivers to D3
-  * so that they do not block Package C entry.
-  */
--void lnl_d3_fixup(void)
-+static void lnl_d3_fixup(void)
- {
- 	pmc_core_set_device_d3(LNL_IPU_PCI_DEV);
- 	pmc_core_set_device_d3(LNL_NPU_PCI_DEV);
- }
- 
--int lnl_resume(struct pmc_dev *pmcdev)
-+static int lnl_resume(struct pmc_dev *pmcdev)
- {
- 	lnl_d3_fixup();
- 	return pmc_core_resume_common(pmcdev);
-
--- 
-2.43.0
-
+Thanks,
+Jan
