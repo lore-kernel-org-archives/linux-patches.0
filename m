@@ -1,140 +1,118 @@
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2064.outbound.protection.outlook.com [40.107.223.64])
+Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5651CA90
-	for <patches@lists.linux.dev>; Fri, 22 Dec 2023 13:28:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFE81D52F
+	for <patches@lists.linux.dev>; Fri, 22 Dec 2023 14:15:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="atUL3fsJ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HJLiyP4xtEjzEN4x5KP8qrAI7fQMeoUoUfdoirH7v3b2zLV+kxHP3aCC0k3ytBwNUTZnaJSYlyD2W/05BuePOWkJX5XUQUsLo9htV+2dMDBMMDbQLQGaKj54bc3QND9571voLImzG2R2aR+b8MCMvGxU0WXoSTGuScJmRC5Z/GDykOVWjeDPCtNgqd97NvR/4WjBzgj4BB3D/+jJSXX9Ix8oE7f5yIAuMPShKYczwaFgln564WzYcFilxvHyj7DgYYYbgDAgzXwAlvoqyNCoXnZRzpInG2Pghc2T9tkVbFkYsyiFr0zH3mt/kkkP1FJgkpnLY1XX8lyPqT/9QJCuqw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/D4knUgQEtWVxKM6CeOr0J5s7RNx4TRWfVnTvhfXjLg=;
- b=lJyyl8aqyUpnWuRK5CpQ1w8vd7nI/d491DiqPXWHTYqRrOUD5kmZVfA/PUgy0sC9yCo/CFrt5R7sZA4j1M5kIHjkEplLuh+gcTUm3OZBGfu5ytrTGYwUkyGgC6QglIiVKVCaVD7jdR9gOCDSehRkE0SnnnZd0SkvOJv+n58kd6jUoxezud7ij6VJgE6/KdrxnmU3sk3voZ9ZwdPNiqR3TRdcIEK7OJL6ql6uI9+zAF8HjcOYd8PhPcyhx5BAloZKApDaaKA7zji+/AHc1123CvxMHaYtBkpxlnFey/C5vUoMsINscLSkYj0BQI/rME8VuYUlelQjDuLDgISI5IulsQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/D4knUgQEtWVxKM6CeOr0J5s7RNx4TRWfVnTvhfXjLg=;
- b=atUL3fsJUCG4iwch02Z2pTNNpBziWM45Qa0LOhUCBxAUDVTxEI95DHw6XxVtgmDBU/8Rdl3gWBqzRq8NRxl84sBGSmqN3+bpmL6oabtHEQETARg0EBRXjQNRY7y4BD3RM/BPV1GW1HivUPoJjAL0ECq4QCMIAfV0GpSjDjoJW7hHhucBQWeNYJkiXO/klqrPA6U6M7G8SrfJ/hB0TNBBjTYqnH2bKUT/TKx2jjFw1ByIruV9Qn6KTdgz4jm1EAXnCkh9+AGmLhdNH/jFrq/8PAkP+bnrCArRtQ5cVpBKFBiibnOlwLj3CLfdw/Ma0JqKWpjGNrVKgU50FEspdNixUQ==
-Received: from BYAPR05CA0071.namprd05.prod.outlook.com (2603:10b6:a03:74::48)
- by CH0PR12MB5201.namprd12.prod.outlook.com (2603:10b6:610:b8::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7113.21; Fri, 22 Dec
- 2023 13:28:21 +0000
-Received: from SJ1PEPF00001CE3.namprd05.prod.outlook.com
- (2603:10b6:a03:74:cafe::8a) by BYAPR05CA0071.outlook.office365.com
- (2603:10b6:a03:74::48) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7113.21 via Frontend
- Transport; Fri, 22 Dec 2023 13:28:21 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SJ1PEPF00001CE3.mail.protection.outlook.com (10.167.242.11) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7113.14 via Frontend Transport; Fri, 22 Dec 2023 13:28:20 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 22 Dec
- 2023 05:28:09 -0800
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 22 Dec
- 2023 05:28:09 -0800
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41 via Frontend
- Transport; Fri, 22 Dec 2023 05:28:09 -0800
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
-	<linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
-Subject: Re: [PATCH 5.15 000/159] 5.15.145-rc1 review
-In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
-References: <20231220160931.251686445@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="QjI2X+Gf"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4SxTpx11X2z9scS;
+	Fri, 22 Dec 2023 15:15:37 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1703254537;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=V/mhqXMoHRu6vLBVYURJ4olCDceAwxhHCNFVZpWTyNI=;
+	b=QjI2X+GfW9GGiufbG8I/qhCl/H3ZwXKKI8ww40RQkIHIHlLZmtcyMxmlzAm9hlTiZKywCB
+	RncCoEAOqCHIGpXcKJ9r0Ncb75WA2cAFOPwkHohOHRFMHS46Hv9SLUxXFjHbDTe5r76F56
+	mxmK8KlgFjzml6S3ByvLJ3v0YanF/ganT0irn0/5suHZExYUSgRHVp6ykagcmHes9bmpR2
+	EsZCl0GVQznGbm5RfTd6ZaEimqXGLwitQITUAw6kuU1ZFddtJfoDjwGgQT8LdoLj+LnUMk
+	hIveBa+q1t156W8yp2lEJm8qqHzOL8KeYVReofKzVgZrb6t+b9VI79Og0BAIGg==
+Message-ID: <2feecc09-3310-4733-a65e-50b9f5dc7325@mailbox.org>
+Date: Fri, 22 Dec 2023 15:15:34 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <e543e041-cdc3-418c-8fba-de7dd5f3ec2e@rnnvmail201.nvidia.com>
-Date: Fri, 22 Dec 2023 05:28:09 -0800
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CE3:EE_|CH0PR12MB5201:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6c59df16-79c2-4a10-6768-08dc02f1ddbd
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	4fHYa5/UPqC/SZcfNTnY2WyPLdc0pSVicoY2mqjqcG58HPc4ArQ0w0TFAfV6jZeNA3S7lv1hF1401coZGJBSUY+R7rYoLpKS13eiByUz7qsuVsoM2WuEA8EWLFVBI47t9/2KzBiMdmsCHpWTzlmipvLrH4Bx6RkTsVHFINkxbYhY8iX84Qh8vbzIpataUMuNrqjfWkhH/BFqKEzpME9xF7QClRUiWNWHjw9f8Cws2WdaHMib11RdqoIP/cjse6IYJIQmUUZr/O83FsvKUAS0QBpjNw4ZUmnx0QlU98zzszPjxaBFZ33kUgm7C5XIPW3h+KS5agcmQop498UGIjraJi2NJFnbxRHIqd9aubft1/q0PCKeaAYwMa7orNlkQXWktt34JXqhpJYY64IK2MS7N0EEKVMcfwS3nGvJrhmLxHKtnDNXjpkifV+GuMYD0gNHxMNO7olSBdZUelyhgN1iGmjBxP4S8fYe0MG4ZI6StlRPr8YlqbGgKv4Z20MJOaCpdRLUhaVqa7gNP5LjfKv9xQniZYSDM+paLCxqubDt0Pq7JWRFchSOvBhQxJJ+pnCn5IWq/sSpng6x/iSim0N/VCi/cLn1OJrUeJPLt0Gv0x32N4G74CkUF2Dyl5/4Dn4OQRH1VNeid3kHf2S5dwY0RAdVToVWCEKhGE1sMjkFNRz0yQ/yDHnIW/y4dUk1JQ14FZ22iV5PbdUltik1LP0+FauPoawbMWnX49wNmQN55A7ywFkegddhvT4ajLO4WAul33aVqfetFnWUNTWYuglTIl6yyEWbVV9Q1BEOFReR4Lo=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(39860400002)(376002)(136003)(396003)(346002)(230922051799003)(64100799003)(186009)(82310400011)(1800799012)(451199024)(36840700001)(40470700004)(46966006)(82740400003)(47076005)(41300700001)(356005)(31686004)(40480700001)(7636003)(40460700003)(31696002)(86362001)(36860700001)(426003)(336012)(26005)(316002)(478600001)(6916009)(70586007)(70206006)(54906003)(8676002)(8936002)(4326008)(7416002)(2906002)(5660300002)(966005);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Dec 2023 13:28:20.9069
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6c59df16-79c2-4a10-6768-08dc02f1ddbd
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ1PEPF00001CE3.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR12MB5201
+To: gregkh@linuxfoundation.org
+Cc: jkosina@suse.cz, me@khvoinitsky.org, patches@lists.linux.dev,
+ sashal@kernel.org, stable@vger.kernel.org
+References: <20231124172031.066468399@linuxfoundation.org>
+Content-Language: en-US
+From: "Uli v. d. Ohe" <u-v@mailbox.org>
+Autocrypt: addr=u-v@mailbox.org; keydata=
+ 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
+Subject: Re: [PATCH 6.6 097/530] HID: lenovo: Detect quirk-free fw on cptkbd
+ and stop applying workaround
+In-Reply-To: <20231124172031.066468399@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-MBO-RS-ID: a55d55361e97dd8e8d6
+X-MBO-RS-META: eihhesz4zywc85quamkfpgx1ed78tx8d
 
-On Wed, 20 Dec 2023 17:07:45 +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.145 release.
-> There are 159 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 22 Dec 2023 16:08:59 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.145-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+I have one of the affected keyboards with original, unmodified firmware, 
+so it should use the old "workaround" to function properly.
 
-All tests passing for Tegra ...
+However, it seems that this keyboard does sometimes send REL_X events 
+when the middle button is pressed (contradicting the comment contained 
+in the patch).
 
-Test results for stable-v5.15:
-    10 builds:	10 pass, 0 fail
-    26 boots:	26 pass, 0 fail
-    102 tests:	102 pass, 0 fail
+Thus, with the patch the necessary workaround gets disabled. Once this 
+has happened, the middle button scrolling exhibits the known buggy behavior.
 
-Linux version:	5.15.145-rc1-ge7911feb56b7
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
+Explicitly, I can confirm the following values occur, leading to 
+disabling of the workaround:
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
+cptkbd_data->middlebutton_state == 1
+usage->type == 2 [i.e., EV_REL]
+usage->code == 0 [i.e., REL_X]
 
-Jon
+This was tested with kernel 6.1.67 which contains this patch backported 
+(commit 6e2076cad8873cc2a9f96e4becab35425c3656dc).
+
+The USB keyboard has been working fine for years with earlier kernels 
+and is identified by lsusb as:
+ID 17ef:6047 Lenovo ThinkPad Compact Keyboard with TrackPoint
+
+Best regards,
+Uli
