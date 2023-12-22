@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3E72C19A;
-	Fri, 22 Dec 2023 18:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE3F2C188;
+	Fri, 22 Dec 2023 18:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bOsqJa9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0766C433CB;
-	Fri, 22 Dec 2023 18:06:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q9T5pnQp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B609BC433C8;
+	Fri, 22 Dec 2023 18:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703268411;
-	bh=1NacUmbt0EL+svtNIQXZRZLRDTEQIO2JqZEQWM/2bL4=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=bOsqJa9Z2mcuE07Kuz2eSAWosTxeaDtF/q2v65sbHGA7ebEHuNTiSVjILmaTGKqm0
-	 1viWAz+89BjuLjd0fo7Vf7K3baMl0HfFHMT5utV0/eEEGIGknPAqI5gKSvfOvXLKg0
-	 vUQw6x7EXx3m8T4FzUvL2XZJh+vcW0xKLAvEGQyVB8TbJ0Y62++OOtbpnxIzfe+HcY
-	 AOlRCcjhwSokLf46G1Yk2dT8jCdV/pviSByjpFHe9iuvbEEbqCdSvU/7J42v+/0I6D
-	 Cbo0nRCToqM/HhW9CTqyLPxYuOG7/KLWd4gNyQdOcKgSeuQn6tUrwkUObA5IdfLhW8
-	 pWWX19xVjAw+Q==
+	s=k20201202; t=1703269627;
+	bh=1ogxdoJeOc5yB3uT5PUZ+U4hWTGXsTipIFLZZ4w0iVg=;
+	h=From:Subject:Date:To:Cc:From;
+	b=Q9T5pnQp/qMhoaiGRcMZ5eumBGWq5iAUp2PCwcE/5F6qRoCIaYM+toRDrSMcni76m
+	 72n7NusZefZY38HAHTXRqT3/Zx5MwsDv7vLIEe6/VY/wZVkv86DwrsD9OnZZeqKYzn
+	 dHpI9FO31otLmEIjHqN2u4AO9PqKhVWR+K9j/KBgl+Oh4aInSMJOs/VKQLiNIo7NsU
+	 Jx8LpAhfybqQhW3eDZttvsx3IVFRxxJzh8dQzz1YW/CiZj3YiXuIIb4Foz93QWtbZS
+	 r9sYVdNW0d9LcYmgsjLWOKBPL0zYiS4y3ddxzQ/8yIyhlDLyHSeUCc4063gpvz53OM
+	 IQulNIvM+SBuA==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Fri, 22 Dec 2023 11:06:45 -0700
-Subject: [PATCH 2/2] dmaengine: xilinx: xdma: Fix initialization location
- of desc in xdma_channel_isr()
+Subject: [PATCH 0/2] platform/x86/intel/pmc: Fix recent instances of
+ -Wmissing-prototypes
+Date: Fri, 22 Dec 2023 11:27:00 -0700
+Message-Id: <20231222-intel-pmc-missing-prototypes-v1-0-3f0d47377d4c@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -29,63 +30,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231222-dma-xilinx-xdma-clang-fixes-v1-2-84a18ff184d2@kernel.org>
-References: <20231222-dma-xilinx-xdma-clang-fixes-v1-0-84a18ff184d2@kernel.org>
-In-Reply-To: <20231222-dma-xilinx-xdma-clang-fixes-v1-0-84a18ff184d2@kernel.org>
-To: lizhi.hou@amd.com, brian.xu@amd.com, raj.kumar.rampelli@amd.com, 
- vkoul@kernel.org, jankul@alatek.krakow.pl
-Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
+X-B4-Tracking: v=1; b=H4sIAPTUhWUC/x3MwQqDMAwA0F+RnBewmRPZr4wdrKZdQNvSFHGI/
+ 27x+C7vAOUsrPBuDsi8iUoMFebRwPQbg2eUuRqopachIpRQeMG0TriKqgSPKccSyz+x4uDsqzW
+ dNb0doBYps5P97j/f87wAuwQQZm4AAAA=
+To: irenic.rajneesh@gmail.com, david.e.box@intel.com, hdegoede@redhat.com, 
+ ilpo.jarvinen@linux.intel.com, rajvi.jingar@linux.intel.com
+Cc: platform-driver-x86@vger.kernel.org, patches@lists.linux.dev, 
+ Stephen Rothwell <sfr@canb.auug.org.au>, 
  Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1437; i=nathan@kernel.org;
- h=from:subject:message-id; bh=1NacUmbt0EL+svtNIQXZRZLRDTEQIO2JqZEQWM/2bL4=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKmtFyz1xZ3TE51/h8nMXfzmg90qwSjOtSXl6o9Pl51zm
- iDiani6o5SFQYyLQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAEykRJrhn8lFq0c/dhlvlqi7
- stmgek3Xfq3Sl+pm5T0v1NoS4l7tCmL4X8m6dGvo+leXfKrMLm/T04zVfqj6yKvxqkqfoL3LB9Y
- rjAA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=925; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=1ogxdoJeOc5yB3uT5PUZ+U4hWTGXsTipIFLZZ4w0iVg=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKmtV35tK1E35/2r/DNw0VuFvqojYg8zeRj+xCw/Ub6s+
+ O7H4t2mHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAi1oUM/5S9Z7xlW/T4olt9
+ wozt5x5LWs5iDjSU15pw2lYp8fBpuzRGhm65oKcm1iZcV4qXrVC3mVnsx3jFjUHuK79yirO+s1Y
+ eFwA=
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Clang warns (or errors with CONFIG_WERROR=y):
+As reported by Stephen at [1], there are a few instances of
+-Wmissing-prototypes, which break the build with CONFIG_WERROR=y. This
+series marks these functions as static because they are not used outside
+of these translation units.
 
-  drivers/dma/xilinx/xdma.c:894:3: error: variable 'desc' is uninitialized when used here [-Werror,-Wuninitialized]
-    894 |                 desc->error = true;
-        |                 ^~~~
+Feel free to squash these into the original changes if the branch is not
+set in stone.
 
-The initialization of desc was moved too far forward, move it back so
-that this assignment does not result in a potential crash at runtime
-while clearing up the warning.
+[1]: https://lore.kernel.org/all/20231222135412.6bd796cc@canb.auug.org.au/
 
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1972
-Fixes: 2f8f90cd2f8d ("dmaengine: xilinx: xdma: Implement interleaved DMA transfers")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/dma/xilinx/xdma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Nathan Chancellor (2):
+      platform/x86/intel/pmc: Mark arl_d3_fixup() and arl_resume() as static
+      platform/x86/intel/pmc: Mark lnl_d3_fixup() and lnl_resume() as static
 
-diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
-index d5b9fc3fd955..ee595d1ebc63 100644
---- a/drivers/dma/xilinx/xdma.c
-+++ b/drivers/dma/xilinx/xdma.c
-@@ -888,6 +888,8 @@ static irqreturn_t xdma_channel_isr(int irq, void *dev_id)
- 	if (ret)
- 		goto out;
- 
-+	desc = to_xdma_desc(vd);
-+
- 	st &= XDMA_CHAN_STATUS_MASK;
- 	if ((st & XDMA_CHAN_ERROR_MASK) ||
- 	    !(st & (CHAN_CTRL_IE_DESC_COMPLETED | CHAN_CTRL_IE_DESC_STOPPED))) {
-@@ -901,7 +903,6 @@ static irqreturn_t xdma_channel_isr(int irq, void *dev_id)
- 	if (ret)
- 		goto out;
- 
--	desc = to_xdma_desc(vd);
- 	if (desc->interleaved_dma) {
- 		xchan->busy = false;
- 		desc->completed_desc_num += complete_desc_num;
+ drivers/platform/x86/intel/pmc/arl.c | 4 ++--
+ drivers/platform/x86/intel/pmc/lnl.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+---
+base-commit: 119652b855e6c96676406ee9a7f535f4db4e8eff
+change-id: 20231222-intel-pmc-missing-prototypes-8fb5014b16b8
 
+Best regards,
 -- 
-2.43.0
+Nathan Chancellor <nathan@kernel.org>
 
