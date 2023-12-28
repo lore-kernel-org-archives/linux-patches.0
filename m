@@ -1,120 +1,119 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F13A6FDA
-	for <patches@lists.linux.dev>; Thu, 28 Dec 2023 09:08:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEE3101ED
+	for <patches@lists.linux.dev>; Thu, 28 Dec 2023 19:43:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="FZHV48O8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1703754481;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4dvIT8jGXG+RMMytEd2ps7+QjIyG5dcVpLq72q/MxXU=;
-	b=FZHV48O8omS8Q8zy/TiBnr35etjkK0ikVdToiOPYCtrTmkM7hvrTxbkzlampniPzmxCYip
-	CqjTvFu4cBbJXClVaHs9hoVkzEt50XnwNW9AFiVRcDsPNkcatniMH+qlUst08oJPM6oCpl
-	k8CxkNiwZI8QOzGfD6HbnnhAEqKO7EI=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-318-nJpDHGrdMHySQJx6pxdmng-1; Thu, 28 Dec 2023 04:07:59 -0500
-X-MC-Unique: nJpDHGrdMHySQJx6pxdmng-1
-Received: by mail-ed1-f71.google.com with SMTP id 4fb4d7f45d1cf-555a14c0251so85198a12.3
-        for <patches@lists.linux.dev>; Thu, 28 Dec 2023 01:07:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kEv0LJgX"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-427fa9ecd60so4148711cf.2
+        for <patches@lists.linux.dev>; Thu, 28 Dec 2023 11:43:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703792583; x=1704397383; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8zTgUJfJIqNmJzukT+nSgAgZaf503JH2MNH3MI61x1Y=;
+        b=kEv0LJgXp4fNBnxY38IgC2idC6JLs6swVZSOAVQC/MP3IDbTzqOGNSOODO+1L047uh
+         77b8bPfcNGi74GcnMvIJ5IPBSXt5qfYpqm3lkysLfvfCcA0cg2C/5B0HwVMwyCT4UM1H
+         Z3nc1AQlWAr3HHBnE9VHVtSwNn4qkCgndp4B5C3hvPLw4gN7MP1ueDkR1dy7V6hej9HM
+         vF7K320j/9uMtJNvmyXkHLDX836mnlo1nsfjYb71gum9MT2l2zQe/Kd7+FiCu5E+RRKh
+         DpSWjR5mSIRJni5BZYbIPePEgTezOct+fuN+YCKhXw2gxo7UxLwtgaoqfnFPDjfKf/0S
+         KI7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703754478; x=1704359278;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4dvIT8jGXG+RMMytEd2ps7+QjIyG5dcVpLq72q/MxXU=;
-        b=dDxHKVN5IIxbmHCH0B3avu9QwFazAm28MR9x98k9QIJNV/AM1ZRQbQH0+2VXe2A3qU
-         onYFhxgJSlYJZWIwyWgW+MQmYHH403CFVO0im4NlsITiHA5yWJAkYflKGMCapOc0Tjq9
-         FfRdJw41rTDrp6fF0Tbgw5MCjxqbXawgKDXzRmVxLM9m3PscsY708sKMESVT8wPsZE+O
-         i89VRsFMulCGh3yWx1r0o5VwDnv9OXu0/o+MN2NqZdnQpVlT7Hvc4h6pMi/9rxlyO1N1
-         CEhYF+vin9jItdFNvF4FY3sB51jVGwRzRe4NHm6/nDa+e9odK3LjZFMOEQiYjRIUfum1
-         CHIA==
-X-Gm-Message-State: AOJu0Yx5VOUydMmX63qxFQkieB1rkaxCwRlYoyviEwBXC4dA/gQffXPu
-	yoxF58tgpLnlp0EfSKg6I8hXOr2jSxb6LVJwNH8WObYIk7CPNzNJXqaQHK2h3HxA8Bpsf3y9RFU
-	Le1s2emJdkEZS0fv2Neesi4gxaA==
-X-Received: by 2002:a50:aadc:0:b0:54c:4837:93e9 with SMTP id r28-20020a50aadc000000b0054c483793e9mr6669899edc.48.1703754478433;
-        Thu, 28 Dec 2023 01:07:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGz1E0wObea0BXX5EKeZRCy+Xu44cqa4YVVGqTaXAZMLM5AuKdKRUr/PdvArl18ROG2qHlq+g==
-X-Received: by 2002:a50:aadc:0:b0:54c:4837:93e9 with SMTP id r28-20020a50aadc000000b0054c483793e9mr6669894edc.48.1703754478147;
-        Thu, 28 Dec 2023 01:07:58 -0800 (PST)
-Received: from ?IPV6:2001:1c00:c32:7800:5bfa:a036:83f0:f9ec? (2001-1c00-0c32-7800-5bfa-a036-83f0-f9ec.cable.dynamic.v6.ziggo.nl. [2001:1c00:c32:7800:5bfa:a036:83f0:f9ec])
-        by smtp.gmail.com with ESMTPSA id ck8-20020a0564021c0800b0055515b40464sm3248814edb.81.2023.12.28.01.07.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Dec 2023 01:07:57 -0800 (PST)
-Message-ID: <1e88b853-7d72-4e4a-8a91-70d945024a96@redhat.com>
-Date: Thu, 28 Dec 2023 10:07:56 +0100
+        d=1e100.net; s=20230601; t=1703792583; x=1704397383;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8zTgUJfJIqNmJzukT+nSgAgZaf503JH2MNH3MI61x1Y=;
+        b=A4falb3ncy96wkjEyP2DqzsfnBJf94KHX4op/mxGwdgWX5SjDmmHSZ5L6z+RkFgPon
+         hTJfpVVjQrcKVpalExJXIEA7EfCI9KO99iBy5AZ7f27FpWiPHWxQ0BqMkTKMmnxmULot
+         M37cjoKm2BSIumTey5SOWGMlpZR2OyYjbxLfKnFoGSy7GARWwLRMyU4uZHS6uB/+ASAT
+         AJ4nq+pq/91NSSstkI5NFnTCMDFMNRy3Dzoumscn++NND+zEd95ZvIG/wBdJr6a0xP0k
+         6HzmYvil8gtFY9e9fEG5msNnUmW6vl2Jtu+jMdo6hYltoIkDFrDdH7mMKZJEhsxgNpDj
+         R7mg==
+X-Gm-Message-State: AOJu0YzsIJcJNMr3+FcxmKiOxOU/Nz8yDfqu/pJRwGP5ytpHZI4kyA6M
+	axUFsB69G8U1WQTFgvNv4xU=
+X-Google-Smtp-Source: AGHT+IGxOTxwgAz40c0YA6Bu6/T7sUpBSnJBsiff2q1myvGIgQ/KzGmg6oDaDqLDi8HB5BCf/FuvvQ==
+X-Received: by 2002:ac8:5754:0:b0:427:892a:edfe with SMTP id 20-20020ac85754000000b00427892aedfemr17790770qtx.66.1703792583543;
+        Thu, 28 Dec 2023 11:43:03 -0800 (PST)
+Received: from auth2-smtp.messagingengine.com (auth2-smtp.messagingengine.com. [66.111.4.228])
+        by smtp.gmail.com with ESMTPSA id ks22-20020ac86216000000b00423f2acc614sm8399072qtb.87.2023.12.28.11.43.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Dec 2023 11:43:03 -0800 (PST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailauth.nyi.internal (Postfix) with ESMTP id 90C7627C005A;
+	Thu, 28 Dec 2023 14:43:02 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Thu, 28 Dec 2023 14:43:02 -0500
+X-ME-Sender: <xms:xc-NZUXKy1ErXIJJTrfxCif2itc5hxSLUDkm8vbPYpaCoY0aeGBN5w>
+    <xme:xc-NZYk5EYGLTb0vPu3yeZnE8m8YgJDfm2qBjrjr90A4mB3teUsV6vEtkFP4emFfA
+    Se-UncdZuvdQKZw0Q>
+X-ME-Received: <xmr:xc-NZYbtsj3BltQkFBlYatYUXmUtM9L40rK63AIzpwiLN-z0UlndhrfNunY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdefuddguddvlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhq
+    uhhnucfhvghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrf
+    grthhtvghrnhepfedthfeuueeihfeihffhtdeluedtveffheeiuddtieehtdduiedvgfej
+    ffeuueefnecuffhomhgrihhnpehgihhthhhusgdrtghomhdprhgvlhgvrghsvghsrdhmug
+    dprhhushhtqdhfohhrqdhlihhnuhigrdgtohhmnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepsghoqhhunhdomhgvshhmthhprghuthhhphgvrh
+    hsohhnrghlihhthidqieelvdeghedtieegqddujeejkeehheehvddqsghoqhhunhdrfhgv
+    nhhgpeepghhmrghilhdrtghomhesfhhigihmvgdrnhgrmhgv
+X-ME-Proxy: <xmx:xc-NZTXyAHdHhfoZRtfSNS-u-32HkHAxWl8sAgMASKstQknwod8bCQ>
+    <xmx:xc-NZemCIgD_F8T3TmCU5f1nLgGl_F9WermBgWNf8iH-yM302H2u_Q>
+    <xmx:xc-NZYevAU7SmQa0YnoQh_Ta1nVxkcYYCxwBnT7mlqc69ylYsgv5pA>
+    <xmx:xs-NZXehw49VsnhL_4Mdid26m-v4L0zpffC8uy4rYU8TqQWMBSXr3A>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 28 Dec 2023 14:43:01 -0500 (EST)
+Date: Thu, 28 Dec 2023 11:42:14 -0800
+From: Boqun Feng <boqun.feng@gmail.com>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] rust: upgrade to Rust 1.75.0
+Message-ID: <ZY3Plt92Jn5xSmXw@boqun-archlinux>
+References: <20231224172128.271447-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] platform/x86/intel/pmc: Fix recent instances of
- -Wmissing-prototypes
-To: Nathan Chancellor <nathan@kernel.org>, irenic.rajneesh@gmail.com,
- david.e.box@intel.com, ilpo.jarvinen@linux.intel.com,
- rajvi.jingar@linux.intel.com
-Cc: platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
- Stephen Rothwell <sfr@canb.auug.org.au>
-References: <20231222-intel-pmc-missing-prototypes-v1-0-3f0d47377d4c@kernel.org>
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <20231222-intel-pmc-missing-prototypes-v1-0-3f0d47377d4c@kernel.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US, nl
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231224172128.271447-1-ojeda@kernel.org>
 
-Hi,
-
-On 12/22/23 19:27, Nathan Chancellor wrote:
-> As reported by Stephen at [1], there are a few instances of
-> -Wmissing-prototypes, which break the build with CONFIG_WERROR=y. This
-> series marks these functions as static because they are not used outside
-> of these translation units.
+On Sun, Dec 24, 2023 at 06:21:28PM +0100, Miguel Ojeda wrote:
+> This is the next upgrade to the Rust toolchain, from 1.74.1 to 1.75.0
+> (i.e. the latest) [1].
 > 
-> Feel free to squash these into the original changes if the branch is not
-> set in stone.
-> 
-> [1]: https://lore.kernel.org/all/20231222135412.6bd796cc@canb.auug.org.au/
+[...]
+> Link: https://github.com/rust-lang/rust/blob/stable/RELEASES.md#version-1750-2023-12-28 [1]
+> Link: https://rust-for-linux.com/rust-version-policy [2]
+> Link: https://github.com/rust-lang/rust/issues/91850 [3]
+> Link: https://github.com/Rust-for-Linux/linux/issues/2 [4]
+> Link: https://github.com/rust-lang/rust/issues/96283 [5]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+> Please note that Rust 1.75.0 will actually be released next week -- this
+> is based on linux-next since we will need to remove the `feature` line
+> for the unstable feature used by the to-be-merged PHYLIB abstractions.
 
-Thank you for your patch-series, I've squashed the patches into
-the original commits in my review-hans branch:
-https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git/log/?h=review-hans
+I have done some unit tests with this based on a merge point of today's
+net-next and rust-next (along with some LGTM patches), all tests passed.
 
-Note it will show up in my review-hans branch once I've pushed my
-local branch there, which might take a while.
-
-Once I've run some tests on this branch the patches there will be
-pushed to the platform-drivers-x86/for-next branch and eventually
-will be included in the pdx86 pull-request to Linus for the next
-merge-window.
+Tested-by: Boqun Feng <boqun.feng@gmail.com>
 
 Regards,
+Boqun
 
-Hans
-
-
-
-> ---
-> Nathan Chancellor (2):
->       platform/x86/intel/pmc: Mark arl_d3_fixup() and arl_resume() as static
->       platform/x86/intel/pmc: Mark lnl_d3_fixup() and lnl_resume() as static
-> 
->  drivers/platform/x86/intel/pmc/arl.c | 4 ++--
->  drivers/platform/x86/intel/pmc/lnl.c | 4 ++--
->  2 files changed, 4 insertions(+), 4 deletions(-)
-> ---
-> base-commit: 119652b855e6c96676406ee9a7f535f4db4e8eff
-> change-id: 20231222-intel-pmc-missing-prototypes-8fb5014b16b8
-> 
-> Best regards,
-
+[...]
