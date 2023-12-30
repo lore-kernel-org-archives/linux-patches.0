@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB7F79CD;
-	Sat, 30 Dec 2023 12:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400C579DC;
+	Sat, 30 Dec 2023 12:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ws/uOzkm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24BC7C433C8;
-	Sat, 30 Dec 2023 12:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVD1lttf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE24C433C7;
+	Sat, 30 Dec 2023 12:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938251;
-	bh=HdcgvPXJGSr6ZKjjaVrsOmxl/F2bXb21PwIjWcOgKLI=;
+	s=korg; t=1703938254;
+	bh=2voai+wTGMDdfQZNJ+vS5HmdObP0Mq9vXuAE8Ovh1Bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ws/uOzkmi0M7a7SzbTOMYdCmF9iXbOJ9t7HfucCkVRd3qNgLueg5HHE7kVSXtKBb7
-	 vAE1Zx7eV13gwp7AvB5IFDbnPRLFKAfUh1REHC6JBwCnV1+i2LO4WetmTeozA4Jr2+
-	 +0Vk/ZPDYOiSl7IsTUE0/tRd5gIQ2ZOZZGKKqHBo=
+	b=sVD1lttfYVTVyIErlBpNjEICw50036Bdyc+u7HULdiXknKc6imgBvO392DO3IMLHy
+	 ea8+MsiTS6x737yVOASc7qy4nYtLfVQBZ6XDD7/Wxn7h1pemAPxe2PzxVcNXFj4AjE
+	 Syljq/fWetJkUJ9XZvK//bJYzJsqM/zSzqcrlSE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	j51569436@gmail.com,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 085/112] smb: client: fix OOB in smbCalcSize()
-Date: Sat, 30 Dec 2023 11:59:58 +0000
-Message-ID: <20231230115809.510607448@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.1 086/112] drm/i915: Reject async flips with bigjoiner
+Date: Sat, 30 Dec 2023 11:59:59 +0000
+Message-ID: <20231230115809.550116533@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -36,85 +36,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit b35858b3786ddbb56e1c35138ba25d6adf8d0bef upstream.
+commit 88a173e5dd05e788068e8fa20a8c37c44bd8f416 upstream.
 
-Validate @smb->WordCount to avoid reading off the end of @smb and thus
-causing the following KASAN splat:
+Currently async flips are busted when bigjoiner is in use.
+As a short term fix simply reject async flips in that case.
 
-  BUG: KASAN: slab-out-of-bounds in smbCalcSize+0x32/0x40 [cifs]
-  Read of size 2 at addr ffff88801c024ec5 by task cifsd/1328
-
-  CPU: 1 PID: 1328 Comm: cifsd Not tainted 6.7.0-rc5 #9
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
-  rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x4a/0x80
-   print_report+0xcf/0x650
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? __phys_addr+0x46/0x90
-   kasan_report+0xd8/0x110
-   ? smbCalcSize+0x32/0x40 [cifs]
-   ? smbCalcSize+0x32/0x40 [cifs]
-   kasan_check_range+0x105/0x1b0
-   smbCalcSize+0x32/0x40 [cifs]
-   checkSMB+0x162/0x370 [cifs]
-   ? __pfx_checkSMB+0x10/0x10 [cifs]
-   cifs_handle_standard+0xbc/0x2f0 [cifs]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   cifs_demultiplex_thread+0xed1/0x1360 [cifs]
-   ? __pfx_cifs_demultiplex_thread+0x10/0x10 [cifs]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? lockdep_hardirqs_on_prepare+0x136/0x210
-   ? __pfx_lock_release+0x10/0x10
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? mark_held_locks+0x1a/0x90
-   ? lockdep_hardirqs_on_prepare+0x136/0x210
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? __kthread_parkme+0xce/0xf0
-   ? __pfx_cifs_demultiplex_thread+0x10/0x10 [cifs]
-   kthread+0x18d/0x1d0
-   ? kthread+0xdb/0x1d0
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork+0x34/0x60
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork_asm+0x1b/0x30
-   </TASK>
-
-This fixes CVE-2023-6606.
-
-Reported-by: j51569436@gmail.com
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218218
 Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/9769
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231211081134.2698-1-ville.syrjala@linux.intel.com
+Reviewed-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+(cherry picked from commit e93bffc2ac0a833b42841f31fff955549d38ce98)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/misc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/i915/display/intel_display.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -350,6 +350,10 @@ checkSMB(char *buf, unsigned int total_r
- 			cifs_dbg(VFS, "Length less than smb header size\n");
- 		}
- 		return -EIO;
-+	} else if (total_read < sizeof(*smb) + 2 * smb->WordCount) {
-+		cifs_dbg(VFS, "%s: can't read BCC due to invalid WordCount(%u)\n",
-+			 __func__, smb->WordCount);
-+		return -EIO;
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -6481,6 +6481,17 @@ static int intel_async_flip_check_uapi(s
+ 		return -EINVAL;
  	}
  
- 	/* otherwise, there is enough to get to the BCC */
++	/*
++	 * FIXME: Bigjoiner+async flip is busted currently.
++	 * Remove this check once the issues are fixed.
++	 */
++	if (new_crtc_state->bigjoiner_pipes) {
++		drm_dbg_kms(&i915->drm,
++			    "[CRTC:%d:%s] async flip disallowed with bigjoiner\n",
++			    crtc->base.base.id, crtc->base.name);
++		return -EINVAL;
++	}
++
+ 	for_each_oldnew_intel_plane_in_state(state, plane, old_plane_state,
+ 					     new_plane_state, i) {
+ 		if (plane->pipe != crtc->pipe)
 
 
