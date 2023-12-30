@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E33F79CD;
-	Sat, 30 Dec 2023 12:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E109179CD;
+	Sat, 30 Dec 2023 12:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtF+MMfx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C978DC433C7;
-	Sat, 30 Dec 2023 12:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTxBB0mO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653B5C433C7;
+	Sat, 30 Dec 2023 12:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938152;
-	bh=y2Dp7WYRanM6A00VqSYrolYHFdUCWWlWsw9PCi+1GTQ=;
+	s=korg; t=1703938154;
+	bh=xS6Ps9f3hsDO/HTRcOCOX3+D/7wM5iNuxgfyVHeCXd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MtF+MMfxjuaqkv7U2N4aBD7WlJi9M/fProx5DfIdLhCHYIv5IvuHBFtKITJnTH6ad
-	 aS+mlepaGF/XU0KqE5yIpvRjYL3za7d54c1qPQGE9aqdI+SVOJjcbYyEW/weLpvJSu
-	 1MUHyAJIQiBSYO4x8uC4SmMioudtuqjBkNm0dRY8=
+	b=cTxBB0mOhGbfaGJycqEFeusc+EHt4JMo3vRseMEeaKuGGU+BKQdqswOLpZblsPzFO
+	 24zOXKu1BUMTMsBw219N2ZolIQHRWz5wlaQT0TozUJAPL1+WFVR19lXJrzKESSdawf
+	 5WcDXIEVjMX695ABL49f4rUd8OfV4vg/uawW721U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/112] gpiolib: cdev: add gpio_device locking wrapper around gpio_ioctl()
-Date: Sat, 30 Dec 2023 11:59:19 +0000
-Message-ID: <20231230115808.200978597@linuxfoundation.org>
+Subject: [PATCH 6.1 024/112] net/mlx5e: Correct snprintf truncation handling for fw_version buffer used by representors
+Date: Sat, 30 Dec 2023 11:58:57 +0000
+Message-ID: <20231230115807.535997993@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -42,62 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kent Gibson <warthog618@gmail.com>
+From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
 
-[ Upstream commit 1d656bd259edb89dc1d9938ec5c5389867088546 ]
+[ Upstream commit b13559b76157de9d74f04d3ca0e49d69de3b5675 ]
 
-While the GPIO cdev gpio_ioctl() call is in progress, the kernel can
-call gpiochip_remove() which will set gdev->chip to NULL, after which
-any subsequent access will cause a crash.
+snprintf returns the length of the formatted string, excluding the trailing
+null, without accounting for truncation. This means that is the return
+value is greater than or equal to the size parameter, the fw_version string
+was truncated.
 
-gpio_ioctl() was overlooked by the previous fix to protect syscalls
-(bdbbae241a04), so add protection for that.
-
-Fixes: bdbbae241a04 ("gpiolib: protect the GPIO device against being dropped while in use by user-space")
-Fixes: d7c51b47ac11 ("gpio: userspace ABI for reading/writing GPIO lines")
-Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
-Fixes: aad955842d1c ("gpiolib: cdev: support GPIO_V2_GET_LINEINFO_IOCTL and GPIO_V2_GET_LINEINFO_WATCH_IOCTL")
-Signed-off-by: Kent Gibson <warthog618@gmail.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://docs.kernel.org/core-api/kernel-api.html#c.snprintf
+Fixes: 1b2bd0c0264f ("net/mlx5e: Check return value of snprintf writing to fw_version buffer for representors")
+Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index 6ab1cf489d035..e40c93f0960b4 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -2444,10 +2444,7 @@ static int lineinfo_unwatch(struct gpio_chardev_data *cdev, void __user *ip)
- 	return 0;
- }
- 
--/*
-- * gpio_ioctl() - ioctl handler for the GPIO chardev
-- */
--static long gpio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
-+static long gpio_ioctl_unlocked(struct file *file, unsigned int cmd, unsigned long arg)
- {
- 	struct gpio_chardev_data *cdev = file->private_data;
- 	struct gpio_device *gdev = cdev->gdev;
-@@ -2484,6 +2481,17 @@ static long gpio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
- 	}
- }
- 
-+/*
-+ * gpio_ioctl() - ioctl handler for the GPIO chardev
-+ */
-+static long gpio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
-+{
-+	struct gpio_chardev_data *cdev = file->private_data;
-+
-+	return call_ioctl_locked(file, cmd, arg, cdev->gdev,
-+				 gpio_ioctl_unlocked);
-+}
-+
- #ifdef CONFIG_COMPAT
- static long gpio_ioctl_compat(struct file *file, unsigned int cmd,
- 			      unsigned long arg)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+index 2653cb96c3105..5aeca9534f15a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+@@ -76,7 +76,7 @@ static void mlx5e_rep_get_drvinfo(struct net_device *dev,
+ 	count = snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
+ 			 "%d.%d.%04d (%.16s)", fw_rev_maj(mdev),
+ 			 fw_rev_min(mdev), fw_rev_sub(mdev), mdev->board_id);
+-	if (count == sizeof(drvinfo->fw_version))
++	if (count >= sizeof(drvinfo->fw_version))
+ 		snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
+ 			 "%d.%d.%04d", fw_rev_maj(mdev),
+ 			 fw_rev_min(mdev), fw_rev_sub(mdev));
 -- 
 2.43.0
 
