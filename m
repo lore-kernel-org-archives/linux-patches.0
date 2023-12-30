@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9162479DE;
-	Sat, 30 Dec 2023 12:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F52679DE;
+	Sat, 30 Dec 2023 12:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykTWDBTw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CDFC433C7;
-	Sat, 30 Dec 2023 12:06:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wviCoDHd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABB4C433C8;
+	Sat, 30 Dec 2023 12:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937992;
-	bh=/E1q+mNnkbZJDixEczimPNJPOknVjqo1+3f7Tfow3Ow=;
+	s=korg; t=1703937995;
+	bh=UdYtSPgcrYecQnluAyJOjx7UFUiXj9wrUJENRh1H3No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ykTWDBTwoJlm8k0HWhqZete2HZPM3+Q8bTFGeFBAMSMOwGpgnUZlk0aH7iZ2X6wbJ
-	 ZHrNHVHMQ+ZVDKjBqEFGDnx0tU+Bg2uMJGyuc2vY7z1p8B1vfCD/QlY9NIIryzzcLL
-	 odDhNQhIYQn+7ENkrQngNKGfLZWFtEjZ76Dpzb4s=
+	b=wviCoDHdk9SnWyzFgBXh4lNm2RpepL4AXyNbW5J1O4DvZSV+XnCt0dsI2BOA6+Dgk
+	 SIW25rigoW5dkCMUJ+U5wo1bZnPnAJwnoXA7m/sE1aMZIm+2RfuoximFNAqySnYbz5
+	 yR70u8JPkZGS9FfxakYs2nuv5Hjz9qXUXGzybh1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.6 142/156] dm-integrity: dont modify bios immutable bio_vec in integrity_metadata()
-Date: Sat, 30 Dec 2023 11:59:56 +0000
-Message-ID: <20231230115816.967594033@linuxfoundation.org>
+	Geliang Tang <geliang.tang@linux.dev>,
+	Mat Martineau <martineau@kernel.org>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 143/156] selftests: mptcp: join: fix subflow_send_ack lookup
+Date: Sat, 30 Dec 2023 11:59:57 +0000
+Message-ID: <20231230115816.999022746@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -41,66 +43,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Geliang Tang <geliang.tang@linux.dev>
 
-commit b86f4b790c998afdbc88fe1aa55cfe89c4068726 upstream.
+commit c8f021eec5817601dbd25ab7e3ad5c720965c688 upstream.
 
-__bio_for_each_segment assumes that the first struct bio_vec argument
-doesn't change - it calls "bio_advance_iter_single((bio), &(iter),
-(bvl).bv_len)" to advance the iterator. Unfortunately, the dm-integrity
-code changes the bio_vec with "bv.bv_len -= pos". When this code path
-is taken, the iterator would be out of sync and dm-integrity would
-report errors. This happens if the machine is out of memory and
-"kmalloc" fails.
+MPC backups tests will skip unexpected sometimes (For example, when
+compiling kernel with an older version of gcc, such as gcc-8), since
+static functions like mptcp_subflow_send_ack also be listed in
+/proc/kallsyms, with a 't' in front of it, not 'T' ('T' is for a global
+function):
 
-Fix this bug by making a copy of "bv" and changing the copy instead.
+ > grep "mptcp_subflow_send_ack" /proc/kallsyms
 
-Fixes: 7eada909bfd7 ("dm: add integrity target")
-Cc: stable@vger.kernel.org	# v4.12+
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+ 0000000000000000 T __pfx___mptcp_subflow_send_ack
+ 0000000000000000 T __mptcp_subflow_send_ack
+ 0000000000000000 t __pfx_mptcp_subflow_send_ack
+ 0000000000000000 t mptcp_subflow_send_ack
+
+In this case, mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"
+will be false, MPC backups tests will skip. This is not what we expected.
+
+The correct logic here should be: if mptcp_subflow_send_ack is not a
+global function in /proc/kallsyms, do these MPC backups tests. So a 'T'
+must be added in front of mptcp_subflow_send_ack.
+
+Fixes: 632978f0a961 ("selftests: mptcp: join: skip MPC backups tests if not supported")
+Cc: stable@vger.kernel.org
+Signed-off-by: Geliang Tang <geliang.tang@linux.dev>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -1765,11 +1765,12 @@ static void integrity_metadata(struct wo
- 		sectors_to_process = dio->range.n_sectors;
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -2773,7 +2773,7 @@ backup_tests()
+ 	fi
  
- 		__bio_for_each_segment(bv, bio, iter, dio->bio_details.bi_iter) {
-+			struct bio_vec bv_copy = bv;
- 			unsigned int pos;
- 			char *mem, *checksums_ptr;
+ 	if reset "mpc backup" &&
+-	   continue_if mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"; then
++	   continue_if mptcp_lib_kallsyms_doesnt_have "T mptcp_subflow_send_ack$"; then
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow,backup
+ 		speed=slow \
+ 			run_tests $ns1 $ns2 10.0.1.1
+@@ -2782,7 +2782,7 @@ backup_tests()
+ 	fi
  
- again:
--			mem = bvec_kmap_local(&bv);
-+			mem = bvec_kmap_local(&bv_copy);
- 			pos = 0;
- 			checksums_ptr = checksums;
- 			do {
-@@ -1778,7 +1779,7 @@ again:
- 				sectors_to_process -= ic->sectors_per_block;
- 				pos += ic->sectors_per_block << SECTOR_SHIFT;
- 				sector += ic->sectors_per_block;
--			} while (pos < bv.bv_len && sectors_to_process && checksums != checksums_onstack);
-+			} while (pos < bv_copy.bv_len && sectors_to_process && checksums != checksums_onstack);
- 			kunmap_local(mem);
+ 	if reset "mpc backup both sides" &&
+-	   continue_if mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"; then
++	   continue_if mptcp_lib_kallsyms_doesnt_have "T mptcp_subflow_send_ack$"; then
+ 		pm_nl_add_endpoint $ns1 10.0.1.1 flags subflow,backup
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow,backup
+ 		speed=slow \
+@@ -2792,7 +2792,7 @@ backup_tests()
+ 	fi
  
- 			r = dm_integrity_rw_tag(ic, checksums, &dio->metadata_block, &dio->metadata_offset,
-@@ -1803,9 +1804,9 @@ again:
- 			if (!sectors_to_process)
- 				break;
+ 	if reset "mpc switch to backup" &&
+-	   continue_if mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"; then
++	   continue_if mptcp_lib_kallsyms_doesnt_have "T mptcp_subflow_send_ack$"; then
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow
+ 		sflags=backup speed=slow \
+ 			run_tests $ns1 $ns2 10.0.1.1
+@@ -2801,7 +2801,7 @@ backup_tests()
+ 	fi
  
--			if (unlikely(pos < bv.bv_len)) {
--				bv.bv_offset += pos;
--				bv.bv_len -= pos;
-+			if (unlikely(pos < bv_copy.bv_len)) {
-+				bv_copy.bv_offset += pos;
-+				bv_copy.bv_len -= pos;
- 				goto again;
- 			}
- 		}
+ 	if reset "mpc switch to backup both sides" &&
+-	   continue_if mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"; then
++	   continue_if mptcp_lib_kallsyms_doesnt_have "T mptcp_subflow_send_ack$"; then
+ 		pm_nl_add_endpoint $ns1 10.0.1.1 flags subflow
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow
+ 		sflags=backup speed=slow \
 
 
