@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A2028FE;
-	Sat, 30 Dec 2023 12:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90988487;
+	Sat, 30 Dec 2023 12:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7Yen0sg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3012C433C7;
-	Sat, 30 Dec 2023 12:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltKr06HI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 406F0C433C7;
+	Sat, 30 Dec 2023 12:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937718;
-	bh=tbcp9Igf3mg+UHebkZIhyeCasypMsBRUbHUhmRnnH7E=;
+	s=korg; t=1703937720;
+	bh=6mwUCUEt0d80Gx8/tsXONcrhoo6qLkmYZrdqM3a+YTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7Yen0sgXVk1LXQKOD/KQKZRxAZPj+6wDOMZKYOrYdRbJMZml9Qhr9TEkLNdtfitk
-	 n2OX1nerwkfa7JJUwByiMe6WLTkdEzu1m7L49FBkD5VOt1yftx6e4ogXlFffmXzdFb
-	 04ekRBH/9PswLmALJKdNfOYahuTA7dHQGHyorLi8=
+	b=ltKr06HIlF5tZWfvchjMr9rsvn6EmnbeZnFeUULU5r0bPXDCy5CROiqnF39i8Fa5T
+	 SnuNQRiVrZB3af53ypx8IUAd24b7wCcNn8KknqdGOmwiQH4apAqzK7sHQi2IFYzm2n
+	 jDhq89qK4DKabAtVk1ecyjSpR9QS9OHXpwGr/Htk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mi <cmi@nvidia.com>,
-	Jianbo Liu <jianbol@nvidia.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/156] net/mlx5e: Decrease num_block_tc when unblock tc offload
-Date: Sat, 30 Dec 2023 11:58:10 +0000
-Message-ID: <20231230115813.555099020@linuxfoundation.org>
+Subject: [PATCH 6.6 037/156] net/mlx5e: XDP, Drop fragmented packets larger than MTU size
+Date: Sat, 30 Dec 2023 11:58:11 +0000
+Message-ID: <20231230115813.584257400@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -43,35 +43,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mi <cmi@nvidia.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit be86106fd74a145f24c56c9bc18d658e8fe6d4f4 ]
+[ Upstream commit bcaf109f794744c14da0e9123b31d1f4571b0a35 ]
 
-The cited commit increases num_block_tc when unblock tc offload.
-Actually should decrease it.
+XDP transmits fragmented packets that are larger than MTU size instead of
+dropping those packets. The drop check that checks whether a packet is larger
+than MTU is comparing MTU size against the linear part length only.
 
-Fixes: c8e350e62fc5 ("net/mlx5e: Make TC and IPsec offloads mutually exclusive on a netdev")
-Signed-off-by: Chris Mi <cmi@nvidia.com>
-Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
+Adjust the drop check to compare MTU size against both linear and non-linear
+part lengths to avoid transmitting fragmented packets larger than MTU size.
+
+Fixes: 39a1665d16a2 ("net/mlx5e: Implement sending multi buffer XDP frames")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-index 03f69c485a006..81e6aa6434cf2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-@@ -1866,7 +1866,7 @@ static int mlx5e_ipsec_block_tc_offload(struct mlx5_core_dev *mdev)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
+index 8bed17d8fe564..b723ff5e5249c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
+@@ -493,6 +493,7 @@ mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
+ 	dma_addr_t dma_addr = xdptxd->dma_addr;
+ 	u32 dma_len = xdptxd->len;
+ 	u16 ds_cnt, inline_hdr_sz;
++	unsigned int frags_size;
+ 	u8 num_wqebbs = 1;
+ 	int num_frags = 0;
+ 	bool inline_ok;
+@@ -503,8 +504,9 @@ mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
  
- static void mlx5e_ipsec_unblock_tc_offload(struct mlx5_core_dev *mdev)
- {
--	mdev->num_block_tc++;
-+	mdev->num_block_tc--;
- }
+ 	inline_ok = sq->min_inline_mode == MLX5_INLINE_MODE_NONE ||
+ 		dma_len >= MLX5E_XDP_MIN_INLINE;
++	frags_size = xdptxd->has_frags ? xdptxdf->sinfo->xdp_frags_size : 0;
  
- int mlx5e_accel_ipsec_fs_add_rule(struct mlx5e_ipsec_sa_entry *sa_entry)
+-	if (unlikely(!inline_ok || sq->hw_mtu < dma_len)) {
++	if (unlikely(!inline_ok || sq->hw_mtu < dma_len + frags_size)) {
+ 		stats->err++;
+ 		return false;
+ 	}
 -- 
 2.43.0
 
