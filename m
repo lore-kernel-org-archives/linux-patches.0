@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3395179DC;
-	Sat, 30 Dec 2023 12:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E4C8487;
+	Sat, 30 Dec 2023 12:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VoP97OTY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC9CC433C7;
-	Sat, 30 Dec 2023 12:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Y8cN5gM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E8BC433C7;
+	Sat, 30 Dec 2023 12:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938329;
-	bh=BNd+g1IENqyDeKtKybwysbbrJ2ZVAzEwmpnsH5P1ovQ=;
+	s=korg; t=1703938331;
+	bh=5zAo6hM/+35hMrOdPj7TcwrqRz8C0kPE0dkiy2Qflas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VoP97OTYOhUm3mGe1sBRh4hQVsYueKfrAVLAvQEE/e4CijIrBYMHoMCVy62JkrDa2
-	 V81A8qgO6G+GssMFlqzZJzMV4ceBnq8ii5r5rGMsYt+9OrKyJwCawkRXuJubb6T9t6
-	 VS6YdoXUN9RLl2qE1OarqvBuwX1TDx4kAg4q3ERI=
+	b=2Y8cN5gM4Kp3qvcr1coWHKKfCua0FUvkbBC2SGpg+PMEqzwRAXGSbPd37GcALPXzI
+	 BartvSKtOCZzcS74PTwLqRYEAy3PhTTB+HZiKInZwN3n3tcmTvwz6qJQiSQc0bHNYi
+	 f+S2gEDMYUatjk8FnN8CrBgjMb5seUb1MNxqGIbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaxiong Tian <tianyaxiong@kylinos.cn>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 104/112] thunderbolt: Fix memory leak in margining_port_remove()
-Date: Sat, 30 Dec 2023 12:00:17 +0000
-Message-ID: <20231230115810.102488269@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.1 105/112] KVM: arm64: vgic: Simplify kvm_vgic_destroy()
+Date: Sat, 30 Dec 2023 12:00:18 +0000
+Message-ID: <20231230115810.133010203@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -41,33 +41,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yaxiong Tian <tianyaxiong@kylinos.cn>
+From: Marc Zyngier <maz@kernel.org>
 
-commit ac43c9122e4287bbdbe91e980fc2528acb72cc1e upstream.
+commit 01ad29d224ff73bc4e16e0ef9ece17f28598c4a4 upstream.
 
-The dentry returned by debugfs_lookup() needs to be released by calling
-dput() which is missing in margining_port_remove(). Fix this by calling
-debugfs_lookup_and_remove() that combines both and avoids the memory leak.
+When destroying a vgic, we have rather cumbersome rules about
+when slots_lock and config_lock are held, resulting in fun
+buglets.
 
-Fixes: d0f1e0c2a699 ("thunderbolt: Add support for receiver lane margining")
+The first port of call is to simplify kvm_vgic_map_resources()
+so that there is only one call to kvm_vgic_destroy() instead of
+two, with the second only holding half of the locks.
+
+For that, we kill the non-locking primitive and move the call
+outside of the locking altogether. This doesn't change anything
+(we re-acquire the locks and teardown the whole vgic), and
+simplifies the code significantly.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Yaxiong Tian <tianyaxiong@kylinos.cn>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20231207151201.3028710-2-maz@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/debugfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/vgic/vgic-init.c |   29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
---- a/drivers/thunderbolt/debugfs.c
-+++ b/drivers/thunderbolt/debugfs.c
-@@ -943,7 +943,7 @@ static void margining_port_remove(struct
- 	snprintf(dir_name, sizeof(dir_name), "port%d", port->port);
- 	parent = debugfs_lookup(dir_name, port->sw->debugfs_dir);
- 	if (parent)
--		debugfs_remove_recursive(debugfs_lookup("margining", parent));
-+		debugfs_lookup_and_remove("margining", parent);
+--- a/arch/arm64/kvm/vgic/vgic-init.c
++++ b/arch/arm64/kvm/vgic/vgic-init.c
+@@ -382,26 +382,24 @@ void kvm_vgic_vcpu_destroy(struct kvm_vc
+ 	vgic_cpu->rd_iodev.base_addr = VGIC_ADDR_UNDEF;
+ }
  
- 	kfree(port->usb4->margining);
- 	port->usb4->margining = NULL;
+-static void __kvm_vgic_destroy(struct kvm *kvm)
++void kvm_vgic_destroy(struct kvm *kvm)
+ {
+ 	struct kvm_vcpu *vcpu;
+ 	unsigned long i;
+ 
+-	lockdep_assert_held(&kvm->arch.config_lock);
++	mutex_lock(&kvm->slots_lock);
+ 
+ 	vgic_debug_destroy(kvm);
+ 
+ 	kvm_for_each_vcpu(i, vcpu, kvm)
+ 		kvm_vgic_vcpu_destroy(vcpu);
+ 
++	mutex_lock(&kvm->arch.config_lock);
++
+ 	kvm_vgic_dist_destroy(kvm);
+-}
+ 
+-void kvm_vgic_destroy(struct kvm *kvm)
+-{
+-	mutex_lock(&kvm->arch.config_lock);
+-	__kvm_vgic_destroy(kvm);
+ 	mutex_unlock(&kvm->arch.config_lock);
++	mutex_unlock(&kvm->slots_lock);
+ }
+ 
+ /**
+@@ -469,25 +467,26 @@ int kvm_vgic_map_resources(struct kvm *k
+ 		type = VGIC_V3;
+ 	}
+ 
+-	if (ret) {
+-		__kvm_vgic_destroy(kvm);
++	if (ret)
+ 		goto out;
+-	}
++
+ 	dist->ready = true;
+ 	dist_base = dist->vgic_dist_base;
+ 	mutex_unlock(&kvm->arch.config_lock);
+ 
+ 	ret = vgic_register_dist_iodev(kvm, dist_base, type);
+-	if (ret) {
++	if (ret)
+ 		kvm_err("Unable to register VGIC dist MMIO regions\n");
+-		kvm_vgic_destroy(kvm);
+-	}
+-	mutex_unlock(&kvm->slots_lock);
+-	return ret;
+ 
++	goto out_slots;
+ out:
+ 	mutex_unlock(&kvm->arch.config_lock);
++out_slots:
+ 	mutex_unlock(&kvm->slots_lock);
++
++	if (ret)
++		kvm_vgic_destroy(kvm);
++
+ 	return ret;
+ }
+ 
 
 
