@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A6279D8;
-	Sat, 30 Dec 2023 12:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB0479DC;
+	Sat, 30 Dec 2023 12:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dPsZiYn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E845C433C7;
-	Sat, 30 Dec 2023 12:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtQgowZZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43470C433C7;
+	Sat, 30 Dec 2023 12:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938049;
-	bh=kT08HQoGFAMQuELkI/ekHKRA9z98gVpbiUBvvzVrJng=;
+	s=korg; t=1703938051;
+	bh=uXgYnk2ITKh9KvMTwkNrRuFKSb0WrXkElXo3cYTVqIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1dPsZiYniU3yHM11bcXoL4SChYP+9mwrH8raXVzxhRsuEnN6UBt5fKoSErRPh5PNm
-	 7iGDYsQF/5QCvmUt1vNDrYvpMuM68zYI2Yq5xcsESKjxr4k7hlzFd/HZ8SmA6GIV8b
-	 pyarhw3v8g11XMmcxQaExXRe8ZZU30iCS6B04SCA=
+	b=mtQgowZZ2pZF0iMy6F+E2uMlNHJGNxJKAzIdMVRl/n5xPPS8bWK6sW76Gl3kDSVy3
+	 AHtdysWRpfugasB4rJRrOVdyNmoPDEYD7AAOY0OAzp3GqpZqs3y7o+itOdGbnOkVeo
+	 klImdXNrIQ5F0rDAXKu60pDWlZNOuATHhcKirkvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Atanasov <alexander.atanasov@virtuozzo.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 140/156] scsi: core: Always send batch on reset or error handling command
-Date: Sat, 30 Dec 2023 11:59:54 +0000
-Message-ID: <20231230115816.908505266@linuxfoundation.org>
+	JP Kobryn <inwardvessel@gmail.com>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>
+Subject: [PATCH 6.6 131/156] 9p: prevent read overrun in protocol dump tracepoint
+Date: Sat, 30 Dec 2023 11:59:45 +0000
+Message-ID: <20231230115816.640588376@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -42,56 +42,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Atanasov <alexander.atanasov@virtuozzo.com>
+From: JP Kobryn <inwardvessel@gmail.com>
 
-commit 066c5b46b6eaf2f13f80c19500dbb3b84baabb33 upstream.
+commit a931c6816078af3e306e0f444f492396ce40de31 upstream.
 
-In commit 8930a6c20791 ("scsi: core: add support for request batching") the
-block layer bd->last flag was mapped to SCMD_LAST and used as an indicator
-to send the batch for the drivers that implement this feature. However, the
-error handling code was not updated accordingly.
+An out of bounds read can occur within the tracepoint 9p_protocol_dump. In
+the fast assign, there is a memcpy that uses a constant size of 32 (macro
+named P9_PROTO_DUMP_SZ). When the copy is invoked, the source buffer is not
+guaranteed match this size.  It was found that in some cases the source
+buffer size is less than 32, resulting in a read that overruns.
 
-scsi_send_eh_cmnd() is used to send error handling commands and request
-sense. The problem is that request sense comes as a single command that
-gets into the batch queue and times out. As a result the device goes
-offline after several failed resets. This was observed on virtio_scsi
-during a device resize operation.
+The size of the source buffer seems to be known at the time of the
+tracepoint being invoked. The allocations happen within p9_fcall_init(),
+where the capacity field is set to the allocated size of the payload
+buffer. This patch tries to fix the overrun by changing the fixed array to
+a dynamically sized array and using the minimum of the capacity value or
+P9_PROTO_DUMP_SZ as its length. The trace log statement is adjusted to
+account for this. Note that the trace log no longer splits the payload on
+the first 16 bytes. The full payload is now logged to a single line.
 
-[  496.316946] sd 0:0:4:0: [sdd] tag#117 scsi_eh_0: requesting sense
-[  506.786356] sd 0:0:4:0: [sdd] tag#117 scsi_send_eh_cmnd timeleft: 0
-[  506.787981] sd 0:0:4:0: [sdd] tag#117 abort
+To repro the orignal problem, operations to a plan 9 managed resource can
+be used. The simplest approach might just be mounting a shared filesystem
+(between host and guest vm) using the plan 9 protocol while the tracepoint
+is enabled.
 
-To fix this always set SCMD_LAST flag in scsi_send_eh_cmnd() and
-scsi_reset_ioctl().
+mount -t 9p -o trans=virtio <mount_tag> <mount_path>
 
-Fixes: 8930a6c20791 ("scsi: core: add support for request batching")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Alexander Atanasov <alexander.atanasov@virtuozzo.com>
-Link: https://lore.kernel.org/r/20231215121008.2881653-1-alexander.atanasov@virtuozzo.com
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The bpftrace program below can be used to show the out of bounds read.
+Note that a recent version of bpftrace is needed for the raw tracepoint
+support. The script was tested using v0.19.0.
+
+/* from include/net/9p/9p.h */
+struct p9_fcall {
+    u32 size;
+    u8 id;
+    u16 tag;
+    size_t offset;
+    size_t capacity;
+    struct kmem_cache *cache;
+    u8 *sdata;
+    bool zc;
+};
+
+tracepoint:9p:9p_protocol_dump
+{
+    /* out of bounds read can happen when this tracepoint is enabled */
+}
+
+rawtracepoint:9p_protocol_dump
+{
+    $pdu = (struct p9_fcall *)arg1;
+    $dump_sz = (uint64)32;
+
+    if ($dump_sz > $pdu->capacity) {
+        printf("reading %zu bytes from src buffer of %zu bytes\n",
+            $dump_sz, $pdu->capacity);
+    }
+}
+
+Signed-off-by: JP Kobryn <inwardvessel@gmail.com>
+Message-ID: <20231204202321.22730-1-inwardvessel@gmail.com>
+Fixes: 60ece0833b6c ("net/9p: allocate appropriate reduced message buffers")
+Cc: stable@vger.kernel.org
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_error.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/trace/events/9p.h |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -1152,6 +1152,7 @@ retry:
+--- a/include/trace/events/9p.h
++++ b/include/trace/events/9p.h
+@@ -178,18 +178,21 @@ TRACE_EVENT(9p_protocol_dump,
+ 		    __field(	void *,		clnt				)
+ 		    __field(	__u8,		type				)
+ 		    __field(	__u16,		tag				)
+-		    __array(	unsigned char,	line,	P9_PROTO_DUMP_SZ	)
++		    __dynamic_array(unsigned char, line,
++				min_t(size_t, pdu->capacity, P9_PROTO_DUMP_SZ))
+ 		    ),
  
- 	scsi_log_send(scmd);
- 	scmd->submitter = SUBMITTED_BY_SCSI_ERROR_HANDLER;
-+	scmd->flags |= SCMD_LAST;
+ 	    TP_fast_assign(
+ 		    __entry->clnt   =  clnt;
+ 		    __entry->type   =  pdu->id;
+ 		    __entry->tag    =  pdu->tag;
+-		    memcpy(__entry->line, pdu->sdata, P9_PROTO_DUMP_SZ);
++		    memcpy(__get_dynamic_array(line), pdu->sdata,
++				__get_dynamic_array_len(line));
+ 		    ),
+-	    TP_printk("clnt %lu %s(tag = %d)\n%.3x: %16ph\n%.3x: %16ph\n",
++	    TP_printk("clnt %lu %s(tag = %d)\n%*ph\n",
+ 		      (unsigned long)__entry->clnt, show_9p_op(__entry->type),
+-		      __entry->tag, 0, __entry->line, 16, __entry->line + 16)
++		      __entry->tag, __get_dynamic_array_len(line),
++		      __get_dynamic_array(line))
+  );
  
- 	/*
- 	 * Lock sdev->state_mutex to avoid that scsi_device_quiesce() can
-@@ -2459,6 +2460,7 @@ scsi_ioctl_reset(struct scsi_device *dev
- 	scsi_init_command(dev, scmd);
  
- 	scmd->submitter = SUBMITTED_BY_SCSI_RESET_IOCTL;
-+	scmd->flags |= SCMD_LAST;
- 	memset(&scmd->sdb, 0, sizeof(scmd->sdb));
- 
- 	scmd->cmd_len			= 0;
 
 
