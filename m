@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CB2611A;
-	Sat, 30 Dec 2023 12:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535A779DE;
+	Sat, 30 Dec 2023 12:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q4I/arpZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BFAC433C8;
-	Sat, 30 Dec 2023 12:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kW/IoYpc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81983C433C8;
+	Sat, 30 Dec 2023 12:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938077;
-	bh=//3KtTdq+RH2POQiD9WMSc7u3GSIqjw88maNgXBUQEk=;
+	s=korg; t=1703938079;
+	bh=DLDxNCX6DIe7lMRJof1aeL29jIaxHxv3bLyc6efyYkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q4I/arpZckyOXfUyuDDryywW9IyJsqSqjFO3I+REta+dLOm1BAD//AmUBWysG+cyo
-	 h2ZX5Q1iKHHLjp2ulCr++1sXHYGr+ob+mLcb+JuLD4USWw5mWKTUbDLJ/HSdLIHDT8
-	 BNtWy/M1IdM4gbYsaZqVLMAJVxw9SWKWUXR+U7Bc=
+	b=kW/IoYpc3+p6sB14lIcLUpe726LoQeIVT6O4uDjJiel0H0Q1scQl9yI0vrxmiKlIY
+	 32rpH3tWzIhNdA6I9eFfdPFK5TShvQrx0uKd7bM1f8s7ZoTWbJGWHIRJPBUke9BhoT
+	 Yyv2fceIWAJpsA/QRlbl5lmZ02P14KSCV73l7VhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
 	Moshe Shemesh <moshe@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/112] net/mlx5: Prevent high-rate FW commands from populating all slots
-Date: Sat, 30 Dec 2023 11:58:51 +0000
-Message-ID: <20231230115807.336014327@linuxfoundation.org>
+Subject: [PATCH 6.1 019/112] net/mlx5: Re-organize mlx5_cmd struct
+Date: Sat, 30 Dec 2023 11:58:52 +0000
+Message-ID: <20231230115807.365789407@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -43,116 +43,332 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tariq Toukan <tariqt@nvidia.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 63fbae0a74c3e1df7c20c81e04353ced050d9887 ]
+[ Upstream commit 58db72869a9f8e01910844ca145efc2ea91bbbf9 ]
 
-Certain connection-based device-offload protocols (like TLS) use
-per-connection HW objects to track the state, maintain the context, and
-perform the offload properly. Some of these objects are created,
-modified, and destroyed via FW commands. Under high connection rate,
-this type of FW commands might continuously populate all slots of the FW
-command interface and throttle it, while starving other critical control
-FW commands.
+Downstream patch will split mlx5_cmd_init() to probe and reload
+routines. As a preparation, organize mlx5_cmd struct so that any
+field that will be used in the reload routine are grouped at new
+nested struct.
 
-Limit these throttle commands to using only up to a portion (half) of
-the FW command interface slots. FW commands maximal rate is not hit, and
-the same high rate is still reached when applying this limitation.
-
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Shay Drory <shayd@nvidia.com>
 Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Stable-dep-of: 8f5100da56b3 ("net/mlx5e: Fix a race in command alloc flow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 30 ++++++++++++++++++-
- include/linux/mlx5/driver.h                   |  1 +
- 2 files changed, 30 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 94 +++++++++----------
+ .../net/ethernet/mellanox/mlx5/core/debugfs.c |  4 +-
+ include/linux/mlx5/driver.h                   | 21 +++--
+ 3 files changed, 60 insertions(+), 59 deletions(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-index edc42f0b3e74d..84f926064cf7b 100644
+index 84f926064cf7b..e89d4fb7774bb 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -95,6 +95,21 @@ static u16 in_to_opcode(void *in)
- 	return MLX5_GET(mbox_in, in, opcode);
+@@ -162,18 +162,18 @@ static int cmd_alloc_index(struct mlx5_cmd *cmd)
+ 	int ret;
+ 
+ 	spin_lock_irqsave(&cmd->alloc_lock, flags);
+-	ret = find_first_bit(&cmd->bitmask, cmd->max_reg_cmds);
+-	if (ret < cmd->max_reg_cmds)
+-		clear_bit(ret, &cmd->bitmask);
++	ret = find_first_bit(&cmd->vars.bitmask, cmd->vars.max_reg_cmds);
++	if (ret < cmd->vars.max_reg_cmds)
++		clear_bit(ret, &cmd->vars.bitmask);
+ 	spin_unlock_irqrestore(&cmd->alloc_lock, flags);
+ 
+-	return ret < cmd->max_reg_cmds ? ret : -ENOMEM;
++	return ret < cmd->vars.max_reg_cmds ? ret : -ENOMEM;
  }
  
-+/* Returns true for opcodes that might be triggered very frequently and throttle
-+ * the command interface. Limit their command slots usage.
-+ */
-+static bool mlx5_cmd_is_throttle_opcode(u16 op)
-+{
-+	switch (op) {
-+	case MLX5_CMD_OP_CREATE_GENERAL_OBJECT:
-+	case MLX5_CMD_OP_DESTROY_GENERAL_OBJECT:
-+	case MLX5_CMD_OP_MODIFY_GENERAL_OBJECT:
-+	case MLX5_CMD_OP_QUERY_GENERAL_OBJECT:
-+		return true;
-+	}
-+	return false;
-+}
-+
- static struct mlx5_cmd_work_ent *
- cmd_alloc_ent(struct mlx5_cmd *cmd, struct mlx5_cmd_msg *in,
- 	      struct mlx5_cmd_msg *out, void *uout, int uout_size,
-@@ -1826,6 +1841,7 @@ static int cmd_exec(struct mlx5_core_dev *dev, void *in, int in_size, void *out,
+ static void cmd_free_index(struct mlx5_cmd *cmd, int idx)
  {
- 	struct mlx5_cmd_msg *inb, *outb;
- 	u16 opcode = in_to_opcode(in);
-+	bool throttle_op;
- 	int pages_queue;
- 	gfp_t gfp;
- 	u8 token;
-@@ -1834,13 +1850,21 @@ static int cmd_exec(struct mlx5_core_dev *dev, void *in, int in_size, void *out,
- 	if (mlx5_cmd_is_down(dev) || !opcode_allowed(&dev->cmd, opcode))
- 		return -ENXIO;
+ 	lockdep_assert_held(&cmd->alloc_lock);
+-	set_bit(idx, &cmd->bitmask);
++	set_bit(idx, &cmd->vars.bitmask);
+ }
  
-+	throttle_op = mlx5_cmd_is_throttle_opcode(opcode);
-+	if (throttle_op) {
-+		/* atomic context may not sleep */
-+		if (callback)
-+			return -EINVAL;
-+		down(&dev->cmd.throttle_sem);
-+	}
-+
- 	pages_queue = is_manage_pages(in);
- 	gfp = callback ? GFP_ATOMIC : GFP_KERNEL;
+ static void cmd_ent_get(struct mlx5_cmd_work_ent *ent)
+@@ -192,7 +192,7 @@ static void cmd_ent_put(struct mlx5_cmd_work_ent *ent)
  
- 	inb = alloc_msg(dev, in_size, gfp);
- 	if (IS_ERR(inb)) {
- 		err = PTR_ERR(inb);
--		return err;
-+		goto out_up;
+ 	if (ent->idx >= 0) {
+ 		cmd_free_index(cmd, ent->idx);
+-		up(ent->page_queue ? &cmd->pages_sem : &cmd->sem);
++		up(ent->page_queue ? &cmd->vars.pages_sem : &cmd->vars.sem);
  	}
  
- 	token = alloc_token(&dev->cmd);
-@@ -1874,6 +1898,9 @@ static int cmd_exec(struct mlx5_core_dev *dev, void *in, int in_size, void *out,
- 	mlx5_free_cmd_msg(dev, outb);
- out_in:
+ 	cmd_free_ent(ent);
+@@ -202,7 +202,7 @@ static void cmd_ent_put(struct mlx5_cmd_work_ent *ent)
+ 
+ static struct mlx5_cmd_layout *get_inst(struct mlx5_cmd *cmd, int idx)
+ {
+-	return cmd->cmd_buf + (idx << cmd->log_stride);
++	return cmd->cmd_buf + (idx << cmd->vars.log_stride);
+ }
+ 
+ static int mlx5_calc_cmd_blocks(struct mlx5_cmd_msg *msg)
+@@ -971,7 +971,7 @@ static void cmd_work_handler(struct work_struct *work)
+ 	cb_timeout = msecs_to_jiffies(mlx5_tout_ms(dev, CMD));
+ 
+ 	complete(&ent->handling);
+-	sem = ent->page_queue ? &cmd->pages_sem : &cmd->sem;
++	sem = ent->page_queue ? &cmd->vars.pages_sem : &cmd->vars.sem;
+ 	down(sem);
+ 	if (!ent->page_queue) {
+ 		alloc_ret = cmd_alloc_index(cmd);
+@@ -991,9 +991,9 @@ static void cmd_work_handler(struct work_struct *work)
+ 		}
+ 		ent->idx = alloc_ret;
+ 	} else {
+-		ent->idx = cmd->max_reg_cmds;
++		ent->idx = cmd->vars.max_reg_cmds;
+ 		spin_lock_irqsave(&cmd->alloc_lock, flags);
+-		clear_bit(ent->idx, &cmd->bitmask);
++		clear_bit(ent->idx, &cmd->vars.bitmask);
+ 		spin_unlock_irqrestore(&cmd->alloc_lock, flags);
+ 	}
+ 
+@@ -1569,15 +1569,15 @@ void mlx5_cmd_allowed_opcode(struct mlx5_core_dev *dev, u16 opcode)
+ 	struct mlx5_cmd *cmd = &dev->cmd;
+ 	int i;
+ 
+-	for (i = 0; i < cmd->max_reg_cmds; i++)
+-		down(&cmd->sem);
+-	down(&cmd->pages_sem);
++	for (i = 0; i < cmd->vars.max_reg_cmds; i++)
++		down(&cmd->vars.sem);
++	down(&cmd->vars.pages_sem);
+ 
+ 	cmd->allowed_opcode = opcode;
+ 
+-	up(&cmd->pages_sem);
+-	for (i = 0; i < cmd->max_reg_cmds; i++)
+-		up(&cmd->sem);
++	up(&cmd->vars.pages_sem);
++	for (i = 0; i < cmd->vars.max_reg_cmds; i++)
++		up(&cmd->vars.sem);
+ }
+ 
+ static void mlx5_cmd_change_mod(struct mlx5_core_dev *dev, int mode)
+@@ -1585,15 +1585,15 @@ static void mlx5_cmd_change_mod(struct mlx5_core_dev *dev, int mode)
+ 	struct mlx5_cmd *cmd = &dev->cmd;
+ 	int i;
+ 
+-	for (i = 0; i < cmd->max_reg_cmds; i++)
+-		down(&cmd->sem);
+-	down(&cmd->pages_sem);
++	for (i = 0; i < cmd->vars.max_reg_cmds; i++)
++		down(&cmd->vars.sem);
++	down(&cmd->vars.pages_sem);
+ 
+ 	cmd->mode = mode;
+ 
+-	up(&cmd->pages_sem);
+-	for (i = 0; i < cmd->max_reg_cmds; i++)
+-		up(&cmd->sem);
++	up(&cmd->vars.pages_sem);
++	for (i = 0; i < cmd->vars.max_reg_cmds; i++)
++		up(&cmd->vars.sem);
+ }
+ 
+ static int cmd_comp_notifier(struct notifier_block *nb,
+@@ -1652,7 +1652,7 @@ static void mlx5_cmd_comp_handler(struct mlx5_core_dev *dev, u64 vec, bool force
+ 
+ 	/* there can be at most 32 command queues */
+ 	vector = vec & 0xffffffff;
+-	for (i = 0; i < (1 << cmd->log_sz); i++) {
++	for (i = 0; i < (1 << cmd->vars.log_sz); i++) {
+ 		if (test_bit(i, &vector)) {
+ 			ent = cmd->ent_arr[i];
+ 
+@@ -1741,7 +1741,7 @@ static void mlx5_cmd_trigger_completions(struct mlx5_core_dev *dev)
+ 	/* wait for pending handlers to complete */
+ 	mlx5_eq_synchronize_cmd_irq(dev);
+ 	spin_lock_irqsave(&dev->cmd.alloc_lock, flags);
+-	vector = ~dev->cmd.bitmask & ((1ul << (1 << dev->cmd.log_sz)) - 1);
++	vector = ~dev->cmd.vars.bitmask & ((1ul << (1 << dev->cmd.vars.log_sz)) - 1);
+ 	if (!vector)
+ 		goto no_trig;
+ 
+@@ -1750,14 +1750,14 @@ static void mlx5_cmd_trigger_completions(struct mlx5_core_dev *dev)
+ 	 * to guarantee pending commands will not get freed in the meanwhile.
+ 	 * For that reason, it also has to be done inside the alloc_lock.
+ 	 */
+-	for_each_set_bit(i, &bitmask, (1 << cmd->log_sz))
++	for_each_set_bit(i, &bitmask, (1 << cmd->vars.log_sz))
+ 		cmd_ent_get(cmd->ent_arr[i]);
+ 	vector |= MLX5_TRIGGERED_CMD_COMP;
+ 	spin_unlock_irqrestore(&dev->cmd.alloc_lock, flags);
+ 
+ 	mlx5_core_dbg(dev, "vector 0x%llx\n", vector);
+ 	mlx5_cmd_comp_handler(dev, vector, true);
+-	for_each_set_bit(i, &bitmask, (1 << cmd->log_sz))
++	for_each_set_bit(i, &bitmask, (1 << cmd->vars.log_sz))
+ 		cmd_ent_put(cmd->ent_arr[i]);
+ 	return;
+ 
+@@ -1770,22 +1770,22 @@ void mlx5_cmd_flush(struct mlx5_core_dev *dev)
+ 	struct mlx5_cmd *cmd = &dev->cmd;
+ 	int i;
+ 
+-	for (i = 0; i < cmd->max_reg_cmds; i++) {
+-		while (down_trylock(&cmd->sem)) {
++	for (i = 0; i < cmd->vars.max_reg_cmds; i++) {
++		while (down_trylock(&cmd->vars.sem)) {
+ 			mlx5_cmd_trigger_completions(dev);
+ 			cond_resched();
+ 		}
+ 	}
+ 
+-	while (down_trylock(&cmd->pages_sem)) {
++	while (down_trylock(&cmd->vars.pages_sem)) {
+ 		mlx5_cmd_trigger_completions(dev);
+ 		cond_resched();
+ 	}
+ 
+ 	/* Unlock cmdif */
+-	up(&cmd->pages_sem);
+-	for (i = 0; i < cmd->max_reg_cmds; i++)
+-		up(&cmd->sem);
++	up(&cmd->vars.pages_sem);
++	for (i = 0; i < cmd->vars.max_reg_cmds; i++)
++		up(&cmd->vars.sem);
+ }
+ 
+ static struct mlx5_cmd_msg *alloc_msg(struct mlx5_core_dev *dev, int in_size,
+@@ -1855,7 +1855,7 @@ static int cmd_exec(struct mlx5_core_dev *dev, void *in, int in_size, void *out,
+ 		/* atomic context may not sleep */
+ 		if (callback)
+ 			return -EINVAL;
+-		down(&dev->cmd.throttle_sem);
++		down(&dev->cmd.vars.throttle_sem);
+ 	}
+ 
+ 	pages_queue = is_manage_pages(in);
+@@ -1900,7 +1900,7 @@ static int cmd_exec(struct mlx5_core_dev *dev, void *in, int in_size, void *out,
  	free_msg(dev, inb);
-+out_up:
-+	if (throttle_op)
-+		up(&dev->cmd.throttle_sem);
+ out_up:
+ 	if (throttle_op)
+-		up(&dev->cmd.throttle_sem);
++		up(&dev->cmd.vars.throttle_sem);
  	return err;
  }
  
-@@ -2218,6 +2245,7 @@ int mlx5_cmd_init(struct mlx5_core_dev *dev)
+@@ -2210,16 +2210,16 @@ int mlx5_cmd_init(struct mlx5_core_dev *dev)
+ 		goto err_free_pool;
  
- 	sema_init(&cmd->sem, cmd->max_reg_cmds);
- 	sema_init(&cmd->pages_sem, 1);
-+	sema_init(&cmd->throttle_sem, DIV_ROUND_UP(cmd->max_reg_cmds, 2));
+ 	cmd_l = ioread32be(&dev->iseg->cmdq_addr_l_sz) & 0xff;
+-	cmd->log_sz = cmd_l >> 4 & 0xf;
+-	cmd->log_stride = cmd_l & 0xf;
+-	if (1 << cmd->log_sz > MLX5_MAX_COMMANDS) {
++	cmd->vars.log_sz = cmd_l >> 4 & 0xf;
++	cmd->vars.log_stride = cmd_l & 0xf;
++	if (1 << cmd->vars.log_sz > MLX5_MAX_COMMANDS) {
+ 		mlx5_core_err(dev, "firmware reports too many outstanding commands %d\n",
+-			      1 << cmd->log_sz);
++			      1 << cmd->vars.log_sz);
+ 		err = -EINVAL;
+ 		goto err_free_page;
+ 	}
+ 
+-	if (cmd->log_sz + cmd->log_stride > MLX5_ADAPTER_PAGE_SHIFT) {
++	if (cmd->vars.log_sz + cmd->vars.log_stride > MLX5_ADAPTER_PAGE_SHIFT) {
+ 		mlx5_core_err(dev, "command queue size overflow\n");
+ 		err = -EINVAL;
+ 		goto err_free_page;
+@@ -2227,13 +2227,13 @@ int mlx5_cmd_init(struct mlx5_core_dev *dev)
+ 
+ 	cmd->state = MLX5_CMDIF_STATE_DOWN;
+ 	cmd->checksum_disabled = 1;
+-	cmd->max_reg_cmds = (1 << cmd->log_sz) - 1;
+-	cmd->bitmask = (1UL << cmd->max_reg_cmds) - 1;
++	cmd->vars.max_reg_cmds = (1 << cmd->vars.log_sz) - 1;
++	cmd->vars.bitmask = (1UL << cmd->vars.max_reg_cmds) - 1;
+ 
+-	cmd->cmdif_rev = ioread32be(&dev->iseg->cmdif_rev_fw_sub) >> 16;
+-	if (cmd->cmdif_rev > CMD_IF_REV) {
++	cmd->vars.cmdif_rev = ioread32be(&dev->iseg->cmdif_rev_fw_sub) >> 16;
++	if (cmd->vars.cmdif_rev > CMD_IF_REV) {
+ 		mlx5_core_err(dev, "driver does not support command interface version. driver %d, firmware %d\n",
+-			      CMD_IF_REV, cmd->cmdif_rev);
++			      CMD_IF_REV, cmd->vars.cmdif_rev);
+ 		err = -EOPNOTSUPP;
+ 		goto err_free_page;
+ 	}
+@@ -2243,9 +2243,9 @@ int mlx5_cmd_init(struct mlx5_core_dev *dev)
+ 	for (i = 0; i < MLX5_CMD_OP_MAX; i++)
+ 		spin_lock_init(&cmd->stats[i].lock);
+ 
+-	sema_init(&cmd->sem, cmd->max_reg_cmds);
+-	sema_init(&cmd->pages_sem, 1);
+-	sema_init(&cmd->throttle_sem, DIV_ROUND_UP(cmd->max_reg_cmds, 2));
++	sema_init(&cmd->vars.sem, cmd->vars.max_reg_cmds);
++	sema_init(&cmd->vars.pages_sem, 1);
++	sema_init(&cmd->vars.throttle_sem, DIV_ROUND_UP(cmd->vars.max_reg_cmds, 2));
  
  	cmd_h = (u32)((u64)(cmd->dma) >> 32);
  	cmd_l = (u32)(cmd->dma);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/debugfs.c b/drivers/net/ethernet/mellanox/mlx5/core/debugfs.c
+index bb95b40d25eb5..e0b0729e238c1 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/debugfs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/debugfs.c
+@@ -176,8 +176,8 @@ static ssize_t slots_read(struct file *filp, char __user *buf, size_t count,
+ 	int ret;
+ 
+ 	cmd = filp->private_data;
+-	weight = bitmap_weight(&cmd->bitmask, cmd->max_reg_cmds);
+-	field = cmd->max_reg_cmds - weight;
++	weight = bitmap_weight(&cmd->vars.bitmask, cmd->vars.max_reg_cmds);
++	field = cmd->vars.max_reg_cmds - weight;
+ 	ret = snprintf(tbuf, sizeof(tbuf), "%d\n", field);
+ 	return simple_read_from_buffer(buf, count, pos, tbuf, ret);
+ }
 diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
-index 3660ce6a93496..ce019c337f67f 100644
+index ce019c337f67f..93ec34a94b724 100644
 --- a/include/linux/mlx5/driver.h
 +++ b/include/linux/mlx5/driver.h
-@@ -308,6 +308,7 @@ struct mlx5_cmd {
+@@ -282,18 +282,23 @@ struct mlx5_cmd_stats {
+ struct mlx5_cmd {
+ 	struct mlx5_nb    nb;
+ 
++	/* members which needs to be queried or reinitialized each reload */
++	struct {
++		u16		cmdif_rev;
++		u8		log_sz;
++		u8		log_stride;
++		int		max_reg_cmds;
++		unsigned long	bitmask;
++		struct semaphore sem;
++		struct semaphore pages_sem;
++		struct semaphore throttle_sem;
++	} vars;
+ 	enum mlx5_cmdif_state	state;
+ 	void	       *cmd_alloc_buf;
+ 	dma_addr_t	alloc_dma;
+ 	int		alloc_size;
+ 	void	       *cmd_buf;
+ 	dma_addr_t	dma;
+-	u16		cmdif_rev;
+-	u8		log_sz;
+-	u8		log_stride;
+-	int		max_reg_cmds;
+-	int		events;
+-	u32 __iomem    *vector;
+ 
+ 	/* protect command queue allocations
+ 	 */
+@@ -303,12 +308,8 @@ struct mlx5_cmd {
+ 	 */
+ 	spinlock_t	token_lock;
+ 	u8		token;
+-	unsigned long	bitmask;
+ 	char		wq_name[MLX5_CMD_WQ_MAX_NAME];
  	struct workqueue_struct *wq;
- 	struct semaphore sem;
- 	struct semaphore pages_sem;
-+	struct semaphore throttle_sem;
+-	struct semaphore sem;
+-	struct semaphore pages_sem;
+-	struct semaphore throttle_sem;
  	int	mode;
  	u16     allowed_opcode;
  	struct mlx5_cmd_work_ent *ent_arr[MLX5_MAX_COMMANDS];
