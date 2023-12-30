@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F349D8486;
-	Sat, 30 Dec 2023 12:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297E279C2;
+	Sat, 30 Dec 2023 12:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMV/D77Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A43C433C7;
-	Sat, 30 Dec 2023 12:06:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTh6TMBT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73CAC433C7;
+	Sat, 30 Dec 2023 12:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937966;
-	bh=j6ZndwVx7F9QkeC/fAtCCwbp2Cyeg6dVMvAzwZGwzHE=;
+	s=korg; t=1703937969;
+	bh=8WKi9h14nyyXlU3cUv3vv4XqfyD9MCJsttSvQovTYOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XMV/D77YeHI5SopQZXuhXP/kTvMwOuCocJVtjHmhnHDKrutuyFFnb0TturAEA5lkH
-	 ivEFP003lACDdNTl9TL3rpuVtisD49s2pL7KaFd1iVT/pN4oE171jvrSXDzlup5IRi
-	 QU+JHuVCuTrjcKSrbvqyBgxDv0GEYJ9Zxcz5xcN4=
+	b=jTh6TMBTtr2XGLSvg+DFL44RoLUFlyeM+qnmNJj+4sJuXaVkulfkd03/3f1BgYfAX
+	 S037DD4uf3bPbs3KLNoeePUFirhGbzysiWO47DJiYoRC6Z9rfLBzBchEOY9TIczODg
+	 2ZU7aT+6JRf0NhbxuFe44t00yqCCQv3ArgsJcjFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20Villeret?= <clement.villeret@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 107/156] ALSA: hda/realtek: Add quirk for ASUS ROG GV302XA
-Date: Sat, 30 Dec 2023 11:59:21 +0000
-Message-ID: <20231230115815.862922419@linuxfoundation.org>
+	Gergo Koteles <soyer@irl.hu>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 108/156] ASoC: tas2781: check the validity of prm_no/cfg_no
+Date: Sat, 30 Dec 2023 11:59:22 +0000
+Message-ID: <20231230115815.897812298@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -35,37 +35,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clément Villeret <clement.villeret@gmail.com>
+From: Gergo Koteles <soyer@irl.hu>
 
-commit 02a460adfc4920d4da775fb59ab3e54036daef22 upstream.
+commit f32c80d34249e1cfb2e647ab3c8ef38a460c787f upstream.
 
-Asus ROG Flowx13 (GV302XA) seems require same patch as others asus products
+Add additional checks for program/config numbers to avoid loading from
+invalid addresses.
 
-Signed-off-by: Clément Villeret <clement.villeret@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/0a27bf4b-3056-49ac-9651-ebd7f3e36328@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+If prm_no/cfg_no is negative, skip uploading program/config.
+
+The tas2781-hda driver caused a NULL pointer dereference after loading
+module, and before first runtime_suspend.
+
+the state was:
+tas_priv->cur_conf = -1;
+tas_priv->tasdevice[i].cur_conf = 0;
+program = &(tas_fmw->programs[-1]);
+
+BUG: kernel NULL pointer dereference, address: 0000000000000010
+Call Trace:
+ <TASK>
+ ? __die+0x23/0x70
+ ? page_fault_oops+0x171/0x4e0
+ ? vprintk_emit+0x175/0x2b0
+ ? exc_page_fault+0x7f/0x180
+ ? asm_exc_page_fault+0x26/0x30
+ ? tasdevice_load_block_kernel+0x21/0x310 [snd_soc_tas2781_fmwlib]
+ tasdevice_select_tuningprm_cfg+0x268/0x3a0 [snd_soc_tas2781_fmwlib]
+ tasdevice_tuning_switch+0x69/0x710 [snd_soc_tas2781_fmwlib]
+ tas2781_hda_playback_hook+0xd4/0x110 [snd_hda_scodec_tas2781_i2c]
+
+Fixes: 915f5eadebd2 ("ASoC: tas2781: firmware lib")
+CC:  <stable@vger.kernel.org>
+Signed-off-by: Gergo Koteles <soyer@irl.hu>
+Link: https://msgid.link/r/523780155bfdca9bc0acd39efc79ed039454818d.1702591356.git.soyer@irl.hu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/tas2781-fmwlib.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9864,6 +9864,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1043, 0x1483, "ASUS GU603V", ALC285_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1493, "ASUS GV601V", ALC285_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1517, "Asus Zenbook UX31A", ALC269VB_FIXUP_ASUS_ZENBOOK_UX31A),
-+	SND_PCI_QUIRK(0x1043, 0x1533, "ASUS GV302XA", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1573, "ASUS GZ301V", ALC285_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1662, "ASUS GV301QH", ALC294_FIXUP_ASUS_DUAL_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x1663, "ASUS GU603ZV", ALC285_FIXUP_ASUS_HEADSET_MIC),
+--- a/sound/soc/codecs/tas2781-fmwlib.c
++++ b/sound/soc/codecs/tas2781-fmwlib.c
+@@ -2219,11 +2219,11 @@ int tasdevice_select_tuningprm_cfg(void
+ 		goto out;
+ 	}
+ 
+-	conf = &(tas_fmw->configs[cfg_no]);
+ 	for (i = 0, prog_status = 0; i < tas_priv->ndev; i++) {
+ 		if (cfg_info[rca_conf_no]->active_dev & (1 << i)) {
+-			if (tas_priv->tasdevice[i].cur_prog != prm_no
+-				|| tas_priv->force_fwload_status) {
++			if (prm_no >= 0
++				&& (tas_priv->tasdevice[i].cur_prog != prm_no
++				|| tas_priv->force_fwload_status)) {
+ 				tas_priv->tasdevice[i].cur_conf = -1;
+ 				tas_priv->tasdevice[i].is_loading = true;
+ 				prog_status++;
+@@ -2258,7 +2258,8 @@ int tasdevice_select_tuningprm_cfg(void
+ 	}
+ 
+ 	for (i = 0, status = 0; i < tas_priv->ndev; i++) {
+-		if (tas_priv->tasdevice[i].cur_conf != cfg_no
++		if (cfg_no >= 0
++			&& tas_priv->tasdevice[i].cur_conf != cfg_no
+ 			&& (cfg_info[rca_conf_no]->active_dev & (1 << i))
+ 			&& (tas_priv->tasdevice[i].is_loaderr == false)) {
+ 			status++;
+@@ -2268,6 +2269,7 @@ int tasdevice_select_tuningprm_cfg(void
+ 	}
+ 
+ 	if (status) {
++		conf = &(tas_fmw->configs[cfg_no]);
+ 		status = 0;
+ 		tasdevice_load_data(tas_priv, &(conf->dev_data));
+ 		for (i = 0; i < tas_priv->ndev; i++) {
+@@ -2311,7 +2313,7 @@ int tasdevice_prmg_load(void *context, i
+ 	}
+ 
+ 	for (i = 0, prog_status = 0; i < tas_priv->ndev; i++) {
+-		if (tas_priv->tasdevice[i].cur_prog != prm_no) {
++		if (prm_no >= 0 && tas_priv->tasdevice[i].cur_prog != prm_no) {
+ 			tas_priv->tasdevice[i].cur_conf = -1;
+ 			tas_priv->tasdevice[i].is_loading = true;
+ 			prog_status++;
+@@ -2356,7 +2358,7 @@ int tasdevice_prmg_calibdata_load(void *
+ 	}
+ 
+ 	for (i = 0, prog_status = 0; i < tas_priv->ndev; i++) {
+-		if (tas_priv->tasdevice[i].cur_prog != prm_no) {
++		if (prm_no >= 0 && tas_priv->tasdevice[i].cur_prog != prm_no) {
+ 			tas_priv->tasdevice[i].cur_conf = -1;
+ 			tas_priv->tasdevice[i].is_loading = true;
+ 			prog_status++;
 
 
