@@ -1,119 +1,271 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEE3101ED
-	for <patches@lists.linux.dev>; Thu, 28 Dec 2023 19:43:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A035079DD;
+	Sat, 30 Dec 2023 12:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kEv0LJgX"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-427fa9ecd60so4148711cf.2
-        for <patches@lists.linux.dev>; Thu, 28 Dec 2023 11:43:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703792583; x=1704397383; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8zTgUJfJIqNmJzukT+nSgAgZaf503JH2MNH3MI61x1Y=;
-        b=kEv0LJgXp4fNBnxY38IgC2idC6JLs6swVZSOAVQC/MP3IDbTzqOGNSOODO+1L047uh
-         77b8bPfcNGi74GcnMvIJ5IPBSXt5qfYpqm3lkysLfvfCcA0cg2C/5B0HwVMwyCT4UM1H
-         Z3nc1AQlWAr3HHBnE9VHVtSwNn4qkCgndp4B5C3hvPLw4gN7MP1ueDkR1dy7V6hej9HM
-         vF7K320j/9uMtJNvmyXkHLDX836mnlo1nsfjYb71gum9MT2l2zQe/Kd7+FiCu5E+RRKh
-         DpSWjR5mSIRJni5BZYbIPePEgTezOct+fuN+YCKhXw2gxo7UxLwtgaoqfnFPDjfKf/0S
-         KI7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703792583; x=1704397383;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8zTgUJfJIqNmJzukT+nSgAgZaf503JH2MNH3MI61x1Y=;
-        b=A4falb3ncy96wkjEyP2DqzsfnBJf94KHX4op/mxGwdgWX5SjDmmHSZ5L6z+RkFgPon
-         hTJfpVVjQrcKVpalExJXIEA7EfCI9KO99iBy5AZ7f27FpWiPHWxQ0BqMkTKMmnxmULot
-         M37cjoKm2BSIumTey5SOWGMlpZR2OyYjbxLfKnFoGSy7GARWwLRMyU4uZHS6uB/+ASAT
-         AJ4nq+pq/91NSSstkI5NFnTCMDFMNRy3Dzoumscn++NND+zEd95ZvIG/wBdJr6a0xP0k
-         6HzmYvil8gtFY9e9fEG5msNnUmW6vl2Jtu+jMdo6hYltoIkDFrDdH7mMKZJEhsxgNpDj
-         R7mg==
-X-Gm-Message-State: AOJu0YzsIJcJNMr3+FcxmKiOxOU/Nz8yDfqu/pJRwGP5ytpHZI4kyA6M
-	axUFsB69G8U1WQTFgvNv4xU=
-X-Google-Smtp-Source: AGHT+IGxOTxwgAz40c0YA6Bu6/T7sUpBSnJBsiff2q1myvGIgQ/KzGmg6oDaDqLDi8HB5BCf/FuvvQ==
-X-Received: by 2002:ac8:5754:0:b0:427:892a:edfe with SMTP id 20-20020ac85754000000b00427892aedfemr17790770qtx.66.1703792583543;
-        Thu, 28 Dec 2023 11:43:03 -0800 (PST)
-Received: from auth2-smtp.messagingengine.com (auth2-smtp.messagingengine.com. [66.111.4.228])
-        by smtp.gmail.com with ESMTPSA id ks22-20020ac86216000000b00423f2acc614sm8399072qtb.87.2023.12.28.11.43.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Dec 2023 11:43:03 -0800 (PST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailauth.nyi.internal (Postfix) with ESMTP id 90C7627C005A;
-	Thu, 28 Dec 2023 14:43:02 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Thu, 28 Dec 2023 14:43:02 -0500
-X-ME-Sender: <xms:xc-NZUXKy1ErXIJJTrfxCif2itc5hxSLUDkm8vbPYpaCoY0aeGBN5w>
-    <xme:xc-NZYk5EYGLTb0vPu3yeZnE8m8YgJDfm2qBjrjr90A4mB3teUsV6vEtkFP4emFfA
-    Se-UncdZuvdQKZw0Q>
-X-ME-Received: <xmr:xc-NZYbtsj3BltQkFBlYatYUXmUtM9L40rK63AIzpwiLN-z0UlndhrfNunY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdefuddguddvlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhq
-    uhhnucfhvghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrf
-    grthhtvghrnhepfedthfeuueeihfeihffhtdeluedtveffheeiuddtieehtdduiedvgfej
-    ffeuueefnecuffhomhgrihhnpehgihhthhhusgdrtghomhdprhgvlhgvrghsvghsrdhmug
-    dprhhushhtqdhfohhrqdhlihhnuhigrdgtohhmnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepsghoqhhunhdomhgvshhmthhprghuthhhphgvrh
-    hsohhnrghlihhthidqieelvdeghedtieegqddujeejkeehheehvddqsghoqhhunhdrfhgv
-    nhhgpeepghhmrghilhdrtghomhesfhhigihmvgdrnhgrmhgv
-X-ME-Proxy: <xmx:xc-NZTXyAHdHhfoZRtfSNS-u-32HkHAxWl8sAgMASKstQknwod8bCQ>
-    <xmx:xc-NZemCIgD_F8T3TmCU5f1nLgGl_F9WermBgWNf8iH-yM302H2u_Q>
-    <xmx:xc-NZYevAU7SmQa0YnoQh_Ta1nVxkcYYCxwBnT7mlqc69ylYsgv5pA>
-    <xmx:xs-NZXehw49VsnhL_4Mdid26m-v4L0zpffC8uy4rYU8TqQWMBSXr3A>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Dec 2023 14:43:01 -0500 (EST)
-Date: Thu, 28 Dec 2023 11:42:14 -0800
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] rust: upgrade to Rust 1.75.0
-Message-ID: <ZY3Plt92Jn5xSmXw@boqun-archlinux>
-References: <20231224172128.271447-1-ojeda@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gULgDbNW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED4BC433C7;
+	Sat, 30 Dec 2023 12:00:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1703937648;
+	bh=HrO1LizfPSv8+PWNb7LAdxH7BhcAOMsf0kcVdFiDJmw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=gULgDbNWpTU1rocruQPKUZBtu7u+mBq7yfAMDDIsDR5CXWNSm9LlHQSjeAZMXRFlf
+	 qAwrjirPDyC7vqy0BflsKU+IJWYTw0GMB/QLjo2PhfBmk7GNvDSokBuc486GE/Aqzu
+	 PM7+Lv71X8kCz1+kpEb9OMBBt2agCFdLpc1vGgmQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	syzbot+97a4fe20470e9bc30810@syzkaller.appspotmail.com,
+	Jiri Olsa <jolsa@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Lee Jones <lee@kernel.org>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Subject: [PATCH 6.6 001/156] bpf: Fix prog_array_map_poke_run map poke update
+Date: Sat, 30 Dec 2023 11:57:35 +0000
+Message-ID: <20231230115812.391952293@linuxfoundation.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
+References: <20231230115812.333117904@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231224172128.271447-1-ojeda@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Sun, Dec 24, 2023 at 06:21:28PM +0100, Miguel Ojeda wrote:
-> This is the next upgrade to the Rust toolchain, from 1.74.1 to 1.75.0
-> (i.e. the latest) [1].
-> 
-[...]
-> Link: https://github.com/rust-lang/rust/blob/stable/RELEASES.md#version-1750-2023-12-28 [1]
-> Link: https://rust-for-linux.com/rust-version-policy [2]
-> Link: https://github.com/rust-lang/rust/issues/91850 [3]
-> Link: https://github.com/Rust-for-Linux/linux/issues/2 [4]
-> Link: https://github.com/rust-lang/rust/issues/96283 [5]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
-> Please note that Rust 1.75.0 will actually be released next week -- this
-> is based on linux-next since we will need to remove the `feature` line
-> for the unstable feature used by the to-be-merged PHYLIB abstractions.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-I have done some unit tests with this based on a merge point of today's
-net-next and rust-next (along with some LGTM patches), all tests passed.
+------------------
 
-Tested-by: Boqun Feng <boqun.feng@gmail.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-Regards,
-Boqun
+commit 4b7de801606e504e69689df71475d27e35336fb3 upstream.
 
-[...]
+Lee pointed out issue found by syscaller [0] hitting BUG in prog array
+map poke update in prog_array_map_poke_run function due to error value
+returned from bpf_arch_text_poke function.
+
+There's race window where bpf_arch_text_poke can fail due to missing
+bpf program kallsym symbols, which is accounted for with check for
+-EINVAL in that BUG_ON call.
+
+The problem is that in such case we won't update the tail call jump
+and cause imbalance for the next tail call update check which will
+fail with -EBUSY in bpf_arch_text_poke.
+
+I'm hitting following race during the program load:
+
+  CPU 0                             CPU 1
+
+  bpf_prog_load
+    bpf_check
+      do_misc_fixups
+        prog_array_map_poke_track
+
+                                    map_update_elem
+                                      bpf_fd_array_map_update_elem
+                                        prog_array_map_poke_run
+
+                                          bpf_arch_text_poke returns -EINVAL
+
+    bpf_prog_kallsyms_add
+
+After bpf_arch_text_poke (CPU 1) fails to update the tail call jump, the next
+poke update fails on expected jump instruction check in bpf_arch_text_poke
+with -EBUSY and triggers the BUG_ON in prog_array_map_poke_run.
+
+Similar race exists on the program unload.
+
+Fixing this by moving the update to bpf_arch_poke_desc_update function which
+makes sure we call __bpf_arch_text_poke that skips the bpf address check.
+
+Each architecture has slightly different approach wrt looking up bpf address
+in bpf_arch_text_poke, so instead of splitting the function or adding new
+'checkip' argument in previous version, it seems best to move the whole
+map_poke_run update as arch specific code.
+
+  [0] https://syzkaller.appspot.com/bug?extid=97a4fe20470e9bc30810
+
+Fixes: ebf7d1f508a7 ("bpf, x64: rework pro/epilogue and tailcall handling in JIT")
+Reported-by: syzbot+97a4fe20470e9bc30810@syzkaller.appspotmail.com
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Cc: Lee Jones <lee@kernel.org>
+Cc: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Link: https://lore.kernel.org/bpf/20231206083041.1306660-2-jolsa@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ arch/x86/net/bpf_jit_comp.c |   46 ++++++++++++++++++++++++++++++++++
+ include/linux/bpf.h         |    3 ++
+ kernel/bpf/arraymap.c       |   58 +++++++-------------------------------------
+ 3 files changed, 59 insertions(+), 48 deletions(-)
+
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -2929,3 +2929,49 @@ void bpf_jit_free(struct bpf_prog *prog)
+ 
+ 	bpf_prog_unlock_free(prog);
+ }
++
++void bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
++			       struct bpf_prog *new, struct bpf_prog *old)
++{
++	u8 *old_addr, *new_addr, *old_bypass_addr;
++	int ret;
++
++	old_bypass_addr = old ? NULL : poke->bypass_addr;
++	old_addr = old ? (u8 *)old->bpf_func + poke->adj_off : NULL;
++	new_addr = new ? (u8 *)new->bpf_func + poke->adj_off : NULL;
++
++	/*
++	 * On program loading or teardown, the program's kallsym entry
++	 * might not be in place, so we use __bpf_arch_text_poke to skip
++	 * the kallsyms check.
++	 */
++	if (new) {
++		ret = __bpf_arch_text_poke(poke->tailcall_target,
++					   BPF_MOD_JUMP,
++					   old_addr, new_addr);
++		BUG_ON(ret < 0);
++		if (!old) {
++			ret = __bpf_arch_text_poke(poke->tailcall_bypass,
++						   BPF_MOD_JUMP,
++						   poke->bypass_addr,
++						   NULL);
++			BUG_ON(ret < 0);
++		}
++	} else {
++		ret = __bpf_arch_text_poke(poke->tailcall_bypass,
++					   BPF_MOD_JUMP,
++					   old_bypass_addr,
++					   poke->bypass_addr);
++		BUG_ON(ret < 0);
++		/* let other CPUs finish the execution of program
++		 * so that it will not possible to expose them
++		 * to invalid nop, stack unwind, nop state
++		 */
++		if (!ret)
++			synchronize_rcu();
++		ret = __bpf_arch_text_poke(poke->tailcall_target,
++					   BPF_MOD_JUMP,
++					   old_addr, NULL);
++		BUG_ON(ret < 0);
++	}
++}
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -3143,6 +3143,9 @@ enum bpf_text_poke_type {
+ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type t,
+ 		       void *addr1, void *addr2);
+ 
++void bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
++			       struct bpf_prog *new, struct bpf_prog *old);
++
+ void *bpf_arch_text_copy(void *dst, void *src, size_t len);
+ int bpf_arch_text_invalidate(void *dst, size_t len);
+ 
+--- a/kernel/bpf/arraymap.c
++++ b/kernel/bpf/arraymap.c
+@@ -1012,11 +1012,16 @@ static void prog_array_map_poke_untrack(
+ 	mutex_unlock(&aux->poke_mutex);
+ }
+ 
++void __weak bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
++				      struct bpf_prog *new, struct bpf_prog *old)
++{
++	WARN_ON_ONCE(1);
++}
++
+ static void prog_array_map_poke_run(struct bpf_map *map, u32 key,
+ 				    struct bpf_prog *old,
+ 				    struct bpf_prog *new)
+ {
+-	u8 *old_addr, *new_addr, *old_bypass_addr;
+ 	struct prog_poke_elem *elem;
+ 	struct bpf_array_aux *aux;
+ 
+@@ -1025,7 +1030,7 @@ static void prog_array_map_poke_run(stru
+ 
+ 	list_for_each_entry(elem, &aux->poke_progs, list) {
+ 		struct bpf_jit_poke_descriptor *poke;
+-		int i, ret;
++		int i;
+ 
+ 		for (i = 0; i < elem->aux->size_poke_tab; i++) {
+ 			poke = &elem->aux->poke_tab[i];
+@@ -1044,21 +1049,10 @@ static void prog_array_map_poke_run(stru
+ 			 *    activated, so tail call updates can arrive from here
+ 			 *    while JIT is still finishing its final fixup for
+ 			 *    non-activated poke entries.
+-			 * 3) On program teardown, the program's kallsym entry gets
+-			 *    removed out of RCU callback, but we can only untrack
+-			 *    from sleepable context, therefore bpf_arch_text_poke()
+-			 *    might not see that this is in BPF text section and
+-			 *    bails out with -EINVAL. As these are unreachable since
+-			 *    RCU grace period already passed, we simply skip them.
+-			 * 4) Also programs reaching refcount of zero while patching
++			 * 3) Also programs reaching refcount of zero while patching
+ 			 *    is in progress is okay since we're protected under
+ 			 *    poke_mutex and untrack the programs before the JIT
+-			 *    buffer is freed. When we're still in the middle of
+-			 *    patching and suddenly kallsyms entry of the program
+-			 *    gets evicted, we just skip the rest which is fine due
+-			 *    to point 3).
+-			 * 5) Any other error happening below from bpf_arch_text_poke()
+-			 *    is a unexpected bug.
++			 *    buffer is freed.
+ 			 */
+ 			if (!READ_ONCE(poke->tailcall_target_stable))
+ 				continue;
+@@ -1068,39 +1062,7 @@ static void prog_array_map_poke_run(stru
+ 			    poke->tail_call.key != key)
+ 				continue;
+ 
+-			old_bypass_addr = old ? NULL : poke->bypass_addr;
+-			old_addr = old ? (u8 *)old->bpf_func + poke->adj_off : NULL;
+-			new_addr = new ? (u8 *)new->bpf_func + poke->adj_off : NULL;
+-
+-			if (new) {
+-				ret = bpf_arch_text_poke(poke->tailcall_target,
+-							 BPF_MOD_JUMP,
+-							 old_addr, new_addr);
+-				BUG_ON(ret < 0 && ret != -EINVAL);
+-				if (!old) {
+-					ret = bpf_arch_text_poke(poke->tailcall_bypass,
+-								 BPF_MOD_JUMP,
+-								 poke->bypass_addr,
+-								 NULL);
+-					BUG_ON(ret < 0 && ret != -EINVAL);
+-				}
+-			} else {
+-				ret = bpf_arch_text_poke(poke->tailcall_bypass,
+-							 BPF_MOD_JUMP,
+-							 old_bypass_addr,
+-							 poke->bypass_addr);
+-				BUG_ON(ret < 0 && ret != -EINVAL);
+-				/* let other CPUs finish the execution of program
+-				 * so that it will not possible to expose them
+-				 * to invalid nop, stack unwind, nop state
+-				 */
+-				if (!ret)
+-					synchronize_rcu();
+-				ret = bpf_arch_text_poke(poke->tailcall_target,
+-							 BPF_MOD_JUMP,
+-							 old_addr, NULL);
+-				BUG_ON(ret < 0 && ret != -EINVAL);
+-			}
++			bpf_arch_poke_desc_update(poke, new, old);
+ 		}
+ 	}
+ }
+
+
