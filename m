@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D858473;
-	Sat, 30 Dec 2023 12:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E9879DE;
+	Sat, 30 Dec 2023 12:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCD/PtoE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB82C433C8;
-	Sat, 30 Dec 2023 12:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbbQWPHX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04476C433C8;
+	Sat, 30 Dec 2023 12:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937919;
-	bh=KnN0ICKvT3I4Aeu2T4eOmw0xns58uTcmhef2Q9GQghA=;
+	s=korg; t=1703937922;
+	bh=sw3CAJlFavRhgtp6D+5lg/PM6ri9b/ZjAFzW1ICV+jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uCD/PtoEq6dM80Lai3tgviShwrwehCeSO+1cIT24N7r0MC4HbXTpiV/NuIX7QRWsR
-	 iyUFLOWdT8RpnDX/ff59yVKT5HkgTXQo8HFYgQB9jPBtYKpVJNPK9+JOQrIArbuaSk
-	 hivfkQmuPO9PDfb//nYt8T9VRp724ol0KSdOyhjs=
+	b=sbbQWPHXARQ9dixj8hjw3h9amA5tO1vRURcsCPQQTIEvW1bDSiTEaJMNk2SkbfKJ+
+	 VgTVx7X8PrP75SV711E1HJONBOOdda0QZ3mZ426wu8jmBJ+9rAN2+HXdqcIwVK+Dry
+	 DqFLTxGCaamp0DvjkxOymwf3M65rUAD2odcMbQBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.6 114/156] usb: typec: ucsi: fix gpio-based orientation detection
-Date: Sat, 30 Dec 2023 11:59:28 +0000
-Message-ID: <20231230115816.085996152@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.6 115/156] usb: fotg210-hcd: delete an incorrect bounds test
+Date: Sat, 30 Dec 2023 11:59:29 +0000
+Message-ID: <20231230115816.121596517@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -44,36 +43,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit c994cb596bf7ef5928f06331c76f46e071b16f09 upstream.
+commit 7fbcd195e2b8cc952e4aeaeb50867b798040314c upstream.
 
-Fix the recently added connector sanity check which was off by one and
-prevented orientation notifications from being handled correctly for the
-second port when using GPIOs to determine orientation.
+Here "temp" is the number of characters that we have written and "size"
+is the size of the buffer.  The intent was clearly to say that if we have
+written to the end of the buffer then stop.
 
-Fixes: c6165ed2f425 ("usb: ucsi: glink: use the connector orientation GPIO to provide switch events")
+However, for that to work the comparison should have been done on the
+original "size" value instead of the "size -= temp" value.  Not only
+will that not trigger when we want to, but there is a small chance that
+it will trigger incorrectly before we want it to and we break from the
+loop slightly earlier than intended.
+
+This code was recently changed from using snprintf() to scnprintf().  With
+snprintf() we likely would have continued looping and passed a negative
+size parameter to snprintf().  This would have triggered an annoying
+WARN().  Now that we have converted to scnprintf() "size" will never
+drop below 1 and there is no real need for this test.  We could change
+the condition to "if (temp <= 1) goto done;" but just deleting the test
+is cleanest.
+
+Fixes: 7d50195f6c50 ("usb: host: Faraday fotg210-hcd driver")
 Cc: stable <stable@kernel.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20231208123603.29957-1-johan+linaro@kernel.org
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/ZXmwIwHe35wGfgzu@suswa
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi_glink.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/fotg210/fotg210-hcd.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi_glink.c
-+++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-@@ -228,7 +228,7 @@ static void pmic_glink_ucsi_notify(struc
+--- a/drivers/usb/fotg210/fotg210-hcd.c
++++ b/drivers/usb/fotg210/fotg210-hcd.c
+@@ -428,8 +428,6 @@ static void qh_lines(struct fotg210_hcd
+ 			temp = size;
+ 		size -= temp;
+ 		next += temp;
+-		if (temp == size)
+-			goto done;
+ 	}
  
- 	con_num = UCSI_CCI_CONNECTOR(cci);
- 	if (con_num) {
--		if (con_num < PMIC_GLINK_MAX_PORTS &&
-+		if (con_num <= PMIC_GLINK_MAX_PORTS &&
- 		    ucsi->port_orientation[con_num - 1]) {
- 			int orientation = gpiod_get_value(ucsi->port_orientation[con_num - 1]);
+ 	temp = snprintf(next, size, "\n");
+@@ -439,7 +437,6 @@ static void qh_lines(struct fotg210_hcd
+ 	size -= temp;
+ 	next += temp;
  
+-done:
+ 	*sizep = size;
+ 	*nextp = next;
+ }
 
 
