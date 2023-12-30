@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533458BEB;
-	Sat, 30 Dec 2023 12:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81F28825;
+	Sat, 30 Dec 2023 12:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ze9hdjk9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13FDC433C8;
-	Sat, 30 Dec 2023 12:02:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZ3V6B31"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60EC4C433C7;
+	Sat, 30 Dec 2023 12:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937728;
-	bh=8nUuxXN2Dg4B+egj8mtxZ+VJRsBhRhfEaTgCF2LQnCQ=;
+	s=korg; t=1703937730;
+	bh=E9xEh/D8HR7RGby1czfRaGYBMndXXwv2/rvVxHVzMeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ze9hdjk9QnHcMjODHh67/TCWAC9MnRqrTHcOKwH5yygDAa/ObL+c7Xg3jtJbS3VjI
-	 QT+HVZLdSD7fp2qTirTY++BVZ651IdKpJepLJGZArarQdtQvT+sbad2XjpFzje1BEL
-	 JadNouqgZvkeEynm73KU0JuNs5MKzNkkTPT5s3Hk=
+	b=zZ3V6B31jh03Djg8YO/tPgfF/b7rGkT2cYdgq1KW7oiWYCOFdNZELbzribtUSDt8V
+	 R2EzEzYOOygITWrJGwBDuePBJ/A/WQqfG6bw3itoAt92j6OqmVNTHXtEf8W3o8Sd8C
+	 lASv/+bGuPXtGMtD1T1c3Ocaf3ZN6d8GkiLG1E7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dan Carpenter <dan.carpenter@linaro.org>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/156] net/mlx5e: Fix error code in mlx5e_tc_action_miss_mapping_get()
-Date: Sat, 30 Dec 2023 11:58:14 +0000
-Message-ID: <20231230115813.671860349@linuxfoundation.org>
+Subject: [PATCH 6.6 041/156] net/mlx5e: Fix error codes in alloc_branch_attr()
+Date: Sat, 30 Dec 2023 11:58:15 +0000
+Message-ID: <20231230115813.705496308@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -44,35 +44,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 86d5922679f3b6d02a64df66cdd777fdd4ea5c0d ]
+[ Upstream commit d792e5f7f19b95f5ce41ac49df5ead4d280238f4 ]
 
-Preserve the error code if esw_add_restore_rule() fails.  Don't return
-success.
+Set the error code if set_branch_dest_ft() fails.
 
-Fixes: 6702782845a5 ("net/mlx5e: TC, Set CT miss to the specific ct action instance")
+Fixes: ccbe33003b10 ("net/mlx5e: TC, Don't offload post action rule if not supported")
 Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_tc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_tc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-index 1bead98f73bf5..2cfbacf77535c 100644
+index 2cfbacf77535c..25e44ee5121a9 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-@@ -5734,8 +5734,10 @@ int mlx5e_tc_action_miss_mapping_get(struct mlx5e_priv *priv, struct mlx5_flow_a
- 
- 	esw = priv->mdev->priv.eswitch;
- 	attr->act_id_restore_rule = esw_add_restore_rule(esw, *act_miss_mapping);
--	if (IS_ERR(attr->act_id_restore_rule))
-+	if (IS_ERR(attr->act_id_restore_rule)) {
-+		err = PTR_ERR(attr->act_id_restore_rule);
- 		goto err_rule;
-+	}
- 
- 	return 0;
- 
+@@ -3776,7 +3776,8 @@ alloc_branch_attr(struct mlx5e_tc_flow *flow,
+ 		break;
+ 	case FLOW_ACTION_ACCEPT:
+ 	case FLOW_ACTION_PIPE:
+-		if (set_branch_dest_ft(flow->priv, attr))
++		err = set_branch_dest_ft(flow->priv, attr);
++		if (err)
+ 			goto out_err;
+ 		break;
+ 	case FLOW_ACTION_JUMP:
+@@ -3786,7 +3787,8 @@ alloc_branch_attr(struct mlx5e_tc_flow *flow,
+ 			goto out_err;
+ 		}
+ 		*jump_count = cond->extval;
+-		if (set_branch_dest_ft(flow->priv, attr))
++		err = set_branch_dest_ft(flow->priv, attr);
++		if (err)
+ 			goto out_err;
+ 		break;
+ 	default:
 -- 
 2.43.0
 
