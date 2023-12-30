@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CE079CD;
-	Sat, 30 Dec 2023 12:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9E879DD;
+	Sat, 30 Dec 2023 12:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sHuuL+u0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51AA8C433C8;
-	Sat, 30 Dec 2023 12:10:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InAnZvZH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9BCAC433C8;
+	Sat, 30 Dec 2023 12:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938230;
-	bh=iPuCW4b72GEau599RTwqCRyNqqwyMKnOdcvJtRrFMVQ=;
+	s=korg; t=1703938233;
+	bh=uvHZUWuXCE1ibtpvuOLlN+a3oFsmfL3JmkWwgfwxnGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sHuuL+u0b0oo7Zgg96t12YzbSQfPBHVRhcDvOGA6cSobD/19S3HaSmMh568t9TKPo
-	 FT67gnsx1Z7lxEerQHPZJwBN+H+RyROpumhTz2QmW2BNp0Lfn9hSgOZigBBGjh2Uej
-	 2gw/jRKX5EY4iKWO3Ksk0RtQnB/TncCFwrnFD8F4=
+	b=InAnZvZH8Wr56H9+X2ZSjeNHEdDa49tBfqLMXbEpYQ47LDjzwiuMo+sD9yNIqHjXe
+	 jmaT/0gEZarlwbf+Jc3H33aYid2ONBCotZ6vcKhdetSIri/h5XFdfn0JPJ794UMwnj
+	 2rwaBunglcC+Gs4OTHNdgnlUg2P2Fo8Kljxdk0E0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/112] drm/i915: Fix ADL+ tiled plane stride when the POT stride is smaller than the original
-Date: Sat, 30 Dec 2023 11:59:26 +0000
-Message-ID: <20231230115808.408687995@linuxfoundation.org>
+Subject: [PATCH 6.1 054/112] interconnect: Treat xlate() returning NULL node as an error
+Date: Sat, 30 Dec 2023 11:59:27 +0000
+Message-ID: <20231230115808.438480211@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -38,61 +36,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Mike Tipton <quic_mdtipton@quicinc.com>
 
-[ Upstream commit 324b70e997aab0a7deab8cb90711faccda4e98c8 ]
+[ Upstream commit ad2ab1297d0c80899125a842bb7a078abfe1e6ce ]
 
-plane_view_scanout_stride() currently assumes that we had to pad the
-mapping stride with dummy pages in order to align it. But that is not
-the case if the original fb stride exceeds the aligned stride used
-to populate the remapped view, which is calculated from the user
-specified framebuffer width rather than the user specified framebuffer
-stride.
+Currently, if provider->xlate() or provider->xlate_extended()
+"successfully" return a NULL node, then of_icc_get_from_provider() won't
+consider that an error and will successfully return the NULL node. This
+bypasses error handling in of_icc_get_by_index() and leads to NULL
+dereferences in path_find().
 
-Ignore the original fb stride in this case and just stick to the POT
-aligned stride. Getting this wrong will cause the plane to fetch the
-wrong data, and can lead to fault errors if the page tables at the
-bogus location aren't even populated.
+This could be avoided by ensuring provider callbacks always return an
+error for NULL nodes, but it's better to explicitly protect against this
+in the common framework.
 
-TODO: figure out if this is OK for CCS, or if we should instead increase
-the width of the view to cover the entire user specified fb stride
-instead...
-
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231204202443.31247-1-ville.syrjala@linux.intel.com
-Reviewed-by: Imre Deak <imre.deak@intel.com>
-Reviewed-by: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
-(cherry picked from commit 01a39f1c4f1220a4e6a25729fae87ff5794cbc52)
-Cc: stable@vger.kernel.org
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: 87e3031b6fbd ("interconnect: Allow endpoints translation via DT")
+Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
+Link: https://lore.kernel.org/r/20231025145829.11603-1-quic_mdtipton@quicinc.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_fb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/interconnect/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_fb.c b/drivers/gpu/drm/i915/display/intel_fb.c
-index 583b3c0f96ddc..c69a638796c62 100644
---- a/drivers/gpu/drm/i915/display/intel_fb.c
-+++ b/drivers/gpu/drm/i915/display/intel_fb.c
-@@ -1316,7 +1316,8 @@ plane_view_scanout_stride(const struct intel_framebuffer *fb, int color_plane,
- 	struct drm_i915_private *i915 = to_i915(fb->base.dev);
- 	unsigned int stride_tiles;
+diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+index 0c6fc954e7296..1d9494f64a215 100644
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -381,6 +381,9 @@ struct icc_node_data *of_icc_get_from_provider(struct of_phandle_args *spec)
+ 	}
+ 	mutex_unlock(&icc_lock);
  
--	if (IS_ALDERLAKE_P(i915) || DISPLAY_VER(i915) >= 14)
-+	if ((IS_ALDERLAKE_P(i915) || DISPLAY_VER(i915) >= 14) &&
-+	    src_stride_tiles < dst_stride_tiles)
- 		stride_tiles = src_stride_tiles;
- 	else
- 		stride_tiles = dst_stride_tiles;
++	if (!node)
++		return ERR_PTR(-EINVAL);
++
+ 	if (IS_ERR(node))
+ 		return ERR_CAST(node);
+ 
 -- 
 2.43.0
 
