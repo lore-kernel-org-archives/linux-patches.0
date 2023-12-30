@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4848BEB;
-	Sat, 30 Dec 2023 12:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59CF881F;
+	Sat, 30 Dec 2023 12:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvG8xdlO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82B9C433C7;
-	Sat, 30 Dec 2023 12:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Za3u6AO2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F159C433C8;
+	Sat, 30 Dec 2023 12:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937816;
-	bh=1qFoKBWuw4/D7WZd/g0s6TH2Xoh8Oi9ebrb81slnF2U=;
+	s=korg; t=1703937818;
+	bh=KxyLGrmPfPt0JWp6zdwv1YW8JpRA71SP1XnWV190JTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IvG8xdlO4mlgaNCdSojGAN0ZxnqWKdchpUi6/Tg1lAJnF41+32NUWp+Q1rp+AU9jf
-	 OYwtiK0/DUwoZRbeqhP3ofOJKdiK4dJtD1Wc1ng66jXRcbQ+qFOtm3e8ndk9m95PGT
-	 78ri7YJUkVlojT6fanqlWFbLK3aBibF14zuoKc4I=
+	b=Za3u6AO2a4zI8swxZXsC4/cAI0Oy/uF40v0KbsHCMlAyesj0QxQPmxc3bQ++U0WcQ
+	 QlvgcR/Bq/knh5VLYSG76e+9w2iNcAcH9hexKaWs22LHQh81HOgndi8+KdtpyPxU3O
+	 CI9RixCkK18JB/1QqYSXvEYzN1cdDhU9KLhu5DFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/156] ASoC: fsl_sai: Fix channel swap issue on i.MX8MP
-Date: Sat, 30 Dec 2023 11:58:47 +0000
-Message-ID: <20231230115814.743684934@linuxfoundation.org>
+Subject: [PATCH 6.6 074/156] i2c: qcom-geni: fix missing clk_disable_unprepare() and geni_se_resources_off()
+Date: Sat, 30 Dec 2023 11:58:48 +0000
+Message-ID: <20231230115814.781076381@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -43,43 +43,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 8f0f01647550daf9cd8752c1656dcb0136d79ce1 ]
+[ Upstream commit 043465b66506e8c647cdd38a2db1f2ee0f369a1b ]
 
-When flag mclk_with_tere and mclk_direction_output enabled,
-The SAI transmitter or receiver will be enabled in very early
-stage, that if FSL_SAI_xMR is set by previous case,
-for example previous case is one channel, current case is
-two channels, then current case started with wrong xMR in
-the beginning, then channel swap happen.
+Add missing clk_disable_unprepare() and geni_se_resources_off() in the error
+path in geni_i2c_probe().
 
-The patch is to clear xMR in hw_free() to avoid such
-channel swap issue.
-
-Fixes: 3e4a82612998 ("ASoC: fsl_sai: MCLK bind with TX/RX enable bit")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Link: https://msgid.link/r/1702953057-4499-1-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 14d02fbadb5d ("i2c: qcom-geni: add desc struct to prepare support for I2C Master Hub variant")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_sai.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/i2c/busses/i2c-qcom-geni.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index 3252eefc4bc0e..3d202398c5411 100644
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -715,6 +715,9 @@ static int fsl_sai_hw_free(struct snd_pcm_substream *substream,
- 	bool tx = substream->stream == SNDRV_PCM_STREAM_PLAYBACK;
- 	unsigned int ofs = sai->soc_data->reg_offset;
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 229353e96e095..0a9d389df301b 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -857,6 +857,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 	ret = geni_se_resources_on(&gi2c->se);
+ 	if (ret) {
+ 		dev_err(dev, "Error turning on resources %d\n", ret);
++		clk_disable_unprepare(gi2c->core_clk);
+ 		return ret;
+ 	}
+ 	proto = geni_se_read_proto(&gi2c->se);
+@@ -876,8 +877,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 		/* FIFO is disabled, so we can only use GPI DMA */
+ 		gi2c->gpi_mode = true;
+ 		ret = setup_gpi_dma(gi2c);
+-		if (ret)
++		if (ret) {
++			geni_se_resources_off(&gi2c->se);
++			clk_disable_unprepare(gi2c->core_clk);
+ 			return dev_err_probe(dev, ret, "Failed to setup GPI DMA mode\n");
++		}
  
-+	/* Clear xMR to avoid channel swap with mclk_with_tere enabled case */
-+	regmap_write(sai->regmap, FSL_SAI_xMR(tx), 0);
-+
- 	regmap_update_bits(sai->regmap, FSL_SAI_xCR3(tx, ofs),
- 			   FSL_SAI_CR3_TRCE_MASK, 0);
+ 		dev_dbg(dev, "Using GPI DMA mode for I2C\n");
+ 	} else {
+@@ -890,6 +894,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 
+ 		if (!tx_depth) {
+ 			dev_err(dev, "Invalid TX FIFO depth\n");
++			geni_se_resources_off(&gi2c->se);
++			clk_disable_unprepare(gi2c->core_clk);
+ 			return -EINVAL;
+ 		}
  
 -- 
 2.43.0
