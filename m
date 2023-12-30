@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB788489;
-	Sat, 30 Dec 2023 12:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0C08487;
+	Sat, 30 Dec 2023 12:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmil2nYA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 648B2C433C8;
-	Sat, 30 Dec 2023 12:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yk81LMQz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01702C433C8;
+	Sat, 30 Dec 2023 12:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937787;
-	bh=UIfzTt4MHUGLq7PCIeCXpuy+d2zUI9fOnuFxct/dH8k=;
+	s=korg; t=1703937790;
+	bh=9YUf3lUkW2cWfIfm1D6Y1Psdx60DF+ZQVnffFBDlaT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mmil2nYAFECykGFDj/InICl11kKViuebksBgZ9vh9/l0/vL9Ipz+fjJnE5qxmv+f6
-	 YFREAyR9kKzH5nFVDFQ923stjIElqJhMQRAT0k+pv9lLgu9LuhzQ1EO7+/9tG0Xu3P
-	 LWeCgLTd4QVzgbHgIhESyqp5H0A7fG28du/ij4cA=
+	b=yk81LMQzAxqgFEoO2rvUd9GHlm6aH3+FmEXpzCiAHc00HTDE4uGYbVSXchQVY38K6
+	 NES1Q+LQi8L/QkWmeJ15JLLsLUx25CB9izdz3UHCd1ciYpKdiLQLMyvHecAVafc1Xi
+	 wUa+DvtFg9RHm7ccpO6GmufVGGZhJT+hlldHeMs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Suvanto <markus.suvanto@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/156] afs: Fix dynamic root lookup DNS check
-Date: Sat, 30 Dec 2023 11:58:37 +0000
-Message-ID: <20231230115814.405414596@linuxfoundation.org>
+Subject: [PATCH 6.6 064/156] net: ethernet: mtk_wed: fix possible NULL pointer dereference in mtk_wed_wo_queue_tx_clean()
+Date: Sat, 30 Dec 2023 11:58:38 +0000
+Message-ID: <20231230115814.435653223@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -44,73 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 74cef6872ceaefb5b6c5c60641371ea28702d358 ]
+[ Upstream commit 7cb8cd4daacfea646cf8b5925ca2c66c98b18480 ]
 
-In the afs dynamic root directory, the ->lookup() function does a DNS check
-on the cell being asked for and if the DNS upcall reports an error it will
-report an error back to userspace (typically ENOENT).
+In order to avoid a NULL pointer dereference, check entry->buf pointer before running
+skb_free_frag in mtk_wed_wo_queue_tx_clean routine.
 
-However, if a failed DNS upcall returns a new-style result, it will return
-a valid result, with the status field set appropriately to indicate the
-type of failure - and in that case, dns_query() doesn't return an error and
-we let stat() complete with no error - which can cause confusion in
-userspace as subsequent calls that trigger d_automount then fail with
-ENOENT.
-
-Fix this by checking the status result from a valid dns_query() and
-returning an error if it indicates a failure.
-
-Fixes: bbb4c4323a4d ("dns: Allow the dns resolver to retrieve a server set")
-Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=216637
-Signed-off-by: David Howells <dhowells@redhat.com>
-Tested-by: Markus Suvanto <markus.suvanto@gmail.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
+Fixes: 799684448e3e ("net: ethernet: mtk_wed: introduce wed wo support")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/3c1262464d215faa8acebfc08869798c81c96f4a.1702827359.git.lorenzo@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/dynroot.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_wed_wo.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/afs/dynroot.c b/fs/afs/dynroot.c
-index cec7d8e5ad0c9..10905a53d5b27 100644
---- a/fs/afs/dynroot.c
-+++ b/fs/afs/dynroot.c
-@@ -114,6 +114,7 @@ static int afs_probe_cell_name(struct dentry *dentry)
- 	struct afs_net *net = afs_d2net(dentry);
- 	const char *name = dentry->d_name.name;
- 	size_t len = dentry->d_name.len;
-+	char *result = NULL;
- 	int ret;
+diff --git a/drivers/net/ethernet/mediatek/mtk_wed_wo.c b/drivers/net/ethernet/mediatek/mtk_wed_wo.c
+index 3bd51a3d66500..ae44ad5f8ce8a 100644
+--- a/drivers/net/ethernet/mediatek/mtk_wed_wo.c
++++ b/drivers/net/ethernet/mediatek/mtk_wed_wo.c
+@@ -291,6 +291,9 @@ mtk_wed_wo_queue_tx_clean(struct mtk_wed_wo *wo, struct mtk_wed_wo_queue *q)
+ 	for (i = 0; i < q->n_desc; i++) {
+ 		struct mtk_wed_wo_queue_entry *entry = &q->entry[i];
  
- 	/* Names prefixed with a dot are R/W mounts. */
-@@ -131,9 +132,22 @@ static int afs_probe_cell_name(struct dentry *dentry)
- 	}
- 
- 	ret = dns_query(net->net, "afsdb", name, len, "srv=1",
--			NULL, NULL, false);
--	if (ret == -ENODATA || ret == -ENOKEY)
-+			&result, NULL, false);
-+	if (ret == -ENODATA || ret == -ENOKEY || ret == 0)
- 		ret = -ENOENT;
-+	if (ret > 0 && ret >= sizeof(struct dns_server_list_v1_header)) {
-+		struct dns_server_list_v1_header *v1 = (void *)result;
++		if (!entry->buf)
++			continue;
 +
-+		if (v1->hdr.zero == 0 &&
-+		    v1->hdr.content == DNS_PAYLOAD_IS_SERVER_LIST &&
-+		    v1->hdr.version == 1 &&
-+		    (v1->status != DNS_LOOKUP_GOOD &&
-+		     v1->status != DNS_LOOKUP_GOOD_WITH_BAD))
-+			return -ENOENT;
-+
-+	}
-+
-+	kfree(result);
- 	return ret;
- }
- 
+ 		dma_unmap_single(wo->hw->dev, entry->addr, entry->len,
+ 				 DMA_TO_DEVICE);
+ 		skb_free_frag(entry->buf);
 -- 
 2.43.0
 
