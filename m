@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CD279C2;
-	Sat, 30 Dec 2023 12:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9162479DE;
+	Sat, 30 Dec 2023 12:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJGITmVq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA23C433C8;
-	Sat, 30 Dec 2023 12:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykTWDBTw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CDFC433C7;
+	Sat, 30 Dec 2023 12:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937989;
-	bh=2maALwr6itLSHfiThUnBvxb2ue6lPDx9Fq5NzV/t40Y=;
+	s=korg; t=1703937992;
+	bh=/E1q+mNnkbZJDixEczimPNJPOknVjqo1+3f7Tfow3Ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJGITmVqDHc9NpdEMOnYHhN3gP6phq16tIyok1bGVgbXVu8JzCccALOduMS2aQMCN
-	 /0+Y5VqfJW0KThWXm/7mStUPaBDLOp9d1uw0Bj6GzLQBA7oYmMzb/UQN+EYtDzblqg
-	 Is7pupC0v9QLz35TM/k2RuVOaxQ5ODQJa32HYB0Y=
+	b=ykTWDBTwoJlm8k0HWhqZete2HZPM3+Q8bTFGeFBAMSMOwGpgnUZlk0aH7iZ2X6wbJ
+	 ZHrNHVHMQ+ZVDKjBqEFGDnx0tU+Bg2uMJGyuc2vY7z1p8B1vfCD/QlY9NIIryzzcLL
+	 odDhNQhIYQn+7ENkrQngNKGfLZWFtEjZ76Dpzb4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <zanussi@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Alexander Graf <graf@amazon.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 141/156] tracing / synthetic: Disable events after testing in synth_event_gen_test_init()
-Date: Sat, 30 Dec 2023 11:59:55 +0000
-Message-ID: <20231230115816.939929528@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.6 142/156] dm-integrity: dont modify bios immutable bio_vec in integrity_metadata()
+Date: Sat, 30 Dec 2023 11:59:56 +0000
+Message-ID: <20231230115816.967594033@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -44,110 +41,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 88b30c7f5d27e1594d70dc2bd7199b18f2b57fa9 upstream.
+commit b86f4b790c998afdbc88fe1aa55cfe89c4068726 upstream.
 
-The synth_event_gen_test module can be built in, if someone wants to run
-the tests at boot up and not have to load them.
+__bio_for_each_segment assumes that the first struct bio_vec argument
+doesn't change - it calls "bio_advance_iter_single((bio), &(iter),
+(bvl).bv_len)" to advance the iterator. Unfortunately, the dm-integrity
+code changes the bio_vec with "bv.bv_len -= pos". When this code path
+is taken, the iterator would be out of sync and dm-integrity would
+report errors. This happens if the machine is out of memory and
+"kmalloc" fails.
 
-The synth_event_gen_test_init() function creates and enables the synthetic
-events and runs its tests.
+Fix this bug by making a copy of "bv" and changing the copy instead.
 
-The synth_event_gen_test_exit() disables the events it created and
-destroys the events.
-
-If the module is builtin, the events are never disabled. The issue is, the
-events should be disable after the tests are run. This could be an issue
-if the rest of the boot up tests are enabled, as they expect the events to
-be in a known state before testing. That known state happens to be
-disabled.
-
-When CONFIG_SYNTH_EVENT_GEN_TEST=y and CONFIG_EVENT_TRACE_STARTUP_TEST=y
-a warning will trigger:
-
- Running tests on trace events:
- Testing event create_synth_test:
- Enabled event during self test!
- ------------[ cut here ]------------
- WARNING: CPU: 2 PID: 1 at kernel/trace/trace_events.c:4150 event_trace_self_tests+0x1c2/0x480
- Modules linked in:
- CPU: 2 PID: 1 Comm: swapper/0 Not tainted 6.7.0-rc2-test-00031-gb803d7c664d5-dirty #276
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
- RIP: 0010:event_trace_self_tests+0x1c2/0x480
- Code: bb e8 a2 ab 5d fc 48 8d 7b 48 e8 f9 3d 99 fc 48 8b 73 48 40 f6 c6 01 0f 84 d6 fe ff ff 48 c7 c7 20 b6 ad bb e8 7f ab 5d fc 90 <0f> 0b 90 48 89 df e8 d3 3d 99 fc 48 8b 1b 4c 39 f3 0f 85 2c ff ff
- RSP: 0000:ffffc9000001fdc0 EFLAGS: 00010246
- RAX: 0000000000000029 RBX: ffff88810399ca80 RCX: 0000000000000000
- RDX: 0000000000000000 RSI: ffffffffb9f19478 RDI: ffff88823c734e64
- RBP: ffff88810399f300 R08: 0000000000000000 R09: fffffbfff79eb32a
- R10: ffffffffbcf59957 R11: 0000000000000001 R12: ffff888104068090
- R13: ffffffffbc89f0a0 R14: ffffffffbc8a0f08 R15: 0000000000000078
- FS:  0000000000000000(0000) GS:ffff88823c700000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 00000001f6282001 CR4: 0000000000170ef0
- Call Trace:
-  <TASK>
-  ? __warn+0xa5/0x200
-  ? event_trace_self_tests+0x1c2/0x480
-  ? report_bug+0x1f6/0x220
-  ? handle_bug+0x6f/0x90
-  ? exc_invalid_op+0x17/0x50
-  ? asm_exc_invalid_op+0x1a/0x20
-  ? tracer_preempt_on+0x78/0x1c0
-  ? event_trace_self_tests+0x1c2/0x480
-  ? __pfx_event_trace_self_tests_init+0x10/0x10
-  event_trace_self_tests_init+0x27/0xe0
-  do_one_initcall+0xd6/0x3c0
-  ? __pfx_do_one_initcall+0x10/0x10
-  ? kasan_set_track+0x25/0x30
-  ? rcu_is_watching+0x38/0x60
-  kernel_init_freeable+0x324/0x450
-  ? __pfx_kernel_init+0x10/0x10
-  kernel_init+0x1f/0x1e0
-  ? _raw_spin_unlock_irq+0x33/0x50
-  ret_from_fork+0x34/0x60
-  ? __pfx_kernel_init+0x10/0x10
-  ret_from_fork_asm+0x1b/0x30
-  </TASK>
-
-This is because the synth_event_gen_test_init() left the synthetic events
-that it created enabled. By having it disable them after testing, the
-other selftests will run fine.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20231220111525.2f0f49b0@gandalf.local.home
-
-Cc: stable@vger.kernel.org
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Fixes: 9fe41efaca084 ("tracing: Add synth event generation test module")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reported-by: Alexander Graf <graf@amazon.com>
-Tested-by: Alexander Graf <graf@amazon.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 7eada909bfd7 ("dm: add integrity target")
+Cc: stable@vger.kernel.org	# v4.12+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/synth_event_gen_test.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/md/dm-integrity.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/kernel/trace/synth_event_gen_test.c
-+++ b/kernel/trace/synth_event_gen_test.c
-@@ -477,6 +477,17 @@ static int __init synth_event_gen_test_i
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -1765,11 +1765,12 @@ static void integrity_metadata(struct wo
+ 		sectors_to_process = dio->range.n_sectors;
  
- 	ret = test_trace_synth_event();
- 	WARN_ON(ret);
-+
-+	/* Disable when done */
-+	trace_array_set_clr_event(gen_synth_test->tr,
-+				  "synthetic",
-+				  "gen_synth_test", false);
-+	trace_array_set_clr_event(empty_synth_test->tr,
-+				  "synthetic",
-+				  "empty_synth_test", false);
-+	trace_array_set_clr_event(create_synth_test->tr,
-+				  "synthetic",
-+				  "create_synth_test", false);
-  out:
- 	return ret;
- }
+ 		__bio_for_each_segment(bv, bio, iter, dio->bio_details.bi_iter) {
++			struct bio_vec bv_copy = bv;
+ 			unsigned int pos;
+ 			char *mem, *checksums_ptr;
+ 
+ again:
+-			mem = bvec_kmap_local(&bv);
++			mem = bvec_kmap_local(&bv_copy);
+ 			pos = 0;
+ 			checksums_ptr = checksums;
+ 			do {
+@@ -1778,7 +1779,7 @@ again:
+ 				sectors_to_process -= ic->sectors_per_block;
+ 				pos += ic->sectors_per_block << SECTOR_SHIFT;
+ 				sector += ic->sectors_per_block;
+-			} while (pos < bv.bv_len && sectors_to_process && checksums != checksums_onstack);
++			} while (pos < bv_copy.bv_len && sectors_to_process && checksums != checksums_onstack);
+ 			kunmap_local(mem);
+ 
+ 			r = dm_integrity_rw_tag(ic, checksums, &dio->metadata_block, &dio->metadata_offset,
+@@ -1803,9 +1804,9 @@ again:
+ 			if (!sectors_to_process)
+ 				break;
+ 
+-			if (unlikely(pos < bv.bv_len)) {
+-				bv.bv_offset += pos;
+-				bv.bv_len -= pos;
++			if (unlikely(pos < bv_copy.bv_len)) {
++				bv_copy.bv_offset += pos;
++				bv_copy.bv_len -= pos;
+ 				goto again;
+ 			}
+ 		}
 
 
