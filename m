@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6DD8486;
-	Sat, 30 Dec 2023 12:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10678F52;
+	Sat, 30 Dec 2023 12:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zV6kW/bu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9197C433C7;
-	Sat, 30 Dec 2023 12:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELGr3tXa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA56C433C8;
+	Sat, 30 Dec 2023 12:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937834;
-	bh=QVlAb/5WsYIAUKyQw0Mu9wnauh1IcNmKS17FP87b4HM=;
+	s=korg; t=1703937836;
+	bh=njcN8CUhY5BS6kH30tjJmcYMaJL2Uu4MKIO527qyslU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zV6kW/bueMCMbl6tc+AITOi7GtJ+1ukSlvQJCemafazaZwZ89oK3irqOzyXsYWu0V
-	 fV1IBaGrZAJE1/zXes8hYpETsjFGIIMzJwskuKjJwCnPyF5fOTBnzD5e+xLM8dTFkO
-	 Vg027HDbW9nQ5UWnzgqK/Msv6bj9FSEum6WW2VpA=
+	b=ELGr3tXaCKfJO5qxZYPNVnTWq4dMytNFGRNP9GJMavzrVUvu2YPhHjvr5ltKc3oQ6
+	 qLAZpCnEmsCNt67bUS1C+5JC2KF9kVpwllEtMtId/LSqjSCebm0D0yumH/Z/UJOlbi
+	 BJdUF6VcqW6eC5gWjuxT26hU69evRLIWwoLGI0Mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/156] net: phy: skip LED triggers on PHYs on SFP modules
-Date: Sat, 30 Dec 2023 11:58:30 +0000
-Message-ID: <20231230115814.170667973@linuxfoundation.org>
+Subject: [PATCH 6.6 057/156] ice: stop trashing VF VSI aggregator node ID information
+Date: Sat, 30 Dec 2023 11:58:31 +0000
+Message-ID: <20231230115814.203352963@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -42,192 +45,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit b1dfc0f76231bbf395c59d20a2070684620d5d0f ]
+[ Upstream commit 7d881346121a97756f34e00e6296a5d63f001f7f ]
 
-Calling led_trigger_register() when attaching a PHY located on an SFP
-module potentially (and practically) leads into a deadlock.
-Fix this by not calling led_trigger_register() for PHYs localted on SFP
-modules as such modules actually never got any LEDs.
+When creating new VSIs, they are assigned into an aggregator node in the
+scheduler tree. Information about which aggregator node a VSI is assigned
+into is maintained by the vsi->agg_node structure. In ice_vsi_decfg(), this
+information is being destroyed, by overwriting the valid flag and the
+agg_id field to zero.
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.7.0-rc4-next-20231208+ #0 Tainted: G           O
-------------------------------------------------------
-kworker/u8:2/43 is trying to acquire lock:
-ffffffc08108c4e8 (triggers_list_lock){++++}-{3:3}, at: led_trigger_register+0x4c/0x1a8
+For VF VSIs, this breaks the aggregator node configuration replay, which
+depends on this information. This results in VFs being inserted into the
+default aggregator node. The resulting configuration will have unexpected
+Tx bandwidth sharing behavior.
 
-but task is already holding lock:
-ffffff80c5c6f318 (&sfp->sm_mutex){+.+.}-{3:3}, at: cleanup_module+0x2ba8/0x3120 [sfp]
+This was broken by commit 6624e780a577 ("ice: split ice_vsi_setup into
+smaller functions"), which added the block to reset the agg_node data.
 
-which lock already depends on the new lock.
+The vsi->agg_node structure is not managed by the scheduler code, but is
+instead a wrapper around an aggregator node ID that is tracked at the VSI
+layer. Its been around for a long time, and its primary purpose was for
+handling VFs. The SR-IOV VF reset flow does not make use of the standard VSI
+rebuild/replay logic, and uses vsi->agg_node as part of its handling to
+rebuild the aggregator node configuration.
 
-the existing dependency chain (in reverse order) is:
+The logic for aggregator nodes stretches  back to early ice driver code from
+commit b126bd6bcd67 ("ice: create scheduler aggregator node config and move
+VSIs")
 
--> #3 (&sfp->sm_mutex){+.+.}-{3:3}:
-       __mutex_lock+0x88/0x7a0
-       mutex_lock_nested+0x20/0x28
-       cleanup_module+0x2ae0/0x3120 [sfp]
-       sfp_register_bus+0x5c/0x9c
-       sfp_register_socket+0x48/0xd4
-       cleanup_module+0x271c/0x3120 [sfp]
-       platform_probe+0x64/0xb8
-       really_probe+0x17c/0x3c0
-       __driver_probe_device+0x78/0x164
-       driver_probe_device+0x3c/0xd4
-       __driver_attach+0xec/0x1f0
-       bus_for_each_dev+0x60/0xa0
-       driver_attach+0x20/0x28
-       bus_add_driver+0x108/0x208
-       driver_register+0x5c/0x118
-       __platform_driver_register+0x24/0x2c
-       init_module+0x28/0xa7c [sfp]
-       do_one_initcall+0x70/0x2ec
-       do_init_module+0x54/0x1e4
-       load_module+0x1b78/0x1c8c
-       __do_sys_init_module+0x1bc/0x2cc
-       __arm64_sys_init_module+0x18/0x20
-       invoke_syscall.constprop.0+0x4c/0xdc
-       do_el0_svc+0x3c/0xbc
-       el0_svc+0x34/0x80
-       el0t_64_sync_handler+0xf8/0x124
-       el0t_64_sync+0x150/0x154
+The logic in ice_vsi_decfg() which trashes the ice_agg_node data is clearly
+wrong. It destroys information that is necessary for handling VF reset,. It
+is also not the correct way to actually remove a VSI from an aggregator
+node. For that, we need to implement logic in the scheduler code. Further,
+non-VF VSIs properly replay their aggregator configuration using existing
+scheduler replay logic.
 
--> #2 (rtnl_mutex){+.+.}-{3:3}:
-       __mutex_lock+0x88/0x7a0
-       mutex_lock_nested+0x20/0x28
-       rtnl_lock+0x18/0x20
-       set_device_name+0x30/0x130
-       netdev_trig_activate+0x13c/0x1ac
-       led_trigger_set+0x118/0x234
-       led_trigger_write+0x104/0x17c
-       sysfs_kf_bin_write+0x64/0x80
-       kernfs_fop_write_iter+0x128/0x1b4
-       vfs_write+0x178/0x2a4
-       ksys_write+0x58/0xd4
-       __arm64_sys_write+0x18/0x20
-       invoke_syscall.constprop.0+0x4c/0xdc
-       do_el0_svc+0x3c/0xbc
-       el0_svc+0x34/0x80
-       el0t_64_sync_handler+0xf8/0x124
-       el0t_64_sync+0x150/0x154
+To fix the VF replay logic, remove this broken aggregator node cleanup
+logic. This is the simplest way to immediately fix this.
 
--> #1 (&led_cdev->trigger_lock){++++}-{3:3}:
-       down_write+0x4c/0x13c
-       led_trigger_write+0xf8/0x17c
-       sysfs_kf_bin_write+0x64/0x80
-       kernfs_fop_write_iter+0x128/0x1b4
-       vfs_write+0x178/0x2a4
-       ksys_write+0x58/0xd4
-       __arm64_sys_write+0x18/0x20
-       invoke_syscall.constprop.0+0x4c/0xdc
-       do_el0_svc+0x3c/0xbc
-       el0_svc+0x34/0x80
-       el0t_64_sync_handler+0xf8/0x124
-       el0t_64_sync+0x150/0x154
+This ensures that VFs will have proper aggregate configuration after a
+reset. This is especially important since VFs often perform resets as part
+of their reconfiguration flows. Without fixing this, VFs will be placed in
+the default aggregator node and Tx bandwidth will not be shared in the
+expected and configured manner.
 
--> #0 (triggers_list_lock){++++}-{3:3}:
-       __lock_acquire+0x12a0/0x2014
-       lock_acquire+0x100/0x2ac
-       down_write+0x4c/0x13c
-       led_trigger_register+0x4c/0x1a8
-       phy_led_triggers_register+0x9c/0x214
-       phy_attach_direct+0x154/0x36c
-       phylink_attach_phy+0x30/0x60
-       phylink_sfp_connect_phy+0x140/0x510
-       sfp_add_phy+0x34/0x50
-       init_module+0x15c/0xa7c [sfp]
-       cleanup_module+0x1d94/0x3120 [sfp]
-       cleanup_module+0x2bb4/0x3120 [sfp]
-       process_one_work+0x1f8/0x4ec
-       worker_thread+0x1e8/0x3d8
-       kthread+0x104/0x110
-       ret_from_fork+0x10/0x20
-
-other info that might help us debug this:
-
-Chain exists of:
-  triggers_list_lock --> rtnl_mutex --> &sfp->sm_mutex
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&sfp->sm_mutex);
-                               lock(rtnl_mutex);
-                               lock(&sfp->sm_mutex);
-  lock(triggers_list_lock);
-
- *** DEADLOCK ***
-
-4 locks held by kworker/u8:2/43:
- #0: ffffff80c000f938 ((wq_completion)events_power_efficient){+.+.}-{0:0}, at: process_one_work+0x150/0x4ec
- #1: ffffffc08214bde8 ((work_completion)(&(&sfp->timeout)->work)){+.+.}-{0:0}, at: process_one_work+0x150/0x4ec
- #2: ffffffc0810902f8 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_lock+0x18/0x20
- #3: ffffff80c5c6f318 (&sfp->sm_mutex){+.+.}-{3:3}, at: cleanup_module+0x2ba8/0x3120 [sfp]
-
-stack backtrace:
-CPU: 0 PID: 43 Comm: kworker/u8:2 Tainted: G           O       6.7.0-rc4-next-20231208+ #0
-Hardware name: Bananapi BPI-R4 (DT)
-Workqueue: events_power_efficient cleanup_module [sfp]
-Call trace:
- dump_backtrace+0xa8/0x10c
- show_stack+0x14/0x1c
- dump_stack_lvl+0x5c/0xa0
- dump_stack+0x14/0x1c
- print_circular_bug+0x328/0x430
- check_noncircular+0x124/0x134
- __lock_acquire+0x12a0/0x2014
- lock_acquire+0x100/0x2ac
- down_write+0x4c/0x13c
- led_trigger_register+0x4c/0x1a8
- phy_led_triggers_register+0x9c/0x214
- phy_attach_direct+0x154/0x36c
- phylink_attach_phy+0x30/0x60
- phylink_sfp_connect_phy+0x140/0x510
- sfp_add_phy+0x34/0x50
- init_module+0x15c/0xa7c [sfp]
- cleanup_module+0x1d94/0x3120 [sfp]
- cleanup_module+0x2bb4/0x3120 [sfp]
- process_one_work+0x1f8/0x4ec
- worker_thread+0x1e8/0x3d8
- kthread+0x104/0x110
- ret_from_fork+0x10/0x20
-
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Fixes: 01e5b728e9e4 ("net: phy: Add a binding for PHY LEDs")
-Link: https://lore.kernel.org/r/102a9dce38bdf00215735d04cd4704458273ad9c.1702339354.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6624e780a577 ("ice: split ice_vsi_setup into smaller functions")
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy_device.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_lib.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 2ce74593d6e4a..a42df2c1bd043 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -1548,7 +1548,8 @@ int phy_attach_direct(struct net_device *dev, struct phy_device *phydev,
- 		goto error;
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 73bbf06a76db9..8dbf7a381e49b 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -2633,10 +2633,6 @@ void ice_vsi_decfg(struct ice_vsi *vsi)
+ 	if (vsi->type == ICE_VSI_VF &&
+ 	    vsi->agg_node && vsi->agg_node->valid)
+ 		vsi->agg_node->num_vsis--;
+-	if (vsi->agg_node) {
+-		vsi->agg_node->valid = false;
+-		vsi->agg_node->agg_id = 0;
+-	}
+ }
  
- 	phy_resume(phydev);
--	phy_led_triggers_register(phydev);
-+	if (!phydev->is_on_sfp_module)
-+		phy_led_triggers_register(phydev);
- 
- 	/**
- 	 * If the external phy used by current mac interface is managed by
-@@ -1817,7 +1818,8 @@ void phy_detach(struct phy_device *phydev)
- 	}
- 	phydev->phylink = NULL;
- 
--	phy_led_triggers_unregister(phydev);
-+	if (!phydev->is_on_sfp_module)
-+		phy_led_triggers_unregister(phydev);
- 
- 	if (phydev->mdio.dev.driver)
- 		module_put(phydev->mdio.dev.driver->owner);
+ /**
 -- 
 2.43.0
 
