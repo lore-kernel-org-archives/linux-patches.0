@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535A779DE;
-	Sat, 30 Dec 2023 12:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949F279EE;
+	Sat, 30 Dec 2023 12:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kW/IoYpc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81983C433C8;
-	Sat, 30 Dec 2023 12:07:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVm+dsI3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B44BC433C7;
+	Sat, 30 Dec 2023 12:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938079;
-	bh=DLDxNCX6DIe7lMRJof1aeL29jIaxHxv3bLyc6efyYkM=;
+	s=korg; t=1703938082;
+	bh=F20lV3reRSH8EkFLZAuYnX5u1FRz1AsHPetvJSpe07U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kW/IoYpc3+p6sB14lIcLUpe726LoQeIVT6O4uDjJiel0H0Q1scQl9yI0vrxmiKlIY
-	 32rpH3tWzIhNdA6I9eFfdPFK5TShvQrx0uKd7bM1f8s7ZoTWbJGWHIRJPBUke9BhoT
-	 Yyv2fceIWAJpsA/QRlbl5lmZ02P14KSCV73l7VhU=
+	b=dVm+dsI33EWOgOGZgXOWLmHFJuI6j7Nl5eM2wc917EBt0hXzZ6uQoUlXZt9uUAWUV
+	 yuoGAYU1+43YOLyGtDYmy/SizWfTwnM099GgFxnic0bP9zKiBnAB+2y2+9mHouCllu
+	 y1Z7LOyA3UTCivkKf3v6yAEow3jjQGyaevWBCPu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/112] net/mlx5: Re-organize mlx5_cmd struct
-Date: Sat, 30 Dec 2023 11:58:52 +0000
-Message-ID: <20231230115807.365789407@linuxfoundation.org>
+	syzbot+97a4fe20470e9bc30810@syzkaller.appspotmail.com,
+	Jiri Olsa <jolsa@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Lee Jones <lee@kernel.org>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Subject: [PATCH 6.1 002/112] bpf: Fix prog_array_map_poke_run map poke update
+Date: Sat, 30 Dec 2023 11:58:35 +0000
+Message-ID: <20231230115806.808365451@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -43,337 +45,227 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 58db72869a9f8e01910844ca145efc2ea91bbbf9 ]
+commit 4b7de801606e504e69689df71475d27e35336fb3 upstream.
 
-Downstream patch will split mlx5_cmd_init() to probe and reload
-routines. As a preparation, organize mlx5_cmd struct so that any
-field that will be used in the reload routine are grouped at new
-nested struct.
+Lee pointed out issue found by syscaller [0] hitting BUG in prog array
+map poke update in prog_array_map_poke_run function due to error value
+returned from bpf_arch_text_poke function.
 
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Stable-dep-of: 8f5100da56b3 ("net/mlx5e: Fix a race in command alloc flow")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+There's race window where bpf_arch_text_poke can fail due to missing
+bpf program kallsym symbols, which is accounted for with check for
+-EINVAL in that BUG_ON call.
+
+The problem is that in such case we won't update the tail call jump
+and cause imbalance for the next tail call update check which will
+fail with -EBUSY in bpf_arch_text_poke.
+
+I'm hitting following race during the program load:
+
+  CPU 0                             CPU 1
+
+  bpf_prog_load
+    bpf_check
+      do_misc_fixups
+        prog_array_map_poke_track
+
+                                    map_update_elem
+                                      bpf_fd_array_map_update_elem
+                                        prog_array_map_poke_run
+
+                                          bpf_arch_text_poke returns -EINVAL
+
+    bpf_prog_kallsyms_add
+
+After bpf_arch_text_poke (CPU 1) fails to update the tail call jump, the next
+poke update fails on expected jump instruction check in bpf_arch_text_poke
+with -EBUSY and triggers the BUG_ON in prog_array_map_poke_run.
+
+Similar race exists on the program unload.
+
+Fixing this by moving the update to bpf_arch_poke_desc_update function which
+makes sure we call __bpf_arch_text_poke that skips the bpf address check.
+
+Each architecture has slightly different approach wrt looking up bpf address
+in bpf_arch_text_poke, so instead of splitting the function or adding new
+'checkip' argument in previous version, it seems best to move the whole
+map_poke_run update as arch specific code.
+
+  [0] https://syzkaller.appspot.com/bug?extid=97a4fe20470e9bc30810
+
+Fixes: ebf7d1f508a7 ("bpf, x64: rework pro/epilogue and tailcall handling in JIT")
+Reported-by: syzbot+97a4fe20470e9bc30810@syzkaller.appspotmail.com
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Cc: Lee Jones <lee@kernel.org>
+Cc: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Link: https://lore.kernel.org/bpf/20231206083041.1306660-2-jolsa@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 94 +++++++++----------
- .../net/ethernet/mellanox/mlx5/core/debugfs.c |  4 +-
- include/linux/mlx5/driver.h                   | 21 +++--
- 3 files changed, 60 insertions(+), 59 deletions(-)
+ arch/x86/net/bpf_jit_comp.c |   46 ++++++++++++++++++++++++++++++++++
+ include/linux/bpf.h         |    3 ++
+ kernel/bpf/arraymap.c       |   58 +++++++-------------------------------------
+ 3 files changed, 59 insertions(+), 48 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-index 84f926064cf7b..e89d4fb7774bb 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -162,18 +162,18 @@ static int cmd_alloc_index(struct mlx5_cmd *cmd)
- 	int ret;
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -2553,3 +2553,49 @@ void bpf_jit_free(struct bpf_prog *prog)
  
- 	spin_lock_irqsave(&cmd->alloc_lock, flags);
--	ret = find_first_bit(&cmd->bitmask, cmd->max_reg_cmds);
--	if (ret < cmd->max_reg_cmds)
--		clear_bit(ret, &cmd->bitmask);
-+	ret = find_first_bit(&cmd->vars.bitmask, cmd->vars.max_reg_cmds);
-+	if (ret < cmd->vars.max_reg_cmds)
-+		clear_bit(ret, &cmd->vars.bitmask);
- 	spin_unlock_irqrestore(&cmd->alloc_lock, flags);
+ 	bpf_prog_unlock_free(prog);
+ }
++
++void bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
++			       struct bpf_prog *new, struct bpf_prog *old)
++{
++	u8 *old_addr, *new_addr, *old_bypass_addr;
++	int ret;
++
++	old_bypass_addr = old ? NULL : poke->bypass_addr;
++	old_addr = old ? (u8 *)old->bpf_func + poke->adj_off : NULL;
++	new_addr = new ? (u8 *)new->bpf_func + poke->adj_off : NULL;
++
++	/*
++	 * On program loading or teardown, the program's kallsym entry
++	 * might not be in place, so we use __bpf_arch_text_poke to skip
++	 * the kallsyms check.
++	 */
++	if (new) {
++		ret = __bpf_arch_text_poke(poke->tailcall_target,
++					   BPF_MOD_JUMP,
++					   old_addr, new_addr);
++		BUG_ON(ret < 0);
++		if (!old) {
++			ret = __bpf_arch_text_poke(poke->tailcall_bypass,
++						   BPF_MOD_JUMP,
++						   poke->bypass_addr,
++						   NULL);
++			BUG_ON(ret < 0);
++		}
++	} else {
++		ret = __bpf_arch_text_poke(poke->tailcall_bypass,
++					   BPF_MOD_JUMP,
++					   old_bypass_addr,
++					   poke->bypass_addr);
++		BUG_ON(ret < 0);
++		/* let other CPUs finish the execution of program
++		 * so that it will not possible to expose them
++		 * to invalid nop, stack unwind, nop state
++		 */
++		if (!ret)
++			synchronize_rcu();
++		ret = __bpf_arch_text_poke(poke->tailcall_target,
++					   BPF_MOD_JUMP,
++					   old_addr, NULL);
++		BUG_ON(ret < 0);
++	}
++}
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -2681,6 +2681,9 @@ enum bpf_text_poke_type {
+ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type t,
+ 		       void *addr1, void *addr2);
  
--	return ret < cmd->max_reg_cmds ? ret : -ENOMEM;
-+	return ret < cmd->vars.max_reg_cmds ? ret : -ENOMEM;
++void bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
++			       struct bpf_prog *new, struct bpf_prog *old);
++
+ void *bpf_arch_text_copy(void *dst, void *src, size_t len);
+ int bpf_arch_text_invalidate(void *dst, size_t len);
+ 
+--- a/kernel/bpf/arraymap.c
++++ b/kernel/bpf/arraymap.c
+@@ -997,11 +997,16 @@ static void prog_array_map_poke_untrack(
+ 	mutex_unlock(&aux->poke_mutex);
  }
  
- static void cmd_free_index(struct mlx5_cmd *cmd, int idx)
++void __weak bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
++				      struct bpf_prog *new, struct bpf_prog *old)
++{
++	WARN_ON_ONCE(1);
++}
++
+ static void prog_array_map_poke_run(struct bpf_map *map, u32 key,
+ 				    struct bpf_prog *old,
+ 				    struct bpf_prog *new)
  {
- 	lockdep_assert_held(&cmd->alloc_lock);
--	set_bit(idx, &cmd->bitmask);
-+	set_bit(idx, &cmd->vars.bitmask);
- }
+-	u8 *old_addr, *new_addr, *old_bypass_addr;
+ 	struct prog_poke_elem *elem;
+ 	struct bpf_array_aux *aux;
  
- static void cmd_ent_get(struct mlx5_cmd_work_ent *ent)
-@@ -192,7 +192,7 @@ static void cmd_ent_put(struct mlx5_cmd_work_ent *ent)
+@@ -1010,7 +1015,7 @@ static void prog_array_map_poke_run(stru
  
- 	if (ent->idx >= 0) {
- 		cmd_free_index(cmd, ent->idx);
--		up(ent->page_queue ? &cmd->pages_sem : &cmd->sem);
-+		up(ent->page_queue ? &cmd->vars.pages_sem : &cmd->vars.sem);
- 	}
+ 	list_for_each_entry(elem, &aux->poke_progs, list) {
+ 		struct bpf_jit_poke_descriptor *poke;
+-		int i, ret;
++		int i;
  
- 	cmd_free_ent(ent);
-@@ -202,7 +202,7 @@ static void cmd_ent_put(struct mlx5_cmd_work_ent *ent)
+ 		for (i = 0; i < elem->aux->size_poke_tab; i++) {
+ 			poke = &elem->aux->poke_tab[i];
+@@ -1029,21 +1034,10 @@ static void prog_array_map_poke_run(stru
+ 			 *    activated, so tail call updates can arrive from here
+ 			 *    while JIT is still finishing its final fixup for
+ 			 *    non-activated poke entries.
+-			 * 3) On program teardown, the program's kallsym entry gets
+-			 *    removed out of RCU callback, but we can only untrack
+-			 *    from sleepable context, therefore bpf_arch_text_poke()
+-			 *    might not see that this is in BPF text section and
+-			 *    bails out with -EINVAL. As these are unreachable since
+-			 *    RCU grace period already passed, we simply skip them.
+-			 * 4) Also programs reaching refcount of zero while patching
++			 * 3) Also programs reaching refcount of zero while patching
+ 			 *    is in progress is okay since we're protected under
+ 			 *    poke_mutex and untrack the programs before the JIT
+-			 *    buffer is freed. When we're still in the middle of
+-			 *    patching and suddenly kallsyms entry of the program
+-			 *    gets evicted, we just skip the rest which is fine due
+-			 *    to point 3).
+-			 * 5) Any other error happening below from bpf_arch_text_poke()
+-			 *    is a unexpected bug.
++			 *    buffer is freed.
+ 			 */
+ 			if (!READ_ONCE(poke->tailcall_target_stable))
+ 				continue;
+@@ -1053,39 +1047,7 @@ static void prog_array_map_poke_run(stru
+ 			    poke->tail_call.key != key)
+ 				continue;
  
- static struct mlx5_cmd_layout *get_inst(struct mlx5_cmd *cmd, int idx)
- {
--	return cmd->cmd_buf + (idx << cmd->log_stride);
-+	return cmd->cmd_buf + (idx << cmd->vars.log_stride);
- }
- 
- static int mlx5_calc_cmd_blocks(struct mlx5_cmd_msg *msg)
-@@ -971,7 +971,7 @@ static void cmd_work_handler(struct work_struct *work)
- 	cb_timeout = msecs_to_jiffies(mlx5_tout_ms(dev, CMD));
- 
- 	complete(&ent->handling);
--	sem = ent->page_queue ? &cmd->pages_sem : &cmd->sem;
-+	sem = ent->page_queue ? &cmd->vars.pages_sem : &cmd->vars.sem;
- 	down(sem);
- 	if (!ent->page_queue) {
- 		alloc_ret = cmd_alloc_index(cmd);
-@@ -991,9 +991,9 @@ static void cmd_work_handler(struct work_struct *work)
- 		}
- 		ent->idx = alloc_ret;
- 	} else {
--		ent->idx = cmd->max_reg_cmds;
-+		ent->idx = cmd->vars.max_reg_cmds;
- 		spin_lock_irqsave(&cmd->alloc_lock, flags);
--		clear_bit(ent->idx, &cmd->bitmask);
-+		clear_bit(ent->idx, &cmd->vars.bitmask);
- 		spin_unlock_irqrestore(&cmd->alloc_lock, flags);
- 	}
- 
-@@ -1569,15 +1569,15 @@ void mlx5_cmd_allowed_opcode(struct mlx5_core_dev *dev, u16 opcode)
- 	struct mlx5_cmd *cmd = &dev->cmd;
- 	int i;
- 
--	for (i = 0; i < cmd->max_reg_cmds; i++)
--		down(&cmd->sem);
--	down(&cmd->pages_sem);
-+	for (i = 0; i < cmd->vars.max_reg_cmds; i++)
-+		down(&cmd->vars.sem);
-+	down(&cmd->vars.pages_sem);
- 
- 	cmd->allowed_opcode = opcode;
- 
--	up(&cmd->pages_sem);
--	for (i = 0; i < cmd->max_reg_cmds; i++)
--		up(&cmd->sem);
-+	up(&cmd->vars.pages_sem);
-+	for (i = 0; i < cmd->vars.max_reg_cmds; i++)
-+		up(&cmd->vars.sem);
- }
- 
- static void mlx5_cmd_change_mod(struct mlx5_core_dev *dev, int mode)
-@@ -1585,15 +1585,15 @@ static void mlx5_cmd_change_mod(struct mlx5_core_dev *dev, int mode)
- 	struct mlx5_cmd *cmd = &dev->cmd;
- 	int i;
- 
--	for (i = 0; i < cmd->max_reg_cmds; i++)
--		down(&cmd->sem);
--	down(&cmd->pages_sem);
-+	for (i = 0; i < cmd->vars.max_reg_cmds; i++)
-+		down(&cmd->vars.sem);
-+	down(&cmd->vars.pages_sem);
- 
- 	cmd->mode = mode;
- 
--	up(&cmd->pages_sem);
--	for (i = 0; i < cmd->max_reg_cmds; i++)
--		up(&cmd->sem);
-+	up(&cmd->vars.pages_sem);
-+	for (i = 0; i < cmd->vars.max_reg_cmds; i++)
-+		up(&cmd->vars.sem);
- }
- 
- static int cmd_comp_notifier(struct notifier_block *nb,
-@@ -1652,7 +1652,7 @@ static void mlx5_cmd_comp_handler(struct mlx5_core_dev *dev, u64 vec, bool force
- 
- 	/* there can be at most 32 command queues */
- 	vector = vec & 0xffffffff;
--	for (i = 0; i < (1 << cmd->log_sz); i++) {
-+	for (i = 0; i < (1 << cmd->vars.log_sz); i++) {
- 		if (test_bit(i, &vector)) {
- 			ent = cmd->ent_arr[i];
- 
-@@ -1741,7 +1741,7 @@ static void mlx5_cmd_trigger_completions(struct mlx5_core_dev *dev)
- 	/* wait for pending handlers to complete */
- 	mlx5_eq_synchronize_cmd_irq(dev);
- 	spin_lock_irqsave(&dev->cmd.alloc_lock, flags);
--	vector = ~dev->cmd.bitmask & ((1ul << (1 << dev->cmd.log_sz)) - 1);
-+	vector = ~dev->cmd.vars.bitmask & ((1ul << (1 << dev->cmd.vars.log_sz)) - 1);
- 	if (!vector)
- 		goto no_trig;
- 
-@@ -1750,14 +1750,14 @@ static void mlx5_cmd_trigger_completions(struct mlx5_core_dev *dev)
- 	 * to guarantee pending commands will not get freed in the meanwhile.
- 	 * For that reason, it also has to be done inside the alloc_lock.
- 	 */
--	for_each_set_bit(i, &bitmask, (1 << cmd->log_sz))
-+	for_each_set_bit(i, &bitmask, (1 << cmd->vars.log_sz))
- 		cmd_ent_get(cmd->ent_arr[i]);
- 	vector |= MLX5_TRIGGERED_CMD_COMP;
- 	spin_unlock_irqrestore(&dev->cmd.alloc_lock, flags);
- 
- 	mlx5_core_dbg(dev, "vector 0x%llx\n", vector);
- 	mlx5_cmd_comp_handler(dev, vector, true);
--	for_each_set_bit(i, &bitmask, (1 << cmd->log_sz))
-+	for_each_set_bit(i, &bitmask, (1 << cmd->vars.log_sz))
- 		cmd_ent_put(cmd->ent_arr[i]);
- 	return;
- 
-@@ -1770,22 +1770,22 @@ void mlx5_cmd_flush(struct mlx5_core_dev *dev)
- 	struct mlx5_cmd *cmd = &dev->cmd;
- 	int i;
- 
--	for (i = 0; i < cmd->max_reg_cmds; i++) {
--		while (down_trylock(&cmd->sem)) {
-+	for (i = 0; i < cmd->vars.max_reg_cmds; i++) {
-+		while (down_trylock(&cmd->vars.sem)) {
- 			mlx5_cmd_trigger_completions(dev);
- 			cond_resched();
+-			old_bypass_addr = old ? NULL : poke->bypass_addr;
+-			old_addr = old ? (u8 *)old->bpf_func + poke->adj_off : NULL;
+-			new_addr = new ? (u8 *)new->bpf_func + poke->adj_off : NULL;
+-
+-			if (new) {
+-				ret = bpf_arch_text_poke(poke->tailcall_target,
+-							 BPF_MOD_JUMP,
+-							 old_addr, new_addr);
+-				BUG_ON(ret < 0 && ret != -EINVAL);
+-				if (!old) {
+-					ret = bpf_arch_text_poke(poke->tailcall_bypass,
+-								 BPF_MOD_JUMP,
+-								 poke->bypass_addr,
+-								 NULL);
+-					BUG_ON(ret < 0 && ret != -EINVAL);
+-				}
+-			} else {
+-				ret = bpf_arch_text_poke(poke->tailcall_bypass,
+-							 BPF_MOD_JUMP,
+-							 old_bypass_addr,
+-							 poke->bypass_addr);
+-				BUG_ON(ret < 0 && ret != -EINVAL);
+-				/* let other CPUs finish the execution of program
+-				 * so that it will not possible to expose them
+-				 * to invalid nop, stack unwind, nop state
+-				 */
+-				if (!ret)
+-					synchronize_rcu();
+-				ret = bpf_arch_text_poke(poke->tailcall_target,
+-							 BPF_MOD_JUMP,
+-							 old_addr, NULL);
+-				BUG_ON(ret < 0 && ret != -EINVAL);
+-			}
++			bpf_arch_poke_desc_update(poke, new, old);
  		}
  	}
- 
--	while (down_trylock(&cmd->pages_sem)) {
-+	while (down_trylock(&cmd->vars.pages_sem)) {
- 		mlx5_cmd_trigger_completions(dev);
- 		cond_resched();
- 	}
- 
- 	/* Unlock cmdif */
--	up(&cmd->pages_sem);
--	for (i = 0; i < cmd->max_reg_cmds; i++)
--		up(&cmd->sem);
-+	up(&cmd->vars.pages_sem);
-+	for (i = 0; i < cmd->vars.max_reg_cmds; i++)
-+		up(&cmd->vars.sem);
  }
- 
- static struct mlx5_cmd_msg *alloc_msg(struct mlx5_core_dev *dev, int in_size,
-@@ -1855,7 +1855,7 @@ static int cmd_exec(struct mlx5_core_dev *dev, void *in, int in_size, void *out,
- 		/* atomic context may not sleep */
- 		if (callback)
- 			return -EINVAL;
--		down(&dev->cmd.throttle_sem);
-+		down(&dev->cmd.vars.throttle_sem);
- 	}
- 
- 	pages_queue = is_manage_pages(in);
-@@ -1900,7 +1900,7 @@ static int cmd_exec(struct mlx5_core_dev *dev, void *in, int in_size, void *out,
- 	free_msg(dev, inb);
- out_up:
- 	if (throttle_op)
--		up(&dev->cmd.throttle_sem);
-+		up(&dev->cmd.vars.throttle_sem);
- 	return err;
- }
- 
-@@ -2210,16 +2210,16 @@ int mlx5_cmd_init(struct mlx5_core_dev *dev)
- 		goto err_free_pool;
- 
- 	cmd_l = ioread32be(&dev->iseg->cmdq_addr_l_sz) & 0xff;
--	cmd->log_sz = cmd_l >> 4 & 0xf;
--	cmd->log_stride = cmd_l & 0xf;
--	if (1 << cmd->log_sz > MLX5_MAX_COMMANDS) {
-+	cmd->vars.log_sz = cmd_l >> 4 & 0xf;
-+	cmd->vars.log_stride = cmd_l & 0xf;
-+	if (1 << cmd->vars.log_sz > MLX5_MAX_COMMANDS) {
- 		mlx5_core_err(dev, "firmware reports too many outstanding commands %d\n",
--			      1 << cmd->log_sz);
-+			      1 << cmd->vars.log_sz);
- 		err = -EINVAL;
- 		goto err_free_page;
- 	}
- 
--	if (cmd->log_sz + cmd->log_stride > MLX5_ADAPTER_PAGE_SHIFT) {
-+	if (cmd->vars.log_sz + cmd->vars.log_stride > MLX5_ADAPTER_PAGE_SHIFT) {
- 		mlx5_core_err(dev, "command queue size overflow\n");
- 		err = -EINVAL;
- 		goto err_free_page;
-@@ -2227,13 +2227,13 @@ int mlx5_cmd_init(struct mlx5_core_dev *dev)
- 
- 	cmd->state = MLX5_CMDIF_STATE_DOWN;
- 	cmd->checksum_disabled = 1;
--	cmd->max_reg_cmds = (1 << cmd->log_sz) - 1;
--	cmd->bitmask = (1UL << cmd->max_reg_cmds) - 1;
-+	cmd->vars.max_reg_cmds = (1 << cmd->vars.log_sz) - 1;
-+	cmd->vars.bitmask = (1UL << cmd->vars.max_reg_cmds) - 1;
- 
--	cmd->cmdif_rev = ioread32be(&dev->iseg->cmdif_rev_fw_sub) >> 16;
--	if (cmd->cmdif_rev > CMD_IF_REV) {
-+	cmd->vars.cmdif_rev = ioread32be(&dev->iseg->cmdif_rev_fw_sub) >> 16;
-+	if (cmd->vars.cmdif_rev > CMD_IF_REV) {
- 		mlx5_core_err(dev, "driver does not support command interface version. driver %d, firmware %d\n",
--			      CMD_IF_REV, cmd->cmdif_rev);
-+			      CMD_IF_REV, cmd->vars.cmdif_rev);
- 		err = -EOPNOTSUPP;
- 		goto err_free_page;
- 	}
-@@ -2243,9 +2243,9 @@ int mlx5_cmd_init(struct mlx5_core_dev *dev)
- 	for (i = 0; i < MLX5_CMD_OP_MAX; i++)
- 		spin_lock_init(&cmd->stats[i].lock);
- 
--	sema_init(&cmd->sem, cmd->max_reg_cmds);
--	sema_init(&cmd->pages_sem, 1);
--	sema_init(&cmd->throttle_sem, DIV_ROUND_UP(cmd->max_reg_cmds, 2));
-+	sema_init(&cmd->vars.sem, cmd->vars.max_reg_cmds);
-+	sema_init(&cmd->vars.pages_sem, 1);
-+	sema_init(&cmd->vars.throttle_sem, DIV_ROUND_UP(cmd->vars.max_reg_cmds, 2));
- 
- 	cmd_h = (u32)((u64)(cmd->dma) >> 32);
- 	cmd_l = (u32)(cmd->dma);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/debugfs.c b/drivers/net/ethernet/mellanox/mlx5/core/debugfs.c
-index bb95b40d25eb5..e0b0729e238c1 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/debugfs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/debugfs.c
-@@ -176,8 +176,8 @@ static ssize_t slots_read(struct file *filp, char __user *buf, size_t count,
- 	int ret;
- 
- 	cmd = filp->private_data;
--	weight = bitmap_weight(&cmd->bitmask, cmd->max_reg_cmds);
--	field = cmd->max_reg_cmds - weight;
-+	weight = bitmap_weight(&cmd->vars.bitmask, cmd->vars.max_reg_cmds);
-+	field = cmd->vars.max_reg_cmds - weight;
- 	ret = snprintf(tbuf, sizeof(tbuf), "%d\n", field);
- 	return simple_read_from_buffer(buf, count, pos, tbuf, ret);
- }
-diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
-index ce019c337f67f..93ec34a94b724 100644
---- a/include/linux/mlx5/driver.h
-+++ b/include/linux/mlx5/driver.h
-@@ -282,18 +282,23 @@ struct mlx5_cmd_stats {
- struct mlx5_cmd {
- 	struct mlx5_nb    nb;
- 
-+	/* members which needs to be queried or reinitialized each reload */
-+	struct {
-+		u16		cmdif_rev;
-+		u8		log_sz;
-+		u8		log_stride;
-+		int		max_reg_cmds;
-+		unsigned long	bitmask;
-+		struct semaphore sem;
-+		struct semaphore pages_sem;
-+		struct semaphore throttle_sem;
-+	} vars;
- 	enum mlx5_cmdif_state	state;
- 	void	       *cmd_alloc_buf;
- 	dma_addr_t	alloc_dma;
- 	int		alloc_size;
- 	void	       *cmd_buf;
- 	dma_addr_t	dma;
--	u16		cmdif_rev;
--	u8		log_sz;
--	u8		log_stride;
--	int		max_reg_cmds;
--	int		events;
--	u32 __iomem    *vector;
- 
- 	/* protect command queue allocations
- 	 */
-@@ -303,12 +308,8 @@ struct mlx5_cmd {
- 	 */
- 	spinlock_t	token_lock;
- 	u8		token;
--	unsigned long	bitmask;
- 	char		wq_name[MLX5_CMD_WQ_MAX_NAME];
- 	struct workqueue_struct *wq;
--	struct semaphore sem;
--	struct semaphore pages_sem;
--	struct semaphore throttle_sem;
- 	int	mode;
- 	u16     allowed_opcode;
- 	struct mlx5_cmd_work_ent *ent_arr[MLX5_MAX_COMMANDS];
--- 
-2.43.0
-
 
 
