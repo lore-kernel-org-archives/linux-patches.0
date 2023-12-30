@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1925A849C;
-	Sat, 30 Dec 2023 12:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17488801;
+	Sat, 30 Dec 2023 12:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCxteMO6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92683C433C7;
-	Sat, 30 Dec 2023 12:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTSKPhSP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28DB5C433C8;
+	Sat, 30 Dec 2023 12:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937859;
-	bh=/h4EqwaNxj1uD/kcKcGD/8bvPfx2l0G0g5WwKWYsfXc=;
+	s=korg; t=1703937862;
+	bh=8j3MNnnWH7kfyvN/NwAxicJidz+WIFPbGYcs9oGNO0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yCxteMO6qLEEc7SSpBh49dbVdGsloC9wly+1oIDc9eTiu6IjuqhtgtBIh+EJ49ZK5
-	 LOcBdfIpoxgGhHXK0v4oSP0XFiKOkufrAsgnvnSzFC5g+m52aa6iDSGLoKf71t+Kc5
-	 Qu/ksq3ZSIVWjk0L84toholF+K2axkPcDlQNCKqo=
+	b=NTSKPhSPIrXrvLaAevQimjPbcEbr0F1wC6sm8X2LcEAtNnF6oIrr6jhaOgWgK6aV9
+	 Ae4ORi5eeUcoxxoBtP1HE/rPD46q7676CWFZXSkNx/faZ0Vj5kIhjvO34IHxbenWtL
+	 SXp+jS2zkgJ8rzY+WA0K8dAphIaZrSVZVZXiztJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Nuno Sa <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 091/156] iio: common: ms_sensors: ms_sensors_i2c: fix humidity conversion time table
-Date: Sat, 30 Dec 2023 11:59:05 +0000
-Message-ID: <20231230115815.336035780@linuxfoundation.org>
+Subject: [PATCH 6.6 092/156] iio: imu: adis16475: add spi_device_id table
+Date: Sat, 30 Dec 2023 11:59:06 +0000
+Message-ID: <20231230115815.368763555@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -42,106 +42,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-commit 54cf39ec16335dadbe1ba008d8e5e98dae3e26f8 upstream.
+commit ee4d79055aeea27f1b8c42233cc0c90d0a8b5355 upstream.
 
-The HTU21 offers 4 sampling frequencies: 20, 40, 70 and 120, which are
-associated to an index that is used to select the right measurement
-resolution and its corresponding measurement time. The current
-implementation selects the measurement resolution and the temperature
-measurement time properly, but it does not select the right humidity
-measurement time in all cases.
+This prevents the warning message "SPI driver has no spi_device_id for..."
+when registering the driver. More importantly, it makes sure that
+module autoloading works as spi relies on spi: modaliases and not of.
 
-In summary, the 40 and 70 humidity measurement times are swapped.
+While at it, move the of_device_id table to it's natural place.
 
-The reason for that is probably the unusual coding for the measurement
-resolution. According to the datasheet, the bits [7,0] of the "user
-register" are used as follows to select the bit resolution:
-
---------------------------------------------------
-| Bit 7 | Bit 0 | RH | Temp | Trh (us) | Tt (us) |
---------------------------------------------------
-|   0   |   0   | 12 |  14  |  16000   |  50000  |
---------------------------------------------------
-|   0   |   1   | 8  |  12  |  3000    |  13000  |
---------------------------------------------------
-|   1   |   0   | 10 |  13  |  5000    |  25000  |
---------------------------------------------------
-|   1   |   1   | 11 |  11  |  8000    |  7000   |
---------------------------------------------------
-*This table is available in the official datasheet, page 13/21. I have
-just appended the times provided in the humidity/temperature tables,
-pages 3/21, 5/21. Note that always a pair of resolutions is selected.
-
-The sampling frequencies [20, 40, 70, 120] are assigned to a linear
-index [0..3] which is then coded as follows [1]:
-
-Index    [7,0]
---------------
-idx 0     0,0
-idx 1     1,0
-idx 2     0,1
-idx 3     1,1
-
-That is done that way because the temperature measurements are being
-used as the reference for the sampling frequency (the frequencies and
-the temperature measurement times are correlated), so increasing the
-index always reduces the temperature measurement time and its
-resolution. Therefore, the temperature measurement time array is as
-simple as [50000, 25000, 13000, 7000]
-
-On the other hand, the humidity resolution cannot follow the same
-pattern because of the way it is coded in the "user register", where
-both resolutions are selected at the same time. The humidity measurement
-time array is the following: [16000, 3000, 5000, 8000], which defines
-the following assignments:
-
-Index    [7,0]    Trh
------------------------
-idx 0     0,0     16000  -> right, [0,0] selects 12 bits (Trh = 16000)
-idx 1     1,0     3000   -> wrong! [1,0] selects 10 bits (Trh = 5000)
-idx 2     0,1     5000   -> wrong! [0,1] selects 8 bits (Trh = 3000)
-idx 3     1,1     8000   -> right, [1,1] selects 11 bits (Trh = 8000)
-
-The times have been ordered as if idx = 1 -> [0,1] and idx = 2 -> [1,0],
-which is not the case for the reason explained above.
-
-So a simple modification is required to obtain the right humidity
-measurement time array, swapping the values in the positions 1 and 2.
-
-The right table should be the following: [16000, 5000, 3000, 8000]
-
-Fix the humidity measurement time array with the right idex/value
-coding.
-
-[1] The actual code that makes this coding and assigns it to the current
-value of the "user register" is the following:
-config_reg &= 0x7E;
-config_reg |= ((i & 1) << 7) + ((i & 2) >> 1);
-
-Fixes: d574a87cc311 ("Add meas-spec sensors common part")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20231026-topic-htu21_conversion_time-v1-1-bd257dc44209@gmail.com
+Fixes: fff7352bf7a3c ("iio: imu: Add support for adis16475")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20231102125258.3284830-1-nuno.sa@analog.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/common/ms_sensors/ms_sensors_i2c.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/imu/adis16475.c |  117 +++++++++++++++++++++++++++-----------------
+ 1 file changed, 72 insertions(+), 45 deletions(-)
 
---- a/drivers/iio/common/ms_sensors/ms_sensors_i2c.c
-+++ b/drivers/iio/common/ms_sensors/ms_sensors_i2c.c
-@@ -15,8 +15,8 @@
- /* Conversion times in us */
- static const u16 ms_sensors_ht_t_conversion_time[] = { 50000, 25000,
- 						       13000, 7000 };
--static const u16 ms_sensors_ht_h_conversion_time[] = { 16000, 3000,
--						       5000, 8000 };
-+static const u16 ms_sensors_ht_h_conversion_time[] = { 16000, 5000,
-+						       3000, 8000 };
- static const u16 ms_sensors_tp_conversion_time[] = { 500, 1100, 2100,
- 						     4100, 8220, 16440 };
+--- a/drivers/iio/imu/adis16475.c
++++ b/drivers/iio/imu/adis16475.c
+@@ -1244,50 +1244,6 @@ static int adis16475_config_irq_pin(stru
+ 	return 0;
+ }
+ 
+-static const struct of_device_id adis16475_of_match[] = {
+-	{ .compatible = "adi,adis16470",
+-		.data = &adis16475_chip_info[ADIS16470] },
+-	{ .compatible = "adi,adis16475-1",
+-		.data = &adis16475_chip_info[ADIS16475_1] },
+-	{ .compatible = "adi,adis16475-2",
+-		.data = &adis16475_chip_info[ADIS16475_2] },
+-	{ .compatible = "adi,adis16475-3",
+-		.data = &adis16475_chip_info[ADIS16475_3] },
+-	{ .compatible = "adi,adis16477-1",
+-		.data = &adis16475_chip_info[ADIS16477_1] },
+-	{ .compatible = "adi,adis16477-2",
+-		.data = &adis16475_chip_info[ADIS16477_2] },
+-	{ .compatible = "adi,adis16477-3",
+-		.data = &adis16475_chip_info[ADIS16477_3] },
+-	{ .compatible = "adi,adis16465-1",
+-		.data = &adis16475_chip_info[ADIS16465_1] },
+-	{ .compatible = "adi,adis16465-2",
+-		.data = &adis16475_chip_info[ADIS16465_2] },
+-	{ .compatible = "adi,adis16465-3",
+-		.data = &adis16475_chip_info[ADIS16465_3] },
+-	{ .compatible = "adi,adis16467-1",
+-		.data = &adis16475_chip_info[ADIS16467_1] },
+-	{ .compatible = "adi,adis16467-2",
+-		.data = &adis16475_chip_info[ADIS16467_2] },
+-	{ .compatible = "adi,adis16467-3",
+-		.data = &adis16475_chip_info[ADIS16467_3] },
+-	{ .compatible = "adi,adis16500",
+-		.data = &adis16475_chip_info[ADIS16500] },
+-	{ .compatible = "adi,adis16505-1",
+-		.data = &adis16475_chip_info[ADIS16505_1] },
+-	{ .compatible = "adi,adis16505-2",
+-		.data = &adis16475_chip_info[ADIS16505_2] },
+-	{ .compatible = "adi,adis16505-3",
+-		.data = &adis16475_chip_info[ADIS16505_3] },
+-	{ .compatible = "adi,adis16507-1",
+-		.data = &adis16475_chip_info[ADIS16507_1] },
+-	{ .compatible = "adi,adis16507-2",
+-		.data = &adis16475_chip_info[ADIS16507_2] },
+-	{ .compatible = "adi,adis16507-3",
+-		.data = &adis16475_chip_info[ADIS16507_3] },
+-	{ },
+-};
+-MODULE_DEVICE_TABLE(of, adis16475_of_match);
+ 
+ static int adis16475_probe(struct spi_device *spi)
+ {
+@@ -1301,7 +1257,7 @@ static int adis16475_probe(struct spi_de
+ 
+ 	st = iio_priv(indio_dev);
+ 
+-	st->info = device_get_match_data(&spi->dev);
++	st->info = spi_get_device_match_data(spi);
+ 	if (!st->info)
+ 		return -EINVAL;
+ 
+@@ -1341,12 +1297,83 @@ static int adis16475_probe(struct spi_de
+ 	return 0;
+ }
+ 
++static const struct of_device_id adis16475_of_match[] = {
++	{ .compatible = "adi,adis16470",
++		.data = &adis16475_chip_info[ADIS16470] },
++	{ .compatible = "adi,adis16475-1",
++		.data = &adis16475_chip_info[ADIS16475_1] },
++	{ .compatible = "adi,adis16475-2",
++		.data = &adis16475_chip_info[ADIS16475_2] },
++	{ .compatible = "adi,adis16475-3",
++		.data = &adis16475_chip_info[ADIS16475_3] },
++	{ .compatible = "adi,adis16477-1",
++		.data = &adis16475_chip_info[ADIS16477_1] },
++	{ .compatible = "adi,adis16477-2",
++		.data = &adis16475_chip_info[ADIS16477_2] },
++	{ .compatible = "adi,adis16477-3",
++		.data = &adis16475_chip_info[ADIS16477_3] },
++	{ .compatible = "adi,adis16465-1",
++		.data = &adis16475_chip_info[ADIS16465_1] },
++	{ .compatible = "adi,adis16465-2",
++		.data = &adis16475_chip_info[ADIS16465_2] },
++	{ .compatible = "adi,adis16465-3",
++		.data = &adis16475_chip_info[ADIS16465_3] },
++	{ .compatible = "adi,adis16467-1",
++		.data = &adis16475_chip_info[ADIS16467_1] },
++	{ .compatible = "adi,adis16467-2",
++		.data = &adis16475_chip_info[ADIS16467_2] },
++	{ .compatible = "adi,adis16467-3",
++		.data = &adis16475_chip_info[ADIS16467_3] },
++	{ .compatible = "adi,adis16500",
++		.data = &adis16475_chip_info[ADIS16500] },
++	{ .compatible = "adi,adis16505-1",
++		.data = &adis16475_chip_info[ADIS16505_1] },
++	{ .compatible = "adi,adis16505-2",
++		.data = &adis16475_chip_info[ADIS16505_2] },
++	{ .compatible = "adi,adis16505-3",
++		.data = &adis16475_chip_info[ADIS16505_3] },
++	{ .compatible = "adi,adis16507-1",
++		.data = &adis16475_chip_info[ADIS16507_1] },
++	{ .compatible = "adi,adis16507-2",
++		.data = &adis16475_chip_info[ADIS16507_2] },
++	{ .compatible = "adi,adis16507-3",
++		.data = &adis16475_chip_info[ADIS16507_3] },
++	{ },
++};
++MODULE_DEVICE_TABLE(of, adis16475_of_match);
++
++static const struct spi_device_id adis16475_ids[] = {
++	{ "adis16470", (kernel_ulong_t)&adis16475_chip_info[ADIS16470] },
++	{ "adis16475-1", (kernel_ulong_t)&adis16475_chip_info[ADIS16475_1] },
++	{ "adis16475-2", (kernel_ulong_t)&adis16475_chip_info[ADIS16475_2] },
++	{ "adis16475-3", (kernel_ulong_t)&adis16475_chip_info[ADIS16475_3] },
++	{ "adis16477-1", (kernel_ulong_t)&adis16475_chip_info[ADIS16477_1] },
++	{ "adis16477-2", (kernel_ulong_t)&adis16475_chip_info[ADIS16477_2] },
++	{ "adis16477-3", (kernel_ulong_t)&adis16475_chip_info[ADIS16477_3] },
++	{ "adis16465-1", (kernel_ulong_t)&adis16475_chip_info[ADIS16465_1] },
++	{ "adis16465-2", (kernel_ulong_t)&adis16475_chip_info[ADIS16465_2] },
++	{ "adis16465-3", (kernel_ulong_t)&adis16475_chip_info[ADIS16465_3] },
++	{ "adis16467-1", (kernel_ulong_t)&adis16475_chip_info[ADIS16467_1] },
++	{ "adis16467-2", (kernel_ulong_t)&adis16475_chip_info[ADIS16467_2] },
++	{ "adis16467-3", (kernel_ulong_t)&adis16475_chip_info[ADIS16467_3] },
++	{ "adis16500", (kernel_ulong_t)&adis16475_chip_info[ADIS16500] },
++	{ "adis16505-1", (kernel_ulong_t)&adis16475_chip_info[ADIS16505_1] },
++	{ "adis16505-2", (kernel_ulong_t)&adis16475_chip_info[ADIS16505_2] },
++	{ "adis16505-3", (kernel_ulong_t)&adis16475_chip_info[ADIS16505_3] },
++	{ "adis16507-1", (kernel_ulong_t)&adis16475_chip_info[ADIS16507_1] },
++	{ "adis16507-2", (kernel_ulong_t)&adis16475_chip_info[ADIS16507_2] },
++	{ "adis16507-3", (kernel_ulong_t)&adis16475_chip_info[ADIS16507_3] },
++	{ }
++};
++MODULE_DEVICE_TABLE(spi, adis16475_ids);
++
+ static struct spi_driver adis16475_driver = {
+ 	.driver = {
+ 		.name = "adis16475",
+ 		.of_match_table = adis16475_of_match,
+ 	},
+ 	.probe = adis16475_probe,
++	.id_table = adis16475_ids,
+ };
+ module_spi_driver(adis16475_driver);
  
 
 
