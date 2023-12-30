@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1866179DE;
-	Sat, 30 Dec 2023 12:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6318825;
+	Sat, 30 Dec 2023 12:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="drIQomNh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95010C433C8;
-	Sat, 30 Dec 2023 12:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDjogCZP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3669AC433C8;
+	Sat, 30 Dec 2023 12:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938310;
-	bh=9SmBH0e/cKZ/EoCQ9lYQWsOAdJfL1gQ7PoBblro25Xw=;
+	s=korg; t=1703938313;
+	bh=pJ/0G0Ue0A+MxVnqxaIIKQHkiU368uVP/SLnD/4tfis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=drIQomNhxAvuyQYzsqAXjBYH3SLyN5aDOgQPVawslPF76CQorLyUiLZ6Mxa7Pfaey
-	 0B83ycmO0sLvFj4UPEbRSQx1+O3ihthdO6c8g78lLwFCXs2jLxhFXn9U1pj0NI9Qzu
-	 UHQKQa0jG9EpJn0Xsg+Js2Qt6Ie+kpkENMxyP3Ig=
+	b=QDjogCZPMURjetRC22h+nzagFmeG/qpW9BMpE18Hu9VpFZGAePYRyQRcFnEJ7n7Xr
+	 8tls6uw/quq2AXYLLqy2t5pITpvMpMmAKvUq35C66lE8AwjPQmbN3FlPa1zUxl01Uu
+	 SL1OUEvIkicgCrxXgnAJO8yMKBoJAKFs8quoW69o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 073/112] Bluetooth: L2CAP: Send reject on command corrupted request
-Date: Sat, 30 Dec 2023 11:59:46 +0000
-Message-ID: <20231230115809.077114445@linuxfoundation.org>
+	Tony Lindgren <tony@atomide.com>
+Subject: [PATCH 6.1 101/112] bus: ti-sysc: Flush posted write only after srst_udelay
+Date: Sat, 30 Dec 2023 12:00:14 +0000
+Message-ID: <20231230115810.022629134@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -35,77 +34,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frédéric Danis <frederic.danis@collabora.com>
+From: Tony Lindgren <tony@atomide.com>
 
-commit 78b99eb1faa7371bf9c534690f26a71b6996622d upstream.
+commit f71f6ff8c1f682a1cae4e8d7bdeed9d7f76b8f75 upstream.
 
-L2CAP/COS/CED/BI-02-C PTS test send a malformed L2CAP signaling packet
-with 2 commands in it (a connection request and an unknown command) and
-expect to get a connection response packet and a command reject packet.
-The second is currently not sent.
+Commit 34539b442b3b ("bus: ti-sysc: Flush posted write on enable before
+reset") caused a regression reproducable on omap4 duovero where the ISS
+target module can produce interconnect errors on boot. Turns out the
+registers are not accessible until after a delay for devices needing
+a ti,sysc-delay-us value.
 
+Let's fix this by flushing the posted write only after the reset delay.
+We do flushing also for ti,sysc-delay-us using devices as that should
+trigger an interconnect error if the delay is not properly configured.
+
+Let's also add some comments while at it.
+
+Fixes: 34539b442b3b ("bus: ti-sysc: Flush posted write on enable before reset")
 Cc: stable@vger.kernel.org
-Signed-off-by: Frédéric Danis <frederic.danis@collabora.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |   21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/bus/ti-sysc.c |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -6493,6 +6493,14 @@ drop:
- 	kfree_skb(skb);
- }
- 
-+static inline void l2cap_sig_send_rej(struct l2cap_conn *conn, u16 ident)
-+{
-+	struct l2cap_cmd_rej_unk rej;
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -2174,13 +2174,23 @@ static int sysc_reset(struct sysc *ddata
+ 		sysc_val = sysc_read_sysconfig(ddata);
+ 		sysc_val |= sysc_mask;
+ 		sysc_write(ddata, sysc_offset, sysc_val);
+-		/* Flush posted write */
 +
-+	rej.reason = cpu_to_le16(L2CAP_REJ_NOT_UNDERSTOOD);
-+	l2cap_send_cmd(conn, ident, L2CAP_COMMAND_REJ, sizeof(rej), &rej);
-+}
++		/*
++		 * Some devices need a delay before reading registers
++		 * after reset. Presumably a srst_udelay is not needed
++		 * for devices that use a rstctrl register reset.
++		 */
++		if (ddata->cfg.srst_udelay)
++			fsleep(ddata->cfg.srst_udelay);
 +
- static inline void l2cap_sig_channel(struct l2cap_conn *conn,
- 				     struct sk_buff *skb)
- {
-@@ -6518,23 +6526,24 @@ static inline void l2cap_sig_channel(str
- 
- 		if (len > skb->len || !cmd->ident) {
- 			BT_DBG("corrupted command");
-+			l2cap_sig_send_rej(conn, cmd->ident);
- 			break;
- 		}
- 
- 		err = l2cap_bredr_sig_cmd(conn, cmd, len, skb->data);
- 		if (err) {
--			struct l2cap_cmd_rej_unk rej;
--
- 			BT_ERR("Wrong link type (%d)", err);
--
--			rej.reason = cpu_to_le16(L2CAP_REJ_NOT_UNDERSTOOD);
--			l2cap_send_cmd(conn, cmd->ident, L2CAP_COMMAND_REJ,
--				       sizeof(rej), &rej);
-+			l2cap_sig_send_rej(conn, cmd->ident);
- 		}
- 
- 		skb_pull(skb, len);
++		/*
++		 * Flush posted write. For devices needing srst_udelay
++		 * this should trigger an interconnect error if the
++		 * srst_udelay value is needed but not configured.
++		 */
+ 		sysc_val = sysc_read_sysconfig(ddata);
  	}
  
-+	if (skb->len > 0) {
-+		BT_DBG("corrupted command");
-+		l2cap_sig_send_rej(conn, 0);
-+	}
-+
- drop:
- 	kfree_skb(skb);
- }
+-	if (ddata->cfg.srst_udelay)
+-		fsleep(ddata->cfg.srst_udelay);
+-
+ 	if (ddata->post_reset_quirk)
+ 		ddata->post_reset_quirk(ddata);
+ 
 
 
