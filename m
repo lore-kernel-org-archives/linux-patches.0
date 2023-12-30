@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1AC63D5;
-	Sat, 30 Dec 2023 12:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F031C79DD;
+	Sat, 30 Dec 2023 12:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SEvwx37+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD26C433C7;
-	Sat, 30 Dec 2023 12:01:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8Q84klg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78455C433C8;
+	Sat, 30 Dec 2023 12:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937679;
-	bh=tbQoJK8CN6dE1QnN/jnhpzy/91HO5P4u0k7XTGbDP74=;
+	s=korg; t=1703937681;
+	bh=VpyEVfwUeF3FjymCcOuIIwGokVBl0NYUnVNsPEBin+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SEvwx37+WFXth5sRdE0d7zHCX+vp0ZIwdF8gA+cZP/4GIa/OSHNddGKvL/6NkxkvR
-	 oAk4TeYNNzaypD2R6oRryJH/3VfQt+ndLlQrzZEFh+gjjaX16ICkia++Q+JEVWKFrd
-	 wZtJN1J/gu+UyZtkNpTZViAbVOuTJsjLBomjciSw=
+	b=Y8Q84klgokabNO/pEnYzP1C9KPRgm1nq2wHQqayz0cbOdiCGUr5gPZtwgpHRQee9d
+	 LSbydotaugg1d/++yAV8xN6+BHG9DHaSYQjWRjNnsbHB2XS/S8fCu0u4AIAmUQN+AD
+	 AVFBVTcjtqK5py6mcdcCmQ04yeyjvqSMow8+ErWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Morin <guillaume@morinfr.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Jouni Malinen <j@w1.fi>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/156] SUNRPC: Revert 5f7fc5d69f6e92ec0b38774c387f5cf7812c5806
-Date: Sat, 30 Dec 2023 11:57:54 +0000
-Message-ID: <20231230115813.032018292@linuxfoundation.org>
+Subject: [PATCH 6.6 021/156] wifi: ieee80211: dont require protected vendor action frames
+Date: Sat, 30 Dec 2023 11:57:55 +0000
+Message-ID: <20231230115813.063775600@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -42,49 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit bd018b98ba84ca0c80abac1ef23ce726a809e58c ]
+[ Upstream commit 98fb9b9680c9f3895ced02d6a73e27f5d7b5892b ]
 
-Guillaume says:
-> I believe commit 5f7fc5d69f6e ("SUNRPC: Resupply rq_pages from
-> node-local memory") in Linux 6.5+ is incorrect. It passes
-> unconditionally rq_pool->sp_id as the NUMA node.
->
-> While the comment in the svc_pool declaration in sunrpc/svc.h says
-> that sp_id is also the NUMA node id, it might not be the case if
-> the svc is created using svc_create_pooled(). svc_created_pooled()
-> can use the per-cpu pool mode therefore in this case sp_id would
-> be the cpu id.
+For vendor action frames, whether a protected one should be
+used or not is clearly up to the individual vendor and frame,
+so even though a protected dual is defined, it may not get
+used. Thus, don't require protection for vendor action frames
+when they're used in a connection.
 
-Fix this by reverting now. At a later point this minor optimization,
-and the deceptive labeling of the sp_id field, can be revisited.
+Since we obviously don't process frames unknown to the kernel
+in the kernel, it may makes sense to invert this list to have
+all the ones the kernel processes and knows to be requiring
+protection, but that'd be a different change.
 
-Reported-by: Guillaume Morin <guillaume@morinfr.org>
-Closes: https://lore.kernel.org/linux-nfs/ZYC9rsno8qYggVt9@bender.morinfr.org/T/#u
-Fixes: 5f7fc5d69f6e ("SUNRPC: Resupply rq_pages from node-local memory")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 91535613b609 ("wifi: mac80211: don't drop all unprotected public action frames")
+Reported-by: Jouni Malinen <j@w1.fi>
+Link: https://msgid.link/20231206223801.f6a2cf4e67ec.Ifa6acc774bd67801d3dafb405278f297683187aa@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svc_xprt.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/linux/ieee80211.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/svc_xprt.c b/net/sunrpc/svc_xprt.c
-index 4cfe9640df481..5cfe5c7408b74 100644
---- a/net/sunrpc/svc_xprt.c
-+++ b/net/sunrpc/svc_xprt.c
-@@ -666,9 +666,8 @@ static bool svc_alloc_arg(struct svc_rqst *rqstp)
- 	}
+diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
+index b24fb80782c5a..2b0a73cb7cbb0 100644
+--- a/include/linux/ieee80211.h
++++ b/include/linux/ieee80211.h
+@@ -4381,7 +4381,8 @@ ieee80211_is_protected_dual_of_public_action(struct sk_buff *skb)
+ 		action != WLAN_PUB_ACTION_LOC_TRACK_NOTI &&
+ 		action != WLAN_PUB_ACTION_FTM_REQUEST &&
+ 		action != WLAN_PUB_ACTION_FTM_RESPONSE &&
+-		action != WLAN_PUB_ACTION_FILS_DISCOVERY;
++		action != WLAN_PUB_ACTION_FILS_DISCOVERY &&
++		action != WLAN_PUB_ACTION_VENDOR_SPECIFIC;
+ }
  
- 	for (filled = 0; filled < pages; filled = ret) {
--		ret = alloc_pages_bulk_array_node(GFP_KERNEL,
--						  rqstp->rq_pool->sp_id,
--						  pages, rqstp->rq_pages);
-+		ret = alloc_pages_bulk_array(GFP_KERNEL, pages,
-+					     rqstp->rq_pages);
- 		if (ret > filled)
- 			/* Made progress, don't sleep yet */
- 			continue;
+ /**
 -- 
 2.43.0
 
