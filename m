@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4A88BE7;
-	Sat, 30 Dec 2023 12:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABEE8BF6;
+	Sat, 30 Dec 2023 12:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrM07WHT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08391C433C8;
-	Sat, 30 Dec 2023 12:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtGXzskt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98EFDC433C8;
+	Sat, 30 Dec 2023 12:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938144;
-	bh=R1YnlVz/IG/qla5C0RylRCsVeGI/NvJtK08zHW232AE=;
+	s=korg; t=1703938146;
+	bh=aclKohuCApr0lVK7iisiD1nU3GSPiIs53QxxsakHuqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mrM07WHTaU2YvJ6U9XAkxnu4mfojkZlbF28zKiRyjuVuxv61E/ID9HdYA8S6laim8
-	 fZWKrFhP3uBhv8RzRk9ZNc74tkml+q8mNTU6Fwtiy1ye+d63GrPxDAibojrVK70fr4
-	 1Yab3kIzaUokropciL5eo6XssJT3k6TQ7YWYUcJw=
+	b=jtGXzsktr4dDFQ+oR6SyGgHlYwC9OR+kF0NtSby3POs6DCXtRzj7rOzt8aN4gGx1m
+	 JxxRNOE+GNKGeJ1exLAViL0ULR5ZyoeZaMHZWzsOgiQ0z+p3hcPvQ0ewoxMUfSvLJf
+	 zCGtMBUM3JYEf0d8v7gE8SXbYjHTPIRSCzZgNHCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Nguyen <quan@os.amperecomputing.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Juergen Gross <jgross@suse.com>,
+	Alyssa Ross <hi@alyssa.is>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/112] i2c: aspeed: Handle the coalesced stop conditions with the start conditions.
-Date: Sat, 30 Dec 2023 11:59:16 +0000
-Message-ID: <20231230115808.114268256@linuxfoundation.org>
+Subject: [PATCH 6.1 044/112] x86/xen: add CPU dependencies for 32-bit build
+Date: Sat, 30 Dec 2023 11:59:17 +0000
+Message-ID: <20231230115808.138735571@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -44,112 +43,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quan Nguyen <quan@os.amperecomputing.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit b4cc1cbba5195a4dd497cf2f8f09e7807977d543 ]
+[ Upstream commit 93cd0597649844a0fe7989839a3202735fb3ae67 ]
 
-Some masters may drive the transfers with low enough latency between
-the nak/stop phase of the current command and the start/address phase
-of the following command that the interrupts are coalesced by the
-time we process them.
-Handle the stop conditions before processing SLAVE_MATCH to fix the
-complaints that sometimes occur below.
+Xen only supports modern CPUs even when running a 32-bit kernel, and it now
+requires a kernel built for a 64 byte (or larger) cache line:
 
-"aspeed-i2c-bus 1e78a040.i2c-bus: irq handled != irq. Expected
-0x00000086, but was 0x00000084"
+In file included from <command-line>:
+In function 'xen_vcpu_setup',
+    inlined from 'xen_vcpu_setup_restore' at arch/x86/xen/enlighten.c:111:3,
+    inlined from 'xen_vcpu_restore' at arch/x86/xen/enlighten.c:141:3:
+include/linux/compiler_types.h:435:45: error: call to '__compiletime_assert_287' declared with attribute error: BUILD_BUG_ON failed: sizeof(*vcpup) > SMP_CACHE_BYTES
+arch/x86/xen/enlighten.c:166:9: note: in expansion of macro 'BUILD_BUG_ON'
+  166 |         BUILD_BUG_ON(sizeof(*vcpup) > SMP_CACHE_BYTES);
+      |         ^~~~~~~~~~~~
 
-Fixes: f9eb91350bb2 ("i2c: aspeed: added slave support for Aspeed I2C driver")
-Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Enforce the dependency with a whitelist of CPU configurations. In normal
+distro kernels, CONFIG_X86_GENERIC is enabled, and this works fine. When this
+is not set, still allow Xen to be built on kernels that target a 64-bit
+capable CPU.
+
+Fixes: db2832309a82 ("x86/xen: fix percpu vcpu_info allocation")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Tested-by: Alyssa Ross <hi@alyssa.is>
+Link: https://lore.kernel.org/r/20231204084722.3789473-1-arnd@kernel.org
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-aspeed.c | 48 ++++++++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 16 deletions(-)
+ arch/x86/xen/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-index 6adf3b141316b..86daf791aa27c 100644
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -249,18 +249,46 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 	if (!slave)
- 		return 0;
- 
--	command = readl(bus->base + ASPEED_I2C_CMD_REG);
-+	/*
-+	 * Handle stop conditions early, prior to SLAVE_MATCH. Some masters may drive
-+	 * transfers with low enough latency between the nak/stop phase of the current
-+	 * command and the start/address phase of the following command that the
-+	 * interrupts are coalesced by the time we process them.
-+	 */
-+	if (irq_status & ASPEED_I2CD_INTR_NORMAL_STOP) {
-+		irq_handled |= ASPEED_I2CD_INTR_NORMAL_STOP;
-+		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
-+	}
-+
-+	if (irq_status & ASPEED_I2CD_INTR_TX_NAK &&
-+	    bus->slave_state == ASPEED_I2C_SLAVE_READ_PROCESSED) {
-+		irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
-+		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
-+	}
-+
-+	/* Propagate any stop conditions to the slave implementation. */
-+	if (bus->slave_state == ASPEED_I2C_SLAVE_STOP) {
-+		i2c_slave_event(slave, I2C_SLAVE_STOP, &value);
-+		bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
-+	}
- 
--	/* Slave was requested, restart state machine. */
-+	/*
-+	 * Now that we've dealt with any potentially coalesced stop conditions,
-+	 * address any start conditions.
-+	 */
- 	if (irq_status & ASPEED_I2CD_INTR_SLAVE_MATCH) {
- 		irq_handled |= ASPEED_I2CD_INTR_SLAVE_MATCH;
- 		bus->slave_state = ASPEED_I2C_SLAVE_START;
- 	}
- 
--	/* Slave is not currently active, irq was for someone else. */
-+	/*
-+	 * If the slave has been stopped and not started then slave interrupt
-+	 * handling is complete.
-+	 */
- 	if (bus->slave_state == ASPEED_I2C_SLAVE_INACTIVE)
- 		return irq_handled;
- 
-+	command = readl(bus->base + ASPEED_I2C_CMD_REG);
- 	dev_dbg(bus->dev, "slave irq status 0x%08x, cmd 0x%08x\n",
- 		irq_status, command);
- 
-@@ -279,17 +307,6 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		irq_handled |= ASPEED_I2CD_INTR_RX_DONE;
- 	}
- 
--	/* Slave was asked to stop. */
--	if (irq_status & ASPEED_I2CD_INTR_NORMAL_STOP) {
--		irq_handled |= ASPEED_I2CD_INTR_NORMAL_STOP;
--		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
--	}
--	if (irq_status & ASPEED_I2CD_INTR_TX_NAK &&
--	    bus->slave_state == ASPEED_I2C_SLAVE_READ_PROCESSED) {
--		irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
--		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
--	}
--
- 	switch (bus->slave_state) {
- 	case ASPEED_I2C_SLAVE_READ_REQUESTED:
- 		if (unlikely(irq_status & ASPEED_I2CD_INTR_TX_ACK))
-@@ -324,8 +341,7 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		i2c_slave_event(slave, I2C_SLAVE_WRITE_RECEIVED, &value);
- 		break;
- 	case ASPEED_I2C_SLAVE_STOP:
--		i2c_slave_event(slave, I2C_SLAVE_STOP, &value);
--		bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
-+		/* Stop event handling is done early. Unreachable. */
- 		break;
- 	case ASPEED_I2C_SLAVE_START:
- 		/* Slave was just started. Waiting for the next event. */;
+diff --git a/arch/x86/xen/Kconfig b/arch/x86/xen/Kconfig
+index 9b1ec5d8c99c8..a65fc2ae15b49 100644
+--- a/arch/x86/xen/Kconfig
++++ b/arch/x86/xen/Kconfig
+@@ -9,6 +9,7 @@ config XEN
+ 	select PARAVIRT_CLOCK
+ 	select X86_HV_CALLBACK_VECTOR
+ 	depends on X86_64 || (X86_32 && X86_PAE)
++	depends on X86_64 || (X86_GENERIC || MPENTIUM4 || MCORE2 || MATOM || MK8)
+ 	depends on X86_LOCAL_APIC && X86_TSC
+ 	help
+ 	  This is the Linux Xen port.  Enabling this will allow the
 -- 
 2.43.0
 
