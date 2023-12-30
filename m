@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C158483;
-	Sat, 30 Dec 2023 12:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065CC79DE;
+	Sat, 30 Dec 2023 12:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yy9TIw4U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41DCC433C8;
-	Sat, 30 Dec 2023 12:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlcz+hJl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E96FC433C7;
+	Sat, 30 Dec 2023 12:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938290;
-	bh=H/w7slU9FZzAh/+U7Of+mglpkwa3ECHRdrr6EpkYiOs=;
+	s=korg; t=1703938292;
+	bh=j1QRLokOuCBiHW6nc0ECUbm+dxfzVsPuKvd/ClJb+OI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yy9TIw4U2z0RRA7nhUIr7CqMJlYmtD7abKd3/TQ99SKUHomFFziaAeHq/I//H6nDm
-	 dvE44fdwnrHCz5rNtJ3GxKYpCODDsn5jOqc7BkdaQCL4pCbSXoO0A6gEZhBDF/mRPD
-	 res43CjohkbvVaeAT9uBSmzUe1SwWZEu01AJhA3Y=
+	b=rlcz+hJlFWdN6FYE+emgWH7+v4kJnh2qtBP2WUjwgkahArCxPEfzE4lNe63AKZY3F
+	 AR1mELjfWc9la3Q+/8rhFRGbTP9cT9bw9PRhm2VApAh/4w8eOk+hc+WVduyU1kEHGY
+	 nA25OUawEAuYHWqrgzcMaihZKfYxbXDWdjlY6oCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 099/112] dm-integrity: dont modify bios immutable bio_vec in integrity_metadata()
-Date: Sat, 30 Dec 2023 12:00:12 +0000
-Message-ID: <20231230115809.961662447@linuxfoundation.org>
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.1 076/112] net: usb: ax88179_178a: avoid failed operations when device is disconnected
+Date: Sat, 30 Dec 2023 11:59:49 +0000
+Message-ID: <20231230115809.192583952@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -41,66 +41,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-commit b86f4b790c998afdbc88fe1aa55cfe89c4068726 upstream.
+commit aef05e349bfd81c95adb4489639413fadbb74a83 upstream.
 
-__bio_for_each_segment assumes that the first struct bio_vec argument
-doesn't change - it calls "bio_advance_iter_single((bio), &(iter),
-(bvl).bv_len)" to advance the iterator. Unfortunately, the dm-integrity
-code changes the bio_vec with "bv.bv_len -= pos". When this code path
-is taken, the iterator would be out of sync and dm-integrity would
-report errors. This happens if the machine is out of memory and
-"kmalloc" fails.
+When the device is disconnected we get the following messages showing
+failed operations:
+Nov 28 20:22:11 localhost kernel: usb 2-3: USB disconnect, device number 2
+Nov 28 20:22:11 localhost kernel: ax88179_178a 2-3:1.0 enp2s0u3: unregister 'ax88179_178a' usb-0000:02:00.0-3, ASIX AX88179 USB 3.0 Gigabit Ethernet
+Nov 28 20:22:11 localhost kernel: ax88179_178a 2-3:1.0 enp2s0u3: Failed to read reg index 0x0002: -19
+Nov 28 20:22:11 localhost kernel: ax88179_178a 2-3:1.0 enp2s0u3: Failed to write reg index 0x0002: -19
+Nov 28 20:22:11 localhost kernel: ax88179_178a 2-3:1.0 enp2s0u3 (unregistered): Failed to write reg index 0x0002: -19
+Nov 28 20:22:11 localhost kernel: ax88179_178a 2-3:1.0 enp2s0u3 (unregistered): Failed to write reg index 0x0001: -19
+Nov 28 20:22:11 localhost kernel: ax88179_178a 2-3:1.0 enp2s0u3 (unregistered): Failed to write reg index 0x0002: -19
 
-Fix this bug by making a copy of "bv" and changing the copy instead.
+The reason is that although the device is detached, normal stop and
+unbind operations are commanded from the driver. These operations are
+not necessary in this situation, so avoid these logs when the device is
+detached if the result of the operation is -ENODEV and if the new flag
+informing about the disconnecting status is enabled.
 
-Fixes: 7eada909bfd7 ("dm: add integrity target")
-Cc: stable@vger.kernel.org	# v4.12+
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+cc:  <stable@vger.kernel.org>
+Fixes: e2ca90c276e1f ("ax88179_178a: ASIX AX88179_178A USB 3.0/2.0 to gigabit ethernet adapter driver")
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20231207175007.263907-1-jtornosm@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/usb/ax88179_178a.c |   23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -1763,11 +1763,12 @@ static void integrity_metadata(struct wo
- 		sectors_to_process = dio->range.n_sectors;
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -173,6 +173,7 @@ struct ax88179_data {
+ 	u8 in_pm;
+ 	u32 wol_supported;
+ 	u32 wolopts;
++	u8 disconnecting;
+ };
  
- 		__bio_for_each_segment(bv, bio, iter, dio->bio_details.bi_iter) {
-+			struct bio_vec bv_copy = bv;
- 			unsigned int pos;
- 			char *mem, *checksums_ptr;
+ struct ax88179_int_data {
+@@ -208,6 +209,7 @@ static int __ax88179_read_cmd(struct usb
+ {
+ 	int ret;
+ 	int (*fn)(struct usbnet *, u8, u8, u16, u16, void *, u16);
++	struct ax88179_data *ax179_data = dev->driver_priv;
  
- again:
--			mem = bvec_kmap_local(&bv);
-+			mem = bvec_kmap_local(&bv_copy);
- 			pos = 0;
- 			checksums_ptr = checksums;
- 			do {
-@@ -1776,7 +1777,7 @@ again:
- 				sectors_to_process -= ic->sectors_per_block;
- 				pos += ic->sectors_per_block << SECTOR_SHIFT;
- 				sector += ic->sectors_per_block;
--			} while (pos < bv.bv_len && sectors_to_process && checksums != checksums_onstack);
-+			} while (pos < bv_copy.bv_len && sectors_to_process && checksums != checksums_onstack);
- 			kunmap_local(mem);
+ 	BUG_ON(!dev);
  
- 			r = dm_integrity_rw_tag(ic, checksums, &dio->metadata_block, &dio->metadata_offset,
-@@ -1801,9 +1802,9 @@ again:
- 			if (!sectors_to_process)
- 				break;
+@@ -219,7 +221,7 @@ static int __ax88179_read_cmd(struct usb
+ 	ret = fn(dev, cmd, USB_DIR_IN | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+ 		 value, index, data, size);
  
--			if (unlikely(pos < bv.bv_len)) {
--				bv.bv_offset += pos;
--				bv.bv_len -= pos;
-+			if (unlikely(pos < bv_copy.bv_len)) {
-+				bv_copy.bv_offset += pos;
-+				bv_copy.bv_len -= pos;
- 				goto again;
- 			}
- 		}
+-	if (unlikely(ret < 0))
++	if (unlikely((ret < 0) && !(ret == -ENODEV && ax179_data->disconnecting)))
+ 		netdev_warn(dev->net, "Failed to read reg index 0x%04x: %d\n",
+ 			    index, ret);
+ 
+@@ -231,6 +233,7 @@ static int __ax88179_write_cmd(struct us
+ {
+ 	int ret;
+ 	int (*fn)(struct usbnet *, u8, u8, u16, u16, const void *, u16);
++	struct ax88179_data *ax179_data = dev->driver_priv;
+ 
+ 	BUG_ON(!dev);
+ 
+@@ -242,7 +245,7 @@ static int __ax88179_write_cmd(struct us
+ 	ret = fn(dev, cmd, USB_DIR_OUT | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+ 		 value, index, data, size);
+ 
+-	if (unlikely(ret < 0))
++	if (unlikely((ret < 0) && !(ret == -ENODEV && ax179_data->disconnecting)))
+ 		netdev_warn(dev->net, "Failed to write reg index 0x%04x: %d\n",
+ 			    index, ret);
+ 
+@@ -492,6 +495,20 @@ static int ax88179_resume(struct usb_int
+ 	return usbnet_resume(intf);
+ }
+ 
++static void ax88179_disconnect(struct usb_interface *intf)
++{
++	struct usbnet *dev = usb_get_intfdata(intf);
++	struct ax88179_data *ax179_data;
++
++	if (!dev)
++		return;
++
++	ax179_data = dev->driver_priv;
++	ax179_data->disconnecting = 1;
++
++	usbnet_disconnect(intf);
++}
++
+ static void
+ ax88179_get_wol(struct net_device *net, struct ethtool_wolinfo *wolinfo)
+ {
+@@ -1906,7 +1923,7 @@ static struct usb_driver ax88179_178a_dr
+ 	.suspend =	ax88179_suspend,
+ 	.resume =	ax88179_resume,
+ 	.reset_resume =	ax88179_resume,
+-	.disconnect =	usbnet_disconnect,
++	.disconnect =	ax88179_disconnect,
+ 	.supports_autosuspend = 1,
+ 	.disable_hub_initiated_lpm = 1,
+ };
 
 
