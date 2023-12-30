@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBA879CD;
-	Sat, 30 Dec 2023 12:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F028473;
+	Sat, 30 Dec 2023 12:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bX64dWDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B08C433C7;
-	Sat, 30 Dec 2023 12:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+g0Etaj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E62C433C8;
+	Sat, 30 Dec 2023 12:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938282;
-	bh=kyr+kzKaSSMnBz+IRwe7BuSRDWhESMUG/z5LQpDTtpQ=;
+	s=korg; t=1703938285;
+	bh=2efLaDGnrk99nxzlLh/Q4O/PpS6eLYRhfcmPE4NZkGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bX64dWDowc+WJFXMZHVCmO5AK5t1OrcbkJ7a4Tc3VoKcOd/J5BQOWKunYt+duP/df
-	 fkphh4DHNnPZRNJFVCPHKMNMZWwvzB0PFcIbEzhQb2QvoTGwTUwKPO2EVILDfJvvQV
-	 yCGAcTaJfeFB5KOTNGb9SyHWHIaI2hvBBFagivSc=
+	b=T+g0Etaj/WV6QH2mFkJTRc/hzOeESbi1J9KXwIcUiyHP24Apf5GGuct74RNNfVdOn
+	 hiJM95dOkScgNFbRE5NaerYM3c0FuanzQfLrYd2mMC/qQYm963jiqVPUvtOr5Itjlw
+	 YHYH0ATrlE8RzdzoE6AuSr8v50K22uLJPlnqYiHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alexander Atanasov <alexander.atanasov@virtuozzo.com>,
+	Ming Lei <ming.lei@redhat.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 096/112] Revert "scsi: aacraid: Reply queue mapping to CPUs based on IRQ affinity"
-Date: Sat, 30 Dec 2023 12:00:09 +0000
-Message-ID: <20231230115809.884695854@linuxfoundation.org>
+Subject: [PATCH 6.1 097/112] scsi: core: Always send batch on reset or error handling command
+Date: Sat, 30 Dec 2023 12:00:10 +0000
+Message-ID: <20231230115809.908552941@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -40,144 +42,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin K. Petersen <martin.petersen@oracle.com>
+From: Alexander Atanasov <alexander.atanasov@virtuozzo.com>
 
-commit c5becf57dd5659c687d41d623a69f42d63f59eb2 upstream.
+commit 066c5b46b6eaf2f13f80c19500dbb3b84baabb33 upstream.
 
-This reverts commit 9dc704dcc09eae7d21b5da0615eb2ed79278f63e.
+In commit 8930a6c20791 ("scsi: core: add support for request batching") the
+block layer bd->last flag was mapped to SCMD_LAST and used as an indicator
+to send the batch for the drivers that implement this feature. However, the
+error handling code was not updated accordingly.
 
-Several reports have been made indicating that this commit caused
-hangs. Numerous attempts at root causing and fixing the issue have
-been unsuccessful so let's revert for now.
+scsi_send_eh_cmnd() is used to send error handling commands and request
+sense. The problem is that request sense comes as a single command that
+gets into the batch queue and times out. As a result the device goes
+offline after several failed resets. This was observed on virtio_scsi
+during a device resize operation.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217599
+[  496.316946] sd 0:0:4:0: [sdd] tag#117 scsi_eh_0: requesting sense
+[  506.786356] sd 0:0:4:0: [sdd] tag#117 scsi_send_eh_cmnd timeleft: 0
+[  506.787981] sd 0:0:4:0: [sdd] tag#117 abort
+
+To fix this always set SCMD_LAST flag in scsi_send_eh_cmnd() and
+scsi_reset_ioctl().
+
+Fixes: 8930a6c20791 ("scsi: core: add support for request batching")
 Cc: <stable@vger.kernel.org>
+Signed-off-by: Alexander Atanasov <alexander.atanasov@virtuozzo.com>
+Link: https://lore.kernel.org/r/20231215121008.2881653-1-alexander.atanasov@virtuozzo.com
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/aacraid/aacraid.h |    1 -
- drivers/scsi/aacraid/commsup.c |    6 +-----
- drivers/scsi/aacraid/linit.c   |   14 --------------
- drivers/scsi/aacraid/src.c     |   25 ++-----------------------
- 4 files changed, 3 insertions(+), 43 deletions(-)
+ drivers/scsi/scsi_error.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/scsi/aacraid/aacraid.h
-+++ b/drivers/scsi/aacraid/aacraid.h
-@@ -1678,7 +1678,6 @@ struct aac_dev
- 	u32			handle_pci_error;
- 	bool			init_reset;
- 	u8			soft_reset_support;
--	u8			use_map_queue;
- };
+--- a/drivers/scsi/scsi_error.c
++++ b/drivers/scsi/scsi_error.c
+@@ -1108,6 +1108,7 @@ retry:
  
- #define aac_adapter_interrupt(dev) \
---- a/drivers/scsi/aacraid/commsup.c
-+++ b/drivers/scsi/aacraid/commsup.c
-@@ -223,12 +223,8 @@ int aac_fib_setup(struct aac_dev * dev)
- struct fib *aac_fib_alloc_tag(struct aac_dev *dev, struct scsi_cmnd *scmd)
- {
- 	struct fib *fibptr;
--	u32 blk_tag;
--	int i;
+ 	scsi_log_send(scmd);
+ 	scmd->submitter = SUBMITTED_BY_SCSI_ERROR_HANDLER;
++	scmd->flags |= SCMD_LAST;
  
--	blk_tag = blk_mq_unique_tag(scsi_cmd_to_rq(scmd));
--	i = blk_mq_unique_tag_to_tag(blk_tag);
--	fibptr = &dev->fibs[i];
-+	fibptr = &dev->fibs[scsi_cmd_to_rq(scmd)->tag];
  	/*
- 	 *	Null out fields that depend on being zero at the start of
- 	 *	each I/O
---- a/drivers/scsi/aacraid/linit.c
-+++ b/drivers/scsi/aacraid/linit.c
-@@ -19,7 +19,6 @@
+ 	 * Lock sdev->state_mutex to avoid that scsi_device_quiesce() can
+@@ -2402,6 +2403,7 @@ scsi_ioctl_reset(struct scsi_device *dev
+ 	scsi_init_command(dev, scmd);
  
- #include <linux/compat.h>
- #include <linux/blkdev.h>
--#include <linux/blk-mq-pci.h>
- #include <linux/completion.h>
- #include <linux/init.h>
- #include <linux/interrupt.h>
-@@ -506,15 +505,6 @@ common_config:
- 	return 0;
- }
+ 	scmd->submitter = SUBMITTED_BY_SCSI_RESET_IOCTL;
++	scmd->flags |= SCMD_LAST;
+ 	memset(&scmd->sdb, 0, sizeof(scmd->sdb));
  
--static void aac_map_queues(struct Scsi_Host *shost)
--{
--	struct aac_dev *aac = (struct aac_dev *)shost->hostdata;
--
--	blk_mq_pci_map_queues(&shost->tag_set.map[HCTX_TYPE_DEFAULT],
--			      aac->pdev, 0);
--	aac->use_map_queue = true;
--}
--
- /**
-  *	aac_change_queue_depth		-	alter queue depths
-  *	@sdev:	SCSI device we are considering
-@@ -1499,7 +1489,6 @@ static struct scsi_host_template aac_dri
- 	.bios_param			= aac_biosparm,
- 	.shost_groups			= aac_host_groups,
- 	.slave_configure		= aac_slave_configure,
--	.map_queues			= aac_map_queues,
- 	.change_queue_depth		= aac_change_queue_depth,
- 	.sdev_groups			= aac_dev_groups,
- 	.eh_abort_handler		= aac_eh_abort,
-@@ -1787,8 +1776,6 @@ static int aac_probe_one(struct pci_dev
- 	shost->max_lun = AAC_MAX_LUN;
- 
- 	pci_set_drvdata(pdev, shost);
--	shost->nr_hw_queues = aac->max_msix;
--	shost->host_tagset = 1;
- 
- 	error = scsi_add_host(shost, &pdev->dev);
- 	if (error)
-@@ -1921,7 +1908,6 @@ static void aac_remove_one(struct pci_de
- 	struct aac_dev *aac = (struct aac_dev *)shost->hostdata;
- 
- 	aac_cancel_rescan_worker(aac);
--	aac->use_map_queue = false;
- 	scsi_remove_host(shost);
- 
- 	__aac_shutdown(aac);
---- a/drivers/scsi/aacraid/src.c
-+++ b/drivers/scsi/aacraid/src.c
-@@ -493,10 +493,6 @@ static int aac_src_deliver_message(struc
- #endif
- 
- 	u16 vector_no;
--	struct scsi_cmnd *scmd;
--	u32 blk_tag;
--	struct Scsi_Host *shost = dev->scsi_host_ptr;
--	struct blk_mq_queue_map *qmap;
- 
- 	atomic_inc(&q->numpending);
- 
-@@ -509,25 +505,8 @@ static int aac_src_deliver_message(struc
- 		if ((dev->comm_interface == AAC_COMM_MESSAGE_TYPE3)
- 			&& dev->sa_firmware)
- 			vector_no = aac_get_vector(dev);
--		else {
--			if (!fib->vector_no || !fib->callback_data) {
--				if (shost && dev->use_map_queue) {
--					qmap = &shost->tag_set.map[HCTX_TYPE_DEFAULT];
--					vector_no = qmap->mq_map[raw_smp_processor_id()];
--				}
--				/*
--				 *	We hardcode the vector_no for
--				 *	reserved commands as a valid shost is
--				 *	absent during the init
--				 */
--				else
--					vector_no = 0;
--			} else {
--				scmd = (struct scsi_cmnd *)fib->callback_data;
--				blk_tag = blk_mq_unique_tag(scsi_cmd_to_rq(scmd));
--				vector_no = blk_mq_unique_tag_to_hwq(blk_tag);
--			}
--		}
-+		else
-+			vector_no = fib->vector_no;
- 
- 		if (native_hba) {
- 			if (fib->flags & FIB_CONTEXT_FLAG_NATIVE_HBA_TMF) {
+ 	scmd->cmd_len			= 0;
 
 
