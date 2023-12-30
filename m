@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90988487;
-	Sat, 30 Dec 2023 12:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968DA8483;
+	Sat, 30 Dec 2023 12:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltKr06HI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 406F0C433C7;
-	Sat, 30 Dec 2023 12:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O02Gz7v3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BA6C433C7;
+	Sat, 30 Dec 2023 12:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937720;
-	bh=6mwUCUEt0d80Gx8/tsXONcrhoo6qLkmYZrdqM3a+YTY=;
+	s=korg; t=1703937723;
+	bh=Wpj/7VXXTMHzkajBYfQa+KdJk3imIWv9V0RiLDtMb1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ltKr06HIlF5tZWfvchjMr9rsvn6EmnbeZnFeUULU5r0bPXDCy5CROiqnF39i8Fa5T
-	 SnuNQRiVrZB3af53ypx8IUAd24b7wCcNn8KknqdGOmwiQH4apAqzK7sHQi2IFYzm2n
-	 jDhq89qK4DKabAtVk1ecyjSpR9QS9OHXpwGr/Htk=
+	b=O02Gz7v335Hs/R2qNhO2DuTmKe1VPmh8k+GRUe7vNC9KxBPr2A/OYsLwL22W+Hcfm
+	 1RYM7ufX7BJcxMsg4crpUDXfFLyEOM1Rdno3L8fLle4YeNW/t54IFx3UDRkuwCmGlS
+	 aV9jdtxYXlV3NAYaXHBUGqRPD4woghoyeCVbBVCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Feras Daoud <ferasda@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/156] net/mlx5e: XDP, Drop fragmented packets larger than MTU size
-Date: Sat, 30 Dec 2023 11:58:11 +0000
-Message-ID: <20231230115813.584257400@linuxfoundation.org>
+Subject: [PATCH 6.6 038/156] net/mlx5: Fix fw tracer first block check
+Date: Sat, 30 Dec 2023 11:58:12 +0000
+Message-ID: <20231230115813.611485349@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -43,49 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit bcaf109f794744c14da0e9123b31d1f4571b0a35 ]
+[ Upstream commit 4261edf11cb7c9224af713a102e5616329306932 ]
 
-XDP transmits fragmented packets that are larger than MTU size instead of
-dropping those packets. The drop check that checks whether a packet is larger
-than MTU is comparing MTU size against the linear part length only.
+While handling new traces, to verify it is not the first block being
+written, last_timestamp is checked. But instead of checking it is non
+zero it is verified to be zero. Fix to verify last_timestamp is not
+zero.
 
-Adjust the drop check to compare MTU size against both linear and non-linear
-part lengths to avoid transmitting fragmented packets larger than MTU size.
-
-Fixes: 39a1665d16a2 ("net/mlx5e: Implement sending multi buffer XDP frames")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Fixes: c71ad41ccb0c ("net/mlx5: FW tracer, events handling")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Feras Daoud <ferasda@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-index 8bed17d8fe564..b723ff5e5249c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-@@ -493,6 +493,7 @@ mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
- 	dma_addr_t dma_addr = xdptxd->dma_addr;
- 	u32 dma_len = xdptxd->len;
- 	u16 ds_cnt, inline_hdr_sz;
-+	unsigned int frags_size;
- 	u8 num_wqebbs = 1;
- 	int num_frags = 0;
- 	bool inline_ok;
-@@ -503,8 +504,9 @@ mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+index ad789349c06e6..85d3bfa0780c6 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+@@ -718,7 +718,7 @@ static void mlx5_fw_tracer_handle_traces(struct work_struct *work)
  
- 	inline_ok = sq->min_inline_mode == MLX5_INLINE_MODE_NONE ||
- 		dma_len >= MLX5E_XDP_MIN_INLINE;
-+	frags_size = xdptxd->has_frags ? xdptxdf->sinfo->xdp_frags_size : 0;
- 
--	if (unlikely(!inline_ok || sq->hw_mtu < dma_len)) {
-+	if (unlikely(!inline_ok || sq->hw_mtu < dma_len + frags_size)) {
- 		stats->err++;
- 		return false;
- 	}
+ 	while (block_timestamp > tracer->last_timestamp) {
+ 		/* Check block override if it's not the first block */
+-		if (!tracer->last_timestamp) {
++		if (tracer->last_timestamp) {
+ 			u64 *ts_event;
+ 			/* To avoid block override be the HW in case of buffer
+ 			 * wraparound, the time stamp of the previous block
 -- 
 2.43.0
 
