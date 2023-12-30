@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC61479DC;
-	Sat, 30 Dec 2023 12:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C3779DC;
+	Sat, 30 Dec 2023 12:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQiOgXNA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558C7C433C8;
-	Sat, 30 Dec 2023 12:02:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrDljaqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64E2C433C7;
+	Sat, 30 Dec 2023 12:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937743;
-	bh=1K1ykQTX/QsrFhMaNX5vzX9GkHF9rWhMU7Rxp9gT4FQ=;
+	s=korg; t=1703937746;
+	bh=fJ9Hgh5R+KGU/nE9p7SCq0FN6+z6c1y1Ks4sWvK6hWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQiOgXNA+jy5n1lXmT2F+X7FIMJvxyT5EarN07oqbdm+RqGK0k4XlxDTf1xao+KW0
-	 cpK5QmUALealbH3IYei1D7KpkjyIUu/eOrTSKN0mWoliafAwX8hHRuh2uXBJ9vGEWr
-	 ivFkVjQ9YlMgF/3SVYR/NDwl2Ju3nYzEiBppMXzU=
+	b=OrDljaqiqMMXlCHLsrOFmRy0/FpOlK9c2fvOzOD88OW+0kkopVDM+rzikiiEkEIub
+	 h4w8aJrvs9nLUTPpJM412/LMx5FM1rEXVY0ucuhjmKh/JwlFdDrfkTIDYpguawEfkB
+	 KCPzEgF+u+TaC8tLlTFapZ2TJe1Jfn2ebXTxHHjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Suman Ghosh <sumang@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 045/156] net: mscc: ocelot: fix pMAC TX RMON stats for bucket 256-511 and above
-Date: Sat, 30 Dec 2023 11:58:19 +0000
-Message-ID: <20231230115813.827600320@linuxfoundation.org>
+Subject: [PATCH 6.6 046/156] octeontx2-pf: Fix graceful exit during PFC configuration failure
+Date: Sat, 30 Dec 2023 11:58:20 +0000
+Message-ID: <20231230115813.860525544@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -43,43 +42,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Suman Ghosh <sumang@marvell.com>
 
-[ Upstream commit 70f010da00f90415296f93fb47a561977eae41cb ]
+[ Upstream commit 8c97ab5448f2096daba11edf8d18a44e1eb6f31d ]
 
-The typo from ocelot_port_rmon_stats_cb() was also carried over to
-ocelot_port_pmac_rmon_stats_cb() as well, leading to incorrect TX RMON
-stats for the pMAC too.
+During PFC configuration failure the code was not handling a graceful
+exit. This patch fixes the same and add proper code for a graceful exit.
 
-Fixes: ab3f97a9610a ("net: mscc: ocelot: export ethtool MAC Merge stats for Felix VSC9959")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20231214000902.545625-2-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 99c969a83d82 ("octeontx2-pf: Add egress PFC support")
+Signed-off-by: Suman Ghosh <sumang@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mscc/ocelot_stats.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../ethernet/marvell/octeontx2/nic/otx2_dcbnl.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mscc/ocelot_stats.c b/drivers/net/ethernet/mscc/ocelot_stats.c
-index f29fa37263dae..c018783757fb2 100644
---- a/drivers/net/ethernet/mscc/ocelot_stats.c
-+++ b/drivers/net/ethernet/mscc/ocelot_stats.c
-@@ -610,10 +610,10 @@ static void ocelot_port_pmac_rmon_stats_cb(struct ocelot *ocelot, int port,
- 	rmon_stats->hist_tx[0] = s[OCELOT_STAT_TX_PMAC_64];
- 	rmon_stats->hist_tx[1] = s[OCELOT_STAT_TX_PMAC_65_127];
- 	rmon_stats->hist_tx[2] = s[OCELOT_STAT_TX_PMAC_128_255];
--	rmon_stats->hist_tx[3] = s[OCELOT_STAT_TX_PMAC_128_255];
--	rmon_stats->hist_tx[4] = s[OCELOT_STAT_TX_PMAC_256_511];
--	rmon_stats->hist_tx[5] = s[OCELOT_STAT_TX_PMAC_512_1023];
--	rmon_stats->hist_tx[6] = s[OCELOT_STAT_TX_PMAC_1024_1526];
-+	rmon_stats->hist_tx[3] = s[OCELOT_STAT_TX_PMAC_256_511];
-+	rmon_stats->hist_tx[4] = s[OCELOT_STAT_TX_PMAC_512_1023];
-+	rmon_stats->hist_tx[5] = s[OCELOT_STAT_TX_PMAC_1024_1526];
-+	rmon_stats->hist_tx[6] = s[OCELOT_STAT_TX_PMAC_1527_MAX];
- }
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
+index bfddbff7bcdfb..28fb643d2917f 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
+@@ -399,9 +399,10 @@ static int otx2_dcbnl_ieee_getpfc(struct net_device *dev, struct ieee_pfc *pfc)
+ static int otx2_dcbnl_ieee_setpfc(struct net_device *dev, struct ieee_pfc *pfc)
+ {
+ 	struct otx2_nic *pfvf = netdev_priv(dev);
++	u8 old_pfc_en;
+ 	int err;
  
- void ocelot_port_get_rmon_stats(struct ocelot *ocelot, int port,
+-	/* Save PFC configuration to interface */
++	old_pfc_en = pfvf->pfc_en;
+ 	pfvf->pfc_en = pfc->pfc_en;
+ 
+ 	if (pfvf->hw.tx_queues >= NIX_PF_PFC_PRIO_MAX)
+@@ -411,13 +412,17 @@ static int otx2_dcbnl_ieee_setpfc(struct net_device *dev, struct ieee_pfc *pfc)
+ 	 * supported by the tx queue configuration
+ 	 */
+ 	err = otx2_check_pfc_config(pfvf);
+-	if (err)
++	if (err) {
++		pfvf->pfc_en = old_pfc_en;
+ 		return err;
++	}
+ 
+ process_pfc:
+ 	err = otx2_config_priority_flow_ctrl(pfvf);
+-	if (err)
++	if (err) {
++		pfvf->pfc_en = old_pfc_en;
+ 		return err;
++	}
+ 
+ 	/* Request Per channel Bpids */
+ 	if (pfc->pfc_en)
+@@ -425,6 +430,12 @@ static int otx2_dcbnl_ieee_setpfc(struct net_device *dev, struct ieee_pfc *pfc)
+ 
+ 	err = otx2_pfc_txschq_update(pfvf);
+ 	if (err) {
++		if (pfc->pfc_en)
++			otx2_nix_config_bp(pfvf, false);
++
++		otx2_pfc_txschq_stop(pfvf);
++		pfvf->pfc_en = old_pfc_en;
++		otx2_config_priority_flow_ctrl(pfvf);
+ 		dev_err(pfvf->dev, "%s failed to update TX schedulers\n", __func__);
+ 		return err;
+ 	}
 -- 
 2.43.0
 
