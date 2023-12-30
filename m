@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02BF63D5;
-	Sat, 30 Dec 2023 12:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F4579DC;
+	Sat, 30 Dec 2023 12:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uB7/Ymtu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 266F8C433C8;
-	Sat, 30 Dec 2023 12:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMi6IweA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1227C433C8;
+	Sat, 30 Dec 2023 12:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937671;
-	bh=ehpL6nb6uVaMhPt1UjCtdkYm9BFkfxOTUv1Jf9092vo=;
+	s=korg; t=1703937674;
+	bh=dCo58GCm1R/opRgxbjpr0m1axxBzity5HmgCGUgaTt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uB7/Ymtutu+zw0Xk62S8sDmt2dW7vlMmLtXDvS5X25n2AqlVIsnx5CJIynuztn3hf
-	 HAPSSP3gRPlLEvpYS55LCYQbXJq083fZtwAhp67Uoldq5qi8ga93Mt9uRhoElZEkJP
-	 f6pVsIcqaJfuUbLwLXOZnw+3kFpeNaC6Xk3A/EQM=
+	b=SMi6IweArKGOod0toOERKmKnqKwy1C6zzY0J1KpiswfvGwBmsozVg8UouBsmqKxLv
+	 tF+15bNvn0w7cKLOH8plXcGDr9UQOLIl5HcZG8RYcaL7OnvPDcBeS5mxH2K4NIezFY
+	 F4AbPp0w+x+sLfJQ3APmJGmxcVRD2z5kudcy+hIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Hendrik Brueckner <brueckner@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Rajvi Jingar <rajvi.jingar@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 018/156] s390/vx: fix save/restore of fpu kernel context
-Date: Sat, 30 Dec 2023 11:57:52 +0000
-Message-ID: <20231230115812.978052225@linuxfoundation.org>
+Subject: [PATCH 6.6 019/156] platform/x86/intel/pmc: Fix hang in pmc_core_send_ltr_ignore()
+Date: Sat, 30 Dec 2023 11:57:53 +0000
+Message-ID: <20231230115813.002035492@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -37,53 +36,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Rajvi Jingar <rajvi.jingar@linux.intel.com>
 
-[ Upstream commit e6b2dab41888332bf83f592131e7ea07756770a4 ]
+[ Upstream commit fbcf67ce5a9e2831c14bdfb895be05213e611724 ]
 
-The KERNEL_FPR mask only contains a flag for the first eight vector
-registers. However floating point registers overlay parts of the first
-sixteen vector registers.
+For input value 0, PMC stays unassigned which causes crash while trying
+to access PMC for register read/write. Include LTR index 0 in pmc_index
+and ltr_index calculation.
 
-This could lead to vector register corruption if a kernel fpu context uses
-any of the vector registers 8 to 15 and is interrupted or calls a
-KERNEL_FPR context. If that context uses also vector registers 8 to 15,
-their contents will be corrupted on return.
-
-Luckily this is currently not a real bug, since the kernel has only one
-KERNEL_FPR user with s390_adjust_jiffies() and it is only using floating
-point registers 0 to 2.
-
-Fix this by using the correct bits for KERNEL_FPR.
-
-Fixes: 7f79695cc1b6 ("s390/fpu: improve kernel_fpu_[begin|end]")
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: 2bcef4529222 ("platform/x86:intel/pmc: Enable debugfs multiple PMC support")
+Signed-off-by: Rajvi Jingar <rajvi.jingar@linux.intel.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20231216011650.1973941-1-rajvi.jingar@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/fpu/api.h | 2 +-
+ drivers/platform/x86/intel/pmc/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/include/asm/fpu/api.h b/arch/s390/include/asm/fpu/api.h
-index b714ed0ef6885..9acf48e53a87f 100644
---- a/arch/s390/include/asm/fpu/api.h
-+++ b/arch/s390/include/asm/fpu/api.h
-@@ -79,7 +79,7 @@ static inline int test_fp_ctl(u32 fpc)
- #define KERNEL_VXR_HIGH		(KERNEL_VXR_V16V23|KERNEL_VXR_V24V31)
+diff --git a/drivers/platform/x86/intel/pmc/core.c b/drivers/platform/x86/intel/pmc/core.c
+index 84c175b9721a0..e95d3011b9997 100644
+--- a/drivers/platform/x86/intel/pmc/core.c
++++ b/drivers/platform/x86/intel/pmc/core.c
+@@ -472,7 +472,7 @@ int pmc_core_send_ltr_ignore(struct pmc_dev *pmcdev, u32 value)
+ 	 * is based on the contiguous indexes from ltr_show output.
+ 	 * pmc index and ltr index needs to be calculated from it.
+ 	 */
+-	for (pmc_index = 0; pmc_index < ARRAY_SIZE(pmcdev->pmcs) && ltr_index > 0; pmc_index++) {
++	for (pmc_index = 0; pmc_index < ARRAY_SIZE(pmcdev->pmcs) && ltr_index >= 0; pmc_index++) {
+ 		pmc = pmcdev->pmcs[pmc_index];
  
- #define KERNEL_VXR		(KERNEL_VXR_LOW|KERNEL_VXR_HIGH)
--#define KERNEL_FPR		(KERNEL_FPC|KERNEL_VXR_V0V7)
-+#define KERNEL_FPR		(KERNEL_FPC|KERNEL_VXR_LOW)
- 
- struct kernel_fpu;
- 
+ 		if (!pmc)
 -- 
 2.43.0
 
