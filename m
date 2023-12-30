@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A7479CD;
-	Sat, 30 Dec 2023 12:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95D228FE;
+	Sat, 30 Dec 2023 12:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DnZdwjNI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFA4C433C7;
-	Sat, 30 Dec 2023 12:10:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBkjbYLU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AB9C433C9;
+	Sat, 30 Dec 2023 12:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938206;
-	bh=kCWQYduUeVnJE1iKCUl9Rzb7uSxaFWwftowPGM0diYs=;
+	s=korg; t=1703938209;
+	bh=tu9tz+88KLsGBnfDmhiOUW/vAfuD9k9Y/V2xLga+EVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DnZdwjNI5sAQ3V5FeohuSfaXZrLgXiHUa4cqh7SspHZF3olguB7glWERilpyY+BZy
-	 tj/TdNy+c4cvgcTHAUQFcrE0ZiTuf7Fkg6NHvHoipzre+dZo/4Y4A+YqKZW9S4uf0V
-	 ZN9hYtcZyZBjkmfHwh4QRCjUNlREOGwfSV1gzKzg=
+	b=TBkjbYLU/8yJPJbsa9W+U8BvYgjD3MBEdmZjS3tq3Vb8A1+x6EEVM1CGb07pJxy1I
+	 DixinlcP9qKtCkrBx8xDNn1/rve5bkHvIQAY7mmygA2ytqIP/beS+9DCHsHQsKWFFG
+	 +VD7nu57d4mkrbMNZwDgHxTFMGEPXI4bxcHdORCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alper Ak <alperyasinak1@gmail.com>,
+	Slark Xiao <slark_xiao@163.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 067/112] USB: serial: option: add Quectel EG912Y module support
-Date: Sat, 30 Dec 2023 11:59:40 +0000
-Message-ID: <20231230115808.860624997@linuxfoundation.org>
+Subject: [PATCH 6.1 068/112] USB: serial: option: add Foxconn T99W265 with new baseline
+Date: Sat, 30 Dec 2023 11:59:41 +0000
+Message-ID: <20231230115808.900862491@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -41,41 +41,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alper Ak <alperyasinak1@gmail.com>
+From: Slark Xiao <slark_xiao@163.com>
 
-commit 6d79d9434c69bb8ffa8a631050eb0ad6b83d3e90 upstream.
+commit 13fde9ac23ca8c6d1ac13cc9eefe1f1ac3ee30a4 upstream.
 
-Add Quectel EG912Y "DIAG, AT, MODEM"
+This ID was added based on latest SDX12 code base line, and we
+made some changes with previous 0489:e0db.
 
-0x6001: ECM / RNDIS + DIAG + AT + MODEM
+Test evidence as below:
+T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=ef(misc ) Sub=02 Prot=01 MxPS= 9 #Cfgs=  2
+P:  Vendor=0489 ProdID=e0da Rev=05.04
+S:  Manufacturer=Qualcomm
+S:  Product=Qualcomm Snapdragon X12
+S:  SerialNumber=2bda65fb
+C:  #Ifs= 6 Cfg#= 2 Atr=a0 MxPwr=896mA
+I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:  If#=0x2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+I:  If#=0x3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
 
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=6001 Rev= 3.18
-S:  Manufacturer=Android
-S:  Product=Android
-S:  SerialNumber=0000
-C:* #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=06 Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
-E:  Ad=87(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=89(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=88(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+0&1: MBIM, 2: Modem, 3:GNSS, 4:Diag, 5:ADB
 
-Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -85,21 +75,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -272,6 +272,7 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_RM500Q			0x0800
- #define QUECTEL_PRODUCT_RM520N			0x0801
- #define QUECTEL_PRODUCT_EC200U			0x0901
-+#define QUECTEL_PRODUCT_EG912Y			0x6001
- #define QUECTEL_PRODUCT_EC200S_CN		0x6002
- #define QUECTEL_PRODUCT_EC200A			0x6005
- #define QUECTEL_PRODUCT_EM061K_LWW		0x6008
-@@ -1244,6 +1245,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200U, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200S_CN, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200T, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG912Y, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
- 
- 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
+@@ -2244,6 +2244,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(0) | RSVD(1) | RSVD(6) },
+ 	{ USB_DEVICE(0x0489, 0xe0b5),						/* Foxconn T77W968 ESIM */
+ 	  .driver_info = RSVD(0) | RSVD(1) | RSVD(6) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0da, 0xff),                     /* Foxconn T99W265 MBIM variant */
++	  .driver_info = RSVD(3) | RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0db, 0xff),			/* Foxconn T99W265 MBIM */
+ 	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0ee, 0xff),			/* Foxconn T99W368 MBIM */
 
 
