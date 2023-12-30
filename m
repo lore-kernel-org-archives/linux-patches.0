@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95078801;
-	Sat, 30 Dec 2023 12:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC0E6AD6;
+	Sat, 30 Dec 2023 12:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfnYaNsa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70289C433C8;
-	Sat, 30 Dec 2023 12:04:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szP0bysJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15327C433C7;
+	Sat, 30 Dec 2023 12:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937872;
-	bh=bJvDoy9APKxsqHEaQwtgXjrHOiRxqwMEBdzsSAS3mpA=;
+	s=korg; t=1703937875;
+	bh=6kodKMV1phsSBbSQO6jbUUzA0i6Pa/wWlfGmvaLmwPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JfnYaNsarhOC8wm0BhzTa1m/zTF3ECsWi3ysL9HvbcQkeDuHUzb8EbmjUaFFWGq/Y
-	 bn/m9dlx21A60C4SCxh3yCYg2mRer3aQlKJ9f2TdjHht3H2pT0qTb3G1DCZGFXYqdB
-	 YLUUZCaWPMzxkab7Ku0wDR1gjueoag/u6QaCm1rw=
+	b=szP0bysJ27Snzse9sGDMh2jEKJ17hQzZ0nEBVesmguaZf7Zprfyg39AOZ1o+SCTWN
+	 IYdHHo4zoHCQx8kVpV/+f0C/YsJG1TOmIprCvJjnOFk6UFUYVI1oO8hb9REhsfNP1Q
+	 XzhdU4fFcpSVoe833OXs2D55+A2FetUoqIiwP09w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremie Knuesel <knuesel@gmail.com>,
-	Alexander Tsoy <alexander@tsoy.me>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 096/156] ALSA: usb-audio: Increase delay in MOTU M quirk
-Date: Sat, 30 Dec 2023 11:59:10 +0000
-Message-ID: <20231230115815.495737257@linuxfoundation.org>
+	Tony Lindgren <tony@atomide.com>
+Subject: [PATCH 6.6 097/156] ARM: dts: Fix occasional boot hang for am3 usb
+Date: Sat, 30 Dec 2023 11:59:11 +0000
+Message-ID: <20231230115815.529217389@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -42,48 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremie Knuesel <knuesel@gmail.com>
+From: Tony Lindgren <tony@atomide.com>
 
-commit 48d6b91798a6694fdd6edb62799754b9d3fe0792 upstream.
+commit 9b6a51aab5f5f9f71d2fa16e8b4d530e1643dfcb upstream.
 
-Increase the quirk delay from 2 seconds to 4 seconds. This reflects a
-change in the Windows driver in which the delay was increased to about
-3.7 seconds. The larger delay fixes an issue where the device fails to
-work unless it was powered up early during boot.
+With subtle timings changes, we can now sometimes get an external abort on
+non-linefetch error booting am3 devices at sysc_reset(). This is because
+of a missing reset delay needed for the usb target module.
 
-Also clarify in the quirk comment that the quirk is only applied to
-older devices (USB ID 07fd:0008).
+Looks like we never enabled the delay earlier for am3, although a similar
+issue was seen earlier with a similar usb setup for dm814x as described in
+commit ebf244148092 ("ARM: OMAP2+: Use srst_udelay for USB on dm814x").
 
-Signed-off-by: Jeremie Knuesel <knuesel@gmail.com>
-Suggested-by: Alexander Tsoy <alexander@tsoy.me>
-Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=211975
-Link: https://lore.kernel.org/r/20231217112243.33409-1-knuesel@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Fixes: 0782e8572ce4 ("ARM: dts: Probe am335x musb with ti-sysc")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/ti/omap/am33xx.dtsi |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1387,7 +1387,7 @@ free_buf:
- 
- static int snd_usb_motu_m_series_boot_quirk(struct usb_device *dev)
- {
--	msleep(2000);
-+	msleep(4000);
- 
- 	return 0;
- }
-@@ -1630,7 +1630,7 @@ int snd_usb_apply_boot_quirk_once(struct
- 				  unsigned int id)
- {
- 	switch (id) {
--	case USB_ID(0x07fd, 0x0008): /* MOTU M Series */
-+	case USB_ID(0x07fd, 0x0008): /* MOTU M Series, 1st hardware version */
- 		return snd_usb_motu_m_series_boot_quirk(dev);
- 	}
- 
+--- a/arch/arm/boot/dts/ti/omap/am33xx.dtsi
++++ b/arch/arm/boot/dts/ti/omap/am33xx.dtsi
+@@ -359,6 +359,7 @@
+ 					<SYSC_IDLE_NO>,
+ 					<SYSC_IDLE_SMART>,
+ 					<SYSC_IDLE_SMART_WKUP>;
++			ti,sysc-delay-us = <2>;
+ 			clocks = <&l3s_clkctrl AM3_L3S_USB_OTG_HS_CLKCTRL 0>;
+ 			clock-names = "fck";
+ 			#address-cells = <1>;
 
 
