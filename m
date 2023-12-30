@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F028473;
-	Sat, 30 Dec 2023 12:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1ED979DE;
+	Sat, 30 Dec 2023 12:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+g0Etaj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E62C433C8;
-	Sat, 30 Dec 2023 12:11:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRP26hSI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B470C433C7;
+	Sat, 30 Dec 2023 12:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938285;
-	bh=2efLaDGnrk99nxzlLh/Q4O/PpS6eLYRhfcmPE4NZkGg=;
+	s=korg; t=1703938287;
+	bh=NnscVeyWlNDtVUaO/pctfHzDBQ0R4V+/RRqbK/A9FRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T+g0Etaj/WV6QH2mFkJTRc/hzOeESbi1J9KXwIcUiyHP24Apf5GGuct74RNNfVdOn
-	 hiJM95dOkScgNFbRE5NaerYM3c0FuanzQfLrYd2mMC/qQYm963jiqVPUvtOr5Itjlw
-	 YHYH0ATrlE8RzdzoE6AuSr8v50K22uLJPlnqYiHY=
+	b=pRP26hSIYQ2IA4JYHdexEDOqrLaoz8WvYaIHNTUfUgbjcdkuYqReLjudW9Mf3B4Xb
+	 ykjcPYxvZW6p6PZMEk+p9BeDGn28szY7/Hhocwy37m5mez9Ti6s2HmSrNwxfTafJ3Z
+	 tWtSSZYhQ2DMCosXO4v4sRN5HmcgGdgSbZ0E7FVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Atanasov <alexander.atanasov@virtuozzo.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 097/112] scsi: core: Always send batch on reset or error handling command
-Date: Sat, 30 Dec 2023 12:00:10 +0000
-Message-ID: <20231230115809.908552941@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Tom Zanussi <zanussi@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Alexander Graf <graf@amazon.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 098/112] tracing / synthetic: Disable events after testing in synth_event_gen_test_init()
+Date: Sat, 30 Dec 2023 12:00:11 +0000
+Message-ID: <20231230115809.934970414@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -42,56 +44,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Atanasov <alexander.atanasov@virtuozzo.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 066c5b46b6eaf2f13f80c19500dbb3b84baabb33 upstream.
+commit 88b30c7f5d27e1594d70dc2bd7199b18f2b57fa9 upstream.
 
-In commit 8930a6c20791 ("scsi: core: add support for request batching") the
-block layer bd->last flag was mapped to SCMD_LAST and used as an indicator
-to send the batch for the drivers that implement this feature. However, the
-error handling code was not updated accordingly.
+The synth_event_gen_test module can be built in, if someone wants to run
+the tests at boot up and not have to load them.
 
-scsi_send_eh_cmnd() is used to send error handling commands and request
-sense. The problem is that request sense comes as a single command that
-gets into the batch queue and times out. As a result the device goes
-offline after several failed resets. This was observed on virtio_scsi
-during a device resize operation.
+The synth_event_gen_test_init() function creates and enables the synthetic
+events and runs its tests.
 
-[  496.316946] sd 0:0:4:0: [sdd] tag#117 scsi_eh_0: requesting sense
-[  506.786356] sd 0:0:4:0: [sdd] tag#117 scsi_send_eh_cmnd timeleft: 0
-[  506.787981] sd 0:0:4:0: [sdd] tag#117 abort
+The synth_event_gen_test_exit() disables the events it created and
+destroys the events.
 
-To fix this always set SCMD_LAST flag in scsi_send_eh_cmnd() and
-scsi_reset_ioctl().
+If the module is builtin, the events are never disabled. The issue is, the
+events should be disable after the tests are run. This could be an issue
+if the rest of the boot up tests are enabled, as they expect the events to
+be in a known state before testing. That known state happens to be
+disabled.
 
-Fixes: 8930a6c20791 ("scsi: core: add support for request batching")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Alexander Atanasov <alexander.atanasov@virtuozzo.com>
-Link: https://lore.kernel.org/r/20231215121008.2881653-1-alexander.atanasov@virtuozzo.com
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+When CONFIG_SYNTH_EVENT_GEN_TEST=y and CONFIG_EVENT_TRACE_STARTUP_TEST=y
+a warning will trigger:
+
+ Running tests on trace events:
+ Testing event create_synth_test:
+ Enabled event during self test!
+ ------------[ cut here ]------------
+ WARNING: CPU: 2 PID: 1 at kernel/trace/trace_events.c:4150 event_trace_self_tests+0x1c2/0x480
+ Modules linked in:
+ CPU: 2 PID: 1 Comm: swapper/0 Not tainted 6.7.0-rc2-test-00031-gb803d7c664d5-dirty #276
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
+ RIP: 0010:event_trace_self_tests+0x1c2/0x480
+ Code: bb e8 a2 ab 5d fc 48 8d 7b 48 e8 f9 3d 99 fc 48 8b 73 48 40 f6 c6 01 0f 84 d6 fe ff ff 48 c7 c7 20 b6 ad bb e8 7f ab 5d fc 90 <0f> 0b 90 48 89 df e8 d3 3d 99 fc 48 8b 1b 4c 39 f3 0f 85 2c ff ff
+ RSP: 0000:ffffc9000001fdc0 EFLAGS: 00010246
+ RAX: 0000000000000029 RBX: ffff88810399ca80 RCX: 0000000000000000
+ RDX: 0000000000000000 RSI: ffffffffb9f19478 RDI: ffff88823c734e64
+ RBP: ffff88810399f300 R08: 0000000000000000 R09: fffffbfff79eb32a
+ R10: ffffffffbcf59957 R11: 0000000000000001 R12: ffff888104068090
+ R13: ffffffffbc89f0a0 R14: ffffffffbc8a0f08 R15: 0000000000000078
+ FS:  0000000000000000(0000) GS:ffff88823c700000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000000 CR3: 00000001f6282001 CR4: 0000000000170ef0
+ Call Trace:
+  <TASK>
+  ? __warn+0xa5/0x200
+  ? event_trace_self_tests+0x1c2/0x480
+  ? report_bug+0x1f6/0x220
+  ? handle_bug+0x6f/0x90
+  ? exc_invalid_op+0x17/0x50
+  ? asm_exc_invalid_op+0x1a/0x20
+  ? tracer_preempt_on+0x78/0x1c0
+  ? event_trace_self_tests+0x1c2/0x480
+  ? __pfx_event_trace_self_tests_init+0x10/0x10
+  event_trace_self_tests_init+0x27/0xe0
+  do_one_initcall+0xd6/0x3c0
+  ? __pfx_do_one_initcall+0x10/0x10
+  ? kasan_set_track+0x25/0x30
+  ? rcu_is_watching+0x38/0x60
+  kernel_init_freeable+0x324/0x450
+  ? __pfx_kernel_init+0x10/0x10
+  kernel_init+0x1f/0x1e0
+  ? _raw_spin_unlock_irq+0x33/0x50
+  ret_from_fork+0x34/0x60
+  ? __pfx_kernel_init+0x10/0x10
+  ret_from_fork_asm+0x1b/0x30
+  </TASK>
+
+This is because the synth_event_gen_test_init() left the synthetic events
+that it created enabled. By having it disable them after testing, the
+other selftests will run fine.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20231220111525.2f0f49b0@gandalf.local.home
+
+Cc: stable@vger.kernel.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Tom Zanussi <zanussi@kernel.org>
+Fixes: 9fe41efaca084 ("tracing: Add synth event generation test module")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reported-by: Alexander Graf <graf@amazon.com>
+Tested-by: Alexander Graf <graf@amazon.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_error.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/synth_event_gen_test.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -1108,6 +1108,7 @@ retry:
+--- a/kernel/trace/synth_event_gen_test.c
++++ b/kernel/trace/synth_event_gen_test.c
+@@ -477,6 +477,17 @@ static int __init synth_event_gen_test_i
  
- 	scsi_log_send(scmd);
- 	scmd->submitter = SUBMITTED_BY_SCSI_ERROR_HANDLER;
-+	scmd->flags |= SCMD_LAST;
- 
- 	/*
- 	 * Lock sdev->state_mutex to avoid that scsi_device_quiesce() can
-@@ -2402,6 +2403,7 @@ scsi_ioctl_reset(struct scsi_device *dev
- 	scsi_init_command(dev, scmd);
- 
- 	scmd->submitter = SUBMITTED_BY_SCSI_RESET_IOCTL;
-+	scmd->flags |= SCMD_LAST;
- 	memset(&scmd->sdb, 0, sizeof(scmd->sdb));
- 
- 	scmd->cmd_len			= 0;
+ 	ret = test_trace_synth_event();
+ 	WARN_ON(ret);
++
++	/* Disable when done */
++	trace_array_set_clr_event(gen_synth_test->tr,
++				  "synthetic",
++				  "gen_synth_test", false);
++	trace_array_set_clr_event(empty_synth_test->tr,
++				  "synthetic",
++				  "empty_synth_test", false);
++	trace_array_set_clr_event(create_synth_test->tr,
++				  "synthetic",
++				  "create_synth_test", false);
+  out:
+ 	return ret;
+ }
 
 
