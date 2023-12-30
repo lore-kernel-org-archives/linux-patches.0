@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA1A8F54;
-	Sat, 30 Dec 2023 12:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC53879DC;
+	Sat, 30 Dec 2023 12:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVcBLPPz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC19C433C7;
-	Sat, 30 Dec 2023 12:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olYJSZzS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A7AC433C7;
+	Sat, 30 Dec 2023 12:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937800;
-	bh=5oYy0/3iHu4HoBxNNo8jPPsixUKxLtXu6paFP113zQo=;
+	s=korg; t=1703937803;
+	bh=8rQbBQIxEiFfYs0byNOFOEQfMD3QA9GMGa/BWpmYYYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jVcBLPPzexlawxAf7NdweCH+W0l+I7rmojmBzq4CMuTXduMM0o9jqkyDf2UvKseVO
-	 AGFhgESfD3h47LADsCTTSJYIWYNZq7AZIxrT3LJ+cOjUC3n7lq+2UYjin1uaLcYavR
-	 q1FktRtHDJ7cx1TEfBKxWJcR8VTrilYKFbB0erD8=
+	b=olYJSZzSypN2jF37bgTKECXgD1AWk6QLVBTIWLGwRSAIOkHemh4cy8mEbJPR6BqLl
+	 LtZYYItV6OBxBFbgQ0R6Xz/D0M+Nn/GI7s2LnDEDcLbR9guxBdM3Ayv/n6x2Mlgb8H
+	 pIbluejw/lTlob4yrIavviC+R+FaPPbm6O6nghMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
 	Jeffrey Altman <jaltman@auristor.com>,
-	Anastasia Belova <abelova@astralinux.ru>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	linux-afs@lists.infradead.org,
-	lvc-project@linuxtesting.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 068/156] afs: Fix overwriting of result of DNS query
-Date: Sat, 30 Dec 2023 11:58:42 +0000
-Message-ID: <20231230115814.581896215@linuxfoundation.org>
+Subject: [PATCH 6.6 069/156] afs: Fix use-after-free due to get/remove race in volume tree
+Date: Sat, 30 Dec 2023 11:58:43 +0000
+Message-ID: <20231230115814.614941747@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -49,54 +47,124 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit a9e01ac8c5ff32669119c40dfdc9e80eb0b7d7aa ]
+[ Upstream commit 9a6b294ab496650e9f270123730df37030911b55 ]
 
-In afs_update_cell(), ret is the result of the DNS lookup and the errors
-are to be handled by a switch - however, the value gets clobbered in
-between by setting it to -ENOMEM in case afs_alloc_vlserver_list()
-fails.
+When an afs_volume struct is put, its refcount is reduced to 0 before
+the cell->volume_lock is taken and the volume removed from the
+cell->volumes tree.
 
-Fix this by moving the setting of -ENOMEM into the error handling for
-OOM failure.  Further, only do it if we don't have an alternative error
-to return.
+Unfortunately, this means that the lookup code can race and see a volume
+with a zero ref in the tree, resulting in a use-after-free:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.  Based
-on a patch from Anastasia Belova [1].
+    refcount_t: addition on 0; use-after-free.
+    WARNING: CPU: 3 PID: 130782 at lib/refcount.c:25 refcount_warn_saturate+0x7a/0xda
+    ...
+    RIP: 0010:refcount_warn_saturate+0x7a/0xda
+    ...
+    Call Trace:
+     afs_get_volume+0x3d/0x55
+     afs_create_volume+0x126/0x1de
+     afs_validate_fc+0xfe/0x130
+     afs_get_tree+0x20/0x2e5
+     vfs_get_tree+0x1d/0xc9
+     do_new_mount+0x13b/0x22e
+     do_mount+0x5d/0x8a
+     __do_sys_mount+0x100/0x12a
+     do_syscall_64+0x3a/0x94
+     entry_SYSCALL_64_after_hwframe+0x62/0x6a
 
-Fixes: d5c32c89b208 ("afs: Fix cell DNS lookup")
+Fix this by:
+
+ (1) When putting, use a flag to indicate if the volume has been removed
+     from the tree and skip the rb_erase if it has.
+
+ (2) When looking up, use a conditional ref increment and if it fails
+     because the refcount is 0, replace the node in the tree and set the
+     removal flag.
+
+Fixes: 20325960f875 ("afs: Reorganise volume and server trees to be rooted on the cell")
 Signed-off-by: David Howells <dhowells@redhat.com>
 Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-cc: Anastasia Belova <abelova@astralinux.ru>
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: linux-afs@lists.infradead.org
-cc: lvc-project@linuxtesting.org
-Link: https://lore.kernel.org/r/20231221085849.1463-1-abelova@astralinux.ru/ [1]
-Link: https://lore.kernel.org/r/1700862.1703168632@warthog.procyon.org.uk/ # v1
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/cell.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/afs/internal.h |  2 ++
+ fs/afs/volume.c   | 26 +++++++++++++++++++++++---
+ 2 files changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/fs/afs/cell.c b/fs/afs/cell.c
-index 988c2ac7cecec..926cb1188eba6 100644
---- a/fs/afs/cell.c
-+++ b/fs/afs/cell.c
-@@ -409,10 +409,12 @@ static int afs_update_cell(struct afs_cell *cell)
- 		if (ret == -ENOMEM)
- 			goto out_wake;
+diff --git a/fs/afs/internal.h b/fs/afs/internal.h
+index 5041eae64423a..c4bf8439bc9c9 100644
+--- a/fs/afs/internal.h
++++ b/fs/afs/internal.h
+@@ -586,6 +586,7 @@ struct afs_volume {
+ #define AFS_VOLUME_OFFLINE	4	/* - T if volume offline notice given */
+ #define AFS_VOLUME_BUSY		5	/* - T if volume busy notice given */
+ #define AFS_VOLUME_MAYBE_NO_IBULK 6	/* - T if some servers don't have InlineBulkStatus */
++#define AFS_VOLUME_RM_TREE	7	/* - Set if volume removed from cell->volumes */
+ #ifdef CONFIG_AFS_FSCACHE
+ 	struct fscache_volume	*cache;		/* Caching cookie */
+ #endif
+@@ -1513,6 +1514,7 @@ extern struct afs_vlserver_list *afs_extract_vlserver_list(struct afs_cell *,
+ extern struct afs_volume *afs_create_volume(struct afs_fs_context *);
+ extern int afs_activate_volume(struct afs_volume *);
+ extern void afs_deactivate_volume(struct afs_volume *);
++bool afs_try_get_volume(struct afs_volume *volume, enum afs_volume_trace reason);
+ extern struct afs_volume *afs_get_volume(struct afs_volume *, enum afs_volume_trace);
+ extern void afs_put_volume(struct afs_net *, struct afs_volume *, enum afs_volume_trace);
+ extern int afs_check_volume_status(struct afs_volume *, struct afs_operation *);
+diff --git a/fs/afs/volume.c b/fs/afs/volume.c
+index 29d483c802813..115c081a8e2ce 100644
+--- a/fs/afs/volume.c
++++ b/fs/afs/volume.c
+@@ -32,8 +32,13 @@ static struct afs_volume *afs_insert_volume_into_cell(struct afs_cell *cell,
+ 		} else if (p->vid > volume->vid) {
+ 			pp = &(*pp)->rb_right;
+ 		} else {
+-			volume = afs_get_volume(p, afs_volume_trace_get_cell_insert);
+-			goto found;
++			if (afs_try_get_volume(p, afs_volume_trace_get_cell_insert)) {
++				volume = p;
++				goto found;
++			}
++
++			set_bit(AFS_VOLUME_RM_TREE, &volume->flags);
++			rb_replace_node_rcu(&p->cell_node, &volume->cell_node, &cell->volumes);
+ 		}
+ 	}
  
--		ret = -ENOMEM;
- 		vllist = afs_alloc_vlserver_list(0);
--		if (!vllist)
-+		if (!vllist) {
-+			if (ret >= 0)
-+				ret = -ENOMEM;
- 			goto out_wake;
-+		}
+@@ -56,7 +61,8 @@ static void afs_remove_volume_from_cell(struct afs_volume *volume)
+ 				 afs_volume_trace_remove);
+ 		write_seqlock(&cell->volume_lock);
+ 		hlist_del_rcu(&volume->proc_link);
+-		rb_erase(&volume->cell_node, &cell->volumes);
++		if (!test_and_set_bit(AFS_VOLUME_RM_TREE, &volume->flags))
++			rb_erase(&volume->cell_node, &cell->volumes);
+ 		write_sequnlock(&cell->volume_lock);
+ 	}
+ }
+@@ -231,6 +237,20 @@ static void afs_destroy_volume(struct afs_net *net, struct afs_volume *volume)
+ 	_leave(" [destroyed]");
+ }
  
- 		switch (ret) {
- 		case -ENODATA:
++/*
++ * Try to get a reference on a volume record.
++ */
++bool afs_try_get_volume(struct afs_volume *volume, enum afs_volume_trace reason)
++{
++	int r;
++
++	if (__refcount_inc_not_zero(&volume->ref, &r)) {
++		trace_afs_volume(volume->vid, r + 1, reason);
++		return true;
++	}
++	return false;
++}
++
+ /*
+  * Get a reference on a volume record.
+  */
 -- 
 2.43.0
 
