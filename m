@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B906611A;
-	Sat, 30 Dec 2023 12:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B7F8BE7;
+	Sat, 30 Dec 2023 12:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XFPKjmXH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8836C433C7;
-	Sat, 30 Dec 2023 12:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRci/Mto"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695DCC433C8;
+	Sat, 30 Dec 2023 12:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938139;
-	bh=ndT55241ZEdB/Z9jZa/6vUbDjdZeEGF7H62km5CQrYo=;
+	s=korg; t=1703938141;
+	bh=Nozvg3dfrgqG93WwRaliLbpkys7mtdLf2KFzPVG8YkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XFPKjmXH1SY4pBXiJhifIViE6iIoDgq41Xu9TO0MbvmrVF8WviANMkmtirOnkrym5
-	 fnpdGK/7b4fQA+7swAQT/y4N9cmZWoY7W1/8IqNeeerBDrH/Qgg+22iUTfyc8AxJG1
-	 3l2joho/e+G/fDmYuShwEYkGOh1696BS/7SYH5pk=
+	b=FRci/MtoUA5e8i8KR7ABHosCAF/vxHQHaCm2UKuMbkwgiZf4lc08EHSkBUCiG6umT
+	 +LPgrKhQZg8E9krqbQ97rUvVJiS/1boFyHzs1AU5KxfUBhimTCcRrMkUYfjvVASfHF
+	 geotHfaDRjXtojVcydM7y71hCRiGHoGkLpllspLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengqiao Xia <xiazhengqiao@huaqin.corp-partner.google.com>,
-	Hsin-Yi Wang <hsinyi@google.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/112] ASoC: hdmi-codec: fix missing report for jack initial status
-Date: Sat, 30 Dec 2023 11:59:14 +0000
-Message-ID: <20231230115808.052525763@linuxfoundation.org>
+Subject: [PATCH 6.1 042/112] ASoC: fsl_sai: Fix channel swap issue on i.MX8MP
+Date: Sat, 30 Dec 2023 11:59:15 +0000
+Message-ID: <20231230115808.082180732@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -44,67 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 025222a9d6d25eee2ad9a1bb5a8b29b34b5ba576 ]
+[ Upstream commit 8f0f01647550daf9cd8752c1656dcb0136d79ce1 ]
 
-This fixes a problem introduced while fixing ELD reporting with no jack
-set.
+When flag mclk_with_tere and mclk_direction_output enabled,
+The SAI transmitter or receiver will be enabled in very early
+stage, that if FSL_SAI_xMR is set by previous case,
+for example previous case is one channel, current case is
+two channels, then current case started with wrong xMR in
+the beginning, then channel swap happen.
 
-Most driver using the hdmi-codec will call the 'plugged_cb' callback
-directly when registered to report the initial state of the HDMI connector.
+The patch is to clear xMR in hw_free() to avoid such
+channel swap issue.
 
-With the commit mentionned, this occurs before jack is ready and the
-initial report is lost for platforms actually providing a jack for HDMI.
-
-Fix this by storing the hdmi connector status regardless of jack being set
-or not and report the last status when jack gets set.
-
-With this, the initial state is reported correctly even if it is
-disconnected. This was not done initially and is also a fix.
-
-Fixes: 15be353d55f9 ("ASoC: hdmi-codec: register hpd callback on component probe")
-Reported-by: Zhengqiao Xia <xiazhengqiao@huaqin.corp-partner.google.com>
-Closes: https://lore.kernel.org/alsa-devel/CADYyEwTNyY+fR9SgfDa-g6iiDwkU3MUdPVCYexs2_3wbcM8_vg@mail.gmail.com/
-Cc: Hsin-Yi Wang <hsinyi@google.com>
-Tested-by: Zhengqiao Xia <xiazhengqiao@huaqin.corp-partner.google.com>
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://msgid.link/r/20231218145655.134929-1-jbrunet@baylibre.com
+Fixes: 3e4a82612998 ("ASoC: fsl_sai: MCLK bind with TX/RX enable bit")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://msgid.link/r/1702953057-4499-1-git-send-email-shengjiu.wang@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdmi-codec.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ sound/soc/fsl/fsl_sai.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/codecs/hdmi-codec.c b/sound/soc/codecs/hdmi-codec.c
-index 4d3c3365488a2..d8259afc60b08 100644
---- a/sound/soc/codecs/hdmi-codec.c
-+++ b/sound/soc/codecs/hdmi-codec.c
-@@ -834,8 +834,9 @@ static int hdmi_dai_probe(struct snd_soc_dai *dai)
- static void hdmi_codec_jack_report(struct hdmi_codec_priv *hcp,
- 				   unsigned int jack_status)
- {
--	if (hcp->jack && jack_status != hcp->jack_status) {
--		snd_soc_jack_report(hcp->jack, jack_status, SND_JACK_LINEOUT);
-+	if (jack_status != hcp->jack_status) {
-+		if (hcp->jack)
-+			snd_soc_jack_report(hcp->jack, jack_status, SND_JACK_LINEOUT);
- 		hcp->jack_status = jack_status;
- 	}
- }
-@@ -864,6 +865,13 @@ static int hdmi_codec_set_jack(struct snd_soc_component *component,
+diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
+index 6364d9be28fbb..cf1cd0460ad98 100644
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -715,6 +715,9 @@ static int fsl_sai_hw_free(struct snd_pcm_substream *substream,
+ 	bool tx = substream->stream == SNDRV_PCM_STREAM_PLAYBACK;
+ 	unsigned int ofs = sai->soc_data->reg_offset;
  
- 	if (hcp->hcd.ops->hook_plugged_cb) {
- 		hcp->jack = jack;
++	/* Clear xMR to avoid channel swap with mclk_with_tere enabled case */
++	regmap_write(sai->regmap, FSL_SAI_xMR(tx), 0);
 +
-+		/*
-+		 * Report the initial jack status which may have been provided
-+		 * by the parent hdmi driver while the hpd hook was registered.
-+		 */
-+		snd_soc_jack_report(jack, hcp->jack_status, SND_JACK_LINEOUT);
-+
- 		return 0;
- 	}
+ 	regmap_update_bits(sai->regmap, FSL_SAI_xCR3(tx, ofs),
+ 			   FSL_SAI_CR3_TRCE_MASK, 0);
  
 -- 
 2.43.0
