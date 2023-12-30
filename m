@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1016379C2;
-	Sat, 30 Dec 2023 12:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40CA79C2;
+	Sat, 30 Dec 2023 12:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+DOPr3B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E516C433C8;
-	Sat, 30 Dec 2023 12:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtELum9g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD28C433C7;
+	Sat, 30 Dec 2023 12:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938012;
-	bh=8kELQPakE4OMFUzM20IJORanDGKgdHKGUTQxEyF9hxE=;
+	s=korg; t=1703938015;
+	bh=bR3Oo9PggkCwUFqWGGJ4nahYBYjs7X3yqRqEVrxXv4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+DOPr3Bo5AL/ie+sbdPrRrTq9wmEFTycMB9G+a0ShrqULbOj4WzKOs0GIuZ9llSt
-	 bzTKtniFWcSTi2/s1soPK6muCT2Ze2NJEZZrTJCAfwLkgOXosV63ii71ibmvE2bd/f
-	 gR3KN4J5lpF9QgYx5TkyYPyrcUr4yuQIDSG6v9Fo=
+	b=mtELum9gFkdsa8cvY05rCAnaCwHgS9yPJBFfGJjSU3xS6gJhkkrRvDQdGGH1tGymQ
+	 E61cVvTUMEwv0bu0H0KHhQTXxsgiIhUDJiibzNihqOb3ZYmwmr0On4BeCfIKgjNlEV
+	 QUIUbHTkjFhJkGGKj19uxztt1jg9i0JBL73ppW4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.6 150/156] KVM: arm64: vgic: Simplify kvm_vgic_destroy()
-Date: Sat, 30 Dec 2023 12:00:04 +0000
-Message-ID: <20231230115817.209156889@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 133/156] ring-buffer: Remove useless update to write_stamp in rb_try_to_discard()
+Date: Sat, 30 Dec 2023 11:59:47 +0000
+Message-ID: <20231230115816.705008371@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -41,100 +46,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 01ad29d224ff73bc4e16e0ef9ece17f28598c4a4 upstream.
+[ Upstream commit 083e9f65bd215582bf8f6a920db729fadf16704f ]
 
-When destroying a vgic, we have rather cumbersome rules about
-when slots_lock and config_lock are held, resulting in fun
-buglets.
+When filtering is enabled, a temporary buffer is created to place the
+content of the trace event output so that the filter logic can decide
+from the trace event output if the trace event should be filtered out or
+not. If it is to be filtered out, the content in the temporary buffer is
+simply discarded, otherwise it is written into the trace buffer.
 
-The first port of call is to simplify kvm_vgic_map_resources()
-so that there is only one call to kvm_vgic_destroy() instead of
-two, with the second only holding half of the locks.
+But if an interrupt were to come in while a previous event was using that
+temporary buffer, the event written by the interrupt would actually go
+into the ring buffer itself to prevent corrupting the data on the
+temporary buffer. If the event is to be filtered out, the event in the
+ring buffer is discarded, or if it fails to discard because another event
+were to have already come in, it is turned into padding.
 
-For that, we kill the non-locking primitive and move the call
-outside of the locking altogether. This doesn't change anything
-(we re-acquire the locks and teardown the whole vgic), and
-simplifies the code significantly.
+The update to the write_stamp in the rb_try_to_discard() happens after a
+fix was made to force the next event after the discard to use an absolute
+timestamp by setting the before_stamp to zero so it does not match the
+write_stamp (which causes an event to use the absolute timestamp).
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20231207151201.3028710-2-maz@kernel.org
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+But there's an effort in rb_try_to_discard() to put back the write_stamp
+to what it was before the event was added. But this is useless and
+wasteful because nothing is going to be using that write_stamp for
+calculations as it still will not match the before_stamp.
+
+Remove this useless update, and in doing so, we remove another
+cmpxchg64()!
+
+Also update the comments to reflect this change as well as remove some
+extra white space in another comment.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20231215081810.1f4f38fe@rorschach.local.home
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Joel Fernandes <joel@joelfernandes.org>
+Cc: Vincent Donnefort   <vdonnefort@google.com>
+Fixes: b2dd797543cf ("ring-buffer: Force absolute timestamp on discard of event")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-init.c |   29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ kernel/trace/ring_buffer.c | 47 +++++++++-----------------------------
+ 1 file changed, 11 insertions(+), 36 deletions(-)
 
---- a/arch/arm64/kvm/vgic/vgic-init.c
-+++ b/arch/arm64/kvm/vgic/vgic-init.c
-@@ -382,26 +382,24 @@ void kvm_vgic_vcpu_destroy(struct kvm_vc
- 	vgic_cpu->rd_iodev.base_addr = VGIC_ADDR_UNDEF;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 070566baa0ca4..4c97160ab9c15 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2987,25 +2987,6 @@ static unsigned rb_calculate_event_length(unsigned length)
+ 	return length;
  }
  
--static void __kvm_vgic_destroy(struct kvm *kvm)
-+void kvm_vgic_destroy(struct kvm *kvm)
- {
- 	struct kvm_vcpu *vcpu;
- 	unsigned long i;
- 
--	lockdep_assert_held(&kvm->arch.config_lock);
-+	mutex_lock(&kvm->slots_lock);
- 
- 	vgic_debug_destroy(kvm);
- 
- 	kvm_for_each_vcpu(i, vcpu, kvm)
- 		kvm_vgic_vcpu_destroy(vcpu);
- 
-+	mutex_lock(&kvm->arch.config_lock);
-+
- 	kvm_vgic_dist_destroy(kvm);
--}
- 
--void kvm_vgic_destroy(struct kvm *kvm)
+-static u64 rb_time_delta(struct ring_buffer_event *event)
 -{
--	mutex_lock(&kvm->arch.config_lock);
--	__kvm_vgic_destroy(kvm);
- 	mutex_unlock(&kvm->arch.config_lock);
-+	mutex_unlock(&kvm->slots_lock);
- }
+-	switch (event->type_len) {
+-	case RINGBUF_TYPE_PADDING:
+-		return 0;
+-
+-	case RINGBUF_TYPE_TIME_EXTEND:
+-		return rb_event_time_stamp(event);
+-
+-	case RINGBUF_TYPE_TIME_STAMP:
+-		return 0;
+-
+-	case RINGBUF_TYPE_DATA:
+-		return event->time_delta;
+-	default:
+-		return 0;
+-	}
+-}
+-
+ static inline bool
+ rb_try_to_discard(struct ring_buffer_per_cpu *cpu_buffer,
+ 		  struct ring_buffer_event *event)
+@@ -3013,8 +2994,6 @@ rb_try_to_discard(struct ring_buffer_per_cpu *cpu_buffer,
+ 	unsigned long new_index, old_index;
+ 	struct buffer_page *bpage;
+ 	unsigned long addr;
+-	u64 write_stamp;
+-	u64 delta;
  
- /**
-@@ -469,25 +467,26 @@ int kvm_vgic_map_resources(struct kvm *k
- 		type = VGIC_V3;
- 	}
+ 	new_index = rb_event_index(event);
+ 	old_index = new_index + rb_event_ts_length(event);
+@@ -3023,14 +3002,10 @@ rb_try_to_discard(struct ring_buffer_per_cpu *cpu_buffer,
  
--	if (ret) {
--		__kvm_vgic_destroy(kvm);
-+	if (ret)
+ 	bpage = READ_ONCE(cpu_buffer->tail_page);
+ 
+-	delta = rb_time_delta(event);
+-
+-	if (!rb_time_read(&cpu_buffer->write_stamp, &write_stamp))
+-		return false;
+-
+-	/* Make sure the write stamp is read before testing the location */
+-	barrier();
+-
++	/*
++	 * Make sure the tail_page is still the same and
++	 * the next write location is the end of this event
++	 */
+ 	if (bpage->page == (void *)addr && rb_page_write(bpage) == old_index) {
+ 		unsigned long write_mask =
+ 			local_read(&bpage->write) & ~RB_WRITE_MASK;
+@@ -3041,20 +3016,20 @@ rb_try_to_discard(struct ring_buffer_per_cpu *cpu_buffer,
+ 		 * to make sure that the next event adds an absolute
+ 		 * value and does not rely on the saved write stamp, which
+ 		 * is now going to be bogus.
++		 *
++		 * By setting the before_stamp to zero, the next event
++		 * is not going to use the write_stamp and will instead
++		 * create an absolute timestamp. This means there's no
++		 * reason to update the wirte_stamp!
+ 		 */
+ 		rb_time_set(&cpu_buffer->before_stamp, 0);
+ 
+-		/* Something came in, can't discard */
+-		if (!rb_time_cmpxchg(&cpu_buffer->write_stamp,
+-				       write_stamp, write_stamp - delta))
+-			return false;
+-
+ 		/*
+ 		 * If an event were to come in now, it would see that the
+ 		 * write_stamp and the before_stamp are different, and assume
+ 		 * that this event just added itself before updating
+ 		 * the write stamp. The interrupting event will fix the
+-		 * write stamp for us, and use the before stamp as its delta.
++		 * write stamp for us, and use an absolute timestamp.
+ 		 */
+ 
+ 		/*
+@@ -3491,7 +3466,7 @@ static void check_buffer(struct ring_buffer_per_cpu *cpu_buffer,
+ 		return;
+ 
+ 	/*
+-	 * If this interrupted another event, 
++	 * If this interrupted another event,
+ 	 */
+ 	if (atomic_inc_return(this_cpu_ptr(&checking)) != 1)
  		goto out;
--	}
-+
- 	dist->ready = true;
- 	dist_base = dist->vgic_dist_base;
- 	mutex_unlock(&kvm->arch.config_lock);
- 
- 	ret = vgic_register_dist_iodev(kvm, dist_base, type);
--	if (ret) {
-+	if (ret)
- 		kvm_err("Unable to register VGIC dist MMIO regions\n");
--		kvm_vgic_destroy(kvm);
--	}
--	mutex_unlock(&kvm->slots_lock);
--	return ret;
- 
-+	goto out_slots;
- out:
- 	mutex_unlock(&kvm->arch.config_lock);
-+out_slots:
- 	mutex_unlock(&kvm->slots_lock);
-+
-+	if (ret)
-+		kvm_vgic_destroy(kvm);
-+
- 	return ret;
- }
- 
+-- 
+2.43.0
+
 
 
