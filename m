@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949F279EE;
-	Sat, 30 Dec 2023 12:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9AE8821;
+	Sat, 30 Dec 2023 12:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVm+dsI3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B44BC433C7;
-	Sat, 30 Dec 2023 12:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mRVopz3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966E9C433C8;
+	Sat, 30 Dec 2023 12:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938082;
-	bh=F20lV3reRSH8EkFLZAuYnX5u1FRz1AsHPetvJSpe07U=;
+	s=korg; t=1703938084;
+	bh=F1cEPHBLWZbTf214QDXVNn/5IFET0wbsypUF7wDyH/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVm+dsI33EWOgOGZgXOWLmHFJuI6j7Nl5eM2wc917EBt0hXzZ6uQoUlXZt9uUAWUV
-	 yuoGAYU1+43YOLyGtDYmy/SizWfTwnM099GgFxnic0bP9zKiBnAB+2y2+9mHouCllu
-	 y1Z7LOyA3UTCivkKf3v6yAEow3jjQGyaevWBCPu8=
+	b=1mRVopz3wISFD0f+ZakUtMU94SuP5E5x9h9Yzq5O5EHU7TIhilgC2Gag/tARlfozs
+	 MPPwcZ5nVzVp0XX7WHqRDJt4I3S3NrwdacN1b14iGEJ0b4I0KqaMw9JxNfL7/5PHJd
+	 /zzKhUtIZhzlCFyzJBBeKNs8V7mK1YkG0nmUD3lE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+97a4fe20470e9bc30810@syzkaller.appspotmail.com,
-	Jiri Olsa <jolsa@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Lee Jones <lee@kernel.org>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Subject: [PATCH 6.1 002/112] bpf: Fix prog_array_map_poke_run map poke update
-Date: Sat, 30 Dec 2023 11:58:35 +0000
-Message-ID: <20231230115806.808365451@linuxfoundation.org>
+	Moshe Shemesh <moshe@nvidia.com>,
+	Shifeng Li <lishifeng@sangfor.com.cn>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 020/112] net/mlx5e: Fix a race in command alloc flow
+Date: Sat, 30 Dec 2023 11:58:53 +0000
+Message-ID: <20231230115807.397309009@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -45,227 +43,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Shifeng Li <lishifeng@sangfor.com.cn>
 
-commit 4b7de801606e504e69689df71475d27e35336fb3 upstream.
+[ Upstream commit 8f5100da56b3980276234e812ce98d8f075194cd ]
 
-Lee pointed out issue found by syscaller [0] hitting BUG in prog array
-map poke update in prog_array_map_poke_run function due to error value
-returned from bpf_arch_text_poke function.
+Fix a cmd->ent use after free due to a race on command entry.
+Such race occurs when one of the commands releases its last refcount and
+frees its index and entry while another process running command flush
+flow takes refcount to this command entry. The process which handles
+commands flush may see this command as needed to be flushed if the other
+process allocated a ent->idx but didn't set ent to cmd->ent_arr in
+cmd_work_handler(). Fix it by moving the assignment of cmd->ent_arr into
+the spin lock.
 
-There's race window where bpf_arch_text_poke can fail due to missing
-bpf program kallsym symbols, which is accounted for with check for
--EINVAL in that BUG_ON call.
+[70013.081955] BUG: KASAN: use-after-free in mlx5_cmd_trigger_completions+0x1e2/0x4c0 [mlx5_core]
+[70013.081967] Write of size 4 at addr ffff88880b1510b4 by task kworker/26:1/1433361
+[70013.081968]
+[70013.082028] Workqueue: events aer_isr
+[70013.082053] Call Trace:
+[70013.082067]  dump_stack+0x8b/0xbb
+[70013.082086]  print_address_description+0x6a/0x270
+[70013.082102]  kasan_report+0x179/0x2c0
+[70013.082173]  mlx5_cmd_trigger_completions+0x1e2/0x4c0 [mlx5_core]
+[70013.082267]  mlx5_cmd_flush+0x80/0x180 [mlx5_core]
+[70013.082304]  mlx5_enter_error_state+0x106/0x1d0 [mlx5_core]
+[70013.082338]  mlx5_try_fast_unload+0x2ea/0x4d0 [mlx5_core]
+[70013.082377]  remove_one+0x200/0x2b0 [mlx5_core]
+[70013.082409]  pci_device_remove+0xf3/0x280
+[70013.082439]  device_release_driver_internal+0x1c3/0x470
+[70013.082453]  pci_stop_bus_device+0x109/0x160
+[70013.082468]  pci_stop_and_remove_bus_device+0xe/0x20
+[70013.082485]  pcie_do_fatal_recovery+0x167/0x550
+[70013.082493]  aer_isr+0x7d2/0x960
+[70013.082543]  process_one_work+0x65f/0x12d0
+[70013.082556]  worker_thread+0x87/0xb50
+[70013.082571]  kthread+0x2e9/0x3a0
+[70013.082592]  ret_from_fork+0x1f/0x40
 
-The problem is that in such case we won't update the tail call jump
-and cause imbalance for the next tail call update check which will
-fail with -EBUSY in bpf_arch_text_poke.
+The logical relationship of this error is as follows:
 
-I'm hitting following race during the program load:
+             aer_recover_work              |          ent->work
+-------------------------------------------+------------------------------
+aer_recover_work_func                      |
+|- pcie_do_recovery                        |
+  |- report_error_detected                 |
+    |- mlx5_pci_err_detected               |cmd_work_handler
+      |- mlx5_enter_error_state            |  |- cmd_alloc_index
+        |- enter_error_state               |    |- lock cmd->alloc_lock
+          |- mlx5_cmd_flush                |    |- clear_bit
+            |- mlx5_cmd_trigger_completions|    |- unlock cmd->alloc_lock
+              |- lock cmd->alloc_lock      |
+              |- vector = ~dev->cmd.vars.bitmask
+              |- for_each_set_bit          |
+                |- cmd_ent_get(cmd->ent_arr[i]) (UAF)
+              |- unlock cmd->alloc_lock    |  |- cmd->ent_arr[ent->idx]=ent
 
-  CPU 0                             CPU 1
+The cmd->ent_arr[ent->idx] assignment and the bit clearing are not
+protected by the cmd->alloc_lock in cmd_work_handler().
 
-  bpf_prog_load
-    bpf_check
-      do_misc_fixups
-        prog_array_map_poke_track
-
-                                    map_update_elem
-                                      bpf_fd_array_map_update_elem
-                                        prog_array_map_poke_run
-
-                                          bpf_arch_text_poke returns -EINVAL
-
-    bpf_prog_kallsyms_add
-
-After bpf_arch_text_poke (CPU 1) fails to update the tail call jump, the next
-poke update fails on expected jump instruction check in bpf_arch_text_poke
-with -EBUSY and triggers the BUG_ON in prog_array_map_poke_run.
-
-Similar race exists on the program unload.
-
-Fixing this by moving the update to bpf_arch_poke_desc_update function which
-makes sure we call __bpf_arch_text_poke that skips the bpf address check.
-
-Each architecture has slightly different approach wrt looking up bpf address
-in bpf_arch_text_poke, so instead of splitting the function or adding new
-'checkip' argument in previous version, it seems best to move the whole
-map_poke_run update as arch specific code.
-
-  [0] https://syzkaller.appspot.com/bug?extid=97a4fe20470e9bc30810
-
-Fixes: ebf7d1f508a7 ("bpf, x64: rework pro/epilogue and tailcall handling in JIT")
-Reported-by: syzbot+97a4fe20470e9bc30810@syzkaller.appspotmail.com
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Cc: Lee Jones <lee@kernel.org>
-Cc: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://lore.kernel.org/bpf/20231206083041.1306660-2-jolsa@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 50b2412b7e78 ("net/mlx5: Avoid possible free of command entry while timeout comp handler")
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Shifeng Li <lishifeng@sangfor.com.cn>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c |   46 ++++++++++++++++++++++++++++++++++
- include/linux/bpf.h         |    3 ++
- kernel/bpf/arraymap.c       |   58 +++++++-------------------------------------
- 3 files changed, 59 insertions(+), 48 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -2553,3 +2553,49 @@ void bpf_jit_free(struct bpf_prog *prog)
- 
- 	bpf_prog_unlock_free(prog);
- }
-+
-+void bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
-+			       struct bpf_prog *new, struct bpf_prog *old)
-+{
-+	u8 *old_addr, *new_addr, *old_bypass_addr;
-+	int ret;
-+
-+	old_bypass_addr = old ? NULL : poke->bypass_addr;
-+	old_addr = old ? (u8 *)old->bpf_func + poke->adj_off : NULL;
-+	new_addr = new ? (u8 *)new->bpf_func + poke->adj_off : NULL;
-+
-+	/*
-+	 * On program loading or teardown, the program's kallsym entry
-+	 * might not be in place, so we use __bpf_arch_text_poke to skip
-+	 * the kallsyms check.
-+	 */
-+	if (new) {
-+		ret = __bpf_arch_text_poke(poke->tailcall_target,
-+					   BPF_MOD_JUMP,
-+					   old_addr, new_addr);
-+		BUG_ON(ret < 0);
-+		if (!old) {
-+			ret = __bpf_arch_text_poke(poke->tailcall_bypass,
-+						   BPF_MOD_JUMP,
-+						   poke->bypass_addr,
-+						   NULL);
-+			BUG_ON(ret < 0);
-+		}
-+	} else {
-+		ret = __bpf_arch_text_poke(poke->tailcall_bypass,
-+					   BPF_MOD_JUMP,
-+					   old_bypass_addr,
-+					   poke->bypass_addr);
-+		BUG_ON(ret < 0);
-+		/* let other CPUs finish the execution of program
-+		 * so that it will not possible to expose them
-+		 * to invalid nop, stack unwind, nop state
-+		 */
-+		if (!ret)
-+			synchronize_rcu();
-+		ret = __bpf_arch_text_poke(poke->tailcall_target,
-+					   BPF_MOD_JUMP,
-+					   old_addr, NULL);
-+		BUG_ON(ret < 0);
-+	}
-+}
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -2681,6 +2681,9 @@ enum bpf_text_poke_type {
- int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type t,
- 		       void *addr1, void *addr2);
- 
-+void bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
-+			       struct bpf_prog *new, struct bpf_prog *old);
-+
- void *bpf_arch_text_copy(void *dst, void *src, size_t len);
- int bpf_arch_text_invalidate(void *dst, size_t len);
- 
---- a/kernel/bpf/arraymap.c
-+++ b/kernel/bpf/arraymap.c
-@@ -997,11 +997,16 @@ static void prog_array_map_poke_untrack(
- 	mutex_unlock(&aux->poke_mutex);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+index e89d4fb7774bb..ac6a0785b10d8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -156,15 +156,18 @@ static u8 alloc_token(struct mlx5_cmd *cmd)
+ 	return token;
  }
  
-+void __weak bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
-+				      struct bpf_prog *new, struct bpf_prog *old)
-+{
-+	WARN_ON_ONCE(1);
-+}
-+
- static void prog_array_map_poke_run(struct bpf_map *map, u32 key,
- 				    struct bpf_prog *old,
- 				    struct bpf_prog *new)
+-static int cmd_alloc_index(struct mlx5_cmd *cmd)
++static int cmd_alloc_index(struct mlx5_cmd *cmd, struct mlx5_cmd_work_ent *ent)
  {
--	u8 *old_addr, *new_addr, *old_bypass_addr;
- 	struct prog_poke_elem *elem;
- 	struct bpf_array_aux *aux;
+ 	unsigned long flags;
+ 	int ret;
  
-@@ -1010,7 +1015,7 @@ static void prog_array_map_poke_run(stru
+ 	spin_lock_irqsave(&cmd->alloc_lock, flags);
+ 	ret = find_first_bit(&cmd->vars.bitmask, cmd->vars.max_reg_cmds);
+-	if (ret < cmd->vars.max_reg_cmds)
++	if (ret < cmd->vars.max_reg_cmds) {
+ 		clear_bit(ret, &cmd->vars.bitmask);
++		ent->idx = ret;
++		cmd->ent_arr[ent->idx] = ent;
++	}
+ 	spin_unlock_irqrestore(&cmd->alloc_lock, flags);
  
- 	list_for_each_entry(elem, &aux->poke_progs, list) {
- 		struct bpf_jit_poke_descriptor *poke;
--		int i, ret;
-+		int i;
- 
- 		for (i = 0; i < elem->aux->size_poke_tab; i++) {
- 			poke = &elem->aux->poke_tab[i];
-@@ -1029,21 +1034,10 @@ static void prog_array_map_poke_run(stru
- 			 *    activated, so tail call updates can arrive from here
- 			 *    while JIT is still finishing its final fixup for
- 			 *    non-activated poke entries.
--			 * 3) On program teardown, the program's kallsym entry gets
--			 *    removed out of RCU callback, but we can only untrack
--			 *    from sleepable context, therefore bpf_arch_text_poke()
--			 *    might not see that this is in BPF text section and
--			 *    bails out with -EINVAL. As these are unreachable since
--			 *    RCU grace period already passed, we simply skip them.
--			 * 4) Also programs reaching refcount of zero while patching
-+			 * 3) Also programs reaching refcount of zero while patching
- 			 *    is in progress is okay since we're protected under
- 			 *    poke_mutex and untrack the programs before the JIT
--			 *    buffer is freed. When we're still in the middle of
--			 *    patching and suddenly kallsyms entry of the program
--			 *    gets evicted, we just skip the rest which is fine due
--			 *    to point 3).
--			 * 5) Any other error happening below from bpf_arch_text_poke()
--			 *    is a unexpected bug.
-+			 *    buffer is freed.
- 			 */
- 			if (!READ_ONCE(poke->tailcall_target_stable))
- 				continue;
-@@ -1053,39 +1047,7 @@ static void prog_array_map_poke_run(stru
- 			    poke->tail_call.key != key)
- 				continue;
- 
--			old_bypass_addr = old ? NULL : poke->bypass_addr;
--			old_addr = old ? (u8 *)old->bpf_func + poke->adj_off : NULL;
--			new_addr = new ? (u8 *)new->bpf_func + poke->adj_off : NULL;
--
--			if (new) {
--				ret = bpf_arch_text_poke(poke->tailcall_target,
--							 BPF_MOD_JUMP,
--							 old_addr, new_addr);
--				BUG_ON(ret < 0 && ret != -EINVAL);
--				if (!old) {
--					ret = bpf_arch_text_poke(poke->tailcall_bypass,
--								 BPF_MOD_JUMP,
--								 poke->bypass_addr,
--								 NULL);
--					BUG_ON(ret < 0 && ret != -EINVAL);
--				}
--			} else {
--				ret = bpf_arch_text_poke(poke->tailcall_bypass,
--							 BPF_MOD_JUMP,
--							 old_bypass_addr,
--							 poke->bypass_addr);
--				BUG_ON(ret < 0 && ret != -EINVAL);
--				/* let other CPUs finish the execution of program
--				 * so that it will not possible to expose them
--				 * to invalid nop, stack unwind, nop state
--				 */
--				if (!ret)
--					synchronize_rcu();
--				ret = bpf_arch_text_poke(poke->tailcall_target,
--							 BPF_MOD_JUMP,
--							 old_addr, NULL);
--				BUG_ON(ret < 0 && ret != -EINVAL);
--			}
-+			bpf_arch_poke_desc_update(poke, new, old);
+ 	return ret < cmd->vars.max_reg_cmds ? ret : -ENOMEM;
+@@ -974,7 +977,7 @@ static void cmd_work_handler(struct work_struct *work)
+ 	sem = ent->page_queue ? &cmd->vars.pages_sem : &cmd->vars.sem;
+ 	down(sem);
+ 	if (!ent->page_queue) {
+-		alloc_ret = cmd_alloc_index(cmd);
++		alloc_ret = cmd_alloc_index(cmd, ent);
+ 		if (alloc_ret < 0) {
+ 			mlx5_core_err_rl(dev, "failed to allocate command entry\n");
+ 			if (ent->callback) {
+@@ -989,15 +992,14 @@ static void cmd_work_handler(struct work_struct *work)
+ 			up(sem);
+ 			return;
  		}
+-		ent->idx = alloc_ret;
+ 	} else {
+ 		ent->idx = cmd->vars.max_reg_cmds;
+ 		spin_lock_irqsave(&cmd->alloc_lock, flags);
+ 		clear_bit(ent->idx, &cmd->vars.bitmask);
++		cmd->ent_arr[ent->idx] = ent;
+ 		spin_unlock_irqrestore(&cmd->alloc_lock, flags);
  	}
- }
+ 
+-	cmd->ent_arr[ent->idx] = ent;
+ 	lay = get_inst(cmd, ent->idx);
+ 	ent->lay = lay;
+ 	memset(lay, 0, sizeof(*lay));
+-- 
+2.43.0
+
 
 
