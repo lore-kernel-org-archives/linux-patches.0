@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA0579C2;
-	Sat, 30 Dec 2023 12:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BA98483;
+	Sat, 30 Dec 2023 12:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cq7UDjIh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3259EC433C7;
-	Sat, 30 Dec 2023 12:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2d1Y8kCY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFAF3C433C8;
+	Sat, 30 Dec 2023 12:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937971;
-	bh=fReQQ6gg0ztZayFC30cNjlWeXLsi1wvXLQ50AWz3C5o=;
+	s=korg; t=1703937974;
+	bh=nLQwV88NY+vOhvgnfZURK7zaQurIxBdIG9Pig/j7+lI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cq7UDjIhnVZqkxyjSRvNgjk3/MUksWewEBObLdpJvN8f1vVLobhPOKvcccXzthYla
-	 hgL++DOImwCx7hplaJN/i8grJnbmXoxeFMeXTWChyKObAHOMQCiapCNutdfmFekFkv
-	 2OKlOoAlEdQHnP1aA0KySFF6HlV8OvrPIo8xWatc=
+	b=2d1Y8kCY57l/46Ry7bsqp6D/i5oTLLrUtpKULyZUEuUoUIxK6Mt0Cf82m1Y3cwICf
+	 qRPHtqs1pah+9XSheNzHr6Gia1m1eSLr+H0BvL93fsQiFd0GDAXb5GKSmMgCzWtTOP
+	 +59LJa6rA84UQehZFCFxCJSsj2Gqfh1sOUTKIcrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hyunwoo Kim <v4bel@theori.io>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 109/156] Bluetooth: hci_event: Fix not checking if HCI_OP_INQUIRY has been sent
-Date: Sat, 30 Dec 2023 11:59:23 +0000
-Message-ID: <20231230115815.928296244@linuxfoundation.org>
+Subject: [PATCH 6.6 110/156] Bluetooth: af_bluetooth: Fix Use-After-Free in bt_sock_recvmsg
+Date: Sat, 30 Dec 2023 11:59:24 +0000
+Message-ID: <20231230115815.962033506@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -40,34 +41,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Hyunwoo Kim <v4bel@theori.io>
 
-commit 99e67d46e5ff3c7c901af6009edec72d3d363be8 upstream.
+commit 2e07e8348ea454615e268222ae3fc240421be768 upstream.
 
-Before setting HCI_INQUIRY bit check if HCI_OP_INQUIRY was really sent
-otherwise the controller maybe be generating invalid events or, more
-likely, it is a result of fuzzing tools attempting to test the right
-behavior of the stack when unexpected events are generated.
+This can cause a race with bt_sock_ioctl() because
+bt_sock_recvmsg() gets the skb from sk->sk_receive_queue
+and then frees it without holding lock_sock.
+A use-after-free for a skb occurs with the following flow.
+```
+bt_sock_recvmsg() -> skb_recv_datagram() -> skb_free_datagram()
+bt_sock_ioctl() -> skb_peek()
+```
+Add lock_sock to bt_sock_recvmsg() to fix this issue.
 
 Cc: stable@vger.kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218151
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bluetooth/af_bluetooth.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2305,7 +2305,8 @@ static void hci_cs_inquiry(struct hci_de
- 		return;
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -309,11 +309,14 @@ int bt_sock_recvmsg(struct socket *sock,
+ 	if (flags & MSG_OOB)
+ 		return -EOPNOTSUPP;
+ 
++	lock_sock(sk);
++
+ 	skb = skb_recv_datagram(sk, flags, &err);
+ 	if (!skb) {
+ 		if (sk->sk_shutdown & RCV_SHUTDOWN)
+-			return 0;
++			err = 0;
+ 
++		release_sock(sk);
+ 		return err;
  	}
  
--	set_bit(HCI_INQUIRY, &hdev->flags);
-+	if (hci_sent_cmd_data(hdev, HCI_OP_INQUIRY))
-+		set_bit(HCI_INQUIRY, &hdev->flags);
- }
+@@ -343,6 +346,8 @@ int bt_sock_recvmsg(struct socket *sock,
  
- static void hci_cs_create_conn(struct hci_dev *hdev, __u8 status)
+ 	skb_free_datagram(sk, skb);
+ 
++	release_sock(sk);
++
+ 	if (flags & MSG_TRUNC)
+ 		copied = skblen;
+ 
 
 
