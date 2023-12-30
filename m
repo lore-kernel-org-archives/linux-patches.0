@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5348BEB;
-	Sat, 30 Dec 2023 12:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C0528FE;
+	Sat, 30 Dec 2023 12:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bjtXKi5c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22173C433C7;
-	Sat, 30 Dec 2023 12:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlqNZGAh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4241C433C8;
+	Sat, 30 Dec 2023 12:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937940;
-	bh=jf7eSm5x4JRFstv+8idq0370oHuuL3tEKreDZdRcPb8=;
+	s=korg; t=1703937943;
+	bh=FzCcarRApC/VDOcAx2P3oYrX948HGwkg6zu7E5QmFGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bjtXKi5cLf5Wi1ZyT7i6aS4eslrgIpV9G+YpL0H1npmaE/nf2JCdtcFdiQRl2Q63L
-	 z9iUQc4J10td/mvXW6JL4l6+ZsmHO4XzE+xb+djK3cMy36/O02vkkMmYfGHdQx0CMQ
-	 F6zrytFLMXjY7C6nUS0wFp0V+zrChjMhcVbNPRHY=
+	b=ZlqNZGAhArAnfQ1KKstCuZfGPr7AXO2WWwhqZCSZQlm7zrsx+l4sF8G9/9l4soQYJ
+	 F8FMmqcDYxV9qlLWFW4tGJhAjIp9IYyMf04WXhyfJ3sR4qICUs9lX2nZzaz1MxS7ll
+	 M7XMbLCWrlhdHp1T8AfCok7FkbdyTTE9lui5SCUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Lai Peter Jun Ann <jun.ann.lai@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 122/156] net: stmmac: fix incorrect flag check in timestamp interrupt
-Date: Sat, 30 Dec 2023 11:59:36 +0000
-Message-ID: <20231230115816.355447319@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Fabio Estevam <festevam@denx.de>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.6 123/156] dt-bindings: nvmem: mxs-ocotp: Document fsl,ocotp
+Date: Sat, 30 Dec 2023 11:59:37 +0000
+Message-ID: <20231230115816.396075420@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -44,40 +43,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lai Peter Jun Ann <jun.ann.lai@intel.com>
+From: Fabio Estevam <festevam@denx.de>
 
-commit bd7f77dae69532ffc027ee50ff99e3792dc30b7f upstream.
+commit a2a8aefecbd0f87d6127951cef33b3def8439057 upstream.
 
-The driver should continue get the timestamp if STMMAC_FLAG_EXT_SNAPSHOT_EN
-flag is set.
+Both imx23.dtsi and imx28.dtsi describe the OCOTP nodes in
+the format:
 
-Fixes: aa5513f5d95f ("net: stmmac: replace the ext_snapshot_en field with a flag")
-Cc: <stable@vger.kernel.org> # 6.6
-Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
-Signed-off-by: Lai Peter Jun Ann <jun.ann.lai@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+compatible = "fsl,imx28-ocotp", "fsl,ocotp";
+
+Document the "fsl,ocotp" entry to fix the following schema
+warning:
+
+efuse@8002c000: compatible: ['fsl,imx23-ocotp', 'fsl,ocotp'] is too long
+from schema $id: http://devicetree.org/schemas/nvmem/mxs-ocotp.yaml#
+
+Fixes: 2c504460f502 ("dt-bindings: nvmem: Convert MXS OCOTP to json-schema")
+Cc:  <Stable@vger.kernel.org>
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20231215111358.316727-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-index 540f6a4ec0b8..f05bd757dfe5 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-@@ -237,7 +237,7 @@ static void timestamp_interrupt(struct stmmac_priv *priv)
- 	 */
- 	ts_status = readl(priv->ioaddr + GMAC_TIMESTAMP_STATUS);
+--- a/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
++++ b/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
+@@ -14,9 +14,11 @@ allOf:
  
--	if (priv->plat->flags & STMMAC_FLAG_EXT_SNAPSHOT_EN)
-+	if (!(priv->plat->flags & STMMAC_FLAG_EXT_SNAPSHOT_EN))
- 		return;
+ properties:
+   compatible:
+-    enum:
+-      - fsl,imx23-ocotp
+-      - fsl,imx28-ocotp
++    items:
++      - enum:
++          - fsl,imx23-ocotp
++          - fsl,imx28-ocotp
++      - const: fsl,ocotp
  
- 	num_snapshot = (ts_status & GMAC_TIMESTAMP_ATSNS_MASK) >>
--- 
-2.43.0
-
+   reg:
+     maxItems: 1
+@@ -34,7 +36,7 @@ unevaluatedProperties: false
+ examples:
+   - |
+     ocotp: efuse@8002c000 {
+-        compatible = "fsl,imx28-ocotp";
++        compatible = "fsl,imx28-ocotp", "fsl,ocotp";
+         #address-cells = <1>;
+         #size-cells = <1>;
+         reg = <0x8002c000 0x2000>;
 
 
