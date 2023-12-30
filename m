@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFA579DE;
-	Sat, 30 Dec 2023 12:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1866179DE;
+	Sat, 30 Dec 2023 12:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbP5gtIs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9879C433C8;
-	Sat, 30 Dec 2023 12:11:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="drIQomNh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95010C433C8;
+	Sat, 30 Dec 2023 12:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938308;
-	bh=SPiSZEVrgdxELhQmo8fRcwqabtCF/NA1gnEhK10JTgI=;
+	s=korg; t=1703938310;
+	bh=9SmBH0e/cKZ/EoCQ9lYQWsOAdJfL1gQ7PoBblro25Xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QbP5gtIsnPA6xX+Y5bh9Tde0di5EPGTuFw7Wzz0cqDVRvTqKrrYbS+63UcfXRV/FK
-	 NJETMYZnK6+KGk+40IqTAb+C8suQLGZvlosPKfEtizk08SZTBHTQol6blKuu9FiLV1
-	 dAl+RLuAHmYpUiVHe6nXqogNKkTOkpsNvludx+mE=
+	b=drIQomNhxAvuyQYzsqAXjBYH3SLyN5aDOgQPVawslPF76CQorLyUiLZ6Mxa7Pfaey
+	 0B83ycmO0sLvFj4UPEbRSQx1+O3ihthdO6c8g78lLwFCXs2jLxhFXn9U1pj0NI9Qzu
+	 UHQKQa0jG9EpJn0Xsg+Js2Qt6Ie+kpkENMxyP3Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@csail.mit.edu>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 082/112] smb: client: fix OOB in cifsd when receiving compounded resps
-Date: Sat, 30 Dec 2023 11:59:55 +0000
-Message-ID: <20231230115809.408233975@linuxfoundation.org>
+	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 073/112] Bluetooth: L2CAP: Send reject on command corrupted request
+Date: Sat, 30 Dec 2023 11:59:46 +0000
+Message-ID: <20231230115809.077114445@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -36,167 +35,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Frédéric Danis <frederic.danis@collabora.com>
 
-commit a8f68b11158f09754418de62e6b3e7b9b7a50cc9 upstream.
+commit 78b99eb1faa7371bf9c534690f26a71b6996622d upstream.
 
-Validate next header's offset in ->next_header() so that it isn't
-smaller than MID_HEADER_SIZE(server) and then standard_receive3() or
-->receive() ends up writing off the end of the buffer because
-'pdu_length - MID_HEADER_SIZE(server)' wraps up to a huge length:
+L2CAP/COS/CED/BI-02-C PTS test send a malformed L2CAP signaling packet
+with 2 commands in it (a connection request and an unknown command) and
+expect to get a connection response packet and a command reject packet.
+The second is currently not sent.
 
-  BUG: KASAN: slab-out-of-bounds in _copy_to_iter+0x4fc/0x840
-  Write of size 701 at addr ffff88800caf407f by task cifsd/1090
-
-  CPU: 0 PID: 1090 Comm: cifsd Not tainted 6.7.0-rc4 #5
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
-  rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x4a/0x80
-   print_report+0xcf/0x650
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? __phys_addr+0x46/0x90
-   kasan_report+0xd8/0x110
-   ? _copy_to_iter+0x4fc/0x840
-   ? _copy_to_iter+0x4fc/0x840
-   kasan_check_range+0x105/0x1b0
-   __asan_memcpy+0x3c/0x60
-   _copy_to_iter+0x4fc/0x840
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? hlock_class+0x32/0xc0
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? __pfx__copy_to_iter+0x10/0x10
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? lock_is_held_type+0x90/0x100
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? __might_resched+0x278/0x360
-   ? __pfx___might_resched+0x10/0x10
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   __skb_datagram_iter+0x2c2/0x460
-   ? __pfx_simple_copy_to_iter+0x10/0x10
-   skb_copy_datagram_iter+0x6c/0x110
-   tcp_recvmsg_locked+0x9be/0xf40
-   ? __pfx_tcp_recvmsg_locked+0x10/0x10
-   ? mark_held_locks+0x5d/0x90
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   tcp_recvmsg+0xe2/0x310
-   ? __pfx_tcp_recvmsg+0x10/0x10
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? lock_acquire+0x14a/0x3a0
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   inet_recvmsg+0xd0/0x370
-   ? __pfx_inet_recvmsg+0x10/0x10
-   ? __pfx_lock_release+0x10/0x10
-   ? do_raw_spin_trylock+0xd1/0x120
-   sock_recvmsg+0x10d/0x150
-   cifs_readv_from_socket+0x25a/0x490 [cifs]
-   ? __pfx_cifs_readv_from_socket+0x10/0x10 [cifs]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   cifs_read_from_socket+0xb5/0x100 [cifs]
-   ? __pfx_cifs_read_from_socket+0x10/0x10 [cifs]
-   ? __pfx_lock_release+0x10/0x10
-   ? do_raw_spin_trylock+0xd1/0x120
-   ? _raw_spin_unlock+0x23/0x40
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? __smb2_find_mid+0x126/0x230 [cifs]
-   cifs_demultiplex_thread+0xd39/0x1270 [cifs]
-   ? __pfx_cifs_demultiplex_thread+0x10/0x10 [cifs]
-   ? __pfx_lock_release+0x10/0x10
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? mark_held_locks+0x1a/0x90
-   ? lockdep_hardirqs_on_prepare+0x136/0x210
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? __kthread_parkme+0xce/0xf0
-   ? __pfx_cifs_demultiplex_thread+0x10/0x10 [cifs]
-   kthread+0x18d/0x1d0
-   ? kthread+0xdb/0x1d0
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork+0x34/0x60
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork_asm+0x1b/0x30
-   </TASK>
-
-Fixes: 8ce79ec359ad ("cifs: update multiplex loop to handle compounded responses")
 Cc: stable@vger.kernel.org
-Reported-by: Robert Morris <rtm@csail.mit.edu>
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Frédéric Danis <frederic.danis@collabora.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsglob.h |    3 ++-
- fs/smb/client/connect.c  |    7 ++++++-
- fs/smb/client/smb2ops.c  |   19 ++++++++++++-------
- 3 files changed, 20 insertions(+), 9 deletions(-)
+ net/bluetooth/l2cap_core.c |   21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -513,7 +513,8 @@ struct smb_version_operations {
- 				 struct mid_q_entry **, char **, int *);
- 	enum securityEnum (*select_sectype)(struct TCP_Server_Info *,
- 			    enum securityEnum);
--	int (*next_header)(char *);
-+	int (*next_header)(struct TCP_Server_Info *server, char *buf,
-+			   unsigned int *noff);
- 	/* ioctl passthrough for query_info */
- 	int (*ioctl_query_info)(const unsigned int xid,
- 				struct cifs_tcon *tcon,
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1225,7 +1225,12 @@ next_pdu:
- 		server->total_read += length;
- 
- 		if (server->ops->next_header) {
--			next_offset = server->ops->next_header(buf);
-+			if (server->ops->next_header(server, buf, &next_offset)) {
-+				cifs_dbg(VFS, "%s: malformed response (next_offset=%u)\n",
-+					 __func__, next_offset);
-+				cifs_reconnect(server, true);
-+				continue;
-+			}
- 			if (next_offset)
- 				server->pdu_size = next_offset;
- 		}
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5196,17 +5196,22 @@ smb3_handle_read_data(struct TCP_Server_
- 				NULL, 0, 0, false);
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6493,6 +6493,14 @@ drop:
+ 	kfree_skb(skb);
  }
  
--static int
--smb2_next_header(char *buf)
-+static int smb2_next_header(struct TCP_Server_Info *server, char *buf,
-+			    unsigned int *noff)
++static inline void l2cap_sig_send_rej(struct l2cap_conn *conn, u16 ident)
++{
++	struct l2cap_cmd_rej_unk rej;
++
++	rej.reason = cpu_to_le16(L2CAP_REJ_NOT_UNDERSTOOD);
++	l2cap_send_cmd(conn, ident, L2CAP_COMMAND_REJ, sizeof(rej), &rej);
++}
++
+ static inline void l2cap_sig_channel(struct l2cap_conn *conn,
+ 				     struct sk_buff *skb)
  {
- 	struct smb2_hdr *hdr = (struct smb2_hdr *)buf;
- 	struct smb2_transform_hdr *t_hdr = (struct smb2_transform_hdr *)buf;
+@@ -6518,23 +6526,24 @@ static inline void l2cap_sig_channel(str
  
--	if (hdr->ProtocolId == SMB2_TRANSFORM_PROTO_NUM)
--		return sizeof(struct smb2_transform_hdr) +
--		  le32_to_cpu(t_hdr->OriginalMessageSize);
+ 		if (len > skb->len || !cmd->ident) {
+ 			BT_DBG("corrupted command");
++			l2cap_sig_send_rej(conn, cmd->ident);
+ 			break;
+ 		}
+ 
+ 		err = l2cap_bredr_sig_cmd(conn, cmd, len, skb->data);
+ 		if (err) {
+-			struct l2cap_cmd_rej_unk rej;
 -
--	return le32_to_cpu(hdr->NextCommand);
-+	if (hdr->ProtocolId == SMB2_TRANSFORM_PROTO_NUM) {
-+		*noff = le32_to_cpu(t_hdr->OriginalMessageSize);
-+		if (unlikely(check_add_overflow(*noff, sizeof(*t_hdr), noff)))
-+			return -EINVAL;
-+	} else {
-+		*noff = le32_to_cpu(hdr->NextCommand);
-+	}
-+	if (unlikely(*noff && *noff < MID_HEADER_SIZE(server)))
-+		return -EINVAL;
-+	return 0;
- }
+ 			BT_ERR("Wrong link type (%d)", err);
+-
+-			rej.reason = cpu_to_le16(L2CAP_REJ_NOT_UNDERSTOOD);
+-			l2cap_send_cmd(conn, cmd->ident, L2CAP_COMMAND_REJ,
+-				       sizeof(rej), &rej);
++			l2cap_sig_send_rej(conn, cmd->ident);
+ 		}
  
- static int
+ 		skb_pull(skb, len);
+ 	}
+ 
++	if (skb->len > 0) {
++		BT_DBG("corrupted command");
++		l2cap_sig_send_rej(conn, 0);
++	}
++
+ drop:
+ 	kfree_skb(skb);
+ }
 
 
