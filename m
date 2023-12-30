@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC518825;
-	Sat, 30 Dec 2023 12:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BC479E0;
+	Sat, 30 Dec 2023 12:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XowC0JLH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149C1C433C8;
-	Sat, 30 Dec 2023 12:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGeavUk6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A391CC433C7;
+	Sat, 30 Dec 2023 12:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937984;
-	bh=p1QzTr/LG/izMoVxXrAirhgLZ1UvnCF3i9UjdeLzE8U=;
+	s=korg; t=1703937987;
+	bh=QrPp/Lx388i2x0S8pqM/CFq1WMQTx6Htp+Tvy1iGDhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XowC0JLHTSl8/+F4+za+CV1oMl7WUZ9k6T6XFbEMDaAyjwrqN2rKp2AzF797QZl+H
-	 NwvaIGD95ERzkUKhFpdmh8Q0XC++b84+xZmkMeR+Q4nv7kK7kMIAQhxJFQY+uDAjNo
-	 TrWtOcRL1DRRoKzeyQggnkU1mL94rxdnvbQ9eIlo=
+	b=zGeavUk6GQ5ymnNX8zAZEHAiShD2pelo8wEH/BJaDJuywTfX3PpcmaAJwDSEury5n
+	 n/S7Re1dKOkOS9oD7vjQjLsHI8Xk7+qfP+JE46KsAFGm5KNEwGJ1HijksN0uKHjNSM
+	 WSS00khgzzNdYCgSN5g8FqUOVjm/XgTF3NgYjveU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slark Xiao <slark_xiao@163.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 104/156] USB: serial: option: add Foxconn T99W265 with new baseline
-Date: Sat, 30 Dec 2023 11:59:18 +0000
-Message-ID: <20231230115815.767360526@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 132/156] ring-buffer: Fix 32-bit rb_time_read() race with rb_time_cmpxchg()
+Date: Sat, 30 Dec 2023 11:59:46 +0000
+Message-ID: <20231230115816.673062797@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -41,48 +42,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slark Xiao <slark_xiao@163.com>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-commit 13fde9ac23ca8c6d1ac13cc9eefe1f1ac3ee30a4 upstream.
+[ Upstream commit dec890089bf79a4954b61482715ee2d084364856 ]
 
-This ID was added based on latest SDX12 code base line, and we
-made some changes with previous 0489:e0db.
+The following race can cause rb_time_read() to observe a corrupted time
+stamp:
 
-Test evidence as below:
-T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=ef(misc ) Sub=02 Prot=01 MxPS= 9 #Cfgs=  2
-P:  Vendor=0489 ProdID=e0da Rev=05.04
-S:  Manufacturer=Qualcomm
-S:  Product=Qualcomm Snapdragon X12
-S:  SerialNumber=2bda65fb
-C:  #Ifs= 6 Cfg#= 2 Atr=a0 MxPwr=896mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-I:  If#=0x3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+rb_time_cmpxchg()
+[...]
+        if (!rb_time_read_cmpxchg(&t->msb, msb, msb2))
+                return false;
+        if (!rb_time_read_cmpxchg(&t->top, top, top2))
+                return false;
+<interrupted before updating bottom>
+__rb_time_read()
+[...]
+        do {
+                c = local_read(&t->cnt);
+                top = local_read(&t->top);
+                bottom = local_read(&t->bottom);
+                msb = local_read(&t->msb);
+        } while (c != local_read(&t->cnt));
 
-0&1: MBIM, 2: Modem, 3:GNSS, 4:Diag, 5:ADB
+        *cnt = rb_time_cnt(top);
 
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+        /* If top and msb counts don't match, this interrupted a write */
+        if (*cnt != rb_time_cnt(msb))
+                return false;
+          ^ this check fails to catch that "bottom" is still not updated.
+
+So the old "bottom" value is returned, which is wrong.
+
+Fix this by checking that all three of msb, top, and bottom 2-bit cnt
+values match.
+
+The reason to favor checking all three fields over requiring a specific
+update order for both rb_time_set() and rb_time_cmpxchg() is because
+checking all three fields is more robust to handle partial failures of
+rb_time_cmpxchg() when interrupted by nested rb_time_set().
+
+Link: https://lore.kernel.org/lkml/20231211201324.652870-1-mathieu.desnoyers@efficios.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20231212193049.680122-1-mathieu.desnoyers@efficios.com
+
+Fixes: f458a1453424e ("ring-buffer: Test last update in 32bit version of __rb_time_read()")
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/ring_buffer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2244,6 +2244,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(0) | RSVD(1) | RSVD(6) },
- 	{ USB_DEVICE(0x0489, 0xe0b5),						/* Foxconn T77W968 ESIM */
- 	  .driver_info = RSVD(0) | RSVD(1) | RSVD(6) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0da, 0xff),                     /* Foxconn T99W265 MBIM variant */
-+	  .driver_info = RSVD(3) | RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0db, 0xff),			/* Foxconn T99W265 MBIM */
- 	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0ee, 0xff),			/* Foxconn T99W368 MBIM */
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index af08a1a411e3d..070566baa0ca4 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -644,8 +644,8 @@ static inline bool __rb_time_read(rb_time_t *t, u64 *ret, unsigned long *cnt)
+ 
+ 	*cnt = rb_time_cnt(top);
+ 
+-	/* If top and msb counts don't match, this interrupted a write */
+-	if (*cnt != rb_time_cnt(msb))
++	/* If top, msb or bottom counts don't match, this interrupted a write */
++	if (*cnt != rb_time_cnt(msb) || *cnt != rb_time_cnt(bottom))
+ 		return false;
+ 
+ 	/* The shift to msb will lose its cnt bits */
+-- 
+2.43.0
+
 
 
