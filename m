@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4ECE79CD;
-	Sat, 30 Dec 2023 12:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E11879CD;
+	Sat, 30 Dec 2023 12:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBU9GobL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032B5C433C7;
-	Sat, 30 Dec 2023 12:01:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRDO0vh1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C06EC433C7;
+	Sat, 30 Dec 2023 12:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937666;
-	bh=ZWiWoXvbn7RKuu4CXho8D3nF0doBng/PkZFpkJygAJI=;
+	s=korg; t=1703937668;
+	bh=J6xCbtYWimYGXNItPGhSUmZKXbcndMvcKXnKRtSBqss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBU9GobLD8zwotR+AmC/XAeTnPRzeE4K1f72/lsDUsZpxgOlGbpWnfatcESe55GCy
-	 v63BjG7ZQZAMuFHHWJVIfhHcDz/zqXLgsj72bEVKIk05yuLE5k6cZIIDBqU1mc7oqv
-	 VKM7TjS3sRJMiJ051m9e46ogmUNGxjw9+M5WfcBY=
+	b=qRDO0vh1G2wSn+96EvRga/UpfMcGDOt43ZcYi/8024YTQ3xHu6c1gtMwQafr2MHib
+	 qFXXSJg5OmL844DFqiMQspiE69U3AjMeRiP9Gymi1PNisIgGikONpZTp7cFQOFWtPO
+	 RRts3SGnkbkIzs3AIEBwygdSjriZX5XEjGmicJEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Tony Lindgren <tony@atomide.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 016/156] ARM: OMAP2+: Fix null pointer dereference and memory leak in omap_soc_device_init
-Date: Sat, 30 Dec 2023 11:57:50 +0000
-Message-ID: <20231230115812.912562997@linuxfoundation.org>
+Subject: [PATCH 6.6 017/156] reset: Fix crash when freeing non-existent optional resets
+Date: Sat, 30 Dec 2023 11:57:51 +0000
+Message-ID: <20231230115812.944831109@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -42,47 +42,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit c72b9c33ef9695ad7ce7a6eb39a9df8a01b70796 ]
+[ Upstream commit 4a6756f56bcf8e64c87144a626ce53aea4899c0e ]
 
-kasprintf() returns a pointer to dynamically allocated memory which can
-be NULL upon failure. When 'soc_dev_attr->family' is NULL,it'll trigger
-the null pointer dereference issue, such as in 'soc_info_show'.
+When obtaining one or more optional resets, non-existent resets are
+stored as NULL pointers, and all related error and cleanup paths need to
+take this into account.
 
-And when 'soc_device_register' fails, it's necessary to release
-'soc_dev_attr->family' to avoid memory leaks.
+Currently only reset_control_put() and reset_control_bulk_put()
+get this right.  All of __reset_control_bulk_get(),
+of_reset_control_array_get(), and reset_control_array_put() lack the
+proper checking, causing NULL pointer dereferences on failure or
+release.
 
-Fixes: 6770b2114325 ("ARM: OMAP2+: Export SoC information to userspace")
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Message-ID: <20231123145237.609442-1-chentao@kylinos.cn>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+Fix this by moving the existing check from reset_control_bulk_put() to
+__reset_control_put_internal(), so it applies to all callers.
+The double check in reset_control_put() doesn't hurt.
+
+Fixes: 17c82e206d2a3cd8 ("reset: Add APIs to manage array of resets")
+Fixes: 48d71395896d54ee ("reset: Add reset_control_bulk API")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/2440edae7ca8534628cdbaf559ded288f2998178.1701276806.git.geert+renesas@glider.be
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/id.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/reset/core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/mach-omap2/id.c b/arch/arm/mach-omap2/id.c
-index 98999aa8cc0c0..7f387706368a6 100644
---- a/arch/arm/mach-omap2/id.c
-+++ b/arch/arm/mach-omap2/id.c
-@@ -793,11 +793,16 @@ void __init omap_soc_device_init(void)
+diff --git a/drivers/reset/core.c b/drivers/reset/core.c
+index f0a076e94118f..92cc13ef3e566 100644
+--- a/drivers/reset/core.c
++++ b/drivers/reset/core.c
+@@ -807,6 +807,9 @@ static void __reset_control_put_internal(struct reset_control *rstc)
+ {
+ 	lockdep_assert_held(&reset_list_mutex);
  
- 	soc_dev_attr->machine  = soc_name;
- 	soc_dev_attr->family   = omap_get_family();
-+	if (!soc_dev_attr->family) {
-+		kfree(soc_dev_attr);
++	if (IS_ERR_OR_NULL(rstc))
 +		return;
-+	}
- 	soc_dev_attr->revision = soc_rev;
- 	soc_dev_attr->custom_attr_group = omap_soc_groups[0];
++
+ 	kref_put(&rstc->refcnt, __reset_control_release);
+ }
  
- 	soc_dev = soc_device_register(soc_dev_attr);
- 	if (IS_ERR(soc_dev)) {
-+		kfree(soc_dev_attr->family);
- 		kfree(soc_dev_attr);
- 		return;
- 	}
+@@ -1017,11 +1020,8 @@ EXPORT_SYMBOL_GPL(reset_control_put);
+ void reset_control_bulk_put(int num_rstcs, struct reset_control_bulk_data *rstcs)
+ {
+ 	mutex_lock(&reset_list_mutex);
+-	while (num_rstcs--) {
+-		if (IS_ERR_OR_NULL(rstcs[num_rstcs].rstc))
+-			continue;
++	while (num_rstcs--)
+ 		__reset_control_put_internal(rstcs[num_rstcs].rstc);
+-	}
+ 	mutex_unlock(&reset_list_mutex);
+ }
+ EXPORT_SYMBOL_GPL(reset_control_bulk_put);
 -- 
 2.43.0
 
