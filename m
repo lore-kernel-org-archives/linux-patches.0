@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B234D79CD;
-	Sat, 30 Dec 2023 12:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E33F79CD;
+	Sat, 30 Dec 2023 12:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kzWc/x9B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A263C433C7;
-	Sat, 30 Dec 2023 12:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtF+MMfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C978DC433C7;
+	Sat, 30 Dec 2023 12:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938149;
-	bh=duY6FceqGYBAWchTM+NAXjU0CmfBeq4mLVvm0uHmFV0=;
+	s=korg; t=1703938152;
+	bh=y2Dp7WYRanM6A00VqSYrolYHFdUCWWlWsw9PCi+1GTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kzWc/x9Bg1bAFIQZ5q/v7FaxWbQ4nvOPhiaD2HFHEn0MdnunBlNiexEB/vWemlIS8
-	 0GB1+Zk6o4DUMHU6p6Ng9iKzwJavGSr+MpK3BJYF4x9ctW8fWPErsWGf8LOdtCRZs0
-	 smjA6gOqUmorO+sSIVYh0hS4jalNcsi2JGJrkdKo=
+	b=MtF+MMfxjuaqkv7U2N4aBD7WlJi9M/fProx5DfIdLhCHYIv5IvuHBFtKITJnTH6ad
+	 aS+mlepaGF/XU0KqE5yIpvRjYL3za7d54c1qPQGE9aqdI+SVOJjcbYyEW/weLpvJSu
+	 1MUHyAJIQiBSYO4x8uC4SmMioudtuqjBkNm0dRY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/112] pinctrl: at91-pio4: use dedicated lock class for IRQ
-Date: Sat, 30 Dec 2023 11:59:18 +0000
-Message-ID: <20231230115808.168505698@linuxfoundation.org>
+Subject: [PATCH 6.1 046/112] gpiolib: cdev: add gpio_device locking wrapper around gpio_ioctl()
+Date: Sat, 30 Dec 2023 11:59:19 +0000
+Message-ID: <20231230115808.200978597@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -36,123 +36,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré <alexis.lothore@bootlin.com>
+From: Kent Gibson <warthog618@gmail.com>
 
-[ Upstream commit 14694179e561b5f2f7e56a0f590e2cb49a9cc7ab ]
+[ Upstream commit 1d656bd259edb89dc1d9938ec5c5389867088546 ]
 
-Trying to suspend to RAM on SAMA5D27 EVK leads to the following lockdep
-warning:
+While the GPIO cdev gpio_ioctl() call is in progress, the kernel can
+call gpiochip_remove() which will set gdev->chip to NULL, after which
+any subsequent access will cause a crash.
 
- ============================================
- WARNING: possible recursive locking detected
- 6.7.0-rc5-wt+ #532 Not tainted
- --------------------------------------------
- sh/92 is trying to acquire lock:
- c3cf306c (&irq_desc_lock_class){-.-.}-{2:2}, at: __irq_get_desc_lock+0xe8/0x100
+gpio_ioctl() was overlooked by the previous fix to protect syscalls
+(bdbbae241a04), so add protection for that.
 
- but task is already holding lock:
- c3d7c46c (&irq_desc_lock_class){-.-.}-{2:2}, at: __irq_get_desc_lock+0xe8/0x100
-
- other info that might help us debug this:
-  Possible unsafe locking scenario:
-
-        CPU0
-        ----
-   lock(&irq_desc_lock_class);
-   lock(&irq_desc_lock_class);
-
-  *** DEADLOCK ***
-
-  May be due to missing lock nesting notation
-
- 6 locks held by sh/92:
-  #0: c3aa0258 (sb_writers#6){.+.+}-{0:0}, at: ksys_write+0xd8/0x178
-  #1: c4c2df44 (&of->mutex){+.+.}-{3:3}, at: kernfs_fop_write_iter+0x138/0x284
-  #2: c32684a0 (kn->active){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x148/0x284
-  #3: c232b6d4 (system_transition_mutex){+.+.}-{3:3}, at: pm_suspend+0x13c/0x4e8
-  #4: c387b088 (&dev->mutex){....}-{3:3}, at: __device_suspend+0x1e8/0x91c
-  #5: c3d7c46c (&irq_desc_lock_class){-.-.}-{2:2}, at: __irq_get_desc_lock+0xe8/0x100
-
- stack backtrace:
- CPU: 0 PID: 92 Comm: sh Not tainted 6.7.0-rc5-wt+ #532
- Hardware name: Atmel SAMA5
-  unwind_backtrace from show_stack+0x18/0x1c
-  show_stack from dump_stack_lvl+0x34/0x48
-  dump_stack_lvl from __lock_acquire+0x19ec/0x3a0c
-  __lock_acquire from lock_acquire.part.0+0x124/0x2d0
-  lock_acquire.part.0 from _raw_spin_lock_irqsave+0x5c/0x78
-  _raw_spin_lock_irqsave from __irq_get_desc_lock+0xe8/0x100
-  __irq_get_desc_lock from irq_set_irq_wake+0xa8/0x204
-  irq_set_irq_wake from atmel_gpio_irq_set_wake+0x58/0xb4
-  atmel_gpio_irq_set_wake from irq_set_irq_wake+0x100/0x204
-  irq_set_irq_wake from gpio_keys_suspend+0xec/0x2b8
-  gpio_keys_suspend from dpm_run_callback+0xe4/0x248
-  dpm_run_callback from __device_suspend+0x234/0x91c
-  __device_suspend from dpm_suspend+0x224/0x43c
-  dpm_suspend from dpm_suspend_start+0x9c/0xa8
-  dpm_suspend_start from suspend_devices_and_enter+0x1e0/0xa84
-  suspend_devices_and_enter from pm_suspend+0x460/0x4e8
-  pm_suspend from state_store+0x78/0xe4
-  state_store from kernfs_fop_write_iter+0x1a0/0x284
-  kernfs_fop_write_iter from vfs_write+0x38c/0x6f4
-  vfs_write from ksys_write+0xd8/0x178
-  ksys_write from ret_fast_syscall+0x0/0x1c
- Exception stack(0xc52b3fa8 to 0xc52b3ff0)
- 3fa0:                   00000004 005a0ae8 00000001 005a0ae8 00000004 00000001
- 3fc0: 00000004 005a0ae8 00000001 00000004 00000004 b6c616c0 00000020 0059d190
- 3fe0: 00000004 b6c61678 aec5a041 aebf1a26
-
-This warning is raised because pinctrl-at91-pio4 uses chained IRQ. Whenever
-a wake up source configures an IRQ through irq_set_irq_wake, it will
-lock the corresponding IRQ desc, and then call irq_set_irq_wake on "parent"
-IRQ which will do the same on its own IRQ desc, but since those two locks
-share the same class, lockdep reports this as an issue.
-
-Fix lockdep false positive by setting a different class for parent and
-children IRQ
-
-Fixes: 776180848b57 ("pinctrl: introduce driver for Atmel PIO4 controller")
-Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Link: https://lore.kernel.org/r/20231215-lockdep_warning-v1-1-8137b2510ed5@bootlin.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: bdbbae241a04 ("gpiolib: protect the GPIO device against being dropped while in use by user-space")
+Fixes: d7c51b47ac11 ("gpio: userspace ABI for reading/writing GPIO lines")
+Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
+Fixes: aad955842d1c ("gpiolib: cdev: support GPIO_V2_GET_LINEINFO_IOCTL and GPIO_V2_GET_LINEINFO_WATCH_IOCTL")
+Signed-off-by: Kent Gibson <warthog618@gmail.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-at91-pio4.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpio/gpiolib-cdev.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-at91-pio4.c b/drivers/pinctrl/pinctrl-at91-pio4.c
-index f71c6457e3509..2425d4813c3c5 100644
---- a/drivers/pinctrl/pinctrl-at91-pio4.c
-+++ b/drivers/pinctrl/pinctrl-at91-pio4.c
-@@ -1033,6 +1033,13 @@ static const struct of_device_id atmel_pctrl_of_match[] = {
+diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
+index 6ab1cf489d035..e40c93f0960b4 100644
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -2444,10 +2444,7 @@ static int lineinfo_unwatch(struct gpio_chardev_data *cdev, void __user *ip)
+ 	return 0;
+ }
+ 
+-/*
+- * gpio_ioctl() - ioctl handler for the GPIO chardev
+- */
+-static long gpio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
++static long gpio_ioctl_unlocked(struct file *file, unsigned int cmd, unsigned long arg)
+ {
+ 	struct gpio_chardev_data *cdev = file->private_data;
+ 	struct gpio_device *gdev = cdev->gdev;
+@@ -2484,6 +2481,17 @@ static long gpio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
  	}
- };
+ }
  
 +/*
-+ * This lock class allows to tell lockdep that parent IRQ and children IRQ do
-+ * not share the same class so it does not raise false positive
++ * gpio_ioctl() - ioctl handler for the GPIO chardev
 + */
-+static struct lock_class_key atmel_lock_key;
-+static struct lock_class_key atmel_request_key;
++static long gpio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
++{
++	struct gpio_chardev_data *cdev = file->private_data;
 +
- static int atmel_pinctrl_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -1185,6 +1192,7 @@ static int atmel_pinctrl_probe(struct platform_device *pdev)
- 		irq_set_chip_and_handler(irq, &atmel_gpio_irq_chip,
- 					 handle_simple_irq);
- 		irq_set_chip_data(irq, atmel_pioctrl);
-+		irq_set_lockdep_class(irq, &atmel_lock_key, &atmel_request_key);
- 		dev_dbg(dev,
- 			"atmel gpio irq domain: hwirq: %d, linux irq: %d\n",
- 			i, irq);
++	return call_ioctl_locked(file, cmd, arg, cdev->gdev,
++				 gpio_ioctl_unlocked);
++}
++
+ #ifdef CONFIG_COMPAT
+ static long gpio_ioctl_compat(struct file *file, unsigned int cmd,
+ 			      unsigned long arg)
 -- 
 2.43.0
 
