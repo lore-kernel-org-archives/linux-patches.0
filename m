@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F224D8483;
-	Sat, 30 Dec 2023 12:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11A428FE;
+	Sat, 30 Dec 2023 12:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIMq6FWm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C15EC433C7;
-	Sat, 30 Dec 2023 12:03:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZpSxbhv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA16C433C8;
+	Sat, 30 Dec 2023 12:03:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937805;
-	bh=lVu/qOulUI2OkLOpg4XQGNRWnBj7Yuhp8Q98Glzv4gw=;
+	s=korg; t=1703937808;
+	bh=QUAOnfwpttj5jb3dHgyS56mmypLtmod2Yv1S1MlrFFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aIMq6FWmkmPuBQE7nDsBGWxVlC5lfix2aQkKMziykgcXkW4aZE2Ftlc5t8Hf3bkgR
-	 yZeXLwj5+wgSI0LeM93tqTT+zl6Xnr0uJ6rWk+MupqX9Np+s6OXp143qomqwo31ZoV
-	 wVqpurHmT3qf6uRbR2Q1mEZ/vknoQW0Vnf5FljPI=
+	b=HZpSxbhvfpY/zFNFjYd5/4AXR6/U6RV1kIug8vL9YdQYSz6Um2Wh3v0GYFg6QNRBw
+	 yc9SCwAe6wbPTLeUkjxZI9j27RHHqba9YdABS9Rgm2W4A4d9s97qVZhFUm9sM0pOmX
+	 UuPaYjOWKPt1f6AUAKrZ74DkTsbY7p+/O+5S+Vuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badal Nilawar <badal.nilawar@intel.com>,
-	Anshuman Gupta <anshuman.gupta@intel.com>,
-	Karthik Poosa <karthik.poosa@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 070/156] drm/i915/hwmon: Fix static analysis tool reported issues
-Date: Sat, 30 Dec 2023 11:58:44 +0000
-Message-ID: <20231230115814.647573906@linuxfoundation.org>
+Subject: [PATCH 6.6 053/156] Bluetooth: hci_event: shut up a false-positive warning
+Date: Sat, 30 Dec 2023 11:58:27 +0000
+Message-ID: <20231230115814.071253852@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -44,52 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthik Poosa <karthik.poosa@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 768f17fd25e4a98bf5166148629ecf6f647d5efc ]
+[ Upstream commit a5812c68d849505ea657f653446512b85887f813 ]
 
-Updated i915 hwmon with fixes for issues reported by static analysis tool.
-Fixed integer overflow with upcasting.
+Turning on -Wstringop-overflow globally exposed a misleading compiler
+warning in bluetooth:
 
-v2:
-- Added Fixes tag (Badal).
-- Updated commit message as per review comments (Anshuman).
+net/bluetooth/hci_event.c: In function 'hci_cc_read_class_of_dev':
+net/bluetooth/hci_event.c:524:9: error: 'memcpy' writing 3 bytes into a
+region of size 0 overflows the destination [-Werror=stringop-overflow=]
+  524 |         memcpy(hdev->dev_class, rp->dev_class, 3);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fixes: 4c2572fe0ae7 ("drm/i915/hwmon: Expose power1_max_interval")
-Reviewed-by: Badal Nilawar <badal.nilawar@intel.com>
-Reviewed-by: Anshuman Gupta <anshuman.gupta@intel.com>
-Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
-Signed-off-by: Anshuman Gupta <anshuman.gupta@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231204144809.1518704-1-karthik.poosa@intel.com
-(cherry picked from commit ac3420d3d428443a08b923f9118121c170192b62)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+The problem here is the check for hdev being NULL in bt_dev_dbg() that
+leads the compiler to conclude that hdev->dev_class might be an invalid
+pointer access.
+
+Add another explicit check for the same condition to make sure gcc sees
+this cannot happen.
+
+Fixes: a9de9248064b ("[Bluetooth] Switch from OGF+OCF to using only opcodes")
+Fixes: 1b56c90018f0 ("Makefile: Enable -Wstringop-overflow globally")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_hwmon.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_event.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/i915_hwmon.c b/drivers/gpu/drm/i915/i915_hwmon.c
-index 975da8e7f2a9f..8c3f443c8347e 100644
---- a/drivers/gpu/drm/i915/i915_hwmon.c
-+++ b/drivers/gpu/drm/i915/i915_hwmon.c
-@@ -175,7 +175,7 @@ hwm_power1_max_interval_show(struct device *dev, struct device_attribute *attr,
- 	 *     tau4 = (4 | x) << y
- 	 * but add 2 when doing the final right shift to account for units
- 	 */
--	tau4 = ((1 << x_w) | x) << y;
-+	tau4 = (u64)((1 << x_w) | x) << y;
- 	/* val in hwmon interface units (millisec) */
- 	out = mul_u64_u32_shr(tau4, SF_TIME, hwmon->scl_shift_time + x_w);
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index da756cbf62206..3661f8cdbab70 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -516,6 +516,9 @@ static u8 hci_cc_read_class_of_dev(struct hci_dev *hdev, void *data,
+ {
+ 	struct hci_rp_read_class_of_dev *rp = data;
  
-@@ -211,7 +211,7 @@ hwm_power1_max_interval_store(struct device *dev,
- 	r = FIELD_PREP(PKG_MAX_WIN, PKG_MAX_WIN_DEFAULT);
- 	x = REG_FIELD_GET(PKG_MAX_WIN_X, r);
- 	y = REG_FIELD_GET(PKG_MAX_WIN_Y, r);
--	tau4 = ((1 << x_w) | x) << y;
-+	tau4 = (u64)((1 << x_w) | x) << y;
- 	max_win = mul_u64_u32_shr(tau4, SF_TIME, hwmon->scl_shift_time + x_w);
++	if (WARN_ON(!hdev))
++		return HCI_ERROR_UNSPECIFIED;
++
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
  
- 	if (val > max_win)
+ 	if (rp->status)
 -- 
 2.43.0
 
