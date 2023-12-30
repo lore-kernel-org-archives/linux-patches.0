@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D76079CD;
-	Sat, 30 Dec 2023 12:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976BA8473;
+	Sat, 30 Dec 2023 12:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+DXqM6N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F5FC433C7;
-	Sat, 30 Dec 2023 12:09:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GoEqSet"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2126AC433C7;
+	Sat, 30 Dec 2023 12:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938172;
-	bh=s2YqA6FRyWIhU28irJMzaw3ZiSprjKconsd7aA+BPVU=;
+	s=korg; t=1703938175;
+	bh=P5/a+PD+LDG+xvRpIJrW/Ae9NsrN4ozD/sR8Mc7Hqtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C+DXqM6NKzY1CfZ4AGtqyXwK1a8R07MKYpYBtnbqr4jEiS0seX/9G7/hqIfhDw+dK
-	 aES7D/lUJDiV0FfojJO8ZqaoBPWTxkFiG2euosGDo8j+sqzBcbX8YCPdEbQDdHb2+x
-	 W5QB6/Rw6BEIM8AKFpLi2m3MwxScBUatfPR42Yb4=
+	b=1GoEqSeteHCku8BnS5wBpauIw9SJupVMP7GXo29wNqFPSZTBM3uGaB65QCU/6rs0g
+	 75uNKeTeoWxRsa586jdJUFNl8ymuVvUhcgZ5hi0dEAXl/ZDm+aitW4UqT6iTVAdM/9
+	 dxB0wY7YtmpknTewaNjuB1A5ZlnrfEQk+kPQWJ8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Luca Coelho <luciano.coelho@intel.com>,
+	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+	Radhakrishna Sripada <radhakrishna.sripada@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/112] net/mlx5e: fix a potential double-free in fs_udp_create_groups
-Date: Sat, 30 Dec 2023 11:58:54 +0000
-Message-ID: <20231230115807.430305569@linuxfoundation.org>
+Subject: [PATCH 6.1 048/112] drm/i915/mtl: limit second scaler vertical scaling in ver >= 14
+Date: Sat, 30 Dec 2023 11:59:21 +0000
+Message-ID: <20231230115808.261039792@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -44,38 +43,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Luca Coelho <luciano.coelho@intel.com>
 
-[ Upstream commit e75efc6466ae289e599fb12a5a86545dff245c65 ]
+[ Upstream commit 8d4312e2b228ba7a5ac79154458098274ec61e9b ]
 
-When kcalloc() for ft->g succeeds but kvzalloc() for in fails,
-fs_udp_create_groups() will free ft->g. However, its caller
-fs_udp_create_table() will free ft->g again through calling
-mlx5e_destroy_flow_table(), which will lead to a double-free.
-Fix this by setting ft->g to NULL in fs_udp_create_groups().
+In newer hardware versions (i.e. display version >= 14), the second
+scaler doesn't support vertical scaling.
 
-Fixes: 1c80bd684388 ("net/mlx5e: Introduce Flow Steering UDP API")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+The current implementation of the scaling limits is simplified and
+only occurs when the planes are created, so we don't know which scaler
+is being used.
+
+In order to handle separate scaling limits for horizontal and vertical
+scaling, and different limits per scaler, split the checks in two
+phases.  We first do a simple check during plane creation and use the
+best-case scenario (because we don't know the scaler that may be used
+at a later point) and then do a more specific check when the scalers
+are actually being set up.
+
+Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
+Reviewed-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+Signed-off-by: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221223130509.43245-2-luciano.coelho@intel.com
+Stable-dep-of: c3070f080f9b ("drm/i915: Fix intel_atomic_setup_scalers() plane_state handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/display/intel_atomic.c | 85 ++++++++++++++++++---
+ 1 file changed, 75 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c b/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
-index be83ad9db82a4..e1283531e0b81 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
-@@ -154,6 +154,7 @@ static int fs_udp_create_groups(struct mlx5e_flow_table *ft, enum fs_udp_type ty
- 	in = kvzalloc(inlen, GFP_KERNEL);
- 	if  (!in || !ft->g) {
- 		kfree(ft->g);
-+		ft->g = NULL;
- 		kvfree(in);
- 		return -ENOMEM;
+diff --git a/drivers/gpu/drm/i915/display/intel_atomic.c b/drivers/gpu/drm/i915/display/intel_atomic.c
+index 18f0a5ae3bacd..61dda54d68e0a 100644
+--- a/drivers/gpu/drm/i915/display/intel_atomic.c
++++ b/drivers/gpu/drm/i915/display/intel_atomic.c
+@@ -41,6 +41,7 @@
+ #include "intel_global_state.h"
+ #include "intel_hdcp.h"
+ #include "intel_psr.h"
++#include "intel_fb.h"
+ #include "skl_universal_plane.h"
+ 
+ /**
+@@ -302,11 +303,11 @@ intel_crtc_destroy_state(struct drm_crtc *crtc,
+ 	kfree(crtc_state);
+ }
+ 
+-static void intel_atomic_setup_scaler(struct intel_crtc_scaler_state *scaler_state,
+-				      int num_scalers_need, struct intel_crtc *intel_crtc,
+-				      const char *name, int idx,
+-				      struct intel_plane_state *plane_state,
+-				      int *scaler_id)
++static int intel_atomic_setup_scaler(struct intel_crtc_scaler_state *scaler_state,
++				     int num_scalers_need, struct intel_crtc *intel_crtc,
++				     const char *name, int idx,
++				     struct intel_plane_state *plane_state,
++				     int *scaler_id)
+ {
+ 	struct drm_i915_private *dev_priv = to_i915(intel_crtc->base.dev);
+ 	int j;
+@@ -326,7 +327,7 @@ static void intel_atomic_setup_scaler(struct intel_crtc_scaler_state *scaler_sta
+ 
+ 	if (drm_WARN(&dev_priv->drm, *scaler_id < 0,
+ 		     "Cannot find scaler for %s:%d\n", name, idx))
+-		return;
++		return -EINVAL;
+ 
+ 	/* set scaler mode */
+ 	if (plane_state && plane_state->hw.fb &&
+@@ -367,9 +368,71 @@ static void intel_atomic_setup_scaler(struct intel_crtc_scaler_state *scaler_sta
+ 		mode = SKL_PS_SCALER_MODE_DYN;
  	}
+ 
++	/*
++	 * FIXME: we should also check the scaler factors for pfit, so
++	 * this shouldn't be tied directly to planes.
++	 */
++	if (plane_state && plane_state->hw.fb) {
++		const struct drm_framebuffer *fb = plane_state->hw.fb;
++		const struct drm_rect *src = &plane_state->uapi.src;
++		const struct drm_rect *dst = &plane_state->uapi.dst;
++		int hscale, vscale, max_vscale, max_hscale;
++
++		/*
++		 * FIXME: When two scalers are needed, but only one of
++		 * them needs to downscale, we should make sure that
++		 * the one that needs downscaling support is assigned
++		 * as the first scaler, so we don't reject downscaling
++		 * unnecessarily.
++		 */
++
++		if (DISPLAY_VER(dev_priv) >= 14) {
++			/*
++			 * On versions 14 and up, only the first
++			 * scaler supports a vertical scaling factor
++			 * of more than 1.0, while a horizontal
++			 * scaling factor of 3.0 is supported.
++			 */
++			max_hscale = 0x30000 - 1;
++			if (*scaler_id == 0)
++				max_vscale = 0x30000 - 1;
++			else
++				max_vscale = 0x10000;
++
++		} else if (DISPLAY_VER(dev_priv) >= 10 ||
++			   !intel_format_info_is_yuv_semiplanar(fb->format, fb->modifier)) {
++			max_hscale = 0x30000 - 1;
++			max_vscale = 0x30000 - 1;
++		} else {
++			max_hscale = 0x20000 - 1;
++			max_vscale = 0x20000 - 1;
++		}
++
++		/*
++		 * FIXME: We should change the if-else block above to
++		 * support HQ vs dynamic scaler properly.
++		 */
++
++		/* Check if required scaling is within limits */
++		hscale = drm_rect_calc_hscale(src, dst, 1, max_hscale);
++		vscale = drm_rect_calc_vscale(src, dst, 1, max_vscale);
++
++		if (hscale < 0 || vscale < 0) {
++			drm_dbg_kms(&dev_priv->drm,
++				    "Scaler %d doesn't support required plane scaling\n",
++				    *scaler_id);
++			drm_rect_debug_print("src: ", src, true);
++			drm_rect_debug_print("dst: ", dst, false);
++
++			return -EINVAL;
++		}
++	}
++
+ 	drm_dbg_kms(&dev_priv->drm, "Attached scaler id %u.%u to %s:%d\n",
+ 		    intel_crtc->pipe, *scaler_id, name, idx);
+ 	scaler_state->scalers[*scaler_id].mode = mode;
++
++	return 0;
+ }
+ 
+ /**
+@@ -429,7 +492,7 @@ int intel_atomic_setup_scalers(struct drm_i915_private *dev_priv,
+ 	for (i = 0; i < sizeof(scaler_state->scaler_users) * 8; i++) {
+ 		int *scaler_id;
+ 		const char *name;
+-		int idx;
++		int idx, ret;
+ 
+ 		/* skip if scaler not required */
+ 		if (!(scaler_state->scaler_users & (1 << i)))
+@@ -486,9 +549,11 @@ int intel_atomic_setup_scalers(struct drm_i915_private *dev_priv,
+ 			scaler_id = &plane_state->scaler_id;
+ 		}
+ 
+-		intel_atomic_setup_scaler(scaler_state, num_scalers_need,
+-					  intel_crtc, name, idx,
+-					  plane_state, scaler_id);
++		ret = intel_atomic_setup_scaler(scaler_state, num_scalers_need,
++						intel_crtc, name, idx,
++						plane_state, scaler_id);
++		if (ret < 0)
++			return ret;
+ 	}
+ 
+ 	return 0;
 -- 
 2.43.0
 
