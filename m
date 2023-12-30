@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061BC8487;
-	Sat, 30 Dec 2023 12:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28E38813;
+	Sat, 30 Dec 2023 12:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhYKYh98"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86317C433C7;
-	Sat, 30 Dec 2023 12:04:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ow8iN6Hl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E015C433C7;
+	Sat, 30 Dec 2023 12:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937841;
-	bh=p19dlEJwoPXitJZDVs+6MTSce4kZCU+eI1i/NFB/Asw=;
+	s=korg; t=1703937844;
+	bh=ETx7pspkq4fXw/eBtLy4rqZIV4gioxDWvrX7AMOP0aM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WhYKYh981AiJIlvtEOXm1AfwN07LgiNsweMM2vf5zFg1qZqzgBc9mgovkvSpySDBq
-	 lajHEhpeBn2u6S2jCQX5LNF9+4vHNfnEZW3zes4oy9cNnCTset/QQdl2T6kr0lgrWy
-	 lD/p14yEsazm8U6NEhCFpZ3IONEzEkRipIUts7Gs=
+	b=ow8iN6Hlfpw5OYo45/ozTaVuaC0KW53JsCcO0J/CltdnbFlYceNryqiOY6wh4V6On
+	 L9GeqBfKn768dz9PrIL+lyAnV3DfLUgrBBvHuhZbf6Ex8CboIQoGfGBLxvapjwpNBo
+	 soSllqFiWwHfdAja1aNFb3/H6oW1OEJlhzf7YZYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Yury Norov <yury.norov@gmail.com>,
 	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>
-Subject: [PATCH 6.6 059/156] ice: Fix PF with enabled XDP going no-carrier after reset
-Date: Sat, 30 Dec 2023 11:58:33 +0000
-Message-ID: <20231230115814.267309866@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 060/156] net: mana: select PAGE_POOL
+Date: Sat, 30 Dec 2023 11:58:34 +0000
+Message-ID: <20231230115814.307199532@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -45,48 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larysa Zaremba <larysa.zaremba@intel.com>
+From: Yury Norov <yury.norov@gmail.com>
 
-[ Upstream commit f5728a418945ba53e2fdf38a6e5c5a2670965e85 ]
+[ Upstream commit 340943fbff3d8faa44d2223ca04917df28786a07 ]
 
-Commit 6624e780a577fc596788 ("ice: split ice_vsi_setup into smaller
-functions") has refactored a bunch of code involved in PFR. In this
-process, TC queue number adjustment for XDP was lost. Bring it back.
+Mana uses PAGE_POOL API. x86_64 defconfig doesn't select it:
 
-Lack of such adjustment causes interface to go into no-carrier after a
-reset, if XDP program is attached, with the following message:
+ld: vmlinux.o: in function `mana_create_page_pool.isra.0':
+mana_en.c:(.text+0x9ae36f): undefined reference to `page_pool_create'
+ld: vmlinux.o: in function `mana_get_rxfrag':
+mana_en.c:(.text+0x9afed1): undefined reference to `page_pool_alloc_pages'
+make[3]: *** [/home/yury/work/linux/scripts/Makefile.vmlinux:37: vmlinux] Error 1
+make[2]: *** [/home/yury/work/linux/Makefile:1154: vmlinux] Error 2
+make[1]: *** [/home/yury/work/linux/Makefile:234: __sub-make] Error 2
+make[1]: Leaving directory '/home/yury/work/build-linux-x86_64'
+make: *** [Makefile:234: __sub-make] Error 2
 
-ice 0000:b1:00.0: Failed to set LAN Tx queue context, error: -22
-ice 0000:b1:00.0 ens801f0np0: Failed to open VSI 0x0006 on switch 0x0001
-ice 0000:b1:00.0: enable VSI failed, err -22, VSI index 0, type ICE_VSI_PF
-ice 0000:b1:00.0: PF VSI rebuild failed: -22
-ice 0000:b1:00.0: Rebuild failed, unload and reload driver
+So we need to select it explicitly.
 
-Fixes: 6624e780a577 ("ice: split ice_vsi_setup into smaller functions")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Signed-off-by: Yury Norov <yury.norov@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Tested-by: Simon Horman <horms@kernel.org> # build-tested
+Fixes: ca9c54d2 ("net: mana: Add a driver for Microsoft Azure Network Adapter")
+Link: https://lore.kernel.org/r/20231215203353.635379-1-yury.norov@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_lib.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/microsoft/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index 8dbf7a381e49b..a66c3b6ccec1e 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -2384,6 +2384,9 @@ static int ice_vsi_cfg_tc_lan(struct ice_pf *pf, struct ice_vsi *vsi)
- 		} else {
- 			max_txqs[i] = vsi->alloc_txq;
- 		}
-+
-+		if (vsi->type == ICE_VSI_PF)
-+			max_txqs[i] += vsi->num_xdp_txq;
- 	}
- 
- 	dev_dbg(dev, "vsi->tc_cfg.ena_tc = %d\n", vsi->tc_cfg.ena_tc);
+diff --git a/drivers/net/ethernet/microsoft/Kconfig b/drivers/net/ethernet/microsoft/Kconfig
+index 090e6b9832431..01eb7445ead95 100644
+--- a/drivers/net/ethernet/microsoft/Kconfig
++++ b/drivers/net/ethernet/microsoft/Kconfig
+@@ -20,6 +20,7 @@ config MICROSOFT_MANA
+ 	depends on PCI_MSI && X86_64
+ 	depends on PCI_HYPERV
+ 	select AUXILIARY_BUS
++	select PAGE_POOL
+ 	help
+ 	  This driver supports Microsoft Azure Network Adapter (MANA).
+ 	  So far, the driver is only supported on X86_64.
 -- 
 2.43.0
 
