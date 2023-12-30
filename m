@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE8479DD;
-	Sat, 30 Dec 2023 12:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1E879DE;
+	Sat, 30 Dec 2023 12:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0vjERft"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37364C433C8;
-	Sat, 30 Dec 2023 12:03:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8+Rc+yu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88F8C433C7;
+	Sat, 30 Dec 2023 12:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937826;
-	bh=FcYscr2RqEUmLzqVPLmuz2MjfTKsfkiJY47cucKfTJI=;
+	s=korg; t=1703937829;
+	bh=vVZM2edzuQ0AIa3t47Ggx3IWGEOrLvjo/f6K8C0gx0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0vjERftxWwBoMNmI3ya61KMbD8HYgC1mkcUqJvYb0SkvPTfFbRqkN2wBGw/cBbMJ
-	 Ne8xtKRTmLD5w0wgiS4UsgQ/UviPpoSQMAIiDDUAprfKFHtqbYwh5SKcV4ve4MngRS
-	 XHbtlksUdthDMPdco8GjjSvfudaxmKwYksWw0lBc=
+	b=d8+Rc+yuyGsKdafzuXnN/pO6fmfFB04z3ZtUGtbr1FjXk8j9iPQcUBqUnpIJ4fk7I
+	 Ul2KYcCkfWV9FDIK7sg0u7S7IZqBEjZ4reYoysZPGF8DBB6/UusHco35ydSUclaJW9
+	 d8B3ZZUs4DrQYAA8Rahn2JSrVS+yl6jOEUFkKHrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Juergen Gross <jgross@suse.com>,
-	Alyssa Ross <hi@alyssa.is>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/156] x86/xen: add CPU dependencies for 32-bit build
-Date: Sat, 30 Dec 2023 11:58:51 +0000
-Message-ID: <20231230115814.880668960@linuxfoundation.org>
+Subject: [PATCH 6.6 054/156] Bluetooth: hci_core: Fix hci_conn_hash_lookup_cis
+Date: Sat, 30 Dec 2023 11:58:28 +0000
+Message-ID: <20231230115814.104340312@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -43,50 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 93cd0597649844a0fe7989839a3202735fb3ae67 ]
+[ Upstream commit 50efc63d1a7a7b9a6ed21adae1b9a7123ec8abc0 ]
 
-Xen only supports modern CPUs even when running a 32-bit kernel, and it now
-requires a kernel built for a 64 byte (or larger) cache line:
+hci_conn_hash_lookup_cis shall always match the requested CIG and CIS
+ids even when they are unset as otherwise it result in not being able
+to bind/connect different sockets to the same address as that would
+result in having multiple sockets mapping to the same hci_conn which
+doesn't really work and prevents BAP audio configuration such as
+AC 6(i) when CIG and CIS are left unset.
 
-In file included from <command-line>:
-In function 'xen_vcpu_setup',
-    inlined from 'xen_vcpu_setup_restore' at arch/x86/xen/enlighten.c:111:3,
-    inlined from 'xen_vcpu_restore' at arch/x86/xen/enlighten.c:141:3:
-include/linux/compiler_types.h:435:45: error: call to '__compiletime_assert_287' declared with attribute error: BUILD_BUG_ON failed: sizeof(*vcpup) > SMP_CACHE_BYTES
-arch/x86/xen/enlighten.c:166:9: note: in expansion of macro 'BUILD_BUG_ON'
-  166 |         BUILD_BUG_ON(sizeof(*vcpup) > SMP_CACHE_BYTES);
-      |         ^~~~~~~~~~~~
-
-Enforce the dependency with a whitelist of CPU configurations. In normal
-distro kernels, CONFIG_X86_GENERIC is enabled, and this works fine. When this
-is not set, still allow Xen to be built on kernels that target a 64-bit
-capable CPU.
-
-Fixes: db2832309a82 ("x86/xen: fix percpu vcpu_info allocation")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Tested-by: Alyssa Ross <hi@alyssa.is>
-Link: https://lore.kernel.org/r/20231204084722.3789473-1-arnd@kernel.org
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: c14516faede3 ("Bluetooth: hci_conn: Fix not matching by CIS ID")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/bluetooth/hci_core.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/xen/Kconfig b/arch/x86/xen/Kconfig
-index 9b1ec5d8c99c8..a65fc2ae15b49 100644
---- a/arch/x86/xen/Kconfig
-+++ b/arch/x86/xen/Kconfig
-@@ -9,6 +9,7 @@ config XEN
- 	select PARAVIRT_CLOCK
- 	select X86_HV_CALLBACK_VECTOR
- 	depends on X86_64 || (X86_32 && X86_PAE)
-+	depends on X86_64 || (X86_GENERIC || MPENTIUM4 || MCORE2 || MATOM || MK8)
- 	depends on X86_LOCAL_APIC && X86_TSC
- 	help
- 	  This is the Linux Xen port.  Enabling this will allow the
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 7fa95b72e5c85..22ce39a2aa7bc 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1227,11 +1227,11 @@ static inline struct hci_conn *hci_conn_hash_lookup_cis(struct hci_dev *hdev,
+ 			continue;
+ 
+ 		/* Match CIG ID if set */
+-		if (cig != BT_ISO_QOS_CIG_UNSET && cig != c->iso_qos.ucast.cig)
++		if (cig != c->iso_qos.ucast.cig)
+ 			continue;
+ 
+ 		/* Match CIS ID if set */
+-		if (id != BT_ISO_QOS_CIS_UNSET && id != c->iso_qos.ucast.cis)
++		if (id != c->iso_qos.ucast.cis)
+ 			continue;
+ 
+ 		/* Match destination address if set */
 -- 
 2.43.0
 
