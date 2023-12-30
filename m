@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9188821;
-	Sat, 30 Dec 2023 12:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFC08821;
+	Sat, 30 Dec 2023 12:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzC1KXiN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB695C433C7;
-	Sat, 30 Dec 2023 12:03:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBZa/AC3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C95C433C7;
+	Sat, 30 Dec 2023 12:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937811;
-	bh=e61Oqmwic90DzW+97ScCaOLBgOduYy1ZJkPoFwU2Pes=;
+	s=korg; t=1703937813;
+	bh=oh2cxhuuH7wKaC9WFjIzgY4/LtBY4Rv5q0k5Cnr5am8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WzC1KXiNgpB3RFzw1qpZ7zy1WHoCf6SIjIoHMDuIDpZ+63HHEsYyJbyKlbWIM0mzz
-	 wq2VQ30aClARFzLvCxMEhbDfUasHG0ixnq7VGwKiazVEfC5deIgCGnWLUY8debZ+To
-	 TtWaSDDTCujvpSG8Hh1TIr6DTvOO4C6DXHQ1Akq8=
+	b=SBZa/AC3WzF1G81fsGYMsZkpGhWumyc6sR472hG+MJcrZ99Nr1JPhrB/9K0OvvTKt
+	 1dnGPrrpjT5lg3nppuxIXpaTwxT8HSm2vPH8yl1RqtUvgnGVwEOzOpc32oxJka5Qnj
+	 GFi8WPWyNnuPeuggpspfHguWz9TxgNZWIl01TT6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Kahola <mika.kahola@intel.com>,
-	Radhakrishna Sripada <radhakrishna.sripada@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Zhengqiao Xia <xiazhengqiao@huaqin.corp-partner.google.com>,
+	Hsin-Yi Wang <hsinyi@google.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/156] drm/i915/mtl: Fix HDMI/DP PLL clock selection
-Date: Sat, 30 Dec 2023 11:58:45 +0000
-Message-ID: <20231230115814.676026540@linuxfoundation.org>
+Subject: [PATCH 6.6 072/156] ASoC: hdmi-codec: fix missing report for jack initial status
+Date: Sat, 30 Dec 2023 11:58:46 +0000
+Message-ID: <20231230115814.710168292@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -44,39 +44,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit dbcab554f777390d9bb6a808ed0cd90ee59bb44e ]
+[ Upstream commit 025222a9d6d25eee2ad9a1bb5a8b29b34b5ba576 ]
 
-Select the HDMI specific PLL clock only for HDMI outputs.
+This fixes a problem introduced while fixing ELD reporting with no jack
+set.
 
-Fixes: 62618c7f117e ("drm/i915/mtl: C20 PLL programming")
-Cc: Mika Kahola <mika.kahola@intel.com>
-Cc: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
-Reviewed-by: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231213220526.1828827-1-imre.deak@intel.com
-(cherry picked from commit 937d02cc79c6828fef28a4d80d8d0ad2f7bf2b62)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Most driver using the hdmi-codec will call the 'plugged_cb' callback
+directly when registered to report the initial state of the HDMI connector.
+
+With the commit mentionned, this occurs before jack is ready and the
+initial report is lost for platforms actually providing a jack for HDMI.
+
+Fix this by storing the hdmi connector status regardless of jack being set
+or not and report the last status when jack gets set.
+
+With this, the initial state is reported correctly even if it is
+disconnected. This was not done initially and is also a fix.
+
+Fixes: 15be353d55f9 ("ASoC: hdmi-codec: register hpd callback on component probe")
+Reported-by: Zhengqiao Xia <xiazhengqiao@huaqin.corp-partner.google.com>
+Closes: https://lore.kernel.org/alsa-devel/CADYyEwTNyY+fR9SgfDa-g6iiDwkU3MUdPVCYexs2_3wbcM8_vg@mail.gmail.com/
+Cc: Hsin-Yi Wang <hsinyi@google.com>
+Tested-by: Zhengqiao Xia <xiazhengqiao@huaqin.corp-partner.google.com>
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://msgid.link/r/20231218145655.134929-1-jbrunet@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_cx0_phy.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/hdmi-codec.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_cx0_phy.c b/drivers/gpu/drm/i915/display/intel_cx0_phy.c
-index 80e4ec6ee4031..048e581fda16c 100644
---- a/drivers/gpu/drm/i915/display/intel_cx0_phy.c
-+++ b/drivers/gpu/drm/i915/display/intel_cx0_phy.c
-@@ -2420,7 +2420,8 @@ static void intel_program_port_clock_ctl(struct intel_encoder *encoder,
+diff --git a/sound/soc/codecs/hdmi-codec.c b/sound/soc/codecs/hdmi-codec.c
+index 20da1eaa4f1c7..0938671700c62 100644
+--- a/sound/soc/codecs/hdmi-codec.c
++++ b/sound/soc/codecs/hdmi-codec.c
+@@ -850,8 +850,9 @@ static int hdmi_dai_probe(struct snd_soc_dai *dai)
+ static void hdmi_codec_jack_report(struct hdmi_codec_priv *hcp,
+ 				   unsigned int jack_status)
+ {
+-	if (hcp->jack && jack_status != hcp->jack_status) {
+-		snd_soc_jack_report(hcp->jack, jack_status, SND_JACK_LINEOUT);
++	if (jack_status != hcp->jack_status) {
++		if (hcp->jack)
++			snd_soc_jack_report(hcp->jack, jack_status, SND_JACK_LINEOUT);
+ 		hcp->jack_status = jack_status;
+ 	}
+ }
+@@ -880,6 +881,13 @@ static int hdmi_codec_set_jack(struct snd_soc_component *component,
  
- 	val |= XELPDP_FORWARD_CLOCK_UNGATE;
+ 	if (hcp->hcd.ops->hook_plugged_cb) {
+ 		hcp->jack = jack;
++
++		/*
++		 * Report the initial jack status which may have been provided
++		 * by the parent hdmi driver while the hpd hook was registered.
++		 */
++		snd_soc_jack_report(jack, hcp->jack_status, SND_JACK_LINEOUT);
++
+ 		return 0;
+ 	}
  
--	if (is_hdmi_frl(crtc_state->port_clock))
-+	if (intel_crtc_has_type(crtc_state, INTEL_OUTPUT_HDMI) &&
-+	    is_hdmi_frl(crtc_state->port_clock))
- 		val |= XELPDP_DDI_CLOCK_SELECT(XELPDP_DDI_CLOCK_SELECT_DIV18CLK);
- 	else
- 		val |= XELPDP_DDI_CLOCK_SELECT(XELPDP_DDI_CLOCK_SELECT_MAXPCLK);
 -- 
 2.43.0
 
