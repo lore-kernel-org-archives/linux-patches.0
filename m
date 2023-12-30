@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC0E6AD6;
-	Sat, 30 Dec 2023 12:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376E58483;
+	Sat, 30 Dec 2023 12:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szP0bysJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15327C433C7;
-	Sat, 30 Dec 2023 12:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h08RI9Hw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E58C433C7;
+	Sat, 30 Dec 2023 12:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937875;
-	bh=6kodKMV1phsSBbSQO6jbUUzA0i6Pa/wWlfGmvaLmwPA=;
+	s=korg; t=1703937878;
+	bh=oSCYPi7qnYBPEAjb7bdyBLbk1oBiECAMCmy6ARNvQ3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=szP0bysJ27Snzse9sGDMh2jEKJ17hQzZ0nEBVesmguaZf7Zprfyg39AOZ1o+SCTWN
-	 IYdHHo4zoHCQx8kVpV/+f0C/YsJG1TOmIprCvJjnOFk6UFUYVI1oO8hb9REhsfNP1Q
-	 XzhdU4fFcpSVoe833OXs2D55+A2FetUoqIiwP09w=
+	b=h08RI9Hwn16hoNSbGc83yXopvz8qjPzvYlU8F/bkvSIkrrSKAKcKCsvp+/Ew/d/Pb
+	 DC2YfQN8/OJRMTkA2+U9KdPHaf2YbjogxfU+Ag5891SUwOimLHw5q7qFBDq4X/Rj9F
+	 gnj0rbaZONCHmnygwZ5ZH/70S/twu4rInooYgVis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Lindgren <tony@atomide.com>
-Subject: [PATCH 6.6 097/156] ARM: dts: Fix occasional boot hang for am3 usb
-Date: Sat, 30 Dec 2023 11:59:11 +0000
-Message-ID: <20231230115815.529217389@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 080/156] nvme-pci: fix sleeping function called from interrupt context
+Date: Sat, 30 Dec 2023 11:58:54 +0000
+Message-ID: <20231230115814.973153574@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -40,35 +44,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-commit 9b6a51aab5f5f9f71d2fa16e8b4d530e1643dfcb upstream.
+[ Upstream commit f6fe0b2d35457c10ec37acc209d19726bdc16dbd ]
 
-With subtle timings changes, we can now sometimes get an external abort on
-non-linefetch error booting am3 devices at sysc_reset(). This is because
-of a missing reset delay needed for the usb target module.
+the nvme_handle_cqe() interrupt handler calls nvme_complete_async_event()
+but the latter may call nvme_auth_stop() which is a blocking function.
+Sleeping functions can't be called in interrupt context
 
-Looks like we never enabled the delay earlier for am3, although a similar
-issue was seen earlier with a similar usb setup for dm814x as described in
-commit ebf244148092 ("ARM: OMAP2+: Use srst_udelay for USB on dm814x").
+ BUG: sleeping function called from invalid context
+ in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/15
+  Call Trace:
+     <IRQ>
+      __cancel_work_timer+0x31e/0x460
+      ? nvme_change_ctrl_state+0xcf/0x3c0 [nvme_core]
+      ? nvme_change_ctrl_state+0xcf/0x3c0 [nvme_core]
+      nvme_complete_async_event+0x365/0x480 [nvme_core]
+      nvme_poll_cq+0x262/0xe50 [nvme]
 
-Cc: stable@vger.kernel.org
-Fixes: 0782e8572ce4 ("ARM: dts: Probe am335x musb with ti-sysc")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix the bug by moving nvme_auth_stop() to fw_act_work
+(executed by the nvme_wq workqueue)
+
+Fixes: f50fff73d620 ("nvme: implement In-Band authentication")
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/ti/omap/am33xx.dtsi |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/host/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm/boot/dts/ti/omap/am33xx.dtsi
-+++ b/arch/arm/boot/dts/ti/omap/am33xx.dtsi
-@@ -359,6 +359,7 @@
- 					<SYSC_IDLE_NO>,
- 					<SYSC_IDLE_SMART>,
- 					<SYSC_IDLE_SMART_WKUP>;
-+			ti,sysc-delay-us = <2>;
- 			clocks = <&l3s_clkctrl AM3_L3S_USB_OTG_HS_CLKCTRL 0>;
- 			clock-names = "fck";
- 			#address-cells = <1>;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index d5c8b0a08d494..b32e3cff37b14 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4100,6 +4100,8 @@ static void nvme_fw_act_work(struct work_struct *work)
+ 				struct nvme_ctrl, fw_act_work);
+ 	unsigned long fw_act_timeout;
+ 
++	nvme_auth_stop(ctrl);
++
+ 	if (ctrl->mtfa)
+ 		fw_act_timeout = jiffies +
+ 				msecs_to_jiffies(ctrl->mtfa * 100);
+@@ -4155,7 +4157,6 @@ static bool nvme_handle_aen_notice(struct nvme_ctrl *ctrl, u32 result)
+ 		 * firmware activation.
+ 		 */
+ 		if (nvme_change_ctrl_state(ctrl, NVME_CTRL_RESETTING)) {
+-			nvme_auth_stop(ctrl);
+ 			requeue = false;
+ 			queue_work(nvme_wq, &ctrl->fw_act_work);
+ 		}
+-- 
+2.43.0
+
 
 
