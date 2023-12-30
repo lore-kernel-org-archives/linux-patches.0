@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9E879DD;
-	Sat, 30 Dec 2023 12:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E8279DD;
+	Sat, 30 Dec 2023 12:10:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InAnZvZH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9BCAC433C8;
-	Sat, 30 Dec 2023 12:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRImA464"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868DCC433C7;
+	Sat, 30 Dec 2023 12:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938233;
-	bh=uvHZUWuXCE1ibtpvuOLlN+a3oFsmfL3JmkWwgfwxnGc=;
+	s=korg; t=1703938235;
+	bh=WMejTZSMwuRmP25mdJJ9pfHSDsmzbngSaEqTlzrpj5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=InAnZvZH8Wr56H9+X2ZSjeNHEdDa49tBfqLMXbEpYQ47LDjzwiuMo+sD9yNIqHjXe
-	 jmaT/0gEZarlwbf+Jc3H33aYid2ONBCotZ6vcKhdetSIri/h5XFdfn0JPJ794UMwnj
-	 2rwaBunglcC+Gs4OTHNdgnlUg2P2Fo8Kljxdk0E0=
+	b=hRImA464pQvO+gEgxUc21jXefLwIdEpsBKTfZQdq48KZFGdygVOyD2HWB6nesmQBn
+	 XPjwJUGF7FhynOkwlH1k2rnHDPr+DWy9U0GmIAbsrYLky3PwfWxelrSldEzs6Ua3vs
+	 GkzxlfE3iTtb5GEK5aEYsF7XZ+DVYXbmUwcoM6T4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Tipton <quic_mdtipton@quicinc.com>,
-	Georgi Djakov <djakov@kernel.org>,
+	Su Hui <suhui@nfschina.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/112] interconnect: Treat xlate() returning NULL node as an error
-Date: Sat, 30 Dec 2023 11:59:27 +0000
-Message-ID: <20231230115808.438480211@linuxfoundation.org>
+Subject: [PATCH 6.1 055/112] iio: imu: inv_mpu6050: fix an error code problem in inv_mpu6050_read_raw
+Date: Sat, 30 Dec 2023 11:59:28 +0000
+Message-ID: <20231230115808.472253031@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -42,43 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Tipton <quic_mdtipton@quicinc.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit ad2ab1297d0c80899125a842bb7a078abfe1e6ce ]
+[ Upstream commit c3df0e29fb7788c4b3ddf37d5ed87dda2b822943 ]
 
-Currently, if provider->xlate() or provider->xlate_extended()
-"successfully" return a NULL node, then of_icc_get_from_provider() won't
-consider that an error and will successfully return the NULL node. This
-bypasses error handling in of_icc_get_by_index() and leads to NULL
-dereferences in path_find().
+inv_mpu6050_sensor_show() can return -EINVAL or IIO_VAL_INT. Return the
+true value rather than only return IIO_VAL_INT.
 
-This could be avoided by ensuring provider callbacks always return an
-error for NULL nodes, but it's better to explicitly protect against this
-in the common framework.
-
-Fixes: 87e3031b6fbd ("interconnect: Allow endpoints translation via DT")
-Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
-Link: https://lore.kernel.org/r/20231025145829.11603-1-quic_mdtipton@quicinc.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: d5098447147c ("iio: imu: mpu6050: add calibration offset support")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20231030020218.65728-1-suhui@nfschina.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/imu/inv_mpu6050/inv_mpu_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index 0c6fc954e7296..1d9494f64a215 100644
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -381,6 +381,9 @@ struct icc_node_data *of_icc_get_from_provider(struct of_phandle_args *spec)
- 	}
- 	mutex_unlock(&icc_lock);
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+index 86fbbe9040503..19a1ef5351d24 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+@@ -736,13 +736,13 @@ inv_mpu6050_read_raw(struct iio_dev *indio_dev,
+ 			ret = inv_mpu6050_sensor_show(st, st->reg->gyro_offset,
+ 						chan->channel2, val);
+ 			mutex_unlock(&st->lock);
+-			return IIO_VAL_INT;
++			return ret;
+ 		case IIO_ACCEL:
+ 			mutex_lock(&st->lock);
+ 			ret = inv_mpu6050_sensor_show(st, st->reg->accl_offset,
+ 						chan->channel2, val);
+ 			mutex_unlock(&st->lock);
+-			return IIO_VAL_INT;
++			return ret;
  
-+	if (!node)
-+		return ERR_PTR(-EINVAL);
-+
- 	if (IS_ERR(node))
- 		return ERR_CAST(node);
- 
+ 		default:
+ 			return -EINVAL;
 -- 
 2.43.0
 
