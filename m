@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD08779CD;
-	Sat, 30 Dec 2023 12:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A0979DF;
+	Sat, 30 Dec 2023 12:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdgMoshJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D67C433C8;
-	Sat, 30 Dec 2023 12:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q33JMx3u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB78C433C7;
+	Sat, 30 Dec 2023 12:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937761;
-	bh=LSVRey+NE+3PAn/DWw7/sr/ZJATj1Swe83GLIOteojI=;
+	s=korg; t=1703937764;
+	bh=EbSFyYZvtUrAXgupq9AYtgB4CMa5OBrCrAT9fPULWmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xdgMoshJmDYyyadRIvu9pR+Cv8te7OJyVytKjQjhKoq0GKK8VAuzurQFXIE5jxQoJ
-	 w8qDg0DlsuI45pofmuIykw9P2D3iaVim8C0feoMi62+WY7633dLa4pr1pirvAOIN4Z
-	 GZ1xXRGWYL8mBHn4AI922jwTLSxOnQHyLWxk6n+M=
+	b=Q33JMx3u1iY4a0YIrVJkUAsKkboLz7RGxksf4rABcAGBqkxVpquRulOM3JLkBfGBE
+	 fHKiJQAzsUtGzCGjzMtrr8MgzIkufUsIw61AADQyPFu6AZSTLVR7iMhm2WTdb9axJy
+	 VBVq3zfZdhHdj87+x0YzB5/tZWA/2qPl170tjcQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot+e8030702aefd3444fb9e@syzkaller.appspotmail.com,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/156] bpf: syzkaller found null ptr deref in unix_bpf proto add
-Date: Sat, 30 Dec 2023 11:58:03 +0000
-Message-ID: <20231230115813.324157087@linuxfoundation.org>
+Subject: [PATCH 6.6 030/156] Revert "net/mlx5e: fix double free of encap_header in update funcs"
+Date: Sat, 30 Dec 2023 11:58:04 +0000
+Message-ID: <20231230115813.353899485@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -45,80 +42,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Fastabend <john.fastabend@gmail.com>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit 8d6650646ce49e9a5b8c5c23eb94f74b1749f70f ]
+[ Upstream commit 66ca8d4deca09bce3fc7bcf8ea7997fa1a51c33c ]
 
-I added logic to track the sock pair for stream_unix sockets so that we
-ensure lifetime of the sock matches the time a sockmap could reference
-the sock (see fixes tag). I forgot though that we allow af_unix unconnected
-sockets into a sock{map|hash} map.
+This reverts commit 3a4aa3cb83563df942be49d145ee3b7ddf17d6bb.
 
-This is problematic because previous fixed expected sk_pair() to exist
-and did not NULL check it. Because unconnected sockets have a NULL
-sk_pair this resulted in the NULL ptr dereference found by syzkaller.
+This patch is causing a null ptr issue, the proper fix is in the next
+patch.
 
-BUG: KASAN: null-ptr-deref in unix_stream_bpf_update_proto+0x72/0x430 net/unix/unix_bpf.c:171
-Write of size 4 at addr 0000000000000080 by task syz-executor360/5073
-Call Trace:
- <TASK>
- ...
- sock_hold include/net/sock.h:777 [inline]
- unix_stream_bpf_update_proto+0x72/0x430 net/unix/unix_bpf.c:171
- sock_map_init_proto net/core/sock_map.c:190 [inline]
- sock_map_link+0xb87/0x1100 net/core/sock_map.c:294
- sock_map_update_common+0xf6/0x870 net/core/sock_map.c:483
- sock_map_update_elem_sys+0x5b6/0x640 net/core/sock_map.c:577
- bpf_map_update_value+0x3af/0x820 kernel/bpf/syscall.c:167
-
-We considered just checking for the null ptr and skipping taking a ref
-on the NULL peer sock. But, if the socket is then connected() after
-being added to the sockmap we can cause the original issue again. So
-instead this patch blocks adding af_unix sockets that are not in the
-ESTABLISHED state.
-
-Reported-by: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot+e8030702aefd3444fb9e@syzkaller.appspotmail.com
-Fixes: 8866730aed51 ("bpf, sockmap: af_unix stream sockets need to hold ref for pair sock")
-Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
-Signed-off-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20231201180139.328529-2-john.fastabend@gmail.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 3a4aa3cb8356 ("net/mlx5e: fix double free of encap_header in update funcs")
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h  | 5 +++++
- net/core/sock_map.c | 2 ++
- 2 files changed, 7 insertions(+)
+ .../ethernet/mellanox/mlx5/core/en/tc_tun.c   | 20 +++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 7753354d59c0b..1b7ca8f35dd60 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2798,6 +2798,11 @@ static inline bool sk_is_tcp(const struct sock *sk)
- 	return sk->sk_type == SOCK_STREAM && sk->sk_protocol == IPPROTO_TCP;
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
+index 668da5c70e63d..8bca696b6658c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
+@@ -403,12 +403,16 @@ int mlx5e_tc_tun_update_header_ipv4(struct mlx5e_priv *priv,
+ 	if (err)
+ 		goto free_encap;
  
-+static inline bool sk_is_stream_unix(const struct sock *sk)
-+{
-+	return sk->sk_family == AF_UNIX && sk->sk_type == SOCK_STREAM;
-+}
++	e->encap_size = ipv4_encap_size;
++	kfree(e->encap_header);
++	e->encap_header = encap_header;
 +
- /**
-  * sk_eat_skb - Release a skb if it is no longer needed
-  * @sk: socket to eat this skb from
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 4292c2ed18286..27d733c0f65e1 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -536,6 +536,8 @@ static bool sock_map_sk_state_allowed(const struct sock *sk)
- {
- 	if (sk_is_tcp(sk))
- 		return (1 << sk->sk_state) & (TCPF_ESTABLISHED | TCPF_LISTEN);
-+	if (sk_is_stream_unix(sk))
-+		return (1 << sk->sk_state) & TCPF_ESTABLISHED;
- 	return true;
- }
+ 	if (!(nud_state & NUD_VALID)) {
+ 		neigh_event_send(attr.n, NULL);
+ 		/* the encap entry will be made valid on neigh update event
+ 		 * and not used before that.
+ 		 */
+-		goto free_encap;
++		goto release_neigh;
+ 	}
  
+ 	memset(&reformat_params, 0, sizeof(reformat_params));
+@@ -422,10 +426,6 @@ int mlx5e_tc_tun_update_header_ipv4(struct mlx5e_priv *priv,
+ 		goto free_encap;
+ 	}
+ 
+-	e->encap_size = ipv4_encap_size;
+-	kfree(e->encap_header);
+-	e->encap_header = encap_header;
+-
+ 	e->flags |= MLX5_ENCAP_ENTRY_VALID;
+ 	mlx5e_rep_queue_neigh_stats_work(netdev_priv(attr.out_dev));
+ 	mlx5e_route_lookup_ipv4_put(&attr);
+@@ -669,12 +669,16 @@ int mlx5e_tc_tun_update_header_ipv6(struct mlx5e_priv *priv,
+ 	if (err)
+ 		goto free_encap;
+ 
++	e->encap_size = ipv6_encap_size;
++	kfree(e->encap_header);
++	e->encap_header = encap_header;
++
+ 	if (!(nud_state & NUD_VALID)) {
+ 		neigh_event_send(attr.n, NULL);
+ 		/* the encap entry will be made valid on neigh update event
+ 		 * and not used before that.
+ 		 */
+-		goto free_encap;
++		goto release_neigh;
+ 	}
+ 
+ 	memset(&reformat_params, 0, sizeof(reformat_params));
+@@ -688,10 +692,6 @@ int mlx5e_tc_tun_update_header_ipv6(struct mlx5e_priv *priv,
+ 		goto free_encap;
+ 	}
+ 
+-	e->encap_size = ipv6_encap_size;
+-	kfree(e->encap_header);
+-	e->encap_header = encap_header;
+-
+ 	e->flags |= MLX5_ENCAP_ENTRY_VALID;
+ 	mlx5e_rep_queue_neigh_stats_work(netdev_priv(attr.out_dev));
+ 	mlx5e_route_lookup_ipv6_put(&attr);
 -- 
 2.43.0
 
