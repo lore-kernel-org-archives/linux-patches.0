@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9047C8473;
-	Sat, 30 Dec 2023 12:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC9F8821;
+	Sat, 30 Dec 2023 12:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRJEcyGn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1729EC433C7;
-	Sat, 30 Dec 2023 12:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lP/9qhP9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC418C433C7;
+	Sat, 30 Dec 2023 12:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937953;
-	bh=5n9QbdvScBMT/m/k7x8JFoIFCoZRwqZUP/KacC1FnV4=;
+	s=korg; t=1703937956;
+	bh=zKNT9zowcqcYdnaX1w2m+FF8nc8XhEKvA3FRN5/tjY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRJEcyGnLyTw+QVXW3j9C5bBHW34pthX6Lk5gcn8Qc4X5gTuJxXbHF6pbqK20WlwY
-	 /4mmzbpnwUdgsYxfBP8G3MOM57LwUfVNkFuZHYyfKKj+gcMki/AIiE0zH+D0ccVjuh
-	 F7Zkqz0doFTBEaKBqpEMwl/Me8SGJnx+faXmPI5M=
+	b=lP/9qhP9rMpFrYRlnfSu35gx0NECgL3ocK4zYoIFkQXp4PKuM817w2cdEXyUyt4hK
+	 e6cY1c5+gf6CpzFi3dwh96eYmnyrFYwpdGELnYvaYjFEwRnilrL8N300e5/nzXTX3B
+	 8447+d+kMSIk+YA05mCu24N37oeVIdNdSx0GSIZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Robert Morris <rtm@csail.mit.edu>,
+	Paulo Alcantara <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 126/156] smb: client: fix potential OOB in cifs_dump_detail()
-Date: Sat, 30 Dec 2023 11:59:40 +0000
-Message-ID: <20231230115816.489946074@linuxfoundation.org>
+Subject: [PATCH 6.6 127/156] smb: client: fix OOB in SMB2_query_info_init()
+Date: Sat, 30 Dec 2023 11:59:41 +0000
+Message-ID: <20231230115816.519594970@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -43,39 +44,176 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.com>
 
-commit b50492b05fd02887b46aef079592207fb5c97a4c upstream.
+commit 33eae65c6f49770fec7a662935d4eb4a6406d24b upstream.
 
-Validate SMB message with ->check_message() before calling
-->calc_smb_size().
+A small CIFS buffer (448 bytes) isn't big enough to hold
+SMB2_QUERY_INFO request along with user's input data from
+CIFS_QUERY_INFO ioctl.  That is, if the user passed an input buffer >
+344 bytes, the client will memcpy() off the end of @req->Buffer in
+SMB2_query_info_init() thus causing the following KASAN splat:
 
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+  BUG: KASAN: slab-out-of-bounds in SMB2_query_info_init+0x242/0x250 [cifs]
+  Write of size 1023 at addr ffff88801308c5a8 by task a.out/1240
+
+  CPU: 1 PID: 1240 Comm: a.out Not tainted 6.7.0-rc4 #5
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
+  rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x4a/0x80
+   print_report+0xcf/0x650
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? __phys_addr+0x46/0x90
+   kasan_report+0xd8/0x110
+   ? SMB2_query_info_init+0x242/0x250 [cifs]
+   ? SMB2_query_info_init+0x242/0x250 [cifs]
+   kasan_check_range+0x105/0x1b0
+   __asan_memcpy+0x3c/0x60
+   SMB2_query_info_init+0x242/0x250 [cifs]
+   ? __pfx_SMB2_query_info_init+0x10/0x10 [cifs]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? smb_rqst_len+0xa6/0xc0 [cifs]
+   smb2_ioctl_query_info+0x4f4/0x9a0 [cifs]
+   ? __pfx_smb2_ioctl_query_info+0x10/0x10 [cifs]
+   ? __pfx_cifsConvertToUTF16+0x10/0x10 [cifs]
+   ? kasan_set_track+0x25/0x30
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? __kasan_kmalloc+0x8f/0xa0
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? cifs_strndup_to_utf16+0x12d/0x1a0 [cifs]
+   ? __build_path_from_dentry_optional_prefix+0x19d/0x2d0 [cifs]
+   ? __pfx_smb2_ioctl_query_info+0x10/0x10 [cifs]
+   cifs_ioctl+0x11c7/0x1de0 [cifs]
+   ? __pfx_cifs_ioctl+0x10/0x10 [cifs]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? rcu_is_watching+0x23/0x50
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? __rseq_handle_notify_resume+0x6cd/0x850
+   ? __pfx___schedule+0x10/0x10
+   ? blkcg_iostat_update+0x250/0x290
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? ksys_write+0xe9/0x170
+   __x64_sys_ioctl+0xc9/0x100
+   do_syscall_64+0x47/0xf0
+   entry_SYSCALL_64_after_hwframe+0x6f/0x77
+  RIP: 0033:0x7f893dde49cf
+  Code: 00 48 89 44 24 18 31 c0 48 8d 44 24 60 c7 04 24 10 00 00 00 48
+  89 44 24 08 48 8d 44 24 20 48 89 44 24 10 b8 10 00 00 00 0f 05 <89>
+  c2 3d 00 f0 ff ff 77 18 48 8b 44 24 18 64 48 2b 04 25 28 00 00
+  RSP: 002b:00007ffc03ff4160 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+  RAX: ffffffffffffffda RBX: 00007ffc03ff4378 RCX: 00007f893dde49cf
+  RDX: 00007ffc03ff41d0 RSI: 00000000c018cf07 RDI: 0000000000000003
+  RBP: 00007ffc03ff4260 R08: 0000000000000410 R09: 0000000000000001
+  R10: 00007f893dce7300 R11: 0000000000000246 R12: 0000000000000000
+  R13: 00007ffc03ff4388 R14: 00007f893df15000 R15: 0000000000406de0
+   </TASK>
+
+Fix this by increasing size of SMB2_QUERY_INFO request buffers and
+validating input length to prevent other callers from overflowing @req
+in SMB2_query_info_init() as well.
+
+Fixes: f5b05d622a3e ("cifs: add IOCTL for QUERY_INFO passthrough to userspace")
 Cc: stable@vger.kernel.org
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Signed-off-by: Paulo Alcantara <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifs_debug.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/smb/client/smb2pdu.c |   29 ++++++++++++++++++++++-------
+ 1 file changed, 22 insertions(+), 7 deletions(-)
 
---- a/fs/smb/client/cifs_debug.c
-+++ b/fs/smb/client/cifs_debug.c
-@@ -40,11 +40,13 @@ void cifs_dump_detail(void *buf, struct
- #ifdef CONFIG_CIFS_DEBUG2
- 	struct smb_hdr *smb = buf;
- 
--	cifs_dbg(VFS, "Cmd: %d Err: 0x%x Flags: 0x%x Flgs2: 0x%x Mid: %d Pid: %d\n",
--		 smb->Command, smb->Status.CifsError,
--		 smb->Flags, smb->Flags2, smb->Mid, smb->Pid);
--	cifs_dbg(VFS, "smb buf %p len %u\n", smb,
--		 server->ops->calc_smb_size(smb));
-+	cifs_dbg(VFS, "Cmd: %d Err: 0x%x Flags: 0x%x Flgs2: 0x%x Mid: %d Pid: %d Wct: %d\n",
-+		 smb->Command, smb->Status.CifsError, smb->Flags,
-+		 smb->Flags2, smb->Mid, smb->Pid, smb->WordCount);
-+	if (!server->ops->check_message(buf, server->total_read, server)) {
-+		cifs_dbg(VFS, "smb buf %p len %u\n", smb,
-+			 server->ops->calc_smb_size(smb));
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -376,10 +376,15 @@ static int __smb2_plain_req_init(__le16
+ 				 void **request_buf, unsigned int *total_len)
+ {
+ 	/* BB eventually switch this to SMB2 specific small buf size */
+-	if (smb2_command == SMB2_SET_INFO)
++	switch (smb2_command) {
++	case SMB2_SET_INFO:
++	case SMB2_QUERY_INFO:
+ 		*request_buf = cifs_buf_get();
+-	else
++		break;
++	default:
+ 		*request_buf = cifs_small_buf_get();
++		break;
 +	}
- #endif /* CONFIG_CIFS_DEBUG2 */
+ 	if (*request_buf == NULL) {
+ 		/* BB should we add a retry in here if not a writepage? */
+ 		return -ENOMEM;
+@@ -3494,8 +3499,13 @@ SMB2_query_info_init(struct cifs_tcon *t
+ 	struct smb2_query_info_req *req;
+ 	struct kvec *iov = rqst->rq_iov;
+ 	unsigned int total_len;
++	size_t len;
+ 	int rc;
+ 
++	if (unlikely(check_add_overflow(input_len, sizeof(*req), &len) ||
++		     len > CIFSMaxBufSize))
++		return -EINVAL;
++
+ 	rc = smb2_plain_req_init(SMB2_QUERY_INFO, tcon, server,
+ 				 (void **) &req, &total_len);
+ 	if (rc)
+@@ -3517,7 +3527,7 @@ SMB2_query_info_init(struct cifs_tcon *t
+ 
+ 	iov[0].iov_base = (char *)req;
+ 	/* 1 for Buffer */
+-	iov[0].iov_len = total_len - 1 + input_len;
++	iov[0].iov_len = len;
+ 	return 0;
  }
  
+@@ -3525,7 +3535,7 @@ void
+ SMB2_query_info_free(struct smb_rqst *rqst)
+ {
+ 	if (rqst && rqst->rq_iov)
+-		cifs_small_buf_release(rqst->rq_iov[0].iov_base); /* request */
++		cifs_buf_release(rqst->rq_iov[0].iov_base); /* request */
+ }
+ 
+ static int
+@@ -5392,6 +5402,11 @@ build_qfs_info_req(struct kvec *iov, str
+ 	return 0;
+ }
+ 
++static inline void free_qfs_info_req(struct kvec *iov)
++{
++	cifs_buf_release(iov->iov_base);
++}
++
+ int
+ SMB311_posix_qfs_info(const unsigned int xid, struct cifs_tcon *tcon,
+ 	      u64 persistent_fid, u64 volatile_fid, struct kstatfs *fsdata)
+@@ -5423,7 +5438,7 @@ SMB311_posix_qfs_info(const unsigned int
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buftype, flags, &rsp_iov);
+-	cifs_small_buf_release(iov.iov_base);
++	free_qfs_info_req(&iov);
+ 	if (rc) {
+ 		cifs_stats_fail_inc(tcon, SMB2_QUERY_INFO_HE);
+ 		goto posix_qfsinf_exit;
+@@ -5474,7 +5489,7 @@ SMB2_QFS_info(const unsigned int xid, st
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buftype, flags, &rsp_iov);
+-	cifs_small_buf_release(iov.iov_base);
++	free_qfs_info_req(&iov);
+ 	if (rc) {
+ 		cifs_stats_fail_inc(tcon, SMB2_QUERY_INFO_HE);
+ 		goto qfsinf_exit;
+@@ -5541,7 +5556,7 @@ SMB2_QFS_attr(const unsigned int xid, st
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buftype, flags, &rsp_iov);
+-	cifs_small_buf_release(iov.iov_base);
++	free_qfs_info_req(&iov);
+ 	if (rc) {
+ 		cifs_stats_fail_inc(tcon, SMB2_QUERY_INFO_HE);
+ 		goto qfsattr_exit;
 
 
