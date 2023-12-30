@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B902C63A5;
-	Sat, 30 Dec 2023 12:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6DD8486;
+	Sat, 30 Dec 2023 12:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLK9ztBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425B0C433C7;
-	Sat, 30 Dec 2023 12:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zV6kW/bu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9197C433C7;
+	Sat, 30 Dec 2023 12:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937831;
-	bh=3BXQr6o9TOFoHsUF4dGtjcfEXSGNAePHFYgPIoXDIM8=;
+	s=korg; t=1703937834;
+	bh=QVlAb/5WsYIAUKyQw0Mu9wnauh1IcNmKS17FP87b4HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vLK9ztBxv/V9IECgt71y/VRcbe6+DfcR7aklyCKFvLermh79WfLwwiF4wx2t8nRnt
-	 Igj5UkOPckMmfmGjjW0TGxnawqvowdIvI9S3VVpLS6Cax5AIWXIlrfQ0cb0KzGyc9y
-	 EWSx/BbvJsmqtASOQb8DCi5MOdRB70YWqSVombNI=
+	b=zV6kW/bueMCMbl6tc+AITOi7GtJ+1ukSlvQJCemafazaZwZ89oK3irqOzyXsYWu0V
+	 fV1IBaGrZAJE1/zXes8hYpETsjFGIIMzJwskuKjJwCnPyF5fOTBnzD5e+xLM8dTFkO
+	 Vg027HDbW9nQ5UWnzgqK/Msv6bj9FSEum6WW2VpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	David Wei <dw@davidwei.uk>,
+	Daniel Golle <daniel@makrotopia.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/156] bnxt_en: do not map packet buffers twice
-Date: Sat, 30 Dec 2023 11:58:29 +0000
-Message-ID: <20231230115814.135415743@linuxfoundation.org>
+Subject: [PATCH 6.6 056/156] net: phy: skip LED triggers on PHYs on SFP modules
+Date: Sat, 30 Dec 2023 11:58:30 +0000
+Message-ID: <20231230115814.170667973@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -45,58 +42,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 23c93c3b6275a59f2a685f4a693944b53c31df4e ]
+[ Upstream commit b1dfc0f76231bbf395c59d20a2070684620d5d0f ]
 
-Remove double-mapping of DMA buffers as it can prevent page pool entries
-from being freed.  Mapping is managed by page pool infrastructure and
-was previously managed by the driver in __bnxt_alloc_rx_page before
-allowing the page pool infrastructure to manage it.
+Calling led_trigger_register() when attaching a PHY located on an SFP
+module potentially (and practically) leads into a deadlock.
+Fix this by not calling led_trigger_register() for PHYs localted on SFP
+modules as such modules actually never got any LEDs.
 
-Fixes: 578fcfd26e2a ("bnxt_en: Let the page pool manage the DMA mapping")
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: David Wei <dw@davidwei.uk>
-Link: https://lore.kernel.org/r/20231214213138.98095-1-michael.chan@broadcom.com
+======================================================
+WARNING: possible circular locking dependency detected
+6.7.0-rc4-next-20231208+ #0 Tainted: G           O
+------------------------------------------------------
+kworker/u8:2/43 is trying to acquire lock:
+ffffffc08108c4e8 (triggers_list_lock){++++}-{3:3}, at: led_trigger_register+0x4c/0x1a8
+
+but task is already holding lock:
+ffffff80c5c6f318 (&sfp->sm_mutex){+.+.}-{3:3}, at: cleanup_module+0x2ba8/0x3120 [sfp]
+
+which lock already depends on the new lock.
+
+the existing dependency chain (in reverse order) is:
+
+-> #3 (&sfp->sm_mutex){+.+.}-{3:3}:
+       __mutex_lock+0x88/0x7a0
+       mutex_lock_nested+0x20/0x28
+       cleanup_module+0x2ae0/0x3120 [sfp]
+       sfp_register_bus+0x5c/0x9c
+       sfp_register_socket+0x48/0xd4
+       cleanup_module+0x271c/0x3120 [sfp]
+       platform_probe+0x64/0xb8
+       really_probe+0x17c/0x3c0
+       __driver_probe_device+0x78/0x164
+       driver_probe_device+0x3c/0xd4
+       __driver_attach+0xec/0x1f0
+       bus_for_each_dev+0x60/0xa0
+       driver_attach+0x20/0x28
+       bus_add_driver+0x108/0x208
+       driver_register+0x5c/0x118
+       __platform_driver_register+0x24/0x2c
+       init_module+0x28/0xa7c [sfp]
+       do_one_initcall+0x70/0x2ec
+       do_init_module+0x54/0x1e4
+       load_module+0x1b78/0x1c8c
+       __do_sys_init_module+0x1bc/0x2cc
+       __arm64_sys_init_module+0x18/0x20
+       invoke_syscall.constprop.0+0x4c/0xdc
+       do_el0_svc+0x3c/0xbc
+       el0_svc+0x34/0x80
+       el0t_64_sync_handler+0xf8/0x124
+       el0t_64_sync+0x150/0x154
+
+-> #2 (rtnl_mutex){+.+.}-{3:3}:
+       __mutex_lock+0x88/0x7a0
+       mutex_lock_nested+0x20/0x28
+       rtnl_lock+0x18/0x20
+       set_device_name+0x30/0x130
+       netdev_trig_activate+0x13c/0x1ac
+       led_trigger_set+0x118/0x234
+       led_trigger_write+0x104/0x17c
+       sysfs_kf_bin_write+0x64/0x80
+       kernfs_fop_write_iter+0x128/0x1b4
+       vfs_write+0x178/0x2a4
+       ksys_write+0x58/0xd4
+       __arm64_sys_write+0x18/0x20
+       invoke_syscall.constprop.0+0x4c/0xdc
+       do_el0_svc+0x3c/0xbc
+       el0_svc+0x34/0x80
+       el0t_64_sync_handler+0xf8/0x124
+       el0t_64_sync+0x150/0x154
+
+-> #1 (&led_cdev->trigger_lock){++++}-{3:3}:
+       down_write+0x4c/0x13c
+       led_trigger_write+0xf8/0x17c
+       sysfs_kf_bin_write+0x64/0x80
+       kernfs_fop_write_iter+0x128/0x1b4
+       vfs_write+0x178/0x2a4
+       ksys_write+0x58/0xd4
+       __arm64_sys_write+0x18/0x20
+       invoke_syscall.constprop.0+0x4c/0xdc
+       do_el0_svc+0x3c/0xbc
+       el0_svc+0x34/0x80
+       el0t_64_sync_handler+0xf8/0x124
+       el0t_64_sync+0x150/0x154
+
+-> #0 (triggers_list_lock){++++}-{3:3}:
+       __lock_acquire+0x12a0/0x2014
+       lock_acquire+0x100/0x2ac
+       down_write+0x4c/0x13c
+       led_trigger_register+0x4c/0x1a8
+       phy_led_triggers_register+0x9c/0x214
+       phy_attach_direct+0x154/0x36c
+       phylink_attach_phy+0x30/0x60
+       phylink_sfp_connect_phy+0x140/0x510
+       sfp_add_phy+0x34/0x50
+       init_module+0x15c/0xa7c [sfp]
+       cleanup_module+0x1d94/0x3120 [sfp]
+       cleanup_module+0x2bb4/0x3120 [sfp]
+       process_one_work+0x1f8/0x4ec
+       worker_thread+0x1e8/0x3d8
+       kthread+0x104/0x110
+       ret_from_fork+0x10/0x20
+
+other info that might help us debug this:
+
+Chain exists of:
+  triggers_list_lock --> rtnl_mutex --> &sfp->sm_mutex
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(&sfp->sm_mutex);
+                               lock(rtnl_mutex);
+                               lock(&sfp->sm_mutex);
+  lock(triggers_list_lock);
+
+ *** DEADLOCK ***
+
+4 locks held by kworker/u8:2/43:
+ #0: ffffff80c000f938 ((wq_completion)events_power_efficient){+.+.}-{0:0}, at: process_one_work+0x150/0x4ec
+ #1: ffffffc08214bde8 ((work_completion)(&(&sfp->timeout)->work)){+.+.}-{0:0}, at: process_one_work+0x150/0x4ec
+ #2: ffffffc0810902f8 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_lock+0x18/0x20
+ #3: ffffff80c5c6f318 (&sfp->sm_mutex){+.+.}-{3:3}, at: cleanup_module+0x2ba8/0x3120 [sfp]
+
+stack backtrace:
+CPU: 0 PID: 43 Comm: kworker/u8:2 Tainted: G           O       6.7.0-rc4-next-20231208+ #0
+Hardware name: Bananapi BPI-R4 (DT)
+Workqueue: events_power_efficient cleanup_module [sfp]
+Call trace:
+ dump_backtrace+0xa8/0x10c
+ show_stack+0x14/0x1c
+ dump_stack_lvl+0x5c/0xa0
+ dump_stack+0x14/0x1c
+ print_circular_bug+0x328/0x430
+ check_noncircular+0x124/0x134
+ __lock_acquire+0x12a0/0x2014
+ lock_acquire+0x100/0x2ac
+ down_write+0x4c/0x13c
+ led_trigger_register+0x4c/0x1a8
+ phy_led_triggers_register+0x9c/0x214
+ phy_attach_direct+0x154/0x36c
+ phylink_attach_phy+0x30/0x60
+ phylink_sfp_connect_phy+0x140/0x510
+ sfp_add_phy+0x34/0x50
+ init_module+0x15c/0xa7c [sfp]
+ cleanup_module+0x1d94/0x3120 [sfp]
+ cleanup_module+0x2bb4/0x3120 [sfp]
+ process_one_work+0x1f8/0x4ec
+ worker_thread+0x1e8/0x3d8
+ kthread+0x104/0x110
+ ret_from_fork+0x10/0x20
+
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Fixes: 01e5b728e9e4 ("net: phy: Add a binding for PHY LEDs")
+Link: https://lore.kernel.org/r/102a9dce38bdf00215735d04cd4704458273ad9c.1702339354.git.daniel@makrotopia.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/net/phy/phy_device.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index 96f5ca778c67d..8cb9a99154aad 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -59,7 +59,6 @@ struct bnxt_sw_tx_bd *bnxt_xmit_bd(struct bnxt *bp,
- 	for (i = 0; i < num_frags ; i++) {
- 		skb_frag_t *frag = &sinfo->frags[i];
- 		struct bnxt_sw_tx_bd *frag_tx_buf;
--		struct pci_dev *pdev = bp->pdev;
- 		dma_addr_t frag_mapping;
- 		int frag_len;
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index 2ce74593d6e4a..a42df2c1bd043 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -1548,7 +1548,8 @@ int phy_attach_direct(struct net_device *dev, struct phy_device *phydev,
+ 		goto error;
  
-@@ -73,16 +72,10 @@ struct bnxt_sw_tx_bd *bnxt_xmit_bd(struct bnxt *bp,
- 		txbd = &txr->tx_desc_ring[TX_RING(prod)][TX_IDX(prod)];
+ 	phy_resume(phydev);
+-	phy_led_triggers_register(phydev);
++	if (!phydev->is_on_sfp_module)
++		phy_led_triggers_register(phydev);
  
- 		frag_len = skb_frag_size(frag);
--		frag_mapping = skb_frag_dma_map(&pdev->dev, frag, 0,
--						frag_len, DMA_TO_DEVICE);
--
--		if (unlikely(dma_mapping_error(&pdev->dev, frag_mapping)))
--			return NULL;
--
--		dma_unmap_addr_set(frag_tx_buf, mapping, frag_mapping);
--
- 		flags = frag_len << TX_BD_LEN_SHIFT;
- 		txbd->tx_bd_len_flags_type = cpu_to_le32(flags);
-+		frag_mapping = page_pool_get_dma_addr(skb_frag_page(frag)) +
-+			       skb_frag_off(frag);
- 		txbd->tx_bd_haddr = cpu_to_le64(frag_mapping);
+ 	/**
+ 	 * If the external phy used by current mac interface is managed by
+@@ -1817,7 +1818,8 @@ void phy_detach(struct phy_device *phydev)
+ 	}
+ 	phydev->phylink = NULL;
  
- 		len = frag_len;
+-	phy_led_triggers_unregister(phydev);
++	if (!phydev->is_on_sfp_module)
++		phy_led_triggers_unregister(phydev);
+ 
+ 	if (phydev->mdio.dev.driver)
+ 		module_put(phydev->mdio.dev.driver->owner);
 -- 
 2.43.0
 
