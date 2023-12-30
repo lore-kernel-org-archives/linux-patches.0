@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C073879CD;
-	Sat, 30 Dec 2023 12:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBCF63D5;
+	Sat, 30 Dec 2023 12:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1REgFgdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48CD7C433C7;
-	Sat, 30 Dec 2023 12:02:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ie9tGqAl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E321AC433C7;
+	Sat, 30 Dec 2023 12:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937769;
-	bh=nn1kwg3UNqzCI7Veln1qYK2L+aOh0gTYa7OMi4szTAE=;
+	s=korg; t=1703937772;
+	bh=/zk8VSXywc0lfwM9197BuohbrZpv1j7R5GekcFigEIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1REgFgdk2mcXh5tPAzGZg5OVkShvgkky7yiztBfG+ySi8xG2DKrs7YsaV6JDFzJW6
-	 KZSrQP6vUuTBUNBs/rI6z7nbiJkH1MCX7y/p1mUcdNsQgmO2u9Z9SrxpqcqqLp7oJi
-	 yw6y9uk+b4kk8OiNi5FbHS1g8IGf1vSIyknmjWVE=
+	b=Ie9tGqAlpcBEAZHrjmKUftANUokZFA5V5wdWYso2gdqhrNeJzH6v0JJSnUx005Zky
+	 WUxmWeP5r1xWS/l138Avoj7CHVWQZEyUORjQl4jmxUuM818LiZ3YrSq6zNvAfQeaak
+	 DnYyyeE8kjd92/HV1OJ+tWBIRtag9oE+e36E2PPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ding Hui <dinghui@sangfor.com.cn>,
+	Moshe Shemesh <moshe@nvidia.com>,
 	Shifeng Li <lishifeng@sangfor.com.cn>,
-	Simon Horman <horms@kernel.org>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/156] net/mlx5e: Fix slab-out-of-bounds in mlx5_query_nic_vport_mac_list()
-Date: Sat, 30 Dec 2023 11:58:06 +0000
-Message-ID: <20231230115813.420181729@linuxfoundation.org>
+Subject: [PATCH 6.6 033/156] net/mlx5e: Fix a race in command alloc flow
+Date: Sat, 30 Dec 2023 11:58:07 +0000
+Message-ID: <20231230115813.456617014@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -46,54 +45,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Shifeng Li <lishifeng@sangfor.com.cn>
 
-[ Upstream commit ddb38ddff9c71026bad481b791a94d446ee37603 ]
+[ Upstream commit 8f5100da56b3980276234e812ce98d8f075194cd ]
 
-Out_sz that the size of out buffer is calculated using query_nic_vport
-_context_in structure when driver query the MAC list. However query_nic
-_vport_context_in structure is smaller than query_nic_vport_context_out.
-When allowed_list_size is greater than 96, calling ether_addr_copy() will
-trigger an slab-out-of-bounds.
+Fix a cmd->ent use after free due to a race on command entry.
+Such race occurs when one of the commands releases its last refcount and
+frees its index and entry while another process running command flush
+flow takes refcount to this command entry. The process which handles
+commands flush may see this command as needed to be flushed if the other
+process allocated a ent->idx but didn't set ent to cmd->ent_arr in
+cmd_work_handler(). Fix it by moving the assignment of cmd->ent_arr into
+the spin lock.
 
-[ 1170.055866] BUG: KASAN: slab-out-of-bounds in mlx5_query_nic_vport_mac_list+0x481/0x4d0 [mlx5_core]
-[ 1170.055869] Read of size 4 at addr ffff88bdbc57d912 by task kworker/u128:1/461
-[ 1170.055870]
-[ 1170.055932] Workqueue: mlx5_esw_wq esw_vport_change_handler [mlx5_core]
-[ 1170.055936] Call Trace:
-[ 1170.055949]  dump_stack+0x8b/0xbb
-[ 1170.055958]  print_address_description+0x6a/0x270
-[ 1170.055961]  kasan_report+0x179/0x2c0
-[ 1170.056061]  mlx5_query_nic_vport_mac_list+0x481/0x4d0 [mlx5_core]
-[ 1170.056162]  esw_update_vport_addr_list+0x2c5/0xcd0 [mlx5_core]
-[ 1170.056257]  esw_vport_change_handle_locked+0xd08/0x1a20 [mlx5_core]
-[ 1170.056377]  esw_vport_change_handler+0x6b/0x90 [mlx5_core]
-[ 1170.056381]  process_one_work+0x65f/0x12d0
-[ 1170.056383]  worker_thread+0x87/0xb50
-[ 1170.056390]  kthread+0x2e9/0x3a0
-[ 1170.056394]  ret_from_fork+0x1f/0x40
+[70013.081955] BUG: KASAN: use-after-free in mlx5_cmd_trigger_completions+0x1e2/0x4c0 [mlx5_core]
+[70013.081967] Write of size 4 at addr ffff88880b1510b4 by task kworker/26:1/1433361
+[70013.081968]
+[70013.082028] Workqueue: events aer_isr
+[70013.082053] Call Trace:
+[70013.082067]  dump_stack+0x8b/0xbb
+[70013.082086]  print_address_description+0x6a/0x270
+[70013.082102]  kasan_report+0x179/0x2c0
+[70013.082173]  mlx5_cmd_trigger_completions+0x1e2/0x4c0 [mlx5_core]
+[70013.082267]  mlx5_cmd_flush+0x80/0x180 [mlx5_core]
+[70013.082304]  mlx5_enter_error_state+0x106/0x1d0 [mlx5_core]
+[70013.082338]  mlx5_try_fast_unload+0x2ea/0x4d0 [mlx5_core]
+[70013.082377]  remove_one+0x200/0x2b0 [mlx5_core]
+[70013.082409]  pci_device_remove+0xf3/0x280
+[70013.082439]  device_release_driver_internal+0x1c3/0x470
+[70013.082453]  pci_stop_bus_device+0x109/0x160
+[70013.082468]  pci_stop_and_remove_bus_device+0xe/0x20
+[70013.082485]  pcie_do_fatal_recovery+0x167/0x550
+[70013.082493]  aer_isr+0x7d2/0x960
+[70013.082543]  process_one_work+0x65f/0x12d0
+[70013.082556]  worker_thread+0x87/0xb50
+[70013.082571]  kthread+0x2e9/0x3a0
+[70013.082592]  ret_from_fork+0x1f/0x40
 
-Fixes: e16aea2744ab ("net/mlx5: Introduce access functions to modify/query vport mac lists")
-Cc: Ding Hui <dinghui@sangfor.com.cn>
+The logical relationship of this error is as follows:
+
+             aer_recover_work              |          ent->work
+-------------------------------------------+------------------------------
+aer_recover_work_func                      |
+|- pcie_do_recovery                        |
+  |- report_error_detected                 |
+    |- mlx5_pci_err_detected               |cmd_work_handler
+      |- mlx5_enter_error_state            |  |- cmd_alloc_index
+        |- enter_error_state               |    |- lock cmd->alloc_lock
+          |- mlx5_cmd_flush                |    |- clear_bit
+            |- mlx5_cmd_trigger_completions|    |- unlock cmd->alloc_lock
+              |- lock cmd->alloc_lock      |
+              |- vector = ~dev->cmd.vars.bitmask
+              |- for_each_set_bit          |
+                |- cmd_ent_get(cmd->ent_arr[i]) (UAF)
+              |- unlock cmd->alloc_lock    |  |- cmd->ent_arr[ent->idx]=ent
+
+The cmd->ent_arr[ent->idx] assignment and the bit clearing are not
+protected by the cmd->alloc_lock in cmd_work_handler().
+
+Fixes: 50b2412b7e78 ("net/mlx5: Avoid possible free of command entry while timeout comp handler")
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
 Signed-off-by: Shifeng Li <lishifeng@sangfor.com.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/vport.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/vport.c b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-index 5a31fb47ffa58..21753f3278685 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-@@ -277,7 +277,7 @@ int mlx5_query_nic_vport_mac_list(struct mlx5_core_dev *dev,
- 		req_list_size = max_list_size;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+index c22b0ad0c8701..7013e1c8741a3 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -156,15 +156,18 @@ static u8 alloc_token(struct mlx5_cmd *cmd)
+ 	return token;
+ }
+ 
+-static int cmd_alloc_index(struct mlx5_cmd *cmd)
++static int cmd_alloc_index(struct mlx5_cmd *cmd, struct mlx5_cmd_work_ent *ent)
+ {
+ 	unsigned long flags;
+ 	int ret;
+ 
+ 	spin_lock_irqsave(&cmd->alloc_lock, flags);
+ 	ret = find_first_bit(&cmd->vars.bitmask, cmd->vars.max_reg_cmds);
+-	if (ret < cmd->vars.max_reg_cmds)
++	if (ret < cmd->vars.max_reg_cmds) {
+ 		clear_bit(ret, &cmd->vars.bitmask);
++		ent->idx = ret;
++		cmd->ent_arr[ent->idx] = ent;
++	}
+ 	spin_unlock_irqrestore(&cmd->alloc_lock, flags);
+ 
+ 	return ret < cmd->vars.max_reg_cmds ? ret : -ENOMEM;
+@@ -977,7 +980,7 @@ static void cmd_work_handler(struct work_struct *work)
+ 	sem = ent->page_queue ? &cmd->vars.pages_sem : &cmd->vars.sem;
+ 	down(sem);
+ 	if (!ent->page_queue) {
+-		alloc_ret = cmd_alloc_index(cmd);
++		alloc_ret = cmd_alloc_index(cmd, ent);
+ 		if (alloc_ret < 0) {
+ 			mlx5_core_err_rl(dev, "failed to allocate command entry\n");
+ 			if (ent->callback) {
+@@ -992,15 +995,14 @@ static void cmd_work_handler(struct work_struct *work)
+ 			up(sem);
+ 			return;
+ 		}
+-		ent->idx = alloc_ret;
+ 	} else {
+ 		ent->idx = cmd->vars.max_reg_cmds;
+ 		spin_lock_irqsave(&cmd->alloc_lock, flags);
+ 		clear_bit(ent->idx, &cmd->vars.bitmask);
++		cmd->ent_arr[ent->idx] = ent;
+ 		spin_unlock_irqrestore(&cmd->alloc_lock, flags);
  	}
  
--	out_sz = MLX5_ST_SZ_BYTES(query_nic_vport_context_in) +
-+	out_sz = MLX5_ST_SZ_BYTES(query_nic_vport_context_out) +
- 			req_list_size * MLX5_ST_SZ_BYTES(mac_address_layout);
- 
- 	out = kvzalloc(out_sz, GFP_KERNEL);
+-	cmd->ent_arr[ent->idx] = ent;
+ 	lay = get_inst(cmd, ent->idx);
+ 	ent->lay = lay;
+ 	memset(lay, 0, sizeof(*lay));
 -- 
 2.43.0
 
