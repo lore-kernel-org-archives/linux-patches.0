@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F124379E0;
-	Sat, 30 Dec 2023 12:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8485B79D8;
+	Sat, 30 Dec 2023 12:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i8XSOuK5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB59C433C7;
-	Sat, 30 Dec 2023 12:05:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x39EhKDm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D311C433C8;
+	Sat, 30 Dec 2023 12:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937903;
-	bh=vsBZ8O8GAcFMJEce/zVcus210et3y/4VA7c57vAK5d0=;
+	s=korg; t=1703937906;
+	bh=6rwUowES3/N6Dpx/daepCwLzRx6u8SliEX4rID6D4H0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i8XSOuK5p7t8kHL7+PSn5d/xvw2mrG3/NQyrI0K/kHjS/PUpFoB+uNqNeauV2QSwM
-	 5kfji4Ny5I7g5rrOcjXM1uvuaonelg/hIAb91aTH3dHAOp6JoabSNLQvESItkxpuS5
-	 EW2N9OaHCB1W98zoDdS3A1B9whhBLwdlqUDx05T0=
+	b=x39EhKDmpAq5+duIF+cMR9iYQpMFzyBtCmX8DW5T4MGoLzzCpD1W6dZIatPnyN/YC
+	 zwPkSntN7jV21gSVCfTcGhbqjHNAguVlGy0S1pACCGj0cO3t1MTr0OoN30ekCYcY3E
+	 k3CEAt1gAeRI0AYfPlg1YsWI3qnCvIYfnGP6CzU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoran Liu <liuhaoran14@163.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	George Stark <gnstark@salutedevices.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 084/156] Input: ipaq-micro-keys - add error handling for devm_kmemdup
-Date: Sat, 30 Dec 2023 11:58:58 +0000
-Message-ID: <20231230115815.108670379@linuxfoundation.org>
+Subject: [PATCH 6.6 085/156] iio: adc: meson: add separate config for axg SoC family
+Date: Sat, 30 Dec 2023 11:58:59 +0000
+Message-ID: <20231230115815.138348196@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -42,38 +43,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoran Liu <liuhaoran14@163.com>
+From: George Stark <gnstark@salutedevices.com>
 
-[ Upstream commit 59b6a747e2d39227ac2325c5e29d6ab3bb070c2a ]
+[ Upstream commit 59b75dcb0953813676b5030877f3f37cedaed87d ]
 
-Check the return value of i2c_add_adapter. Static analysis revealed that
-the function did not properly handle potential failures of
-i2c_add_adapter, which could lead to partial initialization of the I2C
-adapter and unstable operation.
+According to Amlogic custom kernels ADC of axg SoC family has
+vref_select and requires this setting to work nominally and thus
+needs a separate config.
 
-Signed-off-by: Haoran Liu <liuhaoran14@163.com>
-Link: https://lore.kernel.org/r/20231203164653.38983-1-liuhaoran14@163.com
-Fixes: d7535ffa427b ("Input: driver for microcontroller keys on the iPaq h3xxx")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 90c6241860bf ("iio: adc: meson: init voltage control bits")
+Signed-off-by: George Stark <gnstark@salutedevices.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20231127235558.71995-1-gnstark@salutedevices.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/keyboard/ipaq-micro-keys.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/adc/meson_saradc.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/keyboard/ipaq-micro-keys.c b/drivers/input/keyboard/ipaq-micro-keys.c
-index 7b509bce2b332..1d71dd79ffd28 100644
---- a/drivers/input/keyboard/ipaq-micro-keys.c
-+++ b/drivers/input/keyboard/ipaq-micro-keys.c
-@@ -105,6 +105,9 @@ static int micro_key_probe(struct platform_device *pdev)
- 	keys->codes = devm_kmemdup(&pdev->dev, micro_keycodes,
- 			   keys->input->keycodesize * keys->input->keycodemax,
- 			   GFP_KERNEL);
-+	if (!keys->codes)
-+		return -ENOMEM;
-+
- 	keys->input->keycode = keys->codes;
+diff --git a/drivers/iio/adc/meson_saradc.c b/drivers/iio/adc/meson_saradc.c
+index 320e3e7e3d4d4..57cfabe80c826 100644
+--- a/drivers/iio/adc/meson_saradc.c
++++ b/drivers/iio/adc/meson_saradc.c
+@@ -1239,6 +1239,20 @@ static const struct meson_sar_adc_param meson_sar_adc_gxl_param = {
+ 	.cmv_select = 1,
+ };
  
- 	__set_bit(EV_KEY, keys->input->evbit);
++static const struct meson_sar_adc_param meson_sar_adc_axg_param = {
++	.has_bl30_integration = true,
++	.clock_rate = 1200000,
++	.bandgap_reg = MESON_SAR_ADC_REG11,
++	.regmap_config = &meson_sar_adc_regmap_config_gxbb,
++	.resolution = 12,
++	.disable_ring_counter = 1,
++	.has_reg11 = true,
++	.vref_volatge = 1,
++	.has_vref_select = true,
++	.vref_select = VREF_VDDA,
++	.cmv_select = 1,
++};
++
+ static const struct meson_sar_adc_param meson_sar_adc_g12a_param = {
+ 	.has_bl30_integration = false,
+ 	.clock_rate = 1200000,
+@@ -1283,7 +1297,7 @@ static const struct meson_sar_adc_data meson_sar_adc_gxm_data = {
+ };
+ 
+ static const struct meson_sar_adc_data meson_sar_adc_axg_data = {
+-	.param = &meson_sar_adc_gxl_param,
++	.param = &meson_sar_adc_axg_param,
+ 	.name = "meson-axg-saradc",
+ };
+ 
 -- 
 2.43.0
 
