@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F2E79DC;
-	Sat, 30 Dec 2023 12:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C2479C2;
+	Sat, 30 Dec 2023 12:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9gzwnyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D0CC433C7;
-	Sat, 30 Dec 2023 12:07:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGmBdEwV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D70BC433C8;
+	Sat, 30 Dec 2023 12:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938025;
-	bh=JXp5RWvbSYztXNzk06hmzhbN5pm0+SHO1kL2SePL8Mo=;
+	s=korg; t=1703938028;
+	bh=+S0cHqtYKJlMvD0y92fUKSiJ2jvPG5U3zlEkzMKu7xA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g9gzwnywqnUVnDBqaE4CwApIloRdeZZoBYt5mLcYFGEu2EEy8vCTGipdaLdF82Sxz
-	 RyeuBMiPVfWaqBYQFe8QkCNISrjTYc61n9rRDizTHTH+scRf8sXixnDySAig6waPg2
-	 P16hI8JgwBNPVoQ7Ae/iQ3BkBc1xoebU4SXiS5ho=
+	b=RGmBdEwVXUkiNTjr1y1g6JW2ZOZS6NyLS3AoomJ9WjaeRQJpQTOgyeSpnDdx4K2iv
+	 cl6DMmY1/JJVYFMpqeU7XAEH5DlyTFlJgqwkj+XnMf5XKceF0kgYccLY5im0vcc4Md
+	 G0utGDcTYbEP6Z+WrKNWP9Nv8Nu4uZfgfNfYykQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Gortmaker <paul.gortmaker@windriver.com>,
+	Chris Lindee <chris.lindee@gmail.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.6 154/156] x86/alternatives: Disable interrupts and sync when optimizing NOPs in place
-Date: Sat, 30 Dec 2023 12:00:08 +0000
-Message-ID: <20231230115817.328974221@linuxfoundation.org>
+	Ashok Raj <ashok.raj@intel.com>
+Subject: [PATCH 6.6 155/156] x86/smpboot/64: Handle X2APIC BIOS inconsistency gracefully
+Date: Sat, 30 Dec 2023 12:00:09 +0000
+Message-ID: <20231230115817.363828119@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -45,81 +45,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 2dc4196138055eb0340231aecac4d78c2ec2bea5 upstream.
+commit 69a7386c1ec25476a0c78ffeb59de08a2a08f495 upstream.
 
-apply_alternatives() treats alternatives with the ALT_FLAG_NOT flag set
-special as it optimizes the existing NOPs in place.
+Chris reported that a Dell PowerEdge T340 system stopped to boot when upgrading
+to a kernel which contains the parallel hotplug changes.  Disabling parallel
+hotplug on the kernel command line makes it boot again.
 
-Unfortunately, this happens with interrupts enabled and does not provide any
-form of core synchronization.
+It turns out that the Dell BIOS has x2APIC enabled and the boot CPU comes up in
+X2APIC mode, but the APs come up inconsistently in xAPIC mode.
 
-So an interrupt hitting in the middle of the update and using the affected code
-path will observe a half updated NOP and crash and burn. The following
-3 NOP sequence was observed to expose this crash halfway reliably under QEMU
-  32bit:
+Parallel hotplug requires that the upcoming CPU reads out its APIC ID from the
+local APIC in order to map it to the Linux CPU number.
 
-   0x90 0x90 0x90
+In this particular case the readout on the APs uses the MMIO mapped registers
+because the BIOS failed to enable x2APIC mode. That readout results in a page
+fault because the kernel does not have the APIC MMIO space mapped when X2APIC
+mode was enabled by the BIOS on the boot CPU and the kernel switched to X2APIC
+mode early. That page fault can't be handled on the upcoming CPU that early and
+results in a silent boot failure.
 
-which is replaced by the optimized 3 byte NOP:
+If parallel hotplug is disabled the system boots because in that case the APIC
+ID read is not required as the Linux CPU number is provided to the AP in the
+smpboot control word. When the kernel uses x2APIC mode then the APs are
+switched to x2APIC mode too slightly later in the bringup process, but there is
+no reason to do it that late.
 
-   0x8d 0x76 0x00
+Cure the BIOS bogosity by checking in the parallel bootup path whether the
+kernel uses x2APIC mode and if so switching over the APs to x2APIC mode before
+the APIC ID readout.
 
-So an interrupt can observe:
-
-   1) 0x90 0x90 0x90		nop nop nop
-   2) 0x8d 0x90 0x90		undefined
-   3) 0x8d 0x76 0x90		lea    -0x70(%esi),%esi
-   4) 0x8d 0x76 0x00		lea     0x0(%esi),%esi
-
-Where only #1 and #4 are true NOPs. The same problem exists for 64bit obviously.
-
-Disable interrupts around this NOP optimization and invoke sync_core()
-before re-enabling them.
-
-Fixes: 270a69c4485d ("x86/alternative: Support relocations in alternatives")
-Reported-by: Paul Gortmaker <paul.gortmaker@windriver.com>
+Fixes: 0c7ffa32dbd6 ("x86/smpboot/64: Implement arch_cpuhp_init_parallel_bringup() and enable it")
+Reported-by: Chris Lindee <chris.lindee@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Ashok Raj <ashok.raj@intel.com>
+Tested-by: Chris Lindee <chris.lindee@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/ZT6narvE%2BLxX%2B7Be@windriver.com
+Link: https://lore.kernel.org/r/CA%2B2tU59853R49EaU_tyvOZuOTDdcU0RshGyydccp9R1NX9bEeQ@mail.gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/alternative.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ arch/x86/kernel/head_64.S |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
-index fd44739828f7..aae7456ece07 100644
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -255,6 +255,16 @@ static void __init_or_module noinline optimize_nops(u8 *instr, size_t len)
- 	}
- }
+--- a/arch/x86/kernel/head_64.S
++++ b/arch/x86/kernel/head_64.S
+@@ -256,6 +256,22 @@ SYM_INNER_LABEL(secondary_startup_64_no_
+ 	testl	$X2APIC_ENABLE, %eax
+ 	jnz	.Lread_apicid_msr
  
-+static void __init_or_module noinline optimize_nops_inplace(u8 *instr, size_t len)
-+{
-+	unsigned long flags;
++#ifdef CONFIG_X86_X2APIC
++	/*
++	 * If system is in X2APIC mode then MMIO base might not be
++	 * mapped causing the MMIO read below to fault. Faults can't
++	 * be handled at that point.
++	 */
++	cmpl	$0, x2apic_mode(%rip)
++	jz	.Lread_apicid_mmio
 +
-+	local_irq_save(flags);
-+	optimize_nops(instr, len);
-+	sync_core();
-+	local_irq_restore(flags);
-+}
++	/* Force the AP into X2APIC mode. */
++	orl	$X2APIC_ENABLE, %eax
++	wrmsr
++	jmp	.Lread_apicid_msr
++#endif
 +
- /*
-  * In this context, "source" is where the instructions are placed in the
-  * section .altinstr_replacement, for example during kernel build by the
-@@ -438,7 +448,7 @@ void __init_or_module noinline apply_alternatives(struct alt_instr *start,
- 		 *   patch if feature is *NOT* present.
- 		 */
- 		if (!boot_cpu_has(a->cpuid) == !(a->flags & ALT_FLAG_NOT)) {
--			optimize_nops(instr, a->instrlen);
-+			optimize_nops_inplace(instr, a->instrlen);
- 			continue;
- 		}
- 
--- 
-2.43.0
-
++.Lread_apicid_mmio:
+ 	/* Read the APIC ID from the fix-mapped MMIO space. */
+ 	movq	apic_mmio_base(%rip), %rcx
+ 	addq	$APIC_ID, %rcx
 
 
