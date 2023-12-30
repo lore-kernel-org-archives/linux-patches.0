@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D2E79CD;
-	Sat, 30 Dec 2023 12:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AEE379DD;
+	Sat, 30 Dec 2023 12:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQsrjsMN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34826C433C7;
-	Sat, 30 Dec 2023 12:11:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACwguz7D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C757BC433C8;
+	Sat, 30 Dec 2023 12:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938277;
-	bh=0t1Z4poAobnJg/JXKdNXMgueY7zEYvdi7mh7dcSEWVY=;
+	s=korg; t=1703938280;
+	bh=5EAqNRWruzVVU81F9hGZ04oiiyuPre7+HCfZJL2eLl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQsrjsMNyK1dj7ped2GkibMXZGgueEaGfUMoDyNlZ0iPRNpyStekpmuz3mcmIB+kg
-	 vwUg+mWcbJTecfasrqo7HFywEalHxLza48A30K+7Ecj1R00Om+TJwvbss+8H26RHg+
-	 UkxfKMHbz4ybeG8plNgoK+gNgGIxNlwO5Xv2vzkQ=
+	b=ACwguz7DJGMrBtRAWYzJwebfjUd4nqK4rvXEYkeQeB9a0j1I/HFMabXvNHuEic+lr
+	 5KEaBoxoXRNH2eCLK9MzWKYgnsNG6AeyIKLhIUrMal5VXsfTteovkWMBlcMoUn/Fcl
+	 eKKr/+sblu+vcP4LDXxXZuHEOzTCT4batlLnHXaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Geliang Tang <geliang.tang@linux.dev>,
+	Mat Martineau <martineau@kernel.org>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/112] ublk: move ublk_cancel_dev() out of ub->mutex
-Date: Sat, 30 Dec 2023 12:00:07 +0000
-Message-ID: <20231230115809.831305626@linuxfoundation.org>
+Subject: [PATCH 6.1 095/112] selftests: mptcp: join: fix subflow_send_ack lookup
+Date: Sat, 30 Dec 2023 12:00:08 +0000
+Message-ID: <20231230115809.855103870@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -42,140 +44,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Geliang Tang <geliang.tang@linux.dev>
 
-[ Upstream commit 85248d670b71d9edda9459ee14fdc85c8e9632c0 ]
+[ Upstream commit c8f021eec5817601dbd25ab7e3ad5c720965c688 ]
 
-ublk_cancel_dev() just calls ublk_cancel_queue() to cancel all pending
-io commands after ublk request queue is idle. The only protection is just
-the read & write of ubq->nr_io_ready and avoid duplicated command cancel,
-so add one per-queue lock with cancel flag for providing this protection,
-meantime move ublk_cancel_dev() out of ub->mutex.
+MPC backups tests will skip unexpected sometimes (For example, when
+compiling kernel with an older version of gcc, such as gcc-8), since
+static functions like mptcp_subflow_send_ack also be listed in
+/proc/kallsyms, with a 't' in front of it, not 'T' ('T' is for a global
+function):
 
-Then we needn't to call io_uring_cmd_complete_in_task() to cancel
-pending command. And the same cancel logic will be re-used for
-cancelable uring command.
+ > grep "mptcp_subflow_send_ack" /proc/kallsyms
 
-This patch basically reverts commit ac5902f84bb5 ("ublk: fix AB-BA lockdep warning").
+ 0000000000000000 T __pfx___mptcp_subflow_send_ack
+ 0000000000000000 T __mptcp_subflow_send_ack
+ 0000000000000000 t __pfx_mptcp_subflow_send_ack
+ 0000000000000000 t mptcp_subflow_send_ack
 
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20231009093324.957829-4-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+In this case, mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"
+will be false, MPC backups tests will skip. This is not what we expected.
+
+The correct logic here should be: if mptcp_subflow_send_ack is not a
+global function in /proc/kallsyms, do these MPC backups tests. So a 'T'
+must be added in front of mptcp_subflow_send_ack.
+
+Fixes: 632978f0a961 ("selftests: mptcp: join: skip MPC backups tests if not supported")
+Cc: stable@vger.kernel.org
+Signed-off-by: Geliang Tang <geliang.tang@linux.dev>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 40 +++++++++++++++++++++++-----------------
- 1 file changed, 23 insertions(+), 17 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index c2f0f74193f0e..3fa74051f31b4 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -103,6 +103,9 @@ struct ublk_uring_cmd_pdu {
-  */
- #define UBLK_IO_FLAG_NEED_GET_DATA 0x08
+diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+index ea6fc59e9f62f..e52d513009fb0 100755
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -2652,7 +2652,7 @@ backup_tests()
+ 	fi
  
-+/* atomic RW with ubq->cancel_lock */
-+#define UBLK_IO_FLAG_CANCELED	0x80000000
-+
- struct ublk_io {
- 	/* userspace buffer address from io cmd */
- 	__u64	addr;
-@@ -126,6 +129,7 @@ struct ublk_queue {
- 	unsigned int max_io_sz;
- 	bool force_abort;
- 	unsigned short nr_io_ready;	/* how many ios setup */
-+	spinlock_t		cancel_lock;
- 	struct ublk_device *dev;
- 	struct ublk_io ios[];
- };
-@@ -1045,28 +1049,28 @@ static inline bool ublk_queue_ready(struct ublk_queue *ubq)
- 	return ubq->nr_io_ready == ubq->q_depth;
- }
+ 	if reset "mpc backup" &&
+-	   continue_if mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"; then
++	   continue_if mptcp_lib_kallsyms_doesnt_have "T mptcp_subflow_send_ack$"; then
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow,backup
+ 		run_tests $ns1 $ns2 10.0.1.1 0 0 0 slow
+ 		chk_join_nr 0 0 0
+@@ -2660,7 +2660,7 @@ backup_tests()
+ 	fi
  
--static void ublk_cmd_cancel_cb(struct io_uring_cmd *cmd, unsigned issue_flags)
--{
--	io_uring_cmd_done(cmd, UBLK_IO_RES_ABORT, 0, issue_flags);
--}
--
- static void ublk_cancel_queue(struct ublk_queue *ubq)
- {
- 	int i;
+ 	if reset "mpc backup both sides" &&
+-	   continue_if mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"; then
++	   continue_if mptcp_lib_kallsyms_doesnt_have "T mptcp_subflow_send_ack$"; then
+ 		pm_nl_add_endpoint $ns1 10.0.1.1 flags subflow,backup
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow,backup
+ 		run_tests $ns1 $ns2 10.0.1.1 0 0 0 slow
+@@ -2669,7 +2669,7 @@ backup_tests()
+ 	fi
  
--	if (!ublk_queue_ready(ubq))
--		return;
--
- 	for (i = 0; i < ubq->q_depth; i++) {
- 		struct ublk_io *io = &ubq->ios[i];
+ 	if reset "mpc switch to backup" &&
+-	   continue_if mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"; then
++	   continue_if mptcp_lib_kallsyms_doesnt_have "T mptcp_subflow_send_ack$"; then
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow
+ 		run_tests $ns1 $ns2 10.0.1.1 0 0 0 slow backup
+ 		chk_join_nr 0 0 0
+@@ -2677,7 +2677,7 @@ backup_tests()
+ 	fi
  
--		if (io->flags & UBLK_IO_FLAG_ACTIVE)
--			io_uring_cmd_complete_in_task(io->cmd,
--						      ublk_cmd_cancel_cb);
--	}
-+		if (io->flags & UBLK_IO_FLAG_ACTIVE) {
-+			bool done;
- 
--	/* all io commands are canceled */
--	ubq->nr_io_ready = 0;
-+			spin_lock(&ubq->cancel_lock);
-+			done = !!(io->flags & UBLK_IO_FLAG_CANCELED);
-+			if (!done)
-+				io->flags |= UBLK_IO_FLAG_CANCELED;
-+			spin_unlock(&ubq->cancel_lock);
-+
-+			if (!done)
-+				io_uring_cmd_done(io->cmd,
-+						UBLK_IO_RES_ABORT, 0,
-+						IO_URING_F_UNLOCKED);
-+		}
-+	}
- }
- 
- /* Cancel all pending commands, must be called after del_gendisk() returns */
-@@ -1113,7 +1117,6 @@ static void __ublk_quiesce_dev(struct ublk_device *ub)
- 	blk_mq_quiesce_queue(ub->ub_disk->queue);
- 	ublk_wait_tagset_rqs_idle(ub);
- 	ub->dev_info.state = UBLK_S_DEV_QUIESCED;
--	ublk_cancel_dev(ub);
- 	/* we are going to release task_struct of ubq_daemon and resets
- 	 * ->ubq_daemon to NULL. So in monitor_work, check on ubq_daemon causes UAF.
- 	 * Besides, monitor_work is not necessary in QUIESCED state since we have
-@@ -1136,6 +1139,7 @@ static void ublk_quiesce_work_fn(struct work_struct *work)
- 	__ublk_quiesce_dev(ub);
-  unlock:
- 	mutex_unlock(&ub->mutex);
-+	ublk_cancel_dev(ub);
- }
- 
- static void ublk_unquiesce_dev(struct ublk_device *ub)
-@@ -1175,8 +1179,8 @@ static void ublk_stop_dev(struct ublk_device *ub)
- 	put_disk(ub->ub_disk);
- 	ub->ub_disk = NULL;
-  unlock:
--	ublk_cancel_dev(ub);
- 	mutex_unlock(&ub->mutex);
-+	ublk_cancel_dev(ub);
- 	cancel_delayed_work_sync(&ub->monitor_work);
- }
- 
-@@ -1353,6 +1357,7 @@ static int ublk_init_queue(struct ublk_device *ub, int q_id)
- 	void *ptr;
- 	int size;
- 
-+	spin_lock_init(&ubq->cancel_lock);
- 	ubq->flags = ub->dev_info.flags;
- 	ubq->q_id = q_id;
- 	ubq->q_depth = ub->dev_info.queue_depth;
-@@ -1882,8 +1887,9 @@ static void ublk_queue_reinit(struct ublk_device *ub, struct ublk_queue *ubq)
- 	int i;
- 
- 	WARN_ON_ONCE(!(ubq->ubq_daemon && ubq_daemon_is_dying(ubq)));
-+
- 	/* All old ioucmds have to be completed */
--	WARN_ON_ONCE(ubq->nr_io_ready);
-+	ubq->nr_io_ready = 0;
- 	/* old daemon is PF_EXITING, put it now */
- 	put_task_struct(ubq->ubq_daemon);
- 	/* We have to reset it to NULL, otherwise ub won't accept new FETCH_REQ */
+ 	if reset "mpc switch to backup both sides" &&
+-	   continue_if mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"; then
++	   continue_if mptcp_lib_kallsyms_doesnt_have "T mptcp_subflow_send_ack$"; then
+ 		pm_nl_add_endpoint $ns1 10.0.1.1 flags subflow
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow
+ 		run_tests $ns1 $ns2 10.0.1.1 0 0 0 slow backup
 -- 
 2.43.0
 
