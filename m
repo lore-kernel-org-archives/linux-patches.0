@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C52A8BE3;
-	Sat, 30 Dec 2023 12:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A7C79DC;
+	Sat, 30 Dec 2023 12:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jf8Ag5dF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6CEC433C7;
-	Sat, 30 Dec 2023 12:04:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXybrqZD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F14FC433C8;
+	Sat, 30 Dec 2023 12:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937890;
-	bh=7nzCEs0AmaCTV/p0i+W4IVo6ZvEE9n0i7QyLd1D7Rn8=;
+	s=korg; t=1703937893;
+	bh=SDJmN7OqlUSpMwl4y+aDK8ijakTU7cbK8aDrxMBuI+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jf8Ag5dFRpCdXKlILL274gS4JlK0DAPg1pyId9P4nlSsfSAuRJqvFkTDVX/4ubMXs
-	 9SY2GmdsOjMrzxoWTKNYZhtrwZP1I9l+rdd3pulRCq2ksCfdu+zXZp5aTOMWB7dMGm
-	 8KfnxhA6CCsHIF5b9wTaoBl55wfxXGNauOqn5cf4=
+	b=LXybrqZDVnw5GInXpNG602ZbjEZWP24kYbr84TdgktxsRF057eouxGlH5Y/L+RBUg
+	 kCqlJgG0ztrSfDSoNxjBwFtMFr3bD/RVYRP1/RD2HSMVr9KThWnRbZAA+U34OlZIsT
+	 Ksh96z5wdbEz3vxWvPBfosNqfusm8UfITTaK88hA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Glover <mark.glover@actisense.com>,
+	Alper Ak <alperyasinak1@gmail.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 102/156] USB: serial: ftdi_sio: update Actisense PIDs constant names
-Date: Sat, 30 Dec 2023 11:59:16 +0000
-Message-ID: <20231230115815.701393811@linuxfoundation.org>
+Subject: [PATCH 6.6 103/156] USB: serial: option: add Quectel EG912Y module support
+Date: Sat, 30 Dec 2023 11:59:17 +0000
+Message-ID: <20231230115815.734540499@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -41,51 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Glover <mark.glover@actisense.com>
+From: Alper Ak <alperyasinak1@gmail.com>
 
-commit 513d88a88e0203188a38f4647dd08170aebd85df upstream.
+commit 6d79d9434c69bb8ffa8a631050eb0ad6b83d3e90 upstream.
 
-Update the constant names for unused USB PIDs (product identifiers) to
-reflect the new products now using the PIDs.
+Add Quectel EG912Y "DIAG, AT, MODEM"
 
-Signed-off-by: Mark Glover <mark.glover@actisense.com>
+0x6001: ECM / RNDIS + DIAG + AT + MODEM
+
+T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=6001 Rev= 3.18
+S:  Manufacturer=Android
+S:  Product=Android
+S:  SerialNumber=0000
+C:* #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=06 Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=87(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=89(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=88(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/ftdi_sio.c     |    6 +++---
- drivers/usb/serial/ftdi_sio_ids.h |    6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/serial/ftdi_sio.c
-+++ b/drivers/usb/serial/ftdi_sio.c
-@@ -1033,9 +1033,9 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(FTDI_VID, ACTISENSE_USG_PID) },
- 	{ USB_DEVICE(FTDI_VID, ACTISENSE_NGT_PID) },
- 	{ USB_DEVICE(FTDI_VID, ACTISENSE_NGW_PID) },
--	{ USB_DEVICE(FTDI_VID, ACTISENSE_D9AC_PID) },
--	{ USB_DEVICE(FTDI_VID, ACTISENSE_D9AD_PID) },
--	{ USB_DEVICE(FTDI_VID, ACTISENSE_D9AE_PID) },
-+	{ USB_DEVICE(FTDI_VID, ACTISENSE_UID_PID) },
-+	{ USB_DEVICE(FTDI_VID, ACTISENSE_USA_PID) },
-+	{ USB_DEVICE(FTDI_VID, ACTISENSE_NGX_PID) },
- 	{ USB_DEVICE(FTDI_VID, ACTISENSE_D9AF_PID) },
- 	{ USB_DEVICE(FTDI_VID, CHETCO_SEAGAUGE_PID) },
- 	{ USB_DEVICE(FTDI_VID, CHETCO_SEASWITCH_PID) },
---- a/drivers/usb/serial/ftdi_sio_ids.h
-+++ b/drivers/usb/serial/ftdi_sio_ids.h
-@@ -1568,9 +1568,9 @@
- #define ACTISENSE_USG_PID		0xD9A9 /* USG USB Serial Adapter */
- #define ACTISENSE_NGT_PID		0xD9AA /* NGT NMEA2000 Interface */
- #define ACTISENSE_NGW_PID		0xD9AB /* NGW NMEA2000 Gateway */
--#define ACTISENSE_D9AC_PID		0xD9AC /* Actisense Reserved */
--#define ACTISENSE_D9AD_PID		0xD9AD /* Actisense Reserved */
--#define ACTISENSE_D9AE_PID		0xD9AE /* Actisense Reserved */
-+#define ACTISENSE_UID_PID		0xD9AC /* USB Isolating Device */
-+#define ACTISENSE_USA_PID		0xD9AD /* USB to Serial Adapter */
-+#define ACTISENSE_NGX_PID		0xD9AE /* NGX NMEA2000 Gateway */
- #define ACTISENSE_D9AF_PID		0xD9AF /* Actisense Reserved */
- #define CHETCO_SEAGAUGE_PID		0xA548 /* SeaGauge USB Adapter */
- #define CHETCO_SEASWITCH_PID		0xA549 /* SeaSwitch USB Adapter */
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -272,6 +272,7 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_RM500Q			0x0800
+ #define QUECTEL_PRODUCT_RM520N			0x0801
+ #define QUECTEL_PRODUCT_EC200U			0x0901
++#define QUECTEL_PRODUCT_EG912Y			0x6001
+ #define QUECTEL_PRODUCT_EC200S_CN		0x6002
+ #define QUECTEL_PRODUCT_EC200A			0x6005
+ #define QUECTEL_PRODUCT_EM061K_LWW		0x6008
+@@ -1244,6 +1245,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200U, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200S_CN, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200T, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG912Y, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
+ 
+ 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
 
 
