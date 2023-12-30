@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8C579C2;
-	Sat, 30 Dec 2023 12:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0612279C2;
+	Sat, 30 Dec 2023 12:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FEEMJdwj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA31DC433C8;
-	Sat, 30 Dec 2023 12:12:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arqucpJj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F76C433C7;
+	Sat, 30 Dec 2023 12:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938339;
-	bh=zKKQES8Fi1M/Bb8+O4FjGp+zxf10ZLbHvhvDvv+aWVA=;
+	s=korg; t=1703938341;
+	bh=TZeMYShwItDFfqs5UQWKY4WuxcDDqo0EseNcBvrOqiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FEEMJdwjqizbVpvTshsj/nxA+fj0Sg8vMw6r+JgotDh/4S/o5yZgzXcekmmXNqyfS
-	 F1PY9GTBgfdjtas+/5SRLhv7I/CrXGFVzYVwMChJXIqsor+qW4rxVR8TPz7A2JC5Sg
-	 a0mTgtubb0PI6gN+G1DNKhgW6bFZXMoozSjalOOg=
+	b=arqucpJjZRU2cxvpLiuaq2ezGY8wSJJ/UXxyCvuacVOCZoOJAJNMr8uMcZyA7JICq
+	 8xxPRvq9lKsBkTYlMnYma3r/XVTd5OoEUPzRZOY2NZx1pz1wd3PPDvdVtizAN9eulT
+	 NAq68W20jFcAYZbumZpiZKorhpmtJXCaZDRSizFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	stable@kernel.org
-Subject: [PATCH 6.1 108/112] x86/alternatives: Sync core before enabling interrupts
-Date: Sat, 30 Dec 2023 12:00:21 +0000
-Message-ID: <20231230115810.222842736@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Jakub Acs <acsjakub@amazon.de>,
+	Changbin Du <changbin.du@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 109/112] mm/damon/core: make damon_start() waits until kdamond_fn() starts
+Date: Sat, 30 Dec 2023 12:00:22 +0000
+Message-ID: <20231230115810.249692727@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -43,47 +43,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: SeongJae Park <sj@kernel.org>
 
-commit 3ea1704a92967834bf0e64ca1205db4680d04048 upstream.
+commit 6376a824595607e99d032a39ba3394988b4fce96 upstream.
 
-text_poke_early() does:
+The cleanup tasks of kdamond threads including reset of corresponding
+DAMON context's ->kdamond field and decrease of global nr_running_ctxs
+counter is supposed to be executed by kdamond_fn().  However, commit
+0f91d13366a4 ("mm/damon: simplify stop mechanism") made neither
+damon_start() nor damon_stop() ensure the corresponding kdamond has
+started the execution of kdamond_fn().
 
-   local_irq_save(flags);
-   memcpy(addr, opcode, len);
-   local_irq_restore(flags);
-   sync_core();
+As a result, the cleanup can be skipped if damon_stop() is called fast
+enough after the previous damon_start().  Especially the skipped reset
+of ->kdamond could cause a use-after-free.
 
-That's not really correct because the synchronization should happen before
-interrupts are re-enabled to ensure that a pending interrupt observes the
-complete update of the opcodes.
+Fix it by waiting for start of kdamond_fn() execution from
+damon_start().
 
-It's not entirely clear whether the interrupt entry provides enough
-serialization already, but moving the sync_core() invocation into interrupt
-disabled region does no harm and is obviously correct.
-
-Fixes: 6fffacb30349 ("x86/alternatives, jumplabel: Use text_poke_early() before mm_init()")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/ZT6narvE%2BLxX%2B7Be@windriver.com
+Link: https://lkml.kernel.org/r/20231208175018.63880-1-sj@kernel.org
+Fixes: 0f91d13366a4 ("mm/damon: simplify stop mechanism")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Reported-by: Jakub Acs <acsjakub@amazon.de>
+Cc: Changbin Du <changbin.du@intel.com>
+Cc: Jakub Acs <acsjakub@amazon.de>
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/alternative.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/damon.h |    3 +++
+ mm/damon/core.c       |    7 +++++++
+ 2 files changed, 10 insertions(+)
 
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -1015,8 +1015,8 @@ void __init_or_module text_poke_early(vo
- 	} else {
- 		local_irq_save(flags);
- 		memcpy(addr, opcode, len);
--		local_irq_restore(flags);
- 		sync_core();
-+		local_irq_restore(flags);
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -8,6 +8,7 @@
+ #ifndef _DAMON_H_
+ #define _DAMON_H_
  
- 		/*
- 		 * Could also do a CLFLUSH here to speed up CPU recovery; but
++#include <linux/completion.h>
+ #include <linux/mutex.h>
+ #include <linux/time64.h>
+ #include <linux/types.h>
+@@ -452,6 +453,8 @@ struct damon_ctx {
+ /* private: internal use only */
+ 	struct timespec64 last_aggregation;
+ 	struct timespec64 last_ops_update;
++	/* for waiting until the execution of the kdamond_fn is started */
++	struct completion kdamond_started;
+ 
+ /* public: */
+ 	struct task_struct *kdamond;
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -383,6 +383,8 @@ struct damon_ctx *damon_new_ctx(void)
+ 	if (!ctx)
+ 		return NULL;
+ 
++	init_completion(&ctx->kdamond_started);
++
+ 	ctx->attrs.sample_interval = 5 * 1000;
+ 	ctx->attrs.aggr_interval = 100 * 1000;
+ 	ctx->attrs.ops_update_interval = 60 * 1000 * 1000;
+@@ -519,11 +521,14 @@ static int __damon_start(struct damon_ct
+ 	mutex_lock(&ctx->kdamond_lock);
+ 	if (!ctx->kdamond) {
+ 		err = 0;
++		reinit_completion(&ctx->kdamond_started);
+ 		ctx->kdamond = kthread_run(kdamond_fn, ctx, "kdamond.%d",
+ 				nr_running_ctxs);
+ 		if (IS_ERR(ctx->kdamond)) {
+ 			err = PTR_ERR(ctx->kdamond);
+ 			ctx->kdamond = NULL;
++		} else {
++			wait_for_completion(&ctx->kdamond_started);
+ 		}
+ 	}
+ 	mutex_unlock(&ctx->kdamond_lock);
+@@ -1147,6 +1152,8 @@ static int kdamond_fn(void *data)
+ 
+ 	pr_debug("kdamond (%d) starts\n", current->pid);
+ 
++	complete(&ctx->kdamond_started);
++
+ 	if (ctx->ops.init)
+ 		ctx->ops.init(ctx);
+ 	if (ctx->callback.before_start && ctx->callback.before_start(ctx))
 
 
