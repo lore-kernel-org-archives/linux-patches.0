@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C4779CD;
-	Sat, 30 Dec 2023 12:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9601F79CD;
+	Sat, 30 Dec 2023 12:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0RrByXde"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F27C433C7;
-	Sat, 30 Dec 2023 12:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gP4aG2z5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC48C433C7;
+	Sat, 30 Dec 2023 12:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937699;
-	bh=yPD/RtU46Y7xernfCfWHg671bNCnJnxbjZfSxte1Gzc=;
+	s=korg; t=1703937702;
+	bh=JuUX+7ty6SOGdrK5kKeZVY+89t7JyQL4s5BSuxfmQms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0RrByXde9PPrMWoWoqposVIGGPuJEBfjs/hda/V6/xvBVEgjF7vdxaPU3TQdzcsui
-	 WsKVYPWo8iRXX5AaNl54DvM5V/4rnnIKpQqtQ7jHlL8Ej+OwBuQ1HWIYjFcjT7LilU
-	 A/S4CTH0b8ew0o0+AtZEFAzQdKPR2r3Psi8qO1Jc=
+	b=gP4aG2z5qFgyDGjXGXBf+FkiG7/SVCOuJYVfgSmK7TA1SIT/SBSNrEg9ZVwDxoaST
+	 escF2kSeRWzLRtDQZmPcC7/LQqE8/9CeNjqrWLdV9PL0P5ZdGj4651aeySVwQ41Xay
+	 Jcyr2KyEAU35OjsRYI93xdarEaCSfjesVts4fLRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	Bin Li <binli@gnome.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/156] btrfs: free qgroup pertrans reserve on transaction abort
-Date: Sat, 30 Dec 2023 11:57:40 +0000
-Message-ID: <20231230115812.552644190@linuxfoundation.org>
+Subject: [PATCH 6.6 007/156] drm/amd/display: fix hw rotated modes when PSR-SU is enabled
+Date: Sat, 30 Dec 2023 11:57:41 +0000
+Message-ID: <20231230115812.587997409@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -43,117 +45,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-[ Upstream commit b321a52cce062ec7ed385333a33905d22159ce36 ]
+[ Upstream commit f528ee145bd0076cd0ed7e7b2d435893e6329e98 ]
 
-If we abort a transaction, we never run the code that frees the pertrans
-qgroup reservation. This results in warnings on unmount as that
-reservation has been leaked. The leak isn't a huge issue since the fs is
-read-only, but it's better to clean it up when we know we can/should. Do
-it during the cleanup_transaction step of aborting.
+We currently don't support dirty rectangles on hardware rotated modes.
+So, if a user is using hardware rotated modes with PSR-SU enabled,
+use PSR-SU FFU for all rotated planes (including cursor planes).
 
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: 30ebe41582d1 ("drm/amd/display: add FB_DAMAGE_CLIPS support")
+Reported-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2952
+Tested-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Tested-by: Bin Li <binli@gnome.org>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c     | 28 ++++++++++++++++++++++++++++
- fs/btrfs/qgroup.c      |  5 +++--
- fs/btrfs/transaction.c |  2 --
- fs/btrfs/transaction.h |  3 +++
- 4 files changed, 34 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c    |  3 +++
+ drivers/gpu/drm/amd/display/dc/dc_hw_types.h         |  1 +
+ .../drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c    |  3 ++-
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubp.c    | 12 ++++++++++--
+ 4 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 71efb6883f307..b79781df70714 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -4836,6 +4836,32 @@ void btrfs_cleanup_dirty_bgs(struct btrfs_transaction *cur_trans,
- 	}
- }
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index f5fdb61c821d0..d63360127834b 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5170,6 +5170,9 @@ static void fill_dc_dirty_rects(struct drm_plane *plane,
+ 	if (plane->type == DRM_PLANE_TYPE_CURSOR)
+ 		return;
  
-+static void btrfs_free_all_qgroup_pertrans(struct btrfs_fs_info *fs_info)
-+{
-+	struct btrfs_root *gang[8];
-+	int i;
-+	int ret;
++	if (new_plane_state->rotation != DRM_MODE_ROTATE_0)
++		goto ffu;
 +
-+	spin_lock(&fs_info->fs_roots_radix_lock);
-+	while (1) {
-+		ret = radix_tree_gang_lookup_tag(&fs_info->fs_roots_radix,
-+						 (void **)gang, 0,
-+						 ARRAY_SIZE(gang),
-+						 BTRFS_ROOT_TRANS_TAG);
-+		if (ret == 0)
-+			break;
-+		for (i = 0; i < ret; i++) {
-+			struct btrfs_root *root = gang[i];
-+
-+			btrfs_qgroup_free_meta_all_pertrans(root);
-+			radix_tree_tag_clear(&fs_info->fs_roots_radix,
-+					(unsigned long)root->root_key.objectid,
-+					BTRFS_ROOT_TRANS_TAG);
-+		}
+ 	num_clips = drm_plane_get_damage_clips_count(new_plane_state);
+ 	clips = drm_plane_get_damage_clips(new_plane_state);
+ 
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_hw_types.h b/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
+index 100d62162b717..99880b08cda0c 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
+@@ -465,6 +465,7 @@ struct dc_cursor_mi_param {
+ 	struct fixed31_32 v_scale_ratio;
+ 	enum dc_rotation_angle rotation;
+ 	bool mirror;
++	struct dc_stream_state *stream;
+ };
+ 
+ /* IPP related types */
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
+index 79befa17bb037..13ccb57379c7a 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
+@@ -3407,7 +3407,8 @@ void dcn10_set_cursor_position(struct pipe_ctx *pipe_ctx)
+ 		.h_scale_ratio = pipe_ctx->plane_res.scl_data.ratios.horz,
+ 		.v_scale_ratio = pipe_ctx->plane_res.scl_data.ratios.vert,
+ 		.rotation = pipe_ctx->plane_state->rotation,
+-		.mirror = pipe_ctx->plane_state->horizontal_mirror
++		.mirror = pipe_ctx->plane_state->horizontal_mirror,
++		.stream = pipe_ctx->stream,
+ 	};
+ 	bool pipe_split_on = false;
+ 	bool odm_combine_on = (pipe_ctx->next_odm_pipe != NULL) ||
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubp.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubp.c
+index 4566bc7abf17e..aa252dc263267 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubp.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubp.c
+@@ -1075,8 +1075,16 @@ void hubp2_cursor_set_position(
+ 	if (src_y_offset < 0)
+ 		src_y_offset = 0;
+ 	/* Save necessary cursor info x, y position. w, h is saved in attribute func. */
+-	hubp->cur_rect.x = src_x_offset + param->viewport.x;
+-	hubp->cur_rect.y = src_y_offset + param->viewport.y;
++	if (param->stream->link->psr_settings.psr_version >= DC_PSR_VERSION_SU_1 &&
++	    param->rotation != ROTATION_ANGLE_0) {
++		hubp->cur_rect.x = 0;
++		hubp->cur_rect.y = 0;
++		hubp->cur_rect.w = param->stream->timing.h_addressable;
++		hubp->cur_rect.h = param->stream->timing.v_addressable;
++	} else {
++		hubp->cur_rect.x = src_x_offset + param->viewport.x;
++		hubp->cur_rect.y = src_y_offset + param->viewport.y;
 +	}
-+	spin_unlock(&fs_info->fs_roots_radix_lock);
-+}
-+
- void btrfs_cleanup_one_transaction(struct btrfs_transaction *cur_trans,
- 				   struct btrfs_fs_info *fs_info)
- {
-@@ -4864,6 +4890,8 @@ void btrfs_cleanup_one_transaction(struct btrfs_transaction *cur_trans,
- 				     EXTENT_DIRTY);
- 	btrfs_destroy_pinned_extent(fs_info, &cur_trans->pinned_extents);
- 
-+	btrfs_free_all_qgroup_pertrans(fs_info);
-+
- 	cur_trans->state =TRANS_STATE_COMPLETED;
- 	wake_up(&cur_trans->commit_wait);
  }
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index 0d2212fa0ce85..a006f5160e6b4 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -4124,8 +4124,9 @@ static void qgroup_convert_meta(struct btrfs_fs_info *fs_info, u64 ref_root,
  
- 		qgroup_rsv_release(fs_info, qgroup, num_bytes,
- 				BTRFS_QGROUP_RSV_META_PREALLOC);
--		qgroup_rsv_add(fs_info, qgroup, num_bytes,
--				BTRFS_QGROUP_RSV_META_PERTRANS);
-+		if (!sb_rdonly(fs_info->sb))
-+			qgroup_rsv_add(fs_info, qgroup, num_bytes,
-+				       BTRFS_QGROUP_RSV_META_PERTRANS);
- 
- 		list_for_each_entry(glist, &qgroup->groups, next_group)
- 			qgroup_iterator_add(&qgroup_list, glist->group);
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index c780d37294636..0ac2d191cd34f 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -37,8 +37,6 @@
- 
- static struct kmem_cache *btrfs_trans_handle_cachep;
- 
--#define BTRFS_ROOT_TRANS_TAG 0
--
- /*
-  * Transaction states and transitions
-  *
-diff --git a/fs/btrfs/transaction.h b/fs/btrfs/transaction.h
-index 93869cda6af99..238a0ab85df9b 100644
---- a/fs/btrfs/transaction.h
-+++ b/fs/btrfs/transaction.h
-@@ -12,6 +12,9 @@
- #include "ctree.h"
- #include "misc.h"
- 
-+/* Radix-tree tag for roots that are part of the trasaction. */
-+#define BTRFS_ROOT_TRANS_TAG			0
-+
- enum btrfs_trans_state {
- 	TRANS_STATE_RUNNING,
- 	TRANS_STATE_COMMIT_PREP,
+ void hubp2_clk_cntl(struct hubp *hubp, bool enable)
 -- 
 2.43.0
 
