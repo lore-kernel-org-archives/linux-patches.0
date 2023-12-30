@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB7179DC;
-	Sat, 30 Dec 2023 12:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902F479DD;
+	Sat, 30 Dec 2023 12:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIBb04vF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861DFC433C8;
-	Sat, 30 Dec 2023 12:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImW6HgdU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CB4C433C7;
+	Sat, 30 Dec 2023 12:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938323;
-	bh=BSkRvkLB8TOY0faiU4m5rW6OlXo2mywrhWIMTIGi5KY=;
+	s=korg; t=1703938326;
+	bh=4AsNwWV6hAZDlsW/pO2Ibsi+ZKSPCiJnBlDMbtbUUAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AIBb04vFO9sl7gmIyKnR1tBT/xGh+2a+sjgaaG2TbRc1gNJntghLLgRIP2z5Y6IIP
-	 TMw33FTl+6+eEopfUTA2/10FyCJNDSAN0CkdWVnmP2S9HTathVPUT8ExodbBszE7Mb
-	 FrNgOCw6o/Iau5gSnrTs9J/5A2nnfmoOmGBFr0Pg=
+	b=ImW6HgdU8OLXR3Acc/c95NsjNs8ROniBzXFZ50tysXrIlvA+ztA/nVcutXm+Ew663
+	 wK4bCjGeigoc/lukCCgKXw0nTrYrk85VsE/g1m+aSdUyd3sxbHSlnFfubsMEtYSPlU
+	 KvqhViO6prgNdJDz7VYQNqYX1cYXcW+FMkts5YSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Riwen Lu <luriwen@kylinos.cn>,
-	xiongxin <xiongxin@kylinos.cn>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.1 102/112] gpio: dwapb: mask/unmask IRQ when disable/enale it
-Date: Sat, 30 Dec 2023 12:00:15 +0000
-Message-ID: <20231230115810.051620562@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Petr Mladek <pmladek@suse.com>
+Subject: [PATCH 6.1 103/112] lib/vsprintf: Fix %pfwf when current node refcount == 0
+Date: Sat, 30 Dec 2023 12:00:16 +0000
+Message-ID: <20231230115810.075013174@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -45,76 +43,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: xiongxin <xiongxin@kylinos.cn>
+From: Herve Codina <herve.codina@bootlin.com>
 
-commit 1cc3542c76acb5f59001e3e562eba672f1983355 upstream.
+commit 5c47251e8c4903111608ddcba2a77c0c425c247c upstream.
 
-In the hardware implementation of the I2C HID driver based on DesignWare
-GPIO IRQ chip, when the user continues to use the I2C HID device in the
-suspend process, the I2C HID interrupt will be masked after the resume
-process is finished.
+A refcount issue can appeared in __fwnode_link_del() due to the
+pr_debug() call:
+  WARNING: CPU: 0 PID: 901 at lib/refcount.c:25 refcount_warn_saturate+0xe5/0x110
+  Call Trace:
+  <TASK>
+  ...
+  of_node_get+0x1e/0x30
+  of_fwnode_get+0x28/0x40
+  fwnode_full_name_string+0x34/0x90
+  fwnode_string+0xdb/0x140
+  ...
+  vsnprintf+0x17b/0x630
+  ...
+  __fwnode_link_del+0x25/0xa0
+  fwnode_links_purge+0x39/0xb0
+  of_node_release+0xd9/0x180
+  ...
 
-This is because the disable_irq()/enable_irq() of the DesignWare GPIO
-driver does not synchronize the IRQ mask register state. In normal use
-of the I2C HID procedure, the GPIO IRQ irq_mask()/irq_unmask() functions
-are called in pairs. In case of an exception, i2c_hid_core_suspend()
-calls disable_irq() to disable the GPIO IRQ. With low probability, this
-causes irq_unmask() to not be called, which causes the GPIO IRQ to be
-masked and not unmasked in enable_irq(), raising an exception.
+Indeed, an fwnode (of_node) is being destroyed and so, of_node_release()
+is called because the of_node refcount reached 0.
+>From of_node_release() several function calls are done and lead to
+a pr_debug() calls with %pfwf to print the fwnode full name.
+The issue is not present if we change %pfwf to %pfwP.
 
-Add synchronization to the masked register state in the
-dwapb_irq_enable()/dwapb_irq_disable() function. mask the GPIO IRQ
-before disabling it. After enabling the GPIO IRQ, unmask the IRQ.
+To print the full name, %pfwf iterates over the current node and its
+parents and obtain/drop a reference to all nodes involved.
 
-Fixes: 7779b3455697 ("gpio: add a driver for the Synopsys DesignWare APB GPIO block")
-Cc: stable@kernel.org
-Co-developed-by: Riwen Lu <luriwen@kylinos.cn>
-Signed-off-by: Riwen Lu <luriwen@kylinos.cn>
-Signed-off-by: xiongxin <xiongxin@kylinos.cn>
-Acked-by: Serge Semin <fancer.lancer@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+In order to allow to print the full name (%pfwf) of a node while it is
+being destroyed, do not obtain/drop a reference to this current node.
+
+Fixes: a92eb7621b9f ("lib/vsprintf: Make use of fwnode API to obtain node names and separators")
+Cc: stable@vger.kernel.org
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20231114152655.409331-1-herve.codina@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-dwapb.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ lib/vsprintf.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/gpio/gpio-dwapb.c
-+++ b/drivers/gpio/gpio-dwapb.c
-@@ -283,13 +283,15 @@ static void dwapb_irq_enable(struct irq_
- {
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct dwapb_gpio *gpio = to_dwapb_gpio(gc);
-+	irq_hw_number_t hwirq = irqd_to_hwirq(d);
- 	unsigned long flags;
- 	u32 val;
+--- a/lib/vsprintf.c
++++ b/lib/vsprintf.c
+@@ -2092,15 +2092,20 @@ char *fwnode_full_name_string(struct fwn
  
- 	raw_spin_lock_irqsave(&gc->bgpio_lock, flags);
--	val = dwapb_read(gpio, GPIO_INTEN);
--	val |= BIT(irqd_to_hwirq(d));
-+	val = dwapb_read(gpio, GPIO_INTEN) | BIT(hwirq);
- 	dwapb_write(gpio, GPIO_INTEN, val);
-+	val = dwapb_read(gpio, GPIO_INTMASK) & ~BIT(hwirq);
-+	dwapb_write(gpio, GPIO_INTMASK, val);
- 	raw_spin_unlock_irqrestore(&gc->bgpio_lock, flags);
- }
+ 	/* Loop starting from the root node to the current node. */
+ 	for (depth = fwnode_count_parents(fwnode); depth >= 0; depth--) {
+-		struct fwnode_handle *__fwnode =
+-			fwnode_get_nth_parent(fwnode, depth);
++		/*
++		 * Only get a reference for other nodes (i.e. parent nodes).
++		 * fwnode refcount may be 0 here.
++		 */
++		struct fwnode_handle *__fwnode = depth ?
++			fwnode_get_nth_parent(fwnode, depth) : fwnode;
  
-@@ -297,12 +299,14 @@ static void dwapb_irq_disable(struct irq
- {
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct dwapb_gpio *gpio = to_dwapb_gpio(gc);
-+	irq_hw_number_t hwirq = irqd_to_hwirq(d);
- 	unsigned long flags;
- 	u32 val;
+ 		buf = string(buf, end, fwnode_get_name_prefix(__fwnode),
+ 			     default_str_spec);
+ 		buf = string(buf, end, fwnode_get_name(__fwnode),
+ 			     default_str_spec);
  
- 	raw_spin_lock_irqsave(&gc->bgpio_lock, flags);
--	val = dwapb_read(gpio, GPIO_INTEN);
--	val &= ~BIT(irqd_to_hwirq(d));
-+	val = dwapb_read(gpio, GPIO_INTMASK) | BIT(hwirq);
-+	dwapb_write(gpio, GPIO_INTMASK, val);
-+	val = dwapb_read(gpio, GPIO_INTEN) & ~BIT(hwirq);
- 	dwapb_write(gpio, GPIO_INTEN, val);
- 	raw_spin_unlock_irqrestore(&gc->bgpio_lock, flags);
- }
+-		fwnode_handle_put(__fwnode);
++		if (depth)
++			fwnode_handle_put(__fwnode);
+ 	}
+ 
+ 	return buf;
 
 
