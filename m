@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375FD79DC;
-	Sat, 30 Dec 2023 12:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8850879DD;
+	Sat, 30 Dec 2023 12:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DC9Ur/nm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB62C433C8;
-	Sat, 30 Dec 2023 12:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i02e2w9a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF9FC433C8;
+	Sat, 30 Dec 2023 12:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937650;
-	bh=mt+RDhVkwVPW4X5LRtr6G22nbNkFNAmMmpwaLPfSfTI=;
+	s=korg; t=1703937653;
+	bh=mp8btEr7GJAIDSwxFxg43LtdGD4yaE6O9e/bg9qVlyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DC9Ur/nmpiKgxep0xcGyI24Y005AvrdZGYM/ZuGJw4tS/l/YGSIxKSlrzQ2LzA1C5
-	 uQf+L5m5ti5T9AIeQ3eFfYtZ2mFIdD2Dmt3SGxZReKfT6jg39XC4sEozB/gr9jglyL
-	 HGismKdrJnrJTm3E2V6SqnVjlJ1LjmfPSLOFyoGA=
+	b=i02e2w9amu3l2b+QeTFOfZTBADmvpcGi5f6Y2IKEaokw9ckl8Ifa85CC3kvaYdelx
+	 ayoc5WowSARew47842RSNKipJf+eklrNJIRuI59BGaZ+FWkWEfAh0VcTCTZJNQdut+
+	 1OQSolcBJIS8/Om4QzESf88WdDaeqmwgVTC8xCsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Animesh Manna <animesh.manna@intel.com>,
-	Uma Shankar <uma.shankar@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Emil Velikov <emil.l.velikov@gmail.com>,
+	Rob Clark <robdclark@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 010/156] drm/i915/edp: dont write to DP_LINK_BW_SET when using rate select
-Date: Sat, 30 Dec 2023 11:57:44 +0000
-Message-ID: <20231230115812.701902401@linuxfoundation.org>
+Subject: [PATCH 6.6 011/156] drm: Update file owner during use
+Date: Sat, 30 Dec 2023 11:57:45 +0000
+Message-ID: <20231230115812.742042429@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -45,83 +46,311 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 
-[ Upstream commit e6861d8264cd43c5eb20196e53df36fd71ec5698 ]
+[ Upstream commit 1c7a387ffef894b1ab3942f0482dac7a6e0a909c ]
 
-The eDP 1.5 spec adds a clarification for eDP 1.4x:
+With the typical model where the display server opens the file descriptor
+and then hands it over to the client(*), we were showing stale data in
+debugfs.
 
-> For eDP v1.4x, if the Source device chooses the Main-Link rate by way
-> of DPCD 00100h, the Sink device shall ignore DPCD 00115h[2:0].
+Fix it by updating the drm_file->pid on ioctl access from a different
+process.
 
-We write 0 to DP_LINK_BW_SET (DPCD 100h) even when using
-DP_LINK_RATE_SET (DPCD 114h). Stop doing that, as it can cause the panel
-to ignore the rate set method.
+The field is also made RCU protected to allow for lockless readers. Update
+side is protected with dev->filelist_mutex.
 
-Moreover, 0 is a reserved value for DP_LINK_BW_SET, and should not be
-used.
+Before:
 
-v2: Improve the comments (Ville)
+$ cat /sys/kernel/debug/dri/0/clients
+             command   pid dev master a   uid      magic
+                Xorg  2344   0   y    y     0          0
+                Xorg  2344   0   n    y     0          2
+                Xorg  2344   0   n    y     0          3
+                Xorg  2344   0   n    y     0          4
 
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/9081
-Tested-by: Animesh Manna <animesh.manna@intel.com>
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231205180551.2476228-1-jani.nikula@intel.com
-(cherry picked from commit 23b392b94acb0499f69706c5808c099f590ebcf4)
-Cc: stable@vger.kernel.org
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+After:
+
+$ cat /sys/kernel/debug/dri/0/clients
+             command  tgid dev master a   uid      magic
+                Xorg   830   0   y    y     0          0
+       xfce4-session   880   0   n    y     0          1
+               xfwm4   943   0   n    y     0          2
+           neverball  1095   0   n    y     0          3
+
+*)
+More detailed and historically accurate description of various handover
+implementation kindly provided by Emil Velikov:
+
+"""
+The traditional model, the server was the orchestrator managing the
+primary device node. From the fd, to the master status and
+authentication. But looking at the fd alone, this has varied across
+the years.
+
+IIRC in the DRI1 days, Xorg (libdrm really) would have a list of open
+fd(s) and reuse those whenever needed, DRI2 the client was responsible
+for open() themselves and with DRI3 the fd was passed to the client.
+
+Around the inception of DRI3 and systemd-logind, the latter became
+another possible orchestrator. Whereby Xorg and Wayland compositors
+could ask it for the fd. For various reasons (hysterical and genuine
+ones) Xorg has a fallback path going the open(), whereas Wayland
+compositors are moving to solely relying on logind... some never had
+fallback even.
+
+Over the past few years, more projects have emerged which provide
+functionality similar (be that on API level, Dbus, or otherwise) to
+systemd-logind.
+"""
+
+v2:
+ * Fixed typo in commit text and added a fine historical explanation
+   from Emil.
+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Acked-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+Tested-by: Rob Clark <robdclark@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230621094824.2348732-1-tvrtko.ursulin@linux.intel.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Stable-dep-of: 5a6c9a05e55c ("drm: Fix FD ownership check in drm_master_check_perm()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/i915/display/intel_dp_link_training.c | 31 +++++++++++++------
- 1 file changed, 21 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |  6 ++--
+ drivers/gpu/drm/drm_auth.c              |  3 +-
+ drivers/gpu/drm/drm_debugfs.c           | 10 ++++---
+ drivers/gpu/drm/drm_file.c              | 40 +++++++++++++++++++++++--
+ drivers/gpu/drm/drm_ioctl.c             |  3 ++
+ drivers/gpu/drm/nouveau/nouveau_drm.c   |  5 +++-
+ drivers/gpu/drm/vmwgfx/vmwgfx_gem.c     |  6 ++--
+ include/drm/drm_file.h                  | 13 ++++++--
+ 8 files changed, 71 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp_link_training.c b/drivers/gpu/drm/i915/display/intel_dp_link_training.c
-index d09e43a38fa61..a62bca622b0a1 100644
---- a/drivers/gpu/drm/i915/display/intel_dp_link_training.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_link_training.c
-@@ -650,19 +650,30 @@ intel_dp_update_link_bw_set(struct intel_dp *intel_dp,
- 			    const struct intel_crtc_state *crtc_state,
- 			    u8 link_bw, u8 rate_select)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+index ca4d2d430e28c..a1b15d0d6c489 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+@@ -962,6 +962,7 @@ static int amdgpu_debugfs_gem_info_show(struct seq_file *m, void *unused)
+ 	list_for_each_entry(file, &dev->filelist, lhead) {
+ 		struct task_struct *task;
+ 		struct drm_gem_object *gobj;
++		struct pid *pid;
+ 		int id;
+ 
+ 		/*
+@@ -971,8 +972,9 @@ static int amdgpu_debugfs_gem_info_show(struct seq_file *m, void *unused)
+ 		 * Therefore, we need to protect this ->comm access using RCU.
+ 		 */
+ 		rcu_read_lock();
+-		task = pid_task(file->pid, PIDTYPE_TGID);
+-		seq_printf(m, "pid %8d command %s:\n", pid_nr(file->pid),
++		pid = rcu_dereference(file->pid);
++		task = pid_task(pid, PIDTYPE_TGID);
++		seq_printf(m, "pid %8d command %s:\n", pid_nr(pid),
+ 			   task ? task->comm : "<unknown>");
+ 		rcu_read_unlock();
+ 
+diff --git a/drivers/gpu/drm/drm_auth.c b/drivers/gpu/drm/drm_auth.c
+index cf92a9ae8034c..2ed2585ded378 100644
+--- a/drivers/gpu/drm/drm_auth.c
++++ b/drivers/gpu/drm/drm_auth.c
+@@ -235,7 +235,8 @@ static int drm_new_set_master(struct drm_device *dev, struct drm_file *fpriv)
+ static int
+ drm_master_check_perm(struct drm_device *dev, struct drm_file *file_priv)
  {
--	u8 link_config[2];
-+	u8 lane_count = crtc_state->lane_count;
+-	if (file_priv->pid == task_pid(current) && file_priv->was_master)
++	if (file_priv->was_master &&
++	    rcu_access_pointer(file_priv->pid) == task_pid(current))
+ 		return 0;
  
--	/* Write the link configuration data */
--	link_config[0] = link_bw;
--	link_config[1] = crtc_state->lane_count;
- 	if (crtc_state->enhanced_framing)
--		link_config[1] |= DP_LANE_COUNT_ENHANCED_FRAME_EN;
--	drm_dp_dpcd_write(&intel_dp->aux, DP_LINK_BW_SET, link_config, 2);
-+		lane_count |= DP_LANE_COUNT_ENHANCED_FRAME_EN;
-+
-+	if (link_bw) {
-+		/* DP and eDP v1.3 and earlier link bw set method. */
-+		u8 link_config[] = { link_bw, lane_count };
+ 	if (!capable(CAP_SYS_ADMIN))
+diff --git a/drivers/gpu/drm/drm_debugfs.c b/drivers/gpu/drm/drm_debugfs.c
+index 2de43ff3ce0a4..41b0682c638ef 100644
+--- a/drivers/gpu/drm/drm_debugfs.c
++++ b/drivers/gpu/drm/drm_debugfs.c
+@@ -92,15 +92,17 @@ static int drm_clients_info(struct seq_file *m, void *data)
+ 	 */
+ 	mutex_lock(&dev->filelist_mutex);
+ 	list_for_each_entry_reverse(priv, &dev->filelist, lhead) {
+-		struct task_struct *task;
+ 		bool is_current_master = drm_is_current_master(priv);
++		struct task_struct *task;
++		struct pid *pid;
  
--	/* eDP 1.4 rate select method. */
--	if (!link_bw)
--		drm_dp_dpcd_write(&intel_dp->aux, DP_LINK_RATE_SET,
--				  &rate_select, 1);
-+		drm_dp_dpcd_write(&intel_dp->aux, DP_LINK_BW_SET, link_config,
-+				  ARRAY_SIZE(link_config));
-+	} else {
-+		/*
-+		 * eDP v1.4 and later link rate set method.
-+		 *
-+		 * eDP v1.4x sinks shall ignore DP_LINK_RATE_SET if
-+		 * DP_LINK_BW_SET is set. Avoid writing DP_LINK_BW_SET.
-+		 *
-+		 * eDP v1.5 sinks allow choosing either, and the last choice
-+		 * shall be active.
-+		 */
-+		drm_dp_dpcd_writeb(&intel_dp->aux, DP_LANE_COUNT_SET, lane_count);
-+		drm_dp_dpcd_writeb(&intel_dp->aux, DP_LINK_RATE_SET, rate_select);
-+	}
+-		rcu_read_lock(); /* locks pid_task()->comm */
+-		task = pid_task(priv->pid, PIDTYPE_TGID);
++		rcu_read_lock(); /* Locks priv->pid and pid_task()->comm! */
++		pid = rcu_dereference(priv->pid);
++		task = pid_task(pid, PIDTYPE_TGID);
+ 		uid = task ? __task_cred(task)->euid : GLOBAL_ROOT_UID;
+ 		seq_printf(m, "%20s %5d %3d   %c    %c %5d %10u\n",
+ 			   task ? task->comm : "<unknown>",
+-			   pid_vnr(priv->pid),
++			   pid_vnr(pid),
+ 			   priv->minor->index,
+ 			   is_current_master ? 'y' : 'n',
+ 			   priv->authenticated ? 'y' : 'n',
+diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
+index 883d83bc0e3d5..e692770ef6d3c 100644
+--- a/drivers/gpu/drm/drm_file.c
++++ b/drivers/gpu/drm/drm_file.c
+@@ -160,7 +160,7 @@ struct drm_file *drm_file_alloc(struct drm_minor *minor)
+ 
+ 	/* Get a unique identifier for fdinfo: */
+ 	file->client_id = atomic64_inc_return(&ident);
+-	file->pid = get_pid(task_tgid(current));
++	rcu_assign_pointer(file->pid, get_pid(task_tgid(current)));
+ 	file->minor = minor;
+ 
+ 	/* for compatibility root is always authenticated */
+@@ -200,7 +200,7 @@ struct drm_file *drm_file_alloc(struct drm_minor *minor)
+ 		drm_syncobj_release(file);
+ 	if (drm_core_check_feature(dev, DRIVER_GEM))
+ 		drm_gem_release(dev, file);
+-	put_pid(file->pid);
++	put_pid(rcu_access_pointer(file->pid));
+ 	kfree(file);
+ 
+ 	return ERR_PTR(ret);
+@@ -291,7 +291,7 @@ void drm_file_free(struct drm_file *file)
+ 
+ 	WARN_ON(!list_empty(&file->event_list));
+ 
+-	put_pid(file->pid);
++	put_pid(rcu_access_pointer(file->pid));
+ 	kfree(file);
  }
  
- /*
+@@ -505,6 +505,40 @@ int drm_release(struct inode *inode, struct file *filp)
+ }
+ EXPORT_SYMBOL(drm_release);
+ 
++void drm_file_update_pid(struct drm_file *filp)
++{
++	struct drm_device *dev;
++	struct pid *pid, *old;
++
++	/*
++	 * Master nodes need to keep the original ownership in order for
++	 * drm_master_check_perm to keep working correctly. (See comment in
++	 * drm_auth.c.)
++	 */
++	if (filp->was_master)
++		return;
++
++	pid = task_tgid(current);
++
++	/*
++	 * Quick unlocked check since the model is a single handover followed by
++	 * exclusive repeated use.
++	 */
++	if (pid == rcu_access_pointer(filp->pid))
++		return;
++
++	dev = filp->minor->dev;
++	mutex_lock(&dev->filelist_mutex);
++	old = rcu_replace_pointer(filp->pid, pid, 1);
++	mutex_unlock(&dev->filelist_mutex);
++
++	if (pid != old) {
++		get_pid(pid);
++		synchronize_rcu();
++		put_pid(old);
++	}
++}
++
+ /**
+  * drm_release_noglobal - release method for DRM file
+  * @inode: device inode
+diff --git a/drivers/gpu/drm/drm_ioctl.c b/drivers/gpu/drm/drm_ioctl.c
+index f03ffbacfe9b4..77590b0f38fa3 100644
+--- a/drivers/gpu/drm/drm_ioctl.c
++++ b/drivers/gpu/drm/drm_ioctl.c
+@@ -776,6 +776,9 @@ long drm_ioctl_kernel(struct file *file, drm_ioctl_t *func, void *kdata,
+ 	struct drm_device *dev = file_priv->minor->dev;
+ 	int retcode;
+ 
++	/* Update drm_file owner if fd was passed along. */
++	drm_file_update_pid(file_priv);
++
+ 	if (drm_dev_is_unplugged(dev))
+ 		return -ENODEV;
+ 
+diff --git a/drivers/gpu/drm/nouveau/nouveau_drm.c b/drivers/gpu/drm/nouveau/nouveau_drm.c
+index 4396f501b16a3..50589f982d1a4 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_drm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+@@ -1133,7 +1133,10 @@ nouveau_drm_open(struct drm_device *dev, struct drm_file *fpriv)
+ 	}
+ 
+ 	get_task_comm(tmpname, current);
+-	snprintf(name, sizeof(name), "%s[%d]", tmpname, pid_nr(fpriv->pid));
++	rcu_read_lock();
++	snprintf(name, sizeof(name), "%s[%d]",
++		 tmpname, pid_nr(rcu_dereference(fpriv->pid)));
++	rcu_read_unlock();
+ 
+ 	if (!(cli = kzalloc(sizeof(*cli), GFP_KERNEL))) {
+ 		ret = -ENOMEM;
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c b/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
+index 8b1eb0061610c..12787bb9c111d 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
+@@ -244,6 +244,7 @@ static int vmw_debugfs_gem_info_show(struct seq_file *m, void *unused)
+ 	list_for_each_entry(file, &dev->filelist, lhead) {
+ 		struct task_struct *task;
+ 		struct drm_gem_object *gobj;
++		struct pid *pid;
+ 		int id;
+ 
+ 		/*
+@@ -253,8 +254,9 @@ static int vmw_debugfs_gem_info_show(struct seq_file *m, void *unused)
+ 		 * Therefore, we need to protect this ->comm access using RCU.
+ 		 */
+ 		rcu_read_lock();
+-		task = pid_task(file->pid, PIDTYPE_TGID);
+-		seq_printf(m, "pid %8d command %s:\n", pid_nr(file->pid),
++		pid = rcu_dereference(file->pid);
++		task = pid_task(pid, PIDTYPE_TGID);
++		seq_printf(m, "pid %8d command %s:\n", pid_nr(pid),
+ 			   task ? task->comm : "<unknown>");
+ 		rcu_read_unlock();
+ 
+diff --git a/include/drm/drm_file.h b/include/drm/drm_file.h
+index 010239392adfb..9c47a43f42a62 100644
+--- a/include/drm/drm_file.h
++++ b/include/drm/drm_file.h
+@@ -256,8 +256,15 @@ struct drm_file {
+ 	/** @master_lookup_lock: Serializes @master. */
+ 	spinlock_t master_lookup_lock;
+ 
+-	/** @pid: Process that opened this file. */
+-	struct pid *pid;
++	/**
++	 * @pid: Process that is using this file.
++	 *
++	 * Must only be dereferenced under a rcu_read_lock or equivalent.
++	 *
++	 * Updates are guarded with dev->filelist_mutex and reference must be
++	 * dropped after a RCU grace period to accommodate lockless readers.
++	 */
++	struct pid __rcu *pid;
+ 
+ 	/** @client_id: A unique id for fdinfo */
+ 	u64 client_id;
+@@ -420,6 +427,8 @@ static inline bool drm_is_accel_client(const struct drm_file *file_priv)
+ 	return file_priv->minor->type == DRM_MINOR_ACCEL;
+ }
+ 
++void drm_file_update_pid(struct drm_file *);
++
+ int drm_open(struct inode *inode, struct file *filp);
+ int drm_open_helper(struct file *filp, struct drm_minor *minor);
+ ssize_t drm_read(struct file *filp, char __user *buffer,
 -- 
 2.43.0
 
