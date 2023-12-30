@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DF479DC;
-	Sat, 30 Dec 2023 12:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC518825;
+	Sat, 30 Dec 2023 12:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GovnjTXw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB46C433C7;
-	Sat, 30 Dec 2023 12:06:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XowC0JLH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149C1C433C8;
+	Sat, 30 Dec 2023 12:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703937981;
-	bh=KnCdk7EHIlxpgRbxo7CU/ZBKcmyrAzvKLjEVvpKIPxk=;
+	s=korg; t=1703937984;
+	bh=p1QzTr/LG/izMoVxXrAirhgLZ1UvnCF3i9UjdeLzE8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GovnjTXwY4dCmHaQmRHj/WyBVI658lMLzqnFEVOJZl/uWK+LpBNmpjeMm/R+OaBOe
-	 SFoJv68WNRRdGuWVWuENHMUvx8/W8xuFMJCGybNrsO/QuaVWfvDOnWv7Fwbh57iE1N
-	 ruGsbPrxmyBSBfPiXfBrzMZWIVTbApDVKHMLhqo4=
+	b=XowC0JLHTSl8/+F4+za+CV1oMl7WUZ9k6T6XFbEMDaAyjwrqN2rKp2AzF797QZl+H
+	 NwvaIGD95ERzkUKhFpdmh8Q0XC++b84+xZmkMeR+Q4nv7kK7kMIAQhxJFQY+uDAjNo
+	 TrWtOcRL1DRRoKzeyQggnkU1mL94rxdnvbQ9eIlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Lu <alex_lu@realsil.com.cn>,
-	Max Chou <max.chou@realtek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 113/156] Bluetooth: Add more enc key size check
-Date: Sat, 30 Dec 2023 11:59:27 +0000
-Message-ID: <20231230115816.051725113@linuxfoundation.org>
+	Slark Xiao <slark_xiao@163.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 104/156] USB: serial: option: add Foxconn T99W265 with new baseline
+Date: Sat, 30 Dec 2023 11:59:18 +0000
+Message-ID: <20231230115815.767360526@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -42,115 +41,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Lu <alex_lu@realsil.com.cn>
+From: Slark Xiao <slark_xiao@163.com>
 
-commit 04a342cc49a8522e99c9b3346371c329d841dcd2 upstream.
+commit 13fde9ac23ca8c6d1ac13cc9eefe1f1ac3ee30a4 upstream.
 
-When we are slave role and receives l2cap conn req when encryption has
-started, we should check the enc key size to avoid KNOB attack or BLUFFS
-attack.
->From SIG recommendation, implementations are advised to reject
-service-level connections on an encrypted baseband link with key
-strengths below 7 octets.
-A simple and clear way to achieve this is to place the enc key size
-check in hci_cc_read_enc_key_size()
+This ID was added based on latest SDX12 code base line, and we
+made some changes with previous 0489:e0db.
 
-The btmon log below shows the case that lacks enc key size check.
+Test evidence as below:
+T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=ef(misc ) Sub=02 Prot=01 MxPS= 9 #Cfgs=  2
+P:  Vendor=0489 ProdID=e0da Rev=05.04
+S:  Manufacturer=Qualcomm
+S:  Product=Qualcomm Snapdragon X12
+S:  SerialNumber=2bda65fb
+C:  #Ifs= 6 Cfg#= 2 Atr=a0 MxPwr=896mA
+I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:  If#=0x2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+I:  If#=0x3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
 
-> HCI Event: Connect Request (0x04) plen 10
-        Address: BB:22:33:44:55:99 (OUI BB-22-33)
-        Class: 0x480104
-          Major class: Computer (desktop, notebook, PDA, organizers)
-          Minor class: Desktop workstation
-          Capturing (Scanner, Microphone)
-          Telephony (Cordless telephony, Modem, Headset)
-        Link type: ACL (0x01)
-< HCI Command: Accept Connection Request (0x01|0x0009) plen 7
-        Address: BB:22:33:44:55:99 (OUI BB-22-33)
-        Role: Peripheral (0x01)
-> HCI Event: Command Status (0x0f) plen 4
-      Accept Connection Request (0x01|0x0009) ncmd 2
-        Status: Success (0x00)
-> HCI Event: Connect Complete (0x03) plen 11
-        Status: Success (0x00)
-        Handle: 1
-        Address: BB:22:33:44:55:99 (OUI BB-22-33)
-        Link type: ACL (0x01)
-        Encryption: Disabled (0x00)
-...
+0&1: MBIM, 2: Modem, 3:GNSS, 4:Diag, 5:ADB
 
-> HCI Event: Encryption Change (0x08) plen 4
-        Status: Success (0x00)
-        Handle: 1 Address: BB:22:33:44:55:99 (OUI BB-22-33)
-        Encryption: Enabled with E0 (0x01)
-< HCI Command: Read Encryption Key Size (0x05|0x0008) plen 2
-        Handle: 1 Address: BB:22:33:44:55:99 (OUI BB-22-33)
-> HCI Event: Command Complete (0x0e) plen 7
-      Read Encryption Key Size (0x05|0x0008) ncmd 2
-        Status: Success (0x00)
-        Handle: 1 Address: BB:22:33:44:55:99 (OUI BB-22-33)
-        Key size: 6
-// We should check the enc key size
-...
-
-> ACL Data RX: Handle 1 flags 0x02 dlen 12
-      L2CAP: Connection Request (0x02) ident 3 len 4
-        PSM: 25 (0x0019)
-        Source CID: 64
-< ACL Data TX: Handle 1 flags 0x00 dlen 16
-      L2CAP: Connection Response (0x03) ident 3 len 8
-        Destination CID: 64
-        Source CID: 64
-        Result: Connection pending (0x0001)
-        Status: Authorization pending (0x0002)
-> HCI Event: Number of Completed Packets (0x13) plen 5
-        Num handles: 1
-        Handle: 1 Address: BB:22:33:44:55:99 (OUI BB-22-33)
-        Count: 1
-        #35: len 16 (25 Kb/s)
-        Latency: 5 msec (2-7 msec ~4 msec)
-< ACL Data TX: Handle 1 flags 0x00 dlen 16
-      L2CAP: Connection Response (0x03) ident 3 len 8
-        Destination CID: 64
-        Source CID: 64
-        Result: Connection successful (0x0000)
-        Status: No further information available (0x0000)
-
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Alex Lu <alex_lu@realsil.com.cn>
-Signed-off-by: Max Chou <max.chou@realtek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -750,9 +750,23 @@ static u8 hci_cc_read_enc_key_size(struc
- 	} else {
- 		conn->enc_key_size = rp->key_size;
- 		status = 0;
-+
-+		if (conn->enc_key_size < hdev->min_enc_key_size) {
-+			/* As slave role, the conn->state has been set to
-+			 * BT_CONNECTED and l2cap conn req might not be received
-+			 * yet, at this moment the l2cap layer almost does
-+			 * nothing with the non-zero status.
-+			 * So we also clear encrypt related bits, and then the
-+			 * handler of l2cap conn req will get the right secure
-+			 * state at a later time.
-+			 */
-+			status = HCI_ERROR_AUTH_FAILURE;
-+			clear_bit(HCI_CONN_ENCRYPT, &conn->flags);
-+			clear_bit(HCI_CONN_AES_CCM, &conn->flags);
-+		}
- 	}
- 
--	hci_encrypt_cfm(conn, 0);
-+	hci_encrypt_cfm(conn, status);
- 
- done:
- 	hci_dev_unlock(hdev);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2244,6 +2244,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(0) | RSVD(1) | RSVD(6) },
+ 	{ USB_DEVICE(0x0489, 0xe0b5),						/* Foxconn T77W968 ESIM */
+ 	  .driver_info = RSVD(0) | RSVD(1) | RSVD(6) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0da, 0xff),                     /* Foxconn T99W265 MBIM variant */
++	  .driver_info = RSVD(3) | RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0db, 0xff),			/* Foxconn T99W265 MBIM */
+ 	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0ee, 0xff),			/* Foxconn T99W368 MBIM */
 
 
