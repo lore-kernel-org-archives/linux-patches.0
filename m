@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA3579DC;
-	Sat, 30 Dec 2023 12:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BBE79DC;
+	Sat, 30 Dec 2023 12:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nALD8c2l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56F0C433C7;
-	Sat, 30 Dec 2023 12:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlypgkQ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7060AC433C8;
+	Sat, 30 Dec 2023 12:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938041;
-	bh=w7V2dvKlJfH8JWLAwTJU6Zs060J3g7q1Q2ia11SpbH0=;
+	s=korg; t=1703938043;
+	bh=tUenh+2/f8rXkwTnk7ktFHfMjb+OefZiz/LjJhSQkN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nALD8c2lIIZMR7iRk9/me9bbijdEMNIYRMeivF91W1q5R5Bea2FFVKUVo3TNrsaBz
-	 Y1odxANZ+dEvpOwDYkCsb6Dx65X9Ih5br9icZvvgccsWmECspKQcEuU+j3kiaot9W1
-	 q+j91kpUL0qsHatT/yao4ECJIHjjbDDjrLWSMnjg=
+	b=TlypgkQ3ErMt1aeE5P3YgOoKkCCTFKHzB6UGUhYNr3Vx+fxO3Sm4n3kBMabE7o78/
+	 /Jxdm9vK9DsHfqGXZzM4RUsVW0ySpjWSTHPZgbkhNwzNHG9wAMYfVEdqwc11uBkZnl
+	 qYhrI+sVUZAOJ6vc5w3CWHGF+DaDEi56aojHeNLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 137/156] spi: atmel: Fix clock issue when using devices with different polarities
-Date: Sat, 30 Dec 2023 11:59:51 +0000
-Message-ID: <20231230115816.821879397@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Scott Branden <scott.branden@broadcom.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.6 138/156] nvmem: brcm_nvram: store a copy of NVRAM content
+Date: Sat, 30 Dec 2023 11:59:52 +0000
+Message-ID: <20231230115816.848335845@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
 References: <20231230115812.333117904@linuxfoundation.org>
@@ -35,247 +39,270 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Louis Chauvet <louis.chauvet@bootlin.com>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-commit fc70d643a2f6678cbe0f5c86433c1aeb4d613fcc upstream.
+commit 1e37bf84afacd5ba17b7a13a18ca2bc78aff05c0 upstream.
 
-The current Atmel SPI controller driver (v2) behaves incorrectly when
-using two SPI devices with different clock polarities and GPIO CS.
+This driver uses MMIO access for reading NVRAM from a flash device.
+Underneath there is a flash controller that reads data and provides
+mapping window.
 
-When switching from one device to another, the controller driver first
-enables the CS and then applies whatever configuration suits the targeted
-device (typically, the polarities). The side effect of such order is the
-apparition of a spurious clock edge after enabling the CS when the clock
-polarity needs to be inverted wrt. the previous configuration of the
-controller.
+Using MMIO interface affects controller configuration and may break real
+controller driver. It was reported by multiple users of devices with
+NVRAM stored on NAND.
 
-This parasitic clock edge is problematic when the SPI device uses that edge
-for internal processing, which is perfectly legitimate given that its CS
-was asserted. Indeed, devices such as HVS8080 driven by driver gpio-sr in
-the kernel are shift registers and will process this first clock edge to
-perform a first register shift. In this case, the first bit gets lost and
-the whole data block that will later be read by the kernel is all shifted
-by one.
+Modify driver to read & cache NVRAM content during init and use that
+copy to provide NVMEM data when requested. On NAND flashes due to their
+alignment NVRAM partitions can be quite big (1 MiB and more) while
+actual NVRAM content stays quite small (usually 16 to 32 KiB). To avoid
+allocating so much memory check for actual data length.
 
-    Current behavior:
-      The actual switching of the clock polarity only occurs after the CS
-      when the controller sends the first message:
-
-    CLK ------------\   /-\ /-\
-                    |   | | | |    . . .
-                    \---/ \-/ \
-    CS  -----\
-             |
-             \------------------
-
-             ^      ^   ^
-             |      |   |
-             |      |   Actual clock of the message sent
-             |      |
-             |      Change of clock polarity, which occurs with the first
-             |      write to the bus. This edge occurs when the CS is
-             |      already asserted, and can be interpreted as
-             |      the first clock edge by the receiver.
-             |
-             GPIO CS toggle
-
-This issue is specific to this controller because while the SPI core
-performs the operations in the right order, the controller however does
-not. In practice, the controller only applies the clock configuration right
-before the first transmission.
-
-So this is not a problem when using the controller's dedicated CS, as the
-controller does things correctly, but it becomes a problem when you need to
-change the clock polarity and use an external GPIO for the CS.
-
-One possible approach to solve this problem is to send a dummy message
-before actually activating the CS, so that the controller applies the clock
-polarity beforehand.
-
-New behavior:
-
-CLK     ------\      /-\     /-\      /-\     /-\
-              |      | | ... | |      | | ... | |
-              \------/ \-   -/ \------/ \-   -/ \------
-
-CS      -\/-----------------------\
-         ||                       |
-         \/                       \---------------------
-         ^    ^       ^           ^    ^
-         |    |       |           |    |
-         |    |       |           |    Expected clock cycles when
-         |    |       |           |    sending the message
-         |    |       |           |
-         |    |       |           Actual GPIO CS activation, occurs inside
-         |    |       |           the driver
-         |    |       |
-         |    |       Dummy message, to trigger clock polarity
-         |    |       reconfiguration. This message is not received and
-         |    |       processed by the device because CS is low.
-         |    |
-         |    Change of clock polarity, forced by the dummy message. This
-         |    time, the edge is not detected by the receiver.
-         |
-         This small spike in CS activation is due to the fact that the
-         spi-core activates the CS gpio before calling the driver's
-         set_cs callback, which deactivates this gpio again until the
-         clock polarity is correct.
-
-To avoid having to systematically send a dummy packet, the driver keeps
-track of the clock's current polarity. In this way, it only sends the dummy
-packet when necessary, ensuring that the clock will have the correct
-polarity when the CS is toggled.
-
-There could be two hardware problems with this patch:
-1- Maybe the small CS activation peak can confuse SPI devices
-2- If on a design, a single wire is used to select two devices depending
-on its state, the dummy message may disturb them.
-
-Fixes: 5ee36c989831 ("spi: atmel_spi update chipselect handling")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
-Link: https://msgid.link/r/20231204154903.11607-1-louis.chauvet@bootlin.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/linux-mtd/CACna6rwf3_9QVjYcM+847biTX=K0EoWXuXcSMkJO1Vy_5vmVqA@mail.gmail.com/
+Fixes: 3fef9ed0627a ("nvmem: brcm_nvram: new driver exposing Broadcom's NVRAM")
+Cc:  <Stable@vger.kernel.org>
+Cc: Arınç ÜNAL <arinc.unal@arinc9.com>
+Cc: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: Scott Branden <scott.branden@broadcom.com>
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Acked-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20231215111358.316727-3-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-atmel.c |   82 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 81 insertions(+), 1 deletion(-)
+ drivers/nvmem/brcm_nvram.c |  134 +++++++++++++++++++++++++++++++--------------
+ 1 file changed, 94 insertions(+), 40 deletions(-)
 
---- a/drivers/spi/spi-atmel.c
-+++ b/drivers/spi/spi-atmel.c
-@@ -22,6 +22,7 @@
- #include <linux/gpio/consumer.h>
- #include <linux/pinctrl/consumer.h>
- #include <linux/pm_runtime.h>
-+#include <linux/iopoll.h>
- #include <trace/events/spi.h>
+--- a/drivers/nvmem/brcm_nvram.c
++++ b/drivers/nvmem/brcm_nvram.c
+@@ -17,9 +17,23 @@
  
- /* SPI register offsets */
-@@ -279,6 +280,7 @@ struct atmel_spi {
- 	bool			keep_cs;
+ #define NVRAM_MAGIC			"FLSH"
  
- 	u32			fifo_size;
-+	bool			last_polarity;
- 	u8			native_cs_free;
- 	u8			native_cs_for_gpio;
++/**
++ * struct brcm_nvram - driver state internal struct
++ *
++ * @dev:		NVMEM device pointer
++ * @nvmem_size:		Size of the whole space available for NVRAM
++ * @data:		NVRAM data copy stored to avoid poking underlaying flash controller
++ * @data_len:		NVRAM data size
++ * @padding_byte:	Padding value used to fill remaining space
++ * @cells:		Array of discovered NVMEM cells
++ * @ncells:		Number of elements in cells
++ */
+ struct brcm_nvram {
+ 	struct device *dev;
+-	void __iomem *base;
++	size_t nvmem_size;
++	uint8_t *data;
++	size_t data_len;
++	uint8_t padding_byte;
+ 	struct nvmem_cell_info *cells;
+ 	int ncells;
  };
-@@ -292,6 +294,22 @@ struct atmel_spi_device {
- #define INVALID_DMA_ADDRESS	0xffffffff
- 
- /*
-+ * This frequency can be anything supported by the controller, but to avoid
-+ * unnecessary delay, the highest possible frequency is chosen.
-+ *
-+ * This frequency is the highest possible which is not interfering with other
-+ * chip select registers (see Note for Serial Clock Bit Rate configuration in
-+ * Atmel-11121F-ATARM-SAMA5D3-Series-Datasheet_02-Feb-16, page 1283)
-+ */
-+#define DUMMY_MSG_FREQUENCY	0x02
-+/*
-+ * 8 bits is the minimum data the controller is capable of sending.
-+ *
-+ * This message can be anything as it should not be treated by any SPI device.
-+ */
-+#define DUMMY_MSG		0xAA
+@@ -36,10 +50,47 @@ static int brcm_nvram_read(void *context
+ 			   size_t bytes)
+ {
+ 	struct brcm_nvram *priv = context;
+-	u8 *dst = val;
++	size_t to_copy;
 +
-+/*
-  * Version 2 of the SPI controller has
-  *  - CR.LASTXFER
-  *  - SPI_MR.DIV32 may become FDIV or must-be-zero (here: always zero)
-@@ -305,6 +323,43 @@ static bool atmel_spi_is_v2(struct atmel
- }
- 
- /*
-+ * Send a dummy message.
-+ *
-+ * This is sometimes needed when using a CS GPIO to force clock transition when
-+ * switching between devices with different polarities.
-+ */
-+static void atmel_spi_send_dummy(struct atmel_spi *as, struct spi_device *spi, int chip_select)
-+{
-+	u32 status;
-+	u32 csr;
++	if (offset + bytes > priv->data_len)
++		to_copy = max_t(ssize_t, (ssize_t)priv->data_len - offset, 0);
++	else
++		to_copy = bytes;
 +
-+	/*
-+	 * Set a clock frequency to allow sending message on SPI bus.
-+	 * The frequency here can be anything, but is needed for
-+	 * the controller to send the data.
-+	 */
-+	csr = spi_readl(as, CSR0 + 4 * chip_select);
-+	csr = SPI_BFINS(SCBR, DUMMY_MSG_FREQUENCY, csr);
-+	spi_writel(as, CSR0 + 4 * chip_select, csr);
++	memcpy(val, priv->data + offset, to_copy);
 +
-+	/*
-+	 * Read all data coming from SPI bus, needed to be able to send
-+	 * the message.
-+	 */
-+	spi_readl(as, RDR);
-+	while (spi_readl(as, SR) & SPI_BIT(RDRF)) {
-+		spi_readl(as, RDR);
-+		cpu_relax();
-+	}
++	memset((uint8_t *)val + to_copy, priv->padding_byte, bytes - to_copy);
 +
-+	spi_writel(as, TDR, DUMMY_MSG);
-+
-+	readl_poll_timeout_atomic(as->regs + SPI_SR, status,
-+				  (status & SPI_BIT(TXEMPTY)), 1, 1000);
++	return 0;
 +}
 +
++static int brcm_nvram_copy_data(struct brcm_nvram *priv, struct platform_device *pdev)
++{
++	struct resource *res;
++	void __iomem *base;
 +
-+/*
-  * Earlier SPI controllers (e.g. on at91rm9200) have a design bug whereby
-  * they assume that spi slave device state will not change on deselect, so
-  * that automagic deselection is OK.  ("NPCSx rises if no data is to be
-@@ -320,11 +375,17 @@ static bool atmel_spi_is_v2(struct atmel
-  * Master on Chip Select 0.")  No workaround exists for that ... so for
-  * nCS0 on that chip, we (a) don't use the GPIO, (b) can't support CS_HIGH,
-  * and (c) will trigger that first erratum in some cases.
-+ *
-+ * When changing the clock polarity, the SPI controller waits for the next
-+ * transmission to enforce the default clock state. This may be an issue when
-+ * using a GPIO as Chip Select: the clock level is applied only when the first
-+ * packet is sent, once the CS has already been asserted. The workaround is to
-+ * avoid this by sending a first (dummy) message before toggling the CS state.
-  */
--
- static void cs_activate(struct atmel_spi *as, struct spi_device *spi)
++	base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
++	if (IS_ERR(base))
++		return PTR_ERR(base);
++
++	priv->nvmem_size = resource_size(res);
++
++	priv->padding_byte = readb(base + priv->nvmem_size - 1);
++	for (priv->data_len = priv->nvmem_size;
++	     priv->data_len;
++	     priv->data_len--) {
++		if (readb(base + priv->data_len - 1) != priv->padding_byte)
++			break;
++	}
++	WARN(priv->data_len > SZ_128K, "Unexpected (big) NVRAM size: %zu B\n", priv->data_len);
+ 
+-	while (bytes--)
+-		*dst++ = readb(priv->base + offset++);
++	priv->data = devm_kzalloc(priv->dev, priv->data_len, GFP_KERNEL);
++	if (!priv->data)
++		return -ENOMEM;
++
++	memcpy_fromio(priv->data, base, priv->data_len);
++
++	bcm47xx_nvram_init_from_iomem(base, priv->data_len);
+ 
+ 	return 0;
+ }
+@@ -67,8 +118,13 @@ static int brcm_nvram_add_cells(struct b
+ 				size_t len)
  {
- 	struct atmel_spi_device *asd = spi->controller_state;
-+	bool new_polarity;
- 	int chip_select;
- 	u32 mr;
- 
-@@ -353,6 +414,25 @@ static void cs_activate(struct atmel_spi
- 		}
- 
- 		mr = spi_readl(as, MR);
+ 	struct device *dev = priv->dev;
+-	char *var, *value, *eq;
++	char *var, *value;
++	uint8_t tmp;
+ 	int idx;
++	int err = 0;
 +
-+		/*
-+		 * Ensures the clock polarity is valid before we actually
-+		 * assert the CS to avoid spurious clock edges to be
-+		 * processed by the spi devices.
-+		 */
-+		if (spi_get_csgpiod(spi, 0)) {
-+			new_polarity = (asd->csr & SPI_BIT(CPOL)) != 0;
-+			if (new_polarity != as->last_polarity) {
-+				/*
-+				 * Need to disable the GPIO before sending the dummy
-+				 * message because it is already set by the spi core.
-+				 */
-+				gpiod_set_value_cansleep(spi_get_csgpiod(spi, 0), 0);
-+				atmel_spi_send_dummy(as, spi, chip_select);
-+				as->last_polarity = new_polarity;
-+				gpiod_set_value_cansleep(spi_get_csgpiod(spi, 0), 1);
-+			}
++	tmp = priv->data[len - 1];
++	priv->data[len - 1] = '\0';
+ 
+ 	priv->ncells = 0;
+ 	for (var = data + sizeof(struct brcm_nvram_header);
+@@ -78,67 +134,68 @@ static int brcm_nvram_add_cells(struct b
+ 	}
+ 
+ 	priv->cells = devm_kcalloc(dev, priv->ncells, sizeof(*priv->cells), GFP_KERNEL);
+-	if (!priv->cells)
+-		return -ENOMEM;
++	if (!priv->cells) {
++		err = -ENOMEM;
++		goto out;
++	}
+ 
+ 	for (var = data + sizeof(struct brcm_nvram_header), idx = 0;
+ 	     var < (char *)data + len && *var;
+ 	     var = value + strlen(value) + 1, idx++) {
++		char *eq, *name;
++
+ 		eq = strchr(var, '=');
+ 		if (!eq)
+ 			break;
+ 		*eq = '\0';
++		name = devm_kstrdup(dev, var, GFP_KERNEL);
++		*eq = '=';
++		if (!name) {
++			err = -ENOMEM;
++			goto out;
 +		}
- 	} else {
- 		u32 cpol = (spi->mode & SPI_CPOL) ? SPI_BIT(CPOL) : 0;
- 		int i;
+ 		value = eq + 1;
+ 
+-		priv->cells[idx].name = devm_kstrdup(dev, var, GFP_KERNEL);
+-		if (!priv->cells[idx].name)
+-			return -ENOMEM;
++		priv->cells[idx].name = name;
+ 		priv->cells[idx].offset = value - (char *)data;
+ 		priv->cells[idx].bytes = strlen(value);
+ 		priv->cells[idx].np = of_get_child_by_name(dev->of_node, priv->cells[idx].name);
+-		if (!strcmp(var, "et0macaddr") ||
+-		    !strcmp(var, "et1macaddr") ||
+-		    !strcmp(var, "et2macaddr")) {
++		if (!strcmp(name, "et0macaddr") ||
++		    !strcmp(name, "et1macaddr") ||
++		    !strcmp(name, "et2macaddr")) {
+ 			priv->cells[idx].raw_len = strlen(value);
+ 			priv->cells[idx].bytes = ETH_ALEN;
+ 			priv->cells[idx].read_post_process = brcm_nvram_read_post_process_macaddr;
+ 		}
+ 	}
+ 
+-	return 0;
++out:
++	priv->data[len - 1] = tmp;
++	return err;
+ }
+ 
+ static int brcm_nvram_parse(struct brcm_nvram *priv)
+ {
++	struct brcm_nvram_header *header = (struct brcm_nvram_header *)priv->data;
+ 	struct device *dev = priv->dev;
+-	struct brcm_nvram_header header;
+-	uint8_t *data;
+ 	size_t len;
+ 	int err;
+ 
+-	memcpy_fromio(&header, priv->base, sizeof(header));
+-
+-	if (memcmp(header.magic, NVRAM_MAGIC, 4)) {
++	if (memcmp(header->magic, NVRAM_MAGIC, 4)) {
+ 		dev_err(dev, "Invalid NVRAM magic\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	len = le32_to_cpu(header.len);
+-
+-	data = kzalloc(len, GFP_KERNEL);
+-	if (!data)
+-		return -ENOMEM;
+-
+-	memcpy_fromio(data, priv->base, len);
+-	data[len - 1] = '\0';
+-
+-	err = brcm_nvram_add_cells(priv, data, len);
+-	if (err) {
+-		dev_err(dev, "Failed to add cells: %d\n", err);
+-		return err;
++	len = le32_to_cpu(header->len);
++	if (len > priv->nvmem_size) {
++		dev_err(dev, "NVRAM length (%zd) exceeds mapped size (%zd)\n", len,
++			priv->nvmem_size);
++		return -EINVAL;
+ 	}
+ 
+-	kfree(data);
++	err = brcm_nvram_add_cells(priv, priv->data, len);
++	if (err)
++		dev_err(dev, "Failed to add cells: %d\n", err);
+ 
+ 	return 0;
+ }
+@@ -150,7 +207,6 @@ static int brcm_nvram_probe(struct platf
+ 		.reg_read = brcm_nvram_read,
+ 	};
+ 	struct device *dev = &pdev->dev;
+-	struct resource *res;
+ 	struct brcm_nvram *priv;
+ 	int err;
+ 
+@@ -159,21 +215,19 @@ static int brcm_nvram_probe(struct platf
+ 		return -ENOMEM;
+ 	priv->dev = dev;
+ 
+-	priv->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+-	if (IS_ERR(priv->base))
+-		return PTR_ERR(priv->base);
++	err = brcm_nvram_copy_data(priv, pdev);
++	if (err)
++		return err;
+ 
+ 	err = brcm_nvram_parse(priv);
+ 	if (err)
+ 		return err;
+ 
+-	bcm47xx_nvram_init_from_iomem(priv->base, resource_size(res));
+-
+ 	config.dev = dev;
+ 	config.cells = priv->cells;
+ 	config.ncells = priv->ncells;
+ 	config.priv = priv;
+-	config.size = resource_size(res);
++	config.size = priv->nvmem_size;
+ 
+ 	return PTR_ERR_OR_ZERO(devm_nvmem_register(dev, &config));
+ }
 
 
