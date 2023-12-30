@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0612279C2;
-	Sat, 30 Dec 2023 12:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B0C79DD;
+	Sat, 30 Dec 2023 12:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arqucpJj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F76C433C7;
-	Sat, 30 Dec 2023 12:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guzkFykp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247B5C433C8;
+	Sat, 30 Dec 2023 12:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703938341;
-	bh=TZeMYShwItDFfqs5UQWKY4WuxcDDqo0EseNcBvrOqiw=;
+	s=korg; t=1703938344;
+	bh=HcKn7HXfRFA5zEqzxllfsggxycXUXb92tmdvJu0fNAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=arqucpJjZRU2cxvpLiuaq2ezGY8wSJJ/UXxyCvuacVOCZoOJAJNMr8uMcZyA7JICq
-	 8xxPRvq9lKsBkTYlMnYma3r/XVTd5OoEUPzRZOY2NZx1pz1wd3PPDvdVtizAN9eulT
-	 NAq68W20jFcAYZbumZpiZKorhpmtJXCaZDRSizFw=
+	b=guzkFykpT6/IqfNMLhNDKwcCQs+v0La1efuI1fRNDmjm2jdVb2udOF2X2lN7fs2k8
+	 aqWxkT6lbeP/q2YOgynt8qLMrh28FGrd3vhMnQSIH2EtECHt/J/DAnvY+m5ihmZEuk
+	 Ebu0pSxTPewoNEWO8BaZhqBsAMGqqNh//765OOf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Jakub Acs <acsjakub@amazon.de>,
-	Changbin Du <changbin.du@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 109/112] mm/damon/core: make damon_start() waits until kdamond_fn() starts
-Date: Sat, 30 Dec 2023 12:00:22 +0000
-Message-ID: <20231230115810.249692727@linuxfoundation.org>
+	Nam Cao <namcao@linutronix.de>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.1 100/112] pinctrl: starfive: jh7100: ignore disabled device tree nodes
+Date: Sat, 30 Dec 2023 12:00:13 +0000
+Message-ID: <20231230115809.993288961@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 References: <20231230115806.714618407@linuxfoundation.org>
@@ -43,92 +41,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Nam Cao <namcao@linutronix.de>
 
-commit 6376a824595607e99d032a39ba3394988b4fce96 upstream.
+commit 5c584f175d32f9cc66c909f851cd905da58b39ea upstream.
 
-The cleanup tasks of kdamond threads including reset of corresponding
-DAMON context's ->kdamond field and decrease of global nr_running_ctxs
-counter is supposed to be executed by kdamond_fn().  However, commit
-0f91d13366a4 ("mm/damon: simplify stop mechanism") made neither
-damon_start() nor damon_stop() ensure the corresponding kdamond has
-started the execution of kdamond_fn().
+The driver always registers pin configurations in device tree. This can
+cause some inconvenience to users, as pin configurations in the base
+device tree cannot be disabled in the device tree overlay, even when the
+relevant devices are not used.
 
-As a result, the cleanup can be skipped if damon_stop() is called fast
-enough after the previous damon_start().  Especially the skipped reset
-of ->kdamond could cause a use-after-free.
+Ignore disabled pin configuration nodes in device tree.
 
-Fix it by waiting for start of kdamond_fn() execution from
-damon_start().
-
-Link: https://lkml.kernel.org/r/20231208175018.63880-1-sj@kernel.org
-Fixes: 0f91d13366a4 ("mm/damon: simplify stop mechanism")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Reported-by: Jakub Acs <acsjakub@amazon.de>
-Cc: Changbin Du <changbin.du@intel.com>
-Cc: Jakub Acs <acsjakub@amazon.de>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
+Fixes: ec648f6b7686 ("pinctrl: starfive: Add pinctrl driver for StarFive SoCs")
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Link: https://lore.kernel.org/r/fe4c15dcc3074412326b8dc296b0cbccf79c49bf.1701422582.git.namcao@linutronix.de
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/damon.h |    3 +++
- mm/damon/core.c       |    7 +++++++
- 2 files changed, 10 insertions(+)
+ drivers/pinctrl/starfive/pinctrl-starfive-jh7100.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -8,6 +8,7 @@
- #ifndef _DAMON_H_
- #define _DAMON_H_
+--- a/drivers/pinctrl/starfive/pinctrl-starfive-jh7100.c
++++ b/drivers/pinctrl/starfive/pinctrl-starfive-jh7100.c
+@@ -489,7 +489,7 @@ static int starfive_dt_node_to_map(struc
  
-+#include <linux/completion.h>
- #include <linux/mutex.h>
- #include <linux/time64.h>
- #include <linux/types.h>
-@@ -452,6 +453,8 @@ struct damon_ctx {
- /* private: internal use only */
- 	struct timespec64 last_aggregation;
- 	struct timespec64 last_ops_update;
-+	/* for waiting until the execution of the kdamond_fn is started */
-+	struct completion kdamond_started;
+ 	nmaps = 0;
+ 	ngroups = 0;
+-	for_each_child_of_node(np, child) {
++	for_each_available_child_of_node(np, child) {
+ 		int npinmux = of_property_count_u32_elems(child, "pinmux");
+ 		int npins   = of_property_count_u32_elems(child, "pins");
  
- /* public: */
- 	struct task_struct *kdamond;
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -383,6 +383,8 @@ struct damon_ctx *damon_new_ctx(void)
- 	if (!ctx)
- 		return NULL;
+@@ -524,7 +524,7 @@ static int starfive_dt_node_to_map(struc
+ 	nmaps = 0;
+ 	ngroups = 0;
+ 	mutex_lock(&sfp->mutex);
+-	for_each_child_of_node(np, child) {
++	for_each_available_child_of_node(np, child) {
+ 		int npins;
+ 		int i;
  
-+	init_completion(&ctx->kdamond_started);
-+
- 	ctx->attrs.sample_interval = 5 * 1000;
- 	ctx->attrs.aggr_interval = 100 * 1000;
- 	ctx->attrs.ops_update_interval = 60 * 1000 * 1000;
-@@ -519,11 +521,14 @@ static int __damon_start(struct damon_ct
- 	mutex_lock(&ctx->kdamond_lock);
- 	if (!ctx->kdamond) {
- 		err = 0;
-+		reinit_completion(&ctx->kdamond_started);
- 		ctx->kdamond = kthread_run(kdamond_fn, ctx, "kdamond.%d",
- 				nr_running_ctxs);
- 		if (IS_ERR(ctx->kdamond)) {
- 			err = PTR_ERR(ctx->kdamond);
- 			ctx->kdamond = NULL;
-+		} else {
-+			wait_for_completion(&ctx->kdamond_started);
- 		}
- 	}
- 	mutex_unlock(&ctx->kdamond_lock);
-@@ -1147,6 +1152,8 @@ static int kdamond_fn(void *data)
- 
- 	pr_debug("kdamond (%d) starts\n", current->pid);
- 
-+	complete(&ctx->kdamond_started);
-+
- 	if (ctx->ops.init)
- 		ctx->ops.init(ctx);
- 	if (ctx->callback.before_start && ctx->callback.before_start(ctx))
 
 
