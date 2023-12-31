@@ -1,104 +1,86 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95508F6A;
-	Sun, 31 Dec 2023 15:49:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76248F48
+	for <patches@lists.linux.dev>; Sun, 31 Dec 2023 16:33:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=svenjoac@gmx.de header.b="F+8mhInN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1704037750; x=1704642550; i=svenjoac@gmx.de;
-	bh=9ZkZb/6NySPoY2LhMbaCqmu0Y8p8T2cEK9vht0pBelQ=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:In-Reply-To:References:
-	 Date;
-	b=F+8mhInN5gD7RxWV7mh31P18Cc9wvKHuP21vKCBW8lbSAapQ6rPVnzT/Hk8MjMap
-	 BoM0Jkjd0ZzIiL4milgVkxp4gVNBDoLESJ57cBmMHteEF8x7HpqWpR2vPk6QL8Z+R
-	 n3jZi1zou2DOClIx9D8njuMYE8TMd4v0lHluuPwMiGvwvf3YGAOU72qNWSZ2025V1
-	 YN3y53tjhZ1PV0LWAxHrfkEcGL70W7MW8LXJrsyi+CVNUs4oCLV9IxpWSz9aqXj6V
-	 zgcMCcI+1/unzKpXHZoFc6kNvq1NNW64tLfw4g8j4q6ObjcqFVK12tTgQ0bZ4opfJ
-	 gpLA9LTkRdecJVhlnA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from localhost.localdomain ([79.203.84.168]) by mail.gmx.net
- (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 1MC30Z-1rVoQF11LR-00CSWI; Sun, 31 Dec 2023 16:49:10 +0100
-Received: by localhost.localdomain (Postfix, from userid 1000)
-	id C849480098; Sun, 31 Dec 2023 16:49:08 +0100 (CET)
-From: Sven Joachim <svenjoac@gmx.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I2X/iCru"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1d4a980fdedso7539875ad.1
+        for <patches@lists.linux.dev>; Sun, 31 Dec 2023 08:33:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704040383; x=1704645183; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oMrjXLFyZ7sydj2+FYft9slf8SlVSgmYXTiwv8QTWok=;
+        b=I2X/iCruVl7/8MQnlCGN2o1lr/L0vD5slwkJ80PPYwU3zPFGrac7Awx048zU3+tgbU
+         XHRDUG1lNiNt06yJ7NIEtsO3U3+g9+PEwTt6LfjpBPHLPJJbfN3PXXE11pr5dttSQ0Xt
+         odigXQJfGnaS6X+OdO59RJUFg556lyh9yllvemBCGf9sSIvtUl21XyRY6syHIb/aB5sm
+         M/isH7zQ1Ir8xqlQR/mlf84r9cbwwMfRnTVbl6pr1v4qToTarSXiz3INMqAc1sJzKsVx
+         JZyE1ay6glPCMuHPUD9tlQ+5Vc6ki/pjbkuU4z7JrqkXStdA5iM45UAkzBvp8Q7SFxxB
+         FhaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704040383; x=1704645183;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oMrjXLFyZ7sydj2+FYft9slf8SlVSgmYXTiwv8QTWok=;
+        b=Q15IYHTH1plDigIPbDWcJrPGidoN75e6zbvmyNlYHvsAxRCEeS9ikeiMQ7T4CCJhB0
+         +ZwLTlZ7jIhZG79nbZGVi52WEFPsxdzpkoyMn8PwKyzgvzpRexBtONoZ9sZEDBH4aMYY
+         GUoQ/p1jAZ8dtsz8UKNm1rQ7WOmePdd6VLHifAdX/cOPJmqNNYlf4/C0xUl/YODZwzFN
+         vvibz8Mp2yKC7IvZV5owhj7R8d6A41hqnygYaD8UNqZAeUPh12NVXjYWiJmnlbCH1lsL
+         foHjkZZGqGwqvND4nQ4M/IIPyNChaC+cbbRacMKK2bXYzHjVZpiOI42lkxhc+EgBfxZd
+         aABQ==
+X-Gm-Message-State: AOJu0YyaSvgXrHeHzI09qrwxXuoNg89/NPrlmI3x7qb8M8CNOIZ6pNFp
+	cX0K12gaTHaKRNw2tdEwDL4=
+X-Google-Smtp-Source: AGHT+IHfurOYCOL7l5tsZ46Xzsi1qIHnQxh8Vlgqm97Wr86HJCTMy+dEkHLpy1g4RXFqDeH2HcgQoQ==
+X-Received: by 2002:a17:903:41c4:b0:1d4:575c:45b0 with SMTP id u4-20020a17090341c400b001d4575c45b0mr15276162ple.91.1704040382878;
+        Sun, 31 Dec 2023 08:33:02 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id s5-20020a170902ea0500b001d45f92c436sm12005130plg.5.2023.12.31.08.33.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 31 Dec 2023 08:33:02 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Sun, 31 Dec 2023 08:33:01 -0800
+From: Guenter Roeck <linux@roeck-us.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,  patches@lists.linux.dev,  Mauricio Faria de
- Oliveira <mfo@canonical.com>,  Christoph Hellwig <hch@lst.de>,  Jens Axboe
- <axboe@kernel.dk>,  Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 089/112] loop: do not enforce max_loop hard limit by
- (new) default
-In-Reply-To: <20231230115809.666462326@linuxfoundation.org> (Greg
-	Kroah-Hartman's message of "Sat, 30 Dec 2023 12:00:02 +0000")
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: Re: [PATCH 6.1 000/112] 6.1.70-rc1 review
+Message-ID: <92966cc2-7726-4a31-ae4c-5d1b0a5dd0e8@roeck-us.net>
 References: <20231230115806.714618407@linuxfoundation.org>
-	<20231230115809.666462326@linuxfoundation.org>
-Date: Sun, 31 Dec 2023 16:49:08 +0100
-Message-ID: <87y1dape2z.fsf@turtle.gmx.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Provags-ID: V03:K1:iASsc9y1+B9kBoxWnnVl/mmmjqfLDkMDoHd4Cz3XulKXJUY91Wx
- Z4BmBI+Qa7U+W+KOhWZjF5sfLffn6jH2lBkM3nuqW+/t5tuvm+yeVd4gPxePUieSmFU0JUI
- FMGY+mfd76Oop6N9/TDTUyOlfG8G02bR5CN1TEVXcEGNT9cbJ/WcicrsrP0JqAo4zFXwh4g
- 7J9LOgC2suMO9n0hYxfZg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Hw3V35oM3oc=;bLSri1artzPi0OnZwt1+wHu2ydN
- VUs1dB0I9EjSGFBiQtPUhywwpS2f+TcE7JP6hq/wQWCecheT0rcze2hPTo7taQxrhAeH8jU7y
- HuNSXFNZ6VvJikVt6FebY44JKLastecOl3DC5xIIHIJtTRbT0ja7e3J3ymIlASSqXScMjoIGY
- hZyeZfHTtkbM9IJ9cCtVkNznvA2Kz6qlQJZXwI+HulME2c4I2nJbZhzTcZqq6tLbj8K/MIklR
- z7fZzv1BzkQnFdZHGaEu1x8/N563mjU0Ydda2x7RTCy20qqJDCHOEzmBPxyDv2nqs0tItCPvp
- dXEn9MU1xU6nFUUbclaLDz0q+dGfIDhWOrEPIWxYJ6ktvFVF+mqox9nlKYPbCmWTaw17DqQSN
- Vah+Byn2V81xdFI082HE4m7eJ8iGlmu/oPVULdFejbzvnT+/U+oiLrEXpWDDwmFZOQwUzMSL5
- mq0vPiR2ot/UklFLJyXPYPyCuGKROJiBkaM028Ao5quOdWCBCv7t/VdsWL8YMtBuplSiNvnzV
- Knwm7GRTinsQ6okPrIdesYJyhtMyRgsQth81jCAdeKh5yV7LEqjvOu4dFteHPtBpIQeassZGZ
- 58JANowxPLRN3fiUv/7zlACi8Hj2G6jrMioimAmUZAben49Vp4LtZJZ9jnZEfUTI12HLaHKEc
- +blrKiwTUejLcHjXsBcAj97ay742Y7b0wGyfXYe6RzkHsLDc4Tyx9gTsVz41CCfRJzu1DTAav
- epD9Su5QyyfNFFYfJ+qZH96OxUa09vbTq2hTrVKFo5FiTWNlIVhS/8VX6zd4ABStYUmXIre5Q
- xPcxrHtUTFz1Ib4eIZF+H6CJ6uTzO0QV90oC/ohyfKwn9egih6C0VVMMn2xr32WsgQskI3076
- F3/3DK8uV2NIw9uMMv2t4evpgQlR6issKXIbjPoqVADoBsH08QcvxtVTTQkyb85Q0GWyOphPS
- de3RuK5Q1t1mzlOTvWkygE/nFOE=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231230115806.714618407@linuxfoundation.org>
 
-On 2023-12-30 12:00 +0000, Greg Kroah-Hartman wrote:
+On Sat, Dec 30, 2023 at 11:58:33AM +0000, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.70 release.
+> There are 112 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Mon, 01 Jan 2024 11:57:43 +0000.
+> Anything received after that time might be too late.
+> 
 
-> 6.1-stable review patch.  If anyone has any objections, please let me kn=
-ow.
+Build results:
+	total: 157 pass: 157 fail: 0
+Qemu test results:
+	total: 544 pass: 544 fail: 0
 
-This failed to build here:
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
-,----
-|   CC [M]  drivers/block/loop.o
-| drivers/block/loop.c: In function 'loop_probe':
-| drivers/block/loop.c:2125:6: error: 'max_loop_specified' undeclared (fir=
-st use in this function)
-|  2125 |  if (max_loop_specified && max_loop && idx >=3D max_loop)
-|       |      ^~~~~~~~~~~~~~~~~~
-| drivers/block/loop.c:2125:6: note: each undeclared identifier is reporte=
-d only once for each function it appears in
-| make[6]: *** [scripts/Makefile.build:250: drivers/block/loop.o] Error 1
-`----
-
-> @@ -2093,7 +2122,7 @@ static void loop_probe(dev_t dev)
->  {
->  	int idx =3D MINOR(dev) >> part_shift;
->
-> -	if (max_loop && idx >=3D max_loop)
-> +	if (max_loop_specified && max_loop && idx >=3D max_loop)
->  		return;
->  	loop_add(idx);
->  }
-
-If CONFIG_BLOCK_LEGACY_AUTOLOAD is not set, max_loop_specified is
-undeclared.  Applying commit 23881aec85f3 ("loop: deprecate autoloading
-callback loop_probe()") fixes that.
-
-Cheers,
-       Sven
+Guenter
