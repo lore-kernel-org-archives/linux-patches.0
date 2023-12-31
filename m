@@ -1,234 +1,215 @@
-Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC26186C
-	for <patches@lists.linux.dev>; Sun, 31 Dec 2023 09:19:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00A9185D
+	for <patches@lists.linux.dev>; Sun, 31 Dec 2023 09:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BOI338+i"
-Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-7ccdb4b764cso1447163241.2
-        for <patches@lists.linux.dev>; Sun, 31 Dec 2023 01:19:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bTZGhVAU"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3364c9ff8e1so5007375f8f.0
+        for <patches@lists.linux.dev>; Sun, 31 Dec 2023 01:33:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704014369; x=1704619169; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z57RM1fNbmrtEv6jg/m4997t5OrAt8z1G3Y1wCnQ9RA=;
-        b=BOI338+iOdVYQbdxj2u0dJtJvQGZ+MGUfDLB5Y5B41W1eMSOMVd74Z2/vJFjodhohb
-         gyBvBDfVmaDrD0d2F/pWSZQUW5pvYknszrAuQ6WxfSKjs3Sdl35xytEkmvXXWxfRJTRQ
-         Ot55WIHemsAi7UcliiF0tVoFrQNvH0/MbzvazX9XR4sRo3iMUjBUIxCwXQKE++Cu+v6s
-         EZtGt88vFwHmnSYY2XBk7Q6NhXVJeK7cBoS3ol2Gb+id6Ncgs3Doqh3LFmWzoaXB5253
-         JSRQIk4zrd6sVBBTGkdu0vUgJcHtoIZBeErqd3EO6L/3U0cZjp022m15Pq0naZHiiPg6
-         NM7A==
+        d=gmail.com; s=20230601; t=1704015201; x=1704620001; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Xd+Bnx1opc3iAibyYwlUzJrfg5GwcesaHbEFLQImyi0=;
+        b=bTZGhVAU90SZhPWpX6HAiWTr5gciGKcDlk+iQE9cA6e5+DBn6W6h1FRCFhPlEta0e2
+         WaGrSXTquqqT5KZaMobQV97/cY2NKo6B/OAhGEcGUR1O2kQAj9DXDBmbAMcxxIg7TP8d
+         UQLG7pDzIIRSqRM6NqaWPx4pmj57qdrvhjwsQotSiEnCWIXtT7RboFc7uj6nMV2cLuNK
+         JWMNiJvEevtTyYAQx6s+1xOW+WRmGY4FZN/eP6xYUxGhVfZNQVvZ/qpufrjwg6+VePfQ
+         A2MagHLQZpLWTSuJQhsg1VL8USAiAhj/8w6Oc8bC2o6wOg9o1RJUvpIQWLsUrvtz6vNW
+         5Q0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704014369; x=1704619169;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z57RM1fNbmrtEv6jg/m4997t5OrAt8z1G3Y1wCnQ9RA=;
-        b=UgBmEVxtETYhn2w90dKCLHKK7TuoogbgcPzCT2QW0Rbe4ymUeWjj8REZz2TcWYdVb9
-         933MLPfWLPzr3+BdBov/jjAhrUobtNdTzSKD/pvp2hm8C6WTFHRHGU3tIpJ/8FPWsY0t
-         xNQDOoXm3MjxpCG1L9z83fAqOE+usCeYP+DbKS5tUs3r/iUiNFP7OZrAVZazF43ejHy1
-         48MbCbkvv26Nx8ykbr4zf1rNC8ESVvBbkGGFU1l4tNOPzu4q84a0sLpGh6eYPBVvVEpC
-         AVTLx93DUAOTA010/BxWlk7umoRCLEX2uBvRYgkEPKY+n0VLSPE9wKT/QZ3Ww34P/KVC
-         vUcw==
-X-Gm-Message-State: AOJu0YxhE+AGLepIPSFY7mK6914v5K2esQ5ZZQqu8mLV0FsgEQ/thQG1
-	uChlH+ca6zqqnhnmyYMVya6yiW9D76noK6ZwfIL4ckJr2op3Rw==
-X-Google-Smtp-Source: AGHT+IFk9HuSLWUjiPPv4w/by2IqhdFrwsxlLI3rBdfNY9K7U/RdbbTmY62Mcylk/fNVU2ivAtiqk6kYIPKq4DF3r4k=
-X-Received: by 2002:a05:6102:1497:b0:466:f492:9dcf with SMTP id
- d23-20020a056102149700b00466f4929dcfmr7086024vsv.23.1704014368225; Sun, 31
- Dec 2023 01:19:28 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704015201; x=1704620001;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Xd+Bnx1opc3iAibyYwlUzJrfg5GwcesaHbEFLQImyi0=;
+        b=NnNdrFmEL3GPBC0hqZYr4luYikQvUNkGbkb86p7J8k677pEtSJQDS6PXFCAKEQ9x5g
+         Iru7KxkN+9ynnSAbv5RGQC+VJcTqGUFWJKx9hvp/HA/idVLM7Ii0Ywwu2t/DQ6x30a3g
+         P3I4ykOmb/kRG1nV3jOcps9my/xCHmHYz4epjeb5boI2rY6czJqb4XPsnoOOY0x/Yboo
+         VGmzawQgO6HPLxlK0B4vgZRo1n+fNsfk2iYYUMo9pZvmP4w6ijCRhxt3FiYw0Ud+VSUJ
+         +IseYVlxjRO5VYOqHhMrBVf62mdGMLE9OQD07OAGn6PZ2ENSD59kdkjcvfAEvoGky8Ez
+         1KtQ==
+X-Gm-Message-State: AOJu0YyQGguraiaRj0+UafwjoNaPpTjcyvhH/BfNjkH5ZBwIIF4eeJvX
+	d7jZu8QK/fRaW1PcD2heGpE=
+X-Google-Smtp-Source: AGHT+IFqPb0CWvc+oHF4g1xL88gWBlrSCaKzJW3qylcJXPd/RSJXE4gSi5luTIE7NTG0Qb4ckSRlkA==
+X-Received: by 2002:a05:600c:22d8:b0:40d:6293:fb4f with SMTP id 24-20020a05600c22d800b0040d6293fb4fmr2963741wmg.140.1704015200953;
+        Sun, 31 Dec 2023 01:33:20 -0800 (PST)
+Received: from eldamar.lan (c-82-192-242-114.customer.ggaweb.ch. [82.192.242.114])
+        by smtp.gmail.com with ESMTPSA id jg7-20020a05600ca00700b0040c46719966sm44178526wmb.25.2023.12.31.01.33.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 31 Dec 2023 01:33:20 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Received: by eldamar.lan (Postfix, from userid 1000)
+	id A1913BE2DE0; Sun, 31 Dec 2023 10:33:19 +0100 (CET)
+Date: Sun, 31 Dec 2023 10:33:19 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"stable@vger.kernel.org" <stable@vger.kernel.org>,
+	patches@lists.linux.dev,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Christoph Hellwig <hch@lst.de>, Huacai Chen <chenhuacai@kernel.org>,
+	"linux-mips@vger.kernel.org" <linux-mips@vger.kernel.org>
+Subject: Re: [PATCH 5.10 81/97] MIPS: Loongson64: Enable DMA noncoherent
+ support
+Message-ID: <ZZE1X8m5PXJExffG@eldamar.lan>
+References: <20231211182019.802717483@linuxfoundation.org>
+ <20231211182023.277870337@linuxfoundation.org>
+ <ZZBx01WttA3R1XjI@eldamar.lan>
+ <8d70aead-6ed5-4d53-b920-d12167787f0b@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231230115812.333117904@linuxfoundation.org>
-In-Reply-To: <20231230115812.333117904@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Sun, 31 Dec 2023 14:49:16 +0530
-Message-ID: <CA+G9fYudfiJBq4eXwnjFbTdVpPVUSUnqkaUjaLxtnRpH3o4Gmw@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/156] 6.6.9-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8d70aead-6ed5-4d53-b920-d12167787f0b@app.fastmail.com>
 
-On Sat, 30 Dec 2023 at 17:31, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.6.9 release.
-> There are 156 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Mon, 01 Jan 2024 11:57:43 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.6.9-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Hi,
 
+On Sat, Dec 30, 2023 at 11:16:41PM +0000, Jiaxun Yang wrote:
+> 
+> 
+> 在2023年12月30日十二月 下午7:38，Salvatore Bonaccorso写道：
+> > Hi,
+> >
+> > On Mon, Dec 11, 2023 at 07:22:24PM +0100, Greg Kroah-Hartman wrote:
+> >> 5.10-stable review patch.  If anyone has any objections, please let me know.
+> >> 
+> >> ------------------
+> >> 
+> >> From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> >> 
+> >> commit edc0378eee00200a5bedf1bb9f00ad390e0d1bd4 upstream.
+> >> 
+> >> There are some Loongson64 systems come with broken coherent DMA
+> >> support, firmware will set a bit in boot_param and pass nocoherentio
+> >> in cmdline.
+> >> 
+> >> However nonconherent support was missed out when spin off Loongson-2EF
+> >> form Loongson64, and that boot_param change never made itself into
+> >> upstream.
+> >> 
+> >> Support DMA noncoherent properly to get those systems working.
+> >> 
+> >> Cc: stable@vger.kernel.org
+> >> Fixes: 71e2f4dd5a65 ("MIPS: Fork loongson2ef from loongson64")
+> >> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> >> Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+> >> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> >> ---
+> >>  arch/mips/Kconfig                                  |    2 ++
+> >>  arch/mips/include/asm/mach-loongson64/boot_param.h |    3 ++-
+> >>  arch/mips/loongson64/env.c                         |   10 +++++++++-
+> >>  3 files changed, 13 insertions(+), 2 deletions(-)
+> >> 
+> >> --- a/arch/mips/Kconfig
+> >> +++ b/arch/mips/Kconfig
+> >> @@ -468,6 +468,7 @@ config MACH_LOONGSON2EF
+> >>  
+> >>  config MACH_LOONGSON64
+> >>  	bool "Loongson 64-bit family of machines"
+> >> +	select ARCH_DMA_DEFAULT_COHERENT
+> >>  	select ARCH_SPARSEMEM_ENABLE
+> >>  	select ARCH_MIGHT_HAVE_PC_PARPORT
+> >>  	select ARCH_MIGHT_HAVE_PC_SERIO
+> >> @@ -1379,6 +1380,7 @@ config CPU_LOONGSON64
+> >>  	select CPU_SUPPORTS_MSA
+> >>  	select CPU_DIEI_BROKEN if !LOONGSON3_ENHANCEMENT
+> >>  	select CPU_MIPSR2_IRQ_VI
+> >> +	select DMA_NONCOHERENT
+> >>  	select WEAK_ORDERING
+> >>  	select WEAK_REORDERING_BEYOND_LLSC
+> >>  	select MIPS_ASID_BITS_VARIABLE
+> >> --- a/arch/mips/include/asm/mach-loongson64/boot_param.h
+> >> +++ b/arch/mips/include/asm/mach-loongson64/boot_param.h
+> >> @@ -117,7 +117,8 @@ struct irq_source_routing_table {
+> >>  	u64 pci_io_start_addr;
+> >>  	u64 pci_io_end_addr;
+> >>  	u64 pci_config_addr;
+> >> -	u32 dma_mask_bits;
+> >> +	u16 dma_mask_bits;
+> >> +	u16 dma_noncoherent;
+> >>  } __packed;
+> >>  
+> >>  struct interface_info {
+> >> --- a/arch/mips/loongson64/env.c
+> >> +++ b/arch/mips/loongson64/env.c
+> >> @@ -13,6 +13,8 @@
+> >>   * Copyright (C) 2009 Lemote Inc.
+> >>   * Author: Wu Zhangjin, wuzhangjin@gmail.com
+> >>   */
+> >> +
+> >> +#include <linux/dma-map-ops.h>
+> >>  #include <linux/export.h>
+> >>  #include <linux/pci_ids.h>
+> >>  #include <asm/bootinfo.h>
+> >> @@ -131,8 +133,14 @@ void __init prom_init_env(void)
+> >>  	loongson_sysconf.pci_io_base = eirq_source->pci_io_start_addr;
+> >>  	loongson_sysconf.dma_mask_bits = eirq_source->dma_mask_bits;
+> >>  	if (loongson_sysconf.dma_mask_bits < 32 ||
+> >> -		loongson_sysconf.dma_mask_bits > 64)
+> >> +			loongson_sysconf.dma_mask_bits > 64) {
+> >>  		loongson_sysconf.dma_mask_bits = 32;
+> >> +		dma_default_coherent = true;
+> >> +	} else {
+> >> +		dma_default_coherent = !eirq_source->dma_noncoherent;
+> >> +	}
+> >> +
+> >> +	pr_info("Firmware: Coherent DMA: %s\n", dma_default_coherent ? "on" : "off");
+> >>  
+> >>  	loongson_sysconf.restart_addr = boot_p->reset_system.ResetWarm;
+> >>  	loongson_sysconf.poweroff_addr = boot_p->reset_system.Shutdown;
+> >
+> > While preparing an update for Debian and finally building for all
+> > supported architecture, the builds for mipsel and mips64el were
+> > failing with:
+> >
+> > /<<PKGBUILDDIR>>/arch/mips/loongson64/env.c: In function 
+> > 'prom_init_env':
+> > /<<PKGBUILDDIR>>/arch/mips/loongson64/env.c:138:3: error: 
+> > 'dma_default_coherent' undeclared (first use in this function); did you 
+> > mean 'dma_free_coherent'?
+> >   138 |   dma_default_coherent = true;
+> >       |   ^~~~~~~~~~~~~~~~~~~~
+> >       |   dma_free_coherent
+> > /<<PKGBUILDDIR>>/arch/mips/loongson64/env.c:138:3: note: each 
+> > undeclared identifier is reported only once for each function it 
+> > appears in
+> > make[6]: *** [/<<PKGBUILDDIR>>/scripts/Makefile.build:291: 
+> > arch/mips/loongson64/env.o] Error 1
+> > make[6]: *** Waiting for unfinished jobs....
+> >
+> > Is here a prerequisite missing for the commit?
+> >
+> > Backporting though 6d4e9a8efe3d ("driver core: lift dma_default_coherent into
+> > common code") which is from 5.12-rc1 though seems too intrusive, correct? Would
+> > the alternative be to just revert the 3ee7e2faef87 ("MIPS: Loongson64: Enable
+> > DMA noncoherent support") commit which landed in 5.10.204?
+> 
+> Hi,
+> 
+> Sorry for not spotting the issue in the first place.
+> 
+> It actually requires more dependencies such as c00a60d6f4a1 ("of: address: always
+> use dma_default_coherent for default coherency").
+> 
+> I'll try to produce a backport series but better to drop this patch from stable
+> for now.
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+Thanks a lot for your quick reply! 
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+So I guess it only needs a revert for now from 5.10.y correct?
 
-## Build
-* kernel: 6.6.9-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.6.y
-* git commit: ac5757a323d0d58e1e9f6a43cb374d4fbcd14db5
-* git describe: v6.6.8-157-gac5757a323d0
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.8=
--157-gac5757a323d0
+Greg, possible to already queue up the revert for 5.10.y for the next
+upload?
 
-## Test Regressions (compared to v6.6.7)
-
-## Metric Regressions (compared to v6.6.7)
-
-## Test Fixes (compared to v6.6.7)
-
-## Metric Fixes (compared to v6.6.7)
-
-## Test result summary
-total: 152743, pass: 130798, fail: 2523, skip: 19299, xfail: 123
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 145 total, 144 passed, 1 failed
-* arm64: 52 total, 49 passed, 3 failed
-* i386: 41 total, 40 passed, 1 failed
-* mips: 26 total, 26 passed, 0 failed
-* parisc: 4 total, 4 passed, 0 failed
-* powerpc: 36 total, 36 passed, 0 failed
-* riscv: 25 total, 24 passed, 1 failed
-* s390: 13 total, 13 passed, 0 failed
-* sh: 10 total, 10 passed, 0 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 46 total, 45 passed, 1 failed
-
-## Test suites summary
-* boot
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-filesystems-epoll
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-vm
-* kselftest-watchdog
-* kselftest-x86
-* kselftest-zram
-* kunit
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* perf
-* rcutorture
-* v4l2-compliance
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Regards,
+Salvatore
