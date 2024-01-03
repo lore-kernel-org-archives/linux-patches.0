@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7983C1C283;
-	Wed,  3 Jan 2024 17:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D521C29C;
+	Wed,  3 Jan 2024 17:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfhT8/R1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF69C433C8;
-	Wed,  3 Jan 2024 17:14:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsCxH1Wu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D486C433C8;
+	Wed,  3 Jan 2024 17:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704302049;
-	bh=+bKY8D4+BnxP17Yqbrw8Xl3/mRI6un01EZsZhzY1srM=;
+	s=korg; t=1704302051;
+	bh=HZA4PhY1KPmZmPMzQ7da314sbUMCmCWrJXqx9L8mdY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UfhT8/R1sF3UHjFOSBCVSYuLZjY/gSphbOV0djIm1n/grTJSqPgV8Y12QQ9o5cvxG
-	 36RkF+W0lQO/UtZ73keiyUTpbSTpvO1JOPOt1dnSOQtMN9mAyCq4JjHkMqvkqswJLY
-	 10kOVnHNbsYPMg5e6Pj7Nu0MsWZvqeSQTbH6772I=
+	b=vsCxH1WuUtwuklXR3bYJZ9VqdlL+sqwPvdTscbcwWHjtgqILrGbAZ2jvO59B2i2J3
+	 4UembLczskjkvWioyXzlPZ1fzWqOWFzZVCCaEyqiDev2+c95bFFwZJzoCy9AmXihCm
+	 /sKYmtjgRXjDKkW3S+Qzpu0tGFGtFpeRBDReZves=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 31/49] block: renumber QUEUE_FLAG_HW_WC
-Date: Wed,  3 Jan 2024 17:55:51 +0100
-Message-ID: <20240103164839.786691219@linuxfoundation.org>
+Subject: [PATCH 6.6 32/49] platform/x86/intel/pmc: Add suspend callback
+Date: Wed,  3 Jan 2024 17:55:52 +0100
+Message-ID: <20240103164840.026750158@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
 References: <20240103164834.970234661@linuxfoundation.org>
@@ -36,41 +36,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: David E. Box <david.e.box@linux.intel.com>
 
-[ Upstream commit 02d374f3418df577c850f0cd45c3da9245ead547 ]
+[ Upstream commit 7c13f365aee68b01e7e68ee293a71fdc7571c111 ]
 
-For the QUEUE_FLAG_HW_WC to actually work, it needs to have a separate
-number from QUEUE_FLAG_FUA, doh.
+Add a suspend callback to struct pmc for performing platform specific tasks
+before device suspend. This is needed in order to perform GBE LTR ignore on
+certain platforms at suspend-time instead of at probe-time and replace the
+GBE LTR ignore removal that was done in order to fix a bug introduced by
+commit 804951203aa5 ("platform/x86:intel/pmc: Combine core_init() and
+core_configure()").
 
-Fixes: 43c9835b144c ("block: don't allow enabling a cache on devices that don't support it")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20231226081524.180289-1-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 804951203aa5 ("platform/x86:intel/pmc: Combine core_init() and core_configure()")
+Signed-off-by: "David E. Box" <david.e.box@linux.intel.com>
+Link: https://lore.kernel.org/r/20231223032548.1680738-4-david.e.box@linux.intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/blkdev.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/intel/pmc/core.c | 3 +++
+ drivers/platform/x86/intel/pmc/core.h | 2 ++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index eef450f259828..f59fcd5b499a5 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -538,7 +538,7 @@ struct request_queue {
- #define QUEUE_FLAG_ADD_RANDOM	10	/* Contributes to random pool */
- #define QUEUE_FLAG_SYNCHRONOUS	11	/* always completes in submit context */
- #define QUEUE_FLAG_SAME_FORCE	12	/* force complete on same CPU */
--#define QUEUE_FLAG_HW_WC	18	/* Write back caching supported */
-+#define QUEUE_FLAG_HW_WC	13	/* Write back caching supported */
- #define QUEUE_FLAG_INIT_DONE	14	/* queue is initialized */
- #define QUEUE_FLAG_STABLE_WRITES 15	/* don't modify blks until WB is done */
- #define QUEUE_FLAG_POLL		16	/* IO polling enabled if set */
+diff --git a/drivers/platform/x86/intel/pmc/core.c b/drivers/platform/x86/intel/pmc/core.c
+index e95d3011b9997..5ab470d87ad7e 100644
+--- a/drivers/platform/x86/intel/pmc/core.c
++++ b/drivers/platform/x86/intel/pmc/core.c
+@@ -1279,6 +1279,9 @@ static __maybe_unused int pmc_core_suspend(struct device *dev)
+ 	struct pmc_dev *pmcdev = dev_get_drvdata(dev);
+ 	struct pmc *pmc = pmcdev->pmcs[PMC_IDX_MAIN];
+ 
++	if (pmcdev->suspend)
++		pmcdev->suspend(pmcdev);
++
+ 	/* Check if the syspend will actually use S0ix */
+ 	if (pm_suspend_via_firmware())
+ 		return 0;
+diff --git a/drivers/platform/x86/intel/pmc/core.h b/drivers/platform/x86/intel/pmc/core.h
+index 0729f593c6a75..38d888e3afa63 100644
+--- a/drivers/platform/x86/intel/pmc/core.h
++++ b/drivers/platform/x86/intel/pmc/core.h
+@@ -363,6 +363,7 @@ struct pmc {
+  * @s0ix_counter:	S0ix residency (step adjusted)
+  * @num_lpm_modes:	Count of enabled modes
+  * @lpm_en_modes:	Array of enabled modes from lowest to highest priority
++ * @suspend:		Function to perform platform specific suspend
+  * @resume:		Function to perform platform specific resume
+  *
+  * pmc_dev contains info about power management controller device.
+@@ -379,6 +380,7 @@ struct pmc_dev {
+ 	u64 s0ix_counter;
+ 	int num_lpm_modes;
+ 	int lpm_en_modes[LPM_MAX_NUM_MODES];
++	void (*suspend)(struct pmc_dev *pmcdev);
+ 	int (*resume)(struct pmc_dev *pmcdev);
+ 
+ 	bool has_die_c6;
 -- 
 2.43.0
 
