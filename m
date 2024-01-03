@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2266F1BDEC;
-	Wed,  3 Jan 2024 17:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA531BDF1;
+	Wed,  3 Jan 2024 17:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MciN7R+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425E1C433C8;
-	Wed,  3 Jan 2024 17:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbGyoDKe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D0DC433C7;
+	Wed,  3 Jan 2024 17:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301961;
-	bh=xA72vAq+iRE9IRIF9XLQVRuq3ZcizrhQc+Hcj673dbs=;
+	s=korg; t=1704301964;
+	bh=lVtIHogaV19bicU5tfDSNxDMAKRgmBiVWbM3WICmV5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MciN7R+1sZeHVoHMNC3CMLR+W5Iptrjvl1q1QU97yPltFDLzeDMc1HKzzikN+ugU5
-	 g98brsgshslphB/60lgPX9jmdI4ftDiFyatSVkc6gYZQ8tjIn4LOWNEn2EmzJGoGPu
-	 xmp4JiUt+5aW0MOYD9GuoPX1uvidr2j9JIDzvl3Q=
+	b=lbGyoDKeg6uvfZeOGvtv0q5kNoJI75PyUuSBrhQi74ARLIdnOmuyppBxRsx3IxOHx
+	 ik9puc9+Ii25T9CtYwAMEMgLU8if/9bRuycs+TzN/lLiMzs5LXdSWwW0AW2migGJgI
+	 nENZXQSqqtRmQZ3k8k9m86JoOokwuRfDGwm7DqBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dan Sneddon <dan.sneddon@microchip.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 60/75] spi: atmel: Switch to transfer_one transfer method
-Date: Wed,  3 Jan 2024 17:55:41 +0100
-Message-ID: <20240103164852.196748907@linuxfoundation.org>
+Subject: [PATCH 5.10 61/75] spi: atmel: Fix CS and initialization bug
+Date: Wed,  3 Jan 2024 17:55:42 +0100
+Message-ID: <20240103164852.329991240@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164842.953224409@linuxfoundation.org>
 References: <20240103164842.953224409@linuxfoundation.org>
@@ -44,245 +44,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Dan Sneddon <dan.sneddon@microchip.com>
 
-[ Upstream commit 5fa5e6dec762305a783e918a90a05369fc10e346 ]
+[ Upstream commit 69e1818ad27bae167eeaaf6829d4a08900ef5153 ]
 
-Switch from using our own transfer_one_message routine to using the one
-provided by the SPI core.
+Commit 5fa5e6dec762 ("spi: atmel: Switch to transfer_one transfer
+method") switched to using transfer_one and set_cs.  The
+core doesn't call set_cs when the chip select lines are gpios.  Add the
+SPI_MASTER_GPIO_SS flag to the driver to ensure the calls to set_cs
+happen since the driver programs configuration registers there.
+
+Fixes: 5fa5e6dec762 ("spi: atmel: Switch to transfer_one transfer method")
 
 Signed-off-by: Dan Sneddon <dan.sneddon@microchip.com>
-Link: https://lore.kernel.org/r/20210602160816.4890-1-dan.sneddon@microchip.com
+Link: https://lore.kernel.org/r/20210629192218.32125-1-dan.sneddon@microchip.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: fc70d643a2f6 ("spi: atmel: Fix clock issue when using devices with different polarities")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-atmel.c | 124 +++++++++++-----------------------------
- 1 file changed, 33 insertions(+), 91 deletions(-)
+ drivers/spi/spi-atmel.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/spi/spi-atmel.c b/drivers/spi/spi-atmel.c
-index 1db43cbead575..2dba2089f2b7e 100644
+index 2dba2089f2b7e..19499131e5676 100644
 --- a/drivers/spi/spi-atmel.c
 +++ b/drivers/spi/spi-atmel.c
-@@ -867,7 +867,6 @@ static int atmel_spi_set_xfer_speed(struct atmel_spi *as,
-  * lock is held, spi irq is blocked
-  */
- static void atmel_spi_pdc_next_xfer(struct spi_master *master,
--					struct spi_message *msg,
- 					struct spi_transfer *xfer)
- {
- 	struct atmel_spi	*as = spi_master_get_devdata(master);
-@@ -883,12 +882,12 @@ static void atmel_spi_pdc_next_xfer(struct spi_master *master,
- 	spi_writel(as, RPR, rx_dma);
- 	spi_writel(as, TPR, tx_dma);
- 
--	if (msg->spi->bits_per_word > 8)
-+	if (xfer->bits_per_word > 8)
- 		len >>= 1;
- 	spi_writel(as, RCR, len);
- 	spi_writel(as, TCR, len);
- 
--	dev_dbg(&msg->spi->dev,
-+	dev_dbg(&master->dev,
- 		"  start xfer %p: len %u tx %p/%08llx rx %p/%08llx\n",
- 		xfer, xfer->len, xfer->tx_buf,
- 		(unsigned long long)xfer->tx_dma, xfer->rx_buf,
-@@ -902,12 +901,12 @@ static void atmel_spi_pdc_next_xfer(struct spi_master *master,
- 		spi_writel(as, RNPR, rx_dma);
- 		spi_writel(as, TNPR, tx_dma);
- 
--		if (msg->spi->bits_per_word > 8)
-+		if (xfer->bits_per_word > 8)
- 			len >>= 1;
- 		spi_writel(as, RNCR, len);
- 		spi_writel(as, TNCR, len);
- 
--		dev_dbg(&msg->spi->dev,
-+		dev_dbg(&master->dev,
- 			"  next xfer %p: len %u tx %p/%08llx rx %p/%08llx\n",
- 			xfer, xfer->len, xfer->tx_buf,
- 			(unsigned long long)xfer->tx_dma, xfer->rx_buf,
-@@ -1277,12 +1276,28 @@ static int atmel_spi_setup(struct spi_device *spi)
- 	return 0;
- }
- 
-+static void atmel_spi_set_cs(struct spi_device *spi, bool enable)
-+{
-+	struct atmel_spi *as = spi_master_get_devdata(spi->master);
-+	/* the core doesn't really pass us enable/disable, but CS HIGH vs CS LOW
-+	 * since we already have routines for activate/deactivate translate
-+	 * high/low to active/inactive
-+	 */
-+	enable = (!!(spi->mode & SPI_CS_HIGH) == enable);
-+
-+	if (enable) {
-+		cs_activate(as, spi);
-+	} else {
-+		cs_deactivate(as, spi);
-+	}
-+
-+}
-+
- static int atmel_spi_one_transfer(struct spi_master *master,
--					struct spi_message *msg,
-+					struct spi_device *spi,
- 					struct spi_transfer *xfer)
- {
- 	struct atmel_spi	*as;
--	struct spi_device	*spi = msg->spi;
- 	u8			bits;
- 	u32			len;
- 	struct atmel_spi_device	*asd;
-@@ -1291,11 +1306,8 @@ static int atmel_spi_one_transfer(struct spi_master *master,
- 	unsigned long		dma_timeout;
- 
- 	as = spi_master_get_devdata(master);
--
--	if (!(xfer->tx_buf || xfer->rx_buf) && xfer->len) {
--		dev_dbg(&spi->dev, "missing rx or tx buf\n");
--		return -EINVAL;
--	}
-+	/* This lock was orignally taken in atmel_spi_trasfer_one_message */
-+	atmel_spi_lock(as);
- 
- 	asd = spi->controller_state;
- 	bits = (asd->csr >> 4) & 0xf;
-@@ -1309,13 +1321,13 @@ static int atmel_spi_one_transfer(struct spi_master *master,
- 	 * DMA map early, for performance (empties dcache ASAP) and
- 	 * better fault reporting.
- 	 */
--	if ((!msg->is_dma_mapped)
-+	if ((!master->cur_msg_mapped)
- 		&& as->use_pdc) {
- 		if (atmel_spi_dma_map_xfer(as, xfer) < 0)
- 			return -ENOMEM;
- 	}
- 
--	atmel_spi_set_xfer_speed(as, msg->spi, xfer);
-+	atmel_spi_set_xfer_speed(as, spi, xfer);
- 
- 	as->done_status = 0;
- 	as->current_transfer = xfer;
-@@ -1324,7 +1336,7 @@ static int atmel_spi_one_transfer(struct spi_master *master,
- 		reinit_completion(&as->xfer_completion);
- 
- 		if (as->use_pdc) {
--			atmel_spi_pdc_next_xfer(master, msg, xfer);
-+			atmel_spi_pdc_next_xfer(master, xfer);
- 		} else if (atmel_spi_use_dma(as, xfer)) {
- 			len = as->current_remaining_bytes;
- 			ret = atmel_spi_next_xfer_dma_submit(master,
-@@ -1332,7 +1344,8 @@ static int atmel_spi_one_transfer(struct spi_master *master,
- 			if (ret) {
- 				dev_err(&spi->dev,
- 					"unable to use DMA, fallback to PIO\n");
--				atmel_spi_next_xfer_pio(master, xfer);
-+				as->done_status = ret;
-+				break;
- 			} else {
- 				as->current_remaining_bytes -= len;
- 				if (as->current_remaining_bytes < 0)
-@@ -1385,90 +1398,18 @@ static int atmel_spi_one_transfer(struct spi_master *master,
- 		} else if (atmel_spi_use_dma(as, xfer)) {
- 			atmel_spi_stop_dma(master);
+@@ -352,8 +352,6 @@ static void cs_activate(struct atmel_spi *as, struct spi_device *spi)
  		}
--
--		if (!msg->is_dma_mapped
--			&& as->use_pdc)
--			atmel_spi_dma_unmap_xfer(master, xfer);
--
--		return 0;
--
--	} else {
--		/* only update length if no error */
--		msg->actual_length += xfer->len;
+ 
+ 		mr = spi_readl(as, MR);
+-		if (spi->cs_gpiod)
+-			gpiod_set_value(spi->cs_gpiod, 1);
+ 	} else {
+ 		u32 cpol = (spi->mode & SPI_CPOL) ? SPI_BIT(CPOL) : 0;
+ 		int i;
+@@ -369,8 +367,6 @@ static void cs_activate(struct atmel_spi *as, struct spi_device *spi)
+ 
+ 		mr = spi_readl(as, MR);
+ 		mr = SPI_BFINS(PCS, ~(1 << chip_select), mr);
+-		if (spi->cs_gpiod)
+-			gpiod_set_value(spi->cs_gpiod, 1);
+ 		spi_writel(as, MR, mr);
  	}
  
--	if (!msg->is_dma_mapped
-+	if (!master->cur_msg_mapped
- 		&& as->use_pdc)
- 		atmel_spi_dma_unmap_xfer(master, xfer);
+@@ -400,8 +396,6 @@ static void cs_deactivate(struct atmel_spi *as, struct spi_device *spi)
  
--	spi_transfer_delay_exec(xfer);
--
--	if (xfer->cs_change) {
--		if (list_is_last(&xfer->transfer_list,
--				 &msg->transfers)) {
--			as->keep_cs = true;
--		} else {
--			cs_deactivate(as, msg->spi);
--			udelay(10);
--			cs_activate(as, msg->spi);
--		}
--	}
--
--	return 0;
--}
--
--static int atmel_spi_transfer_one_message(struct spi_master *master,
--						struct spi_message *msg)
--{
--	struct atmel_spi *as;
--	struct spi_transfer *xfer;
--	struct spi_device *spi = msg->spi;
--	int ret = 0;
--
--	as = spi_master_get_devdata(master);
--
--	dev_dbg(&spi->dev, "new message %p submitted for %s\n",
--					msg, dev_name(&spi->dev));
--
--	atmel_spi_lock(as);
--	cs_activate(as, spi);
--
--	as->keep_cs = false;
--
--	msg->status = 0;
--	msg->actual_length = 0;
--
--	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
--		trace_spi_transfer_start(msg, xfer);
--
--		ret = atmel_spi_one_transfer(master, msg, xfer);
--		if (ret)
--			goto msg_done;
--
--		trace_spi_transfer_stop(msg, xfer);
--	}
--
- 	if (as->use_pdc)
- 		atmel_spi_disable_pdc_transfer(as);
- 
--	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
--		dev_dbg(&spi->dev,
--			"  xfer %p: len %u tx %p/%pad rx %p/%pad\n",
--			xfer, xfer->len,
--			xfer->tx_buf, &xfer->tx_dma,
--			xfer->rx_buf, &xfer->rx_dma);
--	}
--
--msg_done:
--	if (!as->keep_cs)
--		cs_deactivate(as, msg->spi);
--
- 	atmel_spi_unlock(as);
- 
--	msg->status = as->done_status;
--	spi_finalize_current_message(spi->master);
--
--	return ret;
-+	return as->done_status;
+ 	if (!spi->cs_gpiod)
+ 		spi_writel(as, CR, SPI_BIT(LASTXFER));
+-	else
+-		gpiod_set_value(spi->cs_gpiod, 0);
  }
  
- static void atmel_spi_cleanup(struct spi_device *spi)
-@@ -1558,7 +1499,8 @@ static int atmel_spi_probe(struct platform_device *pdev)
+ static void atmel_spi_lock(struct atmel_spi *as) __acquires(&as->lock)
+@@ -1498,7 +1492,8 @@ static int atmel_spi_probe(struct platform_device *pdev)
+ 	master->bus_num = pdev->id;
  	master->num_chipselect = 4;
  	master->setup = atmel_spi_setup;
- 	master->flags = (SPI_MASTER_MUST_RX | SPI_MASTER_MUST_TX);
--	master->transfer_one_message = atmel_spi_transfer_one_message;
-+	master->transfer_one = atmel_spi_one_transfer;
-+	master->set_cs = atmel_spi_set_cs;
+-	master->flags = (SPI_MASTER_MUST_RX | SPI_MASTER_MUST_TX);
++	master->flags = (SPI_MASTER_MUST_RX | SPI_MASTER_MUST_TX |
++			SPI_MASTER_GPIO_SS);
+ 	master->transfer_one = atmel_spi_one_transfer;
+ 	master->set_cs = atmel_spi_set_cs;
  	master->cleanup = atmel_spi_cleanup;
- 	master->auto_runtime_pm = true;
- 	master->max_dma_len = SPI_MAX_DMA_XFER;
 -- 
 2.43.0
 
