@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E256F1BDEC;
-	Wed,  3 Jan 2024 16:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9F31C283;
+	Wed,  3 Jan 2024 16:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B53htcAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F99CC433C9;
-	Wed,  3 Jan 2024 16:57:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm+FwADC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63305C433C8;
+	Wed,  3 Jan 2024 16:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301044;
-	bh=vyI8Y1hu54plw2Z/XU4Ti2UunlnUmmtuPxdkA2arm7E=;
+	s=korg; t=1704301051;
+	bh=/o0t0KvLGm4hOQ8/iBEtBSKochMl/OITxABXwO7MDb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B53htcAB1NcVSn8Bmj3n6nP7BONm0WnHkOM+6IyaJbo0bOlQ+97zt2DN0LNQzeRkE
-	 kBU3veyw5aGnh0IuWZijJzatwMiue/z3O+Ok69HKqWa0ZA/dLFqXe7P6V6sWdHZL/f
-	 A5IOuaxs/hoXS6mInsCU155xNJTU5VptM+bLw6V8=
+	b=zm+FwADCTOoSxCpgQKRm2LB1kRBAXCrj9xrBVy+lEnYFjRHi9jZhVr09y+UzUJZry
+	 jmgDUSRqk4ydHfDj3N/6SctPlobJKMqlATH6YIZY8tEvluiT3zgbLLnZLQ99yA7cWh
+	 9KO/rb/0XYKTPqf+aZ504b/thBQULq5nHh12RI3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dan Carpenter <error27@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/100] ksmbd: remove unused ksmbd_tree_conn_share function
-Date: Wed,  3 Jan 2024 17:54:13 +0100
-Message-ID: <20240103164859.660085300@linuxfoundation.org>
+Subject: [PATCH 6.1 025/100] ksmbd: use kzalloc() instead of __GFP_ZERO
+Date: Wed,  3 Jan 2024 17:54:14 +0100
+Message-ID: <20240103164859.819980807@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -45,55 +46,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 7bd9f0876fdef00f4e155be35e6b304981a53f80 ]
+[ Upstream commit f87d4f85f43f0d4b12ef64b015478d8053e1a33e ]
 
-Remove unused ksmbd_tree_conn_share function.
+Use kzalloc() instead of __GFP_ZERO.
 
+Reported-by: Dan Carpenter <error27@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/tree_connect.c | 11 -----------
- fs/smb/server/mgmt/tree_connect.h |  3 ---
- 2 files changed, 14 deletions(-)
+ fs/smb/server/smb_common.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/mgmt/tree_connect.c b/fs/smb/server/mgmt/tree_connect.c
-index f07a05f376513..408cddf2f094a 100644
---- a/fs/smb/server/mgmt/tree_connect.c
-+++ b/fs/smb/server/mgmt/tree_connect.c
-@@ -120,17 +120,6 @@ struct ksmbd_tree_connect *ksmbd_tree_conn_lookup(struct ksmbd_session *sess,
- 	return tcon;
- }
- 
--struct ksmbd_share_config *ksmbd_tree_conn_share(struct ksmbd_session *sess,
--						 unsigned int id)
--{
--	struct ksmbd_tree_connect *tc;
--
--	tc = ksmbd_tree_conn_lookup(sess, id);
--	if (tc)
--		return tc->share_conf;
--	return NULL;
--}
--
- int ksmbd_tree_conn_session_logoff(struct ksmbd_session *sess)
+diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
+index adc41b57b84c6..62c33d3357fe1 100644
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -359,8 +359,8 @@ static int smb1_check_user_session(struct ksmbd_work *work)
+  */
+ static int smb1_allocate_rsp_buf(struct ksmbd_work *work)
  {
- 	int ret = 0;
-diff --git a/fs/smb/server/mgmt/tree_connect.h b/fs/smb/server/mgmt/tree_connect.h
-index 700df36cf3e30..562d647ad9fad 100644
---- a/fs/smb/server/mgmt/tree_connect.h
-+++ b/fs/smb/server/mgmt/tree_connect.h
-@@ -53,9 +53,6 @@ int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
- struct ksmbd_tree_connect *ksmbd_tree_conn_lookup(struct ksmbd_session *sess,
- 						  unsigned int id);
+-	work->response_buf = kmalloc(MAX_CIFS_SMALL_BUFFER_SIZE,
+-			GFP_KERNEL | __GFP_ZERO);
++	work->response_buf = kzalloc(MAX_CIFS_SMALL_BUFFER_SIZE,
++			GFP_KERNEL);
+ 	work->response_sz = MAX_CIFS_SMALL_BUFFER_SIZE;
  
--struct ksmbd_share_config *ksmbd_tree_conn_share(struct ksmbd_session *sess,
--						 unsigned int id);
--
- int ksmbd_tree_conn_session_logoff(struct ksmbd_session *sess);
- 
- #endif /* __TREE_CONNECT_MANAGEMENT_H__ */
+ 	if (!work->response_buf) {
 -- 
 2.43.0
 
