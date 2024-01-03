@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1731C28A;
-	Wed,  3 Jan 2024 17:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B7F1BDFD;
+	Wed,  3 Jan 2024 17:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwxHGy+q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EF3C433C8;
-	Wed,  3 Jan 2024 17:07:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fuJMNfBS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1ECC433C7;
+	Wed,  3 Jan 2024 17:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301644;
-	bh=3p0KGGvRzV4j7hx3WfA8Kjnt6cR06Ge0Yj5JrBN7zVo=;
+	s=korg; t=1704301647;
+	bh=DoZWHpHLXisL7cstHWcY6Uji471Zq7STr4gQ9i2ENrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QwxHGy+qtkg/bp65oLqAuj3IOZFzvTYj1+Bq+vw5cBtMRgDO6lB7Nyog4aAL4OajK
-	 Fr1ryG8dhbp2x9aNclKlAiPj9oNI8lSwTvthn2dovrch8mp+RiSmxX3wsjlB9Wlx1P
-	 xjmU2449m6JfIzBD0hiHxms9Q19R4JPhaIptJdJk=
+	b=fuJMNfBSBgauXIFg+k955wdiD71/4pyivPnBy7+XS9kgtVbJ2h6fCts9vTVEIgMX0
+	 kzTJ2RGGwfTqMMJXQy6fPuAlEYeFeZY11sP8pu2jb/cGdWUKRg+sZReH5HIxGb4poB
+	 RTk+UHK5T77AxeoxrG7jtckDzt866Lku/VoWqLek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	j51569436@gmail.com,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Hyunwoo Kim <v4bel@theori.io>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 84/95] smb: client: fix OOB in smbCalcSize()
-Date: Wed,  3 Jan 2024 17:55:32 +0100
-Message-ID: <20240103164906.653078164@linuxfoundation.org>
+Subject: [PATCH 5.15 85/95] Bluetooth: af_bluetooth: Fix Use-After-Free in bt_sock_recvmsg
+Date: Wed,  3 Jan 2024 17:55:33 +0100
+Message-ID: <20240103164906.813368557@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -43,82 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Hyunwoo Kim <v4bel@theori.io>
 
-[ Upstream commit b35858b3786ddbb56e1c35138ba25d6adf8d0bef ]
+[ Upstream commit 2e07e8348ea454615e268222ae3fc240421be768 ]
 
-Validate @smb->WordCount to avoid reading off the end of @smb and thus
-causing the following KASAN splat:
+This can cause a race with bt_sock_ioctl() because
+bt_sock_recvmsg() gets the skb from sk->sk_receive_queue
+and then frees it without holding lock_sock.
+A use-after-free for a skb occurs with the following flow.
+```
+bt_sock_recvmsg() -> skb_recv_datagram() -> skb_free_datagram()
+bt_sock_ioctl() -> skb_peek()
+```
+Add lock_sock to bt_sock_recvmsg() to fix this issue.
 
-  BUG: KASAN: slab-out-of-bounds in smbCalcSize+0x32/0x40 [cifs]
-  Read of size 2 at addr ffff88801c024ec5 by task cifsd/1328
-
-  CPU: 1 PID: 1328 Comm: cifsd Not tainted 6.7.0-rc5 #9
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
-  rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x4a/0x80
-   print_report+0xcf/0x650
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? __phys_addr+0x46/0x90
-   kasan_report+0xd8/0x110
-   ? smbCalcSize+0x32/0x40 [cifs]
-   ? smbCalcSize+0x32/0x40 [cifs]
-   kasan_check_range+0x105/0x1b0
-   smbCalcSize+0x32/0x40 [cifs]
-   checkSMB+0x162/0x370 [cifs]
-   ? __pfx_checkSMB+0x10/0x10 [cifs]
-   cifs_handle_standard+0xbc/0x2f0 [cifs]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   cifs_demultiplex_thread+0xed1/0x1360 [cifs]
-   ? __pfx_cifs_demultiplex_thread+0x10/0x10 [cifs]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? lockdep_hardirqs_on_prepare+0x136/0x210
-   ? __pfx_lock_release+0x10/0x10
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? mark_held_locks+0x1a/0x90
-   ? lockdep_hardirqs_on_prepare+0x136/0x210
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? __kthread_parkme+0xce/0xf0
-   ? __pfx_cifs_demultiplex_thread+0x10/0x10 [cifs]
-   kthread+0x18d/0x1d0
-   ? kthread+0xdb/0x1d0
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork+0x34/0x60
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork_asm+0x1b/0x30
-   </TASK>
-
-This fixes CVE-2023-6606.
-
-Reported-by: j51569436@gmail.com
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218218
 Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/misc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/af_bluetooth.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/cifs/misc.c b/fs/cifs/misc.c
-index 5e4dab5dfb7a3..33328eae03d7a 100644
---- a/fs/cifs/misc.c
-+++ b/fs/cifs/misc.c
-@@ -340,6 +340,10 @@ checkSMB(char *buf, unsigned int total_read, struct TCP_Server_Info *server)
- 			cifs_dbg(VFS, "Length less than smb header size\n");
- 		}
- 		return -EIO;
-+	} else if (total_read < sizeof(*smb) + 2 * smb->WordCount) {
-+		cifs_dbg(VFS, "%s: can't read BCC due to invalid WordCount(%u)\n",
-+			 __func__, smb->WordCount);
-+		return -EIO;
+diff --git a/net/bluetooth/af_bluetooth.c b/net/bluetooth/af_bluetooth.c
+index ce744b14d1a98..b7498e890f0b0 100644
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -263,11 +263,14 @@ int bt_sock_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 	if (flags & MSG_OOB)
+ 		return -EOPNOTSUPP;
+ 
++	lock_sock(sk);
++
+ 	skb = skb_recv_datagram(sk, flags, noblock, &err);
+ 	if (!skb) {
+ 		if (sk->sk_shutdown & RCV_SHUTDOWN)
+-			return 0;
++			err = 0;
+ 
++		release_sock(sk);
+ 		return err;
  	}
  
- 	/* otherwise, there is enough to get to the BCC */
+@@ -293,6 +296,8 @@ int bt_sock_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 
+ 	skb_free_datagram(sk, skb);
+ 
++	release_sock(sk);
++
+ 	if (flags & MSG_TRUNC)
+ 		copied = skblen;
+ 
 -- 
 2.43.0
 
