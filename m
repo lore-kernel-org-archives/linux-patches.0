@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CFA1C68A;
-	Wed,  3 Jan 2024 17:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC2E1C292;
+	Wed,  3 Jan 2024 17:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAr4hZuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF854C433C7;
-	Wed,  3 Jan 2024 17:15:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rONIy+ag"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06048C433C9;
+	Wed,  3 Jan 2024 17:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704302132;
-	bh=m2mDrnyTL+38MoY8AY7DF4BI3+CpTPXO/Ai7+RQXUqc=;
+	s=korg; t=1704302135;
+	bh=edjqbn2k76ciGTcscGQYpIaocnOCCmvf47LomVCvKgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yAr4hZuACaOucOvNOeYTwJH0hKyyoxjbOTARdjZcwNhYx4UuXWvdzK3z5jn6lypB5
-	 AI4MaB+AFMlQx5vbOD22Wc38tt4wATOCIorbKlzKgA7goZaXcOn+3L9LkAz84+LRiW
-	 mlIFk7JD2lPPbIRqB73zpuAi9bSsTxLYUOEcZxMM=
+	b=rONIy+ag1BlYLaeHFFbL2jGj6RldCwPurDntnXHJTcWAfklMYBLSMnOTFYBM0N86O
+	 MsB4fLMQIc/57QZTrM1i8++t+mXSJG5BlrWn5mJvl3H+w7VanpVOI0ecY+N1WwTD5M
+	 NrdXsblU5c0NfKwyeX8DRdIFdlH9N3HXKi2L+nRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 26/49] linux/export: Fix alignment for 64-bit ksymtab entries
-Date: Wed,  3 Jan 2024 17:55:46 +0100
-Message-ID: <20240103164838.975338408@linuxfoundation.org>
+Subject: [PATCH 6.6 17/49] ksmbd: send v2 lease break notification for directory
+Date: Wed,  3 Jan 2024 17:55:37 +0100
+Message-ID: <20240103164837.656508512@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
 References: <20240103164834.970234661@linuxfoundation.org>
@@ -42,49 +42,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit f6847807c22f6944c71c981b630b9fff30801e73 ]
+[ Upstream commit d47d9886aeef79feba7adac701a510d65f3682b5 ]
 
-An alignment of 4 bytes is wrong for 64-bit platforms which don't define
-CONFIG_HAVE_ARCH_PREL32_RELOCATIONS (which then store 64-bit pointers).
-Fix their alignment to 8 bytes.
+If client send different parent key, different client guid, or there is
+no parent lease key flags in create context v2 lease, ksmbd send lease
+break to client.
 
-Fixes: ddb5cdbafaaa ("kbuild: generate KSYMTAB entries by modpost")
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/export-internal.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/common/smb2pdu.h   |  1 +
+ fs/smb/server/oplock.c    | 56 +++++++++++++++++++++++++++++++++++----
+ fs/smb/server/oplock.h    |  4 +++
+ fs/smb/server/smb2pdu.c   |  7 +++++
+ fs/smb/server/vfs_cache.c | 13 ++++++++-
+ fs/smb/server/vfs_cache.h |  2 ++
+ 6 files changed, 77 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/export-internal.h b/include/linux/export-internal.h
-index 45fca09b23194..b842aeecef791 100644
---- a/include/linux/export-internal.h
-+++ b/include/linux/export-internal.h
-@@ -16,10 +16,13 @@
-  * and eliminates the need for absolute relocations that require runtime
-  * processing on relocatable kernels.
-  */
-+#define __KSYM_ALIGN		".balign 4"
- #define __KSYM_REF(sym)		".long " #sym "- ."
- #elif defined(CONFIG_64BIT)
-+#define __KSYM_ALIGN		".balign 8"
- #define __KSYM_REF(sym)		".quad " #sym
- #else
-+#define __KSYM_ALIGN		".balign 4"
- #define __KSYM_REF(sym)		".long " #sym
- #endif
+diff --git a/fs/smb/common/smb2pdu.h b/fs/smb/common/smb2pdu.h
+index ec20c83cc8366..d58550c1c9378 100644
+--- a/fs/smb/common/smb2pdu.h
++++ b/fs/smb/common/smb2pdu.h
+@@ -1228,6 +1228,7 @@ struct create_mxac_rsp {
+ #define SMB2_LEASE_WRITE_CACHING_LE		cpu_to_le32(0x04)
  
-@@ -42,7 +45,7 @@
- 	    "	.asciz \"" ns "\""					"\n"	\
- 	    "	.previous"						"\n"	\
- 	    "	.section \"___ksymtab" sec "+" #name "\", \"a\""	"\n"	\
--	    "	.balign	4"						"\n"	\
-+		__KSYM_ALIGN						"\n"	\
- 	    "__ksymtab_" #name ":"					"\n"	\
- 		__KSYM_REF(sym)						"\n"	\
- 		__KSYM_REF(__kstrtab_ ##name)				"\n"	\
+ #define SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE	cpu_to_le32(0x02)
++#define SMB2_LEASE_FLAG_PARENT_LEASE_KEY_SET_LE	cpu_to_le32(0x04)
+ 
+ #define SMB2_LEASE_KEY_SIZE			16
+ 
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 57950ba7e9257..147d98427ce89 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -102,6 +102,7 @@ static int alloc_lease(struct oplock_info *opinfo, struct lease_ctx_info *lctx)
+ 	lease->new_state = 0;
+ 	lease->flags = lctx->flags;
+ 	lease->duration = lctx->duration;
++	lease->is_dir = lctx->is_dir;
+ 	memcpy(lease->parent_lease_key, lctx->parent_lease_key, SMB2_LEASE_KEY_SIZE);
+ 	lease->version = lctx->version;
+ 	lease->epoch = le16_to_cpu(lctx->epoch);
+@@ -543,12 +544,13 @@ static struct oplock_info *same_client_has_lease(struct ksmbd_inode *ci,
+ 			/* upgrading lease */
+ 			if ((atomic_read(&ci->op_count) +
+ 			     atomic_read(&ci->sop_count)) == 1) {
+-				if (lease->state ==
+-				    (lctx->req_state & lease->state)) {
++				if (lease->state != SMB2_LEASE_NONE_LE &&
++				    lease->state == (lctx->req_state & lease->state)) {
+ 					lease->state |= lctx->req_state;
+ 					if (lctx->req_state &
+ 						SMB2_LEASE_WRITE_CACHING_LE)
+ 						lease_read_to_write(opinfo);
++
+ 				}
+ 			} else if ((atomic_read(&ci->op_count) +
+ 				    atomic_read(&ci->sop_count)) > 1) {
+@@ -900,7 +902,8 @@ static int oplock_break(struct oplock_info *brk_opinfo, int req_op_level)
+ 					lease->new_state =
+ 						SMB2_LEASE_READ_CACHING_LE;
+ 			} else {
+-				if (lease->state & SMB2_LEASE_HANDLE_CACHING_LE)
++				if (lease->state & SMB2_LEASE_HANDLE_CACHING_LE &&
++						!lease->is_dir)
+ 					lease->new_state =
+ 						SMB2_LEASE_READ_CACHING_LE;
+ 				else
+@@ -1082,6 +1085,48 @@ static void set_oplock_level(struct oplock_info *opinfo, int level,
+ 	}
+ }
+ 
++void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
++				      struct lease_ctx_info *lctx)
++{
++	struct oplock_info *opinfo;
++	struct ksmbd_inode *p_ci = NULL;
++
++	if (lctx->version != 2)
++		return;
++
++	p_ci = ksmbd_inode_lookup_lock(fp->filp->f_path.dentry->d_parent);
++	if (!p_ci)
++		return;
++
++	read_lock(&p_ci->m_lock);
++	list_for_each_entry(opinfo, &p_ci->m_op_list, op_entry) {
++		if (!opinfo->is_lease)
++			continue;
++
++		if (opinfo->o_lease->state != SMB2_OPLOCK_LEVEL_NONE &&
++		    (!(lctx->flags & SMB2_LEASE_FLAG_PARENT_LEASE_KEY_SET_LE) ||
++		     !compare_guid_key(opinfo, fp->conn->ClientGUID,
++				      lctx->parent_lease_key))) {
++			if (!atomic_inc_not_zero(&opinfo->refcount))
++				continue;
++
++			atomic_inc(&opinfo->conn->r_count);
++			if (ksmbd_conn_releasing(opinfo->conn)) {
++				atomic_dec(&opinfo->conn->r_count);
++				continue;
++			}
++
++			read_unlock(&p_ci->m_lock);
++			oplock_break(opinfo, SMB2_OPLOCK_LEVEL_NONE);
++			opinfo_conn_put(opinfo);
++			read_lock(&p_ci->m_lock);
++		}
++	}
++	read_unlock(&p_ci->m_lock);
++
++	ksmbd_inode_put(p_ci);
++}
++
+ /**
+  * smb_grant_oplock() - handle oplock/lease request on file open
+  * @work:		smb work
+@@ -1420,10 +1465,11 @@ struct lease_ctx_info *parse_lease_state(void *open_req, bool is_dir)
+ 		struct create_lease_v2 *lc = (struct create_lease_v2 *)cc;
+ 
+ 		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
+-		if (is_dir)
++		if (is_dir) {
+ 			lreq->req_state = lc->lcontext.LeaseState &
+ 				~SMB2_LEASE_WRITE_CACHING_LE;
+-		else
++			lreq->is_dir = true;
++		} else
+ 			lreq->req_state = lc->lcontext.LeaseState;
+ 		lreq->flags = lc->lcontext.LeaseFlags;
+ 		lreq->epoch = lc->lcontext.Epoch;
+diff --git a/fs/smb/server/oplock.h b/fs/smb/server/oplock.h
+index 672127318c750..b64d1536882a1 100644
+--- a/fs/smb/server/oplock.h
++++ b/fs/smb/server/oplock.h
+@@ -36,6 +36,7 @@ struct lease_ctx_info {
+ 	__u8			parent_lease_key[SMB2_LEASE_KEY_SIZE];
+ 	__le16			epoch;
+ 	int			version;
++	bool			is_dir;
+ };
+ 
+ struct lease_table {
+@@ -54,6 +55,7 @@ struct lease {
+ 	__u8			parent_lease_key[SMB2_LEASE_KEY_SIZE];
+ 	int			version;
+ 	unsigned short		epoch;
++	bool			is_dir;
+ 	struct lease_table	*l_lb;
+ };
+ 
+@@ -125,4 +127,6 @@ struct oplock_info *lookup_lease_in_table(struct ksmbd_conn *conn,
+ int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
+ 			struct lease_ctx_info *lctx);
+ void destroy_lease_table(struct ksmbd_conn *conn);
++void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
++				      struct lease_ctx_info *lctx);
+ #endif /* __KSMBD_OPLOCK_H */
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index c4b6adce178a2..cbd5c5572217d 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3225,6 +3225,13 @@ int smb2_open(struct ksmbd_work *work)
+ 		}
+ 	} else {
+ 		if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE) {
++			/*
++			 * Compare parent lease using parent key. If there is no
++			 * a lease that has same parent key, Send lease break
++			 * notification.
++			 */
++			smb_send_parent_lease_break_noti(fp, lc);
++
+ 			req_op_level = smb2_map_lease_to_oplock(lc->req_state);
+ 			ksmbd_debug(SMB,
+ 				    "lease req for(%s) req oplock state 0x%x, lease state 0x%x\n",
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index ddf233994ddbb..4e82ff627d122 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -87,6 +87,17 @@ static struct ksmbd_inode *ksmbd_inode_lookup(struct ksmbd_file *fp)
+ 	return __ksmbd_inode_lookup(fp->filp->f_path.dentry);
+ }
+ 
++struct ksmbd_inode *ksmbd_inode_lookup_lock(struct dentry *d)
++{
++	struct ksmbd_inode *ci;
++
++	read_lock(&inode_hash_lock);
++	ci = __ksmbd_inode_lookup(d);
++	read_unlock(&inode_hash_lock);
++
++	return ci;
++}
++
+ int ksmbd_query_inode_status(struct dentry *dentry)
+ {
+ 	struct ksmbd_inode *ci;
+@@ -199,7 +210,7 @@ static void ksmbd_inode_free(struct ksmbd_inode *ci)
+ 	kfree(ci);
+ }
+ 
+-static void ksmbd_inode_put(struct ksmbd_inode *ci)
++void ksmbd_inode_put(struct ksmbd_inode *ci)
+ {
+ 	if (atomic_dec_and_test(&ci->m_count))
+ 		ksmbd_inode_free(ci);
+diff --git a/fs/smb/server/vfs_cache.h b/fs/smb/server/vfs_cache.h
+index 8325cf4527c46..4d4938d6029b6 100644
+--- a/fs/smb/server/vfs_cache.h
++++ b/fs/smb/server/vfs_cache.h
+@@ -138,6 +138,8 @@ struct ksmbd_file *ksmbd_lookup_foreign_fd(struct ksmbd_work *work, u64 id);
+ struct ksmbd_file *ksmbd_lookup_fd_slow(struct ksmbd_work *work, u64 id,
+ 					u64 pid);
+ void ksmbd_fd_put(struct ksmbd_work *work, struct ksmbd_file *fp);
++struct ksmbd_inode *ksmbd_inode_lookup_lock(struct dentry *d);
++void ksmbd_inode_put(struct ksmbd_inode *ci);
+ struct ksmbd_file *ksmbd_lookup_durable_fd(unsigned long long id);
+ struct ksmbd_file *ksmbd_lookup_fd_cguid(char *cguid);
+ struct ksmbd_file *ksmbd_lookup_fd_inode(struct dentry *dentry);
 -- 
 2.43.0
 
