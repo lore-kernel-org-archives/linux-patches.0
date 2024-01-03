@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A721BDEC;
-	Wed,  3 Jan 2024 16:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850501BDEC;
+	Wed,  3 Jan 2024 16:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oo2mKHNP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB9CC433C7;
-	Wed,  3 Jan 2024 16:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgrZas64"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A6FC433C8;
+	Wed,  3 Jan 2024 16:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301151;
-	bh=HsXEHiBiwRoQhIp4zyeAiVJWRmemFKhtcKoR+VhEAEk=;
+	s=korg; t=1704301154;
+	bh=XPuQVRUoaksLeOZdEBiV5qJu0Bz8Jv005Z47012AkgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oo2mKHNP6MieVkJdwXZzRQj9Ph8VIXlPWiazfxOSUQydKXkNyy001J7SDKsHLkucd
-	 TMpVnNOTXLu/rU6W9BIMSoZWiE9v9ChsWoZFbJJsj+sgUrZ6MGKeI1rNIZrxd2QJsN
-	 rJheB3tok43tUCTxZZmhESxiF3RktYzltatRm+yw=
+	b=EgrZas64y2bqK1QAlGjKErFT9CWpmjK3JYodfxH9gLBmZZuUoOX1ByNeumo4qubMB
+	 688MKZs2wYbewglNEjazUZTY9bgyffphv7CB3qT4FBEBdXmwCIQ4vX962B4pXmYT40
+	 jKwZblwiKsGV09HSfXHcGtfXMWRzX+tInOZELV6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng-Han Wu <hank20010209@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/100] ksmbd: Remove unused field in ksmbd_user struct
-Date: Wed,  3 Jan 2024 17:54:41 +0100
-Message-ID: <20240103164903.886537333@linuxfoundation.org>
+Subject: [PATCH 6.1 053/100] ksmbd: reorganize ksmbd_iov_pin_rsp()
+Date: Wed,  3 Jan 2024 17:54:42 +0100
+Message-ID: <20240103164904.053261576@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -43,32 +42,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng-Han Wu <hank20010209@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit eacc655e18d1dec9b50660d16a1ddeeb4d6c48f2 ]
+[ Upstream commit 1819a904299942b309f687cc0f08b123500aa178 ]
 
-fs/smb/server/mgmt/user_config.h:21: Remove the unused field 'failed_login_count' from the ksmbd_user struct.
+If ksmbd_iov_pin_rsp fail, io vertor should be rollback.
+This patch moves memory allocations to before setting the io vector
+to avoid rollbacks.
 
-Signed-off-by: Cheng-Han Wu <hank20010209@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_config.h | 1 -
- 1 file changed, 1 deletion(-)
+ fs/smb/server/ksmbd_work.c | 43 +++++++++++++++++++-------------------
+ 1 file changed, 22 insertions(+), 21 deletions(-)
 
-diff --git a/fs/smb/server/mgmt/user_config.h b/fs/smb/server/mgmt/user_config.h
-index 6a44109617f14..e068a19fd9049 100644
---- a/fs/smb/server/mgmt/user_config.h
-+++ b/fs/smb/server/mgmt/user_config.h
-@@ -18,7 +18,6 @@ struct ksmbd_user {
+diff --git a/fs/smb/server/ksmbd_work.c b/fs/smb/server/ksmbd_work.c
+index 51def3ca74c01..a2ed441e837ae 100644
+--- a/fs/smb/server/ksmbd_work.c
++++ b/fs/smb/server/ksmbd_work.c
+@@ -95,11 +95,28 @@ bool ksmbd_queue_work(struct ksmbd_work *work)
+ 	return queue_work(ksmbd_wq, &work->work);
+ }
  
- 	size_t			passkey_sz;
- 	char			*passkey;
--	unsigned int		failed_login_count;
- };
+-static int ksmbd_realloc_iov_pin(struct ksmbd_work *work, void *ib,
+-				 unsigned int ib_len)
++static inline void __ksmbd_iov_pin(struct ksmbd_work *work, void *ib,
++				   unsigned int ib_len)
+ {
++	work->iov[++work->iov_idx].iov_base = ib;
++	work->iov[work->iov_idx].iov_len = ib_len;
++	work->iov_cnt++;
++}
++
++static int __ksmbd_iov_pin_rsp(struct ksmbd_work *work, void *ib, int len,
++			       void *aux_buf, unsigned int aux_size)
++{
++	struct aux_read *ar;
++	int need_iov_cnt = 1;
  
- static inline bool user_guest(struct ksmbd_user *user)
+-	if (work->iov_alloc_cnt <= work->iov_cnt) {
++	if (aux_size) {
++		need_iov_cnt++;
++		ar = kmalloc(sizeof(struct aux_read), GFP_KERNEL);
++		if (!ar)
++			return -ENOMEM;
++	}
++
++	if (work->iov_alloc_cnt < work->iov_cnt + need_iov_cnt) {
+ 		struct kvec *new;
+ 
+ 		work->iov_alloc_cnt += 4;
+@@ -111,16 +128,6 @@ static int ksmbd_realloc_iov_pin(struct ksmbd_work *work, void *ib,
+ 		work->iov = new;
+ 	}
+ 
+-	work->iov[++work->iov_idx].iov_base = ib;
+-	work->iov[work->iov_idx].iov_len = ib_len;
+-	work->iov_cnt++;
+-
+-	return 0;
+-}
+-
+-static int __ksmbd_iov_pin_rsp(struct ksmbd_work *work, void *ib, int len,
+-			       void *aux_buf, unsigned int aux_size)
+-{
+ 	/* Plus rfc_length size on first iov */
+ 	if (!work->iov_idx) {
+ 		work->iov[work->iov_idx].iov_base = work->response_buf;
+@@ -129,19 +136,13 @@ static int __ksmbd_iov_pin_rsp(struct ksmbd_work *work, void *ib, int len,
+ 		work->iov_cnt++;
+ 	}
+ 
+-	ksmbd_realloc_iov_pin(work, ib, len);
++	__ksmbd_iov_pin(work, ib, len);
+ 	inc_rfc1001_len(work->iov[0].iov_base, len);
+ 
+ 	if (aux_size) {
+-		struct aux_read *ar;
+-
+-		ksmbd_realloc_iov_pin(work, aux_buf, aux_size);
++		__ksmbd_iov_pin(work, aux_buf, aux_size);
+ 		inc_rfc1001_len(work->iov[0].iov_base, aux_size);
+ 
+-		ar = kmalloc(sizeof(struct aux_read), GFP_KERNEL);
+-		if (!ar)
+-			return -ENOMEM;
+-
+ 		ar->buf = aux_buf;
+ 		list_add(&ar->entry, &work->aux_read_list);
+ 	}
 -- 
 2.43.0
 
