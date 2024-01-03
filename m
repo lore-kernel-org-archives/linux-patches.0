@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DBC1C6A3;
-	Wed,  3 Jan 2024 17:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16631C289;
+	Wed,  3 Jan 2024 17:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbnV4a8F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2660EC433C9;
-	Wed,  3 Jan 2024 17:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PB1AQpzt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEF6C433C8;
+	Wed,  3 Jan 2024 17:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301442;
-	bh=9iE6uZE+h8oNWmqCAjPhOoksLfOylyO9fqi3ZmDOwls=;
+	s=korg; t=1704301445;
+	bh=deShfhui+8mNbKNbEA1zgk0drPGubqM5EAmW6/v0XO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZbnV4a8FasYyVIqemj8ME6Ct1/DQ/8l/cV/kFndfSEnypQbz0AhU2CfuKSESdhX5y
-	 rt5SqFml/JR1Rk52jEhLSfHIaRp+w3sojWZcCz6YniXwadj3qerv2LeQ10EV3QgJRX
-	 bsjpZPfgRhGCZJ3FILpdDzzkq1MSCjwrzKXmPMTQ=
+	b=PB1AQpzt6QmFpTqC4mj8agdgFQTCpRI4POD+gwuA5LB0/JSr6Ulg1oDzok2DUa4nr
+	 WDMbu0cxgsfTud9pc+TChjvFJIBjAuRgtLlG+vNj2PIqaPxMyrEA+k6VyHgXefMY4w
+	 rKi873kG/TZDjg3EP6bicd9h0BjwD8mmQKTf4nEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Nguyen <quan@os.amperecomputing.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 26/95] i2c: aspeed: Handle the coalesced stop conditions with the start conditions.
-Date: Wed,  3 Jan 2024 17:54:34 +0100
-Message-ID: <20240103164858.029963311@linuxfoundation.org>
+Subject: [PATCH 5.15 35/95] interconnect: Treat xlate() returning NULL node as an error
+Date: Wed,  3 Jan 2024 17:54:43 +0100
+Message-ID: <20240103164859.342838418@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -44,112 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quan Nguyen <quan@os.amperecomputing.com>
+From: Mike Tipton <quic_mdtipton@quicinc.com>
 
-[ Upstream commit b4cc1cbba5195a4dd497cf2f8f09e7807977d543 ]
+[ Upstream commit ad2ab1297d0c80899125a842bb7a078abfe1e6ce ]
 
-Some masters may drive the transfers with low enough latency between
-the nak/stop phase of the current command and the start/address phase
-of the following command that the interrupts are coalesced by the
-time we process them.
-Handle the stop conditions before processing SLAVE_MATCH to fix the
-complaints that sometimes occur below.
+Currently, if provider->xlate() or provider->xlate_extended()
+"successfully" return a NULL node, then of_icc_get_from_provider() won't
+consider that an error and will successfully return the NULL node. This
+bypasses error handling in of_icc_get_by_index() and leads to NULL
+dereferences in path_find().
 
-"aspeed-i2c-bus 1e78a040.i2c-bus: irq handled != irq. Expected
-0x00000086, but was 0x00000084"
+This could be avoided by ensuring provider callbacks always return an
+error for NULL nodes, but it's better to explicitly protect against this
+in the common framework.
 
-Fixes: f9eb91350bb2 ("i2c: aspeed: added slave support for Aspeed I2C driver")
-Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fixes: 87e3031b6fbd ("interconnect: Allow endpoints translation via DT")
+Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
+Link: https://lore.kernel.org/r/20231025145829.11603-1-quic_mdtipton@quicinc.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-aspeed.c | 48 ++++++++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 16 deletions(-)
+ drivers/interconnect/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-index b7cad1bed3dc1..e61ed702a12ce 100644
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -250,18 +250,46 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 	if (!slave)
- 		return 0;
- 
--	command = readl(bus->base + ASPEED_I2C_CMD_REG);
-+	/*
-+	 * Handle stop conditions early, prior to SLAVE_MATCH. Some masters may drive
-+	 * transfers with low enough latency between the nak/stop phase of the current
-+	 * command and the start/address phase of the following command that the
-+	 * interrupts are coalesced by the time we process them.
-+	 */
-+	if (irq_status & ASPEED_I2CD_INTR_NORMAL_STOP) {
-+		irq_handled |= ASPEED_I2CD_INTR_NORMAL_STOP;
-+		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
-+	}
-+
-+	if (irq_status & ASPEED_I2CD_INTR_TX_NAK &&
-+	    bus->slave_state == ASPEED_I2C_SLAVE_READ_PROCESSED) {
-+		irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
-+		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
-+	}
-+
-+	/* Propagate any stop conditions to the slave implementation. */
-+	if (bus->slave_state == ASPEED_I2C_SLAVE_STOP) {
-+		i2c_slave_event(slave, I2C_SLAVE_STOP, &value);
-+		bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
-+	}
- 
--	/* Slave was requested, restart state machine. */
-+	/*
-+	 * Now that we've dealt with any potentially coalesced stop conditions,
-+	 * address any start conditions.
-+	 */
- 	if (irq_status & ASPEED_I2CD_INTR_SLAVE_MATCH) {
- 		irq_handled |= ASPEED_I2CD_INTR_SLAVE_MATCH;
- 		bus->slave_state = ASPEED_I2C_SLAVE_START;
+diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+index b7c41bd7409cd..aadb2b97498a0 100644
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -382,6 +382,9 @@ struct icc_node_data *of_icc_get_from_provider(struct of_phandle_args *spec)
  	}
+ 	mutex_unlock(&icc_lock);
  
--	/* Slave is not currently active, irq was for someone else. */
-+	/*
-+	 * If the slave has been stopped and not started then slave interrupt
-+	 * handling is complete.
-+	 */
- 	if (bus->slave_state == ASPEED_I2C_SLAVE_INACTIVE)
- 		return irq_handled;
++	if (!node)
++		return ERR_PTR(-EINVAL);
++
+ 	if (IS_ERR(node))
+ 		return ERR_CAST(node);
  
-+	command = readl(bus->base + ASPEED_I2C_CMD_REG);
- 	dev_dbg(bus->dev, "slave irq status 0x%08x, cmd 0x%08x\n",
- 		irq_status, command);
- 
-@@ -280,17 +308,6 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		irq_handled |= ASPEED_I2CD_INTR_RX_DONE;
- 	}
- 
--	/* Slave was asked to stop. */
--	if (irq_status & ASPEED_I2CD_INTR_NORMAL_STOP) {
--		irq_handled |= ASPEED_I2CD_INTR_NORMAL_STOP;
--		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
--	}
--	if (irq_status & ASPEED_I2CD_INTR_TX_NAK &&
--	    bus->slave_state == ASPEED_I2C_SLAVE_READ_PROCESSED) {
--		irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
--		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
--	}
--
- 	switch (bus->slave_state) {
- 	case ASPEED_I2C_SLAVE_READ_REQUESTED:
- 		if (unlikely(irq_status & ASPEED_I2CD_INTR_TX_ACK))
-@@ -319,8 +336,7 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		i2c_slave_event(slave, I2C_SLAVE_WRITE_RECEIVED, &value);
- 		break;
- 	case ASPEED_I2C_SLAVE_STOP:
--		i2c_slave_event(slave, I2C_SLAVE_STOP, &value);
--		bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
-+		/* Stop event handling is done early. Unreachable. */
- 		break;
- 	case ASPEED_I2C_SLAVE_START:
- 		/* Slave was just started. Waiting for the next event. */;
 -- 
 2.43.0
 
