@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303F91BDDE;
-	Wed,  3 Jan 2024 17:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0B01BDDE;
+	Wed,  3 Jan 2024 17:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="No8gxsHg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85645C433C8;
-	Wed,  3 Jan 2024 17:05:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5DCZz9x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736E9C433C8;
+	Wed,  3 Jan 2024 17:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301519;
-	bh=etUMQWVrq4QUvt5PoN3nHtQnNDynevjcu8c9JbZZOAY=;
+	s=korg; t=1704301522;
+	bh=juedO3uxgbI/X7DA65F7CHvpNYwwohPVLX4kgjadh40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=No8gxsHggFi1h71GGdNEkw9rgX05fThL7cc9fxDuBBDhjqGA2Qm5jPBd38+eynOJC
-	 2CtuVo8HP+L3HhAYxuhd0VzFxNK7oFmErweeX+BI+tX5fOPL/Z+WHnN+TL83g6XErv
-	 MihbJEojBMNEZmpvp9ZSfaX6bnquOv7NZHTRQylA=
+	b=X5DCZz9xvOIXoepblpd32/T1DleKrvihbMGP5Tg6jj703nPHInSKKf9Rj09WiBPNy
+	 1Tcyps9E7insHX48iVvrcHjoojn77pOfuNx19Lo8ERCv9X7UPzoC8G0Kcfk4i+Sjt4
+	 sz2XIEu0EIv6eFWY4uMGN5G4Hly/xqEq7ZhBAeD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Simon Horman <horms@kernel.org>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 5.15 54/95] net: 9p: avoid freeing uninit memory in p9pdu_vreadf
-Date: Wed,  3 Jan 2024 17:55:02 +0100
-Message-ID: <20240103164902.133391465@linuxfoundation.org>
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 28/95] gpiolib: cdev: add gpio_device locking wrapper around gpio_ioctl()
+Date: Wed,  3 Jan 2024 17:54:36 +0100
+Message-ID: <20240103164858.336925043@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -43,82 +42,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Kent Gibson <warthog618@gmail.com>
 
-commit ff49bf1867578f23a5ffdd38f927f6e1e16796c4 upstream.
+[ Upstream commit 1d656bd259edb89dc1d9938ec5c5389867088546 ]
 
-If some of p9pdu_readf() calls inside case 'T' in p9pdu_vreadf() fails,
-the error path is not handled properly. *wnames or members of *wnames
-array may be left uninitialized and invalidly freed.
+While the GPIO cdev gpio_ioctl() call is in progress, the kernel can
+call gpiochip_remove() which will set gdev->chip to NULL, after which
+any subsequent access will cause a crash.
 
-Initialize *wnames to NULL in beginning of case 'T'. Initialize the first
-*wnames array element to NULL and nullify the failing *wnames element so
-that the error path freeing loop stops on the first NULL element and
-doesn't proceed further.
+gpio_ioctl() was overlooked by the previous fix to protect syscalls
+(bdbbae241a04), so add protection for that.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: ace51c4dd2f9 ("9p: add new protocol support code")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Message-ID: <20231206200913.16135-1-pchelkin@ispras.ru>
-Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bdbbae241a04 ("gpiolib: protect the GPIO device against being dropped while in use by user-space")
+Fixes: d7c51b47ac11 ("gpio: userspace ABI for reading/writing GPIO lines")
+Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
+Fixes: aad955842d1c ("gpiolib: cdev: support GPIO_V2_GET_LINEINFO_IOCTL and GPIO_V2_GET_LINEINFO_WATCH_IOCTL")
+Signed-off-by: Kent Gibson <warthog618@gmail.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/protocol.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/gpio/gpiolib-cdev.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/net/9p/protocol.c
-+++ b/net/9p/protocol.c
-@@ -230,6 +230,8 @@ p9pdu_vreadf(struct p9_fcall *pdu, int p
- 				uint16_t *nwname = va_arg(ap, uint16_t *);
- 				char ***wnames = va_arg(ap, char ***);
+diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
+index 2a2e0691462bf..1db991cb2efce 100644
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -2224,10 +2224,7 @@ static int lineinfo_unwatch(struct gpio_chardev_data *cdev, void __user *ip)
+ 	return 0;
+ }
  
-+				*wnames = NULL;
+-/*
+- * gpio_ioctl() - ioctl handler for the GPIO chardev
+- */
+-static long gpio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
++static long gpio_ioctl_unlocked(struct file *file, unsigned int cmd, unsigned long arg)
+ {
+ 	struct gpio_chardev_data *cdev = file->private_data;
+ 	struct gpio_device *gdev = cdev->gdev;
+@@ -2264,6 +2261,17 @@ static long gpio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 	}
+ }
+ 
++/*
++ * gpio_ioctl() - ioctl handler for the GPIO chardev
++ */
++static long gpio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
++{
++	struct gpio_chardev_data *cdev = file->private_data;
 +
- 				errcode = p9pdu_readf(pdu, proto_version,
- 								"w", nwname);
- 				if (!errcode) {
-@@ -239,6 +241,8 @@ p9pdu_vreadf(struct p9_fcall *pdu, int p
- 							  GFP_NOFS);
- 					if (!*wnames)
- 						errcode = -ENOMEM;
-+					else
-+						(*wnames)[0] = NULL;
- 				}
- 
- 				if (!errcode) {
-@@ -250,8 +254,10 @@ p9pdu_vreadf(struct p9_fcall *pdu, int p
- 								proto_version,
- 								"s",
- 								&(*wnames)[i]);
--						if (errcode)
-+						if (errcode) {
-+							(*wnames)[i] = NULL;
- 							break;
-+						}
- 					}
- 				}
- 
-@@ -259,11 +265,14 @@ p9pdu_vreadf(struct p9_fcall *pdu, int p
- 					if (*wnames) {
- 						int i;
- 
--						for (i = 0; i < *nwname; i++)
-+						for (i = 0; i < *nwname; i++) {
-+							if (!(*wnames)[i])
-+								break;
- 							kfree((*wnames)[i]);
-+						}
-+						kfree(*wnames);
-+						*wnames = NULL;
- 					}
--					kfree(*wnames);
--					*wnames = NULL;
- 				}
- 			}
- 			break;
++	return call_ioctl_locked(file, cmd, arg, cdev->gdev,
++				 gpio_ioctl_unlocked);
++}
++
+ #ifdef CONFIG_COMPAT
+ static long gpio_ioctl_compat(struct file *file, unsigned int cmd,
+ 			      unsigned long arg)
+-- 
+2.43.0
+
 
 
