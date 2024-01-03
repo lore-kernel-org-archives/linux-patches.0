@@ -1,29 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15A41C296;
-	Wed,  3 Jan 2024 17:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C85E81C283;
+	Wed,  3 Jan 2024 17:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cc0ZD5pL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA9FC433C7;
-	Wed,  3 Jan 2024 17:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GON9NSVg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CD7C433C7;
+	Wed,  3 Jan 2024 17:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301270;
-	bh=Kk+UW0gx9lPQR3it32HM6Z+ReUOjiS5Jwk1Fp+OTzIY=;
+	s=korg; t=1704301273;
+	bh=oChQLymVZTwdHamzmtPSaCwpFtaEwivpTG9oZKbxuFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cc0ZD5pLptbqRTv2KnsCrVVClTRMCyiDAAGz1UHNw2UO8JxCclKstVDD4DMo5Z9C6
-	 lsW6UyNKyrntIbneq2+p3DApdZvv2O7CGkb6b2Oa6eoLaVrnHabqNVenYrCTrWGDeQ
-	 P2hCDs9+1hbWpeR+D3q9BoJob5XP2jX3kGEkr8ME=
+	b=GON9NSVgYRVIUAubbGiU7Q283kBxC7ytA2iemywEO9ALZuGZzpUS8rKACPVvk67WO
+	 7pzAP9gF9pR57KCSTNsNnJWY15Y7ofGepiloa7/ZKFQ7EHMMSX+8Q0c+X/3z2Uuw7C
+	 098id9TKezCbzHMnVEgSPHJFa6Ee1Ni63l+6MnF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.1 086/100] platform/x86: p2sb: Allow p2sb_bar() calls during PCI device probe
-Date: Wed,  3 Jan 2024 17:55:15 +0100
-Message-ID: <20240103164909.026702193@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Christoph Hellwig <hch@infradead.org>,
+	Dave Chinner <david@fromorbit.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
+	yangerkun <yangerkun@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 087/100] mm/filemap: avoid buffered read/write race to read inconsistent data
+Date: Wed,  3 Jan 2024 17:55:16 +0100
+Message-ID: <20240103164909.170384396@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -36,288 +45,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit b28ff7a7c3245d7f62acc20f15b4361292fe4117 upstream.
+commit e2c27b803bb664748e090d99042ac128b3f88d92 upstream.
 
-p2sb_bar() unhides P2SB device to get resources from the device. It
-guards the operation by locking pci_rescan_remove_lock so that parallel
-rescans do not find the P2SB device. However, this lock causes deadlock
-when PCI bus rescan is triggered by /sys/bus/pci/rescan. The rescan
-locks pci_rescan_remove_lock and probes PCI devices. When PCI devices
-call p2sb_bar() during probe, it locks pci_rescan_remove_lock again.
-Hence the deadlock.
+The following concurrency may cause the data read to be inconsistent with
+the data on disk:
 
-To avoid the deadlock, do not lock pci_rescan_remove_lock in p2sb_bar().
-Instead, do the lock at fs_initcall. Introduce p2sb_cache_resources()
-for fs_initcall which gets and caches the P2SB resources. At p2sb_bar(),
-refer the cache and return to the caller.
+             cpu1                           cpu2
+------------------------------|------------------------------
+                               // Buffered write 2048 from 0
+                               ext4_buffered_write_iter
+                                generic_perform_write
+                                 copy_page_from_iter_atomic
+                                 ext4_da_write_end
+                                  ext4_da_do_write_end
+                                   block_write_end
+                                    __block_commit_write
+                                     folio_mark_uptodate
+// Buffered read 4096 from 0          smp_wmb()
+ext4_file_read_iter                   set_bit(PG_uptodate, folio_flags)
+ generic_file_read_iter            i_size_write // 2048
+  filemap_read                     unlock_page(page)
+   filemap_get_pages
+    filemap_get_read_batch
+    folio_test_uptodate(folio)
+     ret = test_bit(PG_uptodate, folio_flags)
+     if (ret)
+      smp_rmb();
+      // Ensure that the data in page 0-2048 is up-to-date.
 
-Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Fixes: 9745fb07474f ("platform/x86/intel: Add Primary to Sideband (P2SB) bridge support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/linux-pci/6xb24fjmptxxn5js2fjrrddjae6twex5bjaftwqsuawuqqqydx@7cl3uik5ef6j/
-Link: https://lore.kernel.org/r/20231229063912.2517922-2-shinichiro.kawasaki@wdc.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+                               // New buffered write 2048 from 2048
+                               ext4_buffered_write_iter
+                                generic_perform_write
+                                 copy_page_from_iter_atomic
+                                 ext4_da_write_end
+                                  ext4_da_do_write_end
+                                   block_write_end
+                                    __block_commit_write
+                                     folio_mark_uptodate
+                                      smp_wmb()
+                                      set_bit(PG_uptodate, folio_flags)
+                                   i_size_write // 4096
+                                   unlock_page(page)
+
+   isize = i_size_read(inode) // 4096
+   // Read the latest isize 4096, but without smp_rmb(), there may be
+   // Load-Load disorder resulting in the data in the 2048-4096 range
+   // in the page is not up-to-date.
+   copy_page_to_iter
+   // copyout 4096
+
+In the concurrency above, we read the updated i_size, but there is no read
+barrier to ensure that the data in the page is the same as the i_size at
+this point, so we may copy the unsynchronized page out.  Hence adding the
+missing read memory barrier to fix this.
+
+This is a Load-Load reordering issue, which only occurs on some weak
+mem-ordering architectures (e.g.  ARM64, ALPHA), but not on strong
+mem-ordering architectures (e.g.  X86).  And theoretically the problem
+doesn't only happen on ext4, filesystems that call filemap_read() but
+don't hold inode lock (e.g.  btrfs, f2fs, ubifs ...) will have this
+problem, while filesystems with inode lock (e.g.  xfs, nfs) won't have
+this problem.
+
+Link: https://lkml.kernel.org/r/20231213062324.739009-1-libaokun1@huawei.com
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Cc: Theodore Ts'o <tytso@mit.edu>
+Cc: yangerkun <yangerkun@huawei.com>
+Cc: Yu Kuai <yukuai3@huawei.com>
+Cc: Zhang Yi <yi.zhang@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/p2sb.c | 178 +++++++++++++++++++++++++++---------
- 1 file changed, 134 insertions(+), 44 deletions(-)
+ mm/filemap.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/platform/x86/p2sb.c b/drivers/platform/x86/p2sb.c
-index 1cf2471d54dd..fcf1ce8bbdc5 100644
---- a/drivers/platform/x86/p2sb.c
-+++ b/drivers/platform/x86/p2sb.c
-@@ -26,6 +26,21 @@ static const struct x86_cpu_id p2sb_cpu_ids[] = {
- 	{}
- };
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -2745,6 +2745,15 @@ ssize_t filemap_read(struct kiocb *iocb,
+ 		end_offset = min_t(loff_t, isize, iocb->ki_pos + iter->count);
  
-+/*
-+ * Cache BAR0 of P2SB device functions 0 to 7.
-+ * TODO: The constant 8 is the number of functions that PCI specification
-+ *       defines. Same definitions exist tree-wide. Unify this definition and
-+ *       the other definitions then move to include/uapi/linux/pci.h.
-+ */
-+#define NR_P2SB_RES_CACHE 8
-+
-+struct p2sb_res_cache {
-+	u32 bus_dev_id;
-+	struct resource res;
-+};
-+
-+static struct p2sb_res_cache p2sb_resources[NR_P2SB_RES_CACHE];
-+
- static int p2sb_get_devfn(unsigned int *devfn)
- {
- 	unsigned int fn = P2SB_DEVFN_DEFAULT;
-@@ -39,8 +54,16 @@ static int p2sb_get_devfn(unsigned int *devfn)
- 	return 0;
- }
- 
-+static bool p2sb_valid_resource(struct resource *res)
-+{
-+	if (res->flags)
-+		return true;
-+
-+	return false;
-+}
-+
- /* Copy resource from the first BAR of the device in question */
--static int p2sb_read_bar0(struct pci_dev *pdev, struct resource *mem)
-+static void p2sb_read_bar0(struct pci_dev *pdev, struct resource *mem)
- {
- 	struct resource *bar0 = &pdev->resource[0];
- 
-@@ -56,47 +79,64 @@ static int p2sb_read_bar0(struct pci_dev *pdev, struct resource *mem)
- 	mem->end = bar0->end;
- 	mem->flags = bar0->flags;
- 	mem->desc = bar0->desc;
-+}
-+
-+static void p2sb_scan_and_cache_devfn(struct pci_bus *bus, unsigned int devfn)
-+{
-+	struct p2sb_res_cache *cache = &p2sb_resources[PCI_FUNC(devfn)];
-+	struct pci_dev *pdev;
-+
-+	pdev = pci_scan_single_device(bus, devfn);
-+	if (!pdev)
-+		return;
-+
-+	p2sb_read_bar0(pdev, &cache->res);
-+	cache->bus_dev_id = bus->dev.id;
-+
-+	pci_stop_and_remove_bus_device(pdev);
-+	return;
-+}
-+
-+static int p2sb_scan_and_cache(struct pci_bus *bus, unsigned int devfn)
-+{
-+	unsigned int slot, fn;
-+
-+	if (PCI_FUNC(devfn) == 0) {
-+		/*
-+		 * When function number of the P2SB device is zero, scan it and
-+		 * other function numbers, and if devices are available, cache
-+		 * their BAR0s.
+ 		/*
++		 * Pairs with a barrier in
++		 * block_write_end()->mark_buffer_dirty() or other page
++		 * dirtying routines like iomap_write_end() to ensure
++		 * changes to page contents are visible before we see
++		 * increased inode size.
 +		 */
-+		slot = PCI_SLOT(devfn);
-+		for (fn = 0; fn < NR_P2SB_RES_CACHE; fn++)
-+			p2sb_scan_and_cache_devfn(bus, PCI_DEVFN(slot, fn));
-+	} else {
-+		/* Scan the P2SB device and cache its BAR0 */
-+		p2sb_scan_and_cache_devfn(bus, devfn);
-+	}
++		smp_rmb();
 +
-+	if (!p2sb_valid_resource(&p2sb_resources[PCI_FUNC(devfn)].res))
-+		return -ENOENT;
- 
- 	return 0;
- }
- 
--static int p2sb_scan_and_read(struct pci_bus *bus, unsigned int devfn, struct resource *mem)
-+static struct pci_bus *p2sb_get_bus(struct pci_bus *bus)
- {
--	struct pci_dev *pdev;
--	int ret;
-+	static struct pci_bus *p2sb_bus;
- 
--	pdev = pci_scan_single_device(bus, devfn);
--	if (!pdev)
--		return -ENODEV;
-+	bus = bus ?: p2sb_bus;
-+	if (bus)
-+		return bus;
- 
--	ret = p2sb_read_bar0(pdev, mem);
--
--	pci_stop_and_remove_bus_device(pdev);
--	return ret;
-+	/* Assume P2SB is on the bus 0 in domain 0 */
-+	p2sb_bus = pci_find_bus(0, 0);
-+	return p2sb_bus;
- }
- 
--/**
-- * p2sb_bar - Get Primary to Sideband (P2SB) bridge device BAR
-- * @bus: PCI bus to communicate with
-- * @devfn: PCI slot and function to communicate with
-- * @mem: memory resource to be filled in
-- *
-- * The BIOS prevents the P2SB device from being enumerated by the PCI
-- * subsystem, so we need to unhide and hide it back to lookup the BAR.
-- *
-- * if @bus is NULL, the bus 0 in domain 0 will be used.
-- * If @devfn is 0, it will be replaced by devfn of the P2SB device.
-- *
-- * Caller must provide a valid pointer to @mem.
-- *
-- * Locking is handled by pci_rescan_remove_lock mutex.
-- *
-- * Return:
-- * 0 on success or appropriate errno value on error.
-- */
--int p2sb_bar(struct pci_bus *bus, unsigned int devfn, struct resource *mem)
-+static int p2sb_cache_resources(void)
- {
--	struct pci_dev *pdev_p2sb;
-+	struct pci_bus *bus;
- 	unsigned int devfn_p2sb;
- 	u32 value = P2SBC_HIDE;
- 	int ret;
-@@ -106,8 +146,9 @@ int p2sb_bar(struct pci_bus *bus, unsigned int devfn, struct resource *mem)
- 	if (ret)
- 		return ret;
- 
--	/* if @bus is NULL, use bus 0 in domain 0 */
--	bus = bus ?: pci_find_bus(0, 0);
-+	bus = p2sb_get_bus(NULL);
-+	if (!bus)
-+		return -ENODEV;
- 
- 	/*
- 	 * Prevent concurrent PCI bus scan from seeing the P2SB device and
-@@ -115,17 +156,16 @@ int p2sb_bar(struct pci_bus *bus, unsigned int devfn, struct resource *mem)
- 	 */
- 	pci_lock_rescan_remove();
- 
--	/* Unhide the P2SB device, if needed */
-+	/*
-+	 * The BIOS prevents the P2SB device from being enumerated by the PCI
-+	 * subsystem, so we need to unhide and hide it back to lookup the BAR.
-+	 * Unhide the P2SB device here, if needed.
-+	 */
- 	pci_bus_read_config_dword(bus, devfn_p2sb, P2SBC, &value);
- 	if (value & P2SBC_HIDE)
- 		pci_bus_write_config_dword(bus, devfn_p2sb, P2SBC, 0);
- 
--	pdev_p2sb = pci_scan_single_device(bus, devfn_p2sb);
--	if (devfn)
--		ret = p2sb_scan_and_read(bus, devfn, mem);
--	else
--		ret = p2sb_read_bar0(pdev_p2sb, mem);
--	pci_stop_and_remove_bus_device(pdev_p2sb);
-+	ret = p2sb_scan_and_cache(bus, devfn_p2sb);
- 
- 	/* Hide the P2SB device, if it was hidden */
- 	if (value & P2SBC_HIDE)
-@@ -133,12 +173,62 @@ int p2sb_bar(struct pci_bus *bus, unsigned int devfn, struct resource *mem)
- 
- 	pci_unlock_rescan_remove();
- 
--	if (ret)
--		return ret;
-+	return ret;
-+}
- 
--	if (mem->flags == 0)
-+/**
-+ * p2sb_bar - Get Primary to Sideband (P2SB) bridge device BAR
-+ * @bus: PCI bus to communicate with
-+ * @devfn: PCI slot and function to communicate with
-+ * @mem: memory resource to be filled in
-+ *
-+ * If @bus is NULL, the bus 0 in domain 0 will be used.
-+ * If @devfn is 0, it will be replaced by devfn of the P2SB device.
-+ *
-+ * Caller must provide a valid pointer to @mem.
-+ *
-+ * Return:
-+ * 0 on success or appropriate errno value on error.
-+ */
-+int p2sb_bar(struct pci_bus *bus, unsigned int devfn, struct resource *mem)
-+{
-+	struct p2sb_res_cache *cache;
-+	int ret;
-+
-+	bus = p2sb_get_bus(bus);
-+	if (!bus)
- 		return -ENODEV;
- 
-+	if (!devfn) {
-+		ret = p2sb_get_devfn(&devfn);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	cache = &p2sb_resources[PCI_FUNC(devfn)];
-+	if (cache->bus_dev_id != bus->dev.id)
-+		return -ENODEV;
-+
-+	if (!p2sb_valid_resource(&cache->res))
-+		return -ENOENT;
-+
-+	memcpy(mem, &cache->res, sizeof(*mem));
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(p2sb_bar);
-+
-+static int __init p2sb_fs_init(void)
-+{
-+	p2sb_cache_resources();
-+	return 0;
-+}
-+
-+/*
-+ * pci_rescan_remove_lock to avoid access to unhidden P2SB devices can
-+ * not be locked in sysfs pci bus rescan path because of deadlock. To
-+ * avoid the deadlock, access to P2SB devices with the lock at an early
-+ * step in kernel initialization and cache required resources. This
-+ * should happen after subsys_initcall which initializes PCI subsystem
-+ * and before device_initcall which requires P2SB resources.
-+ */
-+fs_initcall(p2sb_fs_init);
--- 
-2.43.0
-
++		/*
+ 		 * Once we start copying data, we don't want to be touching any
+ 		 * cachelines that might be contended:
+ 		 */
 
 
