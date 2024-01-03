@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E036F1BDEC;
-	Wed,  3 Jan 2024 17:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366741BDFB;
+	Wed,  3 Jan 2024 17:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAU6vJXa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B88C433C7;
-	Wed,  3 Jan 2024 17:11:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRBxbZxU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD079C433C7;
+	Wed,  3 Jan 2024 17:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301873;
-	bh=DgVeq1KRqeXod0ETDD6488iwAEoIpkZE/qVgVxGoWCQ=;
+	s=korg; t=1704301877;
+	bh=ZSBbMoiF5PgLvF9YLEb0Fs7C8uHFXn4w18qRN2SAHzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wAU6vJXaVdQyRQO1mXf7AN3Ipr3HHYvz2oE/Fg/CVa+oXNw21AmYNzAkjcv+5rqMt
-	 2z9X73UpDnrx/kJzuP+0lcAALQQXqe5mAJgqfHoZ1/Unwt+oa7J+IYKBx01E9/Cj48
-	 /HHGnIW1qZCvE+RYyxsw/Ks0kV/wgaJ43VgKYFLg=
+	b=jRBxbZxUeqZKVindmgADkzexvSpxLhQxo7SJRBILQIYo0+TTpvcI6vC2AA2hQ8JpB
+	 XlrjOnXsE6oqoEnBGr+EjScRlWRXjWPJzhFviI+bIxYtcIZpMsFxquld9xPx+QrOCT
+	 qbIrqJKyt3aycQrYk3cS3+RYWqsBoj1GrTy3c/bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Saarinen <jani.saarinen@intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Robert Morris <rtm@csail.mit.edu>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 24/75] ALSA: hda/hdmi: add force-connect quirk for NUC5CPYB
-Date: Wed,  3 Jan 2024 17:55:05 +0100
-Message-ID: <20240103164846.836582201@linuxfoundation.org>
+Subject: [PATCH 5.10 25/75] smb: client: fix NULL deref in asn1_ber_decoder()
+Date: Wed,  3 Jan 2024 17:55:06 +0100
+Message-ID: <20240103164846.973850503@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164842.953224409@linuxfoundation.org>
 References: <20240103164842.953224409@linuxfoundation.org>
@@ -38,49 +37,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 3b1ff57e24a7bcd2e2a8426dd2013a80d1fa96eb ]
+[ Upstream commit 90d025c2e953c11974e76637977c473200593a46 ]
 
-Add one more older NUC model that requires quirk to force all pins to be
-connected. The display codec pins are not registered properly without
-the force-connect quirk. The codec will report only one pin as having
-external connectivity, but i915 finds all three connectors on the
-system, so the two drivers are not in sync.
+If server replied SMB2_NEGOTIATE with a zero SecurityBufferOffset,
+smb2_get_data_area() sets @len to non-zero but return NULL, so
+decode_negTokeninit() ends up being called with a NULL @security_blob:
 
-Issue found with DRM igt-gpu-tools test kms_hdmi_inject@inject-audio.
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 0 P4D 0
+  Oops: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 2 PID: 871 Comm: mount.cifs Not tainted 6.7.0-rc4 #2
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
+  RIP: 0010:asn1_ber_decoder+0x173/0xc80
+  Code: 01 4c 39 2c 24 75 09 45 84 c9 0f 85 2f 03 00 00 48 8b 14 24 4c 29 ea 48 83 fa 01 0f 86 1e 07 00 00 48 8b 74 24 28 4d 8d 5d 01 <42> 0f b6 3c 2e 89 fa 40 88 7c 24 5c f7 d2 83 e2 1f 0f 84 3d 07 00
+  RSP: 0018:ffffc9000063f950 EFLAGS: 00010202
+  RAX: 0000000000000002 RBX: 0000000000000000 RCX: 000000000000004a
+  RDX: 000000000000004a RSI: 0000000000000000 RDI: 0000000000000000
+  RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000002 R11: 0000000000000001 R12: 0000000000000000
+  R13: 0000000000000000 R14: 000000000000004d R15: 0000000000000000
+  FS:  00007fce52b0fbc0(0000) GS:ffff88806ba00000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 0000000000000000 CR3: 000000001ae64000 CR4: 0000000000750ef0
+  PKRU: 55555554
+  Call Trace:
+   <TASK>
+   ? __die+0x23/0x70
+   ? page_fault_oops+0x181/0x480
+   ? __stack_depot_save+0x1e6/0x480
+   ? exc_page_fault+0x6f/0x1c0
+   ? asm_exc_page_fault+0x26/0x30
+   ? asn1_ber_decoder+0x173/0xc80
+   ? check_object+0x40/0x340
+   decode_negTokenInit+0x1e/0x30 [cifs]
+   SMB2_negotiate+0xc99/0x17c0 [cifs]
+   ? smb2_negotiate+0x46/0x60 [cifs]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   smb2_negotiate+0x46/0x60 [cifs]
+   cifs_negotiate_protocol+0xae/0x130 [cifs]
+   cifs_get_smb_ses+0x517/0x1040 [cifs]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? queue_delayed_work_on+0x5d/0x90
+   cifs_mount_get_session+0x78/0x200 [cifs]
+   dfs_mount_share+0x13a/0x9f0 [cifs]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? lock_acquire+0xbf/0x2b0
+   ? find_nls+0x16/0x80
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   cifs_mount+0x7e/0x350 [cifs]
+   cifs_smb3_do_mount+0x128/0x780 [cifs]
+   smb3_get_tree+0xd9/0x290 [cifs]
+   vfs_get_tree+0x2c/0x100
+   ? capable+0x37/0x70
+   path_mount+0x2d7/0xb80
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? _raw_spin_unlock_irqrestore+0x44/0x60
+   __x64_sys_mount+0x11a/0x150
+   do_syscall_64+0x47/0xf0
+   entry_SYSCALL_64_after_hwframe+0x6f/0x77
+  RIP: 0033:0x7fce52c2ab1e
 
-Link: https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/issues/3
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Jani Saarinen <jani.saarinen@intel.com>
-Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231208132127.2438067-2-kai.vehmanen@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix this by setting @len to zero when @off == 0 so callers won't
+attempt to dereference non-existing data areas.
+
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_hdmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/cifs/smb2misc.c | 26 ++++++++++----------------
+ 1 file changed, 10 insertions(+), 16 deletions(-)
 
-diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
-index 3060dbf1daf58..0d1c6c4c1ee62 100644
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1970,6 +1970,7 @@ static const struct snd_pci_quirk force_connect_list[] = {
- 	SND_PCI_QUIRK(0x1043, 0x86ae, "ASUS", 1),  /* Z170 PRO */
- 	SND_PCI_QUIRK(0x1043, 0x86c7, "ASUS", 1),  /* Z170M PLUS */
- 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
-+	SND_PCI_QUIRK(0x8086, 0x2060, "Intel NUC5CPYB", 1),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
- 	{}
- };
+diff --git a/fs/cifs/smb2misc.c b/fs/cifs/smb2misc.c
+index be3df90bb2bcc..b98bba887f84b 100644
+--- a/fs/cifs/smb2misc.c
++++ b/fs/cifs/smb2misc.c
+@@ -305,6 +305,9 @@ static const bool has_smb2_data_area[NUMBER_OF_SMB2_COMMANDS] = {
+ char *
+ smb2_get_data_area_len(int *off, int *len, struct smb2_sync_hdr *shdr)
+ {
++	const int max_off = 4096;
++	const int max_len = 128 * 1024;
++
+ 	*off = 0;
+ 	*len = 0;
+ 
+@@ -376,29 +379,20 @@ smb2_get_data_area_len(int *off, int *len, struct smb2_sync_hdr *shdr)
+ 	 * Invalid length or offset probably means data area is invalid, but
+ 	 * we have little choice but to ignore the data area in this case.
+ 	 */
+-	if (*off > 4096) {
+-		cifs_dbg(VFS, "offset %d too large, data area ignored\n", *off);
+-		*len = 0;
+-		*off = 0;
+-	} else if (*off < 0) {
+-		cifs_dbg(VFS, "negative offset %d to data invalid ignore data area\n",
+-			 *off);
++	if (unlikely(*off < 0 || *off > max_off ||
++		     *len < 0 || *len > max_len)) {
++		cifs_dbg(VFS, "%s: invalid data area (off=%d len=%d)\n",
++			 __func__, *off, *len);
+ 		*off = 0;
+ 		*len = 0;
+-	} else if (*len < 0) {
+-		cifs_dbg(VFS, "negative data length %d invalid, data area ignored\n",
+-			 *len);
+-		*len = 0;
+-	} else if (*len > 128 * 1024) {
+-		cifs_dbg(VFS, "data area larger than 128K: %d\n", *len);
++	} else if (*off == 0) {
+ 		*len = 0;
+ 	}
+ 
+ 	/* return pointer to beginning of data area, ie offset from SMB start */
+-	if ((*off != 0) && (*len != 0))
++	if (*off > 0 && *len > 0)
+ 		return (char *)shdr + *off;
+-	else
+-		return NULL;
++	return NULL;
+ }
+ 
+ /*
 -- 
 2.43.0
 
