@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8281BDE7;
-	Wed,  3 Jan 2024 16:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073F71BDE7;
+	Wed,  3 Jan 2024 16:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NkOZ4t9G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A2AC433C8;
-	Wed,  3 Jan 2024 16:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vdktFonv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62325C433C7;
+	Wed,  3 Jan 2024 16:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301009;
-	bh=VuwoGLv1UN8vceph7veK1OlMEA62E9eXyTa8mLEwKGs=;
+	s=korg; t=1704301012;
+	bh=FcqkHgUKhwx6yTVg/1y05jx5zU+uxbS6ReGZNjYDZoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NkOZ4t9G1H740Spm6VM4PSRduzJAEuUk00zF7bXU/KeoQX75hm2e8JhKmD5y9UpNP
-	 5VqQnsBXxlWWR5Rdo3pOd512s6s8M7F7OxAt6BlAWaFk4M32A9S6yDBI4lXuRZI30W
-	 /T532dxWxBmDHItptpwysZTQASkq5XppClp+fQjQ=
+	b=vdktFonv70cA8Fj4CflKmk4ddjFhp5/Umd5K3OCC+ziYWCWND9c3zz75t03uFV1Xq
+	 Ri/ZRq2QuFJGbjBNNuadDeLPUgaDSTEavlHuUMt7lbbOQ8mLODke7sU2G7T+EgJe4X
+	 IwSXKFkAm7Mwkm/OGVNpoVPClVApkWzMBuCCUXC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dawei Li <set_pte_at@outlook.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/100] ksmbd: fix typo, syncronous->synchronous
-Date: Wed,  3 Jan 2024 17:53:56 +0100
-Message-ID: <20240103164857.296838533@linuxfoundation.org>
+Subject: [PATCH 6.1 008/100] ksmbd: Remove duplicated codes
+Date: Wed,  3 Jan 2024 17:53:57 +0100
+Message-ID: <20240103164857.433898748@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -46,78 +45,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Dawei Li <set_pte_at@outlook.com>
 
-[ Upstream commit f8d6e7442aa716a233c7eba99dec628f8885e00b ]
+[ Upstream commit 7010357004096e54c884813e702d71147dc081f8 ]
 
-syncronous->synchronous
+ksmbd_neg_token_init_mech_token() and ksmbd_neg_token_targ_resp_token()
+share same implementation, unify them.
 
 Signed-off-by: Dawei Li <set_pte_at@outlook.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c | 4 ++--
- fs/smb/server/ksmbd_work.h | 2 +-
- fs/smb/server/smb2pdu.c    | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ fs/smb/server/asn1.c | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index ff97cad8d5b45..e885e0eb0dc35 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -116,7 +116,7 @@ void ksmbd_conn_enqueue_request(struct ksmbd_work *work)
+diff --git a/fs/smb/server/asn1.c b/fs/smb/server/asn1.c
+index c03eba0903682..cc6384f796759 100644
+--- a/fs/smb/server/asn1.c
++++ b/fs/smb/server/asn1.c
+@@ -208,9 +208,9 @@ int ksmbd_neg_token_init_mech_type(void *context, size_t hdrlen,
+ 	return 0;
+ }
  
- 	if (conn->ops->get_cmd_val(work) != SMB2_CANCEL_HE) {
- 		requests_queue = &conn->requests;
--		work->syncronous = true;
-+		work->synchronous = true;
- 	}
+-int ksmbd_neg_token_init_mech_token(void *context, size_t hdrlen,
+-				    unsigned char tag, const void *value,
+-				    size_t vlen)
++static int ksmbd_neg_token_alloc(void *context, size_t hdrlen,
++				 unsigned char tag, const void *value,
++				 size_t vlen)
+ {
+ 	struct ksmbd_conn *conn = context;
  
- 	if (requests_queue) {
-@@ -141,7 +141,7 @@ int ksmbd_conn_try_dequeue_request(struct ksmbd_work *work)
- 	spin_lock(&conn->request_lock);
- 	if (!work->multiRsp) {
- 		list_del_init(&work->request_entry);
--		if (work->syncronous == false)
-+		if (!work->synchronous)
- 			list_del_init(&work->async_request_entry);
- 		ret = 0;
- 	}
-diff --git a/fs/smb/server/ksmbd_work.h b/fs/smb/server/ksmbd_work.h
-index 5ece58e40c979..3234f2cf6327c 100644
---- a/fs/smb/server/ksmbd_work.h
-+++ b/fs/smb/server/ksmbd_work.h
-@@ -68,7 +68,7 @@ struct ksmbd_work {
- 	/* Request is encrypted */
- 	bool                            encrypted:1;
- 	/* Is this SYNC or ASYNC ksmbd_work */
--	bool                            syncronous:1;
-+	bool                            synchronous:1;
- 	bool                            need_invalidate_rkey:1;
+@@ -223,17 +223,16 @@ int ksmbd_neg_token_init_mech_token(void *context, size_t hdrlen,
+ 	return 0;
+ }
  
- 	unsigned int                    remote_key;
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 21d0416f11012..d3939fd481497 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -508,7 +508,7 @@ int init_smb2_rsp_hdr(struct ksmbd_work *work)
- 	rsp_hdr->SessionId = rcv_hdr->SessionId;
- 	memcpy(rsp_hdr->Signature, rcv_hdr->Signature, 16);
+-int ksmbd_neg_token_targ_resp_token(void *context, size_t hdrlen,
++int ksmbd_neg_token_init_mech_token(void *context, size_t hdrlen,
+ 				    unsigned char tag, const void *value,
+ 				    size_t vlen)
+ {
+-	struct ksmbd_conn *conn = context;
+-
+-	conn->mechToken = kmalloc(vlen + 1, GFP_KERNEL);
+-	if (!conn->mechToken)
+-		return -ENOMEM;
++	return ksmbd_neg_token_alloc(context, hdrlen, tag, value, vlen);
++}
  
--	work->syncronous = true;
-+	work->synchronous = true;
- 	if (work->async_id) {
- 		ksmbd_release_id(&conn->async_ida, work->async_id);
- 		work->async_id = 0;
-@@ -671,7 +671,7 @@ int setup_async_work(struct ksmbd_work *work, void (*fn)(void **), void **arg)
- 		pr_err("Failed to alloc async message id\n");
- 		return id;
- 	}
--	work->syncronous = false;
-+	work->synchronous = false;
- 	work->async_id = id;
- 	rsp_hdr->Id.AsyncId = cpu_to_le64(id);
- 
+-	memcpy(conn->mechToken, value, vlen);
+-	conn->mechToken[vlen] = '\0';
+-	return 0;
++int ksmbd_neg_token_targ_resp_token(void *context, size_t hdrlen,
++				    unsigned char tag, const void *value,
++				    size_t vlen)
++{
++	return ksmbd_neg_token_alloc(context, hdrlen, tag, value, vlen);
+ }
 -- 
 2.43.0
 
