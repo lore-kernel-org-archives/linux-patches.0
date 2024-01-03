@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072481C280;
-	Wed,  3 Jan 2024 17:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A981BDFE;
+	Wed,  3 Jan 2024 17:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlNUOu+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60774C433C7;
-	Wed,  3 Jan 2024 17:09:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdSWgJdL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6C1C433C8;
+	Wed,  3 Jan 2024 17:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301775;
-	bh=6/u/YvHfh7j0IyEp3zunlwM75jIiPC+WCy2Jar4ydnY=;
+	s=korg; t=1704301779;
+	bh=9upNkeV9STGrqqbaX+39aiuasDS6oobjCL0fLFGnz2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlNUOu+yoEEwobQHO4C+OBHndy4y+yse2wHEVtE9PWAitYnMbJQJhA79EMXFvVkG3
-	 5ZYV7JzS7NhS1nkVtc7C0y74ejR7bS+/RviGFuAZhodKGKhXEVDsV8DDET2dGjJQCI
-	 TKf4y8+iyejCdXEZndXflsz13tAOHM8WJa6w1/PU=
+	b=WdSWgJdLONJh7QXbpc7T2e/ijZXMFi2qLzRGT6dzaPF3kc6PbJh43yISUg7UDkxNw
+	 Fk3tsY/n1Mw5MFOE3NDZZ1XBOT0enVjNa3uw73ujPeLZS77i59UVZ0LRNo38PQbFPF
+	 FeRM/pf8lf8DHRhn3WI15qfCFu4WFzvGIvSNCFX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ding Hui <dinghui@sangfor.com.cn>,
-	Shifeng Li <lishifeng@sangfor.com.cn>,
-	Simon Horman <horms@kernel.org>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Feras Daoud <ferasda@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 08/75] net/mlx5e: Fix slab-out-of-bounds in mlx5_query_nic_vport_mac_list()
-Date: Wed,  3 Jan 2024 17:54:49 +0100
-Message-ID: <20240103164844.223078120@linuxfoundation.org>
+Subject: [PATCH 5.10 09/75] net/mlx5: Fix fw tracer first block check
+Date: Wed,  3 Jan 2024 17:54:50 +0100
+Message-ID: <20240103164844.370062965@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164842.953224409@linuxfoundation.org>
 References: <20240103164842.953224409@linuxfoundation.org>
@@ -44,56 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shifeng Li <lishifeng@sangfor.com.cn>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit ddb38ddff9c71026bad481b791a94d446ee37603 ]
+[ Upstream commit 4261edf11cb7c9224af713a102e5616329306932 ]
 
-Out_sz that the size of out buffer is calculated using query_nic_vport
-_context_in structure when driver query the MAC list. However query_nic
-_vport_context_in structure is smaller than query_nic_vport_context_out.
-When allowed_list_size is greater than 96, calling ether_addr_copy() will
-trigger an slab-out-of-bounds.
+While handling new traces, to verify it is not the first block being
+written, last_timestamp is checked. But instead of checking it is non
+zero it is verified to be zero. Fix to verify last_timestamp is not
+zero.
 
-[ 1170.055866] BUG: KASAN: slab-out-of-bounds in mlx5_query_nic_vport_mac_list+0x481/0x4d0 [mlx5_core]
-[ 1170.055869] Read of size 4 at addr ffff88bdbc57d912 by task kworker/u128:1/461
-[ 1170.055870]
-[ 1170.055932] Workqueue: mlx5_esw_wq esw_vport_change_handler [mlx5_core]
-[ 1170.055936] Call Trace:
-[ 1170.055949]  dump_stack+0x8b/0xbb
-[ 1170.055958]  print_address_description+0x6a/0x270
-[ 1170.055961]  kasan_report+0x179/0x2c0
-[ 1170.056061]  mlx5_query_nic_vport_mac_list+0x481/0x4d0 [mlx5_core]
-[ 1170.056162]  esw_update_vport_addr_list+0x2c5/0xcd0 [mlx5_core]
-[ 1170.056257]  esw_vport_change_handle_locked+0xd08/0x1a20 [mlx5_core]
-[ 1170.056377]  esw_vport_change_handler+0x6b/0x90 [mlx5_core]
-[ 1170.056381]  process_one_work+0x65f/0x12d0
-[ 1170.056383]  worker_thread+0x87/0xb50
-[ 1170.056390]  kthread+0x2e9/0x3a0
-[ 1170.056394]  ret_from_fork+0x1f/0x40
-
-Fixes: e16aea2744ab ("net/mlx5: Introduce access functions to modify/query vport mac lists")
-Cc: Ding Hui <dinghui@sangfor.com.cn>
-Signed-off-by: Shifeng Li <lishifeng@sangfor.com.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: c71ad41ccb0c ("net/mlx5: FW tracer, events handling")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Feras Daoud <ferasda@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/vport.c | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/vport.c b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-index fc91bbf7d0c37..e77cf11356c07 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-@@ -276,7 +276,7 @@ int mlx5_query_nic_vport_mac_list(struct mlx5_core_dev *dev,
- 		req_list_size = max_list_size;
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+index 86088ccab23aa..d49fd21f49637 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+@@ -691,7 +691,7 @@ static void mlx5_fw_tracer_handle_traces(struct work_struct *work)
  
--	out_sz = MLX5_ST_SZ_BYTES(query_nic_vport_context_in) +
-+	out_sz = MLX5_ST_SZ_BYTES(query_nic_vport_context_out) +
- 			req_list_size * MLX5_ST_SZ_BYTES(mac_address_layout);
- 
- 	out = kzalloc(out_sz, GFP_KERNEL);
+ 	while (block_timestamp > tracer->last_timestamp) {
+ 		/* Check block override if it's not the first block */
+-		if (!tracer->last_timestamp) {
++		if (tracer->last_timestamp) {
+ 			u64 *ts_event;
+ 			/* To avoid block override be the HW in case of buffer
+ 			 * wraparound, the time stamp of the previous block
 -- 
 2.43.0
 
