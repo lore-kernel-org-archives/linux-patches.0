@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F320D1BDEC;
-	Wed,  3 Jan 2024 17:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824D61BDF1;
+	Wed,  3 Jan 2024 17:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MP3J+kbc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A82EC433C8;
-	Wed,  3 Jan 2024 17:10:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDIouVPD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAFA9C433C7;
+	Wed,  3 Jan 2024 17:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301857;
-	bh=jtU80mU9e7pM7ji8T7Wbtz24mFHCsDSq7DYnXe+MPgI=;
+	s=korg; t=1704301861;
+	bh=e2vu514eHbWSoVwsFwRAT2rn9Mrq+9CR4rsVxj32mF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MP3J+kbc5QwBNuo966774SxHDIPw+t8KF8qNmeR/BnBGMzgyRWpi1VTkclE+ZTJNq
-	 IEvjhhWDRwIxVvXBK5HiZulwNfESexFiGqZsBwZSeftuwSnpQuoSYwsaW4koLCNQpJ
-	 i6oXX3EJb6J9Okrc7jHbk2fM/InEaCMLzulMBlzo=
+	b=DDIouVPDCfdV645ttunvCGSgSxEi5cYdx9LXtiqLD0//gfZhbVElxmU5g41FiGmKT
+	 3vqxZ530vyYY+dBqeOU5HAO5JifpRLcQelq6BI6nCGdQ6Yb9N7WOhWoQCbXJoUzB1W
+	 w5fVM85I5hLTylH+a/tedoPs/6pEe6IubAnmljLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Petr Mladek <pmladek@suse.com>
-Subject: [PATCH 5.10 49/75] lib/vsprintf: Fix %pfwf when current node refcount == 0
-Date: Wed,  3 Jan 2024 17:55:30 +0100
-Message-ID: <20240103164850.539961124@linuxfoundation.org>
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 23/75] ALSA: hda/hdmi: Add quirk to force pin connectivity on NUC10
+Date: Wed,  3 Jan 2024 17:55:04 +0100
+Message-ID: <20240103164846.657295147@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164842.953224409@linuxfoundation.org>
 References: <20240103164842.953224409@linuxfoundation.org>
@@ -43,77 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-commit 5c47251e8c4903111608ddcba2a77c0c425c247c upstream.
+[ Upstream commit e81d71e343c6c62cf323042caed4b7ca049deda5 ]
 
-A refcount issue can appeared in __fwnode_link_del() due to the
-pr_debug() call:
-  WARNING: CPU: 0 PID: 901 at lib/refcount.c:25 refcount_warn_saturate+0xe5/0x110
-  Call Trace:
-  <TASK>
-  ...
-  of_node_get+0x1e/0x30
-  of_fwnode_get+0x28/0x40
-  fwnode_full_name_string+0x34/0x90
-  fwnode_string+0xdb/0x140
-  ...
-  vsnprintf+0x17b/0x630
-  ...
-  __fwnode_link_del+0x25/0xa0
-  fwnode_links_purge+0x39/0xb0
-  of_node_release+0xd9/0x180
-  ...
+On some Intel NUC10 variants, codec reports AC_JACK_PORT_NONE as
+pin default config for all pins. This results in broken audio.
+Add a quirk to force connectivity.
 
-Indeed, an fwnode (of_node) is being destroyed and so, of_node_release()
-is called because the of_node refcount reached 0.
->From of_node_release() several function calls are done and lead to
-a pr_debug() calls with %pfwf to print the fwnode full name.
-The issue is not present if we change %pfwf to %pfwP.
-
-To print the full name, %pfwf iterates over the current node and its
-parents and obtain/drop a reference to all nodes involved.
-
-In order to allow to print the full name (%pfwf) of a node while it is
-being destroyed, do not obtain/drop a reference to this current node.
-
-Fixes: a92eb7621b9f ("lib/vsprintf: Make use of fwnode API to obtain node names and separators")
-Cc: stable@vger.kernel.org
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20231114152655.409331-1-herve.codina@bootlin.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+BugLink: https://github.com/clearlinux/distribution/issues/2396
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Link: https://lore.kernel.org/r/20210720153216.2200938-1-kai.vehmanen@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 3b1ff57e24a7 ("ALSA: hda/hdmi: add force-connect quirk for NUC5CPYB")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/vsprintf.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_hdmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/lib/vsprintf.c
-+++ b/lib/vsprintf.c
-@@ -1984,15 +1984,20 @@ char *fwnode_full_name_string(struct fwn
+diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
+index 86a43b955db91..3060dbf1daf58 100644
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -1970,6 +1970,7 @@ static const struct snd_pci_quirk force_connect_list[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x86ae, "ASUS", 1),  /* Z170 PRO */
+ 	SND_PCI_QUIRK(0x1043, 0x86c7, "ASUS", 1),  /* Z170M PLUS */
+ 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
++	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
+ 	{}
+ };
  
- 	/* Loop starting from the root node to the current node. */
- 	for (depth = fwnode_count_parents(fwnode); depth >= 0; depth--) {
--		struct fwnode_handle *__fwnode =
--			fwnode_get_nth_parent(fwnode, depth);
-+		/*
-+		 * Only get a reference for other nodes (i.e. parent nodes).
-+		 * fwnode refcount may be 0 here.
-+		 */
-+		struct fwnode_handle *__fwnode = depth ?
-+			fwnode_get_nth_parent(fwnode, depth) : fwnode;
- 
- 		buf = string(buf, end, fwnode_get_name_prefix(__fwnode),
- 			     default_str_spec);
- 		buf = string(buf, end, fwnode_get_name(__fwnode),
- 			     default_str_spec);
- 
--		fwnode_handle_put(__fwnode);
-+		if (depth)
-+			fwnode_handle_put(__fwnode);
- 	}
- 
- 	return buf;
+-- 
+2.43.0
+
 
 
