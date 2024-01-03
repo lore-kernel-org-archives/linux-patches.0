@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951521C2A1;
-	Wed,  3 Jan 2024 16:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31C11C281;
+	Wed,  3 Jan 2024 16:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iw5xZoK4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A513CC433C8;
-	Wed,  3 Jan 2024 16:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nY3egeys"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C69C433C7;
+	Wed,  3 Jan 2024 16:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301178;
-	bh=7tsYaeKZl7Lbr3dC08EeEfcevsPa31uRbHuR0MruoEE=;
+	s=korg; t=1704301181;
+	bh=5ntr9kDPwKuWehfoPh38upSfjsTFBd8UFKNeKProRmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iw5xZoK4JayeYZDfV3PauNEKfFBiPBA+hNbxa7D09COoUHWXhzt4mVDD7p1ep69bZ
-	 QHlblQRWPi/PLx0+Cp3RjKtDW8RlNtNp6ffZolWs3j0Yy63+FJHpetxGqSMw/NKinn
-	 QjnRVjMc8vpkdyNJYonl69eZXIF3stOmb3oA6aOg=
+	b=nY3egeysRGt1rL50eVyx+gBkqG/kaBJT9DztpIzgytCan84hd0kVS6FDVYjvoU3ah
+	 nn/RXt2+Uy26cpj9w7AivIOmiZELHRb3YrVy+PhqKEXKlG9xSjZYJ2TrWN5T5ZtmZy
+	 CuflMWinhU1NDSIWPL5cPaCQf1hxI4+bkdI2ZZbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Zongmin Zhou <zhouzongmin@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/100] ksmbd: fix kernel-doc comment of ksmbd_vfs_kern_path_locked()
-Date: Wed,  3 Jan 2024 17:54:48 +0100
-Message-ID: <20240103164904.960196885@linuxfoundation.org>
+Subject: [PATCH 6.1 060/100] ksmbd: prevent memory leak on error return
+Date: Wed,  3 Jan 2024 17:54:49 +0100
+Message-ID: <20240103164905.103456521@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -43,42 +45,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
 
-[ Upstream commit f6049712e520287ad695e9d4f1572ab76807fa0c ]
+[ Upstream commit 90044481e7cca6cb3125b3906544954a25f1309f ]
 
-Fix argument list that the kdoc format and script verified in
-ksmbd_vfs_kern_path_locked().
+When allocated memory for 'new' failed,just return
+will cause memory leak of 'ar'.
 
-fs/smb/server/vfs.c:1207: warning: Function parameter or member 'parent_path'
-not described in 'ksmbd_vfs_kern_path_locked'
-
+Fixes: 1819a9042999 ("ksmbd: reorganize ksmbd_iov_pin_rsp()")
 Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202311031837.H3yo7JVl-lkp@intel.com/
+Signed-off-by: Zongmin Zhou<zhouzongmin@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/smb/server/ksmbd_work.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index e2e454eba4095..d4298a751d4a2 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -1178,9 +1178,10 @@ static int ksmbd_vfs_lookup_in_dir(const struct path *dir, char *name,
+diff --git a/fs/smb/server/ksmbd_work.c b/fs/smb/server/ksmbd_work.c
+index a2ed441e837ae..2510b9f3c8c14 100644
+--- a/fs/smb/server/ksmbd_work.c
++++ b/fs/smb/server/ksmbd_work.c
+@@ -106,7 +106,7 @@ static inline void __ksmbd_iov_pin(struct ksmbd_work *work, void *ib,
+ static int __ksmbd_iov_pin_rsp(struct ksmbd_work *work, void *ib, int len,
+ 			       void *aux_buf, unsigned int aux_size)
+ {
+-	struct aux_read *ar;
++	struct aux_read *ar = NULL;
+ 	int need_iov_cnt = 1;
  
- /**
-  * ksmbd_vfs_kern_path_locked() - lookup a file and get path info
-- * @name:	file path that is relative to share
-- * @flags:	lookup flags
-- * @path:	if lookup succeed, return path info
-+ * @name:		file path that is relative to share
-+ * @flags:		lookup flags
-+ * @parent_path:	if lookup succeed, return parent_path info
-+ * @path:		if lookup succeed, return path info
-  * @caseless:	caseless filename lookup
-  *
-  * Return:	0 on success, otherwise error
+ 	if (aux_size) {
+@@ -123,8 +123,11 @@ static int __ksmbd_iov_pin_rsp(struct ksmbd_work *work, void *ib, int len,
+ 		new = krealloc(work->iov,
+ 			       sizeof(struct kvec) * work->iov_alloc_cnt,
+ 			       GFP_KERNEL | __GFP_ZERO);
+-		if (!new)
++		if (!new) {
++			kfree(ar);
++			work->iov_alloc_cnt -= 4;
+ 			return -ENOMEM;
++		}
+ 		work->iov = new;
+ 	}
+ 
 -- 
 2.43.0
 
