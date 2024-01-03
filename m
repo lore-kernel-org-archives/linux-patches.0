@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8FF1BDF0;
-	Wed,  3 Jan 2024 16:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2B21BDF0;
+	Wed,  3 Jan 2024 16:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIuCMd0l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F20BC433C7;
-	Wed,  3 Jan 2024 16:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wclb9RI0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A1AC433C7;
+	Wed,  3 Jan 2024 16:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301141;
-	bh=Y9vy5IWjWJOCa81NjIU7fk4AtF4KtMg+NjFg1Ujak3o=;
+	s=korg; t=1704301145;
+	bh=qWIsaQRs3qaLsAcrQUFEBjk8vVXFmx5/+MAZnHU33xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BIuCMd0l33yREc+35x1745KmMHeF8RSJOsY3dBFtqJ6c7duTM8n5Xs0U8yqaubBWC
-	 OVOVKRmvyW819wket/q7JJd32yRMGZekbxXnpt5BpPClub7rPJFNqYOVerQV6KjvMy
-	 UbpjjWKHsZwXsqCTSIg84N2WTqt5eDthN8nQivtI=
+	b=wclb9RI0LjTkA3u/sprFqWGX5AwPAfziw9/irY28Hs/Exl2lrFvFOR2OCQ8U8r5/j
+	 kUwDBELyXMPnKWJuO80/7xrmddQiK/gelRdwtsZUEzyJOhO9vb43cU4ppaq7O4mdGw
+	 atOM6NLXWsq/LJh/dzLH93NSpf/pzDfbFYLnuejM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	David Howells <dhowells@redhat.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 009/100] ksmbd: update Kconfig to note Kerberos support and fix indentation
-Date: Wed,  3 Jan 2024 17:53:58 +0100
-Message-ID: <20240103164857.580213189@linuxfoundation.org>
+Subject: [PATCH 6.1 042/100] ksmbd: fix passing freed memory aux_payload_buf
+Date: Wed,  3 Jan 2024 17:54:31 +0100
+Message-ID: <20240103164902.370094514@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -43,56 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit d280a958f8b2b62610c280ecdf35d780e7922620 ]
+[ Upstream commit 59d8d24f4610333560cf2e8fe3f44cafe30322eb ]
 
-Fix indentation of server config options, and also since
-support for very old, less secure, NTLM authentication was removed
-(and quite a while ago), remove the mention of that in Kconfig, but
-do note Kerberos (not just NTLMv2) which are supported and much
-more secure.
+The patch e2b76ab8b5c9: "ksmbd: add support for read compound" leads
+to the following Smatch static checker warning:
 
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Acked-by: David Howells <dhowells@redhat.com>
+  fs/smb/server/smb2pdu.c:6329 smb2_read()
+        warn: passing freed memory 'aux_payload_buf'
+
+It doesn't matter that we're passing a freed variable because nbytes is
+zero. This patch set "aux_payload_buf = NULL" to make smatch silence.
+
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/Kconfig | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/Kconfig b/fs/smb/server/Kconfig
-index e1fe17747ed69..7055cb5d28800 100644
---- a/fs/smb/server/Kconfig
-+++ b/fs/smb/server/Kconfig
-@@ -33,14 +33,16 @@ config SMB_SERVER
- 	  in ksmbd-tools, available from
- 	  https://github.com/cifsd-team/ksmbd-tools.
- 	  More detail about how to run the ksmbd kernel server is
--	  available via README file
-+	  available via the README file
- 	  (https://github.com/cifsd-team/ksmbd-tools/blob/master/README).
- 
- 	  ksmbd kernel server includes support for auto-negotiation,
- 	  Secure negotiate, Pre-authentication integrity, oplock/lease,
- 	  compound requests, multi-credit, packet signing, RDMA(smbdirect),
- 	  smb3 encryption, copy-offload, secure per-user session
--	  establishment via NTLM or NTLMv2.
-+	  establishment via Kerberos or NTLMv2.
-+
-+if SMB_SERVER
- 
- config SMB_SERVER_SMBDIRECT
- 	bool "Support for SMB Direct protocol"
-@@ -54,6 +56,8 @@ config SMB_SERVER_SMBDIRECT
- 	  SMB Direct allows transferring SMB packets over RDMA. If unsure,
- 	  say N.
- 
-+endif
-+
- config SMB_SERVER_CHECK_CAP_NET_ADMIN
- 	bool "Enable check network administration capability"
- 	depends on SMB_SERVER
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index b81a38803b40d..42697ea86d47b 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -6312,7 +6312,7 @@ int smb2_read(struct ksmbd_work *work)
+ 						      aux_payload_buf,
+ 						      nbytes);
+ 		kvfree(aux_payload_buf);
+-
++		aux_payload_buf = NULL;
+ 		nbytes = 0;
+ 		if (remain_bytes < 0) {
+ 			err = (int)remain_bytes;
 -- 
 2.43.0
 
