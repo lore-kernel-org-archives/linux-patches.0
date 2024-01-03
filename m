@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC9B1BDF1;
-	Wed,  3 Jan 2024 17:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100D01BDDE;
+	Wed,  3 Jan 2024 17:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUQIAl4G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0415AC433C8;
-	Wed,  3 Jan 2024 17:07:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ja2aORFZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C97C433C7;
+	Wed,  3 Jan 2024 17:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301657;
-	bh=puS8XXtqmSQIsa7tJk8BE1pUJsIsujy0ZOIPYT3wdTY=;
+	s=korg; t=1704301660;
+	bh=Y6XLQSf3n9n6k9r3mTOPK/ddLmZY7ureyQyeR43OK7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nUQIAl4GL+vOQX/dZgDbTWAtRdGEh46aShcxOm8QgxjkyR5L9z+es3XH0r7uOAlNk
-	 kgyzDXMnFHrbsRFQPwPH1LNz7CtqVuHuR70N3qkBn51tNH2YGgjgXHEKYpzREYd7t9
-	 ik0/aJ4/TbWCsND/t0SRPmKgaMHUF5Vd4MaMPHKw=
+	b=ja2aORFZPGKihW35Ln1l8EUhp1bV0m9c0m43Koq5HaEJyu68daBiadJwIEcbEAedQ
+	 AjGYd8ObHDb0KnIkUEXKCV/z42JeSMsmvhv2VjW7egPJgndXnN/Rhgutn0PSJsyyM0
+	 4CasnF4zpv9TcbHGxWQdl0PgL6KP9OZ2gdbz9v0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 87/95] ring-buffer: Fix wake ups when buffer_percent is set to 100
-Date: Wed,  3 Jan 2024 17:55:35 +0100
-Message-ID: <20240103164907.094357903@linuxfoundation.org>
+	stable@kernel.org,
+	Riwen Lu <luriwen@kylinos.cn>,
+	xiongxin <xiongxin@kylinos.cn>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 5.15 61/95] gpio: dwapb: mask/unmask IRQ when disable/enale it
+Date: Wed,  3 Jan 2024 17:55:09 +0100
+Message-ID: <20240103164903.109982411@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -43,73 +45,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: xiongxin <xiongxin@kylinos.cn>
 
-commit 623b1f896fa8a669a277ee5a258307a16c7377a3 upstream.
+commit 1cc3542c76acb5f59001e3e562eba672f1983355 upstream.
 
-The tracefs file "buffer_percent" is to allow user space to set a
-water-mark on how much of the tracing ring buffer needs to be filled in
-order to wake up a blocked reader.
+In the hardware implementation of the I2C HID driver based on DesignWare
+GPIO IRQ chip, when the user continues to use the I2C HID device in the
+suspend process, the I2C HID interrupt will be masked after the resume
+process is finished.
 
- 0 - is to wait until any data is in the buffer
- 1 - is to wait for 1% of the sub buffers to be filled
- 50 - would be half of the sub buffers are filled with data
- 100 - is not to wake the waiter until the ring buffer is completely full
+This is because the disable_irq()/enable_irq() of the DesignWare GPIO
+driver does not synchronize the IRQ mask register state. In normal use
+of the I2C HID procedure, the GPIO IRQ irq_mask()/irq_unmask() functions
+are called in pairs. In case of an exception, i2c_hid_core_suspend()
+calls disable_irq() to disable the GPIO IRQ. With low probability, this
+causes irq_unmask() to not be called, which causes the GPIO IRQ to be
+masked and not unmasked in enable_irq(), raising an exception.
 
-Unfortunately the test for being full was:
+Add synchronization to the masked register state in the
+dwapb_irq_enable()/dwapb_irq_disable() function. mask the GPIO IRQ
+before disabling it. After enabling the GPIO IRQ, unmask the IRQ.
 
-	dirty = ring_buffer_nr_dirty_pages(buffer, cpu);
-	return (dirty * 100) > (full * nr_pages);
-
-Where "full" is the value for "buffer_percent".
-
-There is two issues with the above when full == 100.
-
-1. dirty * 100 > 100 * nr_pages will never be true
-   That is, the above is basically saying that if the user sets
-   buffer_percent to 100, more pages need to be dirty than exist in the
-   ring buffer!
-
-2. The page that the writer is on is never considered dirty, as dirty
-   pages are only those that are full. When the writer goes to a new
-   sub-buffer, it clears the contents of that sub-buffer.
-
-That is, even if the check was ">=" it would still not be equal as the
-most pages that can be considered "dirty" is nr_pages - 1.
-
-To fix this, add one to dirty and use ">=" in the compare.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20231226125902.4a057f1d@gandalf.local.home
-
-Cc: stable@vger.kernel.org
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Fixes: 03329f9939781 ("tracing: Add tracefs file buffer_percentage")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 7779b3455697 ("gpio: add a driver for the Synopsys DesignWare APB GPIO block")
+Cc: stable@kernel.org
+Co-developed-by: Riwen Lu <luriwen@kylinos.cn>
+Signed-off-by: Riwen Lu <luriwen@kylinos.cn>
+Signed-off-by: xiongxin <xiongxin@kylinos.cn>
+Acked-by: Serge Semin <fancer.lancer@gmail.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-dwapb.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -897,9 +897,14 @@ static __always_inline bool full_hit(str
- 	if (!nr_pages || !full)
- 		return true;
+--- a/drivers/gpio/gpio-dwapb.c
++++ b/drivers/gpio/gpio-dwapb.c
+@@ -277,13 +277,15 @@ static void dwapb_irq_enable(struct irq_
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+ 	struct dwapb_gpio *gpio = to_dwapb_gpio(gc);
++	irq_hw_number_t hwirq = irqd_to_hwirq(d);
+ 	unsigned long flags;
+ 	u32 val;
  
--	dirty = ring_buffer_nr_dirty_pages(buffer, cpu);
-+	/*
-+	 * Add one as dirty will never equal nr_pages, as the sub-buffer
-+	 * that the writer is on is not counted as dirty.
-+	 * This is needed if "buffer_percent" is set to 100.
-+	 */
-+	dirty = ring_buffer_nr_dirty_pages(buffer, cpu) + 1;
- 
--	return (dirty * 100) > (full * nr_pages);
-+	return (dirty * 100) >= (full * nr_pages);
+ 	raw_spin_lock_irqsave(&gc->bgpio_lock, flags);
+-	val = dwapb_read(gpio, GPIO_INTEN);
+-	val |= BIT(irqd_to_hwirq(d));
++	val = dwapb_read(gpio, GPIO_INTEN) | BIT(hwirq);
+ 	dwapb_write(gpio, GPIO_INTEN, val);
++	val = dwapb_read(gpio, GPIO_INTMASK) & ~BIT(hwirq);
++	dwapb_write(gpio, GPIO_INTMASK, val);
+ 	raw_spin_unlock_irqrestore(&gc->bgpio_lock, flags);
  }
  
- /*
+@@ -291,12 +293,14 @@ static void dwapb_irq_disable(struct irq
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+ 	struct dwapb_gpio *gpio = to_dwapb_gpio(gc);
++	irq_hw_number_t hwirq = irqd_to_hwirq(d);
+ 	unsigned long flags;
+ 	u32 val;
+ 
+ 	raw_spin_lock_irqsave(&gc->bgpio_lock, flags);
+-	val = dwapb_read(gpio, GPIO_INTEN);
+-	val &= ~BIT(irqd_to_hwirq(d));
++	val = dwapb_read(gpio, GPIO_INTMASK) | BIT(hwirq);
++	dwapb_write(gpio, GPIO_INTMASK, val);
++	val = dwapb_read(gpio, GPIO_INTEN) & ~BIT(hwirq);
+ 	dwapb_write(gpio, GPIO_INTEN, val);
+ 	raw_spin_unlock_irqrestore(&gc->bgpio_lock, flags);
+ }
 
 
