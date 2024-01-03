@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A321BDF1;
-	Wed,  3 Jan 2024 17:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C701BDF1;
+	Wed,  3 Jan 2024 17:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWpJUXBK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5D1C433C8;
-	Wed,  3 Jan 2024 17:07:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfhvL4v+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28508C433C8;
+	Wed,  3 Jan 2024 17:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301664;
-	bh=6twLxMRZaUQj0DVREVh+mGZqG9/+e2AFVBijrhgCVEY=;
+	s=korg; t=1704301667;
+	bh=xMAiQutA/1Om8g2yZOOOMbMMHbyWGJ4Uv5geQFaQIlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWpJUXBK+6GGJaWgXsBCrbUbZ4C/9IrKBRFGQaNhA7J+/1EQhDZTleFtZZbdYSlwF
-	 uWGDWEqZtegiQ1v0jT2u7RnVWsHwuNdRCqQKYhwp+tXtZeNwFuoeIdJNYMQkfdui33
-	 nluuE5y4sKT9mDR5GMOvKznjOegrcpf6WT2WOZT0=
+	b=hfhvL4v+KFafPaYac2ywy/rpmwB622jAM5f5WbGltWjWgMC6DnvBs/bIfFHVO66qC
+	 0MV8zE82KgfajYQpIgKi1rsVZ355V17HeUvZrbd9BcbhwDeQIOMXWqW6sTJvU3dUfk
+	 h+n6ufRXXK1jcfk/UrgtMYpgirGzR30FefVfCmh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Petr Mladek <pmladek@suse.com>
-Subject: [PATCH 5.15 62/95] lib/vsprintf: Fix %pfwf when current node refcount == 0
-Date: Wed,  3 Jan 2024 17:55:10 +0100
-Message-ID: <20240103164903.243229544@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 5.15 63/95] KVM: arm64: vgic: Force vcpu vgic teardown on vcpu destroy
+Date: Wed,  3 Jan 2024 17:55:11 +0100
+Message-ID: <20240103164903.380173410@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -43,77 +41,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 5c47251e8c4903111608ddcba2a77c0c425c247c upstream.
+commit 02e3858f08faabab9503ae2911cf7c7e27702257 upstream.
 
-A refcount issue can appeared in __fwnode_link_del() due to the
-pr_debug() call:
-  WARNING: CPU: 0 PID: 901 at lib/refcount.c:25 refcount_warn_saturate+0xe5/0x110
-  Call Trace:
-  <TASK>
-  ...
-  of_node_get+0x1e/0x30
-  of_fwnode_get+0x28/0x40
-  fwnode_full_name_string+0x34/0x90
-  fwnode_string+0xdb/0x140
-  ...
-  vsnprintf+0x17b/0x630
-  ...
-  __fwnode_link_del+0x25/0xa0
-  fwnode_links_purge+0x39/0xb0
-  of_node_release+0xd9/0x180
-  ...
+When failing to create a vcpu because (for example) it has a
+duplicate vcpu_id, we destroy the vcpu. Amusingly, this leaves
+the redistributor registered with the KVM_MMIO bus.
 
-Indeed, an fwnode (of_node) is being destroyed and so, of_node_release()
-is called because the of_node refcount reached 0.
->From of_node_release() several function calls are done and lead to
-a pr_debug() calls with %pfwf to print the fwnode full name.
-The issue is not present if we change %pfwf to %pfwP.
+This is no good, and we should properly clean the mess. Force
+a teardown of the vgic vcpu interface, including the RD device
+before returning to the caller.
 
-To print the full name, %pfwf iterates over the current node and its
-parents and obtain/drop a reference to all nodes involved.
-
-In order to allow to print the full name (%pfwf) of a node while it is
-being destroyed, do not obtain/drop a reference to this current node.
-
-Fixes: a92eb7621b9f ("lib/vsprintf: Make use of fwnode API to obtain node names and separators")
 Cc: stable@vger.kernel.org
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20231114152655.409331-1-herve.codina@bootlin.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20231207151201.3028710-4-maz@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/vsprintf.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/arm.c               |    2 +-
+ arch/arm64/kvm/vgic/vgic-init.c    |    5 ++++-
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c |    2 +-
+ arch/arm64/kvm/vgic/vgic.h         |    1 +
+ 4 files changed, 7 insertions(+), 3 deletions(-)
 
---- a/lib/vsprintf.c
-+++ b/lib/vsprintf.c
-@@ -2111,15 +2111,20 @@ char *fwnode_full_name_string(struct fwn
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -356,7 +356,7 @@ void kvm_arch_vcpu_destroy(struct kvm_vc
+ 	kvm_mmu_free_memory_cache(&vcpu->arch.mmu_page_cache);
+ 	kvm_timer_vcpu_terminate(vcpu);
+ 	kvm_pmu_vcpu_destroy(vcpu);
+-
++	kvm_vgic_vcpu_destroy(vcpu);
+ 	kvm_arm_vcpu_destroy(vcpu);
+ }
  
- 	/* Loop starting from the root node to the current node. */
- 	for (depth = fwnode_count_parents(fwnode); depth >= 0; depth--) {
--		struct fwnode_handle *__fwnode =
--			fwnode_get_nth_parent(fwnode, depth);
-+		/*
-+		 * Only get a reference for other nodes (i.e. parent nodes).
-+		 * fwnode refcount may be 0 here.
-+		 */
-+		struct fwnode_handle *__fwnode = depth ?
-+			fwnode_get_nth_parent(fwnode, depth) : fwnode;
+--- a/arch/arm64/kvm/vgic/vgic-init.c
++++ b/arch/arm64/kvm/vgic/vgic-init.c
+@@ -363,7 +363,10 @@ void kvm_vgic_vcpu_destroy(struct kvm_vc
+ 	vgic_flush_pending_lpis(vcpu);
  
- 		buf = string(buf, end, fwnode_get_name_prefix(__fwnode),
- 			     default_str_spec);
- 		buf = string(buf, end, fwnode_get_name(__fwnode),
- 			     default_str_spec);
+ 	INIT_LIST_HEAD(&vgic_cpu->ap_list_head);
+-	vgic_cpu->rd_iodev.base_addr = VGIC_ADDR_UNDEF;
++	if (vcpu->kvm->arch.vgic.vgic_model == KVM_DEV_TYPE_ARM_VGIC_V3) {
++		vgic_unregister_redist_iodev(vcpu);
++		vgic_cpu->rd_iodev.base_addr = VGIC_ADDR_UNDEF;
++	}
+ }
  
--		fwnode_handle_put(__fwnode);
-+		if (depth)
-+			fwnode_handle_put(__fwnode);
- 	}
+ /* To be called with kvm->lock held */
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -744,7 +744,7 @@ int vgic_register_redist_iodev(struct kv
+ 	return 0;
+ }
  
- 	return buf;
+-static void vgic_unregister_redist_iodev(struct kvm_vcpu *vcpu)
++void vgic_unregister_redist_iodev(struct kvm_vcpu *vcpu)
+ {
+ 	struct vgic_io_device *rd_dev = &vcpu->arch.vgic_cpu.rd_iodev;
+ 
+--- a/arch/arm64/kvm/vgic/vgic.h
++++ b/arch/arm64/kvm/vgic/vgic.h
+@@ -223,6 +223,7 @@ int vgic_v3_lpi_sync_pending_status(stru
+ int vgic_v3_save_pending_tables(struct kvm *kvm);
+ int vgic_v3_set_redist_base(struct kvm *kvm, u32 index, u64 addr, u32 count);
+ int vgic_register_redist_iodev(struct kvm_vcpu *vcpu);
++void vgic_unregister_redist_iodev(struct kvm_vcpu *vcpu);
+ bool vgic_v3_check_base(struct kvm *kvm);
+ 
+ void vgic_v3_load(struct kvm_vcpu *vcpu);
 
 
