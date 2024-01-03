@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1655A1C289;
-	Wed,  3 Jan 2024 17:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EF01C283;
+	Wed,  3 Jan 2024 17:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlF2S3OS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88035C433C7;
-	Wed,  3 Jan 2024 17:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHGIOokt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B16C433C8;
+	Wed,  3 Jan 2024 17:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704302039;
-	bh=eakYzrOoQXP2RcTRUiC2Dqh6EgSJdWLRywD+d3F4XKc=;
+	s=korg; t=1704302043;
+	bh=6en+hcZ+f7IgY+GNzEA/SoAzvrDGaX/2pT3LfJGoXDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mlF2S3OS0O3uYFozl7hkFS/1iSiP6p+PNYrrJPRySlQNwdyq02EbBhc+0ZXg8pqNJ
-	 j1qL/PSyjHoGI+PdVy1gOhwDQM47HxekPEDWnkakyACnP0K4MSOTwudQKwHghT1I96
-	 BKJamMweoJBI5WaSf/oEc3CyTZw2UbDM3L7yex54=
+	b=FHGIOoktPmBDrhtcRizI3ap3O1tZUL6xhs0XxiBULpBMKp4UNY7XE20dg1kpcgEOX
+	 aBEwaf7q0qBwu5TEWjzcE3RDk9HJNLTCoxxwobJVaEnfKoHKmAUurFZsO43gB4vQw0
+	 BU2rHOPZlqJPD7QhsXtUakSmp/ptUI+m9XYnw8gE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
+	syzbot+9dfbaedb6e6baca57a32@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Matthieu Baerts <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 28/49] mptcp: refactor sndbuf auto-tuning
-Date: Wed,  3 Jan 2024 17:55:48 +0100
-Message-ID: <20240103164839.340039748@linuxfoundation.org>
+Subject: [PATCH 6.6 29/49] mptcp: fix possible NULL pointer dereference on close
+Date: Wed,  3 Jan 2024 17:55:49 +0100
+Message-ID: <20240103164839.496350830@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
 References: <20240103164834.970234661@linuxfoundation.org>
@@ -45,253 +48,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 8005184fd1ca6aeb3fea36f4eb9463fc1b90c114 ]
+[ Upstream commit d109a7767273d1706b541c22b83a0323823dfde4 ]
 
-The MPTCP protocol account for the data enqueued on all the subflows
-to the main socket send buffer, while the send buffer auto-tuning
-algorithm set the main socket send buffer size as the max size among
-the subflows.
+After the blamed commit below, the MPTCP release callback can
+dereference the first subflow pointer via __mptcp_set_connected()
+and send buffer auto-tuning. Such pointer is always expected to be
+valid, except at socket destruction time, when the first subflow is
+deleted and the pointer zeroed.
 
-That causes bad performances when at least one subflow is sndbuf
-limited, e.g. due to very high latency, as the MPTCP scheduler can't
-even fill such buffer.
+If the connect event is handled by the release callback while the
+msk socket is finally released, MPTCP hits the following splat:
 
-Change the send-buffer auto-tuning algorithm to compute the main socket
-send buffer size as the sum of all the subflows buffer size.
+  general protection fault, probably for non-canonical address 0xdffffc00000000f2: 0000 [#1] PREEMPT SMP KASAN
+  KASAN: null-ptr-deref in range [0x0000000000000790-0x0000000000000797]
+  CPU: 1 PID: 26719 Comm: syz-executor.2 Not tainted 6.6.0-syzkaller-10102-gff269e2cd5ad #0
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/09/2023
+  RIP: 0010:mptcp_subflow_ctx net/mptcp/protocol.h:542 [inline]
+  RIP: 0010:__mptcp_propagate_sndbuf net/mptcp/protocol.h:813 [inline]
+  RIP: 0010:__mptcp_set_connected+0x57/0x3e0 net/mptcp/subflow.c:424
+  RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffffff8a62323c
+  RDX: 00000000000000f2 RSI: ffffffff8a630116 RDI: 0000000000000790
+  RBP: ffff88803334b100 R08: 0000000000000001 R09: 0000000000000000
+  R10: 0000000000000001 R11: 0000000000000034 R12: ffff88803334b198
+  R13: ffff888054f0b018 R14: 0000000000000000 R15: ffff88803334b100
+  FS:  0000000000000000(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007fbcb4f75198 CR3: 000000006afb5000 CR4: 00000000003506f0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  Call Trace:
+   <TASK>
+   mptcp_release_cb+0xa2c/0xc40 net/mptcp/protocol.c:3405
+   release_sock+0xba/0x1f0 net/core/sock.c:3537
+   mptcp_close+0x32/0xf0 net/mptcp/protocol.c:3084
+   inet_release+0x132/0x270 net/ipv4/af_inet.c:433
+   inet6_release+0x4f/0x70 net/ipv6/af_inet6.c:485
+   __sock_release+0xae/0x260 net/socket.c:659
+   sock_close+0x1c/0x20 net/socket.c:1419
+   __fput+0x270/0xbb0 fs/file_table.c:394
+   task_work_run+0x14d/0x240 kernel/task_work.c:180
+   exit_task_work include/linux/task_work.h:38 [inline]
+   do_exit+0xa92/0x2a20 kernel/exit.c:876
+   do_group_exit+0xd4/0x2a0 kernel/exit.c:1026
+   get_signal+0x23ba/0x2790 kernel/signal.c:2900
+   arch_do_signal_or_restart+0x90/0x7f0 arch/x86/kernel/signal.c:309
+   exit_to_user_mode_loop kernel/entry/common.c:168 [inline]
+   exit_to_user_mode_prepare+0x11f/0x240 kernel/entry/common.c:204
+   __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
+   syscall_exit_to_user_mode+0x1d/0x60 kernel/entry/common.c:296
+   do_syscall_64+0x4b/0x110 arch/x86/entry/common.c:88
+   entry_SYSCALL_64_after_hwframe+0x63/0x6b
+  RIP: 0033:0x7fb515e7cae9
+  Code: Unable to access opcode bytes at 0x7fb515e7cabf.
+  RSP: 002b:00007fb516c560c8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+  RAX: 000000000000003c RBX: 00007fb515f9c120 RCX: 00007fb515e7cae9
+  RDX: 0000000000000000 RSI: 0000000020000140 RDI: 0000000000000006
+  RBP: 00007fb515ec847a R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  R13: 000000000000006e R14: 00007fb515f9c120 R15: 00007ffc631eb968
+   </TASK>
 
-Reviewed-by: Mat Martineau <martineau@kernel.org>
+To avoid sparkling unneeded conditionals, address the issue explicitly
+checking msk->first only in the critical place.
+
+Fixes: 8005184fd1ca ("mptcp: refactor sndbuf auto-tuning")
+Cc: stable@vger.kernel.org
+Reported-by: <syzbot+9dfbaedb6e6baca57a32@syzkaller.appspotmail.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/454
+Reported-by: Eric Dumazet <edumazet@google.com>
+Closes: https://lore.kernel.org/netdev/CANn89iLZUA6S2a=K8GObnS62KK6Jt4B7PsAs7meMFooM8xaTgw@mail.gmail.com/
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20231023-send-net-next-20231023-2-v1-9-9dc60939d371@kernel.org
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20231114-upstream-net-20231113-mptcp-misc-fixes-6-7-rc2-v1-2-7b9cd6a7b7f4@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 4fd19a307016 ("mptcp: fix inconsistent state on fastopen race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 18 +++++++++++++--
- net/mptcp/protocol.h | 54 ++++++++++++++++++++++++++++++++++++++++----
- net/mptcp/sockopt.c  |  5 +++-
- net/mptcp/subflow.c  |  3 +--
- 4 files changed, 70 insertions(+), 10 deletions(-)
+ net/mptcp/protocol.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index c1527f520dce3..44499e49d76e6 100644
+index 44499e49d76e6..dc030551cac13 100644
 --- a/net/mptcp/protocol.c
 +++ b/net/mptcp/protocol.c
-@@ -893,6 +893,7 @@ static bool __mptcp_finish_join(struct mptcp_sock *msk, struct sock *ssk)
- 	mptcp_sockopt_sync_locked(msk, ssk);
- 	mptcp_subflow_joined(msk, ssk);
- 	mptcp_stop_tout_timer(sk);
-+	__mptcp_propagate_sndbuf(sk, ssk);
- 	return true;
- }
- 
-@@ -1079,15 +1080,16 @@ static void mptcp_enter_memory_pressure(struct sock *sk)
- 	struct mptcp_sock *msk = mptcp_sk(sk);
- 	bool first = true;
- 
--	sk_stream_moderate_sndbuf(sk);
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
- 
- 		if (first)
- 			tcp_enter_memory_pressure(ssk);
- 		sk_stream_moderate_sndbuf(ssk);
-+
- 		first = false;
- 	}
-+	__mptcp_sync_sndbuf(sk);
- }
- 
- /* ensure we get enough memory for the frag hdr, beyond some minimal amount of
-@@ -2452,6 +2454,7 @@ static void __mptcp_close_ssk(struct sock *sk, struct sock *ssk,
- 		WRITE_ONCE(msk->first, NULL);
- 
- out:
-+	__mptcp_sync_sndbuf(sk);
- 	if (need_push)
- 		__mptcp_push_pending(sk, 0);
- 
-@@ -3223,7 +3226,7 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
- 	 * uses the correct data
- 	 */
- 	mptcp_copy_inaddrs(nsk, ssk);
--	mptcp_propagate_sndbuf(nsk, ssk);
-+	__mptcp_propagate_sndbuf(nsk, ssk);
- 
- 	mptcp_rcv_space_init(msk, ssk);
- 	bh_unlock_sock(nsk);
-@@ -3401,6 +3404,8 @@ static void mptcp_release_cb(struct sock *sk)
+@@ -3397,10 +3397,11 @@ static void mptcp_release_cb(struct sock *sk)
+ 	if (__test_and_clear_bit(MPTCP_CLEAN_UNA, &msk->cb_flags))
+ 		__mptcp_clean_una_wakeup(sk);
+ 	if (unlikely(msk->cb_flags)) {
+-		/* be sure to set the current sk state before tacking actions
+-		 * depending on sk_state, that is processing MPTCP_ERROR_REPORT
++		/* be sure to set the current sk state before taking actions
++		 * depending on sk_state (MPTCP_ERROR_REPORT)
++		 * On sk release avoid actions depending on the first subflow
+ 		 */
+-		if (__test_and_clear_bit(MPTCP_CONNECTED, &msk->cb_flags))
++		if (__test_and_clear_bit(MPTCP_CONNECTED, &msk->cb_flags) && msk->first)
  			__mptcp_set_connected(sk);
  		if (__test_and_clear_bit(MPTCP_ERROR_REPORT, &msk->cb_flags))
  			__mptcp_error_report(sk);
-+		if (__test_and_clear_bit(MPTCP_SYNC_SNDBUF, &msk->cb_flags))
-+			__mptcp_sync_sndbuf(sk);
- 	}
- 
- 	__mptcp_update_rmem(sk);
-@@ -3445,6 +3450,14 @@ void mptcp_subflow_process_delegated(struct sock *ssk, long status)
- 			__set_bit(MPTCP_PUSH_PENDING, &mptcp_sk(sk)->cb_flags);
- 		mptcp_data_unlock(sk);
- 	}
-+	if (status & BIT(MPTCP_DELEGATE_SNDBUF)) {
-+		mptcp_data_lock(sk);
-+		if (!sock_owned_by_user(sk))
-+			__mptcp_sync_sndbuf(sk);
-+		else
-+			__set_bit(MPTCP_SYNC_SNDBUF, &mptcp_sk(sk)->cb_flags);
-+		mptcp_data_unlock(sk);
-+	}
- 	if (status & BIT(MPTCP_DELEGATE_ACK))
- 		schedule_3rdack_retransmission(ssk);
- }
-@@ -3529,6 +3542,7 @@ bool mptcp_finish_join(struct sock *ssk)
- 	/* active subflow, already present inside the conn_list */
- 	if (!list_empty(&subflow->node)) {
- 		mptcp_subflow_joined(msk, ssk);
-+		mptcp_propagate_sndbuf(parent, ssk);
- 		return true;
- 	}
- 
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index 3612545fa62e0..40866acd91ad5 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -123,6 +123,7 @@
- #define MPTCP_RETRANSMIT	4
- #define MPTCP_FLUSH_JOIN_LIST	5
- #define MPTCP_CONNECTED		6
-+#define MPTCP_SYNC_SNDBUF	7
- 
- struct mptcp_skb_cb {
- 	u64 map_seq;
-@@ -447,6 +448,7 @@ DECLARE_PER_CPU(struct mptcp_delegated_action, mptcp_delegated_actions);
- #define MPTCP_DELEGATE_SCHEDULED	0
- #define MPTCP_DELEGATE_SEND		1
- #define MPTCP_DELEGATE_ACK		2
-+#define MPTCP_DELEGATE_SNDBUF		3
- 
- #define MPTCP_DELEGATE_ACTIONS_MASK	(~BIT(MPTCP_DELEGATE_SCHEDULED))
- /* MPTCP subflow context */
-@@ -520,6 +522,9 @@ struct mptcp_subflow_context {
- 
- 	u32	setsockopt_seq;
- 	u32	stale_rcv_tstamp;
-+	int     cached_sndbuf;	    /* sndbuf size when last synced with the msk sndbuf,
-+				     * protected by the msk socket lock
-+				     */
- 
- 	struct	sock *tcp_sock;	    /* tcp sk backpointer */
- 	struct	sock *conn;	    /* parent mptcp_sock */
-@@ -762,13 +767,52 @@ static inline bool mptcp_data_fin_enabled(const struct mptcp_sock *msk)
- 	       READ_ONCE(msk->write_seq) == READ_ONCE(msk->snd_nxt);
- }
- 
--static inline bool mptcp_propagate_sndbuf(struct sock *sk, struct sock *ssk)
-+static inline void __mptcp_sync_sndbuf(struct sock *sk)
- {
--	if ((sk->sk_userlocks & SOCK_SNDBUF_LOCK) || ssk->sk_sndbuf <= READ_ONCE(sk->sk_sndbuf))
--		return false;
-+	struct mptcp_subflow_context *subflow;
-+	int ssk_sndbuf, new_sndbuf;
-+
-+	if (sk->sk_userlocks & SOCK_SNDBUF_LOCK)
-+		return;
-+
-+	new_sndbuf = sock_net(sk)->ipv4.sysctl_tcp_wmem[0];
-+	mptcp_for_each_subflow(mptcp_sk(sk), subflow) {
-+		ssk_sndbuf =  READ_ONCE(mptcp_subflow_tcp_sock(subflow)->sk_sndbuf);
-+
-+		subflow->cached_sndbuf = ssk_sndbuf;
-+		new_sndbuf += ssk_sndbuf;
-+	}
-+
-+	/* the msk max wmem limit is <nr_subflows> * tcp wmem[2] */
-+	WRITE_ONCE(sk->sk_sndbuf, new_sndbuf);
-+}
-+
-+/* The called held both the msk socket and the subflow socket locks,
-+ * possibly under BH
-+ */
-+static inline void __mptcp_propagate_sndbuf(struct sock *sk, struct sock *ssk)
-+{
-+	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
-+
-+	if (READ_ONCE(ssk->sk_sndbuf) != subflow->cached_sndbuf)
-+		__mptcp_sync_sndbuf(sk);
-+}
-+
-+/* the caller held only the subflow socket lock, either in process or
-+ * BH context. Additionally this can be called under the msk data lock,
-+ * so we can't acquire such lock here: let the delegate action acquires
-+ * the needed locks in suitable order.
-+ */
-+static inline void mptcp_propagate_sndbuf(struct sock *sk, struct sock *ssk)
-+{
-+	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
-+
-+	if (likely(READ_ONCE(ssk->sk_sndbuf) == subflow->cached_sndbuf))
-+		return;
- 
--	WRITE_ONCE(sk->sk_sndbuf, ssk->sk_sndbuf);
--	return true;
-+	local_bh_disable();
-+	mptcp_subflow_delegate(subflow, MPTCP_DELEGATE_SNDBUF);
-+	local_bh_enable();
- }
- 
- static inline void mptcp_write_space(struct sock *sk)
-diff --git a/net/mptcp/sockopt.c b/net/mptcp/sockopt.c
-index 7539b9c8c2fb4..116e3008231bd 100644
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -95,6 +95,7 @@ static void mptcp_sol_socket_sync_intval(struct mptcp_sock *msk, int optname, in
- 		case SO_SNDBUFFORCE:
- 			ssk->sk_userlocks |= SOCK_SNDBUF_LOCK;
- 			WRITE_ONCE(ssk->sk_sndbuf, sk->sk_sndbuf);
-+			mptcp_subflow_ctx(ssk)->cached_sndbuf = sk->sk_sndbuf;
- 			break;
- 		case SO_RCVBUF:
- 		case SO_RCVBUFFORCE:
-@@ -1418,8 +1419,10 @@ static void sync_socket_options(struct mptcp_sock *msk, struct sock *ssk)
- 
- 	if (sk->sk_userlocks & tx_rx_locks) {
- 		ssk->sk_userlocks |= sk->sk_userlocks & tx_rx_locks;
--		if (sk->sk_userlocks & SOCK_SNDBUF_LOCK)
-+		if (sk->sk_userlocks & SOCK_SNDBUF_LOCK) {
- 			WRITE_ONCE(ssk->sk_sndbuf, sk->sk_sndbuf);
-+			mptcp_subflow_ctx(ssk)->cached_sndbuf = sk->sk_sndbuf;
-+		}
- 		if (sk->sk_userlocks & SOCK_RCVBUF_LOCK)
- 			WRITE_ONCE(ssk->sk_rcvbuf, sk->sk_rcvbuf);
- 	}
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index 9c1f8d1d63d24..d8827427ffc84 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -421,6 +421,7 @@ static bool subflow_use_different_dport(struct mptcp_sock *msk, const struct soc
- 
- void __mptcp_set_connected(struct sock *sk)
- {
-+	__mptcp_propagate_sndbuf(sk, mptcp_sk(sk)->first);
- 	if (sk->sk_state == TCP_SYN_SENT) {
- 		inet_sk_state_store(sk, TCP_ESTABLISHED);
- 		sk->sk_state_change(sk);
-@@ -472,7 +473,6 @@ static void subflow_finish_connect(struct sock *sk, const struct sk_buff *skb)
- 		return;
- 
- 	msk = mptcp_sk(parent);
--	mptcp_propagate_sndbuf(parent, sk);
- 	subflow->rel_write_seq = 1;
- 	subflow->conn_finished = 1;
- 	subflow->ssn_offset = TCP_SKB_CB(skb)->seq;
-@@ -1728,7 +1728,6 @@ static void subflow_state_change(struct sock *sk)
- 
- 	msk = mptcp_sk(parent);
- 	if (subflow_simultaneous_connect(sk)) {
--		mptcp_propagate_sndbuf(parent, sk);
- 		mptcp_do_fallback(sk);
- 		mptcp_rcv_space_init(msk, sk);
- 		pr_fallback(msk);
 -- 
 2.43.0
 
