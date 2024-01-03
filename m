@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAA21C289;
-	Wed,  3 Jan 2024 17:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088D11C288;
+	Wed,  3 Jan 2024 17:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7DHajyb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FE5C433C7;
-	Wed,  3 Jan 2024 17:04:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PeX83d8i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6316BC433C8;
+	Wed,  3 Jan 2024 17:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301457;
-	bh=06pau6XYOKhmE30NiZoOYYGoDCM5DdmGzRNOKmQGOfs=;
+	s=korg; t=1704301460;
+	bh=cGihLv3mHP3oHGC4/Gcab/J+g8+j0LVbz3DbfFO/ak8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I7DHajyb59jiLTt9qpw4CNWdc9yP2Reb4S8mMs3pP0oQeVuYnXHfWrkWcsguj09Sa
-	 e1hc1yA67JLqcT2V+46brglGCwFD2OTT8q/5d8p8DheErC0R3dOsWRj3MRlhaaB2UN
-	 1ObeWxV+VBOWzJn9RZO/3ObjXItLXiXVDAjkA4Ws=
+	b=PeX83d8iswG28efflXxl9PkdGotPOD3xFUr4fRh575Dtg+/PpsA1oW8GObUWn9+8N
+	 WxDqWZ3cWXJIPxcg91jwASfqteBOeVNXvOX8XuddDtckxy/Kh+t1AwuiwcX62EM/i9
+	 FJIlYfemqOW6Z3QCABh/u4jU2eIzbrk6lVkB5vhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoran Liu <liuhaoran14@163.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 38/95] Input: ipaq-micro-keys - add error handling for devm_kmemdup
-Date: Wed,  3 Jan 2024 17:54:46 +0100
-Message-ID: <20240103164859.779884288@linuxfoundation.org>
+Subject: [PATCH 5.15 39/95] scsi: bnx2fc: Fix skb double free in bnx2fc_rcv()
+Date: Wed,  3 Jan 2024 17:54:47 +0100
+Message-ID: <20240103164859.983316386@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -42,38 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoran Liu <liuhaoran14@163.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit 59b6a747e2d39227ac2325c5e29d6ab3bb070c2a ]
+[ Upstream commit 08c94d80b2da481652fb633e79cbc41e9e326a91 ]
 
-Check the return value of i2c_add_adapter. Static analysis revealed that
-the function did not properly handle potential failures of
-i2c_add_adapter, which could lead to partial initialization of the I2C
-adapter and unstable operation.
+skb_share_check() already drops the reference to the skb when returning
+NULL. Using kfree_skb() in the error handling path leads to an skb double
+free.
 
-Signed-off-by: Haoran Liu <liuhaoran14@163.com>
-Link: https://lore.kernel.org/r/20231203164653.38983-1-liuhaoran14@163.com
-Fixes: d7535ffa427b ("Input: driver for microcontroller keys on the iPaq h3xxx")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fix this by removing the variable tmp_skb, and return directly when
+skb_share_check() returns NULL.
+
+Fixes: 01a4cc4d0cd6 ("bnx2fc: do not add shared skbs to the fcoe_rx_list")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Link: https://lore.kernel.org/r/20221114110626.526643-1-weiyongjun@huaweicloud.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/keyboard/ipaq-micro-keys.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/scsi/bnx2fc/bnx2fc_fcoe.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/input/keyboard/ipaq-micro-keys.c b/drivers/input/keyboard/ipaq-micro-keys.c
-index 13a66a8e3411f..e0c51189e329c 100644
---- a/drivers/input/keyboard/ipaq-micro-keys.c
-+++ b/drivers/input/keyboard/ipaq-micro-keys.c
-@@ -105,6 +105,9 @@ static int micro_key_probe(struct platform_device *pdev)
- 	keys->codes = devm_kmemdup(&pdev->dev, micro_keycodes,
- 			   keys->input->keycodesize * keys->input->keycodemax,
- 			   GFP_KERNEL);
-+	if (!keys->codes)
-+		return -ENOMEM;
-+
- 	keys->input->keycode = keys->codes;
+diff --git a/drivers/scsi/bnx2fc/bnx2fc_fcoe.c b/drivers/scsi/bnx2fc/bnx2fc_fcoe.c
+index e2586472ecad4..6090434ad6f36 100644
+--- a/drivers/scsi/bnx2fc/bnx2fc_fcoe.c
++++ b/drivers/scsi/bnx2fc/bnx2fc_fcoe.c
+@@ -432,7 +432,6 @@ static int bnx2fc_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	struct fcoe_ctlr *ctlr;
+ 	struct fcoe_rcv_info *fr;
+ 	struct fcoe_percpu_s *bg;
+-	struct sk_buff *tmp_skb;
  
- 	__set_bit(EV_KEY, keys->input->evbit);
+ 	interface = container_of(ptype, struct bnx2fc_interface,
+ 				 fcoe_packet_type);
+@@ -444,11 +443,9 @@ static int bnx2fc_rcv(struct sk_buff *skb, struct net_device *dev,
+ 		goto err;
+ 	}
+ 
+-	tmp_skb = skb_share_check(skb, GFP_ATOMIC);
+-	if (!tmp_skb)
+-		goto err;
+-
+-	skb = tmp_skb;
++	skb = skb_share_check(skb, GFP_ATOMIC);
++	if (!skb)
++		return -1;
+ 
+ 	if (unlikely(eth_hdr(skb)->h_proto != htons(ETH_P_FCOE))) {
+ 		printk(KERN_ERR PFX "bnx2fc_rcv: Wrong FC type frame\n");
 -- 
 2.43.0
 
