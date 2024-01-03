@@ -1,168 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89DC1C290;
-	Wed,  3 Jan 2024 16:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66A61C289;
+	Wed,  3 Jan 2024 16:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iYOVHk2X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40EA1C433C8;
-	Wed,  3 Jan 2024 16:57:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704301032;
-	bh=Dg2dDaPNZtNW//yG71kg8XZ8E7Hu6Q4eVI6C38LDthI=;
-	h=From:Date:Subject:To:Cc:From;
-	b=iYOVHk2XhpQokWq7/u1JypdHbjqJIiozmZIPP46+vKl8+c5MNTwZ6lIeawQdtTHlV
-	 fD/GNag5+BHJ3/XEBKZ3BU3o036DXxaNh+5e+43uCAJq6l8sBZedNQmiO+XtajmUV9
-	 fCBitXICxXvR2TVg8YtfB2MjhLHc7sLAZSYCFMcrWb2WrAIXYYKmQ113Vw5m2m9rHz
-	 o/GeuEn1DesYlKAWVMgrpROoZySLAsZwhabV9haMU4APb5I6MSdePpHfCgha9sfVM5
-	 5NecWyk06XBBXjdFEdq95t21rkwffHIloaFf5YhpyfgWsftyXx+XgHBDIV9kfMux5D
-	 A0IKqSxubn/Sw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 03 Jan 2024 09:57:07 -0700
-Subject: [PATCH] power: supply: bq24190_charger: Fix "initializer element
- is not constant" error
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1W9HfV0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD66C433C7;
+	Wed,  3 Jan 2024 16:57:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1704301034;
+	bh=AGXZqoo03mAJK3a58t1+5+JMyeuMbs23HoODtslh39w=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=x1W9HfV0XxWmBWt9YIaGCTJRl/40LxEr3TqQPEw89XBEg4vd4i+uSbBPMNAJFu6TH
+	 neG1/Gdg44zDRmeceRr/3rmec3y4TRtq0dAVeGXtIhJatcuEzdXWr6J5JUjdGUxnyK
+	 g6c2koL4gHH0mwdtBnV/MilXWmwXUMqB9rOTz8+s=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 021/100] ksmbd: call putname after using the last component
+Date: Wed,  3 Jan 2024 17:54:10 +0100
+Message-ID: <20240103164859.259982292@linuxfoundation.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
+References: <20240103164856.169912722@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240103-fix-bq24190_charger-vbus_desc-non-const-v1-1-115ddf798c70@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAOKRlWUC/x2N0QqDMAxFf0XyvEBaRXC/MoasaXR9SbdkE0H89
- 5U9HrjnngNcrIjDtTvAZCteqjYIlw74+dBVsOTGECkOFKjHpeyY3nEIE81tYasYbunrcxZn1Kr
- IVf2DPKaFKGQepwzt7WXS1H/pdj/PHxCHbTp5AAAA
-To: sre@kernel.org
-Cc: chenhuiz@axis.com, linux-pm@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5503; i=nathan@kernel.org;
- h=from:subject:message-id; bh=Dg2dDaPNZtNW//yG71kg8XZ8E7Hu6Q4eVI6C38LDthI=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKlTJ74w+KGgfPuA2GGRZGmtJnFX1sCTLfPF89kTBesaf
- 0nwf77WUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACbiO5nhf2Cw+8YJE3meun/0
- trPeHP7hkEg663+bHsYk7nvWam3vPRkZ+lVfdFmtn2Te5xzC9vn95czL5/vPbpKOuFWgVcWztXY
- yCwA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Transfer-Encoding: 8bit
 
-When building with a version of GCC prior to 8.x, there is an error
-around non-constant initializer elements:
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-  drivers/power/supply/bq24190_charger.c:1978:16: error: initializer element is not constant
-     .vbus_desc = bq24190_vbus_desc,
-                  ^~~~~~~~~~~~~~~~~
-  drivers/power/supply/bq24190_charger.c:1978:16: note: (near initialization for 'bq24190_chip_info_tbl[0].vbus_desc')
-  drivers/power/supply/bq24190_charger.c:1989:16: error: initializer element is not constant
-     .vbus_desc = bq24190_vbus_desc,
-                  ^~~~~~~~~~~~~~~~~
-  drivers/power/supply/bq24190_charger.c:1989:16: note: (near initialization for 'bq24190_chip_info_tbl[1].vbus_desc')
-  drivers/power/supply/bq24190_charger.c:2000:16: error: initializer element is not constant
-     .vbus_desc = bq24190_vbus_desc,
-                  ^~~~~~~~~~~~~~~~~
-  drivers/power/supply/bq24190_charger.c:2000:16: note: (near initialization for 'bq24190_chip_info_tbl[2].vbus_desc')
-  drivers/power/supply/bq24190_charger.c:2011:16: error: initializer element is not constant
-     .vbus_desc = bq24190_vbus_desc,
-                  ^~~~~~~~~~~~~~~~~
-  drivers/power/supply/bq24190_charger.c:2011:16: note: (near initialization for 'bq24190_chip_info_tbl[3].vbus_desc')
-  drivers/power/supply/bq24190_charger.c:2022:16: error: initializer element is not constant
-     .vbus_desc = bq24296_vbus_desc,
-                  ^~~~~~~~~~~~~~~~~
-  drivers/power/supply/bq24190_charger.c:2022:16: note: (near initialization for 'bq24190_chip_info_tbl[4].vbus_desc')
+------------------
 
-Clang versions prior to 17.x show a similar error:
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-  drivers/power/supply/bq24190_charger.c:1978:16: error: initializer element is not a compile-time constant
-                  .vbus_desc = bq24190_vbus_desc,
-                               ^~~~~~~~~~~~~~~~~
-  1 error generated.
+[ Upstream commit 6fe55c2799bc29624770c26f98ba7b06214f43e0 ]
 
-Newer compilers have decided to accept these structures as compile time
-constants as an extension. To resolve this issue for all supported
-compilers, change the vbus_desc member in 'struct bq24190_chip_info' to
-a pointer, as it is only ever passed by reference anyways, and adjust
-the assignments accordingly.
+last component point filename struct. Currently putname is called after
+vfs_path_parent_lookup(). And then last component is used for
+lookup_one_qstr_excl(). name in last component is freed by previous
+calling putname(). And It cause file lookup failure when testing
+generic/464 test of xfstest.
 
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1973
-Fixes: b150a703b56f ("power: supply: bq24190_charger: Add support for BQ24296")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 74d7970febf7 ("ksmbd: fix racy issue from using ->d_parent and ->d_name")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq24190_charger.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/smb/server/vfs.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/bq24190_charger.c b/drivers/power/supply/bq24190_charger.c
-index a8995a21fadb..2b393eb5c282 100644
---- a/drivers/power/supply/bq24190_charger.c
-+++ b/drivers/power/supply/bq24190_charger.c
-@@ -246,7 +246,7 @@ struct bq24190_dev_info {
- struct bq24190_chip_info {
- 	int ichg_array_size;
- #ifdef CONFIG_REGULATOR
--	const struct regulator_desc vbus_desc;
-+	const struct regulator_desc *vbus_desc;
- #endif
- 	int (*check_chip)(struct bq24190_dev_info *bdi);
- 	int (*set_chg_config)(struct bq24190_dev_info *bdi, const u8 chg_config);
-@@ -728,7 +728,7 @@ static int bq24190_register_vbus_regulator(struct bq24190_dev_info *bdi)
- 	else
- 		cfg.init_data = &bq24190_vbus_init_data;
- 	cfg.driver_data = bdi;
--	reg = devm_regulator_register(bdi->dev, &bdi->info->vbus_desc, &cfg);
-+	reg = devm_regulator_register(bdi->dev, bdi->info->vbus_desc, &cfg);
- 	if (IS_ERR(reg)) {
- 		ret = PTR_ERR(reg);
- 		dev_err(bdi->dev, "Can't register regulator: %d\n", ret);
-@@ -1975,7 +1975,7 @@ static const struct bq24190_chip_info bq24190_chip_info_tbl[] = {
- 	[BQ24190] = {
- 		.ichg_array_size = ARRAY_SIZE(bq24190_ccc_ichg_values),
- #ifdef CONFIG_REGULATOR
--		.vbus_desc = bq24190_vbus_desc,
-+		.vbus_desc = &bq24190_vbus_desc,
- #endif
- 		.check_chip = bq24190_check_chip,
- 		.set_chg_config = bq24190_battery_set_chg_config,
-@@ -1986,7 +1986,7 @@ static const struct bq24190_chip_info bq24190_chip_info_tbl[] = {
- 	[BQ24192] = {
- 		.ichg_array_size = ARRAY_SIZE(bq24190_ccc_ichg_values),
- #ifdef CONFIG_REGULATOR
--		.vbus_desc = bq24190_vbus_desc,
-+		.vbus_desc = &bq24190_vbus_desc,
- #endif
- 		.check_chip = bq24190_check_chip,
- 		.set_chg_config = bq24190_battery_set_chg_config,
-@@ -1997,7 +1997,7 @@ static const struct bq24190_chip_info bq24190_chip_info_tbl[] = {
- 	[BQ24192i] = {
- 		.ichg_array_size = ARRAY_SIZE(bq24190_ccc_ichg_values),
- #ifdef CONFIG_REGULATOR
--		.vbus_desc = bq24190_vbus_desc,
-+		.vbus_desc = &bq24190_vbus_desc,
- #endif
- 		.check_chip = bq24190_check_chip,
- 		.set_chg_config = bq24190_battery_set_chg_config,
-@@ -2008,7 +2008,7 @@ static const struct bq24190_chip_info bq24190_chip_info_tbl[] = {
- 	[BQ24196] = {
- 		.ichg_array_size = ARRAY_SIZE(bq24190_ccc_ichg_values),
- #ifdef CONFIG_REGULATOR
--		.vbus_desc = bq24190_vbus_desc,
-+		.vbus_desc = &bq24190_vbus_desc,
- #endif
- 		.check_chip = bq24190_check_chip,
- 		.set_chg_config = bq24190_battery_set_chg_config,
-@@ -2019,7 +2019,7 @@ static const struct bq24190_chip_info bq24190_chip_info_tbl[] = {
- 	[BQ24296] = {
- 		.ichg_array_size = BQ24296_CCC_ICHG_VALUES_LEN,
- #ifdef CONFIG_REGULATOR
--		.vbus_desc = bq24296_vbus_desc,
-+		.vbus_desc = &bq24296_vbus_desc,
- #endif
- 		.check_chip = bq24296_check_chip,
- 		.set_chg_config = bq24296_battery_set_chg_config,
-
----
-base-commit: b150a703b56fb6eb282d059b421652ccd9155c23
-change-id: 20240103-fix-bq24190_charger-vbus_desc-non-const-c6bf001dc69d
-
-Best regards,
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 5d2bb58d77e80..ebcd5a312f10d 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -87,12 +87,14 @@ static int ksmbd_vfs_path_lookup_locked(struct ksmbd_share_config *share_conf,
+ 	err = vfs_path_parent_lookup(filename, flags,
+ 				     &parent_path, &last, &type,
+ 				     root_share_path);
+-	putname(filename);
+-	if (err)
++	if (err) {
++		putname(filename);
+ 		return err;
++	}
+ 
+ 	if (unlikely(type != LAST_NORM)) {
+ 		path_put(&parent_path);
++		putname(filename);
+ 		return -ENOENT;
+ 	}
+ 
+@@ -109,12 +111,14 @@ static int ksmbd_vfs_path_lookup_locked(struct ksmbd_share_config *share_conf,
+ 	path->dentry = d;
+ 	path->mnt = share_conf->vfs_path.mnt;
+ 	path_put(&parent_path);
++	putname(filename);
+ 
+ 	return 0;
+ 
+ err_out:
+ 	inode_unlock(parent_path.dentry->d_inode);
+ 	path_put(&parent_path);
++	putname(filename);
+ 	return -ENOENT;
+ }
+ 
 -- 
-Nathan Chancellor <nathan@kernel.org>
+2.43.0
+
+
 
