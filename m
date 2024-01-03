@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C935F1C298;
-	Wed,  3 Jan 2024 17:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43DA01C29C;
+	Wed,  3 Jan 2024 17:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n0H8A8Tj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC1DC433C7;
-	Wed,  3 Jan 2024 17:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVigKi2e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B1CEC433C8;
+	Wed,  3 Jan 2024 17:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301485;
-	bh=nshPneWRoPHfIE0+rwuHX4Qi5CNZ6259GzlBNhwRns8=;
+	s=korg; t=1704301488;
+	bh=AHJ07zvKssKCc/MMeBAPjsMq/OYC1pkAhrkeSIwIF8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n0H8A8TjjRBh0T96sAM5Fq6Cjle5g+agBBI5vGNh8vR5wnANFaYzr8xwf0iP2aEDT
-	 sSNOz+c46M+iPABmBp2YD/d/2TAmwschHvUPmDOC4/Nip8L56RszaIFDhywBQibV8o
-	 gMtCvzHiTbuClN+UDldz0jufDslwwMU8o3RvdrxI=
+	b=SVigKi2em5j4bbI4o3dZ+kXsiB1fWnTDBgfO3suxH/vHv+17pGZawJAvXpSCsRmrW
+	 gLwQ68hYqMusA10WilVV0iey9ruqzgaDWuyUdzNvxZbrW9Bdbj07bsw4jjCxGQVUE9
+	 ssxzAqbP7faBtDRKoCpB/hmyhmNf4vWtEMWUAdfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 45/95] wifi: cfg80211: fix certs build to not depend on file order
-Date: Wed,  3 Jan 2024 17:54:53 +0100
-Message-ID: <20240103164900.856217047@linuxfoundation.org>
+	Mark Glover <mark.glover@actisense.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 46/95] USB: serial: ftdi_sio: update Actisense PIDs constant names
+Date: Wed,  3 Jan 2024 17:54:54 +0100
+Message-ID: <20240103164901.003296824@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -42,32 +41,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Mark Glover <mark.glover@actisense.com>
 
-commit 3c2a8ebe3fe66a5f77d4c164a0bea8e2ff37b455 upstream.
+commit 513d88a88e0203188a38f4647dd08170aebd85df upstream.
 
-The file for the new certificate (Chen-Yu Tsai's) didn't
-end with a comma, so depending on the file order in the
-build rule, we'd end up with invalid C when concatenating
-the (now two) certificates. Fix that.
+Update the constant names for unused USB PIDs (product identifiers) to
+reflect the new products now using the PIDs.
 
+Signed-off-by: Mark Glover <mark.glover@actisense.com>
 Cc: stable@vger.kernel.org
-Reported-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Fixes: fb768d3b13ff ("wifi: cfg80211: Add my certificate")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/certs/wens.hex |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/ftdi_sio.c     |    6 +++---
+ drivers/usb/serial/ftdi_sio_ids.h |    6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/net/wireless/certs/wens.hex
-+++ b/net/wireless/certs/wens.hex
-@@ -84,4 +84,4 @@
- 0xf0, 0xc7, 0x83, 0xbb, 0xa2, 0x81, 0x03, 0x2d,
- 0xd4, 0x2a, 0x63, 0x3f, 0xf7, 0x31, 0x2e, 0x40,
- 0x33, 0x5c, 0x46, 0xbc, 0x9b, 0xc1, 0x05, 0xa5,
--0x45, 0x4e, 0xc3
-+0x45, 0x4e, 0xc3,
+--- a/drivers/usb/serial/ftdi_sio.c
++++ b/drivers/usb/serial/ftdi_sio.c
+@@ -1011,9 +1011,9 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE(FTDI_VID, ACTISENSE_USG_PID) },
+ 	{ USB_DEVICE(FTDI_VID, ACTISENSE_NGT_PID) },
+ 	{ USB_DEVICE(FTDI_VID, ACTISENSE_NGW_PID) },
+-	{ USB_DEVICE(FTDI_VID, ACTISENSE_D9AC_PID) },
+-	{ USB_DEVICE(FTDI_VID, ACTISENSE_D9AD_PID) },
+-	{ USB_DEVICE(FTDI_VID, ACTISENSE_D9AE_PID) },
++	{ USB_DEVICE(FTDI_VID, ACTISENSE_UID_PID) },
++	{ USB_DEVICE(FTDI_VID, ACTISENSE_USA_PID) },
++	{ USB_DEVICE(FTDI_VID, ACTISENSE_NGX_PID) },
+ 	{ USB_DEVICE(FTDI_VID, ACTISENSE_D9AF_PID) },
+ 	{ USB_DEVICE(FTDI_VID, CHETCO_SEAGAUGE_PID) },
+ 	{ USB_DEVICE(FTDI_VID, CHETCO_SEASWITCH_PID) },
+--- a/drivers/usb/serial/ftdi_sio_ids.h
++++ b/drivers/usb/serial/ftdi_sio_ids.h
+@@ -1561,9 +1561,9 @@
+ #define ACTISENSE_USG_PID		0xD9A9 /* USG USB Serial Adapter */
+ #define ACTISENSE_NGT_PID		0xD9AA /* NGT NMEA2000 Interface */
+ #define ACTISENSE_NGW_PID		0xD9AB /* NGW NMEA2000 Gateway */
+-#define ACTISENSE_D9AC_PID		0xD9AC /* Actisense Reserved */
+-#define ACTISENSE_D9AD_PID		0xD9AD /* Actisense Reserved */
+-#define ACTISENSE_D9AE_PID		0xD9AE /* Actisense Reserved */
++#define ACTISENSE_UID_PID		0xD9AC /* USB Isolating Device */
++#define ACTISENSE_USA_PID		0xD9AD /* USB to Serial Adapter */
++#define ACTISENSE_NGX_PID		0xD9AE /* NGX NMEA2000 Gateway */
+ #define ACTISENSE_D9AF_PID		0xD9AF /* Actisense Reserved */
+ #define CHETCO_SEAGAUGE_PID		0xA548 /* SeaGauge USB Adapter */
+ #define CHETCO_SEASWITCH_PID		0xA549 /* SeaSwitch USB Adapter */
 
 
