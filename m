@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9A81C695;
-	Wed,  3 Jan 2024 16:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F261CA96;
+	Wed,  3 Jan 2024 16:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZMeUuCy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22C4C433C9;
-	Wed,  3 Jan 2024 16:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xip+gACu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C39C433C8;
+	Wed,  3 Jan 2024 16:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301065;
-	bh=RcGEdjHRSakFuysbIqnZbD4z3zSHdXSH148+MbE5R7U=;
+	s=korg; t=1704301068;
+	bh=ux2DAD8x0gULmepthuyJf9P9pCsdPRCMGDcXEs1XXhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ZMeUuCy7zYdDjFlfSmoQZk2O80GuKnCCYijhHu3TA0dU8lG6+MpkWSHa3HW6J3S0
-	 4KUcJVDrasdIQ9bk/oy3P403vJdr+bDg2gOlNJesx4XjlEKUB4zDNhclYwTuSW0PeT
-	 +O1EAQitRhQteagcP4DUKAn45DLDXTgeMoyQUOEU=
+	b=xip+gACuuKmGeRnkQ518Teh/9OM6dGUuOD8sL+4goV2unFYuMWlzD5RCeYohsQ/Sk
+	 PzxSOiVYmWY6bi1IBNMibWYJLxe7mie6eXJAQYUs1IYVYcOweC/q46Oi3kmoX/ewDf
+	 AmXqLgtXPhtTJozFBOu0KosOArQpHLl68q0pqBVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abaci Robot <abaci@linux.alibaba.com>,
-	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	Lu Hongfei <luhongfei@vivo.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/100] ksmbd: Fix parameter name and comment mismatch
-Date: Wed,  3 Jan 2024 17:54:00 +0100
-Message-ID: <20240103164857.846604696@linuxfoundation.org>
+Subject: [PATCH 6.1 029/100] ksmbd: Replace the ternary conditional operator with min()
+Date: Wed,  3 Jan 2024 17:54:18 +0100
+Message-ID: <20240103164900.449744909@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -45,40 +43,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+From: Lu Hongfei <luhongfei@vivo.com>
 
-[ Upstream commit 63f09a9986eb58578ed6ad0e27a6e2c54e49f797 ]
+[ Upstream commit f65fadb0422537d73f9a6472861852dc2f7a6a5b ]
 
-fs/ksmbd/vfs.c:965: warning: Function parameter or member 'attr_value' not described in 'ksmbd_vfs_setxattr'.
+It would be better to replace the traditional ternary conditional
+operator with min() in compare_sids.
 
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3946
-Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Signed-off-by: Lu Hongfei <luhongfei@vivo.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/smb/server/smbacl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index 36914db8b6616..187d31d984946 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -951,9 +951,9 @@ ssize_t ksmbd_vfs_getxattr(struct user_namespace *user_ns,
-  * ksmbd_vfs_setxattr() - vfs helper for smb set extended attributes value
-  * @user_ns:	user namespace
-  * @dentry:	dentry to set XATTR at
-- * @name:	xattr name for setxattr
-- * @value:	xattr value to set
-- * @size:	size of xattr value
-+ * @attr_name:	xattr name for setxattr
-+ * @attr_value:	xattr value to set
-+ * @attr_size:	size of xattr value
-  * @flags:	destination buffer length
-  *
-  * Return:	0 on success, otherwise error
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index 8fe2592c5525f..03f19d3de2a17 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -97,7 +97,7 @@ int compare_sids(const struct smb_sid *ctsid, const struct smb_sid *cwsid)
+ 	/* compare all of the subauth values if any */
+ 	num_sat = ctsid->num_subauth;
+ 	num_saw = cwsid->num_subauth;
+-	num_subauth = num_sat < num_saw ? num_sat : num_saw;
++	num_subauth = min(num_sat, num_saw);
+ 	if (num_subauth) {
+ 		for (i = 0; i < num_subauth; ++i) {
+ 			if (ctsid->sub_auth[i] != cwsid->sub_auth[i]) {
 -- 
 2.43.0
 
