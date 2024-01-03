@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F5C1BDDE;
-	Wed,  3 Jan 2024 17:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216621BDDE;
+	Wed,  3 Jan 2024 17:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lv6MARFi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DD5C433C8;
-	Wed,  3 Jan 2024 17:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iutbcGCH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252C6C433C8;
+	Wed,  3 Jan 2024 17:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301617;
-	bh=7QtZZUjrnaG961K5G1/6GPSF53zsB6yV7KU4q6SBwSQ=;
+	s=korg; t=1704301620;
+	bh=3CjQ9/RaMrUTAUtOr0v6B08nkphJYaNxsMCNAPVhK2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lv6MARFikOqe2tW0iVwRH9Q+XX15VtJ/CkWZ+/JRXWkUAZCG9LQtMR87o3ACS7ynV
-	 pdAO/ExMjoAan5+b9lztCzcRxy/B+3ywa/Or6PG7ubiQgdcl9KARBpfBcYIGeMt1E0
-	 1RHapSmZWEYTJajYrFtP6mzvkIoe2SbdbItdlhzE=
+	b=iutbcGCHAvT3cO+91J7pvs/UwOaGGA8c8NsJJOKI/aznNQ2ab6g7UU3tv4lGA3Cyh
+	 bAmSWZVq0ebJtpnZz9yC3964XpgOish6Lcke6r8hjThUAaigNX0EXYpBQ7EVjXIo/0
+	 JQ0VffX55/n23A4aoJcDCanB8g6JEOdZr9TPOVdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <zanussi@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Alexander Graf <graf@amazon.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 59/95] tracing / synthetic: Disable events after testing in synth_event_gen_test_init()
-Date: Wed,  3 Jan 2024 17:55:07 +0100
-Message-ID: <20240103164902.833346352@linuxfoundation.org>
+	Justin Chen <justinpopo6@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 77/95] net: usb: ax88179_178a: clean up pm calls
+Date: Wed,  3 Jan 2024 17:55:25 +0100
+Message-ID: <20240103164905.570490180@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -44,110 +42,325 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Justin Chen <justinpopo6@gmail.com>
 
-commit 88b30c7f5d27e1594d70dc2bd7199b18f2b57fa9 upstream.
+[ Upstream commit 843f92052da7694e846e8e12bbe2342845d2033e ]
 
-The synth_event_gen_test module can be built in, if someone wants to run
-the tests at boot up and not have to load them.
+Instead of passing in_pm flags all over the place, use the private
+struct to handle in_pm mode.
 
-The synth_event_gen_test_init() function creates and enables the synthetic
-events and runs its tests.
-
-The synth_event_gen_test_exit() disables the events it created and
-destroys the events.
-
-If the module is builtin, the events are never disabled. The issue is, the
-events should be disable after the tests are run. This could be an issue
-if the rest of the boot up tests are enabled, as they expect the events to
-be in a known state before testing. That known state happens to be
-disabled.
-
-When CONFIG_SYNTH_EVENT_GEN_TEST=y and CONFIG_EVENT_TRACE_STARTUP_TEST=y
-a warning will trigger:
-
- Running tests on trace events:
- Testing event create_synth_test:
- Enabled event during self test!
- ------------[ cut here ]------------
- WARNING: CPU: 2 PID: 1 at kernel/trace/trace_events.c:4150 event_trace_self_tests+0x1c2/0x480
- Modules linked in:
- CPU: 2 PID: 1 Comm: swapper/0 Not tainted 6.7.0-rc2-test-00031-gb803d7c664d5-dirty #276
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
- RIP: 0010:event_trace_self_tests+0x1c2/0x480
- Code: bb e8 a2 ab 5d fc 48 8d 7b 48 e8 f9 3d 99 fc 48 8b 73 48 40 f6 c6 01 0f 84 d6 fe ff ff 48 c7 c7 20 b6 ad bb e8 7f ab 5d fc 90 <0f> 0b 90 48 89 df e8 d3 3d 99 fc 48 8b 1b 4c 39 f3 0f 85 2c ff ff
- RSP: 0000:ffffc9000001fdc0 EFLAGS: 00010246
- RAX: 0000000000000029 RBX: ffff88810399ca80 RCX: 0000000000000000
- RDX: 0000000000000000 RSI: ffffffffb9f19478 RDI: ffff88823c734e64
- RBP: ffff88810399f300 R08: 0000000000000000 R09: fffffbfff79eb32a
- R10: ffffffffbcf59957 R11: 0000000000000001 R12: ffff888104068090
- R13: ffffffffbc89f0a0 R14: ffffffffbc8a0f08 R15: 0000000000000078
- FS:  0000000000000000(0000) GS:ffff88823c700000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 00000001f6282001 CR4: 0000000000170ef0
- Call Trace:
-  <TASK>
-  ? __warn+0xa5/0x200
-  ? event_trace_self_tests+0x1c2/0x480
-  ? report_bug+0x1f6/0x220
-  ? handle_bug+0x6f/0x90
-  ? exc_invalid_op+0x17/0x50
-  ? asm_exc_invalid_op+0x1a/0x20
-  ? tracer_preempt_on+0x78/0x1c0
-  ? event_trace_self_tests+0x1c2/0x480
-  ? __pfx_event_trace_self_tests_init+0x10/0x10
-  event_trace_self_tests_init+0x27/0xe0
-  do_one_initcall+0xd6/0x3c0
-  ? __pfx_do_one_initcall+0x10/0x10
-  ? kasan_set_track+0x25/0x30
-  ? rcu_is_watching+0x38/0x60
-  kernel_init_freeable+0x324/0x450
-  ? __pfx_kernel_init+0x10/0x10
-  kernel_init+0x1f/0x1e0
-  ? _raw_spin_unlock_irq+0x33/0x50
-  ret_from_fork+0x34/0x60
-  ? __pfx_kernel_init+0x10/0x10
-  ret_from_fork_asm+0x1b/0x30
-  </TASK>
-
-This is because the synth_event_gen_test_init() left the synthetic events
-that it created enabled. By having it disable them after testing, the
-other selftests will run fine.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20231220111525.2f0f49b0@gandalf.local.home
-
-Cc: stable@vger.kernel.org
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Fixes: 9fe41efaca084 ("tracing: Add synth event generation test module")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reported-by: Alexander Graf <graf@amazon.com>
-Tested-by: Alexander Graf <graf@amazon.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Justin Chen <justinpopo6@gmail.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: aef05e349bfd ("net: usb: ax88179_178a: avoid failed operations when device is disconnected")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/synth_event_gen_test.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/usb/ax88179_178a.c | 147 +++++++++++++--------------------
+ 1 file changed, 59 insertions(+), 88 deletions(-)
 
---- a/kernel/trace/synth_event_gen_test.c
-+++ b/kernel/trace/synth_event_gen_test.c
-@@ -477,6 +477,17 @@ static int __init synth_event_gen_test_i
+diff --git a/drivers/net/usb/ax88179_178a.c b/drivers/net/usb/ax88179_178a.c
+index 7f5680c0b230c..bd258c4e13948 100644
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -169,6 +169,7 @@ struct ax88179_data {
+ 	u8  eee_active;
+ 	u16 rxctl;
+ 	u16 reserved;
++	u8 in_pm;
+ };
  
- 	ret = test_trace_synth_event();
- 	WARN_ON(ret);
+ struct ax88179_int_data {
+@@ -185,15 +186,29 @@ static const struct {
+ 	{7, 0xcc, 0x4c, 0x18, 8},
+ };
+ 
++static void ax88179_set_pm_mode(struct usbnet *dev, bool pm_mode)
++{
++	struct ax88179_data *ax179_data = (struct ax88179_data *)dev->data;
 +
-+	/* Disable when done */
-+	trace_array_set_clr_event(gen_synth_test->tr,
-+				  "synthetic",
-+				  "gen_synth_test", false);
-+	trace_array_set_clr_event(empty_synth_test->tr,
-+				  "synthetic",
-+				  "empty_synth_test", false);
-+	trace_array_set_clr_event(create_synth_test->tr,
-+				  "synthetic",
-+				  "create_synth_test", false);
-  out:
- 	return ret;
++	ax179_data->in_pm = pm_mode;
++}
++
++static int ax88179_in_pm(struct usbnet *dev)
++{
++	struct ax88179_data *ax179_data = (struct ax88179_data *)dev->data;
++
++	return ax179_data->in_pm;
++}
++
+ static int __ax88179_read_cmd(struct usbnet *dev, u8 cmd, u16 value, u16 index,
+-			      u16 size, void *data, int in_pm)
++			      u16 size, void *data)
+ {
+ 	int ret;
+ 	int (*fn)(struct usbnet *, u8, u8, u16, u16, void *, u16);
+ 
+ 	BUG_ON(!dev);
+ 
+-	if (!in_pm)
++	if (!ax88179_in_pm(dev))
+ 		fn = usbnet_read_cmd;
+ 	else
+ 		fn = usbnet_read_cmd_nopm;
+@@ -209,14 +224,14 @@ static int __ax88179_read_cmd(struct usbnet *dev, u8 cmd, u16 value, u16 index,
  }
+ 
+ static int __ax88179_write_cmd(struct usbnet *dev, u8 cmd, u16 value, u16 index,
+-			       u16 size, const void *data, int in_pm)
++			       u16 size, const void *data)
+ {
+ 	int ret;
+ 	int (*fn)(struct usbnet *, u8, u8, u16, u16, const void *, u16);
+ 
+ 	BUG_ON(!dev);
+ 
+-	if (!in_pm)
++	if (!ax88179_in_pm(dev))
+ 		fn = usbnet_write_cmd;
+ 	else
+ 		fn = usbnet_write_cmd_nopm;
+@@ -249,47 +264,6 @@ static void ax88179_write_cmd_async(struct usbnet *dev, u8 cmd, u16 value,
+ 	}
+ }
+ 
+-static int ax88179_read_cmd_nopm(struct usbnet *dev, u8 cmd, u16 value,
+-				 u16 index, u16 size, void *data)
+-{
+-	int ret;
+-
+-	if (2 == size) {
+-		u16 buf;
+-		ret = __ax88179_read_cmd(dev, cmd, value, index, size, &buf, 1);
+-		le16_to_cpus(&buf);
+-		*((u16 *)data) = buf;
+-	} else if (4 == size) {
+-		u32 buf;
+-		ret = __ax88179_read_cmd(dev, cmd, value, index, size, &buf, 1);
+-		le32_to_cpus(&buf);
+-		*((u32 *)data) = buf;
+-	} else {
+-		ret = __ax88179_read_cmd(dev, cmd, value, index, size, data, 1);
+-	}
+-
+-	return ret;
+-}
+-
+-static int ax88179_write_cmd_nopm(struct usbnet *dev, u8 cmd, u16 value,
+-				  u16 index, u16 size, const void *data)
+-{
+-	int ret;
+-
+-	if (2 == size) {
+-		u16 buf;
+-		buf = *((u16 *)data);
+-		cpu_to_le16s(&buf);
+-		ret = __ax88179_write_cmd(dev, cmd, value, index,
+-					  size, &buf, 1);
+-	} else {
+-		ret = __ax88179_write_cmd(dev, cmd, value, index,
+-					  size, data, 1);
+-	}
+-
+-	return ret;
+-}
+-
+ static int ax88179_read_cmd(struct usbnet *dev, u8 cmd, u16 value, u16 index,
+ 			    u16 size, void *data)
+ {
+@@ -297,16 +271,16 @@ static int ax88179_read_cmd(struct usbnet *dev, u8 cmd, u16 value, u16 index,
+ 
+ 	if (2 == size) {
+ 		u16 buf = 0;
+-		ret = __ax88179_read_cmd(dev, cmd, value, index, size, &buf, 0);
++		ret = __ax88179_read_cmd(dev, cmd, value, index, size, &buf);
+ 		le16_to_cpus(&buf);
+ 		*((u16 *)data) = buf;
+ 	} else if (4 == size) {
+ 		u32 buf = 0;
+-		ret = __ax88179_read_cmd(dev, cmd, value, index, size, &buf, 0);
++		ret = __ax88179_read_cmd(dev, cmd, value, index, size, &buf);
+ 		le32_to_cpus(&buf);
+ 		*((u32 *)data) = buf;
+ 	} else {
+-		ret = __ax88179_read_cmd(dev, cmd, value, index, size, data, 0);
++		ret = __ax88179_read_cmd(dev, cmd, value, index, size, data);
+ 	}
+ 
+ 	return ret;
+@@ -322,10 +296,10 @@ static int ax88179_write_cmd(struct usbnet *dev, u8 cmd, u16 value, u16 index,
+ 		buf = *((u16 *)data);
+ 		cpu_to_le16s(&buf);
+ 		ret = __ax88179_write_cmd(dev, cmd, value, index,
+-					  size, &buf, 0);
++					  size, &buf);
+ 	} else {
+ 		ret = __ax88179_write_cmd(dev, cmd, value, index,
+-					  size, data, 0);
++					  size, data);
+ 	}
+ 
+ 	return ret;
+@@ -428,52 +402,46 @@ static int ax88179_suspend(struct usb_interface *intf, pm_message_t message)
+ 	u16 tmp16;
+ 	u8 tmp8;
+ 
++	ax88179_set_pm_mode(dev, true);
++
+ 	usbnet_suspend(intf, message);
+ 
+ 	/* Disable RX path */
+-	ax88179_read_cmd_nopm(dev, AX_ACCESS_MAC, AX_MEDIUM_STATUS_MODE,
+-			      2, 2, &tmp16);
++	ax88179_read_cmd(dev, AX_ACCESS_MAC, AX_MEDIUM_STATUS_MODE,
++			 2, 2, &tmp16);
+ 	tmp16 &= ~AX_MEDIUM_RECEIVE_EN;
+-	ax88179_write_cmd_nopm(dev, AX_ACCESS_MAC, AX_MEDIUM_STATUS_MODE,
+-			       2, 2, &tmp16);
++	ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_MEDIUM_STATUS_MODE,
++			  2, 2, &tmp16);
+ 
+ 	/* Force bulk-in zero length */
+-	ax88179_read_cmd_nopm(dev, AX_ACCESS_MAC, AX_PHYPWR_RSTCTL,
+-			      2, 2, &tmp16);
++	ax88179_read_cmd(dev, AX_ACCESS_MAC, AX_PHYPWR_RSTCTL,
++			 2, 2, &tmp16);
+ 
+ 	tmp16 |= AX_PHYPWR_RSTCTL_BZ | AX_PHYPWR_RSTCTL_IPRL;
+-	ax88179_write_cmd_nopm(dev, AX_ACCESS_MAC, AX_PHYPWR_RSTCTL,
+-			       2, 2, &tmp16);
++	ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_PHYPWR_RSTCTL,
++			  2, 2, &tmp16);
+ 
+ 	/* change clock */
+ 	tmp8 = 0;
+-	ax88179_write_cmd_nopm(dev, AX_ACCESS_MAC, AX_CLK_SELECT, 1, 1, &tmp8);
++	ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_CLK_SELECT, 1, 1, &tmp8);
+ 
+ 	/* Configure RX control register => stop operation */
+ 	tmp16 = AX_RX_CTL_STOP;
+-	ax88179_write_cmd_nopm(dev, AX_ACCESS_MAC, AX_RX_CTL, 2, 2, &tmp16);
++	ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_RX_CTL, 2, 2, &tmp16);
++
++	ax88179_set_pm_mode(dev, false);
+ 
+ 	return 0;
+ }
+ 
+ /* This function is used to enable the autodetach function. */
+ /* This function is determined by offset 0x43 of EEPROM */
+-static int ax88179_auto_detach(struct usbnet *dev, int in_pm)
++static int ax88179_auto_detach(struct usbnet *dev)
+ {
+ 	u16 tmp16;
+ 	u8 tmp8;
+-	int (*fnr)(struct usbnet *, u8, u16, u16, u16, void *);
+-	int (*fnw)(struct usbnet *, u8, u16, u16, u16, const void *);
+-
+-	if (!in_pm) {
+-		fnr = ax88179_read_cmd;
+-		fnw = ax88179_write_cmd;
+-	} else {
+-		fnr = ax88179_read_cmd_nopm;
+-		fnw = ax88179_write_cmd_nopm;
+-	}
+ 
+-	if (fnr(dev, AX_ACCESS_EEPROM, 0x43, 1, 2, &tmp16) < 0)
++	if (ax88179_read_cmd(dev, AX_ACCESS_EEPROM, 0x43, 1, 2, &tmp16) < 0)
+ 		return 0;
+ 
+ 	if ((tmp16 == 0xFFFF) || (!(tmp16 & 0x0100)))
+@@ -481,13 +449,13 @@ static int ax88179_auto_detach(struct usbnet *dev, int in_pm)
+ 
+ 	/* Enable Auto Detach bit */
+ 	tmp8 = 0;
+-	fnr(dev, AX_ACCESS_MAC, AX_CLK_SELECT, 1, 1, &tmp8);
++	ax88179_read_cmd(dev, AX_ACCESS_MAC, AX_CLK_SELECT, 1, 1, &tmp8);
+ 	tmp8 |= AX_CLK_SELECT_ULR;
+-	fnw(dev, AX_ACCESS_MAC, AX_CLK_SELECT, 1, 1, &tmp8);
++	ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_CLK_SELECT, 1, 1, &tmp8);
+ 
+-	fnr(dev, AX_ACCESS_MAC, AX_PHYPWR_RSTCTL, 2, 2, &tmp16);
++	ax88179_read_cmd(dev, AX_ACCESS_MAC, AX_PHYPWR_RSTCTL, 2, 2, &tmp16);
+ 	tmp16 |= AX_PHYPWR_RSTCTL_AT;
+-	fnw(dev, AX_ACCESS_MAC, AX_PHYPWR_RSTCTL, 2, 2, &tmp16);
++	ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_PHYPWR_RSTCTL, 2, 2, &tmp16);
+ 
+ 	return 0;
+ }
+@@ -498,32 +466,36 @@ static int ax88179_resume(struct usb_interface *intf)
+ 	u16 tmp16;
+ 	u8 tmp8;
+ 
++	ax88179_set_pm_mode(dev, true);
++
+ 	usbnet_link_change(dev, 0, 0);
+ 
+ 	/* Power up ethernet PHY */
+ 	tmp16 = 0;
+-	ax88179_write_cmd_nopm(dev, AX_ACCESS_MAC, AX_PHYPWR_RSTCTL,
+-			       2, 2, &tmp16);
++	ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_PHYPWR_RSTCTL,
++			  2, 2, &tmp16);
+ 	udelay(1000);
+ 
+ 	tmp16 = AX_PHYPWR_RSTCTL_IPRL;
+-	ax88179_write_cmd_nopm(dev, AX_ACCESS_MAC, AX_PHYPWR_RSTCTL,
+-			       2, 2, &tmp16);
++	ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_PHYPWR_RSTCTL,
++			  2, 2, &tmp16);
+ 	msleep(200);
+ 
+ 	/* Ethernet PHY Auto Detach*/
+-	ax88179_auto_detach(dev, 1);
++	ax88179_auto_detach(dev);
+ 
+ 	/* Enable clock */
+-	ax88179_read_cmd_nopm(dev, AX_ACCESS_MAC,  AX_CLK_SELECT, 1, 1, &tmp8);
++	ax88179_read_cmd(dev, AX_ACCESS_MAC,  AX_CLK_SELECT, 1, 1, &tmp8);
+ 	tmp8 |= AX_CLK_SELECT_ACS | AX_CLK_SELECT_BCS;
+-	ax88179_write_cmd_nopm(dev, AX_ACCESS_MAC, AX_CLK_SELECT, 1, 1, &tmp8);
++	ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_CLK_SELECT, 1, 1, &tmp8);
+ 	msleep(100);
+ 
+ 	/* Configure RX control register => start operation */
+ 	tmp16 = AX_RX_CTL_DROPCRCERR | AX_RX_CTL_IPE | AX_RX_CTL_START |
+ 		AX_RX_CTL_AP | AX_RX_CTL_AMALL | AX_RX_CTL_AB;
+-	ax88179_write_cmd_nopm(dev, AX_ACCESS_MAC, AX_RX_CTL, 2, 2, &tmp16);
++	ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_RX_CTL, 2, 2, &tmp16);
++
++	ax88179_set_pm_mode(dev, false);
+ 
+ 	return usbnet_resume(intf);
+ }
+@@ -599,8 +571,7 @@ ax88179_get_eeprom(struct net_device *net, struct ethtool_eeprom *eeprom,
+ 	/* ax88179/178A returns 2 bytes from eeprom on read */
+ 	for (i = first_word; i <= last_word; i++) {
+ 		ret = __ax88179_read_cmd(dev, AX_ACCESS_EEPROM, i, 1, 2,
+-					 &eeprom_buff[i - first_word],
+-					 0);
++					 &eeprom_buff[i - first_word]);
+ 		if (ret < 0) {
+ 			kfree(eeprom_buff);
+ 			return -EIO;
+@@ -1069,7 +1040,7 @@ static int ax88179_check_eeprom(struct usbnet *dev)
+ 		} while (buf & EEP_BUSY);
+ 
+ 		__ax88179_read_cmd(dev, AX_ACCESS_MAC, AX_SROM_DATA_LOW,
+-				   2, 2, &eeprom[i * 2], 0);
++				   2, 2, &eeprom[i * 2]);
+ 
+ 		if ((i == 0) && (eeprom[0] == 0xFF))
+ 			return -EINVAL;
+@@ -1707,7 +1678,7 @@ static int ax88179_reset(struct usbnet *dev)
+ 	msleep(200);
+ 
+ 	/* Ethernet PHY Auto Detach*/
+-	ax88179_auto_detach(dev, 0);
++	ax88179_auto_detach(dev);
+ 
+ 	/* Read MAC address from DTB or asix chip */
+ 	ax88179_get_mac_addr(dev);
+-- 
+2.43.0
+
 
 
