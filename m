@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DAD1BDEC;
-	Wed,  3 Jan 2024 17:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31351BDFE;
+	Wed,  3 Jan 2024 17:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s32C8XbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3275EC433C8;
-	Wed,  3 Jan 2024 17:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2H7PLWHu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A4DC433C9;
+	Wed,  3 Jan 2024 17:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301930;
-	bh=NTNAgQycTYteId1YyMvkJkfvBJyhayEUqGiwYC7IxRE=;
+	s=korg; t=1704301933;
+	bh=cg6S25Bo2CgcC406vTqL7415YPvYEoazKqeKklodiMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s32C8XbL7WBHsIAOJeWEiNRr1nHA3DCiOOY0J+GmgX19z3iH909K2nhTnWyQtSe13
-	 ClFlGz6soCqb9pruI2I2WpY1r/dMnAfysR+1SRrjUu2K7ZT6atlOktOdlTU8a3vPHg
-	 bpl2MUtbwsQhutdtvoAeFUgJDM/9sCt7aJJ4swNU=
+	b=2H7PLWHuuFtUFL0Hd9+3XtNCe5qN6AU5SUmD7SsSI8KbMI06qMpGhRvordrPmsUqH
+	 E5HGbdeaGpt7/Loa3PAFRQsxrhqxbQlsq2TMGxyn3pOSPzRutGQXxauVqjsw/rWyOD
+	 bi3g2iNzgybUKEhzemzT/UydUo4kZHlw0OPRwB2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Archie Pusaka <apusaka@chromium.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 54/75] Bluetooth: use inclusive language in SMP
-Date: Wed,  3 Jan 2024 17:55:35 +0100
-Message-ID: <20240103164851.282988051@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Francis Laniel <flaniel@linux.microsoft.com>
+Subject: [PATCH 5.10 72/75] tracing/kprobes: Return EADDRNOTAVAIL when func matches several symbols
+Date: Wed,  3 Jan 2024 17:55:53 +0100
+Message-ID: <20240103164853.860066253@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164842.953224409@linuxfoundation.org>
 References: <20240103164842.953224409@linuxfoundation.org>
@@ -42,316 +41,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Archie Pusaka <apusaka@chromium.org>
+From: Francis Laniel <flaniel@linux.microsoft.com>
 
-[ Upstream commit fad646e16d3cafd67d3cfff8e66f77401190957e ]
+commit b022f0c7e404887a7c5229788fc99eff9f9a80d5 upstream.
 
-This patch replaces some non-inclusive terms based on the appropriate
-language mapping table compiled by the Bluetooth SIG:
-https://specificationrefs.bluetooth.com/language-mapping/Appropriate_Language_Mapping_Table.pdf
+When a kprobe is attached to a function that's name is not unique (is
+static and shares the name with other functions in the kernel), the
+kprobe is attached to the first function it finds. This is a bug as the
+function that it is attaching to is not necessarily the one that the
+user wants to attach to.
 
-Specifically, these terms are replaced:
-master -> initiator
-slave  -> responder
+Instead of blindly picking a function to attach to what is ambiguous,
+error with EADDRNOTAVAIL to let the user know that this function is not
+unique, and that the user must use another unique function with an
+address offset to get to the function they want to attach to.
 
-Signed-off-by: Archie Pusaka <apusaka@chromium.org>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Stable-dep-of: 59b047bc9808 ("Bluetooth: MGMT/SMP: Fix address type when using SMP over BREDR/LE")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/all/20231020104250.9537-2-flaniel@linux.microsoft.com/
+
+Cc: stable@vger.kernel.org
+Fixes: 413d37d1eb69 ("tracing: Add kprobe-based event tracer")
+Suggested-by: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Francis Laniel <flaniel@linux.microsoft.com>
+Link: https://lore.kernel.org/lkml/20230819101105.b0c104ae4494a7d1f2eea742@kernel.org/
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/mgmt.h |  2 +-
- net/bluetooth/mgmt.c         | 10 +++---
- net/bluetooth/smp.c          | 66 +++++++++++++++++++-----------------
- net/bluetooth/smp.h          |  6 ++--
- 4 files changed, 43 insertions(+), 41 deletions(-)
+ kernel/trace/trace_kprobe.c |   74 ++++++++++++++++++++++++++++++++++++++++++++
+ kernel/trace/trace_probe.h  |    1 
+ 2 files changed, 75 insertions(+)
 
-diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
-index 6b55155e05e97..faaba22e0d386 100644
---- a/include/net/bluetooth/mgmt.h
-+++ b/include/net/bluetooth/mgmt.h
-@@ -202,7 +202,7 @@ struct mgmt_cp_load_link_keys {
- struct mgmt_ltk_info {
- 	struct mgmt_addr_info addr;
- 	__u8	type;
--	__u8	master;
-+	__u8	initiator;
- 	__u8	enc_size;
- 	__le16	ediv;
- 	__le64	rand;
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 878bf73822449..c62ea4c954645 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -5939,7 +5939,7 @@ static int load_irks(struct sock *sk, struct hci_dev *hdev, void *cp_data,
- 
- static bool ltk_is_valid(struct mgmt_ltk_info *key)
- {
--	if (key->master != 0x00 && key->master != 0x01)
-+	if (key->initiator != 0x00 && key->initiator != 0x01)
- 		return false;
- 
- 	switch (key->addr.type) {
-@@ -6017,11 +6017,11 @@ static int load_long_term_keys(struct sock *sk, struct hci_dev *hdev,
- 		switch (key->type) {
- 		case MGMT_LTK_UNAUTHENTICATED:
- 			authenticated = 0x00;
--			type = key->master ? SMP_LTK : SMP_LTK_SLAVE;
-+			type = key->initiator ? SMP_LTK : SMP_LTK_RESPONDER;
- 			break;
- 		case MGMT_LTK_AUTHENTICATED:
- 			authenticated = 0x01;
--			type = key->master ? SMP_LTK : SMP_LTK_SLAVE;
-+			type = key->initiator ? SMP_LTK : SMP_LTK_RESPONDER;
- 			break;
- 		case MGMT_LTK_P256_UNAUTH:
- 			authenticated = 0x00;
-@@ -8055,7 +8055,7 @@ static u8 mgmt_ltk_type(struct smp_ltk *ltk)
- {
- 	switch (ltk->type) {
- 	case SMP_LTK:
--	case SMP_LTK_SLAVE:
-+	case SMP_LTK_RESPONDER:
- 		if (ltk->authenticated)
- 			return MGMT_LTK_AUTHENTICATED;
- 		return MGMT_LTK_UNAUTHENTICATED;
-@@ -8101,7 +8101,7 @@ void mgmt_new_ltk(struct hci_dev *hdev, struct smp_ltk *key, bool persistent)
- 	ev.key.rand = key->rand;
- 
- 	if (key->type == SMP_LTK)
--		ev.key.master = 1;
-+		ev.key.initiator = 1;
- 
- 	/* Make sure we copy only the significant bytes based on the
- 	 * encryption key size, and set the rest of the value to zeroes.
-diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-index 1c1dc2d2b7d59..af6cc2e8c0284 100644
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -112,9 +112,9 @@ struct smp_chan {
- 	u8		id_addr_type;
- 	u8		irk[16];
- 	struct smp_csrk	*csrk;
--	struct smp_csrk	*slave_csrk;
-+	struct smp_csrk	*responder_csrk;
- 	struct smp_ltk	*ltk;
--	struct smp_ltk	*slave_ltk;
-+	struct smp_ltk	*responder_ltk;
- 	struct smp_irk	*remote_irk;
- 	u8		*link_key;
- 	unsigned long	flags;
-@@ -754,7 +754,7 @@ static void smp_chan_destroy(struct l2cap_conn *conn)
- 	mgmt_smp_complete(hcon, complete);
- 
- 	kfree_sensitive(smp->csrk);
--	kfree_sensitive(smp->slave_csrk);
-+	kfree_sensitive(smp->responder_csrk);
- 	kfree_sensitive(smp->link_key);
- 
- 	crypto_free_shash(smp->tfm_cmac);
-@@ -777,9 +777,9 @@ static void smp_chan_destroy(struct l2cap_conn *conn)
- 			kfree_rcu(smp->ltk, rcu);
- 		}
- 
--		if (smp->slave_ltk) {
--			list_del_rcu(&smp->slave_ltk->list);
--			kfree_rcu(smp->slave_ltk, rcu);
-+		if (smp->responder_ltk) {
-+			list_del_rcu(&smp->responder_ltk->list);
-+			kfree_rcu(smp->responder_ltk, rcu);
- 		}
- 
- 		if (smp->remote_irk) {
-@@ -980,7 +980,7 @@ static u8 smp_random(struct smp_chan *smp)
- 	int ret;
- 
- 	bt_dev_dbg(conn->hcon->hdev, "conn %p %s", conn,
--		   conn->hcon->out ? "master" : "slave");
-+		   conn->hcon->out ? "initiator" : "responder");
- 
- 	ret = smp_c1(smp->tk, smp->rrnd, smp->preq, smp->prsp,
- 		     hcon->init_addr_type, &hcon->init_addr,
-@@ -1022,8 +1022,8 @@ static u8 smp_random(struct smp_chan *smp)
- 		else
- 			auth = 0;
- 
--		/* Even though there's no _SLAVE suffix this is the
--		 * slave STK we're adding for later lookup (the master
-+		/* Even though there's no _RESPONDER suffix this is the
-+		 * responder STK we're adding for later lookup (the initiator
- 		 * STK never needs to be stored).
- 		 */
- 		hci_add_ltk(hcon->hdev, &hcon->dst, hcon->dst_type,
-@@ -1078,10 +1078,10 @@ static void smp_notify_keys(struct l2cap_conn *conn)
- 		mgmt_new_csrk(hdev, smp->csrk, persistent);
- 	}
- 
--	if (smp->slave_csrk) {
--		smp->slave_csrk->bdaddr_type = hcon->dst_type;
--		bacpy(&smp->slave_csrk->bdaddr, &hcon->dst);
--		mgmt_new_csrk(hdev, smp->slave_csrk, persistent);
-+	if (smp->responder_csrk) {
-+		smp->responder_csrk->bdaddr_type = hcon->dst_type;
-+		bacpy(&smp->responder_csrk->bdaddr, &hcon->dst);
-+		mgmt_new_csrk(hdev, smp->responder_csrk, persistent);
- 	}
- 
- 	if (smp->ltk) {
-@@ -1090,10 +1090,10 @@ static void smp_notify_keys(struct l2cap_conn *conn)
- 		mgmt_new_ltk(hdev, smp->ltk, persistent);
- 	}
- 
--	if (smp->slave_ltk) {
--		smp->slave_ltk->bdaddr_type = hcon->dst_type;
--		bacpy(&smp->slave_ltk->bdaddr, &hcon->dst);
--		mgmt_new_ltk(hdev, smp->slave_ltk, persistent);
-+	if (smp->responder_ltk) {
-+		smp->responder_ltk->bdaddr_type = hcon->dst_type;
-+		bacpy(&smp->responder_ltk->bdaddr, &hcon->dst);
-+		mgmt_new_ltk(hdev, smp->responder_ltk, persistent);
- 	}
- 
- 	if (smp->link_key) {
-@@ -1273,7 +1273,7 @@ static void smp_distribute_keys(struct smp_chan *smp)
- 
- 	if (*keydist & SMP_DIST_ENC_KEY) {
- 		struct smp_cmd_encrypt_info enc;
--		struct smp_cmd_master_ident ident;
-+		struct smp_cmd_initiator_ident ident;
- 		struct smp_ltk *ltk;
- 		u8 authenticated;
- 		__le16 ediv;
-@@ -1294,14 +1294,15 @@ static void smp_distribute_keys(struct smp_chan *smp)
- 
- 		authenticated = hcon->sec_level == BT_SECURITY_HIGH;
- 		ltk = hci_add_ltk(hdev, &hcon->dst, hcon->dst_type,
--				  SMP_LTK_SLAVE, authenticated, enc.ltk,
-+				  SMP_LTK_RESPONDER, authenticated, enc.ltk,
- 				  smp->enc_key_size, ediv, rand);
--		smp->slave_ltk = ltk;
-+		smp->responder_ltk = ltk;
- 
- 		ident.ediv = ediv;
- 		ident.rand = rand;
- 
--		smp_send_cmd(conn, SMP_CMD_MASTER_IDENT, sizeof(ident), &ident);
-+		smp_send_cmd(conn, SMP_CMD_INITIATOR_IDENT, sizeof(ident),
-+			     &ident);
- 
- 		*keydist &= ~SMP_DIST_ENC_KEY;
- 	}
-@@ -1344,7 +1345,7 @@ static void smp_distribute_keys(struct smp_chan *smp)
- 				csrk->type = MGMT_CSRK_LOCAL_UNAUTHENTICATED;
- 			memcpy(csrk->val, sign.csrk, sizeof(csrk->val));
- 		}
--		smp->slave_csrk = csrk;
-+		smp->responder_csrk = csrk;
- 
- 		smp_send_cmd(conn, SMP_CMD_SIGN_INFO, sizeof(sign), &sign);
- 
-@@ -2049,7 +2050,7 @@ static int fixup_sc_false_positive(struct smp_chan *smp)
- 	struct smp_cmd_pairing *req, *rsp;
- 	u8 auth;
- 
--	/* The issue is only observed when we're in slave role */
-+	/* The issue is only observed when we're in responder role */
- 	if (hcon->out)
- 		return SMP_UNSPECIFIED;
- 
-@@ -2085,7 +2086,8 @@ static u8 smp_cmd_pairing_confirm(struct l2cap_conn *conn, struct sk_buff *skb)
- 	struct hci_conn *hcon = conn->hcon;
- 	struct hci_dev *hdev = hcon->hdev;
- 
--	bt_dev_dbg(hdev, "conn %p %s", conn, hcon->out ? "master" : "slave");
-+	bt_dev_dbg(hdev, "conn %p %s", conn,
-+		   hcon->out ? "initiator" : "responder");
- 
- 	if (skb->len < sizeof(smp->pcnf))
- 		return SMP_INVALID_PARAMS;
-@@ -2252,7 +2254,7 @@ static bool smp_ltk_encrypt(struct l2cap_conn *conn, u8 sec_level)
- 	hci_le_start_enc(hcon, key->ediv, key->rand, key->val, key->enc_size);
- 	hcon->enc_key_size = key->enc_size;
- 
--	/* We never store STKs for master role, so clear this flag */
-+	/* We never store STKs for initiator role, so clear this flag */
- 	clear_bit(HCI_CONN_STK_ENCRYPT, &hcon->flags);
- 
- 	return true;
-@@ -2468,7 +2470,7 @@ int smp_cancel_and_remove_pairing(struct hci_dev *hdev, bdaddr_t *bdaddr,
- 		/* Set keys to NULL to make sure smp_failure() does not try to
- 		 * remove and free already invalidated rcu list entries. */
- 		smp->ltk = NULL;
--		smp->slave_ltk = NULL;
-+		smp->responder_ltk = NULL;
- 		smp->remote_irk = NULL;
- 
- 		if (test_bit(SMP_FLAG_COMPLETE, &smp->flags))
-@@ -2504,7 +2506,7 @@ static int smp_cmd_encrypt_info(struct l2cap_conn *conn, struct sk_buff *skb)
- 		return SMP_INVALID_PARAMS;
- 	}
- 
--	SMP_ALLOW_CMD(smp, SMP_CMD_MASTER_IDENT);
-+	SMP_ALLOW_CMD(smp, SMP_CMD_INITIATOR_IDENT);
- 
- 	skb_pull(skb, sizeof(*rp));
- 
-@@ -2513,9 +2515,9 @@ static int smp_cmd_encrypt_info(struct l2cap_conn *conn, struct sk_buff *skb)
- 	return 0;
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -715,6 +715,36 @@ static inline void sanitize_event_name(c
+ 			*name = '_';
  }
  
--static int smp_cmd_master_ident(struct l2cap_conn *conn, struct sk_buff *skb)
-+static int smp_cmd_initiator_ident(struct l2cap_conn *conn, struct sk_buff *skb)
++struct count_symbols_struct {
++	const char *func_name;
++	unsigned int count;
++};
++
++static int count_symbols(void *data, const char *name, struct module *unused0,
++			 unsigned long unused1)
++{
++	struct count_symbols_struct *args = data;
++
++	if (strcmp(args->func_name, name))
++		return 0;
++
++	args->count++;
++
++	return 0;
++}
++
++static unsigned int number_of_same_symbols(char *func_name)
++{
++	struct count_symbols_struct args = {
++		.func_name = func_name,
++		.count = 0,
++	};
++
++	kallsyms_on_each_symbol(count_symbols, &args);
++
++	return args.count;
++}
++
+ static int trace_kprobe_create(int argc, const char *argv[])
  {
--	struct smp_cmd_master_ident *rp = (void *) skb->data;
-+	struct smp_cmd_initiator_ident *rp = (void *)skb->data;
- 	struct l2cap_chan *chan = conn->smp;
- 	struct smp_chan *smp = chan->data;
- 	struct hci_dev *hdev = conn->hcon->hdev;
-@@ -2914,7 +2916,7 @@ static int smp_cmd_dhkey_check(struct l2cap_conn *conn, struct sk_buff *skb)
- 			return 0;
+ 	/*
+@@ -842,6 +872,31 @@ static int trace_kprobe_create(int argc,
  		}
- 
--		/* Slave sends DHKey check as response to master */
-+		/* Responder sends DHKey check as response to initiator */
- 		sc_dhkey_check(smp);
  	}
  
-@@ -3001,8 +3003,8 @@ static int smp_sig_channel(struct l2cap_chan *chan, struct sk_buff *skb)
- 		reason = smp_cmd_encrypt_info(conn, skb);
- 		break;
++	if (symbol && !strchr(symbol, ':')) {
++		unsigned int count;
++
++		count = number_of_same_symbols(symbol);
++		if (count > 1) {
++			/*
++			 * Users should use ADDR to remove the ambiguity of
++			 * using KSYM only.
++			 */
++			trace_probe_log_err(0, NON_UNIQ_SYMBOL);
++			ret = -EADDRNOTAVAIL;
++
++			goto error;
++		} else if (count == 0) {
++			/*
++			 * We can return ENOENT earlier than when register the
++			 * kprobe.
++			 */
++			trace_probe_log_err(0, BAD_PROBE_ADDR);
++			ret = -ENOENT;
++
++			goto error;
++		}
++	}
++
+ 	trace_probe_log_set_index(0);
+ 	if (event) {
+ 		ret = traceprobe_parse_event_name(&event, &group, buf,
+@@ -1805,6 +1860,7 @@ static int unregister_kprobe_event(struc
+ }
  
--	case SMP_CMD_MASTER_IDENT:
--		reason = smp_cmd_master_ident(conn, skb);
-+	case SMP_CMD_INITIATOR_IDENT:
-+		reason = smp_cmd_initiator_ident(conn, skb);
- 		break;
+ #ifdef CONFIG_PERF_EVENTS
++
+ /* create a trace_kprobe, but don't add it to global lists */
+ struct trace_event_call *
+ create_local_trace_kprobe(char *func, void *addr, unsigned long offs,
+@@ -1814,6 +1870,24 @@ create_local_trace_kprobe(char *func, vo
+ 	int ret;
+ 	char *event;
  
- 	case SMP_CMD_IDENT_INFO:
-diff --git a/net/bluetooth/smp.h b/net/bluetooth/smp.h
-index 121edadd5f8da..5fe68e255cb29 100644
---- a/net/bluetooth/smp.h
-+++ b/net/bluetooth/smp.h
-@@ -79,8 +79,8 @@ struct smp_cmd_encrypt_info {
- 	__u8	ltk[16];
- } __packed;
- 
--#define SMP_CMD_MASTER_IDENT	0x07
--struct smp_cmd_master_ident {
-+#define SMP_CMD_INITIATOR_IDENT	0x07
-+struct smp_cmd_initiator_ident {
- 	__le16	ediv;
- 	__le64	rand;
- } __packed;
-@@ -146,7 +146,7 @@ struct smp_cmd_keypress_notify {
- enum {
- 	SMP_STK,
- 	SMP_LTK,
--	SMP_LTK_SLAVE,
-+	SMP_LTK_RESPONDER,
- 	SMP_LTK_P256,
- 	SMP_LTK_P256_DEBUG,
- };
--- 
-2.43.0
-
++	if (func) {
++		unsigned int count;
++
++		count = number_of_same_symbols(func);
++		if (count > 1)
++			/*
++			 * Users should use addr to remove the ambiguity of
++			 * using func only.
++			 */
++			return ERR_PTR(-EADDRNOTAVAIL);
++		else if (count == 0)
++			/*
++			 * We can return ENOENT earlier than when register the
++			 * kprobe.
++			 */
++			return ERR_PTR(-ENOENT);
++	}
++
+ 	/*
+ 	 * local trace_kprobes are not added to dyn_event, so they are never
+ 	 * searched in find_trace_kprobe(). Therefore, there is no concern of
+--- a/kernel/trace/trace_probe.h
++++ b/kernel/trace/trace_probe.h
+@@ -390,6 +390,7 @@ extern int traceprobe_define_arg_fields(
+ 	C(BAD_MAXACT,		"Invalid maxactive number"),		\
+ 	C(MAXACT_TOO_BIG,	"Maxactive is too big"),		\
+ 	C(BAD_PROBE_ADDR,	"Invalid probed address or symbol"),	\
++	C(NON_UNIQ_SYMBOL,	"The symbol is not unique"),		\
+ 	C(BAD_RETPROBE,		"Retprobe address must be an function entry"), \
+ 	C(BAD_ADDR_SUFFIX,	"Invalid probed address suffix"), \
+ 	C(NO_GROUP_NAME,	"Group name is not specified"),		\
 
 
