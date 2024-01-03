@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F7D1C6A7;
-	Wed,  3 Jan 2024 17:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6CD1BDEC;
+	Wed,  3 Jan 2024 17:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orjzXOVM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29328C433C9;
-	Wed,  3 Jan 2024 17:02:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZtjO7aHM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85800C433C7;
+	Wed,  3 Jan 2024 17:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301352;
-	bh=3A7aGtx4E4dcgwT5oiEty4Ups1OAWueGr1WDcltXmzc=;
+	s=korg; t=1704301356;
+	bh=4ZgQnnhcM9tfsKKCZWXY/Piub3Ul4VtTNW5oVC+V/kM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=orjzXOVMCxq4NUI+AQ8aXqlzCjj/uOubFKl0ycJ5bJsGTISjaByNY+PNOVn1P2Y2q
-	 wu+f9n7omXftOugd5sFkynIs/JfOsYrFahXu4Bmw8/Eou8ALOi6lxWxYHzQQNgPuJw
-	 ZGeYzNpVZEuXVJQDKrOzv4GtfOwHD0X7mopyy8E0=
+	b=ZtjO7aHMlRWN2MZA2NQl+5gbWTdYAnoXGeL7GGEnx6NOQNTID3206zdcs2GDCA5A4
+	 QhzOPTdz7hm/LpSPAzWmo2Ffp1M8iWU0jWby0o5WX/UmCFKajG8cUwSX7gzhyZc/Sj
+	 uY2ME7nzQNwbJX+7KS8SycWvJgHwU4M5DEGxKnh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 01/95] ARM: dts: dra7: Fix DRA7 L3 NoC node register size
-Date: Wed,  3 Jan 2024 17:54:09 +0100
-Message-ID: <20240103164854.125139781@linuxfoundation.org>
+Subject: [PATCH 5.15 10/95] net/mlx5e: fix a potential double-free in fs_udp_create_groups
+Date: Wed,  3 Jan 2024 17:54:18 +0100
+Message-ID: <20240103164855.603385130@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -42,36 +44,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Davis <afd@ti.com>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit 1e5caee2ba8f1426e8098afb4ca38dc40a0ca71b ]
+[ Upstream commit e75efc6466ae289e599fb12a5a86545dff245c65 ]
 
-This node can access any part of the L3 configuration registers space,
-including CLK1 and CLK2 which are 0x800000 offset. Restore this area
-size to include these areas.
+When kcalloc() for ft->g succeeds but kvzalloc() for in fails,
+fs_udp_create_groups() will free ft->g. However, its caller
+fs_udp_create_table() will free ft->g again through calling
+mlx5e_destroy_flow_table(), which will lead to a double-free.
+Fix this by setting ft->g to NULL in fs_udp_create_groups().
 
-Fixes: 7f2659ce657e ("ARM: dts: Move dra7 l3 noc to a separate node")
-Signed-off-by: Andrew Davis <afd@ti.com>
-Message-ID: <20231113181604.546444-1-afd@ti.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+Fixes: 1c80bd684388 ("net/mlx5e: Introduce Flow Steering UDP API")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/dra7.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/dra7.dtsi b/arch/arm/boot/dts/dra7.dtsi
-index 61a3fb3e2a2f9..0cb5ec39e33a3 100644
---- a/arch/arm/boot/dts/dra7.dtsi
-+++ b/arch/arm/boot/dts/dra7.dtsi
-@@ -144,7 +144,7 @@
- 
- 		l3-noc@44000000 {
- 			compatible = "ti,dra7-l3-noc";
--			reg = <0x44000000 0x1000>,
-+			reg = <0x44000000 0x1000000>,
- 			      <0x45000000 0x1000>;
- 			interrupts-extended = <&crossbar_mpu GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&wakeupgen GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c b/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
+index 7aa25a5e29d73..b26edbc53cad2 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
+@@ -156,6 +156,7 @@ static int fs_udp_create_groups(struct mlx5e_flow_table *ft, enum fs_udp_type ty
+ 	in = kvzalloc(inlen, GFP_KERNEL);
+ 	if  (!in || !ft->g) {
+ 		kfree(ft->g);
++		ft->g = NULL;
+ 		kvfree(in);
+ 		return -ENOMEM;
+ 	}
 -- 
 2.43.0
 
