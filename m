@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305D71BDEC;
-	Wed,  3 Jan 2024 17:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B74E1BDF1;
+	Wed,  3 Jan 2024 17:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dks1W3GY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 891DBC433C7;
-	Wed,  3 Jan 2024 17:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjHg8hot"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6180C433C8;
+	Wed,  3 Jan 2024 17:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301766;
-	bh=8ZynEfv4p/4nkrg/hsYGLyBaDRVShKp/LCJERGlyoPw=;
+	s=korg; t=1704301769;
+	bh=eCpKBMBU5Ia44spgZrgaY3QqH9dlKnTvWzOuvxCPcf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dks1W3GYRdSr8rOW/fAAI79FwUluBhXQT8i96ZJMk6MIHhAi6Lf/xokXBlQfQGKLn
-	 5zQC3pQGCGF3OeBUFrYn1gJOLrBaVNBHELfJoRQ2WBFjStCWskQWlx0wDrMnJYESOm
-	 CZVYRBkqJrAE7oIPgcM9HfuRvjOIT3sEWjh71HiQ=
+	b=CjHg8hotOBCEKEddsfurFgf6p2Zt85mVTnSQkNUBGnlgrfDwbrmJo/j8C68VBBfG5
+	 adFa+1FcsY1HdNbqHLAIdhdPUkWLRvptwN0YZVQ2tBblsy1mkxd98/636Hdtb+TDrU
+	 Ogu6R3/KKw9o+yxHXgYLwpQSJ3Flrdykie94lHC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Hendrik Brueckner <brueckner@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 05/75] s390/vx: fix save/restore of fpu kernel context
-Date: Wed,  3 Jan 2024 17:54:46 +0100
-Message-ID: <20240103164843.772456150@linuxfoundation.org>
+Subject: [PATCH 5.10 06/75] wifi: mac80211: mesh_plink: fix matches_local logic
+Date: Wed,  3 Jan 2024 17:54:47 +0100
+Message-ID: <20240103164843.903258151@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164842.953224409@linuxfoundation.org>
 References: <20240103164842.953224409@linuxfoundation.org>
@@ -43,47 +42,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit e6b2dab41888332bf83f592131e7ea07756770a4 ]
+[ Upstream commit 8c386b166e2517cf3a123018e77941ec22625d0f ]
 
-The KERNEL_FPR mask only contains a flag for the first eight vector
-registers. However floating point registers overlay parts of the first
-sixteen vector registers.
+During refactoring the "else" here got lost, add it back.
 
-This could lead to vector register corruption if a kernel fpu context uses
-any of the vector registers 8 to 15 and is interrupted or calls a
-KERNEL_FPR context. If that context uses also vector registers 8 to 15,
-their contents will be corrupted on return.
-
-Luckily this is currently not a real bug, since the kernel has only one
-KERNEL_FPR user with s390_adjust_jiffies() and it is only using floating
-point registers 0 to 2.
-
-Fix this by using the correct bits for KERNEL_FPR.
-
-Fixes: 7f79695cc1b6 ("s390/fpu: improve kernel_fpu_[begin|end]")
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: c99a89edb106 ("mac80211: factor out plink event gathering")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231211085121.795480fa0e0b.I017d501196a5bbdcd9afd33338d342d6fe1edd79@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/fpu/api.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/mesh_plink.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/s390/include/asm/fpu/api.h b/arch/s390/include/asm/fpu/api.h
-index 34a7ae68485c6..be16a6c0f1276 100644
---- a/arch/s390/include/asm/fpu/api.h
-+++ b/arch/s390/include/asm/fpu/api.h
-@@ -76,7 +76,7 @@ static inline int test_fp_ctl(u32 fpc)
- #define KERNEL_VXR_HIGH		(KERNEL_VXR_V16V23|KERNEL_VXR_V24V31)
- 
- #define KERNEL_VXR		(KERNEL_VXR_LOW|KERNEL_VXR_HIGH)
--#define KERNEL_FPR		(KERNEL_FPC|KERNEL_VXR_V0V7)
-+#define KERNEL_FPR		(KERNEL_FPC|KERNEL_VXR_LOW)
- 
- struct kernel_fpu;
- 
+diff --git a/net/mac80211/mesh_plink.c b/net/mac80211/mesh_plink.c
+index aca26df7587dc..ee8b5013d67d7 100644
+--- a/net/mac80211/mesh_plink.c
++++ b/net/mac80211/mesh_plink.c
+@@ -1050,8 +1050,8 @@ mesh_plink_get_event(struct ieee80211_sub_if_data *sdata,
+ 	case WLAN_SP_MESH_PEERING_OPEN:
+ 		if (!matches_local)
+ 			event = OPN_RJCT;
+-		if (!mesh_plink_free_count(sdata) ||
+-		    (sta->mesh->plid && sta->mesh->plid != plid))
++		else if (!mesh_plink_free_count(sdata) ||
++			 (sta->mesh->plid && sta->mesh->plid != plid))
+ 			event = OPN_IGNR;
+ 		else
+ 			event = OPN_ACPT;
+@@ -1059,9 +1059,9 @@ mesh_plink_get_event(struct ieee80211_sub_if_data *sdata,
+ 	case WLAN_SP_MESH_PEERING_CONFIRM:
+ 		if (!matches_local)
+ 			event = CNF_RJCT;
+-		if (!mesh_plink_free_count(sdata) ||
+-		    sta->mesh->llid != llid ||
+-		    (sta->mesh->plid && sta->mesh->plid != plid))
++		else if (!mesh_plink_free_count(sdata) ||
++			 sta->mesh->llid != llid ||
++			 (sta->mesh->plid && sta->mesh->plid != plid))
+ 			event = CNF_IGNR;
+ 		else
+ 			event = CNF_ACPT;
 -- 
 2.43.0
 
