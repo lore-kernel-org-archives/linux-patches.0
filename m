@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1E61BDEC;
-	Wed,  3 Jan 2024 17:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7F51BDEC;
+	Wed,  3 Jan 2024 17:10:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbWimC6U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8E9C433C7;
-	Wed,  3 Jan 2024 17:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qI7d6VIK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5415C433C7;
+	Wed,  3 Jan 2024 17:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301832;
-	bh=bmRQXjW8W6iy5DHL/ykuavClNfy0mv/gOZLvAg6Tu08=;
+	s=korg; t=1704301836;
+	bh=mqNyxZNn2od4iVWETaDfW9NPvj7LXrgrtKDp5joFwd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbWimC6UEwrjSvVVXfDmUyBLz00P1U2zLPvFZ9EAllSOCGa85/tDhMjG/rK90GAAT
-	 3Rgy01BSqvffDjhZofqpqKATsoV8dy9ko+wmAx9nghA2EYwR+iAauCljskqY6jqHEg
-	 bmsCZo2koaigi1vWuYIHwMtNFkG1zteyzcbzyhJU=
+	b=qI7d6VIKf/ovXPrqCLlO6kf/f1D9jsF5E0RDxgUj3Os2IcVrGl38Rap3JHRC3PmLg
+	 YjwfIoP2mgoPzWjJo6l3Usogre1KUvAtqLacS/oS5v9gIt6xFTh5s9kSWIsuLxbC/D
+	 wnL+plvmC1XBgqGf/pmtvl5vLEAqWPs+8M/ynryA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoffer Sandberg <cs@tuxedo.de>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 42/75] Input: soc_button_array - add mapping for airplane mode button
-Date: Wed,  3 Jan 2024 17:55:23 +0100
-Message-ID: <20240103164849.520161811@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Simon Horman <horms@kernel.org>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>
+Subject: [PATCH 5.10 43/75] net: 9p: avoid freeing uninit memory in p9pdu_vreadf
+Date: Wed,  3 Jan 2024 17:55:24 +0100
+Message-ID: <20240103164849.653187706@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164842.953224409@linuxfoundation.org>
 References: <20240103164842.953224409@linuxfoundation.org>
@@ -42,43 +43,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoffer Sandberg <cs@tuxedo.de>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit ea3715941a9b7d816a1e9096ac0577900af2a69e upstream.
+commit ff49bf1867578f23a5ffdd38f927f6e1e16796c4 upstream.
 
-This add a mapping for the airplane mode button on the TUXEDO Pulse Gen3.
+If some of p9pdu_readf() calls inside case 'T' in p9pdu_vreadf() fails,
+the error path is not handled properly. *wnames or members of *wnames
+array may be left uninitialized and invalidly freed.
 
-While it is physically a key it behaves more like a switch, sending a key
-down on first press and a key up on 2nd press. Therefor the switch event
-is used here. Besides this behaviour it uses the HID usage-id 0xc6
-(Wireless Radio Button) and not 0xc8 (Wireless Radio Slider Switch), but
-since neither 0xc6 nor 0xc8 are currently implemented at all in
-soc_button_array this not to standard behaviour is not put behind a quirk
-for the moment.
+Initialize *wnames to NULL in beginning of case 'T'. Initialize the first
+*wnames array element to NULL and nullify the failing *wnames element so
+that the error path freeing loop stops on the first NULL element and
+doesn't proceed further.
 
-Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://lore.kernel.org/r/20231215171718.80229-1-wse@tuxedocomputers.com
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: ace51c4dd2f9 ("9p: add new protocol support code")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Message-ID: <20231206200913.16135-1-pchelkin@ispras.ru>
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/soc_button_array.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/9p/protocol.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/input/misc/soc_button_array.c
-+++ b/drivers/input/misc/soc_button_array.c
-@@ -299,6 +299,11 @@ static int soc_button_parse_btn_desc(str
- 		info->name = "power";
- 		info->event_code = KEY_POWER;
- 		info->wakeup = true;
-+	} else if (upage == 0x01 && usage == 0xc6) {
-+		info->name = "airplane mode switch";
-+		info->event_type = EV_SW;
-+		info->event_code = SW_RFKILL_ALL;
-+		info->active_low = false;
- 	} else if (upage == 0x01 && usage == 0xca) {
- 		info->name = "rotation lock switch";
- 		info->event_type = EV_SW;
+--- a/net/9p/protocol.c
++++ b/net/9p/protocol.c
+@@ -228,6 +228,8 @@ p9pdu_vreadf(struct p9_fcall *pdu, int p
+ 				uint16_t *nwname = va_arg(ap, uint16_t *);
+ 				char ***wnames = va_arg(ap, char ***);
+ 
++				*wnames = NULL;
++
+ 				errcode = p9pdu_readf(pdu, proto_version,
+ 								"w", nwname);
+ 				if (!errcode) {
+@@ -237,6 +239,8 @@ p9pdu_vreadf(struct p9_fcall *pdu, int p
+ 							  GFP_NOFS);
+ 					if (!*wnames)
+ 						errcode = -ENOMEM;
++					else
++						(*wnames)[0] = NULL;
+ 				}
+ 
+ 				if (!errcode) {
+@@ -248,8 +252,10 @@ p9pdu_vreadf(struct p9_fcall *pdu, int p
+ 								proto_version,
+ 								"s",
+ 								&(*wnames)[i]);
+-						if (errcode)
++						if (errcode) {
++							(*wnames)[i] = NULL;
+ 							break;
++						}
+ 					}
+ 				}
+ 
+@@ -257,11 +263,14 @@ p9pdu_vreadf(struct p9_fcall *pdu, int p
+ 					if (*wnames) {
+ 						int i;
+ 
+-						for (i = 0; i < *nwname; i++)
++						for (i = 0; i < *nwname; i++) {
++							if (!(*wnames)[i])
++								break;
+ 							kfree((*wnames)[i]);
++						}
++						kfree(*wnames);
++						*wnames = NULL;
+ 					}
+-					kfree(*wnames);
+-					*wnames = NULL;
+ 				}
+ 			}
+ 			break;
 
 
