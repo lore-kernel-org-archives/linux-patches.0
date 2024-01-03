@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD861BDFD;
-	Wed,  3 Jan 2024 17:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922ED1BDFC;
+	Wed,  3 Jan 2024 17:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="drrO6XSl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C35FC433C9;
-	Wed,  3 Jan 2024 17:04:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+g8Y5G1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6D4C433C8;
+	Wed,  3 Jan 2024 17:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301468;
-	bh=28/c+rYXGquU2l7qF4ZQmFe1M8O5ltMV01W17CLpR84=;
+	s=korg; t=1704301471;
+	bh=HDqB/0obFMTYnGGvL9IgnQXIx1yXFR4JcIOnDT9Fdkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=drrO6XSl4BFbRWDdJcMh3Z7Ht5WDv5oHQYvZlkwXqMjtl4kQNnpXEpoHvzR6gUP5O
-	 0T1DdFptipDx8oPJm2523BDj+TD6A25tLL4BwJm7XbvlALgZO9wKZG0VQp31mbYx1m
-	 x9MqC3+QpxGnaEdpcusqRZTF3zsrX4Z+Z1QY5Zrc=
+	b=g+g8Y5G1kliAas8vUxOkjM4pFSi+6gxriu10/Y4CG5JZGAMTxm4N/dl0ihzzQWJzl
+	 1BNQHJPIdmpNTgEnPgqKMDtHzAy3De8bDvT4afQQvTwfu0N9UyQbMUtDS6H/Pk44rl
+	 EvWGbL1zs+2Atkx0YxiLhjRbX5OgGpFp4KgXHuQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wadim Egorov <w.egorov@phytec.de>,
-	Bhavya Kapoor <b-kapoor@ti.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Nuno Sa <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 41/95] iio: adc: ti_am335x_adc: Fix return value check of tiadc_request_dma()
-Date: Wed,  3 Jan 2024 17:54:49 +0100
-Message-ID: <20240103164900.309918946@linuxfoundation.org>
+Subject: [PATCH 5.15 42/95] iio: triggered-buffer: prevent possible freeing of wrong buffer
+Date: Wed,  3 Jan 2024 17:54:50 +0100
+Message-ID: <20240103164900.457577108@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -43,40 +43,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wadim Egorov <w.egorov@phytec.de>
+From: David Lechner <dlechner@baylibre.com>
 
-commit 60576e84c187043cef11f11d015249e71151d35a upstream.
+commit bce61476dc82f114e24e9c2e11fb064781ec563c upstream.
 
-Fix wrong handling of a DMA request where the probing only failed
-if -EPROPE_DEFER was returned. Instead, let us fail if a non -ENODEV
-value is returned. This makes DMAs explicitly optional. Even if the
-DMA request is unsuccessfully, the ADC can still work properly.
-We do also handle the defer probe case by making use of dev_err_probe().
+Commit ee708e6baacd ("iio: buffer: introduce support for attaching more
+IIO buffers") introduced support for multiple buffers per indio_dev but
+left indio_dev->buffer for a few legacy use cases.
 
-Fixes: f438b9da75eb ("drivers: iio: ti_am335x_adc: add dma support")
-Signed-off-by: Wadim Egorov <w.egorov@phytec.de>
-Reviewed-by: Bhavya Kapoor <b-kapoor@ti.com>
-Link: https://lore.kernel.org/r/20230925134427.214556-1-w.egorov@phytec.de
+In the case of the triggered buffer, iio_triggered_buffer_cleanup()
+still assumes that indio_dev->buffer points to the buffer allocated by
+iio_triggered_buffer_setup_ext(). However, since
+iio_triggered_buffer_setup_ext() now calls iio_device_attach_buffer()
+to attach the buffer, indio_dev->buffer will only point to the buffer
+allocated by iio_device_attach_buffer() if it the first buffer attached.
+
+This adds a check to make sure that no other buffer has been attached
+yet to ensure that indio_dev->buffer will be assigned when
+iio_device_attach_buffer() is called.
+
+As per discussion in the review thread, we may want to deal with multiple
+triggers per device, but this is a fix for the issue in the meantime and
+any such support would be unlikely to be suitable for a backport.
+
+Fixes: ee708e6baacd ("iio: buffer: introduce support for attaching more IIO buffers")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Acked-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20231031210521.1661552-1-dlechner@baylibre.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti_am335x_adc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iio/buffer/industrialio-triggered-buffer.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/iio/adc/ti_am335x_adc.c
-+++ b/drivers/iio/adc/ti_am335x_adc.c
-@@ -632,8 +632,10 @@ static int tiadc_probe(struct platform_d
- 	platform_set_drvdata(pdev, indio_dev);
+--- a/drivers/iio/buffer/industrialio-triggered-buffer.c
++++ b/drivers/iio/buffer/industrialio-triggered-buffer.c
+@@ -44,6 +44,16 @@ int iio_triggered_buffer_setup_ext(struc
+ 	struct iio_buffer *buffer;
+ 	int ret;
  
- 	err = tiadc_request_dma(pdev, adc_dev);
--	if (err && err == -EPROBE_DEFER)
-+	if (err && err != -ENODEV) {
-+		dev_err_probe(&pdev->dev, err, "DMA request failed\n");
- 		goto err_dma;
-+	}
- 
- 	return 0;
- 
++	/*
++	 * iio_triggered_buffer_cleanup() assumes that the buffer allocated here
++	 * is assigned to indio_dev->buffer but this is only the case if this
++	 * function is the first caller to iio_device_attach_buffer(). If
++	 * indio_dev->buffer is already set then we can't proceed otherwise the
++	 * cleanup function will try to free a buffer that was not allocated here.
++	 */
++	if (indio_dev->buffer)
++		return -EADDRINUSE;
++
+ 	buffer = iio_kfifo_allocate();
+ 	if (!buffer) {
+ 		ret = -ENOMEM;
 
 
