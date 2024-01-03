@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9801BDFD;
-	Wed,  3 Jan 2024 17:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8BF1BDE9;
+	Wed,  3 Jan 2024 17:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldEfrsk8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5ED1C433C8;
-	Wed,  3 Jan 2024 17:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDT4gAxR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3566AC433C8;
+	Wed,  3 Jan 2024 17:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301253;
-	bh=tBwxQ4jirYCGkofaz7s5wggTHprH0DPioyVKD2DAP1Y=;
+	s=korg; t=1704301256;
+	bh=NLVg6YaXVnafHpRGS5vGUtmVVekAdvBMku189kjTHVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ldEfrsk8MkS6YJ9RfofTJA0pRGcJV5FYrOiOiWQd5Y7M6SPTyAFIXDMrr+S0c/yE6
-	 Sw0AhWfBNnHEM8duMK9fSSZfoRmR9O3MGoZglnyeEcXSMnuDILce7W0bsBFxfsOfSg
-	 hm7+lfMeUSYIy0OmjtxjV4ezJHDZI589CnE5Nh5M=
+	b=fDT4gAxRaahUwmH6zfUAFBFdRG035q2WjrKbCxF3tit2LX/SYLqgkKtc9uHHOznSP
+	 30B4lnDscsu9Ov4nzx0j2seNp3BD3s+5ImLK5E5TPDwCyd8fAHMchQlPSCIJkytNTl
+	 Dl1+HtdvfQFlCFYECpEYx3JvmmszDJ77geWrI4WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/100] ksmbd: remove unneeded mark_inode_dirty in set_info_sec()
-Date: Wed,  3 Jan 2024 17:54:30 +0100
-Message-ID: <20240103164902.200084197@linuxfoundation.org>
+Subject: [PATCH 6.1 074/100] ARM: dts: Fix occasional boot hang for am3 usb
+Date: Wed,  3 Jan 2024 17:55:03 +0100
+Message-ID: <20240103164907.203631543@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -42,32 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit e4e14095cc68a2efefba6f77d95efe1137e751d4 ]
+[ Upstream commit 9b6a51aab5f5f9f71d2fa16e8b4d530e1643dfcb ]
 
-mark_inode_dirty will be called in notify_change().
-This patch remove unneeded mark_inode_dirty in set_info_sec().
+With subtle timings changes, we can now sometimes get an external abort on
+non-linefetch error booting am3 devices at sysc_reset(). This is because
+of a missing reset delay needed for the usb target module.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Looks like we never enabled the delay earlier for am3, although a similar
+issue was seen earlier with a similar usb setup for dm814x as described in
+commit ebf244148092 ("ARM: OMAP2+: Use srst_udelay for USB on dm814x").
+
+Cc: stable@vger.kernel.org
+Fixes: 0782e8572ce4 ("ARM: dts: Probe am335x musb with ti-sysc")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm/boot/dts/am33xx.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index 03f19d3de2a17..7a42728d8047c 100644
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -1443,7 +1443,6 @@ int set_info_sec(struct ksmbd_conn *conn, struct ksmbd_tree_connect *tcon,
- out:
- 	posix_acl_release(fattr.cf_acls);
- 	posix_acl_release(fattr.cf_dacls);
--	mark_inode_dirty(inode);
- 	return rc;
- }
- 
+diff --git a/arch/arm/boot/dts/am33xx.dtsi b/arch/arm/boot/dts/am33xx.dtsi
+index 32d397b3950b9..b2e7f6a710740 100644
+--- a/arch/arm/boot/dts/am33xx.dtsi
++++ b/arch/arm/boot/dts/am33xx.dtsi
+@@ -349,6 +349,7 @@ usb: target-module@47400000 {
+ 					<SYSC_IDLE_NO>,
+ 					<SYSC_IDLE_SMART>,
+ 					<SYSC_IDLE_SMART_WKUP>;
++			ti,sysc-delay-us = <2>;
+ 			clocks = <&l3s_clkctrl AM3_L3S_USB_OTG_HS_CLKCTRL 0>;
+ 			clock-names = "fck";
+ 			#address-cells = <1>;
 -- 
 2.43.0
 
