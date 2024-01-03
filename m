@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124AF1BDDE;
-	Wed,  3 Jan 2024 17:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F9F1C288;
+	Wed,  3 Jan 2024 17:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUvqfGIY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8871AC433C7;
-	Wed,  3 Jan 2024 17:06:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGISz8xB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A907CC433C8;
+	Wed,  3 Jan 2024 17:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301574;
-	bh=SkHj784iS0dOcMZKyyi3aZjBjsy4QlgdcJLZwjRlHb4=;
+	s=korg; t=1704301578;
+	bh=wLfq9A2hLQh6TL265AC9Ux/2KYMooQ8PMxhoatdsJZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FUvqfGIYuKGnDsJEYUjEKsIbGsJiPv+F2EiMZVsL+bGPYrL7sQ6iM2b5ExBLyO2ID
-	 DfhGS/IXgX3lXEMVgYTLiSWToCatOlhnhusFkz4xH1ldb2f48Pqo00FWev4TbGNLlf
-	 TlaXm5jMuTZdDtmc0D8mWoyyVh7xcuO8mOrxlXSA=
+	b=BGISz8xBXDQq2X+fOYrIXIKj6RDD+tnGBAXsVgnGYp86+oSikvtLbgXeFGmiiVjxb
+	 EGCS6dOZ791zelmh/QKWXZQcSP6H0nvLK2CpIRj8mtk2KCGuRO2Vj7mOpAEiSqS/kt
+	 7C7qvhA3FdgiVChmm6AhLedcuUZEwXp4dDsD/ag4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Atanasov <alexander.atanasov@virtuozzo.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 58/95] scsi: core: Always send batch on reset or error handling command
-Date: Wed,  3 Jan 2024 17:55:06 +0100
-Message-ID: <20240103164902.699731741@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 67/95] ksmbd: set epoch in create context v2 lease
+Date: Wed,  3 Jan 2024 17:55:15 +0100
+Message-ID: <20240103164904.053365716@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -42,56 +42,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Atanasov <alexander.atanasov@virtuozzo.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 066c5b46b6eaf2f13f80c19500dbb3b84baabb33 upstream.
+[ Upstream commit d045850b628aaf931fc776c90feaf824dca5a1cf ]
 
-In commit 8930a6c20791 ("scsi: core: add support for request batching") the
-block layer bd->last flag was mapped to SCMD_LAST and used as an indicator
-to send the batch for the drivers that implement this feature. However, the
-error handling code was not updated accordingly.
+To support v2 lease(directory lease), ksmbd set epoch in create context
+v2 lease response.
 
-scsi_send_eh_cmnd() is used to send error handling commands and request
-sense. The problem is that request sense comes as a single command that
-gets into the batch queue and times out. As a result the device goes
-offline after several failed resets. This was observed on virtio_scsi
-during a device resize operation.
-
-[  496.316946] sd 0:0:4:0: [sdd] tag#117 scsi_eh_0: requesting sense
-[  506.786356] sd 0:0:4:0: [sdd] tag#117 scsi_send_eh_cmnd timeleft: 0
-[  506.787981] sd 0:0:4:0: [sdd] tag#117 abort
-
-To fix this always set SCMD_LAST flag in scsi_send_eh_cmnd() and
-scsi_reset_ioctl().
-
-Fixes: 8930a6c20791 ("scsi: core: add support for request batching")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Alexander Atanasov <alexander.atanasov@virtuozzo.com>
-Link: https://lore.kernel.org/r/20231215121008.2881653-1-alexander.atanasov@virtuozzo.com
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_error.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ksmbd/oplock.c | 5 ++++-
+ fs/ksmbd/oplock.h | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -1104,6 +1104,7 @@ retry:
+diff --git a/fs/ksmbd/oplock.c b/fs/ksmbd/oplock.c
+index 1cf2d2a3746a3..ed639b7b65095 100644
+--- a/fs/ksmbd/oplock.c
++++ b/fs/ksmbd/oplock.c
+@@ -104,7 +104,7 @@ static int alloc_lease(struct oplock_info *opinfo, struct lease_ctx_info *lctx)
+ 	lease->duration = lctx->duration;
+ 	memcpy(lease->parent_lease_key, lctx->parent_lease_key, SMB2_LEASE_KEY_SIZE);
+ 	lease->version = lctx->version;
+-	lease->epoch = 0;
++	lease->epoch = le16_to_cpu(lctx->epoch);
+ 	INIT_LIST_HEAD(&opinfo->lease_entry);
+ 	opinfo->o_lease = lease;
  
- 	scsi_log_send(scmd);
- 	scmd->submitter = SUBMITTED_BY_SCSI_ERROR_HANDLER;
-+	scmd->flags |= SCMD_LAST;
+@@ -1032,6 +1032,7 @@ static void copy_lease(struct oplock_info *op1, struct oplock_info *op2)
+ 	       SMB2_LEASE_KEY_SIZE);
+ 	lease2->duration = lease1->duration;
+ 	lease2->flags = lease1->flags;
++	lease2->epoch = lease1->epoch++;
+ }
  
- 	/*
- 	 * Lock sdev->state_mutex to avoid that scsi_device_quiesce() can
-@@ -2397,6 +2398,7 @@ scsi_ioctl_reset(struct scsi_device *dev
- 	scmd->cmnd = scsi_req(rq)->cmd;
+ static int add_lease_global_list(struct oplock_info *opinfo)
+@@ -1364,6 +1365,7 @@ void create_lease_buf(u8 *rbuf, struct lease *lease)
+ 		memcpy(buf->lcontext.LeaseKey, lease->lease_key,
+ 		       SMB2_LEASE_KEY_SIZE);
+ 		buf->lcontext.LeaseFlags = lease->flags;
++		buf->lcontext.Epoch = cpu_to_le16(++lease->epoch);
+ 		buf->lcontext.LeaseState = lease->state;
+ 		memcpy(buf->lcontext.ParentLeaseKey, lease->parent_lease_key,
+ 		       SMB2_LEASE_KEY_SIZE);
+@@ -1423,6 +1425,7 @@ struct lease_ctx_info *parse_lease_state(void *open_req)
+ 		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
+ 		lreq->req_state = lc->lcontext.LeaseState;
+ 		lreq->flags = lc->lcontext.LeaseFlags;
++		lreq->epoch = lc->lcontext.Epoch;
+ 		lreq->duration = lc->lcontext.LeaseDuration;
+ 		memcpy(lreq->parent_lease_key, lc->lcontext.ParentLeaseKey,
+ 				SMB2_LEASE_KEY_SIZE);
+diff --git a/fs/ksmbd/oplock.h b/fs/ksmbd/oplock.h
+index 4b0fe6da76940..ad31439c61fef 100644
+--- a/fs/ksmbd/oplock.h
++++ b/fs/ksmbd/oplock.h
+@@ -34,6 +34,7 @@ struct lease_ctx_info {
+ 	__le32			flags;
+ 	__le64			duration;
+ 	__u8			parent_lease_key[SMB2_LEASE_KEY_SIZE];
++	__le16			epoch;
+ 	int			version;
+ };
  
- 	scmd->submitter = SUBMITTED_BY_SCSI_RESET_IOCTL;
-+	scmd->flags |= SCMD_LAST;
- 	memset(&scmd->sdb, 0, sizeof(scmd->sdb));
- 
- 	scmd->cmd_len			= 0;
+-- 
+2.43.0
+
 
 
