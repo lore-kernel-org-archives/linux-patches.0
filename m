@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9051BDEC;
-	Wed,  3 Jan 2024 17:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25791BDF1;
+	Wed,  3 Jan 2024 17:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4ttz9nV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD64C433C7;
-	Wed,  3 Jan 2024 17:11:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+rMKAuP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F5EBC433C8;
+	Wed,  3 Jan 2024 17:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301915;
-	bh=nnFAqWh8bShpGzHYebm63UbGqKksAM4n/SEBVE325YA=;
+	s=korg; t=1704301918;
+	bh=r4FGrclJvuq242kWlbmBzKL+xYUu3uyBFgYvQqZNSpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n4ttz9nVkdPtPz/co+5TLZN+/02YZQjV+Q/91TZOTtbEXETUD8DAESxeNDWKTKSM+
-	 Aa5CvMpyxSQ6rHot/vgW0grfDEGB54zqZbvg9QIUpdUg1ltpeIG3w7TI3JVkrAtPhZ
-	 mod4KUo6aSQaEQaQPT6UL2Gcy0L+lRkYC1hSZ6sU=
+	b=F+rMKAuPGshS0rK/s/rLvVBtAmqxb/6SJ/vrbC3idncpv73Qx1gAq8WIJBixGYjFt
+	 Ipndkj6RXMZ6+zciKNfP3c2kB8EEfOfRkFYAKOaKpb5O514J0uwE+G9GWA227PWEBB
+	 +MKyKlKDTTqQcGAJtvHtr2C/y36p+25lJul/RKT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Atanasov <alexander.atanasov@virtuozzo.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 67/75] scsi: core: Always send batch on reset or error handling command
-Date: Wed,  3 Jan 2024 17:55:48 +0100
-Message-ID: <20240103164853.240209807@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 68/75] ring-buffer: Fix wake ups when buffer_percent is set to 100
+Date: Wed,  3 Jan 2024 17:55:49 +0100
+Message-ID: <20240103164853.369923277@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164842.953224409@linuxfoundation.org>
 References: <20240103164842.953224409@linuxfoundation.org>
@@ -43,61 +43,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Atanasov <alexander.atanasov@virtuozzo.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 066c5b46b6eaf2f13f80c19500dbb3b84baabb33 ]
+commit 623b1f896fa8a669a277ee5a258307a16c7377a3 upstream.
 
-In commit 8930a6c20791 ("scsi: core: add support for request batching") the
-block layer bd->last flag was mapped to SCMD_LAST and used as an indicator
-to send the batch for the drivers that implement this feature. However, the
-error handling code was not updated accordingly.
+The tracefs file "buffer_percent" is to allow user space to set a
+water-mark on how much of the tracing ring buffer needs to be filled in
+order to wake up a blocked reader.
 
-scsi_send_eh_cmnd() is used to send error handling commands and request
-sense. The problem is that request sense comes as a single command that
-gets into the batch queue and times out. As a result the device goes
-offline after several failed resets. This was observed on virtio_scsi
-during a device resize operation.
+ 0 - is to wait until any data is in the buffer
+ 1 - is to wait for 1% of the sub buffers to be filled
+ 50 - would be half of the sub buffers are filled with data
+ 100 - is not to wake the waiter until the ring buffer is completely full
 
-[  496.316946] sd 0:0:4:0: [sdd] tag#117 scsi_eh_0: requesting sense
-[  506.786356] sd 0:0:4:0: [sdd] tag#117 scsi_send_eh_cmnd timeleft: 0
-[  506.787981] sd 0:0:4:0: [sdd] tag#117 abort
+Unfortunately the test for being full was:
 
-To fix this always set SCMD_LAST flag in scsi_send_eh_cmnd() and
-scsi_reset_ioctl().
+	dirty = ring_buffer_nr_dirty_pages(buffer, cpu);
+	return (dirty * 100) > (full * nr_pages);
 
-Fixes: 8930a6c20791 ("scsi: core: add support for request batching")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Alexander Atanasov <alexander.atanasov@virtuozzo.com>
-Link: https://lore.kernel.org/r/20231215121008.2881653-1-alexander.atanasov@virtuozzo.com
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Where "full" is the value for "buffer_percent".
+
+There is two issues with the above when full == 100.
+
+1. dirty * 100 > 100 * nr_pages will never be true
+   That is, the above is basically saying that if the user sets
+   buffer_percent to 100, more pages need to be dirty than exist in the
+   ring buffer!
+
+2. The page that the writer is on is never considered dirty, as dirty
+   pages are only those that are full. When the writer goes to a new
+   sub-buffer, it clears the contents of that sub-buffer.
+
+That is, even if the check was ">=" it would still not be equal as the
+most pages that can be considered "dirty" is nr_pages - 1.
+
+To fix this, add one to dirty and use ">=" in the compare.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20231226125902.4a057f1d@gandalf.local.home
+
+Cc: stable@vger.kernel.org
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 03329f9939781 ("tracing: Add tracefs file buffer_percentage")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_error.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/ring_buffer.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
-index 93374173b9579..30eb8769dbab9 100644
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -1068,6 +1068,7 @@ static int scsi_send_eh_cmnd(struct scsi_cmnd *scmd, unsigned char *cmnd,
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -810,9 +810,14 @@ static __always_inline bool full_hit(str
+ 	if (!nr_pages || !full)
+ 		return true;
  
- 	scsi_log_send(scmd);
- 	scmd->submitter = SUBMITTED_BY_SCSI_ERROR_HANDLER;
-+	scmd->flags |= SCMD_LAST;
+-	dirty = ring_buffer_nr_dirty_pages(buffer, cpu);
++	/*
++	 * Add one as dirty will never equal nr_pages, as the sub-buffer
++	 * that the writer is on is not counted as dirty.
++	 * This is needed if "buffer_percent" is set to 100.
++	 */
++	dirty = ring_buffer_nr_dirty_pages(buffer, cpu) + 1;
  
- 	/*
- 	 * Lock sdev->state_mutex to avoid that scsi_device_quiesce() can
-@@ -2359,6 +2360,7 @@ scsi_ioctl_reset(struct scsi_device *dev, int __user *arg)
- 	scmd->cmnd = scsi_req(rq)->cmd;
+-	return (dirty * 100) > (full * nr_pages);
++	return (dirty * 100) >= (full * nr_pages);
+ }
  
- 	scmd->submitter = SUBMITTED_BY_SCSI_RESET_IOCTL;
-+	scmd->flags |= SCMD_LAST;
- 	memset(&scmd->sdb, 0, sizeof(scmd->sdb));
- 
- 	scmd->cmd_len			= 0;
--- 
-2.43.0
-
+ /*
 
 
