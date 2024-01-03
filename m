@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72501C6B0;
-	Wed,  3 Jan 2024 16:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CE71C6A5;
+	Wed,  3 Jan 2024 16:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZXzMWW1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A935C433C8;
-	Wed,  3 Jan 2024 16:57:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP4T+AIo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A430C433C8;
+	Wed,  3 Jan 2024 16:57:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301058;
-	bh=gllEr/kBa5S+jNT9XIaTvhcdBbVcAzAphwKxJcLzIT8=;
+	s=korg; t=1704301062;
+	bh=xqzDoT5IbYWHbvGvsYoG0acsTV8EyFL+uynui2D3jRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZXzMWW1wNpxIXjCzHiGCFTQz3qXVOrHvjweEcjyGDC7tC3Jiv+5A2EQ+jmZN4EpR
-	 3D51lJGuMTSKcpkWXdbYY/8SwlWqNSNmgvjWp1wDTqjTK3HQy/JZRRDXHxQnS6BoIN
-	 r+q62NpW2rIXLV2hRnNQGGpxNMHD55LkLbPHbv88=
+	b=CP4T+AIoUOIE5w3cUKJqOd7TWU60PEkbisB7RHJJmCYpQtMnUNTJ5hWa8cXoN1LB1
+	 +KrP1+1s87+/g3nVk6bvW3Bisje7cerYu062NKqrDEPXL01RnpcTAcsEKy1ldVyLDM
+	 loevfpjlVKMgwRyyATJUeKL1t/dorzO/oXWGU/gE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Hongfei <luhongfei@vivo.com>,
+	kernel test robot <lkp@intel.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 027/100] ksmbd: Change the return value of ksmbd_vfs_query_maximal_access to void
-Date: Wed,  3 Jan 2024 17:54:16 +0100
-Message-ID: <20240103164900.183323821@linuxfoundation.org>
+Subject: [PATCH 6.1 028/100] ksmbd: use kvzalloc instead of kvmalloc
+Date: Wed,  3 Jan 2024 17:54:17 +0100
+Message-ID: <20240103164900.329947570@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -43,79 +43,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Hongfei <luhongfei@vivo.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit ccb5889af97c03c67a83fcd649602034578c0d61 ]
+[ Upstream commit 81a94b27847f7d2e499415db14dd9dc7c22b19b0 ]
 
-The return value of ksmbd_vfs_query_maximal_access is meaningless,
-it is better to modify it to void.
+Use kvzalloc instead of kvmalloc.
 
-Signed-off-by: Lu Hongfei <luhongfei@vivo.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 4 +---
- fs/smb/server/vfs.c     | 6 +-----
- fs/smb/server/vfs.h     | 2 +-
- 3 files changed, 3 insertions(+), 9 deletions(-)
+ fs/smb/server/smb2pdu.c       | 8 ++++----
+ fs/smb/server/transport_ipc.c | 4 ++--
+ fs/smb/server/vfs.c           | 4 ++--
+ 3 files changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index f35e06ae25b3b..e8d2c6fc3f37c 100644
+index e8d2c6fc3f37c..10d51256858ff 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -2891,11 +2891,9 @@ int smb2_open(struct ksmbd_work *work)
- 		if (!file_present) {
- 			daccess = cpu_to_le32(GENERIC_ALL_FLAGS);
- 		} else {
--			rc = ksmbd_vfs_query_maximal_access(user_ns,
-+			ksmbd_vfs_query_maximal_access(user_ns,
- 							    path.dentry,
- 							    &daccess);
--			if (rc)
--				goto err_out;
- 			already_permitted = true;
+@@ -543,7 +543,7 @@ int smb2_allocate_rsp_buf(struct ksmbd_work *work)
+ 	if (le32_to_cpu(hdr->NextCommand) > 0)
+ 		sz = large_sz;
+ 
+-	work->response_buf = kvmalloc(sz, GFP_KERNEL | __GFP_ZERO);
++	work->response_buf = kvzalloc(sz, GFP_KERNEL);
+ 	if (!work->response_buf)
+ 		return -ENOMEM;
+ 
+@@ -6120,7 +6120,7 @@ static noinline int smb2_read_pipe(struct ksmbd_work *work)
  		}
- 		maximal_access = daccess;
+ 
+ 		work->aux_payload_buf =
+-			kvmalloc(rpc_resp->payload_sz, GFP_KERNEL | __GFP_ZERO);
++			kvmalloc(rpc_resp->payload_sz, GFP_KERNEL);
+ 		if (!work->aux_payload_buf) {
+ 			err = -ENOMEM;
+ 			goto out;
+@@ -6277,7 +6277,7 @@ int smb2_read(struct ksmbd_work *work)
+ 	ksmbd_debug(SMB, "filename %pD, offset %lld, len %zu\n",
+ 		    fp->filp, offset, length);
+ 
+-	work->aux_payload_buf = kvmalloc(length, GFP_KERNEL | __GFP_ZERO);
++	work->aux_payload_buf = kvzalloc(length, GFP_KERNEL);
+ 	if (!work->aux_payload_buf) {
+ 		err = -ENOMEM;
+ 		goto out;
+@@ -6428,7 +6428,7 @@ static ssize_t smb2_write_rdma_channel(struct ksmbd_work *work,
+ 	int ret;
+ 	ssize_t nbytes;
+ 
+-	data_buf = kvmalloc(length, GFP_KERNEL | __GFP_ZERO);
++	data_buf = kvzalloc(length, GFP_KERNEL);
+ 	if (!data_buf)
+ 		return -ENOMEM;
+ 
+diff --git a/fs/smb/server/transport_ipc.c b/fs/smb/server/transport_ipc.c
+index 40c721f9227e4..b49d47bdafc94 100644
+--- a/fs/smb/server/transport_ipc.c
++++ b/fs/smb/server/transport_ipc.c
+@@ -229,7 +229,7 @@ static struct ksmbd_ipc_msg *ipc_msg_alloc(size_t sz)
+ 	struct ksmbd_ipc_msg *msg;
+ 	size_t msg_sz = sz + sizeof(struct ksmbd_ipc_msg);
+ 
+-	msg = kvmalloc(msg_sz, GFP_KERNEL | __GFP_ZERO);
++	msg = kvzalloc(msg_sz, GFP_KERNEL);
+ 	if (msg)
+ 		msg->sz = sz;
+ 	return msg;
+@@ -268,7 +268,7 @@ static int handle_response(int type, void *payload, size_t sz)
+ 			       entry->type + 1, type);
+ 		}
+ 
+-		entry->response = kvmalloc(sz, GFP_KERNEL | __GFP_ZERO);
++		entry->response = kvzalloc(sz, GFP_KERNEL);
+ 		if (!entry->response) {
+ 			ret = -ENOMEM;
+ 			break;
 diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index d0a85774a496a..178bcd4d0b209 100644
+index 178bcd4d0b209..d05d2d1274b04 100644
 --- a/fs/smb/server/vfs.c
 +++ b/fs/smb/server/vfs.c
-@@ -122,11 +122,9 @@ static int ksmbd_vfs_path_lookup_locked(struct ksmbd_share_config *share_conf,
- 	return -ENOENT;
- }
+@@ -437,7 +437,7 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
+ 	}
  
--int ksmbd_vfs_query_maximal_access(struct user_namespace *user_ns,
-+void ksmbd_vfs_query_maximal_access(struct user_namespace *user_ns,
- 				   struct dentry *dentry, __le32 *daccess)
- {
--	int ret = 0;
--
- 	*daccess = cpu_to_le32(FILE_READ_ATTRIBUTES | READ_CONTROL);
+ 	if (v_len < size) {
+-		wbuf = kvmalloc(size, GFP_KERNEL | __GFP_ZERO);
++		wbuf = kvzalloc(size, GFP_KERNEL);
+ 		if (!wbuf) {
+ 			err = -ENOMEM;
+ 			goto out;
+@@ -854,7 +854,7 @@ ssize_t ksmbd_vfs_listxattr(struct dentry *dentry, char **list)
+ 	if (size <= 0)
+ 		return size;
  
- 	if (!inode_permission(user_ns, d_inode(dentry), MAY_OPEN | MAY_WRITE))
-@@ -143,8 +141,6 @@ int ksmbd_vfs_query_maximal_access(struct user_namespace *user_ns,
+-	vlist = kvmalloc(size, GFP_KERNEL | __GFP_ZERO);
++	vlist = kvzalloc(size, GFP_KERNEL);
+ 	if (!vlist)
+ 		return -ENOMEM;
  
- 	if (!inode_permission(user_ns, d_inode(dentry->d_parent), MAY_EXEC | MAY_WRITE))
- 		*daccess |= FILE_DELETE_LE;
--
--	return ret;
- }
- 
- /**
-diff --git a/fs/smb/server/vfs.h b/fs/smb/server/vfs.h
-index 0a4eb1e1a79a9..3e3c92d22e3eb 100644
---- a/fs/smb/server/vfs.h
-+++ b/fs/smb/server/vfs.h
-@@ -72,7 +72,7 @@ struct ksmbd_kstat {
- };
- 
- int ksmbd_vfs_lock_parent(struct dentry *parent, struct dentry *child);
--int ksmbd_vfs_query_maximal_access(struct user_namespace *user_ns,
-+void ksmbd_vfs_query_maximal_access(struct user_namespace *user_ns,
- 				   struct dentry *dentry, __le32 *daccess);
- int ksmbd_vfs_create(struct ksmbd_work *work, const char *name, umode_t mode);
- int ksmbd_vfs_mkdir(struct ksmbd_work *work, const char *name, umode_t mode);
 -- 
 2.43.0
 
