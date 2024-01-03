@@ -1,63 +1,74 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A829A1CA87;
-	Wed,  3 Jan 2024 18:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEDC1CF90
+	for <patches@lists.linux.dev>; Wed,  3 Jan 2024 19:15:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VnSE4+8W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D4EC433C9;
-	Wed,  3 Jan 2024 18:57:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704308229;
-	bh=K77hqv5yJIThScNYsdIvcflmJHvbuR+rwHJxDsqElf0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VnSE4+8WPJsxD9S1CLlX+CTl1K4EAoNW2ar6B+y3kfWrgz/apYO7E3eaSaEx4W0gh
-	 irM16TjgSR4xVXzNZ5WcYy8HyIAqnHB920SP9HwggHGM1F0slh0VzH9xDJKwEryyZx
-	 rbt6TbPnky+WcspPPBCOeD6xs2WMnS73oXJ8nfSXUGjdwx3w+L2dGi6HVd46aYZM2K
-	 xqRyMOVbAlAbRfdv/k2sh2jWy+hMcnkUOLR6bdSkqKSwZS7sfo9w99hJWwACbyhdNJ
-	 M3Z7IGt3632pS/Dd+J1n6x1bMpkd6nXI3xd1e9BxTl0WMCS45PtQR6KZ3oIlx21edt
-	 m2ps/2RdpTH3A==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.6 00/49] 6.6.10-rc1 review
-Date: Wed,  3 Jan 2024 10:57:06 -0800
-Message-Id: <20240103185706.48008-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rm0azOVT"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-5ca1b4809b5so3246981a12.3
+        for <patches@lists.linux.dev>; Wed, 03 Jan 2024 11:15:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704309338; x=1704914138; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QUKrvnDKVUQB/NUh9WHSZ3lM3rwikTTA7m5z5TfQ1LE=;
+        b=Rm0azOVTneKYV894VllleKz+4VCdidAT18oVI0O4taJGLJpvdxGP58o+yRsKOl1pcQ
+         YhYrdL6BNbcnXxt/fD3CXreu90hUWyrhxJap04VUEHQ9Vs+nWEspB2XMh7RmtRoj6zej
+         N2L2+bmDCSnPMZMzRl4QY8K5F7Yq8TfgzgCtGu3qNUowDnwFcXq05ivNsN3RM2xBcGHK
+         Si2jhPAlvaKmnzJuihE0YIFKcNnSHdi7FxBmy+mRF1LBfwRs9nfHttMBq3EfnUtXDlnW
+         vMzsQdMad8lHaziNQx4DxPpq6PJum+KaxVdZbmkZ+j6ktP+yoDiEmvOOGA5cDPXggOtC
+         y6PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704309338; x=1704914138;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QUKrvnDKVUQB/NUh9WHSZ3lM3rwikTTA7m5z5TfQ1LE=;
+        b=BN2xmAXBiZQOnudMIw4sZSbLovrlG0zzeloJXaGEB4j9g1MauonD6PqkabG21r8BSt
+         c4FOn3Q8HvES/IQyGjSOGYk740CtNHNJCYgl95K5peMXrS8lUmC5ZdylmehnxdKiibA2
+         /d1P/x1DCh0hFxL1kyd7XTPK3rDhHHD3IbuQsUegYJ2aiBlgCgF4mxSieJ/90MrNueOL
+         wpi83zoN7JeuzaPGc2z+dqOtaVDFVBc6p+v3/sERKdSBFZTodTVp1Bw4uBl5X0JWg+kz
+         fDbcFdq8Aok0sIGioE8ZT7Gt494fuyqKy0aaT/22g1fVYEuuy3eEXGqBNGp8S5YShCGJ
+         L7Qg==
+X-Gm-Message-State: AOJu0Ywp/Tbgv4rXvlsY9eGEfIknsU65Xr6FDk8hgSMFRu0N1u+CptRT
+	2AQCKVdxqJFwLuKqS1rsWZA=
+X-Google-Smtp-Source: AGHT+IHfnT/bgD24BwhFVCndtsgTgB5xyFndtPtFp1nVWMlDecJNekMCkFq98cxglhWyQrPm6JMZIQ==
+X-Received: by 2002:a05:6a20:9717:b0:196:e00:29f8 with SMTP id hr23-20020a056a20971700b001960e0029f8mr5935741pzc.32.1704309338505;
+        Wed, 03 Jan 2024 11:15:38 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id du8-20020a056a002b4800b006daa809584csm3473076pfb.182.2024.01.03.11.15.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jan 2024 11:15:38 -0800 (PST)
+Message-ID: <22d414cc-d2fa-4323-8cd2-61476e28e0eb@gmail.com>
+Date: Wed, 3 Jan 2024 11:15:36 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 00/75] 5.10.206-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, allen.lkml@gmail.com
+References: <20240103164842.953224409@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20240103164842.953224409@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello,
-
-On Wed,  3 Jan 2024 17:55:20 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.6.10 release.
-> There are 49 patches in this series, all will be posted as a response
+On 1/3/24 08:54, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.206 release.
+> There are 75 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -65,51 +76,19 @@ On Wed,  3 Jan 2024 17:55:20 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.or
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.10-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.206-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
 > and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Tested-by: SeongJae Park <sj@kernel.org>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 5fd1c89851c4 ("Linux 6.6.10-rc1")
-
-Thanks,
-SJ
-
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
