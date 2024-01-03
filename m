@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824D61BDF1;
-	Wed,  3 Jan 2024 17:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928DB1BDEC;
+	Wed,  3 Jan 2024 17:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDIouVPD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAFA9C433C7;
-	Wed,  3 Jan 2024 17:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W12Ma0gG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014D3C433C7;
+	Wed,  3 Jan 2024 17:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301861;
-	bh=e2vu514eHbWSoVwsFwRAT2rn9Mrq+9CR4rsVxj32mF8=;
+	s=korg; t=1704301864;
+	bh=eTU9np4hPkGBLTx6fzvmiN2XflmywGnmz1vzDDEmnoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DDIouVPDCfdV645ttunvCGSgSxEi5cYdx9LXtiqLD0//gfZhbVElxmU5g41FiGmKT
-	 3vqxZ530vyYY+dBqeOU5HAO5JifpRLcQelq6BI6nCGdQ6Yb9N7WOhWoQCbXJoUzB1W
-	 w5fVM85I5hLTylH+a/tedoPs/6pEe6IubAnmljLg=
+	b=W12Ma0gGcYxoV13UALzS1Dua+/zNsSlrJc6p/wvzPOKrbtBgqUAlCAW373ikdzFpg
+	 z80wZzGHPwl/BFuEqPns+nDvqixSScxvsWfuq/AihW4s3+dT0eCG0B8x8Vl6huYfAA
+	 ZQy6fuRsz+a2AAuOqmT2XLpmJJ/TT0F3PMPzcp5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 23/75] ALSA: hda/hdmi: Add quirk to force pin connectivity on NUC10
-Date: Wed,  3 Jan 2024 17:55:04 +0100
-Message-ID: <20240103164846.657295147@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	stable@kernel.org
+Subject: [PATCH 5.10 50/75] x86/alternatives: Sync core before enabling interrupts
+Date: Wed,  3 Jan 2024 17:55:31 +0100
+Message-ID: <20240103164850.683241609@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164842.953224409@linuxfoundation.org>
 References: <20240103164842.953224409@linuxfoundation.org>
@@ -42,38 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit e81d71e343c6c62cf323042caed4b7ca049deda5 ]
+commit 3ea1704a92967834bf0e64ca1205db4680d04048 upstream.
 
-On some Intel NUC10 variants, codec reports AC_JACK_PORT_NONE as
-pin default config for all pins. This results in broken audio.
-Add a quirk to force connectivity.
+text_poke_early() does:
 
-BugLink: https://github.com/clearlinux/distribution/issues/2396
-Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://lore.kernel.org/r/20210720153216.2200938-1-kai.vehmanen@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 3b1ff57e24a7 ("ALSA: hda/hdmi: add force-connect quirk for NUC5CPYB")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+   local_irq_save(flags);
+   memcpy(addr, opcode, len);
+   local_irq_restore(flags);
+   sync_core();
+
+That's not really correct because the synchronization should happen before
+interrupts are re-enabled to ensure that a pending interrupt observes the
+complete update of the opcodes.
+
+It's not entirely clear whether the interrupt entry provides enough
+serialization already, but moving the sync_core() invocation into interrupt
+disabled region does no harm and is obviously correct.
+
+Fixes: 6fffacb30349 ("x86/alternatives, jumplabel: Use text_poke_early() before mm_init()")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/ZT6narvE%2BLxX%2B7Be@windriver.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_hdmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/alternative.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
-index 86a43b955db91..3060dbf1daf58 100644
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1970,6 +1970,7 @@ static const struct snd_pci_quirk force_connect_list[] = {
- 	SND_PCI_QUIRK(0x1043, 0x86ae, "ASUS", 1),  /* Z170 PRO */
- 	SND_PCI_QUIRK(0x1043, 0x86c7, "ASUS", 1),  /* Z170M PLUS */
- 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
-+	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
- 	{}
- };
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -1093,8 +1093,8 @@ void __init_or_module text_poke_early(vo
+ 	} else {
+ 		local_irq_save(flags);
+ 		memcpy(addr, opcode, len);
+-		local_irq_restore(flags);
+ 		sync_core();
++		local_irq_restore(flags);
  
--- 
-2.43.0
-
+ 		/*
+ 		 * Could also do a CLFLUSH here to speed up CPU recovery; but
 
 
