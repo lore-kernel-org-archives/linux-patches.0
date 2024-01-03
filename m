@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19801BDDE;
-	Wed,  3 Jan 2024 17:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C231BDF1;
+	Wed,  3 Jan 2024 17:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZI1PJMkZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396C5C433C7;
-	Wed,  3 Jan 2024 17:07:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfqgpHIU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80088C433C7;
+	Wed,  3 Jan 2024 17:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301623;
-	bh=gcDd5YkCmCMk627nWi9lxJ5lzVVYhJQDeCXhEeytWWY=;
+	s=korg; t=1704301628;
+	bh=dP+Nbs228zegAiy49rG4d02sCTzftqspTbWOp65ReIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZI1PJMkZ4gKepHkIkp6p1+drVKqaxRb3+l99SEItNh4qnGa9fdwvt+LaKMXDrm4+/
-	 8hlNxV7vy1yz8kJvEYPdUZRpygmywzGNwXUuu//dCYJqvwrJrQtEcsq8xf1HuaHDeu
-	 ByqFkVVAzygAO6q0K8kHm0vy40DhBAoIdWOcTrpE=
+	b=xfqgpHIUfpxOa+WbRhKCdkA+8OaBV4AwGEs+ekasd9L0FtH8yS+I1Z9yKBmgwCy7D
+	 diMJ15pVJGxntEjV3HzN5jPQdZF6KrlPl/2dYMRidomfW7hNYg2zyAaluO3tClMozY
+	 GZsRMD6Anxa/WIRf1zwYR01tvpo5+mCTT/cZJ5To=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justinpopo6@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 78/95] net: usb: ax88179_178a: wol optimizations
-Date: Wed,  3 Jan 2024 17:55:26 +0100
-Message-ID: <20240103164905.729905960@linuxfoundation.org>
+Subject: [PATCH 5.15 79/95] net: usb: ax88179_178a: avoid failed operations when device is disconnected
+Date: Wed,  3 Jan 2024 17:55:27 +0100
+Message-ID: <20240103164905.903577470@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -42,125 +42,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justinpopo6@gmail.com>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-[ Upstream commit 5050531610a64f08461e0c309db80ca51b779fd5 ]
+[ Upstream commit aef05e349bfd81c95adb4489639413fadbb74a83 ]
 
-- Check if wol is supported on reset instead of everytime get_wol
-is called.
-- Save wolopts in private data instead of relying on the HW to save it.
-- Defer enabling WoL until suspend instead of enabling it everytime
-set_wol is called.
+When the device is disconnected we get the following messages showing
+failed operations:
+Nov 28 20:22:11 localhost kernel: usb 2-3: USB disconnect, device number 2
+Nov 28 20:22:11 localhost kernel: ax88179_178a 2-3:1.0 enp2s0u3: unregister 'ax88179_178a' usb-0000:02:00.0-3, ASIX AX88179 USB 3.0 Gigabit Ethernet
+Nov 28 20:22:11 localhost kernel: ax88179_178a 2-3:1.0 enp2s0u3: Failed to read reg index 0x0002: -19
+Nov 28 20:22:11 localhost kernel: ax88179_178a 2-3:1.0 enp2s0u3: Failed to write reg index 0x0002: -19
+Nov 28 20:22:11 localhost kernel: ax88179_178a 2-3:1.0 enp2s0u3 (unregistered): Failed to write reg index 0x0002: -19
+Nov 28 20:22:11 localhost kernel: ax88179_178a 2-3:1.0 enp2s0u3 (unregistered): Failed to write reg index 0x0001: -19
+Nov 28 20:22:11 localhost kernel: ax88179_178a 2-3:1.0 enp2s0u3 (unregistered): Failed to write reg index 0x0002: -19
 
-Signed-off-by: Justin Chen <justinpopo6@gmail.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: aef05e349bfd ("net: usb: ax88179_178a: avoid failed operations when device is disconnected")
+The reason is that although the device is detached, normal stop and
+unbind operations are commanded from the driver. These operations are
+not necessary in this situation, so avoid these logs when the device is
+detached if the result of the operation is -ENODEV and if the new flag
+informing about the disconnecting status is enabled.
+
+cc:  <stable@vger.kernel.org>
+Fixes: e2ca90c276e1f ("ax88179_178a: ASIX AX88179_178A USB 3.0/2.0 to gigabit ethernet adapter driver")
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20231207175007.263907-1-jtornosm@redhat.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/ax88179_178a.c | 52 ++++++++++++++++++----------------
- 1 file changed, 28 insertions(+), 24 deletions(-)
+ drivers/net/usb/ax88179_178a.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/usb/ax88179_178a.c b/drivers/net/usb/ax88179_178a.c
-index bd258c4e13948..49d97ad376654 100644
+index 49d97ad376654..a2b1f9a0c6d9f 100644
 --- a/drivers/net/usb/ax88179_178a.c
 +++ b/drivers/net/usb/ax88179_178a.c
-@@ -170,6 +170,8 @@ struct ax88179_data {
- 	u16 rxctl;
- 	u16 reserved;
+@@ -172,6 +172,7 @@ struct ax88179_data {
  	u8 in_pm;
-+	u32 wol_supported;
-+	u32 wolopts;
+ 	u32 wol_supported;
+ 	u32 wolopts;
++	u8 disconnecting;
  };
  
  struct ax88179_int_data {
-@@ -399,6 +401,7 @@ ax88179_phy_write_mmd_indirect(struct usbnet *dev, u16 prtad, u16 devad,
- static int ax88179_suspend(struct usb_interface *intf, pm_message_t message)
+@@ -207,6 +208,7 @@ static int __ax88179_read_cmd(struct usbnet *dev, u8 cmd, u16 value, u16 index,
  {
- 	struct usbnet *dev = usb_get_intfdata(intf);
-+	struct ax88179_data *priv = dev->driver_priv;
- 	u16 tmp16;
- 	u8 tmp8;
+ 	int ret;
+ 	int (*fn)(struct usbnet *, u8, u8, u16, u16, void *, u16);
++	struct ax88179_data *ax179_data = dev->driver_priv;
  
-@@ -406,6 +409,19 @@ static int ax88179_suspend(struct usb_interface *intf, pm_message_t message)
+ 	BUG_ON(!dev);
  
- 	usbnet_suspend(intf, message);
+@@ -218,7 +220,7 @@ static int __ax88179_read_cmd(struct usbnet *dev, u8 cmd, u16 value, u16 index,
+ 	ret = fn(dev, cmd, USB_DIR_IN | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+ 		 value, index, data, size);
  
-+	/* Enable WoL */
-+	if (priv->wolopts) {
-+		ax88179_read_cmd(dev, AX_ACCESS_MAC, AX_MONITOR_MOD,
-+				 1, 1, &tmp8);
-+		if (priv->wolopts & WAKE_PHY)
-+			tmp8 |= AX_MONITOR_MODE_RWLC;
-+		if (priv->wolopts & WAKE_MAGIC)
-+			tmp8 |= AX_MONITOR_MODE_RWMP;
+-	if (unlikely(ret < 0))
++	if (unlikely((ret < 0) && !(ret == -ENODEV && ax179_data->disconnecting)))
+ 		netdev_warn(dev->net, "Failed to read reg index 0x%04x: %d\n",
+ 			    index, ret);
+ 
+@@ -230,6 +232,7 @@ static int __ax88179_write_cmd(struct usbnet *dev, u8 cmd, u16 value, u16 index,
+ {
+ 	int ret;
+ 	int (*fn)(struct usbnet *, u8, u8, u16, u16, const void *, u16);
++	struct ax88179_data *ax179_data = dev->driver_priv;
+ 
+ 	BUG_ON(!dev);
+ 
+@@ -241,7 +244,7 @@ static int __ax88179_write_cmd(struct usbnet *dev, u8 cmd, u16 value, u16 index,
+ 	ret = fn(dev, cmd, USB_DIR_OUT | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+ 		 value, index, data, size);
+ 
+-	if (unlikely(ret < 0))
++	if (unlikely((ret < 0) && !(ret == -ENODEV && ax179_data->disconnecting)))
+ 		netdev_warn(dev->net, "Failed to write reg index 0x%04x: %d\n",
+ 			    index, ret);
+ 
+@@ -516,6 +519,20 @@ static int ax88179_resume(struct usb_interface *intf)
+ 	return usbnet_resume(intf);
+ }
+ 
++static void ax88179_disconnect(struct usb_interface *intf)
++{
++	struct usbnet *dev = usb_get_intfdata(intf);
++	struct ax88179_data *ax179_data;
 +
-+		ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_MONITOR_MOD,
-+				  1, 1, &tmp8);
-+	}
++	if (!dev)
++		return;
 +
- 	/* Disable RX path */
- 	ax88179_read_cmd(dev, AX_ACCESS_MAC, AX_MEDIUM_STATUS_MODE,
- 			 2, 2, &tmp16);
-@@ -504,40 +520,22 @@ static void
++	ax179_data = dev->driver_priv;
++	ax179_data->disconnecting = 1;
++
++	usbnet_disconnect(intf);
++}
++
+ static void
  ax88179_get_wol(struct net_device *net, struct ethtool_wolinfo *wolinfo)
  {
- 	struct usbnet *dev = netdev_priv(net);
--	u8 opt;
--
--	if (ax88179_read_cmd(dev, AX_ACCESS_MAC, AX_MONITOR_MOD,
--			     1, 1, &opt) < 0) {
--		wolinfo->supported = 0;
--		wolinfo->wolopts = 0;
--		return;
--	}
-+	struct ax88179_data *priv = dev->driver_priv;
- 
--	wolinfo->supported = WAKE_PHY | WAKE_MAGIC;
--	wolinfo->wolopts = 0;
--	if (opt & AX_MONITOR_MODE_RWLC)
--		wolinfo->wolopts |= WAKE_PHY;
--	if (opt & AX_MONITOR_MODE_RWMP)
--		wolinfo->wolopts |= WAKE_MAGIC;
-+	wolinfo->supported = priv->wol_supported;
-+	wolinfo->wolopts = priv->wolopts;
- }
- 
- static int
- ax88179_set_wol(struct net_device *net, struct ethtool_wolinfo *wolinfo)
- {
- 	struct usbnet *dev = netdev_priv(net);
--	u8 opt = 0;
-+	struct ax88179_data *priv = dev->driver_priv;
- 
--	if (wolinfo->wolopts & ~(WAKE_PHY | WAKE_MAGIC))
-+	if (wolinfo->wolopts & ~(priv->wol_supported))
- 		return -EINVAL;
- 
--	if (wolinfo->wolopts & WAKE_PHY)
--		opt |= AX_MONITOR_MODE_RWLC;
--	if (wolinfo->wolopts & WAKE_MAGIC)
--		opt |= AX_MONITOR_MODE_RWMP;
--
--	if (ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_MONITOR_MOD,
--			      1, 1, &opt) < 0)
--		return -EINVAL;
-+	priv->wolopts = wolinfo->wolopts;
- 
- 	return 0;
- }
-@@ -1727,6 +1725,12 @@ static int ax88179_reset(struct usbnet *dev)
- 	ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_MEDIUM_STATUS_MODE,
- 			  2, 2, tmp16);
- 
-+	/* Check if WoL is supported */
-+	ax179_data->wol_supported = 0;
-+	if (ax88179_read_cmd(dev, AX_ACCESS_MAC, AX_MONITOR_MOD,
-+			     1, 1, &tmp) > 0)
-+		ax179_data->wol_supported = WAKE_MAGIC | WAKE_PHY;
-+
- 	ax88179_led_setting(dev);
- 
- 	ax179_data->eee_enabled = 0;
+@@ -1946,7 +1963,7 @@ static struct usb_driver ax88179_178a_driver = {
+ 	.suspend =	ax88179_suspend,
+ 	.resume =	ax88179_resume,
+ 	.reset_resume =	ax88179_resume,
+-	.disconnect =	usbnet_disconnect,
++	.disconnect =	ax88179_disconnect,
+ 	.supports_autosuspend = 1,
+ 	.disable_hub_initiated_lpm = 1,
+ };
 -- 
 2.43.0
 
