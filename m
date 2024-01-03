@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683D81C29D;
-	Wed,  3 Jan 2024 17:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F7D1C6A7;
+	Wed,  3 Jan 2024 17:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKr+h4wz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3784C433CB;
-	Wed,  3 Jan 2024 17:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orjzXOVM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29328C433C9;
+	Wed,  3 Jan 2024 17:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301349;
-	bh=qJ9YevK3XF+SrxamcaV/DVjQd8iygkrWLQnSkxM498M=;
+	s=korg; t=1704301352;
+	bh=3A7aGtx4E4dcgwT5oiEty4Ups1OAWueGr1WDcltXmzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sKr+h4wzF/2twogfKVpftKKBT50eS4NLr97WYSr1J1rT4+HcRUBzB4v5HglMmcbel
-	 XQDezCcqfZxcdnEDWPC6K6Jf+V/V1YV/8AnZhV1S+4xQLnizUqaMEIv00u7aktlvTx
-	 LA+tga4qA8JZs4JxeTm1A30IjQSV6IYC7VHyF95k=
+	b=orjzXOVMCxq4NUI+AQ8aXqlzCjj/uOubFKl0ycJ5bJsGTISjaByNY+PNOVn1P2Y2q
+	 wu+f9n7omXftOugd5sFkynIs/JfOsYrFahXu4Bmw8/Eou8ALOi6lxWxYHzQQNgPuJw
+	 ZGeYzNpVZEuXVJQDKrOzv4GtfOwHD0X7mopyy8E0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Andrew Davis <afd@ti.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 073/100] ksmbd: fix wrong allocation size update in smb2_open()
-Date: Wed,  3 Jan 2024 17:55:02 +0100
-Message-ID: <20240103164907.050108877@linuxfoundation.org>
+Subject: [PATCH 5.15 01/95] ARM: dts: dra7: Fix DRA7 L3 NoC node register size
+Date: Wed,  3 Jan 2024 17:54:09 +0100
+Message-ID: <20240103164854.125139781@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
-References: <20240103164856.169912722@linuxfoundation.org>
+In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
+References: <20240103164853.921194838@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,86 +38,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Andrew Davis <afd@ti.com>
 
-[ Upstream commit a9f106c765c12d2f58aa33431bd8ce8e9d8a404a ]
+[ Upstream commit 1e5caee2ba8f1426e8098afb4ca38dc40a0ca71b ]
 
-When client send SMB2_CREATE_ALLOCATION_SIZE create context, ksmbd update
-old size to ->AllocationSize in smb2 create response. ksmbd_vfs_getattr()
-should be called after it to get updated stat result.
+This node can access any part of the L3 configuration registers space,
+including CLK1 and CLK2 which are 0x800000 offset. Restore this area
+size to include these areas.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 7f2659ce657e ("ARM: dts: Move dra7 l3 noc to a separate node")
+Signed-off-by: Andrew Davis <afd@ti.com>
+Message-ID: <20231113181604.546444-1-afd@ti.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ arch/arm/boot/dts/dra7.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 2eea811fc8cb0..ea48dd06d4da3 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2516,7 +2516,7 @@ static void smb2_new_xattrs(struct ksmbd_tree_connect *tcon, const struct path *
- 	da.flags = XATTR_DOSINFO_ATTRIB | XATTR_DOSINFO_CREATE_TIME |
- 		XATTR_DOSINFO_ITIME;
+diff --git a/arch/arm/boot/dts/dra7.dtsi b/arch/arm/boot/dts/dra7.dtsi
+index 61a3fb3e2a2f9..0cb5ec39e33a3 100644
+--- a/arch/arm/boot/dts/dra7.dtsi
++++ b/arch/arm/boot/dts/dra7.dtsi
+@@ -144,7 +144,7 @@
  
--	rc = ksmbd_vfs_set_dos_attrib_xattr(mnt_user_ns(path->mnt), path, &da, false);
-+	rc = ksmbd_vfs_set_dos_attrib_xattr(mnt_user_ns(path->mnt), path, &da, true);
- 	if (rc)
- 		ksmbd_debug(SMB, "failed to store file attribute into xattr\n");
- }
-@@ -3185,23 +3185,6 @@ int smb2_open(struct ksmbd_work *work)
- 		goto err_out;
- 	}
- 
--	rc = ksmbd_vfs_getattr(&path, &stat);
--	if (rc)
--		goto err_out;
--
--	if (stat.result_mask & STATX_BTIME)
--		fp->create_time = ksmbd_UnixTimeToNT(stat.btime);
--	else
--		fp->create_time = ksmbd_UnixTimeToNT(stat.ctime);
--	if (req->FileAttributes || fp->f_ci->m_fattr == 0)
--		fp->f_ci->m_fattr =
--			cpu_to_le32(smb2_get_dos_mode(&stat, le32_to_cpu(req->FileAttributes)));
--
--	if (!created)
--		smb2_update_xattrs(tcon, &path, fp);
--	else
--		smb2_new_xattrs(tcon, &path, fp);
--
- 	if (file_present || created)
- 		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
- 
-@@ -3302,6 +3285,23 @@ int smb2_open(struct ksmbd_work *work)
- 		}
- 	}
- 
-+	rc = ksmbd_vfs_getattr(&path, &stat);
-+	if (rc)
-+		goto err_out1;
-+
-+	if (stat.result_mask & STATX_BTIME)
-+		fp->create_time = ksmbd_UnixTimeToNT(stat.btime);
-+	else
-+		fp->create_time = ksmbd_UnixTimeToNT(stat.ctime);
-+	if (req->FileAttributes || fp->f_ci->m_fattr == 0)
-+		fp->f_ci->m_fattr =
-+			cpu_to_le32(smb2_get_dos_mode(&stat, le32_to_cpu(req->FileAttributes)));
-+
-+	if (!created)
-+		smb2_update_xattrs(tcon, &path, fp);
-+	else
-+		smb2_new_xattrs(tcon, &path, fp);
-+
- 	memcpy(fp->client_guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE);
- 
- 	rsp->StructureSize = cpu_to_le16(89);
+ 		l3-noc@44000000 {
+ 			compatible = "ti,dra7-l3-noc";
+-			reg = <0x44000000 0x1000>,
++			reg = <0x44000000 0x1000000>,
+ 			      <0x45000000 0x1000>;
+ 			interrupts-extended = <&crossbar_mpu GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>,
+ 					      <&wakeupgen GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
 -- 
 2.43.0
 
