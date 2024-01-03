@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3645F1BDF1;
-	Wed,  3 Jan 2024 17:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0711BDFB;
+	Wed,  3 Jan 2024 17:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4Tf3EwF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB06C433C7;
-	Wed,  3 Jan 2024 17:13:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xjml0hE2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DC6C433C8;
+	Wed,  3 Jan 2024 17:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301985;
-	bh=CqWWHHGCsz8QMWUdzUuiJyAtxnkXBC79rsgjHNE2o2I=;
+	s=korg; t=1704301988;
+	bh=xHvKEesJmTsQhdhz4YTAvLDF4tP+BVuTQb808BXjdMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4Tf3EwF4vXn3uLVN/rbl/kK6y5SMIWljQvJNzgQF33Sh0q8Tnadlf752/NkDwgSf
-	 JCwb5MEJfAsk6I6b78b05rjiXGl/rC/AS9UhlKwL8B+1YLGOSh18Vf6y1dq0Pib2Q2
-	 /+JC9dqxpp01TlkRvIvt/WYoQCXVxELZvmOIva5w=
+	b=Xjml0hE2wTHRElKXhFqhnxzs1sa5b6IZt3Vf7zeCJ5yyuCGcyN+wqR4Hc6z100Fhr
+	 JUa8xXy2r0LPdSbTjrmPvgsG1lFF/quw1ElLfd0Mvo4mEidXOVWymAhMLnYihuTaoP
+	 wDqzxXDaFUYKBDnWdk0XETpgfIG4ElLZLUhg3Iz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 14/49] ksmbd: set epoch in create context v2 lease
-Date: Wed,  3 Jan 2024 17:55:34 +0100
-Message-ID: <20240103164837.240001747@linuxfoundation.org>
+Subject: [PATCH 6.6 15/49] ksmbd: set v2 lease capability
+Date: Wed,  3 Jan 2024 17:55:35 +0100
+Message-ID: <20240103164837.376735981@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
 References: <20240103164834.970234661@linuxfoundation.org>
@@ -44,68 +44,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit d045850b628aaf931fc776c90feaf824dca5a1cf ]
+[ Upstream commit 18dd1c367c31d0a060f737d48345747662369b64 ]
 
-To support v2 lease(directory lease), ksmbd set epoch in create context
-v2 lease response.
+Set SMB2_GLOBAL_CAP_DIRECTORY_LEASING to ->capabilities to inform server
+support directory lease to client.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c | 5 ++++-
- fs/smb/server/oplock.h | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ fs/smb/server/oplock.c  | 4 ----
+ fs/smb/server/smb2ops.c | 9 ++++++---
+ 2 files changed, 6 insertions(+), 7 deletions(-)
 
 diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 50c68beb71d6c..ff5c83b1fb85c 100644
+index ff5c83b1fb85c..5ef6af68d0de6 100644
 --- a/fs/smb/server/oplock.c
 +++ b/fs/smb/server/oplock.c
-@@ -104,7 +104,7 @@ static int alloc_lease(struct oplock_info *opinfo, struct lease_ctx_info *lctx)
- 	lease->duration = lctx->duration;
- 	memcpy(lease->parent_lease_key, lctx->parent_lease_key, SMB2_LEASE_KEY_SIZE);
- 	lease->version = lctx->version;
--	lease->epoch = 0;
-+	lease->epoch = le16_to_cpu(lctx->epoch);
- 	INIT_LIST_HEAD(&opinfo->lease_entry);
- 	opinfo->o_lease = lease;
+@@ -1105,10 +1105,6 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
+ 	bool prev_op_has_lease;
+ 	__le32 prev_op_state = 0;
  
-@@ -1032,6 +1032,7 @@ static void copy_lease(struct oplock_info *op1, struct oplock_info *op2)
- 	       SMB2_LEASE_KEY_SIZE);
- 	lease2->duration = lease1->duration;
- 	lease2->flags = lease1->flags;
-+	lease2->epoch = lease1->epoch++;
- }
+-	/* not support directory lease */
+-	if (S_ISDIR(file_inode(fp->filp)->i_mode))
+-		return 0;
+-
+ 	opinfo = alloc_opinfo(work, pid, tid);
+ 	if (!opinfo)
+ 		return -ENOMEM;
+diff --git a/fs/smb/server/smb2ops.c b/fs/smb/server/smb2ops.c
+index aed7704a06728..27a9dce3e03ab 100644
+--- a/fs/smb/server/smb2ops.c
++++ b/fs/smb/server/smb2ops.c
+@@ -221,7 +221,8 @@ void init_smb3_0_server(struct ksmbd_conn *conn)
+ 	conn->signing_algorithm = SIGNING_ALG_AES_CMAC_LE;
  
- static int add_lease_global_list(struct oplock_info *opinfo)
-@@ -1364,6 +1365,7 @@ void create_lease_buf(u8 *rbuf, struct lease *lease)
- 		memcpy(buf->lcontext.LeaseKey, lease->lease_key,
- 		       SMB2_LEASE_KEY_SIZE);
- 		buf->lcontext.LeaseFlags = lease->flags;
-+		buf->lcontext.Epoch = cpu_to_le16(++lease->epoch);
- 		buf->lcontext.LeaseState = lease->state;
- 		memcpy(buf->lcontext.ParentLeaseKey, lease->parent_lease_key,
- 		       SMB2_LEASE_KEY_SIZE);
-@@ -1423,6 +1425,7 @@ struct lease_ctx_info *parse_lease_state(void *open_req)
- 		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
- 		lreq->req_state = lc->lcontext.LeaseState;
- 		lreq->flags = lc->lcontext.LeaseFlags;
-+		lreq->epoch = lc->lcontext.Epoch;
- 		lreq->duration = lc->lcontext.LeaseDuration;
- 		memcpy(lreq->parent_lease_key, lc->lcontext.ParentLeaseKey,
- 				SMB2_LEASE_KEY_SIZE);
-diff --git a/fs/smb/server/oplock.h b/fs/smb/server/oplock.h
-index 4b0fe6da76940..ad31439c61fef 100644
---- a/fs/smb/server/oplock.h
-+++ b/fs/smb/server/oplock.h
-@@ -34,6 +34,7 @@ struct lease_ctx_info {
- 	__le32			flags;
- 	__le64			duration;
- 	__u8			parent_lease_key[SMB2_LEASE_KEY_SIZE];
-+	__le16			epoch;
- 	int			version;
- };
+ 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_LEASES)
+-		conn->vals->capabilities |= SMB2_GLOBAL_CAP_LEASING;
++		conn->vals->capabilities |= SMB2_GLOBAL_CAP_LEASING |
++			SMB2_GLOBAL_CAP_DIRECTORY_LEASING;
  
+ 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION &&
+ 	    conn->cli_cap & SMB2_GLOBAL_CAP_ENCRYPTION)
+@@ -245,7 +246,8 @@ void init_smb3_02_server(struct ksmbd_conn *conn)
+ 	conn->signing_algorithm = SIGNING_ALG_AES_CMAC_LE;
+ 
+ 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_LEASES)
+-		conn->vals->capabilities |= SMB2_GLOBAL_CAP_LEASING;
++		conn->vals->capabilities |= SMB2_GLOBAL_CAP_LEASING |
++			SMB2_GLOBAL_CAP_DIRECTORY_LEASING;
+ 
+ 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION ||
+ 	    (!(server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION_OFF) &&
+@@ -270,7 +272,8 @@ int init_smb3_11_server(struct ksmbd_conn *conn)
+ 	conn->signing_algorithm = SIGNING_ALG_AES_CMAC_LE;
+ 
+ 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_LEASES)
+-		conn->vals->capabilities |= SMB2_GLOBAL_CAP_LEASING;
++		conn->vals->capabilities |= SMB2_GLOBAL_CAP_LEASING |
++			SMB2_GLOBAL_CAP_DIRECTORY_LEASING;
+ 
+ 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION ||
+ 	    (!(server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION_OFF) &&
 -- 
 2.43.0
 
