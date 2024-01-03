@@ -1,32 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5911BDFB;
-	Wed,  3 Jan 2024 17:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2B51C29F;
+	Wed,  3 Jan 2024 17:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJyRjxce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E87C433C7;
-	Wed,  3 Jan 2024 17:15:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUT/Pwxe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F3FC433C7;
+	Wed,  3 Jan 2024 17:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704302122;
-	bh=bpqQfnmxazga1GUKzHqmkPqZmznYAqGvR15KEQbShcY=;
+	s=korg; t=1704302125;
+	bh=bCBxo89qCPrq8ZPeA5H1zzWiFrO4cC+ThSp0jBcwRxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJyRjxcekGlxVZTTInZkQb8Dq4I8VelVdzYCeca9zl89sAE/xdlIM4GtvRfgiOa0y
-	 FC2XytSUMCTlKKZKwhFGPR6YJvzWnhMAT35xDGXcW2ocwidqSwf3IfdtocFyTdox9O
-	 gAIGdtvG9rFlUE7yaeLhXRoohZ5ghsreqTMlqnZI=
+	b=XUT/PwxeT9g8t9C1e7OQYzM7kz0SbE7wBemakWxvBPZOtWUcmu5SHIEnxDUly9Rov
+	 TfxItM3TmmzriiT6b5/WKY5awduchzXOsptjYRiJE+oBUiqJo05q9g70nNSQSMKXM7
+	 XpiwJ2lQ7ysffD8lHFR4gygm+xCC/i4XpD6P4i0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ning, Hongyu" <hongyu.ning@linux.intel.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Parav Pandit <parav@nvidia.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Eric DeVolder <eric_devolder@yahoo.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Borislav Petkov <bp@alien8.de>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Conor Dooley <conor@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 23/49] virtio_ring: fix syncs DMA memory with different direction
-Date: Wed,  3 Jan 2024 17:55:43 +0100
-Message-ID: <20240103164838.556172903@linuxfoundation.org>
+Subject: [PATCH 6.6 24/49] kexec: fix KEXEC_FILE dependencies
+Date: Wed,  3 Jan 2024 17:55:44 +0100
+Message-ID: <20240103164838.696708028@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
 References: <20240103164834.970234661@linuxfoundation.org>
@@ -45,98 +63,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 1f475cd572ea77ae6474a17e693a96bca927efe9 ]
+[ Upstream commit c1ad12ee0efc07244be37f69311e6f7c4ac98e62 ]
 
-Now the APIs virtqueue_dma_sync_single_range_for_{cpu,device} ignore
-the parameter 'dir', that is a mistake.
+The cleanup for the CONFIG_KEXEC Kconfig logic accidentally changed the
+'depends on CRYPTO=y' dependency to a plain 'depends on CRYPTO', which
+causes a link failure when all the crypto support is in a loadable module
+and kexec_file support is built-in:
 
-[    6.101666] ------------[ cut here ]------------
-[    6.102079] DMA-API: virtio-pci 0000:00:04.0: device driver syncs DMA memory with different direction [device address=0x00000000ae010000] [size=32752 bytes] [mapped with DMA_FROM_DEVICE] [synced with DMA_BIDIRECTIONAL]
-[    6.103630] WARNING: CPU: 6 PID: 0 at kernel/dma/debug.c:1125 check_sync+0x53e/0x6c0
-[    6.107420] CPU: 6 PID: 0 Comm: swapper/6 Tainted: G            E      6.6.0+ #290
-[    6.108030] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-[    6.108936] RIP: 0010:check_sync+0x53e/0x6c0
-[    6.109289] Code: 24 10 e8 f5 d9 74 00 4c 8b 4c 24 10 4c 8b 44 24 18 48 8b 4c 24 20 48 89 c6 41 56 4c 89 ea 48 c7 c7 b0 f1 50 82 e8 32 fc f3 ff <0f> 0b 48 c7 c7 48 4b 4a 82 e8 74 d9 fc ff 8b 73 4c 48 8d 7b 50 31
-[    6.110750] RSP: 0018:ffffc90000180cd8 EFLAGS: 00010092
-[    6.111178] RAX: 00000000000000ce RBX: ffff888100aa5900 RCX: 0000000000000000
-[    6.111744] RDX: 0000000000000104 RSI: ffffffff824c3208 RDI: 00000000ffffffff
-[    6.112316] RBP: ffffc90000180d40 R08: 0000000000000000 R09: 00000000fffeffff
-[    6.112893] R10: ffffc90000180b98 R11: ffffffff82f63308 R12: ffffffff83d5af00
-[    6.113460] R13: ffff888100998200 R14: ffffffff824a4b5f R15: 0000000000000286
-[    6.114027] FS:  0000000000000000(0000) GS:ffff88842fd80000(0000) knlGS:0000000000000000
-[    6.114665] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    6.115128] CR2: 00007f10f1e03030 CR3: 0000000108272004 CR4: 0000000000770ee0
-[    6.115701] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[    6.116272] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[    6.116842] PKRU: 55555554
-[    6.117069] Call Trace:
-[    6.117275]  <IRQ>
-[    6.117452]  ? __warn+0x84/0x140
-[    6.117727]  ? check_sync+0x53e/0x6c0
-[    6.118034]  ? __report_bug+0xea/0x100
-[    6.118353]  ? check_sync+0x53e/0x6c0
-[    6.118653]  ? report_bug+0x41/0xc0
-[    6.118944]  ? handle_bug+0x3c/0x70
-[    6.119237]  ? exc_invalid_op+0x18/0x70
-[    6.119551]  ? asm_exc_invalid_op+0x1a/0x20
-[    6.119900]  ? check_sync+0x53e/0x6c0
-[    6.120199]  ? check_sync+0x53e/0x6c0
-[    6.120499]  debug_dma_sync_single_for_cpu+0x5c/0x70
-[    6.120906]  ? dma_sync_single_for_cpu+0xb7/0x100
-[    6.121291]  virtnet_rq_unmap+0x158/0x170 [virtio_net]
-[    6.121716]  virtnet_receive+0x196/0x220 [virtio_net]
-[    6.122135]  virtnet_poll+0x48/0x1b0 [virtio_net]
-[    6.122524]  __napi_poll+0x29/0x1b0
-[    6.123083]  net_rx_action+0x282/0x360
-[    6.123612]  __do_softirq+0xf3/0x2fb
-[    6.124138]  __irq_exit_rcu+0x8e/0xf0
-[    6.124663]  common_interrupt+0xbc/0xe0
-[    6.125202]  </IRQ>
+x86_64-linux-ld: vmlinux.o: in function `__x64_sys_kexec_file_load':
+(.text+0x32e30a): undefined reference to `crypto_alloc_shash'
+x86_64-linux-ld: (.text+0x32e58e): undefined reference to `crypto_shash_update'
+x86_64-linux-ld: (.text+0x32e6ee): undefined reference to `crypto_shash_final'
 
-We need to enable CONFIG_DMA_API_DEBUG and work with need sync mode(such
-as swiotlb) to reproduce this warn.
+Both s390 and x86 have this problem, while ppc64 and riscv have the
+correct dependency already.  On riscv, the dependency is only used for the
+purgatory, not for the kexec_file code itself, which may be a bit
+surprising as it means that with CONFIG_CRYPTO=m, it is possible to enable
+KEXEC_FILE but then the purgatory code is silently left out.
 
-Fixes: 8bd2f71054bd ("virtio_ring: introduce dma sync api for virtqueue")
-Reported-by: "Ning, Hongyu" <hongyu.ning@linux.intel.com>
-Closes: https://lore.kernel.org/all/f37cb55a-6fc8-4e21-8789-46d468325eea@linux.intel.com/
-Suggested-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Message-Id: <20231201033303.25141-1-xuanzhuo@linux.alibaba.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Tested-by: Hongyu Ning <hongyu.ning@linux.intel.com>
+Move this into the common Kconfig.kexec file in a way that is correct
+everywhere, using the dependency on CRYPTO_SHA256=y only when the
+purgatory code is available.  This requires reversing the dependency
+between ARCH_SUPPORTS_KEXEC_PURGATORY and KEXEC_FILE, but the effect
+remains the same, other than making riscv behave like the other ones.
+
+On s390, there is an additional dependency on CRYPTO_SHA256_S390, which
+should technically not be required but gives better performance.  Remove
+this dependency here, noting that it was not present in the initial
+Kconfig code but was brought in without an explanation in commit
+71406883fd357 ("s390/kexec_file: Add kexec_file_load system call").
+
+[arnd@arndb.de: fix riscv build]
+  Link: https://lkml.kernel.org/r/67ddd260-d424-4229-a815-e3fcfb864a77@app.fastmail.com
+Link: https://lkml.kernel.org/r/20231023110308.1202042-1-arnd@kernel.org
+Fixes: 6af5138083005 ("x86/kexec: refactor for kernel/Kconfig.kexec")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Eric DeVolder <eric_devolder@yahoo.com>
+Tested-by: Eric DeVolder <eric_devolder@yahoo.com>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Conor Dooley <conor@kernel.org>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_ring.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/powerpc/Kconfig | 4 ++--
+ arch/riscv/Kconfig   | 4 +---
+ arch/s390/Kconfig    | 4 ++--
+ arch/x86/Kconfig     | 4 ++--
+ kernel/Kconfig.kexec | 1 +
+ 5 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index 51d8f3299c105..49299b1f9ec74 100644
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -3219,8 +3219,7 @@ void virtqueue_dma_sync_single_range_for_cpu(struct virtqueue *_vq,
- 	if (!vq->use_dma_api)
- 		return;
+diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
+index d5d5388973ac7..4640cee33f123 100644
+--- a/arch/powerpc/Kconfig
++++ b/arch/powerpc/Kconfig
+@@ -607,10 +607,10 @@ config ARCH_SUPPORTS_KEXEC
+ 	def_bool PPC_BOOK3S || PPC_E500 || (44x && !SMP)
  
--	dma_sync_single_range_for_cpu(dev, addr, offset, size,
--				      DMA_BIDIRECTIONAL);
-+	dma_sync_single_range_for_cpu(dev, addr, offset, size, dir);
- }
- EXPORT_SYMBOL_GPL(virtqueue_dma_sync_single_range_for_cpu);
+ config ARCH_SUPPORTS_KEXEC_FILE
+-	def_bool PPC64 && CRYPTO=y && CRYPTO_SHA256=y
++	def_bool PPC64
  
-@@ -3246,8 +3245,7 @@ void virtqueue_dma_sync_single_range_for_device(struct virtqueue *_vq,
- 	if (!vq->use_dma_api)
- 		return;
+ config ARCH_SUPPORTS_KEXEC_PURGATORY
+-	def_bool KEXEC_FILE
++	def_bool y
  
--	dma_sync_single_range_for_device(dev, addr, offset, size,
--					 DMA_BIDIRECTIONAL);
-+	dma_sync_single_range_for_device(dev, addr, offset, size, dir);
- }
- EXPORT_SYMBOL_GPL(virtqueue_dma_sync_single_range_for_device);
+ config ARCH_SELECTS_KEXEC_FILE
+ 	def_bool y
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index 6688cbbed0b42..9e6d442773eea 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -686,9 +686,7 @@ config ARCH_SELECTS_KEXEC_FILE
+ 	select KEXEC_ELF
  
+ config ARCH_SUPPORTS_KEXEC_PURGATORY
+-	def_bool KEXEC_FILE
+-	depends on CRYPTO=y
+-	depends on CRYPTO_SHA256=y
++	def_bool ARCH_SUPPORTS_KEXEC_FILE
+ 
+ config ARCH_SUPPORTS_CRASH_DUMP
+ 	def_bool y
+diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
+index ae29e4392664a..bd4782f23f66d 100644
+--- a/arch/s390/Kconfig
++++ b/arch/s390/Kconfig
+@@ -252,13 +252,13 @@ config ARCH_SUPPORTS_KEXEC
+ 	def_bool y
+ 
+ config ARCH_SUPPORTS_KEXEC_FILE
+-	def_bool CRYPTO && CRYPTO_SHA256 && CRYPTO_SHA256_S390
++	def_bool y
+ 
+ config ARCH_SUPPORTS_KEXEC_SIG
+ 	def_bool MODULE_SIG_FORMAT
+ 
+ config ARCH_SUPPORTS_KEXEC_PURGATORY
+-	def_bool KEXEC_FILE
++	def_bool y
+ 
+ config ARCH_SUPPORTS_CRASH_DUMP
+ 	def_bool y
+diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+index 66bfabae88149..fe3292e310d48 100644
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -2034,7 +2034,7 @@ config ARCH_SUPPORTS_KEXEC
+ 	def_bool y
+ 
+ config ARCH_SUPPORTS_KEXEC_FILE
+-	def_bool X86_64 && CRYPTO && CRYPTO_SHA256
++	def_bool X86_64
+ 
+ config ARCH_SELECTS_KEXEC_FILE
+ 	def_bool y
+@@ -2042,7 +2042,7 @@ config ARCH_SELECTS_KEXEC_FILE
+ 	select HAVE_IMA_KEXEC if IMA
+ 
+ config ARCH_SUPPORTS_KEXEC_PURGATORY
+-	def_bool KEXEC_FILE
++	def_bool y
+ 
+ config ARCH_SUPPORTS_KEXEC_SIG
+ 	def_bool y
+diff --git a/kernel/Kconfig.kexec b/kernel/Kconfig.kexec
+index f9619ac6b71d9..d3b8a2b1b5732 100644
+--- a/kernel/Kconfig.kexec
++++ b/kernel/Kconfig.kexec
+@@ -36,6 +36,7 @@ config KEXEC
+ config KEXEC_FILE
+ 	bool "Enable kexec file based system call"
+ 	depends on ARCH_SUPPORTS_KEXEC_FILE
++	depends on CRYPTO_SHA256=y || !ARCH_SUPPORTS_KEXEC_PURGATORY
+ 	select KEXEC_CORE
+ 	help
+ 	  This is new version of kexec system call. This system call is
 -- 
 2.43.0
 
