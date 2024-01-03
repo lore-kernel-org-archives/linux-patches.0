@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8021BDFB;
-	Wed,  3 Jan 2024 17:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F320D1BDEC;
+	Wed,  3 Jan 2024 17:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTAPritL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16709C433C7;
-	Wed,  3 Jan 2024 17:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MP3J+kbc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A82EC433C8;
+	Wed,  3 Jan 2024 17:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301852;
-	bh=34nCNs+9wG0BtMgKSmwR6d4LihiYwsXWKLjs30noa9M=;
+	s=korg; t=1704301857;
+	bh=jtU80mU9e7pM7ji8T7Wbtz24mFHCsDSq7DYnXe+MPgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FTAPritL80JdQjMqjevYtFo8/hIzUfdHwhYDEM7Lzyy1AVM0f+Ms2SRetgozfJ8MS
-	 32QSAX3+Y4hbJKmztXFpCz5uOV8KxoI5se//KI6IXE/3IoNteCeKfJpLVwX4f/ZPiD
-	 LfA3SndJtU0gYGh5HaqSi74uHYgQs+6gMcbrCm98=
+	b=MP3J+kbc5QwBNuo966774SxHDIPw+t8KF8qNmeR/BnBGMzgyRWpi1VTkclE+ZTJNq
+	 IEvjhhWDRwIxVvXBK5HiZulwNfESexFiGqZsBwZSeftuwSnpQuoSYwsaW4koLCNQpJ
+	 i6oXX3EJb6J9Okrc7jHbk2fM/InEaCMLzulMBlzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Lindgren <tony@atomide.com>
-Subject: [PATCH 5.10 48/75] bus: ti-sysc: Flush posted write only after srst_udelay
-Date: Wed,  3 Jan 2024 17:55:29 +0100
-Message-ID: <20240103164850.423417102@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Petr Mladek <pmladek@suse.com>
+Subject: [PATCH 5.10 49/75] lib/vsprintf: Fix %pfwf when current node refcount == 0
+Date: Wed,  3 Jan 2024 17:55:30 +0100
+Message-ID: <20240103164850.539961124@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164842.953224409@linuxfoundation.org>
 References: <20240103164842.953224409@linuxfoundation.org>
@@ -40,59 +43,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Herve Codina <herve.codina@bootlin.com>
 
-commit f71f6ff8c1f682a1cae4e8d7bdeed9d7f76b8f75 upstream.
+commit 5c47251e8c4903111608ddcba2a77c0c425c247c upstream.
 
-Commit 34539b442b3b ("bus: ti-sysc: Flush posted write on enable before
-reset") caused a regression reproducable on omap4 duovero where the ISS
-target module can produce interconnect errors on boot. Turns out the
-registers are not accessible until after a delay for devices needing
-a ti,sysc-delay-us value.
+A refcount issue can appeared in __fwnode_link_del() due to the
+pr_debug() call:
+  WARNING: CPU: 0 PID: 901 at lib/refcount.c:25 refcount_warn_saturate+0xe5/0x110
+  Call Trace:
+  <TASK>
+  ...
+  of_node_get+0x1e/0x30
+  of_fwnode_get+0x28/0x40
+  fwnode_full_name_string+0x34/0x90
+  fwnode_string+0xdb/0x140
+  ...
+  vsnprintf+0x17b/0x630
+  ...
+  __fwnode_link_del+0x25/0xa0
+  fwnode_links_purge+0x39/0xb0
+  of_node_release+0xd9/0x180
+  ...
 
-Let's fix this by flushing the posted write only after the reset delay.
-We do flushing also for ti,sysc-delay-us using devices as that should
-trigger an interconnect error if the delay is not properly configured.
+Indeed, an fwnode (of_node) is being destroyed and so, of_node_release()
+is called because the of_node refcount reached 0.
+>From of_node_release() several function calls are done and lead to
+a pr_debug() calls with %pfwf to print the fwnode full name.
+The issue is not present if we change %pfwf to %pfwP.
 
-Let's also add some comments while at it.
+To print the full name, %pfwf iterates over the current node and its
+parents and obtain/drop a reference to all nodes involved.
 
-Fixes: 34539b442b3b ("bus: ti-sysc: Flush posted write on enable before reset")
+In order to allow to print the full name (%pfwf) of a node while it is
+being destroyed, do not obtain/drop a reference to this current node.
+
+Fixes: a92eb7621b9f ("lib/vsprintf: Make use of fwnode API to obtain node names and separators")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20231114152655.409331-1-herve.codina@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/ti-sysc.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ lib/vsprintf.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/bus/ti-sysc.c
-+++ b/drivers/bus/ti-sysc.c
-@@ -2093,13 +2093,23 @@ static int sysc_reset(struct sysc *ddata
- 		sysc_val = sysc_read_sysconfig(ddata);
- 		sysc_val |= sysc_mask;
- 		sysc_write(ddata, sysc_offset, sysc_val);
--		/* Flush posted write */
-+
+--- a/lib/vsprintf.c
++++ b/lib/vsprintf.c
+@@ -1984,15 +1984,20 @@ char *fwnode_full_name_string(struct fwn
+ 
+ 	/* Loop starting from the root node to the current node. */
+ 	for (depth = fwnode_count_parents(fwnode); depth >= 0; depth--) {
+-		struct fwnode_handle *__fwnode =
+-			fwnode_get_nth_parent(fwnode, depth);
 +		/*
-+		 * Some devices need a delay before reading registers
-+		 * after reset. Presumably a srst_udelay is not needed
-+		 * for devices that use a rstctrl register reset.
++		 * Only get a reference for other nodes (i.e. parent nodes).
++		 * fwnode refcount may be 0 here.
 +		 */
-+		if (ddata->cfg.srst_udelay)
-+			fsleep(ddata->cfg.srst_udelay);
-+
-+		/*
-+		 * Flush posted write. For devices needing srst_udelay
-+		 * this should trigger an interconnect error if the
-+		 * srst_udelay value is needed but not configured.
-+		 */
- 		sysc_val = sysc_read_sysconfig(ddata);
++		struct fwnode_handle *__fwnode = depth ?
++			fwnode_get_nth_parent(fwnode, depth) : fwnode;
+ 
+ 		buf = string(buf, end, fwnode_get_name_prefix(__fwnode),
+ 			     default_str_spec);
+ 		buf = string(buf, end, fwnode_get_name(__fwnode),
+ 			     default_str_spec);
+ 
+-		fwnode_handle_put(__fwnode);
++		if (depth)
++			fwnode_handle_put(__fwnode);
  	}
  
--	if (ddata->cfg.srst_udelay)
--		fsleep(ddata->cfg.srst_udelay);
--
- 	if (ddata->post_reset_quirk)
- 		ddata->post_reset_quirk(ddata);
- 
+ 	return buf;
 
 
