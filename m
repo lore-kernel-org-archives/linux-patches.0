@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FF61C284;
-	Wed,  3 Jan 2024 17:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF51A1BDEC;
+	Wed,  3 Jan 2024 17:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hh3NewG/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE613C433C7;
-	Wed,  3 Jan 2024 17:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BT+XY/cZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24585C433C8;
+	Wed,  3 Jan 2024 17:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704302086;
-	bh=I6y8MH6/c2bvRDY5FW9B0NNptDfGXaomRpYoaLCSJiM=;
+	s=korg; t=1704302089;
+	bh=MDA16Y3tbAQZ3LRqZOAqwv1AkXvJsmPZZ+/4UUXfBeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hh3NewG//EvnAWu+pvnc7dH5VfwWfk0hODHMygUL0kT/NCYz6uoaUONBa2+TjMjD6
-	 wDw7wH85x82wzys+K+9ySIiJP0TUbAxyWABcmZatCFnrLlRz6TB4GEjv8Hsx+VJLka
-	 4NBdlfKpwTNUsOhhPtgwWMeGPrwwfwej3MGGymLs=
+	b=BT+XY/cZA/ot3HEqar2rZoZ8CDEShGvdKCr/KkfaoUQ3EfJp3oEZz1kAJ9mrnYBCH
+	 EARVUsl4IFrb504HzxBdpVJOOLzDPfc25/mn6VOdLZP8P8AeaEOld7rKqkKcrbEIei
+	 R9/l+rC2Hj+WsbhVi5S7mIGwQVwp4oMUKwpFjWqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dan Williams <dan.j.williams@intel.com>,
 	Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 41/49] mm/memory-failure: cast index to loff_t before shifting it
-Date: Wed,  3 Jan 2024 17:56:01 +0100
-Message-ID: <20240103164841.369942969@linuxfoundation.org>
+Subject: [PATCH 6.6 42/49] mm/memory-failure: check the mapcount of the precise page
+Date: Wed,  3 Jan 2024 17:56:02 +0100
+Message-ID: <20240103164841.508093263@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
 References: <20240103164834.970234661@linuxfoundation.org>
@@ -45,14 +45,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit 39ebd6dce62d8cfe3864e16148927a139f11bc9a upstream.
+commit c79c5a0a00a9457718056b588f312baadf44e471 upstream.
 
-On 32-bit systems, we'll lose the top bits of index because arithmetic
-will be performed in unsigned long instead of unsigned long long.  This
-affects files over 4GB in size.
+A process may map only some of the pages in a folio, and might be missed
+if it maps the poisoned page but not the head page.  Or it might be
+unnecessarily hit if it maps the head page, but not the poisoned page.
 
-Link: https://lkml.kernel.org/r/20231218135837.3310403-4-willy@infradead.org
-Fixes: 6100e34b2526 ("mm, memory_failure: Teach memory_failure() about dev_pagemap pages")
+Link: https://lkml.kernel.org/r/20231218135837.3310403-3-willy@infradead.org
+Fixes: 7af446a841a2 ("HWPOISON, hugetlb: enable error handling path for hugepage")
 Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Cc: Dan Williams <dan.j.williams@intel.com>
 Cc: Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>
@@ -60,19 +60,32 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/memory-failure.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/mm/memory-failure.c
 +++ b/mm/memory-failure.c
-@@ -1705,7 +1705,7 @@ static void unmap_and_kill(struct list_h
- 		 * mapping being torn down is communicated in siginfo, see
- 		 * kill_proc()
- 		 */
--		loff_t start = (index << PAGE_SHIFT) & ~(size - 1);
-+		loff_t start = ((loff_t)index << PAGE_SHIFT) & ~(size - 1);
+@@ -1571,7 +1571,7 @@ static bool hwpoison_user_mappings(struc
+ 	 * This check implies we don't kill processes if their pages
+ 	 * are in the swap cache early. Those are always late kills.
+ 	 */
+-	if (!page_mapped(hpage))
++	if (!page_mapped(p))
+ 		return true;
  
- 		unmap_mapping_range(mapping, start, size, 0);
+ 	if (PageSwapCache(p)) {
+@@ -1622,10 +1622,10 @@ static bool hwpoison_user_mappings(struc
+ 		try_to_unmap(folio, ttu);
  	}
+ 
+-	unmap_success = !page_mapped(hpage);
++	unmap_success = !page_mapped(p);
+ 	if (!unmap_success)
+ 		pr_err("%#lx: failed to unmap page (mapcount=%d)\n",
+-		       pfn, page_mapcount(hpage));
++		       pfn, page_mapcount(p));
+ 
+ 	/*
+ 	 * try_to_unmap() might put mlocked page in lru cache, so call
 
 
