@@ -1,72 +1,45 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921171DA2A
-	for <patches@lists.linux.dev>; Wed,  3 Jan 2024 22:04:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42F601F934
+	for <patches@lists.linux.dev>; Wed,  3 Jan 2024 23:35:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YufA3rD1"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6d98ce84e18so7989390b3a.3
-        for <patches@lists.linux.dev>; Wed, 03 Jan 2024 14:04:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704319471; x=1704924271; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=O7iewc9p+e5BRzaH3h+6ugVYrcUX2L5YJYU1XW/tpRA=;
-        b=YufA3rD1YbP0V2fSZfA9KTbqi8qHcv5MdxlyTOzh3+aIPRPdT9xPMkyROeyC9iQ0d9
-         qt7Nn2g2pjKTfsTHbQSPzs7k7cx2uelsXPh7RtsMgweF0SytGRyQozyGYZ/+kxgFqGli
-         ApVAYedhmOIAKpMW0ZgFfpqgypYItE6s7LKMFL46dSI9SOsLHG37X3UbHXFdDRhCUddT
-         6bOzGuiEnECeyZUs6nwuAFkgIQSTTcqXsb7+RUKbSdl03wr6knplwryagVRaTbnDVHqz
-         atP7C2/JgKNcZvSEs1BUiceOKL8DK8AOHUj2EYVUT844TH38vclk42SSbk5wA9bIC7n1
-         LH0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704319471; x=1704924271;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O7iewc9p+e5BRzaH3h+6ugVYrcUX2L5YJYU1XW/tpRA=;
-        b=Zb69TmgdxR+/4OkevPRRyUD8PYIQrjjcMNBFdIN/hpn4qn+pAtlokdBNx3/tEc20V2
-         XBCocbIgpzF+U195VHvfYGIJsHnB1MQY7/Ee0L+Srriodbn94Sgb1FFIGYLdMZ4LEy4y
-         7kCpOoRze6M2qRDcPJiOrphk2GpCTBMx9PeNcuH2+cvlRnEVBXM82m1WSPBVwmBsF9Dx
-         wAgtS4vM8fxkzetG9B/6kTx0FQGVgnGhuQ3nk4kzsZ3HvsptTGh8aFDYASe15YFN1464
-         u6+CPW5NacHj5mhBwpSl975Jcodrhy/qWt7hEvHLvThQUTie+yjTHg+bAwBhhPvElVYV
-         jx3Q==
-X-Gm-Message-State: AOJu0Yw3+a4Tdz+6f4WO8IqcfMuYYsunL3Pm1D3uVu5VCZPc08fSThor
-	IkoBauJPHHnKpKPAcQwxPrs=
-X-Google-Smtp-Source: AGHT+IGFAU/chI/igQ3rX6cuspXRekK0D0+GMOnXBB/fR5lCzwlRPqDmltazxxBLKaSkiMUBVHC+1A==
-X-Received: by 2002:a05:6a00:3989:b0:6d9:e91c:a5bc with SMTP id fi9-20020a056a00398900b006d9e91ca5bcmr13608036pfb.38.1704319470948;
-        Wed, 03 Jan 2024 14:04:30 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id u36-20020a056a0009a400b006d9b3b38525sm17876588pfg.161.2024.01.03.14.04.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Jan 2024 14:04:29 -0800 (PST)
-Message-ID: <c0525f2a-3871-4500-b941-a35e1224a4f6@gmail.com>
-Date: Wed, 3 Jan 2024 14:04:28 -0800
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="BjMg2ldX"
+Received: by linux.microsoft.com (Postfix, from userid 1131)
+	id 85BE220ACEE5; Wed,  3 Jan 2024 15:35:30 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 85BE220ACEE5
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1704324930;
+	bh=1C1AW6/XZVDp8rpc10Ul2I6b6XVlEoyKHUbERHZgaGY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BjMg2ldXDfXoJ/d30jQgiRODZZVZ7PqJjYWQJPmgnoUs6j3EO/ubDgkeFL76m/L7+
+	 EtnXVItunFG/gWUBoEZ/xGZQknwHcZYA/GP/uk5Ihv0Vlk+fKBJimFxYpl/cTN4SG8
+	 RKe92/BIOCZKAwNHVg5vW8IO5SIrIHvjkt9zk8f8=
+Date: Wed, 3 Jan 2024 15:35:30 -0800
+From: Kelsey Steele <kelseysteele@linux.microsoft.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.6 00/49] 6.6.10-rc1 review
+Message-ID: <20240103233530.GA858@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+References: <20240103164834.970234661@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 00/49] 6.6.10-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com
-References: <20240103164834.970234661@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Mutt/1.5.21 (2010-09-15)
 
-On 1/3/24 08:55, Greg Kroah-Hartman wrote:
+On Wed, Jan 03, 2024 at 05:55:20PM +0100, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.6.10 release.
 > There are 49 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
@@ -74,21 +47,11 @@ On 1/3/24 08:55, Greg Kroah-Hartman wrote:
 > 
 > Responses should be made by Fri, 05 Jan 2024 16:47:49 +0000.
 > Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.10-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+No regressions found on WSL (x86 and arm64).
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Built, booted, and reviewed dmesg.
 
+Thank you.
+
+Tested-by: Kelsey Steele <kelseysteele@linux.microsoft.com>  
