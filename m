@@ -1,32 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10AF1C283;
-	Wed,  3 Jan 2024 17:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9211BDFF;
+	Wed,  3 Jan 2024 17:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1RGg//8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2434C433C7;
-	Wed,  3 Jan 2024 17:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LShPXBYA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85095C433C8;
+	Wed,  3 Jan 2024 17:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704302075;
-	bh=gtxpvVyZXBg5CKqFOHFQU/0RKZfPCgjFbLVGCWb58Ac=;
+	s=korg; t=1704302079;
+	bh=evKfhJCurxKd/Uurk99VoN3RPgb8zjQk7M3jOs2Ls1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1RGg//8qY9sVZc1p4A3mfvPO0xre4Y5JeblhSNSdHnh3UXLrab9d4neFscPb/f1aS
-	 JEfxbOPO4wF/vRgbNoyS1xDLELLGDmx0FoR+z3AHK3fhDFIbRpykdwo/qCxJ6x+qDP
-	 sYzjQBTZIQFJyc+nokYCR07nFMiCtMgmsMW5NoNs=
+	b=LShPXBYARvptIjqEHVTwRwALRN87P6TGuKGCpAM9RkKySGp+wVrm1ESoN9pg177SO
+	 8xi+kq9drw961Td2iAu2fQc0IybZaNMxX28VVemK5JQW+OF2L7lEriDOEOMREY1de+
+	 iPqWZe7s3WOtCbFgjFROgpL1pcBEDFaChwilMF48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	"kernelci.org bot" <bot@kernelci.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Christoph Hellwig <hch@infradead.org>,
+	Dave Chinner <david@fromorbit.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
+	yangerkun <yangerkun@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 38/49] selftests: secretmem: floor the memory size to the multiple of page_size
-Date: Wed,  3 Jan 2024 17:55:58 +0100
-Message-ID: <20240103164840.910121989@linuxfoundation.org>
+Subject: [PATCH 6.6 39/49] mm/filemap: avoid buffered read/write race to read inconsistent data
+Date: Wed,  3 Jan 2024 17:55:59 +0100
+Message-ID: <20240103164841.053830651@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
 References: <20240103164834.970234661@linuxfoundation.org>
@@ -45,50 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 0aac13add26d546ac74c89d2883b3a5f0fbea039 upstream.
+commit e2c27b803bb664748e090d99042ac128b3f88d92 upstream.
 
-The "locked-in-memory size" limit per process can be non-multiple of
-page_size.  The mmap() fails if we try to allocate locked-in-memory with
-same size as the allowed limit if it isn't multiple of the page_size
-because mmap() rounds off the memory size to be allocated to next multiple
-of page_size.
+The following concurrency may cause the data read to be inconsistent with
+the data on disk:
 
-Fix this by flooring the length to be allocated with mmap() to the
-previous multiple of the page_size.
+             cpu1                           cpu2
+------------------------------|------------------------------
+                               // Buffered write 2048 from 0
+                               ext4_buffered_write_iter
+                                generic_perform_write
+                                 copy_page_from_iter_atomic
+                                 ext4_da_write_end
+                                  ext4_da_do_write_end
+                                   block_write_end
+                                    __block_commit_write
+                                     folio_mark_uptodate
+// Buffered read 4096 from 0          smp_wmb()
+ext4_file_read_iter                   set_bit(PG_uptodate, folio_flags)
+ generic_file_read_iter            i_size_write // 2048
+  filemap_read                     unlock_page(page)
+   filemap_get_pages
+    filemap_get_read_batch
+    folio_test_uptodate(folio)
+     ret = test_bit(PG_uptodate, folio_flags)
+     if (ret)
+      smp_rmb();
+      // Ensure that the data in page 0-2048 is up-to-date.
 
-This was getting triggered on KernelCI regularly because of different
-ulimit settings which wasn't multiple of the page_size.  Find logs
-here: https://linux.kernelci.org/test/plan/id/657654bd8e81e654fae13532/
-The bug in was present from the time test was first added.
+                               // New buffered write 2048 from 2048
+                               ext4_buffered_write_iter
+                                generic_perform_write
+                                 copy_page_from_iter_atomic
+                                 ext4_da_write_end
+                                  ext4_da_do_write_end
+                                   block_write_end
+                                    __block_commit_write
+                                     folio_mark_uptodate
+                                      smp_wmb()
+                                      set_bit(PG_uptodate, folio_flags)
+                                   i_size_write // 4096
+                                   unlock_page(page)
 
-Link: https://lkml.kernel.org/r/20231214101931.1155586-1-usama.anjum@collabora.com
-Fixes: 76fe17ef588a ("secretmem: test: add basic selftest for memfd_secret(2)")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Reported-by: "kernelci.org bot" <bot@kernelci.org>
-Closes: https://linux.kernelci.org/test/plan/id/657654bd8e81e654fae13532/
-Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
-Cc: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
+   isize = i_size_read(inode) // 4096
+   // Read the latest isize 4096, but without smp_rmb(), there may be
+   // Load-Load disorder resulting in the data in the 2048-4096 range
+   // in the page is not up-to-date.
+   copy_page_to_iter
+   // copyout 4096
+
+In the concurrency above, we read the updated i_size, but there is no read
+barrier to ensure that the data in the page is the same as the i_size at
+this point, so we may copy the unsynchronized page out.  Hence adding the
+missing read memory barrier to fix this.
+
+This is a Load-Load reordering issue, which only occurs on some weak
+mem-ordering architectures (e.g.  ARM64, ALPHA), but not on strong
+mem-ordering architectures (e.g.  X86).  And theoretically the problem
+doesn't only happen on ext4, filesystems that call filemap_read() but
+don't hold inode lock (e.g.  btrfs, f2fs, ubifs ...) will have this
+problem, while filesystems with inode lock (e.g.  xfs, nfs) won't have
+this problem.
+
+Link: https://lkml.kernel.org/r/20231213062324.739009-1-libaokun1@huawei.com
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Cc: Theodore Ts'o <tytso@mit.edu>
+Cc: yangerkun <yangerkun@huawei.com>
+Cc: Yu Kuai <yukuai3@huawei.com>
+Cc: Zhang Yi <yi.zhang@huawei.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/memfd_secret.c |    3 +++
- 1 file changed, 3 insertions(+)
+ mm/filemap.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/tools/testing/selftests/mm/memfd_secret.c
-+++ b/tools/testing/selftests/mm/memfd_secret.c
-@@ -62,6 +62,9 @@ static void test_mlock_limit(int fd)
- 	char *mem;
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -2667,6 +2667,15 @@ ssize_t filemap_read(struct kiocb *iocb,
+ 		end_offset = min_t(loff_t, isize, iocb->ki_pos + iter->count);
  
- 	len = mlock_limit_cur;
-+	if (len % page_size != 0)
-+		len = (len/page_size) * page_size;
+ 		/*
++		 * Pairs with a barrier in
++		 * block_write_end()->mark_buffer_dirty() or other page
++		 * dirtying routines like iomap_write_end() to ensure
++		 * changes to page contents are visible before we see
++		 * increased inode size.
++		 */
++		smp_rmb();
 +
- 	mem = mmap(NULL, len, prot, mode, fd, 0);
- 	if (mem == MAP_FAILED) {
- 		fail("unable to mmap secret memory\n");
++		/*
+ 		 * Once we start copying data, we don't want to be touching any
+ 		 * cachelines that might be contended:
+ 		 */
 
 
