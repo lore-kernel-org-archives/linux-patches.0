@@ -1,79 +1,90 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DFB1C683
-	for <patches@lists.linux.dev>; Wed,  3 Jan 2024 17:44:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517AE1C68A;
+	Wed,  3 Jan 2024 18:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="n11hRldY";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="wcd01m6v"
-Date: Wed, 3 Jan 2024 18:44:54 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1704303895;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qXE3wCqeNnmfYrmRPdVySqOQzWJba0ATlinJAcsB6Ac=;
-	b=n11hRldYbf/Bl+1fNKjAOVsJnIJrY3agtA8a1W6Hu+jcFvTO75dCfNOeVa95cYZETnxfI1
-	ERpdpM3vYikRFetnHwQkCUi8l4tKGhj/3itk91lTJAm/AU4AoYMGBMQyjvshTsnAadIo0M
-	2tn72Q7nBN9llmBHZTTa3T6n4D5J8vOERZtlENDR+27iYsSpxfi8UuJdepKtr2yLRG9Su6
-	4aZL9o9WYAb8b0OJHbZtiXWzmrevFYnUM84FCBG866GXO8hKS37nRS1DDiUy/ICCovrRoR
-	VQdNsRWc1AQ0w+wuVOHPToXUzGeThqRA0O+YH+tWMk4N7Hp8CM97sNB8lSxwfQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1704303895;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qXE3wCqeNnmfYrmRPdVySqOQzWJba0ATlinJAcsB6Ac=;
-	b=wcd01m6vhOxYKTXKbcioEhRPdM0dQ9iEvNTOtApRWB3HYikB0qjaKDqjE7t9nKbQPRA1zs
-	uynQdYit0+5i3tBw==
-From: Nam Cao <namcao@linutronix.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
- allen.lkml@gmail.com
-Subject: Re: [PATCH 6.6 00/49] 6.6.10-rc1 review
-Message-ID: <20240103184454.2d65386a@namcao>
-In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
-References: <20240103164834.970234661@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hgiGavpj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE03C433C7;
+	Wed,  3 Jan 2024 18:15:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704305744;
+	bh=AUXrWa4gez8USeQ48h8WOwSAUbB123G3JwiEuIp/YrM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hgiGavpjnyWCBS+MOW1xqN+TMQo7IoZrUXbaSExkf51Dv66D5lZxSzuU2DvD0JyoS
+	 KGY7vBvcsByvQkjkaYqD4P4Xd/QSsl8qeEjNDFm4Ru87DYlzs0VJj1g5i7lVaWMvjy
+	 2wCLrDZvwV6CNqDyih5ZpZgyo2gnzUtMuhSrHLi+eSRawL+KIV5Oiyang1guGb6Awj
+	 hsEOp66LkLFXgK9VAvRDQ9rNq9N/lUDMdFXG1G0sLczCk0mNF0xzPw4qx4Egb/DsTo
+	 bSqqXS9+WWEdDgRU4BDWGOuhX27W4dna2kmVIIyOHnau9VX2WvOkSjYnDGmht2Y/mp
+	 39wEn5K3GbyPw==
+Date: Wed, 3 Jan 2024 11:15:42 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+	dave.hansen@linux.intel.com, x86@kernel.org
+Cc: mhiramat@kernel.org, linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] x86/tools: objdump_reformat.awk: Skip bad instructions
+ from llvm-objdump
+Message-ID: <20240103181542.GA629234@dev-arch.thelio-3990X>
+References: <20231205-objdump_reformat-awk-handle-llvm-objdump-bad_expr-v1-1-b4a74f39396f@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231205-objdump_reformat-awk-handle-llvm-objdump-bad_expr-v1-1-b4a74f39396f@kernel.org>
 
-On Wed,  3 Jan 2024 17:55:20 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> This is the start of the stable review cycle for the 6.6.10 release.
-> There are 49 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 05 Jan 2024 16:47:49 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.10-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Ping? I am still seeing this issue.
 
-Works for my Visionfive2 board (riscv64):
-
-Tested-by: Nam Cao <namcao@linutronix.de>
-
-Best regards,
-Nam
+On Tue, Dec 05, 2023 at 12:53:08PM -0700, Nathan Chancellor wrote:
+> When running the instruction decoder selftest with LLVM=1 +
+> CONFIG_PVH=y, there is a series of warnings:
+> 
+>   arch/x86/tools/insn_decoder_test: warning: Found an x86 instruction decoder bug, please report this.
+>   arch/x86/tools/insn_decoder_test: warning: ffffffff81000050     ea                      <unknown>
+>   arch/x86/tools/insn_decoder_test: warning: objdump says 1 bytes, but insn_get_length() says 7
+>   arch/x86/tools/insn_decoder_test: warning: Decoded and checked 7214721 instructions with 1 failures
+> 
+> GNU objdump outputs "(bad)" instead of "<unknown>", which is already
+> handled in the bad_expr regex, so there is no warning.
+> 
+>   $ objdump -d arch/x86/platform/pvh/head.o | grep -E '50:\s+ea'
+>   50:   ea                      (bad)
+> 
+>   $ llvm-objdump -d arch/x86/platform/pvh/head.o | grep -E '50:\s+ea'
+>         50: ea                            <unknown>
+> 
+> Add "<unknown>" to the bad_expr regex to clear up the warning, allowing
+> the instruction decoder selftest to fully pass with llvm-objdump.
+> 
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  arch/x86/tools/objdump_reformat.awk | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/x86/tools/objdump_reformat.awk b/arch/x86/tools/objdump_reformat.awk
+> index a4120d907277..20b08a6c4d33 100644
+> --- a/arch/x86/tools/objdump_reformat.awk
+> +++ b/arch/x86/tools/objdump_reformat.awk
+> @@ -11,7 +11,7 @@ BEGIN {
+>  	prev_addr = ""
+>  	prev_hex = ""
+>  	prev_mnemonic = ""
+> -	bad_expr = "(\\(bad\\)|^rex|^.byte|^rep(z|nz)$|^lock$|^es$|^cs$|^ss$|^ds$|^fs$|^gs$|^data(16|32)$|^addr(16|32|64))"
+> +	bad_expr = "(\\(bad\\)|<unknown>|^rex|^.byte|^rep(z|nz)$|^lock$|^es$|^cs$|^ss$|^ds$|^fs$|^gs$|^data(16|32)$|^addr(16|32|64))"
+>  	fwait_expr = "^9b[ \t]*fwait"
+>  	fwait_str="9b\tfwait"
+>  }
+> 
+> ---
+> base-commit: 5225952d74d43e4c054731c74b8afd700b23a94a
+> change-id: 20231205-objdump_reformat-awk-handle-llvm-objdump-bad_expr-9e74cd2a08b5
+> 
+> Best regards,
+> -- 
+> Nathan Chancellor <nathan@kernel.org>
+> 
+> 
