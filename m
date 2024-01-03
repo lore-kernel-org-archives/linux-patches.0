@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07EDC1BDF0;
-	Wed,  3 Jan 2024 16:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF35F1BDF0;
+	Wed,  3 Jan 2024 16:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJruPAJv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9C8C433C7;
-	Wed,  3 Jan 2024 16:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSc7A2pU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4557CC433C9;
+	Wed,  3 Jan 2024 16:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301195;
-	bh=lWGGZFxcgwAoMczuiWIAOMSoGprm6n/n3/y+Bowws3I=;
+	s=korg; t=1704301199;
+	bh=Fes0dtBzTS+pDdqH7R12xWIludd9ozPh9wtPvGJbCWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJruPAJvhBhQNVelpD3bWv+p0a3rP3tcB918LdjE8Ohy2cxbg5DppGA+dpLW2pr15
-	 t8GjQVbMyUcFfx5lX0LspnawPyqYoGo0hQuPYunm1L6fYNgYQe1JAPfzeg0nqC9uY1
-	 85gZ6l8gPdXPWMnz9Yrdze6BW4vGQ9PzxmUtCHCs=
+	b=WSc7A2pUV92a7R6To2jUOX294OE7rL5zH8ES/Ck3EROwEO9cQ9wCbtUmraKQ119KA
+	 vIH1gY/CZ0YTEBhxBStRNPFuQWaaanjZ5KsfCtPthQzdHv1lUPPQeS/3+DOKzQYu1/
+	 AxGwWvQzwtonczgJ2lH/hRdSRSELxVVxJamR6198=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/100] ksmbd: move oplock handling after unlock parent dir
-Date: Wed,  3 Jan 2024 17:54:52 +0100
-Message-ID: <20240103164905.550060089@linuxfoundation.org>
+Subject: [PATCH 6.1 064/100] ksmbd: release interim response after sending status pending response
+Date: Wed,  3 Jan 2024 17:54:53 +0100
+Message-ID: <20240103164905.686842335@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -44,359 +44,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 2e450920d58b4991a436c8cecf3484bcacd8e535 ]
+[ Upstream commit 2a3f7857ec742e212d6cee7fbbf7b0e2ae7f5161 ]
 
-ksmbd should process secound parallel smb2 create request during waiting
-oplock break ack. parent lock range that is too large in smb2_open() causes
-smb2_open() to be serialized. Move the oplock handling to the bottom of
-smb2_open() and make it called after parent unlock. This fixes the failure
-of smb2.lease.breaking1 testcase.
+Add missing release async id and delete interim response entry after
+sending status pending response. This only cause when smb2 lease is enable.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 121 +++++++++++++++++++++-------------------
- 1 file changed, 65 insertions(+), 56 deletions(-)
+ fs/smb/server/ksmbd_work.c | 3 +++
+ fs/smb/server/oplock.c     | 3 ++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index ff4cc39b85c72..3d965be412751 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2691,7 +2691,7 @@ int smb2_open(struct ksmbd_work *work)
- 		    *(char *)req->Buffer == '\\') {
- 			pr_err("not allow directory name included leading slash\n");
- 			rc = -EINVAL;
--			goto err_out1;
-+			goto err_out2;
- 		}
- 
- 		name = smb2_get_name(req->Buffer,
-@@ -2702,7 +2702,7 @@ int smb2_open(struct ksmbd_work *work)
- 			if (rc != -ENOMEM)
- 				rc = -ENOENT;
- 			name = NULL;
--			goto err_out1;
-+			goto err_out2;
- 		}
- 
- 		ksmbd_debug(SMB, "converted name = %s\n", name);
-@@ -2710,28 +2710,28 @@ int smb2_open(struct ksmbd_work *work)
- 			if (!test_share_config_flag(work->tcon->share_conf,
- 						    KSMBD_SHARE_FLAG_STREAMS)) {
- 				rc = -EBADF;
--				goto err_out1;
-+				goto err_out2;
- 			}
- 			rc = parse_stream_name(name, &stream_name, &s_type);
- 			if (rc < 0)
--				goto err_out1;
-+				goto err_out2;
- 		}
- 
- 		rc = ksmbd_validate_filename(name);
- 		if (rc < 0)
--			goto err_out1;
-+			goto err_out2;
- 
- 		if (ksmbd_share_veto_filename(share, name)) {
- 			rc = -ENOENT;
- 			ksmbd_debug(SMB, "Reject open(), vetoed file: %s\n",
- 				    name);
--			goto err_out1;
-+			goto err_out2;
- 		}
- 	} else {
- 		name = kstrdup("", GFP_KERNEL);
- 		if (!name) {
- 			rc = -ENOMEM;
--			goto err_out1;
-+			goto err_out2;
- 		}
- 	}
- 
-@@ -2744,14 +2744,14 @@ int smb2_open(struct ksmbd_work *work)
- 		       le32_to_cpu(req->ImpersonationLevel));
- 		rc = -EIO;
- 		rsp->hdr.Status = STATUS_BAD_IMPERSONATION_LEVEL;
--		goto err_out1;
-+		goto err_out2;
- 	}
- 
- 	if (req->CreateOptions && !(req->CreateOptions & CREATE_OPTIONS_MASK_LE)) {
- 		pr_err("Invalid create options : 0x%x\n",
- 		       le32_to_cpu(req->CreateOptions));
- 		rc = -EINVAL;
--		goto err_out1;
-+		goto err_out2;
- 	} else {
- 		if (req->CreateOptions & FILE_SEQUENTIAL_ONLY_LE &&
- 		    req->CreateOptions & FILE_RANDOM_ACCESS_LE)
-@@ -2761,13 +2761,13 @@ int smb2_open(struct ksmbd_work *work)
- 		    (FILE_OPEN_BY_FILE_ID_LE | CREATE_TREE_CONNECTION |
- 		     FILE_RESERVE_OPFILTER_LE)) {
- 			rc = -EOPNOTSUPP;
--			goto err_out1;
-+			goto err_out2;
- 		}
- 
- 		if (req->CreateOptions & FILE_DIRECTORY_FILE_LE) {
- 			if (req->CreateOptions & FILE_NON_DIRECTORY_FILE_LE) {
- 				rc = -EINVAL;
--				goto err_out1;
-+				goto err_out2;
- 			} else if (req->CreateOptions & FILE_NO_COMPRESSION_LE) {
- 				req->CreateOptions = ~(FILE_NO_COMPRESSION_LE);
- 			}
-@@ -2779,21 +2779,21 @@ int smb2_open(struct ksmbd_work *work)
- 		pr_err("Invalid create disposition : 0x%x\n",
- 		       le32_to_cpu(req->CreateDisposition));
- 		rc = -EINVAL;
--		goto err_out1;
-+		goto err_out2;
- 	}
- 
- 	if (!(req->DesiredAccess & DESIRED_ACCESS_MASK)) {
- 		pr_err("Invalid desired access : 0x%x\n",
- 		       le32_to_cpu(req->DesiredAccess));
- 		rc = -EACCES;
--		goto err_out1;
-+		goto err_out2;
- 	}
- 
- 	if (req->FileAttributes && !(req->FileAttributes & FILE_ATTRIBUTE_MASK_LE)) {
- 		pr_err("Invalid file attribute : 0x%x\n",
- 		       le32_to_cpu(req->FileAttributes));
- 		rc = -EINVAL;
--		goto err_out1;
-+		goto err_out2;
- 	}
- 
- 	if (req->CreateContextsOffset) {
-@@ -2801,19 +2801,19 @@ int smb2_open(struct ksmbd_work *work)
- 		context = smb2_find_context_vals(req, SMB2_CREATE_EA_BUFFER, 4);
- 		if (IS_ERR(context)) {
- 			rc = PTR_ERR(context);
--			goto err_out1;
-+			goto err_out2;
- 		} else if (context) {
- 			ea_buf = (struct create_ea_buf_req *)context;
- 			if (le16_to_cpu(context->DataOffset) +
- 			    le32_to_cpu(context->DataLength) <
- 			    sizeof(struct create_ea_buf_req)) {
- 				rc = -EINVAL;
--				goto err_out1;
-+				goto err_out2;
- 			}
- 			if (req->CreateOptions & FILE_NO_EA_KNOWLEDGE_LE) {
- 				rsp->hdr.Status = STATUS_ACCESS_DENIED;
- 				rc = -EACCES;
--				goto err_out1;
-+				goto err_out2;
- 			}
- 		}
- 
-@@ -2821,7 +2821,7 @@ int smb2_open(struct ksmbd_work *work)
- 						 SMB2_CREATE_QUERY_MAXIMAL_ACCESS_REQUEST, 4);
- 		if (IS_ERR(context)) {
- 			rc = PTR_ERR(context);
--			goto err_out1;
-+			goto err_out2;
- 		} else if (context) {
- 			ksmbd_debug(SMB,
- 				    "get query maximal access context\n");
-@@ -2832,11 +2832,11 @@ int smb2_open(struct ksmbd_work *work)
- 						 SMB2_CREATE_TIMEWARP_REQUEST, 4);
- 		if (IS_ERR(context)) {
- 			rc = PTR_ERR(context);
--			goto err_out1;
-+			goto err_out2;
- 		} else if (context) {
- 			ksmbd_debug(SMB, "get timewarp context\n");
- 			rc = -EBADF;
--			goto err_out1;
-+			goto err_out2;
- 		}
- 
- 		if (tcon->posix_extensions) {
-@@ -2844,7 +2844,7 @@ int smb2_open(struct ksmbd_work *work)
- 							 SMB2_CREATE_TAG_POSIX, 16);
- 			if (IS_ERR(context)) {
- 				rc = PTR_ERR(context);
--				goto err_out1;
-+				goto err_out2;
- 			} else if (context) {
- 				struct create_posix *posix =
- 					(struct create_posix *)context;
-@@ -2852,7 +2852,7 @@ int smb2_open(struct ksmbd_work *work)
- 				    le32_to_cpu(context->DataLength) <
- 				    sizeof(struct create_posix) - 4) {
- 					rc = -EINVAL;
--					goto err_out1;
-+					goto err_out2;
- 				}
- 				ksmbd_debug(SMB, "get posix context\n");
- 
-@@ -2864,7 +2864,7 @@ int smb2_open(struct ksmbd_work *work)
- 
- 	if (ksmbd_override_fsids(work)) {
- 		rc = -ENOMEM;
--		goto err_out1;
-+		goto err_out2;
- 	}
- 
- 	rc = ksmbd_vfs_kern_path_locked(work, name, LOOKUP_NO_SYMLINKS,
-@@ -3177,11 +3177,6 @@ int smb2_open(struct ksmbd_work *work)
- 
- 	fp->attrib_only = !(req->DesiredAccess & ~(FILE_READ_ATTRIBUTES_LE |
- 			FILE_WRITE_ATTRIBUTES_LE | FILE_SYNCHRONIZE_LE));
--	if (!S_ISDIR(file_inode(filp)->i_mode) && open_flags & O_TRUNC &&
--	    !fp->attrib_only && !stream_name) {
--		smb_break_all_oplock(work, fp);
--		need_truncate = 1;
--	}
- 
- 	/* fp should be searchable through ksmbd_inode.m_fp_list
- 	 * after daccess, saccess, attrib_only, and stream are
-@@ -3197,13 +3192,39 @@ int smb2_open(struct ksmbd_work *work)
- 		goto err_out;
- 	}
- 
-+	rc = ksmbd_vfs_getattr(&path, &stat);
-+	if (rc)
-+		goto err_out;
+diff --git a/fs/smb/server/ksmbd_work.c b/fs/smb/server/ksmbd_work.c
+index 2510b9f3c8c14..d7c676c151e20 100644
+--- a/fs/smb/server/ksmbd_work.c
++++ b/fs/smb/server/ksmbd_work.c
+@@ -56,6 +56,9 @@ void ksmbd_free_work_struct(struct ksmbd_work *work)
+ 	kfree(work->tr_buf);
+ 	kvfree(work->request_buf);
+ 	kfree(work->iov);
++	if (!list_empty(&work->interim_entry))
++		list_del(&work->interim_entry);
 +
-+	if (stat.result_mask & STATX_BTIME)
-+		fp->create_time = ksmbd_UnixTimeToNT(stat.btime);
-+	else
-+		fp->create_time = ksmbd_UnixTimeToNT(stat.ctime);
-+	if (req->FileAttributes || fp->f_ci->m_fattr == 0)
-+		fp->f_ci->m_fattr =
-+			cpu_to_le32(smb2_get_dos_mode(&stat, le32_to_cpu(req->FileAttributes)));
-+
-+	if (!created)
-+		smb2_update_xattrs(tcon, &path, fp);
-+	else
-+		smb2_new_xattrs(tcon, &path, fp);
-+
-+	if (file_present || created)
-+		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
-+
-+	if (!S_ISDIR(file_inode(filp)->i_mode) && open_flags & O_TRUNC &&
-+	    !fp->attrib_only && !stream_name) {
-+		smb_break_all_oplock(work, fp);
-+		need_truncate = 1;
-+	}
-+
- 	share_ret = ksmbd_smb_check_shared_mode(fp->filp, fp);
- 	if (!test_share_config_flag(work->tcon->share_conf, KSMBD_SHARE_FLAG_OPLOCKS) ||
- 	    (req_op_level == SMB2_OPLOCK_LEVEL_LEASE &&
- 	     !(conn->vals->capabilities & SMB2_GLOBAL_CAP_LEASING))) {
- 		if (share_ret < 0 && !S_ISDIR(file_inode(fp->filp)->i_mode)) {
- 			rc = share_ret;
--			goto err_out;
-+			goto err_out1;
+ 	if (work->async_id)
+ 		ksmbd_release_id(&work->conn->async_ida, work->async_id);
+ 	kmem_cache_free(work_cache, work);
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 90a035c27130f..4c74e8ea9649a 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -833,7 +833,8 @@ static int smb2_lease_break_noti(struct oplock_info *opinfo)
+ 					     interim_entry);
+ 			setup_async_work(in_work, NULL, NULL);
+ 			smb2_send_interim_resp(in_work, STATUS_PENDING);
+-			list_del(&in_work->interim_entry);
++			list_del_init(&in_work->interim_entry);
++			release_async_work(in_work);
  		}
- 	} else {
- 		if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE) {
-@@ -3213,7 +3234,7 @@ int smb2_open(struct ksmbd_work *work)
- 				    name, req_op_level, lc->req_state);
- 			rc = find_same_lease_key(sess, fp->f_ci, lc);
- 			if (rc)
--				goto err_out;
-+				goto err_out1;
- 		} else if (open_flags == O_RDONLY &&
- 			   (req_op_level == SMB2_OPLOCK_LEVEL_BATCH ||
- 			    req_op_level == SMB2_OPLOCK_LEVEL_EXCLUSIVE))
-@@ -3224,12 +3245,18 @@ int smb2_open(struct ksmbd_work *work)
- 				      le32_to_cpu(req->hdr.Id.SyncId.TreeId),
- 				      lc, share_ret);
- 		if (rc < 0)
--			goto err_out;
-+			goto err_out1;
- 	}
- 
- 	if (req->CreateOptions & FILE_DELETE_ON_CLOSE_LE)
- 		ksmbd_fd_set_delete_on_close(fp, file_info);
- 
-+	if (need_truncate) {
-+		rc = smb2_create_truncate(&fp->filp->f_path);
-+		if (rc)
-+			goto err_out1;
-+	}
-+
- 	if (req->CreateContextsOffset) {
- 		struct create_alloc_size_req *az_req;
- 
-@@ -3237,7 +3264,7 @@ int smb2_open(struct ksmbd_work *work)
- 					SMB2_CREATE_ALLOCATION_SIZE, 4);
- 		if (IS_ERR(az_req)) {
- 			rc = PTR_ERR(az_req);
--			goto err_out;
-+			goto err_out1;
- 		} else if (az_req) {
- 			loff_t alloc_size;
- 			int err;
-@@ -3246,7 +3273,7 @@ int smb2_open(struct ksmbd_work *work)
- 			    le32_to_cpu(az_req->ccontext.DataLength) <
- 			    sizeof(struct create_alloc_size_req)) {
- 				rc = -EINVAL;
--				goto err_out;
-+				goto err_out1;
- 			}
- 			alloc_size = le64_to_cpu(az_req->AllocationSize);
- 			ksmbd_debug(SMB,
-@@ -3264,30 +3291,13 @@ int smb2_open(struct ksmbd_work *work)
- 		context = smb2_find_context_vals(req, SMB2_CREATE_QUERY_ON_DISK_ID, 4);
- 		if (IS_ERR(context)) {
- 			rc = PTR_ERR(context);
--			goto err_out;
-+			goto err_out1;
- 		} else if (context) {
- 			ksmbd_debug(SMB, "get query on disk id context\n");
- 			query_disk_id = 1;
- 		}
- 	}
- 
--	rc = ksmbd_vfs_getattr(&path, &stat);
--	if (rc)
--		goto err_out;
--
--	if (stat.result_mask & STATX_BTIME)
--		fp->create_time = ksmbd_UnixTimeToNT(stat.btime);
--	else
--		fp->create_time = ksmbd_UnixTimeToNT(stat.ctime);
--	if (req->FileAttributes || fp->f_ci->m_fattr == 0)
--		fp->f_ci->m_fattr =
--			cpu_to_le32(smb2_get_dos_mode(&stat, le32_to_cpu(req->FileAttributes)));
--
--	if (!created)
--		smb2_update_xattrs(tcon, &path, fp);
--	else
--		smb2_new_xattrs(tcon, &path, fp);
--
- 	memcpy(fp->client_guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE);
- 
- 	rsp->StructureSize = cpu_to_le16(89);
-@@ -3394,14 +3404,13 @@ int smb2_open(struct ksmbd_work *work)
- 	}
- 
- err_out:
--	if (file_present || created)
-+	if (rc && (file_present || created))
- 		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
- 
--	if (fp && need_truncate)
--		rc = smb2_create_truncate(&fp->filp->f_path);
--
--	ksmbd_revert_fsids(work);
- err_out1:
-+	ksmbd_revert_fsids(work);
-+
-+err_out2:
- 	if (!rc) {
- 		ksmbd_update_fstate(&work->sess->file_table, fp, FP_INITED);
- 		rc = ksmbd_iov_pin_rsp(work, (void *)rsp, iov_len);
+ 		INIT_WORK(&work->work, __smb2_lease_break_noti);
+ 		ksmbd_queue_work(work);
 -- 
 2.43.0
 
