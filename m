@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C241BDF1;
-	Wed,  3 Jan 2024 17:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A101BDFD;
+	Wed,  3 Jan 2024 17:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2A4a+CV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7733C433C7;
-	Wed,  3 Jan 2024 17:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q74J6jB0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B22C433C8;
+	Wed,  3 Jan 2024 17:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301677;
-	bh=m3efA7YfqUcQrbPdhhJiyAsA65OQsjZjOcJW2k5bEWA=;
+	s=korg; t=1704301680;
+	bh=LBteSNl1QgzCFvlAeAYgoY6fzDeqRaqPRduPrMGG/Sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K2A4a+CVqbi0GoFVeMi8w+EoKCQlSyW3F5hbH8TtC+8ACIWm1Ex9+cbq5L2tPwA3l
-	 qje5zUf9zKYAjQ9PSspu0DRrnh/qGTMDfM9NSjxmnkxcVsFFlUjwYXAtQ+fOA3B0Hh
-	 977wnbIdyIRPQMXTO8KC99/JIkjN63A2gKpbJ40Y=
+	b=q74J6jB05ZlO2OlPjIT8UlUpR/KM100Jh9sueHN/r1K8KjnAvV+T0+gIVn41W0SG8
+	 tcFpMGCbiz8YQjpu2VeOXKyRTnHd6iBfdEb3I7Y5e+omwbeQtZWCDJCiNHoLF8s/Md
+	 XNgQp7oR0o7ANXlq9znQ6vzAe/v1RGLsDe0EHlTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 66/95] ksmbd: have a dependency on cifs ARC4
-Date: Wed,  3 Jan 2024 17:55:14 +0100
-Message-ID: <20240103164903.899925729@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Fabio Estevam <festevam@denx.de>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 5.15 57/95] dt-bindings: nvmem: mxs-ocotp: Document fsl,ocotp
+Date: Wed,  3 Jan 2024 17:55:05 +0100
+Message-ID: <20240103164902.559765449@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -41,36 +43,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Fabio Estevam <festevam@denx.de>
 
-Omitted the change that has a dependency on cifs ARC4 from backporting
-commit f9929ef6a2a5("ksmbd: add support for key exchange").
-This patch make ksmbd have a dependeny on cifs ARC4.
+commit a2a8aefecbd0f87d6127951cef33b3def8439057 upstream.
 
-Fixes: c5049d2d73b2 ("ksmbd: add support for key exchange")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Both imx23.dtsi and imx28.dtsi describe the OCOTP nodes in
+the format:
+
+compatible = "fsl,imx28-ocotp", "fsl,ocotp";
+
+Document the "fsl,ocotp" entry to fix the following schema
+warning:
+
+efuse@8002c000: compatible: ['fsl,imx23-ocotp', 'fsl,ocotp'] is too long
+from schema $id: http://devicetree.org/schemas/nvmem/mxs-ocotp.yaml#
+
+Fixes: 2c504460f502 ("dt-bindings: nvmem: Convert MXS OCOTP to json-schema")
+Cc:  <Stable@vger.kernel.org>
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20231215111358.316727-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/Kconfig b/fs/Kconfig
-index a6313a969bc5f..971339ecc1a2b 100644
---- a/fs/Kconfig
-+++ b/fs/Kconfig
-@@ -369,8 +369,8 @@ source "fs/ksmbd/Kconfig"
+--- a/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
++++ b/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
+@@ -14,9 +14,11 @@ allOf:
  
- config SMBFS_COMMON
- 	tristate
--	default y if CIFS=y
--	default m if CIFS=m
-+	default y if CIFS=y || SMB_SERVER=y
-+	default m if CIFS=m || SMB_SERVER=m
+ properties:
+   compatible:
+-    enum:
+-      - fsl,imx23-ocotp
+-      - fsl,imx28-ocotp
++    items:
++      - enum:
++          - fsl,imx23-ocotp
++          - fsl,imx28-ocotp
++      - const: fsl,ocotp
  
- source "fs/coda/Kconfig"
- source "fs/afs/Kconfig"
--- 
-2.43.0
-
+   "#address-cells":
+     const: 1
+@@ -40,7 +42,7 @@ additionalProperties: false
+ examples:
+   - |
+     ocotp: efuse@8002c000 {
+-        compatible = "fsl,imx28-ocotp";
++        compatible = "fsl,imx28-ocotp", "fsl,ocotp";
+         #address-cells = <1>;
+         #size-cells = <1>;
+         reg = <0x8002c000 0x2000>;
 
 
