@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732561C283;
-	Wed,  3 Jan 2024 16:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C871C2A3;
+	Wed,  3 Jan 2024 16:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgGIzYhN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C788DC433C7;
-	Wed,  3 Jan 2024 16:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3dEMYfS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8AEC433C8;
+	Wed,  3 Jan 2024 16:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301112;
-	bh=yYidfdlrXT7Nar8HlUG6WFcz9rrwOYysG7BKm38Mc1k=;
+	s=korg; t=1704301115;
+	bh=QJM5gSymo70VhMgufnARbheK0kS0FxHwWHMnnM72xj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jgGIzYhNsUzA/DTKhBUTZOvnCqS4VZ3EkaFvY1I/WX4pRLlS+ins1jMO6sYPsfrBH
-	 RmLIwSbt/a/cVqcY3JytsJ1BU2UK/aPEEkKbzfg5CDpwuctrnjRdt4Qh+XBA7Tj30R
-	 N9DOQ8Fd1mvs51WE8aBfcLyHmQfm71VcjdIB9DJw=
+	b=E3dEMYfSkATngDlzjvPHjKSNPAxrIs0hyAH5wIRvHubxve8i01CipK5LhOD0YOIGj
+	 Jhoxokcd9tagvygTLV8Z1cCm/0naystcs76Bv6vDcf/yU+OB0xDF3w648Oxq4A6K2k
+	 JUjsUu7hhuRE+Nx9THW1bsply8wp2dH8bVYX1cwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Rix <trix@redhat.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/100] ksmbd: remove unused is_char_allowed function
-Date: Wed,  3 Jan 2024 17:54:01 +0100
-Message-ID: <20240103164857.974147345@linuxfoundation.org>
+Subject: [PATCH 6.1 039/100] ksmbd: add missing calling smb2_set_err_rsp() on error
+Date: Wed,  3 Jan 2024 17:54:28 +0100
+Message-ID: <20240103164901.943577241@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -44,55 +42,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Rix <trix@redhat.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 2824861773eb512b37547516d81ef78108032cb2 ]
+[ Upstream commit 0e2378eaa2b3a663726cf740d4aaa8a801e2cb31 ]
 
-clang with W=1 reports
-fs/ksmbd/unicode.c:122:19: error: unused function
-  'is_char_allowed' [-Werror,-Wunused-function]
-static inline int is_char_allowed(char *ch)
-                  ^
-This function is not used so remove it.
+If some error happen on smb2_sess_setup(), Need to call
+smb2_set_err_rsp() to set error response.
+This patch add missing calling smb2_set_err_rsp() on error.
 
-Signed-off-by: Tom Rix <trix@redhat.com>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/unicode.c | 18 ------------------
- 1 file changed, 18 deletions(-)
+ fs/smb/server/smb2pdu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/server/unicode.c b/fs/smb/server/unicode.c
-index a0db699ddafda..9ae676906ed39 100644
---- a/fs/smb/server/unicode.c
-+++ b/fs/smb/server/unicode.c
-@@ -113,24 +113,6 @@ cifs_mapchar(char *target, const __u16 src_char, const struct nls_table *cp,
- 	goto out;
- }
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 0fed613956f7a..b81a38803b40d 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1904,6 +1904,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 				ksmbd_conn_set_need_negotiate(conn);
+ 			}
+ 		}
++		smb2_set_err_rsp(work);
+ 	} else {
+ 		unsigned int iov_len;
  
--/*
-- * is_char_allowed() - check for valid character
-- * @ch:		input character to be checked
-- *
-- * Return:	1 if char is allowed, otherwise 0
-- */
--static inline int is_char_allowed(char *ch)
--{
--	/* check for control chars, wildcards etc. */
--	if (!(*ch & 0x80) &&
--	    (*ch <= 0x1f ||
--	     *ch == '?' || *ch == '"' || *ch == '<' ||
--	     *ch == '>' || *ch == '|'))
--		return 0;
--
--	return 1;
--}
--
- /*
-  * smb_from_utf16() - convert utf16le string to local charset
-  * @to:		destination buffer
 -- 
 2.43.0
 
