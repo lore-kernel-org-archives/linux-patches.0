@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9F31C283;
-	Wed,  3 Jan 2024 16:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829A61BDEC;
+	Wed,  3 Jan 2024 16:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm+FwADC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63305C433C8;
-	Wed,  3 Jan 2024 16:57:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUbqRxgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB758C433C7;
+	Wed,  3 Jan 2024 16:57:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301051;
-	bh=/o0t0KvLGm4hOQ8/iBEtBSKochMl/OITxABXwO7MDb8=;
+	s=korg; t=1704301055;
+	bh=Rc2WqnYHWa2VSQgdVenQ1saB3dnwuDam8+iZ7wMdCSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zm+FwADCTOoSxCpgQKRm2LB1kRBAXCrj9xrBVy+lEnYFjRHi9jZhVr09y+UzUJZry
-	 jmgDUSRqk4ydHfDj3N/6SctPlobJKMqlATH6YIZY8tEvluiT3zgbLLnZLQ99yA7cWh
-	 9KO/rb/0XYKTPqf+aZ504b/thBQULq5nHh12RI3w=
+	b=VUbqRxgfqwmX5rKpObakegyXg365FaNvRkHD2ySYxmOaHYNQQkziEBsxSr/+4ld4R
+	 I1ECXFWqVG3AYhFlCGbCozT3EsV+FIueqGUA3UTUGb70fH0xu/JcDIWU8tsBRmIFPP
+	 WtAXmxXEbmHoo18+yV03nKArWnjmUCbkv/kxnh/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/100] ksmbd: use kzalloc() instead of __GFP_ZERO
-Date: Wed,  3 Jan 2024 17:54:14 +0100
-Message-ID: <20240103164859.819980807@linuxfoundation.org>
+Subject: [PATCH 6.1 026/100] ksmbd: return a literal instead of err in ksmbd_vfs_kern_path_locked()
+Date: Wed,  3 Jan 2024 17:54:15 +0100
+Message-ID: <20240103164859.990058043@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -46,34 +45,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit f87d4f85f43f0d4b12ef64b015478d8053e1a33e ]
+[ Upstream commit cf5e7f734f445588a30350591360bca2f6bf016f ]
 
-Use kzalloc() instead of __GFP_ZERO.
+Return a literal instead of 'err' in ksmbd_vfs_kern_path_locked().
 
-Reported-by: Dan Carpenter <error27@gmail.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb_common.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/server/vfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
-index adc41b57b84c6..62c33d3357fe1 100644
---- a/fs/smb/server/smb_common.c
-+++ b/fs/smb/server/smb_common.c
-@@ -359,8 +359,8 @@ static int smb1_check_user_session(struct ksmbd_work *work)
-  */
- static int smb1_allocate_rsp_buf(struct ksmbd_work *work)
- {
--	work->response_buf = kmalloc(MAX_CIFS_SMALL_BUFFER_SIZE,
--			GFP_KERNEL | __GFP_ZERO);
-+	work->response_buf = kzalloc(MAX_CIFS_SMALL_BUFFER_SIZE,
-+			GFP_KERNEL);
- 	work->response_sz = MAX_CIFS_SMALL_BUFFER_SIZE;
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index e6218c687fa0b..d0a85774a496a 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -1208,7 +1208,7 @@ int ksmbd_vfs_kern_path_locked(struct ksmbd_work *work, char *name,
  
- 	if (!work->response_buf) {
+ 	err = ksmbd_vfs_path_lookup_locked(share_conf, name, flags, path);
+ 	if (!err)
+-		return err;
++		return 0;
+ 
+ 	if (caseless) {
+ 		char *filepath;
 -- 
 2.43.0
 
