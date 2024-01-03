@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCFB1C289;
-	Wed,  3 Jan 2024 17:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859591C2AF;
+	Wed,  3 Jan 2024 17:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYlVaKMl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8DAC433C8;
-	Wed,  3 Jan 2024 17:04:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeqjuZT8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0101C433C7;
+	Wed,  3 Jan 2024 17:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301450;
-	bh=8lT7Cd6jOgSyiNclsdFHun2Xftd4wCY/RCBXeSnUzF4=;
+	s=korg; t=1704301454;
+	bh=98ouZD0wfT4IA76vTX8BsHdb0PYvWWz+gMgS2Qu8ABU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dYlVaKMlYbNueGBqwNxbPTgBizYzQ0WgoRoJ4nbRdMd3hHA/MjIrkv/C4SSp98/8w
-	 BQPVvH3uoMAdYK6KkhGCHJkXeC9HHfl/sx5qcnSkX3NQxTwFipfMGY07QwVVaD5/Pp
-	 W9Nt46/r1yigk3OeqG7X0t4/UfgxOAqPBMSpAPMc=
+	b=EeqjuZT8qgGM83ZVOmYiLSQByyg2+deYOhdNvZNvclWejtszoKrm0Oc4hYfI4joHd
+	 27j8NlYwME8y5x8gTLzKUE3oo5XKkAZKb2SJlmXDWJrrsepgQsiQF/IxN84+dEaQvw
+	 ldE00xlXnMIe9Ujrdu+1pLdCGlkB/bRbt/nleaac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 36/95] iio: imu: inv_mpu6050: fix an error code problem in inv_mpu6050_read_raw
-Date: Wed,  3 Jan 2024 17:54:44 +0100
-Message-ID: <20240103164859.473181844@linuxfoundation.org>
+Subject: [PATCH 5.15 37/95] interconnect: qcom: sm8250: Enable sync_state
+Date: Wed,  3 Jan 2024 17:54:45 +0100
+Message-ID: <20240103164859.619846763@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -42,42 +42,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit c3df0e29fb7788c4b3ddf37d5ed87dda2b822943 ]
+[ Upstream commit bfc7db1cb94ad664546d70212699f8cc6c539e8c ]
 
-inv_mpu6050_sensor_show() can return -EINVAL or IIO_VAL_INT. Return the
-true value rather than only return IIO_VAL_INT.
+Add the generic icc sync_state callback to ensure interconnect votes
+are taken into account, instead of being pegged at maximum values.
 
-Fixes: d5098447147c ("iio: imu: mpu6050: add calibration offset support")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20231030020218.65728-1-suhui@nfschina.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: b95b668eaaa2 ("interconnect: qcom: icc-rpmh: Add BCMs to commit list in pre_aggregate")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231130-topic-8250icc_syncstate-v1-1-7ce78ba6e04c@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/inv_mpu6050/inv_mpu_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/interconnect/qcom/sm8250.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
-index 597768c29a729..caeef03b8c622 100644
---- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
-+++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
-@@ -727,13 +727,13 @@ inv_mpu6050_read_raw(struct iio_dev *indio_dev,
- 			ret = inv_mpu6050_sensor_show(st, st->reg->gyro_offset,
- 						chan->channel2, val);
- 			mutex_unlock(&st->lock);
--			return IIO_VAL_INT;
-+			return ret;
- 		case IIO_ACCEL:
- 			mutex_lock(&st->lock);
- 			ret = inv_mpu6050_sensor_show(st, st->reg->accl_offset,
- 						chan->channel2, val);
- 			mutex_unlock(&st->lock);
--			return IIO_VAL_INT;
-+			return ret;
- 
- 		default:
- 			return -EINVAL;
+diff --git a/drivers/interconnect/qcom/sm8250.c b/drivers/interconnect/qcom/sm8250.c
+index aa707582ea016..8dfb5dea562a3 100644
+--- a/drivers/interconnect/qcom/sm8250.c
++++ b/drivers/interconnect/qcom/sm8250.c
+@@ -551,6 +551,7 @@ static struct platform_driver qnoc_driver = {
+ 	.driver = {
+ 		.name = "qnoc-sm8250",
+ 		.of_match_table = qnoc_of_match,
++		.sync_state = icc_sync_state,
+ 	},
+ };
+ module_platform_driver(qnoc_driver);
 -- 
 2.43.0
 
