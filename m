@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53061C29F;
-	Wed,  3 Jan 2024 17:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953D21C296;
+	Wed,  3 Jan 2024 17:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTjDii/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464E0C433C7;
-	Wed,  3 Jan 2024 17:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4JY+0pw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E13C433C7;
+	Wed,  3 Jan 2024 17:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301263;
-	bh=jCRqCEd3uw8C3Frvc6C02muV4II/JO1aYKeBG/EA7Mg=;
+	s=korg; t=1704301267;
+	bh=76kPto4apcf6hlcilp4n9G5f13jkFje8uYa+VPya6cU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tTjDii/5Zy7BIl4/M6Sb/GGBzkaCJINNPe9KdkOY9E5O+6CLvvL5XtFHFzn8Org4M
-	 R+2NmCJnLdGxUPl9uUA+vEBJmKyXx6fOSiOXYCHjQpwmqYm+hIe8O0aLP7a+Us+HOH
-	 9CevhYtFNV94V5w16g5F4iiAnw/xjrUUnxvbbxKE=
+	b=V4JY+0pwXGisHLShyO0XXFmQ8TMO7X9rA0KvWXJF2zQV5+SfZKqmUZTR3cVYs2vPY
+	 /ht0GKQ89vdENFwu5cqxfhLBbRzIuW8MQD0kCT2qap+BFjruJT4gnlzRNOTo7zhvIQ
+	 L1i1vrf/Z4uEAwxI1TQ6YgYXHui3PfbG5pTMD51E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 084/100] block: renumber QUEUE_FLAG_HW_WC
-Date: Wed,  3 Jan 2024 17:55:13 +0100
-Message-ID: <20240103164908.719444751@linuxfoundation.org>
+	Yang Chaoming <lometsj@live.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 085/100] ksmbd: fix slab-out-of-bounds in smb_strndup_from_utf16()
+Date: Wed,  3 Jan 2024 17:55:14 +0100
+Message-ID: <20240103164908.856549185@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -42,37 +42,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 02d374f3418df577c850f0cd45c3da9245ead547 ]
+commit d10c77873ba1e9e6b91905018e29e196fd5f863d upstream.
 
-For the QUEUE_FLAG_HW_WC to actually work, it needs to have a separate
-number from QUEUE_FLAG_FUA, doh.
+If ->NameOffset/Length is bigger than ->CreateContextsOffset/Length,
+ksmbd_check_message doesn't validate request buffer it correctly.
+So slab-out-of-bounds warning from calling smb_strndup_from_utf16()
+in smb2_open() could happen. If ->NameLength is non-zero, Set the larger
+of the two sums (Name and CreateContext size) as the offset and length of
+the data area.
 
-Fixes: 43c9835b144c ("block: don't allow enabling a cache on devices that don't support it")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20231226081524.180289-1-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Yang Chaoming <lometsj@live.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/blkdev.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2misc.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 57674b3c58774..07a7eeef47d39 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -565,7 +565,7 @@ struct request_queue {
- #define QUEUE_FLAG_NOXMERGES	9	/* No extended merges */
- #define QUEUE_FLAG_ADD_RANDOM	10	/* Contributes to random pool */
- #define QUEUE_FLAG_SAME_FORCE	12	/* force complete on same CPU */
--#define QUEUE_FLAG_HW_WC	18	/* Write back caching supported */
-+#define QUEUE_FLAG_HW_WC	13	/* Write back caching supported */
- #define QUEUE_FLAG_INIT_DONE	14	/* queue is initialized */
- #define QUEUE_FLAG_STABLE_WRITES 15	/* don't modify blks until WB is done */
- #define QUEUE_FLAG_POLL		16	/* IO polling enabled if set */
--- 
-2.43.0
-
+--- a/fs/smb/server/smb2misc.c
++++ b/fs/smb/server/smb2misc.c
+@@ -106,16 +106,25 @@ static int smb2_get_data_area_len(unsign
+ 		break;
+ 	case SMB2_CREATE:
+ 	{
++		unsigned short int name_off =
++			le16_to_cpu(((struct smb2_create_req *)hdr)->NameOffset);
++		unsigned short int name_len =
++			le16_to_cpu(((struct smb2_create_req *)hdr)->NameLength);
++
+ 		if (((struct smb2_create_req *)hdr)->CreateContextsLength) {
+ 			*off = le32_to_cpu(((struct smb2_create_req *)
+ 				hdr)->CreateContextsOffset);
+ 			*len = le32_to_cpu(((struct smb2_create_req *)
+ 				hdr)->CreateContextsLength);
+-			break;
++			if (!name_len)
++				break;
++
++			if (name_off + name_len < (u64)*off + *len)
++				break;
+ 		}
+ 
+-		*off = le16_to_cpu(((struct smb2_create_req *)hdr)->NameOffset);
+-		*len = le16_to_cpu(((struct smb2_create_req *)hdr)->NameLength);
++		*off = name_off;
++		*len = name_len;
+ 		break;
+ 	}
+ 	case SMB2_QUERY_INFO:
 
 
