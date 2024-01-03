@@ -1,90 +1,73 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517AE1C68A;
-	Wed,  3 Jan 2024 18:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33D81C694;
+	Wed,  3 Jan 2024 18:19:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hgiGavpj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE03C433C7;
-	Wed,  3 Jan 2024 18:15:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704305744;
-	bh=AUXrWa4gez8USeQ48h8WOwSAUbB123G3JwiEuIp/YrM=;
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="IF9rG6EF"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 945D440E01FB;
+	Wed,  3 Jan 2024 18:19:10 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id tIVUWCeT5Roq; Wed,  3 Jan 2024 18:19:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1704305948; bh=41ckwIQ1cOsTanraxssYiLysA3mszDJQngRh8ndGtWE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hgiGavpjnyWCBS+MOW1xqN+TMQo7IoZrUXbaSExkf51Dv66D5lZxSzuU2DvD0JyoS
-	 KGY7vBvcsByvQkjkaYqD4P4Xd/QSsl8qeEjNDFm4Ru87DYlzs0VJj1g5i7lVaWMvjy
-	 2wCLrDZvwV6CNqDyih5ZpZgyo2gnzUtMuhSrHLi+eSRawL+KIV5Oiyang1guGb6Awj
-	 hsEOp66LkLFXgK9VAvRDQ9rNq9N/lUDMdFXG1G0sLczCk0mNF0xzPw4qx4Egb/DsTo
-	 bSqqXS9+WWEdDgRU4BDWGOuhX27W4dna2kmVIIyOHnau9VX2WvOkSjYnDGmht2Y/mp
-	 39wEn5K3GbyPw==
-Date: Wed, 3 Jan 2024 11:15:42 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-	dave.hansen@linux.intel.com, x86@kernel.org
-Cc: mhiramat@kernel.org, linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
+	b=IF9rG6EF6vgcO37vd44iR8uhe74ZYsVsHCGg3gc/8Aj1AIhESxNfqRSi9gy3N3tMa
+	 xexNQSYLw/Y2Bn+swerZ0kdEAfN/LX4ebJvBBNioCAbzwVGISkh+SYZlOxFqJG1a3i
+	 O3q2b+AMbtW5NWDV3LoTjfJPk1vaANxU2aoSnPFwrg/S7V7HzGpGCZuzGF9xfCYIbs
+	 x597oHg9c3jOEA27pieOcCmkXy7YgaJplvJsXB/cLJ5LlpZEAwtNsBGthfGkPtdd1z
+	 PWNgm3LSoUjE9JTTdB9b8Mejb4j0iIQQv0F6bNALKei/3m77J2Zwcwf9DG0Wy44pB4
+	 VOQnSt+7na6TUICD3+vkPjtO6ST3GjlTHimadW/2qJYqmF1xYGR7lnftZD0lzXnR3l
+	 wPyPECi6Y4fepwJVleQ53Z5kTUxbBZUEsxJS2/yzp06ybbSGoZkCxARedfwDxZZf1Z
+	 vNdmLueV3kj2wCbP0nDMSJSK9OyaSoU0gdKk4fCy0ksvnHoQL+AZS7IFwh9NMViKFu
+	 +lf0dw7900bacnH4Oy7N9hVzCTBDjOAh7S56QyYjJmJ/hwd3vrvar7j/MUG9C4aqPS
+	 f0rvZ56Ck0r9fXV4rmbjftIj0gEGF5X9xHjKfvpeQo0tJcXy4FFJsPL/35GHAyNQsk
+	 NzaZh+It+5Nura1Tne5PTsoE=
+Received: from zn.tnic (pd9530f8c.dip0.t-ipconnect.de [217.83.15.140])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 6BA0D40E01F7;
+	Wed,  3 Jan 2024 18:18:59 +0000 (UTC)
+Date: Wed, 3 Jan 2024 19:18:52 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: tglx@linutronix.de, mingo@redhat.com, dave.hansen@linux.intel.com,
+	x86@kernel.org, mhiramat@kernel.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
 Subject: Re: [PATCH] x86/tools: objdump_reformat.awk: Skip bad instructions
  from llvm-objdump
-Message-ID: <20240103181542.GA629234@dev-arch.thelio-3990X>
+Message-ID: <20240103181852.GDZZWlDJMVvqAZdpfV@fat_crate.local>
 References: <20231205-objdump_reformat-awk-handle-llvm-objdump-bad_expr-v1-1-b4a74f39396f@kernel.org>
+ <20240103181542.GA629234@dev-arch.thelio-3990X>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20231205-objdump_reformat-awk-handle-llvm-objdump-bad_expr-v1-1-b4a74f39396f@kernel.org>
+In-Reply-To: <20240103181542.GA629234@dev-arch.thelio-3990X>
 
-Ping? I am still seeing this issue.
+On Wed, Jan 03, 2024 at 11:15:42AM -0700, Nathan Chancellor wrote:
+> Ping? I am still seeing this issue.
 
-On Tue, Dec 05, 2023 at 12:53:08PM -0700, Nathan Chancellor wrote:
-> When running the instruction decoder selftest with LLVM=1 +
-> CONFIG_PVH=y, there is a series of warnings:
-> 
->   arch/x86/tools/insn_decoder_test: warning: Found an x86 instruction decoder bug, please report this.
->   arch/x86/tools/insn_decoder_test: warning: ffffffff81000050     ea                      <unknown>
->   arch/x86/tools/insn_decoder_test: warning: objdump says 1 bytes, but insn_get_length() says 7
->   arch/x86/tools/insn_decoder_test: warning: Decoded and checked 7214721 instructions with 1 failures
-> 
-> GNU objdump outputs "(bad)" instead of "<unknown>", which is already
-> handled in the bad_expr regex, so there is no warning.
-> 
->   $ objdump -d arch/x86/platform/pvh/head.o | grep -E '50:\s+ea'
->   50:   ea                      (bad)
-> 
->   $ llvm-objdump -d arch/x86/platform/pvh/head.o | grep -E '50:\s+ea'
->         50: ea                            <unknown>
-> 
-> Add "<unknown>" to the bad_expr regex to clear up the warning, allowing
-> the instruction decoder selftest to fully pass with llvm-objdump.
-> 
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  arch/x86/tools/objdump_reformat.awk | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/x86/tools/objdump_reformat.awk b/arch/x86/tools/objdump_reformat.awk
-> index a4120d907277..20b08a6c4d33 100644
-> --- a/arch/x86/tools/objdump_reformat.awk
-> +++ b/arch/x86/tools/objdump_reformat.awk
-> @@ -11,7 +11,7 @@ BEGIN {
->  	prev_addr = ""
->  	prev_hex = ""
->  	prev_mnemonic = ""
-> -	bad_expr = "(\\(bad\\)|^rex|^.byte|^rep(z|nz)$|^lock$|^es$|^cs$|^ss$|^ds$|^fs$|^gs$|^data(16|32)$|^addr(16|32|64))"
-> +	bad_expr = "(\\(bad\\)|<unknown>|^rex|^.byte|^rep(z|nz)$|^lock$|^es$|^cs$|^ss$|^ds$|^fs$|^gs$|^data(16|32)$|^addr(16|32|64))"
->  	fwait_expr = "^9b[ \t]*fwait"
->  	fwait_str="9b\tfwait"
->  }
-> 
-> ---
-> base-commit: 5225952d74d43e4c054731c74b8afd700b23a94a
-> change-id: 20231205-objdump_reformat-awk-handle-llvm-objdump-bad_expr-9e74cd2a08b5
-> 
-> Best regards,
-> -- 
-> Nathan Chancellor <nathan@kernel.org>
-> 
-> 
+Does this need a Fixes tag and needs to go to Linus now or are you fine
+with 6.8-rc0?
+
+I.e., the answer probably depends on what kernels you're running the
+llvm tests...
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
