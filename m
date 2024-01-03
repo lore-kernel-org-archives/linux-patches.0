@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54671C688;
-	Wed,  3 Jan 2024 17:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B52E1C2A9;
+	Wed,  3 Jan 2024 17:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9Zb5mkW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B121C433C8;
-	Wed,  3 Jan 2024 17:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYpOWeqe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7DDC433C8;
+	Wed,  3 Jan 2024 17:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301707;
-	bh=ESkP13U2f3b1gAqPsM77r/gNz+ot+beeWSGFgEbqrcA=;
+	s=korg; t=1704301711;
+	bh=sxR+hrTncz+u0jui//l51VB3f2kD8Qr1yeXl+bqeiAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f9Zb5mkWjQOBGxbD1p7e1sDnIaxnEl4vpa6OULUGaXMoPoiYQvN1X0E4HNOdJc9ME
-	 stHoImblRB1r7rPF4tgPJV3WNvb4/yU84VLtJJiBMlDxpb0j0NQ1rgOJwfCbqtRcVW
-	 SX8d7ZZflE25aLheiWsTlH/3kkVg8Idnz6Hly3r0=
+	b=HYpOWeqe6JDV/IbRIQrxTI2vKzSTUA/BOp3MIdBdaKlqU/G7yki5RxRvtln5OW27T
+	 KGsur9q3CPQvzHfw4My1DR4Bk+PJlvDjTQjMtUdY9nL+cLPtvrmcZwawONa+ogeUTJ
+	 2HVb69n0vEsH+JcjJrT7g66P4KJhAsqjhenPax6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+97a4fe20470e9bc30810@syzkaller.appspotmail.com,
-	Jiri Olsa <jolsa@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Lee Jones <lee@kernel.org>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Subject: [PATCH 5.15 95/95] bpf: Fix prog_array_map_poke_run map poke update
-Date: Wed,  3 Jan 2024 17:55:43 +0100
-Message-ID: <20240103164908.330992910@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 88/95] tracing: Fix blocked reader of snapshot buffer
+Date: Wed,  3 Jan 2024 17:55:36 +0100
+Message-ID: <20240103164907.256578102@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -45,227 +43,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 4b7de801606e504e69689df71475d27e35336fb3 upstream.
+commit 39a7dc23a1ed0fe81141792a09449d124c5953bd upstream.
 
-Lee pointed out issue found by syscaller [0] hitting BUG in prog array
-map poke update in prog_array_map_poke_run function due to error value
-returned from bpf_arch_text_poke function.
+If an application blocks on the snapshot or snapshot_raw files, expecting
+to be woken up when a snapshot occurs, it will not happen. Or it may
+happen with an unexpected result.
 
-There's race window where bpf_arch_text_poke can fail due to missing
-bpf program kallsym symbols, which is accounted for with check for
--EINVAL in that BUG_ON call.
+That result is that the application will be reading the main buffer
+instead of the snapshot buffer. That is because when the snapshot occurs,
+the main and snapshot buffers are swapped. But the reader has a descriptor
+still pointing to the buffer that it originally connected to.
 
-The problem is that in such case we won't update the tail call jump
-and cause imbalance for the next tail call update check which will
-fail with -EBUSY in bpf_arch_text_poke.
+This is fine for the main buffer readers, as they may be blocked waiting
+for a watermark to be hit, and when a snapshot occurs, the data that the
+main readers want is now on the snapshot buffer.
 
-I'm hitting following race during the program load:
+But for waiters of the snapshot buffer, they are waiting for an event to
+occur that will trigger the snapshot and they can then consume it quickly
+to save the snapshot before the next snapshot occurs. But to do this, they
+need to read the new snapshot buffer, not the old one that is now
+receiving new data.
 
-  CPU 0                             CPU 1
+Also, it does not make sense to have a watermark "buffer_percent" on the
+snapshot buffer, as the snapshot buffer is static and does not receive new
+data except all at once.
 
-  bpf_prog_load
-    bpf_check
-      do_misc_fixups
-        prog_array_map_poke_track
+Link: https://lore.kernel.org/linux-trace-kernel/20231228095149.77f5b45d@gandalf.local.home
 
-                                    map_update_elem
-                                      bpf_fd_array_map_update_elem
-                                        prog_array_map_poke_run
-
-                                          bpf_arch_text_poke returns -EINVAL
-
-    bpf_prog_kallsyms_add
-
-After bpf_arch_text_poke (CPU 1) fails to update the tail call jump, the next
-poke update fails on expected jump instruction check in bpf_arch_text_poke
-with -EBUSY and triggers the BUG_ON in prog_array_map_poke_run.
-
-Similar race exists on the program unload.
-
-Fixing this by moving the update to bpf_arch_poke_desc_update function which
-makes sure we call __bpf_arch_text_poke that skips the bpf address check.
-
-Each architecture has slightly different approach wrt looking up bpf address
-in bpf_arch_text_poke, so instead of splitting the function or adding new
-'checkip' argument in previous version, it seems best to move the whole
-map_poke_run update as arch specific code.
-
-  [0] https://syzkaller.appspot.com/bug?extid=97a4fe20470e9bc30810
-
-Fixes: ebf7d1f508a7 ("bpf, x64: rework pro/epilogue and tailcall handling in JIT")
-Reported-by: syzbot+97a4fe20470e9bc30810@syzkaller.appspotmail.com
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Cc: Lee Jones <lee@kernel.org>
-Cc: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://lore.kernel.org/bpf/20231206083041.1306660-2-jolsa@kernel.org
+Cc: stable@vger.kernel.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: debdd57f5145f ("tracing: Make a snapshot feature available from userspace")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/net/bpf_jit_comp.c |   46 ++++++++++++++++++++++++++++++++++
- include/linux/bpf.h         |    3 ++
- kernel/bpf/arraymap.c       |   58 +++++++-------------------------------------
- 3 files changed, 59 insertions(+), 48 deletions(-)
+ kernel/trace/ring_buffer.c |    3 ++-
+ kernel/trace/trace.c       |   20 +++++++++++++++++---
+ 2 files changed, 19 insertions(+), 4 deletions(-)
 
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -2403,3 +2403,49 @@ bool bpf_jit_supports_kfunc_call(void)
- {
- 	return true;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -964,7 +964,8 @@ void ring_buffer_wake_waiters(struct tra
+ 	/* make sure the waiters see the new index */
+ 	smp_wmb();
+ 
+-	rb_wake_up_waiters(&rbwork->work);
++	/* This can be called in any context */
++	irq_work_queue(&rbwork->work);
  }
+ 
+ /**
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -1837,6 +1837,9 @@ update_max_tr(struct trace_array *tr, st
+ 	__update_max_tr(tr, tsk, cpu);
+ 
+ 	arch_spin_unlock(&tr->max_lock);
 +
-+void bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
-+			       struct bpf_prog *new, struct bpf_prog *old)
-+{
-+	u8 *old_addr, *new_addr, *old_bypass_addr;
++	/* Any waiters on the old snapshot buffer need to wake up */
++	ring_buffer_wake_waiters(tr->array_buffer.buffer, RING_BUFFER_ALL_CPUS);
+ }
+ 
+ /**
+@@ -1888,12 +1891,23 @@ update_max_tr_single(struct trace_array
+ 
+ static int wait_on_pipe(struct trace_iterator *iter, int full)
+ {
 +	int ret;
 +
-+	old_bypass_addr = old ? NULL : poke->bypass_addr;
-+	old_addr = old ? (u8 *)old->bpf_func + poke->adj_off : NULL;
-+	new_addr = new ? (u8 *)new->bpf_func + poke->adj_off : NULL;
+ 	/* Iterators are static, they should be filled or empty */
+ 	if (trace_buffer_iter(iter, iter->cpu_file))
+ 		return 0;
+ 
+-	return ring_buffer_wait(iter->array_buffer->buffer, iter->cpu_file,
+-				full);
++	ret = ring_buffer_wait(iter->array_buffer->buffer, iter->cpu_file, full);
 +
++#ifdef CONFIG_TRACER_MAX_TRACE
 +	/*
-+	 * On program loading or teardown, the program's kallsym entry
-+	 * might not be in place, so we use __bpf_arch_text_poke to skip
-+	 * the kallsyms check.
++	 * Make sure this is still the snapshot buffer, as if a snapshot were
++	 * to happen, this would now be the main buffer.
 +	 */
-+	if (new) {
-+		ret = __bpf_arch_text_poke(poke->tailcall_target,
-+					   BPF_MOD_JUMP,
-+					   old_addr, new_addr, true);
-+		BUG_ON(ret < 0);
-+		if (!old) {
-+			ret = __bpf_arch_text_poke(poke->tailcall_bypass,
-+						   BPF_MOD_JUMP,
-+						   poke->bypass_addr,
-+						   NULL, true);
-+			BUG_ON(ret < 0);
-+		}
-+	} else {
-+		ret = __bpf_arch_text_poke(poke->tailcall_bypass,
-+					   BPF_MOD_JUMP,
-+					   old_bypass_addr,
-+					   poke->bypass_addr, true);
-+		BUG_ON(ret < 0);
-+		/* let other CPUs finish the execution of program
-+		 * so that it will not possible to expose them
-+		 * to invalid nop, stack unwind, nop state
-+		 */
-+		if (!ret)
-+			synchronize_rcu();
-+		ret = __bpf_arch_text_poke(poke->tailcall_target,
-+					   BPF_MOD_JUMP,
-+					   old_addr, NULL, true);
-+		BUG_ON(ret < 0);
-+	}
-+}
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -2280,6 +2280,9 @@ enum bpf_text_poke_type {
- int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type t,
- 		       void *addr1, void *addr2);
- 
-+void bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
-+			       struct bpf_prog *new, struct bpf_prog *old);
-+
- struct btf_id_set;
- bool btf_id_set_contains(const struct btf_id_set *set, u32 id);
- 
---- a/kernel/bpf/arraymap.c
-+++ b/kernel/bpf/arraymap.c
-@@ -957,11 +957,16 @@ static void prog_array_map_poke_untrack(
- 	mutex_unlock(&aux->poke_mutex);
++	if (iter->snapshot)
++		iter->array_buffer = &iter->tr->max_buffer;
++#endif
++	return ret;
  }
  
-+void __weak bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
-+				      struct bpf_prog *new, struct bpf_prog *old)
-+{
-+	WARN_ON_ONCE(1);
-+}
-+
- static void prog_array_map_poke_run(struct bpf_map *map, u32 key,
- 				    struct bpf_prog *old,
- 				    struct bpf_prog *new)
- {
--	u8 *old_addr, *new_addr, *old_bypass_addr;
- 	struct prog_poke_elem *elem;
- 	struct bpf_array_aux *aux;
+ #ifdef CONFIG_FTRACE_STARTUP_TEST
+@@ -8383,7 +8397,7 @@ tracing_buffers_splice_read(struct file
  
-@@ -970,7 +975,7 @@ static void prog_array_map_poke_run(stru
+ 		wait_index = READ_ONCE(iter->wait_index);
  
- 	list_for_each_entry(elem, &aux->poke_progs, list) {
- 		struct bpf_jit_poke_descriptor *poke;
--		int i, ret;
-+		int i;
+-		ret = wait_on_pipe(iter, iter->tr->buffer_percent);
++		ret = wait_on_pipe(iter, iter->snapshot ? 0 : iter->tr->buffer_percent);
+ 		if (ret)
+ 			goto out;
  
- 		for (i = 0; i < elem->aux->size_poke_tab; i++) {
- 			poke = &elem->aux->poke_tab[i];
-@@ -989,21 +994,10 @@ static void prog_array_map_poke_run(stru
- 			 *    activated, so tail call updates can arrive from here
- 			 *    while JIT is still finishing its final fixup for
- 			 *    non-activated poke entries.
--			 * 3) On program teardown, the program's kallsym entry gets
--			 *    removed out of RCU callback, but we can only untrack
--			 *    from sleepable context, therefore bpf_arch_text_poke()
--			 *    might not see that this is in BPF text section and
--			 *    bails out with -EINVAL. As these are unreachable since
--			 *    RCU grace period already passed, we simply skip them.
--			 * 4) Also programs reaching refcount of zero while patching
-+			 * 3) Also programs reaching refcount of zero while patching
- 			 *    is in progress is okay since we're protected under
- 			 *    poke_mutex and untrack the programs before the JIT
--			 *    buffer is freed. When we're still in the middle of
--			 *    patching and suddenly kallsyms entry of the program
--			 *    gets evicted, we just skip the rest which is fine due
--			 *    to point 3).
--			 * 5) Any other error happening below from bpf_arch_text_poke()
--			 *    is a unexpected bug.
-+			 *    buffer is freed.
- 			 */
- 			if (!READ_ONCE(poke->tailcall_target_stable))
- 				continue;
-@@ -1013,39 +1007,7 @@ static void prog_array_map_poke_run(stru
- 			    poke->tail_call.key != key)
- 				continue;
- 
--			old_bypass_addr = old ? NULL : poke->bypass_addr;
--			old_addr = old ? (u8 *)old->bpf_func + poke->adj_off : NULL;
--			new_addr = new ? (u8 *)new->bpf_func + poke->adj_off : NULL;
--
--			if (new) {
--				ret = bpf_arch_text_poke(poke->tailcall_target,
--							 BPF_MOD_JUMP,
--							 old_addr, new_addr);
--				BUG_ON(ret < 0 && ret != -EINVAL);
--				if (!old) {
--					ret = bpf_arch_text_poke(poke->tailcall_bypass,
--								 BPF_MOD_JUMP,
--								 poke->bypass_addr,
--								 NULL);
--					BUG_ON(ret < 0 && ret != -EINVAL);
--				}
--			} else {
--				ret = bpf_arch_text_poke(poke->tailcall_bypass,
--							 BPF_MOD_JUMP,
--							 old_bypass_addr,
--							 poke->bypass_addr);
--				BUG_ON(ret < 0 && ret != -EINVAL);
--				/* let other CPUs finish the execution of program
--				 * so that it will not possible to expose them
--				 * to invalid nop, stack unwind, nop state
--				 */
--				if (!ret)
--					synchronize_rcu();
--				ret = bpf_arch_text_poke(poke->tailcall_target,
--							 BPF_MOD_JUMP,
--							 old_addr, NULL);
--				BUG_ON(ret < 0 && ret != -EINVAL);
--			}
-+			bpf_arch_poke_desc_update(poke, new, old);
- 		}
- 	}
- }
 
 
