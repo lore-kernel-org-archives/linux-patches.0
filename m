@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B74E1BDF1;
-	Wed,  3 Jan 2024 17:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224F21C292;
+	Wed,  3 Jan 2024 17:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjHg8hot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6180C433C8;
-	Wed,  3 Jan 2024 17:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbDRK3Qf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C06AC433C7;
+	Wed,  3 Jan 2024 17:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301769;
-	bh=eCpKBMBU5Ia44spgZrgaY3QqH9dlKnTvWzOuvxCPcf0=;
+	s=korg; t=1704301772;
+	bh=zkQZq91K7PDQ2FBVHIhPRQG4x6iCYvLgYLemB/pWHWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CjHg8hotOBCEKEddsfurFgf6p2Zt85mVTnSQkNUBGnlgrfDwbrmJo/j8C68VBBfG5
-	 adFa+1FcsY1HdNbqHLAIdhdPUkWLRvptwN0YZVQ2tBblsy1mkxd98/636Hdtb+TDrU
-	 Ogu6R3/KKw9o+yxHXgYLwpQSJ3Flrdykie94lHC4=
+	b=bbDRK3QfP4P2eLzkL0NKiSaZwEFJROiCzPZrfdGGNRGmbPMBBFUSc5EGnxo66MWvy
+	 TLCU6WYgQxz4diSvFkpKfSfuPOIc3l45QVZYR1O+MQvicBrVA4jAUhrIaWMpuJtSuw
+	 +xsqzq5aMe3+kAuuPciX/78V8e+74m8lle4UCLI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 06/75] wifi: mac80211: mesh_plink: fix matches_local logic
-Date: Wed,  3 Jan 2024 17:54:47 +0100
-Message-ID: <20240103164843.903258151@linuxfoundation.org>
+Subject: [PATCH 5.10 07/75] Revert "net/mlx5e: fix double free of encap_header"
+Date: Wed,  3 Jan 2024 17:54:48 +0100
+Message-ID: <20240103164844.060005711@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164842.953224409@linuxfoundation.org>
 References: <20240103164842.953224409@linuxfoundation.org>
@@ -42,50 +42,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit 8c386b166e2517cf3a123018e77941ec22625d0f ]
+[ Upstream commit 5d089684dc434a31e08d32f0530066d0025c52e4 ]
 
-During refactoring the "else" here got lost, add it back.
+This reverts commit 6f9b1a0731662648949a1c0587f6acb3b7f8acf1.
 
-Fixes: c99a89edb106 ("mac80211: factor out plink event gathering")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20231211085121.795480fa0e0b.I017d501196a5bbdcd9afd33338d342d6fe1edd79@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This patch is causing a null ptr issue, the proper fix is in the next
+patch.
+
+Fixes: 6f9b1a073166 ("net/mlx5e: fix double free of encap_header")
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_plink.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/mac80211/mesh_plink.c b/net/mac80211/mesh_plink.c
-index aca26df7587dc..ee8b5013d67d7 100644
---- a/net/mac80211/mesh_plink.c
-+++ b/net/mac80211/mesh_plink.c
-@@ -1050,8 +1050,8 @@ mesh_plink_get_event(struct ieee80211_sub_if_data *sdata,
- 	case WLAN_SP_MESH_PEERING_OPEN:
- 		if (!matches_local)
- 			event = OPN_RJCT;
--		if (!mesh_plink_free_count(sdata) ||
--		    (sta->mesh->plid && sta->mesh->plid != plid))
-+		else if (!mesh_plink_free_count(sdata) ||
-+			 (sta->mesh->plid && sta->mesh->plid != plid))
- 			event = OPN_IGNR;
- 		else
- 			event = OPN_ACPT;
-@@ -1059,9 +1059,9 @@ mesh_plink_get_event(struct ieee80211_sub_if_data *sdata,
- 	case WLAN_SP_MESH_PEERING_CONFIRM:
- 		if (!matches_local)
- 			event = CNF_RJCT;
--		if (!mesh_plink_free_count(sdata) ||
--		    sta->mesh->llid != llid ||
--		    (sta->mesh->plid && sta->mesh->plid != plid))
-+		else if (!mesh_plink_free_count(sdata) ||
-+			 sta->mesh->llid != llid ||
-+			 (sta->mesh->plid && sta->mesh->plid != plid))
- 			event = CNF_IGNR;
- 		else
- 			event = CNF_ACPT;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
+index 05bcd69994eca..90930e54b6f28 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
+@@ -267,6 +267,9 @@ int mlx5e_tc_tun_create_header_ipv4(struct mlx5e_priv *priv,
+ 	if (err)
+ 		goto destroy_neigh_entry;
+ 
++	e->encap_size = ipv4_encap_size;
++	e->encap_header = encap_header;
++
+ 	if (!(nud_state & NUD_VALID)) {
+ 		neigh_event_send(n, NULL);
+ 		/* the encap entry will be made valid on neigh update event
+@@ -283,8 +286,6 @@ int mlx5e_tc_tun_create_header_ipv4(struct mlx5e_priv *priv,
+ 		goto destroy_neigh_entry;
+ 	}
+ 
+-	e->encap_size = ipv4_encap_size;
+-	e->encap_header = encap_header;
+ 	e->flags |= MLX5_ENCAP_ENTRY_VALID;
+ 	mlx5e_rep_queue_neigh_stats_work(netdev_priv(out_dev));
+ 	mlx5e_route_lookup_ipv4_put(route_dev, n);
+@@ -430,6 +431,9 @@ int mlx5e_tc_tun_create_header_ipv6(struct mlx5e_priv *priv,
+ 	if (err)
+ 		goto destroy_neigh_entry;
+ 
++	e->encap_size = ipv6_encap_size;
++	e->encap_header = encap_header;
++
+ 	if (!(nud_state & NUD_VALID)) {
+ 		neigh_event_send(n, NULL);
+ 		/* the encap entry will be made valid on neigh update event
+@@ -447,8 +451,6 @@ int mlx5e_tc_tun_create_header_ipv6(struct mlx5e_priv *priv,
+ 		goto destroy_neigh_entry;
+ 	}
+ 
+-	e->encap_size = ipv6_encap_size;
+-	e->encap_header = encap_header;
+ 	e->flags |= MLX5_ENCAP_ENTRY_VALID;
+ 	mlx5e_rep_queue_neigh_stats_work(netdev_priv(out_dev));
+ 	mlx5e_route_lookup_ipv6_put(route_dev, n);
 -- 
 2.43.0
 
