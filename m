@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7701C295;
-	Wed,  3 Jan 2024 17:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54671C688;
+	Wed,  3 Jan 2024 17:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="em8CCjOe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 076ECC433C7;
-	Wed,  3 Jan 2024 17:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9Zb5mkW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B121C433C8;
+	Wed,  3 Jan 2024 17:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301704;
-	bh=Gr5GOAgYgHy3g5efdcG969dObyrfCHvlyhzzCWcufOY=;
+	s=korg; t=1704301707;
+	bh=ESkP13U2f3b1gAqPsM77r/gNz+ot+beeWSGFgEbqrcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=em8CCjOeqHnxHFFO61LZzKnMtOLnPXmkX25k6fE7gL+CQSBPRauX0ba9d1V2Dkg/g
-	 iv1zns3jU/tbWEo9/lUX2c93pKqGOz+ZCXAudlCZGWDqHbDDOtncUqCyj6uxe1+V9e
-	 Q5dDNlGaYCaWSho+EQxZcoKna9pUMpxvY/JIbYis=
+	b=f9Zb5mkWjQOBGxbD1p7e1sDnIaxnEl4vpa6OULUGaXMoPoiYQvN1X0E4HNOdJc9ME
+	 stHoImblRB1r7rPF4tgPJV3WNvb4/yU84VLtJJiBMlDxpb0j0NQ1rgOJwfCbqtRcVW
+	 SX8d7ZZflE25aLheiWsTlH/3kkVg8Idnz6Hly3r0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.15 94/95] device property: Allow const parameter to dev_fwnode()
-Date: Wed,  3 Jan 2024 17:55:42 +0100
-Message-ID: <20240103164908.151824053@linuxfoundation.org>
+	syzbot+97a4fe20470e9bc30810@syzkaller.appspotmail.com,
+	Jiri Olsa <jolsa@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Lee Jones <lee@kernel.org>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Subject: [PATCH 5.15 95/95] bpf: Fix prog_array_map_poke_run map poke update
+Date: Wed,  3 Jan 2024 17:55:43 +0100
+Message-ID: <20240103164908.330992910@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -42,70 +45,227 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit b295d484b97081feba72b071ffcb72fb4638ccfd upstream.
+commit 4b7de801606e504e69689df71475d27e35336fb3 upstream.
 
-It's not fully correct to take a const parameter pointer to a struct
-and return a non-const pointer to a member of that struct.
+Lee pointed out issue found by syscaller [0] hitting BUG in prog array
+map poke update in prog_array_map_poke_run function due to error value
+returned from bpf_arch_text_poke function.
 
-Instead, introduce a const version of the dev_fwnode() API which takes
-and returns const pointers and use it where it's applicable.
+There's race window where bpf_arch_text_poke can fail due to missing
+bpf program kallsym symbols, which is accounted for with check for
+-EINVAL in that BUG_ON call.
 
-With this, convert dev_fwnode() to be a macro wrapper on top of const
-and non-const APIs that chooses one based on the type.
+The problem is that in such case we won't update the tail call jump
+and cause imbalance for the next tail call update check which will
+fail with -EBUSY in bpf_arch_text_poke.
 
-Suggested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Fixes: aade55c86033 ("device property: Add const qualifier to device_get_match_data() parameter")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://lore.kernel.org/r/20221004092129.19412-2-andriy.shevchenko@linux.intel.com
+I'm hitting following race during the program load:
+
+  CPU 0                             CPU 1
+
+  bpf_prog_load
+    bpf_check
+      do_misc_fixups
+        prog_array_map_poke_track
+
+                                    map_update_elem
+                                      bpf_fd_array_map_update_elem
+                                        prog_array_map_poke_run
+
+                                          bpf_arch_text_poke returns -EINVAL
+
+    bpf_prog_kallsyms_add
+
+After bpf_arch_text_poke (CPU 1) fails to update the tail call jump, the next
+poke update fails on expected jump instruction check in bpf_arch_text_poke
+with -EBUSY and triggers the BUG_ON in prog_array_map_poke_run.
+
+Similar race exists on the program unload.
+
+Fixing this by moving the update to bpf_arch_poke_desc_update function which
+makes sure we call __bpf_arch_text_poke that skips the bpf address check.
+
+Each architecture has slightly different approach wrt looking up bpf address
+in bpf_arch_text_poke, so instead of splitting the function or adding new
+'checkip' argument in previous version, it seems best to move the whole
+map_poke_run update as arch specific code.
+
+  [0] https://syzkaller.appspot.com/bug?extid=97a4fe20470e9bc30810
+
+Fixes: ebf7d1f508a7 ("bpf, x64: rework pro/epilogue and tailcall handling in JIT")
+Reported-by: syzbot+97a4fe20470e9bc30810@syzkaller.appspotmail.com
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Cc: Lee Jones <lee@kernel.org>
+Cc: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Link: https://lore.kernel.org/bpf/20231206083041.1306660-2-jolsa@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/property.c  |   11 +++++++++--
- include/linux/property.h |    7 ++++++-
- 2 files changed, 15 insertions(+), 3 deletions(-)
+ arch/x86/net/bpf_jit_comp.c |   46 ++++++++++++++++++++++++++++++++++
+ include/linux/bpf.h         |    3 ++
+ kernel/bpf/arraymap.c       |   58 +++++++-------------------------------------
+ 3 files changed, 59 insertions(+), 48 deletions(-)
 
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -18,12 +18,19 @@
- #include <linux/etherdevice.h>
- #include <linux/phy.h>
- 
--struct fwnode_handle *dev_fwnode(const struct device *dev)
-+struct fwnode_handle *__dev_fwnode(struct device *dev)
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -2403,3 +2403,49 @@ bool bpf_jit_supports_kfunc_call(void)
  {
- 	return IS_ENABLED(CONFIG_OF) && dev->of_node ?
- 		of_fwnode_handle(dev->of_node) : dev->fwnode;
+ 	return true;
  }
--EXPORT_SYMBOL_GPL(dev_fwnode);
-+EXPORT_SYMBOL_GPL(__dev_fwnode);
 +
-+const struct fwnode_handle *__dev_fwnode_const(const struct device *dev)
++void bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
++			       struct bpf_prog *new, struct bpf_prog *old)
 +{
-+	return IS_ENABLED(CONFIG_OF) && dev->of_node ?
-+		of_fwnode_handle(dev->of_node) : dev->fwnode;
++	u8 *old_addr, *new_addr, *old_bypass_addr;
++	int ret;
++
++	old_bypass_addr = old ? NULL : poke->bypass_addr;
++	old_addr = old ? (u8 *)old->bpf_func + poke->adj_off : NULL;
++	new_addr = new ? (u8 *)new->bpf_func + poke->adj_off : NULL;
++
++	/*
++	 * On program loading or teardown, the program's kallsym entry
++	 * might not be in place, so we use __bpf_arch_text_poke to skip
++	 * the kallsyms check.
++	 */
++	if (new) {
++		ret = __bpf_arch_text_poke(poke->tailcall_target,
++					   BPF_MOD_JUMP,
++					   old_addr, new_addr, true);
++		BUG_ON(ret < 0);
++		if (!old) {
++			ret = __bpf_arch_text_poke(poke->tailcall_bypass,
++						   BPF_MOD_JUMP,
++						   poke->bypass_addr,
++						   NULL, true);
++			BUG_ON(ret < 0);
++		}
++	} else {
++		ret = __bpf_arch_text_poke(poke->tailcall_bypass,
++					   BPF_MOD_JUMP,
++					   old_bypass_addr,
++					   poke->bypass_addr, true);
++		BUG_ON(ret < 0);
++		/* let other CPUs finish the execution of program
++		 * so that it will not possible to expose them
++		 * to invalid nop, stack unwind, nop state
++		 */
++		if (!ret)
++			synchronize_rcu();
++		ret = __bpf_arch_text_poke(poke->tailcall_target,
++					   BPF_MOD_JUMP,
++					   old_addr, NULL, true);
++		BUG_ON(ret < 0);
++	}
 +}
-+EXPORT_SYMBOL_GPL(__dev_fwnode_const);
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -2280,6 +2280,9 @@ enum bpf_text_poke_type {
+ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type t,
+ 		       void *addr1, void *addr2);
  
- /**
-  * device_property_present - check if a property of a device is present
---- a/include/linux/property.h
-+++ b/include/linux/property.h
-@@ -31,7 +31,12 @@ enum dev_dma_attr {
- 	DEV_DMA_COHERENT,
- };
++void bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
++			       struct bpf_prog *new, struct bpf_prog *old);
++
+ struct btf_id_set;
+ bool btf_id_set_contains(const struct btf_id_set *set, u32 id);
  
--struct fwnode_handle *dev_fwnode(const struct device *dev);
-+const struct fwnode_handle *__dev_fwnode_const(const struct device *dev);
-+struct fwnode_handle *__dev_fwnode(struct device *dev);
-+#define dev_fwnode(dev)							\
-+	_Generic((dev),							\
-+		 const struct device *: __dev_fwnode_const,	\
-+		 struct device *: __dev_fwnode)(dev)
+--- a/kernel/bpf/arraymap.c
++++ b/kernel/bpf/arraymap.c
+@@ -957,11 +957,16 @@ static void prog_array_map_poke_untrack(
+ 	mutex_unlock(&aux->poke_mutex);
+ }
  
- bool device_property_present(struct device *dev, const char *propname);
- int device_property_read_u8_array(struct device *dev, const char *propname,
++void __weak bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
++				      struct bpf_prog *new, struct bpf_prog *old)
++{
++	WARN_ON_ONCE(1);
++}
++
+ static void prog_array_map_poke_run(struct bpf_map *map, u32 key,
+ 				    struct bpf_prog *old,
+ 				    struct bpf_prog *new)
+ {
+-	u8 *old_addr, *new_addr, *old_bypass_addr;
+ 	struct prog_poke_elem *elem;
+ 	struct bpf_array_aux *aux;
+ 
+@@ -970,7 +975,7 @@ static void prog_array_map_poke_run(stru
+ 
+ 	list_for_each_entry(elem, &aux->poke_progs, list) {
+ 		struct bpf_jit_poke_descriptor *poke;
+-		int i, ret;
++		int i;
+ 
+ 		for (i = 0; i < elem->aux->size_poke_tab; i++) {
+ 			poke = &elem->aux->poke_tab[i];
+@@ -989,21 +994,10 @@ static void prog_array_map_poke_run(stru
+ 			 *    activated, so tail call updates can arrive from here
+ 			 *    while JIT is still finishing its final fixup for
+ 			 *    non-activated poke entries.
+-			 * 3) On program teardown, the program's kallsym entry gets
+-			 *    removed out of RCU callback, but we can only untrack
+-			 *    from sleepable context, therefore bpf_arch_text_poke()
+-			 *    might not see that this is in BPF text section and
+-			 *    bails out with -EINVAL. As these are unreachable since
+-			 *    RCU grace period already passed, we simply skip them.
+-			 * 4) Also programs reaching refcount of zero while patching
++			 * 3) Also programs reaching refcount of zero while patching
+ 			 *    is in progress is okay since we're protected under
+ 			 *    poke_mutex and untrack the programs before the JIT
+-			 *    buffer is freed. When we're still in the middle of
+-			 *    patching and suddenly kallsyms entry of the program
+-			 *    gets evicted, we just skip the rest which is fine due
+-			 *    to point 3).
+-			 * 5) Any other error happening below from bpf_arch_text_poke()
+-			 *    is a unexpected bug.
++			 *    buffer is freed.
+ 			 */
+ 			if (!READ_ONCE(poke->tailcall_target_stable))
+ 				continue;
+@@ -1013,39 +1007,7 @@ static void prog_array_map_poke_run(stru
+ 			    poke->tail_call.key != key)
+ 				continue;
+ 
+-			old_bypass_addr = old ? NULL : poke->bypass_addr;
+-			old_addr = old ? (u8 *)old->bpf_func + poke->adj_off : NULL;
+-			new_addr = new ? (u8 *)new->bpf_func + poke->adj_off : NULL;
+-
+-			if (new) {
+-				ret = bpf_arch_text_poke(poke->tailcall_target,
+-							 BPF_MOD_JUMP,
+-							 old_addr, new_addr);
+-				BUG_ON(ret < 0 && ret != -EINVAL);
+-				if (!old) {
+-					ret = bpf_arch_text_poke(poke->tailcall_bypass,
+-								 BPF_MOD_JUMP,
+-								 poke->bypass_addr,
+-								 NULL);
+-					BUG_ON(ret < 0 && ret != -EINVAL);
+-				}
+-			} else {
+-				ret = bpf_arch_text_poke(poke->tailcall_bypass,
+-							 BPF_MOD_JUMP,
+-							 old_bypass_addr,
+-							 poke->bypass_addr);
+-				BUG_ON(ret < 0 && ret != -EINVAL);
+-				/* let other CPUs finish the execution of program
+-				 * so that it will not possible to expose them
+-				 * to invalid nop, stack unwind, nop state
+-				 */
+-				if (!ret)
+-					synchronize_rcu();
+-				ret = bpf_arch_text_poke(poke->tailcall_target,
+-							 BPF_MOD_JUMP,
+-							 old_addr, NULL);
+-				BUG_ON(ret < 0 && ret != -EINVAL);
+-			}
++			bpf_arch_poke_desc_update(poke, new, old);
+ 		}
+ 	}
+ }
 
 
