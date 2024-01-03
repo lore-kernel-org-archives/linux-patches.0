@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0241C283;
-	Wed,  3 Jan 2024 16:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2B21C284;
+	Wed,  3 Jan 2024 16:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNP+2/DP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77111C433C8;
-	Wed,  3 Jan 2024 16:58:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4c04pNI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E13C433C8;
+	Wed,  3 Jan 2024 16:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301119;
-	bh=a5hIWtEZJKzXb1nMhkzgIAHFV7JOFQMw+kd2kX0Xeoo=;
+	s=korg; t=1704301122;
+	bh=29xNFMV6Q8+i9gpWFwZblWAT379A7StgndnV0wD8XTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oNP+2/DPYkwzx/fGbid7dluO1YNmACC044ny+o2caVhpgjbA0G7q1CS5eR85rkBJr
-	 zcRYjStB8RzlSH+sd8UpkeluaKXTlnocfG7RJFc5Abm4SQ9NlvlZlosA7ht5smfPqS
-	 t4uX+lZO/BgDG6uXWGzIdbdK3xzUqZehmEpzJyg8=
+	b=K4c04pNIJBkZXHUYM3Pw3Su6NbPC1mRRPraJPcLUpM2oFmvKH+sK3nTbUYEY0yG75
+	 h5fXjtgqVBLj214u0YEFQEIOVuan0zqnsfANjvBi2VYda0L4BWxverOZW77YXt3M2n
+	 WTTw8Jzgr5W/NDhW5qka7du5QPnv9xJowazxsyqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/100] ksmbd: remove experimental warning
-Date: Wed,  3 Jan 2024 17:54:29 +0100
-Message-ID: <20240103164902.076714426@linuxfoundation.org>
+Subject: [PATCH 6.1 013/100] ksmbd: delete asynchronous work from list
+Date: Wed,  3 Jan 2024 17:54:02 +0100
+Message-ID: <20240103164858.107851945@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -42,46 +42,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit f5069159f32c8c943e047f22731317463c8e9b84 ]
+[ Upstream commit 3a9b557f44ea8f216aab515a7db20e23f0eb51b9 ]
 
-ksmbd has made significant improvements over the past two
-years and is regularly tested and used.  Remove the experimental
-warning.
+When smb2_lock request is canceled by smb2_cancel or smb2_close(),
+ksmbd is missing deleting async_request_entry async_requests list.
+Because calling init_smb2_rsp_hdr() in smb2_lock() mark ->synchronous
+as true and then it will not be deleted in
+ksmbd_conn_try_dequeue_request(). This patch add release_async_work() to
+release the ones allocated for async work.
 
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/Kconfig  | 2 +-
- fs/smb/server/server.c | 2 --
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ fs/smb/server/connection.c | 12 +++++-------
+ fs/smb/server/ksmbd_work.h |  2 +-
+ fs/smb/server/smb2pdu.c    | 33 +++++++++++++++++++++------------
+ fs/smb/server/smb2pdu.h    |  1 +
+ 4 files changed, 28 insertions(+), 20 deletions(-)
 
-diff --git a/fs/smb/server/Kconfig b/fs/smb/server/Kconfig
-index 7055cb5d28800..d036ab80fec35 100644
---- a/fs/smb/server/Kconfig
-+++ b/fs/smb/server/Kconfig
-@@ -1,5 +1,5 @@
- config SMB_SERVER
--	tristate "SMB3 server support (EXPERIMENTAL)"
-+	tristate "SMB3 server support"
- 	depends on INET
- 	depends on MULTIUSER
- 	depends on FILE_LOCKING
-diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
-index ff1514c79f162..f5d8e405cf6fd 100644
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -591,8 +591,6 @@ static int __init ksmbd_server_init(void)
- 	if (ret)
- 		goto err_crypto_destroy;
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index ffbf14d024191..00a87b4acd5c5 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -114,10 +114,8 @@ void ksmbd_conn_enqueue_request(struct ksmbd_work *work)
+ 	struct ksmbd_conn *conn = work->conn;
+ 	struct list_head *requests_queue = NULL;
  
--	pr_warn_once("The ksmbd server is experimental\n");
+-	if (conn->ops->get_cmd_val(work) != SMB2_CANCEL_HE) {
++	if (conn->ops->get_cmd_val(work) != SMB2_CANCEL_HE)
+ 		requests_queue = &conn->requests;
+-		work->synchronous = true;
+-	}
+ 
+ 	if (requests_queue) {
+ 		atomic_inc(&conn->req_running);
+@@ -138,14 +136,14 @@ int ksmbd_conn_try_dequeue_request(struct ksmbd_work *work)
+ 
+ 	if (!work->multiRsp)
+ 		atomic_dec(&conn->req_running);
+-	spin_lock(&conn->request_lock);
+ 	if (!work->multiRsp) {
++		spin_lock(&conn->request_lock);
+ 		list_del_init(&work->request_entry);
+-		if (!work->synchronous)
+-			list_del_init(&work->async_request_entry);
++		spin_unlock(&conn->request_lock);
++		if (work->asynchronous)
++			release_async_work(work);
+ 		ret = 0;
+ 	}
+-	spin_unlock(&conn->request_lock);
+ 
+ 	wake_up_all(&conn->req_running_q);
+ 	return ret;
+diff --git a/fs/smb/server/ksmbd_work.h b/fs/smb/server/ksmbd_work.h
+index 3234f2cf6327c..f8ae6144c0aea 100644
+--- a/fs/smb/server/ksmbd_work.h
++++ b/fs/smb/server/ksmbd_work.h
+@@ -68,7 +68,7 @@ struct ksmbd_work {
+ 	/* Request is encrypted */
+ 	bool                            encrypted:1;
+ 	/* Is this SYNC or ASYNC ksmbd_work */
+-	bool                            synchronous:1;
++	bool                            asynchronous:1;
+ 	bool                            need_invalidate_rkey:1;
+ 
+ 	unsigned int                    remote_key;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index d3939fd481497..ee128f5d38c35 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -508,12 +508,6 @@ int init_smb2_rsp_hdr(struct ksmbd_work *work)
+ 	rsp_hdr->SessionId = rcv_hdr->SessionId;
+ 	memcpy(rsp_hdr->Signature, rcv_hdr->Signature, 16);
+ 
+-	work->synchronous = true;
+-	if (work->async_id) {
+-		ksmbd_release_id(&conn->async_ida, work->async_id);
+-		work->async_id = 0;
+-	}
 -
  	return 0;
+ }
  
- err_crypto_destroy:
+@@ -671,7 +665,7 @@ int setup_async_work(struct ksmbd_work *work, void (*fn)(void **), void **arg)
+ 		pr_err("Failed to alloc async message id\n");
+ 		return id;
+ 	}
+-	work->synchronous = false;
++	work->asynchronous = true;
+ 	work->async_id = id;
+ 	rsp_hdr->Id.AsyncId = cpu_to_le64(id);
+ 
+@@ -691,6 +685,24 @@ int setup_async_work(struct ksmbd_work *work, void (*fn)(void **), void **arg)
+ 	return 0;
+ }
+ 
++void release_async_work(struct ksmbd_work *work)
++{
++	struct ksmbd_conn *conn = work->conn;
++
++	spin_lock(&conn->request_lock);
++	list_del_init(&work->async_request_entry);
++	spin_unlock(&conn->request_lock);
++
++	work->asynchronous = 0;
++	work->cancel_fn = NULL;
++	kfree(work->cancel_argv);
++	work->cancel_argv = NULL;
++	if (work->async_id) {
++		ksmbd_release_id(&conn->async_ida, work->async_id);
++		work->async_id = 0;
++	}
++}
++
+ void smb2_send_interim_resp(struct ksmbd_work *work, __le32 status)
+ {
+ 	struct smb2_hdr *rsp_hdr;
+@@ -7153,13 +7165,9 @@ int smb2_lock(struct ksmbd_work *work)
+ 
+ 				ksmbd_vfs_posix_lock_wait(flock);
+ 
+-				spin_lock(&work->conn->request_lock);
+ 				spin_lock(&fp->f_lock);
+ 				list_del(&work->fp_entry);
+-				work->cancel_fn = NULL;
+-				kfree(argv);
+ 				spin_unlock(&fp->f_lock);
+-				spin_unlock(&work->conn->request_lock);
+ 
+ 				if (work->state != KSMBD_WORK_ACTIVE) {
+ 					list_del(&smb_lock->llist);
+@@ -7177,6 +7185,7 @@ int smb2_lock(struct ksmbd_work *work)
+ 						work->send_no_response = 1;
+ 						goto out;
+ 					}
++
+ 					init_smb2_rsp_hdr(work);
+ 					smb2_set_err_rsp(work);
+ 					rsp->hdr.Status =
+@@ -7189,7 +7198,7 @@ int smb2_lock(struct ksmbd_work *work)
+ 				spin_lock(&work->conn->llist_lock);
+ 				list_del(&smb_lock->clist);
+ 				spin_unlock(&work->conn->llist_lock);
+-
++				release_async_work(work);
+ 				goto retry;
+ 			} else if (!rc) {
+ 				spin_lock(&work->conn->llist_lock);
+diff --git a/fs/smb/server/smb2pdu.h b/fs/smb/server/smb2pdu.h
+index f13bd65993ccc..59e3de95961c1 100644
+--- a/fs/smb/server/smb2pdu.h
++++ b/fs/smb/server/smb2pdu.h
+@@ -488,6 +488,7 @@ int find_matching_smb2_dialect(int start_index, __le16 *cli_dialects,
+ struct file_lock *smb_flock_init(struct file *f);
+ int setup_async_work(struct ksmbd_work *work, void (*fn)(void **),
+ 		     void **arg);
++void release_async_work(struct ksmbd_work *work);
+ void smb2_send_interim_resp(struct ksmbd_work *work, __le32 status);
+ struct channel *lookup_chann_list(struct ksmbd_session *sess,
+ 				  struct ksmbd_conn *conn);
 -- 
 2.43.0
 
