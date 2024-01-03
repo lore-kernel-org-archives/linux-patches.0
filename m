@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1371C282;
-	Wed,  3 Jan 2024 17:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAC61C282;
+	Wed,  3 Jan 2024 17:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAiYQ59r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24FEAC433C9;
-	Wed,  3 Jan 2024 17:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7DxzuBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A7EC433C7;
+	Wed,  3 Jan 2024 17:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301402;
-	bh=gaf94oX6pAIdmY9QU5b+xr/37NhjjbJMG7xHSqGcZXU=;
+	s=korg; t=1704301405;
+	bh=NWKClQASbiyC1elGymUgUI0GH21BwGK+nJ+3N5SEmro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TAiYQ59rjIsGynVlwaLG3p2QOIDei/1gnsUPJ443VBkaa7SWSowUD6WvEmvHoaWlB
-	 XehqYJHI4QiGQc0MvcmUM7qpImzxcUKfv+6ru0p9MEj5RLJ2G/CZhmnBIj+8lwMWZ6
-	 evE8G6u/x6VWqsjbB435EROL831j5lzT4k8OEVmE=
+	b=K7DxzuBFoa5pv9D4/RUWJfGLQPg97n0P1Oaq9UunUgumaxzzSxxpliZqnNAbglf3U
+	 pEljlkJCOg4V8lHVrzN4aRpq+YmBGShGukH0IV93e1L6/mBQUtoWLc2MlufY1GAujO
+	 RKSCPhMYTziq4/JoIWMyI1OZ4gj7BD/7vJhr32LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	linux-afs@lists.infradead.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 23/95] afs: Use refcount_t rather than atomic_t
-Date: Wed,  3 Jan 2024 17:54:31 +0100
-Message-ID: <20240103164857.589683945@linuxfoundation.org>
+Subject: [PATCH 5.15 24/95] afs: Fix use-after-free due to get/remove race in volume tree
+Date: Wed,  3 Jan 2024 17:54:32 +0100
+Message-ID: <20240103164857.740565772@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -45,695 +47,124 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c56f9ec8b20f931014574b943590c4d830109380 ]
+[ Upstream commit 9a6b294ab496650e9f270123730df37030911b55 ]
 
-Use refcount_t rather than atomic_t in afs to make use of the count
-checking facilities provided.
+When an afs_volume struct is put, its refcount is reduced to 0 before
+the cell->volume_lock is taken and the volume removed from the
+cell->volumes tree.
 
+Unfortunately, this means that the lookup code can race and see a volume
+with a zero ref in the tree, resulting in a use-after-free:
+
+    refcount_t: addition on 0; use-after-free.
+    WARNING: CPU: 3 PID: 130782 at lib/refcount.c:25 refcount_warn_saturate+0x7a/0xda
+    ...
+    RIP: 0010:refcount_warn_saturate+0x7a/0xda
+    ...
+    Call Trace:
+     afs_get_volume+0x3d/0x55
+     afs_create_volume+0x126/0x1de
+     afs_validate_fc+0xfe/0x130
+     afs_get_tree+0x20/0x2e5
+     vfs_get_tree+0x1d/0xc9
+     do_new_mount+0x13b/0x22e
+     do_mount+0x5d/0x8a
+     __do_sys_mount+0x100/0x12a
+     do_syscall_64+0x3a/0x94
+     entry_SYSCALL_64_after_hwframe+0x62/0x6a
+
+Fix this by:
+
+ (1) When putting, use a flag to indicate if the volume has been removed
+     from the tree and skip the rb_erase if it has.
+
+ (2) When looking up, use a conditional ref increment and if it fails
+     because the refcount is 0, replace the node in the tree and set the
+     removal flag.
+
+Fixes: 20325960f875 ("afs: Reorganise volume and server trees to be rooted on the cell")
 Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
 cc: linux-afs@lists.infradead.org
-Link: https://lore.kernel.org/r/165911277768.3745403.423349776836296452.stgit@warthog.procyon.org.uk/ # v1
-Stable-dep-of: 9a6b294ab496 ("afs: Fix use-after-free due to get/remove race in volume tree")
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/cell.c              | 61 ++++++++++++++++++--------------------
- fs/afs/cmservice.c         |  2 +-
- fs/afs/internal.h          | 16 +++++-----
- fs/afs/proc.c              |  6 ++--
- fs/afs/rxrpc.c             | 26 ++++++++--------
- fs/afs/server.c            | 40 ++++++++++++++-----------
- fs/afs/vl_list.c           | 19 ++++--------
- fs/afs/volume.c            | 21 ++++++++-----
- include/trace/events/afs.h | 26 ++++++++--------
- 9 files changed, 110 insertions(+), 107 deletions(-)
+ fs/afs/internal.h |  2 ++
+ fs/afs/volume.c   | 26 +++++++++++++++++++++++---
+ 2 files changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/fs/afs/cell.c b/fs/afs/cell.c
-index b5d20a3c08294..77571372888d9 100644
---- a/fs/afs/cell.c
-+++ b/fs/afs/cell.c
-@@ -158,7 +158,7 @@ static struct afs_cell *afs_alloc_cell(struct afs_net *net,
- 		cell->name[i] = tolower(name[i]);
- 	cell->name[i] = 0;
- 
--	atomic_set(&cell->ref, 1);
-+	refcount_set(&cell->ref, 1);
- 	atomic_set(&cell->active, 0);
- 	INIT_WORK(&cell->manager, afs_manage_cell_work);
- 	cell->volumes = RB_ROOT;
-@@ -287,7 +287,7 @@ struct afs_cell *afs_lookup_cell(struct afs_net *net,
- 	cell = candidate;
- 	candidate = NULL;
- 	atomic_set(&cell->active, 2);
--	trace_afs_cell(cell->debug_id, atomic_read(&cell->ref), 2, afs_cell_trace_insert);
-+	trace_afs_cell(cell->debug_id, refcount_read(&cell->ref), 2, afs_cell_trace_insert);
- 	rb_link_node_rcu(&cell->net_node, parent, pp);
- 	rb_insert_color(&cell->net_node, &net->cells);
- 	up_write(&net->cells_lock);
-@@ -295,7 +295,7 @@ struct afs_cell *afs_lookup_cell(struct afs_net *net,
- 	afs_queue_cell(cell, afs_cell_trace_get_queue_new);
- 
- wait_for_cell:
--	trace_afs_cell(cell->debug_id, atomic_read(&cell->ref), atomic_read(&cell->active),
-+	trace_afs_cell(cell->debug_id, refcount_read(&cell->ref), atomic_read(&cell->active),
- 		       afs_cell_trace_wait);
- 	_debug("wait_for_cell");
- 	wait_var_event(&cell->state,
-@@ -492,13 +492,13 @@ static void afs_cell_destroy(struct rcu_head *rcu)
- {
- 	struct afs_cell *cell = container_of(rcu, struct afs_cell, rcu);
- 	struct afs_net *net = cell->net;
--	int u;
-+	int r;
- 
- 	_enter("%p{%s}", cell, cell->name);
- 
--	u = atomic_read(&cell->ref);
--	ASSERTCMP(u, ==, 0);
--	trace_afs_cell(cell->debug_id, u, atomic_read(&cell->active), afs_cell_trace_free);
-+	r = refcount_read(&cell->ref);
-+	ASSERTCMP(r, ==, 0);
-+	trace_afs_cell(cell->debug_id, r, atomic_read(&cell->active), afs_cell_trace_free);
- 
- 	afs_put_vlserverlist(net, rcu_access_pointer(cell->vl_servers));
- 	afs_unuse_cell(net, cell->alias_of, afs_cell_trace_unuse_alias);
-@@ -541,13 +541,10 @@ void afs_cells_timer(struct timer_list *timer)
-  */
- struct afs_cell *afs_get_cell(struct afs_cell *cell, enum afs_cell_trace reason)
- {
--	int u;
-+	int r;
- 
--	if (atomic_read(&cell->ref) <= 0)
--		BUG();
--
--	u = atomic_inc_return(&cell->ref);
--	trace_afs_cell(cell->debug_id, u, atomic_read(&cell->active), reason);
-+	__refcount_inc(&cell->ref, &r);
-+	trace_afs_cell(cell->debug_id, r + 1, atomic_read(&cell->active), reason);
- 	return cell;
- }
- 
-@@ -558,12 +555,14 @@ void afs_put_cell(struct afs_cell *cell, enum afs_cell_trace reason)
- {
- 	if (cell) {
- 		unsigned int debug_id = cell->debug_id;
--		unsigned int u, a;
-+		unsigned int a;
-+		bool zero;
-+		int r;
- 
- 		a = atomic_read(&cell->active);
--		u = atomic_dec_return(&cell->ref);
--		trace_afs_cell(debug_id, u, a, reason);
--		if (u == 0) {
-+		zero = __refcount_dec_and_test(&cell->ref, &r);
-+		trace_afs_cell(debug_id, r - 1, a, reason);
-+		if (zero) {
- 			a = atomic_read(&cell->active);
- 			WARN(a != 0, "Cell active count %u > 0\n", a);
- 			call_rcu(&cell->rcu, afs_cell_destroy);
-@@ -576,14 +575,12 @@ void afs_put_cell(struct afs_cell *cell, enum afs_cell_trace reason)
-  */
- struct afs_cell *afs_use_cell(struct afs_cell *cell, enum afs_cell_trace reason)
- {
--	int u, a;
--
--	if (atomic_read(&cell->ref) <= 0)
--		BUG();
-+	int r, a;
- 
--	u = atomic_read(&cell->ref);
-+	r = refcount_read(&cell->ref);
-+	WARN_ON(r == 0);
- 	a = atomic_inc_return(&cell->active);
--	trace_afs_cell(cell->debug_id, u, a, reason);
-+	trace_afs_cell(cell->debug_id, r, a, reason);
- 	return cell;
- }
- 
-@@ -595,7 +592,7 @@ void afs_unuse_cell(struct afs_net *net, struct afs_cell *cell, enum afs_cell_tr
- {
- 	unsigned int debug_id;
- 	time64_t now, expire_delay;
--	int u, a;
-+	int r, a;
- 
- 	if (!cell)
- 		return;
-@@ -609,9 +606,9 @@ void afs_unuse_cell(struct afs_net *net, struct afs_cell *cell, enum afs_cell_tr
- 		expire_delay = afs_cell_gc_delay;
- 
- 	debug_id = cell->debug_id;
--	u = atomic_read(&cell->ref);
-+	r = refcount_read(&cell->ref);
- 	a = atomic_dec_return(&cell->active);
--	trace_afs_cell(debug_id, u, a, reason);
-+	trace_afs_cell(debug_id, r, a, reason);
- 	WARN_ON(a == 0);
- 	if (a == 1)
- 		/* 'cell' may now be garbage collected. */
-@@ -623,11 +620,11 @@ void afs_unuse_cell(struct afs_net *net, struct afs_cell *cell, enum afs_cell_tr
-  */
- void afs_see_cell(struct afs_cell *cell, enum afs_cell_trace reason)
- {
--	int u, a;
-+	int r, a;
- 
--	u = atomic_read(&cell->ref);
-+	r = refcount_read(&cell->ref);
- 	a = atomic_read(&cell->active);
--	trace_afs_cell(cell->debug_id, u, a, reason);
-+	trace_afs_cell(cell->debug_id, r, a, reason);
- }
- 
- /*
-@@ -753,7 +750,7 @@ static void afs_manage_cell(struct afs_cell *cell)
- 		active = 1;
- 		if (atomic_try_cmpxchg_relaxed(&cell->active, &active, 0)) {
- 			rb_erase(&cell->net_node, &net->cells);
--			trace_afs_cell(cell->debug_id, atomic_read(&cell->ref), 0,
-+			trace_afs_cell(cell->debug_id, refcount_read(&cell->ref), 0,
- 				       afs_cell_trace_unuse_delete);
- 			smp_store_release(&cell->state, AFS_CELL_REMOVED);
- 		}
-@@ -880,7 +877,7 @@ void afs_manage_cells(struct work_struct *work)
- 		bool sched_cell = false;
- 
- 		active = atomic_read(&cell->active);
--		trace_afs_cell(cell->debug_id, atomic_read(&cell->ref),
-+		trace_afs_cell(cell->debug_id, refcount_read(&cell->ref),
- 			       active, afs_cell_trace_manage);
- 
- 		ASSERTCMP(active, >=, 1);
-@@ -888,7 +885,7 @@ void afs_manage_cells(struct work_struct *work)
- 		if (purging) {
- 			if (test_and_clear_bit(AFS_CELL_FL_NO_GC, &cell->flags)) {
- 				active = atomic_dec_return(&cell->active);
--				trace_afs_cell(cell->debug_id, atomic_read(&cell->ref),
-+				trace_afs_cell(cell->debug_id, refcount_read(&cell->ref),
- 					       active, afs_cell_trace_unuse_pin);
- 			}
- 		}
-diff --git a/fs/afs/cmservice.c b/fs/afs/cmservice.c
-index a3f5de28be798..cedd627e1fae0 100644
---- a/fs/afs/cmservice.c
-+++ b/fs/afs/cmservice.c
-@@ -213,7 +213,7 @@ static void SRXAFSCB_CallBack(struct work_struct *work)
- 	 */
- 	if (call->server) {
- 		trace_afs_server(call->server,
--				 atomic_read(&call->server->ref),
-+				 refcount_read(&call->server->ref),
- 				 atomic_read(&call->server->active),
- 				 afs_server_trace_callback);
- 		afs_break_callbacks(call->server, call->count, call->request);
 diff --git a/fs/afs/internal.h b/fs/afs/internal.h
-index 183200c6ce20e..b29e9c206f782 100644
+index b29e9c206f782..0c03877cdaf7e 100644
 --- a/fs/afs/internal.h
 +++ b/fs/afs/internal.h
-@@ -123,7 +123,7 @@ struct afs_call {
- 	};
- 	struct afs_operation	*op;
- 	unsigned int		server_index;
--	atomic_t		usage;
-+	refcount_t		ref;
- 	enum afs_call_state	state;
- 	spinlock_t		state_lock;
- 	int			error;		/* error code */
-@@ -368,7 +368,7 @@ struct afs_cell {
+@@ -589,6 +589,7 @@ struct afs_volume {
+ #define AFS_VOLUME_OFFLINE	4	/* - T if volume offline notice given */
+ #define AFS_VOLUME_BUSY		5	/* - T if volume busy notice given */
+ #define AFS_VOLUME_MAYBE_NO_IBULK 6	/* - T if some servers don't have InlineBulkStatus */
++#define AFS_VOLUME_RM_TREE	7	/* - Set if volume removed from cell->volumes */
+ #ifdef CONFIG_AFS_FSCACHE
+ 	struct fscache_cookie	*cache;		/* caching cookie */
  #endif
- 	time64_t		dns_expiry;	/* Time AFSDB/SRV record expires */
- 	time64_t		last_inactive;	/* Time of last drop of usage count */
--	atomic_t		ref;		/* Struct refcount */
-+	refcount_t		ref;		/* Struct refcount */
- 	atomic_t		active;		/* Active usage counter */
- 	unsigned long		flags;
- #define AFS_CELL_FL_NO_GC	0		/* The cell was added manually, don't auto-gc */
-@@ -413,7 +413,7 @@ struct afs_vlserver {
- #define AFS_VLSERVER_FL_IS_YFS	2		/* Server is YFS not AFS */
- #define AFS_VLSERVER_FL_RESPONDING 3		/* VL server is responding */
- 	rwlock_t		lock;		/* Lock on addresses */
--	atomic_t		usage;
-+	refcount_t		ref;
- 	unsigned int		rtt;		/* Server's current RTT in uS */
- 
- 	/* Probe state */
-@@ -449,7 +449,7 @@ struct afs_vlserver_entry {
- 
- struct afs_vlserver_list {
- 	struct rcu_head		rcu;
--	atomic_t		usage;
-+	refcount_t		ref;
- 	u8			nr_servers;
- 	u8			index;		/* Server currently in use */
- 	u8			preferred;	/* Preferred server */
-@@ -520,7 +520,7 @@ struct afs_server {
- #define AFS_SERVER_FL_NO_IBULK	17		/* Fileserver doesn't support FS.InlineBulkStatus */
- #define AFS_SERVER_FL_NO_RM2	18		/* Fileserver doesn't support YFS.RemoveFile2 */
- #define AFS_SERVER_FL_HAS_FS64	19		/* Fileserver supports FS.{Fetch,Store}Data64 */
--	atomic_t		ref;		/* Object refcount */
-+	refcount_t		ref;		/* Object refcount */
- 	atomic_t		active;		/* Active user count */
- 	u32			addr_version;	/* Address list version */
- 	unsigned int		rtt;		/* Server's current RTT in uS */
-@@ -575,7 +575,7 @@ struct afs_volume {
- 		struct rcu_head	rcu;
- 		afs_volid_t	vid;		/* volume ID */
- 	};
--	atomic_t		usage;
-+	refcount_t		ref;
- 	time64_t		update_at;	/* Time at which to next update */
- 	struct afs_cell		*cell;		/* Cell to which belongs (pins ref) */
- 	struct rb_node		cell_node;	/* Link in cell->volumes */
-@@ -1483,14 +1483,14 @@ extern int afs_end_vlserver_operation(struct afs_vl_cursor *);
-  */
- static inline struct afs_vlserver *afs_get_vlserver(struct afs_vlserver *vlserver)
- {
--	atomic_inc(&vlserver->usage);
-+	refcount_inc(&vlserver->ref);
- 	return vlserver;
- }
- 
- static inline struct afs_vlserver_list *afs_get_vlserverlist(struct afs_vlserver_list *vllist)
- {
- 	if (vllist)
--		atomic_inc(&vllist->usage);
-+		refcount_inc(&vllist->ref);
- 	return vllist;
- }
- 
-diff --git a/fs/afs/proc.c b/fs/afs/proc.c
-index 065a28bfa3f18..254ccf1d592f0 100644
---- a/fs/afs/proc.c
-+++ b/fs/afs/proc.c
-@@ -47,7 +47,7 @@ static int afs_proc_cells_show(struct seq_file *m, void *v)
- 
- 	/* display one cell per line on subsequent lines */
- 	seq_printf(m, "%3u %3u %6lld %2u %2u %s\n",
--		   atomic_read(&cell->ref),
-+		   refcount_read(&cell->ref),
- 		   atomic_read(&cell->active),
- 		   cell->dns_expiry - ktime_get_real_seconds(),
- 		   vllist ? vllist->nr_servers : 0,
-@@ -217,7 +217,7 @@ static int afs_proc_cell_volumes_show(struct seq_file *m, void *v)
- 	}
- 
- 	seq_printf(m, "%3d %08llx %s %s\n",
--		   atomic_read(&vol->usage), vol->vid,
-+		   refcount_read(&vol->ref), vol->vid,
- 		   afs_vol_types[vol->type],
- 		   vol->name);
- 
-@@ -388,7 +388,7 @@ static int afs_proc_servers_show(struct seq_file *m, void *v)
- 	alist = rcu_dereference(server->addresses);
- 	seq_printf(m, "%pU %3d %3d\n",
- 		   &server->uuid,
--		   atomic_read(&server->ref),
-+		   refcount_read(&server->ref),
- 		   atomic_read(&server->active));
- 	seq_printf(m, "  - info: fl=%lx rtt=%u brk=%x\n",
- 		   server->flags, server->rtt, server->cb_s_break);
-diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
-index f7305f2791fef..ea40da937fcd8 100644
---- a/fs/afs/rxrpc.c
-+++ b/fs/afs/rxrpc.c
-@@ -145,7 +145,7 @@ static struct afs_call *afs_alloc_call(struct afs_net *net,
- 	call->type = type;
- 	call->net = net;
- 	call->debug_id = atomic_inc_return(&rxrpc_debug_id);
--	atomic_set(&call->usage, 1);
-+	refcount_set(&call->ref, 1);
- 	INIT_WORK(&call->async_work, afs_process_async_call);
- 	init_waitqueue_head(&call->waitq);
- 	spin_lock_init(&call->state_lock);
-@@ -163,14 +163,15 @@ static struct afs_call *afs_alloc_call(struct afs_net *net,
- void afs_put_call(struct afs_call *call)
- {
- 	struct afs_net *net = call->net;
--	int n = atomic_dec_return(&call->usage);
--	int o = atomic_read(&net->nr_outstanding_calls);
-+	bool zero;
-+	int r, o;
- 
--	trace_afs_call(call, afs_call_trace_put, n, o,
-+	zero = __refcount_dec_and_test(&call->ref, &r);
-+	o = atomic_read(&net->nr_outstanding_calls);
-+	trace_afs_call(call, afs_call_trace_put, r - 1, o,
- 		       __builtin_return_address(0));
- 
--	ASSERTCMP(n, >=, 0);
--	if (n == 0) {
-+	if (zero) {
- 		ASSERT(!work_pending(&call->async_work));
- 		ASSERT(call->type->name != NULL);
- 
-@@ -198,9 +199,11 @@ void afs_put_call(struct afs_call *call)
- static struct afs_call *afs_get_call(struct afs_call *call,
- 				     enum afs_call_trace why)
- {
--	int u = atomic_inc_return(&call->usage);
-+	int r;
- 
--	trace_afs_call(call, why, u,
-+	__refcount_inc(&call->ref, &r);
-+
-+	trace_afs_call(call, why, r + 1,
- 		       atomic_read(&call->net->nr_outstanding_calls),
- 		       __builtin_return_address(0));
- 	return call;
-@@ -663,14 +666,13 @@ static void afs_wake_up_async_call(struct sock *sk, struct rxrpc_call *rxcall,
- 				   unsigned long call_user_ID)
- {
- 	struct afs_call *call = (struct afs_call *)call_user_ID;
--	int u;
-+	int r;
- 
- 	trace_afs_notify_call(rxcall, call);
- 	call->need_attention = true;
- 
--	u = atomic_fetch_add_unless(&call->usage, 1, 0);
--	if (u != 0) {
--		trace_afs_call(call, afs_call_trace_wake, u + 1,
-+	if (__refcount_inc_not_zero(&call->ref, &r)) {
-+		trace_afs_call(call, afs_call_trace_wake, r + 1,
- 			       atomic_read(&call->net->nr_outstanding_calls),
- 			       __builtin_return_address(0));
- 
-diff --git a/fs/afs/server.c b/fs/afs/server.c
-index 6e5b9a19b234e..ffed828622b60 100644
---- a/fs/afs/server.c
-+++ b/fs/afs/server.c
-@@ -228,7 +228,7 @@ static struct afs_server *afs_alloc_server(struct afs_cell *cell,
- 	if (!server)
- 		goto enomem;
- 
--	atomic_set(&server->ref, 1);
-+	refcount_set(&server->ref, 1);
- 	atomic_set(&server->active, 1);
- 	server->debug_id = atomic_inc_return(&afs_server_debug_id);
- 	RCU_INIT_POINTER(server->addresses, alist);
-@@ -352,9 +352,10 @@ void afs_servers_timer(struct timer_list *timer)
- struct afs_server *afs_get_server(struct afs_server *server,
- 				  enum afs_server_trace reason)
- {
--	unsigned int u = atomic_inc_return(&server->ref);
-+	int r;
- 
--	trace_afs_server(server, u, atomic_read(&server->active), reason);
-+	__refcount_inc(&server->ref, &r);
-+	trace_afs_server(server, r + 1, atomic_read(&server->active), reason);
- 	return server;
- }
- 
-@@ -364,14 +365,14 @@ struct afs_server *afs_get_server(struct afs_server *server,
- static struct afs_server *afs_maybe_use_server(struct afs_server *server,
- 					       enum afs_server_trace reason)
- {
--	unsigned int r = atomic_fetch_add_unless(&server->ref, 1, 0);
- 	unsigned int a;
-+	int r;
- 
--	if (r == 0)
-+	if (!__refcount_inc_not_zero(&server->ref, &r))
- 		return NULL;
- 
- 	a = atomic_inc_return(&server->active);
--	trace_afs_server(server, r, a, reason);
-+	trace_afs_server(server, r + 1, a, reason);
- 	return server;
- }
- 
-@@ -380,10 +381,13 @@ static struct afs_server *afs_maybe_use_server(struct afs_server *server,
-  */
- struct afs_server *afs_use_server(struct afs_server *server, enum afs_server_trace reason)
- {
--	unsigned int r = atomic_inc_return(&server->ref);
--	unsigned int a = atomic_inc_return(&server->active);
-+	unsigned int a;
-+	int r;
-+
-+	__refcount_inc(&server->ref, &r);
-+	a = atomic_inc_return(&server->active);
- 
--	trace_afs_server(server, r, a, reason);
-+	trace_afs_server(server, r + 1, a, reason);
- 	return server;
- }
- 
-@@ -393,14 +397,15 @@ struct afs_server *afs_use_server(struct afs_server *server, enum afs_server_tra
- void afs_put_server(struct afs_net *net, struct afs_server *server,
- 		    enum afs_server_trace reason)
- {
--	unsigned int usage;
-+	bool zero;
-+	int r;
- 
- 	if (!server)
- 		return;
- 
--	usage = atomic_dec_return(&server->ref);
--	trace_afs_server(server, usage, atomic_read(&server->active), reason);
--	if (unlikely(usage == 0))
-+	zero = __refcount_dec_and_test(&server->ref, &r);
-+	trace_afs_server(server, r - 1, atomic_read(&server->active), reason);
-+	if (unlikely(zero))
- 		__afs_put_server(net, server);
- }
- 
-@@ -436,7 +441,7 @@ static void afs_server_rcu(struct rcu_head *rcu)
- {
- 	struct afs_server *server = container_of(rcu, struct afs_server, rcu);
- 
--	trace_afs_server(server, atomic_read(&server->ref),
-+	trace_afs_server(server, refcount_read(&server->ref),
- 			 atomic_read(&server->active), afs_server_trace_free);
- 	afs_put_addrlist(rcu_access_pointer(server->addresses));
- 	kfree(server);
-@@ -487,7 +492,7 @@ static void afs_gc_servers(struct afs_net *net, struct afs_server *gc_list)
- 
- 		active = atomic_read(&server->active);
- 		if (active == 0) {
--			trace_afs_server(server, atomic_read(&server->ref),
-+			trace_afs_server(server, refcount_read(&server->ref),
- 					 active, afs_server_trace_gc);
- 			next = rcu_dereference_protected(
- 				server->uuid_next, lockdep_is_held(&net->fs_lock.lock));
-@@ -553,7 +558,7 @@ void afs_manage_servers(struct work_struct *work)
- 		_debug("manage %pU %u", &server->uuid, active);
- 
- 		if (purging) {
--			trace_afs_server(server, atomic_read(&server->ref),
-+			trace_afs_server(server, refcount_read(&server->ref),
- 					 active, afs_server_trace_purging);
- 			if (active != 0)
- 				pr_notice("Can't purge s=%08x\n", server->debug_id);
-@@ -633,7 +638,8 @@ static noinline bool afs_update_server_record(struct afs_operation *op,
- 
- 	_enter("");
- 
--	trace_afs_server(server, atomic_read(&server->ref), atomic_read(&server->active),
-+	trace_afs_server(server, refcount_read(&server->ref),
-+			 atomic_read(&server->active),
- 			 afs_server_trace_update);
- 
- 	alist = afs_vl_lookup_addrs(op->volume->cell, op->key, &server->uuid);
-diff --git a/fs/afs/vl_list.c b/fs/afs/vl_list.c
-index 38b2ba1d9ec0d..acc48216136ae 100644
---- a/fs/afs/vl_list.c
-+++ b/fs/afs/vl_list.c
-@@ -17,7 +17,7 @@ struct afs_vlserver *afs_alloc_vlserver(const char *name, size_t name_len,
- 	vlserver = kzalloc(struct_size(vlserver, name, name_len + 1),
- 			   GFP_KERNEL);
- 	if (vlserver) {
--		atomic_set(&vlserver->usage, 1);
-+		refcount_set(&vlserver->ref, 1);
- 		rwlock_init(&vlserver->lock);
- 		init_waitqueue_head(&vlserver->probe_wq);
- 		spin_lock_init(&vlserver->probe_lock);
-@@ -39,13 +39,9 @@ static void afs_vlserver_rcu(struct rcu_head *rcu)
- 
- void afs_put_vlserver(struct afs_net *net, struct afs_vlserver *vlserver)
- {
--	if (vlserver) {
--		unsigned int u = atomic_dec_return(&vlserver->usage);
--		//_debug("VL PUT %p{%u}", vlserver, u);
--
--		if (u == 0)
--			call_rcu(&vlserver->rcu, afs_vlserver_rcu);
--	}
-+	if (vlserver &&
-+	    refcount_dec_and_test(&vlserver->ref))
-+		call_rcu(&vlserver->rcu, afs_vlserver_rcu);
- }
- 
- struct afs_vlserver_list *afs_alloc_vlserver_list(unsigned int nr_servers)
-@@ -54,7 +50,7 @@ struct afs_vlserver_list *afs_alloc_vlserver_list(unsigned int nr_servers)
- 
- 	vllist = kzalloc(struct_size(vllist, servers, nr_servers), GFP_KERNEL);
- 	if (vllist) {
--		atomic_set(&vllist->usage, 1);
-+		refcount_set(&vllist->ref, 1);
- 		rwlock_init(&vllist->lock);
- 	}
- 
-@@ -64,10 +60,7 @@ struct afs_vlserver_list *afs_alloc_vlserver_list(unsigned int nr_servers)
- void afs_put_vlserverlist(struct afs_net *net, struct afs_vlserver_list *vllist)
- {
- 	if (vllist) {
--		unsigned int u = atomic_dec_return(&vllist->usage);
--
--		//_debug("VLLS PUT %p{%u}", vllist, u);
--		if (u == 0) {
-+		if (refcount_dec_and_test(&vllist->ref)) {
- 			int i;
- 
- 			for (i = 0; i < vllist->nr_servers; i++) {
+@@ -1507,6 +1508,7 @@ extern struct afs_vlserver_list *afs_extract_vlserver_list(struct afs_cell *,
+ extern struct afs_volume *afs_create_volume(struct afs_fs_context *);
+ extern void afs_activate_volume(struct afs_volume *);
+ extern void afs_deactivate_volume(struct afs_volume *);
++bool afs_try_get_volume(struct afs_volume *volume, enum afs_volume_trace reason);
+ extern struct afs_volume *afs_get_volume(struct afs_volume *, enum afs_volume_trace);
+ extern void afs_put_volume(struct afs_net *, struct afs_volume *, enum afs_volume_trace);
+ extern int afs_check_volume_status(struct afs_volume *, struct afs_operation *);
 diff --git a/fs/afs/volume.c b/fs/afs/volume.c
-index f84194b791d3e..32941bffa2ec1 100644
+index 32941bffa2ec1..137a970c19fb3 100644
 --- a/fs/afs/volume.c
 +++ b/fs/afs/volume.c
-@@ -53,7 +53,7 @@ static void afs_remove_volume_from_cell(struct afs_volume *volume)
- 	struct afs_cell *cell = volume->cell;
+@@ -33,8 +33,13 @@ static struct afs_volume *afs_insert_volume_into_cell(struct afs_cell *cell,
+ 		} else if (p->vid > volume->vid) {
+ 			pp = &(*pp)->rb_right;
+ 		} else {
+-			volume = afs_get_volume(p, afs_volume_trace_get_cell_insert);
+-			goto found;
++			if (afs_try_get_volume(p, afs_volume_trace_get_cell_insert)) {
++				volume = p;
++				goto found;
++			}
++
++			set_bit(AFS_VOLUME_RM_TREE, &volume->flags);
++			rb_replace_node_rcu(&p->cell_node, &volume->cell_node, &cell->volumes);
+ 		}
+ 	}
  
- 	if (!hlist_unhashed(&volume->proc_link)) {
--		trace_afs_volume(volume->vid, atomic_read(&volume->usage),
-+		trace_afs_volume(volume->vid, refcount_read(&cell->ref),
+@@ -57,7 +62,8 @@ static void afs_remove_volume_from_cell(struct afs_volume *volume)
  				 afs_volume_trace_remove);
  		write_seqlock(&cell->volume_lock);
  		hlist_del_rcu(&volume->proc_link);
-@@ -88,7 +88,7 @@ static struct afs_volume *afs_alloc_volume(struct afs_fs_context *params,
- 	volume->type_force	= params->force;
- 	volume->name_len	= vldb->name_len;
+-		rb_erase(&volume->cell_node, &cell->volumes);
++		if (!test_and_set_bit(AFS_VOLUME_RM_TREE, &volume->flags))
++			rb_erase(&volume->cell_node, &cell->volumes);
+ 		write_sequnlock(&cell->volume_lock);
+ 	}
+ }
+@@ -236,6 +242,20 @@ static void afs_destroy_volume(struct afs_net *net, struct afs_volume *volume)
+ 	_leave(" [destroyed]");
+ }
  
--	atomic_set(&volume->usage, 1);
-+	refcount_set(&volume->ref, 1);
- 	INIT_HLIST_NODE(&volume->proc_link);
- 	rwlock_init(&volume->servers_lock);
- 	rwlock_init(&volume->cb_v_break_lock);
-@@ -229,7 +229,7 @@ static void afs_destroy_volume(struct afs_net *net, struct afs_volume *volume)
- 	afs_remove_volume_from_cell(volume);
- 	afs_put_serverlist(net, rcu_access_pointer(volume->servers));
- 	afs_put_cell(volume->cell, afs_cell_trace_put_vol);
--	trace_afs_volume(volume->vid, atomic_read(&volume->usage),
-+	trace_afs_volume(volume->vid, refcount_read(&volume->ref),
- 			 afs_volume_trace_free);
- 	kfree_rcu(volume, rcu);
- 
-@@ -243,8 +243,10 @@ struct afs_volume *afs_get_volume(struct afs_volume *volume,
- 				  enum afs_volume_trace reason)
- {
- 	if (volume) {
--		int u = atomic_inc_return(&volume->usage);
--		trace_afs_volume(volume->vid, u, reason);
-+		int r;
++/*
++ * Try to get a reference on a volume record.
++ */
++bool afs_try_get_volume(struct afs_volume *volume, enum afs_volume_trace reason)
++{
++	int r;
 +
-+		__refcount_inc(&volume->ref, &r);
++	if (__refcount_inc_not_zero(&volume->ref, &r)) {
 +		trace_afs_volume(volume->vid, r + 1, reason);
- 	}
- 	return volume;
- }
-@@ -258,9 +260,12 @@ void afs_put_volume(struct afs_net *net, struct afs_volume *volume,
- {
- 	if (volume) {
- 		afs_volid_t vid = volume->vid;
--		int u = atomic_dec_return(&volume->usage);
--		trace_afs_volume(vid, u, reason);
--		if (u == 0)
-+		bool zero;
-+		int r;
++		return true;
++	}
++	return false;
++}
 +
-+		zero = __refcount_dec_and_test(&volume->ref, &r);
-+		trace_afs_volume(vid, r - 1, reason);
-+		if (zero)
- 			afs_destroy_volume(net, volume);
- 	}
- }
-diff --git a/include/trace/events/afs.h b/include/trace/events/afs.h
-index bca73e8c8cdec..5556c5da117f2 100644
---- a/include/trace/events/afs.h
-+++ b/include/trace/events/afs.h
-@@ -728,14 +728,14 @@ TRACE_EVENT(afs_cb_call,
- 
- TRACE_EVENT(afs_call,
- 	    TP_PROTO(struct afs_call *call, enum afs_call_trace op,
--		     int usage, int outstanding, const void *where),
-+		     int ref, int outstanding, const void *where),
- 
--	    TP_ARGS(call, op, usage, outstanding, where),
-+	    TP_ARGS(call, op, ref, outstanding, where),
- 
- 	    TP_STRUCT__entry(
- 		    __field(unsigned int,		call		)
- 		    __field(int,			op		)
--		    __field(int,			usage		)
-+		    __field(int,			ref		)
- 		    __field(int,			outstanding	)
- 		    __field(const void *,		where		)
- 			     ),
-@@ -743,15 +743,15 @@ TRACE_EVENT(afs_call,
- 	    TP_fast_assign(
- 		    __entry->call = call->debug_id;
- 		    __entry->op = op;
--		    __entry->usage = usage;
-+		    __entry->ref = ref;
- 		    __entry->outstanding = outstanding;
- 		    __entry->where = where;
- 			   ),
- 
--	    TP_printk("c=%08x %s u=%d o=%d sp=%pSR",
-+	    TP_printk("c=%08x %s r=%d o=%d sp=%pSR",
- 		      __entry->call,
- 		      __print_symbolic(__entry->op, afs_call_traces),
--		      __entry->usage,
-+		      __entry->ref,
- 		      __entry->outstanding,
- 		      __entry->where)
- 	    );
-@@ -1475,36 +1475,36 @@ TRACE_EVENT(afs_volume,
- 		    __entry->reason = reason;
- 			   ),
- 
--	    TP_printk("V=%llx %s u=%d",
-+	    TP_printk("V=%llx %s ur=%d",
- 		      __entry->vid,
- 		      __print_symbolic(__entry->reason, afs_volume_traces),
- 		      __entry->ref)
- 	    );
- 
- TRACE_EVENT(afs_cell,
--	    TP_PROTO(unsigned int cell_debug_id, int usage, int active,
-+	    TP_PROTO(unsigned int cell_debug_id, int ref, int active,
- 		     enum afs_cell_trace reason),
- 
--	    TP_ARGS(cell_debug_id, usage, active, reason),
-+	    TP_ARGS(cell_debug_id, ref, active, reason),
- 
- 	    TP_STRUCT__entry(
- 		    __field(unsigned int,		cell		)
--		    __field(int,			usage		)
-+		    __field(int,			ref		)
- 		    __field(int,			active		)
- 		    __field(int,			reason		)
- 			     ),
- 
- 	    TP_fast_assign(
- 		    __entry->cell = cell_debug_id;
--		    __entry->usage = usage;
-+		    __entry->ref = ref;
- 		    __entry->active = active;
- 		    __entry->reason = reason;
- 			   ),
- 
--	    TP_printk("L=%08x %s u=%d a=%d",
-+	    TP_printk("L=%08x %s r=%d a=%d",
- 		      __entry->cell,
- 		      __print_symbolic(__entry->reason, afs_cell_traces),
--		      __entry->usage,
-+		      __entry->ref,
- 		      __entry->active)
- 	    );
- 
+ /*
+  * Get a reference on a volume record.
+  */
 -- 
 2.43.0
 
