@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D521C29C;
-	Wed,  3 Jan 2024 17:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC43F1C284;
+	Wed,  3 Jan 2024 17:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsCxH1Wu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D486C433C8;
-	Wed,  3 Jan 2024 17:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqMr+EkO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E555C433C7;
+	Wed,  3 Jan 2024 17:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704302051;
-	bh=HZA4PhY1KPmZmPMzQ7da314sbUMCmCWrJXqx9L8mdY8=;
+	s=korg; t=1704302054;
+	bh=0w91XEDJWimXsMzCxA18HGUGd5VxmG4g3SkUhStJs9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vsCxH1WuUtwuklXR3bYJZ9VqdlL+sqwPvdTscbcwWHjtgqILrGbAZ2jvO59B2i2J3
-	 4UembLczskjkvWioyXzlPZ1fzWqOWFzZVCCaEyqiDev2+c95bFFwZJzoCy9AmXihCm
-	 /sKYmtjgRXjDKkW3S+Qzpu0tGFGtFpeRBDReZves=
+	b=sqMr+EkO/+xhnXwBTh4HeHVf8Y+S48ksMpCrzPZtHAzEVTM3clBLgsne/Rvm6gHTe
+	 AdhdJFgNpWlXsdPeeRJgeLL33O+aVPWQTE0Oo+pwbw3thARrUfD2cMBOLkTK661Twk
+	 /XimWOff7d+VvEehmv27IW+VoLn2Z6V+vEK4j6Ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"David E. Box" <david.e.box@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 32/49] platform/x86/intel/pmc: Add suspend callback
-Date: Wed,  3 Jan 2024 17:55:52 +0100
-Message-ID: <20240103164840.026750158@linuxfoundation.org>
+Subject: [PATCH 6.6 33/49] platform/x86/intel/pmc: Allow reenabling LTRs
+Date: Wed,  3 Jan 2024 17:55:53 +0100
+Message-ID: <20240103164840.170043803@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
 References: <20240103164834.970234661@linuxfoundation.org>
@@ -45,60 +45,129 @@ Content-Transfer-Encoding: 8bit
 
 From: David E. Box <david.e.box@linux.intel.com>
 
-[ Upstream commit 7c13f365aee68b01e7e68ee293a71fdc7571c111 ]
+[ Upstream commit 6f9cc5c1f94daa98846b2073733d03ced709704b ]
 
-Add a suspend callback to struct pmc for performing platform specific tasks
-before device suspend. This is needed in order to perform GBE LTR ignore on
-certain platforms at suspend-time instead of at probe-time and replace the
-GBE LTR ignore removal that was done in order to fix a bug introduced by
-commit 804951203aa5 ("platform/x86:intel/pmc: Combine core_init() and
-core_configure()").
+Commit 804951203aa5 ("platform/x86:intel/pmc: Combine core_init() and
+core_configure()") caused a network performance regression due to the GBE
+LTR ignore that it added during probe. The fix will move the ignore to
+occur at suspend-time (so as to not affect suspend power). This will
+require the ability to enable the LTR again on resume. Modify
+pmc_core_send_ltr_ignore() to allow enabling an LTR.
 
 Fixes: 804951203aa5 ("platform/x86:intel/pmc: Combine core_init() and core_configure()")
 Signed-off-by: "David E. Box" <david.e.box@linux.intel.com>
-Link: https://lore.kernel.org/r/20231223032548.1680738-4-david.e.box@linux.intel.com
+Link: https://lore.kernel.org/r/20231223032548.1680738-5-david.e.box@linux.intel.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/pmc/core.c | 3 +++
- drivers/platform/x86/intel/pmc/core.h | 2 ++
- 2 files changed, 5 insertions(+)
+ drivers/platform/x86/intel/pmc/adl.c  | 2 +-
+ drivers/platform/x86/intel/pmc/cnp.c  | 2 +-
+ drivers/platform/x86/intel/pmc/core.c | 9 ++++++---
+ drivers/platform/x86/intel/pmc/core.h | 2 +-
+ drivers/platform/x86/intel/pmc/mtl.c  | 2 +-
+ drivers/platform/x86/intel/pmc/tgl.c  | 2 +-
+ 6 files changed, 11 insertions(+), 8 deletions(-)
 
+diff --git a/drivers/platform/x86/intel/pmc/adl.c b/drivers/platform/x86/intel/pmc/adl.c
+index 5006008e01bea..a887c388cf16d 100644
+--- a/drivers/platform/x86/intel/pmc/adl.c
++++ b/drivers/platform/x86/intel/pmc/adl.c
+@@ -323,7 +323,7 @@ int adl_core_init(struct pmc_dev *pmcdev)
+ 	 * when a cable is attached. Tell the PMC to ignore it.
+ 	 */
+ 	dev_dbg(&pmcdev->pdev->dev, "ignoring GBE LTR\n");
+-	pmc_core_send_ltr_ignore(pmcdev, 3);
++	pmc_core_send_ltr_ignore(pmcdev, 3, 1);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/platform/x86/intel/pmc/cnp.c b/drivers/platform/x86/intel/pmc/cnp.c
+index 420aaa1d7c769..10498204962cd 100644
+--- a/drivers/platform/x86/intel/pmc/cnp.c
++++ b/drivers/platform/x86/intel/pmc/cnp.c
+@@ -218,7 +218,7 @@ int cnp_core_init(struct pmc_dev *pmcdev)
+ 	 * when a cable is attached. Tell the PMC to ignore it.
+ 	 */
+ 	dev_dbg(&pmcdev->pdev->dev, "ignoring GBE LTR\n");
+-	pmc_core_send_ltr_ignore(pmcdev, 3);
++	pmc_core_send_ltr_ignore(pmcdev, 3, 1);
+ 
+ 	return 0;
+ }
 diff --git a/drivers/platform/x86/intel/pmc/core.c b/drivers/platform/x86/intel/pmc/core.c
-index e95d3011b9997..5ab470d87ad7e 100644
+index 5ab470d87ad7e..022afb97d531c 100644
 --- a/drivers/platform/x86/intel/pmc/core.c
 +++ b/drivers/platform/x86/intel/pmc/core.c
-@@ -1279,6 +1279,9 @@ static __maybe_unused int pmc_core_suspend(struct device *dev)
- 	struct pmc_dev *pmcdev = dev_get_drvdata(dev);
- 	struct pmc *pmc = pmcdev->pmcs[PMC_IDX_MAIN];
+@@ -460,7 +460,7 @@ static int pmc_core_pll_show(struct seq_file *s, void *unused)
+ }
+ DEFINE_SHOW_ATTRIBUTE(pmc_core_pll);
  
-+	if (pmcdev->suspend)
-+		pmcdev->suspend(pmcdev);
-+
- 	/* Check if the syspend will actually use S0ix */
- 	if (pm_suspend_via_firmware())
- 		return 0;
+-int pmc_core_send_ltr_ignore(struct pmc_dev *pmcdev, u32 value)
++int pmc_core_send_ltr_ignore(struct pmc_dev *pmcdev, u32 value, int ignore)
+ {
+ 	struct pmc *pmc;
+ 	const struct pmc_reg_map *map;
+@@ -498,7 +498,10 @@ int pmc_core_send_ltr_ignore(struct pmc_dev *pmcdev, u32 value)
+ 	mutex_lock(&pmcdev->lock);
+ 
+ 	reg = pmc_core_reg_read(pmc, map->ltr_ignore_offset);
+-	reg |= BIT(ltr_index);
++	if (ignore)
++		reg |= BIT(ltr_index);
++	else
++		reg &= ~BIT(ltr_index);
+ 	pmc_core_reg_write(pmc, map->ltr_ignore_offset, reg);
+ 
+ 	mutex_unlock(&pmcdev->lock);
+@@ -521,7 +524,7 @@ static ssize_t pmc_core_ltr_ignore_write(struct file *file,
+ 	if (err)
+ 		return err;
+ 
+-	err = pmc_core_send_ltr_ignore(pmcdev, value);
++	err = pmc_core_send_ltr_ignore(pmcdev, value, 1);
+ 
+ 	return err == 0 ? count : err;
+ }
 diff --git a/drivers/platform/x86/intel/pmc/core.h b/drivers/platform/x86/intel/pmc/core.h
-index 0729f593c6a75..38d888e3afa63 100644
+index 38d888e3afa63..71ba7d691d691 100644
 --- a/drivers/platform/x86/intel/pmc/core.h
 +++ b/drivers/platform/x86/intel/pmc/core.h
-@@ -363,6 +363,7 @@ struct pmc {
-  * @s0ix_counter:	S0ix residency (step adjusted)
-  * @num_lpm_modes:	Count of enabled modes
-  * @lpm_en_modes:	Array of enabled modes from lowest to highest priority
-+ * @suspend:		Function to perform platform specific suspend
-  * @resume:		Function to perform platform specific resume
-  *
-  * pmc_dev contains info about power management controller device.
-@@ -379,6 +380,7 @@ struct pmc_dev {
- 	u64 s0ix_counter;
- 	int num_lpm_modes;
- 	int lpm_en_modes[LPM_MAX_NUM_MODES];
-+	void (*suspend)(struct pmc_dev *pmcdev);
- 	int (*resume)(struct pmc_dev *pmcdev);
+@@ -488,7 +488,7 @@ extern const struct pmc_bit_map *mtl_ioem_lpm_maps[];
+ extern const struct pmc_reg_map mtl_ioem_reg_map;
  
- 	bool has_die_c6;
+ extern void pmc_core_get_tgl_lpm_reqs(struct platform_device *pdev);
+-extern int pmc_core_send_ltr_ignore(struct pmc_dev *pmcdev, u32 value);
++int pmc_core_send_ltr_ignore(struct pmc_dev *pmcdev, u32 value, int ignore);
+ 
+ int pmc_core_resume_common(struct pmc_dev *pmcdev);
+ int get_primary_reg_base(struct pmc *pmc);
+diff --git a/drivers/platform/x86/intel/pmc/mtl.c b/drivers/platform/x86/intel/pmc/mtl.c
+index 2204bc666980e..71dc11811e112 100644
+--- a/drivers/platform/x86/intel/pmc/mtl.c
++++ b/drivers/platform/x86/intel/pmc/mtl.c
+@@ -1006,7 +1006,7 @@ int mtl_core_init(struct pmc_dev *pmcdev)
+ 	 * when a cable is attached. Tell the PMC to ignore it.
+ 	 */
+ 	dev_dbg(&pmcdev->pdev->dev, "ignoring GBE LTR\n");
+-	pmc_core_send_ltr_ignore(pmcdev, 3);
++	pmc_core_send_ltr_ignore(pmcdev, 3, 1);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/platform/x86/intel/pmc/tgl.c b/drivers/platform/x86/intel/pmc/tgl.c
+index 2449940102db4..078263db24c7a 100644
+--- a/drivers/platform/x86/intel/pmc/tgl.c
++++ b/drivers/platform/x86/intel/pmc/tgl.c
+@@ -268,7 +268,7 @@ int tgl_core_init(struct pmc_dev *pmcdev)
+ 	 * when a cable is attached. Tell the PMC to ignore it.
+ 	 */
+ 	dev_dbg(&pmcdev->pdev->dev, "ignoring GBE LTR\n");
+-	pmc_core_send_ltr_ignore(pmcdev, 3);
++	pmc_core_send_ltr_ignore(pmcdev, 3, 1);
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
