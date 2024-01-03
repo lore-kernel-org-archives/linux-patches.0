@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C9E1BDFB;
-	Wed,  3 Jan 2024 17:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9891BDF1;
+	Wed,  3 Jan 2024 17:06:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHIVSkQl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79530C433C7;
-	Wed,  3 Jan 2024 17:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGfXzxyT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8CBC433C7;
+	Wed,  3 Jan 2024 17:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301597;
-	bh=xise2XkhW4SkJ/b1paNB+6PnqX3RdDN6OFPVQ6ZFIlE=;
+	s=korg; t=1704301602;
+	bh=TTvivtZlDUsaeVNLtZhoVzszUWwHMDfTIo561PEaqTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHIVSkQli/+l8eFgzDVlgaHKqMJFVD43ZU6D4Pkke+tlEsfY+PCMYFEdeH0sSreN0
-	 3L3GaOoOizpotdxOckUlAz3gMZFQphci75SQRnfeF+EO0Mnn4QyFkJfyeLlYttX02t
-	 fwcAxqPVXYpqWuvRIg+meRQWzxbxUUUkpQae2BZw=
+	b=zGfXzxyTlZHGBEVGePnCd+TAk8nZ+mpKTuEZKA9uyznd4kbgq25S2rdZo+yY8ANIc
+	 nxUPcz/NwOmKzp4giNOqWqRC1GwrGJeBsP5aONgv/sutfY7NFbwhKzJjFo7UeRx36I
+	 72lBnX5pSggGtaVWV0IqlKlI1whTHL7/TmA/g6M4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 73/95] ksmbd: fix wrong allocation size update in smb2_open()
-Date: Wed,  3 Jan 2024 17:55:21 +0100
-Message-ID: <20240103164904.956737861@linuxfoundation.org>
+Subject: [PATCH 5.15 74/95] ARM: dts: Fix occasional boot hang for am3 usb
+Date: Wed,  3 Jan 2024 17:55:22 +0100
+Message-ID: <20240103164905.108506952@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -42,82 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit a9f106c765c12d2f58aa33431bd8ce8e9d8a404a ]
+[ Upstream commit 9b6a51aab5f5f9f71d2fa16e8b4d530e1643dfcb ]
 
-When client send SMB2_CREATE_ALLOCATION_SIZE create context, ksmbd update
-old size to ->AllocationSize in smb2 create response. ksmbd_vfs_getattr()
-should be called after it to get updated stat result.
+With subtle timings changes, we can now sometimes get an external abort on
+non-linefetch error booting am3 devices at sysc_reset(). This is because
+of a missing reset delay needed for the usb target module.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Looks like we never enabled the delay earlier for am3, although a similar
+issue was seen earlier with a similar usb setup for dm814x as described in
+commit ebf244148092 ("ARM: OMAP2+: Use srst_udelay for USB on dm814x").
+
+Cc: stable@vger.kernel.org
+Fixes: 0782e8572ce4 ("ARM: dts: Probe am335x musb with ti-sysc")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ arch/arm/boot/dts/am33xx.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index e1c640ed7acc3..8875c04e83827 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -2516,7 +2516,7 @@ static void smb2_new_xattrs(struct ksmbd_tree_connect *tcon, const struct path *
- 	da.flags = XATTR_DOSINFO_ATTRIB | XATTR_DOSINFO_CREATE_TIME |
- 		XATTR_DOSINFO_ITIME;
- 
--	rc = ksmbd_vfs_set_dos_attrib_xattr(mnt_user_ns(path->mnt), path, &da, false);
-+	rc = ksmbd_vfs_set_dos_attrib_xattr(mnt_user_ns(path->mnt), path, &da, true);
- 	if (rc)
- 		ksmbd_debug(SMB, "failed to store file attribute into xattr\n");
- }
-@@ -3182,23 +3182,6 @@ int smb2_open(struct ksmbd_work *work)
- 		goto err_out;
- 	}
- 
--	rc = ksmbd_vfs_getattr(&path, &stat);
--	if (rc)
--		goto err_out;
--
--	if (stat.result_mask & STATX_BTIME)
--		fp->create_time = ksmbd_UnixTimeToNT(stat.btime);
--	else
--		fp->create_time = ksmbd_UnixTimeToNT(stat.ctime);
--	if (req->FileAttributes || fp->f_ci->m_fattr == 0)
--		fp->f_ci->m_fattr =
--			cpu_to_le32(smb2_get_dos_mode(&stat, le32_to_cpu(req->FileAttributes)));
--
--	if (!created)
--		smb2_update_xattrs(tcon, &path, fp);
--	else
--		smb2_new_xattrs(tcon, &path, fp);
--
- 	if (file_present || created)
- 		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
- 
-@@ -3299,6 +3282,23 @@ int smb2_open(struct ksmbd_work *work)
- 		}
- 	}
- 
-+	rc = ksmbd_vfs_getattr(&path, &stat);
-+	if (rc)
-+		goto err_out1;
-+
-+	if (stat.result_mask & STATX_BTIME)
-+		fp->create_time = ksmbd_UnixTimeToNT(stat.btime);
-+	else
-+		fp->create_time = ksmbd_UnixTimeToNT(stat.ctime);
-+	if (req->FileAttributes || fp->f_ci->m_fattr == 0)
-+		fp->f_ci->m_fattr =
-+			cpu_to_le32(smb2_get_dos_mode(&stat, le32_to_cpu(req->FileAttributes)));
-+
-+	if (!created)
-+		smb2_update_xattrs(tcon, &path, fp);
-+	else
-+		smb2_new_xattrs(tcon, &path, fp);
-+
- 	memcpy(fp->client_guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE);
- 
- 	rsp->StructureSize = cpu_to_le16(89);
+diff --git a/arch/arm/boot/dts/am33xx.dtsi b/arch/arm/boot/dts/am33xx.dtsi
+index f53695ecbb782..7daf6ae2cd9af 100644
+--- a/arch/arm/boot/dts/am33xx.dtsi
++++ b/arch/arm/boot/dts/am33xx.dtsi
+@@ -349,6 +349,7 @@ usb: target-module@47400000 {
+ 					<SYSC_IDLE_NO>,
+ 					<SYSC_IDLE_SMART>,
+ 					<SYSC_IDLE_SMART_WKUP>;
++			ti,sysc-delay-us = <2>;
+ 			clocks = <&l3s_clkctrl AM3_L3S_USB_OTG_HS_CLKCTRL 0>;
+ 			clock-names = "fck";
+ 			#address-cells = <1>;
 -- 
 2.43.0
 
