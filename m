@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A7FB1B29F;
-	Wed,  3 Jan 2024 17:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A861BDFA;
+	Wed,  3 Jan 2024 17:00:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lo2WMqJu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3441C433C8;
-	Wed,  3 Jan 2024 17:00:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAGFb/hR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05884C433C8;
+	Wed,  3 Jan 2024 17:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301206;
-	bh=J4R4LZbemmqtL9TQyneq720HO/AT4KMjg58sUh/ek0k=;
+	s=korg; t=1704301209;
+	bh=1tjYwmmOOp58xs40IpsXp9dolcgMFDDehCuj1T5iMYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lo2WMqJuGFMr9D9bwUrBL2lWwnxm0DLdtnTw59MahYcvrPdjSkK30IgQ3AnqP7EIQ
-	 klJd1WRA/NalqGJeTN+mFTi28On74oHlwRVlih6nsNVl0HYBlPL1IaQG5MF7NAFJcC
-	 vq/avlmxCFgVl93SluHYVbHqldiR/kWLUAdp5es4=
+	b=mAGFb/hRrkwZdiGQT90VSBYRdx2nfmFFteF2raYvJRyz0XMvYKfgV5Yg5p/r3GDoj
+	 zKjMBAYMNLcJZEdF1Grk9gHaRNRvyl6UoR3coyPhCvGaGyeV+upWpGv8iZNraUKLIH
+	 AJZZEoFTHupBQ/pWbCwMGkUbucfJ3R2L92U+9yKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/100] ksmbd: dont update ->op_state as OPLOCK_STATE_NONE on error
-Date: Wed,  3 Jan 2024 17:54:55 +0100
-Message-ID: <20240103164906.016613162@linuxfoundation.org>
+Subject: [PATCH 6.1 067/100] ksmbd: set epoch in create context v2 lease
+Date: Wed,  3 Jan 2024 17:54:56 +0100
+Message-ID: <20240103164906.183266906@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
 References: <20240103164856.169912722@linuxfoundation.org>
@@ -44,31 +44,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit cd80ce7e68f1624ac29cd0a6b057789d1236641e ]
+[ Upstream commit d045850b628aaf931fc776c90feaf824dca5a1cf ]
 
-ksmbd set ->op_state as OPLOCK_STATE_NONE on lease break ack error.
-op_state of lease should not be updated because client can send lease
-break ack again. This patch fix smb2.lease.breaking2 test failure.
+To support v2 lease(directory lease), ksmbd set epoch in create context
+v2 lease response.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/smb/server/oplock.c | 5 ++++-
+ fs/smb/server/oplock.h | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 2ba5e685dd3fe..6a698a6036bb2 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8235,7 +8235,6 @@ static void smb21_lease_break_ack(struct ksmbd_work *work)
- 		return;
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 4c74e8ea9649a..037316c78506e 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -104,7 +104,7 @@ static int alloc_lease(struct oplock_info *opinfo, struct lease_ctx_info *lctx)
+ 	lease->duration = lctx->duration;
+ 	memcpy(lease->parent_lease_key, lctx->parent_lease_key, SMB2_LEASE_KEY_SIZE);
+ 	lease->version = lctx->version;
+-	lease->epoch = 0;
++	lease->epoch = le16_to_cpu(lctx->epoch);
+ 	INIT_LIST_HEAD(&opinfo->lease_entry);
+ 	opinfo->o_lease = lease;
  
- err_out:
--	opinfo->op_state = OPLOCK_STATE_NONE;
- 	wake_up_interruptible_all(&opinfo->oplock_q);
- 	atomic_dec(&opinfo->breaking_cnt);
- 	wake_up_interruptible_all(&opinfo->oplock_brk);
+@@ -1032,6 +1032,7 @@ static void copy_lease(struct oplock_info *op1, struct oplock_info *op2)
+ 	       SMB2_LEASE_KEY_SIZE);
+ 	lease2->duration = lease1->duration;
+ 	lease2->flags = lease1->flags;
++	lease2->epoch = lease1->epoch++;
+ }
+ 
+ static int add_lease_global_list(struct oplock_info *opinfo)
+@@ -1364,6 +1365,7 @@ void create_lease_buf(u8 *rbuf, struct lease *lease)
+ 		memcpy(buf->lcontext.LeaseKey, lease->lease_key,
+ 		       SMB2_LEASE_KEY_SIZE);
+ 		buf->lcontext.LeaseFlags = lease->flags;
++		buf->lcontext.Epoch = cpu_to_le16(++lease->epoch);
+ 		buf->lcontext.LeaseState = lease->state;
+ 		memcpy(buf->lcontext.ParentLeaseKey, lease->parent_lease_key,
+ 		       SMB2_LEASE_KEY_SIZE);
+@@ -1423,6 +1425,7 @@ struct lease_ctx_info *parse_lease_state(void *open_req)
+ 		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
+ 		lreq->req_state = lc->lcontext.LeaseState;
+ 		lreq->flags = lc->lcontext.LeaseFlags;
++		lreq->epoch = lc->lcontext.Epoch;
+ 		lreq->duration = lc->lcontext.LeaseDuration;
+ 		memcpy(lreq->parent_lease_key, lc->lcontext.ParentLeaseKey,
+ 				SMB2_LEASE_KEY_SIZE);
+diff --git a/fs/smb/server/oplock.h b/fs/smb/server/oplock.h
+index 4b0fe6da76940..ad31439c61fef 100644
+--- a/fs/smb/server/oplock.h
++++ b/fs/smb/server/oplock.h
+@@ -34,6 +34,7 @@ struct lease_ctx_info {
+ 	__le32			flags;
+ 	__le64			duration;
+ 	__u8			parent_lease_key[SMB2_LEASE_KEY_SIZE];
++	__le16			epoch;
+ 	int			version;
+ };
+ 
 -- 
 2.43.0
 
