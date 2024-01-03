@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366741BDFB;
-	Wed,  3 Jan 2024 17:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266FD1BDF1;
+	Wed,  3 Jan 2024 17:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRBxbZxU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD079C433C7;
-	Wed,  3 Jan 2024 17:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xp/5vETT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986A7C433C7;
+	Wed,  3 Jan 2024 17:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301877;
-	bh=ZSBbMoiF5PgLvF9YLEb0Fs7C8uHFXn4w18qRN2SAHzw=;
+	s=korg; t=1704301880;
+	bh=XaVXDxyjnTInCSsTFevm7nhtnhRbBe1wdu76p3D5P+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jRBxbZxUeqZKVindmgADkzexvSpxLhQxo7SJRBILQIYo0+TTpvcI6vC2AA2hQ8JpB
-	 XlrjOnXsE6oqoEnBGr+EjScRlWRXjWPJzhFviI+bIxYtcIZpMsFxquld9xPx+QrOCT
-	 qbIrqJKyt3aycQrYk3cS3+RYWqsBoj1GrTy3c/bQ=
+	b=Xp/5vETTSi6/eFjB4Yiex12hwZhc4atZNbyjyTd2TAaJn8CTcubZMwJ3eLAkhhFCG
+	 IvD2XL2qWLfuUDPApYtZ5YgVET/rbmwyLAObpxY6WRmSEq7bM3lrKHhArWjZ6JYMLA
+	 zC7olILRyrhcAkAKzynwuinbPixv2wXubkydydcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@csail.mit.edu>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Martin Michaelis <code@mgjm.de>,
+	Neal Gompa <neal@gompa.dev>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 25/75] smb: client: fix NULL deref in asn1_ber_decoder()
-Date: Wed,  3 Jan 2024 17:55:06 +0100
-Message-ID: <20240103164846.973850503@linuxfoundation.org>
+Subject: [PATCH 5.10 26/75] btrfs: do not allow non subvolume root targets for snapshot
+Date: Wed,  3 Jan 2024 17:55:07 +0100
+Message-ID: <20240103164847.126718332@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164842.953224409@linuxfoundation.org>
 References: <20240103164842.953224409@linuxfoundation.org>
@@ -43,134 +44,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 90d025c2e953c11974e76637977c473200593a46 ]
+[ Upstream commit a8892fd71933126ebae3d60aec5918d4dceaae76 ]
 
-If server replied SMB2_NEGOTIATE with a zero SecurityBufferOffset,
-smb2_get_data_area() sets @len to non-zero but return NULL, so
-decode_negTokeninit() ends up being called with a NULL @security_blob:
+Our btrfs subvolume snapshot <source> <destination> utility enforces
+that <source> is the root of the subvolume, however this isn't enforced
+in the kernel.  Update the kernel to also enforce this limitation to
+avoid problems with other users of this ioctl that don't have the
+appropriate checks in place.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: 0000 [#1] PREEMPT SMP NOPTI
-  CPU: 2 PID: 871 Comm: mount.cifs Not tainted 6.7.0-rc4 #2
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
-  RIP: 0010:asn1_ber_decoder+0x173/0xc80
-  Code: 01 4c 39 2c 24 75 09 45 84 c9 0f 85 2f 03 00 00 48 8b 14 24 4c 29 ea 48 83 fa 01 0f 86 1e 07 00 00 48 8b 74 24 28 4d 8d 5d 01 <42> 0f b6 3c 2e 89 fa 40 88 7c 24 5c f7 d2 83 e2 1f 0f 84 3d 07 00
-  RSP: 0018:ffffc9000063f950 EFLAGS: 00010202
-  RAX: 0000000000000002 RBX: 0000000000000000 RCX: 000000000000004a
-  RDX: 000000000000004a RSI: 0000000000000000 RDI: 0000000000000000
-  RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000002 R11: 0000000000000001 R12: 0000000000000000
-  R13: 0000000000000000 R14: 000000000000004d R15: 0000000000000000
-  FS:  00007fce52b0fbc0(0000) GS:ffff88806ba00000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000000000000000 CR3: 000000001ae64000 CR4: 0000000000750ef0
-  PKRU: 55555554
-  Call Trace:
-   <TASK>
-   ? __die+0x23/0x70
-   ? page_fault_oops+0x181/0x480
-   ? __stack_depot_save+0x1e6/0x480
-   ? exc_page_fault+0x6f/0x1c0
-   ? asm_exc_page_fault+0x26/0x30
-   ? asn1_ber_decoder+0x173/0xc80
-   ? check_object+0x40/0x340
-   decode_negTokenInit+0x1e/0x30 [cifs]
-   SMB2_negotiate+0xc99/0x17c0 [cifs]
-   ? smb2_negotiate+0x46/0x60 [cifs]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   smb2_negotiate+0x46/0x60 [cifs]
-   cifs_negotiate_protocol+0xae/0x130 [cifs]
-   cifs_get_smb_ses+0x517/0x1040 [cifs]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? queue_delayed_work_on+0x5d/0x90
-   cifs_mount_get_session+0x78/0x200 [cifs]
-   dfs_mount_share+0x13a/0x9f0 [cifs]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? lock_acquire+0xbf/0x2b0
-   ? find_nls+0x16/0x80
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   cifs_mount+0x7e/0x350 [cifs]
-   cifs_smb3_do_mount+0x128/0x780 [cifs]
-   smb3_get_tree+0xd9/0x290 [cifs]
-   vfs_get_tree+0x2c/0x100
-   ? capable+0x37/0x70
-   path_mount+0x2d7/0xb80
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? _raw_spin_unlock_irqrestore+0x44/0x60
-   __x64_sys_mount+0x11a/0x150
-   do_syscall_64+0x47/0xf0
-   entry_SYSCALL_64_after_hwframe+0x6f/0x77
-  RIP: 0033:0x7fce52c2ab1e
-
-Fix this by setting @len to zero when @off == 0 so callers won't
-attempt to dereference non-existing data areas.
-
-Reported-by: Robert Morris <rtm@csail.mit.edu>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Martin Michaelis <code@mgjm.de>
+CC: stable@vger.kernel.org # 4.14+
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2misc.c | 26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+ fs/btrfs/ioctl.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/cifs/smb2misc.c b/fs/cifs/smb2misc.c
-index be3df90bb2bcc..b98bba887f84b 100644
---- a/fs/cifs/smb2misc.c
-+++ b/fs/cifs/smb2misc.c
-@@ -305,6 +305,9 @@ static const bool has_smb2_data_area[NUMBER_OF_SMB2_COMMANDS] = {
- char *
- smb2_get_data_area_len(int *off, int *len, struct smb2_sync_hdr *shdr)
- {
-+	const int max_off = 4096;
-+	const int max_len = 128 * 1024;
-+
- 	*off = 0;
- 	*len = 0;
- 
-@@ -376,29 +379,20 @@ smb2_get_data_area_len(int *off, int *len, struct smb2_sync_hdr *shdr)
- 	 * Invalid length or offset probably means data area is invalid, but
- 	 * we have little choice but to ignore the data area in this case.
- 	 */
--	if (*off > 4096) {
--		cifs_dbg(VFS, "offset %d too large, data area ignored\n", *off);
--		*len = 0;
--		*off = 0;
--	} else if (*off < 0) {
--		cifs_dbg(VFS, "negative offset %d to data invalid ignore data area\n",
--			 *off);
-+	if (unlikely(*off < 0 || *off > max_off ||
-+		     *len < 0 || *len > max_len)) {
-+		cifs_dbg(VFS, "%s: invalid data area (off=%d len=%d)\n",
-+			 __func__, *off, *len);
- 		*off = 0;
- 		*len = 0;
--	} else if (*len < 0) {
--		cifs_dbg(VFS, "negative data length %d invalid, data area ignored\n",
--			 *len);
--		*len = 0;
--	} else if (*len > 128 * 1024) {
--		cifs_dbg(VFS, "data area larger than 128K: %d\n", *len);
-+	} else if (*off == 0) {
- 		*len = 0;
- 	}
- 
- 	/* return pointer to beginning of data area, ie offset from SMB start */
--	if ((*off != 0) && (*len != 0))
-+	if (*off > 0 && *len > 0)
- 		return (char *)shdr + *off;
--	else
--		return NULL;
-+	return NULL;
- }
- 
- /*
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index 6da8587e2ae37..f06824bea4686 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -1868,6 +1868,15 @@ static noinline int __btrfs_ioctl_snap_create(struct file *file,
+ 			 * are limited to own subvolumes only
+ 			 */
+ 			ret = -EPERM;
++		} else if (btrfs_ino(BTRFS_I(src_inode)) != BTRFS_FIRST_FREE_OBJECTID) {
++			/*
++			 * Snapshots must be made with the src_inode referring
++			 * to the subvolume inode, otherwise the permission
++			 * checking above is useless because we may have
++			 * permission on a lower directory but not the subvol
++			 * itself.
++			 */
++			ret = -EINVAL;
+ 		} else {
+ 			ret = btrfs_mksnapshot(&file->f_path, name, namelen,
+ 					     BTRFS_I(src_inode)->root,
 -- 
 2.43.0
 
