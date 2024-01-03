@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2331BDFD;
-	Wed,  3 Jan 2024 17:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FAA1BDF1;
+	Wed,  3 Jan 2024 17:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TU9awD5F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4C8C433C7;
-	Wed,  3 Jan 2024 17:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azjUKn3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AED4C433C8;
+	Wed,  3 Jan 2024 17:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704301670;
-	bh=HV4y0aMNLEKTNIYHkuVs4HoEGV3jT6HosHfs9BUEXUo=;
+	s=korg; t=1704301674;
+	bh=oWsuWTO9BShKTMuZGdzwj3drSH4VlIPE8H5lSufB0FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TU9awD5Fi74sUnTndFLBHJ1wlynYb7iKY/G/MKq7TvtQtJd1aJEfjVIDQQ+IFxG6E
-	 lDG0M7rneuw7lQonGDM3ed//iqZZDV07FLwmCzOE/Ba1AuOUWTEjfe6XJHCrnNZIMk
-	 6aix/xrowM1rUT7/vrm0jL+vSTGuf+vQMusSz5NU=
+	b=azjUKn3XiK6Qk+XKYVXJcwo5BevI+ow5K+jYlQUfNGEhiXJ+ToLO2ItoCZPkXVMdb
+	 DPcgTga9qVE0EIjlAzAwjoc+U6UoV4GXEFaOemr2/aOGOSPaMHt3JtXoXNzkvASEPY
+	 bZ6NUcClO1QS1a9eDhV52+rgehjpcDd6vY6IzmGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	stable@kernel.org
-Subject: [PATCH 5.15 64/95] x86/alternatives: Sync core before enabling interrupts
-Date: Wed,  3 Jan 2024 17:55:12 +0100
-Message-ID: <20240103164903.524048581@linuxfoundation.org>
+	Krister Johansen <kjlx@templeofstupid.com>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 5.15 65/95] fuse: share lookup state between submount and its parent
+Date: Wed,  3 Jan 2024 17:55:13 +0100
+Message-ID: <20240103164903.718010233@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
 References: <20240103164853.921194838@linuxfoundation.org>
@@ -43,47 +41,222 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Krister Johansen <kjlx@templeofstupid.com>
 
-commit 3ea1704a92967834bf0e64ca1205db4680d04048 upstream.
+commit c4d361f66ac91db8fc65061a9671682f61f4ca9d upstream.
 
-text_poke_early() does:
+Fuse submounts do not perform a lookup for the nodeid that they inherit
+from their parent.  Instead, the code decrements the nlookup on the
+submount's fuse_inode when it is instantiated, and no forget is
+performed when a submount root is evicted.
 
-   local_irq_save(flags);
-   memcpy(addr, opcode, len);
-   local_irq_restore(flags);
-   sync_core();
+Trouble arises when the submount's parent is evicted despite the
+submount itself being in use.  In this author's case, the submount was
+in a container and deatched from the initial mount namespace via a
+MNT_DEATCH operation.  When memory pressure triggered the shrinker, the
+inode from the parent was evicted, which triggered enough forgets to
+render the submount's nodeid invalid.
 
-That's not really correct because the synchronization should happen before
-interrupts are re-enabled to ensure that a pending interrupt observes the
-complete update of the opcodes.
+Since submounts should still function, even if their parent goes away,
+solve this problem by sharing refcounted state between the parent and
+its submount.  When all of the references on this shared state reach
+zero, it's safe to forget the final lookup of the fuse nodeid.
 
-It's not entirely clear whether the interrupt entry provides enough
-serialization already, but moving the sync_core() invocation into interrupt
-disabled region does no harm and is obviously correct.
-
-Fixes: 6fffacb30349 ("x86/alternatives, jumplabel: Use text_poke_early() before mm_init()")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/ZT6narvE%2BLxX%2B7Be@windriver.com
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Cc: stable@vger.kernel.org
+Fixes: 1866d779d5d2 ("fuse: Allow fuse_fill_super_common() for submounts")
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/alternative.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fuse/fuse_i.h |   15 +++++++++++
+ fs/fuse/inode.c  |   75 ++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 87 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -963,8 +963,8 @@ void __init_or_module text_poke_early(vo
- 	} else {
- 		local_irq_save(flags);
- 		memcpy(addr, opcode, len);
--		local_irq_restore(flags);
- 		sync_core();
-+		local_irq_restore(flags);
+--- a/fs/fuse/fuse_i.h
++++ b/fs/fuse/fuse_i.h
+@@ -63,6 +63,19 @@ struct fuse_forget_link {
+ 	struct fuse_forget_link *next;
+ };
  
- 		/*
- 		 * Could also do a CLFLUSH here to speed up CPU recovery; but
++/* Submount lookup tracking */
++struct fuse_submount_lookup {
++	/** Refcount */
++	refcount_t count;
++
++	/** Unique ID, which identifies the inode between userspace
++	 * and kernel */
++	u64 nodeid;
++
++	/** The request used for sending the FORGET message */
++	struct fuse_forget_link *forget;
++};
++
+ /** FUSE inode */
+ struct fuse_inode {
+ 	/** Inode data */
+@@ -155,6 +168,8 @@ struct fuse_inode {
+ 	 */
+ 	struct fuse_inode_dax *dax;
+ #endif
++	/** Submount specific lookup tracking */
++	struct fuse_submount_lookup *submount_lookup;
+ };
+ 
+ /** FUSE inode state bits */
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -69,6 +69,24 @@ struct fuse_forget_link *fuse_alloc_forg
+ 	return kzalloc(sizeof(struct fuse_forget_link), GFP_KERNEL_ACCOUNT);
+ }
+ 
++static struct fuse_submount_lookup *fuse_alloc_submount_lookup(void)
++{
++	struct fuse_submount_lookup *sl;
++
++	sl = kzalloc(sizeof(struct fuse_submount_lookup), GFP_KERNEL_ACCOUNT);
++	if (!sl)
++		return NULL;
++	sl->forget = fuse_alloc_forget();
++	if (!sl->forget)
++		goto out_free;
++
++	return sl;
++
++out_free:
++	kfree(sl);
++	return NULL;
++}
++
+ static struct inode *fuse_alloc_inode(struct super_block *sb)
+ {
+ 	struct fuse_inode *fi;
+@@ -84,6 +102,7 @@ static struct inode *fuse_alloc_inode(st
+ 	fi->attr_version = 0;
+ 	fi->orig_ino = 0;
+ 	fi->state = 0;
++	fi->submount_lookup = NULL;
+ 	mutex_init(&fi->mutex);
+ 	spin_lock_init(&fi->lock);
+ 	fi->forget = fuse_alloc_forget();
+@@ -114,6 +133,17 @@ static void fuse_free_inode(struct inode
+ 	kmem_cache_free(fuse_inode_cachep, fi);
+ }
+ 
++static void fuse_cleanup_submount_lookup(struct fuse_conn *fc,
++					 struct fuse_submount_lookup *sl)
++{
++	if (!refcount_dec_and_test(&sl->count))
++		return;
++
++	fuse_queue_forget(fc, sl->forget, sl->nodeid, 1);
++	sl->forget = NULL;
++	kfree(sl);
++}
++
+ static void fuse_evict_inode(struct inode *inode)
+ {
+ 	struct fuse_inode *fi = get_fuse_inode(inode);
+@@ -133,6 +163,11 @@ static void fuse_evict_inode(struct inod
+ 					  fi->nlookup);
+ 			fi->forget = NULL;
+ 		}
++
++		if (fi->submount_lookup) {
++			fuse_cleanup_submount_lookup(fc, fi->submount_lookup);
++			fi->submount_lookup = NULL;
++		}
+ 	}
+ 	if (S_ISREG(inode->i_mode) && !fuse_is_bad(inode)) {
+ 		WARN_ON(!list_empty(&fi->write_files));
+@@ -279,6 +314,13 @@ void fuse_change_attributes(struct inode
+ 	}
+ }
+ 
++static void fuse_init_submount_lookup(struct fuse_submount_lookup *sl,
++				      u64 nodeid)
++{
++	sl->nodeid = nodeid;
++	refcount_set(&sl->count, 1);
++}
++
+ static void fuse_init_inode(struct inode *inode, struct fuse_attr *attr)
+ {
+ 	inode->i_mode = attr->mode & S_IFMT;
+@@ -336,12 +378,22 @@ struct inode *fuse_iget(struct super_blo
+ 	 */
+ 	if (fc->auto_submounts && (attr->flags & FUSE_ATTR_SUBMOUNT) &&
+ 	    S_ISDIR(attr->mode)) {
++		struct fuse_inode *fi;
++
+ 		inode = new_inode(sb);
+ 		if (!inode)
+ 			return NULL;
+ 
+ 		fuse_init_inode(inode, attr);
+-		get_fuse_inode(inode)->nodeid = nodeid;
++		fi = get_fuse_inode(inode);
++		fi->nodeid = nodeid;
++		fi->submount_lookup = fuse_alloc_submount_lookup();
++		if (!fi->submount_lookup) {
++			iput(inode);
++			return NULL;
++		}
++		/* Sets nlookup = 1 on fi->submount_lookup->nlookup */
++		fuse_init_submount_lookup(fi->submount_lookup, nodeid);
+ 		inode->i_flags |= S_AUTOMOUNT;
+ 		goto done;
+ 	}
+@@ -364,11 +416,11 @@ retry:
+ 		iput(inode);
+ 		goto retry;
+ 	}
+-done:
+ 	fi = get_fuse_inode(inode);
+ 	spin_lock(&fi->lock);
+ 	fi->nlookup++;
+ 	spin_unlock(&fi->lock);
++done:
+ 	fuse_change_attributes(inode, attr, attr_valid, attr_version);
+ 
+ 	return inode;
+@@ -1380,6 +1432,8 @@ static int fuse_fill_super_submount(stru
+ 	struct super_block *parent_sb = parent_fi->inode.i_sb;
+ 	struct fuse_attr root_attr;
+ 	struct inode *root;
++	struct fuse_submount_lookup *sl;
++	struct fuse_inode *fi;
+ 
+ 	fuse_sb_defaults(sb);
+ 	fm->sb = sb;
+@@ -1402,12 +1456,27 @@ static int fuse_fill_super_submount(stru
+ 	 * its nlookup should not be incremented.  fuse_iget() does
+ 	 * that, though, so undo it here.
+ 	 */
+-	get_fuse_inode(root)->nlookup--;
++	fi = get_fuse_inode(root);
++	fi->nlookup--;
++
+ 	sb->s_d_op = &fuse_dentry_operations;
+ 	sb->s_root = d_make_root(root);
+ 	if (!sb->s_root)
+ 		return -ENOMEM;
+ 
++	/*
++	 * Grab the parent's submount_lookup pointer and take a
++	 * reference on the shared nlookup from the parent.  This is to
++	 * prevent the last forget for this nodeid from getting
++	 * triggered until all users have finished with it.
++	 */
++	sl = parent_fi->submount_lookup;
++	WARN_ON(!sl);
++	if (sl) {
++		refcount_inc(&sl->count);
++		fi->submount_lookup = sl;
++	}
++
+ 	return 0;
+ }
+ 
 
 
