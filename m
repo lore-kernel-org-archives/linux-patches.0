@@ -1,128 +1,96 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF50200A0;
-	Thu,  4 Jan 2024 07:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC7320309;
+	Thu,  4 Jan 2024 08:22:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sipsolutions.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDX165+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4829CC433C8;
-	Thu,  4 Jan 2024 07:58:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704355136;
-	bh=pqd2XsGEAL030a/IJtydQ3u/u6QoxwjQvRz/c0XYeDo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vDX165+yBsC4bo1a0C5mhL7PSAMRFq2D/ZWA1RIMIDQw5TQ216p8HY0QuA1HRDNdt
-	 24NF0/tD4NGfKftlcnwNvpFfqE20Uhtu18fVg1Cn3Wkhsh25YSYXc6m+cjwlzY2Ojl
-	 LvJvgD3YhEuOilMx3bBwiSPVm9IkDadBs3NP9zps=
-Date: Thu, 4 Jan 2024 08:58:54 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, leo@leolam.fr,
-	johannes.berg@intel.com
+	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="tXAWZVZJ"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
+	Resent-Cc:Resent-Message-ID; bh=K77rFugtyXwGPPVKHt8Mgc7noRU6Dmdrtaqh9H+93h8=;
+	t=1704356541; x=1705566141; b=tXAWZVZJPccNGFAUImClUBBozvty6sVc1JgWZ5WlGS/sEO1
+	rWXow+fc3O0YyNbuIA0PnMxt+aLIt3uh3CM00s5jsCjDzOY8FmLsjT3TKltzPtkaiPkxyDVC529x9
+	JVwo+J6bNcaRVpXtLV0E0g/ceC/NYVQYVHTRcspyCnn36JWclMgsL72N55LguEU5sz7xZjMVVxpQr
+	dzY/vDbhNiTLF2QYfTHGN2EQl9oizP39hceqa586Re6aaI41Epmc4cJf2PkmSx9ND8A9SdFvzy2O0
+	vUq4dvBSboWGlxeESMlQucQyddEov0IjZJi1aoJ1XeoRKViFQ1344ujzMmRkwXtA==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.97)
+	(envelope-from <johannes@sipsolutions.net>)
+	id 1rLIzA-00000004Q7E-0b9l;
+	Thu, 04 Jan 2024 09:21:52 +0100
+Message-ID: <661af1ebb62b25e75c32933143469855abb1242b.camel@sipsolutions.net>
 Subject: Re: [PATCH 6.6 00/49] 6.6.10-rc1 review
-Message-ID: <2024010427-kisser-canopy-763c@gregkh>
+From: Johannes Berg <johannes@sipsolutions.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Daniel
+	=?ISO-8859-1?Q?D=EDaz?=
+	 <daniel.diaz@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ allen.lkml@gmail.com,  leo@leolam.fr
+Date: Thu, 04 Jan 2024 09:21:50 +0100
+In-Reply-To: <2024010427-kisser-canopy-763c@gregkh>
 References: <20240103164834.970234661@linuxfoundation.org>
- <99fe3993-51b5-4284-8a22-869764f393d8@linaro.org>
- <32ebe3f1-49b7-4ad3-9ea5-ed2adbbd78da@linaro.org>
+	 <99fe3993-51b5-4284-8a22-869764f393d8@linaro.org>
+	 <32ebe3f1-49b7-4ad3-9ea5-ed2adbbd78da@linaro.org>
+	 <2024010427-kisser-canopy-763c@gregkh>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.50.2 (3.50.2-1.fc39) 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <32ebe3f1-49b7-4ad3-9ea5-ed2adbbd78da@linaro.org>
+X-malware-bazaar: not-scanned
 
-On Thu, Jan 04, 2024 at 01:15:45AM -0600, Daniel Díaz wrote:
-> Hello!
-> 
-> On 03/01/24 10:10 p. m., Daniel Díaz wrote:
-> > Hello!
-> > 
-> > On 03/01/24 10:55 a. m., Greg Kroah-Hartman wrote:
-> > > This is the start of the stable review cycle for the 6.6.10 release.
-> > > There are 49 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > > 
-> > > Responses should be made by Fri, 05 Jan 2024 16:47:49 +0000.
-> > > Anything received after that time might be too late.
-> > > 
-> > > The whole patch series can be found in one patch at:
-> > >     https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.10-rc1.gz
-> > > or in the git tree and branch at:
-> > >     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> > > and the diffstat can be found below.
-> > > 
-> > > thanks,
-> > > 
-> > > greg k-h
-> > 
-> > We're seeing a build regression with x86/GCC-8 and allmodconfig:
-> > 
-> > -----8<-----
-> >    In file included from /builds/linux/include/linux/string.h:294,
-> >                     from /builds/linux/include/linux/bitmap.h:11,
-> >                     from /builds/linux/include/linux/cpumask.h:12,
-> >                     from /builds/linux/arch/x86/include/asm/paravirt.h:17,
-> >                     from /builds/linux/arch/x86/include/asm/cpuid.h:62,
-> >                     from /builds/linux/arch/x86/include/asm/processor.h:19,
-> >                     from /builds/linux/arch/x86/include/asm/cpufeature.h:5,
-> >                     from /builds/linux/arch/x86/include/asm/thread_info.h:53,
-> >                     from /builds/linux/include/linux/thread_info.h:60,
-> >                     from /builds/linux/include/linux/uio.h:9,
-> >                     from /builds/linux/include/linux/socket.h:8,
-> >                     from /builds/linux/include/uapi/linux/if.h:25,
-> >                     from /builds/linux/net/wireless/nl80211.c:11:
-> >    In function 'nl80211_set_cqm_rssi.isra.44',
-> >        inlined from 'nl80211_set_cqm' at /builds/linux/net/wireless/nl80211.c:13000:10:
-> >    /builds/linux/include/linux/fortify-string.h:57:29: error: '__builtin_memcpy' pointer overflow between offset 36 and size [-1, 9223372036854775807] [-Werror=array-bounds]
-> >     #define __underlying_memcpy __builtin_memcpy
-> >                                 ^
-> >    /builds/linux/include/linux/fortify-string.h:648:2: note: in expansion of macro '__underlying_memcpy'
-> >      __underlying_##op(p, q, __fortify_size);   \
-> >      ^~~~~~~~~~~~~
-> >    /builds/linux/include/linux/fortify-string.h:693:26: note: in expansion of macro '__fortify_memcpy_chk'
-> >     #define memcpy(p, q, s)  __fortify_memcpy_chk(p, q, s,   \
-> >                              ^~~~~~~~~~~~~~~~~~~~
-> >    /builds/linux/net/wireless/nl80211.c:12939:3: note: in expansion of macro 'memcpy'
-> >       memcpy(cqm_config->rssi_thresholds, thresholds,
-> >       ^~~~~~
-> >    cc1: all warnings being treated as errors
-> >    make[5]: *** [/builds/linux/scripts/Makefile.build:243: net/wireless/nl80211.o] Error 1
-> > ----->8-----
-> > 
-> > This is currently being bisected, so there is more to follow.
-> 
-> Bisection pointed to:
-> 
->   commit 92045aab1bd9bfd73d816e907ea07739c4550b41
->   Author: Johannes Berg <johannes.berg@intel.com>
->   Date:   Sat Dec 16 05:47:15 2023 +0000
-> 
->       wifi: cfg80211: fix CQM for non-range use
->       commit 7e7efdda6adb385fbdfd6f819d76bc68c923c394 upstream.
-> 
-> Reverting that was not possible, so I reverted 47f3694a4259 first ("wifi: nl80211: fix deadlock in nl80211_set_cqm_rssi (6.6.x)"), but that was not enough. After reverting both 47f3694a4259 and 92045aab1bd9, the build passed again.
-> 
-> Reproducer:
-> 
->   tuxmake --runtime podman --target-arch x86_64 --toolchain gcc-8 --kconfig allmodconfig
+T24gVGh1LCAyMDI0LTAxLTA0IGF0IDA4OjU4ICswMTAwLCBHcmVnIEtyb2FoLUhhcnRtYW4gd3Jv
+dGU6Cj4gPiA+IAo+ID4gPiBXZSdyZSBzZWVpbmcgYSBidWlsZCByZWdyZXNzaW9uIHdpdGggeDg2
+L0dDQy04IGFuZCBhbGxtb2Rjb25maWc6Cj4gPiA+IAo+ID4gPiAtLS0tLTg8LS0tLS0KPiA+ID4g
+IMKgIEluIGZpbGUgaW5jbHVkZWQgZnJvbSAvYnVpbGRzL2xpbnV4L2luY2x1ZGUvbGludXgvc3Ry
+aW5nLmg6Mjk0LAo+ID4gPiAgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZy
+b20gL2J1aWxkcy9saW51eC9pbmNsdWRlL2xpbnV4L2JpdG1hcC5oOjExLAo+ID4gPiAgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZyb20gL2J1aWxkcy9saW51eC9pbmNsdWRl
+L2xpbnV4L2NwdW1hc2suaDoxMiwKPiA+ID4gIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCBmcm9tIC9idWlsZHMvbGludXgvYXJjaC94ODYvaW5jbHVkZS9hc20vcGFyYXZpcnQu
+aDoxNywKPiA+ID4gIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBmcm9tIC9i
+dWlsZHMvbGludXgvYXJjaC94ODYvaW5jbHVkZS9hc20vY3B1aWQuaDo2MiwKPiA+ID4gIMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBmcm9tIC9idWlsZHMvbGludXgvYXJjaC94
+ODYvaW5jbHVkZS9hc20vcHJvY2Vzc29yLmg6MTksCj4gPiA+ICDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAgZnJvbSAvYnVpbGRzL2xpbnV4L2FyY2gveDg2L2luY2x1ZGUvYXNt
+L2NwdWZlYXR1cmUuaDo1LAo+ID4gPiAgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgIGZyb20gL2J1aWxkcy9saW51eC9hcmNoL3g4Ni9pbmNsdWRlL2FzbS90aHJlYWRfaW5mby5o
+OjUzLAo+ID4gPiAgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZyb20gL2J1
+aWxkcy9saW51eC9pbmNsdWRlL2xpbnV4L3RocmVhZF9pbmZvLmg6NjAsCj4gPiA+ICDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgZnJvbSAvYnVpbGRzL2xpbnV4L2luY2x1ZGUv
+bGludXgvdWlvLmg6OSwKPiA+ID4gIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCBmcm9tIC9idWlsZHMvbGludXgvaW5jbHVkZS9saW51eC9zb2NrZXQuaDo4LAo+ID4gPiAgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZyb20gL2J1aWxkcy9saW51eC9pbmNs
+dWRlL3VhcGkvbGludXgvaWYuaDoyNSwKPiA+ID4gIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCBmcm9tIC9idWlsZHMvbGludXgvbmV0L3dpcmVsZXNzL25sODAyMTEuYzoxMToK
+PiA+ID4gIMKgIEluIGZ1bmN0aW9uICdubDgwMjExX3NldF9jcW1fcnNzaS5pc3JhLjQ0JywKPiA+
+ID4gIMKgwqDCoMKgwqAgaW5saW5lZCBmcm9tICdubDgwMjExX3NldF9jcW0nIGF0IC9idWlsZHMv
+bGludXgvbmV0L3dpcmVsZXNzL25sODAyMTEuYzoxMzAwMDoxMDoKPiA+ID4gIMKgIC9idWlsZHMv
+bGludXgvaW5jbHVkZS9saW51eC9mb3J0aWZ5LXN0cmluZy5oOjU3OjI5OiBlcnJvcjogJ19fYnVp
+bHRpbl9tZW1jcHknIHBvaW50ZXIgb3ZlcmZsb3cgYmV0d2VlbiBvZmZzZXQgMzYgYW5kIHNpemUg
+Wy0xLCA5MjIzMzcyMDM2ODU0Nzc1ODA3XSBbLVdlcnJvcj1hcnJheS1ib3VuZHNdCgpUaGlzIHBh
+cnRpYWxseSBzaG93ZWQgdXAgdXBzdHJlYW0gYXMgd2VsbCwgYnV0IGl0IHdhcyBwcmV0dHkgaGFy
+ZCB0bwpzZWUsIHNvIEkgdGhpbmsgY29uZmlnIGFuZCB0aGlzIHZlcnkgc3BlY2lmaWMgY29tcGls
+ZXIgdmVyc2lvbiBtYXkgYmUKYWZmZWN0aW5nIGl0IGFzIHdlbGwuCgo+IFZlcnkgb2RkLCA2LjEg
+d29ya3MgZmluZSB3aXRoIHRoaXMgc2FtZSBjb21waWxlcj8gIFRoZXNlIGNoYW5nZXMgd2VyZSBp
+bgo+IHRoZSA2LjEuNzAgcmVsZWFzZSAoYW5kIHRoZSA2LjEuNjYgcmVsZWFzZSkgYmVmb3JlLgo+
+IAo+IEl0IHdhcyBhbHNvIGluIDYuNi41LCBiZWZvcmUgYmVpbmcgcmV2ZXJ0ZWQgaW4gNi42LjYs
+IHNvIHdoeSBpcyB0aGlzCj4gY2F1c2luZyBhIHByb2JsZW0gbm93PwoKWWVhaCwgaXQncyBhbGwg
+YSBiaXQgd2VpcmQuCgpLZWVzIGVuZGVkIHVwIGZpeGluZyBpdCB1cHN0cmVhbSB3aXRoIGNvbW1p
+dCAxNzJkYjU2ZDkwZDIgKCJuZXRsaW5rOgpSZXR1cm4gdW5zaWduZWQgdmFsdWUgZm9yIG5sYV9s
+ZW4oKSIpIChpbiBuZXQtbmV4dCksIGJ1dCBJIGNhbm5vdAphY3R1YWxseSBzYXkgdGhhdCBJIHVu
+ZGVyc3RhbmQgYWxsIHdoYXQncyBnb2luZyBvbiBoZXJlLgoKam9oYW5uZXMK
 
-Very odd, 6.1 works fine with this same compiler?  These changes were in
-the 6.1.70 release (and the 6.1.66 release) before.
-
-It was also in 6.6.5, before being reverted in 6.6.6, so why is this
-causing a problem now?
-
-confused,
-
-greg k-h
