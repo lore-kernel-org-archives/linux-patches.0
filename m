@@ -1,88 +1,78 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2015208BB;
-	Thu,  4 Jan 2024 08:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9BF1EA85;
+	Thu,  4 Jan 2024 08:59:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEHIlwHa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F29C433CA;
-	Thu,  4 Jan 2024 08:58:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704358732;
-	bh=FnM+N0lP11+6X4DeBmtarWzZHMX+s3RDl2T6VN8sUFs=;
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="gtVej27l"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 8622C40E01A1;
+	Thu,  4 Jan 2024 08:59:08 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id gK9ccJe0EGyQ; Thu,  4 Jan 2024 08:59:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1704358746; bh=RtrcR3Qo98X35zKZN99wfN8TVVrIa293mVZlo2XepOo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CEHIlwHaujbs18TLbjfmMDCDJH1zvaIA8olrPoksPUY6WLLbDXT0SeA850O7tjm/5
-	 u8iNFeMtLtDy1I7ujnb2Svyolw68DU7FNyOrgiuNHQUKTI17DckXmRlVqaEdw7H5Uv
-	 2h8oNNEbN8W8uVe5hS+7oAaAkjPxEXVi1IbtFQ70=
-Date: Thu, 4 Jan 2024 09:58:49 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: Re: [PATCH 6.1 086/100] platform/x86: p2sb: Allow p2sb_bar() calls
- during PCI device probe
-Message-ID: <2024010401-shell-easiness-47c9@gregkh>
-References: <20240103164856.169912722@linuxfoundation.org>
- <20240103164909.026702193@linuxfoundation.org>
- <ikeipirtlgca6durdso7md6khlyd5wwh4wl2jzlxkqr2utu4p4@ou2wcovon7jt>
+	b=gtVej27lOwudhs/9JrgIn+QbgPA8TK+L7Oz1Z4y9PogKgOjyCeNt9RMpSbGdrUgSI
+	 fhGQLFSndY7erp0jbVRTGc0YTth7REpJYsl676bhlCtRbCG2We9Yf72g1mLxpRsX4r
+	 AqHSbAjpYjlRoKvlCbu2B9clcC6mFtVkL7ZPKb2UhVLI63LTLmoJbizVMDIqknlQDY
+	 XEsrvHpq4kK/CSdaWIKti6icWRYe7l9pReIFqXljx650TysqIwzglUxe02xJATwpRw
+	 UVFsE/rMNcDWPuYzT8me8S7d8CMbqZDdkmwyJhcdEwT46JP7hkpVufp+ZFw2XDReHl
+	 UsUhxVi/P/FuNpRRHzjzNloGJaXw8pqtzvKUsYjxi0Vy5n3FaiRMyD0H+Pt5jfj0Ul
+	 WmJ1Z+Yaar2bFl6YTpr/RYAUKa4Gn3E7+kp2qln7QQwLZBbwgWVjvoCUWxAWDgFcfg
+	 aMQZeu4SS2DZXeXusDcTSgTlowluOceHCjjy2KCUPcvOtOnGfS/QUN6Dj9BMs4MTJq
+	 uvqZE0BW7ZS/1Ek8+7li+QjYSBToEt4XI3+O/E2kwTRXxJg09EjN/KlzPHj8spmJy4
+	 sPSW7kliB1kHBIt2rlSIeg+gMzv5PSREGO054dGy/hGwVariClPyxHOjqcuywbPiPP
+	 gctpPu/CuMOb4huVMrRtxPOM=
+Received: from zn.tnic (pd9530f8c.dip0.t-ipconnect.de [217.83.15.140])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 5221A40E01F7;
+	Thu,  4 Jan 2024 08:58:57 +0000 (UTC)
+Date: Thu, 4 Jan 2024 09:58:51 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: tglx@linutronix.de, mingo@redhat.com, dave.hansen@linux.intel.com,
+	x86@kernel.org, mhiramat@kernel.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH] x86/tools: objdump_reformat.awk: Skip bad instructions
+ from llvm-objdump
+Message-ID: <20240104085851.GCZZZzS/QAtd9dfqWp@fat_crate.local>
+References: <20231205-objdump_reformat-awk-handle-llvm-objdump-bad_expr-v1-1-b4a74f39396f@kernel.org>
+ <20240103181542.GA629234@dev-arch.thelio-3990X>
+ <20240103181852.GDZZWlDJMVvqAZdpfV@fat_crate.local>
+ <20240103205506.GA152662@dev-arch.thelio-3990X>
+ <20240103212616.GGZZXQ+IKGPb+EqVcu@fat_crate.local>
+ <20240103214804.GA155391@dev-arch.thelio-3990X>
+ <20240103215119.GB155391@dev-arch.thelio-3990X>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ikeipirtlgca6durdso7md6khlyd5wwh4wl2jzlxkqr2utu4p4@ou2wcovon7jt>
+In-Reply-To: <20240103215119.GB155391@dev-arch.thelio-3990X>
 
-On Thu, Jan 04, 2024 at 08:54:48AM +0000, Shinichiro Kawasaki wrote:
-> On Jan 03, 2024 / 17:55, Greg Kroah-Hartman wrote:
-> > 6.1-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-> > 
-> > commit b28ff7a7c3245d7f62acc20f15b4361292fe4117 upstream.
-> > 
-> > p2sb_bar() unhides P2SB device to get resources from the device. It
-> > guards the operation by locking pci_rescan_remove_lock so that parallel
-> > rescans do not find the P2SB device. However, this lock causes deadlock
-> > when PCI bus rescan is triggered by /sys/bus/pci/rescan. The rescan
-> > locks pci_rescan_remove_lock and probes PCI devices. When PCI devices
-> > call p2sb_bar() during probe, it locks pci_rescan_remove_lock again.
-> > Hence the deadlock.
-> > 
-> > To avoid the deadlock, do not lock pci_rescan_remove_lock in p2sb_bar().
-> > Instead, do the lock at fs_initcall. Introduce p2sb_cache_resources()
-> > for fs_initcall which gets and caches the P2SB resources. At p2sb_bar(),
-> > refer the cache and return to the caller.
-> > 
-> > Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> > Fixes: 9745fb07474f ("platform/x86/intel: Add Primary to Sideband (P2SB) bridge support")
-> > Cc: stable@vger.kernel.org
-> > Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-> > Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> > Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-> > Link: https://lore.kernel.org/linux-pci/6xb24fjmptxxn5js2fjrrddjae6twex5bjaftwqsuawuqqqydx@7cl3uik5ef6j/
-> > Link: https://lore.kernel.org/r/20231229063912.2517922-2-shinichiro.kawasaki@wdc.com
-> > Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > ---
-> 
-> Greg, please drop this patch from 6.1-stable for now. Unfortunately, one issue
-> has got reported [*].
-> 
-> [*] https://lore.kernel.org/platform-driver-x86/CABq1_vjfyp_B-f4LAL6pg394bP6nDFyvg110TOLHHb0x4aCPeg@mail.gmail.com/T/#u
+On Wed, Jan 03, 2024 at 02:51:19PM -0700, Nathan Chancellor wrote:
+> For the record, this explanation really should have been in the commit
+> message of 5225952d74d4 but I guess I was not thinking at the time.
 
-What about 6.6.y, this is also queued up there too.
+That's fine - we have the Link tag. Lemme refer to that thread and we're
+good.
 
-And when is this going to be reverted in Linus's tree?  6.7-rc8 has this
-issue right now, right?
+Thx.
 
-thanks,
+-- 
+Regards/Gruss,
+    Boris.
 
-greg k-h
+https://people.kernel.org/tglx/notes-about-netiquette
