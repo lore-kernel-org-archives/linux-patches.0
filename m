@@ -1,152 +1,313 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B431DFE7
-	for <patches@lists.linux.dev>; Thu,  4 Jan 2024 07:15:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F3620305
+	for <patches@lists.linux.dev>; Thu,  4 Jan 2024 07:55:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g/4EIAZ8"
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-2044ecf7035so138028fac.0
-        for <patches@lists.linux.dev>; Wed, 03 Jan 2024 23:15:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fsSBVY+8"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-5cec32dedf3so137739a12.0
+        for <patches@lists.linux.dev>; Wed, 03 Jan 2024 23:55:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704352549; x=1704957349; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=X2SmQScyvIuLdY3E1hFWKaRhiC86WTLlAjqHutwpfeQ=;
-        b=g/4EIAZ8aG3N5qr1Zy2dwkI6wr+LlW4WOuySrrO8b/ZkfDWRIXti5QEvKj5gtwHEwR
-         X/y0IBSspYxrdEwLDjgbi3+RyAJHaqDZvmZsw3dXHY405GVrLsLiiNYcl321uZel+Eo4
-         G0U+8rBAUUpaAglxC+eQD9rC4vbpP0fBhNaaAd6nvr8qCsyhMlqgPotG3M0gzhDX4xxC
-         G9lKiF3Glac/OIlvk3PZr6uyS6MkesU+7EZxvp25J0AvvIK7jdP+uShMPlnrtbHR3TEP
-         b6Bpdrvcybs1CsTIt+LjiSVDTe3m/OAuwbYYRsMc289m2JC73PQILa80V28Zh6C0mvBt
-         8auA==
+        d=gmail.com; s=20230601; t=1704354914; x=1704959714; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=thELQt+jJStLaTs0SK0jv3blwIe6CCuApqMHQi68vpE=;
+        b=fsSBVY+84+8kcv/L1PFDJ06CE6zgicLLg9q6QySusfOYr6+XcakyJo2k+wgu9ATMJ5
+         1AKZnASdmZud+lGzJ5o8DJR75GprnUO622vdFo92aRghfgtZlblCMRxoV2Q7AgfPB6Vm
+         YX/4xRMwkqxy4so/Olzyi8oXrxQ677/uQ2px8LoXbxJ1qrvGXQl74uocNGpDS2RxvZBa
+         71D+jj7epcdLj/pznmSJsds9sSGoFvUg6rstsRMrzgdrcR/Xxgc+iTx2rDvmrpXfgIcQ
+         QPrNKOVM54csdOOgwBSa8brKEE20UOnQboVjypNDcZD2yDC1TkCGc9ZBdoOrpvrSjMTt
+         j8mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704352549; x=1704957349;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X2SmQScyvIuLdY3E1hFWKaRhiC86WTLlAjqHutwpfeQ=;
-        b=AkJBtiaunXE6cVarOB/VDt/ORp9NuiriQyj7zYw6wvQr7Wyy8+yh5f6QkUgcOqzRN0
-         5uXIq5Is0WLdN5YWGTahaGCrLHjixZ2whwqgAR/0R6ts1A3bRDIpAEeeagS0EekgWJYi
-         XHFqfaQb25pHSuF12gISst2h1dLoAf+AV+j1Mq/yWgd7pByobC7QAppJqyAECIJ0+J94
-         BEB5vOcP7d6ZppEZ4rx9CxY6JvsXbFWdsd7BeYGnhni8bOSc6c9J9M93buCsN855G/+U
-         XvCCS8dbudp9T452ZWsH4HR9pY+Vh+oyVgOI/10L91zNq09n+/jMtur3rOJ0mmOnwXn9
-         dZyg==
-X-Gm-Message-State: AOJu0YxCRJfsxXePZUe9pLxsFRnO0s0pyEuZs4PyqLuOMM1iJlnWLiWs
-	GHKl1hN6d9ugnzvp9pkf108kSIzzco8k5w==
-X-Google-Smtp-Source: AGHT+IFDtkmc/5Itm2/vrFUrhCZarPV/ONCswJm00ZQe5veImd2aILrozVH3VBmTM9uNWBifaFHrHA==
-X-Received: by 2002:a05:6871:e410:b0:203:ef6e:2319 with SMTP id py16-20020a056871e41000b00203ef6e2319mr251670oac.10.1704352548337;
-        Wed, 03 Jan 2024 23:15:48 -0800 (PST)
-Received: from [192.168.17.16] ([138.84.62.99])
-        by smtp.gmail.com with ESMTPSA id u11-20020a9d4d8b000000b006d9fb0458cdsm4542214otk.39.2024.01.03.23.15.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Jan 2024 23:15:48 -0800 (PST)
-Message-ID: <32ebe3f1-49b7-4ad3-9ea5-ed2adbbd78da@linaro.org>
-Date: Thu, 4 Jan 2024 01:15:45 -0600
+        d=1e100.net; s=20230601; t=1704354914; x=1704959714;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=thELQt+jJStLaTs0SK0jv3blwIe6CCuApqMHQi68vpE=;
+        b=aykqiVOafMLBvn7l67s6UFopki5h0Bvj4WAY5vE+Mq9pV7S8kb4MNOXuBvnBIvVo9H
+         2U/dUkbYFm9vTkhqyHmMaliVofCz+TNdpFuzFGK5bjAKQny3zqYBQoYJ9XO7MTAL8X1X
+         x09RqeOJ+bXcUE+pja5+XDB819RS89okXqXkm3Kf3WfGQpEwgC0DBN+W8BNu+rmEiSis
+         T98SkL0EF4KbbgZgsoL5fkxiDbI/PmdqP18xJyDBS8jyU8Q2CT6eEUSt9s26y0gLm4F+
+         ym60djDjmfE5raVX+kbmzocD2VoBk+7da5xlesi6/OIs2DiCEVMsoZGKpx5D7zTzSiZy
+         iUIg==
+X-Gm-Message-State: AOJu0Yz9mm3uQqd8aOxw0tzaUAOs4lyZ3acNojGoVql9zb9PWcZy8Cu3
+	kFB4yD5xT2pl1JDLVpZbAv8CkHkI2kpMLQPyng0=
+X-Google-Smtp-Source: AGHT+IFI73v/6TfZ1EDje8MFqjY1bVatog9mEBZ85DA+lpHsm7Ax9qkxcUELS3xNPe7ldb2qxSp24wzYpP9w75dC8po=
+X-Received: by 2002:a05:6a20:12c2:b0:196:4c53:52db with SMTP id
+ v2-20020a056a2012c200b001964c5352dbmr157073pzg.47.1704354914365; Wed, 03 Jan
+ 2024 23:55:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 00/49] 6.6.10-rc1 review
-Content-Language: en-US
-From: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, leo@leolam.fr,
- johannes.berg@intel.com
 References: <20240103164834.970234661@linuxfoundation.org>
- <99fe3993-51b5-4284-8a22-869764f393d8@linaro.org>
-In-Reply-To: <99fe3993-51b5-4284-8a22-869764f393d8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
+From: Luna Jernberg <droidbittin@gmail.com>
+Date: Thu, 4 Jan 2024 07:55:02 +0000
+Message-ID: <CADo9pHiP8rXxLrGdsH5o+0KbR0f8XO+G1a=OgNW6UfD0s_hwAQ@mail.gmail.com>
+Subject: Re: [PATCH 6.6 00/49] 6.6.10-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Luna Jernberg <droidbittin@gmail.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello!
+Tried to follow this guide:
+https://wiki.archlinux.org/title/Kernel/Traditional_compilation to
+compile it on Crystal Linux based on Arch Linux on a Dell Latitude
+7390 laptop with a Intel i5-8350U and did not get it to boot
+but the same process worked for the stable 6.6.9 kernel, so guess i
+will just wait for the stable 6.6.10 and try when thats out
 
-On 03/01/24 10:10 p. m., Daniel Díaz wrote:
-> Hello!
-> 
-> On 03/01/24 10:55 a. m., Greg Kroah-Hartman wrote:
->> This is the start of the stable review cycle for the 6.6.10 release.
->> There are 49 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Fri, 05 Jan 2024 16:47:49 +0000.
->> Anything received after that time might be too late.
->>
->> The whole patch series can be found in one patch at:
->>     https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.10-rc1.gz
->> or in the git tree and branch at:
->>     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
->> and the diffstat can be found below.
->>
->> thanks,
->>
->> greg k-h
-> 
-> We're seeing a build regression with x86/GCC-8 and allmodconfig:
-> 
-> -----8<-----
->    In file included from /builds/linux/include/linux/string.h:294,
->                     from /builds/linux/include/linux/bitmap.h:11,
->                     from /builds/linux/include/linux/cpumask.h:12,
->                     from /builds/linux/arch/x86/include/asm/paravirt.h:17,
->                     from /builds/linux/arch/x86/include/asm/cpuid.h:62,
->                     from /builds/linux/arch/x86/include/asm/processor.h:19,
->                     from /builds/linux/arch/x86/include/asm/cpufeature.h:5,
->                     from /builds/linux/arch/x86/include/asm/thread_info.h:53,
->                     from /builds/linux/include/linux/thread_info.h:60,
->                     from /builds/linux/include/linux/uio.h:9,
->                     from /builds/linux/include/linux/socket.h:8,
->                     from /builds/linux/include/uapi/linux/if.h:25,
->                     from /builds/linux/net/wireless/nl80211.c:11:
->    In function 'nl80211_set_cqm_rssi.isra.44',
->        inlined from 'nl80211_set_cqm' at /builds/linux/net/wireless/nl80211.c:13000:10:
->    /builds/linux/include/linux/fortify-string.h:57:29: error: '__builtin_memcpy' pointer overflow between offset 36 and size [-1, 9223372036854775807] [-Werror=array-bounds]
->     #define __underlying_memcpy __builtin_memcpy
->                                 ^
->    /builds/linux/include/linux/fortify-string.h:648:2: note: in expansion of macro '__underlying_memcpy'
->      __underlying_##op(p, q, __fortify_size);   \
->      ^~~~~~~~~~~~~
->    /builds/linux/include/linux/fortify-string.h:693:26: note: in expansion of macro '__fortify_memcpy_chk'
->     #define memcpy(p, q, s)  __fortify_memcpy_chk(p, q, s,   \
->                              ^~~~~~~~~~~~~~~~~~~~
->    /builds/linux/net/wireless/nl80211.c:12939:3: note: in expansion of macro 'memcpy'
->       memcpy(cqm_config->rssi_thresholds, thresholds,
->       ^~~~~~
->    cc1: all warnings being treated as errors
->    make[5]: *** [/builds/linux/scripts/Makefile.build:243: net/wireless/nl80211.o] Error 1
-> ----->8-----
-> 
-> This is currently being bisected, so there is more to follow.
-
-Bisection pointed to:
-
-   commit 92045aab1bd9bfd73d816e907ea07739c4550b41
-   Author: Johannes Berg <johannes.berg@intel.com>
-   Date:   Sat Dec 16 05:47:15 2023 +0000
-
-       wifi: cfg80211: fix CQM for non-range use
-       
-       commit 7e7efdda6adb385fbdfd6f819d76bc68c923c394 upstream.
-
-Reverting that was not possible, so I reverted 47f3694a4259 first ("wifi: nl80211: fix deadlock in nl80211_set_cqm_rssi (6.6.x)"), but that was not enough. After reverting both 47f3694a4259 and 92045aab1bd9, the build passed again.
-
-Reproducer:
-
-   tuxmake --runtime podman --target-arch x86_64 --toolchain gcc-8 --kconfig allmodconfig
-
-
-Greetings!
-
-Daniel Díaz
-daniel.diaz@linaro.org
-
+Den ons 3 jan. 2024 kl 17:13 skrev Greg Kroah-Hartman
+<gregkh@linuxfoundation.org>:
+>
+> This is the start of the stable review cycle for the 6.6.10 release.
+> There are 49 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 05 Jan 2024 16:47:49 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.10-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+> -------------
+> Pseudo-Shortlog of commits:
+>
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>     Linux 6.6.10-rc1
+>
+> Pablo Neira Ayuso <pablo@netfilter.org>
+>     netfilter: nf_tables: skip set commit for deleted/destroyed sets
+>
+> L=C3=A9o Lam <leo@leolam.fr>
+>     wifi: nl80211: fix deadlock in nl80211_set_cqm_rssi (6.6.x)
+>
+> Johannes Berg <johannes.berg@intel.com>
+>     wifi: cfg80211: fix CQM for non-range use
+>
+> Steven Rostedt (Google) <rostedt@goodmis.org>
+>     tracing: Fix blocked reader of snapshot buffer
+>
+> Steven Rostedt (Google) <rostedt@goodmis.org>
+>     ftrace: Fix modification of direct_function hash while in use
+>
+> Steven Rostedt (Google) <rostedt@goodmis.org>
+>     ring-buffer: Fix wake ups when buffer_percent is set to 100
+>
+> Keith Busch <kbusch@kernel.org>
+>     Revert "nvme-fc: fix race between error recovery and creating associa=
+tion"
+>
+> Matthew Wilcox (Oracle) <willy@infradead.org>
+>     mm/memory-failure: check the mapcount of the precise page
+>
+> Matthew Wilcox (Oracle) <willy@infradead.org>
+>     mm/memory-failure: cast index to loff_t before shifting it
+>
+> Charan Teja Kalla <quic_charante@quicinc.com>
+>     mm: migrate high-order folios in swap cache correctly
+>
+> Baokun Li <libaokun1@huawei.com>
+>     mm/filemap: avoid buffered read/write race to read inconsistent data
+>
+> Muhammad Usama Anjum <usama.anjum@collabora.com>
+>     selftests: secretmem: floor the memory size to the multiple of page_s=
+ize
+>
+> Sidhartha Kumar <sidhartha.kumar@oracle.com>
+>     maple_tree: do not preallocate nodes for slot stores
+>
+> Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+>     platform/x86: p2sb: Allow p2sb_bar() calls during PCI device probe
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: fix slab-out-of-bounds in smb_strndup_from_utf16()
+>
+> David E. Box <david.e.box@linux.intel.com>
+>     platform/x86/intel/pmc: Move GBE LTR ignore to suspend callback
+>
+> David E. Box <david.e.box@linux.intel.com>
+>     platform/x86/intel/pmc: Allow reenabling LTRs
+>
+> David E. Box <david.e.box@linux.intel.com>
+>     platform/x86/intel/pmc: Add suspend callback
+>
+> Christoph Hellwig <hch@lst.de>
+>     block: renumber QUEUE_FLAG_HW_WC
+>
+> Paolo Abeni <pabeni@redhat.com>
+>     mptcp: fix inconsistent state on fastopen race
+>
+> Paolo Abeni <pabeni@redhat.com>
+>     mptcp: fix possible NULL pointer dereference on close
+>
+> Paolo Abeni <pabeni@redhat.com>
+>     mptcp: refactor sndbuf auto-tuning
+>
+> Helge Deller <deller@gmx.de>
+>     linux/export: Ensure natural alignment of kcrctab array
+>
+> Helge Deller <deller@gmx.de>
+>     linux/export: Fix alignment for 64-bit ksymtab entries
+>
+> Arnd Bergmann <arnd@arndb.de>
+>     kexec: select CRYPTO from KEXEC_FILE instead of depending on it
+>
+> Arnd Bergmann <arnd@arndb.de>
+>     kexec: fix KEXEC_FILE dependencies
+>
+> Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+>     virtio_ring: fix syncs DMA memory with different direction
+>
+> Zizhi Wo <wozizhi@huawei.com>
+>     fs: cifs: Fix atime update check
+>
+> Jeff Layton <jlayton@kernel.org>
+>     client: convert to new timestamp accessors
+>
+> Jeff Layton <jlayton@kernel.org>
+>     fs: new accessor methods for atime and mtime
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: avoid duplicate opinfo_put() call on error of smb21_lease_brea=
+k_ack()
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: lazy v2 lease break on smb2_write()
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: send v2 lease break notification for directory
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: downgrade RWH lease caching state to RH for directory
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: set v2 lease capability
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: set epoch in create context v2 lease
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: don't update ->op_state as OPLOCK_STATE_NONE on error
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: move setting SMB2_FLAGS_ASYNC_COMMAND and AsyncId
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: release interim response after sending status pending response
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: move oplock handling after unlock parent dir
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: separately allocate ci per dentry
+>
+> Zongmin Zhou <zhouzongmin@kylinos.cn>
+>     ksmbd: prevent memory leak on error return
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: fix kernel-doc comment of ksmbd_vfs_kern_path_locked()
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: no need to wait for binded connection termination at logoff
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: add support for surrogate pair conversion
+>
+> Kangjing Huang <huangkangjing@gmail.com>
+>     ksmbd: fix missing RDMA-capable flag for IPoIB device in ksmbd_rdma_c=
+apable_netdev()
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: fix kernel-doc comment of ksmbd_vfs_setxattr()
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: reorganize ksmbd_iov_pin_rsp()
+>
+> Cheng-Han Wu <hank20010209@gmail.com>
+>     ksmbd: Remove unused field in ksmbd_user struct
+>
+>
+> -------------
+>
+> Diffstat:
+>
+>  Makefile                                  |   4 +-
+>  arch/powerpc/Kconfig                      |   4 +-
+>  arch/riscv/Kconfig                        |   4 +-
+>  arch/s390/Kconfig                         |   4 +-
+>  arch/x86/Kconfig                          |   4 +-
+>  drivers/nvme/host/fc.c                    |  21 +--
+>  drivers/platform/x86/intel/pmc/adl.c      |   9 +-
+>  drivers/platform/x86/intel/pmc/cnp.c      |  26 ++-
+>  drivers/platform/x86/intel/pmc/core.c     |  12 +-
+>  drivers/platform/x86/intel/pmc/core.h     |   7 +-
+>  drivers/platform/x86/intel/pmc/mtl.c      |   9 +-
+>  drivers/platform/x86/intel/pmc/tgl.c      |   9 +-
+>  drivers/platform/x86/p2sb.c               | 178 ++++++++++++++++-----
+>  drivers/virtio/virtio_ring.c              |   6 +-
+>  fs/libfs.c                                |  41 +++--
+>  fs/smb/client/file.c                      |  18 ++-
+>  fs/smb/client/fscache.h                   |   6 +-
+>  fs/smb/client/inode.c                     |  17 +-
+>  fs/smb/client/smb2ops.c                   |   6 +-
+>  fs/smb/common/smb2pdu.h                   |   1 +
+>  fs/smb/server/connection.c                |  16 --
+>  fs/smb/server/ksmbd_work.c                |  51 +++---
+>  fs/smb/server/mgmt/user_config.h          |   1 -
+>  fs/smb/server/oplock.c                    | 118 ++++++++++++--
+>  fs/smb/server/oplock.h                    |   8 +-
+>  fs/smb/server/smb2misc.c                  |  15 +-
+>  fs/smb/server/smb2ops.c                   |   9 +-
+>  fs/smb/server/smb2pdu.c                   | 258 ++++++++++++++++--------=
+------
+>  fs/smb/server/transport_rdma.c            |  40 +++--
+>  fs/smb/server/unicode.c                   | 187 ++++++++++++++++------
+>  fs/smb/server/vfs.c                       |  14 +-
+>  fs/smb/server/vfs_cache.c                 |  30 ++--
+>  fs/smb/server/vfs_cache.h                 |   9 +-
+>  include/linux/blkdev.h                    |   2 +-
+>  include/linux/export-internal.h           |   6 +-
+>  include/linux/fs.h                        |  85 ++++++++--
+>  kernel/Kconfig.kexec                      |   2 +
+>  kernel/trace/ftrace.c                     | 100 ++++++------
+>  kernel/trace/ring_buffer.c                |  12 +-
+>  kernel/trace/trace.c                      |  20 ++-
+>  lib/maple_tree.c                          |  11 ++
+>  mm/filemap.c                              |   9 ++
+>  mm/memory-failure.c                       |   8 +-
+>  mm/migrate.c                              |   9 +-
+>  net/mptcp/protocol.c                      |  27 +++-
+>  net/mptcp/protocol.h                      |  63 +++++++-
+>  net/mptcp/sockopt.c                       |   5 +-
+>  net/mptcp/subflow.c                       |  29 ++--
+>  net/netfilter/nf_tables_api.c             |   2 +-
+>  net/wireless/core.h                       |   1 +
+>  net/wireless/nl80211.c                    |  56 ++++---
+>  tools/testing/radix-tree/maple.c          |   2 +-
+>  tools/testing/selftests/mm/memfd_secret.c |   3 +
+>  53 files changed, 1070 insertions(+), 524 deletions(-)
+>
+>
+>
