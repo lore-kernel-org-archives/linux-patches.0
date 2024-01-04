@@ -1,102 +1,75 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B2818EBF
-	for <patches@lists.linux.dev>; Thu,  4 Jan 2024 05:20:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41E51DDC8
+	for <patches@lists.linux.dev>; Thu,  4 Jan 2024 06:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kfhT8kuF"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1d3e2972f65so496935ad.3
-        for <patches@lists.linux.dev>; Wed, 03 Jan 2024 21:20:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704345615; x=1704950415; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=g3NzzRz631nrmHxCWhVwS62FIh58ttvyDrTrVUoW0lw=;
-        b=kfhT8kuFoEF1PPQrGhNiKlL7GpBUofFah7c2i1nsyyTBLplhoEpPuH9sLeYaqWLSfj
-         rxDyNL44lgW1rSPooHvNEo7DfyLaA/BDlJtg6VYTPeLaEznyDzEO5jJ7xXeO4E/qdhXR
-         1/nQbAG1IdOrO8t9Ztv4O0UKZtzCo5RZCJ0aG6GRJaWA2wjgIQI9F35UiNn89ok9e9fX
-         Y5Spnz+mfUUMKwh/pOqjCVQFaEib3tQ9vM2NDFCIrmZjUj1pqGAvFsgt3BNN6jH7MQkU
-         sG4tocGWUvm1JPrmaKGs/YQD47yroQpVVn/6q6X4eeeWLwHJuBdq+YPr2t7labqMkOK+
-         di7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704345615; x=1704950415;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=g3NzzRz631nrmHxCWhVwS62FIh58ttvyDrTrVUoW0lw=;
-        b=XqRFO/3f0nvLWxJ+LEnA5G4lVwqOoyximxuZ6wwaEhqezH11IaYZwOhmsOxjrAEa3B
-         r84RQyR6Mpcq3ZWBABCfDdI7/RJW9QkOQvY3XgsTEOr84x1i1mUEew54ScRJZ+qudcEQ
-         hV6ksoErBxs4U3UaM8TqhxXfNgSmO0y6TMHgmcvX3eeB7k6aeharg5Q2PiCbdYkDBq5H
-         SObanC0FCcpOfkn8v88MPMX9A1D8YCDPkBbsM7nO+8iIoYZ/jfUohX8UBMcXmzas4aDe
-         L7oQjyMShdqVSQVRitOPuxMQfOAjB0ctsOAyZWM54dGFNU+4lQcju0DuZN7G+E3ln8hm
-         e06Q==
-X-Gm-Message-State: AOJu0YzLPXeXBPU02yKpsWRZ/WWxJIJCE+xrrTh6u7zaEoelQSYEIInK
-	sAE/nODjmX4LWhtnXXTPamI=
-X-Google-Smtp-Source: AGHT+IHjISQRzYh9tkBeu5tmOF7gvQHMQ0tUCQ/ANdl6BpSWfWZ36Dbys8MO+YxDFI819ttVLUoMWw==
-X-Received: by 2002:a17:902:db07:b0:1d4:cbfc:1ccb with SMTP id m7-20020a170902db0700b001d4cbfc1ccbmr56654plx.64.1704345615332;
-        Wed, 03 Jan 2024 21:20:15 -0800 (PST)
-Received: from archie.me ([103.131.18.64])
-        by smtp.gmail.com with ESMTPSA id j4-20020a170902c3c400b001d395d3df30sm24573015plj.130.2024.01.03.21.20.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jan 2024 21:20:14 -0800 (PST)
-Received: by archie.me (Postfix, from userid 1000)
-	id 118BC184790CB; Thu,  4 Jan 2024 12:20:10 +0700 (WIB)
-Date: Thu, 4 Jan 2024 12:20:10 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com
-Subject: Re: [PATCH 6.6 00/49] 6.6.10-rc1 review
-Message-ID: <ZZZACjAEBXL0DvO2@archie.me>
-References: <20240103164834.970234661@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aetCW2OI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FD7C433CB
+	for <patches@lists.linux.dev>; Thu,  4 Jan 2024 06:45:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704350731;
+	bh=HGvQAbj7vdZsR7FPaga75+bgAWN6OGdRW5CxcWOmWaI=;
+	h=In-Reply-To:References:From:Date:Subject:To:Cc:From;
+	b=aetCW2OInm1yCVrlyftLLmPJ+zyE1snIsoXSCLiZ7OGBhFzj/3QejAe9B6sL2a+MS
+	 hiC8oDKDmKpzIPCih7uCe43zqqN+eycO5mELp+1WwrUAjjF7mOUm8qOdZ79EIs5uRq
+	 pnmOzOFOqVtviIfKnEoKWoIYTSNjuorxvVPnaTAt/k6obMNKxqFlPLgRN6i4HsNACL
+	 e3jSn7mnBITQVhXi6clJS+D8Y3sx1ez56IQnIY9MgHeLjgxAQSdOn7sJ6WvNcz8Jod
+	 uhTQaNDkAh4nhm6yXmhe4jyTK79Is2R28/QzQCQohgFVsgweXdojE/Wrgph07a6SlN
+	 On2euhK+Bj6gg==
+Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-595ac2b6c59so90698eaf.2
+        for <patches@lists.linux.dev>; Wed, 03 Jan 2024 22:45:31 -0800 (PST)
+X-Gm-Message-State: AOJu0YxFKF78E6qc5vEzUg9nGsugo3PzKuHm8Jg0SszT4WfBIIXd82G6
+	NdpdjMsjrF9OC4woTl+nyQBR8mXa2ouGnR/TGYQ=
+X-Google-Smtp-Source: AGHT+IELiwVkzsZGvW6sqO6fdix6qtpPSxBC8xNCpB5TVDwLeW2HM2iEpDuv1LIbnfKDOIAfoksCAYpQkz8Omdyc9mA=
+X-Received: by 2002:a4a:1407:0:b0:595:87a7:26a5 with SMTP id
+ 7-20020a4a1407000000b0059587a726a5mr175376ood.18.1704350730783; Wed, 03 Jan
+ 2024 22:45:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gCL66V2puD9uMZI8"
-Content-Disposition: inline
-In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
+Received: by 2002:a8a:c13:0:b0:511:f2c1:11ee with HTTP; Wed, 3 Jan 2024
+ 22:45:29 -0800 (PST)
+In-Reply-To: <20240103164853.921194838@linuxfoundation.org>
+References: <20240103164853.921194838@linuxfoundation.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
+Date: Thu, 4 Jan 2024 15:45:29 +0900
+X-Gmail-Original-Message-ID: <CAKYAXd8qswi39L+FLRjXdhv_0ziS+xKg_pKbUB_D0srNj7Bc8w@mail.gmail.com>
+Message-ID: <CAKYAXd8qswi39L+FLRjXdhv_0ziS+xKg_pKbUB_D0srNj7Bc8w@mail.gmail.com>
+Subject: Re: [PATCH 5.15 00/95] 5.15.146-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-
---gCL66V2puD9uMZI8
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Jan 03, 2024 at 05:55:20PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.10 release.
-> There are 49 patches in this series, all will be posted as a response
+2024-01-04 1:54 GMT+09:00, Greg Kroah-Hartman <gregkh@linuxfoundation.org>:
+> This is the start of the stable review cycle for the 5.15.146 release.
+> There are 95 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
+>
+> Responses should be made by Fri, 05 Jan 2024 16:47:49 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.146-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+> linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+I have tested smbtorture and tests through windows client against ksmbd.
 
-Successfully compiled and installed the kernel on my computer (Acer
-Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
+Tested-by: Namjae Jeon <linkinjeon@kernel.org>
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---gCL66V2puD9uMZI8
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZZY/+gAKCRD2uYlJVVFO
-o+iSAQDVZqyJauaNs1nMTVxRDf7yh24q/4XMnshBmztqxidgwgD9H7p1j+LlAuUX
-0EiwvKAigIjgLEgD+gp0nUlBby33pAc=
-=cKlU
------END PGP SIGNATURE-----
-
---gCL66V2puD9uMZI8--
+Thanks!
