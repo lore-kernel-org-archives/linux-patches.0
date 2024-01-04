@@ -1,45 +1,70 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4A301F932
-	for <patches@lists.linux.dev>; Wed,  3 Jan 2024 23:37:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06CD1C20
+	for <patches@lists.linux.dev>; Thu,  4 Jan 2024 00:15:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="QzMasmV4"
-Received: by linux.microsoft.com (Postfix, from userid 1131)
-	id 7B2B720B3CC1; Wed,  3 Jan 2024 15:37:54 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7B2B720B3CC1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1704325074;
-	bh=Y2xXW4rLnWBwv3XYyP22fwruGLmFCFghqVmYAEAWj9w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QzMasmV4qE9hL7y9F2XLb8O53pPX3OLvGN1KSXHd65qJ4RI7sEIJBrj3iF7RWjhT1
-	 b8K9YJ/h/S5fClaT54tA2bHlDsnsYeWTAr4rfj1BrTZ5RXXo55AQK2zWs4YKjdPjNz
-	 4ZBN05KRXmu6Pqv+40TSyWeprIxHFypfCWFSnewY=
-Date: Wed, 3 Jan 2024 15:37:54 -0800
-From: Kelsey Steele <kelseysteele@linux.microsoft.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.1 000/100] 6.1.71-rc1 review
-Message-ID: <20240103233754.GC858@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20240103164856.169912722@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iALGPtfv"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-35d374bebe3so5382575ab.1
+        for <patches@lists.linux.dev>; Wed, 03 Jan 2024 16:15:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1704327359; x=1704932159; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IFW5+JN1e6baQduS0ThNTE7VOfQRI53oZNpXeXFaA/4=;
+        b=iALGPtfvORY2yLupF2AoFReP3TYszwtA+2r3QQrtToH3dnQl+KvXr5Hch8c+1kEMZL
+         MAYmy5y1AXEuLdQKNugSYgWLWEWloFu59qrhCe4TYapRb786dUhI5X+uOis7jBNL1M2+
+         g6H7XBlqjb2nMY551HcMO5l9XwcDBR0DRuEZg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704327359; x=1704932159;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IFW5+JN1e6baQduS0ThNTE7VOfQRI53oZNpXeXFaA/4=;
+        b=mFwu1D9iLjRENmu8PTa4kT/OS0frDnEl4GzoIQV5Nk1ouAvVzMuG+EIb3KxB1nvZm2
+         kGOC5cpP4m5g8AmvDmt8ybK/kjcbYPGqr4dOu6sDj2ank1uczjd3SGneqSfX3AnbAjYe
+         r/GztfyqA3j6x1cZpkY5i62VUsl96Ih2TiTCP68Q1yhpqsmMtCXQk5bdVsuoR5T7kwck
+         Lu4dvPRN+8//mdMe8lLKDVrXjbmKVevfdF0fhwPCJEX6d+vKMfEq7Otue25S/xCi0Pff
+         0miZS+FsVC9zmLYzlKxAszAuLRIhHCBXwhDY+l/MYyPQokWl1Qw2CC1rS67dC32SjILZ
+         7M2A==
+X-Gm-Message-State: AOJu0YzQc4yIm+g3n5Xz9jVQ1y2GZMaXmp/N9Q+TLCkksTMtsgCt8bRF
+	MoNj/9ae5Sq0aPtuE/6HCMkDHIV/2TZ7IQ==
+X-Google-Smtp-Source: AGHT+IFjaX8gCUTNVn3Fj4E2mRZF4HJJTFO/WtQI41RRklrv7pjROSYlKsWpinL0cNQ3AGhshhJqnw==
+X-Received: by 2002:a92:c26b:0:b0:360:2a3:7e5f with SMTP id h11-20020a92c26b000000b0036002a37e5fmr27774755ild.2.1704327358869;
+        Wed, 03 Jan 2024 16:15:58 -0800 (PST)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id r5-20020a922a05000000b0035ff4335bd6sm7147343ile.19.2024.01.03.16.15.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jan 2024 16:15:58 -0800 (PST)
+Message-ID: <89dfaefb-973b-4d41-ab2e-32fcbff2782c@linuxfoundation.org>
+Date: Wed, 3 Jan 2024 17:15:57 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 000/100] 6.1.71-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20240103164856.169912722@linuxfoundation.org>
+From: Shuah Khan <skhan@linuxfoundation.org>
 In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jan 03, 2024 at 05:53:49PM +0100, Greg Kroah-Hartman wrote:
+On 1/3/24 09:53, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.1.71 release.
 > There are 100 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
@@ -47,11 +72,22 @@ On Wed, Jan 03, 2024 at 05:53:49PM +0100, Greg Kroah-Hartman wrote:
 > 
 > Responses should be made by Fri, 05 Jan 2024 16:47:49 +0000.
 > Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.71-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-No regressions found on WSL (x86 and arm64).
+Compiled and booted on my test system. No dmesg regressions.
 
-Built, booted, and reviewed dmesg.
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Thank you.
+thanks,
+-- Shuah
 
-Tested-by: Kelsey Steele <kelseysteele@linux.microsoft.com>
