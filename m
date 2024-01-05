@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB212D7AD;
-	Fri,  5 Jan 2024 14:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F8D2D7B5;
+	Fri,  5 Jan 2024 14:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IvqZ0ew"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B71C433C8;
-	Fri,  5 Jan 2024 14:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amrXPqQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D41C433C7;
+	Fri,  5 Jan 2024 14:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465651;
-	bh=4F0ss/H0V40VfEtY/0UPvpmp8izQv2QP8+mxtafkP1o=;
+	s=korg; t=1704465654;
+	bh=Nk7mdn3UZ+QUrzHkxgZDB/oyES1s853sRfRVSvpWwQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1IvqZ0ewXK4PTKxFV/XbdKOmWCJsXEf5jdK9PtootUXfYeNViN26pqhCELPxyAi96
-	 AAMgFDWBCTXGMy4MY2117UHZnDhm7n80INT5Azh2qeZ0TrdvvqTHJ1c/RQ7DwNLgGw
-	 8HzjUNr8kLFQ8zJ5tCS4+3ST6kHl+y9/HwcSUGLQ=
+	b=amrXPqQqQflrrQKFDGaQebHkafoLMjw3qf+fSa523jtpc1a0KwhGEKXxcEUO8qa1E
+	 9AG/s/CoKT6LUztw6AyO07h1bJTvSIXiPJFK8oOcDdAq4rvwAH3RtSjAwff2SqfknJ
+	 AakXMIs7KJHthbpBEz0qGqO6kYBerx3kuNsAVJvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Robert Morris <rtm@csail.mit.edu>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 19/41] pinctrl: at91-pio4: use dedicated lock class for IRQ
-Date: Fri,  5 Jan 2024 15:38:59 +0100
-Message-ID: <20240105143814.805442264@linuxfoundation.org>
+Subject: [PATCH 4.19 20/41] smb: client: fix NULL deref in asn1_ber_decoder()
+Date: Fri,  5 Jan 2024 15:39:00 +0100
+Message-ID: <20240105143814.844738700@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143813.957669139@linuxfoundation.org>
 References: <20240105143813.957669139@linuxfoundation.org>
@@ -36,123 +37,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré <alexis.lothore@bootlin.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 14694179e561b5f2f7e56a0f590e2cb49a9cc7ab ]
+[ Upstream commit 90d025c2e953c11974e76637977c473200593a46 ]
 
-Trying to suspend to RAM on SAMA5D27 EVK leads to the following lockdep
-warning:
+If server replied SMB2_NEGOTIATE with a zero SecurityBufferOffset,
+smb2_get_data_area() sets @len to non-zero but return NULL, so
+decode_negTokeninit() ends up being called with a NULL @security_blob:
 
- ============================================
- WARNING: possible recursive locking detected
- 6.7.0-rc5-wt+ #532 Not tainted
- --------------------------------------------
- sh/92 is trying to acquire lock:
- c3cf306c (&irq_desc_lock_class){-.-.}-{2:2}, at: __irq_get_desc_lock+0xe8/0x100
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 0 P4D 0
+  Oops: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 2 PID: 871 Comm: mount.cifs Not tainted 6.7.0-rc4 #2
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
+  RIP: 0010:asn1_ber_decoder+0x173/0xc80
+  Code: 01 4c 39 2c 24 75 09 45 84 c9 0f 85 2f 03 00 00 48 8b 14 24 4c 29 ea 48 83 fa 01 0f 86 1e 07 00 00 48 8b 74 24 28 4d 8d 5d 01 <42> 0f b6 3c 2e 89 fa 40 88 7c 24 5c f7 d2 83 e2 1f 0f 84 3d 07 00
+  RSP: 0018:ffffc9000063f950 EFLAGS: 00010202
+  RAX: 0000000000000002 RBX: 0000000000000000 RCX: 000000000000004a
+  RDX: 000000000000004a RSI: 0000000000000000 RDI: 0000000000000000
+  RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000002 R11: 0000000000000001 R12: 0000000000000000
+  R13: 0000000000000000 R14: 000000000000004d R15: 0000000000000000
+  FS:  00007fce52b0fbc0(0000) GS:ffff88806ba00000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 0000000000000000 CR3: 000000001ae64000 CR4: 0000000000750ef0
+  PKRU: 55555554
+  Call Trace:
+   <TASK>
+   ? __die+0x23/0x70
+   ? page_fault_oops+0x181/0x480
+   ? __stack_depot_save+0x1e6/0x480
+   ? exc_page_fault+0x6f/0x1c0
+   ? asm_exc_page_fault+0x26/0x30
+   ? asn1_ber_decoder+0x173/0xc80
+   ? check_object+0x40/0x340
+   decode_negTokenInit+0x1e/0x30 [cifs]
+   SMB2_negotiate+0xc99/0x17c0 [cifs]
+   ? smb2_negotiate+0x46/0x60 [cifs]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   smb2_negotiate+0x46/0x60 [cifs]
+   cifs_negotiate_protocol+0xae/0x130 [cifs]
+   cifs_get_smb_ses+0x517/0x1040 [cifs]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? queue_delayed_work_on+0x5d/0x90
+   cifs_mount_get_session+0x78/0x200 [cifs]
+   dfs_mount_share+0x13a/0x9f0 [cifs]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? lock_acquire+0xbf/0x2b0
+   ? find_nls+0x16/0x80
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   cifs_mount+0x7e/0x350 [cifs]
+   cifs_smb3_do_mount+0x128/0x780 [cifs]
+   smb3_get_tree+0xd9/0x290 [cifs]
+   vfs_get_tree+0x2c/0x100
+   ? capable+0x37/0x70
+   path_mount+0x2d7/0xb80
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? _raw_spin_unlock_irqrestore+0x44/0x60
+   __x64_sys_mount+0x11a/0x150
+   do_syscall_64+0x47/0xf0
+   entry_SYSCALL_64_after_hwframe+0x6f/0x77
+  RIP: 0033:0x7fce52c2ab1e
 
- but task is already holding lock:
- c3d7c46c (&irq_desc_lock_class){-.-.}-{2:2}, at: __irq_get_desc_lock+0xe8/0x100
+Fix this by setting @len to zero when @off == 0 so callers won't
+attempt to dereference non-existing data areas.
 
- other info that might help us debug this:
-  Possible unsafe locking scenario:
-
-        CPU0
-        ----
-   lock(&irq_desc_lock_class);
-   lock(&irq_desc_lock_class);
-
-  *** DEADLOCK ***
-
-  May be due to missing lock nesting notation
-
- 6 locks held by sh/92:
-  #0: c3aa0258 (sb_writers#6){.+.+}-{0:0}, at: ksys_write+0xd8/0x178
-  #1: c4c2df44 (&of->mutex){+.+.}-{3:3}, at: kernfs_fop_write_iter+0x138/0x284
-  #2: c32684a0 (kn->active){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x148/0x284
-  #3: c232b6d4 (system_transition_mutex){+.+.}-{3:3}, at: pm_suspend+0x13c/0x4e8
-  #4: c387b088 (&dev->mutex){....}-{3:3}, at: __device_suspend+0x1e8/0x91c
-  #5: c3d7c46c (&irq_desc_lock_class){-.-.}-{2:2}, at: __irq_get_desc_lock+0xe8/0x100
-
- stack backtrace:
- CPU: 0 PID: 92 Comm: sh Not tainted 6.7.0-rc5-wt+ #532
- Hardware name: Atmel SAMA5
-  unwind_backtrace from show_stack+0x18/0x1c
-  show_stack from dump_stack_lvl+0x34/0x48
-  dump_stack_lvl from __lock_acquire+0x19ec/0x3a0c
-  __lock_acquire from lock_acquire.part.0+0x124/0x2d0
-  lock_acquire.part.0 from _raw_spin_lock_irqsave+0x5c/0x78
-  _raw_spin_lock_irqsave from __irq_get_desc_lock+0xe8/0x100
-  __irq_get_desc_lock from irq_set_irq_wake+0xa8/0x204
-  irq_set_irq_wake from atmel_gpio_irq_set_wake+0x58/0xb4
-  atmel_gpio_irq_set_wake from irq_set_irq_wake+0x100/0x204
-  irq_set_irq_wake from gpio_keys_suspend+0xec/0x2b8
-  gpio_keys_suspend from dpm_run_callback+0xe4/0x248
-  dpm_run_callback from __device_suspend+0x234/0x91c
-  __device_suspend from dpm_suspend+0x224/0x43c
-  dpm_suspend from dpm_suspend_start+0x9c/0xa8
-  dpm_suspend_start from suspend_devices_and_enter+0x1e0/0xa84
-  suspend_devices_and_enter from pm_suspend+0x460/0x4e8
-  pm_suspend from state_store+0x78/0xe4
-  state_store from kernfs_fop_write_iter+0x1a0/0x284
-  kernfs_fop_write_iter from vfs_write+0x38c/0x6f4
-  vfs_write from ksys_write+0xd8/0x178
-  ksys_write from ret_fast_syscall+0x0/0x1c
- Exception stack(0xc52b3fa8 to 0xc52b3ff0)
- 3fa0:                   00000004 005a0ae8 00000001 005a0ae8 00000004 00000001
- 3fc0: 00000004 005a0ae8 00000001 00000004 00000004 b6c616c0 00000020 0059d190
- 3fe0: 00000004 b6c61678 aec5a041 aebf1a26
-
-This warning is raised because pinctrl-at91-pio4 uses chained IRQ. Whenever
-a wake up source configures an IRQ through irq_set_irq_wake, it will
-lock the corresponding IRQ desc, and then call irq_set_irq_wake on "parent"
-IRQ which will do the same on its own IRQ desc, but since those two locks
-share the same class, lockdep reports this as an issue.
-
-Fix lockdep false positive by setting a different class for parent and
-children IRQ
-
-Fixes: 776180848b57 ("pinctrl: introduce driver for Atmel PIO4 controller")
-Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Link: https://lore.kernel.org/r/20231215-lockdep_warning-v1-1-8137b2510ed5@bootlin.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-at91-pio4.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/cifs/smb2misc.c | 26 ++++++++++----------------
+ 1 file changed, 10 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-at91-pio4.c b/drivers/pinctrl/pinctrl-at91-pio4.c
-index cbbda24bf6a80..67befdce3805b 100644
---- a/drivers/pinctrl/pinctrl-at91-pio4.c
-+++ b/drivers/pinctrl/pinctrl-at91-pio4.c
-@@ -939,6 +939,13 @@ static const struct of_device_id atmel_pctrl_of_match[] = {
- 	}
- };
- 
-+/*
-+ * This lock class allows to tell lockdep that parent IRQ and children IRQ do
-+ * not share the same class so it does not raise false positive
-+ */
-+static struct lock_class_key atmel_lock_key;
-+static struct lock_class_key atmel_request_key;
-+
- static int atmel_pinctrl_probe(struct platform_device *pdev)
+diff --git a/fs/cifs/smb2misc.c b/fs/cifs/smb2misc.c
+index 7177720e822e1..d3d5d2c6c4013 100644
+--- a/fs/cifs/smb2misc.c
++++ b/fs/cifs/smb2misc.c
+@@ -302,6 +302,9 @@ static const bool has_smb2_data_area[NUMBER_OF_SMB2_COMMANDS] = {
+ char *
+ smb2_get_data_area_len(int *off, int *len, struct smb2_sync_hdr *shdr)
  {
- 	struct device *dev = &pdev->dev;
-@@ -1089,6 +1096,7 @@ static int atmel_pinctrl_probe(struct platform_device *pdev)
- 		irq_set_chip_and_handler(irq, &atmel_gpio_irq_chip,
- 					 handle_simple_irq);
- 		irq_set_chip_data(irq, atmel_pioctrl);
-+		irq_set_lockdep_class(irq, &atmel_lock_key, &atmel_request_key);
- 		dev_dbg(dev,
- 			"atmel gpio irq domain: hwirq: %d, linux irq: %d\n",
- 			i, irq);
++	const int max_off = 4096;
++	const int max_len = 128 * 1024;
++
+ 	*off = 0;
+ 	*len = 0;
+ 
+@@ -369,29 +372,20 @@ smb2_get_data_area_len(int *off, int *len, struct smb2_sync_hdr *shdr)
+ 	 * Invalid length or offset probably means data area is invalid, but
+ 	 * we have little choice but to ignore the data area in this case.
+ 	 */
+-	if (*off > 4096) {
+-		cifs_dbg(VFS, "offset %d too large, data area ignored\n", *off);
+-		*len = 0;
+-		*off = 0;
+-	} else if (*off < 0) {
+-		cifs_dbg(VFS, "negative offset %d to data invalid ignore data area\n",
+-			 *off);
++	if (unlikely(*off < 0 || *off > max_off ||
++		     *len < 0 || *len > max_len)) {
++		cifs_dbg(VFS, "%s: invalid data area (off=%d len=%d)\n",
++			 __func__, *off, *len);
+ 		*off = 0;
+ 		*len = 0;
+-	} else if (*len < 0) {
+-		cifs_dbg(VFS, "negative data length %d invalid, data area ignored\n",
+-			 *len);
+-		*len = 0;
+-	} else if (*len > 128 * 1024) {
+-		cifs_dbg(VFS, "data area larger than 128K: %d\n", *len);
++	} else if (*off == 0) {
+ 		*len = 0;
+ 	}
+ 
+ 	/* return pointer to beginning of data area, ie offset from SMB start */
+-	if ((*off != 0) && (*len != 0))
++	if (*off > 0 && *len > 0)
+ 		return (char *)shdr + *off;
+-	else
+-		return NULL;
++	return NULL;
+ }
+ 
+ /*
 -- 
 2.43.0
 
