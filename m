@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1371E4A9;
-	Fri,  5 Jan 2024 14:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBD42DF9C;
+	Fri,  5 Jan 2024 14:42:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSgtUQYh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE2AC433C8;
-	Fri,  5 Jan 2024 14:42:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbqZOUXc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8861C433C7;
+	Fri,  5 Jan 2024 14:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465768;
-	bh=v5mtCMcyQmR95HG7PwwU8HYH2YzVe/0Y5gjAjFFouHU=;
+	s=korg; t=1704465771;
+	bh=+chTt2wn/347zvyVfKd7VS/cxB3TypDQ1+fm8vjx3kA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MSgtUQYhWluGJMuR+KAxvfRFGZHZ0jpoG3RmgEgOtiRu1D/Mk1b78tJVRcVf8QmQN
-	 pZ3rfdI9qtsAev3ntjiPHCiYtU3TAER2zhNlmUkrQAuSWIIXvElZmsf/AzaLcu0bKx
-	 c+62xFB9RlcwGjoInXWYFBrj+IH3owko2X7CL1SA=
+	b=HbqZOUXcckpgku9evWT82O3S+m8ftH57ZlpxQLPgRXHjnaybQwiQL3UM3xP42fOXG
+	 1pa4BcrSKDI6BpWJGPY2+2M/Tk9xq0YrqDmTDL1xMofS+333xuTSCdvV7A9FP4NpkU
+	 AzWlQwe6JqzvcNU2qVKF0W/luJVdg5l41jhOdgWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Nguyen <quan@os.amperecomputing.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 20/47] i2c: aspeed: Handle the coalesced stop conditions with the start conditions.
-Date: Fri,  5 Jan 2024 15:39:07 +0100
-Message-ID: <20240105143816.291843062@linuxfoundation.org>
+Subject: [PATCH 5.4 21/47] pinctrl: at91-pio4: use dedicated lock class for IRQ
+Date: Fri,  5 Jan 2024 15:39:08 +0100
+Message-ID: <20240105143816.332588588@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
 References: <20240105143815.541462991@linuxfoundation.org>
@@ -38,118 +36,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quan Nguyen <quan@os.amperecomputing.com>
+From: Alexis Lothoré <alexis.lothore@bootlin.com>
 
-[ Upstream commit b4cc1cbba5195a4dd497cf2f8f09e7807977d543 ]
+[ Upstream commit 14694179e561b5f2f7e56a0f590e2cb49a9cc7ab ]
 
-Some masters may drive the transfers with low enough latency between
-the nak/stop phase of the current command and the start/address phase
-of the following command that the interrupts are coalesced by the
-time we process them.
-Handle the stop conditions before processing SLAVE_MATCH to fix the
-complaints that sometimes occur below.
+Trying to suspend to RAM on SAMA5D27 EVK leads to the following lockdep
+warning:
 
-"aspeed-i2c-bus 1e78a040.i2c-bus: irq handled != irq. Expected
-0x00000086, but was 0x00000084"
+ ============================================
+ WARNING: possible recursive locking detected
+ 6.7.0-rc5-wt+ #532 Not tainted
+ --------------------------------------------
+ sh/92 is trying to acquire lock:
+ c3cf306c (&irq_desc_lock_class){-.-.}-{2:2}, at: __irq_get_desc_lock+0xe8/0x100
 
-Fixes: f9eb91350bb2 ("i2c: aspeed: added slave support for Aspeed I2C driver")
-Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+ but task is already holding lock:
+ c3d7c46c (&irq_desc_lock_class){-.-.}-{2:2}, at: __irq_get_desc_lock+0xe8/0x100
+
+ other info that might help us debug this:
+  Possible unsafe locking scenario:
+
+        CPU0
+        ----
+   lock(&irq_desc_lock_class);
+   lock(&irq_desc_lock_class);
+
+  *** DEADLOCK ***
+
+  May be due to missing lock nesting notation
+
+ 6 locks held by sh/92:
+  #0: c3aa0258 (sb_writers#6){.+.+}-{0:0}, at: ksys_write+0xd8/0x178
+  #1: c4c2df44 (&of->mutex){+.+.}-{3:3}, at: kernfs_fop_write_iter+0x138/0x284
+  #2: c32684a0 (kn->active){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x148/0x284
+  #3: c232b6d4 (system_transition_mutex){+.+.}-{3:3}, at: pm_suspend+0x13c/0x4e8
+  #4: c387b088 (&dev->mutex){....}-{3:3}, at: __device_suspend+0x1e8/0x91c
+  #5: c3d7c46c (&irq_desc_lock_class){-.-.}-{2:2}, at: __irq_get_desc_lock+0xe8/0x100
+
+ stack backtrace:
+ CPU: 0 PID: 92 Comm: sh Not tainted 6.7.0-rc5-wt+ #532
+ Hardware name: Atmel SAMA5
+  unwind_backtrace from show_stack+0x18/0x1c
+  show_stack from dump_stack_lvl+0x34/0x48
+  dump_stack_lvl from __lock_acquire+0x19ec/0x3a0c
+  __lock_acquire from lock_acquire.part.0+0x124/0x2d0
+  lock_acquire.part.0 from _raw_spin_lock_irqsave+0x5c/0x78
+  _raw_spin_lock_irqsave from __irq_get_desc_lock+0xe8/0x100
+  __irq_get_desc_lock from irq_set_irq_wake+0xa8/0x204
+  irq_set_irq_wake from atmel_gpio_irq_set_wake+0x58/0xb4
+  atmel_gpio_irq_set_wake from irq_set_irq_wake+0x100/0x204
+  irq_set_irq_wake from gpio_keys_suspend+0xec/0x2b8
+  gpio_keys_suspend from dpm_run_callback+0xe4/0x248
+  dpm_run_callback from __device_suspend+0x234/0x91c
+  __device_suspend from dpm_suspend+0x224/0x43c
+  dpm_suspend from dpm_suspend_start+0x9c/0xa8
+  dpm_suspend_start from suspend_devices_and_enter+0x1e0/0xa84
+  suspend_devices_and_enter from pm_suspend+0x460/0x4e8
+  pm_suspend from state_store+0x78/0xe4
+  state_store from kernfs_fop_write_iter+0x1a0/0x284
+  kernfs_fop_write_iter from vfs_write+0x38c/0x6f4
+  vfs_write from ksys_write+0xd8/0x178
+  ksys_write from ret_fast_syscall+0x0/0x1c
+ Exception stack(0xc52b3fa8 to 0xc52b3ff0)
+ 3fa0:                   00000004 005a0ae8 00000001 005a0ae8 00000004 00000001
+ 3fc0: 00000004 005a0ae8 00000001 00000004 00000004 b6c616c0 00000020 0059d190
+ 3fe0: 00000004 b6c61678 aec5a041 aebf1a26
+
+This warning is raised because pinctrl-at91-pio4 uses chained IRQ. Whenever
+a wake up source configures an IRQ through irq_set_irq_wake, it will
+lock the corresponding IRQ desc, and then call irq_set_irq_wake on "parent"
+IRQ which will do the same on its own IRQ desc, but since those two locks
+share the same class, lockdep reports this as an issue.
+
+Fix lockdep false positive by setting a different class for parent and
+children IRQ
+
+Fixes: 776180848b57 ("pinctrl: introduce driver for Atmel PIO4 controller")
+Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
+Link: https://lore.kernel.org/r/20231215-lockdep_warning-v1-1-8137b2510ed5@bootlin.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-aspeed.c | 48 ++++++++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 16 deletions(-)
+ drivers/pinctrl/pinctrl-at91-pio4.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-index ff08bcb09a68e..3f0b072a4cc84 100644
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -250,18 +250,46 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 	if (!slave)
- 		return 0;
- 
--	command = readl(bus->base + ASPEED_I2C_CMD_REG);
-+	/*
-+	 * Handle stop conditions early, prior to SLAVE_MATCH. Some masters may drive
-+	 * transfers with low enough latency between the nak/stop phase of the current
-+	 * command and the start/address phase of the following command that the
-+	 * interrupts are coalesced by the time we process them.
-+	 */
-+	if (irq_status & ASPEED_I2CD_INTR_NORMAL_STOP) {
-+		irq_handled |= ASPEED_I2CD_INTR_NORMAL_STOP;
-+		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
-+	}
-+
-+	if (irq_status & ASPEED_I2CD_INTR_TX_NAK &&
-+	    bus->slave_state == ASPEED_I2C_SLAVE_READ_PROCESSED) {
-+		irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
-+		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
-+	}
-+
-+	/* Propagate any stop conditions to the slave implementation. */
-+	if (bus->slave_state == ASPEED_I2C_SLAVE_STOP) {
-+		i2c_slave_event(slave, I2C_SLAVE_STOP, &value);
-+		bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
-+	}
- 
--	/* Slave was requested, restart state machine. */
-+	/*
-+	 * Now that we've dealt with any potentially coalesced stop conditions,
-+	 * address any start conditions.
-+	 */
- 	if (irq_status & ASPEED_I2CD_INTR_SLAVE_MATCH) {
- 		irq_handled |= ASPEED_I2CD_INTR_SLAVE_MATCH;
- 		bus->slave_state = ASPEED_I2C_SLAVE_START;
+diff --git a/drivers/pinctrl/pinctrl-at91-pio4.c b/drivers/pinctrl/pinctrl-at91-pio4.c
+index 9c225256e3f4e..409506c1de144 100644
+--- a/drivers/pinctrl/pinctrl-at91-pio4.c
++++ b/drivers/pinctrl/pinctrl-at91-pio4.c
+@@ -928,6 +928,13 @@ static const struct of_device_id atmel_pctrl_of_match[] = {
  	}
+ };
  
--	/* Slave is not currently active, irq was for someone else. */
-+	/*
-+	 * If the slave has been stopped and not started then slave interrupt
-+	 * handling is complete.
-+	 */
- 	if (bus->slave_state == ASPEED_I2C_SLAVE_INACTIVE)
- 		return irq_handled;
- 
-+	command = readl(bus->base + ASPEED_I2C_CMD_REG);
- 	dev_dbg(bus->dev, "slave irq status 0x%08x, cmd 0x%08x\n",
- 		irq_status, command);
- 
-@@ -280,17 +308,6 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		irq_handled |= ASPEED_I2CD_INTR_RX_DONE;
- 	}
- 
--	/* Slave was asked to stop. */
--	if (irq_status & ASPEED_I2CD_INTR_NORMAL_STOP) {
--		irq_handled |= ASPEED_I2CD_INTR_NORMAL_STOP;
--		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
--	}
--	if (irq_status & ASPEED_I2CD_INTR_TX_NAK &&
--	    bus->slave_state == ASPEED_I2C_SLAVE_READ_PROCESSED) {
--		irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
--		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
--	}
--
- 	switch (bus->slave_state) {
- 	case ASPEED_I2C_SLAVE_READ_REQUESTED:
- 		if (unlikely(irq_status & ASPEED_I2CD_INTR_TX_ACK))
-@@ -319,8 +336,7 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		i2c_slave_event(slave, I2C_SLAVE_WRITE_RECEIVED, &value);
- 		break;
- 	case ASPEED_I2C_SLAVE_STOP:
--		i2c_slave_event(slave, I2C_SLAVE_STOP, &value);
--		bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
-+		/* Stop event handling is done early. Unreachable. */
- 		break;
- 	case ASPEED_I2C_SLAVE_START:
- 		/* Slave was just started. Waiting for the next event. */;
++/*
++ * This lock class allows to tell lockdep that parent IRQ and children IRQ do
++ * not share the same class so it does not raise false positive
++ */
++static struct lock_class_key atmel_lock_key;
++static struct lock_class_key atmel_request_key;
++
+ static int atmel_pinctrl_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -1078,6 +1085,7 @@ static int atmel_pinctrl_probe(struct platform_device *pdev)
+ 		irq_set_chip_and_handler(irq, &atmel_gpio_irq_chip,
+ 					 handle_simple_irq);
+ 		irq_set_chip_data(irq, atmel_pioctrl);
++		irq_set_lockdep_class(irq, &atmel_lock_key, &atmel_request_key);
+ 		dev_dbg(dev,
+ 			"atmel gpio irq domain: hwirq: %d, linux irq: %d\n",
+ 			i, irq);
 -- 
 2.43.0
 
