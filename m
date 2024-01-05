@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE3728FA;
-	Fri,  5 Jan 2024 14:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CEC328FA;
+	Fri,  5 Jan 2024 14:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfYTyvYX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1206DC433C7;
-	Fri,  5 Jan 2024 14:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPDyJwJR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7115C433C7;
+	Fri,  5 Jan 2024 14:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465711;
-	bh=/kNGNF/yvts/OSJf22Vj6yKCgNs9whdCo0WUH4mI4k4=;
+	s=korg; t=1704465714;
+	bh=jDgRi60wvvvbGoo4yi0mptEKtmi2cS1ahl6Rc7wOm3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lfYTyvYXbtAyz69q1KjnOUHcp/khFpwkSeF7k520kA4GMpcc8oRUWostOH1Yyc7Jd
-	 Krrr33uf2aBdJk3IqaGutmXV/Op+EqcQDz4PRlLdoQSemwgkc3ITCG2q2IUOj0pIr/
-	 nh46mnjw9Np4fEjdodev4PTfgZU0ynPOdq9JyGCw=
+	b=LPDyJwJRNo3Dmf4Z3WJsaT8DbYaZK2se4ARu5mZYXdzn68SaqdZwZyEprMRm0/B3V
+	 0GTYhDIm2NJovlTGbLNwAwY3ZqyyenpqBq3dEui/ub9Z6X873dFpeuM4veUkGVGdit
+	 GRIwzgliKTG2U/z+ZM8j+1AaQZ4r/f5fIj8DVa74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Sarthak Kukreti <sarthakkukreti@chromium.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 4.19 41/41] block: Dont invalidate pagecache for invalid falloc modes
-Date: Fri,  5 Jan 2024 15:39:21 +0100
-Message-ID: <20240105143815.593077427@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 4.19 28/41] wifi: cfg80211: fix certs build to not depend on file order
+Date: Fri,  5 Jan 2024 15:39:08 +0100
+Message-ID: <20240105143815.135634414@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143813.957669139@linuxfoundation.org>
 References: <20240105143813.957669139@linuxfoundation.org>
@@ -44,60 +42,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarthak Kukreti <sarthakkukreti@chromium.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 1364a3c391aedfeb32aa025303ead3d7c91cdf9d upstream.
+commit 3c2a8ebe3fe66a5f77d4c164a0bea8e2ff37b455 upstream.
 
-Only call truncate_bdev_range() if the fallocate mode is supported. This
-fixes a bug where data in the pagecache could be invalidated if the
-fallocate() was called on the block device with an invalid mode.
+The file for the new certificate (Chen-Yu Tsai's) didn't
+end with a comma, so depending on the file order in the
+build rule, we'd end up with invalid C when concatenating
+the (now two) certificates. Fix that.
 
-Fixes: 25f4c41415e5 ("block: implement (some of) fallocate for block devices")
 Cc: stable@vger.kernel.org
-Reported-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Sarthak Kukreti <sarthakkukreti@chromium.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Fixes: line?  I've never seen those wrapped.
-Link: https://lore.kernel.org/r/20231011201230.750105-1-sarthakkukreti@chromium.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sarthak Kukreti <sarthakkukreti@chromium.org>
+Reported-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Fixes: fb768d3b13ff ("wifi: cfg80211: Add my certificate")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/block_dev.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/wireless/certs/wens.hex |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/block_dev.c
-+++ b/fs/block_dev.c
-@@ -2041,21 +2041,26 @@ static long blkdev_fallocate(struct file
- 	if ((start | len) & (bdev_logical_block_size(bdev) - 1))
- 		return -EINVAL;
- 
--	/* Invalidate the page cache, including dirty pages. */
-+	/*
-+	 * Invalidate the page cache, including dirty pages, for valid
-+	 * de-allocate mode calls to fallocate().
-+	 */
- 	mapping = bdev->bd_inode->i_mapping;
--	truncate_inode_pages_range(mapping, start, end);
- 
- 	switch (mode) {
- 	case FALLOC_FL_ZERO_RANGE:
- 	case FALLOC_FL_ZERO_RANGE | FALLOC_FL_KEEP_SIZE:
-+		truncate_inode_pages_range(mapping, start, end);
- 		error = blkdev_issue_zeroout(bdev, start >> 9, len >> 9,
- 					    GFP_KERNEL, BLKDEV_ZERO_NOUNMAP);
- 		break;
- 	case FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE:
-+		truncate_inode_pages_range(mapping, start, end);
- 		error = blkdev_issue_zeroout(bdev, start >> 9, len >> 9,
- 					     GFP_KERNEL, BLKDEV_ZERO_NOFALLBACK);
- 		break;
- 	case FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE | FALLOC_FL_NO_HIDE_STALE:
-+		truncate_inode_pages_range(mapping, start, end);
- 		error = blkdev_issue_discard(bdev, start >> 9, len >> 9,
- 					     GFP_KERNEL, 0);
- 		break;
+--- a/net/wireless/certs/wens.hex
++++ b/net/wireless/certs/wens.hex
+@@ -84,4 +84,4 @@
+ 0xf0, 0xc7, 0x83, 0xbb, 0xa2, 0x81, 0x03, 0x2d,
+ 0xd4, 0x2a, 0x63, 0x3f, 0xf7, 0x31, 0x2e, 0x40,
+ 0x33, 0x5c, 0x46, 0xbc, 0x9b, 0xc1, 0x05, 0xa5,
+-0x45, 0x4e, 0xc3
++0x45, 0x4e, 0xc3,
 
 
