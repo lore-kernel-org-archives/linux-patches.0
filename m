@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D2518EB7;
-	Fri,  5 Jan 2024 14:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7733D18EB7;
+	Fri,  5 Jan 2024 14:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7phsm4i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BEB3C433C7;
-	Fri,  5 Jan 2024 14:43:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZICjGuFR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C65C433C8;
+	Fri,  5 Jan 2024 14:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465831;
-	bh=/PYoXlV3AGwHYpbw7aM3SSRhbm8GUtZZ23gKYP0AH+c=;
+	s=korg; t=1704465834;
+	bh=Epe3g9BvO2YVig+1L8uiwjGudazpoEveuJnlqejivls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r7phsm4i6dY7q0qHKMyBJUtAFXA5wAdkjjpBEKKevATjVXiZniTHl4kBcwWESIy16
-	 Hsl156szk+HshrvRbcWs59I1IlwGC2i2FmQb4bVB8oqJJ8lfaplxmvHOUuEjWla5rH
-	 rnxj0rQMTMCtFQ8Pc6AgAbgAwBTNHQKirbVahSm8=
+	b=ZICjGuFRGI9nM9Lg1ukRlSRL303G6pvN/lB+tre3YV0i22po8rtc+Vz2q2SgJ8qCi
+	 70oEVx1oYalk3phVhGAtHrHU5QF3QGkK1BJXhvdUDEHCRrRWDD3TDURmRUyGKrvKZa
+	 iu4QVMyPS/yloajbvqi1VUW6q5jW2dlC3EcWrMYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Tony Lindgren <tony@atomide.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 03/47] ARM: OMAP2+: Fix null pointer dereference and memory leak in omap_soc_device_init
-Date: Fri,  5 Jan 2024 15:38:50 +0100
-Message-ID: <20240105143815.665190329@linuxfoundation.org>
+	Slark Xiao <slark_xiao@163.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.4 36/47] USB: serial: option: add Foxconn T99W265 with new baseline
+Date: Fri,  5 Jan 2024 15:39:23 +0100
+Message-ID: <20240105143816.988230914@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
 References: <20240105143815.541462991@linuxfoundation.org>
@@ -42,48 +41,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Slark Xiao <slark_xiao@163.com>
 
-[ Upstream commit c72b9c33ef9695ad7ce7a6eb39a9df8a01b70796 ]
+commit 13fde9ac23ca8c6d1ac13cc9eefe1f1ac3ee30a4 upstream.
 
-kasprintf() returns a pointer to dynamically allocated memory which can
-be NULL upon failure. When 'soc_dev_attr->family' is NULL,it'll trigger
-the null pointer dereference issue, such as in 'soc_info_show'.
+This ID was added based on latest SDX12 code base line, and we
+made some changes with previous 0489:e0db.
 
-And when 'soc_device_register' fails, it's necessary to release
-'soc_dev_attr->family' to avoid memory leaks.
+Test evidence as below:
+T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=ef(misc ) Sub=02 Prot=01 MxPS= 9 #Cfgs=  2
+P:  Vendor=0489 ProdID=e0da Rev=05.04
+S:  Manufacturer=Qualcomm
+S:  Product=Qualcomm Snapdragon X12
+S:  SerialNumber=2bda65fb
+C:  #Ifs= 6 Cfg#= 2 Atr=a0 MxPwr=896mA
+I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:  If#=0x2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+I:  If#=0x3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
 
-Fixes: 6770b2114325 ("ARM: OMAP2+: Export SoC information to userspace")
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Message-ID: <20231123145237.609442-1-chentao@kylinos.cn>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+0&1: MBIM, 2: Modem, 3:GNSS, 4:Diag, 5:ADB
+
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-omap2/id.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/mach-omap2/id.c b/arch/arm/mach-omap2/id.c
-index 188ea5258c999..8c9160779689d 100644
---- a/arch/arm/mach-omap2/id.c
-+++ b/arch/arm/mach-omap2/id.c
-@@ -797,10 +797,15 @@ void __init omap_soc_device_init(void)
- 
- 	soc_dev_attr->machine  = soc_name;
- 	soc_dev_attr->family   = omap_get_family();
-+	if (!soc_dev_attr->family) {
-+		kfree(soc_dev_attr);
-+		return;
-+	}
- 	soc_dev_attr->revision = soc_rev;
- 
- 	soc_dev = soc_device_register(soc_dev_attr);
- 	if (IS_ERR(soc_dev)) {
-+		kfree(soc_dev_attr->family);
- 		kfree(soc_dev_attr);
- 		return;
- 	}
--- 
-2.43.0
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2244,6 +2244,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(0) | RSVD(1) | RSVD(6) },
+ 	{ USB_DEVICE(0x0489, 0xe0b5),						/* Foxconn T77W968 ESIM */
+ 	  .driver_info = RSVD(0) | RSVD(1) | RSVD(6) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0da, 0xff),                     /* Foxconn T99W265 MBIM variant */
++	  .driver_info = RSVD(3) | RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0db, 0xff),			/* Foxconn T99W265 MBIM */
+ 	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0ee, 0xff),			/* Foxconn T99W368 MBIM */
 
 
