@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA952D051;
-	Fri,  5 Jan 2024 14:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE3728FA;
+	Fri,  5 Jan 2024 14:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1FGu7MB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F8DC433C7;
-	Fri,  5 Jan 2024 14:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfYTyvYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1206DC433C7;
+	Fri,  5 Jan 2024 14:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465708;
-	bh=TDFfYrmbm9Cm+JJnNH6rL0c82mTKChYYu76lxnFB8f0=;
+	s=korg; t=1704465711;
+	bh=/kNGNF/yvts/OSJf22Vj6yKCgNs9whdCo0WUH4mI4k4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K1FGu7MB4qHYrXz6bsx2LzU1ok7a+qMgnr0r5fBeAm5AtYCMY7ibMO/I/d4nRAXdF
-	 Izw0xBvA4PCMvPLhQ4pEjU1xsz4Dhk3XmeHinthV1OkXXzCiK7l+enRkT3NHpnDcv/
-	 G3+WqnAdhGanamZGUu2aobDQBmtpQbqINUkQ6DAg=
+	b=lfYTyvYXbtAyz69q1KjnOUHcp/khFpwkSeF7k520kA4GMpcc8oRUWostOH1Yyc7Jd
+	 Krrr33uf2aBdJk3IqaGutmXV/Op+EqcQDz4PRlLdoQSemwgkc3ITCG2q2IUOj0pIr/
+	 nh46mnjw9Np4fEjdodev4PTfgZU0ynPOdq9JyGCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 4.19 40/41] dm-integrity: dont modify bios immutable bio_vec in integrity_metadata()
-Date: Fri,  5 Jan 2024 15:39:20 +0100
-Message-ID: <20240105143815.547690385@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Sarthak Kukreti <sarthakkukreti@chromium.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 4.19 41/41] block: Dont invalidate pagecache for invalid falloc modes
+Date: Fri,  5 Jan 2024 15:39:21 +0100
+Message-ID: <20240105143815.593077427@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143813.957669139@linuxfoundation.org>
 References: <20240105143813.957669139@linuxfoundation.org>
@@ -41,66 +44,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Sarthak Kukreti <sarthakkukreti@chromium.org>
 
-commit b86f4b790c998afdbc88fe1aa55cfe89c4068726 upstream.
+commit 1364a3c391aedfeb32aa025303ead3d7c91cdf9d upstream.
 
-__bio_for_each_segment assumes that the first struct bio_vec argument
-doesn't change - it calls "bio_advance_iter_single((bio), &(iter),
-(bvl).bv_len)" to advance the iterator. Unfortunately, the dm-integrity
-code changes the bio_vec with "bv.bv_len -= pos". When this code path
-is taken, the iterator would be out of sync and dm-integrity would
-report errors. This happens if the machine is out of memory and
-"kmalloc" fails.
+Only call truncate_bdev_range() if the fallocate mode is supported. This
+fixes a bug where data in the pagecache could be invalidated if the
+fallocate() was called on the block device with an invalid mode.
 
-Fix this bug by making a copy of "bv" and changing the copy instead.
-
-Fixes: 7eada909bfd7 ("dm: add integrity target")
-Cc: stable@vger.kernel.org	# v4.12+
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 25f4c41415e5 ("block: implement (some of) fallocate for block devices")
+Cc: stable@vger.kernel.org
+Reported-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Sarthak Kukreti <sarthakkukreti@chromium.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: line?  I've never seen those wrapped.
+Link: https://lore.kernel.org/r/20231011201230.750105-1-sarthakkukreti@chromium.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sarthak Kukreti <sarthakkukreti@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/block_dev.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -1379,11 +1379,12 @@ static void integrity_metadata(struct wo
- 			checksums = checksums_onstack;
+--- a/fs/block_dev.c
++++ b/fs/block_dev.c
+@@ -2041,21 +2041,26 @@ static long blkdev_fallocate(struct file
+ 	if ((start | len) & (bdev_logical_block_size(bdev) - 1))
+ 		return -EINVAL;
  
- 		__bio_for_each_segment(bv, bio, iter, dio->bio_details.bi_iter) {
-+			struct bio_vec bv_copy = bv;
- 			unsigned pos;
- 			char *mem, *checksums_ptr;
+-	/* Invalidate the page cache, including dirty pages. */
++	/*
++	 * Invalidate the page cache, including dirty pages, for valid
++	 * de-allocate mode calls to fallocate().
++	 */
+ 	mapping = bdev->bd_inode->i_mapping;
+-	truncate_inode_pages_range(mapping, start, end);
  
- again:
--			mem = (char *)kmap_atomic(bv.bv_page) + bv.bv_offset;
-+			mem = (char *)kmap_atomic(bv_copy.bv_page) + bv_copy.bv_offset;
- 			pos = 0;
- 			checksums_ptr = checksums;
- 			do {
-@@ -1392,7 +1393,7 @@ again:
- 				sectors_to_process -= ic->sectors_per_block;
- 				pos += ic->sectors_per_block << SECTOR_SHIFT;
- 				sector += ic->sectors_per_block;
--			} while (pos < bv.bv_len && sectors_to_process && checksums != checksums_onstack);
-+			} while (pos < bv_copy.bv_len && sectors_to_process && checksums != checksums_onstack);
- 			kunmap_atomic(mem);
- 
- 			r = dm_integrity_rw_tag(ic, checksums, &dio->metadata_block, &dio->metadata_offset,
-@@ -1412,9 +1413,9 @@ again:
- 			if (!sectors_to_process)
- 				break;
- 
--			if (unlikely(pos < bv.bv_len)) {
--				bv.bv_offset += pos;
--				bv.bv_len -= pos;
-+			if (unlikely(pos < bv_copy.bv_len)) {
-+				bv_copy.bv_offset += pos;
-+				bv_copy.bv_len -= pos;
- 				goto again;
- 			}
- 		}
+ 	switch (mode) {
+ 	case FALLOC_FL_ZERO_RANGE:
+ 	case FALLOC_FL_ZERO_RANGE | FALLOC_FL_KEEP_SIZE:
++		truncate_inode_pages_range(mapping, start, end);
+ 		error = blkdev_issue_zeroout(bdev, start >> 9, len >> 9,
+ 					    GFP_KERNEL, BLKDEV_ZERO_NOUNMAP);
+ 		break;
+ 	case FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE:
++		truncate_inode_pages_range(mapping, start, end);
+ 		error = blkdev_issue_zeroout(bdev, start >> 9, len >> 9,
+ 					     GFP_KERNEL, BLKDEV_ZERO_NOFALLBACK);
+ 		break;
+ 	case FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE | FALLOC_FL_NO_HIDE_STALE:
++		truncate_inode_pages_range(mapping, start, end);
+ 		error = blkdev_issue_discard(bdev, start >> 9, len >> 9,
+ 					     GFP_KERNEL, 0);
+ 		break;
 
 
