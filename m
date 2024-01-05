@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4F528DDA;
-	Fri,  5 Jan 2024 14:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F15D18EB7;
+	Fri,  5 Jan 2024 14:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iwmsa3an"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03370C433C8;
-	Fri,  5 Jan 2024 14:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFF8GL+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB387C433C8;
+	Fri,  5 Jan 2024 14:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465807;
-	bh=PXy98luYCABltjRli1YXOl0JB3Z1vgcfoFMzNh5idVM=;
+	s=korg; t=1704465810;
+	bh=wAVBMdeklR2QCFVOKTRUBTs1osdbRAH/91gw/cX4sCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iwmsa3anru7eeR6zMLChnqExrtlyuh1dqNBXzDB/NVlwnwztUsCQiOkqszFXLd2La
-	 cAtqW/ysMbr9w+MGRqkchh13M9IQ/jTzCSXn7ePxDI3THoi1PlAv05pGIijmZ6/YYf
-	 b2L+AZ9fFojHxJ384H6CUxULdzEb6prKcMnubm08=
+	b=JFF8GL+HPFF99vqwV2dP/CHhdUnO6zcYfLfznuNUbxQG7N6OqbCEds4byTJz0hQT+
+	 OUu+G6OnavI2RPtnUWwhzwyAzgbOUvmXrkQDb9Soh+0WxtnBgrN6szKqSu0Ov/VzGT
+	 FavGrj/UpZu2sAStTWKNCKpckxYNk3XEXSLRTtxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 06/47] wifi: mac80211: mesh_plink: fix matches_local logic
-Date: Fri,  5 Jan 2024 15:38:53 +0100
-Message-ID: <20240105143815.758702742@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.4 33/47] wifi: cfg80211: fix certs build to not depend on file order
+Date: Fri,  5 Jan 2024 15:39:20 +0100
+Message-ID: <20240105143816.852517745@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
 References: <20240105143815.541462991@linuxfoundation.org>
@@ -44,50 +44,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 8c386b166e2517cf3a123018e77941ec22625d0f ]
+commit 3c2a8ebe3fe66a5f77d4c164a0bea8e2ff37b455 upstream.
 
-During refactoring the "else" here got lost, add it back.
+The file for the new certificate (Chen-Yu Tsai's) didn't
+end with a comma, so depending on the file order in the
+build rule, we'd end up with invalid C when concatenating
+the (now two) certificates. Fix that.
 
-Fixes: c99a89edb106 ("mac80211: factor out plink event gathering")
+Cc: stable@vger.kernel.org
+Reported-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Fixes: fb768d3b13ff ("wifi: cfg80211: Add my certificate")
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20231211085121.795480fa0e0b.I017d501196a5bbdcd9afd33338d342d6fe1edd79@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mesh_plink.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/wireless/certs/wens.hex |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/mesh_plink.c b/net/mac80211/mesh_plink.c
-index 737c5f4dbf520..def34c843f290 100644
---- a/net/mac80211/mesh_plink.c
-+++ b/net/mac80211/mesh_plink.c
-@@ -1044,8 +1044,8 @@ mesh_plink_get_event(struct ieee80211_sub_if_data *sdata,
- 	case WLAN_SP_MESH_PEERING_OPEN:
- 		if (!matches_local)
- 			event = OPN_RJCT;
--		if (!mesh_plink_free_count(sdata) ||
--		    (sta->mesh->plid && sta->mesh->plid != plid))
-+		else if (!mesh_plink_free_count(sdata) ||
-+			 (sta->mesh->plid && sta->mesh->plid != plid))
- 			event = OPN_IGNR;
- 		else
- 			event = OPN_ACPT;
-@@ -1053,9 +1053,9 @@ mesh_plink_get_event(struct ieee80211_sub_if_data *sdata,
- 	case WLAN_SP_MESH_PEERING_CONFIRM:
- 		if (!matches_local)
- 			event = CNF_RJCT;
--		if (!mesh_plink_free_count(sdata) ||
--		    sta->mesh->llid != llid ||
--		    (sta->mesh->plid && sta->mesh->plid != plid))
-+		else if (!mesh_plink_free_count(sdata) ||
-+			 sta->mesh->llid != llid ||
-+			 (sta->mesh->plid && sta->mesh->plid != plid))
- 			event = CNF_IGNR;
- 		else
- 			event = CNF_ACPT;
--- 
-2.43.0
-
+--- a/net/wireless/certs/wens.hex
++++ b/net/wireless/certs/wens.hex
+@@ -84,4 +84,4 @@
+ 0xf0, 0xc7, 0x83, 0xbb, 0xa2, 0x81, 0x03, 0x2d,
+ 0xd4, 0x2a, 0x63, 0x3f, 0xf7, 0x31, 0x2e, 0x40,
+ 0x33, 0x5c, 0x46, 0xbc, 0x9b, 0xc1, 0x05, 0xa5,
+-0x45, 0x4e, 0xc3
++0x45, 0x4e, 0xc3,
 
 
