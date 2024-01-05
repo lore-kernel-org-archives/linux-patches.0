@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4A928FA;
-	Fri,  5 Jan 2024 14:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805212D634;
+	Fri,  5 Jan 2024 14:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIcNkSSm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B11C433C8;
-	Fri,  5 Jan 2024 14:40:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5nNPTIZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91071C433C7;
+	Fri,  5 Jan 2024 14:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465612;
-	bh=G5ubY+/gGNWMTTBAaKGOO6yw6hZeXBVn+UdfCmQMxus=;
+	s=korg; t=1704465615;
+	bh=hDtMPPNBcMJl74n5H16yauGvJx+kDyGfAeXjLAeejmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xIcNkSSm66zgmNwegwC04sxV0R2SEViCsjRDWQ/7roUzPszaVahBHMWZQJOze4bjV
-	 R4vHMFjIw/KjzNezhgtadPieNu9GjTz/UyKF6tJUsFB+tq7QMgYlccRBLMtfo347gO
-	 1rfDAeDH1BWpGyYiTF3qrBtbaWuiZrYkA+XD9G/w=
+	b=i5nNPTIZDzx8ac/0KQI9eR8XQbMu+U8wCwj1yonHO3JtnZ7oABkxk6GyTBs2K5c/7
+	 w2uXEO1vIRUti38bhrvUOUxfVVzN5TokDKcyzoGvXU5Gk/IJpy25FFvQGBTEfPB6GU
+	 KQaxBG07Gpnv3C98JJWA7dLv/8N3e5LdmUHx9HZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 06/21] net: check vlan filter feature in vlan_vids_add_by_dev() and vlan_vids_del_by_dev()
-Date: Fri,  5 Jan 2024 15:38:53 +0100
-Message-ID: <20240105143811.840566480@linuxfoundation.org>
+Subject: [PATCH 4.14 07/21] pinctrl: at91-pio4: use dedicated lock class for IRQ
+Date: Fri,  5 Jan 2024 15:38:54 +0100
+Message-ID: <20240105143811.880163215@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143811.536282337@linuxfoundation.org>
 References: <20240105143811.536282337@linuxfoundation.org>
@@ -36,102 +36,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liu Jian <liujian56@huawei.com>
+From: Alexis Lothoré <alexis.lothore@bootlin.com>
 
-[ Upstream commit 01a564bab4876007ce35f312e16797dfe40e4823 ]
+[ Upstream commit 14694179e561b5f2f7e56a0f590e2cb49a9cc7ab ]
 
-I got the below warning trace:
+Trying to suspend to RAM on SAMA5D27 EVK leads to the following lockdep
+warning:
 
-WARNING: CPU: 4 PID: 4056 at net/core/dev.c:11066 unregister_netdevice_many_notify
-CPU: 4 PID: 4056 Comm: ip Not tainted 6.7.0-rc4+ #15
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:unregister_netdevice_many_notify+0x9a4/0x9b0
-Call Trace:
- rtnl_dellink
- rtnetlink_rcv_msg
- netlink_rcv_skb
- netlink_unicast
- netlink_sendmsg
- __sock_sendmsg
- ____sys_sendmsg
- ___sys_sendmsg
- __sys_sendmsg
- do_syscall_64
- entry_SYSCALL_64_after_hwframe
+ ============================================
+ WARNING: possible recursive locking detected
+ 6.7.0-rc5-wt+ #532 Not tainted
+ --------------------------------------------
+ sh/92 is trying to acquire lock:
+ c3cf306c (&irq_desc_lock_class){-.-.}-{2:2}, at: __irq_get_desc_lock+0xe8/0x100
 
-It can be repoduced via:
+ but task is already holding lock:
+ c3d7c46c (&irq_desc_lock_class){-.-.}-{2:2}, at: __irq_get_desc_lock+0xe8/0x100
 
-    ip netns add ns1
-    ip netns exec ns1 ip link add bond0 type bond mode 0
-    ip netns exec ns1 ip link add bond_slave_1 type veth peer veth2
-    ip netns exec ns1 ip link set bond_slave_1 master bond0
-[1] ip netns exec ns1 ethtool -K bond0 rx-vlan-filter off
-[2] ip netns exec ns1 ip link add link bond_slave_1 name bond_slave_1.0 type vlan id 0
-[3] ip netns exec ns1 ip link add link bond0 name bond0.0 type vlan id 0
-[4] ip netns exec ns1 ip link set bond_slave_1 nomaster
-[5] ip netns exec ns1 ip link del veth2
-    ip netns del ns1
+ other info that might help us debug this:
+  Possible unsafe locking scenario:
 
-This is all caused by command [1] turning off the rx-vlan-filter function
-of bond0. The reason is the same as commit 01f4fd270870 ("bonding: Fix
-incorrect deletion of ETH_P_8021AD protocol vid from slaves"). Commands
-[2] [3] add the same vid to slave and master respectively, causing
-command [4] to empty slave->vlan_info. The following command [5] triggers
-this problem.
+        CPU0
+        ----
+   lock(&irq_desc_lock_class);
+   lock(&irq_desc_lock_class);
 
-To fix this problem, we should add VLAN_FILTER feature checks in
-vlan_vids_add_by_dev() and vlan_vids_del_by_dev() to prevent incorrect
-addition or deletion of vlan_vid information.
+  *** DEADLOCK ***
 
-Fixes: 348a1443cc43 ("vlan: introduce functions to do mass addition/deletion of vids by another device")
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  May be due to missing lock nesting notation
+
+ 6 locks held by sh/92:
+  #0: c3aa0258 (sb_writers#6){.+.+}-{0:0}, at: ksys_write+0xd8/0x178
+  #1: c4c2df44 (&of->mutex){+.+.}-{3:3}, at: kernfs_fop_write_iter+0x138/0x284
+  #2: c32684a0 (kn->active){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x148/0x284
+  #3: c232b6d4 (system_transition_mutex){+.+.}-{3:3}, at: pm_suspend+0x13c/0x4e8
+  #4: c387b088 (&dev->mutex){....}-{3:3}, at: __device_suspend+0x1e8/0x91c
+  #5: c3d7c46c (&irq_desc_lock_class){-.-.}-{2:2}, at: __irq_get_desc_lock+0xe8/0x100
+
+ stack backtrace:
+ CPU: 0 PID: 92 Comm: sh Not tainted 6.7.0-rc5-wt+ #532
+ Hardware name: Atmel SAMA5
+  unwind_backtrace from show_stack+0x18/0x1c
+  show_stack from dump_stack_lvl+0x34/0x48
+  dump_stack_lvl from __lock_acquire+0x19ec/0x3a0c
+  __lock_acquire from lock_acquire.part.0+0x124/0x2d0
+  lock_acquire.part.0 from _raw_spin_lock_irqsave+0x5c/0x78
+  _raw_spin_lock_irqsave from __irq_get_desc_lock+0xe8/0x100
+  __irq_get_desc_lock from irq_set_irq_wake+0xa8/0x204
+  irq_set_irq_wake from atmel_gpio_irq_set_wake+0x58/0xb4
+  atmel_gpio_irq_set_wake from irq_set_irq_wake+0x100/0x204
+  irq_set_irq_wake from gpio_keys_suspend+0xec/0x2b8
+  gpio_keys_suspend from dpm_run_callback+0xe4/0x248
+  dpm_run_callback from __device_suspend+0x234/0x91c
+  __device_suspend from dpm_suspend+0x224/0x43c
+  dpm_suspend from dpm_suspend_start+0x9c/0xa8
+  dpm_suspend_start from suspend_devices_and_enter+0x1e0/0xa84
+  suspend_devices_and_enter from pm_suspend+0x460/0x4e8
+  pm_suspend from state_store+0x78/0xe4
+  state_store from kernfs_fop_write_iter+0x1a0/0x284
+  kernfs_fop_write_iter from vfs_write+0x38c/0x6f4
+  vfs_write from ksys_write+0xd8/0x178
+  ksys_write from ret_fast_syscall+0x0/0x1c
+ Exception stack(0xc52b3fa8 to 0xc52b3ff0)
+ 3fa0:                   00000004 005a0ae8 00000001 005a0ae8 00000004 00000001
+ 3fc0: 00000004 005a0ae8 00000001 00000004 00000004 b6c616c0 00000020 0059d190
+ 3fe0: 00000004 b6c61678 aec5a041 aebf1a26
+
+This warning is raised because pinctrl-at91-pio4 uses chained IRQ. Whenever
+a wake up source configures an IRQ through irq_set_irq_wake, it will
+lock the corresponding IRQ desc, and then call irq_set_irq_wake on "parent"
+IRQ which will do the same on its own IRQ desc, but since those two locks
+share the same class, lockdep reports this as an issue.
+
+Fix lockdep false positive by setting a different class for parent and
+children IRQ
+
+Fixes: 776180848b57 ("pinctrl: introduce driver for Atmel PIO4 controller")
+Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
+Link: https://lore.kernel.org/r/20231215-lockdep_warning-v1-1-8137b2510ed5@bootlin.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan_core.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-at91-pio4.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/8021q/vlan_core.c b/net/8021q/vlan_core.c
-index 45c9bf5ff3a0c..815d4fb052bde 100644
---- a/net/8021q/vlan_core.c
-+++ b/net/8021q/vlan_core.c
-@@ -329,6 +329,8 @@ int vlan_vids_add_by_dev(struct net_device *dev,
- 		return 0;
- 
- 	list_for_each_entry(vid_info, &vlan_info->vid_list, list) {
-+		if (!vlan_hw_filter_capable(by_dev, vid_info->proto))
-+			continue;
- 		err = vlan_vid_add(dev, vid_info->proto, vid_info->vid);
- 		if (err)
- 			goto unwind;
-@@ -339,6 +341,8 @@ int vlan_vids_add_by_dev(struct net_device *dev,
- 	list_for_each_entry_continue_reverse(vid_info,
- 					     &vlan_info->vid_list,
- 					     list) {
-+		if (!vlan_hw_filter_capable(by_dev, vid_info->proto))
-+			continue;
- 		vlan_vid_del(dev, vid_info->proto, vid_info->vid);
+diff --git a/drivers/pinctrl/pinctrl-at91-pio4.c b/drivers/pinctrl/pinctrl-at91-pio4.c
+index 8f18a35b66b61..5ef7dd8c9ccf0 100644
+--- a/drivers/pinctrl/pinctrl-at91-pio4.c
++++ b/drivers/pinctrl/pinctrl-at91-pio4.c
+@@ -899,6 +899,13 @@ static const struct of_device_id atmel_pctrl_of_match[] = {
  	}
+ };
  
-@@ -358,8 +362,11 @@ void vlan_vids_del_by_dev(struct net_device *dev,
- 	if (!vlan_info)
- 		return;
- 
--	list_for_each_entry(vid_info, &vlan_info->vid_list, list)
-+	list_for_each_entry(vid_info, &vlan_info->vid_list, list) {
-+		if (!vlan_hw_filter_capable(by_dev, vid_info->proto))
-+			continue;
- 		vlan_vid_del(dev, vid_info->proto, vid_info->vid);
-+	}
- }
- EXPORT_SYMBOL(vlan_vids_del_by_dev);
- 
++/*
++ * This lock class allows to tell lockdep that parent IRQ and children IRQ do
++ * not share the same class so it does not raise false positive
++ */
++static struct lock_class_key atmel_lock_key;
++static struct lock_class_key atmel_request_key;
++
+ static int atmel_pinctrl_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -1044,6 +1051,7 @@ static int atmel_pinctrl_probe(struct platform_device *pdev)
+ 		irq_set_chip_and_handler(irq, &atmel_gpio_irq_chip,
+ 					 handle_simple_irq);
+ 		irq_set_chip_data(irq, atmel_pioctrl);
++		irq_set_lockdep_class(irq, &atmel_lock_key, &atmel_request_key);
+ 		dev_dbg(dev,
+ 			"atmel gpio irq domain: hwirq: %d, linux irq: %d\n",
+ 			i, irq);
 -- 
 2.43.0
 
