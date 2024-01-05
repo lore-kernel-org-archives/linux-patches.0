@@ -1,131 +1,104 @@
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2085.outbound.protection.outlook.com [40.107.220.85])
+Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F30F35F11;
-	Fri,  5 Jan 2024 19:49:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D5D20327
+	for <patches@lists.linux.dev>; Fri,  5 Jan 2024 20:40:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="C37iLfp/"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bC7nCxGXIbFSueZLpAxOvqY/unHRqKYhuUSuT1JFHKfUvCng3n05rUermse/qTEOmvfJ4L+8pWJgtXENInuBnnGK42+Flc2seIPiiidRQxGA08R+w1yv2pBVKhO+DjFWBS1a9Qi2YMYduCdZ71GaHvakuZHKXwZDCejiPrZBY2bzNf2GGp8sWBgtIn+MqnQUf1KNxyTkzruuo2s4psJXNIV2JgmlhcxRfo2YzVi0ZavBi70UrZJup9cg4541ujZUDRU27239KPjfsLfik/KQTihiGNreIn/mq8Va9REh/Gt1/cmCbOVickiQ5QbrnTXEJlB8aDwe0qTMQApyV9eZwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=F49JQ8YSJo0jkfCfCOIVhqKeR6oPLeftwC1ynjQJ+Ys=;
- b=nwWvWz0iSktt2pIEofYaHa1MI7ypXdrb3UMMflOIURWEvjXnGonc0X97xyb+2E+RUPzIHBiAIzC2V2Cnjz7qoR9UAfSfF52kaU+khGZY6WaB/CNv/4Ay2EXsOSvDbf71+gWPXPGuJaRlADCFtnA1cbdGACfAXzp8qzfDro/4s0LdyuPeyAvbeNe01GwoRJW/st6y+bvgNHlc4de4Zuz7UHZtCrWF3ilPUlDyIbunSEaQv1drE7PqcqVyf+iZCCl67X55d+l8xadZU3yyD4cJcRtxFWW7alRZiLIaqkgdXGr29DhqWtpukw7F7l1iG8nEcYGjE5X7LBIt7FcENPjrWQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=F49JQ8YSJo0jkfCfCOIVhqKeR6oPLeftwC1ynjQJ+Ys=;
- b=C37iLfp/CryhCfTJoaokbZUTls0lk3QqT0KvRdqxQhn1s2z6q7s4v051R7fDNcWBL1/bj5xW8+pU9PxDXaSeJOmOj2TEvRQeiXgV6TZBwMLoBQTRRFx/VItbWxygS5P4CaiMlpwC5mOYzNClmKQn4UyofyBmv/meE9YB2qCwG5RFNXgRdTJmqcFJrqe9VFpHqGEpoum5lQTq+W/Hm6WvNmgTDJA+ZQPTqp9LP3N0OrWdaLZSS1Unj3uj7dJzC/E578hmOxrQeDI4nO+xTfgRElOVj+JdVsHpcpeJbcvAbiKm12ptm/ctYrPSYkSh/Qvy/YsoNV+GjAsNBmcVeBHR8A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by BL1PR12MB5062.namprd12.prod.outlook.com (2603:10b6:208:313::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7159.16; Fri, 5 Jan
- 2024 19:49:34 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::60d4:c1e3:e1aa:8f93]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::60d4:c1e3:e1aa:8f93%4]) with mapi id 15.20.7159.015; Fri, 5 Jan 2024
- 19:49:34 +0000
-Date: Fri, 5 Jan 2024 15:49:33 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: "Tian, Kevin" <kevin.tian@intel.com>
-Cc: "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
-	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	"Rodel, Jorg" <jroedel@suse.de>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Robin Murphy <robin.murphy@arm.com>
-Subject: Re: [PATCH] iommufd/selftest: Check the bus type during probe
-Message-ID: <20240105194933.GA366351@nvidia.com>
-References: <0-v1-82d59f7eab8c+40c-iommufd_mock_bus_jgg@nvidia.com>
- <BN9PR11MB52766626A292048AA13F04A78C662@BN9PR11MB5276.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <BN9PR11MB52766626A292048AA13F04A78C662@BN9PR11MB5276.namprd11.prod.outlook.com>
-X-ClientProxiedBy: BL0PR02CA0104.namprd02.prod.outlook.com
- (2603:10b6:208:51::45) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="StVccSeM"
+Received: by mail.gandi.net (Postfix) with ESMTPSA id D83731BF206;
+	Fri,  5 Jan 2024 20:39:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1704487200;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ErApUWVCi+t5EtS/F6eodB58nXznfuCF4fRAcU35LiQ=;
+	b=StVccSeMOUQyEl95dqXt75Cd1mmJtZNf6TXqNpwA3nmd5WN6F9QAGxgQiIYPGqo2p3Zunz
+	57Mwo5aoB+xRNkOimOAW5pbSqPbb0prQfbBmwL4HfbOYODYr3olDjbGhVGfh6AQFYrwIAv
+	xlnDg8ZSW2+LJpj+xHqxHVIjhMIuB2JXISrDaIK9JY6KLbrs+qJrEqRtrw4Oojvrgfgd2y
+	LAhgXSwfxIvzOtxymLJ0kMbiKSq/LMBAK5YbXf0Z8tzKipEoaQ0Xqkw60dSdM8Xn4DbH5q
+	iyqPfamvQD+joknJo5xhbUaU1aBCD3DBvIUGe5KPQqUWv0Acav8nPLsd7zZ40A==
+Message-ID: <26e9b0a8-158c-45b3-b724-616287d36e58@bootlin.com>
+Date: Fri, 5 Jan 2024 21:39:58 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|BL1PR12MB5062:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2bdbf596-e96b-447d-49ab-08dc0e277106
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	jx+cgt3N56iL8GUZwMHifIkfryOiGsckcQw2faoskmxat+lFmnT4XLA6MZ0a8qK+jaYA8hruo+WaScQ5+v50hE16AtNMIMZrqdLiB0hr8NVBQYvhjwvhWwzHjCz3L1If1/rVx31aROaLaa5A83n3Lb27XYaiC1PLCq4umsqJxkOMDhhLFJeiVBBUwEmVgqRrkpLeCx+a8TBkpsTODCUd8spnq615H7o7Zmwl/ikCwj/dlqfwbI9TPYhzRlFef0AWMMEV0QrtLcRuQVQd2sQTVutym+v4CJSR2ojNK7/egTzbOIvErEFCmhT2VocIsBmLnLOTr57vy4HhssosSEGKNin33785cp9hqor9zuQipksdNEUj8suuMHbexSaEvmc74yBB7n300v0pZTDFKQCG+LihJAWkSDs1mo8sVvbMY+Y28RSspy9GR0NgeOaJHrltjPk1umCv2hU3FjeKJdCCW3GbjSyYJtewOuGrMhxpjNtSm6WpPg8BUl/TkywSMoiR6+JxzUuIRqjrUYHeaeQzgxxfUuy0yQ9Ep9UU6K3GutEjXwJZL1sF75ha5e6nR6/rlVWvTdB7zeS1ssw4K3dKG+NWZYqG36EOYaO54h4h+IM=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(136003)(39860400002)(346002)(366004)(396003)(230922051799003)(186009)(451199024)(1800799012)(64100799003)(2616005)(26005)(1076003)(6506007)(6512007)(54906003)(316002)(8676002)(8936002)(36756003)(2906002)(5660300002)(66946007)(4744005)(6486002)(33656002)(4326008)(478600001)(66476007)(66556008)(6916009)(38100700002)(86362001)(41300700001)(27376004);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?ocM3Vjrqg1L4wNSyhfvQYMJlNjq0Wrc+WCwhBEO2NnY956czRx0e34iWZlJT?=
- =?us-ascii?Q?TeYCapUK6NRnUjOcTruM9qe4C/iUwCuc99TD6+VAW62smfp5OT6lkLdsq4hn?=
- =?us-ascii?Q?wYc7SUNiXAoTZ/PCmJevUVNd9hTFNAAvwj12urdprHRzQL/sLpElZEgHhzF4?=
- =?us-ascii?Q?bEfGNSbN0AxkjNyJCHKuc4nbA4OHklm8d50AxVdmpnMU4+4ZdA++m7o5fMP+?=
- =?us-ascii?Q?hdNy8ib3SVtLMu3fsxx1V2bTIbx9VwC7FCL3lVwKeeQQZfzcWQMzFtcnn6+d?=
- =?us-ascii?Q?tO/fby4kHN/bJRkTy+Lz1/Mvz6t250J7Z5lEFhhpvGyyEJcAlC3FJmC29a5j?=
- =?us-ascii?Q?u/1kBuoqMB3Mz2TicK3HYVq7nfmTx/0PweoZP4wV816xI2ZGP1mIlrF/8d1y?=
- =?us-ascii?Q?TNcgoFg5c5Wf9TZUN66pdAfLvyd5nUMzJzIHBLNkCLbFCubuMrSXGJdkK4yZ?=
- =?us-ascii?Q?P4rmdp8JmTZ34pzepEKZYTZhyn1yBMJWHPx8p2Nq3Bw7U3i1X9a5omalyI8v?=
- =?us-ascii?Q?CBs0JRdmQhDC2w7L9kHjsXAz8T6TZW4pUHvcROf/tZJgh78WZs+SMsEi2wJe?=
- =?us-ascii?Q?9PsE6nXGxwE/JrFmUYmABfo/702xVeW+7N/auI2vLHz7vTggi6b2vdhkpKQU?=
- =?us-ascii?Q?PguilLUl29Ec0Lvo0PCVdUC7/bTQcfQGI2lh8inHWXegHJg6njLfIBQpXabL?=
- =?us-ascii?Q?3i/ar4+bQEbhnm1C/q/bVlNEUDvc0o/2BAFEfz4aE5kTXEOEW5DEMG2vflkL?=
- =?us-ascii?Q?1oDxYl+Uh372LVUI37p5Odnla5dRtWfjpEmCc8lRY3Ej3QqwKJ/IIbrrPe5T?=
- =?us-ascii?Q?9Ou++6UDm3JOCt5FYPvwBKf58UGvqCzTvpgs0bdl+y0bCq7+PbMjYSv+7RJQ?=
- =?us-ascii?Q?+lrS08l74+uQjDPbCm3t9uwvOmiSOarA0lO2r2NimiZE8xlEA0QK3qQvWEJX?=
- =?us-ascii?Q?7QSpSsg2hXo8nAGLnm2Dtz6/Gc04t0+TUc517jyeOMVZuirrn18PQSIPjTrP?=
- =?us-ascii?Q?a1UWwQgjS0+LAGUKmPSoiXXVjES6imjfoOerF1YiDAWjhyzTnSoCI5jJZ6EI?=
- =?us-ascii?Q?G52A1MVVmN56pquVZ+SSsigWZPwLxhfBCZOtTCyP0Xvcu96gKCpSzFeb32Iq?=
- =?us-ascii?Q?TFY9Se3mn2QvSlqRftFVtTj5i5515MDl9aSF1VlLm0DNBxi9TszeMT3L3Y5/?=
- =?us-ascii?Q?PIpLRZDAfRffGG5x6DeSfKemtN7LwmSBaTGR8JtxoJS30hFF7lCx4RZ/wJ9s?=
- =?us-ascii?Q?SOhB8VG2/RokL6HAhcRIk8sIYb7MtFGjWvjjvEGk04EUqys4VCEYHXti9aRs?=
- =?us-ascii?Q?oKd2z1CLnLj4hUz52ZKCchOVY1z45M2SKjyE+CVI4Vd5TcIZKhBhj6zkmOXO?=
- =?us-ascii?Q?3eLgeM11/r/H1k42cgxu/ywNK21hxVCKErMhyPxQgkyozWcAfKSJW6Rfv6ZH?=
- =?us-ascii?Q?AYs4b0gDllWf0t0lMBsdyPxX9aXvifuHr5f25hQxt0b0LOC4ydFOiVYDDm0O?=
- =?us-ascii?Q?Y8lGpCVpaqQOqUtwkoY+U+BC6YcroSXBqxjoWfgPO+OmaTuvHERrTteT8ePD?=
- =?us-ascii?Q?MfPlozSoljf4n+NLST0=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2bdbf596-e96b-447d-49ab-08dc0e277106
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jan 2024 19:49:34.4227
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3ouTyx1pzV9gkhlBWrgdRZ8kr6d5i+jPNq/sXkV9b0Gg4mkNLo2Reez2F82yl2b/
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5062
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4.14 00/21] 4.14.335-rc1 review
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, liujian56@huawei.com
+References: <20240105143811.536282337@linuxfoundation.org>
+ <2948beff-a9f6-42b2-8bfb-534ec9188de6@linaro.org>
+From: =?UTF-8?Q?Alexis_Lothor=C3=A9?= <alexis.lothore@bootlin.com>
+In-Reply-To: <2948beff-a9f6-42b2-8bfb-534ec9188de6@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: alexis.lothore@bootlin.com
 
-On Fri, Jan 05, 2024 at 12:38:49AM +0000, Tian, Kevin wrote:
-> > From: Jason Gunthorpe <jgg@nvidia.com>
-> > Sent: Wednesday, January 3, 2024 11:27 PM
-> > 
-> > This relied on the probe function only being invoked by the bus type mock
-> > was registered on. The removal of the bus ops broke this assumption and
-> > the probe could be called on non-mock bus types like PCI.
-> > 
-> > Check the bus type directly in probe.
-> > 
-> > Fixes: 17de3f5fdd35 ("iommu: Retire bus ops")
-> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Hello,
+
+On 1/5/24 18:13, Daniel Díaz wrote:
+> Hello!
 > 
-> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+> On 05/01/24 8:38 a. m., Greg Kroah-Hartman wrote:
 
-Applied to iommufd for-next
+[...]
 
-Thanks,
-Jason
+> Failure looks like this:
+> 
+> -----8<-----
+>   /builds/linux/drivers/pinctrl/pinctrl-at91-pio4.c: In function
+> 'atmel_pinctrl_probe':
+>   /builds/linux/drivers/pinctrl/pinctrl-at91-pio4.c:1054:3: error: too many
+> arguments to function 'irq_set_lockdep_class'
+>      irq_set_lockdep_class(irq, &atmel_lock_key, &atmel_request_key);
+>      ^~~~~~~~~~~~~~~~~~~~~
+>   In file included from /builds/linux/include/linux/irq.h:517,
+>                    from /builds/linux/include/linux/gpio/driver.h:7,
+>                    from /builds/linux/drivers/pinctrl/pinctrl-at91-pio4.c:18:
+>   /builds/linux/include/linux/irqdesc.h:250:1: note: declared here
+>    irq_set_lockdep_class(unsigned int irq, struct lock_class_key *class)
+>    ^~~~~~~~~~~~~~~~~~~~~
+>   make[3]: *** [/builds/linux/scripts/Makefile.build:330:
+> drivers/pinctrl/pinctrl-at91-pio4.o] Error 1
+> ----->8-----
+> 
+> Bisection points to:
+> 
+>   commit 6c47537ba008b3affe99360f65592ff5b797818f
+>   Author: Alexis Lothoré <alexis.lothore@bootlin.com>
+>   Date:   Fri Dec 15 22:34:24 2023 +0100
+> 
+>       pinctrl: at91-pio4: use dedicated lock class for IRQ
+>             [ Upstream commit 14694179e561b5f2f7e56a0f590e2cb49a9cc7ab ]
+
+This fails because linux-4.14.y is older than 39c3fd58952d: kernel/irq: Extend
+lockdep class for request mutex, which updates irq_set_lockdep_class API.
+
+Looking at irq_set_lockdep_class update patch, what appears to be a simple fix is
+to simply remove the last parameter from irq_set_lockdep_class call in
+pinctrl-at91-pio4.c, but I am not even sure if the fix remains legitimate in this
+case (ie if the corresponding lockdep splat reappears), and I do not have access
+to corresponding hardware before the deadline, so if that's not already the plan,
+I suggest to drop this from 4.14 branch.
+
+Alexis
+
+-- 
+Alexis Lothoré, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
+
