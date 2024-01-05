@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7409A18EB7;
-	Fri,  5 Jan 2024 14:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7210628DDA;
+	Fri,  5 Jan 2024 14:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUuP9glQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9C4C433C8;
-	Fri,  5 Jan 2024 14:43:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1BcPaXB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52FBC433C8;
+	Fri,  5 Jan 2024 14:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465791;
-	bh=q1HK6bKti0YPpFicGMmYgIJXyfUdK4/K641LUA6My8I=;
+	s=korg; t=1704465794;
+	bh=Frqh/toGHca+A/3zsLCjr/BHTcBz6GsDMkxeb0yLraw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VUuP9glQ1gSQNgjECEB9mAEA/Lv3OZZ7cD2SI51aw+803pWeVpn+Ekz3AVIa7qTsE
-	 LKIjLzLcmEAmnpN8Bf9KVSCOzIEnk73prU1gXV7w5dXf98c4nC88fgW/bOxylSazoT
-	 tIIcpbfwaC1o5ksyWX1qEshtJpbJF3KCLt5WjQeI=
+	b=c1BcPaXBrUjfIi1iEg5JlAb2vN7yeg91TC07GgT40qSNe1eEruvbt3fWpzO6aYUku
+	 Eobqph4/5lEAzAF5QLp3tGyH8zFV4YxyflfTffIyrKfkJObBnddHDZMu3G/jkbb7oI
+	 I04VLmZoFZUmQeuS/4AO4ooc9PRCZdEuzYVPKhc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Haoran Liu <liuhaoran14@163.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 27/47] iio: imu: inv_mpu6050: fix an error code problem in inv_mpu6050_read_raw
-Date: Fri,  5 Jan 2024 15:39:14 +0100
-Message-ID: <20240105143816.583500399@linuxfoundation.org>
+Subject: [PATCH 5.4 28/47] Input: ipaq-micro-keys - add error handling for devm_kmemdup
+Date: Fri,  5 Jan 2024 15:39:15 +0100
+Message-ID: <20240105143816.632715223@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
 References: <20240105143815.541462991@linuxfoundation.org>
@@ -42,42 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Haoran Liu <liuhaoran14@163.com>
 
-[ Upstream commit c3df0e29fb7788c4b3ddf37d5ed87dda2b822943 ]
+[ Upstream commit 59b6a747e2d39227ac2325c5e29d6ab3bb070c2a ]
 
-inv_mpu6050_sensor_show() can return -EINVAL or IIO_VAL_INT. Return the
-true value rather than only return IIO_VAL_INT.
+Check the return value of i2c_add_adapter. Static analysis revealed that
+the function did not properly handle potential failures of
+i2c_add_adapter, which could lead to partial initialization of the I2C
+adapter and unstable operation.
 
-Fixes: d5098447147c ("iio: imu: mpu6050: add calibration offset support")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20231030020218.65728-1-suhui@nfschina.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Haoran Liu <liuhaoran14@163.com>
+Link: https://lore.kernel.org/r/20231203164653.38983-1-liuhaoran14@163.com
+Fixes: d7535ffa427b ("Input: driver for microcontroller keys on the iPaq h3xxx")
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/inv_mpu6050/inv_mpu_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/input/keyboard/ipaq-micro-keys.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
-index 2261c6c4ac656..87de2a05c7111 100644
---- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
-+++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
-@@ -501,13 +501,13 @@ inv_mpu6050_read_raw(struct iio_dev *indio_dev,
- 			ret = inv_mpu6050_sensor_show(st, st->reg->gyro_offset,
- 						chan->channel2, val);
- 			mutex_unlock(&st->lock);
--			return IIO_VAL_INT;
-+			return ret;
- 		case IIO_ACCEL:
- 			mutex_lock(&st->lock);
- 			ret = inv_mpu6050_sensor_show(st, st->reg->accl_offset,
- 						chan->channel2, val);
- 			mutex_unlock(&st->lock);
--			return IIO_VAL_INT;
-+			return ret;
+diff --git a/drivers/input/keyboard/ipaq-micro-keys.c b/drivers/input/keyboard/ipaq-micro-keys.c
+index e3f9e445e8800..fe5a9c54ad583 100644
+--- a/drivers/input/keyboard/ipaq-micro-keys.c
++++ b/drivers/input/keyboard/ipaq-micro-keys.c
+@@ -105,6 +105,9 @@ static int micro_key_probe(struct platform_device *pdev)
+ 	keys->codes = devm_kmemdup(&pdev->dev, micro_keycodes,
+ 			   keys->input->keycodesize * keys->input->keycodemax,
+ 			   GFP_KERNEL);
++	if (!keys->codes)
++		return -ENOMEM;
++
+ 	keys->input->keycode = keys->codes;
  
- 		default:
- 			return -EINVAL;
+ 	__set_bit(EV_KEY, keys->input->evbit);
 -- 
 2.43.0
 
