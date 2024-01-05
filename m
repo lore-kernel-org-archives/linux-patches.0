@@ -1,172 +1,147 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC132C865;
-	Fri,  5 Jan 2024 14:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071552C6B7;
+	Fri,  5 Jan 2024 14:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfnECKas"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B54C433C8;
-	Fri,  5 Jan 2024 14:39:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PO+Yueo6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EC2C433C8;
+	Fri,  5 Jan 2024 14:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465555;
-	bh=YN83LZsXBdLsEgC/FrUUFvVKQ/xIvpm78Qro2MWVBmM=;
-	h=From:To:Cc:Subject:Date:From;
-	b=XfnECKasaKgSml3+kNld9JiUctSCZb+l9ltP63MGTV3iF4Fw1ZTx/1dIjSXnEvXdL
-	 1gKK8z92C4/j0R2SOrxLDRkwRJtpZMUsAdz32FlHhCSNRLUJTTrwD05HmCoRcd/VVE
-	 RScizu7KCbTxkd+J+KV/DidTdlmBI1S4fyqGFWIg=
+	s=korg; t=1704465560;
+	bh=fe1eBm2jGktvggZtYmw4+dPTpiRkxrs5lcN//9q2xbQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=PO+Yueo6ce7uohdSC+/6XBAgg/uXivzzNMu1FdtrjuxzMGO+GDIKCN8lwug1fp3L3
+	 1wxNL2Psv0a+RdsOEUwrEAGw1uEmC8m8Uqr9n2H2U/2+J71N+kNgKMCMdrB/xiqyPd
+	 pDv4XryHNWVIDiXWOWWM8HkcvRr28F4Pjcjp8DWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com
-Subject: [PATCH 4.14 00/21] 4.14.335-rc1 review
-Date: Fri,  5 Jan 2024 15:38:47 +0100
-Message-ID: <20240105143811.536282337@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 4.14 10/21] iio: common: ms_sensors: ms_sensors_i2c: fix humidity conversion time table
+Date: Fri,  5 Jan 2024 15:38:57 +0100
+Message-ID: <20240105143811.998306866@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240105143811.536282337@linuxfoundation.org>
+References: <20240105143811.536282337@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.335-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.14.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.14.335-rc1
-X-KernelTest-Deadline: 2024-01-07T14:38+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 4.14.335 release.
-There are 21 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+4.14-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Sun, 07 Jan 2024 14:38:02 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.335-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
-and the diffstat can be found below.
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-thanks,
+commit 54cf39ec16335dadbe1ba008d8e5e98dae3e26f8 upstream.
 
-greg k-h
+The HTU21 offers 4 sampling frequencies: 20, 40, 70 and 120, which are
+associated to an index that is used to select the right measurement
+resolution and its corresponding measurement time. The current
+implementation selects the measurement resolution and the temperature
+measurement time properly, but it does not select the right humidity
+measurement time in all cases.
 
--------------
-Pseudo-Shortlog of commits:
+In summary, the 40 and 70 humidity measurement times are swapped.
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.14.335-rc1
+The reason for that is probably the unusual coding for the measurement
+resolution. According to the datasheet, the bits [7,0] of the "user
+register" are used as follows to select the bit resolution:
 
-Sarthak Kukreti <sarthakkukreti@chromium.org>
-    block: Don't invalidate pagecache for invalid falloc modes
+--------------------------------------------------
+| Bit 7 | Bit 0 | RH | Temp | Trh (us) | Tt (us) |
+--------------------------------------------------
+|   0   |   0   | 12 |  14  |  16000   |  50000  |
+--------------------------------------------------
+|   0   |   1   | 8  |  12  |  3000    |  13000  |
+--------------------------------------------------
+|   1   |   0   | 10 |  13  |  5000    |  25000  |
+--------------------------------------------------
+|   1   |   1   | 11 |  11  |  8000    |  7000   |
+--------------------------------------------------
+*This table is available in the official datasheet, page 13/21. I have
+just appended the times provided in the humidity/temperature tables,
+pages 3/21, 5/21. Note that always a pair of resolutions is selected.
 
-Mikulas Patocka <mpatocka@redhat.com>
-    dm-integrity: don't modify bio's immutable bio_vec in integrity_metadata()
+The sampling frequencies [20, 40, 70, 120] are assigned to a linear
+index [0..3] which is then coded as follows [1]:
 
-Rouven Czerwinski <r.czerwinski@pengutronix.de>
-    net: rfkill: gpio: set GPIO direction
+Index    [7,0]
+--------------
+idx 0     0,0
+idx 1     1,0
+idx 2     0,1
+idx 3     1,1
 
-Fedor Pchelkin <pchelkin@ispras.ru>
-    net: 9p: avoid freeing uninit memory in p9pdu_vreadf
+That is done that way because the temperature measurements are being
+used as the reference for the sampling frequency (the frequencies and
+the temperature measurement times are correlated), so increasing the
+index always reduces the temperature measurement time and its
+resolution. Therefore, the temperature measurement time array is as
+simple as [50000, 25000, 13000, 7000]
 
-Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-    Bluetooth: hci_event: Fix not checking if HCI_OP_INQUIRY has been sent
+On the other hand, the humidity resolution cannot follow the same
+pattern because of the way it is coded in the "user register", where
+both resolutions are selected at the same time. The humidity measurement
+time array is the following: [16000, 3000, 5000, 8000], which defines
+the following assignments:
 
-Reinhard Speyerer <rspmn@arcor.de>
-    USB: serial: option: add Quectel RM500Q R13 firmware support
+Index    [7,0]    Trh
+-----------------------
+idx 0     0,0     16000  -> right, [0,0] selects 12 bits (Trh = 16000)
+idx 1     1,0     3000   -> wrong! [1,0] selects 10 bits (Trh = 5000)
+idx 2     0,1     5000   -> wrong! [0,1] selects 8 bits (Trh = 3000)
+idx 3     1,1     8000   -> right, [1,1] selects 11 bits (Trh = 8000)
 
-Slark Xiao <slark_xiao@163.com>
-    USB: serial: option: add Foxconn T99W265 with new baseline
+The times have been ordered as if idx = 1 -> [0,1] and idx = 2 -> [1,0],
+which is not the case for the reason explained above.
 
-Alper Ak <alperyasinak1@gmail.com>
-    USB: serial: option: add Quectel EG912Y module support
+So a simple modification is required to obtain the right humidity
+measurement time array, swapping the values in the positions 1 and 2.
 
-Mark Glover <mark.glover@actisense.com>
-    USB: serial: ftdi_sio: update Actisense PIDs constant names
+The right table should be the following: [16000, 5000, 3000, 8000]
 
-Johannes Berg <johannes.berg@intel.com>
-    wifi: cfg80211: fix certs build to not depend on file order
+Fix the humidity measurement time array with the right idex/value
+coding.
 
-Chen-Yu Tsai <wens@kernel.org>
-    wifi: cfg80211: Add my certificate
+[1] The actual code that makes this coding and assigns it to the current
+value of the "user register" is the following:
+config_reg &= 0x7E;
+config_reg |= ((i & 1) << 7) + ((i & 2) >> 1);
 
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: common: ms_sensors: ms_sensors_i2c: fix humidity conversion time table
+Fixes: d574a87cc311 ("Add meas-spec sensors common part")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20231026-topic-htu21_conversion_time-v1-1-bd257dc44209@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/iio/common/ms_sensors/ms_sensors_i2c.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Haoran Liu <liuhaoran14@163.com>
-    Input: ipaq-micro-keys - add error handling for devm_kmemdup
-
-Su Hui <suhui@nfschina.com>
-    iio: imu: inv_mpu6050: fix an error code problem in inv_mpu6050_read_raw
-
-Alexis Lothoré <alexis.lothore@bootlin.com>
-    pinctrl: at91-pio4: use dedicated lock class for IRQ
-
-Liu Jian <liujian56@huawei.com>
-    net: check vlan filter feature in vlan_vids_add_by_dev() and vlan_vids_del_by_dev()
-
-Zhipeng Lu <alexious@zju.edu.cn>
-    ethernet: atheros: fix a memleak in atl1e_setup_ring_resources
-
-Eric Dumazet <edumazet@google.com>
-    net: sched: ife: fix potential use-after-free
-
-Johannes Berg <johannes.berg@intel.com>
-    wifi: mac80211: mesh_plink: fix matches_local logic
-
-Heiko Carstens <hca@linux.ibm.com>
-    s390/vx: fix save/restore of fpu kernel context
-
-Kunwu Chan <chentao@kylinos.cn>
-    ARM: OMAP2+: Fix null pointer dereference and memory leak in omap_soc_device_init
-
-
--------------
-
-Diffstat:
-
- Makefile                                        |  4 +-
- arch/arm/mach-omap2/id.c                        |  5 ++
- arch/s390/include/asm/fpu/api.h                 |  2 +-
- drivers/iio/common/ms_sensors/ms_sensors_i2c.c  |  4 +-
- drivers/iio/imu/inv_mpu6050/inv_mpu_core.c      |  4 +-
- drivers/input/keyboard/ipaq-micro-keys.c        |  3 +
- drivers/md/dm-integrity.c                       | 11 ++--
- drivers/net/ethernet/atheros/atl1e/atl1e_main.c |  5 +-
- drivers/pinctrl/pinctrl-at91-pio4.c             |  8 +++
- drivers/usb/serial/ftdi_sio.c                   |  6 +-
- drivers/usb/serial/ftdi_sio_ids.h               |  6 +-
- drivers/usb/serial/option.c                     |  5 ++
- fs/block_dev.c                                  |  9 ++-
- net/8021q/vlan_core.c                           |  9 ++-
- net/9p/protocol.c                               | 17 +++--
- net/bluetooth/hci_event.c                       |  3 +-
- net/ife/ife.c                                   |  1 +
- net/mac80211/mesh_plink.c                       | 10 +--
- net/rfkill/rfkill-gpio.c                        |  8 +++
- net/wireless/certs/wens.hex                     | 87 +++++++++++++++++++++++++
- 20 files changed, 175 insertions(+), 32 deletions(-)
+--- a/drivers/iio/common/ms_sensors/ms_sensors_i2c.c
++++ b/drivers/iio/common/ms_sensors/ms_sensors_i2c.c
+@@ -16,8 +16,8 @@
+ /* Conversion times in us */
+ static const u16 ms_sensors_ht_t_conversion_time[] = { 50000, 25000,
+ 						       13000, 7000 };
+-static const u16 ms_sensors_ht_h_conversion_time[] = { 16000, 3000,
+-						       5000, 8000 };
++static const u16 ms_sensors_ht_h_conversion_time[] = { 16000, 5000,
++						       3000, 8000 };
+ static const u16 ms_sensors_tp_conversion_time[] = { 500, 1100, 2100,
+ 						     4100, 8220, 16440 };
+ 
 
 
