@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410792D7B5;
-	Fri,  5 Jan 2024 14:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AE828FA;
+	Fri,  5 Jan 2024 14:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyppc5Lr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3107C433C8;
-	Fri,  5 Jan 2024 14:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="siUL8EgD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32255C433C8;
+	Fri,  5 Jan 2024 14:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465785;
-	bh=tnvTmYWe0j8zxQmAIKklTUv2ZA/UL8v+lYrQXazrTvQ=;
+	s=korg; t=1704465788;
+	bh=+4Yq9tk5pwLPpiVojb2N4VsET24UcwtGXpCsh4SoVaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oyppc5Lrf6akYnd1+MLs5IU3oTt5REJJ1nPj4uLrbdb34wtqjPGWIphwSi+KebjlV
-	 LXEyFSOz7o+WlFIkIpWU3HdP9/j9iKBDrlc0KCMw5oxyNna7/FsJmBBGQCjleFOX7C
-	 JpFu99M0qiTQtiU6mOOCCFZPJxtUu9P/5f1cYTq4=
+	b=siUL8EgDPtiQg9mZK4J56lD9RhzxKyNagccqZUAt2qvdx9+NvqtjXqhTkyyVphnP8
+	 4hxG6TziEhbf8x2454Jdcj0xgeBypB6rBee+MkKleQJ0gTpFoD75eFsxlz+IvHiOQV
+	 4ue9vYhQuw1AwkRQChYd1IpMN3/R4WNGOXrjn0bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Michaelis <code@mgjm.de>,
-	Neal Gompa <neal@gompa.dev>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
+	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 25/47] btrfs: do not allow non subvolume root targets for snapshot
-Date: Fri,  5 Jan 2024 15:39:12 +0100
-Message-ID: <20240105143816.504643366@linuxfoundation.org>
+Subject: [PATCH 5.4 26/47] interconnect: Treat xlate() returning NULL node as an error
+Date: Fri,  5 Jan 2024 15:39:13 +0100
+Message-ID: <20240105143816.543111770@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
 References: <20240105143815.541462991@linuxfoundation.org>
@@ -44,47 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Mike Tipton <quic_mdtipton@quicinc.com>
 
-[ Upstream commit a8892fd71933126ebae3d60aec5918d4dceaae76 ]
+[ Upstream commit ad2ab1297d0c80899125a842bb7a078abfe1e6ce ]
 
-Our btrfs subvolume snapshot <source> <destination> utility enforces
-that <source> is the root of the subvolume, however this isn't enforced
-in the kernel.  Update the kernel to also enforce this limitation to
-avoid problems with other users of this ioctl that don't have the
-appropriate checks in place.
+Currently, if provider->xlate() or provider->xlate_extended()
+"successfully" return a NULL node, then of_icc_get_from_provider() won't
+consider that an error and will successfully return the NULL node. This
+bypasses error handling in of_icc_get_by_index() and leads to NULL
+dereferences in path_find().
 
-Reported-by: Martin Michaelis <code@mgjm.de>
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+This could be avoided by ensuring provider callbacks always return an
+error for NULL nodes, but it's better to explicitly protect against this
+in the common framework.
+
+Fixes: 87e3031b6fbd ("interconnect: Allow endpoints translation via DT")
+Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
+Link: https://lore.kernel.org/r/20231025145829.11603-1-quic_mdtipton@quicinc.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/interconnect/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index 1575992d1f14c..9f1efd5c24f1a 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -1847,6 +1847,15 @@ static noinline int btrfs_ioctl_snap_create_transid(struct file *file,
- 			 * are limited to own subvolumes only
- 			 */
- 			ret = -EPERM;
-+		} else if (btrfs_ino(BTRFS_I(src_inode)) != BTRFS_FIRST_FREE_OBJECTID) {
-+			/*
-+			 * Snapshots must be made with the src_inode referring
-+			 * to the subvolume inode, otherwise the permission
-+			 * checking above is useless because we may have
-+			 * permission on a lower directory but not the subvol
-+			 * itself.
-+			 */
-+			ret = -EINVAL;
- 		} else {
- 			ret = btrfs_mksubvol(&file->f_path, name, namelen,
- 					     BTRFS_I(src_inode)->root,
+diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+index be3fa1ac4261c..8f6dfa6b6e4dc 100644
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -280,6 +280,9 @@ static struct icc_node *of_icc_get_from_provider(struct of_phandle_args *spec)
+ 	}
+ 	mutex_unlock(&icc_lock);
+ 
++	if (!node)
++		return ERR_PTR(-EINVAL);
++
+ 	return node;
+ }
+ 
 -- 
 2.43.0
 
