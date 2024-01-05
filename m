@@ -1,82 +1,271 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCD218EB7;
-	Fri,  5 Jan 2024 14:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1683A1E4A9;
+	Fri,  5 Jan 2024 14:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKQkMv4p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A0BC433C8;
-	Fri,  5 Jan 2024 14:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbcYedxC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C7FC433C7;
+	Fri,  5 Jan 2024 14:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465741;
-	bh=M5fDICDFIedbnj9T5RGP635sMabx1hEVik/Ksieyk0Q=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sKQkMv4p4iW4dfyaPOYoCTjHBN3cYzdUdcayBNriWSoV/3OYx1ODXIm69hvLywlzC
-	 BWfKvsQhMBf/Kk7xhVYcI+tYFeB8tj79vrXMzTraHx18Fz8bRlEd4IKtluftpuGzma
-	 lK8H76yRy4bvuG8a7q9Tzc2Q0/TvhkcyMhd1lo4I=
+	s=korg; t=1704465743;
+	bh=sMTNQ881jY/RuaX/86ZIR9pfxzI6Wl83p/eQZeLrncQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=HbcYedxCyV1Gjx+hVM+PVerHkLpEjm5GNHSK4a0WoT1mNXNmODcFUbqY5ilJyRglb
+	 RbI+EqFOP8DWyzaCZVV6Ej18XfARn/NOgfmkB7YkNuR7oFMyxy3Lx0CTL0D0f9T0qq
+	 78HKFlvR7O5qntZJfa1xIcC6vYKYjTkAGXq/B7lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 02/47] ksmbd: fix wrong name of SMB2_CREATE_ALLOCATION_SIZE
-Date: Fri,  5 Jan 2024 15:38:49 +0100
-Message-ID: <20240105143815.625700584@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: [PATCH 5.4 00/47] 5.4.266-rc1 review
+Date: Fri,  5 Jan 2024 15:38:47 +0100
+Message-ID: <20240105143815.541462991@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
-References: <20240105143815.541462991@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.266-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.4.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.4.266-rc1
+X-KernelTest-Deadline: 2024-01-07T14:38+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 5.4.266 release.
+There are 47 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sun, 07 Jan 2024 14:38:02 +0000.
+Anything received after that time might be too late.
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.266-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+and the diffstat can be found below.
 
-[ Upstream commit 13736654481198e519059d4a2e2e3b20fa9fdb3e ]
+thanks,
 
-MS confirm that "AISi" name of SMB2_CREATE_ALLOCATION_SIZE in MS-SMB2
-specification is a typo. cifs/ksmbd have been using this wrong name from
-MS-SMB2. It should be "AlSi". Also It will cause problem when running
-smb2.create.open test in smbtorture against ksmbd.
+greg k-h
 
-Cc: stable@vger.kernel.org
-Fixes: 12197a7fdda9 ("Clarify SMB2/SMB3 create context and add missing ones")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- fs/cifs/smb2pdu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+-------------
+Pseudo-Shortlog of commits:
 
-diff --git a/fs/cifs/smb2pdu.h b/fs/cifs/smb2pdu.h
-index 739556e385be8..297f5e455a348 100644
---- a/fs/cifs/smb2pdu.h
-+++ b/fs/cifs/smb2pdu.h
-@@ -651,7 +651,7 @@ struct smb2_tree_disconnect_rsp {
- #define SMB2_CREATE_SD_BUFFER			"SecD" /* security descriptor */
- #define SMB2_CREATE_DURABLE_HANDLE_REQUEST	"DHnQ"
- #define SMB2_CREATE_DURABLE_HANDLE_RECONNECT	"DHnC"
--#define SMB2_CREATE_ALLOCATION_SIZE		"AISi"
-+#define SMB2_CREATE_ALLOCATION_SIZE		"AlSi"
- #define SMB2_CREATE_QUERY_MAXIMAL_ACCESS_REQUEST "MxAc"
- #define SMB2_CREATE_TIMEWARP_REQUEST		"TWrp"
- #define SMB2_CREATE_QUERY_ON_DISK_ID		"QFid"
--- 
-2.43.0
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.4.266-rc1
 
+Sarthak Kukreti <sarthakkukreti@chromium.org>
+    block: Don't invalidate pagecache for invalid falloc modes
+
+Steven Rostedt (Google) <rostedt@goodmis.org>
+    ring-buffer: Fix wake ups when buffer_percent is set to 100
+
+Tony Lindgren <tony@atomide.com>
+    bus: ti-sysc: Flush posted write only after srst_udelay
+
+Julien Panis <jpanis@baylibre.com>
+    bus: ti-sysc: Use fsleep() instead of usleep_range() in sysc_reset()
+
+Paulo Alcantara <pc@manguebit.com>
+    smb: client: fix OOB in smbCalcSize()
+
+Dan Carpenter <dan.carpenter@linaro.org>
+    usb: fotg210-hcd: delete an incorrect bounds test
+
+Thomas Gleixner <tglx@linutronix.de>
+    x86/alternatives: Sync core before enabling interrupts
+
+Rouven Czerwinski <r.czerwinski@pengutronix.de>
+    net: rfkill: gpio: set GPIO direction
+
+Fedor Pchelkin <pchelkin@ispras.ru>
+    net: 9p: avoid freeing uninit memory in p9pdu_vreadf
+
+Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+    Bluetooth: hci_event: Fix not checking if HCI_OP_INQUIRY has been sent
+
+Reinhard Speyerer <rspmn@arcor.de>
+    USB: serial: option: add Quectel RM500Q R13 firmware support
+
+Slark Xiao <slark_xiao@163.com>
+    USB: serial: option: add Foxconn T99W265 with new baseline
+
+Alper Ak <alperyasinak1@gmail.com>
+    USB: serial: option: add Quectel EG912Y module support
+
+Mark Glover <mark.glover@actisense.com>
+    USB: serial: ftdi_sio: update Actisense PIDs constant names
+
+Johannes Berg <johannes.berg@intel.com>
+    wifi: cfg80211: fix certs build to not depend on file order
+
+Chen-Yu Tsai <wens@kernel.org>
+    wifi: cfg80211: Add my certificate
+
+Wadim Egorov <w.egorov@phytec.de>
+    iio: adc: ti_am335x_adc: Fix return value check of tiadc_request_dma()
+
+Javier Carrasco <javier.carrasco.cruz@gmail.com>
+    iio: common: ms_sensors: ms_sensors_i2c: fix humidity conversion time table
+
+Wei Yongjun <weiyongjun1@huawei.com>
+    scsi: bnx2fc: Fix skb double free in bnx2fc_rcv()
+
+Haoran Liu <liuhaoran14@163.com>
+    Input: ipaq-micro-keys - add error handling for devm_kmemdup
+
+Su Hui <suhui@nfschina.com>
+    iio: imu: inv_mpu6050: fix an error code problem in inv_mpu6050_read_raw
+
+Mike Tipton <quic_mdtipton@quicinc.com>
+    interconnect: Treat xlate() returning NULL node as an error
+
+Josef Bacik <josef@toxicpanda.com>
+    btrfs: do not allow non subvolume root targets for snapshot
+
+Paulo Alcantara <pc@manguebit.com>
+    smb: client: fix NULL deref in asn1_ber_decoder()
+
+Kai Vehmanen <kai.vehmanen@linux.intel.com>
+    ALSA: hda/hdmi: add force-connect quirk for NUC5CPYB
+
+Kai Vehmanen <kai.vehmanen@linux.intel.com>
+    ALSA: hda/hdmi: Add quirk to force pin connectivity on NUC10
+
+Alexis Lothoré <alexis.lothore@bootlin.com>
+    pinctrl: at91-pio4: use dedicated lock class for IRQ
+
+Quan Nguyen <quan@os.amperecomputing.com>
+    i2c: aspeed: Handle the coalesced stop conditions with the start conditions.
+
+David Howells <dhowells@redhat.com>
+    afs: Fix overwriting of result of DNS query
+
+Eric Dumazet <edumazet@google.com>
+    net: check dev->gso_max_size in gso_features_check()
+
+Heiner Kallweit <hkallweit1@gmail.com>
+    net: warn if gso_type isn't set for a GSO SKB
+
+David Howells <dhowells@redhat.com>
+    afs: Fix dynamic root lookup DNS check
+
+David Howells <dhowells@redhat.com>
+    afs: Fix the dynamic root's d_delete to always delete unused dentries
+
+Liu Jian <liujian56@huawei.com>
+    net: check vlan filter feature in vlan_vids_add_by_dev() and vlan_vids_del_by_dev()
+
+Eric Dumazet <edumazet@google.com>
+    net/rose: fix races in rose_kill_by_device()
+
+Zhipeng Lu <alexious@zju.edu.cn>
+    ethernet: atheros: fix a memleak in atl1e_setup_ring_resources
+
+Eric Dumazet <edumazet@google.com>
+    net: sched: ife: fix potential use-after-free
+
+Rahul Rameshbabu <rrameshbabu@nvidia.com>
+    net/mlx5e: Correct snprintf truncation handling for fw_version buffer used by representors
+
+Moshe Shemesh <moshe@nvidia.com>
+    net/mlx5: Fix fw tracer first block check
+
+Hu Haowen <xianfengting221@163.com>
+    net/mlx5: improve some comments
+
+Vlad Buslov <vladbu@nvidia.com>
+    Revert "net/mlx5e: fix double free of encap_header"
+
+Johannes Berg <johannes.berg@intel.com>
+    wifi: mac80211: mesh_plink: fix matches_local logic
+
+Heiko Carstens <hca@linux.ibm.com>
+    s390/vx: fix save/restore of fpu kernel context
+
+Geert Uytterhoeven <geert+renesas@glider.be>
+    reset: Fix crash when freeing non-existent optional resets
+
+Kunwu Chan <chentao@kylinos.cn>
+    ARM: OMAP2+: Fix null pointer dereference and memory leak in omap_soc_device_init
+
+Namjae Jeon <linkinjeon@kernel.org>
+    ksmbd: fix wrong name of SMB2_CREATE_ALLOCATION_SIZE
+
+Bin Li <bin.li@canonical.com>
+    ALSA: hda/realtek: Enable headset on Lenovo M90 Gen5
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |  4 +-
+ arch/arm/mach-omap2/id.c                           |  5 ++
+ arch/s390/include/asm/fpu/api.h                    |  2 +-
+ arch/x86/kernel/alternative.c                      |  2 +-
+ drivers/bus/ti-sysc.c                              | 19 +++--
+ drivers/i2c/busses/i2c-aspeed.c                    | 48 ++++++++----
+ drivers/iio/adc/ti_am335x_adc.c                    |  4 +-
+ drivers/iio/common/ms_sensors/ms_sensors_i2c.c     |  4 +-
+ drivers/iio/imu/inv_mpu6050/inv_mpu_core.c         |  4 +-
+ drivers/input/keyboard/ipaq-micro-keys.c           |  3 +
+ drivers/interconnect/core.c                        |  3 +
+ drivers/net/ethernet/atheros/atl1e/atl1e_main.c    |  5 +-
+ .../ethernet/mellanox/mlx5/core/diag/fw_tracer.c   |  4 +-
+ .../net/ethernet/mellanox/mlx5/core/en/tc_tun.c    | 10 ++-
+ drivers/net/ethernet/mellanox/mlx5/core/en_rep.c   |  2 +-
+ drivers/pinctrl/pinctrl-at91-pio4.c                |  8 ++
+ drivers/reset/core.c                               |  3 +
+ drivers/scsi/bnx2fc/bnx2fc_fcoe.c                  |  9 +--
+ drivers/usb/host/fotg210-hcd.c                     |  3 -
+ drivers/usb/serial/ftdi_sio.c                      |  6 +-
+ drivers/usb/serial/ftdi_sio_ids.h                  |  6 +-
+ drivers/usb/serial/option.c                        |  5 ++
+ fs/afs/cell.c                                      |  6 +-
+ fs/afs/dynroot.c                                   | 31 ++++----
+ fs/block_dev.c                                     |  9 ++-
+ fs/btrfs/ioctl.c                                   |  9 +++
+ fs/cifs/misc.c                                     |  4 +
+ fs/cifs/smb2misc.c                                 | 26 +++----
+ fs/cifs/smb2pdu.h                                  |  2 +-
+ kernel/trace/ring_buffer.c                         |  9 ++-
+ net/8021q/vlan_core.c                              |  9 ++-
+ net/9p/protocol.c                                  | 17 ++++-
+ net/bluetooth/hci_event.c                          |  3 +-
+ net/core/dev.c                                     |  8 ++
+ net/ife/ife.c                                      |  1 +
+ net/mac80211/mesh_plink.c                          | 10 +--
+ net/rfkill/rfkill-gpio.c                           |  8 ++
+ net/rose/af_rose.c                                 | 41 ++++++++--
+ net/wireless/certs/wens.hex                        | 87 ++++++++++++++++++++++
+ sound/pci/hda/patch_hdmi.c                         |  2 +
+ sound/pci/hda/patch_realtek.c                      |  1 +
+ 41 files changed, 335 insertions(+), 107 deletions(-)
 
 
