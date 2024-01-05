@@ -1,172 +1,122 @@
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2063.outbound.protection.outlook.com [40.107.102.63])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4922E85B
-	for <patches@lists.linux.dev>; Fri,  5 Jan 2024 16:23:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2E732186
+	for <patches@lists.linux.dev>; Fri,  5 Jan 2024 17:01:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="OYPAcKnW"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=oVGJoipE3UByKP68jML6L3l+o3tUylZOkJUkxUnankXphRHCoPg45yHMlNurNWyd7OsU6T+xKercOczEPELr34elAbs0BGy+Rg6ziIv9jQEiiV2gFXWeHGhYRxjmMIm1y4QMKAxQHMMlIWdOgLoXPG6yf0hcKaQ2KnYjosBUT3Th0qhAAoVIdhMxUjyck31kz4uU+iPGfh7vTXrYrxr78o/7qs1GtQV4kQ3WG5biQ8aaDkLPEm8XZxz6eCsZauxcue2lizogFrcwK3lLOFi7YCXt9YjntjNosWF89BCMOP4vs+PXL9ezKS61vleBx23oSUWHvYyhByPqOcDbg0geyw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ywX6WySuLQYs7bVuIBIt3dSFhjUz5eycYDZS5q50HKs=;
- b=YVSjKcdMk/ZlIEo5hMUBACP2uGe6Xo6b4mjTMWO4AwqHOvoLgKtz7c8qXCPdmDRJuRGrnW79jmIU8CgtnDG9JdlHPKj14TLeT4oGdd6BOjnoPyUUbVIltWfOyQy19CW6S5o0kUFJW0prwzFPxXvsgKeLB4sqyPAo8kc1OjYJ+0NYJCiXMNrLs6tb5lHQbUtxhXa2q0QJnd2TRbDAvm/XT4lBUxJIrc94/9ybNz87LTOcY8h1gH3EgDzLMnQ6FNUlcdz/XKcd9i6TDSw9S7OnLUjZMzOgrthSSoymmpuQ2ZpUUvmSGAcre/AVYwJOJ8ChO8Xr5drxnjcbVUEIckltwA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ywX6WySuLQYs7bVuIBIt3dSFhjUz5eycYDZS5q50HKs=;
- b=OYPAcKnW0j0+6oxlWAsN3dfnYmVWpg/LmSq0qQ7I8PAn+KUPEEUUHk+fTyu6d97zACS3Ye1oyArwdRrylhmY4zZlsH9iji/Ytsts/QmbHwUmvvSXCzjo1EhtqFndaW7YmwafCVMufhySV0hogo+MTTKsc7UmfWwWTZ4YVV4fq72od/kKmRMO5Tj4nv7GUoR8ZeCXuTSD5QMnkkxLRoLEaX2njwsb17E4qq9sF+oFIIV0g/tsGLKBD8qKXrOrxflJ1EZBuKZl7yEv49C+IVZa4hGHKdtfs4dug7qyvQCYNXWlp+S89eHGN4mPmxgUMtfq51qFgYV16NaZzTx7AHtKNQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CO6PR12MB5444.namprd12.prod.outlook.com (2603:10b6:5:35e::8) by
- MN0PR12MB5884.namprd12.prod.outlook.com (2603:10b6:208:37c::6) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7159.14; Fri, 5 Jan 2024 16:23:07 +0000
-Received: from CO6PR12MB5444.namprd12.prod.outlook.com
- ([fe80::fb84:50ef:dbb8:1ebb]) by CO6PR12MB5444.namprd12.prod.outlook.com
- ([fe80::fb84:50ef:dbb8:1ebb%4]) with mapi id 15.20.7159.015; Fri, 5 Jan 2024
- 16:23:07 +0000
-Message-ID: <5bf8a4d9-2a83-4503-b041-09c45207fe0c@nvidia.com>
-Date: Fri, 5 Jan 2024 16:23:00 +0000
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4.14 00/21] 4.14.335-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com,
- "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-References: <20240105143811.536282337@linuxfoundation.org>
-From: Jon Hunter <jonathanh@nvidia.com>
-In-Reply-To: <20240105143811.536282337@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: LO2P265CA0016.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:62::28) To CO6PR12MB5444.namprd12.prod.outlook.com
- (2603:10b6:5:35e::8)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DqSbnp22"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-2044d093b3fso943567fac.3
+        for <patches@lists.linux.dev>; Fri, 05 Jan 2024 09:01:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704474107; x=1705078907; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UWpUupEW5Q6RT9phGeKrpsB0tLP4TW7REusBhk8x/xs=;
+        b=DqSbnp22onioapRiL3xUNwkP8TZgAgR9ljTD3gLM9UZDW/DsO1sgZtSmq59euDphXa
+         nkrIlPQg8XAVCwbmMIwRaouG+SfwXdeFX7wDA0WrvLkKRnSE5yqTL2zZJaOIFL0qRFgN
+         BLvhZc2r52vDlNfX3NjBM6fLgRJnVK9awz9Vc/FGEqu79+t2cLjFF+dUSYR3rPnabWPv
+         UVy9jON+bOR8EcISSBLwY8aDb5XOTnf01qo0GxvtZiBs/WlAB3ybDzurtE096wT1k+E5
+         Iku/GLbX05Xvt01aedyho6iwXgL4mAh2r3h9007nA5oaUxw1R1O3VCa3wA7uwSNHThe/
+         x8zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704474107; x=1705078907;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UWpUupEW5Q6RT9phGeKrpsB0tLP4TW7REusBhk8x/xs=;
+        b=wrWYEJDMHsyCl+e4mKu+yXh0GUNs5NvPXmpLE7EO+BJUkckyku8+KMJwP7NOaXprAH
+         IhWoHiU02kwuG39sdOawaBKHStH7GU/8WwLnt2Pmry/lDcgTHBdUFE74OIAhhErfBBB2
+         DsNaHGOrtJcm+qprtGZdhwShzvVr/hzsCKMyCq9pipS9pIt/eu5bQWY8rNb+++eye+kJ
+         iKxH18vDngR3rGVM2/L6ypQllKPCdg98VRrmG7jPZ1I2m6nR5pZBuBIbiv18SRkb44x/
+         ey1bCSrWlyOg1zhz5zZl+1VyvxpsS4yTnifwbSB6oAhcClGVinknIQUb71SnO7R0PBfu
+         HDRA==
+X-Gm-Message-State: AOJu0YwsQSKaJMTo+tSk0inEqD0cGUbCAIlKfHxMMKLGF0Da3gjmpN/O
+	I/damh9A6rIQfdiX9FCyg7QQnuG4BRU1qw==
+X-Google-Smtp-Source: AGHT+IHFjPFjozpPkp8XiDZL8O4QrvW5wcFZTqYcm8kddMKxrUmThPf24tJE0e4H12Y00WQfZXLPqQ==
+X-Received: by 2002:a05:6871:740d:b0:1fb:75b:2fb1 with SMTP id nw13-20020a056871740d00b001fb075b2fb1mr2467219oac.72.1704474107478;
+        Fri, 05 Jan 2024 09:01:47 -0800 (PST)
+Received: from [192.168.17.16] ([138.84.62.70])
+        by smtp.gmail.com with ESMTPSA id ux10-20020a056870af0a00b0020443f5e50csm541383oab.5.2024.01.05.09.01.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Jan 2024 09:01:47 -0800 (PST)
+Message-ID: <92d8ecc9-7b51-4d54-9942-efc5beb156cf@linaro.org>
+Date: Fri, 5 Jan 2024 11:01:44 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO6PR12MB5444:EE_|MN0PR12MB5884:EE_
-X-MS-Office365-Filtering-Correlation-Id: d3a745f9-dd1e-4fb5-aabf-08dc0e0a99af
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	39aGAkM+0/p37xJfScLZ5sLLhCXx6tzD/kbB/XhxsA9kIvu/v4qfYPDtUD/FytDRAQ/l8Uz+Z3+Tv0aIL7p2iUpQk6oWpuUAkeExN93oj6Y98XTvhec70tiWwD6Pce/9KgwIsIHEXPalvMPvHAOOfsrUypbc9VXk/xgR2rizCGjjj/5pQ0x7I45JFv7O5UqvCeLajtAGF7KZ2hwNEqcyg2ybQn8YPoLsqEjXe0b26QItx1hckdtD+I74vgOzoRDsfQjqscO3GWOMCTkclFhZe3tNfpECN9Ln6olVZavBqJdtm2NgXdUu7Vz9ctBGdEPLc8n8mi1VOBrslPs1OaOIuxqRogn1OQ/rcBHFppNbinhco+MDI995dl9I4zdo8euv9XKCKfwFM2lBxi/sKc3BiNONwaBQZAoydu6xNh4nMH0Vk9bO4GZ4Spu/yHAaBgMWYqTF0RRANe/e9DZEBmKgOxiN3aRHJFuwzzpqW+a3UyRbrttpt4IKgDHRhYe/GMVHLyUIvO5u/3E006k5t6yJsztUFwlGv6V8khNPyKHSlU/+2dwxsGM317uQbA0ErFvAAhrnAWpaj+6ohorUHYBbce0iBTtu1qZy/7eBMu3lz4KaABtT/gLJq9yz1xSSvGwF/+sd2Xh7bvm6iG1UsFTiR4S/aRbfUPBVglPVu76Nb0JxD9m1OoiDqyyNI/KRiSL6
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5444.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(366004)(136003)(376002)(396003)(39860400002)(230922051799003)(186009)(1800799012)(64100799003)(451199024)(7416002)(2906002)(4326008)(8936002)(8676002)(5660300002)(36756003)(38100700002)(41300700001)(6666004)(6512007)(6506007)(2616005)(6486002)(966005)(316002)(478600001)(66476007)(83380400001)(31686004)(66556008)(66946007)(53546011)(31696002)(86362001)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?WjRYR3hPakNXT0FKWlJmY1N3Y1V0NVl6SHdWL1NkUU9EWEFHbThucllJV1Vq?=
- =?utf-8?B?djJBY0VGNmNVd21LL0F4VzMzNHFqWWtvcFh0c1FHc3M4dGZ6aUVsRWZLQjMr?=
- =?utf-8?B?Zjc2eFErNkRYWHZmNHoyV0lUS25OemdMY1NsTStHbDZrQ09BRlV0bUY1WEQw?=
- =?utf-8?B?UXUvb0JjK2I4Rm4xMUh1ZzRIQy9LdlljZHdNL2RjUHhPdmpUOStmY3RtcG9P?=
- =?utf-8?B?a0ZPTUxRWmdmeHlyNzNSSlVKb1piazA5cTVsMk1mbjQzM3VwTlJaZWd0WHdw?=
- =?utf-8?B?Z0RwRGl0Z3puQkpRaUsyZ2RvbEJTYyttUUVjMTVWL0tJL0hGTzlGL20zZFB3?=
- =?utf-8?B?TExZVy9BSnlad293dk8zbU1TdDEwV3lVUzVZU1JxMnZRa3d4emxWaW91UHQ3?=
- =?utf-8?B?MGVvdHZESStodURndjR4RXBoNmExbUkxSUM1N2YxM1BmczlJOUhTaXhveFEz?=
- =?utf-8?B?dTRBVm8zUmwyYUUyaG5HeTBUVkpOT09Xc1U2NmlPUTh2dmh5MG0zMm56cXRD?=
- =?utf-8?B?bDBvT2F0VXFLSm9iTlZ1ekdkaTJwVHU5WXQ2RWhoRlRTWlIzeVJzRGlaczlJ?=
- =?utf-8?B?Vm9MZS9LS0wxalFUREQ0b0RxUlpLU0ZDb1VVRWF0K011VXoxTUswbkMwUXR5?=
- =?utf-8?B?UXB3VU5OOUE2ZW81UmpCK083OXZUcmI5Nkd0NlBuRzZJa1p0WUw1bEpSSjdm?=
- =?utf-8?B?K3dIMUFYL2R3Y29QSSt1MWxXQUN1YUZIczFKMm94Q3lnRE9WR1ViYmFqTGt1?=
- =?utf-8?B?c2hYUWx1bDdpeTJJcmdZQTExcGlRblErNndCakc3ZjdGUHVFWmtrYVV3Nklv?=
- =?utf-8?B?V005WVdSOHBIZU9BT3JwNG5PenEwK3YzNWVOaDFIOGtYcnArRG1jQit4bGcw?=
- =?utf-8?B?VUJ5YjdiTjduRE1paEh5blNuOGRaaGNQem5DUDJSSU1QbGJLQmljcmtHVk5K?=
- =?utf-8?B?ZXFhYS9aZlR3QTNONURrd1JIU1R3TExDd0ZsbDVxNHkxZ1pNZEg0dzhudWNn?=
- =?utf-8?B?T2M3YVRWWTJoTHByaXJ2dTJtaUZqUEtYbjdFUldlQ1NuS2pCVGswZy9zejJM?=
- =?utf-8?B?ZWpNUk9LZjI2V3hDZzhGSk1KSnJmNWhWVCtqR2hIb0xhM0k4WXJPRHUydzN5?=
- =?utf-8?B?SkwvSEV1Zk5lZithRzJBTnVZTGw2MW1vOUVSL2VMUmxKc09GUURyOGwrRVhH?=
- =?utf-8?B?dktMbDltTWVDV2l1VEZDRzQvNUdVSnFrUzNETXJnbTZzU3YwWmVwMnhnckk4?=
- =?utf-8?B?RlM1aFVEQlRVVmJveU5EUEJRWjdhSWlOdUhPK3I2ZHdOR3pTZ0FwZ2RZS0dC?=
- =?utf-8?B?dC9tS0JPbUJ1WkxDNnVHT1RJYmJyYVh6enVKKzNoQUVnS3Y1L1I4aWc4WHRp?=
- =?utf-8?B?OW5ld2UxbE80bWRpT0NQME1zeERLOWdMZHpReHllUVZmVlE5by9HVGpTNjJv?=
- =?utf-8?B?OWJJUk1HRmV6bmdzUXpLRVNNeWlab1NKSytnY2hYaW5aOVJ5TUp6ZUZmWkRl?=
- =?utf-8?B?WXJMRUNzMVJCdVNjTTA5aW1RSmR1eHpjTkhLalNvcnBMZnNiSWdKVUFPZkhi?=
- =?utf-8?B?ZlBhRUEyb1U5RGFXTE9FcURlVmJLMEVxb3Arbkk2S3JzZjZydjV2WmlKMGh0?=
- =?utf-8?B?YUYyeTBseUE0Qk4vcTBOekRJMGl2NTNackFmRmkvZkJHWTNIcWJTUGxXeDVP?=
- =?utf-8?B?SFdvbXo3OWppaWpoNGRKakpKTjZlL0p2NW5LaURSQ0VRNFFUNy9ZaUR3VTlU?=
- =?utf-8?B?TzBOUGlhcU96VW5IblVSY2lQWjlwSXU1bmFjWGZMODk4OCtiaEhkajZJNmpx?=
- =?utf-8?B?TVR1WSsvYldLZG13MldFU05KWWl6ZDFuNWhLZlBPZk15Y0txUE51ai9ueXBm?=
- =?utf-8?B?ajJHaFBkUjBDdEFLVGN1OWdQWXZSVHowMkJzWFBobHArZDZVY3NoYnQ5Z0FS?=
- =?utf-8?B?Z1AwWm9jNEhQdWhsVTBzRlVpRnhwelhqR0tlSkZuSmsvZ1J3dGN4ekNvQzV4?=
- =?utf-8?B?TW1zSXhKN3RBQWtyblhJSWgraGg4NUQvNks2bmFrenN0ZVRTcCszTzRJMTdI?=
- =?utf-8?B?UDg4OFEzQ3c3YUlCcVVMaG5JREgwOW9Hdlc5UUs4eU9NNlBpREcrQWlpWlkw?=
- =?utf-8?B?MC84eFNhOGRaNjRvWkRJcW5NWDk1V1ZnMDdnLzBmQllQZXdLdEZISUVvVWZL?=
- =?utf-8?B?NlVBSDd4RE5CL29acGorcm4rcUdrWHNYd2hZMkxuSnNTdGVhTnkzVFg3bU9a?=
- =?utf-8?B?aFNJT3lXYWtNOTJsK2wzNXFXQmF3PT0=?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d3a745f9-dd1e-4fb5-aabf-08dc0e0a99af
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5444.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jan 2024 16:23:07.3637
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: SDtp/dJarfNWwBOd9MWWtZkZM4BeDAGn685/5IemWTER840FcOpE6UAkpcEv3Ufr8uRAPtj0qpQr7P++GF8JZQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5884
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.4 00/47] 5.4.266-rc1 review
+Content-Language: en-US
+From: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, jpanis@baylibre.com
+References: <20240105143815.541462991@linuxfoundation.org>
+ <77569e45-ab73-4049-b90e-cd60cbb872ef@linaro.org>
+In-Reply-To: <77569e45-ab73-4049-b90e-cd60cbb872ef@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Greg,
+Hello!
 
-On 05/01/2024 14:38, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.14.335 release.
-> There are 21 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 05/01/24 10:04 a. m., Daniel Díaz wrote:
+> Hello!
 > 
-> Responses should be made by Sun, 07 Jan 2024 14:38:02 +0000.
-> Anything received after that time might be too late.
+> On 05/01/24 8:38 a. m., Greg Kroah-Hartman wrote:
+>> This is the start of the stable review cycle for the 5.4.266 release.
+>> There are 47 patches in this series, all will be posted as a response
+>> to this one.  If anyone has any issues with these being applied, please
+>> let me know.
+>>
+>> Responses should be made by Sun, 07 Jan 2024 14:38:02 +0000.
+>> Anything received after that time might be too late.
+>>
+>> The whole patch series can be found in one patch at:
+>>     https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.266-rc1.gz
+>> or in the git tree and branch at:
+>>     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+>> and the diffstat can be found below.
+>>
+>> thanks,
+>>
+>> greg k-h
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.335-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
-> and the diffstat can be found below.
+> Quick note that there are Arm32 failures:
 > 
-> thanks,
-> 
-> greg k-h
-> 
-> -------------
-> Pseudo-Shortlog of commits:
+> -----8<-----
+>    /builds/linux/drivers/bus/ti-sysc.c: In function 'sysc_reset':
+>    /builds/linux/drivers/bus/ti-sysc.c:1847:4: error: implicit declaration of function 'fsleep'; did you mean 'ssleep'? [-Werror=implicit-function-declaration]
+>     1847 |    fsleep(ddata->cfg.srst_udelay);
+>          |    ^~~~~~
+>          |    ssleep
+>    cc1: some warnings being treated as errors
+>    make[3]: *** [/builds/linux/scripts/Makefile.build:262: drivers/bus/ti-sysc.o] Error 1
+> ----->8-----
 
-...
+Bisection points to:
 
+   commit bed75624164c501b39531927d07a4fadc5738847
+   Author: Julien Panis <jpanis@baylibre.com>
+   Date:   Mon Aug 21 16:24:18 2023 +0200
 
-> Alexis Lothoré <alexis.lothore@bootlin.com>
->      pinctrl: at91-pio4: use dedicated lock class for IRQ
+       bus: ti-sysc: Use fsleep() instead of usleep_range() in sysc_reset()
+       
+       [ Upstream commit d929b2b7464f95ec01e47f560b1e687482ba8929 ]
 
+Reverting (swapping back the content of that commit, as it wasn't a clean revert) did make the build pass.
 
-I am seeing the following build error for ARM ...
+Greetings!
 
-drivers/pinctrl/pinctrl-at91-pio4.c: In function ‘atmel_pinctrl_probe’:
-drivers/pinctrl/pinctrl-at91-pio4.c:1054:3: error: too many arguments to function ‘irq_set_lockdep_class’
-    irq_set_lockdep_class(irq, &atmel_lock_key, &atmel_request_key);
-    ^~~~~~~~~~~~~~~~~~~~~
-In file included from include/linux/irq.h:517:0,
-                  from include/linux/gpio/driver.h:7,
-                  from drivers/pinctrl/pinctrl-at91-pio4.c:18:
-include/linux/irqdesc.h:250:1: note: declared here
-  irq_set_lockdep_class(unsigned int irq, struct lock_class_key *class)
-  ^~~~~~~~~~~~~~~~~~~~~
+Daniel Díaz
+daniel.diaz@linaro.org
 
-I am guessing it is the above commit.
-
-Jon
--- 
-nvpublic
