@@ -1,73 +1,89 @@
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BF428E08
-	for <patches@lists.linux.dev>; Fri,  5 Jan 2024 11:14:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-Received: from hamburger.collabora.co.uk (hamburger.collabora.co.uk [IPv6:2a01:4f8:1c1c:f269::1])
-	by madrid.collaboradmins.com (Postfix) with ESMTP id 9F3043781FDF;
-	Fri,  5 Jan 2024 11:13:57 +0000 (UTC)
-From: "Shreeya Patel" <shreeya.patel@collabora.com>
-In-Reply-To: <20240103164856.169912722@linuxfoundation.org>
-Content-Type: text/plain; charset="utf-8"
-X-Forward: 127.0.0.1
-References: <20240103164856.169912722@linuxfoundation.org>
-Date: Fri, 05 Jan 2024 11:13:57 +0000
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, kernel@collabora.com, "Gustavo Padovan" <gustavo.padovan@collabora.com>
-To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1673F2E3EF;
+	Fri,  5 Jan 2024 14:39:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bg2akAoo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F66C433C8;
+	Fri,  5 Jan 2024 14:39:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1704465552;
+	bh=Hqe63noenKbUilW7AwyFkqQKqfdD6Z2lhLGzswhJjLE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bg2akAooeP9R9nnZWXxf386HfNc0NEJZYAMi/XWxHAkgQLmA8lYFVxmvQYrk9iAXE
+	 ztgwP1vgYK71dAldeNi6Lk2EGOsvwoaYFevvjrVq1/LLIOfYW5+BelIfiu0dLaEefY
+	 bti5Et9QLews/zHsNQP1GmRaDUZlHd6tfBM9NGvM=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Tony Lindgren <tony@atomide.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 01/21] ARM: OMAP2+: Fix null pointer dereference and memory leak in omap_soc_device_init
+Date: Fri,  5 Jan 2024 15:38:48 +0100
+Message-ID: <20240105143811.605322683@linuxfoundation.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240105143811.536282337@linuxfoundation.org>
+References: <20240105143811.536282337@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <1ab-6597e480-3-72fe1e00@223499225>
-Subject: =?utf-8?q?Re=3A?= [PATCH =?utf-8?q?6=2E1?= 000/100] 
- =?utf-8?q?6=2E1=2E71-rc1?= review
-User-Agent: SOGoMail 5.9.1
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Wednesday, January 03, 2024 22:23 IST, Greg Kroah-Hartman <gregkh@li=
-nuxfoundation.org> wrote:
+4.14-stable review patch.  If anyone has any objections, please let me know.
 
-> This is the start of the stable review cycle for the 6.1.71 release.
-> There are 100 patches in this series, all will be posted as a respons=
-e
-> to this one.  If anyone has any issues with these being applied, plea=
-se
-> let me know.
->=20
-> Responses should be made by Fri, 05 Jan 2024 16:47:49 +0000.
-> Anything received after that time might be too late.
->=20
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1=
-.71-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
-.git linux-6.1.y
-> and the diffstat can be found below.
->=20
+------------------
 
-KernelCI report for stable-rc/linux-6.1.y for this week :-
+From: Kunwu Chan <chentao@kylinos.cn>
 
-## stable-rc HEAD for linux-6.1.y:
-Date: 2024-01-03
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.=
-git/log/?h=3D1882ab3ed5b75d2cfd60da6d4eca87adce3a43f9
+[ Upstream commit c72b9c33ef9695ad7ce7a6eb39a9df8a01b70796 ]
 
-## Build failures:
+kasprintf() returns a pointer to dynamically allocated memory which can
+be NULL upon failure. When 'soc_dev_attr->family' is NULL,it'll trigger
+the null pointer dereference issue, such as in 'soc_info_show'.
 
-No build failures seen for the stable-rc/linux-6.1.y commit head \o/
+And when 'soc_device_register' fails, it's necessary to release
+'soc_dev_attr->family' to avoid memory leaks.
 
-## Boot failures:
+Fixes: 6770b2114325 ("ARM: OMAP2+: Export SoC information to userspace")
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Message-ID: <20231123145237.609442-1-chentao@kylinos.cn>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm/mach-omap2/id.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-No **new** boot failures seen for the stable-rc/linux-6.1.y commit head=
- \o/
+diff --git a/arch/arm/mach-omap2/id.c b/arch/arm/mach-omap2/id.c
+index 79d71b1eae594..1bc17fd49e488 100644
+--- a/arch/arm/mach-omap2/id.c
++++ b/arch/arm/mach-omap2/id.c
+@@ -784,10 +784,15 @@ void __init omap_soc_device_init(void)
+ 
+ 	soc_dev_attr->machine  = soc_name;
+ 	soc_dev_attr->family   = omap_get_family();
++	if (!soc_dev_attr->family) {
++		kfree(soc_dev_attr);
++		return;
++	}
+ 	soc_dev_attr->revision = soc_rev;
+ 
+ 	soc_dev = soc_device_register(soc_dev_attr);
+ 	if (IS_ERR(soc_dev)) {
++		kfree(soc_dev_attr->family);
+ 		kfree(soc_dev_attr);
+ 		return;
+ 	}
+-- 
+2.43.0
 
-Tested-by: kernelci.org bot <bot@kernelci.org>
 
-Thanks,
-Shreeya Patel
 
