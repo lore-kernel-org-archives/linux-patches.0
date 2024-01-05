@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11C32D051;
-	Fri,  5 Jan 2024 14:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE9B18EB7;
+	Fri,  5 Jan 2024 14:41:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tI/mc/pt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42CB4C433C8;
-	Fri,  5 Jan 2024 14:41:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DG4fFYl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F192BC433C8;
+	Fri,  5 Jan 2024 14:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465700;
-	bh=MJjy85CmaJX7aUWkqvBNbzfaVeJ4QXEbTeZIO3ZM0/w=;
+	s=korg; t=1704465703;
+	bh=rF1y//nudTupKhZgqds4XWYM7pjkpQ4beOBPCZIKvEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tI/mc/pt0AkwphYV+JNbHjWziXYlPUZwJuyuvLy/CQGpAEBcYEgG0gdUEl8DL7HwO
-	 Qdopzeg6tRdzcrxdq2LrbHGevrVM0fH/ben9S0gSD1mD/hPaIIRyTnIL3Usb32iYMK
-	 gNu2kFhCeZb68z8gQ+dNKBiFF0HIwPev++qLBP44=
+	b=1DG4fFYlccuyXetXKLKVyl3qKFGkdpTAyUkZIOS9XJ0+YD47iEPwrUKX8rbk1azlU
+	 esxDfgNJy2dpIegEVFVO+cf8XnXkpw0WhoMtwQkC0W7etAbnNjU1FVE3pusi41WrpE
+	 sOMbu1S/ZiqZYycsTIUHWwM14noLNg5VjdGBhJm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Drew Fustini <drew@beagleboard.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	Fabian Godehardt <fg@emlix.com>
-Subject: [PATCH 4.19 37/41] usb: musb: fix MUSB_QUIRK_B_DISCONNECT_99 handling
-Date: Fri,  5 Jan 2024 15:39:17 +0100
-Message-ID: <20240105143815.450392539@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 38/41] usb: fotg210-hcd: delete an incorrect bounds test
+Date: Fri,  5 Jan 2024 15:39:18 +0100
+Message-ID: <20240105143815.481376449@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143813.957669139@linuxfoundation.org>
 References: <20240105143813.957669139@linuxfoundation.org>
@@ -44,60 +44,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit b65ba0c362be665192381cc59e3ac3ef6f0dd1e1 upstream.
+[ Upstream commit 7fbcd195e2b8cc952e4aeaeb50867b798040314c ]
 
-In commit 92af4fc6ec33 ("usb: musb: Fix suspend with devices
-connected for a64"), the logic to support the
-MUSB_QUIRK_B_DISCONNECT_99 quirk was modified to only conditionally
-schedule the musb->irq_work delayed work.
+Here "temp" is the number of characters that we have written and "size"
+is the size of the buffer.  The intent was clearly to say that if we have
+written to the end of the buffer then stop.
 
-This commit badly breaks ECM Gadget on AM335X. Indeed, with this
-commit, one can observe massive packet loss:
+However, for that to work the comparison should have been done on the
+original "size" value instead of the "size -= temp" value.  Not only
+will that not trigger when we want to, but there is a small chance that
+it will trigger incorrectly before we want it to and we break from the
+loop slightly earlier than intended.
 
-$ ping 192.168.0.100
-...
-15 packets transmitted, 3 received, 80% packet loss, time 14316ms
+This code was recently changed from using snprintf() to scnprintf().  With
+snprintf() we likely would have continued looping and passed a negative
+size parameter to snprintf().  This would have triggered an annoying
+WARN().  Now that we have converted to scnprintf() "size" will never
+drop below 1 and there is no real need for this test.  We could change
+the condition to "if (temp <= 1) goto done;" but just deleting the test
+is cleanest.
 
-Reverting this commit brings back a properly functioning ECM
-Gadget. An analysis of the commit seems to indicate that a mistake was
-made: the previous code was not falling through into the
-MUSB_QUIRK_B_INVALID_VBUS_91, but now it is, unless the condition is
-taken.
-
-Changing the logic to be as it was before the problematic commit *and*
-only conditionally scheduling musb->irq_work resolves the regression:
-
-$ ping 192.168.0.100
-...
-64 packets transmitted, 64 received, 0% packet loss, time 64475ms
-
-Fixes: 92af4fc6ec33 ("usb: musb: Fix suspend with devices connected for a64")
-Cc: stable@vger.kernel.org
-Tested-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Tested-by: Drew Fustini <drew@beagleboard.org>
-Acked-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
-Link: https://lore.kernel.org/r/20210528140446.278076-1-thomas.petazzoni@bootlin.com
-Signed-off-by: Fabian Godehardt <fg@emlix.com>
+Fixes: 7d50195f6c50 ("usb: host: Faraday fotg210-hcd driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/ZXmwIwHe35wGfgzu@suswa
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/musb/musb_core.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/host/fotg210-hcd.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/usb/musb/musb_core.c
-+++ b/drivers/usb/musb/musb_core.c
-@@ -1873,9 +1873,8 @@ static void musb_pm_runtime_check_sessio
- 			schedule_delayed_work(&musb->irq_work,
- 					      msecs_to_jiffies(1000));
- 			musb->quirk_retries--;
--			break;
- 		}
--		/* fall through */
-+		break;
- 	case MUSB_QUIRK_B_INVALID_VBUS_91:
- 		if (musb->quirk_retries && !musb->flush_irq_work) {
- 			musb_dbg(musb,
+diff --git a/drivers/usb/host/fotg210-hcd.c b/drivers/usb/host/fotg210-hcd.c
+index 1577424319613..d87b4fb0d9af6 100644
+--- a/drivers/usb/host/fotg210-hcd.c
++++ b/drivers/usb/host/fotg210-hcd.c
+@@ -426,8 +426,6 @@ static void qh_lines(struct fotg210_hcd *fotg210, struct fotg210_qh *qh,
+ 			temp = size;
+ 		size -= temp;
+ 		next += temp;
+-		if (temp == size)
+-			goto done;
+ 	}
+ 
+ 	temp = snprintf(next, size, "\n");
+@@ -437,7 +435,6 @@ static void qh_lines(struct fotg210_hcd *fotg210, struct fotg210_qh *qh,
+ 	size -= temp;
+ 	next += temp;
+ 
+-done:
+ 	*sizep = size;
+ 	*nextp = next;
+ }
+-- 
+2.43.0
+
 
 
