@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5041828DDA;
-	Fri,  5 Jan 2024 14:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D2F18EB7;
+	Fri,  5 Jan 2024 14:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XtLKfyFj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9704C433C7;
-	Fri,  5 Jan 2024 14:43:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mN/T632Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F13C433C7;
+	Fri,  5 Jan 2024 14:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465818;
-	bh=tITjgX1JAzjZXBixOhS0LbJvzyciXHUcNUHKSWtEauw=;
+	s=korg; t=1704465820;
+	bh=x8OvYNCHufG8WyTUgWpCSu0qKdQghW+B1ieEn8n5vSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XtLKfyFjOxhCfZ1+jkAOXfTauK0irMFWjCfEfRc83yONjtRB/s9aMtyv8z5QEHOk7
-	 9v+UDjTpUzgngnpLs4LQiikOt8YxYKgA+TnRmY8jvBU9AyD/QMHNjtBL4j5zvVK9de
-	 BZ6H2cRjOVVIb446hb9VIqxQCBsh1DWiAA5ycw9A=
+	b=mN/T632YrUrz0wqTmP0sADB8aQ/Ka1V77ldE/eWp2CHDzefGOqfNN3SoDwc+YvUI4
+	 eEdJ+lly7PXlp0y4aEKzdvh15kuSIHBlcWz4bSdptg9Xq33S8Kp2zKySsT1rvLuPlF
+	 q155SbfITOeSNwrw3zqxhtCKCt6NCY75uF3JlscQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hu Haowen <xianfengting221@163.com>,
-	Saeed Mahameed <saeedm@mellanox.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Feras Daoud <ferasda@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 08/47] net/mlx5: improve some comments
-Date: Fri,  5 Jan 2024 15:38:55 +0100
-Message-ID: <20240105143815.839048294@linuxfoundation.org>
+Subject: [PATCH 5.4 09/47] net/mlx5: Fix fw tracer first block check
+Date: Fri,  5 Jan 2024 15:38:56 +0100
+Message-ID: <20240105143815.888896612@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
 References: <20240105143815.541462991@linuxfoundation.org>
@@ -42,33 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hu Haowen <xianfengting221@163.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit 6533380dfd003ea7636cb5672f4f85124b56328b ]
+[ Upstream commit 4261edf11cb7c9224af713a102e5616329306932 ]
 
-Replaced "its" with "it's".
+While handling new traces, to verify it is not the first block being
+written, last_timestamp is checked. But instead of checking it is non
+zero it is verified to be zero. Fix to verify last_timestamp is not
+zero.
 
-Signed-off-by: Hu Haowen <xianfengting221@163.com>
-Signed-off-by: Saeed Mahameed <saeedm@mellanox.com>
-Stable-dep-of: 4261edf11cb7 ("net/mlx5: Fix fw tracer first block check")
+Fixes: c71ad41ccb0c ("net/mlx5: FW tracer, events handling")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Feras Daoud <ferasda@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-index 58d48d76c1b8a..8bd5b9ab5e157 100644
+index 8bd5b9ab5e157..53775f3cdaf46 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-@@ -687,7 +687,7 @@ static void mlx5_fw_tracer_handle_traces(struct work_struct *work)
- 		get_block_timestamp(tracer, &tmp_trace_block[TRACES_PER_BLOCK - 1]);
+@@ -688,7 +688,7 @@ static void mlx5_fw_tracer_handle_traces(struct work_struct *work)
  
  	while (block_timestamp > tracer->last_timestamp) {
--		/* Check block override if its not the first block */
-+		/* Check block override if it's not the first block */
- 		if (!tracer->last_timestamp) {
+ 		/* Check block override if it's not the first block */
+-		if (!tracer->last_timestamp) {
++		if (tracer->last_timestamp) {
  			u64 *ts_event;
  			/* To avoid block override be the HW in case of buffer
+ 			 * wraparound, the time stamp of the previous block
 -- 
 2.43.0
 
