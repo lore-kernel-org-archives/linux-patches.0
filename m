@@ -1,81 +1,191 @@
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D97B2E855
-	for <patches@lists.linux.dev>; Fri,  5 Jan 2024 21:51:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-Received: from hamburger.collabora.co.uk (hamburger.collabora.co.uk [IPv6:2a01:4f8:1c1c:f269::1])
-	by madrid.collaboradmins.com (Postfix) with ESMTP id CF52437813CF;
-	Fri,  5 Jan 2024 21:51:10 +0000 (UTC)
-From: "Shreeya Patel" <shreeya.patel@collabora.com>
-In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
-Content-Type: text/plain; charset="utf-8"
-X-Forward: 127.0.0.1
-References: <20240105143815.541462991@linuxfoundation.org>
-Date: Fri, 05 Jan 2024 21:51:10 +0000
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, "Gustavo Padovan" <gustavo.padovan@collabora.com>, kernel@collabora.com
-To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3645A225D3
+	for <patches@lists.linux.dev>; Fri,  5 Jan 2024 21:59:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="czatEGgC"
+Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-7ba8c218fe1so96128139f.3
+        for <patches@lists.linux.dev>; Fri, 05 Jan 2024 13:59:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1704491974; x=1705096774; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=B6rZpkw2Ym1c5fqwTeBK9U1azUZTx22ltTG//VlM2Jw=;
+        b=czatEGgC8BFdcSY5b/rNTEoK9pXe1cCcJzVe3YzfCnAxrKhz/72cfDcrgFyGyWyIws
+         28hIarqtRACQIOkfgDwSdce45qSUVJUBjj2FhbXLrYdRDQIl2i2z3pvp31QyM9mX9VV2
+         ElSUWL4NGIYViz9xDwYrHfB2dLM7hVCPd/rJb4MPrTkEA3fPLAYU8iiL1zj/KQ0FqQ3k
+         2SRxNttWjYD8b0Na1X2RkzgyZEnHTl0+7Pnwz7I+kXaAeVc5zibGufjptvDuV/Or3Moh
+         1CIh2GYmFNJB/xWIZ79GD0xL39q6zqN8eJ5Yjs4i2Kgayr4Zn0rExzhqQv79REmPKMzr
+         /nCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704491974; x=1705096774;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=B6rZpkw2Ym1c5fqwTeBK9U1azUZTx22ltTG//VlM2Jw=;
+        b=KGFYBUuSKw5I+cbl6S1HkObyoKT7BcH2zSdPfYTCDVEB86P7X/wfc0gPLaQjg6/vyc
+         70rL4CzYAJtujQ7StDknFiQU2fA5Oz9emIG+q+oAVJxFM8ZjQNY9N9qJoWuZhgYwYjCm
+         0YZrKyg49jif5210CPlTAbj7m+Rx4eFHt1tJC23cNp2OOpvb4izPghZycvGumGFU9o0L
+         6R5ZgqBj9yrZEVPW33b3KHO6aatjNKcZ6sUdTn5HKIhMtfL7G0tCva/LcVIRGKCK5/yv
+         SSkB3MZmgC10VvxKUUw/KOBCKHNbRMhRK2r9VZsoEdxVzdHP61DopUL8A0q0ZqKZ+D9u
+         DQiQ==
+X-Gm-Message-State: AOJu0YyUcspSzKtl76micVgwZTjSj37iIVfxE7Alg5XdgzSLiY1CAyZq
+	xxHUg9O2BetHOFEiSDytqdI+yAQU6CHJ
+X-Google-Smtp-Source: AGHT+IHuLYZFNRa1aPYhtyIaQJQtiGusNCzi0ck4yHX30YnY6uYgkV+3YFPS7Fsp1/oiBLxrFgPjtA==
+X-Received: by 2002:a5e:8e41:0:b0:7ba:a10f:fa41 with SMTP id r1-20020a5e8e41000000b007baa10ffa41mr162756ioo.18.1704491974248;
+        Fri, 05 Jan 2024 13:59:34 -0800 (PST)
+Received: from google.com (194.225.68.34.bc.googleusercontent.com. [34.68.225.194])
+        by smtp.gmail.com with ESMTPSA id i43-20020a056638402b00b0046b83875cd5sm629253jai.168.2024.01.05.13.59.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jan 2024 13:59:33 -0800 (PST)
+Date: Fri, 5 Jan 2024 21:59:30 +0000
+From: Justin Stitt <justinstitt@google.com>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: sre@kernel.org, chenhuiz@axis.com, linux-pm@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH] power: supply: bq24190_charger: Fix "initializer element
+ is not constant" error
+Message-ID: <20240105215930.usi2yicruah5kecl@google.com>
+References: <20240103-fix-bq24190_charger-vbus_desc-non-const-v1-1-115ddf798c70@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <1b20-65987a00-1-329a04c0@129853067>
-Subject: =?utf-8?q?Re=3A?= [PATCH =?utf-8?q?5=2E4?= 00/47] 
- =?utf-8?q?5=2E4=2E266-rc1?= review
-User-Agent: SOGoMail 5.9.1
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240103-fix-bq24190_charger-vbus_desc-non-const-v1-1-115ddf798c70@kernel.org>
 
-On Friday, January 05, 2024 20:08 IST, Greg Kroah-Hartman <gregkh@linux=
-foundation.org> wrote:
+On Wed, Jan 03, 2024 at 09:57:07AM -0700, Nathan Chancellor wrote:
+> When building with a version of GCC prior to 8.x, there is an error
+> around non-constant initializer elements:
+>
+>   drivers/power/supply/bq24190_charger.c:1978:16: error: initializer element is not constant
+>      .vbus_desc = bq24190_vbus_desc,
+>                   ^~~~~~~~~~~~~~~~~
+>   drivers/power/supply/bq24190_charger.c:1978:16: note: (near initialization for 'bq24190_chip_info_tbl[0].vbus_desc')
+>   drivers/power/supply/bq24190_charger.c:1989:16: error: initializer element is not constant
+>      .vbus_desc = bq24190_vbus_desc,
+>                   ^~~~~~~~~~~~~~~~~
+>   drivers/power/supply/bq24190_charger.c:1989:16: note: (near initialization for 'bq24190_chip_info_tbl[1].vbus_desc')
+>   drivers/power/supply/bq24190_charger.c:2000:16: error: initializer element is not constant
+>      .vbus_desc = bq24190_vbus_desc,
+>                   ^~~~~~~~~~~~~~~~~
+>   drivers/power/supply/bq24190_charger.c:2000:16: note: (near initialization for 'bq24190_chip_info_tbl[2].vbus_desc')
+>   drivers/power/supply/bq24190_charger.c:2011:16: error: initializer element is not constant
+>      .vbus_desc = bq24190_vbus_desc,
+>                   ^~~~~~~~~~~~~~~~~
+>   drivers/power/supply/bq24190_charger.c:2011:16: note: (near initialization for 'bq24190_chip_info_tbl[3].vbus_desc')
+>   drivers/power/supply/bq24190_charger.c:2022:16: error: initializer element is not constant
+>      .vbus_desc = bq24296_vbus_desc,
+>                   ^~~~~~~~~~~~~~~~~
+>   drivers/power/supply/bq24190_charger.c:2022:16: note: (near initialization for 'bq24190_chip_info_tbl[4].vbus_desc')
+>
+> Clang versions prior to 17.x show a similar error:
+>
+>   drivers/power/supply/bq24190_charger.c:1978:16: error: initializer element is not a compile-time constant
+>                   .vbus_desc = bq24190_vbus_desc,
+>                                ^~~~~~~~~~~~~~~~~
+>   1 error generated.
+>
+> Newer compilers have decided to accept these structures as compile time
+> constants as an extension. To resolve this issue for all supported
+> compilers, change the vbus_desc member in 'struct bq24190_chip_info' to
+> a pointer, as it is only ever passed by reference anyways, and adjust
+> the assignments accordingly.
+>
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/1973
+> Fixes: b150a703b56f ("power: supply: bq24190_charger: Add support for BQ24296")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+Since vbus_desc is only ever used as a reference this change to a
+pointer is valid and shouldn't require any further changes other than
+the ones present in this patch.
 
-> This is the start of the stable review cycle for the 5.4.266 release.
-> There are 47 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, plea=
-se
-> let me know.
->=20
-> Responses should be made by Sun, 07 Jan 2024 14:38:02 +0000.
-> Anything received after that time might be too late.
->=20
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4=
-.266-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
-.git linux-5.4.y
-> and the diffstat can be found below.
->=20
+Reviewed-by: Justin Stitt <justinstitt@google.com>
+>  drivers/power/supply/bq24190_charger.c | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
+>
+> diff --git a/drivers/power/supply/bq24190_charger.c b/drivers/power/supply/bq24190_charger.c
+> index a8995a21fadb..2b393eb5c282 100644
+> --- a/drivers/power/supply/bq24190_charger.c
+> +++ b/drivers/power/supply/bq24190_charger.c
+> @@ -246,7 +246,7 @@ struct bq24190_dev_info {
+>  struct bq24190_chip_info {
+>  	int ichg_array_size;
+>  #ifdef CONFIG_REGULATOR
+> -	const struct regulator_desc vbus_desc;
+> +	const struct regulator_desc *vbus_desc;
+>  #endif
+>  	int (*check_chip)(struct bq24190_dev_info *bdi);
+>  	int (*set_chg_config)(struct bq24190_dev_info *bdi, const u8 chg_config);
+> @@ -728,7 +728,7 @@ static int bq24190_register_vbus_regulator(struct bq24190_dev_info *bdi)
+>  	else
+>  		cfg.init_data = &bq24190_vbus_init_data;
+>  	cfg.driver_data = bdi;
+> -	reg = devm_regulator_register(bdi->dev, &bdi->info->vbus_desc, &cfg);
+> +	reg = devm_regulator_register(bdi->dev, bdi->info->vbus_desc, &cfg);
+>  	if (IS_ERR(reg)) {
+>  		ret = PTR_ERR(reg);
+>  		dev_err(bdi->dev, "Can't register regulator: %d\n", ret);
+> @@ -1975,7 +1975,7 @@ static const struct bq24190_chip_info bq24190_chip_info_tbl[] = {
+>  	[BQ24190] = {
+>  		.ichg_array_size = ARRAY_SIZE(bq24190_ccc_ichg_values),
+>  #ifdef CONFIG_REGULATOR
+> -		.vbus_desc = bq24190_vbus_desc,
+> +		.vbus_desc = &bq24190_vbus_desc,
+>  #endif
+>  		.check_chip = bq24190_check_chip,
+>  		.set_chg_config = bq24190_battery_set_chg_config,
+> @@ -1986,7 +1986,7 @@ static const struct bq24190_chip_info bq24190_chip_info_tbl[] = {
+>  	[BQ24192] = {
+>  		.ichg_array_size = ARRAY_SIZE(bq24190_ccc_ichg_values),
+>  #ifdef CONFIG_REGULATOR
+> -		.vbus_desc = bq24190_vbus_desc,
+> +		.vbus_desc = &bq24190_vbus_desc,
+>  #endif
+>  		.check_chip = bq24190_check_chip,
+>  		.set_chg_config = bq24190_battery_set_chg_config,
+> @@ -1997,7 +1997,7 @@ static const struct bq24190_chip_info bq24190_chip_info_tbl[] = {
+>  	[BQ24192i] = {
+>  		.ichg_array_size = ARRAY_SIZE(bq24190_ccc_ichg_values),
+>  #ifdef CONFIG_REGULATOR
+> -		.vbus_desc = bq24190_vbus_desc,
+> +		.vbus_desc = &bq24190_vbus_desc,
+>  #endif
+>  		.check_chip = bq24190_check_chip,
+>  		.set_chg_config = bq24190_battery_set_chg_config,
+> @@ -2008,7 +2008,7 @@ static const struct bq24190_chip_info bq24190_chip_info_tbl[] = {
+>  	[BQ24196] = {
+>  		.ichg_array_size = ARRAY_SIZE(bq24190_ccc_ichg_values),
+>  #ifdef CONFIG_REGULATOR
+> -		.vbus_desc = bq24190_vbus_desc,
+> +		.vbus_desc = &bq24190_vbus_desc,
+>  #endif
+>  		.check_chip = bq24190_check_chip,
+>  		.set_chg_config = bq24190_battery_set_chg_config,
+> @@ -2019,7 +2019,7 @@ static const struct bq24190_chip_info bq24190_chip_info_tbl[] = {
+>  	[BQ24296] = {
+>  		.ichg_array_size = BQ24296_CCC_ICHG_VALUES_LEN,
+>  #ifdef CONFIG_REGULATOR
+> -		.vbus_desc = bq24296_vbus_desc,
+> +		.vbus_desc = &bq24296_vbus_desc,
+>  #endif
+>  		.check_chip = bq24296_check_chip,
+>  		.set_chg_config = bq24296_battery_set_chg_config,
+>
+> ---
+> base-commit: b150a703b56fb6eb282d059b421652ccd9155c23
+> change-id: 20240103-fix-bq24190_charger-vbus_desc-non-const-c6bf001dc69d
+>
+> Best regards,
+> --
+> Nathan Chancellor <nathan@kernel.org>
+>
 
-KernelCI report for stable-rc/linux-5.4.y for this week :-
-
-## stable-rc HEAD for linux-5.4.y:
-
-Date: 2024-01-03
-5.4: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stabl=
-e-rc.git/log/?h=3D84ea024efd547b80abad91a30eb7c86d313eb6a7
-
-## Build failures:
-
-arm:
-    - multi=5Fv7=5Fdefconfig (gcc-10) and omap2plus=5Fdefconfig (gcc-10=
-)
-    - Build details :- https://linux.kernelci.org/build/stable-rc/branc=
-h/linux-5.4.y/kernel/v5.4.265-48-g84ea024efd54/
-    - Errors :-
-    drivers/bus/ti-sysc.c:1847:4: error: implicit declaration of functi=
-on =E2=80=98fsleep=E2=80=99; did you mean =E2=80=98ssleep=E2=80=99? [-W=
-error=3Dimplicit-function-declaration]
-
-## Boot failures:
-
-No **new** boot failures seen for the stable-rc/linux-5.4.y commit head=
- \o/
-
-Tested-by: kernelci.org bot <bot@kernelci.org>
-
-Thanks,
-Shreeya Patel
-
+Thanks
+Justin
