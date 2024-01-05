@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA212D051;
-	Fri,  5 Jan 2024 14:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0798128FA;
+	Fri,  5 Jan 2024 14:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoJUkANj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C530DC433C7;
-	Fri,  5 Jan 2024 14:39:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJ095QQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80634C433C7;
+	Fri,  5 Jan 2024 14:39:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465585;
-	bh=SO30nGvxqJwXkpOSYQZNbT6ocwbyojX8bK66nRrlnCQ=;
+	s=korg; t=1704465587;
+	bh=p587OFCvdB+d2L+ZevkY+4PmElixk1Zxg5kmXhZLzUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eoJUkANj2dZ2Jt2XRVN00lxXaySy92WmUFNO2Mik7520Ff+GGOpiFHdV0YmREaQIT
-	 gQybdAQvUgtcjrq0mHiYqDNMPzG7nEm6+p4odVvWE2khY2BEu0UxEF5Y0WQ+WGcJ8R
-	 naM/QQshyeIzWGyCKPsereVT2N0mMj9ffZPXsWWc=
+	b=dJ095QQ2vq2j1p8fLehawwoc7n0haQGsh7HqWqwZgiCf+c0zpM82ANab884nGc8VE
+	 Pdx4wktBxxgvdhd/ZPPJWDWPlMtPZ6PzoPamWkQpXCuY5Dk+l/LkkFs0f5MKxGsZqr
+	 MU4EXXTGcqCGfJ541bKeUd7PuVQGumRpbaoMb82w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rouven Czerwinski <r.czerwinski@pengutronix.de>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 4.14 19/21] net: rfkill: gpio: set GPIO direction
-Date: Fri,  5 Jan 2024 15:39:06 +0100
-Message-ID: <20240105143812.394635143@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Hendrik Brueckner <brueckner@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 02/21] s390/vx: fix save/restore of fpu kernel context
+Date: Fri,  5 Jan 2024 15:38:49 +0100
+Message-ID: <20240105143811.657718732@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143811.536282337@linuxfoundation.org>
 References: <20240105143811.536282337@linuxfoundation.org>
@@ -41,45 +43,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rouven Czerwinski <r.czerwinski@pengutronix.de>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 23484d817082c3005252d8edfc8292c8a1006b5b upstream.
+[ Upstream commit e6b2dab41888332bf83f592131e7ea07756770a4 ]
 
-Fix the undefined usage of the GPIO consumer API after retrieving the
-GPIO description with GPIO_ASIS. The API documentation mentions that
-GPIO_ASIS won't set a GPIO direction and requires the user to set a
-direction before using the GPIO.
+The KERNEL_FPR mask only contains a flag for the first eight vector
+registers. However floating point registers overlay parts of the first
+sixteen vector registers.
 
-This can be confirmed on i.MX6 hardware, where rfkill-gpio is no longer
-able to enabled/disable a device, presumably because the GPIO controller
-was never configured for the output direction.
+This could lead to vector register corruption if a kernel fpu context uses
+any of the vector registers 8 to 15 and is interrupted or calls a
+KERNEL_FPR context. If that context uses also vector registers 8 to 15,
+their contents will be corrupted on return.
 
-Fixes: b2f750c3a80b ("net: rfkill: gpio: prevent value glitch during probe")
-Cc: stable@vger.kernel.org
-Signed-off-by: Rouven Czerwinski <r.czerwinski@pengutronix.de>
-Link: https://msgid.link/20231207075835.3091694-1-r.czerwinski@pengutronix.de
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Luckily this is currently not a real bug, since the kernel has only one
+KERNEL_FPR user with s390_adjust_jiffies() and it is only using floating
+point registers 0 to 2.
+
+Fix this by using the correct bits for KERNEL_FPR.
+
+Fixes: 7f79695cc1b6 ("s390/fpu: improve kernel_fpu_[begin|end]")
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rfkill/rfkill-gpio.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/s390/include/asm/fpu/api.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/rfkill/rfkill-gpio.c
-+++ b/net/rfkill/rfkill-gpio.c
-@@ -129,6 +129,14 @@ static int rfkill_gpio_probe(struct plat
- 		return -EINVAL;
- 	}
+diff --git a/arch/s390/include/asm/fpu/api.h b/arch/s390/include/asm/fpu/api.h
+index 34a7ae68485c6..be16a6c0f1276 100644
+--- a/arch/s390/include/asm/fpu/api.h
++++ b/arch/s390/include/asm/fpu/api.h
+@@ -76,7 +76,7 @@ static inline int test_fp_ctl(u32 fpc)
+ #define KERNEL_VXR_HIGH		(KERNEL_VXR_V16V23|KERNEL_VXR_V24V31)
  
-+	ret = gpiod_direction_output(rfkill->reset_gpio, true);
-+	if (ret)
-+		return ret;
-+
-+	ret = gpiod_direction_output(rfkill->shutdown_gpio, true);
-+	if (ret)
-+		return ret;
-+
- 	rfkill->rfkill_dev = rfkill_alloc(rfkill->name, &pdev->dev,
- 					  rfkill->type, &rfkill_gpio_ops,
- 					  rfkill);
+ #define KERNEL_VXR		(KERNEL_VXR_LOW|KERNEL_VXR_HIGH)
+-#define KERNEL_FPR		(KERNEL_FPC|KERNEL_VXR_V0V7)
++#define KERNEL_FPR		(KERNEL_FPC|KERNEL_VXR_LOW)
+ 
+ struct kernel_fpu;
+ 
+-- 
+2.43.0
+
 
 
