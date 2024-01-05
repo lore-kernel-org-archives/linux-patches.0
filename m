@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCF21E4A9;
-	Fri,  5 Jan 2024 14:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D882AE74;
+	Fri,  5 Jan 2024 14:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSeLVuHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59D1C433C8;
-	Fri,  5 Jan 2024 14:41:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRFSW3oM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2DEC433C7;
+	Fri,  5 Jan 2024 14:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465676;
-	bh=MIGmNfHzy84MiKhFVgp5Bp5v7vYpAPoPj72VPOVcoec=;
+	s=korg; t=1704465678;
+	bh=VvdKIoZDvqoE/smi7WVy1jvi8PrS6G5552hodv+hi60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oSeLVuHV8Ew5AvpLFrOrjYewY4xeNTM4T8UuqDVugesT56GtZsPbf49T5oAOytJmt
-	 RcHdSSH3RNOJ13A+7S2H4V8PQoYybmKnbDHuDBsvVoZwllUPnBnt/hXbkcFRyfLwOo
-	 FTQMZ0trOGzWvxmc3SwDrItRwg21QATZLRLXPAOc=
+	b=tRFSW3oMmsDWZNH2MRD/N4hYiWm2JdFuGjCNg6nKeOYF63iUZDAiYumhy/pR/J0nk
+	 466K/Qge1Zt1PV+kmMyBCoSSSQaRlVphB5IZL184Y3VSkIqtgREzebxf//wPpzMTVF
+	 zA7gAPQVB5Li9oSs1SDr8omJRvRB3n7EYLQuYhGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 05/41] ksmbd: fix wrong name of SMB2_CREATE_ALLOCATION_SIZE
-Date: Fri,  5 Jan 2024 15:38:45 +0100
-Message-ID: <20240105143814.173086944@linuxfoundation.org>
+Subject: [PATCH 4.19 06/41] ARM: OMAP2+: Fix null pointer dereference and memory leak in omap_soc_device_init
+Date: Fri,  5 Jan 2024 15:38:46 +0100
+Message-ID: <20240105143814.215861496@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143813.957669139@linuxfoundation.org>
 References: <20240105143813.957669139@linuxfoundation.org>
@@ -43,38 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit 13736654481198e519059d4a2e2e3b20fa9fdb3e ]
+[ Upstream commit c72b9c33ef9695ad7ce7a6eb39a9df8a01b70796 ]
 
-MS confirm that "AISi" name of SMB2_CREATE_ALLOCATION_SIZE in MS-SMB2
-specification is a typo. cifs/ksmbd have been using this wrong name from
-MS-SMB2. It should be "AlSi". Also It will cause problem when running
-smb2.create.open test in smbtorture against ksmbd.
+kasprintf() returns a pointer to dynamically allocated memory which can
+be NULL upon failure. When 'soc_dev_attr->family' is NULL,it'll trigger
+the null pointer dereference issue, such as in 'soc_info_show'.
 
-Cc: stable@vger.kernel.org
-Fixes: 12197a7fdda9 ("Clarify SMB2/SMB3 create context and add missing ones")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+And when 'soc_device_register' fails, it's necessary to release
+'soc_dev_attr->family' to avoid memory leaks.
+
+Fixes: 6770b2114325 ("ARM: OMAP2+: Export SoC information to userspace")
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Message-ID: <20231123145237.609442-1-chentao@kylinos.cn>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2pdu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mach-omap2/id.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/cifs/smb2pdu.h b/fs/cifs/smb2pdu.h
-index 8a44d59947b70..dd6e749b24007 100644
---- a/fs/cifs/smb2pdu.h
-+++ b/fs/cifs/smb2pdu.h
-@@ -610,7 +610,7 @@ struct smb2_tree_disconnect_rsp {
- #define SMB2_CREATE_SD_BUFFER			"SecD" /* security descriptor */
- #define SMB2_CREATE_DURABLE_HANDLE_REQUEST	"DHnQ"
- #define SMB2_CREATE_DURABLE_HANDLE_RECONNECT	"DHnC"
--#define SMB2_CREATE_ALLOCATION_SIZE		"AISi"
-+#define SMB2_CREATE_ALLOCATION_SIZE		"AlSi"
- #define SMB2_CREATE_QUERY_MAXIMAL_ACCESS_REQUEST "MxAc"
- #define SMB2_CREATE_TIMEWARP_REQUEST		"TWrp"
- #define SMB2_CREATE_QUERY_ON_DISK_ID		"QFid"
+diff --git a/arch/arm/mach-omap2/id.c b/arch/arm/mach-omap2/id.c
+index 859c71c4e9324..df8a9dda67a01 100644
+--- a/arch/arm/mach-omap2/id.c
++++ b/arch/arm/mach-omap2/id.c
+@@ -800,10 +800,15 @@ void __init omap_soc_device_init(void)
+ 
+ 	soc_dev_attr->machine  = soc_name;
+ 	soc_dev_attr->family   = omap_get_family();
++	if (!soc_dev_attr->family) {
++		kfree(soc_dev_attr);
++		return;
++	}
+ 	soc_dev_attr->revision = soc_rev;
+ 
+ 	soc_dev = soc_device_register(soc_dev_attr);
+ 	if (IS_ERR(soc_dev)) {
++		kfree(soc_dev_attr->family);
+ 		kfree(soc_dev_attr);
+ 		return;
+ 	}
 -- 
 2.43.0
 
