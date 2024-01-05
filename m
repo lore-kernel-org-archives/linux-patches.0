@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE0218EB7;
-	Fri,  5 Jan 2024 14:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE8C28FA;
+	Fri,  5 Jan 2024 14:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSIpltDj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2ED0C433C8;
-	Fri,  5 Jan 2024 14:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCq1Xr00"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D71EC433C7;
+	Fri,  5 Jan 2024 14:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465860;
-	bh=KwZr6yw3PJAmXY+kQbiJPdl5KkNEBPLkqKUBqd+z0ic=;
+	s=korg; t=1704465862;
+	bh=SgJAdfWpmOjXR1ctp2FboqYP7t+zbVSRG6o5Gc33ty0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QSIpltDjOfiodMq4eLSVDH3JTE8w8EKUGPa+pp3ZguRWMOyE1Z19BMdD3l79VZ3j0
-	 IT/V4wz/klLUP+fqMvsPibXdR6TMuVakWPE5czL8BYQwYt4YubXUJZFTLWEwrvK42e
-	 ie8of4Bn1mYclFNuH9pDC82htZiFNFFV6mN8jgc0=
+	b=xCq1Xr00v1FJYS4JNaK4gKmz+TcwW4I/uYFKm3Dy/fauXZ0dNnW5V8jgT+OiwxYJC
+	 S+gsyXQshDK0NOUJN+5lU5vE1Nbea8hEnZcT+XG5x1OXvazxJhXLqWOCV8ggh3a+Kv
+	 ddUsgk1zSpE23ToWFGg/UtgXK/bxMasdbpFaZPK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Lee Jones <lee@kernel.org>,
+	j51569436@gmail.com,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 42/47] usb: fotg210-hcd: delete an incorrect bounds test
-Date: Fri,  5 Jan 2024 15:39:29 +0100
-Message-ID: <20240105143817.265120342@linuxfoundation.org>
+Subject: [PATCH 5.4 43/47] smb: client: fix OOB in smbCalcSize()
+Date: Fri,  5 Jan 2024 15:39:30 +0100
+Message-ID: <20240105143817.305331312@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
 References: <20240105143815.541462991@linuxfoundation.org>
@@ -44,61 +43,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 7fbcd195e2b8cc952e4aeaeb50867b798040314c ]
+[ Upstream commit b35858b3786ddbb56e1c35138ba25d6adf8d0bef ]
 
-Here "temp" is the number of characters that we have written and "size"
-is the size of the buffer.  The intent was clearly to say that if we have
-written to the end of the buffer then stop.
+Validate @smb->WordCount to avoid reading off the end of @smb and thus
+causing the following KASAN splat:
 
-However, for that to work the comparison should have been done on the
-original "size" value instead of the "size -= temp" value.  Not only
-will that not trigger when we want to, but there is a small chance that
-it will trigger incorrectly before we want it to and we break from the
-loop slightly earlier than intended.
+  BUG: KASAN: slab-out-of-bounds in smbCalcSize+0x32/0x40 [cifs]
+  Read of size 2 at addr ffff88801c024ec5 by task cifsd/1328
 
-This code was recently changed from using snprintf() to scnprintf().  With
-snprintf() we likely would have continued looping and passed a negative
-size parameter to snprintf().  This would have triggered an annoying
-WARN().  Now that we have converted to scnprintf() "size" will never
-drop below 1 and there is no real need for this test.  We could change
-the condition to "if (temp <= 1) goto done;" but just deleting the test
-is cleanest.
+  CPU: 1 PID: 1328 Comm: cifsd Not tainted 6.7.0-rc5 #9
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
+  rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x4a/0x80
+   print_report+0xcf/0x650
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? __phys_addr+0x46/0x90
+   kasan_report+0xd8/0x110
+   ? smbCalcSize+0x32/0x40 [cifs]
+   ? smbCalcSize+0x32/0x40 [cifs]
+   kasan_check_range+0x105/0x1b0
+   smbCalcSize+0x32/0x40 [cifs]
+   checkSMB+0x162/0x370 [cifs]
+   ? __pfx_checkSMB+0x10/0x10 [cifs]
+   cifs_handle_standard+0xbc/0x2f0 [cifs]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   cifs_demultiplex_thread+0xed1/0x1360 [cifs]
+   ? __pfx_cifs_demultiplex_thread+0x10/0x10 [cifs]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? lockdep_hardirqs_on_prepare+0x136/0x210
+   ? __pfx_lock_release+0x10/0x10
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? mark_held_locks+0x1a/0x90
+   ? lockdep_hardirqs_on_prepare+0x136/0x210
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? __kthread_parkme+0xce/0xf0
+   ? __pfx_cifs_demultiplex_thread+0x10/0x10 [cifs]
+   kthread+0x18d/0x1d0
+   ? kthread+0xdb/0x1d0
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork+0x34/0x60
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork_asm+0x1b/0x30
+   </TASK>
 
-Fixes: 7d50195f6c50 ("usb: host: Faraday fotg210-hcd driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/ZXmwIwHe35wGfgzu@suswa
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This fixes CVE-2023-6606.
+
+Reported-by: j51569436@gmail.com
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218218
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/fotg210-hcd.c | 3 ---
- 1 file changed, 3 deletions(-)
+ fs/cifs/misc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/usb/host/fotg210-hcd.c b/drivers/usb/host/fotg210-hcd.c
-index f457e083a6f89..c0f727e793072 100644
---- a/drivers/usb/host/fotg210-hcd.c
-+++ b/drivers/usb/host/fotg210-hcd.c
-@@ -428,8 +428,6 @@ static void qh_lines(struct fotg210_hcd *fotg210, struct fotg210_qh *qh,
- 			temp = size;
- 		size -= temp;
- 		next += temp;
--		if (temp == size)
--			goto done;
+diff --git a/fs/cifs/misc.c b/fs/cifs/misc.c
+index f41891379de91..db1fcdedf289a 100644
+--- a/fs/cifs/misc.c
++++ b/fs/cifs/misc.c
+@@ -349,6 +349,10 @@ checkSMB(char *buf, unsigned int total_read, struct TCP_Server_Info *server)
+ 			cifs_dbg(VFS, "Length less than smb header size\n");
+ 		}
+ 		return -EIO;
++	} else if (total_read < sizeof(*smb) + 2 * smb->WordCount) {
++		cifs_dbg(VFS, "%s: can't read BCC due to invalid WordCount(%u)\n",
++			 __func__, smb->WordCount);
++		return -EIO;
  	}
  
- 	temp = snprintf(next, size, "\n");
-@@ -439,7 +437,6 @@ static void qh_lines(struct fotg210_hcd *fotg210, struct fotg210_qh *qh,
- 	size -= temp;
- 	next += temp;
- 
--done:
- 	*sizep = size;
- 	*nextp = next;
- }
+ 	/* otherwise, there is enough to get to the BCC */
 -- 
 2.43.0
 
