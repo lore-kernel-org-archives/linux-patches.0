@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF51128FA;
-	Fri,  5 Jan 2024 14:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DED82D7B0;
+	Fri,  5 Jan 2024 14:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7TuGdTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67991C433C7;
-	Fri,  5 Jan 2024 14:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZuCbFOq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA1AC433C8;
+	Fri,  5 Jan 2024 14:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465776;
-	bh=a/wvK00WdEGUlTTo1KGgUtqbj+iFpdw5MxPucfkxjYE=;
+	s=korg; t=1704465779;
+	bh=RKgYMsrELmm/AOHZ2lzCJ4uNKGZyEvFE3AtzATYwtrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7TuGdTcAGn1ASsnCriioq4N1Wf36bFPHO8Pq0S9GcUHYW7QeIEXm8oZpRgm58KLe
-	 0JOFIvRdWav/xudqr9o/lVfppHkVLOPyKsUJJq05hJM9WjdkQ+xcJgCPYtvV5GImyj
-	 bvIvUoZUOAyAE1AEkvoRlKYAlHfe+P76+vzcXy8w=
+	b=BZuCbFOq4GAKn0gTZW3VXYO19Sp31epHqCJJ80lnoRtvqBMC45GbuMelZ/YVSVIvo
+	 QI7e5L5otvid+bQyO8sNA0DAlbvFKbCaGlgQ3L9BtK5q+0WNzFaoJptHSNcHGq1tGE
+	 fK2yQq3rQGmG9LUYtinA3y8auzjFe73I9ALUypQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Hendrik Brueckner <brueckner@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Saarinen <jani.saarinen@intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 05/47] s390/vx: fix save/restore of fpu kernel context
-Date: Fri,  5 Jan 2024 15:38:52 +0100
-Message-ID: <20240105143815.724327749@linuxfoundation.org>
+Subject: [PATCH 5.4 23/47] ALSA: hda/hdmi: add force-connect quirk for NUC5CPYB
+Date: Fri,  5 Jan 2024 15:39:10 +0100
+Message-ID: <20240105143816.420260585@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
 References: <20240105143815.541462991@linuxfoundation.org>
@@ -37,53 +38,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-[ Upstream commit e6b2dab41888332bf83f592131e7ea07756770a4 ]
+[ Upstream commit 3b1ff57e24a7bcd2e2a8426dd2013a80d1fa96eb ]
 
-The KERNEL_FPR mask only contains a flag for the first eight vector
-registers. However floating point registers overlay parts of the first
-sixteen vector registers.
+Add one more older NUC model that requires quirk to force all pins to be
+connected. The display codec pins are not registered properly without
+the force-connect quirk. The codec will report only one pin as having
+external connectivity, but i915 finds all three connectors on the
+system, so the two drivers are not in sync.
 
-This could lead to vector register corruption if a kernel fpu context uses
-any of the vector registers 8 to 15 and is interrupted or calls a
-KERNEL_FPR context. If that context uses also vector registers 8 to 15,
-their contents will be corrupted on return.
+Issue found with DRM igt-gpu-tools test kms_hdmi_inject@inject-audio.
 
-Luckily this is currently not a real bug, since the kernel has only one
-KERNEL_FPR user with s390_adjust_jiffies() and it is only using floating
-point registers 0 to 2.
-
-Fix this by using the correct bits for KERNEL_FPR.
-
-Fixes: 7f79695cc1b6 ("s390/fpu: improve kernel_fpu_[begin|end]")
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Link: https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/issues/3
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Jani Saarinen <jani.saarinen@intel.com>
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231208132127.2438067-2-kai.vehmanen@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/fpu/api.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_hdmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/s390/include/asm/fpu/api.h b/arch/s390/include/asm/fpu/api.h
-index 34a7ae68485c6..be16a6c0f1276 100644
---- a/arch/s390/include/asm/fpu/api.h
-+++ b/arch/s390/include/asm/fpu/api.h
-@@ -76,7 +76,7 @@ static inline int test_fp_ctl(u32 fpc)
- #define KERNEL_VXR_HIGH		(KERNEL_VXR_V16V23|KERNEL_VXR_V24V31)
- 
- #define KERNEL_VXR		(KERNEL_VXR_LOW|KERNEL_VXR_HIGH)
--#define KERNEL_FPR		(KERNEL_FPC|KERNEL_VXR_V0V7)
-+#define KERNEL_FPR		(KERNEL_FPC|KERNEL_VXR_LOW)
- 
- struct kernel_fpu;
- 
+diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
+index a0de66674faaf..ff81e6051773a 100644
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -1825,6 +1825,7 @@ static const struct snd_pci_quirk force_connect_list[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x86ae, "ASUS", 1),  /* Z170 PRO */
+ 	SND_PCI_QUIRK(0x1043, 0x86c7, "ASUS", 1),  /* Z170M PLUS */
+ 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
++	SND_PCI_QUIRK(0x8086, 0x2060, "Intel NUC5CPYB", 1),
+ 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
+ 	{}
+ };
 -- 
 2.43.0
 
