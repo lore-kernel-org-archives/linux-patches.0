@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9AE2C692;
-	Fri,  5 Jan 2024 14:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D6F2AE74;
+	Fri,  5 Jan 2024 14:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBWH7dSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DFFC433C7;
-	Fri,  5 Jan 2024 14:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwVFa9/P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3FFC433C7;
+	Fri,  5 Jan 2024 14:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465722;
-	bh=ssoT62e3ZTR0R3TxKWkB06gkAhuZlnuwKlPoYEeFTlM=;
+	s=korg; t=1704465724;
+	bh=UbB6eflY+paL7HGzh4ddKgEHhAhv9wo1/ZF9+cgi5gE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kBWH7dSnlCBPjaBjgLgu2ljpP7ZR0JtxD8ugIMiVqYoHr3l7SGWSrGhgP7Wxh7zdK
-	 BOe7dQhkEl3r1nSXJOcBnIoxnoj6jo/YP8/PaWc4mMK6wWdY8+KU0EdlcwHAJNiXrl
-	 8ecba8L74vIu1Smud/JjbuHxmwORkskARTjbNXBI=
+	b=vwVFa9/PiaR0UNoihAR91L2gljEg/gpHtV/TCVb2OtCUatA9HMDwJN7qqTDXclhv0
+	 1pujB+GfRlbGZAv3/mu9SeR9TFLmBe+GaMM/Fk43Pbt83bbqUqKJVGck1ndDYrk9+d
+	 h+gkAhdvnz3xFlB+0T9yK28siwIew2Ml4+yZ9jKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slark Xiao <slark_xiao@163.com>,
+	Reinhard Speyerer <rspmn@arcor.de>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.19 31/41] USB: serial: option: add Foxconn T99W265 with new baseline
-Date: Fri,  5 Jan 2024 15:39:11 +0100
-Message-ID: <20240105143815.246537138@linuxfoundation.org>
+Subject: [PATCH 4.19 32/41] USB: serial: option: add Quectel RM500Q R13 firmware support
+Date: Fri,  5 Jan 2024 15:39:12 +0100
+Message-ID: <20240105143815.277158270@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143813.957669139@linuxfoundation.org>
 References: <20240105143813.957669139@linuxfoundation.org>
@@ -41,48 +41,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slark Xiao <slark_xiao@163.com>
+From: Reinhard Speyerer <rspmn@arcor.de>
 
-commit 13fde9ac23ca8c6d1ac13cc9eefe1f1ac3ee30a4 upstream.
+commit 06f22cd6635bdae7d73566fca9879b2026a08e00 upstream.
 
-This ID was added based on latest SDX12 code base line, and we
-made some changes with previous 0489:e0db.
+Add support for Quectel RM500Q R13 firmware which uses Prot=40 for the
+NMEA port:
 
-Test evidence as below:
-T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=ef(misc ) Sub=02 Prot=01 MxPS= 9 #Cfgs=  2
-P:  Vendor=0489 ProdID=e0da Rev=05.04
-S:  Manufacturer=Qualcomm
-S:  Product=Qualcomm Snapdragon X12
-S:  SerialNumber=2bda65fb
-C:  #Ifs= 6 Cfg#= 2 Atr=a0 MxPwr=896mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-I:  If#=0x3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+T:  Bus=02 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  8 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=2c7c ProdID=0800 Rev= 4.14
+S:  Manufacturer=Quectel
+S:  Product=RM500Q-AE
+S:  SerialNumber=xxxxxxxx
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-0&1: MBIM, 2: Modem, 3:GNSS, 4:Diag, 5:ADB
-
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
+Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/serial/option.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -2244,6 +2244,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(0) | RSVD(1) | RSVD(6) },
- 	{ USB_DEVICE(0x0489, 0xe0b5),						/* Foxconn T77W968 ESIM */
- 	  .driver_info = RSVD(0) | RSVD(1) | RSVD(6) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0da, 0xff),                     /* Foxconn T99W265 MBIM variant */
-+	  .driver_info = RSVD(3) | RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0db, 0xff),			/* Foxconn T99W265 MBIM */
- 	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0ee, 0xff),			/* Foxconn T99W368 MBIM */
+@@ -1233,6 +1233,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, 0x0700, 0xff), /* BG95 */
+ 	  .driver_info = RSVD(3) | ZLP },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500Q, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500Q, 0xff, 0, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500Q, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500Q, 0xff, 0xff, 0x10),
+ 	  .driver_info = ZLP },
 
 
