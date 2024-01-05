@@ -1,252 +1,84 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAC121109
-	for <patches@lists.linux.dev>; Fri,  5 Jan 2024 09:36:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92CB241F1;
+	Fri,  5 Jan 2024 09:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="ngtAf/wt";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="YYKzRJFW";
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="1hG31dr7";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="H3X8mKtD"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id C83861F851;
-	Fri,  5 Jan 2024 09:36:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1704447369; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=B7oLL4S0CY29vzW6K3/CLzt37el9f7mj55GXjEITUVs=;
-	b=ngtAf/wtvnioC/gcCb7q5GrR2iA6FexmjgVsprefWQaIBWsmUKWQcLyGArOowmGVneIFVR
-	HbYgBNk9uA301rSPPGUNGQGr7BGF4MoAcEpQWp1CsIYqtszdcfwkUQqlSTnKqRgKUhEL9R
-	u4ckwwig5woM/ky9EFsVMJgxuRHS5WE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1704447369;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=B7oLL4S0CY29vzW6K3/CLzt37el9f7mj55GXjEITUVs=;
-	b=YYKzRJFWC20Gzb/IF8BKP+FuAiWpuNufLdqbdzsmjz62q5eQbf+QPnaZirfpouK0IqbxTK
-	+RPOaffGSaSEp8AQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1704447368; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=B7oLL4S0CY29vzW6K3/CLzt37el9f7mj55GXjEITUVs=;
-	b=1hG31dr7EKUK87fE/57JoINGflxoZAvEvX50cmKUEiRF+cIto/BHoFZyk9AwSRarBy39rC
-	Uv890iRWLwG2uelmzZATbtkr0sSE1GTcdfn7nEG81A+aQjIsINPsI37Nlt5ABpL3o2LSdO
-	7DLsvE/UgjkaeZGKQiufW01wEqibqIA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1704447368;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=B7oLL4S0CY29vzW6K3/CLzt37el9f7mj55GXjEITUVs=;
-	b=H3X8mKtDZXCHcsE0gV1cgYqWXvXXjhDh/daPsKtiVDSSLk2bNNJEzWVUwBZ3gDdV8mzHyN
-	3cFSYgwiacc6amAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A009E13C99;
-	Fri,  5 Jan 2024 09:36:08 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id c2qbJojNl2UkUAAAD6G6ig
-	(envelope-from <vbabka@suse.cz>); Fri, 05 Jan 2024 09:36:08 +0000
-Message-ID: <a0511a72-711b-4c8f-b9d7-da95681000c1@suse.cz>
-Date: Fri, 5 Jan 2024 10:36:08 +0100
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwOOP7fu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCECBC433C7;
+	Fri,  5 Jan 2024 09:51:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1704448313;
+	bh=zObzgg5xDJEKxicGf3Aen7ihBLVfTRp4ARHI1eYeTGw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=xwOOP7fuywfd1ANXwChAgafiVt6B0zrHR1/0aqaK1ovDh1Lkg+16fd1QnPwt+Ekjo
+	 VwYsj48E0GWH2S/Dd0Xadf0ObUYNutn2N41IwLEZDwGEK0/yflNVJbjQVsAx5ELjVP
+	 yWGogO+2utQetgOGuziLE8oCjcMl/bCYbI0tfZhg=
+Date: Fri, 5 Jan 2024 10:51:50 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Jeffrey E Altman <jaltman@auristor.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	David Howells <dhowells@redhat.com>,
+	Markus Suvanto <markus.suvanto@gmail.com>,
+	Wang Lei <wang840925@gmail.com>, Jeff Layton <jlayton@redhat.com>,
+	Steve French <smfrench@gmail.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	linux-afs@lists.infradead.org, linux-cifs@vger.kernel.org,
+	linux-nfs@vger.kernel.org, ceph-devel@vger.kernel.org,
+	keyrings@vger.kernel.org, netdev@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.6 067/156] keys, dns: Allow key types (eg. DNS) to be
+ reclaimed immediately on expiry
+Message-ID: <2024010526-catalyst-flame-2e33@gregkh>
+References: <20231230115812.333117904@linuxfoundation.org>
+ <20231230115814.539935693@linuxfoundation.org>
+ <cd1d6f0d-a05b-412c-882a-e62ee9e67b85@auristor.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Vlastimil Babka <vbabka@suse.cz>
-Subject: [GIT PULL] slab updates for 6.8
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
- <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
- Pekka Enberg <penberg@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
- LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>,
- Chengming Zhou <chengming.zhou@linux.dev>,
- Stephen Rothwell <sfr@canb.auug.org.au>
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Level: *****
-X-Spamd-Bar: +++++
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=1hG31dr7;
-	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=H3X8mKtD
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [5.10 / 50.00];
-	 TO_DN_EQ_ADDR_SOME(0.00)[];
-	 RCVD_VIA_SMTP_AUTH(0.00)[];
-	 XM_UA_NO_VERSION(0.01)[];
-	 SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	 TO_DN_SOME(0.00)[];
-	 BAYES_SPAM(5.10)[100.00%];
-	 RCVD_COUNT_THREE(0.00)[3];
-	 DKIM_TRACE(0.00)[suse.cz:+];
-	 MX_GOOD(-0.01)[];
-	 NEURAL_HAM_SHORT(-0.20)[-1.000];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 MID_RHS_MATCH_FROM(0.00)[];
-	 ARC_NA(0.00)[];
-	 R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	 URIBL_BLOCKED(0.00)[suse.cz:dkim];
-	 FROM_HAS_DN(0.00)[];
-	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 TAGGED_RCPT(0.00)[];
-	 MIME_GOOD(-0.10)[text/plain];
-	 NEURAL_HAM_LONG(-1.00)[-1.000];
-	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	 RCPT_COUNT_TWELVE(0.00)[13];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 FREEMAIL_CC(0.00)[google.com,lge.com,linux.com,kernel.org,linux-foundation.org,kvack.org,vger.kernel.org,lists.linux.dev,linux.dev,gmail.com,canb.auug.org.au];
-	 RCVD_TLS_ALL(0.00)[];
-	 SUSPICIOUS_RECIPS(1.50)[]
-X-Spam-Score: 5.10
-X-Rspamd-Queue-Id: C83861F851
-X-Spam-Flag: NO
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cd1d6f0d-a05b-412c-882a-e62ee9e67b85@auristor.com>
 
-Hi Linus,
+On Thu, Jan 04, 2024 at 09:13:34PM -0500, Jeffrey E Altman wrote:
+> On 12/30/2023 6:58 AM, Greg Kroah-Hartman wrote:
+> > 6.6-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: David Howells <dhowells@redhat.com>
+> > 
+> > [ Upstream commit 39299bdd2546688d92ed9db4948f6219ca1b9542 ]
+> Greg,
+> 
+> Upstream commit 39299bdd2546688d92ed9db4948f6219ca1b9542 ("keys, dns: Allow
+> key types (eg. DNS) to be reclaimed immediately on expiry") was subsequently
+> fixed by
+> 
+>   commit 1997b3cb4217b09e49659b634c94da47f0340409
+>   Author: Edward Adam Davis <eadavis@qq.com>
+>   Date:   Sun Dec 24 00:02:49 2023 +0000
+> 
+>     keys, dns: Fix missing size check of V1 server-list header
+> 
+>   Fixes: b946001d3bb1 ("keys, dns: Allow key types (eg. DNS) to be reclaimed
+> immediately on expiry")
+> 
+> If it is not too late, would it be possible to apply 1997b3cb421 to the
+> branches b946001d3bb1 was cherry-picked to before release?
+> I believe the complete set of branches are
+> 
+>   linux-6.6.y, linux-6.1.y, linux-5.15.y, linux-5.10.y, linux-5.0.y
 
-once the merge window opens, please pull the latest slab updates from:
+The stable trees were already released with this change in it, so I'll
+queue this up for the next round, thanks.
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.8
-
-there are more conflicts (with mm tree) than usual this time, but I believe
-it's a one-off situation due to a bunch of code being deleted or shuffled due
-to the SLAB removal.
-
-Stephen's -next resolutions (merging slab-next after mm)
-https://lore.kernel.org/all/20240102150224.3c091932@canb.auug.org.au/
-https://lore.kernel.org/all/20240102151332.48a87d86@canb.auug.org.au/
-https://lore.kernel.org/all/20240102153438.5b29f8c5@canb.auug.org.au/
-
-Only the last one is more involved as changes to __kmalloc_large_node() and
-free_large_kmalloc() in mm/slab_common.c from mm tree need to be replicated in
-mm/slub.c
-
-I have tried the opposite direction (mm after slab) and it was basically the
-same. Parking this slab PR until mm PR's is certainly an option.
-
-Thanks,
-Vlastimil
-
-======================================
-
-- SLUB: delayed freezing of CPU partial slabs (Chengming Zhou)
-
-  Freezing is an operation involving double_cmpxchg() that makes a slab
-  exclusive for a particular CPU. Chengming noticed that we use it also in
-  situations where we are not yet installing the slab as the CPU slab, because
-  freezing also indicates that the slab is not on the shared list. This
-  results in redundant freeze/unfreeze operation and can be avoided by marking
-  separately the shared list presence by reusing the PG_workingset flag.
-
-  This approach neatly avoids the issues described in 9b1ea29bc0d7 ("Revert
-  "mm, slub: consider rest of partial list if acquire_slab() fails"") as we can
-  now grab a slab from the shared list in a quick and guaranteed way without
-  the cmpxchg_double() operation that amplifies the lock contention and can fail.
-
-  As a result, lkp has reported 34.2% improvement of stress-ng.rawudp.ops_per_sec
-
-- SLAB removal and SLUB cleanups (Vlastimil Babka)
-
-  The SLAB allocator has been deprecated since 6.5 and nobody has objected so
-  far. We agreed at LSF/MM to wait until the next LTS, which is 6.6, so we
-  should be good to go now.
-
-  This doesn't yet erase all traces of SLAB outside of mm/ so some dead code,
-  comments or documentation remain, and will be cleaned up gradually (some
-  series are already in the works).
-
-  Removing the choice of allocators has already allowed to simplify and
-  optimize the code wiring up the kmalloc APIs to the SLUB implementation.
-
-----------------------------------------------------------------
-Chengming Zhou (9):
-      slub: Reflow ___slab_alloc()
-      slub: Change get_partial() interfaces to return slab
-      slub: Keep track of whether slub is on the per-node partial list
-      slub: Prepare __slab_free() for unfrozen partial slab out of node partial list
-      slub: Introduce freeze_slab()
-      slub: Delay freezing of partial slabs
-      slub: Optimize deactivate_slab()
-      slub: Rename all *unfreeze_partials* functions to *put_partials*
-      slub: Update frozen slabs documentations in the source
-
-Vlastimil Babka (26):
-      mm/slab, docs: switch mm-api docs generation from slab.c to slub.c
-      mm/slab: remove CONFIG_SLAB from all Kconfig and Makefile
-      KASAN: remove code paths guarded by CONFIG_SLAB
-      KFENCE: cleanup kfence_guarded_alloc() after CONFIG_SLAB removal
-      mm/memcontrol: remove CONFIG_SLAB #ifdef guards
-      cpu/hotplug: remove CPUHP_SLAB_PREPARE hooks
-      mm/slab: remove CONFIG_SLAB code from slab common code
-      mm/mempool/dmapool: remove CONFIG_DEBUG_SLAB ifdefs
-      mm/slab: remove mm/slab.c and slab_def.h
-      mm/slab: move struct kmem_cache_cpu declaration to slub.c
-      mm/slab: move the rest of slub_def.h to mm/slab.h
-      mm/slab: consolidate includes in the internal mm/slab.h
-      mm/slab: move pre/post-alloc hooks from slab.h to slub.c
-      mm/slab: move memcg related functions from slab.h to slub.c
-      mm/slab: move struct kmem_cache_node from slab.h to slub.c
-      mm/slab: move kfree() from slab_common.c to slub.c
-      mm/slab: move kmalloc_slab() to mm/slab.h
-      mm/slab: move kmalloc() functions from slab_common.c to slub.c
-      mm/slub: remove slab_alloc() and __kmem_cache_alloc_lru() wrappers
-      mm/slub: optimize alloc fastpath code layout
-      mm/slub: optimize free fast path code layout
-      mm/slub: fix bulk alloc and free stats
-      mm/slub: introduce __kmem_cache_free_bulk() without free hooks
-      mm/slub: handle bulk and single object freeing separately
-      mm/slub: free KFENCE objects in slab_free_hook()
-      Merge branch 'slab/for-6.8/slub-hook-cleanups' into slab/for-next
-
- CREDITS                           |   12 +-
- Documentation/core-api/mm-api.rst |    2 +-
- arch/arm64/Kconfig                |    2 +-
- arch/s390/Kconfig                 |    2 +-
- arch/x86/Kconfig                  |    2 +-
- include/linux/cpuhotplug.h        |    1 -
- include/linux/slab.h              |   22 +-
- include/linux/slab_def.h          |  124 --
- include/linux/slub_def.h          |  204 --
- kernel/cpu.c                      |    5 -
- lib/Kconfig.debug                 |    1 -
- lib/Kconfig.kasan                 |   11 +-
- lib/Kconfig.kfence                |    2 +-
- lib/Kconfig.kmsan                 |    2 +-
- mm/Kconfig                        |   68 +-
- mm/Kconfig.debug                  |   16 +-
- mm/Makefile                       |    6 +-
- mm/dmapool.c                      |    2 +-
- mm/kasan/common.c                 |   13 +-
- mm/kasan/kasan.h                  |    3 +-
- mm/kasan/quarantine.c             |    7 -
- mm/kasan/report.c                 |    1 +
- mm/kfence/core.c                  |    4 -
- mm/memcontrol.c                   |    6 +-
- mm/mempool.c                      |    6 +-
- mm/slab.c                         | 4026 -------------------------------------
- mm/slab.h                         |  551 ++---
- mm/slab_common.c                  |  231 +--
- mm/slub.c                         | 1137 ++++++++---
- 29 files changed, 1094 insertions(+), 5375 deletions(-)
- delete mode 100644 include/linux/slab_def.h
- delete mode 100644 include/linux/slub_def.h
- delete mode 100644 mm/slab.c
+greg k-h
