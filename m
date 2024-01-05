@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FFC28FA;
-	Fri,  5 Jan 2024 14:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF51128FA;
+	Fri,  5 Jan 2024 14:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpZSmZPs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925DEC433C8;
-	Fri,  5 Jan 2024 14:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7TuGdTc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67991C433C7;
+	Fri,  5 Jan 2024 14:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465773;
-	bh=9XeR/GhrlH2lAutuHpRvJlbs/HIkn9CwJCqX0K6X9Io=;
+	s=korg; t=1704465776;
+	bh=a/wvK00WdEGUlTTo1KGgUtqbj+iFpdw5MxPucfkxjYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DpZSmZPsVnzGpWaN9Th2+1eu5HfSWDqLPPSFKObvOakeCZTZnDxy9ymWDZyR/ZRC2
-	 mrJpZqXCfKavWeRar9tk7SCcDG3tYgJL7tthRpVrbR3w6XySEFv5nwIf7xPt+6i9ee
-	 6SxBNzkZTEuzbp9vME8OtW4b6ax7UG7Rwhd3J14Y=
+	b=d7TuGdTcAGn1ASsnCriioq4N1Wf36bFPHO8Pq0S9GcUHYW7QeIEXm8oZpRgm58KLe
+	 0JOFIvRdWav/xudqr9o/lVfppHkVLOPyKsUJJq05hJM9WjdkQ+xcJgCPYtvV5GImyj
+	 bvIvUoZUOAyAE1AEkvoRlKYAlHfe+P76+vzcXy8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Hendrik Brueckner <brueckner@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 22/47] ALSA: hda/hdmi: Add quirk to force pin connectivity on NUC10
-Date: Fri,  5 Jan 2024 15:39:09 +0100
-Message-ID: <20240105143816.371983225@linuxfoundation.org>
+Subject: [PATCH 5.4 05/47] s390/vx: fix save/restore of fpu kernel context
+Date: Fri,  5 Jan 2024 15:38:52 +0100
+Message-ID: <20240105143815.724327749@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
 References: <20240105143815.541462991@linuxfoundation.org>
@@ -42,35 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit e81d71e343c6c62cf323042caed4b7ca049deda5 ]
+[ Upstream commit e6b2dab41888332bf83f592131e7ea07756770a4 ]
 
-On some Intel NUC10 variants, codec reports AC_JACK_PORT_NONE as
-pin default config for all pins. This results in broken audio.
-Add a quirk to force connectivity.
+The KERNEL_FPR mask only contains a flag for the first eight vector
+registers. However floating point registers overlay parts of the first
+sixteen vector registers.
 
-BugLink: https://github.com/clearlinux/distribution/issues/2396
-Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://lore.kernel.org/r/20210720153216.2200938-1-kai.vehmanen@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 3b1ff57e24a7 ("ALSA: hda/hdmi: add force-connect quirk for NUC5CPYB")
+This could lead to vector register corruption if a kernel fpu context uses
+any of the vector registers 8 to 15 and is interrupted or calls a
+KERNEL_FPR context. If that context uses also vector registers 8 to 15,
+their contents will be corrupted on return.
+
+Luckily this is currently not a real bug, since the kernel has only one
+KERNEL_FPR user with s390_adjust_jiffies() and it is only using floating
+point registers 0 to 2.
+
+Fix this by using the correct bits for KERNEL_FPR.
+
+Fixes: 7f79695cc1b6 ("s390/fpu: improve kernel_fpu_[begin|end]")
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_hdmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/s390/include/asm/fpu/api.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
-index 56943daccfc72..a0de66674faaf 100644
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1825,6 +1825,7 @@ static const struct snd_pci_quirk force_connect_list[] = {
- 	SND_PCI_QUIRK(0x1043, 0x86ae, "ASUS", 1),  /* Z170 PRO */
- 	SND_PCI_QUIRK(0x1043, 0x86c7, "ASUS", 1),  /* Z170M PLUS */
- 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
-+	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
- 	{}
- };
+diff --git a/arch/s390/include/asm/fpu/api.h b/arch/s390/include/asm/fpu/api.h
+index 34a7ae68485c6..be16a6c0f1276 100644
+--- a/arch/s390/include/asm/fpu/api.h
++++ b/arch/s390/include/asm/fpu/api.h
+@@ -76,7 +76,7 @@ static inline int test_fp_ctl(u32 fpc)
+ #define KERNEL_VXR_HIGH		(KERNEL_VXR_V16V23|KERNEL_VXR_V24V31)
+ 
+ #define KERNEL_VXR		(KERNEL_VXR_LOW|KERNEL_VXR_HIGH)
+-#define KERNEL_FPR		(KERNEL_FPC|KERNEL_VXR_V0V7)
++#define KERNEL_FPR		(KERNEL_FPC|KERNEL_VXR_LOW)
+ 
+ struct kernel_fpu;
  
 -- 
 2.43.0
