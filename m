@@ -1,84 +1,99 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92CB241F1;
-	Fri,  5 Jan 2024 09:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95916249F3;
+	Fri,  5 Jan 2024 09:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwOOP7fu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCECBC433C7;
-	Fri,  5 Jan 2024 09:51:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QeyLtzor"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFD5C433C7;
+	Fri,  5 Jan 2024 09:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704448313;
-	bh=zObzgg5xDJEKxicGf3Aen7ihBLVfTRp4ARHI1eYeTGw=;
+	s=korg; t=1704448358;
+	bh=3dzwNA7Sokm1IVeJ+eyLxApIoBK8BPG6cvKDoe4/hG8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=xwOOP7fuywfd1ANXwChAgafiVt6B0zrHR1/0aqaK1ovDh1Lkg+16fd1QnPwt+Ekjo
-	 VwYsj48E0GWH2S/Dd0Xadf0ObUYNutn2N41IwLEZDwGEK0/yflNVJbjQVsAx5ELjVP
-	 yWGogO+2utQetgOGuziLE8oCjcMl/bCYbI0tfZhg=
-Date: Fri, 5 Jan 2024 10:51:50 +0100
+	b=QeyLtzorgLk5JvUYdL3/NmTiCpcMXu9BQHc1WeG0nNoccX7EXrFWEpV73tLf0W1s6
+	 yS0JB8MsJPyoiQxnFag4tzlJuHIboyfRgZdCbAHgTFJPQvv17pPZO/eXVvNE9008Ab
+	 mxDYVKhVmYI3A/NJptEcjx0U5KWjgZQvHOCvlnT8=
+Date: Fri, 5 Jan 2024 10:52:35 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jeffrey E Altman <jaltman@auristor.com>
+To: Andy Gospodarek <andrew.gospodarek@broadcom.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Markus Suvanto <markus.suvanto@gmail.com>,
-	Wang Lei <wang840925@gmail.com>, Jeff Layton <jlayton@redhat.com>,
-	Steve French <smfrench@gmail.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	linux-afs@lists.infradead.org, linux-cifs@vger.kernel.org,
-	linux-nfs@vger.kernel.org, ceph-devel@vger.kernel.org,
-	keyrings@vger.kernel.org, netdev@vger.kernel.org,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	David Wei <dw@davidwei.uk>, Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.6 067/156] keys, dns: Allow key types (eg. DNS) to be
- reclaimed immediately on expiry
-Message-ID: <2024010526-catalyst-flame-2e33@gregkh>
+Subject: Re: [PATCH 6.6 055/156] bnxt_en: do not map packet buffers twice
+Message-ID: <2024010553-colonist-elf-1b15@gregkh>
 References: <20231230115812.333117904@linuxfoundation.org>
- <20231230115814.539935693@linuxfoundation.org>
- <cd1d6f0d-a05b-412c-882a-e62ee9e67b85@auristor.com>
+ <20231230115814.135415743@linuxfoundation.org>
+ <ZZQqGtYqN3X9EuWo@C02YVCJELVCG.dhcp.broadcom.net>
+ <2024010348-headroom-plating-1e2a@gregkh>
+ <ZZcP9qZ0G0sS_IPK@C02YVCJELVCG.dhcp.broadcom.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cd1d6f0d-a05b-412c-882a-e62ee9e67b85@auristor.com>
+In-Reply-To: <ZZcP9qZ0G0sS_IPK@C02YVCJELVCG.dhcp.broadcom.net>
 
-On Thu, Jan 04, 2024 at 09:13:34PM -0500, Jeffrey E Altman wrote:
-> On 12/30/2023 6:58 AM, Greg Kroah-Hartman wrote:
-> > 6.6-stable review patch.  If anyone has any objections, please let me know.
+On Thu, Jan 04, 2024 at 03:07:18PM -0500, Andy Gospodarek wrote:
+> On Wed, Jan 03, 2024 at 11:04:11AM +0100, Greg Kroah-Hartman wrote:
+> > On Tue, Jan 02, 2024 at 10:22:02AM -0500, Andy Gospodarek wrote:
+> > > On Sat, Dec 30, 2023 at 11:58:29AM +0000, Greg Kroah-Hartman wrote:
+> > > > 6.6-stable review patch.  If anyone has any objections, please let me know.
+> > > > 
+> > > 
+> > > No objections from me.
+> > > 
+> > > For reference I do have an implementation of this functionality to v6.1
+> > > if/when it should be added.   It is different as the bnxt_en driver did
+> > > not use the page pool to manage DMA mapping until v6.6.
+> > > 
+> > > The minimally disruptive patch to prevent this memory leak is below:
+> > > 
+> > > >From dc82f8b57e2692ec987628b53e6446ab9f4fa615 Mon Sep 17 00:00:00 2001
+> > > From: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+> > > Date: Thu, 7 Dec 2023 16:23:21 -0500
+> > > Subject: [PATCH] bnxt_en: unmap frag buffers before returning page to pool
+> > > 
+> > > If pages are not unmapped before calling page_pool_recycle_direct they
+> > > will not be freed back to the pool.  This will lead to a memory leak and
+> > > messages like the following in dmesg:
+> > > 
+> > > [ 8229.436920] page_pool_release_retry() stalled pool shutdown 340 inflight 5437 sec
+> > > 
+> > > Fixes: a7559bc8c17c ("bnxt: support transmit and free of aggregation buffers")
+> > > Signed-off-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+> > > ---
+> > >  drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 7 +++++++
+> > >  1 file changed, 7 insertions(+)
 > > 
-> > ------------------
+> > I do not understand, what is this patch for?
 > > 
-> > From: David Howells <dhowells@redhat.com>
-> > 
-> > [ Upstream commit 39299bdd2546688d92ed9db4948f6219ca1b9542 ]
+> > Why not submit it for normal inclusion first?
+> 
 > Greg,
 > 
-> Upstream commit 39299bdd2546688d92ed9db4948f6219ca1b9542 ("keys, dns: Allow
-> key types (eg. DNS) to be reclaimed immediately on expiry") was subsequently
-> fixed by
+> I wondered if my description was good enough -- it was not.  :)
 > 
->   commit 1997b3cb4217b09e49659b634c94da47f0340409
->   Author: Edward Adam Davis <eadavis@qq.com>
->   Date:   Sun Dec 24 00:02:49 2023 +0000
+> The sole purpose for sending my last email was to let you know that this
+> problem also occurs on v6.1 but in a different manner.
 > 
->     keys, dns: Fix missing size check of V1 server-list header
+> In the process of fixing this problem on the tip of tree I noted it was also an
+> issue on older kernels, so that was why I brought it up.  
 > 
->   Fixes: b946001d3bb1 ("keys, dns: Allow key types (eg. DNS) to be reclaimed
-> immediately on expiry")
+> This is a bit confusing as the Fixes: tag was correctly set to changes that
+> were made for v6.6 as it was the first kernel where this type of leak was
+> noted.
 > 
-> If it is not too late, would it be possible to apply 1997b3cb421 to the
-> branches b946001d3bb1 was cherry-picked to before release?
-> I believe the complete set of branches are
-> 
->   linux-6.6.y, linux-6.1.y, linux-5.15.y, linux-5.10.y, linux-5.0.y
+> Hopefully that resolves the confusion.
 
-The stable trees were already released with this change in it, so I'll
-queue this up for the next round, thanks.
+Nope, sorry, I still have no idea what to do with this change at all.
+It's not submitted as a "normal" change so what should be done with it?
+
+confused,
 
 greg k-h
