@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B327218EB7;
-	Fri,  5 Jan 2024 14:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCD218EB7;
+	Fri,  5 Jan 2024 14:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIZhfYjc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38DB1C433C7;
-	Fri,  5 Jan 2024 14:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKQkMv4p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A0BC433C8;
+	Fri,  5 Jan 2024 14:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465738;
-	bh=mdyL1c581Je12KBvPbAG9cAMlLvkHRd2feMM8hU1CQg=;
+	s=korg; t=1704465741;
+	bh=M5fDICDFIedbnj9T5RGP635sMabx1hEVik/Ksieyk0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SIZhfYjcEdGnpOwjRzEoVBbt1umzfsGwptxXWLtEB5N6vI2AECbjN/uNc2jmIItmB
-	 JPflBV4fWrsdlkXgcbiTRnG8fD0AQr+RA018EDPyA30HQtb01glcPLKIR2ocKTpmJW
-	 A93UEdlwsIhbY4qPCqAOolwVrNOYfXoK5GOrXjE0=
+	b=sKQkMv4p4iW4dfyaPOYoCTjHBN3cYzdUdcayBNriWSoV/3OYx1ODXIm69hvLywlzC
+	 BWfKvsQhMBf/Kk7xhVYcI+tYFeB8tj79vrXMzTraHx18Fz8bRlEd4IKtluftpuGzma
+	 lK8H76yRy4bvuG8a7q9Tzc2Q0/TvhkcyMhd1lo4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Li <bin.li@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 01/47] ALSA: hda/realtek: Enable headset on Lenovo M90 Gen5
-Date: Fri,  5 Jan 2024 15:38:48 +0100
-Message-ID: <20240105143815.588018634@linuxfoundation.org>
+Subject: [PATCH 5.4 02/47] ksmbd: fix wrong name of SMB2_CREATE_ALLOCATION_SIZE
+Date: Fri,  5 Jan 2024 15:38:49 +0100
+Message-ID: <20240105143815.625700584@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
 References: <20240105143815.541462991@linuxfoundation.org>
@@ -42,34 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bin Li <bin.li@canonical.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 6f7e4664e597440dfbdb8b2931c561b717030d07 ]
+[ Upstream commit 13736654481198e519059d4a2e2e3b20fa9fdb3e ]
 
-Lenovo M90 Gen5 is equipped with ALC897, and it needs
-ALC897_FIXUP_HEADSET_MIC_PIN quirk to make its headset mic work.
+MS confirm that "AISi" name of SMB2_CREATE_ALLOCATION_SIZE in MS-SMB2
+specification is a typo. cifs/ksmbd have been using this wrong name from
+MS-SMB2. It should be "AlSi". Also It will cause problem when running
+smb2.create.open test in smbtorture against ksmbd.
 
-Signed-off-by: Bin Li <bin.li@canonical.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231204100450.642783-1-bin.li@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Fixes: 12197a7fdda9 ("Clarify SMB2/SMB3 create context and add missing ones")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/cifs/smb2pdu.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 5ca5fe75f73fa..bfa66b8e3040b 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10395,6 +10395,7 @@ static const struct snd_pci_quirk alc662_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x32f7, "Lenovo ThinkCentre M90", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3321, "Lenovo ThinkCentre M70 Gen4", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x331b, "Lenovo ThinkCentre M90 Gen4", ALC897_FIXUP_HEADSET_MIC_PIN),
-+	SND_PCI_QUIRK(0x17aa, 0x3364, "Lenovo ThinkCentre M90 Gen5", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3742, "Lenovo TianYi510Pro-14IOB", ALC897_FIXUP_HEADSET_MIC_PIN2),
- 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo Ideapad Y550P", ALC662_FIXUP_IDEAPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x3a0d, "Lenovo Ideapad Y550", ALC662_FIXUP_IDEAPAD),
+diff --git a/fs/cifs/smb2pdu.h b/fs/cifs/smb2pdu.h
+index 739556e385be8..297f5e455a348 100644
+--- a/fs/cifs/smb2pdu.h
++++ b/fs/cifs/smb2pdu.h
+@@ -651,7 +651,7 @@ struct smb2_tree_disconnect_rsp {
+ #define SMB2_CREATE_SD_BUFFER			"SecD" /* security descriptor */
+ #define SMB2_CREATE_DURABLE_HANDLE_REQUEST	"DHnQ"
+ #define SMB2_CREATE_DURABLE_HANDLE_RECONNECT	"DHnC"
+-#define SMB2_CREATE_ALLOCATION_SIZE		"AISi"
++#define SMB2_CREATE_ALLOCATION_SIZE		"AlSi"
+ #define SMB2_CREATE_QUERY_MAXIMAL_ACCESS_REQUEST "MxAc"
+ #define SMB2_CREATE_TIMEWARP_REQUEST		"TWrp"
+ #define SMB2_CREATE_QUERY_ON_DISK_ID		"QFid"
 -- 
 2.43.0
 
