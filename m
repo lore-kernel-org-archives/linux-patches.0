@@ -1,104 +1,70 @@
-Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D5D20327
-	for <patches@lists.linux.dev>; Fri,  5 Jan 2024 20:40:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="StVccSeM"
-Received: by mail.gandi.net (Postfix) with ESMTPSA id D83731BF206;
-	Fri,  5 Jan 2024 20:39:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1704487200;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ErApUWVCi+t5EtS/F6eodB58nXznfuCF4fRAcU35LiQ=;
-	b=StVccSeMOUQyEl95dqXt75Cd1mmJtZNf6TXqNpwA3nmd5WN6F9QAGxgQiIYPGqo2p3Zunz
-	57Mwo5aoB+xRNkOimOAW5pbSqPbb0prQfbBmwL4HfbOYODYr3olDjbGhVGfh6AQFYrwIAv
-	xlnDg8ZSW2+LJpj+xHqxHVIjhMIuB2JXISrDaIK9JY6KLbrs+qJrEqRtrw4Oojvrgfgd2y
-	LAhgXSwfxIvzOtxymLJ0kMbiKSq/LMBAK5YbXf0Z8tzKipEoaQ0Xqkw60dSdM8Xn4DbH5q
-	iyqPfamvQD+joknJo5xhbUaU1aBCD3DBvIUGe5KPQqUWv0Acav8nPLsd7zZ40A==
-Message-ID: <26e9b0a8-158c-45b3-b724-616287d36e58@bootlin.com>
-Date: Fri, 5 Jan 2024 21:39:58 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C2735EFC
+	for <patches@lists.linux.dev>; Fri,  5 Jan 2024 21:31:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 024DC1C006B; Fri,  5 Jan 2024 22:31:31 +0100 (CET)
+Date: Fri, 5 Jan 2024 22:31:30 +0100
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 4.19 00/41] 4.19.304-rc1 review
+Message-ID: <ZZh1MloSmA7F4Z2Z@duo.ucw.cz>
+References: <20240105143813.957669139@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4.14 00/21] 4.14.335-rc1 review
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, liujian56@huawei.com
-References: <20240105143811.536282337@linuxfoundation.org>
- <2948beff-a9f6-42b2-8bfb-534ec9188de6@linaro.org>
-From: =?UTF-8?Q?Alexis_Lothor=C3=A9?= <alexis.lothore@bootlin.com>
-In-Reply-To: <2948beff-a9f6-42b2-8bfb-534ec9188de6@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: alexis.lothore@bootlin.com
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="W5TgC4+z20NnGAT8"
+Content-Disposition: inline
+In-Reply-To: <20240105143813.957669139@linuxfoundation.org>
 
-Hello,
 
-On 1/5/24 18:13, Daniel Díaz wrote:
-> Hello!
-> 
-> On 05/01/24 8:38 a. m., Greg Kroah-Hartman wrote:
+--W5TgC4+z20NnGAT8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[...]
+Hi!
 
-> Failure looks like this:
-> 
-> -----8<-----
->   /builds/linux/drivers/pinctrl/pinctrl-at91-pio4.c: In function
-> 'atmel_pinctrl_probe':
->   /builds/linux/drivers/pinctrl/pinctrl-at91-pio4.c:1054:3: error: too many
-> arguments to function 'irq_set_lockdep_class'
->      irq_set_lockdep_class(irq, &atmel_lock_key, &atmel_request_key);
->      ^~~~~~~~~~~~~~~~~~~~~
->   In file included from /builds/linux/include/linux/irq.h:517,
->                    from /builds/linux/include/linux/gpio/driver.h:7,
->                    from /builds/linux/drivers/pinctrl/pinctrl-at91-pio4.c:18:
->   /builds/linux/include/linux/irqdesc.h:250:1: note: declared here
->    irq_set_lockdep_class(unsigned int irq, struct lock_class_key *class)
->    ^~~~~~~~~~~~~~~~~~~~~
->   make[3]: *** [/builds/linux/scripts/Makefile.build:330:
-> drivers/pinctrl/pinctrl-at91-pio4.o] Error 1
-> ----->8-----
-> 
-> Bisection points to:
-> 
->   commit 6c47537ba008b3affe99360f65592ff5b797818f
->   Author: Alexis Lothoré <alexis.lothore@bootlin.com>
->   Date:   Fri Dec 15 22:34:24 2023 +0100
-> 
->       pinctrl: at91-pio4: use dedicated lock class for IRQ
->             [ Upstream commit 14694179e561b5f2f7e56a0f590e2cb49a9cc7ab ]
+> This is the start of the stable review cycle for the 4.19.304 release.
+> There are 41 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-This fails because linux-4.14.y is older than 39c3fd58952d: kernel/irq: Extend
-lockdep class for request mutex, which updates irq_set_lockdep_class API.
+CIP testing did not find any problems here:
 
-Looking at irq_set_lockdep_class update patch, what appears to be a simple fix is
-to simply remove the last parameter from irq_set_lockdep_class call in
-pinctrl-at91-pio4.c, but I am not even sure if the fix remains legitimate in this
-case (ie if the corresponding lockdep splat reappears), and I do not have access
-to corresponding hardware before the deadline, so if that's not already the plan,
-I suggest to drop this from 4.14 branch.
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+4.19.y
 
-Alexis
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
 
--- 
-Alexis Lothoré, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+Best regards,
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
+--W5TgC4+z20NnGAT8
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZZh1MgAKCRAw5/Bqldv6
+8neLAKCIW5Aiig0wBGhOAu5AXETLm8Q8YQCfYU4E0LSzJWyjDNY3BB1HPYN3fx4=
+=nJaJ
+-----END PGP SIGNATURE-----
+
+--W5TgC4+z20NnGAT8--
