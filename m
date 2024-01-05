@@ -1,105 +1,145 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7469B28DDA;
-	Fri,  5 Jan 2024 14:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F69E328C2
+	for <patches@lists.linux.dev>; Fri,  5 Jan 2024 16:04:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jho3q0p1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDD5C433C7;
-	Fri,  5 Jan 2024 14:44:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465868;
-	bh=+kHv/ga+mVhSnyk4Vme90NNsgQrU+Wnq8J9AE3IThaI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jho3q0p1FLVTvmCoAcYNH5edzZ8F2vSaP6Nu3IpU7LqkgKZvMGZNCKJIDS4Z/Bd0s
-	 OIwKeAQcSdw1cjWDaxZs4V4VvT2w7Bhl2Zj8bXn7410X21FdHSzSDQEKu5wBgDnxO/
-	 59ImZEhdNcbLR3kQPw0Y4IwRRlluG16pG7hVcFwY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Alper Ak <alperyasinak1@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.4 35/47] USB: serial: option: add Quectel EG912Y module support
-Date: Fri,  5 Jan 2024 15:39:22 +0100
-Message-ID: <20240105143816.937856689@linuxfoundation.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
-References: <20240105143815.541462991@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="x+CRH7U5"
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-6dc83674972so935928a34.1
+        for <patches@lists.linux.dev>; Fri, 05 Jan 2024 08:04:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704470692; x=1705075492; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=g/cqkHT4FbEcLpTCBsflcScZ0SAC3mcZJQ2qbWtluSE=;
+        b=x+CRH7U53vO1sOEa2ti1Hv7uNVrIGSilhxg8MsLK1aJEJXLSZex8qdy6EcKcZm99cQ
+         8Rb0iE+PJtgi901ODSaVe32KErnSopChvX5WRrkdo+dsydBxO/cRjhT5686ihTJtIvcO
+         23lA0n5yyMbdLranHOjsG8kKfAzaMIg8gd51OeOs4yRvJIyPenPJL+ttJsGE+A+zaBt0
+         ESHL7mtrkHb/icKUTvpbtTO0yqq7py3tnN/Qzm567i6pIOr2x71dftA+SfnBgQjPa2QK
+         b8xfKg7xhfDb6JRQLof5XWLk+hcXBuTxjdgGjZWrnZ4a+yBePGPk2Ci4Fk/mcSkj0Z6V
+         +2Vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704470692; x=1705075492;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g/cqkHT4FbEcLpTCBsflcScZ0SAC3mcZJQ2qbWtluSE=;
+        b=ScqrrC6ItWKKQItxr8ypBOkrwKwPp5qrjQyt/gti7iorPfvyR3G4v2kyE12Z1i5lV2
+         RyMMUeJjItrFtWu5ogft8XuAI9yH7B9GXQlfRgafKf3YbNyS0EBEP4SUJjZtgjnNlzTI
+         mjdCtr4lA2djtIQvCNJi/xNKJrjS5hiI6ULFq4hn/Xw9pgamRcsCsy3f6Uq1Uy00sLkh
+         f7RpVTyUG8O4ayCuFImupL8OIWNPle5OlfEPLgTOQMoZjkpMw0t2b+xoCrIRSUgqgTsj
+         g5cr9sTd1o6df2ITrEbOqMUNATUJtiOWBGFip8uaoOwiHGLFovw7+Z1h9UObIdG94fQx
+         k4sg==
+X-Gm-Message-State: AOJu0YxXY+Ma9jJA8oanfDH0o0PjRNyBP0GM0Iz/8hDz9vjr9C1GtBSp
+	NEsdAM7/UCNjKQuLafUt+h51pU9JDjXmtA==
+X-Google-Smtp-Source: AGHT+IHoqgc/4KxOLgqUZ3DBIB/H9/F5fTAwUyj3GQ1drQDOpDweX5+WGWBedMdanPP/4rhq1Xq6UQ==
+X-Received: by 2002:a9d:7748:0:b0:6dc:a1:90bb with SMTP id t8-20020a9d7748000000b006dc00a190bbmr2385822otl.69.1704470692568;
+        Fri, 05 Jan 2024 08:04:52 -0800 (PST)
+Received: from [192.168.17.16] ([138.84.62.70])
+        by smtp.gmail.com with ESMTPSA id c21-20020a9d6c95000000b006dbd51a58b8sm409667otr.37.2024.01.05.08.04.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Jan 2024 08:04:52 -0800 (PST)
+Message-ID: <77569e45-ab73-4049-b90e-cd60cbb872ef@linaro.org>
+Date: Fri, 5 Jan 2024 10:04:49 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.4 00/47] 5.4.266-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+References: <20240105143815.541462991@linuxfoundation.org>
+From: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>
+In-Reply-To: <20240105143815.541462991@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+Hello!
 
-------------------
+On 05/01/24 8:38 a. m., Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.266 release.
+> There are 47 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 07 Jan 2024 14:38:02 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.266-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-From: Alper Ak <alperyasinak1@gmail.com>
+Quick note that there are Arm32 failures:
 
-commit 6d79d9434c69bb8ffa8a631050eb0ad6b83d3e90 upstream.
+-----8<-----
+   /builds/linux/drivers/bus/ti-sysc.c: In function 'sysc_reset':
+   /builds/linux/drivers/bus/ti-sysc.c:1847:4: error: implicit declaration of function 'fsleep'; did you mean 'ssleep'? [-Werror=implicit-function-declaration]
+    1847 |    fsleep(ddata->cfg.srst_udelay);
+         |    ^~~~~~
+         |    ssleep
+   cc1: some warnings being treated as errors
+   make[3]: *** [/builds/linux/scripts/Makefile.build:262: drivers/bus/ti-sysc.o] Error 1
+----->8-----
 
-Add Quectel EG912Y "DIAG, AT, MODEM"
+This is with the following configurations:
+* clang-17-defconfig
+* clang-17-lkftconfig
+* clang-17-lkftconfig-no-kselftest-frag
+* clang-17-omap2plus_defconfig
+* clang-lkftconfig
+* clang-nightly-defconfig
+* clang-nightly-lkftconfig
+* clang-nightly-lkftconfig-kselftest
+* clang-nightly-omap2plus_defconfig
+* gcc-8-defconfig
+* gcc-8-omap2plus_defconfig
+* gcc-10-lkftconfig
+* gcc-10-lkftconfig-debug
+* gcc-10-lkftconfig-debug-kmemleak
+* gcc-10-lkftconfig-kselftest-kernel
+* gcc-10-lkftconfig-libgpiod
+* gcc-10-lkftconfig-perf-kernel
+* gcc-10-lkftconfig-rcutorture
+* gcc-12-defconfig
+* gcc-12-lkftconfig
+* gcc-12-lkftconfig-debug
+* gcc-12-lkftconfig-debug-kmemleak
+* gcc-12-lkftconfig-kasan
+* gcc-12-lkftconfig-kselftest
+* gcc-12-lkftconfig-kunit
+* gcc-12-lkftconfig-libgpiod
+* gcc-12-lkftconfig-no-kselftest-frag
+* gcc-12-lkftconfig-perf
+* gcc-12-lkftconfig-rcutorture
+* gcc-12-omap2plus_defconfig
 
-0x6001: ECM / RNDIS + DIAG + AT + MODEM
+A reproducer:
 
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=6001 Rev= 3.18
-S:  Manufacturer=Android
-S:  Product=Android
-S:  SerialNumber=0000
-C:* #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=06 Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
-E:  Ad=87(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=89(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=88(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+   tuxmake --runtime podman --target-arch arm --toolchain gcc-12 --kconfig defconfig
 
-Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -272,6 +272,7 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_RM500Q			0x0800
- #define QUECTEL_PRODUCT_RM520N			0x0801
- #define QUECTEL_PRODUCT_EC200U			0x0901
-+#define QUECTEL_PRODUCT_EG912Y			0x6001
- #define QUECTEL_PRODUCT_EC200S_CN		0x6002
- #define QUECTEL_PRODUCT_EC200A			0x6005
- #define QUECTEL_PRODUCT_EM061K_LWW		0x6008
-@@ -1244,6 +1245,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200U, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200S_CN, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200T, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG912Y, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
- 
- 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
 
+Greetings!
+
+Daniel Díaz
+daniel.diaz@linaro.org
 
