@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39C72D051;
-	Fri,  5 Jan 2024 14:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817E418EB7;
+	Fri,  5 Jan 2024 14:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZNmbhYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4935CC433C8;
-	Fri,  5 Jan 2024 14:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PBj8CK7p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0656DC433C8;
+	Fri,  5 Jan 2024 14:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704465727;
-	bh=EqAfeBI4sJEq+B8yLYcv4ykuzoWGzxUjDRfd29fRU44=;
+	s=korg; t=1704465730;
+	bh=m4po4/BDt69B0b1yG73HISUp1M+LKo48FmCLu9uzsxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZNmbhYDeceV8J/3ihiCD/vSA96a2899tTvxf8vIP16wZ8unUMHtHm+I++pA5yqwp
-	 pnvjwshH4E5fjTybtkNCIThi426o6JVgp+GDzI3KpRRWiAyNaprAE/Y8oT+w8vFqtb
-	 qUD7bBSRdHa2rBgo5uYXyyHPlDTDPSJtHdwY03LU=
+	b=PBj8CK7pMDBOnPL7TU9+dNA445jmS1mAbV5swTNeJ2dtjOkiSv1xKas4jOsYnI6Y3
+	 IO4PxNIVM2UqDtflBc4pv55Z5ZESkWHCZe+T7UTJ9qTOOc9+TdII86pjpkSqAPs9Ed
+	 9Z8bz/6WWCrNkF92f8m9qm+4YJjyzsKgThWWkrWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 4.19 33/41] Bluetooth: hci_event: Fix not checking if HCI_OP_INQUIRY has been sent
-Date: Fri,  5 Jan 2024 15:39:13 +0100
-Message-ID: <20240105143815.308065900@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Simon Horman <horms@kernel.org>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>
+Subject: [PATCH 4.19 34/41] net: 9p: avoid freeing uninit memory in p9pdu_vreadf
+Date: Fri,  5 Jan 2024 15:39:14 +0100
+Message-ID: <20240105143815.339973162@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240105143813.957669139@linuxfoundation.org>
 References: <20240105143813.957669139@linuxfoundation.org>
@@ -40,34 +43,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 99e67d46e5ff3c7c901af6009edec72d3d363be8 upstream.
+commit ff49bf1867578f23a5ffdd38f927f6e1e16796c4 upstream.
 
-Before setting HCI_INQUIRY bit check if HCI_OP_INQUIRY was really sent
-otherwise the controller maybe be generating invalid events or, more
-likely, it is a result of fuzzing tools attempting to test the right
-behavior of the stack when unexpected events are generated.
+If some of p9pdu_readf() calls inside case 'T' in p9pdu_vreadf() fails,
+the error path is not handled properly. *wnames or members of *wnames
+array may be left uninitialized and invalidly freed.
 
+Initialize *wnames to NULL in beginning of case 'T'. Initialize the first
+*wnames array element to NULL and nullify the failing *wnames element so
+that the error path freeing loop stops on the first NULL element and
+doesn't proceed further.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: ace51c4dd2f9 ("9p: add new protocol support code")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Message-ID: <20231206200913.16135-1-pchelkin@ispras.ru>
 Cc: stable@vger.kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218151
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/9p/protocol.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -1701,7 +1701,8 @@ static void hci_cs_inquiry(struct hci_de
- 		return;
- 	}
+--- a/net/9p/protocol.c
++++ b/net/9p/protocol.c
+@@ -243,6 +243,8 @@ p9pdu_vreadf(struct p9_fcall *pdu, int p
+ 				uint16_t *nwname = va_arg(ap, uint16_t *);
+ 				char ***wnames = va_arg(ap, char ***);
  
--	set_bit(HCI_INQUIRY, &hdev->flags);
-+	if (hci_sent_cmd_data(hdev, HCI_OP_INQUIRY))
-+		set_bit(HCI_INQUIRY, &hdev->flags);
- }
++				*wnames = NULL;
++
+ 				errcode = p9pdu_readf(pdu, proto_version,
+ 								"w", nwname);
+ 				if (!errcode) {
+@@ -252,6 +254,8 @@ p9pdu_vreadf(struct p9_fcall *pdu, int p
+ 							  GFP_NOFS);
+ 					if (!*wnames)
+ 						errcode = -ENOMEM;
++					else
++						(*wnames)[0] = NULL;
+ 				}
  
- static void hci_cs_create_conn(struct hci_dev *hdev, __u8 status)
+ 				if (!errcode) {
+@@ -263,8 +267,10 @@ p9pdu_vreadf(struct p9_fcall *pdu, int p
+ 								proto_version,
+ 								"s",
+ 								&(*wnames)[i]);
+-						if (errcode)
++						if (errcode) {
++							(*wnames)[i] = NULL;
+ 							break;
++						}
+ 					}
+ 				}
+ 
+@@ -272,11 +278,14 @@ p9pdu_vreadf(struct p9_fcall *pdu, int p
+ 					if (*wnames) {
+ 						int i;
+ 
+-						for (i = 0; i < *nwname; i++)
++						for (i = 0; i < *nwname; i++) {
++							if (!(*wnames)[i])
++								break;
+ 							kfree((*wnames)[i]);
++						}
++						kfree(*wnames);
++						*wnames = NULL;
+ 					}
+-					kfree(*wnames);
+-					*wnames = NULL;
+ 				}
+ 			}
+ 			break;
 
 
