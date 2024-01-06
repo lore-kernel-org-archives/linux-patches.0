@@ -1,103 +1,93 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AA728F3;
-	Sat,  6 Jan 2024 06:55:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB9563AA;
+	Sat,  6 Jan 2024 08:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="yOcIiVCB"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=OuVdUPjUvU4/6iSnWx34w41LnQL5QQ6HXu6RyAkm9Bc=; b=yOcIiVCBn/mREvuXDvq8dQNSrM
-	kPMJ1RY531i/cUKvqHE+ZB2V0QsBVn6IGxBpupWpcMJ6FZhHHpzqUtuKBGB9anMFvScHeBUNIHuSI
-	IZtE1+roTYlzY9YZI8ipiAIJYTmwONsXE6TCr5Q5jizWYqZHFPZ+Aat8pAwC+46kmgREZ4cAnMpPN
-	9l/3RgaxloDOjqG4uXTWxLvOncqGs26+qZnd9453JL2wREqcs5Nf8LqLCKGuVxfJp+L8772uMVhkf
-	tKig/QksdHFSwzmiWMWWS0TF2JD2Rp9BnC1jFP+pEiOWMZbIEok63iR4iWEsTFmnURNFtKbq3qsQn
-	c5uHVkhA==;
-Received: from [50.53.46.231] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-	id 1rM0aw-000rYt-0K;
-	Sat, 06 Jan 2024 06:55:46 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: netdev@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	bpf@vger.kernel.org,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH bpf-next] net: filter: fix spelling mistakes
-Date: Fri,  5 Jan 2024 22:55:45 -0800
-Message-ID: <20240106065545.16855-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0svUTfy0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FD0FC433C8;
+	Sat,  6 Jan 2024 08:38:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1704530336;
+	bh=7vuXNlpf9BnOyE4McDlBL7Bb7sZyBrF0fs7gPJBM3V0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=0svUTfy0dGrx5HeFZZ/hDbP4X/F8+SOMotQ3FfZhBYDqoUx/NkU+39mEMagngMbR/
+	 t1MBIVJcEmV6+8YOpkN0L/Y5e43njc7NRcaRfsk4v4JWYPzZcOBFEwQYI/FOxxPbUC
+	 TixtuLqkovVEJGoFWpyH3f1+GUfu3NxZMLT4M/kc=
+Date: Sat, 6 Jan 2024 09:38:52 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, jpanis@baylibre.com
+Subject: Re: [PATCH 5.4 00/47] 5.4.266-rc1 review
+Message-ID: <2024010639-sinuous-expansion-417c@gregkh>
+References: <20240105143815.541462991@linuxfoundation.org>
+ <77569e45-ab73-4049-b90e-cd60cbb872ef@linaro.org>
+ <92d8ecc9-7b51-4d54-9942-efc5beb156cf@linaro.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <92d8ecc9-7b51-4d54-9942-efc5beb156cf@linaro.org>
 
-Fix spelling errors as reported by codespell.
+On Fri, Jan 05, 2024 at 11:01:44AM -0600, Daniel Díaz wrote:
+> Hello!
+> 
+> On 05/01/24 10:04 a. m., Daniel Díaz wrote:
+> > Hello!
+> > 
+> > On 05/01/24 8:38 a. m., Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 5.4.266 release.
+> > > There are 47 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > > 
+> > > Responses should be made by Sun, 07 Jan 2024 14:38:02 +0000.
+> > > Anything received after that time might be too late.
+> > > 
+> > > The whole patch series can be found in one patch at:
+> > >     https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.266-rc1.gz
+> > > or in the git tree and branch at:
+> > >     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> > > and the diffstat can be found below.
+> > > 
+> > > thanks,
+> > > 
+> > > greg k-h
+> > 
+> > Quick note that there are Arm32 failures:
+> > 
+> > -----8<-----
+> >    /builds/linux/drivers/bus/ti-sysc.c: In function 'sysc_reset':
+> >    /builds/linux/drivers/bus/ti-sysc.c:1847:4: error: implicit declaration of function 'fsleep'; did you mean 'ssleep'? [-Werror=implicit-function-declaration]
+> >     1847 |    fsleep(ddata->cfg.srst_udelay);
+> >          |    ^~~~~~
+> >          |    ssleep
+> >    cc1: some warnings being treated as errors
+> >    make[3]: *** [/builds/linux/scripts/Makefile.build:262: drivers/bus/ti-sysc.o] Error 1
+> > ----->8-----
+> 
+> Bisection points to:
+> 
+>   commit bed75624164c501b39531927d07a4fadc5738847
+>   Author: Julien Panis <jpanis@baylibre.com>
+>   Date:   Mon Aug 21 16:24:18 2023 +0200
+> 
+>       bus: ti-sysc: Use fsleep() instead of usleep_range() in sysc_reset()
+>       [ Upstream commit d929b2b7464f95ec01e47f560b1e687482ba8929 ]
+> 
+> Reverting (swapping back the content of that commit, as it wasn't a clean revert) did make the build pass.
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: bpf@vger.kernel.org
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
----
-base-commit: 610a9b8f49fbcf1100716370d3b5f6f884a2835a
+Thanks, now dropped and will push out a -rc2
 
- net/core/filter.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff -- a/net/core/filter.c b/net/core/filter.c
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -777,7 +777,7 @@ jmp_rest:
- 			BPF_EMIT_JMP;
- 			break;
- 
--		/* ldxb 4 * ([14] & 0xf) is remaped into 6 insns. */
-+		/* ldxb 4 * ([14] & 0xf) is remapped into 6 insns. */
- 		case BPF_LDX | BPF_MSH | BPF_B: {
- 			struct sock_filter tmp = {
- 				.code	= BPF_LD | BPF_ABS | BPF_B,
-@@ -803,7 +803,7 @@ jmp_rest:
- 			*insn = BPF_MOV64_REG(BPF_REG_A, BPF_REG_TMP);
- 			break;
- 		}
--		/* RET_K is remaped into 2 insns. RET_A case doesn't need an
-+		/* RET_K is remapped into 2 insns. RET_A case doesn't need an
- 		 * extra mov as BPF_REG_0 is already mapped into BPF_REG_A.
- 		 */
- 		case BPF_RET | BPF_A:
-@@ -2967,7 +2967,7 @@ BPF_CALL_4(bpf_msg_pop_data, struct sk_m
- 	 *
- 	 * Then if B is non-zero AND there is no space allocate space and
- 	 * compact A, B regions into page. If there is space shift ring to
--	 * the rigth free'ing the next element in ring to place B, leaving
-+	 * the right free'ing the next element in ring to place B, leaving
- 	 * A untouched except to reduce length.
- 	 */
- 	if (start != offset) {
-@@ -8226,7 +8226,7 @@ xdp_func_proto(enum bpf_func_id func_id,
- #if IS_MODULE(CONFIG_NF_CONNTRACK) && IS_ENABLED(CONFIG_DEBUG_INFO_BTF_MODULES)
- 	/* The nf_conn___init type is used in the NF_CONNTRACK kfuncs. The
- 	 * kfuncs are defined in two different modules, and we want to be able
--	 * to use them interchangably with the same BTF type ID. Because modules
-+	 * to use them interchangeably with the same BTF type ID. Because modules
- 	 * can't de-duplicate BTF IDs between each other, we need the type to be
- 	 * referenced in the vmlinux BTF or the verifier will get confused about
- 	 * the different types. So we add this dummy type reference which will
+greg k-h
