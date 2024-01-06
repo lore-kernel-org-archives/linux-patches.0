@@ -1,264 +1,215 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FB946A6;
-	Sat,  6 Jan 2024 08:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607C363AA
+	for <patches@lists.linux.dev>; Sat,  6 Jan 2024 09:37:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7djhcVz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F1BC433C8;
-	Sat,  6 Jan 2024 08:40:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704530436;
-	bh=UsADQTTl4pkS387/hPrZjKAT6tIXeXDbMa8lR+GzyNE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=E7djhcVznwcjLWz0rI5atEGt5fHMCBYii56lm9mUmrSs4wsmDxfSUYX1t68QY3Cej
-	 v+amcbvzVfBw/l+/es3gdpgkK3tVq8qXfCDIh+S8gtnplhIUnxOIPisWJ6Xzo075nN
-	 w58hxvostpCDng6k/gU9iZamkusNl1I84anhwHEs=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com
-Subject: [PATCH 5.4 00/45] 5.4.266-rc2 review
-Date: Sat,  6 Jan 2024 09:40:33 +0100
-Message-ID: <20240106084016.200641776@linuxfoundation.org>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="o9xeRPKY"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7831362c9bcso18333285a.1
+        for <patches@lists.linux.dev>; Sat, 06 Jan 2024 01:37:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704533867; x=1705138667; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2R/NCLZ1G/4/Oo+PkhRK09jxtahsnTTNbgFR00sNUzI=;
+        b=o9xeRPKY1RrvPRQg44Xg3N0vOX5S+qGZPR00jcWkoiXTJmnANOHJaEYz/fA9H5Rkr4
+         FNpjzdyeL1prZnLdJDQt+Huf045Nb7oXD0U8RA68/slvuesd0Yvt2wetWDNvAtIkIVew
+         xD3zNSa1Jw9FfNin02BjRyJDVexG+Mw9gsDZt5Lo7dog7XgaPZkv0wKMIzUAw/EU8YfW
+         ZnjGpzb3G2aZbB6T/LB9ZSdnnAmLlRRaLdbH/KshiTGXCPN5wy68fBNvNN6WswXnQ79l
+         qYU7jXCWTPHfiA2OEkIHNMgmkNdjN6Zbv4Nco8lNa0jNFKqnfG/9p84px/SpU+036Xjm
+         C/bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704533867; x=1705138667;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2R/NCLZ1G/4/Oo+PkhRK09jxtahsnTTNbgFR00sNUzI=;
+        b=IAy7eLe8Sq2GAF/z/o97peZMBDW9EoS4Zymt4rSxCuMZPq6MmClcfW28Q9coUoEf6j
+         T2Cp/2nq5LKAV8vNF465QKxLjqv9CT24zhYg5AsI6NPsJ+z7SSet6ivGhA2y0iMLlOO+
+         W55IKWr1NvmGtqNFEqNyOsHatB3nTMM290YaiU67QrLsxGV/laeHwUt1uAGbhRFTCvaT
+         EZBH9rIf7N78Dp0xeQANAFw38q5+6NMZ7DaxSnvdz6/g/jR211uR8rACIdCBmezGtuOM
+         PUejk40Eum2FB/skIkMZK+SjWAcdOeBs4OsKLHcO46Y4fLXveMFBayY/btYvEIQxxNp7
+         zvfA==
+X-Gm-Message-State: AOJu0Yxq0d9mU8DOUOzSbjXG+A+o2g1t3rpakP/dIUTnGurdwAZIXkv2
+	Q71OY3Cx0d1VklGmU72wZU/Q4hW39luRLWQ4J/hSwvx15eV9hQ==
+X-Google-Smtp-Source: AGHT+IEcm3ftG3NEuuYVf6CdkOH9cT3RZyUFa9FvQEWR+mUSiDhy4ZApeY+gCtI5FmZGyE4rkuPihRiIHhrvC+B9ZWQ=
+X-Received: by 2002:a05:620a:17a3:b0:783:14fc:2e0e with SMTP id
+ ay35-20020a05620a17a300b0078314fc2e0emr178638qkb.29.1704533867182; Sat, 06
+ Jan 2024 01:37:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.266-rc2.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.4.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.4.266-rc2
-X-KernelTest-Deadline: 2024-01-08T08:40+00:00
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20240105143813.957669139@linuxfoundation.org>
+In-Reply-To: <20240105143813.957669139@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Sat, 6 Jan 2024 15:07:35 +0530
+Message-ID: <CA+G9fYtN2Dqh48zRGZW1wQTQfrw6eaCMG0tA5Q4y__CwT-w5AA@mail.gmail.com>
+Subject: Re: [PATCH 4.19 00/41] 4.19.304-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This is the start of the stable review cycle for the 5.4.266 release.
-There are 45 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
-
-Responses should be made by Mon, 08 Jan 2024 08:39:59 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.266-rc2.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.4.266-rc2
-
-Sarthak Kukreti <sarthakkukreti@chromium.org>
-    block: Don't invalidate pagecache for invalid falloc modes
-
-Steven Rostedt (Google) <rostedt@goodmis.org>
-    ring-buffer: Fix wake ups when buffer_percent is set to 100
-
-Paulo Alcantara <pc@manguebit.com>
-    smb: client: fix OOB in smbCalcSize()
-
-Dan Carpenter <dan.carpenter@linaro.org>
-    usb: fotg210-hcd: delete an incorrect bounds test
-
-Thomas Gleixner <tglx@linutronix.de>
-    x86/alternatives: Sync core before enabling interrupts
-
-Rouven Czerwinski <r.czerwinski@pengutronix.de>
-    net: rfkill: gpio: set GPIO direction
-
-Fedor Pchelkin <pchelkin@ispras.ru>
-    net: 9p: avoid freeing uninit memory in p9pdu_vreadf
-
-Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-    Bluetooth: hci_event: Fix not checking if HCI_OP_INQUIRY has been sent
-
-Reinhard Speyerer <rspmn@arcor.de>
-    USB: serial: option: add Quectel RM500Q R13 firmware support
-
-Slark Xiao <slark_xiao@163.com>
-    USB: serial: option: add Foxconn T99W265 with new baseline
-
-Alper Ak <alperyasinak1@gmail.com>
-    USB: serial: option: add Quectel EG912Y module support
-
-Mark Glover <mark.glover@actisense.com>
-    USB: serial: ftdi_sio: update Actisense PIDs constant names
-
-Johannes Berg <johannes.berg@intel.com>
-    wifi: cfg80211: fix certs build to not depend on file order
-
-Chen-Yu Tsai <wens@kernel.org>
-    wifi: cfg80211: Add my certificate
-
-Wadim Egorov <w.egorov@phytec.de>
-    iio: adc: ti_am335x_adc: Fix return value check of tiadc_request_dma()
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: common: ms_sensors: ms_sensors_i2c: fix humidity conversion time table
-
-Wei Yongjun <weiyongjun1@huawei.com>
-    scsi: bnx2fc: Fix skb double free in bnx2fc_rcv()
-
-Haoran Liu <liuhaoran14@163.com>
-    Input: ipaq-micro-keys - add error handling for devm_kmemdup
-
-Su Hui <suhui@nfschina.com>
-    iio: imu: inv_mpu6050: fix an error code problem in inv_mpu6050_read_raw
-
-Mike Tipton <quic_mdtipton@quicinc.com>
-    interconnect: Treat xlate() returning NULL node as an error
-
-Josef Bacik <josef@toxicpanda.com>
-    btrfs: do not allow non subvolume root targets for snapshot
-
-Paulo Alcantara <pc@manguebit.com>
-    smb: client: fix NULL deref in asn1_ber_decoder()
-
-Kai Vehmanen <kai.vehmanen@linux.intel.com>
-    ALSA: hda/hdmi: add force-connect quirk for NUC5CPYB
-
-Kai Vehmanen <kai.vehmanen@linux.intel.com>
-    ALSA: hda/hdmi: Add quirk to force pin connectivity on NUC10
-
-Alexis Lothoré <alexis.lothore@bootlin.com>
-    pinctrl: at91-pio4: use dedicated lock class for IRQ
-
-Quan Nguyen <quan@os.amperecomputing.com>
-    i2c: aspeed: Handle the coalesced stop conditions with the start conditions.
-
-David Howells <dhowells@redhat.com>
-    afs: Fix overwriting of result of DNS query
-
-Eric Dumazet <edumazet@google.com>
-    net: check dev->gso_max_size in gso_features_check()
-
-Heiner Kallweit <hkallweit1@gmail.com>
-    net: warn if gso_type isn't set for a GSO SKB
-
-David Howells <dhowells@redhat.com>
-    afs: Fix dynamic root lookup DNS check
-
-David Howells <dhowells@redhat.com>
-    afs: Fix the dynamic root's d_delete to always delete unused dentries
-
-Liu Jian <liujian56@huawei.com>
-    net: check vlan filter feature in vlan_vids_add_by_dev() and vlan_vids_del_by_dev()
-
-Eric Dumazet <edumazet@google.com>
-    net/rose: fix races in rose_kill_by_device()
-
-Zhipeng Lu <alexious@zju.edu.cn>
-    ethernet: atheros: fix a memleak in atl1e_setup_ring_resources
-
-Eric Dumazet <edumazet@google.com>
-    net: sched: ife: fix potential use-after-free
-
-Rahul Rameshbabu <rrameshbabu@nvidia.com>
-    net/mlx5e: Correct snprintf truncation handling for fw_version buffer used by representors
-
-Moshe Shemesh <moshe@nvidia.com>
-    net/mlx5: Fix fw tracer first block check
-
-Hu Haowen <xianfengting221@163.com>
-    net/mlx5: improve some comments
-
-Vlad Buslov <vladbu@nvidia.com>
-    Revert "net/mlx5e: fix double free of encap_header"
-
-Johannes Berg <johannes.berg@intel.com>
-    wifi: mac80211: mesh_plink: fix matches_local logic
-
-Heiko Carstens <hca@linux.ibm.com>
-    s390/vx: fix save/restore of fpu kernel context
-
-Geert Uytterhoeven <geert+renesas@glider.be>
-    reset: Fix crash when freeing non-existent optional resets
-
-Kunwu Chan <chentao@kylinos.cn>
-    ARM: OMAP2+: Fix null pointer dereference and memory leak in omap_soc_device_init
-
-Namjae Jeon <linkinjeon@kernel.org>
-    ksmbd: fix wrong name of SMB2_CREATE_ALLOCATION_SIZE
-
-Bin Li <bin.li@canonical.com>
-    ALSA: hda/realtek: Enable headset on Lenovo M90 Gen5
+On Fri, 5 Jan 2024 at 20:10, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 4.19.304 release.
+> There are 41 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sun, 07 Jan 2024 14:38:02 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
+4.19.304-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-4.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
 
--------------
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-Diffstat:
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
- Makefile                                           |  4 +-
- arch/arm/mach-omap2/id.c                           |  5 ++
- arch/s390/include/asm/fpu/api.h                    |  2 +-
- arch/x86/kernel/alternative.c                      |  2 +-
- drivers/i2c/busses/i2c-aspeed.c                    | 48 ++++++++----
- drivers/iio/adc/ti_am335x_adc.c                    |  4 +-
- drivers/iio/common/ms_sensors/ms_sensors_i2c.c     |  4 +-
- drivers/iio/imu/inv_mpu6050/inv_mpu_core.c         |  4 +-
- drivers/input/keyboard/ipaq-micro-keys.c           |  3 +
- drivers/interconnect/core.c                        |  3 +
- drivers/net/ethernet/atheros/atl1e/atl1e_main.c    |  5 +-
- .../ethernet/mellanox/mlx5/core/diag/fw_tracer.c   |  4 +-
- .../net/ethernet/mellanox/mlx5/core/en/tc_tun.c    | 10 ++-
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c   |  2 +-
- drivers/pinctrl/pinctrl-at91-pio4.c                |  8 ++
- drivers/reset/core.c                               |  3 +
- drivers/scsi/bnx2fc/bnx2fc_fcoe.c                  |  9 +--
- drivers/usb/host/fotg210-hcd.c                     |  3 -
- drivers/usb/serial/ftdi_sio.c                      |  6 +-
- drivers/usb/serial/ftdi_sio_ids.h                  |  6 +-
- drivers/usb/serial/option.c                        |  5 ++
- fs/afs/cell.c                                      |  6 +-
- fs/afs/dynroot.c                                   | 31 ++++----
- fs/block_dev.c                                     |  9 ++-
- fs/btrfs/ioctl.c                                   |  9 +++
- fs/cifs/misc.c                                     |  4 +
- fs/cifs/smb2misc.c                                 | 26 +++----
- fs/cifs/smb2pdu.h                                  |  2 +-
- kernel/trace/ring_buffer.c                         |  9 ++-
- net/8021q/vlan_core.c                              |  9 ++-
- net/9p/protocol.c                                  | 17 ++++-
- net/bluetooth/hci_event.c                          |  3 +-
- net/core/dev.c                                     |  8 ++
- net/ife/ife.c                                      |  1 +
- net/mac80211/mesh_plink.c                          | 10 +--
- net/rfkill/rfkill-gpio.c                           |  8 ++
- net/rose/af_rose.c                                 | 39 ++++++++--
- net/wireless/certs/wens.hex                        | 87 ++++++++++++++++++++++
- sound/pci/hda/patch_hdmi.c                         |  2 +
- sound/pci/hda/patch_realtek.c                      |  1 +
- 40 files changed, 320 insertions(+), 101 deletions(-)
+## Build
+* kernel: 4.19.304-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-4.19.y
+* git commit: 3ddaf9daf2cf5540f0abc2fd86938b7a93e099c6
+* git describe: v4.19.303-42-g3ddaf9daf2cf
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19=
+.303-42-g3ddaf9daf2cf
 
+## Test Regressions (compared to v4.19.302)
 
+## Metric Regressions (compared to v4.19.302)
+
+## Test Fixes (compared to v4.19.302)
+
+## Metric Fixes (compared to v4.19.302)
+
+## Test result summary
+total: 55092, pass: 46334, fail: 1606, skip: 7118, xfail: 34
+
+## Build Summary
+* arc: 10 total, 10 passed, 0 failed
+* arm: 111 total, 105 passed, 6 failed
+* arm64: 37 total, 32 passed, 5 failed
+* i386: 21 total, 18 passed, 3 failed
+* mips: 20 total, 20 passed, 0 failed
+* parisc: 3 total, 0 passed, 3 failed
+* powerpc: 24 total, 24 passed, 0 failed
+* s390: 6 total, 6 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 31 total, 26 passed, 5 failed
+
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-user
+* kselftest-vm
+* kselftest-zram
+* kunit
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-crypto
+* ltp-cve
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
