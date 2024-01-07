@@ -1,163 +1,74 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124CA12E7F;
-	Sun,  7 Jan 2024 12:38:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUkZ5Cwl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DEE1C433C7;
-	Sun,  7 Jan 2024 12:38:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704631119;
-	bh=7VKAAJUWOqQXMWuRp2ww3jz0HceeuXh9hur0hbFOrXY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=WUkZ5Cwl/0jFVb0NQ++1vtfNq7nOUCxG0kt/1LQHXWmlz5IOshfoR8lgFvZdG8Qqa
-	 mVYK6LcfN2hvRCV122vhX0GVCt0AQ1SmKymugl5jrpIloczusNnuUGp+4DtaTWRoEa
-	 QheUB2Bq7C9hoWitPOqSk/QQOxeq8C3hXjSEe/HU=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com
-Subject: [PATCH 4.14 00/19] 4.14.335-rc3 review
-Date: Sun,  7 Jan 2024 13:38:33 +0100
-Message-ID: <20240107123823.571931307@linuxfoundation.org>
-X-Mailer: git-send-email 2.43.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47AA134AF
+	for <patches@lists.linux.dev>; Sun,  7 Jan 2024 14:59:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 7E8831C0050; Sun,  7 Jan 2024 15:59:51 +0100 (CET)
+Date: Sun, 7 Jan 2024 15:59:51 +0100
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 4.14 00/19] 4.14.335-rc3 review
+Message-ID: <ZZq8Z6FiQOYPVeQv@duo.ucw.cz>
+References: <20240107123823.571931307@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.335-rc3.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.14.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.14.335-rc3
-X-KernelTest-Deadline: 2024-01-09T12:38+00:00
-Content-Transfer-Encoding: 8bit
-
-This is the start of the stable review cycle for the 4.14.335 release.
-There are 19 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
-
-Responses should be made by Tue, 09 Jan 2024 12:38:13 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.335-rc3.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.14.335-rc3
-
-Sarthak Kukreti <sarthakkukreti@chromium.org>
-    block: Don't invalidate pagecache for invalid falloc modes
-
-Mikulas Patocka <mpatocka@redhat.com>
-    dm-integrity: don't modify bio's immutable bio_vec in integrity_metadata()
-
-Rouven Czerwinski <r.czerwinski@pengutronix.de>
-    net: rfkill: gpio: set GPIO direction
-
-Fedor Pchelkin <pchelkin@ispras.ru>
-    net: 9p: avoid freeing uninit memory in p9pdu_vreadf
-
-Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-    Bluetooth: hci_event: Fix not checking if HCI_OP_INQUIRY has been sent
-
-Reinhard Speyerer <rspmn@arcor.de>
-    USB: serial: option: add Quectel RM500Q R13 firmware support
-
-Slark Xiao <slark_xiao@163.com>
-    USB: serial: option: add Foxconn T99W265 with new baseline
-
-Alper Ak <alperyasinak1@gmail.com>
-    USB: serial: option: add Quectel EG912Y module support
-
-Mark Glover <mark.glover@actisense.com>
-    USB: serial: ftdi_sio: update Actisense PIDs constant names
-
-Johannes Berg <johannes.berg@intel.com>
-    wifi: cfg80211: fix certs build to not depend on file order
-
-Chen-Yu Tsai <wens@kernel.org>
-    wifi: cfg80211: Add my certificate
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: common: ms_sensors: ms_sensors_i2c: fix humidity conversion time table
-
-Haoran Liu <liuhaoran14@163.com>
-    Input: ipaq-micro-keys - add error handling for devm_kmemdup
-
-Su Hui <suhui@nfschina.com>
-    iio: imu: inv_mpu6050: fix an error code problem in inv_mpu6050_read_raw
-
-Zhipeng Lu <alexious@zju.edu.cn>
-    ethernet: atheros: fix a memleak in atl1e_setup_ring_resources
-
-Eric Dumazet <edumazet@google.com>
-    net: sched: ife: fix potential use-after-free
-
-Johannes Berg <johannes.berg@intel.com>
-    wifi: mac80211: mesh_plink: fix matches_local logic
-
-Heiko Carstens <hca@linux.ibm.com>
-    s390/vx: fix save/restore of fpu kernel context
-
-Kunwu Chan <chentao@kylinos.cn>
-    ARM: OMAP2+: Fix null pointer dereference and memory leak in omap_soc_device_init
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="MPORO3F6J5T1nq3D"
+Content-Disposition: inline
+In-Reply-To: <20240107123823.571931307@linuxfoundation.org>
 
 
--------------
+--MPORO3F6J5T1nq3D
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Diffstat:
+Hi!
 
- Makefile                                        |  4 +-
- arch/arm/mach-omap2/id.c                        |  5 ++
- arch/s390/include/asm/fpu/api.h                 |  2 +-
- drivers/iio/common/ms_sensors/ms_sensors_i2c.c  |  4 +-
- drivers/iio/imu/inv_mpu6050/inv_mpu_core.c      |  4 +-
- drivers/input/keyboard/ipaq-micro-keys.c        |  3 +
- drivers/md/dm-integrity.c                       | 11 ++--
- drivers/net/ethernet/atheros/atl1e/atl1e_main.c |  5 +-
- drivers/usb/serial/ftdi_sio.c                   |  6 +-
- drivers/usb/serial/ftdi_sio_ids.h               |  6 +-
- drivers/usb/serial/option.c                     |  5 ++
- fs/block_dev.c                                  |  9 ++-
- net/9p/protocol.c                               | 17 +++--
- net/bluetooth/hci_event.c                       |  3 +-
- net/ife/ife.c                                   |  1 +
- net/mac80211/mesh_plink.c                       | 10 +--
- net/rfkill/rfkill-gpio.c                        |  8 +++
- net/wireless/certs/wens.hex                     | 87 +++++++++++++++++++++++++
- 18 files changed, 159 insertions(+), 31 deletions(-)
+> This is the start of the stable review cycle for the 4.14.335 release.
+> There are 19 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+> Responses should be made by Tue, 09 Jan 2024 12:38:13 +0000.
+> Anything received after that time might be too late.
 
+CIP testing did not find any problems here:
 
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+4.14.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--MPORO3F6J5T1nq3D
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZZq8ZwAKCRAw5/Bqldv6
+8rGXAJ9xBNEmwoFatTtaoUbHuoC5531QlACfVKLVdIsn5ohXX9rNrV92ckmY+RE=
+=tn+4
+-----END PGP SIGNATURE-----
+
+--MPORO3F6J5T1nq3D--
