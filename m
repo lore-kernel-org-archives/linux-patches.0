@@ -1,105 +1,128 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC0712B68;
-	Sun,  7 Jan 2024 08:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A64A134A3;
+	Sun,  7 Jan 2024 12:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxpDCqQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5AC7C433C8;
-	Sun,  7 Jan 2024 08:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CT+1rRQB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D6DC433C7;
+	Sun,  7 Jan 2024 12:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704617602;
-	bh=k2CLj7z3NI/bECjiFCnxSPXUHkYt9xTah9XeKUga9uQ=;
+	s=korg; t=1704631031;
+	bh=EcBDDzyzHrdfz9dL2OagiVunhve5MMjugf9NKzxoFJQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kxpDCqQs6tj3BJqdVPgigUcGV6cpho3tG7zYGlzcOkzvsDNEzGCO9SEVYhehQSSV3
-	 VaKEwFmZdao8Z0Gsy7UIemI8yUvqvta8EbMDF4bjZJw6QGASVd2jvnHRVJYNOGyoqV
-	 lEZaS5anjxbSPK6iNPvNJecOcEplzn1aag8HAyFA=
-Date: Sun, 7 Jan 2024 09:53:19 +0100
+	b=CT+1rRQBUKD00+xkbw312E4PS9V4L6m3yBBM7LT+M9ZktM20pHywgB7eXrrYe1PRZ
+	 6GKAEU8sS1y2EI0bNRvoppSMsB1CRimHy2IukXFgGnOP+5P5l+DlMxCfGSnR32r1Jt
+	 9vjaiGbZWKN3xRWskeO1GAY6NKIIsUvamaZX0e4M=
+Date: Sun, 7 Jan 2024 13:37:09 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Namhyung Kim <namhyung@kernel.org>
-Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org, allen.lkml@gmail.com,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Darren Kenny <darren.kenny@oracle.com>
-Subject: Re: [PATCH 5.15 00/67] 5.15.142-rc1 review
-Message-ID: <2024010711-skeletal-material-15e8@gregkh>
-References: <20231205031519.853779502@linuxfoundation.org>
- <c8ebf598-4d9a-4ce0-bccf-2109150919dc@oracle.com>
- <2023120618-around-duplicity-8f8f@gregkh>
- <CAM9d7cjNgbLPbKV11045zH8ULJxwPWUr3wikFU2Ex1cH_0XxQA@mail.gmail.com>
+	Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>,
+	Liu Jian <liujian56@huawei.com>
+Subject: Re: [PATCH 4.14 00/20] 4.14.335-rc2 review
+Message-ID: <2024010750-trembling-starship-796b@gregkh>
+References: <20240106084013.773696451@linuxfoundation.org>
+ <CA+G9fYsjCRtzFpeBQJepL7H=wyyUu0hi0kN+A3w6-BzksHwYhg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAM9d7cjNgbLPbKV11045zH8ULJxwPWUr3wikFU2Ex1cH_0XxQA@mail.gmail.com>
+In-Reply-To: <CA+G9fYsjCRtzFpeBQJepL7H=wyyUu0hi0kN+A3w6-BzksHwYhg@mail.gmail.com>
 
-On Sat, Jan 06, 2024 at 04:54:34PM -0800, Namhyung Kim wrote:
-> Hello,
-> 
-> On Tue, Dec 5, 2023 at 10:17 AM Greg Kroah-Hartman
+On Sat, Jan 06, 2024 at 03:18:28PM +0530, Naresh Kamboju wrote:
+> On Sat, 6 Jan 2024 at 14:10, Greg Kroah-Hartman
 > <gregkh@linuxfoundation.org> wrote:
 > >
-> > On Tue, Dec 05, 2023 at 12:46:43PM +0530, Harshit Mogalapalli wrote:
-> > > Hi Greg,
-> > >
-> > > On 05/12/23 8:46 am, Greg Kroah-Hartman wrote:
-> > > > This is the start of the stable review cycle for the 5.15.142 release.
-> > > > There are 67 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > >
-> > > > Responses should be made by Thu, 07 Dec 2023 03:14:57 +0000.
-> > > > Anything received after that time might be too late.
-> > > >
-> > > > The whole patch series can be found in one patch at:
-> > > >     https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.142-rc1.gz
-> > > > or in the git tree and branch at:
-> > > >     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > > > and the diffstat can be found below.
-> > > >
-> > > > thanks,
-> > > >
-> > > > greg k-h
-> > > > Adrian Hunter <adrian.hunter@intel.com>
-> > > >      perf inject: Fix GEN_ELF_TEXT_OFFSET for jit
-> > > >
-> > > >
-> > >
-> > > ^^ This commit is causing the perf/ build failure:
-> > >
-> > > In file included from util/jitdump.c:29:
-> > > util/genelf.h:5:10: fatal error: linux/math.h: No such file or directory
-> > >     5 | #include <linux/math.h>
-> > >       |          ^~~~~~~~~~~~~~
-> > > compilation terminated.
-> > >
-> > > This was previously reported on 5.15.136-rc:
-> > >
-> > > Vegard shared his analysis on ways to fix here:
-> > >
-> > > https://lore.kernel.org/stable/fb1ce733-d612-4fa3-a1e4-716545625822@oracle.com/
+> > This is the start of the stable review cycle for the 4.14.335 release.
+> > There are 20 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > >
-> > Now dropped from here and 4.19.y
+> > Responses should be made by Mon, 08 Jan 2024 08:40:01 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.335-rc2.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
 > 
-> Sorry for the super late reply and happy new year!
+> As Daniel reported on RC1 about this failure.
+> Following build failures noticed on 4.14.335-rc2
 > 
-> As Vegard noted we can change the header to <linux/kernel.h>
-> to avoid the build issue.  I don't expect more changes in this
-> code so it's unlikely we have conflicts here.  Let me know if
-> it happens later.
+>  Arm64 with Clang 17:
 > 
-> Anyway this code is needed to handle JIT-dump binaries
-> generated by perf inject.  I'll send a patch if it's ok to you.
+> -----8<-----
+>    /builds/linux/net/8021q/vlan_core.c:332:39: error: incompatible
+> integer to pointer conversion passing '__be16' (aka 'unsigned short')
+> to parameter of type 'const struct vlan_vi
+>    d_info *' [-Wint-conversion]
+>      332 |                 if (!vlan_hw_filter_capable(by_dev, vid_info->proto))
+>          |                                                     ^~~~~~~~~~~~~~~
+>    /builds/linux/net/8021q/vlan_core.c:169:38: note: passing argument
+> to parameter 'vid_info' here
+>      169 |                                      const struct
+> vlan_vid_info *vid_info)
+>          |                                                                  ^
+>    /builds/linux/net/8021q/vlan_core.c:344:39: error: incompatible
+> integer to pointer conversion passing '__be16' (aka 'unsigned short')
+> to parameter of type 'const struct vlan_vi
+>    d_info *' [-Wint-conversion]
+>      344 |                 if (!vlan_hw_filter_capable(by_dev, vid_info->proto))
+>          |                                                     ^~~~~~~~~~~~~~~
+>    /builds/linux/net/8021q/vlan_core.c:169:38: note: passing argument
+> to parameter 'vid_info' here
+>      169 |                                      const struct
+> vlan_vid_info *vid_info)
+>          |                                                                  ^
+>    /builds/linux/net/8021q/vlan_core.c:366:39: error: incompatible
+> integer to pointer conversion passing '__be16' (aka 'unsigned short')
+> to parameter of type 'const struct vlan_vid_info *' [-Wint-conversion]
+>      366 |                 if (!vlan_hw_filter_capable(by_dev, vid_info->proto))
+>          |                                                     ^~~~~~~~~~~~~~~
+>    /builds/linux/net/8021q/vlan_core.c:169:38: note: passing argument
+> to parameter 'vid_info' here
+>      169 |                                      const struct
+> vlan_vid_info *vid_info)
+>          |                                                                  ^
+>    3 errors generated.
+>    make[3]: *** [/builds/linux/scripts/Makefile.build:329:
+> net/8021q/vlan_core.o] Error 1
+> ----->8-----
+> 
+> Bisection in this case points to:
+> 
+>    commit f33474044777425b3578d4e8b22a003f034ae214
+>    Author: Liu Jian <liujian56@huawei.com>
+>    Date:   Sat Dec 16 15:52:18 2023 +0800
+> 
+>        net: check vlan filter feature in vlan_vids_add_by_dev() and
+> vlan_vids_del_by_dev()
+> 
+>        [ Upstream commit 01a564bab4876007ce35f312e16797dfe40e4823 ]
+> 
+> Reproducer:
+> 
+>    tuxmake --runtime podman --target-arch arm64 --toolchain clang-17
+> --kconfig defconfig LD=ld.lld LLVM_IAS=0
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Just send an updated patch please.
+Oops, sorry about that, I missed it, I'll go drop this one now, thanks.
+
+greg k-h
