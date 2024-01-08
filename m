@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF304121D;
-	Mon,  8 Jan 2024 15:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D95B4C3A0;
+	Mon,  8 Jan 2024 15:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7mKoHxU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF55C433C9;
-	Mon,  8 Jan 2024 15:39:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPS68nEm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD3AEC433C7;
+	Mon,  8 Jan 2024 15:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728362;
-	bh=+TSULYuHkmHHFbWDsILR+ilqKJuwwq2q5M2bnV1Mczs=;
+	s=korg; t=1704728365;
+	bh=rzEB0b+K99K8eyyvQkF/AFFXoQHrvUM6i4aGKVnbXT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7mKoHxUaLFYJQOU5xj2Rq0OkkwIUijd4i/jvQnciIxnnSifUHM9JmHwUkDZLG15m
-	 3GpA4HCkf93FOukOweR+aWuPILP3u6C833h/+QZ6+60PiApLYXp31nk68FJu7N7BXi
-	 s2RnxUb37M/w1pGn/cYFD/b2xUOnVTPkTaiDSDZo=
+	b=dPS68nEmJNdYxSn6vq3aCbQz/uEsWTkuNQu5T51ZEzo5p+9ehawvbdQpVUmZgWehc
+	 35t+XVIF8prfxLTFjbU+7yVv1VunPod2+UMkFebRUil342SSw6VfrwEvekEIWoYsZC
+	 5f5DgYeBb6fDuri7PKBRizAQo/2zhPX220wZIPxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	"David S. Miller" <davem@davemloft.net>,
+	Eugen Hristev <eugen.hristev@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/150] asix: Add check for usbnet_get_endpoints
-Date: Mon,  8 Jan 2024 16:35:03 +0100
-Message-ID: <20240108153513.619969437@linuxfoundation.org>
+Subject: [PATCH 6.1 026/150] ASoC: mediatek: mt8186: fix AUD_PAD_TOP register and offset
+Date: Mon,  8 Jan 2024 16:34:37 +0100
+Message-ID: <20240108153512.476860205@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -42,36 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Eugen Hristev <eugen.hristev@collabora.com>
 
-[ Upstream commit eaac6a2d26b65511e164772bec6918fcbc61938e ]
+[ Upstream commit 38744c3fa00109c51076121c2deb4f02e2f09194 ]
 
-Add check for usbnet_get_endpoints() and return the error if it fails
-in order to transfer the error.
+AUD_PAD_TOP widget's correct register is AFE_AUD_PAD_TOP , and not zero.
+Having a zero as register, it would mean that the `snd_soc_dapm_new_widgets`
+would try to read the register at offset zero when trying to get the power
+status of this widget, which is incorrect.
 
-Fixes: 16626b0cc3d5 ("asix: Add a new driver for the AX88172A")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: b65c466220b3 ("ASoC: mediatek: mt8186: support adda in platform driver")
+Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
+Link: https://lore.kernel.org/r/20231229114342.195867-1-eugen.hristev@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/ax88172a.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/mediatek/mt8186/mt8186-dai-adda.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/ax88172a.c b/drivers/net/usb/ax88172a.c
-index 3777c7e2e6fc0..e47bb125048d4 100644
---- a/drivers/net/usb/ax88172a.c
-+++ b/drivers/net/usb/ax88172a.c
-@@ -161,7 +161,9 @@ static int ax88172a_bind(struct usbnet *dev, struct usb_interface *intf)
- 	u8 buf[ETH_ALEN];
- 	struct ax88172a_private *priv;
+diff --git a/sound/soc/mediatek/mt8186/mt8186-dai-adda.c b/sound/soc/mediatek/mt8186/mt8186-dai-adda.c
+index 094402470dc23..858b95b199dcb 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-dai-adda.c
++++ b/sound/soc/mediatek/mt8186/mt8186-dai-adda.c
+@@ -499,7 +499,7 @@ static const struct snd_soc_dapm_widget mtk_dai_adda_widgets[] = {
+ 			      SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMD),
  
--	usbnet_get_endpoints(dev, intf);
-+	ret = usbnet_get_endpoints(dev, intf);
-+	if (ret)
-+		return ret;
- 
- 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
+ 	SND_SOC_DAPM_SUPPLY_S("AUD_PAD_TOP", SUPPLY_SEQ_ADDA_AUD_PAD_TOP,
+-			      0, 0, 0,
++			      AFE_AUD_PAD_TOP, RG_RX_FIFO_ON_SFT, 0,
+ 			      mtk_adda_pad_top_event,
+ 			      SND_SOC_DAPM_PRE_PMU),
+ 	SND_SOC_DAPM_SUPPLY_S("ADDA_MTKAIF_CFG", SUPPLY_SEQ_ADDA_MTKAIF_CFG,
 -- 
 2.43.0
 
