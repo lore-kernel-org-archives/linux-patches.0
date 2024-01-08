@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7553652F8B;
-	Mon,  8 Jan 2024 15:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D6054675;
+	Mon,  8 Jan 2024 15:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXyjTg8t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F058DC433C8;
-	Mon,  8 Jan 2024 15:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMyHKA4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A6DC433CB;
+	Mon,  8 Jan 2024 15:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728529;
-	bh=9gdN4uOo4NRNeW+VvTiM/+MN0ESLIHKr3Y9NNSauEUI=;
+	s=korg; t=1704728532;
+	bh=CW+Sf270tEzBr0FxvfufwJdUf6mJGwKQlOoqccldDIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VXyjTg8tpQmEyOW5VLgj6amvCIQ9tJBFbcL85oAipMlZ+/5GDPLZLKUNg4NXN3iW+
-	 K6vYZUOEGKKp0GsyYSYdFyArJBmvJxz3CZuqImag1QelN9esg1L67pFhkD1EbtAlyZ
-	 Ue6y7kWOAthpIZm6iliI27hEGVHc7wJ4lgjz9gVU=
+	b=RMyHKA4zGshLPBOURrw5PWhm2Rf3Ip4hq2yGNQmvKlsprvjPlV1Mp0q25/y7Xjxw9
+	 HCI+vUsM34jWzqsDUIk8noCMcOL3slk/ULSmBBrt0TWsQc1WXPLRvYuFFPpUXrXOAb
+	 WExnE3d2UJ1kU2GJGh87M960mNp+73vhGhm6I8mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 088/150] s390/mm: add missing arch_set_page_dat() call to vmem_crst_alloc()
-Date: Mon,  8 Jan 2024 16:35:39 +0100
-Message-ID: <20240108153515.289158857@linuxfoundation.org>
+Subject: [PATCH 6.1 106/150] net: dpaa2-eth: rearrange variable in dpaa2_eth_get_ethtool_stats
+Date: Mon,  8 Jan 2024 16:35:57 +0100
+Message-ID: <20240108153516.056507315@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -43,61 +42,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 09cda0a400519b1541591c506e54c9c48e3101bf ]
+[ Upstream commit 3313206827678f6f036eca601a51f6c4524b559a ]
 
-If the cmma no-dat feature is available all pages that are not used for
-dynamic address translation are marked as "no-dat" with the ESSA
-instruction. This information is visible to the hypervisor, so that the
-hypervisor can optimize purging of guest TLB entries. This also means that
-pages which are used for dynamic address translation must not be marked as
-"no-dat", since the hypervisor may then incorrectly not purge guest TLB
-entries.
+Rearrange the variables in the dpaa2_eth_get_ethtool_stats() function so
+that we adhere to the reverse Christmas tree rule.
+Also, in the next patch we are adding more variables and I didn't know
+where to place them with the current ordering.
 
-Region and segment tables allocated via vmem_crst_alloc() are incorrectly
-marked as "no-dat", as soon as slab_is_available() returns true.
-
-Such tables are allocated e.g. when kernel page tables are split, memory is
-hotplugged, or a DCSS segment is loaded.
-
-Fix this by adding the missing arch_set_page_dat() call.
-
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: beb1930f966d ("dpaa2-eth: recycle the RX buffer only after all processing done")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/vmem.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ .../ethernet/freescale/dpaa2/dpaa2-ethtool.c   | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/arch/s390/mm/vmem.c b/arch/s390/mm/vmem.c
-index 9a0ce5315f36d..3cbb461820666 100644
---- a/arch/s390/mm/vmem.c
-+++ b/arch/s390/mm/vmem.c
-@@ -11,6 +11,7 @@
- #include <linux/list.h>
- #include <linux/hugetlb.h>
- #include <linux/slab.h>
-+#include <asm/page-states.h>
- #include <asm/cacheflush.h>
- #include <asm/nospec-branch.h>
- #include <asm/pgalloc.h>
-@@ -44,8 +45,11 @@ void *vmem_crst_alloc(unsigned long val)
- 	unsigned long *table;
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-ethtool.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-ethtool.c
+index eea7d7a07c007..59888826469b9 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-ethtool.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-ethtool.c
+@@ -227,17 +227,8 @@ static void dpaa2_eth_get_ethtool_stats(struct net_device *net_dev,
+ 					struct ethtool_stats *stats,
+ 					u64 *data)
+ {
+-	int i = 0;
+-	int j, k, err;
+-	int num_cnt;
+-	union dpni_statistics dpni_stats;
+-	u32 fcnt, bcnt;
+-	u32 fcnt_rx_total = 0, fcnt_tx_total = 0;
+-	u32 bcnt_rx_total = 0, bcnt_tx_total = 0;
+-	u32 buf_cnt;
+ 	struct dpaa2_eth_priv *priv = netdev_priv(net_dev);
+-	struct dpaa2_eth_drv_stats *extras;
+-	struct dpaa2_eth_ch_stats *ch_stats;
++	union dpni_statistics dpni_stats;
+ 	int dpni_stats_page_size[DPNI_STATISTICS_CNT] = {
+ 		sizeof(dpni_stats.page_0),
+ 		sizeof(dpni_stats.page_1),
+@@ -247,6 +238,13 @@ static void dpaa2_eth_get_ethtool_stats(struct net_device *net_dev,
+ 		sizeof(dpni_stats.page_5),
+ 		sizeof(dpni_stats.page_6),
+ 	};
++	u32 fcnt_rx_total = 0, fcnt_tx_total = 0;
++	u32 bcnt_rx_total = 0, bcnt_tx_total = 0;
++	struct dpaa2_eth_ch_stats *ch_stats;
++	struct dpaa2_eth_drv_stats *extras;
++	int j, k, err, num_cnt, i = 0;
++	u32 fcnt, bcnt;
++	u32 buf_cnt;
  
- 	table = vmem_alloc_pages(CRST_ALLOC_ORDER);
--	if (table)
--		crst_table_init(table, val);
-+	if (!table)
-+		return NULL;
-+	crst_table_init(table, val);
-+	if (slab_is_available())
-+		arch_set_page_dat(virt_to_page(table), CRST_ALLOC_ORDER);
- 	return table;
- }
- 
+ 	memset(data, 0,
+ 	       sizeof(u64) * (DPAA2_ETH_NUM_STATS + DPAA2_ETH_NUM_EXTRA_STATS));
 -- 
 2.43.0
 
