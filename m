@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B271A51C50;
-	Mon,  8 Jan 2024 15:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B8B524AA;
+	Mon,  8 Jan 2024 15:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zniq7uM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6183C433C8;
-	Mon,  8 Jan 2024 15:39:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gr5UvSVK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74BCC433C7;
+	Mon,  8 Jan 2024 15:39:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728391;
-	bh=DsjZxnJqVl6fiyWt3vfPcqMNRA8+hNeYg7TsD9zpkMY=;
+	s=korg; t=1704728394;
+	bh=DyEPa5vZKEpUtxJXzGFjh1NJEjkIgPboBvU77t3koZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1zniq7uM7AJVAoZDvrSJnaX/o8WqV/hyOv/366yPJABIIahIopx2YgaS/yyrRgIB3
-	 bmBa3X0Tp8N1GOvBCTdJbbKQ9q5rD2dHnuTBvzk9GyjKyMDQ3EWaW3ybS38koKfgRb
-	 eK3GmEO5Lk1qj9pm3GVFEso1HEOURgoPQ8pL97rs=
+	b=gr5UvSVKaaUv5CtnoCDfk8pvHdq6lUCfHDB51Cxds82CufSq9JvbIod0grNPyx8LW
+	 XMsYKWRRH2zeSk5bzg45o8+wNkds91rBdv39X8+lR06lLsao6QGY1pxuVlhIlQTvh1
+	 EbVHF8v6ZkZvoqotFlZI78TVmHEBWExjXgYIEK4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kurt Kanzenbach <kurt@linutronix.de>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Thomas Lange <thomas@corelatus.se>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/150] igc: Check VLAN TCI mask
-Date: Mon,  8 Jan 2024 16:34:34 +0100
-Message-ID: <20240108153512.354338661@linuxfoundation.org>
+Subject: [PATCH 6.1 055/150] net: Implement missing SO_TIMESTAMPING_NEW cmsg support
+Date: Mon,  8 Jan 2024 16:35:06 +0100
+Message-ID: <20240108153513.759383966@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -45,139 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kurt Kanzenbach <kurt@linutronix.de>
+From: Thomas Lange <thomas@corelatus.se>
 
-[ Upstream commit b5063cbe148b829e8eb97672c2cbccc058835476 ]
+[ Upstream commit 382a32018b74f407008615e0e831d05ed28e81cd ]
 
-Currently the driver accepts VLAN TCI steering rules regardless of the
-configured mask. And things might fail silently or with confusing error
-messages to the user.
+Commit 9718475e6908 ("socket: Add SO_TIMESTAMPING_NEW") added the new
+socket option SO_TIMESTAMPING_NEW. However, it was never implemented in
+__sock_cmsg_send thus breaking SO_TIMESTAMPING cmsg for platforms using
+SO_TIMESTAMPING_NEW.
 
-There are two ways to handle the VLAN TCI mask:
-
- 1. Match on the PCP field using a VLAN prio filter
- 2. Match on complete TCI field using a flex filter
-
-Therefore, add checks and code for that.
-
-For instance the following rule is invalid and will be converted into a
-VLAN prio rule which is not correct:
-|root@host:~# ethtool -N enp3s0 flow-type ether vlan 0x0001 m 0xf000 \
-|             action 1
-|Added rule with ID 61
-|root@host:~# ethtool --show-ntuple enp3s0
-|4 RX rings available
-|Total 1 rules
-|
-|Filter: 61
-|        Flow Type: Raw Ethernet
-|        Src MAC addr: 00:00:00:00:00:00 mask: FF:FF:FF:FF:FF:FF
-|        Dest MAC addr: 00:00:00:00:00:00 mask: FF:FF:FF:FF:FF:FF
-|        Ethertype: 0x0 mask: 0xFFFF
-|        VLAN EtherType: 0x0 mask: 0xffff
-|        VLAN: 0x1 mask: 0x1fff
-|        User-defined: 0x0 mask: 0xffffffffffffffff
-|        Action: Direct to queue 1
-
-After:
-|root@host:~# ethtool -N enp3s0 flow-type ether vlan 0x0001 m 0xf000 \
-|             action 1
-|rmgr: Cannot insert RX class rule: Operation not supported
-
-Fixes: 7991487ecb2d ("igc: Allow for Flex Filters to be installed")
-Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 9718475e6908 ("socket: Add SO_TIMESTAMPING_NEW")
+Link: https://lore.kernel.org/netdev/6a7281bf-bc4a-4f75-bb88-7011908ae471@app.fastmail.com/
+Signed-off-by: Thomas Lange <thomas@corelatus.se>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20240104085744.49164-1-thomas@corelatus.se
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc.h         |  1 +
- drivers/net/ethernet/intel/igc/igc_ethtool.c | 28 +++++++++++++++++---
- 2 files changed, 26 insertions(+), 3 deletions(-)
+ net/core/sock.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
-index 43c05b41627f7..2a894ca49d93b 100644
---- a/drivers/net/ethernet/intel/igc/igc.h
-+++ b/drivers/net/ethernet/intel/igc/igc.h
-@@ -538,6 +538,7 @@ struct igc_nfc_filter {
- 	u16 etype;
- 	__be16 vlan_etype;
- 	u16 vlan_tci;
-+	u16 vlan_tci_mask;
- 	u8 src_addr[ETH_ALEN];
- 	u8 dst_addr[ETH_ALEN];
- 	u8 user_data[8];
-diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-index 51ef18060dbc4..e146357d61a8a 100644
---- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-@@ -957,6 +957,7 @@ static int igc_ethtool_set_coalesce(struct net_device *netdev,
- }
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 0d8754ec837dc..c50a14a02edd4 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2771,6 +2771,7 @@ int __sock_cmsg_send(struct sock *sk, struct msghdr *msg, struct cmsghdr *cmsg,
+ 		sockc->mark = *(u32 *)CMSG_DATA(cmsg);
+ 		break;
+ 	case SO_TIMESTAMPING_OLD:
++	case SO_TIMESTAMPING_NEW:
+ 		if (cmsg->cmsg_len != CMSG_LEN(sizeof(u32)))
+ 			return -EINVAL;
  
- #define ETHER_TYPE_FULL_MASK ((__force __be16)~0)
-+#define VLAN_TCI_FULL_MASK ((__force __be16)~0)
- static int igc_ethtool_get_nfc_rule(struct igc_adapter *adapter,
- 				    struct ethtool_rxnfc *cmd)
- {
-@@ -988,7 +989,7 @@ static int igc_ethtool_get_nfc_rule(struct igc_adapter *adapter,
- 	if (rule->filter.match_flags & IGC_FILTER_FLAG_VLAN_TCI) {
- 		fsp->flow_type |= FLOW_EXT;
- 		fsp->h_ext.vlan_tci = htons(rule->filter.vlan_tci);
--		fsp->m_ext.vlan_tci = htons(VLAN_PRIO_MASK);
-+		fsp->m_ext.vlan_tci = htons(rule->filter.vlan_tci_mask);
- 	}
- 
- 	if (rule->filter.match_flags & IGC_FILTER_FLAG_DST_MAC_ADDR) {
-@@ -1223,6 +1224,7 @@ static void igc_ethtool_init_nfc_rule(struct igc_nfc_rule *rule,
- 
- 	if ((fsp->flow_type & FLOW_EXT) && fsp->m_ext.vlan_tci) {
- 		rule->filter.vlan_tci = ntohs(fsp->h_ext.vlan_tci);
-+		rule->filter.vlan_tci_mask = ntohs(fsp->m_ext.vlan_tci);
- 		rule->filter.match_flags |= IGC_FILTER_FLAG_VLAN_TCI;
- 	}
- 
-@@ -1260,11 +1262,19 @@ static void igc_ethtool_init_nfc_rule(struct igc_nfc_rule *rule,
- 		memcpy(rule->filter.user_mask, fsp->m_ext.data, sizeof(fsp->m_ext.data));
- 	}
- 
--	/* When multiple filter options or user data or vlan etype is set, use a
--	 * flex filter.
-+	/* The i225/i226 has various different filters. Flex filters provide a
-+	 * way to match up to the first 128 bytes of a packet. Use them for:
-+	 *   a) For specific user data
-+	 *   b) For VLAN EtherType
-+	 *   c) For full TCI match
-+	 *   d) Or in case multiple filter criteria are set
-+	 *
-+	 * Otherwise, use the simple MAC, VLAN PRIO or EtherType filters.
- 	 */
- 	if ((rule->filter.match_flags & IGC_FILTER_FLAG_USER_DATA) ||
- 	    (rule->filter.match_flags & IGC_FILTER_FLAG_VLAN_ETYPE) ||
-+	    ((rule->filter.match_flags & IGC_FILTER_FLAG_VLAN_TCI) &&
-+	     rule->filter.vlan_tci_mask == ntohs(VLAN_TCI_FULL_MASK)) ||
- 	    (rule->filter.match_flags & (rule->filter.match_flags - 1)))
- 		rule->flex = true;
- 	else
-@@ -1334,6 +1344,18 @@ static int igc_ethtool_add_nfc_rule(struct igc_adapter *adapter,
- 		return -EINVAL;
- 	}
- 
-+	/* There are two ways to match the VLAN TCI:
-+	 *  1. Match on PCP field and use vlan prio filter for it
-+	 *  2. Match on complete TCI field and use flex filter for it
-+	 */
-+	if ((fsp->flow_type & FLOW_EXT) &&
-+	    fsp->m_ext.vlan_tci &&
-+	    fsp->m_ext.vlan_tci != htons(VLAN_PRIO_MASK) &&
-+	    fsp->m_ext.vlan_tci != VLAN_TCI_FULL_MASK) {
-+		netdev_dbg(netdev, "VLAN mask not supported\n");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	if (fsp->location >= IGC_MAX_RXNFC_RULES) {
- 		netdev_dbg(netdev, "Invalid location\n");
- 		return -EINVAL;
 -- 
 2.43.0
 
