@@ -1,42 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2B051C5C;
-	Mon,  8 Jan 2024 15:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E8F51C5C;
+	Mon,  8 Jan 2024 15:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULhnvKw8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289C6C433CC;
-	Mon,  8 Jan 2024 15:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nWSlmfO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8ABC433C9;
+	Mon,  8 Jan 2024 15:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728400;
-	bh=hHDHTBjOX0dpobzy7TzDB/Jx0v0+0q5wU4ekBSUNobo=;
+	s=korg; t=1704728403;
+	bh=xBVbc0PYaokWRE1tN0zMfi/mF/aWkz7C/XIRMUVM/Yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULhnvKw8NVLSG5dAT1XGxALXSZgcOkC58IXGWIKHJDBkAxiufcgvGbOaH4zET6hdv
-	 2hMktqZY6jcEsLUAKqlCJd8QTbwKwGhNBSn0LY0dnt7alGQSQl1al6/wimGf/oJhV9
-	 e/F4bosdgQqvHhaM4CpTVHHlgiqp5YHUH2T/Jf1c=
+	b=0nWSlmfO1mQWACCLNcHqNlKrfpg6ZF0msNBUWorBLKHjxVcg6LdpiNu3k7+KWX307
+	 CGceyngZaJZ4657e7/BSfSjhnrt8GzNtMGolNhEmzITenSoNDS4qicuY+eKqNnNxA9
+	 M2N82E53k0EBfpaAWt0deFg2mN+hR+UYaTrovUXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	David Howells <dhowells@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
-	Christoph Hellwig <hch@lst.de>,
-	Al Viro <viro@zeniv.linux.org.uk>,
 	Matthew Wilcox <willy@infradead.org>,
-	Jan Kara <jack@suse.cz>,
-	Jeff Layton <jlayton@kernel.org>,
-	David Hildenbrand <david@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Boris Pismenny <borisp@nvidia.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	linux-mm@kvack.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/150] splice, net: Add a splice_eof op to file-ops and socket-ops
-Date: Mon,  8 Jan 2024 16:35:16 +0100
-Message-ID: <20240108153514.230584734@linuxfoundation.org>
+Subject: [PATCH 6.1 066/150] ipv4, ipv6: Use splice_eof() to flush
+Date: Mon,  8 Jan 2024 16:35:17 +0100
+Message-ID: <20240108153514.272821966@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -57,208 +50,258 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 2bfc66850952b6921b2033b09729ec59eabbc81d ]
+[ Upstream commit 1d7e4538a5463faa0b0e26a7a7b6bd68c7dfdd78 ]
 
-Add an optional method, ->splice_eof(), to allow splice to indicate the
-premature termination of a splice to struct file_operations and struct
-proto_ops.
+Allow splice to undo the effects of MSG_MORE after prematurely ending a
+splice/sendfile due to getting an EOF condition (->splice_read() returned
+0) after splice had called sendmsg() with MSG_MORE set when the user didn't
+set MSG_MORE.
 
-This is called if sendfile() or splice() encounters all of the following
-conditions inside splice_direct_to_actor():
+For UDP, a pending packet will not be emitted if the socket is closed
+before it is flushed; with this change, it be flushed by ->splice_eof().
 
- (1) the user did not set SPLICE_F_MORE (splice only), and
-
- (2) an EOF condition occurred (->splice_read() returned 0), and
-
- (3) we haven't read enough to fulfill the request (ie. len > 0 still), and
-
- (4) we have already spliced at least one byte.
-
-A further patch will modify the behaviour of SPLICE_F_MORE to always be
-passed to the actor if either the user set it or we haven't yet read
-sufficient data to fulfill the request.
+For TCP, it's not clear that MSG_MORE is actually effective.
 
 Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
 Link: https://lore.kernel.org/r/CAHk-=wh=V579PDYvkpnTobCLGczbgxpMgGmmhqiTyE34Cpi5Gg@mail.gmail.com/
 Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+cc: Kuniyuki Iwashima <kuniyu@amazon.com>
+cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+cc: David Ahern <dsahern@kernel.org>
 cc: Jens Axboe <axboe@kernel.dk>
-cc: Christoph Hellwig <hch@lst.de>
-cc: Al Viro <viro@zeniv.linux.org.uk>
 cc: Matthew Wilcox <willy@infradead.org>
-cc: Jan Kara <jack@suse.cz>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: David Hildenbrand <david@redhat.com>
-cc: Christian Brauner <brauner@kernel.org>
-cc: Chuck Lever <chuck.lever@oracle.com>
-cc: Boris Pismenny <borisp@nvidia.com>
-cc: John Fastabend <john.fastabend@gmail.com>
-cc: linux-mm@kvack.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: a0002127cd74 ("udp: move udp->no_check6_tx to udp->udp_flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/splice.c            | 31 ++++++++++++++++++++++++++++++-
- include/linux/fs.h     |  1 +
- include/linux/net.h    |  1 +
- include/linux/splice.h |  1 +
- include/net/sock.h     |  1 +
- net/socket.c           | 10 ++++++++++
- 6 files changed, 44 insertions(+), 1 deletion(-)
+ include/net/inet_common.h |  1 +
+ include/net/tcp.h         |  1 +
+ include/net/udp.h         |  1 +
+ net/ipv4/af_inet.c        | 18 ++++++++++++++++++
+ net/ipv4/tcp.c            | 16 ++++++++++++++++
+ net/ipv4/tcp_ipv4.c       |  1 +
+ net/ipv4/udp.c            | 16 ++++++++++++++++
+ net/ipv6/af_inet6.c       |  1 +
+ net/ipv6/tcp_ipv6.c       |  1 +
+ net/ipv6/udp.c            | 15 +++++++++++++++
+ 10 files changed, 71 insertions(+)
 
-diff --git a/fs/splice.c b/fs/splice.c
-index 5969b7a1d353a..c4ae54deac42c 100644
---- a/fs/splice.c
-+++ b/fs/splice.c
-@@ -764,6 +764,17 @@ static long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
- 	return out->f_op->splice_write(pipe, out, ppos, len, flags);
+diff --git a/include/net/inet_common.h b/include/net/inet_common.h
+index cec453c18f1d6..4673bbfd2811f 100644
+--- a/include/net/inet_common.h
++++ b/include/net/inet_common.h
+@@ -33,6 +33,7 @@ int inet_accept(struct socket *sock, struct socket *newsock, int flags,
+ 		bool kern);
+ int inet_send_prepare(struct sock *sk);
+ int inet_sendmsg(struct socket *sock, struct msghdr *msg, size_t size);
++void inet_splice_eof(struct socket *sock);
+ ssize_t inet_sendpage(struct socket *sock, struct page *page, int offset,
+ 		      size_t size, int flags);
+ int inet_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index c3d56b337f358..4c838f7290dd9 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -332,6 +332,7 @@ int tcp_sendmsg(struct sock *sk, struct msghdr *msg, size_t size);
+ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size);
+ int tcp_sendmsg_fastopen(struct sock *sk, struct msghdr *msg, int *copied,
+ 			 size_t size, struct ubuf_info *uarg);
++void tcp_splice_eof(struct socket *sock);
+ int tcp_sendpage(struct sock *sk, struct page *page, int offset, size_t size,
+ 		 int flags);
+ int tcp_sendpage_locked(struct sock *sk, struct page *page, int offset,
+diff --git a/include/net/udp.h b/include/net/udp.h
+index fee053bcd17c6..fa4cdbe55552c 100644
+--- a/include/net/udp.h
++++ b/include/net/udp.h
+@@ -269,6 +269,7 @@ int udp_get_port(struct sock *sk, unsigned short snum,
+ int udp_err(struct sk_buff *, u32);
+ int udp_abort(struct sock *sk, int err);
+ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len);
++void udp_splice_eof(struct socket *sock);
+ int udp_push_pending_frames(struct sock *sk);
+ void udp_flush_pending_frames(struct sock *sk);
+ int udp_cmsg_send(struct sock *sk, struct msghdr *msg, u16 *gso_size);
+diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
+index 5d379df90c826..347c3768df6e8 100644
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -838,6 +838,21 @@ int inet_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
  }
+ EXPORT_SYMBOL(inet_sendmsg);
  
-+/*
-+ * Indicate to the caller that there was a premature EOF when reading from the
-+ * source and the caller didn't indicate they would be sending more data after
-+ * this.
-+ */
-+static void do_splice_eof(struct splice_desc *sd)
++void inet_splice_eof(struct socket *sock)
 +{
-+	if (sd->splice_eof)
-+		sd->splice_eof(sd);
++	const struct proto *prot;
++	struct sock *sk = sock->sk;
++
++	if (unlikely(inet_send_prepare(sk)))
++		return;
++
++	/* IPV6_ADDRFORM can change sk->sk_prot under us. */
++	prot = READ_ONCE(sk->sk_prot);
++	if (prot->splice_eof)
++		prot->splice_eof(sock);
 +}
++EXPORT_SYMBOL_GPL(inet_splice_eof);
++
+ ssize_t inet_sendpage(struct socket *sock, struct page *page, int offset,
+ 		      size_t size, int flags)
+ {
+@@ -1057,6 +1072,7 @@ const struct proto_ops inet_stream_ops = {
+ #ifdef CONFIG_MMU
+ 	.mmap		   = tcp_mmap,
+ #endif
++	.splice_eof	   = inet_splice_eof,
+ 	.sendpage	   = inet_sendpage,
+ 	.splice_read	   = tcp_splice_read,
+ 	.read_sock	   = tcp_read_sock,
+@@ -1091,6 +1107,7 @@ const struct proto_ops inet_dgram_ops = {
+ 	.read_skb	   = udp_read_skb,
+ 	.recvmsg	   = inet_recvmsg,
+ 	.mmap		   = sock_no_mmap,
++	.splice_eof	   = inet_splice_eof,
+ 	.sendpage	   = inet_sendpage,
+ 	.set_peek_off	   = sk_set_peek_off,
+ #ifdef CONFIG_COMPAT
+@@ -1122,6 +1139,7 @@ static const struct proto_ops inet_sockraw_ops = {
+ 	.sendmsg	   = inet_sendmsg,
+ 	.recvmsg	   = inet_recvmsg,
+ 	.mmap		   = sock_no_mmap,
++	.splice_eof	   = inet_splice_eof,
+ 	.sendpage	   = inet_sendpage,
+ #ifdef CONFIG_COMPAT
+ 	.compat_ioctl	   = inet_compat_ioctl,
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 3935451ad061e..0b7844a8d5711 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -1492,6 +1492,22 @@ int tcp_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
+ }
+ EXPORT_SYMBOL(tcp_sendmsg);
+ 
++void tcp_splice_eof(struct socket *sock)
++{
++	struct sock *sk = sock->sk;
++	struct tcp_sock *tp = tcp_sk(sk);
++	int mss_now, size_goal;
++
++	if (!tcp_write_queue_tail(sk))
++		return;
++
++	lock_sock(sk);
++	mss_now = tcp_send_mss(sk, &size_goal, 0);
++	tcp_push(sk, 0, mss_now, tp->nonagle, size_goal);
++	release_sock(sk);
++}
++EXPORT_SYMBOL_GPL(tcp_splice_eof);
 +
  /*
-  * Attempt to initiate a splice from a file to a pipe.
-  */
-@@ -864,7 +875,7 @@ ssize_t splice_direct_to_actor(struct file *in, struct splice_desc *sd,
- 
- 		ret = do_splice_to(in, &pos, pipe, len, flags);
- 		if (unlikely(ret <= 0))
--			goto out_release;
-+			goto read_failure;
- 
- 		read_len = ret;
- 		sd->total_len = read_len;
-@@ -904,6 +915,15 @@ ssize_t splice_direct_to_actor(struct file *in, struct splice_desc *sd,
- 	file_accessed(in);
- 	return bytes;
- 
-+read_failure:
-+	/*
-+	 * If the user did *not* set SPLICE_F_MORE *and* we didn't hit that
-+	 * "use all of len" case that cleared SPLICE_F_MORE, *and* we did a
-+	 * "->splice_in()" that returned EOF (ie zero) *and* we have sent at
-+	 * least 1 byte *then* we will also do the ->splice_eof() call.
-+	 */
-+	if (ret == 0 && !more && len > 0 && bytes)
-+		do_splice_eof(sd);
- out_release:
- 	/*
- 	 * If we did an incomplete transfer we must release
-@@ -932,6 +952,14 @@ static int direct_splice_actor(struct pipe_inode_info *pipe,
- 			      sd->flags);
+  *	Handle reading urgent data. BSD has very simple semantics for
+  *	this, no blocking and very strange errors 8)
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 7ebbbe561e402..be2c807eed15d 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -3067,6 +3067,7 @@ struct proto tcp_prot = {
+ 	.keepalive		= tcp_set_keepalive,
+ 	.recvmsg		= tcp_recvmsg,
+ 	.sendmsg		= tcp_sendmsg,
++	.splice_eof		= tcp_splice_eof,
+ 	.sendpage		= tcp_sendpage,
+ 	.backlog_rcv		= tcp_v4_do_rcv,
+ 	.release_cb		= tcp_release_cb,
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index b49cb3df01bb4..e8dd2880ac9aa 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -1332,6 +1332,21 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
  }
+ EXPORT_SYMBOL(udp_sendmsg);
  
-+static void direct_file_splice_eof(struct splice_desc *sd)
++void udp_splice_eof(struct socket *sock)
 +{
-+	struct file *file = sd->u.file;
++	struct sock *sk = sock->sk;
++	struct udp_sock *up = udp_sk(sk);
 +
-+	if (file->f_op->splice_eof)
-+		file->f_op->splice_eof(file);
++	if (!up->pending || READ_ONCE(up->corkflag))
++		return;
++
++	lock_sock(sk);
++	if (up->pending && !READ_ONCE(up->corkflag))
++		udp_push_pending_frames(sk);
++	release_sock(sk);
 +}
++EXPORT_SYMBOL_GPL(udp_splice_eof);
 +
- /**
-  * do_splice_direct - splices data directly between two files
-  * @in:		file to splice from
-@@ -957,6 +985,7 @@ long do_splice_direct(struct file *in, loff_t *ppos, struct file *out,
- 		.flags		= flags,
- 		.pos		= *ppos,
- 		.u.file		= out,
-+		.splice_eof	= direct_file_splice_eof,
- 		.opos		= opos,
- 	};
- 	long ret;
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index b6af6abc7a77f..4a1911dcf834b 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -2177,6 +2177,7 @@ struct file_operations {
- 	int (*flock) (struct file *, int, struct file_lock *);
- 	ssize_t (*splice_write)(struct pipe_inode_info *, struct file *, loff_t *, size_t, unsigned int);
- 	ssize_t (*splice_read)(struct file *, loff_t *, struct pipe_inode_info *, size_t, unsigned int);
-+	void (*splice_eof)(struct file *file);
- 	int (*setlease)(struct file *, long, struct file_lock **, void **);
- 	long (*fallocate)(struct file *file, int mode, loff_t offset,
- 			  loff_t len);
-diff --git a/include/linux/net.h b/include/linux/net.h
-index 18d942bbdf6e0..25baca60f6cba 100644
---- a/include/linux/net.h
-+++ b/include/linux/net.h
-@@ -209,6 +209,7 @@ struct proto_ops {
- 				      int offset, size_t size, int flags);
- 	ssize_t 	(*splice_read)(struct socket *sock,  loff_t *ppos,
- 				       struct pipe_inode_info *pipe, size_t len, unsigned int flags);
-+	void		(*splice_eof)(struct socket *sock);
- 	int		(*set_peek_off)(struct sock *sk, int val);
- 	int		(*peek_len)(struct socket *sock);
- 
-diff --git a/include/linux/splice.h b/include/linux/splice.h
-index a55179fd60fc3..41a70687be853 100644
---- a/include/linux/splice.h
-+++ b/include/linux/splice.h
-@@ -38,6 +38,7 @@ struct splice_desc {
- 		struct file *file;	/* file to read/write */
- 		void *data;		/* cookie */
- 	} u;
-+	void (*splice_eof)(struct splice_desc *sd); /* Unexpected EOF handler */
- 	loff_t pos;			/* file position */
- 	loff_t *opos;			/* sendfile: output position */
- 	size_t num_spliced;		/* number of bytes already spliced */
-diff --git a/include/net/sock.h b/include/net/sock.h
-index d8ed62a8e1a3e..9de9f070537cc 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1279,6 +1279,7 @@ struct proto {
- 					   size_t len, int flags, int *addr_len);
- 	int			(*sendpage)(struct sock *sk, struct page *page,
- 					int offset, size_t size, int flags);
-+	void			(*splice_eof)(struct socket *sock);
- 	int			(*bind)(struct sock *sk,
- 					struct sockaddr *addr, int addr_len);
- 	int			(*bind_add)(struct sock *sk,
-diff --git a/net/socket.c b/net/socket.c
-index 6f39f7b0cc85c..639d76f20384e 100644
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -130,6 +130,7 @@ static ssize_t sock_sendpage(struct file *file, struct page *page,
- static ssize_t sock_splice_read(struct file *file, loff_t *ppos,
- 				struct pipe_inode_info *pipe, size_t len,
- 				unsigned int flags);
-+static void sock_splice_eof(struct file *file);
- 
- #ifdef CONFIG_PROC_FS
- static void sock_show_fdinfo(struct seq_file *m, struct file *f)
-@@ -164,6 +165,7 @@ static const struct file_operations socket_file_ops = {
- 	.sendpage =	sock_sendpage,
- 	.splice_write = generic_splice_sendpage,
- 	.splice_read =	sock_splice_read,
-+	.splice_eof =	sock_splice_eof,
- 	.show_fdinfo =	sock_show_fdinfo,
- };
- 
-@@ -1091,6 +1093,14 @@ static ssize_t sock_splice_read(struct file *file, loff_t *ppos,
- 	return sock->ops->splice_read(sock, ppos, pipe, len, flags);
- }
- 
-+static void sock_splice_eof(struct file *file)
-+{
-+	struct socket *sock = file->private_data;
-+
-+	if (sock->ops->splice_eof)
-+		sock->ops->splice_eof(sock);
-+}
-+
- static ssize_t sock_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ int udp_sendpage(struct sock *sk, struct page *page, int offset,
+ 		 size_t size, int flags)
  {
- 	struct file *file = iocb->ki_filp;
+@@ -2907,6 +2922,7 @@ struct proto udp_prot = {
+ 	.getsockopt		= udp_getsockopt,
+ 	.sendmsg		= udp_sendmsg,
+ 	.recvmsg		= udp_recvmsg,
++	.splice_eof		= udp_splice_eof,
+ 	.sendpage		= udp_sendpage,
+ 	.release_cb		= ip4_datagram_release_cb,
+ 	.hash			= udp_lib_hash,
+diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
+index b5309ae87fd79..a2f29ca516000 100644
+--- a/net/ipv6/af_inet6.c
++++ b/net/ipv6/af_inet6.c
+@@ -711,6 +711,7 @@ const struct proto_ops inet6_stream_ops = {
+ #ifdef CONFIG_MMU
+ 	.mmap		   = tcp_mmap,
+ #endif
++	.splice_eof	   = inet_splice_eof,
+ 	.sendpage	   = inet_sendpage,
+ 	.sendmsg_locked    = tcp_sendmsg_locked,
+ 	.sendpage_locked   = tcp_sendpage_locked,
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 7be89dcfd5fc5..ba9a22db5805c 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -2158,6 +2158,7 @@ struct proto tcpv6_prot = {
+ 	.keepalive		= tcp_set_keepalive,
+ 	.recvmsg		= tcp_recvmsg,
+ 	.sendmsg		= tcp_sendmsg,
++	.splice_eof		= tcp_splice_eof,
+ 	.sendpage		= tcp_sendpage,
+ 	.backlog_rcv		= tcp_v6_do_rcv,
+ 	.release_cb		= tcp_release_cb,
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 7f49f69226a21..2a65136dca773 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -1657,6 +1657,20 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	goto out;
+ }
+ 
++static void udpv6_splice_eof(struct socket *sock)
++{
++	struct sock *sk = sock->sk;
++	struct udp_sock *up = udp_sk(sk);
++
++	if (!up->pending || READ_ONCE(up->corkflag))
++		return;
++
++	lock_sock(sk);
++	if (up->pending && !READ_ONCE(up->corkflag))
++		udp_v6_push_pending_frames(sk);
++	release_sock(sk);
++}
++
+ void udpv6_destroy_sock(struct sock *sk)
+ {
+ 	struct udp_sock *up = udp_sk(sk);
+@@ -1768,6 +1782,7 @@ struct proto udpv6_prot = {
+ 	.getsockopt		= udpv6_getsockopt,
+ 	.sendmsg		= udpv6_sendmsg,
+ 	.recvmsg		= udpv6_recvmsg,
++	.splice_eof		= udpv6_splice_eof,
+ 	.release_cb		= ip6_datagram_release_cb,
+ 	.hash			= udp_lib_hash,
+ 	.unhash			= udp_lib_unhash,
 -- 
 2.43.0
 
