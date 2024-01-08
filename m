@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC086D6E4;
-	Mon,  8 Jan 2024 15:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB926D6E4;
+	Mon,  8 Jan 2024 15:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkq8NVOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944C2C433CA;
-	Mon,  8 Jan 2024 15:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DdPXlj0e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC14AC433C7;
+	Mon,  8 Jan 2024 15:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726939;
-	bh=HWMFTvWs3gP+ZcPJdRUq4zWcpublpDUn424E8FPpi5s=;
+	s=korg; t=1704726942;
+	bh=TaTGbs/tTZyP8AKA/4ZoV/iJ93ASN88qsTS0oL4mrRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkq8NVOFhrFAr27HiJme1hiJsf4GCQtrFP9LZHIbGqahsbMrMdOXn6WLD20UhqNPa
-	 iUtNl7VjSeazD1RoxYiGc47ioswMEMD9nOr6SdM9oUUeFcpAC3C8dl5DQdcK513iYg
-	 pTyuSkYXOCDelVenLBkCFfhEmTsTVgyDJTPy81kM=
+	b=DdPXlj0e5PHj/VZeJA3vGlJO0kvGS0HZkZO+ZMBnBiF4GtXwgEIkpbMZXtx1otghi
+	 OR20tvwdekAs9Zq17DIi5SbUROcvjBwezRTTYSxX8XwB1G1yl0SqJ0d+7lkgS+izI1
+	 LhwwjsQhhwfcIz1aEdY4EpB6vIDAZcxiyG4u+rwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Wenchao Chen <wenchao.chen@unisoc.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 119/124] mmc: core: Cancel delayed work before releasing host
-Date: Mon,  8 Jan 2024 16:09:05 +0100
-Message-ID: <20240108150608.440649719@linuxfoundation.org>
+Subject: [PATCH 6.6 120/124] mmc: sdhci-sprd: Fix eMMC init failure after hw reset
+Date: Mon,  8 Jan 2024 16:09:06 +0100
+Message-ID: <20240108150608.488359689@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -42,96 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Wenchao Chen <wenchao.chen@unisoc.com>
 
-commit 1036f69e251380573e256568cf814506e3fb9988 upstream.
+commit 8abf77c88929b6d20fa4f9928b18d6448d64e293 upstream.
 
-On RZ/Five SMARC EVK, where probing of SDHI is deferred due to probe
-deferral of the vqmmc-supply regulator:
+Some eMMC devices that do not close the auto clk gate after hw reset will
+cause eMMC initialization to fail. Let's fix this.
 
-    ------------[ cut here ]------------
-    WARNING: CPU: 0 PID: 0 at kernel/time/timer.c:1738 __run_timers.part.0+0x1d0/0x1e8
-    Modules linked in:
-    CPU: 0 PID: 0 Comm: swapper Not tainted 6.7.0-rc4 #101
-    Hardware name: Renesas SMARC EVK based on r9a07g043f01 (DT)
-    epc : __run_timers.part.0+0x1d0/0x1e8
-     ra : __run_timers.part.0+0x134/0x1e8
-    epc : ffffffff800771a4 ra : ffffffff80077108 sp : ffffffc800003e60
-     gp : ffffffff814f5028 tp : ffffffff8140c5c0 t0 : ffffffc800000000
-     t1 : 0000000000000001 t2 : ffffffff81201300 s0 : ffffffc800003f20
-     s1 : ffffffd8023bc4a0 a0 : 00000000fffee6b0 a1 : 0004010000400000
-     a2 : ffffffffc0000016 a3 : ffffffff81488640 a4 : ffffffc800003e60
-     a5 : 0000000000000000 a6 : 0000000004000000 a7 : ffffffc800003e68
-     s2 : 0000000000000122 s3 : 0000000000200000 s4 : 0000000000000000
-     s5 : ffffffffffffffff s6 : ffffffff81488678 s7 : ffffffff814886c0
-     s8 : ffffffff814f49c0 s9 : ffffffff81488640 s10: 0000000000000000
-     s11: ffffffc800003e60 t3 : 0000000000000240 t4 : 0000000000000a52
-     t5 : ffffffd8024ae018 t6 : ffffffd8024ae038
-    status: 0000000200000100 badaddr: 0000000000000000 cause: 0000000000000003
-    [<ffffffff800771a4>] __run_timers.part.0+0x1d0/0x1e8
-    [<ffffffff800771e0>] run_timer_softirq+0x24/0x4a
-    [<ffffffff80809092>] __do_softirq+0xc6/0x1fa
-    [<ffffffff80028e4c>] irq_exit_rcu+0x66/0x84
-    [<ffffffff80800f7a>] handle_riscv_irq+0x40/0x4e
-    [<ffffffff80808f48>] call_on_irq_stack+0x1c/0x28
-    ---[ end trace 0000000000000000 ]---
-
-What happens?
-
-    renesas_sdhi_probe()
-    {
-    	tmio_mmc_host_alloc()
-	    mmc_alloc_host()
-		INIT_DELAYED_WORK(&host->detect, mmc_rescan);
-
-	devm_request_irq(tmio_mmc_irq);
-
-	/*
-	 * After this, the interrupt handler may be invoked at any time
-	 *
-	 *  tmio_mmc_irq()
-	 *  {
-	 *	__tmio_mmc_card_detect_irq()
-	 *	    mmc_detect_change()
-	 *		_mmc_detect_change()
-	 *		    mmc_schedule_delayed_work(&host->detect, delay);
-	 *  }
-	 */
-
-	tmio_mmc_host_probe()
-	    tmio_mmc_init_ocr()
-		-EPROBE_DEFER
-
-	tmio_mmc_host_free()
-	    mmc_free_host()
-    }
-
-When expire_timers() runs later, it warns because the MMC host structure
-containing the delayed work was freed, and now contains an invalid work
-function pointer.
-
-Fix this by cancelling any pending delayed work before releasing the
-MMC host structure.
-
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Wenchao Chen <wenchao.chen@unisoc.com>
+Fixes: ff874dbc4f86 ("mmc: sdhci-sprd: Disable CLK_AUTO when the clock is less than 400K")
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/205dc4c91b47e31b64392fe2498c7a449e717b4b.1701689330.git.geert+renesas@glider.be
+Link: https://lore.kernel.org/r/20231204064934.21236-1-wenchao.chen@unisoc.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/host.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/sdhci-sprd.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/core/host.c
-+++ b/drivers/mmc/core/host.c
-@@ -692,6 +692,7 @@ EXPORT_SYMBOL(mmc_remove_host);
-  */
- void mmc_free_host(struct mmc_host *host)
- {
-+	cancel_delayed_work_sync(&host->detect);
- 	mmc_pwrseq_free(host);
- 	put_device(&host->class_dev);
+--- a/drivers/mmc/host/sdhci-sprd.c
++++ b/drivers/mmc/host/sdhci-sprd.c
+@@ -239,15 +239,19 @@ static inline void _sdhci_sprd_set_clock
+ 	div = ((div & 0x300) >> 2) | ((div & 0xFF) << 8);
+ 	sdhci_enable_clk(host, div);
+ 
++	val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
++	mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN | SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
+ 	/* Enable CLK_AUTO when the clock is greater than 400K. */
+ 	if (clk > 400000) {
+-		val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
+-		mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN |
+-			SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
+ 		if (mask != (val & mask)) {
+ 			val |= mask;
+ 			sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
+ 		}
++	} else {
++		if (val & mask) {
++			val &= ~mask;
++			sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
++		}
+ 	}
  }
+ 
 
 
