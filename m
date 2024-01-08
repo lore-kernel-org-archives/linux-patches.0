@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125D54BAB1;
-	Mon,  8 Jan 2024 15:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69D24C3DE;
+	Mon,  8 Jan 2024 15:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/il3M1C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46873C433C8;
-	Mon,  8 Jan 2024 15:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiJY/zgK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2A8C433D9;
+	Mon,  8 Jan 2024 15:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726791;
-	bh=9h4QNBY+ydhVERcGkUAdQGtsJ9+LiU5R2dfsP5PoPxo=;
+	s=korg; t=1704726794;
+	bh=DjjeD9YZur++4yIonkCQ2Kbr01mcyuHHwkXw17SO2hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/il3M1CEAPK9PAISx2jvCLUk26GjU8He18TMI6HTeT+jzyx8RwRSRiwokbV8ZU56
-	 opXiPAO8n3JWI0bdr2+kpthxDpS57faEB0MG6q2ZO2FCF6JFNqQZhzWNlmpKH4lkVC
-	 gNeAJbxF58ZEmYp7QpdB+H2u4L0dTumxkWvkgve8=
+	b=yiJY/zgK2vr9kmM4n3vgQUOvJHt9UD6lkNHunr+G/fEXGOVIBhGjPwr3+KEvJHG4j
+	 SKm+lzhhuFmMZC2nHuZHXPQqNn6EP4/tpUKC7uSlSZJaPssQtTZjisSX6ZOVBwgEpE
+	 905/3kdgtq21EcRJl4R+ASUyk0dQKVhvOL8DtS7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Joel Fernandes <joel@joelfernandes.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/124] rcu: Introduce rcu_cpu_online()
-Date: Mon,  8 Jan 2024 16:08:25 +0100
-Message-ID: <20240108150606.603987829@linuxfoundation.org>
+Subject: [PATCH 6.6 080/124] rcu/tasks: Handle new PF_IDLE semantics
+Date: Mon,  8 Jan 2024 16:08:26 +0100
+Message-ID: <20240108150606.655265779@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -44,62 +46,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 2be4686d866ad5896f2bb94d82fe892197aea9c7 ]
+[ Upstream commit 9715ed501b585d47444865071674c961c0cc0020 ]
 
-Export the RCU point of view as to when a CPU is considered offline
-(ie: when does RCU consider that a CPU is sufficiently down in the
-hotplug process to not feature any possible read side).
+The commit:
 
-This will be used by RCU-tasks whose vision of an offline CPU should
-reasonably match the one of RCU core.
+	cff9b2332ab7 ("kernel/sched: Modify initial boot task idle setup")
+
+has changed the semantics of what is to be considered an idle task in
+such a way that CPU boot code preceding the actual idle loop is excluded
+from it.
+
+This has however introduced new potential RCU-tasks stalls when either:
+
+1) Grace period is started before init/0 had a chance to set PF_IDLE,
+   keeping it stuck in the holdout list until idle ever schedules.
+
+2) Grace period is started when some possible CPUs have never been
+   online, keeping their idle tasks stuck in the holdout list until the
+   CPU ever boots up.
+
+3) Similar to 1) but with secondary CPUs: Grace period is started
+   concurrently with secondary CPU booting, putting its idle task in
+   the holdout list because PF_IDLE isn't yet observed on it. It stays
+   then stuck in the holdout list until that CPU ever schedules. The
+   effect is mitigated here by the hotplug AP thread that must run to
+   bring the CPU up.
+
+Fix this with handling the new semantics of PF_IDLE, keeping in mind
+that it may or may not be set on an idle task. Take advantage of that to
+strengthen the coverage of an RCU-tasks quiescent state within an idle
+task, excluding the CPU boot code from it. Only the code running within
+the idle loop is now a quiescent state, along with offline CPUs.
 
 Fixes: cff9b2332ab7 ("kernel/sched: Modify initial boot task idle setup")
+Suggested-by: Joel Fernandes <joel@joelfernandes.org>
+Suggested-by: "Paul E. McKenney" <paulmck@kernel.org>
 Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcu.h  | 2 ++
- kernel/rcu/tree.c | 7 +++++++
- 2 files changed, 9 insertions(+)
+ kernel/rcu/tasks.h | 30 ++++++++++++++++++++++++++++--
+ 1 file changed, 28 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/rcu/rcu.h b/kernel/rcu/rcu.h
-index 98e13be411afd..3d1851f82dbb6 100644
---- a/kernel/rcu/rcu.h
-+++ b/kernel/rcu/rcu.h
-@@ -493,6 +493,7 @@ static inline void rcu_expedite_gp(void) { }
- static inline void rcu_unexpedite_gp(void) { }
- static inline void rcu_async_hurry(void) { }
- static inline void rcu_async_relax(void) { }
-+static inline bool rcu_cpu_online(int cpu) { return true; }
- #else /* #ifdef CONFIG_TINY_RCU */
- bool rcu_gp_is_normal(void);     /* Internal RCU use. */
- bool rcu_gp_is_expedited(void);  /* Internal RCU use. */
-@@ -502,6 +503,7 @@ void rcu_unexpedite_gp(void);
- void rcu_async_hurry(void);
- void rcu_async_relax(void);
- void rcupdate_announce_bootup_oddness(void);
-+bool rcu_cpu_online(int cpu);
- #ifdef CONFIG_TASKS_RCU_GENERIC
- void show_rcu_tasks_gp_kthreads(void);
- #else /* #ifdef CONFIG_TASKS_RCU_GENERIC */
-diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
-index 92a090e161865..9af42eae1ba38 100644
---- a/kernel/rcu/tree.c
-+++ b/kernel/rcu/tree.c
-@@ -4139,6 +4139,13 @@ static bool rcu_rdp_cpu_online(struct rcu_data *rdp)
- 	return !!(rdp->grpmask & rcu_rnp_online_cpus(rdp->mynode));
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index 8d65f7d576a34..b5dc1e5d78c83 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -892,10 +892,36 @@ static void rcu_tasks_pregp_step(struct list_head *hop)
+ 	synchronize_rcu();
  }
  
-+bool rcu_cpu_online(int cpu)
++/* Check for quiescent states since the pregp's synchronize_rcu() */
++static bool rcu_tasks_is_holdout(struct task_struct *t)
 +{
-+	struct rcu_data *rdp = per_cpu_ptr(&rcu_data, cpu);
++	int cpu;
 +
-+	return rcu_rdp_cpu_online(rdp);
++	/* Has the task been seen voluntarily sleeping? */
++	if (!READ_ONCE(t->on_rq))
++		return false;
++
++	/*
++	 * Idle tasks (or idle injection) within the idle loop are RCU-tasks
++	 * quiescent states. But CPU boot code performed by the idle task
++	 * isn't a quiescent state.
++	 */
++	if (is_idle_task(t))
++		return false;
++
++	cpu = task_cpu(t);
++
++	/* Idle tasks on offline CPUs are RCU-tasks quiescent states. */
++	if (t == idle_task(cpu) && !rcu_cpu_online(cpu))
++		return false;
++
++	return true;
 +}
 +
- #if defined(CONFIG_PROVE_RCU) && defined(CONFIG_HOTPLUG_CPU)
+ /* Per-task initial processing. */
+ static void rcu_tasks_pertask(struct task_struct *t, struct list_head *hop)
+ {
+-	if (t != current && READ_ONCE(t->on_rq) && !is_idle_task(t)) {
++	if (t != current && rcu_tasks_is_holdout(t)) {
+ 		get_task_struct(t);
+ 		t->rcu_tasks_nvcsw = READ_ONCE(t->nvcsw);
+ 		WRITE_ONCE(t->rcu_tasks_holdout, true);
+@@ -944,7 +970,7 @@ static void check_holdout_task(struct task_struct *t,
  
- /*
+ 	if (!READ_ONCE(t->rcu_tasks_holdout) ||
+ 	    t->rcu_tasks_nvcsw != READ_ONCE(t->nvcsw) ||
+-	    !READ_ONCE(t->on_rq) ||
++	    !rcu_tasks_is_holdout(t) ||
+ 	    (IS_ENABLED(CONFIG_NO_HZ_FULL) &&
+ 	     !is_idle_task(t) && t->rcu_tasks_idle_cpu >= 0)) {
+ 		WRITE_ONCE(t->rcu_tasks_holdout, false);
 -- 
 2.43.0
 
