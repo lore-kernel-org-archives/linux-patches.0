@@ -1,140 +1,171 @@
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2060.outbound.protection.outlook.com [40.107.102.60])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EF41426D
-	for <patches@lists.linux.dev>; Mon,  8 Jan 2024 10:44:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129EB51010;
+	Mon,  8 Jan 2024 14:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="P72lV5mL"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=T6+55NFWzh+6sD0nrtIyoNmpTnR0hx/ps1VNi5ZkPsbE520wObwJeLV4LuinozJdk6mXHY/ECWr16ETFReWsjj4dJbsCODWqT91KkyvbU8aOsJPoBkq9teOgiwURaAbqeiog9wPGbvrtE2cObk7tCQIwI53wpWoQ7Ci2GxTowpDAH+79NzAqyV177beQLm324ckGS9n68F/zn7GV1auGfAjtkE/wVXYPwBODMQQlCrY03PQkS5P6iThSnTeyM1P5uoRixEXMBCcoUrpsK5xTbNeUjq4eFRmn4vZxmMV7NvJXqypdjkF5mKzxQheXdblsn+DIxr9tArplBZ03ErDUcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XbqR78B8QXd4L+yXp0jJ8bdI+RolG99A235jO2t9UxA=;
- b=X4ScE4SgF1ee8ryyYsdplCKJUzAB+/GVaaVJi3oMH2I0W1MmCtiVqpvWAcOXR0uHIf9tJ8Pb/qqVofG2Z0Ws9La7TlDkm47hSkBQW0ttpypTf78Gj2xb9bFECQzgWfTw5e965tyGk7Y+/WFjsijTG8ZHCc5A/yX7G5uJk2arIOA3X5yQs12Qp2cHK0JouvT1m2ZFXaSD3aBPccVauP5oqYAOVBksl569i4W9FB1hP9qChcEz2RM84sD8TWqMukpr0BUCu69ec1V8vkW9AICf4u9PkHMI3c2UsGKU8qzMRzi6bho4cYEHKX+pLS2Gop2/YMiEauh5C++9UPS8Btcx6Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XbqR78B8QXd4L+yXp0jJ8bdI+RolG99A235jO2t9UxA=;
- b=P72lV5mLWP4Ssl+qhG4yWyD0HPAhgCwCIVYg/J/iQEh1LEfk2m3fgdegiITv1BaaA8zMic/DiJjvTf6rtJ59hIOysH5Xn8Cbv/pqW4KT8elwHFNdDVkFwNAfXEZ9ZHCWOvFiOevshw9OsFYFY2ncJo2ibYf3+SboHEHTuR3aqKw68f6e0GVJNfxjguSPKHC0XOpPny1vTzksQBhU8Ea0YdjevAg7PcXdg3t2d0TbdtimP4O1r1vGuF7HildFW7FGx+kCQBeqDA9G2gWFSg5swJWQEAKURALlW0I8WE/GuhA4GlPIvDq49eqC9CtxNOhRl9N1bcohB1ML04id1L4Qzg==
-Received: from BLAPR03CA0132.namprd03.prod.outlook.com (2603:10b6:208:32e::17)
- by IA1PR12MB6234.namprd12.prod.outlook.com (2603:10b6:208:3e6::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7159.21; Mon, 8 Jan
- 2024 10:44:39 +0000
-Received: from BL02EPF0001A106.namprd05.prod.outlook.com
- (2603:10b6:208:32e:cafe::75) by BLAPR03CA0132.outlook.office365.com
- (2603:10b6:208:32e::17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7159.21 via Frontend
- Transport; Mon, 8 Jan 2024 10:44:39 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- BL02EPF0001A106.mail.protection.outlook.com (10.167.241.139) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7181.12 via Frontend Transport; Mon, 8 Jan 2024 10:44:39 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 8 Jan 2024
- 02:44:21 -0800
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Mon, 8 Jan 2024 02:44:20 -0800
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41 via Frontend
- Transport; Mon, 8 Jan 2024 02:44:20 -0800
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
-	<linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
-Subject: Re: [PATCH 5.4 00/45] 5.4.266-rc2 review
-In-Reply-To: <20240106084016.200641776@linuxfoundation.org>
-References: <20240106084016.200641776@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJxyRESz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35D5C433C8;
+	Mon,  8 Jan 2024 14:22:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1704723726;
+	bh=tU1QzIY+nmnZRfKp/ZGbMdntpCmqKdiTBIoYmY/FJWg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=aJxyRESzRHzElYpxub9cMUEmz3u73zSLKu/sBH1X/f+wubw6l717gCs5Mc/zmbd09
+	 pI/TO7zfM6iJElVRGn6VMHvfpEVCM7j91cmx8YPwaVbIIl8z5XIR5Wtxxej+OOWOf2
+	 iilTWPkHInldRDBunPNMGG67U4bi1AeOcRLn0thA=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Suman Ghosh <sumang@marvell.com>,
+	Siddh Raman Pant <code@siddh.me>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+bbe84a4010eeea00982d@syzkaller.appspotmail.com
+Subject: [PATCH 4.14 1/7] nfc: llcp_core: Hold a ref to llcp_local->dev when holding a ref to llcp_local
+Date: Mon,  8 Jan 2024 15:21:55 +0100
+Message-ID: <20240108141854.206910310@linuxfoundation.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240108141854.158274814@linuxfoundation.org>
+References: <20240108141854.158274814@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <664a5443-08a8-419a-a3b4-5654138b97d4@drhqmail202.nvidia.com>
-Date: Mon, 8 Jan 2024 02:44:20 -0800
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A106:EE_|IA1PR12MB6234:EE_
-X-MS-Office365-Filtering-Correlation-Id: c041001a-b9a0-4c3d-f340-08dc1036d0b7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	yGVIIgYUoFMzx1ibTLUWPdQdObIbY2cJHFyFVFtSyvakiXIB8I+dYR9JgqbHvPqSrCMc0NDS+WTVitKOhy3bcVXMdTEHDOSRucWSHLk8XEwQ6dEidtecKTPVrsvVXpCcUpYRZ22a0Ke/ulmzkOmHmGZ+qVZ6fhM24hujBBZotYfhBpWR42P+GX0Mv2RYjxhuKZllFC4wxBFFNas3TXpMKQCEwORTLX6ONxQqTHk/Pnc7eVwl9H/+ORO7jA0aTUFnbxwx9Hba74/PukaqpZIq/Rke5psdf7a2hnYYMnqyVqYxWRE+gS8rbimgkA0xvKWUm6GMWN65rSpYWZceBJHiKqtF8XbCdcopho94MuRXfZ3YUV6ds69c4j5+wFkO/CHO4jHiSW5vsy4s+Va4UVAYKbMwubTCrHB5IuH/zg48YZBPQtQvCZK23i+Jl9ZTR5KNm9QAP6pAINXf6dLm/YPQURWbNJ/5ge3GlldC/5oqak+bEJTrgXUneaG6TSlk2xRqh3nFppY485aOTPTEdKjRhdIbsVXhb73QJj0qVQVHVkuxKqIYJzmVt1n404qVvNJcFfZvsAmkkI0Txtox6ws1ZxaItbVzjUnb9Frc5V3j5OxL60wqOmpQ/48QmJeKYlGv2eymEtmi2jaKeK64R7t2ZeBlGRuxaaUptT6p0njK9aFLe33Z7mRTLmP+cBJTyU5bo1e5kf3ok/ZPPiplE6/IdMHgaHt2aBDTz4ifR4yNxCP7ByQtxGQEmPUgM3vNQEXHY8SVIoM5hXXHxEOUXlOkkXV4UKoFvLiuioEJdeLxqxA=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(136003)(376002)(39860400002)(346002)(396003)(230922051799003)(64100799003)(186009)(82310400011)(1800799012)(451199024)(40470700004)(36840700001)(46966006)(316002)(70206006)(70586007)(6916009)(54906003)(8936002)(8676002)(966005)(31696002)(478600001)(86362001)(2906002)(7416002)(41300700001)(4326008)(5660300002)(336012)(426003)(40460700003)(47076005)(40480700001)(36860700001)(26005)(7636003)(356005)(82740400003)(31686004);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jan 2024 10:44:39.3887
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c041001a-b9a0-4c3d-f340-08dc1036d0b7
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL02EPF0001A106.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6234
+Content-Transfer-Encoding: 8bit
 
-On Sat, 06 Jan 2024 09:40:33 +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.266 release.
-> There are 45 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Mon, 08 Jan 2024 08:39:59 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.266-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+4.14-stable review patch.  If anyone has any objections, please let me know.
 
-All tests passing for Tegra ...
+------------------
 
-Test results for stable-v5.4:
-    10 builds:	10 pass, 0 fail
-    24 boots:	24 pass, 0 fail
-    54 tests:	54 pass, 0 fail
+From: Siddh Raman Pant <code@siddh.me>
 
-Linux version:	5.4.266-rc2-g27678f7dfd94
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra20-ventana,
-                tegra210-p2371-2180, tegra210-p3450-0000,
-                tegra30-cardhu-a04
+[ Upstream commit c95f919567d6f1914f13350af61a1b044ac85014 ]
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
+llcp_sock_sendmsg() calls nfc_llcp_send_ui_frame() which in turn calls
+nfc_alloc_send_skb(), which accesses the nfc_dev from the llcp_sock for
+getting the headroom and tailroom needed for skb allocation.
 
-Jon
+Parallelly the nfc_dev can be freed, as the refcount is decreased via
+nfc_free_device(), leading to a UAF reported by Syzkaller, which can
+be summarized as follows:
+
+(1) llcp_sock_sendmsg() -> nfc_llcp_send_ui_frame()
+	-> nfc_alloc_send_skb() -> Dereference *nfc_dev
+(2) virtual_ncidev_close() -> nci_free_device() -> nfc_free_device()
+	-> put_device() -> nfc_release() -> Free *nfc_dev
+
+When a reference to llcp_local is acquired, we do not acquire the same
+for the nfc_dev. This leads to freeing even when the llcp_local is in
+use, and this is the case with the UAF described above too.
+
+Thus, when we acquire a reference to llcp_local, we should acquire a
+reference to nfc_dev, and release the references appropriately later.
+
+References for llcp_local is initialized in nfc_llcp_register_device()
+(which is called by nfc_register_device()). Thus, we should acquire a
+reference to nfc_dev there.
+
+nfc_unregister_device() calls nfc_llcp_unregister_device() which in
+turn calls nfc_llcp_local_put(). Thus, the reference to nfc_dev is
+appropriately released later.
+
+Reported-and-tested-by: syzbot+bbe84a4010eeea00982d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bbe84a4010eeea00982d
+Fixes: c7aa12252f51 ("NFC: Take a reference on the LLCP local pointer when creating a socket")
+Reviewed-by: Suman Ghosh <sumang@marvell.com>
+Signed-off-by: Siddh Raman Pant <code@siddh.me>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/nfc/llcp_core.c | 39 ++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 36 insertions(+), 3 deletions(-)
+
+diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
+index 150f7ffbf6bc6..5c14fbcfecbab 100644
+--- a/net/nfc/llcp_core.c
++++ b/net/nfc/llcp_core.c
+@@ -157,6 +157,13 @@ static void nfc_llcp_socket_release(struct nfc_llcp_local *local, bool device,
+ 
+ struct nfc_llcp_local *nfc_llcp_local_get(struct nfc_llcp_local *local)
+ {
++	/* Since using nfc_llcp_local may result in usage of nfc_dev, whenever
++	 * we hold a reference to local, we also need to hold a reference to
++	 * the device to avoid UAF.
++	 */
++	if (!nfc_get_device(local->dev->idx))
++		return NULL;
++
+ 	kref_get(&local->ref);
+ 
+ 	return local;
+@@ -190,10 +197,18 @@ static void local_release(struct kref *ref)
+ 
+ int nfc_llcp_local_put(struct nfc_llcp_local *local)
+ {
++	struct nfc_dev *dev;
++	int ret;
++
+ 	if (local == NULL)
+ 		return 0;
+ 
+-	return kref_put(&local->ref, local_release);
++	dev = local->dev;
++
++	ret = kref_put(&local->ref, local_release);
++	nfc_put_device(dev);
++
++	return ret;
+ }
+ 
+ static struct nfc_llcp_sock *nfc_llcp_sock_get(struct nfc_llcp_local *local,
+@@ -959,8 +974,17 @@ static void nfc_llcp_recv_connect(struct nfc_llcp_local *local,
+ 	}
+ 
+ 	new_sock = nfc_llcp_sock(new_sk);
+-	new_sock->dev = local->dev;
++
+ 	new_sock->local = nfc_llcp_local_get(local);
++	if (!new_sock->local) {
++		reason = LLCP_DM_REJ;
++		sock_put(&new_sock->sk);
++		release_sock(&sock->sk);
++		sock_put(&sock->sk);
++		goto fail;
++	}
++
++	new_sock->dev = local->dev;
+ 	new_sock->rw = sock->rw;
+ 	new_sock->miux = sock->miux;
+ 	new_sock->nfc_protocol = sock->nfc_protocol;
+@@ -1586,7 +1610,16 @@ int nfc_llcp_register_device(struct nfc_dev *ndev)
+ 	if (local == NULL)
+ 		return -ENOMEM;
+ 
+-	local->dev = ndev;
++	/* As we are going to initialize local's refcount, we need to get the
++	 * nfc_dev to avoid UAF, otherwise there is no point in continuing.
++	 * See nfc_llcp_local_get().
++	 */
++	local->dev = nfc_get_device(ndev->idx);
++	if (!local->dev) {
++		kfree(local);
++		return -ENODEV;
++	}
++
+ 	INIT_LIST_HEAD(&local->list);
+ 	kref_init(&local->ref);
+ 	mutex_init(&local->sdp_lock);
+-- 
+2.43.0
+
+
+
