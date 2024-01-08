@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3D14C3C9;
-	Mon,  8 Jan 2024 15:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B426D6DC;
+	Mon,  8 Jan 2024 15:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUvUUjT0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09144C433C9;
-	Mon,  8 Jan 2024 15:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBNPPjY7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9D3C433C8;
+	Mon,  8 Jan 2024 15:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726895;
-	bh=F9Mk2oOzj8YTRsnXvz0JBZCZP7ABkvVEhbO8p4shPsg=;
+	s=korg; t=1704726898;
+	bh=90hgttIimNU26HQcijFL7hjqUniYL0H/Ua84K7ZN1f8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KUvUUjT0wNR0nOhfF9fgItIy4+FZSFHi6o7/VXWA6h9k7IIwZjYYqvkEkqbY1aktT
-	 JN4luTONbQoVGAdrB65AuprT1ZVeAs8n5psaUvmcBhC9knvJKOq+xeE96sB7/6ASPH
-	 +SW//5DapZqi9D2yuESMcy7xXGooRjjYgjpOwZrM=
+	b=TBNPPjY7zxAAiepomtA6QLEqLJOZ5CRF9gEiONxECeDvpFt3rrEIY02D8R9dwYlvX
+	 t1JbTgd344lR0e0drW7fnZugk+3KIRT5lakXNR/RqTSEUDf8WlbKYV3yVLPTqfNTJ0
+	 4QQdjVYv064i9P9JqA7DFZjg4Vi+CFoHcxi4LSi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Bara <benjamin.bara@skidata.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Tor Vic <torvic9@mailbox.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.6 112/124] i2c: core: Fix atomic xfer check for non-preempt config
-Date: Mon,  8 Jan 2024 16:08:58 +0100
-Message-ID: <20240108150608.116612109@linuxfoundation.org>
+	Jai Luthra <j-luthra@ti.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 086/124] dmaengine: ti: k3-psil-am62a: Fix SPI PDMA data
+Date: Mon,  8 Jan 2024 16:08:32 +0100
+Message-ID: <20240108150606.943031207@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -43,59 +42,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Bara <benjamin.bara@skidata.com>
+From: Jai Luthra <j-luthra@ti.com>
 
-commit a3368e1186e3ce8e38f78cbca019622095b1f331 upstream.
+[ Upstream commit be37542afbfcd27b3bb99a135abf9b4736b96f75 ]
 
-Since commit aa49c90894d0 ("i2c: core: Run atomic i2c xfer when
-!preemptible"), the whole reboot/power off sequence on non-preempt kernels
-is using atomic i2c xfer, as !preemptible() always results to 1.
+AM62Ax has 3 SPI channels where each channel has 4x TX and 4x RX
+threads. Also fix the thread numbers to match what the firmware expects
+according to the PSI-L device description.
 
-During device_shutdown(), the i2c might be used a lot and not all busses
-have implemented an atomic xfer handler. This results in a lot of
-avoidable noise, like:
-
-[   12.687169] No atomic I2C transfer handler for 'i2c-0'
-[   12.692313] WARNING: CPU: 6 PID: 275 at drivers/i2c/i2c-core.h:40 i2c_smbus_xfer+0x100/0x118
-...
-
-Fix this by allowing non-atomic xfer when the interrupts are enabled, as
-it was before.
-
-Link: https://lore.kernel.org/r/20231222230106.73f030a5@yea
-Link: https://lore.kernel.org/r/20240102150350.3180741-1-mwalle@kernel.org
-Link: https://lore.kernel.org/linux-i2c/13271b9b-4132-46ef-abf8-2c311967bb46@mailbox.org/
-Fixes: aa49c90894d0 ("i2c: core: Run atomic i2c xfer when !preemptible")
-Cc: stable@vger.kernel.org # v5.2+
-Signed-off-by: Benjamin Bara <benjamin.bara@skidata.com>
-Tested-by: Michael Walle <mwalle@kernel.org>
-Tested-by: Tor Vic <torvic9@mailbox.org>
-[wsa: removed a comment which needs more work, code is ok]
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: http://downloads.ti.com/tisci/esd/latest/5_soc_doc/am62ax/psil_cfg.html [1]
+Fixes: aac6db7e243a ("dmaengine: ti: k3-psil-am62a: Add AM62Ax PSIL and PDMA data")
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Link: https://lore.kernel.org/r/20231123-psil_fix-v1-1-6604d80819be@ti.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma/ti/k3-psil-am62a.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/i2c/i2c-core.h
-+++ b/drivers/i2c/i2c-core.h
-@@ -3,6 +3,7 @@
-  * i2c-core.h - interfaces internal to the I2C framework
-  */
- 
-+#include <linux/kconfig.h>
- #include <linux/rwsem.h>
- 
- struct i2c_devinfo {
-@@ -29,7 +30,8 @@ int i2c_dev_irq_from_resources(const str
-  */
- static inline bool i2c_in_atomic_xfer_mode(void)
- {
--	return system_state > SYSTEM_RUNNING && !preemptible();
-+	return system_state > SYSTEM_RUNNING &&
-+	       (IS_ENABLED(CONFIG_PREEMPT_COUNT) ? !preemptible() : irqs_disabled());
- }
- 
- static inline int __i2c_lock_bus_helper(struct i2c_adapter *adap)
+diff --git a/drivers/dma/ti/k3-psil-am62a.c b/drivers/dma/ti/k3-psil-am62a.c
+index ca9d71f914220..4cf9123b0e932 100644
+--- a/drivers/dma/ti/k3-psil-am62a.c
++++ b/drivers/dma/ti/k3-psil-am62a.c
+@@ -84,7 +84,9 @@ static struct psil_ep am62a_src_ep_map[] = {
+ 	PSIL_SAUL(0x7505, 21, 35, 8, 36, 0),
+ 	PSIL_SAUL(0x7506, 22, 43, 8, 43, 0),
+ 	PSIL_SAUL(0x7507, 23, 43, 8, 44, 0),
+-	/* PDMA_MAIN0 - SPI0-3 */
++	/* PDMA_MAIN0 - SPI0-2 */
++	PSIL_PDMA_XY_PKT(0x4300),
++	PSIL_PDMA_XY_PKT(0x4301),
+ 	PSIL_PDMA_XY_PKT(0x4302),
+ 	PSIL_PDMA_XY_PKT(0x4303),
+ 	PSIL_PDMA_XY_PKT(0x4304),
+@@ -95,8 +97,6 @@ static struct psil_ep am62a_src_ep_map[] = {
+ 	PSIL_PDMA_XY_PKT(0x4309),
+ 	PSIL_PDMA_XY_PKT(0x430a),
+ 	PSIL_PDMA_XY_PKT(0x430b),
+-	PSIL_PDMA_XY_PKT(0x430c),
+-	PSIL_PDMA_XY_PKT(0x430d),
+ 	/* PDMA_MAIN1 - UART0-6 */
+ 	PSIL_PDMA_XY_PKT(0x4400),
+ 	PSIL_PDMA_XY_PKT(0x4401),
+@@ -151,7 +151,9 @@ static struct psil_ep am62a_dst_ep_map[] = {
+ 	/* SAUL */
+ 	PSIL_SAUL(0xf500, 27, 83, 8, 83, 1),
+ 	PSIL_SAUL(0xf501, 28, 91, 8, 91, 1),
+-	/* PDMA_MAIN0 - SPI0-3 */
++	/* PDMA_MAIN0 - SPI0-2 */
++	PSIL_PDMA_XY_PKT(0xc300),
++	PSIL_PDMA_XY_PKT(0xc301),
+ 	PSIL_PDMA_XY_PKT(0xc302),
+ 	PSIL_PDMA_XY_PKT(0xc303),
+ 	PSIL_PDMA_XY_PKT(0xc304),
+@@ -162,8 +164,6 @@ static struct psil_ep am62a_dst_ep_map[] = {
+ 	PSIL_PDMA_XY_PKT(0xc309),
+ 	PSIL_PDMA_XY_PKT(0xc30a),
+ 	PSIL_PDMA_XY_PKT(0xc30b),
+-	PSIL_PDMA_XY_PKT(0xc30c),
+-	PSIL_PDMA_XY_PKT(0xc30d),
+ 	/* PDMA_MAIN1 - UART0-6 */
+ 	PSIL_PDMA_XY_PKT(0xc400),
+ 	PSIL_PDMA_XY_PKT(0xc401),
+-- 
+2.43.0
+
 
 
