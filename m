@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C0E5102D;
-	Mon,  8 Jan 2024 15:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A465102D;
+	Mon,  8 Jan 2024 15:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkaASObE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D83FC433CB;
-	Mon,  8 Jan 2024 15:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCaKD/xw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61877C43395;
+	Mon,  8 Jan 2024 15:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728266;
-	bh=d16be2KcNeR3BSdXqVDVCrgJbg64Qav1Hbs55+9YjJg=;
+	s=korg; t=1704728269;
+	bh=omZd7E8Lh6AGRSY4XpplDaGHD6b0S8k5r93E/cEnqxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkaASObE7nAY/7eumJO6AScSUtm7ykjAkkGtSSJ/X24mVReV8iESJQCFx6f08XNN6
-	 5QyjMfBi3Oo5GlsXJzKetBBdw6mK4pHXdXnEi+ImDXsyD34bfBwWbBNjSEOxQ1jKPP
-	 YUSPxS8NnopPdYQP5h0f5RoNMrbQ5cNue7XX/EFw=
+	b=mCaKD/xwh/6IhvAbaRBxLVVUJ7xpU6RWwwBm7MuDsCd4NeHMG7O/75AjmEuDoNkx2
+	 T+Hg/SMFeavQ9xGzBrB4yjnKT2/qM30ejZkMcewAOYW31V0SueDUO3NYglM90eT7ld
+	 eG4N9nxViC+xZWQ6QMhj8m1nTbXekrvx33C/OG6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kurt Kanzenbach <kurt@linutronix.de>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/150] igc: Report VLAN EtherType matching back to user
-Date: Mon,  8 Jan 2024 16:34:33 +0100
-Message-ID: <20240108153512.305790887@linuxfoundation.org>
+	Aabish Malik <aabishmalik3337@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 003/150] ALSA: hda/realtek: enable SND_PCI_QUIRK for hp pavilion 14-ec1xxx series
+Date: Mon,  8 Jan 2024 16:34:14 +0100
+Message-ID: <20240108153511.386606299@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -45,75 +41,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kurt Kanzenbach <kurt@linutronix.de>
+From: Aabish Malik <aabishmalik3337@gmail.com>
 
-[ Upstream commit 088464abd48cf3735aee91f9e211b32da9d81117 ]
+commit 13a5b21197587a3d9cac9e1a00de9b91526a55e4 upstream.
 
-Currently the driver allows to configure matching by VLAN EtherType.
-However, the retrieval function does not report it back to the user. Add
-it.
+The HP Pavilion 14 ec1xxx series uses the HP mainboard 8A0F with the
+ALC287 codec.
+The mute led can be enabled using the already existing
+ALC287_FIXUP_HP_GPIO_LED quirk.
+Tested on an HP Pavilion ec1003AU
 
-Before:
-|root@host:~# ethtool -N enp3s0 flow-type ether vlan-etype 0x8100 action 0
-|Added rule with ID 63
-|root@host:~# ethtool --show-ntuple enp3s0
-|4 RX rings available
-|Total 1 rules
-|
-|Filter: 63
-|        Flow Type: Raw Ethernet
-|        Src MAC addr: 00:00:00:00:00:00 mask: FF:FF:FF:FF:FF:FF
-|        Dest MAC addr: 00:00:00:00:00:00 mask: FF:FF:FF:FF:FF:FF
-|        Ethertype: 0x0 mask: 0xFFFF
-|        Action: Direct to queue 0
-
-After:
-|root@host:~# ethtool -N enp3s0 flow-type ether vlan-etype 0x8100 action 0
-|Added rule with ID 63
-|root@host:~# ethtool --show-ntuple enp3s0
-|4 RX rings available
-|Total 1 rules
-|
-|Filter: 63
-|        Flow Type: Raw Ethernet
-|        Src MAC addr: 00:00:00:00:00:00 mask: FF:FF:FF:FF:FF:FF
-|        Dest MAC addr: 00:00:00:00:00:00 mask: FF:FF:FF:FF:FF:FF
-|        Ethertype: 0x0 mask: 0xFFFF
-|        VLAN EtherType: 0x8100 mask: 0x0
-|        VLAN: 0x0 mask: 0xffff
-|        User-defined: 0x0 mask: 0xffffffffffffffff
-|        Action: Direct to queue 0
-
-Fixes: 2b477d057e33 ("igc: Integrate flex filter into ethtool ops")
-Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Aabish Malik <aabishmalik3337@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231229170352.742261-3-aabishmalik3337@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igc/igc_ethtool.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-index 81897f7a90a91..51ef18060dbc4 100644
---- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-@@ -979,6 +979,12 @@ static int igc_ethtool_get_nfc_rule(struct igc_adapter *adapter,
- 		fsp->m_u.ether_spec.h_proto = ETHER_TYPE_FULL_MASK;
- 	}
- 
-+	if (rule->filter.match_flags & IGC_FILTER_FLAG_VLAN_ETYPE) {
-+		fsp->flow_type |= FLOW_EXT;
-+		fsp->h_ext.vlan_etype = rule->filter.vlan_etype;
-+		fsp->m_ext.vlan_etype = ETHER_TYPE_FULL_MASK;
-+	}
-+
- 	if (rule->filter.match_flags & IGC_FILTER_FLAG_VLAN_TCI) {
- 		fsp->flow_type |= FLOW_EXT;
- 		fsp->h_ext.vlan_tci = htons(rule->filter.vlan_tci);
--- 
-2.43.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9663,6 +9663,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x89c6, "Zbook Fury 17 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x89ca, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x89d3, "HP EliteBook 645 G9 (MB 89D2)", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
++	SND_PCI_QUIRK(0x103c, 0x8a0f, "HP Pavilion 14-ec1xxx", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8a20, "HP Laptop 15s-fq5xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a25, "HP Victus 16-d1xxx (MB 8A25)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8a78, "HP Dev One", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
 
 
