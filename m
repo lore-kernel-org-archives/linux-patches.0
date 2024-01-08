@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC70C52F86;
-	Mon,  8 Jan 2024 15:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2B452F86;
+	Mon,  8 Jan 2024 15:44:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBaNT3j5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC41C433C7;
-	Mon,  8 Jan 2024 15:44:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikitoYvM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B5FC433C8;
+	Mon,  8 Jan 2024 15:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728644;
-	bh=MIfRmZ+bNJpWh/MsFzIm0CdgDvJsRRO//j+xYiHES/s=;
+	s=korg; t=1704728647;
+	bh=RTBEDmcPauuJQ6qptSEcncG49DTv7VR8GDQIRbc3YNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBaNT3j5zkFzB+J8a0/4BFqoRmRf4l+AEMdiU3Ib1C7XuTB8XU0okAd2FA8XPoYUV
-	 a0JRJQiBuiAkPh66HaCEMOF5tjua5XcubinVHwN6fHHUy26pXCxGyfrlEUlkUV4CL0
-	 Y3ufBX0xHJK9FiFa05GD58LH7GDzstXTUmAF+PB8=
+	b=ikitoYvMOHXn6GopHIiNp2TqPEUc/7BDCfNADm8IlKcMmjBPKeD6UgdzqAHm8Lzdr
+	 P4lC9jy5sGTaDaD+j6TyHWoeDVloAJPGqDRoEzo19lu1f2XzMxBNZtjXQEKPaV7rx4
+	 9SEzF7BmAF5bfkFfghmbyE6Kd/2eHwRD/H5xA22g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.1 142/150] genirq/affinity: Only build SMP-only helper functions on SMP kernels
-Date: Mon,  8 Jan 2024 16:36:33 +0100
-Message-ID: <20240108153517.744485766@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.1 143/150] f2fs: compress: fix to assign compress_level for lz4 correctly
+Date: Mon,  8 Jan 2024 16:36:34 +0100
+Message-ID: <20240108153517.791733554@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -36,72 +35,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ingo Molnar <mingo@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-commit 188a569658584e93930ab60334c5a1079c0330d8 upstream.
+commit 091a4dfbb1d32b06c031edbfe2a44af100c4604f upstream.
 
-allnoconfig grew these new build warnings in lib/group_cpus.c:
+After remount, F2FS_OPTION().compress_level was assgin to
+LZ4HC_DEFAULT_CLEVEL incorrectly, result in lz4hc:9 was enabled, fix it.
 
-  lib/group_cpus.c:247:12: warning: ‘__group_cpus_evenly’ defined but not used [-Wunused-function]
-  lib/group_cpus.c:75:13: warning: ‘build_node_to_cpumask’ defined but not used [-Wunused-function]
-  lib/group_cpus.c:66:13: warning: ‘free_node_to_cpumask’ defined but not used [-Wunused-function]
-  lib/group_cpus.c:43:23: warning: ‘alloc_node_to_cpumask’ defined but not used [-Wunused-function]
+1. mount /dev/vdb
+/dev/vdb on /mnt/f2fs type f2fs (...,compress_algorithm=lz4,compress_log_size=2,...)
+2. mount -t f2fs -o remount,compress_log_size=3 /mnt/f2fs/
+3. mount|grep f2fs
+/dev/vdb on /mnt/f2fs type f2fs (...,compress_algorithm=lz4:9,compress_log_size=3,...)
 
-Widen the #ifdef CONFIG_SMP block to not expose unused helpers on
-non-SMP builds.
-
-Also annotate the preprocessor branches for better readability.
-
-Fixes: f7b3ea8cf72f ("genirq/affinity: Move group_cpus_evenly() into lib/")
-Cc: Ming Lei <ming.lei@redhat.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221227022905.352674-6-ming.lei@redhat.com
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Fixes: 00e120b5e4b5 ("f2fs: assign default compression level")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/group_cpus.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/f2fs/super.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/lib/group_cpus.c
-+++ b/lib/group_cpus.c
-@@ -9,6 +9,8 @@
- #include <linux/sort.h>
- #include <linux/group_cpus.h>
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -615,7 +615,7 @@ static int f2fs_set_lz4hc_level(struct f
+ 	unsigned int level;
  
-+#ifdef CONFIG_SMP
-+
- static void grp_spread_init_one(struct cpumask *irqmsk, struct cpumask *nmsk,
- 				unsigned int cpus_per_grp)
- {
-@@ -327,7 +329,6 @@ static int __group_cpus_evenly(unsigned
- 	return done;
- }
- 
--#ifdef CONFIG_SMP
- /**
-  * group_cpus_evenly - Group all CPUs evenly per NUMA/CPU locality
-  * @numgrps: number of groups
-@@ -422,7 +423,7 @@ struct cpumask *group_cpus_evenly(unsign
+ 	if (strlen(str) == 3) {
+-		F2FS_OPTION(sbi).compress_level = LZ4HC_DEFAULT_CLEVEL;
++		F2FS_OPTION(sbi).compress_level = 0;
+ 		return 0;
  	}
- 	return masks;
- }
--#else
-+#else /* CONFIG_SMP */
- struct cpumask *group_cpus_evenly(unsigned int numgrps)
- {
- 	struct cpumask *masks = kcalloc(numgrps, sizeof(*masks), GFP_KERNEL);
-@@ -434,4 +435,4 @@ struct cpumask *group_cpus_evenly(unsign
- 	cpumask_copy(&masks[0], cpu_possible_mask);
- 	return masks;
- }
--#endif
-+#endif /* CONFIG_SMP */
+ 
 
 
