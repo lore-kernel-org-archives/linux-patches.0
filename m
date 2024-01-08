@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DAF4BA96;
-	Mon,  8 Jan 2024 15:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6892E4C3A9;
+	Mon,  8 Jan 2024 15:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vz52vKh7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA096C433BB;
-	Mon,  8 Jan 2024 15:13:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhf8WrBv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE9BC433CB;
+	Mon,  8 Jan 2024 15:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726801;
-	bh=Uy2DjOE4u2hnBdq5GDLfdmc5qobDRwOusWQmiq5xl5U=;
+	s=korg; t=1704726804;
+	bh=qr0NuEnogppl1m4zV/8xv7AGfjwOoP+6F4drMVKFags=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vz52vKh7Oc8R2rVJZO2tu3dHeViFDpvTVRbW6kBdmd2m0QyyVV9YKPa1cSHSY/Pnb
-	 lIdqfxPaQHsPQEeyXV50HQ96VwbWgmoxKMyFPAAmRfQGbzUPSZ4Fq3pqnjmQ97EL6A
-	 CBmjBTC3g00W5XToCt9snSP9ZjBlefD0ZUeJGt+c=
+	b=yhf8WrBvH3vtaxds96frxldgbOlRlCbThTfD8s1bnGwDntUsLHpYJposZ3CYz6dvD
+	 pRPKrnvzJXpoS1iCo5HG3tYxArwOMqlKA1rVFlph2yj3m0mnNcbXcSv/NEyU/BsXKS
+	 834YhkUqtXiHxU4y3bxFF/l1wiNCV+Ph5x33J+gM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/124] rcu/tasks-trace: Handle new PF_IDLE semantics
-Date: Mon,  8 Jan 2024 16:08:27 +0100
-Message-ID: <20240108150606.703319378@linuxfoundation.org>
+Subject: [PATCH 6.6 082/124] riscv: dont probe unaligned access speed if already done
+Date: Mon,  8 Jan 2024 16:08:28 +0100
+Message-ID: <20240108150606.752169778@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -45,49 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit a80712b9cc7e57830260ec5e1feb9cdb59e1da2f ]
+[ Upstream commit c20d36cc2a2073d4cdcda92bd7a1bb9b3b3b7c79 ]
 
-The commit:
+If misaligned_access_speed percpu var isn't so called "HWPROBE
+MISALIGNED UNKNOWN", it means the probe has happened(this is possible
+for example, hotplug off then hotplug on one cpu), and the percpu var
+has been set, don't probe again in this case.
 
-	cff9b2332ab7 ("kernel/sched: Modify initial boot task idle setup")
-
-has changed the semantics of what is to be considered an idle task in
-such a way that the idle task of an offline CPU may not carry the
-PF_IDLE flag anymore.
-
-However RCU-tasks-trace tests the opposite assertion, still assuming
-that idle tasks carry the PF_IDLE flag during their whole lifecycle.
-
-Remove this assumption to avoid spurious warnings but keep the initial
-test verifying that the idle task is the current task on any offline
-CPU.
-
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Fixes: cff9b2332ab7 ("kernel/sched: Modify initial boot task idle setup")
-Suggested-by: Joel Fernandes <joel@joelfernandes.org>
-Suggested-by: "Paul E. McKenney" <paulmck@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Fixes: 584ea6564bca ("RISC-V: Probe for unaligned access speed")
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230912154040.3306-1-jszhang@kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tasks.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/cpufeature.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index b5dc1e5d78c83..65e000ca332cc 100644
---- a/kernel/rcu/tasks.h
-+++ b/kernel/rcu/tasks.h
-@@ -1548,7 +1548,7 @@ static int trc_inspect_reader(struct task_struct *t, void *bhp_in)
- 	} else {
- 		// The task is not running, so C-language access is safe.
- 		nesting = t->trc_reader_nesting;
--		WARN_ON_ONCE(ofl && task_curr(t) && !is_idle_task(t));
-+		WARN_ON_ONCE(ofl && task_curr(t) && (t != idle_task(task_cpu(t))));
- 		if (IS_ENABLED(CONFIG_TASKS_TRACE_RCU_READ_MB) && ofl)
- 			n_heavy_reader_ofl_updates++;
- 	}
+diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
+index 1cfbba65d11ae..e12cd22755c78 100644
+--- a/arch/riscv/kernel/cpufeature.c
++++ b/arch/riscv/kernel/cpufeature.c
+@@ -568,6 +568,10 @@ void check_unaligned_access(int cpu)
+ 	void *src;
+ 	long speed = RISCV_HWPROBE_MISALIGNED_SLOW;
+ 
++	/* We are already set since the last check */
++	if (per_cpu(misaligned_access_speed, cpu) != RISCV_HWPROBE_MISALIGNED_UNKNOWN)
++		return;
++
+ 	page = alloc_pages(GFP_NOWAIT, get_order(MISALIGNED_BUFFER_SIZE));
+ 	if (!page) {
+ 		pr_warn("Can't alloc pages to measure memcpy performance");
 -- 
 2.43.0
 
