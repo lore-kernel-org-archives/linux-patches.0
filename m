@@ -1,31 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5185380A;
-	Mon,  8 Jan 2024 15:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843C151C4E;
+	Mon,  8 Jan 2024 15:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIqsoiUF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11183C433C7;
-	Mon,  8 Jan 2024 15:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpV2lHkP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D073FC433C9;
+	Mon,  8 Jan 2024 15:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728588;
-	bh=yoqJtS7N5Q5/U9ObtR4pzh0YzsvmqDgEl3s+tHQZTsY=;
+	s=korg; t=1704728591;
+	bh=z13SVoW36uz3ddVW1/95f5Clmi1GK/qr0T+c72vuPc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qIqsoiUFAvP8o9HhG5VJVX5laAvUSnQoFkNs80fZnwf+SQR3u5EPf2Aq9Y3nI4JPu
-	 Jgw7T3JkR2zlpVuqa9vgkTfEb2E9g78h9NGb1awnSlRHuxaMGP6H2eSyTrHI5ILfCn
-	 0Fcq3BVlGT/kPHr877Fj4YevCbxmg9MJPkdh1Pkw=
+	b=dpV2lHkPfkDjb2pTYv4FKqOOAPLDXBIO9mDRXh9GIzubAoc+e04govZWQHpgjUxnz
+	 Synv6nBiSWaLxLUOJdDqnEjN2jMUHOU5F61KLn2gaHfSgmE8xncmhh5GhmHlVNTHPn
+	 fjh0pv6KERv99TUQeXMnwzVM4cOcLc7Y+M9MSfLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	kernel test robot <lkp@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 086/150] blk-mq: make sure active queue usage is held for bio_integrity_prep()
-Date: Mon,  8 Jan 2024 16:35:37 +0100
-Message-ID: <20240108153515.187120453@linuxfoundation.org>
+Subject: [PATCH 6.1 118/150] mm/memory_hotplug: add missing mem_hotplug_lock
+Date: Mon,  8 Jan 2024 16:36:09 +0100
+Message-ID: <20240108153516.621951419@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -44,166 +52,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@infradead.org>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-[ Upstream commit b0077e269f6c152e807fdac90b58caf012cdbaab ]
+[ Upstream commit 001002e73712cdf6b8d9a103648cda3040ad7647 ]
 
-blk_integrity_unregister() can come if queue usage counter isn't held
-for one bio with integrity prepared, so this request may be completed with
-calling profile->complete_fn, then kernel panic.
+>From Documentation/core-api/memory-hotplug.rst:
+When adding/removing/onlining/offlining memory or adding/removing
+heterogeneous/device memory, we should always hold the mem_hotplug_lock
+in write mode to serialise memory hotplug (e.g. access to global/zone
+variables).
 
-Another constraint is that bio_integrity_prep() needs to be called
-before bio merge.
+mhp_(de)init_memmap_on_memory() functions can change zone stats and
+struct page content, but they are currently called w/o the
+mem_hotplug_lock.
 
-Fix the issue by:
+When memory block is being offlined and when kmemleak goes through each
+populated zone, the following theoretical race conditions could occur:
+CPU 0:					     | CPU 1:
+memory_offline()			     |
+-> offline_pages()			     |
+	-> mem_hotplug_begin()		     |
+	   ...				     |
+	-> mem_hotplug_done()		     |
+					     | kmemleak_scan()
+					     | -> get_online_mems()
+					     |    ...
+-> mhp_deinit_memmap_on_memory()	     |
+  [not protected by mem_hotplug_begin/done()]|
+  Marks memory section as offline,	     |   Retrieves zone_start_pfn
+  poisons vmemmap struct pages and updates   |   and struct page members.
+  the zone related data			     |
+   					     |    ...
+   					     | -> put_online_mems()
 
-- call bio_integrity_prep() with one queue usage counter grabbed reliably
+Fix this by ensuring mem_hotplug_lock is taken before performing
+mhp_init_memmap_on_memory().  Also ensure that
+mhp_deinit_memmap_on_memory() holds the lock.
 
-- call bio_integrity_prep() before bio merge
+online/offline_pages() are currently only called from
+memory_block_online/offline(), so it is safe to move the locking there.
 
-Fixes: 900e080752025f00 ("block: move queue enter logic into blk_mq_submit_bio()")
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Tested-by: Yi Zhang <yi.zhang@redhat.com>
-Link: https://lore.kernel.org/r/20231113035231.2708053-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lkml.kernel.org/r/20231120145354.308999-2-sumanthk@linux.ibm.com
+Fixes: a08a2ae34613 ("mm,memory_hotplug: allocate memmap from the added memory range")
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Reviewed-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: kernel test robot <lkp@intel.com>
+Cc: <stable@vger.kernel.org>	[5.15+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 75 +++++++++++++++++++++++++-------------------------
- 1 file changed, 38 insertions(+), 37 deletions(-)
+ drivers/base/memory.c | 18 +++++++++++++++---
+ mm/memory_hotplug.c   | 13 ++++++-------
+ 2 files changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 100fb0c3114f8..383d94615e502 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -2855,11 +2855,8 @@ static struct request *blk_mq_get_new_requests(struct request_queue *q,
- 	};
- 	struct request *rq;
- 
--	if (unlikely(bio_queue_enter(bio)))
--		return NULL;
--
- 	if (blk_mq_attempt_bio_merge(q, bio, nsegs))
--		goto queue_exit;
-+		return NULL;
- 
- 	rq_qos_throttle(q, bio);
- 
-@@ -2875,35 +2872,23 @@ static struct request *blk_mq_get_new_requests(struct request_queue *q,
- 	rq_qos_cleanup(q, bio);
- 	if (bio->bi_opf & REQ_NOWAIT)
- 		bio_wouldblock_error(bio);
--queue_exit:
--	blk_queue_exit(q);
- 	return NULL;
+diff --git a/drivers/base/memory.c b/drivers/base/memory.c
+index 9aa0da991cfb9..5d39f3e374dae 100644
+--- a/drivers/base/memory.c
++++ b/drivers/base/memory.c
+@@ -175,6 +175,9 @@ int memory_notify(unsigned long val, void *v)
+ 	return blocking_notifier_call_chain(&memory_chain, val, v);
  }
  
--static inline struct request *blk_mq_get_cached_request(struct request_queue *q,
--		struct blk_plug *plug, struct bio **bio, unsigned int nsegs)
-+/* return true if this @rq can be used for @bio */
-+static bool blk_mq_can_use_cached_rq(struct request *rq, struct blk_plug *plug,
-+		struct bio *bio)
++/*
++ * Must acquire mem_hotplug_lock in write mode.
++ */
+ static int memory_block_online(struct memory_block *mem)
  {
--	struct request *rq;
--	enum hctx_type type, hctx_type;
-+	enum hctx_type type = blk_mq_get_hctx_type(bio->bi_opf);
-+	enum hctx_type hctx_type = rq->mq_hctx->type;
+ 	unsigned long start_pfn = section_nr_to_pfn(mem->start_section_nr);
+@@ -193,10 +196,11 @@ static int memory_block_online(struct memory_block *mem)
+ 	 * stage helps to keep accounting easier to follow - e.g vmemmaps
+ 	 * belong to the same zone as the memory they backed.
+ 	 */
++	mem_hotplug_begin();
+ 	if (nr_vmemmap_pages) {
+ 		ret = mhp_init_memmap_on_memory(start_pfn, nr_vmemmap_pages, zone);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 	}
  
--	if (!plug)
--		return NULL;
--	rq = rq_list_peek(&plug->cached_rq);
--	if (!rq || rq->q != q)
--		return NULL;
--
--	if (blk_mq_attempt_bio_merge(q, *bio, nsegs)) {
--		*bio = NULL;
--		return NULL;
--	}
-+	WARN_ON_ONCE(rq_list_peek(&plug->cached_rq) != rq);
- 
--	type = blk_mq_get_hctx_type((*bio)->bi_opf);
--	hctx_type = rq->mq_hctx->type;
- 	if (type != hctx_type &&
- 	    !(type == HCTX_TYPE_READ && hctx_type == HCTX_TYPE_DEFAULT))
--		return NULL;
--	if (op_is_flush(rq->cmd_flags) != op_is_flush((*bio)->bi_opf))
--		return NULL;
-+		return false;
-+	if (op_is_flush(rq->cmd_flags) != op_is_flush(bio->bi_opf))
-+		return false;
+ 	ret = online_pages(start_pfn + nr_vmemmap_pages,
+@@ -204,7 +208,7 @@ static int memory_block_online(struct memory_block *mem)
+ 	if (ret) {
+ 		if (nr_vmemmap_pages)
+ 			mhp_deinit_memmap_on_memory(start_pfn, nr_vmemmap_pages);
+-		return ret;
++		goto out;
+ 	}
  
  	/*
- 	 * If any qos ->throttle() end up blocking, we will have flushed the
-@@ -2911,11 +2896,11 @@ static inline struct request *blk_mq_get_cached_request(struct request_queue *q,
- 	 * before we throttle.
- 	 */
- 	plug->cached_rq = rq_list_next(rq);
--	rq_qos_throttle(q, *bio);
-+	rq_qos_throttle(rq->q, bio);
+@@ -216,9 +220,14 @@ static int memory_block_online(struct memory_block *mem)
+ 					  nr_vmemmap_pages);
  
--	rq->cmd_flags = (*bio)->bi_opf;
-+	rq->cmd_flags = bio->bi_opf;
- 	INIT_LIST_HEAD(&rq->queuelist);
--	return rq;
-+	return true;
+ 	mem->zone = zone;
++out:
++	mem_hotplug_done();
+ 	return ret;
  }
  
- static void bio_set_ioprio(struct bio *bio)
-@@ -2944,7 +2929,7 @@ void blk_mq_submit_bio(struct bio *bio)
- 	struct request_queue *q = bdev_get_queue(bio->bi_bdev);
- 	struct blk_plug *plug = blk_mq_plug(bio);
- 	const int is_sync = op_is_sync(bio->bi_opf);
--	struct request *rq;
-+	struct request *rq = NULL;
- 	unsigned int nr_segs = 1;
- 	blk_status_t ret;
- 
-@@ -2955,20 +2940,36 @@ void blk_mq_submit_bio(struct bio *bio)
- 			return;
++/*
++ * Must acquire mem_hotplug_lock in write mode.
++ */
+ static int memory_block_offline(struct memory_block *mem)
+ {
+ 	unsigned long start_pfn = section_nr_to_pfn(mem->start_section_nr);
+@@ -233,6 +242,7 @@ static int memory_block_offline(struct memory_block *mem)
+ 	 * Unaccount before offlining, such that unpopulated zone and kthreads
+ 	 * can properly be torn down in offline_pages().
+ 	 */
++	mem_hotplug_begin();
+ 	if (nr_vmemmap_pages)
+ 		adjust_present_page_count(pfn_to_page(start_pfn), mem->group,
+ 					  -nr_vmemmap_pages);
+@@ -244,13 +254,15 @@ static int memory_block_offline(struct memory_block *mem)
+ 		if (nr_vmemmap_pages)
+ 			adjust_present_page_count(pfn_to_page(start_pfn),
+ 						  mem->group, nr_vmemmap_pages);
+-		return ret;
++		goto out;
  	}
  
--	if (!bio_integrity_prep(bio))
--		return;
+ 	if (nr_vmemmap_pages)
+ 		mhp_deinit_memmap_on_memory(start_pfn, nr_vmemmap_pages);
+ 
+ 	mem->zone = NULL;
++out:
++	mem_hotplug_done();
+ 	return ret;
+ }
+ 
+diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
+index bd2570b4f9b7b..d02722bbfcf33 100644
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1069,6 +1069,9 @@ void mhp_deinit_memmap_on_memory(unsigned long pfn, unsigned long nr_pages)
+ 	kasan_remove_zero_shadow(__va(PFN_PHYS(pfn)), PFN_PHYS(nr_pages));
+ }
+ 
++/*
++ * Must be called with mem_hotplug_lock in write mode.
++ */
+ int __ref online_pages(unsigned long pfn, unsigned long nr_pages,
+ 		       struct zone *zone, struct memory_group *group)
+ {
+@@ -1089,7 +1092,6 @@ int __ref online_pages(unsigned long pfn, unsigned long nr_pages,
+ 			 !IS_ALIGNED(pfn + nr_pages, PAGES_PER_SECTION)))
+ 		return -EINVAL;
+ 
+-	mem_hotplug_begin();
+ 
+ 	/* associate pfn range with the zone */
+ 	move_pfn_range_to_zone(zone, pfn, nr_pages, NULL, MIGRATE_ISOLATE);
+@@ -1148,7 +1150,6 @@ int __ref online_pages(unsigned long pfn, unsigned long nr_pages,
+ 	writeback_set_ratelimit();
+ 
+ 	memory_notify(MEM_ONLINE, &arg);
+-	mem_hotplug_done();
+ 	return 0;
+ 
+ failed_addition:
+@@ -1157,7 +1158,6 @@ int __ref online_pages(unsigned long pfn, unsigned long nr_pages,
+ 		 (((unsigned long long) pfn + nr_pages) << PAGE_SHIFT) - 1);
+ 	memory_notify(MEM_CANCEL_ONLINE, &arg);
+ 	remove_pfn_range_from_zone(zone, pfn, nr_pages);
+-	mem_hotplug_done();
+ 	return ret;
+ }
+ 
+@@ -1787,6 +1787,9 @@ static int count_system_ram_pages_cb(unsigned long start_pfn,
+ 	return 0;
+ }
+ 
++/*
++ * Must be called with mem_hotplug_lock in write mode.
++ */
+ int __ref offline_pages(unsigned long start_pfn, unsigned long nr_pages,
+ 			struct zone *zone, struct memory_group *group)
+ {
+@@ -1809,8 +1812,6 @@ int __ref offline_pages(unsigned long start_pfn, unsigned long nr_pages,
+ 			 !IS_ALIGNED(start_pfn + nr_pages, PAGES_PER_SECTION)))
+ 		return -EINVAL;
+ 
+-	mem_hotplug_begin();
 -
- 	bio_set_ioprio(bio);
+ 	/*
+ 	 * Don't allow to offline memory blocks that contain holes.
+ 	 * Consequently, memory blocks with holes can never get onlined
+@@ -1946,7 +1947,6 @@ int __ref offline_pages(unsigned long start_pfn, unsigned long nr_pages,
  
--	rq = blk_mq_get_cached_request(q, plug, &bio, nr_segs);
--	if (!rq) {
--		if (!bio)
-+	if (plug) {
-+		rq = rq_list_peek(&plug->cached_rq);
-+		if (rq && rq->q != q)
-+			rq = NULL;
-+	}
-+	if (rq) {
-+		if (!bio_integrity_prep(bio))
- 			return;
--		rq = blk_mq_get_new_requests(q, plug, bio, nr_segs);
--		if (unlikely(!rq))
-+		if (blk_mq_attempt_bio_merge(q, bio, nr_segs))
- 			return;
-+		if (blk_mq_can_use_cached_rq(rq, plug, bio))
-+			goto done;
-+		percpu_ref_get(&q->q_usage_counter);
-+	} else {
-+		if (unlikely(bio_queue_enter(bio)))
-+			return;
-+		if (!bio_integrity_prep(bio))
-+			goto fail;
-+	}
-+
-+	rq = blk_mq_get_new_requests(q, plug, bio, nr_segs);
-+	if (unlikely(!rq)) {
-+fail:
-+		blk_queue_exit(q);
-+		return;
- 	}
+ 	memory_notify(MEM_OFFLINE, &arg);
+ 	remove_pfn_range_from_zone(zone, start_pfn, nr_pages);
+-	mem_hotplug_done();
+ 	return 0;
  
-+done:
- 	trace_block_getrq(bio);
+ failed_removal_isolated:
+@@ -1961,7 +1961,6 @@ int __ref offline_pages(unsigned long start_pfn, unsigned long nr_pages,
+ 		 (unsigned long long) start_pfn << PAGE_SHIFT,
+ 		 ((unsigned long long) end_pfn << PAGE_SHIFT) - 1,
+ 		 reason);
+-	mem_hotplug_done();
+ 	return ret;
+ }
  
- 	rq_qos_track(q, rq, bio);
 -- 
 2.43.0
 
