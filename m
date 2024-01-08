@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B426D6DC;
-	Mon,  8 Jan 2024 15:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18AA6D6DC;
+	Mon,  8 Jan 2024 15:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBNPPjY7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9D3C433C8;
-	Mon,  8 Jan 2024 15:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LI6xVKV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0740EC433CA;
+	Mon,  8 Jan 2024 15:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726898;
-	bh=90hgttIimNU26HQcijFL7hjqUniYL0H/Ua84K7ZN1f8=;
+	s=korg; t=1704726901;
+	bh=v7ubSPi9R4OZqAg6VItz+ZrcV1yhyhhJjoQj+Dvc858=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TBNPPjY7zxAAiepomtA6QLEqLJOZ5CRF9gEiONxECeDvpFt3rrEIY02D8R9dwYlvX
-	 t1JbTgd344lR0e0drW7fnZugk+3KIRT5lakXNR/RqTSEUDf8WlbKYV3yVLPTqfNTJ0
-	 4QQdjVYv064i9P9JqA7DFZjg4Vi+CFoHcxi4LSi8=
+	b=LI6xVKV3oV5gaBX7dsXJc70/oKZK22Luqu48Jj89cDHySjnjOI3oiva4PJ+7b3h+D
+	 6fOvQFahcprzOafCsvsV0p8z46ps1tpTU6fgMxpc2n4geXC1RM8+i5ZOTJO2DJ0UI0
+	 iooIBaGTONaTUgpDrNov030lt9272/Iu9/Thl07M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jai Luthra <j-luthra@ti.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/124] dmaengine: ti: k3-psil-am62a: Fix SPI PDMA data
-Date: Mon,  8 Jan 2024 16:08:32 +0100
-Message-ID: <20240108150606.943031207@linuxfoundation.org>
+	Jiajun Xie <jiajun.xie.sh@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 113/124] mm: fix unmap_mapping_range high bits shift bug
+Date: Mon,  8 Jan 2024 16:08:59 +0100
+Message-ID: <20240108150608.166873803@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -42,70 +41,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jai Luthra <j-luthra@ti.com>
+From: Jiajun Xie <jiajun.xie.sh@gmail.com>
 
-[ Upstream commit be37542afbfcd27b3bb99a135abf9b4736b96f75 ]
+commit 9eab0421fa94a3dde0d1f7e36ab3294fc306c99d upstream.
 
-AM62Ax has 3 SPI channels where each channel has 4x TX and 4x RX
-threads. Also fix the thread numbers to match what the firmware expects
-according to the PSI-L device description.
+The bug happens when highest bit of holebegin is 1, suppose holebegin is
+0x8000000111111000, after shift, hba would be 0xfff8000000111111, then
+vma_interval_tree_foreach would look it up fail or leads to the wrong
+result.
 
-Link: http://downloads.ti.com/tisci/esd/latest/5_soc_doc/am62ax/psil_cfg.html [1]
-Fixes: aac6db7e243a ("dmaengine: ti: k3-psil-am62a: Add AM62Ax PSIL and PDMA data")
-Signed-off-by: Jai Luthra <j-luthra@ti.com>
-Link: https://lore.kernel.org/r/20231123-psil_fix-v1-1-6604d80819be@ti.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+error call seq e.g.:
+- mmap(..., offset=0x8000000111111000)
+  |- syscall(mmap, ... unsigned long, off):
+     |- ksys_mmap_pgoff( ... , off >> PAGE_SHIFT);
+
+  here pgoff is correctly shifted to 0x8000000111111,
+  but pass 0x8000000111111000 as holebegin to unmap
+  would then cause terrible result, as shown below:
+
+- unmap_mapping_range(..., loff_t const holebegin)
+  |- pgoff_t hba = holebegin >> PAGE_SHIFT;
+          /* hba = 0xfff8000000111111 unexpectedly */
+
+The issue happens in Heterogeneous computing, where the device(e.g.
+gpu) and host share the same virtual address space.
+
+A simple workflow pattern which hit the issue is:
+        /* host */
+    1. userspace first mmap a file backed VA range with specified offset.
+                        e.g. (offset=0x800..., mmap return: va_a)
+    2. write some data to the corresponding sys page
+                         e.g. (va_a = 0xAABB)
+        /* device */
+    3. gpu workload touches VA, triggers gpu fault and notify the host.
+        /* host */
+    4. reviced gpu fault notification, then it will:
+            4.1 unmap host pages and also takes care of cpu tlb
+                  (use unmap_mapping_range with offset=0x800...)
+            4.2 migrate sys page to device
+            4.3 setup device page table and resolve device fault.
+        /* device */
+    5. gpu workload continued, it accessed va_a and got 0xAABB.
+    6. gpu workload continued, it wrote 0xBBCC to va_a.
+        /* host */
+    7. userspace access va_a, as expected, it will:
+            7.1 trigger cpu vm fault.
+            7.2 driver handling fault to migrate gpu local page to host.
+    8. userspace then could correctly get 0xBBCC from va_a
+    9. done
+
+But in step 4.1, if we hit the bug this patch mentioned, then userspace
+would never trigger cpu fault, and still get the old value: 0xAABB.
+
+Making holebegin unsigned first fixes the bug.
+
+Link: https://lkml.kernel.org/r/20231220052839.26970-1-jiajun.xie.sh@gmail.com
+Signed-off-by: Jiajun Xie <jiajun.xie.sh@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/ti/k3-psil-am62a.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ mm/memory.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-psil-am62a.c b/drivers/dma/ti/k3-psil-am62a.c
-index ca9d71f914220..4cf9123b0e932 100644
---- a/drivers/dma/ti/k3-psil-am62a.c
-+++ b/drivers/dma/ti/k3-psil-am62a.c
-@@ -84,7 +84,9 @@ static struct psil_ep am62a_src_ep_map[] = {
- 	PSIL_SAUL(0x7505, 21, 35, 8, 36, 0),
- 	PSIL_SAUL(0x7506, 22, 43, 8, 43, 0),
- 	PSIL_SAUL(0x7507, 23, 43, 8, 44, 0),
--	/* PDMA_MAIN0 - SPI0-3 */
-+	/* PDMA_MAIN0 - SPI0-2 */
-+	PSIL_PDMA_XY_PKT(0x4300),
-+	PSIL_PDMA_XY_PKT(0x4301),
- 	PSIL_PDMA_XY_PKT(0x4302),
- 	PSIL_PDMA_XY_PKT(0x4303),
- 	PSIL_PDMA_XY_PKT(0x4304),
-@@ -95,8 +97,6 @@ static struct psil_ep am62a_src_ep_map[] = {
- 	PSIL_PDMA_XY_PKT(0x4309),
- 	PSIL_PDMA_XY_PKT(0x430a),
- 	PSIL_PDMA_XY_PKT(0x430b),
--	PSIL_PDMA_XY_PKT(0x430c),
--	PSIL_PDMA_XY_PKT(0x430d),
- 	/* PDMA_MAIN1 - UART0-6 */
- 	PSIL_PDMA_XY_PKT(0x4400),
- 	PSIL_PDMA_XY_PKT(0x4401),
-@@ -151,7 +151,9 @@ static struct psil_ep am62a_dst_ep_map[] = {
- 	/* SAUL */
- 	PSIL_SAUL(0xf500, 27, 83, 8, 83, 1),
- 	PSIL_SAUL(0xf501, 28, 91, 8, 91, 1),
--	/* PDMA_MAIN0 - SPI0-3 */
-+	/* PDMA_MAIN0 - SPI0-2 */
-+	PSIL_PDMA_XY_PKT(0xc300),
-+	PSIL_PDMA_XY_PKT(0xc301),
- 	PSIL_PDMA_XY_PKT(0xc302),
- 	PSIL_PDMA_XY_PKT(0xc303),
- 	PSIL_PDMA_XY_PKT(0xc304),
-@@ -162,8 +164,6 @@ static struct psil_ep am62a_dst_ep_map[] = {
- 	PSIL_PDMA_XY_PKT(0xc309),
- 	PSIL_PDMA_XY_PKT(0xc30a),
- 	PSIL_PDMA_XY_PKT(0xc30b),
--	PSIL_PDMA_XY_PKT(0xc30c),
--	PSIL_PDMA_XY_PKT(0xc30d),
- 	/* PDMA_MAIN1 - UART0-6 */
- 	PSIL_PDMA_XY_PKT(0xc400),
- 	PSIL_PDMA_XY_PKT(0xc401),
--- 
-2.43.0
-
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3565,8 +3565,8 @@ EXPORT_SYMBOL_GPL(unmap_mapping_pages);
+ void unmap_mapping_range(struct address_space *mapping,
+ 		loff_t const holebegin, loff_t const holelen, int even_cows)
+ {
+-	pgoff_t hba = holebegin >> PAGE_SHIFT;
+-	pgoff_t hlen = (holelen + PAGE_SIZE - 1) >> PAGE_SHIFT;
++	pgoff_t hba = (pgoff_t)(holebegin) >> PAGE_SHIFT;
++	pgoff_t hlen = ((pgoff_t)(holelen) + PAGE_SIZE - 1) >> PAGE_SHIFT;
+ 
+ 	/* Check for overflow. */
+ 	if (sizeof(holelen) > sizeof(hlen)) {
 
 
