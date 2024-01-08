@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294F34BA96;
-	Mon,  8 Jan 2024 15:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2248C4C3D3;
+	Mon,  8 Jan 2024 15:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOqvZRju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA6CC433C7;
-	Mon,  8 Jan 2024 15:10:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOM1urPo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54185C433CD;
+	Mon,  8 Jan 2024 15:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726653;
-	bh=zZhrLoOMeddNv+T8PQUNbxjIqz3cSeDvgXZK09E2Pb4=;
+	s=korg; t=1704726656;
+	bh=oOjhZJDvPL9vbNrfuljvWfLLLg7gUUpkCgfw+CR/gsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KOqvZRjuUH408b481rcmWa2LMd728fg359ZhfMSz/YAZuSaXlFbdPs3RwqHxrAhqL
-	 a121J+QERW9rUO3Pv/SDwlish9pJirSIsOwRmlt/p7o9C5WP/NFPz3MYIjNPBYhjAA
-	 OAy9ZeGHTJFz+Q0Tkx7r/UB44T8jMzFXw+Ke8dIs=
+	b=jOM1urPoZUeTUdD65H5Vhz9miuENCabgq4f9hG95BQNrfjlyWysWt9kx2zD7k8b03
+	 3g/MKE6VpB256i8h4z8CJhI5jDR2DRbd3gKKXzRvjpr8fkN6cf1bFpsu1ToZq3c36E
+	 /0m0gBB840bmPen+3AMYDpclqajllJLAAkfIo76c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
+	=?UTF-8?q?J=C3=B6rn-Thorben=20Hinz?= <jthinz@mailbox.tu-berlin.de>,
+	Willem de Bruijn <willemb@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/124] r8169: Fix PCI error on system resume
-Date: Mon,  8 Jan 2024 16:07:42 +0100
-Message-ID: <20240108150604.637524832@linuxfoundation.org>
+Subject: [PATCH 6.6 037/124] net: Implement missing getsockopt(SO_TIMESTAMPING_NEW)
+Date: Mon,  8 Jan 2024 16:07:43 +0100
+Message-ID: <20240108150604.685264562@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -37,53 +37,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kai-Heng Feng <kai.heng.feng@canonical.com>
+From: Jörn-Thorben Hinz <jthinz@mailbox.tu-berlin.de>
 
-[ Upstream commit 9c476269bff2908a20930c58085bf0b05ebd569a ]
+[ Upstream commit 7f6ca95d16b96567ce4cf458a2790ff17fa620c3 ]
 
-Some r8168 NICs stop working upon system resume:
+Commit 9718475e6908 ("socket: Add SO_TIMESTAMPING_NEW") added the new
+socket option SO_TIMESTAMPING_NEW. Setting the option is handled in
+sk_setsockopt(), querying it was not handled in sk_getsockopt(), though.
 
-[  688.051096] r8169 0000:02:00.1 enp2s0f1: rtl_ep_ocp_read_cond == 0 (loop: 10, delay: 10000).
-[  688.175131] r8169 0000:02:00.1 enp2s0f1: Link is Down
-...
-[  691.534611] r8169 0000:02:00.1 enp2s0f1: PCI error (cmd = 0x0407, status_errs = 0x0000)
+Following remarks on an earlier submission of this patch, keep the old
+behavior of getsockopt(SO_TIMESTAMPING_OLD) which returns the active
+flags even if they actually have been set through SO_TIMESTAMPING_NEW.
 
-Not sure if it's related, but those NICs have a BMC device at function
-0:
-02:00.0 Unassigned class [ff00]: Realtek Semiconductor Co., Ltd. Realtek RealManage BMC [10ec:816e] (rev 1a)
+The new getsockopt(SO_TIMESTAMPING_NEW) is stricter, returning flags
+only if they have been set through the same option.
 
-Trial and error shows that increase the loop wait on
-rtl_ep_ocp_read_cond to 30 can eliminate the issue, so let
-rtl8168ep_driver_start() to wait a bit longer.
-
-Fixes: e6d6ca6e1204 ("r8169: Add support for another RTL8168FP")
-Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Fixes: 9718475e6908 ("socket: Add SO_TIMESTAMPING_NEW")
+Link: https://lore.kernel.org/lkml/20230703175048.151683-1-jthinz@mailbox.tu-berlin.de/
+Link: https://lore.kernel.org/netdev/0d7cddc9-03fa-43db-a579-14f3e822615b@app.fastmail.com/
+Signed-off-by: Jörn-Thorben Hinz <jthinz@mailbox.tu-berlin.de>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/sock.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index bb787a52bc754..81fd31f6fac46 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -1211,7 +1211,7 @@ static void rtl8168ep_driver_start(struct rtl8169_private *tp)
- {
- 	r8168ep_ocp_write(tp, 0x01, 0x180, OOB_CMD_DRIVER_START);
- 	r8168ep_ocp_write(tp, 0x01, 0x30, r8168ep_ocp_read(tp, 0x30) | 0x01);
--	rtl_loop_wait_high(tp, &rtl_ep_ocp_read_cond, 10000, 10);
-+	rtl_loop_wait_high(tp, &rtl_ep_ocp_read_cond, 10000, 30);
- }
+diff --git a/net/core/sock.c b/net/core/sock.c
+index bfaf47b3f3c7c..fe687e6170c9a 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -1718,9 +1718,16 @@ int sk_getsockopt(struct sock *sk, int level, int optname,
+ 		break;
  
- static void rtl8168_driver_start(struct rtl8169_private *tp)
+ 	case SO_TIMESTAMPING_OLD:
++	case SO_TIMESTAMPING_NEW:
+ 		lv = sizeof(v.timestamping);
+-		v.timestamping.flags = READ_ONCE(sk->sk_tsflags);
+-		v.timestamping.bind_phc = READ_ONCE(sk->sk_bind_phc);
++		/* For the later-added case SO_TIMESTAMPING_NEW: Be strict about only
++		 * returning the flags when they were set through the same option.
++		 * Don't change the beviour for the old case SO_TIMESTAMPING_OLD.
++		 */
++		if (optname == SO_TIMESTAMPING_OLD || sock_flag(sk, SOCK_TSTAMP_NEW)) {
++			v.timestamping.flags = READ_ONCE(sk->sk_tsflags);
++			v.timestamping.bind_phc = READ_ONCE(sk->sk_bind_phc);
++		}
+ 		break;
+ 
+ 	case SO_RCVTIMEO_OLD:
 -- 
 2.43.0
 
