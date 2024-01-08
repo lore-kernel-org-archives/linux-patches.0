@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E8F51C5C;
-	Mon,  8 Jan 2024 15:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4187E51C29;
+	Mon,  8 Jan 2024 15:40:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nWSlmfO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8ABC433C9;
-	Mon,  8 Jan 2024 15:40:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1ibFmTL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F4EC433C7;
+	Mon,  8 Jan 2024 15:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728403;
-	bh=xBVbc0PYaokWRE1tN0zMfi/mF/aWkz7C/XIRMUVM/Yg=;
+	s=korg; t=1704728406;
+	bh=U3MBtuZrtJAFxmL3uxJShMbjzdKeRN6WxiTXj2ECELM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0nWSlmfO1mQWACCLNcHqNlKrfpg6ZF0msNBUWorBLKHjxVcg6LdpiNu3k7+KWX307
-	 CGceyngZaJZ4657e7/BSfSjhnrt8GzNtMGolNhEmzITenSoNDS4qicuY+eKqNnNxA9
-	 M2N82E53k0EBfpaAWt0deFg2mN+hR+UYaTrovUXA=
+	b=t1ibFmTLhgmKLVMDumunNkXC/dPl6dwhEkYXxFkJkEJalB8B0lpELOvZHk/kLVgUm
+	 yJSe23Cmr6gPPgqnQg+BWIfflIAFWaNyurfpYUYEWtQCLip/ihHZR/bM5quD3Jnjfe
+	 P/r+5B9o8z3+JBmA185+faGbwfFKOYhkONtDzGKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	David Howells <dhowells@redhat.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Matthew Wilcox <willy@infradead.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/150] ipv4, ipv6: Use splice_eof() to flush
-Date: Mon,  8 Jan 2024 16:35:17 +0100
-Message-ID: <20240108153514.272821966@linuxfoundation.org>
+Subject: [PATCH 6.1 067/150] udp: introduce udp->udp_flags
+Date: Mon,  8 Jan 2024 16:35:18 +0100
+Message-ID: <20240108153514.318130115@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -48,260 +43,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1d7e4538a5463faa0b0e26a7a7b6bd68c7dfdd78 ]
+[ Upstream commit 81b36803ac139827538ac5ce4028e750a3c53f53 ]
 
-Allow splice to undo the effects of MSG_MORE after prematurely ending a
-splice/sendfile due to getting an EOF condition (->splice_read() returned
-0) after splice had called sendmsg() with MSG_MORE set when the user didn't
-set MSG_MORE.
+According to syzbot, it is time to use proper atomic flags
+for various UDP flags.
 
-For UDP, a pending packet will not be emitted if the socket is closed
-before it is flushed; with this change, it be flushed by ->splice_eof().
+Add udp_flags field, and convert udp->corkflag to first
+bit in it.
 
-For TCP, it's not clear that MSG_MORE is actually effective.
-
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/CAHk-=wh=V579PDYvkpnTobCLGczbgxpMgGmmhqiTyE34Cpi5Gg@mail.gmail.com/
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Kuniyuki Iwashima <kuniyu@amazon.com>
-cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-cc: David Ahern <dsahern@kernel.org>
-cc: Jens Axboe <axboe@kernel.dk>
-cc: Matthew Wilcox <willy@infradead.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: a0002127cd74 ("udp: move udp->no_check6_tx to udp->udp_flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_common.h |  1 +
- include/net/tcp.h         |  1 +
- include/net/udp.h         |  1 +
- net/ipv4/af_inet.c        | 18 ++++++++++++++++++
- net/ipv4/tcp.c            | 16 ++++++++++++++++
- net/ipv4/tcp_ipv4.c       |  1 +
- net/ipv4/udp.c            | 16 ++++++++++++++++
- net/ipv6/af_inet6.c       |  1 +
- net/ipv6/tcp_ipv6.c       |  1 +
- net/ipv6/udp.c            | 15 +++++++++++++++
- 10 files changed, 71 insertions(+)
+ include/linux/udp.h | 28 +++++++++++++++++++++-------
+ net/ipv4/udp.c      | 12 ++++++------
+ net/ipv6/udp.c      |  6 +++---
+ 3 files changed, 30 insertions(+), 16 deletions(-)
 
-diff --git a/include/net/inet_common.h b/include/net/inet_common.h
-index cec453c18f1d6..4673bbfd2811f 100644
---- a/include/net/inet_common.h
-+++ b/include/net/inet_common.h
-@@ -33,6 +33,7 @@ int inet_accept(struct socket *sock, struct socket *newsock, int flags,
- 		bool kern);
- int inet_send_prepare(struct sock *sk);
- int inet_sendmsg(struct socket *sock, struct msghdr *msg, size_t size);
-+void inet_splice_eof(struct socket *sock);
- ssize_t inet_sendpage(struct socket *sock, struct page *page, int offset,
- 		      size_t size, int flags);
- int inet_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index c3d56b337f358..4c838f7290dd9 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -332,6 +332,7 @@ int tcp_sendmsg(struct sock *sk, struct msghdr *msg, size_t size);
- int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size);
- int tcp_sendmsg_fastopen(struct sock *sk, struct msghdr *msg, int *copied,
- 			 size_t size, struct ubuf_info *uarg);
-+void tcp_splice_eof(struct socket *sock);
- int tcp_sendpage(struct sock *sk, struct page *page, int offset, size_t size,
- 		 int flags);
- int tcp_sendpage_locked(struct sock *sk, struct page *page, int offset,
-diff --git a/include/net/udp.h b/include/net/udp.h
-index fee053bcd17c6..fa4cdbe55552c 100644
---- a/include/net/udp.h
-+++ b/include/net/udp.h
-@@ -269,6 +269,7 @@ int udp_get_port(struct sock *sk, unsigned short snum,
- int udp_err(struct sk_buff *, u32);
- int udp_abort(struct sock *sk, int err);
- int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len);
-+void udp_splice_eof(struct socket *sock);
- int udp_push_pending_frames(struct sock *sk);
- void udp_flush_pending_frames(struct sock *sk);
- int udp_cmsg_send(struct sock *sk, struct msghdr *msg, u16 *gso_size);
-diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
-index 5d379df90c826..347c3768df6e8 100644
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -838,6 +838,21 @@ int inet_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
+diff --git a/include/linux/udp.h b/include/linux/udp.h
+index e96da4157d04d..10b56b8231e3c 100644
+--- a/include/linux/udp.h
++++ b/include/linux/udp.h
+@@ -30,14 +30,20 @@ static inline u32 udp_hashfn(const struct net *net, u32 num, u32 mask)
+ 	return (num + net_hash_mix(net)) & mask;
  }
- EXPORT_SYMBOL(inet_sendmsg);
  
-+void inet_splice_eof(struct socket *sock)
-+{
-+	const struct proto *prot;
-+	struct sock *sk = sock->sk;
++enum {
++	UDP_FLAGS_CORK,		/* Cork is required */
++};
 +
-+	if (unlikely(inet_send_prepare(sk)))
-+		return;
+ struct udp_sock {
+ 	/* inet_sock has to be the first member */
+ 	struct inet_sock inet;
+ #define udp_port_hash		inet.sk.__sk_common.skc_u16hashes[0]
+ #define udp_portaddr_hash	inet.sk.__sk_common.skc_u16hashes[1]
+ #define udp_portaddr_node	inet.sk.__sk_common.skc_portaddr_node
 +
-+	/* IPV6_ADDRFORM can change sk->sk_prot under us. */
-+	prot = READ_ONCE(sk->sk_prot);
-+	if (prot->splice_eof)
-+		prot->splice_eof(sock);
-+}
-+EXPORT_SYMBOL_GPL(inet_splice_eof);
++	unsigned long	 udp_flags;
 +
- ssize_t inet_sendpage(struct socket *sock, struct page *page, int offset,
- 		      size_t size, int flags)
- {
-@@ -1057,6 +1072,7 @@ const struct proto_ops inet_stream_ops = {
- #ifdef CONFIG_MMU
- 	.mmap		   = tcp_mmap,
- #endif
-+	.splice_eof	   = inet_splice_eof,
- 	.sendpage	   = inet_sendpage,
- 	.splice_read	   = tcp_splice_read,
- 	.read_sock	   = tcp_read_sock,
-@@ -1091,6 +1107,7 @@ const struct proto_ops inet_dgram_ops = {
- 	.read_skb	   = udp_read_skb,
- 	.recvmsg	   = inet_recvmsg,
- 	.mmap		   = sock_no_mmap,
-+	.splice_eof	   = inet_splice_eof,
- 	.sendpage	   = inet_sendpage,
- 	.set_peek_off	   = sk_set_peek_off,
- #ifdef CONFIG_COMPAT
-@@ -1122,6 +1139,7 @@ static const struct proto_ops inet_sockraw_ops = {
- 	.sendmsg	   = inet_sendmsg,
- 	.recvmsg	   = inet_recvmsg,
- 	.mmap		   = sock_no_mmap,
-+	.splice_eof	   = inet_splice_eof,
- 	.sendpage	   = inet_sendpage,
- #ifdef CONFIG_COMPAT
- 	.compat_ioctl	   = inet_compat_ioctl,
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 3935451ad061e..0b7844a8d5711 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -1492,6 +1492,22 @@ int tcp_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- }
- EXPORT_SYMBOL(tcp_sendmsg);
+ 	int		 pending;	/* Any pending frames ? */
+-	unsigned int	 corkflag;	/* Cork is required */
+ 	__u8		 encap_type;	/* Is this an Encapsulation socket? */
+ 	unsigned char	 no_check6_tx:1,/* Send zero UDP6 checksums on TX? */
+ 			 no_check6_rx:1,/* Allow zero UDP6 checksums on RX? */
+@@ -49,6 +55,11 @@ struct udp_sock {
+ 			 gro_enabled:1,	/* Request GRO aggregation */
+ 			 accept_udp_l4:1,
+ 			 accept_udp_fraglist:1;
++/* indicator bits used by pcflag: */
++#define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
++#define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
++#define UDPLITE_RECV_CC  0x4		/* set via udplite setsocktopt        */
++	__u8		 pcflag;        /* marks socket as UDP-Lite if > 0    */
+ 	/*
+ 	 * Following member retains the information to create a UDP header
+ 	 * when the socket is uncorked.
+@@ -60,12 +71,6 @@ struct udp_sock {
+ 	 */
+ 	__u16		 pcslen;
+ 	__u16		 pcrlen;
+-/* indicator bits used by pcflag: */
+-#define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
+-#define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
+-#define UDPLITE_RECV_CC  0x4		/* set via udplite setsocktopt        */
+-	__u8		 pcflag;        /* marks socket as UDP-Lite if > 0    */
+-	__u8		 unused[3];
+ 	/*
+ 	 * For encapsulation sockets.
+ 	 */
+@@ -89,6 +94,15 @@ struct udp_sock {
+ 	int		forward_deficit;
+ };
  
-+void tcp_splice_eof(struct socket *sock)
-+{
-+	struct sock *sk = sock->sk;
-+	struct tcp_sock *tp = tcp_sk(sk);
-+	int mss_now, size_goal;
++#define udp_test_bit(nr, sk)			\
++	test_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
++#define udp_set_bit(nr, sk)			\
++	set_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
++#define udp_clear_bit(nr, sk)			\
++	clear_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
++#define udp_assign_bit(nr, sk, val)		\
++	assign_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags, val)
 +
-+	if (!tcp_write_queue_tail(sk))
-+		return;
-+
-+	lock_sock(sk);
-+	mss_now = tcp_send_mss(sk, &size_goal, 0);
-+	tcp_push(sk, 0, mss_now, tp->nonagle, size_goal);
-+	release_sock(sk);
-+}
-+EXPORT_SYMBOL_GPL(tcp_splice_eof);
-+
- /*
-  *	Handle reading urgent data. BSD has very simple semantics for
-  *	this, no blocking and very strange errors 8)
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 7ebbbe561e402..be2c807eed15d 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -3067,6 +3067,7 @@ struct proto tcp_prot = {
- 	.keepalive		= tcp_set_keepalive,
- 	.recvmsg		= tcp_recvmsg,
- 	.sendmsg		= tcp_sendmsg,
-+	.splice_eof		= tcp_splice_eof,
- 	.sendpage		= tcp_sendpage,
- 	.backlog_rcv		= tcp_v4_do_rcv,
- 	.release_cb		= tcp_release_cb,
+ #define UDP_MAX_SEGMENTS	(1 << 6UL)
+ 
+ static inline struct udp_sock *udp_sk(const struct sock *sk)
 diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index b49cb3df01bb4..e8dd2880ac9aa 100644
+index e8dd2880ac9aa..60a754477efb2 100644
 --- a/net/ipv4/udp.c
 +++ b/net/ipv4/udp.c
-@@ -1332,6 +1332,21 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- }
- EXPORT_SYMBOL(udp_sendmsg);
+@@ -1068,7 +1068,7 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	__be16 dport;
+ 	u8  tos;
+ 	int err, is_udplite = IS_UDPLITE(sk);
+-	int corkreq = READ_ONCE(up->corkflag) || msg->msg_flags&MSG_MORE;
++	int corkreq = udp_test_bit(CORK, sk) || msg->msg_flags & MSG_MORE;
+ 	int (*getfrag)(void *, char *, int, int, int, struct sk_buff *);
+ 	struct sk_buff *skb;
+ 	struct ip_options_data opt_copy;
+@@ -1337,11 +1337,11 @@ void udp_splice_eof(struct socket *sock)
+ 	struct sock *sk = sock->sk;
+ 	struct udp_sock *up = udp_sk(sk);
  
-+void udp_splice_eof(struct socket *sock)
-+{
-+	struct sock *sk = sock->sk;
-+	struct udp_sock *up = udp_sk(sk);
-+
-+	if (!up->pending || READ_ONCE(up->corkflag))
-+		return;
-+
-+	lock_sock(sk);
-+	if (up->pending && !READ_ONCE(up->corkflag))
-+		udp_push_pending_frames(sk);
-+	release_sock(sk);
-+}
-+EXPORT_SYMBOL_GPL(udp_splice_eof);
-+
- int udp_sendpage(struct sock *sk, struct page *page, int offset,
- 		 size_t size, int flags)
- {
-@@ -2907,6 +2922,7 @@ struct proto udp_prot = {
- 	.getsockopt		= udp_getsockopt,
- 	.sendmsg		= udp_sendmsg,
- 	.recvmsg		= udp_recvmsg,
-+	.splice_eof		= udp_splice_eof,
- 	.sendpage		= udp_sendpage,
- 	.release_cb		= ip4_datagram_release_cb,
- 	.hash			= udp_lib_hash,
-diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
-index b5309ae87fd79..a2f29ca516000 100644
---- a/net/ipv6/af_inet6.c
-+++ b/net/ipv6/af_inet6.c
-@@ -711,6 +711,7 @@ const struct proto_ops inet6_stream_ops = {
- #ifdef CONFIG_MMU
- 	.mmap		   = tcp_mmap,
- #endif
-+	.splice_eof	   = inet_splice_eof,
- 	.sendpage	   = inet_sendpage,
- 	.sendmsg_locked    = tcp_sendmsg_locked,
- 	.sendpage_locked   = tcp_sendpage_locked,
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 7be89dcfd5fc5..ba9a22db5805c 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -2158,6 +2158,7 @@ struct proto tcpv6_prot = {
- 	.keepalive		= tcp_set_keepalive,
- 	.recvmsg		= tcp_recvmsg,
- 	.sendmsg		= tcp_sendmsg,
-+	.splice_eof		= tcp_splice_eof,
- 	.sendpage		= tcp_sendpage,
- 	.backlog_rcv		= tcp_v6_do_rcv,
- 	.release_cb		= tcp_release_cb,
+-	if (!up->pending || READ_ONCE(up->corkflag))
++	if (!up->pending || udp_test_bit(CORK, sk))
+ 		return;
+ 
+ 	lock_sock(sk);
+-	if (up->pending && !READ_ONCE(up->corkflag))
++	if (up->pending && !udp_test_bit(CORK, sk))
+ 		udp_push_pending_frames(sk);
+ 	release_sock(sk);
+ }
+@@ -2673,9 +2673,9 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
+ 	switch (optname) {
+ 	case UDP_CORK:
+ 		if (val != 0) {
+-			WRITE_ONCE(up->corkflag, 1);
++			udp_set_bit(CORK, sk);
+ 		} else {
+-			WRITE_ONCE(up->corkflag, 0);
++			udp_clear_bit(CORK, sk);
+ 			lock_sock(sk);
+ 			push_pending_frames(sk);
+ 			release_sock(sk);
+@@ -2800,7 +2800,7 @@ int udp_lib_getsockopt(struct sock *sk, int level, int optname,
+ 
+ 	switch (optname) {
+ 	case UDP_CORK:
+-		val = READ_ONCE(up->corkflag);
++		val = udp_test_bit(CORK, sk);
+ 		break;
+ 
+ 	case UDP_ENCAP:
 diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 7f49f69226a21..2a65136dca773 100644
+index 2a65136dca773..85653e3a04fe8 100644
 --- a/net/ipv6/udp.c
 +++ b/net/ipv6/udp.c
-@@ -1657,6 +1657,20 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	goto out;
- }
- 
-+static void udpv6_splice_eof(struct socket *sock)
-+{
-+	struct sock *sk = sock->sk;
-+	struct udp_sock *up = udp_sk(sk);
-+
-+	if (!up->pending || READ_ONCE(up->corkflag))
-+		return;
-+
-+	lock_sock(sk);
-+	if (up->pending && !READ_ONCE(up->corkflag))
-+		udp_v6_push_pending_frames(sk);
-+	release_sock(sk);
-+}
-+
- void udpv6_destroy_sock(struct sock *sk)
- {
+@@ -1351,7 +1351,7 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	int addr_len = msg->msg_namelen;
+ 	bool connected = false;
+ 	int ulen = len;
+-	int corkreq = READ_ONCE(up->corkflag) || msg->msg_flags&MSG_MORE;
++	int corkreq = udp_test_bit(CORK, sk) || msg->msg_flags & MSG_MORE;
+ 	int err;
+ 	int is_udplite = IS_UDPLITE(sk);
+ 	int (*getfrag)(void *, char *, int, int, int, struct sk_buff *);
+@@ -1662,11 +1662,11 @@ static void udpv6_splice_eof(struct socket *sock)
+ 	struct sock *sk = sock->sk;
  	struct udp_sock *up = udp_sk(sk);
-@@ -1768,6 +1782,7 @@ struct proto udpv6_prot = {
- 	.getsockopt		= udpv6_getsockopt,
- 	.sendmsg		= udpv6_sendmsg,
- 	.recvmsg		= udpv6_recvmsg,
-+	.splice_eof		= udpv6_splice_eof,
- 	.release_cb		= ip6_datagram_release_cb,
- 	.hash			= udp_lib_hash,
- 	.unhash			= udp_lib_unhash,
+ 
+-	if (!up->pending || READ_ONCE(up->corkflag))
++	if (!up->pending || udp_test_bit(CORK, sk))
+ 		return;
+ 
+ 	lock_sock(sk);
+-	if (up->pending && !READ_ONCE(up->corkflag))
++	if (up->pending && !udp_test_bit(CORK, sk))
+ 		udp_v6_push_pending_frames(sk);
+ 	release_sock(sk);
+ }
 -- 
 2.43.0
 
