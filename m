@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16644BAB1;
-	Mon,  8 Jan 2024 15:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125D54BAB1;
+	Mon,  8 Jan 2024 15:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhBpeof4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FBA4C433C7;
-	Mon,  8 Jan 2024 15:13:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/il3M1C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46873C433C8;
+	Mon,  8 Jan 2024 15:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726788;
-	bh=e/LM1cstUvf8S6oVwqLUPbObN+w1M7cjKMFOOvfano8=;
+	s=korg; t=1704726791;
+	bh=9h4QNBY+ydhVERcGkUAdQGtsJ9+LiU5R2dfsP5PoPxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OhBpeof42OCHcfJIIvSgmBO1W7fWuet7yaagFUvv0bBk78vnrWuCZl93etCn4+xSi
-	 H7bKt0Re9JEfJ4rCHTOZ2LX0Pp3ntPm2LfUhhp6kPjQFK99kWvh/8S9HHT4t645CKN
-	 nmDrcMWd1Igw/BVZUhg0gPXIC3FIBmazv5JDrpJs=
+	b=Z/il3M1CEAPK9PAISx2jvCLUk26GjU8He18TMI6HTeT+jzyx8RwRSRiwokbV8ZU56
+	 opXiPAO8n3JWI0bdr2+kpthxDpS57faEB0MG6q2ZO2FCF6JFNqQZhzWNlmpKH4lkVC
+	 gNeAJbxF58ZEmYp7QpdB+H2u4L0dTumxkWvkgve8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Waiman Long <longman@redhat.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
 	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 078/124] rcu: Break rcu_node_0 --> &rq->__lock order
-Date: Mon,  8 Jan 2024 16:08:24 +0100
-Message-ID: <20240108150606.564549042@linuxfoundation.org>
+Subject: [PATCH 6.6 079/124] rcu: Introduce rcu_cpu_online()
+Date: Mon,  8 Jan 2024 16:08:25 +0100
+Message-ID: <20240108150606.603987829@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -45,146 +42,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 85d68222ddc5f4522e456d97d201166acb50f716 ]
+[ Upstream commit 2be4686d866ad5896f2bb94d82fe892197aea9c7 ]
 
-Commit 851a723e45d1 ("sched: Always clear user_cpus_ptr in
-do_set_cpus_allowed()") added a kfree() call to free any user
-provided affinity mask, if present. It was changed later to use
-kfree_rcu() in commit 9a5418bc48ba ("sched/core: Use kfree_rcu()
-in do_set_cpus_allowed()") to avoid a circular locking dependency
-problem.
+Export the RCU point of view as to when a CPU is considered offline
+(ie: when does RCU consider that a CPU is sufficiently down in the
+hotplug process to not feature any possible read side).
 
-It turns out that even kfree_rcu() isn't safe for avoiding
-circular locking problem. As reported by kernel test robot,
-the following circular locking dependency now exists:
+This will be used by RCU-tasks whose vision of an offline CPU should
+reasonably match the one of RCU core.
 
-  &rdp->nocb_lock --> rcu_node_0 --> &rq->__lock
-
-Solve this by breaking the rcu_node_0 --> &rq->__lock chain by moving
-the resched_cpu() out from under rcu_node lock.
-
-[peterz: heavily borrowed from Waiman's Changelog]
-[paulmck: applied Z qiang feedback]
-
-Fixes: 851a723e45d1 ("sched: Always clear user_cpus_ptr in do_set_cpus_allowed()")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Acked-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/oe-lkp/202310302207.a25f1a30-oliver.sang@intel.com
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: cff9b2332ab7 ("kernel/sched: Modify initial boot task idle setup")
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree.c | 36 +++++++++++++++++++++++++-----------
- 1 file changed, 25 insertions(+), 11 deletions(-)
+ kernel/rcu/rcu.h  | 2 ++
+ kernel/rcu/tree.c | 7 +++++++
+ 2 files changed, 9 insertions(+)
 
+diff --git a/kernel/rcu/rcu.h b/kernel/rcu/rcu.h
+index 98e13be411afd..3d1851f82dbb6 100644
+--- a/kernel/rcu/rcu.h
++++ b/kernel/rcu/rcu.h
+@@ -493,6 +493,7 @@ static inline void rcu_expedite_gp(void) { }
+ static inline void rcu_unexpedite_gp(void) { }
+ static inline void rcu_async_hurry(void) { }
+ static inline void rcu_async_relax(void) { }
++static inline bool rcu_cpu_online(int cpu) { return true; }
+ #else /* #ifdef CONFIG_TINY_RCU */
+ bool rcu_gp_is_normal(void);     /* Internal RCU use. */
+ bool rcu_gp_is_expedited(void);  /* Internal RCU use. */
+@@ -502,6 +503,7 @@ void rcu_unexpedite_gp(void);
+ void rcu_async_hurry(void);
+ void rcu_async_relax(void);
+ void rcupdate_announce_bootup_oddness(void);
++bool rcu_cpu_online(int cpu);
+ #ifdef CONFIG_TASKS_RCU_GENERIC
+ void show_rcu_tasks_gp_kthreads(void);
+ #else /* #ifdef CONFIG_TASKS_RCU_GENERIC */
 diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
-index 7b4517dc46579..92a090e161865 100644
+index 92a090e161865..9af42eae1ba38 100644
 --- a/kernel/rcu/tree.c
 +++ b/kernel/rcu/tree.c
-@@ -755,14 +755,19 @@ static int dyntick_save_progress_counter(struct rcu_data *rdp)
+@@ -4139,6 +4139,13 @@ static bool rcu_rdp_cpu_online(struct rcu_data *rdp)
+ 	return !!(rdp->grpmask & rcu_rnp_online_cpus(rdp->mynode));
  }
+ 
++bool rcu_cpu_online(int cpu)
++{
++	struct rcu_data *rdp = per_cpu_ptr(&rcu_data, cpu);
++
++	return rcu_rdp_cpu_online(rdp);
++}
++
+ #if defined(CONFIG_PROVE_RCU) && defined(CONFIG_HOTPLUG_CPU)
  
  /*
-- * Return true if the specified CPU has passed through a quiescent
-- * state by virtue of being in or having passed through an dynticks
-- * idle state since the last call to dyntick_save_progress_counter()
-- * for this same CPU, or by virtue of having been offline.
-+ * Returns positive if the specified CPU has passed through a quiescent state
-+ * by virtue of being in or having passed through an dynticks idle state since
-+ * the last call to dyntick_save_progress_counter() for this same CPU, or by
-+ * virtue of having been offline.
-+ *
-+ * Returns negative if the specified CPU needs a force resched.
-+ *
-+ * Returns zero otherwise.
-  */
- static int rcu_implicit_dynticks_qs(struct rcu_data *rdp)
- {
- 	unsigned long jtsq;
-+	int ret = 0;
- 	struct rcu_node *rnp = rdp->mynode;
- 
- 	/*
-@@ -848,8 +853,8 @@ static int rcu_implicit_dynticks_qs(struct rcu_data *rdp)
- 	    (time_after(jiffies, READ_ONCE(rdp->last_fqs_resched) + jtsq * 3) ||
- 	     rcu_state.cbovld)) {
- 		WRITE_ONCE(rdp->rcu_urgent_qs, true);
--		resched_cpu(rdp->cpu);
- 		WRITE_ONCE(rdp->last_fqs_resched, jiffies);
-+		ret = -1;
- 	}
- 
- 	/*
-@@ -862,8 +867,8 @@ static int rcu_implicit_dynticks_qs(struct rcu_data *rdp)
- 	if (time_after(jiffies, rcu_state.jiffies_resched)) {
- 		if (time_after(jiffies,
- 			       READ_ONCE(rdp->last_fqs_resched) + jtsq)) {
--			resched_cpu(rdp->cpu);
- 			WRITE_ONCE(rdp->last_fqs_resched, jiffies);
-+			ret = -1;
- 		}
- 		if (IS_ENABLED(CONFIG_IRQ_WORK) &&
- 		    !rdp->rcu_iw_pending && rdp->rcu_iw_gp_seq != rnp->gp_seq &&
-@@ -892,7 +897,7 @@ static int rcu_implicit_dynticks_qs(struct rcu_data *rdp)
- 		}
- 	}
- 
--	return 0;
-+	return ret;
- }
- 
- /* Trace-event wrapper function for trace_rcu_future_grace_period.  */
-@@ -2270,15 +2275,15 @@ static void force_qs_rnp(int (*f)(struct rcu_data *rdp))
- {
- 	int cpu;
- 	unsigned long flags;
--	unsigned long mask;
--	struct rcu_data *rdp;
- 	struct rcu_node *rnp;
- 
- 	rcu_state.cbovld = rcu_state.cbovldnext;
- 	rcu_state.cbovldnext = false;
- 	rcu_for_each_leaf_node(rnp) {
-+		unsigned long mask = 0;
-+		unsigned long rsmask = 0;
-+
- 		cond_resched_tasks_rcu_qs();
--		mask = 0;
- 		raw_spin_lock_irqsave_rcu_node(rnp, flags);
- 		rcu_state.cbovldnext |= !!rnp->cbovldmask;
- 		if (rnp->qsmask == 0) {
-@@ -2296,11 +2301,17 @@ static void force_qs_rnp(int (*f)(struct rcu_data *rdp))
- 			continue;
- 		}
- 		for_each_leaf_node_cpu_mask(rnp, cpu, rnp->qsmask) {
-+			struct rcu_data *rdp;
-+			int ret;
-+
- 			rdp = per_cpu_ptr(&rcu_data, cpu);
--			if (f(rdp)) {
-+			ret = f(rdp);
-+			if (ret > 0) {
- 				mask |= rdp->grpmask;
- 				rcu_disable_urgency_upon_qs(rdp);
- 			}
-+			if (ret < 0)
-+				rsmask |= rdp->grpmask;
- 		}
- 		if (mask != 0) {
- 			/* Idle/offline CPUs, report (releases rnp->lock). */
-@@ -2309,6 +2320,9 @@ static void force_qs_rnp(int (*f)(struct rcu_data *rdp))
- 			/* Nothing to do here, so just drop the lock. */
- 			raw_spin_unlock_irqrestore_rcu_node(rnp, flags);
- 		}
-+
-+		for_each_leaf_node_cpu_mask(rnp, cpu, rsmask)
-+			resched_cpu(cpu);
- 	}
- }
- 
 -- 
 2.43.0
 
