@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D098C5102D;
-	Mon,  8 Jan 2024 15:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A5E51008;
+	Mon,  8 Jan 2024 15:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BECCkqM+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4588C4339A;
-	Mon,  8 Jan 2024 15:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7ii9f/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF240C433AD;
+	Mon,  8 Jan 2024 15:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728257;
-	bh=lvDETJfH1yafyKAUtoTLfYgw4oe+vktYx+qvaD3fzgs=;
+	s=korg; t=1704728260;
+	bh=lF362pBXl8RJgzJIKzrBffnzAqhHijdSHnyjTD246jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BECCkqM+c2XOBXsftNFBrWArjeOakpQAqwHB9nzd/xjDyisJrHRZEaLj2XKos8ZDP
-	 DkEMVI/Z32UOWwARunc67KGiVX7LDlwOBcRqx5M+dIo9wz5IrWr2nDKE866ee+wwbC
-	 DAPQXWJAoB+nu7aGf5JIIGQ0yOdQLYTJVmXz6g3Y=
+	b=h7ii9f/vPtT3h0Q8RYfAtoq9xQXOmSVNP3baQ2lTeM0R3Qxq4Y5IeC8FJW4Ttm/mX
+	 /ltl91XZpx+9PghtTSY4Btrb8ArMm1qJyaE25el+AdE36xpEvyntPSBBA6elJ9Tdwu
+	 S6LYK9BlJNCtxfxcj8h2II4tVf7W1bvFeMRxbems=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Sarthak Kukreti <sarthakkukreti@chromium.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 002/150] block: Dont invalidate pagecache for invalid falloc modes
-Date: Mon,  8 Jan 2024 16:34:13 +0100
-Message-ID: <20240108153511.343081049@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Ngai-Mint Kwan <ngai-mint.kwan@intel.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.1 020/150] ice: Shut down VSI with "link-down-on-close" enabled
+Date: Mon,  8 Jan 2024 16:34:31 +0100
+Message-ID: <20240108153512.219917006@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -44,72 +45,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarthak Kukreti <sarthakkukreti@chromium.org>
+From: Ngai-Mint Kwan <ngai-mint.kwan@intel.com>
 
-commit 1364a3c391aedfeb32aa025303ead3d7c91cdf9d upstream.
+[ Upstream commit 6d05ff55ef4f4954d28551236239f297bd52ea48 ]
 
-Only call truncate_bdev_range() if the fallocate mode is supported. This
-fixes a bug where data in the pagecache could be invalidated if the
-fallocate() was called on the block device with an invalid mode.
+Disabling netdev with ethtool private flag "link-down-on-close" enabled
+can cause NULL pointer dereference bug. Shut down VSI regardless of
+"link-down-on-close" state.
 
-Fixes: 25f4c41415e5 ("block: implement (some of) fallocate for block devices")
-Cc: stable@vger.kernel.org
-Reported-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Sarthak Kukreti <sarthakkukreti@chromium.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Fixes: line?  I've never seen those wrapped.
-Link: https://lore.kernel.org/r/20231011201230.750105-1-sarthakkukreti@chromium.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sarthak Kukreti <sarthakkukreti@chromium.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8ac7132704f3 ("ice: Fix interface being down after reset with link-down-on-close flag on")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Ngai-Mint Kwan <ngai-mint.kwan@intel.com>
+Signed-off-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/fops.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -655,24 +655,35 @@ static long blkdev_fallocate(struct file
- 
- 	filemap_invalidate_lock(inode->i_mapping);
- 
--	/* Invalidate the page cache, including dirty pages. */
--	error = truncate_bdev_range(bdev, file->f_mode, start, end);
--	if (error)
--		goto fail;
--
-+	/*
-+	 * Invalidate the page cache, including dirty pages, for valid
-+	 * de-allocate mode calls to fallocate().
-+	 */
- 	switch (mode) {
- 	case FALLOC_FL_ZERO_RANGE:
- 	case FALLOC_FL_ZERO_RANGE | FALLOC_FL_KEEP_SIZE:
-+		error = truncate_bdev_range(bdev, file->f_mode, start, end);
-+		if (error)
-+			goto fail;
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 5eb3b80b293c0..ab46cfca4028d 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -9071,6 +9071,8 @@ int ice_stop(struct net_device *netdev)
+ 			else
+ 				netdev_err(vsi->netdev, "Failed to set physical link down, VSI %d error %d\n",
+ 					   vsi->vsi_num, link_err);
 +
- 		error = blkdev_issue_zeroout(bdev, start >> SECTOR_SHIFT,
- 					     len >> SECTOR_SHIFT, GFP_KERNEL,
- 					     BLKDEV_ZERO_NOUNMAP);
- 		break;
- 	case FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE:
-+		error = truncate_bdev_range(bdev, file->f_mode, start, end);
-+		if (error)
-+			goto fail;
-+
- 		error = blkdev_issue_zeroout(bdev, start >> SECTOR_SHIFT,
- 					     len >> SECTOR_SHIFT, GFP_KERNEL,
- 					     BLKDEV_ZERO_NOFALLBACK);
- 		break;
- 	case FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE | FALLOC_FL_NO_HIDE_STALE:
-+		error = truncate_bdev_range(bdev, file->f_mode, start, end);
-+		if (error)
-+			goto fail;
-+
- 		error = blkdev_issue_discard(bdev, start >> SECTOR_SHIFT,
- 					     len >> SECTOR_SHIFT, GFP_KERNEL);
- 		break;
++			ice_vsi_close(vsi);
+ 			return -EIO;
+ 		}
+ 	}
+-- 
+2.43.0
+
 
 
