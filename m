@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E8551C29;
-	Mon,  8 Jan 2024 15:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0CF51C31;
+	Mon,  8 Jan 2024 15:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2p4eDTC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23DC2C433C8;
-	Mon,  8 Jan 2024 15:41:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7cqGTqq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C497C433C9;
+	Mon,  8 Jan 2024 15:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728476;
-	bh=96raf6KaIJDUdqwxeXYXFbJPvUIgSjTBM45YawGZwUQ=;
+	s=korg; t=1704728479;
+	bh=kzx6mhRNLL2YCxsrCLtAg6DDjGl4XqhXg4aC+CyoBkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t2p4eDTCwZ1XjVHT9FCi7o/DbpZFwCPJYDAOW7h+wB+MoIeEEkxwSpGWu1aZaBySC
-	 guEKPR2V455dYO+Z64E61bqIi89ozYcpNpOLdi2yav3zbqFfQg57wuNuN8czi4b3sp
-	 YqwwSNtyBehRF4Asgm3ppEKiZESxj9Lwxy4yYixU=
+	b=Q7cqGTqqZbpzDDto6A7HfAmWnITeRQkStPqNevvXp5IlyYs5JdA1tb4zIy82kmwxx
+	 N0kiTmsBv4lITEglP8wDBjcGzaPQmWzJL3EcIo1AaMGCOqyZjwwiTIuKYkw/sgTBUC
+	 x3d7UP45nj9Yyjny5j/++zNdyl4J8HKP2Nxm0+hI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yong He <alexyonghe@tencent.com>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Neeraj upadhyay <Neeraj.Upadhyay@amd.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Leon Hwang <hffilwlqm@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/150] srcu: Fix callbacks acceleration mishandling
-Date: Mon,  8 Jan 2024 16:35:10 +0100
-Message-ID: <20240108153513.948433069@linuxfoundation.org>
+Subject: [PATCH 6.1 060/150] bpf, x64: Fix tailcall infinite loop
+Date: Mon,  8 Jan 2024 16:35:11 +0100
+Message-ID: <20240108153513.996432649@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -44,155 +43,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Leon Hwang <hffilwlqm@gmail.com>
 
-[ Upstream commit 4a8e65b0c348e42107c64381e692e282900be361 ]
+[ Upstream commit 2b5dcb31a19a2e0acd869b12c9db9b2d696ef544 ]
 
-SRCU callbacks acceleration might fail if the preceding callbacks
-advance also fails. This can happen when the following steps are met:
+>From commit ebf7d1f508a73871 ("bpf, x64: rework pro/epilogue and tailcall
+handling in JIT"), the tailcall on x64 works better than before.
 
-1) The RCU_WAIT_TAIL segment has callbacks (say for gp_num 8) and the
-   RCU_NEXT_READY_TAIL also has callbacks (say for gp_num 12).
+>From commit e411901c0b775a3a ("bpf: allow for tailcalls in BPF subprograms
+for x64 JIT"), tailcall is able to run in BPF subprograms on x64.
 
-2) The grace period for RCU_WAIT_TAIL is observed as started but not yet
-   completed so rcu_seq_current() returns 4 + SRCU_STATE_SCAN1 = 5.
+>From commit 5b92a28aae4dd0f8 ("bpf: Support attaching tracing BPF program
+to other BPF programs"), BPF program is able to trace other BPF programs.
 
-3) This value is passed to rcu_segcblist_advance() which can't move
-   any segment forward and fails.
+How about combining them all together?
 
-4) srcu_gp_start_if_needed() still proceeds with callback acceleration.
-   But then the call to rcu_seq_snap() observes the grace period for the
-   RCU_WAIT_TAIL segment (gp_num 8) as completed and the subsequent one
-   for the RCU_NEXT_READY_TAIL segment as started
-   (ie: 8 + SRCU_STATE_SCAN1 = 9) so it returns a snapshot of the
-   next grace period, which is 16.
+1. FENTRY/FEXIT on a BPF subprogram.
+2. A tailcall runs in the BPF subprogram.
+3. The tailcall calls the subprogram's caller.
 
-5) The value of 16 is passed to rcu_segcblist_accelerate() but the
-   freshly enqueued callback in RCU_NEXT_TAIL can't move to
-   RCU_NEXT_READY_TAIL which already has callbacks for a previous grace
-   period (gp_num = 12). So acceleration fails.
+As a result, a tailcall infinite loop comes up. And the loop would halt
+the machine.
 
-6) Note in all these steps, srcu_invoke_callbacks() hadn't had a chance
-   to run srcu_invoke_callbacks().
+As we know, in tail call context, the tail_call_cnt propagates by stack
+and rax register between BPF subprograms. So do in trampolines.
 
-Then some very bad outcome may happen if the following happens:
-
-7) Some other CPU races and starts the grace period number 16 before the
-   CPU handling previous steps had a chance. Therefore srcu_gp_start()
-   isn't called on the latter sdp to fix the acceleration leak from
-   previous steps with a new pair of call to advance/accelerate.
-
-8) The grace period 16 completes and srcu_invoke_callbacks() is finally
-   called. All the callbacks from previous grace periods (8 and 12) are
-   correctly advanced and executed but callbacks in RCU_NEXT_READY_TAIL
-   still remain. Then rcu_segcblist_accelerate() is called with a
-   snaphot of 20.
-
-9) Since nothing started the grace period number 20, callbacks stay
-   unhandled.
-
-This has been reported in real load:
-
-	[3144162.608392] INFO: task kworker/136:12:252684 blocked for more
-	than 122 seconds.
-	[3144162.615986]       Tainted: G           O  K   5.4.203-1-tlinux4-0011.1 #1
-	[3144162.623053] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs"
-	disables this message.
-	[3144162.631162] kworker/136:12  D    0 252684      2 0x90004000
-	[3144162.631189] Workqueue: kvm-irqfd-cleanup irqfd_shutdown [kvm]
-	[3144162.631192] Call Trace:
-	[3144162.631202]  __schedule+0x2ee/0x660
-	[3144162.631206]  schedule+0x33/0xa0
-	[3144162.631209]  schedule_timeout+0x1c4/0x340
-	[3144162.631214]  ? update_load_avg+0x82/0x660
-	[3144162.631217]  ? raw_spin_rq_lock_nested+0x1f/0x30
-	[3144162.631218]  wait_for_completion+0x119/0x180
-	[3144162.631220]  ? wake_up_q+0x80/0x80
-	[3144162.631224]  __synchronize_srcu.part.19+0x81/0xb0
-	[3144162.631226]  ? __bpf_trace_rcu_utilization+0x10/0x10
-	[3144162.631227]  synchronize_srcu+0x5f/0xc0
-	[3144162.631236]  irqfd_shutdown+0x3c/0xb0 [kvm]
-	[3144162.631239]  ? __schedule+0x2f6/0x660
-	[3144162.631243]  process_one_work+0x19a/0x3a0
-	[3144162.631244]  worker_thread+0x37/0x3a0
-	[3144162.631247]  kthread+0x117/0x140
-	[3144162.631247]  ? process_one_work+0x3a0/0x3a0
-	[3144162.631248]  ? __kthread_cancel_work+0x40/0x40
-	[3144162.631250]  ret_from_fork+0x1f/0x30
-
-Fix this with taking the snapshot for acceleration _before_ the read
-of the current grace period number.
-
-The only side effect of this solution is that callbacks advancing happen
-then _after_ the full barrier in rcu_seq_snap(). This is not a problem
-because that barrier only cares about:
-
-1) Ordering accesses of the update side before call_srcu() so they don't
-   bleed.
-2) See all the accesses prior to the grace period of the current gp_num
-
-The only things callbacks advancing need to be ordered against are
-carried by snp locking.
-
-Reported-by: Yong He <alexyonghe@tencent.com>
-Co-developed-by:: Yong He <alexyonghe@tencent.com>
-Signed-off-by: Yong He <alexyonghe@tencent.com>
-Co-developed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Signed-off-by:  Joel Fernandes (Google) <joel@joelfernandes.org>
-Co-developed-by: Neeraj upadhyay <Neeraj.Upadhyay@amd.com>
-Signed-off-by: Neeraj upadhyay <Neeraj.Upadhyay@amd.com>
-Link: http://lore.kernel.org/CANZk6aR+CqZaqmMWrC2eRRPY12qAZnDZLwLnHZbNi=xXMB401g@mail.gmail.com
-Fixes: da915ad5cf25 ("srcu: Parallelize callback handling")
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Fixes: ebf7d1f508a7 ("bpf, x64: rework pro/epilogue and tailcall handling in JIT")
+Fixes: e411901c0b77 ("bpf: allow for tailcalls in BPF subprograms for x64 JIT")
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: Leon Hwang <hffilwlqm@gmail.com>
+Link: https://lore.kernel.org/r/20230912150442.2009-3-hffilwlqm@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/srcutree.c | 31 +++++++++++++++++++++++++++++--
- 1 file changed, 29 insertions(+), 2 deletions(-)
+ arch/x86/net/bpf_jit_comp.c | 28 ++++++++++++++++++++++------
+ include/linux/bpf.h         |  5 +++++
+ kernel/bpf/trampoline.c     |  4 ++--
+ kernel/bpf/verifier.c       |  3 +++
+ 4 files changed, 32 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/rcu/srcutree.c b/kernel/rcu/srcutree.c
-index 8fdf076720384..929dcbc04d29c 100644
---- a/kernel/rcu/srcutree.c
-+++ b/kernel/rcu/srcutree.c
-@@ -1100,10 +1100,37 @@ static unsigned long srcu_gp_start_if_needed(struct srcu_struct *ssp,
- 	spin_lock_irqsave_sdp_contention(sdp, &flags);
- 	if (rhp)
- 		rcu_segcblist_enqueue(&sdp->srcu_cblist, rhp);
-+	/*
-+	 * The snapshot for acceleration must be taken _before_ the read of the
-+	 * current gp sequence used for advancing, otherwise advancing may fail
-+	 * and acceleration may then fail too.
-+	 *
-+	 * This could happen if:
-+	 *
-+	 *  1) The RCU_WAIT_TAIL segment has callbacks (gp_num = X + 4) and the
-+	 *     RCU_NEXT_READY_TAIL also has callbacks (gp_num = X + 8).
-+	 *
-+	 *  2) The grace period for RCU_WAIT_TAIL is seen as started but not
-+	 *     completed so rcu_seq_current() returns X + SRCU_STATE_SCAN1.
-+	 *
-+	 *  3) This value is passed to rcu_segcblist_advance() which can't move
-+	 *     any segment forward and fails.
-+	 *
-+	 *  4) srcu_gp_start_if_needed() still proceeds with callback acceleration.
-+	 *     But then the call to rcu_seq_snap() observes the grace period for the
-+	 *     RCU_WAIT_TAIL segment as completed and the subsequent one for the
-+	 *     RCU_NEXT_READY_TAIL segment as started (ie: X + 4 + SRCU_STATE_SCAN1)
-+	 *     so it returns a snapshot of the next grace period, which is X + 12.
-+	 *
-+	 *  5) The value of X + 12 is passed to rcu_segcblist_accelerate() but the
-+	 *     freshly enqueued callback in RCU_NEXT_TAIL can't move to
-+	 *     RCU_NEXT_READY_TAIL which already has callbacks for a previous grace
-+	 *     period (gp_num = X + 8). So acceleration fails.
-+	 */
-+	s = rcu_seq_snap(&ssp->srcu_gp_seq);
- 	rcu_segcblist_advance(&sdp->srcu_cblist,
- 			      rcu_seq_current(&ssp->srcu_gp_seq));
--	s = rcu_seq_snap(&ssp->srcu_gp_seq);
--	(void)rcu_segcblist_accelerate(&sdp->srcu_cblist, s);
-+	WARN_ON_ONCE(!rcu_segcblist_accelerate(&sdp->srcu_cblist, s) && rhp);
- 	if (ULONG_CMP_LT(sdp->srcu_gp_seq_needed, s)) {
- 		sdp->srcu_gp_seq_needed = s;
- 		needgp = true;
+diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+index 4686c1d9d0cfd..e6a031f8dd2e9 100644
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -893,6 +893,10 @@ static void emit_nops(u8 **pprog, int len)
+ 
+ #define INSN_SZ_DIFF (((addrs[i] - addrs[i - 1]) - (prog - temp)))
+ 
++/* mov rax, qword ptr [rbp - rounded_stack_depth - 8] */
++#define RESTORE_TAIL_CALL_CNT(stack)				\
++	EMIT3_off32(0x48, 0x8B, 0x85, -round_up(stack, 8) - 8)
++
+ static int do_jit(struct bpf_prog *bpf_prog, int *addrs, u8 *image, u8 *rw_image,
+ 		  int oldproglen, struct jit_context *ctx, bool jmp_padding)
+ {
+@@ -1436,9 +1440,7 @@ st:			if (is_imm8(insn->off))
+ 		case BPF_JMP | BPF_CALL:
+ 			func = (u8 *) __bpf_call_base + imm32;
+ 			if (tail_call_reachable) {
+-				/* mov rax, qword ptr [rbp - rounded_stack_depth - 8] */
+-				EMIT3_off32(0x48, 0x8B, 0x85,
+-					    -round_up(bpf_prog->aux->stack_depth, 8) - 8);
++				RESTORE_TAIL_CALL_CNT(bpf_prog->aux->stack_depth);
+ 				if (!imm32 || emit_call(&prog, func, image + addrs[i - 1] + 7))
+ 					return -EINVAL;
+ 			} else {
+@@ -2070,6 +2072,7 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+ 	 * RBP - ip_off    [ traced function ]  BPF_TRAMP_F_IP_ARG flag
+ 	 *
+ 	 * RBP - run_ctx_off [ bpf_tramp_run_ctx ]
++	 * RSP                 [ tail_call_cnt ] BPF_TRAMP_F_TAIL_CALL_CTX
+ 	 */
+ 
+ 	/* room for return value of orig_call or fentry prog */
+@@ -2106,6 +2109,8 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+ 	EMIT1(0x55);		 /* push rbp */
+ 	EMIT3(0x48, 0x89, 0xE5); /* mov rbp, rsp */
+ 	EMIT4(0x48, 0x83, 0xEC, stack_size); /* sub rsp, stack_size */
++	if (flags & BPF_TRAMP_F_TAIL_CALL_CTX)
++		EMIT1(0x50);		/* push rax */
+ 	EMIT1(0x53);		 /* push rbx */
+ 
+ 	/* Store number of argument registers of the traced function:
+@@ -2156,9 +2161,15 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+ 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
+ 		restore_regs(m, &prog, nr_args, regs_off);
+ 
++		if (flags & BPF_TRAMP_F_TAIL_CALL_CTX)
++			/* Before calling the original function, restore the
++			 * tail_call_cnt from stack to rax.
++			 */
++			RESTORE_TAIL_CALL_CNT(stack_size);
++
+ 		if (flags & BPF_TRAMP_F_ORIG_STACK) {
+-			emit_ldx(&prog, BPF_DW, BPF_REG_0, BPF_REG_FP, 8);
+-			EMIT2(0xff, 0xd0); /* call *rax */
++			emit_ldx(&prog, BPF_DW, BPF_REG_6, BPF_REG_FP, 8);
++			EMIT2(0xff, 0xd3); /* call *rbx */
+ 		} else {
+ 			/* call original function */
+ 			if (emit_call(&prog, orig_call, prog)) {
+@@ -2209,7 +2220,12 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+ 			ret = -EINVAL;
+ 			goto cleanup;
+ 		}
+-	}
++	} else if (flags & BPF_TRAMP_F_TAIL_CALL_CTX)
++		/* Before running the original function, restore the
++		 * tail_call_cnt from stack to rax.
++		 */
++		RESTORE_TAIL_CALL_CNT(stack_size);
++
+ 	/* restore return value of orig_call or fentry prog back into RAX */
+ 	if (save_ret)
+ 		emit_ldx(&prog, BPF_DW, BPF_REG_0, BPF_REG_FP, -8);
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 3ce9e39ecdb85..619fcba84be22 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -825,6 +825,11 @@ struct btf_func_model {
+  */
+ #define BPF_TRAMP_F_SHARE_IPMODIFY	BIT(6)
+ 
++/* Indicate that current trampoline is in a tail call context. Then, it has to
++ * cache and restore tail_call_cnt to avoid infinite tail call loop.
++ */
++#define BPF_TRAMP_F_TAIL_CALL_CTX	BIT(7)
++
+ /* Each call __bpf_prog_enter + call bpf_func + call __bpf_prog_exit is ~50
+  * bytes on x86.
+  */
+diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+index c4381dfcd6b09..748ac86169941 100644
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -443,8 +443,8 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
+ 		goto out;
+ 	}
+ 
+-	/* clear all bits except SHARE_IPMODIFY */
+-	tr->flags &= BPF_TRAMP_F_SHARE_IPMODIFY;
++	/* clear all bits except SHARE_IPMODIFY and TAIL_CALL_CTX */
++	tr->flags &= (BPF_TRAMP_F_SHARE_IPMODIFY | BPF_TRAMP_F_TAIL_CALL_CTX);
+ 
+ 	if (tlinks[BPF_TRAMP_FEXIT].nr_links ||
+ 	    tlinks[BPF_TRAMP_MODIFY_RETURN].nr_links) {
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 12d360d80c149..ee6e811b43158 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -15442,6 +15442,9 @@ static int check_attach_btf_id(struct bpf_verifier_env *env)
+ 	if (!tr)
+ 		return -ENOMEM;
+ 
++	if (tgt_prog && tgt_prog->aux->tail_call_reachable)
++		tr->flags = BPF_TRAMP_F_TAIL_CALL_CTX;
++
+ 	prog->aux->dst_trampoline = tr;
+ 	return 0;
+ }
 -- 
 2.43.0
 
