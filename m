@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579D34B5AB;
-	Mon,  8 Jan 2024 15:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195454C3D4;
+	Mon,  8 Jan 2024 15:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRMEvjGg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664A2C433C8;
-	Mon,  8 Jan 2024 15:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPnkK6kh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813F8C433C8;
+	Mon,  8 Jan 2024 15:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726584;
-	bh=cgcPX4TSqWPiPyRsd47my3sKnI0wuKC2614VqjbsEZY=;
+	s=korg; t=1704726587;
+	bh=Mk9hxKhZp79Kp1gJXmjwwqgqOBa2rCl9A3I+vZ9HIBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aRMEvjGgecUj45BzzsWuDiWUNCO5mop8LWluVIlP8J6sKL/TUpKXOIGGOXWm8jGFP
-	 3gBWtE1Ha8J1zDmMs8ajbJNHafbcQlX4oaqgJq1ctnIE4KH7ekRGp3boZgnZUpj0DJ
-	 jasE/axsdnF1iMPRaEWlix+TAcgQfBtRLYUzhzfI=
+	b=dPnkK6khWXa+krKNQJeD9dYYt0iitc0TRonTG8yd1owuIaEM4LMOP4ohQS/n4wgat
+	 fY42V0qVFmpmGgvnmTmYVGctSlmBZRY2R4oFdKX+BqTGMV1ECzJPDQAAotv3OZvksF
+	 OyPgcQq4HfXUIaPQy60ebZ3hS3431Vvkf3PHouxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 014/124] KVM: x86/pmu: fix masking logic for MSR_CORE_PERF_GLOBAL_CTRL
-Date: Mon,  8 Jan 2024 16:07:20 +0100
-Message-ID: <20240108150603.633383461@linuxfoundation.org>
+	Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 015/124] accel/qaic: Fix GEM import path code
+Date: Mon,  8 Jan 2024 16:07:21 +0100
+Message-ID: <20240108150603.674272143@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -42,74 +43,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 
-commit 971079464001c6856186ca137778e534d983174a upstream.
+[ Upstream commit c8b6f4ad2ff9c6d88cdeb9acf16d0c4a323dd499 ]
 
-When commit c59a1f106f5c ("KVM: x86/pmu: Add IA32_PEBS_ENABLE
-MSR emulation for extended PEBS") switched the initialization of
-cpuc->guest_switch_msrs to use compound literals, it screwed up
-the boolean logic:
+Do not modify the size of dmabuf as it is immutable.
 
-+	u64 pebs_mask = cpuc->pebs_enabled & x86_pmu.pebs_capable;
-...
--	arr[0].guest = intel_ctrl & ~cpuc->intel_ctrl_host_mask;
--	arr[0].guest &= ~(cpuc->pebs_enabled & x86_pmu.pebs_capable);
-+               .guest = intel_ctrl & (~cpuc->intel_ctrl_host_mask | ~pebs_mask),
-
-Before the patch, the value of arr[0].guest would have been intel_ctrl &
-~cpuc->intel_ctrl_host_mask & ~pebs_mask.  The intent is to always treat
-PEBS events as host-only because, while the guest runs, there is no way
-to tell the processor about the virtual address where to put PEBS records
-intended for the host.
-
-Unfortunately, the new expression can be expanded to
-
-	(intel_ctrl & ~cpuc->intel_ctrl_host_mask) | (intel_ctrl & ~pebs_mask)
-
-which makes no sense; it includes any bit that isn't *both* marked as
-exclude_guest and using PEBS.  So, reinstate the old logic.  Another
-way to write it could be "intel_ctrl & ~(cpuc->intel_ctrl_host_mask |
-pebs_mask)", presumably the intention of the author of the faulty.
-However, I personally find the repeated application of A AND NOT B to
-be a bit more readable.
-
-This shows up as guest failures when running concurrent long-running
-perf workloads on the host, and was reported to happen with rcutorture.
-All guests on a given host would die simultaneously with something like an
-instruction fault or a segmentation violation.
-
-Reported-by: Paul E. McKenney <paulmck@kernel.org>
-Analyzed-by: Sean Christopherson <seanjc@google.com>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Cc: stable@vger.kernel.org
-Fixes: c59a1f106f5c ("KVM: x86/pmu: Add IA32_PEBS_ENABLE MSR emulation for extended PEBS")
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ff13be830333 ("accel/qaic: Add datapath")
+Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231208163101.1295769-2-quic_jhugo@quicinc.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/accel/qaic/qaic_data.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -4062,12 +4062,17 @@ static struct perf_guest_switch_msr *int
- 	u64 pebs_mask = cpuc->pebs_enabled & x86_pmu.pebs_capable;
- 	int global_ctrl, pebs_enable;
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index f4b06792c6f1c..ed1a5af434f24 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -766,7 +766,6 @@ struct drm_gem_object *qaic_gem_prime_import(struct drm_device *dev, struct dma_
+ 	struct dma_buf_attachment *attach;
+ 	struct drm_gem_object *obj;
+ 	struct qaic_bo *bo;
+-	size_t size;
+ 	int ret;
  
-+	/*
-+	 * In addition to obeying exclude_guest/exclude_host, remove bits being
-+	 * used for PEBS when running a guest, because PEBS writes to virtual
-+	 * addresses (not physical addresses).
-+	 */
- 	*nr = 0;
- 	global_ctrl = (*nr)++;
- 	arr[global_ctrl] = (struct perf_guest_switch_msr){
- 		.msr = MSR_CORE_PERF_GLOBAL_CTRL,
- 		.host = intel_ctrl & ~cpuc->intel_ctrl_guest_mask,
--		.guest = intel_ctrl & (~cpuc->intel_ctrl_host_mask | ~pebs_mask),
-+		.guest = intel_ctrl & ~cpuc->intel_ctrl_host_mask & ~pebs_mask,
- 	};
+ 	bo = qaic_alloc_init_bo();
+@@ -784,13 +783,12 @@ struct drm_gem_object *qaic_gem_prime_import(struct drm_device *dev, struct dma_
+ 		goto attach_fail;
+ 	}
  
- 	if (!x86_pmu.pebs)
+-	size = PAGE_ALIGN(attach->dmabuf->size);
+-	if (size == 0) {
++	if (!attach->dmabuf->size) {
+ 		ret = -EINVAL;
+ 		goto size_align_fail;
+ 	}
+ 
+-	drm_gem_private_object_init(dev, obj, size);
++	drm_gem_private_object_init(dev, obj, attach->dmabuf->size);
+ 	/*
+ 	 * skipping dma_buf_map_attachment() as we do not know the direction
+ 	 * just yet. Once the direction is known in the subsequent IOCTL to
+-- 
+2.43.0
+
 
 
