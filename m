@@ -1,86 +1,93 @@
-Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B5354F80
-	for <patches@lists.linux.dev>; Mon,  8 Jan 2024 19:02:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66BF4653F
+	for <patches@lists.linux.dev>; Mon,  8 Jan 2024 20:55:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CU9+d7Ku"
-Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-4b745fa9671so247475e0c.0
-        for <patches@lists.linux.dev>; Mon, 08 Jan 2024 11:02:31 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpdCDH/W"
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-7bec3b9db1bso5961239f.0
+        for <patches@lists.linux.dev>; Mon, 08 Jan 2024 12:55:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704740550; x=1705345350; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=i6abKjHrQB2M3iEvyThch0ew2ujiuN7TwHMLgZSiAGw=;
-        b=CU9+d7Ku8l18IPyQL3PiTuMN1iDmEOwkNXkg1XYj98yCACn3RdknVvfwpQqjuFJGKD
-         j3s2SONATlDL5WcoXMYvPaFymqqENkY+DCTk8eb3GXEgIYZyQivR5ahvF6dD1MtfRsST
-         Lg5m5LD65+9ExHGwI7BF0QVpgC53aJajGogaQpWIMWK52qGZxqZjN+bO3O8gcsb3VWgl
-         +yPWaCAygnehY27Db2I1XTSGLRuQvY8cEqruXjSoyQ6BdvK0kk7tAJmYINOEygc7Qqds
-         RDBSf7g+Hgka6PismmIIservkRnQ1QCJ60M8SOibgg04UVoOtXnDxiqQbMC8RBk6VoNd
-         jzVg==
+        d=linuxfoundation.org; s=google; t=1704747355; x=1705352155; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FozcbD392EoHS/61C3J7n8Lnu2PFzEqIfm1NNRw0ONg=;
+        b=cpdCDH/WDHDcqip6vtD2bCY+vVzMTVBYx++w9h5DiRIwd0D4ZVRCnUgDFG+wHEKw6E
+         kpc2m+v3Z/wiXcmih6FBtU91U158C4OrQi0h7cxD15N0X6/0sK5UYp562Na2MfktoRnk
+         dTDRpCkU7FblYej4Als1cpM8VXadp4eHQrn+Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704740550; x=1705345350;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i6abKjHrQB2M3iEvyThch0ew2ujiuN7TwHMLgZSiAGw=;
-        b=AUyCA2XdctTeZD99olxMoaS5t078PVlv2eeUOfIhtxLuelfl6/QE7NGTIShoSBEgtv
-         HQTssrV0SxX71LHNByAupkgE5hgqNT06zXi5KOiO9hmCN0yS1TVEzh6kD77nzjlQOhr/
-         F+I0qWt1GyuVoF+M5TKkj68+8sjceOqR3Cq+EGQ4kkivIeGO31m2BTLGpLTD9sMInx87
-         5gxW6iZ7XtClbb2fM1/1V+iykvS3+/rGPbMGdEzxm1LUIxtD5D1S8CDSihS1jtVtgNt/
-         uAnKdJNsWGKfTR5mDUrHgRA0n+0ydElHBB/m+6NMi7WSxAjmH1hCt2r7Dyn1Wjxs8J+T
-         DFlQ==
-X-Gm-Message-State: AOJu0Yy2xrax9iUsWRRrTXWe1V9FgRT9FaPN3pPpviU6HFynySvMkPUK
-	U6h81lzb6pmKwdZVn61V+tE+/vI24PalOsAbPCE=
-X-Google-Smtp-Source: AGHT+IFZ1oroFQ9FrqNxPzcXlCCnla9b5liu5pflOjp0/Ol/BjcIbkeCD8sMeSlMGrotbUouwpW/5I/1St5MfZUJ1D0=
-X-Received: by 2002:a05:6122:589:b0:4b7:97b9:527d with SMTP id
- i9-20020a056122058900b004b797b9527dmr1351897vko.26.1704740550525; Mon, 08 Jan
- 2024 11:02:30 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704747355; x=1705352155;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FozcbD392EoHS/61C3J7n8Lnu2PFzEqIfm1NNRw0ONg=;
+        b=p/iuLlbaF60ygn2QWtM+DNmn/NOKUee3gElo+WqsURjO4n7TeiYNL040iMtnzPklUi
+         s3XNqG4uA+w7lbQ6mODDKEOh9TiDBQUyc4/LpvOQFkG+Avc3wXyQ5pLjBJ7OGehBF1AQ
+         VNCXEtOscq0u8eBn9TvJPV1J4ICPCIB/gH//Y/9RDs6gW0l3cLQPQ0QxG4hfqOKNx+Pe
+         hl85ieJH4tEIcjAjYRZc4yApVvN4PZlzEC60Ekheiu+9+kVO+y4JdFeBdQ6SH+irZPag
+         fYQ9uFQMbjfmSxCPUs5NilsxFXxMKjz7+zoQrccNfBnylQCB9Cfxvhm89hWQ0rd+qSvI
+         u5bw==
+X-Gm-Message-State: AOJu0YwDV7jzAqq9Tjd8bsqK9v08uVyWVGX75QvGgY3urZyVsKcsNFni
+	Vtdbd5bclieYinVYq7eXVXbyWPo8VvOTHA==
+X-Google-Smtp-Source: AGHT+IEsCxx22dw61jddRHvI4wlX79x52MWlS2DXSCOaDvBDAcalau4rJEE4j1KfiFIF9plGs0NMew==
+X-Received: by 2002:a5e:da4b:0:b0:7be:d855:4893 with SMTP id o11-20020a5eda4b000000b007bed8554893mr236092iop.2.1704747354775;
+        Mon, 08 Jan 2024 12:55:54 -0800 (PST)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id y11-20020a5ec80b000000b007bc102fb67asm122482iol.10.2024.01.08.12.55.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jan 2024 12:55:54 -0800 (PST)
+Message-ID: <e51703d0-ab7d-4b67-bca1-74afc760e6bc@linuxfoundation.org>
+Date: Mon, 8 Jan 2024 13:55:53 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240108150602.976232871@linuxfoundation.org>
-In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
-From: Allen <allen.lkml@gmail.com>
-Date: Mon, 8 Jan 2024 11:02:19 -0800
-Message-ID: <CAOMdWSJei7UHccSGRcUD-A8uoKz-nGdpogVk5bOU6=3cHJ5s-w@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 6.6 000/124] 6.6.11-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20240108150602.976232871@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 1/8/24 08:07, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.6.11 release.
 > There are 124 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Wed, 10 Jan 2024 15:05:35 +0000.
 > Anything received after that time might be too late.
->
+> 
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.11-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.11-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
 > and the diffstat can be found below.
->
+> 
 > thanks,
->
+> 
 > greg k-h
->
+> 
 
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+Compiled and booted on my test system. No dmesg regressions.
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Thanks.
+thanks,
+-- Shuah
+
