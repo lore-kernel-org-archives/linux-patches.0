@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4E74BA96;
-	Mon,  8 Jan 2024 15:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B8C4B5AE;
+	Mon,  8 Jan 2024 15:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kc6or96B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A710DC433B6;
-	Mon,  8 Jan 2024 15:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHX0fP31"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CECADC433B6;
+	Mon,  8 Jan 2024 15:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726729;
-	bh=PK9HPrxedxVK0DSErA4LenJMVxwKHl2qWdh4cGSBR0M=;
+	s=korg; t=1704726732;
+	bh=220A3JHOp/f9peGyrZI/SOubUnAcBb6CelNxEkbViqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kc6or96B1Vtagz0JVYPpIjFt2kj3eRWMSX/gC7kR4nHdQFEjLMsR/3IMeebo/OnCO
-	 ab1UnQYaySalKTSyoGoiZB7QBokJ28RiGwRuoO1dUu/vbLErFahfj2tDGhBQ7+zqLj
-	 61+xVeERRBnsM9g+nDbaqmke0HdQHDf1bREqcNPY=
+	b=qHX0fP31sU0CO7nyQ+jklMly3j5kPWpWLrNuhSCVsoCqvCjLveQOH7ifgH0wF5QyK
+	 Ld7nb9zKTw32Ih8knjdj2hff2J5N5jk3wt89vE1T53c/sIqBFI+6Sg6JCkEjFRnAf7
+	 0YlxTYH74227MH2Ksv4exhojYI9TWUguOn/Zezh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/124] apparmor: Fix move_mount mediation by detecting if source is detached
-Date: Mon,  8 Jan 2024 16:07:58 +0100
-Message-ID: <20240108150605.354496819@linuxfoundation.org>
+Subject: [PATCH 6.6 061/124] bnxt_en: Remove mis-applied code from bnxt_cfg_ntp_filters()
+Date: Mon,  8 Jan 2024 16:08:07 +0100
+Message-ID: <20240108150605.768939325@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -42,69 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 8026e40608b4d552216d2a818ca7080a4264bb44 ]
+[ Upstream commit e009b2efb7a8850498796b360043ac25c8d3d28f ]
 
-Prevent move_mount from applying the attach_disconnected flag
-to move_mount(). This prevents detached mounts from appearing
-as / when applying mount mediation, which is not only incorrect
-but could result in bad policy being generated.
+The 2 lines to check for the BNXT_HWRM_PF_UNLOAD_SP_EVENT bit was
+mis-applied to bnxt_cfg_ntp_filters() and should have been applied to
+bnxt_sp_task().
 
-Basic mount rules like
-  allow mount,
-  allow mount options=(move) -> /target/,
-
-will allow detached mounts, allowing older policy to continue
-to function. New policy gains the ability to specify `detached` as
-a source option
-  allow mount detached -> /target/,
-
-In addition make sure support of move_mount is advertised as
-a feature to userspace so that applications that generate policy
-can respond to the addition.
-
-Note: this fixes mediation of move_mount when a detached mount is used,
-      it does not fix the broader regression of apparmor mediation of
-      mounts under the new mount api.
-
-Link: https://lore.kernel.org/all/68c166b8-5b4d-4612-8042-1dee3334385b@leemhuis.info/T/#mb35fdde37f999f08f0b02d58dc1bf4e6b65b8da2
-Fixes: 157a3537d6bc ("apparmor: Fix regression in mount mediation")
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: 19241368443f ("bnxt_en: Send PF driver unload notification to all VFs.")
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/apparmorfs.c | 1 +
- security/apparmor/mount.c      | 4 ++++
- 2 files changed, 5 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
-index 261cef4c622fb..63ddefb6ddd1c 100644
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -2364,6 +2364,7 @@ static struct aa_sfs_entry aa_sfs_entry_policy[] = {
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index f811d59fd71fd..6039886a8544f 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -12073,6 +12073,8 @@ static void bnxt_sp_task(struct work_struct *work)
+ 		bnxt_cfg_ntp_filters(bp);
+ 	if (test_and_clear_bit(BNXT_HWRM_EXEC_FWD_REQ_SP_EVENT, &bp->sp_event))
+ 		bnxt_hwrm_exec_fwd_req(bp);
++	if (test_and_clear_bit(BNXT_HWRM_PF_UNLOAD_SP_EVENT, &bp->sp_event))
++		netdev_info(bp->dev, "Receive PF driver unload event!\n");
+ 	if (test_and_clear_bit(BNXT_PERIODIC_STATS_SP_EVENT, &bp->sp_event)) {
+ 		bnxt_hwrm_port_qstats(bp, 0);
+ 		bnxt_hwrm_port_qstats_ext(bp, 0);
+@@ -13052,8 +13054,6 @@ static void bnxt_cfg_ntp_filters(struct bnxt *bp)
+ 			}
+ 		}
+ 	}
+-	if (test_and_clear_bit(BNXT_HWRM_PF_UNLOAD_SP_EVENT, &bp->sp_event))
+-		netdev_info(bp->dev, "Receive PF driver unload event!\n");
+ }
  
- static struct aa_sfs_entry aa_sfs_entry_mount[] = {
- 	AA_SFS_FILE_STRING("mask", "mount umount pivot_root"),
-+	AA_SFS_FILE_STRING("move_mount", "detached"),
- 	{ }
- };
- 
-diff --git a/security/apparmor/mount.c b/security/apparmor/mount.c
-index f2a114e540079..cb0fdbdb82d94 100644
---- a/security/apparmor/mount.c
-+++ b/security/apparmor/mount.c
-@@ -499,6 +499,10 @@ int aa_move_mount(const struct cred *subj_cred,
- 	error = -ENOMEM;
- 	if (!to_buffer || !from_buffer)
- 		goto out;
-+
-+	if (!our_mnt(from_path->mnt))
-+		/* moving a mount detached from the namespace */
-+		from_path = NULL;
- 	error = fn_for_each_confined(label, profile,
- 			match_mnt(subj_cred, profile, to_path, to_buffer,
- 				  from_path, from_buffer,
+ #else
 -- 
 2.43.0
 
