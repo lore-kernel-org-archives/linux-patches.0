@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F800487A7;
-	Mon,  8 Jan 2024 15:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F45D4B5AB;
+	Mon,  8 Jan 2024 15:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xabWgKsb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF73C43142;
-	Mon,  8 Jan 2024 15:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHJiJVCm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C14DDC43142;
+	Mon,  8 Jan 2024 15:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726748;
-	bh=dhdTNG9bfH7R0ExFUfC5FNI3BmHiC7Vzo/ohKZD47T8=;
+	s=korg; t=1704726751;
+	bh=NotkY4mQndLs8WCW8LwihXOPZjaYMwXVdPvaGxg2Tu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xabWgKsbzvfwRl84ro9Q25iR4eYNf8fbgsl5P5s7dRCwU0IYki67Jwp/lDDRcKOsu
-	 6T0fK5SGW36fSbrxjCxa+O9WZbhOxmM33hHVQ0tHDW9P4waoDoY4ktnrjP6ugvy41Y
-	 RLmqz+G8LKHQ0d2b35cEErFuRwLFuDU2iZn3OIrw=
+	b=NHJiJVCmaJrl1QhYiXv4mv1qmbmtndUxKfar7v+ShW7W0e72DUtLfqCHs8YnG6oLi
+	 Iajg+Mnmms+vtuRMr7ieEdgYjKQQNi+2j8IxMucRscKiIPXebQfBf4ZdGLQ4pfawDV
+	 kYLFM6SNgLsvqr/2b9SdO2QxByPQpBNOmX6WZ5Zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 066/124] media: qcom: camss: Fix V4L2 async notifier error path
-Date: Mon,  8 Jan 2024 16:08:12 +0100
-Message-ID: <20240108150606.007258057@linuxfoundation.org>
+Subject: [PATCH 6.6 067/124] media: qcom: camss: Fix genpd cleanup
+Date: Mon,  8 Jan 2024 16:08:13 +0100
+Message-ID: <20240108150606.047492703@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -44,88 +44,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-[ Upstream commit b278080a89f452063915beda0ade6b3ed5ee4271 ]
+[ Upstream commit f69791c39745e64621216fe8919cb73c0065002b ]
 
-Previously the jump label err_cleanup was used higher in the probe()
-function to release the async notifier however the async notifier
-registration was moved later in the code rendering the previous four jumps
-redundant.
+Right now we never release the power-domains properly on the error path.
+Add a routine to be reused for this purpose and appropriate jumps in
+probe() to run that routine where necessary.
 
-Rename the label from err_cleanup to err_v4l2_device_unregister to capture
-what the jump does.
-
-Fixes: 51397a4ec75d ("media: qcom: Initialise V4L2 async notifier later")
+Fixes: 2f6f8af67203 ("media: camss: Refactor VFE power domain toggling")
+Cc: stable@vger.kernel.org
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-[hverkuil: fix old name in commit log: err_v4l2_device_register -> err_v4l2_device_unregister]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/media/platform/qcom/camss/camss.c | 35 ++++++++++++++---------
+ 1 file changed, 21 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index 75991d849b571..a925b2bfd8989 100644
+index a925b2bfd8989..c6df862c79e39 100644
 --- a/drivers/media/platform/qcom/camss/camss.c
 +++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -1617,21 +1617,21 @@ static int camss_probe(struct platform_device *pdev)
+@@ -1538,6 +1538,20 @@ static int camss_icc_get(struct camss *camss)
+ 	return 0;
+ }
  
- 	ret = camss_icc_get(camss);
- 	if (ret < 0)
--		goto err_cleanup;
-+		return ret;
- 
- 	ret = camss_configure_pd(camss);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to configure power domains: %d\n", ret);
--		goto err_cleanup;
-+		return ret;
- 	}
++static void camss_genpd_cleanup(struct camss *camss)
++{
++	int i;
++
++	if (camss->genpd_num == 1)
++		return;
++
++	if (camss->genpd_num > camss->vfe_num)
++		device_link_del(camss->genpd_link[camss->genpd_num - 1]);
++
++	for (i = 0; i < camss->genpd_num; i++)
++		dev_pm_domain_detach(camss->genpd[i], true);
++}
++
+ /*
+  * camss_probe - Probe CAMSS platform device
+  * @pdev: Pointer to CAMSS platform device
+@@ -1627,11 +1641,11 @@ static int camss_probe(struct platform_device *pdev)
  
  	ret = camss_init_subdevices(camss);
  	if (ret < 0)
--		goto err_cleanup;
-+		return ret;
+-		return ret;
++		goto err_genpd_cleanup;
  
  	ret = dma_set_mask_and_coherent(dev, 0xffffffff);
  	if (ret)
--		goto err_cleanup;
-+		return ret;
+-		return ret;
++		goto err_genpd_cleanup;
  
  	camss->media_dev.dev = camss->dev;
  	strscpy(camss->media_dev.model, "Qualcomm Camera Subsystem",
-@@ -1643,7 +1643,7 @@ static int camss_probe(struct platform_device *pdev)
+@@ -1643,7 +1657,7 @@ static int camss_probe(struct platform_device *pdev)
  	ret = v4l2_device_register(camss->dev, &camss->v4l2_dev);
  	if (ret < 0) {
  		dev_err(dev, "Failed to register V4L2 device: %d\n", ret);
--		goto err_cleanup;
-+		return ret;
+-		return ret;
++		goto err_genpd_cleanup;
  	}
  
  	v4l2_async_nf_init(&camss->notifier, &camss->v4l2_dev);
-@@ -1651,12 +1651,12 @@ static int camss_probe(struct platform_device *pdev)
- 	num_subdevs = camss_of_parse_ports(camss);
- 	if (num_subdevs < 0) {
- 		ret = num_subdevs;
--		goto err_cleanup;
-+		goto err_v4l2_device_unregister;
- 	}
- 
- 	ret = camss_register_entities(camss);
- 	if (ret < 0)
--		goto err_cleanup;
-+		goto err_v4l2_device_unregister;
- 
- 	if (num_subdevs) {
- 		camss->notifier.ops = &camss_subdev_notifier_ops;
-@@ -1690,7 +1690,7 @@ static int camss_probe(struct platform_device *pdev)
- 
- err_register_subdevs:
- 	camss_unregister_entities(camss);
--err_cleanup:
-+err_v4l2_device_unregister:
+@@ -1693,28 +1707,19 @@ static int camss_probe(struct platform_device *pdev)
+ err_v4l2_device_unregister:
  	v4l2_device_unregister(&camss->v4l2_dev);
  	v4l2_async_nf_cleanup(&camss->notifier);
++err_genpd_cleanup:
++	camss_genpd_cleanup(camss);
  
+ 	return ret;
+ }
+ 
+ void camss_delete(struct camss *camss)
+ {
+-	int i;
+-
+ 	v4l2_device_unregister(&camss->v4l2_dev);
+ 	media_device_unregister(&camss->media_dev);
+ 	media_device_cleanup(&camss->media_dev);
+ 
+ 	pm_runtime_disable(camss->dev);
+-
+-	if (camss->genpd_num == 1)
+-		return;
+-
+-	if (camss->genpd_num > camss->vfe_num)
+-		device_link_del(camss->genpd_link[camss->genpd_num - 1]);
+-
+-	for (i = 0; i < camss->genpd_num; i++)
+-		dev_pm_domain_detach(camss->genpd[i], true);
+ }
+ 
+ /*
+@@ -1733,6 +1738,8 @@ static void camss_remove(struct platform_device *pdev)
+ 
+ 	if (atomic_read(&camss->ref_count) == 0)
+ 		camss_delete(camss);
++
++	camss_genpd_cleanup(camss);
+ }
+ 
+ static const struct of_device_id camss_dt_match[] = {
 -- 
 2.43.0
 
