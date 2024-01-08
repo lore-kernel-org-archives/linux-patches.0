@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7526D4B5AB;
-	Mon,  8 Jan 2024 15:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB32A4BAA8;
+	Mon,  8 Jan 2024 15:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmI6Fbdx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFA3C433C8;
-	Mon,  8 Jan 2024 15:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2NvODrq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5721C433C8;
+	Mon,  8 Jan 2024 15:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726575;
-	bh=vh0pzGWhgzLTbPJy0isRW4Cp0iKJpfN4iSM/EnUbJAs=;
+	s=korg; t=1704726578;
+	bh=xiJJbK7ggrwfeZmtyID9Oy+nxe53Q3x4pWC+wMzR58U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DmI6FbdxvxMTN4nUj12bl16rQEvBBjiN4719L+9P2hj5ImcqWMogoj4S22xLhKuHo
-	 QBbGqVSEyqOPcq4Kyx+MPyh/kuKdi657U6LKJwdbwtDZkzYR4DFMiFjEYZ1dF8is8h
-	 ZtSHbG1v9DAzWDzno+XgWSVE5in0pewQJJI5GCP8=
+	b=s2NvODrqTz3f8rPizTRIfg3krqy6xBMZ7bS3uzvz/FrAoqIaPxU8ydif2eqnbvjfe
+	 hs4gxIB6S/PiEHldE1rmR+byrYHO44K9iS4Whta7vT8Ph5srxyPjrSeIK1I4aU1evf
+	 z5czSqaUYvVsxn9bgerYJRyRqVArBbRaebBTiAmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Sewell <roger.sewell@cantab.net>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 6.6 011/124] drm/mgag200: Fix gamma lut not initialized for G200ER, G200EV, G200SE
-Date: Mon,  8 Jan 2024 16:07:17 +0100
-Message-ID: <20240108150603.492976003@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 012/124] cifs: cifs_chan_is_iface_active should be called with chan_lock held
+Date: Mon,  8 Jan 2024 16:07:18 +0100
+Message-ID: <20240108150603.544894710@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -42,116 +41,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jocelyn Falempe <jfalempe@redhat.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-commit 11f9eb899ecc8c02b769cf8d2532ba12786a7af7 upstream.
+commit 7257bcf3bdc785eabc4eef1f329a59815b032508 upstream.
 
-When mgag200 switched from simple KMS to regular atomic helpers,
-the initialization of the gamma settings was lost.
-This leads to a black screen, if the bios/uefi doesn't use the same
-pixel color depth.
-This has been fixed with commit ad81e23426a6 ("drm/mgag200: Fix gamma
-lut not initialized.") for most G200, but G200ER, G200EV, G200SE use
-their own version of crtc_helper_atomic_enable() and need to be fixed
-too.
+cifs_chan_is_iface_active checks the channels of a session to see
+if the associated iface is active. This should always happen
+with chan_lock held. However, these two callers of this function
+were missing this locking.
 
-Fixes: 1baf9127c482 ("drm/mgag200: Replace simple-KMS with regular atomic helpers")
-Cc: <stable@vger.kernel.org> #v6.1+
-Reported-by: Roger Sewell <roger.sewell@cantab.net>
-Suggested-by: Roger Sewell <roger.sewell@cantab.net>
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231214163849.359691-1-jfalempe@redhat.com
+This change makes sure the function calls are protected with
+proper locking.
+
+Fixes: b54034a73baf ("cifs: during reconnect, update interface if necessary")
+Fixes: fa1d0508bdd4 ("cifs: account for primary channel in the interface list")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mgag200/mgag200_drv.h    |    5 +++++
- drivers/gpu/drm/mgag200/mgag200_g200er.c |    5 +++++
- drivers/gpu/drm/mgag200/mgag200_g200ev.c |    5 +++++
- drivers/gpu/drm/mgag200/mgag200_g200se.c |    5 +++++
- drivers/gpu/drm/mgag200/mgag200_mode.c   |   10 +++++-----
- 5 files changed, 25 insertions(+), 5 deletions(-)
+ fs/smb/client/connect.c |    7 +++++--
+ fs/smb/client/smb2ops.c |    7 ++++++-
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/mgag200/mgag200_drv.h
-+++ b/drivers/gpu/drm/mgag200/mgag200_drv.h
-@@ -392,6 +392,11 @@ void mgag200_primary_plane_helper_atomic
- 	.destroy = drm_plane_cleanup, \
- 	DRM_GEM_SHADOW_PLANE_FUNCS
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -209,10 +209,13 @@ cifs_mark_tcp_ses_conns_for_reconnect(st
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 	list_for_each_entry_safe(ses, nses, &pserver->smb_ses_list, smb_ses_list) {
+ 		/* check if iface is still active */
+-		if (!cifs_chan_is_iface_active(ses, server))
++		spin_lock(&ses->chan_lock);
++		if (!cifs_chan_is_iface_active(ses, server)) {
++			spin_unlock(&ses->chan_lock);
+ 			cifs_chan_update_iface(ses, server);
++			spin_lock(&ses->chan_lock);
++		}
  
-+void mgag200_crtc_set_gamma_linear(struct mga_device *mdev, const struct drm_format_info *format);
-+void mgag200_crtc_set_gamma(struct mga_device *mdev,
-+			    const struct drm_format_info *format,
-+			    struct drm_color_lut *lut);
-+
- enum drm_mode_status mgag200_crtc_helper_mode_valid(struct drm_crtc *crtc,
- 						    const struct drm_display_mode *mode);
- int mgag200_crtc_helper_atomic_check(struct drm_crtc *crtc, struct drm_atomic_state *new_state);
---- a/drivers/gpu/drm/mgag200/mgag200_g200er.c
-+++ b/drivers/gpu/drm/mgag200/mgag200_g200er.c
-@@ -202,6 +202,11 @@ static void mgag200_g200er_crtc_helper_a
+-		spin_lock(&ses->chan_lock);
+ 		if (!mark_smb_session && cifs_chan_needs_reconnect(ses, server)) {
+ 			spin_unlock(&ses->chan_lock);
+ 			continue;
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -782,9 +782,14 @@ SMB3_request_interfaces(const unsigned i
+ 		goto out;
  
- 	mgag200_g200er_reset_tagfifo(mdev);
+ 	/* check if iface is still active */
++	spin_lock(&ses->chan_lock);
+ 	pserver = ses->chans[0].server;
+-	if (pserver && !cifs_chan_is_iface_active(ses, pserver))
++	if (pserver && !cifs_chan_is_iface_active(ses, pserver)) {
++		spin_unlock(&ses->chan_lock);
+ 		cifs_chan_update_iface(ses, pserver);
++		spin_lock(&ses->chan_lock);
++	}
++	spin_unlock(&ses->chan_lock);
  
-+	if (crtc_state->gamma_lut)
-+		mgag200_crtc_set_gamma(mdev, format, crtc_state->gamma_lut->data);
-+	else
-+		mgag200_crtc_set_gamma_linear(mdev, format);
-+
- 	mgag200_enable_display(mdev);
- 
- 	if (funcs->enable_vidrst)
---- a/drivers/gpu/drm/mgag200/mgag200_g200ev.c
-+++ b/drivers/gpu/drm/mgag200/mgag200_g200ev.c
-@@ -203,6 +203,11 @@ static void mgag200_g200ev_crtc_helper_a
- 
- 	mgag200_g200ev_set_hiprilvl(mdev);
- 
-+	if (crtc_state->gamma_lut)
-+		mgag200_crtc_set_gamma(mdev, format, crtc_state->gamma_lut->data);
-+	else
-+		mgag200_crtc_set_gamma_linear(mdev, format);
-+
- 	mgag200_enable_display(mdev);
- 
- 	if (funcs->enable_vidrst)
---- a/drivers/gpu/drm/mgag200/mgag200_g200se.c
-+++ b/drivers/gpu/drm/mgag200/mgag200_g200se.c
-@@ -334,6 +334,11 @@ static void mgag200_g200se_crtc_helper_a
- 
- 	mgag200_g200se_set_hiprilvl(mdev, adjusted_mode, format);
- 
-+	if (crtc_state->gamma_lut)
-+		mgag200_crtc_set_gamma(mdev, format, crtc_state->gamma_lut->data);
-+	else
-+		mgag200_crtc_set_gamma_linear(mdev, format);
-+
- 	mgag200_enable_display(mdev);
- 
- 	if (funcs->enable_vidrst)
---- a/drivers/gpu/drm/mgag200/mgag200_mode.c
-+++ b/drivers/gpu/drm/mgag200/mgag200_mode.c
-@@ -28,8 +28,8 @@
-  * This file contains setup code for the CRTC.
-  */
- 
--static void mgag200_crtc_set_gamma_linear(struct mga_device *mdev,
--					  const struct drm_format_info *format)
-+void mgag200_crtc_set_gamma_linear(struct mga_device *mdev,
-+				   const struct drm_format_info *format)
- {
- 	int i;
- 
-@@ -65,9 +65,9 @@ static void mgag200_crtc_set_gamma_linea
- 	}
- }
- 
--static void mgag200_crtc_set_gamma(struct mga_device *mdev,
--				   const struct drm_format_info *format,
--				   struct drm_color_lut *lut)
-+void mgag200_crtc_set_gamma(struct mga_device *mdev,
-+			    const struct drm_format_info *format,
-+			    struct drm_color_lut *lut)
- {
- 	int i;
- 
+ out:
+ 	kfree(out_buf);
 
 
