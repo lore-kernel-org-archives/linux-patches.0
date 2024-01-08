@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57274B5AB;
-	Mon,  8 Jan 2024 15:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24C74BA96;
+	Mon,  8 Jan 2024 15:12:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PCiypWWL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360B2C433BB;
-	Mon,  8 Jan 2024 15:12:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzOi/sd6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58818C433BB;
+	Mon,  8 Jan 2024 15:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726722;
-	bh=8yUMkR8FpmVySChyShk6bF6em8lBk2WexRsHU2M4pmA=;
+	s=korg; t=1704726725;
+	bh=2zkg0mZUJ2ov9s9vhe8bG9iDHy1YeBUO9EpRqprp6sU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PCiypWWL8B9vuVIo/cgW/ylf+mhA0nIKnfWI+/Yiy8cJ+5tGYMI8aEQ0VNJGHLyiY
-	 +NziO98cbN+xZggP2fqEvU+VTVE4qLdOXpk/A6+ArfgFPNh7iZ2N5+Xsk4agm1oSJg
-	 M5ny/yUNbnOsoAChjsM+dht7fZOCYEN5T/Oz85gs=
+	b=IzOi/sd6fb/TUzYJqQZXXwMkqNoY9ruoG8IkR12rEdwU4Rf9Klc45KpgDhLrKKvnR
+	 lVWVT+g0c01hKOTIgFcFSroq3TkOGpweYvSGbz2zgeyJ7itPhRoqQp+eFj58JIPPFX
+	 GPSlitc8KF5gAz65VArmZdlRe03KKzDslZnASUQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Staikov <andrii.staikov@intel.com>,
-	Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Bharathi Sreenivas <bharathi.sreenivas@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 028/124] i40e: Fix filter input checks to prevent config with invalid values
-Date: Mon,  8 Jan 2024 16:07:34 +0100
-Message-ID: <20240108150604.252806658@linuxfoundation.org>
+Subject: [PATCH 6.6 019/124] drm/bridge: ti-sn65dsi86: Never store more than msg->size bytes in AUX xfer
+Date: Mon,  8 Jan 2024 16:07:25 +0100
+Message-ID: <20240108150603.856019518@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -46,51 +43,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 3e48041d9820c17e0a51599d12e66c6e12a8d08d ]
+[ Upstream commit aca58eac52b88138ab98c814afb389a381725cd7 ]
 
-Prevent VF from configuring filters with unsupported actions or use
-REDIRECT action with invalid tc number. Current checks could cause
-out of bounds access on PF side.
+For aux reads, the value `msg->size` indicates the size of the buffer
+provided by `msg->buffer`. We should never in any circumstances write
+more bytes to the buffer since it may overflow the buffer.
 
-Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
-Reviewed-by: Andrii Staikov <andrii.staikov@intel.com>
-Signed-off-by: Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Bharathi Sreenivas <bharathi.sreenivas@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+In the ti-sn65dsi86 driver there is one code path that reads the
+transfer length from hardware. Even though it's never been seen to be
+a problem, we should make extra sure that the hardware isn't
+increasing the length since doing so would cause us to overrun the
+buffer.
+
+Fixes: 982f589bde7a ("drm/bridge: ti-sn65dsi86: Update reply on aux failures")
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231214123752.v3.2.I7b83c0f31aeedc6b1dc98c7c741d3e1f94f040f8@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 4441b00297f47..220dad902f9b4 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -3519,16 +3519,16 @@ static int i40e_validate_cloud_filter(struct i40e_vf *vf,
- 	bool found = false;
- 	int bkt;
- 
--	if (!tc_filter->action) {
-+	if (tc_filter->action != VIRTCHNL_ACTION_TC_REDIRECT) {
- 		dev_info(&pf->pdev->dev,
--			 "VF %d: Currently ADq doesn't support Drop Action\n",
--			 vf->vf_id);
-+			 "VF %d: ADQ doesn't support this action (%d)\n",
-+			 vf->vf_id, tc_filter->action);
- 		goto err;
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 84148a79414b7..3309c01fa7153 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -527,6 +527,7 @@ static ssize_t ti_sn_aux_transfer(struct drm_dp_aux *aux,
+ 	u32 request_val = AUX_CMD_REQ(msg->request);
+ 	u8 *buf = msg->buffer;
+ 	unsigned int len = msg->size;
++	unsigned int short_len;
+ 	unsigned int val;
+ 	int ret;
+ 	u8 addr_len[SN_AUX_LENGTH_REG + 1 - SN_AUX_ADDR_19_16_REG];
+@@ -600,7 +601,8 @@ static ssize_t ti_sn_aux_transfer(struct drm_dp_aux *aux,
  	}
  
- 	/* action_meta is TC number here to which the filter is applied */
- 	if (!tc_filter->action_meta ||
--	    tc_filter->action_meta > I40E_MAX_VF_VSI) {
-+	    tc_filter->action_meta > vf->num_tc) {
- 		dev_info(&pf->pdev->dev, "VF %d: Invalid TC number %u\n",
- 			 vf->vf_id, tc_filter->action_meta);
- 		goto err;
+ 	if (val & AUX_IRQ_STATUS_AUX_SHORT) {
+-		ret = regmap_read(pdata->regmap, SN_AUX_LENGTH_REG, &len);
++		ret = regmap_read(pdata->regmap, SN_AUX_LENGTH_REG, &short_len);
++		len = min(len, short_len);
+ 		if (ret)
+ 			goto exit;
+ 	} else if (val & AUX_IRQ_STATUS_NAT_I2C_FAIL) {
 -- 
 2.43.0
 
