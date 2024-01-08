@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2E247791;
-	Mon,  8 Jan 2024 15:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E171E47791;
+	Mon,  8 Jan 2024 15:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dsjcRbT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BD4C433CA;
-	Mon,  8 Jan 2024 15:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUBMyVzu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56190C433CC;
+	Mon,  8 Jan 2024 15:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726870;
-	bh=xqzyfjjnnJmNdwXODRLhkfW/AMgnxe3v6E7qD8q95jo=;
+	s=korg; t=1704726873;
+	bh=NeNrUvRru5A1PQlHv+KUSB7rNUw2IAxkxymU+e89mtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0dsjcRbTlZMXrAOlclWnIO6pws8nA99Motq9WWQoMdG6c3iwMBCrzRTgVjBG8WdZR
-	 PMauVKx/I1qQuoSKgig/29SUO0fNAGCl3Vvy0dQNN2E9MHpSbmsP4QtMmM/6lqBtGb
-	 nJFWBgeuBR59jDTXmI8fBdBVx63zEyuRwUxRbTMk=
+	b=VUBMyVzu1kN+biYC6WbeGNEzuHL+Pj21jm+LvFY8KKX5pFIxERxAng7EE16+nJEmz
+	 yYsF/gYG/iIlZftdLnkwbqJIphgBlt6QWwfCqlwOn0xVlDLDyidrHgHx1xNy9prweV
+	 C1QM1ZMonvE0lKLnf7/tqWFZpSQfU/+snuCUd+Ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haren Myneni <haren@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Eric Dumazet <edumazet@google.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/124] powerpc/pseries/vas: Migration suspend waits for no in-progress open windows
-Date: Mon,  8 Jan 2024 16:08:50 +0100
-Message-ID: <20240108150607.744047075@linuxfoundation.org>
+Subject: [PATCH 6.6 105/124] net: prevent mss overflow in skb_segment()
+Date: Mon,  8 Jan 2024 16:08:51 +0100
+Message-ID: <20240108150607.793891016@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -42,237 +44,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haren Myneni <haren@linux.ibm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 0cf72f7f14d12cb065c3d01954cf42fc5638aa69 ]
+[ Upstream commit 23d05d563b7e7b0314e65c8e882bc27eac2da8e7 ]
 
-The hypervisor returns migration failure if all VAS windows are not
-closed. During pre-migration stage, vas_migration_handler() sets
-migration_in_progress flag and closes all windows from the list.
-The allocate VAS window routine checks the migration flag, setup
-the window and then add it to the list. So there is possibility of
-the migration handler missing the window that is still in the
-process of setup.
+Once again syzbot is able to crash the kernel in skb_segment() [1]
 
-t1: Allocate and open VAS	t2: Migration event
-    window
+GSO_BY_FRAGS is a forbidden value, but unfortunately the following
+computation in skb_segment() can reach it quite easily :
 
-lock vas_pseries_mutex
-If migration_in_progress set
-  unlock vas_pseries_mutex
-  return
-open window HCALL
-unlock vas_pseries_mutex
-Modify window HCALL		lock vas_pseries_mutex
-setup window			migration_in_progress=true
-				Closes all windows from the list
-				// May miss windows that are
-				// not in the list
-				unlock vas_pseries_mutex
-lock vas_pseries_mutex		return
-if nr_closed_windows == 0
-  // No DLPAR CPU or migration
-  add window to the list
-  // Window will be added to the
-  // list after the setup is completed
-  unlock vas_pseries_mutex
-  return
-unlock vas_pseries_mutex
-Close VAS window
-// due to DLPAR CPU or migration
-return -EBUSY
+	mss = mss * partial_segs;
 
-This patch resolves the issue with the following steps:
-- Set the migration_in_progress flag without holding mutex.
-- Introduce nr_open_wins_progress counter in VAS capabilities
-  struct
-- This counter tracks the number of open windows are still in
-  progress
-- The allocate setup window thread closes windows if the migration
-  is set and decrements nr_open_window_progress counter
-- The migration handler waits for no in-progress open windows.
+65535 = 3 * 5 * 17 * 257, so many initial values of mss can lead to
+a bad final result.
 
-The code flow with the fix is as follows:
+Make sure to limit segmentation so that the new mss value is smaller
+than GSO_BY_FRAGS.
 
-t1: Allocate and open VAS       t2: Migration event
-    window
+[1]
 
-lock vas_pseries_mutex
-If migration_in_progress set
-   unlock vas_pseries_mutex
-   return
-open window HCALL
-nr_open_wins_progress++
-// Window opened, but not
-// added to the list yet
-unlock vas_pseries_mutex
-Modify window HCALL		migration_in_progress=true
-setup window			lock vas_pseries_mutex
-				Closes all windows from the list
-				While nr_open_wins_progress {
-				    unlock vas_pseries_mutex
-lock vas_pseries_mutex		    sleep
-if nr_closed_windows == 0	    // Wait if any open window in
-or migration is not started	    // progress. The open window
-   // No DLPAR CPU or migration	    // thread closes the window without
-   add window to the list	    // adding to the list and return if
-   nr_open_wins_progress--	    // the migration is in progress.
-   unlock vas_pseries_mutex
-   return
-Close VAS window
-nr_open_wins_progress--
-unlock vas_pseries_mutex
-return -EBUSY			    lock vas_pseries_mutex
-				}
-				unlock vas_pseries_mutex
-				return
+general protection fault, probably for non-canonical address 0xdffffc000000000e: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
+CPU: 1 PID: 5079 Comm: syz-executor993 Not tainted 6.7.0-rc4-syzkaller-00141-g1ae4cd3cbdd0 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/10/2023
+RIP: 0010:skb_segment+0x181d/0x3f30 net/core/skbuff.c:4551
+Code: 83 e3 02 e9 fb ed ff ff e8 90 68 1c f9 48 8b 84 24 f8 00 00 00 48 8d 78 70 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <0f> b6 04 02 84 c0 74 08 3c 03 0f 8e 8a 21 00 00 48 8b 84 24 f8 00
+RSP: 0018:ffffc900043473d0 EFLAGS: 00010202
+RAX: dffffc0000000000 RBX: 0000000000010046 RCX: ffffffff886b1597
+RDX: 000000000000000e RSI: ffffffff886b2520 RDI: 0000000000000070
+RBP: ffffc90004347578 R08: 0000000000000005 R09: 000000000000ffff
+R10: 000000000000ffff R11: 0000000000000002 R12: ffff888063202ac0
+R13: 0000000000010000 R14: 000000000000ffff R15: 0000000000000046
+FS: 0000555556e7e380(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020010000 CR3: 0000000027ee2000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+udp6_ufo_fragment+0xa0e/0xd00 net/ipv6/udp_offload.c:109
+ipv6_gso_segment+0x534/0x17e0 net/ipv6/ip6_offload.c:120
+skb_mac_gso_segment+0x290/0x610 net/core/gso.c:53
+__skb_gso_segment+0x339/0x710 net/core/gso.c:124
+skb_gso_segment include/net/gso.h:83 [inline]
+validate_xmit_skb+0x36c/0xeb0 net/core/dev.c:3626
+__dev_queue_xmit+0x6f3/0x3d60 net/core/dev.c:4338
+dev_queue_xmit include/linux/netdevice.h:3134 [inline]
+packet_xmit+0x257/0x380 net/packet/af_packet.c:276
+packet_snd net/packet/af_packet.c:3087 [inline]
+packet_sendmsg+0x24c6/0x5220 net/packet/af_packet.c:3119
+sock_sendmsg_nosec net/socket.c:730 [inline]
+__sock_sendmsg+0xd5/0x180 net/socket.c:745
+__sys_sendto+0x255/0x340 net/socket.c:2190
+__do_sys_sendto net/socket.c:2202 [inline]
+__se_sys_sendto net/socket.c:2198 [inline]
+__x64_sys_sendto+0xe0/0x1b0 net/socket.c:2198
+do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+do_syscall_64+0x40/0x110 arch/x86/entry/common.c:83
+entry_SYSCALL_64_after_hwframe+0x63/0x6b
+RIP: 0033:0x7f8692032aa9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 d1 19 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fff8d685418 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007f8692032aa9
+RDX: 0000000000010048 RSI: 00000000200000c0 RDI: 0000000000000003
+RBP: 00000000000f4240 R08: 0000000020000540 R09: 0000000000000014
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fff8d685480
+R13: 0000000000000001 R14: 00007fff8d685480 R15: 0000000000000003
+</TASK>
+Modules linked in:
+---[ end trace 0000000000000000 ]---
+RIP: 0010:skb_segment+0x181d/0x3f30 net/core/skbuff.c:4551
+Code: 83 e3 02 e9 fb ed ff ff e8 90 68 1c f9 48 8b 84 24 f8 00 00 00 48 8d 78 70 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <0f> b6 04 02 84 c0 74 08 3c 03 0f 8e 8a 21 00 00 48 8b 84 24 f8 00
+RSP: 0018:ffffc900043473d0 EFLAGS: 00010202
+RAX: dffffc0000000000 RBX: 0000000000010046 RCX: ffffffff886b1597
+RDX: 000000000000000e RSI: ffffffff886b2520 RDI: 0000000000000070
+RBP: ffffc90004347578 R08: 0000000000000005 R09: 000000000000ffff
+R10: 000000000000ffff R11: 0000000000000002 R12: ffff888063202ac0
+R13: 0000000000010000 R14: 000000000000ffff R15: 0000000000000046
+FS: 0000555556e7e380(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020010000 CR3: 0000000027ee2000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 
-Fixes: 37e6764895ef ("powerpc/pseries/vas: Add VAS migration handler")
-Signed-off-by: Haren Myneni <haren@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231125235104.3405008-1-haren@linux.ibm.com
+Fixes: 3953c46c3ac7 ("sk_buff: allow segmenting based on frag sizes")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20231212164621.4131800-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/vas.c | 51 ++++++++++++++++++++++++----
- arch/powerpc/platforms/pseries/vas.h |  2 ++
- 2 files changed, 46 insertions(+), 7 deletions(-)
+ net/core/skbuff.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/platforms/pseries/vas.c b/arch/powerpc/platforms/pseries/vas.c
-index b1f25bac280b4..71d52a670d951 100644
---- a/arch/powerpc/platforms/pseries/vas.c
-+++ b/arch/powerpc/platforms/pseries/vas.c
-@@ -385,11 +385,15 @@ static struct vas_window *vas_allocate_window(int vas_id, u64 flags,
- 	 * same fault IRQ is not freed by the OS before.
- 	 */
- 	mutex_lock(&vas_pseries_mutex);
--	if (migration_in_progress)
-+	if (migration_in_progress) {
- 		rc = -EBUSY;
--	else
-+	} else {
- 		rc = allocate_setup_window(txwin, (u64 *)&domain[0],
- 				   cop_feat_caps->win_type);
-+		if (!rc)
-+			caps->nr_open_wins_progress++;
-+	}
-+
- 	mutex_unlock(&vas_pseries_mutex);
- 	if (rc)
- 		goto out;
-@@ -404,8 +408,17 @@ static struct vas_window *vas_allocate_window(int vas_id, u64 flags,
- 		goto out_free;
- 
- 	txwin->win_type = cop_feat_caps->win_type;
--	mutex_lock(&vas_pseries_mutex);
-+
- 	/*
-+	 * The migration SUSPEND thread sets migration_in_progress and
-+	 * closes all open windows from the list. But the window is
-+	 * added to the list after open and modify HCALLs. So possible
-+	 * that migration_in_progress is set before modify HCALL which
-+	 * may cause some windows are still open when the hypervisor
-+	 * initiates the migration.
-+	 * So checks the migration_in_progress flag again and close all
-+	 * open windows.
-+	 *
- 	 * Possible to lose the acquired credit with DLPAR core
- 	 * removal after the window is opened. So if there are any
- 	 * closed windows (means with lost credits), do not give new
-@@ -413,9 +426,11 @@ static struct vas_window *vas_allocate_window(int vas_id, u64 flags,
- 	 * after the existing windows are reopened when credits are
- 	 * available.
- 	 */
--	if (!caps->nr_close_wins) {
-+	mutex_lock(&vas_pseries_mutex);
-+	if (!caps->nr_close_wins && !migration_in_progress) {
- 		list_add(&txwin->win_list, &caps->list);
- 		caps->nr_open_windows++;
-+		caps->nr_open_wins_progress--;
- 		mutex_unlock(&vas_pseries_mutex);
- 		vas_user_win_add_mm_context(&txwin->vas_win.task_ref);
- 		return &txwin->vas_win;
-@@ -433,6 +448,12 @@ static struct vas_window *vas_allocate_window(int vas_id, u64 flags,
- 	 */
- 	free_irq_setup(txwin);
- 	h_deallocate_vas_window(txwin->vas_win.winid);
-+	/*
-+	 * Hold mutex and reduce nr_open_wins_progress counter.
-+	 */
-+	mutex_lock(&vas_pseries_mutex);
-+	caps->nr_open_wins_progress--;
-+	mutex_unlock(&vas_pseries_mutex);
- out:
- 	atomic_dec(&cop_feat_caps->nr_used_credits);
- 	kfree(txwin);
-@@ -937,14 +958,14 @@ int vas_migration_handler(int action)
- 	struct vas_caps *vcaps;
- 	int i, rc = 0;
- 
-+	pr_info("VAS migration event %d\n", action);
-+
- 	/*
- 	 * NX-GZIP is not enabled. Nothing to do for migration.
- 	 */
- 	if (!copypaste_feat)
- 		return rc;
- 
--	mutex_lock(&vas_pseries_mutex);
--
- 	if (action == VAS_SUSPEND)
- 		migration_in_progress = true;
- 	else
-@@ -990,12 +1011,27 @@ int vas_migration_handler(int action)
- 
- 		switch (action) {
- 		case VAS_SUSPEND:
-+			mutex_lock(&vas_pseries_mutex);
- 			rc = reconfig_close_windows(vcaps, vcaps->nr_open_windows,
- 							true);
-+			/*
-+			 * Windows are included in the list after successful
-+			 * open. So wait for closing these in-progress open
-+			 * windows in vas_allocate_window() which will be
-+			 * done if the migration_in_progress is set.
-+			 */
-+			while (vcaps->nr_open_wins_progress) {
-+				mutex_unlock(&vas_pseries_mutex);
-+				msleep(10);
-+				mutex_lock(&vas_pseries_mutex);
-+			}
-+			mutex_unlock(&vas_pseries_mutex);
- 			break;
- 		case VAS_RESUME:
-+			mutex_lock(&vas_pseries_mutex);
- 			atomic_set(&caps->nr_total_credits, new_nr_creds);
- 			rc = reconfig_open_windows(vcaps, new_nr_creds, true);
-+			mutex_unlock(&vas_pseries_mutex);
- 			break;
- 		default:
- 			/* should not happen */
-@@ -1011,8 +1047,9 @@ int vas_migration_handler(int action)
- 			goto out;
- 	}
- 
-+	pr_info("VAS migration event (%d) successful\n", action);
-+
- out:
--	mutex_unlock(&vas_pseries_mutex);
- 	return rc;
- }
- 
-diff --git a/arch/powerpc/platforms/pseries/vas.h b/arch/powerpc/platforms/pseries/vas.h
-index 7115043ec4883..45567cd131783 100644
---- a/arch/powerpc/platforms/pseries/vas.h
-+++ b/arch/powerpc/platforms/pseries/vas.h
-@@ -91,6 +91,8 @@ struct vas_cop_feat_caps {
- struct vas_caps {
- 	struct vas_cop_feat_caps caps;
- 	struct list_head list;	/* List of open windows */
-+	int nr_open_wins_progress;	/* Number of open windows in */
-+					/* progress. Used in migration */
- 	int nr_close_wins;	/* closed windows in the hypervisor for DLPAR */
- 	int nr_open_windows;	/* Number of successful open windows */
- 	u8 feat;		/* Feature type */
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 6d204cf54c574..011d69029112a 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -4508,8 +4508,9 @@ struct sk_buff *skb_segment(struct sk_buff *head_skb,
+ 		/* GSO partial only requires that we trim off any excess that
+ 		 * doesn't fit into an MSS sized block, so take care of that
+ 		 * now.
++		 * Cap len to not accidentally hit GSO_BY_FRAGS.
+ 		 */
+-		partial_segs = len / mss;
++		partial_segs = min(len, GSO_BY_FRAGS - 1U) / mss;
+ 		if (partial_segs > 1)
+ 			mss *= partial_segs;
+ 		else
 -- 
 2.43.0
 
