@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B48051C31;
-	Mon,  8 Jan 2024 15:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A20451C2F;
+	Mon,  8 Jan 2024 15:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EImZGVI7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A628C433C9;
-	Mon,  8 Jan 2024 15:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSL4FHzj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20DEC433C8;
+	Mon,  8 Jan 2024 15:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728485;
-	bh=yBSx4cy+ZfdkKzx2Es7bVi16KEwjobxCHyaQijirVWs=;
+	s=korg; t=1704728489;
+	bh=Qrl0F15PJPXJyP6Zy4kXgsXmwV9pjSrplwEpFfSlXw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EImZGVI7Omjy36tPRSXBFqrMwHw2Yd87KoWYFZHMyO28I3MCiDTVRku2hZjTYtOky
-	 Ljy6YIw+irJiHM/B/EuZZ50qKwkke5XRn/OqXmG947PJabq44lEqWy0U5FZmUgFiO2
-	 qXdFIaw8A0eS3HuS0XyEOewxH6KPRbVFwTCdAuWM=
+	b=BSL4FHzjdSkhksowTjBhosfsDDNE/Qc9H0qb+uUZud4U4Zg6qOmmW0C6CuF8lRq9H
+	 2hmYhEUuTzYjv5BWpT+y8PEz/wjvYqL419gS4BVs/4kR580ParXfaNEgacB9PzrTFE
+	 Hq0Z9JNBY/N7hKMdQOsQRg9sDQ4x02RovPpfU1K8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Menglong Dong <imagedong@tencent.com>,
-	Yonghong Song <yhs@fb.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Matthew Wilcox <willy@infradead.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/150] bpf, x86: save/restore regs with BPF_DW size
-Date: Mon,  8 Jan 2024 16:35:13 +0100
-Message-ID: <20240108153514.094910283@linuxfoundation.org>
+Subject: [PATCH 6.1 063/150] net: Declare MSG_SPLICE_PAGES internal sendmsg() flag
+Date: Mon,  8 Jan 2024 16:35:14 +0100
+Message-ID: <20240108153514.142655635@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -43,92 +45,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Menglong Dong <imagedong@tencent.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 02a6dfa8ff43efb1c989f87a4d862aedf436088a ]
+[ Upstream commit b841b901c452d92610f739a36e54978453528876 ]
 
-As we already reserve 8 byte in the stack for each reg, it is ok to
-store/restore the regs in BPF_DW size. This will make the code in
-save_regs()/restore_regs() simpler.
+Declare MSG_SPLICE_PAGES, an internal sendmsg() flag, that hints to a
+network protocol that it should splice pages from the source iterator
+rather than copying the data if it can.  This flag is added to a list that
+is cleared by sendmsg syscalls on entry.
 
-Signed-off-by: Menglong Dong <imagedong@tencent.com>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/r/20230713040738.1789742-2-imagedong@tencent.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 2b5dcb31a19a ("bpf, x64: Fix tailcall infinite loop")
+This is intended as a replacement for the ->sendpage() op, allowing a way
+to splice in several multipage folios in one go.
+
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+cc: Jens Axboe <axboe@kernel.dk>
+cc: Matthew Wilcox <willy@infradead.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: a0002127cd74 ("udp: move udp->no_check6_tx to udp->udp_flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 35 ++++++-----------------------------
- 1 file changed, 6 insertions(+), 29 deletions(-)
+ include/linux/socket.h | 3 +++
+ io_uring/net.c         | 2 ++
+ net/socket.c           | 2 ++
+ 3 files changed, 7 insertions(+)
 
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index 87cea23f2da16..84c695ae1940f 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -1755,57 +1755,34 @@ st:			if (is_imm8(insn->off))
- static void save_regs(const struct btf_func_model *m, u8 **prog, int nr_regs,
- 		      int stack_size)
- {
--	int i, j, arg_size;
--	bool next_same_struct = false;
-+	int i;
+diff --git a/include/linux/socket.h b/include/linux/socket.h
+index 1db29aab8f9c3..b3c58042bd254 100644
+--- a/include/linux/socket.h
++++ b/include/linux/socket.h
+@@ -324,6 +324,7 @@ struct ucred {
+ 					  */
  
- 	/* Store function arguments to stack.
- 	 * For a function that accepts two pointers the sequence will be:
- 	 * mov QWORD PTR [rbp-0x10],rdi
- 	 * mov QWORD PTR [rbp-0x8],rsi
- 	 */
--	for (i = 0, j = 0; i < min(nr_regs, 6); i++) {
--		/* The arg_size is at most 16 bytes, enforced by the verifier. */
--		arg_size = m->arg_size[j];
--		if (arg_size > 8) {
--			arg_size = 8;
--			next_same_struct = !next_same_struct;
--		}
--
--		emit_stx(prog, bytes_to_bpf_size(arg_size),
--			 BPF_REG_FP,
-+	for (i = 0; i < min(nr_regs, 6); i++)
-+		emit_stx(prog, BPF_DW, BPF_REG_FP,
- 			 i == 5 ? X86_REG_R9 : BPF_REG_1 + i,
- 			 -(stack_size - i * 8));
--
--		j = next_same_struct ? j : j + 1;
--	}
- }
+ #define MSG_ZEROCOPY	0x4000000	/* Use user data in kernel path */
++#define MSG_SPLICE_PAGES 0x8000000	/* Splice the pages from the iterator in sendmsg() */
+ #define MSG_FASTOPEN	0x20000000	/* Send data in TCP SYN */
+ #define MSG_CMSG_CLOEXEC 0x40000000	/* Set close_on_exec for file
+ 					   descriptor received through
+@@ -334,6 +335,8 @@ struct ucred {
+ #define MSG_CMSG_COMPAT	0		/* We never have 32 bit fixups */
+ #endif
  
- static void restore_regs(const struct btf_func_model *m, u8 **prog, int nr_regs,
- 			 int stack_size)
- {
--	int i, j, arg_size;
--	bool next_same_struct = false;
-+	int i;
++/* Flags to be cleared on entry by sendmsg and sendmmsg syscalls */
++#define MSG_INTERNAL_SENDMSG_FLAGS (MSG_SPLICE_PAGES)
  
- 	/* Restore function arguments from stack.
- 	 * For a function that accepts two pointers the sequence will be:
- 	 * EMIT4(0x48, 0x8B, 0x7D, 0xF0); mov rdi,QWORD PTR [rbp-0x10]
- 	 * EMIT4(0x48, 0x8B, 0x75, 0xF8); mov rsi,QWORD PTR [rbp-0x8]
- 	 */
--	for (i = 0, j = 0; i < min(nr_regs, 6); i++) {
--		/* The arg_size is at most 16 bytes, enforced by the verifier. */
--		arg_size = m->arg_size[j];
--		if (arg_size > 8) {
--			arg_size = 8;
--			next_same_struct = !next_same_struct;
--		}
--
--		emit_ldx(prog, bytes_to_bpf_size(arg_size),
-+	for (i = 0; i < min(nr_regs, 6); i++)
-+		emit_ldx(prog, BPF_DW,
- 			 i == 5 ? X86_REG_R9 : BPF_REG_1 + i,
- 			 BPF_REG_FP,
- 			 -(stack_size - i * 8));
--
--		j = next_same_struct ? j : j + 1;
--	}
- }
+ /* Setsockoptions(2) level. Thanks to BSD these must match IPPROTO_xxx */
+ #define SOL_IP		0
+diff --git a/io_uring/net.c b/io_uring/net.c
+index 57c626cb4d1a5..67f09a40bcb21 100644
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -389,6 +389,7 @@ int io_send(struct io_kiocb *req, unsigned int issue_flags)
+ 	if (flags & MSG_WAITALL)
+ 		min_ret = iov_iter_count(&msg.msg_iter);
  
- static int invoke_bpf_prog(const struct btf_func_model *m, u8 **pprog,
++	flags &= ~MSG_INTERNAL_SENDMSG_FLAGS;
+ 	msg.msg_flags = flags;
+ 	ret = sock_sendmsg(sock, &msg);
+ 	if (ret < min_ret) {
+@@ -1137,6 +1138,7 @@ int io_send_zc(struct io_kiocb *req, unsigned int issue_flags)
+ 		msg_flags |= MSG_DONTWAIT;
+ 	if (msg_flags & MSG_WAITALL)
+ 		min_ret = iov_iter_count(&msg.msg_iter);
++	msg_flags &= ~MSG_INTERNAL_SENDMSG_FLAGS;
+ 
+ 	msg.msg_flags = msg_flags;
+ 	msg.msg_ubuf = &io_notif_to_data(zc->notif)->uarg;
+diff --git a/net/socket.c b/net/socket.c
+index 0104617b440dc..6f39f7b0cc85c 100644
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -2131,6 +2131,7 @@ int __sys_sendto(int fd, void __user *buff, size_t len, unsigned int flags,
+ 		msg.msg_name = (struct sockaddr *)&address;
+ 		msg.msg_namelen = addr_len;
+ 	}
++	flags &= ~MSG_INTERNAL_SENDMSG_FLAGS;
+ 	if (sock->file->f_flags & O_NONBLOCK)
+ 		flags |= MSG_DONTWAIT;
+ 	msg.msg_flags = flags;
+@@ -2482,6 +2483,7 @@ static int ____sys_sendmsg(struct socket *sock, struct msghdr *msg_sys,
+ 		msg_sys->msg_control = ctl_buf;
+ 		msg_sys->msg_control_is_user = false;
+ 	}
++	flags &= ~MSG_INTERNAL_SENDMSG_FLAGS;
+ 	msg_sys->msg_flags = flags;
+ 
+ 	if (sock->file->f_flags & O_NONBLOCK)
 -- 
 2.43.0
 
