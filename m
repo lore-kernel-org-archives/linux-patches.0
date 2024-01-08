@@ -1,31 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36DD47791;
-	Mon,  8 Jan 2024 15:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716075101D;
+	Mon,  8 Jan 2024 15:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wX+1R2B/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDA8C433C9;
-	Mon,  8 Jan 2024 15:15:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjeTtiqr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC27C433C8;
+	Mon,  8 Jan 2024 15:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726957;
-	bh=qUZ4YcrcQQ7zezcRSLfKxgPk6qInWDHLRRzgj3he4JQ=;
+	s=korg; t=1704728221;
+	bh=DgYg8MX93EhW9qM+o+2sFKTZo7BOW3IVsn+dDBLX88k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wX+1R2B/dfRqae8Uzx/oPcL0i+Zb8MQrMAiUtxuX0HKOQ4edGnnF8D3q/frYjuDMA
-	 rsZxwCCuxfsB3+6D3jQ3ar4u9ylkCsUzIseBlV9Ns4nYNlQ3rYpTmFuho4YqSF+Mr7
-	 bVIdCeEQtKQZrBaCXLnxgpcbak+FSA30FU4ttuKU=
+	b=xjeTtiqrQTnSp888Yco52CAphLlLIk3gOELjhkgjmM2TkdT1nL7q69vthUlhlNbBg
+	 sVkYlz6erU6HnhXahjWie+tJULU06TJGLnlmWXhD5t08q2t3m05aRle+14/j8c7xMh
+	 DsIjAKDztpKFpU18OiFjQ2txAPnonlAksK2NK91k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 115/124] drm/amd/display: add nv12 bounding box
-Date: Mon,  8 Jan 2024 16:09:01 +0100
-Message-ID: <20240108150608.264489150@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Edward Adam Davis <eadavis@qq.com>,
+	David Howells <dhowells@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Jeffrey E Altman <jaltman@auristor.com>,
+	Wang Lei <wang840925@gmail.com>,
+	Jeff Layton <jlayton@redhat.com>,
+	Steve French <sfrench@us.ibm.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	syzbot+94bbb75204a05da3d89f@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 001/150] keys, dns: Fix missing size check of V1 server-list header
+Date: Mon,  8 Jan 2024 16:34:12 +0100
+Message-ID: <20240108153511.292147901@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
-References: <20240108150602.976232871@linuxfoundation.org>
+In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
+References: <20240108153511.214254205@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,144 +50,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit 7e725c20fea8914ef1829da777f517ce1a93d388 upstream.
+commit 1997b3cb4217b09e49659b634c94da47f0340409 upstream.
 
-This was included in gpu_info firmware, move it into the
-driver for consistency with other nv1x parts.
+The dns_resolver_preparse() function has a check on the size of the
+payload for the basic header of the binary-style payload, but is missing
+a check for the size of the V1 server-list payload header after
+determining that's what we've been given.
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2318
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Fix this by getting rid of the the pointer to the basic header and just
+assuming that we have a V1 server-list payload and moving the V1 server
+list pointer inside the if-statement.  Dealing with other types and
+versions can be left for when such have been defined.
+
+This can be tested by doing the following with KASAN enabled:
+
+    echo -n -e '\x0\x0\x1\x2' | keyctl padd dns_resolver foo @p
+
+and produces an oops like the following:
+
+    BUG: KASAN: slab-out-of-bounds in dns_resolver_preparse+0xc9f/0xd60 net/dns_resolver/dns_key.c:127
+    Read of size 1 at addr ffff888028894084 by task syz-executor265/5069
+    ...
+    Call Trace:
+      dns_resolver_preparse+0xc9f/0xd60 net/dns_resolver/dns_key.c:127
+      __key_create_or_update+0x453/0xdf0 security/keys/key.c:842
+      key_create_or_update+0x42/0x50 security/keys/key.c:1007
+      __do_sys_add_key+0x29c/0x450 security/keys/keyctl.c:134
+      do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+      do_syscall_64+0x40/0x110 arch/x86/entry/common.c:83
+      entry_SYSCALL_64_after_hwframe+0x62/0x6a
+
+This patch was originally by Edward Adam Davis, but was modified by
+Linus.
+
+Fixes: b946001d3bb1 ("keys, dns: Allow key types (eg. DNS) to be reclaimed immediately on expiry")
+Reported-and-tested-by: syzbot+94bbb75204a05da3d89f@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/0000000000009b39bc060c73e209@google.com/
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Tested-by: David Howells <dhowells@redhat.com>
+Cc: Edward Adam Davis <eadavis@qq.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Jeffrey E Altman <jaltman@auristor.com>
+Cc: Wang Lei <wang840925@gmail.com>
+Cc: Jeff Layton <jlayton@redhat.com>
+Cc: Steve French <sfrench@us.ibm.com>
+Cc: Marc Dionne <marc.dionne@auristor.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Jeffrey E Altman <jaltman@auristor.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c |  110 ++++++++++++++++++-
- 1 file changed, 109 insertions(+), 1 deletion(-)
+ net/dns_resolver/dns_key.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
-@@ -438,7 +438,115 @@ struct _vcs_dpi_soc_bounding_box_st dcn2
- 	.use_urgent_burst_bw = 0
- };
+--- a/net/dns_resolver/dns_key.c
++++ b/net/dns_resolver/dns_key.c
+@@ -91,8 +91,6 @@ const struct cred *dns_resolver_cache;
+ static int
+ dns_resolver_preparse(struct key_preparsed_payload *prep)
+ {
+-	const struct dns_server_list_v1_header *v1;
+-	const struct dns_payload_header *bin;
+ 	struct user_key_payload *upayload;
+ 	unsigned long derrno;
+ 	int ret;
+@@ -103,27 +101,28 @@ dns_resolver_preparse(struct key_prepars
+ 		return -EINVAL;
  
--struct _vcs_dpi_soc_bounding_box_st dcn2_0_nv12_soc = { 0 };
-+struct _vcs_dpi_soc_bounding_box_st dcn2_0_nv12_soc = {
-+	.clock_limits = {
-+		{
-+			.state = 0,
-+			.dcfclk_mhz = 560.0,
-+			.fabricclk_mhz = 560.0,
-+			.dispclk_mhz = 513.0,
-+			.dppclk_mhz = 513.0,
-+			.phyclk_mhz = 540.0,
-+			.socclk_mhz = 560.0,
-+			.dscclk_mhz = 171.0,
-+			.dram_speed_mts = 1069.0,
-+		},
-+		{
-+			.state = 1,
-+			.dcfclk_mhz = 694.0,
-+			.fabricclk_mhz = 694.0,
-+			.dispclk_mhz = 642.0,
-+			.dppclk_mhz = 642.0,
-+			.phyclk_mhz = 600.0,
-+			.socclk_mhz = 694.0,
-+			.dscclk_mhz = 214.0,
-+			.dram_speed_mts = 1324.0,
-+		},
-+		{
-+			.state = 2,
-+			.dcfclk_mhz = 875.0,
-+			.fabricclk_mhz = 875.0,
-+			.dispclk_mhz = 734.0,
-+			.dppclk_mhz = 734.0,
-+			.phyclk_mhz = 810.0,
-+			.socclk_mhz = 875.0,
-+			.dscclk_mhz = 245.0,
-+			.dram_speed_mts = 1670.0,
-+		},
-+		{
-+			.state = 3,
-+			.dcfclk_mhz = 1000.0,
-+			.fabricclk_mhz = 1000.0,
-+			.dispclk_mhz = 1100.0,
-+			.dppclk_mhz = 1100.0,
-+			.phyclk_mhz = 810.0,
-+			.socclk_mhz = 1000.0,
-+			.dscclk_mhz = 367.0,
-+			.dram_speed_mts = 2000.0,
-+		},
-+		{
-+			.state = 4,
-+			.dcfclk_mhz = 1200.0,
-+			.fabricclk_mhz = 1200.0,
-+			.dispclk_mhz = 1284.0,
-+			.dppclk_mhz = 1284.0,
-+			.phyclk_mhz = 810.0,
-+			.socclk_mhz = 1200.0,
-+			.dscclk_mhz = 428.0,
-+			.dram_speed_mts = 2000.0,
-+		},
-+		{
-+			.state = 5,
-+			.dcfclk_mhz = 1200.0,
-+			.fabricclk_mhz = 1200.0,
-+			.dispclk_mhz = 1284.0,
-+			.dppclk_mhz = 1284.0,
-+			.phyclk_mhz = 810.0,
-+			.socclk_mhz = 1200.0,
-+			.dscclk_mhz = 428.0,
-+			.dram_speed_mts = 2000.0,
-+		},
-+	},
+ 	if (data[0] == 0) {
++		const struct dns_server_list_v1_header *v1;
 +
-+	.num_states = 5,
-+	.sr_exit_time_us = 1.9,
-+	.sr_enter_plus_exit_time_us = 4.4,
-+	.urgent_latency_us = 3.0,
-+	.urgent_latency_pixel_data_only_us = 4.0,
-+	.urgent_latency_pixel_mixed_with_vm_data_us = 4.0,
-+	.urgent_latency_vm_data_only_us = 4.0,
-+	.urgent_out_of_order_return_per_channel_pixel_only_bytes = 4096,
-+	.urgent_out_of_order_return_per_channel_pixel_and_vm_bytes = 4096,
-+	.urgent_out_of_order_return_per_channel_vm_only_bytes = 4096,
-+	.pct_ideal_dram_sdp_bw_after_urgent_pixel_only = 40.0,
-+	.pct_ideal_dram_sdp_bw_after_urgent_pixel_and_vm = 40.0,
-+	.pct_ideal_dram_sdp_bw_after_urgent_vm_only = 40.0,
-+	.max_avg_sdp_bw_use_normal_percent = 40.0,
-+	.max_avg_dram_bw_use_normal_percent = 40.0,
-+	.writeback_latency_us = 12.0,
-+	.ideal_dram_bw_after_urgent_percent = 40.0,
-+	.max_request_size_bytes = 256,
-+	.dram_channel_width_bytes = 16,
-+	.fabric_datapath_to_dcn_data_return_bytes = 64,
-+	.dcn_downspread_percent = 0.5,
-+	.downspread_percent = 0.5,
-+	.dram_page_open_time_ns = 50.0,
-+	.dram_rw_turnaround_time_ns = 17.5,
-+	.dram_return_buffer_per_channel_bytes = 8192,
-+	.round_trip_ping_latency_dcfclk_cycles = 131,
-+	.urgent_out_of_order_return_per_channel_bytes = 4096,
-+	.channel_interleave_bytes = 256,
-+	.num_banks = 8,
-+	.num_chans = 16,
-+	.vmm_page_size_bytes = 4096,
-+	.dram_clock_change_latency_us = 45.0,
-+	.writeback_dram_clock_change_latency_us = 23.0,
-+	.return_bus_width_bytes = 64,
-+	.dispclk_dppclk_vco_speed_mhz = 3850,
-+	.xfc_bus_transport_time_us = 20,
-+	.xfc_xbuf_latency_tolerance_us = 50,
-+	.use_urgent_burst_bw = 0,
-+};
+ 		/* It may be a server list. */
+-		if (datalen <= sizeof(*bin))
++		if (datalen <= sizeof(*v1))
+ 			return -EINVAL;
  
- struct _vcs_dpi_ip_params_st dcn2_1_ip = {
- 	.odm_capable = 1,
+-		bin = (const struct dns_payload_header *)data;
+-		kenter("[%u,%u],%u", bin->content, bin->version, datalen);
+-		if (bin->content != DNS_PAYLOAD_IS_SERVER_LIST) {
++		v1 = (const struct dns_server_list_v1_header *)data;
++		kenter("[%u,%u],%u", v1->hdr.content, v1->hdr.version, datalen);
++		if (v1->hdr.content != DNS_PAYLOAD_IS_SERVER_LIST) {
+ 			pr_warn_ratelimited(
+ 				"dns_resolver: Unsupported content type (%u)\n",
+-				bin->content);
++				v1->hdr.content);
+ 			return -EINVAL;
+ 		}
+ 
+-		if (bin->version != 1) {
++		if (v1->hdr.version != 1) {
+ 			pr_warn_ratelimited(
+ 				"dns_resolver: Unsupported server list version (%u)\n",
+-				bin->version);
++				v1->hdr.version);
+ 			return -EINVAL;
+ 		}
+ 
+-		v1 = (const struct dns_server_list_v1_header *)bin;
+ 		if ((v1->status != DNS_LOOKUP_GOOD &&
+ 		     v1->status != DNS_LOOKUP_GOOD_WITH_BAD)) {
+ 			if (prep->expiry == TIME64_MAX)
 
 
