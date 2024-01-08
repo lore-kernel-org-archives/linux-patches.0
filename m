@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3784C602;
-	Mon,  8 Jan 2024 15:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908C84C602;
+	Mon,  8 Jan 2024 15:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfXqqeZ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532BAC433C7;
-	Mon,  8 Jan 2024 15:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIWTIOzx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77A6C433C9;
+	Mon,  8 Jan 2024 15:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728673;
-	bh=yNVTm5J+b5cq9oBu/weRLjREVVL+VFaz9p5nzxnIZ2U=;
+	s=korg; t=1704728677;
+	bh=dp1xJT1SZ0VnldwR+ozHzqwiQrF6hDgFyIIG0Gprn+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qfXqqeZ3pJIuJGZpJfMmNhSW/+pKOJiYvyG8o64RzxwEG2igf6sohZtIh1Js/WlxL
-	 Z/jbP4w8LiuroDZyUPYvYnphyecbaqwlXRhpvuNivZVuxRO4OCjnyEUBr7z7FZEyB0
-	 inwuK+yXehyUAP8qjkx+jSemC0Ixhpmhyq6peulo=
+	b=NIWTIOzxEubcpU3PJSO0LDJFOG7AwZ8LdIAql3GVA+2eQj0ooaTo6LpsUzZq2zGDe
+	 DANpf8SkcQ3wMg8ThHO271+HtnTV6AXXotlCgWFWgmEpR2kjtx6+VJDM0kibW/RX9A
+	 zH1HIwU706f3stsT6qjyJ+2qQ3xoKwx5c742KCYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vlad Buslov <vladbu@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Paul Blakey <paulb@nvidia.com>,
+	Florian Westphal <fw@strlen.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/150] net/sched: act_ct: offload UDP NEW connections
-Date: Mon,  8 Jan 2024 16:36:14 +0100
-Message-ID: <20240108153516.870712194@linuxfoundation.org>
+Subject: [PATCH 6.1 124/150] net/sched: act_ct: Fix promotion of offloaded unreplied tuple
+Date: Mon,  8 Jan 2024 16:36:15 +0100
+Message-ID: <20240108153516.919632274@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -42,155 +44,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Buslov <vladbu@nvidia.com>
+From: Paul Blakey <paulb@nvidia.com>
 
-[ Upstream commit 6a9bad0069cf306f3df6ac53cf02438d4e15f296 ]
+[ Upstream commit 41f2c7c342d3adb1c4dd5f2e3dd831adff16a669 ]
 
-Modify the offload algorithm of UDP connections to the following:
+Currently UNREPLIED and UNASSURED connections are added to the nf flow
+table. This causes the following connection packets to be processed
+by the flow table which then skips conntrack_in(), and thus such the
+connections will remain UNREPLIED and UNASSURED even if reply traffic
+is then seen. Even still, the unoffloaded reply packets are the ones
+triggering hardware update from new to established state, and if
+there aren't any to triger an update and/or previous update was
+missed, hardware can get out of sync with sw and still mark
+packets as new.
 
-- Offload NEW connection as unidirectional.
+Fix the above by:
+1) Not skipping conntrack_in() for UNASSURED packets, but still
+   refresh for hardware, as before the cited patch.
+2) Try and force a refresh by reply-direction packets that update
+   the hardware rules from new to established state.
+3) Remove any bidirectional flows that didn't failed to update in
+   hardware for re-insertion as bidrectional once any new packet
+   arrives.
 
-- When connection state changes to ESTABLISHED also update the hardware
-flow. However, in order to prevent act_ct from spamming offload add wq for
-every packet coming in reply direction in this state verify whether
-connection has already been updated to ESTABLISHED in the drivers. If that
-it the case, then skip flow_table and let conntrack handle such packets
-which will also allow conntrack to potentially promote the connection to
-ASSURED.
-
-- When connection state changes to ASSURED set the flow_table flow
-NF_FLOW_HW_BIDIRECTIONAL flag which will cause refresh mechanism to offload
-the reply direction.
-
-All other protocols have their offload algorithm preserved and are always
-offloaded as bidirectional.
-
-Note that this change tries to minimize the load on flow_table add
-workqueue. First, it tracks the last ctinfo that was offloaded by using new
-flow 'NF_FLOW_HW_ESTABLISHED' flag and doesn't schedule the refresh for
-reply direction packets when the offloads have already been updated with
-current ctinfo. Second, when 'add' task executes on workqueue it always
-update the offload with current flow state (by checking 'bidirectional'
-flow flag and obtaining actual ctinfo/cookie through meta action instead of
-caching any of these from the moment of scheduling the 'add' work)
-preventing the need from scheduling more updates if state changed
-concurrently while the 'add' work was pending on workqueue.
-
+Fixes: 6a9bad0069cf ("net/sched: act_ct: offload UDP NEW connections")
+Co-developed-by: Vlad Buslov <vladbu@nvidia.com>
 Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Paul Blakey <paulb@nvidia.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Link: https://lore.kernel.org/r/1686313379-117663-1-git-send-email-paulb@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 125f1c7f26ff ("net/sched: act_ct: Take per-cb reference to tcf_ct_flow_table")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_ct.c | 51 +++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 39 insertions(+), 12 deletions(-)
+ include/net/netfilter/nf_flow_table.h |  2 +-
+ net/netfilter/nf_flow_table_core.c    | 13 ++++++++++---
+ net/netfilter/nf_flow_table_ip.c      |  4 ++--
+ net/sched/act_ct.c                    |  9 ++++++++-
+ 4 files changed, 21 insertions(+), 7 deletions(-)
 
+diff --git a/include/net/netfilter/nf_flow_table.h b/include/net/netfilter/nf_flow_table.h
+index ebb28ec5b6faf..f37f9f34430c1 100644
+--- a/include/net/netfilter/nf_flow_table.h
++++ b/include/net/netfilter/nf_flow_table.h
+@@ -268,7 +268,7 @@ int flow_offload_route_init(struct flow_offload *flow,
+ 
+ int flow_offload_add(struct nf_flowtable *flow_table, struct flow_offload *flow);
+ void flow_offload_refresh(struct nf_flowtable *flow_table,
+-			  struct flow_offload *flow);
++			  struct flow_offload *flow, bool force);
+ 
+ struct flow_offload_tuple_rhash *flow_offload_lookup(struct nf_flowtable *flow_table,
+ 						     struct flow_offload_tuple *tuple);
+diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
+index 81c26a96c30bb..baddb93a5e8cf 100644
+--- a/net/netfilter/nf_flow_table_core.c
++++ b/net/netfilter/nf_flow_table_core.c
+@@ -314,12 +314,12 @@ int flow_offload_add(struct nf_flowtable *flow_table, struct flow_offload *flow)
+ EXPORT_SYMBOL_GPL(flow_offload_add);
+ 
+ void flow_offload_refresh(struct nf_flowtable *flow_table,
+-			  struct flow_offload *flow)
++			  struct flow_offload *flow, bool force)
+ {
+ 	u32 timeout;
+ 
+ 	timeout = nf_flowtable_time_stamp + flow_offload_get_timeout(flow);
+-	if (timeout - READ_ONCE(flow->timeout) > HZ)
++	if (force || timeout - READ_ONCE(flow->timeout) > HZ)
+ 		WRITE_ONCE(flow->timeout, timeout);
+ 	else
+ 		return;
+@@ -331,6 +331,12 @@ void flow_offload_refresh(struct nf_flowtable *flow_table,
+ }
+ EXPORT_SYMBOL_GPL(flow_offload_refresh);
+ 
++static bool nf_flow_is_outdated(const struct flow_offload *flow)
++{
++	return test_bit(IPS_SEEN_REPLY_BIT, &flow->ct->status) &&
++		!test_bit(NF_FLOW_HW_ESTABLISHED, &flow->flags);
++}
++
+ static inline bool nf_flow_has_expired(const struct flow_offload *flow)
+ {
+ 	return nf_flow_timeout_delta(flow->timeout) <= 0;
+@@ -420,7 +426,8 @@ static void nf_flow_offload_gc_step(struct nf_flowtable *flow_table,
+ 				    struct flow_offload *flow, void *data)
+ {
+ 	if (nf_flow_has_expired(flow) ||
+-	    nf_ct_is_dying(flow->ct))
++	    nf_ct_is_dying(flow->ct) ||
++	    nf_flow_is_outdated(flow))
+ 		flow_offload_teardown(flow);
+ 
+ 	if (test_bit(NF_FLOW_TEARDOWN, &flow->flags)) {
+diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
+index b350fe9d00b0b..6feaac9ab05c8 100644
+--- a/net/netfilter/nf_flow_table_ip.c
++++ b/net/netfilter/nf_flow_table_ip.c
+@@ -384,7 +384,7 @@ nf_flow_offload_ip_hook(void *priv, struct sk_buff *skb,
+ 	if (skb_try_make_writable(skb, thoff + hdrsize))
+ 		return NF_DROP;
+ 
+-	flow_offload_refresh(flow_table, flow);
++	flow_offload_refresh(flow_table, flow, false);
+ 
+ 	nf_flow_encap_pop(skb, tuplehash);
+ 	thoff -= offset;
+@@ -646,7 +646,7 @@ nf_flow_offload_ipv6_hook(void *priv, struct sk_buff *skb,
+ 	if (skb_try_make_writable(skb, thoff + hdrsize))
+ 		return NF_DROP;
+ 
+-	flow_offload_refresh(flow_table, flow);
++	flow_offload_refresh(flow_table, flow, false);
+ 
+ 	nf_flow_encap_pop(skb, tuplehash);
+ 
 diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index 86d269724485a..3c063065f125f 100644
+index 3c063065f125f..b80a58d3bf0f3 100644
 --- a/net/sched/act_ct.c
 +++ b/net/sched/act_ct.c
-@@ -365,7 +365,7 @@ static void tcf_ct_flow_tc_ifidx(struct flow_offload *entry,
- 
- static void tcf_ct_flow_table_add(struct tcf_ct_flow_table *ct_ft,
- 				  struct nf_conn *ct,
--				  bool tcp)
-+				  bool tcp, bool bidirectional)
- {
- 	struct nf_conn_act_ct_ext *act_ct_ext;
- 	struct flow_offload *entry;
-@@ -384,6 +384,8 @@ static void tcf_ct_flow_table_add(struct tcf_ct_flow_table *ct_ft,
- 		ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
- 		ct->proto.tcp.seen[1].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
+@@ -606,6 +606,7 @@ static bool tcf_ct_flow_table_lookup(struct tcf_ct_params *p,
+ 	struct flow_offload_tuple tuple = {};
+ 	enum ip_conntrack_info ctinfo;
+ 	struct tcphdr *tcph = NULL;
++	bool force_refresh = false;
+ 	struct flow_offload *flow;
+ 	struct nf_conn *ct;
+ 	u8 dir;
+@@ -643,6 +644,7 @@ static bool tcf_ct_flow_table_lookup(struct tcf_ct_params *p,
+ 			 * established state, then don't refresh.
+ 			 */
+ 			return false;
++		force_refresh = true;
  	}
-+	if (bidirectional)
-+		__set_bit(NF_FLOW_HW_BIDIRECTIONAL, &entry->flags);
  
- 	act_ct_ext = nf_conn_act_ct_ext_find(ct);
- 	if (act_ct_ext) {
-@@ -407,26 +409,34 @@ static void tcf_ct_flow_table_process_conn(struct tcf_ct_flow_table *ct_ft,
- 					   struct nf_conn *ct,
- 					   enum ip_conntrack_info ctinfo)
- {
--	bool tcp = false;
--
--	if ((ctinfo != IP_CT_ESTABLISHED && ctinfo != IP_CT_ESTABLISHED_REPLY) ||
--	    !test_bit(IPS_ASSURED_BIT, &ct->status))
--		return;
-+	bool tcp = false, bidirectional = true;
+ 	if (tcph && (unlikely(tcph->fin || tcph->rst))) {
+@@ -656,7 +658,12 @@ static bool tcf_ct_flow_table_lookup(struct tcf_ct_params *p,
+ 	else
+ 		ctinfo = IP_CT_ESTABLISHED_REPLY;
  
- 	switch (nf_ct_protonum(ct)) {
- 	case IPPROTO_TCP:
--		tcp = true;
--		if (ct->proto.tcp.state != TCP_CONNTRACK_ESTABLISHED)
-+		if ((ctinfo != IP_CT_ESTABLISHED &&
-+		     ctinfo != IP_CT_ESTABLISHED_REPLY) ||
-+		    !test_bit(IPS_ASSURED_BIT, &ct->status) ||
-+		    ct->proto.tcp.state != TCP_CONNTRACK_ESTABLISHED)
- 			return;
-+
-+		tcp = true;
- 		break;
- 	case IPPROTO_UDP:
-+		if (!nf_ct_is_confirmed(ct))
-+			return;
-+		if (!test_bit(IPS_ASSURED_BIT, &ct->status))
-+			bidirectional = false;
- 		break;
- #ifdef CONFIG_NF_CT_PROTO_GRE
- 	case IPPROTO_GRE: {
- 		struct nf_conntrack_tuple *tuple;
- 
--		if (ct->status & IPS_NAT_MASK)
-+		if ((ctinfo != IP_CT_ESTABLISHED &&
-+		     ctinfo != IP_CT_ESTABLISHED_REPLY) ||
-+		    !test_bit(IPS_ASSURED_BIT, &ct->status) ||
-+		    ct->status & IPS_NAT_MASK)
- 			return;
-+
- 		tuple = &ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple;
- 		/* No support for GRE v1 */
- 		if (tuple->src.u.gre.key || tuple->dst.u.gre.key)
-@@ -442,7 +452,7 @@ static void tcf_ct_flow_table_process_conn(struct tcf_ct_flow_table *ct_ft,
- 	    ct->status & IPS_SEQ_ADJUST)
- 		return;
- 
--	tcf_ct_flow_table_add(ct_ft, ct, tcp);
-+	tcf_ct_flow_table_add(ct_ft, ct, tcp, bidirectional);
- }
- 
- static bool
-@@ -621,13 +631,30 @@ static bool tcf_ct_flow_table_lookup(struct tcf_ct_params *p,
- 	flow = container_of(tuplehash, struct flow_offload, tuplehash[dir]);
- 	ct = flow->ct;
- 
-+	if (dir == FLOW_OFFLOAD_DIR_REPLY &&
-+	    !test_bit(NF_FLOW_HW_BIDIRECTIONAL, &flow->flags)) {
-+		/* Only offload reply direction after connection became
-+		 * assured.
-+		 */
-+		if (test_bit(IPS_ASSURED_BIT, &ct->status))
-+			set_bit(NF_FLOW_HW_BIDIRECTIONAL, &flow->flags);
-+		else if (test_bit(NF_FLOW_HW_ESTABLISHED, &flow->flags))
-+			/* If flow_table flow has already been updated to the
-+			 * established state, then don't refresh.
-+			 */
-+			return false;
+-	flow_offload_refresh(nf_ft, flow);
++	flow_offload_refresh(nf_ft, flow, force_refresh);
++	if (!test_bit(IPS_ASSURED_BIT, &ct->status)) {
++		/* Process this flow in SW to allow promoting to ASSURED */
++		return false;
 +	}
 +
- 	if (tcph && (unlikely(tcph->fin || tcph->rst))) {
- 		flow_offload_teardown(flow);
- 		return false;
- 	}
- 
--	ctinfo = dir == FLOW_OFFLOAD_DIR_ORIGINAL ? IP_CT_ESTABLISHED :
--						    IP_CT_ESTABLISHED_REPLY;
-+	if (dir == FLOW_OFFLOAD_DIR_ORIGINAL)
-+		ctinfo = test_bit(IPS_SEEN_REPLY_BIT, &ct->status) ?
-+			IP_CT_ESTABLISHED : IP_CT_NEW;
-+	else
-+		ctinfo = IP_CT_ESTABLISHED_REPLY;
- 
- 	flow_offload_refresh(nf_ft, flow);
  	nf_conntrack_get(&ct->ct_general);
+ 	nf_ct_set(skb, ct, ctinfo);
+ 	if (nf_ft->flags & NF_FLOWTABLE_COUNTER)
 -- 
 2.43.0
 
