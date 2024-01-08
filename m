@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C8F47791;
-	Mon,  8 Jan 2024 15:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F800487A7;
+	Mon,  8 Jan 2024 15:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAef6ZSJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C30EC43142;
-	Mon,  8 Jan 2024 15:12:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xabWgKsb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF73C43142;
+	Mon,  8 Jan 2024 15:12:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726744;
-	bh=l8xBAzkR/eJ14XA7+yKe1qZeRy6QHTchxEgSYBpGx6Q=;
+	s=korg; t=1704726748;
+	bh=dhdTNG9bfH7R0ExFUfC5FNI3BmHiC7Vzo/ohKZD47T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zAef6ZSJ/d2JxvAZCjXgtBHhcSACEf4wUCuQefipIBM5hggovd40PTtxcMvVIljJ2
-	 Qjdb4jNnIgcOLkxDFglmZU6Xz1DdwqgTupUxJIHMgqCq4EmpGYkBM/qfgcVCs/xPt5
-	 RgPlfXluP63BBWNSqN3fipxUyga3xcKMYFm97u5s=
+	b=xabWgKsbzvfwRl84ro9Q25iR4eYNf8fbgsl5P5s7dRCwU0IYki67Jwp/lDDRcKOsu
+	 6T0fK5SGW36fSbrxjCxa+O9WZbhOxmM33hHVQ0tHDW9P4waoDoY4ktnrjP6ugvy41Y
+	 RLmqz+G8LKHQ0d2b35cEErFuRwLFuDU2iZn3OIrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tirthendu Sarkar <tirthendu.sarkar@intel.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/124] xsk: add multi-buffer support for sockets sharing umem
-Date: Mon,  8 Jan 2024 16:08:11 +0100
-Message-ID: <20240108150605.959461379@linuxfoundation.org>
+Subject: [PATCH 6.6 066/124] media: qcom: camss: Fix V4L2 async notifier error path
+Date: Mon,  8 Jan 2024 16:08:12 +0100
+Message-ID: <20240108150606.007258057@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -43,72 +42,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tirthendu Sarkar <tirthendu.sarkar@intel.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-[ Upstream commit d609f3d228a8efe991f44f11f24146e2a5209755 ]
+[ Upstream commit b278080a89f452063915beda0ade6b3ed5ee4271 ]
 
-Userspace applications indicate their multi-buffer capability to xsk
-using XSK_USE_SG socket bind flag. For sockets using shared umem the
-bind flag may contain XSK_USE_SG only for the first socket. For any
-subsequent socket the only option supported is XDP_SHARED_UMEM.
+Previously the jump label err_cleanup was used higher in the probe()
+function to release the async notifier however the async notifier
+registration was moved later in the code rendering the previous four jumps
+redundant.
 
-Add option XDP_UMEM_SG_FLAG in umem config flags to store the
-multi-buffer handling capability when indicated by XSK_USE_SG option in
-bing flag by the first socket. Use this to derive multi-buffer capability
-for subsequent sockets in xsk core.
+Rename the label from err_cleanup to err_v4l2_device_unregister to capture
+what the jump does.
 
-Signed-off-by: Tirthendu Sarkar <tirthendu.sarkar@intel.com>
-Fixes: 81470b5c3c66 ("xsk: introduce XSK_USE_SG bind flag for xsk socket")
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://lore.kernel.org/r/20230907035032.2627879-1-tirthendu.sarkar@intel.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 51397a4ec75d ("media: qcom: Initialise V4L2 async notifier later")
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[hverkuil: fix old name in commit log: err_v4l2_device_register -> err_v4l2_device_unregister]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xdp_sock.h  | 2 ++
- net/xdp/xsk.c           | 2 +-
- net/xdp/xsk_buff_pool.c | 3 +++
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/camss/camss.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/xdp_sock.h b/include/net/xdp_sock.h
-index 1617af3801620..69b472604b86f 100644
---- a/include/net/xdp_sock.h
-+++ b/include/net/xdp_sock.h
-@@ -14,6 +14,8 @@
- #include <linux/mm.h>
- #include <net/sock.h>
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index 75991d849b571..a925b2bfd8989 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -1617,21 +1617,21 @@ static int camss_probe(struct platform_device *pdev)
  
-+#define XDP_UMEM_SG_FLAG (1 << 1)
-+
- struct net_device;
- struct xsk_queue;
- struct xdp_buff;
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 3515e19852d88..774a6d1916e40 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -1227,7 +1227,7 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
+ 	ret = camss_icc_get(camss);
+ 	if (ret < 0)
+-		goto err_cleanup;
++		return ret;
  
- 	xs->dev = dev;
- 	xs->zc = xs->umem->zc;
--	xs->sg = !!(flags & XDP_USE_SG);
-+	xs->sg = !!(xs->umem->flags & XDP_UMEM_SG_FLAG);
- 	xs->queue_id = qid;
- 	xp_add_xsk(xs->pool, xs);
+ 	ret = camss_configure_pd(camss);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to configure power domains: %d\n", ret);
+-		goto err_cleanup;
++		return ret;
+ 	}
  
-diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
-index b3f7b310811ed..49cb9f9a09bee 100644
---- a/net/xdp/xsk_buff_pool.c
-+++ b/net/xdp/xsk_buff_pool.c
-@@ -170,6 +170,9 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
- 	if (err)
- 		return err;
+ 	ret = camss_init_subdevices(camss);
+ 	if (ret < 0)
+-		goto err_cleanup;
++		return ret;
  
-+	if (flags & XDP_USE_SG)
-+		pool->umem->flags |= XDP_UMEM_SG_FLAG;
-+
- 	if (flags & XDP_USE_NEED_WAKEUP)
- 		pool->uses_need_wakeup = true;
- 	/* Tx needs to be explicitly woken up the first time.  Also
+ 	ret = dma_set_mask_and_coherent(dev, 0xffffffff);
+ 	if (ret)
+-		goto err_cleanup;
++		return ret;
+ 
+ 	camss->media_dev.dev = camss->dev;
+ 	strscpy(camss->media_dev.model, "Qualcomm Camera Subsystem",
+@@ -1643,7 +1643,7 @@ static int camss_probe(struct platform_device *pdev)
+ 	ret = v4l2_device_register(camss->dev, &camss->v4l2_dev);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to register V4L2 device: %d\n", ret);
+-		goto err_cleanup;
++		return ret;
+ 	}
+ 
+ 	v4l2_async_nf_init(&camss->notifier, &camss->v4l2_dev);
+@@ -1651,12 +1651,12 @@ static int camss_probe(struct platform_device *pdev)
+ 	num_subdevs = camss_of_parse_ports(camss);
+ 	if (num_subdevs < 0) {
+ 		ret = num_subdevs;
+-		goto err_cleanup;
++		goto err_v4l2_device_unregister;
+ 	}
+ 
+ 	ret = camss_register_entities(camss);
+ 	if (ret < 0)
+-		goto err_cleanup;
++		goto err_v4l2_device_unregister;
+ 
+ 	if (num_subdevs) {
+ 		camss->notifier.ops = &camss_subdev_notifier_ops;
+@@ -1690,7 +1690,7 @@ static int camss_probe(struct platform_device *pdev)
+ 
+ err_register_subdevs:
+ 	camss_unregister_entities(camss);
+-err_cleanup:
++err_v4l2_device_unregister:
+ 	v4l2_device_unregister(&camss->v4l2_dev);
+ 	v4l2_async_nf_cleanup(&camss->notifier);
+ 
 -- 
 2.43.0
 
