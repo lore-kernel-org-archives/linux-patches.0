@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B6C1E4A2;
-	Mon,  8 Jan 2024 15:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB55D4C602;
+	Mon,  8 Jan 2024 15:37:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSGXSzR1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45585C433CC;
-	Mon,  8 Jan 2024 15:37:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsoSloGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D201DC433D9;
+	Mon,  8 Jan 2024 15:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728235;
-	bh=JE+9NcIaErGyNxD7UwfJh5lL0nTflFOS/i9iP9w26sU=;
+	s=korg; t=1704728238;
+	bh=UeVQ0WKcFVmmPURupEiY4OwRpHFZxcXAW9+UZVWX4JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eSGXSzR1p+OnV6syL1OU3KHN14lfb8fLTl8xhIfUEHXhQy6myhWU0jj0ebFzLYRhs
-	 A7aPhLUSajGq66RT5MqIBfcbBzNw6MkLe2FQm8Mp5QtzycZVoIwTh/ZLKxmWPQ3MgI
-	 +M21E0TJp9O891JXE3HOTV3kRot+lElfuUCZbr9E=
+	b=VsoSloGmfbNlW6B/CAFyT8FmMPzSBrbsDVq+yddaZ7dAR5tzkCHFQRjcoIcjOD5Gl
+	 k2fDfzbzZ+3s9Ck7k/WnpKFzwRT1Wt3HTwQCv0lDonmtdY5zjCMwochAss21OlZXNe
+	 MkR9IscZLBGnSfctMkKTSpNk3gIERut3KWCmj1OY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <swboyd@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/150] drm/bridge: ti-sn65dsi86: Never store more than msg->size bytes in AUX xfer
-Date: Mon,  8 Jan 2024 16:34:24 +0100
-Message-ID: <20240108153511.868488082@linuxfoundation.org>
+Subject: [PATCH 6.1 014/150] netfilter: use skb_ip_totlen and iph_totlen
+Date: Mon,  8 Jan 2024 16:34:25 +0100
+Message-ID: <20240108153511.921030793@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -43,52 +43,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit aca58eac52b88138ab98c814afb389a381725cd7 ]
+[ Upstream commit a13fbf5ed5b4fc9095f12e955ca3a59b5507ff01 ]
 
-For aux reads, the value `msg->size` indicates the size of the buffer
-provided by `msg->buffer`. We should never in any circumstances write
-more bytes to the buffer since it may overflow the buffer.
+There are also quite some places in netfilter that may process IPv4 TCP
+GSO packets, we need to replace them too.
 
-In the ti-sn65dsi86 driver there is one code path that reads the
-transfer length from hardware. Even though it's never been seen to be
-a problem, we should make extra sure that the hardware isn't
-increasing the length since doing so would cause us to overrun the
-buffer.
+In length_mt(), we have to use u_int32_t/int to accept skb_ip_totlen()
+return value, otherwise it may overflow and mismatch. This change will
+also help us add selftest for IPv4 BIG TCP in the following patch.
 
-Fixes: 982f589bde7a ("drm/bridge: ti-sn65dsi86: Update reply on aux failures")
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231214123752.v3.2.I7b83c0f31aeedc6b1dc98c7c741d3e1f94f040f8@changeid
+Note that we don't need to replace the one in tcpmss_tg4(), as it will
+return if there is data after tcphdr in tcpmss_mangle_packet(). The
+same in mangle_contents() in nf_nat_helper.c, it returns false when
+skb->len + extra > 65535 in enlarge_skb().
+
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 0ae8e4cca787 ("netfilter: nf_tables: set transport offset from mac header for netdev/egress")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/net/netfilter/nf_tables_ipv4.h | 4 ++--
+ net/netfilter/ipvs/ip_vs_xmit.c        | 2 +-
+ net/netfilter/nf_log_syslog.c          | 2 +-
+ net/netfilter/xt_length.c              | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 1b5c27ed27370..ff4d0564122a3 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -527,6 +527,7 @@ static ssize_t ti_sn_aux_transfer(struct drm_dp_aux *aux,
- 	u32 request_val = AUX_CMD_REQ(msg->request);
- 	u8 *buf = msg->buffer;
- 	unsigned int len = msg->size;
-+	unsigned int short_len;
- 	unsigned int val;
- 	int ret;
- 	u8 addr_len[SN_AUX_LENGTH_REG + 1 - SN_AUX_ADDR_19_16_REG];
-@@ -600,7 +601,8 @@ static ssize_t ti_sn_aux_transfer(struct drm_dp_aux *aux,
+diff --git a/include/net/netfilter/nf_tables_ipv4.h b/include/net/netfilter/nf_tables_ipv4.h
+index c4a6147b0ef8c..d8f6cb47ebe37 100644
+--- a/include/net/netfilter/nf_tables_ipv4.h
++++ b/include/net/netfilter/nf_tables_ipv4.h
+@@ -29,7 +29,7 @@ static inline int __nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt)
+ 	if (iph->ihl < 5 || iph->version != 4)
+ 		return -1;
+ 
+-	len = ntohs(iph->tot_len);
++	len = iph_totlen(pkt->skb, iph);
+ 	thoff = iph->ihl * 4;
+ 	if (pkt->skb->len < len)
+ 		return -1;
+@@ -62,7 +62,7 @@ static inline int nft_set_pktinfo_ipv4_ingress(struct nft_pktinfo *pkt)
+ 	if (iph->ihl < 5 || iph->version != 4)
+ 		goto inhdr_error;
+ 
+-	len = ntohs(iph->tot_len);
++	len = iph_totlen(pkt->skb, iph);
+ 	thoff = iph->ihl * 4;
+ 	if (pkt->skb->len < len) {
+ 		__IP_INC_STATS(nft_net(pkt), IPSTATS_MIB_INTRUNCATEDPKTS);
+diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
+index 7243079ef3546..b452eb3ddcecb 100644
+--- a/net/netfilter/ipvs/ip_vs_xmit.c
++++ b/net/netfilter/ipvs/ip_vs_xmit.c
+@@ -994,7 +994,7 @@ ip_vs_prepare_tunneled_skb(struct sk_buff *skb, int skb_af,
+ 		old_dsfield = ipv4_get_dsfield(old_iph);
+ 		*ttl = old_iph->ttl;
+ 		if (payload_len)
+-			*payload_len = ntohs(old_iph->tot_len);
++			*payload_len = skb_ip_totlen(skb);
  	}
  
- 	if (val & AUX_IRQ_STATUS_AUX_SHORT) {
--		ret = regmap_read(pdata->regmap, SN_AUX_LENGTH_REG, &len);
-+		ret = regmap_read(pdata->regmap, SN_AUX_LENGTH_REG, &short_len);
-+		len = min(len, short_len);
- 		if (ret)
- 			goto exit;
- 	} else if (val & AUX_IRQ_STATUS_NAT_I2C_FAIL) {
+ 	/* Implement full-functionality option for ECN encapsulation */
+diff --git a/net/netfilter/nf_log_syslog.c b/net/netfilter/nf_log_syslog.c
+index cb894f0d63e9d..c66689ad2b491 100644
+--- a/net/netfilter/nf_log_syslog.c
++++ b/net/netfilter/nf_log_syslog.c
+@@ -322,7 +322,7 @@ dump_ipv4_packet(struct net *net, struct nf_log_buf *m,
+ 
+ 	/* Max length: 46 "LEN=65535 TOS=0xFF PREC=0xFF TTL=255 ID=65535 " */
+ 	nf_log_buf_add(m, "LEN=%u TOS=0x%02X PREC=0x%02X TTL=%u ID=%u ",
+-		       ntohs(ih->tot_len), ih->tos & IPTOS_TOS_MASK,
++		       iph_totlen(skb, ih), ih->tos & IPTOS_TOS_MASK,
+ 		       ih->tos & IPTOS_PREC_MASK, ih->ttl, ntohs(ih->id));
+ 
+ 	/* Max length: 6 "CE DF MF " */
+diff --git a/net/netfilter/xt_length.c b/net/netfilter/xt_length.c
+index 9fbfad13176f0..ca730cedb5d41 100644
+--- a/net/netfilter/xt_length.c
++++ b/net/netfilter/xt_length.c
+@@ -21,7 +21,7 @@ static bool
+ length_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ {
+ 	const struct xt_length_info *info = par->matchinfo;
+-	u_int16_t pktlen = ntohs(ip_hdr(skb)->tot_len);
++	u32 pktlen = skb_ip_totlen(skb);
+ 
+ 	return (pktlen >= info->min && pktlen <= info->max) ^ info->invert;
+ }
 -- 
 2.43.0
 
