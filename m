@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225145103F;
-	Mon,  8 Jan 2024 15:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D345103F;
+	Mon,  8 Jan 2024 15:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xyAl0yAP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95263C433C8;
-	Mon,  8 Jan 2024 15:38:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJ+IGooW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E7CC433C7;
+	Mon,  8 Jan 2024 15:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728330;
-	bh=PASqygUuI1rixLNTc+ZUF/+e0VnupNedd/R35bsXYzI=;
+	s=korg; t=1704728333;
+	bh=fegn+dfV5dC0H61J52Q+cgk5j/6HbBUnWNt423yG0pI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xyAl0yAPXn5IBhMka0qJnkGox5LkrmDnJGjYBYx92XqlUhZF6RnLHrSlh25d2cHwp
-	 pIbcIyg1FQ86V5oCuqPWmC34SGzjJSTPsB+JNbhqZ5ZmSXtOYeJ+c3ypj0JmkaHb1j
-	 1vdo/6RURVPB7UeX6BJOoP2UlMdLfdydP40VX+S4=
+	b=YJ+IGooWK1d8RHXl3LlSmWqgDeWEW3CmeBtEtqOmy0HMc1IOM0q1OmxwaszUjJdUj
+	 DzfBk7wQquT4NobE/YkIcqr000qabP5JyUw+32qkzyF2R2F62TJ2hSBmk2wO2YDd99
+	 znEbp0eYZk8WX7sXXc8IB9JHLy9/AOfynQcLt1hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chancel Liu <chancel.liu@nxp.com>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/150] ASoC: fsl_rpmsg: Fix error handler with pm_runtime_enable
-Date: Mon,  8 Jan 2024 16:34:36 +0100
-Message-ID: <20240108153512.437750208@linuxfoundation.org>
+Subject: [PATCH 6.1 043/150] ASoC: meson: g12a-tohdmitx: Validate written enum values
+Date: Mon,  8 Jan 2024 16:34:54 +0100
+Message-ID: <20240108153513.245369323@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -43,63 +41,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chancel Liu <chancel.liu@nxp.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit f9d378fc68c43fd41b35133edec9cd902ec334ec ]
+[ Upstream commit 1e001206804be3f3d21f4a1cf16e5d059d75643f ]
 
-There is error message when defer probe happens:
+When writing to an enum we need to verify that the value written is valid
+for the enumeration, the helper function snd_soc_item_enum_to_val() doesn't
+do it since it needs to return an unsigned (and in any case we'd need to
+check the return value).
 
-fsl_rpmsg rpmsg_audio: Unbalanced pm_runtime_enable!
-
-Fix the error handler with pm_runtime_enable.
-
-Fixes: b73d9e6225e8 ("ASoC: fsl_rpmsg: Add CPU DAI driver for audio base on rpmsg")
-Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Link: https://lore.kernel.org/r/20231225080608.967953-1-chancel.liu@nxp.com
+Fixes: c8609f3870f7 ("ASoC: meson: add g12a tohdmitx control")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20240103-meson-enum-val-v1-2-424af7a8fb91@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_rpmsg.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ sound/soc/meson/g12a-tohdmitx.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_rpmsg.c b/sound/soc/fsl/fsl_rpmsg.c
-index bf94838bdbefe..5c07a8ff0c9c0 100644
---- a/sound/soc/fsl/fsl_rpmsg.c
-+++ b/sound/soc/fsl/fsl_rpmsg.c
-@@ -231,7 +231,7 @@ static int fsl_rpmsg_probe(struct platform_device *pdev)
- 	ret = devm_snd_soc_register_component(&pdev->dev, &fsl_component,
- 					      &fsl_rpmsg_dai, 1);
- 	if (ret)
--		return ret;
-+		goto err_pm_disable;
+diff --git a/sound/soc/meson/g12a-tohdmitx.c b/sound/soc/meson/g12a-tohdmitx.c
+index 579a04ad4d197..46d1f04e0e8a3 100644
+--- a/sound/soc/meson/g12a-tohdmitx.c
++++ b/sound/soc/meson/g12a-tohdmitx.c
+@@ -45,6 +45,9 @@ static int g12a_tohdmitx_i2s_mux_put_enum(struct snd_kcontrol *kcontrol,
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+ 	unsigned int mux, changed;
  
- 	rpmsg->card_pdev = platform_device_register_data(&pdev->dev,
- 							 "imx-audio-rpmsg",
-@@ -241,16 +241,22 @@ static int fsl_rpmsg_probe(struct platform_device *pdev)
- 	if (IS_ERR(rpmsg->card_pdev)) {
- 		dev_err(&pdev->dev, "failed to register rpmsg card\n");
- 		ret = PTR_ERR(rpmsg->card_pdev);
--		return ret;
-+		goto err_pm_disable;
- 	}
- 
- 	return 0;
++	if (ucontrol->value.enumerated.item[0] >= e->items)
++		return -EINVAL;
 +
-+err_pm_disable:
-+	pm_runtime_disable(&pdev->dev);
-+	return ret;
- }
+ 	mux = snd_soc_enum_item_to_val(e, ucontrol->value.enumerated.item[0]);
+ 	changed = snd_soc_component_test_bits(component, e->reg,
+ 					      CTRL0_I2S_DAT_SEL,
+@@ -93,6 +96,9 @@ static int g12a_tohdmitx_spdif_mux_put_enum(struct snd_kcontrol *kcontrol,
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+ 	unsigned int mux, changed;
  
- static int fsl_rpmsg_remove(struct platform_device *pdev)
- {
- 	struct fsl_rpmsg *rpmsg = platform_get_drvdata(pdev);
- 
-+	pm_runtime_disable(&pdev->dev);
++	if (ucontrol->value.enumerated.item[0] >= e->items)
++		return -EINVAL;
 +
- 	if (rpmsg->card_pdev)
- 		platform_device_unregister(rpmsg->card_pdev);
- 
+ 	mux = snd_soc_enum_item_to_val(e, ucontrol->value.enumerated.item[0]);
+ 	changed = snd_soc_component_test_bits(component, TOHDMITX_CTRL0,
+ 					      CTRL0_SPDIF_SEL,
 -- 
 2.43.0
 
