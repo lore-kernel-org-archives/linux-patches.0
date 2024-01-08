@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CE051C29;
-	Mon,  8 Jan 2024 15:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B27524C3;
+	Mon,  8 Jan 2024 15:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tFkq02pu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2265C433AB;
-	Mon,  8 Jan 2024 15:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0f5ht0GR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCC3C43395;
+	Mon,  8 Jan 2024 15:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728619;
-	bh=XPTx26H3WA+G54/Ll6BBJZdnFYs8TE+qAx4WIV92eaE=;
+	s=korg; t=1704728622;
+	bh=5WSE7ARb6WdLcpOIa/5wbBbjt6ilnS3JucKxYR6ogLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tFkq02puXpckTdFQceE/7AJ4MBOR9w8/SGMzx7Zw30aMpPIZOcGZTCr42MiHFRtpX
-	 Y8iX8vj87obj+zVLUHfZGwUXouotySOdp4ybbSJFKGQllpKjkRvArmESM/u2fS4m+A
-	 zd1gNeWElURYX+s/SYrLrt330aAnsEjkc7niocXk=
+	b=0f5ht0GRGisr9tKJP20jRaU0N0CL3kfhsAjkouRoz9Fvk+tuDIZ906tWGmaU1fXZ/
+	 TUDy9e8IikAph0E/vg5hf/7jYGoFABV2YuFn88OO3zoLQJj6+BHR1wDG9iwvn+B6tL
+	 sPrLLv4mWz7pLzzH+yDhzBiE7fwahUA1syfIp8LI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiajun Xie <jiajun.xie.sh@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 135/150] mm: fix unmap_mapping_range high bits shift bug
-Date: Mon,  8 Jan 2024 16:36:26 +0100
-Message-ID: <20240108153517.410159728@linuxfoundation.org>
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 136/150] drm/amdgpu: skip gpu_info fw loading on navi12
+Date: Mon,  8 Jan 2024 16:36:27 +0100
+Message-ID: <20240108153517.459565553@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -41,81 +41,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiajun Xie <jiajun.xie.sh@gmail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 9eab0421fa94a3dde0d1f7e36ab3294fc306c99d upstream.
+commit 21f6137c64c65d6808c4a81006956197ca203383 upstream.
 
-The bug happens when highest bit of holebegin is 1, suppose holebegin is
-0x8000000111111000, after shift, hba would be 0xfff8000000111111, then
-vma_interval_tree_foreach would look it up fail or leads to the wrong
-result.
+It's no longer required.
 
-error call seq e.g.:
-- mmap(..., offset=0x8000000111111000)
-  |- syscall(mmap, ... unsigned long, off):
-     |- ksys_mmap_pgoff( ... , off >> PAGE_SHIFT);
-
-  here pgoff is correctly shifted to 0x8000000111111,
-  but pass 0x8000000111111000 as holebegin to unmap
-  would then cause terrible result, as shown below:
-
-- unmap_mapping_range(..., loff_t const holebegin)
-  |- pgoff_t hba = holebegin >> PAGE_SHIFT;
-          /* hba = 0xfff8000000111111 unexpectedly */
-
-The issue happens in Heterogeneous computing, where the device(e.g.
-gpu) and host share the same virtual address space.
-
-A simple workflow pattern which hit the issue is:
-        /* host */
-    1. userspace first mmap a file backed VA range with specified offset.
-                        e.g. (offset=0x800..., mmap return: va_a)
-    2. write some data to the corresponding sys page
-                         e.g. (va_a = 0xAABB)
-        /* device */
-    3. gpu workload touches VA, triggers gpu fault and notify the host.
-        /* host */
-    4. reviced gpu fault notification, then it will:
-            4.1 unmap host pages and also takes care of cpu tlb
-                  (use unmap_mapping_range with offset=0x800...)
-            4.2 migrate sys page to device
-            4.3 setup device page table and resolve device fault.
-        /* device */
-    5. gpu workload continued, it accessed va_a and got 0xAABB.
-    6. gpu workload continued, it wrote 0xBBCC to va_a.
-        /* host */
-    7. userspace access va_a, as expected, it will:
-            7.1 trigger cpu vm fault.
-            7.2 driver handling fault to migrate gpu local page to host.
-    8. userspace then could correctly get 0xBBCC from va_a
-    9. done
-
-But in step 4.1, if we hit the bug this patch mentioned, then userspace
-would never trigger cpu fault, and still get the old value: 0xAABB.
-
-Making holebegin unsigned first fixes the bug.
-
-Link: https://lkml.kernel.org/r/20231220052839.26970-1-jiajun.xie.sh@gmail.com
-Signed-off-by: Jiajun Xie <jiajun.xie.sh@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2318
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -3617,8 +3617,8 @@ EXPORT_SYMBOL_GPL(unmap_mapping_pages);
- void unmap_mapping_range(struct address_space *mapping,
- 		loff_t const holebegin, loff_t const holelen, int even_cows)
- {
--	pgoff_t hba = holebegin >> PAGE_SHIFT;
--	pgoff_t hlen = (holelen + PAGE_SIZE - 1) >> PAGE_SHIFT;
-+	pgoff_t hba = (pgoff_t)(holebegin) >> PAGE_SHIFT;
-+	pgoff_t hlen = ((pgoff_t)(holelen) + PAGE_SIZE - 1) >> PAGE_SHIFT;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -1976,15 +1976,8 @@ static int amdgpu_device_parse_gpu_info_
  
- 	/* Check for overflow. */
- 	if (sizeof(holelen) > sizeof(hlen)) {
+ 	adev->firmware.gpu_info_fw = NULL;
+ 
+-	if (adev->mman.discovery_bin) {
+-		/*
+-		 * FIXME: The bounding box is still needed by Navi12, so
+-		 * temporarily read it from gpu_info firmware. Should be dropped
+-		 * when DAL no longer needs it.
+-		 */
+-		if (adev->asic_type != CHIP_NAVI12)
+-			return 0;
+-	}
++	if (adev->mman.discovery_bin)
++		return 0;
+ 
+ 	switch (adev->asic_type) {
+ 	default:
 
 
