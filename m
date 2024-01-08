@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550C06D6E4;
-	Mon,  8 Jan 2024 15:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF654BA96;
+	Mon,  8 Jan 2024 15:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKy3q//K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC6AC43397;
-	Mon,  8 Jan 2024 15:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBAwzbPN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D742FC433B9;
+	Mon,  8 Jan 2024 15:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726773;
-	bh=vDLxmO9IwHsmSzQPzM7UdxLgozvH9JcVgIzxoqYCenw=;
+	s=korg; t=1704726776;
+	bh=q6zE89/YorQedLRzO5nefc+PrjezFZV0E5/ho9t6jVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FKy3q//Kxdo6MNI+0E8Cq+wULKjirbOj3q7+wnmZEIPEu93N5cyK9AWNASMa4DIeL
-	 Zxx3k7kfjCt0NhpgYvuN/gaOsX5VABvS4Idg9EQjlkmgbIpHu0ifCNvz/1lpgVsxpa
-	 BtELjeOnzN66Q/nOXorENxq/aRIeZ7qEnE73ESaM=
+	b=iBAwzbPN8mJvo8LXW1B4sHO6Es5iP3Pm5Eq0nGvDb5eYCdIBjr7gMZDFfgM89wx06
+	 YCcq+WjSS0enrsT0OpqaKcQxu4pW+56wktzCDkV/U0mSlMLcDO6HZevaJ9m/3YNfZQ
+	 sISmJYkLGbbeccJhY2nqdyWsBIJCLyBdZtJu+QOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longfang Liu <liulongfang@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/124] crypto: hisilicon/qm - fix EQ/AEQ interrupt issue
-Date: Mon,  8 Jan 2024 16:08:19 +0100
-Message-ID: <20240108150606.337647372@linuxfoundation.org>
+Subject: [PATCH 6.6 074/124] vfio/mtty: Overhaul mtty interrupt handling
+Date: Mon,  8 Jan 2024 16:08:20 +0100
+Message-ID: <20240108150606.383403520@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -36,212 +36,408 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Longfang Liu <liulongfang@huawei.com>
+From: Alex Williamson <alex.williamson@redhat.com>
 
-[ Upstream commit 5acab6eb592387191c1bb745ba9b815e1e076db5 ]
+[ Upstream commit 293fbc28818135743f54d46c418ede3e4a20a742 ]
 
-During hisilicon accelerator live migration operation. In order to
-prevent the problem of EQ/AEQ interrupt loss. Migration driver will
-trigger an EQ/AEQ doorbell at the end of the migration.
+The mtty driver does not currently conform to the vfio SET_IRQS uAPI.
+For example, it claims to support mask and unmask of INTx, but actually
+does nothing.  It claims to support AUTOMASK for INTx, but doesn't.  It
+fails to teardown eventfds under the full semantics specified by the
+SET_IRQS ioctl.  It also fails to teardown eventfds when the device is
+closed, leading to memory leaks.  It claims to support the request IRQ,
+but doesn't.
 
-This operation may cause double interruption of EQ/AEQ events.
-To ensure that the EQ/AEQ interrupt processing function is normal.
-The interrupt handling functionality of EQ/AEQ needs to be updated.
-Used to handle repeated interrupts event.
+Fix all these.
 
-Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
-Signed-off-by: Longfang Liu <liulongfang@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+A side effect of this is that QEMU will now report a warning:
+
+vfio <uuid>: Failed to set up UNMASK eventfd signaling for interrupt \
+INTX-0: VFIO_DEVICE_SET_IRQS failure: Inappropriate ioctl for device
+
+The fact is that the unmask eventfd was never supported but quietly
+failed.  mtty never honored the AUTOMASK behavior, therefore there
+was nothing to unmask.  QEMU is verbose about the failure, but
+properly falls back to userspace unmasking.
+
+Fixes: 9d1a546c53b4 ("docs: Sample driver to demonstrate how to use Mediated device framework.")
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/r/20231016224736.2575718-2-alex.williamson@redhat.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/qm.c | 105 +++++++++++++---------------------
- include/linux/hisi_acc_qm.h   |   1 +
- 2 files changed, 41 insertions(+), 65 deletions(-)
+ samples/vfio-mdev/mtty.c | 239 +++++++++++++++++++++++++++------------
+ 1 file changed, 166 insertions(+), 73 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
-index 193b0b3a77cda..f1589eb3b46af 100644
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -855,47 +855,15 @@ static void qm_poll_req_cb(struct hisi_qp *qp)
- 	qm_db(qm, qp->qp_id, QM_DOORBELL_CMD_CQ, qp->qp_status.cq_head, 1);
- }
- 
--static int qm_get_complete_eqe_num(struct hisi_qm_poll_data *poll_data)
--{
--	struct hisi_qm *qm = poll_data->qm;
--	struct qm_eqe *eqe = qm->eqe + qm->status.eq_head;
--	u16 eq_depth = qm->eq_depth;
--	int eqe_num = 0;
--	u16 cqn;
--
--	while (QM_EQE_PHASE(eqe) == qm->status.eqc_phase) {
--		cqn = le32_to_cpu(eqe->dw0) & QM_EQE_CQN_MASK;
--		poll_data->qp_finish_id[eqe_num] = cqn;
--		eqe_num++;
--
--		if (qm->status.eq_head == eq_depth - 1) {
--			qm->status.eqc_phase = !qm->status.eqc_phase;
--			eqe = qm->eqe;
--			qm->status.eq_head = 0;
--		} else {
--			eqe++;
--			qm->status.eq_head++;
--		}
--
--		if (eqe_num == (eq_depth >> 1) - 1)
--			break;
--	}
--
--	qm_db(qm, 0, QM_DOORBELL_CMD_EQ, qm->status.eq_head, 0);
--
--	return eqe_num;
--}
--
- static void qm_work_process(struct work_struct *work)
- {
- 	struct hisi_qm_poll_data *poll_data =
- 		container_of(work, struct hisi_qm_poll_data, work);
- 	struct hisi_qm *qm = poll_data->qm;
-+	u16 eqe_num = poll_data->eqe_num;
- 	struct hisi_qp *qp;
--	int eqe_num, i;
-+	int i;
- 
--	/* Get qp id of completed tasks and re-enable the interrupt. */
--	eqe_num = qm_get_complete_eqe_num(poll_data);
- 	for (i = eqe_num - 1; i >= 0; i--) {
- 		qp = &qm->qp_array[poll_data->qp_finish_id[i]];
- 		if (unlikely(atomic_read(&qp->qp_status.flags) == QP_STOP))
-@@ -911,39 +879,55 @@ static void qm_work_process(struct work_struct *work)
- 	}
- }
- 
--static bool do_qm_eq_irq(struct hisi_qm *qm)
-+static void qm_get_complete_eqe_num(struct hisi_qm *qm)
- {
- 	struct qm_eqe *eqe = qm->eqe + qm->status.eq_head;
--	struct hisi_qm_poll_data *poll_data;
--	u16 cqn;
-+	struct hisi_qm_poll_data *poll_data = NULL;
-+	u16 eq_depth = qm->eq_depth;
-+	u16 cqn, eqe_num = 0;
- 
--	if (!readl(qm->io_base + QM_VF_EQ_INT_SOURCE))
--		return false;
-+	if (QM_EQE_PHASE(eqe) != qm->status.eqc_phase) {
-+		atomic64_inc(&qm->debug.dfx.err_irq_cnt);
-+		qm_db(qm, 0, QM_DOORBELL_CMD_EQ, qm->status.eq_head, 0);
-+		return;
-+	}
- 
--	if (QM_EQE_PHASE(eqe) == qm->status.eqc_phase) {
-+	cqn = le32_to_cpu(eqe->dw0) & QM_EQE_CQN_MASK;
-+	if (unlikely(cqn >= qm->qp_num))
-+		return;
-+	poll_data = &qm->poll_data[cqn];
-+
-+	while (QM_EQE_PHASE(eqe) == qm->status.eqc_phase) {
- 		cqn = le32_to_cpu(eqe->dw0) & QM_EQE_CQN_MASK;
--		poll_data = &qm->poll_data[cqn];
--		queue_work(qm->wq, &poll_data->work);
-+		poll_data->qp_finish_id[eqe_num] = cqn;
-+		eqe_num++;
-+
-+		if (qm->status.eq_head == eq_depth - 1) {
-+			qm->status.eqc_phase = !qm->status.eqc_phase;
-+			eqe = qm->eqe;
-+			qm->status.eq_head = 0;
-+		} else {
-+			eqe++;
-+			qm->status.eq_head++;
-+		}
- 
--		return true;
-+		if (eqe_num == (eq_depth >> 1) - 1)
-+			break;
- 	}
- 
--	return false;
-+	poll_data->eqe_num = eqe_num;
-+	queue_work(qm->wq, &poll_data->work);
-+	qm_db(qm, 0, QM_DOORBELL_CMD_EQ, qm->status.eq_head, 0);
- }
- 
- static irqreturn_t qm_eq_irq(int irq, void *data)
- {
- 	struct hisi_qm *qm = data;
--	bool ret;
--
--	ret = do_qm_eq_irq(qm);
--	if (ret)
--		return IRQ_HANDLED;
- 
--	atomic64_inc(&qm->debug.dfx.err_irq_cnt);
--	qm_db(qm, 0, QM_DOORBELL_CMD_EQ, qm->status.eq_head, 0);
-+	/* Get qp id of completed tasks and re-enable the interrupt */
-+	qm_get_complete_eqe_num(qm);
- 
--	return IRQ_NONE;
-+	return IRQ_HANDLED;
- }
- 
- static irqreturn_t qm_mb_cmd_irq(int irq, void *data)
-@@ -1025,6 +1009,8 @@ static irqreturn_t qm_aeq_thread(int irq, void *data)
- 	u16 aeq_depth = qm->aeq_depth;
- 	u32 type, qp_id;
- 
-+	atomic64_inc(&qm->debug.dfx.aeq_irq_cnt);
-+
- 	while (QM_AEQE_PHASE(aeqe) == qm->status.aeqc_phase) {
- 		type = le32_to_cpu(aeqe->dw0) >> QM_AEQE_TYPE_SHIFT;
- 		qp_id = le32_to_cpu(aeqe->dw0) & QM_AEQE_CQN_MASK;
-@@ -1062,17 +1048,6 @@ static irqreturn_t qm_aeq_thread(int irq, void *data)
- 	return IRQ_HANDLED;
- }
- 
--static irqreturn_t qm_aeq_irq(int irq, void *data)
--{
--	struct hisi_qm *qm = data;
--
--	atomic64_inc(&qm->debug.dfx.aeq_irq_cnt);
--	if (!readl(qm->io_base + QM_VF_AEQ_INT_SOURCE))
--		return IRQ_NONE;
--
--	return IRQ_WAKE_THREAD;
--}
--
- static void qm_init_qp_status(struct hisi_qp *qp)
- {
- 	struct hisi_qp_status *qp_status = &qp->qp_status;
-@@ -5012,8 +4987,8 @@ static int qm_register_aeq_irq(struct hisi_qm *qm)
- 		return 0;
- 
- 	irq_vector = val & QM_IRQ_VECTOR_MASK;
--	ret = request_threaded_irq(pci_irq_vector(pdev, irq_vector), qm_aeq_irq,
--						   qm_aeq_thread, 0, qm->dev_name, qm);
-+	ret = request_threaded_irq(pci_irq_vector(pdev, irq_vector), NULL,
-+						   qm_aeq_thread, IRQF_ONESHOT, qm->dev_name, qm);
- 	if (ret)
- 		dev_err(&pdev->dev, "failed to request eq irq, ret = %d", ret);
- 
-diff --git a/include/linux/hisi_acc_qm.h b/include/linux/hisi_acc_qm.h
-index 9da4f3f1e6d61..7262c9993c39c 100644
---- a/include/linux/hisi_acc_qm.h
-+++ b/include/linux/hisi_acc_qm.h
-@@ -276,6 +276,7 @@ struct hisi_qm_poll_data {
- 	struct hisi_qm *qm;
- 	struct work_struct work;
- 	u16 *qp_finish_id;
-+	u16 eqe_num;
+diff --git a/samples/vfio-mdev/mtty.c b/samples/vfio-mdev/mtty.c
+index 5af00387c519e..245db52bedf29 100644
+--- a/samples/vfio-mdev/mtty.c
++++ b/samples/vfio-mdev/mtty.c
+@@ -127,7 +127,6 @@ struct serial_port {
+ /* State of each mdev device */
+ struct mdev_state {
+ 	struct vfio_device vdev;
+-	int irq_fd;
+ 	struct eventfd_ctx *intx_evtfd;
+ 	struct eventfd_ctx *msi_evtfd;
+ 	int irq_index;
+@@ -141,6 +140,7 @@ struct mdev_state {
+ 	struct mutex rxtx_lock;
+ 	struct vfio_device_info dev_info;
+ 	int nr_ports;
++	u8 intx_mask:1;
  };
  
- /**
+ static struct mtty_type {
+@@ -166,10 +166,6 @@ static const struct file_operations vd_fops = {
+ 
+ static const struct vfio_device_ops mtty_dev_ops;
+ 
+-/* function prototypes */
+-
+-static int mtty_trigger_interrupt(struct mdev_state *mdev_state);
+-
+ /* Helper functions */
+ 
+ static void dump_buffer(u8 *buf, uint32_t count)
+@@ -186,6 +182,36 @@ static void dump_buffer(u8 *buf, uint32_t count)
+ #endif
+ }
+ 
++static bool is_intx(struct mdev_state *mdev_state)
++{
++	return mdev_state->irq_index == VFIO_PCI_INTX_IRQ_INDEX;
++}
++
++static bool is_msi(struct mdev_state *mdev_state)
++{
++	return mdev_state->irq_index == VFIO_PCI_MSI_IRQ_INDEX;
++}
++
++static bool is_noirq(struct mdev_state *mdev_state)
++{
++	return !is_intx(mdev_state) && !is_msi(mdev_state);
++}
++
++static void mtty_trigger_interrupt(struct mdev_state *mdev_state)
++{
++	lockdep_assert_held(&mdev_state->ops_lock);
++
++	if (is_msi(mdev_state)) {
++		if (mdev_state->msi_evtfd)
++			eventfd_signal(mdev_state->msi_evtfd, 1);
++	} else if (is_intx(mdev_state)) {
++		if (mdev_state->intx_evtfd && !mdev_state->intx_mask) {
++			eventfd_signal(mdev_state->intx_evtfd, 1);
++			mdev_state->intx_mask = true;
++		}
++	}
++}
++
+ static void mtty_create_config_space(struct mdev_state *mdev_state)
+ {
+ 	/* PCI dev ID */
+@@ -921,6 +947,25 @@ static ssize_t mtty_write(struct vfio_device *vdev, const char __user *buf,
+ 	return -EFAULT;
+ }
+ 
++static void mtty_disable_intx(struct mdev_state *mdev_state)
++{
++	if (mdev_state->intx_evtfd) {
++		eventfd_ctx_put(mdev_state->intx_evtfd);
++		mdev_state->intx_evtfd = NULL;
++		mdev_state->intx_mask = false;
++		mdev_state->irq_index = -1;
++	}
++}
++
++static void mtty_disable_msi(struct mdev_state *mdev_state)
++{
++	if (mdev_state->msi_evtfd) {
++		eventfd_ctx_put(mdev_state->msi_evtfd);
++		mdev_state->msi_evtfd = NULL;
++		mdev_state->irq_index = -1;
++	}
++}
++
+ static int mtty_set_irqs(struct mdev_state *mdev_state, uint32_t flags,
+ 			 unsigned int index, unsigned int start,
+ 			 unsigned int count, void *data)
+@@ -932,59 +977,113 @@ static int mtty_set_irqs(struct mdev_state *mdev_state, uint32_t flags,
+ 	case VFIO_PCI_INTX_IRQ_INDEX:
+ 		switch (flags & VFIO_IRQ_SET_ACTION_TYPE_MASK) {
+ 		case VFIO_IRQ_SET_ACTION_MASK:
++			if (!is_intx(mdev_state) || start != 0 || count != 1) {
++				ret = -EINVAL;
++				break;
++			}
++
++			if (flags & VFIO_IRQ_SET_DATA_NONE) {
++				mdev_state->intx_mask = true;
++			} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
++				uint8_t mask = *(uint8_t *)data;
++
++				if (mask)
++					mdev_state->intx_mask = true;
++			} else if (flags &  VFIO_IRQ_SET_DATA_EVENTFD) {
++				ret = -ENOTTY; /* No support for mask fd */
++			}
++			break;
+ 		case VFIO_IRQ_SET_ACTION_UNMASK:
++			if (!is_intx(mdev_state) || start != 0 || count != 1) {
++				ret = -EINVAL;
++				break;
++			}
++
++			if (flags & VFIO_IRQ_SET_DATA_NONE) {
++				mdev_state->intx_mask = false;
++			} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
++				uint8_t mask = *(uint8_t *)data;
++
++				if (mask)
++					mdev_state->intx_mask = false;
++			} else if (flags &  VFIO_IRQ_SET_DATA_EVENTFD) {
++				ret = -ENOTTY; /* No support for unmask fd */
++			}
+ 			break;
+ 		case VFIO_IRQ_SET_ACTION_TRIGGER:
+-		{
+-			if (flags & VFIO_IRQ_SET_DATA_NONE) {
+-				pr_info("%s: disable INTx\n", __func__);
+-				if (mdev_state->intx_evtfd)
+-					eventfd_ctx_put(mdev_state->intx_evtfd);
++			if (is_intx(mdev_state) && !count &&
++			    (flags & VFIO_IRQ_SET_DATA_NONE)) {
++				mtty_disable_intx(mdev_state);
++				break;
++			}
++
++			if (!(is_intx(mdev_state) || is_noirq(mdev_state)) ||
++			    start != 0 || count != 1) {
++				ret = -EINVAL;
+ 				break;
+ 			}
+ 
+ 			if (flags & VFIO_IRQ_SET_DATA_EVENTFD) {
+ 				int fd = *(int *)data;
++				struct eventfd_ctx *evt;
++
++				mtty_disable_intx(mdev_state);
++
++				if (fd < 0)
++					break;
+ 
+-				if (fd > 0) {
+-					struct eventfd_ctx *evt;
+-
+-					evt = eventfd_ctx_fdget(fd);
+-					if (IS_ERR(evt)) {
+-						ret = PTR_ERR(evt);
+-						break;
+-					}
+-					mdev_state->intx_evtfd = evt;
+-					mdev_state->irq_fd = fd;
+-					mdev_state->irq_index = index;
++				evt = eventfd_ctx_fdget(fd);
++				if (IS_ERR(evt)) {
++					ret = PTR_ERR(evt);
+ 					break;
+ 				}
++				mdev_state->intx_evtfd = evt;
++				mdev_state->irq_index = index;
++				break;
++			}
++
++			if (!is_intx(mdev_state)) {
++				ret = -EINVAL;
++				break;
++			}
++
++			if (flags & VFIO_IRQ_SET_DATA_NONE) {
++				mtty_trigger_interrupt(mdev_state);
++			} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
++				uint8_t trigger = *(uint8_t *)data;
++
++				if (trigger)
++					mtty_trigger_interrupt(mdev_state);
+ 			}
+ 			break;
+ 		}
+-		}
+ 		break;
+ 	case VFIO_PCI_MSI_IRQ_INDEX:
+ 		switch (flags & VFIO_IRQ_SET_ACTION_TYPE_MASK) {
+ 		case VFIO_IRQ_SET_ACTION_MASK:
+ 		case VFIO_IRQ_SET_ACTION_UNMASK:
++			ret = -ENOTTY;
+ 			break;
+ 		case VFIO_IRQ_SET_ACTION_TRIGGER:
+-			if (flags & VFIO_IRQ_SET_DATA_NONE) {
+-				if (mdev_state->msi_evtfd)
+-					eventfd_ctx_put(mdev_state->msi_evtfd);
+-				pr_info("%s: disable MSI\n", __func__);
+-				mdev_state->irq_index = VFIO_PCI_INTX_IRQ_INDEX;
++			if (is_msi(mdev_state) && !count &&
++			    (flags & VFIO_IRQ_SET_DATA_NONE)) {
++				mtty_disable_msi(mdev_state);
+ 				break;
+ 			}
++
++			if (!(is_msi(mdev_state) || is_noirq(mdev_state)) ||
++			    start != 0 || count != 1) {
++				ret = -EINVAL;
++				break;
++			}
++
+ 			if (flags & VFIO_IRQ_SET_DATA_EVENTFD) {
+ 				int fd = *(int *)data;
+ 				struct eventfd_ctx *evt;
+ 
+-				if (fd <= 0)
+-					break;
++				mtty_disable_msi(mdev_state);
+ 
+-				if (mdev_state->msi_evtfd)
++				if (fd < 0)
+ 					break;
+ 
+ 				evt = eventfd_ctx_fdget(fd);
+@@ -993,20 +1092,37 @@ static int mtty_set_irqs(struct mdev_state *mdev_state, uint32_t flags,
+ 					break;
+ 				}
+ 				mdev_state->msi_evtfd = evt;
+-				mdev_state->irq_fd = fd;
+ 				mdev_state->irq_index = index;
++				break;
++			}
++
++			if (!is_msi(mdev_state)) {
++				ret = -EINVAL;
++				break;
++			}
++
++			if (flags & VFIO_IRQ_SET_DATA_NONE) {
++				mtty_trigger_interrupt(mdev_state);
++			} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
++				uint8_t trigger = *(uint8_t *)data;
++
++				if (trigger)
++					mtty_trigger_interrupt(mdev_state);
+ 			}
+ 			break;
+-	}
+-	break;
++		}
++		break;
+ 	case VFIO_PCI_MSIX_IRQ_INDEX:
+-		pr_info("%s: MSIX_IRQ\n", __func__);
++		dev_dbg(mdev_state->vdev.dev, "%s: MSIX_IRQ\n", __func__);
++		ret = -ENOTTY;
+ 		break;
+ 	case VFIO_PCI_ERR_IRQ_INDEX:
+-		pr_info("%s: ERR_IRQ\n", __func__);
++		dev_dbg(mdev_state->vdev.dev, "%s: ERR_IRQ\n", __func__);
++		ret = -ENOTTY;
+ 		break;
+ 	case VFIO_PCI_REQ_IRQ_INDEX:
+-		pr_info("%s: REQ_IRQ\n", __func__);
++		dev_dbg(mdev_state->vdev.dev, "%s: REQ_IRQ\n", __func__);
++		ret = -ENOTTY;
+ 		break;
+ 	}
+ 
+@@ -1014,33 +1130,6 @@ static int mtty_set_irqs(struct mdev_state *mdev_state, uint32_t flags,
+ 	return ret;
+ }
+ 
+-static int mtty_trigger_interrupt(struct mdev_state *mdev_state)
+-{
+-	int ret = -1;
+-
+-	if ((mdev_state->irq_index == VFIO_PCI_MSI_IRQ_INDEX) &&
+-	    (!mdev_state->msi_evtfd))
+-		return -EINVAL;
+-	else if ((mdev_state->irq_index == VFIO_PCI_INTX_IRQ_INDEX) &&
+-		 (!mdev_state->intx_evtfd)) {
+-		pr_info("%s: Intr eventfd not found\n", __func__);
+-		return -EINVAL;
+-	}
+-
+-	if (mdev_state->irq_index == VFIO_PCI_MSI_IRQ_INDEX)
+-		ret = eventfd_signal(mdev_state->msi_evtfd, 1);
+-	else
+-		ret = eventfd_signal(mdev_state->intx_evtfd, 1);
+-
+-#if defined(DEBUG_INTR)
+-	pr_info("Intx triggered\n");
+-#endif
+-	if (ret != 1)
+-		pr_err("%s: eventfd signal failed (%d)\n", __func__, ret);
+-
+-	return ret;
+-}
+-
+ static int mtty_get_region_info(struct mdev_state *mdev_state,
+ 			 struct vfio_region_info *region_info,
+ 			 u16 *cap_type_id, void **cap_type)
+@@ -1084,22 +1173,16 @@ static int mtty_get_region_info(struct mdev_state *mdev_state,
+ 
+ static int mtty_get_irq_info(struct vfio_irq_info *irq_info)
+ {
+-	switch (irq_info->index) {
+-	case VFIO_PCI_INTX_IRQ_INDEX:
+-	case VFIO_PCI_MSI_IRQ_INDEX:
+-	case VFIO_PCI_REQ_IRQ_INDEX:
+-		break;
+-
+-	default:
++	if (irq_info->index != VFIO_PCI_INTX_IRQ_INDEX &&
++	    irq_info->index != VFIO_PCI_MSI_IRQ_INDEX)
+ 		return -EINVAL;
+-	}
+ 
+ 	irq_info->flags = VFIO_IRQ_INFO_EVENTFD;
+ 	irq_info->count = 1;
+ 
+ 	if (irq_info->index == VFIO_PCI_INTX_IRQ_INDEX)
+-		irq_info->flags |= (VFIO_IRQ_INFO_MASKABLE |
+-				VFIO_IRQ_INFO_AUTOMASKED);
++		irq_info->flags |= VFIO_IRQ_INFO_MASKABLE |
++				   VFIO_IRQ_INFO_AUTOMASKED;
+ 	else
+ 		irq_info->flags |= VFIO_IRQ_INFO_NORESIZE;
+ 
+@@ -1262,6 +1345,15 @@ static unsigned int mtty_get_available(struct mdev_type *mtype)
+ 	return atomic_read(&mdev_avail_ports) / type->nr_ports;
+ }
+ 
++static void mtty_close(struct vfio_device *vdev)
++{
++	struct mdev_state *mdev_state =
++				container_of(vdev, struct mdev_state, vdev);
++
++	mtty_disable_intx(mdev_state);
++	mtty_disable_msi(mdev_state);
++}
++
+ static const struct vfio_device_ops mtty_dev_ops = {
+ 	.name = "vfio-mtty",
+ 	.init = mtty_init_dev,
+@@ -1273,6 +1365,7 @@ static const struct vfio_device_ops mtty_dev_ops = {
+ 	.unbind_iommufd	= vfio_iommufd_emulated_unbind,
+ 	.attach_ioas	= vfio_iommufd_emulated_attach_ioas,
+ 	.detach_ioas	= vfio_iommufd_emulated_detach_ioas,
++	.close_device	= mtty_close,
+ };
+ 
+ static struct mdev_driver mtty_driver = {
 -- 
 2.43.0
 
