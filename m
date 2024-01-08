@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A4F4BAB1;
-	Mon,  8 Jan 2024 15:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16644BAB1;
+	Mon,  8 Jan 2024 15:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeLT9n4s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29FAC433CD;
-	Mon,  8 Jan 2024 15:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhBpeof4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FBA4C433C7;
+	Mon,  8 Jan 2024 15:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726785;
-	bh=dmWIid33lCMvDo5AYrDV9L9DeipAeUs7KgT3jMZBASU=;
+	s=korg; t=1704726788;
+	bh=e/LM1cstUvf8S6oVwqLUPbObN+w1M7cjKMFOOvfano8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UeLT9n4sUf+qxveaVKX/wuzJXUgH9kFU9kmZxeOPjZGeIYlBYdJNLgMrOIuv7NBNb
-	 VkHBwp1npUbfFVT8hfhGFGSHzNhFcMiMdsmo2aeCJOZo93jV9w4jBpH3cXVJ1b1Z2i
-	 7Fdkri2+T1LxV3LaxW+7Y6J0Ep6N6urudL9lDUJk=
+	b=OhBpeof42OCHcfJIIvSgmBO1W7fWuet7yaagFUvv0bBk78vnrWuCZl93etCn4+xSi
+	 H7bKt0Re9JEfJ4rCHTOZ2LX0Pp3ntPm2LfUhhp6kPjQFK99kWvh/8S9HHT4t645CKN
+	 nmDrcMWd1Igw/BVZUhg0gPXIC3FIBmazv5JDrpJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Waiman Long <longman@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/124] ACPI: thermal: Fix acpi_thermal_unregister_thermal_zone() cleanup
-Date: Mon,  8 Jan 2024 16:08:23 +0100
-Message-ID: <20240108150606.514127592@linuxfoundation.org>
+Subject: [PATCH 6.6 078/124] rcu: Break rcu_node_0 --> &rq->__lock order
+Date: Mon,  8 Jan 2024 16:08:24 +0100
+Message-ID: <20240108150606.564549042@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -42,53 +45,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 4b27d5c420335dad7aea1aa6e799fe1d05c63b7e ]
+[ Upstream commit 85d68222ddc5f4522e456d97d201166acb50f716 ]
 
-The acpi_thermal_unregister_thermal_zone() is paired with
-acpi_thermal_register_thermal_zone() so it should mirror it.  It should
-clean up all the resources that the register function allocated and
-leave the stuff that was allocated elsewhere.
+Commit 851a723e45d1 ("sched: Always clear user_cpus_ptr in
+do_set_cpus_allowed()") added a kfree() call to free any user
+provided affinity mask, if present. It was changed later to use
+kfree_rcu() in commit 9a5418bc48ba ("sched/core: Use kfree_rcu()
+in do_set_cpus_allowed()") to avoid a circular locking dependency
+problem.
 
-Unfortunately, it doesn't call thermal_zone_device_disable().  Also it
-calls kfree(tz->trip_table) when it shouldn't.  That was allocated in
-acpi_thermal_add().  Putting the kfree() here leads to a double free
-in the acpi_thermal_add() clean up function.
+It turns out that even kfree_rcu() isn't safe for avoiding
+circular locking problem. As reported by kernel test robot,
+the following circular locking dependency now exists:
 
-Likewise, the acpi_thermal_remove() should mirror acpi_thermal_add() so
-it should have an explicit kfree(tz->trip_table) as well.
+  &rdp->nocb_lock --> rcu_node_0 --> &rq->__lock
 
-Fixes: ec23c1c462de ("ACPI: thermal: Use trip point table to register thermal zones")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Solve this by breaking the rcu_node_0 --> &rq->__lock chain by moving
+the resched_cpu() out from under rcu_node lock.
+
+[peterz: heavily borrowed from Waiman's Changelog]
+[paulmck: applied Z qiang feedback]
+
+Fixes: 851a723e45d1 ("sched: Always clear user_cpus_ptr in do_set_cpus_allowed()")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Acked-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/oe-lkp/202310302207.a25f1a30-oliver.sang@intel.com
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/thermal.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/rcu/tree.c | 36 +++++++++++++++++++++++++-----------
+ 1 file changed, 25 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/acpi/thermal.c b/drivers/acpi/thermal.c
-index 312730f8272ee..8263508415a8d 100644
---- a/drivers/acpi/thermal.c
-+++ b/drivers/acpi/thermal.c
-@@ -778,9 +778,9 @@ static int acpi_thermal_register_thermal_zone(struct acpi_thermal *tz)
- 
- static void acpi_thermal_unregister_thermal_zone(struct acpi_thermal *tz)
- {
-+	thermal_zone_device_disable(tz->thermal_zone);
- 	acpi_thermal_zone_sysfs_remove(tz);
- 	thermal_zone_device_unregister(tz->thermal_zone);
--	kfree(tz->trip_table);
- 	tz->thermal_zone = NULL;
+diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
+index 7b4517dc46579..92a090e161865 100644
+--- a/kernel/rcu/tree.c
++++ b/kernel/rcu/tree.c
+@@ -755,14 +755,19 @@ static int dyntick_save_progress_counter(struct rcu_data *rdp)
  }
  
-@@ -985,7 +985,7 @@ static void acpi_thermal_remove(struct acpi_device *device)
+ /*
+- * Return true if the specified CPU has passed through a quiescent
+- * state by virtue of being in or having passed through an dynticks
+- * idle state since the last call to dyntick_save_progress_counter()
+- * for this same CPU, or by virtue of having been offline.
++ * Returns positive if the specified CPU has passed through a quiescent state
++ * by virtue of being in or having passed through an dynticks idle state since
++ * the last call to dyntick_save_progress_counter() for this same CPU, or by
++ * virtue of having been offline.
++ *
++ * Returns negative if the specified CPU needs a force resched.
++ *
++ * Returns zero otherwise.
+  */
+ static int rcu_implicit_dynticks_qs(struct rcu_data *rdp)
+ {
+ 	unsigned long jtsq;
++	int ret = 0;
+ 	struct rcu_node *rnp = rdp->mynode;
  
- 	flush_workqueue(acpi_thermal_pm_queue);
- 	acpi_thermal_unregister_thermal_zone(tz);
--
-+	kfree(tz->trip_table);
- 	kfree(tz);
+ 	/*
+@@ -848,8 +853,8 @@ static int rcu_implicit_dynticks_qs(struct rcu_data *rdp)
+ 	    (time_after(jiffies, READ_ONCE(rdp->last_fqs_resched) + jtsq * 3) ||
+ 	     rcu_state.cbovld)) {
+ 		WRITE_ONCE(rdp->rcu_urgent_qs, true);
+-		resched_cpu(rdp->cpu);
+ 		WRITE_ONCE(rdp->last_fqs_resched, jiffies);
++		ret = -1;
+ 	}
+ 
+ 	/*
+@@ -862,8 +867,8 @@ static int rcu_implicit_dynticks_qs(struct rcu_data *rdp)
+ 	if (time_after(jiffies, rcu_state.jiffies_resched)) {
+ 		if (time_after(jiffies,
+ 			       READ_ONCE(rdp->last_fqs_resched) + jtsq)) {
+-			resched_cpu(rdp->cpu);
+ 			WRITE_ONCE(rdp->last_fqs_resched, jiffies);
++			ret = -1;
+ 		}
+ 		if (IS_ENABLED(CONFIG_IRQ_WORK) &&
+ 		    !rdp->rcu_iw_pending && rdp->rcu_iw_gp_seq != rnp->gp_seq &&
+@@ -892,7 +897,7 @@ static int rcu_implicit_dynticks_qs(struct rcu_data *rdp)
+ 		}
+ 	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ /* Trace-event wrapper function for trace_rcu_future_grace_period.  */
+@@ -2270,15 +2275,15 @@ static void force_qs_rnp(int (*f)(struct rcu_data *rdp))
+ {
+ 	int cpu;
+ 	unsigned long flags;
+-	unsigned long mask;
+-	struct rcu_data *rdp;
+ 	struct rcu_node *rnp;
+ 
+ 	rcu_state.cbovld = rcu_state.cbovldnext;
+ 	rcu_state.cbovldnext = false;
+ 	rcu_for_each_leaf_node(rnp) {
++		unsigned long mask = 0;
++		unsigned long rsmask = 0;
++
+ 		cond_resched_tasks_rcu_qs();
+-		mask = 0;
+ 		raw_spin_lock_irqsave_rcu_node(rnp, flags);
+ 		rcu_state.cbovldnext |= !!rnp->cbovldmask;
+ 		if (rnp->qsmask == 0) {
+@@ -2296,11 +2301,17 @@ static void force_qs_rnp(int (*f)(struct rcu_data *rdp))
+ 			continue;
+ 		}
+ 		for_each_leaf_node_cpu_mask(rnp, cpu, rnp->qsmask) {
++			struct rcu_data *rdp;
++			int ret;
++
+ 			rdp = per_cpu_ptr(&rcu_data, cpu);
+-			if (f(rdp)) {
++			ret = f(rdp);
++			if (ret > 0) {
+ 				mask |= rdp->grpmask;
+ 				rcu_disable_urgency_upon_qs(rdp);
+ 			}
++			if (ret < 0)
++				rsmask |= rdp->grpmask;
+ 		}
+ 		if (mask != 0) {
+ 			/* Idle/offline CPUs, report (releases rnp->lock). */
+@@ -2309,6 +2320,9 @@ static void force_qs_rnp(int (*f)(struct rcu_data *rdp))
+ 			/* Nothing to do here, so just drop the lock. */
+ 			raw_spin_unlock_irqrestore_rcu_node(rnp, flags);
+ 		}
++
++		for_each_leaf_node_cpu_mask(rnp, cpu, rsmask)
++			resched_cpu(cpu);
+ 	}
  }
  
 -- 
