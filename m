@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1093647791;
-	Mon,  8 Jan 2024 15:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F96B6D6DC;
+	Mon,  8 Jan 2024 15:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWDKSFPa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED66C433CB;
-	Mon,  8 Jan 2024 15:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgqYTj/1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72D8FC43397;
+	Mon,  8 Jan 2024 15:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726876;
-	bh=EDgatXhHgcjA0cwU/mrXZB/1y7+Tvs7Vf8jOAxmqF9Q=;
+	s=korg; t=1704726880;
+	bh=IW2ZOB6rHrdVivdNL0MDPwQorPOLYVJU1V/M2c2gVr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MWDKSFPaA6bTFXuRsKdWDT1hpcqIXpTMLze6eDSgFbDTwWL/PxrdfQWgpq3D/PEwm
-	 Bpzf+5d9v1IJG2b4e/hYr3spcaGnAo/livdmltg1+otJTXosinjZezNKnH3njoREqT
-	 kYgCAsWpxNJUqptBJ5y3Voouv6uirMtLcokK9lnA=
+	b=vgqYTj/1VmkJsAiRRm5ZnKiYm00BwN06IC6xZHBkn0e09g8F6EAqOebyRDFD5a1pP
+	 8I2lYqqGh2XdYhARjbGk7MO+K+yEOp9aNu48l8W4UN5oUh5zA7iQ2ttkiRhwflcEvu
+	 5wRLPl3lpFt4XFhP4ELXvkUHGnTYag4i3FmvZ+6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	duanqiangwen <duanqiangwen@net-swift.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 106/124] cxl/pmu: Ensure put_device on pmu devices
-Date: Mon,  8 Jan 2024 16:08:52 +0100
-Message-ID: <20240108150607.845391746@linuxfoundation.org>
+Subject: [PATCH 6.6 107/124] net: libwx: fix memory leak on free page
+Date: Mon,  8 Jan 2024 16:08:53 +0100
+Message-ID: <20240108150607.896561504@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -44,76 +42,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ira Weiny <ira.weiny@intel.com>
+From: duanqiangwen <duanqiangwen@net-swift.com>
 
-[ Upstream commit ef3d5cf9c59cccb012aa6b93d99f4c6eb5d6648e ]
+[ Upstream commit 738b54b9b6236f573eed2453c4cbfa77326793e2 ]
 
-The following kmemleaks were detected when removing the cxl module
-stack:
+ifconfig ethx up, will set page->refcount larger than 1,
+and then ifconfig ethx down, calling __page_frag_cache_drain()
+to free pages, it is not compatible with page pool.
+So deleting codes which changing page->refcount.
 
-unreferenced object 0xffff88822616b800 (size 1024):
-...
-  backtrace:
-    [<00000000bedc6f83>] kmalloc_trace+0x26/0x90
-    [<00000000448d1afc>] devm_cxl_pmu_add+0x3a/0x110 [cxl_core]
-    [<00000000ca3bfe16>] 0xffffffffa105213b
-    [<00000000ba7f78dc>] local_pci_probe+0x41/0x90
-    [<000000005bb027ac>] pci_device_probe+0xb0/0x1c0
-...
-unreferenced object 0xffff8882260abcc0 (size 16):
-...
-  hex dump (first 16 bytes):
-    70 6d 75 5f 6d 65 6d 30 2e 30 00 26 82 88 ff ff  pmu_mem0.0.&....
-  backtrace:
-...
-    [<00000000152b5e98>] dev_set_name+0x43/0x50
-    [<00000000c228798b>] devm_cxl_pmu_add+0x102/0x110 [cxl_core]
-    [<00000000ca3bfe16>] 0xffffffffa105213b
-    [<00000000ba7f78dc>] local_pci_probe+0x41/0x90
-    [<000000005bb027ac>] pci_device_probe+0xb0/0x1c0
-...
-unreferenced object 0xffff8882272af200 (size 256):
-...
-  backtrace:
-    [<00000000bedc6f83>] kmalloc_trace+0x26/0x90
-    [<00000000a14d1813>] device_add+0x4ea/0x890
-    [<00000000a3f07b47>] devm_cxl_pmu_add+0xbe/0x110 [cxl_core]
-    [<00000000ca3bfe16>] 0xffffffffa105213b
-    [<00000000ba7f78dc>] local_pci_probe+0x41/0x90
-    [<000000005bb027ac>] pci_device_probe+0xb0/0x1c0
-...
-
-devm_cxl_pmu_add() correctly registers a device remove function but it
-only calls device_del() which is only part of device unregistration.
-
-Properly call device_unregister() to free up the memory associated with
-the device.
-
-Fixes: 1ad3f701c399 ("cxl/pci: Find and register CXL PMU devices")
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20231016-pmu-unregister-fix-v1-1-1e2eb2fa3c69@intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Fixes: 3c47e8ae113a ("net: libwx: Support to receive packets in NAPI")
+Signed-off-by: duanqiangwen <duanqiangwen@net-swift.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/wangxun/libwx/wx_lib.c  | 82 ++------------------
+ drivers/net/ethernet/wangxun/libwx/wx_type.h |  1 -
+ 2 files changed, 6 insertions(+), 77 deletions(-)
 
-diff --git a/drivers/cxl/core/pmu.c b/drivers/cxl/core/pmu.c
-index 7684c843e5a59..5d8e06b0ba6e8 100644
---- a/drivers/cxl/core/pmu.c
-+++ b/drivers/cxl/core/pmu.c
-@@ -23,7 +23,7 @@ const struct device_type cxl_pmu_type = {
- 
- static void remove_dev(void *dev)
- {
--	device_del(dev);
-+	device_unregister(dev);
+diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+index 21505920136c6..e078f4071dc23 100644
+--- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+@@ -160,60 +160,6 @@ static __le32 wx_test_staterr(union wx_rx_desc *rx_desc,
+ 	return rx_desc->wb.upper.status_error & cpu_to_le32(stat_err_bits);
  }
  
- int devm_cxl_pmu_add(struct device *parent, struct cxl_pmu_regs *regs,
+-static bool wx_can_reuse_rx_page(struct wx_rx_buffer *rx_buffer,
+-				 int rx_buffer_pgcnt)
+-{
+-	unsigned int pagecnt_bias = rx_buffer->pagecnt_bias;
+-	struct page *page = rx_buffer->page;
+-
+-	/* avoid re-using remote and pfmemalloc pages */
+-	if (!dev_page_is_reusable(page))
+-		return false;
+-
+-#if (PAGE_SIZE < 8192)
+-	/* if we are only owner of page we can reuse it */
+-	if (unlikely((rx_buffer_pgcnt - pagecnt_bias) > 1))
+-		return false;
+-#endif
+-
+-	/* If we have drained the page fragment pool we need to update
+-	 * the pagecnt_bias and page count so that we fully restock the
+-	 * number of references the driver holds.
+-	 */
+-	if (unlikely(pagecnt_bias == 1)) {
+-		page_ref_add(page, USHRT_MAX - 1);
+-		rx_buffer->pagecnt_bias = USHRT_MAX;
+-	}
+-
+-	return true;
+-}
+-
+-/**
+- * wx_reuse_rx_page - page flip buffer and store it back on the ring
+- * @rx_ring: rx descriptor ring to store buffers on
+- * @old_buff: donor buffer to have page reused
+- *
+- * Synchronizes page for reuse by the adapter
+- **/
+-static void wx_reuse_rx_page(struct wx_ring *rx_ring,
+-			     struct wx_rx_buffer *old_buff)
+-{
+-	u16 nta = rx_ring->next_to_alloc;
+-	struct wx_rx_buffer *new_buff;
+-
+-	new_buff = &rx_ring->rx_buffer_info[nta];
+-
+-	/* update, and store next to alloc */
+-	nta++;
+-	rx_ring->next_to_alloc = (nta < rx_ring->count) ? nta : 0;
+-
+-	/* transfer page from old buffer to new buffer */
+-	new_buff->page = old_buff->page;
+-	new_buff->page_dma = old_buff->page_dma;
+-	new_buff->page_offset = old_buff->page_offset;
+-	new_buff->pagecnt_bias	= old_buff->pagecnt_bias;
+-}
+-
+ static void wx_dma_sync_frag(struct wx_ring *rx_ring,
+ 			     struct wx_rx_buffer *rx_buffer)
+ {
+@@ -270,8 +216,6 @@ static struct wx_rx_buffer *wx_get_rx_buffer(struct wx_ring *rx_ring,
+ 				      size,
+ 				      DMA_FROM_DEVICE);
+ skip_sync:
+-	rx_buffer->pagecnt_bias--;
+-
+ 	return rx_buffer;
+ }
+ 
+@@ -280,19 +224,9 @@ static void wx_put_rx_buffer(struct wx_ring *rx_ring,
+ 			     struct sk_buff *skb,
+ 			     int rx_buffer_pgcnt)
+ {
+-	if (wx_can_reuse_rx_page(rx_buffer, rx_buffer_pgcnt)) {
+-		/* hand second half of page back to the ring */
+-		wx_reuse_rx_page(rx_ring, rx_buffer);
+-	} else {
+-		if (!IS_ERR(skb) && WX_CB(skb)->dma == rx_buffer->dma)
+-			/* the page has been released from the ring */
+-			WX_CB(skb)->page_released = true;
+-		else
+-			page_pool_put_full_page(rx_ring->page_pool, rx_buffer->page, false);
+-
+-		__page_frag_cache_drain(rx_buffer->page,
+-					rx_buffer->pagecnt_bias);
+-	}
++	if (!IS_ERR(skb) && WX_CB(skb)->dma == rx_buffer->dma)
++		/* the page has been released from the ring */
++		WX_CB(skb)->page_released = true;
+ 
+ 	/* clear contents of rx_buffer */
+ 	rx_buffer->page = NULL;
+@@ -335,11 +269,12 @@ static struct sk_buff *wx_build_skb(struct wx_ring *rx_ring,
+ 		if (size <= WX_RXBUFFER_256) {
+ 			memcpy(__skb_put(skb, size), page_addr,
+ 			       ALIGN(size, sizeof(long)));
+-			rx_buffer->pagecnt_bias++;
+-
++			page_pool_put_full_page(rx_ring->page_pool, rx_buffer->page, true);
+ 			return skb;
+ 		}
+ 
++		skb_mark_for_recycle(skb);
++
+ 		if (!wx_test_staterr(rx_desc, WX_RXD_STAT_EOP))
+ 			WX_CB(skb)->dma = rx_buffer->dma;
+ 
+@@ -382,8 +317,6 @@ static bool wx_alloc_mapped_page(struct wx_ring *rx_ring,
+ 	bi->page_dma = dma;
+ 	bi->page = page;
+ 	bi->page_offset = 0;
+-	page_ref_add(page, USHRT_MAX - 1);
+-	bi->pagecnt_bias = USHRT_MAX;
+ 
+ 	return true;
+ }
+@@ -721,7 +654,6 @@ static int wx_clean_rx_irq(struct wx_q_vector *q_vector,
+ 
+ 		/* exit if we failed to retrieve a buffer */
+ 		if (!skb) {
+-			rx_buffer->pagecnt_bias++;
+ 			break;
+ 		}
+ 
+@@ -2241,8 +2173,6 @@ static void wx_clean_rx_ring(struct wx_ring *rx_ring)
+ 
+ 		/* free resources associated with mapping */
+ 		page_pool_put_full_page(rx_ring->page_pool, rx_buffer->page, false);
+-		__page_frag_cache_drain(rx_buffer->page,
+-					rx_buffer->pagecnt_bias);
+ 
+ 		i++;
+ 		rx_buffer++;
+diff --git a/drivers/net/ethernet/wangxun/libwx/wx_type.h b/drivers/net/ethernet/wangxun/libwx/wx_type.h
+index c5cbd177ef627..c555af9ed51b2 100644
+--- a/drivers/net/ethernet/wangxun/libwx/wx_type.h
++++ b/drivers/net/ethernet/wangxun/libwx/wx_type.h
+@@ -759,7 +759,6 @@ struct wx_rx_buffer {
+ 	dma_addr_t page_dma;
+ 	struct page *page;
+ 	unsigned int page_offset;
+-	u16 pagecnt_bias;
+ };
+ 
+ struct wx_queue_stats {
 -- 
 2.43.0
 
