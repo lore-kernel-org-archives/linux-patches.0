@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EEE4645B;
-	Mon,  8 Jan 2024 15:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA917537EA;
+	Mon,  8 Jan 2024 15:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WydC04A6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1A7C433C7;
-	Mon,  8 Jan 2024 15:40:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKrxMAVk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168DDC433C8;
+	Mon,  8 Jan 2024 15:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728429;
-	bh=5H+htleyB73dsab+1s2RAubbIysJRcobeoB5l4VX5hk=;
+	s=korg; t=1704728432;
+	bh=ttQ6ACPSaHXVB3bbfo+rDIZ38dcx41KiP5/tUSPkwT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WydC04A62FC2vKdpkSad7kq4usJmLW0DqTKTPei+pYd/For5ImwnaQS6DQOZJVj4f
-	 eoTLVkKydTqK9qUhEltMKL+K2wTWpwFLHUbxY81EpcLFAihSw0EjfzSmHKpig8LJ4M
-	 G0iXL+6IRO0syevvQoz2AhuP186oeorvZEf++dcg=
+	b=aKrxMAVkfRnwd5VT4IwAZctN5w6vAmyAPmLONj5+RMGgzP8Lc1/dzkDTUr9gQMkF2
+	 0PTt7jSGM1r+QTXcYwUpJrMR6TCqGKmafpb1sd1DpaBd1Nukc693zwd/VVmdPyd3bs
+	 zxsGOSZwktJTALtM0uHfGug1I3PTRFMffTakDDr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	"kernelci.org bot" <bot@kernelci.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Rotem Saado <rotem.saado@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/150] selftests: secretmem: floor the memory size to the multiple of page_size
-Date: Mon,  8 Jan 2024 16:35:07 +0100
-Message-ID: <20240108153513.807916310@linuxfoundation.org>
+Subject: [PATCH 6.1 074/150] wifi: iwlwifi: yoyo: swap cdb and jacket bits values
+Date: Mon,  8 Jan 2024 16:35:25 +0100
+Message-ID: <20240108153514.619342893@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -46,53 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Rotem Saado <rotem.saado@intel.com>
 
-[ Upstream commit 0aac13add26d546ac74c89d2883b3a5f0fbea039 ]
+[ Upstream commit 65008777b9dcd2002414ddb2c2158293a6e2fd6f ]
 
-The "locked-in-memory size" limit per process can be non-multiple of
-page_size.  The mmap() fails if we try to allocate locked-in-memory with
-same size as the allowed limit if it isn't multiple of the page_size
-because mmap() rounds off the memory size to be allocated to next multiple
-of page_size.
+The bits are wrong, the jacket bit should be 5 and cdb bit 4.
+Fix it.
 
-Fix this by flooring the length to be allocated with mmap() to the
-previous multiple of the page_size.
-
-This was getting triggered on KernelCI regularly because of different
-ulimit settings which wasn't multiple of the page_size.  Find logs
-here: https://linux.kernelci.org/test/plan/id/657654bd8e81e654fae13532/
-The bug in was present from the time test was first added.
-
-Link: https://lkml.kernel.org/r/20231214101931.1155586-1-usama.anjum@collabora.com
-Fixes: 76fe17ef588a ("secretmem: test: add basic selftest for memfd_secret(2)")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Reported-by: "kernelci.org bot" <bot@kernelci.org>
-Closes: https://linux.kernelci.org/test/plan/id/657654bd8e81e654fae13532/
-Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
-Cc: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1f171f4f1437 ("iwlwifi: Add support for getting rf id with blank otp")
+Signed-off-by: Rotem Saado <rotem.saado@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20231004123422.356d8dacda2f.I349ab888b43a11baa2453a1d6978a6a703e422f0@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vm/memfd_secret.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/iwl-prph.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/vm/memfd_secret.c b/tools/testing/selftests/vm/memfd_secret.c
-index 957b9e18c7295..9b298f6a04b37 100644
---- a/tools/testing/selftests/vm/memfd_secret.c
-+++ b/tools/testing/selftests/vm/memfd_secret.c
-@@ -62,6 +62,9 @@ static void test_mlock_limit(int fd)
- 	char *mem;
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-prph.h b/drivers/net/wireless/intel/iwlwifi/iwl-prph.h
+index 157d1f31c4871..c5a306b01fe20 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-prph.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-prph.h
+@@ -348,8 +348,8 @@
+ #define RFIC_REG_RD			0xAD0470
+ #define WFPM_CTRL_REG			0xA03030
+ #define WFPM_OTP_CFG1_ADDR		0x00a03098
+-#define WFPM_OTP_CFG1_IS_JACKET_BIT	BIT(4)
+-#define WFPM_OTP_CFG1_IS_CDB_BIT	BIT(5)
++#define WFPM_OTP_CFG1_IS_JACKET_BIT	BIT(5)
++#define WFPM_OTP_CFG1_IS_CDB_BIT	BIT(4)
  
- 	len = mlock_limit_cur;
-+	if (len % page_size != 0)
-+		len = (len/page_size) * page_size;
-+
- 	mem = mmap(NULL, len, prot, mode, fd, 0);
- 	if (mem == MAP_FAILED) {
- 		fail("unable to mmap secret memory\n");
+ #define WFPM_GP2			0xA030B4
+ 
 -- 
 2.43.0
 
