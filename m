@@ -1,124 +1,167 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B735A4C3A9;
-	Mon,  8 Jan 2024 15:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A996D4C634;
+	Mon,  8 Jan 2024 15:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rk7qSS+H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE6DC433C7;
-	Mon,  8 Jan 2024 15:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLGa1N8X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96657C433C8;
+	Mon,  8 Jan 2024 15:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726516;
-	bh=02L8hpTjzezo9Oz2cpR3Buql9cPDka1bFiHwuFfTdAU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Rk7qSS+HxmB6iqsTnnAJcQaGYEISchJu7IIZcKNCNb75azOlMMOk2gi6FOrqU/RK3
-	 12uwYQx1/AsYooiYBvBJ3nYydm51lXOxFQO1xphBlE6BWZ9HTE3v1XMUJjaUhU5Ewt
-	 RIpOwHJRVuxn7DWR9F8RvIyNlVpAih9khjpku3dM=
-Date: Mon, 8 Jan 2024 16:08:33 +0100
+	s=korg; t=1704726569;
+	bh=U8KTyiuURqxpvOuhz5nzfh41N7zc3R/4ZtWh7oCsuKc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=GLGa1N8XSMtryKyBEAKbjCjLxW/W89NU2z3RloSYt7wlY3sY7tSiqWwmuKaie7eUu
+	 Hit95/SNOPJoPMyuv1/9dZW8+g8lcyWkepQnMcpUOuk8+fuauJfjOFfO6wH6S01IX5
+	 RJphz/TpPjLts/otHlbDhiFM5UdaS6tZahG5mtIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Lee Jones <lee@kernel.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Edward Adam Davis <eadavis@qq.com>,
+	David Howells <dhowells@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Jeffrey E Altman <jaltman@auristor.com>,
+	Wang Lei <wang840925@gmail.com>,
+	Jeff Layton <jlayton@redhat.com>,
+	Steve French <sfrench@us.ibm.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.4 062/165] net: usb: lan78xx: reorder cleanup
- operations to avoid UAF bugs
-Message-ID: <2024010807-fantasy-species-3607@gregkh>
-References: <20230809103642.720851262@linuxfoundation.org>
- <20230809103644.851543936@linuxfoundation.org>
- <20240108145224.GA641998@google.com>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	syzbot+94bbb75204a05da3d89f@syzkaller.appspotmail.com
+Subject: [PATCH 6.6 001/124] keys, dns: Fix missing size check of V1 server-list header
+Date: Mon,  8 Jan 2024 16:07:07 +0100
+Message-ID: <20240108150603.039085545@linuxfoundation.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
+References: <20240108150602.976232871@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240108145224.GA641998@google.com>
 
-On Mon, Jan 08, 2024 at 02:52:24PM +0000, Lee Jones wrote:
-> On Wed, 09 Aug 2023, Greg Kroah-Hartman wrote:
-> 
-> > From: Duoming Zhou <duoming@zju.edu.cn>
-> > 
-> > [ Upstream commit 1e7417c188d0a83fb385ba2dbe35fd2563f2b6f3 ]
-> > 
-> > The timer dev->stat_monitor can schedule the delayed work dev->wq and
-> > the delayed work dev->wq can also arm the dev->stat_monitor timer.
-> > 
-> > When the device is detaching, the net_device will be deallocated. but
-> > the net_device private data could still be dereferenced in delayed work
-> > or timer handler. As a result, the UAF bugs will happen.
-> > 
-> > One racy situation is shown below:
-> > 
-> >       (Thread 1)                 |      (Thread 2)
-> > lan78xx_stat_monitor()           |
-> >  ...                             |  lan78xx_disconnect()
-> >  lan78xx_defer_kevent()          |    ...
-> >   ...                            |    cancel_delayed_work_sync(&dev->wq);
-> >   schedule_delayed_work()        |    ...
-> >   (wait some time)               |    free_netdev(net); //free net_device
-> >   lan78xx_delayedwork()          |
-> >   //use net_device private data  |
-> >   dev-> //use                    |
-> > 
-> > Although we use cancel_delayed_work_sync() to cancel the delayed work
-> > in lan78xx_disconnect(), it could still be scheduled in timer handler
-> > lan78xx_stat_monitor().
-> > 
-> > Another racy situation is shown below:
-> > 
-> >       (Thread 1)                |      (Thread 2)
-> > lan78xx_delayedwork             |
-> >  mod_timer()                    |  lan78xx_disconnect()
-> >                                 |   cancel_delayed_work_sync()
-> >  (wait some time)               |   if (timer_pending(&dev->stat_monitor))
-> >              	                |       del_timer_sync(&dev->stat_monitor);
-> >  lan78xx_stat_monitor()         |   ...
-> >   lan78xx_defer_kevent()        |   free_netdev(net); //free
-> >    //use net_device private data|
-> >    dev-> //use                  |
-> > 
-> > Although we use del_timer_sync() to delete the timer, the function
-> > timer_pending() returns 0 when the timer is activated. As a result,
-> > the del_timer_sync() will not be executed and the timer could be
-> > re-armed.
-> > 
-> > In order to mitigate this bug, We use timer_shutdown_sync() to shutdown
-> > the timer and then use cancel_delayed_work_sync() to cancel the delayed
-> > work. As a result, the net_device could be deallocated safely.
-> > 
-> > What's more, the dev->flags is set to EVENT_DEV_DISCONNECT in
-> > lan78xx_disconnect(). But it could still be set to EVENT_STAT_UPDATE
-> > in lan78xx_stat_monitor(). So this patch put the set_bit() behind
-> > timer_shutdown_sync().
-> > 
-> > Fixes: 77dfff5bb7e2 ("lan78xx: Fix race condition in disconnect handling")
-> 
-> Any idea why this stopped at linux-6.4.y?  The aforementioned Fixes:
-> commit also exists in linux-6.1.y and linux-5.15.y.  I don't see any
-> earlier backport attempts or failure reports that would otherwise
-> explain this.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-Did you try to build it:
+------------------
 
-	drivers/net/usb/lan78xx.c: In function ‘lan78xx_disconnect’:
-	drivers/net/usb/lan78xx.c:4234:9: error: implicit declaration of function ‘timer_shutdown_sync’ [-Werror=implicit-function-declaration]
-	 4234 |         timer_shutdown_sync(&dev->stat_monitor);
-	      |         ^~~~~~~~~~~~~~~~~~~
-	cc1: all warnings being treated as errors
+From: Edward Adam Davis <eadavis@qq.com>
 
-That's a good reason to not include it...
+commit 1997b3cb4217b09e49659b634c94da47f0340409 upstream.
 
-Also, is it really an issue or just showing up on a CVE-checker
-somewhere?  (odds on the latter, based on the author of this commit...)
+The dns_resolver_preparse() function has a check on the size of the
+payload for the basic header of the binary-style payload, but is missing
+a check for the size of the V1 server-list payload header after
+determining that's what we've been given.
 
-If anyone really cares about it, I figured they would submit a working
-patch :)
+Fix this by getting rid of the the pointer to the basic header and just
+assuming that we have a V1 server-list payload and moving the V1 server
+list pointer inside the if-statement.  Dealing with other types and
+versions can be left for when such have been defined.
 
-thanks,
+This can be tested by doing the following with KASAN enabled:
 
-greg k-h
+    echo -n -e '\x0\x0\x1\x2' | keyctl padd dns_resolver foo @p
+
+and produces an oops like the following:
+
+    BUG: KASAN: slab-out-of-bounds in dns_resolver_preparse+0xc9f/0xd60 net/dns_resolver/dns_key.c:127
+    Read of size 1 at addr ffff888028894084 by task syz-executor265/5069
+    ...
+    Call Trace:
+      dns_resolver_preparse+0xc9f/0xd60 net/dns_resolver/dns_key.c:127
+      __key_create_or_update+0x453/0xdf0 security/keys/key.c:842
+      key_create_or_update+0x42/0x50 security/keys/key.c:1007
+      __do_sys_add_key+0x29c/0x450 security/keys/keyctl.c:134
+      do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+      do_syscall_64+0x40/0x110 arch/x86/entry/common.c:83
+      entry_SYSCALL_64_after_hwframe+0x62/0x6a
+
+This patch was originally by Edward Adam Davis, but was modified by
+Linus.
+
+Fixes: b946001d3bb1 ("keys, dns: Allow key types (eg. DNS) to be reclaimed immediately on expiry")
+Reported-and-tested-by: syzbot+94bbb75204a05da3d89f@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/0000000000009b39bc060c73e209@google.com/
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Tested-by: David Howells <dhowells@redhat.com>
+Cc: Edward Adam Davis <eadavis@qq.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Jeffrey E Altman <jaltman@auristor.com>
+Cc: Wang Lei <wang840925@gmail.com>
+Cc: Jeff Layton <jlayton@redhat.com>
+Cc: Steve French <sfrench@us.ibm.com>
+Cc: Marc Dionne <marc.dionne@auristor.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Jeffrey E Altman <jaltman@auristor.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ net/dns_resolver/dns_key.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
+
+--- a/net/dns_resolver/dns_key.c
++++ b/net/dns_resolver/dns_key.c
+@@ -91,8 +91,6 @@ const struct cred *dns_resolver_cache;
+ static int
+ dns_resolver_preparse(struct key_preparsed_payload *prep)
+ {
+-	const struct dns_server_list_v1_header *v1;
+-	const struct dns_payload_header *bin;
+ 	struct user_key_payload *upayload;
+ 	unsigned long derrno;
+ 	int ret;
+@@ -103,27 +101,28 @@ dns_resolver_preparse(struct key_prepars
+ 		return -EINVAL;
+ 
+ 	if (data[0] == 0) {
++		const struct dns_server_list_v1_header *v1;
++
+ 		/* It may be a server list. */
+-		if (datalen <= sizeof(*bin))
++		if (datalen <= sizeof(*v1))
+ 			return -EINVAL;
+ 
+-		bin = (const struct dns_payload_header *)data;
+-		kenter("[%u,%u],%u", bin->content, bin->version, datalen);
+-		if (bin->content != DNS_PAYLOAD_IS_SERVER_LIST) {
++		v1 = (const struct dns_server_list_v1_header *)data;
++		kenter("[%u,%u],%u", v1->hdr.content, v1->hdr.version, datalen);
++		if (v1->hdr.content != DNS_PAYLOAD_IS_SERVER_LIST) {
+ 			pr_warn_ratelimited(
+ 				"dns_resolver: Unsupported content type (%u)\n",
+-				bin->content);
++				v1->hdr.content);
+ 			return -EINVAL;
+ 		}
+ 
+-		if (bin->version != 1) {
++		if (v1->hdr.version != 1) {
+ 			pr_warn_ratelimited(
+ 				"dns_resolver: Unsupported server list version (%u)\n",
+-				bin->version);
++				v1->hdr.version);
+ 			return -EINVAL;
+ 		}
+ 
+-		v1 = (const struct dns_server_list_v1_header *)bin;
+ 		if ((v1->status != DNS_LOOKUP_GOOD &&
+ 		     v1->status != DNS_LOOKUP_GOOD_WITH_BAD)) {
+ 			if (prep->expiry == TIME64_MAX)
+
+
