@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94AF65102B;
-	Mon,  8 Jan 2024 15:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A0254674;
+	Mon,  8 Jan 2024 15:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUbqgmgk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28B5C433CA;
-	Mon,  8 Jan 2024 15:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxaVdosN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC802C433C8;
+	Mon,  8 Jan 2024 15:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728554;
-	bh=7axXAyp83HwxyaU67v//cNSmTXErz6W1J/2Q29dknNA=;
+	s=korg; t=1704728557;
+	bh=aIbcDS5UNU854i82BZ93bl7AJGSKcxkVVpF6YZE2pXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUbqgmgk0xVvnmYlnDjmBsT36pcRTdwtJTiy1Z0xDqkMaiVz+1MTNbcesCoFR/dAi
-	 k44I25nn6u4/KGLoUid3lfelytffY7mgzfJOYGwUQjg0WD00jWixHNbUFYLA+itdNX
-	 qI5NvLN32nxeicrdYT05n1GU67liOYnfJs0PD4Ns=
+	b=vxaVdosNAofikUTexYzGzD1NeX/8kRyUM99rivIfpPjmdRpqYfu50oKGe7dtGD81j
+	 so9sp7Gyy0x4tIxEmx2rbQjD6IDB6FyMTLO8uS/sQwsLrw720aD7A4w14tYlGlvMTG
+	 Tvhqdmy4F6HQovlIKklsIvD66SR2aEZ7xfnYJmK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -24,9 +24,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	John Garry <john.g.garry@oracle.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/150] genirq/affinity: Pass affinity managed mask array to irq_build_affinity_masks
-Date: Mon,  8 Jan 2024 16:36:04 +0100
-Message-ID: <20240108153516.400258551@linuxfoundation.org>
+Subject: [PATCH 6.1 114/150] genirq/affinity: Dont pass irq_affinity_desc array to irq_build_affinity_masks
+Date: Mon,  8 Jan 2024 16:36:05 +0100
+Message-ID: <20240108153516.439744892@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -47,116 +47,137 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 1f962d91a15af54301c63febb8ac2ba07aa3654f ]
+[ Upstream commit e7bdd7f0cbd1c001bb9b4d3313edc5ee094bc3f8 ]
 
-Pass affinity managed mask array to irq_build_affinity_masks() so that the
-index of the first affinity managed vector is always zero.
+Prepare for abstracting irq_build_affinity_masks() into a public function
+for assigning all CPUs evenly into several groups.
 
-This allows to simplify the implementation a bit.
+Don't pass irq_affinity_desc array to irq_build_affinity_masks, instead
+return a cpumask array by storing each assigned group into one element of
+the array.
+
+This allows to provide a generic interface for grouping all CPUs evenly
+from a NUMA and CPU locality viewpoint, and the cost is one extra allocation
+in irq_build_affinity_masks(), which should be fine since it is done via
+GFP_KERNEL and irq_build_affinity_masks() is a slow path anyway.
 
 Signed-off-by: Ming Lei <ming.lei@redhat.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: John Garry <john.g.garry@oracle.com>
 Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Link: https://lore.kernel.org/r/20221227022905.352674-3-ming.lei@redhat.com
+Link: https://lore.kernel.org/r/20221227022905.352674-4-ming.lei@redhat.com
 Stable-dep-of: 0263f92fadbb ("lib/group_cpus.c: avoid acquiring cpu hotplug lock in group_cpus_evenly")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/affinity.c | 28 ++++++++++++----------------
- 1 file changed, 12 insertions(+), 16 deletions(-)
+ kernel/irq/affinity.c | 34 ++++++++++++++++++++++++----------
+ 1 file changed, 24 insertions(+), 10 deletions(-)
 
 diff --git a/kernel/irq/affinity.c b/kernel/irq/affinity.c
-index 3361e36ebaa1e..da6379cd27fd4 100644
+index da6379cd27fd4..00bba1020ecb2 100644
 --- a/kernel/irq/affinity.c
 +++ b/kernel/irq/affinity.c
-@@ -246,14 +246,13 @@ static void alloc_nodes_vectors(unsigned int numvecs,
- 
- static int __irq_build_affinity_masks(unsigned int startvec,
- 				      unsigned int numvecs,
--				      unsigned int firstvec,
+@@ -249,7 +249,7 @@ static int __irq_build_affinity_masks(unsigned int startvec,
  				      cpumask_var_t *node_to_cpumask,
  				      const struct cpumask *cpu_mask,
  				      struct cpumask *nmsk,
- 				      struct irq_affinity_desc *masks)
+-				      struct irq_affinity_desc *masks)
++				      struct cpumask *masks)
  {
  	unsigned int i, n, nodes, cpus_per_vec, extra_vecs, done = 0;
--	unsigned int last_affv = firstvec + numvecs;
-+	unsigned int last_affv = numvecs;
- 	unsigned int curvec = startvec;
- 	nodemask_t nodemsk = NODE_MASK_NONE;
- 	struct node_vectors *node_vectors;
-@@ -273,7 +272,7 @@ static int __irq_build_affinity_masks(unsigned int startvec,
+ 	unsigned int last_affv = numvecs;
+@@ -270,7 +270,7 @@ static int __irq_build_affinity_masks(unsigned int startvec,
+ 		for_each_node_mask(n, nodemsk) {
+ 			/* Ensure that only CPUs which are in both masks are set */
  			cpumask_and(nmsk, cpu_mask, node_to_cpumask[n]);
- 			cpumask_or(&masks[curvec].mask, &masks[curvec].mask, nmsk);
+-			cpumask_or(&masks[curvec].mask, &masks[curvec].mask, nmsk);
++			cpumask_or(&masks[curvec], &masks[curvec], nmsk);
  			if (++curvec == last_affv)
--				curvec = firstvec;
-+				curvec = 0;
+ 				curvec = 0;
  		}
- 		return numvecs;
- 	}
-@@ -321,7 +320,7 @@ static int __irq_build_affinity_masks(unsigned int startvec,
- 			 * may start anywhere
+@@ -321,7 +321,7 @@ static int __irq_build_affinity_masks(unsigned int startvec,
  			 */
  			if (curvec >= last_affv)
--				curvec = firstvec;
-+				curvec = 0;
- 			irq_spread_init_one(&masks[curvec].mask, nmsk,
+ 				curvec = 0;
+-			irq_spread_init_one(&masks[curvec].mask, nmsk,
++			irq_spread_init_one(&masks[curvec], nmsk,
  						cpus_per_vec);
  		}
-@@ -336,11 +335,10 @@ static int __irq_build_affinity_masks(unsigned int startvec,
+ 		done += nv->nvectors;
+@@ -335,16 +335,16 @@ static int __irq_build_affinity_masks(unsigned int startvec,
   *	1) spread present CPU on these vectors
   *	2) spread other possible CPUs on these vectors
   */
--static int irq_build_affinity_masks(unsigned int startvec, unsigned int numvecs,
-+static int irq_build_affinity_masks(unsigned int numvecs,
- 				    struct irq_affinity_desc *masks)
+-static int irq_build_affinity_masks(unsigned int numvecs,
+-				    struct irq_affinity_desc *masks)
++static struct cpumask *irq_build_affinity_masks(unsigned int numvecs)
  {
--	unsigned int curvec = startvec, nr_present = 0, nr_others = 0;
--	unsigned int firstvec = startvec;
-+	unsigned int curvec = 0, nr_present = 0, nr_others = 0;
+ 	unsigned int curvec = 0, nr_present = 0, nr_others = 0;
  	cpumask_var_t *node_to_cpumask;
  	cpumask_var_t nmsk, npresmsk;
  	int ret = -ENOMEM;
-@@ -360,9 +358,8 @@ static int irq_build_affinity_masks(unsigned int startvec, unsigned int numvecs,
++	struct cpumask *masks = NULL;
+ 
+ 	if (!zalloc_cpumask_var(&nmsk, GFP_KERNEL))
+-		return ret;
++		return NULL;
+ 
+ 	if (!zalloc_cpumask_var(&npresmsk, GFP_KERNEL))
+ 		goto fail_nmsk;
+@@ -353,6 +353,10 @@ static int irq_build_affinity_masks(unsigned int numvecs,
+ 	if (!node_to_cpumask)
+ 		goto fail_npresmsk;
+ 
++	masks = kcalloc(numvecs, sizeof(*masks), GFP_KERNEL);
++	if (!masks)
++		goto fail_node_to_cpumask;
++
+ 	/* Stabilize the cpumasks */
+ 	cpus_read_lock();
  	build_node_to_cpumask(node_to_cpumask);
- 
- 	/* Spread on present CPUs starting from affd->pre_vectors */
--	ret = __irq_build_affinity_masks(curvec, numvecs, firstvec,
--					 node_to_cpumask, cpu_present_mask,
--					 nmsk, masks);
-+	ret = __irq_build_affinity_masks(curvec, numvecs, node_to_cpumask,
-+					 cpu_present_mask, nmsk, masks);
- 	if (ret < 0)
- 		goto fail_build_affinity;
- 	nr_present = ret;
-@@ -374,13 +371,12 @@ static int irq_build_affinity_masks(unsigned int startvec, unsigned int numvecs,
- 	 * out vectors.
- 	 */
- 	if (nr_present >= numvecs)
--		curvec = firstvec;
-+		curvec = 0;
- 	else
--		curvec = firstvec + nr_present;
-+		curvec = nr_present;
- 	cpumask_andnot(npresmsk, cpu_possible_mask, cpu_present_mask);
--	ret = __irq_build_affinity_masks(curvec, numvecs, firstvec,
--					 node_to_cpumask, npresmsk, nmsk,
--					 masks);
-+	ret = __irq_build_affinity_masks(curvec, numvecs, node_to_cpumask,
-+					 npresmsk, nmsk, masks);
+@@ -386,6 +390,7 @@ static int irq_build_affinity_masks(unsigned int numvecs,
  	if (ret >= 0)
- 		nr_others = ret;
+ 		WARN_ON(nr_present + nr_others < numvecs);
  
-@@ -463,7 +459,7 @@ irq_create_affinity_masks(unsigned int nvecs, struct irq_affinity *affd)
++ fail_node_to_cpumask:
+ 	free_node_to_cpumask(node_to_cpumask);
+ 
+  fail_npresmsk:
+@@ -393,7 +398,11 @@ static int irq_build_affinity_masks(unsigned int numvecs,
+ 
+  fail_nmsk:
+ 	free_cpumask_var(nmsk);
+-	return ret < 0 ? ret : 0;
++	if (ret < 0) {
++		kfree(masks);
++		return NULL;
++	}
++	return masks;
+ }
+ 
+ static void default_calc_sets(struct irq_affinity *affd, unsigned int affvecs)
+@@ -457,13 +466,18 @@ irq_create_affinity_masks(unsigned int nvecs, struct irq_affinity *affd)
+ 	 */
+ 	for (i = 0, usedvecs = 0; i < affd->nr_sets; i++) {
  		unsigned int this_vecs = affd->set_size[i];
- 		int ret;
+-		int ret;
++		int j;
++		struct cpumask *result = irq_build_affinity_masks(this_vecs);
  
--		ret = irq_build_affinity_masks(curvec, this_vecs, masks);
-+		ret = irq_build_affinity_masks(this_vecs, &masks[curvec]);
- 		if (ret) {
+-		ret = irq_build_affinity_masks(this_vecs, &masks[curvec]);
+-		if (ret) {
++		if (!result) {
  			kfree(masks);
  			return NULL;
+ 		}
++
++		for (j = 0; j < this_vecs; j++)
++			cpumask_copy(&masks[curvec + j].mask, &result[j]);
++		kfree(result);
++
+ 		curvec += this_vecs;
+ 		usedvecs += this_vecs;
+ 	}
 -- 
 2.43.0
 
