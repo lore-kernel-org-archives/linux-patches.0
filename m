@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A8B54FBE;
-	Mon,  8 Jan 2024 15:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A005577C;
+	Mon,  8 Jan 2024 15:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvpCcaNp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E71BCC433CA;
-	Mon,  8 Jan 2024 15:42:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4LBIV1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57ADC433C9;
+	Mon,  8 Jan 2024 15:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728523;
-	bh=8ASggD/YsBfgb7neWlE6d2MnvTmL0Ax3TAfPpOLlxCk=;
+	s=korg; t=1704728526;
+	bh=7F0qPEk9ooC7I+fhAj1uCOcc52s4IsyRbz9jQ8FSoWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvpCcaNp18SoHIi8wntNkkXIqxoazO5CBXIJujCNhqxIJrJRDgx1L9d3F63PoV59X
-	 6hR5Nm5rpW+c0OODH4pxxb4ACjoIMz8IZsxAIxEJ3rr6TjszF+fNV5zR+BunsCjrQj
-	 fINfrSTzYbRkPtVUr4uxtdbPxwUL826ASKoeIWyo=
+	b=V4LBIV1v71hUHnMPW7CBrvNzDEG7u/O0cnf/80Wph8tiRSYH3TWkAWpfMjOGoJ+N4
+	 iaIqwYa660ffCHjnVSiiXzfm1UZM7vmHdyV6SV/mR8kKN/j+UJWUi/D8vzplNkwmTV
+	 wZutTrCLG8PCZAC3vPpgE89IYkJwVqkUhg6PTHjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/150] block: update the stable_writes flag in bdev_add
-Date: Mon,  8 Jan 2024 16:35:55 +0100
-Message-ID: <20240108153515.975880498@linuxfoundation.org>
+Subject: [PATCH 6.1 105/150] smb: client: fix missing mode bits for SMB symlinks
+Date: Mon,  8 Jan 2024 16:35:56 +0100
+Message-ID: <20240108153516.015479269@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -44,44 +42,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 1898efcdbed32bb1c67269c985a50bab0dbc9493 ]
+[ Upstream commit ef22bb800d967616c7638d204bc1b425beac7f5f ]
 
-Propagate the per-queue stable_write flags into each bdev inode in bdev_add.
-This makes sure devices that require stable writes have it set for I/O
-on the block device node as well.
+When instantiating inodes for SMB symlinks, add the mode bits from
+@cifs_sb->ctx->file_mode as we already do for the other special files.
 
-Note that this doesn't cover the case of a flag changing on a live device
-yet.  We should handle that as well, but I plan to cover it as part of a
-more general rework of how changing runtime paramters on block devices
-works.
-
-Fixes: 1cb039f3dc16 ("bdi: replace BDI_CAP_STABLE_WRITES with a queue and a sb flag")
-Reported-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20231025141020.192413-3-hch@lst.de
-Tested-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bdev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index d699ecdb32604..b61502ec8da06 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -507,6 +507,8 @@ struct block_device *bdev_alloc(struct gendisk *disk, u8 partno)
- 
- void bdev_add(struct block_device *bdev, dev_t dev)
- {
-+	if (bdev_stable_writes(bdev))
-+		mapping_set_stable_writes(bdev->bd_inode->i_mapping);
- 	bdev->bd_dev = dev;
- 	bdev->bd_inode->i_rdev = dev;
- 	bdev->bd_inode->i_ino = dev;
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index 7be51f9d2fa18..5343898bac8a6 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -264,7 +264,7 @@ cifs_unix_basic_to_fattr(struct cifs_fattr *fattr, FILE_UNIX_BASIC_INFO *info,
+ 		fattr->cf_dtype = DT_REG;
+ 		break;
+ 	case UNIX_SYMLINK:
+-		fattr->cf_mode |= S_IFLNK;
++		fattr->cf_mode |= S_IFLNK | cifs_sb->ctx->file_mode;
+ 		fattr->cf_dtype = DT_LNK;
+ 		break;
+ 	case UNIX_DIR:
 -- 
 2.43.0
 
