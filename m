@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5295101D;
-	Mon,  8 Jan 2024 15:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D31551C4E;
+	Mon,  8 Jan 2024 15:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOkn21tD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F46C433CB;
-	Mon,  8 Jan 2024 15:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGJDFKHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E8AAC433C8;
+	Mon,  8 Jan 2024 15:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728445;
-	bh=IXqUNCjznSSY/yQzj8A0KZzLepv5DhZ/WuP6aTEs1Gw=;
+	s=korg; t=1704728448;
+	bh=PB9hRWIR8zfn+RmE6C6YGSpfeG89v6RsZVfwEXslPcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LOkn21tD9Zll8IrW1rbLG2HncG3AHfSIhqzZCFpubZVP3zGz30PgN10nG6L7xprAC
-	 EwPT1shjwWRU60fpqU900iuigTSeaXBkHtCi+zZ07Q7UBkTOh6KJRxE6BWmn7oGBSe
-	 V4acDgbF74LIVE5BtohCA+6K6R2CBwzXZVNGPO+o=
+	b=vGJDFKHhBfJgqk8fUFJ2rG/rLcFWUO2WS9pAE7wHixOg+hYsWd5cieZP/NKxmIr+P
+	 qgu4L4/atTnAsXrkdfQ84/URjZFiNSIbyCebThLaSur4xfCqSjfIBM4yNWYsfNBEBf
+	 SDSZYb0MbfcOseFdsRwzkzerT9vI4/TNb7v5cCHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Helge Deller <deller@gmx.de>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/150] fbdev: imsttfb: fix double free in probe()
-Date: Mon,  8 Jan 2024 16:35:29 +0100
-Message-ID: <20240108153514.816570277@linuxfoundation.org>
+Subject: [PATCH 6.1 079/150] bpf: decouple prune and jump points
+Date: Mon,  8 Jan 2024 16:35:30 +0100
+Message-ID: <20240108153514.864243180@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -42,49 +43,195 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit e08c30efda21ef4c0ec084a3a9581c220b442ba9 ]
+[ Upstream commit bffdeaa8a5af7200b0e74c9d5a41167f86626a36 ]
 
-The init_imstt() function calls framebuffer_release() on error and then
-the probe() function calls it again.  It should only be done in probe.
+BPF verifier marks some instructions as prune points. Currently these
+prune points serve two purposes.
 
-Fixes: 518ecb6a209f ("fbdev: imsttfb: Fix error path of imsttfb_probe()")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+It's a point where verifier tries to find previously verified state and
+check current state's equivalence to short circuit verification for
+current code path.
+
+But also currently it's a point where jump history, used for precision
+backtracking, is updated. This is done so that non-linear flow of
+execution could be properly backtracked.
+
+Such coupling is coincidental and unnecessary. Some prune points are not
+part of some non-linear jump path, so don't need update of jump history.
+On the other hand, not all instructions which have to be recorded in
+jump history necessarily are good prune points.
+
+This patch splits prune and jump points into independent flags.
+Currently all prune points are marked as jump points to minimize amount
+of changes in this patch, but next patch will perform some optimization
+of prune vs jmp point placement.
+
+No functional changes are intended.
+
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20221206233345.438540-2-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 3feb263bb516 ("bpf: handle ldimm64 properly in check_cfg()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/imsttfb.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ include/linux/bpf_verifier.h |  1 +
+ kernel/bpf/verifier.c        | 57 +++++++++++++++++++++++++++---------
+ 2 files changed, 44 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/video/fbdev/imsttfb.c b/drivers/video/fbdev/imsttfb.c
-index 3d1ae5267a738..aa51cb72cbba5 100644
---- a/drivers/video/fbdev/imsttfb.c
-+++ b/drivers/video/fbdev/imsttfb.c
-@@ -1419,7 +1419,6 @@ static int init_imstt(struct fb_info *info)
- 	if ((info->var.xres * info->var.yres) * (info->var.bits_per_pixel >> 3) > info->fix.smem_len
- 	    || !(compute_imstt_regvals(par, info->var.xres, info->var.yres))) {
- 		printk("imsttfb: %ux%ux%u not supported\n", info->var.xres, info->var.yres, info->var.bits_per_pixel);
--		framebuffer_release(info);
- 		return -ENODEV;
+diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+index 1a32baa78ce26..f080ccf27d256 100644
+--- a/include/linux/bpf_verifier.h
++++ b/include/linux/bpf_verifier.h
+@@ -429,6 +429,7 @@ struct bpf_insn_aux_data {
+ 	/* below fields are initialized once */
+ 	unsigned int orig_idx; /* original instruction index */
+ 	bool prune_point;
++	bool jmp_point;
+ };
+ 
+ #define MAX_USED_MAPS 64 /* max number of maps accessed by one eBPF program */
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index ee6e811b43158..ec688665aaa25 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -2512,6 +2512,16 @@ static int check_reg_arg(struct bpf_verifier_env *env, u32 regno,
+ 	return 0;
+ }
+ 
++static void mark_jmp_point(struct bpf_verifier_env *env, int idx)
++{
++	env->insn_aux_data[idx].jmp_point = true;
++}
++
++static bool is_jmp_point(struct bpf_verifier_env *env, int insn_idx)
++{
++	return env->insn_aux_data[insn_idx].jmp_point;
++}
++
+ /* for any branch, call, exit record the history of jmps in the given state */
+ static int push_jmp_history(struct bpf_verifier_env *env,
+ 			    struct bpf_verifier_state *cur)
+@@ -2520,6 +2530,9 @@ static int push_jmp_history(struct bpf_verifier_env *env,
+ 	struct bpf_idx_pair *p;
+ 	size_t alloc_size;
+ 
++	if (!is_jmp_point(env, env->insn_idx))
++		return 0;
++
+ 	cnt++;
+ 	alloc_size = kmalloc_size_roundup(size_mul(cnt, sizeof(*p)));
+ 	p = krealloc(cur->jmp_history, alloc_size, GFP_USER);
+@@ -11000,11 +11013,16 @@ static struct bpf_verifier_state_list **explored_state(
+ 	return &env->explored_states[(idx ^ state->callsite) % state_htab_size(env)];
+ }
+ 
+-static void init_explored_state(struct bpf_verifier_env *env, int idx)
++static void mark_prune_point(struct bpf_verifier_env *env, int idx)
+ {
+ 	env->insn_aux_data[idx].prune_point = true;
+ }
+ 
++static bool is_prune_point(struct bpf_verifier_env *env, int insn_idx)
++{
++	return env->insn_aux_data[insn_idx].prune_point;
++}
++
+ enum {
+ 	DONE_EXPLORING = 0,
+ 	KEEP_EXPLORING = 1,
+@@ -11033,9 +11051,11 @@ static int push_insn(int t, int w, int e, struct bpf_verifier_env *env,
+ 		return -EINVAL;
  	}
  
-@@ -1452,14 +1451,11 @@ static int init_imstt(struct fb_info *info)
- 	              FBINFO_HWACCEL_FILLRECT |
- 	              FBINFO_HWACCEL_YPAN;
+-	if (e == BRANCH)
++	if (e == BRANCH) {
+ 		/* mark branch target for state pruning */
+-		init_explored_state(env, w);
++		mark_prune_point(env, w);
++		mark_jmp_point(env, w);
++	}
  
--	if (fb_alloc_cmap(&info->cmap, 0, 0)) {
--		framebuffer_release(info);
-+	if (fb_alloc_cmap(&info->cmap, 0, 0))
- 		return -ENODEV;
--	}
+ 	if (insn_state[w] == 0) {
+ 		/* tree-edge */
+@@ -11073,10 +11093,13 @@ static int visit_func_call_insn(int t, int insn_cnt,
+ 	if (ret)
+ 		return ret;
  
- 	if (register_framebuffer(info) < 0) {
- 		fb_dealloc_cmap(&info->cmap);
--		framebuffer_release(info);
- 		return -ENODEV;
- 	}
+-	if (t + 1 < insn_cnt)
+-		init_explored_state(env, t + 1);
++	if (t + 1 < insn_cnt) {
++		mark_prune_point(env, t + 1);
++		mark_jmp_point(env, t + 1);
++	}
+ 	if (visit_callee) {
+-		init_explored_state(env, t);
++		mark_prune_point(env, t);
++		mark_jmp_point(env, t);
+ 		ret = push_insn(t, t + insns[t].imm + 1, BRANCH, env,
+ 				/* It's ok to allow recursion from CFG point of
+ 				 * view. __check_func_call() will do the actual
+@@ -11110,13 +11133,15 @@ static int visit_insn(int t, int insn_cnt, struct bpf_verifier_env *env)
+ 		return DONE_EXPLORING;
  
+ 	case BPF_CALL:
+-		if (insns[t].imm == BPF_FUNC_timer_set_callback)
++		if (insns[t].imm == BPF_FUNC_timer_set_callback) {
+ 			/* Mark this call insn to trigger is_state_visited() check
+ 			 * before call itself is processed by __check_func_call().
+ 			 * Otherwise new async state will be pushed for further
+ 			 * exploration.
+ 			 */
+-			init_explored_state(env, t);
++			mark_prune_point(env, t);
++			mark_jmp_point(env, t);
++		}
+ 		return visit_func_call_insn(t, insn_cnt, insns, env,
+ 					    insns[t].src_reg == BPF_PSEUDO_CALL);
+ 
+@@ -11134,18 +11159,22 @@ static int visit_insn(int t, int insn_cnt, struct bpf_verifier_env *env)
+ 		 * but it's marked, since backtracking needs
+ 		 * to record jmp history in is_state_visited().
+ 		 */
+-		init_explored_state(env, t + insns[t].off + 1);
++		mark_prune_point(env, t + insns[t].off + 1);
++		mark_jmp_point(env, t + insns[t].off + 1);
+ 		/* tell verifier to check for equivalent states
+ 		 * after every call and jump
+ 		 */
+-		if (t + 1 < insn_cnt)
+-			init_explored_state(env, t + 1);
++		if (t + 1 < insn_cnt) {
++			mark_prune_point(env, t + 1);
++			mark_jmp_point(env, t + 1);
++		}
+ 
+ 		return ret;
+ 
+ 	default:
+ 		/* conditional jump with two edges */
+-		init_explored_state(env, t);
++		mark_prune_point(env, t);
++		mark_jmp_point(env, t);
+ 		ret = push_insn(t, t + 1, FALLTHROUGH, env, true);
+ 		if (ret)
+ 			return ret;
+@@ -12178,11 +12207,11 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+ 	bool add_new_state = env->test_state_freq ? true : false;
+ 
+ 	cur->last_insn_idx = env->prev_insn_idx;
+-	if (!env->insn_aux_data[insn_idx].prune_point)
++	if (!is_prune_point(env, insn_idx))
+ 		/* this 'insn_idx' instruction wasn't marked, so we will not
+ 		 * be doing state search here
+ 		 */
+-		return 0;
++		return push_jmp_history(env, cur);
+ 
+ 	/* bpf progs typically have pruning point every 4 instructions
+ 	 * http://vger.kernel.org/bpfconf2019.html#session-1
 -- 
 2.43.0
 
