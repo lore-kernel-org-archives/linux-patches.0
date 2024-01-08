@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36AAB51032;
-	Mon,  8 Jan 2024 15:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987DC5101B;
+	Mon,  8 Jan 2024 15:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgMgMDsk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF23C433CA;
-	Mon,  8 Jan 2024 15:39:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZvMMc6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6C9C433C8;
+	Mon,  8 Jan 2024 15:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728346;
-	bh=U/gWbrI8JWgr47bWJ+DZd7s075Zva+XNmc/olQ5peTQ=;
+	s=korg; t=1704728349;
+	bh=GCwJgbma+t7FWpPG4RFN0WW59AccJ93I8o9vB2AmV1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vgMgMDsk89liv9wiHCpGF2dP8C9t906/9DU4ctD96v5EBLhB8ITxT2Qs4nHdnRqKv
-	 wX+tq7XCjLrhRPO/bScNE+ePqcCKCvxh2YPijlnftQw+jop+YdgxZGxXBBChfwUdFB
-	 y3s8547oeyAtKUirwGqJD0Xrvwok48VGgS80DGcE=
+	b=pZvMMc6dKRaIKHnHAz3VRCQcQIpiIK+YEtdxi/vV7aHRiLyYJuXBCGD29snuPaVMo
+	 fI/WjA/8TvcDmsoghH/rcEiOihFEX1j5l011bQ2dgNdztBJVWjtMIn1CNBcDpLPY3S
+	 eHSLvndHjo40q9QzK5W2tTGbM41xLsVDNqXMTH5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kurt Kanzenbach <kurt@linutronix.de>,
-	Rodrigo Cataldo <rodrigo.cadore@l-acoustics.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/150] igc: Fix hicredit calculation
-Date: Mon,  8 Jan 2024 16:34:58 +0100
-Message-ID: <20240108153513.415559230@linuxfoundation.org>
+Subject: [PATCH 6.1 048/150] net/qla3xxx: fix potential memleak in ql_alloc_buffer_queues
+Date: Mon,  8 Jan 2024 16:34:59 +0100
+Message-ID: <20240108153513.456789933@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -45,43 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Cataldo <rodrigo.cadore@l-acoustics.com>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit 947dfc8138dfaeb6e966e2d661de89eb203e3064 ]
+[ Upstream commit 89f45c30172c80e55c887f32f1af8e184124577b ]
 
-According to the Intel Software Manual for I225, Section 7.5.2.7,
-hicredit should be multiplied by the constant link-rate value, 0x7736.
+When dma_alloc_coherent() fails, we should free qdev->lrg_buf
+to prevent potential memleak.
 
-Currently, the old constant link-rate value, 0x7735, from the boards
-supported on igb are being used, most likely due to a copy'n'paste, as
-the rest of the logic is the same for both drivers.
-
-Update hicredit accordingly.
-
-Fixes: 1ab011b0bf07 ("igc: Add support for CBS offloading")
-Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
-Signed-off-by: Rodrigo Cataldo <rodrigo.cadore@l-acoustics.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 1357bfcf7106 ("qla3xxx: Dynamically size the rx buffer queue based on the MTU.")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Link: https://lore.kernel.org/r/20231227070227.10527-1-dinghao.liu@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_tsn.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/qlogic/qla3xxx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
-index 725db36e399d2..31ea0781b65ec 100644
---- a/drivers/net/ethernet/intel/igc/igc_tsn.c
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -178,7 +178,7 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
- 			wr32(IGC_TQAVCC(i), tqavcc);
+diff --git a/drivers/net/ethernet/qlogic/qla3xxx.c b/drivers/net/ethernet/qlogic/qla3xxx.c
+index 0d57ffcedf0c6..fc78bc959ded8 100644
+--- a/drivers/net/ethernet/qlogic/qla3xxx.c
++++ b/drivers/net/ethernet/qlogic/qla3xxx.c
+@@ -2591,6 +2591,7 @@ static int ql_alloc_buffer_queues(struct ql3_adapter *qdev)
  
- 			wr32(IGC_TQAVHC(i),
--			     0x80000000 + ring->hicredit * 0x7735);
-+			     0x80000000 + ring->hicredit * 0x7736);
- 		} else {
- 			/* Disable any CBS for the queue */
- 			txqctl &= ~(IGC_TXQCTL_QAV_SEL_MASK);
+ 	if (qdev->lrg_buf_q_alloc_virt_addr == NULL) {
+ 		netdev_err(qdev->ndev, "lBufQ failed\n");
++		kfree(qdev->lrg_buf);
+ 		return -ENOMEM;
+ 	}
+ 	qdev->lrg_buf_q_virt_addr = qdev->lrg_buf_q_alloc_virt_addr;
+@@ -2615,6 +2616,7 @@ static int ql_alloc_buffer_queues(struct ql3_adapter *qdev)
+ 				  qdev->lrg_buf_q_alloc_size,
+ 				  qdev->lrg_buf_q_alloc_virt_addr,
+ 				  qdev->lrg_buf_q_alloc_phy_addr);
++		kfree(qdev->lrg_buf);
+ 		return -ENOMEM;
+ 	}
+ 
 -- 
 2.43.0
 
