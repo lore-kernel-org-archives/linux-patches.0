@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90DE487A7;
-	Mon,  8 Jan 2024 15:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17924B5AB;
+	Mon,  8 Jan 2024 15:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+Vu+04F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C64C433CA;
-	Mon,  8 Jan 2024 15:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHW/Mfor"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401A2C433C9;
+	Mon,  8 Jan 2024 15:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726678;
-	bh=1bjf60Iemm/408qHgbxRFguUgcSTrvxT4VFo37xqk9Y=;
+	s=korg; t=1704726681;
+	bh=3BlfPNOu56NSrytc6OPtJnhlZyABBBsLfzD5MQBzBBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y+Vu+04FV9fl9BmTxXiw83+A3b0zAZeFizjJVIK0dt4CtwXwKovWLnLxD0O+F65w5
-	 i8FkJ6+NYAk0SuBWqaDcrzit6nXLHC0Tozwo1rZWZ0SZdp9H4I8ZSWCqGjs5PUvPBO
-	 JU3xI76JdiVNmoKqr/FUfqe2fUrbEwHr0Xvuj5f4=
+	b=ZHW/Mforwo7yWR8whOELxRr0Yz4Oh8D5McenuFoDsiOxBRnXSRzE3SO5Tc50nrr6F
+	 zJ5fdDvXlOa2uH7iH6KIGntmg1xbWmERMtHnEjBTD6kz2v/5OgYgZgDqj/cioJ72WL
+	 cr3F55jg4Ve3Jx6q2QE720ifII4+yxyP+IyQLoLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 043/124] netfilter: nft_immediate: drop chain reference counter on error
-Date: Mon,  8 Jan 2024 16:07:49 +0100
-Message-ID: <20240108150604.953213645@linuxfoundation.org>
+Subject: [PATCH 6.6 044/124] net: Save and restore msg_namelen in sock_sendmsg
+Date: Mon,  8 Jan 2024 16:07:50 +0100
+Message-ID: <20240108150605.002598206@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -41,34 +43,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Marc Dionne <marc.dionne@auristor.com>
 
-[ Upstream commit b29be0ca8e816119ccdf95cc7d7c7be9bde005f1 ]
+[ Upstream commit 01b2885d9415152bcb12ff1f7788f500a74ea0ed ]
 
-In the init path, nft_data_init() bumps the chain reference counter,
-decrement it on error by following the error path which calls
-nft_data_release() to restore it.
+Commit 86a7e0b69bd5 ("net: prevent rewrite of msg_name in
+sock_sendmsg()") made sock_sendmsg save the incoming msg_name pointer
+and restore it before returning, to insulate the caller against
+msg_name being changed by the called code.  If the address length
+was also changed however, we may return with an inconsistent structure
+where the length doesn't match the address, and attempts to reuse it may
+lead to lost packets.
 
-Fixes: 4bedf9eee016 ("netfilter: nf_tables: fix chain binding transaction logic")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+For example, a kernel that doesn't have commit 1c5950fc6fe9 ("udp6: fix
+potential access to stale information") will replace a v4 mapped address
+with its ipv4 equivalent, and shorten namelen accordingly from 28 to 16.
+If the caller attempts to reuse the resulting msg structure, it will have
+the original ipv6 (v4 mapped) address but an incorrect v4 length.
+
+Fixes: 86a7e0b69bd5 ("net: prevent rewrite of msg_name in sock_sendmsg()")
+Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_immediate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/socket.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/nft_immediate.c b/net/netfilter/nft_immediate.c
-index fccb3cf7749c1..6475c7abc1fe3 100644
---- a/net/netfilter/nft_immediate.c
-+++ b/net/netfilter/nft_immediate.c
-@@ -78,7 +78,7 @@ static int nft_immediate_init(const struct nft_ctx *ctx,
- 		case NFT_GOTO:
- 			err = nf_tables_bind_chain(ctx, chain);
- 			if (err < 0)
--				return err;
-+				goto err1;
- 			break;
- 		default:
- 			break;
+diff --git a/net/socket.c b/net/socket.c
+index c4a6f55329552..8d83c4bb163b4 100644
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -757,6 +757,7 @@ int sock_sendmsg(struct socket *sock, struct msghdr *msg)
+ {
+ 	struct sockaddr_storage *save_addr = (struct sockaddr_storage *)msg->msg_name;
+ 	struct sockaddr_storage address;
++	int save_len = msg->msg_namelen;
+ 	int ret;
+ 
+ 	if (msg->msg_name) {
+@@ -766,6 +767,7 @@ int sock_sendmsg(struct socket *sock, struct msghdr *msg)
+ 
+ 	ret = __sock_sendmsg(sock, msg);
+ 	msg->msg_name = save_addr;
++	msg->msg_namelen = save_len;
+ 
+ 	return ret;
+ }
 -- 
 2.43.0
 
