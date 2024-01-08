@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE2F46450;
-	Mon,  8 Jan 2024 14:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B3147778;
+	Mon,  8 Jan 2024 14:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Op83RppE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C18BC433C8;
-	Mon,  8 Jan 2024 14:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6zuagdO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAB9C433C8;
+	Mon,  8 Jan 2024 14:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704723740;
-	bh=ZRfQUl67T1ie6jZYNSdQuMSB9u8CIRFBsq7yR4kRcWU=;
+	s=korg; t=1704723744;
+	bh=lK+J7Q+zbrfj+TNH5hIO8fZfKEiD3/mRehkMx2pZ1pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Op83RppENNEGq3iAIOkGwSgyOnBhPV8XyVW0GSwqzmZanzdyR6RUX1SNfdK1tdcEH
-	 h/oFoXCSrKIhoiZ004/lFMT7FHyKBXcjthtAoQP+qnnfgJPQJvT7gFxnJfTUAvTDv5
-	 HmT7UQ+WFBiaUrT542AeneIuZ9hp/L+BEUXC/Ync=
+	b=c6zuagdObW+7oPjVj+NMpUBzJfVd+YNgq3W9lmrspR8RMOUkLIL/oCQ+le++Hukfj
+	 wyFjfXUnpyZ3+yArxspGvYfius7TWQZowHc8LbGiU+QuS0OnCBo6ZtVzhDEm07Thy9
+	 PWDfrP8nk+l9TA1B7DF4vH2Gi2Buu3h4O8OWtLKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ke Xiao <xiaoke@sangfor.com.cn>,
-	Ding Hui <dinghui@sangfor.com.cn>,
-	Di Zhu <zhudi2@huawei.com>,
-	Jan Sokolowski <jan.sokolowski@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 4.14 4/7] i40e: fix use-after-free in i40e_aqc_add_filters()
-Date: Mon,  8 Jan 2024 15:21:58 +0100
-Message-ID: <20240108141854.309018521@linuxfoundation.org>
+	Jiri Slaby <jirislaby@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Tobias Gruetzmacher <tobias-lists@23.gs>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Subject: [PATCH 4.14 5/7] firewire: ohci: suppress unexpected system reboot in AMD Ryzen machines and ASM108x/VT630x PCIe cards
+Date: Mon,  8 Jan 2024 15:21:59 +0100
+Message-ID: <20240108141854.339749568@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108141854.158274814@linuxfoundation.org>
 References: <20240108141854.158274814@linuxfoundation.org>
@@ -48,120 +43,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ke Xiao <xiaoke@sangfor.com.cn>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit 6a15584e99db8918b60e507539c7446375dcf366 ]
+commit ac9184fbb8478dab4a0724b279f94956b69be827 upstream.
 
-Commit 3116f59c12bd ("i40e: fix use-after-free in
-i40e_sync_filters_subtask()") avoided use-after-free issues,
-by increasing refcount during update the VSI filter list to
-the HW. However, it missed the unicast situation.
+VIA VT6306/6307/6308 provides PCI interface compliant to 1394 OHCI. When
+the hardware is combined with Asmedia ASM1083/1085 PCIe-to-PCI bus bridge,
+it appears that accesses to its 'Isochronous Cycle Timer' register (offset
+0xf0 on PCI memory space) often causes unexpected system reboot in any
+type of AMD Ryzen machine (both 0x17 and 0x19 families). It does not
+appears in the other type of machine (AMD pre-Ryzen machine, Intel
+machine, at least), or in the other OHCI 1394 hardware (e.g. Texas
+Instruments).
 
-When deleting an unicast FDB entry, the i40e driver will release
-the mac_filter, and i40e_service_task will concurrently request
-firmware to add the mac_filter, which will lead to the following
-use-after-free issue.
+The issue explicitly appears at a commit dcadfd7f7c74 ("firewire: core:
+use union for callback of transaction completion") added to v6.5 kernel.
+It changed 1394 OHCI driver to access to the register every time to
+dispatch local asynchronous transaction. However, the issue exists in
+older version of kernel as long as it runs in AMD Ryzen machine, since
+the access to the register is required to maintain bus time. It is not
+hard to imagine that users experience the unexpected system reboot when
+generating bus reset by plugging any devices in, or reading the register
+by time-aware application programs; e.g. audio sample processing.
 
-Fix again for both netdev->uc and netdev->mc.
+This commit suppresses the unexpected system reboot in the combination of
+hardware. It avoids the access itself. As a result, the software stack can
+not provide the hardware time anymore to unit drivers, userspace
+applications, and nodes in the same IEEE 1394 bus. It brings apparent
+disadvantage since time-aware application programs require it, while
+time-unaware applications are available again; e.g. sbp2.
 
-BUG: KASAN: use-after-free in i40e_aqc_add_filters+0x55c/0x5b0 [i40e]
-Read of size 2 at addr ffff888eb3452d60 by task kworker/8:7/6379
-
-CPU: 8 PID: 6379 Comm: kworker/8:7 Kdump: loaded Tainted: G
-Workqueue: i40e i40e_service_task [i40e]
-Call Trace:
- dump_stack+0x71/0xab
- print_address_description+0x6b/0x290
- kasan_report+0x14a/0x2b0
- i40e_aqc_add_filters+0x55c/0x5b0 [i40e]
- i40e_sync_vsi_filters+0x1676/0x39c0 [i40e]
- i40e_service_task+0x1397/0x2bb0 [i40e]
- process_one_work+0x56a/0x11f0
- worker_thread+0x8f/0xf40
- kthread+0x2a0/0x390
- ret_from_fork+0x1f/0x40
-
-Allocated by task 21948:
- kasan_kmalloc+0xa6/0xd0
- kmem_cache_alloc_trace+0xdb/0x1c0
- i40e_add_filter+0x11e/0x520 [i40e]
- i40e_addr_sync+0x37/0x60 [i40e]
- __hw_addr_sync_dev+0x1f5/0x2f0
- i40e_set_rx_mode+0x61/0x1e0 [i40e]
- dev_uc_add_excl+0x137/0x190
- i40e_ndo_fdb_add+0x161/0x260 [i40e]
- rtnl_fdb_add+0x567/0x950
- rtnetlink_rcv_msg+0x5db/0x880
- netlink_rcv_skb+0x254/0x380
- netlink_unicast+0x454/0x610
- netlink_sendmsg+0x747/0xb00
- sock_sendmsg+0xe2/0x120
- __sys_sendto+0x1ae/0x290
- __x64_sys_sendto+0xdd/0x1b0
- do_syscall_64+0xa0/0x370
- entry_SYSCALL_64_after_hwframe+0x65/0xca
-
-Freed by task 21948:
- __kasan_slab_free+0x137/0x190
- kfree+0x8b/0x1b0
- __i40e_del_filter+0x116/0x1e0 [i40e]
- i40e_del_mac_filter+0x16c/0x300 [i40e]
- i40e_addr_unsync+0x134/0x1b0 [i40e]
- __hw_addr_sync_dev+0xff/0x2f0
- i40e_set_rx_mode+0x61/0x1e0 [i40e]
- dev_uc_del+0x77/0x90
- rtnl_fdb_del+0x6a5/0x860
- rtnetlink_rcv_msg+0x5db/0x880
- netlink_rcv_skb+0x254/0x380
- netlink_unicast+0x454/0x610
- netlink_sendmsg+0x747/0xb00
- sock_sendmsg+0xe2/0x120
- __sys_sendto+0x1ae/0x290
- __x64_sys_sendto+0xdd/0x1b0
- do_syscall_64+0xa0/0x370
- entry_SYSCALL_64_after_hwframe+0x65/0xca
-
-Fixes: 3116f59c12bd ("i40e: fix use-after-free in i40e_sync_filters_subtask()")
-Fixes: 41c445ff0f48 ("i40e: main driver core")
-Signed-off-by: Ke Xiao <xiaoke@sangfor.com.cn>
-Signed-off-by: Ding Hui <dinghui@sangfor.com.cn>
-Cc: Di Zhu <zhudi2@huawei.com>
-Reviewed-by: Jan Sokolowski <jan.sokolowski@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Closes: https://bugzilla.suse.com/show_bug.cgi?id=1215436
+Reported-by: Mario Limonciello <mario.limonciello@amd.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217994
+Reported-by: Tobias Gruetzmacher <tobias-lists@23.gs>
+Closes: https://sourceforge.net/p/linux1394/mailman/message/58711901/
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2240973
+Closes: https://bugs.launchpad.net/linux/+bug/2043905
+Link: https://lore.kernel.org/r/20240102110150.244475-1-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/firewire/ohci.c |   51 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index a7bcdf7c6686c..a783ebb14db90 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -117,12 +117,18 @@ static struct workqueue_struct *i40e_wq;
- static void netdev_hw_addr_refcnt(struct i40e_mac_filter *f,
- 				  struct net_device *netdev, int delta)
- {
-+	struct netdev_hw_addr_list *ha_list;
- 	struct netdev_hw_addr *ha;
+--- a/drivers/firewire/ohci.c
++++ b/drivers/firewire/ohci.c
+@@ -292,6 +292,51 @@ static char ohci_driver_name[] = KBUILD_
+ #define QUIRK_TI_SLLZ059		0x20
+ #define QUIRK_IR_WAKE			0x40
  
- 	if (!f || !netdev)
- 		return;
- 
--	netdev_for_each_mc_addr(ha, netdev) {
-+	if (is_unicast_ether_addr(f->macaddr) || is_link_local_ether_addr(f->macaddr))
-+		ha_list = &netdev->uc;
-+	else
-+		ha_list = &netdev->mc;
++// On PCI Express Root Complex in any type of AMD Ryzen machine, VIA VT6306/6307/6308 with Asmedia
++// ASM1083/1085 brings an inconvenience that the read accesses to 'Isochronous Cycle Timer' register
++// (at offset 0xf0 in PCI I/O space) often causes unexpected system reboot. The mechanism is not
++// clear, since the read access to the other registers is enough safe; e.g. 'Node ID' register,
++// while it is probable due to detection of any type of PCIe error.
++#define QUIRK_REBOOT_BY_CYCLE_TIMER_READ	0x80000000
 +
-+	netdev_hw_addr_list_for_each(ha, ha_list) {
- 		if (ether_addr_equal(ha->addr, f->macaddr)) {
- 			ha->refcount += delta;
- 			if (ha->refcount <= 0)
--- 
-2.43.0
-
++#if IS_ENABLED(CONFIG_X86)
++
++static bool has_reboot_by_cycle_timer_read_quirk(const struct fw_ohci *ohci)
++{
++	return !!(ohci->quirks & QUIRK_REBOOT_BY_CYCLE_TIMER_READ);
++}
++
++#define PCI_DEVICE_ID_ASMEDIA_ASM108X	0x1080
++
++static bool detect_vt630x_with_asm1083_on_amd_ryzen_machine(const struct pci_dev *pdev)
++{
++	const struct pci_dev *pcie_to_pci_bridge;
++
++	// Detect any type of AMD Ryzen machine.
++	if (!static_cpu_has(X86_FEATURE_ZEN))
++		return false;
++
++	// Detect VIA VT6306/6307/6308.
++	if (pdev->vendor != PCI_VENDOR_ID_VIA)
++		return false;
++	if (pdev->device != PCI_DEVICE_ID_VIA_VT630X)
++		return false;
++
++	// Detect Asmedia ASM1083/1085.
++	pcie_to_pci_bridge = pdev->bus->self;
++	if (pcie_to_pci_bridge->vendor != PCI_VENDOR_ID_ASMEDIA)
++		return false;
++	if (pcie_to_pci_bridge->device != PCI_DEVICE_ID_ASMEDIA_ASM108X)
++		return false;
++
++	return true;
++}
++
++#else
++#define has_reboot_by_cycle_timer_read_quirk(ohci) false
++#define detect_vt630x_with_asm1083_on_amd_ryzen_machine(pdev)	false
++#endif
++
+ /* In case of multiple matches in ohci_quirks[], only the first one is used. */
+ static const struct {
+ 	unsigned short vendor, device, revision, flags;
+@@ -1732,6 +1777,9 @@ static u32 get_cycle_time(struct fw_ohci
+ 	s32 diff01, diff12;
+ 	int i;
+ 
++	if (has_reboot_by_cycle_timer_read_quirk(ohci))
++		return 0;
++
+ 	c2 = reg_read(ohci, OHCI1394_IsochronousCycleTimer);
+ 
+ 	if (ohci->quirks & QUIRK_CYCLE_TIMER) {
+@@ -3635,6 +3683,9 @@ static int pci_probe(struct pci_dev *dev
+ 	if (param_quirks)
+ 		ohci->quirks = param_quirks;
+ 
++	if (detect_vt630x_with_asm1083_on_amd_ryzen_machine(dev))
++		ohci->quirks |= QUIRK_REBOOT_BY_CYCLE_TIMER_READ;
++
+ 	/*
+ 	 * Because dma_alloc_coherent() allocates at least one page,
+ 	 * we save space by using a common buffer for the AR request/
 
 
