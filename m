@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA024C629;
-	Mon,  8 Jan 2024 14:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D349E4776F;
+	Mon,  8 Jan 2024 14:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hee8Q+9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05EBC433C7;
-	Mon,  8 Jan 2024 14:22:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLYjbsKv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3897AC433C8;
+	Mon,  8 Jan 2024 14:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704723734;
-	bh=kQ+LhR7iZZAnXsQPFnXuHuZbf/2NiSo9eD/UrzJsCmI=;
+	s=korg; t=1704723737;
+	bh=/lkwTX3dEEg5v+FgTjm3ZtKR3SgSmH2GbgW59Ss9wCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0hee8Q+9O/mK+WZdjhluVyaeIhi8BBgEtkqbV0gkl9+dhhmkPyUq92ddKgtZfmbR+
-	 spogLttCVJAmWlzl4BL23R0Y1H8klA47nfZh52R/4q12JlyapoWEd1EBVeRBf9v91M
-	 0u2+pvJoHgm+MDzVzWUwzGhQZTtWkKYIpqbUbGkE=
+	b=bLYjbsKvRDMS7qE1/7tcEBosUTxXaV4y8ZylmijL6oPChVNmReb28dPPjDWv51RNQ
+	 4EPBBuMXN66yNxnedjMJw+OPhApPT1Bjbxjf7MnkqUdAAgIP4hgQgiN9Am9E5+qSZ2
+	 sr4Dyj8OLRXb6TQ5wTb6atx0p/Bio4OgfZx/lvdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Adrian Cinal <adriancinal1@gmail.com>,
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 2/7] net: sched: em_text: fix possible memory leak in em_text_destroy()
-Date: Mon,  8 Jan 2024 15:21:56 +0100
-Message-ID: <20240108141854.235650139@linuxfoundation.org>
+Subject: [PATCH 4.14 3/7] net: bcmgenet: Fix FCS generation for fragmented skbuffs
+Date: Mon,  8 Jan 2024 15:21:57 +0100
+Message-ID: <20240108141854.273350068@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108141854.158274814@linuxfoundation.org>
 References: <20240108141854.158274814@linuxfoundation.org>
@@ -44,38 +44,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Adrian Cinal <adriancinal@gmail.com>
 
-[ Upstream commit 8fcb0382af6f1ef50936f1be05b8149eb2f88496 ]
+[ Upstream commit e584f2ff1e6cc9b1d99e8a6b0f3415940d1b3eb3 ]
 
-m->data needs to be freed when em_text_destroy is called.
+The flag DMA_TX_APPEND_CRC was only written to the first DMA descriptor
+in the TX path, where each descriptor corresponds to a single skbuff
+fragment (or the skbuff head). This led to packets with no FCS appearing
+on the wire if the kernel allocated the packet in fragments, which would
+always happen when using PACKET_MMAP/TPACKET (cf. tpacket_fill_skb() in
+net/af_packet.c).
 
-Fixes: d675c989ed2d ("[PKT_SCHED]: Packet classification based on textsearch (ematch)")
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1c1008c793fa ("net: bcmgenet: add main driver file")
+Signed-off-by: Adrian Cinal <adriancinal1@gmail.com>
+Acked-by: Doug Berger <opendmb@gmail.com>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20231228135638.1339245-1-adriancinal1@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/em_text.c | 4 +++-
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/em_text.c b/net/sched/em_text.c
-index 73e2ed576ceb3..cbf44783024f3 100644
---- a/net/sched/em_text.c
-+++ b/net/sched/em_text.c
-@@ -101,8 +101,10 @@ static int em_text_change(struct net *net, void *data, int len,
- 
- static void em_text_destroy(struct tcf_ematch *m)
- {
--	if (EM_TEXT_PRIV(m) && EM_TEXT_PRIV(m)->config)
-+	if (EM_TEXT_PRIV(m) && EM_TEXT_PRIV(m)->config) {
- 		textsearch_destroy(EM_TEXT_PRIV(m)->config);
-+		kfree(EM_TEXT_PRIV(m));
-+	}
- }
- 
- static int em_text_dump(struct sk_buff *skb, struct tcf_ematch *m)
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index e5e52c0c39a55..445e892022eb5 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -1625,8 +1625,10 @@ static netdev_tx_t bcmgenet_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		/* Note: if we ever change from DMA_TX_APPEND_CRC below we
+ 		 * will need to restore software padding of "runt" packets
+ 		 */
++		len_stat |= DMA_TX_APPEND_CRC;
++
+ 		if (!i) {
+-			len_stat |= DMA_TX_APPEND_CRC | DMA_SOP;
++			len_stat |= DMA_SOP;
+ 			if (skb->ip_summed == CHECKSUM_PARTIAL)
+ 				len_stat |= DMA_TX_DO_CSUM;
+ 		}
 -- 
 2.43.0
 
