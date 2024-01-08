@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C6251032;
-	Mon,  8 Jan 2024 15:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E63B53E1C;
+	Mon,  8 Jan 2024 15:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbiBqIwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9941BC433CB;
-	Mon,  8 Jan 2024 15:40:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXIx5xsq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE89C433C7;
+	Mon,  8 Jan 2024 15:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728416;
-	bh=SQr5f0QqScCMEMJJTZxCrUFp1FngreAIbPNLkbZZE7M=;
+	s=korg; t=1704728419;
+	bh=8tDiDeN13//ZW1OjdYgR0K5DdUeqhzyb5C3ZZU/RbEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qbiBqIwJfFpR17BpSOoKlaobBZbib+nyRYab2ZR2hFA13QjlINc7aZsaY9eBKzVe6
-	 S/0cvF3OWS6hlRPWWWF4WD/+g1HpG44tFlP73OzyIBmr8lsRDY602YOEYLjbIiOWrJ
-	 iROuTYIIK2FTw6YpJfr/JO9t4tj9M9lzlvtO1WjE=
+	b=NXIx5xsqC4fU9huOdXTQ3TU7F++TICcLkaXlu57b5RbT7n20rTGlLiZK+1tlq+Q5E
+	 zVZRaRzcuCSGkJHCeDcKlc6EKDOtR1Y15i4U4fW6Vhoh50sS1rT3k0RCOO/Am3Ca/G
+	 B/sIQN12LCNi/E8y5gxjh7PCo3auJwosqD/gsRjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Willem de Bruijn <willemb@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 070/150] udp: move udp->gro_enabled to udp->udp_flags
-Date: Mon,  8 Jan 2024 16:35:21 +0100
-Message-ID: <20240108153514.454552408@linuxfoundation.org>
+Subject: [PATCH 6.1 071/150] udp: move udp->accept_udp_{l4|fraglist} to udp->udp_flags
+Date: Mon,  8 Jan 2024 16:35:22 +0100
+Message-ID: <20240108153514.490699426@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -46,105 +45,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e1dc0615c6b08ef36414f08c011965b8fb56198b ]
+[ Upstream commit f5f52f0884a595ff99ab1a608643fe4025fca2d5 ]
 
-syzbot reported that udp->gro_enabled can be read locklessly.
-Use one atomic bit from udp->udp_flags.
+These are read locklessly, move them to udp_flags to fix data-races.
 
-Fixes: e20cf8d3f1f7 ("udp: implement GRO for plain UDP sockets.")
-Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 70a36f571362 ("udp: annotate data-races around udp->encap_type")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/udp.h    | 2 +-
- net/ipv4/udp.c         | 6 +++---
- net/ipv4/udp_offload.c | 4 ++--
- net/ipv6/udp.c         | 2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ include/linux/udp.h | 16 +++++++++-------
+ net/ipv4/udp.c      |  2 +-
+ 2 files changed, 10 insertions(+), 8 deletions(-)
 
 diff --git a/include/linux/udp.h b/include/linux/udp.h
-index e6cd46e2b0831..f87e2123fe7b0 100644
+index f87e2123fe7b0..0e6880856246a 100644
 --- a/include/linux/udp.h
 +++ b/include/linux/udp.h
-@@ -34,6 +34,7 @@ enum {
- 	UDP_FLAGS_CORK,		/* Cork is required */
+@@ -35,6 +35,8 @@ enum {
  	UDP_FLAGS_NO_CHECK6_TX, /* Send zero UDP6 checksums on TX? */
  	UDP_FLAGS_NO_CHECK6_RX, /* Allow zero UDP6 checksums on RX? */
-+	UDP_FLAGS_GRO_ENABLED,	/* Request GRO aggregation */
+ 	UDP_FLAGS_GRO_ENABLED,	/* Request GRO aggregation */
++	UDP_FLAGS_ACCEPT_FRAGLIST,
++	UDP_FLAGS_ACCEPT_L4,
  };
  
  struct udp_sock {
-@@ -52,7 +53,6 @@ struct udp_sock {
+@@ -48,13 +50,11 @@ struct udp_sock {
+ 
+ 	int		 pending;	/* Any pending frames ? */
+ 	__u8		 encap_type;	/* Is this an Encapsulation socket? */
+-	unsigned char	 encap_enabled:1, /* This socket enabled encap
++	unsigned char	 encap_enabled:1; /* This socket enabled encap
+ 					   * processing; UDP tunnels and
  					   * different encapsulation layer set
  					   * this
  					   */
--			 gro_enabled:1,	/* Request GRO aggregation */
- 			 accept_udp_l4:1,
- 			 accept_udp_fraglist:1;
+-			 accept_udp_l4:1,
+-			 accept_udp_fraglist:1;
  /* indicator bits used by pcflag: */
+ #define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
+ #define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
+@@ -146,10 +146,12 @@ static inline bool udp_unexpected_gso(struct sock *sk, struct sk_buff *skb)
+ 	if (!skb_is_gso(skb))
+ 		return false;
+ 
+-	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 && !udp_sk(sk)->accept_udp_l4)
++	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
++	    !udp_test_bit(ACCEPT_L4, sk))
+ 		return true;
+ 
+-	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST && !udp_sk(sk)->accept_udp_fraglist)
++	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST &&
++	    !udp_test_bit(ACCEPT_FRAGLIST, sk))
+ 		return true;
+ 
+ 	return false;
+@@ -157,8 +159,8 @@ static inline bool udp_unexpected_gso(struct sock *sk, struct sk_buff *skb)
+ 
+ static inline void udp_allow_gso(struct sock *sk)
+ {
+-	udp_sk(sk)->accept_udp_l4 = 1;
+-	udp_sk(sk)->accept_udp_fraglist = 1;
++	udp_set_bit(ACCEPT_L4, sk);
++	udp_set_bit(ACCEPT_FRAGLIST, sk);
+ }
+ 
+ #define udp_portaddr_for_each_entry(__sk, list) \
 diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 01e74919885ad..28292fcf07075 100644
+index 28292fcf07075..df0ea45b8b8f2 100644
 --- a/net/ipv4/udp.c
 +++ b/net/ipv4/udp.c
-@@ -1901,7 +1901,7 @@ int udp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
- 						      (struct sockaddr *)sin);
- 	}
- 
--	if (udp_sk(sk)->gro_enabled)
-+	if (udp_test_bit(GRO_ENABLED, sk))
- 		udp_cmsg_recv(msg, sk, skb);
- 
- 	if (inet->cmsg_flags)
-@@ -2730,7 +2730,7 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
- 		/* when enabling GRO, accept the related GSO packet type */
+@@ -2731,7 +2731,7 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
  		if (valbool)
  			udp_tunnel_encap_enable(sk->sk_socket);
--		up->gro_enabled = valbool;
-+		udp_assign_bit(GRO_ENABLED, sk, valbool);
- 		up->accept_udp_l4 = valbool;
+ 		udp_assign_bit(GRO_ENABLED, sk, valbool);
+-		up->accept_udp_l4 = valbool;
++		udp_assign_bit(ACCEPT_L4, sk, valbool);
  		release_sock(sk);
  		break;
-@@ -2820,7 +2820,7 @@ int udp_lib_getsockopt(struct sock *sk, int level, int optname,
- 		break;
  
- 	case UDP_GRO:
--		val = up->gro_enabled;
-+		val = udp_test_bit(GRO_ENABLED, sk);
- 		break;
- 
- 	/* The following two cannot be changed on UDP sockets, the return is
-diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
-index 6d1a4bec2614d..8096576fd9bde 100644
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -549,10 +549,10 @@ struct sk_buff *udp_gro_receive(struct list_head *head, struct sk_buff *skb,
- 	NAPI_GRO_CB(skb)->is_flist = 0;
- 	if (!sk || !udp_sk(sk)->gro_receive) {
- 		if (skb->dev->features & NETIF_F_GRO_FRAGLIST)
--			NAPI_GRO_CB(skb)->is_flist = sk ? !udp_sk(sk)->gro_enabled : 1;
-+			NAPI_GRO_CB(skb)->is_flist = sk ? !udp_test_bit(GRO_ENABLED, sk) : 1;
- 
- 		if ((!sk && (skb->dev->features & NETIF_F_GRO_UDP_FWD)) ||
--		    (sk && udp_sk(sk)->gro_enabled) || NAPI_GRO_CB(skb)->is_flist)
-+		    (sk && udp_test_bit(GRO_ENABLED, sk)) || NAPI_GRO_CB(skb)->is_flist)
- 			return call_gro_receive(udp_gro_receive_segment, head, skb);
- 
- 		/* no GRO, be sure flush the current packet */
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index ae4f7f983f951..ddd17b5ea4259 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -440,7 +440,7 @@ int udpv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 						      (struct sockaddr *)sin6);
- 	}
- 
--	if (udp_sk(sk)->gro_enabled)
-+	if (udp_test_bit(GRO_ENABLED, sk))
- 		udp_cmsg_recv(msg, sk, skb);
- 
- 	if (np->rxopt.all)
 -- 
 2.43.0
 
