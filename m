@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77CC537FD;
-	Mon,  8 Jan 2024 15:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00295524A0;
+	Mon,  8 Jan 2024 15:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMsrLN2X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E135C433C9;
-	Mon,  8 Jan 2024 15:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CaxeT2Ch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA25C433CC;
+	Mon,  8 Jan 2024 15:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728563;
-	bh=H/R/nhiya/oFUBkyRvt/rXR8LicDkrGN0ai8oDSTnE8=;
+	s=korg; t=1704728566;
+	bh=lcPqkZVq570POz5DKL676Y8hytWvOFy3RKTRLyzwqTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jMsrLN2X0CTGev0CpXebBcmEWYB+g9AW216/0Q++s7zIvng/98cHtbt0BMvYKvF0V
-	 khz9k/XCrO8pQL89g6tnUz9fHeV+zusy6hoFFl2lSRcOs/l84jhvEIVkLc7oB4R7Ua
-	 LkOngYlGlDtAnw95Mt55lcqpTiniW1RE3bmnaFYA=
+	b=CaxeT2Ch3D3i1TapDqvMTLb0PGfl3y29RDs6HtXkyher2GqjyZWfkN3X+bt+1P+TJ
+	 HBX/kNMLXS0aKmeG3QkmkcBD2/b9YL7Vo1dMKbeYuRx3xHQlBGVpAbctza4Byw1VqI
+	 UiSvSX2aY5ebXbAempqrGEyoapTOAeZ5Pd/ukntk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/150] s390/cpumf: support user space events for counting
-Date: Mon,  8 Jan 2024 16:35:40 +0100
-Message-ID: <20240108153515.337386634@linuxfoundation.org>
+Subject: [PATCH 6.1 116/150] genirq/affinity: Move group_cpus_evenly() into lib/
+Date: Mon,  8 Jan 2024 16:36:07 +0100
+Message-ID: <20240108153516.532546137@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -43,91 +44,918 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 91d5364dc673fa9cf3a5b7b30cf33c70803eb3a4 ]
+[ Upstream commit f7b3ea8cf72f3d6060fe08e461805181e7450a13 ]
 
-CPU Measurement counting facility events PROBLEM_STATE_CPU_CYCLES(32)
-and PROBLEM_STATE_INSTRUCTIONS(33) are valid events. However the device
-driver returns error -EOPNOTSUPP when these event are to be installed.
+group_cpus_evenly() has become a generic function which can be used for
+other subsystems than the interrupt subsystem, so move it into lib/.
 
-Fix this and allow installation of events PROBLEM_STATE_CPU_CYCLES,
-PROBLEM_STATE_CPU_CYCLES:u, PROBLEM_STATE_INSTRUCTIONS and
-PROBLEM_STATE_INSTRUCTIONS:u.
-Kernel space counting only is still not supported by s390.
-
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Acked-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Stable-dep-of: 09cda0a40051 ("s390/mm: add missing arch_set_page_dat() call to vmem_crst_alloc()")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/r/20221227022905.352674-6-ming.lei@redhat.com
+Stable-dep-of: 0263f92fadbb ("lib/group_cpus.c: avoid acquiring cpu hotplug lock in group_cpus_evenly")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/perf_cpum_cf.c | 35 ++++++++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ MAINTAINERS                |   2 +
+ include/linux/group_cpus.h |  14 ++
+ kernel/irq/affinity.c      | 398 +---------------------------------
+ lib/Makefile               |   2 +
+ lib/group_cpus.c           | 427 +++++++++++++++++++++++++++++++++++++
+ 5 files changed, 446 insertions(+), 397 deletions(-)
+ create mode 100644 include/linux/group_cpus.h
+ create mode 100644 lib/group_cpus.c
 
-diff --git a/arch/s390/kernel/perf_cpum_cf.c b/arch/s390/kernel/perf_cpum_cf.c
-index f043a7ff220b7..28fa80fd69fa0 100644
---- a/arch/s390/kernel/perf_cpum_cf.c
-+++ b/arch/s390/kernel/perf_cpum_cf.c
-@@ -2,7 +2,7 @@
- /*
-  * Performance event support for s390x - CPU-measurement Counter Facility
-  *
-- *  Copyright IBM Corp. 2012, 2021
-+ *  Copyright IBM Corp. 2012, 2022
-  *  Author(s): Hendrik Brueckner <brueckner@linux.ibm.com>
-  *	       Thomas Richter <tmricht@linux.ibm.com>
-  */
-@@ -434,6 +434,12 @@ static void cpumf_hw_inuse(void)
- 	mutex_unlock(&pmc_reserve_mutex);
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 07a9c274c0e29..13d1078808bb5 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -10803,6 +10803,8 @@ L:	linux-kernel@vger.kernel.org
+ S:	Maintained
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git irq/core
+ F:	kernel/irq/
++F:	include/linux/group_cpus.h
++F:	lib/group_cpus.c
  
-+static int is_userspace_event(u64 ev)
+ IRQCHIP DRIVERS
+ M:	Thomas Gleixner <tglx@linutronix.de>
+diff --git a/include/linux/group_cpus.h b/include/linux/group_cpus.h
+new file mode 100644
+index 0000000000000..e42807ec61f6e
+--- /dev/null
++++ b/include/linux/group_cpus.h
+@@ -0,0 +1,14 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (C) 2016 Thomas Gleixner.
++ * Copyright (C) 2016-2017 Christoph Hellwig.
++ */
++
++#ifndef __LINUX_GROUP_CPUS_H
++#define __LINUX_GROUP_CPUS_H
++#include <linux/kernel.h>
++#include <linux/cpu.h>
++
++struct cpumask *group_cpus_evenly(unsigned int numgrps);
++
++#endif
+diff --git a/kernel/irq/affinity.c b/kernel/irq/affinity.c
+index 54083331f1bcb..44a4eba80315c 100644
+--- a/kernel/irq/affinity.c
++++ b/kernel/irq/affinity.c
+@@ -7,403 +7,7 @@
+ #include <linux/kernel.h>
+ #include <linux/slab.h>
+ #include <linux/cpu.h>
+-#include <linux/sort.h>
+-
+-static void grp_spread_init_one(struct cpumask *irqmsk, struct cpumask *nmsk,
+-				unsigned int cpus_per_grp)
+-{
+-	const struct cpumask *siblmsk;
+-	int cpu, sibl;
+-
+-	for ( ; cpus_per_grp > 0; ) {
+-		cpu = cpumask_first(nmsk);
+-
+-		/* Should not happen, but I'm too lazy to think about it */
+-		if (cpu >= nr_cpu_ids)
+-			return;
+-
+-		cpumask_clear_cpu(cpu, nmsk);
+-		cpumask_set_cpu(cpu, irqmsk);
+-		cpus_per_grp--;
+-
+-		/* If the cpu has siblings, use them first */
+-		siblmsk = topology_sibling_cpumask(cpu);
+-		for (sibl = -1; cpus_per_grp > 0; ) {
+-			sibl = cpumask_next(sibl, siblmsk);
+-			if (sibl >= nr_cpu_ids)
+-				break;
+-			if (!cpumask_test_and_clear_cpu(sibl, nmsk))
+-				continue;
+-			cpumask_set_cpu(sibl, irqmsk);
+-			cpus_per_grp--;
+-		}
+-	}
+-}
+-
+-static cpumask_var_t *alloc_node_to_cpumask(void)
+-{
+-	cpumask_var_t *masks;
+-	int node;
+-
+-	masks = kcalloc(nr_node_ids, sizeof(cpumask_var_t), GFP_KERNEL);
+-	if (!masks)
+-		return NULL;
+-
+-	for (node = 0; node < nr_node_ids; node++) {
+-		if (!zalloc_cpumask_var(&masks[node], GFP_KERNEL))
+-			goto out_unwind;
+-	}
+-
+-	return masks;
+-
+-out_unwind:
+-	while (--node >= 0)
+-		free_cpumask_var(masks[node]);
+-	kfree(masks);
+-	return NULL;
+-}
+-
+-static void free_node_to_cpumask(cpumask_var_t *masks)
+-{
+-	int node;
+-
+-	for (node = 0; node < nr_node_ids; node++)
+-		free_cpumask_var(masks[node]);
+-	kfree(masks);
+-}
+-
+-static void build_node_to_cpumask(cpumask_var_t *masks)
+-{
+-	int cpu;
+-
+-	for_each_possible_cpu(cpu)
+-		cpumask_set_cpu(cpu, masks[cpu_to_node(cpu)]);
+-}
+-
+-static int get_nodes_in_cpumask(cpumask_var_t *node_to_cpumask,
+-				const struct cpumask *mask, nodemask_t *nodemsk)
+-{
+-	int n, nodes = 0;
+-
+-	/* Calculate the number of nodes in the supplied affinity mask */
+-	for_each_node(n) {
+-		if (cpumask_intersects(mask, node_to_cpumask[n])) {
+-			node_set(n, *nodemsk);
+-			nodes++;
+-		}
+-	}
+-	return nodes;
+-}
+-
+-struct node_groups {
+-	unsigned id;
+-
+-	union {
+-		unsigned ngroups;
+-		unsigned ncpus;
+-	};
+-};
+-
+-static int ncpus_cmp_func(const void *l, const void *r)
+-{
+-	const struct node_groups *ln = l;
+-	const struct node_groups *rn = r;
+-
+-	return ln->ncpus - rn->ncpus;
+-}
+-
+-/*
+- * Allocate group number for each node, so that for each node:
+- *
+- * 1) the allocated number is >= 1
+- *
+- * 2) the allocated number is <= active CPU number of this node
+- *
+- * The actual allocated total groups may be less than @numgrps when
+- * active total CPU number is less than @numgrps.
+- *
+- * Active CPUs means the CPUs in '@cpu_mask AND @node_to_cpumask[]'
+- * for each node.
+- */
+-static void alloc_nodes_groups(unsigned int numgrps,
+-			       cpumask_var_t *node_to_cpumask,
+-			       const struct cpumask *cpu_mask,
+-			       const nodemask_t nodemsk,
+-			       struct cpumask *nmsk,
+-			       struct node_groups *node_groups)
+-{
+-	unsigned n, remaining_ncpus = 0;
+-
+-	for (n = 0; n < nr_node_ids; n++) {
+-		node_groups[n].id = n;
+-		node_groups[n].ncpus = UINT_MAX;
+-	}
+-
+-	for_each_node_mask(n, nodemsk) {
+-		unsigned ncpus;
+-
+-		cpumask_and(nmsk, cpu_mask, node_to_cpumask[n]);
+-		ncpus = cpumask_weight(nmsk);
+-
+-		if (!ncpus)
+-			continue;
+-		remaining_ncpus += ncpus;
+-		node_groups[n].ncpus = ncpus;
+-	}
+-
+-	numgrps = min_t(unsigned, remaining_ncpus, numgrps);
+-
+-	sort(node_groups, nr_node_ids, sizeof(node_groups[0]),
+-	     ncpus_cmp_func, NULL);
+-
+-	/*
+-	 * Allocate groups for each node according to the ratio of this
+-	 * node's nr_cpus to remaining un-assigned ncpus. 'numgrps' is
+-	 * bigger than number of active numa nodes. Always start the
+-	 * allocation from the node with minimized nr_cpus.
+-	 *
+-	 * This way guarantees that each active node gets allocated at
+-	 * least one group, and the theory is simple: over-allocation
+-	 * is only done when this node is assigned by one group, so
+-	 * other nodes will be allocated >= 1 groups, since 'numgrps' is
+-	 * bigger than number of numa nodes.
+-	 *
+-	 * One perfect invariant is that number of allocated groups for
+-	 * each node is <= CPU count of this node:
+-	 *
+-	 * 1) suppose there are two nodes: A and B
+-	 * 	ncpu(X) is CPU count of node X
+-	 * 	grps(X) is the group count allocated to node X via this
+-	 * 	algorithm
+-	 *
+-	 * 	ncpu(A) <= ncpu(B)
+-	 * 	ncpu(A) + ncpu(B) = N
+-	 * 	grps(A) + grps(B) = G
+-	 *
+-	 * 	grps(A) = max(1, round_down(G * ncpu(A) / N))
+-	 * 	grps(B) = G - grps(A)
+-	 *
+-	 * 	both N and G are integer, and 2 <= G <= N, suppose
+-	 * 	G = N - delta, and 0 <= delta <= N - 2
+-	 *
+-	 * 2) obviously grps(A) <= ncpu(A) because:
+-	 *
+-	 * 	if grps(A) is 1, then grps(A) <= ncpu(A) given
+-	 * 	ncpu(A) >= 1
+-	 *
+-	 * 	otherwise,
+-	 * 		grps(A) <= G * ncpu(A) / N <= ncpu(A), given G <= N
+-	 *
+-	 * 3) prove how grps(B) <= ncpu(B):
+-	 *
+-	 * 	if round_down(G * ncpu(A) / N) == 0, vecs(B) won't be
+-	 * 	over-allocated, so grps(B) <= ncpu(B),
+-	 *
+-	 * 	otherwise:
+-	 *
+-	 * 	grps(A) =
+-	 * 		round_down(G * ncpu(A) / N) =
+-	 * 		round_down((N - delta) * ncpu(A) / N) =
+-	 * 		round_down((N * ncpu(A) - delta * ncpu(A)) / N)	 >=
+-	 * 		round_down((N * ncpu(A) - delta * N) / N)	 =
+-	 * 		cpu(A) - delta
+-	 *
+-	 * 	then:
+-	 *
+-	 * 	grps(A) - G >= ncpu(A) - delta - G
+-	 * 	=>
+-	 * 	G - grps(A) <= G + delta - ncpu(A)
+-	 * 	=>
+-	 * 	grps(B) <= N - ncpu(A)
+-	 * 	=>
+-	 * 	grps(B) <= cpu(B)
+-	 *
+-	 * For nodes >= 3, it can be thought as one node and another big
+-	 * node given that is exactly what this algorithm is implemented,
+-	 * and we always re-calculate 'remaining_ncpus' & 'numgrps', and
+-	 * finally for each node X: grps(X) <= ncpu(X).
+-	 *
+-	 */
+-	for (n = 0; n < nr_node_ids; n++) {
+-		unsigned ngroups, ncpus;
+-
+-		if (node_groups[n].ncpus == UINT_MAX)
+-			continue;
+-
+-		WARN_ON_ONCE(numgrps == 0);
+-
+-		ncpus = node_groups[n].ncpus;
+-		ngroups = max_t(unsigned, 1,
+-				 numgrps * ncpus / remaining_ncpus);
+-		WARN_ON_ONCE(ngroups > ncpus);
+-
+-		node_groups[n].ngroups = ngroups;
+-
+-		remaining_ncpus -= ncpus;
+-		numgrps -= ngroups;
+-	}
+-}
+-
+-static int __group_cpus_evenly(unsigned int startgrp, unsigned int numgrps,
+-			       cpumask_var_t *node_to_cpumask,
+-			       const struct cpumask *cpu_mask,
+-			       struct cpumask *nmsk, struct cpumask *masks)
+-{
+-	unsigned int i, n, nodes, cpus_per_grp, extra_grps, done = 0;
+-	unsigned int last_grp = numgrps;
+-	unsigned int curgrp = startgrp;
+-	nodemask_t nodemsk = NODE_MASK_NONE;
+-	struct node_groups *node_groups;
+-
+-	if (cpumask_empty(cpu_mask))
+-		return 0;
+-
+-	nodes = get_nodes_in_cpumask(node_to_cpumask, cpu_mask, &nodemsk);
+-
+-	/*
+-	 * If the number of nodes in the mask is greater than or equal the
+-	 * number of groups we just spread the groups across the nodes.
+-	 */
+-	if (numgrps <= nodes) {
+-		for_each_node_mask(n, nodemsk) {
+-			/* Ensure that only CPUs which are in both masks are set */
+-			cpumask_and(nmsk, cpu_mask, node_to_cpumask[n]);
+-			cpumask_or(&masks[curgrp], &masks[curgrp], nmsk);
+-			if (++curgrp == last_grp)
+-				curgrp = 0;
+-		}
+-		return numgrps;
+-	}
+-
+-	node_groups = kcalloc(nr_node_ids,
+-			       sizeof(struct node_groups),
+-			       GFP_KERNEL);
+-	if (!node_groups)
+-		return -ENOMEM;
+-
+-	/* allocate group number for each node */
+-	alloc_nodes_groups(numgrps, node_to_cpumask, cpu_mask,
+-			   nodemsk, nmsk, node_groups);
+-	for (i = 0; i < nr_node_ids; i++) {
+-		unsigned int ncpus, v;
+-		struct node_groups *nv = &node_groups[i];
+-
+-		if (nv->ngroups == UINT_MAX)
+-			continue;
+-
+-		/* Get the cpus on this node which are in the mask */
+-		cpumask_and(nmsk, cpu_mask, node_to_cpumask[nv->id]);
+-		ncpus = cpumask_weight(nmsk);
+-		if (!ncpus)
+-			continue;
+-
+-		WARN_ON_ONCE(nv->ngroups > ncpus);
+-
+-		/* Account for rounding errors */
+-		extra_grps = ncpus - nv->ngroups * (ncpus / nv->ngroups);
+-
+-		/* Spread allocated groups on CPUs of the current node */
+-		for (v = 0; v < nv->ngroups; v++, curgrp++) {
+-			cpus_per_grp = ncpus / nv->ngroups;
+-
+-			/* Account for extra groups to compensate rounding errors */
+-			if (extra_grps) {
+-				cpus_per_grp++;
+-				--extra_grps;
+-			}
+-
+-			/*
+-			 * wrapping has to be considered given 'startgrp'
+-			 * may start anywhere
+-			 */
+-			if (curgrp >= last_grp)
+-				curgrp = 0;
+-			grp_spread_init_one(&masks[curgrp], nmsk,
+-						cpus_per_grp);
+-		}
+-		done += nv->ngroups;
+-	}
+-	kfree(node_groups);
+-	return done;
+-}
+-
+-/*
+- * build affinity in two stages for each group, and try to put close CPUs
+- * in viewpoint of CPU and NUMA locality into same group, and we run
+- * two-stage grouping:
+- *
+- *	1) allocate present CPUs on these groups evenly first
+- *	2) allocate other possible CPUs on these groups evenly
+- */
+-static struct cpumask *group_cpus_evenly(unsigned int numgrps)
+-{
+-	unsigned int curgrp = 0, nr_present = 0, nr_others = 0;
+-	cpumask_var_t *node_to_cpumask;
+-	cpumask_var_t nmsk, npresmsk;
+-	int ret = -ENOMEM;
+-	struct cpumask *masks = NULL;
+-
+-	if (!zalloc_cpumask_var(&nmsk, GFP_KERNEL))
+-		return NULL;
+-
+-	if (!zalloc_cpumask_var(&npresmsk, GFP_KERNEL))
+-		goto fail_nmsk;
+-
+-	node_to_cpumask = alloc_node_to_cpumask();
+-	if (!node_to_cpumask)
+-		goto fail_npresmsk;
+-
+-	masks = kcalloc(numgrps, sizeof(*masks), GFP_KERNEL);
+-	if (!masks)
+-		goto fail_node_to_cpumask;
+-
+-	/* Stabilize the cpumasks */
+-	cpus_read_lock();
+-	build_node_to_cpumask(node_to_cpumask);
+-
+-	/* grouping present CPUs first */
+-	ret = __group_cpus_evenly(curgrp, numgrps, node_to_cpumask,
+-				  cpu_present_mask, nmsk, masks);
+-	if (ret < 0)
+-		goto fail_build_affinity;
+-	nr_present = ret;
+-
+-	/*
+-	 * Allocate non present CPUs starting from the next group to be
+-	 * handled. If the grouping of present CPUs already exhausted the
+-	 * group space, assign the non present CPUs to the already
+-	 * allocated out groups.
+-	 */
+-	if (nr_present >= numgrps)
+-		curgrp = 0;
+-	else
+-		curgrp = nr_present;
+-	cpumask_andnot(npresmsk, cpu_possible_mask, cpu_present_mask);
+-	ret = __group_cpus_evenly(curgrp, numgrps, node_to_cpumask,
+-				  npresmsk, nmsk, masks);
+-	if (ret >= 0)
+-		nr_others = ret;
+-
+- fail_build_affinity:
+-	cpus_read_unlock();
+-
+-	if (ret >= 0)
+-		WARN_ON(nr_present + nr_others < numgrps);
+-
+- fail_node_to_cpumask:
+-	free_node_to_cpumask(node_to_cpumask);
+-
+- fail_npresmsk:
+-	free_cpumask_var(npresmsk);
+-
+- fail_nmsk:
+-	free_cpumask_var(nmsk);
+-	if (ret < 0) {
+-		kfree(masks);
+-		return NULL;
+-	}
+-	return masks;
+-}
++#include <linux/group_cpus.h>
+ 
+ static void default_calc_sets(struct irq_affinity *affd, unsigned int affvecs)
+ {
+diff --git a/lib/Makefile b/lib/Makefile
+index 5ffe72ec99797..6f1611d053e6a 100644
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -361,6 +361,8 @@ obj-$(CONFIG_SBITMAP) += sbitmap.o
+ 
+ obj-$(CONFIG_PARMAN) += parman.o
+ 
++obj-y += group_cpus.o
++
+ # GCC library routines
+ obj-$(CONFIG_GENERIC_LIB_ASHLDI3) += ashldi3.o
+ obj-$(CONFIG_GENERIC_LIB_ASHRDI3) += ashrdi3.o
+diff --git a/lib/group_cpus.c b/lib/group_cpus.c
+new file mode 100644
+index 0000000000000..99f08c6cb9d97
+--- /dev/null
++++ b/lib/group_cpus.c
+@@ -0,0 +1,427 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (C) 2016 Thomas Gleixner.
++ * Copyright (C) 2016-2017 Christoph Hellwig.
++ */
++#include <linux/kernel.h>
++#include <linux/slab.h>
++#include <linux/cpu.h>
++#include <linux/sort.h>
++#include <linux/group_cpus.h>
++
++static void grp_spread_init_one(struct cpumask *irqmsk, struct cpumask *nmsk,
++				unsigned int cpus_per_grp)
 +{
-+	return cpumf_generic_events_user[PERF_COUNT_HW_CPU_CYCLES] == ev ||
-+	       cpumf_generic_events_user[PERF_COUNT_HW_INSTRUCTIONS] == ev;
++	const struct cpumask *siblmsk;
++	int cpu, sibl;
++
++	for ( ; cpus_per_grp > 0; ) {
++		cpu = cpumask_first(nmsk);
++
++		/* Should not happen, but I'm too lazy to think about it */
++		if (cpu >= nr_cpu_ids)
++			return;
++
++		cpumask_clear_cpu(cpu, nmsk);
++		cpumask_set_cpu(cpu, irqmsk);
++		cpus_per_grp--;
++
++		/* If the cpu has siblings, use them first */
++		siblmsk = topology_sibling_cpumask(cpu);
++		for (sibl = -1; cpus_per_grp > 0; ) {
++			sibl = cpumask_next(sibl, siblmsk);
++			if (sibl >= nr_cpu_ids)
++				break;
++			if (!cpumask_test_and_clear_cpu(sibl, nmsk))
++				continue;
++			cpumask_set_cpu(sibl, irqmsk);
++			cpus_per_grp--;
++		}
++	}
 +}
 +
- static int __hw_perf_event_init(struct perf_event *event, unsigned int type)
- {
- 	struct perf_event_attr *attr = &event->attr;
-@@ -456,19 +462,26 @@ static int __hw_perf_event_init(struct perf_event *event, unsigned int type)
- 		if (is_sampling_event(event))	/* No sampling support */
- 			return -ENOENT;
- 		ev = attr->config;
--		/* Count user space (problem-state) only */
- 		if (!attr->exclude_user && attr->exclude_kernel) {
--			if (ev >= ARRAY_SIZE(cpumf_generic_events_user))
--				return -EOPNOTSUPP;
--			ev = cpumf_generic_events_user[ev];
--
--		/* No support for kernel space counters only */
++static cpumask_var_t *alloc_node_to_cpumask(void)
++{
++	cpumask_var_t *masks;
++	int node;
++
++	masks = kcalloc(nr_node_ids, sizeof(cpumask_var_t), GFP_KERNEL);
++	if (!masks)
++		return NULL;
++
++	for (node = 0; node < nr_node_ids; node++) {
++		if (!zalloc_cpumask_var(&masks[node], GFP_KERNEL))
++			goto out_unwind;
++	}
++
++	return masks;
++
++out_unwind:
++	while (--node >= 0)
++		free_cpumask_var(masks[node]);
++	kfree(masks);
++	return NULL;
++}
++
++static void free_node_to_cpumask(cpumask_var_t *masks)
++{
++	int node;
++
++	for (node = 0; node < nr_node_ids; node++)
++		free_cpumask_var(masks[node]);
++	kfree(masks);
++}
++
++static void build_node_to_cpumask(cpumask_var_t *masks)
++{
++	int cpu;
++
++	for_each_possible_cpu(cpu)
++		cpumask_set_cpu(cpu, masks[cpu_to_node(cpu)]);
++}
++
++static int get_nodes_in_cpumask(cpumask_var_t *node_to_cpumask,
++				const struct cpumask *mask, nodemask_t *nodemsk)
++{
++	int n, nodes = 0;
++
++	/* Calculate the number of nodes in the supplied affinity mask */
++	for_each_node(n) {
++		if (cpumask_intersects(mask, node_to_cpumask[n])) {
++			node_set(n, *nodemsk);
++			nodes++;
++		}
++	}
++	return nodes;
++}
++
++struct node_groups {
++	unsigned id;
++
++	union {
++		unsigned ngroups;
++		unsigned ncpus;
++	};
++};
++
++static int ncpus_cmp_func(const void *l, const void *r)
++{
++	const struct node_groups *ln = l;
++	const struct node_groups *rn = r;
++
++	return ln->ncpus - rn->ncpus;
++}
++
++/*
++ * Allocate group number for each node, so that for each node:
++ *
++ * 1) the allocated number is >= 1
++ *
++ * 2) the allocated number is <= active CPU number of this node
++ *
++ * The actual allocated total groups may be less than @numgrps when
++ * active total CPU number is less than @numgrps.
++ *
++ * Active CPUs means the CPUs in '@cpu_mask AND @node_to_cpumask[]'
++ * for each node.
++ */
++static void alloc_nodes_groups(unsigned int numgrps,
++			       cpumask_var_t *node_to_cpumask,
++			       const struct cpumask *cpu_mask,
++			       const nodemask_t nodemsk,
++			       struct cpumask *nmsk,
++			       struct node_groups *node_groups)
++{
++	unsigned n, remaining_ncpus = 0;
++
++	for (n = 0; n < nr_node_ids; n++) {
++		node_groups[n].id = n;
++		node_groups[n].ncpus = UINT_MAX;
++	}
++
++	for_each_node_mask(n, nodemsk) {
++		unsigned ncpus;
++
++		cpumask_and(nmsk, cpu_mask, node_to_cpumask[n]);
++		ncpus = cpumask_weight(nmsk);
++
++		if (!ncpus)
++			continue;
++		remaining_ncpus += ncpus;
++		node_groups[n].ncpus = ncpus;
++	}
++
++	numgrps = min_t(unsigned, remaining_ncpus, numgrps);
++
++	sort(node_groups, nr_node_ids, sizeof(node_groups[0]),
++	     ncpus_cmp_func, NULL);
++
++	/*
++	 * Allocate groups for each node according to the ratio of this
++	 * node's nr_cpus to remaining un-assigned ncpus. 'numgrps' is
++	 * bigger than number of active numa nodes. Always start the
++	 * allocation from the node with minimized nr_cpus.
++	 *
++	 * This way guarantees that each active node gets allocated at
++	 * least one group, and the theory is simple: over-allocation
++	 * is only done when this node is assigned by one group, so
++	 * other nodes will be allocated >= 1 groups, since 'numgrps' is
++	 * bigger than number of numa nodes.
++	 *
++	 * One perfect invariant is that number of allocated groups for
++	 * each node is <= CPU count of this node:
++	 *
++	 * 1) suppose there are two nodes: A and B
++	 * 	ncpu(X) is CPU count of node X
++	 * 	grps(X) is the group count allocated to node X via this
++	 * 	algorithm
++	 *
++	 * 	ncpu(A) <= ncpu(B)
++	 * 	ncpu(A) + ncpu(B) = N
++	 * 	grps(A) + grps(B) = G
++	 *
++	 * 	grps(A) = max(1, round_down(G * ncpu(A) / N))
++	 * 	grps(B) = G - grps(A)
++	 *
++	 * 	both N and G are integer, and 2 <= G <= N, suppose
++	 * 	G = N - delta, and 0 <= delta <= N - 2
++	 *
++	 * 2) obviously grps(A) <= ncpu(A) because:
++	 *
++	 * 	if grps(A) is 1, then grps(A) <= ncpu(A) given
++	 * 	ncpu(A) >= 1
++	 *
++	 * 	otherwise,
++	 * 		grps(A) <= G * ncpu(A) / N <= ncpu(A), given G <= N
++	 *
++	 * 3) prove how grps(B) <= ncpu(B):
++	 *
++	 * 	if round_down(G * ncpu(A) / N) == 0, vecs(B) won't be
++	 * 	over-allocated, so grps(B) <= ncpu(B),
++	 *
++	 * 	otherwise:
++	 *
++	 * 	grps(A) =
++	 * 		round_down(G * ncpu(A) / N) =
++	 * 		round_down((N - delta) * ncpu(A) / N) =
++	 * 		round_down((N * ncpu(A) - delta * ncpu(A)) / N)	 >=
++	 * 		round_down((N * ncpu(A) - delta * N) / N)	 =
++	 * 		cpu(A) - delta
++	 *
++	 * 	then:
++	 *
++	 * 	grps(A) - G >= ncpu(A) - delta - G
++	 * 	=>
++	 * 	G - grps(A) <= G + delta - ncpu(A)
++	 * 	=>
++	 * 	grps(B) <= N - ncpu(A)
++	 * 	=>
++	 * 	grps(B) <= cpu(B)
++	 *
++	 * For nodes >= 3, it can be thought as one node and another big
++	 * node given that is exactly what this algorithm is implemented,
++	 * and we always re-calculate 'remaining_ncpus' & 'numgrps', and
++	 * finally for each node X: grps(X) <= ncpu(X).
++	 *
++	 */
++	for (n = 0; n < nr_node_ids; n++) {
++		unsigned ngroups, ncpus;
++
++		if (node_groups[n].ncpus == UINT_MAX)
++			continue;
++
++		WARN_ON_ONCE(numgrps == 0);
++
++		ncpus = node_groups[n].ncpus;
++		ngroups = max_t(unsigned, 1,
++				 numgrps * ncpus / remaining_ncpus);
++		WARN_ON_ONCE(ngroups > ncpus);
++
++		node_groups[n].ngroups = ngroups;
++
++		remaining_ncpus -= ncpus;
++		numgrps -= ngroups;
++	}
++}
++
++static int __group_cpus_evenly(unsigned int startgrp, unsigned int numgrps,
++			       cpumask_var_t *node_to_cpumask,
++			       const struct cpumask *cpu_mask,
++			       struct cpumask *nmsk, struct cpumask *masks)
++{
++	unsigned int i, n, nodes, cpus_per_grp, extra_grps, done = 0;
++	unsigned int last_grp = numgrps;
++	unsigned int curgrp = startgrp;
++	nodemask_t nodemsk = NODE_MASK_NONE;
++	struct node_groups *node_groups;
++
++	if (cpumask_empty(cpu_mask))
++		return 0;
++
++	nodes = get_nodes_in_cpumask(node_to_cpumask, cpu_mask, &nodemsk);
++
++	/*
++	 * If the number of nodes in the mask is greater than or equal the
++	 * number of groups we just spread the groups across the nodes.
++	 */
++	if (numgrps <= nodes) {
++		for_each_node_mask(n, nodemsk) {
++			/* Ensure that only CPUs which are in both masks are set */
++			cpumask_and(nmsk, cpu_mask, node_to_cpumask[n]);
++			cpumask_or(&masks[curgrp], &masks[curgrp], nmsk);
++			if (++curgrp == last_grp)
++				curgrp = 0;
++		}
++		return numgrps;
++	}
++
++	node_groups = kcalloc(nr_node_ids,
++			       sizeof(struct node_groups),
++			       GFP_KERNEL);
++	if (!node_groups)
++		return -ENOMEM;
++
++	/* allocate group number for each node */
++	alloc_nodes_groups(numgrps, node_to_cpumask, cpu_mask,
++			   nodemsk, nmsk, node_groups);
++	for (i = 0; i < nr_node_ids; i++) {
++		unsigned int ncpus, v;
++		struct node_groups *nv = &node_groups[i];
++
++		if (nv->ngroups == UINT_MAX)
++			continue;
++
++		/* Get the cpus on this node which are in the mask */
++		cpumask_and(nmsk, cpu_mask, node_to_cpumask[nv->id]);
++		ncpus = cpumask_weight(nmsk);
++		if (!ncpus)
++			continue;
++
++		WARN_ON_ONCE(nv->ngroups > ncpus);
++
++		/* Account for rounding errors */
++		extra_grps = ncpus - nv->ngroups * (ncpus / nv->ngroups);
++
++		/* Spread allocated groups on CPUs of the current node */
++		for (v = 0; v < nv->ngroups; v++, curgrp++) {
++			cpus_per_grp = ncpus / nv->ngroups;
++
++			/* Account for extra groups to compensate rounding errors */
++			if (extra_grps) {
++				cpus_per_grp++;
++				--extra_grps;
++			}
++
 +			/*
-+			 * Count user space (problem-state) only
-+			 * Handle events 32 and 33 as 0:u and 1:u
++			 * wrapping has to be considered given 'startgrp'
++			 * may start anywhere
 +			 */
-+			if (!is_userspace_event(ev)) {
-+				if (ev >= ARRAY_SIZE(cpumf_generic_events_user))
-+					return -EOPNOTSUPP;
-+				ev = cpumf_generic_events_user[ev];
-+			}
- 		} else if (!attr->exclude_kernel && attr->exclude_user) {
-+			/* No support for kernel space counters only */
- 			return -EOPNOTSUPP;
--		} else {	/* Count user and kernel space */
--			if (ev >= ARRAY_SIZE(cpumf_generic_events_basic))
--				return -EOPNOTSUPP;
--			ev = cpumf_generic_events_basic[ev];
-+		} else {
-+			/* Count user and kernel space, incl. events 32 + 33 */
-+			if (!is_userspace_event(ev)) {
-+				if (ev >= ARRAY_SIZE(cpumf_generic_events_basic))
-+					return -EOPNOTSUPP;
-+				ev = cpumf_generic_events_basic[ev];
-+			}
- 		}
- 		break;
- 
++			if (curgrp >= last_grp)
++				curgrp = 0;
++			grp_spread_init_one(&masks[curgrp], nmsk,
++						cpus_per_grp);
++		}
++		done += nv->ngroups;
++	}
++	kfree(node_groups);
++	return done;
++}
++
++#ifdef CONFIG_SMP
++/**
++ * group_cpus_evenly - Group all CPUs evenly per NUMA/CPU locality
++ * @numgrps: number of groups
++ *
++ * Return: cpumask array if successful, NULL otherwise. And each element
++ * includes CPUs assigned to this group
++ *
++ * Try to put close CPUs from viewpoint of CPU and NUMA locality into
++ * same group, and run two-stage grouping:
++ *	1) allocate present CPUs on these groups evenly first
++ *	2) allocate other possible CPUs on these groups evenly
++ *
++ * We guarantee in the resulted grouping that all CPUs are covered, and
++ * no same CPU is assigned to multiple groups
++ */
++struct cpumask *group_cpus_evenly(unsigned int numgrps)
++{
++	unsigned int curgrp = 0, nr_present = 0, nr_others = 0;
++	cpumask_var_t *node_to_cpumask;
++	cpumask_var_t nmsk, npresmsk;
++	int ret = -ENOMEM;
++	struct cpumask *masks = NULL;
++
++	if (!zalloc_cpumask_var(&nmsk, GFP_KERNEL))
++		return NULL;
++
++	if (!zalloc_cpumask_var(&npresmsk, GFP_KERNEL))
++		goto fail_nmsk;
++
++	node_to_cpumask = alloc_node_to_cpumask();
++	if (!node_to_cpumask)
++		goto fail_npresmsk;
++
++	masks = kcalloc(numgrps, sizeof(*masks), GFP_KERNEL);
++	if (!masks)
++		goto fail_node_to_cpumask;
++
++	/* Stabilize the cpumasks */
++	cpus_read_lock();
++	build_node_to_cpumask(node_to_cpumask);
++
++	/* grouping present CPUs first */
++	ret = __group_cpus_evenly(curgrp, numgrps, node_to_cpumask,
++				  cpu_present_mask, nmsk, masks);
++	if (ret < 0)
++		goto fail_build_affinity;
++	nr_present = ret;
++
++	/*
++	 * Allocate non present CPUs starting from the next group to be
++	 * handled. If the grouping of present CPUs already exhausted the
++	 * group space, assign the non present CPUs to the already
++	 * allocated out groups.
++	 */
++	if (nr_present >= numgrps)
++		curgrp = 0;
++	else
++		curgrp = nr_present;
++	cpumask_andnot(npresmsk, cpu_possible_mask, cpu_present_mask);
++	ret = __group_cpus_evenly(curgrp, numgrps, node_to_cpumask,
++				  npresmsk, nmsk, masks);
++	if (ret >= 0)
++		nr_others = ret;
++
++ fail_build_affinity:
++	cpus_read_unlock();
++
++	if (ret >= 0)
++		WARN_ON(nr_present + nr_others < numgrps);
++
++ fail_node_to_cpumask:
++	free_node_to_cpumask(node_to_cpumask);
++
++ fail_npresmsk:
++	free_cpumask_var(npresmsk);
++
++ fail_nmsk:
++	free_cpumask_var(nmsk);
++	if (ret < 0) {
++		kfree(masks);
++		return NULL;
++	}
++	return masks;
++}
++#else
++struct cpumask *group_cpus_evenly(unsigned int numgrps)
++{
++	struct cpumask *masks = kcalloc(numgrps, sizeof(*masks), GFP_KERNEL);
++
++	if (!masks)
++		return NULL;
++
++	/* assign all CPUs(cpu 0) to the 1st group only */
++	cpumask_copy(&masks[0], cpu_possible_mask);
++	return masks;
++}
++#endif
 -- 
 2.43.0
 
