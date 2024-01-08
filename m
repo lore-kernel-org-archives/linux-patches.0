@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF78C51C2B;
-	Mon,  8 Jan 2024 15:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C509952F86;
+	Mon,  8 Jan 2024 15:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bB7iHVY4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1B1C433C8;
-	Mon,  8 Jan 2024 15:43:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N82tk6fb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD341C433C7;
+	Mon,  8 Jan 2024 15:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728634;
-	bh=m5R/EBKpUB3Kk61+dgP1dpSqBeBITStF4/GGzq/Kynk=;
+	s=korg; t=1704728638;
+	bh=jr7y8Zd/TFLs4FQzrXAqr25OLaoPBjFRWVQBRLqYMyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bB7iHVY4RlcVekfgG6AoR+USL6ubi80olz9xCxwAUg9RiRgHMtXLnkdm8V2q6DY7E
-	 U4R6PwWUppuIwD4ySQcp/k/XNLsOtyDeP2+/yRagT4NS5Wo7mzNAfr02/c6lap9U+o
-	 PggVvxB6LH3n7Q23MVhDIFWyzQgyg2E9jYUWggrQ=
+	b=N82tk6fbUdDYyP6i8YZrmcLg6pSY1ZuS5XDEfV0uFwN3vj49xsKrQmxzNKDMRfimo
+	 ZNf5CRMilNTk/BOX2htsIGc/KsGPTQNY0cM5XhGsqeuVlSufOsOZhNGEcp+ggnDeyF
+	 Eop96EHfSh0aYKlN8h7j1Cvw/yR9EvwKWQCEY4Zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Ramirez-Ortiz <jorge@foundries.io>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 139/150] mmc: rpmb: fixes pause retune on all RPMB partitions.
-Date: Mon,  8 Jan 2024 16:36:30 +0100
-Message-ID: <20240108153517.600894762@linuxfoundation.org>
+Subject: [PATCH 6.1 140/150] mmc: core: Cancel delayed work before releasing host
+Date: Mon,  8 Jan 2024 16:36:31 +0100
+Message-ID: <20240108153517.650983420@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -42,60 +42,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorge Ramirez-Ortiz <jorge@foundries.io>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit e7794c14fd73e5eb4a3e0ecaa5334d5a17377c50 upstream.
+commit 1036f69e251380573e256568cf814506e3fb9988 upstream.
 
-When RPMB was converted to a character device, it added support for
-multiple RPMB partitions (Commit 97548575bef3 ("mmc: block: Convert RPMB to
-a character device").
+On RZ/Five SMARC EVK, where probing of SDHI is deferred due to probe
+deferral of the vqmmc-supply regulator:
 
-One of the changes in this commit was transforming the variable target_part
-defined in __mmc_blk_ioctl_cmd into a bitmask. This inadvertently regressed
-the validation check done in mmc_blk_part_switch_pre() and
-mmc_blk_part_switch_post(), so let's fix it.
+    ------------[ cut here ]------------
+    WARNING: CPU: 0 PID: 0 at kernel/time/timer.c:1738 __run_timers.part.0+0x1d0/0x1e8
+    Modules linked in:
+    CPU: 0 PID: 0 Comm: swapper Not tainted 6.7.0-rc4 #101
+    Hardware name: Renesas SMARC EVK based on r9a07g043f01 (DT)
+    epc : __run_timers.part.0+0x1d0/0x1e8
+     ra : __run_timers.part.0+0x134/0x1e8
+    epc : ffffffff800771a4 ra : ffffffff80077108 sp : ffffffc800003e60
+     gp : ffffffff814f5028 tp : ffffffff8140c5c0 t0 : ffffffc800000000
+     t1 : 0000000000000001 t2 : ffffffff81201300 s0 : ffffffc800003f20
+     s1 : ffffffd8023bc4a0 a0 : 00000000fffee6b0 a1 : 0004010000400000
+     a2 : ffffffffc0000016 a3 : ffffffff81488640 a4 : ffffffc800003e60
+     a5 : 0000000000000000 a6 : 0000000004000000 a7 : ffffffc800003e68
+     s2 : 0000000000000122 s3 : 0000000000200000 s4 : 0000000000000000
+     s5 : ffffffffffffffff s6 : ffffffff81488678 s7 : ffffffff814886c0
+     s8 : ffffffff814f49c0 s9 : ffffffff81488640 s10: 0000000000000000
+     s11: ffffffc800003e60 t3 : 0000000000000240 t4 : 0000000000000a52
+     t5 : ffffffd8024ae018 t6 : ffffffd8024ae038
+    status: 0000000200000100 badaddr: 0000000000000000 cause: 0000000000000003
+    [<ffffffff800771a4>] __run_timers.part.0+0x1d0/0x1e8
+    [<ffffffff800771e0>] run_timer_softirq+0x24/0x4a
+    [<ffffffff80809092>] __do_softirq+0xc6/0x1fa
+    [<ffffffff80028e4c>] irq_exit_rcu+0x66/0x84
+    [<ffffffff80800f7a>] handle_riscv_irq+0x40/0x4e
+    [<ffffffff80808f48>] call_on_irq_stack+0x1c/0x28
+    ---[ end trace 0000000000000000 ]---
 
-Fixes: 97548575bef3 ("mmc: block: Convert RPMB to a character device")
-Signed-off-by: Jorge Ramirez-Ortiz <jorge@foundries.io>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231201153143.1449753-1-jorge@foundries.io
+What happens?
+
+    renesas_sdhi_probe()
+    {
+    	tmio_mmc_host_alloc()
+	    mmc_alloc_host()
+		INIT_DELAYED_WORK(&host->detect, mmc_rescan);
+
+	devm_request_irq(tmio_mmc_irq);
+
+	/*
+	 * After this, the interrupt handler may be invoked at any time
+	 *
+	 *  tmio_mmc_irq()
+	 *  {
+	 *	__tmio_mmc_card_detect_irq()
+	 *	    mmc_detect_change()
+	 *		_mmc_detect_change()
+	 *		    mmc_schedule_delayed_work(&host->detect, delay);
+	 *  }
+	 */
+
+	tmio_mmc_host_probe()
+	    tmio_mmc_init_ocr()
+		-EPROBE_DEFER
+
+	tmio_mmc_host_free()
+	    mmc_free_host()
+    }
+
+When expire_timers() runs later, it warns because the MMC host structure
+containing the delayed work was freed, and now contains an invalid work
+function pointer.
+
+Fix this by cancelling any pending delayed work before releasing the
+MMC host structure.
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/205dc4c91b47e31b64392fe2498c7a449e717b4b.1701689330.git.geert+renesas@glider.be
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/block.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/mmc/core/host.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -866,9 +866,10 @@ static const struct block_device_operati
- static int mmc_blk_part_switch_pre(struct mmc_card *card,
- 				   unsigned int part_type)
+--- a/drivers/mmc/core/host.c
++++ b/drivers/mmc/core/host.c
+@@ -670,6 +670,7 @@ EXPORT_SYMBOL(mmc_remove_host);
+  */
+ void mmc_free_host(struct mmc_host *host)
  {
-+	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
- 	int ret = 0;
- 
--	if (part_type == EXT_CSD_PART_CONFIG_ACC_RPMB) {
-+	if ((part_type & mask) == mask) {
- 		if (card->ext_csd.cmdq_en) {
- 			ret = mmc_cmdq_disable(card);
- 			if (ret)
-@@ -883,9 +884,10 @@ static int mmc_blk_part_switch_pre(struc
- static int mmc_blk_part_switch_post(struct mmc_card *card,
- 				    unsigned int part_type)
- {
-+	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
- 	int ret = 0;
- 
--	if (part_type == EXT_CSD_PART_CONFIG_ACC_RPMB) {
-+	if ((part_type & mask) == mask) {
- 		mmc_retune_unpause(card->host);
- 		if (card->reenable_cmdq && !card->ext_csd.cmdq_en)
- 			ret = mmc_cmdq_enable(card);
-@@ -3180,4 +3182,3 @@ module_exit(mmc_blk_exit);
- 
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("Multimedia Card (MMC) block device driver");
--
++	cancel_delayed_work_sync(&host->detect);
+ 	mmc_pwrseq_free(host);
+ 	put_device(&host->class_dev);
+ }
 
 
