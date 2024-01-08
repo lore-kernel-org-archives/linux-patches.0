@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54E847791;
-	Mon,  8 Jan 2024 15:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE4B4BA96;
+	Mon,  8 Jan 2024 15:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCWb3PD3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A11EC433BB;
-	Mon,  8 Jan 2024 15:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UdlcrPa2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A739C43140;
+	Mon,  8 Jan 2024 15:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726738;
-	bh=5ujZDaaD+UWn4GgjodeOIIE3e1wZ3hJMSz+YHTzUG1M=;
+	s=korg; t=1704726741;
+	bh=+zw1nyGuGszfBD1LC9EjkcEyn56pr9uSU8xIWwoyCeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCWb3PD3iYEc0v5X5qWxD8E+0jUl0pkkYvO53B2urqCB0VDWCr96UWpg+KzBg0Mdo
-	 q59TgRsO/qgOMqvgZG0bVfbJwE9qwxJQivFc37LSKj7C+xV5XI56eNWtidrsCbncoz
-	 tsCaQeIIpzRkEg9Go8Sa++tJJTPpTo4qclAWH/tA=
+	b=UdlcrPa2oMNecxrR+0hw7geZ0WRz7QEBrN+UU1Vk96n1iWrqAM6QivFr749TporDK
+	 AZYIWKzcWqpBpUAvjr/T3Ow3nhgeOls95GmVwfaDsZPlIa99cVmsGyriYjQNPFu3X2
+	 W8n50iwImbjPEgIruUb9drSVJlnJuiSCT54ZdnO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Jane Chu <jane.chu@oracle.com>,
-	Naoya Horiguchi <naoya.horiguchi@nec.com>,
 	Dan Williams <dan.j.williams@intel.com>,
+	Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/124] mm: convert DAX lock/unlock page to lock/unlock folio
-Date: Mon,  8 Jan 2024 16:08:09 +0100
-Message-ID: <20240108150605.872036709@linuxfoundation.org>
+Subject: [PATCH 6.6 064/124] mm/memory-failure: pass the folio and the page to collect_procs()
+Date: Mon,  8 Jan 2024 16:08:10 +0100
+Message-ID: <20240108150605.912408820@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -47,198 +46,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 91e79d22be75fec88ae58d274a7c9e49d6215099 ]
+[ Upstream commit 376907f3a0b34a17e80417825f8cc1c40fcba81b ]
 
-The one caller of DAX lock/unlock page already calls compound_head(), so
-use page_folio() instead, then use a folio throughout the DAX code to
-remove uses of page->mapping and page->index.
+Patch series "Three memory-failure fixes".
 
-[jane.chu@oracle.com: add comment to mf_generic_kill_procss(), simplify mf_generic_kill_procs:folio initialization]
-  Link: https://lkml.kernel.org/r/20230908222336.186313-1-jane.chu@oracle.com
-Link: https://lkml.kernel.org/r/20230822231314.349200-1-willy@infradead.org
+I've been looking at the memory-failure code and I believe I have found
+three bugs that need fixing -- one going all the way back to 2010!  I'll
+have more patches later to use folios more extensively but didn't want
+these bugfixes to get caught up in that.
+
+This patch (of 3):
+
+Both collect_procs_anon() and collect_procs_file() iterate over the VMA
+interval trees looking for a single pgoff, so it is wrong to look for the
+pgoff of the head page as is currently done.  However, it is also wrong to
+look at page->mapping of the precise page as this is invalid for tail
+pages.  Clear up the confusion by passing both the folio and the precise
+page to collect_procs().
+
+Link: https://lkml.kernel.org/r/20231218135837.3310403-1-willy@infradead.org
+Link: https://lkml.kernel.org/r/20231218135837.3310403-2-willy@infradead.org
+Fixes: 415c64c1453a ("mm/memory-failure: split thp earlier in memory error handling")
 Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Jane Chu <jane.chu@oracle.com>
-Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
 Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Jane Chu <jane.chu@oracle.com>
+Cc: Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 376907f3a0b3 ("mm/memory-failure: pass the folio and the page to collect_procs()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dax.c            | 24 ++++++++++++------------
- include/linux/dax.h | 10 +++++-----
- mm/memory-failure.c | 29 ++++++++++++++++-------------
- 3 files changed, 33 insertions(+), 30 deletions(-)
+ mm/memory-failure.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/fs/dax.c b/fs/dax.c
-index 8fafecbe42b15..3380b43cb6bbb 100644
---- a/fs/dax.c
-+++ b/fs/dax.c
-@@ -412,23 +412,23 @@ static struct page *dax_busy_page(void *entry)
- 	return NULL;
- }
- 
--/*
-- * dax_lock_page - Lock the DAX entry corresponding to a page
-- * @page: The page whose entry we want to lock
-+/**
-+ * dax_lock_folio - Lock the DAX entry corresponding to a folio
-+ * @folio: The folio whose entry we want to lock
-  *
-  * Context: Process context.
-- * Return: A cookie to pass to dax_unlock_page() or 0 if the entry could
-+ * Return: A cookie to pass to dax_unlock_folio() or 0 if the entry could
-  * not be locked.
-  */
--dax_entry_t dax_lock_page(struct page *page)
-+dax_entry_t dax_lock_folio(struct folio *folio)
- {
- 	XA_STATE(xas, NULL, 0);
- 	void *entry;
- 
--	/* Ensure page->mapping isn't freed while we look at it */
-+	/* Ensure folio->mapping isn't freed while we look at it */
- 	rcu_read_lock();
- 	for (;;) {
--		struct address_space *mapping = READ_ONCE(page->mapping);
-+		struct address_space *mapping = READ_ONCE(folio->mapping);
- 
- 		entry = NULL;
- 		if (!mapping || !dax_mapping(mapping))
-@@ -447,11 +447,11 @@ dax_entry_t dax_lock_page(struct page *page)
- 
- 		xas.xa = &mapping->i_pages;
- 		xas_lock_irq(&xas);
--		if (mapping != page->mapping) {
-+		if (mapping != folio->mapping) {
- 			xas_unlock_irq(&xas);
- 			continue;
- 		}
--		xas_set(&xas, page->index);
-+		xas_set(&xas, folio->index);
- 		entry = xas_load(&xas);
- 		if (dax_is_locked(entry)) {
- 			rcu_read_unlock();
-@@ -467,10 +467,10 @@ dax_entry_t dax_lock_page(struct page *page)
- 	return (dax_entry_t)entry;
- }
- 
--void dax_unlock_page(struct page *page, dax_entry_t cookie)
-+void dax_unlock_folio(struct folio *folio, dax_entry_t cookie)
- {
--	struct address_space *mapping = page->mapping;
--	XA_STATE(xas, &mapping->i_pages, page->index);
-+	struct address_space *mapping = folio->mapping;
-+	XA_STATE(xas, &mapping->i_pages, folio->index);
- 
- 	if (S_ISCHR(mapping->host->i_mode))
- 		return;
-diff --git a/include/linux/dax.h b/include/linux/dax.h
-index 22cd9902345d7..b463502b16e17 100644
---- a/include/linux/dax.h
-+++ b/include/linux/dax.h
-@@ -159,8 +159,8 @@ int dax_writeback_mapping_range(struct address_space *mapping,
- 
- struct page *dax_layout_busy_page(struct address_space *mapping);
- struct page *dax_layout_busy_page_range(struct address_space *mapping, loff_t start, loff_t end);
--dax_entry_t dax_lock_page(struct page *page);
--void dax_unlock_page(struct page *page, dax_entry_t cookie);
-+dax_entry_t dax_lock_folio(struct folio *folio);
-+void dax_unlock_folio(struct folio *folio, dax_entry_t cookie);
- dax_entry_t dax_lock_mapping_entry(struct address_space *mapping,
- 		unsigned long index, struct page **page);
- void dax_unlock_mapping_entry(struct address_space *mapping,
-@@ -182,14 +182,14 @@ static inline int dax_writeback_mapping_range(struct address_space *mapping,
- 	return -EOPNOTSUPP;
- }
- 
--static inline dax_entry_t dax_lock_page(struct page *page)
-+static inline dax_entry_t dax_lock_folio(struct folio *folio)
- {
--	if (IS_DAX(page->mapping->host))
-+	if (IS_DAX(folio->mapping->host))
- 		return ~0UL;
- 	return 0;
- }
- 
--static inline void dax_unlock_page(struct page *page, dax_entry_t cookie)
-+static inline void dax_unlock_folio(struct folio *folio, dax_entry_t cookie)
- {
- }
- 
 diff --git a/mm/memory-failure.c b/mm/memory-failure.c
-index 16e002e08cf8f..75eb1d6857e48 100644
+index 75eb1d6857e48..455093f73a70c 100644
 --- a/mm/memory-failure.c
 +++ b/mm/memory-failure.c
-@@ -1713,20 +1713,23 @@ static void unmap_and_kill(struct list_head *to_kill, unsigned long pfn,
- 	kill_procs(to_kill, flags & MF_MUST_KILL, false, pfn, flags);
+@@ -595,10 +595,9 @@ struct task_struct *task_early_kill(struct task_struct *tsk, int force_early)
+ /*
+  * Collect processes when the error hit an anonymous page.
+  */
+-static void collect_procs_anon(struct page *page, struct list_head *to_kill,
+-				int force_early)
++static void collect_procs_anon(struct folio *folio, struct page *page,
++		struct list_head *to_kill, int force_early)
+ {
+-	struct folio *folio = page_folio(page);
+ 	struct vm_area_struct *vma;
+ 	struct task_struct *tsk;
+ 	struct anon_vma *av;
+@@ -633,12 +632,12 @@ static void collect_procs_anon(struct page *page, struct list_head *to_kill,
+ /*
+  * Collect processes when the error hit a file mapped page.
+  */
+-static void collect_procs_file(struct page *page, struct list_head *to_kill,
+-				int force_early)
++static void collect_procs_file(struct folio *folio, struct page *page,
++		struct list_head *to_kill, int force_early)
+ {
+ 	struct vm_area_struct *vma;
+ 	struct task_struct *tsk;
+-	struct address_space *mapping = page->mapping;
++	struct address_space *mapping = folio->mapping;
+ 	pgoff_t pgoff;
+ 
+ 	i_mmap_lock_read(mapping);
+@@ -704,17 +703,17 @@ static void collect_procs_fsdax(struct page *page,
+ /*
+  * Collect the processes who have the corrupted page mapped to kill.
+  */
+-static void collect_procs(struct page *page, struct list_head *tokill,
+-				int force_early)
++static void collect_procs(struct folio *folio, struct page *page,
++		struct list_head *tokill, int force_early)
+ {
+-	if (!page->mapping)
++	if (!folio->mapping)
+ 		return;
+ 	if (unlikely(PageKsm(page)))
+ 		collect_procs_ksm(page, tokill, force_early);
+ 	else if (PageAnon(page))
+-		collect_procs_anon(page, tokill, force_early);
++		collect_procs_anon(folio, page, tokill, force_early);
+ 	else
+-		collect_procs_file(page, tokill, force_early);
++		collect_procs_file(folio, page, tokill, force_early);
  }
  
-+/*
-+ * Only dev_pagemap pages get here, such as fsdax when the filesystem
-+ * either do not claim or fails to claim a hwpoison event, or devdax.
-+ * The fsdax pages are initialized per base page, and the devdax pages
-+ * could be initialized either as base pages, or as compound pages with
-+ * vmemmap optimization enabled. Devdax is simplistic in its dealing with
-+ * hwpoison, such that, if a subpage of a compound page is poisoned,
-+ * simply mark the compound head page is by far sufficient.
-+ */
- static int mf_generic_kill_procs(unsigned long long pfn, int flags,
- 		struct dev_pagemap *pgmap)
- {
--	struct page *page = pfn_to_page(pfn);
-+	struct folio *folio = pfn_folio(pfn);
- 	LIST_HEAD(to_kill);
- 	dax_entry_t cookie;
- 	int rc = 0;
- 
--	/*
--	 * Pages instantiated by device-dax (not filesystem-dax)
--	 * may be compound pages.
--	 */
--	page = compound_head(page);
--
- 	/*
- 	 * Prevent the inode from being freed while we are interrogating
- 	 * the address_space, typically this would be handled by
-@@ -1734,11 +1737,11 @@ static int mf_generic_kill_procs(unsigned long long pfn, int flags,
- 	 * also prevents changes to the mapping of this pfn until
- 	 * poison signaling is complete.
+ struct hwpoison_walk {
+@@ -1602,7 +1601,7 @@ static bool hwpoison_user_mappings(struct page *p, unsigned long pfn,
+ 	 * mapped in dirty form.  This has to be done before try_to_unmap,
+ 	 * because ttu takes the rmap data structures down.
  	 */
--	cookie = dax_lock_page(page);
-+	cookie = dax_lock_folio(folio);
- 	if (!cookie)
- 		return -EBUSY;
+-	collect_procs(hpage, &tokill, flags & MF_ACTION_REQUIRED);
++	collect_procs(folio, p, &tokill, flags & MF_ACTION_REQUIRED);
  
--	if (hwpoison_filter(page)) {
-+	if (hwpoison_filter(&folio->page)) {
- 		rc = -EOPNOTSUPP;
- 		goto unlock;
- 	}
-@@ -1760,7 +1763,7 @@ static int mf_generic_kill_procs(unsigned long long pfn, int flags,
- 	 * Use this flag as an indication that the dax page has been
- 	 * remapped UC to prevent speculative consumption of poison.
- 	 */
--	SetPageHWPoison(page);
-+	SetPageHWPoison(&folio->page);
- 
- 	/*
- 	 * Unlike System-RAM there is no possibility to swap in a
-@@ -1769,11 +1772,11 @@ static int mf_generic_kill_procs(unsigned long long pfn, int flags,
+ 	if (PageHuge(hpage) && !PageAnon(hpage)) {
+ 		/*
+@@ -1772,7 +1771,7 @@ static int mf_generic_kill_procs(unsigned long long pfn, int flags,
  	 * SIGBUS (i.e. MF_MUST_KILL)
  	 */
  	flags |= MF_ACTION_REQUIRED | MF_MUST_KILL;
--	collect_procs(page, &to_kill, true);
-+	collect_procs(&folio->page, &to_kill, true);
+-	collect_procs(&folio->page, &to_kill, true);
++	collect_procs(folio, &folio->page, &to_kill, true);
  
--	unmap_and_kill(&to_kill, pfn, page->mapping, page->index, flags);
-+	unmap_and_kill(&to_kill, pfn, folio->mapping, folio->index, flags);
+ 	unmap_and_kill(&to_kill, pfn, folio->mapping, folio->index, flags);
  unlock:
--	dax_unlock_page(page, cookie);
-+	dax_unlock_folio(folio, cookie);
- 	return rc;
- }
- 
 -- 
 2.43.0
 
