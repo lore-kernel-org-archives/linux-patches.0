@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633034C3A0;
-	Mon,  8 Jan 2024 15:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962244C3BE;
+	Mon,  8 Jan 2024 15:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGJ9p2fb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A76C433C9;
-	Mon,  8 Jan 2024 15:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LW57fYWU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF99DC433C8;
+	Mon,  8 Jan 2024 15:39:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728368;
-	bh=sDkdUGiG0HzVq7klFbI1YNbC5OfmuZojmFRKElQVj7s=;
+	s=korg; t=1704728371;
+	bh=tETF7LMfpt9T1rQxZSox6Ys6R3MD5tlPRj1xxIMRiEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GGJ9p2fbUP7suZ0lGN7ZMoKonc5VctlU+w+QuBwJBZgjwFnawYzzc/LIGd3AFuBaW
-	 ihn9WGRZeoVY0/TQuKPYIcPx8FkThhZAaVcH/4NaexRARJPykhwn7hLLJllbknJ784
-	 X6V3AoXwbRxljSYY+rkDVppYHMOYmIyK1+vgTm+w=
+	b=LW57fYWU48NXz4btEVRTSkuy06L72otbvTGrLRh1qZgdL4sRKC+QyxrrVIHEVnPcP
+	 0Q5qP5fdeWHMsWXhtnsUdQUsWsd2wYZKWyFnqIjxAOJuqbr0h8eZ5no+2ZC0e08EUM
+	 sr8hid4unQqyXfhijdhLsB/JNw0TU/9dDJ4ER8IM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Asmaa Mnebhi <asmaa@nvidia.com>,
+	David Thompson <davthompson@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/150] net: ravb: Wait for operating mode to be applied
-Date: Mon,  8 Jan 2024 16:35:04 +0100
-Message-ID: <20240108153513.670431080@linuxfoundation.org>
+Subject: [PATCH 6.1 027/150] mlxbf_gige: fix receive packet race condition
+Date: Mon,  8 Jan 2024 16:34:38 +0100
+Message-ID: <20240108153512.508272844@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -43,179 +43,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: David Thompson <davthompson@nvidia.com>
 
-[ Upstream commit 9039cd4c61635b2d541009a7cd5e2cc052402f28 ]
+[ Upstream commit dcea1bd45e6d111cc8fc1aaefa7e31694089bda3 ]
 
-CSR.OPS bits specify the current operating mode and (according to
-documentation) they are updated by HW when the operating mode change
-request is processed. To comply with this check CSR.OPS before proceeding.
+Under heavy traffic, the BlueField Gigabit interface can
+become unresponsive. This is due to a possible race condition
+in the mlxbf_gige_rx_packet function, where the function exits
+with producer and consumer indices equal but there are remaining
+packet(s) to be processed. In order to prevent this situation,
+read receive consumer index *before* the HW replenish so that
+the mlxbf_gige_rx_packet function returns an accurate return
+value even if a packet is received into just-replenished buffer
+prior to exiting this routine. If the just-replenished buffer
+is received and occupies the last RX ring entry, the interface
+would not recover and instead would encounter RX packet drops
+related to internal buffer shortages since the driver RX logic
+is not being triggered to drain the RX ring. This patch will
+address and prevent this "ring full" condition.
 
-Commit introduces ravb_set_opmode() that does all the necessities for
-setting the operating mode (set CCC.OPC (and CCC.GAC, CCC.CSEL, if any) and
-wait for CSR.OPS) and call it where needed. This should comply with all the
-HW manuals requirements as different manual variants specify that different
-modes need to be checked in CSR.OPS when setting CCC.OPC.
-
-If gPTP active in config mode is supported and it needs to be enabled, the
-CCC.GAC and CCC.CSEL needs to be configured along with CCC.OPC in the same
-write access. For this, ravb_set_opmode() allows passing GAC and CSEL as
-part of opmode and the function updates accordingly CCC register.
-
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Fixes: f92e1869d74e ("Add Mellanox BlueField Gigabit Ethernet driver")
+Reviewed-by: Asmaa Mnebhi <asmaa@nvidia.com>
+Signed-off-by: David Thompson <davthompson@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 65 +++++++++++++++---------
- 1 file changed, 42 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 68cb5616ef991..c2c56a5289caf 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -68,16 +68,27 @@ int ravb_wait(struct net_device *ndev, enum ravb_reg reg, u32 mask, u32 value)
- 	return -ETIMEDOUT;
- }
- 
--static int ravb_config(struct net_device *ndev)
-+static int ravb_set_opmode(struct net_device *ndev, u32 opmode)
- {
-+	u32 csr_ops = 1U << (opmode & CCC_OPC);
-+	u32 ccc_mask = CCC_OPC;
- 	int error;
- 
--	/* Set config mode */
--	ravb_modify(ndev, CCC, CCC_OPC, CCC_OPC_CONFIG);
--	/* Check if the operating mode is changed to the config mode */
--	error = ravb_wait(ndev, CSR, CSR_OPS, CSR_OPS_CONFIG);
--	if (error)
--		netdev_err(ndev, "failed to switch device to config mode\n");
-+	/* If gPTP active in config mode is supported it needs to be configured
-+	 * along with CSEL and operating mode in the same access. This is a
-+	 * hardware limitation.
-+	 */
-+	if (opmode & CCC_GAC)
-+		ccc_mask |= CCC_GAC | CCC_CSEL;
-+
-+	/* Set operating mode */
-+	ravb_modify(ndev, CCC, ccc_mask, opmode);
-+	/* Check if the operating mode is changed to the requested one */
-+	error = ravb_wait(ndev, CSR, CSR_OPS, csr_ops);
-+	if (error) {
-+		netdev_err(ndev, "failed to switch device to requested mode (%u)\n",
-+			   opmode & CCC_OPC);
-+	}
- 
- 	return error;
- }
-@@ -675,7 +686,7 @@ static int ravb_dmac_init(struct net_device *ndev)
- 	int error;
- 
- 	/* Set CONFIG mode */
--	error = ravb_config(ndev);
-+	error = ravb_set_opmode(ndev, CCC_OPC_CONFIG);
- 	if (error)
- 		return error;
- 
-@@ -684,9 +695,7 @@ static int ravb_dmac_init(struct net_device *ndev)
- 		return error;
- 
- 	/* Setting the control will start the AVB-DMAC process. */
--	ravb_modify(ndev, CCC, CCC_OPC, CCC_OPC_OPERATION);
--
--	return 0;
-+	return ravb_set_opmode(ndev, CCC_OPC_OPERATION);
- }
- 
- static void ravb_get_tx_tstamp(struct net_device *ndev)
-@@ -1048,7 +1057,7 @@ static int ravb_stop_dma(struct net_device *ndev)
- 		return error;
- 
- 	/* Stop AVB-DMAC process */
--	return ravb_config(ndev);
-+	return ravb_set_opmode(ndev, CCC_OPC_CONFIG);
- }
- 
- /* E-MAC interrupt handler */
-@@ -2576,21 +2585,25 @@ static int ravb_set_gti(struct net_device *ndev)
- 	return 0;
- }
- 
--static void ravb_set_config_mode(struct net_device *ndev)
-+static int ravb_set_config_mode(struct net_device *ndev)
- {
- 	struct ravb_private *priv = netdev_priv(ndev);
- 	const struct ravb_hw_info *info = priv->info;
-+	int error;
- 
- 	if (info->gptp) {
--		ravb_modify(ndev, CCC, CCC_OPC, CCC_OPC_CONFIG);
-+		error = ravb_set_opmode(ndev, CCC_OPC_CONFIG);
-+		if (error)
-+			return error;
- 		/* Set CSEL value */
- 		ravb_modify(ndev, CCC, CCC_CSEL, CCC_CSEL_HPB);
- 	} else if (info->ccc_gac) {
--		ravb_modify(ndev, CCC, CCC_OPC, CCC_OPC_CONFIG |
--			    CCC_GAC | CCC_CSEL_HPB);
-+		error = ravb_set_opmode(ndev, CCC_OPC_CONFIG | CCC_GAC | CCC_CSEL_HPB);
- 	} else {
--		ravb_modify(ndev, CCC, CCC_OPC, CCC_OPC_CONFIG);
-+		error = ravb_set_opmode(ndev, CCC_OPC_CONFIG);
+diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
+index 0d5a41a2ae010..227d01cace3f0 100644
+--- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
++++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
+@@ -267,6 +267,13 @@ static bool mlxbf_gige_rx_packet(struct mlxbf_gige *priv, int *rx_pkts)
+ 		priv->stats.rx_truncate_errors++;
  	}
+ 
++	/* Read receive consumer index before replenish so that this routine
++	 * returns accurate return value even if packet is received into
++	 * just-replenished buffer prior to exiting this routine.
++	 */
++	rx_ci = readq(priv->base + MLXBF_GIGE_RX_CQE_PACKET_CI);
++	rx_ci_rem = rx_ci % priv->rx_q_entries;
 +
-+	return error;
- }
+ 	/* Let hardware know we've replenished one buffer */
+ 	rx_pi++;
  
- /* Set tx and rx clock internal delay modes */
-@@ -2810,7 +2823,9 @@ static int ravb_probe(struct platform_device *pdev)
- 	ndev->ethtool_ops = &ravb_ethtool_ops;
+@@ -279,8 +286,6 @@ static bool mlxbf_gige_rx_packet(struct mlxbf_gige *priv, int *rx_pkts)
+ 	rx_pi_rem = rx_pi % priv->rx_q_entries;
+ 	if (rx_pi_rem == 0)
+ 		priv->valid_polarity ^= 1;
+-	rx_ci = readq(priv->base + MLXBF_GIGE_RX_CQE_PACKET_CI);
+-	rx_ci_rem = rx_ci % priv->rx_q_entries;
  
- 	/* Set AVB config mode */
--	ravb_set_config_mode(ndev);
-+	error = ravb_set_config_mode(ndev);
-+	if (error)
-+		goto out_disable_gptp_clk;
- 
- 	if (info->gptp || info->ccc_gac) {
- 		/* Set GTI value */
-@@ -2933,8 +2948,7 @@ static int ravb_remove(struct platform_device *pdev)
- 	dma_free_coherent(ndev->dev.parent, priv->desc_bat_size, priv->desc_bat,
- 			  priv->desc_bat_dma);
- 
--	/* Set reset mode */
--	ravb_write(ndev, CCC_OPC_RESET, CCC);
-+	ravb_set_opmode(ndev, CCC_OPC_RESET);
- 
- 	clk_disable_unprepare(priv->gptp_clk);
- 	clk_disable_unprepare(priv->refclk);
-@@ -3018,8 +3032,11 @@ static int __maybe_unused ravb_resume(struct device *dev)
- 	int ret = 0;
- 
- 	/* If WoL is enabled set reset mode to rearm the WoL logic */
--	if (priv->wol_enabled)
--		ravb_write(ndev, CCC_OPC_RESET, CCC);
-+	if (priv->wol_enabled) {
-+		ret = ravb_set_opmode(ndev, CCC_OPC_RESET);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	/* All register have been reset to default values.
- 	 * Restore all registers which where setup at probe time and
-@@ -3027,7 +3044,9 @@ static int __maybe_unused ravb_resume(struct device *dev)
- 	 */
- 
- 	/* Set AVB config mode */
--	ravb_set_config_mode(ndev);
-+	ret = ravb_set_config_mode(ndev);
-+	if (ret)
-+		return ret;
- 
- 	if (info->gptp || info->ccc_gac) {
- 		/* Set GTI value */
+ 	if (skb)
+ 		netif_receive_skb(skb);
 -- 
 2.43.0
 
