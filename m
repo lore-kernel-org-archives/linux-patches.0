@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3300851C2E;
-	Mon,  8 Jan 2024 15:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5BD52F82;
+	Mon,  8 Jan 2024 15:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQkoGXwZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DD2C433C7;
-	Mon,  8 Jan 2024 15:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+Yp+atk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F09C433C9;
+	Mon,  8 Jan 2024 15:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728657;
-	bh=VIDIQX8XpJLRM/7MjeCxOM7MBkFT+V/8d2LtBVQ/kXM=;
+	s=korg; t=1704728660;
+	bh=eqvrGjGMnZ5fM5niaxYUfgpTNwU0ABji7kFZoGD4w6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JQkoGXwZNeLLZr1ALF09p9V/SRAlI6tYUoucYtx2S4GqoNZG77hApR+ojpe0W0Crm
-	 gCBpZNxUg6F/fgYNGXcBOoyJ95Wx19xiXWiEeHgShrF0Oscm3o2g1IMX7DK0S7cUOF
-	 shErUNVJ9/DNbygRc070TIrMFEAnKqgtYuGf+peE=
+	b=j+Yp+atk0ytaftCr+2FebMbXsMxvZAlKXRymJACdUrP0RP0232UGaC1nnUNqNnEHO
+	 p8pGCULihMNLqPBSd0EQnHoL652uvYOWIwdu2KOMTjW4iLBzHDIM65VOT2wlKRTPuV
+	 KquJWgR2/8Z2b9qjQiIRPne1v0y64VmkV95oyCiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>
-Subject: [PATCH 6.1 146/150] bpf: Fix a verifier bug due to incorrect branch offset comparison with cpu=v4
-Date: Mon,  8 Jan 2024 16:36:37 +0100
-Message-ID: <20240108153517.932369000@linuxfoundation.org>
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 120/150] net: sched: call tcf_ct_params_free to free params in tcf_ct_init
+Date: Mon,  8 Jan 2024 16:36:11 +0100
+Message-ID: <20240108153516.727089290@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -41,66 +43,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Xin Long <lucien.xin@gmail.com>
 
-commit dfce9cb3140592b886838e06f3e0c25fea2a9cae upstream.
+[ Upstream commit 1913894100ca53205f2d56091cb34b8eba1de217 ]
 
-Bpf cpu=v4 support is introduced in [1] and Commit 4cd58e9af8b9
-("bpf: Support new 32bit offset jmp instruction") added support for new
-32bit offset jmp instruction. Unfortunately, in function
-bpf_adj_delta_to_off(), for new branch insn with 32bit offset, the offset
-(plus/minor a small delta) compares to 16-bit offset bound
-[S16_MIN, S16_MAX], which caused the following verification failure:
-  $ ./test_progs-cpuv4 -t verif_scale_pyperf180
-  ...
-  insn 10 cannot be patched due to 16-bit range
-  ...
-  libbpf: failed to load object 'pyperf180.bpf.o'
-  scale_test:FAIL:expect_success unexpected error: -12 (errno 12)
-  #405     verif_scale_pyperf180:FAIL
+This patch is to make the err path simple by calling tcf_ct_params_free(),
+so that it won't cause problems when more members are added into param and
+need freeing on the err path.
 
-Note that due to recent llvm18 development, the patch [2] (already applied
-in bpf-next) needs to be applied to bpf tree for testing purpose.
-
-The fix is rather simple. For 32bit offset branch insn, the adjusted
-offset compares to [S32_MIN, S32_MAX] and then verification succeeded.
-
-  [1] https://lore.kernel.org/all/20230728011143.3710005-1-yonghong.song@linux.dev
-  [2] https://lore.kernel.org/bpf/20231110193644.3130906-1-yonghong.song@linux.dev
-
-Fixes: 4cd58e9af8b9 ("bpf: Support new 32bit offset jmp instruction")
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20231201024640.3417057-1-yonghong.song@linux.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 125f1c7f26ff ("net/sched: act_ct: Take per-cb reference to tcf_ct_flow_table")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/sched/act_ct.c | 35 ++++++++++++++++++-----------------
+ 1 file changed, 18 insertions(+), 17 deletions(-)
 
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -365,14 +365,18 @@ static int bpf_adj_delta_to_imm(struct b
- static int bpf_adj_delta_to_off(struct bpf_insn *insn, u32 pos, s32 end_old,
- 				s32 end_new, s32 curr, const bool probe_pass)
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index 4c7f7861ea967..478cedc29b737 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -345,11 +345,9 @@ static void tcf_ct_flow_table_cleanup_work(struct work_struct *work)
+ 	module_put(THIS_MODULE);
+ }
+ 
+-static void tcf_ct_flow_table_put(struct tcf_ct_params *params)
++static void tcf_ct_flow_table_put(struct tcf_ct_flow_table *ct_ft)
  {
--	const s32 off_min = S16_MIN, off_max = S16_MAX;
-+	s64 off_min, off_max, off;
- 	s32 delta = end_new - end_old;
--	s32 off;
+-	struct tcf_ct_flow_table *ct_ft = params->ct_ft;
+-
+-	if (refcount_dec_and_test(&params->ct_ft->ref)) {
++	if (refcount_dec_and_test(&ct_ft->ref)) {
+ 		rhashtable_remove_fast(&zones_ht, &ct_ft->node, zones_params);
+ 		INIT_RCU_WORK(&ct_ft->rwork, tcf_ct_flow_table_cleanup_work);
+ 		queue_rcu_work(act_ct_wq, &ct_ft->rwork);
+@@ -832,18 +830,23 @@ static int tcf_ct_handle_fragments(struct net *net, struct sk_buff *skb,
+ 	return err;
+ }
  
--	if (insn->code == (BPF_JMP32 | BPF_JA))
-+	if (insn->code == (BPF_JMP32 | BPF_JA)) {
- 		off = insn->imm;
--	else
-+		off_min = S32_MIN;
-+		off_max = S32_MAX;
-+	} else {
- 		off = insn->off;
-+		off_min = S16_MIN;
-+		off_max = S16_MAX;
-+	}
+-static void tcf_ct_params_free(struct rcu_head *head)
++static void tcf_ct_params_free(struct tcf_ct_params *params)
+ {
+-	struct tcf_ct_params *params = container_of(head,
+-						    struct tcf_ct_params, rcu);
+-
+-	tcf_ct_flow_table_put(params);
+-
++	if (params->ct_ft)
++		tcf_ct_flow_table_put(params->ct_ft);
+ 	if (params->tmpl)
+ 		nf_ct_put(params->tmpl);
+ 	kfree(params);
+ }
  
- 	if (curr < pos && curr + off + 1 >= end_old)
- 		off += delta;
++static void tcf_ct_params_free_rcu(struct rcu_head *head)
++{
++	struct tcf_ct_params *params;
++
++	params = container_of(head, struct tcf_ct_params, rcu);
++	tcf_ct_params_free(params);
++}
++
+ #if IS_ENABLED(CONFIG_NF_NAT)
+ /* Modelled after nf_nat_ipv[46]_fn().
+  * range is only used for new, uninitialized NAT state.
+@@ -1390,7 +1393,7 @@ static int tcf_ct_init(struct net *net, struct nlattr *nla,
+ 
+ 	err = tcf_ct_flow_table_get(net, params);
+ 	if (err)
+-		goto cleanup_params;
++		goto cleanup;
+ 
+ 	spin_lock_bh(&c->tcf_lock);
+ 	goto_ch = tcf_action_set_ctrlact(*a, parm->action, goto_ch);
+@@ -1401,17 +1404,15 @@ static int tcf_ct_init(struct net *net, struct nlattr *nla,
+ 	if (goto_ch)
+ 		tcf_chain_put_by_act(goto_ch);
+ 	if (params)
+-		call_rcu(&params->rcu, tcf_ct_params_free);
++		call_rcu(&params->rcu, tcf_ct_params_free_rcu);
+ 
+ 	return res;
+ 
+-cleanup_params:
+-	if (params->tmpl)
+-		nf_ct_put(params->tmpl);
+ cleanup:
+ 	if (goto_ch)
+ 		tcf_chain_put_by_act(goto_ch);
+-	kfree(params);
++	if (params)
++		tcf_ct_params_free(params);
+ 	tcf_idr_release(*a, bind);
+ 	return err;
+ }
+@@ -1423,7 +1424,7 @@ static void tcf_ct_cleanup(struct tc_action *a)
+ 
+ 	params = rcu_dereference_protected(c->params, 1);
+ 	if (params)
+-		call_rcu(&params->rcu, tcf_ct_params_free);
++		call_rcu(&params->rcu, tcf_ct_params_free_rcu);
+ }
+ 
+ static int tcf_ct_dump_key_val(struct sk_buff *skb,
+-- 
+2.43.0
+
 
 
