@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BAD53E1F;
-	Mon,  8 Jan 2024 15:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33E653E27;
+	Mon,  8 Jan 2024 15:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApaF7hdp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE4BC433C9;
-	Mon,  8 Jan 2024 15:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGisvC1X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18207C433CA;
+	Mon,  8 Jan 2024 15:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728680;
-	bh=1vTOtFuS+jn3f+D6JD6qsY6Xu+2NCvPRhqXdRTRtqbs=;
+	s=korg; t=1704728683;
+	bh=OEeGpn0bmsiK8OL7Hkqej5p/Nr+1mYZ0gNmjB1g7dF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ApaF7hdpcoFlicg7AKuG+OUywCyWxv2ov6JVQv3qC2y0OTkc3Uvp3NAZcULaDGYEt
-	 qUfPeKj/cHNCCZxVfg2Z0cf0XYtukwdUyXEOXZPvwFFj4I38CokltdXk+fBseZNCtm
-	 ABNQrtHhHiC0oYACF1Ibh3OYf2P4Lyd9q18ewNeM=
+	b=hGisvC1Xf+lL4m/gV9lFibMNC20v3gpXrBwTsOsy9BTWZBE/a8oifTKu9XPJLpHw1
+	 SDmVG0E9oVLHTjr4Guwmw35/0fJZlYyrP7CQhLoJAlF1fRg6h7BhsiEB0sN8rJAlat
+	 l47tbt1rZ0x6Wq/Uvem9YqPoRWOz9CG1RhmUKNio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Smelhaus <vl.sm@email.cz>,
+	Vlad Buslov <vladbu@nvidia.com>,
 	Paul Blakey <paulb@nvidia.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 125/150] netfilter: flowtable: GC pushes back packets to classic path
-Date: Mon,  8 Jan 2024 16:36:16 +0100
-Message-ID: <20240108153516.956393315@linuxfoundation.org>
+Subject: [PATCH 6.1 126/150] net/sched: act_ct: Take per-cb reference to tcf_ct_flow_table
+Date: Mon,  8 Jan 2024 16:36:17 +0100
+Message-ID: <20240108153516.995858138@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -43,102 +44,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit 735795f68b37e9bb49f642407a0d49b1631ea1c7 ]
+[ Upstream commit 125f1c7f26ffcdbf96177abe75b70c1a6ceb17bc ]
 
-Since 41f2c7c342d3 ("net/sched: act_ct: Fix promotion of offloaded
-unreplied tuple"), flowtable GC pushes back flows with IPS_SEEN_REPLY
-back to classic path in every run, ie. every second. This is because of
-a new check for NF_FLOW_HW_ESTABLISHED which is specific of sched/act_ct.
+The referenced change added custom cleanup code to act_ct to delete any
+callbacks registered on the parent block when deleting the
+tcf_ct_flow_table instance. However, the underlying issue is that the
+drivers don't obtain the reference to the tcf_ct_flow_table instance when
+registering callbacks which means that not only driver callbacks may still
+be on the table when deleting it but also that the driver can still have
+pointers to its internal nf_flowtable and can use it concurrently which
+results either warning in netfilter[0] or use-after-free.
 
-In Netfilter's flowtable case, NF_FLOW_HW_ESTABLISHED never gets set on
-and IPS_SEEN_REPLY is unreliable since users decide when to offload the
-flow before, such bit might be set on at a later stage.
+Fix the issue by taking a reference to the underlying struct
+tcf_ct_flow_table instance when registering the callback and release the
+reference when unregistering. Expose new API required for such reference
+counting by adding two new callbacks to nf_flowtable_type and implementing
+them for act_ct flowtable_ct type. This fixes the issue by extending the
+lifetime of nf_flowtable until all users have unregistered.
 
-Fix it by adding a custom .gc handler that sched/act_ct can use to
-deal with its NF_FLOW_HW_ESTABLISHED bit.
+[0]:
+[106170.938634] ------------[ cut here ]------------
+[106170.939111] WARNING: CPU: 21 PID: 3688 at include/net/netfilter/nf_flow_table.h:262 mlx5_tc_ct_del_ft_cb+0x267/0x2b0 [mlx5_core]
+[106170.940108] Modules linked in: act_ct nf_flow_table act_mirred act_skbedit act_tunnel_key vxlan cls_matchall nfnetlink_cttimeout act_gact cls_flower sch_ingress mlx5_vdpa vringh vhost_iotlb vdpa bonding openvswitch nsh rpcrdma rdma_ucm
+ib_iser libiscsi scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm mlx5_ib ib_uverbs ib_core xt_MASQUERADE nf_conntrack_netlink nfnetlink iptable_nat xt_addrtype xt_conntrack nf_nat br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_regis
+try overlay mlx5_core
+[106170.943496] CPU: 21 PID: 3688 Comm: kworker/u48:0 Not tainted 6.6.0-rc7_for_upstream_min_debug_2023_11_01_13_02 #1
+[106170.944361] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+[106170.945292] Workqueue: mlx5e mlx5e_rep_neigh_update [mlx5_core]
+[106170.945846] RIP: 0010:mlx5_tc_ct_del_ft_cb+0x267/0x2b0 [mlx5_core]
+[106170.946413] Code: 89 ef 48 83 05 71 a4 14 00 01 e8 f4 06 04 e1 48 83 05 6c a4 14 00 01 48 83 c4 28 5b 5d 41 5c 41 5d c3 48 83 05 d1 8b 14 00 01 <0f> 0b 48 83 05 d7 8b 14 00 01 e9 96 fe ff ff 48 83 05 a2 90 14 00
+[106170.947924] RSP: 0018:ffff88813ff0fcb8 EFLAGS: 00010202
+[106170.948397] RAX: 0000000000000000 RBX: ffff88811eabac40 RCX: ffff88811eabad48
+[106170.949040] RDX: ffff88811eab8000 RSI: ffffffffa02cd560 RDI: 0000000000000000
+[106170.949679] RBP: ffff88811eab8000 R08: 0000000000000001 R09: ffffffffa0229700
+[106170.950317] R10: ffff888103538fc0 R11: 0000000000000001 R12: ffff88811eabad58
+[106170.950969] R13: ffff888110c01c00 R14: ffff888106b40000 R15: 0000000000000000
+[106170.951616] FS:  0000000000000000(0000) GS:ffff88885fd40000(0000) knlGS:0000000000000000
+[106170.952329] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[106170.952834] CR2: 00007f1cefd28cb0 CR3: 000000012181b006 CR4: 0000000000370ea0
+[106170.953482] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[106170.954121] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[106170.954766] Call Trace:
+[106170.955057]  <TASK>
+[106170.955315]  ? __warn+0x79/0x120
+[106170.955648]  ? mlx5_tc_ct_del_ft_cb+0x267/0x2b0 [mlx5_core]
+[106170.956172]  ? report_bug+0x17c/0x190
+[106170.956537]  ? handle_bug+0x3c/0x60
+[106170.956891]  ? exc_invalid_op+0x14/0x70
+[106170.957264]  ? asm_exc_invalid_op+0x16/0x20
+[106170.957666]  ? mlx5_del_flow_rules+0x10/0x310 [mlx5_core]
+[106170.958172]  ? mlx5_tc_ct_block_flow_offload_add+0x1240/0x1240 [mlx5_core]
+[106170.958788]  ? mlx5_tc_ct_del_ft_cb+0x267/0x2b0 [mlx5_core]
+[106170.959339]  ? mlx5_tc_ct_del_ft_cb+0xc6/0x2b0 [mlx5_core]
+[106170.959854]  ? mapping_remove+0x154/0x1d0 [mlx5_core]
+[106170.960342]  ? mlx5e_tc_action_miss_mapping_put+0x4f/0x80 [mlx5_core]
+[106170.960927]  mlx5_tc_ct_delete_flow+0x76/0xc0 [mlx5_core]
+[106170.961441]  mlx5_free_flow_attr_actions+0x13b/0x220 [mlx5_core]
+[106170.962001]  mlx5e_tc_del_fdb_flow+0x22c/0x3b0 [mlx5_core]
+[106170.962524]  mlx5e_tc_del_flow+0x95/0x3c0 [mlx5_core]
+[106170.963034]  mlx5e_flow_put+0x73/0xe0 [mlx5_core]
+[106170.963506]  mlx5e_put_flow_list+0x38/0x70 [mlx5_core]
+[106170.964002]  mlx5e_rep_update_flows+0xec/0x290 [mlx5_core]
+[106170.964525]  mlx5e_rep_neigh_update+0x1da/0x310 [mlx5_core]
+[106170.965056]  process_one_work+0x13a/0x2c0
+[106170.965443]  worker_thread+0x2e5/0x3f0
+[106170.965808]  ? rescuer_thread+0x410/0x410
+[106170.966192]  kthread+0xc6/0xf0
+[106170.966515]  ? kthread_complete_and_exit+0x20/0x20
+[106170.966970]  ret_from_fork+0x2d/0x50
+[106170.967332]  ? kthread_complete_and_exit+0x20/0x20
+[106170.967774]  ret_from_fork_asm+0x11/0x20
+[106170.970466]  </TASK>
+[106170.970726] ---[ end trace 0000000000000000 ]---
 
-Fixes: 41f2c7c342d3 ("net/sched: act_ct: Fix promotion of offloaded unreplied tuple")
-Reported-by: Vladimir Smelhaus <vl.sm@email.cz>
+Fixes: 77ac5e40c44e ("net/sched: act_ct: remove and free nf_table callbacks")
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
 Reviewed-by: Paul Blakey <paulb@nvidia.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 125f1c7f26ff ("net/sched: act_ct: Take per-cb reference to tcf_ct_flow_table")
+Acked-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_flow_table.h |  1 +
- net/netfilter/nf_flow_table_core.c    | 14 +++++++-------
- net/sched/act_ct.c                    |  7 +++++++
- 3 files changed, 15 insertions(+), 7 deletions(-)
+ include/net/netfilter/nf_flow_table.h | 10 ++++++++
+ net/sched/act_ct.c                    | 34 ++++++++++++++++++++++-----
+ 2 files changed, 38 insertions(+), 6 deletions(-)
 
 diff --git a/include/net/netfilter/nf_flow_table.h b/include/net/netfilter/nf_flow_table.h
-index f37f9f34430c1..0b163ead95c9f 100644
+index 0b163ead95c9f..dde4dd9c4012c 100644
 --- a/include/net/netfilter/nf_flow_table.h
 +++ b/include/net/netfilter/nf_flow_table.h
-@@ -53,6 +53,7 @@ struct nf_flowtable_type {
- 	struct list_head		list;
- 	int				family;
- 	int				(*init)(struct nf_flowtable *ft);
-+	bool				(*gc)(const struct flow_offload *flow);
- 	int				(*setup)(struct nf_flowtable *ft,
- 						 struct net_device *dev,
- 						 enum flow_block_command cmd);
-diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
-index baddb93a5e8cf..c1d99cb370b44 100644
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -331,12 +331,6 @@ void flow_offload_refresh(struct nf_flowtable *flow_table,
- }
- EXPORT_SYMBOL_GPL(flow_offload_refresh);
+@@ -62,6 +62,8 @@ struct nf_flowtable_type {
+ 						  enum flow_offload_tuple_dir dir,
+ 						  struct nf_flow_rule *flow_rule);
+ 	void				(*free)(struct nf_flowtable *ft);
++	void				(*get)(struct nf_flowtable *ft);
++	void				(*put)(struct nf_flowtable *ft);
+ 	nf_hookfn			*hook;
+ 	struct module			*owner;
+ };
+@@ -240,6 +242,11 @@ nf_flow_table_offload_add_cb(struct nf_flowtable *flow_table,
+ 	}
  
--static bool nf_flow_is_outdated(const struct flow_offload *flow)
--{
--	return test_bit(IPS_SEEN_REPLY_BIT, &flow->ct->status) &&
--		!test_bit(NF_FLOW_HW_ESTABLISHED, &flow->flags);
--}
--
- static inline bool nf_flow_has_expired(const struct flow_offload *flow)
- {
- 	return nf_flow_timeout_delta(flow->timeout) <= 0;
-@@ -422,12 +416,18 @@ nf_flow_table_iterate(struct nf_flowtable *flow_table,
- 	return err;
- }
- 
-+static bool nf_flow_custom_gc(struct nf_flowtable *flow_table,
-+			      const struct flow_offload *flow)
-+{
-+	return flow_table->type->gc && flow_table->type->gc(flow);
-+}
+ 	list_add_tail(&block_cb->list, &block->cb_list);
++	up_write(&flow_table->flow_block_lock);
 +
- static void nf_flow_offload_gc_step(struct nf_flowtable *flow_table,
- 				    struct flow_offload *flow, void *data)
- {
- 	if (nf_flow_has_expired(flow) ||
- 	    nf_ct_is_dying(flow->ct) ||
--	    nf_flow_is_outdated(flow))
-+	    nf_flow_custom_gc(flow_table, flow))
- 		flow_offload_teardown(flow);
++	if (flow_table->type->get)
++		flow_table->type->get(flow_table);
++	return 0;
  
- 	if (test_bit(NF_FLOW_TEARDOWN, &flow->flags)) {
+ unlock:
+ 	up_write(&flow_table->flow_block_lock);
+@@ -262,6 +269,9 @@ nf_flow_table_offload_del_cb(struct nf_flowtable *flow_table,
+ 		WARN_ON(true);
+ 	}
+ 	up_write(&flow_table->flow_block_lock);
++
++	if (flow_table->type->put)
++		flow_table->type->put(flow_table);
+ }
+ 
+ int flow_offload_route_init(struct flow_offload *flow,
 diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index b80a58d3bf0f3..4d34474f2cc0e 100644
+index 4d34474f2cc0e..faf798133059b 100644
 --- a/net/sched/act_ct.c
 +++ b/net/sched/act_ct.c
-@@ -274,7 +274,14 @@ static int tcf_ct_flow_table_fill_actions(struct net *net,
- 	return err;
+@@ -280,9 +280,31 @@ static bool tcf_ct_flow_is_outdated(const struct flow_offload *flow)
+ 	       !test_bit(NF_FLOW_HW_ESTABLISHED, &flow->flags);
  }
  
-+static bool tcf_ct_flow_is_outdated(const struct flow_offload *flow)
++static void tcf_ct_flow_table_get_ref(struct tcf_ct_flow_table *ct_ft);
++
++static void tcf_ct_nf_get(struct nf_flowtable *ft)
 +{
-+	return test_bit(IPS_SEEN_REPLY_BIT, &flow->ct->status) &&
-+	       !test_bit(NF_FLOW_HW_ESTABLISHED, &flow->flags);
++	struct tcf_ct_flow_table *ct_ft =
++		container_of(ft, struct tcf_ct_flow_table, nf_ft);
++
++	tcf_ct_flow_table_get_ref(ct_ft);
++}
++
++static void tcf_ct_flow_table_put(struct tcf_ct_flow_table *ct_ft);
++
++static void tcf_ct_nf_put(struct nf_flowtable *ft)
++{
++	struct tcf_ct_flow_table *ct_ft =
++		container_of(ft, struct tcf_ct_flow_table, nf_ft);
++
++	tcf_ct_flow_table_put(ct_ft);
 +}
 +
  static struct nf_flowtable_type flowtable_ct = {
-+	.gc		= tcf_ct_flow_is_outdated,
+ 	.gc		= tcf_ct_flow_is_outdated,
  	.action		= tcf_ct_flow_table_fill_actions,
++	.get		= tcf_ct_nf_get,
++	.put		= tcf_ct_nf_put,
  	.owner		= THIS_MODULE,
  };
+ 
+@@ -331,9 +353,13 @@ static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
+ 	return err;
+ }
+ 
++static void tcf_ct_flow_table_get_ref(struct tcf_ct_flow_table *ct_ft)
++{
++	refcount_inc(&ct_ft->ref);
++}
++
+ static void tcf_ct_flow_table_cleanup_work(struct work_struct *work)
+ {
+-	struct flow_block_cb *block_cb, *tmp_cb;
+ 	struct tcf_ct_flow_table *ct_ft;
+ 	struct flow_block *block;
+ 
+@@ -341,13 +367,9 @@ static void tcf_ct_flow_table_cleanup_work(struct work_struct *work)
+ 			     rwork);
+ 	nf_flow_table_free(&ct_ft->nf_ft);
+ 
+-	/* Remove any remaining callbacks before cleanup */
+ 	block = &ct_ft->nf_ft.flow_block;
+ 	down_write(&ct_ft->nf_ft.flow_block_lock);
+-	list_for_each_entry_safe(block_cb, tmp_cb, &block->cb_list, list) {
+-		list_del(&block_cb->list);
+-		flow_block_cb_free(block_cb);
+-	}
++	WARN_ON(!list_empty(&block->cb_list));
+ 	up_write(&ct_ft->nf_ft.flow_block_lock);
+ 	kfree(ct_ft);
+ 
 -- 
 2.43.0
 
