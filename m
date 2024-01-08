@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BF74B5AE;
-	Mon,  8 Jan 2024 15:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1CD6D6DC;
+	Mon,  8 Jan 2024 15:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zn01sYau"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE17DC433C7;
-	Mon,  8 Jan 2024 15:14:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yj9bKvtj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEDD0C433CA;
+	Mon,  8 Jan 2024 15:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726857;
-	bh=nrSuUnoPo/KFEJyJ9+8xtCInMPMV6w3l/aPhCsDnOtc=;
+	s=korg; t=1704726860;
+	bh=35tXPO8nrEixk3mtVFC89UFfdtxMbCboYFcx9J4A+Hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zn01sYau0jQpR7DR30W4663KW4xyhE9+hCRUGIyWk2SviCQygC2/PoZ1HNqbCMOIX
-	 QStUk/dcF9yhIHzAFSG/9rd7+O+jVGGYGTirXubK8trdKe0InK8CN0mQE+jr9iuYOq
-	 yb4x4mvVSjvhwF6Yy/7xumDsA3AGDiDlIk42PoDU=
+	b=yj9bKvtjBZO6G/9Y66a+VqU/ug9wY73JRxWH81nt6J883V7dDpx8oxEtEy2yW01Y6
+	 ZgDnzmNQ87Pit77yM+HJx0iXM5HgD/wZ5QepnYHpXaaCxo24IiOhS1vIHSwu9BYFyW
+	 nDtOpuBC0tmX6haLdgUP9xUPHcz+VTgMhNG/MH3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanjun <guanjun@linux.alibaba.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Lijun Pan <lijun.pan@intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/124] dmaengine: idxd: Protect int_handle field in hw descriptor
-Date: Mon,  8 Jan 2024 16:08:47 +0100
-Message-ID: <20240108150607.603651734@linuxfoundation.org>
+Subject: [PATCH 6.6 102/124] dmaengine: fsl-edma: fix wrong pointer check in fsl_edma3_attach_pd()
+Date: Mon,  8 Jan 2024 16:08:48 +0100
+Message-ID: <20240108150607.653150050@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -45,57 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanjun <guanjun@linux.alibaba.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 778dfacc903d4b1ef5b7a9726e3a36bc15913d29 ]
+[ Upstream commit bffa7218dcddb80e7f18dfa545dd4b359b11dd93 ]
 
-The int_handle field in hw descriptor should also be protected
-by wmb() before possibly triggering a DMA read.
+device_link_add() returns NULL pointer not PTR_ERR() when it fails,
+so replace the IS_ERR() check with NULL pointer check.
 
-Fixes: eb0cf33a91b4 (dmaengine: idxd: move interrupt handle assignment)
-Signed-off-by: Guanjun <guanjun@linux.alibaba.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Fenghua Yu <fenghua.yu@intel.com>
-Reviewed-by: Lijun Pan <lijun.pan@intel.com>
-Link: https://lore.kernel.org/r/20231211053704.2725417-2-guanjun@linux.alibaba.com
+Fixes: 72f5801a4e2b ("dmaengine: fsl-edma: integrate v3 support")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20231129090000.841440-1-yangyingliang@huaweicloud.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/submit.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/dma/fsl-edma-main.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/idxd/submit.c b/drivers/dma/idxd/submit.c
-index c01db23e3333f..3f922518e3a52 100644
---- a/drivers/dma/idxd/submit.c
-+++ b/drivers/dma/idxd/submit.c
-@@ -182,13 +182,6 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
+diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
+index db6cd8431f30a..00cb70aca34a3 100644
+--- a/drivers/dma/fsl-edma-main.c
++++ b/drivers/dma/fsl-edma-main.c
+@@ -400,9 +400,8 @@ static int fsl_edma3_attach_pd(struct platform_device *pdev, struct fsl_edma_eng
+ 		link = device_link_add(dev, pd_chan, DL_FLAG_STATELESS |
+ 					     DL_FLAG_PM_RUNTIME |
+ 					     DL_FLAG_RPM_ACTIVE);
+-		if (IS_ERR(link)) {
+-			dev_err(dev, "Failed to add device_link to %d: %ld\n", i,
+-				PTR_ERR(link));
++		if (!link) {
++			dev_err(dev, "Failed to add device_link to %d\n", i);
+ 			return -EINVAL;
+ 		}
  
- 	portal = idxd_wq_portal_addr(wq);
- 
--	/*
--	 * The wmb() flushes writes to coherent DMA data before
--	 * possibly triggering a DMA read. The wmb() is necessary
--	 * even on UP because the recipient is a device.
--	 */
--	wmb();
--
- 	/*
- 	 * Pending the descriptor to the lockless list for the irq_entry
- 	 * that we designated the descriptor to.
-@@ -199,6 +192,13 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
- 		llist_add(&desc->llnode, &ie->pending_llist);
- 	}
- 
-+	/*
-+	 * The wmb() flushes writes to coherent DMA data before
-+	 * possibly triggering a DMA read. The wmb() is necessary
-+	 * even on UP because the recipient is a device.
-+	 */
-+	wmb();
-+
- 	if (wq_dedicated(wq)) {
- 		iosubmit_cmds512(portal, desc->hw, 1);
- 	} else {
 -- 
 2.43.0
 
