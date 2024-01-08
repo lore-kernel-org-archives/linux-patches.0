@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D1647791;
-	Mon,  8 Jan 2024 15:13:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A11C26AC1;
+	Mon,  8 Jan 2024 15:13:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJfCMQbZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10966C433C7;
-	Mon,  8 Jan 2024 15:13:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRIT2WrA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094FCC433C7;
+	Mon,  8 Jan 2024 15:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726835;
-	bh=96C0NVeq4sVbVy/IHpE7zE0ow4hiEMIGHRNWXSAqZ2c=;
+	s=korg; t=1704726838;
+	bh=7MV2LSAyroYB9zdp16Md/QxbzRgFUbeYh6gcoMoDiWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eJfCMQbZq5vZbGiDNryqCQut3eYLKITU+Qs+z2wCVy7JOsuAAJUf8E2kVYWVM28ZC
-	 jOw8JLeynXPWtpgPx2r+rsIKnhcwImx7TllQsCrJm85MTo8lvWp/ToxlAil24DMdx1
-	 1GzdZKVq9ld0c9JwrlV5vVP9S3bGsvduzZvux0jc=
+	b=pRIT2WrAqzRHPNlSqmMUHvQ5on8ZynAuWzUiYSvb6d/dryUYqNL36wKG2cD67WFp7
+	 LkcvrcX/jhWl768+Uob07+OJjj4+cS9cn2t3LpE3eCYbKALaNl0RKVrXJdblVMCuSB
+	 nG1L4DpPaPjuVtPrQOv3Oj+TV2uGRn6lFTLaNGmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bee <knaerzche@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Jani Nikula <jani.nikula@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 094/124] clk: rockchip: rk3128: Fix SCLK_SDMMCs clock name
-Date: Mon,  8 Jan 2024 16:08:40 +0100
-Message-ID: <20240108150607.294140277@linuxfoundation.org>
+Subject: [PATCH 6.6 095/124] drm/i915: Call intel_pre_plane_updates() also for pipes getting enabled
+Date: Mon,  8 Jan 2024 16:08:41 +0100
+Message-ID: <20240108150607.342701090@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -36,44 +36,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Bee <knaerzche@gmail.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 99fe9ee56bd2f7358f1bc72551c2f3a6bbddf80a ]
+[ Upstream commit d21a3962d3042e6f56ad324cf18bdd64a1e6ecfa ]
 
-SCLK_SDMMC is the parent for SCLK_SDMMC_DRV and SCLK_SDMMC_SAMPLE, but
-used with the (more) correct name sclk_sdmmc. SD card tuning does currently
-fail as the parent can't be found under that name.
-There is no need to suffix the name with '0' since RK312x SoCs do have a
-single sdmmc controller - so rename it to the name which is already used
-by it's children.
+We used to call intel_pre_plane_updates() for any pipe going through
+a modeset whether the pipe was previously enabled or not. This in
+fact needed to apply all the necessary clock gating workarounds/etc.
+Restore the correct behaviour.
 
-Fixes: f6022e88faca ("clk: rockchip: add clock controller for rk3128")
-Signed-off-by: Alex Bee <knaerzche@gmail.com>
-Link: https://lore.kernel.org/r/20231127181415.11735-6-knaerzche@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 39919997322f ("drm/i915: Disable all planes before modesetting any pipes")
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231121054324.9988-3-ville.syrjala@linux.intel.com
+(cherry picked from commit e0d5ce11ed0a21bb2bf328ad82fd261783c7ad88)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/rockchip/clk-rk3128.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_display.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/rockchip/clk-rk3128.c b/drivers/clk/rockchip/clk-rk3128.c
-index fcacfe758829c..22e7522360307 100644
---- a/drivers/clk/rockchip/clk-rk3128.c
-+++ b/drivers/clk/rockchip/clk-rk3128.c
-@@ -310,7 +310,7 @@ static struct rockchip_clk_branch common_clk_branches[] __initdata = {
- 	GATE(SCLK_MIPI_24M, "clk_mipi_24m", "xin24m", CLK_IGNORE_UNUSED,
- 			RK2928_CLKGATE_CON(2), 15, GFLAGS),
+diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
+index 2e0daad23aa61..a072fbb9872aa 100644
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -6670,10 +6670,11 @@ static void intel_commit_modeset_disables(struct intel_atomic_state *state)
+ 		if (!intel_crtc_needs_modeset(new_crtc_state))
+ 			continue;
  
--	COMPOSITE(SCLK_SDMMC, "sclk_sdmmc0", mux_mmc_src_p, 0,
-+	COMPOSITE(SCLK_SDMMC, "sclk_sdmmc", mux_mmc_src_p, 0,
- 			RK2928_CLKSEL_CON(11), 6, 2, MFLAGS, 0, 6, DFLAGS,
- 			RK2928_CLKGATE_CON(2), 11, GFLAGS),
++		intel_pre_plane_update(state, crtc);
++
+ 		if (!old_crtc_state->hw.active)
+ 			continue;
+ 
+-		intel_pre_plane_update(state, crtc);
+ 		intel_crtc_disable_planes(state, crtc);
+ 	}
  
 -- 
 2.43.0
