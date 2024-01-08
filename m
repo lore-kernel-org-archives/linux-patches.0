@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E125380A;
-	Mon,  8 Jan 2024 15:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B271A51C50;
+	Mon,  8 Jan 2024 15:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cn0dCwoX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4369C433CD;
-	Mon,  8 Jan 2024 15:39:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zniq7uM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6183C433C8;
+	Mon,  8 Jan 2024 15:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728388;
-	bh=CxIF5qrRKnZt90qYUozIBNTm6Z+Y2q15lPqwq5qK8as=;
+	s=korg; t=1704728391;
+	bh=DsjZxnJqVl6fiyWt3vfPcqMNRA8+hNeYg7TsD9zpkMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cn0dCwoXEsqATlF8tuDsDsGN63D6sVsZxdEaYsa9ZSUMAtLWmURcyVyO9v9t0374g
-	 s+rB8z8BncdgsPE2hugZ/H6PgsQOo48hmLcKiJW7Wn+VSUf5abvwwc0RoL2coXfMNm
-	 cdkPxQgcMdveveAT0HOTbVgYnksKn7nKhfdDXsjQ=
+	b=1zniq7uM7AJVAoZDvrSJnaX/o8WqV/hyOv/366yPJABIIahIopx2YgaS/yyrRgIB3
+	 bmBa3X0Tp8N1GOvBCTdJbbKQ9q5rD2dHnuTBvzk9GyjKyMDQ3EWaW3ybS38koKfgRb
+	 eK3GmEO5Lk1qj9pm3GVFEso1HEOURgoPQ8pL97rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/150] net: annotate data-races around sk->sk_tsflags
-Date: Mon,  8 Jan 2024 16:34:43 +0100
-Message-ID: <20240108153512.755577616@linuxfoundation.org>
+Subject: [PATCH 6.1 023/150] igc: Check VLAN TCI mask
+Date: Mon,  8 Jan 2024 16:34:34 +0100
+Message-ID: <20240108153512.354338661@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -43,365 +45,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kurt Kanzenbach <kurt@linutronix.de>
 
-[ Upstream commit e3390b30a5dfb112e8e802a59c0f68f947b638b2 ]
+[ Upstream commit b5063cbe148b829e8eb97672c2cbccc058835476 ]
 
-sk->sk_tsflags can be read locklessly, add corresponding annotations.
+Currently the driver accepts VLAN TCI steering rules regardless of the
+configured mask. And things might fail silently or with confusing error
+messages to the user.
 
-Fixes: b9f40e21ef42 ("net-timestamp: move timestamp flags out of sk_flags")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 7f6ca95d16b9 ("net: Implement missing getsockopt(SO_TIMESTAMPING_NEW)")
+There are two ways to handle the VLAN TCI mask:
+
+ 1. Match on the PCP field using a VLAN prio filter
+ 2. Match on complete TCI field using a flex filter
+
+Therefore, add checks and code for that.
+
+For instance the following rule is invalid and will be converted into a
+VLAN prio rule which is not correct:
+|root@host:~# ethtool -N enp3s0 flow-type ether vlan 0x0001 m 0xf000 \
+|             action 1
+|Added rule with ID 61
+|root@host:~# ethtool --show-ntuple enp3s0
+|4 RX rings available
+|Total 1 rules
+|
+|Filter: 61
+|        Flow Type: Raw Ethernet
+|        Src MAC addr: 00:00:00:00:00:00 mask: FF:FF:FF:FF:FF:FF
+|        Dest MAC addr: 00:00:00:00:00:00 mask: FF:FF:FF:FF:FF:FF
+|        Ethertype: 0x0 mask: 0xFFFF
+|        VLAN EtherType: 0x0 mask: 0xffff
+|        VLAN: 0x1 mask: 0x1fff
+|        User-defined: 0x0 mask: 0xffffffffffffffff
+|        Action: Direct to queue 1
+
+After:
+|root@host:~# ethtool -N enp3s0 flow-type ether vlan 0x0001 m 0xf000 \
+|             action 1
+|rmgr: Cannot insert RX class rule: Operation not supported
+
+Fixes: 7991487ecb2d ("igc: Allow for Flex Filters to be installed")
+Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip.h       |  2 +-
- include/net/sock.h     | 17 ++++++++++-------
- net/can/j1939/socket.c | 10 ++++++----
- net/core/skbuff.c      | 10 ++++++----
- net/core/sock.c        |  4 ++--
- net/ipv4/ip_output.c   |  2 +-
- net/ipv4/ip_sockglue.c |  2 +-
- net/ipv4/tcp.c         |  4 ++--
- net/ipv6/ip6_output.c  |  2 +-
- net/ipv6/ping.c        |  2 +-
- net/ipv6/raw.c         |  2 +-
- net/ipv6/udp.c         |  2 +-
- net/socket.c           | 13 +++++++------
- 13 files changed, 40 insertions(+), 32 deletions(-)
+ drivers/net/ethernet/intel/igc/igc.h         |  1 +
+ drivers/net/ethernet/intel/igc/igc_ethtool.c | 28 +++++++++++++++++---
+ 2 files changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/ip.h b/include/net/ip.h
-index c286344628dba..c83c09c65623f 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -95,7 +95,7 @@ static inline void ipcm_init_sk(struct ipcm_cookie *ipcm,
- 	ipcm_init(ipcm);
- 
- 	ipcm->sockc.mark = READ_ONCE(inet->sk.sk_mark);
--	ipcm->sockc.tsflags = inet->sk.sk_tsflags;
-+	ipcm->sockc.tsflags = READ_ONCE(inet->sk.sk_tsflags);
- 	ipcm->oif = READ_ONCE(inet->sk.sk_bound_dev_if);
- 	ipcm->addr = inet->inet_saddr;
- 	ipcm->protocol = inet->inet_num;
-diff --git a/include/net/sock.h b/include/net/sock.h
-index b6027b01c2455..d8ed62a8e1a3e 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1928,7 +1928,9 @@ struct sockcm_cookie {
- static inline void sockcm_init(struct sockcm_cookie *sockc,
- 			       const struct sock *sk)
- {
--	*sockc = (struct sockcm_cookie) { .tsflags = sk->sk_tsflags };
-+	*sockc = (struct sockcm_cookie) {
-+		.tsflags = READ_ONCE(sk->sk_tsflags)
-+	};
+diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
+index 43c05b41627f7..2a894ca49d93b 100644
+--- a/drivers/net/ethernet/intel/igc/igc.h
++++ b/drivers/net/ethernet/intel/igc/igc.h
+@@ -538,6 +538,7 @@ struct igc_nfc_filter {
+ 	u16 etype;
+ 	__be16 vlan_etype;
+ 	u16 vlan_tci;
++	u16 vlan_tci_mask;
+ 	u8 src_addr[ETH_ALEN];
+ 	u8 dst_addr[ETH_ALEN];
+ 	u8 user_data[8];
+diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
+index 51ef18060dbc4..e146357d61a8a 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
++++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
+@@ -957,6 +957,7 @@ static int igc_ethtool_set_coalesce(struct net_device *netdev,
  }
  
- int __sock_cmsg_send(struct sock *sk, struct msghdr *msg, struct cmsghdr *cmsg,
-@@ -2741,9 +2743,9 @@ void __sock_recv_wifi_status(struct msghdr *msg, struct sock *sk,
- static inline void
- sock_recv_timestamp(struct msghdr *msg, struct sock *sk, struct sk_buff *skb)
+ #define ETHER_TYPE_FULL_MASK ((__force __be16)~0)
++#define VLAN_TCI_FULL_MASK ((__force __be16)~0)
+ static int igc_ethtool_get_nfc_rule(struct igc_adapter *adapter,
+ 				    struct ethtool_rxnfc *cmd)
  {
--	ktime_t kt = skb->tstamp;
- 	struct skb_shared_hwtstamps *hwtstamps = skb_hwtstamps(skb);
--
-+	u32 tsflags = READ_ONCE(sk->sk_tsflags);
-+	ktime_t kt = skb->tstamp;
- 	/*
- 	 * generate control messages if
- 	 * - receive time stamping in software requested
-@@ -2751,10 +2753,10 @@ sock_recv_timestamp(struct msghdr *msg, struct sock *sk, struct sk_buff *skb)
- 	 * - hardware time stamps available and wanted
+@@ -988,7 +989,7 @@ static int igc_ethtool_get_nfc_rule(struct igc_adapter *adapter,
+ 	if (rule->filter.match_flags & IGC_FILTER_FLAG_VLAN_TCI) {
+ 		fsp->flow_type |= FLOW_EXT;
+ 		fsp->h_ext.vlan_tci = htons(rule->filter.vlan_tci);
+-		fsp->m_ext.vlan_tci = htons(VLAN_PRIO_MASK);
++		fsp->m_ext.vlan_tci = htons(rule->filter.vlan_tci_mask);
+ 	}
+ 
+ 	if (rule->filter.match_flags & IGC_FILTER_FLAG_DST_MAC_ADDR) {
+@@ -1223,6 +1224,7 @@ static void igc_ethtool_init_nfc_rule(struct igc_nfc_rule *rule,
+ 
+ 	if ((fsp->flow_type & FLOW_EXT) && fsp->m_ext.vlan_tci) {
+ 		rule->filter.vlan_tci = ntohs(fsp->h_ext.vlan_tci);
++		rule->filter.vlan_tci_mask = ntohs(fsp->m_ext.vlan_tci);
+ 		rule->filter.match_flags |= IGC_FILTER_FLAG_VLAN_TCI;
+ 	}
+ 
+@@ -1260,11 +1262,19 @@ static void igc_ethtool_init_nfc_rule(struct igc_nfc_rule *rule,
+ 		memcpy(rule->filter.user_mask, fsp->m_ext.data, sizeof(fsp->m_ext.data));
+ 	}
+ 
+-	/* When multiple filter options or user data or vlan etype is set, use a
+-	 * flex filter.
++	/* The i225/i226 has various different filters. Flex filters provide a
++	 * way to match up to the first 128 bytes of a packet. Use them for:
++	 *   a) For specific user data
++	 *   b) For VLAN EtherType
++	 *   c) For full TCI match
++	 *   d) Or in case multiple filter criteria are set
++	 *
++	 * Otherwise, use the simple MAC, VLAN PRIO or EtherType filters.
  	 */
- 	if (sock_flag(sk, SOCK_RCVTSTAMP) ||
--	    (sk->sk_tsflags & SOF_TIMESTAMPING_RX_SOFTWARE) ||
--	    (kt && sk->sk_tsflags & SOF_TIMESTAMPING_SOFTWARE) ||
-+	    (tsflags & SOF_TIMESTAMPING_RX_SOFTWARE) ||
-+	    (kt && tsflags & SOF_TIMESTAMPING_SOFTWARE) ||
- 	    (hwtstamps->hwtstamp &&
--	     (sk->sk_tsflags & SOF_TIMESTAMPING_RAW_HARDWARE)))
-+	     (tsflags & SOF_TIMESTAMPING_RAW_HARDWARE)))
- 		__sock_recv_timestamp(msg, sk, skb);
+ 	if ((rule->filter.match_flags & IGC_FILTER_FLAG_USER_DATA) ||
+ 	    (rule->filter.match_flags & IGC_FILTER_FLAG_VLAN_ETYPE) ||
++	    ((rule->filter.match_flags & IGC_FILTER_FLAG_VLAN_TCI) &&
++	     rule->filter.vlan_tci_mask == ntohs(VLAN_TCI_FULL_MASK)) ||
+ 	    (rule->filter.match_flags & (rule->filter.match_flags - 1)))
+ 		rule->flex = true;
  	else
- 		sock_write_timestamp(sk, kt);
-@@ -2776,7 +2778,8 @@ static inline void sock_recv_cmsgs(struct msghdr *msg, struct sock *sk,
- #define TSFLAGS_ANY	  (SOF_TIMESTAMPING_SOFTWARE			| \
- 			   SOF_TIMESTAMPING_RAW_HARDWARE)
- 
--	if (sk->sk_flags & FLAGS_RECV_CMSGS || sk->sk_tsflags & TSFLAGS_ANY)
-+	if (sk->sk_flags & FLAGS_RECV_CMSGS ||
-+	    READ_ONCE(sk->sk_tsflags) & TSFLAGS_ANY)
- 		__sock_recv_cmsgs(msg, sk, skb);
- 	else if (unlikely(sock_flag(sk, SOCK_TIMESTAMP)))
- 		sock_write_timestamp(sk, skb->tstamp);
-diff --git a/net/can/j1939/socket.c b/net/can/j1939/socket.c
-index 9c828067b4481..b0be23559243c 100644
---- a/net/can/j1939/socket.c
-+++ b/net/can/j1939/socket.c
-@@ -974,6 +974,7 @@ static void __j1939_sk_errqueue(struct j1939_session *session, struct sock *sk,
- 	struct sock_exterr_skb *serr;
- 	struct sk_buff *skb;
- 	char *state = "UNK";
-+	u32 tsflags;
- 	int err;
- 
- 	jsk = j1939_sk(sk);
-@@ -981,13 +982,14 @@ static void __j1939_sk_errqueue(struct j1939_session *session, struct sock *sk,
- 	if (!(jsk->state & J1939_SOCK_ERRQUEUE))
- 		return;
- 
-+	tsflags = READ_ONCE(sk->sk_tsflags);
- 	switch (type) {
- 	case J1939_ERRQUEUE_TX_ACK:
--		if (!(sk->sk_tsflags & SOF_TIMESTAMPING_TX_ACK))
-+		if (!(tsflags & SOF_TIMESTAMPING_TX_ACK))
- 			return;
- 		break;
- 	case J1939_ERRQUEUE_TX_SCHED:
--		if (!(sk->sk_tsflags & SOF_TIMESTAMPING_TX_SCHED))
-+		if (!(tsflags & SOF_TIMESTAMPING_TX_SCHED))
- 			return;
- 		break;
- 	case J1939_ERRQUEUE_TX_ABORT:
-@@ -997,7 +999,7 @@ static void __j1939_sk_errqueue(struct j1939_session *session, struct sock *sk,
- 	case J1939_ERRQUEUE_RX_DPO:
- 		fallthrough;
- 	case J1939_ERRQUEUE_RX_ABORT:
--		if (!(sk->sk_tsflags & SOF_TIMESTAMPING_RX_SOFTWARE))
-+		if (!(tsflags & SOF_TIMESTAMPING_RX_SOFTWARE))
- 			return;
- 		break;
- 	default:
-@@ -1054,7 +1056,7 @@ static void __j1939_sk_errqueue(struct j1939_session *session, struct sock *sk,
- 	}
- 
- 	serr->opt_stats = true;
--	if (sk->sk_tsflags & SOF_TIMESTAMPING_OPT_ID)
-+	if (tsflags & SOF_TIMESTAMPING_OPT_ID)
- 		serr->ee.ee_data = session->tskey;
- 
- 	netdev_dbg(session->priv->ndev, "%s: 0x%p tskey: %i, state: %s\n",
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 73b1e0e53534e..8a819d0a7bfb0 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -4913,7 +4913,7 @@ static void __skb_complete_tx_timestamp(struct sk_buff *skb,
- 	serr->ee.ee_info = tstype;
- 	serr->opt_stats = opt_stats;
- 	serr->header.h4.iif = skb->dev ? skb->dev->ifindex : 0;
--	if (sk->sk_tsflags & SOF_TIMESTAMPING_OPT_ID) {
-+	if (READ_ONCE(sk->sk_tsflags) & SOF_TIMESTAMPING_OPT_ID) {
- 		serr->ee.ee_data = skb_shinfo(skb)->tskey;
- 		if (sk_is_tcp(sk))
- 			serr->ee.ee_data -= atomic_read(&sk->sk_tskey);
-@@ -4969,21 +4969,23 @@ void __skb_tstamp_tx(struct sk_buff *orig_skb,
- {
- 	struct sk_buff *skb;
- 	bool tsonly, opt_stats = false;
-+	u32 tsflags;
- 
- 	if (!sk)
- 		return;
- 
--	if (!hwtstamps && !(sk->sk_tsflags & SOF_TIMESTAMPING_OPT_TX_SWHW) &&
-+	tsflags = READ_ONCE(sk->sk_tsflags);
-+	if (!hwtstamps && !(tsflags & SOF_TIMESTAMPING_OPT_TX_SWHW) &&
- 	    skb_shinfo(orig_skb)->tx_flags & SKBTX_IN_PROGRESS)
- 		return;
- 
--	tsonly = sk->sk_tsflags & SOF_TIMESTAMPING_OPT_TSONLY;
-+	tsonly = tsflags & SOF_TIMESTAMPING_OPT_TSONLY;
- 	if (!skb_may_tx_timestamp(sk, tsonly))
- 		return;
- 
- 	if (tsonly) {
- #ifdef CONFIG_INET
--		if ((sk->sk_tsflags & SOF_TIMESTAMPING_OPT_STATS) &&
-+		if ((tsflags & SOF_TIMESTAMPING_OPT_STATS) &&
- 		    sk_is_tcp(sk)) {
- 			skb = tcp_get_timestamping_opt_stats(sk, orig_skb,
- 							     ack_skb);
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 4305e55dbfba4..929055bc0cc7b 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -926,7 +926,7 @@ int sock_set_timestamping(struct sock *sk, int optname,
- 			return ret;
- 	}
- 
--	sk->sk_tsflags = val;
-+	WRITE_ONCE(sk->sk_tsflags, val);
- 	sock_valbool_flag(sk, SOCK_TSTAMP_NEW, optname == SO_TIMESTAMPING_NEW);
- 
- 	if (val & SOF_TIMESTAMPING_RX_SOFTWARE)
-@@ -1705,7 +1705,7 @@ int sk_getsockopt(struct sock *sk, int level, int optname,
- 
- 	case SO_TIMESTAMPING_OLD:
- 		lv = sizeof(v.timestamping);
--		v.timestamping.flags = sk->sk_tsflags;
-+		v.timestamping.flags = READ_ONCE(sk->sk_tsflags);
- 		v.timestamping.bind_phc = sk->sk_bind_phc;
- 		break;
- 
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index d8ec802f97524..e19ef88ae181f 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -991,7 +991,7 @@ static int __ip_append_data(struct sock *sk,
- 	paged = !!cork->gso_size;
- 
- 	if (cork->tx_flags & SKBTX_ANY_TSTAMP &&
--	    sk->sk_tsflags & SOF_TIMESTAMPING_OPT_ID)
-+	    READ_ONCE(sk->sk_tsflags) & SOF_TIMESTAMPING_OPT_ID)
- 		tskey = atomic_inc_return(&sk->sk_tskey) - 1;
- 
- 	hh_len = LL_RESERVED_SPACE(rt->dst.dev);
-diff --git a/net/ipv4/ip_sockglue.c b/net/ipv4/ip_sockglue.c
-index 63aa52becd880..c1fb7580ea581 100644
---- a/net/ipv4/ip_sockglue.c
-+++ b/net/ipv4/ip_sockglue.c
-@@ -509,7 +509,7 @@ static bool ipv4_datagram_support_cmsg(const struct sock *sk,
- 	 * or without payload (SOF_TIMESTAMPING_OPT_TSONLY).
- 	 */
- 	info = PKTINFO_SKB_CB(skb);
--	if (!(sk->sk_tsflags & SOF_TIMESTAMPING_OPT_CMSG) ||
-+	if (!(READ_ONCE(sk->sk_tsflags) & SOF_TIMESTAMPING_OPT_CMSG) ||
- 	    !info->ipi_ifindex)
- 		return false;
- 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 58409ea2da0af..3935451ad061e 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -2359,14 +2359,14 @@ void tcp_recv_timestamp(struct msghdr *msg, const struct sock *sk,
- 			}
- 		}
- 
--		if (sk->sk_tsflags & SOF_TIMESTAMPING_SOFTWARE)
-+		if (READ_ONCE(sk->sk_tsflags) & SOF_TIMESTAMPING_SOFTWARE)
- 			has_timestamping = true;
- 		else
- 			tss->ts[0] = (struct timespec64) {0};
- 	}
- 
- 	if (tss->ts[2].tv_sec || tss->ts[2].tv_nsec) {
--		if (sk->sk_tsflags & SOF_TIMESTAMPING_RAW_HARDWARE)
-+		if (READ_ONCE(sk->sk_tsflags) & SOF_TIMESTAMPING_RAW_HARDWARE)
- 			has_timestamping = true;
- 		else
- 			tss->ts[2] = (struct timespec64) {0};
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 04822e2cba74a..e9ae084d038d1 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1507,7 +1507,7 @@ static int __ip6_append_data(struct sock *sk,
- 	orig_mtu = mtu;
- 
- 	if (cork->tx_flags & SKBTX_ANY_TSTAMP &&
--	    sk->sk_tsflags & SOF_TIMESTAMPING_OPT_ID)
-+	    READ_ONCE(sk->sk_tsflags) & SOF_TIMESTAMPING_OPT_ID)
- 		tskey = atomic_inc_return(&sk->sk_tskey) - 1;
- 
- 	hh_len = LL_RESERVED_SPACE(rt->dst.dev);
-diff --git a/net/ipv6/ping.c b/net/ipv6/ping.c
-index 4d5a27dd9a4b2..a5d7d1915ba7e 100644
---- a/net/ipv6/ping.c
-+++ b/net/ipv6/ping.c
-@@ -119,7 +119,7 @@ static int ping_v6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+@@ -1334,6 +1344,18 @@ static int igc_ethtool_add_nfc_rule(struct igc_adapter *adapter,
  		return -EINVAL;
- 
- 	ipcm6_init_sk(&ipc6, np);
--	ipc6.sockc.tsflags = sk->sk_tsflags;
-+	ipc6.sockc.tsflags = READ_ONCE(sk->sk_tsflags);
- 	ipc6.sockc.mark = READ_ONCE(sk->sk_mark);
- 
- 	fl6.flowi6_oif = oif;
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index df3abd9e5237c..dc31752a7edcc 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -776,7 +776,7 @@ static int rawv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	fl6.flowi6_uid = sk->sk_uid;
- 
- 	ipcm6_init(&ipc6);
--	ipc6.sockc.tsflags = sk->sk_tsflags;
-+	ipc6.sockc.tsflags = READ_ONCE(sk->sk_tsflags);
- 	ipc6.sockc.mark = fl6.flowi6_mark;
- 
- 	if (sin6) {
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 64b36c2ba774a..7f49f69226a21 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1358,7 +1358,7 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 
- 	ipcm6_init(&ipc6);
- 	ipc6.gso_size = READ_ONCE(up->gso_size);
--	ipc6.sockc.tsflags = sk->sk_tsflags;
-+	ipc6.sockc.tsflags = READ_ONCE(sk->sk_tsflags);
- 	ipc6.sockc.mark = READ_ONCE(sk->sk_mark);
- 
- 	/* destination address check */
-diff --git a/net/socket.c b/net/socket.c
-index 04cba91c7cbe5..9c1fb94b12851 100644
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -826,7 +826,7 @@ static bool skb_is_swtx_tstamp(const struct sk_buff *skb, int false_tstamp)
- 
- static ktime_t get_timestamp(struct sock *sk, struct sk_buff *skb, int *if_index)
- {
--	bool cycles = sk->sk_tsflags & SOF_TIMESTAMPING_BIND_PHC;
-+	bool cycles = READ_ONCE(sk->sk_tsflags) & SOF_TIMESTAMPING_BIND_PHC;
- 	struct skb_shared_hwtstamps *shhwtstamps = skb_hwtstamps(skb);
- 	struct net_device *orig_dev;
- 	ktime_t hwtstamp;
-@@ -878,12 +878,12 @@ void __sock_recv_timestamp(struct msghdr *msg, struct sock *sk,
- 	int need_software_tstamp = sock_flag(sk, SOCK_RCVTSTAMP);
- 	int new_tstamp = sock_flag(sk, SOCK_TSTAMP_NEW);
- 	struct scm_timestamping_internal tss;
--
- 	int empty = 1, false_tstamp = 0;
- 	struct skb_shared_hwtstamps *shhwtstamps =
- 		skb_hwtstamps(skb);
- 	int if_index;
- 	ktime_t hwtstamp;
-+	u32 tsflags;
- 
- 	/* Race occurred between timestamp enabling and packet
- 	   receiving.  Fill in the current time for now. */
-@@ -925,11 +925,12 @@ void __sock_recv_timestamp(struct msghdr *msg, struct sock *sk,
  	}
  
- 	memset(&tss, 0, sizeof(tss));
--	if ((sk->sk_tsflags & SOF_TIMESTAMPING_SOFTWARE) &&
-+	tsflags = READ_ONCE(sk->sk_tsflags);
-+	if ((tsflags & SOF_TIMESTAMPING_SOFTWARE) &&
- 	    ktime_to_timespec64_cond(skb->tstamp, tss.ts + 0))
- 		empty = 0;
- 	if (shhwtstamps &&
--	    (sk->sk_tsflags & SOF_TIMESTAMPING_RAW_HARDWARE) &&
-+	    (tsflags & SOF_TIMESTAMPING_RAW_HARDWARE) &&
- 	    !skb_is_swtx_tstamp(skb, false_tstamp)) {
- 		if_index = 0;
- 		if (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP_NETDEV)
-@@ -937,14 +938,14 @@ void __sock_recv_timestamp(struct msghdr *msg, struct sock *sk,
- 		else
- 			hwtstamp = shhwtstamps->hwtstamp;
- 
--		if (sk->sk_tsflags & SOF_TIMESTAMPING_BIND_PHC)
-+		if (tsflags & SOF_TIMESTAMPING_BIND_PHC)
- 			hwtstamp = ptp_convert_timestamp(&hwtstamp,
- 							 sk->sk_bind_phc);
- 
- 		if (ktime_to_timespec64_cond(hwtstamp, tss.ts + 2)) {
- 			empty = 0;
- 
--			if ((sk->sk_tsflags & SOF_TIMESTAMPING_OPT_PKTINFO) &&
-+			if ((tsflags & SOF_TIMESTAMPING_OPT_PKTINFO) &&
- 			    !skb_is_err_queue(skb))
- 				put_ts_pktinfo(msg, skb, if_index);
- 		}
++	/* There are two ways to match the VLAN TCI:
++	 *  1. Match on PCP field and use vlan prio filter for it
++	 *  2. Match on complete TCI field and use flex filter for it
++	 */
++	if ((fsp->flow_type & FLOW_EXT) &&
++	    fsp->m_ext.vlan_tci &&
++	    fsp->m_ext.vlan_tci != htons(VLAN_PRIO_MASK) &&
++	    fsp->m_ext.vlan_tci != VLAN_TCI_FULL_MASK) {
++		netdev_dbg(netdev, "VLAN mask not supported\n");
++		return -EOPNOTSUPP;
++	}
++
+ 	if (fsp->location >= IGC_MAX_RXNFC_RULES) {
+ 		netdev_dbg(netdev, "Invalid location\n");
+ 		return -EINVAL;
 -- 
 2.43.0
 
