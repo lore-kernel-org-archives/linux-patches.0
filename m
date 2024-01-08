@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F724B5AE;
-	Mon,  8 Jan 2024 15:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A6D4B5AB;
+	Mon,  8 Jan 2024 15:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zItHld9d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76444C43395;
-	Mon,  8 Jan 2024 15:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4UXPdP5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C68C433C7;
+	Mon,  8 Jan 2024 15:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726703;
-	bh=XaMoe3FSBJm9iS8Ewxa7koeMW4JhHdDYOxSQxQWfuSs=;
+	s=korg; t=1704726706;
+	bh=VvZd9BJB/Vw2JlUTAtiuOAbLKUXawawWXDiQGMFoEsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zItHld9dOvW/9P/BOHrFRCagVyq4B8oaCyphu3/ojh9GEDnhjQpBv58YJaCZcqpPz
-	 Dw5j1dFoA0XWLGqAdtAli1kQtSthdjaq9rN+tX99+kA7N0pR0Ze4tzGfvAnqeDJ8wO
-	 Emhm63+SopTFj+QWSmlHQi4PrgbpYJs5wQHzCBfs=
+	b=M4UXPdP5bxC9Scx2oWhj3hEdNU59JF09pGrzRsdQR3bL3/jGh4NTvOD6WgwiSllbX
+	 sAd1IrhkGgnDuCmlnfJjKawEBo2RYQzrFQEAn7fJm59mNQ1Vr+zUk1V5grapxI8EfN
+	 T2VliqdKnN1i9wQfLLJC+U2U5iXhOYIIIEp/VhxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karen Ostrowska <karen.ostrowska@intel.com>,
-	Mateusz Palczewski <mateusz.palczewski@intel.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Andrii Staikov <andrii.staikov@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Suman Ghosh <sumang@marvell.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/124] i40e: Restore VF MSI-X state during PCI reset
-Date: Mon,  8 Jan 2024 16:07:56 +0100
-Message-ID: <20240108150605.268583521@linuxfoundation.org>
+Subject: [PATCH 6.6 023/124] octeontx2-af: Fix marking couple of structure as __packed
+Date: Mon,  8 Jan 2024 16:07:29 +0100
+Message-ID: <20240108150604.038146677@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -47,102 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Staikov <andrii.staikov@intel.com>
+From: Suman Ghosh <sumang@marvell.com>
 
-[ Upstream commit 371e576ff3e8580d91d49026e5d5faebf5565558 ]
+[ Upstream commit 0ee2384a5a0f3b4eeac8d10bb01a0609d245a4d1 ]
 
-During a PCI FLR the MSI-X Enable flag in the VF PCI MSI-X capability
-register will be cleared. This can lead to issues when a VF is
-assigned to a VM because in these cases the VF driver receives no
-indication of the PF PCI error/reset and additionally it is incapable
-of restoring the cleared flag in the hypervisor configuration space
-without fully reinitializing the driver interrupt functionality.
+Couple of structures was not marked as __packed. This patch
+fixes the same and mark them as __packed.
 
-Since the VF driver is unable to easily resolve this condition on its own,
-restore the VF MSI-X flag during the PF PCI reset handling.
-
-Fixes: 19b7960b2da1 ("i40e: implement split PCI error reset handler")
-Co-developed-by: Karen Ostrowska <karen.ostrowska@intel.com>
-Signed-off-by: Karen Ostrowska <karen.ostrowska@intel.com>
-Co-developed-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
-Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 42006910b5ea ("octeontx2-af: cleanup KPU config data")
+Signed-off-by: Suman Ghosh <sumang@marvell.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c   |  3 +++
- .../ethernet/intel/i40e/i40e_virtchnl_pf.c    | 26 +++++++++++++++++++
- .../ethernet/intel/i40e/i40e_virtchnl_pf.h    |  3 +++
- 3 files changed, 32 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/af/npc.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 370825e433cc6..5b20eba93d048 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -16485,6 +16485,9 @@ static void i40e_pci_error_reset_done(struct pci_dev *pdev)
- 		return;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/npc.h b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
+index de9fbd98dfb76..c92c3f4631d54 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/npc.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
+@@ -520,7 +520,7 @@ struct npc_lt_def {
+ 	u8	ltype_mask;
+ 	u8	ltype_match;
+ 	u8	lid;
+-};
++} __packed;
  
- 	i40e_reset_and_rebuild(pf, false, false);
-+#ifdef CONFIG_PCI_IOV
-+	i40e_restore_all_vfs_msi_state(pdev);
-+#endif /* CONFIG_PCI_IOV */
- }
+ struct npc_lt_def_ipsec {
+ 	u8	ltype_mask;
+@@ -528,7 +528,7 @@ struct npc_lt_def_ipsec {
+ 	u8	lid;
+ 	u8	spi_offset;
+ 	u8	spi_nz;
+-};
++} __packed;
  
- /**
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 220dad902f9b4..a97ca2224da0e 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -152,6 +152,32 @@ void i40e_vc_notify_reset(struct i40e_pf *pf)
- 			     (u8 *)&pfe, sizeof(struct virtchnl_pf_event));
- }
- 
-+#ifdef CONFIG_PCI_IOV
-+void i40e_restore_all_vfs_msi_state(struct pci_dev *pdev)
-+{
-+	u16 vf_id;
-+	u16 pos;
-+
-+	/* Continue only if this is a PF */
-+	if (!pdev->is_physfn)
-+		return;
-+
-+	if (!pci_num_vf(pdev))
-+		return;
-+
-+	pos = pci_find_ext_capability(pdev, PCI_EXT_CAP_ID_SRIOV);
-+	if (pos) {
-+		struct pci_dev *vf_dev = NULL;
-+
-+		pci_read_config_word(pdev, pos + PCI_SRIOV_VF_DID, &vf_id);
-+		while ((vf_dev = pci_get_device(pdev->vendor, vf_id, vf_dev))) {
-+			if (vf_dev->is_virtfn && vf_dev->physfn == pdev)
-+				pci_restore_msi_state(vf_dev);
-+		}
-+	}
-+}
-+#endif /* CONFIG_PCI_IOV */
-+
- /**
-  * i40e_vc_notify_vf_reset
-  * @vf: pointer to the VF structure
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
-index 895b8feb2567c..bda9ba668c41e 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
-@@ -135,6 +135,9 @@ int i40e_ndo_set_vf_spoofchk(struct net_device *netdev, int vf_id, bool enable);
- 
- void i40e_vc_notify_link_state(struct i40e_pf *pf);
- void i40e_vc_notify_reset(struct i40e_pf *pf);
-+#ifdef CONFIG_PCI_IOV
-+void i40e_restore_all_vfs_msi_state(struct pci_dev *pdev);
-+#endif /* CONFIG_PCI_IOV */
- int i40e_get_vf_stats(struct net_device *netdev, int vf_id,
- 		      struct ifla_vf_stats *vf_stats);
- 
+ struct npc_lt_def_apad {
+ 	u8	ltype_mask;
 -- 
 2.43.0
 
