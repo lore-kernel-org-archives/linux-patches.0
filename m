@@ -1,124 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9CD4654B;
-	Mon,  8 Jan 2024 14:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA024C629;
+	Mon,  8 Jan 2024 14:22:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjUrkmru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD80C433C9;
-	Mon,  8 Jan 2024 14:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hee8Q+9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05EBC433C7;
+	Mon,  8 Jan 2024 14:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704723729;
-	bh=+XcQhzqAcZx7MwvetyJR66qrtgK91z8Pi2prIoSFj6s=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ZjUrkmruBoRkq7qb50Mbte7NcsaYoDSTB4t4hGWiQme8hIVU62OQtasebiZNZjqeM
-	 S/X/MG6CzTzh8S6J0jKhWU+ckFRdjSrUx9JS08NUVqyKZEChbk1+E9FmmAJXLAlGOi
-	 BTibpHmgYxKaoS68Vxc+VIk7JHGwu7AfY3cRM/dc=
+	s=korg; t=1704723734;
+	bh=kQ+LhR7iZZAnXsQPFnXuHuZbf/2NiSo9eD/UrzJsCmI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=0hee8Q+9O/mK+WZdjhluVyaeIhi8BBgEtkqbV0gkl9+dhhmkPyUq92ddKgtZfmbR+
+	 spogLttCVJAmWlzl4BL23R0Y1H8klA47nfZh52R/4q12JlyapoWEd1EBVeRBf9v91M
+	 0u2+pvJoHgm+MDzVzWUwzGhQZTtWkKYIpqbUbGkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com
-Subject: [PATCH 4.14 0/7] 4.14.336-rc1 review
-Date: Mon,  8 Jan 2024 15:21:54 +0100
-Message-ID: <20240108141854.158274814@linuxfoundation.org>
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 2/7] net: sched: em_text: fix possible memory leak in em_text_destroy()
+Date: Mon,  8 Jan 2024 15:21:56 +0100
+Message-ID: <20240108141854.235650139@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240108141854.158274814@linuxfoundation.org>
+References: <20240108141854.158274814@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.336-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.14.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.14.336-rc1
-X-KernelTest-Deadline: 2024-01-10T14:18+00:00
 Content-Transfer-Encoding: 8bit
 
--------------------------------
-NOTE, this is the LAST 4.14.y-rc release cycle that is going to happen.
-After this release, this branch will be end-of-life.  You all should
-have moved to the 4.19.y branch at the very least by now, as this is it,
-time to stop using this one.
--------------------------------
+4.14-stable review patch.  If anyone has any objections, please let me know.
 
-This is the start of the stable review cycle for the 4.14.336 release.
-There are 7 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+------------------
 
-Responses should be made by Wed, 10 Jan 2024 14:18:47 +0000.
-Anything received after that time might be too late.
+From: Hangyu Hua <hbh25y@gmail.com>
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.336-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
-and the diffstat can be found below.
+[ Upstream commit 8fcb0382af6f1ef50936f1be05b8149eb2f88496 ]
 
-thanks,
+m->data needs to be freed when em_text_destroy is called.
 
-greg k-h
+Fixes: d675c989ed2d ("[PKT_SCHED]: Packet classification based on textsearch (ematch)")
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/sched/em_text.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
--------------
-Pseudo-Shortlog of commits:
+diff --git a/net/sched/em_text.c b/net/sched/em_text.c
+index 73e2ed576ceb3..cbf44783024f3 100644
+--- a/net/sched/em_text.c
++++ b/net/sched/em_text.c
+@@ -101,8 +101,10 @@ static int em_text_change(struct net *net, void *data, int len,
+ 
+ static void em_text_destroy(struct tcf_ematch *m)
+ {
+-	if (EM_TEXT_PRIV(m) && EM_TEXT_PRIV(m)->config)
++	if (EM_TEXT_PRIV(m) && EM_TEXT_PRIV(m)->config) {
+ 		textsearch_destroy(EM_TEXT_PRIV(m)->config);
++		kfree(EM_TEXT_PRIV(m));
++	}
+ }
+ 
+ static int em_text_dump(struct sk_buff *skb, struct tcf_ematch *m)
+-- 
+2.43.0
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.14.336-rc1
-
-Geert Uytterhoeven <geert+renesas@glider.be>
-    mmc: core: Cancel delayed work before releasing host
-
-Jorge Ramirez-Ortiz <jorge@foundries.io>
-    mmc: rpmb: fixes pause retune on all RPMB partitions.
-
-Takashi Sakamoto <o-takashi@sakamocchi.jp>
-    firewire: ohci: suppress unexpected system reboot in AMD Ryzen machines and ASM108x/VT630x PCIe cards
-
-Ke Xiao <xiaoke@sangfor.com.cn>
-    i40e: fix use-after-free in i40e_aqc_add_filters()
-
-Adrian Cinal <adriancinal@gmail.com>
-    net: bcmgenet: Fix FCS generation for fragmented skbuffs
-
-Hangyu Hua <hbh25y@gmail.com>
-    net: sched: em_text: fix possible memory leak in em_text_destroy()
-
-Siddh Raman Pant <code@siddh.me>
-    nfc: llcp_core: Hold a ref to llcp_local->dev when holding a ref to llcp_local
-
-
--------------
-
-Diffstat:
-
- Makefile                                       |  4 +-
- drivers/firewire/ohci.c                        | 51 ++++++++++++++++++++++++++
- drivers/mmc/core/block.c                       |  7 ++--
- drivers/mmc/core/host.c                        |  1 +
- drivers/net/ethernet/broadcom/genet/bcmgenet.c |  4 +-
- drivers/net/ethernet/intel/i40e/i40e_main.c    |  8 +++-
- net/nfc/llcp_core.c                            | 39 ++++++++++++++++++--
- net/sched/em_text.c                            |  4 +-
- 8 files changed, 107 insertions(+), 11 deletions(-)
 
 
