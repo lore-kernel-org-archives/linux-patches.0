@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D721D5102B;
-	Mon,  8 Jan 2024 15:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9910524AC;
+	Mon,  8 Jan 2024 15:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFX7uWDt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456F4C433C7;
-	Mon,  8 Jan 2024 15:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDVkKnao"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55717C433CC;
+	Mon,  8 Jan 2024 15:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728544;
-	bh=FOg9qWnZ9rmVrY44ALRzF6i+R+s0IZgpfjGRaVSZgWo=;
+	s=korg; t=1704728547;
+	bh=/UXc6pCjcp023mX2caT1uzHJbg2x6ycqF3wNRa23W/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFX7uWDtRjclh4JlX6UHnwj4LP1bmTzX9E49duV3GMPQKEuFTH8R4gETY7DBadluF
-	 4Ec9lYPK1ztPIWYj4QWiAVc3Ki3YHxb+mn64IQ8NwlDIHkdTOz5olwr5iLmv4Fnxc8
-	 OOqTS+gwNbXzg9JuLa3m00ZKPMOXH6OiOiwbENM8=
+	b=WDVkKnaocvFonHK6oIvWgTyIPL/4BYksUPHf6B4UAotdWnWAST5SrXMGchzfnmwOK
+	 0SnBjooz/rxCHVvvHo2UiZa9qdmDyll5cEARKv5F9STK/ZOgWBKfL2JL+8OKMrBjZo
+	 le4j5lhkLtJSa8ml4IahNPgJvbTZVh91H2i2OLoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/150] firmware: arm_scmi: Fix frequency truncation by promoting multiplier type
-Date: Mon,  8 Jan 2024 16:36:01 +0100
-Message-ID: <20240108153516.253176114@linuxfoundation.org>
+Subject: [PATCH 6.1 111/150] ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7
+Date: Mon,  8 Jan 2024 16:36:02 +0100
+Message-ID: <20240108153516.303055994@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -43,53 +41,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 8e3c98d9187e09274fc000a7d1a77b070a42d259 ]
+[ Upstream commit 634e5e1e06f5cdd614a1bc429ecb243a51cc009d ]
 
-Fix the possible frequency truncation for all values equal to or greater
-4GHz on 64bit machines by updating the multiplier 'mult_factor' to
-'unsigned long' type. It is also possible that the multiplier itself can
-be greater than or equal to 2^32. So we need to also fix the equation
-computing the value of the multiplier.
+Lenovo Yoga Pro 7 14APH8 (PCI SSID 17aa:3882) seems requiring the
+similar workaround like Yoga 9 model for the bass speaker.
 
-Fixes: a9e3fbfaa0ff ("firmware: arm_scmi: add initial support for performance protocol")
-Reported-by: Sibi Sankar <quic_sibis@quicinc.com>
-Closes: https://lore.kernel.org/all/20231129065748.19871-3-quic_sibis@quicinc.com/
-Cc: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20231130204343.503076-1-sudeep.holla@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/CAGGk=CRRQ1L9p771HsXTN_ebZP41Qj+3gw35Gezurn+nokRewg@mail.gmail.com
+Link: https://lore.kernel.org/r/20231207182035.30248-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/perf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
-index 431bda9165c3d..2775bcafe40f6 100644
---- a/drivers/firmware/arm_scmi/perf.c
-+++ b/drivers/firmware/arm_scmi/perf.c
-@@ -131,7 +131,7 @@ struct perf_dom_info {
- 	u32 opp_count;
- 	u32 sustained_freq_khz;
- 	u32 sustained_perf_level;
--	u32 mult_factor;
-+	unsigned long mult_factor;
- 	char name[SCMI_MAX_STR_SIZE];
- 	struct scmi_opp opp[MAX_OPPS];
- 	struct scmi_fc_info *fc_info;
-@@ -223,8 +223,8 @@ scmi_perf_domain_attributes_get(const struct scmi_protocol_handle *ph,
- 			dom_info->mult_factor =	1000;
- 		else
- 			dom_info->mult_factor =
--					(dom_info->sustained_freq_khz * 1000) /
--					dom_info->sustained_perf_level;
-+					(dom_info->sustained_freq_khz * 1000UL)
-+					/ dom_info->sustained_perf_level;
- 		strscpy(dom_info->name, attr->name, SCMI_SHORT_NAME_MAX_SIZE);
- 	}
- 
--- 
-2.43.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9907,6 +9907,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1558, 0xc019, "Clevo NH77D[BE]Q", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xc022, "Clevo NH77[DC][QW]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x17aa, 0x1036, "Lenovo P520", ALC233_FIXUP_LENOVO_MULTI_CODECS),
++	SND_PCI_QUIRK(0x17aa, 0x3882, "Lenovo Yoga Pro 7 14APH8", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x1048, "ThinkCentre Station", ALC623_FIXUP_LENOVO_THINKSTATION_P340),
+ 	SND_PCI_QUIRK(0x17aa, 0x20f2, "Thinkpad SL410/510", ALC269_FIXUP_SKU_IGNORE),
+ 	SND_PCI_QUIRK(0x17aa, 0x215e, "Thinkpad L512", ALC269_FIXUP_SKU_IGNORE),
 
 
