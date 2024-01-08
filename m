@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7506E51C29;
-	Mon,  8 Jan 2024 15:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2B051C29;
+	Mon,  8 Jan 2024 15:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gND6ikw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A80C433C9;
-	Mon,  8 Jan 2024 15:41:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDXBclkJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124ACC433C8;
+	Mon,  8 Jan 2024 15:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728470;
-	bh=uf9yssLZQA6lSJhSCxmeRMk4ebUdyMsBa5zq3lZH4XU=;
+	s=korg; t=1704728473;
+	bh=hWShnBm9KiLMkPSsmHXp4dP0p1SLXwbxrCHPKbpf3ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0gND6ikwKOccOGQK2/HaM0RIQPmCNZMUXwn9kYX4b0ZiefccpB+FoXUo5H/OJPkDX
-	 Ait2/Gad7znIH7FwOYfiQqCfP0OzF+/oYh//FiJg25B0F71z/H0sYegAJkIjVwIKtO
-	 FvXxNQWQmelsK0orGM2388Hf5WZRK90DaUaemRtY=
+	b=qDXBclkJLik+IQURiTTg39LoMoojHZO85b2g1kB/S36tQdTBt0WbJIUPKwBMvwBOT
+	 sx15PfY9YqxEGv/aAMOp2OTFcVcpy3u2/0DNSzmA9zvVL5fNPgtit2BSFoAMcBkNAp
+	 u40ZwQ0gC7yHR+rTUcESljLX1tLPiAXRmpB0PeaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Zhang Rui <rui.zhang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/150] bpf: fix precision backtracking instruction iteration
-Date: Mon,  8 Jan 2024 16:35:36 +0100
-Message-ID: <20240108153515.146424663@linuxfoundation.org>
+Subject: [PATCH 6.1 058/150] cpu/SMT: Make SMT control more robust against enumeration failures
+Date: Mon,  8 Jan 2024 16:35:09 +0100
+Message-ID: <20240108153513.900716546@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -43,87 +46,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 4bb7ea946a370707315ab774432963ce47291946 ]
+[ Upstream commit d91bdd96b55cc3ce98d883a60f133713821b80a6 ]
 
-Fix an edge case in __mark_chain_precision() which prematurely stops
-backtracking instructions in a state if it happens that state's first
-and last instruction indexes are the same. This situations doesn't
-necessarily mean that there were no instructions simulated in a state,
-but rather that we starting from the instruction, jumped around a bit,
-and then ended up at the same instruction before checkpointing or
-marking precision.
+The SMT control mechanism got added as speculation attack vector
+mitigation. The implemented logic relies on the primary thread mask to
+be set up properly.
 
-To distinguish between these two possible situations, we need to consult
-jump history. If it's empty or contain a single record "bridging" parent
-state and first instruction of processed state, then we indeed
-backtracked all instructions in this state. But if history is not empty,
-we are definitely not done yet.
+This turns out to be an issue with XEN/PV guests because their CPU hotplug
+mechanics do not enumerate APICs and therefore the mask is never correctly
+populated.
 
-Move this logic inside get_prev_insn_idx() to contain it more nicely.
-Use -ENOENT return code to denote "we are out of instructions"
-situation.
+This went unnoticed so far because by chance XEN/PV ends up with
+smp_num_siblings == 2. So smt_hotplug_control stays at its default value
+CPU_SMT_ENABLED and the primary thread mask is never evaluated in the
+context of CPU hotplug.
 
-This bug was exposed by verifier_loop1.c's bounded_recursion subtest, once
-the next fix in this patch set is applied.
+This stopped "working" with the upcoming overhaul of the topology
+evaluation which legitimately provides a fake topology for XEN/PV. That
+sets smp_num_siblings to 1, which causes the core CPU hot-plug core to
+refuse to bring up the APs.
 
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Fixes: b5dc0163d8fd ("bpf: precise scalar_value tracking")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20231110002638.4168352-3-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+This happens because smt_hotplug_control is set to CPU_SMT_NOT_SUPPORTED
+which causes cpu_smt_allowed() to evaluate the unpopulated primary thread
+mask with the conclusion that all non-boot CPUs are not valid to be
+plugged.
+
+Make cpu_smt_allowed() more robust and take CPU_SMT_NOT_SUPPORTED and
+CPU_SMT_NOT_IMPLEMENTED into account. Rename it to cpu_bootable() while at
+it as that makes it more clear what the function is about.
+
+The primary mask issue on x86 XEN/PV needs to be addressed separately as
+there are users outside of the CPU hotplug code too.
+
+Fixes: 05736e4ac13c ("cpu/hotplug: Provide knobs to control SMT")
+Reported-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Juergen Gross <jgross@suse.com>
+Tested-by: Sohil Mehta <sohil.mehta@intel.com>
+Tested-by: Michael Kelley <mikelley@microsoft.com>
+Tested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Zhang Rui <rui.zhang@intel.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20230814085112.149440843@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ kernel/cpu.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 95521beec66c5..142e10d49fd81 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2551,12 +2551,29 @@ static int push_jmp_history(struct bpf_verifier_env *env,
+diff --git a/kernel/cpu.c b/kernel/cpu.c
+index c37f1758a4865..e6f0101941ed8 100644
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -460,11 +460,19 @@ static inline bool cpu_smt_thread_allowed(unsigned int cpu)
+ #endif
+ }
  
- /* Backtrack one insn at a time. If idx is not at the top of recorded
-  * history then previous instruction came from straight line execution.
-+ * Return -ENOENT if we exhausted all instructions within given state.
-+ *
-+ * It's legal to have a bit of a looping with the same starting and ending
-+ * insn index within the same state, e.g.: 3->4->5->3, so just because current
-+ * instruction index is the same as state's first_idx doesn't mean we are
-+ * done. If there is still some jump history left, we should keep going. We
-+ * need to take into account that we might have a jump history between given
-+ * state's parent and itself, due to checkpointing. In this case, we'll have
-+ * history entry recording a jump from last instruction of parent state and
-+ * first instruction of given state.
-  */
- static int get_prev_insn_idx(struct bpf_verifier_state *st, int i,
- 			     u32 *history)
+-static inline bool cpu_smt_allowed(unsigned int cpu)
++static inline bool cpu_bootable(unsigned int cpu)
  {
- 	u32 cnt = *history;
+ 	if (cpu_smt_control == CPU_SMT_ENABLED && cpu_smt_thread_allowed(cpu))
+ 		return true;
  
-+	if (i == st->first_insn_idx) {
-+		if (cnt == 0)
-+			return -ENOENT;
-+		if (cnt == 1 && st->jmp_history[0].idx == i)
-+			return -ENOENT;
-+	}
++	/* All CPUs are bootable if controls are not configured */
++	if (cpu_smt_control == CPU_SMT_NOT_IMPLEMENTED)
++		return true;
 +
- 	if (cnt && st->jmp_history[cnt - 1].idx == i) {
- 		i = st->jmp_history[cnt - 1].prev_idx;
- 		(*history)--;
-@@ -3052,9 +3069,9 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int frame, int r
- 				 * Nothing to be tracked further in the parent state.
- 				 */
- 				return 0;
--			if (i == first_idx)
--				break;
- 			i = get_prev_insn_idx(st, i, &history);
-+			if (i == -ENOENT)
-+				break;
- 			if (i >= env->prog->len) {
- 				/* This can happen if backtracking reached insn 0
- 				 * and there are still reg_mask or stack_mask
++	/* All CPUs are bootable if CPU is not SMT capable */
++	if (cpu_smt_control == CPU_SMT_NOT_SUPPORTED)
++		return true;
++
+ 	if (topology_is_primary_thread(cpu))
+ 		return true;
+ 
+@@ -485,7 +493,7 @@ bool cpu_smt_possible(void)
+ }
+ EXPORT_SYMBOL_GPL(cpu_smt_possible);
+ #else
+-static inline bool cpu_smt_allowed(unsigned int cpu) { return true; }
++static inline bool cpu_bootable(unsigned int cpu) { return true; }
+ #endif
+ 
+ static inline enum cpuhp_state
+@@ -588,10 +596,10 @@ static int bringup_wait_for_ap(unsigned int cpu)
+ 	 * SMT soft disabling on X86 requires to bring the CPU out of the
+ 	 * BIOS 'wait for SIPI' state in order to set the CR4.MCE bit.  The
+ 	 * CPU marked itself as booted_once in notify_cpu_starting() so the
+-	 * cpu_smt_allowed() check will now return false if this is not the
++	 * cpu_bootable() check will now return false if this is not the
+ 	 * primary sibling.
+ 	 */
+-	if (!cpu_smt_allowed(cpu))
++	if (!cpu_bootable(cpu))
+ 		return -ECANCELED;
+ 
+ 	if (st->target <= CPUHP_AP_ONLINE_IDLE)
+@@ -1478,7 +1486,7 @@ static int cpu_up(unsigned int cpu, enum cpuhp_state target)
+ 		err = -EBUSY;
+ 		goto out;
+ 	}
+-	if (!cpu_smt_allowed(cpu)) {
++	if (!cpu_bootable(cpu)) {
+ 		err = -EPERM;
+ 		goto out;
+ 	}
 -- 
 2.43.0
 
