@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22111537E3;
-	Mon,  8 Jan 2024 15:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3784C602;
+	Mon,  8 Jan 2024 15:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvzpmsGZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EBDC433C7;
-	Mon,  8 Jan 2024 15:44:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfXqqeZ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532BAC433C7;
+	Mon,  8 Jan 2024 15:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728670;
-	bh=JXPMbjN82ScDwLMyB4couM3pn+4slg1Pdrv/ULQzMNo=;
+	s=korg; t=1704728673;
+	bh=yNVTm5J+b5cq9oBu/weRLjREVVL+VFaz9p5nzxnIZ2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvzpmsGZKjwmj6prPsuQ4G4BjYkIjv9Uffghn5qywfGu9d4cim7/gCr2MncoOYcTN
-	 wmP47k/dy1ewZ5gF2kBy80/8lN4i0sPMIp1LbAxC5OTSC3b6sllaZN2JDZcF4dfQvX
-	 zM1O4XFnOl8EYyK/loSADJj1KuMB491M7BCp4Mao=
+	b=qfXqqeZ3pJIuJGZpJfMmNhSW/+pKOJiYvyG8o64RzxwEG2igf6sohZtIh1Js/WlxL
+	 Z/jbP4w8LiuroDZyUPYvYnphyecbaqwlXRhpvuNivZVuxRO4OCjnyEUBr7z7FZEyB0
+	 inwuK+yXehyUAP8qjkx+jSemC0Ixhpmhyq6peulo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vlad Buslov <vladbu@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 122/150] netfilter: flowtable: cache info of last offload
-Date: Mon,  8 Jan 2024 16:36:13 +0100
-Message-ID: <20240108153516.820414538@linuxfoundation.org>
+Subject: [PATCH 6.1 123/150] net/sched: act_ct: offload UDP NEW connections
+Date: Mon,  8 Jan 2024 16:36:14 +0100
+Message-ID: <20240108153516.870712194@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -44,167 +44,153 @@ Content-Transfer-Encoding: 8bit
 
 From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit 1a441a9b8be8849957a01413a144f84932c324cb ]
+[ Upstream commit 6a9bad0069cf306f3df6ac53cf02438d4e15f296 ]
 
-Modify flow table offload to cache the last ct info status that was passed
-to the driver offload callbacks by extending enum nf_flow_flags with new
-"NF_FLOW_HW_ESTABLISHED" flag. Set the flag if ctinfo was 'established'
-during last act_ct meta actions fill call. This infrastructure change is
-necessary to optimize promoting of UDP connections from 'new' to
-'established' in following patches in this series.
+Modify the offload algorithm of UDP connections to the following:
+
+- Offload NEW connection as unidirectional.
+
+- When connection state changes to ESTABLISHED also update the hardware
+flow. However, in order to prevent act_ct from spamming offload add wq for
+every packet coming in reply direction in this state verify whether
+connection has already been updated to ESTABLISHED in the drivers. If that
+it the case, then skip flow_table and let conntrack handle such packets
+which will also allow conntrack to potentially promote the connection to
+ASSURED.
+
+- When connection state changes to ASSURED set the flow_table flow
+NF_FLOW_HW_BIDIRECTIONAL flag which will cause refresh mechanism to offload
+the reply direction.
+
+All other protocols have their offload algorithm preserved and are always
+offloaded as bidirectional.
+
+Note that this change tries to minimize the load on flow_table add
+workqueue. First, it tracks the last ctinfo that was offloaded by using new
+flow 'NF_FLOW_HW_ESTABLISHED' flag and doesn't schedule the refresh for
+reply direction packets when the offloads have already been updated with
+current ctinfo. Second, when 'add' task executes on workqueue it always
+update the offload with current flow state (by checking 'bidirectional'
+flow flag and obtaining actual ctinfo/cookie through meta action instead of
+caching any of these from the moment of scheduling the 'add' work)
+preventing the need from scheduling more updates if state changed
+concurrently while the 'add' work was pending on workqueue.
 
 Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 125f1c7f26ff ("net/sched: act_ct: Take per-cb reference to tcf_ct_flow_table")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_flow_table.h |  7 ++++---
- net/netfilter/nf_flow_table_inet.c    |  2 +-
- net/netfilter/nf_flow_table_offload.c |  6 +++---
- net/sched/act_ct.c                    | 12 +++++++-----
- 4 files changed, 15 insertions(+), 12 deletions(-)
+ net/sched/act_ct.c | 51 +++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 39 insertions(+), 12 deletions(-)
 
-diff --git a/include/net/netfilter/nf_flow_table.h b/include/net/netfilter/nf_flow_table.h
-index 88ab98ab41d9f..ebb28ec5b6faf 100644
---- a/include/net/netfilter/nf_flow_table.h
-+++ b/include/net/netfilter/nf_flow_table.h
-@@ -57,7 +57,7 @@ struct nf_flowtable_type {
- 						 struct net_device *dev,
- 						 enum flow_block_command cmd);
- 	int				(*action)(struct net *net,
--						  const struct flow_offload *flow,
-+						  struct flow_offload *flow,
- 						  enum flow_offload_tuple_dir dir,
- 						  struct nf_flow_rule *flow_rule);
- 	void				(*free)(struct nf_flowtable *ft);
-@@ -165,6 +165,7 @@ enum nf_flow_flags {
- 	NF_FLOW_HW_DEAD,
- 	NF_FLOW_HW_PENDING,
- 	NF_FLOW_HW_BIDIRECTIONAL,
-+	NF_FLOW_HW_ESTABLISHED,
- };
- 
- enum flow_offload_type {
-@@ -313,10 +314,10 @@ void nf_flow_table_offload_flush_cleanup(struct nf_flowtable *flowtable);
- int nf_flow_table_offload_setup(struct nf_flowtable *flowtable,
- 				struct net_device *dev,
- 				enum flow_block_command cmd);
--int nf_flow_rule_route_ipv4(struct net *net, const struct flow_offload *flow,
-+int nf_flow_rule_route_ipv4(struct net *net, struct flow_offload *flow,
- 			    enum flow_offload_tuple_dir dir,
- 			    struct nf_flow_rule *flow_rule);
--int nf_flow_rule_route_ipv6(struct net *net, const struct flow_offload *flow,
-+int nf_flow_rule_route_ipv6(struct net *net, struct flow_offload *flow,
- 			    enum flow_offload_tuple_dir dir,
- 			    struct nf_flow_rule *flow_rule);
- 
-diff --git a/net/netfilter/nf_flow_table_inet.c b/net/netfilter/nf_flow_table_inet.c
-index 0ccabf3fa6aa3..9505f9d188ff2 100644
---- a/net/netfilter/nf_flow_table_inet.c
-+++ b/net/netfilter/nf_flow_table_inet.c
-@@ -39,7 +39,7 @@ nf_flow_offload_inet_hook(void *priv, struct sk_buff *skb,
- }
- 
- static int nf_flow_rule_route_inet(struct net *net,
--				   const struct flow_offload *flow,
-+				   struct flow_offload *flow,
- 				   enum flow_offload_tuple_dir dir,
- 				   struct nf_flow_rule *flow_rule)
- {
-diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
-index 8b852f10fab4b..1c26f03fc6617 100644
---- a/net/netfilter/nf_flow_table_offload.c
-+++ b/net/netfilter/nf_flow_table_offload.c
-@@ -679,7 +679,7 @@ nf_flow_rule_route_common(struct net *net, const struct flow_offload *flow,
- 	return 0;
- }
- 
--int nf_flow_rule_route_ipv4(struct net *net, const struct flow_offload *flow,
-+int nf_flow_rule_route_ipv4(struct net *net, struct flow_offload *flow,
- 			    enum flow_offload_tuple_dir dir,
- 			    struct nf_flow_rule *flow_rule)
- {
-@@ -704,7 +704,7 @@ int nf_flow_rule_route_ipv4(struct net *net, const struct flow_offload *flow,
- }
- EXPORT_SYMBOL_GPL(nf_flow_rule_route_ipv4);
- 
--int nf_flow_rule_route_ipv6(struct net *net, const struct flow_offload *flow,
-+int nf_flow_rule_route_ipv6(struct net *net, struct flow_offload *flow,
- 			    enum flow_offload_tuple_dir dir,
- 			    struct nf_flow_rule *flow_rule)
- {
-@@ -735,7 +735,7 @@ nf_flow_offload_rule_alloc(struct net *net,
- {
- 	const struct nf_flowtable *flowtable = offload->flowtable;
- 	const struct flow_offload_tuple *tuple, *other_tuple;
--	const struct flow_offload *flow = offload->flow;
-+	struct flow_offload *flow = offload->flow;
- 	struct dst_entry *other_dst = NULL;
- 	struct nf_flow_rule *flow_rule;
- 	int err = -ENOMEM;
 diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index 478cedc29b737..86d269724485a 100644
+index 86d269724485a..3c063065f125f 100644
 --- a/net/sched/act_ct.c
 +++ b/net/sched/act_ct.c
-@@ -168,11 +168,11 @@ tcf_ct_flow_table_add_action_nat_udp(const struct nf_conntrack_tuple *tuple,
+@@ -365,7 +365,7 @@ static void tcf_ct_flow_tc_ifidx(struct flow_offload *entry,
  
- static void tcf_ct_flow_table_add_action_meta(struct nf_conn *ct,
- 					      enum ip_conntrack_dir dir,
-+					      enum ip_conntrack_info ctinfo,
- 					      struct flow_action *action)
+ static void tcf_ct_flow_table_add(struct tcf_ct_flow_table *ct_ft,
+ 				  struct nf_conn *ct,
+-				  bool tcp)
++				  bool tcp, bool bidirectional)
  {
- 	struct nf_conn_labels *ct_labels;
- 	struct flow_action_entry *entry;
--	enum ip_conntrack_info ctinfo;
- 	u32 *act_ct_labels;
+ 	struct nf_conn_act_ct_ext *act_ct_ext;
+ 	struct flow_offload *entry;
+@@ -384,6 +384,8 @@ static void tcf_ct_flow_table_add(struct tcf_ct_flow_table *ct_ft,
+ 		ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
+ 		ct->proto.tcp.seen[1].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
+ 	}
++	if (bidirectional)
++		__set_bit(NF_FLOW_HW_BIDIRECTIONAL, &entry->flags);
  
- 	entry = tcf_ct_flow_table_flow_action_get_next(action);
-@@ -180,8 +180,6 @@ static void tcf_ct_flow_table_add_action_meta(struct nf_conn *ct,
- #if IS_ENABLED(CONFIG_NF_CONNTRACK_MARK)
- 	entry->ct_metadata.mark = READ_ONCE(ct->mark);
- #endif
--	ctinfo = dir == IP_CT_DIR_ORIGINAL ? IP_CT_ESTABLISHED :
--					     IP_CT_ESTABLISHED_REPLY;
- 	/* aligns with the CT reference on the SKB nf_ct_set */
- 	entry->ct_metadata.cookie = (unsigned long)ct | ctinfo;
- 	entry->ct_metadata.orig_dir = dir == IP_CT_DIR_ORIGINAL;
-@@ -235,22 +233,26 @@ static int tcf_ct_flow_table_add_action_nat(struct net *net,
+ 	act_ct_ext = nf_conn_act_ct_ext_find(ct);
+ 	if (act_ct_ext) {
+@@ -407,26 +409,34 @@ static void tcf_ct_flow_table_process_conn(struct tcf_ct_flow_table *ct_ft,
+ 					   struct nf_conn *ct,
+ 					   enum ip_conntrack_info ctinfo)
+ {
+-	bool tcp = false;
+-
+-	if ((ctinfo != IP_CT_ESTABLISHED && ctinfo != IP_CT_ESTABLISHED_REPLY) ||
+-	    !test_bit(IPS_ASSURED_BIT, &ct->status))
+-		return;
++	bool tcp = false, bidirectional = true;
+ 
+ 	switch (nf_ct_protonum(ct)) {
+ 	case IPPROTO_TCP:
+-		tcp = true;
+-		if (ct->proto.tcp.state != TCP_CONNTRACK_ESTABLISHED)
++		if ((ctinfo != IP_CT_ESTABLISHED &&
++		     ctinfo != IP_CT_ESTABLISHED_REPLY) ||
++		    !test_bit(IPS_ASSURED_BIT, &ct->status) ||
++		    ct->proto.tcp.state != TCP_CONNTRACK_ESTABLISHED)
+ 			return;
++
++		tcp = true;
+ 		break;
+ 	case IPPROTO_UDP:
++		if (!nf_ct_is_confirmed(ct))
++			return;
++		if (!test_bit(IPS_ASSURED_BIT, &ct->status))
++			bidirectional = false;
+ 		break;
+ #ifdef CONFIG_NF_CT_PROTO_GRE
+ 	case IPPROTO_GRE: {
+ 		struct nf_conntrack_tuple *tuple;
+ 
+-		if (ct->status & IPS_NAT_MASK)
++		if ((ctinfo != IP_CT_ESTABLISHED &&
++		     ctinfo != IP_CT_ESTABLISHED_REPLY) ||
++		    !test_bit(IPS_ASSURED_BIT, &ct->status) ||
++		    ct->status & IPS_NAT_MASK)
+ 			return;
++
+ 		tuple = &ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple;
+ 		/* No support for GRE v1 */
+ 		if (tuple->src.u.gre.key || tuple->dst.u.gre.key)
+@@ -442,7 +452,7 @@ static void tcf_ct_flow_table_process_conn(struct tcf_ct_flow_table *ct_ft,
+ 	    ct->status & IPS_SEQ_ADJUST)
+ 		return;
+ 
+-	tcf_ct_flow_table_add(ct_ft, ct, tcp);
++	tcf_ct_flow_table_add(ct_ft, ct, tcp, bidirectional);
  }
  
- static int tcf_ct_flow_table_fill_actions(struct net *net,
--					  const struct flow_offload *flow,
-+					  struct flow_offload *flow,
- 					  enum flow_offload_tuple_dir tdir,
- 					  struct nf_flow_rule *flow_rule)
- {
- 	struct flow_action *action = &flow_rule->rule->action;
- 	int num_entries = action->num_entries;
- 	struct nf_conn *ct = flow->ct;
-+	enum ip_conntrack_info ctinfo;
- 	enum ip_conntrack_dir dir;
- 	int i, err;
+ static bool
+@@ -621,13 +631,30 @@ static bool tcf_ct_flow_table_lookup(struct tcf_ct_params *p,
+ 	flow = container_of(tuplehash, struct flow_offload, tuplehash[dir]);
+ 	ct = flow->ct;
  
- 	switch (tdir) {
- 	case FLOW_OFFLOAD_DIR_ORIGINAL:
- 		dir = IP_CT_DIR_ORIGINAL;
-+		ctinfo = IP_CT_ESTABLISHED;
-+		set_bit(NF_FLOW_HW_ESTABLISHED, &flow->flags);
- 		break;
- 	case FLOW_OFFLOAD_DIR_REPLY:
- 		dir = IP_CT_DIR_REPLY;
++	if (dir == FLOW_OFFLOAD_DIR_REPLY &&
++	    !test_bit(NF_FLOW_HW_BIDIRECTIONAL, &flow->flags)) {
++		/* Only offload reply direction after connection became
++		 * assured.
++		 */
++		if (test_bit(IPS_ASSURED_BIT, &ct->status))
++			set_bit(NF_FLOW_HW_BIDIRECTIONAL, &flow->flags);
++		else if (test_bit(NF_FLOW_HW_ESTABLISHED, &flow->flags))
++			/* If flow_table flow has already been updated to the
++			 * established state, then don't refresh.
++			 */
++			return false;
++	}
++
+ 	if (tcph && (unlikely(tcph->fin || tcph->rst))) {
+ 		flow_offload_teardown(flow);
+ 		return false;
+ 	}
+ 
+-	ctinfo = dir == FLOW_OFFLOAD_DIR_ORIGINAL ? IP_CT_ESTABLISHED :
+-						    IP_CT_ESTABLISHED_REPLY;
++	if (dir == FLOW_OFFLOAD_DIR_ORIGINAL)
++		ctinfo = test_bit(IPS_SEEN_REPLY_BIT, &ct->status) ?
++			IP_CT_ESTABLISHED : IP_CT_NEW;
++	else
 +		ctinfo = IP_CT_ESTABLISHED_REPLY;
- 		break;
- 	default:
- 		return -EOPNOTSUPP;
-@@ -260,7 +262,7 @@ static int tcf_ct_flow_table_fill_actions(struct net *net,
- 	if (err)
- 		goto err_nat;
  
--	tcf_ct_flow_table_add_action_meta(ct, dir, action);
-+	tcf_ct_flow_table_add_action_meta(ct, dir, ctinfo, action);
- 	return 0;
- 
- err_nat:
+ 	flow_offload_refresh(nf_ft, flow);
+ 	nf_conntrack_get(&ct->ct_general);
 -- 
 2.43.0
 
