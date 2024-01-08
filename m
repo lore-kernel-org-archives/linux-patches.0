@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1CD6D6DC;
-	Mon,  8 Jan 2024 15:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401426D6DC;
+	Mon,  8 Jan 2024 15:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yj9bKvtj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEDD0C433CA;
-	Mon,  8 Jan 2024 15:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRDAjCyZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697DDC433CA;
+	Mon,  8 Jan 2024 15:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726860;
-	bh=35tXPO8nrEixk3mtVFC89UFfdtxMbCboYFcx9J4A+Hc=;
+	s=korg; t=1704726864;
+	bh=xufhh18Nj1AMyKU1rZPRi36A6s3+mQ6j+rPS08RkE/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yj9bKvtjBZO6G/9Y66a+VqU/ug9wY73JRxWH81nt6J883V7dDpx8oxEtEy2yW01Y6
-	 ZgDnzmNQ87Pit77yM+HJx0iXM5HgD/wZ5QepnYHpXaaCxo24IiOhS1vIHSwu9BYFyW
-	 nDtOpuBC0tmX6haLdgUP9xUPHcz+VTgMhNG/MH3E=
+	b=PRDAjCyZTEMC1nJBufRk6kzMVDO5DJcNoXeOzSj4A+bIRmR1Hkqygr9s/cY943Vax
+	 1ucaBwtvksM2IoxKnutHdPL0sH6vjK5pViSRC+Oag/GQjGXBuOQbn/0SuohT62OEl2
+	 DRTcNNElL6NlAHXATMQKOQqYevc5YVkA7eRg7auQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Ronald Wahl <ronald.wahl@raritan.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 102/124] dmaengine: fsl-edma: fix wrong pointer check in fsl_edma3_attach_pd()
-Date: Mon,  8 Jan 2024 16:08:48 +0100
-Message-ID: <20240108150607.653150050@linuxfoundation.org>
+Subject: [PATCH 6.6 085/124] dmaengine: ti: k3-psil-am62: Fix SPI PDMA data
+Date: Mon,  8 Jan 2024 16:08:31 +0100
+Message-ID: <20240108150606.902631267@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -42,38 +44,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Ronald Wahl <rwahl@gmx.de>
 
-[ Upstream commit bffa7218dcddb80e7f18dfa545dd4b359b11dd93 ]
+[ Upstream commit 744f5e7b69710701dc225020769138f8ca2894df ]
 
-device_link_add() returns NULL pointer not PTR_ERR() when it fails,
-so replace the IS_ERR() check with NULL pointer check.
+AM62x has 3 SPI channels where each channel has 4 TX and 4 RX threads.
+This also fixes the thread numbers.
 
-Fixes: 72f5801a4e2b ("dmaengine: fsl-edma: integrate v3 support")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20231129090000.841440-1-yangyingliang@huaweicloud.com
+Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
+Fixes: 5ac6bfb58777 ("dmaengine: ti: k3-psil: Add AM62x PSIL and PDMA data")
+Reviewed-by: Jai Luthra <j-luthra@ti.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Link: https://lore.kernel.org/r/20231030190113.16782-1-rwahl@gmx.de
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl-edma-main.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/dma/ti/k3-psil-am62.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
-index db6cd8431f30a..00cb70aca34a3 100644
---- a/drivers/dma/fsl-edma-main.c
-+++ b/drivers/dma/fsl-edma-main.c
-@@ -400,9 +400,8 @@ static int fsl_edma3_attach_pd(struct platform_device *pdev, struct fsl_edma_eng
- 		link = device_link_add(dev, pd_chan, DL_FLAG_STATELESS |
- 					     DL_FLAG_PM_RUNTIME |
- 					     DL_FLAG_RPM_ACTIVE);
--		if (IS_ERR(link)) {
--			dev_err(dev, "Failed to add device_link to %d: %ld\n", i,
--				PTR_ERR(link));
-+		if (!link) {
-+			dev_err(dev, "Failed to add device_link to %d\n", i);
- 			return -EINVAL;
- 		}
- 
+diff --git a/drivers/dma/ti/k3-psil-am62.c b/drivers/dma/ti/k3-psil-am62.c
+index 2b6fd6e37c610..1272b1541f61e 100644
+--- a/drivers/dma/ti/k3-psil-am62.c
++++ b/drivers/dma/ti/k3-psil-am62.c
+@@ -74,7 +74,9 @@ static struct psil_ep am62_src_ep_map[] = {
+ 	PSIL_SAUL(0x7505, 21, 35, 8, 36, 0),
+ 	PSIL_SAUL(0x7506, 22, 43, 8, 43, 0),
+ 	PSIL_SAUL(0x7507, 23, 43, 8, 44, 0),
+-	/* PDMA_MAIN0 - SPI0-3 */
++	/* PDMA_MAIN0 - SPI0-2 */
++	PSIL_PDMA_XY_PKT(0x4300),
++	PSIL_PDMA_XY_PKT(0x4301),
+ 	PSIL_PDMA_XY_PKT(0x4302),
+ 	PSIL_PDMA_XY_PKT(0x4303),
+ 	PSIL_PDMA_XY_PKT(0x4304),
+@@ -85,8 +87,6 @@ static struct psil_ep am62_src_ep_map[] = {
+ 	PSIL_PDMA_XY_PKT(0x4309),
+ 	PSIL_PDMA_XY_PKT(0x430a),
+ 	PSIL_PDMA_XY_PKT(0x430b),
+-	PSIL_PDMA_XY_PKT(0x430c),
+-	PSIL_PDMA_XY_PKT(0x430d),
+ 	/* PDMA_MAIN1 - UART0-6 */
+ 	PSIL_PDMA_XY_PKT(0x4400),
+ 	PSIL_PDMA_XY_PKT(0x4401),
+@@ -141,7 +141,9 @@ static struct psil_ep am62_dst_ep_map[] = {
+ 	/* SAUL */
+ 	PSIL_SAUL(0xf500, 27, 83, 8, 83, 1),
+ 	PSIL_SAUL(0xf501, 28, 91, 8, 91, 1),
+-	/* PDMA_MAIN0 - SPI0-3 */
++	/* PDMA_MAIN0 - SPI0-2 */
++	PSIL_PDMA_XY_PKT(0xc300),
++	PSIL_PDMA_XY_PKT(0xc301),
+ 	PSIL_PDMA_XY_PKT(0xc302),
+ 	PSIL_PDMA_XY_PKT(0xc303),
+ 	PSIL_PDMA_XY_PKT(0xc304),
+@@ -152,8 +154,6 @@ static struct psil_ep am62_dst_ep_map[] = {
+ 	PSIL_PDMA_XY_PKT(0xc309),
+ 	PSIL_PDMA_XY_PKT(0xc30a),
+ 	PSIL_PDMA_XY_PKT(0xc30b),
+-	PSIL_PDMA_XY_PKT(0xc30c),
+-	PSIL_PDMA_XY_PKT(0xc30d),
+ 	/* PDMA_MAIN1 - UART0-6 */
+ 	PSIL_PDMA_XY_PKT(0xc400),
+ 	PSIL_PDMA_XY_PKT(0xc401),
 -- 
 2.43.0
 
