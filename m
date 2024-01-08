@@ -1,43 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFF253E31;
-	Mon,  8 Jan 2024 15:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716DB54659;
+	Mon,  8 Jan 2024 15:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvUxtedl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A79C433CD;
-	Mon,  8 Jan 2024 15:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgNChNcy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDFDC433CB;
+	Mon,  8 Jan 2024 15:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728517;
-	bh=yYTLTDLJO/13yWVnc+TNQQ4y1zY7Mhr9B0fX2SGePFE=;
+	s=korg; t=1704728520;
+	bh=FuOtKG1rH2dBiIwCe7Tm9l87y5og7SthdpK/xe9E8yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dvUxtedlet8OSHuQvkJtbrLVZGVBS8zxCNJvNN1hjG+VGNoMM8igHdjmAl4PnHGhZ
-	 htffH5v5U/feP3e9qK8S5lelduE5wrHhCMIfZP4JquGDQMIEoDqSb9a/A+azN0wyAw
-	 sCh1gfJ9ciGMJ8zFE5Ef3/DFUx98ei1OFniCAdAk=
+	b=EgNChNcyvumABUyeXLimfEI5yZd8/NgOK7/xj75fUFDUanAP3fvIkKq/d8NMC3gpO
+	 J2kpLmjrohykrV6ZncV4fblWollgKRIv+PPx4awismvzlxwVCX4ilXovnJ8SnYhUQB
+	 KGakhkpUSvnMFCqlbYNcTfBenPko1fQM9sg5c61g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Dave Wysochanski <dwysocha@redhat.com>,
-	Rohith Surabattula <rohiths.msft@gmail.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	SeongJae Park <sj@kernel.org>,
-	Daire Byrne <daire.byrne@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Steve French <sfrench@samba.org>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Ilya Dryomov <idryomov@gmail.com>,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	"Theodore Tso" <tytso@mit.edu>,
-	Xiubo Li <xiubli@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/150] mm, netfs, fscache: stop read optimisation when folio removed from pagecache
-Date: Mon,  8 Jan 2024 16:35:53 +0100
-Message-ID: <20240108153515.909201521@linuxfoundation.org>
+Subject: [PATCH 6.1 103/150] filemap: add a per-mapping stable writes flag
+Date: Mon,  8 Jan 2024 16:35:54 +0100
+Message-ID: <20240108153515.941650670@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -56,219 +45,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit b4fa966f03b7401ceacd4ffd7227197afb2b8376 ]
+[ Upstream commit 762321dab9a72760bf9aec48362f932717c9424d ]
 
-Fscache has an optimisation by which reads from the cache are skipped
-until we know that (a) there's data there to be read and (b) that data
-isn't entirely covered by pages resident in the netfs pagecache.  This is
-done with two flags manipulated by fscache_note_page_release():
+folio_wait_stable waits for writeback to finish before modifying the
+contents of a folio again, e.g. to support check summing of the data
+in the block integrity code.
 
-	if (...
-	    test_bit(FSCACHE_COOKIE_HAVE_DATA, &cookie->flags) &&
-	    test_bit(FSCACHE_COOKIE_NO_DATA_TO_READ, &cookie->flags))
-		clear_bit(FSCACHE_COOKIE_NO_DATA_TO_READ, &cookie->flags);
+Currently this behavior is controlled by the SB_I_STABLE_WRITES flag
+on the super_block, which means it is uniform for the entire file system.
+This is wrong for the block device pseudofs which is shared by all
+block devices, or file systems that can use multiple devices like XFS
+witht the RT subvolume or btrfs (although btrfs currently reimplements
+folio_wait_stable anyway).
 
-where the NO_DATA_TO_READ flag causes cachefiles_prepare_read() to
-indicate that netfslib should download from the server or clear the page
-instead.
+Add a per-address_space AS_STABLE_WRITES flag to control the behavior
+in a more fine grained way.  The existing SB_I_STABLE_WRITES is kept
+to initialize AS_STABLE_WRITES to the existing default which covers
+most cases.
 
-The fscache_note_page_release() function is intended to be called from
-->releasepage() - but that only gets called if PG_private or PG_private_2
-is set - and currently the former is at the discretion of the network
-filesystem and the latter is only set whilst a page is being written to
-the cache, so sometimes we miss clearing the optimisation.
-
-Fix this by following Willy's suggestion[1] and adding an address_space
-flag, AS_RELEASE_ALWAYS, that causes filemap_release_folio() to always call
-->release_folio() if it's set, even if PG_private or PG_private_2 aren't
-set.
-
-Note that this would require folio_test_private() and page_has_private() to
-become more complicated.  To avoid that, in the places[*] where these are
-used to conditionalise calls to filemap_release_folio() and
-try_to_release_page(), the tests are removed the those functions just
-jumped to unconditionally and the test is performed there.
-
-[*] There are some exceptions in vmscan.c where the check guards more than
-just a call to the releaser.  I've added a function, folio_needs_release()
-to wrap all the checks for that.
-
-AS_RELEASE_ALWAYS should be set if a non-NULL cookie is obtained from
-fscache and cleared in ->evict_inode() before truncate_inode_pages_final()
-is called.
-
-Additionally, the FSCACHE_COOKIE_NO_DATA_TO_READ flag needs to be cleared
-and the optimisation cancelled if a cachefiles object already contains data
-when we open it.
-
-[dwysocha@redhat.com: call folio_mapping() inside folio_needs_release()]
-  Link: https://github.com/DaveWysochanskiRH/kernel/commit/902c990e311120179fa5de99d68364b2947b79ec
-Link: https://lkml.kernel.org/r/20230628104852.3391651-3-dhowells@redhat.com
-Fixes: 1f67e6d0b188 ("fscache: Provide a function to note the release of a page")
-Fixes: 047487c947e8 ("cachefiles: Implement the I/O routines")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Dave Wysochanski <dwysocha@redhat.com>
-Reported-by: Rohith Surabattula <rohiths.msft@gmail.com>
-Suggested-by: Matthew Wilcox <willy@infradead.org>
-Tested-by: SeongJae Park <sj@kernel.org>
-Cc: Daire Byrne <daire.byrne@gmail.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Steve French <sfrench@samba.org>
-Cc: Shyam Prasad N <nspmangalore@gmail.com>
-Cc: Rohith Surabattula <rohiths.msft@gmail.com>
-Cc: Dave Wysochanski <dwysocha@redhat.com>
-Cc: Dominique Martinet <asmadeus@codewreck.org>
-Cc: Ilya Dryomov <idryomov@gmail.com>
-Cc: Andreas Dilger <adilger.kernel@dilger.ca>
-Cc: Jingbo Xu <jefflexu@linux.alibaba.com>
-Cc: "Theodore Ts'o" <tytso@mit.edu>
-Cc: Xiubo Li <xiubli@redhat.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20231025141020.192413-2-hch@lst.de
+Tested-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Stable-dep-of: 1898efcdbed3 ("block: update the stable_writes flag in bdev_add")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/cache.c           |  2 ++
- fs/afs/internal.h       |  2 ++
- fs/cachefiles/namei.c   |  2 ++
- fs/ceph/cache.c         |  2 ++
- fs/nfs/fscache.c        |  3 +++
- fs/smb/client/fscache.c |  2 ++
- include/linux/pagemap.h | 16 ++++++++++++++++
- mm/internal.h           |  5 ++++-
- 8 files changed, 33 insertions(+), 1 deletion(-)
+ fs/inode.c              |  2 ++
+ include/linux/pagemap.h | 17 +++++++++++++++++
+ mm/page-writeback.c     |  2 +-
+ 3 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/fs/9p/cache.c b/fs/9p/cache.c
-index cebba4eaa0b57..12c0ae29f1857 100644
---- a/fs/9p/cache.c
-+++ b/fs/9p/cache.c
-@@ -68,6 +68,8 @@ void v9fs_cache_inode_get_cookie(struct inode *inode)
- 				       &path, sizeof(path),
- 				       &version, sizeof(version),
- 				       i_size_read(&v9inode->netfs.inode));
-+	if (v9inode->netfs.cache)
-+		mapping_set_release_always(inode->i_mapping);
- 
- 	p9_debug(P9_DEBUG_FSC, "inode %p get cookie %p\n",
- 		 inode, v9fs_inode_cookie(v9inode));
-diff --git a/fs/afs/internal.h b/fs/afs/internal.h
-index fcbb598d8c85d..a25fdc3e52310 100644
---- a/fs/afs/internal.h
-+++ b/fs/afs/internal.h
-@@ -682,6 +682,8 @@ static inline void afs_vnode_set_cache(struct afs_vnode *vnode,
- {
- #ifdef CONFIG_AFS_FSCACHE
- 	vnode->netfs.cache = cookie;
-+	if (cookie)
-+		mapping_set_release_always(vnode->netfs.inode.i_mapping);
- #endif
- }
- 
-diff --git a/fs/cachefiles/namei.c b/fs/cachefiles/namei.c
-index 03ca8f2f657ab..50b2ee163af60 100644
---- a/fs/cachefiles/namei.c
-+++ b/fs/cachefiles/namei.c
-@@ -584,6 +584,8 @@ static bool cachefiles_open_file(struct cachefiles_object *object,
- 	if (ret < 0)
- 		goto check_failed;
- 
-+	clear_bit(FSCACHE_COOKIE_NO_DATA_TO_READ, &object->cookie->flags);
-+
- 	object->file = file;
- 
- 	/* Always update the atime on an object we've just looked up (this is
-diff --git a/fs/ceph/cache.c b/fs/ceph/cache.c
-index 177d8e8d73fe4..de1dee46d3df7 100644
---- a/fs/ceph/cache.c
-+++ b/fs/ceph/cache.c
-@@ -36,6 +36,8 @@ void ceph_fscache_register_inode_cookie(struct inode *inode)
- 				       &ci->i_vino, sizeof(ci->i_vino),
- 				       &ci->i_version, sizeof(ci->i_version),
- 				       i_size_read(inode));
-+	if (ci->netfs.cache)
-+		mapping_set_release_always(inode->i_mapping);
- }
- 
- void ceph_fscache_unregister_inode_cookie(struct ceph_inode_info *ci)
-diff --git a/fs/nfs/fscache.c b/fs/nfs/fscache.c
-index e731c00a9fcbc..d3c938dd2b12a 100644
---- a/fs/nfs/fscache.c
-+++ b/fs/nfs/fscache.c
-@@ -176,6 +176,9 @@ void nfs_fscache_init_inode(struct inode *inode)
- 					       &auxdata,      /* aux_data */
- 					       sizeof(auxdata),
- 					       i_size_read(inode));
-+
-+	if (netfs_inode(inode)->cache)
-+		mapping_set_release_always(inode->i_mapping);
- }
- 
- /*
-diff --git a/fs/smb/client/fscache.c b/fs/smb/client/fscache.c
-index e73625b5d0cc6..f64bad513ba6d 100644
---- a/fs/smb/client/fscache.c
-+++ b/fs/smb/client/fscache.c
-@@ -108,6 +108,8 @@ void cifs_fscache_get_inode_cookie(struct inode *inode)
- 				       &cifsi->uniqueid, sizeof(cifsi->uniqueid),
- 				       &cd, sizeof(cd),
- 				       i_size_read(&cifsi->netfs.inode));
-+	if (cifsi->netfs.cache)
-+		mapping_set_release_always(inode->i_mapping);
- }
- 
- void cifs_fscache_unuse_inode_cookie(struct inode *inode, bool update)
+diff --git a/fs/inode.c b/fs/inode.c
+index 73ad1b0d47758..8cfda7a6d5900 100644
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -215,6 +215,8 @@ int inode_init_always(struct super_block *sb, struct inode *inode)
+ 	lockdep_set_class_and_name(&mapping->invalidate_lock,
+ 				   &sb->s_type->invalidate_lock_key,
+ 				   "mapping.invalidate_lock");
++	if (sb->s_iflags & SB_I_STABLE_WRITES)
++		mapping_set_stable_writes(mapping);
+ 	inode->i_private = NULL;
+ 	inode->i_mapping = mapping;
+ 	INIT_HLIST_HEAD(&inode->i_dentry);	/* buggered by rcu freeing */
 diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
-index 03307b72de6c6..fdbb90ae56c70 100644
+index fdbb90ae56c70..1be5a1fa6a3a8 100644
 --- a/include/linux/pagemap.h
 +++ b/include/linux/pagemap.h
-@@ -199,6 +199,7 @@ enum mapping_flags {
- 	/* writeback related tags are not used */
+@@ -200,6 +200,8 @@ enum mapping_flags {
  	AS_NO_WRITEBACK_TAGS = 5,
  	AS_LARGE_FOLIO_SUPPORT = 6,
-+	AS_RELEASE_ALWAYS,	/* Call ->release_folio(), even if no private data */
+ 	AS_RELEASE_ALWAYS,	/* Call ->release_folio(), even if no private data */
++	AS_STABLE_WRITES,	/* must wait for writeback before modifying
++				   folio contents */
  };
  
  /**
-@@ -269,6 +270,21 @@ static inline int mapping_use_writeback_tags(struct address_space *mapping)
- 	return !test_bit(AS_NO_WRITEBACK_TAGS, &mapping->flags);
+@@ -285,6 +287,21 @@ static inline void mapping_clear_release_always(struct address_space *mapping)
+ 	clear_bit(AS_RELEASE_ALWAYS, &mapping->flags);
  }
  
-+static inline bool mapping_release_always(const struct address_space *mapping)
++static inline bool mapping_stable_writes(const struct address_space *mapping)
 +{
-+	return test_bit(AS_RELEASE_ALWAYS, &mapping->flags);
++	return test_bit(AS_STABLE_WRITES, &mapping->flags);
 +}
 +
-+static inline void mapping_set_release_always(struct address_space *mapping)
++static inline void mapping_set_stable_writes(struct address_space *mapping)
 +{
-+	set_bit(AS_RELEASE_ALWAYS, &mapping->flags);
++	set_bit(AS_STABLE_WRITES, &mapping->flags);
 +}
 +
-+static inline void mapping_clear_release_always(struct address_space *mapping)
++static inline void mapping_clear_stable_writes(struct address_space *mapping)
 +{
-+	clear_bit(AS_RELEASE_ALWAYS, &mapping->flags);
++	clear_bit(AS_STABLE_WRITES, &mapping->flags);
 +}
 +
  static inline gfp_t mapping_gfp_mask(struct address_space * mapping)
  {
  	return mapping->gfp_mask;
-diff --git a/mm/internal.h b/mm/internal.h
-index 1fefb5181ab78..d01130efce5fb 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -168,7 +168,10 @@ static inline void set_page_refcounted(struct page *page)
+diff --git a/mm/page-writeback.c b/mm/page-writeback.c
+index 7e9d8d857ecca..de5f69921b946 100644
+--- a/mm/page-writeback.c
++++ b/mm/page-writeback.c
+@@ -3078,7 +3078,7 @@ EXPORT_SYMBOL_GPL(folio_wait_writeback_killable);
   */
- static inline bool folio_needs_release(struct folio *folio)
+ void folio_wait_stable(struct folio *folio)
  {
--	return folio_has_private(folio);
-+	struct address_space *mapping = folio_mapping(folio);
-+
-+	return folio_has_private(folio) ||
-+		(mapping && mapping_release_always(mapping));
+-	if (folio_inode(folio)->i_sb->s_iflags & SB_I_STABLE_WRITES)
++	if (mapping_stable_writes(folio_mapping(folio)))
+ 		folio_wait_writeback(folio);
  }
- 
- extern unsigned long highest_memmap_pfn;
+ EXPORT_SYMBOL_GPL(folio_wait_stable);
 -- 
 2.43.0
 
