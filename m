@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7C553806;
-	Mon,  8 Jan 2024 15:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23B5524C2;
+	Mon,  8 Jan 2024 15:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="laoWl9mC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB94C433CC;
-	Mon,  8 Jan 2024 15:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PECSgyX2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B44C43391;
+	Mon,  8 Jan 2024 15:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728597;
-	bh=Lz2fM53E9IVmRgofKeEQBVeoQV/IWvGxkROdpfLjbX8=;
+	s=korg; t=1704728600;
+	bh=jcfxSyl6D2KAMsf2Y3qaGYmT9zWCsIFCOe2rWGP5zrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=laoWl9mC3XjXPFjoGw49PM/6unBNRX1CeQ4obA8RkIace/TJyVaryqmfq7RdvBHTZ
-	 vmV9K9gWLeEQ63QjcyDkFZxjl2VlVTPWIiUnTRPBauXTTkxJzjy2bBWhA/8GCDJAOo
-	 FwLRjHUMostq/GTW75PNhWniUjEw4T6TtUkx1KvA=
+	b=PECSgyX2ic3PGr6CjBqcVq4Zm3NowLy0r/CcicT0jEtOOnHQZshCgMuWA9kDIJVte
+	 rSPwdJz7jTCHcHXv82SKqKRbt7X4bugjkgJNnU4zx1Sv552xCzYgPxTBnVUM/QwlLJ
+	 LLdh4rNesk/MI+jN5HJMsraSvTmNoPJpa6/MXKHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rakesh Babu Saladi <rsaladi2@marvell.com>,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 128/150] octeontx2-af: Support variable number of lmacs
-Date: Mon,  8 Jan 2024 16:36:19 +0100
-Message-ID: <20240108153517.085811463@linuxfoundation.org>
+Subject: [PATCH 6.1 129/150] btrfs: fix qgroup_free_reserved_data int overflow
+Date: Mon,  8 Jan 2024 16:36:20 +0100
+Message-ID: <20240108153517.127336093@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -44,340 +43,267 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rakesh Babu Saladi <rsaladi2@marvell.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit f2e664ad503d4e5ce7c42a0862ab164331a0ef37 ]
+[ Upstream commit 9e65bfca24cf1d77e4a5c7a170db5867377b3fe7 ]
 
-Most of the code in CGX/RPM driver assumes that max lmacs per
-given MAC as always, 4 and the number of MAC blocks also as 4.
-With this assumption, the max number of interfaces supported is
-hardcoded to 16. This creates a problem as next gen CN10KB silicon
-MAC supports 8 lmacs per MAC block.
+The reserved data counter and input parameter is a u64, but we
+inadvertently accumulate it in an int. Overflowing that int results in
+freeing the wrong amount of data and breaking reserve accounting.
 
-This patch solves the problem by using "max lmac per MAC block"
-value from constant csrs and uses cgx_cnt_max value which is
-populated based number of MAC blocks supported by silicon.
+Unfortunately, this overflow rot spreads from there, as the qgroup
+release/free functions rely on returning an int to take advantage of
+negative values for error codes.
 
-Signed-off-by: Rakesh Babu Saladi <rsaladi2@marvell.com>
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: e307b5a845c5 ("octeontx2-af: Fix pause frame configuration")
+Therefore, the full fix is to return the "released" or "freed" amount by
+a u64 argument and to return 0 or negative error code via the return
+value.
+
+Most of the call sites simply ignore the return value, though some
+of them handle the error and count the returned bytes. Change all of
+them accordingly.
+
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/cgx.c   | 35 ++++++++-----------
- .../net/ethernet/marvell/octeontx2/af/cgx.h   |  6 ++--
- .../marvell/octeontx2/af/lmac_common.h        |  5 ++-
- .../net/ethernet/marvell/octeontx2/af/rvu.h   |  2 +-
- .../ethernet/marvell/octeontx2/af/rvu_cgx.c   | 26 ++++++++------
- .../marvell/octeontx2/af/rvu_debugfs.c        |  2 +-
- .../ethernet/marvell/octeontx2/af/rvu_nix.c   |  2 +-
- .../marvell/octeontx2/af/rvu_npc_hash.c       |  4 ++-
- 8 files changed, 42 insertions(+), 40 deletions(-)
+ fs/btrfs/delalloc-space.c |  2 +-
+ fs/btrfs/file.c           |  2 +-
+ fs/btrfs/inode.c          | 16 ++++++++--------
+ fs/btrfs/ordered-data.c   |  7 ++++---
+ fs/btrfs/qgroup.c         | 25 +++++++++++++++----------
+ fs/btrfs/qgroup.h         |  4 ++--
+ 6 files changed, 31 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-index 65c0373d34d12..90be87dc105d3 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -78,7 +78,7 @@ static bool is_dev_rpm(void *cgxd)
+diff --git a/fs/btrfs/delalloc-space.c b/fs/btrfs/delalloc-space.c
+index 0b62ce77053f5..f2bc5563c0f92 100644
+--- a/fs/btrfs/delalloc-space.c
++++ b/fs/btrfs/delalloc-space.c
+@@ -197,7 +197,7 @@ void btrfs_free_reserved_data_space(struct btrfs_inode *inode,
+ 	start = round_down(start, fs_info->sectorsize);
  
- bool is_lmac_valid(struct cgx *cgx, int lmac_id)
- {
--	if (!cgx || lmac_id < 0 || lmac_id >= MAX_LMAC_PER_CGX)
-+	if (!cgx || lmac_id < 0 || lmac_id >= cgx->max_lmac_per_mac)
- 		return false;
- 	return test_bit(lmac_id, &cgx->lmac_bmap);
- }
-@@ -90,7 +90,7 @@ static int get_sequence_id_of_lmac(struct cgx *cgx, int lmac_id)
- {
- 	int tmp, id = 0;
- 
--	for_each_set_bit(tmp, &cgx->lmac_bmap, MAX_LMAC_PER_CGX) {
-+	for_each_set_bit(tmp, &cgx->lmac_bmap, cgx->max_lmac_per_mac) {
- 		if (tmp == lmac_id)
- 			break;
- 		id++;
-@@ -121,7 +121,7 @@ u64 cgx_read(struct cgx *cgx, u64 lmac, u64 offset)
- 
- struct lmac *lmac_pdata(u8 lmac_id, struct cgx *cgx)
- {
--	if (!cgx || lmac_id >= MAX_LMAC_PER_CGX)
-+	if (!cgx || lmac_id >= cgx->max_lmac_per_mac)
- 		return NULL;
- 
- 	return cgx->lmac_idmap[lmac_id];
-@@ -1410,7 +1410,7 @@ int cgx_get_fwdata_base(u64 *base)
- 	if (!cgx)
- 		return -ENXIO;
- 
--	first_lmac = find_first_bit(&cgx->lmac_bmap, MAX_LMAC_PER_CGX);
-+	first_lmac = find_first_bit(&cgx->lmac_bmap, cgx->max_lmac_per_mac);
- 	req = FIELD_SET(CMDREG_ID, CGX_CMD_GET_FWD_BASE, req);
- 	err = cgx_fwi_cmd_generic(req, &resp, cgx, first_lmac);
- 	if (!err)
-@@ -1499,7 +1499,7 @@ static int cgx_fwi_link_change(struct cgx *cgx, int lmac_id, bool enable)
- 
- static inline int cgx_fwi_read_version(u64 *resp, struct cgx *cgx)
- {
--	int first_lmac = find_first_bit(&cgx->lmac_bmap, MAX_LMAC_PER_CGX);
-+	int first_lmac = find_first_bit(&cgx->lmac_bmap, cgx->max_lmac_per_mac);
- 	u64 req = 0;
- 
- 	req = FIELD_SET(CMDREG_ID, CGX_CMD_GET_FW_VER, req);
-@@ -1537,7 +1537,7 @@ static void cgx_lmac_linkup_work(struct work_struct *work)
- 	int i, err;
- 
- 	/* Do Link up for all the enabled lmacs */
--	for_each_set_bit(i, &cgx->lmac_bmap, MAX_LMAC_PER_CGX) {
-+	for_each_set_bit(i, &cgx->lmac_bmap, cgx->max_lmac_per_mac) {
- 		err = cgx_fwi_link_change(cgx, i, true);
- 		if (err)
- 			dev_info(dev, "cgx port %d:%d Link up command failed\n",
-@@ -1557,14 +1557,6 @@ int cgx_lmac_linkup_start(void *cgxd)
- 	return 0;
+ 	btrfs_free_reserved_data_space_noquota(fs_info, len);
+-	btrfs_qgroup_free_data(inode, reserved, start, len);
++	btrfs_qgroup_free_data(inode, reserved, start, len, NULL);
  }
  
--static void cgx_lmac_get_fifolen(struct cgx *cgx)
--{
--	u64 cfg;
--
--	cfg = cgx_read(cgx, 0, CGX_CONST);
--	cgx->mac_ops->fifo_len = FIELD_GET(CGX_CONST_RXFIFO_SIZE, cfg);
--}
--
- static int cgx_configure_interrupt(struct cgx *cgx, struct lmac *lmac,
- 				   int cnt, bool req_free)
- {
-@@ -1619,17 +1611,14 @@ static int cgx_lmac_init(struct cgx *cgx)
- 	u64 lmac_list;
- 	int i, err;
- 
--	cgx_lmac_get_fifolen(cgx);
--
--	cgx->lmac_count = cgx->mac_ops->get_nr_lmacs(cgx);
- 	/* lmac_list specifies which lmacs are enabled
- 	 * when bit n is set to 1, LMAC[n] is enabled
+ /**
+diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
+index 0a46fff3dd067..1783a0fbf1665 100644
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -3191,7 +3191,7 @@ static long btrfs_fallocate(struct file *file, int mode,
+ 			qgroup_reserved -= range->len;
+ 		} else if (qgroup_reserved > 0) {
+ 			btrfs_qgroup_free_data(BTRFS_I(inode), data_reserved,
+-					       range->start, range->len);
++					       range->start, range->len, NULL);
+ 			qgroup_reserved -= range->len;
+ 		}
+ 		list_del(&range->list);
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 81eac121c6b23..9a7d77c410e22 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -466,7 +466,7 @@ static noinline int cow_file_range_inline(struct btrfs_inode *inode, u64 size,
+ 	 * And at reserve time, it's always aligned to page size, so
+ 	 * just free one page here.
  	 */
- 	if (cgx->mac_ops->non_contiguous_serdes_lane)
- 		lmac_list = cgx_read(cgx, 0, CGXX_CMRX_RX_LMACS) & 0xFULL;
+-	btrfs_qgroup_free_data(inode, NULL, 0, PAGE_SIZE);
++	btrfs_qgroup_free_data(inode, NULL, 0, PAGE_SIZE, NULL);
+ 	btrfs_free_path(path);
+ 	btrfs_end_transaction(trans);
+ 	return ret;
+@@ -5372,7 +5372,7 @@ static void evict_inode_truncate_pages(struct inode *inode)
+ 		 */
+ 		if (state_flags & EXTENT_DELALLOC)
+ 			btrfs_qgroup_free_data(BTRFS_I(inode), NULL, start,
+-					       end - start + 1);
++					       end - start + 1, NULL);
  
--	if (cgx->lmac_count > MAX_LMAC_PER_CGX)
--		cgx->lmac_count = MAX_LMAC_PER_CGX;
-+	if (cgx->lmac_count > cgx->max_lmac_per_mac)
-+		cgx->lmac_count = cgx->max_lmac_per_mac;
+ 		clear_extent_bit(io_tree, start, end,
+ 				 EXTENT_CLEAR_ALL_BITS | EXTENT_DO_ACCOUNTING,
+@@ -8440,7 +8440,7 @@ static void btrfs_invalidate_folio(struct folio *folio, size_t offset,
+ 		 *    reserved data space.
+ 		 *    Since the IO will never happen for this page.
+ 		 */
+-		btrfs_qgroup_free_data(inode, NULL, cur, range_end + 1 - cur);
++		btrfs_qgroup_free_data(inode, NULL, cur, range_end + 1 - cur, NULL);
+ 		if (!inode_evicting) {
+ 			clear_extent_bit(tree, cur, range_end, EXTENT_LOCKED |
+ 				 EXTENT_DELALLOC | EXTENT_UPTODATE |
+@@ -9902,7 +9902,7 @@ static struct btrfs_trans_handle *insert_prealloc_file_extent(
+ 	struct btrfs_path *path;
+ 	u64 start = ins->objectid;
+ 	u64 len = ins->offset;
+-	int qgroup_released;
++	u64 qgroup_released = 0;
+ 	int ret;
  
- 	for (i = 0; i < cgx->lmac_count; i++) {
- 		lmac = kzalloc(sizeof(struct lmac), GFP_KERNEL);
-@@ -1707,7 +1696,7 @@ static int cgx_lmac_exit(struct cgx *cgx)
+ 	memset(&stack_fi, 0, sizeof(stack_fi));
+@@ -9915,9 +9915,9 @@ static struct btrfs_trans_handle *insert_prealloc_file_extent(
+ 	btrfs_set_stack_file_extent_compression(&stack_fi, BTRFS_COMPRESS_NONE);
+ 	/* Encryption and other encoding is reserved and all 0 */
+ 
+-	qgroup_released = btrfs_qgroup_release_data(inode, file_offset, len);
+-	if (qgroup_released < 0)
+-		return ERR_PTR(qgroup_released);
++	ret = btrfs_qgroup_release_data(inode, file_offset, len, &qgroup_released);
++	if (ret < 0)
++		return ERR_PTR(ret);
+ 
+ 	if (trans) {
+ 		ret = insert_reserved_file_extent(trans, inode,
+@@ -10903,7 +10903,7 @@ ssize_t btrfs_do_encoded_write(struct kiocb *iocb, struct iov_iter *from,
+ 	btrfs_delalloc_release_metadata(inode, disk_num_bytes, ret < 0);
+ out_qgroup_free_data:
+ 	if (ret < 0)
+-		btrfs_qgroup_free_data(inode, data_reserved, start, num_bytes);
++		btrfs_qgroup_free_data(inode, data_reserved, start, num_bytes, NULL);
+ out_free_data_space:
+ 	/*
+ 	 * If btrfs_reserve_extent() succeeded, then we already decremented
+diff --git a/fs/btrfs/ordered-data.c b/fs/btrfs/ordered-data.c
+index 0321753c16b9f..1b2af4785c0e2 100644
+--- a/fs/btrfs/ordered-data.c
++++ b/fs/btrfs/ordered-data.c
+@@ -172,11 +172,12 @@ int btrfs_add_ordered_extent(struct btrfs_inode *inode, u64 file_offset,
+ 	struct rb_node *node;
+ 	struct btrfs_ordered_extent *entry;
+ 	int ret;
++	u64 qgroup_rsv = 0;
+ 
+ 	if (flags &
+ 	    ((1 << BTRFS_ORDERED_NOCOW) | (1 << BTRFS_ORDERED_PREALLOC))) {
+ 		/* For nocow write, we can release the qgroup rsv right now */
+-		ret = btrfs_qgroup_free_data(inode, NULL, file_offset, num_bytes);
++		ret = btrfs_qgroup_free_data(inode, NULL, file_offset, num_bytes, &qgroup_rsv);
+ 		if (ret < 0)
+ 			return ret;
+ 		ret = 0;
+@@ -185,7 +186,7 @@ int btrfs_add_ordered_extent(struct btrfs_inode *inode, u64 file_offset,
+ 		 * The ordered extent has reserved qgroup space, release now
+ 		 * and pass the reserved number for qgroup_record to free.
+ 		 */
+-		ret = btrfs_qgroup_release_data(inode, file_offset, num_bytes);
++		ret = btrfs_qgroup_release_data(inode, file_offset, num_bytes, &qgroup_rsv);
+ 		if (ret < 0)
+ 			return ret;
  	}
+@@ -203,7 +204,7 @@ int btrfs_add_ordered_extent(struct btrfs_inode *inode, u64 file_offset,
+ 	entry->inode = igrab(&inode->vfs_inode);
+ 	entry->compress_type = compress_type;
+ 	entry->truncated_len = (u64)-1;
+-	entry->qgroup_rsv = ret;
++	entry->qgroup_rsv = qgroup_rsv;
+ 	entry->physical = (u64)-1;
  
- 	/* Free all lmac related resources */
--	for_each_set_bit(i, &cgx->lmac_bmap, MAX_LMAC_PER_CGX) {
-+	for_each_set_bit(i, &cgx->lmac_bmap, cgx->max_lmac_per_mac) {
- 		lmac = cgx->lmac_idmap[i];
- 		if (!lmac)
- 			continue;
-@@ -1723,6 +1712,12 @@ static int cgx_lmac_exit(struct cgx *cgx)
+ 	ASSERT((flags & ~BTRFS_ORDERED_TYPE_FLAGS) == 0);
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index 26cabffd59710..96ec9ccc2ef61 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -3833,13 +3833,14 @@ int btrfs_qgroup_reserve_data(struct btrfs_inode *inode,
  
- static void cgx_populate_features(struct cgx *cgx)
+ /* Free ranges specified by @reserved, normally in error path */
+ static int qgroup_free_reserved_data(struct btrfs_inode *inode,
+-			struct extent_changeset *reserved, u64 start, u64 len)
++				     struct extent_changeset *reserved,
++				     u64 start, u64 len, u64 *freed_ret)
  {
-+	u64 cfg;
-+
-+	cfg = cgx_read(cgx, 0, CGX_CONST);
-+	cgx->mac_ops->fifo_len = FIELD_GET(CGX_CONST_RXFIFO_SIZE, cfg);
-+	cgx->max_lmac_per_mac = FIELD_GET(CGX_CONST_MAX_LMACS, cfg);
-+
- 	if (is_dev_rpm(cgx))
- 		cgx->hw_features = (RVU_LMAC_FEAT_DMACF | RVU_MAC_RPM |
- 				    RVU_LMAC_FEAT_FC | RVU_LMAC_FEAT_PTP);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.h b/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
-index 04338db38671b..09ddb00f63cc7 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
-@@ -18,11 +18,8 @@
- /* PCI BAR nos */
- #define PCI_CFG_REG_BAR_NUM		0
+ 	struct btrfs_root *root = inode->root;
+ 	struct ulist_node *unode;
+ 	struct ulist_iterator uiter;
+ 	struct extent_changeset changeset;
+-	int freed = 0;
++	u64 freed = 0;
+ 	int ret;
  
--#define CGX_ID_MASK			0x7
--#define MAX_LMAC_PER_CGX		4
-+#define CGX_ID_MASK			0xF
- #define MAX_DMAC_ENTRIES_PER_CGX	32
--#define CGX_FIFO_LEN			65536 /* 64K for both Rx & Tx */
--#define CGX_OFFSET(x)			((x) * MAX_LMAC_PER_CGX)
- 
- /* Registers */
- #define CGXX_CMRX_CFG			0x00
-@@ -56,6 +53,7 @@
- #define CGXX_SCRATCH1_REG		0x1058
- #define CGX_CONST			0x2000
- #define CGX_CONST_RXFIFO_SIZE	        GENMASK_ULL(23, 0)
-+#define CGX_CONST_MAX_LMACS	        GENMASK_ULL(31, 24)
- #define CGXX_SPUX_CONTROL1		0x10000
- #define CGXX_SPUX_LNX_FEC_CORR_BLOCKS	0x10700
- #define CGXX_SPUX_LNX_FEC_UNCORR_BLOCKS	0x10800
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h b/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h
-index 52b6016789fa4..697cfec74aa1e 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h
-@@ -128,7 +128,10 @@ struct cgx {
- 	struct pci_dev		*pdev;
- 	u8			cgx_id;
- 	u8			lmac_count;
--	struct lmac		*lmac_idmap[MAX_LMAC_PER_CGX];
-+	/* number of LMACs per MAC could be 4 or 8 */
-+	u8			max_lmac_per_mac;
-+#define MAX_LMAC_COUNT		8
-+	struct lmac             *lmac_idmap[MAX_LMAC_COUNT];
- 	struct			work_struct cgx_cmd_work;
- 	struct			workqueue_struct *cgx_cmd_workq;
- 	struct list_head	cgx_list;
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-index ab78e9d020751..0b76dfa979d4e 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-@@ -480,7 +480,7 @@ struct rvu {
- 	u8			cgx_mapped_pfs;
- 	u8			cgx_cnt_max;	 /* CGX port count max */
- 	u8			*pf2cgxlmac_map; /* pf to cgx_lmac map */
--	u16			*cgxlmac2pf_map; /* bitmap of mapped pfs for
-+	u64			*cgxlmac2pf_map; /* bitmap of mapped pfs for
- 						  * every cgx lmac port
- 						  */
- 	unsigned long		pf_notify_bmap; /* Flags for PF notification */
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-index fa658bd4dfb3b..bcb4385d0621c 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-@@ -55,8 +55,9 @@ bool is_mac_feature_supported(struct rvu *rvu, int pf, int feature)
- 	return  (cgx_features_get(cgxd) & feature);
- }
- 
-+#define CGX_OFFSET(x)			((x) * rvu->hw->lmac_per_cgx)
- /* Returns bitmap of mapped PFs */
--static u16 cgxlmac_to_pfmap(struct rvu *rvu, u8 cgx_id, u8 lmac_id)
-+static u64 cgxlmac_to_pfmap(struct rvu *rvu, u8 cgx_id, u8 lmac_id)
- {
- 	return rvu->cgxlmac2pf_map[CGX_OFFSET(cgx_id) + lmac_id];
- }
-@@ -71,7 +72,8 @@ int cgxlmac_to_pf(struct rvu *rvu, int cgx_id, int lmac_id)
- 	if (!pfmap)
- 		return -ENODEV;
- 	else
--		return find_first_bit(&pfmap, 16);
-+		return find_first_bit(&pfmap,
-+				      rvu->cgx_cnt_max * rvu->hw->lmac_per_cgx);
- }
- 
- static u8 cgxlmac_id_to_bmap(u8 cgx_id, u8 lmac_id)
-@@ -129,14 +131,14 @@ static int rvu_map_cgx_lmac_pf(struct rvu *rvu)
- 	if (!cgx_cnt_max)
- 		return 0;
- 
--	if (cgx_cnt_max > 0xF || MAX_LMAC_PER_CGX > 0xF)
-+	if (cgx_cnt_max > 0xF || rvu->hw->lmac_per_cgx > 0xF)
- 		return -EINVAL;
- 
- 	/* Alloc map table
- 	 * An additional entry is required since PF id starts from 1 and
- 	 * hence entry at offset 0 is invalid.
- 	 */
--	size = (cgx_cnt_max * MAX_LMAC_PER_CGX + 1) * sizeof(u8);
-+	size = (cgx_cnt_max * rvu->hw->lmac_per_cgx + 1) * sizeof(u8);
- 	rvu->pf2cgxlmac_map = devm_kmalloc(rvu->dev, size, GFP_KERNEL);
- 	if (!rvu->pf2cgxlmac_map)
- 		return -ENOMEM;
-@@ -145,9 +147,10 @@ static int rvu_map_cgx_lmac_pf(struct rvu *rvu)
- 	memset(rvu->pf2cgxlmac_map, 0xFF, size);
- 
- 	/* Reverse map table */
--	rvu->cgxlmac2pf_map = devm_kzalloc(rvu->dev,
--				  cgx_cnt_max * MAX_LMAC_PER_CGX * sizeof(u16),
--				  GFP_KERNEL);
-+	rvu->cgxlmac2pf_map =
-+		devm_kzalloc(rvu->dev,
-+			     cgx_cnt_max * rvu->hw->lmac_per_cgx * sizeof(u64),
-+			     GFP_KERNEL);
- 	if (!rvu->cgxlmac2pf_map)
- 		return -ENOMEM;
- 
-@@ -156,7 +159,7 @@ static int rvu_map_cgx_lmac_pf(struct rvu *rvu)
- 		if (!rvu_cgx_pdata(cgx, rvu))
- 			continue;
- 		lmac_bmap = cgx_get_lmac_bmap(rvu_cgx_pdata(cgx, rvu));
--		for_each_set_bit(iter, &lmac_bmap, MAX_LMAC_PER_CGX) {
-+		for_each_set_bit(iter, &lmac_bmap, rvu->hw->lmac_per_cgx) {
- 			lmac = cgx_get_lmacid(rvu_cgx_pdata(cgx, rvu),
- 					      iter);
- 			rvu->pf2cgxlmac_map[pf] = cgxlmac_id_to_bmap(cgx, lmac);
-@@ -235,7 +238,8 @@ static void cgx_notify_pfs(struct cgx_link_event *event, struct rvu *rvu)
- 	pfmap = cgxlmac_to_pfmap(rvu, event->cgx_id, event->lmac_id);
- 
- 	do {
--		pfid = find_first_bit(&pfmap, 16);
-+		pfid = find_first_bit(&pfmap,
-+				      rvu->cgx_cnt_max * rvu->hw->lmac_per_cgx);
- 		clear_bit(pfid, &pfmap);
- 
- 		/* check if notification is enabled */
-@@ -310,7 +314,7 @@ static int cgx_lmac_event_handler_init(struct rvu *rvu)
- 		if (!cgxd)
- 			continue;
- 		lmac_bmap = cgx_get_lmac_bmap(cgxd);
--		for_each_set_bit(lmac, &lmac_bmap, MAX_LMAC_PER_CGX) {
-+		for_each_set_bit(lmac, &lmac_bmap, rvu->hw->lmac_per_cgx) {
- 			err = cgx_lmac_evh_register(&cb, cgxd, lmac);
- 			if (err)
- 				dev_err(rvu->dev,
-@@ -396,7 +400,7 @@ int rvu_cgx_exit(struct rvu *rvu)
- 		if (!cgxd)
- 			continue;
- 		lmac_bmap = cgx_get_lmac_bmap(cgxd);
--		for_each_set_bit(lmac, &lmac_bmap, MAX_LMAC_PER_CGX)
-+		for_each_set_bit(lmac, &lmac_bmap, rvu->hw->lmac_per_cgx)
- 			cgx_lmac_evh_unregister(cgxd, lmac);
+ 	extent_changeset_init(&changeset);
+@@ -3880,7 +3881,9 @@ static int qgroup_free_reserved_data(struct btrfs_inode *inode,
  	}
+ 	btrfs_qgroup_free_refroot(root->fs_info, root->root_key.objectid, freed,
+ 				  BTRFS_QGROUP_RSV_DATA);
+-	ret = freed;
++	if (freed_ret)
++		*freed_ret = freed;
++	ret = 0;
+ out:
+ 	extent_changeset_release(&changeset);
+ 	return ret;
+@@ -3888,7 +3891,7 @@ static int qgroup_free_reserved_data(struct btrfs_inode *inode,
  
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-index 5c9dc3f9262f5..cc5d342e026c7 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-@@ -2618,7 +2618,7 @@ static void rvu_dbg_cgx_init(struct rvu *rvu)
- 		rvu->rvu_dbg.cgx = debugfs_create_dir(dname,
- 						      rvu->rvu_dbg.cgx_root);
+ static int __btrfs_qgroup_release_data(struct btrfs_inode *inode,
+ 			struct extent_changeset *reserved, u64 start, u64 len,
+-			int free)
++			u64 *released, int free)
+ {
+ 	struct extent_changeset changeset;
+ 	int trace_op = QGROUP_RELEASE;
+@@ -3900,7 +3903,7 @@ static int __btrfs_qgroup_release_data(struct btrfs_inode *inode,
+ 	/* In release case, we shouldn't have @reserved */
+ 	WARN_ON(!free && reserved);
+ 	if (free && reserved)
+-		return qgroup_free_reserved_data(inode, reserved, start, len);
++		return qgroup_free_reserved_data(inode, reserved, start, len, released);
+ 	extent_changeset_init(&changeset);
+ 	ret = clear_record_extent_bits(&inode->io_tree, start, start + len -1,
+ 				       EXTENT_QGROUP_RESERVED, &changeset);
+@@ -3915,7 +3918,8 @@ static int __btrfs_qgroup_release_data(struct btrfs_inode *inode,
+ 		btrfs_qgroup_free_refroot(inode->root->fs_info,
+ 				inode->root->root_key.objectid,
+ 				changeset.bytes_changed, BTRFS_QGROUP_RSV_DATA);
+-	ret = changeset.bytes_changed;
++	if (released)
++		*released = changeset.bytes_changed;
+ out:
+ 	extent_changeset_release(&changeset);
+ 	return ret;
+@@ -3934,9 +3938,10 @@ static int __btrfs_qgroup_release_data(struct btrfs_inode *inode,
+  * NOTE: This function may sleep for memory allocation.
+  */
+ int btrfs_qgroup_free_data(struct btrfs_inode *inode,
+-			struct extent_changeset *reserved, u64 start, u64 len)
++			   struct extent_changeset *reserved,
++			   u64 start, u64 len, u64 *freed)
+ {
+-	return __btrfs_qgroup_release_data(inode, reserved, start, len, 1);
++	return __btrfs_qgroup_release_data(inode, reserved, start, len, freed, 1);
+ }
  
--		for_each_set_bit(lmac_id, &lmac_bmap, MAX_LMAC_PER_CGX) {
-+		for_each_set_bit(lmac_id, &lmac_bmap, rvu->hw->lmac_per_cgx) {
- 			/* lmac debugfs dir */
- 			sprintf(dname, "lmac%d", lmac_id);
- 			rvu->rvu_dbg.lmac =
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 7f9581ce7f1fe..bb99302eab67a 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -4079,7 +4079,7 @@ static void nix_link_config(struct rvu *rvu, int blkaddr,
+ /*
+@@ -3954,9 +3959,9 @@ int btrfs_qgroup_free_data(struct btrfs_inode *inode,
+  *
+  * NOTE: This function may sleep for memory allocation.
+  */
+-int btrfs_qgroup_release_data(struct btrfs_inode *inode, u64 start, u64 len)
++int btrfs_qgroup_release_data(struct btrfs_inode *inode, u64 start, u64 len, u64 *released)
+ {
+-	return __btrfs_qgroup_release_data(inode, NULL, start, len, 0);
++	return __btrfs_qgroup_release_data(inode, NULL, start, len, released, 0);
+ }
  
- 		/* Get LMAC id's from bitmap */
- 		lmac_bmap = cgx_get_lmac_bmap(rvu_cgx_pdata(cgx, rvu));
--		for_each_set_bit(iter, &lmac_bmap, MAX_LMAC_PER_CGX) {
-+		for_each_set_bit(iter, &lmac_bmap, rvu->hw->lmac_per_cgx) {
- 			lmac_fifo_len = rvu_cgx_get_lmac_fifolen(rvu, cgx, iter);
- 			if (!lmac_fifo_len) {
- 				dev_err(rvu->dev,
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-index 34fa59575fa91..54e0dfdc9d984 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-@@ -1999,7 +1999,9 @@ int rvu_npc_exact_init(struct rvu *rvu)
- 	/* Install SDP drop rule */
- 	drop_mcam_idx = &table->num_drop_rules;
- 
--	max_lmac_cnt = rvu->cgx_cnt_max * MAX_LMAC_PER_CGX + PF_CGXMAP_BASE;
-+	max_lmac_cnt = rvu->cgx_cnt_max * rvu->hw->lmac_per_cgx +
-+		       PF_CGXMAP_BASE;
-+
- 	for (i = PF_CGXMAP_BASE; i < max_lmac_cnt; i++) {
- 		if (rvu->pf2cgxlmac_map[i] == 0xFF)
- 			continue;
+ static void add_root_meta_rsv(struct btrfs_root *root, int num_bytes,
+diff --git a/fs/btrfs/qgroup.h b/fs/btrfs/qgroup.h
+index 578c77e94200f..c382923f7628e 100644
+--- a/fs/btrfs/qgroup.h
++++ b/fs/btrfs/qgroup.h
+@@ -360,10 +360,10 @@ int btrfs_verify_qgroup_counts(struct btrfs_fs_info *fs_info, u64 qgroupid,
+ /* New io_tree based accurate qgroup reserve API */
+ int btrfs_qgroup_reserve_data(struct btrfs_inode *inode,
+ 			struct extent_changeset **reserved, u64 start, u64 len);
+-int btrfs_qgroup_release_data(struct btrfs_inode *inode, u64 start, u64 len);
++int btrfs_qgroup_release_data(struct btrfs_inode *inode, u64 start, u64 len, u64 *released);
+ int btrfs_qgroup_free_data(struct btrfs_inode *inode,
+ 			   struct extent_changeset *reserved, u64 start,
+-			   u64 len);
++			   u64 len, u64 *freed);
+ int btrfs_qgroup_reserve_meta(struct btrfs_root *root, int num_bytes,
+ 			      enum btrfs_qgroup_rsv_type type, bool enforce);
+ int __btrfs_qgroup_reserve_meta(struct btrfs_root *root, int num_bytes,
 -- 
 2.43.0
 
