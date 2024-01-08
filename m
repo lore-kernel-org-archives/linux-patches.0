@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83AF51C31;
-	Mon,  8 Jan 2024 15:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B48051C31;
+	Mon,  8 Jan 2024 15:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkiYuvsH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F19C433C9;
-	Mon,  8 Jan 2024 15:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EImZGVI7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A628C433C9;
+	Mon,  8 Jan 2024 15:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728482;
-	bh=OLYxnPNq8LYHefS5YPe9wuf1SgtWEAWoDizvNFVOTHk=;
+	s=korg; t=1704728485;
+	bh=yBSx4cy+ZfdkKzx2Es7bVi16KEwjobxCHyaQijirVWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LkiYuvsHtp5TtCrUEsN+SM1s9Un2i/cPeZPsx7eklo2AtTHw0HdoQ0YYMfZ+GSil0
-	 hne3JxM4NKB8QZFglJW/kj4CcGyc63/Q3+6PTZ00rhIuhF1LIWd39ujaZBXHzH2EgF
-	 lraRVi5bv1Sg9IJiwtXVnzZUXmrcLxBTUFck/lPk=
+	b=EImZGVI7Omjy36tPRSXBFqrMwHw2Yd87KoWYFZHMyO28I3MCiDTVRku2hZjTYtOky
+	 Ljy6YIw+irJiHM/B/EuZZ50qKwkke5XRn/OqXmG947PJabq44lEqWy0U5FZmUgFiO2
+	 qXdFIaw8A0eS3HuS0XyEOewxH6KPRbVFwTCdAuWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
+	Menglong Dong <imagedong@tencent.com>,
 	Yonghong Song <yhs@fb.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/150] bpf, x86: Simplify the parsing logic of structure parameters
-Date: Mon,  8 Jan 2024 16:35:12 +0100
-Message-ID: <20240108153514.045271350@linuxfoundation.org>
+Subject: [PATCH 6.1 062/150] bpf, x86: save/restore regs with BPF_DW size
+Date: Mon,  8 Jan 2024 16:35:13 +0100
+Message-ID: <20240108153514.094910283@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -43,223 +43,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Menglong Dong <imagedong@tencent.com>
 
-[ Upstream commit 7f7880495770329d095d402c2865bfa7089192f8 ]
+[ Upstream commit 02a6dfa8ff43efb1c989f87a4d862aedf436088a ]
 
-Extra_nregs of structure parameters and nr_args can be
-added directly at the beginning, and using a flip flag
-to identifiy structure parameters. Meantime, renaming
-some variables to make them more sense.
+As we already reserve 8 byte in the stack for each reg, it is ok to
+store/restore the regs in BPF_DW size. This will make the code in
+save_regs()/restore_regs() simpler.
 
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Menglong Dong <imagedong@tencent.com>
 Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/r/20230105035026.3091988-1-pulehui@huaweicloud.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://lore.kernel.org/r/20230713040738.1789742-2-imagedong@tencent.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Stable-dep-of: 2b5dcb31a19a ("bpf, x64: Fix tailcall infinite loop")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 101 +++++++++++++++++-------------------
- 1 file changed, 48 insertions(+), 53 deletions(-)
+ arch/x86/net/bpf_jit_comp.c | 35 ++++++-----------------------------
+ 1 file changed, 6 insertions(+), 29 deletions(-)
 
 diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index e6a031f8dd2e9..87cea23f2da16 100644
+index 87cea23f2da16..84c695ae1940f 100644
 --- a/arch/x86/net/bpf_jit_comp.c
 +++ b/arch/x86/net/bpf_jit_comp.c
-@@ -1752,62 +1752,59 @@ st:			if (is_imm8(insn->off))
- 	return proglen;
- }
- 
--static void save_regs(const struct btf_func_model *m, u8 **prog, int nr_args,
-+static void save_regs(const struct btf_func_model *m, u8 **prog, int nr_regs,
+@@ -1755,57 +1755,34 @@ st:			if (is_imm8(insn->off))
+ static void save_regs(const struct btf_func_model *m, u8 **prog, int nr_regs,
  		      int stack_size)
  {
--	int i, j, arg_size, nr_regs;
-+	int i, j, arg_size;
-+	bool next_same_struct = false;
-+
+-	int i, j, arg_size;
+-	bool next_same_struct = false;
++	int i;
+ 
  	/* Store function arguments to stack.
  	 * For a function that accepts two pointers the sequence will be:
  	 * mov QWORD PTR [rbp-0x10],rdi
  	 * mov QWORD PTR [rbp-0x8],rsi
  	 */
--	for (i = 0, j = 0; i < min(nr_args, 6); i++) {
--		if (m->arg_flags[i] & BTF_FMODEL_STRUCT_ARG) {
--			nr_regs = (m->arg_size[i] + 7) / 8;
-+	for (i = 0, j = 0; i < min(nr_regs, 6); i++) {
-+		/* The arg_size is at most 16 bytes, enforced by the verifier. */
-+		arg_size = m->arg_size[j];
-+		if (arg_size > 8) {
- 			arg_size = 8;
--		} else {
--			nr_regs = 1;
--			arg_size = m->arg_size[i];
-+			next_same_struct = !next_same_struct;
- 		}
- 
--		while (nr_regs) {
--			emit_stx(prog, bytes_to_bpf_size(arg_size),
--				 BPF_REG_FP,
--				 j == 5 ? X86_REG_R9 : BPF_REG_1 + j,
--				 -(stack_size - j * 8));
--			nr_regs--;
--			j++;
+-	for (i = 0, j = 0; i < min(nr_regs, 6); i++) {
+-		/* The arg_size is at most 16 bytes, enforced by the verifier. */
+-		arg_size = m->arg_size[j];
+-		if (arg_size > 8) {
+-			arg_size = 8;
+-			next_same_struct = !next_same_struct;
 -		}
-+		emit_stx(prog, bytes_to_bpf_size(arg_size),
-+			 BPF_REG_FP,
-+			 i == 5 ? X86_REG_R9 : BPF_REG_1 + i,
-+			 -(stack_size - i * 8));
-+
-+		j = next_same_struct ? j : j + 1;
- 	}
+-
+-		emit_stx(prog, bytes_to_bpf_size(arg_size),
+-			 BPF_REG_FP,
++	for (i = 0; i < min(nr_regs, 6); i++)
++		emit_stx(prog, BPF_DW, BPF_REG_FP,
+ 			 i == 5 ? X86_REG_R9 : BPF_REG_1 + i,
+ 			 -(stack_size - i * 8));
+-
+-		j = next_same_struct ? j : j + 1;
+-	}
  }
  
--static void restore_regs(const struct btf_func_model *m, u8 **prog, int nr_args,
-+static void restore_regs(const struct btf_func_model *m, u8 **prog, int nr_regs,
+ static void restore_regs(const struct btf_func_model *m, u8 **prog, int nr_regs,
  			 int stack_size)
  {
--	int i, j, arg_size, nr_regs;
-+	int i, j, arg_size;
-+	bool next_same_struct = false;
+-	int i, j, arg_size;
+-	bool next_same_struct = false;
++	int i;
  
  	/* Restore function arguments from stack.
  	 * For a function that accepts two pointers the sequence will be:
  	 * EMIT4(0x48, 0x8B, 0x7D, 0xF0); mov rdi,QWORD PTR [rbp-0x10]
  	 * EMIT4(0x48, 0x8B, 0x75, 0xF8); mov rsi,QWORD PTR [rbp-0x8]
  	 */
--	for (i = 0, j = 0; i < min(nr_args, 6); i++) {
--		if (m->arg_flags[i] & BTF_FMODEL_STRUCT_ARG) {
--			nr_regs = (m->arg_size[i] + 7) / 8;
-+	for (i = 0, j = 0; i < min(nr_regs, 6); i++) {
-+		/* The arg_size is at most 16 bytes, enforced by the verifier. */
-+		arg_size = m->arg_size[j];
-+		if (arg_size > 8) {
- 			arg_size = 8;
--		} else {
--			nr_regs = 1;
--			arg_size = m->arg_size[i];
-+			next_same_struct = !next_same_struct;
- 		}
- 
--		while (nr_regs) {
--			emit_ldx(prog, bytes_to_bpf_size(arg_size),
--				 j == 5 ? X86_REG_R9 : BPF_REG_1 + j,
--				 BPF_REG_FP,
--				 -(stack_size - j * 8));
--			nr_regs--;
--			j++;
+-	for (i = 0, j = 0; i < min(nr_regs, 6); i++) {
+-		/* The arg_size is at most 16 bytes, enforced by the verifier. */
+-		arg_size = m->arg_size[j];
+-		if (arg_size > 8) {
+-			arg_size = 8;
+-			next_same_struct = !next_same_struct;
 -		}
-+		emit_ldx(prog, bytes_to_bpf_size(arg_size),
-+			 i == 5 ? X86_REG_R9 : BPF_REG_1 + i,
-+			 BPF_REG_FP,
-+			 -(stack_size - i * 8));
-+
-+		j = next_same_struct ? j : j + 1;
- 	}
+-
+-		emit_ldx(prog, bytes_to_bpf_size(arg_size),
++	for (i = 0; i < min(nr_regs, 6); i++)
++		emit_ldx(prog, BPF_DW,
+ 			 i == 5 ? X86_REG_R9 : BPF_REG_1 + i,
+ 			 BPF_REG_FP,
+ 			 -(stack_size - i * 8));
+-
+-		j = next_same_struct ? j : j + 1;
+-	}
  }
  
-@@ -2033,8 +2030,8 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 				struct bpf_tramp_links *tlinks,
- 				void *func_addr)
- {
--	int ret, i, nr_args = m->nr_args, extra_nregs = 0;
--	int regs_off, ip_off, args_off, stack_size = nr_args * 8, run_ctx_off;
-+	int i, ret, nr_regs = m->nr_args, stack_size = 0;
-+	int regs_off, nregs_off, ip_off, run_ctx_off;
- 	struct bpf_tramp_links *fentry = &tlinks[BPF_TRAMP_FENTRY];
- 	struct bpf_tramp_links *fexit = &tlinks[BPF_TRAMP_FEXIT];
- 	struct bpf_tramp_links *fmod_ret = &tlinks[BPF_TRAMP_MODIFY_RETURN];
-@@ -2043,17 +2040,14 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 	u8 *prog;
- 	bool save_ret;
- 
--	/* x86-64 supports up to 6 arguments. 7+ can be added in the future */
--	if (nr_args > 6)
--		return -ENOTSUPP;
--
--	for (i = 0; i < MAX_BPF_FUNC_ARGS; i++) {
-+	/* extra registers for struct arguments */
-+	for (i = 0; i < m->nr_args; i++)
- 		if (m->arg_flags[i] & BTF_FMODEL_STRUCT_ARG)
--			extra_nregs += (m->arg_size[i] + 7) / 8 - 1;
--	}
--	if (nr_args + extra_nregs > 6)
-+			nr_regs += (m->arg_size[i] + 7) / 8 - 1;
-+
-+	/* x86-64 supports up to 6 arguments. 7+ can be added in the future */
-+	if (nr_regs > 6)
- 		return -ENOTSUPP;
--	stack_size += extra_nregs * 8;
- 
- 	/* Generated trampoline stack layout:
- 	 *
-@@ -2067,7 +2061,7 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 	 *                 [ ...             ]
- 	 * RBP - regs_off  [ reg_arg1        ]  program's ctx pointer
- 	 *
--	 * RBP - args_off  [ arg regs count  ]  always
-+	 * RBP - nregs_off [ regs count	     ]  always
- 	 *
- 	 * RBP - ip_off    [ traced function ]  BPF_TRAMP_F_IP_ARG flag
- 	 *
-@@ -2080,11 +2074,12 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 	if (save_ret)
- 		stack_size += 8;
- 
-+	stack_size += nr_regs * 8;
- 	regs_off = stack_size;
- 
--	/* args count  */
-+	/* regs count  */
- 	stack_size += 8;
--	args_off = stack_size;
-+	nregs_off = stack_size;
- 
- 	if (flags & BPF_TRAMP_F_IP_ARG)
- 		stack_size += 8; /* room for IP address argument */
-@@ -2114,11 +2109,11 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 	EMIT1(0x53);		 /* push rbx */
- 
- 	/* Store number of argument registers of the traced function:
--	 *   mov rax, nr_args + extra_nregs
--	 *   mov QWORD PTR [rbp - args_off], rax
-+	 *   mov rax, nr_regs
-+	 *   mov QWORD PTR [rbp - nregs_off], rax
- 	 */
--	emit_mov_imm64(&prog, BPF_REG_0, 0, (u32) nr_args + extra_nregs);
--	emit_stx(&prog, BPF_DW, BPF_REG_FP, BPF_REG_0, -args_off);
-+	emit_mov_imm64(&prog, BPF_REG_0, 0, (u32) nr_regs);
-+	emit_stx(&prog, BPF_DW, BPF_REG_FP, BPF_REG_0, -nregs_off);
- 
- 	if (flags & BPF_TRAMP_F_IP_ARG) {
- 		/* Store IP address of the traced function:
-@@ -2129,7 +2124,7 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 		emit_stx(&prog, BPF_DW, BPF_REG_FP, BPF_REG_0, -ip_off);
- 	}
- 
--	save_regs(m, &prog, nr_args, regs_off);
-+	save_regs(m, &prog, nr_regs, regs_off);
- 
- 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
- 		/* arg1: mov rdi, im */
-@@ -2159,7 +2154,7 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 	}
- 
- 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
--		restore_regs(m, &prog, nr_args, regs_off);
-+		restore_regs(m, &prog, nr_regs, regs_off);
- 
- 		if (flags & BPF_TRAMP_F_TAIL_CALL_CTX)
- 			/* Before calling the original function, restore the
-@@ -2206,7 +2201,7 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 		}
- 
- 	if (flags & BPF_TRAMP_F_RESTORE_REGS)
--		restore_regs(m, &prog, nr_args, regs_off);
-+		restore_regs(m, &prog, nr_regs, regs_off);
- 
- 	/* This needs to be done regardless. If there were fmod_ret programs,
- 	 * the return value is only updated on the stack and still needs to be
+ static int invoke_bpf_prog(const struct btf_func_model *m, u8 **pprog,
 -- 
 2.43.0
 
