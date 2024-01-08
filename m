@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5D55101B;
-	Mon,  8 Jan 2024 15:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181AC1E4A2;
+	Mon,  8 Jan 2024 15:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AljamhRG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EFEBC433D9;
-	Mon,  8 Jan 2024 15:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAG1z4um"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB59C4339A;
+	Mon,  8 Jan 2024 15:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728241;
-	bh=OEyoNzReK0TlUuyCZ8Jl7gKc+T8FkCX78ve1ZVzM+Gk=;
+	s=korg; t=1704728244;
+	bh=J+2SGai45TpRPmUF7Jnoiy/dQ0c6wLobtyBlOVlG04c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AljamhRGzo1EDraVmCpuHEy6n9UYELfUEi9BJuMaHiU8k7mIRhHAsOywlu8mU+x9c
-	 0keCbrJ5Iq5oUaSXUCy9PexSMnqbjBe+qa+NqYAfDo2f/llNXBLBPJx2odLD6AIti+
-	 uS8FvEsIO6MdixxyU4hytYSIAJqcGApn3+/43GDg=
+	b=DAG1z4umGR3rY544tLNkF7+iCORJSYqVzHByMV6zpo/Onm2XjOPBQKzVyalmkKepT
+	 pB8XTA7Ye5WmSqGptHhzvhKVdeedscLryhvone+9+G+FgZ3uyr1Js7tvaHDpESGf9O
+	 hUv/fLgmGvg/CCe/JUrWG1UkMPXN3oUrejMpISxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/150] netfilter: nf_tables: set transport offset from mac header for netdev/egress
-Date: Mon,  8 Jan 2024 16:34:26 +0100
-Message-ID: <20240108153511.970280590@linuxfoundation.org>
+	Suman Ghosh <sumang@marvell.com>,
+	Siddh Raman Pant <code@siddh.me>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+bbe84a4010eeea00982d@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 016/150] nfc: llcp_core: Hold a ref to llcp_local->dev when holding a ref to llcp_local
+Date: Mon,  8 Jan 2024 16:34:27 +0100
+Message-ID: <20240108153512.018064702@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -41,72 +45,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Siddh Raman Pant <code@siddh.me>
 
-[ Upstream commit 0ae8e4cca78781401b17721bfb72718fdf7b4912 ]
+[ Upstream commit c95f919567d6f1914f13350af61a1b044ac85014 ]
 
-Before this patch, transport offset (pkt->thoff) provides an offset
-relative to the network header. This is fine for the inet families
-because skb->data points to the network header in such case. However,
-from netdev/egress, skb->data points to the mac header (if available),
-thus, pkt->thoff is missing the mac header length.
+llcp_sock_sendmsg() calls nfc_llcp_send_ui_frame() which in turn calls
+nfc_alloc_send_skb(), which accesses the nfc_dev from the llcp_sock for
+getting the headroom and tailroom needed for skb allocation.
 
-Add skb_network_offset() to the transport offset (pkt->thoff) for
-netdev, so transport header mangling works as expected. Adjust payload
-fast eval function to use skb->data now that pkt->thoff provides an
-absolute offset. This explains why users report that matching on
-egress/netdev works but payload mangling does not.
+Parallelly the nfc_dev can be freed, as the refcount is decreased via
+nfc_free_device(), leading to a UAF reported by Syzkaller, which can
+be summarized as follows:
 
-This patch implicitly fixes payload mangling for IPv4 packets in
-netdev/egress given skb_store_bits() requires an offset from skb->data
-to reach the transport header.
+(1) llcp_sock_sendmsg() -> nfc_llcp_send_ui_frame()
+	-> nfc_alloc_send_skb() -> Dereference *nfc_dev
+(2) virtual_ncidev_close() -> nci_free_device() -> nfc_free_device()
+	-> put_device() -> nfc_release() -> Free *nfc_dev
 
-I suspect that nft_exthdr and the trace infra were also broken from
-netdev/egress because they also take skb->data as start, and pkt->thoff
-was not correct.
+When a reference to llcp_local is acquired, we do not acquire the same
+for the nfc_dev. This leads to freeing even when the llcp_local is in
+use, and this is the case with the UAF described above too.
 
-Note that IPv6 is fine because ipv6_find_hdr() already provides a
-transport offset starting from skb->data, which includes
-skb_network_offset().
+Thus, when we acquire a reference to llcp_local, we should acquire a
+reference to nfc_dev, and release the references appropriately later.
 
-The bridge family also uses nft_set_pktinfo_ipv4_validate(), but there
-skb_network_offset() is zero, so the update in this patch does not alter
-the existing behaviour.
+References for llcp_local is initialized in nfc_llcp_register_device()
+(which is called by nfc_register_device()). Thus, we should acquire a
+reference to nfc_dev there.
 
-Fixes: 42df6e1d221d ("netfilter: Introduce egress hook")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+nfc_unregister_device() calls nfc_llcp_unregister_device() which in
+turn calls nfc_llcp_local_put(). Thus, the reference to nfc_dev is
+appropriately released later.
+
+Reported-and-tested-by: syzbot+bbe84a4010eeea00982d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bbe84a4010eeea00982d
+Fixes: c7aa12252f51 ("NFC: Take a reference on the LLCP local pointer when creating a socket")
+Reviewed-by: Suman Ghosh <sumang@marvell.com>
+Signed-off-by: Siddh Raman Pant <code@siddh.me>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables_ipv4.h | 2 +-
- net/netfilter/nf_tables_core.c         | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/nfc/llcp_core.c | 39 ++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 36 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables_ipv4.h b/include/net/netfilter/nf_tables_ipv4.h
-index d8f6cb47ebe37..5225d2bd1a6e9 100644
---- a/include/net/netfilter/nf_tables_ipv4.h
-+++ b/include/net/netfilter/nf_tables_ipv4.h
-@@ -30,7 +30,7 @@ static inline int __nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt)
- 		return -1;
+diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
+index 1dac28136e6a3..18be13fb9b75a 100644
+--- a/net/nfc/llcp_core.c
++++ b/net/nfc/llcp_core.c
+@@ -145,6 +145,13 @@ static void nfc_llcp_socket_release(struct nfc_llcp_local *local, bool device,
  
- 	len = iph_totlen(pkt->skb, iph);
--	thoff = iph->ihl * 4;
-+	thoff = skb_network_offset(pkt->skb) + (iph->ihl * 4);
- 	if (pkt->skb->len < len)
- 		return -1;
- 	else if (len < thoff)
-diff --git a/net/netfilter/nf_tables_core.c b/net/netfilter/nf_tables_core.c
-index cee3e4e905ec8..e0c117229ee9d 100644
---- a/net/netfilter/nf_tables_core.c
-+++ b/net/netfilter/nf_tables_core.c
-@@ -141,7 +141,7 @@ static bool nft_payload_fast_eval(const struct nft_expr *expr,
- 	else {
- 		if (!(pkt->flags & NFT_PKTINFO_L4PROTO))
- 			return false;
--		ptr = skb_network_header(skb) + nft_thoff(pkt);
-+		ptr = skb->data + nft_thoff(pkt);
+ static struct nfc_llcp_local *nfc_llcp_local_get(struct nfc_llcp_local *local)
+ {
++	/* Since using nfc_llcp_local may result in usage of nfc_dev, whenever
++	 * we hold a reference to local, we also need to hold a reference to
++	 * the device to avoid UAF.
++	 */
++	if (!nfc_get_device(local->dev->idx))
++		return NULL;
++
+ 	kref_get(&local->ref);
+ 
+ 	return local;
+@@ -177,10 +184,18 @@ static void local_release(struct kref *ref)
+ 
+ int nfc_llcp_local_put(struct nfc_llcp_local *local)
+ {
++	struct nfc_dev *dev;
++	int ret;
++
+ 	if (local == NULL)
+ 		return 0;
+ 
+-	return kref_put(&local->ref, local_release);
++	dev = local->dev;
++
++	ret = kref_put(&local->ref, local_release);
++	nfc_put_device(dev);
++
++	return ret;
+ }
+ 
+ static struct nfc_llcp_sock *nfc_llcp_sock_get(struct nfc_llcp_local *local,
+@@ -959,8 +974,17 @@ static void nfc_llcp_recv_connect(struct nfc_llcp_local *local,
  	}
  
- 	ptr += priv->offset;
+ 	new_sock = nfc_llcp_sock(new_sk);
+-	new_sock->dev = local->dev;
++
+ 	new_sock->local = nfc_llcp_local_get(local);
++	if (!new_sock->local) {
++		reason = LLCP_DM_REJ;
++		sock_put(&new_sock->sk);
++		release_sock(&sock->sk);
++		sock_put(&sock->sk);
++		goto fail;
++	}
++
++	new_sock->dev = local->dev;
+ 	new_sock->rw = sock->rw;
+ 	new_sock->miux = sock->miux;
+ 	new_sock->nfc_protocol = sock->nfc_protocol;
+@@ -1597,7 +1621,16 @@ int nfc_llcp_register_device(struct nfc_dev *ndev)
+ 	if (local == NULL)
+ 		return -ENOMEM;
+ 
+-	local->dev = ndev;
++	/* As we are going to initialize local's refcount, we need to get the
++	 * nfc_dev to avoid UAF, otherwise there is no point in continuing.
++	 * See nfc_llcp_local_get().
++	 */
++	local->dev = nfc_get_device(ndev->idx);
++	if (!local->dev) {
++		kfree(local);
++		return -ENODEV;
++	}
++
+ 	INIT_LIST_HEAD(&local->list);
+ 	kref_init(&local->ref);
+ 	mutex_init(&local->sdp_lock);
 -- 
 2.43.0
 
