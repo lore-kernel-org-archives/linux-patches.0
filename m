@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27424C3A0;
-	Mon,  8 Jan 2024 15:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5801E4A2;
+	Mon,  8 Jan 2024 15:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nhf+gfaJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A880FC433A9;
-	Mon,  8 Jan 2024 15:37:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHPADQID"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDD8C433A9;
+	Mon,  8 Jan 2024 15:37:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728251;
-	bh=MJaaQSF8A+w9C4oZmf1f69lXORMFjLgX0hdXFiL2b1U=;
+	s=korg; t=1704728254;
+	bh=d4PM6Z5XiUBiNQEbRGWwVZ6Vx47uCnrcsO1/1pOduq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nhf+gfaJ0sbIqIHeeJuz5DzkKatrdp5IecEPi3dzNw4w63uDG+dLeyGvKsYlp3Rrd
-	 BpA4C9N/dPYRnqQU2CWyVBlU1ldWDsI06hYY1YgwEkliCprpV/PNVyNwdEdYKb3srN
-	 ABebT3WrtwHrniNXT69tKlhWZvUlbVw0itZLoP+o=
+	b=WHPADQIDsh7VPRe8+GeZOX8eBdQPujb1UJN1CQB/2xzxV3uU+ztw0UK0NQAgC3Qp1
+	 wyOtja0z/B0jR2uu0m0Y4NeNT4nNDYvflXBtBp2n00KMpBhdnR/bd/ufOBTk4H//gd
+	 Aa5qnytjE2Wwl8pkNFRrklJaIUbvT7rKoHOzmtIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Lee Shawn C <shawn.c.lee@intel.com>,
-	Khaled Almahallawy <khaled.almahallawy@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/150] drm/i915/dp: Fix passing the correct DPCD_REV for drm_dp_set_phy_test_pattern
-Date: Mon,  8 Jan 2024 16:34:29 +0100
-Message-ID: <20240108153512.114517747@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Katarzyna Wieczerzycka <katarzyna.wieczerzycka@intel.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.1 019/150] ice: Fix link_down_on_close message
+Date: Mon,  8 Jan 2024 16:34:30 +0100
+Message-ID: <20240108153512.166454355@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -44,39 +45,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Khaled Almahallawy <khaled.almahallawy@intel.com>
+From: Katarzyna Wieczerzycka <katarzyna.wieczerzycka@intel.com>
 
-[ Upstream commit 2bd7a06a1208aaacb4e7a2a5436c23bce8d70801 ]
+[ Upstream commit 6a8d8bb55e7001de2d50920381cc858f3a3e9fb7 ]
 
-Using link_status to get DPCD_REV fails when disabling/defaulting
-phy pattern. Use intel_dp->dpcd to access DPCD_REV correctly.
+The driver should not report an error message when for a medialess port
+the link_down_on_close flag is enabled and the physical link cannot be
+set down.
 
-Fixes: 8cdf72711928 ("drm/i915/dp: Program vswing, pre-emphasis, test-pattern")
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Lee Shawn C <shawn.c.lee@intel.com>
-Signed-off-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231213211542.3585105-3-khaled.almahallawy@intel.com
-(cherry picked from commit 3ee302ec22d6e1d7d1e6d381b0d507ee80f2135c)
+Fixes: 8ac7132704f3 ("ice: Fix interface being down after reset with link-down-on-close flag on")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Katarzyna Wieczerzycka <katarzyna.wieczerzycka@intel.com>
+Signed-off-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index 5970f4149090f..4699c21102261 100644
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -3707,7 +3707,7 @@ static void intel_dp_process_phy_request(struct intel_dp *intel_dp,
- 			  intel_dp->train_set, crtc_state->lane_count);
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index f0f39364819ac..5eb3b80b293c0 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -2138,7 +2138,7 @@ static int ice_configure_phy(struct ice_vsi *vsi)
  
- 	drm_dp_set_phy_test_pattern(&intel_dp->aux, data,
--				    link_status[DP_DPCD_REV]);
-+				    intel_dp->dpcd[DP_DPCD_REV]);
- }
+ 	/* Ensure we have media as we cannot configure a medialess port */
+ 	if (!(phy->link_info.link_info & ICE_AQ_MEDIA_AVAILABLE))
+-		return -EPERM;
++		return -ENOMEDIUM;
  
- static u8 intel_dp_autotest_phy_pattern(struct intel_dp *intel_dp)
+ 	ice_print_topo_conflict(vsi);
+ 
+@@ -9065,8 +9065,12 @@ int ice_stop(struct net_device *netdev)
+ 		int link_err = ice_force_phys_link_state(vsi, false);
+ 
+ 		if (link_err) {
+-			netdev_err(vsi->netdev, "Failed to set physical link down, VSI %d error %d\n",
+-				   vsi->vsi_num, link_err);
++			if (link_err == -ENOMEDIUM)
++				netdev_info(vsi->netdev, "Skipping link reconfig - no media attached, VSI %d\n",
++					    vsi->vsi_num);
++			else
++				netdev_err(vsi->netdev, "Failed to set physical link down, VSI %d error %d\n",
++					   vsi->vsi_num, link_err);
+ 			return -EIO;
+ 		}
+ 	}
 -- 
 2.43.0
 
