@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6842626AC1;
-	Mon,  8 Jan 2024 15:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2582A4BA96;
+	Mon,  8 Jan 2024 15:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnVgOKLo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7130EC433C8;
-	Mon,  8 Jan 2024 15:10:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SC31Kuo0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84253C433CA;
+	Mon,  8 Jan 2024 15:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726659;
-	bh=JTJ3Xz5DeMBzpPs/ltGZKOz7m8Lsh1lzQtoHeDS2cdg=;
+	s=korg; t=1704726663;
+	bh=2l6ZQbmsNxpK1ak799Dwl7m1/CswxEF0ogI4mhjEGC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bnVgOKLo9wL7evgddpjqRcShiNC5KxNfhYDLx7gToP/qDKCpnLryYyS3tW/WvTfSb
-	 0is/lupXk6gjjN7HdxaMlsopXOdElZaOwuYeM1qz3dVGKk1W1XG2rY+11wBrpLYVtt
-	 4xcr6W/s6QWhD91LL8db4jS3UDGaNEp0rD+ZA314=
+	b=SC31Kuo0uSIXHV2oWC2Sle41NNmldcrOmiwl7zboQbQjT3vf0XSFSvQcALseIMG4q
+	 0uvfsylFtxY0M80HmohDps8fqgyjdvV4Rhv38lKvfFkAkBwV0gmUdJOBEsJaT61Fm0
+	 Yu1hUm7aNCmRQNp46Xj3fooUvzESZikeHws6WDYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Benjamin Poirier <benjamin.poirier@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/124] selftests: bonding: do not set port down when adding to bond
-Date: Mon,  8 Jan 2024 16:07:44 +0100
-Message-ID: <20240108150604.736332795@linuxfoundation.org>
+Subject: [PATCH 6.6 021/124] netfilter: nf_tables: set transport offset from mac header for netdev/egress
+Date: Mon,  8 Jan 2024 16:07:27 +0100
+Message-ID: <20240108150603.938636122@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -43,51 +41,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 61fa2493ca76fd7bb74e13f0205274f4ab0aa696 ]
+[ Upstream commit 0ae8e4cca78781401b17721bfb72718fdf7b4912 ]
 
-Similar to commit be809424659c ("selftests: bonding: do not set port down
-before adding to bond"). The bond-arp-interval-causes-panic test failed
-after commit a4abfa627c38 ("net: rtnetlink: Enslave device before bringing
-it up") as the kernel will set the port down _after_ adding to bond if setting
-port down specifically.
+Before this patch, transport offset (pkt->thoff) provides an offset
+relative to the network header. This is fine for the inet families
+because skb->data points to the network header in such case. However,
+from netdev/egress, skb->data points to the mac header (if available),
+thus, pkt->thoff is missing the mac header length.
 
-Fix it by removing the link down operation when adding to bond.
+Add skb_network_offset() to the transport offset (pkt->thoff) for
+netdev, so transport header mangling works as expected. Adjust payload
+fast eval function to use skb->data now that pkt->thoff provides an
+absolute offset. This explains why users report that matching on
+egress/netdev works but payload mangling does not.
 
-Fixes: 2ffd57327ff1 ("selftests: bonding: cause oops in bond_rr_gen_slave_id")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Tested-by: Benjamin Poirier <benjamin.poirier@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This patch implicitly fixes payload mangling for IPv4 packets in
+netdev/egress given skb_store_bits() requires an offset from skb->data
+to reach the transport header.
+
+I suspect that nft_exthdr and the trace infra were also broken from
+netdev/egress because they also take skb->data as start, and pkt->thoff
+was not correct.
+
+Note that IPv6 is fine because ipv6_find_hdr() already provides a
+transport offset starting from skb->data, which includes
+skb_network_offset().
+
+The bridge family also uses nft_set_pktinfo_ipv4_validate(), but there
+skb_network_offset() is zero, so the update in this patch does not alter
+the existing behaviour.
+
+Fixes: 42df6e1d221d ("netfilter: Introduce egress hook")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drivers/net/bonding/bond-arp-interval-causes-panic.sh   | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/net/netfilter/nf_tables_ipv4.h | 2 +-
+ net/netfilter/nf_tables_core.c         | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/bonding/bond-arp-interval-causes-panic.sh b/tools/testing/selftests/drivers/net/bonding/bond-arp-interval-causes-panic.sh
-index 4917dbb35a44d..5667febee3286 100755
---- a/tools/testing/selftests/drivers/net/bonding/bond-arp-interval-causes-panic.sh
-+++ b/tools/testing/selftests/drivers/net/bonding/bond-arp-interval-causes-panic.sh
-@@ -30,16 +30,16 @@ ip netns exec server ip addr add ${server_ip4}/24 dev eth0
+diff --git a/include/net/netfilter/nf_tables_ipv4.h b/include/net/netfilter/nf_tables_ipv4.h
+index 947973623dc77..60a7d0ce30804 100644
+--- a/include/net/netfilter/nf_tables_ipv4.h
++++ b/include/net/netfilter/nf_tables_ipv4.h
+@@ -30,7 +30,7 @@ static inline int __nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt)
+ 		return -1;
  
- ip netns exec client ip link add dev bond0 down type bond mode 1 \
- 	miimon 100 all_slaves_active 1
--ip netns exec client ip link set dev eth0 down master bond0
-+ip netns exec client ip link set dev eth0 master bond0
- ip netns exec client ip link set dev bond0 up
- ip netns exec client ip addr add ${client_ip4}/24 dev bond0
- ip netns exec client ping -c 5 $server_ip4 >/dev/null
+ 	len = iph_totlen(pkt->skb, iph);
+-	thoff = iph->ihl * 4;
++	thoff = skb_network_offset(pkt->skb) + (iph->ihl * 4);
+ 	if (pkt->skb->len < len)
+ 		return -1;
+ 	else if (len < thoff)
+diff --git a/net/netfilter/nf_tables_core.c b/net/netfilter/nf_tables_core.c
+index 4d0ce12221f66..711c22ab701dd 100644
+--- a/net/netfilter/nf_tables_core.c
++++ b/net/netfilter/nf_tables_core.c
+@@ -158,7 +158,7 @@ static bool nft_payload_fast_eval(const struct nft_expr *expr,
+ 	else {
+ 		if (!(pkt->flags & NFT_PKTINFO_L4PROTO))
+ 			return false;
+-		ptr = skb_network_header(skb) + nft_thoff(pkt);
++		ptr = skb->data + nft_thoff(pkt);
+ 	}
  
--ip netns exec client ip link set dev eth0 down nomaster
-+ip netns exec client ip link set dev eth0 nomaster
- ip netns exec client ip link set dev bond0 down
- ip netns exec client ip link set dev bond0 type bond mode 0 \
- 	arp_interval 1000 arp_ip_target "+${server_ip4}"
--ip netns exec client ip link set dev eth0 down master bond0
-+ip netns exec client ip link set dev eth0 master bond0
- ip netns exec client ip link set dev bond0 up
- ip netns exec client ping -c 5 $server_ip4 >/dev/null
- 
+ 	ptr += priv->offset;
 -- 
 2.43.0
 
