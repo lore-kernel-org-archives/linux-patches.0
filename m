@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004034A99F;
-	Mon,  8 Jan 2024 15:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B6F487A7;
+	Mon,  8 Jan 2024 15:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwNubAD1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5DCC433C8;
-	Mon,  8 Jan 2024 15:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rKXvD2RO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CFBC433C7;
+	Mon,  8 Jan 2024 15:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726697;
-	bh=3SShSR/FU578ZaSq856P7j8hMcbbBEhvYCd1yrVrIgM=;
+	s=korg; t=1704726700;
+	bh=IFVo/+dEL+zIp6AIJO9oOUgaDp9R+/tIMQlKnNZBTAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vwNubAD14k7uQvsDNcM2Tv7wfk9JTyXJtFz+Yj11Dj5+W4pxbDMizNX1eifXeOrFk
-	 +Lwf6jobTuUYg1KuAPvL7UYUK1lCRCvYLR71XYbiqn0R8q8BXhkhZ0IgyqslYpqX7x
-	 SJ3KMg/y5/gRShjcAeWvbQp+BTRrSG8Wr2hALnSw=
+	b=rKXvD2ROLS5CepKfaNEiOvBqdBEE1QxpsriHz5W+XxC2Vicj918z+s2dBxClBHQ80
+	 SYmtxiCgj9/1qvDC1vVm8ThErKlKvPGXpXZxnRzterZuhpn16Jey14daUJr5G3P2hD
+	 esu8jpOvTBpCuTuh7ED36AeKyTBTEnhN5dTG20uQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
-	Siddh Raman Pant <code@siddh.me>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+bbe84a4010eeea00982d@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 022/124] nfc: llcp_core: Hold a ref to llcp_local->dev when holding a ref to llcp_local
-Date: Mon,  8 Jan 2024 16:07:28 +0100
-Message-ID: <20240108150603.987610350@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 049/124] ASoC: meson: g12a-tohdmitx: Fix event generation for S/PDIF mux
+Date: Mon,  8 Jan 2024 16:07:55 +0100
+Message-ID: <20240108150605.222582907@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -45,125 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddh Raman Pant <code@siddh.me>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit c95f919567d6f1914f13350af61a1b044ac85014 ]
+[ Upstream commit b036d8ef3120b996751495ce25994eea58032a98 ]
 
-llcp_sock_sendmsg() calls nfc_llcp_send_ui_frame() which in turn calls
-nfc_alloc_send_skb(), which accesses the nfc_dev from the llcp_sock for
-getting the headroom and tailroom needed for skb allocation.
+When a control changes value the return value from _put() should be 1 so
+we get events generated to userspace notifying applications of the change.
+While the I2S mux gets this right the S/PDIF mux does not, fix the return
+value.
 
-Parallelly the nfc_dev can be freed, as the refcount is decreased via
-nfc_free_device(), leading to a UAF reported by Syzkaller, which can
-be summarized as follows:
-
-(1) llcp_sock_sendmsg() -> nfc_llcp_send_ui_frame()
-	-> nfc_alloc_send_skb() -> Dereference *nfc_dev
-(2) virtual_ncidev_close() -> nci_free_device() -> nfc_free_device()
-	-> put_device() -> nfc_release() -> Free *nfc_dev
-
-When a reference to llcp_local is acquired, we do not acquire the same
-for the nfc_dev. This leads to freeing even when the llcp_local is in
-use, and this is the case with the UAF described above too.
-
-Thus, when we acquire a reference to llcp_local, we should acquire a
-reference to nfc_dev, and release the references appropriately later.
-
-References for llcp_local is initialized in nfc_llcp_register_device()
-(which is called by nfc_register_device()). Thus, we should acquire a
-reference to nfc_dev there.
-
-nfc_unregister_device() calls nfc_llcp_unregister_device() which in
-turn calls nfc_llcp_local_put(). Thus, the reference to nfc_dev is
-appropriately released later.
-
-Reported-and-tested-by: syzbot+bbe84a4010eeea00982d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bbe84a4010eeea00982d
-Fixes: c7aa12252f51 ("NFC: Take a reference on the LLCP local pointer when creating a socket")
-Reviewed-by: Suman Ghosh <sumang@marvell.com>
-Signed-off-by: Siddh Raman Pant <code@siddh.me>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c8609f3870f7 ("ASoC: meson: add g12a tohdmitx control")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20240103-meson-enum-val-v1-4-424af7a8fb91@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_core.c | 39 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 36 insertions(+), 3 deletions(-)
+ sound/soc/meson/g12a-tohdmitx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
-index 1dac28136e6a3..18be13fb9b75a 100644
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -145,6 +145,13 @@ static void nfc_llcp_socket_release(struct nfc_llcp_local *local, bool device,
+diff --git a/sound/soc/meson/g12a-tohdmitx.c b/sound/soc/meson/g12a-tohdmitx.c
+index 51b7703e1834f..b92434125face 100644
+--- a/sound/soc/meson/g12a-tohdmitx.c
++++ b/sound/soc/meson/g12a-tohdmitx.c
+@@ -118,7 +118,7 @@ static int g12a_tohdmitx_spdif_mux_put_enum(struct snd_kcontrol *kcontrol,
  
- static struct nfc_llcp_local *nfc_llcp_local_get(struct nfc_llcp_local *local)
- {
-+	/* Since using nfc_llcp_local may result in usage of nfc_dev, whenever
-+	 * we hold a reference to local, we also need to hold a reference to
-+	 * the device to avoid UAF.
-+	 */
-+	if (!nfc_get_device(local->dev->idx))
-+		return NULL;
-+
- 	kref_get(&local->ref);
+ 	snd_soc_dapm_mux_update_power(dapm, kcontrol, mux, e, NULL);
  
- 	return local;
-@@ -177,10 +184,18 @@ static void local_release(struct kref *ref)
- 
- int nfc_llcp_local_put(struct nfc_llcp_local *local)
- {
-+	struct nfc_dev *dev;
-+	int ret;
-+
- 	if (local == NULL)
- 		return 0;
- 
--	return kref_put(&local->ref, local_release);
-+	dev = local->dev;
-+
-+	ret = kref_put(&local->ref, local_release);
-+	nfc_put_device(dev);
-+
-+	return ret;
+-	return 0;
++	return 1;
  }
  
- static struct nfc_llcp_sock *nfc_llcp_sock_get(struct nfc_llcp_local *local,
-@@ -959,8 +974,17 @@ static void nfc_llcp_recv_connect(struct nfc_llcp_local *local,
- 	}
- 
- 	new_sock = nfc_llcp_sock(new_sk);
--	new_sock->dev = local->dev;
-+
- 	new_sock->local = nfc_llcp_local_get(local);
-+	if (!new_sock->local) {
-+		reason = LLCP_DM_REJ;
-+		sock_put(&new_sock->sk);
-+		release_sock(&sock->sk);
-+		sock_put(&sock->sk);
-+		goto fail;
-+	}
-+
-+	new_sock->dev = local->dev;
- 	new_sock->rw = sock->rw;
- 	new_sock->miux = sock->miux;
- 	new_sock->nfc_protocol = sock->nfc_protocol;
-@@ -1597,7 +1621,16 @@ int nfc_llcp_register_device(struct nfc_dev *ndev)
- 	if (local == NULL)
- 		return -ENOMEM;
- 
--	local->dev = ndev;
-+	/* As we are going to initialize local's refcount, we need to get the
-+	 * nfc_dev to avoid UAF, otherwise there is no point in continuing.
-+	 * See nfc_llcp_local_get().
-+	 */
-+	local->dev = nfc_get_device(ndev->idx);
-+	if (!local->dev) {
-+		kfree(local);
-+		return -ENODEV;
-+	}
-+
- 	INIT_LIST_HEAD(&local->list);
- 	kref_init(&local->ref);
- 	mutex_init(&local->sdp_lock);
+ static SOC_ENUM_SINGLE_DECL(g12a_tohdmitx_spdif_mux_enum, TOHDMITX_CTRL0,
 -- 
 2.43.0
 
