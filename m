@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7179347791;
-	Mon,  8 Jan 2024 15:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E429F4A9A4;
+	Mon,  8 Jan 2024 15:10:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnjXNocB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1DBC4339A;
-	Mon,  8 Jan 2024 15:10:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwIdO41A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA353C433C9;
+	Mon,  8 Jan 2024 15:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726603;
-	bh=xRN69cSsECNRd/BBU7AzypQCXtcYde5GfjqHQlHqE8s=;
+	s=korg; t=1704726606;
+	bh=E41OhA3Gc3ZDi9DZxhuQ8t1pNDUy2CSNqwwiU5ae0JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PnjXNocBaYaFwt2KMoulrGOS414A3i6MhkJ8V5yRdkd2FTMczHbFxgFrRcwnpbRqb
-	 Ie+oR5eepmqmMmoe9Jn0Hf0G/iYhzqfF8ppEcnsMqqzxDIrJ03K5kr4KLrtPi9YiLY
-	 VcuN8nP8bq2XQmzzeYYeWhr78gU4ki0TNQADcmJw=
+	b=uwIdO41AZAi4B3y2o/H5yqLlxWKQPj9jIVDwyUbEuDh3ZE0gz9RJYAhcqqoXqYYug
+	 vDuMvcr1EkZugQmOkQTd7EAM9Fc7ET77BQCALGOtwseFYKuycUaem8bjr3TBPP2e5L
+	 l02RI6gxz5oAO++zQyE524kIw9BFEFTtBIyQXtLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gergo Koteles <soyer@irl.hu>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 003/124] ALSA: hda/tas2781: move set_drv_data outside tasdevice_init
-Date: Mon,  8 Jan 2024 16:07:09 +0100
-Message-ID: <20240108150603.116622521@linuxfoundation.org>
+Subject: [PATCH 6.6 004/124] ALSA: hda/tas2781: remove sound controls in unbind
+Date: Mon,  8 Jan 2024 16:07:10 +0100
+Message-ID: <20240108150603.166204127@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -43,61 +43,470 @@ Content-Transfer-Encoding: 8bit
 
 From: Gergo Koteles <soyer@irl.hu>
 
-commit e7aa105657f7f62f54a493480588895cc8a9a1a7 upstream.
+commit 4e7914eb1dae377b8e6de59c96b0653aacb47646 upstream.
 
-allow driver specific driver data in tas2781-hda-i2c and tas2781-i2c
+Remove sound controls in hda_unbind to make
+module loadable after module unload.
 
-Fixes: ef3bcde75d06 ("ASoC: tas2781: Add tas2781 driver")
+Add a driver specific struct (tas2781_hda) to store
+the controls.
+
+This patch depends on patch:
+ALSA: hda/tas2781: do not use regcache
+
+Fixes: 5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver")
 CC: stable@vger.kernel.org
 Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Link: https://lore.kernel.org/r/1398bd8bf3e935b1595a99128320e4a1913e210a.1703204848.git.soyer@irl.hu
+Link: https://lore.kernel.org/r/362aa3e2f81b9259a3e5222f576bec5debfc5e88.1703204848.git.soyer@irl.hu
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/tas2781_hda_i2c.c   | 2 ++
- sound/soc/codecs/tas2781-comlib.c | 2 --
- sound/soc/codecs/tas2781-i2c.c    | 2 ++
- 3 files changed, 4 insertions(+), 2 deletions(-)
+ sound/pci/hda/tas2781_hda_i2c.c | 223 +++++++++++++++++++-------------
+ 1 file changed, 130 insertions(+), 93 deletions(-)
 
 diff --git a/sound/pci/hda/tas2781_hda_i2c.c b/sound/pci/hda/tas2781_hda_i2c.c
-index 54d135405788..6d11bced78f0 100644
+index 6d11bced78f0..dfe281b57aa6 100644
 --- a/sound/pci/hda/tas2781_hda_i2c.c
 +++ b/sound/pci/hda/tas2781_hda_i2c.c
-@@ -659,6 +659,8 @@ static int tas2781_hda_i2c_probe(struct i2c_client *clt)
- 	if (!tas_priv)
- 		return -ENOMEM;
+@@ -65,6 +65,15 @@ enum calib_data {
+ 	CALIB_MAX
+ };
  
-+	dev_set_drvdata(&clt->dev, tas_priv);
++struct tas2781_hda {
++	struct device *dev;
++	struct tasdevice_priv *priv;
++	struct snd_kcontrol *dsp_prog_ctl;
++	struct snd_kcontrol *dsp_conf_ctl;
++	struct snd_kcontrol *prof_ctl;
++	struct snd_kcontrol *snd_ctls[3];
++};
 +
- 	tas_priv->irq_info.irq = clt->irq;
- 	ret = tas2781_read_acpi(tas_priv, device_name);
+ static int tas2781_get_i2c_res(struct acpi_resource *ares, void *data)
+ {
+ 	struct tasdevice_priv *tas_priv = data;
+@@ -125,26 +134,26 @@ static int tas2781_read_acpi(struct tasdevice_priv *p, const char *hid)
+ 
+ static void tas2781_hda_playback_hook(struct device *dev, int action)
+ {
+-	struct tasdevice_priv *tas_priv = dev_get_drvdata(dev);
++	struct tas2781_hda *tas_hda = dev_get_drvdata(dev);
+ 
+-	dev_dbg(tas_priv->dev, "%s: action = %d\n", __func__, action);
++	dev_dbg(tas_hda->dev, "%s: action = %d\n", __func__, action);
+ 	switch (action) {
+ 	case HDA_GEN_PCM_ACT_OPEN:
+ 		pm_runtime_get_sync(dev);
+-		mutex_lock(&tas_priv->codec_lock);
+-		tasdevice_tuning_switch(tas_priv, 0);
+-		mutex_unlock(&tas_priv->codec_lock);
++		mutex_lock(&tas_hda->priv->codec_lock);
++		tasdevice_tuning_switch(tas_hda->priv, 0);
++		mutex_unlock(&tas_hda->priv->codec_lock);
+ 		break;
+ 	case HDA_GEN_PCM_ACT_CLOSE:
+-		mutex_lock(&tas_priv->codec_lock);
+-		tasdevice_tuning_switch(tas_priv, 1);
+-		mutex_unlock(&tas_priv->codec_lock);
++		mutex_lock(&tas_hda->priv->codec_lock);
++		tasdevice_tuning_switch(tas_hda->priv, 1);
++		mutex_unlock(&tas_hda->priv->codec_lock);
+ 
+ 		pm_runtime_mark_last_busy(dev);
+ 		pm_runtime_put_autosuspend(dev);
+ 		break;
+ 	default:
+-		dev_dbg(tas_priv->dev, "Playback action not supported: %d\n",
++		dev_dbg(tas_hda->dev, "Playback action not supported: %d\n",
+ 			action);
+ 		break;
+ 	}
+@@ -477,9 +486,28 @@ static int tas2781_save_calibration(struct tasdevice_priv *tas_priv)
+ 	return 0;
+ }
+ 
++static void tas2781_hda_remove_controls(struct tas2781_hda *tas_hda)
++{
++	struct hda_codec *codec = tas_hda->priv->codec;
++
++	if (tas_hda->dsp_prog_ctl)
++		snd_ctl_remove(codec->card, tas_hda->dsp_prog_ctl);
++
++	if (tas_hda->dsp_conf_ctl)
++		snd_ctl_remove(codec->card, tas_hda->dsp_conf_ctl);
++
++	for (int i = ARRAY_SIZE(tas_hda->snd_ctls) - 1; i >= 0; i--)
++		if (tas_hda->snd_ctls[i])
++			snd_ctl_remove(codec->card, tas_hda->snd_ctls[i]);
++
++	if (tas_hda->prof_ctl)
++		snd_ctl_remove(codec->card, tas_hda->prof_ctl);
++}
++
+ static void tasdev_fw_ready(const struct firmware *fmw, void *context)
+ {
+ 	struct tasdevice_priv *tas_priv = context;
++	struct tas2781_hda *tas_hda = dev_get_drvdata(tas_priv->dev);
+ 	struct hda_codec *codec = tas_priv->codec;
+ 	int i, ret;
+ 
+@@ -490,8 +518,8 @@ static void tasdev_fw_ready(const struct firmware *fmw, void *context)
  	if (ret)
-diff --git a/sound/soc/codecs/tas2781-comlib.c b/sound/soc/codecs/tas2781-comlib.c
-index 933cd008e9f5..00e35169ae49 100644
---- a/sound/soc/codecs/tas2781-comlib.c
-+++ b/sound/soc/codecs/tas2781-comlib.c
-@@ -316,8 +316,6 @@ int tasdevice_init(struct tasdevice_priv *tas_priv)
- 		tas_priv->tasdevice[i].cur_conf = -1;
+ 		goto out;
+ 
+-	ret = snd_ctl_add(codec->card,
+-		snd_ctl_new1(&tas2781_prof_ctrl, tas_priv));
++	tas_hda->prof_ctl = snd_ctl_new1(&tas2781_prof_ctrl, tas_priv);
++	ret = snd_ctl_add(codec->card, tas_hda->prof_ctl);
+ 	if (ret) {
+ 		dev_err(tas_priv->dev,
+ 			"Failed to add KControl %s = %d\n",
+@@ -500,8 +528,9 @@ static void tasdev_fw_ready(const struct firmware *fmw, void *context)
  	}
  
--	dev_set_drvdata(tas_priv->dev, tas_priv);
--
- 	mutex_init(&tas_priv->codec_lock);
+ 	for (i = 0; i < ARRAY_SIZE(tas2781_snd_controls); i++) {
+-		ret = snd_ctl_add(codec->card,
+-			snd_ctl_new1(&tas2781_snd_controls[i], tas_priv));
++		tas_hda->snd_ctls[i] = snd_ctl_new1(&tas2781_snd_controls[i],
++			tas_priv);
++		ret = snd_ctl_add(codec->card, tas_hda->snd_ctls[i]);
+ 		if (ret) {
+ 			dev_err(tas_priv->dev,
+ 				"Failed to add KControl %s = %d\n",
+@@ -523,8 +552,9 @@ static void tasdev_fw_ready(const struct firmware *fmw, void *context)
+ 		goto out;
+ 	}
+ 
+-	ret = snd_ctl_add(codec->card,
+-		snd_ctl_new1(&tas2781_dsp_prog_ctrl, tas_priv));
++	tas_hda->dsp_prog_ctl = snd_ctl_new1(&tas2781_dsp_prog_ctrl,
++		tas_priv);
++	ret = snd_ctl_add(codec->card, tas_hda->dsp_prog_ctl);
+ 	if (ret) {
+ 		dev_err(tas_priv->dev,
+ 			"Failed to add KControl %s = %d\n",
+@@ -532,8 +562,9 @@ static void tasdev_fw_ready(const struct firmware *fmw, void *context)
+ 		goto out;
+ 	}
+ 
+-	ret = snd_ctl_add(codec->card,
+-		snd_ctl_new1(&tas2781_dsp_conf_ctrl, tas_priv));
++	tas_hda->dsp_conf_ctl = snd_ctl_new1(&tas2781_dsp_conf_ctrl,
++		tas_priv);
++	ret = snd_ctl_add(codec->card, tas_hda->dsp_conf_ctl);
+ 	if (ret) {
+ 		dev_err(tas_priv->dev,
+ 			"Failed to add KControl %s = %d\n",
+@@ -554,27 +585,27 @@ static void tasdev_fw_ready(const struct firmware *fmw, void *context)
+ 	tas2781_save_calibration(tas_priv);
  
  out:
-diff --git a/sound/soc/codecs/tas2781-i2c.c b/sound/soc/codecs/tas2781-i2c.c
-index 55cd5e3c23a5..917b1c15f71d 100644
---- a/sound/soc/codecs/tas2781-i2c.c
-+++ b/sound/soc/codecs/tas2781-i2c.c
-@@ -689,6 +689,8 @@ static int tasdevice_i2c_probe(struct i2c_client *i2c)
- 	if (!tas_priv)
+-	mutex_unlock(&tas_priv->codec_lock);
++	mutex_unlock(&tas_hda->priv->codec_lock);
+ 	if (fmw)
+ 		release_firmware(fmw);
+-	pm_runtime_mark_last_busy(tas_priv->dev);
+-	pm_runtime_put_autosuspend(tas_priv->dev);
++	pm_runtime_mark_last_busy(tas_hda->dev);
++	pm_runtime_put_autosuspend(tas_hda->dev);
+ }
+ 
+ static int tas2781_hda_bind(struct device *dev, struct device *master,
+ 	void *master_data)
+ {
+-	struct tasdevice_priv *tas_priv = dev_get_drvdata(dev);
++	struct tas2781_hda *tas_hda = dev_get_drvdata(dev);
+ 	struct hda_component *comps = master_data;
+ 	struct hda_codec *codec;
+ 	unsigned int subid;
+ 	int ret;
+ 
+-	if (!comps || tas_priv->index < 0 ||
+-		tas_priv->index >= HDA_MAX_COMPONENTS)
++	if (!comps || tas_hda->priv->index < 0 ||
++		tas_hda->priv->index >= HDA_MAX_COMPONENTS)
+ 		return -EINVAL;
+ 
+-	comps = &comps[tas_priv->index];
++	comps = &comps[tas_hda->priv->index];
+ 	if (comps->dev)
+ 		return -EBUSY;
+ 
+@@ -583,10 +614,10 @@ static int tas2781_hda_bind(struct device *dev, struct device *master,
+ 
+ 	switch (subid) {
+ 	case 0x17aa:
+-		tas_priv->catlog_id = LENOVO;
++		tas_hda->priv->catlog_id = LENOVO;
+ 		break;
+ 	default:
+-		tas_priv->catlog_id = OTHERS;
++		tas_hda->priv->catlog_id = OTHERS;
+ 		break;
+ 	}
+ 
+@@ -596,7 +627,7 @@ static int tas2781_hda_bind(struct device *dev, struct device *master,
+ 
+ 	strscpy(comps->name, dev_name(dev), sizeof(comps->name));
+ 
+-	ret = tascodec_init(tas_priv, codec, tasdev_fw_ready);
++	ret = tascodec_init(tas_hda->priv, codec, tasdev_fw_ready);
+ 	if (!ret)
+ 		comps->playback_hook = tas2781_hda_playback_hook;
+ 
+@@ -609,9 +640,9 @@ static int tas2781_hda_bind(struct device *dev, struct device *master,
+ static void tas2781_hda_unbind(struct device *dev,
+ 	struct device *master, void *master_data)
+ {
+-	struct tasdevice_priv *tas_priv = dev_get_drvdata(dev);
++	struct tas2781_hda *tas_hda = dev_get_drvdata(dev);
+ 	struct hda_component *comps = master_data;
+-	comps = &comps[tas_priv->index];
++	comps = &comps[tas_hda->priv->index];
+ 
+ 	if (comps->dev == dev) {
+ 		comps->dev = NULL;
+@@ -619,10 +650,12 @@ static void tas2781_hda_unbind(struct device *dev,
+ 		comps->playback_hook = NULL;
+ 	}
+ 
+-	tasdevice_config_info_remove(tas_priv);
+-	tasdevice_dsp_remove(tas_priv);
++	tas2781_hda_remove_controls(tas_hda);
+ 
+-	tas_priv->fw_state = TASDEVICE_DSP_FW_PENDING;
++	tasdevice_config_info_remove(tas_hda->priv);
++	tasdevice_dsp_remove(tas_hda->priv);
++
++	tas_hda->priv->fw_state = TASDEVICE_DSP_FW_PENDING;
+ }
+ 
+ static const struct component_ops tas2781_hda_comp_ops = {
+@@ -632,21 +665,21 @@ static const struct component_ops tas2781_hda_comp_ops = {
+ 
+ static void tas2781_hda_remove(struct device *dev)
+ {
+-	struct tasdevice_priv *tas_priv = dev_get_drvdata(dev);
++	struct tas2781_hda *tas_hda = dev_get_drvdata(dev);
+ 
+-	pm_runtime_get_sync(tas_priv->dev);
+-	pm_runtime_disable(tas_priv->dev);
++	pm_runtime_get_sync(tas_hda->dev);
++	pm_runtime_disable(tas_hda->dev);
+ 
+-	component_del(tas_priv->dev, &tas2781_hda_comp_ops);
++	component_del(tas_hda->dev, &tas2781_hda_comp_ops);
+ 
+-	pm_runtime_put_noidle(tas_priv->dev);
++	pm_runtime_put_noidle(tas_hda->dev);
+ 
+-	tasdevice_remove(tas_priv);
++	tasdevice_remove(tas_hda->priv);
+ }
+ 
+ static int tas2781_hda_i2c_probe(struct i2c_client *clt)
+ {
+-	struct tasdevice_priv *tas_priv;
++	struct tas2781_hda *tas_hda;
+ 	const char *device_name;
+ 	int ret;
+ 
+@@ -655,37 +688,42 @@ static int tas2781_hda_i2c_probe(struct i2c_client *clt)
+ 	else
+ 		return -ENODEV;
+ 
+-	tas_priv = tasdevice_kzalloc(clt);
+-	if (!tas_priv)
++	tas_hda = devm_kzalloc(&clt->dev, sizeof(*tas_hda), GFP_KERNEL);
++	if (!tas_hda)
  		return -ENOMEM;
  
-+	dev_set_drvdata(&i2c->dev, tas_priv);
+-	dev_set_drvdata(&clt->dev, tas_priv);
++	dev_set_drvdata(&clt->dev, tas_hda);
++	tas_hda->dev = &clt->dev;
+ 
+-	tas_priv->irq_info.irq = clt->irq;
+-	ret = tas2781_read_acpi(tas_priv, device_name);
++	tas_hda->priv = tasdevice_kzalloc(clt);
++	if (!tas_hda->priv)
++		return -ENOMEM;
 +
- 	if (ACPI_HANDLE(&i2c->dev)) {
- 		acpi_id = acpi_match_device(i2c->dev.driver->acpi_match_table,
- 				&i2c->dev);
++	tas_hda->priv->irq_info.irq = clt->irq;
++	ret = tas2781_read_acpi(tas_hda->priv, device_name);
+ 	if (ret)
+-		return dev_err_probe(tas_priv->dev, ret,
++		return dev_err_probe(tas_hda->dev, ret,
+ 			"Platform not supported\n");
+ 
+-	ret = tasdevice_init(tas_priv);
++	ret = tasdevice_init(tas_hda->priv);
+ 	if (ret)
+ 		goto err;
+ 
+-	pm_runtime_set_autosuspend_delay(tas_priv->dev, 3000);
+-	pm_runtime_use_autosuspend(tas_priv->dev);
+-	pm_runtime_mark_last_busy(tas_priv->dev);
+-	pm_runtime_set_active(tas_priv->dev);
+-	pm_runtime_get_noresume(tas_priv->dev);
+-	pm_runtime_enable(tas_priv->dev);
++	pm_runtime_set_autosuspend_delay(tas_hda->dev, 3000);
++	pm_runtime_use_autosuspend(tas_hda->dev);
++	pm_runtime_mark_last_busy(tas_hda->dev);
++	pm_runtime_set_active(tas_hda->dev);
++	pm_runtime_get_noresume(tas_hda->dev);
++	pm_runtime_enable(tas_hda->dev);
+ 
+-	pm_runtime_put_autosuspend(tas_priv->dev);
++	pm_runtime_put_autosuspend(tas_hda->dev);
+ 
+-	tas2781_reset(tas_priv);
++	tas2781_reset(tas_hda->priv);
+ 
+-	ret = component_add(tas_priv->dev, &tas2781_hda_comp_ops);
++	ret = component_add(tas_hda->dev, &tas2781_hda_comp_ops);
+ 	if (ret) {
+-		dev_err(tas_priv->dev, "Register component failed: %d\n", ret);
+-		pm_runtime_disable(tas_priv->dev);
++		dev_err(tas_hda->dev, "Register component failed: %d\n", ret);
++		pm_runtime_disable(tas_hda->dev);
+ 	}
+ 
+ err:
+@@ -701,66 +739,65 @@ static void tas2781_hda_i2c_remove(struct i2c_client *clt)
+ 
+ static int tas2781_runtime_suspend(struct device *dev)
+ {
+-	struct tasdevice_priv *tas_priv = dev_get_drvdata(dev);
++	struct tas2781_hda *tas_hda = dev_get_drvdata(dev);
+ 	int i;
+ 
+-	dev_dbg(tas_priv->dev, "Runtime Suspend\n");
++	dev_dbg(tas_hda->dev, "Runtime Suspend\n");
+ 
+-	mutex_lock(&tas_priv->codec_lock);
++	mutex_lock(&tas_hda->priv->codec_lock);
+ 
+-	if (tas_priv->playback_started) {
+-		tasdevice_tuning_switch(tas_priv, 1);
+-		tas_priv->playback_started = false;
++	if (tas_hda->priv->playback_started) {
++		tasdevice_tuning_switch(tas_hda->priv, 1);
++		tas_hda->priv->playback_started = false;
+ 	}
+ 
+-	for (i = 0; i < tas_priv->ndev; i++) {
+-		tas_priv->tasdevice[i].cur_book = -1;
+-		tas_priv->tasdevice[i].cur_prog = -1;
+-		tas_priv->tasdevice[i].cur_conf = -1;
++	for (i = 0; i < tas_hda->priv->ndev; i++) {
++		tas_hda->priv->tasdevice[i].cur_book = -1;
++		tas_hda->priv->tasdevice[i].cur_prog = -1;
++		tas_hda->priv->tasdevice[i].cur_conf = -1;
+ 	}
+ 
+-
+-	mutex_unlock(&tas_priv->codec_lock);
++	mutex_unlock(&tas_hda->priv->codec_lock);
+ 
+ 	return 0;
+ }
+ 
+ static int tas2781_runtime_resume(struct device *dev)
+ {
+-	struct tasdevice_priv *tas_priv = dev_get_drvdata(dev);
++	struct tas2781_hda *tas_hda = dev_get_drvdata(dev);
+ 	unsigned long calib_data_sz =
+-		tas_priv->ndev * TASDEVICE_SPEAKER_CALIBRATION_SIZE;
++		tas_hda->priv->ndev * TASDEVICE_SPEAKER_CALIBRATION_SIZE;
+ 
+-	dev_dbg(tas_priv->dev, "Runtime Resume\n");
++	dev_dbg(tas_hda->dev, "Runtime Resume\n");
+ 
+-	mutex_lock(&tas_priv->codec_lock);
++	mutex_lock(&tas_hda->priv->codec_lock);
+ 
+-	tasdevice_prmg_load(tas_priv, tas_priv->cur_prog);
++	tasdevice_prmg_load(tas_hda->priv, tas_hda->priv->cur_prog);
+ 
+ 	/* If calibrated data occurs error, dsp will still works with default
+ 	 * calibrated data inside algo.
+ 	 */
+-	if (tas_priv->cali_data.total_sz > calib_data_sz)
+-		tas2781_apply_calib(tas_priv);
++	if (tas_hda->priv->cali_data.total_sz > calib_data_sz)
++		tas2781_apply_calib(tas_hda->priv);
+ 
+-	mutex_unlock(&tas_priv->codec_lock);
++	mutex_unlock(&tas_hda->priv->codec_lock);
+ 
+ 	return 0;
+ }
+ 
+ static int tas2781_system_suspend(struct device *dev)
+ {
+-	struct tasdevice_priv *tas_priv = dev_get_drvdata(dev);
++	struct tas2781_hda *tas_hda = dev_get_drvdata(dev);
+ 	int ret;
+ 
+-	dev_dbg(tas_priv->dev, "System Suspend\n");
++	dev_dbg(tas_hda->priv->dev, "System Suspend\n");
+ 
+ 	ret = pm_runtime_force_suspend(dev);
+ 	if (ret)
+ 		return ret;
+ 
+ 	/* Shutdown chip before system suspend */
+-	tasdevice_tuning_switch(tas_priv, 1);
++	tasdevice_tuning_switch(tas_hda->priv, 1);
+ 
+ 	/*
+ 	 * Reset GPIO may be shared, so cannot reset here.
+@@ -771,33 +808,33 @@ static int tas2781_system_suspend(struct device *dev)
+ 
+ static int tas2781_system_resume(struct device *dev)
+ {
+-	struct tasdevice_priv *tas_priv = dev_get_drvdata(dev);
++	struct tas2781_hda *tas_hda = dev_get_drvdata(dev);
+ 	unsigned long calib_data_sz =
+-		tas_priv->ndev * TASDEVICE_SPEAKER_CALIBRATION_SIZE;
++		tas_hda->priv->ndev * TASDEVICE_SPEAKER_CALIBRATION_SIZE;
+ 	int i, ret;
+ 
+-	dev_dbg(tas_priv->dev, "System Resume\n");
++	dev_info(tas_hda->priv->dev, "System Resume\n");
+ 
+ 	ret = pm_runtime_force_resume(dev);
+ 	if (ret)
+ 		return ret;
+ 
+-	mutex_lock(&tas_priv->codec_lock);
++	mutex_lock(&tas_hda->priv->codec_lock);
+ 
+-	for (i = 0; i < tas_priv->ndev; i++) {
+-		tas_priv->tasdevice[i].cur_book = -1;
+-		tas_priv->tasdevice[i].cur_prog = -1;
+-		tas_priv->tasdevice[i].cur_conf = -1;
++	for (i = 0; i < tas_hda->priv->ndev; i++) {
++		tas_hda->priv->tasdevice[i].cur_book = -1;
++		tas_hda->priv->tasdevice[i].cur_prog = -1;
++		tas_hda->priv->tasdevice[i].cur_conf = -1;
+ 	}
+-	tas2781_reset(tas_priv);
+-	tasdevice_prmg_load(tas_priv, tas_priv->cur_prog);
++	tas2781_reset(tas_hda->priv);
++	tasdevice_prmg_load(tas_hda->priv, tas_hda->priv->cur_prog);
+ 
+ 	/* If calibrated data occurs error, dsp will still work with default
+ 	 * calibrated data inside algo.
+ 	 */
+-	if (tas_priv->cali_data.total_sz > calib_data_sz)
+-		tas2781_apply_calib(tas_priv);
+-	mutex_unlock(&tas_priv->codec_lock);
++	if (tas_hda->priv->cali_data.total_sz > calib_data_sz)
++		tas2781_apply_calib(tas_hda->priv);
++	mutex_unlock(&tas_hda->priv->codec_lock);
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
