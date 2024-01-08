@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6892E4C3A9;
-	Mon,  8 Jan 2024 15:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FBD6D6DC;
+	Mon,  8 Jan 2024 15:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhf8WrBv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE9BC433CB;
-	Mon,  8 Jan 2024 15:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dteWTncv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44FCC433C7;
+	Mon,  8 Jan 2024 15:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726804;
-	bh=qr0NuEnogppl1m4zV/8xv7AGfjwOoP+6F4drMVKFags=;
+	s=korg; t=1704726807;
+	bh=SoEhxISkJZsFkwz/4BtLiWj4MLHYtkLyfxSNc3ATs04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yhf8WrBvH3vtaxds96frxldgbOlRlCbThTfD8s1bnGwDntUsLHpYJposZ3CYz6dvD
-	 pRPKrnvzJXpoS1iCo5HG3tYxArwOMqlKA1rVFlph2yj3m0mnNcbXcSv/NEyU/BsXKS
-	 834YhkUqtXiHxU4y3bxFF/l1wiNCV+Ph5x33J+gM=
+	b=dteWTncvnDf8t1pSuPmbglM/M/SoeuyhtIeHmS95UZh1Pesl01RxJ2Qs3xmQGjuqd
+	 fJ7kk/FUClaemSYgkncE2GUbRKa4xPjyB0oSFoNTmyZ5Cyu8HZQiqDF4IP8xnwYGHC
+	 LdSI7fFKu/c/1aiRATcDqVUDYGpBdyCe2zEKHXhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 082/124] riscv: dont probe unaligned access speed if already done
-Date: Mon,  8 Jan 2024 16:08:28 +0100
-Message-ID: <20240108150606.752169778@linuxfoundation.org>
+Subject: [PATCH 6.6 055/124] net/qla3xxx: fix potential memleak in ql_alloc_buffer_queues
+Date: Mon,  8 Jan 2024 16:08:01 +0100
+Message-ID: <20240108150605.494571140@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -43,40 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit c20d36cc2a2073d4cdcda92bd7a1bb9b3b3b7c79 ]
+[ Upstream commit 89f45c30172c80e55c887f32f1af8e184124577b ]
 
-If misaligned_access_speed percpu var isn't so called "HWPROBE
-MISALIGNED UNKNOWN", it means the probe has happened(this is possible
-for example, hotplug off then hotplug on one cpu), and the percpu var
-has been set, don't probe again in this case.
+When dma_alloc_coherent() fails, we should free qdev->lrg_buf
+to prevent potential memleak.
 
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Fixes: 584ea6564bca ("RISC-V: Probe for unaligned access speed")
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20230912154040.3306-1-jszhang@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 1357bfcf7106 ("qla3xxx: Dynamically size the rx buffer queue based on the MTU.")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Link: https://lore.kernel.org/r/20231227070227.10527-1-dinghao.liu@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/cpufeature.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/qlogic/qla3xxx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
-index 1cfbba65d11ae..e12cd22755c78 100644
---- a/arch/riscv/kernel/cpufeature.c
-+++ b/arch/riscv/kernel/cpufeature.c
-@@ -568,6 +568,10 @@ void check_unaligned_access(int cpu)
- 	void *src;
- 	long speed = RISCV_HWPROBE_MISALIGNED_SLOW;
+diff --git a/drivers/net/ethernet/qlogic/qla3xxx.c b/drivers/net/ethernet/qlogic/qla3xxx.c
+index 0d57ffcedf0c6..fc78bc959ded8 100644
+--- a/drivers/net/ethernet/qlogic/qla3xxx.c
++++ b/drivers/net/ethernet/qlogic/qla3xxx.c
+@@ -2591,6 +2591,7 @@ static int ql_alloc_buffer_queues(struct ql3_adapter *qdev)
  
-+	/* We are already set since the last check */
-+	if (per_cpu(misaligned_access_speed, cpu) != RISCV_HWPROBE_MISALIGNED_UNKNOWN)
-+		return;
-+
- 	page = alloc_pages(GFP_NOWAIT, get_order(MISALIGNED_BUFFER_SIZE));
- 	if (!page) {
- 		pr_warn("Can't alloc pages to measure memcpy performance");
+ 	if (qdev->lrg_buf_q_alloc_virt_addr == NULL) {
+ 		netdev_err(qdev->ndev, "lBufQ failed\n");
++		kfree(qdev->lrg_buf);
+ 		return -ENOMEM;
+ 	}
+ 	qdev->lrg_buf_q_virt_addr = qdev->lrg_buf_q_alloc_virt_addr;
+@@ -2615,6 +2616,7 @@ static int ql_alloc_buffer_queues(struct ql3_adapter *qdev)
+ 				  qdev->lrg_buf_q_alloc_size,
+ 				  qdev->lrg_buf_q_alloc_virt_addr,
+ 				  qdev->lrg_buf_q_alloc_phy_addr);
++		kfree(qdev->lrg_buf);
+ 		return -ENOMEM;
+ 	}
+ 
 -- 
 2.43.0
 
