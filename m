@@ -1,41 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A996D4C634;
-	Mon,  8 Jan 2024 15:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCFB4C634;
+	Mon,  8 Jan 2024 15:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLGa1N8X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96657C433C8;
-	Mon,  8 Jan 2024 15:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eygXTwb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3AABC433C9;
+	Mon,  8 Jan 2024 15:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726569;
-	bh=U8KTyiuURqxpvOuhz5nzfh41N7zc3R/4ZtWh7oCsuKc=;
+	s=korg; t=1704726572;
+	bh=EAL6veoL5CQb6D7ZZ8q87zAkjxUD4sWgYXg/aWWqeak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GLGa1N8XSMtryKyBEAKbjCjLxW/W89NU2z3RloSYt7wlY3sY7tSiqWwmuKaie7eUu
-	 Hit95/SNOPJoPMyuv1/9dZW8+g8lcyWkepQnMcpUOuk8+fuauJfjOFfO6wH6S01IX5
-	 RJphz/TpPjLts/otHlbDhiFM5UdaS6tZahG5mtIs=
+	b=eygXTwb2JONrMIWqCa0uypJDPxWsU3KoQa1n2D0NlEc3atdhzL4eDOiGi29Vf9vi8
+	 UnT71suSdlyrcS4S44qjqG5KMf0/giJuxQyvjTv3Q5MKeAsK+kE7pvlv2lGjinLtPs
+	 EWbNPk0KBCS0aREY2r1EmvG/6Om8I4Z7iWGDNkUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Edward Adam Davis <eadavis@qq.com>,
-	David Howells <dhowells@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Jeffrey E Altman <jaltman@auristor.com>,
-	Wang Lei <wang840925@gmail.com>,
-	Jeff Layton <jlayton@redhat.com>,
-	Steve French <sfrench@us.ibm.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	syzbot+94bbb75204a05da3d89f@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 001/124] keys, dns: Fix missing size check of V1 server-list header
-Date: Mon,  8 Jan 2024 16:07:07 +0100
-Message-ID: <20240108150603.039085545@linuxfoundation.org>
+	Michael Schaller <michael@5challer.de>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.6 010/124] Revert "PCI/ASPM: Remove pcie_aspm_pm_state_change()"
+Date: Mon,  8 Jan 2024 16:07:16 +0100
+Message-ID: <20240108150603.445015618@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -54,114 +41,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-commit 1997b3cb4217b09e49659b634c94da47f0340409 upstream.
+commit f93e71aea6c60ebff8adbd8941e678302d377869 upstream.
 
-The dns_resolver_preparse() function has a check on the size of the
-payload for the basic header of the binary-style payload, but is missing
-a check for the size of the V1 server-list payload header after
-determining that's what we've been given.
+This reverts commit 08d0cc5f34265d1a1e3031f319f594bd1970976c.
 
-Fix this by getting rid of the the pointer to the basic header and just
-assuming that we have a V1 server-list payload and moving the V1 server
-list pointer inside the if-statement.  Dealing with other types and
-versions can be left for when such have been defined.
+Michael reported that when attempting to resume from suspend to RAM on ASUS
+mini PC PN51-BB757MDE1 (DMI model: MINIPC PN51-E1), 08d0cc5f3426
+("PCI/ASPM: Remove pcie_aspm_pm_state_change()") caused a 12-second delay
+with no output, followed by a reboot.
 
-This can be tested by doing the following with KASAN enabled:
+Workarounds include:
 
-    echo -n -e '\x0\x0\x1\x2' | keyctl padd dns_resolver foo @p
+  - Reverting 08d0cc5f3426 ("PCI/ASPM: Remove pcie_aspm_pm_state_change()")
+  - Booting with "pcie_aspm=off"
+  - Booting with "pcie_aspm.policy=performance"
+  - "echo 0 | sudo tee /sys/bus/pci/devices/0000:03:00.0/link/l1_aspm"
+    before suspending
+  - Connecting a USB flash drive
 
-and produces an oops like the following:
-
-    BUG: KASAN: slab-out-of-bounds in dns_resolver_preparse+0xc9f/0xd60 net/dns_resolver/dns_key.c:127
-    Read of size 1 at addr ffff888028894084 by task syz-executor265/5069
-    ...
-    Call Trace:
-      dns_resolver_preparse+0xc9f/0xd60 net/dns_resolver/dns_key.c:127
-      __key_create_or_update+0x453/0xdf0 security/keys/key.c:842
-      key_create_or_update+0x42/0x50 security/keys/key.c:1007
-      __do_sys_add_key+0x29c/0x450 security/keys/keyctl.c:134
-      do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-      do_syscall_64+0x40/0x110 arch/x86/entry/common.c:83
-      entry_SYSCALL_64_after_hwframe+0x62/0x6a
-
-This patch was originally by Edward Adam Davis, but was modified by
-Linus.
-
-Fixes: b946001d3bb1 ("keys, dns: Allow key types (eg. DNS) to be reclaimed immediately on expiry")
-Reported-and-tested-by: syzbot+94bbb75204a05da3d89f@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/0000000000009b39bc060c73e209@google.com/
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Tested-by: David Howells <dhowells@redhat.com>
-Cc: Edward Adam Davis <eadavis@qq.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: Jeffrey E Altman <jaltman@auristor.com>
-Cc: Wang Lei <wang840925@gmail.com>
-Cc: Jeff Layton <jlayton@redhat.com>
-Cc: Steve French <sfrench@us.ibm.com>
-Cc: Marc Dionne <marc.dionne@auristor.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Jeffrey E Altman <jaltman@auristor.com>
+Link: https://lore.kernel.org/r/20240102232550.1751655-1-helgaas@kernel.org
+Fixes: 08d0cc5f3426 ("PCI/ASPM: Remove pcie_aspm_pm_state_change()")
+Reported-by: Michael Schaller <michael@5challer.de>
+Link: https://lore.kernel.org/r/76c61361-b8b4-435f-a9f1-32b716763d62@5challer.de
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dns_resolver/dns_key.c |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/pci/pci.c       |    6 ++++++
+ drivers/pci/pci.h       |    2 ++
+ drivers/pci/pcie/aspm.c |   19 +++++++++++++++++++
+ 3 files changed, 27 insertions(+)
 
---- a/net/dns_resolver/dns_key.c
-+++ b/net/dns_resolver/dns_key.c
-@@ -91,8 +91,6 @@ const struct cred *dns_resolver_cache;
- static int
- dns_resolver_preparse(struct key_preparsed_payload *prep)
- {
--	const struct dns_server_list_v1_header *v1;
--	const struct dns_payload_header *bin;
- 	struct user_key_payload *upayload;
- 	unsigned long derrno;
- 	int ret;
-@@ -103,27 +101,28 @@ dns_resolver_preparse(struct key_prepars
- 		return -EINVAL;
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -1335,6 +1335,9 @@ static int pci_set_full_power_state(stru
+ 		pci_restore_bars(dev);
+ 	}
  
- 	if (data[0] == 0) {
-+		const struct dns_server_list_v1_header *v1;
++	if (dev->bus->self)
++		pcie_aspm_pm_state_change(dev->bus->self);
 +
- 		/* It may be a server list. */
--		if (datalen <= sizeof(*bin))
-+		if (datalen <= sizeof(*v1))
- 			return -EINVAL;
+ 	return 0;
+ }
  
--		bin = (const struct dns_payload_header *)data;
--		kenter("[%u,%u],%u", bin->content, bin->version, datalen);
--		if (bin->content != DNS_PAYLOAD_IS_SERVER_LIST) {
-+		v1 = (const struct dns_server_list_v1_header *)data;
-+		kenter("[%u,%u],%u", v1->hdr.content, v1->hdr.version, datalen);
-+		if (v1->hdr.content != DNS_PAYLOAD_IS_SERVER_LIST) {
- 			pr_warn_ratelimited(
- 				"dns_resolver: Unsupported content type (%u)\n",
--				bin->content);
-+				v1->hdr.content);
- 			return -EINVAL;
- 		}
+@@ -1429,6 +1432,9 @@ static int pci_set_low_power_state(struc
+ 				     pci_power_name(dev->current_state),
+ 				     pci_power_name(state));
  
--		if (bin->version != 1) {
-+		if (v1->hdr.version != 1) {
- 			pr_warn_ratelimited(
- 				"dns_resolver: Unsupported server list version (%u)\n",
--				bin->version);
-+				v1->hdr.version);
- 			return -EINVAL;
- 		}
++	if (dev->bus->self)
++		pcie_aspm_pm_state_change(dev->bus->self);
++
+ 	return 0;
+ }
  
--		v1 = (const struct dns_server_list_v1_header *)bin;
- 		if ((v1->status != DNS_LOOKUP_GOOD &&
- 		     v1->status != DNS_LOOKUP_GOOD_WITH_BAD)) {
- 			if (prep->expiry == TIME64_MAX)
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -566,10 +566,12 @@ int pcie_retrain_link(struct pci_dev *pd
+ #ifdef CONFIG_PCIEASPM
+ void pcie_aspm_init_link_state(struct pci_dev *pdev);
+ void pcie_aspm_exit_link_state(struct pci_dev *pdev);
++void pcie_aspm_pm_state_change(struct pci_dev *pdev);
+ void pcie_aspm_powersave_config_link(struct pci_dev *pdev);
+ #else
+ static inline void pcie_aspm_init_link_state(struct pci_dev *pdev) { }
+ static inline void pcie_aspm_exit_link_state(struct pci_dev *pdev) { }
++static inline void pcie_aspm_pm_state_change(struct pci_dev *pdev) { }
+ static inline void pcie_aspm_powersave_config_link(struct pci_dev *pdev) { }
+ #endif
+ 
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -1001,6 +1001,25 @@ void pcie_aspm_exit_link_state(struct pc
+ 	up_read(&pci_bus_sem);
+ }
+ 
++/* @pdev: the root port or switch downstream port */
++void pcie_aspm_pm_state_change(struct pci_dev *pdev)
++{
++	struct pcie_link_state *link = pdev->link_state;
++
++	if (aspm_disabled || !link)
++		return;
++	/*
++	 * Devices changed PM state, we should recheck if latency
++	 * meets all functions' requirement
++	 */
++	down_read(&pci_bus_sem);
++	mutex_lock(&aspm_lock);
++	pcie_update_aspm_capable(link->root);
++	pcie_config_aspm_path(link);
++	mutex_unlock(&aspm_lock);
++	up_read(&pci_bus_sem);
++}
++
+ void pcie_aspm_powersave_config_link(struct pci_dev *pdev)
+ {
+ 	struct pcie_link_state *link = pdev->link_state;
 
 
