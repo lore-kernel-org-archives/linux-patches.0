@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F73D51C2B;
-	Mon,  8 Jan 2024 15:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7D1524A1;
+	Mon,  8 Jan 2024 15:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19GjtB/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06325C433CC;
-	Mon,  8 Jan 2024 15:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UyJ+IGKU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8BFC433CA;
+	Mon,  8 Jan 2024 15:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728628;
-	bh=8kwHVdOBEB/6yozIC1ff08cSXoOK6mLFovf3RKUW5ns=;
+	s=korg; t=1704728631;
+	bh=4yO8z7EJIcXnVAPN7cV8fRHi5hbBGzY6BSbu16AI8Gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19GjtB/P2Ee/KCGnl/OVVKka0KgyKDWaMN2k8XlIye9e4B2/bLclnhwkrJgmmIKGQ
-	 tbVwZ1wGY+/EgDsnFaZFDVvPNCQWfO6Gv95+/2vcOekjiJOGBHoJIua76fPY/SeWHW
-	 sNTT4ejKNeto+6Cl4MxnT70xUjWNSkHr7eczI9gM=
+	b=UyJ+IGKUl2nzxI5HCxYQqhVHrQLlwFl0xFWakTbynhL/DZzreRNGapCzKvdFO76y3
+	 Xvs55mEwHwvMMQzMFR5MU/PcLJcB4vxdAuYbvknex3/EaycqZsq6p6bJtaTkCZj0zb
+	 XQ6iNu7y/X5x+4QtI8Zw3Esl/hDq4bzqVySlZJuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 137/150] drm/amd/display: add nv12 bounding box
-Date: Mon,  8 Jan 2024 16:36:28 +0100
-Message-ID: <20240108153517.509030497@linuxfoundation.org>
+	Ziyang Huang <hzyitc@outlook.com>,
+	Anand Moon <linux.amoon@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 138/150] mmc: meson-mx-sdhc: Fix initialization frozen issue
+Date: Mon,  8 Jan 2024 16:36:29 +0100
+Message-ID: <20240108153517.550692476@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -41,140 +42,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Ziyang Huang <hzyitc@outlook.com>
 
-commit 7e725c20fea8914ef1829da777f517ce1a93d388 upstream.
+commit 8c124d998ea0c9022e247b11ac51f86ec8afa0e1 upstream.
 
-This was included in gpu_info firmware, move it into the
-driver for consistency with other nv1x parts.
+Commit 4bc31edebde5 ("mmc: core: Set HS clock speed before sending
+HS CMD13") set HS clock (52MHz) before switching to HS mode. For this
+freq, FCLK_DIV5 will be selected and div value is 10 (reg value is 9).
+Then we set rx_clk_phase to 11 or 15 which is out of range and make
+hardware frozen. After we send command request, no irq will be
+interrupted and the mmc driver will keep to wait for request finished,
+even durning rebooting.
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2318
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+So let's set it to Phase 90 which should work in most cases. Then let
+meson_mx_sdhc_execute_tuning() to find the accurate value for data
+transfer.
+
+If this doesn't work, maybe need to define a factor in dts.
+
+Fixes: e4bf1b0970ef ("mmc: host: meson-mx-sdhc: new driver for the Amlogic Meson SDHC host")
+Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
+Tested-by: Anand Moon <linux.amoon@gmail.com>
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/TYZPR01MB5556A3E71554A2EC08597EA4C9CDA@TYZPR01MB5556.apcprd01.prod.exchangelabs.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c |  110 ++++++++++++++++++-
- 1 file changed, 109 insertions(+), 1 deletion(-)
+ drivers/mmc/host/meson-mx-sdhc-mmc.c |   26 +++++---------------------
+ 1 file changed, 5 insertions(+), 21 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
-@@ -438,7 +438,115 @@ struct _vcs_dpi_soc_bounding_box_st dcn2
- 	.use_urgent_burst_bw = 0
- };
+--- a/drivers/mmc/host/meson-mx-sdhc-mmc.c
++++ b/drivers/mmc/host/meson-mx-sdhc-mmc.c
+@@ -269,7 +269,7 @@ static int meson_mx_sdhc_enable_clks(str
+ static int meson_mx_sdhc_set_clk(struct mmc_host *mmc, struct mmc_ios *ios)
+ {
+ 	struct meson_mx_sdhc_host *host = mmc_priv(mmc);
+-	u32 rx_clk_phase;
++	u32 val, rx_clk_phase;
+ 	int ret;
  
--struct _vcs_dpi_soc_bounding_box_st dcn2_0_nv12_soc = { 0 };
-+struct _vcs_dpi_soc_bounding_box_st dcn2_0_nv12_soc = {
-+	.clock_limits = {
-+		{
-+			.state = 0,
-+			.dcfclk_mhz = 560.0,
-+			.fabricclk_mhz = 560.0,
-+			.dispclk_mhz = 513.0,
-+			.dppclk_mhz = 513.0,
-+			.phyclk_mhz = 540.0,
-+			.socclk_mhz = 560.0,
-+			.dscclk_mhz = 171.0,
-+			.dram_speed_mts = 1069.0,
-+		},
-+		{
-+			.state = 1,
-+			.dcfclk_mhz = 694.0,
-+			.fabricclk_mhz = 694.0,
-+			.dispclk_mhz = 642.0,
-+			.dppclk_mhz = 642.0,
-+			.phyclk_mhz = 600.0,
-+			.socclk_mhz = 694.0,
-+			.dscclk_mhz = 214.0,
-+			.dram_speed_mts = 1324.0,
-+		},
-+		{
-+			.state = 2,
-+			.dcfclk_mhz = 875.0,
-+			.fabricclk_mhz = 875.0,
-+			.dispclk_mhz = 734.0,
-+			.dppclk_mhz = 734.0,
-+			.phyclk_mhz = 810.0,
-+			.socclk_mhz = 875.0,
-+			.dscclk_mhz = 245.0,
-+			.dram_speed_mts = 1670.0,
-+		},
-+		{
-+			.state = 3,
-+			.dcfclk_mhz = 1000.0,
-+			.fabricclk_mhz = 1000.0,
-+			.dispclk_mhz = 1100.0,
-+			.dppclk_mhz = 1100.0,
-+			.phyclk_mhz = 810.0,
-+			.socclk_mhz = 1000.0,
-+			.dscclk_mhz = 367.0,
-+			.dram_speed_mts = 2000.0,
-+		},
-+		{
-+			.state = 4,
-+			.dcfclk_mhz = 1200.0,
-+			.fabricclk_mhz = 1200.0,
-+			.dispclk_mhz = 1284.0,
-+			.dppclk_mhz = 1284.0,
-+			.phyclk_mhz = 810.0,
-+			.socclk_mhz = 1200.0,
-+			.dscclk_mhz = 428.0,
-+			.dram_speed_mts = 2000.0,
-+		},
-+		{
-+			.state = 5,
-+			.dcfclk_mhz = 1200.0,
-+			.fabricclk_mhz = 1200.0,
-+			.dispclk_mhz = 1284.0,
-+			.dppclk_mhz = 1284.0,
-+			.phyclk_mhz = 810.0,
-+			.socclk_mhz = 1200.0,
-+			.dscclk_mhz = 428.0,
-+			.dram_speed_mts = 2000.0,
-+		},
-+	},
-+
-+	.num_states = 5,
-+	.sr_exit_time_us = 1.9,
-+	.sr_enter_plus_exit_time_us = 4.4,
-+	.urgent_latency_us = 3.0,
-+	.urgent_latency_pixel_data_only_us = 4.0,
-+	.urgent_latency_pixel_mixed_with_vm_data_us = 4.0,
-+	.urgent_latency_vm_data_only_us = 4.0,
-+	.urgent_out_of_order_return_per_channel_pixel_only_bytes = 4096,
-+	.urgent_out_of_order_return_per_channel_pixel_and_vm_bytes = 4096,
-+	.urgent_out_of_order_return_per_channel_vm_only_bytes = 4096,
-+	.pct_ideal_dram_sdp_bw_after_urgent_pixel_only = 40.0,
-+	.pct_ideal_dram_sdp_bw_after_urgent_pixel_and_vm = 40.0,
-+	.pct_ideal_dram_sdp_bw_after_urgent_vm_only = 40.0,
-+	.max_avg_sdp_bw_use_normal_percent = 40.0,
-+	.max_avg_dram_bw_use_normal_percent = 40.0,
-+	.writeback_latency_us = 12.0,
-+	.ideal_dram_bw_after_urgent_percent = 40.0,
-+	.max_request_size_bytes = 256,
-+	.dram_channel_width_bytes = 16,
-+	.fabric_datapath_to_dcn_data_return_bytes = 64,
-+	.dcn_downspread_percent = 0.5,
-+	.downspread_percent = 0.5,
-+	.dram_page_open_time_ns = 50.0,
-+	.dram_rw_turnaround_time_ns = 17.5,
-+	.dram_return_buffer_per_channel_bytes = 8192,
-+	.round_trip_ping_latency_dcfclk_cycles = 131,
-+	.urgent_out_of_order_return_per_channel_bytes = 4096,
-+	.channel_interleave_bytes = 256,
-+	.num_banks = 8,
-+	.num_chans = 16,
-+	.vmm_page_size_bytes = 4096,
-+	.dram_clock_change_latency_us = 45.0,
-+	.writeback_dram_clock_change_latency_us = 23.0,
-+	.return_bus_width_bytes = 64,
-+	.dispclk_dppclk_vco_speed_mhz = 3850,
-+	.xfc_bus_transport_time_us = 20,
-+	.xfc_xbuf_latency_tolerance_us = 50,
-+	.use_urgent_burst_bw = 0,
-+};
+ 	meson_mx_sdhc_disable_clks(mmc);
+@@ -290,27 +290,11 @@ static int meson_mx_sdhc_set_clk(struct
+ 		mmc->actual_clock = clk_get_rate(host->sd_clk);
  
- struct _vcs_dpi_ip_params_st dcn2_1_ip = {
- 	.odm_capable = 1,
+ 		/*
+-		 * according to Amlogic the following latching points are
+-		 * selected with empirical values, there is no (known) formula
+-		 * to calculate these.
++		 * Phase 90 should work in most cases. For data transmission,
++		 * meson_mx_sdhc_execute_tuning() will find a accurate value
+ 		 */
+-		if (mmc->actual_clock > 100000000) {
+-			rx_clk_phase = 1;
+-		} else if (mmc->actual_clock > 45000000) {
+-			if (ios->signal_voltage == MMC_SIGNAL_VOLTAGE_330)
+-				rx_clk_phase = 15;
+-			else
+-				rx_clk_phase = 11;
+-		} else if (mmc->actual_clock >= 25000000) {
+-			rx_clk_phase = 15;
+-		} else if (mmc->actual_clock > 5000000) {
+-			rx_clk_phase = 23;
+-		} else if (mmc->actual_clock > 1000000) {
+-			rx_clk_phase = 55;
+-		} else {
+-			rx_clk_phase = 1061;
+-		}
+-
++		regmap_read(host->regmap, MESON_SDHC_CLKC, &val);
++		rx_clk_phase = FIELD_GET(MESON_SDHC_CLKC_CLK_DIV, val) / 4;
+ 		regmap_update_bits(host->regmap, MESON_SDHC_CLK2,
+ 				   MESON_SDHC_CLK2_RX_CLK_PHASE,
+ 				   FIELD_PREP(MESON_SDHC_CLK2_RX_CLK_PHASE,
 
 
