@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCFB4C634;
-	Mon,  8 Jan 2024 15:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7526D4B5AB;
+	Mon,  8 Jan 2024 15:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eygXTwb2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3AABC433C9;
-	Mon,  8 Jan 2024 15:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmI6Fbdx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFA3C433C8;
+	Mon,  8 Jan 2024 15:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704726572;
-	bh=EAL6veoL5CQb6D7ZZ8q87zAkjxUD4sWgYXg/aWWqeak=;
+	s=korg; t=1704726575;
+	bh=vh0pzGWhgzLTbPJy0isRW4Cp0iKJpfN4iSM/EnUbJAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eygXTwb2JONrMIWqCa0uypJDPxWsU3KoQa1n2D0NlEc3atdhzL4eDOiGi29Vf9vi8
-	 UnT71suSdlyrcS4S44qjqG5KMf0/giJuxQyvjTv3Q5MKeAsK+kE7pvlv2lGjinLtPs
-	 EWbNPk0KBCS0aREY2r1EmvG/6Om8I4Z7iWGDNkUk=
+	b=DmI6FbdxvxMTN4nUj12bl16rQEvBBjiN4719L+9P2hj5ImcqWMogoj4S22xLhKuHo
+	 QBbGqVSEyqOPcq4Kyx+MPyh/kuKdi657U6LKJwdbwtDZkzYR4DFMiFjEYZ1dF8is8h
+	 ZtSHbG1v9DAzWDzno+XgWSVE5in0pewQJJI5GCP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Schaller <michael@5challer.de>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.6 010/124] Revert "PCI/ASPM: Remove pcie_aspm_pm_state_change()"
-Date: Mon,  8 Jan 2024 16:07:16 +0100
-Message-ID: <20240108150603.445015618@linuxfoundation.org>
+	Roger Sewell <roger.sewell@cantab.net>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 6.6 011/124] drm/mgag200: Fix gamma lut not initialized for G200ER, G200EV, G200SE
+Date: Mon,  8 Jan 2024 16:07:17 +0100
+Message-ID: <20240108150603.492976003@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
 References: <20240108150602.976232871@linuxfoundation.org>
@@ -41,103 +42,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Jocelyn Falempe <jfalempe@redhat.com>
 
-commit f93e71aea6c60ebff8adbd8941e678302d377869 upstream.
+commit 11f9eb899ecc8c02b769cf8d2532ba12786a7af7 upstream.
 
-This reverts commit 08d0cc5f34265d1a1e3031f319f594bd1970976c.
+When mgag200 switched from simple KMS to regular atomic helpers,
+the initialization of the gamma settings was lost.
+This leads to a black screen, if the bios/uefi doesn't use the same
+pixel color depth.
+This has been fixed with commit ad81e23426a6 ("drm/mgag200: Fix gamma
+lut not initialized.") for most G200, but G200ER, G200EV, G200SE use
+their own version of crtc_helper_atomic_enable() and need to be fixed
+too.
 
-Michael reported that when attempting to resume from suspend to RAM on ASUS
-mini PC PN51-BB757MDE1 (DMI model: MINIPC PN51-E1), 08d0cc5f3426
-("PCI/ASPM: Remove pcie_aspm_pm_state_change()") caused a 12-second delay
-with no output, followed by a reboot.
-
-Workarounds include:
-
-  - Reverting 08d0cc5f3426 ("PCI/ASPM: Remove pcie_aspm_pm_state_change()")
-  - Booting with "pcie_aspm=off"
-  - Booting with "pcie_aspm.policy=performance"
-  - "echo 0 | sudo tee /sys/bus/pci/devices/0000:03:00.0/link/l1_aspm"
-    before suspending
-  - Connecting a USB flash drive
-
-Link: https://lore.kernel.org/r/20240102232550.1751655-1-helgaas@kernel.org
-Fixes: 08d0cc5f3426 ("PCI/ASPM: Remove pcie_aspm_pm_state_change()")
-Reported-by: Michael Schaller <michael@5challer.de>
-Link: https://lore.kernel.org/r/76c61361-b8b4-435f-a9f1-32b716763d62@5challer.de
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 1baf9127c482 ("drm/mgag200: Replace simple-KMS with regular atomic helpers")
+Cc: <stable@vger.kernel.org> #v6.1+
+Reported-by: Roger Sewell <roger.sewell@cantab.net>
+Suggested-by: Roger Sewell <roger.sewell@cantab.net>
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231214163849.359691-1-jfalempe@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c       |    6 ++++++
- drivers/pci/pci.h       |    2 ++
- drivers/pci/pcie/aspm.c |   19 +++++++++++++++++++
- 3 files changed, 27 insertions(+)
+ drivers/gpu/drm/mgag200/mgag200_drv.h    |    5 +++++
+ drivers/gpu/drm/mgag200/mgag200_g200er.c |    5 +++++
+ drivers/gpu/drm/mgag200/mgag200_g200ev.c |    5 +++++
+ drivers/gpu/drm/mgag200/mgag200_g200se.c |    5 +++++
+ drivers/gpu/drm/mgag200/mgag200_mode.c   |   10 +++++-----
+ 5 files changed, 25 insertions(+), 5 deletions(-)
 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1335,6 +1335,9 @@ static int pci_set_full_power_state(stru
- 		pci_restore_bars(dev);
- 	}
+--- a/drivers/gpu/drm/mgag200/mgag200_drv.h
++++ b/drivers/gpu/drm/mgag200/mgag200_drv.h
+@@ -392,6 +392,11 @@ void mgag200_primary_plane_helper_atomic
+ 	.destroy = drm_plane_cleanup, \
+ 	DRM_GEM_SHADOW_PLANE_FUNCS
  
-+	if (dev->bus->self)
-+		pcie_aspm_pm_state_change(dev->bus->self);
++void mgag200_crtc_set_gamma_linear(struct mga_device *mdev, const struct drm_format_info *format);
++void mgag200_crtc_set_gamma(struct mga_device *mdev,
++			    const struct drm_format_info *format,
++			    struct drm_color_lut *lut);
 +
- 	return 0;
- }
+ enum drm_mode_status mgag200_crtc_helper_mode_valid(struct drm_crtc *crtc,
+ 						    const struct drm_display_mode *mode);
+ int mgag200_crtc_helper_atomic_check(struct drm_crtc *crtc, struct drm_atomic_state *new_state);
+--- a/drivers/gpu/drm/mgag200/mgag200_g200er.c
++++ b/drivers/gpu/drm/mgag200/mgag200_g200er.c
+@@ -202,6 +202,11 @@ static void mgag200_g200er_crtc_helper_a
  
-@@ -1429,6 +1432,9 @@ static int pci_set_low_power_state(struc
- 				     pci_power_name(dev->current_state),
- 				     pci_power_name(state));
+ 	mgag200_g200er_reset_tagfifo(mdev);
  
-+	if (dev->bus->self)
-+		pcie_aspm_pm_state_change(dev->bus->self);
++	if (crtc_state->gamma_lut)
++		mgag200_crtc_set_gamma(mdev, format, crtc_state->gamma_lut->data);
++	else
++		mgag200_crtc_set_gamma_linear(mdev, format);
 +
- 	return 0;
- }
+ 	mgag200_enable_display(mdev);
  
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -566,10 +566,12 @@ int pcie_retrain_link(struct pci_dev *pd
- #ifdef CONFIG_PCIEASPM
- void pcie_aspm_init_link_state(struct pci_dev *pdev);
- void pcie_aspm_exit_link_state(struct pci_dev *pdev);
-+void pcie_aspm_pm_state_change(struct pci_dev *pdev);
- void pcie_aspm_powersave_config_link(struct pci_dev *pdev);
- #else
- static inline void pcie_aspm_init_link_state(struct pci_dev *pdev) { }
- static inline void pcie_aspm_exit_link_state(struct pci_dev *pdev) { }
-+static inline void pcie_aspm_pm_state_change(struct pci_dev *pdev) { }
- static inline void pcie_aspm_powersave_config_link(struct pci_dev *pdev) { }
- #endif
+ 	if (funcs->enable_vidrst)
+--- a/drivers/gpu/drm/mgag200/mgag200_g200ev.c
++++ b/drivers/gpu/drm/mgag200/mgag200_g200ev.c
+@@ -203,6 +203,11 @@ static void mgag200_g200ev_crtc_helper_a
  
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -1001,6 +1001,25 @@ void pcie_aspm_exit_link_state(struct pc
- 	up_read(&pci_bus_sem);
- }
+ 	mgag200_g200ev_set_hiprilvl(mdev);
  
-+/* @pdev: the root port or switch downstream port */
-+void pcie_aspm_pm_state_change(struct pci_dev *pdev)
-+{
-+	struct pcie_link_state *link = pdev->link_state;
++	if (crtc_state->gamma_lut)
++		mgag200_crtc_set_gamma(mdev, format, crtc_state->gamma_lut->data);
++	else
++		mgag200_crtc_set_gamma_linear(mdev, format);
 +
-+	if (aspm_disabled || !link)
-+		return;
-+	/*
-+	 * Devices changed PM state, we should recheck if latency
-+	 * meets all functions' requirement
-+	 */
-+	down_read(&pci_bus_sem);
-+	mutex_lock(&aspm_lock);
-+	pcie_update_aspm_capable(link->root);
-+	pcie_config_aspm_path(link);
-+	mutex_unlock(&aspm_lock);
-+	up_read(&pci_bus_sem);
-+}
+ 	mgag200_enable_display(mdev);
+ 
+ 	if (funcs->enable_vidrst)
+--- a/drivers/gpu/drm/mgag200/mgag200_g200se.c
++++ b/drivers/gpu/drm/mgag200/mgag200_g200se.c
+@@ -334,6 +334,11 @@ static void mgag200_g200se_crtc_helper_a
+ 
+ 	mgag200_g200se_set_hiprilvl(mdev, adjusted_mode, format);
+ 
++	if (crtc_state->gamma_lut)
++		mgag200_crtc_set_gamma(mdev, format, crtc_state->gamma_lut->data);
++	else
++		mgag200_crtc_set_gamma_linear(mdev, format);
 +
- void pcie_aspm_powersave_config_link(struct pci_dev *pdev)
+ 	mgag200_enable_display(mdev);
+ 
+ 	if (funcs->enable_vidrst)
+--- a/drivers/gpu/drm/mgag200/mgag200_mode.c
++++ b/drivers/gpu/drm/mgag200/mgag200_mode.c
+@@ -28,8 +28,8 @@
+  * This file contains setup code for the CRTC.
+  */
+ 
+-static void mgag200_crtc_set_gamma_linear(struct mga_device *mdev,
+-					  const struct drm_format_info *format)
++void mgag200_crtc_set_gamma_linear(struct mga_device *mdev,
++				   const struct drm_format_info *format)
  {
- 	struct pcie_link_state *link = pdev->link_state;
+ 	int i;
+ 
+@@ -65,9 +65,9 @@ static void mgag200_crtc_set_gamma_linea
+ 	}
+ }
+ 
+-static void mgag200_crtc_set_gamma(struct mga_device *mdev,
+-				   const struct drm_format_info *format,
+-				   struct drm_color_lut *lut)
++void mgag200_crtc_set_gamma(struct mga_device *mdev,
++			    const struct drm_format_info *format,
++			    struct drm_color_lut *lut)
+ {
+ 	int i;
+ 
 
 
