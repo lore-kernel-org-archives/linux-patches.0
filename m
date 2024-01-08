@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F50C53E10;
-	Mon,  8 Jan 2024 15:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFF253E31;
+	Mon,  8 Jan 2024 15:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqVgpxTw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE66CC433C9;
-	Mon,  8 Jan 2024 15:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvUxtedl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A79C433CD;
+	Mon,  8 Jan 2024 15:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728514;
-	bh=ILvNLhcywUs1OJOzYcpcS4F1+jvaAMz3fuCx+tOCAx0=;
+	s=korg; t=1704728517;
+	bh=yYTLTDLJO/13yWVnc+TNQQ4y1zY7Mhr9B0fX2SGePFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EqVgpxTwAc7vFULHWU8BoYkU9mXVH66mMxweQxdGmUzrrj1e8LcAPhKtzO4PuwZ9U
-	 1W4yKK7LHAat0yDyaAx+zGNCr/oBFnDHNzX602SE61gy1plmR8HNcNucAyj07kZ+5A
-	 Qc4aivJF4+P8QV5++etNgqWlu/HYL+RF7NCR4I/E=
+	b=dvUxtedlet8OSHuQvkJtbrLVZGVBS8zxCNJvNN1hjG+VGNoMM8igHdjmAl4PnHGhZ
+	 htffH5v5U/feP3e9qK8S5lelduE5wrHhCMIfZP4JquGDQMIEoDqSb9a/A+azN0wyAw
+	 sCh1gfJ9ciGMJ8zFE5Ef3/DFUx98ei1OFniCAdAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	David Howells <dhowells@redhat.com>,
+	Dave Wysochanski <dwysocha@redhat.com>,
 	Rohith Surabattula <rohiths.msft@gmail.com>,
 	Matthew Wilcox <willy@infradead.org>,
-	David Howells <dhowells@redhat.com>,
+	SeongJae Park <sj@kernel.org>,
+	Daire Byrne <daire.byrne@gmail.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Steve French <sfrench@samba.org>,
 	Shyam Prasad N <nspmangalore@gmail.com>,
-	Dave Wysochanski <dwysocha@redhat.com>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Ilya Dryomov <idryomov@gmail.com>,
-	"Theodore Tso" <tytso@mit.edu>,
 	Andreas Dilger <adilger.kernel@dilger.ca>,
-	Xiubo Li <xiubli@redhat.com>,
 	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	"Theodore Tso" <tytso@mit.edu>,
+	Xiubo Li <xiubli@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/150] mm: merge folio_has_private()/filemap_release_folio() call pairs
-Date: Mon,  8 Jan 2024 16:35:52 +0100
-Message-ID: <20240108153515.856925497@linuxfoundation.org>
+Subject: [PATCH 6.1 102/150] mm, netfs, fscache: stop read optimisation when folio removed from pagecache
+Date: Mon,  8 Jan 2024 16:35:53 +0100
+Message-ID: <20240108153515.909201521@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -56,53 +58,62 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 0201ebf274a306a6ebb95e5dc2d6a0a27c737cac ]
+[ Upstream commit b4fa966f03b7401ceacd4ffd7227197afb2b8376 ]
 
-Patch series "mm, netfs, fscache: Stop read optimisation when folio
-removed from pagecache", v7.
+Fscache has an optimisation by which reads from the cache are skipped
+until we know that (a) there's data there to be read and (b) that data
+isn't entirely covered by pages resident in the netfs pagecache.  This is
+done with two flags manipulated by fscache_note_page_release():
 
-This fixes an optimisation in fscache whereby we don't read from the cache
-for a particular file until we know that there's data there that we don't
-have in the pagecache.  The problem is that I'm no longer using PG_fscache
-(aka PG_private_2) to indicate that the page is cached and so I don't get
-a notification when a cached page is dropped from the pagecache.
+	if (...
+	    test_bit(FSCACHE_COOKIE_HAVE_DATA, &cookie->flags) &&
+	    test_bit(FSCACHE_COOKIE_NO_DATA_TO_READ, &cookie->flags))
+		clear_bit(FSCACHE_COOKIE_NO_DATA_TO_READ, &cookie->flags);
 
-The first patch merges some folio_has_private() and
-filemap_release_folio() pairs and introduces a helper,
-folio_needs_release(), to indicate if a release is required.
+where the NO_DATA_TO_READ flag causes cachefiles_prepare_read() to
+indicate that netfslib should download from the server or clear the page
+instead.
 
-The second patch is the actual fix.  Following Willy's suggestions[1], it
-adds an AS_RELEASE_ALWAYS flag to an address_space that will make
-filemap_release_folio() always call ->release_folio(), even if
-PG_private/PG_private_2 aren't set.  folio_needs_release() is altered to
-add a check for this.
+The fscache_note_page_release() function is intended to be called from
+->releasepage() - but that only gets called if PG_private or PG_private_2
+is set - and currently the former is at the discretion of the network
+filesystem and the latter is only set whilst a page is being written to
+the cache, so sometimes we miss clearing the optimisation.
 
-This patch (of 2):
+Fix this by following Willy's suggestion[1] and adding an address_space
+flag, AS_RELEASE_ALWAYS, that causes filemap_release_folio() to always call
+->release_folio() if it's set, even if PG_private or PG_private_2 aren't
+set.
 
-Make filemap_release_folio() check folio_has_private().  Then, in most
-cases, where a call to folio_has_private() is immediately followed by a
-call to filemap_release_folio(), we can get rid of the test in the pair.
+Note that this would require folio_test_private() and page_has_private() to
+become more complicated.  To avoid that, in the places[*] where these are
+used to conditionalise calls to filemap_release_folio() and
+try_to_release_page(), the tests are removed the those functions just
+jumped to unconditionally and the test is performed there.
 
-There are a couple of sites in mm/vscan.c that this can't so easily be
-done.  In shrink_folio_list(), there are actually three cases (something
-different is done for incompletely invalidated buffers), but
-filemap_release_folio() elides two of them.
+[*] There are some exceptions in vmscan.c where the check guards more than
+just a call to the releaser.  I've added a function, folio_needs_release()
+to wrap all the checks for that.
 
-In shrink_active_list(), we don't have have the folio lock yet, so the
-check allows us to avoid locking the page unnecessarily.
+AS_RELEASE_ALWAYS should be set if a non-NULL cookie is obtained from
+fscache and cleared in ->evict_inode() before truncate_inode_pages_final()
+is called.
 
-A wrapper function to check if a folio needs release is provided for those
-places that still need to do it in the mm/ directory.  This will acquire
-additional parts to the condition in a future patch.
+Additionally, the FSCACHE_COOKIE_NO_DATA_TO_READ flag needs to be cleared
+and the optimisation cancelled if a cachefiles object already contains data
+when we open it.
 
-After this, the only remaining caller of folio_has_private() outside of
-mm/ is a check in fuse.
-
-Link: https://lkml.kernel.org/r/20230628104852.3391651-1-dhowells@redhat.com
-Link: https://lkml.kernel.org/r/20230628104852.3391651-2-dhowells@redhat.com
+[dwysocha@redhat.com: call folio_mapping() inside folio_needs_release()]
+  Link: https://github.com/DaveWysochanskiRH/kernel/commit/902c990e311120179fa5de99d68364b2947b79ec
+Link: https://lkml.kernel.org/r/20230628104852.3391651-3-dhowells@redhat.com
+Fixes: 1f67e6d0b188 ("fscache: Provide a function to note the release of a page")
+Fixes: 047487c947e8 ("cachefiles: Implement the I/O routines")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Dave Wysochanski <dwysocha@redhat.com>
 Reported-by: Rohith Surabattula <rohiths.msft@gmail.com>
 Suggested-by: Matthew Wilcox <willy@infradead.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
+Tested-by: SeongJae Park <sj@kernel.org>
+Cc: Daire Byrne <daire.byrne@gmail.com>
 Cc: Matthew Wilcox <willy@infradead.org>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: Steve French <sfrench@samba.org>
@@ -111,223 +122,153 @@ Cc: Rohith Surabattula <rohiths.msft@gmail.com>
 Cc: Dave Wysochanski <dwysocha@redhat.com>
 Cc: Dominique Martinet <asmadeus@codewreck.org>
 Cc: Ilya Dryomov <idryomov@gmail.com>
-Cc: "Theodore Ts'o" <tytso@mit.edu>
 Cc: Andreas Dilger <adilger.kernel@dilger.ca>
-Cc: Xiubo Li <xiubli@redhat.com>
 Cc: Jingbo Xu <jefflexu@linux.alibaba.com>
+Cc: "Theodore Ts'o" <tytso@mit.edu>
+Cc: Xiubo Li <xiubli@redhat.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 1898efcdbed3 ("block: update the stable_writes flag in bdev_add")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/move_extent.c | 12 ++++--------
- fs/splice.c           |  3 +--
- mm/filemap.c          |  2 ++
- mm/huge_memory.c      |  3 +--
- mm/internal.h         |  8 ++++++++
- mm/khugepaged.c       |  3 +--
- mm/memory-failure.c   |  8 +++-----
- mm/migrate.c          |  3 +--
- mm/truncate.c         |  6 ++----
- mm/vmscan.c           |  8 ++++----
- 10 files changed, 27 insertions(+), 29 deletions(-)
+ fs/9p/cache.c           |  2 ++
+ fs/afs/internal.h       |  2 ++
+ fs/cachefiles/namei.c   |  2 ++
+ fs/ceph/cache.c         |  2 ++
+ fs/nfs/fscache.c        |  3 +++
+ fs/smb/client/fscache.c |  2 ++
+ include/linux/pagemap.h | 16 ++++++++++++++++
+ mm/internal.h           |  5 ++++-
+ 8 files changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/move_extent.c b/fs/ext4/move_extent.c
-index 8dbb87edf24c4..dedc9d445f243 100644
---- a/fs/ext4/move_extent.c
-+++ b/fs/ext4/move_extent.c
-@@ -339,10 +339,8 @@ move_extent_per_page(struct file *o_filp, struct inode *donor_inode,
- 			ext4_double_up_write_data_sem(orig_inode, donor_inode);
- 			goto data_copy;
- 		}
--		if ((folio_has_private(folio[0]) &&
--		     !filemap_release_folio(folio[0], 0)) ||
--		    (folio_has_private(folio[1]) &&
--		     !filemap_release_folio(folio[1], 0))) {
-+		if (!filemap_release_folio(folio[0], 0) ||
-+		    !filemap_release_folio(folio[1], 0)) {
- 			*err = -EBUSY;
- 			goto drop_data_sem;
- 		}
-@@ -361,10 +359,8 @@ move_extent_per_page(struct file *o_filp, struct inode *donor_inode,
+diff --git a/fs/9p/cache.c b/fs/9p/cache.c
+index cebba4eaa0b57..12c0ae29f1857 100644
+--- a/fs/9p/cache.c
++++ b/fs/9p/cache.c
+@@ -68,6 +68,8 @@ void v9fs_cache_inode_get_cookie(struct inode *inode)
+ 				       &path, sizeof(path),
+ 				       &version, sizeof(version),
+ 				       i_size_read(&v9inode->netfs.inode));
++	if (v9inode->netfs.cache)
++		mapping_set_release_always(inode->i_mapping);
  
- 	/* At this point all buffers in range are uptodate, old mapping layout
- 	 * is no longer required, try to drop it now. */
--	if ((folio_has_private(folio[0]) &&
--		!filemap_release_folio(folio[0], 0)) ||
--	    (folio_has_private(folio[1]) &&
--		!filemap_release_folio(folio[1], 0))) {
-+	if (!filemap_release_folio(folio[0], 0) ||
-+	    !filemap_release_folio(folio[1], 0)) {
- 		*err = -EBUSY;
- 		goto unlock_folios;
- 	}
-diff --git a/fs/splice.c b/fs/splice.c
-index c4ae54deac42c..d0230cf8ec571 100644
---- a/fs/splice.c
-+++ b/fs/splice.c
-@@ -65,8 +65,7 @@ static bool page_cache_pipe_buf_try_steal(struct pipe_inode_info *pipe,
- 		 */
- 		folio_wait_writeback(folio);
- 
--		if (folio_has_private(folio) &&
--		    !filemap_release_folio(folio, GFP_KERNEL))
-+		if (!filemap_release_folio(folio, GFP_KERNEL))
- 			goto out_unlock;
- 
- 		/*
-diff --git a/mm/filemap.c b/mm/filemap.c
-index 10fe6430693bd..2809b1174f04e 100644
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -4005,6 +4005,8 @@ bool filemap_release_folio(struct folio *folio, gfp_t gfp)
- 	struct address_space * const mapping = folio->mapping;
- 
- 	BUG_ON(!folio_test_locked(folio));
-+	if (!folio_needs_release(folio))
-+		return true;
- 	if (folio_test_writeback(folio))
- 		return false;
- 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 2753fb54cdf38..59577946735b1 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2694,8 +2694,7 @@ int split_huge_page_to_list(struct page *page, struct list_head *list)
- 		gfp = current_gfp_context(mapping_gfp_mask(mapping) &
- 							GFP_RECLAIM_MASK);
- 
--		if (folio_test_private(folio) &&
--				!filemap_release_folio(folio, gfp)) {
-+		if (!filemap_release_folio(folio, gfp)) {
- 			ret = -EBUSY;
- 			goto out;
- 		}
-diff --git a/mm/internal.h b/mm/internal.h
-index 6b7ef495b56d3..1fefb5181ab78 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -163,6 +163,14 @@ static inline void set_page_refcounted(struct page *page)
- 	set_page_count(page, 1);
+ 	p9_debug(P9_DEBUG_FSC, "inode %p get cookie %p\n",
+ 		 inode, v9fs_inode_cookie(v9inode));
+diff --git a/fs/afs/internal.h b/fs/afs/internal.h
+index fcbb598d8c85d..a25fdc3e52310 100644
+--- a/fs/afs/internal.h
++++ b/fs/afs/internal.h
+@@ -682,6 +682,8 @@ static inline void afs_vnode_set_cache(struct afs_vnode *vnode,
+ {
+ #ifdef CONFIG_AFS_FSCACHE
+ 	vnode->netfs.cache = cookie;
++	if (cookie)
++		mapping_set_release_always(vnode->netfs.inode.i_mapping);
+ #endif
  }
  
-+/*
-+ * Return true if a folio needs ->release_folio() calling upon it.
-+ */
-+static inline bool folio_needs_release(struct folio *folio)
-+{
-+	return folio_has_private(folio);
-+}
+diff --git a/fs/cachefiles/namei.c b/fs/cachefiles/namei.c
+index 03ca8f2f657ab..50b2ee163af60 100644
+--- a/fs/cachefiles/namei.c
++++ b/fs/cachefiles/namei.c
+@@ -584,6 +584,8 @@ static bool cachefiles_open_file(struct cachefiles_object *object,
+ 	if (ret < 0)
+ 		goto check_failed;
+ 
++	clear_bit(FSCACHE_COOKIE_NO_DATA_TO_READ, &object->cookie->flags);
 +
- extern unsigned long highest_memmap_pfn;
+ 	object->file = file;
+ 
+ 	/* Always update the atime on an object we've just looked up (this is
+diff --git a/fs/ceph/cache.c b/fs/ceph/cache.c
+index 177d8e8d73fe4..de1dee46d3df7 100644
+--- a/fs/ceph/cache.c
++++ b/fs/ceph/cache.c
+@@ -36,6 +36,8 @@ void ceph_fscache_register_inode_cookie(struct inode *inode)
+ 				       &ci->i_vino, sizeof(ci->i_vino),
+ 				       &ci->i_version, sizeof(ci->i_version),
+ 				       i_size_read(inode));
++	if (ci->netfs.cache)
++		mapping_set_release_always(inode->i_mapping);
+ }
+ 
+ void ceph_fscache_unregister_inode_cookie(struct ceph_inode_info *ci)
+diff --git a/fs/nfs/fscache.c b/fs/nfs/fscache.c
+index e731c00a9fcbc..d3c938dd2b12a 100644
+--- a/fs/nfs/fscache.c
++++ b/fs/nfs/fscache.c
+@@ -176,6 +176,9 @@ void nfs_fscache_init_inode(struct inode *inode)
+ 					       &auxdata,      /* aux_data */
+ 					       sizeof(auxdata),
+ 					       i_size_read(inode));
++
++	if (netfs_inode(inode)->cache)
++		mapping_set_release_always(inode->i_mapping);
+ }
  
  /*
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 6fc7db587c453..65bd0b105266a 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1955,8 +1955,7 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 			goto out_unlock;
- 		}
+diff --git a/fs/smb/client/fscache.c b/fs/smb/client/fscache.c
+index e73625b5d0cc6..f64bad513ba6d 100644
+--- a/fs/smb/client/fscache.c
++++ b/fs/smb/client/fscache.c
+@@ -108,6 +108,8 @@ void cifs_fscache_get_inode_cookie(struct inode *inode)
+ 				       &cifsi->uniqueid, sizeof(cifsi->uniqueid),
+ 				       &cd, sizeof(cd),
+ 				       i_size_read(&cifsi->netfs.inode));
++	if (cifsi->netfs.cache)
++		mapping_set_release_always(inode->i_mapping);
+ }
  
--		if (folio_has_private(folio) &&
--		    !filemap_release_folio(folio, GFP_KERNEL)) {
-+		if (!filemap_release_folio(folio, GFP_KERNEL)) {
- 			result = SCAN_PAGE_HAS_PRIVATE;
- 			folio_putback_lru(folio);
- 			goto out_unlock;
-diff --git a/mm/memory-failure.c b/mm/memory-failure.c
-index 6355166a6bb28..5b846ed5dcbe9 100644
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -830,14 +830,12 @@ static int truncate_error_page(struct page *p, unsigned long pfn,
- 		struct folio *folio = page_folio(p);
- 		int err = mapping->a_ops->error_remove_page(mapping, p);
+ void cifs_fscache_unuse_inode_cookie(struct inode *inode, bool update)
+diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
+index 03307b72de6c6..fdbb90ae56c70 100644
+--- a/include/linux/pagemap.h
++++ b/include/linux/pagemap.h
+@@ -199,6 +199,7 @@ enum mapping_flags {
+ 	/* writeback related tags are not used */
+ 	AS_NO_WRITEBACK_TAGS = 5,
+ 	AS_LARGE_FOLIO_SUPPORT = 6,
++	AS_RELEASE_ALWAYS,	/* Call ->release_folio(), even if no private data */
+ };
  
--		if (err != 0) {
-+		if (err != 0)
- 			pr_info("%#lx: Failed to punch page: %d\n", pfn, err);
--		} else if (folio_has_private(folio) &&
--			   !filemap_release_folio(folio, GFP_NOIO)) {
-+		else if (!filemap_release_folio(folio, GFP_NOIO))
- 			pr_info("%#lx: failed to release buffers\n", pfn);
--		} else {
-+		else
- 			ret = MF_RECOVERED;
--		}
- 	} else {
- 		/*
- 		 * If the file system doesn't support it just invalidate
-diff --git a/mm/migrate.c b/mm/migrate.c
-index 91bd69c61148e..c93dd6a31c31a 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -914,8 +914,7 @@ static int fallback_migrate_folio(struct address_space *mapping,
- 	 * Buffers may be managed in a filesystem specific way.
- 	 * We must have no buffers or drop them.
- 	 */
--	if (folio_test_private(src) &&
--	    !filemap_release_folio(src, GFP_KERNEL))
-+	if (!filemap_release_folio(src, GFP_KERNEL))
- 		return mode == MIGRATE_SYNC ? -EAGAIN : -EBUSY;
+ /**
+@@ -269,6 +270,21 @@ static inline int mapping_use_writeback_tags(struct address_space *mapping)
+ 	return !test_bit(AS_NO_WRITEBACK_TAGS, &mapping->flags);
+ }
  
- 	return migrate_folio(mapping, dst, src, mode);
-diff --git a/mm/truncate.c b/mm/truncate.c
-index c0be77e5c0083..0d4dd233f5187 100644
---- a/mm/truncate.c
-+++ b/mm/truncate.c
-@@ -19,7 +19,6 @@
- #include <linux/highmem.h>
- #include <linux/pagevec.h>
- #include <linux/task_io_accounting_ops.h>
--#include <linux/buffer_head.h>	/* grr. try_to_release_page */
- #include <linux/shmem_fs.h>
- #include <linux/rmap.h>
- #include "internal.h"
-@@ -276,7 +275,7 @@ static long mapping_evict_folio(struct address_space *mapping,
- 	if (folio_ref_count(folio) >
- 			folio_nr_pages(folio) + folio_has_private(folio) + 1)
- 		return 0;
--	if (folio_has_private(folio) && !filemap_release_folio(folio, 0))
-+	if (!filemap_release_folio(folio, 0))
- 		return 0;
++static inline bool mapping_release_always(const struct address_space *mapping)
++{
++	return test_bit(AS_RELEASE_ALWAYS, &mapping->flags);
++}
++
++static inline void mapping_set_release_always(struct address_space *mapping)
++{
++	set_bit(AS_RELEASE_ALWAYS, &mapping->flags);
++}
++
++static inline void mapping_clear_release_always(struct address_space *mapping)
++{
++	clear_bit(AS_RELEASE_ALWAYS, &mapping->flags);
++}
++
+ static inline gfp_t mapping_gfp_mask(struct address_space * mapping)
+ {
+ 	return mapping->gfp_mask;
+diff --git a/mm/internal.h b/mm/internal.h
+index 1fefb5181ab78..d01130efce5fb 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -168,7 +168,10 @@ static inline void set_page_refcounted(struct page *page)
+  */
+ static inline bool folio_needs_release(struct folio *folio)
+ {
+-	return folio_has_private(folio);
++	struct address_space *mapping = folio_mapping(folio);
++
++	return folio_has_private(folio) ||
++		(mapping && mapping_release_always(mapping));
+ }
  
- 	return remove_mapping(mapping, folio);
-@@ -581,8 +580,7 @@ static int invalidate_complete_folio2(struct address_space *mapping,
- 	if (folio->mapping != mapping)
- 		return 0;
- 
--	if (folio_has_private(folio) &&
--	    !filemap_release_folio(folio, GFP_KERNEL))
-+	if (!filemap_release_folio(folio, GFP_KERNEL))
- 		return 0;
- 
- 	spin_lock(&mapping->host->i_lock);
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 3f090faa6377f..9f3cfb7caa48d 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -1992,7 +1992,7 @@ static unsigned int shrink_folio_list(struct list_head *folio_list,
- 		 * (refcount == 1) it can be freed.  Otherwise, leave
- 		 * the folio on the LRU so it is swappable.
- 		 */
--		if (folio_has_private(folio)) {
-+		if (folio_needs_release(folio)) {
- 			if (!filemap_release_folio(folio, sc->gfp_mask))
- 				goto activate_locked;
- 			if (!mapping && folio_ref_count(folio) == 1) {
-@@ -2618,9 +2618,9 @@ static void shrink_active_list(unsigned long nr_to_scan,
- 		}
- 
- 		if (unlikely(buffer_heads_over_limit)) {
--			if (folio_test_private(folio) && folio_trylock(folio)) {
--				if (folio_test_private(folio))
--					filemap_release_folio(folio, 0);
-+			if (folio_needs_release(folio) &&
-+			    folio_trylock(folio)) {
-+				filemap_release_folio(folio, 0);
- 				folio_unlock(folio);
- 			}
- 		}
+ extern unsigned long highest_memmap_pfn;
 -- 
 2.43.0
 
