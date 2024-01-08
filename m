@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5BD52F82;
-	Mon,  8 Jan 2024 15:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32F8524A1;
+	Mon,  8 Jan 2024 15:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+Yp+atk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F09C433C9;
-	Mon,  8 Jan 2024 15:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxjYq+ey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 076B4C433C8;
+	Mon,  8 Jan 2024 15:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704728660;
-	bh=eqvrGjGMnZ5fM5niaxYUfgpTNwU0ABji7kFZoGD4w6E=;
+	s=korg; t=1704728663;
+	bh=motfFfHG4c7aA2zOrxJAWl0T9+VZR/tID6SuuPPX11A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+Yp+atk0ytaftCr+2FebMbXsMxvZAlKXRymJACdUrP0RP0232UGaC1nnUNqNnEHO
-	 p8pGCULihMNLqPBSd0EQnHoL652uvYOWIwdu2KOMTjW4iLBzHDIM65VOT2wlKRTPuV
-	 KquJWgR2/8Z2b9qjQiIRPne1v0y64VmkV95oyCiY=
+	b=HxjYq+eykyscDL8BTmMmnQ7wbficfJc0PkZw3/slk9ANewtuzYAYn6LyC/EXvIg4T
+	 6flez/h9NZE8LfVPmRPSiipHGhDsBRE4QONBrS2UNFXBhGIBK58pq21YFdpw6VmZPc
+	 lsyRSiZ2VPx3e4j0Aw99J29f8fOP8QJsq2v+zwHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/150] net: sched: call tcf_ct_params_free to free params in tcf_ct_init
-Date: Mon,  8 Jan 2024 16:36:11 +0100
-Message-ID: <20240108153516.727089290@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	syzbot+e8030702aefd3444fb9e@syzkaller.appspotmail.com,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>
+Subject: [PATCH 6.1 147/150] bpf: syzkaller found null ptr deref in unix_bpf proto add
+Date: Mon,  8 Jan 2024 16:36:38 +0100
+Message-ID: <20240108153517.983160839@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 References: <20240108153511.214254205@linuxfoundation.org>
@@ -43,112 +44,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: John Fastabend <john.fastabend@gmail.com>
 
-[ Upstream commit 1913894100ca53205f2d56091cb34b8eba1de217 ]
+commit 8d6650646ce49e9a5b8c5c23eb94f74b1749f70f upstream.
 
-This patch is to make the err path simple by calling tcf_ct_params_free(),
-so that it won't cause problems when more members are added into param and
-need freeing on the err path.
+I added logic to track the sock pair for stream_unix sockets so that we
+ensure lifetime of the sock matches the time a sockmap could reference
+the sock (see fixes tag). I forgot though that we allow af_unix unconnected
+sockets into a sock{map|hash} map.
 
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 125f1c7f26ff ("net/sched: act_ct: Take per-cb reference to tcf_ct_flow_table")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This is problematic because previous fixed expected sk_pair() to exist
+and did not NULL check it. Because unconnected sockets have a NULL
+sk_pair this resulted in the NULL ptr dereference found by syzkaller.
+
+BUG: KASAN: null-ptr-deref in unix_stream_bpf_update_proto+0x72/0x430 net/unix/unix_bpf.c:171
+Write of size 4 at addr 0000000000000080 by task syz-executor360/5073
+Call Trace:
+ <TASK>
+ ...
+ sock_hold include/net/sock.h:777 [inline]
+ unix_stream_bpf_update_proto+0x72/0x430 net/unix/unix_bpf.c:171
+ sock_map_init_proto net/core/sock_map.c:190 [inline]
+ sock_map_link+0xb87/0x1100 net/core/sock_map.c:294
+ sock_map_update_common+0xf6/0x870 net/core/sock_map.c:483
+ sock_map_update_elem_sys+0x5b6/0x640 net/core/sock_map.c:577
+ bpf_map_update_value+0x3af/0x820 kernel/bpf/syscall.c:167
+
+We considered just checking for the null ptr and skipping taking a ref
+on the NULL peer sock. But, if the socket is then connected() after
+being added to the sockmap we can cause the original issue again. So
+instead this patch blocks adding af_unix sockets that are not in the
+ESTABLISHED state.
+
+Reported-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot+e8030702aefd3444fb9e@syzkaller.appspotmail.com
+Fixes: 8866730aed51 ("bpf, sockmap: af_unix stream sockets need to hold ref for pair sock")
+Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
+Signed-off-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20231201180139.328529-2-john.fastabend@gmail.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ct.c | 35 ++++++++++++++++++-----------------
- 1 file changed, 18 insertions(+), 17 deletions(-)
+ include/net/sock.h  |    5 +++++
+ net/core/sock_map.c |    2 ++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index 4c7f7861ea967..478cedc29b737 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -345,11 +345,9 @@ static void tcf_ct_flow_table_cleanup_work(struct work_struct *work)
- 	module_put(THIS_MODULE);
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2829,6 +2829,11 @@ static inline bool sk_is_tcp(const struc
+ 	return sk->sk_type == SOCK_STREAM && sk->sk_protocol == IPPROTO_TCP;
  }
  
--static void tcf_ct_flow_table_put(struct tcf_ct_params *params)
-+static void tcf_ct_flow_table_put(struct tcf_ct_flow_table *ct_ft)
- {
--	struct tcf_ct_flow_table *ct_ft = params->ct_ft;
--
--	if (refcount_dec_and_test(&params->ct_ft->ref)) {
-+	if (refcount_dec_and_test(&ct_ft->ref)) {
- 		rhashtable_remove_fast(&zones_ht, &ct_ft->node, zones_params);
- 		INIT_RCU_WORK(&ct_ft->rwork, tcf_ct_flow_table_cleanup_work);
- 		queue_rcu_work(act_ct_wq, &ct_ft->rwork);
-@@ -832,18 +830,23 @@ static int tcf_ct_handle_fragments(struct net *net, struct sk_buff *skb,
- 	return err;
- }
- 
--static void tcf_ct_params_free(struct rcu_head *head)
-+static void tcf_ct_params_free(struct tcf_ct_params *params)
- {
--	struct tcf_ct_params *params = container_of(head,
--						    struct tcf_ct_params, rcu);
--
--	tcf_ct_flow_table_put(params);
--
-+	if (params->ct_ft)
-+		tcf_ct_flow_table_put(params->ct_ft);
- 	if (params->tmpl)
- 		nf_ct_put(params->tmpl);
- 	kfree(params);
- }
- 
-+static void tcf_ct_params_free_rcu(struct rcu_head *head)
++static inline bool sk_is_stream_unix(const struct sock *sk)
 +{
-+	struct tcf_ct_params *params;
-+
-+	params = container_of(head, struct tcf_ct_params, rcu);
-+	tcf_ct_params_free(params);
++	return sk->sk_family == AF_UNIX && sk->sk_type == SOCK_STREAM;
 +}
 +
- #if IS_ENABLED(CONFIG_NF_NAT)
- /* Modelled after nf_nat_ipv[46]_fn().
-  * range is only used for new, uninitialized NAT state.
-@@ -1390,7 +1393,7 @@ static int tcf_ct_init(struct net *net, struct nlattr *nla,
- 
- 	err = tcf_ct_flow_table_get(net, params);
- 	if (err)
--		goto cleanup_params;
-+		goto cleanup;
- 
- 	spin_lock_bh(&c->tcf_lock);
- 	goto_ch = tcf_action_set_ctrlact(*a, parm->action, goto_ch);
-@@ -1401,17 +1404,15 @@ static int tcf_ct_init(struct net *net, struct nlattr *nla,
- 	if (goto_ch)
- 		tcf_chain_put_by_act(goto_ch);
- 	if (params)
--		call_rcu(&params->rcu, tcf_ct_params_free);
-+		call_rcu(&params->rcu, tcf_ct_params_free_rcu);
- 
- 	return res;
- 
--cleanup_params:
--	if (params->tmpl)
--		nf_ct_put(params->tmpl);
- cleanup:
- 	if (goto_ch)
- 		tcf_chain_put_by_act(goto_ch);
--	kfree(params);
-+	if (params)
-+		tcf_ct_params_free(params);
- 	tcf_idr_release(*a, bind);
- 	return err;
- }
-@@ -1423,7 +1424,7 @@ static void tcf_ct_cleanup(struct tc_action *a)
- 
- 	params = rcu_dereference_protected(c->params, 1);
- 	if (params)
--		call_rcu(&params->rcu, tcf_ct_params_free);
-+		call_rcu(&params->rcu, tcf_ct_params_free_rcu);
+ /**
+  * sk_eat_skb - Release a skb if it is no longer needed
+  * @sk: socket to eat this skb from
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -538,6 +538,8 @@ static bool sock_map_sk_state_allowed(co
+ {
+ 	if (sk_is_tcp(sk))
+ 		return (1 << sk->sk_state) & (TCPF_ESTABLISHED | TCPF_LISTEN);
++	if (sk_is_stream_unix(sk))
++		return (1 << sk->sk_state) & TCPF_ESTABLISHED;
+ 	return true;
  }
  
- static int tcf_ct_dump_key_val(struct sk_buff *skb,
--- 
-2.43.0
-
 
 
