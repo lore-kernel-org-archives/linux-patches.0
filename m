@@ -1,107 +1,164 @@
-Received: from omta34.uswest2.a.cloudfilter.net (omta34.uswest2.a.cloudfilter.net [35.89.44.33])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D40B67F
-	for <patches@lists.linux.dev>; Tue,  9 Jan 2024 07:32:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CB329431;
+	Tue,  9 Jan 2024 08:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="qnbNWV4S"
-Received: from eig-obgw-5010a.ext.cloudfilter.net ([10.0.29.199])
-	by cmsmtp with ESMTPS
-	id Mwj6rUSvuMVQiN6bIrljYp; Tue, 09 Jan 2024 07:32:40 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id N6bHroyefbhW6N6bHrzWNK; Tue, 09 Jan 2024 07:32:39 +0000
-X-Authority-Analysis: v=2.4 cv=aLPjFJxm c=1 sm=1 tr=0 ts=659cf697
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10 a=dEuoMetlWLkA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=C98bigyJ3ZVO9B9/GDKiW/cosK4y0mmaIXBlcqQBV/A=; b=qnbNWV4S8n2C6o5QXng7VDxwQz
-	doNQiv3G7ckSISPVXeH3fbDvVfwThOD7rYaMk/uJoDsTkRQoQU18BzWObYNWKPK+OB0vrbERX1iMR
-	Ej3cPcK0QBC/PRPVO91cm+vpW38fmiEHMagTqb+MZwJA26GL1mQYaNy5CLPkcBnnxdij0ggxWT7f/
-	ih41ujaEG4QsclhBxZWq6QBBfdSY33REg6byK+oqWEzjOzAN1h4qyu4DpiveNKXxzgpjIck7viAOS
-	OtX8qGpiuT+g3ilUVeAH07A+drBfGgdEiJsVamLjg9ZyfiLr9RAvBObRLUKXing+JHCo3JpLj784U
-	sxhx5D1w==;
-Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:34630 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1rN6bE-002iqX-2T;
-	Tue, 09 Jan 2024 00:32:36 -0700
-Subject: Re: [PATCH 6.6 000/124] 6.6.11-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-References: <20240108150602.976232871@linuxfoundation.org>
-In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <6e526956-1f9a-81bf-810f-a884afb5317e@w6rz.net>
-Date: Mon, 8 Jan 2024 23:32:34 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UIH4jQSc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC70C433F1;
+	Tue,  9 Jan 2024 08:32:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704789175;
+	bh=+6w7os/oKX5yZtjN/akBKdWLap4kHD39ILnrrP4cJHA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UIH4jQScZcwbxHgQbv+yqe3QmSHFU/SsaoBnTfBbRXjpg4OQzNs5R5a78Xp92/5ZY
+	 0Cj3TSPGfcFrzONRzIkQfpib7p0EHTuY2LDHf3+Jlh3NUxfL/i2MVfMhK99a75/cL6
+	 IvH12nM3ZyylEs3pBpI5p6ly4WYIIK20n5CACgxxB5XlHz7xXImx+/MvV9RWGpijUw
+	 GEY2ywnQW9YM2Vaf8kJn1HcQhwEbXXKKQ6gyboDi7gooOjktgl39D7lxNwNijXvtEC
+	 rzff3O1PSkj+5nO0R5bTN0JQluOPkdOcQ2lyBv3LibhQ8+gMzkDP+VBGQQKIh/wUW2
+	 l2ICQSJ1Q32GA==
+Date: Tue, 9 Jan 2024 08:32:51 +0000
+From: Lee Jones <lee@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.4 062/165] net: usb: lan78xx: reorder cleanup
+ operations to avoid UAF bugs
+Message-ID: <20240109083251.GD7948@google.com>
+References: <20230809103642.720851262@linuxfoundation.org>
+ <20230809103644.851543936@linuxfoundation.org>
+ <20240108145224.GA641998@google.com>
+ <2024010807-fantasy-species-3607@gregkh>
+ <20240108165806.GA7948@google.com>
+ <2024010845-foam-efficient-6ae4@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 98.207.139.8
-X-Source-L: No
-X-Exim-ID: 1rN6bE-002iqX-2T
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:34630
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfHMShcaJHpE/Hi+NSRUGDpOrN2My9vTw4e0lYtdxeBeuWeq+zWC5QLv0DhHMu5zUrtEEcabu1BATzxYoc+8TmPp3ZfSnJo5QViUH5Y07H91SOVUTap5F
- MXRTyjglkiOUq0rlVvgiNvcZl/oUY2nLIfTLOCmXcZrX47S+urk1QSm8A+qVQ6KkIKLYEuFyVFTW7Q==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2024010845-foam-efficient-6ae4@gregkh>
 
-On 1/8/24 7:07 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.11 release.
-> There are 124 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 10 Jan 2024 15:05:35 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.11-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Mon, 08 Jan 2024, Greg Kroah-Hartman wrote:
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+> On Mon, Jan 08, 2024 at 04:58:06PM +0000, Lee Jones wrote:
+> > On Mon, 08 Jan 2024, Greg Kroah-Hartman wrote:
+> > 
+> > > On Mon, Jan 08, 2024 at 02:52:24PM +0000, Lee Jones wrote:
+> > > > On Wed, 09 Aug 2023, Greg Kroah-Hartman wrote:
+> > > > 
+> > > > > From: Duoming Zhou <duoming@zju.edu.cn>
+> > > > > 
+> > > > > [ Upstream commit 1e7417c188d0a83fb385ba2dbe35fd2563f2b6f3 ]
+> > > > > 
+> > > > > The timer dev->stat_monitor can schedule the delayed work dev->wq and
+> > > > > the delayed work dev->wq can also arm the dev->stat_monitor timer.
+> > > > > 
+> > > > > When the device is detaching, the net_device will be deallocated. but
+> > > > > the net_device private data could still be dereferenced in delayed work
+> > > > > or timer handler. As a result, the UAF bugs will happen.
+> > > > > 
+> > > > > One racy situation is shown below:
+> > > > > 
+> > > > >       (Thread 1)                 |      (Thread 2)
+> > > > > lan78xx_stat_monitor()           |
+> > > > >  ...                             |  lan78xx_disconnect()
+> > > > >  lan78xx_defer_kevent()          |    ...
+> > > > >   ...                            |    cancel_delayed_work_sync(&dev->wq);
+> > > > >   schedule_delayed_work()        |    ...
+> > > > >   (wait some time)               |    free_netdev(net); //free net_device
+> > > > >   lan78xx_delayedwork()          |
+> > > > >   //use net_device private data  |
+> > > > >   dev-> //use                    |
+> > > > > 
+> > > > > Although we use cancel_delayed_work_sync() to cancel the delayed work
+> > > > > in lan78xx_disconnect(), it could still be scheduled in timer handler
+> > > > > lan78xx_stat_monitor().
+> > > > > 
+> > > > > Another racy situation is shown below:
+> > > > > 
+> > > > >       (Thread 1)                |      (Thread 2)
+> > > > > lan78xx_delayedwork             |
+> > > > >  mod_timer()                    |  lan78xx_disconnect()
+> > > > >                                 |   cancel_delayed_work_sync()
+> > > > >  (wait some time)               |   if (timer_pending(&dev->stat_monitor))
+> > > > >              	                |       del_timer_sync(&dev->stat_monitor);
+> > > > >  lan78xx_stat_monitor()         |   ...
+> > > > >   lan78xx_defer_kevent()        |   free_netdev(net); //free
+> > > > >    //use net_device private data|
+> > > > >    dev-> //use                  |
+> > > > > 
+> > > > > Although we use del_timer_sync() to delete the timer, the function
+> > > > > timer_pending() returns 0 when the timer is activated. As a result,
+> > > > > the del_timer_sync() will not be executed and the timer could be
+> > > > > re-armed.
+> > > > > 
+> > > > > In order to mitigate this bug, We use timer_shutdown_sync() to shutdown
+> > > > > the timer and then use cancel_delayed_work_sync() to cancel the delayed
+> > > > > work. As a result, the net_device could be deallocated safely.
+> > > > > 
+> > > > > What's more, the dev->flags is set to EVENT_DEV_DISCONNECT in
+> > > > > lan78xx_disconnect(). But it could still be set to EVENT_STAT_UPDATE
+> > > > > in lan78xx_stat_monitor(). So this patch put the set_bit() behind
+> > > > > timer_shutdown_sync().
+> > > > > 
+> > > > > Fixes: 77dfff5bb7e2 ("lan78xx: Fix race condition in disconnect handling")
+> > > > 
+> > > > Any idea why this stopped at linux-6.4.y?  The aforementioned Fixes:
+> > > > commit also exists in linux-6.1.y and linux-5.15.y.  I don't see any
+> > > > earlier backport attempts or failure reports that would otherwise
+> > > > explain this.
+> > > 
+> > > Did you try to build it:
+> > 
+> > No, I just noticed that it was missing.
+> > 
+> > > 	drivers/net/usb/lan78xx.c: In function ‘lan78xx_disconnect’:
+> > > 	drivers/net/usb/lan78xx.c:4234:9: error: implicit declaration of function ‘timer_shutdown_sync’ [-Werror=implicit-function-declaration]
+> > > 	 4234 |         timer_shutdown_sync(&dev->stat_monitor);
+> > > 	      |         ^~~~~~~~~~~~~~~~~~~
+> > > 	cc1: all warnings being treated as errors
+> > > 
+> > > That's a good reason to not include it...
+> > 
+> > It's a perfect reason not to include it.
+> > 
+> > The issue is not that the patch is not present.  It's more the lack of
+> > transparency in terms of searchable information on why it was not
+> > included.
+> > 
+> > I was under the impression that a report is usually sent out when a
+> > patch failed to apply for any reason?
+> 
+> For patches that are explicitly tagged for stable inclusion, yes, that
+> will happen.  That is not the case for this commit.
+> 
+> For patches that only have a "Fixes:" tag on it, those are gotten to on
+> a "best effort" basis when we get a chance, as those were obviously not
+> explicitly asked to be backported.  And when they are backported, if
+> they fail, they will fail silently as the author/maintainer was not
+> explicitly asking them to be applied to a stable tree, so it would just
+> be noise to complain about it.
+> 
+> So, it's lucky that this patch was backported at all to any stable tree :)
 
-Tested-by: Ron Economos <re@w6rz.net>
+That's fair to a point.
 
+Just know that if there are no other means to determine the actions
+taken place behind closed doors, then these queries are likely to
+reoccur.
+
+It would be far nicer if an automated mail was sent out when a failed
+backport attempt were made in all cases.  Even if we drop the individual
+contributor/maintainer addresses and only ping the mailing lists, since
+at least it then becomes helpfully searchable on LORE.  Is it really
+more work to duplicate the workflow between intended Stable inclusions
+and any other attempt?
+
+-- 
+Lee Jones [李琼斯]
