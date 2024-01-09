@@ -1,71 +1,55 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78433D962
-	for <patches@lists.linux.dev>; Tue,  9 Jan 2024 19:53:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 0EC751C006B; Tue,  9 Jan 2024 20:53:10 +0100 (CET)
-Date: Tue, 9 Jan 2024 20:53:09 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.1 000/150] 6.1.72-rc1 review
-Message-ID: <ZZ2kJZ08QJaQKR+Y@duo.ucw.cz>
-References: <20240108153511.214254205@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F683E482;
+	Tue,  9 Jan 2024 21:40:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SWuLr1U4"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 20A74C433F1;
+	Tue,  9 Jan 2024 21:40:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704836413;
+	bh=jhIdDW5qYTBVSSDFWvMOGAI8nCs4tw8lpe0ZIwpizak=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+	b=SWuLr1U4bunRrgt605wkzO6CihyqFW7J278JTt+/1zJqZ4UP54xOnTy9W0+lx2j+x
+	 w2m9D5VoLvJSAtXaieUZdXDJ8UF/Smr4Bb2iq2SVe0hMWZLu3FW2N5jo/aYRr3hF20
+	 rPfAy486DXIoVAIvwndxKsYGNYFUK7GWUHt2Uwuh1NckXlE3C225RPIMyQsf0UxHHj
+	 qqNW1silCKJY9575KsnAvEdtxEEufstVi1cCQN0czuWEv9CN51BiaXdtYio0hoP2Aj
+	 yDFjnr2+jfUmiwWICtlQLhpIGoOzqdvbSQwa5LG3ko5qKD1Ks8zdKn435lRpLOwhoo
+	 qn2RBjj+ktZqA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0C092D8C96F;
+	Tue,  9 Jan 2024 21:40:13 +0000 (UTC)
+Subject: Re: [GIT PULL] slab updates for 6.8
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <a0511a72-711b-4c8f-b9d7-da95681000c1@suse.cz>
+References: <a0511a72-711b-4c8f-b9d7-da95681000c1@suse.cz>
+X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
+X-PR-Tracked-Message-Id: <a0511a72-711b-4c8f-b9d7-da95681000c1@suse.cz>
+X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.8
+X-PR-Tracked-Commit-Id: 61d7e367f8bcc8083f02dcc5ce89b98b1480929d
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: d30e51aa7b1f6fa7dd78d4598d1e4c047fcc3fb9
+Message-Id: <170483641304.1854.12542188128449597766.pr-tracker-bot@kernel.org>
+Date: Tue, 09 Jan 2024 21:40:13 +0000
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, Chengming Zhou <chengming.zhou@linux.dev>, Stephen Rothwell <sfr@canb.auug.org.au>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Q9xe+AQtSDDuDXay"
-Content-Disposition: inline
-In-Reply-To: <20240108153511.214254205@linuxfoundation.org>
 
+The pull request you sent on Fri, 5 Jan 2024 10:36:08 +0100:
 
---Q9xe+AQtSDDuDXay
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.8
 
-Hi!
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/d30e51aa7b1f6fa7dd78d4598d1e4c047fcc3fb9
 
-> This is the start of the stable review cycle for the 6.1.72 release.
-> There are 150 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Thank you!
 
-CIP testing did not find any problems here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.1.y
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
-
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---Q9xe+AQtSDDuDXay
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZZ2kJQAKCRAw5/Bqldv6
-8jbxAJ9EdZbmVtAW/4KJ/rKcQv31P4SCugCghsA8T+TtlyH4fsEODz+RSw6fLGc=
-=lYk9
------END PGP SIGNATURE-----
-
---Q9xe+AQtSDDuDXay--
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
