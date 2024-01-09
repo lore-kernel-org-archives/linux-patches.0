@@ -1,81 +1,54 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933053E489
-	for <patches@lists.linux.dev>; Tue,  9 Jan 2024 21:49:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B426F3D99D
+	for <patches@lists.linux.dev>; Tue,  9 Jan 2024 22:00:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ECOfTO/p"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1d3f29fea66so17407855ad.3
-        for <patches@lists.linux.dev>; Tue, 09 Jan 2024 13:49:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704836998; x=1705441798; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CnBPxEnXk7KjlkqXAC9IxPbYGia/n1Rz7kNemo9mTos=;
-        b=ECOfTO/pXgSBBtP3vd/Cx6B0bWQjZxE5IqTbKCgR/J3C08LEnvrg2RPWxtz7tS7y+f
-         5LGhzVdXgrcDHixQMZkTCnuvxQ2+44Gwlbi4pYeBJxFLjOYvc0SI/KdSt1DFaNafZKGh
-         y5r6q/yZGHP7vXB2WF2B1qBc+B5MGAcQHb+V/zt/LPFmZkENIhDjOUnJbZZ4/EyuZW0B
-         ft3zVXr3etMGO2Ji/4DLvVpgWlZ0bdf0pzQmwABMGFY5Y1/E3bWJnhqpZrRmkW47uuZP
-         XqxcZ89Za/Uhs7xn+IcNndx2ZH+N1QcW6HI+8wzldHF6B3nQ+H/hEULpQSb4qLeoiQGl
-         SQOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704836998; x=1705441798;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=CnBPxEnXk7KjlkqXAC9IxPbYGia/n1Rz7kNemo9mTos=;
-        b=KX8HvYm8PLdOX125AGSJjUnFXFH9EIGvmmo2DhGLiPM8BpS/FNMqBGsofJUpkfv7xD
-         LsEYvrtuuvhiIRTYAkyYbp7vsTLEzhqWZHCy0w3uzmFXbskku7rimGpDH0//zVkwtAmO
-         cR3Nvskeu03iVSn0yKGO3D/hkzDCpyqa0zbZ5C0T/7kWqRc+TxZFP3tj7KFx+Z8smWcX
-         LO0uRazSxBAAQIB5Bh8By4QViK9+d7Y1TP/RhEAEHNTvmP6ERR6m0hUek2yDtE9JE4OC
-         hgVTKGIbo9GimDaBBH82DETLM9AA7w3Lrs7aqzgt8d1r861Q26lpKYScLW+ireJiD75Y
-         1K9Q==
-X-Gm-Message-State: AOJu0YzQ1uOpUgl+8nzKrRTJkYNvIlJAuWIAZEvzujV0pKNo0fAuiMMJ
-	bbHNpZ9z2XuGRbnElqdpdog=
-X-Google-Smtp-Source: AGHT+IFY2Ld9moWymK/ytefZKpitqb9BBrNdq4JahB3/Dd7cexihzS/iRjzJ9kat+JUkyc//v6zpZQ==
-X-Received: by 2002:a17:902:c949:b0:1d4:e36f:748f with SMTP id i9-20020a170902c94900b001d4e36f748fmr71428pla.41.1704836997726;
-        Tue, 09 Jan 2024 13:49:57 -0800 (PST)
-Received: from bangji.corp.google.com ([2620:15c:2c0:5:b4e:5c78:a5b3:ef5b])
-        by smtp.gmail.com with ESMTPSA id t9-20020a170902bc4900b001d4b0ae7052sm2249146plz.135.2024.01.09.13.49.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jan 2024 13:49:57 -0800 (PST)
-Sender: Namhyung Kim <namhyung@gmail.com>
-From: Namhyung Kim <namhyung@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="arKdJwOX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1704837623; x=1736373623;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=1QjgZpGFHA+FPBRTzqHWSHb+oBeT6/irOFJFEnoel6w=;
+  b=arKdJwOXloFNLlcA7IxceM89d+IcYvO5iSEzM1SbwN5YW9ctrCCe1SLz
+   Uev7xOMas92fCkQVKY+B3L5F0bVvSTKdLbCcUP+T+vXUk3cpcINTMrZPc
+   vr/XwfVoxGgh5HhERX0/GMV/4Oq1zJ3QqhRkvnxtS4gfL9yGOoBN2URrx
+   Nzjb5Y6Udi1bmhqYvYb6FOrk7rwbkiP7OrHvfNbs+ktEiHWHMGN0R1N/1
+   4v0dwR3D12WVOBZSMClX/vNCeeKxS/Ix9tN7bShU1GQH05h7+VBveS23G
+   2cDmrZCQnd9YJw+1eispEIM1BtxIS/mvIPMiwzjT+Bg0YDUgCj6B6UKYQ
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10947"; a="5704800"
+X-IronPort-AV: E=Sophos;i="6.04,184,1695711600"; 
+   d="scan'208";a="5704800"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jan 2024 14:00:20 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10947"; a="925418904"
+X-IronPort-AV: E=Sophos;i="6.04,184,1695711600"; 
+   d="scan'208";a="925418904"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
+  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jan 2024 14:00:16 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	x86@kernel.org
+Cc: James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Xiaochen Shen <xiaochen.shen@intel.com>,
 	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Darren Kenny <darren.kenny@oracle.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Lieven Hey <lieven.hey@kdab.com>
-Subject: [PATCH for-5.15] perf inject: Fix GEN_ELF_TEXT_OFFSET for jit
-Date: Tue,  9 Jan 2024 13:49:55 -0800
-Message-ID: <20240109214955.451513-1-namhyung@kernel.org>
-X-Mailer: git-send-email 2.43.0.472.g3155946c3a-goog
-In-Reply-To: <2024010711-skeletal-material-15e8@gregkh>
-References: <2024010711-skeletal-material-15e8@gregkh>
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH] x86/resctrl: Implement new MBA_mbps throttling heuristic
+Date: Tue,  9 Jan 2024 14:00:03 -0800
+Message-ID: <20240109220003.29225-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20231201214737.104444-1-tony.luck@intel.com>
+References: <20231201214737.104444-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -84,48 +57,160 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+The MBA_mbps feedback loop increases throttling when a group is using
+more bandwidth than the target set by the user in the schemata file, and
+decreases throttling when below target.
 
-When a program header was added, it moved the text section but
-GEN_ELF_TEXT_OFFSET was not updated.
+To avoid possibly stepping throttling up and down on every poll a
+flag "delta_comp" is set whenever throttling is changed to indicate
+that the actual change in bandwidth should be recorded on the next
+poll in "delta_bw". Throttling is only reduced if the current bandwidth
+plus delta_bw is below the user target.
 
-Fix by adding the program header size and aligning.
+This algorithm works well if the workload has steady bandwidth needs.
+But it can go badly wrong if the workload moves to a different phase
+just as the throttling level changed. E.g. if the workload becomes
+essentially idle right as throttling level is increased, the value
+calculated for delta_bw will be more or less the old bandwidth level.
+If the workload then resumes, Linux may never reduce throttling because
+current bandwidth plu delta_bw is above the target set by the user.
 
-Fixes: babd04386b1df8c3 ("perf jit: Include program header in ELF files")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Lieven Hey <lieven.hey@kdab.com>
-Link: https://lore.kernel.org/r/20221014170905.64069-7-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-[namhyung: use "linux/kernel.h" instead to avoid build failure]
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Implement a simpler heuristic by assuming that in the worst case the
+currently measured bandwidth is being controlled by the current level of
+throttling. Compute how much it may increase if throttling is relaxed to
+the next higher level. If that is still below the user target, then it
+is ok to reduce the amount of throttling.
+
+Fixes: ba0f26d8529c ("x86/intel_rdt/mba_sc: Prepare for feedback loop")
+Reported-by: Xiaochen Shen <xiaochen.shen@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- tools/perf/util/genelf.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/genelf.h b/tools/perf/util/genelf.h
-index b5c909546e3f..6af062d1c452 100644
---- a/tools/perf/util/genelf.h
-+++ b/tools/perf/util/genelf.h
-@@ -2,6 +2,8 @@
- #ifndef __GENELF_H__
- #define __GENELF_H__
+This patch was previously posted in:
+
+  https://lore.kernel.org/lkml/ZVU+L92LRBbJXgXn@agluck-desk3/#t
+
+as part of a proposal to allow the mba_MBps mount option to base its
+feedback loop input on total bandwidth instead of local bandwidth.
+Sending it now as a standalone patch because Xiaochen reported that
+real systems have experienced problems when delta_bw is incorrectly
+calculated.
+
+ arch/x86/kernel/cpu/resctrl/internal.h |  4 ---
+ arch/x86/kernel/cpu/resctrl/monitor.c  | 42 ++++++--------------------
+ 2 files changed, 10 insertions(+), 36 deletions(-)
+
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index a4f1aa15f0a2..71bbd2245cc7 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -296,14 +296,10 @@ struct rftype {
+  * struct mbm_state - status for each MBM counter in each domain
+  * @prev_bw_bytes: Previous bytes value read for bandwidth calculation
+  * @prev_bw:	The most recent bandwidth in MBps
+- * @delta_bw:	Difference between the current and previous bandwidth
+- * @delta_comp:	Indicates whether to compute the delta_bw
+  */
+ struct mbm_state {
+ 	u64	prev_bw_bytes;
+ 	u32	prev_bw;
+-	u32	delta_bw;
+-	bool	delta_comp;
+ };
  
-+#include <linux/kernel.h>
-+
- /* genelf.c */
- int jit_write_elf(int fd, uint64_t code_addr, const char *sym,
- 		  const void *code, int csize, void *debug, int nr_debug_entries,
-@@ -76,6 +78,6 @@ int jit_add_debug_info(Elf *e, uint64_t code_addr, void *debug, int nr_debug_ent
- #endif
+ /**
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index f136ac046851..1961823b555b 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -440,9 +440,6 @@ static void mbm_bw_count(u32 rmid, struct rmid_read *rr)
  
- /* The .text section is directly after the ELF header */
--#define GEN_ELF_TEXT_OFFSET sizeof(Elf_Ehdr)
-+#define GEN_ELF_TEXT_OFFSET round_up(sizeof(Elf_Ehdr) + sizeof(Elf_Phdr), 16)
+ 	cur_bw = bytes / SZ_1M;
  
- #endif
+-	if (m->delta_comp)
+-		m->delta_bw = abs(cur_bw - m->prev_bw);
+-	m->delta_comp = false;
+ 	m->prev_bw = cur_bw;
+ }
+ 
+@@ -520,7 +517,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+ {
+ 	u32 closid, rmid, cur_msr_val, new_msr_val;
+ 	struct mbm_state *pmbm_data, *cmbm_data;
+-	u32 cur_bw, delta_bw, user_bw;
++	u32 cur_bw, user_bw;
+ 	struct rdt_resource *r_mba;
+ 	struct rdt_domain *dom_mba;
+ 	struct list_head *head;
+@@ -543,7 +540,6 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+ 
+ 	cur_bw = pmbm_data->prev_bw;
+ 	user_bw = dom_mba->mbps_val[closid];
+-	delta_bw = pmbm_data->delta_bw;
+ 
+ 	/* MBA resource doesn't support CDP */
+ 	cur_msr_val = resctrl_arch_get_config(r_mba, dom_mba, closid, CDP_NONE);
+@@ -555,49 +551,31 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+ 	list_for_each_entry(entry, head, mon.crdtgrp_list) {
+ 		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
+ 		cur_bw += cmbm_data->prev_bw;
+-		delta_bw += cmbm_data->delta_bw;
+ 	}
+ 
+ 	/*
+ 	 * Scale up/down the bandwidth linearly for the ctrl group.  The
+ 	 * bandwidth step is the bandwidth granularity specified by the
+ 	 * hardware.
+-	 *
+-	 * The delta_bw is used when increasing the bandwidth so that we
+-	 * dont alternately increase and decrease the control values
+-	 * continuously.
+-	 *
+-	 * For ex: consider cur_bw = 90MBps, user_bw = 100MBps and if
+-	 * bandwidth step is 20MBps(> user_bw - cur_bw), we would keep
+-	 * switching between 90 and 110 continuously if we only check
+-	 * cur_bw < user_bw.
++	 * Always increase throttling if current bandwidth is above the
++	 * target set by user.
++	 * But avoid thrashing up and down on every poll by checking
++	 * whether a decrease in throttling is likely to push the group
++	 * back over target. E.g. if currently throttling to 30% of bandwidth
++	 * on a system with 10% granularity steps, check whether moving to
++	 * 40% would go past the limit by multiplying current bandwidth by
++	 * "(30 + 10) / 30".
+ 	 */
+ 	if (cur_msr_val > r_mba->membw.min_bw && user_bw < cur_bw) {
+ 		new_msr_val = cur_msr_val - r_mba->membw.bw_gran;
+ 	} else if (cur_msr_val < MAX_MBA_BW &&
+-		   (user_bw > (cur_bw + delta_bw))) {
++		   (user_bw > (cur_bw * (cur_msr_val + r_mba->membw.min_bw) / cur_msr_val))) {
+ 		new_msr_val = cur_msr_val + r_mba->membw.bw_gran;
+ 	} else {
+ 		return;
+ 	}
+ 
+ 	resctrl_arch_update_one(r_mba, dom_mba, closid, CDP_NONE, new_msr_val);
+-
+-	/*
+-	 * Delta values are updated dynamically package wise for each
+-	 * rdtgrp every time the throttle MSR changes value.
+-	 *
+-	 * This is because (1)the increase in bandwidth is not perfectly
+-	 * linear and only "approximately" linear even when the hardware
+-	 * says it is linear.(2)Also since MBA is a core specific
+-	 * mechanism, the delta values vary based on number of cores used
+-	 * by the rdtgrp.
+-	 */
+-	pmbm_data->delta_comp = true;
+-	list_for_each_entry(entry, head, mon.crdtgrp_list) {
+-		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
+-		cmbm_data->delta_comp = true;
+-	}
+ }
+ 
+ static void mbm_update(struct rdt_resource *r, struct rdt_domain *d, int rmid)
+
+base-commit: 0dd3ee31125508cd67f7e7172247f05b7fd1753a
 -- 
-2.43.0.472.g3155946c3a-goog
+2.43.0
 
