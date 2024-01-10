@@ -1,309 +1,187 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8263FB34;
-	Tue,  9 Jan 2024 22:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFEE1FA6
+	for <patches@lists.linux.dev>; Wed, 10 Jan 2024 02:17:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zq8ocN8G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7695CC4163A;
-	Tue,  9 Jan 2024 22:16:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704838614;
-	bh=WEn5lTrzAXiM29oFJTOtG7WGsQHyaE8VVcpnTQ825es=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=Zq8ocN8Gt1fqJMhJwOXYGLVh0X0nGl41KS8W4md+yRdfItGW8fNnP0aRYm/3H6lAl
-	 RS27Py+YNnR5kRSt+po4oAHAEWb8VCZ4plTxJ9tHH89qCRyg2dtoAWNC5e5An5dSZU
-	 +JzvfWbNjxCnZsb1JPhcCIyg8HTq07RwbIKmHE5PbUgHpl62LhEW99qTUmRwlC4XUj
-	 tFxwc5+m00o10eK3MDOXqDhJvrk7QWYLW9omp+MinaN9zQ5+dIOI1juTAcz3K/C2/p
-	 3/ZPyl9rbEDTjpogg6clozkMlc/fZuaj5iit9sPEM6FYdXPBAs73lpQUDVYHldIsnX
-	 4xjPgJS1qq3mQ==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 09 Jan 2024 15:16:31 -0700
-Subject: [PATCH 3/3] treewide: Update LLVM Bugzilla links
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="HCV5SaO2";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="K9YCORHo"
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 40A1mcOJ029427;
+	Wed, 10 Jan 2024 02:17:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-11-20;
+ bh=rgMcC7AfzFLFrwHKgXp56OyoqoxVcIpfRQniU3mpMQs=;
+ b=HCV5SaO2ZLoAmJleiedfuP2XJUKz58BskSV/02WtmJyPkbUiLwwrfoDDsBvGgf70UbUn
+ iumJAsZDCQIkinCtqHTmOneskmszUMIS1RHQ6EmzwfFCl1I2nOhx09PRzXTCftym88bl
+ qijJQtrdbs+Vjcf4m7PAxHoZw35aK7HipoE7jIf4TGzNe4XjpKJm3Yst7ZCNGY+4qPXz
+ fsk7Na1Dj3BYQrbOGCevwfGoOCI7KESbIPOmrnG8uXfXTuxmdON2NladLruwO7DgNXFf
+ hHPfqbXz1ykoSBITmPaXdPb+mTBRi5U7xe94yqwcAsWaWCmJx5xvfQ7Lz6YJNdVfQiMS oQ== 
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3vh9r990tk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 10 Jan 2024 02:17:03 +0000
+Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 40A2B7n3030110;
+	Wed, 10 Jan 2024 02:17:02 GMT
+Received: from nam12-mw2-obe.outbound.protection.outlook.com (mail-mw2nam12lp2041.outbound.protection.outlook.com [104.47.66.41])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 3vfutmx324-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 10 Jan 2024 02:17:02 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=QoOs7XwcfKBUsygE8F9PEN+BqFwnT5LPE6uDpW4gSNXyEexXdVg0cuzBcK21/c38hflzaoYhH5JPSecle1fpZx5A7Dj2johMRk4gD2YO8y9Pw+VeQBa0BSaYm3JMw8U2L1Mo70o06N1QcWwbHTNru+Arc50JNsbEjrGG5tyZ0XgXboKENuo5BJDLnIjIC0AZR3FahiHAK7iX8xLNEMwLQtsBMQC53wyDl6APqiaS0Zq4BKkCxTKlQ9R+MAyqI5TFHEH477nA6oM7pT5NErH8D7ka37HQhNwizMqn45k8iscPZMHs+c4yT5HY9DqqrVWL3aVwZs4grbNOSpDC2ZmCMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rgMcC7AfzFLFrwHKgXp56OyoqoxVcIpfRQniU3mpMQs=;
+ b=g0mccNZ+CdMHPk1ACEDaWuZhGhVjvPVGUrso3VqnNYyekJSMBj0wHh/9QADMXL2KgY6nJ3UotClIk0kApTgDvAJSrwrmQcdzvpptT58WMxIoMc0/SLsHkKBp8Yef909Xue/EhNbJY1HAAxatGeFgAlD4MR/7h7O9yERLI/BCDrf9+RB4zbFC3iucZ/KJXyCi7LC2JGcszsEt2JYSek2aQrogsANvoxSqWrGtUUh0zWXWYsiX7SmbvZAY8XB9aVaZnYOV8cz//n1MBzFeNaRF0uW8Bb5DX2+IjNxbO0rYWOxL3WhSg+uGRjKIA8DEYElTTll13okVbUAI3bx/P4RQag==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rgMcC7AfzFLFrwHKgXp56OyoqoxVcIpfRQniU3mpMQs=;
+ b=K9YCORHoZ8A6B88oMb5uchWpWcYYa0UIEZ+VKFjP5U4lB8AYhwd2vjgm+6saRAKwr16J8fIrduUDRKn/uUqrhDsSylHnbCNTKANl8IU4GaMYvST7Pvr9L7iyILa7c84pIAtsiuZjDUc2+TDijUQkIiOOTvfpMbDleu+8pWaZbNY=
+Received: from PH8PR10MB6290.namprd10.prod.outlook.com (2603:10b6:510:1c1::7)
+ by CYYPR10MB7570.namprd10.prod.outlook.com (2603:10b6:930:c0::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7159.23; Wed, 10 Jan
+ 2024 02:17:00 +0000
+Received: from PH8PR10MB6290.namprd10.prod.outlook.com
+ ([fe80::f41b:4111:b10e:4fa5]) by PH8PR10MB6290.namprd10.prod.outlook.com
+ ([fe80::f41b:4111:b10e:4fa5%4]) with mapi id 15.20.7159.020; Wed, 10 Jan 2024
+ 02:16:59 +0000
+Message-ID: <6945da59-f341-46a5-a6bd-819d488430dd@oracle.com>
+Date: Wed, 10 Jan 2024 07:46:48 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 000/124] 6.6.11-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+        torvalds@linux-foundation.org, akpm@linux-foundation.org,
+        linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+        lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+        f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+        rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
+        Vegard Nossum <vegard.nossum@oracle.com>,
+        Darren Kenny <darren.kenny@oracle.com>
+References: <20240108150602.976232871@linuxfoundation.org>
+Content-Language: en-US
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BM1PR01CA0144.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:b00:68::14) To PH8PR10MB6290.namprd10.prod.outlook.com
+ (2603:10b6:510:1c1::7)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240109-update-llvm-links-v1-3-eb09b59db071@kernel.org>
-References: <20240109-update-llvm-links-v1-0-eb09b59db071@kernel.org>
-In-Reply-To: <20240109-update-llvm-links-v1-0-eb09b59db071@kernel.org>
-To: akpm@linux-foundation.org
-Cc: llvm@lists.linux.dev, patches@lists.linux.dev, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linuxppc-dev@lists.ozlabs.org, kvm@vger.kernel.org, 
- linux-riscv@lists.infradead.org, linux-trace-kernel@vger.kernel.org, 
- linux-s390@vger.kernel.org, linux-pm@vger.kernel.org, 
- linux-crypto@vger.kernel.org, linux-efi@vger.kernel.org, 
- amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
- linux-media@vger.kernel.org, linux-arch@vger.kernel.org, 
- kasan-dev@googlegroups.com, linux-mm@kvack.org, bridge@lists.linux.dev, 
- netdev@vger.kernel.org, linux-security-module@vger.kernel.org, 
- linux-kselftest@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11357; i=nathan@kernel.org;
- h=from:subject:message-id; bh=WEn5lTrzAXiM29oFJTOtG7WGsQHyaE8VVcpnTQ825es=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKlzj16w1Pj8I8RGNGpqStpeL/2Ss7Fckxj+MQn8ummhc
- f/e3puMHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAipzgZ/mcpXDN6n369Z2Vr
- 7IPwnTz2R5dYJN5v++9iM3XOfBYtOU5GhuM55jNe+5/7H/HicGe1b2CLnMlqaZtVrzg+6Dfn1Hg
- YcwMA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH8PR10MB6290:EE_|CYYPR10MB7570:EE_
+X-MS-Office365-Filtering-Correlation-Id: 028d9c8e-fbcf-4fbb-027c-08dc11823975
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	TrIwv3/4/lFAn8po96yw4EA/YB5ZW113j6VHPqwzzY+I0YD6eVCDiJfMfo9kk+8r+a/RPx2QOsv4hIuFoyqXihhmJlKu6Qo8UPxtMcLZtEZ1yaIhNoi3NudFD6zlNNBcrISzRuZEa6erVKjdx+LzhRt4Em98g6KO/Sstbsbm8noWFPvPzKRoVdEXGECtjkNgSkrbC1d5ds+8U5mJnP1VSdJc/ciIVTCYxaBTCpLalUqh4BaXqTlMaSZrua72pP4lXID2uEfPD/lfcH8M+UWxF4lViqrBLMavWDBPG7URcYvdiv49gnrZfrU/NBwqxYzI6pu66zD+E+iHUVXG/nCoaBwOyHC1+wprVAv6fZziF9PcGsjkPdUQBaapnVuOIOMx6QGXXifnUF7HCvL45lfRUeHv2D5fbO4GhEL9E22TypUBpJv0NvuHWWQMsDxdI3fIifem06BVR+VMbuIEdGBqYPLDfDPKPrWt+7R7POTwbuNbeWq4MFsFGPVFWhbR5uIlP9XObNNzlQb2MKLuYkYEgb0WNCfaRg6U2BZsIbjyVGlG2rV8i7OFIenZhhgh/qfQkSNKh0q4VpRqpDgKi7Lk54kQIBZpCEToh5k+kCIb3sO2XHWg0FTifOpeMPxlewxs5zi2Z+v8sGZLdCDsyepv2Q==
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR10MB6290.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(39860400002)(346002)(396003)(136003)(366004)(230922051799003)(1800799012)(451199024)(64100799003)(186009)(31686004)(7416002)(2906002)(4744005)(5660300002)(8936002)(36756003)(4326008)(66946007)(316002)(54906003)(66476007)(41300700001)(66556008)(6506007)(966005)(31696002)(86362001)(6486002)(107886003)(8676002)(478600001)(6512007)(6666004)(53546011)(26005)(2616005)(38100700002)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?utf-8?B?UGwwc2gvb09PZis3dUpLZTIrSGUxWkRWM1E4b1V4VEEyWHJQZ1BxRDZTUkJ2?=
+ =?utf-8?B?aUxVZVU4U1ZyWWt0VWtSb2xEQUFXVDZDeGZpNDJRR20xZ2NLSEMvL2pKdlAy?=
+ =?utf-8?B?dGhvbk5jVk52WnBSeG9ZRVM3NWtFMUtRL0V2Z2lxb0E4RS9sYUdXNzgwQnRT?=
+ =?utf-8?B?NUVibzJRV21IYkFTOVlDVU0vdGhYdEdqVnJES0pxNWo1Nld2OHhCSXM3Z29n?=
+ =?utf-8?B?LzV6cGtLcGdXYUFET093bmFVZzlwT2VSTngwaXUwYzFIUnd2S2MxTDNYR0FT?=
+ =?utf-8?B?K3NkeEg4RTJwMlowOW5HL1VnVGEwTHordnBIYjE5RmRLSTBaSVJ2c3BqVHBj?=
+ =?utf-8?B?ZnBmTnBBMTBKclcvTG96RU0xSEhzelFaYWZUa2piS3V6QlN3MXFpVENyWTBD?=
+ =?utf-8?B?SU9SR1lHZzVpSU1Rd1JPQXlESGpPZjJxclpVSHpLRGR2a3l0djB0M3NlSVlC?=
+ =?utf-8?B?ZlpvbGZKQWplaG8rQ09ESzIrTEtRQUxKTjh2eWtJNlBBM285SUo1dURpQWMr?=
+ =?utf-8?B?OW8rYTMzcFhqdE9rUUtTT0EvS0tLSzVVMENzb0IyUUMyZTk1d0tQaWtKR25E?=
+ =?utf-8?B?eE9WK0Y5UndvVkJGNXdhTER1WVZ3bURlY3lFaVpNOVgzNUF6ajZiUXV2U2JL?=
+ =?utf-8?B?dWd1TXBjdmxHd0IwbFNXRy9XdHZjZEorUGhPYml2L2NPUlBab0dsUWtzcUUr?=
+ =?utf-8?B?QTY5OTlVbGc1aFdzL0JFVllFNjNBTWFxSnlFbHhxSFVVQlFUaWtuelNoaGFY?=
+ =?utf-8?B?Vmd1Q1ArTHBmVHkvR01XK09yeXZUbHZISTQ3RlZCOGxPaDJFbmtQWkRNT0JI?=
+ =?utf-8?B?RHl1NGFWaDczeGRoV0c1cFNsRkMvV09zN1oxV25ZcElJSkVBZWkzbUhaaWRG?=
+ =?utf-8?B?WXp4MkFGYk9qWG5xNGlxKzlvaTBmdzBUSDdUVEM3UU53L0hVRlYzMzR5b1p3?=
+ =?utf-8?B?UXcya0JkRzkvNGlzRm5qRVpxMW5qOFZScHJzWHZPWUpyMWRmSUlvUURsSDRC?=
+ =?utf-8?B?R0IxVTNPczVjbXV2S09NRFNGUHZrQ0VNeHRHc0kzRVFuYWNMekllTURXWEVv?=
+ =?utf-8?B?cTZLMVZrcG5QREhTQTlDdzRHY3pBakxRV0w3VzhVTWFlL3M5ZWgxUS9DOTFk?=
+ =?utf-8?B?aW9aQ095UEpCOHhLTmxIQlZFRk9IUHRubkFnL0l2Tkx3aDV6dndieXBmWHBy?=
+ =?utf-8?B?eUlJcFA1Nml5d1NqeFZQVk8rM1IwUFp3c1YxcXdac3BNOTNOUU9qaGgxd3FT?=
+ =?utf-8?B?eGt5NzRnaEhmb2IvczNpRlkwdzgxZUhndmRWU1JJNEptSGhvUlo2VnBRNldE?=
+ =?utf-8?B?NkxWSE0xZ1RsY2M2bDFrV2JKNWIwM1piK0RuOHNrUnViUHhzVHVLdWVFa3c3?=
+ =?utf-8?B?Z3pycVZOL3Ezb044Z0JiZ0hTY0VMWkcxamxVTkl6MUdDREE0MzFuNHh4Y2Ry?=
+ =?utf-8?B?Z1Nzc3E5TU9oRkNUaFg3NUF6UTBXdnluWW5nSy82OWJwdE9sSFR1YzNYd01S?=
+ =?utf-8?B?b1hRY2NvcmQxaFhKV2pTNmQ5OGVTaUs1ek5kandyb1VETlhGRTYxNnlQeGt3?=
+ =?utf-8?B?OXA2V3psVWtlVXFsOFRFYWhMUExTY1hYZFlLdUVadTl1dEJQelVmN01xVkxZ?=
+ =?utf-8?B?MnB3bHVkNElZUEZQM0FrMm9SOHdxTGNta0pkSGRRVnA5Ym1tNC84M0xaN2s0?=
+ =?utf-8?B?Z21wZlVVZVp2NmJUMWp2RUdJL1pxeDI0Y2pzS2djVEVYTStCMTBYbHg5VkQ5?=
+ =?utf-8?B?UjlmbGNkbUcrZFl6QW9UWFBwTGhRNURmazRlTzZlK3Zqak9NQWtQNzlnMkMy?=
+ =?utf-8?B?ckc5cWdueWpKbW0rQ2JmREFHMDhJOW1hNElmeGFUNHU2eW9hRzQ0UEd1UTBh?=
+ =?utf-8?B?NEZBVEo0VG5UellzTDJhZGJuSXBRNXFoSVBzdjF2NThkSk1tM0IrdHdzdUkx?=
+ =?utf-8?B?dmJwd1FLMGxnRC9xTVRKRStCbk55enFIdGZtdk9zQ1RpQWVKeGlqK0IzUTZB?=
+ =?utf-8?B?SmhZbFNQZEZOeTRJdUlIQlJQRThaZ09oMUJMT01jd3FlQWt4c1pNKzAzRGVt?=
+ =?utf-8?B?SzA1OEpJTTVWV2lUa25ER2ZaZ2t4K1R6QWhMTWtqVFZBVzBBditQcm1ieXdt?=
+ =?utf-8?B?aE85S2YvN2lFS0lSNGpXSU5iM2dFK2NEVzd5NGxWeU96dUVJSXRmNzY2Z2Ez?=
+ =?utf-8?Q?fg6Z5B8AgySZkdWxmuXJaPE=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	Mrodq2bBlmgzs8k5meomRoc7FWMwvzSB6Na5vfYQmSqoj1rac+xRj8pZPEQKHG9UsoYFhch6iECjiIUKE5+q7MTtsIawC2xU+3LkxNRslco2BFH4vw5T6csHLqWJzskNm29N/wOi5Ztzz2cCslWDXw+eiaYdbIs9sE+0RH6QLpib98rhFz6skowyMdSEGKnypjK9q1fqEc1WrO7L8Wc0DZuWgA3kElk0Se2jhtGIyFc3z4B8mCewxOu4YCyl58bdkCoBhr2OOxCGvf7AgCvjRi/r0FamFHpL5+/H9XBOxR44GSAcFJC0Y+cYU/99yQ3w4pOHsAFyjMQk+qCD3D4b1H21XYnxt4H2sHgV2/0USEmjGaCLxKgYOHql3iI53uh4YDDza0jVFnc269nEjzB7zgZZdCD2U4yTBI/TTZXiMDVDQ99yfRbxahdtm488Ri1yOqULHSiytR9GGyw/TORz0NS+5jQVeC3diaO6ojqCuL2OhAKxAed8AVGWo34GeSP8ZEyz9InqZwwlI/W0GvgrPDJPLQq4yek1umQ+Su0Y0Cghzr4iENhaRfe01/3TdjXLtb45ppVBY0DD8bbuZFY/5CumGoTt6LMvPfk8lMbOGZ4=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 028d9c8e-fbcf-4fbb-027c-08dc11823975
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR10MB6290.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jan 2024 02:16:59.0749
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: V8JU0xrRFakBjDh8a6zFak1/9xBKeJ6qD5r5aAgvDP49HG505sYt7HR/R28d/lf+PtaYHjOIOIquK96C+hue+v5F4prFPAoc6izF2BMOJer/VQb+DEfv50yPkGZ0vErf
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR10MB7570
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-09_13,2024-01-09_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 bulkscore=0 adultscore=0
+ phishscore=0 malwarescore=0 mlxlogscore=999 suspectscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2401100017
+X-Proofpoint-ORIG-GUID: 19koq6eXT1DVgNnT62G4SmaJ-tO0NLx6
+X-Proofpoint-GUID: 19koq6eXT1DVgNnT62G4SmaJ-tO0NLx6
 
-LLVM moved their issue tracker from their own Bugzilla instance to
-GitHub issues. While all of the links are still valid, they may not
-necessarily show the most up to date information around the issues, as
-all updates will occur on GitHub, not Bugzilla.
+Hi Greg,
 
-Another complication is that the Bugzilla issue number is not always the
-same as the GitHub issue number. Thankfully, LLVM maintains this mapping
-through two shortlinks:
+On 08/01/24 8:37 pm, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.11 release.
+> There are 124 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 10 Jan 2024 15:05:35 +0000.
+> Anything received after that time might be too late.
+> 
 
-  https://llvm.org/bz<num> -> https://bugs.llvm.org/show_bug.cgi?id=<num>
-  https://llvm.org/pr<num> -> https://github.com/llvm/llvm-project/issues/<mapped_num>
+Built and boot tested on x86_64 and aarch64.
 
-Switch all "https://bugs.llvm.org/show_bug.cgi?id=<num>" links to the
-"https://llvm.org/pr<num>" shortlink so that the links show the most up
-to date information. Each migrated issue links back to the Bugzilla
-entry, so there should be no loss of fidelity of information here.
+Tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/powerpc/Makefile                           | 4 ++--
- arch/powerpc/kvm/book3s_hv_nested.c             | 2 +-
- arch/s390/include/asm/ftrace.h                  | 2 +-
- arch/x86/power/Makefile                         | 2 +-
- crypto/blake2b_generic.c                        | 2 +-
- drivers/firmware/efi/libstub/Makefile           | 2 +-
- drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c        | 2 +-
- drivers/media/test-drivers/vicodec/codec-fwht.c | 2 +-
- drivers/regulator/Kconfig                       | 2 +-
- include/asm-generic/vmlinux.lds.h               | 2 +-
- lib/Kconfig.kasan                               | 2 +-
- lib/raid6/Makefile                              | 2 +-
- lib/stackinit_kunit.c                           | 2 +-
- mm/slab_common.c                                | 2 +-
- net/bridge/br_multicast.c                       | 2 +-
- security/Kconfig                                | 2 +-
- 16 files changed, 17 insertions(+), 17 deletions(-)
+Thanks,
+Harshit
 
-diff --git a/arch/powerpc/Makefile b/arch/powerpc/Makefile
-index f19dbaa1d541..cd6aaa45f355 100644
---- a/arch/powerpc/Makefile
-+++ b/arch/powerpc/Makefile
-@@ -133,11 +133,11 @@ CFLAGS-$(CONFIG_PPC64)	+= $(call cc-option,-mno-pointers-to-nested-functions)
- CFLAGS-$(CONFIG_PPC64)	+= $(call cc-option,-mlong-double-128)
- 
- # Clang unconditionally reserves r2 on ppc32 and does not support the flag
--# https://bugs.llvm.org/show_bug.cgi?id=39555
-+# https://llvm.org/pr39555
- CFLAGS-$(CONFIG_PPC32)	:= $(call cc-option, -ffixed-r2)
- 
- # Clang doesn't support -mmultiple / -mno-multiple
--# https://bugs.llvm.org/show_bug.cgi?id=39556
-+# https://llvm.org/pr39556
- CFLAGS-$(CONFIG_PPC32)	+= $(call cc-option, $(MULTIPLEWORD))
- 
- CFLAGS-$(CONFIG_PPC32)	+= $(call cc-option,-mno-readonly-in-sdata)
-diff --git a/arch/powerpc/kvm/book3s_hv_nested.c b/arch/powerpc/kvm/book3s_hv_nested.c
-index 3b658b8696bc..3f5970f74c6b 100644
---- a/arch/powerpc/kvm/book3s_hv_nested.c
-+++ b/arch/powerpc/kvm/book3s_hv_nested.c
-@@ -55,7 +55,7 @@ void kvmhv_save_hv_regs(struct kvm_vcpu *vcpu, struct hv_guest_state *hr)
- 	hr->dawrx1 = vcpu->arch.dawrx1;
- }
- 
--/* Use noinline_for_stack due to https://bugs.llvm.org/show_bug.cgi?id=49610 */
-+/* Use noinline_for_stack due to https://llvm.org/pr49610 */
- static noinline_for_stack void byteswap_pt_regs(struct pt_regs *regs)
- {
- 	unsigned long *addr = (unsigned long *) regs;
-diff --git a/arch/s390/include/asm/ftrace.h b/arch/s390/include/asm/ftrace.h
-index 5a82b08f03cd..621f23d5ae30 100644
---- a/arch/s390/include/asm/ftrace.h
-+++ b/arch/s390/include/asm/ftrace.h
-@@ -9,7 +9,7 @@
- #ifndef __ASSEMBLY__
- 
- #ifdef CONFIG_CC_IS_CLANG
--/* https://bugs.llvm.org/show_bug.cgi?id=41424 */
-+/* https://llvm.org/pr41424 */
- #define ftrace_return_address(n) 0UL
- #else
- #define ftrace_return_address(n) __builtin_return_address(n)
-diff --git a/arch/x86/power/Makefile b/arch/x86/power/Makefile
-index 379777572bc9..e0cd7afd5302 100644
---- a/arch/x86/power/Makefile
-+++ b/arch/x86/power/Makefile
-@@ -5,7 +5,7 @@
- CFLAGS_cpu.o	:= -fno-stack-protector
- 
- # Clang may incorrectly inline functions with stack protector enabled into
--# __restore_processor_state(): https://bugs.llvm.org/show_bug.cgi?id=47479
-+# __restore_processor_state(): https://llvm.org/pr47479
- CFLAGS_REMOVE_cpu.o := $(CC_FLAGS_LTO)
- 
- obj-$(CONFIG_PM_SLEEP)		+= cpu.o
-diff --git a/crypto/blake2b_generic.c b/crypto/blake2b_generic.c
-index 6704c0355889..32e380b714b6 100644
---- a/crypto/blake2b_generic.c
-+++ b/crypto/blake2b_generic.c
-@@ -102,7 +102,7 @@ static void blake2b_compress_one_generic(struct blake2b_state *S,
- 	ROUND(10);
- 	ROUND(11);
- #ifdef CONFIG_CC_IS_CLANG
--#pragma nounroll /* https://bugs.llvm.org/show_bug.cgi?id=45803 */
-+#pragma nounroll /* https://llvm.org/pr45803 */
- #endif
- 	for (i = 0; i < 8; ++i)
- 		S->h[i] = S->h[i] ^ v[i] ^ v[i + 8];
-diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
-index 06964a3c130f..a223bd10564b 100644
---- a/drivers/firmware/efi/libstub/Makefile
-+++ b/drivers/firmware/efi/libstub/Makefile
-@@ -105,7 +105,7 @@ lib-y				:= $(patsubst %.o,%.stub.o,$(lib-y))
- # Even when -mbranch-protection=none is set, Clang will generate a
- # .note.gnu.property for code-less object files (like lib/ctype.c),
- # so work around this by explicitly removing the unwanted section.
--# https://bugs.llvm.org/show_bug.cgi?id=46480
-+# https://llvm.org/pr46480
- STUBCOPY_FLAGS-y		+= --remove-section=.note.gnu.property
- 
- STUBCOPY_RELOC-$(CONFIG_X86_32)	:= R_386_32
-diff --git a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-index 0f24af6f2810..265fa028b121 100644
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-@@ -610,7 +610,7 @@ static uint32_t sdma_v4_4_2_rb_cntl(struct amdgpu_ring *ring, uint32_t rb_cntl)
- 	/* Set ring buffer size in dwords */
- 	uint32_t rb_bufsz = order_base_2(ring->ring_size / 4);
- 
--	barrier(); /* work around https://bugs.llvm.org/show_bug.cgi?id=42576 */
-+	barrier(); /* work around https://llvm.org/pr42576 */
- 	rb_cntl = REG_SET_FIELD(rb_cntl, SDMA_GFX_RB_CNTL, RB_SIZE, rb_bufsz);
- #ifdef __BIG_ENDIAN
- 	rb_cntl = REG_SET_FIELD(rb_cntl, SDMA_GFX_RB_CNTL, RB_SWAP_ENABLE, 1);
-diff --git a/drivers/media/test-drivers/vicodec/codec-fwht.c b/drivers/media/test-drivers/vicodec/codec-fwht.c
-index 1ce682e1b85c..fd75457d03b2 100644
---- a/drivers/media/test-drivers/vicodec/codec-fwht.c
-+++ b/drivers/media/test-drivers/vicodec/codec-fwht.c
-@@ -49,7 +49,7 @@ static const uint8_t zigzag[64] = {
- 
- /*
-  * noinline_for_stack to work around
-- * https://bugs.llvm.org/show_bug.cgi?id=38809
-+ * https://llvm.org/pr38809
-  */
- static int noinline_for_stack
- rlc(const s16 *in, __be16 *output, int blocktype)
-diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
-index f3ec24691378..f537e78478ef 100644
---- a/drivers/regulator/Kconfig
-+++ b/drivers/regulator/Kconfig
-@@ -278,7 +278,7 @@ config REGULATOR_CROS_EC
- config REGULATOR_DA903X
- 	tristate "Dialog Semiconductor DA9030/DA9034 regulators"
- 	depends on PMIC_DA903X
--	depends on !CC_IS_CLANG # https://bugs.llvm.org/show_bug.cgi?id=38789
-+	depends on !CC_IS_CLANG # https://llvm.org/pr38789
- 	help
- 	  Say y here to support the BUCKs and LDOs regulators found on
- 	  Dialog Semiconductor DA9030/DA9034 PMIC.
-diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index bae0fe4d499b..c425a1e2edee 100644
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -977,7 +977,7 @@
-  * -fsanitize=thread produce unwanted sections (.eh_frame
-  * and .init_array.*), but CONFIG_CONSTRUCTORS wants to
-  * keep any .init_array.* sections.
-- * https://bugs.llvm.org/show_bug.cgi?id=46478
-+ * https://llvm.org/pr46478
-  */
- #ifdef CONFIG_UNWIND_TABLES
- #define DISCARD_EH_FRAME
-diff --git a/lib/Kconfig.kasan b/lib/Kconfig.kasan
-index fdca89c05745..de3e9e4803af 100644
---- a/lib/Kconfig.kasan
-+++ b/lib/Kconfig.kasan
-@@ -163,7 +163,7 @@ config KASAN_STACK
- 	  out-of-bounds bugs in stack variables.
- 
- 	  With Clang, stack instrumentation has a problem that causes excessive
--	  stack usage, see https://bugs.llvm.org/show_bug.cgi?id=38809. Thus,
-+	  stack usage, see https://llvm.org/pr38809. Thus,
- 	  with Clang, this option is deemed unsafe.
- 
- 	  This option is always disabled when compile-testing with Clang to
-diff --git a/lib/raid6/Makefile b/lib/raid6/Makefile
-index 1c5420ff254e..385a94aa0b99 100644
---- a/lib/raid6/Makefile
-+++ b/lib/raid6/Makefile
-@@ -21,7 +21,7 @@ altivec_flags += -isystem $(shell $(CC) -print-file-name=include)
- ifdef CONFIG_CC_IS_CLANG
- # clang ppc port does not yet support -maltivec when -msoft-float is
- # enabled. A future release of clang will resolve this
--# https://bugs.llvm.org/show_bug.cgi?id=31177
-+# https://llvm.org/pr31177
- CFLAGS_REMOVE_altivec1.o  += -msoft-float
- CFLAGS_REMOVE_altivec2.o  += -msoft-float
- CFLAGS_REMOVE_altivec4.o  += -msoft-float
-diff --git a/lib/stackinit_kunit.c b/lib/stackinit_kunit.c
-index 05947a2feb93..7a10e1d17258 100644
---- a/lib/stackinit_kunit.c
-+++ b/lib/stackinit_kunit.c
-@@ -404,7 +404,7 @@ static noinline int leaf_switch_2_none(unsigned long sp, bool fill,
-  * These are expected to fail for most configurations because neither
-  * GCC nor Clang have a way to perform initialization of variables in
-  * non-code areas (i.e. in a switch statement before the first "case").
-- * https://bugs.llvm.org/show_bug.cgi?id=44916
-+ * https://llvm.org/pr44916
-  */
- DEFINE_TEST_DRIVER(switch_1_none, uint64_t, SCALAR, ALWAYS_FAIL);
- DEFINE_TEST_DRIVER(switch_2_none, uint64_t, SCALAR, ALWAYS_FAIL);
-diff --git a/mm/slab_common.c b/mm/slab_common.c
-index 8d431193c273..105ba974854c 100644
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -656,7 +656,7 @@ static struct kmem_cache *__init create_kmalloc_cache(const char *name,
- 
- struct kmem_cache *
- kmalloc_caches[NR_KMALLOC_TYPES][KMALLOC_SHIFT_HIGH + 1] __ro_after_init =
--{ /* initialization for https://bugs.llvm.org/show_bug.cgi?id=42570 */ };
-+{ /* initialization for https://llvm.org/pr42570 */ };
- EXPORT_SYMBOL(kmalloc_caches);
- 
- #ifdef CONFIG_RANDOM_KMALLOC_CACHES
-diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
-index d7d021af1029..523f72ac9633 100644
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -5043,7 +5043,7 @@ void br_multicast_uninit_stats(struct net_bridge *br)
- 	free_percpu(br->mcast_stats);
- }
- 
--/* noinline for https://bugs.llvm.org/show_bug.cgi?id=45802#c9 */
-+/* noinline for https://llvm.org/pr45802#c9 */
- static noinline_for_stack void mcast_stats_add_dir(u64 *dst, u64 *src)
- {
- 	dst[BR_MCAST_DIR_RX] += src[BR_MCAST_DIR_RX];
-diff --git a/security/Kconfig b/security/Kconfig
-index 52c9af08ad35..606a87c29a01 100644
---- a/security/Kconfig
-+++ b/security/Kconfig
-@@ -142,7 +142,7 @@ config HARDENED_USERCOPY
- config FORTIFY_SOURCE
- 	bool "Harden common str/mem functions against buffer overflows"
- 	depends on ARCH_HAS_FORTIFY_SOURCE
--	# https://bugs.llvm.org/show_bug.cgi?id=41459
-+	# https://llvm.org/pr41459
- 	depends on !CC_IS_CLANG || CLANG_VERSION >= 120001
- 	# https://github.com/llvm/llvm-project/issues/53645
- 	depends on !CC_IS_CLANG || !X86_32
-
--- 
-2.43.0
-
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.11-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
