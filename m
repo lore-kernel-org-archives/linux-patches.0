@@ -1,94 +1,92 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B1E3AC1B
-	for <patches@lists.linux.dev>; Wed, 10 Jan 2024 11:29:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marliere.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20F4495CC;
+	Wed, 10 Jan 2024 13:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=marliere.net header.i=@marliere.net header.b="HioB4ei+"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-28db4f860easo532724a91.3
-        for <patches@lists.linux.dev>; Wed, 10 Jan 2024 03:29:29 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704886168; x=1705490968;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:dkim-signature:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=sd9KoMYLeziNK4DDc7cQHmh6PfB06g+zdl70q6cPYIg=;
-        b=XcWz9f4WdnDLgbM89i6OreYCT+HsSqVaGJDG1sShI6uTDrQLTl8lg6VOzh0H/EqOQl
-         tljf3Zkebqa/KO4cdjpUkpbrEkW36O45qRu8SfpwnJec3gFV9+mVW22JkavDiO/l6fYf
-         acS5Vc9k1TenanwlR1hZm6JFqWw09otzDyUtc/JqQEnv3FTTzzyIgKWhzIzqQdTJL5Ss
-         hvMtEZX+ahJMG4pKcnlv2NC30HTRkT3O+HrFZTSL6RyRXTKCSUH53DRAPleOyR+MEmQ+
-         7VlBenpa/OrRFA5ml4GpH2O+Z84S2Zz+wYqibcdweOiWdWWJPmUh6LIjN+ChJzZTfkML
-         +kdw==
-X-Gm-Message-State: AOJu0Yyiu0n7ffDE1m7xKXAJ/iRLXpB4sl8MglLcHfa9tOHvpGsBTxi6
-	Xu/QjqMIQZGVvxUrkV/ZE1A=
-X-Google-Smtp-Source: AGHT+IGUaroPt6ao2/Q+kSx/LjIuD93mF78quMxU86dAnctI1ISMFoW3uRBD7N6iSjeIEqnKq9uaDw==
-X-Received: by 2002:a17:90a:b883:b0:28c:5b7:87c5 with SMTP id o3-20020a17090ab88300b0028c05b787c5mr411371pjr.2.1704886168502;
-        Wed, 10 Jan 2024 03:29:28 -0800 (PST)
-Received: from mail.marliere.net ([24.199.118.162])
-        by smtp.gmail.com with ESMTPSA id r7-20020a17090ad40700b00286920600a9sm1283168pju.32.2024.01.10.03.29.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jan 2024 03:29:27 -0800 (PST)
-Date: Wed, 10 Jan 2024 08:29:26 -0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marliere.net;
-	s=2023; t=1704886166;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=sd9KoMYLeziNK4DDc7cQHmh6PfB06g+zdl70q6cPYIg=;
-	b=HioB4ei+m4iR+RQEiNF+din6hdYrf6xMT6HKSS2BpKdw+CcHDihLB3fyM2aDVCUMvmKHpj
-	FJSy8F26WGNT6Gvqoyf2j+Ctss10SrgFfIrHJ3MbwGHlfuPMrDIzy8VgYjU5LH9BB1uqhC
-	PSpxWvWPueimV/USCu5ziJTIhgTptIfOkrSKshflZR7Lfh/XndzC2J69yem1AOogCkaNtG
-	TVPL5Zl2LenfqSoFR4RcDeJZQg6qYCP4xr9UAXwnFO7SGcEIJ4DMQAcshXlmEOD9dEJ22X
-	LQtZ6N0rL/O5VDpbyXTv2KAB94dmd9gznwo4ABAopTYraXooHnhna13lIGK90g==
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=ricardo@marliere.net smtp.mailfrom=ricardo@marliere.net
-From: "Ricardo B. Marliere" <ricardo@marliere.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	allen.lkml@gmail.com
-Subject: Re: [PATCH 6.6 000/124] 6.6.11-rc1 review
-Message-ID: <4mmnqui4njnmr4lik4jf6iaoi3ykivewytoba4dhydk3qr6juj@2im6qkfei2lv>
-References: <20240108150602.976232871@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V1jPPPfb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14496C433C7;
+	Wed, 10 Jan 2024 13:48:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704894507;
+	bh=Mpj9MmpWsZ0QXa3z+JG9y8iO9570kyRUme6G8UyY3ns=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=V1jPPPfbtZjWicjR/pXvV3fvfEd+WTpUYKesK1ver/unl0yUXsY4TkjQIutQjBRsP
+	 rP/Oz0q/0h14UEjOgFaxFG624+eWlJ/AO+ivv3TYC1sZnL+hL4/+Alo/46tP000hXg
+	 zplNZ64lLrfkj8J9hOzdzzP2smKm7MeEZ/IYISeNp94tvvX509RdtM1WHeyhjMm5jx
+	 6PVp6J9lR2f0adpYnosG4kNDW+C6yKAzSmFoUpH39oONuTUSb402zXo2PYbzqdDyDw
+	 8BKfIvBQaR2VfeSzJy9k28uur98lcaUtFQRjhOYk1Xziu9Q+q1jecwOjEuD67FrH9y
+	 AnuUlci6GEj1Q==
+Date: Wed, 10 Jan 2024 13:48:20 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: akpm@linux-foundation.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	kvm@vger.kernel.org, linux-riscv@lists.infradead.org,
+	linux-trace-kernel@vger.kernel.org, linux-s390@vger.kernel.org,
+	linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-efi@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
+	linux-arch@vger.kernel.org, kasan-dev@googlegroups.com,
+	linux-mm@kvack.org, bridge@lists.linux.dev, netdev@vger.kernel.org,
+	linux-security-module@vger.kernel.org,
+	linux-kselftest@vger.kernel.org
+Subject: Re: [PATCH 2/3] arch and include: Update LLVM Phabricator links
+Message-ID: <20240110-apostle-trident-533d4c2c9c97@spud>
+References: <20240109-update-llvm-links-v1-0-eb09b59db071@kernel.org>
+ <20240109-update-llvm-links-v1-2-eb09b59db071@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="p6SYI+U6gP5vpK1M"
+Content-Disposition: inline
+In-Reply-To: <20240109-update-llvm-links-v1-2-eb09b59db071@kernel.org>
+
+
+--p6SYI+U6gP5vpK1M
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240108150602.976232871@linuxfoundation.org>
+Content-Transfer-Encoding: quoted-printable
 
-On  8 Jan 16:07, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.11 release.
-> There are 124 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 10 Jan 2024 15:05:35 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.11-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Tue, Jan 09, 2024 at 03:16:30PM -0700, Nathan Chancellor wrote:
+> reviews.llvm.org was LLVM's Phabricator instances for code review. It
+> has been abandoned in favor of GitHub pull requests. While the majority
+> of links in the kernel sources still work because of the work Fangrui
+> has done turning the dynamic Phabricator instance into a static archive,
+> there are some issues with that work, so preemptively convert all the
+> links in the kernel sources to point to the commit on GitHub.
+>=20
+> Most of the commits have the corresponding differential review link in
+> the commit message itself so there should not be any loss of fidelity in
+> the relevant information.
+>=20
+> Link: https://discourse.llvm.org/t/update-on-github-pull-requests/71540/1=
+72
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
 
-System runs fine, no noticeable regressions.
+>  arch/riscv/Kconfig              | 2 +-
+>  arch/riscv/include/asm/ftrace.h | 2 +-
 
-Linux version 6.6.11-rc1-ktest-gc52463eb66c8 (rbmarliere@debian) (gcc (Debian 13.2.0-9) 13.2.0, GNU ld (GNU Binutils for Debian) 2.41.50.20231227) #1 SMP PREEMPT_DYNAMIC Tue Jan  9 14:26:52 -03 2024
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
 
-Tested-by: Ricardo B. Marliere <ricardo@marliere.net>
+Cheers,
+Conor.
 
-Thanks,
--	Ricardo
+--p6SYI+U6gP5vpK1M
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZZ6gJAAKCRB4tDGHoIJi
+0mIlAQCj5ZP6QEhEswWYjX38obn/p3pF8mt+Ve+vlBnVEhAW8QD8ClRvKxDiajR5
+Zp8ES/FLDyH/QJ5QjGuYLP5PATLeFAY=
+=SqXc
+-----END PGP SIGNATURE-----
+
+--p6SYI+U6gP5vpK1M--
