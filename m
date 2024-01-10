@@ -1,89 +1,94 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A084F1FA
-	for <patches@lists.linux.dev>; Wed, 10 Jan 2024 17:53:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-28bd623c631so3966272a91.3
-        for <patches@lists.linux.dev>; Wed, 10 Jan 2024 09:53:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704909210; x=1705514010;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=quyVSdnppz8w0YPUQzzVyzANCKAuU/PcHNsts+I2z4s=;
-        b=AlPloKdQudSNG/AuBGCYLAe4+Tjehtla/+NTaAZ9qhUCpUai+CnPNnwUd7ON/hfsl/
-         bXcJ2LX0eOi48c1qyljGK58eu6Vmpijcb6pxaVJxUizcLcfIIMWHUgfdU86AoAl79e5N
-         Dxa3Kl+lR4b0QGWyhEYFfcu/xZAwJy4fhODrFrUilbGJcoyfQ/LB9KGl17aYqvDbz4il
-         AkL9DeJ2OYG6T3bVwI/WtDG+J5/gVJ9oAkS7JDo4NkLfYARjvzcd+IFSGeCU2KQdviI+
-         i+5TxkuEggRxOZgTO6GBwzu7FqLjSCKWr6yvgIb629S+oRc9vQ3ZvxusxnadcDmvDI4W
-         j3UQ==
-X-Gm-Message-State: AOJu0YxiMGLBwUao5ksYHoJ8K0jYpce327CC+62HLbA2Up0FLDQv5LZL
-	Yp26fWWba8zLci0mKj1SGs1Fwd+5dF6sJRf3Qdc=
-X-Google-Smtp-Source: AGHT+IHrKEA9A15zuS4dmV0QjZovE8jdobS9FxQvBvDSb65iQnzMpB77JE1mM0dshtFLLIWhQCIQDpT2PIjEgJn1vu4=
-X-Received: by 2002:a17:90a:9746:b0:28d:c3ec:8028 with SMTP id
- i6-20020a17090a974600b0028dc3ec8028mr869411pjw.12.1704909209857; Wed, 10 Jan
- 2024 09:53:29 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C8C4EB5B;
+	Wed, 10 Jan 2024 20:46:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ddUka3t7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5333C433F1;
+	Wed, 10 Jan 2024 20:46:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704919615;
+	bh=Xg9lnyE22VXBwPU3Db8PJTmAlrZRAYVmPEj0reyp/xk=;
+	h=From:Date:Subject:To:Cc:From;
+	b=ddUka3t7mdfb7aNEzNWt0XPMdGO8JhXJrDJZP9a6oDnAytItdEoD109gfkGMn8Yto
+	 ydF/Ld5JzHMD/xSELZsIua5ZOFI9VtemkNUiEAeY4071m5cFTkFsRPXMg40W8eb9ma
+	 he3Q2wU5l1t7D4lww4Crmv7BJXYfbZJki6+RAOu0m3p1Vmn3OxGWxLcRxJsM8mB00Q
+	 o1iI1xy0rzG5qvK/NBDFCitsDl2R6hbL65XJbS01RdjFBeoTgFNP4uVSmTMKWz68qz
+	 6MkiFE9uWzbxsyNde0ycmxnUmwehzMGvyxJWtdw/sx8OR76G1j/t2TUIsHftP/jY95
+	 mNRssX/YTxtNw==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 10 Jan 2024 13:46:47 -0700
+Subject: [PATCH] drm/amd/display: Avoid enum conversion warning
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <2024010711-skeletal-material-15e8@gregkh> <20240109214955.451513-1-namhyung@kernel.org>
- <2024011043-unearned-manned-12b7@gregkh>
-In-Reply-To: <2024011043-unearned-manned-12b7@gregkh>
-From: Namhyung Kim <namhyung@kernel.org>
-Date: Wed, 10 Jan 2024 09:53:17 -0800
-Message-ID: <CAM9d7cj3fdaKVehz+E3Fd_Zf91hy31z19goM84qq+cc8WZe7RQ@mail.gmail.com>
-Subject: Re: [PATCH for-5.15] perf inject: Fix GEN_ELF_TEXT_OFFSET for jit
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
-	conor@kernel.org, allen.lkml@gmail.com, 
-	Vegard Nossum <vegard.nossum@oracle.com>, Darren Kenny <darren.kenny@oracle.com>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Arnaldo Carvalho de Melo <acme@redhat.com>, 
-	Ian Rogers <irogers@google.com>, Jiri Olsa <jolsa@kernel.org>, Lieven Hey <lieven.hey@kdab.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240110-amdgpu-display-enum-enum-conversion-v1-1-953ae94fe15e@kernel.org>
+X-B4-Tracking: v=1; b=H4sIADYCn2UC/yWNQQqDMBBFryKz7kASUgpeRVxMzZgOmBgSFEW8u
+ 9FuHrzF+/+Awlm4QNsckHmVInOsol8NDD+KnlFcdTDKWKW1QgrOpwWdlDTRjhyX8Mcwx5Xz3SM
+ b+9bkvqOlD9SllHmU7Xnp+vO8ANYejTt1AAAA
+To: harry.wentland@amd.com, sunpeng.li@amd.com, Rodrigo.Siqueira@amd.com, 
+ alexander.deucher@amd.com
+Cc: christian.koenig@amd.com, Xinhui.Pan@amd.com, peichen.huang@amd.com, 
+ cruise.hung@amd.com, arnd@arndb.de, amd-gfx@lists.freedesktop.org, 
+ dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2136; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=Xg9lnyE22VXBwPU3Db8PJTmAlrZRAYVmPEj0reyp/xk=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKnzmezmflB5KuXzq2ftB+Yf0q8vq8t/8jP2v7fI1bukf
+ 4eE7ZqIjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRlbcZ/scdubnz1PZVen46
+ 6h0fI09tVYic6uAwP6y0/pew3GzBI66MDI8cDxxJ3vRmmfSsb847Dv75b89ePy/wx8W54T7/3j0
+ yn8wOAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hello,
+Clang warns (or errors with CONFIG_WERROR=y) when performing arithmetic
+with different enumerated types, which is usually a bug:
 
-On Tue, Jan 9, 2024 at 11:59=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> On Tue, Jan 09, 2024 at 01:49:55PM -0800, Namhyung Kim wrote:
-> > From: Adrian Hunter <adrian.hunter@intel.com>
-> >
-> > When a program header was added, it moved the text section but
-> > GEN_ELF_TEXT_OFFSET was not updated.
-> >
-> > Fix by adding the program header size and aligning.
-> >
-> > Fixes: babd04386b1df8c3 ("perf jit: Include program header in ELF files=
-")
-> > Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-> > Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-> > Cc: Ian Rogers <irogers@google.com>
-> > Cc: Jiri Olsa <jolsa@kernel.org>
-> > Cc: Lieven Hey <lieven.hey@kdab.com>
-> > Link: https://lore.kernel.org/r/20221014170905.64069-7-adrian.hunter@in=
-tel.com
-> > Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-> > [namhyung: use "linux/kernel.h" instead to avoid build failure]
-> > Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-> > ---
-> >  tools/perf/util/genelf.h | 4 +++-
-> >  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> What is the git commit id of this change in Linus's tree?
+    drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_dpia_bw.c:548:24: error: arithmetic between different enumeration types ('const enum dc_link_rate' and 'const enum dc_lane_count') [-Werror,-Wenum-enum-conversion]
+      548 |                         link_cap->link_rate * link_cap->lane_count * LINK_RATE_REF_FREQ_IN_KHZ * 8;
+          |                         ~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~
+    1 error generated.
 
-Sorry I forgot to add that.  It's 89b15d00527b7825ff19130ed83478e80e3fae99
+In this case, there is not a problem because the enumerated types are
+basically treated as '#define' values. Add an explicit cast to an
+integral type to silence the warning.
 
-Thanks,
-Namhyung
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1976
+Fixes: 5f3bce13266e ("drm/amd/display: Request usb4 bw for mst streams")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
+index 4ef1a6a1d129..dd0d2b206462 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
+@@ -544,8 +544,9 @@ int link_dp_dpia_get_dp_overhead_in_dp_tunneling(struct dc_link *link)
+ 		 */
+ 		const struct dc_link_settings *link_cap =
+ 			dc_link_get_link_cap(link);
+-		uint32_t link_bw_in_kbps =
+-			link_cap->link_rate * link_cap->lane_count * LINK_RATE_REF_FREQ_IN_KHZ * 8;
++		uint32_t link_bw_in_kbps = (uint32_t)link_cap->link_rate *
++					   (uint32_t)link_cap->lane_count *
++					   LINK_RATE_REF_FREQ_IN_KHZ * 8;
+ 		link_mst_overhead = (link_bw_in_kbps / 64) + ((link_bw_in_kbps % 64) ? 1 : 0);
+ 	}
+ 
+
+---
+base-commit: 6e7a29f011ac03a765f53844f7c3f04cdd421715
+change-id: 20240110-amdgpu-display-enum-enum-conversion-e2451adbf4a7
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
