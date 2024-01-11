@@ -1,117 +1,85 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D46212E4C;
-	Thu, 11 Jan 2024 09:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD16B13FE2;
+	Thu, 11 Jan 2024 09:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0RtdqRMj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51154C433C7;
-	Thu, 11 Jan 2024 09:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DseH/l62"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17768C43390;
+	Thu, 11 Jan 2024 09:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704966779;
-	bh=Rg+uWdSn7M8siVwGtnph84S0VwOHlpKxDjRqhHzmUBE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=0RtdqRMjVtvj+J7ROrMeb6Sr/+F4RqCQItOXOt4+RNnO0MS+dLkH7f+78WQrgQEJW
-	 20YmvNzQFZP8ohR1Y7yg1gIB75sO+PLU7vjmMoUWutRHxfWvw2RmFw/m5LRE+kyWUf
-	 x1NR2Xo3BuTYiQu+gp+nh5sbJUdc0+uy9VCwAMAI=
+	s=korg; t=1704966788;
+	bh=OYrZmDL+eqaIXGpUGWBGllwky8lW4k9HOZSVrEO/vfs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=DseH/l62ikep0KCFtquaJLGqRtnhvFpTn/Awc0867shHFwpPZ/46epn+CukZc/lCe
+	 NCjcWFbtnxVugxxoKxu4gS/hZjLN86xqiztdGfl7VjtDv9gIXfw4s2kOG59uhxDXCm
+	 kFHR+DBzYEyfYp5z+w0zQytN/pX9Ynsob7WFLXwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com
-Subject: [PATCH 5.10 0/7] 5.10.207-rc1 review
-Date: Thu, 11 Jan 2024 10:52:49 +0100
-Message-ID: <20240111094700.222742213@linuxfoundation.org>
+	Pavel Machek <pavel@ucw.cz>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 1/7] Revert "scsi: core: Always send batch on reset or error handling command"
+Date: Thu, 11 Jan 2024 10:52:50 +0100
+Message-ID: <20240111094700.291427808@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240111094700.222742213@linuxfoundation.org>
+References: <20240111094700.222742213@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.207-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.10.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.10.207-rc1
-X-KernelTest-Deadline: 2024-01-13T09:47+00:00
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.10.207 release.
-There are 7 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Sat, 13 Jan 2024 09:46:53 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.207-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-and the diffstat can be found below.
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-thanks,
+This reverts commit 9db5239d7533c841dcd7a36700f829f6ee96a76d which is
+commit 066c5b46b6eaf2f13f80c19500dbb3b84baabb33 upstream.
 
-greg k-h
+As reported, a lot of scsi changes were made just to resolve a 2 line
+patch, so let's revert them all and then manually fix up the 2 line
+fixup so that things are simpler and potential abi changes are not an
+issue.
 
--------------
-Pseudo-Shortlog of commits:
+Link: https://lore.kernel.org/r/ZZ042FejzwMM5vDW@duo.ucw.cz
+Reported-by: Pavel Machek <pavel@ucw.cz>
+Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: Ming Lei <ming.lei@redhat.com>
+Cc: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/scsi/scsi_error.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.10.207-rc1
-
-Alexander Atanasov <alexander.atanasov@virtuozzo.com>
-    scsi: core: Always send batch on reset or error handling command
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "scsi: core: Add scsi_prot_ref_tag() helper"
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "scsi: core: Introduce scsi_get_sector()"
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "scsi: core: Make scsi_get_lba() return the LBA"
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "scsi: core: Use scsi_cmd_to_rq() instead of scsi_cmnd.request"
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "scsi: core: Use a structure member to track the SCSI command submitter"
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "scsi: core: Always send batch on reset or error handling command"
-
-
--------------
-
-Diffstat:
-
- Makefile                    |  4 ++--
- drivers/scsi/scsi.c         |  2 +-
- drivers/scsi/scsi_error.c   | 34 +++++++++++++++++++---------------
- drivers/scsi/scsi_lib.c     | 38 +++++++++++++-------------------------
- drivers/scsi/scsi_logging.c | 18 ++++++++----------
- drivers/scsi/scsi_priv.h    |  1 -
- include/scsi/scsi_cmnd.h    | 29 +++--------------------------
- include/scsi/scsi_device.h  | 16 +++++++---------
- 8 files changed, 53 insertions(+), 89 deletions(-)
+--- a/drivers/scsi/scsi_error.c
++++ b/drivers/scsi/scsi_error.c
+@@ -1068,7 +1068,6 @@ retry:
+ 
+ 	scsi_log_send(scmd);
+ 	scmd->submitter = SUBMITTED_BY_SCSI_ERROR_HANDLER;
+-	scmd->flags |= SCMD_LAST;
+ 
+ 	/*
+ 	 * Lock sdev->state_mutex to avoid that scsi_device_quiesce() can
+@@ -2360,7 +2359,6 @@ scsi_ioctl_reset(struct scsi_device *dev
+ 	scmd->cmnd = scsi_req(rq)->cmd;
+ 
+ 	scmd->submitter = SUBMITTED_BY_SCSI_RESET_IOCTL;
+-	scmd->flags |= SCMD_LAST;
+ 	memset(&scmd->sdb, 0, sizeof(scmd->sdb));
+ 
+ 	scmd->cmd_len			= 0;
 
 
