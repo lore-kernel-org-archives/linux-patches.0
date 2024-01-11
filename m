@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0461311727;
-	Thu, 11 Jan 2024 09:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF5F12B81;
+	Thu, 11 Jan 2024 09:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JA1N0E6l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3628AC433C7;
-	Thu, 11 Jan 2024 09:53:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxUxpEuB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B34C433F1;
+	Thu, 11 Jan 2024 09:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704966802;
-	bh=ZkCdZZ4A87Ys6dklvLYXbCzV9uRAWrk4Cex4rFEHVko=;
+	s=korg; t=1704966805;
+	bh=1bRXyFtr4YJcJb//yKtGsf/cj7tG/uxLY4fMs2nOuds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JA1N0E6lPMsL65ZZJYELxkQ0L9GlMxKo9kdCSNgZy7zfRjOnkyoN7FrBaBUcZUF7n
-	 co4hWjVgrn4b4GgHbtxBCigHDWyDVgoEtv6FWv3K1dldwT6+5K3TS508Zz6FsWqYbO
-	 ByljFtHO27LrcG2jJeXWIaSNv2w6S0wYseKzJedI=
+	b=VxUxpEuBHoZw7wBFkJolZ1bT/n08LrmbPqHCHt0wTm0nbkGltavquTRonHieNSi3j
+	 Ozy6J5gK2TZRczTmL1kE6xy1GoNB6NgQTAXm+B39DRYYl0f5FMcPbS7QOfEQHKj381
+	 92Y1pSDHTgFrGhJ9KZTxdIc/udqanR6D2tIEYqeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Atanasov <alexander.atanasov@virtuozzo.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Ming Lei <ming.lei@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 7/7] scsi: core: Always send batch on reset or error handling command
-Date: Thu, 11 Jan 2024 10:52:56 +0100
-Message-ID: <20240111094700.571797003@linuxfoundation.org>
+	Hannes Reinecke <hare@suse.de>,
+	Damien Le Moal <damien.lemoal@wdc.com>,
+	Benjamin Block <bblock@linux.ibm.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 5/7] Revert "scsi: core: Introduce scsi_get_sector()"
+Date: Thu, 11 Jan 2024 10:52:54 +0100
+Message-ID: <20240111094700.479841410@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240111094700.222742213@linuxfoundation.org>
 References: <20240111094700.222742213@linuxfoundation.org>
@@ -42,56 +48,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Atanasov <alexander.atanasov@virtuozzo.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 066c5b46b6eaf2f13f80c19500dbb3b84baabb33 upstream.
+This reverts commit f230e6d4249b9ccdcb571077023cecabf91ecbb1 which is
+commit f0f214fe8cd32224267ebea93817b8c32074623d upstream.
 
-In commit 8930a6c20791 ("scsi: core: add support for request batching") the
-block layer bd->last flag was mapped to SCMD_LAST and used as an indicator
-to send the batch for the drivers that implement this feature. However, the
-error handling code was not updated accordingly.
+As reported, a lot of scsi changes were made just to resolve a 2 line
+patch, so let's revert them all and then manually fix up the 2 line
+fixup so that things are simpler and potential abi changes are not an
+issue.
 
-scsi_send_eh_cmnd() is used to send error handling commands and request
-sense. The problem is that request sense comes as a single command that
-gets into the batch queue and times out. As a result the device goes
-offline after several failed resets. This was observed on virtio_scsi
-during a device resize operation.
-
-[  496.316946] sd 0:0:4:0: [sdd] tag#117 scsi_eh_0: requesting sense
-[  506.786356] sd 0:0:4:0: [sdd] tag#117 scsi_send_eh_cmnd timeleft: 0
-[  506.787981] sd 0:0:4:0: [sdd] tag#117 abort
-
-To fix this always set SCMD_LAST flag in scsi_send_eh_cmnd() and
-scsi_reset_ioctl().
-
-Fixes: 8930a6c20791 ("scsi: core: add support for request batching")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Alexander Atanasov <alexander.atanasov@virtuozzo.com>
-Link: https://lore.kernel.org/r/20231215121008.2881653-1-alexander.atanasov@virtuozzo.com
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/ZZ042FejzwMM5vDW@duo.ucw.cz
+Reported-by: Pavel Machek <pavel@ucw.cz>
+Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Ming Lei <ming.lei@redhat.com>
+Cc: Hannes Reinecke <hare@suse.de>
+Cc: Damien Le Moal <damien.lemoal@wdc.com>
+Cc: Benjamin Block <bblock@linux.ibm.com>
+Cc: Bart Van Assche <bvanassche@acm.org>
+Cc: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_error.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/scsi/scsi_cmnd.h |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -1069,6 +1069,7 @@ retry:
+--- a/include/scsi/scsi_cmnd.h
++++ b/include/scsi/scsi_cmnd.h
+@@ -224,11 +224,6 @@ static inline int scsi_sg_copy_to_buffer
+ 				 buf, buflen);
+ }
  
- 	scsi_log_send(scmd);
- 	scmd->scsi_done = scsi_eh_done;
-+	scmd->flags |= SCMD_LAST;
- 
- 	/*
- 	 * Lock sdev->state_mutex to avoid that scsi_device_quiesce() can
-@@ -2361,6 +2362,7 @@ scsi_ioctl_reset(struct scsi_device *dev
- 	scsi_init_command(dev, scmd);
- 	scmd->request = rq;
- 	scmd->cmnd = scsi_req(rq)->cmd;
-+	scmd->flags |= SCMD_LAST;
- 
- 	scmd->scsi_done		= scsi_reset_provider_done_command;
- 	memset(&scmd->sdb, 0, sizeof(scmd->sdb));
+-static inline sector_t scsi_get_sector(struct scsi_cmnd *scmd)
+-{
+-	return blk_rq_pos(scmd->request);
+-}
+-
+ /*
+  * The operations below are hints that tell the controller driver how
+  * to handle I/Os with DIF or similar types of protection information.
 
 
