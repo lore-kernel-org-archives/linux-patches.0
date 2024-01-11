@@ -1,94 +1,130 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C8C4EB5B;
-	Wed, 10 Jan 2024 20:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C067393
+	for <patches@lists.linux.dev>; Thu, 11 Jan 2024 00:46:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ddUka3t7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5333C433F1;
-	Wed, 10 Jan 2024 20:46:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704919615;
-	bh=Xg9lnyE22VXBwPU3Db8PJTmAlrZRAYVmPEj0reyp/xk=;
-	h=From:Date:Subject:To:Cc:From;
-	b=ddUka3t7mdfb7aNEzNWt0XPMdGO8JhXJrDJZP9a6oDnAytItdEoD109gfkGMn8Yto
-	 ydF/Ld5JzHMD/xSELZsIua5ZOFI9VtemkNUiEAeY4071m5cFTkFsRPXMg40W8eb9ma
-	 he3Q2wU5l1t7D4lww4Crmv7BJXYfbZJki6+RAOu0m3p1Vmn3OxGWxLcRxJsM8mB00Q
-	 o1iI1xy0rzG5qvK/NBDFCitsDl2R6hbL65XJbS01RdjFBeoTgFNP4uVSmTMKWz68qz
-	 6MkiFE9uWzbxsyNde0ycmxnUmwehzMGvyxJWtdw/sx8OR76G1j/t2TUIsHftP/jY95
-	 mNRssX/YTxtNw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 10 Jan 2024 13:46:47 -0700
-Subject: [PATCH] drm/amd/display: Avoid enum conversion warning
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="kQj1RYRG"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-6daa822be30so2220175b3a.0
+        for <patches@lists.linux.dev>; Wed, 10 Jan 2024 16:46:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1704933967; x=1705538767; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=gueNhZrbsNiJzCN2gb4yLrjECQBWf6cwwXnoTcfXIT4=;
+        b=kQj1RYRGm4Aa++ruvyTfFI19APFq/BW9lxuVS6Ln36ACb5Z3HGszxACIHVq7Jbcbiw
+         /gdXfRPorgAndp4BxTY1YwjfpdHLj9RtNk6k9FjEzutBWT5h86y9WNUIPQJ9SlNhZRse
+         pcgGrGW9/1I8+LPBAW895c3WLpDgCRKSIgWvg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704933967; x=1705538767;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gueNhZrbsNiJzCN2gb4yLrjECQBWf6cwwXnoTcfXIT4=;
+        b=vQ+3P538r2GRKVzZmQycFHtuQIVgECdqC0DdEWxv2s6mMTaFBRslvNId1UzgG8q3wW
+         x+PfXBcQ5V4CXYvrnrNNQn2EsDA01kTwCG/UfDcE5GfJcCU942TVEPjUvU0ovThSlXjW
+         ggLphzYvr9JMoCePjbF7vN95HLmD/yJyI02bYC9eKMrIdS/QhfeRIQgj0HQjgBnxso3s
+         6OKkdB8UqK1Qsn3D37X8cV4mIyKYd+IEkLnkrGGMF9w8O+dp90/gUlGZPhkaNURKRUtu
+         RpJ7oN10Pbex3TESIklPVkcWTuRG3+5qjWRKtVMpDtTNTcWqv9CYmvjfdGI8DI+0cXYB
+         jDvg==
+X-Gm-Message-State: AOJu0YzUJN2Rwwdzc1afUnl05FqlPv2TD5xrHjWX21wFHr8NEgPQpV1e
+	mTq5pqAJ809jB4l8KwMubBIaIu83edkW
+X-Google-Smtp-Source: AGHT+IGkiZ1hknB2+0UC/gxIH8jrVZxWAA/1vUWxP929828CA6Qm4M9e8Oxn46aJ8qOxkFFVf4GTPg==
+X-Received: by 2002:aa7:90d3:0:b0:6d9:a64c:c5d1 with SMTP id k19-20020aa790d3000000b006d9a64cc5d1mr504196pfk.26.1704933967538;
+        Wed, 10 Jan 2024 16:46:07 -0800 (PST)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id y2-20020a62b502000000b006dac91d6da5sm4071344pfe.68.2024.01.10.16.46.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jan 2024 16:46:06 -0800 (PST)
+Date: Wed, 10 Jan 2024 16:46:06 -0800
+From: Kees Cook <keescook@chromium.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: akpm@linux-foundation.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	kvm@vger.kernel.org, linux-riscv@lists.infradead.org,
+	linux-trace-kernel@vger.kernel.org, linux-s390@vger.kernel.org,
+	linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-efi@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
+	linux-arch@vger.kernel.org, kasan-dev@googlegroups.com,
+	linux-mm@kvack.org, bridge@lists.linux.dev, netdev@vger.kernel.org,
+	linux-security-module@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, ast@kernel.org,
+	daniel@iogearbox.net, andrii@kernel.org, mykolal@fb.com,
+	bpf@vger.kernel.org
+Subject: Re: [PATCH 0/3] Update LLVM Phabricator and Bugzilla links
+Message-ID: <202401101645.ED161519BA@keescook>
+References: <20240109-update-llvm-links-v1-0-eb09b59db071@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240110-amdgpu-display-enum-enum-conversion-v1-1-953ae94fe15e@kernel.org>
-X-B4-Tracking: v=1; b=H4sIADYCn2UC/yWNQQqDMBBFryKz7kASUgpeRVxMzZgOmBgSFEW8u
- 9FuHrzF+/+Awlm4QNsckHmVInOsol8NDD+KnlFcdTDKWKW1QgrOpwWdlDTRjhyX8Mcwx5Xz3SM
- b+9bkvqOlD9SllHmU7Xnp+vO8ANYejTt1AAAA
-To: harry.wentland@amd.com, sunpeng.li@amd.com, Rodrigo.Siqueira@amd.com, 
- alexander.deucher@amd.com
-Cc: christian.koenig@amd.com, Xinhui.Pan@amd.com, peichen.huang@amd.com, 
- cruise.hung@amd.com, arnd@arndb.de, amd-gfx@lists.freedesktop.org, 
- dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2136; i=nathan@kernel.org;
- h=from:subject:message-id; bh=Xg9lnyE22VXBwPU3Db8PJTmAlrZRAYVmPEj0reyp/xk=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKnzmezmflB5KuXzq2ftB+Yf0q8vq8t/8jP2v7fI1bukf
- 4eE7ZqIjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRlbcZ/scdubnz1PZVen46
- 6h0fI09tVYic6uAwP6y0/pew3GzBI66MDI8cDxxJ3vRmmfSsb847Dv75b89ePy/wx8W54T7/3j0
- yn8wOAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240109-update-llvm-links-v1-0-eb09b59db071@kernel.org>
 
-Clang warns (or errors with CONFIG_WERROR=y) when performing arithmetic
-with different enumerated types, which is usually a bug:
+On Tue, Jan 09, 2024 at 03:16:28PM -0700, Nathan Chancellor wrote:
+> This series updates all instances of LLVM Phabricator and Bugzilla links
+> to point to GitHub commits directly and LLVM's Bugzilla to GitHub issue
+> shortlinks respectively.
+> 
+> I split up the Phabricator patch into BPF selftests and the rest of the
+> kernel in case the BPF folks want to take it separately from the rest of
+> the series, there are obviously no dependency issues in that case. The
+> Bugzilla change was mechanical enough and should have no conflicts.
+> 
+> I am aiming this at Andrew and CC'ing other lists, in case maintainers
+> want to chime in, but I think this is pretty uncontroversial (famous
+> last words...).
+> 
+> ---
+> Nathan Chancellor (3):
+>       selftests/bpf: Update LLVM Phabricator links
+>       arch and include: Update LLVM Phabricator links
+>       treewide: Update LLVM Bugzilla links
+> 
+>  arch/arm64/Kconfig                                 |  4 +--
+>  arch/powerpc/Makefile                              |  4 +--
+>  arch/powerpc/kvm/book3s_hv_nested.c                |  2 +-
+>  arch/riscv/Kconfig                                 |  2 +-
+>  arch/riscv/include/asm/ftrace.h                    |  2 +-
+>  arch/s390/include/asm/ftrace.h                     |  2 +-
+>  arch/x86/power/Makefile                            |  2 +-
+>  crypto/blake2b_generic.c                           |  2 +-
+>  drivers/firmware/efi/libstub/Makefile              |  2 +-
+>  drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c           |  2 +-
+>  drivers/media/test-drivers/vicodec/codec-fwht.c    |  2 +-
+>  drivers/regulator/Kconfig                          |  2 +-
+>  include/asm-generic/vmlinux.lds.h                  |  2 +-
+>  include/linux/compiler-clang.h                     |  2 +-
+>  lib/Kconfig.kasan                                  |  2 +-
+>  lib/raid6/Makefile                                 |  2 +-
+>  lib/stackinit_kunit.c                              |  2 +-
+>  mm/slab_common.c                                   |  2 +-
+>  net/bridge/br_multicast.c                          |  2 +-
+>  security/Kconfig                                   |  2 +-
+>  tools/testing/selftests/bpf/README.rst             | 32 +++++++++++-----------
+>  tools/testing/selftests/bpf/prog_tests/xdpwall.c   |  2 +-
+>  .../selftests/bpf/progs/test_core_reloc_type_id.c  |  2 +-
+>  23 files changed, 40 insertions(+), 40 deletions(-)
+> ---
+> base-commit: 0dd3ee31125508cd67f7e7172247f05b7fd1753a
+> change-id: 20240109-update-llvm-links-d03f9d649e1e
+> 
+> Best regards,
+> -- 
+> Nathan Chancellor <nathan@kernel.org>
+> 
 
-    drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_dpia_bw.c:548:24: error: arithmetic between different enumeration types ('const enum dc_link_rate' and 'const enum dc_lane_count') [-Werror,-Wenum-enum-conversion]
-      548 |                         link_cap->link_rate * link_cap->lane_count * LINK_RATE_REF_FREQ_IN_KHZ * 8;
-          |                         ~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~
-    1 error generated.
+Excellent! Thanks for doing this. I spot checked a handful I was
+familiar with and everything looks good to me.
 
-In this case, there is not a problem because the enumerated types are
-basically treated as '#define' values. Add an explicit cast to an
-integral type to silence the warning.
+Reviewed-by: Kees Cook <keescook@chromium.org>
 
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1976
-Fixes: 5f3bce13266e ("drm/amd/display: Request usb4 bw for mst streams")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-index 4ef1a6a1d129..dd0d2b206462 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-@@ -544,8 +544,9 @@ int link_dp_dpia_get_dp_overhead_in_dp_tunneling(struct dc_link *link)
- 		 */
- 		const struct dc_link_settings *link_cap =
- 			dc_link_get_link_cap(link);
--		uint32_t link_bw_in_kbps =
--			link_cap->link_rate * link_cap->lane_count * LINK_RATE_REF_FREQ_IN_KHZ * 8;
-+		uint32_t link_bw_in_kbps = (uint32_t)link_cap->link_rate *
-+					   (uint32_t)link_cap->lane_count *
-+					   LINK_RATE_REF_FREQ_IN_KHZ * 8;
- 		link_mst_overhead = (link_bw_in_kbps / 64) + ((link_bw_in_kbps % 64) ? 1 : 0);
- 	}
- 
-
----
-base-commit: 6e7a29f011ac03a765f53844f7c3f04cdd421715
-change-id: 20240110-amdgpu-display-enum-enum-conversion-e2451adbf4a7
-
-Best regards,
 -- 
-Nathan Chancellor <nathan@kernel.org>
-
+Kees Cook
