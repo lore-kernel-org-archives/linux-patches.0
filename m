@@ -1,37 +1,41 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F03F20F5;
-	Thu, 11 Jan 2024 04:12:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D46212E4C;
+	Thu, 11 Jan 2024 09:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="DYubyUnN"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=Vab4e2aBGIW5uTr9Tpos6UuO9ZTChmMGyb6A0nM+R3w=; b=DYubyUnN3TD3Db/aAufPtB3Z70
-	ggOeu8AQXAhBVmCI0h4najc8kAspagDGmXjqLUliOeVES5/f+WNAvP0fNiT3LleowgDIaKPBmXaBE
-	7NRqcz1UhmDK7BrfYLQamQsJc0x2sf43SgD6SSph/DvVEd9+H7WvRK9sopbFD8sjMajrA8tptuuxO
-	lNHKPHI2TXVc5304Kqp1QvsH9Ea/6YNOXxRS586mhdoI7X7X8kkqrJtZZ7AACji02sNVtQINWfHKQ
-	r9kx5mzmpC+FAjOlxUPkYRGoOY76Me2Eqsh6W7EVhScODeHo+crS/2+f6ZJ7jgLs1Cj+jB8bCqbbw
-	zJPfvvpg==;
-Received: from [50.53.46.231] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-	id 1rNmQE-00Fk8Z-2S;
-	Thu, 11 Jan 2024 04:12:02 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: dri-devel@lists.freedesktop.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	linux-media@vger.kernel.org,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	linaro-mm-sig@lists.linaro.org
-Subject: [PATCH] dma-buf/dma-resv: fix spelling
-Date: Wed, 10 Jan 2024 20:11:55 -0800
-Message-ID: <20240111041202.32011-1-rdunlap@infradead.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0RtdqRMj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51154C433C7;
+	Thu, 11 Jan 2024 09:52:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1704966779;
+	bh=Rg+uWdSn7M8siVwGtnph84S0VwOHlpKxDjRqhHzmUBE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=0RtdqRMjVtvj+J7ROrMeb6Sr/+F4RqCQItOXOt4+RNnO0MS+dLkH7f+78WQrgQEJW
+	 20YmvNzQFZP8ohR1Y7yg1gIB75sO+PLU7vjmMoUWutRHxfWvw2RmFw/m5LRE+kyWUf
+	 x1NR2Xo3BuTYiQu+gp+nh5sbJUdc0+uy9VCwAMAI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: [PATCH 5.10 0/7] 5.10.207-rc1 review
+Date: Thu, 11 Jan 2024 10:52:49 +0100
+Message-ID: <20240111094700.222742213@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,39 +43,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.207-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.10.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.10.207-rc1
+X-KernelTest-Deadline: 2024-01-13T09:47+00:00
 Content-Transfer-Encoding: 8bit
 
-Fix spelling mistakes as reported by codespell.
+This is the start of the stable review cycle for the 5.10.207 release.
+There are 7 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Sumit Semwal <sumit.semwal@linaro.org>
-Cc: linux-media@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: Christian König <christian.koenig@amd.com>
-Cc: linaro-mm-sig@lists.linaro.org
----
- drivers/dma-buf/dma-resv.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Responses should be made by Sat, 13 Jan 2024 09:46:53 +0000.
+Anything received after that time might be too late.
 
-diff -- a/drivers/dma-buf/dma-resv.c b/drivers/dma-buf/dma-resv.c
---- a/drivers/dma-buf/dma-resv.c
-+++ b/drivers/dma-buf/dma-resv.c
-@@ -405,7 +405,7 @@ static void dma_resv_iter_walk_unlocked(
-  *
-  * Beware that the iterator can be restarted.  Code which accumulates statistics
-  * or similar needs to check for this with dma_resv_iter_is_restarted(). For
-- * this reason prefer the locked dma_resv_iter_first() whenver possible.
-+ * this reason prefer the locked dma_resv_iter_first() whenever possible.
-  *
-  * Returns the first fence from an unlocked dma_resv obj.
-  */
-@@ -428,7 +428,7 @@ EXPORT_SYMBOL(dma_resv_iter_first_unlock
-  *
-  * Beware that the iterator can be restarted.  Code which accumulates statistics
-  * or similar needs to check for this with dma_resv_iter_is_restarted(). For
-- * this reason prefer the locked dma_resv_iter_next() whenver possible.
-+ * this reason prefer the locked dma_resv_iter_next() whenever possible.
-  *
-  * Returns the next fence from an unlocked dma_resv obj.
-  */
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.207-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+and the diffstat can be found below.
+
+thanks,
+
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.10.207-rc1
+
+Alexander Atanasov <alexander.atanasov@virtuozzo.com>
+    scsi: core: Always send batch on reset or error handling command
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "scsi: core: Add scsi_prot_ref_tag() helper"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "scsi: core: Introduce scsi_get_sector()"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "scsi: core: Make scsi_get_lba() return the LBA"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "scsi: core: Use scsi_cmd_to_rq() instead of scsi_cmnd.request"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "scsi: core: Use a structure member to track the SCSI command submitter"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "scsi: core: Always send batch on reset or error handling command"
+
+
+-------------
+
+Diffstat:
+
+ Makefile                    |  4 ++--
+ drivers/scsi/scsi.c         |  2 +-
+ drivers/scsi/scsi_error.c   | 34 +++++++++++++++++++---------------
+ drivers/scsi/scsi_lib.c     | 38 +++++++++++++-------------------------
+ drivers/scsi/scsi_logging.c | 18 ++++++++----------
+ drivers/scsi/scsi_priv.h    |  1 -
+ include/scsi/scsi_cmnd.h    | 29 +++--------------------------
+ include/scsi/scsi_device.h  | 16 +++++++---------
+ 8 files changed, 53 insertions(+), 89 deletions(-)
+
+
