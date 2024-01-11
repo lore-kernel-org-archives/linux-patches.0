@@ -1,91 +1,85 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF5F12B81;
-	Thu, 11 Jan 2024 09:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D27C14AB5;
+	Thu, 11 Jan 2024 10:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxUxpEuB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B34C433F1;
-	Thu, 11 Jan 2024 09:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNYmXVP6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B9EC433C7;
+	Thu, 11 Jan 2024 10:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704966805;
-	bh=1bRXyFtr4YJcJb//yKtGsf/cj7tG/uxLY4fMs2nOuds=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VxUxpEuBHoZw7wBFkJolZ1bT/n08LrmbPqHCHt0wTm0nbkGltavquTRonHieNSi3j
-	 Ozy6J5gK2TZRczTmL1kE6xy1GoNB6NgQTAXm+B39DRYYl0f5FMcPbS7QOfEQHKj381
-	 92Y1pSDHTgFrGhJ9KZTxdIc/udqanR6D2tIEYqeY=
+	s=korg; t=1704969843;
+	bh=wTvyF0pAfwwWQaTolfICOUFyt2Pv4Lpw/gdxqRFsfWE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oNYmXVP6XsJgYWhj+lLirQKLMoSsJw0R2XQkt7T9zPMH0QkQ5uhQvXNq4XB9D1Aos
+	 pYCmvd6sknJrgT/Dav66vHkENYCFegEWjNOqKV+7mQhxz2NZWa1I4vKzNIb9XK9jKC
+	 QHkQA08uU6nLc0TEMbJ7jg2wpdM+2jZClmFDDyGU=
+Date: Thu, 11 Jan 2024 11:44:01 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Pavel Machek <pavel@ucw.cz>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Damien Le Moal <damien.lemoal@wdc.com>,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 5/7] Revert "scsi: core: Introduce scsi_get_sector()"
-Date: Thu, 11 Jan 2024 10:52:54 +0100
-Message-ID: <20240111094700.479841410@linuxfoundation.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240111094700.222742213@linuxfoundation.org>
-References: <20240111094700.222742213@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+To: Namhyung Kim <namhyung@kernel.org>
+Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Darren Kenny <darren.kenny@oracle.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ian Rogers <irogers@google.com>, Jiri Olsa <jolsa@kernel.org>,
+	Lieven Hey <lieven.hey@kdab.com>
+Subject: Re: [PATCH for-5.15] perf inject: Fix GEN_ELF_TEXT_OFFSET for jit
+Message-ID: <2024011155-fragrance-perfected-2183@gregkh>
+References: <2024010711-skeletal-material-15e8@gregkh>
+ <20240109214955.451513-1-namhyung@kernel.org>
+ <2024011043-unearned-manned-12b7@gregkh>
+ <CAM9d7cj3fdaKVehz+E3Fd_Zf91hy31z19goM84qq+cc8WZe7RQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAM9d7cj3fdaKVehz+E3Fd_Zf91hy31z19goM84qq+cc8WZe7RQ@mail.gmail.com>
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+On Wed, Jan 10, 2024 at 09:53:17AM -0800, Namhyung Kim wrote:
+> Hello,
+> 
+> On Tue, Jan 9, 2024 at 11:59 PM Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > On Tue, Jan 09, 2024 at 01:49:55PM -0800, Namhyung Kim wrote:
+> > > From: Adrian Hunter <adrian.hunter@intel.com>
+> > >
+> > > When a program header was added, it moved the text section but
+> > > GEN_ELF_TEXT_OFFSET was not updated.
+> > >
+> > > Fix by adding the program header size and aligning.
+> > >
+> > > Fixes: babd04386b1df8c3 ("perf jit: Include program header in ELF files")
+> > > Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+> > > Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+> > > Cc: Ian Rogers <irogers@google.com>
+> > > Cc: Jiri Olsa <jolsa@kernel.org>
+> > > Cc: Lieven Hey <lieven.hey@kdab.com>
+> > > Link: https://lore.kernel.org/r/20221014170905.64069-7-adrian.hunter@intel.com
+> > > Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+> > > [namhyung: use "linux/kernel.h" instead to avoid build failure]
+> > > Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+> > > ---
+> > >  tools/perf/util/genelf.h | 4 +++-
+> > >  1 file changed, 3 insertions(+), 1 deletion(-)
+> >
+> > What is the git commit id of this change in Linus's tree?
+> 
+> Sorry I forgot to add that.  It's 89b15d00527b7825ff19130ed83478e80e3fae99
 
-------------------
+Thanks, now queued up.
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-This reverts commit f230e6d4249b9ccdcb571077023cecabf91ecbb1 which is
-commit f0f214fe8cd32224267ebea93817b8c32074623d upstream.
-
-As reported, a lot of scsi changes were made just to resolve a 2 line
-patch, so let's revert them all and then manually fix up the 2 line
-fixup so that things are simpler and potential abi changes are not an
-issue.
-
-Link: https://lore.kernel.org/r/ZZ042FejzwMM5vDW@duo.ucw.cz
-Reported-by: Pavel Machek <pavel@ucw.cz>
-Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Ming Lei <ming.lei@redhat.com>
-Cc: Hannes Reinecke <hare@suse.de>
-Cc: Damien Le Moal <damien.lemoal@wdc.com>
-Cc: Benjamin Block <bblock@linux.ibm.com>
-Cc: Bart Van Assche <bvanassche@acm.org>
-Cc: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- include/scsi/scsi_cmnd.h |    5 -----
- 1 file changed, 5 deletions(-)
-
---- a/include/scsi/scsi_cmnd.h
-+++ b/include/scsi/scsi_cmnd.h
-@@ -224,11 +224,6 @@ static inline int scsi_sg_copy_to_buffer
- 				 buf, buflen);
- }
- 
--static inline sector_t scsi_get_sector(struct scsi_cmnd *scmd)
--{
--	return blk_rq_pos(scmd->request);
--}
--
- /*
-  * The operations below are hints that tell the controller driver how
-  * to handle I/Os with DIF or similar types of protection information.
-
-
+greg k-h
