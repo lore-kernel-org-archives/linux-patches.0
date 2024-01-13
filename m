@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6E21848;
-	Sat, 13 Jan 2024 09:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982B61846;
+	Sat, 13 Jan 2024 09:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WBUl4DKH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2844BC433C7;
-	Sat, 13 Jan 2024 09:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lt+EJMS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179F2C433F1;
+	Sat, 13 Jan 2024 09:58:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139888;
-	bh=KVATUPz+nrV1Tde0aeIBlXSmdhvwMtwDP2/7slsfNhY=;
+	s=korg; t=1705139891;
+	bh=6Wtv63WM5HwCju8Qlwa9MvBk1vQpSD0crBdvpzdJV4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WBUl4DKHH/e83k1Gb9rO2w7JZoiPwPFypWYehZ61Zzs7mnHLeV7b/734x/MY7/r8p
-	 flaJIcFXmrnbyoKJH3NQM1egSG8uHQvjchK/69vAaq+kutiz365J5lZsewDsywvte6
-	 6Q4Tgydo73IOYc6lEJyIsfpLzBQfGhJxj54U46z4=
+	b=Lt+EJMS4HAAX7lQwtyZT/I3k+qA4P5rMotoLHknoq2PmHAXpzOCyetkmvm6rjLO0U
+	 bwGOV5fhCDONUbbkSVQM97ef3vYOPrwRrZj5+GYip3+Aeo8tzCiEKejKTdXx8MZMjk
+	 2Bza/0C0QYsLRTBkAVsVf4CASkltFFbh3+IHXNqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Thomas Lange <thomas@corelatus.se>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 25/43] bnxt_en: Remove mis-applied code from bnxt_cfg_ntp_filters()
-Date: Sat, 13 Jan 2024 10:50:04 +0100
-Message-ID: <20240113094207.718398714@linuxfoundation.org>
+Subject: [PATCH 5.10 26/43] net: Implement missing SO_TIMESTAMPING_NEW cmsg support
+Date: Sat, 13 Jan 2024 10:50:05 +0100
+Message-ID: <20240113094207.754508628@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.930684111@linuxfoundation.org>
 References: <20240113094206.930684111@linuxfoundation.org>
@@ -43,45 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Thomas Lange <thomas@corelatus.se>
 
-[ Upstream commit e009b2efb7a8850498796b360043ac25c8d3d28f ]
+[ Upstream commit 382a32018b74f407008615e0e831d05ed28e81cd ]
 
-The 2 lines to check for the BNXT_HWRM_PF_UNLOAD_SP_EVENT bit was
-mis-applied to bnxt_cfg_ntp_filters() and should have been applied to
-bnxt_sp_task().
+Commit 9718475e6908 ("socket: Add SO_TIMESTAMPING_NEW") added the new
+socket option SO_TIMESTAMPING_NEW. However, it was never implemented in
+__sock_cmsg_send thus breaking SO_TIMESTAMPING cmsg for platforms using
+SO_TIMESTAMPING_NEW.
 
-Fixes: 19241368443f ("bnxt_en: Send PF driver unload notification to all VFs.")
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 9718475e6908 ("socket: Add SO_TIMESTAMPING_NEW")
+Link: https://lore.kernel.org/netdev/6a7281bf-bc4a-4f75-bb88-7011908ae471@app.fastmail.com/
+Signed-off-by: Thomas Lange <thomas@corelatus.se>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20240104085744.49164-1-thomas@corelatus.se
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/sock.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index c67a108c2c07f..584f365de563f 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -11143,6 +11143,8 @@ static void bnxt_sp_task(struct work_struct *work)
- 		bnxt_cfg_ntp_filters(bp);
- 	if (test_and_clear_bit(BNXT_HWRM_EXEC_FWD_REQ_SP_EVENT, &bp->sp_event))
- 		bnxt_hwrm_exec_fwd_req(bp);
-+	if (test_and_clear_bit(BNXT_HWRM_PF_UNLOAD_SP_EVENT, &bp->sp_event))
-+		netdev_info(bp->dev, "Receive PF driver unload event!\n");
- 	if (test_and_clear_bit(BNXT_PERIODIC_STATS_SP_EVENT, &bp->sp_event)) {
- 		bnxt_hwrm_port_qstats(bp, 0);
- 		bnxt_hwrm_port_qstats_ext(bp, 0);
-@@ -12097,8 +12099,6 @@ static void bnxt_cfg_ntp_filters(struct bnxt *bp)
- 			}
- 		}
- 	}
--	if (test_and_clear_bit(BNXT_HWRM_PF_UNLOAD_SP_EVENT, &bp->sp_event))
--		netdev_info(bp->dev, "Receive PF driver unload event!\n");
- }
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 9c3bc24bfdd1f..aa5237a6116e1 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2402,6 +2402,7 @@ int __sock_cmsg_send(struct sock *sk, struct msghdr *msg, struct cmsghdr *cmsg,
+ 		sockc->mark = *(u32 *)CMSG_DATA(cmsg);
+ 		break;
+ 	case SO_TIMESTAMPING_OLD:
++	case SO_TIMESTAMPING_NEW:
+ 		if (cmsg->cmsg_len != CMSG_LEN(sizeof(u32)))
+ 			return -EINVAL;
  
- #else
 -- 
 2.43.0
 
