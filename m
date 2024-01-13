@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8A2185A;
-	Sat, 13 Jan 2024 09:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A431848;
+	Sat, 13 Jan 2024 09:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJAN5kGq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04A5C433F1;
-	Sat, 13 Jan 2024 09:56:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogrMAFf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1148C433F1;
+	Sat, 13 Jan 2024 09:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139780;
-	bh=o7DtYrGDDub7YSYLwqY9jVMUCUlk0svzRMbqdeCZLzo=;
+	s=korg; t=1705139783;
+	bh=zPFQ9Gs91xdsM9xrHU/ngR1EE6KY8HGmJtB8NyS838E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UJAN5kGqXEkNCK0PJh7ylhQSLLdXy2+Y59H5dDSfg+jvTS80oU7XnrvwuEWpSBp2R
-	 ETIAGmyO0fhl0vyKOjEdonnihrc0oycP1Xwy2Wvl8vz2BW9TES4bT5qebAeli4EDMI
-	 XzMVs9UFvrgiXEG4vQ3eeUquojtEAoE4zCjPwl7U=
+	b=ogrMAFf3pD3VZJd+c/dbU4wCiQJMvJN4bOa616PTqchRA6r/6YblCx/ZW5pJqGMDb
+	 ozy7yH7y+vvcUdwGNAeVCIfn4CJ5VKb2W9qWH1M9gmX7wnCJKzvOyEc7++CU5lBcnk
+	 a2l40GL2KuP58x7FNYytmjEeULJDDgx/IFhXYx0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Chen <wenchao.chen@unisoc.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 27/38] mmc: sdhci-sprd: Fix eMMC init failure after hw reset
-Date: Sat, 13 Jan 2024 10:50:03 +0100
-Message-ID: <20240113094207.284457593@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Kalle Valo <kvalo@codeaurora.org>,
+	Amit Pundir <amit.pundir@linaro.org>
+Subject: [PATCH 5.4 28/38] ath10k: Wait until copy complete is actually done before completing
+Date: Sat, 13 Jan 2024 10:50:04 +0100
+Message-ID: <20240113094207.316101222@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.455533180@linuxfoundation.org>
 References: <20240113094206.455533180@linuxfoundation.org>
@@ -42,48 +42,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenchao Chen <wenchao.chen@unisoc.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-commit 8abf77c88929b6d20fa4f9928b18d6448d64e293 upstream.
+[ Upstream commit 8f9ed93d09a97444733d492a3bbf66bcb786a777 ]
 
-Some eMMC devices that do not close the auto clk gate after hw reset will
-cause eMMC initialization to fail. Let's fix this.
+On wcn3990 we have "per_ce_irq = true".  That makes the
+ath10k_ce_interrupt_summary() function always return 0xfff. The
+ath10k_ce_per_engine_service_any() function will see this and think
+that _all_ copy engines have an interrupt.  Without checking, the
+ath10k_ce_per_engine_service() assumes that if it's called that the
+"copy complete" (cc) interrupt fired.  This combination seems bad.
 
-Signed-off-by: Wenchao Chen <wenchao.chen@unisoc.com>
-Fixes: ff874dbc4f86 ("mmc: sdhci-sprd: Disable CLK_AUTO when the clock is less than 400K")
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231204064934.21236-1-wenchao.chen@unisoc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Let's add a check to make sure that the "copy complete" interrupt
+actually fired in ath10k_ce_per_engine_service().
+
+This might fix a hard-to-reproduce failure where it appears that the
+copy complete handlers run before the copy is really complete.
+Specifically a symptom was that we were seeing this on a Qualcomm
+sc7180 board:
+  arm-smmu 15000000.iommu: Unhandled context fault:
+  fsr=0x402, iova=0x7fdd45780, fsynr=0x30003, cbfrsynra=0xc1, cb=10
+
+Even on platforms that don't have wcn3990 this still seems like it
+would be a sane thing to do.  Specifically the current IRQ handler
+comments indicate that there might be other misc interrupt sources
+firing that need to be cleared.  If one of those sources was the one
+that caused the IRQ handler to be called it would also be important to
+double-check that the interrupt we cared about actually fired.
+
+Tested-on: WCN3990 SNOC WLAN.HL.3.2.2-00490-QCAHLSWMTPL-1
+
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
+Link: https://lore.kernel.org/r/20200609082015.1.Ife398994e5a0a6830e4d4a16306ef36e0144e7ba@changeid
+Stable-dep-of: 170c75d43a77 ("ath10k: Don't touch the CE interrupt registers after power up")
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-sprd.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath10k/ce.c |   30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
---- a/drivers/mmc/host/sdhci-sprd.c
-+++ b/drivers/mmc/host/sdhci-sprd.c
-@@ -223,15 +223,19 @@ static inline void _sdhci_sprd_set_clock
- 	div = ((div & 0x300) >> 2) | ((div & 0xFF) << 8);
- 	sdhci_enable_clk(host, div);
- 
-+	val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
-+	mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN | SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
- 	/* Enable CLK_AUTO when the clock is greater than 400K. */
- 	if (clk > 400000) {
--		val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
--		mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN |
--			SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
- 		if (mask != (val & mask)) {
- 			val |= mask;
- 			sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
- 		}
-+	} else {
-+		if (val & mask) {
-+			val &= ~mask;
-+			sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
-+		}
- 	}
+--- a/drivers/net/wireless/ath/ath10k/ce.c
++++ b/drivers/net/wireless/ath/ath10k/ce.c
+@@ -481,6 +481,15 @@ static inline void ath10k_ce_engine_int_
+ 	ath10k_ce_write32(ar, ce_ctrl_addr + wm_regs->addr, mask);
  }
  
++static inline bool ath10k_ce_engine_int_status_check(struct ath10k *ar,
++						     u32 ce_ctrl_addr,
++						     unsigned int mask)
++{
++	struct ath10k_hw_ce_host_wm_regs *wm_regs = ar->hw_ce_regs->wm_regs;
++
++	return ath10k_ce_read32(ar, ce_ctrl_addr + wm_regs->addr) & mask;
++}
++
+ /*
+  * Guts of ath10k_ce_send.
+  * The caller takes responsibility for any needed locking.
+@@ -1301,19 +1310,22 @@ void ath10k_ce_per_engine_service(struct
+ 
+ 	spin_lock_bh(&ce->ce_lock);
+ 
+-	/* Clear the copy-complete interrupts that will be handled here. */
+-	ath10k_ce_engine_int_status_clear(ar, ctrl_addr,
+-					  wm_regs->cc_mask);
++	if (ath10k_ce_engine_int_status_check(ar, ctrl_addr,
++					      wm_regs->cc_mask)) {
++		/* Clear before handling */
++		ath10k_ce_engine_int_status_clear(ar, ctrl_addr,
++						  wm_regs->cc_mask);
+ 
+-	spin_unlock_bh(&ce->ce_lock);
++		spin_unlock_bh(&ce->ce_lock);
+ 
+-	if (ce_state->recv_cb)
+-		ce_state->recv_cb(ce_state);
++		if (ce_state->recv_cb)
++			ce_state->recv_cb(ce_state);
+ 
+-	if (ce_state->send_cb)
+-		ce_state->send_cb(ce_state);
++		if (ce_state->send_cb)
++			ce_state->send_cb(ce_state);
+ 
+-	spin_lock_bh(&ce->ce_lock);
++		spin_lock_bh(&ce->ce_lock);
++	}
+ 
+ 	/*
+ 	 * Misc CE interrupts are not being handled, but still need
 
 
