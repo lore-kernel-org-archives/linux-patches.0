@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E3EDF6D;
-	Sat, 13 Jan 2024 09:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6AA1869;
+	Sat, 13 Jan 2024 09:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3FTkNUN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23866C43390;
-	Sat, 13 Jan 2024 09:56:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yw6a+7aA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C198C433F1;
+	Sat, 13 Jan 2024 09:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139768;
-	bh=vz3lTZD5j0hnadsF5MUiTzRU5xO1DGcmd5AIUPTKa7E=;
+	s=korg; t=1705139771;
+	bh=qzOnEfbWsBRdFsXfsjQNQRV/lWNvkOe3rXTCGj0/usA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I3FTkNUN1nUci7ASzOtgm4RhDdUWnpP+D2bPRcK5EbZGSjqllv9ovIMwrzbrTaY4b
-	 nyC0FvpM/gLYjsWuhk+NNchbV5VtRoRYW0f1NcWW9aZwAI8YubnkGZaFDzrN3Rrxjv
-	 5+Iq+0O6q99T6o1xS073Fy1bD9/XJZxvQEjFBNko=
+	b=yw6a+7aApXSD2Dg13/8mVa2hdA5p4QBo0nVUClQMSZ3dLkjCLoJtfvpkbC4qIQa/J
+	 cmke/YUf+zTIXraqpdGmpoLc2RDZwVtExDPmFVZg+Fc+UDBhHEdnAOmVhEh5OnOjWG
+	 B7AgyyF9yoziW4+J3dEsIrO1gDTPSpLeDPxcl814=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiajun Xie <jiajun.xie.sh@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 24/38] mm: fix unmap_mapping_range high bits shift bug
-Date: Sat, 13 Jan 2024 10:50:00 +0100
-Message-ID: <20240113094207.187633705@linuxfoundation.org>
+	Vadim Fedorenko <vadfed@meta.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 07/38] net-timestamp: extend SOF_TIMESTAMPING_OPT_ID to HW timestamps
+Date: Sat, 13 Jan 2024 10:49:43 +0100
+Message-ID: <20240113094206.682696962@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.455533180@linuxfoundation.org>
 References: <20240113094206.455533180@linuxfoundation.org>
@@ -41,81 +43,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiajun Xie <jiajun.xie.sh@gmail.com>
+From: Vadim Fedorenko <vadfed@meta.com>
 
-commit 9eab0421fa94a3dde0d1f7e36ab3294fc306c99d upstream.
+[ Upstream commit 8ca5a5790b9a1ce147484d2a2c4e66d2553f3d6c ]
 
-The bug happens when highest bit of holebegin is 1, suppose holebegin is
-0x8000000111111000, after shift, hba would be 0xfff8000000111111, then
-vma_interval_tree_foreach would look it up fail or leads to the wrong
-result.
+When the feature was added it was enabled for SW timestamps only but
+with current hardware the same out-of-order timestamps can be seen.
+Let's expand the area for the feature to all types of timestamps.
 
-error call seq e.g.:
-- mmap(..., offset=0x8000000111111000)
-  |- syscall(mmap, ... unsigned long, off):
-     |- ksys_mmap_pgoff( ... , off >> PAGE_SHIFT);
-
-  here pgoff is correctly shifted to 0x8000000111111,
-  but pass 0x8000000111111000 as holebegin to unmap
-  would then cause terrible result, as shown below:
-
-- unmap_mapping_range(..., loff_t const holebegin)
-  |- pgoff_t hba = holebegin >> PAGE_SHIFT;
-          /* hba = 0xfff8000000111111 unexpectedly */
-
-The issue happens in Heterogeneous computing, where the device(e.g.
-gpu) and host share the same virtual address space.
-
-A simple workflow pattern which hit the issue is:
-        /* host */
-    1. userspace first mmap a file backed VA range with specified offset.
-                        e.g. (offset=0x800..., mmap return: va_a)
-    2. write some data to the corresponding sys page
-                         e.g. (va_a = 0xAABB)
-        /* device */
-    3. gpu workload touches VA, triggers gpu fault and notify the host.
-        /* host */
-    4. reviced gpu fault notification, then it will:
-            4.1 unmap host pages and also takes care of cpu tlb
-                  (use unmap_mapping_range with offset=0x800...)
-            4.2 migrate sys page to device
-            4.3 setup device page table and resolve device fault.
-        /* device */
-    5. gpu workload continued, it accessed va_a and got 0xAABB.
-    6. gpu workload continued, it wrote 0xBBCC to va_a.
-        /* host */
-    7. userspace access va_a, as expected, it will:
-            7.1 trigger cpu vm fault.
-            7.2 driver handling fault to migrate gpu local page to host.
-    8. userspace then could correctly get 0xBBCC from va_a
-    9. done
-
-But in step 4.1, if we hit the bug this patch mentioned, then userspace
-would never trigger cpu fault, and still get the old value: 0xAABB.
-
-Making holebegin unsigned first fixes the bug.
-
-Link: https://lkml.kernel.org/r/20231220052839.26970-1-jiajun.xie.sh@gmail.com
-Signed-off-by: Jiajun Xie <jiajun.xie.sh@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Vadim Fedorenko <vadfed@meta.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 7f6ca95d16b9 ("net: Implement missing getsockopt(SO_TIMESTAMPING_NEW)")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/ip_output.c  | 2 +-
+ net/ipv6/ip6_output.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -2872,8 +2872,8 @@ void unmap_mapping_pages(struct address_
- void unmap_mapping_range(struct address_space *mapping,
- 		loff_t const holebegin, loff_t const holelen, int even_cows)
- {
--	pgoff_t hba = holebegin >> PAGE_SHIFT;
--	pgoff_t hlen = (holelen + PAGE_SIZE - 1) >> PAGE_SHIFT;
-+	pgoff_t hba = (pgoff_t)(holebegin) >> PAGE_SHIFT;
-+	pgoff_t hlen = ((pgoff_t)(holelen) + PAGE_SIZE - 1) >> PAGE_SHIFT;
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index bf7c2333bc236..0f70c2dbbe5bb 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -993,7 +993,7 @@ static int __ip_append_data(struct sock *sk,
+ 	mtu = cork->gso_size ? IP_MAX_MTU : cork->fragsize;
+ 	paged = !!cork->gso_size;
  
- 	/* Check for overflow. */
- 	if (sizeof(holelen) > sizeof(hlen)) {
+-	if (cork->tx_flags & SKBTX_ANY_SW_TSTAMP &&
++	if (cork->tx_flags & SKBTX_ANY_TSTAMP &&
+ 	    sk->sk_tsflags & SOF_TIMESTAMPING_OPT_ID)
+ 		tskey = sk->sk_tskey++;
+ 
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index d3455585e6a8c..c67d634dccd47 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1425,7 +1425,7 @@ static int __ip6_append_data(struct sock *sk,
+ 	mtu = cork->gso_size ? IP6_MAX_MTU : cork->fragsize;
+ 	orig_mtu = mtu;
+ 
+-	if (cork->tx_flags & SKBTX_ANY_SW_TSTAMP &&
++	if (cork->tx_flags & SKBTX_ANY_TSTAMP &&
+ 	    sk->sk_tsflags & SOF_TIMESTAMPING_OPT_ID)
+ 		tskey = sk->sk_tskey++;
+ 
+-- 
+2.43.0
+
 
 
