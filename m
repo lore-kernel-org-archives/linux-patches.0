@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF0412E5E;
-	Sat, 13 Jan 2024 10:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317C815AF6;
+	Sat, 13 Jan 2024 10:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mbwaIsr0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85A4C433C7;
-	Sat, 13 Jan 2024 10:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2tEfuOc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28C7C43390;
+	Sat, 13 Jan 2024 10:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705140026;
-	bh=VUrhgkM4gEsjXmddXhFopGWpJVhv7XYRO+09nWBcsR4=;
+	s=korg; t=1705140029;
+	bh=EOnRDofVMBrr62BfFFl+EzhdfLAV4uxG4w89YnKXO7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mbwaIsr0IPngx1YL0TTA1B2hYBzvmc/z7sXCIOnS8JRie3eoW0pkWPDPYpwvBS+w9
-	 hj5XEzLqRmKiInsRU1axTyhotDKWfean9FZJTVu1bHM/M4IbhAsZPaUAktgMParOHv
-	 nhEwCCvbUSXanQyO769vYX30eCbC3za3ssNhHYJo=
+	b=u2tEfuOc3QbKADvEotwoa61OuGDOEgvMUlQOmJyJtTBVrne3kt3aazVsdk+SjcIWF
+	 Fl9o3x/dG+I35kMmzp2qvF/Q19wtsJ2DlVIbeYD799JKiKC8VG45oirVS62uH/iGaP
+	 B4N5Eik97T5Uv1QkR7p/9IMwNyF30PDoyhbjSwOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadfed@meta.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 21/59] net-timestamp: extend SOF_TIMESTAMPING_OPT_ID to HW timestamps
-Date: Sat, 13 Jan 2024 10:49:52 +0100
-Message-ID: <20240113094209.960941475@linuxfoundation.org>
+Subject: [PATCH 5.15 30/59] ASoC: meson: g12a-toacodec: Fix event generation
+Date: Sat, 13 Jan 2024 10:50:01 +0100
+Message-ID: <20240113094210.235209280@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
 References: <20240113094209.301672391@linuxfoundation.org>
@@ -43,50 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Fedorenko <vadfed@meta.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 8ca5a5790b9a1ce147484d2a2c4e66d2553f3d6c ]
+[ Upstream commit 172c88244b5f2d3375403ebb504d407be0fded59 ]
 
-When the feature was added it was enabled for SW timestamps only but
-with current hardware the same out-of-order timestamps can be seen.
-Let's expand the area for the feature to all types of timestamps.
+When a control changes value the return value from _put() should be 1 so
+we get events generated to userspace notifying applications of the change.
+We are checking if there has been a change and exiting early if not but we
+are not providing the correct return value in the latter case, fix this.
 
-Signed-off-by: Vadim Fedorenko <vadfed@meta.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 7f6ca95d16b9 ("net: Implement missing getsockopt(SO_TIMESTAMPING_NEW)")
+Fixes: af2618a2eee8 ("ASoC: meson: g12a: add internal DAC glue driver")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20240103-meson-enum-val-v1-3-424af7a8fb91@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_output.c  | 2 +-
- net/ipv6/ip6_output.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/meson/g12a-toacodec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index a5f09d64c6ed1..a445e4e05e0d1 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -990,7 +990,7 @@ static int __ip_append_data(struct sock *sk,
- 	mtu = cork->gso_size ? IP_MAX_MTU : cork->fragsize;
- 	paged = !!cork->gso_size;
+diff --git a/sound/soc/meson/g12a-toacodec.c b/sound/soc/meson/g12a-toacodec.c
+index 10a2ff1ecf33e..1cd62ba56e06b 100644
+--- a/sound/soc/meson/g12a-toacodec.c
++++ b/sound/soc/meson/g12a-toacodec.c
+@@ -104,7 +104,7 @@ static int g12a_toacodec_mux_put_enum(struct snd_kcontrol *kcontrol,
  
--	if (cork->tx_flags & SKBTX_ANY_SW_TSTAMP &&
-+	if (cork->tx_flags & SKBTX_ANY_TSTAMP &&
- 	    sk->sk_tsflags & SOF_TIMESTAMPING_OPT_ID)
- 		tskey = atomic_inc_return(&sk->sk_tskey) - 1;
+ 	snd_soc_dapm_mux_update_power(dapm, kcontrol, mux, e, NULL);
  
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 5045b479c2a95..7205473ba28d3 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1484,7 +1484,7 @@ static int __ip6_append_data(struct sock *sk,
- 	mtu = cork->gso_size ? IP6_MAX_MTU : cork->fragsize;
- 	orig_mtu = mtu;
+-	return 0;
++	return 1;
+ }
  
--	if (cork->tx_flags & SKBTX_ANY_SW_TSTAMP &&
-+	if (cork->tx_flags & SKBTX_ANY_TSTAMP &&
- 	    sk->sk_tsflags & SOF_TIMESTAMPING_OPT_ID)
- 		tskey = atomic_inc_return(&sk->sk_tskey) - 1;
- 
+ static SOC_ENUM_SINGLE_DECL(g12a_toacodec_mux_enum, TOACODEC_CTRL0,
 -- 
 2.43.0
 
