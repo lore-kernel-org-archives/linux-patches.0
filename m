@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7349C8DD;
-	Sat, 13 Jan 2024 10:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4A61EEE6;
+	Sat, 13 Jan 2024 10:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uj0fR5bI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24BABC433F1;
-	Sat, 13 Jan 2024 10:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBzlpuqR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0DBC433C7;
+	Sat, 13 Jan 2024 10:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705140043;
-	bh=yGliNyXmMq7953sYMgWEXBdYhtgy9F3mT6rXFcocTW4=;
+	s=korg; t=1705140046;
+	bh=BdVaFwYepQoWnE5D1TBFBPMh4UQysKIho0Za5qTc3Ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uj0fR5bInK76YpP1fqYB3UVC6sXe3WJ6vUzgeFlyJH6klXSZWSgwa/GZuoKC9bToz
-	 TCLVjn+PhKAfygCUgHssI0xSK3cbvVejU5L06EG196Ror2M1PCBFu9Zq+0Sz2sb+70
-	 rlO1aWtmQla9KIx0GNkaqQsyyQZ7Q2TZ0nBW+xlY=
+	b=SBzlpuqRGXCMX+OpUJl5E/FzR2ibtZIpWWC7OjcaNJknP9TGbaMFHkW8C8zroFt94
+	 26J97lTzUWNPMfFZzes7vf1nXcdK6mT99JNzxo5ATOT6bE6fD91Gm1WnGTeb+z0NJS
+	 pq+/uIAeFb4TZFwlkB1ZVWgDhtrMJA2HJqkL+XZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
+	Nithin Dabilpuram <ndabilpuram@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Geetha Sowjanya <gakula@marvell.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 35/59] octeontx2-af: Dont enable Pause frames by default
-Date: Sat, 13 Jan 2024 10:50:06 +0100
-Message-ID: <20240113094210.386136085@linuxfoundation.org>
+Subject: [PATCH 5.15 36/59] octeontx2-af: Set NIX link credits based on max LMAC
+Date: Sat, 13 Jan 2024 10:50:07 +0100
+Message-ID: <20240113094210.415849316@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
 References: <20240113094209.301672391@linuxfoundation.org>
@@ -43,268 +44,250 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Sunil Goutham <sgoutham@marvell.com>
 
-[ Upstream commit d957b51f7ed66dbe6102f1bba0587fdfc0119a94 ]
+[ Upstream commit 459f326e995ce6f02f3dc79ca5bc4e2abe33d156 ]
 
-Current implementation is such that 802.3x pause frames are
-enabled by default.  As CGX and RPM blocks support PFC
-(priority flow control) also, instead of driver enabling one
-between them enable them upon request from PF or its VFs.
-Also add support to disable pause frames in driver unbind.
+When number of LMACs active on a CGX/RPM are 3, then
+current NIX link credit config based on per lmac fifo
+length which inturn  is calculated as
+'lmac_fifo_len = total_fifo_len / 3', is incorrect. In HW
+one of the LMAC gets half of the FIFO and rest gets 1/4th.
 
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
+Signed-off-by: Nithin Dabilpuram <ndabilpuram@marvell.com>
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Signed-off-by: Geetha Sowjanya <gakula@marvell.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: a0d9528f6daf ("octeontx2-af: Always configure NIX TX link credits based on max frame size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/cgx.c   | 41 ++++++----------
- .../net/ethernet/marvell/octeontx2/af/rpm.c   | 47 +++++--------------
- .../ethernet/marvell/octeontx2/af/rvu_nix.c   |  8 ----
- .../marvell/octeontx2/nic/otx2_common.c       |  1 +
- .../ethernet/marvell/octeontx2/nic/otx2_pf.c  | 15 +++---
- .../ethernet/marvell/octeontx2/nic/otx2_vf.c  | 12 +++--
- 6 files changed, 44 insertions(+), 80 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/cgx.c   | 27 +++++++++++++++
+ .../marvell/octeontx2/af/lmac_common.h        |  1 +
+ .../net/ethernet/marvell/octeontx2/af/rpm.c   | 30 ++++++++++++++++
+ .../net/ethernet/marvell/octeontx2/af/rpm.h   |  1 +
+ .../net/ethernet/marvell/octeontx2/af/rvu.h   |  2 +-
+ .../ethernet/marvell/octeontx2/af/rvu_cgx.c   | 16 +++++++++
+ .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 34 ++++++++++++++-----
+ 7 files changed, 102 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-index 8ac95cb7bbb74..098504aa0fd2b 100644
+index 098504aa0fd2b..1a269a2e61fdb 100644
 --- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
 +++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -789,21 +789,8 @@ static void cgx_lmac_pause_frm_config(void *cgxd, int lmac_id, bool enable)
- 
- 	if (!is_lmac_valid(cgx, lmac_id))
- 		return;
--	if (enable) {
--		/* Enable receive pause frames */
--		cfg = cgx_read(cgx, lmac_id, CGXX_SMUX_RX_FRM_CTL);
--		cfg |= CGX_SMUX_RX_FRM_CTL_CTL_BCK;
--		cgx_write(cgx, lmac_id, CGXX_SMUX_RX_FRM_CTL, cfg);
--
--		cfg = cgx_read(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL);
--		cfg |= CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK;
--		cgx_write(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL, cfg);
--
--		/* Enable pause frames transmission */
--		cfg = cgx_read(cgx, lmac_id, CGXX_SMUX_TX_CTL);
--		cfg |= CGX_SMUX_TX_CTL_L2P_BP_CONV;
--		cgx_write(cgx, lmac_id, CGXX_SMUX_TX_CTL, cfg);
- 
-+	if (enable) {
- 		/* Set pause time and interval */
- 		cgx_write(cgx, lmac_id, CGXX_SMUX_TX_PAUSE_PKT_TIME,
- 			  DEFAULT_PAUSE_TIME);
-@@ -820,21 +807,21 @@ static void cgx_lmac_pause_frm_config(void *cgxd, int lmac_id, bool enable)
- 		cfg &= ~0xFFFFULL;
- 		cgx_write(cgx, lmac_id, CGXX_GMP_GMI_TX_PAUSE_PKT_INTERVAL,
- 			  cfg | (DEFAULT_PAUSE_TIME / 2));
--	} else {
--		/* ALL pause frames received are completely ignored */
--		cfg = cgx_read(cgx, lmac_id, CGXX_SMUX_RX_FRM_CTL);
--		cfg &= ~CGX_SMUX_RX_FRM_CTL_CTL_BCK;
--		cgx_write(cgx, lmac_id, CGXX_SMUX_RX_FRM_CTL, cfg);
-+	}
- 
--		cfg = cgx_read(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL);
--		cfg &= ~CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK;
--		cgx_write(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL, cfg);
-+	/* ALL pause frames received are completely ignored */
-+	cfg = cgx_read(cgx, lmac_id, CGXX_SMUX_RX_FRM_CTL);
-+	cfg &= ~CGX_SMUX_RX_FRM_CTL_CTL_BCK;
-+	cgx_write(cgx, lmac_id, CGXX_SMUX_RX_FRM_CTL, cfg);
- 
--		/* Disable pause frames transmission */
--		cfg = cgx_read(cgx, lmac_id, CGXX_SMUX_TX_CTL);
--		cfg &= ~CGX_SMUX_TX_CTL_L2P_BP_CONV;
--		cgx_write(cgx, lmac_id, CGXX_SMUX_TX_CTL, cfg);
--	}
-+	cfg = cgx_read(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL);
-+	cfg &= ~CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK;
-+	cgx_write(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL, cfg);
-+
-+	/* Disable pause frames transmission */
-+	cfg = cgx_read(cgx, lmac_id, CGXX_SMUX_TX_CTL);
-+	cfg &= ~CGX_SMUX_TX_CTL_L2P_BP_CONV;
-+	cgx_write(cgx, lmac_id, CGXX_SMUX_TX_CTL, cfg);
+@@ -505,6 +505,32 @@ static u8 cgx_get_lmac_type(void *cgxd, int lmac_id)
+ 	return (cfg >> CGX_LMAC_TYPE_SHIFT) & CGX_LMAC_TYPE_MASK;
  }
  
- void cgx_lmac_ptp_config(void *cgxd, int lmac_id, bool enable)
++static u32 cgx_get_lmac_fifo_len(void *cgxd, int lmac_id)
++{
++	struct cgx *cgx = cgxd;
++	u8 num_lmacs;
++	u32 fifo_len;
++
++	fifo_len = cgx->mac_ops->fifo_len;
++	num_lmacs = cgx->mac_ops->get_nr_lmacs(cgx);
++
++	switch (num_lmacs) {
++	case 1:
++		return fifo_len;
++	case 2:
++		return fifo_len / 2;
++	case 3:
++		/* LMAC0 gets half of the FIFO, reset 1/4th */
++		if (lmac_id == 0)
++			return fifo_len / 2;
++		return fifo_len / 4;
++	case 4:
++	default:
++		return fifo_len / 4;
++	}
++	return 0;
++}
++
+ /* Configure CGX LMAC in internal loopback mode */
+ int cgx_lmac_internal_loopback(void *cgxd, int lmac_id, bool enable)
+ {
+@@ -1557,6 +1583,7 @@ static struct mac_ops	cgx_mac_ops    = {
+ 	.tx_stats_cnt   =       18,
+ 	.get_nr_lmacs	=	cgx_get_nr_lmacs,
+ 	.get_lmac_type  =       cgx_get_lmac_type,
++	.lmac_fifo_len	=	cgx_get_lmac_fifo_len,
+ 	.mac_lmac_intl_lbk =    cgx_lmac_internal_loopback,
+ 	.mac_get_rx_stats  =	cgx_get_rx_stats,
+ 	.mac_get_tx_stats  =	cgx_get_tx_stats,
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h b/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h
+index b33e7d1d0851c..f6eb9fec1e8d6 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/lmac_common.h
+@@ -76,6 +76,7 @@ struct mac_ops {
+ 	 */
+ 	int			(*get_nr_lmacs)(void *cgx);
+ 	u8                      (*get_lmac_type)(void *cgx, int lmac_id);
++	u32                     (*lmac_fifo_len)(void *cgx, int lmac_id);
+ 	int                     (*mac_lmac_intl_lbk)(void *cgx, int lmac_id,
+ 						     bool enable);
+ 	/* Register Stats related functions */
 diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-index 9ea2f6ac38ec1..8c0b35a868cfe 100644
+index 8c0b35a868cfe..3ac26ba31e2f3 100644
 --- a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
 +++ b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-@@ -167,26 +167,6 @@ void rpm_lmac_pause_frm_config(void *rpmd, int lmac_id, bool enable)
- 	u64 cfg;
- 
- 	if (enable) {
--		/* Enable 802.3 pause frame mode */
--		cfg = rpm_read(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG);
--		cfg &= ~RPMX_MTI_MAC100X_COMMAND_CONFIG_PFC_MODE;
--		rpm_write(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG, cfg);
--
--		/* Enable receive pause frames */
--		cfg = rpm_read(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG);
--		cfg &= ~RPMX_MTI_MAC100X_COMMAND_CONFIG_RX_P_DISABLE;
--		rpm_write(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG, cfg);
--
--		/* Enable forward pause to TX block */
--		cfg = rpm_read(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG);
--		cfg &= ~RPMX_MTI_MAC100X_COMMAND_CONFIG_PAUSE_IGNORE;
--		rpm_write(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG, cfg);
--
--		/* Enable pause frames transmission */
--		cfg = rpm_read(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG);
--		cfg &= ~RPMX_MTI_MAC100X_COMMAND_CONFIG_TX_P_DISABLE;
--		rpm_write(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG, cfg);
--
- 		/* Set pause time and interval */
- 		cfg = rpm_read(rpm, lmac_id,
- 			       RPMX_MTI_MAC100X_CL01_PAUSE_QUANTA);
-@@ -199,23 +179,22 @@ void rpm_lmac_pause_frm_config(void *rpmd, int lmac_id, bool enable)
- 		cfg &= ~0xFFFFULL;
- 		rpm_write(rpm, lmac_id, RPMX_MTI_MAC100X_CL01_QUANTA_THRESH,
- 			  cfg | (RPM_DEFAULT_PAUSE_TIME / 2));
-+	}
- 
--	} else {
--		/* ALL pause frames received are completely ignored */
--		cfg = rpm_read(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG);
--		cfg |= RPMX_MTI_MAC100X_COMMAND_CONFIG_RX_P_DISABLE;
--		rpm_write(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG, cfg);
-+	/* ALL pause frames received are completely ignored */
-+	cfg = rpm_read(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG);
-+	cfg |= RPMX_MTI_MAC100X_COMMAND_CONFIG_RX_P_DISABLE;
-+	rpm_write(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG, cfg);
- 
--		/* Disable forward pause to TX block */
--		cfg = rpm_read(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG);
--		cfg |= RPMX_MTI_MAC100X_COMMAND_CONFIG_PAUSE_IGNORE;
--		rpm_write(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG, cfg);
-+	/* Disable forward pause to TX block */
-+	cfg = rpm_read(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG);
-+	cfg |= RPMX_MTI_MAC100X_COMMAND_CONFIG_PAUSE_IGNORE;
-+	rpm_write(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG, cfg);
- 
--		/* Disable pause frames transmission */
--		cfg = rpm_read(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG);
--		cfg |= RPMX_MTI_MAC100X_COMMAND_CONFIG_TX_P_DISABLE;
--		rpm_write(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG, cfg);
--	}
-+	/* Disable pause frames transmission */
-+	cfg = rpm_read(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG);
-+	cfg |= RPMX_MTI_MAC100X_COMMAND_CONFIG_TX_P_DISABLE;
-+	rpm_write(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG, cfg);
- }
- 
- int rpm_get_rx_stats(void *rpmd, int lmac_id, int idx, u64 *rx_stat)
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 5f9f6da5c45bb..1ab9dc544eeea 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -296,7 +296,6 @@ static int nix_interface_init(struct rvu *rvu, u16 pcifunc, int type, int nixlf,
- 	struct rvu_hwinfo *hw = rvu->hw;
- 	struct sdp_node_info *sdp_info;
- 	int pkind, pf, vf, lbkid, vfid;
--	struct mac_ops *mac_ops;
- 	u8 cgx_id, lmac_id;
- 	bool from_vf;
- 	int err;
-@@ -326,13 +325,6 @@ static int nix_interface_init(struct rvu *rvu, u16 pcifunc, int type, int nixlf,
- 		cgx_set_pkind(rvu_cgx_pdata(cgx_id, rvu), lmac_id, pkind);
- 		rvu_npc_set_pkind(rvu, pkind, pfvf);
- 
--		mac_ops = get_mac_ops(rvu_cgx_pdata(cgx_id, rvu));
--
--		/* By default we enable pause frames */
--		if ((pcifunc & RVU_PFVF_FUNC_MASK) == 0)
--			mac_ops->mac_enadis_pause_frm(rvu_cgx_pdata(cgx_id,
--								    rvu),
--						      lmac_id, true, true);
- 		break;
- 	case NIX_INTF_TYPE_LBK:
- 		vf = (pcifunc & RVU_PFVF_FUNC_MASK) - 1;
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-index b743646993ca2..572c981171bac 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-@@ -262,6 +262,7 @@ int otx2_config_pause_frm(struct otx2_nic *pfvf)
- 	mutex_unlock(&pfvf->mbox.lock);
+@@ -22,6 +22,7 @@ static struct mac_ops	rpm_mac_ops   = {
+ 	.tx_stats_cnt   =       34,
+ 	.get_nr_lmacs	=	rpm_get_nr_lmacs,
+ 	.get_lmac_type  =       rpm_get_lmac_type,
++	.lmac_fifo_len	=	rpm_get_lmac_fifo_len,
+ 	.mac_lmac_intl_lbk =    rpm_lmac_internal_loopback,
+ 	.mac_get_rx_stats  =	rpm_get_rx_stats,
+ 	.mac_get_tx_stats  =	rpm_get_tx_stats,
+@@ -261,6 +262,35 @@ u8 rpm_get_lmac_type(void *rpmd, int lmac_id)
  	return err;
  }
-+EXPORT_SYMBOL(otx2_config_pause_frm);
  
- int otx2_set_flowkey_cfg(struct otx2_nic *pfvf)
++u32 rpm_get_lmac_fifo_len(void *rpmd, int lmac_id)
++{
++	rpm_t *rpm = rpmd;
++	u64 hi_perf_lmac;
++	u8 num_lmacs;
++	u32 fifo_len;
++
++	fifo_len = rpm->mac_ops->fifo_len;
++	num_lmacs = rpm->mac_ops->get_nr_lmacs(rpm);
++
++	switch (num_lmacs) {
++	case 1:
++		return fifo_len;
++	case 2:
++		return fifo_len / 2;
++	case 3:
++		/* LMAC marked as hi_perf gets half of the FIFO and rest 1/4th */
++		hi_perf_lmac = rpm_read(rpm, 0, CGXX_CMRX_RX_LMACS);
++		hi_perf_lmac = (hi_perf_lmac >> 4) & 0x3ULL;
++		if (lmac_id == hi_perf_lmac)
++			return fifo_len / 2;
++		return fifo_len / 4;
++	case 4:
++	default:
++		return fifo_len / 4;
++	}
++	return 0;
++}
++
+ int rpm_lmac_internal_loopback(void *rpmd, int lmac_id, bool enable)
  {
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index f9bb0e9e73592..167b926196c83 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -1785,9 +1785,6 @@ int otx2_open(struct net_device *netdev)
- 	if (pf->linfo.link_up && !(pf->pcifunc & RVU_PFVF_FUNC_MASK))
- 		otx2_handle_link_event(pf);
- 
--	/* Restore pause frame settings */
--	otx2_config_pause_frm(pf);
+ 	rpm_t *rpm = rpmd;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rpm.h b/drivers/net/ethernet/marvell/octeontx2/af/rpm.h
+index ff580311edd03..39e9a1d068353 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rpm.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rpm.h
+@@ -49,6 +49,7 @@
+ /* Function Declarations */
+ int rpm_get_nr_lmacs(void *rpmd);
+ u8 rpm_get_lmac_type(void *rpmd, int lmac_id);
++u32 rpm_get_lmac_fifo_len(void *rpmd, int lmac_id);
+ int rpm_lmac_internal_loopback(void *rpmd, int lmac_id, bool enable);
+ void rpm_lmac_enadis_rx_pause_fwding(void *rpmd, int lmac_id, bool enable);
+ int rpm_lmac_get_pause_frm_status(void *cgxd, int lmac_id, u8 *tx_pause,
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+index 9d517e6dac2f0..8d1df8a70ae0d 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+@@ -813,7 +813,7 @@ u32  rvu_cgx_get_fifolen(struct rvu *rvu);
+ void *rvu_first_cgx_pdata(struct rvu *rvu);
+ int cgxlmac_to_pf(struct rvu *rvu, int cgx_id, int lmac_id);
+ int rvu_cgx_config_tx(void *cgxd, int lmac_id, bool enable);
 -
- 	/* Install DMAC Filters */
- 	if (pf->flags & OTX2_FLAG_DMACFLTR_SUPPORT)
- 		otx2_dmacflt_reinstall_flows(pf);
-@@ -2777,10 +2774,6 @@ static int otx2_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	/* Enable link notifications */
- 	otx2_cgx_config_linkevents(pf, true);
++u32 rvu_cgx_get_lmac_fifolen(struct rvu *rvu, int cgx, int lmac);
+ int npc_get_nixlf_mcam_index(struct npc_mcam *mcam, u16 pcifunc, int nixlf,
+ 			     int type);
+ bool is_mcam_entry_enabled(struct rvu *rvu, struct npc_mcam *mcam, int blkaddr,
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+index f4c7bb6bf053a..4bd511b007cbc 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+@@ -831,6 +831,22 @@ u32 rvu_cgx_get_fifolen(struct rvu *rvu)
+ 	return fifo_len;
+ }
  
--	/* Enable pause frames by default */
--	pf->flags |= OTX2_FLAG_RX_PAUSE_ENABLED;
--	pf->flags |= OTX2_FLAG_TX_PAUSE_ENABLED;
--
- 	return 0;
- 
- err_pf_sriov_init:
-@@ -2924,6 +2917,14 @@ static void otx2_remove(struct pci_dev *pdev)
- 	if (pf->flags & OTX2_FLAG_RX_TSTAMP_ENABLED)
- 		otx2_config_hw_rx_tstamp(pf, false);
- 
-+	/* Disable 802.3x pause frames */
-+	if (pf->flags & OTX2_FLAG_RX_PAUSE_ENABLED ||
-+	    (pf->flags & OTX2_FLAG_TX_PAUSE_ENABLED)) {
-+		pf->flags &= ~OTX2_FLAG_RX_PAUSE_ENABLED;
-+		pf->flags &= ~OTX2_FLAG_TX_PAUSE_ENABLED;
-+		otx2_config_pause_frm(pf);
-+	}
++u32 rvu_cgx_get_lmac_fifolen(struct rvu *rvu, int cgx, int lmac)
++{
++	struct mac_ops *mac_ops;
++	void *cgxd;
 +
- 	cancel_work_sync(&pf->reset_task);
- 	/* Disable link notifications */
- 	otx2_cgx_config_linkevents(pf, false);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-index e69b0e2729cb2..689e0853ab9cd 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-@@ -695,10 +695,6 @@ static int otx2vf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (err)
- 		goto err_unreg_netdev;
- 
--	/* Enable pause frames by default */
--	vf->flags |= OTX2_FLAG_RX_PAUSE_ENABLED;
--	vf->flags |= OTX2_FLAG_TX_PAUSE_ENABLED;
--
- 	return 0;
- 
- err_unreg_netdev:
-@@ -732,6 +728,14 @@ static void otx2vf_remove(struct pci_dev *pdev)
- 
- 	vf = netdev_priv(netdev);
- 
-+	/* Disable 802.3x pause frames */
-+	if (vf->flags & OTX2_FLAG_RX_PAUSE_ENABLED ||
-+	    (vf->flags & OTX2_FLAG_TX_PAUSE_ENABLED)) {
-+		vf->flags &= ~OTX2_FLAG_RX_PAUSE_ENABLED;
-+		vf->flags &= ~OTX2_FLAG_TX_PAUSE_ENABLED;
-+		otx2_config_pause_frm(vf);
-+	}
++	cgxd = rvu_cgx_pdata(cgx, rvu);
++	if (!cgxd)
++		return 0;
 +
- 	cancel_work_sync(&vf->reset_task);
- 	otx2_unregister_dl(vf);
- 	unregister_netdev(netdev);
++	mac_ops = get_mac_ops(cgxd);
++	if (!mac_ops->lmac_fifo_len)
++		return 0;
++
++	return mac_ops->lmac_fifo_len(cgxd, lmac);
++}
++
+ static int rvu_cgx_config_intlbk(struct rvu *rvu, u16 pcifunc, bool en)
+ {
+ 	int pf = rvu_get_pf(pcifunc);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index 1ab9dc544eeea..874248499ef9a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -4036,9 +4036,13 @@ int rvu_mbox_handler_nix_set_hw_frs(struct rvu *rvu, struct nix_frs_cfg *req,
+ 		return 0;
+ 
+ 	/* Update transmit credits for CGX links */
+-	lmac_fifo_len =
+-		rvu_cgx_get_fifolen(rvu) /
+-		cgx_get_lmac_cnt(rvu_cgx_pdata(cgx, rvu));
++	lmac_fifo_len = rvu_cgx_get_lmac_fifolen(rvu, cgx, lmac);
++	if (!lmac_fifo_len) {
++		dev_err(rvu->dev,
++			"%s: Failed to get CGX/RPM%d:LMAC%d FIFO size\n",
++			__func__, cgx, lmac);
++		return 0;
++	}
+ 	return nix_config_link_credits(rvu, blkaddr, link, pcifunc,
+ 				       (lmac_fifo_len - req->maxlen) / 16);
+ }
+@@ -4086,7 +4090,10 @@ static void nix_link_config(struct rvu *rvu, int blkaddr,
+ 	struct rvu_hwinfo *hw = rvu->hw;
+ 	int cgx, lmac_cnt, slink, link;
+ 	u16 lbk_max_frs, lmac_max_frs;
++	unsigned long lmac_bmap;
+ 	u64 tx_credits, cfg;
++	u64 lmac_fifo_len;
++	int iter;
+ 
+ 	rvu_get_lbk_link_max_frs(rvu, &lbk_max_frs);
+ 	rvu_get_lmac_link_max_frs(rvu, &lmac_max_frs);
+@@ -4120,12 +4127,23 @@ static void nix_link_config(struct rvu *rvu, int blkaddr,
+ 		/* Skip when cgx is not available or lmac cnt is zero */
+ 		if (lmac_cnt <= 0)
+ 			continue;
+-		tx_credits = ((rvu_cgx_get_fifolen(rvu) / lmac_cnt) -
+-			       lmac_max_frs) / 16;
+-		/* Enable credits and set credit pkt count to max allowed */
+-		cfg =  (tx_credits << 12) | (0x1FF << 2) | BIT_ULL(1);
+ 		slink = cgx * hw->lmac_per_cgx;
+-		for (link = slink; link < (slink + lmac_cnt); link++) {
++
++		/* Get LMAC id's from bitmap */
++		lmac_bmap = cgx_get_lmac_bmap(rvu_cgx_pdata(cgx, rvu));
++		for_each_set_bit(iter, &lmac_bmap, MAX_LMAC_PER_CGX) {
++			lmac_fifo_len = rvu_cgx_get_lmac_fifolen(rvu, cgx, iter);
++			if (!lmac_fifo_len) {
++				dev_err(rvu->dev,
++					"%s: Failed to get CGX/RPM%d:LMAC%d FIFO size\n",
++					__func__, cgx, iter);
++				continue;
++			}
++			tx_credits = (lmac_fifo_len - lmac_max_frs) / 16;
++			/* Enable credits and set credit pkt count to max allowed */
++			cfg =  (tx_credits << 12) | (0x1FF << 2) | BIT_ULL(1);
++
++			link = iter + slink;
+ 			nix_hw->tx_credits[link] = tx_credits;
+ 			rvu_write64(rvu, blkaddr,
+ 				    NIX_AF_TX_LINKX_NORM_CREDIT(link), cfg);
 -- 
 2.43.0
 
