@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282021846;
-	Sat, 13 Jan 2024 09:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB4815BD;
+	Sat, 13 Jan 2024 09:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OyX2j/Io"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99059C433F1;
-	Sat, 13 Jan 2024 09:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUy4Ew8c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A80C433C7;
+	Sat, 13 Jan 2024 09:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139994;
-	bh=LNjdVDZqClTL+iEuzyVXFM7HdstHJOoe4jK8flIaw70=;
+	s=korg; t=1705139996;
+	bh=hEir8W/F+01iamgs1mw3792O9ClyRvUAu+kVweECSGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OyX2j/IoZDbLZVeVni3x39iyC8BpAuNFNG4SCfuQKc30utwAqQUnA0Nx1dlCNMaFE
-	 wqfLakWWqW5KJ8VPiYnfTj/r/6+qYBPduGPHXCadFC28a1H3mFhJ5Ikx9S20kWWmQz
-	 oPwo9SLpr9qN6g2N3ojajD5lAWXOxFW2rlnCQsmc=
+	b=jUy4Ew8cSJeIq/I6cIh1xb7HOKO67tn2mkluo+iWULgHLNMw8lyTjOtEn9Z4Xrvsy
+	 Fwdxz2qO5g4XU+0pZEZuhjWf8gtK6y+/FVo3xLJELwb76g+MhDoo0vuIlBSZuhxhTO
+	 aRyI1yrro+wA801Z7NMrh+C5R0fwB2n86YS284tQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=B6rn-Thorben=20Hinz?= <jthinz@mailbox.tu-berlin.de>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 18/59] net: Implement missing getsockopt(SO_TIMESTAMPING_NEW)
-Date: Sat, 13 Jan 2024 10:49:49 +0100
-Message-ID: <20240113094209.871593031@linuxfoundation.org>
+Subject: [PATCH 5.15 19/59] can: raw: add support for SO_TXTIME/SCM_TXTIME
+Date: Sat, 13 Jan 2024 10:49:50 +0100
+Message-ID: <20240113094209.903855105@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
 References: <20240113094209.301672391@linuxfoundation.org>
@@ -37,62 +36,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jörn-Thorben Hinz <jthinz@mailbox.tu-berlin.de>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 7f6ca95d16b96567ce4cf458a2790ff17fa620c3 ]
+[ Upstream commit 51a0d5e51178fcd147c1b8fdab2ed16b561326db ]
 
-Commit 9718475e6908 ("socket: Add SO_TIMESTAMPING_NEW") added the new
-socket option SO_TIMESTAMPING_NEW. Setting the option is handled in
-sk_setsockopt(), querying it was not handled in sk_getsockopt(), though.
+This patch calls into sock_cmsg_send() to parse the user supplied
+control information into a struct sockcm_cookie. Then assign the
+requested transmit time to the skb.
 
-Following remarks on an earlier submission of this patch, keep the old
-behavior of getsockopt(SO_TIMESTAMPING_OLD) which returns the active
-flags even if they actually have been set through SO_TIMESTAMPING_NEW.
+This makes it possible to use the Earliest TXTIME First (ETF) packet
+scheduler with the CAN_RAW protocol. The user can send a CAN_RAW frame
+with a TXTIME and the kernel (with the ETF scheduler) will take care
+of sending it to the network interface.
 
-The new getsockopt(SO_TIMESTAMPING_NEW) is stricter, returning flags
-only if they have been set through the same option.
-
-Fixes: 9718475e6908 ("socket: Add SO_TIMESTAMPING_NEW")
-Link: https://lore.kernel.org/lkml/20230703175048.151683-1-jthinz@mailbox.tu-berlin.de/
-Link: https://lore.kernel.org/netdev/0d7cddc9-03fa-43db-a579-14f3e822615b@app.fastmail.com/
-Signed-off-by: Jörn-Thorben Hinz <jthinz@mailbox.tu-berlin.de>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/all/20220502091946.1916211-3-mkl@pengutronix.de
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: 7f6ca95d16b9 ("net: Implement missing getsockopt(SO_TIMESTAMPING_NEW)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/can/raw.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 662cd6d54ac70..ef29106af6046 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1534,9 +1534,16 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
- 		break;
+diff --git a/net/can/raw.c b/net/can/raw.c
+index 8877d22da67ee..ed8834b853bee 100644
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -780,6 +780,7 @@ static int raw_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct raw_sock *ro = raw_sk(sk);
++	struct sockcm_cookie sockc;
+ 	struct sk_buff *skb;
+ 	struct net_device *dev;
+ 	int ifindex;
+@@ -825,11 +826,19 @@ static int raw_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
+ 	if (err < 0)
+ 		goto free_skb;
  
- 	case SO_TIMESTAMPING_OLD:
-+	case SO_TIMESTAMPING_NEW:
- 		lv = sizeof(v.timestamping);
--		v.timestamping.flags = sk->sk_tsflags;
--		v.timestamping.bind_phc = sk->sk_bind_phc;
-+		/* For the later-added case SO_TIMESTAMPING_NEW: Be strict about only
-+		 * returning the flags when they were set through the same option.
-+		 * Don't change the beviour for the old case SO_TIMESTAMPING_OLD.
-+		 */
-+		if (optname == SO_TIMESTAMPING_OLD || sock_flag(sk, SOCK_TSTAMP_NEW)) {
-+			v.timestamping.flags = sk->sk_tsflags;
-+			v.timestamping.bind_phc = sk->sk_bind_phc;
-+		}
- 		break;
+-	skb_setup_tx_timestamp(skb, sk->sk_tsflags);
++	sockcm_init(&sockc, sk);
++	if (msg->msg_controllen) {
++		err = sock_cmsg_send(sk, msg, &sockc);
++		if (unlikely(err))
++			goto free_skb;
++	}
  
- 	case SO_RCVTIMEO_OLD:
+ 	skb->dev = dev;
+ 	skb->sk = sk;
+ 	skb->priority = sk->sk_priority;
++	skb->tstamp = sockc.transmit_time;
++
++	skb_setup_tx_timestamp(skb, sockc.tsflags);
+ 
+ 	err = can_send(skb, ro->loopback);
+ 
 -- 
 2.43.0
 
