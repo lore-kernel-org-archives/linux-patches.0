@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927D617E8;
-	Sat, 13 Jan 2024 09:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5EE15AF;
+	Sat, 13 Jan 2024 09:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hMQnkWd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE16C433C7;
-	Sat, 13 Jan 2024 09:54:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bu1bCbHI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFA7C433F1;
+	Sat, 13 Jan 2024 09:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139665;
-	bh=4lgrvBM0YiQAij5gX4qsxMrFzEqDuMIbJ2NLKVBTHxI=;
+	s=korg; t=1705139668;
+	bh=oYnVBHExty9kXJxyi/XPk4ygPdF8w9Xlyd2axNPgpCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0hMQnkWdneMcpd0SUU0rRRb7qKrEwu8yDRavuJyKThneGPu7jSrUMK+KqQQBV7OQw
-	 P+E6I3bEoh38yTKmTtGqnK9PB+JlT7YFagjCm1/9yzCAKFYM+dlKRG74+MWKluehWB
-	 Be6CoKLOK+pPpQPUcdug8LqZqrF5S8NQDqyRcAyA=
+	b=bu1bCbHIGTVtgYh1C5eKakdxNgFwcSWhxMK+X7r5W7bNqscs1QxO/2lGUkAzmALwb
+	 069zVBXhQ1XIdEBk7JwzRenTaYqsFSRdX5iDuTYmHLNeY0a1Izp/uk1I1RMIdYICPK
+	 3fv1ANIIAZDnX+GA8xmMrxbCvl9FvfzErsorSF0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiajun Xie <jiajun.xie.sh@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 15/25] mm: fix unmap_mapping_range high bits shift bug
-Date: Sat, 13 Jan 2024 10:49:56 +0100
-Message-ID: <20240113094205.509103039@linuxfoundation.org>
+	Jorge Ramirez-Ortiz <jorge@foundries.io>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.19 16/25] mmc: rpmb: fixes pause retune on all RPMB partitions.
+Date: Sat, 13 Jan 2024 10:49:57 +0100
+Message-ID: <20240113094205.543931161@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094205.025407355@linuxfoundation.org>
 References: <20240113094205.025407355@linuxfoundation.org>
@@ -41,81 +42,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiajun Xie <jiajun.xie.sh@gmail.com>
+From: Jorge Ramirez-Ortiz <jorge@foundries.io>
 
-commit 9eab0421fa94a3dde0d1f7e36ab3294fc306c99d upstream.
+commit e7794c14fd73e5eb4a3e0ecaa5334d5a17377c50 upstream.
 
-The bug happens when highest bit of holebegin is 1, suppose holebegin is
-0x8000000111111000, after shift, hba would be 0xfff8000000111111, then
-vma_interval_tree_foreach would look it up fail or leads to the wrong
-result.
+When RPMB was converted to a character device, it added support for
+multiple RPMB partitions (Commit 97548575bef3 ("mmc: block: Convert RPMB to
+a character device").
 
-error call seq e.g.:
-- mmap(..., offset=0x8000000111111000)
-  |- syscall(mmap, ... unsigned long, off):
-     |- ksys_mmap_pgoff( ... , off >> PAGE_SHIFT);
+One of the changes in this commit was transforming the variable target_part
+defined in __mmc_blk_ioctl_cmd into a bitmask. This inadvertently regressed
+the validation check done in mmc_blk_part_switch_pre() and
+mmc_blk_part_switch_post(), so let's fix it.
 
-  here pgoff is correctly shifted to 0x8000000111111,
-  but pass 0x8000000111111000 as holebegin to unmap
-  would then cause terrible result, as shown below:
-
-- unmap_mapping_range(..., loff_t const holebegin)
-  |- pgoff_t hba = holebegin >> PAGE_SHIFT;
-          /* hba = 0xfff8000000111111 unexpectedly */
-
-The issue happens in Heterogeneous computing, where the device(e.g.
-gpu) and host share the same virtual address space.
-
-A simple workflow pattern which hit the issue is:
-        /* host */
-    1. userspace first mmap a file backed VA range with specified offset.
-                        e.g. (offset=0x800..., mmap return: va_a)
-    2. write some data to the corresponding sys page
-                         e.g. (va_a = 0xAABB)
-        /* device */
-    3. gpu workload touches VA, triggers gpu fault and notify the host.
-        /* host */
-    4. reviced gpu fault notification, then it will:
-            4.1 unmap host pages and also takes care of cpu tlb
-                  (use unmap_mapping_range with offset=0x800...)
-            4.2 migrate sys page to device
-            4.3 setup device page table and resolve device fault.
-        /* device */
-    5. gpu workload continued, it accessed va_a and got 0xAABB.
-    6. gpu workload continued, it wrote 0xBBCC to va_a.
-        /* host */
-    7. userspace access va_a, as expected, it will:
-            7.1 trigger cpu vm fault.
-            7.2 driver handling fault to migrate gpu local page to host.
-    8. userspace then could correctly get 0xBBCC from va_a
-    9. done
-
-But in step 4.1, if we hit the bug this patch mentioned, then userspace
-would never trigger cpu fault, and still get the old value: 0xAABB.
-
-Making holebegin unsigned first fixes the bug.
-
-Link: https://lkml.kernel.org/r/20231220052839.26970-1-jiajun.xie.sh@gmail.com
-Signed-off-by: Jiajun Xie <jiajun.xie.sh@gmail.com>
+Fixes: 97548575bef3 ("mmc: block: Convert RPMB to a character device")
+Signed-off-by: Jorge Ramirez-Ortiz <jorge@foundries.io>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20231201153143.1449753-1-jorge@foundries.io
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/core/block.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -3042,8 +3042,8 @@ void unmap_mapping_pages(struct address_
- void unmap_mapping_range(struct address_space *mapping,
- 		loff_t const holebegin, loff_t const holelen, int even_cows)
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -851,9 +851,10 @@ static const struct block_device_operati
+ static int mmc_blk_part_switch_pre(struct mmc_card *card,
+ 				   unsigned int part_type)
  {
--	pgoff_t hba = holebegin >> PAGE_SHIFT;
--	pgoff_t hlen = (holelen + PAGE_SIZE - 1) >> PAGE_SHIFT;
-+	pgoff_t hba = (pgoff_t)(holebegin) >> PAGE_SHIFT;
-+	pgoff_t hlen = ((pgoff_t)(holelen) + PAGE_SIZE - 1) >> PAGE_SHIFT;
++	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
+ 	int ret = 0;
  
- 	/* Check for overflow. */
- 	if (sizeof(holelen) > sizeof(hlen)) {
+-	if (part_type == EXT_CSD_PART_CONFIG_ACC_RPMB) {
++	if ((part_type & mask) == mask) {
+ 		if (card->ext_csd.cmdq_en) {
+ 			ret = mmc_cmdq_disable(card);
+ 			if (ret)
+@@ -868,9 +869,10 @@ static int mmc_blk_part_switch_pre(struc
+ static int mmc_blk_part_switch_post(struct mmc_card *card,
+ 				    unsigned int part_type)
+ {
++	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
+ 	int ret = 0;
+ 
+-	if (part_type == EXT_CSD_PART_CONFIG_ACC_RPMB) {
++	if ((part_type & mask) == mask) {
+ 		mmc_retune_unpause(card->host);
+ 		if (card->reenable_cmdq && !card->ext_csd.cmdq_en)
+ 			ret = mmc_cmdq_enable(card);
+@@ -3102,4 +3104,3 @@ module_exit(mmc_blk_exit);
+ 
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("Multimedia Card (MMC) block device driver");
+-
 
 
