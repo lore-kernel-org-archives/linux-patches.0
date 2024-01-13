@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7887715AF;
-	Sat, 13 Jan 2024 09:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BD01848;
+	Sat, 13 Jan 2024 09:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPyJWiL+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA301C43394;
-	Sat, 13 Jan 2024 09:56:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIWQzSOx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBABFC43399;
+	Sat, 13 Jan 2024 09:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139815;
-	bh=OSMOv2cGfLkePejzxu5Alh4WLQtxgK9BjSgJ4O81As0=;
+	s=korg; t=1705139818;
+	bh=wRkONm2Pjd5tjrbQ35KYutH/LPCZvsuQhT+Ghvep/gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dPyJWiL+PJ9YqGDYHYybMntjPHxVeP4yQSb8LoAIcfjZwre3IXJoy7gKzUnza95rv
-	 P9vmjAiW4CeUOuiH7Eczjn2klMgHB/kMjGv/XzR85zoZNcPCK1oX/jzl+v38XTZnSu
-	 o1KlLVZECsaPuKX+RbhptO+amIEdKueBTT1oY7h4=
+	b=CIWQzSOxtumEfCu+rFAHAzjMm+9aIGsgPkreaeRs7sh/9kV+9sz3ijMtugdTAYjrc
+	 qzXYbpzM3N1L7rYmbPDMEpIPVb1MD25rrj7PoiwG1eQH5a6M2Ipf0i5OhCAzttpicl
+	 u+xOvXW09/ctX0Ho+n9F0rr8N5QgTQrzFVElXYF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 05/38] can: raw: add support for SO_TXTIME/SCM_TXTIME
-Date: Sat, 13 Jan 2024 10:49:41 +0100
-Message-ID: <20240113094206.619467945@linuxfoundation.org>
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.4 33/38] netfilter: nf_tables: Reject tables of unsupported family
+Date: Sat, 13 Jan 2024 10:50:09 +0100
+Message-ID: <20240113094207.469987090@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.455533180@linuxfoundation.org>
 References: <20240113094206.455533180@linuxfoundation.org>
@@ -42,63 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 51a0d5e51178fcd147c1b8fdab2ed16b561326db ]
+commit f1082dd31fe461d482d69da2a8eccfeb7bf07ac2 upstream.
 
-This patch calls into sock_cmsg_send() to parse the user supplied
-control information into a struct sockcm_cookie. Then assign the
-requested transmit time to the skb.
+An nftables family is merely a hollow container, its family just a
+number and such not reliant on compile-time options other than nftables
+support itself. Add an artificial check so attempts at using a family
+the kernel can't support fail as early as possible. This helps user
+space detect kernels which lack e.g. NFPROTO_INET.
 
-This makes it possible to use the Earliest TXTIME First (ETF) packet
-scheduler with the CAN_RAW protocol. The user can send a CAN_RAW frame
-with a TXTIME and the kernel (with the ETF scheduler) will take care
-of sending it to the network interface.
-
-Link: https://lore.kernel.org/all/20220502091946.1916211-3-mkl@pengutronix.de
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Stable-dep-of: 7f6ca95d16b9 ("net: Implement missing getsockopt(SO_TIMESTAMPING_NEW)")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/raw.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/net/can/raw.c b/net/can/raw.c
-index bb837019d1724..2700153262771 100644
---- a/net/can/raw.c
-+++ b/net/can/raw.c
-@@ -770,6 +770,7 @@ static int raw_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
- {
- 	struct sock *sk = sock->sk;
- 	struct raw_sock *ro = raw_sk(sk);
-+	struct sockcm_cookie sockc;
- 	struct sk_buff *skb;
- 	struct net_device *dev;
- 	int ifindex;
-@@ -815,11 +816,19 @@ static int raw_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
- 	if (err < 0)
- 		goto free_skb;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1005,6 +1005,30 @@ static int nft_objname_hash_cmp(struct r
+ 	return strcmp(obj->key.name, k->name);
+ }
  
--	skb_setup_tx_timestamp(skb, sk->sk_tsflags);
-+	sockcm_init(&sockc, sk);
-+	if (msg->msg_controllen) {
-+		err = sock_cmsg_send(sk, msg, &sockc);
-+		if (unlikely(err))
-+			goto free_skb;
-+	}
- 
- 	skb->dev = dev;
- 	skb->sk  = sk;
- 	skb->priority = sk->sk_priority;
-+	skb->tstamp = sockc.transmit_time;
++static bool nft_supported_family(u8 family)
++{
++	return false
++#ifdef CONFIG_NF_TABLES_INET
++		|| family == NFPROTO_INET
++#endif
++#ifdef CONFIG_NF_TABLES_IPV4
++		|| family == NFPROTO_IPV4
++#endif
++#ifdef CONFIG_NF_TABLES_ARP
++		|| family == NFPROTO_ARP
++#endif
++#ifdef CONFIG_NF_TABLES_NETDEV
++		|| family == NFPROTO_NETDEV
++#endif
++#if IS_ENABLED(CONFIG_NF_TABLES_BRIDGE)
++		|| family == NFPROTO_BRIDGE
++#endif
++#ifdef CONFIG_NF_TABLES_IPV6
++		|| family == NFPROTO_IPV6
++#endif
++		;
++}
 +
-+	skb_setup_tx_timestamp(skb, sockc.tsflags);
+ static int nf_tables_newtable(struct net *net, struct sock *nlsk,
+ 			      struct sk_buff *skb, const struct nlmsghdr *nlh,
+ 			      const struct nlattr * const nla[],
+@@ -1020,6 +1044,9 @@ static int nf_tables_newtable(struct net
+ 	struct nft_ctx ctx;
+ 	int err;
  
- 	err = can_send(skb, ro->loopback);
- 
--- 
-2.43.0
-
++	if (!nft_supported_family(family))
++		return -EOPNOTSUPP;
++
+ 	lockdep_assert_held(&nft_net->commit_mutex);
+ 	attr = nla[NFTA_TABLE_NAME];
+ 	table = nft_table_lookup(net, attr, family, genmask);
 
 
