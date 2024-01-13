@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809261848;
-	Sat, 13 Jan 2024 09:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4B9EC5;
+	Sat, 13 Jan 2024 09:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MH8xE9me"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5158C433C7;
-	Sat, 13 Jan 2024 09:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OCrRXx3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974C7C43390;
+	Sat, 13 Jan 2024 09:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139792;
-	bh=JmgRHh+TQdpTyPJz9wf+5eZUnvedMrDvP4c87FRfx/k=;
+	s=korg; t=1705139795;
+	bh=M1eOQCqWYiv9bf+OR+Rv/Hnubc+u4VCo0sgNXWBVXys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MH8xE9meBBDc411PIL+mraPsHOJVrkYYbMUVLtbFo5CWWN+YjMenAkes2Tmm+v4zc
-	 ua9jDxO0arNdznYFlpij2HdAvUEUEnMFxoMO/ac7MeVw46dRwnGuk572+xgmiQ2j0v
-	 WXPUKaaAmP4Kx+OsGSILlp6dA+9TjizoLj7jHJug=
+	b=2OCrRXx3zC0KKTxFmV5QdxdIMCIlnJjkRRJHIsmuWYfVrQqg/Mos6VEO4W5haQZoe
+	 nt/9lugue249cJIJ1FWPCpLMQCZuJtrbrbiV/Gpe1xbLQEGFEhHF1mImo4CSXdadfo
+	 o7ZWN84hcQILl2OfIxNZZRpDp8LjHH5CtKiRfqU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Kalle Valo <kvalo@codeaurora.org>,
-	Amit Pundir <amit.pundir@linaro.org>
-Subject: [PATCH 5.4 31/38] ath10k: Get rid of "per_ce_irq" hw param
-Date: Sat, 13 Jan 2024 10:50:07 +0100
-Message-ID: <20240113094207.405595161@linuxfoundation.org>
+	Stefan Wahren <wahrenst@gmx.net>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 08/38] ARM: sun9i: smp: Fix array-index-out-of-bounds read in sunxi_mc_smp_init
+Date: Sat, 13 Jan 2024 10:49:44 +0100
+Message-ID: <20240113094206.710670093@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.455533180@linuxfoundation.org>
 References: <20240113094206.455533180@linuxfoundation.org>
@@ -43,143 +43,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit 7f86551665121931ecd6d327e019e7a69782bfcd ]
+[ Upstream commit 72ad3b772b6d393701df58ba1359b0bb346a19ed ]
 
-As of the patch ("ath10k: Keep track of which interrupts fired, don't
-poll them") we now have no users of this hardware parameter.  Remove
-it.
+Running a multi-arch kernel (multi_v7_defconfig) on a Raspberry Pi 3B+
+with enabled CONFIG_UBSAN triggers the following warning:
 
-Suggested-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
-Link: https://lore.kernel.org/r/20200709082024.v2.2.I083faa4e62e69f863311c89ae5eb28ec5a229b70@changeid
-Stable-dep-of: 170c75d43a77 ("ath10k: Don't touch the CE interrupt registers after power up")
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ UBSAN: array-index-out-of-bounds in arch/arm/mach-sunxi/mc_smp.c:810:29
+ index 2 is out of range for type 'sunxi_mc_smp_data [2]'
+ CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.7.0-rc6-00248-g5254c0cbc92d
+ Hardware name: BCM2835
+  unwind_backtrace from show_stack+0x10/0x14
+  show_stack from dump_stack_lvl+0x40/0x4c
+  dump_stack_lvl from ubsan_epilogue+0x8/0x34
+  ubsan_epilogue from __ubsan_handle_out_of_bounds+0x78/0x80
+  __ubsan_handle_out_of_bounds from sunxi_mc_smp_init+0xe4/0x4cc
+  sunxi_mc_smp_init from do_one_initcall+0xa0/0x2fc
+  do_one_initcall from kernel_init_freeable+0xf4/0x2f4
+  kernel_init_freeable from kernel_init+0x18/0x158
+  kernel_init from ret_from_fork+0x14/0x28
+
+Since the enabled method couldn't match with any entry from
+sunxi_mc_smp_data, the value of the index shouldn't be used right after
+the loop. So move it after the check of ret in order to have a valid
+index.
+
+Fixes: 1631090e34f5 ("ARM: sun9i: smp: Add is_a83t field")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20231228193903.9078-1-wahrenst@gmx.net
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/core.c |   13 -------------
- drivers/net/wireless/ath/ath10k/hw.h   |    3 ---
- 2 files changed, 16 deletions(-)
+ arch/arm/mach-sunxi/mc_smp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -118,7 +118,6 @@ static const struct ath10k_hw_params ath
- 		.num_wds_entries = 0x20,
- 		.target_64bit = false,
- 		.rx_ring_fill_level = HTT_RX_RING_FILL_LEVEL,
--		.per_ce_irq = false,
- 		.shadow_reg_support = false,
- 		.rri_on_ddr = false,
- 		.hw_filter_reset_required = true,
-@@ -154,7 +153,6 @@ static const struct ath10k_hw_params ath
- 		.num_wds_entries = 0x20,
- 		.target_64bit = false,
- 		.rx_ring_fill_level = HTT_RX_RING_FILL_LEVEL,
--		.per_ce_irq = false,
- 		.shadow_reg_support = false,
- 		.rri_on_ddr = false,
- 		.hw_filter_reset_required = true,
-@@ -217,7 +215,6 @@ static const struct ath10k_hw_params ath
- 		.num_wds_entries = 0x20,
- 		.target_64bit = false,
- 		.rx_ring_fill_level = HTT_RX_RING_FILL_LEVEL,
--		.per_ce_irq = false,
- 		.shadow_reg_support = false,
- 		.rri_on_ddr = false,
- 		.hw_filter_reset_required = true,
-@@ -252,7 +249,6 @@ static const struct ath10k_hw_params ath
- 		.num_wds_entries = 0x20,
- 		.target_64bit = false,
- 		.rx_ring_fill_level = HTT_RX_RING_FILL_LEVEL,
--		.per_ce_irq = false,
- 		.shadow_reg_support = false,
- 		.rri_on_ddr = false,
- 		.hw_filter_reset_required = true,
-@@ -287,7 +283,6 @@ static const struct ath10k_hw_params ath
- 		.num_wds_entries = 0x20,
- 		.target_64bit = false,
- 		.rx_ring_fill_level = HTT_RX_RING_FILL_LEVEL,
--		.per_ce_irq = false,
- 		.shadow_reg_support = false,
- 		.rri_on_ddr = false,
- 		.hw_filter_reset_required = true,
-@@ -325,7 +320,6 @@ static const struct ath10k_hw_params ath
- 		.num_wds_entries = 0x20,
- 		.target_64bit = false,
- 		.rx_ring_fill_level = HTT_RX_RING_FILL_LEVEL,
--		.per_ce_irq = false,
- 		.shadow_reg_support = false,
- 		.rri_on_ddr = false,
- 		.hw_filter_reset_required = true,
-@@ -366,7 +360,6 @@ static const struct ath10k_hw_params ath
- 		.num_wds_entries = 0x20,
- 		.target_64bit = false,
- 		.rx_ring_fill_level = HTT_RX_RING_FILL_LEVEL,
--		.per_ce_irq = false,
- 		.shadow_reg_support = false,
- 		.rri_on_ddr = false,
- 		.hw_filter_reset_required = true,
-@@ -414,7 +407,6 @@ static const struct ath10k_hw_params ath
- 		.num_wds_entries = 0x20,
- 		.target_64bit = false,
- 		.rx_ring_fill_level = HTT_RX_RING_FILL_LEVEL,
--		.per_ce_irq = false,
- 		.shadow_reg_support = false,
- 		.rri_on_ddr = false,
- 		.hw_filter_reset_required = true,
-@@ -459,7 +451,6 @@ static const struct ath10k_hw_params ath
- 		.num_wds_entries = 0x20,
- 		.target_64bit = false,
- 		.rx_ring_fill_level = HTT_RX_RING_FILL_LEVEL,
--		.per_ce_irq = false,
- 		.shadow_reg_support = false,
- 		.rri_on_ddr = false,
- 		.hw_filter_reset_required = true,
-@@ -494,7 +485,6 @@ static const struct ath10k_hw_params ath
- 		.num_wds_entries = 0x20,
- 		.target_64bit = false,
- 		.rx_ring_fill_level = HTT_RX_RING_FILL_LEVEL,
--		.per_ce_irq = false,
- 		.shadow_reg_support = false,
- 		.rri_on_ddr = false,
- 		.hw_filter_reset_required = true,
-@@ -531,7 +521,6 @@ static const struct ath10k_hw_params ath
- 		.num_wds_entries = 0x20,
- 		.target_64bit = false,
- 		.rx_ring_fill_level = HTT_RX_RING_FILL_LEVEL,
--		.per_ce_irq = false,
- 		.shadow_reg_support = false,
- 		.rri_on_ddr = false,
- 		.hw_filter_reset_required = true,
-@@ -573,7 +562,6 @@ static const struct ath10k_hw_params ath
- 		.num_wds_entries = 0x20,
- 		.target_64bit = false,
- 		.rx_ring_fill_level = HTT_RX_RING_FILL_LEVEL,
--		.per_ce_irq = false,
- 		.shadow_reg_support = false,
- 		.rri_on_ddr = false,
- 		.hw_filter_reset_required = true,
-@@ -601,7 +589,6 @@ static const struct ath10k_hw_params ath
- 		.num_wds_entries = TARGET_HL_TLV_NUM_WDS_ENTRIES,
- 		.target_64bit = true,
- 		.rx_ring_fill_level = HTT_RX_RING_FILL_LEVEL_DUAL_MAC,
--		.per_ce_irq = true,
- 		.shadow_reg_support = true,
- 		.rri_on_ddr = true,
- 		.hw_filter_reset_required = false,
---- a/drivers/net/wireless/ath/ath10k/hw.h
-+++ b/drivers/net/wireless/ath/ath10k/hw.h
-@@ -590,9 +590,6 @@ struct ath10k_hw_params {
- 	/* Target rx ring fill level */
- 	u32 rx_ring_fill_level;
+diff --git a/arch/arm/mach-sunxi/mc_smp.c b/arch/arm/mach-sunxi/mc_smp.c
+index 26cbce1353387..b2f5f4f28705f 100644
+--- a/arch/arm/mach-sunxi/mc_smp.c
++++ b/arch/arm/mach-sunxi/mc_smp.c
+@@ -808,12 +808,12 @@ static int __init sunxi_mc_smp_init(void)
+ 			break;
+ 	}
  
--	/* target supporting per ce IRQ */
--	bool per_ce_irq;
+-	is_a83t = sunxi_mc_smp_data[i].is_a83t;
 -
- 	/* target supporting shadow register for ce write */
- 	bool shadow_reg_support;
+ 	of_node_put(node);
+ 	if (ret)
+ 		return -ENODEV;
  
++	is_a83t = sunxi_mc_smp_data[i].is_a83t;
++
+ 	if (!sunxi_mc_smp_cpu_table_init())
+ 		return -EINVAL;
+ 
+-- 
+2.43.0
+
 
 
