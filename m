@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E23E1EEE6;
-	Sat, 13 Jan 2024 10:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C5563C3;
+	Sat, 13 Jan 2024 10:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTkuxcRl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C11C433C7;
-	Sat, 13 Jan 2024 10:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHvg40Lx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE90FC433F1;
+	Sat, 13 Jan 2024 10:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705140070;
-	bh=S35lNXf8wjQG9vF0g2e4Qsf27dVD3X7LHmbULvUDXQI=;
+	s=korg; t=1705140073;
+	bh=6MgylHYZihgVusPnWRRzM1CzS2izel+IsnUMIi5Kr48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTkuxcRliNWjvKxE/WAP3pSz/RYE+rbLR3i3gR/H5EeqrL3XaM91PSi8jaGgLjY5K
-	 AWtzOBn0vS/GlhFkVX6H1/RTwnOX08TUgDCzRPhbgUr7wv031HUroMA8D5KCUGNCo0
-	 CGxDDObkgpefuwbsGl1Nk2sTTbEQPiQyP+eiDjz4=
+	b=tHvg40LxuMFYG9j6LG7EotiwKKkZ1ajAUMSnFfatfbqnfUJlxOAOxE1r1agPy0B7z
+	 SYFkw1Xmb2stvCWApNRGIi0cB/ifYQxIKrTgCqPL4C2sim4BzWqLQrRRtWxKm30ggs
+	 L2zH3E5DxQ8HKZ68QI4woKd32MseN5tGs8LOjoVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 43/59] mm/memory-failure: check the mapcount of the precise page
-Date: Sat, 13 Jan 2024 10:50:14 +0100
-Message-ID: <20240113094210.620787267@linuxfoundation.org>
+	Jiri Slaby <jirislaby@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Tobias Gruetzmacher <tobias-lists@23.gs>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Subject: [PATCH 5.15 44/59] firewire: ohci: suppress unexpected system reboot in AMD Ryzen machines and ASM108x/VT630x PCIe cards
+Date: Sat, 13 Jan 2024 10:50:15 +0100
+Message-ID: <20240113094210.647105764@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
 References: <20240113094209.301672391@linuxfoundation.org>
@@ -44,54 +43,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit c79c5a0a00a9457718056b588f312baadf44e471 ]
+commit ac9184fbb8478dab4a0724b279f94956b69be827 upstream.
 
-A process may map only some of the pages in a folio, and might be missed
-if it maps the poisoned page but not the head page.  Or it might be
-unnecessarily hit if it maps the head page, but not the poisoned page.
+VIA VT6306/6307/6308 provides PCI interface compliant to 1394 OHCI. When
+the hardware is combined with Asmedia ASM1083/1085 PCIe-to-PCI bus bridge,
+it appears that accesses to its 'Isochronous Cycle Timer' register (offset
+0xf0 on PCI memory space) often causes unexpected system reboot in any
+type of AMD Ryzen machine (both 0x17 and 0x19 families). It does not
+appears in the other type of machine (AMD pre-Ryzen machine, Intel
+machine, at least), or in the other OHCI 1394 hardware (e.g. Texas
+Instruments).
 
-Link: https://lkml.kernel.org/r/20231218135837.3310403-3-willy@infradead.org
-Fixes: 7af446a841a2 ("HWPOISON, hugetlb: enable error handling path for hugepage")
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The issue explicitly appears at a commit dcadfd7f7c74 ("firewire: core:
+use union for callback of transaction completion") added to v6.5 kernel.
+It changed 1394 OHCI driver to access to the register every time to
+dispatch local asynchronous transaction. However, the issue exists in
+older version of kernel as long as it runs in AMD Ryzen machine, since
+the access to the register is required to maintain bus time. It is not
+hard to imagine that users experience the unexpected system reboot when
+generating bus reset by plugging any devices in, or reading the register
+by time-aware application programs; e.g. audio sample processing.
+
+This commit suppresses the unexpected system reboot in the combination of
+hardware. It avoids the access itself. As a result, the software stack can
+not provide the hardware time anymore to unit drivers, userspace
+applications, and nodes in the same IEEE 1394 bus. It brings apparent
+disadvantage since time-aware application programs require it, while
+time-unaware applications are available again; e.g. sbp2.
+
+Cc: stable@vger.kernel.org
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Closes: https://bugzilla.suse.com/show_bug.cgi?id=1215436
+Reported-by: Mario Limonciello <mario.limonciello@amd.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217994
+Reported-by: Tobias Gruetzmacher <tobias-lists@23.gs>
+Closes: https://sourceforge.net/p/linux1394/mailman/message/58711901/
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2240973
+Closes: https://bugs.launchpad.net/linux/+bug/2043905
+Link: https://lore.kernel.org/r/20240102110150.244475-1-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/firewire/ohci.c |   51 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
-diff --git a/mm/memory-failure.c b/mm/memory-failure.c
-index bcd71d8736be5..1f23baa98ee9b 100644
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -1331,7 +1331,7 @@ static bool hwpoison_user_mappings(struct page *p, unsigned long pfn,
- 	 * This check implies we don't kill processes if their pages
- 	 * are in the swap cache early. Those are always late kills.
- 	 */
--	if (!page_mapped(hpage))
-+	if (!page_mapped(p))
- 		return true;
+--- a/drivers/firewire/ohci.c
++++ b/drivers/firewire/ohci.c
+@@ -279,6 +279,51 @@ static char ohci_driver_name[] = KBUILD_
+ #define QUIRK_TI_SLLZ059		0x20
+ #define QUIRK_IR_WAKE			0x40
  
- 	if (PageKsm(p)) {
-@@ -1397,10 +1397,10 @@ static bool hwpoison_user_mappings(struct page *p, unsigned long pfn,
- 		}
- 	}
++// On PCI Express Root Complex in any type of AMD Ryzen machine, VIA VT6306/6307/6308 with Asmedia
++// ASM1083/1085 brings an inconvenience that the read accesses to 'Isochronous Cycle Timer' register
++// (at offset 0xf0 in PCI I/O space) often causes unexpected system reboot. The mechanism is not
++// clear, since the read access to the other registers is enough safe; e.g. 'Node ID' register,
++// while it is probable due to detection of any type of PCIe error.
++#define QUIRK_REBOOT_BY_CYCLE_TIMER_READ	0x80000000
++
++#if IS_ENABLED(CONFIG_X86)
++
++static bool has_reboot_by_cycle_timer_read_quirk(const struct fw_ohci *ohci)
++{
++	return !!(ohci->quirks & QUIRK_REBOOT_BY_CYCLE_TIMER_READ);
++}
++
++#define PCI_DEVICE_ID_ASMEDIA_ASM108X	0x1080
++
++static bool detect_vt630x_with_asm1083_on_amd_ryzen_machine(const struct pci_dev *pdev)
++{
++	const struct pci_dev *pcie_to_pci_bridge;
++
++	// Detect any type of AMD Ryzen machine.
++	if (!static_cpu_has(X86_FEATURE_ZEN))
++		return false;
++
++	// Detect VIA VT6306/6307/6308.
++	if (pdev->vendor != PCI_VENDOR_ID_VIA)
++		return false;
++	if (pdev->device != PCI_DEVICE_ID_VIA_VT630X)
++		return false;
++
++	// Detect Asmedia ASM1083/1085.
++	pcie_to_pci_bridge = pdev->bus->self;
++	if (pcie_to_pci_bridge->vendor != PCI_VENDOR_ID_ASMEDIA)
++		return false;
++	if (pcie_to_pci_bridge->device != PCI_DEVICE_ID_ASMEDIA_ASM108X)
++		return false;
++
++	return true;
++}
++
++#else
++#define has_reboot_by_cycle_timer_read_quirk(ohci) false
++#define detect_vt630x_with_asm1083_on_amd_ryzen_machine(pdev)	false
++#endif
++
+ /* In case of multiple matches in ohci_quirks[], only the first one is used. */
+ static const struct {
+ 	unsigned short vendor, device, revision, flags;
+@@ -1713,6 +1758,9 @@ static u32 get_cycle_time(struct fw_ohci
+ 	s32 diff01, diff12;
+ 	int i;
  
--	unmap_success = !page_mapped(hpage);
-+	unmap_success = !page_mapped(p);
- 	if (!unmap_success)
- 		pr_err("Memory failure: %#lx: failed to unmap page (mapcount=%d)\n",
--		       pfn, page_mapcount(hpage));
-+		       pfn, page_mapcount(p));
++	if (has_reboot_by_cycle_timer_read_quirk(ohci))
++		return 0;
++
+ 	c2 = reg_read(ohci, OHCI1394_IsochronousCycleTimer);
  
+ 	if (ohci->quirks & QUIRK_CYCLE_TIMER) {
+@@ -3615,6 +3663,9 @@ static int pci_probe(struct pci_dev *dev
+ 	if (param_quirks)
+ 		ohci->quirks = param_quirks;
+ 
++	if (detect_vt630x_with_asm1083_on_amd_ryzen_machine(dev))
++		ohci->quirks |= QUIRK_REBOOT_BY_CYCLE_TIMER_READ;
++
  	/*
- 	 * try_to_unmap() might put mlocked page in lru cache, so call
--- 
-2.43.0
-
+ 	 * Because dma_alloc_coherent() allocates at least one page,
+ 	 * we save space by using a common buffer for the AR request/
 
 
