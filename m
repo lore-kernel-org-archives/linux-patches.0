@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD15C5683;
-	Sat, 13 Jan 2024 09:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6685B1110;
+	Sat, 13 Jan 2024 09:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTENYUEB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6E7C433F1;
-	Sat, 13 Jan 2024 09:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPibs+Rx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D484BC433C7;
+	Sat, 13 Jan 2024 09:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139706;
-	bh=CtqfeLUx5a9dyOVY0b9hqY/OnYwfw8vFEkQhEitsRk8=;
+	s=korg; t=1705139709;
+	bh=FYkWVibhDnBcaT/QmS31Cp4C/LC3w5k1EqCbzOA4oqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UTENYUEBwjFSecOkYTRSY/9Cef+lMRTXE44wxArSlcrIU1xtRzIpzcpuVP8QVyRtk
-	 MXKm0Uuigtr3Q7K9caml9NTEZ5+k7Kup0pCHP/p7SI3jMMA3dOzL0h+njlkYVEblnW
-	 XmC7sLaBZLg9xS3K76w+vm4WZtzKTzdH33NA0pwg=
+	b=mPibs+Rxxyyc1CYIO1mGEgK8xJrbnJHOFQjWAcMjJ2MSgJ5AgWKxxB2dZkKakfC+o
+	 vjFS4xCJaqfoTPgDHvMdb9SGxEz7AG1ID2pQ/s3e5mSEDvnHdOiGgjwdqbXyJ6Nccw
+	 zEV+Yhi6xj/Xa57kLWz2xqS4ApZbrQAdRSZmNnm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Pawlowski <bartosz.pawlowski@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>
-Subject: [PATCH 4.19 21/25] PCI: Disable ATS for specific Intel IPU E2000 devices
-Date: Sat, 13 Jan 2024 10:50:02 +0100
-Message-ID: <20240113094205.699001062@linuxfoundation.org>
+	Peter Oskolkov <posk@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Suraj Jitindar Singh <surajjs@amazon.com>
+Subject: [PATCH 4.19 22/25] net: add a route cache full diagnostic message
+Date: Sat, 13 Jan 2024 10:50:03 +0100
+Message-ID: <20240113094205.733342417@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094205.025407355@linuxfoundation.org>
 References: <20240113094205.025407355@linuxfoundation.org>
@@ -43,55 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Pawlowski <bartosz.pawlowski@intel.com>
+From: Peter Oskolkov <posk@google.com>
 
-commit a18615b1cfc04f00548c60eb9a77e0ce56e848fd upstream.
+commit 22c2ad616b74f3de2256b242572ab449d031d941 upstream.
 
-Due to a hardware issue in A and B steppings of Intel IPU E2000, it expects
-wrong endianness in ATS invalidation message body. This problem can lead to
-outdated translations being returned as valid and finally cause system
-instability.
+In some testing scenarios, dst/route cache can fill up so quickly
+that even an explicit GC call occasionally fails to clean it up. This leads
+to sporadically failing calls to dst_alloc and "network unreachable" errors
+to the user, which is confusing.
 
-To prevent such issues, add quirk_intel_e2000_no_ats() to disable ATS for
-vulnerable IPU E2000 devices.
+This patch adds a diagnostic message to make the cause of the failure
+easier to determine.
 
-Link: https://lore.kernel.org/r/20230908143606.685930-3-bartosz.pawlowski@intel.com
-Signed-off-by: Bartosz Pawlowski <bartosz.pawlowski@intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: Peter Oskolkov <posk@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
+Cc: <stable@vger.kernel.org> # 4.19.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ net/core/dst.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5212,6 +5212,25 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AT
- /* AMD Navi14 dGPU */
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7340, quirk_amd_harvest_no_ats);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7341, quirk_amd_harvest_no_ats);
-+
-+/*
-+ * Intel IPU E2000 revisions before C0 implement incorrect endianness
-+ * in ATS Invalidate Request message body. Disable ATS for those devices.
-+ */
-+static void quirk_intel_e2000_no_ats(struct pci_dev *pdev)
-+{
-+	if (pdev->revision < 0x20)
-+		quirk_no_ats(pdev);
-+}
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1451, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1452, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1453, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1454, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1455, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1457, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1459, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x145a, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x145c, quirk_intel_e2000_no_ats);
- #endif /* CONFIG_PCI_ATS */
+--- a/net/core/dst.c
++++ b/net/core/dst.c
+@@ -98,8 +98,12 @@ void *dst_alloc(struct dst_ops *ops, str
+ 	struct dst_entry *dst;
  
- /* Freescale PCIe doesn't support MSI in RC mode */
+ 	if (ops->gc && dst_entries_get_fast(ops) > ops->gc_thresh) {
+-		if (ops->gc(ops))
++		if (ops->gc(ops)) {
++			printk_ratelimited(KERN_NOTICE "Route cache is full: "
++					   "consider increasing sysctl "
++					   "net.ipv[4|6].route.max_size.\n");
+ 			return NULL;
++		}
+ 	}
+ 
+ 	dst = kmem_cache_alloc(ops->kmem_cachep, GFP_ATOMIC);
 
 
