@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6AA1869;
-	Sat, 13 Jan 2024 09:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8CCC8DD;
+	Sat, 13 Jan 2024 09:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yw6a+7aA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C198C433F1;
-	Sat, 13 Jan 2024 09:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgsQNlpR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08FC5C433C7;
+	Sat, 13 Jan 2024 09:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139771;
-	bh=qzOnEfbWsBRdFsXfsjQNQRV/lWNvkOe3rXTCGj0/usA=;
+	s=korg; t=1705139774;
+	bh=SiQs2sObLGhIvOxn0GzkwF/tCdicVpjg86iGyHRwDD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yw6a+7aApXSD2Dg13/8mVa2hdA5p4QBo0nVUClQMSZ3dLkjCLoJtfvpkbC4qIQa/J
-	 cmke/YUf+zTIXraqpdGmpoLc2RDZwVtExDPmFVZg+Fc+UDBhHEdnAOmVhEh5OnOjWG
-	 B7AgyyF9yoziW4+J3dEsIrO1gDTPSpLeDPxcl814=
+	b=fgsQNlpRXvxM69aa0CyWXmCekjZXfVbRmNC3RF8bw0av1rQThDlG1EZQYSOC58ONJ
+	 KvvidQi+iNMy+LuBSscq7wcjw2S5qCoI1ZsViXHRJK4LCiDLHyhnMUCIGd8hKuNig8
+	 U91soKqO7lbl7M7IV8JEEX8SF+iVaACTPcjiTKHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadfed@meta.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 07/38] net-timestamp: extend SOF_TIMESTAMPING_OPT_ID to HW timestamps
-Date: Sat, 13 Jan 2024 10:49:43 +0100
-Message-ID: <20240113094206.682696962@linuxfoundation.org>
+	Jorge Ramirez-Ortiz <jorge@foundries.io>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 25/38] mmc: rpmb: fixes pause retune on all RPMB partitions.
+Date: Sat, 13 Jan 2024 10:50:01 +0100
+Message-ID: <20240113094207.213940780@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.455533180@linuxfoundation.org>
 References: <20240113094206.455533180@linuxfoundation.org>
@@ -43,52 +42,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Fedorenko <vadfed@meta.com>
+From: Jorge Ramirez-Ortiz <jorge@foundries.io>
 
-[ Upstream commit 8ca5a5790b9a1ce147484d2a2c4e66d2553f3d6c ]
+commit e7794c14fd73e5eb4a3e0ecaa5334d5a17377c50 upstream.
 
-When the feature was added it was enabled for SW timestamps only but
-with current hardware the same out-of-order timestamps can be seen.
-Let's expand the area for the feature to all types of timestamps.
+When RPMB was converted to a character device, it added support for
+multiple RPMB partitions (Commit 97548575bef3 ("mmc: block: Convert RPMB to
+a character device").
 
-Signed-off-by: Vadim Fedorenko <vadfed@meta.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 7f6ca95d16b9 ("net: Implement missing getsockopt(SO_TIMESTAMPING_NEW)")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+One of the changes in this commit was transforming the variable target_part
+defined in __mmc_blk_ioctl_cmd into a bitmask. This inadvertently regressed
+the validation check done in mmc_blk_part_switch_pre() and
+mmc_blk_part_switch_post(), so let's fix it.
+
+Fixes: 97548575bef3 ("mmc: block: Convert RPMB to a character device")
+Signed-off-by: Jorge Ramirez-Ortiz <jorge@foundries.io>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231201153143.1449753-1-jorge@foundries.io
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ip_output.c  | 2 +-
- net/ipv6/ip6_output.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/core/block.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index bf7c2333bc236..0f70c2dbbe5bb 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -993,7 +993,7 @@ static int __ip_append_data(struct sock *sk,
- 	mtu = cork->gso_size ? IP_MAX_MTU : cork->fragsize;
- 	paged = !!cork->gso_size;
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -850,9 +850,10 @@ static const struct block_device_operati
+ static int mmc_blk_part_switch_pre(struct mmc_card *card,
+ 				   unsigned int part_type)
+ {
++	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
+ 	int ret = 0;
  
--	if (cork->tx_flags & SKBTX_ANY_SW_TSTAMP &&
-+	if (cork->tx_flags & SKBTX_ANY_TSTAMP &&
- 	    sk->sk_tsflags & SOF_TIMESTAMPING_OPT_ID)
- 		tskey = sk->sk_tskey++;
+-	if (part_type == EXT_CSD_PART_CONFIG_ACC_RPMB) {
++	if ((part_type & mask) == mask) {
+ 		if (card->ext_csd.cmdq_en) {
+ 			ret = mmc_cmdq_disable(card);
+ 			if (ret)
+@@ -867,9 +868,10 @@ static int mmc_blk_part_switch_pre(struc
+ static int mmc_blk_part_switch_post(struct mmc_card *card,
+ 				    unsigned int part_type)
+ {
++	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
+ 	int ret = 0;
  
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index d3455585e6a8c..c67d634dccd47 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1425,7 +1425,7 @@ static int __ip6_append_data(struct sock *sk,
- 	mtu = cork->gso_size ? IP6_MAX_MTU : cork->fragsize;
- 	orig_mtu = mtu;
+-	if (part_type == EXT_CSD_PART_CONFIG_ACC_RPMB) {
++	if ((part_type & mask) == mask) {
+ 		mmc_retune_unpause(card->host);
+ 		if (card->reenable_cmdq && !card->ext_csd.cmdq_en)
+ 			ret = mmc_cmdq_enable(card);
+@@ -3091,4 +3093,3 @@ module_exit(mmc_blk_exit);
  
--	if (cork->tx_flags & SKBTX_ANY_SW_TSTAMP &&
-+	if (cork->tx_flags & SKBTX_ANY_TSTAMP &&
- 	    sk->sk_tsflags & SOF_TIMESTAMPING_OPT_ID)
- 		tskey = sk->sk_tskey++;
- 
--- 
-2.43.0
-
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("Multimedia Card (MMC) block device driver");
+-
 
 
