@@ -1,34 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780D315BD;
-	Sat, 13 Jan 2024 09:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDD0EC5;
+	Sat, 13 Jan 2024 09:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGQfp98x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3711C433F1;
-	Sat, 13 Jan 2024 09:59:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUdg+Kh0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21C4C43390;
+	Sat, 13 Jan 2024 09:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139964;
-	bh=pxqDMjwblP7PAU1+/62aqNH56HB7WUjnIXb5jXsQD1A=;
+	s=korg; t=1705139967;
+	bh=82WdXyrSyjvDb9GrgVmjvH7eVv5Bk/N8aZTylot5/hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FGQfp98xQZJc9TKI1PqfvZtEmxXbQzIH/8f7ZmujgcYnBho0bH6ks4FFbvfa5vb6s
-	 QmMQFZAbY1Q2/HsCcTlYnwLQHbQBhUNlv/vB3Km5Z2/vfaMG8wFzW0uFG5w058qrOK
-	 U5zcgGvzprIGbtBaXQv9cxu6IEw476U4cFe30lQM=
+	b=WUdg+Kh09SD+b2/HZ+kEOgP1aH8nBj5Z/tliIXOdDmhaUXlAs9ro5M8FwttvaFkfo
+	 hLyU+j2VbyVLA//ptimO5yLPXccdi4KjCkHBCQJeQeIOu3QFBoTQ6sNCfBJMgcgvAA
+	 3+Q//e5yZTHHjRtjtV+nJW9OmTSVB4/KutWAxOS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 27/43] mm/memory-failure: check the mapcount of the precise page
-Date: Sat, 13 Jan 2024 10:50:06 +0100
-Message-ID: <20240113094207.786197636@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Edward Adam Davis <eadavis@qq.com>,
+	David Howells <dhowells@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Jeffrey E Altman <jaltman@auristor.com>,
+	Wang Lei <wang840925@gmail.com>,
+	Jeff Layton <jlayton@redhat.com>,
+	Steve French <sfrench@us.ibm.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	syzbot+94bbb75204a05da3d89f@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 01/59] keys, dns: Fix missing size check of V1 server-list header
+Date: Sat, 13 Jan 2024 10:49:32 +0100
+Message-ID: <20240113094209.351127507@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240113094206.930684111@linuxfoundation.org>
-References: <20240113094206.930684111@linuxfoundation.org>
+In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
+References: <20240113094209.301672391@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -40,60 +50,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit c79c5a0a00a9457718056b588f312baadf44e471 ]
+commit 1997b3cb4217b09e49659b634c94da47f0340409 upstream.
 
-A process may map only some of the pages in a folio, and might be missed
-if it maps the poisoned page but not the head page.  Or it might be
-unnecessarily hit if it maps the head page, but not the poisoned page.
+The dns_resolver_preparse() function has a check on the size of the
+payload for the basic header of the binary-style payload, but is missing
+a check for the size of the V1 server-list payload header after
+determining that's what we've been given.
 
-Link: https://lkml.kernel.org/r/20231218135837.3310403-3-willy@infradead.org
-Fixes: 7af446a841a2 ("HWPOISON, hugetlb: enable error handling path for hugepage")
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by getting rid of the the pointer to the basic header and just
+assuming that we have a V1 server-list payload and moving the V1 server
+list pointer inside the if-statement.  Dealing with other types and
+versions can be left for when such have been defined.
+
+This can be tested by doing the following with KASAN enabled:
+
+    echo -n -e '\x0\x0\x1\x2' | keyctl padd dns_resolver foo @p
+
+and produces an oops like the following:
+
+    BUG: KASAN: slab-out-of-bounds in dns_resolver_preparse+0xc9f/0xd60 net/dns_resolver/dns_key.c:127
+    Read of size 1 at addr ffff888028894084 by task syz-executor265/5069
+    ...
+    Call Trace:
+      dns_resolver_preparse+0xc9f/0xd60 net/dns_resolver/dns_key.c:127
+      __key_create_or_update+0x453/0xdf0 security/keys/key.c:842
+      key_create_or_update+0x42/0x50 security/keys/key.c:1007
+      __do_sys_add_key+0x29c/0x450 security/keys/keyctl.c:134
+      do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+      do_syscall_64+0x40/0x110 arch/x86/entry/common.c:83
+      entry_SYSCALL_64_after_hwframe+0x62/0x6a
+
+This patch was originally by Edward Adam Davis, but was modified by
+Linus.
+
+Fixes: b946001d3bb1 ("keys, dns: Allow key types (eg. DNS) to be reclaimed immediately on expiry")
+Reported-and-tested-by: syzbot+94bbb75204a05da3d89f@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/0000000000009b39bc060c73e209@google.com/
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Tested-by: David Howells <dhowells@redhat.com>
+Cc: Edward Adam Davis <eadavis@qq.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Jeffrey E Altman <jaltman@auristor.com>
+Cc: Wang Lei <wang840925@gmail.com>
+Cc: Jeff Layton <jlayton@redhat.com>
+Cc: Steve French <sfrench@us.ibm.com>
+Cc: Marc Dionne <marc.dionne@auristor.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Jeffrey E Altman <jaltman@auristor.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/dns_resolver/dns_key.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/mm/memory-failure.c b/mm/memory-failure.c
-index 652283a1353d7..f320ff02cc196 100644
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -1010,7 +1010,7 @@ static bool hwpoison_user_mappings(struct page *p, unsigned long pfn,
- 	 * This check implies we don't kill processes if their pages
- 	 * are in the swap cache early. Those are always late kills.
- 	 */
--	if (!page_mapped(hpage))
-+	if (!page_mapped(p))
- 		return true;
+--- a/net/dns_resolver/dns_key.c
++++ b/net/dns_resolver/dns_key.c
+@@ -91,8 +91,6 @@ const struct cred *dns_resolver_cache;
+ static int
+ dns_resolver_preparse(struct key_preparsed_payload *prep)
+ {
+-	const struct dns_server_list_v1_header *v1;
+-	const struct dns_payload_header *bin;
+ 	struct user_key_payload *upayload;
+ 	unsigned long derrno;
+ 	int ret;
+@@ -103,27 +101,28 @@ dns_resolver_preparse(struct key_prepars
+ 		return -EINVAL;
  
- 	if (PageKsm(p)) {
-@@ -1075,12 +1075,12 @@ static bool hwpoison_user_mappings(struct page *p, unsigned long pfn,
- 				unmap_success = false;
- 			}
- 		} else {
--			unmap_success = try_to_unmap(hpage, ttu);
-+			unmap_success = try_to_unmap(p, ttu);
+ 	if (data[0] == 0) {
++		const struct dns_server_list_v1_header *v1;
++
+ 		/* It may be a server list. */
+-		if (datalen <= sizeof(*bin))
++		if (datalen <= sizeof(*v1))
+ 			return -EINVAL;
+ 
+-		bin = (const struct dns_payload_header *)data;
+-		kenter("[%u,%u],%u", bin->content, bin->version, datalen);
+-		if (bin->content != DNS_PAYLOAD_IS_SERVER_LIST) {
++		v1 = (const struct dns_server_list_v1_header *)data;
++		kenter("[%u,%u],%u", v1->hdr.content, v1->hdr.version, datalen);
++		if (v1->hdr.content != DNS_PAYLOAD_IS_SERVER_LIST) {
+ 			pr_warn_ratelimited(
+ 				"dns_resolver: Unsupported content type (%u)\n",
+-				bin->content);
++				v1->hdr.content);
+ 			return -EINVAL;
  		}
- 	}
- 	if (!unmap_success)
- 		pr_err("Memory failure: %#lx: failed to unmap page (mapcount=%d)\n",
--		       pfn, page_mapcount(hpage));
-+		       pfn, page_mapcount(p));
  
- 	/*
- 	 * try_to_unmap() might put mlocked page in lru cache, so call
--- 
-2.43.0
-
+-		if (bin->version != 1) {
++		if (v1->hdr.version != 1) {
+ 			pr_warn_ratelimited(
+ 				"dns_resolver: Unsupported server list version (%u)\n",
+-				bin->version);
++				v1->hdr.version);
+ 			return -EINVAL;
+ 		}
+ 
+-		v1 = (const struct dns_server_list_v1_header *)bin;
+ 		if ((v1->status != DNS_LOOKUP_GOOD &&
+ 		     v1->status != DNS_LOOKUP_GOOD_WITH_BAD)) {
+ 			if (prep->expiry == TIME64_MAX)
 
 
