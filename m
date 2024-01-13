@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0509412E63;
-	Sat, 13 Jan 2024 09:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D1012E70;
+	Sat, 13 Jan 2024 09:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRG6cjZr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C90C433C7;
-	Sat, 13 Jan 2024 09:55:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tz7YB5Nj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27AA6C433F1;
+	Sat, 13 Jan 2024 09:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139756;
-	bh=3xdnyEWnVcLjb+nLqtDYzxAiNv0NM459UcxEqZI7vNU=;
+	s=korg; t=1705139759;
+	bh=wsfFXaPP4T7vZ/tdNhGLbPGmyvs5rmds75bVArOp9DA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DRG6cjZrmIMT4imqdPT6OAeHmGPniBjIhyvFJ3N23o79DtPdcV2sz/Ddginaa2vAT
-	 2CeF2qFuXMCX8Npu4ElQ7vr3ytJQTdxxjUe/vqJO+vLfBTgayJKCFeEKcAVij2otuE
-	 W9wkqL6MApQXb5CMtq+/rDoRX2Jzr5XDh0a7Y8Vs=
+	b=Tz7YB5Njy+8gJZYSrcriHsypuao1sSuIKujq1/jxmQ5ni2+IeC094CcA0bh6jq+YD
+	 +NmIs7nq6BFfevet84Fl4w72kuxoFW22hUdRT4g3WumIQ7+JuHc/UtlhtGmq0fJNmB
+	 7W6mdBZHenJDRpxLARfK70SQ7jU8k1iAL4c5KWZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Lange <thomas@corelatus.se>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 20/38] net: Implement missing SO_TIMESTAMPING_NEW cmsg support
-Date: Sat, 13 Jan 2024 10:49:56 +0100
-Message-ID: <20240113094207.067061361@linuxfoundation.org>
+Subject: [PATCH 5.4 21/38] mm/memory-failure: check the mapcount of the precise page
+Date: Sat, 13 Jan 2024 10:49:57 +0100
+Message-ID: <20240113094207.100428254@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.455533180@linuxfoundation.org>
 References: <20240113094206.455533180@linuxfoundation.org>
@@ -43,38 +44,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Lange <thomas@corelatus.se>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 382a32018b74f407008615e0e831d05ed28e81cd ]
+[ Upstream commit c79c5a0a00a9457718056b588f312baadf44e471 ]
 
-Commit 9718475e6908 ("socket: Add SO_TIMESTAMPING_NEW") added the new
-socket option SO_TIMESTAMPING_NEW. However, it was never implemented in
-__sock_cmsg_send thus breaking SO_TIMESTAMPING cmsg for platforms using
-SO_TIMESTAMPING_NEW.
+A process may map only some of the pages in a folio, and might be missed
+if it maps the poisoned page but not the head page.  Or it might be
+unnecessarily hit if it maps the head page, but not the poisoned page.
 
-Fixes: 9718475e6908 ("socket: Add SO_TIMESTAMPING_NEW")
-Link: https://lore.kernel.org/netdev/6a7281bf-bc4a-4f75-bb88-7011908ae471@app.fastmail.com/
-Signed-off-by: Thomas Lange <thomas@corelatus.se>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20240104085744.49164-1-thomas@corelatus.se
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20231218135837.3310403-3-willy@infradead.org
+Fixes: 7af446a841a2 ("HWPOISON, hugetlb: enable error handling path for hugepage")
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/memory-failure.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index a3ca522434a6e..42076a3e12c3c 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2310,6 +2310,7 @@ int __sock_cmsg_send(struct sock *sk, struct msghdr *msg, struct cmsghdr *cmsg,
- 		sockc->mark = *(u32 *)CMSG_DATA(cmsg);
- 		break;
- 	case SO_TIMESTAMPING_OLD:
-+	case SO_TIMESTAMPING_NEW:
- 		if (cmsg->cmsg_len != CMSG_LEN(sizeof(u32)))
- 			return -EINVAL;
+diff --git a/mm/memory-failure.c b/mm/memory-failure.c
+index 9030ab0d9d975..c6453f9ffd4d9 100644
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -986,7 +986,7 @@ static bool hwpoison_user_mappings(struct page *p, unsigned long pfn,
+ 	 * This check implies we don't kill processes if their pages
+ 	 * are in the swap cache early. Those are always late kills.
+ 	 */
+-	if (!page_mapped(hpage))
++	if (!page_mapped(p))
+ 		return true;
  
+ 	if (PageKsm(p)) {
+@@ -1030,10 +1030,10 @@ static bool hwpoison_user_mappings(struct page *p, unsigned long pfn,
+ 	if (kill)
+ 		collect_procs(hpage, &tokill, flags & MF_ACTION_REQUIRED);
+ 
+-	unmap_success = try_to_unmap(hpage, ttu);
++	unmap_success = try_to_unmap(p, ttu);
+ 	if (!unmap_success)
+ 		pr_err("Memory failure: %#lx: failed to unmap page (mapcount=%d)\n",
+-		       pfn, page_mapcount(hpage));
++		       pfn, page_mapcount(p));
+ 
+ 	/*
+ 	 * try_to_unmap() might put mlocked page in lru cache, so call
 -- 
 2.43.0
 
