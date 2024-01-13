@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4B9EC5;
-	Sat, 13 Jan 2024 09:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007C21846;
+	Sat, 13 Jan 2024 09:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OCrRXx3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974C7C43390;
-	Sat, 13 Jan 2024 09:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/dPi+Av"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E84C43394;
+	Sat, 13 Jan 2024 09:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139795;
-	bh=M1eOQCqWYiv9bf+OR+Rv/Hnubc+u4VCo0sgNXWBVXys=;
+	s=korg; t=1705139797;
+	bh=tzj56keJp0lkxeoK2IlXn0jbI8kLo1tE/ONyG9DE0jU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2OCrRXx3zC0KKTxFmV5QdxdIMCIlnJjkRRJHIsmuWYfVrQqg/Mos6VEO4W5haQZoe
-	 nt/9lugue249cJIJ1FWPCpLMQCZuJtrbrbiV/Gpe1xbLQEGFEhHF1mImo4CSXdadfo
-	 o7ZWN84hcQILl2OfIxNZZRpDp8LjHH5CtKiRfqU4=
+	b=x/dPi+AvaevjN9jZeCWsL+676b4D5JAT9veUenOC8JOCrfaoENs32T+vTP8juFHUI
+	 NhctL8be8/Wu5vfwACbFFrEKAXr4hmEWgbep5V11SVH0VV2CFFUtcXdrJjS8Kt+65V
+	 f6zQdM5ENJuyWmzM6wB4Ym2j9PqjacMchZJrE4a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Adrian Cinal <adriancinal1@gmail.com>,
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 08/38] ARM: sun9i: smp: Fix array-index-out-of-bounds read in sunxi_mc_smp_init
-Date: Sat, 13 Jan 2024 10:49:44 +0100
-Message-ID: <20240113094206.710670093@linuxfoundation.org>
+Subject: [PATCH 5.4 09/38] net: bcmgenet: Fix FCS generation for fragmented skbuffs
+Date: Sat, 13 Jan 2024 10:49:45 +0100
+Message-ID: <20240113094206.739447640@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.455533180@linuxfoundation.org>
 References: <20240113094206.455533180@linuxfoundation.org>
@@ -43,61 +44,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Adrian Cinal <adriancinal@gmail.com>
 
-[ Upstream commit 72ad3b772b6d393701df58ba1359b0bb346a19ed ]
+[ Upstream commit e584f2ff1e6cc9b1d99e8a6b0f3415940d1b3eb3 ]
 
-Running a multi-arch kernel (multi_v7_defconfig) on a Raspberry Pi 3B+
-with enabled CONFIG_UBSAN triggers the following warning:
+The flag DMA_TX_APPEND_CRC was only written to the first DMA descriptor
+in the TX path, where each descriptor corresponds to a single skbuff
+fragment (or the skbuff head). This led to packets with no FCS appearing
+on the wire if the kernel allocated the packet in fragments, which would
+always happen when using PACKET_MMAP/TPACKET (cf. tpacket_fill_skb() in
+net/af_packet.c).
 
- UBSAN: array-index-out-of-bounds in arch/arm/mach-sunxi/mc_smp.c:810:29
- index 2 is out of range for type 'sunxi_mc_smp_data [2]'
- CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.7.0-rc6-00248-g5254c0cbc92d
- Hardware name: BCM2835
-  unwind_backtrace from show_stack+0x10/0x14
-  show_stack from dump_stack_lvl+0x40/0x4c
-  dump_stack_lvl from ubsan_epilogue+0x8/0x34
-  ubsan_epilogue from __ubsan_handle_out_of_bounds+0x78/0x80
-  __ubsan_handle_out_of_bounds from sunxi_mc_smp_init+0xe4/0x4cc
-  sunxi_mc_smp_init from do_one_initcall+0xa0/0x2fc
-  do_one_initcall from kernel_init_freeable+0xf4/0x2f4
-  kernel_init_freeable from kernel_init+0x18/0x158
-  kernel_init from ret_from_fork+0x14/0x28
-
-Since the enabled method couldn't match with any entry from
-sunxi_mc_smp_data, the value of the index shouldn't be used right after
-the loop. So move it after the check of ret in order to have a valid
-index.
-
-Fixes: 1631090e34f5 ("ARM: sun9i: smp: Add is_a83t field")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20231228193903.9078-1-wahrenst@gmx.net
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 1c1008c793fa ("net: bcmgenet: add main driver file")
+Signed-off-by: Adrian Cinal <adriancinal1@gmail.com>
+Acked-by: Doug Berger <opendmb@gmail.com>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20231228135638.1339245-1-adriancinal1@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-sunxi/mc_smp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-sunxi/mc_smp.c b/arch/arm/mach-sunxi/mc_smp.c
-index 26cbce1353387..b2f5f4f28705f 100644
---- a/arch/arm/mach-sunxi/mc_smp.c
-+++ b/arch/arm/mach-sunxi/mc_smp.c
-@@ -808,12 +808,12 @@ static int __init sunxi_mc_smp_init(void)
- 			break;
- 	}
- 
--	is_a83t = sunxi_mc_smp_data[i].is_a83t;
--
- 	of_node_put(node);
- 	if (ret)
- 		return -ENODEV;
- 
-+	is_a83t = sunxi_mc_smp_data[i].is_a83t;
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index 750acbf294640..eeadeeec17bab 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -1648,8 +1648,10 @@ static netdev_tx_t bcmgenet_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		/* Note: if we ever change from DMA_TX_APPEND_CRC below we
+ 		 * will need to restore software padding of "runt" packets
+ 		 */
++		len_stat |= DMA_TX_APPEND_CRC;
 +
- 	if (!sunxi_mc_smp_cpu_table_init())
- 		return -EINVAL;
- 
+ 		if (!i) {
+-			len_stat |= DMA_TX_APPEND_CRC | DMA_SOP;
++			len_stat |= DMA_SOP;
+ 			if (skb->ip_summed == CHECKSUM_PARTIAL)
+ 				len_stat |= DMA_TX_DO_CSUM;
+ 		}
 -- 
 2.43.0
 
