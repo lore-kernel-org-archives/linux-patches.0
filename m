@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C5415C9;
-	Sat, 13 Jan 2024 09:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBF615BD;
+	Sat, 13 Jan 2024 09:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyV2JGVW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EDBC433F1;
-	Sat, 13 Jan 2024 09:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8w7yifH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8E5C433C7;
+	Sat, 13 Jan 2024 09:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139985;
-	bh=ofQMMzopVvEayVuEqaka8H0M+Kha2DyxbGeEzhJog/Y=;
+	s=korg; t=1705139988;
+	bh=EGUmKTUsWW4OtJAfpIkbVuiOSmF8MmZrGvElbgJyu7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tyV2JGVWOHtdSjM4MENwbtJwIsCxi7bFfWss53SZY0vRt+Y1jrNsJdX6U9tDeyZHH
-	 U/v7AW9gdo243lkg5kX//uQAW/NaiKmaB80C/JPw8WWejg1+4j4kgvIcv3Wm9P00Rt
-	 K1w7xIvKBAZAOrbwisQL00r2gsraschCXx7Xtgy0=
+	b=z8w7yifH21WHRN+C9uFz6gF5X18wzoQvYjl79CybIVZ5X1aMEnzaHZVoCZSvqBtEb
+	 A5svKdsveTzuJDEE4vmWrFsAYIqcfe2uMy8CNMQFIp2kVOaWhfBrghLLOx0lonZSaR
+	 QVJLbp1TjXxsSy/vMcVOi+r468xN7S3XsW6rJTAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asmaa Mnebhi <asmaa@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 15/59] mlxbf_gige: fix receive packet race condition
-Date: Sat, 13 Jan 2024 10:49:46 +0100
-Message-ID: <20240113094209.779210801@linuxfoundation.org>
+Subject: [PATCH 5.15 16/59] net: sched: em_text: fix possible memory leak in em_text_destroy()
+Date: Sat, 13 Jan 2024 10:49:47 +0100
+Message-ID: <20240113094209.810408785@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
 References: <20240113094209.301672391@linuxfoundation.org>
@@ -43,61 +44,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Thompson <davthompson@nvidia.com>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-[ Upstream commit dcea1bd45e6d111cc8fc1aaefa7e31694089bda3 ]
+[ Upstream commit 8fcb0382af6f1ef50936f1be05b8149eb2f88496 ]
 
-Under heavy traffic, the BlueField Gigabit interface can
-become unresponsive. This is due to a possible race condition
-in the mlxbf_gige_rx_packet function, where the function exits
-with producer and consumer indices equal but there are remaining
-packet(s) to be processed. In order to prevent this situation,
-read receive consumer index *before* the HW replenish so that
-the mlxbf_gige_rx_packet function returns an accurate return
-value even if a packet is received into just-replenished buffer
-prior to exiting this routine. If the just-replenished buffer
-is received and occupies the last RX ring entry, the interface
-would not recover and instead would encounter RX packet drops
-related to internal buffer shortages since the driver RX logic
-is not being triggered to drain the RX ring. This patch will
-address and prevent this "ring full" condition.
+m->data needs to be freed when em_text_destroy is called.
 
-Fixes: f92e1869d74e ("Add Mellanox BlueField Gigabit Ethernet driver")
-Reviewed-by: Asmaa Mnebhi <asmaa@nvidia.com>
-Signed-off-by: David Thompson <davthompson@nvidia.com>
+Fixes: d675c989ed2d ("[PKT_SCHED]: Packet classification based on textsearch (ematch)")
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/sched/em_text.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
-index 0d5a41a2ae010..227d01cace3f0 100644
---- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
-@@ -267,6 +267,13 @@ static bool mlxbf_gige_rx_packet(struct mlxbf_gige *priv, int *rx_pkts)
- 		priv->stats.rx_truncate_errors++;
- 	}
+diff --git a/net/sched/em_text.c b/net/sched/em_text.c
+index 6f3c1fb2fb44c..f176afb70559e 100644
+--- a/net/sched/em_text.c
++++ b/net/sched/em_text.c
+@@ -97,8 +97,10 @@ static int em_text_change(struct net *net, void *data, int len,
  
-+	/* Read receive consumer index before replenish so that this routine
-+	 * returns accurate return value even if packet is received into
-+	 * just-replenished buffer prior to exiting this routine.
-+	 */
-+	rx_ci = readq(priv->base + MLXBF_GIGE_RX_CQE_PACKET_CI);
-+	rx_ci_rem = rx_ci % priv->rx_q_entries;
-+
- 	/* Let hardware know we've replenished one buffer */
- 	rx_pi++;
+ static void em_text_destroy(struct tcf_ematch *m)
+ {
+-	if (EM_TEXT_PRIV(m) && EM_TEXT_PRIV(m)->config)
++	if (EM_TEXT_PRIV(m) && EM_TEXT_PRIV(m)->config) {
+ 		textsearch_destroy(EM_TEXT_PRIV(m)->config);
++		kfree(EM_TEXT_PRIV(m));
++	}
+ }
  
-@@ -279,8 +286,6 @@ static bool mlxbf_gige_rx_packet(struct mlxbf_gige *priv, int *rx_pkts)
- 	rx_pi_rem = rx_pi % priv->rx_q_entries;
- 	if (rx_pi_rem == 0)
- 		priv->valid_polarity ^= 1;
--	rx_ci = readq(priv->base + MLXBF_GIGE_RX_CQE_PACKET_CI);
--	rx_ci_rem = rx_ci % priv->rx_q_entries;
- 
- 	if (skb)
- 		netif_receive_skb(skb);
+ static int em_text_dump(struct sk_buff *skb, struct tcf_ematch *m)
 -- 
 2.43.0
 
