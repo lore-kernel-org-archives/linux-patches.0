@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53BF163C3;
-	Sat, 13 Jan 2024 09:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2C51869;
+	Sat, 13 Jan 2024 09:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGDS4CpH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51A6C433F1;
-	Sat, 13 Jan 2024 09:58:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="woti+4ic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6899C433F1;
+	Sat, 13 Jan 2024 09:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139929;
-	bh=8AZUYp159gMs733l1tSCh+CNA2SkrF0+4h52GTL8/Ik=;
+	s=korg; t=1705139932;
+	bh=MfcE9PjhiqsMiqpOmGMEverxxjiSaSYZ1+H1S+9vPLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGDS4CpHUiGp6H7nBpGh3UnyzYvw88pvnmQWYuGw2oCMJPwFWb/tZntKSAZOuDNOg
-	 JTHdJqhikUb1+hFQhkEov160/V99kpzJdLf+pLYFCNOVHNvqUk4xyyheBYawxcV2pB
-	 Hk9wi9ZuDhzWa964SKnoesZENJj++SeE380OnC4U=
+	b=woti+4ic0utH8KBSUu8Hq/vAzIzOyb0x0YlDnp9R9n3gH4PDUyY7Ea1K4Q4BWNSqz
+	 CxsPecEn0eVou6ghcqBjE4oV24oWZ5mVEWViDtjDL9h/XVJG/QrKy4eVExprTXAjBo
+	 YJeMQfoxjyitirrCshV+oza1Q9JoK5/497WKMVuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 40/43] netfilter: nf_tables: Reject tables of unsupported family
-Date: Sat, 13 Jan 2024 10:50:19 +0100
-Message-ID: <20240113094208.247364809@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Pawlowski <bartosz.pawlowski@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 5.10 41/43] PCI: Extract ATS disabling to a helper function
+Date: Sat, 13 Jan 2024 10:50:20 +0100
+Message-ID: <20240113094208.280788483@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.930684111@linuxfoundation.org>
 References: <20240113094206.930684111@linuxfoundation.org>
@@ -41,65 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Bartosz Pawlowski <bartosz.pawlowski@intel.com>
 
-commit f1082dd31fe461d482d69da2a8eccfeb7bf07ac2 upstream.
+commit f18b1137d38c091cc8c16365219f0a1d4a30b3d1 upstream.
 
-An nftables family is merely a hollow container, its family just a
-number and such not reliant on compile-time options other than nftables
-support itself. Add an artificial check so attempts at using a family
-the kernel can't support fail as early as possible. This helps user
-space detect kernels which lack e.g. NFPROTO_INET.
+Introduce quirk_no_ats() helper function to provide a standard way to
+disable ATS capability in PCI quirks.
 
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230908143606.685930-2-bartosz.pawlowski@intel.com
+Signed-off-by: Bartosz Pawlowski <bartosz.pawlowski@intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |   27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/pci/quirks.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -1186,6 +1186,30 @@ static int nft_objname_hash_cmp(struct r
- 	return strcmp(obj->key.name, k->name);
- }
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5353,6 +5353,12 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SE
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0422, quirk_no_ext_tags);
  
-+static bool nft_supported_family(u8 family)
+ #ifdef CONFIG_PCI_ATS
++static void quirk_no_ats(struct pci_dev *pdev)
 +{
-+	return false
-+#ifdef CONFIG_NF_TABLES_INET
-+		|| family == NFPROTO_INET
-+#endif
-+#ifdef CONFIG_NF_TABLES_IPV4
-+		|| family == NFPROTO_IPV4
-+#endif
-+#ifdef CONFIG_NF_TABLES_ARP
-+		|| family == NFPROTO_ARP
-+#endif
-+#ifdef CONFIG_NF_TABLES_NETDEV
-+		|| family == NFPROTO_NETDEV
-+#endif
-+#if IS_ENABLED(CONFIG_NF_TABLES_BRIDGE)
-+		|| family == NFPROTO_BRIDGE
-+#endif
-+#ifdef CONFIG_NF_TABLES_IPV6
-+		|| family == NFPROTO_IPV6
-+#endif
-+		;
++	pci_info(pdev, "disabling ATS\n");
++	pdev->ats_cap = 0;
 +}
 +
- static int nf_tables_newtable(struct net *net, struct sock *nlsk,
- 			      struct sk_buff *skb, const struct nlmsghdr *nlh,
- 			      const struct nlattr * const nla[],
-@@ -1201,6 +1225,9 @@ static int nf_tables_newtable(struct net
- 	u32 flags = 0;
- 	int err;
+ /*
+  * Some devices require additional driver setup to enable ATS.  Don't use
+  * ATS for those devices as ATS will be enabled before the driver has had a
+@@ -5365,8 +5371,7 @@ static void quirk_amd_harvest_no_ats(str
+ 	    (pdev->device == 0x7341 && pdev->revision != 0x00))
+ 		return;
  
-+	if (!nft_supported_family(family))
-+		return -EOPNOTSUPP;
-+
- 	lockdep_assert_held(&nft_net->commit_mutex);
- 	attr = nla[NFTA_TABLE_NAME];
- 	table = nft_table_lookup(net, attr, family, genmask);
+-	pci_info(pdev, "disabling ATS\n");
+-	pdev->ats_cap = 0;
++	quirk_no_ats(pdev);
+ }
+ 
+ /* AMD Stoney platform GPU */
 
 
