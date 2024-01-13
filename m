@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DAC1095B;
-	Sat, 13 Jan 2024 09:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1D615BD;
+	Sat, 13 Jan 2024 09:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNV2ck/B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E639C433F1;
-	Sat, 13 Jan 2024 09:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ucrbfE0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002A6C433F1;
+	Sat, 13 Jan 2024 09:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139762;
-	bh=82xbk1QsaJaPle7LMtfbWlGl778wlL5UGEcQrGwUY3g=;
+	s=korg; t=1705139765;
+	bh=Ski0r79TRR3rVWdSm03rBJiovCRSlgo/7szmX4b0HtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dNV2ck/BfT6+nbOWV46blJmIIidzt1Q7iDN2nA3ISKjh9bK4L0Q3HvD0N3neOOlZS
-	 HOoCFMkS1y68xQZDeKHoIuLoB49vCiYEWdhpSnOt1+br6v1+JGBJNe/qU0a0fjLGbw
-	 oLJ7GyUrHbkT/3yoYCWlC7PeN2UL7bn0U7hycoFM=
+	b=ucrbfE0/gWCY9rrVLv4qm6IG0F4B4869Mg3EE+4QjRcCRT4/p8Xs6RM0QHDlAHoAA
+	 NNAyUPRK1zDPD/EbwR3vJcdXkeOh4sMOFiL7CNPkrR4NYRrhb53Rar6ZVUHTQ/0xT5
+	 ++Ostd81DPyEjMlXw7dBD7fQpJPwfjlHWHfzU7/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Tobias Gruetzmacher <tobias-lists@23.gs>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Subject: [PATCH 5.4 22/38] firewire: ohci: suppress unexpected system reboot in AMD Ryzen machines and ASM108x/VT630x PCIe cards
-Date: Sat, 13 Jan 2024 10:49:58 +0100
-Message-ID: <20240113094207.132873943@linuxfoundation.org>
+	Benjamin Bara <benjamin.bara@skidata.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Tor Vic <torvic9@mailbox.org>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 5.4 23/38] i2c: core: Fix atomic xfer check for non-preempt config
+Date: Sat, 13 Jan 2024 10:49:59 +0100
+Message-ID: <20240113094207.161207933@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.455533180@linuxfoundation.org>
 References: <20240113094206.455533180@linuxfoundation.org>
@@ -43,125 +43,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Benjamin Bara <benjamin.bara@skidata.com>
 
-commit ac9184fbb8478dab4a0724b279f94956b69be827 upstream.
+commit a3368e1186e3ce8e38f78cbca019622095b1f331 upstream.
 
-VIA VT6306/6307/6308 provides PCI interface compliant to 1394 OHCI. When
-the hardware is combined with Asmedia ASM1083/1085 PCIe-to-PCI bus bridge,
-it appears that accesses to its 'Isochronous Cycle Timer' register (offset
-0xf0 on PCI memory space) often causes unexpected system reboot in any
-type of AMD Ryzen machine (both 0x17 and 0x19 families). It does not
-appears in the other type of machine (AMD pre-Ryzen machine, Intel
-machine, at least), or in the other OHCI 1394 hardware (e.g. Texas
-Instruments).
+Since commit aa49c90894d0 ("i2c: core: Run atomic i2c xfer when
+!preemptible"), the whole reboot/power off sequence on non-preempt kernels
+is using atomic i2c xfer, as !preemptible() always results to 1.
 
-The issue explicitly appears at a commit dcadfd7f7c74 ("firewire: core:
-use union for callback of transaction completion") added to v6.5 kernel.
-It changed 1394 OHCI driver to access to the register every time to
-dispatch local asynchronous transaction. However, the issue exists in
-older version of kernel as long as it runs in AMD Ryzen machine, since
-the access to the register is required to maintain bus time. It is not
-hard to imagine that users experience the unexpected system reboot when
-generating bus reset by plugging any devices in, or reading the register
-by time-aware application programs; e.g. audio sample processing.
+During device_shutdown(), the i2c might be used a lot and not all busses
+have implemented an atomic xfer handler. This results in a lot of
+avoidable noise, like:
 
-This commit suppresses the unexpected system reboot in the combination of
-hardware. It avoids the access itself. As a result, the software stack can
-not provide the hardware time anymore to unit drivers, userspace
-applications, and nodes in the same IEEE 1394 bus. It brings apparent
-disadvantage since time-aware application programs require it, while
-time-unaware applications are available again; e.g. sbp2.
+[   12.687169] No atomic I2C transfer handler for 'i2c-0'
+[   12.692313] WARNING: CPU: 6 PID: 275 at drivers/i2c/i2c-core.h:40 i2c_smbus_xfer+0x100/0x118
+...
 
-Cc: stable@vger.kernel.org
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Closes: https://bugzilla.suse.com/show_bug.cgi?id=1215436
-Reported-by: Mario Limonciello <mario.limonciello@amd.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217994
-Reported-by: Tobias Gruetzmacher <tobias-lists@23.gs>
-Closes: https://sourceforge.net/p/linux1394/mailman/message/58711901/
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2240973
-Closes: https://bugs.launchpad.net/linux/+bug/2043905
-Link: https://lore.kernel.org/r/20240102110150.244475-1-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Fix this by allowing non-atomic xfer when the interrupts are enabled, as
+it was before.
+
+Link: https://lore.kernel.org/r/20231222230106.73f030a5@yea
+Link: https://lore.kernel.org/r/20240102150350.3180741-1-mwalle@kernel.org
+Link: https://lore.kernel.org/linux-i2c/13271b9b-4132-46ef-abf8-2c311967bb46@mailbox.org/
+Fixes: aa49c90894d0 ("i2c: core: Run atomic i2c xfer when !preemptible")
+Cc: stable@vger.kernel.org # v5.2+
+Signed-off-by: Benjamin Bara <benjamin.bara@skidata.com>
+Tested-by: Michael Walle <mwalle@kernel.org>
+Tested-by: Tor Vic <torvic9@mailbox.org>
+[wsa: removed a comment which needs more work, code is ok]
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firewire/ohci.c |   51 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ drivers/i2c/i2c-core.h |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/firewire/ohci.c
-+++ b/drivers/firewire/ohci.c
-@@ -279,6 +279,51 @@ static char ohci_driver_name[] = KBUILD_
- #define QUIRK_TI_SLLZ059		0x20
- #define QUIRK_IR_WAKE			0x40
+--- a/drivers/i2c/i2c-core.h
++++ b/drivers/i2c/i2c-core.h
+@@ -3,6 +3,7 @@
+  * i2c-core.h - interfaces internal to the I2C framework
+  */
  
-+// On PCI Express Root Complex in any type of AMD Ryzen machine, VIA VT6306/6307/6308 with Asmedia
-+// ASM1083/1085 brings an inconvenience that the read accesses to 'Isochronous Cycle Timer' register
-+// (at offset 0xf0 in PCI I/O space) often causes unexpected system reboot. The mechanism is not
-+// clear, since the read access to the other registers is enough safe; e.g. 'Node ID' register,
-+// while it is probable due to detection of any type of PCIe error.
-+#define QUIRK_REBOOT_BY_CYCLE_TIMER_READ	0x80000000
-+
-+#if IS_ENABLED(CONFIG_X86)
-+
-+static bool has_reboot_by_cycle_timer_read_quirk(const struct fw_ohci *ohci)
-+{
-+	return !!(ohci->quirks & QUIRK_REBOOT_BY_CYCLE_TIMER_READ);
-+}
-+
-+#define PCI_DEVICE_ID_ASMEDIA_ASM108X	0x1080
-+
-+static bool detect_vt630x_with_asm1083_on_amd_ryzen_machine(const struct pci_dev *pdev)
-+{
-+	const struct pci_dev *pcie_to_pci_bridge;
-+
-+	// Detect any type of AMD Ryzen machine.
-+	if (!static_cpu_has(X86_FEATURE_ZEN))
-+		return false;
-+
-+	// Detect VIA VT6306/6307/6308.
-+	if (pdev->vendor != PCI_VENDOR_ID_VIA)
-+		return false;
-+	if (pdev->device != PCI_DEVICE_ID_VIA_VT630X)
-+		return false;
-+
-+	// Detect Asmedia ASM1083/1085.
-+	pcie_to_pci_bridge = pdev->bus->self;
-+	if (pcie_to_pci_bridge->vendor != PCI_VENDOR_ID_ASMEDIA)
-+		return false;
-+	if (pcie_to_pci_bridge->device != PCI_DEVICE_ID_ASMEDIA_ASM108X)
-+		return false;
-+
-+	return true;
-+}
-+
-+#else
-+#define has_reboot_by_cycle_timer_read_quirk(ohci) false
-+#define detect_vt630x_with_asm1083_on_amd_ryzen_machine(pdev)	false
-+#endif
-+
- /* In case of multiple matches in ohci_quirks[], only the first one is used. */
- static const struct {
- 	unsigned short vendor, device, revision, flags;
-@@ -1717,6 +1762,9 @@ static u32 get_cycle_time(struct fw_ohci
- 	s32 diff01, diff12;
- 	int i;
++#include <linux/kconfig.h>
+ #include <linux/rwsem.h>
  
-+	if (has_reboot_by_cycle_timer_read_quirk(ohci))
-+		return 0;
-+
- 	c2 = reg_read(ohci, OHCI1394_IsochronousCycleTimer);
+ struct i2c_devinfo {
+@@ -29,7 +30,8 @@ int i2c_dev_irq_from_resources(const str
+  */
+ static inline bool i2c_in_atomic_xfer_mode(void)
+ {
+-	return system_state > SYSTEM_RUNNING && !preemptible();
++	return system_state > SYSTEM_RUNNING &&
++	       (IS_ENABLED(CONFIG_PREEMPT_COUNT) ? !preemptible() : irqs_disabled());
+ }
  
- 	if (ohci->quirks & QUIRK_CYCLE_TIMER) {
-@@ -3619,6 +3667,9 @@ static int pci_probe(struct pci_dev *dev
- 	if (param_quirks)
- 		ohci->quirks = param_quirks;
- 
-+	if (detect_vt630x_with_asm1083_on_amd_ryzen_machine(dev))
-+		ohci->quirks |= QUIRK_REBOOT_BY_CYCLE_TIMER_READ;
-+
- 	/*
- 	 * Because dma_alloc_coherent() allocates at least one page,
- 	 * we save space by using a common buffer for the AR request/
+ static inline int __i2c_lock_bus_helper(struct i2c_adapter *adap)
 
 
