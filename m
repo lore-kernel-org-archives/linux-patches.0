@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D540711C8D;
-	Sat, 13 Jan 2024 09:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF74310958;
+	Sat, 13 Jan 2024 09:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNxRJvN5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516DEC433C7;
-	Sat, 13 Jan 2024 09:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqCIKumi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC60C433F1;
+	Sat, 13 Jan 2024 09:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139943;
-	bh=OLY6KDGFcx1rr/xSPRO1FIsxCfabtD1PQ0CF4zPXcqE=;
+	s=korg; t=1705139946;
+	bh=Meqi9drEIokpyaZdeQidmLxfN65xZnkWqvgWGR6uhC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uNxRJvN5iQwLuo8Oz3ARtdV9b9NoxH+m2MGLZM4xpKqfTIr7wq1k94lCJROReaBl2
-	 ETe+XENjMJh5wSUaOWLKPp5K5vo2S1gETa0N6Ej/MI7vV0Sdo48rbLXMTrUx4RmXv7
-	 pV+seGzC+5KrK55nfOPApZBPAD0/PLNCxHX6K11Q=
+	b=GqCIKumiVK+h8Dqj8baUMrlJLzetW1RxJT7llu4OWw0JVchhvx325vzv7dm8zF448
+	 f7nZiKP20aM3CpS/ctq8dhKM1I2YXb3xKOStYfoC7Sl+y9FBDkdihQoqkCMta2ac1K
+	 ZvKLrQ3chgT3E5ki7wq6LEdWKASok1r71RJ4EcaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Bara <benjamin.bara@skidata.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Tor Vic <torvic9@mailbox.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.10 30/43] i2c: core: Fix atomic xfer check for non-preempt config
-Date: Sat, 13 Jan 2024 10:50:09 +0100
-Message-ID: <20240113094207.896862227@linuxfoundation.org>
+	Jiajun Xie <jiajun.xie.sh@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 31/43] mm: fix unmap_mapping_range high bits shift bug
+Date: Sat, 13 Jan 2024 10:50:10 +0100
+Message-ID: <20240113094207.927859670@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.930684111@linuxfoundation.org>
 References: <20240113094206.930684111@linuxfoundation.org>
@@ -43,59 +41,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Bara <benjamin.bara@skidata.com>
+From: Jiajun Xie <jiajun.xie.sh@gmail.com>
 
-commit a3368e1186e3ce8e38f78cbca019622095b1f331 upstream.
+commit 9eab0421fa94a3dde0d1f7e36ab3294fc306c99d upstream.
 
-Since commit aa49c90894d0 ("i2c: core: Run atomic i2c xfer when
-!preemptible"), the whole reboot/power off sequence on non-preempt kernels
-is using atomic i2c xfer, as !preemptible() always results to 1.
+The bug happens when highest bit of holebegin is 1, suppose holebegin is
+0x8000000111111000, after shift, hba would be 0xfff8000000111111, then
+vma_interval_tree_foreach would look it up fail or leads to the wrong
+result.
 
-During device_shutdown(), the i2c might be used a lot and not all busses
-have implemented an atomic xfer handler. This results in a lot of
-avoidable noise, like:
+error call seq e.g.:
+- mmap(..., offset=0x8000000111111000)
+  |- syscall(mmap, ... unsigned long, off):
+     |- ksys_mmap_pgoff( ... , off >> PAGE_SHIFT);
 
-[   12.687169] No atomic I2C transfer handler for 'i2c-0'
-[   12.692313] WARNING: CPU: 6 PID: 275 at drivers/i2c/i2c-core.h:40 i2c_smbus_xfer+0x100/0x118
-...
+  here pgoff is correctly shifted to 0x8000000111111,
+  but pass 0x8000000111111000 as holebegin to unmap
+  would then cause terrible result, as shown below:
 
-Fix this by allowing non-atomic xfer when the interrupts are enabled, as
-it was before.
+- unmap_mapping_range(..., loff_t const holebegin)
+  |- pgoff_t hba = holebegin >> PAGE_SHIFT;
+          /* hba = 0xfff8000000111111 unexpectedly */
 
-Link: https://lore.kernel.org/r/20231222230106.73f030a5@yea
-Link: https://lore.kernel.org/r/20240102150350.3180741-1-mwalle@kernel.org
-Link: https://lore.kernel.org/linux-i2c/13271b9b-4132-46ef-abf8-2c311967bb46@mailbox.org/
-Fixes: aa49c90894d0 ("i2c: core: Run atomic i2c xfer when !preemptible")
-Cc: stable@vger.kernel.org # v5.2+
-Signed-off-by: Benjamin Bara <benjamin.bara@skidata.com>
-Tested-by: Michael Walle <mwalle@kernel.org>
-Tested-by: Tor Vic <torvic9@mailbox.org>
-[wsa: removed a comment which needs more work, code is ok]
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+The issue happens in Heterogeneous computing, where the device(e.g.
+gpu) and host share the same virtual address space.
+
+A simple workflow pattern which hit the issue is:
+        /* host */
+    1. userspace first mmap a file backed VA range with specified offset.
+                        e.g. (offset=0x800..., mmap return: va_a)
+    2. write some data to the corresponding sys page
+                         e.g. (va_a = 0xAABB)
+        /* device */
+    3. gpu workload touches VA, triggers gpu fault and notify the host.
+        /* host */
+    4. reviced gpu fault notification, then it will:
+            4.1 unmap host pages and also takes care of cpu tlb
+                  (use unmap_mapping_range with offset=0x800...)
+            4.2 migrate sys page to device
+            4.3 setup device page table and resolve device fault.
+        /* device */
+    5. gpu workload continued, it accessed va_a and got 0xAABB.
+    6. gpu workload continued, it wrote 0xBBCC to va_a.
+        /* host */
+    7. userspace access va_a, as expected, it will:
+            7.1 trigger cpu vm fault.
+            7.2 driver handling fault to migrate gpu local page to host.
+    8. userspace then could correctly get 0xBBCC from va_a
+    9. done
+
+But in step 4.1, if we hit the bug this patch mentioned, then userspace
+would never trigger cpu fault, and still get the old value: 0xAABB.
+
+Making holebegin unsigned first fixes the bug.
+
+Link: https://lkml.kernel.org/r/20231220052839.26970-1-jiajun.xie.sh@gmail.com
+Signed-off-by: Jiajun Xie <jiajun.xie.sh@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/memory.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/i2c-core.h
-+++ b/drivers/i2c/i2c-core.h
-@@ -3,6 +3,7 @@
-  * i2c-core.h - interfaces internal to the I2C framework
-  */
- 
-+#include <linux/kconfig.h>
- #include <linux/rwsem.h>
- 
- struct i2c_devinfo {
-@@ -29,7 +30,8 @@ int i2c_dev_irq_from_resources(const str
-  */
- static inline bool i2c_in_atomic_xfer_mode(void)
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3300,8 +3300,8 @@ void unmap_mapping_pages(struct address_
+ void unmap_mapping_range(struct address_space *mapping,
+ 		loff_t const holebegin, loff_t const holelen, int even_cows)
  {
--	return system_state > SYSTEM_RUNNING && !preemptible();
-+	return system_state > SYSTEM_RUNNING &&
-+	       (IS_ENABLED(CONFIG_PREEMPT_COUNT) ? !preemptible() : irqs_disabled());
- }
+-	pgoff_t hba = holebegin >> PAGE_SHIFT;
+-	pgoff_t hlen = (holelen + PAGE_SIZE - 1) >> PAGE_SHIFT;
++	pgoff_t hba = (pgoff_t)(holebegin) >> PAGE_SHIFT;
++	pgoff_t hlen = ((pgoff_t)(holelen) + PAGE_SIZE - 1) >> PAGE_SHIFT;
  
- static inline int __i2c_lock_bus_helper(struct i2c_adapter *adap)
+ 	/* Check for overflow. */
+ 	if (sizeof(holelen) > sizeof(hlen)) {
 
 
