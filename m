@@ -1,32 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A4D185A;
-	Sat, 13 Jan 2024 09:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3541846;
+	Sat, 13 Jan 2024 09:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zD5EzmrP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758A7C43390;
-	Sat, 13 Jan 2024 09:57:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CD8upUI8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D58C433C7;
+	Sat, 13 Jan 2024 09:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139835;
-	bh=JcZzu4Vjy7fGlc0WQoyGEi6favtl2be5lROykbOKeyk=;
+	s=korg; t=1705139838;
+	bh=rYT4FRic/2d+H9pP5KSKNmNyRQvFvI4eb1Rc0l6u06E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zD5EzmrPIfLxoZGNCsSAnk9+xaPwNLBSYAbck0o144VTqBNRTiHf3m4I4Haz4LGvr
-	 l1BYCDFDBK/cjr7LHKOeh6/+l8ZH1y6ceztvN3kBLYgHGo/VxAuJEDqFioHFkEPh9M
-	 HQimaLQDrtrHmt4bJW6bJ6jTAb7DoW1GrHr+G30Q=
+	b=CD8upUI8HrU6SK4KctBK1wDA5kAfS00tdp0H6UFLhGP8F1rmdMcHM3Q3aFTdB1GB6
+	 kSxYLMemzKB4kBaAxq2KjQ9Y3sVywfcnrDHjWS4nDoLrLEsS6+hnrnBA+h3sCPS13r
+	 lO9ErlR59L/fp5VNi0sHTV8gWbAUH+WO+JdJ2iNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Fastabend <john.fastabend@gmail.com>,
-	Jann Horn <jannh@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 32/38] net: tls, update curr on splice as well
-Date: Sat, 13 Jan 2024 10:50:08 +0100
-Message-ID: <20240113094207.433090868@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Edward Adam Davis <eadavis@qq.com>,
+	David Howells <dhowells@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Jeffrey E Altman <jaltman@auristor.com>,
+	Wang Lei <wang840925@gmail.com>,
+	Jeff Layton <jlayton@redhat.com>,
+	Steve French <sfrench@us.ibm.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	syzbot+94bbb75204a05da3d89f@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 01/43] keys, dns: Fix missing size check of V1 server-list header
+Date: Sat, 13 Jan 2024 10:49:40 +0100
+Message-ID: <20240113094206.977905274@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240113094206.455533180@linuxfoundation.org>
-References: <20240113094206.455533180@linuxfoundation.org>
+In-Reply-To: <20240113094206.930684111@linuxfoundation.org>
+References: <20240113094206.930684111@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,37 +50,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Fastabend <john.fastabend@gmail.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit c5a595000e2677e865a39f249c056bc05d6e55fd upstream.
+commit 1997b3cb4217b09e49659b634c94da47f0340409 upstream.
 
-The curr pointer must also be updated on the splice similar to how
-we do this for other copy types.
+The dns_resolver_preparse() function has a check on the size of the
+payload for the basic header of the binary-style payload, but is missing
+a check for the size of the V1 server-list payload header after
+determining that's what we've been given.
 
-Fixes: d829e9c4112b ("tls: convert to generic sk_msg interface")
-Signed-off-by: John Fastabend <john.fastabend@gmail.com>
-Reported-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20231206232706.374377-2-john.fastabend@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by getting rid of the the pointer to the basic header and just
+assuming that we have a V1 server-list payload and moving the V1 server
+list pointer inside the if-statement.  Dealing with other types and
+versions can be left for when such have been defined.
+
+This can be tested by doing the following with KASAN enabled:
+
+    echo -n -e '\x0\x0\x1\x2' | keyctl padd dns_resolver foo @p
+
+and produces an oops like the following:
+
+    BUG: KASAN: slab-out-of-bounds in dns_resolver_preparse+0xc9f/0xd60 net/dns_resolver/dns_key.c:127
+    Read of size 1 at addr ffff888028894084 by task syz-executor265/5069
+    ...
+    Call Trace:
+      dns_resolver_preparse+0xc9f/0xd60 net/dns_resolver/dns_key.c:127
+      __key_create_or_update+0x453/0xdf0 security/keys/key.c:842
+      key_create_or_update+0x42/0x50 security/keys/key.c:1007
+      __do_sys_add_key+0x29c/0x450 security/keys/keyctl.c:134
+      do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+      do_syscall_64+0x40/0x110 arch/x86/entry/common.c:83
+      entry_SYSCALL_64_after_hwframe+0x62/0x6a
+
+This patch was originally by Edward Adam Davis, but was modified by
+Linus.
+
+Fixes: b946001d3bb1 ("keys, dns: Allow key types (eg. DNS) to be reclaimed immediately on expiry")
+Reported-and-tested-by: syzbot+94bbb75204a05da3d89f@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/0000000000009b39bc060c73e209@google.com/
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Tested-by: David Howells <dhowells@redhat.com>
+Cc: Edward Adam Davis <eadavis@qq.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Jeffrey E Altman <jaltman@auristor.com>
+Cc: Wang Lei <wang840925@gmail.com>
+Cc: Jeff Layton <jlayton@redhat.com>
+Cc: Steve French <sfrench@us.ibm.com>
+Cc: Marc Dionne <marc.dionne@auristor.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Jeffrey E Altman <jaltman@auristor.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/dns_resolver/dns_key.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1211,6 +1211,8 @@ alloc_payload:
+--- a/net/dns_resolver/dns_key.c
++++ b/net/dns_resolver/dns_key.c
+@@ -91,8 +91,6 @@ const struct cred *dns_resolver_cache;
+ static int
+ dns_resolver_preparse(struct key_preparsed_payload *prep)
+ {
+-	const struct dns_server_list_v1_header *v1;
+-	const struct dns_payload_header *bin;
+ 	struct user_key_payload *upayload;
+ 	unsigned long derrno;
+ 	int ret;
+@@ -103,27 +101,28 @@ dns_resolver_preparse(struct key_prepars
+ 		return -EINVAL;
+ 
+ 	if (data[0] == 0) {
++		const struct dns_server_list_v1_header *v1;
++
+ 		/* It may be a server list. */
+-		if (datalen <= sizeof(*bin))
++		if (datalen <= sizeof(*v1))
+ 			return -EINVAL;
+ 
+-		bin = (const struct dns_payload_header *)data;
+-		kenter("[%u,%u],%u", bin->content, bin->version, datalen);
+-		if (bin->content != DNS_PAYLOAD_IS_SERVER_LIST) {
++		v1 = (const struct dns_server_list_v1_header *)data;
++		kenter("[%u,%u],%u", v1->hdr.content, v1->hdr.version, datalen);
++		if (v1->hdr.content != DNS_PAYLOAD_IS_SERVER_LIST) {
+ 			pr_warn_ratelimited(
+ 				"dns_resolver: Unsupported content type (%u)\n",
+-				bin->content);
++				v1->hdr.content);
+ 			return -EINVAL;
  		}
  
- 		sk_msg_page_add(msg_pl, page, copy, offset);
-+		msg_pl->sg.copybreak = 0;
-+		msg_pl->sg.curr = msg_pl->sg.end;
- 		sk_mem_charge(sk, copy);
+-		if (bin->version != 1) {
++		if (v1->hdr.version != 1) {
+ 			pr_warn_ratelimited(
+ 				"dns_resolver: Unsupported server list version (%u)\n",
+-				bin->version);
++				v1->hdr.version);
+ 			return -EINVAL;
+ 		}
  
- 		offset += copy;
+-		v1 = (const struct dns_server_list_v1_header *)bin;
+ 		if ((v1->status != DNS_LOOKUP_GOOD &&
+ 		     v1->status != DNS_LOOKUP_GOOD_WITH_BAD)) {
+ 			if (prep->expiry == TIME64_MAX)
 
 
