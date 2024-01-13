@@ -1,116 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mailrelay.tu-berlin.de (mailrelay.tu-berlin.de [130.149.7.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDE66AA6;
-	Sat, 13 Jan 2024 18:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5D063A9
+	for <patches@lists.linux.dev>; Sat, 13 Jan 2024 19:27:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mailbox.tu-berlin.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=campus.tu-berlin.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rnVxneUk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D79CC433F1;
-	Sat, 13 Jan 2024 18:44:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705171497;
-	bh=Qtpbk1zVnu6maiTd9Dtcw2fER79l3G0LG5NYeYnh6D0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rnVxneUksCPJPAbQmgd8EQNl4VlR/HFjRjE3RBIPBQjE8vZ7/V1wqNabyg5H7DYr3
-	 3cobEndrUt8cUcoJ74y1e6MZkuvyJG8zIu24AH3fQLG6y4J1+Atar0vAAqzjUFByxk
-	 mUBDHYo+v0+oegUVWUDLg3pb4IojimSnagNQbGZO+vpj+JppST3ZCZMFdLC8ZBykJs
-	 aPPg7AkfzodqaYifLI7vZIs9huTIx8uKSekzoTFJdakpfD1qowZbP4K/XC67BdoDq4
-	 zkxsgu+qkZKrl4SCZFbdhzDaWuTklC6b9w29N3j40Yxk/qDwY5l7v3rOTwZNJWNQEq
-	 YjSPF1eAHFPSA==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.6 0/1] 6.6.12-rc1 review
-Date: Sat, 13 Jan 2024 10:44:55 -0800
-Message-Id: <20240113184455.46585-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240113094204.275569789@linuxfoundation.org>
-References: 
+	dkim=pass (1024-bit key) header.d=tu-berlin.de header.i=@tu-berlin.de header.b="hFoxloZe"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=tu-berlin.de; l=4114; s=dkim-tub; t=1705174028;
+  h=message-id:subject:from:to:cc:date:in-reply-to:
+   references:content-transfer-encoding:mime-version;
+  bh=b9fJikpYCnNONhCw+bFmkc7caL8HTLEf1EylWV7eMBU=;
+  b=hFoxloZexVz43l1pyiav1sKpiiDp1+XTjdftzw1Pn8hH/2+nES94ujb0
+   qVS02bTEjrYbKdNCW6OdQVaTGBKKu8x0ThiAgWikFNgUmy8KawmNRWX8z
+   7Nb6gGYJdMdBcFix6xxm4AEmcXW3VEmQ7aHg4EciZEUf7NENoqEV3k5sK
+   w=;
+X-CSE-ConnectionGUID: sJ3GttmKSb6Vxxt3O/P9bw==
+X-CSE-MsgGUID: R8Xq9vUnRsWE43VV4R1wKQ==
+X-IronPort-AV: E=Sophos;i="6.04,192,1695679200"; 
+   d="scan'208";a="16301829"
+Received: from bulkmail.tu-berlin.de (HELO mail.tu-berlin.de) ([141.23.12.143])
+  by mailrelay.tu-berlin.de with ESMTP; 13 Jan 2024 20:25:56 +0100
+Message-ID: <27f5543f5c6023ce0d9bc6161aef9e37cc720a02.camel@mailbox.tu-berlin.de>
+Subject: Re: [PATCH 5.10 09/43] net: Implement missing
+ getsockopt(SO_TIMESTAMPING_NEW)
+From: =?ISO-8859-1?Q?J=F6rn-Thorben?= Hinz <jthinz@mailbox.tu-berlin.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, Willem de Bruijn <willemb@google.com>, "David
+	S. Miller" <davem@davemloft.net>, Sasha Levin <sashal@kernel.org>
+Date: Sat, 13 Jan 2024 20:25:54 +0100
+In-Reply-To: <20240113094207.231546964@linuxfoundation.org>
+References: <20240113094206.930684111@linuxfoundation.org>
+	 <20240113094207.231546964@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Hello,
+SGkgR3JlZywKCnRoaXMgcGF0Y2ggaXMgYXBwbGllZCBpbiB0aGUgd3JvbmcgcGxhY2UgKHRoZSB3
+cm9uZyBjYXNlKSBoZXJlIGluCnNvY2tfZ2V0c29ja29wdCgpLiBUaGUgZnVuY3Rpb24gc2VlbXMg
+dG8gaGF2ZSBjaGFuZ2VkIGluIGEgbnVtYmVyIG9mCnBsYWNlcyBhZnRlciA1LjEwLCBhcHBhcmVu
+dGx5IHRvbyBtdWNoIGZvciBhbiBhdXRvbWF0aWMoPyEpIG1lcmdlLgoKT24gU2F0LCAyMDI0LTAx
+LTEzIGF0IDEwOjQ5ICswMTAwLCBHcmVnIEtyb2FoLUhhcnRtYW4gd3JvdGU6Cj4gNS4xMC1zdGFi
+bGUgcmV2aWV3IHBhdGNoLsKgIElmIGFueW9uZSBoYXMgYW55IG9iamVjdGlvbnMsIHBsZWFzZSBs
+ZXQKPiBtZSBrbm93Lgo+IAo+IC0tLS0tLS0tLS0tLS0tLS0tLQo+IAo+IEZyb206IErDtnJuLVRo
+b3JiZW4gSGlueiA8anRoaW56QG1haWxib3gudHUtYmVybGluLmRlPgo+IAo+IFsgVXBzdHJlYW0g
+Y29tbWl0IDdmNmNhOTVkMTZiOTY1NjdjZTRjZjQ1OGEyNzkwZmYxN2ZhNjIwYzMgXQo+IAo+IENv
+bW1pdCA5NzE4NDc1ZTY5MDggKCJzb2NrZXQ6IEFkZCBTT19USU1FU1RBTVBJTkdfTkVXIikgYWRk
+ZWQgdGhlIG5ldwo+IHNvY2tldCBvcHRpb24gU09fVElNRVNUQU1QSU5HX05FVy4gU2V0dGluZyB0
+aGUgb3B0aW9uIGlzIGhhbmRsZWQgaW4KPiBza19zZXRzb2Nrb3B0KCksIHF1ZXJ5aW5nIGl0IHdh
+cyBub3QgaGFuZGxlZCBpbiBza19nZXRzb2Nrb3B0KCksCj4gdGhvdWdoLgo+IAo+IEZvbGxvd2lu
+ZyByZW1hcmtzIG9uIGFuIGVhcmxpZXIgc3VibWlzc2lvbiBvZiB0aGlzIHBhdGNoLCBrZWVwIHRo
+ZQo+IG9sZAo+IGJlaGF2aW9yIG9mIGdldHNvY2tvcHQoU09fVElNRVNUQU1QSU5HX09MRCkgd2hp
+Y2ggcmV0dXJucyB0aGUgYWN0aXZlCj4gZmxhZ3MgZXZlbiBpZiB0aGV5IGFjdHVhbGx5IGhhdmUg
+YmVlbiBzZXQgdGhyb3VnaAo+IFNPX1RJTUVTVEFNUElOR19ORVcuCj4gCj4gVGhlIG5ldyBnZXRz
+b2Nrb3B0KFNPX1RJTUVTVEFNUElOR19ORVcpIGlzIHN0cmljdGVyLCByZXR1cm5pbmcgZmxhZ3MK
+PiBvbmx5IGlmIHRoZXkgaGF2ZSBiZWVuIHNldCB0aHJvdWdoIHRoZSBzYW1lIG9wdGlvbi4KPiAK
+PiBGaXhlczogOTcxODQ3NWU2OTA4ICgic29ja2V0OiBBZGQgU09fVElNRVNUQU1QSU5HX05FVyIp
+Cj4gTGluazoKPiBodHRwczovL2xvcmUua2VybmVsLm9yZy9sa21sLzIwMjMwNzAzMTc1MDQ4LjE1
+MTY4My0xLWp0aGluekBtYWlsYm94LnR1LWJlcmxpbi5kZS8KPiBMaW5rOgo+IGh0dHBzOi8vbG9y
+ZS5rZXJuZWwub3JnL25ldGRldi8wZDdjZGRjOS0wM2ZhLTQzZGItYTU3OS0xNGYzZTgyMjYxNWJA
+YXBwLmZhc3RtYWlsLmNvbS8KPiBTaWduZWQtb2ZmLWJ5OiBKw7Zybi1UaG9yYmVuIEhpbnogPGp0
+aGluekBtYWlsYm94LnR1LWJlcmxpbi5kZT4KPiBSZXZpZXdlZC1ieTogV2lsbGVtIGRlIEJydWlq
+biA8d2lsbGVtYkBnb29nbGUuY29tPgo+IFNpZ25lZC1vZmYtYnk6IERhdmlkIFMuIE1pbGxlciA8
+ZGF2ZW1AZGF2ZW1sb2Z0Lm5ldD4KPiBTaWduZWQtb2ZmLWJ5OiBTYXNoYSBMZXZpbiA8c2FzaGFs
+QGtlcm5lbC5vcmc+Cj4gLS0tCj4gwqBuZXQvY29yZS9zb2NrLmMgfCAxMSArKysrKysrKystLQo+
+IMKgMSBmaWxlIGNoYW5nZWQsIDkgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKPiAKPiBk
+aWZmIC0tZ2l0IGEvbmV0L2NvcmUvc29jay5jIGIvbmV0L2NvcmUvc29jay5jCj4gaW5kZXggYTA2
+OWI1NDc2ZGY0Ni4uOWMzYmMyNGJmZGQxZiAxMDA2NDQKPiAtLS0gYS9uZXQvY29yZS9zb2NrLmMK
+PiArKysgYi9uZXQvY29yZS9zb2NrLmMKPiBAQCAtMTM4Myw5ICsxMzgzLDE2IEBAIGludCBzb2Nr
+X2dldHNvY2tvcHQoc3RydWN0IHNvY2tldCAqc29jaywgaW50Cj4gbGV2ZWwsIGludCBvcHRuYW1l
+LAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgYnJlYWs7Cj4gwqAKPiDCoMKgwqDC
+oMKgwqDCoMKgY2FzZSBTT19MSU5HRVI6Cj4gK8KgwqDCoMKgwqDCoMKgY2FzZSBTT19USU1FU1RB
+TVBJTkdfTkVXOgo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgbHbCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgPSBzaXplb2Yodi5saW5nKTsKPiAtwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgdi5saW5nLmxfb25vZmbCoMKgPSBzb2NrX2ZsYWcoc2ssIFNPQ0tfTElOR0VS
+KTsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgdi5saW5nLmxfbGluZ2VywqA9IHNr
+LT5za19saW5nZXJ0aW1lIC8gSFo7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoC8q
+IEZvciB0aGUgbGF0ZXItYWRkZWQgY2FzZSBTT19USU1FU1RBTVBJTkdfTkVXOiBCZQo+IHN0cmlj
+dCBhYm91dCBvbmx5Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAqIHJldHVybmlu
+ZyB0aGUgZmxhZ3Mgd2hlbiB0aGV5IHdlcmUgc2V0IHRocm91Z2ggdGhlCj4gc2FtZSBvcHRpb24u
+Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAqIERvbid0IGNoYW5nZSB0aGUgYmV2
+aW91ciBmb3IgdGhlIG9sZCBjYXNlCj4gU09fVElNRVNUQU1QSU5HX09MRC4KPiArwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgICovCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oGlmIChvcHRuYW1lID09IFNPX1RJTUVTVEFNUElOR19PTEQgfHwgc29ja19mbGFnKHNrLAo+IFNP
+Q0tfVFNUQU1QX05FVykpIHsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoHYubGluZy5sX29ub2ZmwqDCoD0gc29ja19mbGFnKHNrLCBTT0NLX0xJTkdFUik7
+Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB2Lmxpbmcu
+bF9saW5nZXLCoD0gc2stPnNrX2xpbmdlcnRpbWUgLyBIWjsKPiArwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgfQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgYnJlYWs7Cj4g
+wqAKPiDCoMKgwqDCoMKgwqDCoMKgY2FzZSBTT19CU0RDT01QQVQ6Cgo=
 
-On Sat, 13 Jan 2024 10:50:58 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.6.12 release.
-> There are 1 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Mon, 15 Jan 2024 09:41:55 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.12-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
-
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
-
-Tested-by: SeongJae Park <sj@kernel.org>
-
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] f44c56831910 ("Linux 6.6.12-rc1")
-
-Thanks,
-SJ
-
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_m68k.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
