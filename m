@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CBF1EEE6;
-	Sat, 13 Jan 2024 10:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244791EEE6;
+	Sat, 13 Jan 2024 10:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xH5HgGIH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B21DC433F1;
-	Sat, 13 Jan 2024 10:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+lTMp9+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9343CC433F1;
+	Sat, 13 Jan 2024 10:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705140100;
-	bh=DjUxWnR+0Gi6jQV42fNkt6pEUdhyGlPa8hjdFxDO61E=;
+	s=korg; t=1705140103;
+	bh=nGtQDz0urymHA+/pNQWSHinAHunAAYwq+TYZvZwHluQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xH5HgGIH7vT8PvjCD3ru+D5UrF6prsvetfpWf5Csv1A+7P+ipRFPXOe1Lo5CSYN/W
-	 zeXu/mC2EuGJec0eHtJIzbA96kU6/okum49jFaTP9AGULBIfhAVd5zrP5SQ1T6Q66R
-	 qvvOO61JvwCJeIcVjc55tvq7mG7KMiEI0x9Cbq9s=
+	b=a+lTMp9+qmnxZvE+f14jeEthk7VHdYRk/ALZtrK21f9IxvywqjZxkwk9P/mTc/2su
+	 iqmCxxMdqzF1o4sDTP7O/JnL+I+g0xcpe0bh0/g7Ewsl93aYggDyqp/VXxKL8AFo6l
+	 o+3SftL9WZVtsHFLTqZ3hq/4YgmkEYqaubnDYvJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 29/59] ASoC: meson: g12a-tohdmitx: Validate written enum values
-Date: Sat, 13 Jan 2024 10:50:00 +0100
-Message-ID: <20240113094210.207231326@linuxfoundation.org>
+Subject: [PATCH 5.15 20/59] can: raw: add support for SO_MARK
+Date: Sat, 13 Jan 2024 10:49:51 +0100
+Message-ID: <20240113094209.933730914@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
 References: <20240113094209.301672391@linuxfoundation.org>
@@ -41,48 +42,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 1e001206804be3f3d21f4a1cf16e5d059d75643f ]
+[ Upstream commit 0826e82b8a32e646b7b32ba8b68ba30812028e47 ]
 
-When writing to an enum we need to verify that the value written is valid
-for the enumeration, the helper function snd_soc_item_enum_to_val() doesn't
-do it since it needs to return an unsigned (and in any case we'd need to
-check the return value).
+Add support for SO_MARK to the CAN_RAW protocol. This makes it
+possible to add traffic control filters based on the fwmark.
 
-Fixes: c8609f3870f7 ("ASoC: meson: add g12a tohdmitx control")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20240103-meson-enum-val-v1-2-424af7a8fb91@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/all/20221210113653.170346-1-mkl@pengutronix.de
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: 7f6ca95d16b9 ("net: Implement missing getsockopt(SO_TIMESTAMPING_NEW)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/g12a-tohdmitx.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/can/raw.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/meson/g12a-tohdmitx.c b/sound/soc/meson/g12a-tohdmitx.c
-index 6c99052feafd8..6b16159733f72 100644
---- a/sound/soc/meson/g12a-tohdmitx.c
-+++ b/sound/soc/meson/g12a-tohdmitx.c
-@@ -45,6 +45,9 @@ static int g12a_tohdmitx_i2s_mux_put_enum(struct snd_kcontrol *kcontrol,
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	unsigned int mux, changed;
+diff --git a/net/can/raw.c b/net/can/raw.c
+index ed8834b853bee..e32ffcd200f38 100644
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -836,6 +836,7 @@ static int raw_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
+ 	skb->dev = dev;
+ 	skb->sk = sk;
+ 	skb->priority = sk->sk_priority;
++	skb->mark = sk->sk_mark;
+ 	skb->tstamp = sockc.transmit_time;
  
-+	if (ucontrol->value.enumerated.item[0] >= e->items)
-+		return -EINVAL;
-+
- 	mux = snd_soc_enum_item_to_val(e, ucontrol->value.enumerated.item[0]);
- 	changed = snd_soc_component_test_bits(component, e->reg,
- 					      CTRL0_I2S_DAT_SEL,
-@@ -93,6 +96,9 @@ static int g12a_tohdmitx_spdif_mux_put_enum(struct snd_kcontrol *kcontrol,
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	unsigned int mux, changed;
- 
-+	if (ucontrol->value.enumerated.item[0] >= e->items)
-+		return -EINVAL;
-+
- 	mux = snd_soc_enum_item_to_val(e, ucontrol->value.enumerated.item[0]);
- 	changed = snd_soc_component_test_bits(component, TOHDMITX_CTRL0,
- 					      CTRL0_SPDIF_SEL,
+ 	skb_setup_tx_timestamp(skb, sockc.tsflags);
 -- 
 2.43.0
 
