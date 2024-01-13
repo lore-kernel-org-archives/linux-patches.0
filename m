@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CF317E8;
-	Sat, 13 Jan 2024 09:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0B015AF;
+	Sat, 13 Jan 2024 09:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttFOjwKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD0FC433F1;
-	Sat, 13 Jan 2024 09:54:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bho2CTWg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E109EC433F1;
+	Sat, 13 Jan 2024 09:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139656;
-	bh=WNwfl+SBrAkK5cGDLrUFieqC8i2UOvT14Jr2d/onaMs=;
+	s=korg; t=1705139659;
+	bh=+JXjBZLgfZU9aiO2nEPbtTqRBh60ilpIFy9NCvjpJUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ttFOjwKAXbY8FYK2dZC68GJczBBweMSh98qVBD7+L0PqrGk84/WwRo+OioRa7fI+M
-	 7h01/xg065SITvPVMiIUyB93wXmqRF1RvMhTimZXb39LGcNUJC921M8ftexj3Eun6y
-	 eed2CCun78EZyAMYiFe0ziZmNwlY/SD/Oc3Ck0v8=
+	b=Bho2CTWghdeh226uAZJlB7Zda/pu1tizWyFJY8eAoUnkpwL+Krsoqi1OIrdKTuYVD
+	 p1K+Rdn1Kaw6FtalmjZaYbgGpT+ZD7xWtH2QJLkE/jPw/gok4A3qUuJjuig/Uv0iSK
+	 Q9U/HLkYksra5u40eCyPgU2+GCwjZKOc54kalBGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 12/25] bnxt_en: Remove mis-applied code from bnxt_cfg_ntp_filters()
-Date: Sat, 13 Jan 2024 10:49:53 +0100
-Message-ID: <20240113094205.425957997@linuxfoundation.org>
+Subject: [PATCH 4.19 13/25] mm/memory-failure: check the mapcount of the precise page
+Date: Sat, 13 Jan 2024 10:49:54 +0100
+Message-ID: <20240113094205.453376430@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094205.025407355@linuxfoundation.org>
 References: <20240113094205.025407355@linuxfoundation.org>
@@ -43,45 +44,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit e009b2efb7a8850498796b360043ac25c8d3d28f ]
+[ Upstream commit c79c5a0a00a9457718056b588f312baadf44e471 ]
 
-The 2 lines to check for the BNXT_HWRM_PF_UNLOAD_SP_EVENT bit was
-mis-applied to bnxt_cfg_ntp_filters() and should have been applied to
-bnxt_sp_task().
+A process may map only some of the pages in a folio, and might be missed
+if it maps the poisoned page but not the head page.  Or it might be
+unnecessarily hit if it maps the head page, but not the poisoned page.
 
-Fixes: 19241368443f ("bnxt_en: Send PF driver unload notification to all VFs.")
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lkml.kernel.org/r/20231218135837.3310403-3-willy@infradead.org
+Fixes: 7af446a841a2 ("HWPOISON, hugetlb: enable error handling path for hugepage")
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/memory-failure.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index d79281c6d915d..ca817b251ef58 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -7847,6 +7847,8 @@ static void bnxt_sp_task(struct work_struct *work)
- 		bnxt_cfg_ntp_filters(bp);
- 	if (test_and_clear_bit(BNXT_HWRM_EXEC_FWD_REQ_SP_EVENT, &bp->sp_event))
- 		bnxt_hwrm_exec_fwd_req(bp);
-+	if (test_and_clear_bit(BNXT_HWRM_PF_UNLOAD_SP_EVENT, &bp->sp_event))
-+		netdev_info(bp->dev, "Receive PF driver unload event!\n");
- 	if (test_and_clear_bit(BNXT_VXLAN_ADD_PORT_SP_EVENT, &bp->sp_event)) {
- 		bnxt_hwrm_tunnel_dst_port_alloc(
- 			bp, bp->vxlan_port,
-@@ -8407,8 +8409,6 @@ static void bnxt_cfg_ntp_filters(struct bnxt *bp)
- 			}
- 		}
- 	}
--	if (test_and_clear_bit(BNXT_HWRM_PF_UNLOAD_SP_EVENT, &bp->sp_event))
--		netdev_info(bp->dev, "Receive PF driver unload event!");
- }
+diff --git a/mm/memory-failure.c b/mm/memory-failure.c
+index 3da3c63dccd1a..c971d5e11f932 100644
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -989,7 +989,7 @@ static bool hwpoison_user_mappings(struct page *p, unsigned long pfn,
+ 	 * This check implies we don't kill processes if their pages
+ 	 * are in the swap cache early. Those are always late kills.
+ 	 */
+-	if (!page_mapped(hpage))
++	if (!page_mapped(p))
+ 		return true;
  
- #else
+ 	if (PageKsm(p)) {
+@@ -1033,10 +1033,10 @@ static bool hwpoison_user_mappings(struct page *p, unsigned long pfn,
+ 	if (kill)
+ 		collect_procs(hpage, &tokill, flags & MF_ACTION_REQUIRED);
+ 
+-	unmap_success = try_to_unmap(hpage, ttu);
++	unmap_success = try_to_unmap(p, ttu);
+ 	if (!unmap_success)
+ 		pr_err("Memory failure: %#lx: failed to unmap page (mapcount=%d)\n",
+-		       pfn, page_mapcount(hpage));
++		       pfn, page_mapcount(p));
+ 
+ 	/*
+ 	 * try_to_unmap() might put mlocked page in lru cache, so call
 -- 
 2.43.0
 
