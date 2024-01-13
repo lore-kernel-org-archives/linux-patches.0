@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F431848;
-	Sat, 13 Jan 2024 10:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E4A63C3;
+	Sat, 13 Jan 2024 10:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ZLeSMVH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90908C433C7;
-	Sat, 13 Jan 2024 10:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEchIqRD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750CDC433F1;
+	Sat, 13 Jan 2024 10:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705140150;
-	bh=RYJ0zOVeHGV6RMrx+kt2x0lZrPn5TUnEbJBUXnr91wk=;
+	s=korg; t=1705140152;
+	bh=lmVkGszCyShbSmz6NkCYy7Om229lAJ+gV5xQTgZzL0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ZLeSMVHlT7lBHxH35E5xp7DiyWERiLb+Oucxmo5f7mdD9XmyiOpDRVOz7l+U+wec
-	 mv34aQaik6ViAk8HnGPIt276mA7WV32/eVSpjHZDjvpF0vZuRr3RqYBfQT+/SL7UYb
-	 d/ZQVEBP+Q8TTvaL7PlrEQC+KuKOKr6XxDg0jzhw=
+	b=CEchIqRD/Lpis/BizMG2EcqTmAb/HCW8p9cvJwf3eveLBbm/a1amtq7SlENF9rjOA
+	 cuWNQXxtVgXeB+KUFTGfsKqeySjkXy/DSAtppzAgCyzNMWJKhTUpcf/JobERaJuYxt
+	 /Ax1oVPZOhDJ/x8Oa/MaCOpxJ87bTqoyJQeoZoIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	email200202 <email200202@yahoo.com>,
-	NeilBrown <neilb@suse.de>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 3/4] Revert "nfsd: separate nfsd_last_thread() from nfsd_put()"
-Date: Sat, 13 Jan 2024 10:50:41 +0100
-Message-ID: <20240113094204.144145096@linuxfoundation.org>
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Jon Maxwell <jmaxwell37@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"Jitindar Singh, Suraj" <surajjs@amazon.com>
+Subject: [PATCH 6.1 4/4] ipv6: remove max_size check inline with ipv4
+Date: Sat, 13 Jan 2024 10:50:42 +0100
+Message-ID: <20240113094204.182490438@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094204.017594027@linuxfoundation.org>
 References: <20240113094204.017594027@linuxfoundation.org>
@@ -44,164 +44,202 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Jon Maxwell <jmaxwell37@gmail.com>
 
-This reverts commit 03d68ffc48b94cc1e15bbf3b4f16f1e1e4fa286a which is
-commit 9f28a971ee9fdf1bf8ce8c88b103f483be610277 upstream.
+commit af6d10345ca76670c1b7c37799f0d5576ccef277 upstream.
 
-It is reported to cause issues, so revert it.
+In ip6_dst_gc() replace:
 
-Reported-by: email200202 <email200202@yahoo.com>
-Link: https://lore.kernel.org/r/e341cb408b5663d8c91b8fa57b41bb984be43448.camel@kernel.org
-Cc: NeilBrown <neilb@suse.de>
-Cc: Jeff Layton <jlayton@kernel.org>
-Cc: Chuck Lever <chuck.lever@oracle.com>
-Cc: Sasha Levin <sashal@kernel.org>
+  if (entries > gc_thresh)
+
+With:
+
+  if (entries > ops->gc_thresh)
+
+Sending Ipv6 packets in a loop via a raw socket triggers an issue where a
+route is cloned by ip6_rt_cache_alloc() for each packet sent. This quickly
+consumes the Ipv6 max_size threshold which defaults to 4096 resulting in
+these warnings:
+
+[1]   99.187805] dst_alloc: 7728 callbacks suppressed
+[2] Route cache is full: consider increasing sysctl net.ipv6.route.max_size.
+.
+.
+[300] Route cache is full: consider increasing sysctl net.ipv6.route.max_size.
+
+When this happens the packet is dropped and sendto() gets a network is
+unreachable error:
+
+remaining pkt 200557 errno 101
+remaining pkt 196462 errno 101
+.
+.
+remaining pkt 126821 errno 101
+
+Implement David Aherns suggestion to remove max_size check seeing that Ipv6
+has a GC to manage memory usage. Ipv4 already does not check max_size.
+
+Here are some memory comparisons for Ipv4 vs Ipv6 with the patch:
+
+Test by running 5 instances of a program that sends UDP packets to a raw
+socket 5000000 times. Compare Ipv4 and Ipv6 performance with a similar
+program.
+
+Ipv4:
+
+Before test:
+
+MemFree:        29427108 kB
+Slab:             237612 kB
+
+ip6_dst_cache       1912   2528    256   32    2 : tunables    0    0    0
+xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
+ip_dst_cache        2881   3990    192   42    2 : tunables    0    0    0
+
+During test:
+
+MemFree:        29417608 kB
+Slab:             247712 kB
+
+ip6_dst_cache       1912   2528    256   32    2 : tunables    0    0    0
+xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
+ip_dst_cache       44394  44394    192   42    2 : tunables    0    0    0
+
+After test:
+
+MemFree:        29422308 kB
+Slab:             238104 kB
+
+ip6_dst_cache       1912   2528    256   32    2 : tunables    0    0    0
+xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
+ip_dst_cache        3048   4116    192   42    2 : tunables    0    0    0
+
+Ipv6 with patch:
+
+Errno 101 errors are not observed anymore with the patch.
+
+Before test:
+
+MemFree:        29422308 kB
+Slab:             238104 kB
+
+ip6_dst_cache       1912   2528    256   32    2 : tunables    0    0    0
+xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
+ip_dst_cache        3048   4116    192   42    2 : tunables    0    0    0
+
+During Test:
+
+MemFree:        29431516 kB
+Slab:             240940 kB
+
+ip6_dst_cache      11980  12064    256   32    2 : tunables    0    0    0
+xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
+ip_dst_cache        3048   4116    192   42    2 : tunables    0    0    0
+
+After Test:
+
+MemFree:        29441816 kB
+Slab:             238132 kB
+
+ip6_dst_cache       1902   2432    256   32    2 : tunables    0    0    0
+xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
+ip_dst_cache        3048   4116    192   42    2 : tunables    0    0    0
+
+Tested-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Signed-off-by: Jon Maxwell <jmaxwell37@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20230112012532.311021-1-jmaxwell37@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: "Jitindar Singh, Suraj" <surajjs@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsd.h   |    7 +------
- fs/nfsd/nfssvc.c |   52 +++++++++++++++++++++++++++++++++-------------------
- 2 files changed, 34 insertions(+), 25 deletions(-)
+ include/net/dst_ops.h |    2 +-
+ net/core/dst.c        |    8 ++------
+ net/ipv6/route.c      |   13 +++++--------
+ 3 files changed, 8 insertions(+), 15 deletions(-)
 
---- a/fs/nfsd/nfsd.h
-+++ b/fs/nfsd/nfsd.h
-@@ -97,12 +97,7 @@ int		nfsd_pool_stats_open(struct inode *
- int		nfsd_pool_stats_release(struct inode *, struct file *);
- void		nfsd_shutdown_threads(struct net *net);
+--- a/include/net/dst_ops.h
++++ b/include/net/dst_ops.h
+@@ -16,7 +16,7 @@ struct dst_ops {
+ 	unsigned short		family;
+ 	unsigned int		gc_thresh;
  
--static inline void nfsd_put(struct net *net)
--{
--	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
--
--	svc_put(nn->nfsd_serv);
--}
-+void		nfsd_put(struct net *net);
+-	int			(*gc)(struct dst_ops *ops);
++	void			(*gc)(struct dst_ops *ops);
+ 	struct dst_entry *	(*check)(struct dst_entry *, __u32 cookie);
+ 	unsigned int		(*default_advmss)(const struct dst_entry *);
+ 	unsigned int		(*mtu)(const struct dst_entry *);
+--- a/net/core/dst.c
++++ b/net/core/dst.c
+@@ -82,12 +82,8 @@ void *dst_alloc(struct dst_ops *ops, str
  
- bool		i_am_nfsd(void);
+ 	if (ops->gc &&
+ 	    !(flags & DST_NOCOUNT) &&
+-	    dst_entries_get_fast(ops) > ops->gc_thresh) {
+-		if (ops->gc(ops)) {
+-			pr_notice_ratelimited("Route cache is full: consider increasing sysctl net.ipv6.route.max_size.\n");
+-			return NULL;
+-		}
+-	}
++	    dst_entries_get_fast(ops) > ops->gc_thresh)
++		ops->gc(ops);
  
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -523,14 +523,9 @@ static struct notifier_block nfsd_inet6a
- /* Only used under nfsd_mutex, so this atomic may be overkill: */
- static atomic_t nfsd_notifier_refcount = ATOMIC_INIT(0);
+ 	dst = kmem_cache_alloc(ops->kmem_cachep, GFP_ATOMIC);
+ 	if (!dst)
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -91,7 +91,7 @@ static struct dst_entry *ip6_negative_ad
+ static void		ip6_dst_destroy(struct dst_entry *);
+ static void		ip6_dst_ifdown(struct dst_entry *,
+ 				       struct net_device *dev, int how);
+-static int		 ip6_dst_gc(struct dst_ops *ops);
++static void		 ip6_dst_gc(struct dst_ops *ops);
  
--static void nfsd_last_thread(struct net *net)
-+static void nfsd_last_thread(struct svc_serv *serv, struct net *net)
+ static int		ip6_pkt_discard(struct sk_buff *skb);
+ static int		ip6_pkt_discard_out(struct net *net, struct sock *sk, struct sk_buff *skb);
+@@ -3288,11 +3288,10 @@ out:
+ 	return dst;
+ }
+ 
+-static int ip6_dst_gc(struct dst_ops *ops)
++static void ip6_dst_gc(struct dst_ops *ops)
  {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
--	struct svc_serv *serv = nn->nfsd_serv;
--
--	spin_lock(&nfsd_notifier_lock);
--	nn->nfsd_serv = NULL;
--	spin_unlock(&nfsd_notifier_lock);
+ 	struct net *net = container_of(ops, struct net, ipv6.ip6_dst_ops);
+ 	int rt_min_interval = net->ipv6.sysctl.ip6_rt_gc_min_interval;
+-	int rt_max_size = net->ipv6.sysctl.ip6_rt_max_size;
+ 	int rt_elasticity = net->ipv6.sysctl.ip6_rt_gc_elasticity;
+ 	int rt_gc_timeout = net->ipv6.sysctl.ip6_rt_gc_timeout;
+ 	unsigned long rt_last_gc = net->ipv6.ip6_rt_last_gc;
+@@ -3300,11 +3299,10 @@ static int ip6_dst_gc(struct dst_ops *op
+ 	int entries;
  
- 	/* check if the notifier still has clients */
- 	if (atomic_dec_return(&nfsd_notifier_refcount) == 0) {
-@@ -540,8 +535,6 @@ static void nfsd_last_thread(struct net
- #endif
- 	}
+ 	entries = dst_entries_get_fast(ops);
+-	if (entries > rt_max_size)
++	if (entries > ops->gc_thresh)
+ 		entries = dst_entries_get_slow(ops);
  
--	svc_xprt_destroy_all(serv, net);
--
- 	/*
- 	 * write_ports can create the server without actually starting
- 	 * any threads--if we get shut down before any threads are
-@@ -632,8 +625,7 @@ void nfsd_shutdown_threads(struct net *n
- 	svc_get(serv);
- 	/* Kill outstanding nfsd threads */
- 	svc_set_num_threads(serv, NULL, 0);
--	nfsd_last_thread(net);
--	svc_put(serv);
-+	nfsd_put(net);
- 	mutex_unlock(&nfsd_mutex);
- }
- 
-@@ -663,6 +655,9 @@ int nfsd_create_serv(struct net *net)
- 	serv->sv_maxconn = nn->max_connections;
- 	error = svc_bind(serv, net);
- 	if (error < 0) {
-+		/* NOT nfsd_put() as notifiers (see below) haven't
-+		 * been set up yet.
-+		 */
- 		svc_put(serv);
- 		return error;
- 	}
-@@ -705,6 +700,29 @@ int nfsd_get_nrthreads(int n, int *nthre
- 	return 0;
- }
- 
-+/* This is the callback for kref_put() below.
-+ * There is no code here as the first thing to be done is
-+ * call svc_shutdown_net(), but we cannot get the 'net' from
-+ * the kref.  So do all the work when kref_put returns true.
-+ */
-+static void nfsd_noop(struct kref *ref)
-+{
-+}
-+
-+void nfsd_put(struct net *net)
-+{
-+	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
-+
-+	if (kref_put(&nn->nfsd_serv->sv_refcnt, nfsd_noop)) {
-+		svc_xprt_destroy_all(nn->nfsd_serv, net);
-+		nfsd_last_thread(nn->nfsd_serv, net);
-+		svc_destroy(&nn->nfsd_serv->sv_refcnt);
-+		spin_lock(&nfsd_notifier_lock);
-+		nn->nfsd_serv = NULL;
-+		spin_unlock(&nfsd_notifier_lock);
-+	}
-+}
-+
- int nfsd_set_nrthreads(int n, int *nthreads, struct net *net)
- {
- 	int i = 0;
-@@ -755,7 +773,7 @@ int nfsd_set_nrthreads(int n, int *nthre
- 		if (err)
- 			break;
- 	}
--	svc_put(nn->nfsd_serv);
-+	nfsd_put(net);
- 	return err;
- }
- 
-@@ -770,7 +788,6 @@ nfsd_svc(int nrservs, struct net *net, c
- 	int	error;
- 	bool	nfsd_up_before;
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
--	struct svc_serv *serv;
- 
- 	mutex_lock(&nfsd_mutex);
- 	dprintk("nfsd: creating service\n");
-@@ -790,25 +807,22 @@ nfsd_svc(int nrservs, struct net *net, c
+-	if (time_after(rt_last_gc + rt_min_interval, jiffies) &&
+-	    entries <= rt_max_size)
++	if (time_after(rt_last_gc + rt_min_interval, jiffies))
  		goto out;
  
- 	nfsd_up_before = nn->nfsd_net_up;
--	serv = nn->nfsd_serv;
- 
- 	error = nfsd_startup_net(net, cred);
- 	if (error)
- 		goto out_put;
--	error = svc_set_num_threads(serv, NULL, nrservs);
-+	error = svc_set_num_threads(nn->nfsd_serv, NULL, nrservs);
- 	if (error)
- 		goto out_shutdown;
--	error = serv->sv_nrthreads;
--	if (error == 0)
--		nfsd_last_thread(net);
-+	error = nn->nfsd_serv->sv_nrthreads;
- out_shutdown:
- 	if (error < 0 && !nfsd_up_before)
- 		nfsd_shutdown_net(net);
- out_put:
- 	/* Threads now hold service active */
- 	if (xchg(&nn->keep_active, 0))
--		svc_put(serv);
--	svc_put(serv);
-+		nfsd_put(net);
-+	nfsd_put(net);
+ 	fib6_run_gc(atomic_inc_return(&net->ipv6.ip6_rt_gc_expire), net, true);
+@@ -3314,7 +3312,6 @@ static int ip6_dst_gc(struct dst_ops *op
  out:
- 	mutex_unlock(&nfsd_mutex);
- 	return error;
+ 	val = atomic_read(&net->ipv6.ip6_rt_gc_expire);
+ 	atomic_set(&net->ipv6.ip6_rt_gc_expire, val - (val >> rt_elasticity));
+-	return entries > rt_max_size;
+ }
+ 
+ static int ip6_nh_lookup_table(struct net *net, struct fib6_config *cfg,
+@@ -6517,7 +6514,7 @@ static int __net_init ip6_route_net_init
+ #endif
+ 
+ 	net->ipv6.sysctl.flush_delay = 0;
+-	net->ipv6.sysctl.ip6_rt_max_size = 4096;
++	net->ipv6.sysctl.ip6_rt_max_size = INT_MAX;
+ 	net->ipv6.sysctl.ip6_rt_gc_min_interval = HZ / 2;
+ 	net->ipv6.sysctl.ip6_rt_gc_timeout = 60*HZ;
+ 	net->ipv6.sysctl.ip6_rt_gc_interval = 30*HZ;
 
 
