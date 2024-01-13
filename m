@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470E117730;
-	Fri, 12 Jan 2024 20:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227C2139F;
+	Sat, 13 Jan 2024 09:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W9/SlA7d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51766C43394;
-	Fri, 12 Jan 2024 20:07:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705090075;
-	bh=ua+X20080YRjcHe0C1o6t3ehjcRZtGl3WAk/t15eQ/k=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wF1P1/7g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D42C433F1;
+	Sat, 13 Jan 2024 09:54:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1705139647;
+	bh=naia9IyH+ILQg6oJS3Ll0KfWnHgegcGHlgrZq8lyU9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W9/SlA7dwlMSfXI4eTDVjMoPuCuC9FE1VqpmUJNPyPwQcZ8vlOb3P4KZF4WInPPrS
-	 D8k7Eg93W+UcWyPzE34O9t7/0Rr/Jc5XD6DXkEd93rA65eBuxCnEml4DGbpVStHG91
-	 KfzR94Rm5w+TjxilnrPr76MZfQCzXDw0Dnl4o8kaSyQYVsyfxyMT8lW7R/dRKq3C0K
-	 4eCSbmy0jRzfvTWgthjDeZ4Q1Knu8TPgS+6KWnQYxLighp/oo63e1pZ3JTdIiz0hea
-	 iA41au/DcqhZ+iLg00zV0JqHCZ0cLYgx2ywejUbFVJO4av9lBILwhzoqmlQq8qLy9V
-	 uRIv5ur7Xhdug==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Rob Herring <robh+dt@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
+	b=wF1P1/7gMwpznr72NkSsJrBgsf7gYmC8UI8gn3ZqQA0KQt8I2HJ6MNqEISapvSuPp
+	 R5q+DvIe3k7hF4a8/f4FxD0tL1Wn0pw5x7HSvy7SMfJvMxl4fCNhc5Lbel9Hdnc/5P
+	 O2RBwfkg2LAWujfvwa/KmiHONA1jFR2Ufp5W4u34=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-um@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Frank Rowand <frowand.list@gmail.com>,
-	David Gow <davidgow@google.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>
-Subject: [PATCH 6/6] of: Add KUnit test to confirm DTB is loaded
-Date: Fri, 12 Jan 2024 12:07:49 -0800
-Message-ID: <20240112200750.4062441-7-sboyd@kernel.org>
-X-Mailer: git-send-email 2.43.0.275.g3460e3d667-goog
-In-Reply-To: <20240112200750.4062441-1-sboyd@kernel.org>
-References: <20240112200750.4062441-1-sboyd@kernel.org>
+	Suman Ghosh <sumang@marvell.com>,
+	Siddh Raman Pant <code@siddh.me>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+bbe84a4010eeea00982d@syzkaller.appspotmail.com
+Subject: [PATCH 4.19 01/25] nfc: llcp_core: Hold a ref to llcp_local->dev when holding a ref to llcp_local
+Date: Sat, 13 Jan 2024 10:49:42 +0100
+Message-ID: <20240113094205.078669942@linuxfoundation.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240113094205.025407355@linuxfoundation.org>
+References: <20240113094205.025407355@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,168 +41,131 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a KUnit test that confirms a DTB has been loaded, i.e. there is a
-root node, and that the of_have_populated_dt() API works properly.
+4.19-stable review patch.  If anyone has any objections, please let me know.
 
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Frank Rowand <frowand.list@gmail.com>
-Cc: David Gow <davidgow@google.com>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+------------------
+
+From: Siddh Raman Pant <code@siddh.me>
+
+[ Upstream commit c95f919567d6f1914f13350af61a1b044ac85014 ]
+
+llcp_sock_sendmsg() calls nfc_llcp_send_ui_frame() which in turn calls
+nfc_alloc_send_skb(), which accesses the nfc_dev from the llcp_sock for
+getting the headroom and tailroom needed for skb allocation.
+
+Parallelly the nfc_dev can be freed, as the refcount is decreased via
+nfc_free_device(), leading to a UAF reported by Syzkaller, which can
+be summarized as follows:
+
+(1) llcp_sock_sendmsg() -> nfc_llcp_send_ui_frame()
+	-> nfc_alloc_send_skb() -> Dereference *nfc_dev
+(2) virtual_ncidev_close() -> nci_free_device() -> nfc_free_device()
+	-> put_device() -> nfc_release() -> Free *nfc_dev
+
+When a reference to llcp_local is acquired, we do not acquire the same
+for the nfc_dev. This leads to freeing even when the llcp_local is in
+use, and this is the case with the UAF described above too.
+
+Thus, when we acquire a reference to llcp_local, we should acquire a
+reference to nfc_dev, and release the references appropriately later.
+
+References for llcp_local is initialized in nfc_llcp_register_device()
+(which is called by nfc_register_device()). Thus, we should acquire a
+reference to nfc_dev there.
+
+nfc_unregister_device() calls nfc_llcp_unregister_device() which in
+turn calls nfc_llcp_local_put(). Thus, the reference to nfc_dev is
+appropriately released later.
+
+Reported-and-tested-by: syzbot+bbe84a4010eeea00982d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bbe84a4010eeea00982d
+Fixes: c7aa12252f51 ("NFC: Take a reference on the LLCP local pointer when creating a socket")
+Reviewed-by: Suman Ghosh <sumang@marvell.com>
+Signed-off-by: Siddh Raman Pant <code@siddh.me>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/.kunitconfig |  3 ++
- drivers/of/Kconfig      |  9 ++++
- drivers/of/Makefile     |  2 +
- drivers/of/of_test.c    | 98 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 112 insertions(+)
- create mode 100644 drivers/of/.kunitconfig
- create mode 100644 drivers/of/of_test.c
+ net/nfc/llcp_core.c | 39 ++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 36 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/of/.kunitconfig b/drivers/of/.kunitconfig
-new file mode 100644
-index 000000000000..5a8fee11978c
---- /dev/null
-+++ b/drivers/of/.kunitconfig
-@@ -0,0 +1,3 @@
-+CONFIG_KUNIT=y
-+CONFIG_OF=y
-+CONFIG_OF_KUNIT_TEST=y
-diff --git a/drivers/of/Kconfig b/drivers/of/Kconfig
-index 9628e48baa15..a527ba8451d9 100644
---- a/drivers/of/Kconfig
-+++ b/drivers/of/Kconfig
-@@ -37,6 +37,15 @@ config OF_UNITTEST
+diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
+index c30b28465e644..a217830f0f34c 100644
+--- a/net/nfc/llcp_core.c
++++ b/net/nfc/llcp_core.c
+@@ -157,6 +157,13 @@ static void nfc_llcp_socket_release(struct nfc_llcp_local *local, bool device,
  
- 	  If unsure, say N here. This option is not safe to enable.
+ struct nfc_llcp_local *nfc_llcp_local_get(struct nfc_llcp_local *local)
+ {
++	/* Since using nfc_llcp_local may result in usage of nfc_dev, whenever
++	 * we hold a reference to local, we also need to hold a reference to
++	 * the device to avoid UAF.
++	 */
++	if (!nfc_get_device(local->dev->idx))
++		return NULL;
++
+ 	kref_get(&local->ref);
  
-+config OF_KUNIT_TEST
-+	tristate "Devicetree KUnit DTB Test" if !KUNIT_ALL_TESTS
-+	depends on KUNIT
-+	default KUNIT_ALL_TESTS
-+	help
-+	  This option builds KUnit unit tests for device tree infrastructure.
-+
-+	  If unsure, say N here, but this option is safe to enable.
-+
- config OF_ALL_DTBS
- 	bool "Build all Device Tree Blobs"
- 	depends on COMPILE_TEST
-diff --git a/drivers/of/Makefile b/drivers/of/Makefile
-index df305348d1cb..251d33532148 100644
---- a/drivers/of/Makefile
-+++ b/drivers/of/Makefile
-@@ -19,4 +19,6 @@ obj-y	+= kexec.o
- endif
- endif
+ 	return local;
+@@ -190,10 +197,18 @@ static void local_release(struct kref *ref)
  
-+obj-$(CONFIG_OF_KUNIT_TEST) += of_test.o
+ int nfc_llcp_local_put(struct nfc_llcp_local *local)
+ {
++	struct nfc_dev *dev;
++	int ret;
 +
- obj-$(CONFIG_OF_UNITTEST) += unittest-data/
-diff --git a/drivers/of/of_test.c b/drivers/of/of_test.c
-new file mode 100644
-index 000000000000..7609ad3081b9
---- /dev/null
-+++ b/drivers/of/of_test.c
-@@ -0,0 +1,98 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * KUnit tests for OF APIs
-+ */
-+#include <linux/module.h>
-+#include <linux/of.h>
+ 	if (local == NULL)
+ 		return 0;
+ 
+-	return kref_put(&local->ref, local_release);
++	dev = local->dev;
 +
-+#include <kunit/test.h>
++	ret = kref_put(&local->ref, local_release);
++	nfc_put_device(dev);
 +
-+/*
-+ * Test that the root node "/" exists.
-+ */
-+static void dtb_root_node_found_by_path(struct kunit *test)
-+{
-+	struct device_node *np;
++	return ret;
+ }
+ 
+ static struct nfc_llcp_sock *nfc_llcp_sock_get(struct nfc_llcp_local *local,
+@@ -951,8 +966,17 @@ static void nfc_llcp_recv_connect(struct nfc_llcp_local *local,
+ 	}
+ 
+ 	new_sock = nfc_llcp_sock(new_sk);
+-	new_sock->dev = local->dev;
 +
-+	np = of_find_node_by_path("/");
-+	KUNIT_EXPECT_NOT_ERR_OR_NULL(test, np);
-+	of_node_put(np);
-+}
+ 	new_sock->local = nfc_llcp_local_get(local);
++	if (!new_sock->local) {
++		reason = LLCP_DM_REJ;
++		sock_put(&new_sock->sk);
++		release_sock(&sock->sk);
++		sock_put(&sock->sk);
++		goto fail;
++	}
 +
-+/*
-+ * Test that the of_root global variable is always populated when DT
-+ * code is enabled.
-+ */
-+static void dtb_root_node_populates_of_root(struct kunit *test)
-+{
-+	KUNIT_EXPECT_NOT_ERR_OR_NULL(test, of_root);
-+}
++	new_sock->dev = local->dev;
+ 	new_sock->rw = sock->rw;
+ 	new_sock->miux = sock->miux;
+ 	new_sock->nfc_protocol = sock->nfc_protocol;
+@@ -1584,7 +1608,16 @@ int nfc_llcp_register_device(struct nfc_dev *ndev)
+ 	if (local == NULL)
+ 		return -ENOMEM;
+ 
+-	local->dev = ndev;
++	/* As we are going to initialize local's refcount, we need to get the
++	 * nfc_dev to avoid UAF, otherwise there is no point in continuing.
++	 * See nfc_llcp_local_get().
++	 */
++	local->dev = nfc_get_device(ndev->idx);
++	if (!local->dev) {
++		kfree(local);
++		return -ENODEV;
++	}
 +
-+static struct kunit_case dtb_test_cases[] = {
-+	KUNIT_CASE(dtb_root_node_found_by_path),
-+	KUNIT_CASE(dtb_root_node_populates_of_root),
-+	{}
-+};
-+
-+/*
-+ * Test suite to confirm a live DTB is loaded.
-+ */
-+static struct kunit_suite dtb_suite = {
-+	.name = "dtb",
-+	.test_cases = dtb_test_cases,
-+};
-+
-+/*
-+ * Test that calling of_have_populated_dt() returns false when
-+ * the OF_EMPTY_ROOT flag isn't set.
-+ */
-+static void of_have_populated_dt_false_when_flag_set(struct kunit *test)
-+{
-+	bool was_set;
-+
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, of_root);
-+
-+	was_set = of_node_test_and_set_flag(of_root, OF_EMPTY_ROOT);
-+	KUNIT_EXPECT_FALSE(test, of_have_populated_dt());
-+
-+	if (!was_set)
-+		of_node_clear_flag(of_root, OF_EMPTY_ROOT);
-+}
-+
-+/*
-+ * Test that calling of_have_populated_dt() returns false when
-+ * the OF_EMPTY_ROOT flag isn't set.
-+ */
-+static void of_have_populated_dt_true_when_flag_clear(struct kunit *test)
-+{
-+	bool was_set;
-+
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, of_root);
-+
-+	was_set = of_node_check_flag(of_root, OF_EMPTY_ROOT);
-+	of_node_set_flag(of_root, OF_EMPTY_ROOT);
-+	KUNIT_EXPECT_FALSE(test, of_have_populated_dt());
-+
-+	if (was_set)
-+		of_node_set_flag(of_root, OF_EMPTY_ROOT);
-+}
-+
-+static struct kunit_case of_have_populated_dt_test_cases[] = {
-+	KUNIT_CASE(of_have_populated_dt_false_when_flag_set),
-+	KUNIT_CASE(of_have_populated_dt_true_when_flag_clear),
-+	{}
-+};
-+
-+/*
-+ * Test suite to confirm behavior of of_have_populated_dt().
-+ */
-+static struct kunit_suite of_have_populated_dt_suite = {
-+	.name = "of_have_populated_dt",
-+	.test_cases = of_have_populated_dt_test_cases,
-+};
-+
-+kunit_test_suites(
-+	&dtb_suite,
-+	&of_have_populated_dt_suite,
-+);
-+MODULE_LICENSE("GPL");
+ 	INIT_LIST_HEAD(&local->list);
+ 	kref_init(&local->ref);
+ 	mutex_init(&local->sdp_lock);
 -- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+2.43.0
+
+
 
