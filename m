@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B9EEC5;
-	Sat, 13 Jan 2024 09:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54FC7185A;
+	Sat, 13 Jan 2024 09:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0F+ISedN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF261C43601;
-	Sat, 13 Jan 2024 09:57:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeU4QjE3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6AC0C433C7;
+	Sat, 13 Jan 2024 09:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139824;
-	bh=atgPHSSQyfaztTDp377+GYR2/dqPXUWoWRgd1XBUDqk=;
+	s=korg; t=1705139827;
+	bh=Vqyo80m/S1p2ph4Jo2X46Rd0KT0wNGGJ8PRTN5rvrjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0F+ISedN3uv/Y4V4B17bfqnjsXPDgYTdxG0U9aWWXf/aOIyFDCXK9v7Sg8yx3ZDHQ
-	 S1pXgzFy1bv394YLEXJmiywauaoYuE5VyPvFFb42xWXR6DteYtxndPJimvh1KEpWJD
-	 quPUwXNpM24XkX8+zPBk+iOFspk9KsLa0xVdv4sU=
+	b=UeU4QjE3wKRCtCCFMIO9+wvcv86b/1BtWr4zgmgNNk4+rxBXPsRRwLORCVYDXfVkZ
+	 AGpPk8ncKiDmq6J0PRDUgMMZpKWBGtjLBomDqtz0gbgP7wqsR7rhxQs3X1tk7t8GdY
+	 eNIQXEVj6lqj4+45h+V8Ji1aamXIMHF6Sb3sHNAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Pawlowski <bartosz.pawlowski@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>
-Subject: [PATCH 5.4 35/38] PCI: Disable ATS for specific Intel IPU E2000 devices
-Date: Sat, 13 Jan 2024 10:50:11 +0100
-Message-ID: <20240113094207.524416202@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Suraj Jitindar Singh <surajjs@amazon.com>
+Subject: [PATCH 5.4 36/38] net/dst: use a smaller percpu_counter batch for dst entries accounting
+Date: Sat, 13 Jan 2024 10:50:12 +0100
+Message-ID: <20240113094207.556743428@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.455533180@linuxfoundation.org>
 References: <20240113094206.455533180@linuxfoundation.org>
@@ -43,55 +42,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Pawlowski <bartosz.pawlowski@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit a18615b1cfc04f00548c60eb9a77e0ce56e848fd upstream.
+commit cf86a086a18095e33e0637cb78cda1fcf5280852 upstream.
 
-Due to a hardware issue in A and B steppings of Intel IPU E2000, it expects
-wrong endianness in ATS invalidation message body. This problem can lead to
-outdated translations being returned as valid and finally cause system
-instability.
+percpu_counter_add() uses a default batch size which is quite big
+on platforms with 256 cpus. (2*256 -> 512)
 
-To prevent such issues, add quirk_intel_e2000_no_ats() to disable ATS for
-vulnerable IPU E2000 devices.
+This means dst_entries_get_fast() can be off by +/- 2*(nr_cpus^2)
+(131072 on servers with 256 cpus)
 
-Link: https://lore.kernel.org/r/20230908143606.685930-3-bartosz.pawlowski@intel.com
-Signed-off-by: Bartosz Pawlowski <bartosz.pawlowski@intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reduce the batch size to something more reasonable, and
+add logic to ip6_dst_gc() to call dst_entries_get_slow()
+before calling the _very_ expensive fib6_run_gc() function.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
+Cc: <stable@vger.kernel.org> # 5.4.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ include/net/dst_ops.h |    4 +++-
+ net/core/dst.c        |    8 ++++----
+ net/ipv6/route.c      |    3 +++
+ 3 files changed, 10 insertions(+), 5 deletions(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5419,6 +5419,25 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AT
- /* AMD Navi14 dGPU */
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7340, quirk_amd_harvest_no_ats);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7341, quirk_amd_harvest_no_ats);
-+
-+/*
-+ * Intel IPU E2000 revisions before C0 implement incorrect endianness
-+ * in ATS Invalidate Request message body. Disable ATS for those devices.
-+ */
-+static void quirk_intel_e2000_no_ats(struct pci_dev *pdev)
-+{
-+	if (pdev->revision < 0x20)
-+		quirk_no_ats(pdev);
-+}
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1451, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1452, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1453, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1454, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1455, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1457, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1459, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x145a, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x145c, quirk_intel_e2000_no_ats);
- #endif /* CONFIG_PCI_ATS */
+--- a/include/net/dst_ops.h
++++ b/include/net/dst_ops.h
+@@ -53,9 +53,11 @@ static inline int dst_entries_get_slow(s
+ 	return percpu_counter_sum_positive(&dst->pcpuc_entries);
+ }
  
- /* Freescale PCIe doesn't support MSI in RC mode */
++#define DST_PERCPU_COUNTER_BATCH 32
+ static inline void dst_entries_add(struct dst_ops *dst, int val)
+ {
+-	percpu_counter_add(&dst->pcpuc_entries, val);
++	percpu_counter_add_batch(&dst->pcpuc_entries, val,
++				 DST_PERCPU_COUNTER_BATCH);
+ }
+ 
+ static inline int dst_entries_init(struct dst_ops *dst)
+--- a/net/core/dst.c
++++ b/net/core/dst.c
+@@ -81,11 +81,11 @@ void *dst_alloc(struct dst_ops *ops, str
+ {
+ 	struct dst_entry *dst;
+ 
+-	if (ops->gc && dst_entries_get_fast(ops) > ops->gc_thresh) {
++	if (ops->gc &&
++	    !(flags & DST_NOCOUNT) &&
++	    dst_entries_get_fast(ops) > ops->gc_thresh) {
+ 		if (ops->gc(ops)) {
+-			printk_ratelimited(KERN_NOTICE "Route cache is full: "
+-					   "consider increasing sysctl "
+-					   "net.ipv[4|6].route.max_size.\n");
++			pr_notice_ratelimited("Route cache is full: consider increasing sysctl net.ipv6.route.max_size.\n");
+ 			return NULL;
+ 		}
+ 	}
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3218,6 +3218,9 @@ static int ip6_dst_gc(struct dst_ops *op
+ 	int entries;
+ 
+ 	entries = dst_entries_get_fast(ops);
++	if (entries > rt_max_size)
++		entries = dst_entries_get_slow(ops);
++
+ 	if (time_after(rt_last_gc + rt_min_interval, jiffies) &&
+ 	    entries <= rt_max_size)
+ 		goto out;
 
 
