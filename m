@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8A61848;
-	Sat, 13 Jan 2024 09:57:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20553EC5;
+	Sat, 13 Jan 2024 09:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6JTNYwg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8DEC433F1;
-	Sat, 13 Jan 2024 09:57:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PyxgqpVa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950A3C433F1;
+	Sat, 13 Jan 2024 09:57:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139830;
-	bh=WtaJF7mnwuMK9hNr7F5tQUrsMFPEYqczTi0jJQd4bV0=;
+	s=korg; t=1705139833;
+	bh=Gj/EXQuvxwGzwiIqBXUDuIGA4IqvOCJXdDi5YjpCXu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t6JTNYwgCMxGlukRZ4p18Yw6N2s8v56h3cSsGZpwhdzdOdnU+rTE/9JN40qYOSWO/
-	 iNrBc0UPd1x5sHnqcMlfTq34La1NNnc1oxw+1bRDfrpeM30paYM5JDdPp2c/rBBl6B
-	 o/J0vC4Xu86duIDZZO4PV/ufvx1Ah6yptEk8B7b8=
+	b=PyxgqpVadHguYYGVhpNtarL7oqi2uXmNRLc0J5Ch5iardRM4z4FqnsWetFe5t4NfU
+	 KgvSQ2vmK6FeGLcLLafhUO15xAMCNAjvEh+zdPYi/zdiqgt+lWjzy+Ux4UV0fvtQM8
+	 v3zSDvwhPIZSmpmXvy2NbE2cvybaADvEeg/SREmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot <syzkaller@googlegroups.com>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Jon Maxwell <jmaxwell37@gmail.com>,
 	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Suraj Jitindar Singh <surajjs@amazon.com>
-Subject: [PATCH 5.4 37/38] ipv6: make ip6_rt_gc_expire an atomic_t
-Date: Sat, 13 Jan 2024 10:50:13 +0100
-Message-ID: <20240113094207.590835711@linuxfoundation.org>
+Subject: [PATCH 5.4 38/38] ipv6: remove max_size check inline with ipv4
+Date: Sat, 13 Jan 2024 10:50:14 +0100
+Message-ID: <20240113094207.620864763@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.455533180@linuxfoundation.org>
 References: <20240113094206.455533180@linuxfoundation.org>
@@ -44,120 +44,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jon Maxwell <jmaxwell37@gmail.com>
 
-commit 9cb7c013420f98fa6fd12fc6a5dc055170c108db upstream.
+commit af6d10345ca76670c1b7c37799f0d5576ccef277 upstream.
 
-Reads and Writes to ip6_rt_gc_expire always have been racy,
-as syzbot reported lately [1]
+In ip6_dst_gc() replace:
 
-There is a possible risk of under-flow, leading
-to unexpected high value passed to fib6_run_gc(),
-although I have not observed this in the field.
+  if (entries > gc_thresh)
 
-Hosts hitting ip6_dst_gc() very hard are under pretty bad
-state anyway.
+With:
 
-[1]
-BUG: KCSAN: data-race in ip6_dst_gc / ip6_dst_gc
+  if (entries > ops->gc_thresh)
 
-read-write to 0xffff888102110744 of 4 bytes by task 13165 on cpu 1:
- ip6_dst_gc+0x1f3/0x220 net/ipv6/route.c:3311
- dst_alloc+0x9b/0x160 net/core/dst.c:86
- ip6_dst_alloc net/ipv6/route.c:344 [inline]
- icmp6_dst_alloc+0xb2/0x360 net/ipv6/route.c:3261
- mld_sendpack+0x2b9/0x580 net/ipv6/mcast.c:1807
- mld_send_cr net/ipv6/mcast.c:2119 [inline]
- mld_ifc_work+0x576/0x800 net/ipv6/mcast.c:2651
- process_one_work+0x3d3/0x720 kernel/workqueue.c:2289
- worker_thread+0x618/0xa70 kernel/workqueue.c:2436
- kthread+0x1a9/0x1e0 kernel/kthread.c:376
- ret_from_fork+0x1f/0x30
+Sending Ipv6 packets in a loop via a raw socket triggers an issue where a
+route is cloned by ip6_rt_cache_alloc() for each packet sent. This quickly
+consumes the Ipv6 max_size threshold which defaults to 4096 resulting in
+these warnings:
 
-read-write to 0xffff888102110744 of 4 bytes by task 11607 on cpu 0:
- ip6_dst_gc+0x1f3/0x220 net/ipv6/route.c:3311
- dst_alloc+0x9b/0x160 net/core/dst.c:86
- ip6_dst_alloc net/ipv6/route.c:344 [inline]
- icmp6_dst_alloc+0xb2/0x360 net/ipv6/route.c:3261
- mld_sendpack+0x2b9/0x580 net/ipv6/mcast.c:1807
- mld_send_cr net/ipv6/mcast.c:2119 [inline]
- mld_ifc_work+0x576/0x800 net/ipv6/mcast.c:2651
- process_one_work+0x3d3/0x720 kernel/workqueue.c:2289
- worker_thread+0x618/0xa70 kernel/workqueue.c:2436
- kthread+0x1a9/0x1e0 kernel/kthread.c:376
- ret_from_fork+0x1f/0x30
+[1]   99.187805] dst_alloc: 7728 callbacks suppressed
+[2] Route cache is full: consider increasing sysctl net.ipv6.route.max_size.
+.
+.
+[300] Route cache is full: consider increasing sysctl net.ipv6.route.max_size.
 
-value changed: 0x00000bb3 -> 0x00000ba9
+When this happens the packet is dropped and sendto() gets a network is
+unreachable error:
 
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 11607 Comm: kworker/0:21 Not tainted 5.18.0-rc1-syzkaller-00037-g42e7a03d3bad-dirty #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: mld mld_ifc_work
+remaining pkt 200557 errno 101
+remaining pkt 196462 errno 101
+.
+.
+remaining pkt 126821 errno 101
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot <syzkaller@googlegroups.com>
+Implement David Aherns suggestion to remove max_size check seeing that Ipv6
+has a GC to manage memory usage. Ipv4 already does not check max_size.
+
+Here are some memory comparisons for Ipv4 vs Ipv6 with the patch:
+
+Test by running 5 instances of a program that sends UDP packets to a raw
+socket 5000000 times. Compare Ipv4 and Ipv6 performance with a similar
+program.
+
+Ipv4:
+
+Before test:
+
+MemFree:        29427108 kB
+Slab:             237612 kB
+
+ip6_dst_cache       1912   2528    256   32    2 : tunables    0    0    0
+xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
+ip_dst_cache        2881   3990    192   42    2 : tunables    0    0    0
+
+During test:
+
+MemFree:        29417608 kB
+Slab:             247712 kB
+
+ip6_dst_cache       1912   2528    256   32    2 : tunables    0    0    0
+xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
+ip_dst_cache       44394  44394    192   42    2 : tunables    0    0    0
+
+After test:
+
+MemFree:        29422308 kB
+Slab:             238104 kB
+
+ip6_dst_cache       1912   2528    256   32    2 : tunables    0    0    0
+xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
+ip_dst_cache        3048   4116    192   42    2 : tunables    0    0    0
+
+Ipv6 with patch:
+
+Errno 101 errors are not observed anymore with the patch.
+
+Before test:
+
+MemFree:        29422308 kB
+Slab:             238104 kB
+
+ip6_dst_cache       1912   2528    256   32    2 : tunables    0    0    0
+xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
+ip_dst_cache        3048   4116    192   42    2 : tunables    0    0    0
+
+During Test:
+
+MemFree:        29431516 kB
+Slab:             240940 kB
+
+ip6_dst_cache      11980  12064    256   32    2 : tunables    0    0    0
+xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
+ip_dst_cache        3048   4116    192   42    2 : tunables    0    0    0
+
+After Test:
+
+MemFree:        29441816 kB
+Slab:             238132 kB
+
+ip6_dst_cache       1902   2432    256   32    2 : tunables    0    0    0
+xfrm_dst_cache         0      0    320   25    2 : tunables    0    0    0
+ip_dst_cache        3048   4116    192   42    2 : tunables    0    0    0
+
+Tested-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Signed-off-by: Jon Maxwell <jmaxwell37@gmail.com>
 Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20220413181333.649424-1-eric.dumazet@gmail.com
+Link: https://lore.kernel.org/r/20230112012532.311021-1-jmaxwell37@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ 5.4: context adjustment in include/net/netns/ipv6.h ]
 Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
 Cc: <stable@vger.kernel.org> # 5.4.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netns/ipv6.h |    4 ++--
- net/ipv6/route.c         |   11 ++++++-----
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ include/net/dst_ops.h |    2 +-
+ net/core/dst.c        |    8 ++------
+ net/ipv6/route.c      |   13 +++++--------
+ 3 files changed, 8 insertions(+), 15 deletions(-)
 
---- a/include/net/netns/ipv6.h
-+++ b/include/net/netns/ipv6.h
-@@ -78,8 +78,8 @@ struct netns_ipv6 {
- 	struct dst_ops		ip6_dst_ops;
- 	rwlock_t		fib6_walker_lock;
- 	spinlock_t		fib6_gc_lock;
--	unsigned int		 ip6_rt_gc_expire;
--	unsigned long		 ip6_rt_last_gc;
-+	atomic_t		ip6_rt_gc_expire;
-+	unsigned long		ip6_rt_last_gc;
- #ifdef CONFIG_IPV6_MULTIPLE_TABLES
- 	unsigned int		fib6_rules_require_fldissect;
- 	bool			fib6_has_custom_rules;
+--- a/include/net/dst_ops.h
++++ b/include/net/dst_ops.h
+@@ -16,7 +16,7 @@ struct dst_ops {
+ 	unsigned short		family;
+ 	unsigned int		gc_thresh;
+ 
+-	int			(*gc)(struct dst_ops *ops);
++	void			(*gc)(struct dst_ops *ops);
+ 	struct dst_entry *	(*check)(struct dst_entry *, __u32 cookie);
+ 	unsigned int		(*default_advmss)(const struct dst_entry *);
+ 	unsigned int		(*mtu)(const struct dst_entry *);
+--- a/net/core/dst.c
++++ b/net/core/dst.c
+@@ -83,12 +83,8 @@ void *dst_alloc(struct dst_ops *ops, str
+ 
+ 	if (ops->gc &&
+ 	    !(flags & DST_NOCOUNT) &&
+-	    dst_entries_get_fast(ops) > ops->gc_thresh) {
+-		if (ops->gc(ops)) {
+-			pr_notice_ratelimited("Route cache is full: consider increasing sysctl net.ipv6.route.max_size.\n");
+-			return NULL;
+-		}
+-	}
++	    dst_entries_get_fast(ops) > ops->gc_thresh)
++		ops->gc(ops);
+ 
+ 	dst = kmem_cache_alloc(ops->kmem_cachep, GFP_ATOMIC);
+ 	if (!dst)
 --- a/net/ipv6/route.c
 +++ b/net/ipv6/route.c
-@@ -3215,6 +3215,7 @@ static int ip6_dst_gc(struct dst_ops *op
+@@ -88,7 +88,7 @@ static struct dst_entry *ip6_negative_ad
+ static void		ip6_dst_destroy(struct dst_entry *);
+ static void		ip6_dst_ifdown(struct dst_entry *,
+ 				       struct net_device *dev, int how);
+-static int		 ip6_dst_gc(struct dst_ops *ops);
++static void		 ip6_dst_gc(struct dst_ops *ops);
+ 
+ static int		ip6_pkt_discard(struct sk_buff *skb);
+ static int		ip6_pkt_discard_out(struct net *net, struct sock *sk, struct sk_buff *skb);
+@@ -3207,11 +3207,10 @@ out:
+ 	return dst;
+ }
+ 
+-static int ip6_dst_gc(struct dst_ops *ops)
++static void ip6_dst_gc(struct dst_ops *ops)
+ {
+ 	struct net *net = container_of(ops, struct net, ipv6.ip6_dst_ops);
+ 	int rt_min_interval = net->ipv6.sysctl.ip6_rt_gc_min_interval;
+-	int rt_max_size = net->ipv6.sysctl.ip6_rt_max_size;
  	int rt_elasticity = net->ipv6.sysctl.ip6_rt_gc_elasticity;
  	int rt_gc_timeout = net->ipv6.sysctl.ip6_rt_gc_timeout;
  	unsigned long rt_last_gc = net->ipv6.ip6_rt_last_gc;
-+	unsigned int val;
+@@ -3219,11 +3218,10 @@ static int ip6_dst_gc(struct dst_ops *op
  	int entries;
  
  	entries = dst_entries_get_fast(ops);
-@@ -3225,13 +3226,13 @@ static int ip6_dst_gc(struct dst_ops *op
- 	    entries <= rt_max_size)
+-	if (entries > rt_max_size)
++	if (entries > ops->gc_thresh)
+ 		entries = dst_entries_get_slow(ops);
+ 
+-	if (time_after(rt_last_gc + rt_min_interval, jiffies) &&
+-	    entries <= rt_max_size)
++	if (time_after(rt_last_gc + rt_min_interval, jiffies))
  		goto out;
  
--	net->ipv6.ip6_rt_gc_expire++;
--	fib6_run_gc(net->ipv6.ip6_rt_gc_expire, net, true);
-+	fib6_run_gc(atomic_inc_return(&net->ipv6.ip6_rt_gc_expire), net, true);
- 	entries = dst_entries_get_slow(ops);
- 	if (entries < ops->gc_thresh)
--		net->ipv6.ip6_rt_gc_expire = rt_gc_timeout>>1;
-+		atomic_set(&net->ipv6.ip6_rt_gc_expire, rt_gc_timeout >> 1);
+ 	fib6_run_gc(atomic_inc_return(&net->ipv6.ip6_rt_gc_expire), net, true);
+@@ -3233,7 +3231,6 @@ static int ip6_dst_gc(struct dst_ops *op
  out:
--	net->ipv6.ip6_rt_gc_expire -= net->ipv6.ip6_rt_gc_expire>>rt_elasticity;
-+	val = atomic_read(&net->ipv6.ip6_rt_gc_expire);
-+	atomic_set(&net->ipv6.ip6_rt_gc_expire, val - (val >> rt_elasticity));
- 	return entries > rt_max_size;
+ 	val = atomic_read(&net->ipv6.ip6_rt_gc_expire);
+ 	atomic_set(&net->ipv6.ip6_rt_gc_expire, val - (val >> rt_elasticity));
+-	return entries > rt_max_size;
  }
  
-@@ -6329,7 +6330,7 @@ static int __net_init ip6_route_net_init
- 	net->ipv6.sysctl.ip6_rt_min_advmss = IPV6_MIN_MTU - 20 - 40;
- 	net->ipv6.sysctl.skip_notify_on_dev_down = 0;
+ static int ip6_nh_lookup_table(struct net *net, struct fib6_config *cfg,
+@@ -6321,7 +6318,7 @@ static int __net_init ip6_route_net_init
+ #endif
  
--	net->ipv6.ip6_rt_gc_expire = 30*HZ;
-+	atomic_set(&net->ipv6.ip6_rt_gc_expire, 30*HZ);
- 
- 	ret = 0;
- out:
+ 	net->ipv6.sysctl.flush_delay = 0;
+-	net->ipv6.sysctl.ip6_rt_max_size = 4096;
++	net->ipv6.sysctl.ip6_rt_max_size = INT_MAX;
+ 	net->ipv6.sysctl.ip6_rt_gc_min_interval = HZ / 2;
+ 	net->ipv6.sysctl.ip6_rt_gc_timeout = 60*HZ;
+ 	net->ipv6.sysctl.ip6_rt_gc_interval = 30*HZ;
 
 
