@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A43363C3;
-	Sat, 13 Jan 2024 10:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C4912E63;
+	Sat, 13 Jan 2024 10:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMM7prqj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE5F6C433C7;
-	Sat, 13 Jan 2024 10:00:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QKtV79O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3840C433C7;
+	Sat, 13 Jan 2024 10:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705140058;
-	bh=h/st+XGJtn2Eeynwl0QF52/bewhJVoL4sxl9nGhRRdY=;
+	s=korg; t=1705140061;
+	bh=+Dp3mskmtYgzaHW2nsNxwvzvBiFXu8kqcq2/Nbz1oBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cMM7prqjh4ZfAA6ZEdMk532gnj4UKoY6HtAEkzuD2WDs8aclWfaQNz/l2nl9xWQPj
-	 3WUAfH+LAJU4yDCLkZWf2ah+0M5Qm/PMksgxxG8I+IUonjuV/Gkyk0K0VNjwxwAevU
-	 0eK9Ws+04A7TTJX8uMdckm+rSwWkvSMAT+B88WW8=
+	b=1QKtV79OYwPSA1i/c5B2Ktceq9Z5dCRYVLrRGi38r0/l/gKkO9Qo6nM5j7koe4jNE
+	 UItLr3wMSmWlrvdYaKRaOpxsaQ4s4x1dWsvwTMRsHziRMU1SN12YJ1LZc56CtG94L8
+	 cnvX500UPuVovBBQtlkt5mw/zyusXfyIJ8A5DJKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 22/59] ARM: sun9i: smp: Fix array-index-out-of-bounds read in sunxi_mc_smp_init
-Date: Sat, 13 Jan 2024 10:49:53 +0100
-Message-ID: <20240113094209.992246896@linuxfoundation.org>
+Subject: [PATCH 5.15 40/59] bnxt_en: Remove mis-applied code from bnxt_cfg_ntp_filters()
+Date: Sat, 13 Jan 2024 10:50:11 +0100
+Message-ID: <20240113094210.538543817@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
 References: <20240113094209.301672391@linuxfoundation.org>
@@ -43,61 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 72ad3b772b6d393701df58ba1359b0bb346a19ed ]
+[ Upstream commit e009b2efb7a8850498796b360043ac25c8d3d28f ]
 
-Running a multi-arch kernel (multi_v7_defconfig) on a Raspberry Pi 3B+
-with enabled CONFIG_UBSAN triggers the following warning:
+The 2 lines to check for the BNXT_HWRM_PF_UNLOAD_SP_EVENT bit was
+mis-applied to bnxt_cfg_ntp_filters() and should have been applied to
+bnxt_sp_task().
 
- UBSAN: array-index-out-of-bounds in arch/arm/mach-sunxi/mc_smp.c:810:29
- index 2 is out of range for type 'sunxi_mc_smp_data [2]'
- CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.7.0-rc6-00248-g5254c0cbc92d
- Hardware name: BCM2835
-  unwind_backtrace from show_stack+0x10/0x14
-  show_stack from dump_stack_lvl+0x40/0x4c
-  dump_stack_lvl from ubsan_epilogue+0x8/0x34
-  ubsan_epilogue from __ubsan_handle_out_of_bounds+0x78/0x80
-  __ubsan_handle_out_of_bounds from sunxi_mc_smp_init+0xe4/0x4cc
-  sunxi_mc_smp_init from do_one_initcall+0xa0/0x2fc
-  do_one_initcall from kernel_init_freeable+0xf4/0x2f4
-  kernel_init_freeable from kernel_init+0x18/0x158
-  kernel_init from ret_from_fork+0x14/0x28
-
-Since the enabled method couldn't match with any entry from
-sunxi_mc_smp_data, the value of the index shouldn't be used right after
-the loop. So move it after the check of ret in order to have a valid
-index.
-
-Fixes: 1631090e34f5 ("ARM: sun9i: smp: Add is_a83t field")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20231228193903.9078-1-wahrenst@gmx.net
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 19241368443f ("bnxt_en: Send PF driver unload notification to all VFs.")
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-sunxi/mc_smp.c | 4 ++--
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-sunxi/mc_smp.c b/arch/arm/mach-sunxi/mc_smp.c
-index 26cbce1353387..b2f5f4f28705f 100644
---- a/arch/arm/mach-sunxi/mc_smp.c
-+++ b/arch/arm/mach-sunxi/mc_smp.c
-@@ -808,12 +808,12 @@ static int __init sunxi_mc_smp_init(void)
- 			break;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 42fa218295295..631639a19bad8 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -11749,6 +11749,8 @@ static void bnxt_sp_task(struct work_struct *work)
+ 		bnxt_cfg_ntp_filters(bp);
+ 	if (test_and_clear_bit(BNXT_HWRM_EXEC_FWD_REQ_SP_EVENT, &bp->sp_event))
+ 		bnxt_hwrm_exec_fwd_req(bp);
++	if (test_and_clear_bit(BNXT_HWRM_PF_UNLOAD_SP_EVENT, &bp->sp_event))
++		netdev_info(bp->dev, "Receive PF driver unload event!\n");
+ 	if (test_and_clear_bit(BNXT_PERIODIC_STATS_SP_EVENT, &bp->sp_event)) {
+ 		bnxt_hwrm_port_qstats(bp, 0);
+ 		bnxt_hwrm_port_qstats_ext(bp, 0);
+@@ -12694,8 +12696,6 @@ static void bnxt_cfg_ntp_filters(struct bnxt *bp)
+ 			}
+ 		}
  	}
+-	if (test_and_clear_bit(BNXT_HWRM_PF_UNLOAD_SP_EVENT, &bp->sp_event))
+-		netdev_info(bp->dev, "Receive PF driver unload event!\n");
+ }
  
--	is_a83t = sunxi_mc_smp_data[i].is_a83t;
--
- 	of_node_put(node);
- 	if (ret)
- 		return -ENODEV;
- 
-+	is_a83t = sunxi_mc_smp_data[i].is_a83t;
-+
- 	if (!sunxi_mc_smp_cpu_table_init())
- 		return -EINVAL;
- 
+ #else
 -- 
 2.43.0
 
