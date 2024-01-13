@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9ED63C3;
-	Sat, 13 Jan 2024 10:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3280F1846;
+	Sat, 13 Jan 2024 10:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuqmXn80"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FFEBC433C7;
-	Sat, 13 Jan 2024 10:01:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fUR9E2P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D3DC433C7;
+	Sat, 13 Jan 2024 10:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705140079;
-	bh=mzSYKgUVTHuoqdqzJ1RgOrrZdwhLRv48nInwdHrbbFo=;
+	s=korg; t=1705140082;
+	bh=s5V6z+FNnHic6nCzJ0cU68M9uWRHcMd/THX2G3S0O3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VuqmXn80sdeU7wk3puVNDX4UV+DngBu92ZWuMO1VVgAuUiYsy+KksXm/ZZqKAhVJB
-	 cZSEEL4N5NhdYL6vWVe6S2AhGIfgzH4796YD1jVX40hk1AtFY0sPjsBP5vwuLSibe6
-	 BCINDrAsfGUfAatejkQjrajkFuGX8oDwF+3pjmzw=
+	b=1fUR9E2Py8tCuVGn6U24sFHWi72jANJ91bKrKT+sMDYU9yEtG8guQlXPOwinPBYye
+	 PS5/PuDJO38jyn5bE3/tg4w+D7LOkyqsEQrdkg1hWHlTSchwx36UVho7I3tCwnNYM6
+	 c+AgPeEwh46eHa3DwVLRy40cWq1qdH3vU3QmERcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Bara <benjamin.bara@skidata.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Tor Vic <torvic9@mailbox.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.15 46/59] i2c: core: Fix atomic xfer check for non-preempt config
-Date: Sat, 13 Jan 2024 10:50:17 +0100
-Message-ID: <20240113094210.703699910@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 23/59] sfc: fix a double-free bug in efx_probe_filters
+Date: Sat, 13 Jan 2024 10:49:54 +0100
+Message-ID: <20240113094210.021820384@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
 References: <20240113094209.301672391@linuxfoundation.org>
@@ -43,59 +44,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Bara <benjamin.bara@skidata.com>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-commit a3368e1186e3ce8e38f78cbca019622095b1f331 upstream.
+[ Upstream commit d5a306aedba34e640b11d7026dbbafb78ee3a5f6 ]
 
-Since commit aa49c90894d0 ("i2c: core: Run atomic i2c xfer when
-!preemptible"), the whole reboot/power off sequence on non-preempt kernels
-is using atomic i2c xfer, as !preemptible() always results to 1.
+In efx_probe_filters, the channel->rps_flow_id is freed in a
+efx_for_each_channel marco  when success equals to 0.
+However, after the following call chain:
 
-During device_shutdown(), the i2c might be used a lot and not all busses
-have implemented an atomic xfer handler. This results in a lot of
-avoidable noise, like:
+ef100_net_open
+  |-> efx_probe_filters
+  |-> ef100_net_stop
+        |-> efx_remove_filters
 
-[   12.687169] No atomic I2C transfer handler for 'i2c-0'
-[   12.692313] WARNING: CPU: 6 PID: 275 at drivers/i2c/i2c-core.h:40 i2c_smbus_xfer+0x100/0x118
-...
+The channel->rps_flow_id is freed again in the efx_for_each_channel of
+efx_remove_filters, triggering a double-free bug.
 
-Fix this by allowing non-atomic xfer when the interrupts are enabled, as
-it was before.
-
-Link: https://lore.kernel.org/r/20231222230106.73f030a5@yea
-Link: https://lore.kernel.org/r/20240102150350.3180741-1-mwalle@kernel.org
-Link: https://lore.kernel.org/linux-i2c/13271b9b-4132-46ef-abf8-2c311967bb46@mailbox.org/
-Fixes: aa49c90894d0 ("i2c: core: Run atomic i2c xfer when !preemptible")
-Cc: stable@vger.kernel.org # v5.2+
-Signed-off-by: Benjamin Bara <benjamin.bara@skidata.com>
-Tested-by: Michael Walle <mwalle@kernel.org>
-Tested-by: Tor Vic <torvic9@mailbox.org>
-[wsa: removed a comment which needs more work, code is ok]
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a9dc3d5612ce ("sfc_ef100: RX filter table management and related gubbins")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Edward Cree <ecree.xilinx@gmail.com>
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Link: https://lore.kernel.org/r/20231225112915.3544581-1-alexious@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core.h |    4 +++-
+ drivers/net/ethernet/sfc/rx_common.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/i2c-core.h
-+++ b/drivers/i2c/i2c-core.h
-@@ -3,6 +3,7 @@
-  * i2c-core.h - interfaces internal to the I2C framework
-  */
+diff --git a/drivers/net/ethernet/sfc/rx_common.c b/drivers/net/ethernet/sfc/rx_common.c
+index a804c754cd7d0..0f2d6efdbba1c 100644
+--- a/drivers/net/ethernet/sfc/rx_common.c
++++ b/drivers/net/ethernet/sfc/rx_common.c
+@@ -837,8 +837,10 @@ int efx_probe_filters(struct efx_nic *efx)
+ 		}
  
-+#include <linux/kconfig.h>
- #include <linux/rwsem.h>
- 
- struct i2c_devinfo {
-@@ -29,7 +30,8 @@ int i2c_dev_irq_from_resources(const str
-  */
- static inline bool i2c_in_atomic_xfer_mode(void)
- {
--	return system_state > SYSTEM_RUNNING && !preemptible();
-+	return system_state > SYSTEM_RUNNING &&
-+	       (IS_ENABLED(CONFIG_PREEMPT_COUNT) ? !preemptible() : irqs_disabled());
- }
- 
- static inline int __i2c_lock_bus_helper(struct i2c_adapter *adap)
+ 		if (!success) {
+-			efx_for_each_channel(channel, efx)
++			efx_for_each_channel(channel, efx) {
+ 				kfree(channel->rps_flow_id);
++				channel->rps_flow_id = NULL;
++			}
+ 			efx->type->filter_table_remove(efx);
+ 			rc = -ENOMEM;
+ 			goto out_unlock;
+-- 
+2.43.0
+
 
 
