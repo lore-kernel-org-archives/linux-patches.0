@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A87CCA71;
-	Sat, 13 Jan 2024 09:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748401848;
+	Sat, 13 Jan 2024 09:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHcahZL3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BB0C43399;
-	Sat, 13 Jan 2024 09:59:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRwEZPDv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6BD2C433F1;
+	Sat, 13 Jan 2024 09:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139970;
-	bh=Fe8/xojviZAR7sSSx0ztDNRjz/z9gMq7rff1odaDeN4=;
+	s=korg; t=1705139973;
+	bh=RgBP0xliUO0SNtZe1kwrKBrJ0em3S+95DhKjiEz30cI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GHcahZL3YtYJVtL4yNIt9A+3EVx5O3Gijb3RNmtH9HWuYCePv+6+SXD6jIsyL6H00
-	 A6s8tgji485zpZ+99AhMbbb//GByPuRXlsmgQDQVqXDVXJ78ko1lde/CXHUMJQCIqU
-	 HXCksBgqE9ObzyESmcOEn7qO2ZNIHZLXGUZYCPC4=
+	b=qRwEZPDv7BgdnpZ1PUEQ82rp+bQYuUPsrokREyF+iCY+NTZDfjM6xjmLNsHryV43Y
+	 AGc5Q5XSAHOraCuwY/RV5/t/7419GHlnoe+I1MogXRe0guSLfE/+Vu2LUMknoJE6ZY
+	 DQhQl3PZ3lwDFgy4kf0kVLNLGGMygV+XXZdQ/QmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Staikov <andrii.staikov@intel.com>,
-	Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
 	Simon Horman <horms@kernel.org>,
-	Bharathi Sreenivas <bharathi.sreenivas@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 10/59] i40e: Fix filter input checks to prevent config with invalid values
-Date: Sat, 13 Jan 2024 10:49:41 +0100
-Message-ID: <20240113094209.618300289@linuxfoundation.org>
+Subject: [PATCH 5.15 11/59] igc: Report VLAN EtherType matching back to user
+Date: Sat, 13 Jan 2024 10:49:42 +0100
+Message-ID: <20240113094209.648284423@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
 References: <20240113094209.301672391@linuxfoundation.org>
@@ -46,51 +45,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
+From: Kurt Kanzenbach <kurt@linutronix.de>
 
-[ Upstream commit 3e48041d9820c17e0a51599d12e66c6e12a8d08d ]
+[ Upstream commit 088464abd48cf3735aee91f9e211b32da9d81117 ]
 
-Prevent VF from configuring filters with unsupported actions or use
-REDIRECT action with invalid tc number. Current checks could cause
-out of bounds access on PF side.
+Currently the driver allows to configure matching by VLAN EtherType.
+However, the retrieval function does not report it back to the user. Add
+it.
 
-Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
-Reviewed-by: Andrii Staikov <andrii.staikov@intel.com>
-Signed-off-by: Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Before:
+|root@host:~# ethtool -N enp3s0 flow-type ether vlan-etype 0x8100 action 0
+|Added rule with ID 63
+|root@host:~# ethtool --show-ntuple enp3s0
+|4 RX rings available
+|Total 1 rules
+|
+|Filter: 63
+|        Flow Type: Raw Ethernet
+|        Src MAC addr: 00:00:00:00:00:00 mask: FF:FF:FF:FF:FF:FF
+|        Dest MAC addr: 00:00:00:00:00:00 mask: FF:FF:FF:FF:FF:FF
+|        Ethertype: 0x0 mask: 0xFFFF
+|        Action: Direct to queue 0
+
+After:
+|root@host:~# ethtool -N enp3s0 flow-type ether vlan-etype 0x8100 action 0
+|Added rule with ID 63
+|root@host:~# ethtool --show-ntuple enp3s0
+|4 RX rings available
+|Total 1 rules
+|
+|Filter: 63
+|        Flow Type: Raw Ethernet
+|        Src MAC addr: 00:00:00:00:00:00 mask: FF:FF:FF:FF:FF:FF
+|        Dest MAC addr: 00:00:00:00:00:00 mask: FF:FF:FF:FF:FF:FF
+|        Ethertype: 0x0 mask: 0xFFFF
+|        VLAN EtherType: 0x8100 mask: 0x0
+|        VLAN: 0x0 mask: 0xffff
+|        User-defined: 0x0 mask: 0xffffffffffffffff
+|        Action: Direct to queue 0
+
+Fixes: 2b477d057e33 ("igc: Integrate flex filter into ethtool ops")
+Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Bharathi Sreenivas <bharathi.sreenivas@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_ethtool.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 7950b18cb7a41..0946565b157cd 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -3427,16 +3427,16 @@ static int i40e_validate_cloud_filter(struct i40e_vf *vf,
- 	bool found = false;
- 	int bkt;
- 
--	if (!tc_filter->action) {
-+	if (tc_filter->action != VIRTCHNL_ACTION_TC_REDIRECT) {
- 		dev_info(&pf->pdev->dev,
--			 "VF %d: Currently ADq doesn't support Drop Action\n",
--			 vf->vf_id);
-+			 "VF %d: ADQ doesn't support this action (%d)\n",
-+			 vf->vf_id, tc_filter->action);
- 		goto err;
+diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
+index 3bffd2729a439..ea4545e431dc5 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
++++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
+@@ -972,6 +972,12 @@ static int igc_ethtool_get_nfc_rule(struct igc_adapter *adapter,
+ 		fsp->m_u.ether_spec.h_proto = ETHER_TYPE_FULL_MASK;
  	}
  
- 	/* action_meta is TC number here to which the filter is applied */
- 	if (!tc_filter->action_meta ||
--	    tc_filter->action_meta > I40E_MAX_VF_VSI) {
-+	    tc_filter->action_meta > vf->num_tc) {
- 		dev_info(&pf->pdev->dev, "VF %d: Invalid TC number %u\n",
- 			 vf->vf_id, tc_filter->action_meta);
- 		goto err;
++	if (rule->filter.match_flags & IGC_FILTER_FLAG_VLAN_ETYPE) {
++		fsp->flow_type |= FLOW_EXT;
++		fsp->h_ext.vlan_etype = rule->filter.vlan_etype;
++		fsp->m_ext.vlan_etype = ETHER_TYPE_FULL_MASK;
++	}
++
+ 	if (rule->filter.match_flags & IGC_FILTER_FLAG_VLAN_TCI) {
+ 		fsp->flow_type |= FLOW_EXT;
+ 		fsp->h_ext.vlan_tci = htons(rule->filter.vlan_tci);
 -- 
 2.43.0
 
