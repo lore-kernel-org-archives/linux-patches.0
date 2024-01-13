@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72C11846;
-	Sat, 13 Jan 2024 09:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A563CEC5;
+	Sat, 13 Jan 2024 09:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fK/ruyEI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A92C433C7;
-	Sat, 13 Jan 2024 09:57:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Clx40gGX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2245CC433C7;
+	Sat, 13 Jan 2024 09:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139844;
-	bh=JoTIvdSrnZ7FacuOJs1bev78sekHnP3GIGTc2Uyi6xc=;
+	s=korg; t=1705139847;
+	bh=5XlAsVRFU9b+ntU6IK9OklGUNjTS5CTe2eA1vUIJ9qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fK/ruyEIDnYavD+PtQasjJpaOLp1W+Z5Sik0leeCMZ2tU4Vl9p/h1n5eR3rsxjYho
-	 fW49IkRPmvv5+pAx2dHNi5jTcnCxP1QlLv0ysPrLyeqU99dPXbsgLji6i5jFz/RW+2
-	 sreyrPwkLrxN54gIlD2rATNoOP+mblPkCchodokE=
+	b=Clx40gGXrEbzswndXynp5aNFjFKJyt3eKbUPFWe7zMAYdV8fHtCmpJSiuR7Vjzi0c
+	 U79bMM6f7J1OL6VxOFfKbDoMpzkPFgtbYfLOm2QmfK6iUd9bbTvD6PMgnUNJHoNlHd
+	 Ekqlaz4wWH5UinOaHHEKwodNgacaeGbdggrODn94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Zhipeng Lu <alexious@zju.edu.cn>,
+	Adrian Cinal <adriancinal1@gmail.com>,
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 11/43] sfc: fix a double-free bug in efx_probe_filters
-Date: Sat, 13 Jan 2024 10:49:50 +0100
-Message-ID: <20240113094207.289451444@linuxfoundation.org>
+Subject: [PATCH 5.10 12/43] net: bcmgenet: Fix FCS generation for fragmented skbuffs
+Date: Sat, 13 Jan 2024 10:49:51 +0100
+Message-ID: <20240113094207.314043377@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.930684111@linuxfoundation.org>
 References: <20240113094206.930684111@linuxfoundation.org>
@@ -44,49 +44,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Adrian Cinal <adriancinal@gmail.com>
 
-[ Upstream commit d5a306aedba34e640b11d7026dbbafb78ee3a5f6 ]
+[ Upstream commit e584f2ff1e6cc9b1d99e8a6b0f3415940d1b3eb3 ]
 
-In efx_probe_filters, the channel->rps_flow_id is freed in a
-efx_for_each_channel marco  when success equals to 0.
-However, after the following call chain:
+The flag DMA_TX_APPEND_CRC was only written to the first DMA descriptor
+in the TX path, where each descriptor corresponds to a single skbuff
+fragment (or the skbuff head). This led to packets with no FCS appearing
+on the wire if the kernel allocated the packet in fragments, which would
+always happen when using PACKET_MMAP/TPACKET (cf. tpacket_fill_skb() in
+net/af_packet.c).
 
-ef100_net_open
-  |-> efx_probe_filters
-  |-> ef100_net_stop
-        |-> efx_remove_filters
-
-The channel->rps_flow_id is freed again in the efx_for_each_channel of
-efx_remove_filters, triggering a double-free bug.
-
-Fixes: a9dc3d5612ce ("sfc_ef100: RX filter table management and related gubbins")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Edward Cree <ecree.xilinx@gmail.com>
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Link: https://lore.kernel.org/r/20231225112915.3544581-1-alexious@zju.edu.cn
+Fixes: 1c1008c793fa ("net: bcmgenet: add main driver file")
+Signed-off-by: Adrian Cinal <adriancinal1@gmail.com>
+Acked-by: Doug Berger <opendmb@gmail.com>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20231228135638.1339245-1-adriancinal1@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/rx_common.c | 4 +++-
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/sfc/rx_common.c b/drivers/net/ethernet/sfc/rx_common.c
-index 36b46ddb67107..0ea3168e08960 100644
---- a/drivers/net/ethernet/sfc/rx_common.c
-+++ b/drivers/net/ethernet/sfc/rx_common.c
-@@ -837,8 +837,10 @@ int efx_probe_filters(struct efx_nic *efx)
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index 145488449f133..8edf12077e663 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -2086,8 +2086,10 @@ static netdev_tx_t bcmgenet_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		/* Note: if we ever change from DMA_TX_APPEND_CRC below we
+ 		 * will need to restore software padding of "runt" packets
+ 		 */
++		len_stat |= DMA_TX_APPEND_CRC;
++
+ 		if (!i) {
+-			len_stat |= DMA_TX_APPEND_CRC | DMA_SOP;
++			len_stat |= DMA_SOP;
+ 			if (skb->ip_summed == CHECKSUM_PARTIAL)
+ 				len_stat |= DMA_TX_DO_CSUM;
  		}
- 
- 		if (!success) {
--			efx_for_each_channel(channel, efx)
-+			efx_for_each_channel(channel, efx) {
- 				kfree(channel->rps_flow_id);
-+				channel->rps_flow_id = NULL;
-+			}
- 			efx->type->filter_table_remove(efx);
- 			rc = -ENOMEM;
- 			goto out_unlock;
 -- 
 2.43.0
 
