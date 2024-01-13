@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB4815BD;
-	Sat, 13 Jan 2024 09:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF29CFC19;
+	Sat, 13 Jan 2024 09:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUy4Ew8c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A80C433C7;
-	Sat, 13 Jan 2024 09:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eYmzu6ke"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C88C433F1;
+	Sat, 13 Jan 2024 09:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139996;
-	bh=hEir8W/F+01iamgs1mw3792O9ClyRvUAu+kVweECSGw=;
+	s=korg; t=1705139999;
+	bh=/C+U/QP5dcUBjtfyhuAYz7zAqzsD6U2AZbaxwnsyc4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUy4Ew8cSJeIq/I6cIh1xb7HOKO67tn2mkluo+iWULgHLNMw8lyTjOtEn9Z4Xrvsy
-	 Fwdxz2qO5g4XU+0pZEZuhjWf8gtK6y+/FVo3xLJELwb76g+MhDoo0vuIlBSZuhxhTO
-	 aRyI1yrro+wA801Z7NMrh+C5R0fwB2n86YS284tQ=
+	b=eYmzu6keRT4pX9Fl6FfrtcnVPT3as1tUFyrjrVQdixPYuFOstCrAvodtopFOcJhUB
+	 WaNmIhqrqPO6moOJBTbK3kTRi8eSl87wmym7XC3Xm3i8ijzw99yCKJ5LbBx76TE+r7
+	 Gf9Q1ebT533XSz0dIgHNNCy2+5EIvl28+uAPR0Pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 19/59] can: raw: add support for SO_TXTIME/SCM_TXTIME
-Date: Sat, 13 Jan 2024 10:49:50 +0100
-Message-ID: <20240113094209.903855105@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Sarthak Kukreti <sarthakkukreti@chromium.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 02/59] block: Dont invalidate pagecache for invalid falloc modes
+Date: Sat, 13 Jan 2024 10:49:33 +0100
+Message-ID: <20240113094209.383061026@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
 References: <20240113094209.301672391@linuxfoundation.org>
@@ -42,63 +44,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Sarthak Kukreti <sarthakkukreti@chromium.org>
 
-[ Upstream commit 51a0d5e51178fcd147c1b8fdab2ed16b561326db ]
+commit 1364a3c391aedfeb32aa025303ead3d7c91cdf9d upstream.
 
-This patch calls into sock_cmsg_send() to parse the user supplied
-control information into a struct sockcm_cookie. Then assign the
-requested transmit time to the skb.
+Only call truncate_bdev_range() if the fallocate mode is supported. This
+fixes a bug where data in the pagecache could be invalidated if the
+fallocate() was called on the block device with an invalid mode.
 
-This makes it possible to use the Earliest TXTIME First (ETF) packet
-scheduler with the CAN_RAW protocol. The user can send a CAN_RAW frame
-with a TXTIME and the kernel (with the ETF scheduler) will take care
-of sending it to the network interface.
-
-Link: https://lore.kernel.org/all/20220502091946.1916211-3-mkl@pengutronix.de
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Stable-dep-of: 7f6ca95d16b9 ("net: Implement missing getsockopt(SO_TIMESTAMPING_NEW)")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 25f4c41415e5 ("block: implement (some of) fallocate for block devices")
+Cc: stable@vger.kernel.org
+Reported-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Sarthak Kukreti <sarthakkukreti@chromium.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: line?  I've never seen those wrapped.
+Link: https://lore.kernel.org/r/20231011201230.750105-1-sarthakkukreti@chromium.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sarthak Kukreti <sarthakkukreti@chromium.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/raw.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ block/fops.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/net/can/raw.c b/net/can/raw.c
-index 8877d22da67ee..ed8834b853bee 100644
---- a/net/can/raw.c
-+++ b/net/can/raw.c
-@@ -780,6 +780,7 @@ static int raw_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
- {
- 	struct sock *sk = sock->sk;
- 	struct raw_sock *ro = raw_sk(sk);
-+	struct sockcm_cookie sockc;
- 	struct sk_buff *skb;
- 	struct net_device *dev;
- 	int ifindex;
-@@ -825,11 +826,19 @@ static int raw_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
- 	if (err < 0)
- 		goto free_skb;
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -599,22 +599,33 @@ static long blkdev_fallocate(struct file
  
--	skb_setup_tx_timestamp(skb, sk->sk_tsflags);
-+	sockcm_init(&sockc, sk);
-+	if (msg->msg_controllen) {
-+		err = sock_cmsg_send(sk, msg, &sockc);
-+		if (unlikely(err))
-+			goto free_skb;
-+	}
+ 	filemap_invalidate_lock(inode->i_mapping);
  
- 	skb->dev = dev;
- 	skb->sk = sk;
- 	skb->priority = sk->sk_priority;
-+	skb->tstamp = sockc.transmit_time;
+-	/* Invalidate the page cache, including dirty pages. */
+-	error = truncate_bdev_range(bdev, file->f_mode, start, end);
+-	if (error)
+-		goto fail;
+-
++	/*
++	 * Invalidate the page cache, including dirty pages, for valid
++	 * de-allocate mode calls to fallocate().
++	 */
+ 	switch (mode) {
+ 	case FALLOC_FL_ZERO_RANGE:
+ 	case FALLOC_FL_ZERO_RANGE | FALLOC_FL_KEEP_SIZE:
++		error = truncate_bdev_range(bdev, file->f_mode, start, end);
++		if (error)
++			goto fail;
 +
-+	skb_setup_tx_timestamp(skb, sockc.tsflags);
- 
- 	err = can_send(skb, ro->loopback);
- 
--- 
-2.43.0
-
+ 		error = blkdev_issue_zeroout(bdev, start >> 9, len >> 9,
+ 					    GFP_KERNEL, BLKDEV_ZERO_NOUNMAP);
+ 		break;
+ 	case FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE:
++		error = truncate_bdev_range(bdev, file->f_mode, start, end);
++		if (error)
++			goto fail;
++
+ 		error = blkdev_issue_zeroout(bdev, start >> 9, len >> 9,
+ 					     GFP_KERNEL, BLKDEV_ZERO_NOFALLBACK);
+ 		break;
+ 	case FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE | FALLOC_FL_NO_HIDE_STALE:
++		error = truncate_bdev_range(bdev, file->f_mode, start, end);
++		if (error)
++			goto fail;
++
+ 		error = blkdev_issue_discard(bdev, start >> 9, len >> 9,
+ 					     GFP_KERNEL, 0);
+ 		break;
 
 
