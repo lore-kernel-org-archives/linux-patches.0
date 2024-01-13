@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D501846;
-	Sat, 13 Jan 2024 09:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5951846;
+	Sat, 13 Jan 2024 09:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSS3rxW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C88C433F1;
-	Sat, 13 Jan 2024 09:57:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDAAPQ+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CECC433C7;
+	Sat, 13 Jan 2024 09:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139868;
-	bh=l5fTT+2bzfisZWcyiEJhw+3KZQvW4OyQTEXWeDRXP/A=;
+	s=korg; t=1705139871;
+	bh=cPF6DcROJf/pB+MhFZvtizhw53fxd+ZgaVZTiti4NzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SSS3rxW+n8pjQNNTpzmJg241QdYV95TonjWFsQw4npYJJinMqTbsZzRNhhMUdAiX2
-	 DAkutsYkDQrutB3T36r8pjpT9ubQvUPCvovupVdYNKt58dYsMV1/DpwRXIcLxzg9Ji
-	 nZ0QUtLjEhxnWC1zT6+zYcTCSYa4o6pw2PUq2o+4=
+	b=RDAAPQ+yKkXPY+9vqilpvprVBP4tW59QfN4BkSVdev6RXTf+0yFbTYYogb+WV9qkC
+	 d9GhJlQNN5IPAYfzYP84fFdJLWuCuX2T4Z82bREmiYWND8xZ/4d/9TzyYedf4+hfYi
+	 QlvL90bQ2YNblm1A6VYgL8NA/R92jRXIYBPbVERM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 19/43] ASoC: meson: g12a-toacodec: Fix event generation
-Date: Sat, 13 Jan 2024 10:49:58 +0100
-Message-ID: <20240113094207.531315359@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Sarthak Kukreti <sarthakkukreti@chromium.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 02/43] block: Dont invalidate pagecache for invalid falloc modes
+Date: Sat, 13 Jan 2024 10:49:41 +0100
+Message-ID: <20240113094207.010915551@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094206.930684111@linuxfoundation.org>
 References: <20240113094206.930684111@linuxfoundation.org>
@@ -41,39 +44,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Sarthak Kukreti <sarthakkukreti@chromium.org>
 
-[ Upstream commit 172c88244b5f2d3375403ebb504d407be0fded59 ]
+commit 1364a3c391aedfeb32aa025303ead3d7c91cdf9d upstream.
 
-When a control changes value the return value from _put() should be 1 so
-we get events generated to userspace notifying applications of the change.
-We are checking if there has been a change and exiting early if not but we
-are not providing the correct return value in the latter case, fix this.
+Only call truncate_bdev_range() if the fallocate mode is supported. This
+fixes a bug where data in the pagecache could be invalidated if the
+fallocate() was called on the block device with an invalid mode.
 
-Fixes: af2618a2eee8 ("ASoC: meson: g12a: add internal DAC glue driver")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20240103-meson-enum-val-v1-3-424af7a8fb91@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 25f4c41415e5 ("block: implement (some of) fallocate for block devices")
+Cc: stable@vger.kernel.org
+Reported-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Sarthak Kukreti <sarthakkukreti@chromium.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: line?  I've never seen those wrapped.
+Link: https://lore.kernel.org/r/20231011201230.750105-1-sarthakkukreti@chromium.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sarthak Kukreti <sarthakkukreti@chromium.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/meson/g12a-toacodec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/block_dev.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/meson/g12a-toacodec.c b/sound/soc/meson/g12a-toacodec.c
-index 0938f590de226..5ddeb22ac685a 100644
---- a/sound/soc/meson/g12a-toacodec.c
-+++ b/sound/soc/meson/g12a-toacodec.c
-@@ -85,7 +85,7 @@ static int g12a_toacodec_mux_put_enum(struct snd_kcontrol *kcontrol,
+--- a/fs/block_dev.c
++++ b/fs/block_dev.c
+@@ -2031,22 +2031,33 @@ static long blkdev_fallocate(struct file
+ 	if ((start | len) & (bdev_logical_block_size(bdev) - 1))
+ 		return -EINVAL;
  
- 	snd_soc_dapm_mux_update_power(dapm, kcontrol, mux, e, NULL);
- 
--	return 0;
-+	return 1;
- }
- 
- static SOC_ENUM_SINGLE_DECL(g12a_toacodec_mux_enum, TOACODEC_CTRL0,
--- 
-2.43.0
-
+-	/* Invalidate the page cache, including dirty pages. */
+-	error = truncate_bdev_range(bdev, file->f_mode, start, end);
+-	if (error)
+-		return error;
+-
++	/*
++	 * Invalidate the page cache, including dirty pages, for valid
++	 * de-allocate mode calls to fallocate().
++	 */
+ 	switch (mode) {
+ 	case FALLOC_FL_ZERO_RANGE:
+ 	case FALLOC_FL_ZERO_RANGE | FALLOC_FL_KEEP_SIZE:
++		error = truncate_bdev_range(bdev, file->f_mode, start, end);
++		if (error)
++			break;
++
+ 		error = blkdev_issue_zeroout(bdev, start >> 9, len >> 9,
+ 					    GFP_KERNEL, BLKDEV_ZERO_NOUNMAP);
+ 		break;
+ 	case FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE:
++		error = truncate_bdev_range(bdev, file->f_mode, start, end);
++		if (error)
++			break;
++
+ 		error = blkdev_issue_zeroout(bdev, start >> 9, len >> 9,
+ 					     GFP_KERNEL, BLKDEV_ZERO_NOFALLBACK);
+ 		break;
+ 	case FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE | FALLOC_FL_NO_HIDE_STALE:
++		error = truncate_bdev_range(bdev, file->f_mode, start, end);
++		if (error)
++			break;
++
+ 		error = blkdev_issue_discard(bdev, start >> 9, len >> 9,
+ 					     GFP_KERNEL, 0);
+ 		break;
 
 
