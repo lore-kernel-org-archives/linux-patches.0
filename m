@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E9815AF;
-	Sat, 13 Jan 2024 09:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927D617E8;
+	Sat, 13 Jan 2024 09:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ijkRR1n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4A6C433F1;
-	Sat, 13 Jan 2024 09:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hMQnkWd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE16C433C7;
+	Sat, 13 Jan 2024 09:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705139662;
-	bh=jol53jkuXxWogwqrEBZpfNg63ycgpglmjMMhmN4A6lc=;
+	s=korg; t=1705139665;
+	bh=4lgrvBM0YiQAij5gX4qsxMrFzEqDuMIbJ2NLKVBTHxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ijkRR1ngpo7Yp12c90o5SoKxJsfZhkuYtV+M+X1+R3Oz3TvgmbfyhEDumQrs6YWK
-	 zVS2wFHOT0FL96ue2r53orP5MtVxHDh/Ttc+mOm2RAHt7wd/dUYTC/l1pQd1KKsCqo
-	 57riBdKbAJpVV1w4ayfFawZKNBeEVPxLk/8fy6yc=
+	b=0hMQnkWdneMcpd0SUU0rRRb7qKrEwu8yDRavuJyKThneGPu7jSrUMK+KqQQBV7OQw
+	 P+E6I3bEoh38yTKmTtGqnK9PB+JlT7YFagjCm1/9yzCAKFYM+dlKRG74+MWKluehWB
+	 Be6CoKLOK+pPpQPUcdug8LqZqrF5S8NQDqyRcAyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Tobias Gruetzmacher <tobias-lists@23.gs>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Subject: [PATCH 4.19 14/25] firewire: ohci: suppress unexpected system reboot in AMD Ryzen machines and ASM108x/VT630x PCIe cards
-Date: Sat, 13 Jan 2024 10:49:55 +0100
-Message-ID: <20240113094205.482339428@linuxfoundation.org>
+	Jiajun Xie <jiajun.xie.sh@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 15/25] mm: fix unmap_mapping_range high bits shift bug
+Date: Sat, 13 Jan 2024 10:49:56 +0100
+Message-ID: <20240113094205.509103039@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094205.025407355@linuxfoundation.org>
 References: <20240113094205.025407355@linuxfoundation.org>
@@ -43,125 +41,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Jiajun Xie <jiajun.xie.sh@gmail.com>
 
-commit ac9184fbb8478dab4a0724b279f94956b69be827 upstream.
+commit 9eab0421fa94a3dde0d1f7e36ab3294fc306c99d upstream.
 
-VIA VT6306/6307/6308 provides PCI interface compliant to 1394 OHCI. When
-the hardware is combined with Asmedia ASM1083/1085 PCIe-to-PCI bus bridge,
-it appears that accesses to its 'Isochronous Cycle Timer' register (offset
-0xf0 on PCI memory space) often causes unexpected system reboot in any
-type of AMD Ryzen machine (both 0x17 and 0x19 families). It does not
-appears in the other type of machine (AMD pre-Ryzen machine, Intel
-machine, at least), or in the other OHCI 1394 hardware (e.g. Texas
-Instruments).
+The bug happens when highest bit of holebegin is 1, suppose holebegin is
+0x8000000111111000, after shift, hba would be 0xfff8000000111111, then
+vma_interval_tree_foreach would look it up fail or leads to the wrong
+result.
 
-The issue explicitly appears at a commit dcadfd7f7c74 ("firewire: core:
-use union for callback of transaction completion") added to v6.5 kernel.
-It changed 1394 OHCI driver to access to the register every time to
-dispatch local asynchronous transaction. However, the issue exists in
-older version of kernel as long as it runs in AMD Ryzen machine, since
-the access to the register is required to maintain bus time. It is not
-hard to imagine that users experience the unexpected system reboot when
-generating bus reset by plugging any devices in, or reading the register
-by time-aware application programs; e.g. audio sample processing.
+error call seq e.g.:
+- mmap(..., offset=0x8000000111111000)
+  |- syscall(mmap, ... unsigned long, off):
+     |- ksys_mmap_pgoff( ... , off >> PAGE_SHIFT);
 
-This commit suppresses the unexpected system reboot in the combination of
-hardware. It avoids the access itself. As a result, the software stack can
-not provide the hardware time anymore to unit drivers, userspace
-applications, and nodes in the same IEEE 1394 bus. It brings apparent
-disadvantage since time-aware application programs require it, while
-time-unaware applications are available again; e.g. sbp2.
+  here pgoff is correctly shifted to 0x8000000111111,
+  but pass 0x8000000111111000 as holebegin to unmap
+  would then cause terrible result, as shown below:
 
-Cc: stable@vger.kernel.org
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Closes: https://bugzilla.suse.com/show_bug.cgi?id=1215436
-Reported-by: Mario Limonciello <mario.limonciello@amd.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217994
-Reported-by: Tobias Gruetzmacher <tobias-lists@23.gs>
-Closes: https://sourceforge.net/p/linux1394/mailman/message/58711901/
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2240973
-Closes: https://bugs.launchpad.net/linux/+bug/2043905
-Link: https://lore.kernel.org/r/20240102110150.244475-1-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+- unmap_mapping_range(..., loff_t const holebegin)
+  |- pgoff_t hba = holebegin >> PAGE_SHIFT;
+          /* hba = 0xfff8000000111111 unexpectedly */
+
+The issue happens in Heterogeneous computing, where the device(e.g.
+gpu) and host share the same virtual address space.
+
+A simple workflow pattern which hit the issue is:
+        /* host */
+    1. userspace first mmap a file backed VA range with specified offset.
+                        e.g. (offset=0x800..., mmap return: va_a)
+    2. write some data to the corresponding sys page
+                         e.g. (va_a = 0xAABB)
+        /* device */
+    3. gpu workload touches VA, triggers gpu fault and notify the host.
+        /* host */
+    4. reviced gpu fault notification, then it will:
+            4.1 unmap host pages and also takes care of cpu tlb
+                  (use unmap_mapping_range with offset=0x800...)
+            4.2 migrate sys page to device
+            4.3 setup device page table and resolve device fault.
+        /* device */
+    5. gpu workload continued, it accessed va_a and got 0xAABB.
+    6. gpu workload continued, it wrote 0xBBCC to va_a.
+        /* host */
+    7. userspace access va_a, as expected, it will:
+            7.1 trigger cpu vm fault.
+            7.2 driver handling fault to migrate gpu local page to host.
+    8. userspace then could correctly get 0xBBCC from va_a
+    9. done
+
+But in step 4.1, if we hit the bug this patch mentioned, then userspace
+would never trigger cpu fault, and still get the old value: 0xAABB.
+
+Making holebegin unsigned first fixes the bug.
+
+Link: https://lkml.kernel.org/r/20231220052839.26970-1-jiajun.xie.sh@gmail.com
+Signed-off-by: Jiajun Xie <jiajun.xie.sh@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firewire/ohci.c |   51 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ mm/memory.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/firewire/ohci.c
-+++ b/drivers/firewire/ohci.c
-@@ -292,6 +292,51 @@ static char ohci_driver_name[] = KBUILD_
- #define QUIRK_TI_SLLZ059		0x20
- #define QUIRK_IR_WAKE			0x40
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3042,8 +3042,8 @@ void unmap_mapping_pages(struct address_
+ void unmap_mapping_range(struct address_space *mapping,
+ 		loff_t const holebegin, loff_t const holelen, int even_cows)
+ {
+-	pgoff_t hba = holebegin >> PAGE_SHIFT;
+-	pgoff_t hlen = (holelen + PAGE_SIZE - 1) >> PAGE_SHIFT;
++	pgoff_t hba = (pgoff_t)(holebegin) >> PAGE_SHIFT;
++	pgoff_t hlen = ((pgoff_t)(holelen) + PAGE_SIZE - 1) >> PAGE_SHIFT;
  
-+// On PCI Express Root Complex in any type of AMD Ryzen machine, VIA VT6306/6307/6308 with Asmedia
-+// ASM1083/1085 brings an inconvenience that the read accesses to 'Isochronous Cycle Timer' register
-+// (at offset 0xf0 in PCI I/O space) often causes unexpected system reboot. The mechanism is not
-+// clear, since the read access to the other registers is enough safe; e.g. 'Node ID' register,
-+// while it is probable due to detection of any type of PCIe error.
-+#define QUIRK_REBOOT_BY_CYCLE_TIMER_READ	0x80000000
-+
-+#if IS_ENABLED(CONFIG_X86)
-+
-+static bool has_reboot_by_cycle_timer_read_quirk(const struct fw_ohci *ohci)
-+{
-+	return !!(ohci->quirks & QUIRK_REBOOT_BY_CYCLE_TIMER_READ);
-+}
-+
-+#define PCI_DEVICE_ID_ASMEDIA_ASM108X	0x1080
-+
-+static bool detect_vt630x_with_asm1083_on_amd_ryzen_machine(const struct pci_dev *pdev)
-+{
-+	const struct pci_dev *pcie_to_pci_bridge;
-+
-+	// Detect any type of AMD Ryzen machine.
-+	if (!static_cpu_has(X86_FEATURE_ZEN))
-+		return false;
-+
-+	// Detect VIA VT6306/6307/6308.
-+	if (pdev->vendor != PCI_VENDOR_ID_VIA)
-+		return false;
-+	if (pdev->device != PCI_DEVICE_ID_VIA_VT630X)
-+		return false;
-+
-+	// Detect Asmedia ASM1083/1085.
-+	pcie_to_pci_bridge = pdev->bus->self;
-+	if (pcie_to_pci_bridge->vendor != PCI_VENDOR_ID_ASMEDIA)
-+		return false;
-+	if (pcie_to_pci_bridge->device != PCI_DEVICE_ID_ASMEDIA_ASM108X)
-+		return false;
-+
-+	return true;
-+}
-+
-+#else
-+#define has_reboot_by_cycle_timer_read_quirk(ohci) false
-+#define detect_vt630x_with_asm1083_on_amd_ryzen_machine(pdev)	false
-+#endif
-+
- /* In case of multiple matches in ohci_quirks[], only the first one is used. */
- static const struct {
- 	unsigned short vendor, device, revision, flags;
-@@ -1730,6 +1775,9 @@ static u32 get_cycle_time(struct fw_ohci
- 	s32 diff01, diff12;
- 	int i;
- 
-+	if (has_reboot_by_cycle_timer_read_quirk(ohci))
-+		return 0;
-+
- 	c2 = reg_read(ohci, OHCI1394_IsochronousCycleTimer);
- 
- 	if (ohci->quirks & QUIRK_CYCLE_TIMER) {
-@@ -3633,6 +3681,9 @@ static int pci_probe(struct pci_dev *dev
- 	if (param_quirks)
- 		ohci->quirks = param_quirks;
- 
-+	if (detect_vt630x_with_asm1083_on_amd_ryzen_machine(dev))
-+		ohci->quirks |= QUIRK_REBOOT_BY_CYCLE_TIMER_READ;
-+
- 	/*
- 	 * Because dma_alloc_coherent() allocates at least one page,
- 	 * we save space by using a common buffer for the AR request/
+ 	/* Check for overflow. */
+ 	if (sizeof(holelen) > sizeof(hlen)) {
 
 
