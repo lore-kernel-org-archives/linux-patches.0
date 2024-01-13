@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A973263C3;
-	Sat, 13 Jan 2024 10:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933C71846;
+	Sat, 13 Jan 2024 10:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJrtV7Hd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27625C433C7;
-	Sat, 13 Jan 2024 10:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CaRZm/tn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CBEC433C7;
+	Sat, 13 Jan 2024 10:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705140123;
-	bh=Mpqkociv5oMzq1OBdlZGo3fnH08CjMXYYArq4GPYx2g=;
+	s=korg; t=1705140126;
+	bh=zIfWc9LVj4HQXfHfF/vwjwc58jak0HACnBru09wypL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJrtV7HdxfFIsOr0ZDglQOLLHnXzCrK776jVfQYhFlTfHi2UQmn8f+/cnynW5wVCa
-	 s7utZMjVvsSuMbPyE6a11WPzcPof+zltZcFpbyT9lqU28MM94h7lh2qoVbOoo7/CoX
-	 pxKlMwHKqqn8AhjTVG1+8az247p20IBKYWvE3rw0=
+	b=CaRZm/tnpq5WOG+8maWLK9rsS0JTYd3cePy14AWSD3yHa9bdesyeXibAPWy+kfDTV
+	 tBTevk6A2KScwf1VcTOsX1ljjVz4feLbaqp4AH7mbz12tE3+Skp4dAtBrBOGXgoR9y
+	 1ResfIlozZ2/qvKVWdG3858cPxSZZF9hHBkyS8l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Chen <wenchao.chen@unisoc.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 51/59] mmc: sdhci-sprd: Fix eMMC init failure after hw reset
-Date: Sat, 13 Jan 2024 10:50:22 +0100
-Message-ID: <20240113094210.850139930@linuxfoundation.org>
+	John Fastabend <john.fastabend@gmail.com>,
+	Jann Horn <jannh@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 52/59] net: tls, update curr on splice as well
+Date: Sat, 13 Jan 2024 10:50:23 +0100
+Message-ID: <20240113094210.879993385@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
 References: <20240113094209.301672391@linuxfoundation.org>
@@ -42,48 +42,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenchao Chen <wenchao.chen@unisoc.com>
+From: John Fastabend <john.fastabend@gmail.com>
 
-commit 8abf77c88929b6d20fa4f9928b18d6448d64e293 upstream.
+commit c5a595000e2677e865a39f249c056bc05d6e55fd upstream.
 
-Some eMMC devices that do not close the auto clk gate after hw reset will
-cause eMMC initialization to fail. Let's fix this.
+The curr pointer must also be updated on the splice similar to how
+we do this for other copy types.
 
-Signed-off-by: Wenchao Chen <wenchao.chen@unisoc.com>
-Fixes: ff874dbc4f86 ("mmc: sdhci-sprd: Disable CLK_AUTO when the clock is less than 400K")
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231204064934.21236-1-wenchao.chen@unisoc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: d829e9c4112b ("tls: convert to generic sk_msg interface")
+Signed-off-by: John Fastabend <john.fastabend@gmail.com>
+Reported-by: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/r/20231206232706.374377-2-john.fastabend@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-sprd.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/tls/tls_sw.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/host/sdhci-sprd.c
-+++ b/drivers/mmc/host/sdhci-sprd.c
-@@ -224,15 +224,19 @@ static inline void _sdhci_sprd_set_clock
- 	div = ((div & 0x300) >> 2) | ((div & 0xFF) << 8);
- 	sdhci_enable_clk(host, div);
- 
-+	val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
-+	mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN | SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
- 	/* Enable CLK_AUTO when the clock is greater than 400K. */
- 	if (clk > 400000) {
--		val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
--		mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN |
--			SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
- 		if (mask != (val & mask)) {
- 			val |= mask;
- 			sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1216,6 +1216,8 @@ alloc_payload:
  		}
-+	} else {
-+		if (val & mask) {
-+			val &= ~mask;
-+			sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
-+		}
- 	}
- }
  
+ 		sk_msg_page_add(msg_pl, page, copy, offset);
++		msg_pl->sg.copybreak = 0;
++		msg_pl->sg.curr = msg_pl->sg.end;
+ 		sk_mem_charge(sk, copy);
+ 
+ 		offset += copy;
 
 
