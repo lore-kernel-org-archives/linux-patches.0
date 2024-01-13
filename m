@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BB41EEE6;
-	Sat, 13 Jan 2024 10:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A57C1846;
+	Sat, 13 Jan 2024 10:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qaTCUPIU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC71C433C7;
-	Sat, 13 Jan 2024 10:02:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUyT+Wju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B27C433C7;
+	Sat, 13 Jan 2024 10:02:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705140132;
-	bh=5Tt5BpqvsyhjVkMIdXvlL6PDGyJM5XdZZ/z15nmRTFY=;
+	s=korg; t=1705140135;
+	bh=uk9u0cn8cXgV+zR1VpH2X0nAy74PXaJKM4XwWv06OD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qaTCUPIUYEE/qfkmsHk52YCMBiAWMTDfRt/Ndu3DJIj2vf4HuVVJOPtIbpfC0LRtK
-	 SpxcKOhGXxC0JjDfbLM5ycNwRL8SVl1oTn7BVUSTsnb5bbkWhXRhcW4YD8WzxdMh44
-	 kHVq5hqi+wyZ+jaVHb1NUXt3PMhKhkRJPA8tPFiQ=
+	b=NUyT+WjuCaF2e7yGViiep0kgY1sKd73Yr6gZ4Kw0AYy8Nw6xGhuWZyh7Gk/fmDAmk
+	 1IDo2fsQucqm6sg/aLLTrIlIxnoiPTfZmG1Ydg7GbtENWKnj1rXYIR8eE43amZ8AkY
+	 L5RRK46r36C0HEplOtqK6Tjxz6TJvD8B2eRHlRUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Lieven Hey <lieven.hey@kdab.com>,
-	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 5.15 54/59] perf inject: Fix GEN_ELF_TEXT_OFFSET for jit
-Date: Sat, 13 Jan 2024 10:50:25 +0100
-Message-ID: <20240113094210.936158589@linuxfoundation.org>
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 55/59] netfilter: nf_tables: Reject tables of unsupported family
+Date: Sat, 13 Jan 2024 10:50:26 +0100
+Message-ID: <20240113094210.964294961@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
 References: <20240113094209.301672391@linuxfoundation.org>
@@ -45,49 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Phil Sutter <phil@nwl.cc>
 
-commit 89b15d00527b7825ff19130ed83478e80e3fae99 upstream.
+commit f1082dd31fe461d482d69da2a8eccfeb7bf07ac2 upstream.
 
-When a program header was added, it moved the text section but
-GEN_ELF_TEXT_OFFSET was not updated.
+An nftables family is merely a hollow container, its family just a
+number and such not reliant on compile-time options other than nftables
+support itself. Add an artificial check so attempts at using a family
+the kernel can't support fail as early as possible. This helps user
+space detect kernels which lack e.g. NFPROTO_INET.
 
-Fix by adding the program header size and aligning.
-
-Fixes: babd04386b1df8c3 ("perf jit: Include program header in ELF files")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Lieven Hey <lieven.hey@kdab.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20221014170905.64069-7-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-[namhyung: use "linux/kernel.h" instead to avoid build failure]
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/genelf.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
---- a/tools/perf/util/genelf.h
-+++ b/tools/perf/util/genelf.h
-@@ -2,6 +2,8 @@
- #ifndef __GENELF_H__
- #define __GENELF_H__
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1247,6 +1247,30 @@ static int nft_objname_hash_cmp(struct r
+ 	return strcmp(obj->key.name, k->name);
+ }
  
-+#include <linux/kernel.h>
++static bool nft_supported_family(u8 family)
++{
++	return false
++#ifdef CONFIG_NF_TABLES_INET
++		|| family == NFPROTO_INET
++#endif
++#ifdef CONFIG_NF_TABLES_IPV4
++		|| family == NFPROTO_IPV4
++#endif
++#ifdef CONFIG_NF_TABLES_ARP
++		|| family == NFPROTO_ARP
++#endif
++#ifdef CONFIG_NF_TABLES_NETDEV
++		|| family == NFPROTO_NETDEV
++#endif
++#if IS_ENABLED(CONFIG_NF_TABLES_BRIDGE)
++		|| family == NFPROTO_BRIDGE
++#endif
++#ifdef CONFIG_NF_TABLES_IPV6
++		|| family == NFPROTO_IPV6
++#endif
++		;
++}
 +
- /* genelf.c */
- int jit_write_elf(int fd, uint64_t code_addr, const char *sym,
- 		  const void *code, int csize, void *debug, int nr_debug_entries,
-@@ -73,6 +75,6 @@ int jit_add_debug_info(Elf *e, uint64_t
- #endif
+ static int nf_tables_newtable(struct sk_buff *skb, const struct nfnl_info *info,
+ 			      const struct nlattr * const nla[])
+ {
+@@ -1261,6 +1285,9 @@ static int nf_tables_newtable(struct sk_
+ 	u32 flags = 0;
+ 	int err;
  
- /* The .text section is directly after the ELF header */
--#define GEN_ELF_TEXT_OFFSET sizeof(Elf_Ehdr)
-+#define GEN_ELF_TEXT_OFFSET round_up(sizeof(Elf_Ehdr) + sizeof(Elf_Phdr), 16)
- 
- #endif
++	if (!nft_supported_family(family))
++		return -EOPNOTSUPP;
++
+ 	lockdep_assert_held(&nft_net->commit_mutex);
+ 	attr = nla[NFTA_TABLE_NAME];
+ 	table = nft_table_lookup(net, attr, family, genmask,
 
 
