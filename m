@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBFB1EF1C;
-	Sat, 13 Jan 2024 10:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715CE1848;
+	Sat, 13 Jan 2024 10:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eAbyikFC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1492C433F1;
-	Sat, 13 Jan 2024 10:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MDS9l79h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE059C433C7;
+	Sat, 13 Jan 2024 10:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705140138;
-	bh=SSx17O5n16KLciEeDzHnDp8ia80vDm5aMw4StnJuNDw=;
+	s=korg; t=1705140141;
+	bh=yCblQYPtdplNFrKseSsmiQs5m96X4ND1ZV7zJYJT428=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eAbyikFCMf4xvOjWI49QilmXps9ME2oPWrSDNlNPFP/71HHnn5ZPZ7/IeEKjRR+Sy
-	 LWPYW1gOIkJn+5cURgjUvIL0FETNNE6qawA0eIf3e7diwEzcV71QyWSniAEUedZo1p
-	 1xqHlBVBD4xZM0+ttJmeEhf27Gz/13YMo7iuO5V8=
+	b=MDS9l79h/tD51Sb23CYeE4nL8TDAvtc0AMg7Le+EY00V60ARwO4zUsGrDTw3xl3Ag
+	 fHRo7zcS3QkQm+KDHJ5hWkD8rh8nafvrjqeCZOIhI6Hbc39b6atoXJmMQNPwMSGfeg
+	 fB8P+ZJr5c6uqbwc2f9qra9qQKb3MjH8yU+yfvpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Song Liu <song@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Markus Boehme <markubo@amazon.com>
-Subject: [PATCH 5.15 56/59] kallsyms: Make module_kallsyms_on_each_symbol generally available
-Date: Sat, 13 Jan 2024 10:50:27 +0100
-Message-ID: <20240113094210.996319716@linuxfoundation.org>
+	Jiajun Xie <jiajun.xie.sh@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 47/59] mm: fix unmap_mapping_range high bits shift bug
+Date: Sat, 13 Jan 2024 10:50:18 +0100
+Message-ID: <20240113094210.737579173@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240113094209.301672391@linuxfoundation.org>
 References: <20240113094209.301672391@linuxfoundation.org>
@@ -44,68 +41,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Jiajun Xie <jiajun.xie.sh@gmail.com>
 
-commit 73feb8d5fa3b755bb51077c0aabfb6aa556fd498 upstream.
+commit 9eab0421fa94a3dde0d1f7e36ab3294fc306c99d upstream.
 
-Making module_kallsyms_on_each_symbol generally available, so it
-can be used outside CONFIG_LIVEPATCH option in following changes.
+The bug happens when highest bit of holebegin is 1, suppose holebegin is
+0x8000000111111000, after shift, hba would be 0xfff8000000111111, then
+vma_interval_tree_foreach would look it up fail or leads to the wrong
+result.
 
-Rather than adding another ifdef option let's make the function
-generally available (when CONFIG_KALLSYMS and CONFIG_MODULES
-options are defined).
+error call seq e.g.:
+- mmap(..., offset=0x8000000111111000)
+  |- syscall(mmap, ... unsigned long, off):
+     |- ksys_mmap_pgoff( ... , off >> PAGE_SHIFT);
 
-Cc: Christoph Hellwig <hch@lst.de>
-Acked-by: Song Liu <song@kernel.org>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20221025134148.3300700-2-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 926fe783c8a6 ("tracing/kprobes: Fix symbol counting logic by looking at modules as well")
-Signed-off-by: Markus Boehme <markubo@amazon.com>
+  here pgoff is correctly shifted to 0x8000000111111,
+  but pass 0x8000000111111000 as holebegin to unmap
+  would then cause terrible result, as shown below:
+
+- unmap_mapping_range(..., loff_t const holebegin)
+  |- pgoff_t hba = holebegin >> PAGE_SHIFT;
+          /* hba = 0xfff8000000111111 unexpectedly */
+
+The issue happens in Heterogeneous computing, where the device(e.g.
+gpu) and host share the same virtual address space.
+
+A simple workflow pattern which hit the issue is:
+        /* host */
+    1. userspace first mmap a file backed VA range with specified offset.
+                        e.g. (offset=0x800..., mmap return: va_a)
+    2. write some data to the corresponding sys page
+                         e.g. (va_a = 0xAABB)
+        /* device */
+    3. gpu workload touches VA, triggers gpu fault and notify the host.
+        /* host */
+    4. reviced gpu fault notification, then it will:
+            4.1 unmap host pages and also takes care of cpu tlb
+                  (use unmap_mapping_range with offset=0x800...)
+            4.2 migrate sys page to device
+            4.3 setup device page table and resolve device fault.
+        /* device */
+    5. gpu workload continued, it accessed va_a and got 0xAABB.
+    6. gpu workload continued, it wrote 0xBBCC to va_a.
+        /* host */
+    7. userspace access va_a, as expected, it will:
+            7.1 trigger cpu vm fault.
+            7.2 driver handling fault to migrate gpu local page to host.
+    8. userspace then could correctly get 0xBBCC from va_a
+    9. done
+
+But in step 4.1, if we hit the bug this patch mentioned, then userspace
+would never trigger cpu fault, and still get the old value: 0xAABB.
+
+Making holebegin unsigned first fixes the bug.
+
+Link: https://lkml.kernel.org/r/20231220052839.26970-1-jiajun.xie.sh@gmail.com
+Signed-off-by: Jiajun Xie <jiajun.xie.sh@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/module.h |    9 +++++++++
- kernel/module.c        |    2 --
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ mm/memory.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/linux/module.h
-+++ b/include/linux/module.h
-@@ -867,8 +867,17 @@ static inline bool module_sig_ok(struct
- }
- #endif	/* CONFIG_MODULE_SIG */
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3451,8 +3451,8 @@ EXPORT_SYMBOL_GPL(unmap_mapping_pages);
+ void unmap_mapping_range(struct address_space *mapping,
+ 		loff_t const holebegin, loff_t const holelen, int even_cows)
+ {
+-	pgoff_t hba = holebegin >> PAGE_SHIFT;
+-	pgoff_t hlen = (holelen + PAGE_SIZE - 1) >> PAGE_SHIFT;
++	pgoff_t hba = (pgoff_t)(holebegin) >> PAGE_SHIFT;
++	pgoff_t hlen = ((pgoff_t)(holelen) + PAGE_SIZE - 1) >> PAGE_SHIFT;
  
-+#if defined(CONFIG_MODULES) && defined(CONFIG_KALLSYMS)
- int module_kallsyms_on_each_symbol(int (*fn)(void *, const char *,
- 					     struct module *, unsigned long),
- 				   void *data);
-+#else
-+static inline int module_kallsyms_on_each_symbol(int (*fn)(void *, const char *,
-+						 struct module *, unsigned long),
-+						 void *data)
-+{
-+	return -EOPNOTSUPP;
-+}
-+#endif  /* CONFIG_MODULES && CONFIG_KALLSYMS */
- 
- #endif /* _LINUX_MODULE_H */
---- a/kernel/module.c
-+++ b/kernel/module.c
-@@ -4482,7 +4482,6 @@ unsigned long module_kallsyms_lookup_nam
- 	return ret;
- }
- 
--#ifdef CONFIG_LIVEPATCH
- int module_kallsyms_on_each_symbol(int (*fn)(void *, const char *,
- 					     struct module *, unsigned long),
- 				   void *data)
-@@ -4514,7 +4513,6 @@ out:
- 	mutex_unlock(&module_mutex);
- 	return ret;
- }
--#endif /* CONFIG_LIVEPATCH */
- #endif /* CONFIG_KALLSYMS */
- 
- static void cfi_init(struct module *mod)
+ 	/* Check for overflow. */
+ 	if (sizeof(holelen) > sizeof(hlen)) {
 
 
