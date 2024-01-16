@@ -1,229 +1,327 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612581B580;
-	Mon, 15 Jan 2024 20:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E6B1118B
+	for <patches@lists.linux.dev>; Tue, 16 Jan 2024 05:03:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GEYzCBDz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874B9C433C7;
-	Mon, 15 Jan 2024 20:32:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705350752;
-	bh=Nj+5DRK1mAIiOXj9//YfcsT2QRmca2Ur2W3zX//CzEA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GEYzCBDzsCdWb9gVC8SAxS6/mxihBUtRmfgNAvSz5PViRgINhad5qG2em5naB2kBd
-	 AlV/Q7avpsEbvxvTDS4MC4xucx3PXT0DSrBXwbf1PXunjtI3s+OB3WgeXG+hkxZTUp
-	 7B0OTUkfQLR+6s1EPfWss4BtO4JNCk6jDp6AiBUG1Oh8LkyvRnUB5r/YdEklvUu5fi
-	 fHrP0cVz8bT9R9/XtXTOnTgS3P7mu6C5cyNdtFwI1Oy+zU86AVV8BefZu5qwL/X14E
-	 HB/Y8eNRBB/rjgl5loQamQOfPhYY0G/OBMGbtBOYgQCvZu3Eo1d9NYRby4aODAM8fO
-	 DbyUGcCgP9TuA==
-Date: Mon, 15 Jan 2024 14:32:30 -0600
-From: Rob Herring <robh@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Frank Rowand <frowand.list@gmail.com>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, linux-um@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org, kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 4/6] of: Create of_root if no dtb provided by firmware
-Message-ID: <20240115203230.GA1439771-robh@kernel.org>
-References: <20240112200750.4062441-1-sboyd@kernel.org>
- <20240112200750.4062441-5-sboyd@kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WOixRqdn"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5534180f0e9so18686a12.1
+        for <patches@lists.linux.dev>; Mon, 15 Jan 2024 21:03:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1705381405; x=1705986205; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ysSH2U5T5UStaBUNLmDGsTthT5prEGrzbLKnWTreGqU=;
+        b=WOixRqdnUAdky95y61LdTOLoaTEVBF9f6cb60WQGofGf0sYccn9ulXrX1xS1WrEPaf
+         YioYudjBhi4WnpwtZfF7XHjzU/i4a7UmUoZ2IXPZ3fJFmIh0mPpDGr7JAC08O5ozOFOU
+         w2pIC/23XxO4AJuBvwAYFyiOGasZx1hYfNzL4kR5eg53erVJb8A4bQN7Ymc5YirYNVN7
+         FHCI5LFmlDC+s8aKDkNlTgG8S0AAd9gXMgxo6qbAWKczdItGjzvZ1clJKUaYYdpwM9Rs
+         Jd6I8tEqfKFac4CcCJraVBvB6Fje7W44T7BPtnnO+UwH6TCLgduR5eJ3grw120YwXEpD
+         18ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705381405; x=1705986205;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ysSH2U5T5UStaBUNLmDGsTthT5prEGrzbLKnWTreGqU=;
+        b=VsfmlouWIvd/Og3cI93WkxJckVsz1tlD7QPj08EAv0fIvpv3MFePlCpOVvESpLHJgG
+         k4e4DgH95ZI1zTS1osDCQlWES3CF+zw+yXHwWp8YlpEmViJxPvSl3kslZBigQvgJsUfq
+         Q9Khk+WgMBgDP6w2+kbUImY12tR+aAODJCA0hqTB8GKPDkDjR1JrsqLlsAU/LHa25Qwt
+         rx8W19+wy8zBwP+r1AyvMoXIuTa0z9MA3NYqRtpH29KsicWaX2fOIOhUvfWcJAzOTMtx
+         FHSlqBFQbL5cLn3gfZRmvTIyFX+D1T/ZEacVT4JzROU9O+AkyVcNfhYNQmF45LTmxnEr
+         r8JA==
+X-Gm-Message-State: AOJu0YwvgS9FtHx4UY/bA1vjvnxzwDhX/AhHIO1/PaNA6H0j9Vrq3XNi
+	7X1kRFZ3+F5C6PRHEMGI49m/ZlPwZYJBto209Pgvifjk/1kJ
+X-Google-Smtp-Source: AGHT+IFq7VbLb5Vx+XX8Et3HFDm04nnkzR+kMJiJlapv3AECv/E9KKeEcbQL5955erPk2myGTtrN/KbsbMZBTJNjkAQ=
+X-Received: by 2002:a05:6402:278e:b0:558:7f0f:aa70 with SMTP id
+ b14-20020a056402278e00b005587f0faa70mr322200ede.5.1705381404947; Mon, 15 Jan
+ 2024 21:03:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240112200750.4062441-5-sboyd@kernel.org>
+References: <20240112200750.4062441-1-sboyd@kernel.org> <20240112200750.4062441-7-sboyd@kernel.org>
+In-Reply-To: <20240112200750.4062441-7-sboyd@kernel.org>
+From: David Gow <davidgow@google.com>
+Date: Tue, 16 Jan 2024 13:03:12 +0800
+Message-ID: <CABVgOSkymMzaOFtJ-6OuVaB4i4zoVafPMqssA=GHByMJ9VTsKg@mail.gmail.com>
+Subject: Re: [PATCH 6/6] of: Add KUnit test to confirm DTB is loaded
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, linux-um@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, kunit-dev@googlegroups.com, 
+	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, 
+	Frank Rowand <frowand.list@gmail.com>, Brendan Higgins <brendan.higgins@linux.dev>
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="000000000000dee8be060f090c10"
 
-On Fri, Jan 12, 2024 at 12:07:47PM -0800, Stephen Boyd wrote:
-> From: Frank Rowand <frowand.list@gmail.com>
-> 
-> When enabling CONFIG_OF on a platform where 'of_root' is not populated
-> by firmware, we end up without a root node. In order to apply overlays
-> and create subnodes of the root node, we need one. Create this root node
-> by unflattening an empty builtin dtb.
-> 
-> If firmware provides a flattened device tree (FDT) then the FDT is
-> unflattened via setup_arch(). Otherwise, the call to
-> unflatten(_and_copy)?_device_tree() will create an empty root node.
-> 
-> We make of_have_populated_dt() return true only if the DTB was loaded by
-> firmware so that existing callers don't change behavior after this
-> patch. The call in the of platform code is removed because it prevents
-> overlays from creating platform devices when the platform bus isn't
-> fully initialized.
-> 
-> Signed-off-by: Frank Rowand <frowand.list@gmail.com>
-> Link: https://lore.kernel.org/r/20230317053415.2254616-2-frowand.list@gmail.com
+--000000000000dee8be060f090c10
+Content-Type: text/plain; charset="UTF-8"
+
+On Sat, 13 Jan 2024 at 04:07, Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> Add a KUnit test that confirms a DTB has been loaded, i.e. there is a
+> root node, and that the of_have_populated_dt() API works properly.
+>
 > Cc: Rob Herring <robh+dt@kernel.org>
-> [sboyd@kernel.org: Update of_have_populated_dt() to treat this empty dtb
-> as not populated. Drop setup_of() initcall]
+> Cc: Frank Rowand <frowand.list@gmail.com>
+> Cc: David Gow <davidgow@google.com>
+> Cc: Brendan Higgins <brendan.higgins@linux.dev>
 > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 > ---
->  drivers/of/Kconfig        |  7 ++++++-
->  drivers/of/Makefile       |  2 +-
->  drivers/of/empty_root.dts |  6 ++++++
->  drivers/of/fdt.c          | 25 +++++++++++++++++++++++++
->  drivers/of/platform.c     |  3 ---
->  include/linux/of.h        | 17 ++++++++++++-----
->  6 files changed, 50 insertions(+), 10 deletions(-)
->  create mode 100644 drivers/of/empty_root.dts
-> 
+
+I won't pretend to be a devicetree expert, but this looks good to me
+from a KUnit point of view, and passes comfortably here.
+
+checkpatch seems to have one complaint about the kconfig help text.
+Personally, I think the brief description is fine.
+
+Reviewed-by: David Gow <davidgow@google.com>
+
+Cheers,
+-- David
+
+>  drivers/of/.kunitconfig |  3 ++
+>  drivers/of/Kconfig      |  9 ++++
+>  drivers/of/Makefile     |  2 +
+>  drivers/of/of_test.c    | 98 +++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 112 insertions(+)
+>  create mode 100644 drivers/of/.kunitconfig
+>  create mode 100644 drivers/of/of_test.c
+>
+> diff --git a/drivers/of/.kunitconfig b/drivers/of/.kunitconfig
+> new file mode 100644
+> index 000000000000..5a8fee11978c
+> --- /dev/null
+> +++ b/drivers/of/.kunitconfig
+> @@ -0,0 +1,3 @@
+> +CONFIG_KUNIT=y
+> +CONFIG_OF=y
+> +CONFIG_OF_KUNIT_TEST=y
 > diff --git a/drivers/of/Kconfig b/drivers/of/Kconfig
-> index da9826accb1b..9628e48baa15 100644
+> index 9628e48baa15..a527ba8451d9 100644
 > --- a/drivers/of/Kconfig
 > +++ b/drivers/of/Kconfig
-> @@ -54,9 +54,14 @@ config OF_FLATTREE
->  	select CRC32
->  
->  config OF_EARLY_FLATTREE
-> -	bool
-> +	bool "Functions for accessing Flat Devicetree (FDT) early in boot"
+> @@ -37,6 +37,15 @@ config OF_UNITTEST
+>
+>           If unsure, say N here. This option is not safe to enable.
+>
+> +config OF_KUNIT_TEST
+> +       tristate "Devicetree KUnit DTB Test" if !KUNIT_ALL_TESTS
+> +       depends on KUNIT
+> +       default KUNIT_ALL_TESTS
+> +       help
+> +         This option builds KUnit unit tests for device tree infrastructure.
+> +
+> +         If unsure, say N here, but this option is safe to enable.
+> +
 
-I think we could instead just get rid of this kconfig option. Or 
-always enable with CONFIG_OF (except on Sparc). The only cost of 
-enabling it is init section functions which get freed anyways.
+FYI:
+WARNING: please write a help paragraph that fully describes the config symbol
+#111: FILE: drivers/of/Kconfig:40:
 
->  	select DMA_DECLARE_COHERENT if HAS_DMA && HAS_IOMEM
->  	select OF_FLATTREE
-> +	help
-> +	  Normally selected by platforms that process an FDT that has been
-> +	  passed to the kernel by the bootloader.  If the bootloader does not
-> +	  pass an FDT to the kernel and you need an empty devicetree that
-> +	  contains only a root node to exist, then say Y here.
->  
->  config OF_PROMTREE
->  	bool
+>  config OF_ALL_DTBS
+>         bool "Build all Device Tree Blobs"
+>         depends on COMPILE_TEST
 > diff --git a/drivers/of/Makefile b/drivers/of/Makefile
-> index eff624854575..df305348d1cb 100644
+> index df305348d1cb..251d33532148 100644
 > --- a/drivers/of/Makefile
 > +++ b/drivers/of/Makefile
-> @@ -2,7 +2,7 @@
->  obj-y = base.o cpu.o device.o module.o platform.o property.o
->  obj-$(CONFIG_OF_KOBJ) += kobj.o
->  obj-$(CONFIG_OF_DYNAMIC) += dynamic.o
-> -obj-$(CONFIG_OF_FLATTREE) += fdt.o
-> +obj-$(CONFIG_OF_FLATTREE) += fdt.o empty_root.dtb.o
->  obj-$(CONFIG_OF_EARLY_FLATTREE) += fdt_address.o
->  obj-$(CONFIG_OF_PROMTREE) += pdt.o
->  obj-$(CONFIG_OF_ADDRESS)  += address.o
-> diff --git a/drivers/of/empty_root.dts b/drivers/of/empty_root.dts
+> @@ -19,4 +19,6 @@ obj-y += kexec.o
+>  endif
+>  endif
+>
+> +obj-$(CONFIG_OF_KUNIT_TEST) += of_test.o
+> +
+>  obj-$(CONFIG_OF_UNITTEST) += unittest-data/
+> diff --git a/drivers/of/of_test.c b/drivers/of/of_test.c
 > new file mode 100644
-> index 000000000000..cf9e97a60f48
+> index 000000000000..7609ad3081b9
 > --- /dev/null
-> +++ b/drivers/of/empty_root.dts
-> @@ -0,0 +1,6 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/dts-v1/;
-> +
-> +/ {
-> +
-> +};
-> diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
-> index b488ad86d456..9fc7f8b4f48a 100644
-> --- a/drivers/of/fdt.c
-> +++ b/drivers/of/fdt.c
-> @@ -32,6 +32,13 @@
->  
->  #include "of_private.h"
->  
+> +++ b/drivers/of/of_test.c
+> @@ -0,0 +1,98 @@
+> +// SPDX-License-Identifier: GPL-2.0
 > +/*
-> + * __dtb_empty_root_begin[] and __dtb_empty_root_end[] magically created by
-> + * cmd_dt_S_dtb in scripts/Makefile.lib
+> + * KUnit tests for OF APIs
 > + */
-> +extern uint8_t __dtb_empty_root_begin[];
-> +extern uint8_t __dtb_empty_root_end[];
+> +#include <linux/module.h>
+> +#include <linux/of.h>
 > +
->  /*
->   * of_fdt_limit_memory - limit the number of regions in the /memory node
->   * @limit: maximum entries
-> @@ -1343,8 +1350,26 @@ static void __init copy_device_tree(void)
->   */
->  void __init unflatten_device_tree(void)
->  {
-> +	bool firmware_loaded = true;
+> +#include <kunit/test.h>
 > +
-> +	if (!initial_boot_params) {
-> +		initial_boot_params = (void *) __dtb_empty_root_begin;
-> +		/* fdt_totalsize() will be used for copy size */
-> +		if (fdt_totalsize(initial_boot_params) >
-> +		    __dtb_empty_root_end - __dtb_empty_root_begin) {
-> +			pr_err("invalid size in dtb_empty_root\n");
-> +			return;
-> +		}
-> +		of_fdt_crc32 = crc32_be(~0, initial_boot_params,
-> +					fdt_totalsize(initial_boot_params));
-> +		copy_device_tree();
-> +		firmware_loaded = false;
-> +	}
-> +
->  	__unflatten_device_tree(initial_boot_params, NULL, &of_root,
->  				early_init_dt_alloc_memory_arch, false);
-> +	if (!firmware_loaded)
-> +		of_node_set_flag(of_root, OF_EMPTY_ROOT);
->  
->  	/* Get pointer to "/chosen" and "/aliases" nodes for use everywhere */
->  	of_alias_scan(early_init_dt_alloc_memory_arch);
-> diff --git a/drivers/of/platform.c b/drivers/of/platform.c
-> index 126d265aa7d8..20087bb8a46b 100644
-> --- a/drivers/of/platform.c
-> +++ b/drivers/of/platform.c
-> @@ -549,9 +549,6 @@ static int __init of_platform_default_populate_init(void)
->  
->  	device_links_supplier_sync_state_pause();
->  
-> -	if (!of_have_populated_dt())
-> -		return -ENODEV;
-> -
->  	if (IS_ENABLED(CONFIG_PPC)) {
->  		struct device_node *boot_display = NULL;
->  		struct platform_device *dev;
-> diff --git a/include/linux/of.h b/include/linux/of.h
-> index 6a9ddf20e79a..390ad961ef01 100644
-> --- a/include/linux/of.h
-> +++ b/include/linux/of.h
-> @@ -151,6 +151,7 @@ extern struct device_node *of_stdout;
->  #define OF_POPULATED_BUS	4 /* platform bus created for children */
->  #define OF_OVERLAY		5 /* allocated for an overlay */
->  #define OF_OVERLAY_FREE_CSET	6 /* in overlay cset being freed */
-> +#define OF_EMPTY_ROOT		7 /* the builtin empty root node */
->  
->  #define OF_BAD_ADDR	((u64)-1)
->  
-> @@ -180,11 +181,6 @@ static inline bool is_of_node(const struct fwnode_handle *fwnode)
->  			&__of_fwnode_handle_node->fwnode : NULL;	\
->  	})
->  
-> -static inline bool of_have_populated_dt(void)
-> -{
-> -	return of_root != NULL;
-> -}
-> -
->  static inline bool of_node_is_root(const struct device_node *node)
->  {
->  	return node && (node->parent == NULL);
-> @@ -195,6 +191,17 @@ static inline int of_node_check_flag(const struct device_node *n, unsigned long
->  	return test_bit(flag, &n->_flags);
->  }
->  
-> +/**
-> + * of_have_populated_dt() - Has DT been populated by bootloader
-> + *
-> + * Return: True if a DTB has been populated by the bootloader and it isn't the
-> + * empty builtin one. False otherwise.
+> +/*
+> + * Test that the root node "/" exists.
 > + */
-> +static inline bool of_have_populated_dt(void)
+> +static void dtb_root_node_found_by_path(struct kunit *test)
 > +{
-> +	return of_root != NULL && !of_node_check_flag(of_root, OF_EMPTY_ROOT);
+> +       struct device_node *np;
+> +
+> +       np = of_find_node_by_path("/");
+> +       KUNIT_EXPECT_NOT_ERR_OR_NULL(test, np);
+> +       of_node_put(np);
+> +}
+> +
+> +/*
+> + * Test that the of_root global variable is always populated when DT
+> + * code is enabled.
+> + */
+> +static void dtb_root_node_populates_of_root(struct kunit *test)
+> +{
+> +       KUNIT_EXPECT_NOT_ERR_OR_NULL(test, of_root);
+> +}
+> +
+> +static struct kunit_case dtb_test_cases[] = {
+> +       KUNIT_CASE(dtb_root_node_found_by_path),
+> +       KUNIT_CASE(dtb_root_node_populates_of_root),
+> +       {}
+> +};
+> +
+> +/*
+> + * Test suite to confirm a live DTB is loaded.
+> + */
+> +static struct kunit_suite dtb_suite = {
+> +       .name = "dtb",
+> +       .test_cases = dtb_test_cases,
+> +};
+> +
+> +/*
+> + * Test that calling of_have_populated_dt() returns false when
+> + * the OF_EMPTY_ROOT flag isn't set.
+> + */
+> +static void of_have_populated_dt_false_when_flag_set(struct kunit *test)
+> +{
+> +       bool was_set;
+> +
+> +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, of_root);
+> +
+> +       was_set = of_node_test_and_set_flag(of_root, OF_EMPTY_ROOT);
+> +       KUNIT_EXPECT_FALSE(test, of_have_populated_dt());
+> +
+> +       if (!was_set)
+> +               of_node_clear_flag(of_root, OF_EMPTY_ROOT);
+> +}
+> +
+> +/*
+> + * Test that calling of_have_populated_dt() returns false when
+> + * the OF_EMPTY_ROOT flag isn't set.
+> + */
+> +static void of_have_populated_dt_true_when_flag_clear(struct kunit *test)
+> +{
+> +       bool was_set;
+> +
+> +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, of_root);
+> +
+> +       was_set = of_node_check_flag(of_root, OF_EMPTY_ROOT);
+> +       of_node_set_flag(of_root, OF_EMPTY_ROOT);
+> +       KUNIT_EXPECT_FALSE(test, of_have_populated_dt());
+> +
+> +       if (was_set)
+> +               of_node_set_flag(of_root, OF_EMPTY_ROOT);
+> +}
+> +
+> +static struct kunit_case of_have_populated_dt_test_cases[] = {
+> +       KUNIT_CASE(of_have_populated_dt_false_when_flag_set),
+> +       KUNIT_CASE(of_have_populated_dt_true_when_flag_clear),
+> +       {}
+> +};
+> +
+> +/*
+> + * Test suite to confirm behavior of of_have_populated_dt().
+> + */
+> +static struct kunit_suite of_have_populated_dt_suite = {
+> +       .name = "of_have_populated_dt",
+> +       .test_cases = of_have_populated_dt_test_cases,
+> +};
+> +
+> +kunit_test_suites(
+> +       &dtb_suite,
+> +       &of_have_populated_dt_suite,
+> +);
+> +MODULE_LICENSE("GPL");
+> --
+> https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+> https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+>
 
-Just a side comment, but I think many/all callers of this function could 
-just be removed.
+--000000000000dee8be060f090c10
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
-I don't love new flags. Another possible way to handle this would be 
-checking for "compatible" being present in the root node. I guess this 
-is fine as-is for now at least.
-
-Rob
+MIIPqgYJKoZIhvcNAQcCoIIPmzCCD5cCAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0BBwGg
+gg0EMIIEtjCCA56gAwIBAgIQeAMYYHb81ngUVR0WyMTzqzANBgkqhkiG9w0BAQsFADBMMSAwHgYD
+VQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBSMzETMBEGA1UEChMKR2xvYmFsU2lnbjETMBEGA1UE
+AxMKR2xvYmFsU2lnbjAeFw0yMDA3MjgwMDAwMDBaFw0yOTAzMTgwMDAwMDBaMFQxCzAJBgNVBAYT
+AkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSowKAYDVQQDEyFHbG9iYWxTaWduIEF0bGFz
+IFIzIFNNSU1FIENBIDIwMjAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCvLe9xPU9W
+dpiHLAvX7kFnaFZPuJLey7LYaMO8P/xSngB9IN73mVc7YiLov12Fekdtn5kL8PjmDBEvTYmWsuQS
+6VBo3vdlqqXZ0M9eMkjcKqijrmDRleudEoPDzTumwQ18VB/3I+vbN039HIaRQ5x+NHGiPHVfk6Rx
+c6KAbYceyeqqfuJEcq23vhTdium/Bf5hHqYUhuJwnBQ+dAUcFndUKMJrth6lHeoifkbw2bv81zxJ
+I9cvIy516+oUekqiSFGfzAqByv41OrgLV4fLGCDH3yRh1tj7EtV3l2TngqtrDLUs5R+sWIItPa/4
+AJXB1Q3nGNl2tNjVpcSn0uJ7aFPbAgMBAAGjggGKMIIBhjAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0l
+BBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMBIGA1UdEwEB/wQIMAYBAf8CAQAwHQYDVR0OBBYEFHzM
+CmjXouseLHIb0c1dlW+N+/JjMB8GA1UdIwQYMBaAFI/wS3+oLkUkrk1Q+mOai97i3Ru8MHsGCCsG
+AQUFBwEBBG8wbTAuBggrBgEFBQcwAYYiaHR0cDovL29jc3AyLmdsb2JhbHNpZ24uY29tL3Jvb3Ry
+MzA7BggrBgEFBQcwAoYvaHR0cDovL3NlY3VyZS5nbG9iYWxzaWduLmNvbS9jYWNlcnQvcm9vdC1y
+My5jcnQwNgYDVR0fBC8wLTAroCmgJ4YlaHR0cDovL2NybC5nbG9iYWxzaWduLmNvbS9yb290LXIz
+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
+7xDrOPfX3COqq162RFg/MFcGA1UdIARQME4wCQYHZ4EMAQUBATBBBgkrBgEEAaAyASgwNDAyBggr
+BgEFBQcCARYmaHR0cHM6Ly93d3cuZ2xvYmFsc2lnbi5jb20vcmVwb3NpdG9yeS8wDAYDVR0TAQH/
+BAIwADCBmgYIKwYBBQUHAQEEgY0wgYowPgYIKwYBBQUHMAGGMmh0dHA6Ly9vY3NwLmdsb2JhbHNp
+Z24uY29tL2NhL2dzYXRsYXNyM3NtaW1lY2EyMDIwMEgGCCsGAQUFBzAChjxodHRwOi8vc2VjdXJl
+Lmdsb2JhbHNpZ24uY29tL2NhY2VydC9nc2F0bGFzcjNzbWltZWNhMjAyMC5jcnQwHwYDVR0jBBgw
+FoAUfMwKaNei6x4schvRzV2Vb4378mMwRgYDVR0fBD8wPTA7oDmgN4Y1aHR0cDovL2NybC5nbG9i
+YWxzaWduLmNvbS9jYS9nc2F0bGFzcjNzbWltZWNhMjAyMC5jcmwwDQYJKoZIhvcNAQELBQADggEB
+AK0lDd6/eSh3qHmXaw1YUfIFy07B25BEcTvWgOdla99gF1O7sOsdYaTz/DFkZI5ghjgaPJCovgla
+mRMfNcxZCfoBtsB7mAS6iOYjuwFOZxi9cv6jhfiON6b89QWdMaPeDddg/F2Q0bxZ9Z2ZEBxyT34G
+wlDp+1p6RAqlDpHifQJW16h5jWIIwYisvm5QyfxQEVc+XH1lt+taSzCfiBT0ZLgjB9Sg+zAo8ys6
+5PHxFaT2a5Td/fj5yJ5hRSrqy/nj/hjT14w3/ZdX5uWg+cus6VjiiR/5qGSZRjHt8JoApD6t6/tg
+ITv8ZEy6ByumbU23nkHTMOzzQSxczHkT+0q10/MxggJqMIICZgIBATBoMFQxCzAJBgNVBAYTAkJF
+MRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSowKAYDVQQDEyFHbG9iYWxTaWduIEF0bGFzIFIz
+IFNNSU1FIENBIDIwMjACEAHS+TgZvH/tCq5FcDC0n9IwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZI
+hvcNAQkEMSIEIF5Vy+zqzLJitGDzEQRfVFjMHVpx+ZUPxyQRM1FeGTkwMBgGCSqGSIb3DQEJAzEL
+BgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI0MDExNjA1MDMyNVowaQYJKoZIhvcNAQkPMVww
+WjALBglghkgBZQMEASowCwYJYIZIAWUDBAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkq
+hkiG9w0BAQowCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQCVaUCH
+XfmYMeODo5JZpU50v99amHLDvgIqPC7RgcmIqGA7mlLr2Ca1MLtJ6HOuvgGPdB17l+eB4FgokitW
+Q02/TebwvxvpIJxwkfJqpZ0bz+ZjD3kG93gzknNqub7uR8KbmO4kM8KcTVkFL3/SyuBPT+70cklA
+4Xnw7n7PO/eUzs9dkMq0rPeB/Ies6gziPCeWU343wHwAB65SVP8LKNmavsKY0mH7oqsB1IGmLkWh
+p9h6Yk8AaFyfcnBLCBGyflSg3MGwGpHQ9t0MlymEPaxjC0hjXfC+5uj4hq7x2DQiSQtoNZWklK5A
+fFiy552KwIP90P3NIuPw5nLK5atUzJfl
+--000000000000dee8be060f090c10--
