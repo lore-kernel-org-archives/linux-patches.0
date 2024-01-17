@@ -1,85 +1,57 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C496E2231B;
-	Wed, 17 Jan 2024 17:54:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C875B225A1
+	for <patches@lists.linux.dev>; Wed, 17 Jan 2024 18:55:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705514091; cv=none; b=dJTSgyLyNWlaN0FHlhHbNgj3fTeTMA9MTt3rabK2lrrlrWmD4zrnQWcCbREvcbRgnV3xwwaUTAa8vfBMz0RBD8sPaaCYeq2aMK/jxBmzTGScbq8aaJ4ou/vtleI1/KVR7R1E9SkrJgkB1qyZnUtaAxN0ovzv6BM2Euf+nlZgqMs=
+	t=1705517708; cv=none; b=YCDEV18vVtBnUStrgX9hkqRIUSr+HPxbO+lkoCCHHLHL+B+mrTr8iw2CUptxHgxEKEDlqF517I6I74eU7DKMo5GmyzmNdo20x7zR13PcglLJ0Wp1+Ge5ZdgsIJJy8RtzdHiJrTvIjPMy3vVblkZ2XShCWUuIO25Q0jLqUGA/qgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705514091; c=relaxed/simple;
-	bh=J77FS0Bpoh8nK3y4ULhNSS2rlyTKBjXxlnteilrvwrU=;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To; b=PL1eijc303G9Wl0aIu3ZkIZzAqiS/kKlbrtKWIF74RxAskpoXjtqEGDxSyW0VCa2+7kJw6Zqa6owxU/A/W6wxJlUUU5nWuI6xpRbpTn20bIYmYmb69hUxLn72MfS7GXYE/UajNrwAlZYJiWXSi8l+Hx9epio/LXq3ljdRKTIMr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WGqGmlE2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1705517708; c=relaxed/simple;
+	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+	h=DKIM-Signature:X-IronPort-AV:X-IronPort-AV:Received:X-ExtLoop1:
+	 X-IronPort-AV:Received:From:To:Subject:Date:Message-Id:X-Mailer:
+	 MIME-Version:Content-Transfer-Encoding; b=bgE41yV76pP3jcpHjgbswN1ajA6cd+9BZ1qkuKO/ZvX7Awcc5mqtwcE1YnI9+895pAHNEJenUUveH1KTy8wEx/FtxGGCR5ydQoXJcTIUknot8oW3z1albOYtyf+Z/s1XF7OMJjBxkTVqvhywXXqOhUkGbFbeCCYuccSYlT/lpcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iGesBH1p; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WGqGmlE2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18862C433C7;
-	Wed, 17 Jan 2024 17:54:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705514091;
-	bh=J77FS0Bpoh8nK3y4ULhNSS2rlyTKBjXxlnteilrvwrU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WGqGmlE25dqAiZWRrRkWSXIKygA+vpQOQvudOI4smF0yF+9MoHfmQC6PyBFpSWkBk
-	 ssQBsIwrkcHj36bazih+ox4UPvJsDWBBoqrvC2nO1FQLqFxRRrSD3aOUfQXqWqyqnl
-	 /zgabKW7Dzp1RbLxvTi0UlZcqiRrV6DRYoYe4Fg4yCDru891/7Zz14jA3v25IFJXt/
-	 +f1Cjw8QPDdc68I8RiydMsFMZdDk5o+Kg+LyFCj9Oit8z1bJ4a9EsNZTwJcJPKCxV2
-	 EQt9YTer5GBiuziU4DiiskqBKqRkDm5xAJPvTFLaCAlyXTHrDUDHQXJOnyL8EKGHq0
-	 cK7aTGGHvFV9g==
-Date: Wed, 17 Jan 2024 11:54:48 -0600
-From: Rob Herring <robh@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, linux-um@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org, kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org,
-	Frank Rowand <frowand.list@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: Re: [PATCH 1/6] arm64: Unconditionally call unflatten_device_tree()
-Message-ID: <20240117175448.GB2779523-robh@kernel.org>
-References: <20240112200750.4062441-1-sboyd@kernel.org>
- <20240112200750.4062441-2-sboyd@kernel.org>
- <ZaZtbU9hre3YhZam@FVFF77S0Q05N>
- <434b21afe1899b1567f3617261594842.sboyd@kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iGesBH1p"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1705517707; x=1737053707;
+  h=from:to:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=frcCV1k9oG9oKj3dpUqdJg1PxRT2RSN/XKdLCPjaYaY=;
+  b=iGesBH1p9y0i7Hrc7KaWs09lzwYWOM1m1PneDeH5Vyapt0Lk9xerkULc
+   JBYZgGArGQV0TM/WQyRen8nDR86Rx54UykAj4fAaP0/73pe4HKwWKFyHn
+   mz5Z9FDW3ug1QUv8vseH2P69QoXHn6SPRe4C0ZjXrQMn3eMsEQsLScUdg
+   JEs+XK5qpDj+8hkWNE4QMqwDW5Z6oUZ4aOcEEBS5wygX9T6Jkn86SPKes
+   qpIIqUsNqyW9mHdLGirFxx6GC4e/KxaIaawATSXyGEOZXZGiWQylH44JX
+   pRbyyIkkg2XA3n3OlKM0WpGbfbXoOMlKdvznIRifgYU0qMgLHw09i6dpM
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10956"; a="7638045"
+X-IronPort-AV: E=Sophos;i="6.05,200,1701158400"; 
+   d="scan'208";a="7638045"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jan 2024 10:55:06 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,200,1701158400"; 
+   d="scan'208";a="158396"
+Received: from viggo.jf.intel.com (HELO ray2.amr.corp.intel.com) ([10.54.77.144])
+  by orviesa004.jf.intel.com with ESMTP; 17 Jan 2024 10:55:06 -0800
+From: Dave Hansen <dave.hansen@linux.intel.com>
+To: patches@lists.linux.dev
+Subject: [PATCH] x86/fpu: verify xstate buffer size according with requested features
+Date: Wed, 17 Jan 2024 10:55:19 -0800
+Message-Id: <20240117185519.295436-1-dave.hansen@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <434b21afe1899b1567f3617261594842.sboyd@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jan 16, 2024 at 05:27:18PM -0800, Stephen Boyd wrote:
-> Quoting Mark Rutland (2024-01-16 03:51:14)
-> > Hi Stephen,
-> > 
-> > On Fri, Jan 12, 2024 at 12:07:44PM -0800, Stephen Boyd wrote:
-> > > Call this function unconditionally so that we can populate an empty DTB
-> > > on platforms that don't boot with a firmware provided or builtin DTB.
-> > > There's no harm in calling unflatten_device_tree() unconditionally.
-> > 
-> > For better or worse, that's not true: there are systems the provide both a DTB
-> > *and* ACPI tables, and we must not consume both at the same time as those can
-> > clash and cause all sorts of problems. In addition, we don't want people being
-> > "clever" and describing disparate portions of their system in ACPI and DT.
-> > 
-> > It is a very deliberate choice to not unflatten the DTB when ACPI is in use,
-> > and I don't think we want to reopen this can of worms.
-> 
-> Hmm ok. I missed this part. Can we knock out the initial_boot_params in
-> this case so that we don't unflatten a DTB when ACPI is in use?
 
-You mean so we don't unflatten the boot DTB, but instead unflatten the 
-empty one, right? That sounds fine.
-
-Another thing to check is kexec because it will still need the original 
-DTB I think. Though if you are doing ACPI boot and kexec'ing, kexec may 
-write out everything needed by the next kernel and the empty DTB would 
-work just fine. Of course those users booting with ACPI and then 
-kexec'ing to DT boot will be broken. Perhaps that's a feature...
-
-Rob
