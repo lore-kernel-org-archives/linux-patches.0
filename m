@@ -1,100 +1,85 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6732231B;
-	Wed, 17 Jan 2024 17:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C496E2231B;
+	Wed, 17 Jan 2024 17:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705514072; cv=none; b=RZYoA40odagEE4fAmSyCZd/t8cn19GWSzqWwmEsen38LIHohSoWSDjvI+LJmDikgIsNaBTKHF+MB8MzYc8j36im2ok4rnwqzSBo80A5v4Ip1Mk6ZAI+GneGawhpE8lhVjKUwZIJSYktANY1+sKORqIHD4Cr/wNHA19oRD55bz9w=
+	t=1705514091; cv=none; b=dJTSgyLyNWlaN0FHlhHbNgj3fTeTMA9MTt3rabK2lrrlrWmD4zrnQWcCbREvcbRgnV3xwwaUTAa8vfBMz0RBD8sPaaCYeq2aMK/jxBmzTGScbq8aaJ4ou/vtleI1/KVR7R1E9SkrJgkB1qyZnUtaAxN0ovzv6BM2Euf+nlZgqMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705514072; c=relaxed/simple;
-	bh=dbMqLTHCvUQEZgyJdc7aMfKn0UNVtS6MgrTwWOFFDBw=;
-	h=Received:DKIM-Signature:From:Date:Subject:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Message-Id:X-B4-Tracking:To:
-	 Cc:X-Mailer:X-Developer-Signature:X-Developer-Key; b=S/OILYGPMA4+IwCph3aRmZwuh8niE90ueL4CadRNHbJWg++45OwnA50aP1Q+A9THCc2ZS8U8muewzaubIdROL5c9muwdN2gJMe5AD7/xX4ZsegCvUar7P96bzGXhv97Q6G18vGBJCDzA8GmfGGu8Rk4Gq4RhzZRRwpAfSdm8qvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EsxjIWJv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1705514091; c=relaxed/simple;
+	bh=J77FS0Bpoh8nK3y4ULhNSS2rlyTKBjXxlnteilrvwrU=;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To; b=PL1eijc303G9Wl0aIu3ZkIZzAqiS/kKlbrtKWIF74RxAskpoXjtqEGDxSyW0VCa2+7kJw6Zqa6owxU/A/W6wxJlUUU5nWuI6xpRbpTn20bIYmYmb69hUxLn72MfS7GXYE/UajNrwAlZYJiWXSi8l+Hx9epio/LXq3ljdRKTIMr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WGqGmlE2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EsxjIWJv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED7DC433C7;
-	Wed, 17 Jan 2024 17:54:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WGqGmlE2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18862C433C7;
+	Wed, 17 Jan 2024 17:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705514072;
-	bh=dbMqLTHCvUQEZgyJdc7aMfKn0UNVtS6MgrTwWOFFDBw=;
-	h=From:Date:Subject:To:Cc:From;
-	b=EsxjIWJv9Hb8/SaXztw8GyNCMclrBRYm34rPmI/X2sZwyzJ9NO+QT/S41fB18AYBp
-	 WiY3NSoi8oBGhiw0VCRT3xz6jZnrJhiabPxtlYaYCOpT8Iqs3RyMKUKSkAPiw8bj/C
-	 d70nbdz9JGjbbnW9HXASEjewPA2ZvfTKAdzLVvXMUx7HOUq9jwnvwt38/fRTck8aG7
-	 HwJbX9Upaoim+MYoag0MQPbxCSxH+huIk50h8iVNrPr2TLfWFouoyNasCvZTQhwr0B
-	 Vz5vPtJAqFK90NHULEqZ3DHDCt58KQQO2vF3jpaKU9PweeoQFFIQlP67pVnoGFy+K7
-	 Xvyoq/SPYZnGA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 17 Jan 2024 10:54:16 -0700
-Subject: [PATCH] rtc: max31335: Fix comparison in max31335_volatile_reg()
+	s=k20201202; t=1705514091;
+	bh=J77FS0Bpoh8nK3y4ULhNSS2rlyTKBjXxlnteilrvwrU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WGqGmlE25dqAiZWRrRkWSXIKygA+vpQOQvudOI4smF0yF+9MoHfmQC6PyBFpSWkBk
+	 ssQBsIwrkcHj36bazih+ox4UPvJsDWBBoqrvC2nO1FQLqFxRRrSD3aOUfQXqWqyqnl
+	 /zgabKW7Dzp1RbLxvTi0UlZcqiRrV6DRYoYe4Fg4yCDru891/7Zz14jA3v25IFJXt/
+	 +f1Cjw8QPDdc68I8RiydMsFMZdDk5o+Kg+LyFCj9Oit8z1bJ4a9EsNZTwJcJPKCxV2
+	 EQt9YTer5GBiuziU4DiiskqBKqRkDm5xAJPvTFLaCAlyXTHrDUDHQXJOnyL8EKGHq0
+	 cK7aTGGHvFV9g==
+Date: Wed, 17 Jan 2024 11:54:48 -0600
+From: Rob Herring <robh@kernel.org>
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, linux-um@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, kunit-dev@googlegroups.com,
+	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org,
+	Frank Rowand <frowand.list@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: Re: [PATCH 1/6] arm64: Unconditionally call unflatten_device_tree()
+Message-ID: <20240117175448.GB2779523-robh@kernel.org>
+References: <20240112200750.4062441-1-sboyd@kernel.org>
+ <20240112200750.4062441-2-sboyd@kernel.org>
+ <ZaZtbU9hre3YhZam@FVFF77S0Q05N>
+ <434b21afe1899b1567f3617261594842.sboyd@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240117-rtc-max3133-fix-comparison-v1-1-91e98b29d564@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAEcUqGUC/x3MQQqAIBBA0avErBvQNIuuEi3EpppFGmNEEN09a
- fng8x/IJEwZhuoBoYszp1ig6wrC5uNKyHMxNKqxSusO5Qy4+9toY3DhG0PaDy+cU0TXkl186Ml
- YB2VwCJXin4/T+35h2OEebAAAAA==
-To: antoniu.miclaus@analog.com, alexandre.belloni@bootlin.com
-Cc: linux@roeck-us.net, linux-rtc@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1717; i=nathan@kernel.org;
- h=from:subject:message-id; bh=dbMqLTHCvUQEZgyJdc7aMfKn0UNVtS6MgrTwWOFFDBw=;
- b=kA0DAAoWHWsmkXHAGpYByyZiAGWoFFejgYO/Iav26s0knPaZdfUEudYrzOsicnqqtw+lTa1u1
- Ih1BAAWCgAdFiEEe+MlxzExnM0B2MqSHWsmkXHAGpYFAmWoFFcACgkQHWsmkXHAGpaALQEA8n7L
- v8RJ/d0dghwUZQhvBYSRhbQSOQWLPSmzZnB/1Y4A/3+ljUg0n27fYqtzC7tdJOmZKD+CMBKT3ke
- U0tt7JjAG
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <434b21afe1899b1567f3617261594842.sboyd@kernel.org>
 
-Clang warns (or errors with CONFIG_WERROR=y):
+On Tue, Jan 16, 2024 at 05:27:18PM -0800, Stephen Boyd wrote:
+> Quoting Mark Rutland (2024-01-16 03:51:14)
+> > Hi Stephen,
+> > 
+> > On Fri, Jan 12, 2024 at 12:07:44PM -0800, Stephen Boyd wrote:
+> > > Call this function unconditionally so that we can populate an empty DTB
+> > > on platforms that don't boot with a firmware provided or builtin DTB.
+> > > There's no harm in calling unflatten_device_tree() unconditionally.
+> > 
+> > For better or worse, that's not true: there are systems the provide both a DTB
+> > *and* ACPI tables, and we must not consume both at the same time as those can
+> > clash and cause all sorts of problems. In addition, we don't want people being
+> > "clever" and describing disparate portions of their system in ACPI and DT.
+> > 
+> > It is a very deliberate choice to not unflatten the DTB when ACPI is in use,
+> > and I don't think we want to reopen this can of worms.
+> 
+> Hmm ok. I missed this part. Can we knock out the initial_boot_params in
+> this case so that we don't unflatten a DTB when ACPI is in use?
 
-    drivers/rtc/rtc-max31335.c:211:36: error: use of logical '||' with constant operand [-Werror,-Wconstant-logical-operand]
-      211 |         if (reg == MAX31335_TEMP_DATA_MSB || MAX31335_TEMP_DATA_LSB)
-          |                                           ^  ~~~~~~~~~~~~~~~~~~~~~~
-    drivers/rtc/rtc-max31335.c:211:36: note: use '|' for a bitwise operation
-      211 |         if (reg == MAX31335_TEMP_DATA_MSB || MAX31335_TEMP_DATA_LSB)
-          |                                           ^~
-          |                                           |
-    1 error generated.
+You mean so we don't unflatten the boot DTB, but instead unflatten the 
+empty one, right? That sounds fine.
 
-This clearly should be a comparison against reg. Fix the comparison so
-that max31335_volatile_reg() does not always return true.
+Another thing to check is kexec because it will still need the original 
+DTB I think. Though if you are doing ACPI boot and kexec'ing, kexec may 
+write out everything needed by the next kernel and the empty DTB would 
+work just fine. Of course those users booting with ACPI and then 
+kexec'ing to DT boot will be broken. Perhaps that's a feature...
 
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1980
-Fixes: dedaf03b99d6 ("rtc: max31335: add driver support")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/rtc/rtc-max31335.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/rtc/rtc-max31335.c b/drivers/rtc/rtc-max31335.c
-index 3ddfe71bbb56..565d4c9ee399 100644
---- a/drivers/rtc/rtc-max31335.c
-+++ b/drivers/rtc/rtc-max31335.c
-@@ -208,7 +208,7 @@ static bool max31335_volatile_reg(struct device *dev, unsigned int reg)
- 		return true;
- 
- 	/* temperature registers */
--	if (reg == MAX31335_TEMP_DATA_MSB || MAX31335_TEMP_DATA_LSB)
-+	if (reg == MAX31335_TEMP_DATA_MSB || reg == MAX31335_TEMP_DATA_LSB)
- 		return true;
- 
- 	return false;
-
----
-base-commit: dedaf03b99d6561fae06457fd7fc2b0aa154d003
-change-id: 20240117-rtc-max3133-fix-comparison-65e4fac8e346
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Rob
