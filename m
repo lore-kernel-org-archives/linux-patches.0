@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7423241F6;
-	Thu, 18 Jan 2024 11:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FE723757;
+	Thu, 18 Jan 2024 11:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575627; cv=none; b=Z8Ba0m+UzIcqQZdgBz8LGcdbRH6TdC7v8GI7248rkSaSTJ29vbwhIAndtddASTRft7Ip7Kjj8aGpXganTqGP9fHoNS2uVYnWKKs2U7ZcgTB/E2eZPh/I1fuScPd6QFNXJ6so2571YHt10/rRW5tr5iApPFDbZ7gnjrIyT1rSGLA=
+	t=1705575629; cv=none; b=TbgS58pwf0a+cN1TVzW6E8X1LceQiO3YQgYsdGd38hhseG4bYP07cF7LRv33n1n/YG6J3UgVMcBKbWCaTsJNbhWqMiYxauqQ6mJTHxj/mjJl4umbCqatucjvViVyphwSEf62iGzsz4ucl9TLW4slVgx06Y++k8uTQd0alc+mqbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575627; c=relaxed/simple;
-	bh=obF4n1Kwr5SpQe0RhylFL8wos0XCyFho5D/CnA25eu8=;
+	s=arc-20240116; t=1705575629; c=relaxed/simple;
+	bh=I8lSrD/z3eqORiat5z67rJfX3rHJVwFVOuWlMp4XzNg=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=EnTPmhrf/LSlUu6VTUule/8PN4Hj5zv7as/CjL1Ac8CQcmN99RrMcudnVevzjVtMtskF92940GQnO94efj66d2mDMwlpo5aCtcV7m/tckqYhipLU9hfK84Pp9vgLM67ktmJ719QJaSn2Vinn2kYF1oSn2rVi1TrWkw+W7cyPUkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cHJz8zdK; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=BV1ABqY6XHcXgZHmSziew69Tw5VFl23Mo7xv5thCBxLJ7rB6bSsDdF0X0lgGuu/MFuTyaMLuOgvNHgNZW4zuMA2kqNvPnCQG293W3+hMZDVR1RYVFeDmIqDmRyaRhvCN0uKbPDtrAKFbwUmmX6Q0TM6aL00+NDx3dBLM5ULHVa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=naq5qgOu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHJz8zdK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5C8C43143;
-	Thu, 18 Jan 2024 11:00:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="naq5qgOu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29988C433C7;
+	Thu, 18 Jan 2024 11:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575626;
-	bh=obF4n1Kwr5SpQe0RhylFL8wos0XCyFho5D/CnA25eu8=;
+	s=korg; t=1705575629;
+	bh=I8lSrD/z3eqORiat5z67rJfX3rHJVwFVOuWlMp4XzNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cHJz8zdKJ6kEhXT9cKseZtYJ3borV9mubpVCcyKqeUvGunpkxtwTs6y2F6pAEcPkF
-	 1sBNK67c4kw7CcxhPNH4vSyyCJJGlbMm5bPHBy9ltjGhlHaiZh/m20KtmPNcZfRva/
-	 ooTDCqfbbD9QreRpm9kAtn8MAAD/v/s1AK/D3p+g=
+	b=naq5qgOuHr3Cm6AfO3ajSbXMN1eBgqfLanm0XMb1ok2+cqVOavxU3bNmmMHKAf8P9
+	 S8HAzMYMhkvcc3i9EMhNMO3oaKhzI+u5YXSGX3T8Lf1Xlrv0zLbmABsUUZNr1sY7jB
+	 hDcM6jTzWGgJeg0jQI7NvnOQXl/lP6uBIegiMuZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/100] jbd2: fix soft lockup in journal_finish_inode_data_buffers()
-Date: Thu, 18 Jan 2024 11:48:57 +0100
-Message-ID: <20240118104313.037569941@linuxfoundation.org>
+Subject: [PATCH 6.1 032/100] ASoC: ops: add correct range check for limiting volume
+Date: Thu, 18 Jan 2024 11:48:40 +0100
+Message-ID: <20240118104312.314169811@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -53,80 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit 6c02757c936063f0631b4e43fe156f8c8f1f351f ]
+[ Upstream commit fb9ad24485087e0f00d84bee7a5914640b2b9024 ]
 
-There's issue when do io test:
-WARN: soft lockup - CPU#45 stuck for 11s! [jbd2/dm-2-8:4170]
-CPU: 45 PID: 4170 Comm: jbd2/dm-2-8 Kdump: loaded Tainted: G  OE
-Call trace:
- dump_backtrace+0x0/0x1a0
- show_stack+0x24/0x30
- dump_stack+0xb0/0x100
- watchdog_timer_fn+0x254/0x3f8
- __hrtimer_run_queues+0x11c/0x380
- hrtimer_interrupt+0xfc/0x2f8
- arch_timer_handler_phys+0x38/0x58
- handle_percpu_devid_irq+0x90/0x248
- generic_handle_irq+0x3c/0x58
- __handle_domain_irq+0x68/0xc0
- gic_handle_irq+0x90/0x320
- el1_irq+0xcc/0x180
- queued_spin_lock_slowpath+0x1d8/0x320
- jbd2_journal_commit_transaction+0x10f4/0x1c78 [jbd2]
- kjournald2+0xec/0x2f0 [jbd2]
- kthread+0x134/0x138
- ret_from_fork+0x10/0x18
+Volume can have ranges that start with negative values, ex: -84dB to
++40dB. Apply correct range check in snd_soc_limit_volume before setting
+the platform_max. Without this patch, for example setting a 0dB limit on
+a volume range of -84dB to +40dB would fail.
 
-Analyzed informations from vmcore as follows:
-(1) There are about 5k+ jbd2_inode in 'commit_transaction->t_inode_list';
-(2) Now is processing the 855th jbd2_inode;
-(3) JBD2 task has TIF_NEED_RESCHED flag;
-(4) There's no pags in address_space around the 855th jbd2_inode;
-(5) There are some process is doing drop caches;
-(6) Mounted with 'nodioread_nolock' option;
-(7) 128 CPUs;
-
-According to informations from vmcore we know 'journal->j_list_lock' spin lock
-competition is fierce. So journal_finish_inode_data_buffers() maybe process
-slowly. Theoretically, there is scheduling point in the filemap_fdatawait_range_keep_errors().
-However, if inode's address_space has no pages which taged with PAGECACHE_TAG_WRITEBACK,
-will not call cond_resched(). So may lead to soft lockup.
-journal_finish_inode_data_buffers
-  filemap_fdatawait_range_keep_errors
-    __filemap_fdatawait_range
-      while (index <= end)
-        nr_pages = pagevec_lookup_range_tag(&pvec, mapping, &index, end, PAGECACHE_TAG_WRITEBACK);
-        if (!nr_pages)
-           break;    --> If 'nr_pages' is equal zero will break, then will not call cond_resched()
-        for (i = 0; i < nr_pages; i++)
-          wait_on_page_writeback(page);
-        cond_resched();
-
-To solve above issue, add scheduling point in the journal_finish_inode_data_buffers();
-
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231211112544.3879780-1-yebin10@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20231204124736.132185-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/commit.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/soc-ops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jbd2/commit.c b/fs/jbd2/commit.c
-index 447c6972a6d3..556b259a00ba 100644
---- a/fs/jbd2/commit.c
-+++ b/fs/jbd2/commit.c
-@@ -300,6 +300,7 @@ static int journal_finish_inode_data_buffers(journal_t *journal,
- 			if (!ret)
- 				ret = err;
+diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
+index 55b009d3c681..2d25748ca706 100644
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -661,7 +661,7 @@ int snd_soc_limit_volume(struct snd_soc_card *card,
+ 	kctl = snd_soc_card_get_kcontrol(card, name);
+ 	if (kctl) {
+ 		struct soc_mixer_control *mc = (struct soc_mixer_control *)kctl->private_value;
+-		if (max <= mc->max) {
++		if (max <= mc->max - mc->min) {
+ 			mc->platform_max = max;
+ 			ret = 0;
  		}
-+		cond_resched();
- 		spin_lock(&journal->j_list_lock);
- 		jinode->i_flags &= ~JI_COMMIT_RUNNING;
- 		smp_mb();
 -- 
 2.43.0
 
