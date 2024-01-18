@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F521774B;
-	Thu, 18 Jan 2024 10:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67AAD1774B;
+	Thu, 18 Jan 2024 10:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575510; cv=none; b=K5FHSVHpyn0Nr1syW5kLonnGEHsmNFK0TbN+frsLsLQJHBbvZnzHlGn9/rEz33oDDyYXbM3gS96xx3m93882AtU/8cFkInoxECBSUKyfZVLFdMZJHPmtOeuOujj4dHCMg6Ui9qfVyzyC4bOUIdRX/tUkpCYRx3myf7IomAzTtvM=
+	t=1705575513; cv=none; b=Nv7GKMLDscWAPYre6hUkmKJajeqn/WcVYRcTqcz8X86wJgpIXnebn0icChqaFWACrkcQkpsgWxv3KDfNHq2lHebNtrkL48S7iMaGQ4VD18JM/ndAhw0YWqbsZM/juvbnTa5jKrbFXjE3Furc31Zai5w+NMlVThMZ4EYO564IIoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575510; c=relaxed/simple;
-	bh=bwLqZkpY6hyQ/i7gV77yA5FpnoAT1MkxstAZHCGW+tU=;
+	s=arc-20240116; t=1705575513; c=relaxed/simple;
+	bh=HFwTnyBupkbglaXiM5iTYFT2qEMffFLtx1oSC0iaKV4=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=Ro7pdFMbz2iNZ7OiL9kT3vVItoz+DtJCWWhDpvhWYLaiswvg6k79sTAnEfisaffFFRP7MsIzu9ozDM2y4h6txNMQjOHWAAKhbX6lklRSF4nYQlTglszlzEkDeCUEbMvS/hkthrDB90cIggj3KGgTHVJDL3CFS7XHQpIL2DA4iQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6+GZVCc; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=sa99AYcMCv5W4vGyLaNSjKxvhS2Pscv7jTOS5l4OlH30Yqh3QFOgegpBV/xfo2Hq6EMtZrU0Gk0+AMLeqcp20e1Mpar6M8mWcSWRss9G+E4qME/xzKYpmbkAE4JsXozevtvhzAAM0aBSG4P30hPtQsohvK5zKi2dumY/Xfy+dNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRhLT3At; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6+GZVCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16807C433F1;
-	Thu, 18 Jan 2024 10:58:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRhLT3At"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF081C433C7;
+	Thu, 18 Jan 2024 10:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575510;
-	bh=bwLqZkpY6hyQ/i7gV77yA5FpnoAT1MkxstAZHCGW+tU=;
+	s=korg; t=1705575513;
+	bh=HFwTnyBupkbglaXiM5iTYFT2qEMffFLtx1oSC0iaKV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K6+GZVCcy4WCo+bFfMo3nBHHGAMeIqrV28TXI30Gv2ZTWVaS8VaLJswfrQOF8bKtP
-	 v2BWFeoClSXsqDLtMDPpv+DJIveHwHKIllyFaRWRPxT2hWELTKdlmBy/bmAsRovLOu
-	 u7FrBWYNte/suOnRK4IrPQJ0V68SOxnWq2aHcn8s=
+	b=qRhLT3AtwUx3S6heCxvvV3q/c+mND+Y8tKrA5sDaQxm0q73c9YBpps0y0duOi+FWN
+	 c2Pd4swr6JDlRM/HFVNMhqWA87aYaoZP3HBh20KABtmG2We6EMm28uoyWWggXg0+/N
+	 D81BapHXSY8vla2Mjzc0ws0glw+G7xU8YUd8bQKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddh Raman Pant <code@siddh.me>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Suman Ghosh <sumang@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 122/150] nfc: Do not send datagram if socket state isnt LLCP_BOUND
-Date: Thu, 18 Jan 2024 11:49:04 +0100
-Message-ID: <20240118104325.707184004@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.1 001/100] f2fs: explicitly null-terminate the xattr list
+Date: Thu, 18 Jan 2024 11:48:09 +0100
+Message-ID: <20240118104310.952914636@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
-References: <20240118104320.029537060@linuxfoundation.org>
+In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
+References: <20240118104310.892180084@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,46 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Siddh Raman Pant <code@siddh.me>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 6ec0d7527c4287369b52df3bcefd21a0c4fb2b7c ]
+commit e26b6d39270f5eab0087453d9b544189a38c8564 upstream.
 
-As we know we cannot send the datagram (state can be set to LLCP_CLOSED
-by nfc_llcp_socket_release()), there is no need to proceed further.
+When setting an xattr, explicitly null-terminate the xattr list.  This
+eliminates the fragile assumption that the unused xattr space is always
+zeroed.
 
-Thus, bail out early from llcp_sock_sendmsg().
-
-Signed-off-by: Siddh Raman Pant <code@siddh.me>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Suman Ghosh <sumang@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/llcp_sock.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/f2fs/xattr.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
-index 645677f84dba..819157bbb5a2 100644
---- a/net/nfc/llcp_sock.c
-+++ b/net/nfc/llcp_sock.c
-@@ -796,6 +796,11 @@ static int llcp_sock_sendmsg(struct socket *sock, struct msghdr *msg,
+--- a/fs/f2fs/xattr.c
++++ b/fs/f2fs/xattr.c
+@@ -754,6 +754,12 @@ retry:
+ 		memcpy(pval, value, size);
+ 		last->e_value_size = cpu_to_le16(size);
+ 		new_hsize += newsize;
++		/*
++		 * Explicitly add the null terminator.  The unused xattr space
++		 * is supposed to always be zeroed, which would make this
++		 * unnecessary, but don't depend on that.
++		 */
++		*(u32 *)((u8 *)last + newsize) = 0;
  	}
  
- 	if (sk->sk_type == SOCK_DGRAM) {
-+		if (sk->sk_state != LLCP_BOUND) {
-+			release_sock(sk);
-+			return -ENOTCONN;
-+		}
-+
- 		DECLARE_SOCKADDR(struct sockaddr_nfc_llcp *, addr,
- 				 msg->msg_name);
- 
--- 
-2.43.0
-
+ 	error = write_all_xattrs(inode, new_hsize, base_addr, ipage);
 
 
