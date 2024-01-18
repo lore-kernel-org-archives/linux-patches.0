@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97811B96D;
-	Thu, 18 Jan 2024 10:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864111B96D;
+	Thu, 18 Jan 2024 10:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575104; cv=none; b=e1pVTUJYUrwGQDN9/YOMQTTCX+HUA839z5ZXSHDqgHfJ/ped0oDulH7hDROEl7KQ3HGxcGbM5s2xBQWsIYzxkLQVMJHGZqkCwTbvnVMxA6p5m/g4ltHkE3K2E70FBiuqE0AKqHu66gZih2GKwB1JcNoVLIN/WxLS3GPR0JX+qHA=
+	t=1705575107; cv=none; b=kFc6ZZa+a2f8YxpzH5e0nDII3i4M70dOQAW4Ev7R0RH4AYTtABy2NDlyP0gTclM25zikwCr5Kr75Xs+bDta5dG1KagfxhHGX7FWKX0p2GC+aodU0r5WfRsr3Pu0HrIF3+ad2osO6wypiIPWk+BCMaTgdb9lonJtaSgRDCbjBUbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575104; c=relaxed/simple;
-	bh=6Q2TMEgs7U6YHMf3bY3KX/wPKVeAHxE4MPVV0xoA1lA=;
+	s=arc-20240116; t=1705575107; c=relaxed/simple;
+	bh=MJcNpPoiuuOjg2i5Jli6vWRWPVQAL15R/y4mXuBWBpI=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=lJBjzQzdynzIK4wo7g8hvuPhGqoPYgJCORp6oYcOjxbqfdkp7zw2Foicxy+k6fH0J4djyNSzIueT7cvIKXF1Vsi02bhcBufL/ACX+2QR6gho7t9CjZWchuv3Q4/Q+PvHP5xnWx6aRUc0UdvuqgoITVilX1doZt+1WIaqegWXeJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ti2irIZd; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=RvxrAcg8cgJtqlG4RUqOBGoOvWKhO5hLyb/hNQpCWAoGbgIOTREGCV9Y5ttJccZJkqjbRY87Ex90Y1DCd5pS3bNRpcG66grW6EDeLtSqzi7z816PIkpnNVmrqGN0YomKff0MxFBubtwNAxD0bG2j4455l3IOlqjKp+kmOcioNV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKPhhxoh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ti2irIZd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8ECC43399;
-	Thu, 18 Jan 2024 10:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKPhhxoh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C75C433C7;
+	Thu, 18 Jan 2024 10:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575104;
-	bh=6Q2TMEgs7U6YHMf3bY3KX/wPKVeAHxE4MPVV0xoA1lA=;
+	s=korg; t=1705575107;
+	bh=MJcNpPoiuuOjg2i5Jli6vWRWPVQAL15R/y4mXuBWBpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ti2irIZdRPwEMbumqu3zFC522TB6tzViIBOlEocGD08UcwQ8LryW1MQpTzFSIZdfm
-	 fHai4xkwP2FX265sdVrmFPfXic+EPZkVtlSv1l7LAM9iBTcxF7TS9hqX/j6KhyZVU5
-	 LZzs572oEVJOF9y9IXPULQSt3gYkoswNkMImM/eY=
+	b=fKPhhxohsa5E4O2E8coChSlDP4DDKQKk8qpVvkWpaoyWtReowQrrcMrjQ0GreMYHT
+	 /STkVNCTN0pbKjlAqL5XkwM7yWKezVkCI4kmq+n5zeI6LBAY/zaCnzEltdgiKWcSBX
+	 FWZXC+nu4ZlkRKjGaKxU29p3YFkhRTmVOtwHLCGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/150] nvme-core: fix a memory leak in nvme_ns_info_from_identify()
-Date: Thu, 18 Jan 2024 11:47:15 +0100
-Message-ID: <20240118104320.641070157@linuxfoundation.org>
+Subject: [PATCH 6.6 014/150] io_uring: use fget/fput consistently
+Date: Thu, 18 Jan 2024 11:47:16 +0100
+Message-ID: <20240118104320.693897282@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -54,48 +52,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit e3139cef8257fcab1725441e2fd5fd0ccb5481b1 ]
+[ Upstream commit 73363c262d6a7d26063da96610f61baf69a70f7c ]
 
-In case of error, free the nvme_id_ns structure that was allocated
-by nvme_identify_ns().
+Normally within a syscall it's fine to use fdget/fdput for grabbing a
+file from the file table, and it's fine within io_uring as well. We do
+that via io_uring_enter(2), io_uring_register(2), and then also for
+cancel which is invoked from the latter. io_uring cannot close its own
+file descriptors as that is explicitly rejected, and for the cancel
+side of things, the file itself is just used as a lookup cookie.
 
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+However, it is more prudent to ensure that full references are always
+grabbed. For anything threaded, either explicitly in the application
+itself or through use of the io-wq worker threads, this is what happens
+anyway. Generalize it and use fget/fput throughout.
+
+Also see the below link for more details.
+
+Link: https://lore.kernel.org/io-uring/CAG48ez1htVSO3TqmrF8QcX2WFuYTRM-VZ_N10i-VZgbtg=NNqw@mail.gmail.com/
+Suggested-by: Jann Horn <jannh@google.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ io_uring/cancel.c   | 11 ++++++-----
+ io_uring/io_uring.c | 36 ++++++++++++++++++------------------
+ 2 files changed, 24 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index b32e3cff37b1..212991308bbe 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -1479,7 +1479,8 @@ static int nvme_ns_info_from_identify(struct nvme_ctrl *ctrl,
- 	if (id->ncap == 0) {
- 		/* namespace not allocated or attached */
- 		info->is_removed = true;
--		return -ENODEV;
-+		ret = -ENODEV;
-+		goto error;
+diff --git a/io_uring/cancel.c b/io_uring/cancel.c
+index 7b23607cf4af..a5d51471feeb 100644
+--- a/io_uring/cancel.c
++++ b/io_uring/cancel.c
+@@ -263,7 +263,7 @@ int io_sync_cancel(struct io_ring_ctx *ctx, void __user *arg)
+ 	};
+ 	ktime_t timeout = KTIME_MAX;
+ 	struct io_uring_sync_cancel_reg sc;
+-	struct fd f = { };
++	struct file *file = NULL;
+ 	DEFINE_WAIT(wait);
+ 	int ret, i;
+ 
+@@ -285,10 +285,10 @@ int io_sync_cancel(struct io_ring_ctx *ctx, void __user *arg)
+ 	/* we can grab a normal file descriptor upfront */
+ 	if ((cd.flags & IORING_ASYNC_CANCEL_FD) &&
+ 	   !(cd.flags & IORING_ASYNC_CANCEL_FD_FIXED)) {
+-		f = fdget(sc.fd);
+-		if (!f.file)
++		file = fget(sc.fd);
++		if (!file)
+ 			return -EBADF;
+-		cd.file = f.file;
++		cd.file = file;
  	}
  
- 	info->anagrpid = id->anagrpid;
-@@ -1497,8 +1498,10 @@ static int nvme_ns_info_from_identify(struct nvme_ctrl *ctrl,
- 		    !memchr_inv(ids->nguid, 0, sizeof(ids->nguid)))
- 			memcpy(ids->nguid, id->nguid, sizeof(ids->nguid));
+ 	ret = __io_sync_cancel(current->io_uring, &cd, sc.fd);
+@@ -338,6 +338,7 @@ int io_sync_cancel(struct io_ring_ctx *ctx, void __user *arg)
+ 	if (ret == -ENOENT || ret > 0)
+ 		ret = 0;
+ out:
+-	fdput(f);
++	if (file)
++		fput(file);
+ 	return ret;
+ }
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index bb8880d1e084..586ac65becfd 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3607,7 +3607,7 @@ SYSCALL_DEFINE6(io_uring_enter, unsigned int, fd, u32, to_submit,
+ 		size_t, argsz)
+ {
+ 	struct io_ring_ctx *ctx;
+-	struct fd f;
++	struct file *file;
+ 	long ret;
+ 
+ 	if (unlikely(flags & ~(IORING_ENTER_GETEVENTS | IORING_ENTER_SQ_WAKEUP |
+@@ -3625,20 +3625,19 @@ SYSCALL_DEFINE6(io_uring_enter, unsigned int, fd, u32, to_submit,
+ 		if (unlikely(!tctx || fd >= IO_RINGFD_REG_MAX))
+ 			return -EINVAL;
+ 		fd = array_index_nospec(fd, IO_RINGFD_REG_MAX);
+-		f.file = tctx->registered_rings[fd];
+-		f.flags = 0;
+-		if (unlikely(!f.file))
++		file = tctx->registered_rings[fd];
++		if (unlikely(!file))
+ 			return -EBADF;
+ 	} else {
+-		f = fdget(fd);
+-		if (unlikely(!f.file))
++		file = fget(fd);
++		if (unlikely(!file))
+ 			return -EBADF;
+ 		ret = -EOPNOTSUPP;
+-		if (unlikely(!io_is_uring_fops(f.file)))
++		if (unlikely(!io_is_uring_fops(file)))
+ 			goto out;
  	}
-+
-+error:
- 	kfree(id);
--	return 0;
-+	return ret;
+ 
+-	ctx = f.file->private_data;
++	ctx = file->private_data;
+ 	ret = -EBADFD;
+ 	if (unlikely(ctx->flags & IORING_SETUP_R_DISABLED))
+ 		goto out;
+@@ -3732,7 +3731,8 @@ SYSCALL_DEFINE6(io_uring_enter, unsigned int, fd, u32, to_submit,
+ 		}
+ 	}
+ out:
+-	fdput(f);
++	if (!(flags & IORING_ENTER_REGISTERED_RING))
++		fput(file);
+ 	return ret;
  }
  
- static int nvme_ns_info_from_id_cs_indep(struct nvme_ctrl *ctrl,
+@@ -4573,7 +4573,7 @@ SYSCALL_DEFINE4(io_uring_register, unsigned int, fd, unsigned int, opcode,
+ {
+ 	struct io_ring_ctx *ctx;
+ 	long ret = -EBADF;
+-	struct fd f;
++	struct file *file;
+ 	bool use_registered_ring;
+ 
+ 	use_registered_ring = !!(opcode & IORING_REGISTER_USE_REGISTERED_RING);
+@@ -4592,27 +4592,27 @@ SYSCALL_DEFINE4(io_uring_register, unsigned int, fd, unsigned int, opcode,
+ 		if (unlikely(!tctx || fd >= IO_RINGFD_REG_MAX))
+ 			return -EINVAL;
+ 		fd = array_index_nospec(fd, IO_RINGFD_REG_MAX);
+-		f.file = tctx->registered_rings[fd];
+-		f.flags = 0;
+-		if (unlikely(!f.file))
++		file = tctx->registered_rings[fd];
++		if (unlikely(!file))
+ 			return -EBADF;
+ 	} else {
+-		f = fdget(fd);
+-		if (unlikely(!f.file))
++		file = fget(fd);
++		if (unlikely(!file))
+ 			return -EBADF;
+ 		ret = -EOPNOTSUPP;
+-		if (!io_is_uring_fops(f.file))
++		if (!io_is_uring_fops(file))
+ 			goto out_fput;
+ 	}
+ 
+-	ctx = f.file->private_data;
++	ctx = file->private_data;
+ 
+ 	mutex_lock(&ctx->uring_lock);
+ 	ret = __io_uring_register(ctx, opcode, arg, nr_args);
+ 	mutex_unlock(&ctx->uring_lock);
+ 	trace_io_uring_register(ctx, opcode, ctx->nr_user_files, ctx->nr_user_bufs, ret);
+ out_fput:
+-	fdput(f);
++	if (!use_registered_ring)
++		fput(file);
+ 	return ret;
+ }
+ 
 -- 
 2.43.0
 
