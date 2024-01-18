@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E0A23762;
-	Thu, 18 Jan 2024 11:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E177423771;
+	Thu, 18 Jan 2024 11:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575649; cv=none; b=OM7HHTXiCZXOWEG/SpwP2BbFhABM4OpOLa1Si1mkFii8F+uVhbYhUbjghV+Nz/bLUMHrVcArm6pZvlTZLibzGxozagkRakkUzJ/rZx9lCpR5S81k3HUL+KorEZzix/+kLJDAR3XgtJ5Um8bgtBNe6wuRJV7EqvNS0N9HpzHHc6M=
+	t=1705575654; cv=none; b=LRGVd7htSCp0rMgG/KIz+HUArJA0tdHxau/Apkzz4iywhlW9udSM/f7+qZeurevTxZQDskQtVXMOuhEzHTtafEO5fWHyX//fT0Nz0FLHlx/hVkPeHJgkkbjFDp9Eh+zbezkUnlNaB1Df73DLAVEkV6LUNAEe54othFKhkwiqu60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575649; c=relaxed/simple;
-	bh=b8vRcPpfiSfwsrrRsEbPV7mFgXBnzAQGXt9KRYQRq7w=;
+	s=arc-20240116; t=1705575654; c=relaxed/simple;
+	bh=JxYIei1PFAGeM7q2ieolSJH7sKPFh0JGil0xkVuwVsQ=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding; b=LRA41CNwp2OK8iZqVhhcAILooXx9WKRodzBiC0WKRpIwmPXABOa1kQ3tniPx6bwAR2Nzrge8oFGSVsSc8/sCCXwOVjfE07r7hBshVXYssAeiRqCFJJmk9bD5rxTLrRG1WvDLUOjy1Zgy0kw+IONwdCKXiwE8+BEYqMLRuh2tbLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGttmUZy; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=f2/em25njq9i9LOgSp2FqlioyzyFiAd2WS4VQPRw8lTddzkr2yCLtneUI1+bqxA5JY0go8JJXOysQLR7020OpgDo03K9buVQsu7fJVPjxXL0VwS/4vu2yKrE0Qut2bgAZbm6QF3V8lcinKFHL6t+qX0zx6PDAgx6/JeBiJouL2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IFPNnBx0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGttmUZy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8ACC433C7;
-	Thu, 18 Jan 2024 11:00:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IFPNnBx0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42044C433F1;
+	Thu, 18 Jan 2024 11:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575649;
-	bh=b8vRcPpfiSfwsrrRsEbPV7mFgXBnzAQGXt9KRYQRq7w=;
+	s=korg; t=1705575653;
+	bh=JxYIei1PFAGeM7q2ieolSJH7sKPFh0JGil0xkVuwVsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGttmUZywBsPIZDy4bLyiqP4TPUASbdfsovv/OzlsAp1Bo3lbWNcA341I1IgdKaqO
-	 dUj97JicJt6ARIqh9X5G+1xUFXRupTm7cYdEtz8OKnmFglKaHVPlNkvgWEaGGFMHOm
-	 hU+wBlEQokrfH+fJCGBVUHwNUOhhI6ry+ls1+kbA=
+	b=IFPNnBx0E3rvY+YZZasvuhnCxyjFbSX/8Xb1odthF4fw+fmp3PYFV3NQtor0ztH4+
+	 vliZ61Hf9Mad2MJzpKz9BVF9oTDIW8eOYMRai74nM5VMxvAb9cCLbQtXxfJpBDCQC5
+	 PoOXba/yk/zM15ZzGhEh7y5ABL4w2pzh0siUfb88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jos=C3=A9=20Pekkarinen?= <jose.pekkarinen@foxhound.fi>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/100] Input: psmouse - enable Synaptics InterTouch for ThinkPad L14 G1
-Date: Thu, 18 Jan 2024 11:49:04 +0100
-Message-ID: <20240118104313.350260450@linuxfoundation.org>
+Subject: [PATCH 6.1 057/100] reset: hisilicon: hi6220: fix Wvoid-pointer-to-enum-cast warning
+Date: Thu, 18 Jan 2024 11:49:05 +0100
+Message-ID: <20240118104313.390160721@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -47,51 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: José Pekkarinen <jose.pekkarinen@foxhound.fi>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit c1f342f35f820b33390571293498c3e2e9bc77ec ]
+[ Upstream commit b5ec294472794ed9ecba0cb4b8208372842e7e0d ]
 
-Observed on dmesg of my laptop I see the following
-output:
+'type' is an enum, thus cast of pointer on 64-bit compile test with W=1
+causes:
 
-[   19.898700] psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
-[   19.936057] psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
-[   19.936076] psmouse serio1: synaptics: Your touchpad (PNP: LEN0411 PNP0f13) says it can support a different bus. If i2c-hid and hid-rmi are not used, you might want to try setting psmouse.synaptics_intertouch to 1 and report this to linux-input@vger.kernel.org.
-[   20.008901] psmouse serio1: synaptics: Touchpad model: 1, fw: 10.32, id: 0x1e2a1, caps: 0xf014a3/0x940300/0x12e800/0x500000, board id: 3471, fw id: 2909640
-[   20.008925] psmouse serio1: synaptics: serio: Synaptics pass-through port at isa0060/serio1/input0
-[   20.053344] input: SynPS/2 Synaptics TouchPad as /devices/platform/i8042/serio1/input/input7
-[   20.397608] mousedev: PS/2 mouse device common for all mice
+  hi6220_reset.c:166:9: error: cast to smaller integer type 'enum hi6220_reset_ctrl_type' from 'const void *' [-Werror,-Wvoid-pointer-to-enum-cast]
 
-This patch will add its pnp id to the smbus list to
-produce the setup of intertouch for the device.
-
-Signed-off-by: José Pekkarinen <jose.pekkarinen@foxhound.fi>
-Link: https://lore.kernel.org/r/20231114063607.71772-1-jose.pekkarinen@foxhound.fi
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230810091300.70197-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/synaptics.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/reset/hisilicon/hi6220_reset.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/input/mouse/synaptics.c b/drivers/input/mouse/synaptics.c
-index e43e93ac2798..b6749af46262 100644
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -183,6 +183,7 @@ static const char * const smbus_pnp_ids[] = {
- 	"LEN009b", /* T580 */
- 	"LEN0402", /* X1 Extreme Gen 2 / P1 Gen 2 */
- 	"LEN040f", /* P1 Gen 3 */
-+	"LEN0411", /* L14 Gen 1 */
- 	"LEN200f", /* T450s */
- 	"LEN2044", /* L470  */
- 	"LEN2054", /* E480 */
+diff --git a/drivers/reset/hisilicon/hi6220_reset.c b/drivers/reset/hisilicon/hi6220_reset.c
+index 5ca145b64e63..30951914afac 100644
+--- a/drivers/reset/hisilicon/hi6220_reset.c
++++ b/drivers/reset/hisilicon/hi6220_reset.c
+@@ -164,7 +164,7 @@ static int hi6220_reset_probe(struct platform_device *pdev)
+ 	if (!data)
+ 		return -ENOMEM;
+ 
+-	type = (enum hi6220_reset_ctrl_type)of_device_get_match_data(dev);
++	type = (uintptr_t)of_device_get_match_data(dev);
+ 
+ 	regmap = syscon_node_to_regmap(np);
+ 	if (IS_ERR(regmap)) {
 -- 
 2.43.0
 
