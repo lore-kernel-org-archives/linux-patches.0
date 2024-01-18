@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D36123772;
-	Thu, 18 Jan 2024 10:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4793123754;
+	Thu, 18 Jan 2024 10:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575221; cv=none; b=OOj7b52c5FXiQiXVSlBgr3WpFmEkcWCQUdRyAsPRZFp9mAKDwVVceWFvhxFfit+53ipPv/yGe1I7go0rxHAmG0HovumuMgy5Fokkp7/pTTnXH3UrYY/glEEnBR3RWDzjhTmUzvQTvgtGXs/+pBqAWO7x57V1tPDjQxrLYlp15qM=
+	t=1705575224; cv=none; b=jZI2Esy/0s1Brb31foSALLxm+GOiL7hM9rzY0MJxeO/Q8XXlXc7FCWfhk+X7U9i+4T3n4PrnKqrkVv7qmszwGhp9nMjn9XVnTlc8k4YEJddyPVchZKVBgAHHf0dBYiZJXpo5o4I6tOLVUQJvW3ARw/zXV7nHYYGoScA+S1pqXe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575221; c=relaxed/simple;
-	bh=PxSX8GjMwDQ27NJXPyy2JbYQy02NvS3sTyvX9O21hJ4=;
+	s=arc-20240116; t=1705575224; c=relaxed/simple;
+	bh=nb5JHRAHc/rVVPvKK2KAiAJenlp4O60Arc5TBrngN6o=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=MB5xBK8tg35T9vr+ghx8qBrZ7t9LE9f617pxjRLADExLDEVRaHcWyL5gMaHpc60rcrM96I++7aSVzLu7U2S0klllV9Pyxr/LJeWxp1xIcqIpuelh3/s1FoWrpUi7AXHz29CNIngfMGkOMq4pNZ12ZZtWr/DnQHipg9mtX/maNTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMWI4rBC; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=Gx2mgZH6p0uAt4KJJUxhD/uMRd1G1hb0RSnK4/KeGixrmUapDZPiJR+L9mrtIOkTzVO6h3bldITd7muBHsA+4zIARl05b7O0wiktLuZ4XsquCb+5E1+3DjLPd4mlyOw0rWCHK3pwIMFFqzotc6bJun6FvznwSGBH6v7+SXsDtVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cu4tD01X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMWI4rBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101E2C433C7;
-	Thu, 18 Jan 2024 10:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cu4tD01X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C080BC43390;
+	Thu, 18 Jan 2024 10:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575221;
-	bh=PxSX8GjMwDQ27NJXPyy2JbYQy02NvS3sTyvX9O21hJ4=;
+	s=korg; t=1705575224;
+	bh=nb5JHRAHc/rVVPvKK2KAiAJenlp4O60Arc5TBrngN6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WMWI4rBCflq3Y4o3XSRUweZYs1rqrqwFpEHxf1iyaeaTJl5ARhZe6pebWDHNuDHin
-	 Inkv82mqHtKXMWBR1wK34N/z8RjF2Bm0bW/t5/LOgI++kIY0IijoUuu5ry5HEDt7NZ
-	 m+V9WzcvURP1+WOBZrbOMQ+YSuUIBZefpuNcoYvY=
+	b=cu4tD01XL9sdy55Ohvlajyc1mCZE2ofq/eqbBH3Bw148drT/36WeqSS+beCJr88/J
+	 NlFVl3pGYDsu98ZbMdmHOjDtn/FGU5IBl3ogfZFe/LC9Y8rA8jnYixxQMH9r4J8fXV
+	 EBNx6BIYKOBU8QMTP4IVG+her60ocqAVKxBRQy3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minh Hoang <mh2022@meta.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/150] nvme: ensure reset state check ordering
-Date: Thu, 18 Jan 2024 11:47:56 +0100
-Message-ID: <20240118104322.483877812@linuxfoundation.org>
+Subject: [PATCH 6.6 055/150] nvme-ioctl: move capable() admin check to the end
+Date: Thu, 18 Jan 2024 11:47:57 +0100
+Message-ID: <20240118104322.524887807@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -56,422 +56,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit e6e7f7ac03e40795346f1b2994a05f507ad8d345 ]
+[ Upstream commit 7be866b1cf0bf1dfa74480fe8097daeceda68622 ]
 
-A different CPU may be setting the ctrl->state value, so ensure proper
-barriers to prevent optimizing to a stale state. Normally it isn't a
-problem to observe the wrong state as it is merely advisory to take a
-quicker path during initialization and error recovery, but seeing an old
-state can report unexpected ENETRESET errors when a reset request was in
-fact successful.
+This can be an expensive call on some kernel configs. Move it to the end
+after checking the cheaper ways to determine if the command is allowed.
 
-Reported-by: Minh Hoang <mh2022@meta.com>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
 Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Hannes Reinecke <hare@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 42 +++++++++++++++++++++-------------------
- drivers/nvme/host/fc.c   |  6 +++---
- drivers/nvme/host/pci.c  | 14 +++++++-------
- drivers/nvme/host/rdma.c | 23 +++++++++++++---------
- drivers/nvme/host/tcp.c  | 27 ++++++++++++++++----------
- 5 files changed, 63 insertions(+), 49 deletions(-)
+ drivers/nvme/host/ioctl.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index ae234f34ac9b..c38e234723ec 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -131,7 +131,7 @@ void nvme_queue_scan(struct nvme_ctrl *ctrl)
+diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
+index 529b9954d2b8..4939ed35638f 100644
+--- a/drivers/nvme/host/ioctl.c
++++ b/drivers/nvme/host/ioctl.c
+@@ -18,15 +18,12 @@ static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
+ {
+ 	u32 effects;
+ 
+-	if (capable(CAP_SYS_ADMIN))
+-		return true;
+-
  	/*
- 	 * Only new queue scan work when admin and IO queues are both alive
+ 	 * Do not allow unprivileged passthrough on partitions, as that allows an
+ 	 * escape from the containment of the partition.
  	 */
--	if (ctrl->state == NVME_CTRL_LIVE && ctrl->tagset)
-+	if (nvme_ctrl_state(ctrl) == NVME_CTRL_LIVE && ctrl->tagset)
- 		queue_work(nvme_wq, &ctrl->scan_work);
- }
- 
-@@ -143,7 +143,7 @@ void nvme_queue_scan(struct nvme_ctrl *ctrl)
-  */
- int nvme_try_sched_reset(struct nvme_ctrl *ctrl)
- {
--	if (ctrl->state != NVME_CTRL_RESETTING)
-+	if (nvme_ctrl_state(ctrl) != NVME_CTRL_RESETTING)
- 		return -EBUSY;
- 	if (!queue_work(nvme_reset_wq, &ctrl->reset_work))
- 		return -EBUSY;
-@@ -156,7 +156,7 @@ static void nvme_failfast_work(struct work_struct *work)
- 	struct nvme_ctrl *ctrl = container_of(to_delayed_work(work),
- 			struct nvme_ctrl, failfast_work);
- 
--	if (ctrl->state != NVME_CTRL_CONNECTING)
-+	if (nvme_ctrl_state(ctrl) != NVME_CTRL_CONNECTING)
- 		return;
- 
- 	set_bit(NVME_CTRL_FAILFAST_EXPIRED, &ctrl->flags);
-@@ -200,7 +200,7 @@ int nvme_reset_ctrl_sync(struct nvme_ctrl *ctrl)
- 	ret = nvme_reset_ctrl(ctrl);
- 	if (!ret) {
- 		flush_work(&ctrl->reset_work);
--		if (ctrl->state != NVME_CTRL_LIVE)
-+		if (nvme_ctrl_state(ctrl) != NVME_CTRL_LIVE)
- 			ret = -ENETRESET;
- 	}
- 
-@@ -499,7 +499,7 @@ bool nvme_change_ctrl_state(struct nvme_ctrl *ctrl,
- 
- 	spin_lock_irqsave(&ctrl->lock, flags);
- 
--	old_state = ctrl->state;
-+	old_state = nvme_ctrl_state(ctrl);
- 	switch (new_state) {
- 	case NVME_CTRL_LIVE:
- 		switch (old_state) {
-@@ -567,7 +567,7 @@ bool nvme_change_ctrl_state(struct nvme_ctrl *ctrl,
- 	}
- 
- 	if (changed) {
--		ctrl->state = new_state;
-+		WRITE_ONCE(ctrl->state, new_state);
- 		wake_up_all(&ctrl->state_wq);
- 	}
- 
-@@ -575,11 +575,11 @@ bool nvme_change_ctrl_state(struct nvme_ctrl *ctrl,
- 	if (!changed)
- 		return false;
- 
--	if (ctrl->state == NVME_CTRL_LIVE) {
-+	if (new_state == NVME_CTRL_LIVE) {
- 		if (old_state == NVME_CTRL_CONNECTING)
- 			nvme_stop_failfast_work(ctrl);
- 		nvme_kick_requeue_lists(ctrl);
--	} else if (ctrl->state == NVME_CTRL_CONNECTING &&
-+	} else if (new_state == NVME_CTRL_CONNECTING &&
- 		old_state == NVME_CTRL_RESETTING) {
- 		nvme_start_failfast_work(ctrl);
- 	}
-@@ -592,7 +592,7 @@ EXPORT_SYMBOL_GPL(nvme_change_ctrl_state);
-  */
- static bool nvme_state_terminal(struct nvme_ctrl *ctrl)
- {
--	switch (ctrl->state) {
-+	switch (nvme_ctrl_state(ctrl)) {
- 	case NVME_CTRL_NEW:
- 	case NVME_CTRL_LIVE:
- 	case NVME_CTRL_RESETTING:
-@@ -617,7 +617,7 @@ bool nvme_wait_reset(struct nvme_ctrl *ctrl)
- 	wait_event(ctrl->state_wq,
- 		   nvme_change_ctrl_state(ctrl, NVME_CTRL_RESETTING) ||
- 		   nvme_state_terminal(ctrl));
--	return ctrl->state == NVME_CTRL_RESETTING;
-+	return nvme_ctrl_state(ctrl) == NVME_CTRL_RESETTING;
- }
- EXPORT_SYMBOL_GPL(nvme_wait_reset);
- 
-@@ -704,9 +704,11 @@ EXPORT_SYMBOL_GPL(nvme_init_request);
- blk_status_t nvme_fail_nonready_command(struct nvme_ctrl *ctrl,
- 		struct request *rq)
- {
--	if (ctrl->state != NVME_CTRL_DELETING_NOIO &&
--	    ctrl->state != NVME_CTRL_DELETING &&
--	    ctrl->state != NVME_CTRL_DEAD &&
-+	enum nvme_ctrl_state state = nvme_ctrl_state(ctrl);
-+
-+	if (state != NVME_CTRL_DELETING_NOIO &&
-+	    state != NVME_CTRL_DELETING &&
-+	    state != NVME_CTRL_DEAD &&
- 	    !test_bit(NVME_CTRL_FAILFAST_EXPIRED, &ctrl->flags) &&
- 	    !blk_noretry_request(rq) && !(rq->cmd_flags & REQ_NVME_MPATH))
- 		return BLK_STS_RESOURCE;
-@@ -736,7 +738,7 @@ bool __nvme_check_ready(struct nvme_ctrl *ctrl, struct request *rq,
- 		 * command, which is require to set the queue live in the
- 		 * appropinquate states.
- 		 */
--		switch (ctrl->state) {
-+		switch (nvme_ctrl_state(ctrl)) {
- 		case NVME_CTRL_CONNECTING:
- 			if (blk_rq_is_passthrough(rq) && nvme_is_fabrics(req->cmd) &&
- 			    (req->cmd->fabrics.fctype == nvme_fabrics_type_connect ||
-@@ -2542,7 +2544,7 @@ static void nvme_set_latency_tolerance(struct device *dev, s32 val)
- 
- 	if (ctrl->ps_max_latency_us != latency) {
- 		ctrl->ps_max_latency_us = latency;
--		if (ctrl->state == NVME_CTRL_LIVE)
-+		if (nvme_ctrl_state(ctrl) == NVME_CTRL_LIVE)
- 			nvme_configure_apst(ctrl);
- 	}
- }
-@@ -3228,7 +3230,7 @@ static int nvme_dev_open(struct inode *inode, struct file *file)
- 	struct nvme_ctrl *ctrl =
- 		container_of(inode->i_cdev, struct nvme_ctrl, cdev);
- 
--	switch (ctrl->state) {
-+	switch (nvme_ctrl_state(ctrl)) {
- 	case NVME_CTRL_LIVE:
- 		break;
- 	default:
-@@ -3914,7 +3916,7 @@ static void nvme_scan_work(struct work_struct *work)
- 	int ret;
- 
- 	/* No tagset on a live ctrl means IO queues could not created */
--	if (ctrl->state != NVME_CTRL_LIVE || !ctrl->tagset)
-+	if (nvme_ctrl_state(ctrl) != NVME_CTRL_LIVE || !ctrl->tagset)
- 		return;
+ 	if (flags & NVME_IOCTL_PARTITION)
+-		return false;
++		goto admin;
  
  	/*
-@@ -3984,7 +3986,7 @@ void nvme_remove_namespaces(struct nvme_ctrl *ctrl)
- 	 * removing the namespaces' disks; fail all the queues now to avoid
- 	 * potentially having to clean up the failed sync later.
+ 	 * Do not allow unprivileged processes to send vendor specific or fabrics
+@@ -34,7 +31,7 @@ static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
  	 */
--	if (ctrl->state == NVME_CTRL_DEAD)
-+	if (nvme_ctrl_state(ctrl) == NVME_CTRL_DEAD)
- 		nvme_mark_namespaces_dead(ctrl);
+ 	if (c->common.opcode >= nvme_cmd_vendor_start ||
+ 	    c->common.opcode == nvme_fabrics_command)
+-		return false;
++		goto admin;
  
- 	/* this is a no-op when called from the controller reset handler */
-@@ -4066,7 +4068,7 @@ static void nvme_async_event_work(struct work_struct *work)
- 	 * flushing ctrl async_event_work after changing the controller state
- 	 * from LIVE and before freeing the admin queue.
- 	*/
--	if (ctrl->state == NVME_CTRL_LIVE)
-+	if (nvme_ctrl_state(ctrl) == NVME_CTRL_LIVE)
- 		ctrl->ops->submit_async_event(ctrl);
+ 	/*
+ 	 * Do not allow unprivileged passthrough of admin commands except
+@@ -53,7 +50,7 @@ static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
+ 				return true;
+ 			}
+ 		}
+-		return false;
++		goto admin;
+ 	}
+ 
+ 	/*
+@@ -63,7 +60,7 @@ static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
+ 	 */
+ 	effects = nvme_command_effects(ns->ctrl, ns, c->common.opcode);
+ 	if (!(effects & NVME_CMD_EFFECTS_CSUPP))
+-		return false;
++		goto admin;
+ 
+ 	/*
+ 	 * Don't allow passthrough for command that have intrusive (or unknown)
+@@ -72,16 +69,20 @@ static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
+ 	if (effects & ~(NVME_CMD_EFFECTS_CSUPP | NVME_CMD_EFFECTS_LBCC |
+ 			NVME_CMD_EFFECTS_UUID_SEL |
+ 			NVME_CMD_EFFECTS_SCOPE_MASK))
+-		return false;
++		goto admin;
+ 
+ 	/*
+ 	 * Only allow I/O commands that transfer data to the controller or that
+ 	 * change the logical block contents if the file descriptor is open for
+ 	 * writing.
+ 	 */
+-	if (nvme_is_write(c) || (effects & NVME_CMD_EFFECTS_LBCC))
+-		return open_for_write;
++	if ((nvme_is_write(c) || (effects & NVME_CMD_EFFECTS_LBCC)) &&
++	    !open_for_write)
++		goto admin;
++
+ 	return true;
++admin:
++	return capable(CAP_SYS_ADMIN);
  }
  
-@@ -4451,7 +4453,7 @@ int nvme_init_ctrl(struct nvme_ctrl *ctrl, struct device *dev,
- {
- 	int ret;
- 
--	ctrl->state = NVME_CTRL_NEW;
-+	WRITE_ONCE(ctrl->state, NVME_CTRL_NEW);
- 	clear_bit(NVME_CTRL_FAILFAST_EXPIRED, &ctrl->flags);
- 	spin_lock_init(&ctrl->lock);
- 	mutex_init(&ctrl->scan_lock);
-diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index 206f1b4e5eb1..46cce0ec35e9 100644
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -557,7 +557,7 @@ nvme_fc_rport_get(struct nvme_fc_rport *rport)
- static void
- nvme_fc_resume_controller(struct nvme_fc_ctrl *ctrl)
- {
--	switch (ctrl->ctrl.state) {
-+	switch (nvme_ctrl_state(&ctrl->ctrl)) {
- 	case NVME_CTRL_NEW:
- 	case NVME_CTRL_CONNECTING:
- 		/*
-@@ -793,7 +793,7 @@ nvme_fc_ctrl_connectivity_loss(struct nvme_fc_ctrl *ctrl)
- 		"NVME-FC{%d}: controller connectivity lost. Awaiting "
- 		"Reconnect", ctrl->cnum);
- 
--	switch (ctrl->ctrl.state) {
-+	switch (nvme_ctrl_state(&ctrl->ctrl)) {
- 	case NVME_CTRL_NEW:
- 	case NVME_CTRL_LIVE:
- 		/*
-@@ -3305,7 +3305,7 @@ nvme_fc_reconnect_or_delete(struct nvme_fc_ctrl *ctrl, int status)
- 	unsigned long recon_delay = ctrl->ctrl.opts->reconnect_delay * HZ;
- 	bool recon = true;
- 
--	if (ctrl->ctrl.state != NVME_CTRL_CONNECTING)
-+	if (nvme_ctrl_state(&ctrl->ctrl) != NVME_CTRL_CONNECTING)
- 		return;
- 
- 	if (portptr->port_state == FC_OBJSTATE_ONLINE) {
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 5c2a3af26d4d..f8e92404a659 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1234,7 +1234,7 @@ static bool nvme_should_reset(struct nvme_dev *dev, u32 csts)
- 	bool nssro = dev->subsystem && (csts & NVME_CSTS_NSSRO);
- 
- 	/* If there is a reset/reinit ongoing, we shouldn't reset again. */
--	switch (dev->ctrl.state) {
-+	switch (nvme_ctrl_state(&dev->ctrl)) {
- 	case NVME_CTRL_RESETTING:
- 	case NVME_CTRL_CONNECTING:
- 		return false;
-@@ -1322,7 +1322,7 @@ static enum blk_eh_timer_return nvme_timeout(struct request *req)
- 	 * cancellation error. All outstanding requests are completed on
- 	 * shutdown, so we return BLK_EH_DONE.
- 	 */
--	switch (dev->ctrl.state) {
-+	switch (nvme_ctrl_state(&dev->ctrl)) {
- 	case NVME_CTRL_CONNECTING:
- 		nvme_change_ctrl_state(&dev->ctrl, NVME_CTRL_DELETING);
- 		fallthrough;
-@@ -1594,7 +1594,7 @@ static int nvme_setup_io_queues_trylock(struct nvme_dev *dev)
- 	/*
- 	 * Controller is in wrong state, fail early.
- 	 */
--	if (dev->ctrl.state != NVME_CTRL_CONNECTING) {
-+	if (nvme_ctrl_state(&dev->ctrl) != NVME_CTRL_CONNECTING) {
- 		mutex_unlock(&dev->shutdown_lock);
- 		return -ENODEV;
- 	}
-@@ -2574,13 +2574,13 @@ static bool nvme_pci_ctrl_is_dead(struct nvme_dev *dev)
- 
- static void nvme_dev_disable(struct nvme_dev *dev, bool shutdown)
- {
-+	enum nvme_ctrl_state state = nvme_ctrl_state(&dev->ctrl);
- 	struct pci_dev *pdev = to_pci_dev(dev->dev);
- 	bool dead;
- 
- 	mutex_lock(&dev->shutdown_lock);
- 	dead = nvme_pci_ctrl_is_dead(dev);
--	if (dev->ctrl.state == NVME_CTRL_LIVE ||
--	    dev->ctrl.state == NVME_CTRL_RESETTING) {
-+	if (state == NVME_CTRL_LIVE || state == NVME_CTRL_RESETTING) {
- 		if (pci_is_enabled(pdev))
- 			nvme_start_freeze(&dev->ctrl);
- 		/*
-@@ -2691,7 +2691,7 @@ static void nvme_reset_work(struct work_struct *work)
- 	bool was_suspend = !!(dev->ctrl.ctrl_config & NVME_CC_SHN_NORMAL);
- 	int result;
- 
--	if (dev->ctrl.state != NVME_CTRL_RESETTING) {
-+	if (nvme_ctrl_state(&dev->ctrl) != NVME_CTRL_RESETTING) {
- 		dev_warn(dev->ctrl.device, "ctrl state %d is not RESETTING\n",
- 			 dev->ctrl.state);
- 		result = -ENODEV;
-@@ -3207,7 +3207,7 @@ static int nvme_suspend(struct device *dev)
- 	nvme_wait_freeze(ctrl);
- 	nvme_sync_queues(ctrl);
- 
--	if (ctrl->state != NVME_CTRL_LIVE)
-+	if (nvme_ctrl_state(ctrl) != NVME_CTRL_LIVE)
- 		goto unfreeze;
- 
- 	/*
-diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
-index a7fea4cbacd7..c04317a966b3 100644
---- a/drivers/nvme/host/rdma.c
-+++ b/drivers/nvme/host/rdma.c
-@@ -984,10 +984,11 @@ static void nvme_rdma_free_ctrl(struct nvme_ctrl *nctrl)
- 
- static void nvme_rdma_reconnect_or_remove(struct nvme_rdma_ctrl *ctrl)
- {
-+	enum nvme_ctrl_state state = nvme_ctrl_state(&ctrl->ctrl);
-+
- 	/* If we are resetting/deleting then do nothing */
--	if (ctrl->ctrl.state != NVME_CTRL_CONNECTING) {
--		WARN_ON_ONCE(ctrl->ctrl.state == NVME_CTRL_NEW ||
--			ctrl->ctrl.state == NVME_CTRL_LIVE);
-+	if (state != NVME_CTRL_CONNECTING) {
-+		WARN_ON_ONCE(state == NVME_CTRL_NEW || state == NVME_CTRL_LIVE);
- 		return;
- 	}
- 
-@@ -1059,8 +1060,10 @@ static int nvme_rdma_setup_ctrl(struct nvme_rdma_ctrl *ctrl, bool new)
- 		 * unless we're during creation of a new controller to
- 		 * avoid races with teardown flow.
- 		 */
--		WARN_ON_ONCE(ctrl->ctrl.state != NVME_CTRL_DELETING &&
--			     ctrl->ctrl.state != NVME_CTRL_DELETING_NOIO);
-+		enum nvme_ctrl_state state = nvme_ctrl_state(&ctrl->ctrl);
-+
-+		WARN_ON_ONCE(state != NVME_CTRL_DELETING &&
-+			     state != NVME_CTRL_DELETING_NOIO);
- 		WARN_ON_ONCE(new);
- 		ret = -EINVAL;
- 		goto destroy_io;
-@@ -1128,8 +1131,10 @@ static void nvme_rdma_error_recovery_work(struct work_struct *work)
- 
- 	if (!nvme_change_ctrl_state(&ctrl->ctrl, NVME_CTRL_CONNECTING)) {
- 		/* state change failure is ok if we started ctrl delete */
--		WARN_ON_ONCE(ctrl->ctrl.state != NVME_CTRL_DELETING &&
--			     ctrl->ctrl.state != NVME_CTRL_DELETING_NOIO);
-+		enum nvme_ctrl_state state = nvme_ctrl_state(&ctrl->ctrl);
-+
-+		WARN_ON_ONCE(state != NVME_CTRL_DELETING &&
-+			     state != NVME_CTRL_DELETING_NOIO);
- 		return;
- 	}
- 
-@@ -1161,7 +1166,7 @@ static void nvme_rdma_wr_error(struct ib_cq *cq, struct ib_wc *wc,
- 	struct nvme_rdma_queue *queue = wc->qp->qp_context;
- 	struct nvme_rdma_ctrl *ctrl = queue->ctrl;
- 
--	if (ctrl->ctrl.state == NVME_CTRL_LIVE)
-+	if (nvme_ctrl_state(&ctrl->ctrl) == NVME_CTRL_LIVE)
- 		dev_info(ctrl->ctrl.device,
- 			     "%s for CQE 0x%p failed with status %s (%d)\n",
- 			     op, wc->wr_cqe,
-@@ -1944,7 +1949,7 @@ static enum blk_eh_timer_return nvme_rdma_timeout(struct request *rq)
- 	dev_warn(ctrl->ctrl.device, "I/O %d QID %d timeout\n",
- 		 rq->tag, nvme_rdma_queue_idx(queue));
- 
--	if (ctrl->ctrl.state != NVME_CTRL_LIVE) {
-+	if (nvme_ctrl_state(&ctrl->ctrl) != NVME_CTRL_LIVE) {
- 		/*
- 		 * If we are resetting, connecting or deleting we should
- 		 * complete immediately because we may block controller
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 5b332d9f87fc..f1d62d74426f 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -1993,10 +1993,11 @@ static void nvme_tcp_teardown_io_queues(struct nvme_ctrl *ctrl,
- 
- static void nvme_tcp_reconnect_or_remove(struct nvme_ctrl *ctrl)
- {
-+	enum nvme_ctrl_state state = nvme_ctrl_state(ctrl);
-+
- 	/* If we are resetting/deleting then do nothing */
--	if (ctrl->state != NVME_CTRL_CONNECTING) {
--		WARN_ON_ONCE(ctrl->state == NVME_CTRL_NEW ||
--			ctrl->state == NVME_CTRL_LIVE);
-+	if (state != NVME_CTRL_CONNECTING) {
-+		WARN_ON_ONCE(state == NVME_CTRL_NEW || state == NVME_CTRL_LIVE);
- 		return;
- 	}
- 
-@@ -2056,8 +2057,10 @@ static int nvme_tcp_setup_ctrl(struct nvme_ctrl *ctrl, bool new)
- 		 * unless we're during creation of a new controller to
- 		 * avoid races with teardown flow.
- 		 */
--		WARN_ON_ONCE(ctrl->state != NVME_CTRL_DELETING &&
--			     ctrl->state != NVME_CTRL_DELETING_NOIO);
-+		enum nvme_ctrl_state state = nvme_ctrl_state(ctrl);
-+
-+		WARN_ON_ONCE(state != NVME_CTRL_DELETING &&
-+			     state != NVME_CTRL_DELETING_NOIO);
- 		WARN_ON_ONCE(new);
- 		ret = -EINVAL;
- 		goto destroy_io;
-@@ -2124,8 +2127,10 @@ static void nvme_tcp_error_recovery_work(struct work_struct *work)
- 
- 	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_CONNECTING)) {
- 		/* state change failure is ok if we started ctrl delete */
--		WARN_ON_ONCE(ctrl->state != NVME_CTRL_DELETING &&
--			     ctrl->state != NVME_CTRL_DELETING_NOIO);
-+		enum nvme_ctrl_state state = nvme_ctrl_state(ctrl);
-+
-+		WARN_ON_ONCE(state != NVME_CTRL_DELETING &&
-+			     state != NVME_CTRL_DELETING_NOIO);
- 		return;
- 	}
- 
-@@ -2155,8 +2160,10 @@ static void nvme_reset_ctrl_work(struct work_struct *work)
- 
- 	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_CONNECTING)) {
- 		/* state change failure is ok if we started ctrl delete */
--		WARN_ON_ONCE(ctrl->state != NVME_CTRL_DELETING &&
--			     ctrl->state != NVME_CTRL_DELETING_NOIO);
-+		enum nvme_ctrl_state state = nvme_ctrl_state(ctrl);
-+
-+		WARN_ON_ONCE(state != NVME_CTRL_DELETING &&
-+			     state != NVME_CTRL_DELETING_NOIO);
- 		return;
- 	}
- 
-@@ -2274,7 +2281,7 @@ static enum blk_eh_timer_return nvme_tcp_timeout(struct request *rq)
- 		nvme_tcp_queue_id(req->queue), nvme_cid(rq), pdu->hdr.type,
- 		opc, nvme_opcode_str(qid, opc, fctype));
- 
--	if (ctrl->state != NVME_CTRL_LIVE) {
-+	if (nvme_ctrl_state(ctrl) != NVME_CTRL_LIVE) {
- 		/*
- 		 * If we are resetting, connecting or deleting we should
- 		 * complete immediately because we may block controller
+ /*
 -- 
 2.43.0
 
