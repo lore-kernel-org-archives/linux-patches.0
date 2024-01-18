@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4793123754;
-	Thu, 18 Jan 2024 10:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0843F23754;
+	Thu, 18 Jan 2024 10:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575224; cv=none; b=jZI2Esy/0s1Brb31foSALLxm+GOiL7hM9rzY0MJxeO/Q8XXlXc7FCWfhk+X7U9i+4T3n4PrnKqrkVv7qmszwGhp9nMjn9XVnTlc8k4YEJddyPVchZKVBgAHHf0dBYiZJXpo5o4I6tOLVUQJvW3ARw/zXV7nHYYGoScA+S1pqXe0=
+	t=1705575227; cv=none; b=cxfN0mfHxaqt0ZWctYvuAHpjzoZneM3kHE1FJBhfKWvqVzv4tNAPBf9TE46Jad6ZTTU2MLlxYL8Qj8/i0uBLey46hAEN4pDZ3H5CJildgf0TV/Q7pbob7CxdmMZMGF342hWzGuD+VoRxIY88K0xATVCUmdKE1QR45/e55E18MXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575224; c=relaxed/simple;
-	bh=nb5JHRAHc/rVVPvKK2KAiAJenlp4O60Arc5TBrngN6o=;
+	s=arc-20240116; t=1705575227; c=relaxed/simple;
+	bh=0d/YvBoaZXLNqHIL2V9JLk5M54xo1eyFkqeLl692mOc=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=Gx2mgZH6p0uAt4KJJUxhD/uMRd1G1hb0RSnK4/KeGixrmUapDZPiJR+L9mrtIOkTzVO6h3bldITd7muBHsA+4zIARl05b7O0wiktLuZ4XsquCb+5E1+3DjLPd4mlyOw0rWCHK3pwIMFFqzotc6bJun6FvznwSGBH6v7+SXsDtVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cu4tD01X; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=t4rlTJ3IgqKUWs69ZkfdH5Gi5VdWcY6eyC/3VhS441Yhoxe7eLeJzuBmjP5xOPbyij8+LFzAyk+S9hgHH/4gEryNqQE4tSPKEpDwP4KLu+JkrMnB+c9Jfm0PFZK9ivIYGcYtuk9ER6fYcCSLZNsLLorOnTiCNh+/xAkgv70o68g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXt0jdyF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cu4tD01X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C080BC43390;
-	Thu, 18 Jan 2024 10:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXt0jdyF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818AAC433C7;
+	Thu, 18 Jan 2024 10:53:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575224;
-	bh=nb5JHRAHc/rVVPvKK2KAiAJenlp4O60Arc5TBrngN6o=;
+	s=korg; t=1705575226;
+	bh=0d/YvBoaZXLNqHIL2V9JLk5M54xo1eyFkqeLl692mOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cu4tD01XL9sdy55Ohvlajyc1mCZE2ofq/eqbBH3Bw148drT/36WeqSS+beCJr88/J
-	 NlFVl3pGYDsu98ZbMdmHOjDtn/FGU5IBl3ogfZFe/LC9Y8rA8jnYixxQMH9r4J8fXV
-	 EBNx6BIYKOBU8QMTP4IVG+her60ocqAVKxBRQy3M=
+	b=SXt0jdyFp1zs4vgkav1rNVoPQfyo0vtoV8X9OrMKwbnDiylr8/w1P5WHxGqrAeZiS
+	 e+KJ3CR2EC2iHg7skNOc9vpjYywLWRurtZwyGk9oMTn8HM+mCY6zxp5F6Yote1vHcu
+	 CU20YPjwJOhKIWsK2BqfgRz8lZXRlPGvwgZFe+4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Sagi Grimberg <sagi@grimberg.me>,
+	Nitesh Shetty <nj.shetty@samsung.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/150] nvme-ioctl: move capable() admin check to the end
-Date: Thu, 18 Jan 2024 11:47:57 +0100
-Message-ID: <20240118104322.524887807@linuxfoundation.org>
+Subject: [PATCH 6.6 056/150] nvme: prevent potential spectre v1 gadget
+Date: Thu, 18 Jan 2024 11:47:58 +0100
+Message-ID: <20240118104322.576364270@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -54,94 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Nitesh Shetty <nj.shetty@samsung.com>
 
-[ Upstream commit 7be866b1cf0bf1dfa74480fe8097daeceda68622 ]
+[ Upstream commit 20dc66f2d76b4a410df14e4675e373b718babc34 ]
 
-This can be an expensive call on some kernel configs. Move it to the end
-after checking the cheaper ways to determine if the command is allowed.
+This patch fixes the smatch warning, "nvmet_ns_ana_grpid_store() warn:
+potential spectre issue 'nvmet_ana_group_enabled' [w] (local cap)"
+Prevent the contents of kernel memory from being leaked to  user space
+via speculative execution by using array_index_nospec.
 
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Nitesh Shetty <nj.shetty@samsung.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/ioctl.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/nvme/target/configfs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
-index 529b9954d2b8..4939ed35638f 100644
---- a/drivers/nvme/host/ioctl.c
-+++ b/drivers/nvme/host/ioctl.c
-@@ -18,15 +18,12 @@ static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
- {
- 	u32 effects;
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index 907143870da5..01b2a3d1a5e6 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -17,6 +17,7 @@
+ #endif
+ #include <crypto/hash.h>
+ #include <crypto/kpp.h>
++#include <linux/nospec.h>
  
--	if (capable(CAP_SYS_ADMIN))
--		return true;
--
- 	/*
- 	 * Do not allow unprivileged passthrough on partitions, as that allows an
- 	 * escape from the containment of the partition.
- 	 */
- 	if (flags & NVME_IOCTL_PARTITION)
--		return false;
-+		goto admin;
+ #include "nvmet.h"
  
- 	/*
- 	 * Do not allow unprivileged processes to send vendor specific or fabrics
-@@ -34,7 +31,7 @@ static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
- 	 */
- 	if (c->common.opcode >= nvme_cmd_vendor_start ||
- 	    c->common.opcode == nvme_fabrics_command)
--		return false;
-+		goto admin;
+@@ -509,6 +510,7 @@ static ssize_t nvmet_ns_ana_grpid_store(struct config_item *item,
  
- 	/*
- 	 * Do not allow unprivileged passthrough of admin commands except
-@@ -53,7 +50,7 @@ static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
- 				return true;
- 			}
- 		}
--		return false;
-+		goto admin;
- 	}
+ 	down_write(&nvmet_ana_sem);
+ 	oldgrpid = ns->anagrpid;
++	newgrpid = array_index_nospec(newgrpid, NVMET_MAX_ANAGRPS);
+ 	nvmet_ana_group_enabled[newgrpid]++;
+ 	ns->anagrpid = newgrpid;
+ 	nvmet_ana_group_enabled[oldgrpid]--;
+@@ -1700,6 +1702,7 @@ static struct config_group *nvmet_ana_groups_make_group(
+ 	grp->grpid = grpid;
  
- 	/*
-@@ -63,7 +60,7 @@ static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
- 	 */
- 	effects = nvme_command_effects(ns->ctrl, ns, c->common.opcode);
- 	if (!(effects & NVME_CMD_EFFECTS_CSUPP))
--		return false;
-+		goto admin;
+ 	down_write(&nvmet_ana_sem);
++	grpid = array_index_nospec(grpid, NVMET_MAX_ANAGRPS);
+ 	nvmet_ana_group_enabled[grpid]++;
+ 	up_write(&nvmet_ana_sem);
  
- 	/*
- 	 * Don't allow passthrough for command that have intrusive (or unknown)
-@@ -72,16 +69,20 @@ static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
- 	if (effects & ~(NVME_CMD_EFFECTS_CSUPP | NVME_CMD_EFFECTS_LBCC |
- 			NVME_CMD_EFFECTS_UUID_SEL |
- 			NVME_CMD_EFFECTS_SCOPE_MASK))
--		return false;
-+		goto admin;
- 
- 	/*
- 	 * Only allow I/O commands that transfer data to the controller or that
- 	 * change the logical block contents if the file descriptor is open for
- 	 * writing.
- 	 */
--	if (nvme_is_write(c) || (effects & NVME_CMD_EFFECTS_LBCC))
--		return open_for_write;
-+	if ((nvme_is_write(c) || (effects & NVME_CMD_EFFECTS_LBCC)) &&
-+	    !open_for_write)
-+		goto admin;
-+
- 	return true;
-+admin:
-+	return capable(CAP_SYS_ADMIN);
- }
- 
- /*
 -- 
 2.43.0
 
