@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8691622F0F;
-	Thu, 18 Jan 2024 11:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8C0241E1;
+	Thu, 18 Jan 2024 11:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575682; cv=none; b=oHCCcaxSbbhZzAbsb4xb2k/EGu0r2sjqxVW2NCm8YVMB7iwq9i4pvgoL6+ZHm++fgQItdv8v/aXGuYqOtC1ddfUiNjjGLMkLflzy6M9ro+EhylW/apGHUYysXNT/orGLUYQ89e/8nu0kStEQ1TvEgcedIh5vwVFr2BCbfKMS6Rw=
+	t=1705575685; cv=none; b=fsTWjPBcWM9RRuNhWyebI+0PlfKqTCiWsGTihfiD4MrvFL8T6JtUbUNGXq9n4HaZT4TnLyWsdJ/Pxikrn7BkPzYRjfF9Ou9bntvQn2G1WnCvE8PmYFHRlgG/cwTq9D6zPHw9hXUuwXXcbKg+WoJTq4gacZW6Sb3dJQpZEsIwZxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575682; c=relaxed/simple;
-	bh=GTQ1192VpDnPDVm57I3EadHngOBjbKJpiBdOogmK8D4=;
+	s=arc-20240116; t=1705575685; c=relaxed/simple;
+	bh=VVTFFNpYhP2aaebBxdOZeGkwCtTjuf+xCjb4ogiBfWg=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=Ulybc66nLLLs+aOGYb4+PlEHkCuBsMHUqrNeFEzNSUC6ArLVp3kfYxeHSnPQy0tIxLXvjML1ERvMpnYWevzr4AU4a+152sIWsZTAH11vsPjIwkQ4JIz1w+lR+KUVNyvICUcn2DQ6mcoOVenjC/HD72XWCXicm3//QgVKPOE9H+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+SBM/4l; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=eoogRLiDlax4BNIY9theqwhPOK1OnxlScwpMuD1bzpuxJSFY3DN5n0+7EZKn9M39fr0/K8Jxpx1sdh+1CvDq38M1Bk/6jyNBOp4F3hxOhTd4+uFfPxpWWsyapDjo+BNgcx9b47DN7cmWldc/VZGhOWaIIyHH3Sl3Nsq9XfbTYOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAmvCto6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+SBM/4l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C17C433C7;
-	Thu, 18 Jan 2024 11:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAmvCto6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68277C433C7;
+	Thu, 18 Jan 2024 11:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575682;
-	bh=GTQ1192VpDnPDVm57I3EadHngOBjbKJpiBdOogmK8D4=;
+	s=korg; t=1705575684;
+	bh=VVTFFNpYhP2aaebBxdOZeGkwCtTjuf+xCjb4ogiBfWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y+SBM/4lFfjEwEctrxXA0QTzK3yEwWqqDfdabh4yAfnCwvcSLDLfOZONrQ1FZ4trf
-	 2r5SxYd6UXsY6F24DEUniE6fa80z8xlEjxFDVOvxiA2eVDXRUqOn7zA+qeVOq3KdA+
-	 Z7xmnmM/uH0lNrfilMD062qOu3c1vAkrBVKBRsJU=
+	b=CAmvCto6oVFOAodoJzfFzd5emxzE5Q+LuKDkhys3jXRsBLH0/wu9aaKulFnCvlwxS
+	 u0+2+a2aIb63eaDlULX+6VDEt1CpBXc+4I1uzeQHZllYEqnccAGbdSbXg+INMdJEYg
+	 JvtnEqjgrEl9W1DE06CgVNv7fRdBSYK6SxrjAd6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inki Dae <inki.dae@samsung.com>,
+	Thinh Tran <thinhtr@linux.vnet.ibm.com>,
+	Venkata Sai Duggi <venkata.sai.duggi@ibm.com>,
+	David Christensen <drc@linux.vnet.ibm.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 039/100] drm/exynos: fix a wrong error checking
-Date: Thu, 18 Jan 2024 11:48:47 +0100
-Message-ID: <20240118104312.610727799@linuxfoundation.org>
+Subject: [PATCH 6.1 030/100] net/tg3: fix race condition in tg3_reset_task()
+Date: Thu, 18 Jan 2024 11:48:38 +0100
+Message-ID: <20240118104312.236877260@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -51,60 +55,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Inki Dae <inki.dae@samsung.com>
+From: Thinh Tran <thinhtr@linux.vnet.ibm.com>
 
-[ Upstream commit 8d1b7809684c688005706125b804e1f9792d2b1b ]
+[ Upstream commit 16b55b1f2269962fb6b5154b8bf43f37c9a96637 ]
 
-Fix a wrong error checking in exynos_drm_dma.c module.
+When an EEH error is encountered by a PCI adapter, the EEH driver
+modifies the PCI channel's state as shown below:
 
-In the exynos_drm_register_dma function, both arm_iommu_create_mapping()
-and iommu_get_domain_for_dev() functions are expected to return NULL as
-an error.
+   enum {
+      /* I/O channel is in normal state */
+      pci_channel_io_normal = (__force pci_channel_state_t) 1,
 
-However, the error checking is performed using the statement
-if(IS_ERR(mapping)), which doesn't provide a suitable error value.
-So check if 'mapping' is NULL, and if it is, return -ENODEV.
+      /* I/O to channel is blocked */
+      pci_channel_io_frozen = (__force pci_channel_state_t) 2,
 
-This issue[1] was reported by Dan.
+      /* PCI card is dead */
+      pci_channel_io_perm_failure = (__force pci_channel_state_t) 3,
+   };
 
-Changelog v1:
-- fix build warning.
+If the same EEH error then causes the tg3 driver's transmit timeout
+logic to execute, the tg3_tx_timeout() function schedules a reset
+task via tg3_reset_task_schedule(), which may cause a race condition
+between the tg3 and EEH driver as both attempt to recover the HW via
+a reset action.
 
-[1] https://lore.kernel.org/all/33e52277-1349-472b-a55b-ab5c3462bfcf@moroto.mountain/
+EEH driver gets error event
+--> eeh_set_channel_state()
+    and set device to one of
+    error state above           scheduler: tg3_reset_task() get
+                                returned error from tg3_init_hw()
+                             --> dev_close() shuts down the interface
+tg3_io_slot_reset() and
+tg3_io_resume() fail to
+reset/resume the device
 
-Reported-by : Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+To resolve this issue, we avoid the race condition by checking the PCI
+channel state in the tg3_reset_task() function and skip the tg3 driver
+initiated reset when the PCI channel is not in the normal state.  (The
+driver has no access to tg3 device registers at this point and cannot
+even complete the reset task successfully without external assistance.)
+We'll leave the reset procedure to be managed by the EEH driver which
+calls the tg3_io_error_detected(), tg3_io_slot_reset() and
+tg3_io_resume() functions as appropriate.
+
+Adding the same checking in tg3_dump_state() to avoid dumping all
+device registers when the PCI channel is not in the normal state.
+
+Signed-off-by: Thinh Tran <thinhtr@linux.vnet.ibm.com>
+Tested-by: Venkata Sai Duggi <venkata.sai.duggi@ibm.com>
+Reviewed-by: David Christensen <drc@linux.vnet.ibm.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/20231201001911.656-1-thinhtr@linux.vnet.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_dma.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_dma.c b/drivers/gpu/drm/exynos/exynos_drm_dma.c
-index a971590b8132..e2c7373f20c6 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_dma.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_dma.c
-@@ -107,18 +107,16 @@ int exynos_drm_register_dma(struct drm_device *drm, struct device *dev,
- 		return 0;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index f60a16de565e..0c694ab3c110 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -6447,6 +6447,14 @@ static void tg3_dump_state(struct tg3 *tp)
+ 	int i;
+ 	u32 *regs;
  
- 	if (!priv->mapping) {
--		void *mapping;
-+		void *mapping = NULL;
++	/* If it is a PCI error, all registers will be 0xffff,
++	 * we don't dump them out, just report the error and return
++	 */
++	if (tp->pdev->error_state != pci_channel_io_normal) {
++		netdev_err(tp->dev, "PCI channel ERROR!\n");
++		return;
++	}
++
+ 	regs = kzalloc(TG3_REG_BLK_SIZE, GFP_ATOMIC);
+ 	if (!regs)
+ 		return;
+@@ -11184,7 +11192,8 @@ static void tg3_reset_task(struct work_struct *work)
+ 	rtnl_lock();
+ 	tg3_full_lock(tp, 0);
  
- 		if (IS_ENABLED(CONFIG_ARM_DMA_USE_IOMMU))
- 			mapping = arm_iommu_create_mapping(&platform_bus_type,
- 				EXYNOS_DEV_ADDR_START, EXYNOS_DEV_ADDR_SIZE);
- 		else if (IS_ENABLED(CONFIG_IOMMU_DMA))
- 			mapping = iommu_get_domain_for_dev(priv->dma_dev);
--		else
--			mapping = ERR_PTR(-ENODEV);
- 
--		if (IS_ERR(mapping))
--			return PTR_ERR(mapping);
-+		if (!mapping)
-+			return -ENODEV;
- 		priv->mapping = mapping;
- 	}
- 
+-	if (tp->pcierr_recovery || !netif_running(tp->dev)) {
++	if (tp->pcierr_recovery || !netif_running(tp->dev) ||
++	    tp->pdev->error_state != pci_channel_io_normal) {
+ 		tg3_flag_clear(tp, RESET_TASK_PENDING);
+ 		tg3_full_unlock(tp);
+ 		rtnl_unlock();
 -- 
 2.43.0
 
