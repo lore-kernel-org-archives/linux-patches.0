@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331881774B;
-	Thu, 18 Jan 2024 10:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E796E1774B;
+	Thu, 18 Jan 2024 10:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575327; cv=none; b=JsDj4ebbkaNH6rw2rcdPb7UmkWIgwRkGri8PAYNv0uAlQjQ9l7HBjhczg4qIx+vWntAr317GjYP6l139niqZ5U+IejO1ieSEyZhh3SdiOf8IdYcg59DehPNvpAb7OYIq6xIjqHSleeXHaqk+SJXSAX+LGWsQySKEK7xKK8zzAM0=
+	t=1705575330; cv=none; b=dU7RORo8gTRSO7FjktADtwRnPZZs0KAwzhqZjUGsw4JAvcAv187lxvP7lixcmoePmXZXnP7ldxFjVE5QMCiuFwfDKa3waAcZw0tbEp1fdtD9y/QxGB7XlDWTXmTQTKmaHRJKIkIhrTFZ57u/JuerKIkIZzFSu6AWxn6Cx5Ctoi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575327; c=relaxed/simple;
-	bh=nF7HBEnynD4pBYdMpp/PR3dY5qc1C2zrRREuMsF4YAg=;
+	s=arc-20240116; t=1705575330; c=relaxed/simple;
+	bh=7VczybJS7d/aI1GZgoZ2DBQ/0Roz6sFuw5Y50euyrM8=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=tcWucW2YDZTUzJmjbWeTGyg8OBNstKdpHxheyTZPUzoEOqnjorsFLf6prnoxcD4GymYMT5M7au0gT99+5zV0Wpovs1A71H4D+P8UOyrEpg62QcaMaTtIxxwpzrMi2bE1yV7anlnRRWZ6UomghnQpN1Je5bITOXVUQ3JfnJimCS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yumSxKXf; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=SrvS0d8sYvHumv0DPHWo48nQHCWoyeWoEUktYFQB6ApqzN+RFY1zjrvPfVa4so2CEvo41rlRTGQ8ElHn7fiEf3EuBOkqb7bcXcq4JHgzmUH+dsbWRY0WFIHm+qJo3QyvBjnTR0B/U9+jIjK0t+QAH+ZC6t7K7zUj7EkxsrMcJE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uC8fJ7bz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yumSxKXf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C1F1C433C7;
-	Thu, 18 Jan 2024 10:55:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uC8fJ7bz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADC5C433C7;
+	Thu, 18 Jan 2024 10:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575327;
-	bh=nF7HBEnynD4pBYdMpp/PR3dY5qc1C2zrRREuMsF4YAg=;
+	s=korg; t=1705575329;
+	bh=7VczybJS7d/aI1GZgoZ2DBQ/0Roz6sFuw5Y50euyrM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yumSxKXfrL36Yv4ADiNc5Pl6q6LZQ+ij4Hj/kodY+FgeUt/a2U2mf74upHPkonjVu
-	 97faSJBJffuybktmMJGb1CJMh/+7Hh05KX//ET9TLsf8pECiM8FJgSalrWk97vPNSZ
-	 afjLH/dRnDsJ62WldS5pAnSxN6LY3k74i18WE950=
+	b=uC8fJ7bzHR9oLzPf+f7+qbEvNAZMU2VAXRUuDpYuGCna7FnvYc9cvGJDcMv28tdlV
+	 vsFq5Ko8kLCt5RGsk6rzIDJGvkqDpAooEyNFmXJtFfQp9AipWG0ZqRaQuhbOQjgFOz
+	 AW0qdK6/qk+WJhMQTSi+VtDrheQuJDXPre+fBIzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inki Dae <inki.dae@samsung.com>,
+	Ivan Orlov <ivan.orlov0322@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/150] drm/exynos: fix a wrong error checking
-Date: Thu, 18 Jan 2024 11:48:05 +0100
-Message-ID: <20240118104322.901552362@linuxfoundation.org>
+Subject: [PATCH 6.6 064/150] ALSA: pcmtest: stop timer before buffer is released
+Date: Thu, 18 Jan 2024 11:48:06 +0100
+Message-ID: <20240118104322.942028580@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -51,60 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Inki Dae <inki.dae@samsung.com>
+From: Ivan Orlov <ivan.orlov0322@gmail.com>
 
-[ Upstream commit 8d1b7809684c688005706125b804e1f9792d2b1b ]
+[ Upstream commit eb99b1b72a424a79f56c972e0fd7ad01fe93a008 ]
 
-Fix a wrong error checking in exynos_drm_dma.c module.
+Stop timer in the 'trigger' and 'sync_stop' callbacks since we want
+the timer to be stopped before the DMA buffer is released. Otherwise,
+it could trigger a kernel panic in some circumstances, for instance
+when the DMA buffer is already released but the timer callback is
+still running.
 
-In the exynos_drm_register_dma function, both arm_iommu_create_mapping()
-and iommu_get_domain_for_dev() functions are expected to return NULL as
-an error.
-
-However, the error checking is performed using the statement
-if(IS_ERR(mapping)), which doesn't provide a suitable error value.
-So check if 'mapping' is NULL, and if it is, return -ENODEV.
-
-This issue[1] was reported by Dan.
-
-Changelog v1:
-- fix build warning.
-
-[1] https://lore.kernel.org/all/33e52277-1349-472b-a55b-ab5c3462bfcf@moroto.mountain/
-
-Reported-by : Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Signed-off-by: Ivan Orlov <ivan.orlov0322@gmail.com>
+Link: https://lore.kernel.org/r/20231206223211.12761-1-ivan.orlov0322@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_dma.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ sound/drivers/pcmtest.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_dma.c b/drivers/gpu/drm/exynos/exynos_drm_dma.c
-index a971590b8132..e2c7373f20c6 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_dma.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_dma.c
-@@ -107,18 +107,16 @@ int exynos_drm_register_dma(struct drm_device *drm, struct device *dev,
- 		return 0;
+diff --git a/sound/drivers/pcmtest.c b/sound/drivers/pcmtest.c
+index b59b78a09224..b8bff5522bce 100644
+--- a/sound/drivers/pcmtest.c
++++ b/sound/drivers/pcmtest.c
+@@ -397,7 +397,6 @@ static int snd_pcmtst_pcm_close(struct snd_pcm_substream *substream)
+ 	struct pcmtst_buf_iter *v_iter = substream->runtime->private_data;
  
- 	if (!priv->mapping) {
--		void *mapping;
-+		void *mapping = NULL;
- 
- 		if (IS_ENABLED(CONFIG_ARM_DMA_USE_IOMMU))
- 			mapping = arm_iommu_create_mapping(&platform_bus_type,
- 				EXYNOS_DEV_ADDR_START, EXYNOS_DEV_ADDR_SIZE);
- 		else if (IS_ENABLED(CONFIG_IOMMU_DMA))
- 			mapping = iommu_get_domain_for_dev(priv->dma_dev);
--		else
--			mapping = ERR_PTR(-ENODEV);
- 
--		if (IS_ERR(mapping))
--			return PTR_ERR(mapping);
-+		if (!mapping)
-+			return -ENODEV;
- 		priv->mapping = mapping;
+ 	timer_shutdown_sync(&v_iter->timer_instance);
+-	v_iter->substream = NULL;
+ 	playback_capture_test = !v_iter->is_buf_corrupted;
+ 	kfree(v_iter);
+ 	return 0;
+@@ -435,6 +434,7 @@ static int snd_pcmtst_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+ 		// We can't call timer_shutdown_sync here, as it is forbidden to sleep here
+ 		v_iter->suspend = true;
++		timer_delete(&v_iter->timer_instance);
+ 		break;
  	}
  
+@@ -512,12 +512,22 @@ static int snd_pcmtst_ioctl(struct snd_pcm_substream *substream, unsigned int cm
+ 	return snd_pcm_lib_ioctl(substream, cmd, arg);
+ }
+ 
++static int snd_pcmtst_sync_stop(struct snd_pcm_substream *substream)
++{
++	struct pcmtst_buf_iter *v_iter = substream->runtime->private_data;
++
++	timer_delete_sync(&v_iter->timer_instance);
++
++	return 0;
++}
++
+ static const struct snd_pcm_ops snd_pcmtst_playback_ops = {
+ 	.open =		snd_pcmtst_pcm_open,
+ 	.close =	snd_pcmtst_pcm_close,
+ 	.trigger =	snd_pcmtst_pcm_trigger,
+ 	.hw_params =	snd_pcmtst_pcm_hw_params,
+ 	.ioctl =	snd_pcmtst_ioctl,
++	.sync_stop =	snd_pcmtst_sync_stop,
+ 	.hw_free =	snd_pcmtst_pcm_hw_free,
+ 	.prepare =	snd_pcmtst_pcm_prepare,
+ 	.pointer =	snd_pcmtst_pcm_pointer,
+@@ -530,6 +540,7 @@ static const struct snd_pcm_ops snd_pcmtst_capture_ops = {
+ 	.hw_params =	snd_pcmtst_pcm_hw_params,
+ 	.hw_free =	snd_pcmtst_pcm_hw_free,
+ 	.ioctl =	snd_pcmtst_ioctl,
++	.sync_stop =	snd_pcmtst_sync_stop,
+ 	.prepare =	snd_pcmtst_pcm_prepare,
+ 	.pointer =	snd_pcmtst_pcm_pointer,
+ };
 -- 
 2.43.0
 
