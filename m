@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1BE1B96D;
-	Thu, 18 Jan 2024 10:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6F31B96D;
+	Thu, 18 Jan 2024 10:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575138; cv=none; b=bJC1FqlJdOiqOea3iM6tIQDVRIwgl85cOVQxLZB2H2H9qYoBGKrEonZEjOgvZR1EmGSKMGzCUgJI+ypw5kVUbkG6zUSXYXyqIfb23hZsTnCAFudyKA3HYCG9rkmFchntGo2yKQVcwMeWziVc5hcsga4rFOjvMUDO7GWuxyFVX2w=
+	t=1705575140; cv=none; b=JIaSedpnKHFhOpTgygSMvdYmT7ur0REidgp6uot5mVHCRaqmLG4KoXwIDimGyVOJRLcTFE0Tnzt4YIl2vyR0TIzuLrLhj7z+GMxmenztXa5l7uKxfA8NBQPwJDzGFkyiz2bVlL78NpyUqz+zbVQBoPu2wFjjrLucBwnv1uhONN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575138; c=relaxed/simple;
-	bh=TqP7GZG6ffdqkO/xJV2slZ+Ijc1XBj+61WlSzkz1sf0=;
+	s=arc-20240116; t=1705575140; c=relaxed/simple;
+	bh=RX60X6kng1L60qLjMXkby0VXvBVH2GJgJJNubvMKAvg=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=lsVxZs0omkfC/f6X5bIAFenN6/JkkO38zI5E23iSi5Zp90VWDfEfHMtILsttkaOm2kDuGbWf1FQqO14BvCA+GNCUcoD3pHsaCm6jH/nRjleF56RItEe/zK2Bey6V3MyyMUv2LtFL3O0nv/3LjvjhF9EvopHHOIbi1wgz1gj5xyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWK8qRWH; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=ak7R5gF0NWglFTUPz3G07+zpyokm+ygKBQ6EqVB2ARVO7v/nnF3S6VDbFJ2+cvrrwBUY0qzvxXqjNGKDy8LgFI6duCmZyzM1qvljgytsP6Jnr9eAleX8A4fUmTMJW2aOyEzYbf2NxB+vktAO6tNNfuxih4+y4lcT/NPyjPIwlQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Br2smidq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWK8qRWH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA80C433F1;
-	Thu, 18 Jan 2024 10:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Br2smidq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFD9C433C7;
+	Thu, 18 Jan 2024 10:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575137;
-	bh=TqP7GZG6ffdqkO/xJV2slZ+Ijc1XBj+61WlSzkz1sf0=;
+	s=korg; t=1705575140;
+	bh=RX60X6kng1L60qLjMXkby0VXvBVH2GJgJJNubvMKAvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xWK8qRWHQfC6IX9Lj+70yHIcCckxpRTRAqp5LjckAFJs94vZV7zhnpr1SjtopijKR
-	 +Ky8ddLSERnylwdYBrJ+LafOTV+HXoWMltaut7HlLvl6XnL3glb7cbx3L0h47v9/4U
-	 wdYioKj4F1FWP2+6T0gA2cO55Vimv41a4YLfdTm0=
+	b=Br2smidqmFzCUYsxoVdP3AVwnlHQz3kuzn//eES2z8xDRj73zFGdvEiLtsr/rz8Vt
+	 wxBCRzkBOYNkK3w3YXdW7+cRu13zV5od9UtAdLXqxyStyWitRu0D7kVEA+kvnb1P5r
+	 A2hPY3096f3vmFJiYbDPlE2LpK43pCwQ3q5RMCWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	David Jeffery <djeffery@redhat.com>,
-	John Pittman <jpittman@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/150] blk-mq: dont count completed flush data request as inflight in case of quiesce
-Date: Thu, 18 Jan 2024 11:47:26 +0100
-Message-ID: <20240118104321.194189437@linuxfoundation.org>
+Subject: [PATCH 6.6 025/150] nvme-core: check for too small lba shift
+Date: Thu, 18 Jan 2024 11:47:27 +0100
+Message-ID: <20240118104321.234870494@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -55,67 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 0e4237ae8d159e3d28f3cd83146a46f576ffb586 ]
+[ Upstream commit 74fbc88e161424b3b96a22b23a8e3e1edab9d05c ]
 
-Request queue quiesce may interrupt flush sequence, and the original request
-may have been marked as COMPLETE, but can't get finished because of
-queue quiesce.
+The block layer doesn't support logical block sizes smaller than 512
+bytes. The nvme spec doesn't support that small either, but the driver
+isn't checking to make sure the device responded with usable data.
+Failing to catch this will result in a kernel bug, either from a
+division by zero when stacking, or a zero length bio.
 
-This way is fine from driver viewpoint, because flush sequence is block
-layer concept, and it isn't related with driver.
-
-However, driver(such as dm-rq) can call blk_mq_queue_inflight() to count &
-drain inflight requests, then the wait & drain never gets done because
-the completed & not-finished flush request is counted as inflight.
-
-Fix this issue by not counting completed flush data request as inflight in
-case of quiesce.
-
-Cc: Mike Snitzer <snitzer@kernel.org>
-Cc: David Jeffery <djeffery@redhat.com>
-Cc: John Pittman <jpittman@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20231201085605.577730-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 6ab7f360ff2a..20ecd0ab616f 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -1511,14 +1511,26 @@ void blk_mq_delay_kick_requeue_list(struct request_queue *q,
- }
- EXPORT_SYMBOL(blk_mq_delay_kick_requeue_list);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 212991308bbe..ae234f34ac9b 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1893,9 +1893,10 @@ static void nvme_update_disk_info(struct gendisk *disk,
  
-+static bool blk_is_flush_data_rq(struct request *rq)
-+{
-+	return (rq->rq_flags & RQF_FLUSH_SEQ) && !is_flush_rq(rq);
-+}
-+
- static bool blk_mq_rq_inflight(struct request *rq, void *priv)
- {
  	/*
- 	 * If we find a request that isn't idle we know the queue is busy
- 	 * as it's checked in the iter.
- 	 * Return false to stop the iteration.
-+	 *
-+	 * In case of queue quiesce, if one flush data request is completed,
-+	 * don't count it as inflight given the flush sequence is suspended,
-+	 * and the original flush data request is invisible to driver, just
-+	 * like other pending requests because of quiesce
+ 	 * The block layer can't support LBA sizes larger than the page size
+-	 * yet, so catch this early and don't allow block I/O.
++	 * or smaller than a sector size yet, so catch this early and don't
++	 * allow block I/O.
  	 */
--	if (blk_mq_request_started(rq)) {
-+	if (blk_mq_request_started(rq) && !(blk_queue_quiesced(rq->q) &&
-+				blk_is_flush_data_rq(rq) &&
-+				blk_mq_request_completed(rq))) {
- 		bool *busy = priv;
- 
- 		*busy = true;
+-	if (ns->lba_shift > PAGE_SHIFT) {
++	if (ns->lba_shift > PAGE_SHIFT || ns->lba_shift < SECTOR_SHIFT) {
+ 		capacity = 0;
+ 		bs = (1 << 9);
+ 	}
 -- 
 2.43.0
 
