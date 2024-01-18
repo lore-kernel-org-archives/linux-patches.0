@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2771222323;
-	Thu, 18 Jan 2024 10:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D869322323;
+	Thu, 18 Jan 2024 10:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575157; cv=none; b=bgO2tKKNhAk2IWqWrVXh7+bdGWk8Y9ItM8L9O8jyfSdy1fP9HXXvMBRxJCMemnk+My/YlpHbOkYTHv/QgYU6Xm7I45YeY82SucmaHJt0wInQv5L5jLPbVhUUKOnF+UjPCaeK1KzbxaWXcrinTCVOcoE51A3LN73+3qBhm0ATNNY=
+	t=1705575159; cv=none; b=CfKZvTQpDKABoy1ZfVPoiy1X3qCkkkpACPYWwlk3ZIu6Sd9ZqT+trwD1dikoy0Uapd4PTQ91rKbw0R8qbFSztSxnmmbXeZfUobTE7twC3XhxMj0pXkzuuAdJJ4RLiJq1jU2u+99825uvCnIcNTThqpPEhJwwvqdqysW48bJqQrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575157; c=relaxed/simple;
-	bh=XWBHz3gBz63mgBBfcaX8MaCOgOqDyYHH2aLJwxs48F8=;
+	s=arc-20240116; t=1705575159; c=relaxed/simple;
+	bh=n3adBkM4XSjvC0VZvgMazTj6a0HVZsF7v2CDCukzWgY=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=cPeamN7CsXquZAlogj/2eUcM73dZO/ZQ+5o1k2/u/I651513kpkncMFbCXO2tHWdEVbgw9qiqJTFtzRLiN5mOc0tuN2Phs0WtWeHMFrBVhNH6S0P91d0xusTE+8NVPoRalajFmoj2y3nqDJ8YgAPMEORTQh77VQWx284d01rd6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imZ2nUPQ; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=NOdvXefzhsS/vu5pzANJoFNYKtBC1tcc/sLgRq4E7UMK4p4Z2NVJATG9I8vkcvAh+FOssYBqzFpCiOBXBCd1Yse+REFwnrrA+gtQh8Shqtdkp1ZGtqV4XfE7NazmsveToziSKfbJDBjRdRgGimkM7dDO1HaBSZl7eKq0teNURUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGf1aBx0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imZ2nUPQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F966C433F1;
-	Thu, 18 Jan 2024 10:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGf1aBx0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6B0C43390;
+	Thu, 18 Jan 2024 10:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575157;
-	bh=XWBHz3gBz63mgBBfcaX8MaCOgOqDyYHH2aLJwxs48F8=;
+	s=korg; t=1705575159;
+	bh=n3adBkM4XSjvC0VZvgMazTj6a0HVZsF7v2CDCukzWgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imZ2nUPQwaqZZY9ObZZ53cCgFJz3UtHEcLvvo0hvKlK/Sl4dnZc5s3oYrGbllXCB8
-	 qrKu8osi0uxNbZBtWqdW/0i1oGeeibOz++2/e1Ob4J5ItiPv1dtaJTEJTaOVTDTbP3
-	 +npWPmKzLYyWPBOYhfxGnnlMngarrU+UKcxNr9us=
+	b=CGf1aBx0np2lN90SmWZ+UtntsvF88Ii2/Twa/59SRqdzeiEOFFJTfKUn9gwT6WTuR
+	 vXgdNAvdBAqEFAqoL6ayW5PHo9TFc/zueudfukzIjy4dmhj+NUnPstoBrhlUm9UmEK
+	 GKVAM/wkXvW1G9zHBUeSGHZU3BwGyCxLeo3kB2qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b834a6b2decad004cfa1@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+7e59a5bfc7a897247e18@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 007/150] mptcp: fix uninit-value in mptcp_incoming_options
-Date: Thu, 18 Jan 2024 11:47:09 +0100
-Message-ID: <20240118104320.377766458@linuxfoundation.org>
+Subject: [PATCH 6.6 008/150] wifi: cfg80211: lock wiphy mutex for rfkill poll
+Date: Thu, 18 Jan 2024 11:47:10 +0100
+Message-ID: <20240118104320.427850882@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -54,33 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 237ff253f2d4f6307b7b20434d7cbcc67693298b ]
+[ Upstream commit 8e2f6f2366219b3304b227bdd2f04b64c92e3e12 ]
 
-Added initialization use_ack to mptcp_parse_option().
+We want to guarantee the mutex is held for pretty much
+all operations, so ensure that here as well.
 
-Reported-by: syzbot+b834a6b2decad004cfa1@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: syzbot+7e59a5bfc7a897247e18@syzkaller.appspotmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/options.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/mptcp/options.c b/net/mptcp/options.c
-index cd15ec73073e..c53914012d01 100644
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -108,6 +108,7 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 			mp_opt->suboptions |= OPTION_MPTCP_DSS;
- 			mp_opt->use_map = 1;
- 			mp_opt->mpc_map = 1;
-+			mp_opt->use_ack = 0;
- 			mp_opt->data_len = get_unaligned_be16(ptr);
- 			ptr += 2;
- 		}
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 563cfbe3237c..f6ada0a72977 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -221,7 +221,9 @@ static void cfg80211_rfkill_poll(struct rfkill *rfkill, void *data)
+ {
+ 	struct cfg80211_registered_device *rdev = data;
+ 
++	wiphy_lock(&rdev->wiphy);
+ 	rdev_rfkill_poll(rdev);
++	wiphy_unlock(&rdev->wiphy);
+ }
+ 
+ void cfg80211_stop_p2p_device(struct cfg80211_registered_device *rdev,
 -- 
 2.43.0
 
