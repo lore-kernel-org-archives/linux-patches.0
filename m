@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED1A1774B;
-	Thu, 18 Jan 2024 10:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F9622323;
+	Thu, 18 Jan 2024 10:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575332; cv=none; b=SZV1d8JS/D+vr1tzerStSukABvhP5Ykgbc4gAPhUUMVwvKfOh+5372PqBPqjlV1DEwyCqMHus7Lf/ghy3vA9/YuqVTsBtmlGVl/4wNFoy2Nd8n6i0TzmZWKhOv+IMQwA/E5cRrduyoCFQmydC5hrnRXMcxzBXGXF8pSPBWP7j24=
+	t=1705575335; cv=none; b=CVt3aZQuj1qfVF9PrbMJN49uo6pH6+0IA3UB8gUc4Gvmr1xYhge4gngbdMzmyneR0Nvkj3EGICeWobiAabnxdJK34kSvPPzk9mM1TpXLJt8hVreo4h0S8WYW4tYzvw9nR0YsopOnwTYMx/u0VxFHG52JjGKnpGRcY2iuiP841J4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575332; c=relaxed/simple;
-	bh=YBLivcxtcdL+TqUvy0C7dOv/DV8rKMBpJOszR30/X8k=;
+	s=arc-20240116; t=1705575335; c=relaxed/simple;
+	bh=u/Z6fmQMtCcPPltj3cGL0WSBPIUDSpHf3J5MkDgiT1s=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=arZFEMbHP3TyemrYqZW7KzGaIQxxLTzXUIPV1dhkbFDvuDXMzovRftNfvVJv1B3ed+RtTPYNhAH2EF3GdFaXMoLv/suRSaiFo3SDdRk+phzvLCVauUAM917ibeft2R3CZ5Xb7z8gqVwgwr1UFW83qHUo+XuCcq2Alf0FnHpfSk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBBBLPy8; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=UUqM5WSrJ/U1JVPn2jYTDZ6noH16AcyqKThYufZ73QWMQvaylcW8rxXSmRQaSz+YPu6ge6rCRV7VqnwrQUgy50omgCQJ5N70Nbidx+twza3zRTJgfnwbwmzxOi4LpsoNUQJ3a4kqHrEtoSXpwVAHIKVbCVCs9LBvZE05bbzMTfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmXTKgrh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBBBLPy8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1FDC433C7;
-	Thu, 18 Jan 2024 10:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmXTKgrh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCF8C43390;
+	Thu, 18 Jan 2024 10:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575332;
-	bh=YBLivcxtcdL+TqUvy0C7dOv/DV8rKMBpJOszR30/X8k=;
+	s=korg; t=1705575335;
+	bh=u/Z6fmQMtCcPPltj3cGL0WSBPIUDSpHf3J5MkDgiT1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dBBBLPy8p95K54o1i/floaGUEXPJO3wW0IKM6WbiK5yvhdlQUc3431H7Uop9iJcQo
-	 I07R58unhG8NiuLLAYcuetK4xyRHI9do5XS1Ai6s+oXtGQBB7khfcbvNWLi4qx31bO
-	 /fr2BW+/aNVstkQUWNb+aV7kiH9t0o666e7LSTrU=
+	b=wmXTKgrh28acqCCR8H3bWj4zP06R2JbzuKVZXqz2GfZBZhrZwwuLJ/cQ4xGMhCBWQ
+	 4gCU8bBoQIzTpf6uSt4kisQ4jrs54FZ6MWK9TAiCKWIgwpgkbzytfAVA7maDFZ47JP
+	 Vt1MOfR8B5PmPNlsEPuQVw4tFCEXJ0oduhZYES8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	WANG Rui <wangrui@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/150] hwmon: (corsair-psu) Fix probe when built-in
-Date: Thu, 18 Jan 2024 11:48:07 +0100
-Message-ID: <20240118104322.984448655@linuxfoundation.org>
+Subject: [PATCH 6.6 066/150] LoongArch: Apply dynamic relocations for LLD
+Date: Thu, 18 Jan 2024 11:48:08 +0100
+Message-ID: <20240118104323.024232838@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -52,55 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: WANG Rui <wangrui@loongson.cn>
 
-[ Upstream commit 307004e8b254ad28e150b63f299ab9caa4bc7c3e ]
+[ Upstream commit eea673e9d5ea994c60b550ffb684413d3759b3f4 ]
 
-It seems that when the driver is built-in, the HID bus is
-initialized after the driver is loaded, which whould cause
-module_hid_driver() to fail.
-Fix this by registering the driver after the HID bus using
-late_initcall() in accordance with other hwmon HID drivers.
+For the following assembly code:
 
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20231207210723.222552-1-W_Armin@gmx.de
-[groeck: Dropped "compile tested" comment; the patch has been tested
- but the tester did not provide a Tested-by: tag]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+     .text
+     .global func
+ func:
+     nop
+
+     .data
+ var:
+     .dword func
+
+When linked with `-pie`, GNU LD populates the `var` variable with the
+pre-relocated value of `func`. However, LLVM LLD does not exhibit the
+same behavior. This issue also arises with the `kernel_entry` in arch/
+loongarch/kernel/head.S:
+
+ _head:
+     .word   MZ_MAGIC                /* "MZ", MS-DOS header */
+     .org    0x8
+     .dword  kernel_entry            /* Kernel entry point */
+
+The correct kernel entry from the MS-DOS header is crucial for jumping
+to vmlinux from zboot. This necessity is why the compressed relocatable
+kernel compiled by Clang encounters difficulties in booting.
+
+To address this problem, it is proposed to apply dynamic relocations to
+place with `--apply-dynamic-relocs`.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1962
+Signed-off-by: WANG Rui <wangrui@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-psu.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ arch/loongarch/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
-index 904890598c11..2c7c92272fe3 100644
---- a/drivers/hwmon/corsair-psu.c
-+++ b/drivers/hwmon/corsair-psu.c
-@@ -899,7 +899,23 @@ static struct hid_driver corsairpsu_driver = {
- 	.reset_resume	= corsairpsu_resume,
- #endif
- };
--module_hid_driver(corsairpsu_driver);
-+
-+static int __init corsair_init(void)
-+{
-+	return hid_register_driver(&corsairpsu_driver);
-+}
-+
-+static void __exit corsair_exit(void)
-+{
-+	hid_unregister_driver(&corsairpsu_driver);
-+}
-+
-+/*
-+ * With module_init() the driver would load before the HID bus when
-+ * built-in, so use late_initcall() instead.
-+ */
-+late_initcall(corsair_init);
-+module_exit(corsair_exit);
+diff --git a/arch/loongarch/Makefile b/arch/loongarch/Makefile
+index 96747bfec1a1..d423fba7c406 100644
+--- a/arch/loongarch/Makefile
++++ b/arch/loongarch/Makefile
+@@ -80,7 +80,7 @@ endif
  
- MODULE_LICENSE("GPL");
- MODULE_AUTHOR("Wilken Gottwalt <wilken.gottwalt@posteo.net>");
+ ifeq ($(CONFIG_RELOCATABLE),y)
+ KBUILD_CFLAGS_KERNEL		+= -fPIE
+-LDFLAGS_vmlinux			+= -static -pie --no-dynamic-linker -z notext
++LDFLAGS_vmlinux			+= -static -pie --no-dynamic-linker -z notext $(call ld-option, --apply-dynamic-relocs)
+ endif
+ 
+ cflags-y += $(call cc-option, -mno-check-zero-division)
 -- 
 2.43.0
 
