@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0108C22F0F;
-	Thu, 18 Jan 2024 10:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043BC22F0B;
+	Thu, 18 Jan 2024 10:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575530; cv=none; b=YUZWvMCC+/I1DC8JNLfQPHWtWjKpFHkhCdut3szwWkNMaJ0bgNOcMRM0iXUQTWDXuNpajxWHWVVrt3BIMUlR1E9Om4JO0XwHjbU52COE/qHwVtjTHfkhpLVCh8JjmYZTZrtlaWmQz8DtrU4MgCNKAz2/lfa/cxLoqA1ukiF1mE8=
+	t=1705575533; cv=none; b=IK7LkHFz8EzjOurtkdfRgUWXf6D5zHb+SO77yYwaXmS+x+VTWAb5DHJYejEaf7qyeomEZNBwLIBRJ+pKMz5hLKTHaXAx9BLF8fXUfgz6J7q7f05Hg2DAE7U3sI73MvraTeh2WVKIZ3f+BKfZYPUOqwejwhpUxDRawa5AkBu96JU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575530; c=relaxed/simple;
-	bh=P1yAgonovg0DCJhdfUTlNpH33x9qz+nY2+FCDHHsMck=;
+	s=arc-20240116; t=1705575533; c=relaxed/simple;
+	bh=A0A6C+JyJjnWjO8uoamZcLA+w5fRO3NLHOW73kMay7k=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=dVenEl0GHYFQx8Z69bgxZ/i0C+Gs8N+FZ28/10H9kR93YidKAXgxxZNJ/j5QjOHJlQN0bpLQetQZSC3YmsfvUZxhLUFAqQfuAmG1m+LynBjZV39HwS4+P7Zuf0D0ucdgU1icSecy4Z5B4/7by4s+WIpYihLqATSp5E3hSvZZQtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+3VACd1; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=BouNpe+lcP0f8+yjfrAn1AkLV2gJtOBAxi9Wz0vQuW7c137o82w7OoZeivfUSSJWcq2uS9z5PJ16bEX8zWOCLuKzi6MZwhKxPhWKH4jdnHQ7sBt/qOTP5ko7tC5OpTwo2G0a8uogxz1fhvcXIY+A4nGLyGZID4SQayhBTofHkaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=flL0fgAZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+3VACd1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C27C433F1;
-	Thu, 18 Jan 2024 10:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flL0fgAZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407E8C433F1;
+	Thu, 18 Jan 2024 10:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575529;
-	bh=P1yAgonovg0DCJhdfUTlNpH33x9qz+nY2+FCDHHsMck=;
+	s=korg; t=1705575532;
+	bh=A0A6C+JyJjnWjO8uoamZcLA+w5fRO3NLHOW73kMay7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t+3VACd1MLSqxYiKgS+jQdauv1ue5n5NuCjv5ifKZPZJNbspnOGAo7ZulhiYWZODA
-	 ge5NkNAQgaLAwM/VNl8qkMYiSRtf4q4oM+E1BSdy64x4sPIAkuY+H7j6XutBUM9gBz
-	 ccfEsUxPI/zqdxPNbZuHgX4DDfbLHY3noK3nvnCE=
+	b=flL0fgAZgG34kZOlgOT9dFuOF36nlsVF9l8Kc22s4iyGeVAa/+gpWTAq33bnCnkCR
+	 ORqPhE8aU1dpQlkIqTXjO+Kvdjf0ftdLfffBiTDMz1VGb5kS38Rpwd6zG4SDFL4wZS
+	 Du1vjChcbVqtS0bfQIB/G9T9rtgnIoo0dmGSQZps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Keith Busch <kbusch@kernel.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/100] nvme-core: check for too small lba shift
-Date: Thu, 18 Jan 2024 11:48:23 +0100
-Message-ID: <20240118104311.560509254@linuxfoundation.org>
+Subject: [PATCH 6.1 016/100] hwtracing: hisi_ptt: Handle the interrupt in hardirq context
+Date: Thu, 18 Jan 2024 11:48:24 +0100
+Message-ID: <20240118104311.614533121@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -52,40 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-[ Upstream commit 74fbc88e161424b3b96a22b23a8e3e1edab9d05c ]
+[ Upstream commit e0dd27ad8af00f147ac3c9de88e0687986afc3ea ]
 
-The block layer doesn't support logical block sizes smaller than 512
-bytes. The nvme spec doesn't support that small either, but the driver
-isn't checking to make sure the device responded with usable data.
-Failing to catch this will result in a kernel bug, either from a
-division by zero when stacking, or a zero length bio.
+Handle the trace interrupt in the hardirq context, make sure the irq
+core won't threaded it by declaring IRQF_NO_THREAD and userspace won't
+balance it by declaring IRQF_NOBALANCING. Otherwise we may violate the
+synchronization requirements of the perf core, referenced to the
+change of arm-ccn PMU
+  commit 0811ef7e2f54 ("bus: arm-ccn: fix PMU interrupt flags").
 
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+In the interrupt handler we mainly doing 2 things:
+- Copy the data from the local DMA buffer to the AUX buffer
+- Commit the data in the AUX buffer
+
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[ Fixed commit description to suppress checkpatch warning ]
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20231010084731.30450-3-yangyicong@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/hwtracing/ptt/hisi_ptt.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 67c893934c80..0c088db94470 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -1925,9 +1925,10 @@ static void nvme_update_disk_info(struct gendisk *disk,
+diff --git a/drivers/hwtracing/ptt/hisi_ptt.c b/drivers/hwtracing/ptt/hisi_ptt.c
+index 016220ba0add..11f26ef709c9 100644
+--- a/drivers/hwtracing/ptt/hisi_ptt.c
++++ b/drivers/hwtracing/ptt/hisi_ptt.c
+@@ -342,9 +342,9 @@ static int hisi_ptt_register_irq(struct hisi_ptt *hisi_ptt)
+ 		return ret;
  
- 	/*
- 	 * The block layer can't support LBA sizes larger than the page size
--	 * yet, so catch this early and don't allow block I/O.
-+	 * or smaller than a sector size yet, so catch this early and don't
-+	 * allow block I/O.
- 	 */
--	if (ns->lba_shift > PAGE_SHIFT) {
-+	if (ns->lba_shift > PAGE_SHIFT || ns->lba_shift < SECTOR_SHIFT) {
- 		capacity = 0;
- 		bs = (1 << 9);
- 	}
+ 	hisi_ptt->trace_irq = pci_irq_vector(pdev, HISI_PTT_TRACE_DMA_IRQ);
+-	ret = devm_request_threaded_irq(&pdev->dev, hisi_ptt->trace_irq,
+-					NULL, hisi_ptt_isr, 0,
+-					DRV_NAME, hisi_ptt);
++	ret = devm_request_irq(&pdev->dev, hisi_ptt->trace_irq, hisi_ptt_isr,
++				IRQF_NOBALANCING | IRQF_NO_THREAD, DRV_NAME,
++				hisi_ptt);
+ 	if (ret) {
+ 		pci_err(pdev, "failed to request irq %d, ret = %d\n",
+ 			hisi_ptt->trace_irq, ret);
 -- 
 2.43.0
 
