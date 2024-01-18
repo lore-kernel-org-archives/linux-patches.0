@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3F722F06;
-	Thu, 18 Jan 2024 10:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6770822EF7;
+	Thu, 18 Jan 2024 10:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575087; cv=none; b=FjQQQnm6CjpU3E793CMhT39qFgWKekeLIS+gwGFJ0cxslrajmgCbmNr9mBAvNxqnr/qAIx9BA0v3QU2agabjztnSr2fesX6kKrfhbvhhAiSjWPzSdXA2n+L4dxEScmvXpDCTkTO6zZUG2BfR5v7CMVzFFhkTwGE0Tcvf1OUfuKM=
+	t=1705575091; cv=none; b=kpDRJD7HwM49ho/VKcA6+Wg8r3BSBIYMaW/g3E75SeR/eafry712CLMrc3kxCCE6y+hsB6vBi1yKuldd1IzDQY2mGTSNVYe1uKY7dU+RDNjsV2MmGdLG5k5JaBMOE+1gE90NNg3f/UjtfMCl0s9TInA7nX1NcPU6EnolygloTMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575087; c=relaxed/simple;
-	bh=j4Heej8uIzbphshWiHqpI36vFGpI2Xqga0Bm8eVELgs=;
+	s=arc-20240116; t=1705575091; c=relaxed/simple;
+	bh=vO2IGzgcj8+TjO/sBh07c0aGUATKflMb87lwtL5SOkE=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=IY8j4R0ljhXqP4kP+A3PpO/ucJQP/R40jUlqkJbXYuOk92BhmRuyPI5He+ZPreOCqN/wbFd0FFVniBTom/hs0QmZ0xGc0G3Nimj3Z/pB2UsK08I6zXmQikKq4cQ2X1qwayu9ZvJ5uLkmEu0xHf+I34sParZu/pUc6Ae6AF3Dwck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g34b8wxO; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=pk8SgbLc/XzpDc+wxkJbRWH1Tx/UlUx5BjOX0sdSFxYpXJo2XYXY5nYPU7FFg2+Bqmz2FQNgYF3Dc6wt4SgdQP6HLSkzzI6eIV96Cu2YeEn6Fs8oev5024Jk4piC9OriFu/MyeTWuQMhmuLm3WDsJTy5ACaMWTOFFH0Cc+nQfQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFs7pofN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g34b8wxO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51443C433C7;
-	Thu, 18 Jan 2024 10:51:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFs7pofN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E5EC433F1;
+	Thu, 18 Jan 2024 10:51:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575087;
-	bh=j4Heej8uIzbphshWiHqpI36vFGpI2Xqga0Bm8eVELgs=;
+	s=korg; t=1705575090;
+	bh=vO2IGzgcj8+TjO/sBh07c0aGUATKflMb87lwtL5SOkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g34b8wxOZW4FlKHCVcXVRnxfADc6wfhHhWDqyvV4otL/4HpRhX32evC5B53pl7Ysz
-	 /9SAaTS5zY5K0ZUirTA6XV6JxSlU38AEWha0ZWepMekjHei6uJv4JlZpOCkrQo4wqf
-	 +/eCQts17eR6OCQBvBgymoHg1Dy+nVd9m4oUCelA=
+	b=SFs7pofNi/yjMoLpwFSFFRXVI+OjpimQwhXxlox3zl2slRsBV3g83c1ijw895b9Xs
+	 n8kIA2Wppi6D0b9hYylW974gBh/Bc+pRDdikYdSCT+AduqIgmTA27VMgr9Wae5BCD1
+	 7/9XD4tIaMOylbyN94/1gmfOnsHk/GZM6ArTGwrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cameron Williams <cang1@live.co.uk>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Subject: [PATCH 6.7 22/28] parport: parport_serial: Add Brainboxes device IDs and geometry
-Date: Thu, 18 Jan 2024 11:49:12 +0100
-Message-ID: <20240118104301.991794287@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.7 13/28] ksmbd: dont allow O_TRUNC open on read-only share
+Date: Thu, 18 Jan 2024 11:49:03 +0100
+Message-ID: <20240118104301.694908338@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104301.249503558@linuxfoundation.org>
 References: <20240118104301.249503558@linuxfoundation.org>
@@ -51,95 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cameron Williams <cang1@live.co.uk>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 6aa1fc5a8085bbc01687aa708dcf2dbe637a5ee3 upstream.
+commit d592a9158a112d419f341f035d18d02f8d232def upstream.
 
-Add device IDs for the Brainboxes UC-203, UC-257, UC-414, UC-475,
-IS-300/IS-500 and PX-263/PX-295 and define the relevant "geometry"
-for the cards.
-This patch requires part 1 of this series.
+When file is changed using notepad on read-only share(read_only = yes in
+ksmbd.conf), There is a problem where existing data is truncated.
+notepad in windows try to O_TRUNC open(FILE_OVERWRITE_IF) and all data
+in file is truncated. This patch don't allow  O_TRUNC open on read-only
+share and add KSMBD_TREE_CONN_FLAG_WRITABLE check in smb2_set_info().
 
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Link: https://lore.kernel.org/r/AS4PR02MB7903A4094564BE28F1F926A6C4A6A@AS4PR02MB7903.eurprd02.prod.outlook.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parport/parport_serial.c |   56 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
+ fs/smb/server/smb2pdu.c |   23 +++++++++--------------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
 
---- a/drivers/parport/parport_serial.c
-+++ b/drivers/parport/parport_serial.c
-@@ -285,6 +285,38 @@ static struct pci_device_id parport_seri
- 	{ PCI_VENDOR_ID_SUNIX, PCI_DEVICE_ID_SUNIX_1999, PCI_VENDOR_ID_SUNIX,
- 	  0x0104, 0, 0, sunix_5099a },
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2971,7 +2971,7 @@ int smb2_open(struct ksmbd_work *work)
+ 					    &may_flags);
  
-+	/* Brainboxes UC-203 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0bc1,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0bc2,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+
-+	/* Brainboxes UC-257 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0861,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0862,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0863,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+
-+	/* Brainboxes UC-414 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0e61,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc414 },
-+
-+	/* Brainboxes UC-475 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0981,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0982,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+
-+	/* Brainboxes IS-300/IS-500 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0da0,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_is300 },
-+
-+	/* Brainboxes PX-263/PX-295 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x402c,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_px263 },
-+
- 	{ 0, } /* terminate list */
- };
- MODULE_DEVICE_TABLE(pci,parport_serial_pci_tbl);
-@@ -550,6 +582,30 @@ static struct pciserial_board pci_parpor
- 		.base_baud      = 921600,
- 		.uart_offset	= 0x8,
- 	},
-+	[brainboxes_uc257] = {
-+		.flags		= FL_BASE2,
-+		.num_ports	= 2,
-+		.base_baud	= 115200,
-+		.uart_offset	= 8,
-+	},
-+	[brainboxes_is300] = {
-+		.flags		= FL_BASE2,
-+		.num_ports	= 1,
-+		.base_baud	= 115200,
-+		.uart_offset	= 8,
-+	},
-+	[brainboxes_uc414] = {
-+		.flags		= FL_BASE2,
-+		.num_ports	= 4,
-+		.base_baud	= 115200,
-+		.uart_offset	= 8,
-+	},
-+	[brainboxes_px263] = {
-+		.flags		= FL_BASE2,
-+		.num_ports	= 4,
-+		.base_baud	= 921600,
-+		.uart_offset	= 8,
-+	},
- };
+ 	if (!test_tree_conn_flag(tcon, KSMBD_TREE_CONN_FLAG_WRITABLE)) {
+-		if (open_flags & O_CREAT) {
++		if (open_flags & (O_CREAT | O_TRUNC)) {
+ 			ksmbd_debug(SMB,
+ 				    "User does not have write permission\n");
+ 			rc = -EACCES;
+@@ -5943,12 +5943,6 @@ static int smb2_set_info_file(struct ksm
+ 	}
+ 	case FILE_RENAME_INFORMATION:
+ 	{
+-		if (!test_tree_conn_flag(work->tcon, KSMBD_TREE_CONN_FLAG_WRITABLE)) {
+-			ksmbd_debug(SMB,
+-				    "User does not have write permission\n");
+-			return -EACCES;
+-		}
+-
+ 		if (buf_len < sizeof(struct smb2_file_rename_info))
+ 			return -EINVAL;
  
- struct parport_serial_private {
+@@ -5968,12 +5962,6 @@ static int smb2_set_info_file(struct ksm
+ 	}
+ 	case FILE_DISPOSITION_INFORMATION:
+ 	{
+-		if (!test_tree_conn_flag(work->tcon, KSMBD_TREE_CONN_FLAG_WRITABLE)) {
+-			ksmbd_debug(SMB,
+-				    "User does not have write permission\n");
+-			return -EACCES;
+-		}
+-
+ 		if (buf_len < sizeof(struct smb2_file_disposition_info))
+ 			return -EINVAL;
+ 
+@@ -6035,7 +6023,7 @@ int smb2_set_info(struct ksmbd_work *wor
+ {
+ 	struct smb2_set_info_req *req;
+ 	struct smb2_set_info_rsp *rsp;
+-	struct ksmbd_file *fp;
++	struct ksmbd_file *fp = NULL;
+ 	int rc = 0;
+ 	unsigned int id = KSMBD_NO_FID, pid = KSMBD_NO_FID;
+ 
+@@ -6055,6 +6043,13 @@ int smb2_set_info(struct ksmbd_work *wor
+ 		rsp = smb2_get_msg(work->response_buf);
+ 	}
+ 
++	if (!test_tree_conn_flag(work->tcon, KSMBD_TREE_CONN_FLAG_WRITABLE)) {
++		ksmbd_debug(SMB, "User does not have write permission\n");
++		pr_err("User does not have write permission\n");
++		rc = -EACCES;
++		goto err_out;
++	}
++
+ 	if (!has_file_id(id)) {
+ 		id = req->VolatileFileId;
+ 		pid = req->PersistentFileId;
 
 
