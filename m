@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303951774B;
-	Thu, 18 Jan 2024 10:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331881774B;
+	Thu, 18 Jan 2024 10:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575324; cv=none; b=NlJ7Af8N8/3adlpwF5lhrxZscdEsDuRgRk59gVUILtaH1KqIrNqym0UnFNIkW7riVupspP6f1ekwN26UmkG2YfLlitNs/AlUsM6vmswxTiWVlwvFRF4hlXExWJzvstLo38rlErC037FnxdXIMo5BscPU0lfyHW9js83YNC9xvV4=
+	t=1705575327; cv=none; b=JsDj4ebbkaNH6rw2rcdPb7UmkWIgwRkGri8PAYNv0uAlQjQ9l7HBjhczg4qIx+vWntAr317GjYP6l139niqZ5U+IejO1ieSEyZhh3SdiOf8IdYcg59DehPNvpAb7OYIq6xIjqHSleeXHaqk+SJXSAX+LGWsQySKEK7xKK8zzAM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575324; c=relaxed/simple;
-	bh=ePDPhnBx7P+q6jP3Fu9RDcfDcSL9+0JBAj4dhYpzlMM=;
+	s=arc-20240116; t=1705575327; c=relaxed/simple;
+	bh=nF7HBEnynD4pBYdMpp/PR3dY5qc1C2zrRREuMsF4YAg=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=gjh3VEihPTZd3FF7TzcCrnsYX38S7uoEMX6l9+tZFyYeaNamztYv+ifk/lVkMnqaLVcdeK0Hgqgn3VayrhbOumwZkvN0VxaOW0Th0YVJbQ9svYEK3DiPFLmmb6qDLUG98/P2nuCevj3c6/NVxeObtyERCfuwcqAwof/gAgAGkDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQSf+1uu; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=tcWucW2YDZTUzJmjbWeTGyg8OBNstKdpHxheyTZPUzoEOqnjorsFLf6prnoxcD4GymYMT5M7au0gT99+5zV0Wpovs1A71H4D+P8UOyrEpg62QcaMaTtIxxwpzrMi2bE1yV7anlnRRWZ6UomghnQpN1Je5bITOXVUQ3JfnJimCS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yumSxKXf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQSf+1uu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8787C433C7;
-	Thu, 18 Jan 2024 10:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yumSxKXf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C1F1C433C7;
+	Thu, 18 Jan 2024 10:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575324;
-	bh=ePDPhnBx7P+q6jP3Fu9RDcfDcSL9+0JBAj4dhYpzlMM=;
+	s=korg; t=1705575327;
+	bh=nF7HBEnynD4pBYdMpp/PR3dY5qc1C2zrRREuMsF4YAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQSf+1uu37TBM+CKxfjAIc7SWl1xEd7o0LWRCFl5ciZbkrLkdu09Ni+mOwxiQjMAg
-	 XTh+7OzxmHwONnBTTQx9Pc6LdzS+KK/0Mp36Q6OPhPJTKlL+onwCMcFHxH8RPebNym
-	 7R0grg0tjUcZJMKqn7Cd4trgyER15JvdT53tyS90=
+	b=yumSxKXfrL36Yv4ADiNc5Pl6q6LZQ+ij4Hj/kodY+FgeUt/a2U2mf74upHPkonjVu
+	 97faSJBJffuybktmMJGb1CJMh/+7Hh05KX//ET9TLsf8pECiM8FJgSalrWk97vPNSZ
+	 afjLH/dRnDsJ62WldS5pAnSxN6LY3k74i18WE950=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Yang <xiangyang3@huawei.com>,
 	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/150] drm/exynos: fix a potential error pointer dereference
-Date: Thu, 18 Jan 2024 11:48:04 +0100
-Message-ID: <20240118104322.853362117@linuxfoundation.org>
+Subject: [PATCH 6.6 063/150] drm/exynos: fix a wrong error checking
+Date: Thu, 18 Jan 2024 11:48:05 +0100
+Message-ID: <20240118104322.901552362@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -52,38 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Yang <xiangyang3@huawei.com>
+From: Inki Dae <inki.dae@samsung.com>
 
-[ Upstream commit 73bf1c9ae6c054c53b8e84452c5e46f86dd28246 ]
+[ Upstream commit 8d1b7809684c688005706125b804e1f9792d2b1b ]
 
-Smatch reports the warning below:
-drivers/gpu/drm/exynos/exynos_hdmi.c:1864 hdmi_bind()
-error: 'crtc' dereferencing possible ERR_PTR()
+Fix a wrong error checking in exynos_drm_dma.c module.
 
-The return value of exynos_drm_crtc_get_by_type maybe ERR_PTR(-ENODEV),
-which can not be used directly. Fix this by checking the return value
-before using it.
+In the exynos_drm_register_dma function, both arm_iommu_create_mapping()
+and iommu_get_domain_for_dev() functions are expected to return NULL as
+an error.
 
-Signed-off-by: Xiang Yang <xiangyang3@huawei.com>
+However, the error checking is performed using the statement
+if(IS_ERR(mapping)), which doesn't provide a suitable error value.
+So check if 'mapping' is NULL, and if it is, return -ENODEV.
+
+This issue[1] was reported by Dan.
+
+Changelog v1:
+- fix build warning.
+
+[1] https://lore.kernel.org/all/33e52277-1349-472b-a55b-ab5c3462bfcf@moroto.mountain/
+
+Reported-by : Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_hdmi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/exynos/exynos_drm_dma.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
-index f3aaa4ea3e68..dd9903eab563 100644
---- a/drivers/gpu/drm/exynos/exynos_hdmi.c
-+++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
-@@ -1861,6 +1861,8 @@ static int hdmi_bind(struct device *dev, struct device *master, void *data)
- 		return ret;
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_dma.c b/drivers/gpu/drm/exynos/exynos_drm_dma.c
+index a971590b8132..e2c7373f20c6 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_dma.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_dma.c
+@@ -107,18 +107,16 @@ int exynos_drm_register_dma(struct drm_device *drm, struct device *dev,
+ 		return 0;
  
- 	crtc = exynos_drm_crtc_get_by_type(drm_dev, EXYNOS_DISPLAY_TYPE_HDMI);
-+	if (IS_ERR(crtc))
-+		return PTR_ERR(crtc);
- 	crtc->pipe_clk = &hdata->phy_clk;
+ 	if (!priv->mapping) {
+-		void *mapping;
++		void *mapping = NULL;
  
- 	ret = hdmi_create_connector(encoder);
+ 		if (IS_ENABLED(CONFIG_ARM_DMA_USE_IOMMU))
+ 			mapping = arm_iommu_create_mapping(&platform_bus_type,
+ 				EXYNOS_DEV_ADDR_START, EXYNOS_DEV_ADDR_SIZE);
+ 		else if (IS_ENABLED(CONFIG_IOMMU_DMA))
+ 			mapping = iommu_get_domain_for_dev(priv->dma_dev);
+-		else
+-			mapping = ERR_PTR(-ENODEV);
+ 
+-		if (IS_ERR(mapping))
+-			return PTR_ERR(mapping);
++		if (!mapping)
++			return -ENODEV;
+ 		priv->mapping = mapping;
+ 	}
+ 
 -- 
 2.43.0
 
