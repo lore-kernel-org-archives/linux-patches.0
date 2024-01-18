@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F9622323;
-	Thu, 18 Jan 2024 10:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5867B22F06;
+	Thu, 18 Jan 2024 10:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575335; cv=none; b=CVt3aZQuj1qfVF9PrbMJN49uo6pH6+0IA3UB8gUc4Gvmr1xYhge4gngbdMzmyneR0Nvkj3EGICeWobiAabnxdJK34kSvPPzk9mM1TpXLJt8hVreo4h0S8WYW4tYzvw9nR0YsopOnwTYMx/u0VxFHG52JjGKnpGRcY2iuiP841J4=
+	t=1705575338; cv=none; b=Q+EAlDwws6210PZYqEJNIMkGIjkBnDdHUrCE0EofY12MtrcO3cMMmwdxaG65eMtGXjWRyUmWx+yRdvikX45CgaRsBC5fhgb/Im1YJFCDsoCnmF8Bq3aQM2mNI1L94yAIgWdu3et9E6qFhpKjVdfIVJc8UtrPMGa5MU3mev8IY6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575335; c=relaxed/simple;
-	bh=u/Z6fmQMtCcPPltj3cGL0WSBPIUDSpHf3J5MkDgiT1s=;
+	s=arc-20240116; t=1705575338; c=relaxed/simple;
+	bh=mNpzoaxehkQVZSHukhhnhhMTQkzDzcjgtbYK1lGYrsE=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=UUqM5WSrJ/U1JVPn2jYTDZ6noH16AcyqKThYufZ73QWMQvaylcW8rxXSmRQaSz+YPu6ge6rCRV7VqnwrQUgy50omgCQJ5N70Nbidx+twza3zRTJgfnwbwmzxOi4LpsoNUQJ3a4kqHrEtoSXpwVAHIKVbCVCs9LBvZE05bbzMTfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmXTKgrh; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=LWIBzGFe6RCAbBehm64xsrPI/3PCp7jgeLACcl85qDdoCnmV19UX7p+bxiVfc0IBkvCQE8Dbkwp4okK/CSHToTY0qXx8z0LVacQYymaBSRerpCDvhC41zLYwg/znzypDGazAk15oF70L2em9GrqmDYCPDrNEXMlwprSx5Hc7fbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UkVSZ2mb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmXTKgrh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCF8C43390;
-	Thu, 18 Jan 2024 10:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UkVSZ2mb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EFC2C433F1;
+	Thu, 18 Jan 2024 10:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575335;
-	bh=u/Z6fmQMtCcPPltj3cGL0WSBPIUDSpHf3J5MkDgiT1s=;
+	s=korg; t=1705575337;
+	bh=mNpzoaxehkQVZSHukhhnhhMTQkzDzcjgtbYK1lGYrsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmXTKgrh28acqCCR8H3bWj4zP06R2JbzuKVZXqz2GfZBZhrZwwuLJ/cQ4xGMhCBWQ
-	 4gCU8bBoQIzTpf6uSt4kisQ4jrs54FZ6MWK9TAiCKWIgwpgkbzytfAVA7maDFZ47JP
-	 Vt1MOfR8B5PmPNlsEPuQVw4tFCEXJ0oduhZYES8E=
+	b=UkVSZ2mb8jHqUocprMUROLPiB5sX67Yto4ywsf1YOGvV6zIvlPPTGhGPuEYqI7/ie
+	 XAw/d5wvraTjP0BG3Ce1vVQhNdUJy3umkHbrumhHQplJ3z8EdcKzsUyucJHAmyPp4S
+	 C7FgnYr7TS4aw0vJOsh84ZL9UQwvVN5YoaOu4SV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WANG Rui <wangrui@loongson.cn>,
+	Hengqi Chen <hengqi.chen@gmail.com>,
+	Jinyang He <hejinyang@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 066/150] LoongArch: Apply dynamic relocations for LLD
-Date: Thu, 18 Jan 2024 11:48:08 +0100
-Message-ID: <20240118104323.024232838@linuxfoundation.org>
+Subject: [PATCH 6.6 067/150] LoongArch: Set unwind stack type to unknown rather than set error flag
+Date: Thu, 18 Jan 2024 11:48:09 +0100
+Message-ID: <20240118104323.072524552@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -52,59 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WANG Rui <wangrui@loongson.cn>
+From: Jinyang He <hejinyang@loongson.cn>
 
-[ Upstream commit eea673e9d5ea994c60b550ffb684413d3759b3f4 ]
+[ Upstream commit 97ceddbc9404a7d1e2c4049435bff29427d762cc ]
 
-For the following assembly code:
+During unwinding, unwind_done() is used as an end condition. Normally it
+unwind to the user stack and then set the stack type to unknown, which
+is a normal exit. When something unexpected happens in unwind process
+and we cannot unwind anymore, we should set the error flag, and also set
+the stack type to unknown to indicate that the unwind process can not
+continue. The error flag emphasizes that the unwind process produce an
+unexpected error. There is no unexpected things when we unwind the PT_REGS
+in the top of IRQ stack and find out that is an user mode PT_REGS. Thus,
+we should not set error flag and just set stack type to unknown.
 
-     .text
-     .global func
- func:
-     nop
-
-     .data
- var:
-     .dword func
-
-When linked with `-pie`, GNU LD populates the `var` variable with the
-pre-relocated value of `func`. However, LLVM LLD does not exhibit the
-same behavior. This issue also arises with the `kernel_entry` in arch/
-loongarch/kernel/head.S:
-
- _head:
-     .word   MZ_MAGIC                /* "MZ", MS-DOS header */
-     .org    0x8
-     .dword  kernel_entry            /* Kernel entry point */
-
-The correct kernel entry from the MS-DOS header is crucial for jumping
-to vmlinux from zboot. This necessity is why the compressed relocatable
-kernel compiled by Clang encounters difficulties in booting.
-
-To address this problem, it is proposed to apply dynamic relocations to
-place with `--apply-dynamic-relocs`.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1962
-Signed-off-by: WANG Rui <wangrui@loongson.cn>
+Reported-by: Hengqi Chen <hengqi.chen@gmail.com>
+Acked-by: Hengqi Chen <hengqi.chen@gmail.com>
+Signed-off-by: Jinyang He <hejinyang@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kernel/stacktrace.c      | 2 +-
+ arch/loongarch/kernel/unwind.c          | 1 -
+ arch/loongarch/kernel/unwind_prologue.c | 2 +-
+ 3 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/arch/loongarch/Makefile b/arch/loongarch/Makefile
-index 96747bfec1a1..d423fba7c406 100644
---- a/arch/loongarch/Makefile
-+++ b/arch/loongarch/Makefile
-@@ -80,7 +80,7 @@ endif
+diff --git a/arch/loongarch/kernel/stacktrace.c b/arch/loongarch/kernel/stacktrace.c
+index 92270f14db94..f623feb2129f 100644
+--- a/arch/loongarch/kernel/stacktrace.c
++++ b/arch/loongarch/kernel/stacktrace.c
+@@ -32,7 +32,7 @@ void arch_stack_walk(stack_trace_consume_fn consume_entry, void *cookie,
+ 	}
  
- ifeq ($(CONFIG_RELOCATABLE),y)
- KBUILD_CFLAGS_KERNEL		+= -fPIE
--LDFLAGS_vmlinux			+= -static -pie --no-dynamic-linker -z notext
-+LDFLAGS_vmlinux			+= -static -pie --no-dynamic-linker -z notext $(call ld-option, --apply-dynamic-relocs)
- endif
+ 	for (unwind_start(&state, task, regs);
+-	     !unwind_done(&state) && !unwind_error(&state); unwind_next_frame(&state)) {
++	     !unwind_done(&state); unwind_next_frame(&state)) {
+ 		addr = unwind_get_return_address(&state);
+ 		if (!addr || !consume_entry(cookie, addr))
+ 			break;
+diff --git a/arch/loongarch/kernel/unwind.c b/arch/loongarch/kernel/unwind.c
+index ba324ba76fa1..a463d6961344 100644
+--- a/arch/loongarch/kernel/unwind.c
++++ b/arch/loongarch/kernel/unwind.c
+@@ -28,6 +28,5 @@ bool default_next_frame(struct unwind_state *state)
  
- cflags-y += $(call cc-option, -mno-check-zero-division)
+ 	} while (!get_stack_info(state->sp, state->task, info));
+ 
+-	state->error = true;
+ 	return false;
+ }
+diff --git a/arch/loongarch/kernel/unwind_prologue.c b/arch/loongarch/kernel/unwind_prologue.c
+index 55afc27320e1..929ae240280a 100644
+--- a/arch/loongarch/kernel/unwind_prologue.c
++++ b/arch/loongarch/kernel/unwind_prologue.c
+@@ -227,7 +227,7 @@ static bool next_frame(struct unwind_state *state)
+ 	} while (!get_stack_info(state->sp, state->task, info));
+ 
+ out:
+-	state->error = true;
++	state->stack_info.type = STACK_TYPE_UNKNOWN;
+ 	return false;
+ }
+ 
 -- 
 2.43.0
 
