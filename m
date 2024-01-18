@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039CE22F0F;
-	Thu, 18 Jan 2024 10:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57DE22F0F;
+	Thu, 18 Jan 2024 10:59:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575558; cv=none; b=ZCV8KeJVBEG3m5jNRDp7Csln8VycXadZj1VvYlaaXzwOa5UW13BF4jWHKoRmjUVc5Bc5yIZrox7qeJCDxByPkTbxZJ1booxVljFYyMAsPTic7itwd1LPk+lOuvp2x1vGDgDV1TcBi9FJ4vD6C8YJ+JbgN/OoWv4qo7AYj7Q+bOQ=
+	t=1705575560; cv=none; b=SzhE5CamWUSqPdIWRrMO+spPRHOgyynXWHkQIsgVPETOmv87Jyec5cUG5ajb7K6U+qD2AY4X52KB2s4/XxyfQBi3fQuNsp2VfQDe6bDAIwLutuMQlIkedIeKRu3EPejyA0Y8m9IyTb2NXcRWReoR+3KpF6jECEU85XlLo2XSidQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575558; c=relaxed/simple;
-	bh=5eLFiS8RAMhIPvJNZC1nLc/D8AY399UcX2QhRO9GrsE=;
+	s=arc-20240116; t=1705575560; c=relaxed/simple;
+	bh=19aQXHwNit+r1wV3ANTBUatMxkzMq7qdAwc4+kB8zdo=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=lEiH3OuU+8CNhtXgB2JJjGZxET/Jou+GqphSJx2fyKDuS0fs95p4NhQ2iBd4M/CiHoxbwCfBqToWEFmU0+ckwRmBkO7vgS+40HOL1+3k6lqhTap2I9ubmi1YRLlGho6QQBG2uXSv5HRQlJqcHUTaqjFeRGLnKuO1gEWEEq9Ggwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpBKR2pF; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=RC4qFVMDDNA2DDLMN5cvENNEMKVhQLMfQ9/dTCCZPSoc4B6AlR7vCO1kBdp506mJ94bSlREBtWx9GALUR5GGDmsHEtqzpf0DuEZd+Mt3nOgfJnHovQYf4LB/xTMV26774gVFnzA+QSWg6WbtMnKdiDx/GNcncT7ufo4TMDwEtlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEaUsVvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpBKR2pF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE5AC433F1;
-	Thu, 18 Jan 2024 10:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEaUsVvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A3BC433F1;
+	Thu, 18 Jan 2024 10:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575557;
-	bh=5eLFiS8RAMhIPvJNZC1nLc/D8AY399UcX2QhRO9GrsE=;
+	s=korg; t=1705575560;
+	bh=19aQXHwNit+r1wV3ANTBUatMxkzMq7qdAwc4+kB8zdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FpBKR2pFrFQO7BP6Hdyy+tLZFc8/nk3RSYRVZed449UCRZmRFxnS6js9MAg/ey8Qg
-	 5YqLJuS+wQmxkLJVBR7e+Qxs/yUG83zpXt5erOfis2YxZMJ3OljFGXfXbxfZhAYnnz
-	 8VyiGBIYhhJrFa5mkFr09tRzlR5qte/yzfUzPZ2o=
+	b=NEaUsVvq39em0Ex7l7MzfbLXNCINeZ0JezUsSiXigrhOsmpCa78YDX2trIYoe8TmI
+	 WxqWLj2gA7EGTrAk2PWgcljNEMK0mqFTHhVcBa2Q3VE4bdU7Cpob2pRzmgFHh5bBKz
+	 y6Jbs9pnT86ywhQXNgU+TkSqsd3TCWWxkP+ReKO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Strozek <mstrozek@opensource.cirrus.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Shuming Fan <shumingf@realtek.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/100] ASoC: cs43130: Fix incorrect frame delay configuration
-Date: Thu, 18 Jan 2024 11:48:32 +0100
-Message-ID: <20240118104311.960788006@linuxfoundation.org>
+Subject: [PATCH 6.1 025/100] ASoC: rt5650: add mutex to avoid the jack detection failure
+Date: Thu, 18 Jan 2024 11:48:33 +0100
+Message-ID: <20240118104312.002232537@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -53,32 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Strozek <mstrozek@opensource.cirrus.com>
+From: Shuming Fan <shumingf@realtek.com>
 
-[ Upstream commit aa7e8e5e4011571022dc06e4d7a2f108feb53d1a ]
+[ Upstream commit cdba4301adda7c60a2064bf808e48fccd352aaa9 ]
 
-Signed-off-by: Maciej Strozek <mstrozek@opensource.cirrus.com>
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20231117141344.64320-3-mstrozek@opensource.cirrus.com
+This patch adds the jd_mutex to protect the jack detection control flow.
+And only the headset type could check the button status.
+
+Signed-off-by: Shuming Fan <shumingf@realtek.com>
+Link: https://lore.kernel.org/r/20231122100123.2831753-1-shumingf@realtek.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs43130.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/rt5645.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/cs43130.c b/sound/soc/codecs/cs43130.c
-index 1fcbf2ffccff..0b8ecd917a08 100644
---- a/sound/soc/codecs/cs43130.c
-+++ b/sound/soc/codecs/cs43130.c
-@@ -579,7 +579,7 @@ static int cs43130_set_sp_fmt(int dai_id, unsigned int bitwidth_sclk,
- 		break;
- 	case SND_SOC_DAIFMT_LEFT_J:
- 		hi_size = bitwidth_sclk;
--		frm_delay = 2;
-+		frm_delay = 0;
- 		frm_phase = 1;
- 		break;
- 	case SND_SOC_DAIFMT_DSP_A:
+diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
+index f86fc7cd104d..60518ee5a86e 100644
+--- a/sound/soc/codecs/rt5645.c
++++ b/sound/soc/codecs/rt5645.c
+@@ -448,6 +448,7 @@ struct rt5645_priv {
+ 	struct regulator_bulk_data supplies[ARRAY_SIZE(rt5645_supply_names)];
+ 	struct rt5645_eq_param_s *eq_param;
+ 	struct timer_list btn_check_timer;
++	struct mutex jd_mutex;
+ 
+ 	int codec_type;
+ 	int sysclk;
+@@ -3189,6 +3190,8 @@ static int rt5645_jack_detect(struct snd_soc_component *component, int jack_inse
+ 				rt5645_enable_push_button_irq(component, true);
+ 			}
+ 		} else {
++			if (rt5645->en_button_func)
++				rt5645_enable_push_button_irq(component, false);
+ 			snd_soc_dapm_disable_pin(dapm, "Mic Det Power");
+ 			snd_soc_dapm_sync(dapm);
+ 			rt5645->jack_type = SND_JACK_HEADPHONE;
+@@ -3269,6 +3272,8 @@ static void rt5645_jack_detect_work(struct work_struct *work)
+ 	if (!rt5645->component)
+ 		return;
+ 
++	mutex_lock(&rt5645->jd_mutex);
++
+ 	switch (rt5645->pdata.jd_mode) {
+ 	case 0: /* Not using rt5645 JD */
+ 		if (rt5645->gpiod_hp_det) {
+@@ -3295,7 +3300,7 @@ static void rt5645_jack_detect_work(struct work_struct *work)
+ 
+ 	if (!val && (rt5645->jack_type == 0)) { /* jack in */
+ 		report = rt5645_jack_detect(rt5645->component, 1);
+-	} else if (!val && rt5645->jack_type != 0) {
++	} else if (!val && rt5645->jack_type == SND_JACK_HEADSET) {
+ 		/* for push button and jack out */
+ 		btn_type = 0;
+ 		if (snd_soc_component_read(rt5645->component, RT5645_INT_IRQ_ST) & 0x4) {
+@@ -3351,6 +3356,8 @@ static void rt5645_jack_detect_work(struct work_struct *work)
+ 		rt5645_jack_detect(rt5645->component, 0);
+ 	}
+ 
++	mutex_unlock(&rt5645->jd_mutex);
++
+ 	snd_soc_jack_report(rt5645->hp_jack, report, SND_JACK_HEADPHONE);
+ 	snd_soc_jack_report(rt5645->mic_jack, report, SND_JACK_MICROPHONE);
+ 	if (rt5645->en_button_func)
+@@ -4119,6 +4126,7 @@ static int rt5645_i2c_probe(struct i2c_client *i2c)
+ 	}
+ 	timer_setup(&rt5645->btn_check_timer, rt5645_btn_check_callback, 0);
+ 
++	mutex_init(&rt5645->jd_mutex);
+ 	INIT_DELAYED_WORK(&rt5645->jack_detect_work, rt5645_jack_detect_work);
+ 	INIT_DELAYED_WORK(&rt5645->rcclock_work, rt5645_rcclock_work);
+ 
 -- 
 2.43.0
 
