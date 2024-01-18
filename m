@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1179423754;
-	Thu, 18 Jan 2024 10:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F20A200AA;
+	Thu, 18 Jan 2024 10:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575572; cv=none; b=bT+w+EAN33h/nzZoe1y/NztPlU5ePQA5Uouril+918Bkqs9hozWeirSMQFRxGYFHoTOuJMdPRw5+qZzY4/7NCDcIMAajDolOm8Wb2F6R1Iw75vAtXMZ68l6PfpE93L5LTo104nqJh0yCKjsS9+bIb2+CZxcGl9bhpOTkltoxgaA=
+	t=1705575575; cv=none; b=GyxPcmzxWlxD7hpdKG45WM5Gx/zFC6huTViJ/CXUFrShkahnZSocUbokWxMCaICjnzjlvJXIkaGkcvS+kbwePbO5yx1PBhnc/fmzZ5CImeCH92ASlF3OxY+afXKW2GDNFy0gXTauwTEJ5uYSBx0qgqYheqXv71JxEFIUsS39iuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575572; c=relaxed/simple;
-	bh=R8gxZrEyfTSrYk1Cr3uIgcxQ5D+uVz71ismzXOoTQE8=;
+	s=arc-20240116; t=1705575575; c=relaxed/simple;
+	bh=icoFE6PY8TEW8pmy6ua1JhWxiegQVgteMfTis8KBROo=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=elXW5IbkA/3nThz8JhiFvZpBTXefFMJA8Q1QX6H5PIkyHepo6PyBpKwp28J965n4Jt7V6GoBuuwCAuImzsa3nqLWFRtgNzSZCaRN/wyRTBBPE90N0wBb5VO8edS86QHsrcqied42t6MOEz1FjiotvF6J7qosRuH4qWbtidNHGSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e97019IJ; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=TeO0NdgfqnNvwhSWVmrJVXtTIxnWVTfT9WGhdpdcjCZTg+L2M/GJAGMyHdlMt27iqu80nSkrsZkxGwEK+Wyzy4Xy95yoC41F4fWDxk4lsg3DQGocMNbK4ddo07WhMvdnarAx8rU9zKYcgy2bQwG6CErgr785HV9whQVMVLYv+ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpUNc4zQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e97019IJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8398CC433F1;
-	Thu, 18 Jan 2024 10:59:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpUNc4zQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D0BC433C7;
+	Thu, 18 Jan 2024 10:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575571;
-	bh=R8gxZrEyfTSrYk1Cr3uIgcxQ5D+uVz71ismzXOoTQE8=;
+	s=korg; t=1705575574;
+	bh=icoFE6PY8TEW8pmy6ua1JhWxiegQVgteMfTis8KBROo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e97019IJwq2RDPxNX+pSTLMbmCVGeKYTcAJPJuxlPc/OGoU5FAueEm5FYuYXruPJY
-	 lk6faxCeZqoEEVJ6V11dWqOjColdrgQxcWtHIqwsBs4S8n/cXa5f/xmzoIaqy0XhaN
-	 OOX00FNlm0OamDA/0j3eDBM2U52v7gQhy+g0VUC4=
+	b=LpUNc4zQDDWTUyL3L3VnbA2bW9zOCoJ1rAgu0XTqyvaoWvdzGAinTxnXTRnGVctTZ
+	 7HL5eeAJFs1MiTVu4NDgCahzn1NQxJOxqle96cJmQ46xNx4Lrjjfhyh59qivmpElaT
+	 vRece1H9mCJdUUB9Y62rg77eXr1OhEtHkYKr530Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/100] ASoC: hdac_hda: Conditionally register dais for HDMI and Analog
-Date: Thu, 18 Jan 2024 11:48:37 +0100
-Message-ID: <20240118104312.187230305@linuxfoundation.org>
+Subject: [PATCH 6.1 003/100] ALSA: hda - Fix speaker and headset mic pin config for CHUWI CoreBook XPro
+Date: Thu, 18 Jan 2024 11:48:11 +0100
+Message-ID: <20240118104311.034364129@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -53,93 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-[ Upstream commit a0575b4add21a243cc3257e75ad913cd5377d5f2 ]
+[ Upstream commit 7c9caa299335df94ad1c58f70a22f16a540eab60 ]
 
-The current driver is registering the same dais for each hdev found in the
-system which results duplicated widgets to be registered and the kernel
-log contains similar prints:
-snd_hda_codec_realtek ehdaudio0D0: ASoC: sink widget AIF1TX overwritten
-snd_hda_codec_realtek ehdaudio0D0: ASoC: source widget AIF1RX overwritten
-skl_hda_dsp_generic skl_hda_dsp_generic: ASoC: sink widget hifi3 overwritten
-skl_hda_dsp_generic skl_hda_dsp_generic: ASoC: sink widget hifi2 overwritten
-skl_hda_dsp_generic skl_hda_dsp_generic: ASoC: sink widget hifi1 overwritten
-skl_hda_dsp_generic skl_hda_dsp_generic: ASoC: source widget Codec Output Pin1 overwritten
-skl_hda_dsp_generic skl_hda_dsp_generic: ASoC: sink widget Codec Input Pin1 overwritten
-skl_hda_dsp_generic skl_hda_dsp_generic: ASoC: sink widget Analog Codec Playback overwritten
-skl_hda_dsp_generic skl_hda_dsp_generic: ASoC: sink widget Digital Codec Playback overwritten
-skl_hda_dsp_generic skl_hda_dsp_generic: ASoC: sink widget Alt Analog Codec Playback overwritten
-skl_hda_dsp_generic skl_hda_dsp_generic: ASoC: source widget Analog Codec Capture overwritten
-skl_hda_dsp_generic skl_hda_dsp_generic: ASoC: source widget Digital Codec Capture overwritten
-skl_hda_dsp_generic skl_hda_dsp_generic: ASoC: source widget Alt Analog Codec Capture overwritten
+This patch corrected the speaker and headset mic pin config to the more
+appropriate values.
 
-To avoid such issue, split the dai array into HDMI and non HDMI array and
-register them conditionally:
-for HDMI hdev only register the dais needed for HDMI
-for non HDMI hdev do not  register the HDMI dais.
-
-Depends-on: 3d1dc8b1030d ("ASoC: Intel: skl_hda_dsp_generic: Drop HDMI routes when HDMI is not available")
-Link: https://github.com/thesofproject/linux/issues/4509
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://lore.kernel.org/r/20231128123914.3986-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://lore.kernel.org/r/20231117170923.106822-1-kovalev@altlinux.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hda.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_realtek.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
-index 8af434e14bfb..21a00c86a139 100644
---- a/sound/soc/codecs/hdac_hda.c
-+++ b/sound/soc/codecs/hdac_hda.c
-@@ -124,6 +124,9 @@ static struct snd_soc_dai_driver hdac_hda_dais[] = {
- 		.sig_bits = 24,
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 1c8ffc5cf97f..beefb522a85d 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -7108,6 +7108,7 @@ enum {
+ 	ALC290_FIXUP_SUBWOOFER_HSJACK,
+ 	ALC269_FIXUP_THINKPAD_ACPI,
+ 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
++	ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO,
+ 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
+ 	ALC255_FIXUP_ASUS_MIC_NO_PRESENCE,
+ 	ALC255_FIXUP_DELL1_MIC_NO_PRESENCE,
+@@ -7454,6 +7455,14 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc269_fixup_pincfg_U7x7_headset_mic,
  	},
- },
-+};
-+
-+static struct snd_soc_dai_driver hdac_hda_hdmi_dais[] = {
- {
- 	.id = HDAC_HDMI_0_DAI_ID,
- 	.name = "intel-hdmi-hifi1",
-@@ -578,8 +581,16 @@ static const struct snd_soc_component_driver hdac_hda_codec = {
- 	.endianness		= 1,
- };
- 
-+static const struct snd_soc_component_driver hdac_hda_hdmi_codec = {
-+	.probe			= hdac_hda_codec_probe,
-+	.remove			= hdac_hda_codec_remove,
-+	.idle_bias_on		= false,
-+	.endianness		= 1,
-+};
-+
- static int hdac_hda_dev_probe(struct hdac_device *hdev)
- {
-+	struct hdac_hda_priv *hda_pvt = dev_get_drvdata(&hdev->dev);
- 	struct hdac_ext_link *hlink;
- 	int ret;
- 
-@@ -592,9 +603,15 @@ static int hdac_hda_dev_probe(struct hdac_device *hdev)
- 	snd_hdac_ext_bus_link_get(hdev->bus, hlink);
- 
- 	/* ASoC specific initialization */
--	ret = devm_snd_soc_register_component(&hdev->dev,
--					 &hdac_hda_codec, hdac_hda_dais,
--					 ARRAY_SIZE(hdac_hda_dais));
-+	if (hda_pvt->need_display_power)
-+		ret = devm_snd_soc_register_component(&hdev->dev,
-+						&hdac_hda_hdmi_codec, hdac_hda_hdmi_dais,
-+						ARRAY_SIZE(hdac_hda_hdmi_dais));
-+	else
-+		ret = devm_snd_soc_register_component(&hdev->dev,
-+						&hdac_hda_codec, hdac_hda_dais,
-+						ARRAY_SIZE(hdac_hda_dais));
-+
- 	if (ret < 0) {
- 		dev_err(&hdev->dev, "failed to register HDA codec %d\n", ret);
- 		return ret;
++	[ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x18, 0x03a19020 }, /* headset mic */
++			{ 0x1b, 0x90170150 }, /* speaker */
++			{ }
++		},
++	},
+ 	[ALC269_FIXUP_AMIC] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -10032,6 +10041,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
++	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
+ 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
+ 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
 -- 
 2.43.0
 
