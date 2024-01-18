@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0A722323;
-	Thu, 18 Jan 2024 10:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E671B96D;
+	Thu, 18 Jan 2024 10:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575421; cv=none; b=jzOW0pIJhPzU/8DAb6mXOms8N7bHB3kpoQi4wln+2CSAijKDJUnrR2dtmfYCZPJ/oTXVz0qPpTg1TshCcYShBXdgg4M3ygQ2FBq6RY+kyCaCW/Lj0jGs1te44tdPhbOqdW/qwWtqc6d7maAI3wy0/IySyjCfBLd+FwdCE5v0Ml0=
+	t=1705575424; cv=none; b=W1O/dkkBiL0DZzzYaKuIhdO8ObMSU22h4dUD8uqQELfK7mEs+dGUHwydO0FSd2aFuiR7KXSUPWwu4bVNKBev3DFfeyv76ccyX/XJtR8c2Ov1FXmW7CngOzdEn7/Z9xtDkrLP5YAi6caGQxwfusAeTJaQkQ9LiF2Mh7D+IYZkDtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575421; c=relaxed/simple;
-	bh=1yv4BDUz1d3qAEY3KptcJ0/3m7yNiJD1cmCp2QNNn7w=;
+	s=arc-20240116; t=1705575424; c=relaxed/simple;
+	bh=FrM4zZKZub0x3JQXjdzywuhuZEp/RWpsWJDeXRuwS+4=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=qBXUzGEPc+jyX5DoWnwZe3Rd8o0h5ZCIXkL7X7v6TJtQNrh0mQKRrDsV7+uIIOgDTtP6qSbSCljNoLEGc41iTFJYf93zOcffSzrr3dnfwZcjf2Oqnb1lQW5Tlson1DAqqGW0HWnETzVzSmwWi9J/m9gTZr8ukUqRrMQhcVvQCns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hs8vqohH; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=LcKKJMXPk7GOSh9xquLw2yJdCvr+Ia/nQtDfrBSwXmsA0rEwfIpV43ecFdTw/JtjuHaDRtr+XxrNYNhfTN2nSjwjfuibcqQGCRDEOXJpmvV1+T7RN+5lESCWUeEvT6fqZPJA5GVRobedaS/pJDgbL90rJxU/IZkctEcTBPTE3cE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FU+Ji6MB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hs8vqohH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE5DC433C7;
-	Thu, 18 Jan 2024 10:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FU+Ji6MB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D124AC433C7;
+	Thu, 18 Jan 2024 10:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575421;
-	bh=1yv4BDUz1d3qAEY3KptcJ0/3m7yNiJD1cmCp2QNNn7w=;
+	s=korg; t=1705575424;
+	bh=FrM4zZKZub0x3JQXjdzywuhuZEp/RWpsWJDeXRuwS+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hs8vqohHYskhOibJ4J9S/TCCNlO01x0vKxOrEEVbztR9PwdvgmhnUCnls00hxMbZM
-	 zfG2pR7NFyto2Izc561+Wdw7b8E/zuCunkIr3Z8Eoi+pyHbxprboaiZ8B1+nJcraPx
-	 DDyOgH85DMCbkW4L2QZnwDw6YHKLeniMgtAkFA8w=
+	b=FU+Ji6MBvVsBrc+ntmnhtxStIX2I8fLLW55UXTWEKr2mDEflKiN1zlodUms7P3qoK
+	 4GFprsDpg2kxA/8EHSLkNagSmGqvhddi6dSpow0xnlgnaoK5umx/aiY/7RB0N2SK55
+	 DUL3JPhYS3jonBTbZZWAW/Wi3AgQ/c0OdtZoK92o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca@z3ntu.xyz>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/150] Input: xpad - add Razer Wolverine V2 support
-Date: Thu, 18 Jan 2024 11:48:39 +0100
-Message-ID: <20240118104324.441696320@linuxfoundation.org>
+Subject: [PATCH 6.6 098/150] driver core: Add a guard() definition for the device_lock()
+Date: Thu, 18 Jan 2024 11:48:40 +0100
+Message-ID: <20240118104324.490920909@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -52,32 +56,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca@z3ntu.xyz>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit c3d1610345b79cbe29ef6ca04a4780eff0d360c7 ]
+[ Upstream commit 134c6eaa6087d78c0e289931ca15ae7a5007670d ]
 
-Add the VID and PID of Razer Wolverine V2 to xpad_device.
+At present there are ~200 usages of device_lock() in the kernel. Some of
+those usages lead to "goto unlock;" patterns which have proven to be
+error prone. Define a "device" guard() definition to allow for those to
+be cleaned up and prevent new ones from appearing.
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-Link: https://lore.kernel.org/r/20231125-razer-wolverine-v2-v1-1-979fe9f9288e@z3ntu.xyz
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: http://lore.kernel.org/r/657897453dda8_269bd29492@dwillia2-mobl3.amr.corp.intel.com.notmuch
+Link: http://lore.kernel.org/r/6577b0c2a02df_a04c5294bb@dwillia2-xfh.jf.intel.com.notmuch
+Cc: Vishal Verma <vishal.l.verma@intel.com>
+Cc: Ira Weiny <ira.weiny@intel.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
+Link: https://lore.kernel.org/r/170250854466.1522182.17555361077409628655.stgit@dwillia2-xfh.jf.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/xpad.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/device.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
-index f5c21565bb3c..e2c1848182de 100644
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -286,6 +286,7 @@ static const struct xpad_device {
- 	{ 0x146b, 0x0604, "Bigben Interactive DAIJA Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
- 	{ 0x1532, 0x0a00, "Razer Atrox Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
- 	{ 0x1532, 0x0a03, "Razer Wildcat", 0, XTYPE_XBOXONE },
-+	{ 0x1532, 0x0a29, "Razer Wolverine V2", 0, XTYPE_XBOXONE },
- 	{ 0x15e4, 0x3f00, "Power A Mini Pro Elite", 0, XTYPE_XBOX360 },
- 	{ 0x15e4, 0x3f0a, "Xbox Airflo wired controller", 0, XTYPE_XBOX360 },
- 	{ 0x15e4, 0x3f10, "Batarang Xbox 360 controller", 0, XTYPE_XBOX360 },
+diff --git a/include/linux/device.h b/include/linux/device.h
+index 56d93a1ffb7b..99496a0a5ddb 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -1007,6 +1007,8 @@ static inline void device_unlock(struct device *dev)
+ 	mutex_unlock(&dev->mutex);
+ }
+ 
++DEFINE_GUARD(device, struct device *, device_lock(_T), device_unlock(_T))
++
+ static inline void device_lock_assert(struct device *dev)
+ {
+ 	lockdep_assert_held(&dev->mutex);
 -- 
 2.43.0
 
