@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80AEB65C;
-	Thu, 18 Jan 2024 10:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18D2B65C;
+	Thu, 18 Jan 2024 10:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575059; cv=none; b=GwTWFGQ8BbmgYX0ViY8nO+jmFeU5osSXVePAlUtAOYkhfB089Orj7JjwDOiHnaCbD4yBgyHjpNRoziCSvq5OdHNSGLdGpaWTJjJ307Sj48CciFl0Cp6RB9UQcL9eMESel3j8lTqYcQ1vQHQnZ7/phXiCPVeEuxl0clsDUjVm3xo=
+	t=1705575062; cv=none; b=FkmQWXNiF0OPyVqZzIQU3pRAJ8PVOIKvg0z4xMg9/Zt0o/1Kn6i0aWiAg3NXUb8gAH9okeGSf0kn1IGANnUG1yIFCOLtBbh3wKbvV0VzkBIfe0VkiTwxyH3yEFqo2sWxoiZrMj4oX7avPsLWmqjpZ0eFGKMo2JC/fRAwWjSpMOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575059; c=relaxed/simple;
-	bh=GDAuswjR/OYJya90u3mMJdOirAqKRL3cZh3jHSaiL3M=;
+	s=arc-20240116; t=1705575062; c=relaxed/simple;
+	bh=bFm5Q9eYQIJNbWqSPpYSyryD1E1Rudy3gIHe3AvY7rI=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=IgLNCMeuM9DtCQeiCBpeiuGjHIb4qFEz8fBZvjkPKFIYvgnXmN55Lc0HQB4Oqgn3MGZsrO/6W3uliPRQr3WwaOqvymFjljswzbFksFCslSl615jQyv90F5esGyP8OalLpcC0L45ghHTpWFJcv4/qtkVnQrKJFhvyK8FEl/I6xCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZCRoKg+; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=U6i0Gh/Fti9GLB6oSe4ZkHbQofNCfmIqGadEZ9EPvT48mVRW8/4a0RtG2tX2o9HNTCEVfF57CaLRWRpFwoMEMLDvjdkZ35kEyQW78DgtkY/3RWN/2TXgVYjRv6yB0dSLy8YXT8aOBKdwRSYJqQyjbOV0KOGm4JARuYu9sSSO3rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBxxLmQX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZCRoKg+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25738C433C7;
-	Thu, 18 Jan 2024 10:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBxxLmQX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B17C433C7;
+	Thu, 18 Jan 2024 10:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575059;
-	bh=GDAuswjR/OYJya90u3mMJdOirAqKRL3cZh3jHSaiL3M=;
+	s=korg; t=1705575062;
+	bh=bFm5Q9eYQIJNbWqSPpYSyryD1E1Rudy3gIHe3AvY7rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nZCRoKg+ZlFXnZgIfDiWf4ERSMWXQNvzu+30yvdYaS7D+DR1HMYq6IOedOxpQvsZ8
-	 4C0Jh7DKQn2BfppmA/ajYOj+fFpnluhfG+oYZoRH6kk+SNLDeFz5fBFoQJfFGeZyDk
-	 fIrhGWW6ZQNJsD891qB0SsexW0X1YvyLHrIIOtIM=
+	b=OBxxLmQXuTpxp5Ay7VK1Iq7IIF5bYpltaflJRzYWy+rRK+ecNbl15ko0G2CsvBu9h
+	 vFddH33du43Bg6FvddfuPQClrKRj3Lwpol8p1c24LWQ6a0ZtNXFWNwRSu3ClVf6QVV
+	 f3HrkdIKelRJt9O1lT72cfUyLHsBtON0PiLOAxmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Will Deacon <will@kernel.org>,
-	John Stultz <jstultz@google.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Tom Rix <trix@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.7 26/28] scripts/decode_stacktrace.sh: optionally use LLVM utilities
-Date: Thu, 18 Jan 2024 11:49:16 +0100
-Message-ID: <20240118104302.116482720@linuxfoundation.org>
+	Jani Nikula <jani.nikula@intel.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Jonathan Corbet <corbet@lwn.net>
+Subject: [PATCH 6.7 27/28] docs: kernel_feat.py: fix potential command injection
+Date: Thu, 18 Jan 2024 11:49:17 +0100
+Message-ID: <20240118104302.147275313@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104301.249503558@linuxfoundation.org>
 References: <20240118104301.249503558@linuxfoundation.org>
@@ -59,97 +52,293 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Vegard Nossum <vegard.nossum@oracle.com>
 
-commit efbd6398353315b7018e6943e41fee9ec35e875f upstream.
+commit c48a7c44a1d02516309015b6134c9bb982e17008 upstream.
 
-GNU's addr2line can have problems parsing a vmlinux built with LLVM,
-particularly when LTO was used.  In order to decode the traces correctly
-this patch adds the ability to switch to LLVM's utilities readelf and
-addr2line.  The same approach is followed by Will in [1].
+The kernel-feat directive passes its argument straight to the shell.
+This is unfortunate and unnecessary.
 
-Before:
-  $ scripts/decode_stacktrace.sh vmlinux < kernel.log
-  [17716.240635] Call trace:
-  [17716.240646] skb_cow_data (??:?)
-  [17716.240654] esp6_input (ld-temp.o:?)
-  [17716.240666] xfrm_input (ld-temp.o:?)
-  [17716.240674] xfrm6_rcv (??:?)
-  [...]
+Let's always use paths relative to $srctree/Documentation/ and use
+subprocess.check_call() instead of subprocess.Popen(shell=True).
 
-After:
-  $ LLVM=1 scripts/decode_stacktrace.sh vmlinux < kernel.log
-  [17716.240635] Call trace:
-  [17716.240646] skb_cow_data (include/linux/skbuff.h:2172 net/core/skbuff.c:4503)
-  [17716.240654] esp6_input (net/ipv6/esp6.c:977)
-  [17716.240666] xfrm_input (net/xfrm/xfrm_input.c:659)
-  [17716.240674] xfrm6_rcv (net/ipv6/xfrm6_input.c:172)
-  [...]
+This also makes the code shorter.
 
-Note that one could set CROSS_COMPILE=llvm- instead to hack around this
-issue.  However, doing so can break the decodecode routine as it will
-force the selection of other LLVM utilities down the line e.g.  llvm-as.
+This is analogous to commit 3231dd586277 ("docs: kernel_abi.py: fix
+command injection") where we did exactly the same thing for
+kernel_abi.py, somehow I completely missed this one.
 
-[1] https://lore.kernel.org/all/20230914131225.13415-3-will@kernel.org/
-
-Link: https://lkml.kernel.org/r/20230929034836.403735-1-cmllamas@google.com
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
-Tested-by: Justin Stitt <justinstitt@google.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: John Stultz <jstultz@google.com>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Tom Rix <trix@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://fosstodon.org/@jani/111676532203641247
+Reported-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/r/20240110174758.3680506-1-vegard.nossum@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/decode_stacktrace.sh |   19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ Documentation/admin-guide/features.rst                       |    2 
+ Documentation/arch/arc/features.rst                          |    2 
+ Documentation/arch/arm/features.rst                          |    2 
+ Documentation/arch/arm64/features.rst                        |    2 
+ Documentation/arch/loongarch/features.rst                    |    2 
+ Documentation/arch/m68k/features.rst                         |    2 
+ Documentation/arch/mips/features.rst                         |    2 
+ Documentation/arch/nios2/features.rst                        |    2 
+ Documentation/arch/openrisc/features.rst                     |    2 
+ Documentation/arch/parisc/features.rst                       |    2 
+ Documentation/arch/powerpc/features.rst                      |    2 
+ Documentation/arch/riscv/features.rst                        |    2 
+ Documentation/arch/s390/features.rst                         |    2 
+ Documentation/arch/sh/features.rst                           |    2 
+ Documentation/arch/sparc/features.rst                        |    2 
+ Documentation/arch/x86/features.rst                          |    2 
+ Documentation/arch/xtensa/features.rst                       |    2 
+ Documentation/sphinx/kernel_feat.py                          |   55 ++---------
+ Documentation/translations/zh_CN/arch/loongarch/features.rst |    2 
+ Documentation/translations/zh_CN/arch/mips/features.rst      |    2 
+ Documentation/translations/zh_TW/arch/loongarch/features.rst |    2 
+ Documentation/translations/zh_TW/arch/mips/features.rst      |    2 
+ 22 files changed, 32 insertions(+), 65 deletions(-)
 
---- a/scripts/decode_stacktrace.sh
-+++ b/scripts/decode_stacktrace.sh
-@@ -16,6 +16,21 @@ elif type c++filt >/dev/null 2>&1 ; then
- 	cppfilt_opts=-i
- fi
+--- a/Documentation/admin-guide/features.rst
++++ b/Documentation/admin-guide/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
  
-+UTIL_SUFFIX=
-+if [[ -z ${LLVM:-} ]]; then
-+	UTIL_PREFIX=${CROSS_COMPILE:-}
-+else
-+	UTIL_PREFIX=llvm-
-+	if [[ ${LLVM} == */ ]]; then
-+		UTIL_PREFIX=${LLVM}${UTIL_PREFIX}
-+	elif [[ ${LLVM} == -* ]]; then
-+		UTIL_SUFFIX=${LLVM}
-+	fi
-+fi
-+
-+READELF=${UTIL_PREFIX}readelf${UTIL_SUFFIX}
-+ADDR2LINE=${UTIL_PREFIX}addr2line${UTIL_SUFFIX}
-+
- if [[ $1 == "-r" ]] ; then
- 	vmlinux=""
- 	basepath="auto"
-@@ -75,7 +90,7 @@ find_module() {
+-.. kernel-feat:: $srctree/Documentation/features
++.. kernel-feat:: features
+--- a/Documentation/arch/arc/features.rst
++++ b/Documentation/arch/arc/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
  
- 	if [[ "$modpath" != "" ]] ; then
- 		for fn in $(find "$modpath" -name "${module//_/[-_]}.ko*") ; do
--			if readelf -WS "$fn" | grep -qwF .debug_line ; then
-+			if ${READELF} -WS "$fn" | grep -qwF .debug_line ; then
- 				echo $fn
- 				return
- 			fi
-@@ -169,7 +184,7 @@ parse_symbol() {
- 	if [[ $aarray_support == true && "${cache[$module,$address]+isset}" == "isset" ]]; then
- 		local code=${cache[$module,$address]}
- 	else
--		local code=$(${CROSS_COMPILE}addr2line -i -e "$objfile" "$address" 2>/dev/null)
-+		local code=$(${ADDR2LINE} -i -e "$objfile" "$address" 2>/dev/null)
- 		if [[ $aarray_support == true ]]; then
- 			cache[$module,$address]=$code
- 		fi
+-.. kernel-feat:: $srctree/Documentation/features arc
++.. kernel-feat:: features arc
+--- a/Documentation/arch/arm/features.rst
++++ b/Documentation/arch/arm/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features arm
++.. kernel-feat:: features arm
+--- a/Documentation/arch/arm64/features.rst
++++ b/Documentation/arch/arm64/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features arm64
++.. kernel-feat:: features arm64
+--- a/Documentation/arch/loongarch/features.rst
++++ b/Documentation/arch/loongarch/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features loongarch
++.. kernel-feat:: features loongarch
+--- a/Documentation/arch/m68k/features.rst
++++ b/Documentation/arch/m68k/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features m68k
++.. kernel-feat:: features m68k
+--- a/Documentation/arch/mips/features.rst
++++ b/Documentation/arch/mips/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features mips
++.. kernel-feat:: features mips
+--- a/Documentation/arch/nios2/features.rst
++++ b/Documentation/arch/nios2/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features nios2
++.. kernel-feat:: features nios2
+--- a/Documentation/arch/openrisc/features.rst
++++ b/Documentation/arch/openrisc/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features openrisc
++.. kernel-feat:: features openrisc
+--- a/Documentation/arch/parisc/features.rst
++++ b/Documentation/arch/parisc/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features parisc
++.. kernel-feat:: features parisc
+--- a/Documentation/arch/powerpc/features.rst
++++ b/Documentation/arch/powerpc/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features powerpc
++.. kernel-feat:: features powerpc
+--- a/Documentation/arch/riscv/features.rst
++++ b/Documentation/arch/riscv/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features riscv
++.. kernel-feat:: features riscv
+--- a/Documentation/arch/s390/features.rst
++++ b/Documentation/arch/s390/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features s390
++.. kernel-feat:: features s390
+--- a/Documentation/arch/sh/features.rst
++++ b/Documentation/arch/sh/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features sh
++.. kernel-feat:: features sh
+--- a/Documentation/arch/sparc/features.rst
++++ b/Documentation/arch/sparc/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features sparc
++.. kernel-feat:: features sparc
+--- a/Documentation/arch/x86/features.rst
++++ b/Documentation/arch/x86/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features x86
++.. kernel-feat:: features x86
+--- a/Documentation/arch/xtensa/features.rst
++++ b/Documentation/arch/xtensa/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features xtensa
++.. kernel-feat:: features xtensa
+--- a/Documentation/sphinx/kernel_feat.py
++++ b/Documentation/sphinx/kernel_feat.py
+@@ -37,8 +37,6 @@ import re
+ import subprocess
+ import sys
+ 
+-from os import path
+-
+ from docutils import nodes, statemachine
+ from docutils.statemachine import ViewList
+ from docutils.parsers.rst import directives, Directive
+@@ -76,33 +74,26 @@ class KernelFeat(Directive):
+         self.state.document.settings.env.app.warn(message, prefix="")
+ 
+     def run(self):
+-
+         doc = self.state.document
+         if not doc.settings.file_insertion_enabled:
+             raise self.warning("docutils: file insertion disabled")
+ 
+         env = doc.settings.env
+-        cwd = path.dirname(doc.current_source)
+-        cmd = "get_feat.pl rest --enable-fname --dir "
+-        cmd += self.arguments[0]
+-
+-        if len(self.arguments) > 1:
+-            cmd += " --arch " + self.arguments[1]
+ 
+-        srctree = path.abspath(os.environ["srctree"])
++        srctree = os.path.abspath(os.environ["srctree"])
+ 
+-        fname = cmd
++        args = [
++            os.path.join(srctree, 'scripts/get_feat.pl'),
++            'rest',
++            '--enable-fname',
++            '--dir',
++            os.path.join(srctree, 'Documentation', self.arguments[0]),
++        ]
+ 
+-        # extend PATH with $(srctree)/scripts
+-        path_env = os.pathsep.join([
+-            srctree + os.sep + "scripts",
+-            os.environ["PATH"]
+-        ])
+-        shell_env = os.environ.copy()
+-        shell_env["PATH"]    = path_env
+-        shell_env["srctree"] = srctree
++        if len(self.arguments) > 1:
++            args.extend(['--arch', self.arguments[1]])
+ 
+-        lines = self.runCmd(cmd, shell=True, cwd=cwd, env=shell_env)
++        lines = subprocess.check_output(args, cwd=os.path.dirname(doc.current_source)).decode('utf-8')
+ 
+         line_regex = re.compile(r"^\.\. FILE (\S+)$")
+ 
+@@ -121,30 +112,6 @@ class KernelFeat(Directive):
+         nodeList = self.nestedParse(out_lines, fname)
+         return nodeList
+ 
+-    def runCmd(self, cmd, **kwargs):
+-        u"""Run command ``cmd`` and return its stdout as unicode."""
+-
+-        try:
+-            proc = subprocess.Popen(
+-                cmd
+-                , stdout = subprocess.PIPE
+-                , stderr = subprocess.PIPE
+-                , **kwargs
+-            )
+-            out, err = proc.communicate()
+-
+-            out, err = codecs.decode(out, 'utf-8'), codecs.decode(err, 'utf-8')
+-
+-            if proc.returncode != 0:
+-                raise self.severe(
+-                    u"command '%s' failed with return code %d"
+-                    % (cmd, proc.returncode)
+-                )
+-        except OSError as exc:
+-            raise self.severe(u"problems with '%s' directive: %s."
+-                              % (self.name, ErrorString(exc)))
+-        return out
+-
+     def nestedParse(self, lines, fname):
+         content = ViewList()
+         node    = nodes.section()
+--- a/Documentation/translations/zh_CN/arch/loongarch/features.rst
++++ b/Documentation/translations/zh_CN/arch/loongarch/features.rst
+@@ -5,4 +5,4 @@
+ :Original: Documentation/arch/loongarch/features.rst
+ :Translator: Huacai Chen <chenhuacai@loongson.cn>
+ 
+-.. kernel-feat:: $srctree/Documentation/features loongarch
++.. kernel-feat:: features loongarch
+--- a/Documentation/translations/zh_CN/arch/mips/features.rst
++++ b/Documentation/translations/zh_CN/arch/mips/features.rst
+@@ -10,4 +10,4 @@
+ 
+ .. _cn_features:
+ 
+-.. kernel-feat:: $srctree/Documentation/features mips
++.. kernel-feat:: features mips
+--- a/Documentation/translations/zh_TW/arch/loongarch/features.rst
++++ b/Documentation/translations/zh_TW/arch/loongarch/features.rst
+@@ -5,5 +5,5 @@
+ :Original: Documentation/arch/loongarch/features.rst
+ :Translator: Huacai Chen <chenhuacai@loongson.cn>
+ 
+-.. kernel-feat:: $srctree/Documentation/features loongarch
++.. kernel-feat:: features loongarch
+ 
+--- a/Documentation/translations/zh_TW/arch/mips/features.rst
++++ b/Documentation/translations/zh_TW/arch/mips/features.rst
+@@ -10,5 +10,5 @@
+ 
+ .. _tw_features:
+ 
+-.. kernel-feat:: $srctree/Documentation/features mips
++.. kernel-feat:: features mips
+ 
 
 
