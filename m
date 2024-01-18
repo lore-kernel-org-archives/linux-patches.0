@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4EA1774B;
-	Thu, 18 Jan 2024 10:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D702922F1B;
+	Thu, 18 Jan 2024 10:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575494; cv=none; b=aVLNjcjBbjvlY9EEmHS8VHGqIFNFvY5l6oafIaqkDtYyPMtrzwjUuqL5ozZ1tlPYs/UPXxY1KGkW/oukJa8wbkBoEruu92QWvovqstn4FulgAeHilY/RKa2B9LRROPIVv5gR3tcTn9/P95m/EuzK2inboI/LR3LuNsIWqE/whIQ=
+	t=1705575496; cv=none; b=Yj+KRf0l2oMaiwrxG9fMGhiMRMCSjD18Z58u99+2eRNIgS5bg1jRQNNbu8Hn8BXYDUMTkblVRzoZuZJEXm9g48sDrn/fuZNNzQjmsTrvwe5YwcVDJizCvH0icVrdWhFDPRha/GMKHiMIyE3XKEoFYiSnbmDhaMWmesW4yQo5CCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575494; c=relaxed/simple;
-	bh=Oavlt241vqNi4eABnd9AJGwmujRnQdMYb8vmGlGSSfg=;
+	s=arc-20240116; t=1705575496; c=relaxed/simple;
+	bh=g9qeelaSFK7GXmXJxPNxsQjYa/pohyVRPJihl50o5kY=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=SXqem2McL52Tkds/xauPmsNEjPcnyL4slbTPk5ppmlgkAVu1VqPF0byot7SNeOhxZDrqQWgovN0xWv25OIjJ+I6qPViIwy6XnoPNFf9O/qw1tnuj4DXji0j+QnWT8oW9zQdXkyQTB0bHFMJ6/+7qDLd8g7MjAK2zxcbXhau4eMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRBS0zYq; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=a8LhZf7QX+A7dleUdpeMsKJesSGJx/7uWitnSIwkgCJDvQeodOLQ5aVk9ll/wn4pssHV49Y9Nyyg8MrlT3dEOKDn17lQ28HicbSvC4EUxKj1vJjo0QaLfJBZogIQ2qLs7Q8tZ3oVyzlVXrBP2OyJ9ac0dleJ4KYENkY/IbO1iEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GKB6ZvXV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRBS0zYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94DC7C433F1;
-	Thu, 18 Jan 2024 10:58:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GKB6ZvXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59F6BC433C7;
+	Thu, 18 Jan 2024 10:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575493;
-	bh=Oavlt241vqNi4eABnd9AJGwmujRnQdMYb8vmGlGSSfg=;
+	s=korg; t=1705575496;
+	bh=g9qeelaSFK7GXmXJxPNxsQjYa/pohyVRPJihl50o5kY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MRBS0zYqK6Qqasmmt/5+ZvoqNxoid0rnRyGM15B9teU9Ag7RS+cFb9Re8DsR+nsTK
-	 VVIxJMLZfANbrBXhI0X7nCz6ePg3GcbhX0jGDWIpyRNRbj1zGA0lUT2z7NOjfJMpYD
-	 Dbt44rkIJ6WO8n6ixmGGpkCoiAzIETvaSGMFRhHs=
+	b=GKB6ZvXV0k6hxobc1T0oN6G7ifZuOoI/1QFFjRL9TvDI8hQzpBwnnnw98iIlfsS7l
+	 h0ZBOn0WJjokO5jepxCf7+d0zAo7A9w+1YMNFfqEomV3d4Gbk4GHJ0aQtV6agk0qoO
+	 EBDSAVjw1jfyTNNxKpoNmXR7o1ekIFO3HuymAPak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Noah Goldstein <goldstein.w.n@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	David Laight <david.laight@aculab.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/150] x86/csum: Remove unnecessary odd handling
-Date: Thu, 18 Jan 2024 11:49:08 +0100
-Message-ID: <20240118104325.884602830@linuxfoundation.org>
+Subject: [PATCH 6.6 127/150] x86/csum: clean up `csum_partial further
+Date: Thu, 18 Jan 2024 11:49:09 +0100
+Message-ID: <20240118104325.934413736@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -54,101 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Noah Goldstein <goldstein.w.n@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 5d4acb62853abac1da2deebcb1c1c5b79219bf3b ]
+[ Upstream commit a476aae3f1dc78a162a0d2e7945feea7d2b29401 ]
 
-The special case for odd aligned buffers is unnecessary and mostly
-just adds overhead. Aligned buffers is the expectations, and even for
-unaligned buffer, the only case that was helped is if the buffer was
-1-byte from word aligned which is ~1/7 of the cases. Overall it seems
-highly unlikely to be worth to extra branch.
+Commit 688eb8191b47 ("x86/csum: Improve performance of `csum_partial`")
+ended up improving the code generation for the IP csum calculations, and
+in particular special-casing the 40-byte case that is a hot case for
+IPv6 headers.
 
-It was left in the previous perf improvement patch because I was
-erroneously comparing the exact output of `csum_partial(...)`, but
-really we only need `csum_fold(csum_partial(...))` to match so its
-safe to remove.
+It then had _another_ special case for the 64-byte unrolled loop, which
+did two chains of 32-byte blocks, which allows modern CPU's to improve
+performance by doing the chains in parallel thanks to renaming the carry
+flag.
 
-All csum kunit tests pass.
+This just unifies the special cases and combines them into just one
+single helper the 40-byte csum case, and replaces the 64-byte case by a
+80-byte case that just does that single helper twice.  It avoids having
+all these different versions of inline assembly, and actually improved
+performance further in my tests.
 
-Signed-off-by: Noah Goldstein <goldstein.w.n@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Laight <david.laight@aculab.com>
+There was never anything magical about the 64-byte unrolled case, even
+though it happens to be a common size (and typically is the cacheline
+size).
+
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/lib/csum-partial_64.c | 36 ++++------------------------------
- 1 file changed, 4 insertions(+), 32 deletions(-)
+ arch/x86/lib/csum-partial_64.c | 81 ++++++++++++++++------------------
+ 1 file changed, 37 insertions(+), 44 deletions(-)
 
 diff --git a/arch/x86/lib/csum-partial_64.c b/arch/x86/lib/csum-partial_64.c
-index cea25ca8b8cf..557e42ede68e 100644
+index 557e42ede68e..c9dae65ac01b 100644
 --- a/arch/x86/lib/csum-partial_64.c
 +++ b/arch/x86/lib/csum-partial_64.c
-@@ -11,26 +11,9 @@
- #include <asm/checksum.h>
- #include <asm/word-at-a-time.h>
- 
--static inline unsigned short from32to16(unsigned a)
-+static inline __wsum csum_finalize_sum(u64 temp64)
- {
--	unsigned short b = a >> 16;
--	asm("addw %w2,%w0\n\t"
--	    "adcw $0,%w0\n"
--	    : "=r" (b)
--	    : "0" (b), "r" (a));
--	return b;
--}
--
--static inline __wsum csum_tail(u64 temp64, int odd)
--{
--	unsigned int result;
--
--	result = add32_with_carry(temp64 >> 32, temp64 & 0xffffffff);
--	if (unlikely(odd)) {
--		result = from32to16(result);
--		result = ((result >> 8) & 0xff) | ((result & 0xff) << 8);
--	}
--	return (__force __wsum)result;
-+	return (__force __wsum)((temp64 + ror64(temp64, 32)) >> 32);
+@@ -16,6 +16,20 @@ static inline __wsum csum_finalize_sum(u64 temp64)
+ 	return (__force __wsum)((temp64 + ror64(temp64, 32)) >> 32);
  }
  
++static inline unsigned long update_csum_40b(unsigned long sum, const unsigned long m[5])
++{
++	asm("addq %1,%0\n\t"
++	     "adcq %2,%0\n\t"
++	     "adcq %3,%0\n\t"
++	     "adcq %4,%0\n\t"
++	     "adcq %5,%0\n\t"
++	     "adcq $0,%0"
++		:"+r" (sum)
++		:"m" (m[0]), "m" (m[1]), "m" (m[2]),
++		 "m" (m[3]), "m" (m[4]));
++	return sum;
++}
++
  /*
-@@ -47,17 +30,6 @@ static inline __wsum csum_tail(u64 temp64, int odd)
- __wsum csum_partial(const void *buff, int len, __wsum sum)
+  * Do a checksum on an arbitrary memory area.
+  * Returns a 32bit checksum.
+@@ -31,52 +45,31 @@ __wsum csum_partial(const void *buff, int len, __wsum sum)
  {
  	u64 temp64 = (__force u64)sum;
--	unsigned odd;
--
--	odd = 1 & (unsigned long) buff;
--	if (unlikely(odd)) {
--		if (unlikely(len == 0))
--			return sum;
--		temp64 = ror32((__force u32)sum, 8);
--		temp64 += (*(unsigned char *)buff << 8);
--		len--;
--		buff++;
--	}
  
- 	/*
- 	 * len == 40 is the hot case due to IPv6 headers, but annotating it likely()
-@@ -73,7 +45,7 @@ __wsum csum_partial(const void *buff, int len, __wsum sum)
- 		    "adcq $0,%[res]"
- 		    : [res] "+r"(temp64)
- 		    : [src] "r"(buff), "m"(*(const char(*)[40])buff));
--		return csum_tail(temp64, odd);
-+		return csum_finalize_sum(temp64);
+-	/*
+-	 * len == 40 is the hot case due to IPv6 headers, but annotating it likely()
+-	 * has noticeable negative affect on codegen for all other cases with
+-	 * minimal performance benefit here.
+-	 */
+-	if (len == 40) {
+-		asm("addq 0*8(%[src]),%[res]\n\t"
+-		    "adcq 1*8(%[src]),%[res]\n\t"
+-		    "adcq 2*8(%[src]),%[res]\n\t"
+-		    "adcq 3*8(%[src]),%[res]\n\t"
+-		    "adcq 4*8(%[src]),%[res]\n\t"
+-		    "adcq $0,%[res]"
+-		    : [res] "+r"(temp64)
+-		    : [src] "r"(buff), "m"(*(const char(*)[40])buff));
+-		return csum_finalize_sum(temp64);
++	/* Do two 40-byte chunks in parallel to get better ILP */
++	if (likely(len >= 80)) {
++		u64 temp64_2 = 0;
++		do {
++			temp64 = update_csum_40b(temp64, buff);
++			temp64_2 = update_csum_40b(temp64_2, buff + 40);
++			buff += 80;
++			len -= 80;
++		} while (len >= 80);
++
++		asm("addq %1,%0\n\t"
++		    "adcq $0,%0"
++		    :"+r" (temp64): "r" (temp64_2));
  	}
- 	if (unlikely(len >= 64)) {
- 		/*
-@@ -143,7 +115,7 @@ __wsum csum_partial(const void *buff, int len, __wsum sum)
- 		    : [res] "+r"(temp64)
- 		    : [trail] "r"(trail));
- 	}
--	return csum_tail(temp64, odd);
-+	return csum_finalize_sum(temp64);
- }
- EXPORT_SYMBOL(csum_partial);
+-	if (unlikely(len >= 64)) {
+-		/*
+-		 * Extra accumulators for better ILP in the loop.
+-		 */
+-		u64 tmp_accum, tmp_carries;
  
+-		asm("xorl %k[tmp_accum],%k[tmp_accum]\n\t"
+-		    "xorl %k[tmp_carries],%k[tmp_carries]\n\t"
+-		    "subl $64, %[len]\n\t"
+-		    "1:\n\t"
+-		    "addq 0*8(%[src]),%[res]\n\t"
+-		    "adcq 1*8(%[src]),%[res]\n\t"
+-		    "adcq 2*8(%[src]),%[res]\n\t"
+-		    "adcq 3*8(%[src]),%[res]\n\t"
+-		    "adcl $0,%k[tmp_carries]\n\t"
+-		    "addq 4*8(%[src]),%[tmp_accum]\n\t"
+-		    "adcq 5*8(%[src]),%[tmp_accum]\n\t"
+-		    "adcq 6*8(%[src]),%[tmp_accum]\n\t"
+-		    "adcq 7*8(%[src]),%[tmp_accum]\n\t"
+-		    "adcl $0,%k[tmp_carries]\n\t"
+-		    "addq $64, %[src]\n\t"
+-		    "subl $64, %[len]\n\t"
+-		    "jge 1b\n\t"
+-		    "addq %[tmp_accum],%[res]\n\t"
+-		    "adcq %[tmp_carries],%[res]\n\t"
+-		    "adcq $0,%[res]"
+-		    : [tmp_accum] "=&r"(tmp_accum),
+-		      [tmp_carries] "=&r"(tmp_carries), [res] "+r"(temp64),
+-		      [len] "+r"(len), [src] "+r"(buff)
+-		    : "m"(*(const char *)buff));
++	/*
++	 * len == 40 is the hot case due to IPv6 headers, so return
++	 * early for that exact case without checking the tail bytes.
++	 */
++	if (len >= 40) {
++		temp64 = update_csum_40b(temp64, buff);
++		len -= 40;
++		if (!len)
++			return csum_finalize_sum(temp64);
++		buff += 40;
+ 	}
+ 
+ 	if (len & 32) {
 -- 
 2.43.0
 
