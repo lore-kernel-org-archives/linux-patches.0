@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0507822F0B;
-	Thu, 18 Jan 2024 10:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA9D1774B;
+	Thu, 18 Jan 2024 10:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575316; cv=none; b=PGXsm8pp9SgnzyrvLtEo73S6N4cj0hh6uS0ikBpsTcDfxVadpxseBDbPDFzLfmglvld6I/H3+jkeRn+25o4hNWbJzdFfCnOwevtoxfsB52XJyz6r3dlGeexbX38lppVhk5IFXMFRd7zzl/5qF012lKV/rdcLN7TNMzfSkOz1tvs=
+	t=1705575318; cv=none; b=EgXAXzYDnqgA7Q5dthHuIR7XeGjXty3i6WBbd4pqcbzMD8s+soFblC9vM31VrFgbpDOOOdTd4So1oma5KTvkB0fa0376/X8N9vdk0xa9fzWEmW6BeBdy/nQtdZXGrwrTVD7UHvdpPXJQJWqvos50KsbKeShhGdFZU+69TKMVL8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575316; c=relaxed/simple;
-	bh=zwsNY+zle39BfDrCOGr+2+vHjjrHSmOV3hEUM+2W89w=;
+	s=arc-20240116; t=1705575318; c=relaxed/simple;
+	bh=n8xq0SZLa1Caxmjkl0fIUZgvQ7d88wNPy47vWZvcKPw=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=DkCZ5EIsT0ID05jANUoAYtZ/nGt9Cz6EKNUhTaUISuGdsuTBVkY9BueHQ/NK+Njw7o124DO1iEZ3Gk7+hmF+DcuJbR8Pudmmo3ieFD8QpechaA+j70aEDPPnWtIehAjLXKPoykdE89ywuTX05azAMraAmjoqHWBbEIVsCEDzoZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kI8W4RWr; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=QRgbZWgsPIn+ZcDAHb26q26wNe7s2TNef0sVoxhVjJrE15tyV6hhrRdeyejlFlwfzRbWVQ+XCgysxGtPnXJiPtbDXoIqeRLP2VZOg0ZEnbqHxL1hTeiMrlux4aomI7OUjCWhKHB99z/S1q8X6FqrjRRJ1Q1NbX4Ijtn4d8xBaFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAJd7X4U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kI8W4RWr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74CBDC433C7;
-	Thu, 18 Jan 2024 10:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAJd7X4U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358D5C433C7;
+	Thu, 18 Jan 2024 10:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575315;
-	bh=zwsNY+zle39BfDrCOGr+2+vHjjrHSmOV3hEUM+2W89w=;
+	s=korg; t=1705575318;
+	bh=n8xq0SZLa1Caxmjkl0fIUZgvQ7d88wNPy47vWZvcKPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kI8W4RWr/PopQwhJ3m8MU534sgIc9oN/4kXtvPDzujWekkpq2n9cytqMaZbRI86QD
-	 +xEZDptrfrB2q9BPHLmtMvmYK3AHLff72eeQti7PCrpN6jVy9WaNIcZj5uaFOH5WNL
-	 zLofwsjZJlJNRynHfb0fp8Z+dto8f7D0qV6J12fU=
+	b=TAJd7X4U3XkhVrgBRionL9gTIuo9Y5tOae0sfLMavr1w69OeJYspF7DGyHB6S9G0n
+	 RQhWLpCXHfnqDGMeKwf5TfPUpUR39z/eMKmYU6F4bFf3v40y7ihUmS089EKIvgCDTz
+	 nh9T5021D1KcBpHfRNE2NZYq+SpfGI8A8oRrk8b4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Esther Shimanovich <eshimanovich@chromium.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 061/150] drm/amdgpu: Add NULL checks for function pointers
-Date: Thu, 18 Jan 2024 11:48:03 +0100
-Message-ID: <20240118104322.803334673@linuxfoundation.org>
+Subject: [PATCH 6.6 088/150] Input: i8042 - add nomux quirk for Acer P459-G2-M
+Date: Thu, 18 Jan 2024 11:48:30 +0100
+Message-ID: <20240118104324.027149349@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -53,53 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Esther Shimanovich <eshimanovich@chromium.org>
 
-[ Upstream commit 81577503efb49f4ad76af22f9941d72900ef4aab ]
+[ Upstream commit 335fe00319e030d481a54d5e0e68d50c5e672c0e ]
 
-Check if function is implemented before making the call.
+After the laptop lid is opened, and the device resumes from S3 deep
+sleep, if the user presses a keyboard key while the screen is still black,
+the mouse and keyboard become unusable.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Enabling this quirk prevents this behavior from occurring.
+
+Signed-off-by: Esther Shimanovich <eshimanovich@chromium.org>
+Link: https://lore.kernel.org/r/20231130195615.v2.1.Ibe78a9df97ecd18dc227a5cff67d3029631d9c11@changeid
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc15.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/input/serio/i8042-acpipnpio.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/soc15.c b/drivers/gpu/drm/amd/amdgpu/soc15.c
-index 9abfe4c28cea..3667f9a54841 100644
---- a/drivers/gpu/drm/amd/amdgpu/soc15.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
-@@ -1422,9 +1422,11 @@ static void soc15_common_get_clockgating_state(void *handle, u64 *flags)
- 	if (amdgpu_sriov_vf(adev))
- 		*flags = 0;
- 
--	adev->nbio.funcs->get_clockgating_state(adev, flags);
-+	if (adev->nbio.funcs && adev->nbio.funcs->get_clockgating_state)
-+		adev->nbio.funcs->get_clockgating_state(adev, flags);
- 
--	adev->hdp.funcs->get_clock_gating_state(adev, flags);
-+	if (adev->hdp.funcs && adev->hdp.funcs->get_clock_gating_state)
-+		adev->hdp.funcs->get_clock_gating_state(adev, flags);
- 
- 	if (adev->ip_versions[MP0_HWIP][0] != IP_VERSION(13, 0, 2)) {
- 
-@@ -1440,9 +1442,11 @@ static void soc15_common_get_clockgating_state(void *handle, u64 *flags)
- 	}
- 
- 	/* AMD_CG_SUPPORT_ROM_MGCG */
--	adev->smuio.funcs->get_clock_gating_state(adev, flags);
-+	if (adev->smuio.funcs && adev->smuio.funcs->get_clock_gating_state)
-+		adev->smuio.funcs->get_clock_gating_state(adev, flags);
- 
--	adev->df.funcs->get_clockgating_state(adev, flags);
-+	if (adev->df.funcs && adev->df.funcs->get_clockgating_state)
-+		adev->df.funcs->get_clockgating_state(adev, flags);
- }
- 
- static int soc15_common_set_powergating_state(void *handle,
+diff --git a/drivers/input/serio/i8042-acpipnpio.h b/drivers/input/serio/i8042-acpipnpio.h
+index 9c39553d30fa..b585b1dab870 100644
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -360,6 +360,14 @@ static const struct dmi_system_id i8042_dmi_quirk_table[] __initconst = {
+ 		},
+ 		.driver_data = (void *)(SERIO_QUIRK_DRITEK)
+ 	},
++	{
++		/* Acer TravelMate P459-G2-M */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "TravelMate P459-G2-M"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
++	},
+ 	{
+ 		/* Amoi M636/A737 */
+ 		.matches = {
 -- 
 2.43.0
 
