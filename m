@@ -1,125 +1,144 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0216F2033B;
-	Thu, 18 Jan 2024 11:03:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F1F923768
+	for <patches@lists.linux.dev>; Thu, 18 Jan 2024 11:15:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575798; cv=none; b=Bobgat2RzQFM3TjnC8ChPUc7C+qL/0+LympbqzybDWVxIkTLE21E10scLVQLlX1r+lnu+K9BhrDfCx+X/6eKva7DRNFqT1H4iS9+N32qV8bfAycVoqB1mipBYlclDsG8lFzoK4JWbousp22n3+wIAWD03pa6uq4XEyDLTtQ8xr0=
+	t=1705576510; cv=none; b=rvyhOOXNMTq3r+UIQlhQTEKXhHrR4FPTTSeZLmk8h69ukRabsg7a0uP5a5Ftlsl4qNWakWxLiHBGE6Bl8J+acWc9fEsBYlHHvPDRK9lvsL+clrTyM98nMLT2Fr8HIGkP2Dr2ft1Hum6n/Dw1WLOHBexQptlJyGCG1h1/pawKe/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575798; c=relaxed/simple;
-	bh=F92wZq8buhAt0cVyv2prK4dV9PoePuOujOFpyYQsHXA=;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=tvXyXupkJs4mPR+IXdPVjsya/f0OcWNGkN6SjKD1HD92Ti+vfgx9Y/sWIIVKshuvo7kKRe+BRsLJ7yl0RcCZpQ2hccHjzwFC60wso+3G879fkRNDxhYHd2S59yqKycvx88hMN5amN7EOpy47bvVcihyt60+JlP8g/WTA0a0Y2+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOex8aNW; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOex8aNW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77977C433C7;
-	Thu, 18 Jan 2024 11:03:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575797;
-	bh=F92wZq8buhAt0cVyv2prK4dV9PoePuOujOFpyYQsHXA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fOex8aNWKgFCxq6bhMtIEIo87RPJQgDaI2Czyf8nrxhlB2yPioM1RoVGhj018Hl5O
-	 v0hmGGrZOsqIcWHJPHGiksXPIHCTawb1vwGsLdEta+gfeTYF1DqFuxHFRvvTa0HVCW
-	 m53SF2E9D72nHtWZu2Pk57ybgO8m9wejSHr0EGeo=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>
-Subject: [PATCH 6.1 094/100] uio: Fix use-after-free in uio_open
-Date: Thu, 18 Jan 2024 11:49:42 +0100
-Message-ID: <20240118104314.966268360@linuxfoundation.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
-References: <20240118104310.892180084@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	s=arc-20240116; t=1705576510; c=relaxed/simple;
+	bh=ZOUWw6/+yRTX1HLJ3j2jZTIMiLHnk08ngluWTEwYzIY=;
+	h=Received:Received:X-Originating-IP:Date:X-CM-HeaderCharset:From:
+	 To:Cc:Subject:X-Priority:X-Mailer:In-Reply-To:References:
+	 Content-Transfer-Encoding:X-CM-CTRLDATA:Content-Type:MIME-Version:
+	 Message-ID:X-Coremail-Locale:X-CM-TRANSID:X-CM-SenderInfo:
+	 X-Coremail-Antispam; b=fpf9fAXm+Dl6Znc8rThBIrcUyr1C2AYv701mGVDiBM18TQJ6xkdiQe17s7TVBrh7segs2AzgHaS4NT0qsZZEaaCkkmrg+vySIgTl8sM2SZv3gzK5cXuTr8oEIlGZBo/wgY0dgLUhOZaXIDlzG7aUCMuq6cbzYgh57pecSNzCAdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [112.20.108.41])
+	by gateway (Coremail) with SMTP id _____8AxqvAvCKllCZwBAA--.7990S3;
+	Thu, 18 Jan 2024 19:14:55 +0800 (CST)
+Received: from chenhuacai$loongson.cn ( [112.20.108.41] ) by
+ ajax-webmail-localhost.localdomain (Coremail) ; Thu, 18 Jan 2024 19:14:52
+ +0800 (GMT+08:00)
+Date: Thu, 18 Jan 2024 19:14:52 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?6ZmI5Y2O5omN?= <chenhuacai@loongson.cn>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	"Stefan Wiehler" <stefan.wiehler@nokia.com>,
+	"Thomas Bogendoerfer" <tsbogend@alpha.franken.de>,
+	"Sasha Levin" <sashal@kernel.org>
+Subject: Re: [PATCH 6.6 059/150] mips/smp: Call
+ rcutree_report_cpu_starting() earlier
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2023.1-cmXT6 build
+ 20230523(b0518e05) Copyright (c) 2002-2024 www.mailtech.cn loongson
+In-Reply-To: <20240118104322.716905144@linuxfoundation.org>
+References: <20240118104320.029537060@linuxfoundation.org>
+ <20240118104322.716905144@linuxfoundation.org>
+Content-Transfer-Encoding: base64
+X-CM-CTRLDATA: Cp/T0mZvb3Rlcl90eHQ9MzIyOTo2MTI=
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Message-ID: <6a59dd46.1988.18d1c47eea9.Coremail.chenhuacai@loongson.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:AQAAf8BxrM4sCKllfmIIAA--.1046W
+X-CM-SenderInfo: hfkh0x5xdftxo6or00hjvr0hdfq/1tbiAQAABmWnj+AKsAAIsY
+X-Coremail-Antispam: 1Uk129KBj93XoWxWFyfJF47WF47trWDJFWxKrX_yoW5tw17pr
+	4fWanxKr4kXryDZw1IyryruFyrWan8Gw42vFW8tw1fZF1UuF1DJr1Sy3WfWFyDur9Yg3W2
+	yFn0van2kF4qyFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUBIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+	xVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+	Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
+	14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACY4xI67k042
+	43AVAKzVAKj4xxM4xvF2IEb7IF0Fy26I8I3I1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC
+	6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWw
+	C2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_
+	JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJV
+	WUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UMVCE
+	FcxC0VAYjxAxZFUvcSsGvfC2KfnxnUUI43ZEXa7IU8sSdPUUUUU==
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
-
-------------------
-
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-
-commit 0c9ae0b8605078eafc3bea053cc78791e97ba2e2 upstream.
-
-core-1				core-2
--------------------------------------------------------
-uio_unregister_device		uio_open
-				idev = idr_find()
-device_unregister(&idev->dev)
-put_device(&idev->dev)
-uio_device_release
-				get_device(&idev->dev)
-kfree(idev)
-uio_free_minor(minor)
-				uio_release
-				put_device(&idev->dev)
-				kfree(idev)
--------------------------------------------------------
-
-In the core-1 uio_unregister_device(), the device_unregister will kfree
-idev when the idev->dev kobject ref is 1. But after core-1
-device_unregister, put_device and before doing kfree, the core-2 may
-get_device. Then:
-1. After core-1 kfree idev, the core-2 will do use-after-free for idev.
-2. When core-2 do uio_release and put_device, the idev will be double
-   freed.
-
-To address this issue, we can get idev atomic & inc idev reference with
-minor_lock.
-
-Fixes: 57c5f4df0a5a ("uio: fix crash after the device is unregistered")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://lore.kernel.org/r/1703152663-59949-1-git-send-email-guanghuifeng@linux.alibaba.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/uio/uio.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
---- a/drivers/uio/uio.c
-+++ b/drivers/uio/uio.c
-@@ -466,13 +466,13 @@ static int uio_open(struct inode *inode,
- 
- 	mutex_lock(&minor_lock);
- 	idev = idr_find(&uio_idr, iminor(inode));
--	mutex_unlock(&minor_lock);
- 	if (!idev) {
- 		ret = -ENODEV;
-+		mutex_unlock(&minor_lock);
- 		goto out;
- 	}
--
- 	get_device(&idev->dev);
-+	mutex_unlock(&minor_lock);
- 
- 	if (!try_module_get(idev->owner)) {
- 		ret = -ENODEV;
-@@ -1064,9 +1064,8 @@ void uio_unregister_device(struct uio_in
- 	wake_up_interruptible(&idev->wait);
- 	kill_fasync(&idev->async_queue, SIGIO, POLL_HUP);
- 
--	device_unregister(&idev->dev);
--
- 	uio_free_minor(minor);
-+	device_unregister(&idev->dev);
- 
- 	return;
- }
-
+SGksIEdyZWcsCgpBcyBJIHNhaWQgYmVmb3JlLCB0aGlzIHBhdGNoIGNhbm5vdCBiZSBiYWNrcG9y
+dGVkIGJlY2F1c2UgcmN1dHJlZV9yZXBvcnRfY3B1X3N0YXJ0aW5nKCkgb25seSBleGlzdCBpbiA2
+LjcrLgoKSHVhY2FpCgoKPiAtLS0tLeWOn+Wni+mCruS7ti0tLS0tCj4g5Y+R5Lu25Lq6OiAiR3Jl
+ZyBLcm9haC1IYXJ0bWFuIiA8Z3JlZ2toQGxpbnV4Zm91bmRhdGlvbi5vcmc+Cj4g5Y+R6YCB5pe2
+6Ze0OjIwMjQtMDEtMTggMTg6NDg6MDEgKOaYn+acn+WbmykKPiDmlLbku7bkuro6IHN0YWJsZUB2
+Z2VyLmtlcm5lbC5vcmcKPiDmioTpgIE6ICJHcmVnIEtyb2FoLUhhcnRtYW4iIDxncmVna2hAbGlu
+dXhmb3VuZGF0aW9uLm9yZz4sIHBhdGNoZXNAbGlzdHMubGludXguZGV2LCAiU3RlZmFuIFdpZWhs
+ZXIiIDxzdGVmYW4ud2llaGxlckBub2tpYS5jb20+LCAiSHVhY2FpIENoZW4iIDxjaGVuaHVhY2Fp
+QGxvb25nc29uLmNuPiwgIlRob21hcyBCb2dlbmRvZXJmZXIiIDx0c2JvZ2VuZEBhbHBoYS5mcmFu
+a2VuLmRlPiwgIlNhc2hhIExldmluIiA8c2FzaGFsQGtlcm5lbC5vcmc+Cj4g5Li76aKYOiBbUEFU
+Q0ggNi42IDA1OS8xNTBdIG1pcHMvc21wOiBDYWxsIHJjdXRyZWVfcmVwb3J0X2NwdV9zdGFydGlu
+ZygpIGVhcmxpZXIKPiAKPiA2LjYtc3RhYmxlIHJldmlldyBwYXRjaC4gIElmIGFueW9uZSBoYXMg
+YW55IG9iamVjdGlvbnMsIHBsZWFzZSBsZXQgbWUga25vdy4KPiAKPiAtLS0tLS0tLS0tLS0tLS0t
+LS0KPiAKPiBGcm9tOiBTdGVmYW4gV2llaGxlciA8c3RlZmFuLndpZWhsZXJAbm9raWEuY29tPgo+
+IAo+IFsgVXBzdHJlYW0gY29tbWl0IDU1NzAyZWM5NjAzZWJlZmZiMTVlNmY3YjExMzYyM2ZlMWQ4
+ODcyZjQgXQo+IAo+IHJjdXRyZWVfcmVwb3J0X2NwdV9zdGFydGluZygpIG11c3QgYmUgY2FsbGVk
+IGJlZm9yZQo+IGNsb2NrZXZlbnRzX3JlZ2lzdGVyX2RldmljZSgpIHRvIGF2b2lkIHRoZSBmb2xs
+b3dpbmcgbG9ja2RlcCBzcGxhdCB0cmlnZ2VyZWQgYnkKPiBjYWxsaW5nIGxpc3RfYWRkKCkgd2hl
+biBDT05GSUdfUFJPVkVfUkNVX0xJU1Q9eToKPiAKPiAgIFdBUk5JTkc6IHN1c3BpY2lvdXMgUkNV
+IHVzYWdlCj4gICAuLi4KPiAgIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCj4gICBrZXJu
+ZWwvbG9ja2luZy9sb2NrZGVwLmM6MzY4MCBSQ1UtbGlzdCB0cmF2ZXJzZWQgaW4gbm9uLXJlYWRl
+ciBzZWN0aW9uISEKPiAKPiAgIG90aGVyIGluZm8gdGhhdCBtaWdodCBoZWxwIHVzIGRlYnVnIHRo
+aXM6Cj4gCj4gICBSQ1UgdXNlZCBpbGxlZ2FsbHkgZnJvbSBvZmZsaW5lIENQVSEKPiAgIHJjdV9z
+Y2hlZHVsZXJfYWN0aXZlID0gMSwgZGVidWdfbG9ja3MgPSAxCj4gICBubyBsb2NrcyBoZWxkIGJ5
+IHN3YXBwZXIvMS8wLgo+ICAgLi4uCj4gICBDYWxsIFRyYWNlOgo+ICAgWzxmZmZmZmZmZjgwMTJh
+NDM0Pl0gc2hvd19zdGFjaysweDY0LzB4MTU4Cj4gICBbPGZmZmZmZmZmODBhOTNkOTg+XSBkdW1w
+X3N0YWNrX2x2bCsweDkwLzB4YzQKPiAgIFs8ZmZmZmZmZmY4MDFjOWU5Yz5dIF9fbG9ja19hY3F1
+aXJlKzB4MTQwNC8weDI5NDAKPiAgIFs8ZmZmZmZmZmY4MDFjYmYzYz5dIGxvY2tfYWNxdWlyZSsw
+eDE0Yy8weDQ0OAo+ICAgWzxmZmZmZmZmZjgwYWE0MjYwPl0gX3Jhd19zcGluX2xvY2tfaXJxc2F2
+ZSsweDUwLzB4ODgKPiAgIFs8ZmZmZmZmZmY4MDIxZTBjOD5dIGNsb2NrZXZlbnRzX3JlZ2lzdGVy
+X2RldmljZSsweDYwLzB4MWU4Cj4gICBbPGZmZmZmZmZmODAxMzBmZjA+XSByNGtfY2xvY2tldmVu
+dF9pbml0KzB4MjIwLzB4M2EwCj4gICBbPGZmZmZmZmZmODAxMzM5ZDA+XSBzdGFydF9zZWNvbmRh
+cnkrMHg1MC8weDNiOAo+IAo+IHJhd19zbXBfcHJvY2Vzc29yX2lkKCkgaXMgcmVxdWlyZWQgaW4g
+b3JkZXIgdG8gYXZvaWQgY2FsbGluZyBpbnRvIGxvY2tkZXAKPiBiZWZvcmUgUkNVIGhhcyBkZWNs
+YXJlZCB0aGUgQ1BVIHRvIGJlIHdhdGNoZWQgZm9yIHJlYWRlcnMuCj4gCj4gU2VlIGFsc28gY29t
+bWl0IDI5MzY4ZTA5MzkyMSAoIng4Ni9zbXBib290OiAgTW92ZSByY3VfY3B1X3N0YXJ0aW5nKCkg
+ZWFybGllciIpLAo+IGNvbW1pdCBkZTVkOWRhZTE1MGMgKCJzMzkwL3NtcDogbW92ZSByY3VfY3B1
+X3N0YXJ0aW5nKCkgZWFybGllciIpIGFuZCBjb21taXQKPiA5OWYwNzBiNjIzMjIgKCJwb3dlcnBj
+L3NtcDogQ2FsbCByY3VfY3B1X3N0YXJ0aW5nKCkgZWFybGllciIpLgo+IAo+IFNpZ25lZC1vZmYt
+Ynk6IFN0ZWZhbiBXaWVobGVyIDxzdGVmYW4ud2llaGxlckBub2tpYS5jb20+Cj4gUmV2aWV3ZWQt
+Ynk6IEh1YWNhaSBDaGVuIDxjaGVuaHVhY2FpQGxvb25nc29uLmNuPgo+IFNpZ25lZC1vZmYtYnk6
+IFRob21hcyBCb2dlbmRvZXJmZXIgPHRzYm9nZW5kQGFscGhhLmZyYW5rZW4uZGU+Cj4gU2lnbmVk
+LW9mZi1ieTogU2FzaGEgTGV2aW4gPHNhc2hhbEBrZXJuZWwub3JnPgo+IC0tLQo+ICBhcmNoL21p
+cHMva2VybmVsL3NtcC5jIHwgNCArKy0tCj4gIDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMo
+KyksIDIgZGVsZXRpb25zKC0pCj4gCj4gZGlmZiAtLWdpdCBhL2FyY2gvbWlwcy9rZXJuZWwvc21w
+LmMgYi9hcmNoL21pcHMva2VybmVsL3NtcC5jCj4gaW5kZXggOGZiZWY1MzdmYjg4Li44MmUyZTA1
+MWI0MTYgMTAwNjQ0Cj4gLS0tIGEvYXJjaC9taXBzL2tlcm5lbC9zbXAuYwo+ICsrKyBiL2FyY2gv
+bWlwcy9rZXJuZWwvc21wLmMKPiBAQCAtMzUxLDEwICszNTEsMTEgQEAgZWFybHlfaW5pdGNhbGwo
+bWlwc19zbXBfaXBpX2luaXQpOwo+ICAgKi8KPiAgYXNtbGlua2FnZSB2b2lkIHN0YXJ0X3NlY29u
+ZGFyeSh2b2lkKQo+ICB7Cj4gLQl1bnNpZ25lZCBpbnQgY3B1Owo+ICsJdW5zaWduZWQgaW50IGNw
+dSA9IHJhd19zbXBfcHJvY2Vzc29yX2lkKCk7Cj4gIAo+ICAJY3B1X3Byb2JlKCk7Cj4gIAlwZXJf
+Y3B1X3RyYXBfaW5pdChmYWxzZSk7Cj4gKwlyY3V0cmVlX3JlcG9ydF9jcHVfc3RhcnRpbmcoY3B1
+KTsKPiAgCW1pcHNfY2xvY2tldmVudF9pbml0KCk7Cj4gIAltcF9vcHMtPmluaXRfc2Vjb25kYXJ5
+KCk7Cj4gIAljcHVfcmVwb3J0KCk7Cj4gQEAgLTM2Niw3ICszNjcsNiBAQCBhc21saW5rYWdlIHZv
+aWQgc3RhcnRfc2Vjb25kYXJ5KHZvaWQpCj4gIAkgKi8KPiAgCj4gIAljYWxpYnJhdGVfZGVsYXko
+KTsKPiAtCWNwdSA9IHNtcF9wcm9jZXNzb3JfaWQoKTsKPiAgCWNwdV9kYXRhW2NwdV0udWRlbGF5
+X3ZhbCA9IGxvb3BzX3Blcl9qaWZmeTsKPiAgCj4gIAlzZXRfY3B1X3NpYmxpbmdfbWFwKGNwdSk7
+Cj4gLS0gCj4gMi40My4wCj4gCj4gCg0KDQrmnKzpgq7ku7blj4rlhbbpmYTku7blkKvmnInpvpno
+iq/kuK3np5HnmoTllYbkuJrnp5jlr4bkv6Hmga/vvIzku4XpmZDkuo7lj5HpgIHnu5nkuIrpnaLl
+nLDlnYDkuK3liJflh7rnmoTkuKrkurrmiJbnvqTnu4TjgILnpoHmraLku7vkvZXlhbbku5bkurrk
+u6Xku7vkvZXlvaLlvI/kvb/nlKjvvIjljIXmi6zkvYbkuI3pmZDkuo7lhajpg6jmiJbpg6jliIbl
+nLDms4TpnLLjgIHlpI3liLbmiJbmlaPlj5HvvInmnKzpgq7ku7blj4rlhbbpmYTku7bkuK3nmoTk
+v6Hmga/jgILlpoLmnpzmgqjplJnmlLbmnKzpgq7ku7bvvIzor7fmgqjnq4vljbPnlLXor53miJbp
+gq7ku7bpgJrnn6Xlj5Hku7bkurrlubbliKDpmaTmnKzpgq7ku7bjgIIgDQpUaGlzIGVtYWlsIGFu
+ZCBpdHMgYXR0YWNobWVudHMgY29udGFpbiBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24gZnJvbSBM
+b29uZ3NvbiBUZWNobm9sb2d5ICwgd2hpY2ggaXMgaW50ZW5kZWQgb25seSBmb3IgdGhlIHBlcnNv
+biBvciBlbnRpdHkgd2hvc2UgYWRkcmVzcyBpcyBsaXN0ZWQgYWJvdmUuIEFueSB1c2Ugb2YgdGhl
+IGluZm9ybWF0aW9uIGNvbnRhaW5lZCBoZXJlaW4gaW4gYW55IHdheSAoaW5jbHVkaW5nLCBidXQg
+bm90IGxpbWl0ZWQgdG8sIHRvdGFsIG9yIHBhcnRpYWwgZGlzY2xvc3VyZSwgcmVwcm9kdWN0aW9u
+IG9yIGRpc3NlbWluYXRpb24pIGJ5IHBlcnNvbnMgb3RoZXIgdGhhbiB0aGUgaW50ZW5kZWQgcmVj
+aXBpZW50KHMpIGlzIHByb2hpYml0ZWQuIElmIHlvdSByZWNlaXZlIHRoaXMgZW1haWwgaW4gZXJy
+b3IsIHBsZWFzZSBub3RpZnkgdGhlIHNlbmRlciBieSBwaG9uZSBvciBlbWFpbCBpbW1lZGlhdGVs
+eSBhbmQgZGVsZXRlIGl0LiA=
 
