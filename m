@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A581B96D;
-	Thu, 18 Jan 2024 10:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0563219FC;
+	Thu, 18 Jan 2024 10:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575285; cv=none; b=kIKBKQndnePmFLD9SdWWs1kgHwcNOi2TKhuSDwfqpqeYdw2RN/zxUcDqBqg/Qel4610isK+dWpdM4mvrShDneIeSlZc3D9hqGJbwSoavPZEGkIU1J9w1RLvgSOjurc1NcMUwMUdZseIBZyBtHa0mmwdDSp5H21E8eWD+QIwqr1U=
+	t=1705575288; cv=none; b=YYMIYeVGEx4k1X2uaslXHr869N1KL8Alrx5zd5ERA0oNGqAU7vgbFMmKIWDn+26jzLaNT4NxLhXWZN0kWCwf8KWmBOLNYMe4w7+3Nkfh+J92BxZt73SpN5eFcezc8i8o71PGcftZmh3UX0RkAD4TsDFFlJ7vM+6BBDqhnIZQgZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575285; c=relaxed/simple;
-	bh=A3cfx0pnB4RnY+pkmSHSWeWk2HezMRniCcUhtpqdOFI=;
+	s=arc-20240116; t=1705575288; c=relaxed/simple;
+	bh=QRKKWX4Fjo/2WHDKQbSb/03sZktNuJQHjQFBroPHwZk=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=aN1G6rp7gWGpUDbFuDlUvgagWhHm1q1H0f/vrT+pj2WXdk1RbEAqqhvXGER3DMa3A46qexkOi92Z1EqCAUuA7B/BwDSHXoQvlpHcq5X6ukXGqfns/VvPm0Qjga61nCdCcq/aygzjMidW5skYre9Yh2xU2P+UCNY6UxRYPcg+mKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aG91Rawf; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=aWpgTtUtqCusNl7b+Oq6UJTmaGwyMTzqEB0VDibaQ9cDklPtR1DG47h3H9uZ413B6DG19OA1gMUsvlBkI3xFlz7x7HOAVoYmWOpI5a8rlHaMZg4ac1xZpRK7gnftT+uIzxTJg540Xaw8BwxFznztAPu9ycETBIm+b//vECLq5fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZacZ9bOS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aG91Rawf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8A1C433F1;
-	Thu, 18 Jan 2024 10:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZacZ9bOS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 731FFC433F1;
+	Thu, 18 Jan 2024 10:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575285;
-	bh=A3cfx0pnB4RnY+pkmSHSWeWk2HezMRniCcUhtpqdOFI=;
+	s=korg; t=1705575287;
+	bh=QRKKWX4Fjo/2WHDKQbSb/03sZktNuJQHjQFBroPHwZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aG91Rawfbsfhek4BFmV+EETvFR7SrT2SP5iLCfpO7gSaQRVQZA+XKA9v1TlCqSrPZ
-	 k14S6vArmNjinAk3j7UPDDSGa5x0QJL7b0PlzP+eIHFmBrRdLGL+EtpVkSF1tu97tb
-	 s6cWU9muYrcqR/8JUn+afOV11jcy+SjD1focvq6U=
+	b=ZacZ9bOSA7J3rr/RPmrAxizLB47rMiw6Ay+lLLH4Ds9w8kAAhBO0cf9Q3D+RW2lFd
+	 sFPXmctFozcMIR2xWc9zfTMKwnPfBcox/gwkL7Y0sCOzmf73b2MKyQ2b6CharFVg9q
+	 VFnqt7o6InUy/Yt3uzPOQEndf9mfvI1/CYfWguoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Sun peng Li <sunpeng.li@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Ivan Lipski <ivlipski@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 060/150] drm/amd/display: Add monitor patch for specific eDP
-Date: Thu, 18 Jan 2024 11:48:02 +0100
-Message-ID: <20240118104322.764006328@linuxfoundation.org>
+Subject: [PATCH 6.6 078/150] jbd2: fix soft lockup in journal_finish_inode_data_buffers()
+Date: Thu, 18 Jan 2024 11:48:20 +0100
+Message-ID: <20240118104323.586830822@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -55,46 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Lipski <ivlipski@amd.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 3d71a8726e05a35beb9de394e86ce896d69e563f ]
+[ Upstream commit 6c02757c936063f0631b4e43fe156f8c8f1f351f ]
 
-[WHY]
-Some eDP panels's ext caps don't write initial value cause the value of
-dpcd_addr(0x317) is random.  It means that sometimes the eDP will
-clarify it is OLED, miniLED...etc cause the backlight control interface
-is incorrect.
+There's issue when do io test:
+WARN: soft lockup - CPU#45 stuck for 11s! [jbd2/dm-2-8:4170]
+CPU: 45 PID: 4170 Comm: jbd2/dm-2-8 Kdump: loaded Tainted: G  OE
+Call trace:
+ dump_backtrace+0x0/0x1a0
+ show_stack+0x24/0x30
+ dump_stack+0xb0/0x100
+ watchdog_timer_fn+0x254/0x3f8
+ __hrtimer_run_queues+0x11c/0x380
+ hrtimer_interrupt+0xfc/0x2f8
+ arch_timer_handler_phys+0x38/0x58
+ handle_percpu_devid_irq+0x90/0x248
+ generic_handle_irq+0x3c/0x58
+ __handle_domain_irq+0x68/0xc0
+ gic_handle_irq+0x90/0x320
+ el1_irq+0xcc/0x180
+ queued_spin_lock_slowpath+0x1d8/0x320
+ jbd2_journal_commit_transaction+0x10f4/0x1c78 [jbd2]
+ kjournald2+0xec/0x2f0 [jbd2]
+ kthread+0x134/0x138
+ ret_from_fork+0x10/0x18
 
-[HOW]
-Add a new panel patch to remove sink ext caps(HDR,OLED...etc)
+Analyzed informations from vmcore as follows:
+(1) There are about 5k+ jbd2_inode in 'commit_transaction->t_inode_list';
+(2) Now is processing the 855th jbd2_inode;
+(3) JBD2 task has TIF_NEED_RESCHED flag;
+(4) There's no pags in address_space around the 855th jbd2_inode;
+(5) There are some process is doing drop caches;
+(6) Mounted with 'nodioread_nolock' option;
+(7) 128 CPUs;
 
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Sun peng Li <sunpeng.li@amd.com>
-Acked-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Ivan Lipski <ivlipski@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+According to informations from vmcore we know 'journal->j_list_lock' spin lock
+competition is fierce. So journal_finish_inode_data_buffers() maybe process
+slowly. Theoretically, there is scheduling point in the filemap_fdatawait_range_keep_errors().
+However, if inode's address_space has no pages which taged with PAGECACHE_TAG_WRITEBACK,
+will not call cond_resched(). So may lead to soft lockup.
+journal_finish_inode_data_buffers
+  filemap_fdatawait_range_keep_errors
+    __filemap_fdatawait_range
+      while (index <= end)
+        nr_pages = pagevec_lookup_range_tag(&pvec, mapping, &index, end, PAGECACHE_TAG_WRITEBACK);
+        if (!nr_pages)
+           break;    --> If 'nr_pages' is equal zero will break, then will not call cond_resched()
+        for (i = 0; i < nr_pages; i++)
+          wait_on_page_writeback(page);
+        cond_resched();
+
+To solve above issue, add scheduling point in the journal_finish_inode_data_buffers();
+
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20231211112544.3879780-1-yebin10@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/jbd2/commit.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-index 4b230933b28e..87a1000b8572 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-@@ -63,6 +63,12 @@ static void apply_edid_quirks(struct edid *edid, struct dc_edid_caps *edid_caps)
- 		DRM_DEBUG_DRIVER("Disabling FAMS on monitor with panel id %X\n", panel_id);
- 		edid_caps->panel_patch.disable_fams = true;
- 		break;
-+	/* Workaround for some monitors that do not clear DPCD 0x317 if FreeSync is unsupported */
-+	case drm_edid_encode_panel_id('A', 'U', 'O', 0xA7AB):
-+	case drm_edid_encode_panel_id('A', 'U', 'O', 0xE69B):
-+		DRM_DEBUG_DRIVER("Clearing DPCD 0x317 on monitor with panel id %X\n", panel_id);
-+		edid_caps->panel_patch.remove_sink_ext_caps = true;
-+		break;
- 	default:
- 		return;
- 	}
+diff --git a/fs/jbd2/commit.c b/fs/jbd2/commit.c
+index 9bdb377a348f..5e122586e06e 100644
+--- a/fs/jbd2/commit.c
++++ b/fs/jbd2/commit.c
+@@ -270,6 +270,7 @@ static int journal_finish_inode_data_buffers(journal_t *journal,
+ 			if (!ret)
+ 				ret = err;
+ 		}
++		cond_resched();
+ 		spin_lock(&journal->j_list_lock);
+ 		jinode->i_flags &= ~JI_COMMIT_RUNNING;
+ 		smp_mb();
 -- 
 2.43.0
 
