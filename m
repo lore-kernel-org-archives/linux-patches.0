@@ -1,58 +1,58 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5412E3F8
-	for <patches@lists.linux.dev>; Thu, 18 Jan 2024 19:22:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46982E627
+	for <patches@lists.linux.dev>; Thu, 18 Jan 2024 19:51:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705605730; cv=none; b=akCW7J4QefFjI+078a5C9nUkseDREiv/BNm9ujCBHFSFXz0kRRpfYctYEzR6H/E7mNW0Kde04qsb3QnNcfOAv6etu8lRA9ftj8fLgdjpAGa/FtWUTpluPk/02QaBB9wNS0jKj6mKQw3RvXDbMLjR9jL3u6gozMxqdz7C65/G8/w=
+	t=1705607471; cv=none; b=PG3S/zgQncLXpBDbrfRmQ5CV6hhCUaYCCJn0S4Z6HVcmUftXm405br7PVV20uHGyjt1syYaSbjfz/7eDuwqktRk39uXIZoPlhUunHfVLROsoSEBWQeWFP5qhHardTrHw0VZnmEeFZiuNrHo+cK6q/wbfK37WKEnaQaTf70e/Vok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705605730; c=relaxed/simple;
-	bh=SrRbwpTDfXLX2j/Mn2Wvk81ST3LhR6HY3Tnc+uJKbl8=;
+	s=arc-20240116; t=1705607471; c=relaxed/simple;
+	bh=zpB1vJKPFUrLosU/KAweJYdV+HjG58GHXZeRiTmNml8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m4juosE3gtxEKC6nE+HaXpxSSN1qbAwgN0erluDTkaJ0tWmCMtkM5+yoUjaKcV83kpQc5NgxMBNQw5/ORu9Qge6CxB3IZ+2l7qmqNRu+bS0Hk/LuA4uKO3BuD9UXUqNeQKVYn12/CSIRLy8Wx2wAs9ichrzdnPYEoQ8wOVItHbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C99bTetD; arc=none smtp.client-ip=209.85.210.169
+	 In-Reply-To:Content-Type; b=duophMOJfi1pmHbrV/cQTY/p9EGJRdrlpJcteqg6QW+KUKevKWuMxZj/jd1k5jLDgP59LHcd3eamQup3d7ep0jMLd9v+TKu6BAKf6z2ev0HgedZdt68c3mKPxJ4PFOoA7CK7L+CTWqlqNL9VpM8WYpSbR0CEja4N85jwuG1F4E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fyo6wdO4; arc=none smtp.client-ip=209.85.160.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C99bTetD"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-6d99980b2e0so38052b3a.2
-        for <patches@lists.linux.dev>; Thu, 18 Jan 2024 11:22:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fyo6wdO4"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-42989a64713so256721cf.2
+        for <patches@lists.linux.dev>; Thu, 18 Jan 2024 11:51:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705605729; x=1706210529; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1705607468; x=1706212268; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=eIZHdTR71za9DIyPMIvJQ62OJfFj0JIbKk8OksEAc1U=;
-        b=C99bTetD24rPJo59mVQkC9x9MjZLoyA50JUgQNlOxhAM3kyuBfD1MnAkcaHaVIIhuS
-         fichSZKfpV0gHnCXtMdXYNAdfWDCCPInuDrpJlivwcG70voCkZxZbrB+aGL7o9us8o5z
-         y0cqiFGTANpJ2VeccOoW7ja/dN9yhGe8K1ZlNtIVzTZhsI+U60q/gho2gyNHXRUSsWpw
-         1N/RJlf3pOEDYegskbIHI+CqNZ/TYFHijLygBYsipA7SLkbLHrsbiWEEtHoFHuUTIZPA
-         iTBL7BuNrypWkSgDuI1EE40iV9NCMmaCinPkaqv3NTeYmrLV5QgKLTWrXnmBNIoPuXbh
-         uoAA==
+        bh=BTvQsNfYLosp4zMJSEtUdKK37sRRAVysKUE3QZOulFY=;
+        b=fyo6wdO45E4nwdWySMlQBDLpbaoQMGC60fobbOKqdCMklQvPLAX0c03TzWTT2VKuDZ
+         6IF1l0o9KdSx3TMeAk8KQrSDLLNPhqyhzWQ/62a5ZC00XpCznyx2uPNIPFFJ/W+nsEfq
+         gShXNi5IJTRoehBVFjL9eNo4ylo3gEhGRRnpSFJZXmseI5jJ062tUsW/DGlp8JxntYa9
+         jEbGNKO7g2h4UwARQ19m9umANaXj97N1rlRYlUtAK1UkA/moUh57mcACAVcOuTScddl4
+         wGcDva6L9rQpRLeZdDNmxYG1hoBcRupRTxQBVKCkHLb7cvyMChyNJeQCNuKRsLJmvh7C
+         8iPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705605729; x=1706210529;
+        d=1e100.net; s=20230601; t=1705607468; x=1706212268;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eIZHdTR71za9DIyPMIvJQ62OJfFj0JIbKk8OksEAc1U=;
-        b=Zftg1lVA8u51pZmoXcQHvLZA894tyTZmhgIgUOUSGkfLZjKgkXSWHf2pY/O2IXCqrV
-         jt5dxrxQ6yQyUEpJW0+nj4edaoxSvjBTc/4hohmWgy7KtJ2UvVIsPBEsytxT6D898ez5
-         hj7+UpY0QdYynTGlvTee/iNEJUpLAbkYBbwF8TgavV0mSeaJI6QPyyT0/9EFlqlJzqxO
-         /16zSoAjwZd7Xxuiph9gFJqub5cQJzdoTR65tNqKi70c2Z5kHz0c0SPZlkIxqa5nxniz
-         dwWuxnbpmgyN0C0Y8mTz/CmBQuIsWDzJtmIfqpSoaqyggEo56wiyDWNHMTUopDhByDHj
-         k09w==
-X-Gm-Message-State: AOJu0Yy2AXNyY/VG+QZumabFO9eiCiKzQdL0g3GC2JVCHJupPTk5UofX
-	oBAkt4LrLmra6vvBBhZVks91yj0UVlRIKQqhmw3EyC0nv2/FhuCo
-X-Google-Smtp-Source: AGHT+IEIR0jISgGDTiNiveync7yB2yYqyPiTmLy8ZnhSieBLfY6BPqzjwTrK+ZaiFHELMp5FPh8s/w==
-X-Received: by 2002:a05:6a00:2d25:b0:6d9:bf35:768f with SMTP id fa37-20020a056a002d2500b006d9bf35768fmr1492354pfb.46.1705605728757;
-        Thu, 18 Jan 2024 11:22:08 -0800 (PST)
+        bh=BTvQsNfYLosp4zMJSEtUdKK37sRRAVysKUE3QZOulFY=;
+        b=Um9Z8s6jnu3d2xCYAkj9dEAPu0q8StA20e/R4OXFY0YBE5iM24rCGwMdZJkqhGUyOh
+         8HQ4W73SCcCop0Q6f9nqJd6K97qyGBthMFCAk9REfWdKPM9RXT+HaQ/99xolgerJW77v
+         ixQsvmR/OpPPkgfoHEG9aat1s5RD0ACKi+mixLa7Xgcwe+iBoIGT2i2+7wjiB2x7IITH
+         QYwXDAtTRmlLBzgRf4rFSlS44X4uxROiS1hpGwfYRqczaq0nk17N+Bn5CpA1j6wuLAl4
+         0xoMm/3s4L2uigdBbs5rw3mYfQcjr91j7zOj6aetHJ16kGB1FdU6bvedwuhGF1LJR3V7
+         Pliw==
+X-Gm-Message-State: AOJu0YzRkSwDia6LclkSyc3rWOlux8Nt8MjxFm5Nu/IDX99Y9B4wFKB9
+	MpeT1Up9PxOamoGGsFHQKJG/JbEy6HAabVOsQKHw+CORmVcjT42H
+X-Google-Smtp-Source: AGHT+IFuzwMJ2IKpO0vPscGpujBJTJMHffiNlful/2XZ3SiEHAezwmJr9V7vyeM/KC94kkWc9UiFVQ==
+X-Received: by 2002:a05:622a:2d4:b0:42a:212d:4a30 with SMTP id a20-20020a05622a02d400b0042a212d4a30mr494962qtx.29.1705607467542;
+        Thu, 18 Jan 2024 11:51:07 -0800 (PST)
 Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id n24-20020aa78a58000000b006d95b565418sm3643211pfa.153.2024.01.18.11.22.04
+        by smtp.googlemail.com with ESMTPSA id c25-20020ac853d9000000b004283695a39bsm6944302qtq.94.2024.01.18.11.51.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jan 2024 11:22:08 -0800 (PST)
-Message-ID: <ab9bef24-a07b-4930-b09a-b3c0f4e04789@gmail.com>
-Date: Thu, 18 Jan 2024 11:22:03 -0800
+        Thu, 18 Jan 2024 11:51:07 -0800 (PST)
+Message-ID: <4c0fd569-3381-421a-82de-4c85b8a4cb59@gmail.com>
+Date: Thu, 18 Jan 2024 11:51:01 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -60,7 +60,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/150] 6.6.13-rc1 review
+Subject: Re: [PATCH 6.7 00/28] 6.7.1-rc1 review
 Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
@@ -69,15 +69,15 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
  conor@kernel.org, allen.lkml@gmail.com
-References: <20240118104320.029537060@linuxfoundation.org>
+References: <20240118104301.249503558@linuxfoundation.org>
 From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
+In-Reply-To: <20240118104301.249503558@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 1/18/24 02:47, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.13 release.
-> There are 150 patches in this series, all will be posted as a response
+On 1/18/24 02:48, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.7.1 release.
+> There are 28 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -85,44 +85,19 @@ On 1/18/24 02:47, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.13-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.1-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
 
-Same as with 6.1:
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-ARM and ARM64 builds worked fine and passed tests, however BMIPS_GENERIC 
-fails to build with:
-
-arch/mips/kernel/smp.c: In function 'start_secondary':
-arch/mips/kernel/smp.c:340:2: error: implicit declaration of function 
-'rcutree_report_cpu_starting'; did you mean 'rcu_cpu_starting'? 
-[-Werror=implicit-function-declaration]
-   rcutree_report_cpu_starting(cpu);
-   ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-   rcu_cpu_starting
-cc1: all warnings being treated as errors
-host-make[5]: *** [scripts/Makefile.build:250: arch/mips/kernel/smp.o] 
-Error 1
-host-make[4]: *** [scripts/Makefile.build:500: arch/mips/kernel] Error 2
-host-make[3]: *** [scripts/Makefile.build:500: arch/mips] Error 2
-host-make[3]: *** Waiting for unfinished jobs....
-
-which is caused by 1fa03a4622bb26a31279a453aa251154f11e6c70 ("mips/smp: 
-Call rcutree_report_cpu_starting() earlier").
-
-It looks like rcutree_report_cpu_starting() has been introduced 
-448e9f34d91d1a4799fdb06a93c2c24b34b6fd9d ("rcu: Standardize explicit 
-CPU-hotplug calls") which is in v6.7.
-
-For MIPS, it would like an adequate fix would be to 
-'s/rcutree_report_cpu_starting/rcu_cpu_starting/' for the 6.1 and 6.6 
-branches.
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
 Florian
 
