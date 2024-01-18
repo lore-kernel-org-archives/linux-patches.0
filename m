@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A90920B1C;
-	Thu, 18 Jan 2024 11:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D832B241E9;
+	Thu, 18 Jan 2024 11:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575696; cv=none; b=B3jSX/T6oKVZ43l0ijR88CFzfEGrlfjVljx7wnimU2UuH+jOj+unj+ZRHoFTPOVtQFvwkCBYP6ELE7I/LFV5Y+SzBxFRLCMIrfmfWtnAtWb8vgrWFGtELtozSKb55gcMaHs/oB4UaiywIJC6517gDt1F881SaNdeICOaPoyQxYk=
+	t=1705575698; cv=none; b=ZxG8i1KmNwELxL5rJM7ZZH+XonaHdXfz+3SvctipfyIcPoNPbWHnZ6IeaErNWQO0PR9x+NH2BdEEnoDRF2D8QCZhai8oIDhntheYPEoN511P9BgyJJUNvNeBwkWXjHAU3EtOlacNs5vlyeEUIQqMDZshlfE4TVeO2134NmS2bWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575696; c=relaxed/simple;
-	bh=3uIuRRiSn+uyAlypTXZ3lmDN43eoHgU3Kqa3oIWwSkI=;
+	s=arc-20240116; t=1705575698; c=relaxed/simple;
+	bh=ZJxmQz6eP68kMhjPXt5DSae2s+ul9QE29JJqBmhpogw=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=j7duCqdpRFYmHCzEqxLiZI2K60o3qb/HRen6rjIWSujnvk1VW4ayqf79jt1WDCgGCF0v84HGeLOEzzYUmHS9vGQD3YIMW6q37R5uWwmhDzGjewulBGsR4RrvaH/JaLxkqETAuh8xefFRFgCSrPb9QMHEdMPWvfplAlDQU5Yc/oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJzsS9m+; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=oxmGURSyUODt8xyCwQ3FXGDQsfYnnh6OBQFamNpeZXFP+yFFYNPL+Yd6232qms6ZLC6Q718frQHZZydx8kH6mAmDNdvRRBsZDhaTJ+5lslZ6CDdhRSv6ANdnkRUXBbkiCCNArmm+KhP5bkiY9XSJ0H4HHXboHTaVSpQ8lN+OU/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0cTc3UQY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJzsS9m+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF0AC433C7;
-	Thu, 18 Jan 2024 11:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0cTc3UQY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D62C433C7;
+	Thu, 18 Jan 2024 11:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575695;
-	bh=3uIuRRiSn+uyAlypTXZ3lmDN43eoHgU3Kqa3oIWwSkI=;
+	s=korg; t=1705575698;
+	bh=ZJxmQz6eP68kMhjPXt5DSae2s+ul9QE29JJqBmhpogw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DJzsS9m+cpgj4SWaGmTJXl2z4qI3m55Jver4QVgSRP+PD51Y/YjqLaQ9ioYZfZ+3L
-	 wiXZCCXbPlqu7Y1nincH3mhf/zSj1LM6QMoWJA61UCXrb4VbepwtoU9OQbfghwkaEi
-	 2oxKzbmcZ3NOGxaxCmpgg6sh85gEppelRSVNspvA=
+	b=0cTc3UQYDpyOED2hnd969eX+lLTqU38RqDNaZqHW94oNlINgsKqGtg/8R9uJSVC0e
+	 sV8/RFlKFco84XNqsTtkAShAS/9/nnM1AOzYKwgwT7jgg7bXNsHk3qcYh8roCwit/L
+	 Uxguh+PhSfVtGgtS6OkyB0P/pMHN4pkdMPZLA2iE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jensen Huang <jensenhuang@friendlyarm.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 073/100] i2c: rk3x: fix potential spinlock recursion on poll
-Date: Thu, 18 Jan 2024 11:49:21 +0100
-Message-ID: <20240118104314.107571481@linuxfoundation.org>
+Subject: [PATCH 6.1 074/100] drm/amd/display: get dprefclk ss info from integration info table
+Date: Thu, 18 Jan 2024 11:49:22 +0100
+Message-ID: <20240118104314.137886157@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -54,84 +55,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jensen Huang <jensenhuang@friendlyarm.com>
+From: Charlene Liu <charlene.liu@amd.com>
 
-[ Upstream commit 19cde9c92b8d3b7ee555d0da3bcb0232d3a784f4 ]
+[ Upstream commit 51e7b64690776a9981355428b537af9048308a95 ]
 
-Possible deadlock scenario (on reboot):
-rk3x_i2c_xfer_common(polling)
-    -> rk3x_i2c_wait_xfer_poll()
-        -> rk3x_i2c_irq(0, i2c);
-            --> spin_lock(&i2c->lock);
-            ...
-        <rk3x i2c interrupt>
-        -> rk3x_i2c_irq(0, i2c);
-            --> spin_lock(&i2c->lock); (deadlock here)
+[why & how]
+we have two SSC_En:
+we get ssc_info from dce_info for MPLL_SSC_EN.
+we used to call VBIOS cmdtbl's smu_info's SS persentage for DPRECLK SS info,
+is used for DP AUDIO and VBIOS' smu_info table was from systemIntegrationInfoTable.
 
-Store the IRQ number and disable/enable it around the polling transfer.
-This patch has been tested on NanoPC-T4.
+since dcn35 VBIOS removed smu_info, driver need to use integrationInfotable directly.
 
-Signed-off-by: Jensen Huang <jensenhuang@friendlyarm.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Charlene Liu <charlene.liu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-rk3x.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c          |   19 ++++++++----
+ drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h |    2 +
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-rk3x.c b/drivers/i2c/busses/i2c-rk3x.c
-index b31cf4f18f85..6aa4f1f06240 100644
---- a/drivers/i2c/busses/i2c-rk3x.c
-+++ b/drivers/i2c/busses/i2c-rk3x.c
-@@ -178,6 +178,7 @@ struct rk3x_i2c_soc_data {
-  * @clk: function clk for rk3399 or function & Bus clks for others
-  * @pclk: Bus clk for rk3399
-  * @clk_rate_nb: i2c clk rate change notify
-+ * @irq: irq number
-  * @t: I2C known timing information
-  * @lock: spinlock for the i2c bus
-  * @wait: the waitqueue to wait for i2c transfer
-@@ -200,6 +201,7 @@ struct rk3x_i2c {
- 	struct clk *clk;
- 	struct clk *pclk;
- 	struct notifier_block clk_rate_nb;
-+	int irq;
- 
- 	/* Settings */
- 	struct i2c_timings t;
-@@ -1087,13 +1089,18 @@ static int rk3x_i2c_xfer_common(struct i2c_adapter *adap,
- 
- 		spin_unlock_irqrestore(&i2c->lock, flags);
- 
--		rk3x_i2c_start(i2c);
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -1018,13 +1018,20 @@ static enum bp_result get_ss_info_v4_5(
+ 		DC_LOG_BIOS("AS_SIGNAL_TYPE_HDMI ss_percentage: %d\n", ss_info->spread_spectrum_percentage);
+ 		break;
+ 	case AS_SIGNAL_TYPE_DISPLAY_PORT:
+-		ss_info->spread_spectrum_percentage =
++		if (bp->base.integrated_info) {
++			DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", bp->base.integrated_info->gpuclk_ss_percentage);
++			ss_info->spread_spectrum_percentage =
++					bp->base.integrated_info->gpuclk_ss_percentage;
++			ss_info->type.CENTER_MODE =
++					bp->base.integrated_info->gpuclk_ss_type;
++		} else {
++			ss_info->spread_spectrum_percentage =
+ 				disp_cntl_tbl->dp_ss_percentage;
+-		ss_info->spread_spectrum_range =
++			ss_info->spread_spectrum_range =
+ 				disp_cntl_tbl->dp_ss_rate_10hz * 10;
+-		if (disp_cntl_tbl->dp_ss_mode & ATOM_SS_CENTRE_SPREAD_MODE)
+-			ss_info->type.CENTER_MODE = true;
 -
- 		if (!polling) {
-+			rk3x_i2c_start(i2c);
-+
- 			timeout = wait_event_timeout(i2c->wait, !i2c->busy,
- 						     msecs_to_jiffies(WAIT_TIMEOUT));
- 		} else {
-+			disable_irq(i2c->irq);
-+			rk3x_i2c_start(i2c);
-+
- 			timeout = rk3x_i2c_wait_xfer_poll(i2c);
-+
-+			enable_irq(i2c->irq);
- 		}
++			if (disp_cntl_tbl->dp_ss_mode & ATOM_SS_CENTRE_SPREAD_MODE)
++				ss_info->type.CENTER_MODE = true;
++		}
+ 		DC_LOG_BIOS("AS_SIGNAL_TYPE_DISPLAY_PORT ss_percentage: %d\n", ss_info->spread_spectrum_percentage);
+ 		break;
+ 	case AS_SIGNAL_TYPE_GPU_PLL:
+@@ -2830,6 +2837,8 @@ static enum bp_result get_integrated_inf
+ 	info->ma_channel_number = info_v2_2->umachannelnumber;
+ 	info->dp_ss_control =
+ 		le16_to_cpu(info_v2_2->reserved1);
++	info->gpuclk_ss_percentage = info_v2_2->gpuclk_ss_percentage;
++	info->gpuclk_ss_type = info_v2_2->gpuclk_ss_type;
  
- 		spin_lock_irqsave(&i2c->lock, flags);
-@@ -1310,6 +1317,8 @@ static int rk3x_i2c_probe(struct platform_device *pdev)
- 		return ret;
- 	}
+ 	for (i = 0; i < NUMBER_OF_UCHAR_FOR_GUID; ++i) {
+ 		info->ext_disp_conn_info.gu_id[i] =
+--- a/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h
++++ b/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h
+@@ -417,6 +417,8 @@ struct integrated_info {
+ 	/* V2.1 */
+ 	struct edp_info edp1_info;
+ 	struct edp_info edp2_info;
++	uint32_t gpuclk_ss_percentage;
++	uint32_t gpuclk_ss_type;
+ };
  
-+	i2c->irq = irq;
-+
- 	platform_set_drvdata(pdev, i2c);
- 
- 	if (i2c->soc_data->calc_timings == rk3x_i2c_v0_calc_timings) {
--- 
-2.43.0
-
+ /*
 
 
