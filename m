@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168121B96D;
-	Thu, 18 Jan 2024 10:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D713C22323;
+	Thu, 18 Jan 2024 10:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575416; cv=none; b=nB45BMVQfMjppna0lBGF7/6zcZpx4u/K7hFMZuvd3zFHae+JAC1pmPm7tz2L4dbeDbQVemruwSFbCF4npUW2AAiaEXbYkf5Lh7gSawKA3ggCPKLo+VCCf0Ve0BLl1ObmrLwO529zytsXEMpesTDT9u2YEh85/5ThRxXJwZ2drjQ=
+	t=1705575418; cv=none; b=pG/kDwfLqilmVuqvQn+13m5iWl7bBVrae174Babx4sNmNySs2pAGMfpXEqHwY8Gf80CXypkHAKG1fl2zig/eksJOenJQYa50DjJ+Nv8oWWKGEpiHXFrUS+5/Bb21wM7jdd9YBMlW4VymHn7LQRw9OCZXO0ybZErJSBzqFKFxhIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575416; c=relaxed/simple;
-	bh=0QG+085uCdCq0Or4VNx9Z29UKQ5b88x9/Dj05pSHX1c=;
+	s=arc-20240116; t=1705575418; c=relaxed/simple;
+	bh=ygnpirTk+AdLC0aPZaTD/TeIUVbGAfgwDlZeRfRky1M=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=By1J433ZmC64YwF6FCYk4dxSYy+6JKtP4fzCmbPXXLEfczuciIqzyRGXENCM+0Rp46EV4BZ8hoKxy9EyTnLHzqpWD5gVOCwV6+XnZiYqlLmnnzvRN3Tk5F8GtII/cG6Xr3zI1B+R5BnpkcMJbVtVb5us9WiRAzngQ9qVEcoMooc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjL0+crX; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=dOGCePN4j2xfGS0OoKlA2BEDiOcU8SRRrwaMacLGPfjwd69D29Frvjuhzv3g1VWyVTqX5viWhRF+fe2NvKgyYsAsoiwlGeVlSl5Zh8Ldt86L4/B335kyMTYZoP3DO5b101zK1vj5MaavJ5BnHsojVNDJXbcrYsHczlGRlB6Z9lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTNtEOk6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjL0+crX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3F0C433F1;
-	Thu, 18 Jan 2024 10:56:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTNtEOk6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A90DC433F1;
+	Thu, 18 Jan 2024 10:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575415;
-	bh=0QG+085uCdCq0Or4VNx9Z29UKQ5b88x9/Dj05pSHX1c=;
+	s=korg; t=1705575418;
+	bh=ygnpirTk+AdLC0aPZaTD/TeIUVbGAfgwDlZeRfRky1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vjL0+crXc8dsxRkGQvZB7l3StEOw0vm/OLV/2hV5nvVclYhhBpXES9y21aA97iyrp
-	 oTDLfBoH0BlTNXFbvKYPjFZjhkfM9Dbbl2/wDcCmI4Z0P4t/gw5ZZim9+aXYN8W9OC
-	 Rk+kGy3KTDareDCPySGVpMhUNfMryTQagJ3lbveE=
+	b=FTNtEOk6oNMbQJ7SYmBcWW2t5otZlxYrTCWJTpU26YYlHWAmsojD883oXRE6ibvkw
+	 8tzPTFk+CM361gCBaOQA2YrnNbn+2TdH7AJ//Q4uAnN+xi/CMjGm/qnaWXXfvjBDep
+	 BGFY9adufGyG2URfekyalIzEaCmpmL15W3olrK8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Vineet Gupta <vgupta@kernel.org>,
+	Avraham Stern <avraham.stern@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/150] ARC: fix smatch warning
-Date: Thu, 18 Jan 2024 11:48:37 +0100
-Message-ID: <20240118104324.343684899@linuxfoundation.org>
+Subject: [PATCH 6.6 096/150] wifi: iwlwifi: pcie: avoid a NULL pointer dereference
+Date: Thu, 18 Jan 2024 11:48:38 +0100
+Message-ID: <20240118104324.393185827@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -53,41 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vineet Gupta <vgupta@kernel.org>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit 4eb69d00fe967699b9d93f7e74a990fe813e8d2b ]
+[ Upstream commit ce038edfce43fb345f8dfdca0f7b17f535896701 ]
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202311280906.VAIwEAfT-lkp@intel.com/
-Signed-off-by: Vineet Gupta <vgupta@kernel.org>
+It possible that while the rx rb is being handled, the transport has
+been stopped and re-started. In this case the tx queue pointer is not
+yet initialized, which will lead to a NULL pointer dereference.
+Fix it.
+
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231207044813.cd0898cafd89.I0b84daae753ba9612092bf383f5c6f761446e964@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arc/kernel/setup.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arc/kernel/setup.c b/arch/arc/kernel/setup.c
-index 4dcf8589b708..d08a5092c2b4 100644
---- a/arch/arc/kernel/setup.c
-+++ b/arch/arc/kernel/setup.c
-@@ -153,7 +153,7 @@ static int arcv2_mumbojumbo(int c, struct cpuinfo_arc *info, char *buf, int len)
- {
- 	int n = 0;
- #ifdef CONFIG_ISA_ARCV2
--	const char *release, *cpu_nm, *isa_nm = "ARCv2";
-+	const char *release = "", *cpu_nm = "HS38", *isa_nm = "ARCv2";
- 	int dual_issue = 0, dual_enb = 0, mpy_opt, present;
- 	int bpu_full, bpu_cache, bpu_pred, bpu_ret_stk;
- 	char mpy_nm[16], lpb_nm[32];
-@@ -172,8 +172,6 @@ static int arcv2_mumbojumbo(int c, struct cpuinfo_arc *info, char *buf, int len)
- 	 * releases only update it.
- 	 */
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
+index a9415d333490..63091c45a576 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
+@@ -1385,7 +1385,7 @@ static void iwl_pcie_rx_handle_rb(struct iwl_trans *trans,
+ 		 * if it is true then one of the handlers took the page.
+ 		 */
  
--	cpu_nm = "HS38";
--
- 	if (info->arcver > 0x50 && info->arcver <= 0x53) {
- 		release = arc_hs_rel[info->arcver - 0x51].str;
- 	} else {
+-		if (reclaim) {
++		if (reclaim && txq) {
+ 			u16 sequence = le16_to_cpu(pkt->hdr.sequence);
+ 			int index = SEQ_TO_INDEX(sequence);
+ 			int cmd_index = iwl_txq_get_cmd_index(txq, index);
 -- 
 2.43.0
 
