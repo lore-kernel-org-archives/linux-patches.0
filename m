@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408021B96D;
-	Thu, 18 Jan 2024 10:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8F11B96D;
+	Thu, 18 Jan 2024 10:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575122; cv=none; b=uZqqmywEbyNZNm+Yu/KWF/Zbl4bvOo1ttpNte4srqznMbTNQaN+DXxL/OmMsBWntzjZnhIsJHSljevPz3PPYDKwJ3pzGaHrhH5vFRSw2iuZUKwP26wW57zhhV/Yghb+YKER+aSEkEvjnRb37vGLOiLAQGk2iP8zr4tZkkAu87JU=
+	t=1705575124; cv=none; b=ns20MnNocpzgRc7foivveWJXLSrt83xssV1D7LQAOmyYv+k7oSEMi1jvtANjg4+pL1wmTnyJIpjUb/BjR18eyE7skF5qUJtLp4O2BC5J8E39K1XfoakvGvemXEmUu+c6aj//ef3EILlGGqmOJkN7aQv1c6pBgO6PWp6oqelyo7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575122; c=relaxed/simple;
-	bh=61F+V60pBsEzwhDNF99utPlhBlyGlUbkwEik9Z6w0zE=;
+	s=arc-20240116; t=1705575124; c=relaxed/simple;
+	bh=12Y6PpZuckzJpz03tNd7sFfAnGwg1Ll3nCz0T+cTycc=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding; b=e9hSB1BwOKeJY36B9zJlMqpRfSEwh6eGakmZQFhgfws8fDByCo4HinuzuXdY+Azsi1UlbP2UK5yV4A/rAjS/7ANsfYQTec540/uENjLDOLT1SJflpSXqY8NZMZn11Bl98BOG1mGpbkSjlKsWTasQnZnevKB+3kfdJ7LCsGdd8mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGPa7S1R; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=X6jd+WHc8Kz0ng+nl7aXw1WHFTLoUkt7R5DzABDzUNmaW04RDEUSWTGFEoznpdjJdrQAcYO/m9Z8Mj0obSL+Un4CLhQyAYF7mrBDa8ABotCxrkKe6B97EvSjB1vaOwj+DzAxJuBEFlk49huF0d7ui88kBgMegrOLFkttO4AhBAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2YP6KZd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGPa7S1R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC482C433C7;
-	Thu, 18 Jan 2024 10:52:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2YP6KZd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7178BC433C7;
+	Thu, 18 Jan 2024 10:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575121;
-	bh=61F+V60pBsEzwhDNF99utPlhBlyGlUbkwEik9Z6w0zE=;
+	s=korg; t=1705575123;
+	bh=12Y6PpZuckzJpz03tNd7sFfAnGwg1Ll3nCz0T+cTycc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GGPa7S1R9CsuAfmGPFNlx/rHyWvWKFLu3Z0Oik7t81CvdNaMslr5w0B3Y93oAy0UA
-	 lTNg88vI0oXcsySrgh8eZhsk5LHFk+QxyZRKhI8Hwtotx7+iAPQT6vrbTnJhY+1bOn
-	 98eH7qhWmurCIn7z0oOt2pttiB9NQLdGxjoZVmis=
+	b=f2YP6KZdVZkdVam7hcQ/xuQxo3FgPprePRCZsiT9LlpVg9G15LmPOmMn7kF6mpXAr
+	 +E8ZJLMIWAWjq8+UE9FVbcb2M5ZpaDDJ+jDVYxyqHNRYJcp9OABdXR21K2ouC5aDZT
+	 MVIuZWDQs1+9eO/xmbdYCfOG7jV4o46vokhhvbhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lu Yao <yaolu@kylinos.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	kernel test robot <lkp@intel.com>,
+	Chester Lin <clin@suse.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/150] drm/amdgpu: Fix cat debugfs amdgpu_regs_didt causes kernel null pointer
-Date: Thu, 18 Jan 2024 11:47:21 +0100
-Message-ID: <20240118104320.937065886@linuxfoundation.org>
+Subject: [PATCH 6.6 002/150] pinctrl: s32cc: Avoid possible string truncation
+Date: Thu, 18 Jan 2024 11:47:04 +0100
+Message-ID: <20240118104320.147257659@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -48,57 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lu Yao <yaolu@kylinos.cn>
+From: Chester Lin <clin@suse.com>
 
-[ Upstream commit 2161e09cd05a50d80736fe397145340d2e8f6c05 ]
+[ Upstream commit 08e8734d877a9a0fb8af1254a4ce58734fbef296 ]
 
-For 'AMDGPU_FAMILY_SI' family cards, in 'si_common_early_init' func, init
-'didt_rreg' and 'didt_wreg' to 'NULL'. But in func
-'amdgpu_debugfs_regs_didt_read/write', using 'RREG32_DIDT' 'WREG32_DIDT'
-lacks of relevant judgment. And other 'amdgpu_ip_block_version' that use
-these two definitions won't be added for 'AMDGPU_FAMILY_SI'.
+With "W=1" and "-Wformat-truncation" build options, the kernel test robot
+found a possible string truncation warning in pinctrl-s32cc.c, which uses
+an 8-byte char array to hold a memory region name "map%u". Since the
+maximum number of digits that a u32 value can present is 10, and the "map"
+string occupies 3 bytes with a termination '\0', which means the rest 4
+bytes cannot fully present the integer "X" that exceeds 4 digits.
 
-So, add null pointer judgment before calling.
+Here we check if the number >= 10000, which is the lowest value that
+contains more than 4 digits.
 
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Lu Yao <yaolu@kylinos.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202311030159.iyUGjNGF-lkp@intel.com/
+Signed-off-by: Chester Lin <clin@suse.com>
+Link: https://lore.kernel.org/r/20231107141044.24058-1-clin@suse.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pinctrl/nxp/pinctrl-s32cc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-index 05405da51e7a..3f2126f99923 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -638,6 +638,9 @@ static ssize_t amdgpu_debugfs_regs_didt_read(struct file *f, char __user *buf,
- 	if (size & 0x3 || *pos & 0x3)
- 		return -EINVAL;
+diff --git a/drivers/pinctrl/nxp/pinctrl-s32cc.c b/drivers/pinctrl/nxp/pinctrl-s32cc.c
+index 7daff9f186cd..f0cad2c501f7 100644
+--- a/drivers/pinctrl/nxp/pinctrl-s32cc.c
++++ b/drivers/pinctrl/nxp/pinctrl-s32cc.c
+@@ -843,8 +843,8 @@ static int s32_pinctrl_probe_dt(struct platform_device *pdev,
+ 	if (!np)
+ 		return -ENODEV;
  
-+	if (!adev->didt_rreg)
-+		return -EOPNOTSUPP;
-+
- 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
- 	if (r < 0) {
- 		pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
-@@ -694,6 +697,9 @@ static ssize_t amdgpu_debugfs_regs_didt_write(struct file *f, const char __user
- 	if (size & 0x3 || *pos & 0x3)
+-	if (mem_regions == 0) {
+-		dev_err(&pdev->dev, "mem_regions is 0\n");
++	if (mem_regions == 0 || mem_regions >= 10000) {
++		dev_err(&pdev->dev, "mem_regions is invalid: %u\n", mem_regions);
  		return -EINVAL;
+ 	}
  
-+	if (!adev->didt_wreg)
-+		return -EOPNOTSUPP;
-+
- 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
- 	if (r < 0) {
- 		pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
 -- 
 2.43.0
 
