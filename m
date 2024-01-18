@@ -1,144 +1,79 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F1F923768
-	for <patches@lists.linux.dev>; Thu, 18 Jan 2024 11:15:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28B7241E2
+	for <patches@lists.linux.dev>; Thu, 18 Jan 2024 11:36:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705576510; cv=none; b=rvyhOOXNMTq3r+UIQlhQTEKXhHrR4FPTTSeZLmk8h69ukRabsg7a0uP5a5Ftlsl4qNWakWxLiHBGE6Bl8J+acWc9fEsBYlHHvPDRK9lvsL+clrTyM98nMLT2Fr8HIGkP2Dr2ft1Hum6n/Dw1WLOHBexQptlJyGCG1h1/pawKe/Y=
+	t=1705577791; cv=none; b=dg6Vg33BosYW/eSY8Tiaz67NIpvU+ytsa+5AfbDcHym4Wz/d9R9iuEHwHOwBPGZQ43WRKxpos4iAq3aWRaPyDrZYjsngkUR+KyQumoiQZ6l3SgiSyKL+HspmHxTL8HD7yKnZq2lP3tE5gphTP7ur5wzwPWNdY+ZiN4fxMUWilbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705576510; c=relaxed/simple;
-	bh=ZOUWw6/+yRTX1HLJ3j2jZTIMiLHnk08ngluWTEwYzIY=;
-	h=Received:Received:X-Originating-IP:Date:X-CM-HeaderCharset:From:
-	 To:Cc:Subject:X-Priority:X-Mailer:In-Reply-To:References:
-	 Content-Transfer-Encoding:X-CM-CTRLDATA:Content-Type:MIME-Version:
-	 Message-ID:X-Coremail-Locale:X-CM-TRANSID:X-CM-SenderInfo:
-	 X-Coremail-Antispam; b=fpf9fAXm+Dl6Znc8rThBIrcUyr1C2AYv701mGVDiBM18TQJ6xkdiQe17s7TVBrh7segs2AzgHaS4NT0qsZZEaaCkkmrg+vySIgTl8sM2SZv3gzK5cXuTr8oEIlGZBo/wgY0dgLUhOZaXIDlzG7aUCMuq6cbzYgh57pecSNzCAdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [112.20.108.41])
-	by gateway (Coremail) with SMTP id _____8AxqvAvCKllCZwBAA--.7990S3;
-	Thu, 18 Jan 2024 19:14:55 +0800 (CST)
-Received: from chenhuacai$loongson.cn ( [112.20.108.41] ) by
- ajax-webmail-localhost.localdomain (Coremail) ; Thu, 18 Jan 2024 19:14:52
- +0800 (GMT+08:00)
-Date: Thu, 18 Jan 2024 19:14:52 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: =?UTF-8?B?6ZmI5Y2O5omN?= <chenhuacai@loongson.cn>
-To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
+	s=arc-20240116; t=1705577791; c=relaxed/simple;
+	bh=M7EAn7R7Qzkjp1pLVtrjmJ8cFDKmactEzIq7QW5zduA=;
+	h=Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To; b=DQJ8/MKsvAIX56+EqsDJjMMNS7uRgLIFABhs0OV3zpP+vkEqJ2GakSJ5bHwSiM60iYPa1nckDsohNPASUEbMXTxHnJPsjZccjMJgF5PSTQcTw+6sbLXXkpNAoiV+CakIZNwRHYgKcKFQ7sjrV5jHGfHnUjnhdlf9p99GGH7KF4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 3D15B1C0071; Thu, 18 Jan 2024 12:36:22 +0100 (CET)
+Date: Thu, 18 Jan 2024 12:36:21 +0100
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	"Stefan Wiehler" <stefan.wiehler@nokia.com>,
-	"Thomas Bogendoerfer" <tsbogend@alpha.franken.de>,
-	"Sasha Levin" <sashal@kernel.org>
-Subject: Re: [PATCH 6.6 059/150] mips/smp: Call
- rcutree_report_cpu_starting() earlier
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.1-cmXT6 build
- 20230523(b0518e05) Copyright (c) 2002-2024 www.mailtech.cn loongson
-In-Reply-To: <20240118104322.716905144@linuxfoundation.org>
-References: <20240118104320.029537060@linuxfoundation.org>
- <20240118104322.716905144@linuxfoundation.org>
-Content-Transfer-Encoding: base64
-X-CM-CTRLDATA: Cp/T0mZvb3Rlcl90eHQ9MzIyOTo2MTI=
-Content-Type: text/plain; charset=UTF-8
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.1 000/100] 6.1.74-rc1 review
+Message-ID: <ZakNNSaezSvgWSvv@duo.ucw.cz>
+References: <20240118104310.892180084@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <6a59dd46.1988.18d1c47eea9.Coremail.chenhuacai@loongson.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:AQAAf8BxrM4sCKllfmIIAA--.1046W
-X-CM-SenderInfo: hfkh0x5xdftxo6or00hjvr0hdfq/1tbiAQAABmWnj+AKsAAIsY
-X-Coremail-Antispam: 1Uk129KBj93XoWxWFyfJF47WF47trWDJFWxKrX_yoW5tw17pr
-	4fWanxKr4kXryDZw1IyryruFyrWan8Gw42vFW8tw1fZF1UuF1DJr1Sy3WfWFyDur9Yg3W2
-	yFn0van2kF4qyFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUBIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
-	xVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
-	Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
-	14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACY4xI67k042
-	43AVAKzVAKj4xxM4xvF2IEb7IF0Fy26I8I3I1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC
-	6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWw
-	C2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_
-	JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJV
-	WUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UMVCE
-	FcxC0VAYjxAxZFUvcSsGvfC2KfnxnUUI43ZEXa7IU8sSdPUUUUU==
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="JiSdNXSbHFccVNUj"
+Content-Disposition: inline
+In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 
-SGksIEdyZWcsCgpBcyBJIHNhaWQgYmVmb3JlLCB0aGlzIHBhdGNoIGNhbm5vdCBiZSBiYWNrcG9y
-dGVkIGJlY2F1c2UgcmN1dHJlZV9yZXBvcnRfY3B1X3N0YXJ0aW5nKCkgb25seSBleGlzdCBpbiA2
-LjcrLgoKSHVhY2FpCgoKPiAtLS0tLeWOn+Wni+mCruS7ti0tLS0tCj4g5Y+R5Lu25Lq6OiAiR3Jl
-ZyBLcm9haC1IYXJ0bWFuIiA8Z3JlZ2toQGxpbnV4Zm91bmRhdGlvbi5vcmc+Cj4g5Y+R6YCB5pe2
-6Ze0OjIwMjQtMDEtMTggMTg6NDg6MDEgKOaYn+acn+WbmykKPiDmlLbku7bkuro6IHN0YWJsZUB2
-Z2VyLmtlcm5lbC5vcmcKPiDmioTpgIE6ICJHcmVnIEtyb2FoLUhhcnRtYW4iIDxncmVna2hAbGlu
-dXhmb3VuZGF0aW9uLm9yZz4sIHBhdGNoZXNAbGlzdHMubGludXguZGV2LCAiU3RlZmFuIFdpZWhs
-ZXIiIDxzdGVmYW4ud2llaGxlckBub2tpYS5jb20+LCAiSHVhY2FpIENoZW4iIDxjaGVuaHVhY2Fp
-QGxvb25nc29uLmNuPiwgIlRob21hcyBCb2dlbmRvZXJmZXIiIDx0c2JvZ2VuZEBhbHBoYS5mcmFu
-a2VuLmRlPiwgIlNhc2hhIExldmluIiA8c2FzaGFsQGtlcm5lbC5vcmc+Cj4g5Li76aKYOiBbUEFU
-Q0ggNi42IDA1OS8xNTBdIG1pcHMvc21wOiBDYWxsIHJjdXRyZWVfcmVwb3J0X2NwdV9zdGFydGlu
-ZygpIGVhcmxpZXIKPiAKPiA2LjYtc3RhYmxlIHJldmlldyBwYXRjaC4gIElmIGFueW9uZSBoYXMg
-YW55IG9iamVjdGlvbnMsIHBsZWFzZSBsZXQgbWUga25vdy4KPiAKPiAtLS0tLS0tLS0tLS0tLS0t
-LS0KPiAKPiBGcm9tOiBTdGVmYW4gV2llaGxlciA8c3RlZmFuLndpZWhsZXJAbm9raWEuY29tPgo+
-IAo+IFsgVXBzdHJlYW0gY29tbWl0IDU1NzAyZWM5NjAzZWJlZmZiMTVlNmY3YjExMzYyM2ZlMWQ4
-ODcyZjQgXQo+IAo+IHJjdXRyZWVfcmVwb3J0X2NwdV9zdGFydGluZygpIG11c3QgYmUgY2FsbGVk
-IGJlZm9yZQo+IGNsb2NrZXZlbnRzX3JlZ2lzdGVyX2RldmljZSgpIHRvIGF2b2lkIHRoZSBmb2xs
-b3dpbmcgbG9ja2RlcCBzcGxhdCB0cmlnZ2VyZWQgYnkKPiBjYWxsaW5nIGxpc3RfYWRkKCkgd2hl
-biBDT05GSUdfUFJPVkVfUkNVX0xJU1Q9eToKPiAKPiAgIFdBUk5JTkc6IHN1c3BpY2lvdXMgUkNV
-IHVzYWdlCj4gICAuLi4KPiAgIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCj4gICBrZXJu
-ZWwvbG9ja2luZy9sb2NrZGVwLmM6MzY4MCBSQ1UtbGlzdCB0cmF2ZXJzZWQgaW4gbm9uLXJlYWRl
-ciBzZWN0aW9uISEKPiAKPiAgIG90aGVyIGluZm8gdGhhdCBtaWdodCBoZWxwIHVzIGRlYnVnIHRo
-aXM6Cj4gCj4gICBSQ1UgdXNlZCBpbGxlZ2FsbHkgZnJvbSBvZmZsaW5lIENQVSEKPiAgIHJjdV9z
-Y2hlZHVsZXJfYWN0aXZlID0gMSwgZGVidWdfbG9ja3MgPSAxCj4gICBubyBsb2NrcyBoZWxkIGJ5
-IHN3YXBwZXIvMS8wLgo+ICAgLi4uCj4gICBDYWxsIFRyYWNlOgo+ICAgWzxmZmZmZmZmZjgwMTJh
-NDM0Pl0gc2hvd19zdGFjaysweDY0LzB4MTU4Cj4gICBbPGZmZmZmZmZmODBhOTNkOTg+XSBkdW1w
-X3N0YWNrX2x2bCsweDkwLzB4YzQKPiAgIFs8ZmZmZmZmZmY4MDFjOWU5Yz5dIF9fbG9ja19hY3F1
-aXJlKzB4MTQwNC8weDI5NDAKPiAgIFs8ZmZmZmZmZmY4MDFjYmYzYz5dIGxvY2tfYWNxdWlyZSsw
-eDE0Yy8weDQ0OAo+ICAgWzxmZmZmZmZmZjgwYWE0MjYwPl0gX3Jhd19zcGluX2xvY2tfaXJxc2F2
-ZSsweDUwLzB4ODgKPiAgIFs8ZmZmZmZmZmY4MDIxZTBjOD5dIGNsb2NrZXZlbnRzX3JlZ2lzdGVy
-X2RldmljZSsweDYwLzB4MWU4Cj4gICBbPGZmZmZmZmZmODAxMzBmZjA+XSByNGtfY2xvY2tldmVu
-dF9pbml0KzB4MjIwLzB4M2EwCj4gICBbPGZmZmZmZmZmODAxMzM5ZDA+XSBzdGFydF9zZWNvbmRh
-cnkrMHg1MC8weDNiOAo+IAo+IHJhd19zbXBfcHJvY2Vzc29yX2lkKCkgaXMgcmVxdWlyZWQgaW4g
-b3JkZXIgdG8gYXZvaWQgY2FsbGluZyBpbnRvIGxvY2tkZXAKPiBiZWZvcmUgUkNVIGhhcyBkZWNs
-YXJlZCB0aGUgQ1BVIHRvIGJlIHdhdGNoZWQgZm9yIHJlYWRlcnMuCj4gCj4gU2VlIGFsc28gY29t
-bWl0IDI5MzY4ZTA5MzkyMSAoIng4Ni9zbXBib290OiAgTW92ZSByY3VfY3B1X3N0YXJ0aW5nKCkg
-ZWFybGllciIpLAo+IGNvbW1pdCBkZTVkOWRhZTE1MGMgKCJzMzkwL3NtcDogbW92ZSByY3VfY3B1
-X3N0YXJ0aW5nKCkgZWFybGllciIpIGFuZCBjb21taXQKPiA5OWYwNzBiNjIzMjIgKCJwb3dlcnBj
-L3NtcDogQ2FsbCByY3VfY3B1X3N0YXJ0aW5nKCkgZWFybGllciIpLgo+IAo+IFNpZ25lZC1vZmYt
-Ynk6IFN0ZWZhbiBXaWVobGVyIDxzdGVmYW4ud2llaGxlckBub2tpYS5jb20+Cj4gUmV2aWV3ZWQt
-Ynk6IEh1YWNhaSBDaGVuIDxjaGVuaHVhY2FpQGxvb25nc29uLmNuPgo+IFNpZ25lZC1vZmYtYnk6
-IFRob21hcyBCb2dlbmRvZXJmZXIgPHRzYm9nZW5kQGFscGhhLmZyYW5rZW4uZGU+Cj4gU2lnbmVk
-LW9mZi1ieTogU2FzaGEgTGV2aW4gPHNhc2hhbEBrZXJuZWwub3JnPgo+IC0tLQo+ICBhcmNoL21p
-cHMva2VybmVsL3NtcC5jIHwgNCArKy0tCj4gIDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMo
-KyksIDIgZGVsZXRpb25zKC0pCj4gCj4gZGlmZiAtLWdpdCBhL2FyY2gvbWlwcy9rZXJuZWwvc21w
-LmMgYi9hcmNoL21pcHMva2VybmVsL3NtcC5jCj4gaW5kZXggOGZiZWY1MzdmYjg4Li44MmUyZTA1
-MWI0MTYgMTAwNjQ0Cj4gLS0tIGEvYXJjaC9taXBzL2tlcm5lbC9zbXAuYwo+ICsrKyBiL2FyY2gv
-bWlwcy9rZXJuZWwvc21wLmMKPiBAQCAtMzUxLDEwICszNTEsMTEgQEAgZWFybHlfaW5pdGNhbGwo
-bWlwc19zbXBfaXBpX2luaXQpOwo+ICAgKi8KPiAgYXNtbGlua2FnZSB2b2lkIHN0YXJ0X3NlY29u
-ZGFyeSh2b2lkKQo+ICB7Cj4gLQl1bnNpZ25lZCBpbnQgY3B1Owo+ICsJdW5zaWduZWQgaW50IGNw
-dSA9IHJhd19zbXBfcHJvY2Vzc29yX2lkKCk7Cj4gIAo+ICAJY3B1X3Byb2JlKCk7Cj4gIAlwZXJf
-Y3B1X3RyYXBfaW5pdChmYWxzZSk7Cj4gKwlyY3V0cmVlX3JlcG9ydF9jcHVfc3RhcnRpbmcoY3B1
-KTsKPiAgCW1pcHNfY2xvY2tldmVudF9pbml0KCk7Cj4gIAltcF9vcHMtPmluaXRfc2Vjb25kYXJ5
-KCk7Cj4gIAljcHVfcmVwb3J0KCk7Cj4gQEAgLTM2Niw3ICszNjcsNiBAQCBhc21saW5rYWdlIHZv
-aWQgc3RhcnRfc2Vjb25kYXJ5KHZvaWQpCj4gIAkgKi8KPiAgCj4gIAljYWxpYnJhdGVfZGVsYXko
-KTsKPiAtCWNwdSA9IHNtcF9wcm9jZXNzb3JfaWQoKTsKPiAgCWNwdV9kYXRhW2NwdV0udWRlbGF5
-X3ZhbCA9IGxvb3BzX3Blcl9qaWZmeTsKPiAgCj4gIAlzZXRfY3B1X3NpYmxpbmdfbWFwKGNwdSk7
-Cj4gLS0gCj4gMi40My4wCj4gCj4gCg0KDQrmnKzpgq7ku7blj4rlhbbpmYTku7blkKvmnInpvpno
-iq/kuK3np5HnmoTllYbkuJrnp5jlr4bkv6Hmga/vvIzku4XpmZDkuo7lj5HpgIHnu5nkuIrpnaLl
-nLDlnYDkuK3liJflh7rnmoTkuKrkurrmiJbnvqTnu4TjgILnpoHmraLku7vkvZXlhbbku5bkurrk
-u6Xku7vkvZXlvaLlvI/kvb/nlKjvvIjljIXmi6zkvYbkuI3pmZDkuo7lhajpg6jmiJbpg6jliIbl
-nLDms4TpnLLjgIHlpI3liLbmiJbmlaPlj5HvvInmnKzpgq7ku7blj4rlhbbpmYTku7bkuK3nmoTk
-v6Hmga/jgILlpoLmnpzmgqjplJnmlLbmnKzpgq7ku7bvvIzor7fmgqjnq4vljbPnlLXor53miJbp
-gq7ku7bpgJrnn6Xlj5Hku7bkurrlubbliKDpmaTmnKzpgq7ku7bjgIIgDQpUaGlzIGVtYWlsIGFu
-ZCBpdHMgYXR0YWNobWVudHMgY29udGFpbiBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24gZnJvbSBM
-b29uZ3NvbiBUZWNobm9sb2d5ICwgd2hpY2ggaXMgaW50ZW5kZWQgb25seSBmb3IgdGhlIHBlcnNv
-biBvciBlbnRpdHkgd2hvc2UgYWRkcmVzcyBpcyBsaXN0ZWQgYWJvdmUuIEFueSB1c2Ugb2YgdGhl
-IGluZm9ybWF0aW9uIGNvbnRhaW5lZCBoZXJlaW4gaW4gYW55IHdheSAoaW5jbHVkaW5nLCBidXQg
-bm90IGxpbWl0ZWQgdG8sIHRvdGFsIG9yIHBhcnRpYWwgZGlzY2xvc3VyZSwgcmVwcm9kdWN0aW9u
-IG9yIGRpc3NlbWluYXRpb24pIGJ5IHBlcnNvbnMgb3RoZXIgdGhhbiB0aGUgaW50ZW5kZWQgcmVj
-aXBpZW50KHMpIGlzIHByb2hpYml0ZWQuIElmIHlvdSByZWNlaXZlIHRoaXMgZW1haWwgaW4gZXJy
-b3IsIHBsZWFzZSBub3RpZnkgdGhlIHNlbmRlciBieSBwaG9uZSBvciBlbWFpbCBpbW1lZGlhdGVs
-eSBhbmQgZGVsZXRlIGl0LiA=
 
+--JiSdNXSbHFccVNUj
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi!
+
+> This is the start of the stable review cycle for the 6.1.74 release.
+> There are 100 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+CIP testing did not find any problems here:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+6.1.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--JiSdNXSbHFccVNUj
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZakNNQAKCRAw5/Bqldv6
+8qv/AJ9RMEDyA3LDTlsFrG6LKCpK6hznDQCgvcivROelW8n9Iqskhi0PxNHSOeY=
+=FF9/
+-----END PGP SIGNATURE-----
+
+--JiSdNXSbHFccVNUj--
