@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90126BE7F;
-	Thu, 18 Jan 2024 11:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F3C200A0;
+	Thu, 18 Jan 2024 11:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575718; cv=none; b=YuAEddO0NevrUANfKYXkiTQR82oy/sGIgN1WCr5lcO8OVWgiv7tlmQmGhXw79FEAoWMzs9PoZAOXtKcdvxfTklAPwXlxjDgQ2So8OnPbj0KDjtWLDpHu5dVrUX7WxTWpDSSaG2L0fN1fNfOSjgB3JgyujLcesQQDCSmSDI2c69s=
+	t=1705575721; cv=none; b=IudtoghJQN/dUDj3CiqlZ9cuuaoR5cGaZTrjhyeX/HmQsOLK0d9ZePyvqus7tWW/tYoLXbnLpS0ofCpToQolafGVACYzE4lBjhywU8iwTrqZsIIhQDq8tfwIWDcO2j3+jdOJ18Ce0oBkqeuxI/5ukeSXAE6QDFKgzrgFZzxj0rU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575718; c=relaxed/simple;
-	bh=DsgV56p0vf8jg5c8kuC733aKH2iZ8GAgO3iEj7z0n3I=;
+	s=arc-20240116; t=1705575721; c=relaxed/simple;
+	bh=KVxZ5l604JVDqfDmQz11GwzPw1Pm8IZDp3xOBk0IsN0=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=aTekAhFpADAnDdK9Ilk0pzJR6ECIAjftxJec1SmCfquJRK8E7LqZ9XVRTkCsWaq8o85YyKC87TamqZuBnn7tTw7XCSjAeIe0MEITgGoorhG0KKukZp4GFLu0CzBNEucSQ7XYhxxOkiREhTiNFTclvyNRxEjuQAEnwWxD+MN6Mak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2TpmcW0; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=gAq6vF7ptOjAsrZcPlCJ1OUXcY8So6Alp7tZY0BfYo6lt5+C+8aeLxozWoWuwDW1mtZpBSXUivih2Qyx8NlOAZPFbCCp9vWgLRRfZVZKU+Jdz8opUZNPCEkcB9KJI+XE/ka/KRBJTCSpBf5SJ3D+YeKQalxka5hFd57OyRMRKvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4SVXUyg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2TpmcW0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13953C433C7;
-	Thu, 18 Jan 2024 11:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4SVXUyg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0302C433C7;
+	Thu, 18 Jan 2024 11:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575718;
-	bh=DsgV56p0vf8jg5c8kuC733aKH2iZ8GAgO3iEj7z0n3I=;
+	s=korg; t=1705575721;
+	bh=KVxZ5l604JVDqfDmQz11GwzPw1Pm8IZDp3xOBk0IsN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e2TpmcW0gQVMS4ULRR6cKcUUPnXgCMRmMRVCUFy5HVIxaXIFjXKIYCfKfGpVpQoui
-	 TFCqKsU3w/oRbHnzggskfxIiWVgBkbTflIjsn5OYbul4hsl9t258uDHjX4y/HytNBr
-	 vdVkpVdWUKeKm0uFnY8VwuQuX04D7wP78V3BWNmo=
+	b=q4SVXUygrYJkWbPfOw2OuT8XM5/jnVGJMyjmDf0QqGUi6qi/6zWwidXWFcdZgALf1
+	 fyiAP5dDruXOKllEUbw/TyVjH55Z/3jsI+4JBlOGGMZa4jBMdEuFvAZUNzdaSUal7l
+	 ZZxt6W6a3pjIDoMAQbK39Z9eqMqZVHnHEcmLAmeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca@z3ntu.xyz>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	syzbot+4fad2e57beb6397ab2fc@syzkaller.appspotmail.com,
+	Ziqi Zhao <astrajoan@yahoo.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/100] Input: xpad - add Razer Wolverine V2 support
-Date: Thu, 18 Jan 2024 11:49:11 +0100
-Message-ID: <20240118104313.674160863@linuxfoundation.org>
+Subject: [PATCH 6.1 081/100] drm/crtc: fix uninitialized variable use
+Date: Thu, 18 Jan 2024 11:49:29 +0100
+Message-ID: <20240118104314.429737186@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -52,32 +56,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca@z3ntu.xyz>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit c3d1610345b79cbe29ef6ca04a4780eff0d360c7 ]
+[ Upstream commit 6e455f5dcdd15fa28edf0ffb5b44d3508512dccf ]
 
-Add the VID and PID of Razer Wolverine V2 to xpad_device.
+Commit 3823119b9c2b ("drm/crtc: Fix uninit-value bug in
+drm_mode_setcrtc") was supposed to fix use of an uninitialized variable,
+but introduced another.
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-Link: https://lore.kernel.org/r/20231125-razer-wolverine-v2-v1-1-979fe9f9288e@z3ntu.xyz
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+num_connectors is only initialized if crtc_req->count_connectors > 0,
+but it's used regardless. Fix it.
+
+Fixes: 3823119b9c2b ("drm/crtc: Fix uninit-value bug in drm_mode_setcrtc")
+Cc: syzbot+4fad2e57beb6397ab2fc@syzkaller.appspotmail.com
+Cc: Ziqi Zhao <astrajoan@yahoo.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231208131238.2924571-1-jani.nikula@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/xpad.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/drm_crtc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
-index 8404286302b0..e8011d70d079 100644
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -286,6 +286,7 @@ static const struct xpad_device {
- 	{ 0x146b, 0x0604, "Bigben Interactive DAIJA Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
- 	{ 0x1532, 0x0a00, "Razer Atrox Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
- 	{ 0x1532, 0x0a03, "Razer Wildcat", 0, XTYPE_XBOXONE },
-+	{ 0x1532, 0x0a29, "Razer Wolverine V2", 0, XTYPE_XBOXONE },
- 	{ 0x15e4, 0x3f00, "Power A Mini Pro Elite", 0, XTYPE_XBOX360 },
- 	{ 0x15e4, 0x3f0a, "Xbox Airflo wired controller", 0, XTYPE_XBOX360 },
- 	{ 0x15e4, 0x3f10, "Batarang Xbox 360 controller", 0, XTYPE_XBOX360 },
+diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
+index d718c17ab1e9..cb90e70d85e8 100644
+--- a/drivers/gpu/drm/drm_crtc.c
++++ b/drivers/gpu/drm/drm_crtc.c
+@@ -715,7 +715,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
+ 	struct drm_mode_set set;
+ 	uint32_t __user *set_connectors_ptr;
+ 	struct drm_modeset_acquire_ctx ctx;
+-	int ret, i, num_connectors;
++	int ret, i, num_connectors = 0;
+ 
+ 	if (!drm_core_check_feature(dev, DRIVER_MODESET))
+ 		return -EOPNOTSUPP;
+@@ -850,7 +850,6 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
+ 			goto out;
+ 		}
+ 
+-		num_connectors = 0;
+ 		for (i = 0; i < crtc_req->count_connectors; i++) {
+ 			connector_set[i] = NULL;
+ 			set_connectors_ptr = (uint32_t __user *)(unsigned long)crtc_req->set_connectors_ptr;
 -- 
 2.43.0
 
