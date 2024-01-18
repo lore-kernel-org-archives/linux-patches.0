@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087B12377B;
-	Thu, 18 Jan 2024 10:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29BC1774B;
+	Thu, 18 Jan 2024 10:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575505; cv=none; b=LqL/aOi4X0/BZTG9Bjhfm8HBy3MRX/HYGb3+wPw3I2hHXAKKsXrIkN/l7PI9JubolUVvKwCcpzBm2XCCvSzLAvlanveF5LayxhzUpSV6EO8H8vUnYUg+TS2I/0LnRAbz1MPzBLVKzb45bMnl/MGh253vLTZJlxJI1MnWtEHk1Jk=
+	t=1705575507; cv=none; b=hmlVRHgCMlHqwkosRXC2RfFInoGyLs4mItpljgoEsJ+8ZTcm+/itJnIEtT+BNPio+36Ix0v1emhLcF4cnZjoRf5yKjTOMOnMUFX4QbeVXplyWjXvdORv7T9AMUEzxJ0RQSPNQm6qEcr+XUIgXkowOguHvqjBfonRqJ5xl3A/QeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575505; c=relaxed/simple;
-	bh=6++ZeRTK3f2yfFxNQj3GEn3PMN7i3s9lWcZYBhrf2nA=;
+	s=arc-20240116; t=1705575507; c=relaxed/simple;
+	bh=Ve4zWD7DyKEaSKpLx8B4HVajm+gRqdtmItazRO58LO4=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=K00Y8Q4XO6LdweVbLu+ULJcOZSMuDf3SoeLguDSxy5yMDKah2Jh3sESp5B03F1LMNzG03+PYdAqmX08Pv4yfpzJHsTpxyPmk75mRdKm1pGr4EeqRiaIbaH6chjxWCLLHOJmQqU02YLRjiNI2Kl4mJdcu9nZnUFvvgcirFfxgsBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qu8fp+yB; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=tuS9QDOrfRDLI24T4hVSO1ovOMp5SVJf3tmA2FSlTvE/Lxj/bEA18omPVChsCxxUw4dnQfH92CLONFHvLZt1dUa5gvD5zvdBH63IyFHE76b3cx9KDbeB+ixtVfNKm17wUKvOGmrQCgKAtARxCTzPTwR7i5KU6xbpiA3aOBFswQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBjPtDsN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qu8fp+yB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812C8C433F1;
-	Thu, 18 Jan 2024 10:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBjPtDsN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577ABC433F1;
+	Thu, 18 Jan 2024 10:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575504;
-	bh=6++ZeRTK3f2yfFxNQj3GEn3PMN7i3s9lWcZYBhrf2nA=;
+	s=korg; t=1705575507;
+	bh=Ve4zWD7DyKEaSKpLx8B4HVajm+gRqdtmItazRO58LO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qu8fp+yBjYVia9SUgo6EfIrhSwcn9xzSp2uo/dwEJAYN2pJ/G6t75O1c6eN0T9DF+
-	 0nYaedThnsq9rxueReuDKncJpvSldJ/L10N7IyRoQOlg6s2ZseE3Uhr0IZrzQtFMNy
-	 50WGhng6HsQmDO6Dbc3wOZyb/QfNlE9lA+OUI9zg=
+	b=XBjPtDsNnu1M4Kb4v2jHGwBbLIGRVmYRZxHtgI7o5Pc04teGJEGDSlzmKZz4WguNT
+	 xinGRi0ktKmZGlZQ6MQc0ItJ3KsI1WeLwHR5b+34vj7MxQACIK+Jm6xHK7KR13ZZDg
+	 k6UHbOGu2bTkX5YwRPxhYkoOx+2UMfZGqoy8jxe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Jason Schwanke <tom@catboys.cloud>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 130/150] ALSA: hda/realtek: Fix mute and mic-mute LEDs for HP Envy X360 13-ay0xxx
-Date: Thu, 18 Jan 2024 11:49:12 +0100
-Message-ID: <20240118104326.063785364@linuxfoundation.org>
+	Luis Acuna <ldacuna@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 131/150] ACPI: resource: Add another DMI match for the TongFang GMxXGxx
+Date: Thu, 18 Jan 2024 11:49:13 +0100
+Message-ID: <20240118104326.112948234@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -51,34 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Jason Schwanke <tom@catboys.cloud>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 6b3d14b7f9b1acaf7303d8499836bf78ee9c470c upstream.
+commit df0cced74159c79e36ce7971f0bf250673296d93 upstream.
 
-This enables the mute and mic-mute LEDs on the HP Envy X360 13-ay0xxx
-convertibles.
-The quirk 'ALC245_FIXUP_HP_X360_MUTE_LEDS' already exists and is now
-enabled for this device.
+The TongFang GMxXGxx, which needs IRQ overriding for the keyboard to work,
+is also sold as the Eluktronics RP-15 which does not use the standard
+TongFang GMxXGxx DMI board_name.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216197
-Signed-off-by: Tom Jason Schwanke <tom@catboys.cloud>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/651b26e9-e86b-45dd-aa90-3e43d6b99823@catboys.cloud
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Add an entry for this laptop to the irq1_edge_low_force_override[] DMI
+table to make the internal keyboard functional.
+
+Reported-by: Luis Acuna <ldacuna@gmail.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/resource.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9735,6 +9735,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8735, "HP ProBook 435 G7", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8736, "HP", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x8760, "HP", ALC285_FIXUP_HP_MUTE_LED),
-+	SND_PCI_QUIRK(0x103c, 0x876e, "HP ENVY x360 Convertible 13-ay0xxx", ALC245_FIXUP_HP_X360_MUTE_LEDS),
- 	SND_PCI_QUIRK(0x103c, 0x877a, "HP", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x877d, "HP", ALC236_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8780, "HP ZBook Fury 17 G7 Mobile Workstation",
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -509,6 +509,13 @@ static const struct dmi_system_id mainge
+ 		},
+ 	},
+ 	{
++		/* TongFang GMxXGxx sold as Eluktronics Inc. RP-15 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Eluktronics Inc."),
++			DMI_MATCH(DMI_BOARD_NAME, "RP-15"),
++		},
++	},
++	{
+ 		/* TongFang GM6XGxX/TUXEDO Stellaris 16 Gen5 AMD */
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "GM6XGxX"),
 
 
