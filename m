@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FE723757;
-	Thu, 18 Jan 2024 11:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBC22376B;
+	Thu, 18 Jan 2024 11:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575629; cv=none; b=TbgS58pwf0a+cN1TVzW6E8X1LceQiO3YQgYsdGd38hhseG4bYP07cF7LRv33n1n/YG6J3UgVMcBKbWCaTsJNbhWqMiYxauqQ6mJTHxj/mjJl4umbCqatucjvViVyphwSEf62iGzsz4ucl9TLW4slVgx06Y++k8uTQd0alc+mqbo=
+	t=1705575632; cv=none; b=L+sSDJnwik20wl8TOCxG/H6PeRVQljYNqSH8P618cidSEzSkYfIQPTEj9KiPsFH64OTNm6OkqR3f03YEMYUuhJoV57/oixXquFgT61h3lETXlU5roBae/LyIMiVBMU2oUBtyprF806g9YhgOXdWlf0jtVHRxK5nGBIgSJ/Bpx/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575629; c=relaxed/simple;
-	bh=I8lSrD/z3eqORiat5z67rJfX3rHJVwFVOuWlMp4XzNg=;
+	s=arc-20240116; t=1705575632; c=relaxed/simple;
+	bh=o/xyUv8Itebw6dZQXfeN4v4b/Q1cqTrFwQg2knjnIhA=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=BV1ABqY6XHcXgZHmSziew69Tw5VFl23Mo7xv5thCBxLJ7rB6bSsDdF0X0lgGuu/MFuTyaMLuOgvNHgNZW4zuMA2kqNvPnCQG293W3+hMZDVR1RYVFeDmIqDmRyaRhvCN0uKbPDtrAKFbwUmmX6Q0TM6aL00+NDx3dBLM5ULHVa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=naq5qgOu; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=MfOZYa4XlS6HzNkouidUYYIWm5f5gnqM3832MxkgDdVzxBjZJXekvFdJNWMFubrnj/DKrY9v0Lp+3HEym7j7XKRynrKUVdHhkT1mq8NyIvmLBo0CdEEED5SWCbsavHKUT1vBoBmh1boVt6ES9rKssDQGCJAOk9T/H4siyiChhCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7+OuT0d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="naq5qgOu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29988C433C7;
-	Thu, 18 Jan 2024 11:00:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7+OuT0d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01782C433F1;
+	Thu, 18 Jan 2024 11:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575629;
-	bh=I8lSrD/z3eqORiat5z67rJfX3rHJVwFVOuWlMp4XzNg=;
+	s=korg; t=1705575632;
+	bh=o/xyUv8Itebw6dZQXfeN4v4b/Q1cqTrFwQg2knjnIhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=naq5qgOuHr3Cm6AfO3ajSbXMN1eBgqfLanm0XMb1ok2+cqVOavxU3bNmmMHKAf8P9
-	 S8HAzMYMhkvcc3i9EMhNMO3oaKhzI+u5YXSGX3T8Lf1Xlrv0zLbmABsUUZNr1sY7jB
-	 hDcM6jTzWGgJeg0jQI7NvnOQXl/lP6uBIegiMuZw=
+	b=L7+OuT0djVAzSd1exoBlLLHIMbWrWjbe6gM/PsHgPqQLJxOM6fybH8oWaljR4S3b0
+	 uJW3dPAF8DhZ1LNFsTIX6PzeYeNkoh7us3AfwacvvY8IBK65JV4LzNHlBcRP366DaH
+	 ijNao1M37i5HoMI7Fjqxal0AjB8vIcsvIA/1bhsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/100] ASoC: ops: add correct range check for limiting volume
-Date: Thu, 18 Jan 2024 11:48:40 +0100
-Message-ID: <20240118104312.314169811@linuxfoundation.org>
+Subject: [PATCH 6.1 050/100] tracing: Have large events show up as [LINE TOO BIG] instead of nothing
+Date: Thu, 18 Jan 2024 11:48:58 +0100
+Message-ID: <20240118104313.087210778@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -53,38 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit fb9ad24485087e0f00d84bee7a5914640b2b9024 ]
+[ Upstream commit b55b0a0d7c4aa2dac3579aa7e6802d1f57445096 ]
 
-Volume can have ranges that start with negative values, ex: -84dB to
-+40dB. Apply correct range check in snd_soc_limit_volume before setting
-the platform_max. Without this patch, for example setting a 0dB limit on
-a volume range of -84dB to +40dB would fail.
+If a large event was added to the ring buffer that is larger than what the
+trace_seq can handle, it just drops the output:
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231204124736.132185-2-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+ ~# cat /sys/kernel/tracing/trace
+ # tracer: nop
+ #
+ # entries-in-buffer/entries-written: 2/2   #P:8
+ #
+ #                                _-----=> irqs-off/BH-disabled
+ #                               / _----=> need-resched
+ #                              | / _---=> hardirq/softirq
+ #                              || / _--=> preempt-depth
+ #                              ||| / _-=> migrate-disable
+ #                              |||| /     delay
+ #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+ #              | |         |   |||||     |         |
+            <...>-859     [001] .....   141.118951: tracing_mark_write           <...>-859     [001] .....   141.148201: tracing_mark_write: 78901234
+
+Instead, catch this case and add some context:
+
+ ~# cat /sys/kernel/tracing/trace
+ # tracer: nop
+ #
+ # entries-in-buffer/entries-written: 2/2   #P:8
+ #
+ #                                _-----=> irqs-off/BH-disabled
+ #                               / _----=> need-resched
+ #                              | / _---=> hardirq/softirq
+ #                              || / _--=> preempt-depth
+ #                              ||| / _-=> migrate-disable
+ #                              |||| /     delay
+ #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+ #              | |         |   |||||     |         |
+            <...>-852     [001] .....   121.550551: tracing_mark_write[LINE TOO BIG]
+            <...>-852     [001] .....   121.550581: tracing_mark_write: 78901234
+
+This now emulates the same output as trace_pipe.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20231209171058.78c1a026@gandalf.local.home
+
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-ops.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
-index 55b009d3c681..2d25748ca706 100644
---- a/sound/soc/soc-ops.c
-+++ b/sound/soc/soc-ops.c
-@@ -661,7 +661,7 @@ int snd_soc_limit_volume(struct snd_soc_card *card,
- 	kctl = snd_soc_card_get_kcontrol(card, name);
- 	if (kctl) {
- 		struct soc_mixer_control *mc = (struct soc_mixer_control *)kctl->private_value;
--		if (max <= mc->max) {
-+		if (max <= mc->max - mc->min) {
- 			mc->platform_max = max;
- 			ret = 0;
- 		}
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index deae65af76ec..b751c2ce9a34 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -4679,7 +4679,11 @@ static int s_show(struct seq_file *m, void *v)
+ 		iter->leftover = ret;
+ 
+ 	} else {
+-		print_trace_line(iter);
++		ret = print_trace_line(iter);
++		if (ret == TRACE_TYPE_PARTIAL_LINE) {
++			iter->seq.full = 0;
++			trace_seq_puts(&iter->seq, "[LINE TOO BIG]\n");
++		}
+ 		ret = trace_print_seq(m, &iter->seq);
+ 		/*
+ 		 * If we overflow the seq_file buffer, then it will
 -- 
 2.43.0
 
