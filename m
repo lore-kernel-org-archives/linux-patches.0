@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57DE22F0F;
-	Thu, 18 Jan 2024 10:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CB023776;
+	Thu, 18 Jan 2024 10:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575560; cv=none; b=SzhE5CamWUSqPdIWRrMO+spPRHOgyynXWHkQIsgVPETOmv87Jyec5cUG5ajb7K6U+qD2AY4X52KB2s4/XxyfQBi3fQuNsp2VfQDe6bDAIwLutuMQlIkedIeKRu3EPejyA0Y8m9IyTb2NXcRWReoR+3KpF6jECEU85XlLo2XSidQ=
+	t=1705575563; cv=none; b=eolPr5bU3xARDCGMSrTB4Htsb9oT/96gILxIVFpcsxUd2Wwaz/m3nb0cP3oZRFlpg0ptN4FjOOw+heT86acY14YohZz4F2njMBCYLTW60eyq6EUpnj8sU9aFqOHk85JO6ZH0xuJKeAItxCxSVhfhE2ClZkqtubaW/jJE44rvQE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575560; c=relaxed/simple;
-	bh=19aQXHwNit+r1wV3ANTBUatMxkzMq7qdAwc4+kB8zdo=;
+	s=arc-20240116; t=1705575563; c=relaxed/simple;
+	bh=E8JC7GkiJh+NEa+dX43VfFK3bpI2Fo1jiWoKJs3JjOU=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=RC4qFVMDDNA2DDLMN5cvENNEMKVhQLMfQ9/dTCCZPSoc4B6AlR7vCO1kBdp506mJ94bSlREBtWx9GALUR5GGDmsHEtqzpf0DuEZd+Mt3nOgfJnHovQYf4LB/xTMV26774gVFnzA+QSWg6WbtMnKdiDx/GNcncT7ufo4TMDwEtlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEaUsVvq; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=GzZq0ZVtB3vcfkd2kYn/0m5V/umKHDiNifoDUmO8lUAvc8i3HTolA3DfMMCpCiJTxVbEhWiJdD0ozz1DC6+YEW3P+hcEEGA6kqcSxCdKOR2YPqjNHUmailOuF30vQY+obzlZI2JeeCHk7oAr31Ncf8JBg3Kz3fn0MoLv4Mw15vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRela6ad; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEaUsVvq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A3BC433F1;
-	Thu, 18 Jan 2024 10:59:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRela6ad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15CCDC433C7;
+	Thu, 18 Jan 2024 10:59:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575560;
-	bh=19aQXHwNit+r1wV3ANTBUatMxkzMq7qdAwc4+kB8zdo=;
+	s=korg; t=1705575563;
+	bh=E8JC7GkiJh+NEa+dX43VfFK3bpI2Fo1jiWoKJs3JjOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NEaUsVvq39em0Ex7l7MzfbLXNCINeZ0JezUsSiXigrhOsmpCa78YDX2trIYoe8TmI
-	 WxqWLj2gA7EGTrAk2PWgcljNEMK0mqFTHhVcBa2Q3VE4bdU7Cpob2pRzmgFHh5bBKz
-	 y6Jbs9pnT86ywhQXNgU+TkSqsd3TCWWxkP+ReKO8=
+	b=bRela6ad8Z+UaIJ6ocVVehDOIPkVsvmmWbZB6yN5qLAOGqsFd66BORyo/wkmbHjjn
+	 DQAlINRvFZ55/Y0n4sj3cgi2oMGSbwplo6AeIYvlmV/UeyctsQQeuSpbXhNsSuOYc9
+	 EIHwNOay4BraPAGcJR4dcTmLancQDCuZwT0FKFpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuming Fan <shumingf@realtek.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/100] ASoC: rt5650: add mutex to avoid the jack detection failure
-Date: Thu, 18 Jan 2024 11:48:33 +0100
-Message-ID: <20240118104312.002232537@linuxfoundation.org>
+Subject: [PATCH 6.1 026/100] ASoC: Intel: skl_hda_dsp_generic: Drop HDMI routes when HDMI is not available
+Date: Thu, 18 Jan 2024 11:48:34 +0100
+Message-ID: <20240118104312.053613682@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -52,77 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit cdba4301adda7c60a2064bf808e48fccd352aaa9 ]
+[ Upstream commit 3d1dc8b1030df8ca0fdfd4905c88ee10db943bf8 ]
 
-This patch adds the jd_mutex to protect the jack detection control flow.
-And only the headset type could check the button status.
+When the HDMI is not present due to disabled display support
+we will use dummy codec and the HDMI routes will refer to non existent
+DAPM widgets.
 
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Link: https://lore.kernel.org/r/20231122100123.2831753-1-shumingf@realtek.com
+Trim the route list from the HDMI routes to be able to probe the card even
+if the HDMI dais are not registered.
+
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20231124124015.15878-1-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5645.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ sound/soc/intel/boards/skl_hda_dsp_generic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
-index f86fc7cd104d..60518ee5a86e 100644
---- a/sound/soc/codecs/rt5645.c
-+++ b/sound/soc/codecs/rt5645.c
-@@ -448,6 +448,7 @@ struct rt5645_priv {
- 	struct regulator_bulk_data supplies[ARRAY_SIZE(rt5645_supply_names)];
- 	struct rt5645_eq_param_s *eq_param;
- 	struct timer_list btn_check_timer;
-+	struct mutex jd_mutex;
- 
- 	int codec_type;
- 	int sysclk;
-@@ -3189,6 +3190,8 @@ static int rt5645_jack_detect(struct snd_soc_component *component, int jack_inse
- 				rt5645_enable_push_button_irq(component, true);
- 			}
- 		} else {
-+			if (rt5645->en_button_func)
-+				rt5645_enable_push_button_irq(component, false);
- 			snd_soc_dapm_disable_pin(dapm, "Mic Det Power");
- 			snd_soc_dapm_sync(dapm);
- 			rt5645->jack_type = SND_JACK_HEADPHONE;
-@@ -3269,6 +3272,8 @@ static void rt5645_jack_detect_work(struct work_struct *work)
- 	if (!rt5645->component)
- 		return;
- 
-+	mutex_lock(&rt5645->jd_mutex);
-+
- 	switch (rt5645->pdata.jd_mode) {
- 	case 0: /* Not using rt5645 JD */
- 		if (rt5645->gpiod_hp_det) {
-@@ -3295,7 +3300,7 @@ static void rt5645_jack_detect_work(struct work_struct *work)
- 
- 	if (!val && (rt5645->jack_type == 0)) { /* jack in */
- 		report = rt5645_jack_detect(rt5645->component, 1);
--	} else if (!val && rt5645->jack_type != 0) {
-+	} else if (!val && rt5645->jack_type == SND_JACK_HEADSET) {
- 		/* for push button and jack out */
- 		btn_type = 0;
- 		if (snd_soc_component_read(rt5645->component, RT5645_INT_IRQ_ST) & 0x4) {
-@@ -3351,6 +3356,8 @@ static void rt5645_jack_detect_work(struct work_struct *work)
- 		rt5645_jack_detect(rt5645->component, 0);
- 	}
- 
-+	mutex_unlock(&rt5645->jd_mutex);
-+
- 	snd_soc_jack_report(rt5645->hp_jack, report, SND_JACK_HEADPHONE);
- 	snd_soc_jack_report(rt5645->mic_jack, report, SND_JACK_MICROPHONE);
- 	if (rt5645->en_button_func)
-@@ -4119,6 +4126,7 @@ static int rt5645_i2c_probe(struct i2c_client *i2c)
- 	}
- 	timer_setup(&rt5645->btn_check_timer, rt5645_btn_check_callback, 0);
- 
-+	mutex_init(&rt5645->jd_mutex);
- 	INIT_DELAYED_WORK(&rt5645->jack_detect_work, rt5645_jack_detect_work);
- 	INIT_DELAYED_WORK(&rt5645->rcclock_work, rt5645_rcclock_work);
- 
+diff --git a/sound/soc/intel/boards/skl_hda_dsp_generic.c b/sound/soc/intel/boards/skl_hda_dsp_generic.c
+index 879ebba52832..463ffb85121d 100644
+--- a/sound/soc/intel/boards/skl_hda_dsp_generic.c
++++ b/sound/soc/intel/boards/skl_hda_dsp_generic.c
+@@ -157,6 +157,8 @@ static int skl_hda_fill_card_info(struct snd_soc_acpi_mach_params *mach_params)
+ 		card->dapm_widgets = skl_hda_widgets;
+ 		card->num_dapm_widgets = ARRAY_SIZE(skl_hda_widgets);
+ 		if (!ctx->idisp_codec) {
++			card->dapm_routes = &skl_hda_map[IDISP_ROUTE_COUNT];
++			num_route -= IDISP_ROUTE_COUNT;
+ 			for (i = 0; i < IDISP_DAI_COUNT; i++) {
+ 				skl_hda_be_dai_links[i].codecs = dummy_codec;
+ 				skl_hda_be_dai_links[i].num_codecs =
 -- 
 2.43.0
 
