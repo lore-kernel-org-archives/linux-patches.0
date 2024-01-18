@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F2E22323;
-	Thu, 18 Jan 2024 10:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13AE1B96D;
+	Thu, 18 Jan 2024 10:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575127; cv=none; b=Ty2Yqjk0LPmFmFM7MHzfyntXnKFvYQg1cReR+UA2dQEnXGWD9PH0AGqEagJYECGN74EOcGkyxQ+YkzuP8qexBb5ECR6tJHel7aYoVSiGw21bA3LI7FJdvhrP3C5Pvn7hrdwdV6vZMuqQ29+a0WkRtVJoiva5h0oi0uAKtQNPD7s=
+	t=1705575129; cv=none; b=WRD6PV+wC04U20awsPJKhCxtbTtOwnv8ljn7wWSgGVleo/H/tN3H/Z2VUz1t9nYAEeilBATpvzpKfOlMdtUor+IrhnY8CCdCn/ttkdrKJc7sxdYKtFpxTAvL99glmaQ5uiC4lFyVRUHMKHkOLKFXHOQzjKmIMh7c9qNQhRQiUR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575127; c=relaxed/simple;
-	bh=USPSdsFIF58fv4yqb/tEMG6SqrgFlIC3BBvb5QVnwMo=;
+	s=arc-20240116; t=1705575129; c=relaxed/simple;
+	bh=FRpWdSssnTRgZ5mu4BHg2a4fYxPplgir9krcW9CH6aQ=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=bENwWd6nFD5uzH9GLi7TnXENGVlgCRgYnT7q9MpDqBHB+w/+z/YjN74FAi8pjCrMMBIxuczgmQbcMoMUDZyBhe8xhywlDnGTstZlF5FmGfAelcw62ANsxlBrV5KfcgfnVj+1ZcVn41RpW2WvGoNmMPdO+9leOGFmXY/RrQtjlwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeO9DZJ4; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=h9LUQympS8WLuxWxAif1zWtlmzRBWQV2SJ6rXszlON5q92LSWpX54XNjmaEKooXbcKcH1KIO7irxwLeYiOf2TUvdR7WDNyoU8kcQfR3mIoWdk2OGem4jmWgGanC3zcuIS0GAznOsOXeT5j9Uo6JhbIr+hZugYw6vr+Z3VD6FphQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGBhkVNd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeO9DZJ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD37C433C7;
-	Thu, 18 Jan 2024 10:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGBhkVNd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A2AC433F1;
+	Thu, 18 Jan 2024 10:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575126;
-	bh=USPSdsFIF58fv4yqb/tEMG6SqrgFlIC3BBvb5QVnwMo=;
+	s=korg; t=1705575129;
+	bh=FRpWdSssnTRgZ5mu4BHg2a4fYxPplgir9krcW9CH6aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aeO9DZJ4L7c4vZbMpX314YNH3AuPJeFHYCt30B+rNO9F6CdjZHmqffGX4V3UsuAGc
-	 PPpnFgHeAQR/0ymuOclR8D9YKQSsFe/0LnwtHcU7Y3Ou8B1suSmgajqRu3TarWvGdM
-	 1M/9q8JBO4M72hIFixNhEIQGjRCuybHbfysoS4IA=
+	b=UGBhkVNdtJ2qCmqw3urnaNeKbColjp0GzbRZYIHdIznqDaabH2nMGfec6VbDp/6Po
+	 Axaa1qlAwuRHUULi1GvcQWECMmjQ5CjfGqVBfSc+81rw1OYlUAefUegBNbCAL2UBOc
+	 k6eoaBabwsIafD8s696631BV3zCyLj81/vf+D3LY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	ZhenGuo Yin <zhenguo.yin@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/150] drm/amdkfd: Free gang_ctx_bo and wptr_bo in pqm_uninit
-Date: Thu, 18 Jan 2024 11:47:22 +0100
-Message-ID: <20240118104320.986126337@linuxfoundation.org>
+Subject: [PATCH 6.6 021/150] drm/amdgpu: Use another offset for GC 9.4.3 remap
+Date: Thu, 18 Jan 2024 11:47:23 +0100
+Message-ID: <20240118104321.036123651@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -53,105 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhenGuo Yin <zhenguo.yin@amd.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 72838777aa38352e20301e123b97110c456cd38e ]
+[ Upstream commit ed6e4f0a27ebafffbd12bf3878ab004787685d8a ]
 
-[Why]
-Memory leaks of gang_ctx_bo and wptr_bo.
+The legacy region at 0x7F000 maps to valid registers in GC 9.4.3 SOCs.
+Use 0x1A000 offset instead as MMIO register remap region.
 
-[How]
-Free gang_ctx_bo and wptr_bo in pqm_uninit.
-
-v2: add a common function pqm_clean_queue_resource to
-free queue's resources.
-v3: reset pdd->pqd.num_gws when destorying GWS queue.
-
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: ZhenGuo Yin <zhenguo.yin@amd.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/amdkfd/kfd_process_queue_manager.c    | 54 +++++++++++--------
- 1 file changed, 33 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/soc15.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-index 77649392e233..77f493262e05 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-@@ -169,16 +169,43 @@ int pqm_init(struct process_queue_manager *pqm, struct kfd_process *p)
- 	return 0;
- }
- 
-+static void pqm_clean_queue_resource(struct process_queue_manager *pqm,
-+				     struct process_queue_node *pqn)
-+{
-+	struct kfd_node *dev;
-+	struct kfd_process_device *pdd;
-+
-+	dev = pqn->q->device;
-+
-+	pdd = kfd_get_process_device_data(dev, pqm->process);
-+	if (!pdd) {
-+		pr_err("Process device data doesn't exist\n");
-+		return;
-+	}
-+
-+	if (pqn->q->gws) {
-+		if (KFD_GC_VERSION(pqn->q->device) != IP_VERSION(9, 4, 3) &&
-+		    !dev->kfd->shared_resources.enable_mes)
-+			amdgpu_amdkfd_remove_gws_from_process(
-+				pqm->process->kgd_process_info, pqn->q->gws);
-+		pdd->qpd.num_gws = 0;
-+	}
-+
-+	if (dev->kfd->shared_resources.enable_mes) {
-+		amdgpu_amdkfd_free_gtt_mem(dev->adev, pqn->q->gang_ctx_bo);
-+		if (pqn->q->wptr_bo)
-+			amdgpu_amdkfd_free_gtt_mem(dev->adev, pqn->q->wptr_bo);
-+	}
-+}
-+
- void pqm_uninit(struct process_queue_manager *pqm)
- {
- 	struct process_queue_node *pqn, *next;
- 
- 	list_for_each_entry_safe(pqn, next, &pqm->queues, process_queue_list) {
--		if (pqn->q && pqn->q->gws &&
--		    KFD_GC_VERSION(pqn->q->device) != IP_VERSION(9, 4, 3) &&
--		    !pqn->q->device->kfd->shared_resources.enable_mes)
--			amdgpu_amdkfd_remove_gws_from_process(pqm->process->kgd_process_info,
--				pqn->q->gws);
-+		if (pqn->q)
-+			pqm_clean_queue_resource(pqm, pqn);
-+
- 		kfd_procfs_del_queue(pqn->q);
- 		uninit_queue(pqn->q);
- 		list_del(&pqn->process_queue_list);
-@@ -461,22 +488,7 @@ int pqm_destroy_queue(struct process_queue_manager *pqm, unsigned int qid)
- 				goto err_destroy_queue;
- 		}
- 
--		if (pqn->q->gws) {
--			if (KFD_GC_VERSION(pqn->q->device) != IP_VERSION(9, 4, 3) &&
--			    !dev->kfd->shared_resources.enable_mes)
--				amdgpu_amdkfd_remove_gws_from_process(
--						pqm->process->kgd_process_info,
--						pqn->q->gws);
--			pdd->qpd.num_gws = 0;
--		}
--
--		if (dev->kfd->shared_resources.enable_mes) {
--			amdgpu_amdkfd_free_gtt_mem(dev->adev,
--						   pqn->q->gang_ctx_bo);
--			if (pqn->q->wptr_bo)
--				amdgpu_amdkfd_free_gtt_mem(dev->adev, pqn->q->wptr_bo);
--
--		}
-+		pqm_clean_queue_resource(pqm, pqn);
- 		uninit_queue(pqn->q);
- 	}
- 
+diff --git a/drivers/gpu/drm/amd/amdgpu/soc15.c b/drivers/gpu/drm/amd/amdgpu/soc15.c
+index 28094cd7d9c2..9abfe4c28cea 100644
+--- a/drivers/gpu/drm/amd/amdgpu/soc15.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
+@@ -1160,6 +1160,11 @@ static int soc15_common_early_init(void *handle)
+ 			AMD_PG_SUPPORT_VCN_DPG |
+ 			AMD_PG_SUPPORT_JPEG;
+ 		adev->external_rev_id = adev->rev_id + 0x46;
++		/* GC 9.4.3 uses MMIO register region hole at a different offset */
++		if (!amdgpu_sriov_vf(adev)) {
++			adev->rmmio_remap.reg_offset = 0x1A000;
++			adev->rmmio_remap.bus_addr = adev->rmmio_base + 0x1A000;
++		}
+ 		break;
+ 	default:
+ 		/* FIXME: not supported yet */
 -- 
 2.43.0
 
