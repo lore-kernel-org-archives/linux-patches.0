@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B451774B;
-	Thu, 18 Jan 2024 10:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7454D1774B;
+	Thu, 18 Jan 2024 10:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575460; cv=none; b=QZCi91irpe34MQB4jGRtIICBrohcicemQ29aoK023C4OKczJZMKLsamxzJ9AFB6LgKpqI7qWUzqScejqh5D5+wPzqc3gM/Gs1jHwYIsQucUN7z8xz+u8FJ/cC3RZHrmlpWBr5tf9rUx8azT8XJyA80N+Bd02600Qm93+kaedGVA=
+	t=1705575463; cv=none; b=glWuvzqDumY+mJccl9NRMFc5R58GNU+oH2ay3bcU7wdsPwTN2W4LJxBCpTzDTJhJLvPAiyMXHiPeH6YnP2DDaStaMX0Z/3SjHTAMXWRM/R7T5eIqz9+61faTBnhR84bViIhY5kA2bC1aCLKF66mvg4env1qJwitcekAGTN0KOOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575460; c=relaxed/simple;
-	bh=9uPgzFlu7Wt0U+u+faC0V7RP84x5DYOK7bDwnoOk5qk=;
+	s=arc-20240116; t=1705575463; c=relaxed/simple;
+	bh=lkvr24GCnYnwcfX2lw4pV4bexaaGi4tRHwt9gzNk60A=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=PZvcrAjelZAxcD4+uVZpmWd6UUVXs5rjdO1YeNKgmcF0/uEQGA8az17WJhb1PdXdvqlWnsLPwxu+dg2aw2YlXC7knj8r/IYw6O3zOgv05HQ4uM8xy+k7eGlO2L6VuqTrDYfKiMyY6BvGReQiwACE7mBFZRR9o8USt/Hn2uxcxXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TdrpzwTp; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=uCdu5eN/Kf6StKo0Zox7XwKwcReB6jSAKCRC+tQhxXFOSiAThe9Cdhn0WmIA3CxzjPXG7qN+SOZirJ2eVe97b2KUGcy4C8nhSY3DehNA9jToUTqkRijfEOPHg4VQAljr8c5sCd923pTkOQMk1eYPvYQAN37yovwul9N8PENP+0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNyHJINv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdrpzwTp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A47C43390;
-	Thu, 18 Jan 2024 10:57:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNyHJINv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9622C43390;
+	Thu, 18 Jan 2024 10:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575460;
-	bh=9uPgzFlu7Wt0U+u+faC0V7RP84x5DYOK7bDwnoOk5qk=;
+	s=korg; t=1705575463;
+	bh=lkvr24GCnYnwcfX2lw4pV4bexaaGi4tRHwt9gzNk60A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TdrpzwTp+q1P+WregI4pk5K1KtYGyAQLISFRnOz+7Kqs5AS3GY4MSVyuHFAujc02Z
-	 cuLfe8w0afcjexahd3jCBBvI4xr9XNYpy7Gv1VKz3zKYPoYGsH2qoyyJZMpiplwWoV
-	 4iR+nE8hKMZOnOP/ZlY16GN/aZso8Z1rUunPyxX0=
+	b=bNyHJINv7VKoIerIm1XTOR4e6hOdw9SC8P+CqsbOp9saL4UNPgWAE1Yhm5kYCilAC
+	 EAxe128e0UJeHWAM81fHQ0Pu9oinNwMn7NQPtZXUfhlNwKYFk9XPFJzXxmH3frfNkG
+	 30FWEqFPIJtqh29EVps+qNQwXV6CZfjcWcBgFXxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.6 141/150] binder: fix trivial typo of binder_free_buf_locked()
-Date: Thu, 18 Jan 2024 11:49:23 +0100
-Message-ID: <20240118104326.590816658@linuxfoundation.org>
+	wangkeqi <wangkeqiwang@didiglobal.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 124/150] connector: Fix proc_event_num_listeners count not cleared
+Date: Thu, 18 Jan 2024 11:49:06 +0100
+Message-ID: <20240118104325.783900958@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -51,34 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: wangkeqi <wangkeqiwang@didiglobal.com>
 
-commit 122a3c1cb0ff304c2b8934584fcfea4edb2fe5e3 upstream.
+[ Upstream commit c46bfba1337d301661dbb23cfd905d4cb51f27ca ]
 
-Fix minor misspelling of the function in the comment section.
+When we register a cn_proc listening event, the proc_event_num_listener
+variable will be incremented by one, but if PROC_CN_MCAST_IGNORE is
+not called, the count will not decrease.
+This will cause the proc_*_connector function to take the wrong path.
+It will reappear when the forkstat tool exits via ctrl + c.
+We solve this problem by determining whether
+there are still listeners to clear proc_event_num_listener.
 
-No functional changes in this patch.
-
-Cc: stable@vger.kernel.org
-Fixes: 0f966cba95c7 ("binder: add flag to clear buffer on txn complete")
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20231201172212.1813387-7-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: wangkeqi <wangkeqiwang@didiglobal.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder_alloc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/connector/cn_proc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -706,7 +706,7 @@ void binder_alloc_free_buf(struct binder
- 	/*
- 	 * We could eliminate the call to binder_alloc_clear_buf()
- 	 * from binder_alloc_deferred_release() by moving this to
--	 * binder_alloc_free_buf_locked(). However, that could
-+	 * binder_free_buf_locked(). However, that could
- 	 * increase contention for the alloc mutex if clear_on_free
- 	 * is used frequently for large buffers. The mutex is not
- 	 * needed for correctness here.
+diff --git a/drivers/connector/cn_proc.c b/drivers/connector/cn_proc.c
+index 44b19e696176..3d5e6d705fc6 100644
+--- a/drivers/connector/cn_proc.c
++++ b/drivers/connector/cn_proc.c
+@@ -108,8 +108,9 @@ static inline void send_msg(struct cn_msg *msg)
+ 		filter_data[1] = 0;
+ 	}
+ 
+-	cn_netlink_send_mult(msg, msg->len, 0, CN_IDX_PROC, GFP_NOWAIT,
+-			     cn_filter, (void *)filter_data);
++	if (cn_netlink_send_mult(msg, msg->len, 0, CN_IDX_PROC, GFP_NOWAIT,
++			     cn_filter, (void *)filter_data) == -ESRCH)
++		atomic_set(&proc_event_num_listeners, 0);
+ 
+ 	local_unlock(&local_event.lock);
+ }
+-- 
+2.43.0
+
 
 
