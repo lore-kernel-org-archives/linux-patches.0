@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A341774B;
-	Thu, 18 Jan 2024 10:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0D71774B;
+	Thu, 18 Jan 2024 10:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575363; cv=none; b=d7nKdzPxtHNrBDzqvL4//hdr/StWq0MCUxTbtSSswXgk/AwvvFjpV1JVdaNeltM+uh5MPlO4os0YyPtNrnHJJuETrbwsn24OI6w49leq0ITa1N9qsHrr4aETIQIJmBJkBWtFi163nh1Qu35lXHSBr1NNXML+q4ZF6pwm6Doyslc=
+	t=1705575366; cv=none; b=Kl2Iognx7o1gNKDaS1ZBEc9R+KVfTREilXZ1gBpSjzV2CeICJ0QPbLpRVeLvdUUXUU/uwbhNG8WV4pwZ2dMAC6mthXP+dWupGZHfEC1MrNepbw+ul4PkDRYvoF0onJQK1PmJX+UbcyMw79s7ObxcHKG4sXH28xs3O996jUQ0NzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575363; c=relaxed/simple;
-	bh=Uv6KvKaOL0s11vjvb+VbHhtFRq6+OAxyuOVD8N8VYhI=;
+	s=arc-20240116; t=1705575366; c=relaxed/simple;
+	bh=xRprqsvBry3a3peRVukHqzItO5tvRJs/sR6BBOtjP/U=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=upDCp6B/Uk4rCMHJXj8zMh+qVyRO7xqcXb3QhNEuYQpMLrgBgEFxvefYAQwv5gJ5ihn99XVqrCMOMoqWyzGvYIiK4tz5UIrFNUCnz92qlAgrrRwmZeGbLne38RTGUVbG/o7LImNnCoerIAJu0fg85zfOeJ3KMZZHGqdIdBnTYDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0mWdZUqm; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=hWHOsBjPKd3nhgdxSrcqhzb2bLnDkmBrIIS1ySjQND6xMSxoRKiTxYhRBzuTIZyz4kFXeMOeIOJqlp9NQVdBWntyfJZT22mZvWDjvK+i/AaolyX2LwH0QnhSaRkikeh6PVGvJQuWLH9KDpBRxFLC8/gzXqvKgersyHN41sjLv/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZxqtdHf9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0mWdZUqm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B46C433F1;
-	Thu, 18 Jan 2024 10:56:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxqtdHf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26FEC433C7;
+	Thu, 18 Jan 2024 10:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575363;
-	bh=Uv6KvKaOL0s11vjvb+VbHhtFRq6+OAxyuOVD8N8VYhI=;
+	s=korg; t=1705575366;
+	bh=xRprqsvBry3a3peRVukHqzItO5tvRJs/sR6BBOtjP/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0mWdZUqmXuQ9C5EFH+2+ITbZRRZ3GVFOdhuLuKjmqpjMHhkPgNr8BTy4JFvzWFzNt
-	 UcBJOzC75/ZIxYdN1Pg7HXizhYxWrkMB/5mLQyuVGZbjbCuKadkZojFNDbS8cRgthg
-	 YXJI7A5RFtFzdWsrIth06tj/S3xIs1kSzVV3wEyw=
+	b=ZxqtdHf9FeOhchdg4XG3wfwEBZUnLk+e7OpEktKqBrvIa/lOQbaOgHm0t4+fIi4Bx
+	 Arh6btuATyD+9+DB4RJb2sKEcMnF4WDOVeXgJaHGk6YL5nGvThExfcApuwgfdDYbio
+	 Y+DGgyl/sBVUbBwpcJt8IbfxU46+eMQpJ2z2EJik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 106/150] ASoC: Intel: bytcr_rt5640: Add quirk for the Medion Lifetab S10346
-Date: Thu, 18 Jan 2024 11:48:48 +0100
-Message-ID: <20240118104324.959047909@linuxfoundation.org>
+Subject: [PATCH 6.6 107/150] ASoC: Intel: bytcr_rt5640: Add new swapped-speakers quirk
+Date: Thu, 18 Jan 2024 11:48:49 +0100
+Message-ID: <20240118104324.997094373@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -55,44 +55,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 99c7bb44f5749373bc01b73af02b50b69bcbf43d ]
+[ Upstream commit b1b6131bca35a55a69fadc39d51577968fa2ee97 ]
 
-Add a quirk for the Medion Lifetab S10346, this BYTCR tablet has no CHAN
-package in its ACPI tables and uses SSP0-AIF1 rather then SSP0-AIF2 which
-is the default for BYTCR devices.
+Some BYTCR x86 tablets with a rt5640 codec have the left and right channels
+of their speakers swapped.
+
+Add a new BYT_RT5640_SWAPPED_SPEAKERS quirk for this which sets
+cfg-spk:swapped in the components string to let userspace know
+about the swapping so that the UCM profile can configure the mixer
+to correct this.
+
+Enable this new quirk on the Medion Lifetab S10346 which has its
+speakers swapped.
 
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://msgid.link/r/20231217213221.49424-1-hdegoede@redhat.com
+Link: https://msgid.link/r/20231217213221.49424-2-hdegoede@redhat.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ sound/soc/intel/boards/bytcr_rt5640.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index 630784b6cb6d..f184d23deaa0 100644
+index f184d23deaa0..6b631a608ae8 100644
 --- a/sound/soc/intel/boards/bytcr_rt5640.c
 +++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -894,6 +894,18 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
+@@ -83,6 +83,7 @@ enum {
+ #define BYT_RT5640_HSMIC2_ON_IN1	BIT(27)
+ #define BYT_RT5640_JD_HP_ELITEP_1000G2	BIT(28)
+ #define BYT_RT5640_USE_AMCR0F28		BIT(29)
++#define BYT_RT5640_SWAPPED_SPEAKERS	BIT(30)
+ 
+ #define BYTCR_INPUT_DEFAULTS				\
+ 	(BYT_RT5640_IN3_MAP |				\
+@@ -157,6 +158,8 @@ static void log_quirks(struct device *dev)
+ 		dev_info(dev, "quirk MONO_SPEAKER enabled\n");
+ 	if (byt_rt5640_quirk & BYT_RT5640_NO_SPEAKERS)
+ 		dev_info(dev, "quirk NO_SPEAKERS enabled\n");
++	if (byt_rt5640_quirk & BYT_RT5640_SWAPPED_SPEAKERS)
++		dev_info(dev, "quirk SWAPPED_SPEAKERS enabled\n");
+ 	if (byt_rt5640_quirk & BYT_RT5640_LINEOUT)
+ 		dev_info(dev, "quirk LINEOUT enabled\n");
+ 	if (byt_rt5640_quirk & BYT_RT5640_LINEOUT_AS_HP2)
+@@ -903,6 +906,7 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
+ 			DMI_MATCH(DMI_BIOS_DATE, "10/22/2015"),
+ 		},
+ 		.driver_data = (void *)(BYTCR_INPUT_DEFAULTS |
++					BYT_RT5640_SWAPPED_SPEAKERS |
  					BYT_RT5640_SSP0_AIF1 |
  					BYT_RT5640_MCLK_EN),
  	},
-+	{
-+		/* Medion Lifetab S10346 */
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Aptio CRB"),
-+			/* Above strings are much too generic, also match on BIOS date */
-+			DMI_MATCH(DMI_BIOS_DATE, "10/22/2015"),
-+		},
-+		.driver_data = (void *)(BYTCR_INPUT_DEFAULTS |
-+					BYT_RT5640_SSP0_AIF1 |
-+					BYT_RT5640_MCLK_EN),
-+	},
- 	{	/* Mele PCG03 Mini PC */
- 		.matches = {
- 			DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Mini PC"),
+@@ -1631,11 +1635,11 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
+ 	const char *platform_name;
+ 	struct acpi_device *adev;
+ 	struct device *codec_dev;
++	const char *cfg_spk;
+ 	bool sof_parent;
+ 	int ret_val = 0;
+ 	int dai_index = 0;
+-	int i, cfg_spk;
+-	int aif;
++	int i, aif;
+ 
+ 	is_bytcr = false;
+ 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+@@ -1795,13 +1799,16 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	if (byt_rt5640_quirk & BYT_RT5640_NO_SPEAKERS) {
+-		cfg_spk = 0;
++		cfg_spk = "0";
+ 		spk_type = "none";
+ 	} else if (byt_rt5640_quirk & BYT_RT5640_MONO_SPEAKER) {
+-		cfg_spk = 1;
++		cfg_spk = "1";
+ 		spk_type = "mono";
++	} else if (byt_rt5640_quirk & BYT_RT5640_SWAPPED_SPEAKERS) {
++		cfg_spk = "swapped";
++		spk_type = "swapped";
+ 	} else {
+-		cfg_spk = 2;
++		cfg_spk = "2";
+ 		spk_type = "stereo";
+ 	}
+ 
+@@ -1816,7 +1823,7 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
+ 		headset2_string = " cfg-hs2:in1";
+ 
+ 	snprintf(byt_rt5640_components, sizeof(byt_rt5640_components),
+-		 "cfg-spk:%d cfg-mic:%s aif:%d%s%s", cfg_spk,
++		 "cfg-spk:%s cfg-mic:%s aif:%d%s%s", cfg_spk,
+ 		 map_name[BYT_RT5640_MAP(byt_rt5640_quirk)], aif,
+ 		 lineout_string, headset2_string);
+ 	byt_rt5640_card.components = byt_rt5640_components;
 -- 
 2.43.0
 
