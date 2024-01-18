@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CC51774B;
-	Thu, 18 Jan 2024 10:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3751774B;
+	Thu, 18 Jan 2024 10:59:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575538; cv=none; b=YeAGrcqIK8Rjj3+F995TALzMqS9xtJijZEjjaKmVP2NBl5gaCpIMp3DjmEqaInoCZ5MUbSQteA3FRhckQQOk8bU0Ia9ktVZTTswUGjKILg3J5H+vbLuutAjsKGOHS4fZPBlG5/gHFvLwHCHb7++lOYXUcP/RJjkOXuEgkDX3/w0=
+	t=1705575541; cv=none; b=KQUvWMlQsMVCG+BH1L7iBYeK8ux+3fOnPgbYOyBNNAKmjcoUzU6QcjAFsNWWzFQ2n47F14XwT8gUS0wzMo1zz/HNijDNDmo4eJsVVN5BikwVlJNo2u/5jyhRwTWIRspqxgCc6FekPEbQ45wKOaNa+pMjVCMf8WswsUCw5c112Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575538; c=relaxed/simple;
-	bh=46TcRNEHL9K7ESWwRXqQfRY29xaklJbOZyqon8pjblg=;
+	s=arc-20240116; t=1705575541; c=relaxed/simple;
+	bh=cENdJfhYII7A2AOZ7uRmTX6BRncBURGPMdSnfftkutw=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=XIQhjEKu5j7fM7K2Mi7P1dzvgQ2gY/yudTFygLGiJSgw8opTXGJLSmHEKY9Ity0gOwN2flx9eRfWbJIQMCURfmJfSAeQ8imMle918Y050/gcBAvltWT6932Ve5FXxvlRI4gxlgsnrkQ5xdp355NL0+8PHOYRoz+pp/1dG+H6Pkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JY6V21DM; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=tCp91GBMof8Zc+MWal5Lgx8hvjnLt34NH+PEhGaZuNLXjEGRhYcpoGHBQFRKunFfi0r3DmGSQqt4KKDbsd4gX/+I5oUNkQren/nSe53KcVrASmCVgmTgZpOuRdb8Yn10/b0w1cbidGo9aNyxyUry1cpF7fLvwY610qTq3nrwfyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYsrTKik; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JY6V21DM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B1BC433F1;
-	Thu, 18 Jan 2024 10:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYsrTKik"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4A1C433F1;
+	Thu, 18 Jan 2024 10:59:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575538;
-	bh=46TcRNEHL9K7ESWwRXqQfRY29xaklJbOZyqon8pjblg=;
+	s=korg; t=1705575541;
+	bh=cENdJfhYII7A2AOZ7uRmTX6BRncBURGPMdSnfftkutw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JY6V21DMfV35N80HixPdEzPWzaV8qvfOr5pYO4OOwOodu/WSQGZ303yXFjZ2ER5bV
-	 uOgm2mHYOtonKQL8AjlIoA9H+j7v8NBbBvlT6gNuxk8rENCmPmg0RDTAhtPJD7PKfv
-	 tdNILBVaMV/7gp+HK2TYehwvBVtXZLM5To4HL8NQ=
+	b=OYsrTKikhq/tLICokG69abohXp9lo0BPD49mqVoZDP/6o6+nKqS6TS4PlnktvTqtU
+	 vLDyy30kntiJ1DTXkIklXswuEg/7XqRQtzNUdh6FlQawh3nVZweoIVfqpcg1s2YzJo
+	 28MKC3xtjieNsYJW166LVXH+iHvvSF75avJYLiN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/100] ASoC: wm8974: Correct boost mixer inputs
-Date: Thu, 18 Jan 2024 11:48:26 +0100
-Message-ID: <20240118104311.708998396@linuxfoundation.org>
+Subject: [PATCH 6.1 019/100] arm64: dts: rockchip: fix rk356x pcie msg interrupt name
+Date: Thu, 18 Jan 2024 11:48:27 +0100
+Message-ID: <20240118104311.748080915@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -52,47 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 37e6fd0cebf0b9f71afb38fd95b10408799d1f0b ]
+[ Upstream commit 3cee9c635f27d1003d46f624d816f3455698b625 ]
 
-Bit 6 of INPPGA (INPPGAMUTE) does not control the Aux path, it controls
-the input PGA path, as can been seen from Figure 8 Input Boost Stage in
-the datasheet. Update the naming of things in the driver to match this
-and update the routing to also reflect this.
+The expected name by the binding at this position is "msg" and the SoC's
+manual also calls the interrupt in question "msg", so fix the rk356x dtsi
+to use the correct name.
 
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20231113155916.1741027-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20231114153834.934978-1-heiko@sntech.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8974.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk356x.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8974.c b/sound/soc/codecs/wm8974.c
-index 010a394c705c..1becbf2c6ffa 100644
---- a/sound/soc/codecs/wm8974.c
-+++ b/sound/soc/codecs/wm8974.c
-@@ -186,7 +186,7 @@ SOC_DAPM_SINGLE("PCM Playback Switch", WM8974_MONOMIX, 0, 1, 0),
- 
- /* Boost mixer */
- static const struct snd_kcontrol_new wm8974_boost_mixer[] = {
--SOC_DAPM_SINGLE("Aux Switch", WM8974_INPPGA, 6, 1, 1),
-+SOC_DAPM_SINGLE("PGA Switch", WM8974_INPPGA, 6, 1, 1),
- };
- 
- /* Input PGA */
-@@ -246,8 +246,8 @@ static const struct snd_soc_dapm_route wm8974_dapm_routes[] = {
- 
- 	/* Boost Mixer */
- 	{"ADC", NULL, "Boost Mixer"},
--	{"Boost Mixer", "Aux Switch", "Aux Input"},
--	{"Boost Mixer", NULL, "Input PGA"},
-+	{"Boost Mixer", NULL, "Aux Input"},
-+	{"Boost Mixer", "PGA Switch", "Input PGA"},
- 	{"Boost Mixer", NULL, "MICP"},
- 
- 	/* Input PGA */
+diff --git a/arch/arm64/boot/dts/rockchip/rk356x.dtsi b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
+index 234b5bbda120..f4d6dbbbddcd 100644
+--- a/arch/arm64/boot/dts/rockchip/rk356x.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
+@@ -958,7 +958,7 @@ pcie2x1: pcie@fe260000 {
+ 			     <GIC_SPI 73 IRQ_TYPE_LEVEL_HIGH>,
+ 			     <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>,
+ 			     <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
+-		interrupt-names = "sys", "pmc", "msi", "legacy", "err";
++		interrupt-names = "sys", "pmc", "msg", "legacy", "err";
+ 		bus-range = <0x0 0xf>;
+ 		clocks = <&cru ACLK_PCIE20_MST>, <&cru ACLK_PCIE20_SLV>,
+ 			 <&cru ACLK_PCIE20_DBI>, <&cru PCLK_PCIE20>,
 -- 
 2.43.0
 
