@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4D722F1B;
-	Thu, 18 Jan 2024 10:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383F422F1B;
+	Thu, 18 Jan 2024 10:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575524; cv=none; b=SP1N32qEfinNgUKGXGw8V3knZbvSpyNCvx/YQ6bB4+Q95Kag7iqhvaZi8jXMad2E4OZqGv8oVfnPPmePUcXYv/Solfuwdm7X/6yNrMQqdXCGH6t5J0cMksRBAr/ls4Bp1DpOv2wLRr0CLyXUQMid9iHa9UreGWYABTxm5NpkgJs=
+	t=1705575527; cv=none; b=WBxl8vWh22SP7CsB9QckIrMvcagg4nE48j60zqFVTIypRJv9pvteGRVoILVvtmV6YIKqTsnbujWTk+yjy1g7KfT5SSbZ/i9P54sC0cPgkXJQdU30ZV9LHj1ZhBpaYFoFGyRg2optd4J6/E8c4mVsuvwR3hOPP+N8LAmzxlCed0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575524; c=relaxed/simple;
-	bh=0eq5fQmiYVUYdqGEXAdoGNP8IpS2Qb8t+trG8Ljs8BA=;
+	s=arc-20240116; t=1705575527; c=relaxed/simple;
+	bh=enLLsixOyGkckTu/x8QKKOryh6YWtCSYozsu9PY7Us4=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=pGulXjE830XWACjk1mQmdkAHcHlKuWkyr73+dAWBDL8s9QjHtBYUXQjfTWCu1+hlpQg6K8pQv7CRwMVEC3dhQ1djZaH8EdGgsvIBZrTx0u5GZSwg2UZNMqaNqRhU1HfE7i9+qX1vLUSp4/Z7eUwsNXZr4ozP2QngMtsUsCAOLV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVeke/vc; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=tgJIxI16W2yKV6zG3mit9fPxIHOIlBoEkH4KosLzzKieMAzZgyiVM27AtYRsowEZEaGWKZdLwouNBnICQP8AH8NLEwktDj61N28CFwOiiQ8dUAj421+ZDibBRkPrASyz4zxY9zcr2+eVLKswkYMR5kAthx2GUM3vRssnAX8gBl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JbIipys; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVeke/vc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0027AC433C7;
-	Thu, 18 Jan 2024 10:58:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JbIipys"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF94AC433F1;
+	Thu, 18 Jan 2024 10:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575524;
-	bh=0eq5fQmiYVUYdqGEXAdoGNP8IpS2Qb8t+trG8Ljs8BA=;
+	s=korg; t=1705575527;
+	bh=enLLsixOyGkckTu/x8QKKOryh6YWtCSYozsu9PY7Us4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kVeke/vcogQ9FKrP1fzvz/8itbVXujbUWAUWE7uew2vDIX7ljeBUTk/tXts27/llm
-	 NTzmDXXzuS48kdeq3gWaVtZQ9AqEaKE6n0BD+MNzY+oFTbEt3nEUSEJsWQt+hiPfaV
-	 N9tNoIiz3O1PKQoeGVkyFYOOEGRnAKRAYVsdCECw=
+	b=2JbIipyszjbUWc3HSCIprqR/4wvUyKL/UiFySxurCiVYAHdCjP/dNVLAH0/d/TGKm
+	 ghgSk/wRRk87mPLjeFpWn6yta5bKV5II3UsaffJm6/WBMJde5JUfGLx89JBSSNj8BI
+	 NkLP1axcHZQ871bVhpQJhHljSF4X8ilhkJcPGeiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	David Jeffery <djeffery@redhat.com>,
+	John Pittman <jpittman@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/100] smb: client, common: fix fortify warnings
-Date: Thu, 18 Jan 2024 11:48:21 +0100
-Message-ID: <20240118104311.460981213@linuxfoundation.org>
+Subject: [PATCH 6.1 014/100] blk-mq: dont count completed flush data request as inflight in case of quiesce
+Date: Thu, 18 Jan 2024 11:48:22 +0100
+Message-ID: <20240118104311.511678352@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -53,215 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 0015eb6e12384ff1c589928e84deac2ad1ceb236 ]
+[ Upstream commit 0e4237ae8d159e3d28f3cd83146a46f576ffb586 ]
 
-When compiling with gcc version 14.0.0 20231126 (experimental)
-and CONFIG_FORTIFY_SOURCE=y, I've noticed the following:
+Request queue quiesce may interrupt flush sequence, and the original request
+may have been marked as COMPLETE, but can't get finished because of
+queue quiesce.
 
-In file included from ./include/linux/string.h:295,
-                 from ./include/linux/bitmap.h:12,
-                 from ./include/linux/cpumask.h:12,
-                 from ./arch/x86/include/asm/paravirt.h:17,
-                 from ./arch/x86/include/asm/cpuid.h:62,
-                 from ./arch/x86/include/asm/processor.h:19,
-                 from ./arch/x86/include/asm/cpufeature.h:5,
-                 from ./arch/x86/include/asm/thread_info.h:53,
-                 from ./include/linux/thread_info.h:60,
-                 from ./arch/x86/include/asm/preempt.h:9,
-                 from ./include/linux/preempt.h:79,
-                 from ./include/linux/spinlock.h:56,
-                 from ./include/linux/wait.h:9,
-                 from ./include/linux/wait_bit.h:8,
-                 from ./include/linux/fs.h:6,
-                 from fs/smb/client/smb2pdu.c:18:
-In function 'fortify_memcpy_chk',
-    inlined from '__SMB2_close' at fs/smb/client/smb2pdu.c:3480:4:
-./include/linux/fortify-string.h:588:25: warning: call to '__read_overflow2_field'
-declared with attribute warning: detected read beyond size of field (2nd parameter);
-maybe use struct_group()? [-Wattribute-warning]
-  588 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This way is fine from driver viewpoint, because flush sequence is block
+layer concept, and it isn't related with driver.
 
-and:
+However, driver(such as dm-rq) can call blk_mq_queue_inflight() to count &
+drain inflight requests, then the wait & drain never gets done because
+the completed & not-finished flush request is counted as inflight.
 
-In file included from ./include/linux/string.h:295,
-                 from ./include/linux/bitmap.h:12,
-                 from ./include/linux/cpumask.h:12,
-                 from ./arch/x86/include/asm/paravirt.h:17,
-                 from ./arch/x86/include/asm/cpuid.h:62,
-                 from ./arch/x86/include/asm/processor.h:19,
-                 from ./arch/x86/include/asm/cpufeature.h:5,
-                 from ./arch/x86/include/asm/thread_info.h:53,
-                 from ./include/linux/thread_info.h:60,
-                 from ./arch/x86/include/asm/preempt.h:9,
-                 from ./include/linux/preempt.h:79,
-                 from ./include/linux/spinlock.h:56,
-                 from ./include/linux/wait.h:9,
-                 from ./include/linux/wait_bit.h:8,
-                 from ./include/linux/fs.h:6,
-                 from fs/smb/client/cifssmb.c:17:
-In function 'fortify_memcpy_chk',
-    inlined from 'CIFS_open' at fs/smb/client/cifssmb.c:1248:3:
-./include/linux/fortify-string.h:588:25: warning: call to '__read_overflow2_field'
-declared with attribute warning: detected read beyond size of field (2nd parameter);
-maybe use struct_group()? [-Wattribute-warning]
-  588 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Fix this issue by not counting completed flush data request as inflight in
+case of quiesce.
 
-In both cases, the fortification logic inteprets calls to 'memcpy()' as an
-attempts to copy an amount of data which exceeds the size of the specified
-field (i.e. more than 8 bytes from __le64 value) and thus issues an overread
-warning. Both of these warnings may be silenced by using the convenient
-'struct_group()' quirk.
-
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: Mike Snitzer <snitzer@kernel.org>
+Cc: David Jeffery <djeffery@redhat.com>
+Cc: John Pittman <jpittman@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20231201085605.577730-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifspdu.h | 24 ++++++++++++++----------
- fs/smb/client/cifssmb.c |  6 ++++--
- fs/smb/client/smb2pdu.c |  8 +++-----
- fs/smb/client/smb2pdu.h | 16 +++++++++-------
- fs/smb/common/smb2pdu.h | 17 ++++++++++-------
- 5 files changed, 40 insertions(+), 31 deletions(-)
+ block/blk-mq.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/cifspdu.h b/fs/smb/client/cifspdu.h
-index c403816d0b6c..97bb1838555b 100644
---- a/fs/smb/client/cifspdu.h
-+++ b/fs/smb/client/cifspdu.h
-@@ -882,11 +882,13 @@ typedef struct smb_com_open_rsp {
- 	__u8 OplockLevel;
- 	__u16 Fid;
- 	__le32 CreateAction;
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le32 FileAttributes;
-+	struct_group(common_attributes,
-+		__le64 CreationTime;
-+		__le64 LastAccessTime;
-+		__le64 LastWriteTime;
-+		__le64 ChangeTime;
-+		__le32 FileAttributes;
-+	);
- 	__le64 AllocationSize;
- 	__le64 EndOfFile;
- 	__le16 FileType;
-@@ -2268,11 +2270,13 @@ typedef struct {
- /* QueryFileInfo/QueryPathinfo (also for SetPath/SetFile) data buffer formats */
- /******************************************************************************/
- typedef struct { /* data block encoding of response to level 263 QPathInfo */
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le32 Attributes;
-+	struct_group(common_attributes,
-+		__le64 CreationTime;
-+		__le64 LastAccessTime;
-+		__le64 LastWriteTime;
-+		__le64 ChangeTime;
-+		__le32 Attributes;
-+	);
- 	__u32 Pad1;
- 	__le64 AllocationSize;
- 	__le64 EndOfFile;	/* size ie offset to first free byte in file */
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index c90d4ec9292c..67c5fc2b2db9 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -1234,8 +1234,10 @@ CIFS_open(const unsigned int xid, struct cifs_open_parms *oparms, int *oplock,
- 		*oplock |= CIFS_CREATE_ACTION;
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 383d94615e50..368f1947c895 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -1500,14 +1500,26 @@ void blk_mq_delay_kick_requeue_list(struct request_queue *q,
+ }
+ EXPORT_SYMBOL(blk_mq_delay_kick_requeue_list);
  
- 	if (buf) {
--		/* copy from CreationTime to Attributes */
--		memcpy((char *)buf, (char *)&rsp->CreationTime, 36);
-+		/* copy commonly used attributes */
-+		memcpy(&buf->common_attributes,
-+		       &rsp->common_attributes,
-+		       sizeof(buf->common_attributes));
- 		/* the file_info buf is endian converted by caller */
- 		buf->AllocationSize = rsp->AllocationSize;
- 		buf->EndOfFile = rsp->EndOfFile;
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 2dfbf1b23cfa..e65f998ea4cf 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -3429,12 +3429,10 @@ __SMB2_close(const unsigned int xid, struct cifs_tcon *tcon,
- 	} else {
- 		trace_smb3_close_done(xid, persistent_fid, tcon->tid,
- 				      ses->Suid);
--		/*
--		 * Note that have to subtract 4 since struct network_open_info
--		 * has a final 4 byte pad that close response does not have
--		 */
- 		if (pbuf)
--			memcpy(pbuf, (char *)&rsp->CreationTime, sizeof(*pbuf) - 4);
-+			memcpy(&pbuf->network_open_info,
-+			       &rsp->network_open_info,
-+			       sizeof(pbuf->network_open_info));
- 	}
++static bool blk_is_flush_data_rq(struct request *rq)
++{
++	return (rq->rq_flags & RQF_FLUSH_SEQ) && !is_flush_rq(rq);
++}
++
+ static bool blk_mq_rq_inflight(struct request *rq, void *priv)
+ {
+ 	/*
+ 	 * If we find a request that isn't idle we know the queue is busy
+ 	 * as it's checked in the iter.
+ 	 * Return false to stop the iteration.
++	 *
++	 * In case of queue quiesce, if one flush data request is completed,
++	 * don't count it as inflight given the flush sequence is suspended,
++	 * and the original flush data request is invisible to driver, just
++	 * like other pending requests because of quiesce
+ 	 */
+-	if (blk_mq_request_started(rq)) {
++	if (blk_mq_request_started(rq) && !(blk_queue_quiesced(rq->q) &&
++				blk_is_flush_data_rq(rq) &&
++				blk_mq_request_completed(rq))) {
+ 		bool *busy = priv;
  
- 	atomic_dec(&tcon->num_remote_opens);
-diff --git a/fs/smb/client/smb2pdu.h b/fs/smb/client/smb2pdu.h
-index a5773a06aba8..8d011fedecd0 100644
---- a/fs/smb/client/smb2pdu.h
-+++ b/fs/smb/client/smb2pdu.h
-@@ -339,13 +339,15 @@ struct smb2_file_reparse_point_info {
- } __packed;
- 
- struct smb2_file_network_open_info {
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le64 AllocationSize;
--	__le64 EndOfFile;
--	__le32 Attributes;
-+	struct_group(network_open_info,
-+		__le64 CreationTime;
-+		__le64 LastAccessTime;
-+		__le64 LastWriteTime;
-+		__le64 ChangeTime;
-+		__le64 AllocationSize;
-+		__le64 EndOfFile;
-+		__le32 Attributes;
-+	);
- 	__le32 Reserved;
- } __packed; /* level 34 Query also similar returned in close rsp and open rsp */
- 
-diff --git a/fs/smb/common/smb2pdu.h b/fs/smb/common/smb2pdu.h
-index 5593bb49954c..a3936ff53d9d 100644
---- a/fs/smb/common/smb2pdu.h
-+++ b/fs/smb/common/smb2pdu.h
-@@ -699,13 +699,16 @@ struct smb2_close_rsp {
- 	__le16 StructureSize; /* 60 */
- 	__le16 Flags;
- 	__le32 Reserved;
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le64 AllocationSize;	/* Beginning of FILE_STANDARD_INFO equivalent */
--	__le64 EndOfFile;
--	__le32 Attributes;
-+	struct_group(network_open_info,
-+		__le64 CreationTime;
-+		__le64 LastAccessTime;
-+		__le64 LastWriteTime;
-+		__le64 ChangeTime;
-+		/* Beginning of FILE_STANDARD_INFO equivalent */
-+		__le64 AllocationSize;
-+		__le64 EndOfFile;
-+		__le32 Attributes;
-+	);
- } __packed;
- 
- 
+ 		*busy = true;
 -- 
 2.43.0
 
