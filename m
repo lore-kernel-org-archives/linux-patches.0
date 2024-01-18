@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226A91774B;
-	Thu, 18 Jan 2024 11:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5C1BE7F;
+	Thu, 18 Jan 2024 11:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575707; cv=none; b=tlFyThMQq15j64+3l1iH+lxeZ4GTE0nZJZrgc3Y19ogorkA8nG3YZqmZS7LqlJ2bXvcXns//RuXQ0ThAujq0Gnn1Vj9RofI5gO0sHrWh42rPIK0UwgJmizyIeFB+1PwabtWNm+PgkV6PcOJ7JJNA5MujbOeHPGI2V6oVxWfQJb0=
+	t=1705575710; cv=none; b=TvnbUly5BmrsimYspHLnGrPd8tQy0ODLjeR9/Us5uqUoHkA0E0z+KyfKRlmV4AmvdMcMzQbzwUJuydLYpUZIN54JffBc6kFWZtBDCilDaoFdoWoZ6wYQYFhWIM23wvECAvoI3vDy+n6vz70+5CT+dcDmdAaK2g6JujkUFu3tDO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575707; c=relaxed/simple;
-	bh=CsUWCwq/uvsmT75wbUOXeXPsgn5gQ3Y01uTLGBfKKlk=;
+	s=arc-20240116; t=1705575710; c=relaxed/simple;
+	bh=r1jyXvpinvGOnwRlIaNNsH3/c4CiUUfVyrWMtXoN/Eo=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=YZuAPi37NXAuAWuzIiCxX26+atuHsA+DAamA38NK55UDPvzsC94wDPNv2uzNteulPhvxnLz3l8KDFJvtbZvQ8BW8Bd+beIQJSmpU/Cqv866ErHF0gnC1OITh1LanC5YP3rwY54SsDYsgQ3QtnYgtfl6h9mzenJoT8JWbagExgkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjqLojPw; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding; b=WFVoh1msqcGh46475VckFOxFMIe9uUGhP60fhZ6FZVKuQcZ8DGf3LQrrYeedR6ZZSPk43G2wuaPVFEiYBVN3ily4q4C0FYmX8ugrglyX97tVWVmq6yvwLcqewacv9oWEaKHefMz4qC2SkQEmH+oCW1wf0DREwOaGws3VEdi0CEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ik5fAJ98; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjqLojPw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADF4C433C7;
-	Thu, 18 Jan 2024 11:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ik5fAJ98"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A70DC433F1;
+	Thu, 18 Jan 2024 11:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575707;
-	bh=CsUWCwq/uvsmT75wbUOXeXPsgn5gQ3Y01uTLGBfKKlk=;
+	s=korg; t=1705575709;
+	bh=r1jyXvpinvGOnwRlIaNNsH3/c4CiUUfVyrWMtXoN/Eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SjqLojPwzbqzyjHHparKVIPsRxJkVbKlOXG976bd6DvNulJaIgw0oPQoVcIVFmQCb
-	 7tmgc1lnTle5ccJXApmz97VqgVEbZxByWcRoH3GxCTwOsJv17oulSCqZQ9zkDnSAz5
-	 OzWbqiOFvIOR6hvAv7LBFHuo36eJQg3nMyVYqeFQ=
+	b=ik5fAJ989BvriMHq/xG6kkmRM5qg9lTLSSYyyfizJHtH/KrBCTbYBFAoESUhgPfEq
+	 0Tt0OgPCg9dVDU7VLu9tH3YCWcXrfHq+pKzzzVXQGoJNRaSC+SlcjKvyxDwp37+M4F
+	 cPd74MiIFPurZRdTgj9D+woplEtQJLbzp0ghcqRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenghan Wang <wzhmmmmm@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Suwan Kim <suwan.kim027@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/100] ida: Fix crash in ida_free when the bitmap is empty
-Date: Thu, 18 Jan 2024 11:49:25 +0100
-Message-ID: <20240118104314.251479823@linuxfoundation.org>
+Subject: [PATCH 6.1 078/100] virtio_blk: fix snprintf truncation compiler warning
+Date: Thu, 18 Jan 2024 11:49:26 +0100
+Message-ID: <20240118104314.290347083@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -47,103 +49,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-[ Upstream commit af73483f4e8b6f5c68c9aa63257bdd929a9c194a ]
+[ Upstream commit b8e0792449928943c15d1af9f63816911d139267 ]
 
-The IDA usually detects double-frees, but that detection failed to
-consider the case when there are no nearby IDs allocated and so we have a
-NULL bitmap rather than simply having a clear bit.  Add some tests to the
-test-suite to be sure we don't inadvertently reintroduce this problem.
-Unfortunately they're quite noisy so include a message to disregard
-the warnings.
+Commit 4e0400525691 ("virtio-blk: support polling I/O") triggers the
+following gcc 13 W=1 warnings:
 
-Reported-by: Zhenghan Wang <wzhmmmmm@gmail.com>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+drivers/block/virtio_blk.c: In function ‘init_vq’:
+drivers/block/virtio_blk.c:1077:68: warning: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 7 [-Wformat-truncation=]
+ 1077 |                 snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req_poll.%d", i);
+      |                                                                    ^~
+drivers/block/virtio_blk.c:1077:58: note: directive argument in the range [-2147483648, 65534]
+ 1077 |                 snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req_poll.%d", i);
+      |                                                          ^~~~~~~~~~~~~
+drivers/block/virtio_blk.c:1077:17: note: ‘snprintf’ output between 11 and 21 bytes into a destination of size 16
+ 1077 |                 snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req_poll.%d", i);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is a false positive because the lower bound -2147483648 is
+incorrect. The true range of i is [0, num_vqs - 1] where 0 < num_vqs <
+65536.
+
+The code mixes int, unsigned short, and unsigned int types in addition
+to using "%d" for an unsigned value. Use unsigned short and "%u"
+consistently to solve the compiler warning.
+
+Cc: Suwan Kim <suwan.kim027@gmail.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202312041509.DIyvEt9h-lkp@intel.com/
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-Id: <20231204140743.1487843-1-stefanha@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/idr.c      |  2 +-
- lib/test_ida.c | 40 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+), 1 deletion(-)
+ drivers/block/virtio_blk.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/lib/idr.c b/lib/idr.c
-index 13f2758c2377..da36054c3ca0 100644
---- a/lib/idr.c
-+++ b/lib/idr.c
-@@ -508,7 +508,7 @@ void ida_free(struct ida *ida, unsigned int id)
- 			goto delete;
- 		xas_store(&xas, xa_mk_value(v));
- 	} else {
--		if (!test_bit(bit, bitmap->bitmap))
-+		if (!bitmap || !test_bit(bit, bitmap->bitmap))
- 			goto err;
- 		__clear_bit(bit, bitmap->bitmap);
- 		xas_set_mark(&xas, XA_FREE_MARK);
-diff --git a/lib/test_ida.c b/lib/test_ida.c
-index b06880625961..55105baa19da 100644
---- a/lib/test_ida.c
-+++ b/lib/test_ida.c
-@@ -150,6 +150,45 @@ static void ida_check_conv(struct ida *ida)
- 	IDA_BUG_ON(ida, !ida_is_empty(ida));
- }
+diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+index efa5535a8e1d..3124837aa406 100644
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -609,12 +609,12 @@ static void virtblk_config_changed(struct virtio_device *vdev)
+ static int init_vq(struct virtio_blk *vblk)
+ {
+ 	int err;
+-	int i;
++	unsigned short i;
+ 	vq_callback_t **callbacks;
+ 	const char **names;
+ 	struct virtqueue **vqs;
+ 	unsigned short num_vqs;
+-	unsigned int num_poll_vqs;
++	unsigned short num_poll_vqs;
+ 	struct virtio_device *vdev = vblk->vdev;
+ 	struct irq_affinity desc = { 0, };
  
-+/*
-+ * Check various situations where we attempt to free an ID we don't own.
-+ */
-+static void ida_check_bad_free(struct ida *ida)
-+{
-+	unsigned long i;
-+
-+	printk("vvv Ignore \"not allocated\" warnings\n");
-+	/* IDA is empty; all of these will fail */
-+	ida_free(ida, 0);
-+	for (i = 0; i < 31; i++)
-+		ida_free(ida, 1 << i);
-+
-+	/* IDA contains a single value entry */
-+	IDA_BUG_ON(ida, ida_alloc_min(ida, 3, GFP_KERNEL) != 3);
-+	ida_free(ida, 0);
-+	for (i = 0; i < 31; i++)
-+		ida_free(ida, 1 << i);
-+
-+	/* IDA contains a single bitmap */
-+	IDA_BUG_ON(ida, ida_alloc_min(ida, 1023, GFP_KERNEL) != 1023);
-+	ida_free(ida, 0);
-+	for (i = 0; i < 31; i++)
-+		ida_free(ida, 1 << i);
-+
-+	/* IDA contains a tree */
-+	IDA_BUG_ON(ida, ida_alloc_min(ida, (1 << 20) - 1, GFP_KERNEL) != (1 << 20) - 1);
-+	ida_free(ida, 0);
-+	for (i = 0; i < 31; i++)
-+		ida_free(ida, 1 << i);
-+	printk("^^^ \"not allocated\" warnings over\n");
-+
-+	ida_free(ida, 3);
-+	ida_free(ida, 1023);
-+	ida_free(ida, (1 << 20) - 1);
-+
-+	IDA_BUG_ON(ida, !ida_is_empty(ida));
-+}
-+
- static DEFINE_IDA(ida);
+@@ -658,13 +658,13 @@ static int init_vq(struct virtio_blk *vblk)
  
- static int ida_checks(void)
-@@ -162,6 +201,7 @@ static int ida_checks(void)
- 	ida_check_leaf(&ida, 1024 * 64);
- 	ida_check_max(&ida);
- 	ida_check_conv(&ida);
-+	ida_check_bad_free(&ida);
+ 	for (i = 0; i < num_vqs - num_poll_vqs; i++) {
+ 		callbacks[i] = virtblk_done;
+-		snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req.%d", i);
++		snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req.%u", i);
+ 		names[i] = vblk->vqs[i].name;
+ 	}
  
- 	printk("IDA: %u of %u tests passed\n", tests_passed, tests_run);
- 	return (tests_run != tests_passed) ? 0 : -EINVAL;
+ 	for (; i < num_vqs; i++) {
+ 		callbacks[i] = NULL;
+-		snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req_poll.%d", i);
++		snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req_poll.%u", i);
+ 		names[i] = vblk->vqs[i].name;
+ 	}
+ 
 -- 
 2.43.0
 
