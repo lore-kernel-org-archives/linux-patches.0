@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96961774B;
-	Thu, 18 Jan 2024 10:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDB61774B;
+	Thu, 18 Jan 2024 10:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575405; cv=none; b=toQ4JvsG4ZPZLrC081yNVy6xlJEZdVT+UnQHijd9O5Gm8FAEVOIWOVZsZ5ruJEmWYEq0IJUzEFGXFHfELTPJVgbhoV59UjPktsgwfFe8lmGV/KuEyg//Hp3VR9nLzD9v92Xz/nExL5yZDYCB/937Dj0Iu9dlSheJGybJo2G6Ddc=
+	t=1705575407; cv=none; b=klkxFaNvk2jIRl8HExkjzDHYkNbVOrmZjFtvmzg71HCBuCGc2GKj926h116ThXZwR9BgfBDtpE8jK57fO7yC091ibUtxbTDT//gkkn4EmzzjyVmEg8f48FTmcSh4TkDJbcmGgS0NZiLWqqK3137ag9AYPLoY5H5AnDFAy7Tn4Dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575405; c=relaxed/simple;
-	bh=2fuKmE0iJtvMy94Ov77WFG26ZZc2DylF33HyxXbt0iE=;
+	s=arc-20240116; t=1705575407; c=relaxed/simple;
+	bh=T/kistQQbgHBWO7X/Po6MKKqt/aNncLtpxeZOu9ap6c=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=QDEc5nTciu7halZPVqu8EUWSq2N7TOqQKxpsP5DqH0LbDmJQXTkxS8wLDOs7Bc+Dol+UXrkzYR7z7mg5Z1uQ4g4AQ/GDJqYrTmjy9KOfYgnCHq0Z6psWHSPkSRNI7AzcGiJNTOBbXjIfqFKEZxC3AtzYV1ZXPWY++t6sj7wPC+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmTR59iq; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=hlMFIMX5IByikqxUiFCVe4bKg13J2FQRoTpgKP3cZJyh7zkWiujJ+VmOKA5/r0jL4btLZrRU3Y7pcIWEmaKtU68aIiGjFUl5mBy7B8grPdDli76Rom/REj5pdCbDMWJGuXqrLhWY1sOFhhcYz84LmKi2PcyDxY9CyELEu2Hc26c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1RK70Uo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmTR59iq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2C1C433F1;
-	Thu, 18 Jan 2024 10:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1RK70Uo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E277C433C7;
+	Thu, 18 Jan 2024 10:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575404;
-	bh=2fuKmE0iJtvMy94Ov77WFG26ZZc2DylF33HyxXbt0iE=;
+	s=korg; t=1705575407;
+	bh=T/kistQQbgHBWO7X/Po6MKKqt/aNncLtpxeZOu9ap6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vmTR59iqYlLrha38En8bH+Egmyvch/+7sFeYjrUidEX31yG196nLQymjaZs9Qz6fc
-	 Cg9l+L8iBXu04mL6GvPryyvgRUgGown9SuYLSmfeq3Wiqn+nGTVrVnr7ynD7KaMpeB
-	 4bghT3vHzFGSq9xcM8DIxk3ZF9HM1laPPM8H+JUI=
+	b=l1RK70Uo//StWN1GWDtzh2NRwWbMTuo+PK54H8gvGqohSu7JZTNmE8m/1GrZIFjPQ
+	 5X5RzXWSO9JRge55z/6QCJh/QC3QMldeGRHJZlXeiU4/8n/zGnIyQcW9loZgU/Nf0v
+	 8/zTnVvXI/3cZBMfktxdA8/y154GYySFNMbtF+eI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Zhenghan Wang <wzhmmmmm@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 093/150] s390/scm: fix virtual vs physical address confusion
-Date: Thu, 18 Jan 2024 11:48:35 +0100
-Message-ID: <20240118104324.251311072@linuxfoundation.org>
+Subject: [PATCH 6.6 120/150] ida: Fix crash in ida_free when the bitmap is empty
+Date: Thu, 18 Jan 2024 11:49:02 +0100
+Message-ID: <20240118104325.607632984@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -53,57 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vineeth Vijayan <vneethv@linux.ibm.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit b1a6a1a77f0666a5a6dc0893ab6ec8fcae46f24c ]
+[ Upstream commit af73483f4e8b6f5c68c9aa63257bdd929a9c194a ]
 
-Fix virtual vs physical address confusion (which currently are the same).
+The IDA usually detects double-frees, but that detection failed to
+consider the case when there are no nearby IDs allocated and so we have a
+NULL bitmap rather than simply having a clear bit.  Add some tests to the
+test-suite to be sure we don't inadvertently reintroduce this problem.
+Unfortunately they're quite noisy so include a message to disregard
+the warnings.
 
-Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Reported-by: Zhenghan Wang <wzhmmmmm@gmail.com>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/scm_blk.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ lib/idr.c      |  2 +-
+ lib/test_ida.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/s390/block/scm_blk.c b/drivers/s390/block/scm_blk.c
-index 3a9cc8a4a230..ade95e91b3c8 100644
---- a/drivers/s390/block/scm_blk.c
-+++ b/drivers/s390/block/scm_blk.c
-@@ -17,6 +17,7 @@
- #include <linux/blk-mq.h>
- #include <linux/slab.h>
- #include <linux/list.h>
-+#include <linux/io.h>
- #include <asm/eadm.h>
- #include "scm_blk.h"
+diff --git a/lib/idr.c b/lib/idr.c
+index 13f2758c2377..da36054c3ca0 100644
+--- a/lib/idr.c
++++ b/lib/idr.c
+@@ -508,7 +508,7 @@ void ida_free(struct ida *ida, unsigned int id)
+ 			goto delete;
+ 		xas_store(&xas, xa_mk_value(v));
+ 	} else {
+-		if (!test_bit(bit, bitmap->bitmap))
++		if (!bitmap || !test_bit(bit, bitmap->bitmap))
+ 			goto err;
+ 		__clear_bit(bit, bitmap->bitmap);
+ 		xas_set_mark(&xas, XA_FREE_MARK);
+diff --git a/lib/test_ida.c b/lib/test_ida.c
+index b06880625961..55105baa19da 100644
+--- a/lib/test_ida.c
++++ b/lib/test_ida.c
+@@ -150,6 +150,45 @@ static void ida_check_conv(struct ida *ida)
+ 	IDA_BUG_ON(ida, !ida_is_empty(ida));
+ }
  
-@@ -130,7 +131,7 @@ static void scm_request_done(struct scm_request *scmrq)
++/*
++ * Check various situations where we attempt to free an ID we don't own.
++ */
++static void ida_check_bad_free(struct ida *ida)
++{
++	unsigned long i;
++
++	printk("vvv Ignore \"not allocated\" warnings\n");
++	/* IDA is empty; all of these will fail */
++	ida_free(ida, 0);
++	for (i = 0; i < 31; i++)
++		ida_free(ida, 1 << i);
++
++	/* IDA contains a single value entry */
++	IDA_BUG_ON(ida, ida_alloc_min(ida, 3, GFP_KERNEL) != 3);
++	ida_free(ida, 0);
++	for (i = 0; i < 31; i++)
++		ida_free(ida, 1 << i);
++
++	/* IDA contains a single bitmap */
++	IDA_BUG_ON(ida, ida_alloc_min(ida, 1023, GFP_KERNEL) != 1023);
++	ida_free(ida, 0);
++	for (i = 0; i < 31; i++)
++		ida_free(ida, 1 << i);
++
++	/* IDA contains a tree */
++	IDA_BUG_ON(ida, ida_alloc_min(ida, (1 << 20) - 1, GFP_KERNEL) != (1 << 20) - 1);
++	ida_free(ida, 0);
++	for (i = 0; i < 31; i++)
++		ida_free(ida, 1 << i);
++	printk("^^^ \"not allocated\" warnings over\n");
++
++	ida_free(ida, 3);
++	ida_free(ida, 1023);
++	ida_free(ida, (1 << 20) - 1);
++
++	IDA_BUG_ON(ida, !ida_is_empty(ida));
++}
++
+ static DEFINE_IDA(ida);
  
- 	for (i = 0; i < nr_requests_per_io && scmrq->request[i]; i++) {
- 		msb = &scmrq->aob->msb[i];
--		aidaw = msb->data_addr;
-+		aidaw = (u64)phys_to_virt(msb->data_addr);
+ static int ida_checks(void)
+@@ -162,6 +201,7 @@ static int ida_checks(void)
+ 	ida_check_leaf(&ida, 1024 * 64);
+ 	ida_check_max(&ida);
+ 	ida_check_conv(&ida);
++	ida_check_bad_free(&ida);
  
- 		if ((msb->flags & MSB_FLAG_IDA) && aidaw &&
- 		    IS_ALIGNED(aidaw, PAGE_SIZE))
-@@ -195,12 +196,12 @@ static int scm_request_prepare(struct scm_request *scmrq)
- 	msb->scm_addr = scmdev->address + ((u64) blk_rq_pos(req) << 9);
- 	msb->oc = (rq_data_dir(req) == READ) ? MSB_OC_READ : MSB_OC_WRITE;
- 	msb->flags |= MSB_FLAG_IDA;
--	msb->data_addr = (u64) aidaw;
-+	msb->data_addr = (u64)virt_to_phys(aidaw);
- 
- 	rq_for_each_segment(bv, req, iter) {
- 		WARN_ON(bv.bv_offset);
- 		msb->blk_count += bv.bv_len >> 12;
--		aidaw->data_addr = (u64) page_address(bv.bv_page);
-+		aidaw->data_addr = virt_to_phys(page_address(bv.bv_page));
- 		aidaw++;
- 	}
- 
+ 	printk("IDA: %u of %u tests passed\n", tests_passed, tests_run);
+ 	return (tests_run != tests_passed) ? 0 : -EINVAL;
 -- 
 2.43.0
 
