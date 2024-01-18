@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0031424B25;
-	Thu, 18 Jan 2024 11:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FF924B5F;
+	Thu, 18 Jan 2024 11:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575610; cv=none; b=GsRxzQK4/aeK2056zF+i66RAQEeN5214HZ5sjyoQqZth9E5Yitmc35XTd4fp/v8q7XV0YHnCVEoUzTMPnBg/qH8ClsM7VqAz0nKaTe2gPhrJnBTjA8kboj18br7Ih7KtbBVGJXW9Ag8lR7XKIPd/DYI7np2G7sL/hEw18hh9Psc=
+	t=1705575613; cv=none; b=JSKUDhwxtvOkzT3/4p7oFlP1JehPbEVdjuYsnFior+snfWXS7lObXHZAFXEh8C79879yc2bxYVc3eHnRCxcx7SIedjKaz+lyUd/rl5ztlS7f3yqmH6zd8lWG+ZuX53AZc55nrX0am/tk3HckOakLETgkBdLC9zEQSg0pTAo/QXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575610; c=relaxed/simple;
-	bh=REVHN3hJPK55EWCfcjbTzPXz8hixOqflTVH/BrezkS8=;
+	s=arc-20240116; t=1705575613; c=relaxed/simple;
+	bh=mJF92q/mRy0Sw5S8dXPGrtJbG4dNjjkbyH6GqVCXzDg=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=lmLeVoMb2nr2MvL8C12I5NUdAXtUQQaxI+sCM1DvQiDKRj/ly3mCeiNY+DFQj/WUxzYJxmpGCbC63TrxrInu6VV1eu1Pc6m4tFiK9cEoIkmdeJKE3IR8bSJKq8wMJcuh6T3LgmcMX+2VH6z+NLbwgxZazpP6pSCQ7f6v6tGK1lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8y+cvTR; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=aL7ZO9F7WQW5x/t/FzCGvGk83y6WdeuJitsZnIDWUyuku1wk1EurPsL2318uUG12iHmEe0HU5klaYJzv7mGTyOR4miyymK9aFH1CwtCnAUAd4eXmjgYuKsn/eE3HNdXw+AaXJTpvoxBNLBRLKVffRzgbrqjjxz0xxLkUIUKAORI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WljIQNwm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8y+cvTR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E04C433A6;
-	Thu, 18 Jan 2024 11:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WljIQNwm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66120C43390;
+	Thu, 18 Jan 2024 11:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575609;
-	bh=REVHN3hJPK55EWCfcjbTzPXz8hixOqflTVH/BrezkS8=;
+	s=korg; t=1705575612;
+	bh=mJF92q/mRy0Sw5S8dXPGrtJbG4dNjjkbyH6GqVCXzDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8y+cvTR8I1TkPTx0hHINFNl1CVFAz9Jerc13HXw9uwHXBphCjKROP/gbVdgIA/ME
-	 oSrJY/ljvKkfG/nxjVycdkfH+4m1+OlJZlbN3jz/3LNIau70wl/VdW3JN3MgTm3v5/
-	 /wL7OwYx4rrOxZUiRwgaE8oZXkduwVZj7jhWJ4UA=
+	b=WljIQNwmoh8917uv8CspKfHW9guJdWWlv1GPAB/GCllrq9LwwcJ7FQQX0WAEIAMxJ
+	 lEV4b6rC6wH5HXFKPhe5s4R3R7mRk0cR5c1+nnqZWM8hcdZ1PCceEp19sxu9vCtG6b
+	 5pL+IgGhZbnyoEHGqAIjhYgAN1S/DMbsoLbOZubQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weihao Li <cn.liweihao@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/100] clk: rockchip: rk3128: Fix HCLK_OTG gate register
-Date: Thu, 18 Jan 2024 11:48:51 +0100
-Message-ID: <20240118104312.788748012@linuxfoundation.org>
+Subject: [PATCH 6.1 044/100] jbd2: correct the printing of write_flags in jbd2_write_superblock()
+Date: Thu, 18 Jan 2024 11:48:52 +0100
+Message-ID: <20240118104312.818658981@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -52,33 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weihao Li <cn.liweihao@gmail.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit c6c5a5580dcb6631aa6369dabe12ef3ce784d1d2 ]
+[ Upstream commit 85559227211020b270728104c3b89918f7af27ac ]
 
-The HCLK_OTG gate control is in CRU_CLKGATE5_CON, not CRU_CLKGATE3_CON.
+The write_flags print in the trace of jbd2_write_superblock() is not
+real, so move the modification before the trace.
 
-Signed-off-by: Weihao Li <cn.liweihao@gmail.com>
-Link: https://lore.kernel.org/r/20231031111816.8777-1-cn.liweihao@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20231129114740.2686201-1-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/rockchip/clk-rk3128.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jbd2/journal.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/rockchip/clk-rk3128.c b/drivers/clk/rockchip/clk-rk3128.c
-index aa53797dbfc1..7782785a86e6 100644
---- a/drivers/clk/rockchip/clk-rk3128.c
-+++ b/drivers/clk/rockchip/clk-rk3128.c
-@@ -490,7 +490,7 @@ static struct rockchip_clk_branch common_clk_branches[] __initdata = {
- 	GATE(HCLK_I2S_2CH, "hclk_i2s_2ch", "hclk_peri", 0, RK2928_CLKGATE_CON(7), 2, GFLAGS),
- 	GATE(0, "hclk_usb_peri", "hclk_peri", CLK_IGNORE_UNUSED, RK2928_CLKGATE_CON(9), 13, GFLAGS),
- 	GATE(HCLK_HOST2, "hclk_host2", "hclk_peri", 0, RK2928_CLKGATE_CON(7), 3, GFLAGS),
--	GATE(HCLK_OTG, "hclk_otg", "hclk_peri", 0, RK2928_CLKGATE_CON(3), 13, GFLAGS),
-+	GATE(HCLK_OTG, "hclk_otg", "hclk_peri", 0, RK2928_CLKGATE_CON(5), 13, GFLAGS),
- 	GATE(0, "hclk_peri_ahb", "hclk_peri", CLK_IGNORE_UNUSED, RK2928_CLKGATE_CON(9), 14, GFLAGS),
- 	GATE(HCLK_SPDIF, "hclk_spdif", "hclk_peri", 0, RK2928_CLKGATE_CON(10), 9, GFLAGS),
- 	GATE(HCLK_TSP, "hclk_tsp", "hclk_peri", 0, RK2928_CLKGATE_CON(10), 12, GFLAGS),
+diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
+index 2696f43e7239..611337b0b5ad 100644
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -1620,9 +1620,11 @@ static int jbd2_write_superblock(journal_t *journal, blk_opf_t write_flags)
+ 		return -EIO;
+ 	}
+ 
+-	trace_jbd2_write_superblock(journal, write_flags);
+ 	if (!(journal->j_flags & JBD2_BARRIER))
+ 		write_flags &= ~(REQ_FUA | REQ_PREFLUSH);
++
++	trace_jbd2_write_superblock(journal, write_flags);
++
+ 	if (buffer_write_io_error(bh)) {
+ 		/*
+ 		 * Oh, dear.  A previous attempt to write the journal
 -- 
 2.43.0
 
