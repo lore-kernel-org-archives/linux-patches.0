@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362BB2033B;
-	Thu, 18 Jan 2024 11:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0216F2033B;
+	Thu, 18 Jan 2024 11:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575795; cv=none; b=rQKHgTdg7gXULW0YpM0hVAi4MaMTc3gPUtAsS+foQRMkPZhCRxdnHZQbWa3OAnJBMlCaGIg5k4+NU1Ic+AWggu4Fu69x1s3xcTdGCDLq2s1qeUYs/4Vsu6nio+9jXPE6r3BfYWzZszinFusKjlZPmZmnQwESMl8Q8dZigkTeRmE=
+	t=1705575798; cv=none; b=Bobgat2RzQFM3TjnC8ChPUc7C+qL/0+LympbqzybDWVxIkTLE21E10scLVQLlX1r+lnu+K9BhrDfCx+X/6eKva7DRNFqT1H4iS9+N32qV8bfAycVoqB1mipBYlclDsG8lFzoK4JWbousp22n3+wIAWD03pa6uq4XEyDLTtQ8xr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575795; c=relaxed/simple;
-	bh=Q/hIgyaFSPNuKHfjrKG0COy9B9jRUuBTB2Qtm5+tV6I=;
+	s=arc-20240116; t=1705575798; c=relaxed/simple;
+	bh=F92wZq8buhAt0cVyv2prK4dV9PoePuOujOFpyYQsHXA=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=a4/Yv5wJFDNcBTP3Sy2uNF94MBbMmtDJ1c8ho/5fxgTVV1jbKsm15/U5jpHhHukUOEKb7OJ1MKuk338sldCuCRrUTORg1NhdANIYqJJOPdLiqmdYi1twfLO158Lz//sPr/0yoJO4yteyQTG4O9+dMPj/Qj1SPnkOjmHzkk+frKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08yaSlCg; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=tvXyXupkJs4mPR+IXdPVjsya/f0OcWNGkN6SjKD1HD92Ti+vfgx9Y/sWIIVKshuvo7kKRe+BRsLJ7yl0RcCZpQ2hccHjzwFC60wso+3G879fkRNDxhYHd2S59yqKycvx88hMN5amN7EOpy47bvVcihyt60+JlP8g/WTA0a0Y2+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOex8aNW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08yaSlCg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82780C433C7;
-	Thu, 18 Jan 2024 11:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOex8aNW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77977C433C7;
+	Thu, 18 Jan 2024 11:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575795;
-	bh=Q/hIgyaFSPNuKHfjrKG0COy9B9jRUuBTB2Qtm5+tV6I=;
+	s=korg; t=1705575797;
+	bh=F92wZq8buhAt0cVyv2prK4dV9PoePuOujOFpyYQsHXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=08yaSlCgJnaAV/LMWhRHfiXdLqa8h7m0Mkk+HH1UMTMcQxE2uheTomlxotSIgXQeI
-	 IXLMqpUejkvA6o/nAuLXNXF1m+s6gZQE+nRDxI/SwvmOa51rmT8mHse4W66ClzIwRK
-	 j/QiDlqrjA2044ESFo/L8TP4CEXYcsnB6QpImuFk=
+	b=fOex8aNWKgFCxq6bhMtIEIo87RPJQgDaI2Czyf8nrxhlB2yPioM1RoVGhj018Hl5O
+	 v0hmGGrZOsqIcWHJPHGiksXPIHCTawb1vwGsLdEta+gfeTYF1DqFuxHFRvvTa0HVCW
+	 m53SF2E9D72nHtWZu2Pk57ybgO8m9wejSHr0EGeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Will Deacon <will@kernel.org>,
-	John Stultz <jstultz@google.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Tom Rix <trix@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 100/100] scripts/decode_stacktrace.sh: optionally use LLVM utilities
-Date: Thu, 18 Jan 2024 11:49:48 +0100
-Message-ID: <20240118104315.173290398@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>
+Subject: [PATCH 6.1 094/100] uio: Fix use-after-free in uio_open
+Date: Thu, 18 Jan 2024 11:49:42 +0100
+Message-ID: <20240118104314.966268360@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -59,97 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
 
-commit efbd6398353315b7018e6943e41fee9ec35e875f upstream.
+commit 0c9ae0b8605078eafc3bea053cc78791e97ba2e2 upstream.
 
-GNU's addr2line can have problems parsing a vmlinux built with LLVM,
-particularly when LTO was used.  In order to decode the traces correctly
-this patch adds the ability to switch to LLVM's utilities readelf and
-addr2line.  The same approach is followed by Will in [1].
+core-1				core-2
+-------------------------------------------------------
+uio_unregister_device		uio_open
+				idev = idr_find()
+device_unregister(&idev->dev)
+put_device(&idev->dev)
+uio_device_release
+				get_device(&idev->dev)
+kfree(idev)
+uio_free_minor(minor)
+				uio_release
+				put_device(&idev->dev)
+				kfree(idev)
+-------------------------------------------------------
 
-Before:
-  $ scripts/decode_stacktrace.sh vmlinux < kernel.log
-  [17716.240635] Call trace:
-  [17716.240646] skb_cow_data (??:?)
-  [17716.240654] esp6_input (ld-temp.o:?)
-  [17716.240666] xfrm_input (ld-temp.o:?)
-  [17716.240674] xfrm6_rcv (??:?)
-  [...]
+In the core-1 uio_unregister_device(), the device_unregister will kfree
+idev when the idev->dev kobject ref is 1. But after core-1
+device_unregister, put_device and before doing kfree, the core-2 may
+get_device. Then:
+1. After core-1 kfree idev, the core-2 will do use-after-free for idev.
+2. When core-2 do uio_release and put_device, the idev will be double
+   freed.
 
-After:
-  $ LLVM=1 scripts/decode_stacktrace.sh vmlinux < kernel.log
-  [17716.240635] Call trace:
-  [17716.240646] skb_cow_data (include/linux/skbuff.h:2172 net/core/skbuff.c:4503)
-  [17716.240654] esp6_input (net/ipv6/esp6.c:977)
-  [17716.240666] xfrm_input (net/xfrm/xfrm_input.c:659)
-  [17716.240674] xfrm6_rcv (net/ipv6/xfrm6_input.c:172)
-  [...]
+To address this issue, we can get idev atomic & inc idev reference with
+minor_lock.
 
-Note that one could set CROSS_COMPILE=llvm- instead to hack around this
-issue.  However, doing so can break the decodecode routine as it will
-force the selection of other LLVM utilities down the line e.g.  llvm-as.
-
-[1] https://lore.kernel.org/all/20230914131225.13415-3-will@kernel.org/
-
-Link: https://lkml.kernel.org/r/20230929034836.403735-1-cmllamas@google.com
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
-Tested-by: Justin Stitt <justinstitt@google.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: John Stultz <jstultz@google.com>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Tom Rix <trix@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 57c5f4df0a5a ("uio: fix crash after the device is unregistered")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://lore.kernel.org/r/1703152663-59949-1-git-send-email-guanghuifeng@linux.alibaba.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/decode_stacktrace.sh |   19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/uio/uio.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/scripts/decode_stacktrace.sh
-+++ b/scripts/decode_stacktrace.sh
-@@ -16,6 +16,21 @@ elif type c++filt >/dev/null 2>&1 ; then
- 	cppfilt_opts=-i
- fi
+--- a/drivers/uio/uio.c
++++ b/drivers/uio/uio.c
+@@ -466,13 +466,13 @@ static int uio_open(struct inode *inode,
  
-+UTIL_SUFFIX=
-+if [[ -z ${LLVM:-} ]]; then
-+	UTIL_PREFIX=${CROSS_COMPILE:-}
-+else
-+	UTIL_PREFIX=llvm-
-+	if [[ ${LLVM} == */ ]]; then
-+		UTIL_PREFIX=${LLVM}${UTIL_PREFIX}
-+	elif [[ ${LLVM} == -* ]]; then
-+		UTIL_SUFFIX=${LLVM}
-+	fi
-+fi
-+
-+READELF=${UTIL_PREFIX}readelf${UTIL_SUFFIX}
-+ADDR2LINE=${UTIL_PREFIX}addr2line${UTIL_SUFFIX}
-+
- if [[ $1 == "-r" ]] ; then
- 	vmlinux=""
- 	basepath="auto"
-@@ -75,7 +90,7 @@ find_module() {
+ 	mutex_lock(&minor_lock);
+ 	idev = idr_find(&uio_idr, iminor(inode));
+-	mutex_unlock(&minor_lock);
+ 	if (!idev) {
+ 		ret = -ENODEV;
++		mutex_unlock(&minor_lock);
+ 		goto out;
+ 	}
+-
+ 	get_device(&idev->dev);
++	mutex_unlock(&minor_lock);
  
- 	if [[ "$modpath" != "" ]] ; then
- 		for fn in $(find "$modpath" -name "${module//_/[-_]}.ko*") ; do
--			if readelf -WS "$fn" | grep -qwF .debug_line ; then
-+			if ${READELF} -WS "$fn" | grep -qwF .debug_line ; then
- 				echo $fn
- 				return
- 			fi
-@@ -169,7 +184,7 @@ parse_symbol() {
- 	if [[ $aarray_support == true && "${cache[$module,$address]+isset}" == "isset" ]]; then
- 		local code=${cache[$module,$address]}
- 	else
--		local code=$(${CROSS_COMPILE}addr2line -i -e "$objfile" "$address" 2>/dev/null)
-+		local code=$(${ADDR2LINE} -i -e "$objfile" "$address" 2>/dev/null)
- 		if [[ $aarray_support == true ]]; then
- 			cache[$module,$address]=$code
- 		fi
+ 	if (!try_module_get(idev->owner)) {
+ 		ret = -ENODEV;
+@@ -1064,9 +1064,8 @@ void uio_unregister_device(struct uio_in
+ 	wake_up_interruptible(&idev->wait);
+ 	kill_fasync(&idev->async_queue, SIGIO, POLL_HUP);
+ 
+-	device_unregister(&idev->dev);
+-
+ 	uio_free_minor(minor);
++	device_unregister(&idev->dev);
+ 
+ 	return;
+ }
 
 
