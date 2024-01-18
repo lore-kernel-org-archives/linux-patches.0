@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F021B96D;
-	Thu, 18 Jan 2024 10:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C4222323;
+	Thu, 18 Jan 2024 10:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575093; cv=none; b=uYqEpnjjMy58+pheQghL6qMgGb1/9+XxZSNuGwy+6VglGH2f9ErJu+OCzqSh2aGBunpoMU6O4UTY9c74RQqcLojF0Yib/v9EGq73zI3YKRG3B1qQLpAvpj0vTj0qa43Mbm0JwfLkZWxBOkzNWlTUTbWZrZVrOZXuxKjmkcAQLsA=
+	t=1705575096; cv=none; b=pHNY4b6CnEcdoWi3eZzmq3/MDpMvmsxcYub2e0rO+sWctZXN89/kB52wwepZVBGKq4+CuzKnm1q6Eo9kPfZNQG7m14ZdiGe3eUJMkod2U3oXhpQmN+r2YP7MwH+xQkCgTcFUqOfSM10EvwLu85rJu0l7FLOgVjfqRuNMn3H+sTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575093; c=relaxed/simple;
-	bh=D2XuAGC7vTjqBDX5t4AMt5BdPKdJPUGsVa34aQffAL8=;
+	s=arc-20240116; t=1705575096; c=relaxed/simple;
+	bh=xg+GHzgFWUWzT7VGslN1YDdU1+Xutf3TU+4V7iXuHNs=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=PEIk7rvUJFZe6xiCt11T+35Vv63a6cdCO8jVluonqxJwvPPFePXxZqpFHCBVa6aniTRUMsSq/iUOQE1JRb0rH6HOM0/RWNxPdjVN1Sdn3VTjFS2Pxq77mgf4iFZXgamtLVgyqkQvtu8OHNH5Oxx5eXG9a2IgE/glqbA5ujC0kXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXwclD5X; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=fVCtrrJ1SA9eIkcljcHRDSp1f5SB3jaQWyOmGMDfo1D1qypKPfnHj5rh2CUiXMkdMHM9Nsy+44jrqoqGNiUB/l+dE+iOtQpb1G5v6xFgA6hQAYDKIsj+hLP0O9wfRPxU8kWgm/3736eSi77IcGp0Vro7lh6iKK7phLlTR4MCTiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XIQHh02R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXwclD5X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13184C433C7;
-	Thu, 18 Jan 2024 10:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XIQHh02R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB11C43390;
+	Thu, 18 Jan 2024 10:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575093;
-	bh=D2XuAGC7vTjqBDX5t4AMt5BdPKdJPUGsVa34aQffAL8=;
+	s=korg; t=1705575096;
+	bh=xg+GHzgFWUWzT7VGslN1YDdU1+Xutf3TU+4V7iXuHNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GXwclD5XdNrJBMJAt74u1SPSmbEyZRCDCojSTI+tBqYDkUitsdlEoe1rPwZs+sWyl
-	 oIuHDIAs8I02O7GZs8ahHrq7FuAEcjKogs8i3V35MW2UyEqXwCRXvUAcBk2j2Isqgn
-	 bZ2U0mNqHVrmnmStnXZ+JhGLts8tAiBGRsEuZ8/M=
+	b=XIQHh02RPFSajHTVe744KRrG4C2aWzAgN85KcnPQhkZp8HOgsj7xoYnhJjKTFbjjh
+	 NlnO5IFjX03b1/gHf8asx2fVvEaAu06OMZZrp0PMyLpz07NYS4uxi35LwgJO1rjjmc
+	 m3DDgbVed3VMGgizWlsveQ8U4LibQDIl2qokIC9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 001/150] f2fs: explicitly null-terminate the xattr list
-Date: Thu, 18 Jan 2024 11:47:03 +0100
-Message-ID: <20240118104320.100026486@linuxfoundation.org>
+	Ben Greear <greearb@candelatech.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 010/150] wifi: mac80211: handle 320 MHz in ieee80211_ht_cap_ie_to_sta_ht_cap
+Date: Thu, 18 Jan 2024 11:47:12 +0100
+Message-ID: <20240118104320.508541499@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -52,36 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Ben Greear <greearb@candelatech.com>
 
-commit e26b6d39270f5eab0087453d9b544189a38c8564 upstream.
+[ Upstream commit 00f7d153f3358a7c7e35aef66fcd9ceb95d90430 ]
 
-When setting an xattr, explicitly null-terminate the xattr list.  This
-eliminates the fragile assumption that the unused xattr space is always
-zeroed.
+The new 320 MHz channel width wasn't handled, so connecting
+a station to a 320 MHz AP would limit the station to 20 MHz
+(on HT) after a warning, handle 320 MHz to fix that.
 
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ben Greear <greearb@candelatech.com>
+Link: https://lore.kernel.org/r/20231109182201.495381-1-greearb@candelatech.com
+[write a proper commit message]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/xattr.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/mac80211/ht.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/f2fs/xattr.c
-+++ b/fs/f2fs/xattr.c
-@@ -754,6 +754,12 @@ retry:
- 		memcpy(pval, value, size);
- 		last->e_value_size = cpu_to_le16(size);
- 		new_hsize += newsize;
-+		/*
-+		 * Explicitly add the null terminator.  The unused xattr space
-+		 * is supposed to always be zeroed, which would make this
-+		 * unnecessary, but don't depend on that.
-+		 */
-+		*(u32 *)((u8 *)last + newsize) = 0;
- 	}
- 
- 	error = write_all_xattrs(inode, new_hsize, base_addr, ipage);
+diff --git a/net/mac80211/ht.c b/net/mac80211/ht.c
+index 33729870ad8a..b3371872895c 100644
+--- a/net/mac80211/ht.c
++++ b/net/mac80211/ht.c
+@@ -271,6 +271,7 @@ bool ieee80211_ht_cap_ie_to_sta_ht_cap(struct ieee80211_sub_if_data *sdata,
+ 	case NL80211_CHAN_WIDTH_80:
+ 	case NL80211_CHAN_WIDTH_80P80:
+ 	case NL80211_CHAN_WIDTH_160:
++	case NL80211_CHAN_WIDTH_320:
+ 		bw = ht_cap.cap & IEEE80211_HT_CAP_SUP_WIDTH_20_40 ?
+ 				IEEE80211_STA_RX_BW_40 : IEEE80211_STA_RX_BW_20;
+ 		break;
+-- 
+2.43.0
+
 
 
