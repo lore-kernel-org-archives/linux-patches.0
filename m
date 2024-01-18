@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B151774B;
-	Thu, 18 Jan 2024 10:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686CD1774B;
+	Thu, 18 Jan 2024 10:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575388; cv=none; b=gsSGyz0fzi43xnzaKGavDdeOQirmiR+wQ8PF7df+dsSJVSVvD10PSBou+XTEjtxgBkHLyOdHEvC9tK1aRVaHE/HlzHhkCF3MqX4WNo+kj1Tts2nb1hE+7HVlUWeZHJVusT5gZloUwN0LOG8dYuxgfq6+JmerQeBXUlEMS4iCfUY=
+	t=1705575391; cv=none; b=ijIeqHOB4aZFuygvk4nuiKdomg1ByKkq6VW+y7/wkVBihjAjmZPPXneHsquOLFk3+f/AUGhYTIN1m6H/rdvucxNjKJAr5tbU2J75vy3LRf0R6+fWDzmn3S3TLdFto3sslS+22W/UloKY1YNtfVNsZxRUUstvbbTF51/Jn3KgZqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575388; c=relaxed/simple;
-	bh=eS0tUIi1U3IBKT11h2lTnF93wWY30EZsd/nTI1gncMg=;
+	s=arc-20240116; t=1705575391; c=relaxed/simple;
+	bh=BEuutCHUELKNrBeoHcHtCy4pCkuUIPcfaeDo3K8+jUs=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=SaXW33HbKdSXCD6PZneyzeVioBM4QtrkxLHHJXIqf8sSuthM7z+vW9Pd9yuBJhSZP3Vs/dHDOCjDrAZh8XNff6EMfON6txE8uazHhbuKG8xVn6oEtA7NfOVxVamqubGlJxSapOrkmhX8PLSDzD+luQJoWb+T2WKBLwvqtg6LykE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4tocwk6; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=GEzgbUwU30YurFVm2ZCiWuvFKKyoCnuJEbRNjIKCrPCxqy/L556fGa+Kl58FhBycFc8Nlhyf3bW/X5kK6bHRsGGw8XR+plKmq2guymAGt07G+6XyG+hAZsYUy03t90A4aG3K+lAUYGRDokuPSkkVxM3MRzE+pukCuIK52CR7shQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yl4UzFVx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4tocwk6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E8FC433C7;
-	Thu, 18 Jan 2024 10:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yl4UzFVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7D3C433C7;
+	Thu, 18 Jan 2024 10:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575388;
-	bh=eS0tUIi1U3IBKT11h2lTnF93wWY30EZsd/nTI1gncMg=;
+	s=korg; t=1705575390;
+	bh=BEuutCHUELKNrBeoHcHtCy4pCkuUIPcfaeDo3K8+jUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4tocwk62zouV2Qj9CmussfACRxN/OHufLlROKTkWFolOhoiNXTehqbkTHZuqvvbr
-	 Sitml7O+O7fD/oiTgkz3N0zODFbkwzd+k8Hez8vEeuL4bXOAV/y5LEbK6U1d9pc1Bf
-	 5MBCfcw+l8gJTnXsSt/ZkwDsKgRcVYYGB++Pey10=
+	b=Yl4UzFVxBIbn6RPE29jk/jf+JHrzJ/OXyEA4jWBRDuIEyykn7eOJiOiPlANdNlV2n
+	 /Xo5sbyZD2ufz+baSndFy5peTfCklLdGoufD4gTdWHJA8tpxqLgOaroCiyoGN2wcDq
+	 TdiClhVeaVmW5GOYGx5foxt/0BLNPz9cNvjD3t5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Li <roman.li@amd.com>,
-	Jun Lei <jun.lei@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
 	Wayne Lin <wayne.lin@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 114/150] drm/amd/display: Add case for dcn35 to support usb4 dmub hpd event
-Date: Thu, 18 Jan 2024 11:48:56 +0100
-Message-ID: <20240118104325.327202901@linuxfoundation.org>
+Subject: [PATCH 6.6 115/150] drm/amd/display: get dprefclk ss info from integration info table
+Date: Thu, 18 Jan 2024 11:48:57 +0100
+Message-ID: <20240118104325.377592093@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -55,67 +55,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <wayne.lin@amd.com>
+From: Charlene Liu <charlene.liu@amd.com>
 
-[ Upstream commit 989824589f793120833bef13aa4e21f5a836a707 ]
+[ Upstream commit 51e7b64690776a9981355428b537af9048308a95 ]
 
-[Why & how]
-Refactor dc_is_dmub_outbox_supported() a bit and add case for dcn35 to
-register dmub outbox notification irq to handle usb4 relevant hpd event.
+[why & how]
+we have two SSC_En:
+we get ssc_info from dce_info for MPLL_SSC_EN.
+we used to call VBIOS cmdtbl's smu_info's SS persentage for DPRECLK SS info,
+is used for DP AUDIO and VBIOS' smu_info table was from systemIntegrationInfoTable.
 
-Reviewed-by: Roman Li <roman.li@amd.com>
-Reviewed-by: Jun Lei <jun.lei@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+since dcn35 VBIOS removed smu_info, driver need to use integrationInfotable directly.
+
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Charlene Liu <charlene.liu@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 26 ++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c          |   19 ++++++++----
+ drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h |    2 +
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index a1be93f6385c..8cdf380bf366 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -4865,18 +4865,28 @@ void dc_mclk_switch_using_fw_based_vblank_stretch_shut_down(struct dc *dc)
-  */
- bool dc_is_dmub_outbox_supported(struct dc *dc)
- {
--	/* DCN31 B0 USB4 DPIA needs dmub notifications for interrupts */
--	if (dc->ctx->asic_id.chip_family == FAMILY_YELLOW_CARP &&
--	    dc->ctx->asic_id.hw_internal_rev == YELLOW_CARP_B0 &&
--	    !dc->debug.dpia_debug.bits.disable_dpia)
--		return true;
-+	switch (dc->ctx->asic_id.chip_family) {
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -1015,13 +1015,20 @@ static enum bp_result get_ss_info_v4_5(
+ 		DC_LOG_BIOS("AS_SIGNAL_TYPE_HDMI ss_percentage: %d\n", ss_info->spread_spectrum_percentage);
+ 		break;
+ 	case AS_SIGNAL_TYPE_DISPLAY_PORT:
+-		ss_info->spread_spectrum_percentage =
++		if (bp->base.integrated_info) {
++			DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", bp->base.integrated_info->gpuclk_ss_percentage);
++			ss_info->spread_spectrum_percentage =
++					bp->base.integrated_info->gpuclk_ss_percentage;
++			ss_info->type.CENTER_MODE =
++					bp->base.integrated_info->gpuclk_ss_type;
++		} else {
++			ss_info->spread_spectrum_percentage =
+ 				disp_cntl_tbl->dp_ss_percentage;
+-		ss_info->spread_spectrum_range =
++			ss_info->spread_spectrum_range =
+ 				disp_cntl_tbl->dp_ss_rate_10hz * 10;
+-		if (disp_cntl_tbl->dp_ss_mode & ATOM_SS_CENTRE_SPREAD_MODE)
+-			ss_info->type.CENTER_MODE = true;
+-
++			if (disp_cntl_tbl->dp_ss_mode & ATOM_SS_CENTRE_SPREAD_MODE)
++				ss_info->type.CENTER_MODE = true;
++		}
+ 		DC_LOG_BIOS("AS_SIGNAL_TYPE_DISPLAY_PORT ss_percentage: %d\n", ss_info->spread_spectrum_percentage);
+ 		break;
+ 	case AS_SIGNAL_TYPE_GPU_PLL:
+@@ -2826,6 +2833,8 @@ static enum bp_result get_integrated_inf
+ 	info->ma_channel_number = info_v2_2->umachannelnumber;
+ 	info->dp_ss_control =
+ 		le16_to_cpu(info_v2_2->reserved1);
++	info->gpuclk_ss_percentage = info_v2_2->gpuclk_ss_percentage;
++	info->gpuclk_ss_type = info_v2_2->gpuclk_ss_type;
  
--	if (dc->ctx->asic_id.chip_family == AMDGPU_FAMILY_GC_11_0_1 &&
--	    !dc->debug.dpia_debug.bits.disable_dpia)
--		return true;
-+	case FAMILY_YELLOW_CARP:
-+		/* DCN31 B0 USB4 DPIA needs dmub notifications for interrupts */
-+		if (dc->ctx->asic_id.hw_internal_rev == YELLOW_CARP_B0 &&
-+		    !dc->debug.dpia_debug.bits.disable_dpia)
-+			return true;
-+	break;
-+
-+	case AMDGPU_FAMILY_GC_11_0_1:
-+	case AMDGPU_FAMILY_GC_11_5_0:
-+		if (!dc->debug.dpia_debug.bits.disable_dpia)
-+			return true;
-+	break;
-+
-+	default:
-+		break;
-+	}
+ 	for (i = 0; i < NUMBER_OF_UCHAR_FOR_GUID; ++i) {
+ 		info->ext_disp_conn_info.gu_id[i] =
+--- a/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h
++++ b/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h
+@@ -417,6 +417,8 @@ struct integrated_info {
+ 	/* V2.1 */
+ 	struct edp_info edp1_info;
+ 	struct edp_info edp2_info;
++	uint32_t gpuclk_ss_percentage;
++	uint32_t gpuclk_ss_type;
+ };
  
- 	/* dmub aux needs dmub notifications to be enabled */
- 	return dc->debug.enable_dmub_aux_for_legacy_ddc;
-+
- }
- 
- /**
--- 
-2.43.0
-
+ /*
 
 
