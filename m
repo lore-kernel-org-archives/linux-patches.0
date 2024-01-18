@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F74422323;
-	Thu, 18 Jan 2024 10:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A4422323;
+	Thu, 18 Jan 2024 10:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575132; cv=none; b=Qoa+eOzaAlbmqxp0pHO4ot58fXIEthykoIT9klwJ4FndFuwmCT4bOwc3PUHP/bvPTQTZkKxWnVyQ7rfarLUxGSf6OzHk6EGBQHjrBRAwyPoSq3aq5J4E6WCGEzwBZFdaw4Kg3+HkF8jCapity9IKOWrvwDM0rCGZapXZrxa06KM=
+	t=1705575135; cv=none; b=uyxskEaWj0Tm3aPqzLa4KK6P+iq1NOUnvckR0VJvBpy3MP0Jmr5RuiP8OL2T4i8sZHGU2Y6oP7b0n45uKcyGVS7LcHk5nOXfXsj64HKE0FvdaiTSoMYi2P+Srd8YXSfOPrhtI3MdMxgZ2ztaYwQCOWJElR/eHIHkD9aN3fB94G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575132; c=relaxed/simple;
-	bh=hPmJhE5Ub8wBc0Rd+vMSZoyNFCvozzZkJRMYgtfiBTE=;
+	s=arc-20240116; t=1705575135; c=relaxed/simple;
+	bh=IHSIyJ/OfWAdJKPIy3WBBaUXSByMht7B6gbi8kM0c38=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=e8rhoKSYucSco/RHB9E0YLZNl3cwdkYhgxFfxKD6dRHTlXsX7abtVzQoNZDH+dNsGly8j1Yi/6cMB1XXg7QXNL4W5QkQBjby12hEl2nRLNU81ADQptnBGkBBr8FuIVUKU0cjSNFlFmc8e3QKco7as0xtEFbKP0yajNVswCMTA4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cs0sQtzx; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding; b=eSeSobzk2lWN9KBByX03y/Ak4EAtoIv/JkS6S8oxZJjXa9yCYCtYB4e9c4C8oRU4CgilkPht8rjZv2Fai4lNApokhOn+Imn3XXFFA4LQdp1iemCamJLd1BuHu6EhP73H3avnf4Ynka+78xdgUHP/1c7pcTQa/HSraeN3XRfncRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwBmWRAv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cs0sQtzx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91AEC433C7;
-	Thu, 18 Jan 2024 10:52:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwBmWRAv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF23AC433C7;
+	Thu, 18 Jan 2024 10:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575132;
-	bh=hPmJhE5Ub8wBc0Rd+vMSZoyNFCvozzZkJRMYgtfiBTE=;
+	s=korg; t=1705575135;
+	bh=IHSIyJ/OfWAdJKPIy3WBBaUXSByMht7B6gbi8kM0c38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cs0sQtzx/NjoXkFzFBtvVXnp94Aw1Q1InKOWzridkSAUXuBTwu9ehu3x9CCt2572d
-	 z7aIsYb7d3w0YC3B5J0AKCFkrkcn1yLEXydH1xUZjFDA76FiSqjbgFzeCX1MQe8F4Z
-	 JIDoxlBqTfSJophssZDrjsqJYSZW6IhfQkf+KriU=
+	b=JwBmWRAvtoAownFDH77tHgwbe5RtgDRKKhlhwJbpCLZfwdcRxSn5evinw0trXFZH3
+	 niwZHosGT/7qJ2jwj2w1OgN0rB2GN9JKgX5d0pNYwQVD5cIKp+3vOq5SEbFkdpfd0Z
+	 p1M/H8KhPwIe4/UG//VGqUn0/0HsOruoJzoMrM/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/150] smb: client, common: fix fortify warnings
-Date: Thu, 18 Jan 2024 11:47:24 +0100
-Message-ID: <20240118104321.088590837@linuxfoundation.org>
+Subject: [PATCH 6.6 023/150] Revert "drm/prime: Unexport helpers for fd/handle conversion"
+Date: Thu, 18 Jan 2024 11:47:25 +0100
+Message-ID: <20240118104321.140116751@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -47,221 +50,153 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Felix Kuehling <Felix.Kuehling@amd.com>
 
-[ Upstream commit 0015eb6e12384ff1c589928e84deac2ad1ceb236 ]
+[ Upstream commit 0514f63cfff38a0dcb7ba9c5f245827edc0c5107 ]
 
-When compiling with gcc version 14.0.0 20231126 (experimental)
-and CONFIG_FORTIFY_SOURCE=y, I've noticed the following:
+This reverts commit 71a7974ac7019afeec105a54447ae1dc7216cbb3.
 
-In file included from ./include/linux/string.h:295,
-                 from ./include/linux/bitmap.h:12,
-                 from ./include/linux/cpumask.h:12,
-                 from ./arch/x86/include/asm/paravirt.h:17,
-                 from ./arch/x86/include/asm/cpuid.h:62,
-                 from ./arch/x86/include/asm/processor.h:19,
-                 from ./arch/x86/include/asm/cpufeature.h:5,
-                 from ./arch/x86/include/asm/thread_info.h:53,
-                 from ./include/linux/thread_info.h:60,
-                 from ./arch/x86/include/asm/preempt.h:9,
-                 from ./include/linux/preempt.h:79,
-                 from ./include/linux/spinlock.h:56,
-                 from ./include/linux/wait.h:9,
-                 from ./include/linux/wait_bit.h:8,
-                 from ./include/linux/fs.h:6,
-                 from fs/smb/client/smb2pdu.c:18:
-In function 'fortify_memcpy_chk',
-    inlined from '__SMB2_close' at fs/smb/client/smb2pdu.c:3480:4:
-./include/linux/fortify-string.h:588:25: warning: call to '__read_overflow2_field'
-declared with attribute warning: detected read beyond size of field (2nd parameter);
-maybe use struct_group()? [-Wattribute-warning]
-  588 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+These helper functions are needed for KFD to export and import DMABufs
+the right way without duplicating the tracking of DMABufs associated with
+GEM objects while ensuring that move notifier callbacks are working as
+intended.
 
-and:
-
-In file included from ./include/linux/string.h:295,
-                 from ./include/linux/bitmap.h:12,
-                 from ./include/linux/cpumask.h:12,
-                 from ./arch/x86/include/asm/paravirt.h:17,
-                 from ./arch/x86/include/asm/cpuid.h:62,
-                 from ./arch/x86/include/asm/processor.h:19,
-                 from ./arch/x86/include/asm/cpufeature.h:5,
-                 from ./arch/x86/include/asm/thread_info.h:53,
-                 from ./include/linux/thread_info.h:60,
-                 from ./arch/x86/include/asm/preempt.h:9,
-                 from ./include/linux/preempt.h:79,
-                 from ./include/linux/spinlock.h:56,
-                 from ./include/linux/wait.h:9,
-                 from ./include/linux/wait_bit.h:8,
-                 from ./include/linux/fs.h:6,
-                 from fs/smb/client/cifssmb.c:17:
-In function 'fortify_memcpy_chk',
-    inlined from 'CIFS_open' at fs/smb/client/cifssmb.c:1248:3:
-./include/linux/fortify-string.h:588:25: warning: call to '__read_overflow2_field'
-declared with attribute warning: detected read beyond size of field (2nd parameter);
-maybe use struct_group()? [-Wattribute-warning]
-  588 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In both cases, the fortification logic inteprets calls to 'memcpy()' as an
-attempts to copy an amount of data which exceeds the size of the specified
-field (i.e. more than 8 bytes from __le64 value) and thus issues an overread
-warning. Both of these warnings may be silenced by using the convenient
-'struct_group()' quirk.
-
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+CC: Christian König <christian.koenig@amd.com>
+CC: Thomas Zimmermann <tzimmermann@suse.de>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Acked-by: Daniel Vetter <daniel@ffwll.ch>
+Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifspdu.h | 24 ++++++++++++++----------
- fs/smb/client/cifssmb.c |  6 ++++--
- fs/smb/client/smb2pdu.c |  8 +++-----
- fs/smb/client/smb2pdu.h | 16 +++++++++-------
- fs/smb/common/smb2pdu.h | 17 ++++++++++-------
- 5 files changed, 40 insertions(+), 31 deletions(-)
+ drivers/gpu/drm/drm_prime.c | 33 ++++++++++++++++++---------------
+ include/drm/drm_prime.h     |  7 +++++++
+ 2 files changed, 25 insertions(+), 15 deletions(-)
 
-diff --git a/fs/smb/client/cifspdu.h b/fs/smb/client/cifspdu.h
-index 83ccc51a54d0..c0513fbb8a59 100644
---- a/fs/smb/client/cifspdu.h
-+++ b/fs/smb/client/cifspdu.h
-@@ -882,11 +882,13 @@ typedef struct smb_com_open_rsp {
- 	__u8 OplockLevel;
- 	__u16 Fid;
- 	__le32 CreateAction;
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le32 FileAttributes;
-+	struct_group(common_attributes,
-+		__le64 CreationTime;
-+		__le64 LastAccessTime;
-+		__le64 LastWriteTime;
-+		__le64 ChangeTime;
-+		__le32 FileAttributes;
-+	);
- 	__le64 AllocationSize;
- 	__le64 EndOfFile;
- 	__le16 FileType;
-@@ -2264,11 +2266,13 @@ typedef struct {
- /* QueryFileInfo/QueryPathinfo (also for SetPath/SetFile) data buffer formats */
- /******************************************************************************/
- typedef struct { /* data block encoding of response to level 263 QPathInfo */
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le32 Attributes;
-+	struct_group(common_attributes,
-+		__le64 CreationTime;
-+		__le64 LastAccessTime;
-+		__le64 LastWriteTime;
-+		__le64 ChangeTime;
-+		__le32 Attributes;
-+	);
- 	__u32 Pad1;
- 	__le64 AllocationSize;
- 	__le64 EndOfFile;	/* size ie offset to first free byte in file */
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index bad91ba6c3a9..9ee348e6d106 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -1244,8 +1244,10 @@ CIFS_open(const unsigned int xid, struct cifs_open_parms *oparms, int *oplock,
- 		*oplock |= CIFS_CREATE_ACTION;
+diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.c
+index 63b709a67471..834a5e28abbe 100644
+--- a/drivers/gpu/drm/drm_prime.c
++++ b/drivers/gpu/drm/drm_prime.c
+@@ -278,7 +278,7 @@ void drm_gem_dmabuf_release(struct dma_buf *dma_buf)
+ }
+ EXPORT_SYMBOL(drm_gem_dmabuf_release);
  
- 	if (buf) {
--		/* copy from CreationTime to Attributes */
--		memcpy((char *)buf, (char *)&rsp->CreationTime, 36);
-+		/* copy commonly used attributes */
-+		memcpy(&buf->common_attributes,
-+		       &rsp->common_attributes,
-+		       sizeof(buf->common_attributes));
- 		/* the file_info buf is endian converted by caller */
- 		buf->AllocationSize = rsp->AllocationSize;
- 		buf->EndOfFile = rsp->EndOfFile;
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 76a0b9dbcf75..5276992e3647 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -3401,12 +3401,10 @@ __SMB2_close(const unsigned int xid, struct cifs_tcon *tcon,
- 	} else {
- 		trace_smb3_close_done(xid, persistent_fid, tcon->tid,
- 				      ses->Suid);
--		/*
--		 * Note that have to subtract 4 since struct network_open_info
--		 * has a final 4 byte pad that close response does not have
--		 */
- 		if (pbuf)
--			memcpy(pbuf, (char *)&rsp->CreationTime, sizeof(*pbuf) - 4);
-+			memcpy(&pbuf->network_open_info,
-+			       &rsp->network_open_info,
-+			       sizeof(pbuf->network_open_info));
- 	}
+-/*
++/**
+  * drm_gem_prime_fd_to_handle - PRIME import function for GEM drivers
+  * @dev: drm_device to import into
+  * @file_priv: drm file-private structure
+@@ -292,9 +292,9 @@ EXPORT_SYMBOL(drm_gem_dmabuf_release);
+  *
+  * Returns 0 on success or a negative error code on failure.
+  */
+-static int drm_gem_prime_fd_to_handle(struct drm_device *dev,
+-				      struct drm_file *file_priv, int prime_fd,
+-				      uint32_t *handle)
++int drm_gem_prime_fd_to_handle(struct drm_device *dev,
++			       struct drm_file *file_priv, int prime_fd,
++			       uint32_t *handle)
+ {
+ 	struct dma_buf *dma_buf;
+ 	struct drm_gem_object *obj;
+@@ -360,6 +360,7 @@ static int drm_gem_prime_fd_to_handle(struct drm_device *dev,
+ 	dma_buf_put(dma_buf);
+ 	return ret;
+ }
++EXPORT_SYMBOL(drm_gem_prime_fd_to_handle);
  
- 	atomic_dec(&tcon->num_remote_opens);
-diff --git a/fs/smb/client/smb2pdu.h b/fs/smb/client/smb2pdu.h
-index 220994d0a0f7..db08194484e0 100644
---- a/fs/smb/client/smb2pdu.h
-+++ b/fs/smb/client/smb2pdu.h
-@@ -319,13 +319,15 @@ struct smb2_file_reparse_point_info {
- } __packed;
+ int drm_prime_fd_to_handle_ioctl(struct drm_device *dev, void *data,
+ 				 struct drm_file *file_priv)
+@@ -408,7 +409,7 @@ static struct dma_buf *export_and_register_object(struct drm_device *dev,
+ 	return dmabuf;
+ }
  
- struct smb2_file_network_open_info {
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le64 AllocationSize;
--	__le64 EndOfFile;
--	__le32 Attributes;
-+	struct_group(network_open_info,
-+		__le64 CreationTime;
-+		__le64 LastAccessTime;
-+		__le64 LastWriteTime;
-+		__le64 ChangeTime;
-+		__le64 AllocationSize;
-+		__le64 EndOfFile;
-+		__le32 Attributes;
-+	);
- 	__le32 Reserved;
- } __packed; /* level 34 Query also similar returned in close rsp and open rsp */
+-/*
++/**
+  * drm_gem_prime_handle_to_fd - PRIME export function for GEM drivers
+  * @dev: dev to export the buffer from
+  * @file_priv: drm file-private structure
+@@ -421,10 +422,10 @@ static struct dma_buf *export_and_register_object(struct drm_device *dev,
+  * The actual exporting from GEM object to a dma-buf is done through the
+  * &drm_gem_object_funcs.export callback.
+  */
+-static int drm_gem_prime_handle_to_fd(struct drm_device *dev,
+-				      struct drm_file *file_priv, uint32_t handle,
+-				      uint32_t flags,
+-				      int *prime_fd)
++int drm_gem_prime_handle_to_fd(struct drm_device *dev,
++			       struct drm_file *file_priv, uint32_t handle,
++			       uint32_t flags,
++			       int *prime_fd)
+ {
+ 	struct drm_gem_object *obj;
+ 	int ret = 0;
+@@ -506,6 +507,7 @@ static int drm_gem_prime_handle_to_fd(struct drm_device *dev,
  
-diff --git a/fs/smb/common/smb2pdu.h b/fs/smb/common/smb2pdu.h
-index d58550c1c937..63f969a8e44d 100644
---- a/fs/smb/common/smb2pdu.h
-+++ b/fs/smb/common/smb2pdu.h
-@@ -700,13 +700,16 @@ struct smb2_close_rsp {
- 	__le16 StructureSize; /* 60 */
- 	__le16 Flags;
- 	__le32 Reserved;
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le64 AllocationSize;	/* Beginning of FILE_STANDARD_INFO equivalent */
--	__le64 EndOfFile;
--	__le32 Attributes;
-+	struct_group(network_open_info,
-+		__le64 CreationTime;
-+		__le64 LastAccessTime;
-+		__le64 LastWriteTime;
-+		__le64 ChangeTime;
-+		/* Beginning of FILE_STANDARD_INFO equivalent */
-+		__le64 AllocationSize;
-+		__le64 EndOfFile;
-+		__le32 Attributes;
-+	);
- } __packed;
+ 	return ret;
+ }
++EXPORT_SYMBOL(drm_gem_prime_handle_to_fd);
  
+ int drm_prime_handle_to_fd_ioctl(struct drm_device *dev, void *data,
+ 				 struct drm_file *file_priv)
+@@ -864,9 +866,9 @@ EXPORT_SYMBOL(drm_prime_get_contiguous_size);
+  * @obj: GEM object to export
+  * @flags: flags like DRM_CLOEXEC and DRM_RDWR
+  *
+- * This is the implementation of the &drm_gem_object_funcs.export functions
+- * for GEM drivers using the PRIME helpers. It is used as the default for
+- * drivers that do not set their own.
++ * This is the implementation of the &drm_gem_object_funcs.export functions for GEM drivers
++ * using the PRIME helpers. It is used as the default in
++ * drm_gem_prime_handle_to_fd().
+  */
+ struct dma_buf *drm_gem_prime_export(struct drm_gem_object *obj,
+ 				     int flags)
+@@ -962,9 +964,10 @@ EXPORT_SYMBOL(drm_gem_prime_import_dev);
+  * @dev: drm_device to import into
+  * @dma_buf: dma-buf object to import
+  *
+- * This is the implementation of the gem_prime_import functions for GEM
+- * drivers using the PRIME helpers. It is the default for drivers that do
+- * not set their own &drm_driver.gem_prime_import.
++ * This is the implementation of the gem_prime_import functions for GEM drivers
++ * using the PRIME helpers. Drivers can use this as their
++ * &drm_driver.gem_prime_import implementation. It is used as the default
++ * implementation in drm_gem_prime_fd_to_handle().
+  *
+  * Drivers must arrange to call drm_prime_gem_destroy() from their
+  * &drm_gem_object_funcs.free hook when using this function.
+diff --git a/include/drm/drm_prime.h b/include/drm/drm_prime.h
+index a7abf9f3e697..2a1d01e5b56b 100644
+--- a/include/drm/drm_prime.h
++++ b/include/drm/drm_prime.h
+@@ -60,12 +60,19 @@ enum dma_data_direction;
  
+ struct drm_device;
+ struct drm_gem_object;
++struct drm_file;
+ 
+ /* core prime functions */
+ struct dma_buf *drm_gem_dmabuf_export(struct drm_device *dev,
+ 				      struct dma_buf_export_info *exp_info);
+ void drm_gem_dmabuf_release(struct dma_buf *dma_buf);
+ 
++int drm_gem_prime_fd_to_handle(struct drm_device *dev,
++			       struct drm_file *file_priv, int prime_fd, uint32_t *handle);
++int drm_gem_prime_handle_to_fd(struct drm_device *dev,
++			       struct drm_file *file_priv, uint32_t handle, uint32_t flags,
++			       int *prime_fd);
++
+ /* helper functions for exporting */
+ int drm_gem_map_attach(struct dma_buf *dma_buf,
+ 		       struct dma_buf_attachment *attach);
 -- 
 2.43.0
 
