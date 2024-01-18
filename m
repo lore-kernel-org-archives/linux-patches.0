@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6927F1B96D;
-	Thu, 18 Jan 2024 10:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2771222323;
+	Thu, 18 Jan 2024 10:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575154; cv=none; b=LKAuduAG+sfGzE3gFsYaPhOhTgOhPLl8zJO1FzeJbRdca3Iw85m+4fT/uEkvQ11tz2HEuWHqxVqij//jU6W3aOBC7T0GgrfZHMsU6i2HCsQfK0mGDwu2cEXelkRbS5J8TN5bQSXEN6lzGyrRsOE9qkm/5vr16ODqQTYCHv1mIEM=
+	t=1705575157; cv=none; b=bgO2tKKNhAk2IWqWrVXh7+bdGWk8Y9ItM8L9O8jyfSdy1fP9HXXvMBRxJCMemnk+My/YlpHbOkYTHv/QgYU6Xm7I45YeY82SucmaHJt0wInQv5L5jLPbVhUUKOnF+UjPCaeK1KzbxaWXcrinTCVOcoE51A3LN73+3qBhm0ATNNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575154; c=relaxed/simple;
-	bh=MjFz+W/3BPBk3+T3T0WPioeTUHZE6Pz43rmJo+bBjXs=;
+	s=arc-20240116; t=1705575157; c=relaxed/simple;
+	bh=XWBHz3gBz63mgBBfcaX8MaCOgOqDyYHH2aLJwxs48F8=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=Szpq0KGYk6icx49CPREsgy4MH/0vkx6I5P5pGGbGwiVOz4VjKxkjqXJlJs5ym6D+A9ko3uX7vTc6S7PJIl2Tys4+vTfKI1EaZKwLVrWSq4YWY8OCq4KR8GhW7eH8VR41OkXRsQpKnZTMJ1oBFv/KvILE2LpKDWlwfBrc/HnmNQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIJXv206; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=cPeamN7CsXquZAlogj/2eUcM73dZO/ZQ+5o1k2/u/I651513kpkncMFbCXO2tHWdEVbgw9qiqJTFtzRLiN5mOc0tuN2Phs0WtWeHMFrBVhNH6S0P91d0xusTE+8NVPoRalajFmoj2y3nqDJ8YgAPMEORTQh77VQWx284d01rd6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imZ2nUPQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIJXv206"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31C6C433C7;
-	Thu, 18 Jan 2024 10:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imZ2nUPQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F966C433F1;
+	Thu, 18 Jan 2024 10:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575154;
-	bh=MjFz+W/3BPBk3+T3T0WPioeTUHZE6Pz43rmJo+bBjXs=;
+	s=korg; t=1705575157;
+	bh=XWBHz3gBz63mgBBfcaX8MaCOgOqDyYHH2aLJwxs48F8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PIJXv206dwg/o61XcasCApU2ljdyodwYtxYN3vQxTJnAvGZlnEsysLmuSG0WaZNy6
-	 yprBu77GzMbwSthL4O64Pl/1bT/c8W7vDO1ISdX5Ik/ZRQlYY0VEaZQ5zBafhTIX9/
-	 0/e4jJBOxHpr2HaPUy8mT4rnVEcB+5rzkhDs0g90=
+	b=imZ2nUPQwaqZZY9ObZZ53cCgFJz3UtHEcLvvo0hvKlK/Sl4dnZc5s3oYrGbllXCB8
+	 qrKu8osi0uxNbZBtWqdW/0i1oGeeibOz++2/e1Ob4J5ItiPv1dtaJTEJTaOVTDTbP3
+	 +npWPmKzLYyWPBOYhfxGnnlMngarrU+UKcxNr9us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+b834a6b2decad004cfa1@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/150] ALSA: hda - Fix speaker and headset mic pin config for CHUWI CoreBook XPro
-Date: Thu, 18 Jan 2024 11:47:08 +0100
-Message-ID: <20240118104320.335162215@linuxfoundation.org>
+Subject: [PATCH 6.6 007/150] mptcp: fix uninit-value in mptcp_incoming_options
+Date: Thu, 18 Jan 2024 11:47:09 +0100
+Message-ID: <20240118104320.377766458@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -52,56 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 7c9caa299335df94ad1c58f70a22f16a540eab60 ]
+[ Upstream commit 237ff253f2d4f6307b7b20434d7cbcc67693298b ]
 
-This patch corrected the speaker and headset mic pin config to the more
-appropriate values.
+Added initialization use_ack to mptcp_parse_option().
 
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://lore.kernel.org/r/20231117170923.106822-1-kovalev@altlinux.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: syzbot+b834a6b2decad004cfa1@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/mptcp/options.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index a9822d731ae0..2f367e8b399b 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7180,6 +7180,7 @@ enum {
- 	ALC290_FIXUP_SUBWOOFER_HSJACK,
- 	ALC269_FIXUP_THINKPAD_ACPI,
- 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
-+	ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO,
- 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
- 	ALC255_FIXUP_ASUS_MIC_NO_PRESENCE,
- 	ALC255_FIXUP_DELL1_MIC_NO_PRESENCE,
-@@ -7532,6 +7533,14 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc269_fixup_pincfg_U7x7_headset_mic,
- 	},
-+	[ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x18, 0x03a19020 }, /* headset mic */
-+			{ 0x1b, 0x90170150 }, /* speaker */
-+			{ }
-+		},
-+	},
- 	[ALC269_FIXUP_AMIC] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -10183,6 +10192,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
+diff --git a/net/mptcp/options.c b/net/mptcp/options.c
+index cd15ec73073e..c53914012d01 100644
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -108,6 +108,7 @@ static void mptcp_parse_option(const struct sk_buff *skb,
+ 			mp_opt->suboptions |= OPTION_MPTCP_DSS;
+ 			mp_opt->use_map = 1;
+ 			mp_opt->mpc_map = 1;
++			mp_opt->use_ack = 0;
+ 			mp_opt->data_len = get_unaligned_be16(ptr);
+ 			ptr += 2;
+ 		}
 -- 
 2.43.0
 
