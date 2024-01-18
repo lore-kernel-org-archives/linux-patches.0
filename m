@@ -1,129 +1,98 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DEF23741
-	for <patches@lists.linux.dev>; Thu, 18 Jan 2024 16:23:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671BA2C693
+	for <patches@lists.linux.dev>; Thu, 18 Jan 2024 16:35:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705595023; cv=none; b=C35T9jJM7KpOUcGMImK12keNAV6N2gHIVj7hw+Rykd0MaTWg6E4PLvSQ15ydPod3DaXL3DFEyavRcQ2BCYGMB+5GxPMaHluqAqSVibgDd1UZC67CbKYuydqx5ADciA5CPk4q/9L6RfaLsVJ/Y8IyyqKiVSfC/qULAQob0jEUHmw=
+	t=1705595750; cv=none; b=goFT01aCF3Ik85FwqRrZh+JEQ/YCV6/94X67GTGFrFz3Fsb2dxzVUH4GNHYAFq5OWpx4gNBl8qaZlH2JJVeognakxq7+EWr6Xog5PZUW1W6VAEyU8OJiaPf3ffry0J2Wp6HWrjmDtU28KCnV8h8e1mzC+K4reYatuYIKhPv8Gd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705595023; c=relaxed/simple;
-	bh=qKUUpq7MmCfdf2J5CKyKj1so4YJl9z164uDR3Riq3eE=;
-	h=Received:X-Google-DKIM-Signature:X-Gm-Message-State:
-	 X-Google-Smtp-Source:X-Received:Received:Received:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:Message-ID:Subject:To:Cc:Content-Type:
-	 Content-Transfer-Encoding; b=QLcE8goccNVPoi0dgvy7hIqv1PXtE78JsjMnvWqbXvk3MVHC8roDI71VpCK4fN0npTsy08MVlPmCD87GsvL5+4fXAjUNF15Po1xcE/1GottIb8G8ChYEAKyXf99UT03hl1d3qM6nmF202h4/9IZYIgU6Guo6BJgRhzoRvjP31rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+	s=arc-20240116; t=1705595750; c=relaxed/simple;
+	bh=HVtIWULhKgdre+jmToxGqERh4Fcm+IoYq7p6h7HkQ6E=;
+	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:MIME-Version:
+	 References:In-Reply-To:From:Date:Message-ID:Subject:To:Cc:
+	 Content-Type; b=cGSHvjCfExbhDB/nAiAb3EGDufSM7Qi2SPUWoQXe9h7S+VpgF465t3BTbu5mAGCHNMh/xocNb0NIxXJWMdN6HW0ySsQp3hXUaYSCYlqLkvTc9KuVZ8CiiIiWkfdltXpufWt+QNu9ev2BUQ5cv9l6OxrKyomSXf6+yX1b4hSxr3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UYxLGlkR; arc=none smtp.client-ip=209.85.222.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dafe04717baso10060347276.1
-        for <patches@lists.linux.dev>; Thu, 18 Jan 2024 08:23:41 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UYxLGlkR"
+Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-7cd4d77e2ebso3505303241.3
+        for <patches@lists.linux.dev>; Thu, 18 Jan 2024 08:35:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705595748; x=1706200548; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=gpvBWl64BM2U+Fa3xxlD+umyFQJyzuRde12Sfj64vBo=;
+        b=UYxLGlkR59zT7uMTs5LakHNm6oMfOsqe7DkSoohK5/1Gy9jrfkSZ7IhCsmplN0f22J
+         CFKd/eQjTUUlvFaRAeBgDzh97R+lMRVkl8GO7g/ONlcxG5CXLZYLaKPbVfHV/4lSGaX7
+         p4Ihwjw789Xi4tyoMQNvlG97DykBCpNNM0aSFMbk37RwgdPQtOIROZE2yopybjNyIB+f
+         sXFW+8P1HhJwmhtCBLYBpZTipE2ZjEmpHDEtIiN5MdpDpps0nwwniNNXZd54U1rwC2Wg
+         u6rTrkekb+hP6vXEz7uOTjqulZdl2EnDvxw4Pgj3Psb8dZQqrUJB036L1tQX43G3ZCQA
+         GRfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705595021; x=1706199821;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Si052lwaQIxGIdPAiTDPdKrWDfItm8neDWdgcw4uLug=;
-        b=RUCrRa4kHsXDHXu4JuVGWfCn7OSeIdXkQLx2METlOg1DNOtef0K1Au+HigFIa49Ckd
-         nCePEMQPDpg5Ekw4R5uuGiBYywc1NNehsPh5qRP0D50BMcxDlm8s1CadOhPLdKpi9kd7
-         r4sV3rVJwTivWXzDFLsj5nGb9Ni7IBUSKYO+ZI8j+Ko+k4frZQLKQkgvw2rL9UPC1Y8n
-         vkdkmrrSbMu1an2NNdFwRRGBpieul62QM0sC5nPQeBaYARIbcCaOJRy6VRXuN0yb3qHw
-         XCB6j3uTkd7W3T0xOTIrKasR1yMCdznMwTVRhZ2ZKICvAdmCvvbfhL7ZMMASDz8fnHNk
-         oUkg==
-X-Gm-Message-State: AOJu0YyKIndh0hrJOpj09uurIRUit9j/zpLzhckCE3J+MtvFlozevYd5
-	UnZbuqEUGqgRUXJ8gh7MQujMLKjm3x+fZKbkxaQ8SCssga8eB5d/laTofRnZeGw=
-X-Google-Smtp-Source: AGHT+IEyfKkm/JBeZkfHqtzKJjhDqxBzHh1G6EOqnAW+ZufBE9oY/kpgyz5uZiaPngX210Uk2c7mpg==
-X-Received: by 2002:a25:bccf:0:b0:dbd:abfa:f83a with SMTP id l15-20020a25bccf000000b00dbdabfaf83amr878666ybm.116.1705595020855;
-        Thu, 18 Jan 2024 08:23:40 -0800 (PST)
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com. [209.85.128.172])
-        by smtp.gmail.com with ESMTPSA id k10-20020a25b28a000000b00dc2217892a4sm2380604ybj.56.2024.01.18.08.23.40
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jan 2024 08:23:40 -0800 (PST)
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-5f2d4aaa2fdso127764207b3.1
-        for <patches@lists.linux.dev>; Thu, 18 Jan 2024 08:23:40 -0800 (PST)
-X-Received: by 2002:a0d:c201:0:b0:5f4:97a:ac87 with SMTP id
- e1-20020a0dc201000000b005f4097aac87mr963234ywd.60.1705595019879; Thu, 18 Jan
- 2024 08:23:39 -0800 (PST)
+        d=1e100.net; s=20230601; t=1705595748; x=1706200548;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gpvBWl64BM2U+Fa3xxlD+umyFQJyzuRde12Sfj64vBo=;
+        b=RFqV9Fde3SuqiJ0GbtvxR6IQi4tINyWxY2EYz3f6nMMhSxT0EVto3uVy1uHDs+f7nU
+         5mC1IKa7eu1BCGNdfQg/28V3vV833hgjFGmPg5bhF2XXev3UsBQExLuGYiOL2LlR+Mwb
+         wTvNNo5LcFKk0HQ5Wxh/GsiKMcXgAX/D3ez+SUb7opTs6oHdUs52yv/hlynz9n5lVHD1
+         PaBut5jAa4Bm8VFnaxgjpC42+aXUWylDQz7UKfIxyfyAAulJgokIM58jXppflbZhcY7w
+         VadwwpXH/754p2wShY3rEG5HChQZ3jxTVSUeSCBMYaT9sFtC6zfTLUWefiFIUbI7GFk+
+         ETTA==
+X-Gm-Message-State: AOJu0Yx/6p1odGTV7uQhdoj+P89AmpAKBSfVYBPeYkzdkfl6sKIQyL1h
+	tLmEH2vGK/u2E4nQ/GxETB5tXfLwNE7BfhiU3WhiQfsdYemN0+fCmDjQ6lOxYsTEIULwQ8+XyQQ
+	daGnh0hdl1K0UHLp2jmvbZHFk96E=
+X-Google-Smtp-Source: AGHT+IGMs6yZyS34Oap5tc2ZDXBJhIXQx0gOhbO4B68g+nsccnaReqwgyA/t+qBdbyFSF6xrgOnuxZep/LYYPo8vPfA=
+X-Received: by 2002:ac5:c8ac:0:b0:4b6:d3f2:6d26 with SMTP id
+ o12-20020ac5c8ac000000b004b6d3f26d26mr726202vkl.26.1705595748326; Thu, 18 Jan
+ 2024 08:35:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240112200750.4062441-1-sboyd@kernel.org> <20240112200750.4062441-2-sboyd@kernel.org>
- <ZaZtbU9hre3YhZam@FVFF77S0Q05N> <434b21afe1899b1567f3617261594842.sboyd@kernel.org>
- <ZalDM90KoQ2Il0j7@FVFF77S0Q05N.cambridge.arm.com>
-In-Reply-To: <ZalDM90KoQ2Il0j7@FVFF77S0Q05N.cambridge.arm.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Thu, 18 Jan 2024 17:23:28 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdXkwDA4WAe5qYujeP0sF+h-950GZNkg+6kERr6SSmfz6A@mail.gmail.com>
-Message-ID: <CAMuHMdXkwDA4WAe5qYujeP0sF+h-950GZNkg+6kERr6SSmfz6A@mail.gmail.com>
-Subject: Re: [PATCH 1/6] arm64: Unconditionally call unflatten_device_tree()
-To: Mark Rutland <mark.rutland@arm.com>
-Cc: Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, linux-um@lists.infradead.org, 
-	linux-arm-kernel@lists.infradead.org, kunit-dev@googlegroups.com, 
-	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, 
-	Frank Rowand <frowand.list@gmail.com>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>
+References: <20240118104301.249503558@linuxfoundation.org>
+In-Reply-To: <20240118104301.249503558@linuxfoundation.org>
+From: Allen <allen.lkml@gmail.com>
+Date: Thu, 18 Jan 2024 08:35:37 -0800
+Message-ID: <CAOMdWSLdLSOMpNb24CWDDOf2qH9ZLw+7_+vOmAiDWB6St_XnBA@mail.gmail.com>
+Subject: Re: [PATCH 6.7 00/28] 6.7.1-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Mark,
-
-On Thu, Jan 18, 2024 at 4:27=E2=80=AFPM Mark Rutland <mark.rutland@arm.com>=
- wrote:
-> On Tue, Jan 16, 2024 at 05:27:18PM -0800, Stephen Boyd wrote:
-> > Quoting Mark Rutland (2024-01-16 03:51:14)
-> > > On Fri, Jan 12, 2024 at 12:07:44PM -0800, Stephen Boyd wrote:
-> > > > Call this function unconditionally so that we can populate an empty=
- DTB
-> > > > on platforms that don't boot with a firmware provided or builtin DT=
-B.
-> > > > There's no harm in calling unflatten_device_tree() unconditionally.
-> > >
-> > > For better or worse, that's not true: there are systems the provide b=
-oth a DTB
-> > > *and* ACPI tables, and we must not consume both at the same time as t=
-hose can
-> > > clash and cause all sorts of problems. In addition, we don't want peo=
-ple being
-> > > "clever" and describing disparate portions of their system in ACPI an=
-d DT.
-> > >
-> > > It is a very deliberate choice to not unflatten the DTB when ACPI is =
-in use,
-> > > and I don't think we want to reopen this can of worms.
-> >
-> > Hmm ok. I missed this part. Can we knock out the initial_boot_params in
-> > this case so that we don't unflatten a DTB when ACPI is in use?
+> This is the start of the stable review cycle for the 6.7.1 release.
+> There are 28 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> Why is that better than just not calling unflatten_device_tree(), as we d=
-o
-> today?
+> Responses should be made by Sat, 20 Jan 2024 10:42:49 +0000.
+> Anything received after that time might be too late.
 >
-> The cover letter says this is all so that we can run DT tests for the clk
-> framework; why can't that just depend on the system being booted with DT =
-rather
-> than ACPI? We have other tests which are architecture and/or configuratio=
-n
-> dependent...
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.1-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-There is definitely a merit in running (platform-independent) DT tests
-on any platform, whether the platform actually uses DT to boot or not.
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
-Gr{oetje,eeting}s,
+Tested-by: Allen Pais <apais@linux.microsoft.com>
 
-                        Geert
-
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+Thanks.
