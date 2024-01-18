@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A9C1B96D;
-	Thu, 18 Jan 2024 10:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE091B96D;
+	Thu, 18 Jan 2024 10:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575254; cv=none; b=RvlFTjZnhFNzuirh0oRjyLBYeHirwREAJqbLPBhpPFx2wVoDg66RqVYboYsXhKq1ElhamyDwFH3o6OFV3F7REOmvlKkp5OHzxt/B8kfnhSE8XObsgVIV21QF8LL8gyo5qmCjCXMTqS2xh5z21ZWPujGsSppB9Oty7zuygaPCxAY=
+	t=1705575257; cv=none; b=tMpEvAi05/BLum5i3EEsdnblxLlXilD/3NNDJZ8/fBCZlYyeeH81chuECDqQkkbFy/bg7da16oFepezDG3xc9HbjxDTE4oItcgjQmMKTKa9B0rYzT9E7myqB238jSKQ+YqxCYptSUvOOWbjoh4xZvVFXY560196BVwQJIXlfoBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575254; c=relaxed/simple;
-	bh=R3pO/0ga0StjT1ANvtodmGK1rxtbYl+XGVenC8OU2uw=;
+	s=arc-20240116; t=1705575257; c=relaxed/simple;
+	bh=vnuX+LgN0jW9hMl3TtaU2bvGkupuAEDLBGZ+SpYYUlo=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=ORYjSOt2GojfDw+gfpxca+WG31sCeuYQlo2wXThQebT6bjlqQ34S9czO1KV1Rmw9BedeT4cTW1vq+HM4U9J6Zq/yWrIkAo0iTdQ9A1Y+F21EPk8UTFPSiauSyivMDUM6zkCMC/UCz84cFwLI6H94Y5ZspejriUszQotY31ByQJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16jFt9w1; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=HyrUzU2NJraGzRuhKMITu0St+5q4+qhW0XQkpSy9nftIVbDtF+h+emaKyAHl5V7Q8dRNgiqFybeBWSpBqfS7EKTIpWtFhaEVzwpeLENQp6RE7Q8eRiRtYqPhDlZUBurRPGP1hZHahSJxBijE6FmEm4MnF1F9jjAXj9JsC9Nhai4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZ+mRN1v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16jFt9w1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ADA0C43390;
-	Thu, 18 Jan 2024 10:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZ+mRN1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD04AC433F1;
+	Thu, 18 Jan 2024 10:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575254;
-	bh=R3pO/0ga0StjT1ANvtodmGK1rxtbYl+XGVenC8OU2uw=;
+	s=korg; t=1705575257;
+	bh=vnuX+LgN0jW9hMl3TtaU2bvGkupuAEDLBGZ+SpYYUlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=16jFt9w1pMQU4GNG0BynCA6/dlOP0gpxkSymwTdtSS2POgclW0q7YKd5LnzLc6FRV
-	 /2q+44mCENbyzsXtOhtIBsfTbV6DwtouAqWkkKXboNxf7EjYH7h57t5dHOcZux2uGB
-	 IOLUDWbzezvNFLfWqjW8mKqCeoDeXQ1hRtd5tLd0=
+	b=cZ+mRN1vVk+cJeDg45CuDvRB2EbkV0fH5Sqt0dgks4Tie9Y+jlZerYuTBwOP3UdyV
+	 CJrm2gKgu5zMNEK4uSCy+Kkr60JQIzsSQ1QwAsWOT9ARIasBaGUhR15FehMJBMe3M5
+	 Ui27QIBZuPDMGhQtm5hL45ewxs1zwNhvuyWP2xlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wiehler <stefan.wiehler@nokia.com>,
+	Hengqi Chen <hengqi.chen@gmail.com>,
 	Huacai Chen <chenhuacai@loongson.cn>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/150] mips/smp: Call rcutree_report_cpu_starting() earlier
-Date: Thu, 18 Jan 2024 11:48:01 +0100
-Message-ID: <20240118104322.716905144@linuxfoundation.org>
+Subject: [PATCH 6.6 068/150] LoongArch: Preserve syscall nr across execve()
+Date: Thu, 18 Jan 2024 11:48:10 +0100
+Message-ID: <20240118104323.117387570@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -53,75 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wiehler <stefan.wiehler@nokia.com>
+From: Hengqi Chen <hengqi.chen@gmail.com>
 
-[ Upstream commit 55702ec9603ebeffb15e6f7b113623fe1d8872f4 ]
+[ Upstream commit d6c5f06e46a836e6a70c7cfd95bb38a67d9252ec ]
 
-rcutree_report_cpu_starting() must be called before
-clockevents_register_device() to avoid the following lockdep splat triggered by
-calling list_add() when CONFIG_PROVE_RCU_LIST=y:
+Currently, we store syscall nr in pt_regs::regs[11] and syscall execve()
+accidentally overrides it during its execution:
 
-  WARNING: suspicious RCU usage
-  ...
-  -----------------------------
-  kernel/locking/lockdep.c:3680 RCU-list traversed in non-reader section!!
+    sys_execve()
+      -> do_execve()
+        -> do_execveat_common()
+          -> bprm_execve()
+            -> exec_binprm()
+              -> search_binary_handler()
+                -> load_elf_binary()
+                  -> ELF_PLAT_INIT()
 
-  other info that might help us debug this:
+ELF_PLAT_INIT() reset regs[11] to 0, so in syscall_exit_to_user_mode()
+we later get a wrong syscall nr. This breaks tools like execsnoop since
+it relies on execve() tracepoints.
 
-  RCU used illegally from offline CPU!
-  rcu_scheduler_active = 1, debug_locks = 1
-  no locks held by swapper/1/0.
-  ...
-  Call Trace:
-  [<ffffffff8012a434>] show_stack+0x64/0x158
-  [<ffffffff80a93d98>] dump_stack_lvl+0x90/0xc4
-  [<ffffffff801c9e9c>] __lock_acquire+0x1404/0x2940
-  [<ffffffff801cbf3c>] lock_acquire+0x14c/0x448
-  [<ffffffff80aa4260>] _raw_spin_lock_irqsave+0x50/0x88
-  [<ffffffff8021e0c8>] clockevents_register_device+0x60/0x1e8
-  [<ffffffff80130ff0>] r4k_clockevent_init+0x220/0x3a0
-  [<ffffffff801339d0>] start_secondary+0x50/0x3b8
+Skip pt_regs::regs[11] reset in ELF_PLAT_INIT() to fix the issue.
 
-raw_smp_processor_id() is required in order to avoid calling into lockdep
-before RCU has declared the CPU to be watched for readers.
-
-See also commit 29368e093921 ("x86/smpboot:  Move rcu_cpu_starting() earlier"),
-commit de5d9dae150c ("s390/smp: move rcu_cpu_starting() earlier") and commit
-99f070b62322 ("powerpc/smp: Call rcu_cpu_starting() earlier").
-
-Signed-off-by: Stefan Wiehler <stefan.wiehler@nokia.com>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/smp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/loongarch/include/asm/elf.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/kernel/smp.c b/arch/mips/kernel/smp.c
-index 8fbef537fb88..82e2e051b416 100644
---- a/arch/mips/kernel/smp.c
-+++ b/arch/mips/kernel/smp.c
-@@ -351,10 +351,11 @@ early_initcall(mips_smp_ipi_init);
-  */
- asmlinkage void start_secondary(void)
- {
--	unsigned int cpu;
-+	unsigned int cpu = raw_smp_processor_id();
- 
- 	cpu_probe();
- 	per_cpu_trap_init(false);
-+	rcutree_report_cpu_starting(cpu);
- 	mips_clockevent_init();
- 	mp_ops->init_secondary();
- 	cpu_report();
-@@ -366,7 +367,6 @@ asmlinkage void start_secondary(void)
- 	 */
- 
- 	calibrate_delay();
--	cpu = smp_processor_id();
- 	cpu_data[cpu].udelay_val = loops_per_jiffy;
- 
- 	set_cpu_sibling_map(cpu);
+diff --git a/arch/loongarch/include/asm/elf.h b/arch/loongarch/include/asm/elf.h
+index b9a4ab54285c..9b16a3b8e706 100644
+--- a/arch/loongarch/include/asm/elf.h
++++ b/arch/loongarch/include/asm/elf.h
+@@ -293,7 +293,7 @@ extern const char *__elf_platform;
+ #define ELF_PLAT_INIT(_r, load_addr)	do { \
+ 	_r->regs[1] = _r->regs[2] = _r->regs[3] = _r->regs[4] = 0;	\
+ 	_r->regs[5] = _r->regs[6] = _r->regs[7] = _r->regs[8] = 0;	\
+-	_r->regs[9] = _r->regs[10] = _r->regs[11] = _r->regs[12] = 0;	\
++	_r->regs[9] = _r->regs[10] /* syscall n */ = _r->regs[12] = 0;	\
+ 	_r->regs[13] = _r->regs[14] = _r->regs[15] = _r->regs[16] = 0;	\
+ 	_r->regs[17] = _r->regs[18] = _r->regs[19] = _r->regs[20] = 0;	\
+ 	_r->regs[21] = _r->regs[22] = _r->regs[23] = _r->regs[24] = 0;	\
 -- 
 2.43.0
 
