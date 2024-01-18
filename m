@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5C1BE7F;
-	Thu, 18 Jan 2024 11:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07910BE7F;
+	Thu, 18 Jan 2024 11:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575710; cv=none; b=TvnbUly5BmrsimYspHLnGrPd8tQy0ODLjeR9/Us5uqUoHkA0E0z+KyfKRlmV4AmvdMcMzQbzwUJuydLYpUZIN54JffBc6kFWZtBDCilDaoFdoWoZ6wYQYFhWIM23wvECAvoI3vDy+n6vz70+5CT+dcDmdAaK2g6JujkUFu3tDO4=
+	t=1705575713; cv=none; b=Bf73SRSK9byjZCk/+ldX1tRbV6+ZJ0ugpop8OYBDZVEZ9Q5p/auRuFgwjQstVffzhefQCW/8BgVMNZJl6xyF/27BAjn/ZI64G4zvBRymq8hCa/LYCdzHCfGtA4YcMSngtfrtzMTq3tTF5FG/Q9LmghnO9pMz/fNeDWh8eR+jb+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575710; c=relaxed/simple;
-	bh=r1jyXvpinvGOnwRlIaNNsH3/c4CiUUfVyrWMtXoN/Eo=;
+	s=arc-20240116; t=1705575713; c=relaxed/simple;
+	bh=921yFkaS1u+DikEfL1yop4eZeFhS502uVLwAJ62US7U=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding; b=WFVoh1msqcGh46475VckFOxFMIe9uUGhP60fhZ6FZVKuQcZ8DGf3LQrrYeedR6ZZSPk43G2wuaPVFEiYBVN3ily4q4C0FYmX8ugrglyX97tVWVmq6yvwLcqewacv9oWEaKHefMz4qC2SkQEmH+oCW1wf0DREwOaGws3VEdi0CEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ik5fAJ98; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=eacTpzO5HtsXtDon3eutcPJttpYOJVfIWZXYRXaspWS+ZB3ldmkssipCsYg31ndl1hO7mNgDohML302q8QwM9IVuT6EQ9XFj61MCjrcbydkKC6gQW2A18Tk3SqtgXbJv93LhN89givQH64MJ0L9a0hx7PHiNUSquIdc/6lj6J2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ihs89KNp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ik5fAJ98"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A70DC433F1;
-	Thu, 18 Jan 2024 11:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ihs89KNp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B15C433F1;
+	Thu, 18 Jan 2024 11:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575709;
-	bh=r1jyXvpinvGOnwRlIaNNsH3/c4CiUUfVyrWMtXoN/Eo=;
+	s=korg; t=1705575712;
+	bh=921yFkaS1u+DikEfL1yop4eZeFhS502uVLwAJ62US7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ik5fAJ989BvriMHq/xG6kkmRM5qg9lTLSSYyyfizJHtH/KrBCTbYBFAoESUhgPfEq
-	 0Tt0OgPCg9dVDU7VLu9tH3YCWcXrfHq+pKzzzVXQGoJNRaSC+SlcjKvyxDwp37+M4F
-	 cPd74MiIFPurZRdTgj9D+woplEtQJLbzp0ghcqRo=
+	b=Ihs89KNpIxLBpN+7TOWcSTQKKSBkeEWMWfbn+keAsNdT3PM9Aeauyws+Et1zgZUHD
+	 BAlRfFbjMP5EZk21ldiAMJjYTzPyDe97az/EDaCm6RyXz/orjJe6zRnw8TBm9uMqrw
+	 /7/UFVbJWh5hFSRc+juYEhMgMpbmQLRkQHNwu+vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suwan Kim <suwan.kim027@gmail.com>,
-	kernel test robot <lkp@intel.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Sarannya Sasikumar <quic_sarannya@quicinc.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/100] virtio_blk: fix snprintf truncation compiler warning
-Date: Thu, 18 Jan 2024 11:49:26 +0100
-Message-ID: <20240118104314.290347083@linuxfoundation.org>
+Subject: [PATCH 6.1 079/100] net: qrtr: ns: Return 0 if server port is not present
+Date: Thu, 18 Jan 2024 11:49:27 +0100
+Message-ID: <20240118104314.335717027@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -49,85 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Sarannya S <quic_sarannya@quicinc.com>
 
-[ Upstream commit b8e0792449928943c15d1af9f63816911d139267 ]
+[ Upstream commit 9bf2e9165f90dc9f416af53c902be7e33930f728 ]
 
-Commit 4e0400525691 ("virtio-blk: support polling I/O") triggers the
-following gcc 13 W=1 warnings:
+When a 'DEL_CLIENT' message is received from the remote, the corresponding
+server port gets deleted. A DEL_SERVER message is then announced for this
+server. As part of handling the subsequent DEL_SERVER message, the name-
+server attempts to delete the server port which results in a '-ENOENT' error.
+The return value from server_del() is then propagated back to qrtr_ns_worker,
+causing excessive error prints.
+To address this, return 0 from control_cmd_del_server() without checking the
+return value of server_del(), since the above scenario is not an error case
+and hence server_del() doesn't have any other error return value.
 
-drivers/block/virtio_blk.c: In function ‘init_vq’:
-drivers/block/virtio_blk.c:1077:68: warning: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 7 [-Wformat-truncation=]
- 1077 |                 snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req_poll.%d", i);
-      |                                                                    ^~
-drivers/block/virtio_blk.c:1077:58: note: directive argument in the range [-2147483648, 65534]
- 1077 |                 snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req_poll.%d", i);
-      |                                                          ^~~~~~~~~~~~~
-drivers/block/virtio_blk.c:1077:17: note: ‘snprintf’ output between 11 and 21 bytes into a destination of size 16
- 1077 |                 snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req_poll.%d", i);
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This is a false positive because the lower bound -2147483648 is
-incorrect. The true range of i is [0, num_vqs - 1] where 0 < num_vqs <
-65536.
-
-The code mixes int, unsigned short, and unsigned int types in addition
-to using "%d" for an unsigned value. Use unsigned short and "%u"
-consistently to solve the compiler warning.
-
-Cc: Suwan Kim <suwan.kim027@gmail.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202312041509.DIyvEt9h-lkp@intel.com/
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-Id: <20231204140743.1487843-1-stefanha@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Sarannya Sasikumar <quic_sarannya@quicinc.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/qrtr/ns.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index efa5535a8e1d..3124837aa406 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -609,12 +609,12 @@ static void virtblk_config_changed(struct virtio_device *vdev)
- static int init_vq(struct virtio_blk *vblk)
- {
- 	int err;
--	int i;
-+	unsigned short i;
- 	vq_callback_t **callbacks;
- 	const char **names;
- 	struct virtqueue **vqs;
- 	unsigned short num_vqs;
--	unsigned int num_poll_vqs;
-+	unsigned short num_poll_vqs;
- 	struct virtio_device *vdev = vblk->vdev;
- 	struct irq_affinity desc = { 0, };
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index 3e40a1ba48f7..4a13b9f7abb4 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -569,7 +569,9 @@ static int ctrl_cmd_del_server(struct sockaddr_qrtr *from,
+ 	if (!node)
+ 		return -ENOENT;
  
-@@ -658,13 +658,13 @@ static int init_vq(struct virtio_blk *vblk)
+-	return server_del(node, port, true);
++	server_del(node, port, true);
++
++	return 0;
+ }
  
- 	for (i = 0; i < num_vqs - num_poll_vqs; i++) {
- 		callbacks[i] = virtblk_done;
--		snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req.%d", i);
-+		snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req.%u", i);
- 		names[i] = vblk->vqs[i].name;
- 	}
- 
- 	for (; i < num_vqs; i++) {
- 		callbacks[i] = NULL;
--		snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req_poll.%d", i);
-+		snprintf(vblk->vqs[i].name, VQ_NAME_LEN, "req_poll.%u", i);
- 		names[i] = vblk->vqs[i].name;
- 	}
- 
+ static int ctrl_cmd_new_lookup(struct sockaddr_qrtr *from,
 -- 
 2.43.0
 
