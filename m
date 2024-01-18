@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F24C1774B;
-	Thu, 18 Jan 2024 10:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303951774B;
+	Thu, 18 Jan 2024 10:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575321; cv=none; b=rZ9OXPfXniAVxPO4/LBug00fNJEsmFuJnqwaRcSPZ7hFyf7Jgk318qqqhebcqj4qt+QGmsoL4yPuuWTMJLIQotEb+60pb4txCugyUoB1j2TMulznfMwfgqsSnY72LR5ki4Z+LtrenOfpapbeZD393yS6IFJWSNibjmuxK6Qlabk=
+	t=1705575324; cv=none; b=NlJ7Af8N8/3adlpwF5lhrxZscdEsDuRgRk59gVUILtaH1KqIrNqym0UnFNIkW7riVupspP6f1ekwN26UmkG2YfLlitNs/AlUsM6vmswxTiWVlwvFRF4hlXExWJzvstLo38rlErC037FnxdXIMo5BscPU0lfyHW9js83YNC9xvV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575321; c=relaxed/simple;
-	bh=noLTKSOU0B6mhyxM5GivMUP74dS5BvE3Gmch5ommtAY=;
+	s=arc-20240116; t=1705575324; c=relaxed/simple;
+	bh=ePDPhnBx7P+q6jP3Fu9RDcfDcSL9+0JBAj4dhYpzlMM=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=tHjET4KxFP0v86NhF5zqTV1w7Q6JWwgzVKot5ljUgiLiq+mP5wNrNwF32tRNoD8bFEog1uu81QafSn1SBHKsUwJGH6zhBQ3SsxiW5qxFKdkI3l+WKJqgzW7jw4qzHwf1E7HDpBMYVGlsb+OcLJH6BOfTBysMbesGXbF1roxZ/ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKU/z+Xk; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=gjh3VEihPTZd3FF7TzcCrnsYX38S7uoEMX6l9+tZFyYeaNamztYv+ifk/lVkMnqaLVcdeK0Hgqgn3VayrhbOumwZkvN0VxaOW0Th0YVJbQ9svYEK3DiPFLmmb6qDLUG98/P2nuCevj3c6/NVxeObtyERCfuwcqAwof/gAgAGkDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQSf+1uu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKU/z+Xk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAFCAC433C7;
-	Thu, 18 Jan 2024 10:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQSf+1uu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8787C433C7;
+	Thu, 18 Jan 2024 10:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575321;
-	bh=noLTKSOU0B6mhyxM5GivMUP74dS5BvE3Gmch5ommtAY=;
+	s=korg; t=1705575324;
+	bh=ePDPhnBx7P+q6jP3Fu9RDcfDcSL9+0JBAj4dhYpzlMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SKU/z+Xk3/bMpsr+cUx6OiU2XQtOUA5h4dg/PlrBmwKCyTbylFPj0q5CX9FLpGNWI
-	 iG3wu8LwH+x5zpQ4v8s0yerr+rYYvHs6NaplZN1TqVaWrtzWPanK22Q43SkY7M6rb2
-	 SDK9jbm2TIinZ2Egh2jlT1oMcMEaZU2wvuAH5BmA=
+	b=cQSf+1uu37TBM+CKxfjAIc7SWl1xEd7o0LWRCFl5ciZbkrLkdu09Ni+mOwxiQjMAg
+	 XTh+7OzxmHwONnBTTQx9Pc6LdzS+KK/0Mp36Q6OPhPJTKlL+onwCMcFHxH8RPebNym
+	 7R0grg0tjUcZJMKqn7Cd4trgyER15JvdT53tyS90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Marcus Aram <marcus+oss@oxar.nl>,
-	Mark Herbert <mark.herbert42@gmail.com>
-Subject: [PATCH 6.6 089/150] pinctrl: amd: Mask non-wake source pins with interrupt enabled at suspend
-Date: Thu, 18 Jan 2024 11:48:31 +0100
-Message-ID: <20240118104324.076721447@linuxfoundation.org>
+	Xiang Yang <xiangyang3@huawei.com>,
+	Inki Dae <inki.dae@samsung.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 062/150] drm/exynos: fix a potential error pointer dereference
+Date: Thu, 18 Jan 2024 11:48:04 +0100
+Message-ID: <20240118104322.853362117@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -54,65 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Xiang Yang <xiangyang3@huawei.com>
 
-[ Upstream commit 2fff0b5e1a6b9c577b4dd4958902c877159c856b ]
+[ Upstream commit 73bf1c9ae6c054c53b8e84452c5e46f86dd28246 ]
 
-If a pin isn't marked as a wake source processing any interrupts is
-just going to destroy battery life.  The APU may wake up from a hardware
-sleep state to process the interrupt but not return control to the OS.
+Smatch reports the warning below:
+drivers/gpu/drm/exynos/exynos_hdmi.c:1864 hdmi_bind()
+error: 'crtc' dereferencing possible ERR_PTR()
 
-Mask interrupt for all non-wake source pins at suspend. They'll be
-re-enabled at resume.
+The return value of exynos_drm_crtc_get_by_type maybe ERR_PTR(-ENODEV),
+which can not be used directly. Fix this by checking the return value
+before using it.
 
-Reported-and-tested-by: Marcus Aram <marcus+oss@oxar.nl>
-Reported-and-tested-by: Mark Herbert <mark.herbert42@gmail.com>
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2812
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20231203032431.30277-3-mario.limonciello@amd.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Xiang Yang <xiangyang3@huawei.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-amd.c | 9 +++++++++
- drivers/pinctrl/pinctrl-amd.h | 5 +++++
- 2 files changed, 14 insertions(+)
+ drivers/gpu/drm/exynos/exynos_hdmi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
-index 74241b2ff21e..86034c457c04 100644
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -923,6 +923,15 @@ static int amd_gpio_suspend(struct device *dev)
+diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
+index f3aaa4ea3e68..dd9903eab563 100644
+--- a/drivers/gpu/drm/exynos/exynos_hdmi.c
++++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
+@@ -1861,6 +1861,8 @@ static int hdmi_bind(struct device *dev, struct device *master, void *data)
+ 		return ret;
  
- 		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
- 		gpio_dev->saved_regs[i] = readl(gpio_dev->base + pin * 4) & ~PIN_IRQ_PENDING;
-+
-+		/* mask any interrupts not intended to be a wake source */
-+		if (!(gpio_dev->saved_regs[i] & WAKE_SOURCE)) {
-+			writel(gpio_dev->saved_regs[i] & ~BIT(INTERRUPT_MASK_OFF),
-+			       gpio_dev->base + pin * 4);
-+			pm_pr_dbg("Disabling GPIO #%d interrupt for suspend.\n",
-+				  pin);
-+		}
-+
- 		raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
- 	}
+ 	crtc = exynos_drm_crtc_get_by_type(drm_dev, EXYNOS_DISPLAY_TYPE_HDMI);
++	if (IS_ERR(crtc))
++		return PTR_ERR(crtc);
+ 	crtc->pipe_clk = &hdata->phy_clk;
  
-diff --git a/drivers/pinctrl/pinctrl-amd.h b/drivers/pinctrl/pinctrl-amd.h
-index 34c5c3e71fb2..cf59089f2776 100644
---- a/drivers/pinctrl/pinctrl-amd.h
-+++ b/drivers/pinctrl/pinctrl-amd.h
-@@ -80,6 +80,11 @@
- #define FUNCTION_MASK		GENMASK(1, 0)
- #define FUNCTION_INVALID	GENMASK(7, 0)
- 
-+#define WAKE_SOURCE	(BIT(WAKE_CNTRL_OFF_S0I3) | \
-+			 BIT(WAKE_CNTRL_OFF_S3)   | \
-+			 BIT(WAKE_CNTRL_OFF_S4)   | \
-+			 BIT(WAKECNTRL_Z_OFF))
-+
- struct amd_function {
- 	const char *name;
- 	const char * const groups[NSELECTS];
+ 	ret = hdmi_create_connector(encoder);
 -- 
 2.43.0
 
