@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E2F1774B;
-	Thu, 18 Jan 2024 10:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B340D22F16;
+	Thu, 18 Jan 2024 10:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575519; cv=none; b=A4K3g2td+6LjPpVVzMbcPbgpBn7cE4WTaA7WvaDOoNvr/nILRrjMUbIiW1Hl47M2433Tv5pLZaJNwP+XH/Kp8WQZpNgpIbWttlaM7v2jYrNeRRH5Q0ei60PkNjcWjWJl7l5qZgCSgnlq4L2rJi8ASaZWIeg2qWTtq5AM+dc3rfQ=
+	t=1705575521; cv=none; b=Dw4sCnPvKfMf+ydXdcJZd/jNJZiEl85Uj8Jv4+ro5jB/m+67GvJl9qA3OjXs3goWQfsfyAfuFPoRI/Tw6cFj5smwpCTW2axNi9DCvfmCk2KAoy3rOhm/ltLO/aAZeoay/Xgpnf02XJ/s5bq03KV1cKs/21LizzeqDuIzvU6GO8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575519; c=relaxed/simple;
-	bh=9Oso+WsbQiZMQ3VHcHy13nSf0aERGX/q8RJixopuYzc=;
+	s=arc-20240116; t=1705575521; c=relaxed/simple;
+	bh=78RXJPKUcZjND86/1sRhYmiyfwlvZ/gxOjuuuKE+NDM=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=sGjGoKGTDL4WzjZezHGUm7OGrmKnuHwuLRuqDHuguFw7t5ijYEmR2AFBJMoHsm1dD9TjZYPnb3+gUel1VsgGJsyl/R7MNUumPlqs+ZSDJ68Ki8Jfdx0MK777ZysyrkxbkOS23Xr8FHH7me5cddaPcgQ6eXK4ZCC0BlL5OdjURfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fd5gmBvq; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding; b=LxA+VJSgtUYQjDufmtUySNFzPYoJd9i98/B6iiU05FbWsJv9lO3+kS00ndeBNBcgKCgkQK3Gm7WPOr9MJZtTCpKZqrOmOMEp9QqlRNlRL5O4WoTbp4D+l91agiBXkUCAKdVOvjpTbb6J1FqeGQihdUcFzyMvvIi6TF8y/14UQYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EziXQnsX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fd5gmBvq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A58C433C7;
-	Thu, 18 Jan 2024 10:58:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EziXQnsX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39071C433F1;
+	Thu, 18 Jan 2024 10:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575518;
-	bh=9Oso+WsbQiZMQ3VHcHy13nSf0aERGX/q8RJixopuYzc=;
+	s=korg; t=1705575521;
+	bh=78RXJPKUcZjND86/1sRhYmiyfwlvZ/gxOjuuuKE+NDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fd5gmBvq+xAiXAoXX3Ga+qTaok1omSYLltY1PIkJs9n2Yo52rXK+ki1yJAZSjp5ya
-	 l2DSZAOxVdXSmqy4JwMJMEgg/rj1fr9KRDe9Wh2MQP4JOryIjLwOGz4+vo5D3QViGl
-	 nIkl7vNx0aA2wa3Gx8AIh6hvXE/kQQnopepoBe60=
+	b=EziXQnsXz/Qrh7rJQwIg2SXy3l5SR5dCsh+EJAbp16ui0Rjec7mYYeej3wUIc3if6
+	 jU9A943T8u+v2iL2IENN3cc14gvcns84wM6iN7Ll4qbt141Ni6HQLWMeyyLdGxlgdc
+	 mfSeXXlEowl/4DEDpRxxOhDm0xagvp3pfLt/YphI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlene Liu <charlene.liu@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Lu Yao <yaolu@kylinos.cn>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/100] drm/amd/display: update dcn315 lpddr pstate latency
-Date: Thu, 18 Jan 2024 11:48:19 +0100
-Message-ID: <20240118104311.366737826@linuxfoundation.org>
+Subject: [PATCH 6.1 012/100] drm/amdgpu: Fix cat debugfs amdgpu_regs_didt causes kernel null pointer
+Date: Thu, 18 Jan 2024 11:48:20 +0100
+Message-ID: <20240118104311.412396980@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -49,69 +48,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
+From: Lu Yao <yaolu@kylinos.cn>
 
-[ Upstream commit c92da0403d373c03ea5c65c0260c7db6762013b0 ]
+[ Upstream commit 2161e09cd05a50d80736fe397145340d2e8f6c05 ]
 
-[WHY/HOW]
-Increase the pstate latency to improve ac/dc transition
+For 'AMDGPU_FAMILY_SI' family cards, in 'si_common_early_init' func, init
+'didt_rreg' and 'didt_wreg' to 'NULL'. But in func
+'amdgpu_debugfs_regs_didt_read/write', using 'RREG32_DIDT' 'WREG32_DIDT'
+lacks of relevant judgment. And other 'amdgpu_ip_block_version' that use
+these two definitions won't be added for 'AMDGPU_FAMILY_SI'.
 
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+So, add null pointer judgment before calling.
+
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Lu Yao <yaolu@kylinos.cn>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c    | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
-index 893991a0eb97..28b83133db91 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
-@@ -324,7 +324,7 @@ static struct wm_table lpddr5_wm_table = {
- 		{
- 			.wm_inst = WM_A,
- 			.wm_type = WM_TYPE_PSTATE_CHG,
--			.pstate_latency_us = 11.65333,
-+			.pstate_latency_us = 129.0,
- 			.sr_exit_time_us = 11.5,
- 			.sr_enter_plus_exit_time_us = 14.5,
- 			.valid = true,
-@@ -332,7 +332,7 @@ static struct wm_table lpddr5_wm_table = {
- 		{
- 			.wm_inst = WM_B,
- 			.wm_type = WM_TYPE_PSTATE_CHG,
--			.pstate_latency_us = 11.65333,
-+			.pstate_latency_us = 129.0,
- 			.sr_exit_time_us = 11.5,
- 			.sr_enter_plus_exit_time_us = 14.5,
- 			.valid = true,
-@@ -340,7 +340,7 @@ static struct wm_table lpddr5_wm_table = {
- 		{
- 			.wm_inst = WM_C,
- 			.wm_type = WM_TYPE_PSTATE_CHG,
--			.pstate_latency_us = 11.65333,
-+			.pstate_latency_us = 129.0,
- 			.sr_exit_time_us = 11.5,
- 			.sr_enter_plus_exit_time_us = 14.5,
- 			.valid = true,
-@@ -348,7 +348,7 @@ static struct wm_table lpddr5_wm_table = {
- 		{
- 			.wm_inst = WM_D,
- 			.wm_type = WM_TYPE_PSTATE_CHG,
--			.pstate_latency_us = 11.65333,
-+			.pstate_latency_us = 129.0,
- 			.sr_exit_time_us = 11.5,
- 			.sr_enter_plus_exit_time_us = 14.5,
- 			.valid = true,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+index fd796574f87a..8123feb1a116 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -479,6 +479,9 @@ static ssize_t amdgpu_debugfs_regs_didt_read(struct file *f, char __user *buf,
+ 	if (size & 0x3 || *pos & 0x3)
+ 		return -EINVAL;
+ 
++	if (!adev->didt_rreg)
++		return -EOPNOTSUPP;
++
+ 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
+ 	if (r < 0) {
+ 		pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
+@@ -535,6 +538,9 @@ static ssize_t amdgpu_debugfs_regs_didt_write(struct file *f, const char __user
+ 	if (size & 0x3 || *pos & 0x3)
+ 		return -EINVAL;
+ 
++	if (!adev->didt_wreg)
++		return -EOPNOTSUPP;
++
+ 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
+ 	if (r < 0) {
+ 		pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
 -- 
 2.43.0
 
