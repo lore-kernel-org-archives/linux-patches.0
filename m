@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864111B96D;
-	Thu, 18 Jan 2024 10:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B5A22323;
+	Thu, 18 Jan 2024 10:51:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575107; cv=none; b=kFc6ZZa+a2f8YxpzH5e0nDII3i4M70dOQAW4Ev7R0RH4AYTtABy2NDlyP0gTclM25zikwCr5Kr75Xs+bDta5dG1KagfxhHGX7FWKX0p2GC+aodU0r5WfRsr3Pu0HrIF3+ad2osO6wypiIPWk+BCMaTgdb9lonJtaSgRDCbjBUbc=
+	t=1705575110; cv=none; b=eBI9C/3POPXqHI/wdt0cSafrk447rpPSiPxCzEVgd15iqy+vyCnMln18ba76P6IysXYrlLK/sKjyzAkktIC6hNZ8oFoyhKL68T1Yc379CJUpy7+eB+lQw5AkR6/kiCo7mLck0Hcyehp08wpPtkgQvVm5HC4iZfndBWKW7CM9Z1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575107; c=relaxed/simple;
-	bh=MJcNpPoiuuOjg2i5Jli6vWRWPVQAL15R/y4mXuBWBpI=;
+	s=arc-20240116; t=1705575110; c=relaxed/simple;
+	bh=c3MIZAyNHNavcfjdFA0pjcuhKjz4DA0vVUjcdcpDK6o=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=RvxrAcg8cgJtqlG4RUqOBGoOvWKhO5hLyb/hNQpCWAoGbgIOTREGCV9Y5ttJccZJkqjbRY87Ex90Y1DCd5pS3bNRpcG66grW6EDeLtSqzi7z816PIkpnNVmrqGN0YomKff0MxFBubtwNAxD0bG2j4455l3IOlqjKp+kmOcioNV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKPhhxoh; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=ZjS72g/6i2R/cqz5SFk880ukQptJBFqo3sc008LL3Af4MsSMDEnZGWAmpcivjwoD6RwXltCzotubkEXsmkuJgZQzUCW3WObL5NLXrGRF1UAluPJeygcrSVg/WZDvusFRC4YPHPq39gCk0rZZNPp+DxhAqInytwZmKOnNTGW1NqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnKwivPo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKPhhxoh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C75C433C7;
-	Thu, 18 Jan 2024 10:51:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnKwivPo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F0AC433C7;
+	Thu, 18 Jan 2024 10:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575107;
-	bh=MJcNpPoiuuOjg2i5Jli6vWRWPVQAL15R/y4mXuBWBpI=;
+	s=korg; t=1705575110;
+	bh=c3MIZAyNHNavcfjdFA0pjcuhKjz4DA0vVUjcdcpDK6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKPhhxohsa5E4O2E8coChSlDP4DDKQKk8qpVvkWpaoyWtReowQrrcMrjQ0GreMYHT
-	 /STkVNCTN0pbKjlAqL5XkwM7yWKezVkCI4kmq+n5zeI6LBAY/zaCnzEltdgiKWcSBX
-	 FWZXC+nu4ZlkRKjGaKxU29p3YFkhRTmVOtwHLCGA=
+	b=ZnKwivPoWzkz3N/OfYyPkD9ItQW065LINVH3cpx+nDdPI0ifmT8qHwLqLKcgW+/7c
+	 ldmdNPEQH9nPxYCh+XMmo67im4d1civjXj7ohR5twVEiG0zI4OjGHSy+zPxdO5fX8T
+	 HDlEWiqyT3luaK1WgLIK/NOyz22ny1apO6AZN4ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/150] io_uring: use fget/fput consistently
-Date: Thu, 18 Jan 2024 11:47:16 +0100
-Message-ID: <20240118104320.693897282@linuxfoundation.org>
+Subject: [PATCH 6.6 015/150] block: warn once for each partition in bio_check_ro()
+Date: Thu, 18 Jan 2024 11:47:17 +0100
+Message-ID: <20240118104320.746966036@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -52,164 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 73363c262d6a7d26063da96610f61baf69a70f7c ]
+[ Upstream commit 67d995e069535c32829f5d368d919063492cec6e ]
 
-Normally within a syscall it's fine to use fdget/fdput for grabbing a
-file from the file table, and it's fine within io_uring as well. We do
-that via io_uring_enter(2), io_uring_register(2), and then also for
-cancel which is invoked from the latter. io_uring cannot close its own
-file descriptors as that is explicitly rejected, and for the cancel
-side of things, the file itself is just used as a lookup cookie.
+Commit 1b0a151c10a6 ("blk-core: use pr_warn_ratelimited() in
+bio_check_ro()") fix message storm by limit the rate, however, there
+will still be lots of message in the long term. Fix it better by warn
+once for each partition.
 
-However, it is more prudent to ensure that full references are always
-grabbed. For anything threaded, either explicitly in the application
-itself or through use of the io-wq worker threads, this is what happens
-anyway. Generalize it and use fget/fput throughout.
-
-Also see the below link for more details.
-
-Link: https://lore.kernel.org/io-uring/CAG48ez1htVSO3TqmrF8QcX2WFuYTRM-VZ_N10i-VZgbtg=NNqw@mail.gmail.com/
-Suggested-by: Jann Horn <jannh@google.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20231128123027.971610-3-yukuai1@huaweicloud.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/cancel.c   | 11 ++++++-----
- io_uring/io_uring.c | 36 ++++++++++++++++++------------------
- 2 files changed, 24 insertions(+), 23 deletions(-)
+ block/blk-core.c          | 14 +++++++++++---
+ include/linux/blk_types.h |  1 +
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/io_uring/cancel.c b/io_uring/cancel.c
-index 7b23607cf4af..a5d51471feeb 100644
---- a/io_uring/cancel.c
-+++ b/io_uring/cancel.c
-@@ -263,7 +263,7 @@ int io_sync_cancel(struct io_ring_ctx *ctx, void __user *arg)
- 	};
- 	ktime_t timeout = KTIME_MAX;
- 	struct io_uring_sync_cancel_reg sc;
--	struct fd f = { };
-+	struct file *file = NULL;
- 	DEFINE_WAIT(wait);
- 	int ret, i;
- 
-@@ -285,10 +285,10 @@ int io_sync_cancel(struct io_ring_ctx *ctx, void __user *arg)
- 	/* we can grab a normal file descriptor upfront */
- 	if ((cd.flags & IORING_ASYNC_CANCEL_FD) &&
- 	   !(cd.flags & IORING_ASYNC_CANCEL_FD_FIXED)) {
--		f = fdget(sc.fd);
--		if (!f.file)
-+		file = fget(sc.fd);
-+		if (!file)
- 			return -EBADF;
--		cd.file = f.file;
-+		cd.file = file;
+diff --git a/block/blk-core.c b/block/blk-core.c
+index fdf25b8d6e78..2eca76ccf4ee 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -501,9 +501,17 @@ static inline void bio_check_ro(struct bio *bio)
+ 	if (op_is_write(bio_op(bio)) && bdev_read_only(bio->bi_bdev)) {
+ 		if (op_is_flush(bio->bi_opf) && !bio_sectors(bio))
+ 			return;
+-		pr_warn_ratelimited("Trying to write to read-only block-device %pg\n",
+-				    bio->bi_bdev);
+-		/* Older lvm-tools actually trigger this */
++
++		if (bio->bi_bdev->bd_ro_warned)
++			return;
++
++		bio->bi_bdev->bd_ro_warned = true;
++		/*
++		 * Use ioctl to set underlying disk of raid/dm to read-only
++		 * will trigger this.
++		 */
++		pr_warn("Trying to write to read-only block-device %pg\n",
++			bio->bi_bdev);
  	}
- 
- 	ret = __io_sync_cancel(current->io_uring, &cd, sc.fd);
-@@ -338,6 +338,7 @@ int io_sync_cancel(struct io_ring_ctx *ctx, void __user *arg)
- 	if (ret == -ENOENT || ret > 0)
- 		ret = 0;
- out:
--	fdput(f);
-+	if (file)
-+		fput(file);
- 	return ret;
- }
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index bb8880d1e084..586ac65becfd 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3607,7 +3607,7 @@ SYSCALL_DEFINE6(io_uring_enter, unsigned int, fd, u32, to_submit,
- 		size_t, argsz)
- {
- 	struct io_ring_ctx *ctx;
--	struct fd f;
-+	struct file *file;
- 	long ret;
- 
- 	if (unlikely(flags & ~(IORING_ENTER_GETEVENTS | IORING_ENTER_SQ_WAKEUP |
-@@ -3625,20 +3625,19 @@ SYSCALL_DEFINE6(io_uring_enter, unsigned int, fd, u32, to_submit,
- 		if (unlikely(!tctx || fd >= IO_RINGFD_REG_MAX))
- 			return -EINVAL;
- 		fd = array_index_nospec(fd, IO_RINGFD_REG_MAX);
--		f.file = tctx->registered_rings[fd];
--		f.flags = 0;
--		if (unlikely(!f.file))
-+		file = tctx->registered_rings[fd];
-+		if (unlikely(!file))
- 			return -EBADF;
- 	} else {
--		f = fdget(fd);
--		if (unlikely(!f.file))
-+		file = fget(fd);
-+		if (unlikely(!file))
- 			return -EBADF;
- 		ret = -EOPNOTSUPP;
--		if (unlikely(!io_is_uring_fops(f.file)))
-+		if (unlikely(!io_is_uring_fops(file)))
- 			goto out;
- 	}
- 
--	ctx = f.file->private_data;
-+	ctx = file->private_data;
- 	ret = -EBADFD;
- 	if (unlikely(ctx->flags & IORING_SETUP_R_DISABLED))
- 		goto out;
-@@ -3732,7 +3731,8 @@ SYSCALL_DEFINE6(io_uring_enter, unsigned int, fd, u32, to_submit,
- 		}
- 	}
- out:
--	fdput(f);
-+	if (!(flags & IORING_ENTER_REGISTERED_RING))
-+		fput(file);
- 	return ret;
  }
  
-@@ -4573,7 +4573,7 @@ SYSCALL_DEFINE4(io_uring_register, unsigned int, fd, unsigned int, opcode,
- {
- 	struct io_ring_ctx *ctx;
- 	long ret = -EBADF;
--	struct fd f;
-+	struct file *file;
- 	bool use_registered_ring;
- 
- 	use_registered_ring = !!(opcode & IORING_REGISTER_USE_REGISTERED_RING);
-@@ -4592,27 +4592,27 @@ SYSCALL_DEFINE4(io_uring_register, unsigned int, fd, unsigned int, opcode,
- 		if (unlikely(!tctx || fd >= IO_RINGFD_REG_MAX))
- 			return -EINVAL;
- 		fd = array_index_nospec(fd, IO_RINGFD_REG_MAX);
--		f.file = tctx->registered_rings[fd];
--		f.flags = 0;
--		if (unlikely(!f.file))
-+		file = tctx->registered_rings[fd];
-+		if (unlikely(!file))
- 			return -EBADF;
- 	} else {
--		f = fdget(fd);
--		if (unlikely(!f.file))
-+		file = fget(fd);
-+		if (unlikely(!file))
- 			return -EBADF;
- 		ret = -EOPNOTSUPP;
--		if (!io_is_uring_fops(f.file))
-+		if (!io_is_uring_fops(file))
- 			goto out_fput;
- 	}
- 
--	ctx = f.file->private_data;
-+	ctx = file->private_data;
- 
- 	mutex_lock(&ctx->uring_lock);
- 	ret = __io_uring_register(ctx, opcode, arg, nr_args);
- 	mutex_unlock(&ctx->uring_lock);
- 	trace_io_uring_register(ctx, opcode, ctx->nr_user_files, ctx->nr_user_bufs, ret);
- out_fput:
--	fdput(f);
-+	if (!use_registered_ring)
-+		fput(file);
- 	return ret;
- }
- 
+diff --git a/include/linux/blk_types.h b/include/linux/blk_types.h
+index d5c5e59ddbd2..92c8997b1938 100644
+--- a/include/linux/blk_types.h
++++ b/include/linux/blk_types.h
+@@ -69,6 +69,7 @@ struct block_device {
+ #ifdef CONFIG_FAIL_MAKE_REQUEST
+ 	bool			bd_make_it_fail;
+ #endif
++	bool			bd_ro_warned;
+ 	/*
+ 	 * keep this out-of-line as it's both big and not needed in the fast
+ 	 * path
 -- 
 2.43.0
 
