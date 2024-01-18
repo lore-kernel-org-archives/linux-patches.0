@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E1B22F16;
-	Thu, 18 Jan 2024 11:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC70022F0F;
+	Thu, 18 Jan 2024 11:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575674; cv=none; b=IUKBy7EvPtym67KyNfe7gHSAJcleb/pOAijC/dpCIr1cYB49E88BKVHLa1aJ7pYS0+Mz7+caieH5xs7wLtjsB4QUaHCOy23VNpTfBJ9Yw+ZFvNHACEXl0Mtz3cyem1z9OoYgwO/XASk7XtFYysl6WXUwC7UzgcLYwH2U46faEGI=
+	t=1705575676; cv=none; b=s4Ct05ytRQ9Qr6V64hsaOxQLbzWfY4Jqo4gtnTlhxdoPLYfICOOfj+C1li1412AtyJpWAS+lwWGK7PkdKhcEV4I1K/Sdlo6i4qFKbSnW2xQi824RbfkJgTBkqLF7UfGOSQ5kFzCwcF8FSHDj/vnePv6/o1Xbt7o+NSVs6WlA988=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575674; c=relaxed/simple;
-	bh=TROUpB22GyDfGFBAC/QtFfG+4S+mIIIFxO/7nYY/WaI=;
+	s=arc-20240116; t=1705575676; c=relaxed/simple;
+	bh=7Fs+DBRQxp6jp3YCjn3KpCvk4C1PDKGXp3M/J/HWp7M=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=TAA9UVf7OqIvJJav2mPnn0SQJvzdJloJEFj6ALAPj5mW8OO+Y/Znq9CdnLjboSwpNx2/PmDBXEysDptf29yMKY+Xgqgq/McefbU8FLNosEBUbRXP9EsWrR/1u0LUAaBuHXZBNyoWwRLLvqB0aSLz2I08URJGFdXGNgpsKquLa6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twT2x21z; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=d2XRJfAkGHcqSTv2IVYFQIAAp0gxm1CPJr+3OvYdahP1k/u33qJw7MwoLQwzrU8PxnfNY4/b9LwYB65FLXZpitmgjAkB+EbTvumNWhSpTgEJmRL8kfQDTAEYgiEOrY0lRRiwmM2vtDIXJWkfdgKQdHFyZ4kb2YwIVAm49vloOe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERcbkg5S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twT2x21z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED88C43390;
-	Thu, 18 Jan 2024 11:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERcbkg5S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EABCC433C7;
+	Thu, 18 Jan 2024 11:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575673;
-	bh=TROUpB22GyDfGFBAC/QtFfG+4S+mIIIFxO/7nYY/WaI=;
+	s=korg; t=1705575676;
+	bh=7Fs+DBRQxp6jp3YCjn3KpCvk4C1PDKGXp3M/J/HWp7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=twT2x21zRBcqr1JKtGqQV8UuXYyXZuZMqSxZpvzNeGE3hdXZGb6LihBnnbEHlXmsg
-	 NkyipHpueSn7es6hQwG7+oC+Nio+MyLy9IHXwHwBgKtig0guDebLl5tUKjoIq3Qdm6
-	 yM0k/eLmaUuYcdDfGvc7oM3wWhKoLlMBOxSavFlc=
+	b=ERcbkg5SVb3hXG94RVLuEGq+yW3oFQlaALrhyYEDseRmEJ+h1nxHLPh3V+IO0OGo6
+	 dyfWeTA3tJnWXKmeOJgKYsBu+Wi+3P5HOPC8LXcG0ddvWKcIGxpR1/Nx5Jv4PlHTAB
+	 W0BTZKl21qr62XhLE92EugRw3fVSzdIW4imFzv8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wiehler <stefan.wiehler@nokia.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/100] mips/smp: Call rcutree_report_cpu_starting() earlier
-Date: Thu, 18 Jan 2024 11:48:44 +0100
-Message-ID: <20240118104312.487232798@linuxfoundation.org>
+Subject: [PATCH 6.1 037/100] drm/amdgpu: Add NULL checks for function pointers
+Date: Thu, 18 Jan 2024 11:48:45 +0100
+Message-ID: <20240118104312.526904492@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -53,75 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wiehler <stefan.wiehler@nokia.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 55702ec9603ebeffb15e6f7b113623fe1d8872f4 ]
+[ Upstream commit 81577503efb49f4ad76af22f9941d72900ef4aab ]
 
-rcutree_report_cpu_starting() must be called before
-clockevents_register_device() to avoid the following lockdep splat triggered by
-calling list_add() when CONFIG_PROVE_RCU_LIST=y:
+Check if function is implemented before making the call.
 
-  WARNING: suspicious RCU usage
-  ...
-  -----------------------------
-  kernel/locking/lockdep.c:3680 RCU-list traversed in non-reader section!!
-
-  other info that might help us debug this:
-
-  RCU used illegally from offline CPU!
-  rcu_scheduler_active = 1, debug_locks = 1
-  no locks held by swapper/1/0.
-  ...
-  Call Trace:
-  [<ffffffff8012a434>] show_stack+0x64/0x158
-  [<ffffffff80a93d98>] dump_stack_lvl+0x90/0xc4
-  [<ffffffff801c9e9c>] __lock_acquire+0x1404/0x2940
-  [<ffffffff801cbf3c>] lock_acquire+0x14c/0x448
-  [<ffffffff80aa4260>] _raw_spin_lock_irqsave+0x50/0x88
-  [<ffffffff8021e0c8>] clockevents_register_device+0x60/0x1e8
-  [<ffffffff80130ff0>] r4k_clockevent_init+0x220/0x3a0
-  [<ffffffff801339d0>] start_secondary+0x50/0x3b8
-
-raw_smp_processor_id() is required in order to avoid calling into lockdep
-before RCU has declared the CPU to be watched for readers.
-
-See also commit 29368e093921 ("x86/smpboot:  Move rcu_cpu_starting() earlier"),
-commit de5d9dae150c ("s390/smp: move rcu_cpu_starting() earlier") and commit
-99f070b62322 ("powerpc/smp: Call rcu_cpu_starting() earlier").
-
-Signed-off-by: Stefan Wiehler <stefan.wiehler@nokia.com>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/smp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/soc15.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/arch/mips/kernel/smp.c b/arch/mips/kernel/smp.c
-index 1d93b85271ba..b951ce3a53ab 100644
---- a/arch/mips/kernel/smp.c
-+++ b/arch/mips/kernel/smp.c
-@@ -333,10 +333,11 @@ early_initcall(mips_smp_ipi_init);
-  */
- asmlinkage void start_secondary(void)
- {
--	unsigned int cpu;
-+	unsigned int cpu = raw_smp_processor_id();
+diff --git a/drivers/gpu/drm/amd/amdgpu/soc15.c b/drivers/gpu/drm/amd/amdgpu/soc15.c
+index 2eddd7f6cd41..811dd3ea6362 100644
+--- a/drivers/gpu/drm/amd/amdgpu/soc15.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
+@@ -1411,9 +1411,11 @@ static void soc15_common_get_clockgating_state(void *handle, u64 *flags)
+ 	if (amdgpu_sriov_vf(adev))
+ 		*flags = 0;
  
- 	cpu_probe();
- 	per_cpu_trap_init(false);
-+	rcutree_report_cpu_starting(cpu);
- 	mips_clockevent_init();
- 	mp_ops->init_secondary();
- 	cpu_report();
-@@ -348,7 +349,6 @@ asmlinkage void start_secondary(void)
- 	 */
+-	adev->nbio.funcs->get_clockgating_state(adev, flags);
++	if (adev->nbio.funcs && adev->nbio.funcs->get_clockgating_state)
++		adev->nbio.funcs->get_clockgating_state(adev, flags);
  
- 	calibrate_delay();
--	cpu = smp_processor_id();
- 	cpu_data[cpu].udelay_val = loops_per_jiffy;
+-	adev->hdp.funcs->get_clock_gating_state(adev, flags);
++	if (adev->hdp.funcs && adev->hdp.funcs->get_clock_gating_state)
++		adev->hdp.funcs->get_clock_gating_state(adev, flags);
  
- 	set_cpu_sibling_map(cpu);
+ 	if (adev->ip_versions[MP0_HWIP][0] != IP_VERSION(13, 0, 2)) {
+ 
+@@ -1429,9 +1431,11 @@ static void soc15_common_get_clockgating_state(void *handle, u64 *flags)
+ 	}
+ 
+ 	/* AMD_CG_SUPPORT_ROM_MGCG */
+-	adev->smuio.funcs->get_clock_gating_state(adev, flags);
++	if (adev->smuio.funcs && adev->smuio.funcs->get_clock_gating_state)
++		adev->smuio.funcs->get_clock_gating_state(adev, flags);
+ 
+-	adev->df.funcs->get_clockgating_state(adev, flags);
++	if (adev->df.funcs && adev->df.funcs->get_clockgating_state)
++		adev->df.funcs->get_clockgating_state(adev, flags);
+ }
+ 
+ static int soc15_common_set_powergating_state(void *handle,
 -- 
 2.43.0
 
