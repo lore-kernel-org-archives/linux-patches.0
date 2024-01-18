@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9407824B34;
-	Thu, 18 Jan 2024 11:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1D924B2C;
+	Thu, 18 Jan 2024 11:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575665; cv=none; b=fOTFiJ4U52YxoA3i3i9xa48Y2vnK2Y/QZ7G2O0ClagyY7Hn8N81IwZtm2rWL9VKGAJ9qp1rGOE3R8OVYN6Eud1sUfbXKOeTaPoyl5cPFWxrgHZo77mqR8pNord2pm35HZxmXnW+sxMNnm1B+mPqq2IzFoI8XdkM8iJKtqsrB6jA=
+	t=1705575668; cv=none; b=fcoUfB7d6WohmkHgU0W/lkVe5f1grmWEgfR+mGjaFf+kFrLqdKeJU9DHu+U33c7qvg+mB2V3QYRwhRyVG4a9Yw0F6kZT7tqCMC4p8R6LH+ayPNYM2hSlmcc11RwAr9zxzgEgnyMoQVTTOplRC1Hs/yASEPK9VAJ+jJr425Ts52Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575665; c=relaxed/simple;
-	bh=LrJWu2RfZSb1vnSbkefxzjxR1f1kUrnIf0owN4fQ04c=;
+	s=arc-20240116; t=1705575668; c=relaxed/simple;
+	bh=UD+HBMbZtZ3g1yjxFIwtdYBTcOOMsJdX7QTpI17iMZ8=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=SkiriHuBsyFjT4C96NMHdCQJi4MJ+uw/a2xsNuhGLQsgobZIpBQIABD+4UbBbu1kvXrJjbmLTGpzFRZypBuElYxByAsPU6IgJxpjec9+Oc+kA2BciKJtreiUwwdt9l9zU2U61eURlVHmY9R/Ob42a5kAHPU+flwpTGWh+xmqA5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWXuv5mp; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=E8v1Cj/ja335KDBvCcNhIABqEJ6sPFhZ2GWI3YINnbej8kQH9cPcepw74I6f2Ln0zizPk/tpNLueuTi+vNWwFJI4MaqVpV0nUKYIBr+/g5fvdzX0QqLajeUhiWl8VpAgGTupxcaRmXACFIzTo2ike2TLduVBDtmcr83f/uEau14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bs69F+Vt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWXuv5mp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C6DC43390;
-	Thu, 18 Jan 2024 11:01:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bs69F+Vt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2214C433C7;
+	Thu, 18 Jan 2024 11:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575665;
-	bh=LrJWu2RfZSb1vnSbkefxzjxR1f1kUrnIf0owN4fQ04c=;
+	s=korg; t=1705575668;
+	bh=UD+HBMbZtZ3g1yjxFIwtdYBTcOOMsJdX7QTpI17iMZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aWXuv5mp6xkfkubtf02MEDBTskxwHPjMJBXpJJgXWQiynvScHcMPlMjqf5f4aRvf8
-	 s9tpgyCdxYbMAprORyiGWS0V6OZ1/90hKE5wBA0H0hGqVbKBaZXWopHWf+V6CB+VWY
-	 CgJZKB+TT+99oCHhU8JunqDeyoToxO9UV1lpNah8=
+	b=bs69F+VtR46TK3JIU6ngsfAey6bvjE85E4Q9kWvl5wlB2+c1/OkQDuiDK9rtiAcJB
+	 Q+TW0rx6fdMyYgies3E5akBfAtTgVUWi6STel7kSBez3x3QJU/oxIaPGZqEIsQrOHg
+	 hokXzlo6mIp2FJZqXpT+RsnBbGNhtV0vhiNpFpd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Nitesh Shetty <nj.shetty@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/100] s390/scm: fix virtual vs physical address confusion
-Date: Thu, 18 Jan 2024 11:49:08 +0100
-Message-ID: <20240118104313.531662430@linuxfoundation.org>
+Subject: [PATCH 6.1 034/100] nvme: prevent potential spectre v1 gadget
+Date: Thu, 18 Jan 2024 11:48:42 +0100
+Message-ID: <20240118104312.409877389@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -53,56 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vineeth Vijayan <vneethv@linux.ibm.com>
+From: Nitesh Shetty <nj.shetty@samsung.com>
 
-[ Upstream commit b1a6a1a77f0666a5a6dc0893ab6ec8fcae46f24c ]
+[ Upstream commit 20dc66f2d76b4a410df14e4675e373b718babc34 ]
 
-Fix virtual vs physical address confusion (which currently are the same).
+This patch fixes the smatch warning, "nvmet_ns_ana_grpid_store() warn:
+potential spectre issue 'nvmet_ana_group_enabled' [w] (local cap)"
+Prevent the contents of kernel memory from being leaked to  user space
+via speculative execution by using array_index_nospec.
 
-Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Nitesh Shetty <nj.shetty@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/scm_blk.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/nvme/target/configfs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/s390/block/scm_blk.c b/drivers/s390/block/scm_blk.c
-index 0c1df1d5f1ac..a165b1a59fde 100644
---- a/drivers/s390/block/scm_blk.c
-+++ b/drivers/s390/block/scm_blk.c
-@@ -17,6 +17,7 @@
- #include <linux/blk-mq.h>
- #include <linux/slab.h>
- #include <linux/list.h>
-+#include <linux/io.h>
- #include <asm/eadm.h>
- #include "scm_blk.h"
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index 6a2816f3b4e8..73ae16059a1c 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -16,6 +16,7 @@
+ #endif
+ #include <crypto/hash.h>
+ #include <crypto/kpp.h>
++#include <linux/nospec.h>
  
-@@ -130,7 +131,7 @@ static void scm_request_done(struct scm_request *scmrq)
+ #include "nvmet.h"
  
- 	for (i = 0; i < nr_requests_per_io && scmrq->request[i]; i++) {
- 		msb = &scmrq->aob->msb[i];
--		aidaw = msb->data_addr;
-+		aidaw = (u64)phys_to_virt(msb->data_addr);
+@@ -508,6 +509,7 @@ static ssize_t nvmet_ns_ana_grpid_store(struct config_item *item,
  
- 		if ((msb->flags & MSB_FLAG_IDA) && aidaw &&
- 		    IS_ALIGNED(aidaw, PAGE_SIZE))
-@@ -195,12 +196,12 @@ static int scm_request_prepare(struct scm_request *scmrq)
- 	msb->scm_addr = scmdev->address + ((u64) blk_rq_pos(req) << 9);
- 	msb->oc = (rq_data_dir(req) == READ) ? MSB_OC_READ : MSB_OC_WRITE;
- 	msb->flags |= MSB_FLAG_IDA;
--	msb->data_addr = (u64) aidaw;
-+	msb->data_addr = (u64)virt_to_phys(aidaw);
+ 	down_write(&nvmet_ana_sem);
+ 	oldgrpid = ns->anagrpid;
++	newgrpid = array_index_nospec(newgrpid, NVMET_MAX_ANAGRPS);
+ 	nvmet_ana_group_enabled[newgrpid]++;
+ 	ns->anagrpid = newgrpid;
+ 	nvmet_ana_group_enabled[oldgrpid]--;
+@@ -1580,6 +1582,7 @@ static struct config_group *nvmet_ana_groups_make_group(
+ 	grp->grpid = grpid;
  
- 	rq_for_each_segment(bv, req, iter) {
- 		WARN_ON(bv.bv_offset);
- 		msb->blk_count += bv.bv_len >> 12;
--		aidaw->data_addr = (u64) page_address(bv.bv_page);
-+		aidaw->data_addr = virt_to_phys(page_address(bv.bv_page));
- 		aidaw++;
- 	}
+ 	down_write(&nvmet_ana_sem);
++	grpid = array_index_nospec(grpid, NVMET_MAX_ANAGRPS);
+ 	nvmet_ana_group_enabled[grpid]++;
+ 	up_write(&nvmet_ana_sem);
  
 -- 
 2.43.0
