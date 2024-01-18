@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839E523775;
-	Thu, 18 Jan 2024 11:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E0A23762;
+	Thu, 18 Jan 2024 11:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575646; cv=none; b=Qikw9iMJs2mdEaSaKiz6hyYXOGwxk+LBiia8gJJbCqiO/e6jMsc8+o/wDFkAxPPcGFeiik6dHz8XAxsx99QPfDrViQ7xH/JShKzRIr/vBv2Gzf0L8Y4S1GpI6cWNThQEBtf0GhqOn0wS6XxwvzLdeQV/lQmI/pbIRuSLruY65QU=
+	t=1705575649; cv=none; b=OM7HHTXiCZXOWEG/SpwP2BbFhABM4OpOLa1Si1mkFii8F+uVhbYhUbjghV+Nz/bLUMHrVcArm6pZvlTZLibzGxozagkRakkUzJ/rZx9lCpR5S81k3HUL+KorEZzix/+kLJDAR3XgtJ5Um8bgtBNe6wuRJV7EqvNS0N9HpzHHc6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575646; c=relaxed/simple;
-	bh=f6kIzWrf/e3tmxcpQRQrwZ7+tK6onkBdNzeEV2MykAI=;
+	s=arc-20240116; t=1705575649; c=relaxed/simple;
+	bh=b8vRcPpfiSfwsrrRsEbPV7mFgXBnzAQGXt9KRYQRq7w=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=SC0Y0NoKp7zUt2440H1JpX1mnZPh/qdLJ/CJsv+6uYZdw5vxuaLhGLaLsLVTEZFu4BQ+3Lvm1UmLrsekMMJRWiW46IBpjtGZjRvtgITkpt8sR7P9kWoA/6P+QHayFK+g9+yDsDpgv7S3DWyWhOPz/xalBkE5Dvkmt38IJ1smOQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZFvndjq; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding; b=LRA41CNwp2OK8iZqVhhcAILooXx9WKRodzBiC0WKRpIwmPXABOa1kQ3tniPx6bwAR2Nzrge8oFGSVsSc8/sCCXwOVjfE07r7hBshVXYssAeiRqCFJJmk9bD5rxTLrRG1WvDLUOjy1Zgy0kw+IONwdCKXiwE8+BEYqMLRuh2tbLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGttmUZy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZFvndjq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0852AC433C7;
-	Thu, 18 Jan 2024 11:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGttmUZy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8ACC433C7;
+	Thu, 18 Jan 2024 11:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575646;
-	bh=f6kIzWrf/e3tmxcpQRQrwZ7+tK6onkBdNzeEV2MykAI=;
+	s=korg; t=1705575649;
+	bh=b8vRcPpfiSfwsrrRsEbPV7mFgXBnzAQGXt9KRYQRq7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QZFvndjq4K/7ntgSKAd/nU+79rkg2nQH2UcbXydexb+WbAcncBX+l4aG7cqe9LWzK
-	 EUalmW09j2tiIvZQRcRoTEOR5lrgnEg+oT54HZOgNPcFswxSOgF5tZT+XZPrOhpPJG
-	 RodeZVpPNdh/sb4uGURqoOC497v2BCrmWvDbo+Gs=
+	b=TGttmUZywBsPIZDy4bLyiqP4TPUASbdfsovv/OzlsAp1Bo3lbWNcA341I1IgdKaqO
+	 dUj97JicJt6ARIqh9X5G+1xUFXRupTm7cYdEtz8OKnmFglKaHVPlNkvgWEaGGFMHOm
+	 hU+wBlEQokrfH+fJCGBVUHwNUOhhI6ry+ls1+kbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	=?UTF-8?q?Jos=C3=A9=20Pekkarinen?= <jose.pekkarinen@foxhound.fi>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/100] ring-buffer: Do not record in NMI if the arch does not support cmpxchg in NMI
-Date: Thu, 18 Jan 2024 11:49:03 +0100
-Message-ID: <20240118104313.293838709@linuxfoundation.org>
+Subject: [PATCH 6.1 056/100] Input: psmouse - enable Synaptics InterTouch for ThinkPad L14 G1
+Date: Thu, 18 Jan 2024 11:49:04 +0100
+Message-ID: <20240118104313.350260450@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
 References: <20240118104310.892180084@linuxfoundation.org>
@@ -48,48 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: José Pekkarinen <jose.pekkarinen@foxhound.fi>
 
-[ Upstream commit 712292308af2265cd9b126aedfa987f10f452a33 ]
+[ Upstream commit c1f342f35f820b33390571293498c3e2e9bc77ec ]
 
-As the ring buffer recording requires cmpxchg() to work, if the
-architecture does not support cmpxchg in NMI, then do not do any recording
-within an NMI.
+Observed on dmesg of my laptop I see the following
+output:
 
-Link: https://lore.kernel.org/linux-trace-kernel/20231213175403.6fc18540@gandalf.local.home
+[   19.898700] psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[   19.936057] psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[   19.936076] psmouse serio1: synaptics: Your touchpad (PNP: LEN0411 PNP0f13) says it can support a different bus. If i2c-hid and hid-rmi are not used, you might want to try setting psmouse.synaptics_intertouch to 1 and report this to linux-input@vger.kernel.org.
+[   20.008901] psmouse serio1: synaptics: Touchpad model: 1, fw: 10.32, id: 0x1e2a1, caps: 0xf014a3/0x940300/0x12e800/0x500000, board id: 3471, fw id: 2909640
+[   20.008925] psmouse serio1: synaptics: serio: Synaptics pass-through port at isa0060/serio1/input0
+[   20.053344] input: SynPS/2 Synaptics TouchPad as /devices/platform/i8042/serio1/input/input7
+[   20.397608] mousedev: PS/2 mouse device common for all mice
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+This patch will add its pnp id to the smbus list to
+produce the setup of intertouch for the device.
+
+Signed-off-by: José Pekkarinen <jose.pekkarinen@foxhound.fi>
+Link: https://lore.kernel.org/r/20231114063607.71772-1-jose.pekkarinen@foxhound.fi
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/input/mouse/synaptics.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 71cad4f1323c..1285e7fb597e 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -3644,6 +3644,12 @@ rb_reserve_next_event(struct trace_buffer *buffer,
- 	int nr_loops = 0;
- 	int add_ts_default;
- 
-+	/* ring buffer does cmpxchg, make sure it is safe in NMI context */
-+	if (!IS_ENABLED(CONFIG_ARCH_HAVE_NMI_SAFE_CMPXCHG) &&
-+	    (unlikely(in_nmi()))) {
-+		return NULL;
-+	}
-+
- 	rb_start_commit(cpu_buffer);
- 	/* The commit page can not change after this */
- 
+diff --git a/drivers/input/mouse/synaptics.c b/drivers/input/mouse/synaptics.c
+index e43e93ac2798..b6749af46262 100644
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -183,6 +183,7 @@ static const char * const smbus_pnp_ids[] = {
+ 	"LEN009b", /* T580 */
+ 	"LEN0402", /* X1 Extreme Gen 2 / P1 Gen 2 */
+ 	"LEN040f", /* P1 Gen 3 */
++	"LEN0411", /* L14 Gen 1 */
+ 	"LEN200f", /* T450s */
+ 	"LEN2044", /* L470  */
+ 	"LEN2054", /* E480 */
 -- 
 2.43.0
 
