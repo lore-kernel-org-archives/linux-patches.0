@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9AA1774B;
-	Thu, 18 Jan 2024 10:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441471774B;
+	Thu, 18 Jan 2024 10:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575477; cv=none; b=dUVjsMrZIzQ6yVNetZUjPN4TXKIaTEkjz8Xa4ea7AI3F/BzcKwgUPSoqrqpZzAQTLn0pDpg8pFV8F5ij9EgsBTdcanpT5PnCN1IDSJxZoLqOEY9iVI1JiQnPNSYq1sict6r0QRVJH3qGsDm0ZU2slpAl3t+tKYxYQFMHjYXJd1c=
+	t=1705575480; cv=none; b=srNyGrxWuiZVTLWyV1L8k/4ynRx8S15VdR6o9B3XbkpAlcR5tx7RVsa8rYenJNwzxjDuvh3MRO5VRGOyBxfA0W4UZcLJNVDPZptcQ5B+15GC5y2ABjHMvjvf761oK2op19J2Nvsq7KRQ4DqFjAFGINJf4K/u5JCdVPjn92BQtKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575477; c=relaxed/simple;
-	bh=aFIY3Rc0nvctBtB7dFZ2H2Wc/ZZhT8axgwxboJ5QbQI=;
+	s=arc-20240116; t=1705575480; c=relaxed/simple;
+	bh=kIjz0m31cKKsfh0JDjBydTYgZJ/oJfvIADNqRL/VPD4=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:User-Agent:X-stable:
-	 X-Patchwork-Hint:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding; b=el7VKtKZfdQNI7rb8w5pqF9F467ov24MrAekVAUx/ZgiTfR1J6kwMLXbL1laXV18j+mO1bOKEHeW7bqSDZHEggM9YamqWX4d6bIUVDYTWV2qOoTkStbe/SfF2TtkYco54Z0Aftkbo9Vy3MhKUpOEpUDky+bTNa5V831GZKJRM/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEPMkTgM; arc=none smtp.client-ip=10.30.226.201
+	 X-Patchwork-Hint:MIME-Version:Content-Transfer-Encoding; b=qCYOTxb4c+/vrFO5ZwrVdv8mV9BVOZvie37VAkJSUhNNdYHICKe6jxw3kXMibDMHqlmk3kZn3lKglIHxxRXiNXWFtLa6ON35ngnxHGD0PVfgej77vgmLTwMMiCYsuSS0Kn9rtx20EpBUEjzmfUpBtoL1N3cGaQTDXqQRboveDno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvE2Ra21; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEPMkTgM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCC7C433C7;
-	Thu, 18 Jan 2024 10:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvE2Ra21"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD227C433C7;
+	Thu, 18 Jan 2024 10:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705575477;
-	bh=aFIY3Rc0nvctBtB7dFZ2H2Wc/ZZhT8axgwxboJ5QbQI=;
+	s=korg; t=1705575480;
+	bh=kIjz0m31cKKsfh0JDjBydTYgZJ/oJfvIADNqRL/VPD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EEPMkTgMuDeXc/qqxJAHYUBNdY1oPQRKlRV8cdsXBkECK5z3HEv177tib1cLEWgcU
-	 gX7sA3CEV9p0cCFPkdY3XhtpbbJCz0E2QhS/M6AFp/W746ZRB4FT3GDdUR8TzTEDd7
-	 mpAm+BlmgTPVyGmtEKGKyLok+omUXnRIjwFR3fqg=
+	b=vvE2Ra213njVJNXs2NeDDNUlIMk68KlgAN6y+q6pr07EdgBU2eiaIkB4pFzoszRsJ
+	 VMZu6GD0Wah/X7IoxycrOrhDiUg/UzzJbOWdQWS3PE5H/GFJozvxJSGy4y2Xa2THt/
+	 LFhNu+Ya15Y9RM34c0fNEkIIzWFbdh5uDwtFJQV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Eckert <fe@dev.tdt.de>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 146/150] leds: ledtrig-tty: Free allocated ttyname buffer on deactivate
-Date: Thu, 18 Jan 2024 11:49:28 +0100
-Message-ID: <20240118104326.817467242@linuxfoundation.org>
+	LeoLiuoc <LeoLiu-oc@zhaoxin.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.6 147/150] PCI: Add ACS quirk for more Zhaoxin Root Ports
+Date: Thu, 18 Jan 2024 11:49:29 +0100
+Message-ID: <20240118104326.861351986@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240118104320.029537060@linuxfoundation.org>
 References: <20240118104320.029537060@linuxfoundation.org>
@@ -47,48 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Eckert <fe@dev.tdt.de>
+From: LeoLiuoc <LeoLiu-oc@zhaoxin.com>
 
-commit 25054b232681c286fca9c678854f56494d1352cc upstream.
+commit e367e3c765f5477b2e79da0f1399aed49e2d1e37 upstream.
 
-The ttyname buffer for the ledtrig_tty_data struct is allocated in the
-sysfs ttyname_store() function. This buffer must be released on trigger
-deactivation. This was missing and is thus a memory leak.
+Add more Root Port Device IDs to pci_quirk_zhaoxin_pcie_ports_acs() for
+some new Zhaoxin platforms.
 
-While we are at it, the TTY handler in the ledtrig_tty_data struct should
-also be returned in case of the trigger deactivation call.
-
-Cc: stable@vger.kernel.org
-Fixes: fd4a641ac88f ("leds: trigger: implement a tty trigger")
-Signed-off-by: Florian Eckert <fe@dev.tdt.de>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20231127081621.774866-1-fe@dev.tdt.de
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 299bd044a6f3 ("PCI: Add ACS quirk for Zhaoxin Root/Downstream Ports")
+Link: https://lore.kernel.org/r/20231211091543.735903-1-LeoLiu-oc@zhaoxin.com
+Signed-off-by: LeoLiuoc <LeoLiu-oc@zhaoxin.com>
+[bhelgaas: update subject, drop changelog, add Fixes, add stable tag, fix
+whitespace, wrap code comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: <stable@vger.kernel.org>	# 5.7
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/trigger/ledtrig-tty.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pci/quirks.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/leds/trigger/ledtrig-tty.c
-+++ b/drivers/leds/trigger/ledtrig-tty.c
-@@ -168,6 +168,10 @@ static void ledtrig_tty_deactivate(struc
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -4699,17 +4699,21 @@ static int pci_quirk_xgene_acs(struct pc
+  * But the implementation could block peer-to-peer transactions between them
+  * and provide ACS-like functionality.
+  */
+-static int  pci_quirk_zhaoxin_pcie_ports_acs(struct pci_dev *dev, u16 acs_flags)
++static int pci_quirk_zhaoxin_pcie_ports_acs(struct pci_dev *dev, u16 acs_flags)
+ {
+ 	if (!pci_is_pcie(dev) ||
+ 	    ((pci_pcie_type(dev) != PCI_EXP_TYPE_ROOT_PORT) &&
+ 	     (pci_pcie_type(dev) != PCI_EXP_TYPE_DOWNSTREAM)))
+ 		return -ENOTTY;
  
- 	cancel_delayed_work_sync(&trigger_data->dwork);
- 
-+	kfree(trigger_data->ttyname);
-+	tty_kref_put(trigger_data->tty);
-+	trigger_data->tty = NULL;
-+
- 	kfree(trigger_data);
- }
- 
++	/*
++	 * Future Zhaoxin Root Ports and Switch Downstream Ports will
++	 * implement ACS capability in accordance with the PCIe Spec.
++	 */
+ 	switch (dev->device) {
+ 	case 0x0710 ... 0x071e:
+ 	case 0x0721:
+-	case 0x0723 ... 0x0732:
++	case 0x0723 ... 0x0752:
+ 		return pci_acs_ctrl_enabled(acs_flags,
+ 			PCI_ACS_SV | PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_UF);
+ 	}
 
 
