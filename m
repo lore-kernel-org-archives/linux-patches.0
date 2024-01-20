@@ -1,98 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85C438E;
-	Fri, 19 Jan 2024 23:10:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C9DA4A
+	for <patches@lists.linux.dev>; Sat, 20 Jan 2024 00:46:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705705840; cv=none; b=NaF2dENO5XWwL/FHIbHX8bNFUlaZHbuwYcQ+ubTXqqLAGBBBJEDXKkM+pnJDL16RL2RPLBAR1V/Px7CX5ZLZV1gyiKB9RIW81dBQK/J4ETF8n0EclQhwhwjnTttHOpsHcPHuk0HpsZ17Yw1BtXgoXl8a/vX/Op+H9krH/2pSezA=
+	t=1705711603; cv=none; b=dWqLDZPgwLyVMPUpMBFJJxLs7Qg4OJlUQwHvsvM9osadnkDgqTuoa+S1GILfqqskHfE8D3MYzGax9h8XwzT1pCDhvFrwu5ocFR3DT+MK5loQoR/b6KPraLB5ECtFc3UgQhLIp6k4bnS52eo5ccsrMpZrX7dmMOopBEgatKK0JcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705705840; c=relaxed/simple;
-	bh=hLvySJOGh3H9r6ZYVIGvpuQ7Zcb/pUmD6s9QAjLdlmU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nvEbD1Wa/ChF7S4HdIVRZjFXDK7sM9OXhZhWZYjZo8sGrh3i6ADZPSap8fTgTv8k5tT/1O1+mGexkPEEPu1GvO4Vhj2a9YyK+8ViTn6J5vlIIQVw9GHp8RZVYUeCPbsZu9puc+fjdlSVVtdKu8ItoflYMlQgjmJ2WrVPRzUvF0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H7as3jph; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1705711603; c=relaxed/simple;
+	bh=XIZsv/RfQm7BgGT+oEhN8pKQIm+tOaegcjtaTUA0ghY=;
+	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
+	 MIME-Version:Content-Type; b=FGGaB2niau9Nxku/igqH3OJMm5Tf40w9XT81B6PtgA6pcV2iGq+vQosmlMQGW/G1Ci+1CQIBn3EVnpItMhsCxGnVrKBzBt7m0Biw7ZI0ANQyCmtsU4wBKYELIYgekl9D4YMvIzccfRWTCJs3Bg1vjCkMHMQLtX5/czxI/+6/aYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=SsOfTEWx; arc=none smtp.client-ip=44.202.169.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H7as3jph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A2AC433F1;
-	Fri, 19 Jan 2024 23:10:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705705839;
-	bh=hLvySJOGh3H9r6ZYVIGvpuQ7Zcb/pUmD6s9QAjLdlmU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=H7as3jphr/I/+VOFoHA/dDZFNvfVfRn2PMpnFrkReodXeioRG9Q1/QXBCBYASb4Oh
-	 ASbADsHm7oaSU2U8sAMhRBhkG1hZzvwQLNVmdFti9FJEuofwnUhUb1KV18Nrt9Eo4E
-	 TTOIGmp3+6Ay5A/JwyUwsD1pMfNyffItFyqA3IoYaf6vSrpX2up4Hfxbq9G4SIXDPy
-	 iA8+yMQzQg/IsjvDXpCCcl9D700BjuCgPyeOSSZXqKfNx/+ZsuVYlIxCDjwJ7Wdm3W
-	 eNbnDH33gPh8XnnEaFCuJTEF6hh+z9MgoRmk1zEqsj7S5X2/Oc7tCh+Xueumv6IL0T
-	 5gFqj7oSlYXhA==
-Date: Fri, 19 Jan 2024 17:10:36 -0600
-From: Rob Herring <robh@kernel.org>
-To: Mark Rutland <mark.rutland@arm.com>
-Cc: Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, linux-um@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org, kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org,
-	Frank Rowand <frowand.list@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: Re: [PATCH 1/6] arm64: Unconditionally call unflatten_device_tree()
-Message-ID: <20240119231036.GA1247053-robh@kernel.org>
-References: <20240112200750.4062441-1-sboyd@kernel.org>
- <20240112200750.4062441-2-sboyd@kernel.org>
- <ZaZtbU9hre3YhZam@FVFF77S0Q05N>
- <434b21afe1899b1567f3617261594842.sboyd@kernel.org>
- <ZalDM90KoQ2Il0j7@FVFF77S0Q05N.cambridge.arm.com>
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="SsOfTEWx"
+Received: from eig-obgw-5003a.ext.cloudfilter.net ([10.0.29.159])
+	by cmsmtp with ESMTPS
+	id QyO7rXYB49gG6QzVQrqo7J; Sat, 20 Jan 2024 00:46:40 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id QzVPrI2DMl5UwQzVPr2ETl; Sat, 20 Jan 2024 00:46:40 +0000
+X-Authority-Analysis: v=2.4 cv=daKTYFbe c=1 sm=1 tr=0 ts=65ab17f0
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=dEuoMetlWLkA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=wHu7zF97UQTgv3i/yyCxjGkDLfWtEHfYOEFNAgQbnow=; b=SsOfTEWxmb7hR3n2I54w7H+ysg
+	zrNZYmuSFI6IvyrdM4mCUqfPGTXbQrgRZLnFbB7xRrZPn2LBFrnhY25XvTPE4TMlcEVgH+XOrzMT3
+	eFHscg8G3JCRcU36K5TqMsFNtCtVWFIkL0o8vLPctMdrscFRLVaTe7f9M05XezU1FpzQW02HioqVe
+	jfkZO6l8/hC4PF2ok5ELdrwYFWrF/4SDsyvIM0W2W0xHjbwRBFLk1O3t/RP92o1p8rM/vpvFl9M3P
+	i3TQtdoZkTu8p8IPuhaZ3NJCDJY2yW/inC2YutI22KrE7c1+pYnZUFbefJAfmoqBRB+TVg/z/kvhw
+	9zyzy1hQ==;
+Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:36008 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1rQzVN-00145A-0F;
+	Fri, 19 Jan 2024 17:46:37 -0700
+Subject: Re: [PATCH 6.1 000/100] 6.1.74-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+References: <20240118104310.892180084@linuxfoundation.org>
+In-Reply-To: <20240118104310.892180084@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <a136c055-75f7-01b1-9883-dbfcea86d08b@w6rz.net>
+Date: Fri, 19 Jan 2024 16:46:34 -0800
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZalDM90KoQ2Il0j7@FVFF77S0Q05N.cambridge.arm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 98.207.139.8
+X-Source-L: No
+X-Exim-ID: 1rQzVN-00145A-0F
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:36008
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfKkeDyQ4HpsxGR/FHThDQ+qmXgmyp7O3AVHQKNt8q9mJMA5qjRv7rg4xPcz9A4D/2kSG8D3BBl8S4oU5CrfkgHcL1HqlhvVs2lRilbJAa+lEY/rPTlSW
+ 4OuG0EOeV49iLruSVYp+PTfOdGXlZsrrKZKzEMEUOVWyHX5opEfthzt3/PXuAb0tADbYGGJsryjLAg==
 
-On Thu, Jan 18, 2024 at 03:26:43PM +0000, Mark Rutland wrote:
-> On Tue, Jan 16, 2024 at 05:27:18PM -0800, Stephen Boyd wrote:
-> > Quoting Mark Rutland (2024-01-16 03:51:14)
-> > > Hi Stephen,
-> > > 
-> > > On Fri, Jan 12, 2024 at 12:07:44PM -0800, Stephen Boyd wrote:
-> > > > Call this function unconditionally so that we can populate an empty DTB
-> > > > on platforms that don't boot with a firmware provided or builtin DTB.
-> > > > There's no harm in calling unflatten_device_tree() unconditionally.
-> > > 
-> > > For better or worse, that's not true: there are systems the provide both a DTB
-> > > *and* ACPI tables, and we must not consume both at the same time as those can
-> > > clash and cause all sorts of problems. In addition, we don't want people being
-> > > "clever" and describing disparate portions of their system in ACPI and DT.
-> > > 
-> > > It is a very deliberate choice to not unflatten the DTB when ACPI is in use,
-> > > and I don't think we want to reopen this can of worms.
-> > 
-> > Hmm ok. I missed this part. Can we knock out the initial_boot_params in
-> > this case so that we don't unflatten a DTB when ACPI is in use?
-> 
-> Why is that better than just not calling unflatten_device_tree(), as we do
-> today?
-> 
-> The cover letter says this is all so that we can run DT tests for the clk
-> framework; why can't that just depend on the system being booted with DT rather
-> than ACPI? 
+On 1/18/24 2:48 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.74 release.
+> There are 100 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 20 Jan 2024 10:42:49 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.74-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Because then the tests can never run on x86 and some people still use 
-those systems. It's no different than why do we compile !x86 drivers on 
-x86. It is convenient.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-> We have other tests which are architecture and/or configuration
-> dependent...
+Tested-by: Ron Economos <re@w6rz.net>
 
-There's another usecase of non-discoverable devices behind discoverable 
-devices. See my LPC session slides for more details. For this we will 
-need some base DT to apply overlays to on DT AND ACPI systems. This is 
-what Geert was getting at. Yes, it could be done with some other code 
-path, but the DT unittest has done that hack for years and this series 
-is getting rid of it.
-
-Rob
