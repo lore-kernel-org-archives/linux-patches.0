@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC8C13BEA7;
-	Tue, 23 Jan 2024 00:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DED813A27F;
+	Tue, 23 Jan 2024 00:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969432; cv=none; b=AbuMfwjNt/zGFKq+pAYeRo+hXuqbJEPrHY1Ok2JTlx/QSIpz2z3hbqoFY+U3fVwkiUb8JuYRl1UnhhrLSvQnuObFB+C07yffv2kTGQktf+thH9NeCMmNL1nMCeie9QAqD5SiD2jI/n0vhZ0UwtFtWOP1ooJAo+5sDW1eWKMIT4w=
+	t=1705969433; cv=none; b=cOW+VeztPJZcNTBICm/3gbCDfaJ0k3Inv1Ke13/mMJsLtNfzdBWZ+pU4jaSfWP0GSFYNjIzDaxBkxN8LDSJNrMDScr/dYSanxgvmK4vOd7yzGEDU9GnD4VqF1pRGWdjnFyOkDs0X7y7+y3A4MxRkpeoZ1phzE1e9s95yM1IbHjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969432; c=relaxed/simple;
-	bh=uzYQy4NT+HMjvMrSiKiJNL7fWfOVF6HGxSTC7dvAAao=;
+	s=arc-20240116; t=1705969433; c=relaxed/simple;
+	bh=wtNJDXpbk1pmv6nCQOCoQaeTBdGiYR9qNSbms0WATgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZrP/Mkf9OjVbY6GDQkGpch+5l03qKEwz31aP3fGIYT0yNVrIAXwefkuih890qVlDnlEWn6xYi3LF4ZFKM/0BaVvhzsOF7nkHmULZjDD5x/bcBOrmii28+fPKlPHhjuU/wLxSOEZ5YczOKBzjsd6WK8neIJ2vByW9GtwaDyA53uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsGXBWHt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FA4FEiAMwSLdq9WSdhsn6FT37AKnvrRUEA8jjizqVAjmqELVaSVKHifioQ/8w94v6CPu9XS5XFSeQpd7/Rf/a/96KNYXhUw7+gce4/U6H+AgTej9Blo7v/HlYIJaYEvLB9x6rxobw68CSUmt9yYv/EACLBLTfbbv1d1pit0i7yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvrNZcZA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsGXBWHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EA9C43390;
-	Tue, 23 Jan 2024 00:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvrNZcZA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F47AC433F1;
+	Tue, 23 Jan 2024 00:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969431;
-	bh=uzYQy4NT+HMjvMrSiKiJNL7fWfOVF6HGxSTC7dvAAao=;
+	s=korg; t=1705969433;
+	bh=wtNJDXpbk1pmv6nCQOCoQaeTBdGiYR9qNSbms0WATgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gsGXBWHtdIqY+V9YOyRBtbwWIsdRci2husnLl/ytjwv1b9gFSTCEd18cANb15/4Nu
-	 qUigA87YvL6/lb7Akfx28kCWU7XIQaVA5Zzx2DScQgpO8gBLbmn4phRkBNHybIsDgu
-	 zglK5FaBZ8TNwbcfkaLNiWUO8LpsdvxeglSNbTx4=
+	b=QvrNZcZAvppa1tPqrLCTqd07B/4sRoRz5vCF2u5VtVoIJwS6Ezp+e6NaB4ieS7kDm
+	 1WERESiGQvcyiP5DwXTr6/oGIGp42mQnC/+GvoSjrncLykg+KhvbBaPv1WjfoxHMwr
+	 EEyRQGMSdgJ53ygG8nB4B+1O1uKbeXj+pWYDkQYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 217/641] wifi: iwlwifi: mvm: send TX path flush in rfkill
-Date: Mon, 22 Jan 2024 15:52:01 -0800
-Message-ID: <20240122235824.732984473@linuxfoundation.org>
+Subject: [PATCH 6.7 218/641] wifi: iwlwifi: mvm: Do not warn if valid link pair was not found
+Date: Mon, 22 Jan 2024 15:52:02 -0800
+Message-ID: <20240122235824.760799702@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,40 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 2afc3dad39ea84a072d04ff40a417234326adc47 ]
+[ Upstream commit c5bfdb46636a2ea7f0678243c6d3e9f8d26b027a ]
 
-If we want to drop packets, that's surely a good thing to
-do when we want to enter rfkill. Send this command despite
-rfkill so we can successfully clean up everything, we need
-to handle it separately since it has CMD_WANT_SKB, so it's
-not going to automatically return success when in rfkill.
+It is possible that though multiple links are enabled we cannot enabled
+EMLSR enable more than a single link, e.g., all valid links are on the
+same band etc. Thus, do not warn in case no valid link pair is found.
 
-Fixes: d4e3a341b87b ("iwlwifi: mvm: add support for new flush queue response")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: b9be67fb4207 ("wifi: iwlwifi: mvm: Add basic link selection logic")
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
 Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20231219215605.c528a6fa6cec.Ibe5e9560359ccc0fba60c35e01de285c376748a2@changeid
+Link: https://msgid.link/20231219215605.142e57a05230.I7cfe78c94c3d15c4c744bccadd8f187e43594932@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 2 +-
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index ae5cd13cd6dd..db986bfc4dc3 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -2256,7 +2256,7 @@ int iwl_mvm_flush_sta_tids(struct iwl_mvm *mvm, u32 sta_id, u16 tids)
- 	WARN_ON(!iwl_mvm_has_new_tx_api(mvm));
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+index ff6cb064051b..8e263acbc763 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+@@ -716,7 +716,7 @@ void iwl_mvm_mld_select_links(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
+ 		}
+ 	}
  
- 	if (iwl_fw_lookup_notif_ver(mvm->fw, LONG_GROUP, TXPATH_FLUSH, 0) > 0)
--		cmd.flags |= CMD_WANT_SKB;
-+		cmd.flags |= CMD_WANT_SKB | CMD_SEND_IN_RFKILL;
+-	if (WARN_ON(!new_active_links))
++	if (!new_active_links)
+ 		return;
  
- 	IWL_DEBUG_TX_QUEUES(mvm, "flush for sta id %d tid mask 0x%x\n",
- 			    sta_id, tids);
+ 	if (vif->active_links != new_active_links)
 -- 
 2.43.0
 
