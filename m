@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291F312C52C;
-	Tue, 23 Jan 2024 00:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E864612BF3D;
+	Tue, 23 Jan 2024 00:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968937; cv=none; b=NOSkX86Caz2SYpPfbiRPmQ5HUKa4Ke6jn8ZdRzqzP7gmn7GO0656KHTgsrlIVSYFsv2a7l4WjBn4Jo8UdIx0cgS9GEfB2YBxcp2ckyNdCy+DsoLwhkTOIupYuV6If2f/YBEx6fCFtXfxWPeJ7kseBrD+d4ysKogGkd4beGzeskI=
+	t=1705968938; cv=none; b=DuLsC1xiIcyLK6mgdCj57LzjHbDIL/VOCWFgvV7CVlJ8DfLnrNink7u5BkxGL1eb++nWPa1cpLQEuegs7TMCDM3FYexfQIh911kivOw0JzovOtEUAx065po9PJiiy2uAHYy1t1CrZwk1na4KHWJqZnuT8pyfUvHnDfuizH73X3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968937; c=relaxed/simple;
-	bh=AdvQvEoFsEe9+8WmQ6K84hdHcgRplZmuq5RUjTayJOQ=;
+	s=arc-20240116; t=1705968938; c=relaxed/simple;
+	bh=Vq3DUU2hKbkry7x0NpEAzVjx4yJKtuN2maLSYeHSqpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QiBwgcoiipgJ61JAZC/lfcupN8z00ato3cwx1MNH6wpGrc03iLImD0zmvbO5Xp4W073R4DNPLrRFP2/goGbcFeAi2hNVcax1yPWH3NUm9HmqkPSnOjViVeDTCXD2TZW5JGu4GlNeBtpnC1tYR8IPAfkMVMw2L5q9viAtdD5AIrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZ33vsUQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=upWuQcrf3q+Ep+734rOPilJA2lxbAxr4RiaGcK1IEUdHToEapk6uyZVzW4YaZWhGIwTM0eE33zeHBwDOFusC8IgGC2qByk+R35gHE9/cRTYFIW9THej8cf7FqKFmRAg+nV3gya3APKoW8LVE4eeAt3rxMCQZRP5J/Qb3HzgDpfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9j861cz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZ33vsUQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DBFC43390;
-	Tue, 23 Jan 2024 00:15:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9j861cz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE176C43394;
+	Tue, 23 Jan 2024 00:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968936;
-	bh=AdvQvEoFsEe9+8WmQ6K84hdHcgRplZmuq5RUjTayJOQ=;
+	s=korg; t=1705968937;
+	bh=Vq3DUU2hKbkry7x0NpEAzVjx4yJKtuN2maLSYeHSqpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZ33vsUQcbqsrNsgUrFUHOUcRrFsGLvZ4F3yIZSh6lmadI1PdNIhqiUOq8lRwa41R
-	 8UOUCViJsVRxvhj1K+m6uFjUiVAVnNuPg0F8ImTRsW4PHnNL8pGP4nRqeKBHC1bRLR
-	 kblnSH5OfKjbPbKUIqcXtgFDwRVjXa6tpzISrkP4=
+	b=f9j861czmI3wA+lIl/mDnrYU4bsNCkkeRNfNpcF1dwBQHJQPeYK5OgKek6EWNIkJp
+	 +n8/kU2kuoVG0my140A15f471MZ4CLNxdg83+lkNtDY5P/CXEXTmGqf/5scJxNCHqJ
+	 5NNDSnzthDxp2Ial6uYfi4udjQzBM/K/u/88SoM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ricardo B. Marliere" <ricardo@marliere.net>,
-	Mike Isely <isely@pobox.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+621409285c4156a009b3@syzkaller.appspotmail.com
-Subject: [PATCH 5.4 110/194] media: pvrusb2: fix use after free on context disconnection
-Date: Mon, 22 Jan 2024 15:57:20 -0800
-Message-ID: <20240122235723.950780333@linuxfoundation.org>
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Robert Foss <rfoss@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 111/194] drm/bridge: Fix typo in post_disable() description
+Date: Mon, 22 Jan 2024 15:57:21 -0800
+Message-ID: <20240122235723.991627392@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -54,44 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo B. Marliere <ricardo@marliere.net>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit ded85b0c0edd8f45fec88783d7555a5b982449c1 ]
+[ Upstream commit 288b039db225676e0c520c981a1b5a2562d893a3 ]
 
-Upon module load, a kthread is created targeting the
-pvr2_context_thread_func function, which may call pvr2_context_destroy
-and thus call kfree() on the context object. However, that might happen
-before the usb hub_event handler is able to notify the driver. This
-patch adds a sanity check before the invalid read reported by syzbot,
-within the context disconnection call stack.
+s/singals/signals/
 
-Reported-and-tested-by: syzbot+621409285c4156a009b3@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000a02a4205fff8eb92@google.com/
-
-Fixes: e5be15c63804 ("V4L/DVB (7711): pvrusb2: Fix race on module unload")
-Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
-Acked-by: Mike Isely <isely@pobox.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 199e4e967af4 ("drm: Extract drm_bridge.h")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231124094253.658064-1-dario.binacchi@amarulasolutions.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/pvrusb2/pvrusb2-context.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/drm/drm_bridge.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/pvrusb2/pvrusb2-context.c b/drivers/media/usb/pvrusb2/pvrusb2-context.c
-index 14170a5d72b3..1764674de98b 100644
---- a/drivers/media/usb/pvrusb2/pvrusb2-context.c
-+++ b/drivers/media/usb/pvrusb2/pvrusb2-context.c
-@@ -268,7 +268,8 @@ void pvr2_context_disconnect(struct pvr2_context *mp)
- {
- 	pvr2_hdw_disconnect(mp->hdw);
- 	mp->disconnect_flag = !0;
--	pvr2_context_notify(mp);
-+	if (!pvr2_context_shutok())
-+		pvr2_context_notify(mp);
- }
- 
- 
+diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
+index 9f7192366cfb..64172de5029d 100644
+--- a/include/drm/drm_bridge.h
++++ b/include/drm/drm_bridge.h
+@@ -162,7 +162,7 @@ struct drm_bridge_funcs {
+ 	 * or &drm_encoder_helper_funcs.dpms hook.
+ 	 *
+ 	 * The bridge must assume that the display pipe (i.e. clocks and timing
+-	 * singals) feeding it is no longer running when this callback is
++	 * signals) feeding it is no longer running when this callback is
+ 	 * called.
+ 	 *
+ 	 * The post_disable callback is optional.
 -- 
 2.43.0
 
