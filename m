@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E114E1D2;
-	Tue, 23 Jan 2024 01:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C5F57321;
+	Tue, 23 Jan 2024 01:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974021; cv=none; b=YO1qRbAcyOavu5O51Oo0Y28TFI+LZ3P/kSYZ3RVK+zIszlH0YgnADgbW+fNUXIVxmVTzCMvXfwja0qNuGfCaryPXzuX0xs+TytlXBaSa3GryZUU2oHWIaAFxjPnLkZsMZnFhY9XiIpiubzwRKgljGCuwKo04/Dq57+Wy26gIVM4=
+	t=1705974022; cv=none; b=YrbGGrnPQSS5CHPjHwFvEzbL049oGRxnFKYf174C2Uhyx+x9UpRbhukzGzQir0bsDfqgDouKaRLLyJZ0FWighD21Dm0Bz9rRkg2tOLSRduJT6UYGFV/Bu3stjLpF4/S4r8fE90rUgXLxT1Fs7zU1ozBM40q9jBhSkthuQVWy49A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974021; c=relaxed/simple;
-	bh=hhGZqW6P78V3edxME/Kj8zpRZDXQIPxTIg7ZTCwlEhk=;
+	s=arc-20240116; t=1705974022; c=relaxed/simple;
+	bh=UiWEhw/hjN5dBOBBt7Ewx3HI4GCoTxGN3CqIu8RzwxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AlxlPISq3Vx6mx3yaIddtaWBFdDd8Ia9LBGVDB1KGDuPzlKSsLjUQ63GIiYkvRB3cm1/sFl5ngtTdMI2yAnIAuy+MTKjXbIeQzj8FLkoVSCwiP1U1Os8GKJLB0BTXwcjm3aDZ7b+n4deeGJUIqF+BEkEe01vgz6W8n9PEgVbbsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DromsfFc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lxnQfaf5Ia42whjbJrgoZyXI5cAPmX+0Aa4TSSFViQ0T/fzVui6guJIilRErgYttvHcPA5NtBJVlql+Wv92NfdxxTKN53D3sPYjuGOZDkCbZuzDQYP94rZNHlwkPz1kwSy6xWk/DB978EGlKR0udn5X1tmWau7r+lDjTccUOf1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rr40R0y/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DromsfFc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05A8C433C7;
-	Tue, 23 Jan 2024 01:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rr40R0y/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCD0C43390;
+	Tue, 23 Jan 2024 01:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974020;
-	bh=hhGZqW6P78V3edxME/Kj8zpRZDXQIPxTIg7ZTCwlEhk=;
+	s=korg; t=1705974021;
+	bh=UiWEhw/hjN5dBOBBt7Ewx3HI4GCoTxGN3CqIu8RzwxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DromsfFcufH6X80DPuIIiYTWvMTW5JPvrtChfYD1h0GW1r1pNvnU1ZljZTtp5oTIr
-	 fVK35C1HeTyXNX2fbxvyBI3mQrNUXLQXTZq+lkzY3n6WhbJHtvKjatbqLfAzbNmiPv
-	 LdN+OBMsc+DagGzRGHJtJkUJTzBEHnBTeJqDbDEI=
+	b=Rr40R0y/tYgpVjHx/727OSIRd5PPr0I0Od18H15p0EJwbM86rwyqjMqxvKfezqGgQ
+	 tz2aJzpU8NyVWDvo9n/eiycwjt37APmb0cED/FpY1gWUvkzJkkDH2f+2QfWpCDM7RY
+	 ETQxEtggw07/rlVw1c8s3ClrskRXYr0b0fOrLMZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 005/583] x86: Fix CPUIDLE_FLAG_IRQ_ENABLE leaking timer reprogram
-Date: Mon, 22 Jan 2024 15:50:56 -0800
-Message-ID: <20240122235812.400556155@linuxfoundation.org>
+Subject: [PATCH 5.15 129/374] ARM: dts: qcom: sdx65: correct SPMI node name
+Date: Mon, 22 Jan 2024 15:56:25 -0800
+Message-ID: <20240122235749.132258136@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,123 +49,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit edc8fc01f608108b0b7580cb2c29dfb5135e5f0e ]
+[ Upstream commit a900ad783f507cb396e402827052e70c0c565ae9 ]
 
-intel_idle_irq() re-enables IRQs very early. As a result, an interrupt
-may fire before mwait() is eventually called. If such an interrupt queues
-a timer, it may go unnoticed until mwait returns and the idle loop
-handles the tick re-evaluation. And monitoring TIF_NEED_RESCHED doesn't
-help because a local timer enqueue doesn't set that flag.
+Node names should not have vendor prefixes:
 
-The issue is mitigated by the fact that this idle handler is only invoked
-for shallow C-states when, presumably, the next tick is supposed to be
-close enough. There may still be rare cases though when the next tick
-is far away and the selected C-state is shallow, resulting in a timer
-getting ignored for a while.
+  qcom-sdx65-mtp.dtb: qcom,spmi@c440000: $nodename:0: 'qcom,spmi@c440000' does not match '^spmi@.*
 
-Fix this with using sti_mwait() whose IRQ-reenablement only triggers
-upon calling mwait(), dealing with the race while keeping the interrupt
-latency within acceptable bounds.
-
-Fixes: c227233ad64c (intel_idle: enable interrupts before C1 on Xeons)
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Link: https://lkml.kernel.org/r/20231115151325.6262-3-frederic@kernel.org
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230924183103.49487-3-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/mwait.h | 11 +++++++++--
- drivers/idle/intel_idle.c    | 19 +++++++------------
- 2 files changed, 16 insertions(+), 14 deletions(-)
+ arch/arm/boot/dts/qcom-sdx55.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/mwait.h b/arch/x86/include/asm/mwait.h
-index 778df05f8539..bae83810505b 100644
---- a/arch/x86/include/asm/mwait.h
-+++ b/arch/x86/include/asm/mwait.h
-@@ -115,8 +115,15 @@ static __always_inline void mwait_idle_with_hints(unsigned long eax, unsigned lo
- 		}
+diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
+index 9d62487f6c8f..73fa0ef6b69e 100644
+--- a/arch/arm/boot/dts/qcom-sdx55.dtsi
++++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
+@@ -457,7 +457,7 @@ restart@c264000 {
+ 			reg = <0x0c264000 0x1000>;
+ 		};
  
- 		__monitor((void *)&current_thread_info()->flags, 0, 0);
--		if (!need_resched())
--			__mwait(eax, ecx);
-+
-+		if (!need_resched()) {
-+			if (ecx & 1) {
-+				__mwait(eax, ecx);
-+			} else {
-+				__sti_mwait(eax, ecx);
-+				raw_local_irq_disable();
-+			}
-+		}
- 	}
- 	current_clr_polling();
- }
-diff --git a/drivers/idle/intel_idle.c b/drivers/idle/intel_idle.c
-index ea5a6a14c553..45500d2d5b4b 100644
---- a/drivers/idle/intel_idle.c
-+++ b/drivers/idle/intel_idle.c
-@@ -131,11 +131,12 @@ static unsigned int mwait_substates __initdata;
- #define MWAIT2flg(eax) ((eax & 0xFF) << 24)
- 
- static __always_inline int __intel_idle(struct cpuidle_device *dev,
--					struct cpuidle_driver *drv, int index)
-+					struct cpuidle_driver *drv,
-+					int index, bool irqoff)
- {
- 	struct cpuidle_state *state = &drv->states[index];
- 	unsigned long eax = flg2MWAIT(state->flags);
--	unsigned long ecx = 1; /* break on interrupt flag */
-+	unsigned long ecx = 1*irqoff; /* break on interrupt flag */
- 
- 	mwait_idle_with_hints(eax, ecx);
- 
-@@ -159,19 +160,13 @@ static __always_inline int __intel_idle(struct cpuidle_device *dev,
- static __cpuidle int intel_idle(struct cpuidle_device *dev,
- 				struct cpuidle_driver *drv, int index)
- {
--	return __intel_idle(dev, drv, index);
-+	return __intel_idle(dev, drv, index, true);
- }
- 
- static __cpuidle int intel_idle_irq(struct cpuidle_device *dev,
- 				    struct cpuidle_driver *drv, int index)
- {
--	int ret;
--
--	raw_local_irq_enable();
--	ret = __intel_idle(dev, drv, index);
--	raw_local_irq_disable();
--
--	return ret;
-+	return __intel_idle(dev, drv, index, false);
- }
- 
- static __cpuidle int intel_idle_ibrs(struct cpuidle_device *dev,
-@@ -184,7 +179,7 @@ static __cpuidle int intel_idle_ibrs(struct cpuidle_device *dev,
- 	if (smt_active)
- 		native_wrmsrl(MSR_IA32_SPEC_CTRL, 0);
- 
--	ret = __intel_idle(dev, drv, index);
-+	ret = __intel_idle(dev, drv, index, true);
- 
- 	if (smt_active)
- 		native_wrmsrl(MSR_IA32_SPEC_CTRL, spec_ctrl);
-@@ -196,7 +191,7 @@ static __cpuidle int intel_idle_xstate(struct cpuidle_device *dev,
- 				       struct cpuidle_driver *drv, int index)
- {
- 	fpu_idle_fpregs();
--	return __intel_idle(dev, drv, index);
-+	return __intel_idle(dev, drv, index, true);
- }
- 
- /**
+-		spmi_bus: qcom,spmi@c440000 {
++		spmi_bus: spmi@c440000 {
+ 			compatible = "qcom,spmi-pmic-arb";
+ 			reg = <0x0c440000 0x0000d00>,
+ 			      <0x0c600000 0x2000000>,
 -- 
 2.43.0
 
