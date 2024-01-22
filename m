@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7707D3A8F4;
-	Tue, 23 Jan 2024 00:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8372648CCD;
+	Tue, 23 Jan 2024 00:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969859; cv=none; b=BwD/mdTH5sClpsTs89CGUcAH/G20+NKqQHvvLag+AwAfA/M2KaRda495h9L+50cJS0g62o4sl1twSI9a4ve1kZ6OWiPx2z3egd1s8490eSNtrj/qwuTbAH9AdH2uuNMc03sRRq3qxKOYaW6Hsq0b8RZNxLmabc0ieAqTJF/6mxE=
+	t=1705969859; cv=none; b=NoAZm5CkezIC9S3/WGOTeuVLpooLUx/rFPnkcX5O0Adr5B1hOfowuMUXi5//yuqXQv2ptQBbLnQiYj9wX7ADFjFlD5duGSIyRdJVToFLjWepLJqTc4bKsPb1kZ7cxX9zEL/0+NYpe8P48qL0wfSCqByjUjELwqwcuvayG6bzJyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705969859; c=relaxed/simple;
-	bh=/nBreDkfSTp/5/oRtvmFe7pcKhudwGvv8F3HhNUJTag=;
+	bh=MlQsXGJzNiSfhQDSceC9dHDeEXezFYRXoGSnyqYm7OQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FhzwZHSLuwRl4BIfLsCzbnhiwVZ5ylBcK2U0iDfSsQBxRya9HU4jsEcFH3yShg3bZWRGtM1v57sqXK3zASFIhsjt1uYg9tvEycwIt8uJV67jzAPzH+l9KUbSL44OvKSmT5QDrsR1iLa7yrDr6GIt1cdxRjdXEQfZxiSOVFoYJRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQazztGp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TczoF+WUWXfqBQWb4UYo/bQ5mhX1DGEOiXvjqfNliIah6nIk0UlY8cBjtUDckxAvaV3Cyx8ZRyYdB2HuP2N0Qh/f3CkuWeKVViS+fY227KSSWvyePJvUnLiUB5diwvcNFOg/GnOT5pLfoN3EGUrSfpfOu9s5/DyfYSr37OSRDSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbbL9mba; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQazztGp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5EFC433F1;
-	Tue, 23 Jan 2024 00:30:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbbL9mba"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0F1C43390;
+	Tue, 23 Jan 2024 00:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969857;
-	bh=/nBreDkfSTp/5/oRtvmFe7pcKhudwGvv8F3HhNUJTag=;
+	s=korg; t=1705969859;
+	bh=MlQsXGJzNiSfhQDSceC9dHDeEXezFYRXoGSnyqYm7OQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQazztGp53AoDlKp+Rr2lA2CtXRkz1KLp52u3S0Nqg7T4Zualgc81yLNVUsFCbgW8
-	 H4k9nf/81ypNVV5env/gBT/Wocu/VfhsCf0kJiPoy5QOrkG296fMJvMnc5I4DIyFYu
-	 0rSpfWiYBTFPyAlh/zLWBIwGv0H/HhaUrU2JkkFM=
+	b=fbbL9mbac/H8yqtqksfkmjtB6UTOs+7Nz5/cgjQwGXXO5PysHGStsIVeOXh9siyCZ
+	 dhsYCpo3uYrBtNTn4fkTvIGfVWegxAj22NquL0KhjekWfO+trN29NQ8fP7tMxoLgNe
+	 cZoUKmQdxHvWl/knp5mLWKQ7TDkk7jZWppZpjqJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alex Vinarskis <alex.vinarskis@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Neeraj Upadhyay (AMD)" <neeraj.iitr10@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 489/641] mfd: intel-lpss: Fix the fractional clock divider flags
-Date: Mon, 22 Jan 2024 15:56:33 -0800
-Message-ID: <20240122235833.378605423@linuxfoundation.org>
+Subject: [PATCH 6.7 490/641] srcu: Use try-lock lockdep annotation for NMI-safe access.
+Date: Mon, 22 Jan 2024 15:56:34 -0800
+Message-ID: <20240122235833.405376758@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,38 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 03d790f04fb2507173913cad9c213272ac983a60 ]
+[ Upstream commit 3c6b0c1c28184038d90dffe8eb542bedcb8ccf98 ]
 
-The conversion to CLK_FRAC_DIVIDER_POWER_OF_TWO_PS uses wrong flags
-in the parameters and hence miscalculates the values in the clock
-divider. Fix this by applying the flag to the proper parameter.
+It is claimed that srcu_read_lock_nmisafe() NMI-safe. However it
+triggers a lockdep if used from NMI because lockdep expects a deadlock
+since nothing disables NMIs while the lock is acquired.
 
-Fixes: 82f53f9ee577 ("clk: fractional-divider: Introduce POWER_OF_TWO_PS flag")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reported-by: Alex Vinarskis <alex.vinarskis@gmail.com>
-Link: https://lore.kernel.org/r/20231211111441.3910083-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+This is because commit f0f44752f5f61 ("rcu: Annotate SRCU's update-side
+lockdep dependencies") annotates synchronize_srcu() as a write lock
+usage. This helps to detect a deadlocks such as
+	srcu_read_lock();
+	synchronize_srcu();
+	srcu_read_unlock();
+
+The side effect is that the lock srcu_struct now has a USED usage in normal
+contexts, so it conflicts with a USED_READ usage in NMI. But this shouldn't
+cause a real deadlock because the write lock usage from synchronize_srcu()
+is a fake one and only used for read/write deadlock detection.
+
+Use a try-lock annotation for srcu_read_lock_nmisafe() to avoid lockdep
+complains if used from NMI.
+
+Fixes: f0f44752f5f6 ("rcu: Annotate SRCU's update-side lockdep dependencies")
+Link: https://lore.kernel.org/r/20230927160231.XRCDDSK4@linutronix.de
+Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.iitr10@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/intel-lpss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/rcupdate.h | 6 ++++++
+ include/linux/srcu.h     | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/intel-lpss.c b/drivers/mfd/intel-lpss.c
-index 9591b354072a..00e7b578bb3e 100644
---- a/drivers/mfd/intel-lpss.c
-+++ b/drivers/mfd/intel-lpss.c
-@@ -301,8 +301,8 @@ static int intel_lpss_register_clock_divider(struct intel_lpss *lpss,
+diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
+index f7206b2623c9..31d523c4e089 100644
+--- a/include/linux/rcupdate.h
++++ b/include/linux/rcupdate.h
+@@ -301,6 +301,11 @@ static inline void rcu_lock_acquire(struct lockdep_map *map)
+ 	lock_acquire(map, 0, 0, 2, 0, NULL, _THIS_IP_);
+ }
  
- 	snprintf(name, sizeof(name), "%s-div", devname);
- 	tmp = clk_register_fractional_divider(NULL, name, __clk_get_name(tmp),
-+					      0, lpss->priv, 1, 15, 16, 15,
- 					      CLK_FRAC_DIVIDER_POWER_OF_TWO_PS,
--					      lpss->priv, 1, 15, 16, 15, 0,
- 					      NULL);
- 	if (IS_ERR(tmp))
- 		return PTR_ERR(tmp);
++static inline void rcu_try_lock_acquire(struct lockdep_map *map)
++{
++	lock_acquire(map, 0, 1, 2, 0, NULL, _THIS_IP_);
++}
++
+ static inline void rcu_lock_release(struct lockdep_map *map)
+ {
+ 	lock_release(map, _THIS_IP_);
+@@ -315,6 +320,7 @@ int rcu_read_lock_any_held(void);
+ #else /* #ifdef CONFIG_DEBUG_LOCK_ALLOC */
+ 
+ # define rcu_lock_acquire(a)		do { } while (0)
++# define rcu_try_lock_acquire(a)	do { } while (0)
+ # define rcu_lock_release(a)		do { } while (0)
+ 
+ static inline int rcu_read_lock_held(void)
+diff --git a/include/linux/srcu.h b/include/linux/srcu.h
+index 127ef3b2e607..236610e4a8fa 100644
+--- a/include/linux/srcu.h
++++ b/include/linux/srcu.h
+@@ -229,7 +229,7 @@ static inline int srcu_read_lock_nmisafe(struct srcu_struct *ssp) __acquires(ssp
+ 
+ 	srcu_check_nmi_safety(ssp, true);
+ 	retval = __srcu_read_lock_nmisafe(ssp);
+-	rcu_lock_acquire(&ssp->dep_map);
++	rcu_try_lock_acquire(&ssp->dep_map);
+ 	return retval;
+ }
+ 
 -- 
 2.43.0
 
