@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B56A46AB;
-	Tue, 23 Jan 2024 00:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502094A27;
+	Tue, 23 Jan 2024 00:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969592; cv=none; b=G1L9f9LVvfoJbjv4Ddr5pgo7T/3OLgckwmEq9kA2iBLyDohVfRhO6q4O2L/H/dzsTHfAqbpF4VJGmsQS++DzrL+HVFHlbfejaW16jcL6gJ3nNfTEnHmSuwIH3E1vMR7yEELy5BaAXn7o1OQeaLQJuhcGczQVoYCWzrxwVuiHd/Y=
+	t=1705969593; cv=none; b=N/0vByzhxRW7yy5YprkLKDGvDer0f6iK0SjKTOPWFo7pHqSxNKq/x/zW9GGUDFVTuKyZa1sqO8dbTM+BVLhWZLcXTi0FkGwllEkM9DtmowX+3YXpc2OhFZq6SxpgMXlbpsLh0rBKH5zbMGwTEpOkiwCOlHrIh943meA/iq40lQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969592; c=relaxed/simple;
-	bh=AbMro5CdaBH6WD73EaMHskp32iEEY9KfBTvNKlNHTBA=;
+	s=arc-20240116; t=1705969593; c=relaxed/simple;
+	bh=zMfPq63/UZdQOJ1LnuKH8WmZ5srnqMCkJVzwZ8wzTQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ub0nm//95ApHSksV1Wb9CriEYd9OI5Q0EVsYI2HycgJhyxwAa+wztMEEMfNiaDoJhqwB/5hZ54DdFSjoVI2izR8Ptk/xUQOLxhoEIKpDfBcr6Khq/XmgZKdA6Uvl+e49mSf5RhQn4owMiIhZRdw2yBbnCN9GjV2jCBEkYXw5MNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0UK55KOR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s8mV51dUW+n+o2UPUJO8blBxvsaaYJpu2S0kwBGqAGXbQbkpfvZnqpeV9Rb5hvVddh4RPjSZ1D2XvVm+jVB4eiJHMdOk6L1o/3t/gDZRx2DfTbYXVAwtkQ4EkyxhujgfdIwIQWoK0G3dXVTeD4LIJcfi3uo3/sJBSGySjiy0jGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysD157G0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UK55KOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016A8C433A6;
-	Tue, 23 Jan 2024 00:26:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysD157G0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7B7C43390;
+	Tue, 23 Jan 2024 00:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969592;
-	bh=AbMro5CdaBH6WD73EaMHskp32iEEY9KfBTvNKlNHTBA=;
+	s=korg; t=1705969593;
+	bh=zMfPq63/UZdQOJ1LnuKH8WmZ5srnqMCkJVzwZ8wzTQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0UK55KOR9gzsZKvMMzLyf5cC/gneq8XcitqIoRFePLyTprAL2gJAXOlkhEryfjpzL
-	 WskAVp+gnVsXBEUP/uTNGG6Y/E+5ePStbjoiNS/Cn0x8DkPauw72v3tQlX0YaH6hOA
-	 33lk45fTKduXhhuTbP+7DRxL7b++Pmlelb43vvyQ=
+	b=ysD157G0c+9/7AMJQIr3tiR65aWhE0u9KE2P+FJsV89wb9aMNKSUk2ZkXD3hVRIP9
+	 /YiyqhWxUbsGL5JklVSYcy44XnoUFtT/BgW7N/WtwNLIOj4P1AQICThIp4SZF70NjQ
+	 WdyTCaTwVXoLJAh+EqPtfCk230szDcJzKxSPixeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 319/641] clk: renesas: rzg2l-cpg: Reuse code in rzg2l_cpg_reset()
-Date: Mon, 22 Jan 2024 15:53:43 -0800
-Message-ID: <20240122235827.858735495@linuxfoundation.org>
+Subject: [PATCH 6.7 320/641] clk: renesas: rzg2l: Check reset monitor registers
+Date: Mon, 22 Jan 2024 15:53:44 -0800
+Message-ID: <20240122235827.893569473@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,78 +53,134 @@ Content-Transfer-Encoding: 8bit
 
 From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 5f9e29b9159a41fcf6733c3b59fa46a90ce3ae20 ]
+[ Upstream commit da235d2fac212d0add570e755feb1167a830bc99 ]
 
-Code in rzg2l_cpg_reset() is equivalent with the combined code of
-rzg2l_cpg_assert() and rzg2l_cpg_deassert(). There is no need to have
-different versions thus re-use rzg2l_cpg_assert() and rzg2l_cpg_deassert().
+The hardware manual of both RZ/G2L and RZ/G3S specifies that the reset
+monitor registers need to be interrogated when the reset signals are
+toggled (chapters "Procedures for Supplying and Stopping Reset Signals"
+and "Procedure for Activating Modules").  Without this, there is a
+chance that different modules (e.g. Ethernet) are not ready after their
+reset signal is toggled, leading to failures (on probe or resume from
+deep sleep states).
 
+The same indications are available for RZ/V2M for TYPE-B reset controls.
+
+Fixes: ef3c613ccd68 ("clk: renesas: Add CPG core wrapper for RZ/G2L SoC")
+Fixes: 8090bea32484 ("clk: renesas: rzg2l: Add support for RZ/V2M reset monitor reg")
 Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20231120070024.4079344-2-claudiu.beznea.uj@bp.renesas.com
+Link: https://lore.kernel.org/r/20231207070700.4156557-2-claudiu.beznea.uj@bp.renesas.com
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Stable-dep-of: da235d2fac21 ("clk: renesas: rzg2l: Check reset monitor registers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/rzg2l-cpg.c | 38 +++++++++++++--------------------
- 1 file changed, 15 insertions(+), 23 deletions(-)
+ drivers/clk/renesas/rzg2l-cpg.c | 59 ++++++++++++++++++++++++---------
+ 1 file changed, 44 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
-index 764bd72cf059..3189c3167ba8 100644
+index 3189c3167ba8..3d2daa4ba2a4 100644
 --- a/drivers/clk/renesas/rzg2l-cpg.c
 +++ b/drivers/clk/renesas/rzg2l-cpg.c
-@@ -1410,29 +1410,6 @@ rzg2l_cpg_register_mod_clk(const struct rzg2l_mod_clk *mod,
+@@ -1416,12 +1416,27 @@ static int rzg2l_cpg_assert(struct reset_controller_dev *rcdev,
+ 	struct rzg2l_cpg_priv *priv = rcdev_to_priv(rcdev);
+ 	const struct rzg2l_cpg_info *info = priv->info;
+ 	unsigned int reg = info->resets[id].off;
+-	u32 value = BIT(info->resets[id].bit) << 16;
++	u32 mask = BIT(info->resets[id].bit);
++	s8 monbit = info->resets[id].monbit;
++	u32 value = mask << 16;
  
- #define rcdev_to_priv(x)	container_of(x, struct rzg2l_cpg_priv, rcdev)
+ 	dev_dbg(rcdev->dev, "assert id:%ld offset:0x%x\n", id, CLK_RST_R(reg));
  
--static int rzg2l_cpg_reset(struct reset_controller_dev *rcdev,
--			   unsigned long id)
--{
--	struct rzg2l_cpg_priv *priv = rcdev_to_priv(rcdev);
--	const struct rzg2l_cpg_info *info = priv->info;
--	unsigned int reg = info->resets[id].off;
+ 	writel(value, priv->base + CLK_RST_R(reg));
+-	return 0;
++
++	if (info->has_clk_mon_regs) {
++		reg = CLK_MRST_R(reg);
++	} else if (monbit >= 0) {
++		reg = CPG_RST_MON;
++		mask = BIT(monbit);
++	} else {
++		/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
++		udelay(35);
++		return 0;
++	}
++
++	return readl_poll_timeout_atomic(priv->base + reg, value,
++					 value & mask, 10, 200);
+ }
+ 
+ static int rzg2l_cpg_deassert(struct reset_controller_dev *rcdev,
+@@ -1430,14 +1445,28 @@ static int rzg2l_cpg_deassert(struct reset_controller_dev *rcdev,
+ 	struct rzg2l_cpg_priv *priv = rcdev_to_priv(rcdev);
+ 	const struct rzg2l_cpg_info *info = priv->info;
+ 	unsigned int reg = info->resets[id].off;
 -	u32 dis = BIT(info->resets[id].bit);
--	u32 we = dis << 16;
--
--	dev_dbg(rcdev->dev, "reset id:%ld offset:0x%x\n", id, CLK_RST_R(reg));
--
--	/* Reset module */
--	writel(we, priv->base + CLK_RST_R(reg));
--
+-	u32 value = (dis << 16) | dis;
++	u32 mask = BIT(info->resets[id].bit);
++	s8 monbit = info->resets[id].monbit;
++	u32 value = (mask << 16) | mask;
+ 
+ 	dev_dbg(rcdev->dev, "deassert id:%ld offset:0x%x\n", id,
+ 		CLK_RST_R(reg));
+ 
+ 	writel(value, priv->base + CLK_RST_R(reg));
+-	return 0;
++
++	if (info->has_clk_mon_regs) {
++		reg = CLK_MRST_R(reg);
++	} else if (monbit >= 0) {
++		reg = CPG_RST_MON;
++		mask = BIT(monbit);
++	} else {
++		/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
++		udelay(35);
++		return 0;
++	}
++
++	return readl_poll_timeout_atomic(priv->base + reg, value,
++					 !(value & mask), 10, 200);
+ }
+ 
+ static int rzg2l_cpg_reset(struct reset_controller_dev *rcdev,
+@@ -1449,9 +1478,6 @@ static int rzg2l_cpg_reset(struct reset_controller_dev *rcdev,
+ 	if (ret)
+ 		return ret;
+ 
 -	/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
 -	udelay(35);
 -
--	/* Release module from reset state */
--	writel(we | dis, priv->base + CLK_RST_R(reg));
--
--	return 0;
--}
--
- static int rzg2l_cpg_assert(struct reset_controller_dev *rcdev,
- 			    unsigned long id)
- {
-@@ -1463,6 +1440,21 @@ static int rzg2l_cpg_deassert(struct reset_controller_dev *rcdev,
- 	return 0;
+ 	return rzg2l_cpg_deassert(rcdev, id);
  }
  
-+static int rzg2l_cpg_reset(struct reset_controller_dev *rcdev,
-+			   unsigned long id)
-+{
-+	int ret;
-+
-+	ret = rzg2l_cpg_assert(rcdev, id);
-+	if (ret)
-+		return ret;
-+
-+	/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
-+	udelay(35);
-+
-+	return rzg2l_cpg_deassert(rcdev, id);
-+}
-+
- static int rzg2l_cpg_status(struct reset_controller_dev *rcdev,
- 			    unsigned long id)
+@@ -1460,18 +1486,21 @@ static int rzg2l_cpg_status(struct reset_controller_dev *rcdev,
  {
+ 	struct rzg2l_cpg_priv *priv = rcdev_to_priv(rcdev);
+ 	const struct rzg2l_cpg_info *info = priv->info;
+-	unsigned int reg = info->resets[id].off;
+-	u32 bitmask = BIT(info->resets[id].bit);
+ 	s8 monbit = info->resets[id].monbit;
++	unsigned int reg;
++	u32 bitmask;
+ 
+ 	if (info->has_clk_mon_regs) {
+-		return !!(readl(priv->base + CLK_MRST_R(reg)) & bitmask);
++		reg = CLK_MRST_R(info->resets[id].off);
++		bitmask = BIT(info->resets[id].bit);
+ 	} else if (monbit >= 0) {
+-		u32 monbitmask = BIT(monbit);
+-
+-		return !!(readl(priv->base + CPG_RST_MON) & monbitmask);
++		reg = CPG_RST_MON;
++		bitmask = BIT(monbit);
++	} else {
++		return -ENOTSUPP;
+ 	}
+-	return -ENOTSUPP;
++
++	return !!(readl(priv->base + reg) & bitmask);
+ }
+ 
+ static const struct reset_control_ops rzg2l_cpg_reset_ops = {
 -- 
 2.43.0
 
