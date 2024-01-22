@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA17F5680;
-	Tue, 23 Jan 2024 00:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE735680;
+	Tue, 23 Jan 2024 00:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968411; cv=none; b=UNtIdzwP0zJJs3jzhI1gapCQms7MIBnY62Zf5pwclDoLl1Tqeb+EhM/Vu4QGY0o8tTtcmTOSLhqZpbdIjTzBJMjr4FnTakWMAB8awZNJGemJeHWRJCs7qkKOY9Q7pK1JsMaFl2LykBwefcnFdMEq/kqm+PLZQ+hTXyUKhmLnwjw=
+	t=1705968414; cv=none; b=MyZi+7GLbVsNRETnU9hiv7Wa830IWmI+NEFmbc4NoL8fWTDMckLojf92vTHIXHbe7MiiR92GmoROC+VTCYEfalmBb2LNinmcq+MGJuVG5qLIGu9aFaUKHYVkgM1R1wtRfX00X+A1PtTuzcL04Vy6aV6GCc3fU+N8Cbmv/TgiEsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968411; c=relaxed/simple;
-	bh=ocNRXW4si3hems3gWKFGJRjO4/TrLg5FrEBQPRiHzvk=;
+	s=arc-20240116; t=1705968414; c=relaxed/simple;
+	bh=c3QV8F4uFjhqKWN1Ajma9+uXnf84a1jBVnKS0BilwBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ChuMGrWLbVcPjUFEG/HKUSZJEvkAEwIFb5J2tZFjUWu7ACAq0/1eJy3qGFvUTP6xjthnFYaWAIBW2IaOQAgx3Y5PMBh1emR9D0s3u8Zb9OiddqyTjedxZhkaA5RuWiwseroM07n9CJnKxugveVsVFtVqDC22sDWuOCWyZE2Kk9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNUD82Vw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I7jHXI8COWm230DWTPFmHJGsELt/xXQcrCJrLjoPS1Su93ZHG/UjeLhr1qfmb5DeHkCsVzYEilGnl8Rb6aoKd0R4TpT5ZSd14lLaN9IJKbxjSBKENKL6jYEN2CgI+8T4HckyhoU+tPrLTm+vIy5yX+O8QrCEPoOSlNaXv0zUwPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyYWSkFL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNUD82Vw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E890C433C7;
-	Tue, 23 Jan 2024 00:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyYWSkFL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334A0C433C7;
+	Tue, 23 Jan 2024 00:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968411;
-	bh=ocNRXW4si3hems3gWKFGJRjO4/TrLg5FrEBQPRiHzvk=;
+	s=korg; t=1705968414;
+	bh=c3QV8F4uFjhqKWN1Ajma9+uXnf84a1jBVnKS0BilwBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eNUD82Vw2aoAy/CYCeXBSqXN7C9znia4cBf2wc1sBL0fhse1iSk7OnrR9yGQXucBb
-	 VfqSrBOjrN0e0o0CR6yNewVjKxdCs6v3fj02f1eGY6i3j22cl/TJSRJilrtECMqDdi
-	 KB7fU2vLpBjAj8MfjAiOWr187Gpobw2du/saC0FQ=
+	b=oyYWSkFLYA9QpG4ovsw4DsEGcIf6f8yQJWQSN5uDhPFaUK6DLw6wWs26+pASJORv1
+	 7ungiagL8V3yyBjFgHn3Kwg/vJydgIS6uzP+LXm2MlSIrWOFS7Jkb3P4jfqKhqHMig
+	 s1/+1tEESdNA70/QSVSWw36EA2qyqdIvDax/zAXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Lehner <dev@der-flo.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 064/148] bpf, lpm: Fix check prefixlen before walking trie
-Date: Mon, 22 Jan 2024 15:57:00 -0800
-Message-ID: <20240122235714.987370226@linuxfoundation.org>
+Subject: [PATCH 4.19 065/148] wifi: libertas: stop selecting wext
+Date: Mon, 22 Jan 2024 15:57:01 -0800
+Message-ID: <20240122235715.020032620@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -52,41 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Lehner <dev@der-flo.net>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 9b75dbeb36fcd9fc7ed51d370310d0518a387769 ]
+[ Upstream commit 8170b04c2c92eee52ea50b96db4c54662197e512 ]
 
-When looking up an element in LPM trie, the condition 'matchlen ==
-trie->max_prefixlen' will never return true, if key->prefixlen is larger
-than trie->max_prefixlen. Consequently all elements in the LPM trie will
-be visited and no element is returned in the end.
+Libertas no longer references the iw_handler infrastructure or wext_spy,
+so neither of the 'select' statements are used any more.
 
-To resolve this, check key->prefixlen first before walking the LPM trie.
-
-Fixes: b95a5c4db09b ("bpf: add a longest prefix match trie map implementation")
-Signed-off-by: Florian Lehner <dev@der-flo.net>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20231105085801.3742-1-dev@der-flo.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: e86dc1ca4676 ("Libertas: cfg80211 support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20231108153409.1065286-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/lpm_trie.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/marvell/libertas/Kconfig | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
-index 1a8b208f6c55..fcd3a15add41 100644
---- a/kernel/bpf/lpm_trie.c
-+++ b/kernel/bpf/lpm_trie.c
-@@ -194,6 +194,9 @@ static void *trie_lookup_elem(struct bpf_map *map, void *_key)
- 	struct lpm_trie_node *node, *found = NULL;
- 	struct bpf_lpm_trie_key *key = _key;
- 
-+	if (key->prefixlen > trie->max_prefixlen)
-+		return NULL;
-+
- 	/* Start walking the trie from the root node ... */
- 
- 	for (node = rcu_dereference(trie->root); node;) {
+diff --git a/drivers/net/wireless/marvell/libertas/Kconfig b/drivers/net/wireless/marvell/libertas/Kconfig
+index e6268ceacbf1..28985cdac541 100644
+--- a/drivers/net/wireless/marvell/libertas/Kconfig
++++ b/drivers/net/wireless/marvell/libertas/Kconfig
+@@ -1,8 +1,6 @@
+ config LIBERTAS
+ 	tristate "Marvell 8xxx Libertas WLAN driver support"
+ 	depends on CFG80211
+-	select WIRELESS_EXT
+-	select WEXT_SPY
+ 	select LIB80211
+ 	select FW_LOADER
+ 	---help---
 -- 
 2.43.0
 
