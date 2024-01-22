@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1221354BD2;
-	Tue, 23 Jan 2024 00:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09DE54BD2;
+	Tue, 23 Jan 2024 00:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970600; cv=none; b=ZclaK58l2MHKWmCYgdS/h70RaGGuwBpbMxyJ7C8ADPve3Et8CS749NlhBMXrxc58zneDJ5Mdb1tWXM0elH8aSWwmNTI5199rZHiQDKsSfkjQ4vlHT0RRw8wszcb/eyKvMjckn5smM2DMILzeXrPSVIOHJrly9L+fQaEdvXnB/Ws=
+	t=1705970603; cv=none; b=hL8Ie6vio31in1EXtUBOjpfBA30Vutd6BGjDxbBTAVPYQgNYrSiYlgqHp65KeW6qsRySzhwVYHYzonCIePasvFfBblZqso9QraEeb4valr4PWdKLQVucU0nJ79cLi+PkdSIC4rYSqlYYCrjXzU9yDxeePRz4lqSN0q8PMfN1Upw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970600; c=relaxed/simple;
-	bh=VdCOKrZ2M1ZsDRcavSmmACytbCsCs41PRCe3ruWqasQ=;
+	s=arc-20240116; t=1705970603; c=relaxed/simple;
+	bh=CEB+IXgRmSQml8soF/rVAxH0bRiA4IhT4kWqF6aQq7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JiyJ6XtqX/OnsKNIH2UwTFk5mGIc9U09iSq+VhM6CLRbuJ4A7dAI498XL1lJ8xMUJ1vwKHIsj20QxFP2z3aaBsIwJaES/YkNIaf66a83eU28heBhDwUiacTyJXKLxWRSHsTNSNCo5lJPbGtT8dgEOGLxrV1Q1YXmxNDIdhmyhMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXiASPXB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fMa2ZncVmmsIKxzBKIVyfF+hJeXHUtTyn7/V7mSAyzD4lOTCxk4eyJqIMaC5A48gjIp7mWFgwEW/fTHke3bZ9QqJjxM8ptKi0ZBLrdxMvQe9ijruzNM9xYTXFvgOP1TL7NoO5D72LF7JhGHrozyE1GiyFfdH3TUZVI32vvx8wwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yk+7VmCq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXiASPXB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C2DCC43390;
-	Tue, 23 Jan 2024 00:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yk+7VmCq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A25CEC433F1;
+	Tue, 23 Jan 2024 00:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970599;
-	bh=VdCOKrZ2M1ZsDRcavSmmACytbCsCs41PRCe3ruWqasQ=;
+	s=korg; t=1705970603;
+	bh=CEB+IXgRmSQml8soF/rVAxH0bRiA4IhT4kWqF6aQq7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GXiASPXBA6PFtitg6EpTGyKGjJLDqgKCv1L22XcrO4SFStma8vZ2FZbrTvtf/N0N9
-	 pS4A1rp5WGyrOGiczIj7PdAAWaleJuD5tF8HK6+cuJplJQUAzlFEue8wABFzDZsF7N
-	 wP7vW6y4paAA4PzgDZ5e42+GHK8smuJHBw07khJo=
+	b=yk+7VmCqQemdyFI5/iv4CUxQjCJHhPn58g07LuM7k0GGFJ/GlrAfufcKdTqeNvTIU
+	 72XdTZqp9fwmS9SIoZdi1a3qLtjc1UPdEJWpn+n8uw1O9KQEkJBXl0vpP9PzlO5YIK
+	 seZJ9oA05lbaIGBKIAXArrTx1ZR48276gsg1Tnbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhaoLong Wang <wangzhaolong1@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Rob Herring <robh@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/417] mtd: Fix gluebi NULL pointer dereference caused by ftl notifier
-Date: Mon, 22 Jan 2024 15:53:20 -0800
-Message-ID: <20240122235752.705771636@linuxfoundation.org>
+Subject: [PATCH 6.1 023/417] cpufreq: Use of_property_present() for testing DT property presence
+Date: Mon, 22 Jan 2024 15:53:11 -0800
+Message-ID: <20240122235752.348195454@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -47,87 +45,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: ZhaoLong Wang <wangzhaolong1@huawei.com>
+From: Rob Herring <robh@kernel.org>
 
-[ Upstream commit a43bdc376deab5fff1ceb93dca55bcab8dbdc1d6 ]
+[ Upstream commit b8f3a396a7ee43e6079176cc0fb8de2b95a23681 ]
 
-If both ftl.ko and gluebi.ko are loaded, the notifier of ftl
-triggers NULL pointer dereference when trying to access
-‘gluebi->desc’ in gluebi_read().
+It is preferred to use typed property access functions (i.e.
+of_property_read_<type> functions) rather than low-level
+of_get_property/of_find_property functions for reading properties. As
+part of this, convert of_get_property/of_find_property calls to the
+recently added of_property_present() helper when we just want to test
+for presence of a property and nothing more.
 
-ubi_gluebi_init
-  ubi_register_volume_notifier
-    ubi_enumerate_volumes
-      ubi_notify_all
-        gluebi_notify    nb->notifier_call()
-          gluebi_create
-            mtd_device_register
-              mtd_device_parse_register
-                add_mtd_device
-                  blktrans_notify_add   not->add()
-                    ftl_add_mtd         tr->add_mtd()
-                      scan_header
-                        mtd_read
-                          mtd_read_oob
-                            mtd_read_oob_std
-                              gluebi_read   mtd->read()
-                                gluebi->desc - NULL
-
-Detailed reproduction information available at the Link [1],
-
-In the normal case, obtain gluebi->desc in the gluebi_get_device(),
-and access gluebi->desc in the gluebi_read(). However,
-gluebi_get_device() is not executed in advance in the
-ftl_add_mtd() process, which leads to NULL pointer dereference.
-
-The solution for the gluebi module is to run jffs2 on the UBI
-volume without considering working with ftl or mtdblock [2].
-Therefore, this problem can be avoided by preventing gluebi from
-creating the mtdblock device after creating mtd partition of the
-type MTD_UBIVOLUME.
-
-Fixes: 2ba3d76a1e29 ("UBI: make gluebi a separate module")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217992 [1]
-Link: https://lore.kernel.org/lkml/441107100.23734.1697904580252.JavaMail.zimbra@nod.at/ [2]
-Signed-off-by: ZhaoLong Wang <wangzhaolong1@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Acked-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20231220024619.2138625-1-wangzhaolong1@huawei.com
+Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Stable-dep-of: c4a5118a3ae1 ("cpufreq: scmi: process the result of devm_of_clk_add_hw_provider()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtd_blkdevs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/cpufreq/cpufreq-dt-platdev.c | 2 +-
+ drivers/cpufreq/imx-cpufreq-dt.c     | 2 +-
+ drivers/cpufreq/imx6q-cpufreq.c      | 4 ++--
+ drivers/cpufreq/scmi-cpufreq.c       | 2 +-
+ drivers/cpufreq/tegra20-cpufreq.c    | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mtd/mtd_blkdevs.c b/drivers/mtd/mtd_blkdevs.c
-index 60b222799871..8ee60605a6dc 100644
---- a/drivers/mtd/mtd_blkdevs.c
-+++ b/drivers/mtd/mtd_blkdevs.c
-@@ -463,7 +463,7 @@ static void blktrans_notify_add(struct mtd_info *mtd)
- {
- 	struct mtd_blktrans_ops *tr;
+diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
+index 69a8742c0a7a..8514bb62dd10 100644
+--- a/drivers/cpufreq/cpufreq-dt-platdev.c
++++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+@@ -176,7 +176,7 @@ static bool __init cpu0_node_has_opp_v2_prop(void)
+ 	struct device_node *np = of_cpu_device_node_get(0);
+ 	bool ret = false;
  
--	if (mtd->type == MTD_ABSENT)
-+	if (mtd->type == MTD_ABSENT || mtd->type == MTD_UBIVOLUME)
- 		return;
+-	if (of_get_property(np, "operating-points-v2", NULL))
++	if (of_property_present(np, "operating-points-v2"))
+ 		ret = true;
  
- 	list_for_each_entry(tr, &blktrans_majors, list)
-@@ -503,7 +503,7 @@ int register_mtd_blktrans(struct mtd_blktrans_ops *tr)
- 	mutex_lock(&mtd_table_mutex);
- 	list_add(&tr->list, &blktrans_majors);
- 	mtd_for_each_device(mtd)
--		if (mtd->type != MTD_ABSENT)
-+		if (mtd->type != MTD_ABSENT && mtd->type != MTD_UBIVOLUME)
- 			tr->add_mtd(tr, mtd);
- 	mutex_unlock(&mtd_table_mutex);
- 	return 0;
+ 	of_node_put(np);
+diff --git a/drivers/cpufreq/imx-cpufreq-dt.c b/drivers/cpufreq/imx-cpufreq-dt.c
+index 76e553af2071..535867a7dfdd 100644
+--- a/drivers/cpufreq/imx-cpufreq-dt.c
++++ b/drivers/cpufreq/imx-cpufreq-dt.c
+@@ -89,7 +89,7 @@ static int imx_cpufreq_dt_probe(struct platform_device *pdev)
+ 
+ 	cpu_dev = get_cpu_device(0);
+ 
+-	if (!of_find_property(cpu_dev->of_node, "cpu-supply", NULL))
++	if (!of_property_present(cpu_dev->of_node, "cpu-supply"))
+ 		return -ENODEV;
+ 
+ 	if (of_machine_is_compatible("fsl,imx7ulp")) {
+diff --git a/drivers/cpufreq/imx6q-cpufreq.c b/drivers/cpufreq/imx6q-cpufreq.c
+index 925fc17eaacb..39b0362a3b9a 100644
+--- a/drivers/cpufreq/imx6q-cpufreq.c
++++ b/drivers/cpufreq/imx6q-cpufreq.c
+@@ -230,7 +230,7 @@ static int imx6q_opp_check_speed_grading(struct device *dev)
+ 	u32 val;
+ 	int ret;
+ 
+-	if (of_find_property(dev->of_node, "nvmem-cells", NULL)) {
++	if (of_property_present(dev->of_node, "nvmem-cells")) {
+ 		ret = nvmem_cell_read_u32(dev, "speed_grade", &val);
+ 		if (ret)
+ 			return ret;
+@@ -285,7 +285,7 @@ static int imx6ul_opp_check_speed_grading(struct device *dev)
+ 	u32 val;
+ 	int ret = 0;
+ 
+-	if (of_find_property(dev->of_node, "nvmem-cells", NULL)) {
++	if (of_property_present(dev->of_node, "nvmem-cells")) {
+ 		ret = nvmem_cell_read_u32(dev, "speed_grade", &val);
+ 		if (ret)
+ 			return ret;
+diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+index 513a071845c2..f34e6382a4c5 100644
+--- a/drivers/cpufreq/scmi-cpufreq.c
++++ b/drivers/cpufreq/scmi-cpufreq.c
+@@ -310,7 +310,7 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
+ 
+ #ifdef CONFIG_COMMON_CLK
+ 	/* dummy clock provider as needed by OPP if clocks property is used */
+-	if (of_find_property(dev->of_node, "#clock-cells", NULL))
++	if (of_property_present(dev->of_node, "#clock-cells"))
+ 		devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, NULL);
+ #endif
+ 
+diff --git a/drivers/cpufreq/tegra20-cpufreq.c b/drivers/cpufreq/tegra20-cpufreq.c
+index ab7ac7df9e62..dfd2de4f8e07 100644
+--- a/drivers/cpufreq/tegra20-cpufreq.c
++++ b/drivers/cpufreq/tegra20-cpufreq.c
+@@ -25,7 +25,7 @@ static bool cpu0_node_has_opp_v2_prop(void)
+ 	struct device_node *np = of_cpu_device_node_get(0);
+ 	bool ret = false;
+ 
+-	if (of_get_property(np, "operating-points-v2", NULL))
++	if (of_property_present(np, "operating-points-v2"))
+ 		ret = true;
+ 
+ 	of_node_put(np);
 -- 
 2.43.0
 
