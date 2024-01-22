@@ -1,58 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C8E2B9C7;
-	Tue, 23 Jan 2024 01:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEBD2B9C7;
+	Tue, 23 Jan 2024 01:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974588; cv=none; b=qR63kwCws2weaGeevgNwDvqFeKtXt8Eswe/tffWiRkTwJj+vmbdM/skn2TLUEdAJe/zHO9FXQTDS1cmAfOI93Rj54Z0oCl15brLWsh7TjovO8PnBAr5Bx6LhZGf1dGBC7W20YmRcwQP/H2Lrs6mSL6Lcs3Fc9rJl7zVIFy2Ytds=
+	t=1705974630; cv=none; b=rpkiQiROmmL5ssast7zJsDvBgatrBfxNYSF2kEGMF5rAn2oBYvBCDu6k0t/Qh3SHBPREqc578t5xXymrTJ8DFOZ9HSeu1sagD7iQUPGYptMkAqhruF+WhgZBdc8Mry9Zo9JUfzFt5MBair9aawIkhGdeBiMN2zBQjIuYif/Hkac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974588; c=relaxed/simple;
-	bh=sLWuNVpVOcAxllqOLHduNAyE/ya0tJXpWnsLROvwI34=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=FL34vhczvyJWGfI5LTSbduh7BKIfNYrbzXOUGDAnEmDqmyIgxEuc7ZpN1VtMOTdJMjIzy1YCKv26Mi/wA1XYrz4Rd5+u6HGkh2BXyP4169CuYZ1jbQ3sEB089AC4VPyYIaUXDdPzlzzHnOS1tSexrrRsxb89eAWOHwfqPVgEvjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K8BHWW1i; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1705974630; c=relaxed/simple;
+	bh=MTGkow184q6lEoKxtUcFK3zI5RTx+ftsVA/F+0JLtRE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=B0zCT7A21ED8WKjZLyHv0r4MkPrgzr6YYwKqsTRJencF7+D04KIrlJQe/DrnzizQap6e8vx3ueOOMLRH0O8XUiaPsT/8H9sJKy88xjcikJcJfzm9o+1ctn16jVv0Jr1HYoPxYbC5eZclEn70qAETrtuLwzDG23VtnZXcWD+0tac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0y3jfhkm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K8BHWW1i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F27BC433C7;
-	Tue, 23 Jan 2024 01:49:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705974587;
-	bh=sLWuNVpVOcAxllqOLHduNAyE/ya0tJXpWnsLROvwI34=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0y3jfhkm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB189C433C7;
+	Tue, 23 Jan 2024 01:50:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1705974630;
+	bh=MTGkow184q6lEoKxtUcFK3zI5RTx+ftsVA/F+0JLtRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K8BHWW1iHfKDI4qTMxwXHEfZI/UTi2M9NhQAG2wywXMHhHcCwyLpEdbG9TItCGoRR
-	 T4Jo8DAPCYytEZRApLN/egoBOkyqWsoH67E0CXWxICbL2f8ARKvcCdDgUv/CQyOei+
-	 FCoWMdBHecKvDzGXIYjNQv2rkrzzJ1XMrOfXxfkH4tvxYjGCu4zvtmjhCQtfba6UYQ
-	 lysYYZpO3Qrcgq4Z86bL8RAOtJ3zN9F3ukbW5Bi2sjVKHoYV1YFbNZE5LFzmuix0u3
-	 up2+Ded96aw7VsxeEX6ZzSosmbLpSqg3OsDqa5a8/xARzLWluKBXCN4keCuPcScW2C
-	 VUGmGA9AlLAVw==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
+	b=0y3jfhkmWpTnmYvcaaBWmIW7rXbhxGK9LmjxO/BvbXk08NSDf84bgrBwBSw/h/GP6
+	 voeFi4knScs1AUdd32NFePa7Le71yT8+wQgeUTY41JNu3gXTjS4Rg3Szv8D0MUi8NE
+	 xvZ4mg4+5iVbC5u6MGIW8Uz+P68wquXoGHEMnA7w=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.1 000/417] 6.1.75-rc1 review
-Date: Mon, 22 Jan 2024 17:49:44 -0800
-Message-Id: <20240123014944.85840-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: 
+	Stefan Wahren <wahrenst@gmx.net>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 221/374] watchdog: bcm2835_wdt: Fix WDIOC_SETTIMEOUT handling
+Date: Mon, 22 Jan 2024 15:57:57 -0800
+Message-ID: <20240122235752.350925568@linuxfoundation.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,61 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
-On Mon, 22 Jan 2024 15:52:48 -0800 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+------------------
 
-> This is the start of the stable review cycle for the 6.1.75 release.
-> There are 417 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 24 Jan 2024 23:56:49 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.75-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
+From: Stefan Wahren <wahrenst@gmx.net>
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+[ Upstream commit f33f5b1fd1be5f5106d16f831309648cb0f1c31d ]
 
-Tested-by: SeongJae Park <sj@kernel.org>
+Users report about the unexpected behavior for setting timeouts above
+15 sec on Raspberry Pi. According to watchdog-api.rst the ioctl
+WDIOC_SETTIMEOUT shouldn't fail because of hardware limitations.
+But looking at the code shows that max_timeout based on the
+register value PM_WDOG_TIME_SET, which is the maximum.
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] b74a57f4a549 ("Linux 6.1.75-rc1")
+Since 664a39236e71 ("watchdog: Introduce hardware maximum heartbeat
+in watchdog core") the watchdog core is able to handle this problem.
 
-Thanks,
-SJ
+This fix has been tested with watchdog-test from selftests.
 
-[...]
-
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217374
+Fixes: 664a39236e71 ("watchdog: Introduce hardware maximum heartbeat in watchdog core")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20231112173251.4827-1-wahrenst@gmx.net
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+ drivers/watchdog/bcm2835_wdt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: sysfs.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_m68k.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+diff --git a/drivers/watchdog/bcm2835_wdt.c b/drivers/watchdog/bcm2835_wdt.c
+index 94907176a0e4..55c0f7b0e8fb 100644
+--- a/drivers/watchdog/bcm2835_wdt.c
++++ b/drivers/watchdog/bcm2835_wdt.c
+@@ -42,6 +42,7 @@
+ 
+ #define SECS_TO_WDOG_TICKS(x) ((x) << 16)
+ #define WDOG_TICKS_TO_SECS(x) ((x) >> 16)
++#define WDOG_TICKS_TO_MSECS(x) ((x) * 1000 >> 16)
+ 
+ struct bcm2835_wdt {
+ 	void __iomem		*base;
+@@ -140,7 +141,7 @@ static struct watchdog_device bcm2835_wdt_wdd = {
+ 	.info =		&bcm2835_wdt_info,
+ 	.ops =		&bcm2835_wdt_ops,
+ 	.min_timeout =	1,
+-	.max_timeout =	WDOG_TICKS_TO_SECS(PM_WDOG_TIME_SET),
++	.max_hw_heartbeat_ms =	WDOG_TICKS_TO_MSECS(PM_WDOG_TIME_SET),
+ 	.timeout =	WDOG_TICKS_TO_SECS(PM_WDOG_TIME_SET),
+ };
+ 
+-- 
+2.43.0
+
+
+
