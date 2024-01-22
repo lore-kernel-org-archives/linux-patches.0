@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760C51852;
-	Tue, 23 Jan 2024 00:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40037185B;
+	Tue, 23 Jan 2024 00:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968209; cv=none; b=BJGiZusPJgIGNVjLEybkmW2Vu0zTX1nd9TEw7CMPnxVgAs4kuT2Ia80zfNrgndSGBvrN8tC4Orl4Zvh+BI+AZ9yjqYuKsiluaYhjeJ1MF8ETYpTcs5qDXP3v8nHodXK9Tpd/Zm7Z2rqMc7Zlt/6VTdgn8/NlTuIsjGh6wffGjZ0=
+	t=1705968211; cv=none; b=Zt6d++IyjQ1++ieItdxWtZ5TAfaUtbh7xqzTZObYVovIoYkXTHXcr+8Yq+1YyxlsOKbwsoaLnsvTCMr6OXFEAUjgfldhblIIYfhKDezd9flw8W8oxMyyDz/ht40i62IpWdbYFf3U9dcLnWeuie8uA+K8S3jWOBEyQToa+H567zY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968209; c=relaxed/simple;
-	bh=+1oW31Ikkz2fdchoaVMBgpECCjFG+WZSpdRgVWOcej8=;
+	s=arc-20240116; t=1705968211; c=relaxed/simple;
+	bh=UWRyCGisCrscxSajaNWLlriNVpqhk9C5aiGhaGbxdHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=saWTpaDeH5j9UCTflSdbYxkk13B0fPJ4SaHGR0qZuCLhubKgxrwh6z5kge2+akJkiHzA6Qb8ljLOFgQgpZ93TsqIGTpGn88bqIhimsUqsgtn94tbPMMCg/9nQE7u+qwD0+EK3DnerE1my466EiZLW8YI25DUo5AzCEhEvzp8GAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3/95vcT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q5St5BIhYI/zP0aIm0t9uAIu9YUSMk20tW7K+UY5NAE+oR1z9FTMlDePxZEJCnr6OyZmssXhVww9wWuyc3Mn3eddpRV8Ayf3/Ti+ogtHP3u8UMzFNz9JIsBgD1j+Q9dY0EClTD+yjWTv2zIsKA92VVv8BhdaYVcxXqd3a3CU2J0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTyYWL3q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3/95vcT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286FAC433F1;
-	Tue, 23 Jan 2024 00:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTyYWL3q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA404C433C7;
+	Tue, 23 Jan 2024 00:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968209;
-	bh=+1oW31Ikkz2fdchoaVMBgpECCjFG+WZSpdRgVWOcej8=;
+	s=korg; t=1705968211;
+	bh=UWRyCGisCrscxSajaNWLlriNVpqhk9C5aiGhaGbxdHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G3/95vcTMdlUSFJ50c8MhqKWf6BBqpBvrXjlw958AAtCQASFwRtGIcNQqBsPCmsNH
-	 64ThMGEiYjf4+NnOLE3Zvk42HA0VNcYgrc/vPMo8brWwO9byDOhNZR8hXZqGwixrjL
-	 Vj4ZTnLJY7aD1tXWgY3EoaUVevyA8LZPRasNfN7E=
+	b=jTyYWL3qgJA+TF8yaLDKoRmphczSKThGxv7lfKpt8FSp8798me4eeCaweNsF6D89E
+	 FU4mv/85/kKR/0dsl72XooqkreuBdSFsl5vRSrT9nZXtiGY2Do7hL693mE0GNkePPn
+	 2r6yiIrLMTOtn3xVvB5kD3TSrsCa01ZhXvfBstIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
-	wangyangxin <wangyangxin1@huawei.com>,
-	Gonglei <arei.gonglei@huawei.com>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 045/148] crypto: virtio - Handle dataq logic with tasklet
-Date: Mon, 22 Jan 2024 15:56:41 -0800
-Message-ID: <20240122235714.242905571@linuxfoundation.org>
+Subject: [PATCH 4.19 046/148] crypto: ccp - fix memleak in ccp_init_dm_workarea
+Date: Mon, 22 Jan 2024 15:56:42 -0800
+Message-ID: <20240122235714.287088798@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -53,97 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gonglei (Arei) <arei.gonglei@huawei.com>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit fed93fb62e05c38152b0fc1dc9609639e63eed76 ]
+[ Upstream commit a1c95dd5bc1d6a5d7a75a376c2107421b7d6240d ]
 
-Doing ipsec produces a spinlock recursion warning.
-This is due to crypto_finalize_request() being called in the upper half.
-Move virtual data queue processing of virtio-crypto driver to tasklet.
+When dma_map_single() fails, wa->address is supposed to be freed
+by the callers of ccp_init_dm_workarea() through ccp_dm_free().
+However, many of the call spots don't expect to have to call
+ccp_dm_free() on failure of ccp_init_dm_workarea(), which may
+lead to a memleak. Let's free wa->address in ccp_init_dm_workarea()
+when dma_map_single() fails.
 
-Fixes: dbaf0624ffa57 ("crypto: add virtio-crypto driver")
-Reported-by: Halil Pasic <pasic@linux.ibm.com>
-Signed-off-by: wangyangxin <wangyangxin1@huawei.com>
-Signed-off-by: Gonglei <arei.gonglei@huawei.com>
+Fixes: 63b945091a07 ("crypto: ccp - CCP device driver and interface support")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/virtio/virtio_crypto_common.h |  2 ++
- drivers/crypto/virtio/virtio_crypto_core.c   | 23 +++++++++++---------
- 2 files changed, 15 insertions(+), 10 deletions(-)
+ drivers/crypto/ccp/ccp-ops.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/virtio/virtio_crypto_common.h b/drivers/crypto/virtio/virtio_crypto_common.h
-index 63ef7f7924ea..5b94c60ca461 100644
---- a/drivers/crypto/virtio/virtio_crypto_common.h
-+++ b/drivers/crypto/virtio/virtio_crypto_common.h
-@@ -22,6 +22,7 @@
- #include <linux/virtio.h>
- #include <linux/crypto.h>
- #include <linux/spinlock.h>
-+#include <linux/interrupt.h>
- #include <crypto/aead.h>
- #include <crypto/aes.h>
- #include <crypto/engine.h>
-@@ -39,6 +40,7 @@ struct data_queue {
- 	char name[32];
+diff --git a/drivers/crypto/ccp/ccp-ops.c b/drivers/crypto/ccp/ccp-ops.c
+index 453d27d2a4ff..56c571370486 100644
+--- a/drivers/crypto/ccp/ccp-ops.c
++++ b/drivers/crypto/ccp/ccp-ops.c
+@@ -183,8 +183,11 @@ static int ccp_init_dm_workarea(struct ccp_dm_workarea *wa,
  
- 	struct crypto_engine *engine;
-+	struct tasklet_struct done_task;
- };
+ 		wa->dma.address = dma_map_single(wa->dev, wa->address, len,
+ 						 dir);
+-		if (dma_mapping_error(wa->dev, wa->dma.address))
++		if (dma_mapping_error(wa->dev, wa->dma.address)) {
++			kfree(wa->address);
++			wa->address = NULL;
+ 			return -ENOMEM;
++		}
  
- struct virtio_crypto {
-diff --git a/drivers/crypto/virtio/virtio_crypto_core.c b/drivers/crypto/virtio/virtio_crypto_core.c
-index 3c9e120287af..c21770345f5f 100644
---- a/drivers/crypto/virtio/virtio_crypto_core.c
-+++ b/drivers/crypto/virtio/virtio_crypto_core.c
-@@ -34,27 +34,28 @@ virtcrypto_clear_request(struct virtio_crypto_request *vc_req)
+ 		wa->dma.length = len;
  	}
- }
- 
--static void virtcrypto_dataq_callback(struct virtqueue *vq)
-+static void virtcrypto_done_task(unsigned long data)
- {
--	struct virtio_crypto *vcrypto = vq->vdev->priv;
-+	struct data_queue *data_vq = (struct data_queue *)data;
-+	struct virtqueue *vq = data_vq->vq;
- 	struct virtio_crypto_request *vc_req;
--	unsigned long flags;
- 	unsigned int len;
--	unsigned int qid = vq->index;
- 
--	spin_lock_irqsave(&vcrypto->data_vq[qid].lock, flags);
- 	do {
- 		virtqueue_disable_cb(vq);
- 		while ((vc_req = virtqueue_get_buf(vq, &len)) != NULL) {
--			spin_unlock_irqrestore(
--				&vcrypto->data_vq[qid].lock, flags);
- 			if (vc_req->alg_cb)
- 				vc_req->alg_cb(vc_req, len);
--			spin_lock_irqsave(
--				&vcrypto->data_vq[qid].lock, flags);
- 		}
- 	} while (!virtqueue_enable_cb(vq));
--	spin_unlock_irqrestore(&vcrypto->data_vq[qid].lock, flags);
-+}
-+
-+static void virtcrypto_dataq_callback(struct virtqueue *vq)
-+{
-+	struct virtio_crypto *vcrypto = vq->vdev->priv;
-+	struct data_queue *dq = &vcrypto->data_vq[vq->index];
-+
-+	tasklet_schedule(&dq->done_task);
- }
- 
- static int virtcrypto_find_vqs(struct virtio_crypto *vi)
-@@ -111,6 +112,8 @@ static int virtcrypto_find_vqs(struct virtio_crypto *vi)
- 			ret = -ENOMEM;
- 			goto err_engine;
- 		}
-+		tasklet_init(&vi->data_vq[i].done_task, virtcrypto_done_task,
-+				(unsigned long)&vi->data_vq[i]);
- 	}
- 
- 	kfree(names);
 -- 
 2.43.0
 
