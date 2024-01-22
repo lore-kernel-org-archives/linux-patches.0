@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890756025E;
-	Tue, 23 Jan 2024 01:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3D16025E;
+	Tue, 23 Jan 2024 01:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974712; cv=none; b=Hhb12Xh2sae6vSBV+BABCME8zTZG1EaXLUfFnNJFVySDUT/ulSUuk5Kt2oFSsHdifqR92jNh7UqryLjsh4YwEEfh1xqJkU5yQecQ3lP2Un2q4I13gh/93zwgzPHJVsGFlb7M54svMMxNRMJIXg3CmafZDpvNNQK1Hznj6YAQ3qo=
+	t=1705974713; cv=none; b=MXzVOxY1eNB9cOeFH7xOOSzVRS6yV9cuoTHxJ8bEbsQ2PiWFjsBoAJKoBfd0m2y86HMHZCe5rKXdnUEgcnSloktbinY1OpdjYHT3VzW0aO7cLH4a+r6feZY0e9ON9gG6poTAZgAq4ay+ftC5wkN7Xz7WG3Lg040n8oO/RRtk9Po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974712; c=relaxed/simple;
-	bh=TVLgVmk86w5R3ALy0CjW9CB92xOK+jMiKAYUnJdsYZs=;
+	s=arc-20240116; t=1705974713; c=relaxed/simple;
+	bh=hVRsc0xGzxjjn1RGqxpPbYpIRvFfRLPzeI19VbUIYKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OB+DUXIpU7QmSMrz3VOf/Ymhg7hknMNzu/ELFaOpfR+RdUctImNMnFTLlPcUHqkj9SCtx3gNJ9GsaMf00wMHMqlJERBN8LRkD6qOvjawfuvBz84h6JY9xfYNThj+fCv2wPiCC7Em8sbXo1HUCd72eg9u2Cq9tBih31IaUfmkIrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+xHsCHR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f7QBW/hBQbzw0+kMnxFKaOJ3iJdEJaxSugwFAQQNn898XwKMfSmOp/pJaMqean+42fBWiNVfqW/ZbvQAKen9j5MnDuhpekSYueCbSUSlKdhPrhdTehCpQd0lQwEN4q9na9Z+sV26ho+2cb8jlMCpeEokAQ9cTwERL29ySQaE6Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ixankxj9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+xHsCHR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 504E9C433F1;
-	Tue, 23 Jan 2024 01:51:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ixankxj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235FBC433F1;
+	Tue, 23 Jan 2024 01:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974712;
-	bh=TVLgVmk86w5R3ALy0CjW9CB92xOK+jMiKAYUnJdsYZs=;
+	s=korg; t=1705974713;
+	bh=hVRsc0xGzxjjn1RGqxpPbYpIRvFfRLPzeI19VbUIYKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f+xHsCHRNovNQYPPE+LraWgDU313gHFB1NfbguudmlbwlzAXHlgITRINf2bbueQo9
-	 cxFlLs96ILK0Av1JFz5eWyLXuJPg4mX7WXCUoJs80gZNZg/Rn9hxHWgotqFE9Uo09y
-	 ApHHYAeyevy+KcwbnUhP7T4ndOcBJN3eV1AK/RNA=
+	b=ixankxj9dZD0qjLjqswUjexYyzaCv62Y1jQVRIeNApf0OArpBm7c0fAmByRZifibe
+	 duzY7CdeFj4afZQHFi6rWEUsNqT1wuVV5VbzQAs+PeWymhWEdeZ97oe4unQ95U4Ach
+	 EgeEMByOeErUvEqo5Zey28Vho3IgLznvQtn0BmdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <2045gemini@gmail.com>
-Subject: [PATCH 5.15 263/374] usb: mon: Fix atomicity violation in mon_bin_vma_fault
-Date: Mon, 22 Jan 2024 15:58:39 -0800
-Message-ID: <20240122235753.915245342@linuxfoundation.org>
+	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Felix Fietkau <nbd@nbd.name>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 139/583] wifi: mt76: mt7915: fix EEPROM offset of TSSI flag on MT7981
+Date: Mon, 22 Jan 2024 15:53:10 -0800
+Message-ID: <20240122235816.355100594@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,94 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gui-Dong Han <2045gemini@gmail.com>
+From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
 
-commit 2dd23cc4d0e6aa55cf9fb3b05f2f4165b01de81c upstream.
+[ Upstream commit 3531c72aedb95261f4d78c47efa4b5ba7cdcddd9 ]
 
-In mon_bin_vma_fault():
-    offset = vmf->pgoff << PAGE_SHIFT;
-    if (offset >= rp->b_size)
-        return VM_FAULT_SIGBUS;
-    chunk_idx = offset / CHUNK_SIZE;
-    pageptr = rp->b_vec[chunk_idx].pg;
-The code is executed without holding any lock.
+The offset of the TSSI flag on the EEPROM of MT7981 devices was wrong.
+Set the correct offset instead.
 
-In mon_bin_vma_close():
-    spin_lock_irqsave(&rp->b_lock, flags);
-    rp->mmap_active--;
-    spin_unlock_irqrestore(&rp->b_lock, flags);
-
-In mon_bin_ioctl():
-    spin_lock_irqsave(&rp->b_lock, flags);
-    if (rp->mmap_active) {
-        ...
-    } else {
-        ...
-        kfree(rp->b_vec);
-        rp->b_vec  = vec;
-        rp->b_size = size;
-        ...
-    }
-    spin_unlock_irqrestore(&rp->b_lock, flags);
-
-Concurrent execution of mon_bin_vma_fault() with mon_bin_vma_close() and
-mon_bin_ioctl() could lead to atomicity violations. mon_bin_vma_fault()
-accesses rp->b_size and rp->b_vec without locking, risking array
-out-of-bounds access or use-after-free bugs due to possible modifications
-in mon_bin_ioctl().
-
-This possible bug is found by an experimental static analysis tool
-developed by our team, BassCheck[1]. This tool analyzes the locking APIs
-to extract function pairs that can be concurrently executed, and then
-analyzes the instructions in the paired functions to identify possible
-concurrency bugs including data races and atomicity violations. The above
-possible bug is reported when our tool analyzes the source code of
-Linux 6.2.
-
-To address this issue, it is proposed to add a spin lock pair in
-mon_bin_vma_fault() to ensure atomicity. With this patch applied, our tool
-never reports the possible bug, with the kernel configuration allyesconfig
-for x86_64. Due to the lack of associated hardware, we cannot test the
-patch in runtime testing, and just verify it according to the code logic.
-
-[1] https://sites.google.com/view/basscheck/
-
-Fixes: 19e6317d24c2 ("usb: mon: Fix a deadlock in usbmon between ...")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
-Link: https://lore.kernel.org/r/20240105052412.9377-1-2045gemini@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6bad146d162e ("wifi: mt76: mt7915: add support for MT7981")
+Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/mon/mon_bin.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/mon/mon_bin.c
-+++ b/drivers/usb/mon/mon_bin.c
-@@ -1247,14 +1247,19 @@ static vm_fault_t mon_bin_vma_fault(stru
- 	struct mon_reader_bin *rp = vmf->vma->vm_private_data;
- 	unsigned long offset, chunk_idx;
- 	struct page *pageptr;
-+	unsigned long flags;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
+index f3e56817d36e..adc26a222823 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
+@@ -144,7 +144,8 @@ static inline bool
+ mt7915_tssi_enabled(struct mt7915_dev *dev, enum nl80211_band band)
+ {
+ 	u8 *eep = dev->mt76.eeprom.data;
+-	u8 val = eep[MT_EE_WIFI_CONF + 7];
++	u8 offs = is_mt7981(&dev->mt76) ? 8 : 7;
++	u8 val = eep[MT_EE_WIFI_CONF + offs];
  
-+	spin_lock_irqsave(&rp->b_lock, flags);
- 	offset = vmf->pgoff << PAGE_SHIFT;
--	if (offset >= rp->b_size)
-+	if (offset >= rp->b_size) {
-+		spin_unlock_irqrestore(&rp->b_lock, flags);
- 		return VM_FAULT_SIGBUS;
-+	}
- 	chunk_idx = offset / CHUNK_SIZE;
- 	pageptr = rp->b_vec[chunk_idx].pg;
- 	get_page(pageptr);
- 	vmf->page = pageptr;
-+	spin_unlock_irqrestore(&rp->b_lock, flags);
- 	return 0;
- }
- 
+ 	if (band == NL80211_BAND_2GHZ)
+ 		return val & MT_EE_WIFI_CONF7_TSSI0_2G;
+-- 
+2.43.0
+
 
 
