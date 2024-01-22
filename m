@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0459212A17F;
-	Tue, 23 Jan 2024 00:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B91612A17F;
+	Tue, 23 Jan 2024 00:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968815; cv=none; b=qNnDHJyr/d/JdAEqny5hDJSH9ejf+9+43g/Elt6wOyfc6H8v1J7t3fWyoQ1SWvV0qfVqEicWIAV94RITb0xrEkJItsGhHSyFKd/5NVMWG64iLeKog4B03V84qXzLm9oycGIoXBZbmD9sH4HuC8YiY4r3YiBB4OkSdxoXE7l/BWA=
+	t=1705968817; cv=none; b=WGZrIJOJnFKxEFZ+uKC+joV3ft3LF7ERPQTuj718y/bUlNjIsucXMF2m7axJdw45dJzFsZrDW0Wa+Di64oKM1JcWMTSORudQjeQQlgL1e5J6RRrKcWw9AySqBGPsWcHxjkKMzHSPvQ6nffCaN5s1j6Y/w7UGTkcFvR1mnujo//k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968815; c=relaxed/simple;
-	bh=nrvrjUWAGSMPt0k2fO36dR4kDH9ZVBPSGdNiUil5DBU=;
+	s=arc-20240116; t=1705968817; c=relaxed/simple;
+	bh=otERdlNGVWSIAxjuUUD3ETnevjm21FNA7vyNfk1JmlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JXovCHrpipLVWtMfXs1AnukAX/hlh3O+s6Y+PUvSQV8hkFQFzLEr0Pa3KJOBoISYk87gl31TdgsIygRPoBEeMURzdzv40BQG1E6YrDWPpWjeL7GRpzxBcdGi/rPkam95eovEbRWMH3oVMDs6tpMGgJ4axsX/mTH9+JnjbzzgjWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PjF8jYt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o1DTvzgLxeBAzh5lVAS9WwTrW/sMJOh0DvHDW+J2lnMDPOMfuEPjsizTTp+onfJPz+LCyJONvMmb+Fw9AILmm6H4Q2SablIZ9acgIDEUKLC16HX2mvqLWJwevVSnyTazdhBZE3wlupnccQJXvAzK1Ub076UqAFNntYDdCpy2up4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ktyod8jA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PjF8jYt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38245C433F1;
-	Tue, 23 Jan 2024 00:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ktyod8jA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8FAC433C7;
+	Tue, 23 Jan 2024 00:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968814;
-	bh=nrvrjUWAGSMPt0k2fO36dR4kDH9ZVBPSGdNiUil5DBU=;
+	s=korg; t=1705968816;
+	bh=otERdlNGVWSIAxjuUUD3ETnevjm21FNA7vyNfk1JmlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2PjF8jYtrAN+hT4gumkGh13Gey5B8eeYrOasRSkfF7OmYYfwHK9gAjMA7vRAgtLjz
-	 E1Zry0OA1WT/Q+SCEK3nczPcfu9vXI+hJaZZbgAgrCaV1GD1SZrh7y0CNiweEGCvhi
-	 gF22NucjwIdYuhWDkrTSvkWN/1WAZJarOS0w7Lcw=
+	b=Ktyod8jAg24Pnv3VSOLIBmwv9bt9l15BAxeUoPEVvQkGSBdOkwbLPIL/hNZMX5ph2
+	 /wgqIwS3GBOfMxfK+p/HAzPtUgIhIU+VD9xOZuxUVp5D0DcC1hfpPRiN2bKSsip1eC
+	 mnLPyZekFMVgN5Se6Ev6odo6H2uY6yUW1UBdliGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Paris <eparis@parisplace.org>,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 059/194] selinux: Fix error priority for bind with AF_UNSPEC on PF_INET6 socket
-Date: Mon, 22 Jan 2024 15:56:29 -0800
-Message-ID: <20240122235721.731227356@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 5.4 033/194] binder: use EPOLLERR from eventpoll.h
+Date: Mon, 22 Jan 2024 15:56:03 -0800
+Message-ID: <20240122235720.633150473@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -49,58 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Carlos Llamas <cmllamas@google.com>
 
-[ Upstream commit bbf5a1d0e5d0fb3bdf90205aa872636122692a50 ]
+commit 6ac061db9c58ca5b9270b1b3940d2464fb3ff183 upstream.
 
-The IPv6 network stack first checks the sockaddr length (-EINVAL error)
-before checking the family (-EAFNOSUPPORT error).
+Use EPOLLERR instead of POLLERR to make sure it is cast to the correct
+__poll_t type. This fixes the following sparse issue:
 
-This was discovered thanks to commit a549d055a22e ("selftests/landlock:
-Add network tests").
+  drivers/android/binder.c:5030:24: warning: incorrect type in return expression (different base types)
+  drivers/android/binder.c:5030:24:    expected restricted __poll_t
+  drivers/android/binder.c:5030:24:    got int
 
-Cc: Eric Paris <eparis@parisplace.org>
-Cc: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Cc: Paul Moore <paul@paul-moore.com>
-Cc: Stephen Smalley <stephen.smalley.work@gmail.com>
-Reported-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Closes: https://lore.kernel.org/r/0584f91c-537c-4188-9e4f-04f192565667@collabora.com
-Fixes: 0f8db8cc73df ("selinux: add AF_UNSPEC and INADDR_ANY checks to selinux_socket_bind()")
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Tested-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f88982679f54 ("binder: check for binder_thread allocation failure in binder_poll()")
+Cc: stable@vger.kernel.org
+Cc: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Link: https://lore.kernel.org/r/20231201172212.1813387-2-cmllamas@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/android/binder.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/selinux/hooks.c b/security/selinux/hooks.c
-index d9f15c84aab7..c1bf319b459a 100644
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -4625,6 +4625,13 @@ static int selinux_socket_bind(struct socket *sock, struct sockaddr *address, in
- 				return -EINVAL;
- 			addr4 = (struct sockaddr_in *)address;
- 			if (family_sa == AF_UNSPEC) {
-+				if (family == PF_INET6) {
-+					/* Length check from inet6_bind_sk() */
-+					if (addrlen < SIN6_LEN_RFC2133)
-+						return -EINVAL;
-+					/* Family check from __inet6_bind() */
-+					goto err_af;
-+				}
- 				/* see __inet_bind(), we only want to allow
- 				 * AF_UNSPEC if the address is INADDR_ANY
- 				 */
--- 
-2.43.0
-
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -5177,7 +5177,7 @@ static __poll_t binder_poll(struct file
+ 
+ 	thread = binder_get_thread(proc);
+ 	if (!thread)
+-		return POLLERR;
++		return EPOLLERR;
+ 
+ 	binder_inner_proc_lock(thread->proc);
+ 	thread->looper |= BINDER_LOOPER_STATE_POLL;
 
 
