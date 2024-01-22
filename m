@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B1E23C6;
-	Tue, 23 Jan 2024 00:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D84442E;
+	Tue, 23 Jan 2024 00:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969589; cv=none; b=M5UfdaerYccmnBd7mN4D8KT7uMzFUO8Xi01L4DKj9R1HgK4/Hux0gv+hHAddodrq0lo3F8pwI8q9mdlEP3BC5kbF17iu1qor9R+zDjV/wcRhpby+5/b67tD6SXztVPKDA/BEtnx4SiRzRm2yRJ+NKdf/sOi9+zJ5xRL6hruaSTo=
+	t=1705969591; cv=none; b=IoUZTWAMXGdEW2a1BGNwGAxGyqhrwRUK8hVHCqv1Nd4kkivNagZl1pGcF0uZHjQAYq6yLx+xWh/l/q+4pBmzrmmX/qIUnXXQHL3OWQUPebZ1zvqt/yVfDodoYWw6IH3b6Vi5PUSbrgd3TUXsfyceHGzFSLLyLmNeauJGGbvqFCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969589; c=relaxed/simple;
-	bh=46iopOS9QSX7wU+OmJciXctQvU1oR1G8rYt0OhQ/9fs=;
+	s=arc-20240116; t=1705969591; c=relaxed/simple;
+	bh=EVZ2VrUJuios9yHW31Lt+ySYvNDg3pMxW0N5FcWzoio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xd2AWIf4OUdgWZGR9PrGAMqlBPHqZ45tuNqF0C3e9w6YgaoUlH7qTWocQapYZH6g14Bi8+3TEnK/F/ikjlgJeNSgGGJVRmQnC5f18dXNRhPrYVhVZQLnFFFLnzvdhQfaL0V5GDuBzfLIutSMxgK5Vq+vjexNv+IceZTVyQ9GjAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTAF0f/S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tn/+8kYhnAMWkqgCzANxRRk9ZrUeGwhiB/6yg3qIsiR9ach0xVMSEusvH44RsIfUuiJgNZdxQJgj2FrkBWKkK+eRotkk7E0xX3nedExcYNXCFeuC2+vF2dO5EP7FFXRH5UkLy7x/jGcqg0n+FVxhsJvkySrJsn5PbH24vCXQCLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9gFJ/dW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTAF0f/S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629D6C43390;
-	Tue, 23 Jan 2024 00:26:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9gFJ/dW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7344C43390;
+	Tue, 23 Jan 2024 00:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969589;
-	bh=46iopOS9QSX7wU+OmJciXctQvU1oR1G8rYt0OhQ/9fs=;
+	s=korg; t=1705969591;
+	bh=EVZ2VrUJuios9yHW31Lt+ySYvNDg3pMxW0N5FcWzoio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rTAF0f/SHo0GomMa7cRcd1jqHdyaPGLs1MeYglsK39nFU7n8ChaAMNjDmO2xx2J14
-	 WMt+kkGD1SCTlgXdy+qwnDcIyuA6h9tv1NjeIo7d4+/nhtFhfr39y2qn5yrijKUwph
-	 x+mNNpG/JDRqDTfb4FGmHEAObm9zB/8WrijXqwhs=
+	b=w9gFJ/dW4n82H+634AY+SobIqFMcgTyeJDV814GsD7jh+9m2ALtkctvf7vtCEfluT
+	 cq6aQj0ufrVlsL/xbPjs6t4IbyKvqPG40UWjYHpqn/Duypjioi/ICY8uS84mwbiYAK
+	 wevP5WteaWYmzs17glMlc1Djcy1elKxTHrTQWrtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 317/641] media: dvbdev: drop refcount on error path in dvb_device_open()
-Date: Mon, 22 Jan 2024 15:53:41 -0800
-Message-ID: <20240122235827.804890807@linuxfoundation.org>
+Subject: [PATCH 6.7 318/641] media: dvb-frontends: m88ds3103: Fix a memory leak in an error handling path of m88ds3103_probe()
+Date: Mon, 22 Jan 2024 15:53:42 -0800
+Message-ID: <20240122235827.831294549@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,33 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit a2dd235df435a05d389240be748909ada91201d2 ]
+[ Upstream commit 5b2f885e2f6f482d05c23f04c8240f7b4fc5bdb5 ]
 
-If call to file->f_op->open() fails, then call dvb_device_put(dvbdev).
+If an error occurs after a successful i2c_mux_add_adapter(), then
+i2c_mux_del_adapters() should be called to free some resources, as
+already done in the remove function.
 
-Fixes: 0fc044b2b5e2 ("media: dvbdev: adopts refcnt to avoid UAF")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: e6089feca460 ("media: m88ds3103: Add support for ds3103b demod")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvbdev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/dvb-frontends/m88ds3103.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
-index 305bb21d843c..49f0eb7d0b9d 100644
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -104,6 +104,8 @@ static int dvb_device_open(struct inode *inode, struct file *file)
- 			err = file->f_op->open(inode, file);
- 		up_read(&minor_rwsem);
- 		mutex_unlock(&dvbdev_mutex);
-+		if (err)
-+			dvb_device_put(dvbdev);
- 		return err;
+diff --git a/drivers/media/dvb-frontends/m88ds3103.c b/drivers/media/dvb-frontends/m88ds3103.c
+index 26c67ef05d13..e0272054fca5 100644
+--- a/drivers/media/dvb-frontends/m88ds3103.c
++++ b/drivers/media/dvb-frontends/m88ds3103.c
+@@ -1894,7 +1894,7 @@ static int m88ds3103_probe(struct i2c_client *client)
+ 		/* get frontend address */
+ 		ret = regmap_read(dev->regmap, 0x29, &utmp);
+ 		if (ret)
+-			goto err_kfree;
++			goto err_del_adapters;
+ 		dev->dt_addr = ((utmp & 0x80) == 0) ? 0x42 >> 1 : 0x40 >> 1;
+ 		dev_dbg(&client->dev, "dt addr is 0x%02x\n", dev->dt_addr);
+ 
+@@ -1902,11 +1902,14 @@ static int m88ds3103_probe(struct i2c_client *client)
+ 						      dev->dt_addr);
+ 		if (IS_ERR(dev->dt_client)) {
+ 			ret = PTR_ERR(dev->dt_client);
+-			goto err_kfree;
++			goto err_del_adapters;
+ 		}
  	}
- fail:
+ 
+ 	return 0;
++
++err_del_adapters:
++	i2c_mux_del_adapters(dev->muxc);
+ err_kfree:
+ 	kfree(dev);
+ err:
 -- 
 2.43.0
 
