@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43472137F;
-	Tue, 23 Jan 2024 00:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19E73A1B4;
+	Tue, 23 Jan 2024 00:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969826; cv=none; b=XYsKnOsM53EjN6KzZ48vWzG9K1UCGvfQyc9iBs/opYkfajQw0HXs6aqtWm02J1pjX42r4QWiD7FZb11vdx/UOi1QN6a3ktVBbTjVa9XiDrbdmwjr1+85i5pBURcxNazvqBDRdq4+GxO+xiZsVoTXbbh9VGoIkeCYhZ7QXrtcLV0=
+	t=1705969828; cv=none; b=WPmnAMWjILUukwr17g0gwGVOPF+fjSIgtQp6Rm2K/SAeUOulGMD/Wo4QhjY1r1XoKL9EC0ZG7MZIq7WFqTaXLqBMbbh0nW2ifAAhsRG6zYmg8aR13NqSGZlIXjq822CsDMi367hKe8YaekQtnPIQ6drF6k+uFszfXhbsO1PBCX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969826; c=relaxed/simple;
-	bh=SNvNggRYEw5TGrb+URs0Qe+V025NgX8yi9tV3aFUwy8=;
+	s=arc-20240116; t=1705969828; c=relaxed/simple;
+	bh=n4+TfmOQ1uTQX3DM0WiBO5/J+H0t0VqCjpOPYMQREFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRa+JSBwII0TcMfzzMD3PLMwkubXSfz3O1NnG0Hwko0sA2Ga8+u9W93wxleOegpbXcP18zL+0AgUtlbAjtqxqv23G8/boW6cysHNeZWx0RqcoXJe89IMTrxecmbMuuxcZPdClKB9Tg6h0nAvq1ewrZTgHeXEegWBhjajBliYZGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wa9ibIJC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oCk64Y2ecuEjkxtblpLXac1XFsEoTKjDp44v5ezFRmBsVpmKf4IpTTVYHqgga1EgYiQ8nu2ep1R83iDKbi4zHP/XlNR6f0ysmMwq01/AjQ8D4HKkGIr5IipJ7vn9Lz+geeU7kQhPO6l+3o1Lm3yznLYLv+s+1kezv/S2Hvyit7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6tP4eLA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wa9ibIJC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3184FC43390;
-	Tue, 23 Jan 2024 00:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6tP4eLA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85862C43390;
+	Tue, 23 Jan 2024 00:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969826;
-	bh=SNvNggRYEw5TGrb+URs0Qe+V025NgX8yi9tV3aFUwy8=;
+	s=korg; t=1705969828;
+	bh=n4+TfmOQ1uTQX3DM0WiBO5/J+H0t0VqCjpOPYMQREFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wa9ibIJCyyKr4+RexehJa5X5OP6ZnElbbve9GRMa8JDa1W2auap/AO8bZrtHmJVpO
-	 2zxWDQ5/o0GmZYZsAjuMRRYW/bnZNflbgMjccSr6OwRQX4iGlaMZocVxGlMJl97v/O
-	 gimCCTx0jTFZ26pFko3AKl4Om2WeFeKo52iOLDbM=
+	b=I6tP4eLAiOixAvDUvmpr7qEU7ZtiTMGH9zDjqn/uGN3pB9qNPHepsBc+qHecuGhkQ
+	 VJ3AfoOEIfHd5Nv1aqXm+eJ3u8RzkNX5mSxSwvewhxEiIdpmVHS9xS99EvtG+4/A4M
+	 9PdRgrmXQQEy9O9qunzjceBbnx/3L10/KFurkafQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunkun Jiang <jiangkunkun@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Zenghui Yu <yuzenghui@huawei.com>
-Subject: [PATCH 6.7 472/641] KVM: arm64: vgic-v4: Restore pending state on host userspace write
-Date: Mon, 22 Jan 2024 15:56:16 -0800
-Message-ID: <20240122235832.827479108@linuxfoundation.org>
+	Jiri Olsa <olsajiri@gmail.com>,
+	Song Liu <song@kernel.org>,
+	Dmitrii Dolgov <9erthalion6@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.7 450/641] bpf: Fix re-attachment branch in bpf_tracing_prog_attach
+Date: Mon, 22 Jan 2024 15:55:54 -0800
+Message-ID: <20240122235832.104274852@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,69 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Jiri Olsa <olsajiri@gmail.com>
 
-commit 7b95382f965133ef61ce44aaabc518c16eb46909 upstream.
+commit 715d82ba636cb3629a6e18a33bb9dbe53f9936ee upstream.
 
-When the VMM writes to ISPENDR0 to set the state pending state of
-an SGI, we fail to convey this to the HW if this SGI is already
-backed by a GICv4.1 vSGI.
+The following case can cause a crash due to missing attach_btf:
 
-This is a bit of a corner case, as this would only occur if the
-vgic state is changed on an already running VM, but this can
-apparently happen across a guest reset driven by the VMM.
+1) load rawtp program
+2) load fentry program with rawtp as target_fd
+3) create tracing link for fentry program with target_fd = 0
+4) repeat 3
 
-Fix this by always writing out the pending_latch value to the
-HW, and reseting it to false.
+In the end we have:
 
-Reported-by: Kunkun Jiang <jiangkunkun@huawei.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
-Cc: stable@vger.kernel.org # 5.10+
-Link: https://lore.kernel.org/r/7e7f2c0c-448b-10a9-8929-4b8f4f6e2a32@huawei.com
+- prog->aux->dst_trampoline == NULL
+- tgt_prog == NULL (because we did not provide target_fd to link_create)
+- prog->aux->attach_btf == NULL (the program was loaded with attach_prog_fd=X)
+- the program was loaded for tgt_prog but we have no way to find out which one
+
+    BUG: kernel NULL pointer dereference, address: 0000000000000058
+    Call Trace:
+     <TASK>
+     ? __die+0x20/0x70
+     ? page_fault_oops+0x15b/0x430
+     ? fixup_exception+0x22/0x330
+     ? exc_page_fault+0x6f/0x170
+     ? asm_exc_page_fault+0x22/0x30
+     ? bpf_tracing_prog_attach+0x279/0x560
+     ? btf_obj_id+0x5/0x10
+     bpf_tracing_prog_attach+0x439/0x560
+     __sys_bpf+0x1cf4/0x2de0
+     __x64_sys_bpf+0x1c/0x30
+     do_syscall_64+0x41/0xf0
+     entry_SYSCALL_64_after_hwframe+0x6e/0x76
+
+Return -EINVAL in this situation.
+
+Fixes: f3a95075549e0 ("bpf: Allow trampoline re-attach for tracing and lsm programs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiri Olsa <olsajiri@gmail.com>
+Acked-by: Jiri Olsa <olsajiri@gmail.com>
+Acked-by: Song Liu <song@kernel.org>
+Signed-off-by: Dmitrii Dolgov <9erthalion6@gmail.com>
+Link: https://lore.kernel.org/r/20240103190559.14750-4-9erthalion6@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-mmio-v3.c |   27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ kernel/bpf/syscall.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-@@ -365,19 +365,26 @@ static int vgic_v3_uaccess_write_pending
- 		struct vgic_irq *irq = vgic_get_irq(vcpu->kvm, vcpu, intid + i);
- 
- 		raw_spin_lock_irqsave(&irq->irq_lock, flags);
--		if (test_bit(i, &val)) {
--			/*
--			 * pending_latch is set irrespective of irq type
--			 * (level or edge) to avoid dependency that VM should
--			 * restore irq config before pending info.
--			 */
--			irq->pending_latch = true;
--			vgic_queue_irq_unlock(vcpu->kvm, irq, flags);
--		} else {
-+
-+		/*
-+		 * pending_latch is set irrespective of irq type
-+		 * (level or edge) to avoid dependency that VM should
-+		 * restore irq config before pending info.
-+		 */
-+		irq->pending_latch = test_bit(i, &val);
-+
-+		if (irq->hw && vgic_irq_is_sgi(irq->intid)) {
-+			irq_set_irqchip_state(irq->host_irq,
-+					      IRQCHIP_STATE_PENDING,
-+					      irq->pending_latch);
- 			irq->pending_latch = false;
--			raw_spin_unlock_irqrestore(&irq->irq_lock, flags);
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -3205,6 +3205,10 @@ static int bpf_tracing_prog_attach(struc
+ 	 *
+ 	 * - if prog->aux->dst_trampoline and tgt_prog is NULL, the program
+ 	 *   was detached and is going for re-attachment.
++	 *
++	 * - if prog->aux->dst_trampoline is NULL and tgt_prog and prog->aux->attach_btf
++	 *   are NULL, then program was already attached and user did not provide
++	 *   tgt_prog_fd so we have no way to find out or create trampoline
+ 	 */
+ 	if (!prog->aux->dst_trampoline && !tgt_prog) {
+ 		/*
+@@ -3218,6 +3222,11 @@ static int bpf_tracing_prog_attach(struc
+ 			err = -EINVAL;
+ 			goto out_unlock;
  		}
- 
-+		if (irq->pending_latch)
-+			vgic_queue_irq_unlock(vcpu->kvm, irq, flags);
-+		else
-+			raw_spin_unlock_irqrestore(&irq->irq_lock, flags);
-+
- 		vgic_put_irq(vcpu->kvm, irq);
++		/* We can allow re-attach only if we have valid attach_btf. */
++		if (!prog->aux->attach_btf) {
++			err = -EINVAL;
++			goto out_unlock;
++		}
+ 		btf_id = prog->aux->attach_btf_id;
+ 		key = bpf_trampoline_compute_key(NULL, prog->aux->attach_btf, btf_id);
  	}
- 
 
 
