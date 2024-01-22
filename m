@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD6662805;
-	Tue, 23 Jan 2024 00:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D397062805;
+	Tue, 23 Jan 2024 00:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971502; cv=none; b=LW1AEt/GgrHsjYKXb1fIhVPUazMQ+mhZAy70kfhWhU1WhjAAA2mkM/CaAqm3erl9xllySJ71CHUgtKnHTXlT9fpthEVIbjPj7w022QtGeF0WyF02AIwuE9dI9ge7vXI18hlIHIIDZP8bM6LKtLm8c98fMDCaC8ElFt6yEliFGB8=
+	t=1705971503; cv=none; b=thWhWYEYEAaFLk03ShaKHw5dIDoY+6M25UD7AFSEh/Z+1XoM/sq1XmBrNfNSBw/pMpOMaHVQGjfUnCCK1j59A3GhyrpVmgKRnGi3PCeyLDTn9jpXsluP+A5MFUQD9P0aD+tvAKDXSr8c92K74VipK7Z4fVN35SJ8HHQk5YjsPvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971502; c=relaxed/simple;
-	bh=4oq6AUSfjT/I/EswXic8zITuJAk/ewOQTHPRj2ZvUhY=;
+	s=arc-20240116; t=1705971503; c=relaxed/simple;
+	bh=bNGJAnoRVgvcmOBHcdbjDChNFSPuTS5tT2zFLY1TEAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=riIr9vw96RYG7mlDNB1JKwhoDY8rvwPpvq2Lf6d2QQaMekGV3yzk7wia7rF7b0FdkrEjQvBYGV9YeEcmo1GNPQdHGUxv8TI1RLhPkWp6NQPp9Ot2op9fMfVl7fVbQHvSypaByIaeneDwWGleCbC8sOUXVsMPWK0iAqqyps82Ubc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Coou+FCS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BHUz0MzGpb/mxwSjs0VfC+ybVXN4M8rDnRjaFsHDzxWXcHooZDBXq4mdBTw2/fxNkV+9SyrTxVv1LDI7Ulw6B60tb5npQys67qX5WZBatHO03xaZhLe1PwtcZDEpsgmnKhosid7mKvOtEQ9UJpmOlxMKAnu9JihzHLz1hFnsH3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iY7L8Khs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Coou+FCS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB93C433F1;
-	Tue, 23 Jan 2024 00:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iY7L8Khs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD45C433C7;
+	Tue, 23 Jan 2024 00:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971501;
-	bh=4oq6AUSfjT/I/EswXic8zITuJAk/ewOQTHPRj2ZvUhY=;
+	s=korg; t=1705971503;
+	bh=bNGJAnoRVgvcmOBHcdbjDChNFSPuTS5tT2zFLY1TEAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Coou+FCSnUdq8azUCUn/BmBrpqi5/RSqEytXSnWFncGa/fi0fqJFJpXl9fK71QJvG
-	 MSGAUEtVFvxtrSWXN8ryHHpJT5oGlJeehCllaTxdYZEaXS6sawcFQFhJyqcUVjlsJw
-	 +kvw7kVqHIzWcUywQGl8Ui/il2R7hZlmk35XSIoQ=
+	b=iY7L8Khsq92oPaI0AG9nlTd8Qf22RCcuDl8btRDTlytLIOi3/G2dk85bxlviVDqpm
+	 Yzk/cUUhFJJo+zJG83ii8S31vXksg569mMMjvz7u35m99aKkUZpUgazPPv0Qy2Ibo0
+	 fxEdbeMBtBMYMlyONTRCUqBM96FO0AvYWcG1GIj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 253/417] Input: atkbd - use ab83 as id when skipping the getid command
-Date: Mon, 22 Jan 2024 15:57:01 -0800
-Message-ID: <20240122235800.642567765@linuxfoundation.org>
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 162/286] drm/radeon/trinity_dpm: fix a memleak in trinity_parse_power_table
+Date: Mon, 22 Jan 2024 15:57:48 -0800
+Message-ID: <20240122235738.407718281@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,79 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-commit 58f65f9db7e0de366a5a115c2e2c0703858bba69 upstream.
+[ Upstream commit 28c28d7f77c06ac2c0b8f9c82bc04eba22912b3b ]
 
-Barnabás reported that the change to skip the getid command
-when the controller is in translated mode on laptops caused
-the Version field of his "AT Translated Set 2 keyboard"
-input device to change from ab83 to abba, breaking a custom
-hwdb entry for this keyboard.
+The rdev->pm.dpm.ps allocated by kcalloc should be freed in every
+following error-handling path. However, in the error-handling of
+rdev->pm.power_state[i].clock_info the rdev->pm.dpm.ps is not freed,
+resulting in a memleak in this function.
 
-Use the standard ab83 id for keyboards when getid is skipped
-(rather then that getid fails) to avoid reporting a different
-Version to userspace then before skipping the getid.
-
-Fixes: 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in translated mode")
-Reported-by: Barnabás Pőcze <pobrn@protonmail.com>
-Closes: https://lore.kernel.org/linux-input/W1ydwoG2fYv85Z3C3yfDOJcVpilEvGge6UGa9kZh8zI2-qkHXp7WLnl2hSkFz63j-c7WupUWI5TLL6n7Lt8DjRuU-yJBwLYWrreb1hbnd6A=@protonmail.com/
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240116204325.7719-1-hdegoede@redhat.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d70229f70447 ("drm/radeon/kms: add dpm support for trinity asics")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/keyboard/atkbd.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/radeon/trinity_dpm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -772,9 +772,9 @@ static bool atkbd_is_portable_device(voi
-  * not work. So in this case simply assume a keyboard is connected to avoid
-  * confusing some laptop keyboards.
-  *
-- * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using a fake id is
-- * ok in translated mode, only atkbd_select_set() checks atkbd->id and in
-- * translated mode that is a no-op.
-+ * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using the standard
-+ * 0xab83 id is ok in translated mode, only atkbd_select_set() checks atkbd->id
-+ * and in translated mode that is a no-op.
-  */
- static bool atkbd_skip_getid(struct atkbd *atkbd)
- {
-@@ -792,6 +792,7 @@ static int atkbd_probe(struct atkbd *atk
- {
- 	struct ps2dev *ps2dev = &atkbd->ps2dev;
- 	unsigned char param[2];
-+	bool skip_getid;
- 
- /*
-  * Some systems, where the bit-twiddling when testing the io-lines of the
-@@ -813,7 +814,8 @@ static int atkbd_probe(struct atkbd *atk
-  */
- 
- 	param[0] = param[1] = 0xa5;	/* initialize with invalid values */
--	if (atkbd_skip_getid(atkbd) || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
-+	skip_getid = atkbd_skip_getid(atkbd);
-+	if (skip_getid || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
- 
- /*
-  * If the get ID command was skipped or failed, we check if we can at least set
-@@ -823,7 +825,7 @@ static int atkbd_probe(struct atkbd *atk
- 		param[0] = 0;
- 		if (ps2_command(ps2dev, param, ATKBD_CMD_SETLEDS))
- 			return -1;
--		atkbd->id = 0xabba;
-+		atkbd->id = skip_getid ? 0xab83 : 0xabba;
- 		return 0;
- 	}
- 
+diff --git a/drivers/gpu/drm/radeon/trinity_dpm.c b/drivers/gpu/drm/radeon/trinity_dpm.c
+index 4d93b84aa739..49c28fbe366e 100644
+--- a/drivers/gpu/drm/radeon/trinity_dpm.c
++++ b/drivers/gpu/drm/radeon/trinity_dpm.c
+@@ -1770,8 +1770,10 @@ static int trinity_parse_power_table(struct radeon_device *rdev)
+ 		non_clock_array_index = power_state->v2.nonClockInfoIndex;
+ 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
+ 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
+-		if (!rdev->pm.power_state[i].clock_info)
++		if (!rdev->pm.power_state[i].clock_info) {
++			kfree(rdev->pm.dpm.ps);
+ 			return -EINVAL;
++		}
+ 		ps = kzalloc(sizeof(struct sumo_ps), GFP_KERNEL);
+ 		if (ps == NULL) {
+ 			kfree(rdev->pm.dpm.ps);
+-- 
+2.43.0
+
 
 
