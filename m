@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB345A0F8;
-	Tue, 23 Jan 2024 00:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86D552F7C;
+	Tue, 23 Jan 2024 00:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969932; cv=none; b=GPf9v2Omqose9Z8IzwxgydHvson1/Ax6GWBYns3N9KuCL5UWWDdnfIqMasvZn/k0ohoL6JUhjQFmjVXgExdB1DoaxlQMbFkN+LNpWhnY0vLrM7/ZEaPv0PFT/SNLgokQGxWaIZWixf+zocAIxHUUTEY2hRuIFWqwF24koalEqkU=
+	t=1705969935; cv=none; b=IaohGYrlybpl5IecJNRjaRpb12LgHEaKGlxUvFHzgKmGzh1kw9oe15wP09NwLONhs+GZK+J84fOPthvrJKMwrSRkwD31EN6eX4RVBc8mOt30JHFJtkk3c030fEtLS0gmVQWfIhCQLfvkS4Ya4mOJV6870Yx6MDpplYZdCyMuRew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969932; c=relaxed/simple;
-	bh=Bgv+9RVFEsm5sZFkpnyztISOBvKnN16srALZk4W301U=;
+	s=arc-20240116; t=1705969935; c=relaxed/simple;
+	bh=0f+fNcUNF2wpEhC2AyMLwF7POsSjBgfw3hJ1zjnNrZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lIGvmy89y3AeolI+XUzoVRLtuoG2lhp02e8e0GDRptbA5JkeWRRWjzpJmJH3JZRNOpifulkCEBEQGr8vBJwiSjkkyuaAk0AZB8Iv1fK5LF8CtFuHBY38/n3rS82+nrCWwMLnsBxlynJUe8+rOGM0YZ5n0kNjDJKShn4SNEo9CaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nsuGiOS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G+A+dSP+g1qDocE3UJ0dJpURCf26VovF1rNrWWSMDKLGwKictAchKWmKLdsBQO+EhQTc8d7I3ZgFY1ggjLT+loAI98bqfveGvV8FJrBRvoYask2nP6vKJOjy1flGyDBi6h+zwthdBYMSef8zFnOFtAYWromjTH28Ny1fi3zvmYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlaLH+db; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nsuGiOS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC072C433C7;
-	Tue, 23 Jan 2024 00:32:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlaLH+db"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62885C433F1;
+	Tue, 23 Jan 2024 00:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969932;
-	bh=Bgv+9RVFEsm5sZFkpnyztISOBvKnN16srALZk4W301U=;
+	s=korg; t=1705969935;
+	bh=0f+fNcUNF2wpEhC2AyMLwF7POsSjBgfw3hJ1zjnNrZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0nsuGiOSOgcOlP3QFOhC/teQ1WQP64dFRxQySmKSLTz/RoKebijdS0yTEfpaB/aiQ
-	 CfUSufionJ/XVPE941/0W74rcRROITpy+50YsXTNqgzFrKjqYXBlyjUCqisNGp5Ctz
-	 O58U+VRa9fXrPSCHcq0ZQWe14GUdE1tIISDGNh8I=
+	b=dlaLH+dbo9aFy0D/UkrA3+5Rm3Eeb+KJWfL5kv4G0WCRdk0vGhemvGZ/l3ucR+eRW
+	 2hkdPw+ZaV6z0bnxWBsSM5atYN3/x8dw9wCazbwm8PNN1UBpqQMbkz/+dPlRm3adUT
+	 Xu7gvkEv5Y679vaNLPBtssC2yx+eaoZDHWrbKSuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Tony Lindgren <tony@atomide.com>,
+	Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 505/641] serial: 8250: omap: Dont skip resource freeing if pm_runtime_resume_and_get() failed
-Date: Mon, 22 Jan 2024 15:56:49 -0800
-Message-ID: <20240122235833.873577989@linuxfoundation.org>
+Subject: [PATCH 6.7 506/641] iommu: Map reserved memory as cacheable if device is coherent
+Date: Mon, 22 Jan 2024 15:56:50 -0800
+Message-ID: <20240122235833.902172301@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -45,52 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Laurentiu Tudor <laurentiu.tudor@nxp.com>
 
-[ Upstream commit ad90d0358bd3b4554f243a425168fc7cebe7d04e ]
+[ Upstream commit f1aad9df93f39267e890836a28d22511f23474e1 ]
 
-Returning an error code from .remove() makes the driver core emit the
-little helpful error message:
+Check if the device is marked as DMA coherent in the DT and if so,
+map its reserved memory as cacheable in the IOMMU.
+This fixes the recently added IOMMU reserved memory support which
+uses IOMMU_RESV_DIRECT without properly building the PROT for the
+mapping.
 
-	remove callback returned a non-zero value. This will be ignored.
-
-and then remove the device anyhow. So all resources that were not freed
-are leaked in this case. Skipping serial8250_unregister_port() has the
-potential to keep enough of the UART around to trigger a use-after-free.
-
-So replace the error return (and with it the little helpful error
-message) by a more useful error message and continue to cleanup.
-
-Fixes: e3f0c638f428 ("serial: 8250: omap: Fix unpaired pm_runtime_put_sync() in omap8250_remove()")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20231110152927.70601-2-u.kleine-koenig@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a5bf3cfce8cb ("iommu: Implement of_iommu_get_resv_regions()")
+Signed-off-by: Laurentiu Tudor <laurentiu.tudor@nxp.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20230926152600.8749-1-laurentiu.tudor@nxp.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/of_iommu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index 578f35895b27..dd2be7a813c3 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -1594,7 +1594,7 @@ static int omap8250_remove(struct platform_device *pdev)
+diff --git a/drivers/iommu/of_iommu.c b/drivers/iommu/of_iommu.c
+index 35ba090f3b5e..47302b637cc0 100644
+--- a/drivers/iommu/of_iommu.c
++++ b/drivers/iommu/of_iommu.c
+@@ -260,6 +260,9 @@ void of_iommu_get_resv_regions(struct device *dev, struct list_head *list)
+ 				phys_addr_t iova;
+ 				size_t length;
  
- 	err = pm_runtime_resume_and_get(&pdev->dev);
- 	if (err)
--		return err;
-+		dev_err(&pdev->dev, "Failed to resume hardware\n");
++				if (of_dma_is_coherent(dev->of_node))
++					prot |= IOMMU_CACHE;
++
+ 				maps = of_translate_dma_region(np, maps, &iova, &length);
+ 				type = iommu_resv_region_get_type(dev, &phys, iova, length);
  
- 	up = serial8250_get_port(priv->line);
- 	omap_8250_shutdown(&up->port);
 -- 
 2.43.0
 
