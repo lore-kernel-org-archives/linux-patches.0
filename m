@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0E339AC0;
-	Tue, 23 Jan 2024 00:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE5E59B72;
+	Tue, 23 Jan 2024 00:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969801; cv=none; b=OdwHYuKr5YU3MTtL7oO7l6ViYtVFfeo4X7ygljf3PT7b54csmEaDbisCpmAlKjOhd61gqVvrSa2Z1b+pR89UaYbjWSbEjBROjZd8t+P8GqxV70uYK7QhRt2y2ypIUsSG40pEFeHNFOrw3K5mr9My84pfQBlOqN7bpBvzUPNa3TM=
+	t=1705969803; cv=none; b=tdewWTFMGTDqE7f200lT6VN+oJvAvv02Enohr30K/fCEqlue0zSzrRJGyzGAjgGjJhYaYVksP87mv74bscStqZQA9DVVJYhqF3yEkUURJhKn2PQi9ctuuY4m9CFaqE+yg9ZCOtnX3w2GOTfd/rO4ONsw+xZVE7elI+J2bsP60es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969801; c=relaxed/simple;
-	bh=oq+NrvX4nmcHpKdgZ/tHFL0KXdpAleTiU9RstVb8yQM=;
+	s=arc-20240116; t=1705969803; c=relaxed/simple;
+	bh=GorgIaBc1dtvBg+2Efny89nUoodAmqH/pWipFuMvb7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fu5clws8WQj2mmtrdgXTk3Yjagsxyr5VauKRpuf1wyvyEH62P2IYPkvpIaQgQXXT0cZMsGgdPqZorZVaADla6lmSMBOxoQngjo0X8taFd9Ue/qik4Ri1ga46jVkYTzlt3AqB180H4QN9Sp3gVOnaLvQs7g9i2Fe/9mZo7jfUbu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLs61JNi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rg+5PToUEFN9r4uBwdelN+fC0Krh7d1LJdT449vY8Pruq+aLU6F8vqTcb8sA47c+INRM4pp9nScda4uA/c5PDLkQ2cveQhCGv4ut9/sdpftMt6cXKOpsQW89FIrwF/OBodbpZRRyOALWc7iQRYYECV4WoRecIfNsP5MPb6x8Vjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCTUqXve; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLs61JNi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F00C433F1;
-	Tue, 23 Jan 2024 00:30:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCTUqXve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4C2C433F1;
+	Tue, 23 Jan 2024 00:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969801;
-	bh=oq+NrvX4nmcHpKdgZ/tHFL0KXdpAleTiU9RstVb8yQM=;
+	s=korg; t=1705969803;
+	bh=GorgIaBc1dtvBg+2Efny89nUoodAmqH/pWipFuMvb7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TLs61JNi45V7YtwIOhRjHGq6YYYm/Zo4FYNIIFGv1ARYl81Jkmrq6AMjTGrRTWGIm
-	 Lg0EEJtRCLFbFbRnLxJEiFVAJmjEmFPV0zskS7NrWh4LG1X9h7fk1w07HhR1J3r1GE
-	 v8bRPvqoKA+p9F2VDgmY0id5w0Hkf6SCD+35GQbI=
+	b=GCTUqXveVlivqzrEo9IS/5F0rbxloVSHqQpBljYvtcOMehEIyIGW6tMnVs5UxFjwz
+	 TXdyretYbeTkAodCKKYFQxWq49UA5rXQFgmBJjCpsfmM3oiJb8i/R0DZJJSNmHSQbK
+	 XizJpkge14Lq2TvwxKr/QXxwewZH4P1hdr/1zkC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Lin <yu-hao.lin@nxp.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
 	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
-	Rafael Beims <rafael.beims@toradex.com>
-Subject: [PATCH 6.7 458/641] wifi: mwifiex: configure BSSID consistently when starting AP
-Date: Mon, 22 Jan 2024 15:56:02 -0800
-Message-ID: <20240122235832.362578388@linuxfoundation.org>
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.7 459/641] wifi: mwifiex: fix uninitialized firmware_stat
+Date: Mon, 22 Jan 2024 15:56:03 -0800
+Message-ID: <20240122235832.395373172@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -55,88 +55,34 @@ Content-Transfer-Encoding: 8bit
 
 From: David Lin <yu-hao.lin@nxp.com>
 
-commit f0dd488e11e71ac095df7638d892209c629d9af2 upstream.
+commit 3df95e265924ac898c1a38a0c01846dd0bd3b354 upstream.
 
-AP BSSID configuration is missing at AP start.  Without this fix, FW returns
-STA interface MAC address after first init.  When hostapd restarts, it gets MAC
-address from netdev before driver sets STA MAC to netdev again. Now MAC address
-between hostapd and net interface are different causes STA cannot connect to
-AP.  After that MAC address of uap0 mlan0 become the same. And issue disappears
-after following hostapd restart (another issue is AP/STA MAC address become the
-same).
-
-This patch fixes the issue cleanly.
+Variable firmware_stat is possible to be used without initialization.
 
 Signed-off-by: David Lin <yu-hao.lin@nxp.com>
-Fixes: 12190c5d80bd ("mwifiex: add cfg80211 start_ap and stop_ap handlers")
+Fixes: 1c5d463c0770 ("wifi: mwifiex: add extra delay for firmware ready")
 Cc: stable@vger.kernel.org
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Tested-by: Rafael Beims <rafael.beims@toradex.com> # Verdin iMX8MP/SD8997 SD
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202312192236.ZflaWYCw-lkp@intel.com/
 Acked-by: Brian Norris <briannorris@chromium.org>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231215005118.17031-1-yu-hao.lin@nxp.com
+Link: https://msgid.link/20231221015511.1032128-1-yu-hao.lin@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c |    2 ++
- drivers/net/wireless/marvell/mwifiex/fw.h       |    1 +
- drivers/net/wireless/marvell/mwifiex/ioctl.h    |    1 +
- drivers/net/wireless/marvell/mwifiex/uap_cmd.c  |    8 ++++++++
- 4 files changed, 12 insertions(+)
+ drivers/net/wireless/marvell/mwifiex/sdio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -2047,6 +2047,8 @@ static int mwifiex_cfg80211_start_ap(str
- 
- 	mwifiex_set_sys_config_invalid_data(bss_cfg);
- 
-+	memcpy(bss_cfg->mac_addr, priv->curr_addr, ETH_ALEN);
-+
- 	if (params->beacon_interval)
- 		bss_cfg->beacon_period = params->beacon_interval;
- 	if (params->dtim_period)
---- a/drivers/net/wireless/marvell/mwifiex/fw.h
-+++ b/drivers/net/wireless/marvell/mwifiex/fw.h
-@@ -165,6 +165,7 @@ enum MWIFIEX_802_11_PRIVACY_FILTER {
- #define TLV_TYPE_STA_MAC_ADDR       (PROPRIETARY_TLV_BASE_ID + 32)
- #define TLV_TYPE_BSSID              (PROPRIETARY_TLV_BASE_ID + 35)
- #define TLV_TYPE_CHANNELBANDLIST    (PROPRIETARY_TLV_BASE_ID + 42)
-+#define TLV_TYPE_UAP_MAC_ADDRESS    (PROPRIETARY_TLV_BASE_ID + 43)
- #define TLV_TYPE_UAP_BEACON_PERIOD  (PROPRIETARY_TLV_BASE_ID + 44)
- #define TLV_TYPE_UAP_DTIM_PERIOD    (PROPRIETARY_TLV_BASE_ID + 45)
- #define TLV_TYPE_UAP_BCAST_SSID     (PROPRIETARY_TLV_BASE_ID + 48)
---- a/drivers/net/wireless/marvell/mwifiex/ioctl.h
-+++ b/drivers/net/wireless/marvell/mwifiex/ioctl.h
-@@ -107,6 +107,7 @@ struct mwifiex_uap_bss_param {
- 	u8 qos_info;
- 	u8 power_constraint;
- 	struct mwifiex_types_wmm_info wmm_info;
-+	u8 mac_addr[ETH_ALEN];
- };
- 
- enum {
---- a/drivers/net/wireless/marvell/mwifiex/uap_cmd.c
-+++ b/drivers/net/wireless/marvell/mwifiex/uap_cmd.c
-@@ -468,6 +468,7 @@ void mwifiex_config_uap_11d(struct mwifi
- static int
- mwifiex_uap_bss_param_prepare(u8 *tlv, void *cmd_buf, u16 *param_size)
+--- a/drivers/net/wireless/marvell/mwifiex/sdio.c
++++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
+@@ -779,7 +779,7 @@ static int mwifiex_check_fw_status(struc
  {
-+	struct host_cmd_tlv_mac_addr *mac_tlv;
- 	struct host_cmd_tlv_dtim_period *dtim_period;
- 	struct host_cmd_tlv_beacon_period *beacon_period;
- 	struct host_cmd_tlv_ssid *ssid;
-@@ -487,6 +488,13 @@ mwifiex_uap_bss_param_prepare(u8 *tlv, v
- 	int i;
- 	u16 cmd_size = *param_size;
+ 	struct sdio_mmc_card *card = adapter->card;
+ 	int ret = 0;
+-	u16 firmware_stat;
++	u16 firmware_stat = 0;
+ 	u32 tries;
  
-+	mac_tlv = (struct host_cmd_tlv_mac_addr *)tlv;
-+	mac_tlv->header.type = cpu_to_le16(TLV_TYPE_UAP_MAC_ADDRESS);
-+	mac_tlv->header.len = cpu_to_le16(ETH_ALEN);
-+	memcpy(mac_tlv->mac_addr, bss_cfg->mac_addr, ETH_ALEN);
-+	cmd_size += sizeof(struct host_cmd_tlv_mac_addr);
-+	tlv += sizeof(struct host_cmd_tlv_mac_addr);
-+
- 	if (bss_cfg->ssid.ssid_len) {
- 		ssid = (struct host_cmd_tlv_ssid *)tlv;
- 		ssid->header.type = cpu_to_le16(TLV_TYPE_UAP_SSID);
+ 	for (tries = 0; tries < poll_num; tries++) {
 
 
