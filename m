@@ -1,52 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E7513474E;
-	Tue, 23 Jan 2024 01:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCCC13473B;
+	Tue, 23 Jan 2024 01:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971929; cv=none; b=pZ61sD326u+ocF+/nmvjb+/U2wZNyIq6Qh0bCiJ2lCcWaibL9I9vprJ3g+CGyZDtkAiSWZYnoKKcSzhd4ZntSIX+OMt9LqCDZwPAFdAkntv6jnrySDAQ50x9AvVoa8qTyspg+hEU4WtPrYb6OFr2zL3XM/4S9XAAw9jf4ZeyS+Y=
+	t=1705971932; cv=none; b=aKLL+/MojtgmhKQO24yrjJgQLdGLIH097ykkdgAaIpP1rMO74Axff2yIBaOJcoWCIn+dXrgF4m1iYtnS/VxzGPqFR4RYAsnkFKqS/YhleKY6TXwbsx0RYPN0Gp0gXX3Cr/vlI7zMGVrTlFptngO7tjUHYvdqJwVLFBjBkLjKOuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971929; c=relaxed/simple;
-	bh=pH9YZwNCIgsfgcvEeq0joIHvFLIcY+vwekZ3xrGCPS0=;
+	s=arc-20240116; t=1705971932; c=relaxed/simple;
+	bh=NDSHDBEms2jHIf3fkT/117ovDhGzdN2w7DZup1a+7o4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqhe8nIwF6I6KalwQha7oUH6rRco49vdP1uOz4Jhs3RKwJwGs3ohzNnS7I3adQ8H69J4euaPxxKglX0iUkE2qF51Ri84ul541pNZ8L0x3/6CzdywDpGLrs+jZGimC7FxmKXMHOTHKLFIaJ4yQo3mkMAaKm+dsMYJ/CekupG9pN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=viOAiX6f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EfA3jYj8P4SmI2RrHnNOurg/eynWpZ4VXaqPs8R0HB8eqYuL/zoEvDz247enNFdx4eVHEBN1ndpMB2A1KffelBTtwxRiQe4M/nv37Hp7p8+WsqAB0aCcEc4QCZDFIOKsY1RncYGkBkX4cJEQDet/PlhBF7aalhMkkWPL1ZNLTOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTunK5g1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="viOAiX6f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9F6C433F1;
-	Tue, 23 Jan 2024 01:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTunK5g1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE84C433F1;
+	Tue, 23 Jan 2024 01:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971929;
-	bh=pH9YZwNCIgsfgcvEeq0joIHvFLIcY+vwekZ3xrGCPS0=;
+	s=korg; t=1705971932;
+	bh=NDSHDBEms2jHIf3fkT/117ovDhGzdN2w7DZup1a+7o4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=viOAiX6fagkly3di26QHBps1JCM36nZWbUcfi3zv7Pu6/UJhbcM16Y2Q7o8xKkJPg
-	 H2VQVbmeiX6S2NEQJD5VFciALSLWLYODrb2xU9Mt0gduYlhQ1MLK2FgrzqO1m7ut20
-	 N6Lzk7h3qxOYpIuOIwvT9TXEP27ZJAlMDff/7DV8=
+	b=HTunK5g1G9titcqM0vAUxh+hLshMQR/qTf9L8oHetwf7kTGeMVV70EGCxsCkPz1UU
+	 +4XOqgq+fQBzlubm6q05vtk9PVU+lTi84zVmIObDzWh2dYqpiJ9bgEwKxSaKQ2r6v3
+	 hMUgq7/DQ3YN9ArWjV251tqayK6vT1WyM3bR/PEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Namhyung Kim <Namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Junhao He <hejunhao3@huawei.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Qi Liu <liuqi115@huawei.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 354/417] perf hisi-ptt: Fix one memory leakage in hisi_ptt_process_auxtrace_event()
-Date: Mon, 22 Jan 2024 15:58:42 -0800
-Message-ID: <20240122235804.057925163@linuxfoundation.org>
+Subject: [PATCH 5.10 249/286] iio: adc: ad9467: fix reset gpio handling
+Date: Mon, 22 Jan 2024 15:59:15 -0800
+Message-ID: <20240122235741.655283582@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -58,50 +48,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit 1bc479d665bc25a9a4e8168d5b400a47491511f9 ]
+[ Upstream commit 76f028539cf360f750efd8cde560edda298e4c6b ]
 
-ASan complains a memory leakage in hisi_ptt_process_auxtrace_event()
-that the data buffer is not freed. Since currently we only support the
-raw dump trace mode, the data buffer is used only within this function.
-So fix this by freeing the data buffer before going out.
+The reset gpio was being handled with inverted polarity. This means that
+as far as gpiolib is concerned we were actually leaving the pin asserted
+(in theory, this would mean reset). However, inverting the polarity in
+devicetree made things work. Fix it by doing it the proper way and how
+gpiolib expects it to be done.
 
-Fixes: 5e91e57e68090c0e ("perf auxtrace arm64: Add support for parsing HiSilicon PCIe Trace packet")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Acked-by: Namhyung Kim <Namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Junhao He <hejunhao3@huawei.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Qi Liu <liuqi115@huawei.com>
-Link: https://lore.kernel.org/r/20231207081635.8427-3-yangyicong@huawei.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+While at it, moved the handling to it's own function and dropped
+'reset_gpio' from the 'struct ad9467_state' as we only need it during
+probe. On top of that, refactored things so that we now request the gpio
+asserted (i.e in reset) and then de-assert it. Also note that we now use
+gpiod_set_value_cansleep() instead of gpiod_direction_output() as we
+already request the pin as output.
+
+Fixes: ad6797120238 ("iio: adc: ad9467: add support AD9467 ADC")
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20231207-iio-backend-prep-v2-1-a4a33bc4d70e@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/hisi-ptt.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/adc/ad9467.c | 31 ++++++++++++++++++-------------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/tools/perf/util/hisi-ptt.c b/tools/perf/util/hisi-ptt.c
-index 45b614bb73bf..764d660d30e2 100644
---- a/tools/perf/util/hisi-ptt.c
-+++ b/tools/perf/util/hisi-ptt.c
-@@ -121,6 +121,7 @@ static int hisi_ptt_process_auxtrace_event(struct perf_session *session,
- 	if (dump_trace)
- 		hisi_ptt_dump_event(ptt, data, size);
+diff --git a/drivers/iio/adc/ad9467.c b/drivers/iio/adc/ad9467.c
+index 92837dcbc170..f2620dcd2a2c 100644
+--- a/drivers/iio/adc/ad9467.c
++++ b/drivers/iio/adc/ad9467.c
+@@ -121,7 +121,6 @@ struct ad9467_state {
+ 	unsigned int			output_mode;
  
-+	free(data);
- 	return 0;
+ 	struct gpio_desc		*pwrdown_gpio;
+-	struct gpio_desc		*reset_gpio;
+ };
+ 
+ static int ad9467_spi_read(struct spi_device *spi, unsigned int reg)
+@@ -378,6 +377,21 @@ static int ad9467_preenable_setup(struct adi_axi_adc_conv *conv)
+ 	return ad9467_outputmode_set(st->spi, st->output_mode);
  }
+ 
++static int ad9467_reset(struct device *dev)
++{
++	struct gpio_desc *gpio;
++
++	gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
++	if (IS_ERR_OR_NULL(gpio))
++		return PTR_ERR_OR_ZERO(gpio);
++
++	fsleep(1);
++	gpiod_set_value_cansleep(gpio, 0);
++	fsleep(10 * USEC_PER_MSEC);
++
++	return 0;
++}
++
+ static int ad9467_probe(struct spi_device *spi)
+ {
+ 	const struct ad9467_chip_info *info;
+@@ -406,18 +420,9 @@ static int ad9467_probe(struct spi_device *spi)
+ 	if (IS_ERR(st->pwrdown_gpio))
+ 		return PTR_ERR(st->pwrdown_gpio);
+ 
+-	st->reset_gpio = devm_gpiod_get_optional(&spi->dev, "reset",
+-						 GPIOD_OUT_LOW);
+-	if (IS_ERR(st->reset_gpio))
+-		return PTR_ERR(st->reset_gpio);
+-
+-	if (st->reset_gpio) {
+-		udelay(1);
+-		ret = gpiod_direction_output(st->reset_gpio, 1);
+-		if (ret)
+-			return ret;
+-		mdelay(10);
+-	}
++	ret = ad9467_reset(&spi->dev);
++	if (ret)
++		return ret;
+ 
+ 	spi_set_drvdata(spi, st);
  
 -- 
 2.43.0
