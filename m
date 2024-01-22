@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFF66281D;
-	Tue, 23 Jan 2024 00:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAE56281D;
+	Tue, 23 Jan 2024 00:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971443; cv=none; b=DFyO9ZdoYEf8jnf7tUaEPBQqRhRFy/cA0BE0JBzfhug6HM2EKPjsDD/7PBPwmzu/zusOZM6B2DFRjIZzb/S1KJAJqExdPZ8CZOLw0otPALZa0ySXYAcc4Wwcm27A48suQ5gzvKB9TaVKlgCTkmQLGrL5L2omc744HDe51Hszukk=
+	t=1705971447; cv=none; b=SGb5sXGslwCxAhJNxbW2A0dczHaXniYQnXFVSSK9+sqH4aB7u93BfS5edBHoFri7e0W+Oy/2f1zFLSKe+3wVbQz0DODCZitk+/juQDssrcwKbr7XpKpt5D38N3Wi2UYMCauARmjy1Sl3vTaZncO95/xNrsxcO4OlFVqO5bM2Whs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971443; c=relaxed/simple;
-	bh=wGuN975V07rpQPfbn8kxmTghtVRXyNhe6OvU9yJ+a88=;
+	s=arc-20240116; t=1705971447; c=relaxed/simple;
+	bh=3v0Yy4IJuhdJ8657qpAWhs0MM4z4BPoy1c70cJLPTAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zl4H77qFOyZ6TzNKxcrSz23DNx4tM16aS5OEW50mzI7TAco2+yYt4UYv2C4DSMurmM6JpDXQ/JQcnBcSCeLSJz+2kbz1+OmEw4emvKKQkH8SxAIE8fx3Xs8DAAazIBX9H2MPlV4ukkN2FqDnwis7+lwawRwVqAOqjhC00p+7llo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z819cun3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oEcO/cKSbuGaBz/u0IJc93NuL2Dr89uzJeuJNR4JZlseHdCxIGOQIlThdM9TkNOZhs9P9buX2odCR9B2pnlA7u0nqh+L6RHoKeWBHmCKF9YcbHz4MmZOtjmsKWzrjj2SYVzN9IXjupMcqL9Xst0yMfGIxiAngpF4XIItFFc3uSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMco6nuP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z819cun3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD55C433F1;
-	Tue, 23 Jan 2024 00:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMco6nuP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9B2C433C7;
+	Tue, 23 Jan 2024 00:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971443;
-	bh=wGuN975V07rpQPfbn8kxmTghtVRXyNhe6OvU9yJ+a88=;
+	s=korg; t=1705971447;
+	bh=3v0Yy4IJuhdJ8657qpAWhs0MM4z4BPoy1c70cJLPTAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z819cun3WtHtacJYyZrJ/nz3QDFeVzvw3wbG/5Go9gTxD/n7qoDRtKYOKOH4mY08A
-	 JbRjgcq+HB3Sxk7wKSMa0iWUk0gL1xdX08Exh7wj6TBPVp5E3AJYIdY2mBySLoluPo
-	 uLqBlV8rGn0pd8kwStlrRMpQrs/DJNpg1bJl0cDw=
+	b=RMco6nuPNIfWxklppWzLuLl9O3SqPjtafVgBaeRF6Vj/LiDe/y9tYa8vJs6CdUrZ4
+	 ASx0OG6zUq39LItLZj2Ap70R98WZdBiRICDkFwTJ42UdX4D6v/lIxs54VXwhDEvIYT
+	 6Rpto/uAdmOhQwtSX4iAoIH3TYs5BJP+e2c5/knY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Shuah Khan <shuah@kernel.org>,
-	linux-sound@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Takashi Iwai <tiwai@suse.de>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 243/417] kselftest/alsa - mixer-test: Fix the print format specifier warning
-Date: Mon, 22 Jan 2024 15:56:51 -0800
-Message-ID: <20240122235800.296862359@linuxfoundation.org>
+Subject: [PATCH 5.10 152/286] drm/radeon/r600_cs: Fix possible int overflows in r600_cs_check_reg()
+Date: Mon, 22 Jan 2024 15:57:38 -0800
+Message-ID: <20240122235738.011286961@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,66 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 3f47c1ebe5ca9c5883e596c7888dec4bec0176d8 ]
+[ Upstream commit 39c960bbf9d9ea862398759e75736cfb68c3446f ]
 
-The GCC 13.2.0 compiler issued the following warning:
+While improbable, there may be a chance of hitting integer
+overflow when the result of radeon_get_ib_value() gets shifted
+left.
 
-mixer-test.c: In function ‘ctl_value_index_valid’:
-mixer-test.c:322:79: warning: format ‘%lld’ expects argument of type ‘long long int’, \
-			      but argument 5 has type ‘long int’ [-Wformat=]
-  322 |                         ksft_print_msg("%s.%d value %lld more than maximum %lld\n",
-      |                                                                            ~~~^
-      |                                                                               |
-      |                                                                               long long int
-      |                                                                            %ld
-  323 |                                        ctl->name, index, int64_val,
-  324 |                                        snd_ctl_elem_info_get_max(ctl->info));
-      |                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      |                                        |
-      |                                        long int
+Avoid it by casting one of the operands to larger data type (u64).
 
-Fixing the format specifier as advised by the compiler suggestion removes the
-warning.
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-Fixes: 3f48b137d88e7 ("kselftest: alsa: Factor out check that values meet constraints")
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: linux-sound@vger.kernel.org
-Cc: linux-kselftest@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Acked-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20240107173704.937824-3-mirsad.todorovac@alu.unizg.hr
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 1729dd33d20b ("drm/radeon/kms: r600 CS parser fixes")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/alsa/mixer-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/r600_cs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/alsa/mixer-test.c b/tools/testing/selftests/alsa/mixer-test.c
-index d59910658c8c..9ad39db32d14 100644
---- a/tools/testing/selftests/alsa/mixer-test.c
-+++ b/tools/testing/selftests/alsa/mixer-test.c
-@@ -358,7 +358,7 @@ static bool ctl_value_index_valid(struct ctl_data *ctl,
+diff --git a/drivers/gpu/drm/radeon/r600_cs.c b/drivers/gpu/drm/radeon/r600_cs.c
+index 390a9621604a..1e6ad9daff53 100644
+--- a/drivers/gpu/drm/radeon/r600_cs.c
++++ b/drivers/gpu/drm/radeon/r600_cs.c
+@@ -1276,7 +1276,7 @@ static int r600_cs_check_reg(struct radeon_cs_parser *p, u32 reg, u32 idx)
+ 			return -EINVAL;
  		}
- 
- 		if (int64_val > snd_ctl_elem_info_get_max64(ctl->info)) {
--			ksft_print_msg("%s.%d value %lld more than maximum %lld\n",
-+			ksft_print_msg("%s.%d value %lld more than maximum %ld\n",
- 				       ctl->name, index, int64_val,
- 				       snd_ctl_elem_info_get_max(ctl->info));
- 			return false;
+ 		tmp = (reg - CB_COLOR0_BASE) / 4;
+-		track->cb_color_bo_offset[tmp] = radeon_get_ib_value(p, idx) << 8;
++		track->cb_color_bo_offset[tmp] = (u64)radeon_get_ib_value(p, idx) << 8;
+ 		ib[idx] += (u32)((reloc->gpu_offset >> 8) & 0xffffffff);
+ 		track->cb_color_base_last[tmp] = ib[idx];
+ 		track->cb_color_bo[tmp] = reloc->robj;
+@@ -1303,7 +1303,7 @@ static int r600_cs_check_reg(struct radeon_cs_parser *p, u32 reg, u32 idx)
+ 					"0x%04X\n", reg);
+ 			return -EINVAL;
+ 		}
+-		track->htile_offset = radeon_get_ib_value(p, idx) << 8;
++		track->htile_offset = (u64)radeon_get_ib_value(p, idx) << 8;
+ 		ib[idx] += (u32)((reloc->gpu_offset >> 8) & 0xffffffff);
+ 		track->htile_bo = reloc->robj;
+ 		track->db_dirty = true;
 -- 
 2.43.0
 
