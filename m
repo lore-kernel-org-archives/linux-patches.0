@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9C62B9B7;
-	Tue, 23 Jan 2024 01:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558782B9B7;
+	Tue, 23 Jan 2024 01:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974108; cv=none; b=fXhOpxxNjhX4a/H/Cb7a9xbC5AIZn05CumO+OyLEXRIa25Znzrhtf4vku4pg/ZKfxZo1islyhKo+knw4r2Fog7eQ4U1fb3JjirKLUu60jV/gpkH3A6Vu5I7FamKxqzu0UzW0srtA3T2jnGoBzKHoRrY34vyFhyxksXsTyHSHtlA=
+	t=1705974109; cv=none; b=lMBbsMAYG0thaq9j0h2vn1DnWJZ5WiPlnUifZPJ7AxgpaS6dRCMAAzXB1OgKyApfUKcyCSWGD2swUeXXmGueoNu1hI8oEIED68PIc+9bWpdzmaQLNkHXRMiwZ2WAZbmwKsewtZ5vBdv22XqaKfbcgqA00mUAP0vO55SbIyJPbVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974108; c=relaxed/simple;
-	bh=2tkxMR1zeh97f3NX7x79QwVPXJUtSmzb8WNfO/TZpPc=;
+	s=arc-20240116; t=1705974109; c=relaxed/simple;
+	bh=+p9zbJwduckakHQFo+c1iBqwImAhhsVynLP0xUhcw9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uOiPaFuIR/Hk/FnAIg3bVT08SRucnJmSGRDzzF4F4RQiLGyKvrYQgY+5/9JbZKCNA9x6TMfCAcgJEoP07GElgICOQVNyYSIWO3HA/y5ixMY/ygBP8pkPJnhzfoFpru4swejsesHtcTskLocSM4SP38BTxMcNt3RMtrAEaMiQ1Nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HRvyLqNV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=du78XxASzHIi1SLY6VkDbjzOFYhtv8NlD09xDp8PqSth36SQH1mt3JysvtBK3dVR6SSKtoBTdq7TF+PCO0aRY4k9hkeCNdaDz9OF7mmIMhb3dxQdsDA9PPJeR/QfhCoum2YwkW9gQfqjWIi6Cw/iAClLvAWSKnKzbASaeQPmlcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrNLlxm4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HRvyLqNV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E527EC43390;
-	Tue, 23 Jan 2024 01:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrNLlxm4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16352C433C7;
+	Tue, 23 Jan 2024 01:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974108;
-	bh=2tkxMR1zeh97f3NX7x79QwVPXJUtSmzb8WNfO/TZpPc=;
+	s=korg; t=1705974109;
+	bh=+p9zbJwduckakHQFo+c1iBqwImAhhsVynLP0xUhcw9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HRvyLqNVbhpp7VYgBbW8AaVp98CgXCEoIhwmIwCKdnouCsA1AYdHxSlQZriOEFXjV
-	 l5wfemyw706sQTpLbsdJ6PQvFN/jUU/cJzOLPlkUJi5B0AkqIXvWCw8ehRbrXRKpew
-	 1Es/bDmbZpU4PzhIFSGRMRiEjLtjrNCTQC2XneM4=
+	b=WrNLlxm4/X6UM5A12MlEfKSxhVCey5l33/5t24UvQq4bY+y9KwXWZHKsGpiQDk+Yh
+	 ym5bHdPU19L4pP8EkEHsK2yXCRkbh/ZlvSVhMFnq4Iyf39SPbzMAUcrBHDQK2hThui
+	 GqB+0JRv751+zq3767RI/YSstF7G/53UniXR0IyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Paris <eparis@parisplace.org>,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 041/583] selinux: Fix error priority for bind with AF_UNSPEC on PF_INET6 socket
-Date: Mon, 22 Jan 2024 15:51:32 -0800
-Message-ID: <20240122235813.406072843@linuxfoundation.org>
+Subject: [PATCH 5.15 166/374] Bluetooth: Fix bogus check for re-auth no supported with non-ssp
+Date: Mon, 22 Jan 2024 15:57:02 -0800
+Message-ID: <20240122235750.388569754@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,56 +44,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit bbf5a1d0e5d0fb3bdf90205aa872636122692a50 ]
+[ Upstream commit d03376c185926098cb4d668d6458801eb785c0a5 ]
 
-The IPv6 network stack first checks the sockaddr length (-EINVAL error)
-before checking the family (-EAFNOSUPPORT error).
+This reverts 19f8def031bfa50c579149b200bfeeb919727b27
+"Bluetooth: Fix auth_complete_evt for legacy units" which seems to be
+working around a bug on a broken controller rather then any limitation
+imposed by the Bluetooth spec, in fact if there ws not possible to
+re-auth the command shall fail not succeed.
 
-This was discovered thanks to commit a549d055a22e ("selftests/landlock:
-Add network tests").
-
-Cc: Eric Paris <eparis@parisplace.org>
-Cc: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Cc: Paul Moore <paul@paul-moore.com>
-Cc: Stephen Smalley <stephen.smalley.work@gmail.com>
-Reported-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Closes: https://lore.kernel.org/r/0584f91c-537c-4188-9e4f-04f192565667@collabora.com
-Fixes: 0f8db8cc73df ("selinux: add AF_UNSPEC and INADDR_ANY checks to selinux_socket_bind()")
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Tested-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 19f8def031bf ("Bluetooth: Fix auth_complete_evt for legacy units")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/hooks.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ include/net/bluetooth/hci_core.h |  1 -
+ net/bluetooth/hci_conn.c         |  8 +++-----
+ net/bluetooth/hci_event.c        | 11 ++---------
+ 3 files changed, 5 insertions(+), 15 deletions(-)
 
-diff --git a/security/selinux/hooks.c b/security/selinux/hooks.c
-index 208503340721..aa0afc122f09 100644
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -4661,6 +4661,13 @@ static int selinux_socket_bind(struct socket *sock, struct sockaddr *address, in
- 				return -EINVAL;
- 			addr4 = (struct sockaddr_in *)address;
- 			if (family_sa == AF_UNSPEC) {
-+				if (family == PF_INET6) {
-+					/* Length check from inet6_bind_sk() */
-+					if (addrlen < SIN6_LEN_RFC2133)
-+						return -EINVAL;
-+					/* Family check from __inet6_bind() */
-+					goto err_af;
-+				}
- 				/* see __inet_bind(), we only want to allow
- 				 * AF_UNSPEC if the address is INADDR_ANY
- 				 */
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 9a21ccbb5b5c..b6114bc0dd0f 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -852,7 +852,6 @@ void hci_inquiry_cache_flush(struct hci_dev *hdev);
+ /* ----- HCI Connections ----- */
+ enum {
+ 	HCI_CONN_AUTH_PEND,
+-	HCI_CONN_REAUTH_PEND,
+ 	HCI_CONN_ENCRYPT_PEND,
+ 	HCI_CONN_RSWITCH_PEND,
+ 	HCI_CONN_MODE_CHANGE_PEND,
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index ce538dbe89d1..700920aea39e 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1436,12 +1436,10 @@ static int hci_conn_auth(struct hci_conn *conn, __u8 sec_level, __u8 auth_type)
+ 		hci_send_cmd(conn->hdev, HCI_OP_AUTH_REQUESTED,
+ 			     sizeof(cp), &cp);
+ 
+-		/* If we're already encrypted set the REAUTH_PEND flag,
+-		 * otherwise set the ENCRYPT_PEND.
++		/* Set the ENCRYPT_PEND to trigger encryption after
++		 * authentication.
+ 		 */
+-		if (test_bit(HCI_CONN_ENCRYPT, &conn->flags))
+-			set_bit(HCI_CONN_REAUTH_PEND, &conn->flags);
+-		else
++		if (!test_bit(HCI_CONN_ENCRYPT, &conn->flags))
+ 			set_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags);
+ 	}
+ 
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index edf5132b5dc9..2ad2f4647847 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3017,14 +3017,8 @@ static void hci_auth_complete_evt(struct hci_dev *hdev, struct sk_buff *skb)
+ 
+ 	if (!ev->status) {
+ 		clear_bit(HCI_CONN_AUTH_FAILURE, &conn->flags);
+-
+-		if (!hci_conn_ssp_enabled(conn) &&
+-		    test_bit(HCI_CONN_REAUTH_PEND, &conn->flags)) {
+-			bt_dev_info(hdev, "re-auth of legacy device is not possible.");
+-		} else {
+-			set_bit(HCI_CONN_AUTH, &conn->flags);
+-			conn->sec_level = conn->pending_sec_level;
+-		}
++		set_bit(HCI_CONN_AUTH, &conn->flags);
++		conn->sec_level = conn->pending_sec_level;
+ 	} else {
+ 		if (ev->status == HCI_ERROR_PIN_OR_KEY_MISSING)
+ 			set_bit(HCI_CONN_AUTH_FAILURE, &conn->flags);
+@@ -3033,7 +3027,6 @@ static void hci_auth_complete_evt(struct hci_dev *hdev, struct sk_buff *skb)
+ 	}
+ 
+ 	clear_bit(HCI_CONN_AUTH_PEND, &conn->flags);
+-	clear_bit(HCI_CONN_REAUTH_PEND, &conn->flags);
+ 
+ 	if (conn->state == BT_CONFIG) {
+ 		if (!ev->status && hci_conn_ssp_enabled(conn)) {
 -- 
 2.43.0
 
