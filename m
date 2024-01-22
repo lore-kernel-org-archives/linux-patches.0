@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C892A51C44;
-	Tue, 23 Jan 2024 01:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06D75733D;
+	Tue, 23 Jan 2024 01:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974052; cv=none; b=YNE2oK7MbyPkEkPvSwXF2BBgQeHPvuArq65zbkyDn9XoLFg9RQ3uuzlWuD20TgH+0wpTK0TEfniG5E3NKT76R18ctxnhhMi0ZTQzFvdXnD4yqMWaJvJjxd1yLp+UVqlCbXCVG2FtFcIjaeNGOJb22F+Pa/nkLpj9EaTrdArQHdk=
+	t=1705974053; cv=none; b=r7lG52DGvHRKIqx0TkkR3KELKa6wymkm485YxIozfG5Z/N7xBuH/Z2z46Gso6WZ6PjVNfpWJU5gxOgvCVSPZxrzVGpMeXaOs5IvOKVDcIXZYne2zLhr/ODAVVjVMCjYao6Gs9fEHzn3LmZE83BiB648BNa6uM16okf4yGPuc/Dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974052; c=relaxed/simple;
-	bh=tdIedISinqeeB2X6xbUziK5/BaBh/upHO/1Cc0aEGq0=;
+	s=arc-20240116; t=1705974053; c=relaxed/simple;
+	bh=yWp6cYTcYo/ECvSOA0HtX7TPBo+a6eoH8Vzzo79QY4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IR+B5xjK9AMH/cJrTc2knU+p0qXPTQpDwlbSdlq/YUqKPtrkPcYvToH2Ja23LAMDZAWntWzNJPABC7zIS7KMOwLcsxIcRSbOwIbb20I1uMIqIc8O5rVy2EKWqTk2dQpk8UDzD7mNMHEEAHR4aLWN6knkM7ZGTtWEWfNHC8yW56o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTznXJwP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oGjL3K+wB6hG4ulQ3YkgsfhcwEiGdm0Um6TdAFHU3TIelTFm1/7lk9zeV0Q9+1OIJfgJ2vmzkqWoVhx9Ciux20ef2bnrVUIKkwUml1sawrpX3cLfKpWkXyToQ3KdbkINPc593Aq5rvdbm8lLgb7VAfKFSkx11H4B+hrBfCpjiv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVRSg6NS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTznXJwP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C993C43390;
-	Tue, 23 Jan 2024 01:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVRSg6NS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91EE0C43390;
+	Tue, 23 Jan 2024 01:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974052;
-	bh=tdIedISinqeeB2X6xbUziK5/BaBh/upHO/1Cc0aEGq0=;
+	s=korg; t=1705974053;
+	bh=yWp6cYTcYo/ECvSOA0HtX7TPBo+a6eoH8Vzzo79QY4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QTznXJwPKmER/gDg8mi+YeAtkU6qR7YEVpQbycunZKzcgB7cVrhUNxfAILgRQCa/t
-	 o724o7bDCY64tl+Z4HohT3dNm7T2FyBIJGhczUEFOOZ6d1HC9QKNsbAjdq5SzvVtnX
-	 yrFI6gPkHcSjmBBS29ZEvvD64EeuDlDtyzzFBS3U=
+	b=zVRSg6NSWk/9NbwT5lmfuRr9Mbn2jsrOGW0+1u7sxUt9dD/oEv5lckEsP6GE7vngq
+	 ueXZkiDkAvHApIr4/W0vmJnPYwYdZaZrkMlcQpqb/BJ3QA5OCpOfP03z/4SEC5PBQA
+	 fIn3lQiF2gQe1drklJq609lrrowM4VmcZXopn7rY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Luo Jiaxing <luojiaxing@huawei.com>,
+	John Garry <john.garry@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 018/583] powerpc/powernv: Add a null pointer check in opal_powercap_init()
-Date: Mon, 22 Jan 2024 15:51:09 -0800
-Message-ID: <20240122235812.773468809@linuxfoundation.org>
+Subject: [PATCH 5.15 142/374] scsi: hisi_sas: Rename HISI_SAS_{RESET -> RESETTING}_BIT
+Date: Mon, 22 Jan 2024 15:56:38 -0800
+Message-ID: <20240122235749.568859871@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +48,177 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Luo Jiaxing <luojiaxing@huawei.com>
 
-[ Upstream commit e123015c0ba859cf48aa7f89c5016cc6e98e018d ]
+[ Upstream commit b5a9fa20e3bf59d89b5f48315a0c0c32963796ed ]
 
-kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure.
+HISI_SAS_RESET_BIT means that the controller is being reset, and so the
+name is a bit vague. Rename it to HISI_SAS_RESETTING_BIT.
 
-Fixes: b9ef7b4b867f ("powerpc: Convert to using %pOFn instead of device_node.name")
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231126095739.1501990-1-chentao@kylinos.cn
+Link: https://lore.kernel.org/r/1629799260-120116-4-git-send-email-john.garry@huawei.com
+Signed-off-by: Luo Jiaxing <luojiaxing@huawei.com>
+Signed-off-by: John Garry <john.garry@huawei.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: d34ee535705e ("scsi: hisi_sas: Replace with standard error code return value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/powernv/opal-powercap.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/scsi/hisi_sas/hisi_sas.h       |  2 +-
+ drivers/scsi/hisi_sas/hisi_sas_main.c  | 12 ++++++------
+ drivers/scsi/hisi_sas/hisi_sas_v1_hw.c |  2 +-
+ drivers/scsi/hisi_sas/hisi_sas_v2_hw.c |  2 +-
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 10 +++++-----
+ 5 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/arch/powerpc/platforms/powernv/opal-powercap.c b/arch/powerpc/platforms/powernv/opal-powercap.c
-index 7bfe4cbeb35a..ea917266aa17 100644
---- a/arch/powerpc/platforms/powernv/opal-powercap.c
-+++ b/arch/powerpc/platforms/powernv/opal-powercap.c
-@@ -196,6 +196,12 @@ void __init opal_powercap_init(void)
+diff --git a/drivers/scsi/hisi_sas/hisi_sas.h b/drivers/scsi/hisi_sas/hisi_sas.h
+index 436d174f2194..57be32ba0109 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas.h
++++ b/drivers/scsi/hisi_sas/hisi_sas.h
+@@ -35,7 +35,7 @@
+ #define HISI_SAS_QUEUE_SLOTS	4096
+ #define HISI_SAS_MAX_ITCT_ENTRIES 1024
+ #define HISI_SAS_MAX_DEVICES HISI_SAS_MAX_ITCT_ENTRIES
+-#define HISI_SAS_RESET_BIT	0
++#define HISI_SAS_RESETTING_BIT	0
+ #define HISI_SAS_REJECT_CMD_BIT	1
+ #define HISI_SAS_PM_BIT		2
+ #define HISI_SAS_HW_FAULT_BIT	3
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index 7d93783c09a5..7744594cd3e3 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -724,7 +724,7 @@ static int hisi_sas_init_device(struct domain_device *device)
+ 		 */
+ 		local_phy = sas_get_local_phy(device);
+ 		if (!scsi_is_sas_phy_local(local_phy) &&
+-		    !test_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags)) {
++		    !test_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags)) {
+ 			unsigned long deadline = ata_deadline(jiffies, 20000);
+ 			struct sata_device *sata_dev = &device->sata_dev;
+ 			struct ata_host *ata_host = sata_dev->ata_host;
+@@ -1072,7 +1072,7 @@ static void hisi_sas_dev_gone(struct domain_device *device)
+ 		 sas_dev->device_id, sas_dev->dev_type);
  
- 		j = 0;
- 		pcaps[i].pg.name = kasprintf(GFP_KERNEL, "%pOFn", node);
-+		if (!pcaps[i].pg.name) {
-+			kfree(pcaps[i].pattrs);
-+			kfree(pcaps[i].pg.attrs);
-+			goto out_pcaps_pattrs;
-+		}
-+
- 		if (has_min) {
- 			powercap_add_attr(min, "powercap-min",
- 					  &pcaps[i].pattrs[j]);
+ 	down(&hisi_hba->sem);
+-	if (!test_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags)) {
++	if (!test_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags)) {
+ 		hisi_sas_internal_task_abort(hisi_hba, device,
+ 					     HISI_SAS_INT_ABT_DEV, 0, true);
+ 
+@@ -1576,7 +1576,7 @@ void hisi_sas_controller_reset_done(struct hisi_hba *hisi_hba)
+ 	hisi_sas_reset_init_all_devices(hisi_hba);
+ 	up(&hisi_hba->sem);
+ 	scsi_unblock_requests(shost);
+-	clear_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags);
++	clear_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags);
+ 
+ 	hisi_sas_rescan_topology(hisi_hba, hisi_hba->phy_state);
+ }
+@@ -1587,7 +1587,7 @@ static int hisi_sas_controller_prereset(struct hisi_hba *hisi_hba)
+ 	if (!hisi_hba->hw->soft_reset)
+ 		return -1;
+ 
+-	if (test_and_set_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags))
++	if (test_and_set_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags))
+ 		return -1;
+ 
+ 	if (hisi_sas_debugfs_enable && hisi_hba->debugfs_itct[0].itct)
+@@ -1611,7 +1611,7 @@ static int hisi_sas_controller_reset(struct hisi_hba *hisi_hba)
+ 		clear_bit(HISI_SAS_REJECT_CMD_BIT, &hisi_hba->flags);
+ 		up(&hisi_hba->sem);
+ 		scsi_unblock_requests(shost);
+-		clear_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags);
++		clear_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags);
+ 		return rc;
+ 	}
+ 
+@@ -2251,7 +2251,7 @@ void hisi_sas_phy_down(struct hisi_hba *hisi_hba, int phy_no, int rdy,
+ 	} else {
+ 		struct hisi_sas_port *port  = phy->port;
+ 
+-		if (test_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags) ||
++		if (test_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags) ||
+ 		    phy->in_reset) {
+ 			dev_info(dev, "ignore flutter phy%d down\n", phy_no);
+ 			return;
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
+index afe639994f3d..862f4e8b7eb5 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
+@@ -1422,7 +1422,7 @@ static irqreturn_t int_bcast_v1_hw(int irq, void *p)
+ 		goto end;
+ 	}
+ 
+-	if (!test_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags))
++	if (!test_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags))
+ 		sas_notify_port_event(sas_phy, PORTE_BROADCAST_RCVD,
+ 				      GFP_ATOMIC);
+ 
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+index c40588ed68a5..a6d89a149546 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+@@ -2831,7 +2831,7 @@ static void phy_bcast_v2_hw(int phy_no, struct hisi_hba *hisi_hba)
+ 	hisi_sas_phy_write32(hisi_hba, phy_no, SL_RX_BCAST_CHK_MSK, 1);
+ 	bcast_status = hisi_sas_phy_read32(hisi_hba, phy_no, RX_PRIMS_STATUS);
+ 	if ((bcast_status & RX_BCAST_CHG_MSK) &&
+-	    !test_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags))
++	    !test_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags))
+ 		sas_notify_port_event(sas_phy, PORTE_BROADCAST_RCVD,
+ 				      GFP_ATOMIC);
+ 	hisi_sas_phy_write32(hisi_hba, phy_no, CHL_INT0,
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index d1c07e7cb60d..2ed787956fa8 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -1622,7 +1622,7 @@ static irqreturn_t phy_bcast_v3_hw(int phy_no, struct hisi_hba *hisi_hba)
+ 	hisi_sas_phy_write32(hisi_hba, phy_no, SL_RX_BCAST_CHK_MSK, 1);
+ 	bcast_status = hisi_sas_phy_read32(hisi_hba, phy_no, RX_PRIMS_STATUS);
+ 	if ((bcast_status & RX_BCAST_CHG_MSK) &&
+-	    !test_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags))
++	    !test_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags))
+ 		sas_notify_port_event(sas_phy, PORTE_BROADCAST_RCVD,
+ 				      GFP_ATOMIC);
+ 	hisi_sas_phy_write32(hisi_hba, phy_no, CHL_INT0,
+@@ -4935,7 +4935,7 @@ static void hisi_sas_reset_prepare_v3_hw(struct pci_dev *pdev)
+ 	int rc;
+ 
+ 	dev_info(dev, "FLR prepare\n");
+-	set_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags);
++	set_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags);
+ 	hisi_sas_controller_reset_prepare(hisi_hba);
+ 
+ 	rc = disable_host_v3_hw(hisi_hba);
+@@ -4981,7 +4981,7 @@ static int _suspend_v3_hw(struct device *device)
+ 		return -ENODEV;
+ 	}
+ 
+-	if (test_and_set_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags))
++	if (test_and_set_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags))
+ 		return -1;
+ 
+ 	scsi_block_requests(shost);
+@@ -4992,7 +4992,7 @@ static int _suspend_v3_hw(struct device *device)
+ 	if (rc) {
+ 		dev_err(dev, "PM suspend: disable host failed rc=%d\n", rc);
+ 		clear_bit(HISI_SAS_REJECT_CMD_BIT, &hisi_hba->flags);
+-		clear_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags);
++		clear_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags);
+ 		scsi_unblock_requests(shost);
+ 		return rc;
+ 	}
+@@ -5031,7 +5031,7 @@ static int _resume_v3_hw(struct device *device)
+ 	}
+ 	phys_init_v3_hw(hisi_hba);
+ 	sas_resume_ha(sha);
+-	clear_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags);
++	clear_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags);
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
