@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67131487C4;
-	Tue, 23 Jan 2024 00:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3A61487D0;
+	Tue, 23 Jan 2024 00:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969146; cv=none; b=BOLZnYP/BWyw6iTfQi3Y+6xxD5qhwrt7DiUItUEch1hpoXpEMHENnVaaP9mgakk68JOCDkeVj+13dmOZ7OEX0qbXONNeTQppNStuYGrno9pRuEsv4KhC01vegHJaV+OnCvxl8hgtdo0c0UT2Kc/lCZ8AWMd5ID8ofiuxwwQcbWs=
+	t=1705969148; cv=none; b=h6mLQU2kWfO36vzuBMbg3+DU5PfV4+vh/QtLqEp34CuCvSodWY2XbbGfeHLk9AUYPy+JxdtnZe6QHlDKdvOT+Bw+Q+4Coj0mTr/eRjL7pkRi5cz7veX4K9BiE6o3adsh/IIqkVXUcaLvKPHAzT+WPQm+XGyAhxGRGaT7LBRGSHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969146; c=relaxed/simple;
-	bh=3tROXfNka0I+koYB0yUCBXEyCKtXnboUCZlEpqAWKwQ=;
+	s=arc-20240116; t=1705969148; c=relaxed/simple;
+	bh=WRjGD8RYjMiP4qNqiW6MRhsrihA9R1Una9NpQqiMNyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nTzj7fdpKZOlTod4fK5eiJp8dO+UQ01Dg9DpFrBRYKAwuCyIAdHkQAmE50We6EYLiHy/b6yWjvwgDOxkPAMAkpEuJIx2Z4aEH02irWBs/tl0ltXiUn5w9Q4u+pn5J9bYnVkQMQ12GC51vlPSIRUpF4YCADjSBaXt7jkt+9o+d2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2o5ha95c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aV6jwxx3kcJEn20+0533P+0jGhmLQ/wJ2bemKnTSYF3qjpXulTZKU57BNfBlOpNbueRyNcDNwZZrSIsU6Kb9Jvr5oATIcMp/K/hkl01I3VUQ9t80swGdheE7b+KM1DRDH9sr/8irsv9rlSLHasMOLsqQ8glQpFCHU/VcEgJgZTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjMSk7Z5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2o5ha95c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBFFC433A6;
-	Tue, 23 Jan 2024 00:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjMSk7Z5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902A1C43394;
+	Tue, 23 Jan 2024 00:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969146;
-	bh=3tROXfNka0I+koYB0yUCBXEyCKtXnboUCZlEpqAWKwQ=;
+	s=korg; t=1705969147;
+	bh=WRjGD8RYjMiP4qNqiW6MRhsrihA9R1Una9NpQqiMNyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2o5ha95cHAMaqpC07IMGHRo0UWwSrKwpAiIs2oUhEUFVHoSpBQPzQBB1Z474/+cFm
-	 yP2f8U8IQryKUxOrfSHzz1pSun0yP0jP72fXPXZYWfJINv0jI2qDXQfCdE7SvlZi9H
-	 7Wd7FQ9T+68806kSAMeWWs+vzA4yzHuwkMqV41F0=
+	b=kjMSk7Z5deGVVkRTrLOKncpKObT/GQKCfs/7WsBZyEXlv+PGxEqhG7ZP7iEgGLBrf
+	 IF9+kvser65jAVrfl169q+No0SWT1nCzlkHUEokLzKhQm5xf7I8WZDRMGSbOF6oJHd
+	 eLbSl7Z9b4gIh0blsKpYu2uv5VrUfPJ0F1kzF2Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Diupina <adiupina@astralinux.ru>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 029/641] cpufreq: scmi: process the result of devm_of_clk_add_hw_provider()
-Date: Mon, 22 Jan 2024 15:48:53 -0800
-Message-ID: <20240122235819.001067013@linuxfoundation.org>
+Subject: [PATCH 6.7 030/641] calipso: fix memory leak in netlbl_calipso_add_pass()
+Date: Mon, 22 Jan 2024 15:48:54 -0800
+Message-ID: <20240122235819.028789753@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,41 +51,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Diupina <adiupina@astralinux.ru>
+From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
 
-[ Upstream commit c4a5118a3ae1eadc687d84eef9431f9e13eb015c ]
+[ Upstream commit ec4e9d630a64df500641892f4e259e8149594a99 ]
 
-devm_of_clk_add_hw_provider() may return an errno, so
-add a return value check
+If IPv6 support is disabled at boot (ipv6.disable=1),
+the calipso_init() -> netlbl_calipso_ops_register() function isn't called,
+and the netlbl_calipso_ops_get() function always returns NULL.
+In this case, the netlbl_calipso_add_pass() function allocates memory
+for the doi_def variable but doesn't free it with the calipso_doi_free().
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+BUG: memory leak
+unreferenced object 0xffff888011d68180 (size 64):
+  comm "syz-executor.1", pid 10746, jiffies 4295410986 (age 17.928s)
+  hex dump (first 32 bytes):
+    00 00 00 00 02 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<...>] kmalloc include/linux/slab.h:552 [inline]
+    [<...>] netlbl_calipso_add_pass net/netlabel/netlabel_calipso.c:76 [inline]
+    [<...>] netlbl_calipso_add+0x22e/0x4f0 net/netlabel/netlabel_calipso.c:111
+    [<...>] genl_family_rcv_msg_doit+0x22f/0x330 net/netlink/genetlink.c:739
+    [<...>] genl_family_rcv_msg net/netlink/genetlink.c:783 [inline]
+    [<...>] genl_rcv_msg+0x341/0x5a0 net/netlink/genetlink.c:800
+    [<...>] netlink_rcv_skb+0x14d/0x440 net/netlink/af_netlink.c:2515
+    [<...>] genl_rcv+0x29/0x40 net/netlink/genetlink.c:811
+    [<...>] netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
+    [<...>] netlink_unicast+0x54b/0x800 net/netlink/af_netlink.c:1339
+    [<...>] netlink_sendmsg+0x90a/0xdf0 net/netlink/af_netlink.c:1934
+    [<...>] sock_sendmsg_nosec net/socket.c:651 [inline]
+    [<...>] sock_sendmsg+0x157/0x190 net/socket.c:671
+    [<...>] ____sys_sendmsg+0x712/0x870 net/socket.c:2342
+    [<...>] ___sys_sendmsg+0xf8/0x170 net/socket.c:2396
+    [<...>] __sys_sendmsg+0xea/0x1b0 net/socket.c:2429
+    [<...>] do_syscall_64+0x30/0x40 arch/x86/entry/common.c:46
+    [<...>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
 
-Fixes: 8410e7f3b31e ("cpufreq: scmi: Fix OPP addition failure with a dummy clock provider")
-Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with Syzkaller
+
+Fixes: cb72d38211ea ("netlabel: Initial support for the CALIPSO netlink protocol.")
+Signed-off-by: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+[PM: merged via the LSM tree at Jakub Kicinski request]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/scmi-cpufreq.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/netlabel/netlabel_calipso.c | 49 +++++++++++++++++----------------
+ 1 file changed, 26 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-index c8a7ccc42c16..4ee23f4ebf4a 100644
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -334,8 +334,11 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
+diff --git a/net/netlabel/netlabel_calipso.c b/net/netlabel/netlabel_calipso.c
+index f1d5b8465217..a07c2216d28b 100644
+--- a/net/netlabel/netlabel_calipso.c
++++ b/net/netlabel/netlabel_calipso.c
+@@ -54,6 +54,28 @@ static const struct nla_policy calipso_genl_policy[NLBL_CALIPSO_A_MAX + 1] = {
+ 	[NLBL_CALIPSO_A_MTYPE] = { .type = NLA_U32 },
+ };
  
- #ifdef CONFIG_COMMON_CLK
- 	/* dummy clock provider as needed by OPP if clocks property is used */
--	if (of_property_present(dev->of_node, "#clock-cells"))
--		devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, NULL);
-+	if (of_property_present(dev->of_node, "#clock-cells")) {
-+		ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, NULL);
-+		if (ret)
-+			return dev_err_probe(dev, ret, "%s: registering clock provider failed\n", __func__);
-+	}
- #endif
++static const struct netlbl_calipso_ops *calipso_ops;
++
++/**
++ * netlbl_calipso_ops_register - Register the CALIPSO operations
++ * @ops: ops to register
++ *
++ * Description:
++ * Register the CALIPSO packet engine operations.
++ *
++ */
++const struct netlbl_calipso_ops *
++netlbl_calipso_ops_register(const struct netlbl_calipso_ops *ops)
++{
++	return xchg(&calipso_ops, ops);
++}
++EXPORT_SYMBOL(netlbl_calipso_ops_register);
++
++static const struct netlbl_calipso_ops *netlbl_calipso_ops_get(void)
++{
++	return READ_ONCE(calipso_ops);
++}
++
+ /* NetLabel Command Handlers
+  */
+ /**
+@@ -96,15 +118,18 @@ static int netlbl_calipso_add_pass(struct genl_info *info,
+  *
+  */
+ static int netlbl_calipso_add(struct sk_buff *skb, struct genl_info *info)
+-
+ {
+ 	int ret_val = -EINVAL;
+ 	struct netlbl_audit audit_info;
++	const struct netlbl_calipso_ops *ops = netlbl_calipso_ops_get();
  
- 	ret = cpufreq_register_driver(&scmi_cpufreq_driver);
+ 	if (!info->attrs[NLBL_CALIPSO_A_DOI] ||
+ 	    !info->attrs[NLBL_CALIPSO_A_MTYPE])
+ 		return -EINVAL;
+ 
++	if (!ops)
++		return -EOPNOTSUPP;
++
+ 	netlbl_netlink_auditinfo(&audit_info);
+ 	switch (nla_get_u32(info->attrs[NLBL_CALIPSO_A_MTYPE])) {
+ 	case CALIPSO_MAP_PASS:
+@@ -363,28 +388,6 @@ int __init netlbl_calipso_genl_init(void)
+ 	return genl_register_family(&netlbl_calipso_gnl_family);
+ }
+ 
+-static const struct netlbl_calipso_ops *calipso_ops;
+-
+-/**
+- * netlbl_calipso_ops_register - Register the CALIPSO operations
+- * @ops: ops to register
+- *
+- * Description:
+- * Register the CALIPSO packet engine operations.
+- *
+- */
+-const struct netlbl_calipso_ops *
+-netlbl_calipso_ops_register(const struct netlbl_calipso_ops *ops)
+-{
+-	return xchg(&calipso_ops, ops);
+-}
+-EXPORT_SYMBOL(netlbl_calipso_ops_register);
+-
+-static const struct netlbl_calipso_ops *netlbl_calipso_ops_get(void)
+-{
+-	return READ_ONCE(calipso_ops);
+-}
+-
+ /**
+  * calipso_doi_add - Add a new DOI to the CALIPSO protocol engine
+  * @doi_def: the DOI structure
 -- 
 2.43.0
 
