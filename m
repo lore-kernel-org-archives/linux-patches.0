@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60182B9A0;
-	Tue, 23 Jan 2024 00:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8715D2B9CA;
+	Tue, 23 Jan 2024 00:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968181; cv=none; b=ena4ZM2CcaWS0F58KM4fB1xRjftg4S4lvrfcOzc0ZhRI5uL5VCS7d3TEKanbpmMIdhbPzErnm0kuOMlidGvhlXnnJeqgr5T11ALdIsKfvuGpeP3B+iVewQ0EAiSnGd/tFOEP9h8Ec2fzu/szxOUTAXkMNJ55OmHR173/b7JmAro=
+	t=1705968184; cv=none; b=KlrLRbb6CVlkii0k9eLUTJEqSMvQbdXfhdEwwklKRoboSXaq7GUXq1TbEBMpWUOGOqJGQfngUySRrZxZ8Ca7wEhVI+C9EYG8xYBXjHWa29Z2gdYL4/pZn2p9i/ZbP01bVEteeza/G1ME0XG9nfB4fTKqELsC9ngXlQZbgOR5wJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968181; c=relaxed/simple;
-	bh=KSMG2LTj8pnRkYyr8e1ETYzxiGs/Fre+DVSP/OdfLTM=;
+	s=arc-20240116; t=1705968184; c=relaxed/simple;
+	bh=4+iXcYXCK0DOqXDt5cdF6rFaLewDb4HepE+SWLl/sI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNl5qOBDuKLF1EH8iiUUXqjDH6j2ZaUgrjk/15E5Y2iULU9D/GLTbtt9AG6+lQUqoaiZP6lE2cdW2q0ylZxtu8628qHpHEVtoz6AsDMBZO6NTUG9oKGhTHSyG3UpXRW2NFGZ3SH3qGVAR/0B9/024iv2+CWiCNcDklWZXFAmWyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBb+Xe4f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RNVAqEC+ActAM5rVFANjPBd8ye9AB6411TyG6N5CYGa/m6UXR+DtaCvA1heVYibpjL+880fgg6Fx8hllGzulKtKKAvSjLwbYdys9AFre+jwCRmyaqMP2IgRnOFPDE4wEG2xY+IrDQ81o9HhvWuv8VfDhAWwZq7Zw9VMaywZTw3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOxPpJX1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBb+Xe4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65524C433C7;
-	Tue, 23 Jan 2024 00:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOxPpJX1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC51CC433F1;
+	Tue, 23 Jan 2024 00:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968181;
-	bh=KSMG2LTj8pnRkYyr8e1ETYzxiGs/Fre+DVSP/OdfLTM=;
+	s=korg; t=1705968184;
+	bh=4+iXcYXCK0DOqXDt5cdF6rFaLewDb4HepE+SWLl/sI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oBb+Xe4fvOVsj6wD2e4DFbhgX9FlWbMNUTAgKvOa5ppZWs0gbGIO7t1I2njSOSSJd
-	 Jd4vVpMM/PA0dSc8XbFMKQnqeA7fy7pCbsP5A5q0bDKuoVJxS6Hxe4AE3Ej0eTwLO/
-	 nVkPlgyj2fswTZBbcR4Qe+2dGaqkNeP8F0D+QihE=
+	b=zOxPpJX10S6KcbUYJoYQ23r7WeyVdohYEC6Mh0tqnXTuC14u/uRrdHNRl72myZahg
+	 RhZrVOWjNnbqR/Q2ja97jc+wE0oMlW0F5ack6/vG5rLDm7Oi5zTHGu2rEaUGA9QMo7
+	 KLx2IwuP2BPs1C4OxR6HBNwLVSFKwaIEXBn8T3/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Ronald Monthero <debug.penguin32@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 036/148] powerpc/imc-pmu: Add a null pointer check in update_events_in_group()
-Date: Mon, 22 Jan 2024 15:56:32 -0800
-Message-ID: <20240122235713.868033863@linuxfoundation.org>
+Subject: [PATCH 4.19 037/148] mtd: rawnand: Increment IFC_TIMEOUT_MSECS for nand controller response
+Date: Mon, 22 Jan 2024 15:56:33 -0800
+Message-ID: <20240122235713.915330439@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -51,53 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Ronald Monthero <debug.penguin32@gmail.com>
 
-[ Upstream commit 0a233867a39078ebb0f575e2948593bbff5826b3 ]
+[ Upstream commit 923fb6238cb3ac529aa2bf13b3b1e53762186a8b ]
 
-kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure.
+Under heavy load it is likely that the controller is done
+with its own task but the thread unlocking the wait is not
+scheduled in time. Increasing IFC_TIMEOUT_MSECS allows the
+controller to respond within allowable timeslice of 1 sec.
 
-Fixes: 885dcd709ba9 ("powerpc/perf: Add nest IMC PMU support")
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231126093719.1440305-1-chentao@kylinos.cn
+fsl,ifc-nand 7e800000.nand: Controller is not responding
+
+[<804b2047>] (nand_get_device) from [<804b5335>] (nand_write_oob+0x1b/0x4a)
+[<804b5335>] (nand_write_oob) from [<804a3585>] (mtd_write+0x41/0x5c)
+[<804a3585>] (mtd_write) from [<804c1d47>] (ubi_io_write+0x17f/0x22c)
+[<804c1d47>] (ubi_io_write) from [<804c047b>] (ubi_eba_write_leb+0x5b/0x1d0)
+
+Fixes: 82771882d960 ("NAND Machine support for Integrated Flash Controller")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Ronald Monthero <debug.penguin32@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20231118083156.776887-1-debug.penguin32@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/imc-pmu.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/mtd/nand/raw/fsl_ifc_nand.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/perf/imc-pmu.c b/arch/powerpc/perf/imc-pmu.c
-index 555322677074..65ee4fe863b2 100644
---- a/arch/powerpc/perf/imc-pmu.c
-+++ b/arch/powerpc/perf/imc-pmu.c
-@@ -261,6 +261,8 @@ static int update_events_in_group(struct device_node *node, struct imc_pmu *pmu)
- 	attr_group->attrs = attrs;
- 	do {
- 		ev_val_str = kasprintf(GFP_KERNEL, "event=0x%x", pmu->events[i].value);
-+		if (!ev_val_str)
-+			continue;
- 		dev_str = device_str_attr_create(pmu->events[i].name, ev_val_str);
- 		if (!dev_str)
- 			continue;
-@@ -268,6 +270,8 @@ static int update_events_in_group(struct device_node *node, struct imc_pmu *pmu)
- 		attrs[j++] = dev_str;
- 		if (pmu->events[i].scale) {
- 			ev_scale_str = kasprintf(GFP_KERNEL, "%s.scale", pmu->events[i].name);
-+			if (!ev_scale_str)
-+				continue;
- 			dev_str = device_str_attr_create(ev_scale_str, pmu->events[i].scale);
- 			if (!dev_str)
- 				continue;
-@@ -277,6 +281,8 @@ static int update_events_in_group(struct device_node *node, struct imc_pmu *pmu)
+diff --git a/drivers/mtd/nand/raw/fsl_ifc_nand.c b/drivers/mtd/nand/raw/fsl_ifc_nand.c
+index 70bf8e1552a5..bdb97460257c 100644
+--- a/drivers/mtd/nand/raw/fsl_ifc_nand.c
++++ b/drivers/mtd/nand/raw/fsl_ifc_nand.c
+@@ -34,7 +34,7 @@
  
- 		if (pmu->events[i].unit) {
- 			ev_unit_str = kasprintf(GFP_KERNEL, "%s.unit", pmu->events[i].name);
-+			if (!ev_unit_str)
-+				continue;
- 			dev_str = device_str_attr_create(ev_unit_str, pmu->events[i].unit);
- 			if (!dev_str)
- 				continue;
+ #define ERR_BYTE		0xFF /* Value returned for read
+ 					bytes when read failed	*/
+-#define IFC_TIMEOUT_MSECS	500  /* Maximum number of mSecs to wait
++#define IFC_TIMEOUT_MSECS	1000 /* Maximum timeout to wait
+ 					for IFC NAND Machine	*/
+ 
+ struct fsl_ifc_ctrl;
 -- 
 2.43.0
 
