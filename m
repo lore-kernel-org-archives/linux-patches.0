@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DAA62805;
-	Tue, 23 Jan 2024 01:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE7A634F4;
+	Tue, 23 Jan 2024 01:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975028; cv=none; b=e/CmnB55LDmLOngWEWuYLVQlfjbBT8xbPWStUMTcIxLhKoLFfO2pWlIGw5xiH6OHefQQ1ViiREIsUnDaeMlunK7GE6QOHKI6r1XJzaOpZn6cQwAHhwcyAasyyRQFq3ROUYgcLc9PASAaqsWrPfk7Kn0rJKYFhlQN2gBlBR1UE4k=
+	t=1705975029; cv=none; b=UYIYzEA2YVxoZT8P9jueFSii5JVIdVpPyv79l+MNgJfKwbTUsvUyJ6X6z/Xp10mDqYm7CZ25kH9vrtYT9DCimBVDrxOEWOQvirOdaZ2JFEVE6T/S2f8pnyWR0GDTtYKQr2/iW6yzTa/LxJ9QAydSziKx8lGSNWxDGAZcf1sPenE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975028; c=relaxed/simple;
-	bh=ZpeN/87RhZTju6O7JyUTsVp4YscV15UAXvWlA2JwEVA=;
+	s=arc-20240116; t=1705975029; c=relaxed/simple;
+	bh=vf6tUDsunpa2imaAAbGxsCf0cO3kbHNdUFDR+GEGois=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=su+K2bxLT7mTitzspOBCVWUZVBbmtJBFghIiKaYe06CaVCciTScByt++Mw8YiQDBBuaJeAhPOKgsQcsO9F3hxFxN4jH2gVqS4ESqgi208u7/xrrDXm+2ooynYdioGHcfOPRy6viZ+yFHZCVlhtOtX3BKfbVSvzlf3IINdI2hRLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cksEB4uK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HLARGYThtQWfGeePU757osspJ8QZUBDKYvER/FHhEOpEwL85fV0tfHhQb7AhB5XjXcIjfCn40NZH6aAovHmCzqWUX2VXuBeL+qgihKuB+dcGWCHAZJe8MPX8oaoUa0jlCZfHvK5FKhB5OVJGngxkDzWoZSIA0tIllyyLvs/uuU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgVL4fSd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cksEB4uK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C44C433C7;
-	Tue, 23 Jan 2024 01:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgVL4fSd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45DFC43390;
+	Tue, 23 Jan 2024 01:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705975028;
-	bh=ZpeN/87RhZTju6O7JyUTsVp4YscV15UAXvWlA2JwEVA=;
+	bh=vf6tUDsunpa2imaAAbGxsCf0cO3kbHNdUFDR+GEGois=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cksEB4uKWPWwcjGnX80Z1tDxfRfHz9gY3euFXd1ASC8KZ/CSE734O8nVP5oN2OX13
-	 8vpCoegWlXzUBjK8r7EnUvSxcXkKRVULDLgzgMCyXn5h9ultt7yxA/FI0kN9bdfcAW
-	 UIAw4jMmTCoW/5d2iofPQcCFAJ6JuBB05Mzb649s=
+	b=AgVL4fSdO5JGHuVZXGrdrKI6hP+TzQfifiuyiBQ/13VvbJ6K1MMXUrdZSG0qKu0Ic
+	 4YtBMoEyRtC5zdSnr133/pSQmqO/tHQd2ZDALspgtWMEmt/O48NC+kbK25Pi9+lmLC
+	 me5Enq4Mo4wDC6grfP5WN36RiWZgR9EeuKLUi8MQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	kernel test robot <oliver.sang@intel.com>,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 203/583] netfilter: nf_tables: mark newset as dead on transaction abort
-Date: Mon, 22 Jan 2024 15:54:14 -0800
-Message-ID: <20240122235818.204852202@linuxfoundation.org>
+Subject: [PATCH 6.6 190/583] bpf: Use c->unit_size to select target cache during free
+Date: Mon, 22 Jan 2024 15:54:01 -0800
+Message-ID: <20240122235817.812591685@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -45,54 +46,273 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 08e4c8c5919fd405a4d709b4ba43d836894a26eb ]
+[ Upstream commit 7ac5c53e00735d183a0f5e2cfce5eeb6c16319f2 ]
 
-If a transaction is aborted, we should mark the to-be-released NEWSET dead,
-just like commit path does for DEL and DESTROYSET commands.
+At present, bpf memory allocator uses check_obj_size() to ensure that
+ksize() of allocated pointer is equal with the unit_size of used
+bpf_mem_cache. Its purpose is to prevent bpf_mem_free() from selecting
+a bpf_mem_cache which has different unit_size compared with the
+bpf_mem_cache used for allocation. But as reported by lkp, the return
+value of ksize() or kmalloc_size_roundup() may change due to slab merge
+and it will lead to the warning report in check_obj_size().
 
-In both cases all remaining elements will be released via
-set->ops->destroy().
+The reported warning happened as follows:
+(1) in bpf_mem_cache_adjust_size(), kmalloc_size_roundup(96) returns the
+object_size of kmalloc-96 instead of kmalloc-cg-96. The object_size of
+kmalloc-96 is 96, so size_index for 96 is not adjusted accordingly.
+(2) the object_size of kmalloc-cg-96 is adjust from 96 to 128 due to
+slab merge in __kmem_cache_alias(). For SLAB, SLAB_HWCACHE_ALIGN is
+enabled by default for kmalloc slab, so align is 64 and size is 128 for
+kmalloc-cg-96. SLUB has a similar merge logic, but its object_size will
+not be changed, because its align is 8 under x86-64.
+(3) when unit_alloc() does kmalloc_node(96, __GFP_ACCOUNT, node),
+ksize() returns 128 instead of 96 for the returned pointer.
+(4) the warning in check_obj_size() is triggered.
 
-The existing abort code does NOT post the actual release to the work queue.
-Also the entire __nf_tables_abort() function is wrapped in gc_seq
-begin/end pair.
+Considering the slab merge can happen in anytime (e.g, a slab created in
+a new module), the following case is also possible: during the
+initialization of bpf_global_ma, there is no slab merge and ksize() for
+a 96-bytes object returns 96. But after that a new slab created by a
+kernel module is merged to kmalloc-cg-96 and the object_size of
+kmalloc-cg-96 is adjust from 96 to 128 (which is possible for x86-64 +
+CONFIG_SLAB, because its alignment requirement is 64 for 96-bytes slab).
+So soon or later, when bpf_global_ma frees a 96-byte-sized pointer
+which is allocated from bpf_mem_cache with unit_size=96, bpf_mem_free()
+will free the pointer through a bpf_mem_cache in which unit_size is 128,
+because the return value of ksize() changes. The warning for the
+mismatch will be triggered again.
 
-Therefore, async gc worker will never try to release the pending set
-elements, as gc sequence is always stale.
+A feasible fix is introducing similar APIs compared with ksize() and
+kmalloc_size_roundup() to return the actually-allocated size instead of
+size which may change due to slab merge, but it will introduce
+unnecessary dependency on the implementation details of mm subsystem.
 
-It might be possible to speed up transaction aborts via work queue too,
-this would result in a race and a possible use-after-free.
+As for now the pointer of bpf_mem_cache is saved in the 8-bytes area
+(or 4-bytes under 32-bit host) above the returned pointer, using
+unit_size in the saved bpf_mem_cache to select the target cache instead
+of inferring the size from the pointer itself. Beside no extra
+dependency on mm subsystem, the performance for bpf_mem_free_rcu() is
+also improved as shown below.
 
-So fix this before it becomes an issue.
+Before applying the patch, the performances of bpf_mem_alloc() and
+bpf_mem_free_rcu() on 8-CPUs VM with one producer are as follows:
 
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+kmalloc : alloc 11.69 ± 0.28M/s free 29.58 ± 0.93M/s
+percpu  : alloc 14.11 ± 0.52M/s free 14.29 ± 0.99M/s
+
+After apply the patch, the performance for bpf_mem_free_rcu() increases
+9% and 146% for kmalloc memory and per-cpu memory respectively:
+
+kmalloc: alloc 11.01 ± 0.03M/s free   32.42 ± 0.48M/s
+percpu:  alloc 12.84 ± 0.12M/s free   35.24 ± 0.23M/s
+
+After the fixes, there is no need to adjust size_index to fix the
+mismatch between allocation and free, so remove it as well. Also return
+NULL instead of ZERO_SIZE_PTR for zero-sized alloc in bpf_mem_alloc(),
+because there is no bpf_mem_cache pointer saved above ZERO_SIZE_PTR.
+
+Fixes: 9077fc228f09 ("bpf: Use kmalloc_size_roundup() to adjust size_index")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/bpf/202310302113.9f8fe705-oliver.sang@intel.com
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20231216131052.27621-2-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/memalloc.c | 105 +++++-------------------------------------
+ 1 file changed, 11 insertions(+), 94 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 5a14e1ab0b13..24cad36565d7 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -10345,6 +10345,7 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
- 				nft_trans_destroy(trans);
- 				break;
- 			}
-+			nft_trans_set(trans)->dead = 1;
- 			list_del_rcu(&nft_trans_set(trans)->list);
- 			break;
- 		case NFT_MSG_DELSET:
+diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
+index 5f93bafa4a26..85f9501ff6e6 100644
+--- a/kernel/bpf/memalloc.c
++++ b/kernel/bpf/memalloc.c
+@@ -486,27 +486,6 @@ static void prefill_mem_cache(struct bpf_mem_cache *c, int cpu)
+ 	alloc_bulk(c, c->unit_size <= 256 ? 4 : 1, cpu_to_node(cpu), false);
+ }
+ 
+-static int check_obj_size(struct bpf_mem_cache *c, unsigned int idx)
+-{
+-	struct llist_node *first;
+-	unsigned int obj_size;
+-
+-	first = c->free_llist.first;
+-	if (!first)
+-		return 0;
+-
+-	if (c->percpu_size)
+-		obj_size = pcpu_alloc_size(((void **)first)[1]);
+-	else
+-		obj_size = ksize(first);
+-	if (obj_size != c->unit_size) {
+-		WARN_ONCE(1, "bpf_mem_cache[%u]: percpu %d, unexpected object size %u, expect %u\n",
+-			  idx, c->percpu_size, obj_size, c->unit_size);
+-		return -EINVAL;
+-	}
+-	return 0;
+-}
+-
+ /* When size != 0 bpf_mem_cache for each cpu.
+  * This is typical bpf hash map use case when all elements have equal size.
+  *
+@@ -517,10 +496,10 @@ static int check_obj_size(struct bpf_mem_cache *c, unsigned int idx)
+ int bpf_mem_alloc_init(struct bpf_mem_alloc *ma, int size, bool percpu)
+ {
+ 	static u16 sizes[NUM_CACHES] = {96, 192, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096};
+-	int cpu, i, err, unit_size, percpu_size = 0;
+ 	struct bpf_mem_caches *cc, __percpu *pcc;
+ 	struct bpf_mem_cache *c, __percpu *pc;
+ 	struct obj_cgroup *objcg = NULL;
++	int cpu, i, unit_size, percpu_size = 0;
+ 
+ 	ma->percpu = percpu;
+ 
+@@ -560,7 +539,6 @@ int bpf_mem_alloc_init(struct bpf_mem_alloc *ma, int size, bool percpu)
+ 	pcc = __alloc_percpu_gfp(sizeof(*cc), 8, GFP_KERNEL);
+ 	if (!pcc)
+ 		return -ENOMEM;
+-	err = 0;
+ #ifdef CONFIG_MEMCG_KMEM
+ 	objcg = get_obj_cgroup_from_current();
+ #endif
+@@ -573,28 +551,12 @@ int bpf_mem_alloc_init(struct bpf_mem_alloc *ma, int size, bool percpu)
+ 			c->tgt = c;
+ 
+ 			init_refill_work(c);
+-			/* Another bpf_mem_cache will be used when allocating
+-			 * c->unit_size in bpf_mem_alloc(), so doesn't prefill
+-			 * for the bpf_mem_cache because these free objects will
+-			 * never be used.
+-			 */
+-			if (i != bpf_mem_cache_idx(c->unit_size))
+-				continue;
+ 			prefill_mem_cache(c, cpu);
+-			err = check_obj_size(c, i);
+-			if (err)
+-				goto out;
+ 		}
+ 	}
+ 
+-out:
+ 	ma->caches = pcc;
+-	/* refill_work is either zeroed or initialized, so it is safe to
+-	 * call irq_work_sync().
+-	 */
+-	if (err)
+-		bpf_mem_alloc_destroy(ma);
+-	return err;
++	return 0;
+ }
+ 
+ static void drain_mem_cache(struct bpf_mem_cache *c)
+@@ -858,7 +820,7 @@ void notrace *bpf_mem_alloc(struct bpf_mem_alloc *ma, size_t size)
+ 	void *ret;
+ 
+ 	if (!size)
+-		return ZERO_SIZE_PTR;
++		return NULL;
+ 
+ 	idx = bpf_mem_cache_idx(size + LLIST_NODE_SZ);
+ 	if (idx < 0)
+@@ -868,26 +830,17 @@ void notrace *bpf_mem_alloc(struct bpf_mem_alloc *ma, size_t size)
+ 	return !ret ? NULL : ret + LLIST_NODE_SZ;
+ }
+ 
+-static notrace int bpf_mem_free_idx(void *ptr, bool percpu)
+-{
+-	size_t size;
+-
+-	if (percpu)
+-		size = pcpu_alloc_size(*((void **)ptr));
+-	else
+-		size = ksize(ptr - LLIST_NODE_SZ);
+-	return bpf_mem_cache_idx(size);
+-}
+-
+ void notrace bpf_mem_free(struct bpf_mem_alloc *ma, void *ptr)
+ {
++	struct bpf_mem_cache *c;
+ 	int idx;
+ 
+ 	if (!ptr)
+ 		return;
+ 
+-	idx = bpf_mem_free_idx(ptr, ma->percpu);
+-	if (idx < 0)
++	c = *(void **)(ptr - LLIST_NODE_SZ);
++	idx = bpf_mem_cache_idx(c->unit_size);
++	if (WARN_ON_ONCE(idx < 0))
+ 		return;
+ 
+ 	unit_free(this_cpu_ptr(ma->caches)->cache + idx, ptr);
+@@ -895,13 +848,15 @@ void notrace bpf_mem_free(struct bpf_mem_alloc *ma, void *ptr)
+ 
+ void notrace bpf_mem_free_rcu(struct bpf_mem_alloc *ma, void *ptr)
+ {
++	struct bpf_mem_cache *c;
+ 	int idx;
+ 
+ 	if (!ptr)
+ 		return;
+ 
+-	idx = bpf_mem_free_idx(ptr, ma->percpu);
+-	if (idx < 0)
++	c = *(void **)(ptr - LLIST_NODE_SZ);
++	idx = bpf_mem_cache_idx(c->unit_size);
++	if (WARN_ON_ONCE(idx < 0))
+ 		return;
+ 
+ 	unit_free_rcu(this_cpu_ptr(ma->caches)->cache + idx, ptr);
+@@ -975,41 +930,3 @@ void notrace *bpf_mem_cache_alloc_flags(struct bpf_mem_alloc *ma, gfp_t flags)
+ 
+ 	return !ret ? NULL : ret + LLIST_NODE_SZ;
+ }
+-
+-/* The alignment of dynamic per-cpu area is 8, so c->unit_size and the
+- * actual size of dynamic per-cpu area will always be matched and there is
+- * no need to adjust size_index for per-cpu allocation. However for the
+- * simplicity of the implementation, use an unified size_index for both
+- * kmalloc and per-cpu allocation.
+- */
+-static __init int bpf_mem_cache_adjust_size(void)
+-{
+-	unsigned int size;
+-
+-	/* Adjusting the indexes in size_index() according to the object_size
+-	 * of underlying slab cache, so bpf_mem_alloc() will select a
+-	 * bpf_mem_cache with unit_size equal to the object_size of
+-	 * the underlying slab cache.
+-	 *
+-	 * The maximal value of KMALLOC_MIN_SIZE and __kmalloc_minalign() is
+-	 * 256-bytes, so only do adjustment for [8-bytes, 192-bytes].
+-	 */
+-	for (size = 192; size >= 8; size -= 8) {
+-		unsigned int kmalloc_size, index;
+-
+-		kmalloc_size = kmalloc_size_roundup(size);
+-		if (kmalloc_size == size)
+-			continue;
+-
+-		if (kmalloc_size <= 192)
+-			index = size_index[(kmalloc_size - 1) / 8];
+-		else
+-			index = fls(kmalloc_size - 1) - 1;
+-		/* Only overwrite if necessary */
+-		if (size_index[(size - 1) / 8] != index)
+-			size_index[(size - 1) / 8] = index;
+-	}
+-
+-	return 0;
+-}
+-subsys_initcall(bpf_mem_cache_adjust_size);
 -- 
 2.43.0
 
