@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAC66EB61;
-	Tue, 23 Jan 2024 02:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA046EB67;
+	Tue, 23 Jan 2024 02:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975424; cv=none; b=IhHIe1tIkg7xQfyYY8Cysb87EeIRhW+UlLjqSb+v45fHBbCT8Xyh6i1U4GHr8z23UPUBc3Ku02FVFdp8fQPG/4j5d5ajndMhMdUKSXh3foVJLxDmCXvcMy05TmtAlVln08bzz8bQopC32QwRVqM1rs2EzTpNcMx7x5p1oJHKREQ=
+	t=1705975425; cv=none; b=gpN7tA+qoGCShQJNe6sF5Lf/ZsqobE5hqIp7aNswj3JHwiqpEzkaXrz/i2vk2k+rz1nHOb0LkqVNpg1Z35S1m9P5wYDC7DLTmrlfk64ZuEZbLokFEAtCuciYWFm+mdRjCLLT+1viWvO4yvhngtsHfUjsCxpjHEn6bExtRPcyf4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975424; c=relaxed/simple;
-	bh=wWz8Y9rqgj76bXXA1mSG89GnqbVCfyhyMsIUHmiavgo=;
+	s=arc-20240116; t=1705975425; c=relaxed/simple;
+	bh=Q9cBlMkE/gBUhNWPd1bHV/fDRApPa97i9Nfa2mR/J0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qHIOVuvVtHr6MDorbHLycJflHBK6HE2kTyYje8ZBG/3wpSDlcbfTPfSykUaRxuJ1EhIXCcOzSmnEj+QGzBSjCCBIZkvFhI52S97vrG0LBodjZYka+CVdY5p1QMSz+rMlsI/hlMvKFlwYPHpLPfgEKDE8/sLyohhVmLgQzQjyecE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JnElFV4u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sAijrnzO0RC0VoVatZKfyuenStB/MhGzlmvwsZvl0ZYNIbeD1kFu/CrTsdfNPRvy2ojQd+ATmBrj2gcCvUVMfrDp6aSw6yM01dF0OL0j9P5SJowPwENktSDi8dIb66N7n8EL8J7BF/xbDa2/7XnvQIwxuPxjBFw8ZfC9d6ZHuXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WStUAwB9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnElFV4u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6FAC433C7;
-	Tue, 23 Jan 2024 02:03:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WStUAwB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84328C43390;
+	Tue, 23 Jan 2024 02:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975424;
-	bh=wWz8Y9rqgj76bXXA1mSG89GnqbVCfyhyMsIUHmiavgo=;
+	s=korg; t=1705975425;
+	bh=Q9cBlMkE/gBUhNWPd1bHV/fDRApPa97i9Nfa2mR/J0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JnElFV4uPHBMhh0Rb8lHTFdMdTAINJwGgLXs/5k4W+aWRz9VNw+x9M41+NCjvtMPW
-	 w7QMRVGVVWvFhF0qLVJb3WE8NqQUD135AR4xJSLjmLKPEW4Vv5lOlBle1YAmhsgiK6
-	 PC1jcDajey5OZwFAuifj+ePYJJY99OPqL3zWv4I0=
+	b=WStUAwB9AZXmRV/9hRBnj+JnMDMs9tVGUF9ImxGF5lWvuUSaL8v9KWm/8RwUf6kOg
+	 bSx6ogFATPPN/AACf7ateaqdnUQtxhULWCXgi3UA7islC1Ken9kif41ryWUjF/5GlL
+	 90YnfwJ9XKID4SCpYAekWzVsR3UDEOaHYjMCbuQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Li <bin.li@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 382/583] ALSA: hda/realtek: Enable headset mic on Lenovo M70 Gen5
-Date: Mon, 22 Jan 2024 15:57:13 -0800
-Message-ID: <20240122235823.687138663@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.6 383/583] ksmbd: validate mech token in session setup
+Date: Mon, 22 Jan 2024 15:57:14 -0800
+Message-ID: <20240122235823.717350633@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -50,31 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bin Li <bin.li@canonical.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit fb3c007fde80d9d3b4207943e74c150c9116cead upstream.
+commit 92e470163d96df8db6c4fa0f484e4a229edb903d upstream.
 
-Lenovo M70 Gen5 is equipped with ALC623, and it needs
-ALC283_FIXUP_HEADSET_MIC quirk to make its headset mic work.
+If client send invalid mech token in session setup request, ksmbd
+validate and make the error if it is invalid.
 
-Signed-off-by: Bin Li <bin.li@canonical.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240117154123.21578-1-bin.li@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-22890
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/server/asn1.c       |    5 +++++
+ fs/smb/server/connection.h |    1 +
+ fs/smb/server/smb2pdu.c    |   22 +++++++++++++++++-----
+ 3 files changed, 23 insertions(+), 5 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10116,6 +10116,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x17aa, 0x3176, "ThinkCentre Station", ALC283_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x17aa, 0x3178, "ThinkCentre Station", ALC283_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x17aa, 0x31af, "ThinkCentre Station", ALC623_FIXUP_LENOVO_THINKSTATION_P340),
-+	SND_PCI_QUIRK(0x17aa, 0x334b, "Lenovo ThinkCentre M70 Gen5", ALC283_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x17aa, 0x3801, "Lenovo Yoga9 14IAP7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3802, "Lenovo Yoga DuetITL 2021", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3813, "Legion 7i 15IMHG05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
+--- a/fs/smb/server/asn1.c
++++ b/fs/smb/server/asn1.c
+@@ -214,10 +214,15 @@ static int ksmbd_neg_token_alloc(void *c
+ {
+ 	struct ksmbd_conn *conn = context;
+ 
++	if (!vlen)
++		return -EINVAL;
++
+ 	conn->mechToken = kmemdup_nul(value, vlen, GFP_KERNEL);
+ 	if (!conn->mechToken)
+ 		return -ENOMEM;
+ 
++	conn->mechTokenLen = (unsigned int)vlen;
++
+ 	return 0;
+ }
+ 
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -88,6 +88,7 @@ struct ksmbd_conn {
+ 	__u16				dialect;
+ 
+ 	char				*mechToken;
++	unsigned int			mechTokenLen;
+ 
+ 	struct ksmbd_conn_ops	*conn_ops;
+ 
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1414,7 +1414,10 @@ static struct ksmbd_user *session_user(s
+ 	char *name;
+ 	unsigned int name_off, name_len, secbuf_len;
+ 
+-	secbuf_len = le16_to_cpu(req->SecurityBufferLength);
++	if (conn->use_spnego && conn->mechToken)
++		secbuf_len = conn->mechTokenLen;
++	else
++		secbuf_len = le16_to_cpu(req->SecurityBufferLength);
+ 	if (secbuf_len < sizeof(struct authenticate_message)) {
+ 		ksmbd_debug(SMB, "blob len %d too small\n", secbuf_len);
+ 		return NULL;
+@@ -1505,7 +1508,10 @@ static int ntlm_authenticate(struct ksmb
+ 		struct authenticate_message *authblob;
+ 
+ 		authblob = user_authblob(conn, req);
+-		sz = le16_to_cpu(req->SecurityBufferLength);
++		if (conn->use_spnego && conn->mechToken)
++			sz = conn->mechTokenLen;
++		else
++			sz = le16_to_cpu(req->SecurityBufferLength);
+ 		rc = ksmbd_decode_ntlmssp_auth_blob(authblob, sz, conn, sess);
+ 		if (rc) {
+ 			set_user_flag(sess->user, KSMBD_USER_FLAG_BAD_PASSWORD);
+@@ -1778,8 +1784,7 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 
+ 	negblob_off = le16_to_cpu(req->SecurityBufferOffset);
+ 	negblob_len = le16_to_cpu(req->SecurityBufferLength);
+-	if (negblob_off < offsetof(struct smb2_sess_setup_req, Buffer) ||
+-	    negblob_len < offsetof(struct negotiate_message, NegotiateFlags)) {
++	if (negblob_off < offsetof(struct smb2_sess_setup_req, Buffer)) {
+ 		rc = -EINVAL;
+ 		goto out_err;
+ 	}
+@@ -1788,8 +1793,15 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 			negblob_off);
+ 
+ 	if (decode_negotiation_token(conn, negblob, negblob_len) == 0) {
+-		if (conn->mechToken)
++		if (conn->mechToken) {
+ 			negblob = (struct negotiate_message *)conn->mechToken;
++			negblob_len = conn->mechTokenLen;
++		}
++	}
++
++	if (negblob_len < offsetof(struct negotiate_message, NegotiateFlags)) {
++		rc = -EINVAL;
++		goto out_err;
+ 	}
+ 
+ 	if (server_conf.auth_mechs & conn->auth_mechs) {
 
 
