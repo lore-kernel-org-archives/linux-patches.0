@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BA613E204;
-	Tue, 23 Jan 2024 01:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC5D13E204;
+	Tue, 23 Jan 2024 01:06:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971984; cv=none; b=HszE0pAlPMxUK2tgobNECkM3SNghvURpIXykhHmJ+sLvBRkGLSnw8gUPEizOmhLgq2jcUtvk6xDshNrCAfksiZhT/4AWkBxJDRV4Wxhtk53+pWouQAzMkNrWpR85aDeKbQQiyLwNBMafISmWLoOp07LELd4ES68kqvxkVREz7Xg=
+	t=1705971985; cv=none; b=o97M0sq4bIE1lcdjLCnTrNQ8TH/Dzr57LaGc2aLcjrBAoI6iDWeGe9VRFdoKx0+BzA7xkX2513mrWlemrwmFmXgGNHBPDv2/SwgV7H6iN2ujNpn+aSHPhuC0qR2eOy8CLUI7NxvRMVr+XYKJOmmVMxZ2FHC2UuIyzOONj1TToss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971984; c=relaxed/simple;
-	bh=w2mvVWuSBwBJ9FDTnQQyEmAyIcZtx79D350Ha36CTJc=;
+	s=arc-20240116; t=1705971985; c=relaxed/simple;
+	bh=/nwQTadHjwMT0fDyozrZvhBdyzIIBKEIYKLdSjE8WAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bV1ho/ViNRfgsW7KoD1XYJDyX71s5BUhNDQlhrie+SsTg9oxPlg4XquvX1T1fyJYNhDbdvtvYEzw2tez0vksioghX8LAxH/vB0wnoLc3XQkJY2bVPkSJYBSuZMXtjC1/wsNFaWOc6mcmI5hgCmlH3q7KivOhdcwENrLGsxRATIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f1oKJw2z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W5YPuW/eZfNs64A2sgYdGjuvX0QySdrwnfXBl2KilAk4/WK1XluLC5cz2UqSthAzzftENGsHRJj8pINovqvE4Bcpk4WStZE9X/x92yHRq7xzUfMjKT8vmnhL/z2VyLDqA032Q6zwmXBMlSCrQ8B6k4ZAqwJuEYAyqx4kfHG5wII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbKbNxG8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1oKJw2z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19C1C433F1;
-	Tue, 23 Jan 2024 01:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbKbNxG8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7426C433F1;
+	Tue, 23 Jan 2024 01:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971983;
-	bh=w2mvVWuSBwBJ9FDTnQQyEmAyIcZtx79D350Ha36CTJc=;
+	s=korg; t=1705971985;
+	bh=/nwQTadHjwMT0fDyozrZvhBdyzIIBKEIYKLdSjE8WAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f1oKJw2z2hGSYnokg3UgCLRc6j8airfPqces3dHo1UI0uOnuXnvotwXMymUGPYgVV
-	 RE5ycSDyHdj4RMRtfdFwv5PfjuNBKarQSyNjnI0WhAAVAwsD2BjwtFkraIUdakI+KD
-	 n+c5GiTQCHtNpiZ4UuLzwoTgwm2XqPut3o0jLzfA=
+	b=nbKbNxG8iCfL7+Jx1Vg2uSuKZJ1mBYa6IMeskzp2uzzTG4HTvna3GZ7f4yJA+316d
+	 Abvu4dPn3v0KuWN/nleI9Zs+BryNYUTcTQWTO2JA3mDnRztDW+v4cs37uQfsLlibXK
+	 Ij+hs763PRhzfFx+bzqtI+0uHJfD9INtMjl4HkNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 362/417] spmi: mtk-pmif: Serialize PMIF status check and command submission
-Date: Mon, 22 Jan 2024 15:58:50 -0800
-Message-ID: <20240122235804.363439566@linuxfoundation.org>
+Subject: [PATCH 6.1 371/417] nvmet: re-fix tracing strncpy() warning
+Date: Mon, 22 Jan 2024 15:58:59 -0800
+Message-ID: <20240122235804.662351788@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -54,142 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit f200fff8d019f2754f91f5d715652e3e3fdf3604 ]
+[ Upstream commit 4ee7ffeb4ce50c80bc4504db6f39b25a2df6bcf4 ]
 
-Before writing the read or write command to the SPMI arbiter through the
-PMIF interface, the current status of the channel is checked to ensure
-it is idle. However, since the status only changes from idle when the
-command is written, it is possible for two concurrent calls to determine
-that the channel is idle and simultaneously send their commands. At this
-point the PMIF interface hangs, with the status register no longer being
-updated, and thus causing all subsequent operations to time out.
+An earlier patch had tried to address a warning about a string copy with
+missing zero termination:
 
-This was observed on the mt8195-cherry-tomato-r2 machine, particularly
-after commit 46600ab142f8 ("regulator: Set PROBE_PREFER_ASYNCHRONOUS for
-drivers between 5.10 and 5.15") was applied, since then the two MT6315
-devices present on the SPMI bus would probe assynchronously and
-sometimes (during probe or at a later point) read the bus
-simultaneously, breaking the PMIF interface and consequently slowing
-down the whole system.
+drivers/nvme/target/trace.h:52:3: warning: ‘strncpy’ specified bound 32 equals destination size [-Wstringop-truncation]
 
-To fix the issue at its root cause, introduce locking around the channel
-status check and the command write, so that both become an atomic
-operation, preventing race conditions between two (or more) SPMI bus
-read/write operations. A spinlock is used since this is a fast bus, as
-indicated by the usage of the atomic variant of readl_poll, and
-'.fast_io = true' being used in the mt6315 driver, so spinlocks are
-already used for the regmap access.
+The new version causes a different warning with some compiler versions, notably
+gcc-9 and gcc-10, and also misses the zero padding that was apparently done
+intentionally in the original code:
 
-Fixes: b45b3ccef8c0 ("spmi: mediatek: Add support for MT6873/8192")
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://lore.kernel.org/r/20230724154739.493724-1-nfraprado@collabora.com
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20231206231733.4031901-2-sboyd@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+drivers/nvme/target/trace.h:56:2: error: 'strncpy' specified bound depends on the length of the source argument [-Werror=stringop-overflow=]
+
+Change it to use strscpy_pad() with the original length, which will give
+a properly padded and zero-terminated string as well as avoiding the warning.
+
+Fixes: d86481e924a7 ("nvmet: use min of device_path and disk len")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spmi/spmi-mtk-pmif.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ drivers/nvme/target/trace.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/spmi/spmi-mtk-pmif.c b/drivers/spmi/spmi-mtk-pmif.c
-index ad511f2c3324..01e8851e639d 100644
---- a/drivers/spmi/spmi-mtk-pmif.c
-+++ b/drivers/spmi/spmi-mtk-pmif.c
-@@ -50,6 +50,7 @@ struct pmif {
- 	struct clk_bulk_data clks[PMIF_MAX_CLKS];
- 	size_t nclks;
- 	const struct pmif_data *data;
-+	raw_spinlock_t lock;
- };
- 
- static const char * const pmif_clock_names[] = {
-@@ -314,6 +315,7 @@ static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
- 	struct ch_reg *inf_reg;
- 	int ret;
- 	u32 data, cmd;
-+	unsigned long flags;
- 
- 	/* Check for argument validation. */
- 	if (sid & ~0xf) {
-@@ -334,6 +336,7 @@ static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
- 	else
- 		return -EINVAL;
- 
-+	raw_spin_lock_irqsave(&arb->lock, flags);
- 	/* Wait for Software Interface FSM state to be IDLE. */
- 	inf_reg = &arb->chan;
- 	ret = readl_poll_timeout_atomic(arb->base + arb->data->regs[inf_reg->ch_sta],
-@@ -343,6 +346,7 @@ static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
- 		/* set channel ready if the data has transferred */
- 		if (pmif_is_fsm_vldclr(arb))
- 			pmif_writel(arb, 1, inf_reg->ch_rdy);
-+		raw_spin_unlock_irqrestore(&arb->lock, flags);
- 		dev_err(&ctrl->dev, "failed to wait for SWINF_IDLE\n");
- 		return ret;
- 	}
-@@ -350,6 +354,7 @@ static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
- 	/* Send the command. */
- 	cmd = (opc << 30) | (sid << 24) | ((len - 1) << 16) | addr;
- 	pmif_writel(arb, cmd, inf_reg->ch_send);
-+	raw_spin_unlock_irqrestore(&arb->lock, flags);
- 
- 	/*
- 	 * Wait for Software Interface FSM state to be WFVLDCLR,
-@@ -376,7 +381,8 @@ static int pmif_spmi_write_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
- 	struct pmif *arb = spmi_controller_get_drvdata(ctrl);
- 	struct ch_reg *inf_reg;
- 	int ret;
--	u32 data, cmd;
-+	u32 data, wdata, cmd;
-+	unsigned long flags;
- 
- 	if (len > 4) {
- 		dev_err(&ctrl->dev, "pmif supports 1..4 bytes per trans, but:%zu requested", len);
-@@ -394,6 +400,10 @@ static int pmif_spmi_write_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
- 	else
- 		return -EINVAL;
- 
-+	/* Set the write data. */
-+	memcpy(&wdata, buf, len);
-+
-+	raw_spin_lock_irqsave(&arb->lock, flags);
- 	/* Wait for Software Interface FSM state to be IDLE. */
- 	inf_reg = &arb->chan;
- 	ret = readl_poll_timeout_atomic(arb->base + arb->data->regs[inf_reg->ch_sta],
-@@ -403,17 +413,17 @@ static int pmif_spmi_write_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
- 		/* set channel ready if the data has transferred */
- 		if (pmif_is_fsm_vldclr(arb))
- 			pmif_writel(arb, 1, inf_reg->ch_rdy);
-+		raw_spin_unlock_irqrestore(&arb->lock, flags);
- 		dev_err(&ctrl->dev, "failed to wait for SWINF_IDLE\n");
- 		return ret;
+diff --git a/drivers/nvme/target/trace.h b/drivers/nvme/target/trace.h
+index 6109b3806b12..155334ddc13f 100644
+--- a/drivers/nvme/target/trace.h
++++ b/drivers/nvme/target/trace.h
+@@ -53,8 +53,7 @@ static inline void __assign_req_name(char *name, struct nvmet_req *req)
+ 		return;
  	}
  
--	/* Set the write data. */
--	memcpy(&data, buf, len);
--	pmif_writel(arb, data, inf_reg->wdata);
-+	pmif_writel(arb, wdata, inf_reg->wdata);
- 
- 	/* Send the command. */
- 	cmd = (opc << 30) | BIT(29) | (sid << 24) | ((len - 1) << 16) | addr;
- 	pmif_writel(arb, cmd, inf_reg->ch_send);
-+	raw_spin_unlock_irqrestore(&arb->lock, flags);
- 
- 	return 0;
+-	strncpy(name, req->ns->device_path,
+-		min_t(size_t, DISK_NAME_LEN, strlen(req->ns->device_path)));
++	strscpy_pad(name, req->ns->device_path, DISK_NAME_LEN);
  }
-@@ -488,6 +498,8 @@ static int mtk_spmi_probe(struct platform_device *pdev)
- 	arb->chan.ch_send = PMIF_SWINF_0_ACC + chan_offset;
- 	arb->chan.ch_rdy = PMIF_SWINF_0_VLD_CLR + chan_offset;
+ #endif
  
-+	raw_spin_lock_init(&arb->lock);
-+
- 	platform_set_drvdata(pdev, ctrl);
- 
- 	err = spmi_controller_add(ctrl);
 -- 
 2.43.0
 
