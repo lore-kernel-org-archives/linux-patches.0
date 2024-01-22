@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F32E60254;
-	Tue, 23 Jan 2024 00:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168B260252;
+	Tue, 23 Jan 2024 00:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970850; cv=none; b=lE3x0PgvFaK5Efo4cX+tLAs+Bq/A0vdoqjUH3h/YjPfvzpORnBtrsLbOJfDp3e9dNuNIdVhcHgLWkxR+MHBuH0D0CV+CMqW66Cb32//eiIBQ7sINhVfsO3BDN1yoh5dj7mbeFR36kYPYnZOxbpvEyZBRFCT6Y5GlchXpbD0QFyk=
+	t=1705970853; cv=none; b=npqVYeRJN/SmYhhNBrsmJ6CBsnGpiXpMUXBZRoZaouVEJ0l0FWXO3155W8P7BNwxxMWg7qijqcpfU0qr6aBIi+FhjBSXb9r1KxwRM2DMgJrwxqzdELD7CMw4zFORDmYFDnQUHxYeY5nw5S2zz87o2Oo08aZV3M1FPiBxQzJ2B2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970850; c=relaxed/simple;
-	bh=kbQLxoovu+uEZNhJaQqfnbza66Q7zMBCU4oJosMpeEE=;
+	s=arc-20240116; t=1705970853; c=relaxed/simple;
+	bh=ZY+lknEH/rkQPnGcWWWBLaRlII1cicnzkLOvpx01CRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOftRUN6k/qtmEw1DY0p4/jPZWzrgjyHCaAozzETxLvTIl/yWLsVQCnkVnYoiTZQfYkjCaNxcdaR1VSQSHQaIFLz891+Oc0M/Tg78whmf1Z9HbS+7cYsektE8DyB0TRlaGPIybSeKIhBKfJ3MD21bOCay17gV2Zj7JFW3KebG7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BeBGYVfH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MfIyWPEM4bhQpt36Ahgf7M95iwIzUCFLegKx0lJ0uw9jI9pLT27NO3H967k7G/XnjeE3PF1t4+XFCPogCC7dGcmBfo10CCRoF8I+reqsmDws9yvACv6wiVaY8EyH0fU5rFYDPQ5q49cNntAygRj0nWKCpVKuwPIiDexnihdaM9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLbJI8Za; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BeBGYVfH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E253CC43390;
-	Tue, 23 Jan 2024 00:47:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLbJI8Za"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B56C43390;
+	Tue, 23 Jan 2024 00:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970850;
-	bh=kbQLxoovu+uEZNhJaQqfnbza66Q7zMBCU4oJosMpeEE=;
+	s=korg; t=1705970852;
+	bh=ZY+lknEH/rkQPnGcWWWBLaRlII1cicnzkLOvpx01CRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BeBGYVfH1Lr2GTbdDbqqLaGMnp4R3EjmAllXKXGgUByp+LvXnADdrpVy+lGOa9tF0
-	 kDrDdsYsIMahy0w3J3ZfFKHPrnc++4chZWKqICdBtMWNxlYr88Z+OzPXCMtPCmHaFr
-	 UDU2DQIPibt3/w5QOdulsW4n0ZElggLNHrIMejeI=
+	b=BLbJI8ZaVNhKj8vvc87veBQRPmHcxtp5ZvezFKigDwu/tijyjylpFEKQ7C4bKZ/pK
+	 kSf77RKSrVIdkHH8VM9g/JTQFmBR2bvstl3DMqGWwIknrz+tTCrLkyrjrIgNYTITDU
+	 ODk+O93Bht2FhgDcDoWgS1OS6s4lrogdedeAux0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihang Li <liyihang9@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 116/417] scsi: hisi_sas: Replace with standard error code return value
-Date: Mon, 22 Jan 2024 15:54:44 -0800
-Message-ID: <20240122235755.795689242@linuxfoundation.org>
+Subject: [PATCH 6.1 125/417] arm64: dts: qcom: sm8150-hdk: fix SS USB regulators
+Date: Mon, 22 Jan 2024 15:54:53 -0800
+Message-ID: <20240122235756.136418157@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -52,61 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yihang Li <liyihang9@huawei.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit d34ee535705eb43885bc0f561c63046f697355ad ]
+[ Upstream commit a509adf05b2aac31b22781f5aa09e4768a5b6c39 ]
 
-In function hisi_sas_controller_prereset(), -ENOSYS (Function not
-implemented) should be returned if the driver does not support .soft_reset.
-Returns -EPERM (Operation not permitted) if HISI_SAS_RESETTING_BIT is
-already be set.
+The SM8150-HDK uses two different regulators to power up SuperSpeed USB
+PHYs. The L5A regulator is used for the second USB host, while the first
+(OTG) USB host uses different regulator, L18A. Fix the regulator for the
+usb_1 QMPPHY and (to remove possible confusion) drop the
+usb_ss_dp_core_1/_2 labels.
 
-In function _suspend_v3_hw(), returns -EPERM (Operation not permitted) if
-HISI_SAS_RESETTING_BIT is already be set.
-
-Fixes: 4522204ab218 ("scsi: hisi_sas: tidy host controller reset function a bit")
-Signed-off-by: Yihang Li <liyihang9@huawei.com>
-Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1702525516-51258-3-git-send-email-chenxiang66@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 0ab1b2d10afe ("arm64: dts: qcom: add sm8150 hdk dts")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20231215174152.315403-4-dmitry.baryshkov@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_main.c  | 4 ++--
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8150-hdk.dts | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index a8142e2b9643..450a8578157c 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_main.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -1502,12 +1502,12 @@ EXPORT_SYMBOL_GPL(hisi_sas_controller_reset_done);
- static int hisi_sas_controller_prereset(struct hisi_hba *hisi_hba)
- {
- 	if (!hisi_hba->hw->soft_reset)
--		return -1;
-+		return -ENOENT;
+diff --git a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
+index 3331ee957d64..368da4c7f41b 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
++++ b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
+@@ -126,8 +126,6 @@ vdda_qrefs_0p875_5:
+ 		vdda_sp_sensor:
+ 		vdda_ufs_2ln_core_1:
+ 		vdda_ufs_2ln_core_2:
+-		vdda_usb_ss_dp_core_1:
+-		vdda_usb_ss_dp_core_2:
+ 		vdda_qlink_lv:
+ 		vdda_qlink_lv_ck:
+ 		vreg_l5a_0p875: ldo5 {
+@@ -209,6 +207,12 @@ vreg_l17a_3p0: ldo17 {
+ 			regulator-max-microvolt = <3008000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
++
++		vreg_l18a_0p8: ldo18 {
++			regulator-min-microvolt = <880000>;
++			regulator-max-microvolt = <880000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
+ 	};
  
- 	down(&hisi_hba->sem);
- 	if (test_and_set_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags)) {
- 		up(&hisi_hba->sem);
--		return -1;
-+		return -EPERM;
- 	}
+ 	pm8150l-rpmh-regulators {
+@@ -439,13 +443,13 @@ &usb_2_hsphy {
+ &usb_1_qmpphy {
+ 	status = "okay";
+ 	vdda-phy-supply = <&vreg_l3c_1p2>;
+-	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
++	vdda-pll-supply = <&vreg_l18a_0p8>;
+ };
  
- 	if (hisi_sas_debugfs_enable && hisi_hba->debugfs_itct[0].itct)
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index c4305ec38ebf..4f816b2cfa49 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -4981,7 +4981,7 @@ static int _suspend_v3_hw(struct device *device)
- 	}
+ &usb_2_qmpphy {
+ 	status = "okay";
+ 	vdda-phy-supply = <&vreg_l3c_1p2>;
+-	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
++	vdda-pll-supply = <&vreg_l5a_0p875>;
+ };
  
- 	if (test_and_set_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags))
--		return -1;
-+		return -EPERM;
- 
- 	dev_warn(dev, "entering suspend state\n");
- 
+ &usb_1 {
 -- 
 2.43.0
 
