@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CBE129A63;
-	Tue, 23 Jan 2024 00:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD30129A63;
+	Tue, 23 Jan 2024 00:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968749; cv=none; b=pWBZnBcHKHVqsJQpZL2x4PadVo4d/mmn+brp8I4X+uP9af7Aro3CflUuV421BNn0B9qwdqxPBlzPcmGE7ms+7l3ZwIg1xDoQ+rxdsi0zD437sWU5SUaeWfDvdkSrzRcTwHUa4W7r0n8CBJWj4WkZP8HuJv0EuYT3Bob2kmhVJws=
+	t=1705968751; cv=none; b=EnqpGrn8UFo0wBEXMAjKE3GQhrvwngI6yeqEDcxvV8NJ+q1BvzQFAXk+JLR3Cl3FmFumfCk8gt5jVl2ZSXwqulVJmsUTN54ILpL9/8gKsOf8nEz7IiQuV/NEJeu/lZGcEQ7Fu6YsYA1gtz6aufDVP6QPc6roVD/zo1g9qV4cSBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968749; c=relaxed/simple;
-	bh=4lp5WUkMjwZyjxuPzuGAW8fWzXadgukGlFIdm9lUpRk=;
+	s=arc-20240116; t=1705968751; c=relaxed/simple;
+	bh=j3YkrBhxgGq4VvgZVjEY+HKILJbaskKONVU9FTgqQv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o9L7p2cqdvRvDhxM4GXvnKMMvw+GitR7JXhr3uopUSJ/hQ4EnzWNsQ/zUbzpxvIlOF+HIfwUqultYY37c43YLtkrJrcL6QYeOSezb9vJAv88AltW3jErf0OstH9MvGBaEiJFHA8YeVyabYHchqnfyOrx3rZFiDzBs6pASno6k7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOc1Hvvc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NNtJ9/LYUti/oasVG+tkqC07vC5tNwKNPHwzFpAVBY/iR3bC9V1ZdkyEfoQJ8qnNX+ZoYgMUKERXv0t44uBvXE+xHvM65eFJ+Ui4sPErb0rZGCOyYNihUv0a0T21eLuNwaWECsnsmMIB5Ar7B0oLDQVZJyPuMbo9GPKzHyyXfk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZllHojW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOc1Hvvc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA71C433C7;
-	Tue, 23 Jan 2024 00:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZllHojW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03B6C43390;
+	Tue, 23 Jan 2024 00:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968749;
-	bh=4lp5WUkMjwZyjxuPzuGAW8fWzXadgukGlFIdm9lUpRk=;
+	s=korg; t=1705968751;
+	bh=j3YkrBhxgGq4VvgZVjEY+HKILJbaskKONVU9FTgqQv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kOc1Hvvc70K/CkOhqFL9e8JZYT8XnB0eklu8Fk1wTifpmbEWqgR2XiyVuOXPjGQEI
-	 cGbPNT/WMRFOKJNt6gnZSeRk2FTbGd6GERBTeb1TZS7NfULPs+Z3Qd+QdQiDOJHFvZ
-	 vHsQfwFnk1sWlrolarUIPmWW7QYQR/q2KdDCtzw4=
+	b=KZllHojWpozGchu99OQkFzo1hXjGbD+kP1ctCYeil207j8hKpbfIf7skCs8mXh4hW
+	 kx6OvIM1tHDUaWbLATZLOE8oO0MK722dNiE02vyCXkATd41kSd/pJq1IXdsOHo/UuN
+	 fmjtvDCCkv4HhPaWxW3CYqIN3zsM0pngO+yciGpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenghan Wang <wzhmmmmm@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Kamil Duljas <kamil.duljas@gmail.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 029/194] ida: Fix crash in ida_free when the bitmap is empty
-Date: Mon, 22 Jan 2024 15:55:59 -0800
-Message-ID: <20240122235720.465127254@linuxfoundation.org>
+Subject: [PATCH 5.4 006/194] ASoC: Intel: Skylake: mem leak in skl register function
+Date: Mon, 22 Jan 2024 15:55:36 -0800
+Message-ID: <20240122235719.482863813@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -46,103 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Kamil Duljas <kamil.duljas@gmail.com>
 
-[ Upstream commit af73483f4e8b6f5c68c9aa63257bdd929a9c194a ]
+[ Upstream commit f8ba14b780273fd290ddf7ee0d7d7decb44cc365 ]
 
-The IDA usually detects double-frees, but that detection failed to
-consider the case when there are no nearby IDs allocated and so we have a
-NULL bitmap rather than simply having a clear bit.  Add some tests to the
-test-suite to be sure we don't inadvertently reintroduce this problem.
-Unfortunately they're quite noisy so include a message to disregard
-the warnings.
+skl_platform_register() uses krealloc. When krealloc is fail,
+then previous memory is not freed. The leak is also when soc
+component registration failed.
 
-Reported-by: Zhenghan Wang <wzhmmmmm@gmail.com>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Kamil Duljas <kamil.duljas@gmail.com>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20231116224112.2209-2-kamil.duljas@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/idr.c      |  2 +-
- lib/test_ida.c | 40 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+), 1 deletion(-)
+ sound/soc/intel/skylake/skl-pcm.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/lib/idr.c b/lib/idr.c
-index a91ca1dfe143..a90bd348ba03 100644
---- a/lib/idr.c
-+++ b/lib/idr.c
-@@ -506,7 +506,7 @@ void ida_free(struct ida *ida, unsigned int id)
- 			goto delete;
- 		xas_store(&xas, xa_mk_value(v));
- 	} else {
--		if (!test_bit(bit, bitmap->bitmap))
-+		if (!bitmap || !test_bit(bit, bitmap->bitmap))
+diff --git a/sound/soc/intel/skylake/skl-pcm.c b/sound/soc/intel/skylake/skl-pcm.c
+index 19176ae27274..3256f7c4eb74 100644
+--- a/sound/soc/intel/skylake/skl-pcm.c
++++ b/sound/soc/intel/skylake/skl-pcm.c
+@@ -1492,6 +1492,7 @@ int skl_platform_register(struct device *dev)
+ 		dais = krealloc(skl->dais, sizeof(skl_fe_dai) +
+ 				sizeof(skl_platform_dai), GFP_KERNEL);
+ 		if (!dais) {
++			kfree(skl->dais);
+ 			ret = -ENOMEM;
  			goto err;
- 		__clear_bit(bit, bitmap->bitmap);
- 		xas_set_mark(&xas, XA_FREE_MARK);
-diff --git a/lib/test_ida.c b/lib/test_ida.c
-index b06880625961..55105baa19da 100644
---- a/lib/test_ida.c
-+++ b/lib/test_ida.c
-@@ -150,6 +150,45 @@ static void ida_check_conv(struct ida *ida)
- 	IDA_BUG_ON(ida, !ida_is_empty(ida));
+ 		}
+@@ -1504,8 +1505,10 @@ int skl_platform_register(struct device *dev)
+ 
+ 	ret = devm_snd_soc_register_component(dev, &skl_component,
+ 					 skl->dais, num_dais);
+-	if (ret)
++	if (ret) {
++		kfree(skl->dais);
+ 		dev_err(dev, "soc component registration failed %d\n", ret);
++	}
+ err:
+ 	return ret;
  }
- 
-+/*
-+ * Check various situations where we attempt to free an ID we don't own.
-+ */
-+static void ida_check_bad_free(struct ida *ida)
-+{
-+	unsigned long i;
-+
-+	printk("vvv Ignore \"not allocated\" warnings\n");
-+	/* IDA is empty; all of these will fail */
-+	ida_free(ida, 0);
-+	for (i = 0; i < 31; i++)
-+		ida_free(ida, 1 << i);
-+
-+	/* IDA contains a single value entry */
-+	IDA_BUG_ON(ida, ida_alloc_min(ida, 3, GFP_KERNEL) != 3);
-+	ida_free(ida, 0);
-+	for (i = 0; i < 31; i++)
-+		ida_free(ida, 1 << i);
-+
-+	/* IDA contains a single bitmap */
-+	IDA_BUG_ON(ida, ida_alloc_min(ida, 1023, GFP_KERNEL) != 1023);
-+	ida_free(ida, 0);
-+	for (i = 0; i < 31; i++)
-+		ida_free(ida, 1 << i);
-+
-+	/* IDA contains a tree */
-+	IDA_BUG_ON(ida, ida_alloc_min(ida, (1 << 20) - 1, GFP_KERNEL) != (1 << 20) - 1);
-+	ida_free(ida, 0);
-+	for (i = 0; i < 31; i++)
-+		ida_free(ida, 1 << i);
-+	printk("^^^ \"not allocated\" warnings over\n");
-+
-+	ida_free(ida, 3);
-+	ida_free(ida, 1023);
-+	ida_free(ida, (1 << 20) - 1);
-+
-+	IDA_BUG_ON(ida, !ida_is_empty(ida));
-+}
-+
- static DEFINE_IDA(ida);
- 
- static int ida_checks(void)
-@@ -162,6 +201,7 @@ static int ida_checks(void)
- 	ida_check_leaf(&ida, 1024 * 64);
- 	ida_check_max(&ida);
- 	ida_check_conv(&ida);
-+	ida_check_bad_free(&ida);
- 
- 	printk("IDA: %u of %u tests passed\n", tests_passed, tests_run);
- 	return (tests_run != tests_passed) ? 0 : -EINVAL;
 -- 
 2.43.0
 
