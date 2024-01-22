@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09D95C8F4;
-	Tue, 23 Jan 2024 01:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3115BAFD;
+	Tue, 23 Jan 2024 01:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974372; cv=none; b=Gu+DiFYpWpcfZd7/DiMvgn1yNpZ9C6rpf2Nrj+y3q5TRWIsfwhO4R0WhDJfChbSScfSt1m7bRgLtBp0ZOKPeSYoMvuMoxsO2Kk+jaQ+sVv+pMIE+QzE9O1g8RntXWT5wW4+KinWNF5kHBtNajIH7s5OqJN0oSXY6PcxwCXiQ6sM=
+	t=1705974374; cv=none; b=FZs4HV/8IE6eeHQSHRNcwXmKnu6Te0nf8QSyUPRBhCTVP8r2ydHn6i1REnYGjLCD3cMNxLVZovISa+QaWb+EX099nGixmuR7uy5pq8KpgzUcKYkwVyTcX7maKMIUFhhKcuj0pXEOeLD1QSQL9BzUUA9kvOVbso/FlJf6Ptr7DFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974372; c=relaxed/simple;
-	bh=fAukxXxU53+hImUuPpKIB7mXjE9tRQfhIxIZvXVMMJc=;
+	s=arc-20240116; t=1705974374; c=relaxed/simple;
+	bh=xqBhWhFpgNEugVu7Q1fvNGG6jrJfT2gzDn9evWPbZh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BbijcuI7SwmW5g1NefMgAj3OuVDS9pTyg60aQTclD+QtbLF3RnJSy2hEA3HSedg7nEt7fcxy8EuNT8BIKmnW32rIC9Y0gsoLPVuEgO3MLvOnn5e3PHGsD73DytI5j/ZtyRhayyAAyKuTUU6/7irEuWXK8t4vnE1Jx3ADSB49UPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pElsIgW+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kUd2/3lGPOc8vCGQQXnX7u6Zmr5BjFWj7MUO+wKkzppLFIOGnmO7/z2S56INg6mobYw5X2QsqMxEEsR8p1uy9vpiA6I04rzbbLqxLVUsHnnuFXEZ6XnAwXhnCwUseWk2HpsB+B0ZxV+2kIgjpjK+1l/L/AV4C7/lSoJczsJuj1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BG+CD0mQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pElsIgW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869B4C433F1;
-	Tue, 23 Jan 2024 01:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BG+CD0mQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15ECFC433C7;
+	Tue, 23 Jan 2024 01:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974372;
-	bh=fAukxXxU53+hImUuPpKIB7mXjE9tRQfhIxIZvXVMMJc=;
+	s=korg; t=1705974374;
+	bh=xqBhWhFpgNEugVu7Q1fvNGG6jrJfT2gzDn9evWPbZh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pElsIgW+6gd2iAg5hMpBnY6n1Bfp0T+TSJc/luyuKl3D2qHXtRUwTq8PIm2Utw/33
-	 xontQipw3W5K40nUq7rLl5ngJ4dc74WhlWPZVXAZcX9zqkUvirXsVfzYSVRccZtDeU
-	 fy/e0Y+NZT6M+Iyl/HtBHQw3vL1UxqQUIkornhk8=
+	b=BG+CD0mQOmvvWlMiYtGQvpLxHolKycQFBFF5rQqKvD9GM6BSotkU2rfrdYZob8jG2
+	 hBTxu5YYIY2jItsvUQ6Av+Sp8DYw7Z5KBJaEbGS5aTqYugaaU/wnRBp9ukq7eC6tUo
+	 TE3XY4HXI39kkmPvIfCoZLkKWmovZCrLYzncrFbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 197/374] drm/radeon/trinity_dpm: fix a memleak in trinity_parse_power_table
-Date: Mon, 22 Jan 2024 15:57:33 -0800
-Message-ID: <20240122235751.458276760@linuxfoundation.org>
+Subject: [PATCH 6.6 071/583] crypto: sahara - improve error handling in sahara_sha_process()
+Date: Mon, 22 Jan 2024 15:52:02 -0800
+Message-ID: <20240122235814.328227766@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit 28c28d7f77c06ac2c0b8f9c82bc04eba22912b3b ]
+[ Upstream commit 5deff027fca49a1eb3b20359333cf2ae562a2343 ]
 
-The rdev->pm.dpm.ps allocated by kcalloc should be freed in every
-following error-handling path. However, in the error-handling of
-rdev->pm.power_state[i].clock_info the rdev->pm.dpm.ps is not freed,
-resulting in a memleak in this function.
+sahara_sha_hw_data_descriptor_create() returns negative error codes on
+failure, so make sure the errors are correctly handled / propagated.
 
-Fixes: d70229f70447 ("drm/radeon/kms: add dpm support for trinity asics")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/trinity_dpm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/crypto/sahara.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/trinity_dpm.c b/drivers/gpu/drm/radeon/trinity_dpm.c
-index 08ea1c864cb2..ef1cc7bad20a 100644
---- a/drivers/gpu/drm/radeon/trinity_dpm.c
-+++ b/drivers/gpu/drm/radeon/trinity_dpm.c
-@@ -1726,8 +1726,10 @@ static int trinity_parse_power_table(struct radeon_device *rdev)
- 		non_clock_array_index = power_state->v2.nonClockInfoIndex;
- 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
- 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
--		if (!rdev->pm.power_state[i].clock_info)
-+		if (!rdev->pm.power_state[i].clock_info) {
-+			kfree(rdev->pm.dpm.ps);
- 			return -EINVAL;
-+		}
- 		ps = kzalloc(sizeof(struct sumo_ps), GFP_KERNEL);
- 		if (ps == NULL) {
- 			kfree(rdev->pm.dpm.ps);
+diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
+index 86ff5add2e15..117aa4296c2a 100644
+--- a/drivers/crypto/sahara.c
++++ b/drivers/crypto/sahara.c
+@@ -987,7 +987,10 @@ static int sahara_sha_process(struct ahash_request *req)
+ 		return ret;
+ 
+ 	if (rctx->first) {
+-		sahara_sha_hw_data_descriptor_create(dev, rctx, req, 0);
++		ret = sahara_sha_hw_data_descriptor_create(dev, rctx, req, 0);
++		if (ret)
++			return ret;
++
+ 		dev->hw_desc[0]->next = 0;
+ 		rctx->first = 0;
+ 	} else {
+@@ -995,7 +998,10 @@ static int sahara_sha_process(struct ahash_request *req)
+ 
+ 		sahara_sha_hw_context_descriptor_create(dev, rctx, req, 0);
+ 		dev->hw_desc[0]->next = dev->hw_phys_desc[1];
+-		sahara_sha_hw_data_descriptor_create(dev, rctx, req, 1);
++		ret = sahara_sha_hw_data_descriptor_create(dev, rctx, req, 1);
++		if (ret)
++			return ret;
++
+ 		dev->hw_desc[1]->next = 0;
+ 	}
+ 
 -- 
 2.43.0
 
