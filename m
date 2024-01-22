@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3168B136658;
-	Tue, 23 Jan 2024 00:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66ED136658;
+	Tue, 23 Jan 2024 00:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969702; cv=none; b=Fu5RZ3Z75KXWKNoV8mZpSMjrOLwQ9NJI6va5tGnI+aUBx7JUhokOhAC+eu48TH+ZdY1mFY76QXegfvl8SbmjDgo8+z/9CO0ZxGBoQnQIxw10IqfM/erzc8+2IIo5MGNP1jWH26Q2Ghkm4VEzbvtKhWvwaS4ZlUQJJQKvAqfCaIM=
+	t=1705969703; cv=none; b=iar0wiBNpHP0OBrc0ireldY7lEVasqlzTsA5dnXkwf4RfZ+N+SyA8IreI06eeZX1whQ+oQRCU9L1wVBR21yc7ONgOUI2GLmZWokc4liBokD83qCT6tNSTJlqY/LeGbd6sWrXenCiTCyspgYN5/O4ZIalV4tg9Wi6SxcHkDa/AVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969702; c=relaxed/simple;
-	bh=zmtznzuk1e0ckZ+ShXCQ+QkmVOq5JAFEvKVaAt2++bM=;
+	s=arc-20240116; t=1705969703; c=relaxed/simple;
+	bh=5pIdF8HLwHJEDYqBPAWc8X+NuY31VWW6j+0HPZPTWMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gNaeZtldvPZhaBWev1j+OarNUlcFI9kW6SkS5Q+gJ2pb1M46iV26uKAQimKR/hntfNE1oUfc1UvSZQZ8Ak/+yVp4ei/Hg6f+xa2gvB6PpAX+X7uUeVoQKYh++SixL0hxFqGPKE1HFZzYCM6nFFHJ3hAHmjjQDoCijHsuZuFyQ8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j48LaO0U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yzm+3Hsq3b8cBwbKL3hpZ7vIGkEiYFoR8zlrkfyj1tTiEi86o6E8gzE7aCJnDk4ycWNMq8sIgV9MqQvLvwPi5ZpyVrmKyDgih7dDEjqobZqpL0D4Qll9pLCGMSfjW82wfgFpuLHXZP+fDGoW44UBXiUf7hHoC7khXoYZaSwQag4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwjOOs66; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j48LaO0U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3149C433F1;
-	Tue, 23 Jan 2024 00:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwjOOs66"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4070FC433F1;
+	Tue, 23 Jan 2024 00:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969702;
-	bh=zmtznzuk1e0ckZ+ShXCQ+QkmVOq5JAFEvKVaAt2++bM=;
+	s=korg; t=1705969703;
+	bh=5pIdF8HLwHJEDYqBPAWc8X+NuY31VWW6j+0HPZPTWMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j48LaO0UFFS5aqfgnjxz2ZZF/x7eWnu0jaD2SW9recuCNuSDhjxSU6sFU2viW4xHN
-	 LoFj4IMiE2MgVJ35tzM24a2P4nf8y+t6qQWZMGKTfLLRWCno8m6gzTwwR2HYjGo9j5
-	 5qO6JxHRJahRLT09KlJ9EiFmR+j/zZdH8FddzHwI=
+	b=pwjOOs66vqI7kCs1o3KX45yL7hZcIcKW9ArmHARF46BSRFBUHp1EljjAiS8vVQkjO
+	 amxnw7AanSLqLf0odViccOhh4A5Fzix+rwSWWOJ2OPBlT1L9aA6s9FtxOQnJokGfxs
+	 R6bUjc5vUnq977FunflXYlfSle9I2n7mEsj2TQRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Subject: [PATCH 6.7 412/641] serial: core: set missing supported flag for RX during TX GPIO
-Date: Mon, 22 Jan 2024 15:55:16 -0800
-Message-ID: <20240122235830.871809020@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 6.7 413/641] serial: 8250_bcm2835aux: Restore clock error handling
+Date: Mon, 22 Jan 2024 15:55:17 -0800
+Message-ID: <20240122235830.898809657@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -44,43 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-commit 1a33e33ca0e80d485458410f149265cdc0178cfa upstream.
+commit 83e571f054cd742eb9a46d46ef05193904adf53f upstream.
 
-If the RS485 feature RX-during-TX is supported by means of a GPIO set the
-according supported flag. Otherwise setting this feature from userspace may
-not be possible, since in uart_sanitize_serial_rs485() the passed RS485
-configuration is matched against the supported features and unsupported
-settings are thereby removed and thus take no effect.
+The commit fcc446c8aa63 ("serial: 8250_bcm2835aux: Add ACPI support")
+dropped the error handling for clock acquiring. But even an optional
+clock needs this.
 
-Cc:  <stable@vger.kernel.org>
-Fixes: 163f080eb717 ("serial: core: Add option to output RS485 RX_DURING_TX state via GPIO")
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Link: https://lore.kernel.org/r/20240103061818.564-3-l.sanfilippo@kunbus.com
+Fixes: fcc446c8aa63 ("serial: 8250_bcm2835aux: Add ACPI support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20231220114334.4712-1-wahrenst@gmx.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |    2 ++
+ drivers/tty/serial/8250/8250_bcm2835aux.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -3650,6 +3650,8 @@ int uart_get_rs485_mode(struct uart_port
- 	if (IS_ERR(desc))
- 		return dev_err_probe(dev, PTR_ERR(desc), "Cannot get rs485-rx-during-tx-gpios\n");
- 	port->rs485_rx_during_tx_gpio = desc;
-+	if (port->rs485_rx_during_tx_gpio)
-+		port->rs485_supported.flags |= SER_RS485_RX_DURING_TX;
+--- a/drivers/tty/serial/8250/8250_bcm2835aux.c
++++ b/drivers/tty/serial/8250/8250_bcm2835aux.c
+@@ -119,6 +119,8 @@ static int bcm2835aux_serial_probe(struc
  
- 	return 0;
- }
+ 	/* get the clock - this also enables the HW */
+ 	data->clk = devm_clk_get_optional(&pdev->dev, NULL);
++	if (IS_ERR(data->clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(data->clk), "could not get clk\n");
+ 
+ 	/* get the interrupt */
+ 	ret = platform_get_irq(pdev, 0);
 
 
