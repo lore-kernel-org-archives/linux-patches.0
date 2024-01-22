@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F774EB4A;
-	Tue, 23 Jan 2024 00:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0F05479F;
+	Tue, 23 Jan 2024 00:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969787; cv=none; b=KtKvDrXlkfNANdP6IUAlFu/mPf6AnKvMIEt1fWZpunj1vZT4WQzatuExNxeogyLQSHMybtQ+I24NEzopsPWfXw7pvLjjU5BrdY1Vph3OeKfZLNDDgWSLTY/C4sRdNfKxB2Nn3LGhZk7f3Nh/GdJDeF7KdF1wk1gWZWbEletcSIs=
+	t=1705969788; cv=none; b=kbQ1WJv9m26eSZ518Qe877wH2zdGU1Bezqkjsclve50JWkD3C4ZDEv2da4cff0EhFH+YARvxMMpv85kzbZ0v3Tai55yhQY7B9Nwy5qz7LXwXZaY/2FdNiDDLip948LoLUgxK79yiiJewcNJOu5nMEfszaU5nWgCLMZlEZYacxfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969787; c=relaxed/simple;
-	bh=rLphiWNvQjj09MCVAdl1jB2phwM/zDCGMfHzh5jRHKc=;
+	s=arc-20240116; t=1705969788; c=relaxed/simple;
+	bh=6fRqbbtaQGoMa3vkoIMto2FH3+7EF9+9AImlOTNifHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dc8iXGHCoGkNq4nvQIFm6CfDYIQs7YKftlXGHSr9BdnaSEINy13HuO0LHNeAYc/i+d3eiuskWFjYPEI4dgLYhXzUCqCB4DBC7Yk943HX2Ogav0y61+yFyWnys25GO2HqPO6rJEMzIPlWpBjbp0Z5lrQu0i/2zfZiCaC4iBg+d+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZfC+cIPc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=niPydcSNd+2QQ9h2OFcYL+9o3JSdLuqrl2H2fV66Tlk3g4WOi17WV/UkQYycZ8O3Inw8KwvJXeMuh8whYn6wkQKpts2+RhV5wa+wcbpA7w41J18+OFUFgQj++Zpo20yyABdk869T5/++18kCheakxaliJ8ypuJoYfJC3/oQUD08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrgOW+3Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZfC+cIPc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED76BC43390;
-	Tue, 23 Jan 2024 00:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrgOW+3Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD3CC43399;
+	Tue, 23 Jan 2024 00:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969787;
-	bh=rLphiWNvQjj09MCVAdl1jB2phwM/zDCGMfHzh5jRHKc=;
+	s=korg; t=1705969788;
+	bh=6fRqbbtaQGoMa3vkoIMto2FH3+7EF9+9AImlOTNifHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZfC+cIPc9E1V01JHPH3d0A6rfHk4S6aWVC6rdd7H7CaWlMGbAbice4zFL53rXjna8
-	 cy1Br34mQoQeAEczR7KadZvrOlVyW7f49t7+waS4zD2sp/x/qQebcDZxwxcCmagnzS
-	 +Qa2qzuMnMTvExSXxwY2Z89COp6YPBqMKs+mmoVQ=
+	b=nrgOW+3ZQTgiN6vCXteSGKPMk3uULhQst0xe6WsGrLXXKij1liNI7ZXhs4wXkPrlB
+	 BPXhMNEZYiL/fN5DWdPcvFF8/JtgUWWjs2UQT8xOBgKS2o1oJvv/g6jgMNKokMDNgF
+	 XhoM/tiuzLUj0d6TVrdYUnh7AI9XcMYlU7ZtZ5hk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.7 424/641] ksmbd: only v2 leases handle the directory
-Date: Mon, 22 Jan 2024 15:55:28 -0800
-Message-ID: <20240122235831.258723046@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Xiubo Li <xiubli@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.7 425/641] ceph: select FS_ENCRYPTION_ALGS if FS_ENCRYPTION
+Date: Mon, 22 Jan 2024 15:55:29 -0800
+Message-ID: <20240122235831.291354524@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -50,37 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 77bebd186442a7d703b796784db7495129cc3e70 upstream.
+commit 9c896d6bc3dfef86659a6a1fb25ccdea5dbef6a3 upstream.
 
-When smb2 leases is disable, ksmbd can send oplock break notification
-and cause wait oplock break ack timeout. It may appear like hang when
-accessing a directory. This patch make only v2 leases handle the
-directory.
+The kconfig options for filesystems that support FS_ENCRYPTION are
+supposed to select FS_ENCRYPTION_ALGS.  This is needed to ensure that
+required crypto algorithms get enabled as loadable modules or builtin as
+is appropriate for the set of enabled filesystems.  Do this for CEPH_FS
+so that there aren't any missing algorithms if someone happens to have
+CEPH_FS as their only enabled filesystem that supports encryption.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: f061feda6c54 ("ceph: add fscrypt ioctls and ceph.fscrypt.auth vxattr")
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/oplock.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ceph/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -1191,6 +1191,12 @@ int smb_grant_oplock(struct ksmbd_work *
- 	bool prev_op_has_lease;
- 	__le32 prev_op_state = 0;
- 
-+	/* Only v2 leases handle the directory */
-+	if (S_ISDIR(file_inode(fp->filp)->i_mode)) {
-+		if (!lctx || lctx->version != 2)
-+			return 0;
-+	}
-+
- 	opinfo = alloc_opinfo(work, pid, tid);
- 	if (!opinfo)
- 		return -ENOMEM;
+--- a/fs/ceph/Kconfig
++++ b/fs/ceph/Kconfig
+@@ -7,6 +7,7 @@ config CEPH_FS
+ 	select CRYPTO_AES
+ 	select CRYPTO
+ 	select NETFS_SUPPORT
++	select FS_ENCRYPTION_ALGS if FS_ENCRYPTION
+ 	default n
+ 	help
+ 	  Choose Y or M here to include support for mounting the
 
 
