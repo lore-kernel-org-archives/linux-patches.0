@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4F029403;
-	Tue, 23 Jan 2024 01:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6945929408;
+	Tue, 23 Jan 2024 01:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974737; cv=none; b=EhKbwkNTgXWSX16xpK8WBhtnAA+rQIoW240Ai7w8bdRICy/9V8fOXDDKIraykMoH65Lf9idaDerVbnELYQK4GKcaXRRm0zrWw/K5UwDH6qnpIWAyHbFAc33Y15fgFhEgSddSALeoRb3tOn/WyzOLcV6WmuuijwHSxsd0BtPpxzU=
+	t=1705974738; cv=none; b=Qq7Q5VxadlaRdaDgn5vkJjvmb2YrpPdiNhddN4/mYN8vhjJ67tCoz80CY6YqygQ0TVbEl/3H0VHjiM7+m8LLjujoU25PpMxe7YLo8Xvu+bWLK36j3tvEQU/qJLXCw/6lhVak7+HXFGH1/ehjQdyjs6wUXn9plhIwjEXtsoQhVss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974737; c=relaxed/simple;
-	bh=eLN5z31J0xxJ7Gf6S5zhRtZCSXzulzZmOEGYOSXwMUM=;
+	s=arc-20240116; t=1705974738; c=relaxed/simple;
+	bh=wmkeVO1w56XztlyThIXnzsvKSA/QrRb4FJFZuglpfoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VzbrgP6pCreDCfNsC/xOTOM2jAfMsORsAvvLo8Kbc25JFGYz4O9D0dTwylOfhAFp0EnTyH/zTQxim/4IigVPKjVMOPjeST2mhmOqmo1Q8RNPC1nb1TFOgHG3ggjp5BLOZ5AmfsgWmDdRZYSI9Un0GIrR0ngQ9w7KvPnBxEYA6Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5uTDjuI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fVbhFu0BrSS12HOLh+aULAnWcvbnuqpXgJDCOJDES+oplZrXuL6Vh6SpgokzEygfP6qTJr6rpzSKnOPxWzDkq+L+o8tIkaCNBTgHdZptQf/gu5FfbT7U90xk+ZKfNXJ1J9M674+Rv8o/p/ruxXH1wH0EXtvdSrT+1f58oZz3XXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3S3r/k0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5uTDjuI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BCCC433C7;
-	Tue, 23 Jan 2024 01:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3S3r/k0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDE8C43394;
+	Tue, 23 Jan 2024 01:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974737;
-	bh=eLN5z31J0xxJ7Gf6S5zhRtZCSXzulzZmOEGYOSXwMUM=;
+	s=korg; t=1705974738;
+	bh=wmkeVO1w56XztlyThIXnzsvKSA/QrRb4FJFZuglpfoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5uTDjuIsxBrp/70R8A0oobl7J9G2qi+Jcx2OHe2E1zedAz27I+5nOKtyxR5TN25B
-	 i8LWewBlSS7UNMvfCc0ggryE7c1MxK3ysAHSw/Oh2rDp/BGbhbWfczd7phfcFnvXLO
-	 b/SKYkBXjm0pYn2MRTP/FMmhzl6OftGfSFEB+Y8I=
+	b=G3S3r/k0QO2tdz32ZkzoPtsmIqXMBz0wMM2KBPgHcmUy2aRl6gRoNrihWvpxbw2F9
+	 637OPc/gareCYgnywbVDHT5WFTHgFK2ASIZOHOvhJ1BzImdHSSqmSYDV51+6a7IOVo
+	 DCxrPB8SowVj+jh9/+MAPK+5CNIGgeNQeZpS+y7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <2045gemini@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 274/374] Bluetooth: Fix atomicity violation in {min,max}_key_size_set
-Date: Mon, 22 Jan 2024 15:58:50 -0800
-Message-ID: <20240122235754.306285010@linuxfoundation.org>
+	Eugen Hristev <eugen.hristev@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 150/583] arm64: dts: mediatek: mt8186: fix address warning for ADSP mailboxes
+Date: Mon, 22 Jan 2024 15:53:21 -0800
+Message-ID: <20240122235816.661744040@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,96 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gui-Dong Han <2045gemini@gmail.com>
+From: Eugen Hristev <eugen.hristev@collabora.com>
 
-commit da9065caa594d19b26e1a030fd0cc27bd365d685 upstream.
+[ Upstream commit 840e341bed3c4331061031dc9db0aff04abafb4b ]
 
-In min_key_size_set():
-    if (val > hdev->le_max_key_size || val < SMP_MIN_ENC_KEY_SIZE)
-        return -EINVAL;
-    hci_dev_lock(hdev);
-    hdev->le_min_key_size = val;
-    hci_dev_unlock(hdev);
+Fix warnings reported by dtbs_check :
 
-In max_key_size_set():
-    if (val > SMP_MAX_ENC_KEY_SIZE || val < hdev->le_min_key_size)
-        return -EINVAL;
-    hci_dev_lock(hdev);
-    hdev->le_max_key_size = val;
-    hci_dev_unlock(hdev);
+arch/arm64/boot/dts/mediatek/mt8186.dtsi:1163.35-1168.5: Warning (simple_bus_reg):
+ /soc/mailbox@10686000: simple-bus unit address format error, expected "10686100"
+arch/arm64/boot/dts/mediatek/mt8186.dtsi:1170.35-1175.5: Warning (simple_bus_reg):
+ /soc/mailbox@10687000: simple-bus unit address format error, expected "10687100"
 
-The atomicity violation occurs due to concurrent execution of set_min and
-set_max funcs.Consider a scenario where setmin writes a new, valid 'min'
-value, and concurrently, setmax writes a value that is greater than the
-old 'min' but smaller than the new 'min'. In this case, setmax might check
-against the old 'min' value (before acquiring the lock) but write its
-value after the 'min' has been updated by setmin. This leads to a
-situation where the 'max' value ends up being smaller than the 'min'
-value, which is an inconsistency.
+by having the right bus address as node name.
 
-This possible bug is found by an experimental static analysis tool
-developed by our team, BassCheck[1]. This tool analyzes the locking APIs
-to extract function pairs that can be concurrently executed, and then
-analyzes the instructions in the paired functions to identify possible
-concurrency bugs including data races and atomicity violations. The above
-possible bug is reported when our tool analyzes the source code of
-Linux 5.17.
-
-To resolve this issue, it is suggested to encompass the validity checks
-within the locked sections in both set_min and set_max funcs. The
-modification ensures that the validation of 'val' against the
-current min/max values is atomic, thus maintaining the integrity of the
-settings. With this patch applied, our tool no longer reports the bug,
-with the kernel configuration allyesconfig for x86_64. Due to the lack of
-associated hardware, we cannot test the patch in runtime testing, and just
-verify it according to the code logic.
-
-[1] https://sites.google.com/view/basscheck/
-
-Fixes: 18f81241b74f ("Bluetooth: Move {min,max}_key_size debugfs ...")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 379cf0e639ae ("arm64: dts: mediatek: mt8186: Add ADSP mailbox nodes")
+Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
+Link: https://lore.kernel.org/r/20231204135533.21327-1-eugen.hristev@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_debugfs.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8186.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/hci_debugfs.c
-+++ b/net/bluetooth/hci_debugfs.c
-@@ -1044,10 +1044,12 @@ static int min_key_size_set(void *data,
- {
- 	struct hci_dev *hdev = data;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8186.dtsi b/arch/arm64/boot/dts/mediatek/mt8186.dtsi
+index 021397671099..2fec6fd1c1a7 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8186.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8186.dtsi
+@@ -1160,14 +1160,14 @@ adsp: adsp@10680000 {
+ 			status = "disabled";
+ 		};
  
--	if (val > hdev->le_max_key_size || val < SMP_MIN_ENC_KEY_SIZE)
-+	hci_dev_lock(hdev);
-+	if (val > hdev->le_max_key_size || val < SMP_MIN_ENC_KEY_SIZE) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
+-		adsp_mailbox0: mailbox@10686000 {
++		adsp_mailbox0: mailbox@10686100 {
+ 			compatible = "mediatek,mt8186-adsp-mbox";
+ 			#mbox-cells = <0>;
+ 			reg = <0 0x10686100 0 0x1000>;
+ 			interrupts = <GIC_SPI 361 IRQ_TYPE_LEVEL_HIGH 0>;
+ 		};
  
--	hci_dev_lock(hdev);
- 	hdev->le_min_key_size = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -1072,10 +1074,12 @@ static int max_key_size_set(void *data,
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val > SMP_MAX_ENC_KEY_SIZE || val < hdev->le_min_key_size)
-+	hci_dev_lock(hdev);
-+	if (val > SMP_MAX_ENC_KEY_SIZE || val < hdev->le_min_key_size) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->le_max_key_size = val;
- 	hci_dev_unlock(hdev);
- 
+-		adsp_mailbox1: mailbox@10687000 {
++		adsp_mailbox1: mailbox@10687100 {
+ 			compatible = "mediatek,mt8186-adsp-mbox";
+ 			#mbox-cells = <0>;
+ 			reg = <0 0x10687100 0 0x1000>;
+-- 
+2.43.0
+
 
 
