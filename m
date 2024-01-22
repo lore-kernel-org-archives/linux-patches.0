@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B471C130E42;
-	Tue, 23 Jan 2024 00:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12943130E42;
+	Tue, 23 Jan 2024 00:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969079; cv=none; b=jN1p7ewXYMW5CUu5/54CZBu5XSkHahEzeW4nIdem6WkxQktJ1agNpQwMG/3oblUfOey5ElvmdRsXesOFFTlz0bjx+b2Q4M7SmkZ/tKXWpQLqvHh/pzhpQYYyNg64W/rVfz7F+wrMJpE0oJLl4YSVNLIXPW7rjykwwcVUHAsNJ4U=
+	t=1705969081; cv=none; b=P8W27cvlA8q/ht+VaRIn7cMbnS+baZ6KgRN3M3ihkT9e/RG+/L/rXGNv7V7Vy8efl/lAeGFm5lbw2C2a1/sGSnGH9WH68dFPF2A++qv3nyVNmd1+KdRCR7bdft/rHZsEZ+YHqV7vsrmEqCv3556QC9FNn+QayommmlC2gQdxFJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969079; c=relaxed/simple;
-	bh=1oMv62C+Ht9C4ohbKqojMFisCXyWHwUa+GmPxYq4AKE=;
+	s=arc-20240116; t=1705969081; c=relaxed/simple;
+	bh=hYFwvyKWGXG/J0MAHYRNwPLQDf5QjlbIIa/p6vCRGps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sZ1E84bHmL3RySdXMILISEq3YE/+GViC5dOPAnA0q6EGYTDjzgyrDn9dK54vYaVDftz72um00dajc5HqixSJ+dNICmRwPMFozpLnfpLn7l36TcnGsR0UdSqbFtgn2uLpv5knIKVBXIJJG5he1fZp74LU8NQlaNI7OH2HiQvCBKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JlEiCt85; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SACdN/XZRXwbXgSX5r//NEHjJszEhX1FRa+HozAXUOsiq2lEqFsygoEgV7cXpPff9Hnj/vZJMJ4o9clpuUoX2F70o/SYas4534ivgY41fPQMVX4sM4FdcoWkLfn0JeZDAgciNBeI/Fy7ztnjbIsAu1a63AHsKQdNg+/0Gj3cFtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qhF6jMLT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlEiCt85"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71683C43390;
-	Tue, 23 Jan 2024 00:17:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qhF6jMLT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2958C43394;
+	Tue, 23 Jan 2024 00:18:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969079;
-	bh=1oMv62C+Ht9C4ohbKqojMFisCXyWHwUa+GmPxYq4AKE=;
+	s=korg; t=1705969080;
+	bh=hYFwvyKWGXG/J0MAHYRNwPLQDf5QjlbIIa/p6vCRGps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JlEiCt85JHOYW3i8lWonybhiFuqF7Z8GfIP4oUR7GFpoWLnKJnNJs0ohtgUee1/GL
-	 ruQY+OInCqU/iGBpt81yQHAy267Ae4X5btv6dfbqKKS+q7j/2Z18GQcbldtKIpktvf
-	 3XKYJ/JhHQVSOJtMjJ0Xkjkbcu1n1J6rEbVjQW/M=
+	b=qhF6jMLTm6jgBGxgDtS3CAcZFSUochDHCtD7sJg0iH++m3IpGxa1x/fW2D4t7+oPr
+	 CWg18Wa84j4dl9hA8nCshmX9vb1tpbhKAX5JZ8VSac9asMonFUmKElQ09BHr9dxOA0
+	 3l7Bi/1pD0h0uV+qqSl0gNbZfNfqU9wVw8q3YsXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 182/194] s390/pci: fix max size calculation in zpci_memcpy_toio()
-Date: Mon, 22 Jan 2024 15:58:32 -0800
-Message-ID: <20240122235727.032691047@linuxfoundation.org>
+Subject: [PATCH 6.7 001/641] x86/lib: Fix overflow when counting digits
+Date: Mon, 22 Jan 2024 15:48:25 -0800
+Message-ID: <20240122235818.144276031@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
-References: <20240122235719.206965081@linuxfoundation.org>
+In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
+References: <20240122235818.091081209@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,147 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 80df7d6af7f6d229b34cf237b2cc9024c07111cd ]
+[ Upstream commit a24d61c609813963aacc9f6ec8343f4fcaac7243 ]
 
-The zpci_get_max_write_size() helper is used to determine the maximum
-size a PCI store or load can use at a given __iomem address.
+tl;dr: The num_digits() function has a theoretical overflow issue.
+But it doesn't affect any actual in-tree users.  Fix it by using
+a larger type for one of the local variables.
 
-For the PCI block store the following restrictions apply:
+Long version:
 
-1. The dst + len must not cross a 4K boundary in the (pseudo-)MMIO space
-2. len must not exceed ZPCI_MAX_WRITE_SIZE
-3. len must be a multiple of 8 bytes
-4. The src address must be double word (8 byte) aligned
-5. The dst address must be double word (8 byte) aligned
+There is an overflow in variable m in function num_digits when val
+is >= 1410065408 which leads to the digit calculation loop to
+iterate more times than required. This results in either more
+digits being counted or in some cases (for example where val is
+1932683193) the value of m eventually overflows to zero and the
+while loop spins forever).
 
-Otherwise only a normal PCI store which takes its src value from
-a register can be used. For these PCI store restriction 1 still applies.
-Similarly 1 also applies to PCI loads.
+Currently the function num_digits is currently only being used for
+small values of val in the SMP boot stage for digit counting on the
+number of cpus and NUMA nodes, so the overflow is never encountered.
+However it is useful to fix the overflow issue in case the function
+is used for other purposes in the future. (The issue was discovered
+while investigating the digit counting performance in various
+kernel helper functions rather than any real-world use-case).
 
-It turns out zpci_max_write_size() instead implements stricter
-conditions which prevents PCI block stores from being used where they
-can and should be used. In particular instead of conditions 4 and 5 it
-wrongly enforces both dst and src to be size aligned. This indirectly
-covers condition 1 but also prevents many legal PCI block stores.
+The simplest fix is to make m a long long, the overhead in
+multiplication speed for a long long is very minor for small values
+of val less than 10000 on modern processors. The alternative
+fix is to replace the multiplication with a constant division
+by 10 loop (this compiles down to an multiplication and shift)
+without needing to make m a long long, but this is slightly slower
+than the fix in this commit when measured on a range of x86
+processors).
 
-On top of the functional shortcomings the zpci_get_max_write_size() is
-misnamed as it is used for both read and write size calculations. Rename
-it to zpci_get_max_io_size() and implement the listed conditions
-explicitly.
+[ dhansen: subject and changelog tweaks ]
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Fixes: cd24834130ac ("s390/pci: base support")
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-[agordeev@linux.ibm.com replaced spaces with tabs]
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: 646e29a1789a ("x86: Improve the printout of the SMP bootup CPU table")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://lore.kernel.org/all/20231102174901.2590325-1-colin.i.king%40gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/pci_io.h | 32 ++++++++++++++++++--------------
- arch/s390/pci/pci_mmio.c       | 12 ++++++------
- 2 files changed, 24 insertions(+), 20 deletions(-)
+ arch/x86/lib/misc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/include/asm/pci_io.h b/arch/s390/include/asm/pci_io.h
-index 287bb88f7698..2686bee800e3 100644
---- a/arch/s390/include/asm/pci_io.h
-+++ b/arch/s390/include/asm/pci_io.h
-@@ -11,6 +11,8 @@
- /* I/O size constraints */
- #define ZPCI_MAX_READ_SIZE	8
- #define ZPCI_MAX_WRITE_SIZE	128
-+#define ZPCI_BOUNDARY_SIZE	(1 << 12)
-+#define ZPCI_BOUNDARY_MASK	(ZPCI_BOUNDARY_SIZE - 1)
- 
- /* I/O Map */
- #define ZPCI_IOMAP_SHIFT		48
-@@ -125,16 +127,18 @@ static inline int zpci_read_single(void *dst, const volatile void __iomem *src,
- int zpci_write_block(volatile void __iomem *dst, const void *src,
- 		     unsigned long len);
- 
--static inline u8 zpci_get_max_write_size(u64 src, u64 dst, int len, int max)
-+static inline int zpci_get_max_io_size(u64 src, u64 dst, int len, int max)
+diff --git a/arch/x86/lib/misc.c b/arch/x86/lib/misc.c
+index 92cd8ecc3a2c..40b81c338ae5 100644
+--- a/arch/x86/lib/misc.c
++++ b/arch/x86/lib/misc.c
+@@ -8,7 +8,7 @@
+  */
+ int num_digits(int val)
  {
--	int count = len > max ? max : len, size = 1;
-+	int offset = dst & ZPCI_BOUNDARY_MASK;
-+	int size;
+-	int m = 10;
++	long long m = 10;
+ 	int d = 1;
  
--	while (!(src & 0x1) && !(dst & 0x1) && ((size << 1) <= count)) {
--		dst = dst >> 1;
--		src = src >> 1;
--		size = size << 1;
--	}
--	return size;
-+	size = min3(len, ZPCI_BOUNDARY_SIZE - offset, max);
-+	if (IS_ALIGNED(src, 8) && IS_ALIGNED(dst, 8) && IS_ALIGNED(size, 8))
-+		return size;
-+
-+	if (size >= 8)
-+		return 8;
-+	return rounddown_pow_of_two(size);
- }
- 
- static inline int zpci_memcpy_fromio(void *dst,
-@@ -144,9 +148,9 @@ static inline int zpci_memcpy_fromio(void *dst,
- 	int size, rc = 0;
- 
- 	while (n > 0) {
--		size = zpci_get_max_write_size((u64 __force) src,
--					       (u64) dst, n,
--					       ZPCI_MAX_READ_SIZE);
-+		size = zpci_get_max_io_size((u64 __force) src,
-+					    (u64) dst, n,
-+					    ZPCI_MAX_READ_SIZE);
- 		rc = zpci_read_single(dst, src, size);
- 		if (rc)
- 			break;
-@@ -166,9 +170,9 @@ static inline int zpci_memcpy_toio(volatile void __iomem *dst,
- 		return -EINVAL;
- 
- 	while (n > 0) {
--		size = zpci_get_max_write_size((u64 __force) dst,
--					       (u64) src, n,
--					       ZPCI_MAX_WRITE_SIZE);
-+		size = zpci_get_max_io_size((u64 __force) dst,
-+					    (u64) src, n,
-+					    ZPCI_MAX_WRITE_SIZE);
- 		if (size > 8) /* main path */
- 			rc = zpci_write_block(dst, src, size);
- 		else
-diff --git a/arch/s390/pci/pci_mmio.c b/arch/s390/pci/pci_mmio.c
-index a4d5048b7eee..675e6cb50584 100644
---- a/arch/s390/pci/pci_mmio.c
-+++ b/arch/s390/pci/pci_mmio.c
-@@ -100,9 +100,9 @@ static inline int __memcpy_toio_inuser(void __iomem *dst,
- 
- 	old_fs = enable_sacf_uaccess();
- 	while (n > 0) {
--		size = zpci_get_max_write_size((u64 __force) dst,
--					       (u64 __force) src, n,
--					       ZPCI_MAX_WRITE_SIZE);
-+		size = zpci_get_max_io_size((u64 __force) dst,
-+					    (u64 __force) src, n,
-+					    ZPCI_MAX_WRITE_SIZE);
- 		if (size > 8) /* main path */
- 			rc = __pcistb_mio_inuser(dst, src, size, &status);
- 		else
-@@ -250,9 +250,9 @@ static inline int __memcpy_fromio_inuser(void __user *dst,
- 
- 	old_fs = enable_sacf_uaccess();
- 	while (n > 0) {
--		size = zpci_get_max_write_size((u64 __force) src,
--					       (u64 __force) dst, n,
--					       ZPCI_MAX_READ_SIZE);
-+		size = zpci_get_max_io_size((u64 __force) src,
-+					    (u64 __force) dst, n,
-+					    ZPCI_MAX_READ_SIZE);
- 		rc = __pcilg_mio_inuser(dst, src, size, &status);
- 		if (rc)
- 			break;
+ 	if (val < 0) {
 -- 
 2.43.0
 
