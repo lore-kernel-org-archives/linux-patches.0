@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA975A78C;
-	Tue, 23 Jan 2024 00:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C285FDDF;
+	Tue, 23 Jan 2024 00:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970529; cv=none; b=qBOprdDAj6NHnmYH0zeIB7n/CGrePlDjuzAfmBOfy1aQlBSGslnMd5eBN2e6QMy+AyRkfj5c7EAyHMYpjLydkwUyLWSL8e4uI+7cCpkaRTwrujSOCmyL4RYQfw6H+0K26dxHxMq0XHacrbuqKijqFhmR4QK9biZDxI+CaJkHPHQ=
+	t=1705970533; cv=none; b=KahZFxW4DdOf2I3keuet0I4F3RLNB2k4J4le9uzgbY24m5qs0y7OUjkQM+gREwbvwbgRJenYCyKwUyqwN7ITMiZwA53s243vZ9kdihdaWmhSNFsTEbu+ov0kwGL3R/jZVi5g74lxzeN/por/HiMLcrHP+4lp0D/YycDc6/3g/JM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970529; c=relaxed/simple;
-	bh=MSjRGNvwzIjME1Bs/P2P+oUHuwnZcLo58JfLSlIBQiU=;
+	s=arc-20240116; t=1705970533; c=relaxed/simple;
+	bh=Jn7oto7w1aG2MX+YbD8rklEHJC8eQKBbT3/IevpKJ2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VmEFF8iSNNE0bgvreyTVeXgqqkClRsutSJavX5VOZkfrkDBR8DDxd5KT8OJWmNfPlIbTVaJzR1vqmWk+Mpo3KPpyc7gNCAzQr702JIlnA0jFfcq+iI2DwqOtjrQqTsOWxatjuOEbyjk6Yr2QRxdDpMKhQ64BBnHxg5bwpgVtvIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yOr8szLA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ExcqatvFrxppoKAVyYSe1IRk2sN13SM/1szPJBErCd976mG7jFtxxtviTIRWCqvbhw08Fo5qvwRx2zOJSlHr5d4/UqXHcQsEGni/tfHfnTToiWSXUOCsRClTACGI3Z2LYcCgTqncFRNH8BJJGYngthpBfUkvvV9l7xEVw5SNNAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/gXsPi5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yOr8szLA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0081CC43390;
-	Tue, 23 Jan 2024 00:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/gXsPi5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427F5C43394;
+	Tue, 23 Jan 2024 00:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970529;
-	bh=MSjRGNvwzIjME1Bs/P2P+oUHuwnZcLo58JfLSlIBQiU=;
+	s=korg; t=1705970532;
+	bh=Jn7oto7w1aG2MX+YbD8rklEHJC8eQKBbT3/IevpKJ2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yOr8szLASY/i3Gd50DzmK/+ecy7aoRWwlkyhufM1xRmeLrAR6P1lCGMyVZKfIlzHM
-	 DY89MNdqm/cpCIiA0VmenFyW6ZRMRwTA9R1JAEOxsSk2fXaRGJ9iCzlmUbPQdRrkoX
-	 o77EzkXe9ddD/uFggAKIl+MQPbKeIWqY6EWb/UmI=
+	b=Q/gXsPi5CO54uqt56nTbrfbDjvfMioI27ag9Jrvu9tEIOQodYtOGbqSoUYnJ3CrYi
+	 e/EWE8vWDK96X8uckZztnjCVNXULUCZ9Ut2fK+EwT8mIRKKbewPwY0c/NIKtD3/iBB
+	 GcqJ4nIUozm78vpLjEayKKkTYXKCVDGRFhNGh8f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiqi Song <songzhiqi1@huawei.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/417] crypto: hisilicon/qm - save capability registers in qm init process
-Date: Mon, 22 Jan 2024 15:53:32 -0800
-Message-ID: <20240122235753.187100323@linuxfoundation.org>
+Subject: [PATCH 6.1 045/417] crypto: hisilicon/zip - add zip comp high perf mode configuration
+Date: Mon, 22 Jan 2024 15:53:33 -0800
+Message-ID: <20240122235753.225692031@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -51,255 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiqi Song <songzhiqi1@huawei.com>
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-[ Upstream commit cabe13d0bd2efb8dd50ed2310f57b33e1a69a0d4 ]
+[ Upstream commit a9864bae1806499ebf3757a9e71dddde5b9c48c6 ]
 
-In previous capability register implementation, qm irq related values
-were read from capability registers dynamically when needed. But in
-abnormal scenario, e.g. the core is timeout and the device needs to
-soft reset and reset failed after disabling the MSE, the device can
-not be removed normally, causing the following call trace:
+To meet specific application scenarios, the function of switching between
+the high performance mode and the high compression mode is added.
 
-	| Call trace:
-        |  pci_irq_vector+0xfc/0x140
-        |  hisi_qm_uninit+0x278/0x3b0 [hisi_qm]
-        |  hpre_remove+0x16c/0x1c0 [hisi_hpre]
-        |  pci_device_remove+0x6c/0x264
-        |  device_release_driver_internal+0x1ec/0x3e0
-        |  device_release_driver+0x3c/0x60
-        |  pci_stop_bus_device+0xfc/0x22c
-        |  pci_stop_and_remove_bus_device+0x38/0x70
-        |  pci_iov_remove_virtfn+0x108/0x1c0
-        |  sriov_disable+0x7c/0x1e4
-        |  pci_disable_sriov+0x4c/0x6c
-        |  hisi_qm_sriov_disable+0x90/0x160 [hisi_qm]
-        |  hpre_remove+0x1a8/0x1c0 [hisi_hpre]
-        |  pci_device_remove+0x6c/0x264
-        |  device_release_driver_internal+0x1ec/0x3e0
-        |  driver_detach+0x168/0x2d0
-        |  bus_remove_driver+0xc0/0x230
-        |  driver_unregister+0x58/0xdc
-        |  pci_unregister_driver+0x40/0x220
-        |  hpre_exit+0x34/0x64 [hisi_hpre]
-        |  __arm64_sys_delete_module+0x374/0x620
-        [...]
+Use the perf_mode=0/1 configuration to set the compression high perf mode,
+0(default, high compression mode), 1(high performance mode). These two
+modes only apply to the compression direction and are compatible with
+software algorithm in both directions.
 
-        | Call trace:
-        |  free_msi_irqs+0x25c/0x300
-        |  pci_disable_msi+0x19c/0x264
-        |  pci_free_irq_vectors+0x4c/0x70
-        |  hisi_qm_pci_uninit+0x44/0x90 [hisi_qm]
-        |  hisi_qm_uninit+0x28c/0x3b0 [hisi_qm]
-        |  hpre_remove+0x16c/0x1c0 [hisi_hpre]
-        |  pci_device_remove+0x6c/0x264
-        [...]
-
-The reason for this call trace is that when the MSE is disabled, the value
-of capability registers in the BAR space become invalid. This will make the
-subsequent unregister process get the wrong irq vector through capability
-registers and get the wrong irq number by pci_irq_vector().
-
-So add a capability table structure to pre-store the valid value of the irq
-information capability register in qm init process, avoid obtaining invalid
-capability register value after the MSE is disabled.
-
-Fixes: 3536cc55cada ("crypto: hisilicon/qm - support get device irq information from hardware registers")
-Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: cf8b5156bbc8 ("crypto: hisilicon/hpre - save capability registers in probe process")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/qm.c | 62 +++++++++++++++++++++++++++++------
- include/linux/hisi_acc_qm.h   | 12 +++++++
- 2 files changed, 64 insertions(+), 10 deletions(-)
+ drivers/crypto/hisilicon/zip/zip_main.c | 65 +++++++++++++++++++++++++
+ 1 file changed, 65 insertions(+)
 
-diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
-index f9acf7ecc41b..d4c6a601c5f2 100644
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -315,6 +315,13 @@ enum qm_basic_type {
- 	QM_VF_IRQ_NUM_CAP,
- };
+diff --git a/drivers/crypto/hisilicon/zip/zip_main.c b/drivers/crypto/hisilicon/zip/zip_main.c
+index 190b4fecfc74..2c5e805ffdc3 100644
+--- a/drivers/crypto/hisilicon/zip/zip_main.c
++++ b/drivers/crypto/hisilicon/zip/zip_main.c
+@@ -107,6 +107,14 @@
+ #define HZIP_CLOCK_GATED_EN		(HZIP_CORE_GATED_EN | \
+ 					 HZIP_CORE_GATED_OOO_EN)
  
-+enum qm_pre_store_cap_idx {
-+	QM_EQ_IRQ_TYPE_CAP_IDX = 0x0,
-+	QM_AEQ_IRQ_TYPE_CAP_IDX,
-+	QM_ABN_IRQ_TYPE_CAP_IDX,
-+	QM_PF2VF_IRQ_TYPE_CAP_IDX,
++/* zip comp high performance */
++#define HZIP_HIGH_PERF_OFFSET		0x301208
++
++enum {
++	HZIP_HIGH_COMP_RATE,
++	HZIP_HIGH_COMP_PERF,
 +};
 +
- static const struct hisi_qm_cap_info qm_cap_info_comm[] = {
- 	{QM_SUPPORT_DB_ISOLATION, 0x30,   0, BIT(0),  0x0, 0x0, 0x0},
- 	{QM_SUPPORT_FUNC_QOS,     0x3100, 0, BIT(8),  0x0, 0x0, 0x1},
-@@ -344,6 +351,13 @@ static const struct hisi_qm_cap_info qm_basic_info[] = {
- 	{QM_VF_IRQ_NUM_CAP,     0x311c,   0,  GENMASK(15, 0), 0x1,       0x2,       0x3},
- };
+ static const char hisi_zip_name[] = "hisi_zip";
+ static struct dentry *hzip_debugfs_root;
  
-+static const u32 qm_pre_store_caps[] = {
-+	QM_EQ_IRQ_TYPE_CAP,
-+	QM_AEQ_IRQ_TYPE_CAP,
-+	QM_ABN_IRQ_TYPE_CAP,
-+	QM_PF2VF_IRQ_TYPE_CAP,
-+};
-+
- struct qm_mailbox {
- 	__le16 w0;
- 	__le16 queue_num;
-@@ -4804,7 +4818,7 @@ static void qm_unregister_abnormal_irq(struct hisi_qm *qm)
- 	if (qm->fun_type == QM_HW_VF)
- 		return;
- 
--	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_ABN_IRQ_TYPE_CAP, qm->cap_ver);
-+	val = qm->cap_tables.qm_cap_table[QM_ABN_IRQ_TYPE_CAP_IDX].cap_val;
- 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_ABN_IRQ_TYPE_MASK))
- 		return;
- 
-@@ -4821,7 +4835,7 @@ static int qm_register_abnormal_irq(struct hisi_qm *qm)
- 	if (qm->fun_type == QM_HW_VF)
- 		return 0;
- 
--	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_ABN_IRQ_TYPE_CAP, qm->cap_ver);
-+	val = qm->cap_tables.qm_cap_table[QM_ABN_IRQ_TYPE_CAP_IDX].cap_val;
- 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_ABN_IRQ_TYPE_MASK))
- 		return 0;
- 
-@@ -4838,7 +4852,7 @@ static void qm_unregister_mb_cmd_irq(struct hisi_qm *qm)
- 	struct pci_dev *pdev = qm->pdev;
- 	u32 irq_vector, val;
- 
--	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_PF2VF_IRQ_TYPE_CAP, qm->cap_ver);
-+	val = qm->cap_tables.qm_cap_table[QM_PF2VF_IRQ_TYPE_CAP_IDX].cap_val;
- 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_IRQ_TYPE_MASK))
- 		return;
- 
-@@ -4852,7 +4866,7 @@ static int qm_register_mb_cmd_irq(struct hisi_qm *qm)
- 	u32 irq_vector, val;
- 	int ret;
- 
--	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_PF2VF_IRQ_TYPE_CAP, qm->cap_ver);
-+	val = qm->cap_tables.qm_cap_table[QM_PF2VF_IRQ_TYPE_CAP_IDX].cap_val;
- 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_IRQ_TYPE_MASK))
- 		return 0;
- 
-@@ -4869,7 +4883,7 @@ static void qm_unregister_aeq_irq(struct hisi_qm *qm)
- 	struct pci_dev *pdev = qm->pdev;
- 	u32 irq_vector, val;
- 
--	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_AEQ_IRQ_TYPE_CAP, qm->cap_ver);
-+	val = qm->cap_tables.qm_cap_table[QM_AEQ_IRQ_TYPE_CAP_IDX].cap_val;
- 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_IRQ_TYPE_MASK))
- 		return;
- 
-@@ -4883,7 +4897,7 @@ static int qm_register_aeq_irq(struct hisi_qm *qm)
- 	u32 irq_vector, val;
- 	int ret;
- 
--	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_AEQ_IRQ_TYPE_CAP, qm->cap_ver);
-+	val = qm->cap_tables.qm_cap_table[QM_AEQ_IRQ_TYPE_CAP_IDX].cap_val;
- 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_IRQ_TYPE_MASK))
- 		return 0;
- 
-@@ -4901,7 +4915,7 @@ static void qm_unregister_eq_irq(struct hisi_qm *qm)
- 	struct pci_dev *pdev = qm->pdev;
- 	u32 irq_vector, val;
- 
--	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_EQ_IRQ_TYPE_CAP, qm->cap_ver);
-+	val = qm->cap_tables.qm_cap_table[QM_EQ_IRQ_TYPE_CAP_IDX].cap_val;
- 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_IRQ_TYPE_MASK))
- 		return;
- 
-@@ -4915,7 +4929,7 @@ static int qm_register_eq_irq(struct hisi_qm *qm)
- 	u32 irq_vector, val;
- 	int ret;
- 
--	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_EQ_IRQ_TYPE_CAP, qm->cap_ver);
-+	val = qm->cap_tables.qm_cap_table[QM_EQ_IRQ_TYPE_CAP_IDX].cap_val;
- 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_IRQ_TYPE_MASK))
- 		return 0;
- 
-@@ -5003,7 +5017,29 @@ static int qm_get_qp_num(struct hisi_qm *qm)
+@@ -352,6 +360,37 @@ static int hzip_diff_regs_show(struct seq_file *s, void *unused)
  	return 0;
  }
- 
--static void qm_get_hw_caps(struct hisi_qm *qm)
-+static int qm_pre_store_irq_type_caps(struct hisi_qm *qm)
+ DEFINE_SHOW_ATTRIBUTE(hzip_diff_regs);
++
++static int perf_mode_set(const char *val, const struct kernel_param *kp)
 +{
-+	struct hisi_qm_cap_record *qm_cap;
-+	struct pci_dev *pdev = qm->pdev;
-+	size_t i, size;
++	int ret;
++	u32 n;
 +
-+	size = ARRAY_SIZE(qm_pre_store_caps);
-+	qm_cap = devm_kzalloc(&pdev->dev, sizeof(*qm_cap) * size, GFP_KERNEL);
-+	if (!qm_cap)
-+		return -ENOMEM;
++	if (!val)
++		return -EINVAL;
 +
-+	for (i = 0; i < size; i++) {
-+		qm_cap[i].type = qm_pre_store_caps[i];
-+		qm_cap[i].cap_val = hisi_qm_get_hw_info(qm, qm_basic_info,
-+							qm_pre_store_caps[i], qm->cap_ver);
-+	}
++	ret = kstrtou32(val, 10, &n);
++	if (ret != 0 || (n != HZIP_HIGH_COMP_PERF &&
++			 n != HZIP_HIGH_COMP_RATE))
++		return -EINVAL;
 +
-+	qm->cap_tables.qm_cap_table = qm_cap;
-+
-+	return 0;
++	return param_set_int(val, kp);
 +}
 +
-+static int qm_get_hw_caps(struct hisi_qm *qm)
- {
- 	const struct hisi_qm_cap_info *cap_info = qm->fun_type == QM_HW_PF ?
- 						  qm_cap_info_pf : qm_cap_info_vf;
-@@ -5034,6 +5070,9 @@ static void qm_get_hw_caps(struct hisi_qm *qm)
- 		if (val)
- 			set_bit(cap_info[i].type, &qm->caps);
- 	}
++static const struct kernel_param_ops zip_com_perf_ops = {
++	.set = perf_mode_set,
++	.get = param_get_int,
++};
 +
-+	/* Fetch and save the value of irq type related capability registers */
-+	return qm_pre_store_irq_type_caps(qm);
++/*
++ * perf_mode = 0 means enable high compression rate mode,
++ * perf_mode = 1 means enable high compression performance mode.
++ * These two modes only apply to the compression direction.
++ */
++static u32 perf_mode = HZIP_HIGH_COMP_RATE;
++module_param_cb(perf_mode, &zip_com_perf_ops, &perf_mode, 0444);
++MODULE_PARM_DESC(perf_mode, "ZIP high perf mode 0(default), 1(enable)");
++
+ static const struct kernel_param_ops zip_uacce_mode_ops = {
+ 	.set = uacce_mode_set,
+ 	.get = param_get_int,
+@@ -417,6 +456,28 @@ bool hisi_zip_alg_support(struct hisi_qm *qm, u32 alg)
+ 	return false;
  }
  
- static int qm_get_pci_res(struct hisi_qm *qm)
-@@ -5055,7 +5094,10 @@ static int qm_get_pci_res(struct hisi_qm *qm)
- 		goto err_request_mem_regions;
- 	}
- 
--	qm_get_hw_caps(qm);
-+	ret = qm_get_hw_caps(qm);
++static int hisi_zip_set_high_perf(struct hisi_qm *qm)
++{
++	u32 val;
++	int ret;
++
++	val = readl_relaxed(qm->io_base + HZIP_HIGH_PERF_OFFSET);
++	if (perf_mode == HZIP_HIGH_COMP_PERF)
++		val |= HZIP_HIGH_COMP_PERF;
++	else
++		val &= ~HZIP_HIGH_COMP_PERF;
++
++	/* Set perf mode */
++	writel(val, qm->io_base + HZIP_HIGH_PERF_OFFSET);
++	ret = readl_relaxed_poll_timeout(qm->io_base + HZIP_HIGH_PERF_OFFSET,
++					 val, val == perf_mode, HZIP_DELAY_1_US,
++					 HZIP_POLL_TIMEOUT_US);
 +	if (ret)
-+		goto err_ioremap;
++		pci_err(qm->pdev, "failed to set perf mode\n");
 +
- 	if (test_bit(QM_SUPPORT_DB_ISOLATION, &qm->caps)) {
- 		qm->db_interval = QM_QP_DB_INTERVAL;
- 		qm->db_phys_base = pci_resource_start(pdev, PCI_BAR_4);
-diff --git a/include/linux/hisi_acc_qm.h b/include/linux/hisi_acc_qm.h
-index 41203ce27d64..241b0dc3183e 100644
---- a/include/linux/hisi_acc_qm.h
-+++ b/include/linux/hisi_acc_qm.h
-@@ -266,6 +266,16 @@ struct hisi_qm_cap_info {
- 	u32 v3_val;
- };
++	return ret;
++}
++
+ static int hisi_zip_set_qm_algs(struct hisi_qm *qm)
+ {
+ 	struct device *dev = &qm->pdev->dev;
+@@ -1115,6 +1176,10 @@ static int hisi_zip_pf_probe_init(struct hisi_zip *hisi_zip)
+ 	if (ret)
+ 		return ret;
  
-+struct hisi_qm_cap_record {
-+	u32 type;
-+	u32 cap_val;
-+};
++	ret = hisi_zip_set_high_perf(qm);
++	if (ret)
++		return ret;
 +
-+struct hisi_qm_cap_tables {
-+	struct hisi_qm_cap_record *qm_cap_table;
-+	struct hisi_qm_cap_record *dev_cap_table;
-+};
-+
- struct hisi_qm_list {
- 	struct mutex lock;
- 	struct list_head list;
-@@ -348,6 +358,8 @@ struct hisi_qm {
- 	struct qm_shaper_factor *factor;
- 	u32 mb_qos;
- 	u32 type_rate;
-+
-+	struct hisi_qm_cap_tables cap_tables;
- };
- 
- struct hisi_qp_status {
+ 	hisi_zip_open_sva_prefetch(qm);
+ 	hisi_qm_dev_err_init(qm);
+ 	hisi_zip_debug_regs_clear(qm);
 -- 
 2.43.0
 
