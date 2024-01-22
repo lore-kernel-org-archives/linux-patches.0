@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EF529403;
-	Tue, 23 Jan 2024 01:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289DC612D1;
+	Tue, 23 Jan 2024 01:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974749; cv=none; b=ow6LFEjWnXfsYN+ZEX8MvXWtRYpBUPKbJA8i2dMfBFOiV21en1VbYi+CwNW3MWUibXQJqxvbmAJTeEPc7eJp3LXLuDREifRZz5/M3wBlWMk+W00wYd1uZ8mKB0t3jSM9GqZHW/X99NG9RtpjTSjzfOKhyMhGUQQpbozttGbzfNs=
+	t=1705974934; cv=none; b=UiS+hJ9z9E+ZjAwuiYzj0+M6vJpeZXN9m+++YSHEMj/iX09k0xRuRZd7TiSai/FYuSnKso4P3SmwawXOcVofQ5nSomtMq4HYMeE27VK3oPnG9Lw1jFkyt9J7hYPz3Q2hb74D2z8KALN/Hdtjend14TNCguaHqr8DKT05RNR7nRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974749; c=relaxed/simple;
-	bh=J39zBbUDAzxslJBVoj1Enz16+7P3BUiH1ObnGqlXTtw=;
+	s=arc-20240116; t=1705974934; c=relaxed/simple;
+	bh=P07ghF+71t7SbO0Z1FuAwYw9dGYKit76rjQP2lijz10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GyyNUDAkpwTty0pcdJs7awW46qjL2iZQT0p8DE4W6BfH+FP5ZgFeZ7bYMB1mUHDU59nv7MNgXpe8V7BAKoZ93gvueHxWajwMVwqB7uxIgGuTL7jwNrQ4ZmizeWoKA4yziiu28HzZkyvArSiA2qjKKb17gilBQTPfLJfJyQsf2C0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWO5Yz5U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eE1xprjqi568GpY97vQ+wLnpgDs2oZtHzD3lKzFbptQmXAS8XdJ5YUQoOabR4/osu+yM8x62t7Q4UNJIsqT7rO7unWKt+o7UGPqbvj/Ne/hMJXB6wS97zVWepWSnoNAzecIg/wAaVATlowjuKtrtNLTpjWtxhEjsCb29c0ZxJu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dEU40uIW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWO5Yz5U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118DBC433C7;
-	Tue, 23 Jan 2024 01:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dEU40uIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60EAC433C7;
+	Tue, 23 Jan 2024 01:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974749;
-	bh=J39zBbUDAzxslJBVoj1Enz16+7P3BUiH1ObnGqlXTtw=;
+	s=korg; t=1705974934;
+	bh=P07ghF+71t7SbO0Z1FuAwYw9dGYKit76rjQP2lijz10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RWO5Yz5UgzZbwzIyMXddUxjSMKRfd7w38AlJvPLkVh6SuXcX1UV9fwpchyTXs2yNy
-	 gq3sNZ983NR/x7QPjZX9PHt0zMVrL8YfWsu9R+tvEPN4+P6xroYPTxp0lwkw3TFQRQ
-	 yWfIDJQl+P0Qt5++FoEIPi/bFIwQGIDOA8oHuGmE=
+	b=dEU40uIWVW2GqiCOuhsnUHOAA0pvOZrE5ttP/I+Upc1DWK1nNz+dIB5udjpc8PIkO
+	 6Yiex4ECRSv3LXnaXdVtUZGqLYoXCjJFh98gRbfMCROeENBqKlw3BmNVpSNNKNW8XV
+	 H5xPJQZyho7tXyMuD4Cei2yIjkEjDd8GV/f35+zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Michal Simek <michal.simek@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 155/583] arm64: dts: xilinx: Apply overlays to base dtbs
-Date: Mon, 22 Jan 2024 15:53:26 -0800
-Message-ID: <20240122235816.796210226@linuxfoundation.org>
+	David Lin <yu-hao.lin@nxp.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>,
+	Rafael Beims <rafael.beims@toradex.com>
+Subject: [PATCH 5.15 280/374] wifi: mwifiex: configure BSSID consistently when starting AP
+Date: Mon, 22 Jan 2024 15:58:56 -0800
+Message-ID: <20240122235754.505613903@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +49,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Herring <robh@kernel.org>
+From: David Lin <yu-hao.lin@nxp.com>
 
-[ Upstream commit 23b697ec85f3e7beed271b9f344c54821de2251e ]
+commit f0dd488e11e71ac095df7638d892209c629d9af2 upstream.
 
-DT overlays in tree need to be applied to a base DTB to validate they
-apply, to run schema checks on them, and to catch any errors at compile
-time. Defining the "-dtbs" variable is not enough as the combined DT must
-be added to dtbs-y.
+AP BSSID configuration is missing at AP start.  Without this fix, FW returns
+STA interface MAC address after first init.  When hostapd restarts, it gets MAC
+address from netdev before driver sets STA MAC to netdev again. Now MAC address
+between hostapd and net interface are different causes STA cannot connect to
+AP.  After that MAC address of uap0 mlan0 become the same. And issue disappears
+after following hostapd restart (another issue is AP/STA MAC address become the
+same).
 
-zynqmp-sck-kr-g-revA.dtso and zynqmp-sck-kr-g-revB.dtso don't exist, so drop
-them.
+This patch fixes the issue cleanly.
 
-Signed-off-by: Rob Herring <robh@kernel.org>
-Fixes: 45fe0dc4ea2e ("arm64: xilinx: Use zynqmp prefix for SOM dt overlays")
-Link: https://lore.kernel.org/r/20230911214751.2202913-1-robh@kernel.org
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: David Lin <yu-hao.lin@nxp.com>
+Fixes: 12190c5d80bd ("mwifiex: add cfg80211 start_ap and stop_ap handlers")
+Cc: stable@vger.kernel.org
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Tested-by: Rafael Beims <rafael.beims@toradex.com> # Verdin iMX8MP/SD8997 SD
+Acked-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231215005118.17031-1-yu-hao.lin@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/xilinx/Makefile | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/cfg80211.c |    2 ++
+ drivers/net/wireless/marvell/mwifiex/fw.h       |    1 +
+ drivers/net/wireless/marvell/mwifiex/ioctl.h    |    1 +
+ drivers/net/wireless/marvell/mwifiex/uap_cmd.c  |    8 ++++++++
+ 4 files changed, 12 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/xilinx/Makefile b/arch/arm64/boot/dts/xilinx/Makefile
-index 5e40c0b4fa0a..1068b0fa8e98 100644
---- a/arch/arm64/boot/dts/xilinx/Makefile
-+++ b/arch/arm64/boot/dts/xilinx/Makefile
-@@ -22,11 +22,10 @@ dtb-$(CONFIG_ARCH_ZYNQMP) += zynqmp-sm-k26-revA.dtb
- dtb-$(CONFIG_ARCH_ZYNQMP) += zynqmp-smk-k26-revA.dtb
+--- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+@@ -1980,6 +1980,8 @@ static int mwifiex_cfg80211_start_ap(str
  
- zynqmp-sm-k26-revA-sck-kv-g-revA-dtbs := zynqmp-sm-k26-revA.dtb zynqmp-sck-kv-g-revA.dtbo
-+dtb-$(CONFIG_ARCH_ZYNQMP) += zynqmp-sm-k26-revA-sck-kv-g-revA.dtb
- zynqmp-sm-k26-revA-sck-kv-g-revB-dtbs := zynqmp-sm-k26-revA.dtb zynqmp-sck-kv-g-revB.dtbo
-+dtb-$(CONFIG_ARCH_ZYNQMP) += zynqmp-sm-k26-revA-sck-kv-g-revB.dtb
- zynqmp-smk-k26-revA-sck-kv-g-revA-dtbs := zynqmp-smk-k26-revA.dtb zynqmp-sck-kv-g-revA.dtbo
-+dtb-$(CONFIG_ARCH_ZYNQMP) += zynqmp-smk-k26-revA-sck-kv-g-revA.dtb
- zynqmp-smk-k26-revA-sck-kv-g-revB-dtbs := zynqmp-smk-k26-revA.dtb zynqmp-sck-kv-g-revB.dtbo
--
--zynqmp-sm-k26-revA-sck-kr-g-revA-dtbs := zynqmp-sm-k26-revA.dtb zynqmp-sck-kr-g-revA.dtbo
--zynqmp-sm-k26-revA-sck-kr-g-revB-dtbs := zynqmp-sm-k26-revA.dtb zynqmp-sck-kr-g-revB.dtbo
--zynqmp-smk-k26-revA-sck-kr-g-revA-dtbs := zynqmp-smk-k26-revA.dtb zynqmp-sck-kr-g-revA.dtbo
--zynqmp-smk-k26-revA-sck-kr-g-revB-dtbs := zynqmp-smk-k26-revA.dtb zynqmp-sck-kr-g-revB.dtbo
-+dtb-$(CONFIG_ARCH_ZYNQMP) += zynqmp-smk-k26-revA-sck-kv-g-revB.dtb
--- 
-2.43.0
-
+ 	mwifiex_set_sys_config_invalid_data(bss_cfg);
+ 
++	memcpy(bss_cfg->mac_addr, priv->curr_addr, ETH_ALEN);
++
+ 	if (params->beacon_interval)
+ 		bss_cfg->beacon_period = params->beacon_interval;
+ 	if (params->dtim_period)
+--- a/drivers/net/wireless/marvell/mwifiex/fw.h
++++ b/drivers/net/wireless/marvell/mwifiex/fw.h
+@@ -177,6 +177,7 @@ enum MWIFIEX_802_11_PRIVACY_FILTER {
+ #define TLV_TYPE_STA_MAC_ADDR       (PROPRIETARY_TLV_BASE_ID + 32)
+ #define TLV_TYPE_BSSID              (PROPRIETARY_TLV_BASE_ID + 35)
+ #define TLV_TYPE_CHANNELBANDLIST    (PROPRIETARY_TLV_BASE_ID + 42)
++#define TLV_TYPE_UAP_MAC_ADDRESS    (PROPRIETARY_TLV_BASE_ID + 43)
+ #define TLV_TYPE_UAP_BEACON_PERIOD  (PROPRIETARY_TLV_BASE_ID + 44)
+ #define TLV_TYPE_UAP_DTIM_PERIOD    (PROPRIETARY_TLV_BASE_ID + 45)
+ #define TLV_TYPE_UAP_BCAST_SSID     (PROPRIETARY_TLV_BASE_ID + 48)
+--- a/drivers/net/wireless/marvell/mwifiex/ioctl.h
++++ b/drivers/net/wireless/marvell/mwifiex/ioctl.h
+@@ -119,6 +119,7 @@ struct mwifiex_uap_bss_param {
+ 	u8 qos_info;
+ 	u8 power_constraint;
+ 	struct mwifiex_types_wmm_info wmm_info;
++	u8 mac_addr[ETH_ALEN];
+ };
+ 
+ enum {
+--- a/drivers/net/wireless/marvell/mwifiex/uap_cmd.c
++++ b/drivers/net/wireless/marvell/mwifiex/uap_cmd.c
+@@ -480,6 +480,7 @@ void mwifiex_config_uap_11d(struct mwifi
+ static int
+ mwifiex_uap_bss_param_prepare(u8 *tlv, void *cmd_buf, u16 *param_size)
+ {
++	struct host_cmd_tlv_mac_addr *mac_tlv;
+ 	struct host_cmd_tlv_dtim_period *dtim_period;
+ 	struct host_cmd_tlv_beacon_period *beacon_period;
+ 	struct host_cmd_tlv_ssid *ssid;
+@@ -499,6 +500,13 @@ mwifiex_uap_bss_param_prepare(u8 *tlv, v
+ 	int i;
+ 	u16 cmd_size = *param_size;
+ 
++	mac_tlv = (struct host_cmd_tlv_mac_addr *)tlv;
++	mac_tlv->header.type = cpu_to_le16(TLV_TYPE_UAP_MAC_ADDRESS);
++	mac_tlv->header.len = cpu_to_le16(ETH_ALEN);
++	memcpy(mac_tlv->mac_addr, bss_cfg->mac_addr, ETH_ALEN);
++	cmd_size += sizeof(struct host_cmd_tlv_mac_addr);
++	tlv += sizeof(struct host_cmd_tlv_mac_addr);
++
+ 	if (bss_cfg->ssid.ssid_len) {
+ 		ssid = (struct host_cmd_tlv_ssid *)tlv;
+ 		ssid->header.type = cpu_to_le16(TLV_TYPE_UAP_SSID);
 
 
