@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B00613343B;
-	Tue, 23 Jan 2024 00:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB18133982;
+	Tue, 23 Jan 2024 00:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969136; cv=none; b=fPge5Iibs0M/KWSSkRGOkR4QnXkKrO0wbhadhZ+8fpCxCg5DGHxZc/Aw7f6icj6GONeH4EOs9EkoVQSNeesgkUzOzmCXCecGb/C8s22cCuZs3PebhUaJ2vQQkWj3HikDS2dPUHMWwgWj5Uc3raEyjaSL7DP86G3SpfDqoUn/nWw=
+	t=1705969138; cv=none; b=lxG491Bkt+juUUc3exGKkETs9FicDOwjLnW12mECx8ydNyBJlzWasrrhFcQtX63u639iOYBnRUmcktljkollohOLlfPO5kFQpaL72VmIolJ+mkL44sBVdXS/f6YL+0OFRVWrAdWGE615+Y4dTAytdF7M3LiwTltW3PxgHxm1USo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969136; c=relaxed/simple;
-	bh=xLEHs8LRg6SMA893lHjGv9jWQwn4R1JRbEydsiI2z00=;
+	s=arc-20240116; t=1705969138; c=relaxed/simple;
+	bh=yulhMnlcCyhP+cwuh9marxmIJlKF2h7sw6TP9TiF1vU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nq8bhmbqcIvK7VybLuHdF4qoMfmXP2q8hbAHKcMXIj0XDfKmsyT6th6Be9l7HV014ETM9Q+NVeIO+qAlSvQNHs/XTc0TAqTRMJ6iwW5a8VNdM862rXH3iix18WiEAlWYdlZsmd2XNC4SfwcmvJEJ4qetAnp84BUIWwz3mpA3tBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kkKxbE8j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uyd7E70HMlqpWOVRak+4bPGyOXr1j6+pknrPWIaltAqa+u9VI5iijSBZsLcUBgMZimgLWSlUu/ijDRkp71Gsr6SDg14+VKiB6Zm8fdzDyqjUiB6pBDe5k1q56iGX9/NgloZKipLZHy02MsD0bH0LS1z9fODpEypaL2ytXeKUoPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xR1tC3Ph; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kkKxbE8j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F84C433C7;
-	Tue, 23 Jan 2024 00:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xR1tC3Ph"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D2AC433F1;
+	Tue, 23 Jan 2024 00:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969135;
-	bh=xLEHs8LRg6SMA893lHjGv9jWQwn4R1JRbEydsiI2z00=;
+	s=korg; t=1705969137;
+	bh=yulhMnlcCyhP+cwuh9marxmIJlKF2h7sw6TP9TiF1vU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kkKxbE8jJZ5ZXftH14wwvxFyZSyHvZX+iZxpBEtBuLqMc3lvntJAlUq0MTBMA8Isz
-	 THfcWAtjCPyarqygdbLUQHtbeG8t7Xj0/c1OY7dMXbI2BzeccxDU6pNIGkWc3fbACE
-	 dEdJp+5x59mfcrU1rTMdOyk7qvXJUjZtW6qlsNk0=
+	b=xR1tC3Phs0nype/mf10f3A2/hcGeQZh088Tggt0QUwWbN6+0Xje6s9AgJw2CEHTpP
+	 LewWebpTD6acnT6WEvjs7/q4bbmr61aPr8esGY3LrnA4zE9kwgSJChIJqZVyXsD1MF
+	 Fs5ASYVc7J85fSidg6d/oWDp46cxqMT/zYaT+suY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chanho Park <chanho61.park@samsung.com>,
-	Jia Jie Ho <jiajie.ho@starfivetech.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 045/641] crypto: jh7110 - Correct deferred probe return
-Date: Mon, 22 Jan 2024 15:49:09 -0800
-Message-ID: <20240122235819.493173146@linuxfoundation.org>
+Subject: [PATCH 6.7 028/641] platform/x86/intel/vsec: Fix xa_alloc memory leak
+Date: Mon, 22 Jan 2024 15:48:52 -0800
+Message-ID: <20240122235818.972537624@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -46,58 +46,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chanho Park <chanho61.park@samsung.com>
+From: David E. Box <david.e.box@linux.intel.com>
 
-[ Upstream commit d57343022b71b9f41e731282dbe0baf0cff6ada8 ]
+[ Upstream commit 8cbcc1dbf8a62c730fadd60de761e0658547a589 ]
 
-This fixes list_add corruption error when the driver is returned
-with -EPROBE_DEFER. It is also required to roll back the previous
-probe sequences in case of deferred_probe. So, this removes
-'err_probe_defer" goto label and just use err_dma_init instead.
+Commit 936874b77dd0 ("platform/x86/intel/vsec: Add PCI error recovery
+support to Intel PMT") added an xarray to track the list of vsec devices to
+be recovered after a PCI error. But it did not provide cleanup for the list
+leading to a memory leak that was caught by kmemleak.  Do xa_alloc() before
+devm_add_action_or_reset() so that the list may be cleaned up with
+xa_erase() in the release function.
 
-Fixes: 42ef0e944b01 ("crypto: starfive - Add crypto engine support")
-Signed-off-by: Chanho Park <chanho61.park@samsung.com>
-Reviewed-by: Jia Jie Ho <jiajie.ho@starfivetech.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 936874b77dd0 ("platform/x86/intel/vsec: Add PCI error recovery support to Intel PMT")
+Signed-off-by: David E. Box <david.e.box@linux.intel.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20231129222132.2331261-2-david.e.box@linux.intel.com
+[hdegoede@redhat.com: Add missing xa_erase() on error-exit
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/starfive/jh7110-cryp.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/platform/x86/intel/vsec.c | 25 +++++++++++++++----------
+ drivers/platform/x86/intel/vsec.h |  1 +
+ 2 files changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/crypto/starfive/jh7110-cryp.c b/drivers/crypto/starfive/jh7110-cryp.c
-index 08e974e0dd12..3a67ddc4d936 100644
---- a/drivers/crypto/starfive/jh7110-cryp.c
-+++ b/drivers/crypto/starfive/jh7110-cryp.c
-@@ -180,12 +180,8 @@ static int starfive_cryp_probe(struct platform_device *pdev)
- 	spin_unlock(&dev_list.lock);
+diff --git a/drivers/platform/x86/intel/vsec.c b/drivers/platform/x86/intel/vsec.c
+index c1f9e4471b28..343ab6a82c01 100644
+--- a/drivers/platform/x86/intel/vsec.c
++++ b/drivers/platform/x86/intel/vsec.c
+@@ -120,6 +120,8 @@ static void intel_vsec_dev_release(struct device *dev)
+ {
+ 	struct intel_vsec_device *intel_vsec_dev = dev_to_ivdev(dev);
  
- 	ret = starfive_dma_init(cryp);
--	if (ret) {
--		if (ret == -EPROBE_DEFER)
--			goto err_probe_defer;
--		else
--			goto err_dma_init;
--	}
-+	if (ret)
-+		goto err_dma_init;
- 
- 	/* Initialize crypto engine */
- 	cryp->engine = crypto_engine_alloc_init(&pdev->dev, 1);
-@@ -233,7 +229,7 @@ static int starfive_cryp_probe(struct platform_device *pdev)
- 
- 	tasklet_kill(&cryp->aes_done);
- 	tasklet_kill(&cryp->hash_done);
--err_probe_defer:
++	xa_erase(&auxdev_array, intel_vsec_dev->id);
 +
- 	return ret;
- }
+ 	mutex_lock(&vsec_ida_lock);
+ 	ida_free(intel_vsec_dev->ida, intel_vsec_dev->auxdev.id);
+ 	mutex_unlock(&vsec_ida_lock);
+@@ -135,19 +137,28 @@ int intel_vsec_add_aux(struct pci_dev *pdev, struct device *parent,
+ 	struct auxiliary_device *auxdev = &intel_vsec_dev->auxdev;
+ 	int ret, id;
  
+-	mutex_lock(&vsec_ida_lock);
+-	ret = ida_alloc(intel_vsec_dev->ida, GFP_KERNEL);
+-	mutex_unlock(&vsec_ida_lock);
++	ret = xa_alloc(&auxdev_array, &intel_vsec_dev->id, intel_vsec_dev,
++		       PMT_XA_LIMIT, GFP_KERNEL);
+ 	if (ret < 0) {
+ 		kfree(intel_vsec_dev->resource);
+ 		kfree(intel_vsec_dev);
+ 		return ret;
+ 	}
+ 
++	mutex_lock(&vsec_ida_lock);
++	id = ida_alloc(intel_vsec_dev->ida, GFP_KERNEL);
++	mutex_unlock(&vsec_ida_lock);
++	if (id < 0) {
++		xa_erase(&auxdev_array, intel_vsec_dev->id);
++		kfree(intel_vsec_dev->resource);
++		kfree(intel_vsec_dev);
++		return id;
++	}
++
+ 	if (!parent)
+ 		parent = &pdev->dev;
+ 
+-	auxdev->id = ret;
++	auxdev->id = id;
+ 	auxdev->name = name;
+ 	auxdev->dev.parent = parent;
+ 	auxdev->dev.release = intel_vsec_dev_release;
+@@ -169,12 +180,6 @@ int intel_vsec_add_aux(struct pci_dev *pdev, struct device *parent,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	/* Add auxdev to list */
+-	ret = xa_alloc(&auxdev_array, &id, intel_vsec_dev, PMT_XA_LIMIT,
+-		       GFP_KERNEL);
+-	if (ret)
+-		return ret;
+-
+ 	return 0;
+ }
+ EXPORT_SYMBOL_NS_GPL(intel_vsec_add_aux, INTEL_VSEC);
+diff --git a/drivers/platform/x86/intel/vsec.h b/drivers/platform/x86/intel/vsec.h
+index 0fd042c171ba..0a6201b4a0e9 100644
+--- a/drivers/platform/x86/intel/vsec.h
++++ b/drivers/platform/x86/intel/vsec.h
+@@ -45,6 +45,7 @@ struct intel_vsec_device {
+ 	struct ida *ida;
+ 	struct intel_vsec_platform_info *info;
+ 	int num_resources;
++	int id; /* xa */
+ 	void *priv_data;
+ 	size_t priv_data_size;
+ };
 -- 
 2.43.0
 
