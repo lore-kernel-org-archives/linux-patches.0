@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F1A130E3B;
-	Tue, 23 Jan 2024 00:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF94131739;
+	Tue, 23 Jan 2024 00:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968096; cv=none; b=IPYP/ug/g0MBUpVgcvcLWybqrif576Fs9LnozSUCH1FGE1fBRWnNLNWZM5C/sNWtw3zy8BQdF9PplzX3aw4qK7VaCjUtKT2DizFG/tU2DkncHycLCmjSyu5MfBhg9cwAKP3DOdZlizaNP0lu4Hx5WBgfOxT//fRQoBFZEKrZLFE=
+	t=1705968099; cv=none; b=HwGjvdOs/nQpWBBaXjdRIOy7eXNZlS1ZGgobxyMtpqvvHwd30ViwqFhSoTDvPX0jurL4H0M4zNciD3qaxniD3DoX06NF84qh91Efz8ZJI7y50xN753h5mpNSEpHqNbgzYjPsI5r2kIpsDRhOWgbpttoL2K1MWW+MsYbD/sw/9fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968096; c=relaxed/simple;
-	bh=rWaXDadMo6bzkcy7PvTqT5GNXlgohuENfoIRi5Jvra0=;
+	s=arc-20240116; t=1705968099; c=relaxed/simple;
+	bh=bqi8XDWU+OLUfXiCJo3XOuoapVfLTIiSwrcA2t+o8/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXB7CF/7Z/RfZ+twMT0UfGhybxmwW9AXAoP6ViH69isxuSLri/Tik/Bq5WSsKnIAj3sPerlTi04oQcIvButPih+NSoHFspDjHu74T7D3aj+HDx/0iDgcx52LmUrckRGvEZ4Y5QUcnb5g61y5RhPH4wvP/5uw9uBQOzt8A50qMNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqBbLuXf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PemzIlZqH0aKZN09J0818frg2Ru+EJNMsS1w5Ejej+fjJgQCpUvUcllwLbwMCR9hV4GktpPTtXn0NT9V3nLb2vQ3SOdqm+KAWq2/bieZVMmYDBIG77NT6lsy0BLo3Z1rk/uFjrnwJfzetbcU4kXkvcBT9j05HgVs9VpqExiRbec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tfFAlV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqBbLuXf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E2DC433F1;
-	Tue, 23 Jan 2024 00:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tfFAlV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F94C433B1;
+	Tue, 23 Jan 2024 00:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968095;
-	bh=rWaXDadMo6bzkcy7PvTqT5GNXlgohuENfoIRi5Jvra0=;
+	s=korg; t=1705968099;
+	bh=bqi8XDWU+OLUfXiCJo3XOuoapVfLTIiSwrcA2t+o8/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EqBbLuXff5qGxdWZpS/M5E19TIk6guQcQHVwoZb28F1IM0NUxbB4VR1xHF2ox4E/O
-	 A5+k8tXrDi09BD+O8kRJ7g78XYh3aLU4A6bNm2nr+GPJcjJgtc2KzuzWuY0eyWCez4
-	 x2z80PaKyJ1m8/JvXwE57tKSpjMheEoPW+rAvp0s=
+	b=2tfFAlV2ouv4mRsy8TKo7goffw2pO3Yn33skXZqwHyYPXvwWH/BOJSJgGDSQGZbhe
+	 QbI2FgqXleZsM6ziHN6IrqGgcNuUQeJuBNPWcjJN5yaPIIyKWRKDO1PBgBSHs+4xWo
+	 GT44hYOH9rO5220YLaR24T7kf85hrbY+MFHmYh8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	syzbot+4fad2e57beb6397ab2fc@syzkaller.appspotmail.com,
+	Ziqi Zhao <astrajoan@yahoo.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 010/148] jbd2: correct the printing of write_flags in jbd2_write_superblock()
-Date: Mon, 22 Jan 2024 15:56:06 -0800
-Message-ID: <20240122235712.848182261@linuxfoundation.org>
+Subject: [PATCH 4.19 011/148] drm/crtc: Fix uninit-value bug in drm_mode_setcrtc
+Date: Mon, 22 Jan 2024 15:56:07 -0800
+Message-ID: <20240122235712.893344510@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -52,39 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Ziqi Zhao <astrajoan@yahoo.com>
 
-[ Upstream commit 85559227211020b270728104c3b89918f7af27ac ]
+[ Upstream commit 3823119b9c2b5f9e9b760336f75bc989b805cde6 ]
 
-The write_flags print in the trace of jbd2_write_superblock() is not
-real, so move the modification before the trace.
+The connector_set contains uninitialized values when allocated with
+kmalloc_array. However, in the "out" branch, the logic assumes that any
+element in connector_set would be equal to NULL if failed to
+initialize, which causes the bug reported by Syzbot. The fix is to use
+an extra variable to keep track of how many connectors are initialized
+indeed, and use that variable to decrease any refcounts in the "out"
+branch.
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231129114740.2686201-1-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reported-by: syzbot+4fad2e57beb6397ab2fc@syzkaller.appspotmail.com
+Signed-off-by: Ziqi Zhao <astrajoan@yahoo.com>
+Reported-and-tested-by: syzbot+4fad2e57beb6397ab2fc@syzkaller.appspotmail.com
+Tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Link: https://lore.kernel.org/r/20230721161446.8602-1-astrajoan@yahoo.com
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/journal.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_crtc.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
-index 8a50722bca29..629928b19e48 100644
---- a/fs/jbd2/journal.c
-+++ b/fs/jbd2/journal.c
-@@ -1375,9 +1375,11 @@ static int jbd2_write_superblock(journal_t *journal, int write_flags)
- 		return -EIO;
+diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
+index 6e241a3c31ee..52a1bfeef0d9 100644
+--- a/drivers/gpu/drm/drm_crtc.c
++++ b/drivers/gpu/drm/drm_crtc.c
+@@ -573,8 +573,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
+ 	struct drm_mode_set set;
+ 	uint32_t __user *set_connectors_ptr;
+ 	struct drm_modeset_acquire_ctx ctx;
+-	int ret;
+-	int i;
++	int ret, i, num_connectors;
+ 
+ 	if (!drm_core_check_feature(dev, DRIVER_MODESET))
+ 		return -EINVAL;
+@@ -719,6 +718,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
+ 			goto out;
+ 		}
+ 
++		num_connectors = 0;
+ 		for (i = 0; i < crtc_req->count_connectors; i++) {
+ 			connector_set[i] = NULL;
+ 			set_connectors_ptr = (uint32_t __user *)(unsigned long)crtc_req->set_connectors_ptr;
+@@ -739,6 +739,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
+ 					connector->name);
+ 
+ 			connector_set[i] = connector;
++			num_connectors++;
+ 		}
  	}
  
--	trace_jbd2_write_superblock(journal, write_flags);
- 	if (!(journal->j_flags & JBD2_BARRIER))
- 		write_flags &= ~(REQ_FUA | REQ_PREFLUSH);
-+
-+	trace_jbd2_write_superblock(journal, write_flags);
-+
- 	if (buffer_write_io_error(bh)) {
- 		/*
- 		 * Oh, dear.  A previous attempt to write the journal
+@@ -747,7 +748,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
+ 	set.y = crtc_req->y;
+ 	set.mode = mode;
+ 	set.connectors = connector_set;
+-	set.num_connectors = crtc_req->count_connectors;
++	set.num_connectors = num_connectors;
+ 	set.fb = fb;
+ 
+ 	if (drm_drv_uses_atomic_modeset(dev))
+@@ -760,7 +761,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
+ 		drm_framebuffer_put(fb);
+ 
+ 	if (connector_set) {
+-		for (i = 0; i < crtc_req->count_connectors; i++) {
++		for (i = 0; i < num_connectors; i++) {
+ 			if (connector_set[i])
+ 				drm_connector_put(connector_set[i]);
+ 		}
 -- 
 2.43.0
 
