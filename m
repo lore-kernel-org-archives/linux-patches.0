@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542BA37A;
-	Tue, 23 Jan 2024 01:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38608810;
+	Tue, 23 Jan 2024 01:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972141; cv=none; b=dow5ZmmfzjvxOup9b0UMTTa15QWFM5jm5xVxOgs/s0hCXYSPr2lV7ziWNpjcYtRD+z2IPIlLc5IFT47A+Ci4ZExqpBZ6/qZtqIZ4QN4/Klh0PaJHZ1cMk4PS3u1AEaS9VsUTgDbF5ynHZqE1TVD83WUp8inMT2jKvzK+bFYRohs=
+	t=1705972142; cv=none; b=N4RPf1E4O0eoRQ4Gy4TsLwj8oV/sY/PK79qMXeKiGtCgufykg8M70agvJGjZzKbHGd1pgCekPVuLKltjhUlnMzwWaOJZJYN8WJLGgGOVcHyJA3kEXTZB+aBh6vnx3ZmBMfQTNscUTxWDIpQGNY0x2cGf2d3biMM1d1YhGvBuNmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972141; c=relaxed/simple;
-	bh=Bq3bbHr5/NXJiJt/Eww5ce3fwBUkvxhoK4hL+qu6qcw=;
+	s=arc-20240116; t=1705972142; c=relaxed/simple;
+	bh=ZDWwp8HKxVXbhfCAcIt7y5w7dG6XlO3I6aOq8/F4vG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DjX5Mnpzf7snRmJ2wBXJGXABTnNpRHnEMr8isSdY6pRkUP3Y3Caa/fp/fS4vXTMdXUSaKdvija/Bqy0vIhn8DZFAyTt9xHfGajiJ6rufhe6/nM4MjlPTSZ7qe11NS4DUNHXSC4jEBMnFySy+amw0otjUecZrQc8f3DDgSyVNJEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFmFihqN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rlo5MRf4/Jkg9NKMXVoL/hH/dyJktZlSnfn8HPcHZOJ/PC2Mo/OOvrg3bDCAPBaKKcWU54sxVShJ3fd/3J7XUnjfUqKxylFmHbAMSMLaSyp7fbcTXML6Pqx4Xu1lc5u1BHGbWODwERfGCy4YUA6vSf3YP9o5VSOCDTA5nHS+wkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/e3Rs4z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFmFihqN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA979C43390;
-	Tue, 23 Jan 2024 01:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/e3Rs4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC17C43390;
+	Tue, 23 Jan 2024 01:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972140;
-	bh=Bq3bbHr5/NXJiJt/Eww5ce3fwBUkvxhoK4hL+qu6qcw=;
+	s=korg; t=1705972142;
+	bh=ZDWwp8HKxVXbhfCAcIt7y5w7dG6XlO3I6aOq8/F4vG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YFmFihqN9e6fnR3k0e3wyqiufsJh/JCFUANhlnPoF4nOfia7qnLFqzWHpSZxidFkT
-	 2kdi9QSzmZOyr2t6SlmV4kDgEJKkROaLmNTkMNj2uFsxWsKRKIoAbzF8wHoCfL19t8
-	 tRIp6oPccUsF3wkaeqEg5aenh2xcYmRTRmSNm4KA=
+	b=Q/e3Rs4zlqxD67PtgLImie407sBc5IzITXBVanJgM98f4bb5DR3u42IomnPz+5SNL
+	 TqC6UW9SnlEtlavlvGuWrYLvFy7MeXBVbi457AFfCL8n/EYHtlMUbi3667EZAKegRa
+	 BNvDRx8NjYvMY5WUCXGyl9YK+b+YAz1zWWjytsCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/374] powerpc: add crtsavres.o to always-y instead of extra-y
-Date: Mon, 22 Jan 2024 15:55:26 -0800
-Message-ID: <20240122235747.050006879@linuxfoundation.org>
+Subject: [PATCH 5.15 071/374] powerpc/44x: select I2C for CURRITUCK
+Date: Mon, 22 Jan 2024 15:55:27 -0800
+Message-ID: <20240122235747.085606690@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -52,48 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 1b1e38002648819c04773647d5242990e2824264 ]
+[ Upstream commit 4a74197b65e69c46fe6e53f7df2f4d6ce9ffe012 ]
 
-crtsavres.o is linked to modules. However, as explained in commit
-d0e628cd817f ("kbuild: doc: clarify the difference between extra-y
-and always-y"), 'make modules' does not build extra-y.
+Fix build errors when CURRITUCK=y and I2C is not builtin (=m or is
+not set). Fixes these build errors:
 
-For example, the following command fails:
+powerpc-linux-ld: arch/powerpc/platforms/44x/ppc476.o: in function `avr_halt_system':
+ppc476.c:(.text+0x58): undefined reference to `i2c_smbus_write_byte_data'
+powerpc-linux-ld: arch/powerpc/platforms/44x/ppc476.o: in function `ppc47x_device_probe':
+ppc476.c:(.init.text+0x18): undefined reference to `i2c_register_driver'
 
-  $ make ARCH=powerpc LLVM=1 KBUILD_MODPOST_WARN=1 mrproper ps3_defconfig modules
-    [snip]
-    LD [M]  arch/powerpc/platforms/cell/spufs/spufs.ko
-  ld.lld: error: cannot open arch/powerpc/lib/crtsavres.o: No such file or directory
-  make[3]: *** [scripts/Makefile.modfinal:56: arch/powerpc/platforms/cell/spufs/spufs.ko] Error 1
-  make[2]: *** [Makefile:1844: modules] Error 2
-  make[1]: *** [/home/masahiro/workspace/linux-kbuild/Makefile:350: __build_one_by_one] Error 2
-  make: *** [Makefile:234: __sub-make] Error 2
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Fixes: baa25b571a16 ("powerpc/64: Do not link crtsavres.o in vmlinux")
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Fixes: 2a2c74b2efcb ("IBM Akebono: Add the Akebono platform")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: lore.kernel.org/r/202312010820.cmdwF5X9-lkp@intel.com
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231120232332.4100288-1-masahiroy@kernel.org
+Link: https://msgid.link/20231201055159.8371-1-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/lib/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/44x/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/lib/Makefile b/arch/powerpc/lib/Makefile
-index cb8a66743a02..6448de85f738 100644
---- a/arch/powerpc/lib/Makefile
-+++ b/arch/powerpc/lib/Makefile
-@@ -38,7 +38,7 @@ obj-$(CONFIG_FUNCTION_ERROR_INJECTION)	+= error-inject.o
- # so it is only needed for modules, and only for older linkers which
- # do not support --save-restore-funcs
- ifndef CONFIG_LD_IS_BFD
--extra-$(CONFIG_PPC64)	+= crtsavres.o
-+always-$(CONFIG_PPC64)	+= crtsavres.o
- endif
- 
- obj-$(CONFIG_PPC_BOOK3S_64) += copyuser_power7.o copypage_power7.o \
+diff --git a/arch/powerpc/platforms/44x/Kconfig b/arch/powerpc/platforms/44x/Kconfig
+index 83975ef50975..66c54cef3cfa 100644
+--- a/arch/powerpc/platforms/44x/Kconfig
++++ b/arch/powerpc/platforms/44x/Kconfig
+@@ -177,6 +177,7 @@ config ISS4xx
+ config CURRITUCK
+ 	bool "IBM Currituck (476fpe) Support"
+ 	depends on PPC_47x
++	select I2C
+ 	select SWIOTLB
+ 	select 476FPE
+ 	select FORCE_PCI
 -- 
 2.43.0
 
