@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BB66025E;
-	Tue, 23 Jan 2024 01:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890756025E;
+	Tue, 23 Jan 2024 01:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974712; cv=none; b=i1LT1ZQ1Qfqys8cNt8LZT/9p27bH7lIWoiGNdZKAXP3zeBAtlfRw/xBufR/9H1roc7tEeBhdc5m47WfKzZpTiHPa8NEQudoq4gKfNwypCTOIIcHu9pUGJoeJjpCPovJoEzjn0fXEv/Po2JKgO1oj6KEEHfFWqTOPdOf2R3VQsFQ=
+	t=1705974712; cv=none; b=Hhb12Xh2sae6vSBV+BABCME8zTZG1EaXLUfFnNJFVySDUT/ulSUuk5Kt2oFSsHdifqR92jNh7UqryLjsh4YwEEfh1xqJkU5yQecQ3lP2Un2q4I13gh/93zwgzPHJVsGFlb7M54svMMxNRMJIXg3CmafZDpvNNQK1Hznj6YAQ3qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705974712; c=relaxed/simple;
-	bh=GRrsjM3sMakmoJoP3GhzZxTZ7H7YKDY5g0XJinlJ4/w=;
+	bh=TVLgVmk86w5R3ALy0CjW9CB92xOK+jMiKAYUnJdsYZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JdIMU9xxujVo97vUkrPIK2oWimVgCnNu84x3ADllZEZvLtIkOEcVZv03fO5SUIrZhm6ijhlo7viw3MLia1NWMhXUF/gEHKEDXhX3Vnb4ytUB/+wDZT/xVSeeJ2ORttdfqnA9U3v5NNl9xIE2PLfzxOgzdUaYzV1AgsFi/6md7+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STZlfjz+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OB+DUXIpU7QmSMrz3VOf/Ymhg7hknMNzu/ELFaOpfR+RdUctImNMnFTLlPcUHqkj9SCtx3gNJ9GsaMf00wMHMqlJERBN8LRkD6qOvjawfuvBz84h6JY9xfYNThj+fCv2wPiCC7Em8sbXo1HUCd72eg9u2Cq9tBih31IaUfmkIrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+xHsCHR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STZlfjz+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77400C433C7;
-	Tue, 23 Jan 2024 01:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+xHsCHR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 504E9C433F1;
+	Tue, 23 Jan 2024 01:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974711;
-	bh=GRrsjM3sMakmoJoP3GhzZxTZ7H7YKDY5g0XJinlJ4/w=;
+	s=korg; t=1705974712;
+	bh=TVLgVmk86w5R3ALy0CjW9CB92xOK+jMiKAYUnJdsYZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=STZlfjz+c648G/QMycIty0/cP59dVnGDRBTrjlRYSbO5IpkLAsXTPWFmzRimjrmQN
-	 v0HO7hkKwzOb0dDWsqDrfYjjkNr5Yerj2FmMsZ9T527gHV2VOoEXVfb8u4vB9XP7Tj
-	 hZdkP+t/4cM2n/HutebYu3AjBnS2Wn8zhNO4Fl4M=
+	b=f+xHsCHRNovNQYPPE+LraWgDU313gHFB1NfbguudmlbwlzAXHlgITRINf2bbueQo9
+	 cxFlLs96ILK0Av1JFz5eWyLXuJPg4mX7WXCUoJs80gZNZg/Rn9hxHWgotqFE9Uo09y
+	 ApHHYAeyevy+KcwbnUhP7T4ndOcBJN3eV1AK/RNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	MeiChia Chiu <meichia.chiu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 138/583] wifi: mt76: mt7996: fix rate usage of inband discovery frames
-Date: Mon, 22 Jan 2024 15:53:09 -0800
-Message-ID: <20240122235816.329971340@linuxfoundation.org>
+	Gui-Dong Han <2045gemini@gmail.com>
+Subject: [PATCH 5.15 263/374] usb: mon: Fix atomicity violation in mon_bin_vma_fault
+Date: Mon, 22 Jan 2024 15:58:39 -0800
+Message-ID: <20240122235753.915245342@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +45,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: MeiChia Chiu <meichia.chiu@mediatek.com>
+From: Gui-Dong Han <2045gemini@gmail.com>
 
-[ Upstream commit 1e3f387736c744e73b5398a147b90412f82f54da ]
+commit 2dd23cc4d0e6aa55cf9fb3b05f2f4165b01de81c upstream.
 
-For UBPR and FILS frames, the BSS_CHANGED_BEACON flag will also be set,
-which causes those frames to use the beacon rate in TX descriptors.
-Adjust the statement to fix this issue.
+In mon_bin_vma_fault():
+    offset = vmf->pgoff << PAGE_SHIFT;
+    if (offset >= rp->b_size)
+        return VM_FAULT_SIGBUS;
+    chunk_idx = offset / CHUNK_SIZE;
+    pageptr = rp->b_vec[chunk_idx].pg;
+The code is executed without holding any lock.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: MeiChia Chiu <meichia.chiu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In mon_bin_vma_close():
+    spin_lock_irqsave(&rp->b_lock, flags);
+    rp->mmap_active--;
+    spin_unlock_irqrestore(&rp->b_lock, flags);
+
+In mon_bin_ioctl():
+    spin_lock_irqsave(&rp->b_lock, flags);
+    if (rp->mmap_active) {
+        ...
+    } else {
+        ...
+        kfree(rp->b_vec);
+        rp->b_vec  = vec;
+        rp->b_size = size;
+        ...
+    }
+    spin_unlock_irqrestore(&rp->b_lock, flags);
+
+Concurrent execution of mon_bin_vma_fault() with mon_bin_vma_close() and
+mon_bin_ioctl() could lead to atomicity violations. mon_bin_vma_fault()
+accesses rp->b_size and rp->b_vec without locking, risking array
+out-of-bounds access or use-after-free bugs due to possible modifications
+in mon_bin_ioctl().
+
+This possible bug is found by an experimental static analysis tool
+developed by our team, BassCheck[1]. This tool analyzes the locking APIs
+to extract function pairs that can be concurrently executed, and then
+analyzes the instructions in the paired functions to identify possible
+concurrency bugs including data races and atomicity violations. The above
+possible bug is reported when our tool analyzes the source code of
+Linux 6.2.
+
+To address this issue, it is proposed to add a spin lock pair in
+mon_bin_vma_fault() to ensure atomicity. With this patch applied, our tool
+never reports the possible bug, with the kernel configuration allyesconfig
+for x86_64. Due to the lack of associated hardware, we cannot test the
+patch in runtime testing, and just verify it according to the code logic.
+
+[1] https://sites.google.com/view/basscheck/
+
+Fixes: 19e6317d24c2 ("usb: mon: Fix a deadlock in usbmon between ...")
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
+Link: https://lore.kernel.org/r/20240105052412.9377-1-2045gemini@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/mon/mon_bin.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index c43839a20508..26d5675202ba 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -840,10 +840,10 @@ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
- 	struct mt76_vif *mvif;
- 	u16 tx_count = 15;
- 	u32 val;
--	bool beacon = !!(changed & (BSS_CHANGED_BEACON |
--				    BSS_CHANGED_BEACON_ENABLED));
- 	bool inband_disc = !!(changed & (BSS_CHANGED_UNSOL_BCAST_PROBE_RESP |
- 					 BSS_CHANGED_FILS_DISCOVERY));
-+	bool beacon = !!(changed & (BSS_CHANGED_BEACON |
-+				    BSS_CHANGED_BEACON_ENABLED)) && (!inband_disc);
+--- a/drivers/usb/mon/mon_bin.c
++++ b/drivers/usb/mon/mon_bin.c
+@@ -1247,14 +1247,19 @@ static vm_fault_t mon_bin_vma_fault(stru
+ 	struct mon_reader_bin *rp = vmf->vma->vm_private_data;
+ 	unsigned long offset, chunk_idx;
+ 	struct page *pageptr;
++	unsigned long flags;
  
- 	mvif = vif ? (struct mt76_vif *)vif->drv_priv : NULL;
- 	if (mvif) {
--- 
-2.43.0
-
++	spin_lock_irqsave(&rp->b_lock, flags);
+ 	offset = vmf->pgoff << PAGE_SHIFT;
+-	if (offset >= rp->b_size)
++	if (offset >= rp->b_size) {
++		spin_unlock_irqrestore(&rp->b_lock, flags);
+ 		return VM_FAULT_SIGBUS;
++	}
+ 	chunk_idx = offset / CHUNK_SIZE;
+ 	pageptr = rp->b_vec[chunk_idx].pg;
+ 	get_page(pageptr);
+ 	vmf->page = pageptr;
++	spin_unlock_irqrestore(&rp->b_lock, flags);
+ 	return 0;
+ }
+ 
 
 
