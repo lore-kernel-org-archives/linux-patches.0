@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9A863400;
-	Tue, 23 Jan 2024 01:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234DD657AE;
+	Tue, 23 Jan 2024 01:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975082; cv=none; b=O7KwFqBLd0d2PvAcWGGhfvYg+dfp2EUMH218H/lKh1dV1r/2qXDv+ydSMf5Q41ZpQeR2qDWwOXcjUX6dTFXu4JTCQ76ryILhfgphGE10MMYsFPSl3Nr4TGce/shRgXiSlFZFaAs0pk2ahITLwQHIvsx+iDkDMLYCyzR/5fDBBGA=
+	t=1705975083; cv=none; b=Dwc12waX7b10rof7yTxu55ZUg/xWChPfV6YB1+RA2dR8H29jvlNOXy+oukxm5sxRIXnFoYNmGav4NBeIGduTB8H8olSurXkvONEEIUKbgBC/Q+YCuFstd3fYgzCJCBILHJkG7oHzQrs20X4nmOwAlKIiNOkot5Qt0sOvNQbOvxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975082; c=relaxed/simple;
-	bh=A4qta6Q9iaSe5lYq3ilwUOYYfFbCJWDcwF1lcVTh37E=;
+	s=arc-20240116; t=1705975083; c=relaxed/simple;
+	bh=Z75RowVjMb5RPe+9UqGMCl7uYb0x2GGd/KE/+RWKZYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tIi+ANWicmVddihrS5pNXV2qCvRasES+5JxhnPfP2GRPHKXmGCoAgOnloR9Tp99dyApiwj3Fob6V1FcCHULD+YJvqwHcLtu69sJjSgAD53s/CAXYJHowEyLe4tTmDrZdgZg2jswe+5QpWquc48m51dNE8OUTX4MT4IwAiXyCLwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUyeLxec; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ru0KTyF9n0nkAr+YzncpyhD7+CwbaKMaKDfI1WH+XzpAfsHXBwF2amBW7PQXjBxFhDXoE105X0rNH+c8UOQfY1zHkWrUqH1HB1+lxh8dhTghmVhaJHFFXw0fetizNd6DcoHQMd1se3bkEl8Z0sTlK9BugGLh+rDD1vUbAz6eckA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UG/y9Dzj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUyeLxec"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C48C433C7;
-	Tue, 23 Jan 2024 01:58:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UG/y9Dzj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93FCC433A6;
+	Tue, 23 Jan 2024 01:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975082;
-	bh=A4qta6Q9iaSe5lYq3ilwUOYYfFbCJWDcwF1lcVTh37E=;
+	s=korg; t=1705975083;
+	bh=Z75RowVjMb5RPe+9UqGMCl7uYb0x2GGd/KE/+RWKZYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YUyeLxec+2P/XOJOrOtKu9bU6nb09vUCkgAvSrUjgFylDPI7B3ryFrFp9beY1RPdN
-	 poitwrBBcyKdkgYZ7XjfDAf0gtxdpeB8GjPVbmdh7SGX4RRt8btKOUziJoDbaXrUSR
-	 dsMhMoNM0rOHB1/s5iANW1aFkTeUKtDrnl21SovM=
+	b=UG/y9DzjnU0ZAnKMCd4T4f6k1/xBr3035RsJLJddBIJB1KI89RGhXzySt1Ng2CM4C
+	 Uq+Gp4WC5uZvlSff8sdygLFxP9WKINv+vwYkB5kh/FLGvFxyg5XY6udNjqsFeSK+mA
+	 haJBv0N8h5X4ndwttGhKRewbFNd1cjD+cXa/pt3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ludvig=20P=C3=A4rsson?= <ludvig.parsson@axis.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Abhinav Singh <singhabhinav9051571833@gmail.com>,
+	Danilo Krummrich <dakr@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 357/374] ethtool: netlink: Add missing ethnl_ops_begin/complete
-Date: Mon, 22 Jan 2024 16:00:13 -0800
-Message-ID: <20240122235757.366546902@linuxfoundation.org>
+Subject: [PATCH 6.6 230/583] drm/nouveau/fence:: fix warning directly dereferencing a rcu pointer
+Date: Mon, 22 Jan 2024 15:54:41 -0800
+Message-ID: <20240122235819.033039898@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,66 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ludvig Pärsson <ludvig.parsson@axis.com>
+From: Abhinav Singh <singhabhinav9051571833@gmail.com>
 
-[ Upstream commit f1172f3ee3a98754d95b968968920a7d03fdebcc ]
+[ Upstream commit 5f35a624c1e30b5bae5023b3c256e94e0ad4f806 ]
 
-Accessing an ethernet device that is powered off or clock gated might
-cause the CPU to hang. Add ethnl_ops_begin/complete in
-ethnl_set_features() to protect against this.
+Fix a sparse warning with this message
+"warning:dereference of noderef expression". In this context it means we
+are dereferencing a __rcu tagged pointer directly.
 
-Fixes: 0980bfcd6954 ("ethtool: set netdev features with FEATURES_SET request")
-Signed-off-by: Ludvig Pärsson <ludvig.parsson@axis.com>
-Link: https://lore.kernel.org/r/20240117-etht2-v2-1-1a96b6e8c650@axis.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+We should not be directly dereferencing a rcu pointer. To get a normal
+(non __rcu tagged pointer) from a __rcu tagged pointer we are using the
+function unrcu_pointer(...). The non __rcu tagged pointer then can be
+dereferenced just like a normal pointer.
+
+I tested with qemu with this command
+qemu-system-x86_64 \
+	-m 2G \
+	-smp 2 \
+	-kernel bzImage \
+	-append "console=ttyS0 root=/dev/sda earlyprintk=serial net.ifnames=0" \
+	-drive file=bullseye.img,format=raw \
+	-net user,host=10.0.2.10,hostfwd=tcp:127.0.0.1:10021-:22 \
+	-net nic,model=e1000 \
+	-enable-kvm \
+	-nographic \
+	-pidfile vm.pid \
+	2>&1 | tee vm.log
+with lockdep enabled.
+
+Fixes: 0ec5f02f0e2c ("drm/nouveau: prevent stale fence->channel pointers, and protect with rcu")
+Signed-off-by: Abhinav Singh <singhabhinav9051571833@gmail.com>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231113191303.3277733-1-singhabhinav9051571833@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/features.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nv04_fence.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ethtool/features.c b/net/ethtool/features.c
-index 1c9f4df273bd..faccab84d865 100644
---- a/net/ethtool/features.c
-+++ b/net/ethtool/features.c
-@@ -235,17 +235,20 @@ int ethnl_set_features(struct sk_buff *skb, struct genl_info *info)
- 	dev = req_info.dev;
- 
- 	rtnl_lock();
-+	ret = ethnl_ops_begin(dev);
-+	if (ret < 0)
-+		goto out_rtnl;
- 	ethnl_features_to_bitmap(old_active, dev->features);
- 	ethnl_features_to_bitmap(old_wanted, dev->wanted_features);
- 	ret = ethnl_parse_bitset(req_wanted, req_mask, NETDEV_FEATURE_COUNT,
- 				 tb[ETHTOOL_A_FEATURES_WANTED],
- 				 netdev_features_strings, info->extack);
- 	if (ret < 0)
--		goto out_rtnl;
-+		goto out_ops;
- 	if (ethnl_bitmap_to_features(req_mask) & ~NETIF_F_ETHTOOL_BITS) {
- 		GENL_SET_ERR_MSG(info, "attempt to change non-ethtool features");
- 		ret = -EINVAL;
--		goto out_rtnl;
-+		goto out_ops;
- 	}
- 
- 	/* set req_wanted bits not in req_mask from old_wanted */
-@@ -282,6 +285,8 @@ int ethnl_set_features(struct sk_buff *skb, struct genl_info *info)
- 	if (mod)
- 		netdev_features_change(dev);
- 
-+out_ops:
-+	ethnl_ops_complete(dev);
- out_rtnl:
- 	rtnl_unlock();
- 	dev_put(dev);
+diff --git a/drivers/gpu/drm/nouveau/nv04_fence.c b/drivers/gpu/drm/nouveau/nv04_fence.c
+index 5b71a5a5cd85..cdbc75e3d1f6 100644
+--- a/drivers/gpu/drm/nouveau/nv04_fence.c
++++ b/drivers/gpu/drm/nouveau/nv04_fence.c
+@@ -39,7 +39,7 @@ struct nv04_fence_priv {
+ static int
+ nv04_fence_emit(struct nouveau_fence *fence)
+ {
+-	struct nvif_push *push = fence->channel->chan.push;
++	struct nvif_push *push = unrcu_pointer(fence->channel)->chan.push;
+ 	int ret = PUSH_WAIT(push, 2);
+ 	if (ret == 0) {
+ 		PUSH_NVSQ(push, NV_SW, 0x0150, fence->base.seqno);
 -- 
 2.43.0
 
