@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE655BAC5;
-	Tue, 23 Jan 2024 00:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3E85BAC5;
+	Tue, 23 Jan 2024 00:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970539; cv=none; b=UtVRo+YJCsOo7Wt61GHAsd0JiwesG7t9xFCPa6BDCAEWj/i6o3kOhDbUSqvD7yFTqk6SvTQLmbTNlBUyvLBk9KsO4kj8DfSXuz7VL51wDQfruLX7bcy0pHC0Xn61W9LPhpSTcEtKpVBBlM9wm7InI+gO7r2Fp05Q8NRwfYn4TJI=
+	t=1705970542; cv=none; b=fZqF0pyJJ0zVLd751ZlCXYUoS8w5B2O88zbHDvgcCCriyIVzN5JYG/2XNTFtEuInDCeV3qcKaavRFH/bfYebPc5j5+AvYVknimDkwqVOd3TuqnK0qrehZOkcjzqXpFCUWbDKFL3laZliSO9f95f655UzikO98RCUGbC6tNxMQ0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970539; c=relaxed/simple;
-	bh=u/XFrYXs/zuQIIAPcOfwWirp1jbcUmVd//un7jtDH8Y=;
+	s=arc-20240116; t=1705970542; c=relaxed/simple;
+	bh=jMOO1UgwXczmmpd4Q0cv2cs5aHreAkofzB/ikJ5mWuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qyXF+bVzmoPre4HOpLPUpOFGsiVfYEFmr2p8+NuntmGteNYf9xgEQJKY6ov2A1ZCfgRy6k2HIeB/O1LuOj3Pu1P/ubTi7k1ouQNdn1osJ3Dluy95huqJaaubLPcHUh0E6XKbcx89mvn/GzcCNMSEKoh4ONFMVjmy9QsTdPPJx0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JotyhyN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=heiHVVs0KYFBsLkysnO/tOE8gqAA6hxjZQ+w9VjSCie5Wb+83Jpq77r2QcUiE/erl0rKywwNwqDPZhIzfLgRo/C5t1QTTcmk8K0BJ8bfqLVR6iPiOPXdIbhJ56UGlh9wSelksX4ZI9LPCQtrIcWR1i6Bh0MkRWwP0q2EEAXJxrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpxpYlik; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JotyhyN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47193C433F1;
-	Tue, 23 Jan 2024 00:42:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpxpYlik"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9153FC433C7;
+	Tue, 23 Jan 2024 00:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970538;
-	bh=u/XFrYXs/zuQIIAPcOfwWirp1jbcUmVd//un7jtDH8Y=;
+	s=korg; t=1705970542;
+	bh=jMOO1UgwXczmmpd4Q0cv2cs5aHreAkofzB/ikJ5mWuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1JotyhyNoBQzvgSYcQOvgtk2BCtYKC0u07zM5XUuLyXfEdmMa4sTexHcVbpj2jOPK
-	 dSO4EAH+0WDRmH59RR1jsUDY3kwb7a+LMt9EVhuNdJNHttQWNJDkBLBFUUgyavRqyR
-	 yJF8YSpPAQAhALTbLlDx08D99MRHn/rNCmeVXroM=
+	b=MpxpYlikn0/wez3rWkEyXOxH0pywqc8gCIzDql8PH4PLTTK/ZEAp45Zm8/lk7fXhJ
+	 icezs/oiTVUwFiysjxHde6fTbeUQJUfpzXr3xYt9Bx2Y2hEMoPLry5QeNFR8FPUM5u
+	 G2d3XnE9VtABxlJ6hIRNyAa7wtszDVFsxcwerlx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhiqi Song <songzhiqi1@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/417] crypto: hisilicon/hpre - save capability registers in probe process
-Date: Mon, 22 Jan 2024 15:53:35 -0800
-Message-ID: <20240122235753.294375108@linuxfoundation.org>
+Subject: [PATCH 6.1 048/417] crypto: hisilicon/sec2 - save capability registers in probe process
+Date: Mon, 22 Jan 2024 15:53:36 -0800
+Message-ID: <20240122235753.337708950@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -53,207 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhiqi Song <songzhiqi1@huawei.com>
 
-[ Upstream commit cf8b5156bbc8c9376f699e8d35e9464b739e33ff ]
+[ Upstream commit f1115b0096c3163592e04e74f5a7548c25bda957 ]
 
-Pre-store the valid value of hpre alg support related capability
-register in hpre_qm_init(), which will be called by hpre_probe().
+Pre-store the valid value of the sec alg support related capability
+register in sec_qm_init(), which will be called by probe process.
 It can reduce the number of capability register queries and avoid
 obtaining incorrect values in abnormal scenarios, such as reset
 failed and the memory space disabled.
 
-Fixes: f214d59a0603 ("crypto: hisilicon/hpre - support hpre capability")
+Fixes: 921715b6b782 ("crypto: hisilicon/sec - get algorithm bitmap from registers")
 Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_main.c | 82 ++++++++++++++++++-----
- 1 file changed, 64 insertions(+), 18 deletions(-)
+ drivers/crypto/hisilicon/sec2/sec.h        |  7 ++++
+ drivers/crypto/hisilicon/sec2/sec_crypto.c | 13 +++++--
+ drivers/crypto/hisilicon/sec2/sec_main.c   | 43 ++++++++++++++++++++--
+ 3 files changed, 57 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_main.c b/drivers/crypto/hisilicon/hpre/hpre_main.c
-index cf02c9cde85a..269df4ec148b 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_main.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_main.c
-@@ -226,6 +226,20 @@ static const struct hisi_qm_cap_info hpre_basic_info[] = {
- 	{HPRE_CORE10_ALG_BITMAP_CAP, 0x3170, 0, GENMASK(31, 0), 0x0, 0x10, 0x10}
+diff --git a/drivers/crypto/hisilicon/sec2/sec.h b/drivers/crypto/hisilicon/sec2/sec.h
+index 3e57fc04b377..410c83712e28 100644
+--- a/drivers/crypto/hisilicon/sec2/sec.h
++++ b/drivers/crypto/hisilicon/sec2/sec.h
+@@ -220,6 +220,13 @@ enum sec_cap_type {
+ 	SEC_CORE4_ALG_BITMAP_HIGH,
  };
  
-+enum hpre_pre_store_cap_idx {
-+	HPRE_CLUSTER_NUM_CAP_IDX = 0x0,
-+	HPRE_CORE_ENABLE_BITMAP_CAP_IDX,
-+	HPRE_DRV_ALG_BITMAP_CAP_IDX,
-+	HPRE_DEV_ALG_BITMAP_CAP_IDX,
++enum sec_cap_reg_record_idx {
++	SEC_DRV_ALG_BITMAP_LOW_IDX = 0x0,
++	SEC_DRV_ALG_BITMAP_HIGH_IDX,
++	SEC_DEV_ALG_BITMAP_LOW_IDX,
++	SEC_DEV_ALG_BITMAP_HIGH_IDX,
 +};
 +
-+static const u32 hpre_pre_store_caps[] = {
-+	HPRE_CLUSTER_NUM_CAP,
-+	HPRE_CORE_ENABLE_BITMAP_CAP,
-+	HPRE_DRV_ALG_BITMAP_CAP,
-+	HPRE_DEV_ALG_BITMAP_CAP,
+ void sec_destroy_qps(struct hisi_qp **qps, int qp_num);
+ struct hisi_qp **sec_create_qps(void);
+ int sec_register_to_crypto(struct hisi_qm *qm);
+diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+index 84ae8ddd1a13..cae7c414bdaf 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
++++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+@@ -2546,8 +2546,12 @@ static int sec_register_aead(u64 alg_mask)
+ 
+ int sec_register_to_crypto(struct hisi_qm *qm)
+ {
+-	u64 alg_mask = sec_get_alg_bitmap(qm, SEC_DRV_ALG_BITMAP_HIGH, SEC_DRV_ALG_BITMAP_LOW);
+-	int ret;
++	u64 alg_mask;
++	int ret = 0;
++
++	alg_mask = sec_get_alg_bitmap(qm, SEC_DRV_ALG_BITMAP_HIGH_IDX,
++				      SEC_DRV_ALG_BITMAP_LOW_IDX);
++
+ 
+ 	ret = sec_register_skcipher(alg_mask);
+ 	if (ret)
+@@ -2562,7 +2566,10 @@ int sec_register_to_crypto(struct hisi_qm *qm)
+ 
+ void sec_unregister_from_crypto(struct hisi_qm *qm)
+ {
+-	u64 alg_mask = sec_get_alg_bitmap(qm, SEC_DRV_ALG_BITMAP_HIGH, SEC_DRV_ALG_BITMAP_LOW);
++	u64 alg_mask;
++
++	alg_mask = sec_get_alg_bitmap(qm, SEC_DRV_ALG_BITMAP_HIGH_IDX,
++				      SEC_DRV_ALG_BITMAP_LOW_IDX);
+ 
+ 	sec_unregister_aead(alg_mask, ARRAY_SIZE(sec_aeads));
+ 	sec_unregister_skcipher(alg_mask, ARRAY_SIZE(sec_skciphers));
+diff --git a/drivers/crypto/hisilicon/sec2/sec_main.c b/drivers/crypto/hisilicon/sec2/sec_main.c
+index 3605f610699c..4bab5000a13e 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_main.c
++++ b/drivers/crypto/hisilicon/sec2/sec_main.c
+@@ -168,6 +168,13 @@ static const struct hisi_qm_cap_info sec_basic_info[] = {
+ 	{SEC_CORE4_ALG_BITMAP_HIGH, 0x3170, 0, GENMASK(31, 0), 0x3FFF, 0x3FFF, 0x3FFF},
+ };
+ 
++static const u32 sec_pre_store_caps[] = {
++	SEC_DRV_ALG_BITMAP_LOW,
++	SEC_DRV_ALG_BITMAP_HIGH,
++	SEC_DEV_ALG_BITMAP_LOW,
++	SEC_DEV_ALG_BITMAP_HIGH,
 +};
 +
- static const struct hpre_hw_error hpre_hw_errors[] = {
- 	{
- 		.int_msk = BIT(0),
-@@ -345,7 +359,7 @@ bool hpre_check_alg_support(struct hisi_qm *qm, u32 alg)
+ static const struct qm_dev_alg sec_dev_algs[] = { {
+ 		.alg_msk = SEC_CIPHER_BITMAP,
+ 		.alg = "cipher\n",
+@@ -389,8 +396,8 @@ u64 sec_get_alg_bitmap(struct hisi_qm *qm, u32 high, u32 low)
  {
- 	u32 cap_val;
+ 	u32 cap_val_h, cap_val_l;
  
--	cap_val = hisi_qm_get_hw_info(qm, hpre_basic_info, HPRE_DRV_ALG_BITMAP_CAP, qm->cap_ver);
-+	cap_val = qm->cap_tables.dev_cap_table[HPRE_DRV_ALG_BITMAP_CAP_IDX].cap_val;
- 	if (alg & cap_val)
- 		return true;
+-	cap_val_h = hisi_qm_get_hw_info(qm, sec_basic_info, high, qm->cap_ver);
+-	cap_val_l = hisi_qm_get_hw_info(qm, sec_basic_info, low, qm->cap_ver);
++	cap_val_h = qm->cap_tables.dev_cap_table[high].cap_val;
++	cap_val_l = qm->cap_tables.dev_cap_table[low].cap_val;
  
-@@ -421,16 +435,6 @@ static u32 vfs_num;
- module_param_cb(vfs_num, &vfs_num_ops, &vfs_num, 0444);
- MODULE_PARM_DESC(vfs_num, "Number of VFs to enable(1-63), 0(default)");
- 
--static inline int hpre_cluster_num(struct hisi_qm *qm)
--{
--	return hisi_qm_get_hw_info(qm, hpre_basic_info, HPRE_CLUSTER_NUM_CAP, qm->cap_ver);
--}
--
--static inline int hpre_cluster_core_mask(struct hisi_qm *qm)
--{
--	return hisi_qm_get_hw_info(qm, hpre_basic_info, HPRE_CORE_ENABLE_BITMAP_CAP, qm->cap_ver);
--}
--
- struct hisi_qp *hpre_create_qp(u8 type)
- {
- 	int node = cpu_to_node(smp_processor_id());
-@@ -497,13 +501,15 @@ static int hpre_cfg_by_dsm(struct hisi_qm *qm)
- 
- static int hpre_set_cluster(struct hisi_qm *qm)
- {
--	u32 cluster_core_mask = hpre_cluster_core_mask(qm);
--	u8 clusters_num = hpre_cluster_num(qm);
- 	struct device *dev = &qm->pdev->dev;
- 	unsigned long offset;
-+	u32 cluster_core_mask;
-+	u8 clusters_num;
- 	u32 val = 0;
- 	int ret, i;
- 
-+	cluster_core_mask = qm->cap_tables.dev_cap_table[HPRE_CORE_ENABLE_BITMAP_CAP_IDX].cap_val;
-+	clusters_num = qm->cap_tables.dev_cap_table[HPRE_CLUSTER_NUM_CAP_IDX].cap_val;
- 	for (i = 0; i < clusters_num; i++) {
- 		offset = i * HPRE_CLSTR_ADDR_INTRVL;
- 
-@@ -698,11 +704,12 @@ static int hpre_set_user_domain_and_cache(struct hisi_qm *qm)
- 
- static void hpre_cnt_regs_clear(struct hisi_qm *qm)
- {
--	u8 clusters_num = hpre_cluster_num(qm);
- 	unsigned long offset;
-+	u8 clusters_num;
- 	int i;
- 
- 	/* clear clusterX/cluster_ctrl */
-+	clusters_num = qm->cap_tables.dev_cap_table[HPRE_CLUSTER_NUM_CAP_IDX].cap_val;
- 	for (i = 0; i < clusters_num; i++) {
- 		offset = HPRE_CLSTR_BASE + i * HPRE_CLSTR_ADDR_INTRVL;
- 		writel(0x0, qm->io_base + offset + HPRE_CLUSTER_INQURY);
-@@ -989,13 +996,14 @@ static int hpre_pf_comm_regs_debugfs_init(struct hisi_qm *qm)
- 
- static int hpre_cluster_debugfs_init(struct hisi_qm *qm)
- {
--	u8 clusters_num = hpre_cluster_num(qm);
- 	struct device *dev = &qm->pdev->dev;
- 	char buf[HPRE_DBGFS_VAL_MAX_LEN];
- 	struct debugfs_regset32 *regset;
- 	struct dentry *tmp_d;
-+	u8 clusters_num;
- 	int i, ret;
- 
-+	clusters_num = qm->cap_tables.dev_cap_table[HPRE_CLUSTER_NUM_CAP_IDX].cap_val;
- 	for (i = 0; i < clusters_num; i++) {
- 		ret = snprintf(buf, HPRE_DBGFS_VAL_MAX_LEN, "cluster%d", i);
- 		if (ret >= HPRE_DBGFS_VAL_MAX_LEN)
-@@ -1100,6 +1108,34 @@ static void hpre_debugfs_exit(struct hisi_qm *qm)
- 	debugfs_remove_recursive(qm->debug.debug_root);
+ 	return ((u64)cap_val_h << SEC_ALG_BITMAP_SHIFT) | (u64)cap_val_l;
+ }
+@@ -1073,6 +1080,28 @@ static int sec_pf_probe_init(struct sec_dev *sec)
+ 	return ret;
  }
  
-+static int hpre_pre_store_cap_reg(struct hisi_qm *qm)
++static int sec_pre_store_cap_reg(struct hisi_qm *qm)
 +{
-+	struct hisi_qm_cap_record *hpre_cap;
-+	struct device *dev = &qm->pdev->dev;
++	struct hisi_qm_cap_record *sec_cap;
++	struct pci_dev *pdev = qm->pdev;
 +	size_t i, size;
 +
-+	size = ARRAY_SIZE(hpre_pre_store_caps);
-+	hpre_cap = devm_kzalloc(dev, sizeof(*hpre_cap) * size, GFP_KERNEL);
-+	if (!hpre_cap)
++	size = ARRAY_SIZE(sec_pre_store_caps);
++	sec_cap = devm_kzalloc(&pdev->dev, sizeof(*sec_cap) * size, GFP_KERNEL);
++	if (!sec_cap)
 +		return -ENOMEM;
 +
 +	for (i = 0; i < size; i++) {
-+		hpre_cap[i].type = hpre_pre_store_caps[i];
-+		hpre_cap[i].cap_val = hisi_qm_get_hw_info(qm, hpre_basic_info,
-+				      hpre_pre_store_caps[i], qm->cap_ver);
++		sec_cap[i].type = sec_pre_store_caps[i];
++		sec_cap[i].cap_val = hisi_qm_get_hw_info(qm, sec_basic_info,
++				     sec_pre_store_caps[i], qm->cap_ver);
 +	}
 +
-+	if (hpre_cap[HPRE_CLUSTER_NUM_CAP_IDX].cap_val > HPRE_CLUSTERS_NUM_MAX) {
-+		dev_err(dev, "Device cluster num %u is out of range for driver supports %d!\n",
-+			hpre_cap[HPRE_CLUSTER_NUM_CAP_IDX].cap_val, HPRE_CLUSTERS_NUM_MAX);
-+		return -EINVAL;
-+	}
-+
-+	qm->cap_tables.dev_cap_table = hpre_cap;
++	qm->cap_tables.dev_cap_table = sec_cap;
 +
 +	return 0;
 +}
 +
- static int hpre_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ static int sec_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
  {
  	u64 alg_msk;
-@@ -1133,7 +1169,15 @@ static int hpre_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+@@ -1110,7 +1139,15 @@ static int sec_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
  		return ret;
  	}
  
--	alg_msk = hisi_qm_get_hw_info(qm, hpre_basic_info, HPRE_DEV_ALG_BITMAP_CAP, qm->cap_ver);
+-	alg_msk = sec_get_alg_bitmap(qm, SEC_DEV_ALG_BITMAP_HIGH, SEC_DEV_ALG_BITMAP_LOW);
 +	/* Fetch and save the value of capability registers */
-+	ret = hpre_pre_store_cap_reg(qm);
++	ret = sec_pre_store_cap_reg(qm);
 +	if (ret) {
-+		pci_err(pdev, "Failed to pre-store capability registers!\n");
++		pci_err(qm->pdev, "Failed to pre-store capability registers!\n");
 +		hisi_qm_uninit(qm);
 +		return ret;
 +	}
 +
-+	alg_msk = qm->cap_tables.dev_cap_table[HPRE_DEV_ALG_BITMAP_CAP_IDX].cap_val;
- 	ret = hisi_qm_set_algs(qm, alg_msk, hpre_dev_algs, ARRAY_SIZE(hpre_dev_algs));
++	alg_msk = sec_get_alg_bitmap(qm, SEC_DEV_ALG_BITMAP_HIGH_IDX, SEC_DEV_ALG_BITMAP_LOW_IDX);
+ 	ret = hisi_qm_set_algs(qm, alg_msk, sec_dev_algs, ARRAY_SIZE(sec_dev_algs));
  	if (ret) {
- 		pci_err(pdev, "Failed to set hpre algs!\n");
-@@ -1147,11 +1191,12 @@ static int hpre_show_last_regs_init(struct hisi_qm *qm)
- {
- 	int cluster_dfx_regs_num =  ARRAY_SIZE(hpre_cluster_dfx_regs);
- 	int com_dfx_regs_num = ARRAY_SIZE(hpre_com_dfx_regs);
--	u8 clusters_num = hpre_cluster_num(qm);
- 	struct qm_debug *debug = &qm->debug;
- 	void __iomem *io_base;
-+	u8 clusters_num;
- 	int i, j, idx;
- 
-+	clusters_num = qm->cap_tables.dev_cap_table[HPRE_CLUSTER_NUM_CAP_IDX].cap_val;
- 	debug->last_words = kcalloc(cluster_dfx_regs_num * clusters_num +
- 			com_dfx_regs_num, sizeof(unsigned int), GFP_KERNEL);
- 	if (!debug->last_words)
-@@ -1188,10 +1233,10 @@ static void hpre_show_last_dfx_regs(struct hisi_qm *qm)
- {
- 	int cluster_dfx_regs_num =  ARRAY_SIZE(hpre_cluster_dfx_regs);
- 	int com_dfx_regs_num = ARRAY_SIZE(hpre_com_dfx_regs);
--	u8 clusters_num = hpre_cluster_num(qm);
- 	struct qm_debug *debug = &qm->debug;
- 	struct pci_dev *pdev = qm->pdev;
- 	void __iomem *io_base;
-+	u8 clusters_num;
- 	int i, j, idx;
- 	u32 val;
- 
-@@ -1206,6 +1251,7 @@ static void hpre_show_last_dfx_regs(struct hisi_qm *qm)
- 			  hpre_com_dfx_regs[i].name, debug->last_words[i], val);
- 	}
- 
-+	clusters_num = qm->cap_tables.dev_cap_table[HPRE_CLUSTER_NUM_CAP_IDX].cap_val;
- 	for (i = 0; i < clusters_num; i++) {
- 		io_base = qm->io_base + hpre_cluster_offsets[i];
- 		for (j = 0; j <  cluster_dfx_regs_num; j++) {
+ 		pci_err(qm->pdev, "Failed to set sec algs!\n");
 -- 
 2.43.0
 
