@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AAB4E1D8;
-	Tue, 23 Jan 2024 00:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA435D75B;
+	Tue, 23 Jan 2024 00:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970003; cv=none; b=uuAOaFpkscFuqt7Z2fYn4LZF62kwkNPIE+76GNFkwDkK0AGLqPRBJfXgukhwond5/mkO+d1ga/4VHm/8PTnuKwPbtaolihB/Yu+76Xu3+HOb7jdAvXaDPMbV0/9/5EhIvf0BPsdNRIMS9hRaE8ZTiVWTQi5t07BxWiMs8U/yIVA=
+	t=1705970006; cv=none; b=majcAN4hVItjGgfEGqDvFYA+fYI6SpQoHbfrEnmSgZ23SfVjp9mbgVq+uA8KaBS4JckWw5JQC7HGdEtC+3x5sTCrRmjG+0bkz9iN1dbd5eeUEM3WGPJe91U+/m+mPL/JEHW2fYSUF1s366Ge0rWPqqQSVo20NMMtooxoOXj1iwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970003; c=relaxed/simple;
-	bh=a+vEKBhGU/TR1im6bY5Zx0mUAifvTl5DnXwBas2gzKM=;
+	s=arc-20240116; t=1705970006; c=relaxed/simple;
+	bh=NPnoMZeDHsv3vbjiguIZi8UUteSQWNmtPjefrKDPgrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t71mE+D+sJRtMqJVlnTeHgRion7SCijlYCmR4aRt+91ROSZkRsauUYmN3J9cKXwee1DMoXMl8CDAvL5z13zXi2+dHNtRf895wcwLqxYuYbZFg2tOI0BZluBHiAd/OADFnDrxg7JIj1mQwHt0l91l5cQhSnfkPRBMGNCWDkFTcUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X2Q6ED3n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cPnP5Y7fBxBNsKZOn1Ing1AR6m4uBSFt6/XBJ+vzPT4xOj7yRlGoDidZ1ElXxa5We0xBBZ7TrHcRxBXOUfH0pzMH9Yp8wx3GiqEtMk9hKCCN0BKyVu2tg2bWTuWrVuFvGAr3es2OAUjthNUGHZb13+5wageUNj9IE2BZWFD11UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tle8LWbf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X2Q6ED3n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7845C433F1;
-	Tue, 23 Jan 2024 00:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tle8LWbf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0E3C433C7;
+	Tue, 23 Jan 2024 00:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970003;
-	bh=a+vEKBhGU/TR1im6bY5Zx0mUAifvTl5DnXwBas2gzKM=;
+	s=korg; t=1705970006;
+	bh=NPnoMZeDHsv3vbjiguIZi8UUteSQWNmtPjefrKDPgrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X2Q6ED3ntRkzomkZcJPnIWrJ1JgVDECjTZfabCsCiO8M3cgUBOL5RplDxrDlJcEKR
-	 tetRYjwkjwXlhbdGYbp28k0mF/t7ANwWa9P3HORAWmpLJ70cUAsW8w0iCj6PgtQ4f9
-	 t4lS4Ym2WIV0d7HG4fY6sUKQRvjgGrA5IkfQAK5s=
+	b=tle8LWbfeoFIhYjaNtvM7qnz6blC43QKVuvVQn9g+5+HeO0fPRkq/98RAyBaQxY7l
+	 Kr9XUimmid/KL8mUsM8NKSohoXNe4ZCf2PsladzKPaeyJtyZtkzSLghnHzQfZIrm92
+	 kXmgmaqa/l3y3FfNEX00BGAUAWPUWDyuy/iD1AJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Fangrui Song <maskray@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Milian Wolff <milian.wolff@kdab.com>,
-	Pablo Galindo <pablogsal@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 536/641] perf unwind-libunwind: Fix base address for .eh_frame
-Date: Mon, 22 Jan 2024 15:57:20 -0800
-Message-ID: <20240122235834.894829842@linuxfoundation.org>
+Subject: [PATCH 6.7 527/641] selftests/sgx: Skip non X86_64 platform
+Date: Mon, 22 Jan 2024 15:57:11 -0800
+Message-ID: <20240122235834.588278643@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -59,47 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-[ Upstream commit 4fb54994b2360ab5029ee3a959161f6fe6bbb349 ]
+[ Upstream commit 981cf568a8644161c2f15c02278ebc2834b51ba6 ]
 
-The base address of a DSO mapping should start at the start of the file.
-Usually DSOs are mapped from the pgoff 0 so it doesn't matter when it
-uses the start of the map address.
+When building whole selftests on arm64, rsync gives an erorr about sgx:
 
-But generated DSOs for JIT codes doesn't start from the 0 so it should
-subtract the offset to calculate the .eh_frame table offsets correctly.
+rsync: [sender] link_stat "/root/linux-next/tools/testing/selftests/sgx/test_encl.elf" failed: No such file or directory (2)
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1327) [sender=3.2.5]
 
-Fixes: dc2cf4ca866f5715 ("perf unwind: Fix segbase for ld.lld linked objects")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Fangrui Song <maskray@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Milian Wolff <milian.wolff@kdab.com>
-Cc: Pablo Galindo <pablogsal@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20231212070547.612536-4-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+The root casue is sgx only used on X86_64, and shall be skipped on other
+platforms.
+
+Fix this by moving TEST_CUSTOM_PROGS and TEST_FILES inside the if check,
+then the build result will be "Skipping non-existent dir: sgx".
+
+Fixes: 2adcba79e69d ("selftests/x86: Add a selftest for SGX")
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/all/20231206025605.3965302-1-zhaomzhao%40126.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/unwind-libunwind-local.c | 2 +-
+ tools/testing/selftests/sgx/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/unwind-libunwind-local.c b/tools/perf/util/unwind-libunwind-local.c
-index c0641882fd2f..5e5c3395a499 100644
---- a/tools/perf/util/unwind-libunwind-local.c
-+++ b/tools/perf/util/unwind-libunwind-local.c
-@@ -327,7 +327,7 @@ static int read_unwind_spec_eh_frame(struct dso *dso, struct unwind_info *ui,
+diff --git a/tools/testing/selftests/sgx/Makefile b/tools/testing/selftests/sgx/Makefile
+index 50aab6b57da3..01abe4969b0f 100644
+--- a/tools/testing/selftests/sgx/Makefile
++++ b/tools/testing/selftests/sgx/Makefile
+@@ -16,10 +16,10 @@ HOST_CFLAGS := -Wall -Werror -g $(INCLUDES) -fPIC -z noexecstack
+ ENCL_CFLAGS := -Wall -Werror -static -nostdlib -nostartfiles -fPIC \
+ 	       -fno-stack-protector -mrdrnd $(INCLUDES)
  
- 	maps__for_each_entry(thread__maps(ui->thread), map_node) {
- 		struct map *map = map_node->map;
--		u64 start = map__start(map);
-+		u64 start = map__start(map) - map__pgoff(map);
++ifeq ($(CAN_BUILD_X86_64), 1)
+ TEST_CUSTOM_PROGS := $(OUTPUT)/test_sgx
+ TEST_FILES := $(OUTPUT)/test_encl.elf
  
- 		if (map__dso(map) == dso && start < base_addr)
- 			base_addr = start;
+-ifeq ($(CAN_BUILD_X86_64), 1)
+ all: $(TEST_CUSTOM_PROGS) $(OUTPUT)/test_encl.elf
+ endif
+ 
 -- 
 2.43.0
 
