@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1744114C580;
-	Tue, 23 Jan 2024 00:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2786214C580;
+	Tue, 23 Jan 2024 00:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969268; cv=none; b=af95OYCZjBRGwObZ9IZ+3mrXyuiK/oSU6MlA6gRfMWsAgzRdNAgS/18aVMgILfrVr4FMLWi0CMwfsoZLlwB6fFHxcVNv4CqPHvPiVrq3jmxeVBEXL3pFa2AvdjnzStvr0WNPGaQU8wRl5nJRHj/cnUvpaxCVL2lR394tRPS6nlU=
+	t=1705969269; cv=none; b=OVkyKhHwI/KME6/2lMeJVQFI19f4j2ZOAp6pmge9IrjtetjhOVGaapV+glxDWG4jn8aRWWGnT+ni/fK5TLRD6KaN34Uh/SmOcR8QCDSb4ycpm87xImcjFuWWo8rsVuR82QS7H6ZtGBrb8su3Y9E0aO+EPi1cYo+JO+ndPx+5uEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969268; c=relaxed/simple;
-	bh=R6WlfNRryRYWampqypQCCNn2WOUIhfifJX3F8tDQxdk=;
+	s=arc-20240116; t=1705969269; c=relaxed/simple;
+	bh=6Mpd4A2YYJzyotehXnNfCnfpRQRWMz8EQP8PEBPG7VQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+Yf8BXDqcq4zn/xhR/B6fYp5bnJO/qCOsNrMVWdmdHDw0e6g+xOd87/vUxgagC0ncoTGCk+MIknQHAiuCrDzcYVDIGvThLwjpUvs5UAIq9Zk9VPltdxX33Wh0y05HDmWifomtRijtAMmm3vDyRMvbTkO1pZ7Enk+8mjwyDk82M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HX6inG6Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KJdCUxOTvrY9udAUvlSEIs7VwqFiX8WF1cLsDyS5R8FMGlaB0dHYcgUUuzmuN1nUkaEk2Bl6oUKowH7YxO+CKiMU4OvN+yB76SEOocGdlJRLiNbuiYPwsrQiVkFXPZ2t26qK9EtYl/Kgjr9wn2zf2UkVmHwy/A9pf/5EYE3nh5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/F6gbRx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HX6inG6Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2E4C433C7;
-	Tue, 23 Jan 2024 00:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/F6gbRx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAABAC43399;
+	Tue, 23 Jan 2024 00:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969267;
-	bh=R6WlfNRryRYWampqypQCCNn2WOUIhfifJX3F8tDQxdk=;
+	s=korg; t=1705969269;
+	bh=6Mpd4A2YYJzyotehXnNfCnfpRQRWMz8EQP8PEBPG7VQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HX6inG6ZoaOmYhvAGGuL406vvzHndAmJGR9CxsaV1dfu8tbv1BS5Q5O9C9Pz1wq9a
-	 AC3pBz8HqMMeyVlTeSDP5BMS8SABTOrQDcpSTzU+c5hjCvEGU0BNz06tlMdX4ck859
-	 MYC8+4/syn0puS0aNWNMbYAwGMo8lyBQsRHIoGM8=
+	b=F/F6gbRx4lwJWgN/xKa10Uth8EruH4QxvZCnQmigtfh1w5B7Vl81/5p0Vr6t33YJS
+	 TA8KnlZPfOVn2zUAhLPR8qGQHJJjMAXZMCsVf8p1RkqzpcNASBh8WuIBeMpHoSriah
+	 SbtQTfXI/UZ0/01hMTU6FbWpN4us2T2MFVew6ZZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Nitin Yadav <n-yadav@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 109/641] wifi: rtlwifi: rtl8821ae: phy: fix an undefined bitwise shift behavior
-Date: Mon, 22 Jan 2024 15:50:13 -0800
-Message-ID: <20240122235821.451650586@linuxfoundation.org>
+Subject: [PATCH 6.7 110/641] arm64: dts: ti: k3-am62a-main: Fix GPIO pin count in DT nodes
+Date: Mon, 22 Jan 2024 15:50:14 -0800
+Message-ID: <20240122235821.482230575@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,56 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Nitin Yadav <n-yadav@ti.com>
 
-[ Upstream commit bc8263083af60e7e57c6120edbc1f75d6c909a35 ]
+[ Upstream commit 7dc4af358cc382c5d20bd5b726e53ef0f526eb6d ]
 
-Clang static checker warns:
+Fix number of gpio pins in main_gpio0 & main_gpio1 DT nodes according
+to AM62A7 datasheet[0].
 
-drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c:184:49:
-	The result of the left shift is undefined due to shifting by '32',
-	which is greater or equal to the width of type 'u32'.
-	[core.UndefinedBinaryOperatorResult]
-
-If the value of the right operand is negative or is greater than or
-equal to the width of the promoted left operand, the behavior is
-undefined.[1][2]
-
-For example, when using different gcc's compilation optimization options
-(-O0 or -O2), the result of '(u32)data << 32' is different. One is 0, the
-other is old value of data. Let _rtl8821ae_phy_calculate_bit_shift()'s
-return value less than 32 to fix this problem. Warn if bitmask is zero.
-
-[1] https://stackoverflow.com/questions/11270492/what-does-the-c-standard-say-about-bitshifting-more-bits-than-the-width-of-type
-[2] https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf
-
-Fixes: 21e4b0726dc6 ("rtlwifi: rtl8821ae: Move driver from staging to regular tree")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231127013511.26694-2-suhui@nfschina.com
+[0] https://www.ti.com/lit/gpn/am62a3 Section: 6.3.10 GPIO (Page No. 52-55)
+Fixes: 5fc6b1b62639 ("arm64: dts: ti: Introduce AM62A7 family of SoCs")
+Signed-off-by: Nitin Yadav <n-yadav@ti.com>
+Link: https://lore.kernel.org/r/20231027065930.1187405-1-n-yadav@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62a-main.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
-index 5323ead30db0..fa1839d8ee55 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
-@@ -29,9 +29,10 @@ static void _rtl8821ae_phy_rf_serial_write(struct ieee80211_hw *hw,
- 					   u32 data);
- static u32 _rtl8821ae_phy_calculate_bit_shift(u32 bitmask)
- {
--	u32 i = ffs(bitmask);
-+	if (WARN_ON_ONCE(!bitmask))
-+		return 0;
- 
--	return i ? i - 1 : 32;
-+	return __ffs(bitmask);
- }
- static bool _rtl8821ae_phy_bb8821a_config_parafile(struct ieee80211_hw *hw);
- /*static bool _rtl8812ae_phy_config_mac_with_headerfile(struct ieee80211_hw *hw);*/
+diff --git a/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi b/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
+index 4ae7fdc5221b..ccd708b09acd 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
+@@ -462,7 +462,7 @@ main_gpio0: gpio@600000 {
+ 			     <193>, <194>, <195>;
+ 		interrupt-controller;
+ 		#interrupt-cells = <2>;
+-		ti,ngpio = <87>;
++		ti,ngpio = <92>;
+ 		ti,davinci-gpio-unbanked = <0>;
+ 		power-domains = <&k3_pds 77 TI_SCI_PD_EXCLUSIVE>;
+ 		clocks = <&k3_clks 77 0>;
+@@ -480,7 +480,7 @@ main_gpio1: gpio@601000 {
+ 			     <183>, <184>, <185>;
+ 		interrupt-controller;
+ 		#interrupt-cells = <2>;
+-		ti,ngpio = <88>;
++		ti,ngpio = <52>;
+ 		ti,davinci-gpio-unbanked = <0>;
+ 		power-domains = <&k3_pds 78 TI_SCI_PD_EXCLUSIVE>;
+ 		clocks = <&k3_clks 78 0>;
 -- 
 2.43.0
 
