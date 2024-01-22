@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D7750258;
-	Tue, 23 Jan 2024 01:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4033850258;
+	Tue, 23 Jan 2024 01:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974651; cv=none; b=ApEOG2Q/SUJ5QPPBqvrI6AyLhyFpquU+V6PcxifjR7caqSojDrIKlxDhiAoQiQI7l8293FpJOyio64/fqN06IQuyvY1lfm2oXnPmC72CneEf6Cnq9akGZ5GFj2PDMN4m9EaNzROybtJyt5D89feUrzuMEqH8AmYBCYvtT68MvZQ=
+	t=1705974652; cv=none; b=J5CPLOCEOoBiD04b+xzXtGLZ/ZyDt3OuOzpX48sHTdpyDGWFy4wUZfOqnH7074nIOXi/E9k6c9R/y/PonTC0aJkf+7xHuZqVqdaFUO/a9MS0E3X6YfZkRPSYZClRhkwRSeWCI3CM1UQ0yQm7Bl89i6RLEFvHIm9o2lca1IHvBf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974651; c=relaxed/simple;
-	bh=ibjWYXDbx9NkS2W/B4surKj1UcwM2NLdmLH6VMWDtow=;
+	s=arc-20240116; t=1705974652; c=relaxed/simple;
+	bh=oSoBrT4VOdlvNdOTGiWsfIaOmWQ7SuvfFEObIGspN+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RaHHfsdUHQZb/LOO5TU8rDzprHvZKUUAUnfeaCvj9WDUyQp/RjZcWfUJTpXQIOXwfZTorg7KdvJv0gjy8UhsjhY6hvEQunDU22ypxjzicJXFa3Lhp21Kie3/pdAIKPhLAigDxz3M8wpboRrPeoanzA5g7S/F0ikIF4o1iVG/fHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wIWbFKB3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vGkRQPXum6HGH8zGT5dUcgbm8jXzUPJ16jTDn/aos1RXNwhDPisevx5WHa/5F/qkmVqXa7FS2MTsqWLzUoAdZClxgBqXu6bZlPEa+cf5O6nlDexWo8CgTAwRhOknAgnfrs0oyG9njcw62W8jz9TByQkGFI/O57fj7jAxPx1TzN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6M/EeUb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wIWbFKB3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1A6C433C7;
-	Tue, 23 Jan 2024 01:50:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6M/EeUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F578C43394;
+	Tue, 23 Jan 2024 01:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974650;
-	bh=ibjWYXDbx9NkS2W/B4surKj1UcwM2NLdmLH6VMWDtow=;
+	s=korg; t=1705974651;
+	bh=oSoBrT4VOdlvNdOTGiWsfIaOmWQ7SuvfFEObIGspN+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wIWbFKB36Z/Xeg3/4Vr9mnlP2/1e2Dg8cp1AeSvWN9Ak6OKcfBngQh2sNqGSDC5X4
-	 tjQnDrsLnrdY/6zJFvFTrVCdE29JLHQ+tzHUnHW+D8kBTZ0r86xosaEq2Jf595gmON
-	 8g6o49xhs9wBeVyCffnrXdaGx+lAaPQS6GK4HMuc=
+	b=E6M/EeUb/f4goFojwcgoeQgZEvOi+meaun9O1GeSEeplnBoMlTgB4gYatqoNsMx0a
+	 67R6sQHaaSr9T0I+YB9xxv5AzTdaqerx3iw3S9G+G7BFCLQk91Iy+QAoFxAmpK6KZK
+	 16KmjWoFM4KH6fJ6ihUSdIQbZuW8zXt2GlhvB4b4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 233/374] ALSA: scarlett2: Allow passing any output to line_out_remap()
-Date: Mon, 22 Jan 2024 15:58:09 -0800
-Message-ID: <20240122235752.822269691@linuxfoundation.org>
+Subject: [PATCH 6.6 107/583] arm64: dts: qcom: sc8180x-primus: Fix HALL_INT polarity
+Date: Mon, 22 Jan 2024 15:52:38 -0800
+Message-ID: <20240122235815.438180993@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,85 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 2190b9aea4eb92ccf3176e35c17c959e40f1a81b ]
+[ Upstream commit 1aaa08e8de365cce59203541cafadb5053b1ec1a ]
 
-Line outputs 3 & 4 on the Gen 3 18i8 are internally the analogue 7 and
-8 outputs, and this renumbering is hidden from the user by
-line_out_remap(). By allowing higher values (representing non-analogue
-outputs) to be passed to line_out_remap(), repeated code from
-scarlett2_mux_src_enum_ctl_get() and scarlett2_mux_src_enum_ctl_put()
-can be removed.
+The hall sensor interrupt on the Primus is active low, which means that
+with the current configuration the device attempts to suspend when the
+LID is open.
 
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Link: https://lore.kernel.org/r/3b70267931f5994628ab27306c73cddd17b93c8f.1698342632.git.g@b4.vu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 50603a67daef ("ALSA: scarlett2: Add missing error checks to *_ctl_get()")
+Fix the polarity of the HALL_INT GPIO to avoid this.
+
+Fixes: 2ce38cc1e8fe ("arm64: dts: qcom: sc8180x: Introduce Primus")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231130-sc8180x-primus-lid-polarity-v1-1-da917b59604b@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_scarlett_gen2.c | 25 +++++++++----------------
- 1 file changed, 9 insertions(+), 16 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8180x-primus.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/mixer_scarlett_gen2.c b/sound/usb/mixer_scarlett_gen2.c
-index f8787a4b1e13..ad46a0d3e33b 100644
---- a/sound/usb/mixer_scarlett_gen2.c
-+++ b/sound/usb/mixer_scarlett_gen2.c
-@@ -1777,9 +1777,16 @@ static int scarlett2_master_volume_ctl_get(struct snd_kcontrol *kctl,
- static int line_out_remap(struct scarlett2_data *private, int index)
- {
- 	const struct scarlett2_device_info *info = private->info;
-+	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
-+	int line_out_count =
-+		port_count[SCARLETT2_PORT_TYPE_ANALOGUE][SCARLETT2_PORT_OUT];
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+index 834e6f9fb7c8..ae008c3b0aed 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
++++ b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+@@ -42,7 +42,7 @@ gpio-keys {
+ 		pinctrl-0 = <&hall_int_active_state>;
  
- 	if (!info->line_out_remap_enable)
- 		return index;
-+
-+	if (index >= line_out_count)
-+		return index;
-+
- 	return info->line_out_remap[index];
- }
- 
-@@ -3264,14 +3271,7 @@ static int scarlett2_mux_src_enum_ctl_get(struct snd_kcontrol *kctl,
- 	struct usb_mixer_elem_info *elem = kctl->private_data;
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
--	const struct scarlett2_device_info *info = private->info;
--	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
--	int line_out_count =
--		port_count[SCARLETT2_PORT_TYPE_ANALOGUE][SCARLETT2_PORT_OUT];
--	int index = elem->control;
--
--	if (index < line_out_count)
--		index = line_out_remap(private, index);
-+	int index = line_out_remap(private, elem->control);
- 
- 	mutex_lock(&private->data_mutex);
- 	if (private->mux_updated)
-@@ -3288,16 +3288,9 @@ static int scarlett2_mux_src_enum_ctl_put(struct snd_kcontrol *kctl,
- 	struct usb_mixer_elem_info *elem = kctl->private_data;
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
--	const struct scarlett2_device_info *info = private->info;
--	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
--	int line_out_count =
--		port_count[SCARLETT2_PORT_TYPE_ANALOGUE][SCARLETT2_PORT_OUT];
--	int index = elem->control;
-+	int index = line_out_remap(private, elem->control);
- 	int oval, val, err = 0;
- 
--	if (index < line_out_count)
--		index = line_out_remap(private, index);
--
- 	mutex_lock(&private->data_mutex);
- 
- 	oval = private->mux[index];
+ 		lid-switch {
+-			gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>;
++			gpios = <&tlmm 121 GPIO_ACTIVE_LOW>;
+ 			linux,input-type = <EV_SW>;
+ 			linux,code = <SW_LID>;
+ 			wakeup-source;
 -- 
 2.43.0
 
