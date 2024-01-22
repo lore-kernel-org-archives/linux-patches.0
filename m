@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CBD12F5A7;
-	Tue, 23 Jan 2024 00:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A6012F5A7;
+	Tue, 23 Jan 2024 00:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969019; cv=none; b=O6kCZ3O5dFActkFV2eohyscN4uxNoi2yg7JqT91+IJzJHh/9qc1gHQPjYNbiMWbD4Iu065bZHKepKpoG+aUNbcQebswdMYXTPJX7CizF1mlRrmcV1x3yIekr6vvGhYKLAPw+V1CBHb62Ru9PThmYJoQzfCYt653bUve2YwkFeKU=
+	t=1705969021; cv=none; b=BuvrcSpD9aYOu+mO4i0oN7K79loUxqFCI+IKFAFU7FcLAtJWEi7y1AzDsZyatCWsPZf1h3e68DV+xa2UDUrkkBIwsZ2O5QothdquM8gTdfOifK08jFmtDoVngpkVGUr1EfUNFucF7Sq5adU9ipEfxv/X0eI01hp0TMPAWhgMvKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969019; c=relaxed/simple;
-	bh=L68J52t/c7OopDjKsEsLdEkxPRccGmM5s4YUkg2ez+U=;
+	s=arc-20240116; t=1705969021; c=relaxed/simple;
+	bh=RBBTIsfF+z1LKqaqb3U65u8rvMOVP4vS/ZcZamBwSX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vGDe6m2/z02DFnjZwqrjwH1uu5KfalpW+5B/ReJG0VAZ6f/5AqJYZcuJlTWCPo3F4hmTj/7tD2QLYD3Koi+t3LPEdkji6NoeOquaBMymExz1CLEt/kynCs55V/7FBSnCK+Y8KWjpagrV8C2PByntq3o2a3ETNJAVRAH676ssfiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcWFUHMH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BZniS9xJTKSclpojceYZA7O5sckouXbYP60j2N6F4MUpGCY/bpIC+OwOatmjW00DEmWOdCnuYKp4zVJhYhBvz3BrglTmyDreI62P/ZRrYv2fJkukEnKS2euwtkPTCBTiBlOlV1hGedLQRn0UCtIPFx8xgb+5Ly6FqP7XUOpQiBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QD+pGm3U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcWFUHMH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46BDCC43399;
-	Tue, 23 Jan 2024 00:16:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QD+pGm3U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7A4FC433C7;
+	Tue, 23 Jan 2024 00:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969019;
-	bh=L68J52t/c7OopDjKsEsLdEkxPRccGmM5s4YUkg2ez+U=;
+	s=korg; t=1705969020;
+	bh=RBBTIsfF+z1LKqaqb3U65u8rvMOVP4vS/ZcZamBwSX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kcWFUHMH6zvjsedISymCG3e2AKxDJe4WzecejMEeWxoFH+21+QjH0nnX0GvF5YEXt
-	 jW3U06Ub05QXoUDUMX0KIi7k3OvxJJasabHVAc7fouhdB+07OPBwc+R6TNdyEjRBbo
-	 Vg/breCJPB52tUyp8xsOcJA1PFR56RzvYdXkEd64=
+	b=QD+pGm3UfchHyw9QMiD9X8HCfcUZrJ1nriWYpq0Wd5DhzLDZ5Cw6cMYzlPz/B+Wts
+	 YEw6KGvfvCYbB9sHx4WhI7LGmGx9trgJhAGsXiWlhWKRzndeOaPBdv3zrnjQAKYoqW
+	 dWlLOe9RoYX1x9QEbbu/CRA2fRLbIolDKu77uEpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.4 156/194] fbdev: flush deferred work in fb_deferred_io_fsync()
-Date: Mon, 22 Jan 2024 15:58:06 -0800
-Message-ID: <20240122235725.881928211@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 165/194] MIPS: Alchemy: Fix an out-of-bound access in db1550_dev_setup()
+Date: Mon, 22 Jan 2024 15:58:15 -0800
+Message-ID: <20240122235726.282165242@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,51 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 15e4c1f462279b4e128f27de48133e0debe9e0df upstream.
+[ Upstream commit 3c1e5abcda64bed0c7bffa65af2316995f269a61 ]
 
-The driver's fsync() is supposed to flush any pending operation to
-hardware. It is implemented in this driver by cancelling the queued
-deferred IO first, then schedule it for "immediate execution" by calling
-schedule_delayed_work() again with delay=0. However, setting delay=0
-only means the work is scheduled immediately, it does not mean the work
-is executed immediately. There is no guarantee that the work is finished
-after schedule_delayed_work() returns. After this driver's fsync()
-returns, there can still be pending work. Furthermore, if close() is
-called by users immediately after fsync(), the pending work gets
-cancelled and fsync() may do nothing.
+When calling spi_register_board_info(),
 
-To ensure that the deferred IO completes, use flush_delayed_work()
-instead. Write operations to this driver either write to the device
-directly, or invoke schedule_delayed_work(); so by flushing the
-workqueue, it can be guaranteed that all previous writes make it to the
-device.
-
-Fixes: 5e841b88d23d ("fb: fsync() method for deferred I/O flush.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f869d42e580f ("MIPS: Alchemy: Improved DB1550 support, with audio and serial busses.")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fb_defio.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ arch/mips/alchemy/devboards/db1550.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/core/fb_defio.c
-+++ b/drivers/video/fbdev/core/fb_defio.c
-@@ -78,11 +78,7 @@ int fb_deferred_io_fsync(struct file *fi
- 		return 0;
+diff --git a/arch/mips/alchemy/devboards/db1550.c b/arch/mips/alchemy/devboards/db1550.c
+index 3e0c75c0ece0..583b265d7407 100644
+--- a/arch/mips/alchemy/devboards/db1550.c
++++ b/arch/mips/alchemy/devboards/db1550.c
+@@ -588,7 +588,7 @@ int __init db1550_dev_setup(void)
+ 	i2c_register_board_info(0, db1550_i2c_devs,
+ 				ARRAY_SIZE(db1550_i2c_devs));
+ 	spi_register_board_info(db1550_spi_devs,
+-				ARRAY_SIZE(db1550_i2c_devs));
++				ARRAY_SIZE(db1550_spi_devs));
  
- 	inode_lock(inode);
--	/* Kill off the delayed work */
--	cancel_delayed_work_sync(&info->deferred_work);
--
--	/* Run it immediately */
--	schedule_delayed_work(&info->deferred_work, 0);
-+	flush_delayed_work(&info->deferred_work);
- 	inode_unlock(inode);
- 
- 	return 0;
+ 	c = clk_get(NULL, "psc0_intclk");
+ 	if (!IS_ERR(c)) {
+-- 
+2.43.0
+
 
 
