@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEBD2B9C7;
-	Tue, 23 Jan 2024 01:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1803FE1;
+	Tue, 23 Jan 2024 01:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974630; cv=none; b=rpkiQiROmmL5ssast7zJsDvBgatrBfxNYSF2kEGMF5rAn2oBYvBCDu6k0t/Qh3SHBPREqc578t5xXymrTJ8DFOZ9HSeu1sagD7iQUPGYptMkAqhruF+WhgZBdc8Mry9Zo9JUfzFt5MBair9aawIkhGdeBiMN2zBQjIuYif/Hkac=
+	t=1705974632; cv=none; b=qussrBcKLPXOxh79/8ki2IiAAep5qx7IjkQJWZHvYVrN4c8c8SlHmJdCgice/n8ODQu/a3yx3UCKn+N764/Apxso37DOYmEfTVQdT3HFnud1Y4Bt8sXAWj3+ZL+0q3APMkX/NWc1g/bvdUlCrFM0ggeFDtIahWLbY/9F1e9OI/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974630; c=relaxed/simple;
-	bh=MTGkow184q6lEoKxtUcFK3zI5RTx+ftsVA/F+0JLtRE=;
+	s=arc-20240116; t=1705974632; c=relaxed/simple;
+	bh=JCAnIo/GoQDMKtzHxIUcebM+e4IpBVOKACOIIn/ChPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B0zCT7A21ED8WKjZLyHv0r4MkPrgzr6YYwKqsTRJencF7+D04KIrlJQe/DrnzizQap6e8vx3ueOOMLRH0O8XUiaPsT/8H9sJKy88xjcikJcJfzm9o+1ctn16jVv0Jr1HYoPxYbC5eZclEn70qAETrtuLwzDG23VtnZXcWD+0tac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0y3jfhkm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iIr7qI2QQ0hDxCfyrMaW511lMy1uMsLlw5UlCSfsLbOckJ8MpcYGUL1bmvCb6rJYd6+EgARzClloaOHe58A58Ccqz8qKNWyjzf/9KFFUTEeHvyIVLoIBf6BK9v5c5RUb5ao+6XehNT0nGaORhD4b1y+wEXAjzvPEpfWzgutyIiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkWYs7YU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0y3jfhkm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB189C433C7;
-	Tue, 23 Jan 2024 01:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkWYs7YU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B381FC433F1;
+	Tue, 23 Jan 2024 01:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974630;
-	bh=MTGkow184q6lEoKxtUcFK3zI5RTx+ftsVA/F+0JLtRE=;
+	s=korg; t=1705974632;
+	bh=JCAnIo/GoQDMKtzHxIUcebM+e4IpBVOKACOIIn/ChPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0y3jfhkmWpTnmYvcaaBWmIW7rXbhxGK9LmjxO/BvbXk08NSDf84bgrBwBSw/h/GP6
-	 voeFi4knScs1AUdd32NFePa7Le71yT8+wQgeUTY41JNu3gXTjS4Rg3Szv8D0MUi8NE
-	 xvZ4mg4+5iVbC5u6MGIW8Uz+P68wquXoGHEMnA7w=
+	b=QkWYs7YUlLYD2uGsTcVtXwKiOrQQP0e0K5wdeqn+F9P2/7v7qeu3A2o+SoSfMzyId
+	 X1rakbYBPGp+CDGnGRDzwTrPSWHGvJESsiCcoNKc5TFXfhuscFtNNhBTFF89FKIu1c
+	 n+sbalrog1KWNw/XogjNshHpD64N+EdC7wDTntQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Nitin Yadav <n-yadav@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 221/374] watchdog: bcm2835_wdt: Fix WDIOC_SETTIMEOUT handling
-Date: Mon, 22 Jan 2024 15:57:57 -0800
-Message-ID: <20240122235752.350925568@linuxfoundation.org>
+Subject: [PATCH 6.6 097/583] arm64: dts: ti: k3-am62a-main: Fix GPIO pin count in DT nodes
+Date: Mon, 22 Jan 2024 15:52:28 -0800
+Message-ID: <20240122235815.155335786@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,59 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Nitin Yadav <n-yadav@ti.com>
 
-[ Upstream commit f33f5b1fd1be5f5106d16f831309648cb0f1c31d ]
+[ Upstream commit 7dc4af358cc382c5d20bd5b726e53ef0f526eb6d ]
 
-Users report about the unexpected behavior for setting timeouts above
-15 sec on Raspberry Pi. According to watchdog-api.rst the ioctl
-WDIOC_SETTIMEOUT shouldn't fail because of hardware limitations.
-But looking at the code shows that max_timeout based on the
-register value PM_WDOG_TIME_SET, which is the maximum.
+Fix number of gpio pins in main_gpio0 & main_gpio1 DT nodes according
+to AM62A7 datasheet[0].
 
-Since 664a39236e71 ("watchdog: Introduce hardware maximum heartbeat
-in watchdog core") the watchdog core is able to handle this problem.
-
-This fix has been tested with watchdog-test from selftests.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217374
-Fixes: 664a39236e71 ("watchdog: Introduce hardware maximum heartbeat in watchdog core")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20231112173251.4827-1-wahrenst@gmx.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+[0] https://www.ti.com/lit/gpn/am62a3 Section: 6.3.10 GPIO (Page No. 52-55)
+Fixes: 5fc6b1b62639 ("arm64: dts: ti: Introduce AM62A7 family of SoCs")
+Signed-off-by: Nitin Yadav <n-yadav@ti.com>
+Link: https://lore.kernel.org/r/20231027065930.1187405-1-n-yadav@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/bcm2835_wdt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am62a-main.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/watchdog/bcm2835_wdt.c b/drivers/watchdog/bcm2835_wdt.c
-index 94907176a0e4..55c0f7b0e8fb 100644
---- a/drivers/watchdog/bcm2835_wdt.c
-+++ b/drivers/watchdog/bcm2835_wdt.c
-@@ -42,6 +42,7 @@
- 
- #define SECS_TO_WDOG_TICKS(x) ((x) << 16)
- #define WDOG_TICKS_TO_SECS(x) ((x) >> 16)
-+#define WDOG_TICKS_TO_MSECS(x) ((x) * 1000 >> 16)
- 
- struct bcm2835_wdt {
- 	void __iomem		*base;
-@@ -140,7 +141,7 @@ static struct watchdog_device bcm2835_wdt_wdd = {
- 	.info =		&bcm2835_wdt_info,
- 	.ops =		&bcm2835_wdt_ops,
- 	.min_timeout =	1,
--	.max_timeout =	WDOG_TICKS_TO_SECS(PM_WDOG_TIME_SET),
-+	.max_hw_heartbeat_ms =	WDOG_TICKS_TO_MSECS(PM_WDOG_TIME_SET),
- 	.timeout =	WDOG_TICKS_TO_SECS(PM_WDOG_TIME_SET),
- };
- 
+diff --git a/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi b/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
+index 3198af08fb9f..de36abb243f1 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
+@@ -462,7 +462,7 @@ main_gpio0: gpio@600000 {
+ 			     <193>, <194>, <195>;
+ 		interrupt-controller;
+ 		#interrupt-cells = <2>;
+-		ti,ngpio = <87>;
++		ti,ngpio = <92>;
+ 		ti,davinci-gpio-unbanked = <0>;
+ 		power-domains = <&k3_pds 77 TI_SCI_PD_EXCLUSIVE>;
+ 		clocks = <&k3_clks 77 0>;
+@@ -480,7 +480,7 @@ main_gpio1: gpio@601000 {
+ 			     <183>, <184>, <185>;
+ 		interrupt-controller;
+ 		#interrupt-cells = <2>;
+-		ti,ngpio = <88>;
++		ti,ngpio = <52>;
+ 		ti,davinci-gpio-unbanked = <0>;
+ 		power-domains = <&k3_pds 78 TI_SCI_PD_EXCLUSIVE>;
+ 		clocks = <&k3_clks 78 0>;
 -- 
 2.43.0
 
