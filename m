@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2E913E204;
-	Tue, 23 Jan 2024 01:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BA613E204;
+	Tue, 23 Jan 2024 01:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971982; cv=none; b=MtfgdbYTxrBfgRP5x+OZWRSSenLkoNC0m941MGoHfRUxXDFXqLE+VOi9S4HdNfMJYfsolbtO9xkQTipW3rYtGudin6cSKHSXPPuK3QwJNwRdesDghWnsICMQbqC52MZfsxx0J9m3qpRr46IC7LilI1zXuR0aQVjx8Rf5r94eZ4k=
+	t=1705971984; cv=none; b=HszE0pAlPMxUK2tgobNECkM3SNghvURpIXykhHmJ+sLvBRkGLSnw8gUPEizOmhLgq2jcUtvk6xDshNrCAfksiZhT/4AWkBxJDRV4Wxhtk53+pWouQAzMkNrWpR85aDeKbQQiyLwNBMafISmWLoOp07LELd4ES68kqvxkVREz7Xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971982; c=relaxed/simple;
-	bh=aQHPbnPMv2EDr5J17mdrmULTWE5p640PFHzIY4cacE8=;
+	s=arc-20240116; t=1705971984; c=relaxed/simple;
+	bh=w2mvVWuSBwBJ9FDTnQQyEmAyIcZtx79D350Ha36CTJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1G0YMvnLd3NZO8UkKesLm0Vhp+vFsqCuJApsgw0fmBYNrOhO1iULu9O82LpZwiXf3jB8gCL1evqDNv17MPD0fFHW+hSKXo+6gKR63nB450i1Hdifh6EyiwmN77Vz3nm7CB2SibBzc0LL6dWm9OJ2cJf6e3ThaYgEn0/HwsILso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fj4jORHe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bV1ho/ViNRfgsW7KoD1XYJDyX71s5BUhNDQlhrie+SsTg9oxPlg4XquvX1T1fyJYNhDbdvtvYEzw2tez0vksioghX8LAxH/vB0wnoLc3XQkJY2bVPkSJYBSuZMXtjC1/wsNFaWOc6mcmI5hgCmlH3q7KivOhdcwENrLGsxRATIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f1oKJw2z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fj4jORHe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C35DC433C7;
-	Tue, 23 Jan 2024 01:06:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1oKJw2z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19C1C433F1;
+	Tue, 23 Jan 2024 01:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971982;
-	bh=aQHPbnPMv2EDr5J17mdrmULTWE5p640PFHzIY4cacE8=;
+	s=korg; t=1705971983;
+	bh=w2mvVWuSBwBJ9FDTnQQyEmAyIcZtx79D350Ha36CTJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fj4jORHeRx7dFdhIEu/7cG7iMnFln+b1Ca5iImlvLWGIiEEG28Ykyf28l+E39jBPt
-	 /fM/U7Vy81B7nrND4E7LnF4B27AOnJzh81wlaShw5f2WzZohayD4rTQ7xO3O4ZYCSc
-	 z3MZpu6VkCqAArdR/elQP1xHhX2w/T3YPplFQ1fI=
+	b=f1oKJw2z2hGSYnokg3UgCLRc6j8airfPqces3dHo1UI0uOnuXnvotwXMymUGPYgVV
+	 RE5ycSDyHdj4RMRtfdFwv5PfjuNBKarQSyNjnI0WhAAVAwsD2BjwtFkraIUdakI+KD
+	 n+c5GiTQCHtNpiZ4UuLzwoTgwm2XqPut3o0jLzfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 281/286] mlxsw: spectrum_acl_tcam: Reorder functions to avoid forward declarations
-Date: Mon, 22 Jan 2024 15:59:47 -0800
-Message-ID: <20240122235742.884210382@linuxfoundation.org>
+Subject: [PATCH 6.1 362/417] spmi: mtk-pmif: Serialize PMIF status check and command submission
+Date: Mon, 22 Jan 2024 15:58:50 -0800
+Message-ID: <20240122235804.363439566@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,179 +47,149 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 194ab9476089bbfc021073214e071a404e375ee6 ]
+[ Upstream commit f200fff8d019f2754f91f5d715652e3e3fdf3604 ]
 
-Move the initialization and de-initialization code further below in
-order to avoid forward declarations in the next patch. No functional
-changes.
+Before writing the read or write command to the SPMI arbiter through the
+PMIF interface, the current status of the channel is checked to ensure
+it is idle. However, since the status only changes from idle when the
+command is written, it is possible for two concurrent calls to determine
+that the channel is idle and simultaneously send their commands. At this
+point the PMIF interface hangs, with the status register no longer being
+updated, and thus causing all subsequent operations to time out.
 
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 483ae90d8f97 ("mlxsw: spectrum_acl_tcam: Fix stack corruption")
+This was observed on the mt8195-cherry-tomato-r2 machine, particularly
+after commit 46600ab142f8 ("regulator: Set PROBE_PREFER_ASYNCHRONOUS for
+drivers between 5.10 and 5.15") was applied, since then the two MT6315
+devices present on the SPMI bus would probe assynchronously and
+sometimes (during probe or at a later point) read the bus
+simultaneously, breaking the PMIF interface and consequently slowing
+down the whole system.
+
+To fix the issue at its root cause, introduce locking around the channel
+status check and the command write, so that both become an atomic
+operation, preventing race conditions between two (or more) SPMI bus
+read/write operations. A spinlock is used since this is a fast bus, as
+indicated by the usage of the atomic variant of readl_poll, and
+'.fast_io = true' being used in the mt6315 driver, so spinlocks are
+already used for the regmap access.
+
+Fixes: b45b3ccef8c0 ("spmi: mediatek: Add support for MT6873/8192")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Link: https://lore.kernel.org/r/20230724154739.493724-1-nfraprado@collabora.com
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20231206231733.4031901-2-sboyd@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlxsw/spectrum_acl_tcam.c        | 130 +++++++++---------
- 1 file changed, 65 insertions(+), 65 deletions(-)
+ drivers/spmi/spmi-mtk-pmif.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index 08d91bfa7b39..ab897b8be39f 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -29,71 +29,6 @@ size_t mlxsw_sp_acl_tcam_priv_size(struct mlxsw_sp *mlxsw_sp)
- #define MLXSW_SP_ACL_TCAM_VREGION_REHASH_INTRVL_MIN 3000 /* ms */
- #define MLXSW_SP_ACL_TCAM_VREGION_REHASH_CREDITS 100 /* number of entries */
+diff --git a/drivers/spmi/spmi-mtk-pmif.c b/drivers/spmi/spmi-mtk-pmif.c
+index ad511f2c3324..01e8851e639d 100644
+--- a/drivers/spmi/spmi-mtk-pmif.c
++++ b/drivers/spmi/spmi-mtk-pmif.c
+@@ -50,6 +50,7 @@ struct pmif {
+ 	struct clk_bulk_data clks[PMIF_MAX_CLKS];
+ 	size_t nclks;
+ 	const struct pmif_data *data;
++	raw_spinlock_t lock;
+ };
  
--int mlxsw_sp_acl_tcam_init(struct mlxsw_sp *mlxsw_sp,
--			   struct mlxsw_sp_acl_tcam *tcam)
--{
--	const struct mlxsw_sp_acl_tcam_ops *ops = mlxsw_sp->acl_tcam_ops;
--	u64 max_tcam_regions;
--	u64 max_regions;
--	u64 max_groups;
--	int err;
--
--	mutex_init(&tcam->lock);
--	tcam->vregion_rehash_intrvl =
--			MLXSW_SP_ACL_TCAM_VREGION_REHASH_INTRVL_DFLT;
--	INIT_LIST_HEAD(&tcam->vregion_list);
--
--	max_tcam_regions = MLXSW_CORE_RES_GET(mlxsw_sp->core,
--					      ACL_MAX_TCAM_REGIONS);
--	max_regions = MLXSW_CORE_RES_GET(mlxsw_sp->core, ACL_MAX_REGIONS);
--
--	/* Use 1:1 mapping between ACL region and TCAM region */
--	if (max_tcam_regions < max_regions)
--		max_regions = max_tcam_regions;
--
--	tcam->used_regions = bitmap_zalloc(max_regions, GFP_KERNEL);
--	if (!tcam->used_regions) {
--		err = -ENOMEM;
--		goto err_alloc_used_regions;
--	}
--	tcam->max_regions = max_regions;
--
--	max_groups = MLXSW_CORE_RES_GET(mlxsw_sp->core, ACL_MAX_GROUPS);
--	tcam->used_groups = bitmap_zalloc(max_groups, GFP_KERNEL);
--	if (!tcam->used_groups) {
--		err = -ENOMEM;
--		goto err_alloc_used_groups;
--	}
--	tcam->max_groups = max_groups;
--	tcam->max_group_size = MLXSW_CORE_RES_GET(mlxsw_sp->core,
--						 ACL_MAX_GROUP_SIZE);
--
--	err = ops->init(mlxsw_sp, tcam->priv, tcam);
--	if (err)
--		goto err_tcam_init;
--
--	return 0;
--
--err_tcam_init:
--	bitmap_free(tcam->used_groups);
--err_alloc_used_groups:
--	bitmap_free(tcam->used_regions);
--err_alloc_used_regions:
--	mutex_destroy(&tcam->lock);
--	return err;
--}
--
--void mlxsw_sp_acl_tcam_fini(struct mlxsw_sp *mlxsw_sp,
--			    struct mlxsw_sp_acl_tcam *tcam)
--{
--	const struct mlxsw_sp_acl_tcam_ops *ops = mlxsw_sp->acl_tcam_ops;
--
--	ops->fini(mlxsw_sp, tcam->priv);
--	bitmap_free(tcam->used_groups);
--	bitmap_free(tcam->used_regions);
--	mutex_destroy(&tcam->lock);
--}
--
- int mlxsw_sp_acl_tcam_priority_get(struct mlxsw_sp *mlxsw_sp,
- 				   struct mlxsw_sp_acl_rule_info *rulei,
- 				   u32 *priority, bool fillup_priority)
-@@ -1546,6 +1481,71 @@ mlxsw_sp_acl_tcam_vregion_rehash(struct mlxsw_sp *mlxsw_sp,
- 		mlxsw_sp_acl_tcam_vregion_rehash_end(mlxsw_sp, vregion, ctx);
+ static const char * const pmif_clock_names[] = {
+@@ -314,6 +315,7 @@ static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
+ 	struct ch_reg *inf_reg;
+ 	int ret;
+ 	u32 data, cmd;
++	unsigned long flags;
+ 
+ 	/* Check for argument validation. */
+ 	if (sid & ~0xf) {
+@@ -334,6 +336,7 @@ static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
+ 	else
+ 		return -EINVAL;
+ 
++	raw_spin_lock_irqsave(&arb->lock, flags);
+ 	/* Wait for Software Interface FSM state to be IDLE. */
+ 	inf_reg = &arb->chan;
+ 	ret = readl_poll_timeout_atomic(arb->base + arb->data->regs[inf_reg->ch_sta],
+@@ -343,6 +346,7 @@ static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
+ 		/* set channel ready if the data has transferred */
+ 		if (pmif_is_fsm_vldclr(arb))
+ 			pmif_writel(arb, 1, inf_reg->ch_rdy);
++		raw_spin_unlock_irqrestore(&arb->lock, flags);
+ 		dev_err(&ctrl->dev, "failed to wait for SWINF_IDLE\n");
+ 		return ret;
+ 	}
+@@ -350,6 +354,7 @@ static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
+ 	/* Send the command. */
+ 	cmd = (opc << 30) | (sid << 24) | ((len - 1) << 16) | addr;
+ 	pmif_writel(arb, cmd, inf_reg->ch_send);
++	raw_spin_unlock_irqrestore(&arb->lock, flags);
+ 
+ 	/*
+ 	 * Wait for Software Interface FSM state to be WFVLDCLR,
+@@ -376,7 +381,8 @@ static int pmif_spmi_write_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
+ 	struct pmif *arb = spmi_controller_get_drvdata(ctrl);
+ 	struct ch_reg *inf_reg;
+ 	int ret;
+-	u32 data, cmd;
++	u32 data, wdata, cmd;
++	unsigned long flags;
+ 
+ 	if (len > 4) {
+ 		dev_err(&ctrl->dev, "pmif supports 1..4 bytes per trans, but:%zu requested", len);
+@@ -394,6 +400,10 @@ static int pmif_spmi_write_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
+ 	else
+ 		return -EINVAL;
+ 
++	/* Set the write data. */
++	memcpy(&wdata, buf, len);
++
++	raw_spin_lock_irqsave(&arb->lock, flags);
+ 	/* Wait for Software Interface FSM state to be IDLE. */
+ 	inf_reg = &arb->chan;
+ 	ret = readl_poll_timeout_atomic(arb->base + arb->data->regs[inf_reg->ch_sta],
+@@ -403,17 +413,17 @@ static int pmif_spmi_write_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
+ 		/* set channel ready if the data has transferred */
+ 		if (pmif_is_fsm_vldclr(arb))
+ 			pmif_writel(arb, 1, inf_reg->ch_rdy);
++		raw_spin_unlock_irqrestore(&arb->lock, flags);
+ 		dev_err(&ctrl->dev, "failed to wait for SWINF_IDLE\n");
+ 		return ret;
+ 	}
+ 
+-	/* Set the write data. */
+-	memcpy(&data, buf, len);
+-	pmif_writel(arb, data, inf_reg->wdata);
++	pmif_writel(arb, wdata, inf_reg->wdata);
+ 
+ 	/* Send the command. */
+ 	cmd = (opc << 30) | BIT(29) | (sid << 24) | ((len - 1) << 16) | addr;
+ 	pmif_writel(arb, cmd, inf_reg->ch_send);
++	raw_spin_unlock_irqrestore(&arb->lock, flags);
+ 
+ 	return 0;
  }
+@@ -488,6 +498,8 @@ static int mtk_spmi_probe(struct platform_device *pdev)
+ 	arb->chan.ch_send = PMIF_SWINF_0_ACC + chan_offset;
+ 	arb->chan.ch_rdy = PMIF_SWINF_0_VLD_CLR + chan_offset;
  
-+int mlxsw_sp_acl_tcam_init(struct mlxsw_sp *mlxsw_sp,
-+			   struct mlxsw_sp_acl_tcam *tcam)
-+{
-+	const struct mlxsw_sp_acl_tcam_ops *ops = mlxsw_sp->acl_tcam_ops;
-+	u64 max_tcam_regions;
-+	u64 max_regions;
-+	u64 max_groups;
-+	int err;
++	raw_spin_lock_init(&arb->lock);
 +
-+	mutex_init(&tcam->lock);
-+	tcam->vregion_rehash_intrvl =
-+			MLXSW_SP_ACL_TCAM_VREGION_REHASH_INTRVL_DFLT;
-+	INIT_LIST_HEAD(&tcam->vregion_list);
-+
-+	max_tcam_regions = MLXSW_CORE_RES_GET(mlxsw_sp->core,
-+					      ACL_MAX_TCAM_REGIONS);
-+	max_regions = MLXSW_CORE_RES_GET(mlxsw_sp->core, ACL_MAX_REGIONS);
-+
-+	/* Use 1:1 mapping between ACL region and TCAM region */
-+	if (max_tcam_regions < max_regions)
-+		max_regions = max_tcam_regions;
-+
-+	tcam->used_regions = bitmap_zalloc(max_regions, GFP_KERNEL);
-+	if (!tcam->used_regions) {
-+		err = -ENOMEM;
-+		goto err_alloc_used_regions;
-+	}
-+	tcam->max_regions = max_regions;
-+
-+	max_groups = MLXSW_CORE_RES_GET(mlxsw_sp->core, ACL_MAX_GROUPS);
-+	tcam->used_groups = bitmap_zalloc(max_groups, GFP_KERNEL);
-+	if (!tcam->used_groups) {
-+		err = -ENOMEM;
-+		goto err_alloc_used_groups;
-+	}
-+	tcam->max_groups = max_groups;
-+	tcam->max_group_size = MLXSW_CORE_RES_GET(mlxsw_sp->core,
-+						  ACL_MAX_GROUP_SIZE);
-+
-+	err = ops->init(mlxsw_sp, tcam->priv, tcam);
-+	if (err)
-+		goto err_tcam_init;
-+
-+	return 0;
-+
-+err_tcam_init:
-+	bitmap_free(tcam->used_groups);
-+err_alloc_used_groups:
-+	bitmap_free(tcam->used_regions);
-+err_alloc_used_regions:
-+	mutex_destroy(&tcam->lock);
-+	return err;
-+}
-+
-+void mlxsw_sp_acl_tcam_fini(struct mlxsw_sp *mlxsw_sp,
-+			    struct mlxsw_sp_acl_tcam *tcam)
-+{
-+	const struct mlxsw_sp_acl_tcam_ops *ops = mlxsw_sp->acl_tcam_ops;
-+
-+	ops->fini(mlxsw_sp, tcam->priv);
-+	bitmap_free(tcam->used_groups);
-+	bitmap_free(tcam->used_regions);
-+	mutex_destroy(&tcam->lock);
-+}
-+
- static const enum mlxsw_afk_element mlxsw_sp_acl_tcam_pattern_ipv4[] = {
- 	MLXSW_AFK_ELEMENT_SRC_SYS_PORT,
- 	MLXSW_AFK_ELEMENT_DMAC_32_47,
+ 	platform_set_drvdata(pdev, ctrl);
+ 
+ 	err = spmi_controller_add(ctrl);
 -- 
 2.43.0
 
