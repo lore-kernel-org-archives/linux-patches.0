@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35CD6167F;
-	Tue, 23 Jan 2024 01:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB21E6168A;
+	Tue, 23 Jan 2024 01:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974943; cv=none; b=NmDxsRZIwRS9IUK6rrDBzgYm/HQsK9JyQFIlfgCeHff699XKlsrxLuRhbQwNJSaase48d0SmYW2MJTwAPvitW0VNxvfWBJgG2u75lFPp31iBhCDKIrYXEQuU2IwhC1vevAbPTXt2uWHVRgH4E6azK/TqpFDJhJ0dvVTjc7c/WPM=
+	t=1705974945; cv=none; b=ozHUh2AkRYk6O8MrSSLIxLy0iOvl19OC76tHGEniXJMytHFeUUo86SvOvx/ij1jlCk0obnjyO+gjn4yWW5w6pSOPcX+tZQ7FFTIdoULq/oqO7gJ5soiyFy3BgaA4jzQqNYbsoXF1lUnG7Et4lziXPqWO6sBjxKICVrMQG+z8UY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974943; c=relaxed/simple;
-	bh=iTH2ioNYMKSO7qO7MB8ay8OqSZEqnPlW6lysGI4rgyE=;
+	s=arc-20240116; t=1705974945; c=relaxed/simple;
+	bh=nTzWqHn2STCqN2Td9mHisQPxHUw5dOESestZvFR4lhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NiZ8t2Sv+ZgH1FVT3bW0xNM6boI87ERK+PZplh+L3orhUDc7AXNaDro5mai9G27d5TM4rKZH3DBDgwzT7HWVTDZZwBStYiXrblBSeKB8FtHo5KWvFqoRLOb+AXSgJIYhcecze11KyRqOB9jm26vmXdJSlIYwVgN74Dxtx+qbVhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E41Rk1sL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aLplthHSJ+GCr1g8qZyc0auIZwEPGyWthbUPoLcXlIU3VD2qTmF+u2Sq6xoWlWw/pknx3cMpKk+GiT9/2XOzFV6Uhl4GVHp+J6pipQNCUpb0IJ5gc/iO87KSXWhns23wolbSltwx2aGc3dpZFMANJoQ0uv19nYnG8A4oRzy40U8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgd9/+U3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E41Rk1sL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92153C43394;
-	Tue, 23 Jan 2024 01:55:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgd9/+U3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2B4C433F1;
+	Tue, 23 Jan 2024 01:55:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974942;
-	bh=iTH2ioNYMKSO7qO7MB8ay8OqSZEqnPlW6lysGI4rgyE=;
+	s=korg; t=1705974944;
+	bh=nTzWqHn2STCqN2Td9mHisQPxHUw5dOESestZvFR4lhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E41Rk1sLsQXzL+ajM6Rw9NTEyu7sPvTold/9S5Mbj9LDj/HcIhNq+tOH7XwdvFlCg
-	 1aDivva1mykLYuD6+nw5pftdPnNDW4YWlxWu4YWvZ22OpcPXHiU1EKqQ4a1bpKegSd
-	 L5QiXE3hWBmyUPn5zmhGT9LAHW2S1+nk1Lf+2FR4=
+	b=tgd9/+U3rElgNt50pPD19T9YcYv5guO6JKLXyRyMuHUmbgicGeir8lOqWMlMCsNX5
+	 OTxz8edQ9S9p3VJCdgRn1G5U7V38quNvFhaiDVEuMir8h/oOXcEOg5pIHa6/5ISD+C
+	 fFGbP004EbgdWMb16gQoa07W6hADPC/K+M8dmfx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Wanpeng Li <wanpengli@tencent.com>
-Subject: [PATCH 5.15 283/374] x86/kvm: Do not try to disable kvmclock if it was not enabled
-Date: Mon, 22 Jan 2024 15:58:59 -0800
-Message-ID: <20240122235754.608330305@linuxfoundation.org>
+	Yihang Li <liyihang9@huawei.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 162/583] scsi: hisi_sas: Rollback some operations if FLR failed
+Date: Mon, 22 Jan 2024 15:53:33 -0800
+Message-ID: <20240122235817.001579156@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,74 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Yihang Li <liyihang9@huawei.com>
 
-commit 1c6d984f523f67ecfad1083bb04c55d91977bb15 upstream.
+[ Upstream commit 7ea3e7763c50b20a8bd25cf524ea0c6463de69be ]
 
-kvm_guest_cpu_offline() tries to disable kvmclock regardless if it is
-present in the VM. It leads to write to a MSR that doesn't exist on some
-configurations, namely in TDX guest:
+We obtain the semaphore and set HISI_SAS_RESETTING_BIT in
+hisi_sas_reset_prepare_v3_hw(), block the scsi host and set
+HISI_SAS_REJECT_CMD_BIT in hisi_sas_controller_reset_prepare(), released
+them in hisi_sas_controller_reset_done(). However, if the HW reset failure
+in FLR results in early return, the semaphore and flag bits will not be
+release.
 
-	unchecked MSR access error: WRMSR to 0x12 (tried to write 0x0000000000000000)
-	at rIP: 0xffffffff8110687c (kvmclock_disable+0x1c/0x30)
+Rollback some operations including clearing flags / releasing semaphore
+when FLR is failed.
 
-kvmclock enabling is gated by CLOCKSOURCE and CLOCKSOURCE2 KVM paravirt
-features.
-
-Do not disable kvmclock if it was not enabled.
-
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Fixes: c02027b5742b ("x86/kvm: Disable kvmclock on all CPUs on shutdown")
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Wanpeng Li <wanpengli@tencent.com>
-Cc: stable@vger.kernel.org
-Message-Id: <20231205004510.27164-6-kirill.shutemov@linux.intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e5ea48014adc ("scsi: hisi_sas: Implement handlers of PCIe FLR for v3 hw")
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
+Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
+Link: https://lore.kernel.org/r/1702525516-51258-5-git-send-email-chenxiang66@hisilicon.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/kvmclock.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/x86/kernel/kvmclock.c
-+++ b/arch/x86/kernel/kvmclock.c
-@@ -24,8 +24,8 @@
- 
- static int kvmclock __initdata = 1;
- static int kvmclock_vsyscall __initdata = 1;
--static int msr_kvm_system_time __ro_after_init = MSR_KVM_SYSTEM_TIME;
--static int msr_kvm_wall_clock __ro_after_init = MSR_KVM_WALL_CLOCK;
-+static int msr_kvm_system_time __ro_after_init;
-+static int msr_kvm_wall_clock __ro_after_init;
- static u64 kvm_sched_clock_offset __ro_after_init;
- 
- static int __init parse_no_kvmclock(char *arg)
-@@ -195,7 +195,8 @@ static void kvm_setup_secondary_clock(vo
- 
- void kvmclock_disable(void)
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index 568bd8052639..53c955c4f080 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -5098,6 +5098,7 @@ static void hisi_sas_reset_done_v3_hw(struct pci_dev *pdev)
  {
--	native_write_msr(msr_kvm_system_time, 0, 0);
-+	if (msr_kvm_system_time)
-+		native_write_msr(msr_kvm_system_time, 0, 0);
- }
+ 	struct sas_ha_struct *sha = pci_get_drvdata(pdev);
+ 	struct hisi_hba *hisi_hba = sha->lldd_ha;
++	struct Scsi_Host *shost = hisi_hba->shost;
+ 	struct device *dev = hisi_hba->dev;
+ 	int rc;
  
- static void __init kvmclock_init_mem(void)
-@@ -291,7 +292,10 @@ void __init kvmclock_init(void)
- 	if (kvm_para_has_feature(KVM_FEATURE_CLOCKSOURCE2)) {
- 		msr_kvm_system_time = MSR_KVM_SYSTEM_TIME_NEW;
- 		msr_kvm_wall_clock = MSR_KVM_WALL_CLOCK_NEW;
--	} else if (!kvm_para_has_feature(KVM_FEATURE_CLOCKSOURCE)) {
-+	} else if (kvm_para_has_feature(KVM_FEATURE_CLOCKSOURCE)) {
-+		msr_kvm_system_time = MSR_KVM_SYSTEM_TIME;
-+		msr_kvm_wall_clock = MSR_KVM_WALL_CLOCK;
-+	} else {
+@@ -5106,6 +5107,10 @@ static void hisi_sas_reset_done_v3_hw(struct pci_dev *pdev)
+ 	rc = hw_init_v3_hw(hisi_hba);
+ 	if (rc) {
+ 		dev_err(dev, "FLR: hw init failed rc=%d\n", rc);
++		clear_bit(HISI_SAS_REJECT_CMD_BIT, &hisi_hba->flags);
++		scsi_unblock_requests(shost);
++		clear_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags);
++		up(&hisi_hba->sem);
  		return;
  	}
  
+-- 
+2.43.0
+
 
 
