@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD2733097;
-	Tue, 23 Jan 2024 00:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E456633097;
+	Tue, 23 Jan 2024 00:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969637; cv=none; b=XBMYak30xLRFazNUN6sGI+rZXd7LcMo0s+YsJfSbZrWdCJd1FrCmxPbW3bPU2tMEFD9RffkcwWgzZFXErruwZMuNN/Y5l3klAjeU9GBfuvpB2wzSR/IbAf7jgMx2Y2c4e720ypzmbRZQs1BoL0lkESgKtX1hLR+Eo+cF2u/Vjfw=
+	t=1705969639; cv=none; b=lPqVMXMUoejlkP7ValJG1eqpuYg2aDPxcEw0vrtEZWAwbi/aKq7z493xAnzB6Iex15Ccozdg+V9y/u/SOLYEywtsxxY/2kN7qxBAVptP4Z9bJs5EDnHh4WCBTH4Ro9MoRNijNdGHG3Ekl8qox8U4XC3YYsn9X6LdVtg2PM1qwf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969637; c=relaxed/simple;
-	bh=9NsIF/pxjYAbZQd+8K/GSubLkcNJFj5Sk7sSLaFChZQ=;
+	s=arc-20240116; t=1705969639; c=relaxed/simple;
+	bh=gbYVo1kagpnlkFm8O7IGNopHIKC5QJozS8Rn8yBt3Bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B00nMyrr3I0stoAP7ovuhqwoNzNkV0PBZQcAosbhEhCZbVAFeWl211EU2JzEK63KH0qDO97QwzY85XvEWsjovTc4opXVokGQO0skATuzlQuf5gT/XMoURRqvjMofJI7pYcts0cZfZB2fg9EH3FlqjjzF+u5Cd+4z3+O52VdY+FA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNMq7AqQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lEa2SPMNqEnZ0zqWolfYsDYf+8vLrh9OMsEsgs5tnNoaBoh8MsBkya83YXaW1d7gKR/7TkKcuvymYn+irCO8JUV7Rw6B//oqIDmLRP2wlOH4XQEuZ6Qv3WnFy3uK4A+P/gQxPGu9y8y6i1YuZNdqEalofGjC4s9cPiKA9i3+KGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYbzagTg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNMq7AqQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9A7C433C7;
-	Tue, 23 Jan 2024 00:27:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYbzagTg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A14C433F1;
+	Tue, 23 Jan 2024 00:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969637;
-	bh=9NsIF/pxjYAbZQd+8K/GSubLkcNJFj5Sk7sSLaFChZQ=;
+	s=korg; t=1705969638;
+	bh=gbYVo1kagpnlkFm8O7IGNopHIKC5QJozS8Rn8yBt3Bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yNMq7AqQS9qBAvlkEIrtCbHobIf8x5qPF0pI36KvxZD5tS+1ys1vtVBXjelRNAqHy
-	 sUF/HMkYLycb90nviPK5f+6BeZNknOasbiB6fM0iP3yvZYvRkfMgqEs3GTQIPslpmt
-	 rVVzt38aNoZ8YALaOtl6CffwVs5+dwL/ZLOITh0Q=
+	b=GYbzagTg/QEXo1/WGAmv5lF+45Zaydb4ekdoPaN0Y+4xEzw5dk4lIiIHHEIkKYnze
+	 HC3s5uw6tftpnpeSbsz6VFTvAaVs213KfoBa0yWIFDikHpbfqGMcB35zNsVxivKUiD
+	 8DVB8+3AXYTFBW5gb4SP9sR7PPEX+LUqpR97rJlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Manorit Chawdhry <m-chawdhry@ti.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 340/641] watchdog: rti_wdt: Drop runtime pm reference count when watchdog is unused
-Date: Mon, 22 Jan 2024 15:54:04 -0800
-Message-ID: <20240122235828.554185440@linuxfoundation.org>
+Subject: [PATCH 6.7 368/641] drm/amd/pm/smu7: fix a memleak in smu7_hwmgr_backend_init
+Date: Mon, 22 Jan 2024 15:54:32 -0800
+Message-ID: <20240122235829.463720109@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,69 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vignesh Raghavendra <vigneshr@ti.com>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-[ Upstream commit c1a6edf3b541e44e78f10bc6024df779715723f1 ]
+[ Upstream commit 2f3be3ca779b11c332441b10e00443a2510f4d7b ]
 
-Call runtime_pm_put*() if watchdog is not already started during probe and re
-enable it in watchdog start as required.
+The hwmgr->backend, (i.e. data) allocated by kzalloc is not freed in
+the error-handling paths of smu7_get_evv_voltages and
+smu7_update_edc_leakage_table. However, it did be freed in the
+error-handling of phm_initializa_dynamic_state_adjustment_rule_settings,
+by smu7_hwmgr_backend_fini. So the lack of free in smu7_get_evv_voltages
+and smu7_update_edc_leakage_table is considered a memleak in this patch.
 
-On K3 SoCs, watchdogs and their corresponding CPUs are under same
-power-domain, so if the reference count of unused watchdogs aren't
-dropped, it will lead to CPU hotplug failures as Device Management
-firmware won't allow to turn off the power-domain due to dangling
-reference count.
-
-Fixes: 2d63908bdbfb ("watchdog: Add K3 RTI watchdog support")
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
-Tested-by: Manorit Chawdhry <m-chawdhry@ti.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20231213140110.938129-1-vigneshr@ti.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 599a7e9fe1b6 ("drm/amd/powerplay: implement smu7 hwmgr to manager asics with smu ip version 7.")
+Fixes: 8f0804c6b7d0 ("drm/amd/pm: add edc leakage controller setting")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/rti_wdt.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/rti_wdt.c b/drivers/watchdog/rti_wdt.c
-index 8e1be7ba0103..9215793a1c81 100644
---- a/drivers/watchdog/rti_wdt.c
-+++ b/drivers/watchdog/rti_wdt.c
-@@ -77,6 +77,11 @@ static int rti_wdt_start(struct watchdog_device *wdd)
- {
- 	u32 timer_margin;
- 	struct rti_wdt_device *wdt = watchdog_get_drvdata(wdd);
-+	int ret;
-+
-+	ret = pm_runtime_resume_and_get(wdd->parent);
-+	if (ret)
-+		return ret;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+index 11372fcc59c8..b1a8799e2dee 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+@@ -2974,6 +2974,8 @@ static int smu7_hwmgr_backend_init(struct pp_hwmgr *hwmgr)
+ 		result = smu7_get_evv_voltages(hwmgr);
+ 		if (result) {
+ 			pr_info("Get EVV Voltage Failed.  Abort Driver loading!\n");
++			kfree(hwmgr->backend);
++			hwmgr->backend = NULL;
+ 			return -EINVAL;
+ 		}
+ 	} else {
+@@ -3019,8 +3021,10 @@ static int smu7_hwmgr_backend_init(struct pp_hwmgr *hwmgr)
+ 	}
  
- 	/* set timeout period */
- 	timer_margin = (u64)wdd->timeout * wdt->freq;
-@@ -343,6 +348,9 @@ static int rti_wdt_probe(struct platform_device *pdev)
- 	if (last_ping)
- 		watchdog_set_last_hw_keepalive(wdd, last_ping);
+ 	result = smu7_update_edc_leakage_table(hwmgr);
+-	if (result)
++	if (result) {
++		smu7_hwmgr_backend_fini(hwmgr);
+ 		return result;
++	}
  
-+	if (!watchdog_hw_running(wdd))
-+		pm_runtime_put_sync(&pdev->dev);
-+
  	return 0;
- 
- err_iomap:
-@@ -357,7 +365,10 @@ static void rti_wdt_remove(struct platform_device *pdev)
- 	struct rti_wdt_device *wdt = platform_get_drvdata(pdev);
- 
- 	watchdog_unregister_device(&wdt->wdd);
--	pm_runtime_put(&pdev->dev);
-+
-+	if (!pm_runtime_suspended(&pdev->dev))
-+		pm_runtime_put(&pdev->dev);
-+
- 	pm_runtime_disable(&pdev->dev);
  }
- 
 -- 
 2.43.0
 
