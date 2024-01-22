@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7652B768F9;
-	Tue, 23 Jan 2024 02:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD46768F9;
+	Tue, 23 Jan 2024 02:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975489; cv=none; b=DBIN8ZmqAntIkMf+KEbAOVSFdg3+CNRnDeoNijugR8oZjtwr1QJ8e5krfO+frjOltl0cn0j3tI6uzGuLLj/fwQ0vhPNSNxGvfPkE9RnXnxADDx89umnaHcsfi4yj7LcSBWNX4JZBNfdQDVM6cDZBNW4mF8A+DyxJNyR3qzdYUlo=
+	t=1705975490; cv=none; b=WRYXcJTGsn0GKAz2N94fMuJ/sjpK4j1Kj5Z/Jql/htksWTfZb2eGG0j2SGHI05CxnqPImS7RQble0HIo+RmuRJNdrvmfjfpOoWVWJJA/vLY4f2SAPx30HXQBMriW3FZc5FOslzRucFOtsrAOtCd6Zy+sbZgiy5XXCS+OafHbupE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975489; c=relaxed/simple;
-	bh=s0QC7/OKRsVK4L/y9SZ9RLJ9Abrcy+veHpkZIo7e0xg=;
+	s=arc-20240116; t=1705975490; c=relaxed/simple;
+	bh=LXUn4yf+G+di8j/j8wRWUmuZFuVCEVubRh1L2xbiGCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFQve0PlYSEhIK5JnlDnPM49cl0rVOWxvQp0zTkuai8UE17Cp6R/bWcaAQ+Z+2cTeu/XjFuSNoi/aw//wuKR6mMZNFx8vf4K0vZKyVD9tDF2nwLh3B1/Ys5fAjZ/wk23iWLS5LyWaUqCltyFs1WoGRnwpgpsT/LnxX6aW7R/s44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbDhbYtG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nzKS2V6dPw0b35NKrVtz5Pr3XrN+84l4fkgQ2nHxSxsN7Bm33e4FIXvqh3zQnoKtcOL/JW82PziEqSGgxvDRmJ0IuBzWPeHCc4TUxFF2YnGN4YHAs6FHNavMELPR4WeuPSs8c9WWuGPu3nb/6xhD8ifMOp+w2p80qYHgQrZygeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpuVfL6x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbDhbYtG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C26DC43390;
-	Tue, 23 Jan 2024 02:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpuVfL6x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4AFC433F1;
+	Tue, 23 Jan 2024 02:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975489;
-	bh=s0QC7/OKRsVK4L/y9SZ9RLJ9Abrcy+veHpkZIo7e0xg=;
+	s=korg; t=1705975490;
+	bh=LXUn4yf+G+di8j/j8wRWUmuZFuVCEVubRh1L2xbiGCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbDhbYtGeUBDk+/R7lr6G1wDVK7wB8OGfn3W9d5UdrAtgdxlfOlyzP9iJQ7c5VZlO
-	 5w4QpuHzs/3WexSVhBLP/H2x7DtDyfVYaE8CQuuwFB+g+7sO4W7MtDzdAmPXImtsGw
-	 E7RLYYUn6gO0zHkQFR6GjQ0CGBLen9LSj5bhRsK8=
+	b=DpuVfL6xhHQR7a48c5PQxpGU59MJPk5mpbBiVSTc+6+lyUe3GUoRZYvl7Aqg5nX9u
+	 KDbv6YuKSyjE5ve4AcPV5Hw+oH1gaRKtiPQbEWj+OcwP3BDPJZLzZlTRxPS/1zlDZX
+	 uA+TtTycMx8Xx/kK9KCQiF2u2ZU/0o5wMMsHcaNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lin <yu-hao.lin@nxp.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.6 418/583] wifi: mwifiex: fix uninitialized firmware_stat
-Date: Mon, 22 Jan 2024 15:57:49 -0800
-Message-ID: <20240122235824.755793809@linuxfoundation.org>
+	Petr Tesarik <petr@tesarici.cz>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 419/583] net: stmmac: fix ethtool per-queue statistics
+Date: Mon, 22 Jan 2024 15:57:50 -0800
+Message-ID: <20240122235824.788229303@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,36 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lin <yu-hao.lin@nxp.com>
+From: Petr Tesarik <petr@tesarici.cz>
 
-commit 3df95e265924ac898c1a38a0c01846dd0bd3b354 upstream.
+commit 61921bdaa132b580b6db6858e6d7dcdb870df5fe upstream.
 
-Variable firmware_stat is possible to be used without initialization.
+Fix per-queue statistics for devices with more than one queue.
 
-Signed-off-by: David Lin <yu-hao.lin@nxp.com>
-Fixes: 1c5d463c0770 ("wifi: mwifiex: add extra delay for firmware ready")
+The output data pointer is currently reset in each loop iteration,
+effectively summing all queue statistics in the first four u64 values.
+
+The summary values are not even labeled correctly. For example, if eth0 has
+2 queues, ethtool -S eth0 shows:
+
+     q0_tx_pkt_n: 374 (actually tx_pkt_n over all queues)
+     q0_tx_irq_n: 23  (actually tx_normal_irq_n over all queues)
+     q1_tx_pkt_n: 462 (actually rx_pkt_n over all queues)
+     q1_tx_irq_n: 446 (actually rx_normal_irq_n over all queues)
+     q0_rx_pkt_n: 0
+     q0_rx_irq_n: 0
+     q1_rx_pkt_n: 0
+     q1_rx_irq_n: 0
+
+Fixes: 133466c3bbe1 ("net: stmmac: use per-queue 64 bit statistics where necessary")
 Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202312192236.ZflaWYCw-lkp@intel.com/
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231221015511.1032128-1-yu-hao.lin@nxp.com
+Signed-off-by: Petr Tesarik <petr@tesarici.cz>
+Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sdio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/sdio.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
-@@ -779,7 +779,7 @@ static int mwifiex_check_fw_status(struc
- {
- 	struct sdio_mmc_card *card = adapter->card;
- 	int ret = 0;
--	u16 firmware_stat;
-+	u16 firmware_stat = 0;
- 	u32 tries;
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+@@ -543,15 +543,12 @@ static void stmmac_get_per_qstats(struct
+ 	u32 rx_cnt = priv->plat->rx_queues_to_use;
+ 	unsigned int start;
+ 	int q, stat;
+-	u64 *pos;
+ 	char *p;
  
- 	for (tries = 0; tries < poll_num; tries++) {
+-	pos = data;
+ 	for (q = 0; q < tx_cnt; q++) {
+ 		struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[q];
+ 		struct stmmac_txq_stats snapshot;
+ 
+-		data = pos;
+ 		do {
+ 			start = u64_stats_fetch_begin(&txq_stats->syncp);
+ 			snapshot = *txq_stats;
+@@ -559,17 +556,15 @@ static void stmmac_get_per_qstats(struct
+ 
+ 		p = (char *)&snapshot + offsetof(struct stmmac_txq_stats, tx_pkt_n);
+ 		for (stat = 0; stat < STMMAC_TXQ_STATS; stat++) {
+-			*data++ += (*(u64 *)p);
++			*data++ = (*(u64 *)p);
+ 			p += sizeof(u64);
+ 		}
+ 	}
+ 
+-	pos = data;
+ 	for (q = 0; q < rx_cnt; q++) {
+ 		struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[q];
+ 		struct stmmac_rxq_stats snapshot;
+ 
+-		data = pos;
+ 		do {
+ 			start = u64_stats_fetch_begin(&rxq_stats->syncp);
+ 			snapshot = *rxq_stats;
+@@ -577,7 +572,7 @@ static void stmmac_get_per_qstats(struct
+ 
+ 		p = (char *)&snapshot + offsetof(struct stmmac_rxq_stats, rx_pkt_n);
+ 		for (stat = 0; stat < STMMAC_RXQ_STATS; stat++) {
+-			*data++ += (*(u64 *)p);
++			*data++ = (*(u64 *)p);
+ 			p += sizeof(u64);
+ 		}
+ 	}
 
 
