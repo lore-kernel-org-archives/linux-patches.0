@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66C06313F;
-	Tue, 23 Jan 2024 01:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1826313F;
+	Tue, 23 Jan 2024 01:57:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975024; cv=none; b=jLuXkqmHD9nDMEyLyuQmPnN1kRKUys4xnr9gkKc3AIh9gwamE9ned3OzcSrwj4Hh8YNaoel5AJFr2KoojgBTmQw50KZ0BvqzS+rXZjkM9BABhJetGEwzbW2ydTzUJR/yQnHykXYFrfGz1zZwv5eyvnyNV9FXFty8hk1RDH2hmLY=
+	t=1705975025; cv=none; b=oYg2emx6GyAlgl3Wz11m3ebOkZ6p7kTzjb09njkBS6/sivdMz6oQhTJKrgMJlsc4DtwVNG74q+yBAIg0y/+VpBcuZ7BzUCJeZnUepW3lL48efXZrZQBPLT1O2+rc7OsXndUfUb6two2FlLFGha3hOtkzHCHr8A/53csqsBl21aY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975024; c=relaxed/simple;
-	bh=r61aYmHeE7ihlNAMhDk1gw/Ues/fxDSRuLKZ8MEDA4M=;
+	s=arc-20240116; t=1705975025; c=relaxed/simple;
+	bh=+hg5hL6WvyDnoUOR/idODyZRcJuZg/Skj5a3SU4hIWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oZ1D4UTN7q7sG5Cf+INzB6RM7/nphnZiaGPFz74j6kdecBfQ88oIzXYYQJB3nhGZ7PF8joBWdxTSdybeRC6Gcz4NY0XAQQx2ukriNJs5gC2LJudq2ECRVNpBgHZ3mERIkHeLhLBsU2wPz+D0aThz7j9D1nmdHA5c0qQw3lHwy6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0zsFc/P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r8oscOp16RnZF8LmDdy6xWpF60k469LBJp1Dsca6jpkGMjLzTTlmx6r001DxMJlDyHClPlmIIKeh8/U7Qe6oebQiOMVlqxyzYN9j9vZWs8gMzRt7UXVFUzK2TzjPVve145I3thoOdeMCN1cxPokOaA+p1qoDWh8fG0kxtnB0h6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryD94hw1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0zsFc/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C00C433A6;
-	Tue, 23 Jan 2024 01:57:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryD94hw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C953C433F1;
+	Tue, 23 Jan 2024 01:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975024;
-	bh=r61aYmHeE7ihlNAMhDk1gw/Ues/fxDSRuLKZ8MEDA4M=;
+	s=korg; t=1705975025;
+	bh=+hg5hL6WvyDnoUOR/idODyZRcJuZg/Skj5a3SU4hIWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0zsFc/P4/8NW2izsyVIXHYB8+HgZ77tVbA/KN0iiywFT1q2xu18E9HKul45/kfxy
-	 UPCupN7RVW3vWpalF+ALFxgecsdtUiu+yJ7Wv4mqs41fYtO1S3JtAf9EuXY8iDtfK2
-	 G1fAeWeks6ADuRqm3tHFNrybEcpWEW38CN4NDWeg=
+	b=ryD94hw17O5JAEHNS6Vz8Pxe3Bk/tCbMmwiGwIbq1fPQGSxTmhyKC0Qdx4BPDTjh+
+	 SzZb0cXY+dJu/yB02U8MKTQhFAh8q0D10Mgblc46cmpxTRC3zuRrRWQU8V4+Np6d+R
+	 H9fDmIBJxs9Eyyj2+p1ARVtkiR9+bzy+YZk7dG4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 201/583] wifi: iwlwifi: fix out of bound copy_from_user
-Date: Mon, 22 Jan 2024 15:54:12 -0800
-Message-ID: <20240122235818.135692758@linuxfoundation.org>
+Subject: [PATCH 5.15 329/374] nvmet-tcp: Fix the H2C expected PDU len calculation
+Date: Mon, 22 Jan 2024 15:59:45 -0800
+Message-ID: <20240122235756.342489086@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,46 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit cb2dfacb197bed0241fbb4f84bd0995a47f4465e ]
+[ Upstream commit 9a1abc24850eb759e36a2f8869161c3b7254c904 ]
 
-The driver copies the userspace buffer into an internal NUL
-byte terminated buffer. While doing so, it was reading beyond
-the end of the userspace buffer, overwriting its own NUL
-termination in the process.
+The nvmet_tcp_handle_h2c_data_pdu() function should take into
+consideration the possibility that the header digest and/or the data
+digests are enabled when calculating the expected PDU length, before
+comparing it to the value stored in cmd->pdu_len.
 
-Fix this by only copying the correct number of bytes.
-
-Fixes: 3f244876ef73 ("wifi: iwlwifi: make debugfs entries link specific")
-Signed-off-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
-Reviewed-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20231219215605.e4913deb2ad4.Idcf6a7e909ff4b7801cd49c2f691f84a2f68eff9@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: efa56305908b ("nvmet-tcp: Fix a kernel panic when host sends an invalid H2C PDU length")
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/tcp.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
-index cf27f106d4d5..7057421e513b 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
-@@ -1673,7 +1673,7 @@ static ssize_t _iwl_dbgfs_link_sta_##name##_write(struct file *file,	\
- 	char buf[buflen] = {};						\
- 	size_t buf_size = min(count, sizeof(buf) -  1);			\
- 									\
--	if (copy_from_user(buf, user_buf, sizeof(buf)))			\
-+	if (copy_from_user(buf, user_buf, buf_size))			\
- 		return -EFAULT;						\
- 									\
- 	return _iwl_dbgfs_link_sta_wrap_write(iwl_dbgfs_##name##_write,	\
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index d25ca0742f91..4f2164a3f466 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -931,7 +931,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
+ {
+ 	struct nvme_tcp_data_pdu *data = &queue->pdu.data;
+ 	struct nvmet_tcp_cmd *cmd;
+-	unsigned int plen;
++	unsigned int exp_data_len;
+ 
+ 	if (likely(queue->nr_cmds)) {
+ 		if (unlikely(data->ttag >= queue->nr_cmds)) {
+@@ -954,9 +954,13 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
+ 		return -EPROTO;
+ 	}
+ 
+-	plen = le32_to_cpu(data->hdr.plen);
++	exp_data_len = le32_to_cpu(data->hdr.plen) -
++			nvmet_tcp_hdgst_len(queue) -
++			nvmet_tcp_ddgst_len(queue) -
++			sizeof(*data);
++
+ 	cmd->pdu_len = le32_to_cpu(data->data_length);
+-	if (unlikely(cmd->pdu_len != (plen - sizeof(*data)) ||
++	if (unlikely(cmd->pdu_len != exp_data_len ||
+ 		     cmd->pdu_len == 0 ||
+ 		     cmd->pdu_len > NVMET_TCP_MAXH2CDATA)) {
+ 		pr_err("H2CData PDU len %u is invalid\n", cmd->pdu_len);
 -- 
 2.43.0
 
