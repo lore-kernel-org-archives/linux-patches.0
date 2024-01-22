@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAAF315147C;
-	Tue, 23 Jan 2024 00:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C424D151CEA;
+	Tue, 23 Jan 2024 00:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969366; cv=none; b=jIJEhG7wB96LkKOWIDaYtr+V/J//6iOJlaU7gIadk672+9NOYi0onrSN+C0+R1O6ix4B0I282fG5EDgBI4H49Nas64VzEVu0FZRJZIj+AThqNuRNEJMUIAlWtIXqlIv0JtIimdkcj0xMlQ3ACHyPsYf8d9wCeKOqIphewnjk2CA=
+	t=1705969367; cv=none; b=Sju/qdgWI0a3/t4eSDDiFMhYMSQDRdED0n64BhzmusY4zY5yhZJ1a0cMQDvOj7Envtr1bJ7+oERpaJFUh+ojkTSJMQp22KHIEtrf9IlWvhYXDs0rH8XUggHCRARlkNSv/z9rFZJr+jf9jLN6Rdzhc5spS53NM7+8Oiz5/zr/mio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969366; c=relaxed/simple;
-	bh=PO5qFGhqyCz1rJ17V+ACCmmTAVn5eELM33Etv83tTH0=;
+	s=arc-20240116; t=1705969367; c=relaxed/simple;
+	bh=zXcoTGpO6QWLAwCOzNCOqi0u+94ptEDsBRFkdivTMHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YxvJb05nE+SpYk0tt9UVy6ClT1COyg9+xU7pZRIvBY9L+LWGQ5g3ts2AyTz9biOer2xLjcmKCtv5oA3VCUqHi4lkO0cKGg2Ae/w1MRFhBwmokgA+Cpa1FZ/jqm/kNQSEvpg21b65rxsCbZs3QSRFM4qqPMz/amiUWnxuz1bKGbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dz4nrmAY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IB1ufdcLk1IVROJR2sCQPlFTA4uOlgbOdntP9i+CCV44wFCdoXO/0GYiVEzDIbTJpWUaFzqdZaF2UILU5P1w8cQIvmSVLCBeCb2bsndGiWX8PynEGU23u1FH/2kaSADkUsZ0+yYL8gj4DI/k+ioJ1xVn7cG4X0ERtk/oCnwH8aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4YEstGR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dz4nrmAY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA3CC433F1;
-	Tue, 23 Jan 2024 00:22:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4YEstGR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593DDC433F1;
+	Tue, 23 Jan 2024 00:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969366;
-	bh=PO5qFGhqyCz1rJ17V+ACCmmTAVn5eELM33Etv83tTH0=;
+	s=korg; t=1705969367;
+	bh=zXcoTGpO6QWLAwCOzNCOqi0u+94ptEDsBRFkdivTMHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dz4nrmAY5d+nQXhM2c2j+zfM7jMs7GLvmPwcUFUsrx6hTebwFk1oN4leDhqeizX5t
-	 EfijBup4TwtMURjaj/+01/lMPjw+dE1O3geLQk9d+txO6tynVLJyWYieo7BJPmEawy
-	 dnReLEFx8hWs/fQibGhjccj/KbIZuA6+5iSGjaL0=
+	b=k4YEstGR8JtAYdU14oY0nbJfRWOAtkhG8SxZwb5tkSyUH3vUeu9VbR71UbBn1FG0Z
+	 06B1eDJx/R3mN9c5IeesVVHITZo0bN04Rdbtwg3IuTxiCb1AUaE+K5wENo9dYx0bvR
+	 H/LvgjbehHXm+5Mfn/d5faxmGS6XA5pmsnsAkiLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Unnathi Chalicheemala <quic_uchalich@quicinc.com>,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Li Nan <linan122@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 198/641] soc: qcom: llcc: Fix LLCC_TRP_ATTR2_CFGn offset
-Date: Mon, 22 Jan 2024 15:51:42 -0800
-Message-ID: <20240122235824.158014494@linuxfoundation.org>
+Subject: [PATCH 6.7 199/641] block: add check of minors and first_minor in device_add_disk()
+Date: Mon, 22 Jan 2024 15:51:43 -0800
+Message-ID: <20240122235824.187897021@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -54,37 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 110cb8d861cc1a040cdab495b22ac436c49d1454 ]
+[ Upstream commit 4c434392c4777881d01beada6701eff8c76b43fe ]
 
-According to documentation, it has increments of 4, not 8.
+'first_minor' represents the starting minor number of disks, and
+'minors' represents the number of partitions in the device. Neither
+of them can be greater than MINORMASK + 1.
 
-Fixes: c72ca343f911 ("soc: qcom: llcc: Add v4.1 HW version support")
-Reported-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-Reviewed-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20231012160509.184891-1-abel.vesa@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Commit e338924bd05d ("block: check minor range in device_add_disk()")
+only added the check of 'first_minor + minors'. However, their sum might
+be less than MINORMASK but their values are wrong. Complete the checks now.
+
+Fixes: e338924bd05d ("block: check minor range in device_add_disk()")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20231219075942.840255-1-linan666@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/genhd.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 2e32a0e521d5..57d47dcf11b9 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -47,7 +47,7 @@
- #define LLCC_TRP_STATUSn(n)           (4 + n * SZ_4K)
- #define LLCC_TRP_ATTR0_CFGn(n)        (0x21000 + SZ_8 * n)
- #define LLCC_TRP_ATTR1_CFGn(n)        (0x21004 + SZ_8 * n)
--#define LLCC_TRP_ATTR2_CFGn(n)        (0x21100 + SZ_8 * n)
-+#define LLCC_TRP_ATTR2_CFGn(n)        (0x21100 + SZ_4 * n)
- 
- #define LLCC_TRP_SCID_DIS_CAP_ALLOC   0x21f00
- #define LLCC_TRP_PCB_ACT              0x21f04
+diff --git a/block/genhd.c b/block/genhd.c
+index 13db3a7943d8..d74fb5b4ae68 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -432,7 +432,9 @@ int __must_check device_add_disk(struct device *parent, struct gendisk *disk,
+ 				DISK_MAX_PARTS);
+ 			disk->minors = DISK_MAX_PARTS;
+ 		}
+-		if (disk->first_minor + disk->minors > MINORMASK + 1)
++		if (disk->first_minor > MINORMASK ||
++		    disk->minors > MINORMASK + 1 ||
++		    disk->first_minor + disk->minors > MINORMASK + 1)
+ 			goto out_exit_elevator;
+ 	} else {
+ 		if (WARN_ON(disk->minors))
 -- 
 2.43.0
 
