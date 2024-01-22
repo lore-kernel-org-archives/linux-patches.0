@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6B8664CD;
-	Tue, 23 Jan 2024 01:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8324065BC5;
+	Tue, 23 Jan 2024 01:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971679; cv=none; b=C5rfaejfG45uWNRNuqPeWI/pPwT09ahkSzrv2InSpmTo/3UZ+DELKy9XHxOXq6AJuodbocWkj/szmxSL6lLf24OBJAzKcEMdt8vKr3+nDYKAa5s58rAYyVv9KOd/zn7L/n4kh6cvmlQaJdcRigfdRl4FoiRe/OOleh7JyF/FJRs=
+	t=1705971680; cv=none; b=OT9DdPcN+W5hvHyuZ7GrarI9FfaDfvV2Xxn3NTRz4sOP3Nd3kcmULERqilKGKVMZgtcBLlPXQUok1KvOU3hwckXRQ7RIgV3ofdibUe67gUSOm2KcH1ZsgAx2T29WM81pBOWwxwOFnpJYlha17LNeyQ3IIqrFLSKudBevNbSHWj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971679; c=relaxed/simple;
-	bh=9kzvvZmQsCI43NU8mah4+p81lvbNVfPG5tWPJU3z1hY=;
+	s=arc-20240116; t=1705971680; c=relaxed/simple;
+	bh=x6Rss4do+PyJNRwa/8GeiR5bLovlaLZIn0FDj4WozRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OXZ+/9Wa1vvFsaEgAw+iB+egVX3fAkBaVMgDsSmDQMeFtsJvgvla7i0f9txLxx8RGNJYKcIeLotSPQYY7N/fQN+k+yEQ0EZojAA+s6J/5eqj81Wam0IuD6tyXyqfyIo9hIscbyKURpV/1BZgQONB6FpXiboMKTxGuAkYlb0cWfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZbNYV9D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rwBniXNP3ZOZ1EZmuErPIk43wS7YLMHwQAo4dQ+wr+W9rh4/yzeLwn4X1lwvmrU0xVj6khsdJZceUM1SYiWbR/X9Jt0iPjO7iQx9uPPYkZ8KfEkkhhgXVyXW51swc9SDHQopoQM1rEHmZhJRsB8EtV9hFQFoBz2BLBFm2uQfaj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xrbr1Xxr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZbNYV9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3889C43394;
-	Tue, 23 Jan 2024 01:01:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xrbr1Xxr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435E3C43390;
+	Tue, 23 Jan 2024 01:01:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971679;
-	bh=9kzvvZmQsCI43NU8mah4+p81lvbNVfPG5tWPJU3z1hY=;
+	s=korg; t=1705971680;
+	bh=x6Rss4do+PyJNRwa/8GeiR5bLovlaLZIn0FDj4WozRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OZbNYV9DTcn7AcIOmCyOZHFfRFczBjVla5fJuu7pUHE/UT2W+7mv2T4RNMG8RusFJ
-	 EeZXcPuQhOsaYFocG41GBqQ7bvgkCN5wRNMPg+11mvukMjk4ZV7Fu7Yiu0FHW47ZjG
-	 QfDDARIa0mZrtH58XTjSEt9DYfWMd547J3zRQuwY=
+	b=Xrbr1XxrqqDE2pnIw2Ap3ZYkTg2YXdjguHP6aiIetWqPuCjmg+YOmz3Mcs9UVhQUu
+	 ppqxoqvb+EbeS4J2Av+H6csCjoUnlWE9hJkLRfEldNTlcWDmEBDBmo2dU4qfxJj/kv
+	 JL20M9r6ixfs5/gsn5rUo8SDzQqN2FZqMH26S5ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Gonglei <arei.gonglei@huawei.com>,
-	zhenwei pi <pizhenwei@bytedance.com>,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 5.10 204/286] virtio-crypto: fix memory leak in virtio_crypto_alg_skcipher_close_session()
-Date: Mon, 22 Jan 2024 15:58:30 -0800
-Message-ID: <20240122235739.966085949@linuxfoundation.org>
+	syzbot+8b23309d5788a79d3eea@syzkaller.appspotmail.com,
+	syzbot+004c1e0fced2b4bc3dcc@syzkaller.appspotmail.com,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 296/417] block: Fix iterating over an empty bio with bio_for_each_folio_all
+Date: Mon, 22 Jan 2024 15:57:44 -0800
+Message-ID: <20240122235802.083920566@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,41 +48,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit b1d65f717cd6305a396a8738e022c6f7c65cfbe8 upstream.
+commit 7bed6f3d08b7af27b7015da8dc3acf2b9c1f21d7 upstream.
 
-'vc_ctrl_req' is alloced in virtio_crypto_alg_skcipher_close_session(),
-and should be freed in the invalid ctrl_status->status error handling
-case. Otherwise there is a memory leak.
+If the bio contains no data, bio_first_folio() calls page_folio() on a
+NULL pointer and oopses.  Move the test that we've reached the end of
+the bio from bio_next_folio() to bio_first_folio().
 
-Fixes: 0756ad15b1fe ("virtio-crypto: use private buffer for control request")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Message-Id: <20221114110740.537276-1-weiyongjun@huaweicloud.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Gonglei <arei.gonglei@huawei.com>
-Acked-by: zhenwei pi<pizhenwei@bytedance.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Reported-by: syzbot+8b23309d5788a79d3eea@syzkaller.appspotmail.com
+Reported-by: syzbot+004c1e0fced2b4bc3dcc@syzkaller.appspotmail.com
+Fixes: 640d1930bef4 ("block: Add bio_for_each_folio_all()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://lore.kernel.org/r/20240116212959.3413014-1-willy@infradead.org
+[axboe: add unlikely() to error case]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/virtio/virtio_crypto_algs.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/bio.h |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/crypto/virtio/virtio_crypto_algs.c
-+++ b/drivers/crypto/virtio/virtio_crypto_algs.c
-@@ -239,7 +239,8 @@ static int virtio_crypto_alg_skcipher_cl
- 		pr_err("virtio_crypto: Close session failed status: %u, session_id: 0x%llx\n",
- 			ctrl_status->status, destroy_session->session_id);
+--- a/include/linux/bio.h
++++ b/include/linux/bio.h
+@@ -279,6 +279,11 @@ static inline void bio_first_folio(struc
+ {
+ 	struct bio_vec *bvec = bio_first_bvec_all(bio) + i;
  
--		return -EINVAL;
-+		err = -EINVAL;
-+		goto out;
++	if (unlikely(i >= bio->bi_vcnt)) {
++		fi->folio = NULL;
++		return;
++	}
++
+ 	fi->folio = page_folio(bvec->bv_page);
+ 	fi->offset = bvec->bv_offset +
+ 			PAGE_SIZE * (bvec->bv_page - &fi->folio->page);
+@@ -296,10 +301,8 @@ static inline void bio_next_folio(struct
+ 		fi->offset = 0;
+ 		fi->length = min(folio_size(fi->folio), fi->_seg_count);
+ 		fi->_next = folio_next(fi->folio);
+-	} else if (fi->_i + 1 < bio->bi_vcnt) {
+-		bio_first_folio(fi, bio, fi->_i + 1);
+ 	} else {
+-		fi->folio = NULL;
++		bio_first_folio(fi, bio, fi->_i + 1);
  	}
+ }
  
- 	err = 0;
 
 
