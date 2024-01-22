@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D022B9C0;
-	Tue, 23 Jan 2024 01:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B022B9B8;
+	Tue, 23 Jan 2024 01:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974082; cv=none; b=D0STh+BFR8XG30akBEldkjO+YPDxpW5ZOAJMVcAASMGmY8oWECDhHFPzGR74wzSUEvgVb5bpv3HgA8sPorHpqgAIHsuRiEwx19+F7alprN1dYG2rY7BJUw7smWrE2C+dnKM4sxwwN7aEvdHfzLdB9KJPXs5Qj1ueU4i4eCWq1vQ=
+	t=1705974083; cv=none; b=XLFiOnu3OUrtHeX9EktidkeIITSzIkhC3Q/VuxeLo/3jeYnJpk2i/iCCtNTHpZaEQw9cCeCcoADkSBFpxYqcQsSF9oARyFryzaZxeEa2l3P0JubsfxaEj5sbb8gGZo7YaZOMLR9SmUi6JteNFuyte3jRiwmq8229UvCTaZe9+fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974082; c=relaxed/simple;
-	bh=60S+XUQVvbOSXvnQH9cZQ6qySlHpzhzg2GpILp68V4U=;
+	s=arc-20240116; t=1705974083; c=relaxed/simple;
+	bh=fPzo+D81kHav8qlFwUV3Nuak0BLQTXhBeNgRdi75OBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXbgdU9TsFCe2KJWtqHeho5WU/M4L4MEEvE98bB3BQHIH4IFbBopO2OFPXK857DoLC5tIQ9yOOjTOjYd3fEi9R8CEtQ2hO5r+Ghbo3ZZtvSVS2lhgJry9LiwSJxGU+nHWrTQsIaH8DC6fJO5FV2ibWUOVjEgOKhGN6zjKeRZaP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F3523Vl2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SdKS7PPXK2NcV52mnHg18c326quOPzAxWYZA4vbm0HuOjFY2c5ipLuS6/u70jHk5hVL9bRWRVOPck6gAwOSsgoNulAFlDXuqfAVAZn7Cc2chNsby014BKBa6Tsqq0bdgomiZBil/LVihcFEUKvnebtTvQberUWjMHuFjL4qJOhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DD1AaqOI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3523Vl2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15EEC433C7;
-	Tue, 23 Jan 2024 01:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DD1AaqOI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED60C433C7;
+	Tue, 23 Jan 2024 01:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974081;
-	bh=60S+XUQVvbOSXvnQH9cZQ6qySlHpzhzg2GpILp68V4U=;
+	s=korg; t=1705974082;
+	bh=fPzo+D81kHav8qlFwUV3Nuak0BLQTXhBeNgRdi75OBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F3523Vl2jKsGKi6olickYbd7vY36BtTs4/WxJj6ZYXZ9v6GW6CJHVYY3NYDcDmBP8
-	 ws91EpYC8VJdJoumjXaXIgCSUCYCJ58IXMQk0mRShXKNdFe2Lr+4ROgbXFTkEK6E0J
-	 CqeKw229/ZRPlssMnbOoOGPvBWbLvo8ZyW5vk43Q=
+	b=DD1AaqOIpOUDDCX5vj6t8BhzXQKHA4Ksp9OEDYoeBD9e1Rpe5TE/yEj6qfz1jOzkz
+	 Z/EEM1RlaCeAR2q/IYVunLjCMZzWt5Zvs43drG5Iu2n1jQzvgaN6esuXRmk2qId+Gi
+	 N7sethWIPbqWpurVynAVNcEMz6JTCjjWE4FNd5/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Su Hui <suhui@nfschina.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/583] efivarfs: force RO when remounting if SetVariable is not supported
-Date: Mon, 22 Jan 2024 15:51:22 -0800
-Message-ID: <20240122235813.128304671@linuxfoundation.org>
+Subject: [PATCH 5.15 156/374] wifi: rtlwifi: rtl8188ee: phy: using calculate_bit_shift()
+Date: Mon, 22 Jan 2024 15:56:52 -0800
+Message-ID: <20240122235750.035870925@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,110 +47,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 0e8d2444168dd519fea501599d150e62718ed2fe ]
+[ Upstream commit 969bc926f04b438676768aeffffffb050e480b62 ]
 
-If SetVariable at runtime is not supported by the firmware we never assign
-a callback for that function. At the same time mount the efivarfs as
-RO so no one can call that.  However, we never check the permission flags
-when someone remounts the filesystem as RW. As a result this leads to a
-crash looking like this:
+Using calculate_bit_shift() to replace _rtl88e_phy_calculate_bit_shift().
+And fix the undefined bitwise shift behavior problem.
 
-$ mount -o remount,rw /sys/firmware/efi/efivars
-$ efi-updatevar -f PK.auth PK
-
-[  303.279166] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-[  303.280482] Mem abort info:
-[  303.280854]   ESR = 0x0000000086000004
-[  303.281338]   EC = 0x21: IABT (current EL), IL = 32 bits
-[  303.282016]   SET = 0, FnV = 0
-[  303.282414]   EA = 0, S1PTW = 0
-[  303.282821]   FSC = 0x04: level 0 translation fault
-[  303.283771] user pgtable: 4k pages, 48-bit VAs, pgdp=000000004258c000
-[  303.284913] [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
-[  303.286076] Internal error: Oops: 0000000086000004 [#1] PREEMPT SMP
-[  303.286936] Modules linked in: qrtr tpm_tis tpm_tis_core crct10dif_ce arm_smccc_trng rng_core drm fuse ip_tables x_tables ipv6
-[  303.288586] CPU: 1 PID: 755 Comm: efi-updatevar Not tainted 6.3.0-rc1-00108-gc7d0c4695c68 #1
-[  303.289748] Hardware name: Unknown Unknown Product/Unknown Product, BIOS 2023.04-00627-g88336918701d 04/01/2023
-[  303.291150] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  303.292123] pc : 0x0
-[  303.292443] lr : efivar_set_variable_locked+0x74/0xec
-[  303.293156] sp : ffff800008673c10
-[  303.293619] x29: ffff800008673c10 x28: ffff0000037e8000 x27: 0000000000000000
-[  303.294592] x26: 0000000000000800 x25: ffff000002467400 x24: 0000000000000027
-[  303.295572] x23: ffffd49ea9832000 x22: ffff0000020c9800 x21: ffff000002467000
-[  303.296566] x20: 0000000000000001 x19: 00000000000007fc x18: 0000000000000000
-[  303.297531] x17: 0000000000000000 x16: 0000000000000000 x15: 0000aaaac807ab54
-[  303.298495] x14: ed37489f673633c0 x13: 71c45c606de13f80 x12: 47464259e219acf4
-[  303.299453] x11: ffff000002af7b01 x10: 0000000000000003 x9 : 0000000000000002
-[  303.300431] x8 : 0000000000000010 x7 : ffffd49ea8973230 x6 : 0000000000a85201
-[  303.301412] x5 : 0000000000000000 x4 : ffff0000020c9800 x3 : 00000000000007fc
-[  303.302370] x2 : 0000000000000027 x1 : ffff000002467400 x0 : ffff000002467000
-[  303.303341] Call trace:
-[  303.303679]  0x0
-[  303.303938]  efivar_entry_set_get_size+0x98/0x16c
-[  303.304585]  efivarfs_file_write+0xd0/0x1a4
-[  303.305148]  vfs_write+0xc4/0x2e4
-[  303.305601]  ksys_write+0x70/0x104
-[  303.306073]  __arm64_sys_write+0x1c/0x28
-[  303.306622]  invoke_syscall+0x48/0x114
-[  303.307156]  el0_svc_common.constprop.0+0x44/0xec
-[  303.307803]  do_el0_svc+0x38/0x98
-[  303.308268]  el0_svc+0x2c/0x84
-[  303.308702]  el0t_64_sync_handler+0xf4/0x120
-[  303.309293]  el0t_64_sync+0x190/0x194
-[  303.309794] Code: ???????? ???????? ???????? ???????? (????????)
-[  303.310612] ---[ end trace 0000000000000000 ]---
-
-Fix this by adding a .reconfigure() function to the fs operations which
-we can use to check the requested flags and deny anything that's not RO
-if the firmware doesn't implement SetVariable at runtime.
-
-Fixes: f88814cc2578 ("efi/efivars: Expose RT service availability via efivars abstraction")
-Signed-off-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: f0eb856e0b6c ("rtlwifi: rtl8188ee: Add new driver")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231219065739.1895666-4-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/efivarfs/super.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ .../net/wireless/realtek/rtlwifi/rtl8188ee/phy.c   | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/fs/efivarfs/super.c b/fs/efivarfs/super.c
-index 996271473609..05c01694e852 100644
---- a/fs/efivarfs/super.c
-+++ b/fs/efivarfs/super.c
-@@ -14,6 +14,7 @@
- #include <linux/slab.h>
- #include <linux/magic.h>
- #include <linux/statfs.h>
-+#include <linux/printk.h>
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/phy.c
+index 12d0b3a87af7..0fab3a0c7d49 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/phy.c
+@@ -16,12 +16,6 @@ static u32 _rtl88e_phy_rf_serial_read(struct ieee80211_hw *hw,
+ static void _rtl88e_phy_rf_serial_write(struct ieee80211_hw *hw,
+ 					enum radio_path rfpath, u32 offset,
+ 					u32 data);
+-static u32 _rtl88e_phy_calculate_bit_shift(u32 bitmask)
+-{
+-	u32 i = ffs(bitmask);
+-
+-	return i ? i - 1 : 32;
+-}
+ static bool _rtl88e_phy_bb8188e_config_parafile(struct ieee80211_hw *hw);
+ static bool _rtl88e_phy_config_mac_with_headerfile(struct ieee80211_hw *hw);
+ static bool phy_config_bb_with_headerfile(struct ieee80211_hw *hw,
+@@ -51,7 +45,7 @@ u32 rtl88e_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
+ 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
+ 		"regaddr(%#x), bitmask(%#x)\n", regaddr, bitmask);
+ 	originalvalue = rtl_read_dword(rtlpriv, regaddr);
+-	bitshift = _rtl88e_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	returnvalue = (originalvalue & bitmask) >> bitshift;
  
- #include "internal.h"
+ 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
+@@ -74,7 +68,7 @@ void rtl88e_phy_set_bb_reg(struct ieee80211_hw *hw,
  
-@@ -275,8 +276,19 @@ static int efivarfs_get_tree(struct fs_context *fc)
- 	return get_tree_single(fc, efivarfs_fill_super);
- }
+ 	if (bitmask != MASKDWORD) {
+ 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
+-		bitshift = _rtl88e_phy_calculate_bit_shift(bitmask);
++		bitshift = calculate_bit_shift(bitmask);
+ 		data = ((originalvalue & (~bitmask)) | (data << bitshift));
+ 	}
  
-+static int efivarfs_reconfigure(struct fs_context *fc)
-+{
-+	if (!efivar_supports_writes() && !(fc->sb_flags & SB_RDONLY)) {
-+		pr_err("Firmware does not support SetVariableRT. Can not remount with rw\n");
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static const struct fs_context_operations efivarfs_context_ops = {
- 	.get_tree	= efivarfs_get_tree,
-+	.reconfigure	= efivarfs_reconfigure,
- };
+@@ -99,7 +93,7 @@ u32 rtl88e_phy_query_rf_reg(struct ieee80211_hw *hw,
  
- static int efivarfs_init_fs_context(struct fs_context *fc)
+ 
+ 	original_value = _rtl88e_phy_rf_serial_read(hw, rfpath, regaddr);
+-	bitshift = _rtl88e_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
+ 
+ 	spin_unlock(&rtlpriv->locks.rf_lock);
+@@ -127,7 +121,7 @@ void rtl88e_phy_set_rf_reg(struct ieee80211_hw *hw,
+ 			original_value = _rtl88e_phy_rf_serial_read(hw,
+ 								    rfpath,
+ 								    regaddr);
+-			bitshift = _rtl88e_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data =
+ 			    ((original_value & (~bitmask)) |
+ 			     (data << bitshift));
 -- 
 2.43.0
 
