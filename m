@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647ED6FB3;
-	Tue, 23 Jan 2024 00:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EFB42A8D;
+	Tue, 23 Jan 2024 00:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968451; cv=none; b=YQAT+zuYzgkHWmEJquUBkoAo1h22UWTb6R/Rmn9hJ+tw7hHoudJgjWEw+IFfA5gcG4DztxEecz2U9ahTqu2VGnclYJ4Glm9HTNWXvGMKpGRi66gqN63lVo3J8cDsS0vs5CH7tl+UpCrCOXZN4iz8GYyemB9KHgrz/4iJTUIf48g=
+	t=1705968454; cv=none; b=G2ngHrPiW+DPxQs+cJbC12Iy3fLnlmvg7SvjKsOlvvbVJfVOu0LOpdygUKi8JBPjtdn9luMYbpWxls+9AvQKNDKQbuN1ro6DoYTeZEqP3Ee3MNTSNPt/rRsm1XRQ3MdXI8Xrog5EmKZtm3MB0ThzFZkaH1QTLVdWZD6dsFjy0+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968451; c=relaxed/simple;
-	bh=gD79Gy3pf3U8W+X3FV0492uh9QPbp9wKZxCsmr2ZFa8=;
+	s=arc-20240116; t=1705968454; c=relaxed/simple;
+	bh=ImMqXOAmep9+3UdKkatyqWnuoDoeCYTHgGatAH5o5BU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Dkq4vfE07w/mnSBPOfPF/jvsOmdBWM28Yx15fR66ylE/GhYxFa3HQtLEGREf3Ox7HVnpjcAFsiJZJzQu/aM6jdOUFSPDeC1+fSv/ZmRlggUmGAes7Y2wdk3xkt+INiOPZmy3fyqAJbTTit5Mm4rTIB2lFD7wVQvss3Wwn5bJTUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LszIR84R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TJdj6jHBcjE6c3ZLWDrSbJCfXrO8jQDd1Y1DdoBvf/s8RQ2O3QyYbWKrbL104x6MYnGGd8p9nsCzaoJk0fnGLfd12BMftaZNpLnBiNKbBrS/QtQXU6vxWnI/J2EqVvfLGoCZLCDCwitwaMsWa7Uvt7uV4zVRU0CpOjrtak5GwFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZZeOKAY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LszIR84R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3975C433F1;
-	Tue, 23 Jan 2024 00:07:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZZeOKAY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DCBC43390;
+	Tue, 23 Jan 2024 00:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968451;
-	bh=gD79Gy3pf3U8W+X3FV0492uh9QPbp9wKZxCsmr2ZFa8=;
+	s=korg; t=1705968454;
+	bh=ImMqXOAmep9+3UdKkatyqWnuoDoeCYTHgGatAH5o5BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LszIR84RL6o7k6pHZr98mjz+fK0lANSdJFwvvfj4dEIOHX5czF71WmUljqPQLfyGO
-	 KCH0f7Fz9Y+xUkC9XR0mX0dnHsECJRrT5U8B8wiVNR/awPUQSvYskMn9rZyRB6AIvM
-	 unHp8tH0EeefP2i+u30ytLbNE7KQ/Dphvd+dWYoA=
+	b=lZZeOKAYjfr7qJRcv6hAGD65K6Um31aibhvpK7OJLnofRN/DP9cQ215xZKN2Gj214
+	 BpVVlxlOJ6ovHLNsixZG+ZVNd/oWF3OYfa52pi6+cM/6Zx6X2slwWqOophK//jSV23
+	 NseXaGRpaETRbD/Y5M6Th48HfQEKdzNC0E9TCLHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 4.19 113/148] Input: atkbd - use ab83 as id when skipping the getid command
-Date: Mon, 22 Jan 2024 15:57:49 -0800
-Message-ID: <20240122235717.038244768@linuxfoundation.org>
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 096/148] drm/drv: propagate errors from drm_modeset_register_all()
+Date: Mon, 22 Jan 2024 15:57:32 -0800
+Message-ID: <20240122235716.270624063@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -45,79 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit 58f65f9db7e0de366a5a115c2e2c0703858bba69 upstream.
+[ Upstream commit 5f8dec200923a76dc57187965fd59c1136f5d085 ]
 
-Barnabás reported that the change to skip the getid command
-when the controller is in translated mode on laptops caused
-the Version field of his "AT Translated Set 2 keyboard"
-input device to change from ab83 to abba, breaking a custom
-hwdb entry for this keyboard.
+In case the drm_modeset_register_all() function fails, its error code
+will be ignored. Instead make the drm_dev_register() bail out in case of
+such an error.
 
-Use the standard ab83 id for keyboards when getid is skipped
-(rather then that getid fails) to avoid reporting a different
-Version to userspace then before skipping the getid.
-
-Fixes: 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in translated mode")
-Reported-by: Barnabás Pőcze <pobrn@protonmail.com>
-Closes: https://lore.kernel.org/linux-input/W1ydwoG2fYv85Z3C3yfDOJcVpilEvGge6UGa9kZh8zI2-qkHXp7WLnl2hSkFz63j-c7WupUWI5TLL6n7Lt8DjRuU-yJBwLYWrreb1hbnd6A=@protonmail.com/
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240116204325.7719-1-hdegoede@redhat.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 79190ea2658a ("drm: Add callbacks for late registering")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231202225552.1283638-1-dmitry.baryshkov@linaro.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/keyboard/atkbd.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/drm_drv.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -743,9 +743,9 @@ static bool atkbd_is_portable_device(voi
-  * not work. So in this case simply assume a keyboard is connected to avoid
-  * confusing some laptop keyboards.
-  *
-- * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using a fake id is
-- * ok in translated mode, only atkbd_select_set() checks atkbd->id and in
-- * translated mode that is a no-op.
-+ * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using the standard
-+ * 0xab83 id is ok in translated mode, only atkbd_select_set() checks atkbd->id
-+ * and in translated mode that is a no-op.
-  */
- static bool atkbd_skip_getid(struct atkbd *atkbd)
- {
-@@ -763,6 +763,7 @@ static int atkbd_probe(struct atkbd *atk
- {
- 	struct ps2dev *ps2dev = &atkbd->ps2dev;
- 	unsigned char param[2];
-+	bool skip_getid;
- 
- /*
-  * Some systems, where the bit-twiddling when testing the io-lines of the
-@@ -784,7 +785,8 @@ static int atkbd_probe(struct atkbd *atk
-  */
- 
- 	param[0] = param[1] = 0xa5;	/* initialize with invalid values */
--	if (atkbd_skip_getid(atkbd) || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
-+	skip_getid = atkbd_skip_getid(atkbd);
-+	if (skip_getid || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
- 
- /*
-  * If the get ID command was skipped or failed, we check if we can at least set
-@@ -794,7 +796,7 @@ static int atkbd_probe(struct atkbd *atk
- 		param[0] = 0;
- 		if (ps2_command(ps2dev, param, ATKBD_CMD_SETLEDS))
- 			return -1;
--		atkbd->id = 0xabba;
-+		atkbd->id = skip_getid ? 0xab83 : 0xabba;
- 		return 0;
+diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
+index d8ae4ca129c7..e0c54de615fd 100644
+--- a/drivers/gpu/drm/drm_drv.c
++++ b/drivers/gpu/drm/drm_drv.c
+@@ -818,8 +818,11 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
+ 			goto err_minors;
  	}
  
+-	if (drm_core_check_feature(dev, DRIVER_MODESET))
+-		drm_modeset_register_all(dev);
++	if (drm_core_check_feature(dev, DRIVER_MODESET)) {
++		ret = drm_modeset_register_all(dev);
++		if (ret)
++			goto err_unload;
++	}
+ 
+ 	ret = 0;
+ 
+@@ -831,6 +834,9 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
+ 
+ 	goto out_unlock;
+ 
++err_unload:
++	if (dev->driver->unload)
++		dev->driver->unload(dev);
+ err_minors:
+ 	remove_compat_control_link(dev);
+ 	drm_minor_unregister(dev, DRM_MINOR_PRIMARY);
+-- 
+2.43.0
+
 
 
