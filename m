@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E13129A8A;
-	Tue, 23 Jan 2024 00:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B34129A91;
+	Tue, 23 Jan 2024 00:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968723; cv=none; b=RXMB/zBTSLaD1sat2xn1GgAfc5oyA0Lqt1NEZ8aS5O2IipudAA0AZfizCaQoBypcgQWVglvoxiWMCE+uRMjwpcaGPsoCR8XXxEGLbvWmNk0sbWStT42eyqBGmAhsvkem0vcvpk8ZWrueFl2o1QtxcX1tgOJ4Gn9scQ17ta5xEME=
+	t=1705968724; cv=none; b=W19u2mmG2G99J3VxJY9cOokDQhzYWbHisckzjyKegZX2B91XNyyaDr4NvFAOo5Gli8n12IXrJbYB7ygHcxi1Qhq1K0ZavbQeTVqwrAK5tqaJMlm1NQIB6ffGRLzWGreBsVDKAOAUxmv0DPyW5+pgeqy8JEWw7A96uSaS4lEVa8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968723; c=relaxed/simple;
-	bh=lJIOeyRIYFFBSQLBEOm28iHwTF4AARPYxllXd5oNti4=;
+	s=arc-20240116; t=1705968724; c=relaxed/simple;
+	bh=Kc4ifM/IXpdIXaCSJe6rL24ScM8QJIbLCaDaL0KYEVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sqpvka0p5hkilp6TMrdgicJaSRs7Ny+sJIi8bOs3MOQlPvD5sa6Z8wZ3cgAV9UVLxlrJw9VDVTvj1Xrmalsd6p/QeRUsoEWRA+VcKhJEjwqi67dQCL3bd+kwTCqfPK3f716z1VTPtuKRu6c9kPEs/FbczRHzarmMoMJ9cstz15U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJFvBUiF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ltIAEc4obcaDjpLC/3LQoPGuzMpkUa/wsw6SAkfv/JWnODAzAxUZeuTvFhRsVvXT7hFhsShHbTrjJtS1Weog1a6b4V/cI2zvkamlkd6nY+j+KlDSFNT8sntEVCu7WeBHfqoGIs4YzD3hpDIODtkpQXFXdYxRWEr4IqfDgS6GaI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMbj09xu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJFvBUiF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C930C43390;
-	Tue, 23 Jan 2024 00:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMbj09xu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA7CC433C7;
+	Tue, 23 Jan 2024 00:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968723;
-	bh=lJIOeyRIYFFBSQLBEOm28iHwTF4AARPYxllXd5oNti4=;
+	s=korg; t=1705968724;
+	bh=Kc4ifM/IXpdIXaCSJe6rL24ScM8QJIbLCaDaL0KYEVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pJFvBUiFOz+Y+cxecglBkBki7fPjOS6t/HQrSQF78iq3d8Hs4l1dd1NBxVEMT3zP1
-	 BqDKcBa7GTpY2F+hAU50SBBUnmP4m8xCAp3LjSXgT1GQZLrZJ6FfRa24yAlZzuYGHm
-	 MbECVTvjhWA0CLi+roBF+cxnegqU+FUsWtLd6I/A=
+	b=UMbj09xuUPrDd99Eon5ufUWdLXTMiQaWZY/ow6wl6zqZMv9Lw3JQHVEJHyn2CHFkA
+	 2iNX+sVsksXV307CqKTSI3EwElNEkj/zStcmAlMeTl+GKqzNiMEtuWuXEH0sXfthfX
+	 078LtQa+8TpiZl0At09T+0Pftw26auDqU6GbcgQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inki Dae <inki.dae@samsung.com>,
+	Weihao Li <cn.liweihao@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 015/194] drm/exynos: fix a wrong error checking
-Date: Mon, 22 Jan 2024 15:55:45 -0800
-Message-ID: <20240122235719.863429756@linuxfoundation.org>
+Subject: [PATCH 5.4 016/194] clk: rockchip: rk3128: Fix HCLK_OTG gate register
+Date: Mon, 22 Jan 2024 15:55:46 -0800
+Message-ID: <20240122235719.902387282@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -50,60 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Inki Dae <inki.dae@samsung.com>
+From: Weihao Li <cn.liweihao@gmail.com>
 
-[ Upstream commit 8d1b7809684c688005706125b804e1f9792d2b1b ]
+[ Upstream commit c6c5a5580dcb6631aa6369dabe12ef3ce784d1d2 ]
 
-Fix a wrong error checking in exynos_drm_dma.c module.
+The HCLK_OTG gate control is in CRU_CLKGATE5_CON, not CRU_CLKGATE3_CON.
 
-In the exynos_drm_register_dma function, both arm_iommu_create_mapping()
-and iommu_get_domain_for_dev() functions are expected to return NULL as
-an error.
-
-However, the error checking is performed using the statement
-if(IS_ERR(mapping)), which doesn't provide a suitable error value.
-So check if 'mapping' is NULL, and if it is, return -ENODEV.
-
-This issue[1] was reported by Dan.
-
-Changelog v1:
-- fix build warning.
-
-[1] https://lore.kernel.org/all/33e52277-1349-472b-a55b-ab5c3462bfcf@moroto.mountain/
-
-Reported-by : Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Signed-off-by: Weihao Li <cn.liweihao@gmail.com>
+Link: https://lore.kernel.org/r/20231031111816.8777-1-cn.liweihao@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_dma.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/clk/rockchip/clk-rk3128.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_dma.c b/drivers/gpu/drm/exynos/exynos_drm_dma.c
-index a3c9d8b9e1a1..e07d31b9a921 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_dma.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_dma.c
-@@ -133,18 +133,16 @@ int exynos_drm_register_dma(struct drm_device *drm, struct device *dev,
- 		return 0;
- 
- 	if (!priv->mapping) {
--		void *mapping;
-+		void *mapping = NULL;
- 
- 		if (IS_ENABLED(CONFIG_ARM_DMA_USE_IOMMU))
- 			mapping = arm_iommu_create_mapping(&platform_bus_type,
- 				EXYNOS_DEV_ADDR_START, EXYNOS_DEV_ADDR_SIZE);
- 		else if (IS_ENABLED(CONFIG_IOMMU_DMA))
- 			mapping = iommu_get_domain_for_dev(priv->dma_dev);
--		else
--			mapping = ERR_PTR(-ENODEV);
- 
--		if (IS_ERR(mapping))
--			return PTR_ERR(mapping);
-+		if (!mapping)
-+			return -ENODEV;
- 		priv->mapping = mapping;
- 	}
- 
+diff --git a/drivers/clk/rockchip/clk-rk3128.c b/drivers/clk/rockchip/clk-rk3128.c
+index 4b1122e98e16..ddfe1c402e80 100644
+--- a/drivers/clk/rockchip/clk-rk3128.c
++++ b/drivers/clk/rockchip/clk-rk3128.c
+@@ -489,7 +489,7 @@ static struct rockchip_clk_branch common_clk_branches[] __initdata = {
+ 	GATE(HCLK_I2S_2CH, "hclk_i2s_2ch", "hclk_peri", 0, RK2928_CLKGATE_CON(7), 2, GFLAGS),
+ 	GATE(0, "hclk_usb_peri", "hclk_peri", CLK_IGNORE_UNUSED, RK2928_CLKGATE_CON(9), 13, GFLAGS),
+ 	GATE(HCLK_HOST2, "hclk_host2", "hclk_peri", 0, RK2928_CLKGATE_CON(7), 3, GFLAGS),
+-	GATE(HCLK_OTG, "hclk_otg", "hclk_peri", 0, RK2928_CLKGATE_CON(3), 13, GFLAGS),
++	GATE(HCLK_OTG, "hclk_otg", "hclk_peri", 0, RK2928_CLKGATE_CON(5), 13, GFLAGS),
+ 	GATE(0, "hclk_peri_ahb", "hclk_peri", CLK_IGNORE_UNUSED, RK2928_CLKGATE_CON(9), 14, GFLAGS),
+ 	GATE(HCLK_SPDIF, "hclk_spdif", "hclk_peri", 0, RK2928_CLKGATE_CON(10), 9, GFLAGS),
+ 	GATE(HCLK_TSP, "hclk_tsp", "hclk_peri", 0, RK2928_CLKGATE_CON(10), 12, GFLAGS),
 -- 
 2.43.0
 
