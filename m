@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6366FB3;
-	Tue, 23 Jan 2024 00:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647ED6FB3;
+	Tue, 23 Jan 2024 00:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968449; cv=none; b=qMdwFJyrDT09UK0CddW3vHl492lXm9b4LWw/xqIYCeTxssb8kdvMCMj5bd530QT/8R6zpjt2tth06WiAxhW2TbQKchvjs0shqraEs92L7cPhIgGVTr4soVP16XM6wz2bsX44B1/djVOXyNUp4uvPIq/UDpc1eMpa7xsit2dPdPI=
+	t=1705968451; cv=none; b=YQAT+zuYzgkHWmEJquUBkoAo1h22UWTb6R/Rmn9hJ+tw7hHoudJgjWEw+IFfA5gcG4DztxEecz2U9ahTqu2VGnclYJ4Glm9HTNWXvGMKpGRi66gqN63lVo3J8cDsS0vs5CH7tl+UpCrCOXZN4iz8GYyemB9KHgrz/4iJTUIf48g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968449; c=relaxed/simple;
-	bh=CCnLPpGWJO411wsaZLSP+I3V9NJgcJD0LTaG8vObqNU=;
+	s=arc-20240116; t=1705968451; c=relaxed/simple;
+	bh=gD79Gy3pf3U8W+X3FV0492uh9QPbp9wKZxCsmr2ZFa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hkm7Jw+52Tosog87OkBdJnvlCI3p8TtKRXIcqCIqR4SDK80nhpCU2t01xqgM/zSxm+/dgaNmsm7z2l2HrUQ0zKiwvwZYbSXmytO6LOnSnj+ILQNxku4tf2VD4GUqLCgIw74cj9+z6hjroJl6o6Ymn78ZJWvJVaH6hdpk39ULOmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxHnns86; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Dkq4vfE07w/mnSBPOfPF/jvsOmdBWM28Yx15fR66ylE/GhYxFa3HQtLEGREf3Ox7HVnpjcAFsiJZJzQu/aM6jdOUFSPDeC1+fSv/ZmRlggUmGAes7Y2wdk3xkt+INiOPZmy3fyqAJbTTit5Mm4rTIB2lFD7wVQvss3Wwn5bJTUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LszIR84R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxHnns86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30041C433C7;
-	Tue, 23 Jan 2024 00:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LszIR84R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3975C433F1;
+	Tue, 23 Jan 2024 00:07:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968448;
-	bh=CCnLPpGWJO411wsaZLSP+I3V9NJgcJD0LTaG8vObqNU=;
+	s=korg; t=1705968451;
+	bh=gD79Gy3pf3U8W+X3FV0492uh9QPbp9wKZxCsmr2ZFa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WxHnns86J8pNvufGgcD01nrh9HMp5/i/pa9Vz7MqJWyRpf2EX+IDJfZ9ma5n1gqca
-	 lEMaPD/Lci3dJG+5oUSdKnUu/dwLp25i/izymw6Jj+8I8vmhQG7zj5KH/cf1zIDL0l
-	 2zdk5rndAVbhB2JMo+CPkk/BVYfj8BrIBmVjfCLc=
+	b=LszIR84RL6o7k6pHZr98mjz+fK0lANSdJFwvvfj4dEIOHX5czF71WmUljqPQLfyGO
+	 KCH0f7Fz9Y+xUkC9XR0mX0dnHsECJRrT5U8B8wiVNR/awPUQSvYskMn9rZyRB6AIvM
+	 unHp8tH0EeefP2i+u30ytLbNE7KQ/Dphvd+dWYoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 4.19 112/148] binder: fix async space check for 0-sized buffers
-Date: Mon, 22 Jan 2024 15:57:48 -0800
-Message-ID: <20240122235716.992236739@linuxfoundation.org>
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 4.19 113/148] Input: atkbd - use ab83 as id when skipping the getid command
+Date: Mon, 22 Jan 2024 15:57:49 -0800
+Message-ID: <20240122235717.038244768@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -44,50 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 3091c21d3e9322428691ce0b7a0cfa9c0b239eeb upstream.
+commit 58f65f9db7e0de366a5a115c2e2c0703858bba69 upstream.
 
-Move the padding of 0-sized buffers to an earlier stage to account for
-this round up during the alloc->free_async_space check.
+Barnabás reported that the change to skip the getid command
+when the controller is in translated mode on laptops caused
+the Version field of his "AT Translated Set 2 keyboard"
+input device to change from ab83 to abba, breaking a custom
+hwdb entry for this keyboard.
 
-Fixes: 74310e06be4d ("android: binder: Move buffer out of area shared with user space")
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20231201172212.1813387-5-cmllamas@google.com
+Use the standard ab83 id for keyboards when getid is skipped
+(rather then that getid fails) to avoid reporting a different
+Version to userspace then before skipping the getid.
+
+Fixes: 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in translated mode")
+Reported-by: Barnabás Pőcze <pobrn@protonmail.com>
+Closes: https://lore.kernel.org/linux-input/W1ydwoG2fYv85Z3C3yfDOJcVpilEvGge6UGa9kZh8zI2-qkHXp7WLnl2hSkFz63j-c7WupUWI5TLL6n7Lt8DjRuU-yJBwLYWrreb1hbnd6A=@protonmail.com/
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240116204325.7719-1-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder_alloc.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/input/keyboard/atkbd.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -398,6 +398,10 @@ static struct binder_buffer *binder_allo
- 				alloc->pid, extra_buffers_size);
- 		return ERR_PTR(-EINVAL);
- 	}
-+
-+	/* Pad 0-size buffers so they get assigned unique addresses */
-+	size = max(size, sizeof(void *));
-+
- 	if (is_async &&
- 	    alloc->free_async_space < size + sizeof(struct binder_buffer)) {
- 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
-@@ -406,9 +410,6 @@ static struct binder_buffer *binder_allo
- 		return ERR_PTR(-ENOSPC);
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -743,9 +743,9 @@ static bool atkbd_is_portable_device(voi
+  * not work. So in this case simply assume a keyboard is connected to avoid
+  * confusing some laptop keyboards.
+  *
+- * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using a fake id is
+- * ok in translated mode, only atkbd_select_set() checks atkbd->id and in
+- * translated mode that is a no-op.
++ * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using the standard
++ * 0xab83 id is ok in translated mode, only atkbd_select_set() checks atkbd->id
++ * and in translated mode that is a no-op.
+  */
+ static bool atkbd_skip_getid(struct atkbd *atkbd)
+ {
+@@ -763,6 +763,7 @@ static int atkbd_probe(struct atkbd *atk
+ {
+ 	struct ps2dev *ps2dev = &atkbd->ps2dev;
+ 	unsigned char param[2];
++	bool skip_getid;
+ 
+ /*
+  * Some systems, where the bit-twiddling when testing the io-lines of the
+@@ -784,7 +785,8 @@ static int atkbd_probe(struct atkbd *atk
+  */
+ 
+ 	param[0] = param[1] = 0xa5;	/* initialize with invalid values */
+-	if (atkbd_skip_getid(atkbd) || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
++	skip_getid = atkbd_skip_getid(atkbd);
++	if (skip_getid || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
+ 
+ /*
+  * If the get ID command was skipped or failed, we check if we can at least set
+@@ -794,7 +796,7 @@ static int atkbd_probe(struct atkbd *atk
+ 		param[0] = 0;
+ 		if (ps2_command(ps2dev, param, ATKBD_CMD_SETLEDS))
+ 			return -1;
+-		atkbd->id = 0xabba;
++		atkbd->id = skip_getid ? 0xab83 : 0xabba;
+ 		return 0;
  	}
  
--	/* Pad 0-size buffers so they get assigned unique addresses */
--	size = max(size, sizeof(void *));
--
- 	while (n) {
- 		buffer = rb_entry(n, struct binder_buffer, rb_node);
- 		BUG_ON(!buffer->free);
 
 
