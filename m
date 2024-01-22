@@ -1,50 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609511350CA;
-	Tue, 23 Jan 2024 01:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66E71350CA;
+	Tue, 23 Jan 2024 01:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971935; cv=none; b=jct7GelI39MoYH54Mr7zeNJtWXSSxlRb4NHZKVOxNLtQlXYBuKr/FLusvhaL303qI3Num3QnABAraArXB6G48fknUhbQY2xdATUBOnNNbnrx40qyqyG+wFz39kFjN1NDqjmf9dLz3eSEXOTqOIIv39jqb59GRtIUOA2t+uNzG7c=
+	t=1705971936; cv=none; b=YrG6vuxEGSKxvyWjinea3Ll2LknbRhN9ym0TDv6JLVxv6CvPu9N/EcXafrqwgMqpZmB7DyvwhkoNBrrRSViebxPTpShIzc0OCdXU7oqPgAbBUfwLDCH6BZRDHJWwRKnEg2Dv0xbEUqhF9+8kP4DQg6RCSs86rIJ2W7OXhIJ17oA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971935; c=relaxed/simple;
-	bh=Yc/LKOxVvXv9SwdvsarZ4bIt3BrGxQilVEOjtkjOW4g=;
+	s=arc-20240116; t=1705971936; c=relaxed/simple;
+	bh=/Th/w+wVvlmVjOuefWUvKUjAP0N24V9gWMU39lWdupY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cznWuknXTBZpqfkCXsTLz5OZhICc7UbnojLiwGPkVagOHvsVObty5KYQR3In+WHzrgkJKQQqO/KnZMaP8o2VlGI/Xh1r5yHsK2LmfVVoiOAYnMW3oR2vX+rImJTDvpk8KAf3lIKRyBnihP2EWwkQul7MDMb1ng/kIgmtPCRSP24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uc3s3WPZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h3x7eHglvhpJhpjBfGQi3XFcdmTfAsdu+Dek1T1q240NdGSk/PS/nRk82qWFQoxkcn4yPa5E6HZ5ZRWgfQDKW58YlJ7wR6mt16q3FpxVHoZmtjXDoxDqlG/otn3SAxoYX6ODeslqtyhVZzk1IxG1oWJMO8o4hQAsIHar/dcorZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxzfhqLC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uc3s3WPZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E45C433C7;
-	Tue, 23 Jan 2024 01:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxzfhqLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C0FC433C7;
+	Tue, 23 Jan 2024 01:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971935;
-	bh=Yc/LKOxVvXv9SwdvsarZ4bIt3BrGxQilVEOjtkjOW4g=;
+	s=korg; t=1705971936;
+	bh=/Th/w+wVvlmVjOuefWUvKUjAP0N24V9gWMU39lWdupY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uc3s3WPZtaO1rdNx+iAui2zFRn7jB30z64sh3M+yFdsrAzjmVU5ZLkfBp9KpbKAja
-	 54kkDP4LMGFRrAAWZ7JFgrF7QFPbvsoUi3L5Q+Nyy1J+QXjLFSETik+fvfK25ISaFX
-	 So4W/kGEyKbl5bYc4i3M1W/dx/Y7P4qKo4Ahxj/M=
+	b=RxzfhqLCWI2lzIMO1Hh0Gvfy4everq9XAmgzGwDDY2zmdITg9mQJBHS9FcvI9k9OF
+	 4y+3uix3HMloJZfk1du93p0S53J3HQ94rRfXwmHWMO2o6JBZ8U0MbvtUX7gdlZUqn9
+	 pmIHmBwS9ET6kkZLjvnt9O4f9s9tHC9Qgtp+I9RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Fangrui Song <maskray@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Lieven Hey <lieven.hey@kdab.com>,
-	Milian Wolff <milian.wolff@kdab.com>,
-	Pablo Galindo <pablogsal@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 355/417] perf genelf: Set ELF program header addresses properly
-Date: Mon, 22 Jan 2024 15:58:43 -0800
-Message-ID: <20240122235804.100405683@linuxfoundation.org>
+Subject: [PATCH 5.10 268/286] net: phy: micrel: populate .soft_reset for KSZ9131
+Date: Mon, 22 Jan 2024 15:59:34 -0800
+Message-ID: <20240122235742.364953102@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -56,52 +49,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 1af478903fc48c1409a8dd6b698383b62387adf1 ]
+[ Upstream commit e398822c4751017fe401f57409488f5948d12fb5 ]
 
-The text section starts after the ELF headers so PHDR.p_vaddr and
-others should have the correct addresses.
+The RZ/G3S SMARC Module has 2 KSZ9131 PHYs. In this setup, the KSZ9131 PHY
+is used with the ravb Ethernet driver. It has been discovered that when
+bringing the Ethernet interface down/up continuously, e.g., with the
+following sh script:
 
-Fixes: babd04386b1df8c3 ("perf jit: Include program header in ELF files")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Fangrui Song <maskray@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Lieven Hey <lieven.hey@kdab.com>
-Cc: Milian Wolff <milian.wolff@kdab.com>
-Cc: Pablo Galindo <pablogsal@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20231212070547.612536-2-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+$ while :; do ifconfig eth0 down; ifconfig eth0 up; done
+
+the link speed and duplex are wrong after interrupting the bring down/up
+operation even though the Ethernet interface is up. To recover from this
+state the following configuration sequence is necessary (executed
+manually):
+
+$ ifconfig eth0 down
+$ ifconfig eth0 up
+
+The behavior has been identified also on the Microchip SAMA7G5-EK board
+which runs the macb driver and uses the same PHY.
+
+The order of PHY-related operations in ravb_open() is as follows:
+ravb_open() ->
+  ravb_phy_start() ->
+    ravb_phy_init() ->
+      of_phy_connect() ->
+        phy_connect_direct() ->
+	  phy_attach_direct() ->
+	    phy_init_hw() ->
+	      phydev->drv->soft_reset()
+	      phydev->drv->config_init()
+	      phydev->drv->config_intr()
+	    phy_resume()
+	      kszphy_resume()
+
+The order of PHY-related operations in ravb_close is as follows:
+ravb_close() ->
+  phy_stop() ->
+    phy_suspend() ->
+      kszphy_suspend() ->
+        genphy_suspend()
+	  // set BMCR_PDOWN bit in MII_BMCR
+
+In genphy_suspend() setting the BMCR_PDWN bit in MII_BMCR switches the PHY
+to Software Power-Down (SPD) mode (according to the KSZ9131 datasheet).
+Thus, when opening the interface after it has been  previously closed (via
+ravb_close()), the phydev->drv->config_init() and
+phydev->drv->config_intr() reach the KSZ9131 PHY driver via the
+ksz9131_config_init() and kszphy_config_intr() functions.
+
+KSZ9131 specifies that the MII management interface remains operational
+during SPD (Software Power-Down), but (according to manual):
+- Only access to the standard registers (0 through 31) is supported.
+- Access to MMD address spaces other than MMD address space 1 is possible
+  if the spd_clock_gate_override bit is set.
+- Access to MMD address space 1 is not possible.
+
+The spd_clock_gate_override bit is not used in the KSZ9131 driver.
+
+ksz9131_config_init() configures RGMII delay, pad skews and LEDs by
+accessesing MMD registers other than those in address space 1.
+
+The datasheet for the KSZ9131 does not specify what happens if registers
+from an unsupported address space are accessed while the PHY is in SPD.
+
+To fix the issue the .soft_reset method has been instantiated for KSZ9131,
+too. This resets the PHY to the default state before doing any
+configurations to it, thus switching it out of SPD.
+
+Fixes: bff5b4b37372 ("net: phy: micrel: add Microchip KSZ9131 initial driver")
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/genelf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/phy/micrel.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/genelf.c b/tools/perf/util/genelf.c
-index fefc72066c4e..ac17a3cb59dc 100644
---- a/tools/perf/util/genelf.c
-+++ b/tools/perf/util/genelf.c
-@@ -293,9 +293,9 @@ jit_write_elf(int fd, uint64_t load_addr, const char *sym,
- 	 */
- 	phdr = elf_newphdr(e, 1);
- 	phdr[0].p_type = PT_LOAD;
--	phdr[0].p_offset = 0;
--	phdr[0].p_vaddr = 0;
--	phdr[0].p_paddr = 0;
-+	phdr[0].p_offset = GEN_ELF_TEXT_OFFSET;
-+	phdr[0].p_vaddr = GEN_ELF_TEXT_OFFSET;
-+	phdr[0].p_paddr = GEN_ELF_TEXT_OFFSET;
- 	phdr[0].p_filesz = csize;
- 	phdr[0].p_memsz = csize;
- 	phdr[0].p_flags = PF_X | PF_R;
+diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
+index bbbe198f83e8..2b7616f161d6 100644
+--- a/drivers/net/phy/micrel.c
++++ b/drivers/net/phy/micrel.c
+@@ -1345,6 +1345,7 @@ static struct phy_driver ksphy_driver[] = {
+ 	/* PHY_GBIT_FEATURES */
+ 	.driver_data	= &ksz9021_type,
+ 	.probe		= kszphy_probe,
++	.soft_reset	= genphy_soft_reset,
+ 	.config_init	= ksz9131_config_init,
+ 	.read_status	= genphy_read_status,
+ 	.ack_interrupt	= kszphy_ack_interrupt,
 -- 
 2.43.0
 
