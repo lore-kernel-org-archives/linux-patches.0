@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339E067727;
-	Tue, 23 Jan 2024 01:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7766A66B52;
+	Tue, 23 Jan 2024 01:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971685; cv=none; b=dtgwKzpMbPKwgNWj/KTcvQLgwU9w1ff0chKy+Hyb0vv0ZfesaF0xMipepnAhP731/FF6LNIu5a3LZvJKrMiF8F5kfSV5N/Uu/edWJx6wfkSQYWeKDOzCRfBKxWGA76Ot28/RvTTKTEpxftc/Ne0g7JyRd2z1NFI+e4mdD/jjxkM=
+	t=1705971687; cv=none; b=Vk08IGPc+pSweDSDD7w4vOBUnCdSkKMx8iYqcORSAWr9td6mScw6Gs773yBYiPyoy7O5LHV4n0ygKme21ICDZ4APSfG16Hxs0Ln80SN638cX6fnxfWFDhNGhJYg9zddgrrk5BZCSiJeW2Y+swoEuMnckFrWZQ1HzCSjCwvYgWyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971685; c=relaxed/simple;
-	bh=yZc9bHKHHfbI6qlMPT/K4ZMRDFOFOrk2Olby+pqm+RI=;
+	s=arc-20240116; t=1705971687; c=relaxed/simple;
+	bh=cnTtTnV5nNdfkh8lwe8BfsZCgFjisAXu6hTjUdsVmsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ccj4ysj96WfY+pTpu5M08fuEcQN667+xvXpRF9hcKdQhTvw4E5p0JRZbS5H6hRxcLhIqjNWoZVUee4W8wZXe5kd4iGADtr1jITKuOZu8Uzu9fXfrpngTX9OUWkuM2JMCNR/ViBR7JtsGZdv9z7ozdHc/nMZ9Eq61wCGMhU6YJkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Nvrje0Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=igxqZOwllx70bL+1+lhduietzuIYXBZ43RifTda84XHdUS3Ko7qozxg8iQm9wh/gdhlELVJX1DzIyTEdi4L5PsOEhUnh1T/YuC76tWiCFN30u4o8poxSTpwN/4OHUj8qDvwqLAjodwzGKttvI7S+OAqt+IM5Ymztu9vqHLo+9XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5Q6wxh+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Nvrje0Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9422C433F1;
-	Tue, 23 Jan 2024 01:01:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5Q6wxh+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEDEC433C7;
+	Tue, 23 Jan 2024 01:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971685;
-	bh=yZc9bHKHHfbI6qlMPT/K4ZMRDFOFOrk2Olby+pqm+RI=;
+	s=korg; t=1705971687;
+	bh=cnTtTnV5nNdfkh8lwe8BfsZCgFjisAXu6hTjUdsVmsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Nvrje0ZRSmjF52oJjODMasEgB/AfnRabenqtRTqxDcTY93xWRD8pKS1wVLGNovZ4
-	 0owPHXsUDvCNdth82xE0/b2S+wXV4avZVNgkySlNv5h0rh5ol5lbv3jhvsNcCzv+R5
-	 Sv/B2edYHGSKvOY1Vh+Dgv7uRnj4x0nCEHZhO5pI=
+	b=a5Q6wxh+8B0LqO2myq8Z55jNw/aus/Ox+RKyPFsdMgIo1DVFcyreC9CbFmy20yzcu
+	 1LQSQF8Y8GCNjuZ4UqsGo2fK6z9EbIaRVn0q96RYZG5a/5gR7S7GYgogUgDqOa/M/D
+	 3GKdha/LBVJfkHj8M7Acj874KlsE5443KoSnolp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>
-Subject: [PATCH 5.10 206/286] kprobes: Fix to handle forcibly unoptimized kprobes on freeing_list
-Date: Mon, 22 Jan 2024 15:58:32 -0800
-Message-ID: <20240122235740.038442931@linuxfoundation.org>
+	Bart Van Assche <bvanassche@acm.org>,
+	Can Guo <quic_cang@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 289/417] scsi: ufs: core: Simplify power management during async scan
+Date: Mon, 22 Jan 2024 15:57:37 -0800
+Message-ID: <20240122235801.844884547@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,99 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 4fbd2f83fda0ca44a2ec6421ca3508b355b31858 upstream.
+commit daf7795406bf307997366f694888bd317ae5b5fa upstream.
 
-Since forcibly unoptimized kprobes will be put on the freeing_list directly
-in the unoptimize_kprobe(), do_unoptimize_kprobes() must continue to check
-the freeing_list even if unoptimizing_list is empty.
+ufshcd_init() calls pm_runtime_get_sync() before it calls
+async_schedule(). ufshcd_async_scan() calls pm_runtime_put_sync() directly
+or indirectly from ufshcd_add_lus(). Simplify ufshcd_async_scan() by always
+calling pm_runtime_put_sync() from ufshcd_async_scan().
 
-This bug can happen if a kprobe is put in an instruction which is in the
-middle of the jump-replaced instruction sequence of an optprobe, *and* the
-optprobe is recently unregistered and queued on unoptimizing_list.
-In this case, the optprobe will be unoptimized forcibly (means immediately)
-and put it into the freeing_list, expecting the optprobe will be handled in
-do_unoptimize_kprobe().
-But if there is no other optprobes on the unoptimizing_list, current code
-returns from the do_unoptimize_kprobe() soon and does not handle the
-optprobe which is on the freeing_list. Then the optprobe will hit the
-WARN_ON_ONCE() in the do_free_cleaned_kprobes(), because it is not handled
-in the latter loop of the do_unoptimize_kprobe().
-
-To solve this issue, do not return from do_unoptimize_kprobes() immediately
-even if unoptimizing_list is empty.
-
-Moreover, this change affects another case. kill_optimized_kprobes() expects
-kprobe_optimizer() will just free the optprobe on freeing_list.
-So I changed it to just do list_move() to freeing_list if optprobes are on
-unoptimizing list. And the do_unoptimize_kprobe() will skip
-arch_disarm_kprobe() if the probe on freeing_list has gone flag.
-
-Link: https://lore.kernel.org/all/Y8URdIfVr3pq2X8w@xpf.sh.intel.com/
-Link: https://lore.kernel.org/all/167448024501.3253718.13037333683110512967.stgit@devnote3/
-
-Fixes: e4add247789e ("kprobes: Fix optimize_kprobe()/unoptimize_kprobe() cancellation logic")
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Cc: stable@vger.kernel.org
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-[fp: adjust comment conflict regarding commit 223a76b268c9 ("kprobes: Fix
- coding style issues")]
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20231218225229.2542156-2-bvanassche@acm.org
+Reviewed-by: Can Guo <quic_cang@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kprobes.c |   23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ drivers/ufs/core/ufshcd.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -545,17 +545,15 @@ static void do_unoptimize_kprobes(void)
- 	/* See comment in do_optimize_kprobes() */
- 	lockdep_assert_cpus_held();
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -8204,7 +8204,6 @@ static int ufshcd_add_lus(struct ufs_hba
+ 	ufs_bsg_probe(hba);
+ 	ufshpb_init(hba);
+ 	scsi_scan_host(hba->host);
+-	pm_runtime_put_sync(hba->dev);
  
--	/* Unoptimization must be done anytime */
--	if (list_empty(&unoptimizing_list))
--		return;
-+	if (!list_empty(&unoptimizing_list))
-+		arch_unoptimize_kprobes(&unoptimizing_list, &freeing_list);
+ out:
+ 	return ret;
+@@ -8331,15 +8330,15 @@ static void ufshcd_async_scan(void *data
  
--	arch_unoptimize_kprobes(&unoptimizing_list, &freeing_list);
--	/* Loop free_list for disarming */
-+	/* Loop on 'freeing_list' for disarming and removing from kprobe hash list */
- 	list_for_each_entry_safe(op, tmp, &freeing_list, list) {
- 		/* Switching from detour code to origin */
- 		op->kp.flags &= ~KPROBE_FLAG_OPTIMIZED;
--		/* Disarm probes if marked disabled */
--		if (kprobe_disabled(&op->kp))
-+		/* Disarm probes if marked disabled and not gone */
-+		if (kprobe_disabled(&op->kp) && !kprobe_gone(&op->kp))
- 			arch_disarm_kprobe(&op->kp);
- 		if (kprobe_unused(&op->kp)) {
- 			/*
-@@ -784,14 +782,13 @@ static void kill_optimized_kprobe(struct
- 	op->kp.flags &= ~KPROBE_FLAG_OPTIMIZED;
+ 	/* Probe and add UFS logical units  */
+ 	ret = ufshcd_add_lus(hba);
++
+ out:
++	pm_runtime_put_sync(hba->dev);
+ 	/*
+ 	 * If we failed to initialize the device or the device is not
+ 	 * present, turn off the power/clocks etc.
+ 	 */
+-	if (ret) {
+-		pm_runtime_put_sync(hba->dev);
++	if (ret)
+ 		ufshcd_hba_exit(hba);
+-	}
+ }
  
- 	if (kprobe_unused(p)) {
--		/* Enqueue if it is unused */
--		list_add(&op->list, &freeing_list);
- 		/*
--		 * Remove unused probes from the hash list. After waiting
--		 * for synchronization, this probe is reclaimed.
--		 * (reclaiming is done by do_free_cleaned_kprobes().)
-+		 * Unused kprobe is on unoptimizing or freeing list. We move it
-+		 * to freeing_list and let the kprobe_optimizer() remove it from
-+		 * the kprobe hash list and free it.
- 		 */
--		hlist_del_rcu(&op->kp.hlist);
-+		if (optprobe_queued_unopt(op))
-+			list_move(&op->list, &freeing_list);
- 	}
- 
- 	/* Don't touch the code, because it is already freed. */
+ static const struct attribute_group *ufshcd_driver_groups[] = {
 
 
