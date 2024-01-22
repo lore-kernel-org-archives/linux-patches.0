@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BA21339A7;
-	Tue, 23 Jan 2024 00:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B7013A252;
+	Tue, 23 Jan 2024 00:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969427; cv=none; b=uscMWduZjI7u+o68/pWleQ6o74KZ5anyfVUjByQQLylIbi7iwThLM0Uo+YNwFykSXcRNMPgxilJLG7RQD3TXIEtrPolJoSkyoIPqJUG2vdFFu54WrzV5E/cohOSGYsIIq2ZitmMacY1JfEtuJg9S3nDprXtMzPDMogKGzb7OHkw=
+	t=1705969429; cv=none; b=rFK/xOVkwFkWiJ4B+iwXdL4j5n754fzDQpxIGzzibvLuGPc6ZNe06bBQYJNQwcYB9gPGSe9ZnksRmxy/DsoR7o9w+irv4JEjjS9v7uXdtxioB4pn1DwtdYod/8AEdxNOxP4pszA6tSOCP8D6/DDVnpeETkgO5M2MZOhXoelFYCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969427; c=relaxed/simple;
-	bh=uBmxOAh3/5MWro2CjblwIQ/XqfdUbkMyWr3t84AxwHE=;
+	s=arc-20240116; t=1705969429; c=relaxed/simple;
+	bh=UZIyXKO32peRk58C+ByQPmUiuH6DJkAJh3n5ET3h0to=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ucnCXzsjAw5xST12gQPER50mklJozOIbf4pk4NzyC6X1MJU/6GeKtcZb2TFz9A+Vmq5SnE7RBO5Fmn4QLtt8UQhOTUF2MIo8Z0+xiYVH23jQ+bFL3C4v2/Bh/InlizGQkHA9HC1jMQHeSnUyyEv35sNSE+0QkoF0yuAPIWSMH6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZBM++mu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J4s5MwdNXLhcnofVQaCV68amSAIYtmYy5ECgfx5BXmedrwKO8MVrvcbC2PP6CBDr/w57xPOvy7bHGdFmEgS9IEyHOizmjzjuPhk70RmFs9W/MnVBlpq4T43zKRaHqBM0RtnDoKiQp5ncn2vBc1sWt/53YFYPBh7xnKKZ1rUQ8kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UDxEpf9d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZBM++mu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DABEC43390;
-	Tue, 23 Jan 2024 00:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UDxEpf9d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C2BC433F1;
+	Tue, 23 Jan 2024 00:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969427;
-	bh=uBmxOAh3/5MWro2CjblwIQ/XqfdUbkMyWr3t84AxwHE=;
+	s=korg; t=1705969429;
+	bh=UZIyXKO32peRk58C+ByQPmUiuH6DJkAJh3n5ET3h0to=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZBM++muhZGwcFHG/XRZMgfTtgqxr+uIYjEr9GvsT6/kNNXYseiadO1D9aqnHudlx
-	 Ef7CYIeHsDdhLzlYXWK3Ku+lp8OdVyeznOm/LEubssji7nxFDg6jj5IhYJQKvyrA4k
-	 D0NlwZBA0nYnOl2oQ4YJfHy6sNONX4wy4nIOeNqs=
+	b=UDxEpf9dSl+Cr7oqa0ZArldZcKB8wYsF6h9biG+KeO5uKF3gLFcRR033R/gJqj9ZD
+	 iXKTZYKszlcy7BWXWw/kjYNTXVb/2LJt5iCbMttG9dOk5EkeyZHbQpg3B90K7yJsO+
+	 tiUMXztqko9WotdYazLqMfBOa4BopbdnoOjprttI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Ayala Beker <ayala.beker@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 214/641] wifi: rtlwifi: rtl8192se: using calculate_bit_shift()
-Date: Mon, 22 Jan 2024 15:51:58 -0800
-Message-ID: <20240122235824.643464234@linuxfoundation.org>
+Subject: [PATCH 6.7 215/641] wifi: mac80211: fix advertised TTLM scheduling
+Date: Mon, 22 Jan 2024 15:51:59 -0800
+Message-ID: <20240122235824.673507099@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,76 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Ayala Beker <ayala.beker@intel.com>
 
-[ Upstream commit ac32b9317063b101a8ff3d3e885f76f87a280419 ]
+[ Upstream commit b1a23f8ae0d76ad32fe36682730c050251275b0b ]
 
-Using calculate_bit_shift() to replace _rtl92s_phy_calculate_bit_shift().
-And fix the undefined bitwise shift behavior problem.
+Handle a case of time overflow, where the switch time might
+be smaller than the partial TSF in the beacon.
+Additionally, apply advertised TTLM earlier in order to be
+ready on time on the newly activated links.
 
-Fixes: d15853163bea ("rtlwifi: rtl8192se: Merge phy routines")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231219065739.1895666-10-suhui@nfschina.com
+Fixes: 702e80470a33 ("wifi: mac80211: support handling of advertised TID-to-link mapping")
+Signed-off-by: Ayala Beker <ayala.beker@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231220133549.15079c34e5c8.I0dd50bcceff5953080cdd7aee5118b72c78c6507@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/realtek/rtlwifi/rtl8192se/phy.c  | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ net/mac80211/mlme.c | 49 ++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 40 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192se/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192se/phy.c
-index 09591a0b5a81..d9ef7e1da1db 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192se/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192se/phy.c
-@@ -14,13 +14,6 @@
- #include "hw.h"
- #include "table.h"
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index c8998cf01b7a..dcdaab19efbd 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -43,6 +43,9 @@
+ #define IEEE80211_ASSOC_TIMEOUT_SHORT	(HZ / 10)
+ #define IEEE80211_ASSOC_MAX_TRIES	3
  
--static u32 _rtl92s_phy_calculate_bit_shift(u32 bitmask)
--{
--	u32 i = ffs(bitmask);
--
--	return i ? i - 1 : 32;
--}
--
- u32 rtl92s_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
- {
- 	struct rtl_priv *rtlpriv = rtl_priv(hw);
-@@ -30,7 +23,7 @@ u32 rtl92s_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
- 		regaddr, bitmask);
++#define IEEE80211_ADV_TTLM_SAFETY_BUFFER_MS msecs_to_jiffies(100)
++#define IEEE80211_ADV_TTLM_ST_UNDERFLOW 0xff00
++
+ static int max_nullfunc_tries = 2;
+ module_param(max_nullfunc_tries, int, 0644);
+ MODULE_PARM_DESC(max_nullfunc_tries,
+@@ -5946,6 +5949,13 @@ ieee80211_parse_adv_t2l(struct ieee80211_sub_if_data *sdata,
+ 	pos++;
  
- 	originalvalue = rtl_read_dword(rtlpriv, regaddr);
--	bitshift = _rtl92s_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	returnvalue = (originalvalue & bitmask) >> bitshift;
+ 	ttlm_info->switch_time = get_unaligned_le16(pos);
++
++	/* Since ttlm_info->switch_time == 0 means no switch time, bump it
++	 * by 1.
++	 */
++	if (!ttlm_info->switch_time)
++		ttlm_info->switch_time = 1;
++
+ 	pos += 2;
  
- 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE, "BBR MASK=0x%x Addr[0x%x]=0x%x\n",
-@@ -52,7 +45,7 @@ void rtl92s_phy_set_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask,
+ 	if (control & IEEE80211_TTLM_CONTROL_EXPECTED_DUR_PRESENT) {
+@@ -6040,25 +6050,46 @@ static void ieee80211_process_adv_ttlm(struct ieee80211_sub_if_data *sdata,
+ 		}
  
- 	if (bitmask != MASKDWORD) {
- 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
--		bitshift = _rtl92s_phy_calculate_bit_shift(bitmask);
-+		bitshift = calculate_bit_shift(bitmask);
- 		data = ((originalvalue & (~bitmask)) | (data << bitshift));
+ 		if (ttlm_info.switch_time) {
+-			u32 st_us, delay = 0;
+-			u32 ts_l26 = beacon_ts & GENMASK(25, 0);
++			u16 beacon_ts_tu, st_tu, delay;
++			u32 delay_jiffies;
++			u64 mask;
+ 
+ 			/* The t2l map switch time is indicated with a partial
+-			 * TSF value, convert it to TSF and calc the delay
+-			 * to the start time.
++			 * TSF value (bits 10 to 25), get the partial beacon TS
++			 * as well, and calc the delay to the start time.
++			 */
++			mask = GENMASK_ULL(25, 10);
++			beacon_ts_tu = (beacon_ts & mask) >> 10;
++			st_tu = ttlm_info.switch_time;
++			delay = st_tu - beacon_ts_tu;
++
++			/*
++			 * If the switch time is far in the future, then it
++			 * could also be the previous switch still being
++			 * announced.
++			 * We can simply ignore it for now, if it is a future
++			 * switch the AP will continue to announce it anyway.
++			 */
++			if (delay > IEEE80211_ADV_TTLM_ST_UNDERFLOW)
++				return;
++
++			delay_jiffies = TU_TO_JIFFIES(delay);
++
++			/* Link switching can take time, so schedule it
++			 * 100ms before to be ready on time
+ 			 */
+-			st_us = ieee80211_tu_to_usec(ttlm_info.switch_time);
+-			if (st_us > ts_l26)
+-				delay = st_us - ts_l26;
++			if (delay_jiffies > IEEE80211_ADV_TTLM_SAFETY_BUFFER_MS)
++				delay_jiffies -=
++					IEEE80211_ADV_TTLM_SAFETY_BUFFER_MS;
+ 			else
+-				continue;
++				delay_jiffies = 0;
+ 
+ 			sdata->u.mgd.ttlm_info = ttlm_info;
+ 			wiphy_delayed_work_cancel(sdata->local->hw.wiphy,
+ 						  &sdata->u.mgd.ttlm_work);
+ 			wiphy_delayed_work_queue(sdata->local->hw.wiphy,
+ 						 &sdata->u.mgd.ttlm_work,
+-						 usecs_to_jiffies(delay));
++						 delay_jiffies);
+ 			return;
+ 		}
  	}
- 
-@@ -157,7 +150,7 @@ u32 rtl92s_phy_query_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
- 
- 	original_value = _rtl92s_phy_rf_serial_read(hw, rfpath, regaddr);
- 
--	bitshift = _rtl92s_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	readback_value = (original_value & bitmask) >> bitshift;
- 
- 	spin_unlock(&rtlpriv->locks.rf_lock);
-@@ -188,7 +181,7 @@ void rtl92s_phy_set_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
- 	if (bitmask != RFREG_OFFSET_MASK) {
- 		original_value = _rtl92s_phy_rf_serial_read(hw, rfpath,
- 							    regaddr);
--		bitshift = _rtl92s_phy_calculate_bit_shift(bitmask);
-+		bitshift = calculate_bit_shift(bitmask);
- 		data = ((original_value & (~bitmask)) | (data << bitshift));
- 	}
- 
 -- 
 2.43.0
 
