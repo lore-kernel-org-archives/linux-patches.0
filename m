@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3B65A7B8;
-	Tue, 23 Jan 2024 01:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78B85A7B8;
+	Tue, 23 Jan 2024 01:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974349; cv=none; b=Ti0RPHG0TGFblxeIgn+DdHy4gxgXiVmYChDToxEvgcEFpMCzzqvmBBYovL8+Qx7RQz0xvRorawSWVN5qsUWK1Fy2vqzPx6JggMJWoKcohQRe66f1FVQSuK5mtHm0QWABBP04Do+joUxVykws9svlgNlaw4o2uo7ZjSlSYytr4Z8=
+	t=1705974350; cv=none; b=uhLFZfXb1+7dM20aeU1GCTWewsHNyFdS4Ud8FN9YEeintNy1aUm2/hKNPi3FIv+CCdEvisvYetkJi23iX0cT2pPRUR3hZnn3f9W+N58zG+900hItWgnl1OAVhPqmfK+q8eTlyNZZa0Ebmz6A8/5xDe3jjbZu95C5uzHeJkyqLhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974349; c=relaxed/simple;
-	bh=YEgBQMDirgHf/Nm3CxJOR0JL4VLzSNRFQfi6P23YbRU=;
+	s=arc-20240116; t=1705974350; c=relaxed/simple;
+	bh=WXKGPf0EKTDeshpwou60I3rhaS6fJ5AlRnHdTPw3gmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tJCEBAscHRMUHK3MOIIcPim6emerhJToXlhWAqLXgJKb6frKOMlw5UzEJDGjtun2FsCogcmqYtBzkDKvNZVKf973Unqop1WOQ/IrxQ6gFd7oHsNub0GumoRoN+JQH+Vr1O53Z5iNTNiZpHUZYj+CirHQZ8Weq1WiCnGuH0i2pdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WvsuP+d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ajBJ21kdunWBREvMk3oxySKUKCsHJMgW5BQTPFNRp4tsLCfJ6CHBk1cR7406TzP//Q8Qwoyx0RxNna7Odz0tjXqXOa/4u0O7PqdgzY95v29ydZ7nPqea8mobwLjtDer2DRnrsLZaREP3aJFP18Pjod2Rulo6Z+X161serPrt62o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBfDvI9R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WvsuP+d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6B2C433F1;
-	Tue, 23 Jan 2024 01:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBfDvI9R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2B8C433C7;
+	Tue, 23 Jan 2024 01:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974349;
-	bh=YEgBQMDirgHf/Nm3CxJOR0JL4VLzSNRFQfi6P23YbRU=;
+	s=korg; t=1705974350;
+	bh=WXKGPf0EKTDeshpwou60I3rhaS6fJ5AlRnHdTPw3gmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0WvsuP+dlo+ofgGtVuJDdvwmCRE+wt5hDrtUWXdsyg92F8NKU0yMm9B3VOYzx80fW
-	 4jpUwvHbn2uPyD074F0VsfYtaIA8UnTcE77YuwqDqTz9/saI0IwgoLo4At5Ypydjxa
-	 Ua/sg9PIN4p4TRtwzB9APAOw1Jux70FE4FsAGZCM=
+	b=hBfDvI9RT+ug1+8VawrINyXXTcUxnftkQZI7wggkwMo4Rx2ftWHXfjtoWCcvh4bUA
+	 qAjZnhhVReNj1XUtz4p/t1LpzwkQainA3k47nUtzSh1xJKjLiMBCH6I7i5C3rlqsrW
+	 HQ7/Ok60D8qjpPW0SfXCxitNydzoStmIefDtDYag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Kees Cook <keescook@chromium.org>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 060/583] pstore: ram_core: fix possible overflow in persistent_ram_init_ecc()
-Date: Mon, 22 Jan 2024 15:51:51 -0800
-Message-ID: <20240122235813.962623006@linuxfoundation.org>
+Subject: [PATCH 5.15 187/374] drm/radeon/r600_cs: Fix possible int overflows in r600_cs_check_reg()
+Date: Mon, 22 Jan 2024 15:57:23 -0800
+Message-ID: <20240122235751.126874678@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 86222a8fc16ec517de8da2604d904c9df3a08e5d ]
+[ Upstream commit 39c960bbf9d9ea862398759e75736cfb68c3446f ]
 
-In persistent_ram_init_ecc(), on 64-bit arches DIV_ROUND_UP() will return
-64-bit value since persistent_ram_zone::buffer_size has type size_t which
-is derived from the 64-bit *unsigned long*, while the ecc_blocks variable
-this value gets assigned to has (always 32-bit) *int* type.  Even if that
-value fits into *int* type, an overflow is still possible when calculating
-the size_t typed ecc_total variable further below since there's no cast to
-any 64-bit type before multiplication.  Declaring the ecc_blocks variable
-as *size_t* should fix this mess...
+While improbable, there may be a chance of hitting integer
+overflow when the result of radeon_get_ib_value() gets shifted
+left.
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE static
-analysis tool.
+Avoid it by casting one of the operands to larger data type (u64).
 
-Fixes: 9cc05ad97c57 ("staging: android: persistent_ram: refactor ecc support")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20231105202936.25694-1-s.shtylyov@omp.ru
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 1729dd33d20b ("drm/radeon/kms: r600 CS parser fixes")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/r600_cs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
-index 650e437b55e6..f1848cdd6d34 100644
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -190,7 +190,7 @@ static int persistent_ram_init_ecc(struct persistent_ram_zone *prz,
- {
- 	int numerr;
- 	struct persistent_ram_buffer *buffer = prz->buffer;
--	int ecc_blocks;
-+	size_t ecc_blocks;
- 	size_t ecc_total;
- 
- 	if (!ecc_info || !ecc_info->ecc_size)
+diff --git a/drivers/gpu/drm/radeon/r600_cs.c b/drivers/gpu/drm/radeon/r600_cs.c
+index 8be4799a98ef..6ade5dd470d5 100644
+--- a/drivers/gpu/drm/radeon/r600_cs.c
++++ b/drivers/gpu/drm/radeon/r600_cs.c
+@@ -1277,7 +1277,7 @@ static int r600_cs_check_reg(struct radeon_cs_parser *p, u32 reg, u32 idx)
+ 			return -EINVAL;
+ 		}
+ 		tmp = (reg - CB_COLOR0_BASE) / 4;
+-		track->cb_color_bo_offset[tmp] = radeon_get_ib_value(p, idx) << 8;
++		track->cb_color_bo_offset[tmp] = (u64)radeon_get_ib_value(p, idx) << 8;
+ 		ib[idx] += (u32)((reloc->gpu_offset >> 8) & 0xffffffff);
+ 		track->cb_color_base_last[tmp] = ib[idx];
+ 		track->cb_color_bo[tmp] = reloc->robj;
+@@ -1304,7 +1304,7 @@ static int r600_cs_check_reg(struct radeon_cs_parser *p, u32 reg, u32 idx)
+ 					"0x%04X\n", reg);
+ 			return -EINVAL;
+ 		}
+-		track->htile_offset = radeon_get_ib_value(p, idx) << 8;
++		track->htile_offset = (u64)radeon_get_ib_value(p, idx) << 8;
+ 		ib[idx] += (u32)((reloc->gpu_offset >> 8) & 0xffffffff);
+ 		track->htile_bo = reloc->robj;
+ 		track->db_dirty = true;
 -- 
 2.43.0
 
