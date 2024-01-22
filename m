@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516E1141998;
-	Tue, 23 Jan 2024 01:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABBA1339A7;
+	Tue, 23 Jan 2024 01:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972119; cv=none; b=QptmEYjy/yAgS6TdWdLobbUveg2mywo6dtOO3ly3pN2KIoUtRPVSPkrkZeBaCDAil2RGlBOu0Dt5ofdX2astBP5GxqKjl1vitUpvuWs44OtSuMZKbbnjgN15bsg6TUej42/QXfhzzNs9LCTqgYQFreDO/SY3R5eW5379v6bQqK0=
+	t=1705972121; cv=none; b=sRX+4AkIdB9lCJBj8qEcdraRiU80+51WkZ1oZ8Y9iCPAVD4vFVMIHpQ7ZcvHU8IHK3jFCTcgXRUXo3Z6AEUg+M0WmpZdFl43rLHn4IDGrCiZOqFLGH8C4uTtoFB9iU2d5jh1MBjZXdMX7TRvp1hAW+68Xez5/b11alNHE9N30dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972119; c=relaxed/simple;
-	bh=zFITtTF3GrnJ9MnT8yDizDmbpy9usNULeFAWxQtutLg=;
+	s=arc-20240116; t=1705972121; c=relaxed/simple;
+	bh=gUPOWLOZe+rrlWCruekLxC+yYxAmeBx7dd/mWw9XnLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNDmAAZvHxlhXe0JsjItPm8lHy9/TxqbousWartmpjCyj6fu7hPbaRq5xq2MlHDBmhkzTAAauEQdyu90k87QaeERmZZRt4fMPnGh2mm5jMbWNuNu9XZ+s6YlDkgY5CdPT1MfFK96O1IhD+eGwARTheYIoJ9Q55nqhT09KlQZ/s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=man0OByL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IPKh7Ci5y/khRYXbaVVlNDOvzXUwdbwDlJjuRT6pT0e2Jwwe9D9p770WdNL25xDwaGg+c55h2yofO2h5vQZJG1JHWbXjdSYNow/rGZypHNon7aW7e+8DddjX0H55C0d7erCiFQwm9jfXn5MzNiEGc+F2l2aJr0nTMmIC0MIzbeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LyuJwBNw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="man0OByL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15610C43390;
-	Tue, 23 Jan 2024 01:08:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LyuJwBNw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB981C433C7;
+	Tue, 23 Jan 2024 01:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972119;
-	bh=zFITtTF3GrnJ9MnT8yDizDmbpy9usNULeFAWxQtutLg=;
+	s=korg; t=1705972120;
+	bh=gUPOWLOZe+rrlWCruekLxC+yYxAmeBx7dd/mWw9XnLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=man0OByLHMT5xK4pLc4DhdOSRbKLkJTFgcUqxbA5FhyLrdcvc4Qrxyg4grAqZflEB
-	 ZEcRUJILGwh2MeVG7ZbmJOshK2o5g33Goj/QzaI6QMzbvEcahA39LFG5GPee/JGf3t
-	 lHqHQTkl6bZharwyG58mshD22VEp0eK70yxFrgEg=
+	b=LyuJwBNwOuhCisB+/O3KjLZt44Xw0DYkh0VAbuL5A9Mr5p/QytJdCdxVQXraCQVO4
+	 PCT3KrlekNvdbmF6z12yDEH2r7RjE0ctkXoBoWfF5ZVd4mO+88KMZ4mvVGCN99PdMR
+	 ZU9jjHAQ6X09mF4HNaRvcLWlhhWvwSToE2Gxga7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Sarannya Sasikumar <quic_sarannya@quicinc.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/374] ASoC: ops: add correct range check for limiting volume
-Date: Mon, 22 Jan 2024 15:54:35 -0800
-Message-ID: <20240122235745.298265298@linuxfoundation.org>
+Subject: [PATCH 5.15 047/374] net: qrtr: ns: Return 0 if server port is not present
+Date: Mon, 22 Jan 2024 15:55:03 -0800
+Message-ID: <20240122235746.247167906@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -52,38 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Sarannya S <quic_sarannya@quicinc.com>
 
-[ Upstream commit fb9ad24485087e0f00d84bee7a5914640b2b9024 ]
+[ Upstream commit 9bf2e9165f90dc9f416af53c902be7e33930f728 ]
 
-Volume can have ranges that start with negative values, ex: -84dB to
-+40dB. Apply correct range check in snd_soc_limit_volume before setting
-the platform_max. Without this patch, for example setting a 0dB limit on
-a volume range of -84dB to +40dB would fail.
+When a 'DEL_CLIENT' message is received from the remote, the corresponding
+server port gets deleted. A DEL_SERVER message is then announced for this
+server. As part of handling the subsequent DEL_SERVER message, the name-
+server attempts to delete the server port which results in a '-ENOENT' error.
+The return value from server_del() is then propagated back to qrtr_ns_worker,
+causing excessive error prints.
+To address this, return 0 from control_cmd_del_server() without checking the
+return value of server_del(), since the above scenario is not an error case
+and hence server_del() doesn't have any other error return value.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231204124736.132185-2-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sarannya Sasikumar <quic_sarannya@quicinc.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-ops.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/qrtr/ns.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
-index 12effaa59fdb..c56379fac927 100644
---- a/sound/soc/soc-ops.c
-+++ b/sound/soc/soc-ops.c
-@@ -644,7 +644,7 @@ int snd_soc_limit_volume(struct snd_soc_card *card,
- 	kctl = snd_soc_card_get_kcontrol(card, name);
- 	if (kctl) {
- 		struct soc_mixer_control *mc = (struct soc_mixer_control *)kctl->private_value;
--		if (max <= mc->max) {
-+		if (max <= mc->max - mc->min) {
- 			mc->platform_max = max;
- 			ret = 0;
- 		}
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index 3e40a1ba48f7..4a13b9f7abb4 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -569,7 +569,9 @@ static int ctrl_cmd_del_server(struct sockaddr_qrtr *from,
+ 	if (!node)
+ 		return -ENOENT;
+ 
+-	return server_del(node, port, true);
++	server_del(node, port, true);
++
++	return 0;
+ }
+ 
+ static int ctrl_cmd_new_lookup(struct sockaddr_qrtr *from,
 -- 
 2.43.0
 
