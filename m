@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B962B39AC0;
-	Tue, 23 Jan 2024 00:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6703A27E;
+	Tue, 23 Jan 2024 00:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969813; cv=none; b=N2lrQQSuiZuaoOHbE75UqZaqgZx7gL9tl6yJh+OB6DYQIXjVFBZCjtNI2/9xMpL3Frr77QcZT9jUE06IPZiH5sVUOPvbpJAPLZVjbK5GqsqMpKxPlGRd64Ob2YlOCWm/1Dy1rMjKcQyNUaYaj+Jtoc9ohiX34nk1nQR6DBAiHs0=
+	t=1705969815; cv=none; b=D+FQ1J7loAOLjAZrjY/g7Jp/Qm6UNSG7i/wl5LXoGdNIiiFJhBWVu+oZFgPhvq8r4YzYQtpVhqJ8gQn20eC+Zp6TapwuvzDon3hUoYnzLqA0vnphaR1rKOt69jziZBsB7qcI4MYAVBJ1qmYTwt9BVx9wMaFhilAaoCpz1OYGc+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969813; c=relaxed/simple;
-	bh=8sfcjKGjBC9d2ie1m/VLYS3zqQs88uyeE26EMK5MZPI=;
+	s=arc-20240116; t=1705969815; c=relaxed/simple;
+	bh=zfy2rAJe5Cn1sMdZohc+QJsVgNcPheBk9wmsP14nLvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJdztjKy83PSR9JozM5hPRJl//fxoijZMOhcHJ47FRC5SwVSPxO1gUoYl8pHKueimPrPXUig+1DsiX02FDBvE3AD/N/e9BNzdEPv1xPFmkoeb4anzZeBKJ7cbIfp/Z7+t0do7TzM+u+j/rHqeZzMTMtNbAQrOSZZoMzg/CFDH5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrE5vbsR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=djmuYNhUF3uB3xtXgs+LXDTfdcdx5eOYBMcLIZsQB+Ifx3T+CTcuAPMb/NtRYX7P2WvmHb3XVddBdMyjIBo0ZgkWb/+w4GC/JQPI/L6M+kpV9rizllYJhy23Olms0XJYZrpM2Y99PWoUD44WfyCveIUgjnq1w3qLT2upXLL3amU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KC5sGLf0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrE5vbsR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795A0C433C7;
-	Tue, 23 Jan 2024 00:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KC5sGLf0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB704C433C7;
+	Tue, 23 Jan 2024 00:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969813;
-	bh=8sfcjKGjBC9d2ie1m/VLYS3zqQs88uyeE26EMK5MZPI=;
+	s=korg; t=1705969814;
+	bh=zfy2rAJe5Cn1sMdZohc+QJsVgNcPheBk9wmsP14nLvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GrE5vbsRMHC+EgKbPPVk5MgGT7fCBr5UwSGX202eg9uV5GUiLE0+xjAV+FRAdoNzM
-	 QJeuJM+kCUKrwL68qoWIpEYrQ9N4LL3GFQak53Pam5CV6NohN6cCqJpaxb4hLKfdrx
-	 nXecY2+baFtdS5E+y5rcCnEgwGKEfi6C4oD0SmpA=
+	b=KC5sGLf0M4/qhZ5+yMja9VaR53FiTOXyF58hcKjF4dvEK/4yX6sCxA2eolQDDyz/g
+	 u/JyYKFI8uatO0juDFJHnNaAd+GGW0qC8CYVz9DFzoiB+m3wTpD0QlJowtFQbfLD3S
+	 4eu3wQiceW81cqp9jEIK+EZTpZexc5ES5ZtG2ZQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tadeusz Struk <tstruk@gigaio.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	stable@kernel.org
-Subject: [PATCH 6.7 466/641] PCI/P2PDMA: Remove reference to pci_p2pdma_map_sg()
-Date: Mon, 22 Jan 2024 15:56:10 -0800
-Message-ID: <20240122235832.626346157@linuxfoundation.org>
+	Gui-Dong Han <2045gemini@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.7 449/641] Bluetooth: Fix atomicity violation in {min,max}_key_size_set
+Date: Mon, 22 Jan 2024 15:55:53 -0800
+Message-ID: <20240122235832.073769747@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,48 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tadeusz Struk <tstruk@gigaio.com>
+From: Gui-Dong Han <2045gemini@gmail.com>
 
-commit 9a000a72af75886e5de13f4edef7f0d788622e7d upstream.
+commit da9065caa594d19b26e1a030fd0cc27bd365d685 upstream.
 
-Update Documentation/driver-api/pci/p2pdma.rst doc and remove references to
-obsolete p2pdma mapping functions.
+In min_key_size_set():
+    if (val > hdev->le_max_key_size || val < SMP_MIN_ENC_KEY_SIZE)
+        return -EINVAL;
+    hci_dev_lock(hdev);
+    hdev->le_min_key_size = val;
+    hci_dev_unlock(hdev);
 
-Fixes: 0d06132fc84b ("PCI/P2PDMA: Remove pci_p2pdma_[un]map_sg()")
-Link: https://lore.kernel.org/r/20231113180325.444692-1-tstruk@gmail.com
-Signed-off-by: Tadeusz Struk <tstruk@gigaio.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Cc: stable@kernel.org
+In max_key_size_set():
+    if (val > SMP_MAX_ENC_KEY_SIZE || val < hdev->le_min_key_size)
+        return -EINVAL;
+    hci_dev_lock(hdev);
+    hdev->le_max_key_size = val;
+    hci_dev_unlock(hdev);
+
+The atomicity violation occurs due to concurrent execution of set_min and
+set_max funcs.Consider a scenario where setmin writes a new, valid 'min'
+value, and concurrently, setmax writes a value that is greater than the
+old 'min' but smaller than the new 'min'. In this case, setmax might check
+against the old 'min' value (before acquiring the lock) but write its
+value after the 'min' has been updated by setmin. This leads to a
+situation where the 'max' value ends up being smaller than the 'min'
+value, which is an inconsistency.
+
+This possible bug is found by an experimental static analysis tool
+developed by our team, BassCheck[1]. This tool analyzes the locking APIs
+to extract function pairs that can be concurrently executed, and then
+analyzes the instructions in the paired functions to identify possible
+concurrency bugs including data races and atomicity violations. The above
+possible bug is reported when our tool analyzes the source code of
+Linux 5.17.
+
+To resolve this issue, it is suggested to encompass the validity checks
+within the locked sections in both set_min and set_max funcs. The
+modification ensures that the validation of 'val' against the
+current min/max values is atomic, thus maintaining the integrity of the
+settings. With this patch applied, our tool no longer reports the bug,
+with the kernel configuration allyesconfig for x86_64. Due to the lack of
+associated hardware, we cannot test the patch in runtime testing, and just
+verify it according to the code logic.
+
+[1] https://sites.google.com/view/basscheck/
+
+Fixes: 18f81241b74f ("Bluetooth: Move {min,max}_key_size debugfs ...")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/driver-api/pci/p2pdma.rst |   16 +++-------------
- 1 file changed, 3 insertions(+), 13 deletions(-)
+ net/bluetooth/hci_debugfs.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/Documentation/driver-api/pci/p2pdma.rst
-+++ b/Documentation/driver-api/pci/p2pdma.rst
-@@ -83,19 +83,9 @@ this to include other types of resources
- Client Drivers
- --------------
+--- a/net/bluetooth/hci_debugfs.c
++++ b/net/bluetooth/hci_debugfs.c
+@@ -1046,10 +1046,12 @@ static int min_key_size_set(void *data,
+ {
+ 	struct hci_dev *hdev = data;
  
--A client driver typically only has to conditionally change its DMA map
--routine to use the mapping function :c:func:`pci_p2pdma_map_sg()` instead
--of the usual :c:func:`dma_map_sg()` function. Memory mapped in this
--way does not need to be unmapped.
--
--The client may also, optionally, make use of
--:c:func:`is_pci_p2pdma_page()` to determine when to use the P2P mapping
--functions and when to use the regular mapping functions. In some
--situations, it may be more appropriate to use a flag to indicate a
--given request is P2P memory and map appropriately. It is important to
--ensure that struct pages that back P2P memory stay out of code that
--does not have support for them as other code may treat the pages as
--regular memory which may not be appropriate.
-+A client driver only has to use the mapping API :c:func:`dma_map_sg()`
-+and :c:func:`dma_unmap_sg()` functions as usual, and the implementation
-+will do the right thing for the P2P capable memory.
+-	if (val > hdev->le_max_key_size || val < SMP_MIN_ENC_KEY_SIZE)
++	hci_dev_lock(hdev);
++	if (val > hdev->le_max_key_size || val < SMP_MIN_ENC_KEY_SIZE) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
  
+-	hci_dev_lock(hdev);
+ 	hdev->le_min_key_size = val;
+ 	hci_dev_unlock(hdev);
  
- Orchestrator Drivers
+@@ -1074,10 +1076,12 @@ static int max_key_size_set(void *data,
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val > SMP_MAX_ENC_KEY_SIZE || val < hdev->le_min_key_size)
++	hci_dev_lock(hdev);
++	if (val > SMP_MAX_ENC_KEY_SIZE || val < hdev->le_min_key_size) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->le_max_key_size = val;
+ 	hci_dev_unlock(hdev);
+ 
 
 
