@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721F6629E1;
-	Tue, 23 Jan 2024 01:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5287C62802;
+	Tue, 23 Jan 2024 01:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974966; cv=none; b=WS6achaWuSxGQ/vs1fjqQMCqcfLnlnM/2gW32PZd+A6SjkUNADKBNSnPKldvqpuqXdc5iVrkuvLqouDD5J7oDua8C6sLKI894AW+IRwx5qn9Wdq21uWNTAVyw0i6jOeDNbQnf+/o3zzSig8XkizVoOAvtZsNdUIXVixZp80HPzw=
+	t=1705974967; cv=none; b=TVqRL5Yw38kO9U83Tsom5gqeo65/J0vwGw5FaYZ5fYb4xMacPlLY3pHtY1M77pJj6Wh4LzCUD5BqC5+Vew6PMiZfk+el/RUi5FqsZgVvxhxFeiKRO0NSCtThDlnc+zgA41qkzyklMkD4DgBLhtWwVBKZrNSroF4Ub+IFJwXRsvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974966; c=relaxed/simple;
-	bh=50O3UWUy4GRFE+bwCgIqF01X9kkekzOClc5O+QZrLdo=;
+	s=arc-20240116; t=1705974967; c=relaxed/simple;
+	bh=9euEvJDHHCKRYYfvlVPZjpLF246FPE37+8xxsWd/d3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iLi6D40f4eB8XYzZuFLmIUkovwHEbxCNUAn/9gOzuHL9UzC4L7iTfdFV92fIUJt53YbZJiFGnihzSJeTuSLqSlptxK6CpqMzVP8dYsAnUKMS5HOcTuKMNHBEeL6978TkKRTf0UAReC+oGDjxKNM/wX2KkUmEYLhBNwMooxiMDCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJvGqfNT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kH6Oanj4uvGNbfBmtV7TpB4hZf7SuuDTShbgz+ubKO81rvKC9i79gi3L6BC0NiyBeqnWTH1/Fh2uQeo13koXQ0P+ffYS3KKHfvqAS9xFbVCdHYCGWz+T6hOaQOOA3nBMee1Vjyl6HCS+LeUJ7xS5KHXLTswM6lx56iltARXjrHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZ7Vc/iO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJvGqfNT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E75C433F1;
-	Tue, 23 Jan 2024 01:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZ7Vc/iO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18676C433F1;
+	Tue, 23 Jan 2024 01:56:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974966;
-	bh=50O3UWUy4GRFE+bwCgIqF01X9kkekzOClc5O+QZrLdo=;
+	s=korg; t=1705974967;
+	bh=9euEvJDHHCKRYYfvlVPZjpLF246FPE37+8xxsWd/d3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJvGqfNT7hiUEgJJ8iTCMvGK9lGE8L9SmM+PDno6PCfgPQKDYNNwllMTAs2sAIElr
-	 dJJJtu3NPD45TaeZs6qIgUUYMu+mqNXPoU5J+a23L2QShZ9mBHNPv5madzyHvqZDbm
-	 lX1xDADVj7u7LMOQD7JAVmXm/OniIwz8C2zXRMVs=
+	b=SZ7Vc/iOEaPxEymLIHZM/XNYEsp0uXYnFq9WyJj9KB0k+8lzFve+uIP0/FDLm5XWo
+	 /shizZbl+OPUxncI1oa2DMl+II8A7oBP8ylEYPDZC9nNLV3MUAJ7ls9kLPVbGqoNiW
+	 2z2FarRIJGDE2lwfMAOJxTiocyPwNt0nfKfpCvWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 6.6 158/583] scsi: ufs: qcom: Fix the return value of ufs_qcom_ice_program_key()
-Date: Mon, 22 Jan 2024 15:53:29 -0800
-Message-ID: <20240122235816.884473966@linuxfoundation.org>
+	Hou Tao <houtao1@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 172/583] bpf: Limit the number of kprobes when attaching program to multiple kprobes
+Date: Mon, 22 Jan 2024 15:53:43 -0800
+Message-ID: <20240122235817.292147893@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,38 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 3bf7ab4ac30c03beecf57c052e87d5a38fb8aed6 ]
+[ Upstream commit d6d1e6c17cab2dcb7b8530c599f00e7de906d380 ]
 
-Currently, the function returns -EINVAL if algorithm other than AES-256-XTS
-is requested. But the correct error code is -EOPNOTSUPP. Fix it!
+An abnormally big cnt may also be assigned to kprobe_multi.cnt when
+attaching multiple kprobes. It will trigger the following warning in
+kvmalloc_node():
 
-Cc: Abel Vesa <abel.vesa@linaro.org>
-Fixes: 56541c7c4468 ("scsi: ufs: ufs-qcom: Switch to the new ICE API")
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20231208065902.11006-3-manivannan.sadhasivam@linaro.org
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+	if (unlikely(size > INT_MAX)) {
+	    WARN_ON_ONCE(!(flags & __GFP_NOWARN));
+	    return NULL;
+	}
+
+Fix the warning by limiting the maximal number of kprobes in
+bpf_kprobe_multi_link_attach(). If the number of kprobes is greater than
+MAX_KPROBE_MULTI_CNT, the attachment will fail and return -E2BIG.
+
+Fixes: 0dcac2725406 ("bpf: Add multi kprobe link")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20231215100708.2265609-3-houtao@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/bpf_trace.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index fc40726e13c2..fc0fa1065a30 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -159,7 +159,7 @@ static int ufs_qcom_ice_program_key(struct ufs_hba *hba,
- 	cap = hba->crypto_cap_array[cfg->crypto_cap_idx];
- 	if (cap.algorithm_id != UFS_CRYPTO_ALG_AES_XTS ||
- 	    cap.key_size != UFS_CRYPTO_KEY_SIZE_256)
--		return -EINVAL;
-+		return -EOPNOTSUPP;
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 39c4cef98b95..1d76f3b014ae 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -42,6 +42,7 @@
+ 	rcu_dereference_protected(p, lockdep_is_held(&bpf_event_mutex))
  
- 	if (config_enable)
- 		return qcom_ice_program_key(host->ice,
+ #define MAX_UPROBE_MULTI_CNT (1U << 20)
++#define MAX_KPROBE_MULTI_CNT (1U << 20)
+ 
+ #ifdef CONFIG_MODULES
+ struct bpf_trace_module {
+@@ -2897,6 +2898,8 @@ int bpf_kprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
+ 	cnt = attr->link_create.kprobe_multi.cnt;
+ 	if (!cnt)
+ 		return -EINVAL;
++	if (cnt > MAX_KPROBE_MULTI_CNT)
++		return -E2BIG;
+ 
+ 	size = cnt * sizeof(*addrs);
+ 	addrs = kvmalloc_array(cnt, sizeof(*addrs), GFP_KERNEL);
 -- 
 2.43.0
 
