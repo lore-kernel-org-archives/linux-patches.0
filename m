@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79D45C5EF;
-	Tue, 23 Jan 2024 01:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294B75BAFD;
+	Tue, 23 Jan 2024 01:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974361; cv=none; b=s7hT2Ogeygw2GQLcNf6K1FHkKO7T3uuMdY27sNPa4FE7l5suKAANGlbkZOUavp28vxCUMeqg9PIhaJJZ5hoJD3fyaQeLDAltCEDEB9flnJgF6gkPKeU7EgGIgzw06kNrXKd3OBZvk2r4VNTpRFmSs1fDRIwgPYUrCUiIYQuMyhA=
+	t=1705974363; cv=none; b=bXhlvI83zUz6hkGedaEXz9lpoz55Wtkz7IuXnEuFauzDikq9bSmKLBT6Abn4DlC09ZlKZnu9l8xAbqLdUsa8hwDswVovbhhJ9pt9KdJlprJ1UR50EsftDXVSVtwy6/npAChIkKolekt+f51+t80c04d+kPnZtnaDkT7NG01p5zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974361; c=relaxed/simple;
-	bh=khOPx1ttPv9ZWuTLz1t4ipbbC/JsLb/H1mAdKKZQbHc=;
+	s=arc-20240116; t=1705974363; c=relaxed/simple;
+	bh=I0nF9wzn4Nb51WINtjz0iYi8eTKxAZjirIjiEJveHk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cz/0vCGspOWORzjzLYjhNTj/HESXDr2z/1iHBGj5igw8n/tr3nwrBr2QRt5amGvBAOn2+DQc+Hc1M/pkrV+INYn0ZRiUBp7NiaEW4wtVS+9mfKdFV6GzCGMxXk+UOihX0R4GzK2CiXABB2NYNV+yFuWuVQ3BLh8ei+APa2MYY8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/eL2Xvg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GB2xDciZEfgExX9XCGb7hV+ptphZEZ/EL0/moGq3bPH8C8Kw3tBoleLUm1rk+B7mRNBmOQce101ex3TXTeEHdQ+hbwZBGAgcStcwb5J41qMB/F6xFpN1F2kUb1NNo8WaDvWjH2jXc0ZjnOvFQv5WoSyegoJvjMF8m1IZ9kHqwNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkwsnuBl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/eL2Xvg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A289C433F1;
-	Tue, 23 Jan 2024 01:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkwsnuBl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D00C43390;
+	Tue, 23 Jan 2024 01:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974361;
-	bh=khOPx1ttPv9ZWuTLz1t4ipbbC/JsLb/H1mAdKKZQbHc=;
+	s=korg; t=1705974362;
+	bh=I0nF9wzn4Nb51WINtjz0iYi8eTKxAZjirIjiEJveHk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/eL2Xvg85f7F500LM8nsMCLckbyaw8drsUqfZy/LDv9cct0Jc4yYvKRQMqau/LgB
-	 vulAF4yFO2McIUIl/TXEu3SVa5+/GjuKtd+LV0R76xie8jY1Ye05t4Ksi1fwNCl9J7
-	 05u4jlo3avB78en3F8dreBRrdbmCFskDo59BNZC8=
+	b=XkwsnuBlyC81SlYWbAsvk69SW44wVScdQZMkBwMEE+3Kp8zEWQUh4ZjxiaAwN8gUl
+	 NQnCkQKM3rWqnEW3+PQUaeDNKwn7gRJnljJqnbvHFz6xoOFndKR3BMQQIapny5Whe6
+	 oIyviGHg/pX0UhwmRmgdrw1vQz8vmxVktjGNXcuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	wangyangxin <wangyangxin1@huawei.com>,
+	Gonglei <arei.gonglei@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 192/374] drm/msm/mdp4: flush vblank event on disable
-Date: Mon, 22 Jan 2024 15:57:28 -0800
-Message-ID: <20240122235751.291132128@linuxfoundation.org>
+Subject: [PATCH 6.6 066/583] crypto: virtio - Wait for tasklet to complete on device remove
+Date: Mon, 22 Jan 2024 15:51:57 -0800
+Message-ID: <20240122235814.164404090@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: wangyangxin <wangyangxin1@huawei.com>
 
-[ Upstream commit c6721b3c6423d8a348ae885a0f4c85e14f9bf85c ]
+[ Upstream commit 67cc511e8d436456cc98033e6d4ba83ebfc8e672 ]
 
-Flush queued events when disabling the crtc. This avoids timeouts when
-we come back and wait for dependencies (like the previous frame's
-flip_done).
+The scheduled tasklet needs to be executed on device remove.
 
-Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/569127/
-Link: https://lore.kernel.org/r/20231127215401.4064128-1-dmitry.baryshkov@linaro.org
+Fixes: fed93fb62e05 ("crypto: virtio - Handle dataq logic with tasklet")
+Signed-off-by: wangyangxin <wangyangxin1@huawei.com>
+Signed-off-by: Gonglei <arei.gonglei@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/crypto/virtio/virtio_crypto_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-index 169f9de4a12a..3100957225a7 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-@@ -269,6 +269,7 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
+diff --git a/drivers/crypto/virtio/virtio_crypto_core.c b/drivers/crypto/virtio/virtio_crypto_core.c
+index 428d76562447..b909c6a2bf1c 100644
+--- a/drivers/crypto/virtio/virtio_crypto_core.c
++++ b/drivers/crypto/virtio/virtio_crypto_core.c
+@@ -500,12 +500,15 @@ static void virtcrypto_free_unused_reqs(struct virtio_crypto *vcrypto)
+ static void virtcrypto_remove(struct virtio_device *vdev)
  {
- 	struct mdp4_crtc *mdp4_crtc = to_mdp4_crtc(crtc);
- 	struct mdp4_kms *mdp4_kms = get_kms(crtc);
-+	unsigned long flags;
+ 	struct virtio_crypto *vcrypto = vdev->priv;
++	int i;
  
- 	DBG("%s", mdp4_crtc->name);
+ 	dev_info(&vdev->dev, "Start virtcrypto_remove.\n");
  
-@@ -281,6 +282,14 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
- 	mdp_irq_unregister(&mdp4_kms->base, &mdp4_crtc->err);
- 	mdp4_disable(mdp4_kms);
- 
-+	if (crtc->state->event && !crtc->state->active) {
-+		WARN_ON(mdp4_crtc->event);
-+		spin_lock_irqsave(&mdp4_kms->dev->event_lock, flags);
-+		drm_crtc_send_vblank_event(crtc, crtc->state->event);
-+		crtc->state->event = NULL;
-+		spin_unlock_irqrestore(&mdp4_kms->dev->event_lock, flags);
-+	}
-+
- 	mdp4_crtc->enabled = false;
- }
- 
+ 	flush_work(&vcrypto->config_work);
+ 	if (virtcrypto_dev_started(vcrypto))
+ 		virtcrypto_dev_stop(vcrypto);
++	for (i = 0; i < vcrypto->max_data_queues; i++)
++		tasklet_kill(&vcrypto->data_vq[i].done_task);
+ 	virtio_reset_device(vdev);
+ 	virtcrypto_free_unused_reqs(vcrypto);
+ 	virtcrypto_clear_crypto_engines(vcrypto);
 -- 
 2.43.0
 
