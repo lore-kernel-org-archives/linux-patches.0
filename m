@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C401869;
-	Tue, 23 Jan 2024 00:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69C31FDB;
+	Tue, 23 Jan 2024 00:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969487; cv=none; b=PveqwTtiWIgzgGlPge4xSE2goqkMK7/DzjKVoo4T25Wc2I2/YHrTkh9GHmd/+7JXT7DhHcGMSbsN1sQtvo7JNKz7ybfrpvMB0Go6mFddWY5e0jbbqFOORNeUoAgaLMjWIZMu5rmbBTR7Me4wKNYJpLMcpEd3zM025k8J+lKw2oA=
+	t=1705969488; cv=none; b=OE4bFynP9mlAJ5YP8Nc2TsSWJ54ccs84elHNOhP7rg99CGC9skDil01JjWHYAqHEbjS/+ZeXh9V+1JsZ6ph3yQ8In2eL+bzjNKEau4lYbqgQKdw0ImdqrhdR4YyiVlkcPjsMKqOLqoF6v+NNj8iu3/crTpRLL3XIzyymAY9+CKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969487; c=relaxed/simple;
-	bh=rMaUvT4FuVTQdhAsHQjKsFPrX1hAsABIzlk5a1ICwE0=;
+	s=arc-20240116; t=1705969488; c=relaxed/simple;
+	bh=N/mdc422U8S8qQ28tKuRS3M6oiqaVCAjyu+FgCXwpBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=huRx0J5Kc/rhS6MTwqDonG4Dp+dFfU2cPuHniYLD6y8IGhCdwaM3xtZCZ8Cae2Y4ddiEOIjixIFUtnXbxkRSv1zGq6QyHr7fe4o/bSE4VF/C9n8MMZZoOUCeLJp+qE/zGIQ6EJI0okLTagiSSx0rO64Y750AksSPMnR/bLpZSfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ow8qlLiq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LGo1nrQP6NSh43Bk/vUXXz+PYqZhLMuaXZqyLjzcViyKhXv/SWsNFux9Yk+cgOYAxVyEDpB2F++FC3mJWCPl5SladCpEhjlTfBlvVJUY27geW7pV6NGSre5099WAwA/2aD1dU02GpqHKRH6JHBS7fYwv+HiG0VSt0sRqlMxyZh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1pD3R2N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ow8qlLiq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733B4C43390;
-	Tue, 23 Jan 2024 00:24:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1pD3R2N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A05C433A6;
+	Tue, 23 Jan 2024 00:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969487;
-	bh=rMaUvT4FuVTQdhAsHQjKsFPrX1hAsABIzlk5a1ICwE0=;
+	s=korg; t=1705969488;
+	bh=N/mdc422U8S8qQ28tKuRS3M6oiqaVCAjyu+FgCXwpBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ow8qlLiqHpxgW+oT+DomCxxYg50kzshXm87sc12IUPMRppe0FxNgOXEKjQnQJgRDM
-	 XRhqquM2HdRocqXP2xJp8pGCd+NZ1YtSKZaXmpABVLBY0X02gJsFdDLhz+saW0sjA+
-	 dYr7EzskbRL7lOWMkY6BaSEY75NFXMAmVlPZeMmA=
+	b=L1pD3R2NBuzqAOoqTVRGlkLdCHwIMy3o6yAggI0VFu1BPXixIXK68ETKco4Fw8IMO
+	 44ela/bZj/i/GwoPO4zuA1/jVzP/xYCe0u7cBngLjkxoK2Mstvf1EiY1tJ1EumRV5f
+	 ARfkDuQl/ujr7wnmlHefQMyJ9wAsLrIDlhsATtoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 277/641] ASoC: cs35l34: Fix GPIO name and drop legacy include
-Date: Mon, 22 Jan 2024 15:53:01 -0800
-Message-ID: <20240122235826.583855676@linuxfoundation.org>
+Subject: [PATCH 6.7 278/641] drm/msm/a6xx: add QMP dependency
+Date: Mon, 22 Jan 2024 15:53:02 -0800
+Message-ID: <20240122235826.610235002@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,63 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit a6122b0b4211d132934ef99e7b737910e6d54d2f ]
+[ Upstream commit 96ab215b2d5edc39310c00f50b33d8ab72ac3fe3 ]
 
-This driver includes the legacy GPIO APIs <linux/gpio.h> and
-<linux/of_gpio.h> but does not use any symbols from any of
-them.
+When QMP is in a loadable module, the A6xx GPU driver fails to link
+as built-in:
 
-Drop the includes.
+x86_64-linux-ld: drivers/gpu/drm/msm/adreno/a6xx_gmu.o: in function `a6xx_gmu_resume':
+a6xx_gmu.c:(.text+0xd62): undefined reference to `qmp_send'
 
-Further the driver is requesting "reset-gpios" rather than
-just "reset" from the GPIO framework. This is wrong because
-the gpiolib core will add "-gpios" before processing the
-request from e.g. device tree. Drop the suffix.
+Add the usual dependency that still allows compiling without QMP but
+otherwise avoids the broken combination of options.
 
-The last problem means that the optional RESET GPIO has
-never been properly retrieved and used even if it existed,
-but nobody noticed.
-
-Fixes: c1124c09e103 ("ASoC: cs35l34: Initial commit of the cs35l34 CODEC driver.")
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20231201-descriptors-sound-cirrus-v2-3-ee9f9d4655eb@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 88a0997f2f949 ("drm/msm/a6xx: Send ACD state to QMP at GMU resume")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/562945/
+Link: https://lore.kernel.org/r/20231016200415.791090-1-arnd@kernel.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l34.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/msm/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/cs35l34.c b/sound/soc/codecs/cs35l34.c
-index e5871736fa29..cca59de66b73 100644
---- a/sound/soc/codecs/cs35l34.c
-+++ b/sound/soc/codecs/cs35l34.c
-@@ -20,14 +20,12 @@
- #include <linux/regulator/machine.h>
- #include <linux/pm_runtime.h>
- #include <linux/of.h>
--#include <linux/of_gpio.h>
- #include <linux/of_irq.h>
- #include <sound/core.h>
- #include <sound/pcm.h>
- #include <sound/pcm_params.h>
- #include <sound/soc.h>
- #include <sound/soc-dapm.h>
--#include <linux/gpio.h>
- #include <linux/gpio/consumer.h>
- #include <sound/initval.h>
- #include <sound/tlv.h>
-@@ -1061,7 +1059,7 @@ static int cs35l34_i2c_probe(struct i2c_client *i2c_client)
- 		dev_err(&i2c_client->dev, "Failed to request IRQ: %d\n", ret);
- 
- 	cs35l34->reset_gpio = devm_gpiod_get_optional(&i2c_client->dev,
--				"reset-gpios", GPIOD_OUT_LOW);
-+				"reset", GPIOD_OUT_LOW);
- 	if (IS_ERR(cs35l34->reset_gpio)) {
- 		ret = PTR_ERR(cs35l34->reset_gpio);
- 		goto err_regulator;
+diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+index 6309a857ca31..ad70b611b44f 100644
+--- a/drivers/gpu/drm/msm/Kconfig
++++ b/drivers/gpu/drm/msm/Kconfig
+@@ -6,6 +6,7 @@ config DRM_MSM
+ 	depends on ARCH_QCOM || SOC_IMX5 || COMPILE_TEST
+ 	depends on COMMON_CLK
+ 	depends on IOMMU_SUPPORT
++	depends on QCOM_AOSS_QMP || QCOM_AOSS_QMP=n
+ 	depends on QCOM_OCMEM || QCOM_OCMEM=n
+ 	depends on QCOM_LLCC || QCOM_LLCC=n
+ 	depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=n
 -- 
 2.43.0
 
