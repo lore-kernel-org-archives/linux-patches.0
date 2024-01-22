@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3772B9B7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689522B9B7;
 	Tue, 23 Jan 2024 01:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974113; cv=none; b=ivJJ+onGkMdHAxSq4aE69HxyE5K3XBRcmo9YiiClr/5stN1ppA6slV1IjaRE5UtXwx7z0NVs1ZwvKDqDFJug3ybX0FN1SFH6uSvHqjr4e++wUCKsR3lU5dAwdtEZvvE2ZMVSQO7wsGkcy7lhj7FEHbH6+WdngUFoCyQM6FQ+tQw=
+	t=1705974114; cv=none; b=Vzn7l9VG0UcawlhnzDwgBLAG/ObY7eYjawry8xLWFlpxtJPHgbdnDGKLYxHz4ZmNwDb1C+GzYkBWLcykjs2SSiz/6VDdZjasFnKmRP/FH54YVgfUXQdwLkYL68Aapb58JvbQl1zuyeahMUKNYjFzSVMYobGa2/kIGK3BcS+qhdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974113; c=relaxed/simple;
-	bh=BDj7xWi/bbAZjDDZ4RADsvOx2cZ+237xd8qfqbxYtHk=;
+	s=arc-20240116; t=1705974114; c=relaxed/simple;
+	bh=0CsZ/yywgPVMhH7IiUC0bvaMrJRK/zGtPlvPGP8zVX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HnwLbCgbRk8T6Fy4GfdDg0P6K1xu0YH+oR2C/erP6R6TnlFJewxIk0U9oejKtyKnxdCrWCLbWLbXAXa529nDirQLX+/ScySmQG90Z0WxkMsFMj1M0MOxv4v/x2aKskNePhZSHGAZBq88rvHV4k+e4T4tnx7i2vH3LjJCrRYnl+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsnIbdA6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TXJ2ANopzqsCg+GtyRwjGzZXcUFKWlhhnon18EGww3CLW8Sr+xEAaIhoq/0yDoNpIxPjuy7laY41gGuDVrE1e+mnVEEOd+sa9+921TX3xy5ZCb2KIG27kRdPKoSwM9x9gy1yFyV0uqCF+Zl+cV8vmeDd7t5f3Hnw0D5qPObc5VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pf4chDk7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsnIbdA6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D647AC43399;
-	Tue, 23 Jan 2024 01:41:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pf4chDk7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC524C433C7;
+	Tue, 23 Jan 2024 01:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705974113;
-	bh=BDj7xWi/bbAZjDDZ4RADsvOx2cZ+237xd8qfqbxYtHk=;
+	bh=0CsZ/yywgPVMhH7IiUC0bvaMrJRK/zGtPlvPGP8zVX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gsnIbdA6Ir3iCqjp8/trNxr0RpjV1RVSlKFbfGoYth7o8G/grCVFgDaeTGK8G2Q/9
-	 kO+nySx7Q+tBNs/WYY/E9cGzO5IdDpMpLe1vWZPRDEfIuuPGX0CPyTUIjE/sCZzoM8
-	 8lTG3nfUOoIPyBPyifEim1eVrtfEnjsgUaBEDwkM=
+	b=pf4chDk7FY94ggzw9TpwjCPYjunRLEYt8qpmTuF745Wrefeh1pMr+yex3cnNo1/Hk
+	 AZ7DGr6TfLkWkG3yttzjbL2WQTO+SSt5thT0kXFvr2h/YUroa0aHzlmxYDJzspSPbW
+	 BRm3WoHaro0QlED7XRx4ZY8h7advUky9RQigQ3Dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Yihang Li <liyihang9@huawei.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 168/374] block: make BLK_DEF_MAX_SECTORS unsigned
-Date: Mon, 22 Jan 2024 15:57:04 -0800
-Message-ID: <20240122235750.473062285@linuxfoundation.org>
+Subject: [PATCH 5.15 146/374] scsi: hisi_sas: Correct the number of global debugfs registers
+Date: Mon, 22 Jan 2024 15:56:42 -0800
+Message-ID: <20240122235749.710059001@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -54,73 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Yihang Li <liyihang9@huawei.com>
 
-[ Upstream commit 0a26f327e46c203229e72c823dfec71a2b405ec5 ]
+[ Upstream commit 73e33f969ef05328766b23a99b2c07bfff765009 ]
 
-This is used as an unsigned value, so define it that way to avoid
-having to cast it.
+In function debugfs_debugfs_snapshot_global_reg_v3_hw() it uses
+debugfs_axi_reg.count (which is the number of axi debugfs registers) to
+acquire the number of global debugfs registers.
 
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Link: https://lore.kernel.org/r/20230105205146.3610282-2-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 9a9525de8654 ("null_blk: don't cap max_hw_sectors to BLK_DEF_MAX_SECTORS")
+Use debugfs_global_reg.count to acquire the number of global debugfs
+registers instead.
+
+Fixes: 623a4b6d5c2a ("scsi: hisi_sas: Move debugfs code to v3 hw driver")
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
+Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
+Link: https://lore.kernel.org/r/1702525516-51258-6-git-send-email-chenxiang66@hisilicon.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-settings.c          | 2 +-
- drivers/block/null_blk/main.c | 3 +--
- include/linux/blkdev.h        | 3 ++-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-settings.c b/block/blk-settings.c
-index 73a80895e3ae..959b5c1e6d3b 100644
---- a/block/blk-settings.c
-+++ b/block/blk-settings.c
-@@ -136,7 +136,7 @@ void blk_queue_max_hw_sectors(struct request_queue *q, unsigned int max_hw_secto
- 	limits->max_hw_sectors = max_hw_sectors;
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index 4505310c0c3c..1651d03d3b46 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -3331,7 +3331,7 @@ static void debugfs_snapshot_global_reg_v3_hw(struct hisi_hba *hisi_hba)
+ 	u32 *databuf = hisi_hba->debugfs_regs[dump_index][DEBUGFS_GLOBAL].data;
+ 	int i;
  
- 	max_sectors = min_not_zero(max_hw_sectors, limits->max_dev_sectors);
--	max_sectors = min_t(unsigned int, max_sectors, BLK_DEF_MAX_SECTORS);
-+	max_sectors = min(max_sectors, BLK_DEF_MAX_SECTORS);
- 	max_sectors = round_down(max_sectors,
- 				 limits->logical_block_size >> SECTOR_SHIFT);
- 	limits->max_sectors = max_sectors;
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 686ec6bcdef3..4a867233b14a 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -1902,8 +1902,7 @@ static int null_add_dev(struct nullb_device *dev)
- 	blk_queue_physical_block_size(nullb->q, dev->blocksize);
- 	if (!dev->max_sectors)
- 		dev->max_sectors = queue_max_hw_sectors(nullb->q);
--	dev->max_sectors = min_t(unsigned int, dev->max_sectors,
--				 BLK_DEF_MAX_SECTORS);
-+	dev->max_sectors = min(dev->max_sectors, BLK_DEF_MAX_SECTORS);
- 	blk_queue_max_hw_sectors(nullb->q, dev->max_sectors);
+-	for (i = 0; i < debugfs_axi_reg.count; i++, databuf++)
++	for (i = 0; i < debugfs_global_reg.count; i++, databuf++)
+ 		*databuf = hisi_sas_read32(hisi_hba, 4 * i);
+ }
  
- 	if (dev->virt_boundary)
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 67344dfe07a7..905844172cfd 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -1334,11 +1334,12 @@ static inline bool bdev_is_partition(struct block_device *bdev)
- enum blk_default_limits {
- 	BLK_MAX_SEGMENTS	= 128,
- 	BLK_SAFE_MAX_SECTORS	= 255,
--	BLK_DEF_MAX_SECTORS	= 2560,
- 	BLK_MAX_SEGMENT_SIZE	= 65536,
- 	BLK_SEG_BOUNDARY_MASK	= 0xFFFFFFFFUL,
- };
- 
-+#define BLK_DEF_MAX_SECTORS 2560u
-+
- static inline unsigned long queue_segment_boundary(const struct request_queue *q)
- {
- 	return q->limits.seg_boundary_mask;
 -- 
 2.43.0
 
