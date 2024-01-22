@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86D552F7C;
-	Tue, 23 Jan 2024 00:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAAF52F7C;
+	Tue, 23 Jan 2024 00:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969935; cv=none; b=IaohGYrlybpl5IecJNRjaRpb12LgHEaKGlxUvFHzgKmGzh1kw9oe15wP09NwLONhs+GZK+J84fOPthvrJKMwrSRkwD31EN6eX4RVBc8mOt30JHFJtkk3c030fEtLS0gmVQWfIhCQLfvkS4Ya4mOJV6870Yx6MDpplYZdCyMuRew=
+	t=1705969938; cv=none; b=qYMqsEP/FSL9bio155uNU/+i2p/Fx0H/bgkdYO+RYw5yEVpB+T9+BKVqy0bH7shv+G3RA8ednSLi6lM6tP+elufL8a7WD7hr0Pgta8/5aAXa1yiUxVrkHv/BgUDYpcY7ub3fja3A+89ydlC8WOcXwpUIJJhY2QpJzMsEKkJdEOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969935; c=relaxed/simple;
-	bh=0f+fNcUNF2wpEhC2AyMLwF7POsSjBgfw3hJ1zjnNrZs=;
+	s=arc-20240116; t=1705969938; c=relaxed/simple;
+	bh=RGbJ14mPK3fOA56Ar21PRf3IwBEi9s84Vjit/FazBfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+A+dSP+g1qDocE3UJ0dJpURCf26VovF1rNrWWSMDKLGwKictAchKWmKLdsBQO+EhQTc8d7I3ZgFY1ggjLT+loAI98bqfveGvV8FJrBRvoYask2nP6vKJOjy1flGyDBi6h+zwthdBYMSef8zFnOFtAYWromjTH28Ny1fi3zvmYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlaLH+db; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qJ50tTehBsH/KDpfuY8HyN33iXwMO6tIxeLZtPxTd/N0dv8whxNRu0kSVidrbgqz2LrbReSJFMGfesRxL2r9D3Nk0gg8mx8fgC1xZDhMRbvssavchpOptOOS5jAgGw4RPDDfIcKI0RixQBiZGLhlI2vHb7/S4TzEso6PJG3Togo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlNY1O1Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlaLH+db"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62885C433F1;
-	Tue, 23 Jan 2024 00:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlNY1O1Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2ECC433C7;
+	Tue, 23 Jan 2024 00:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969935;
-	bh=0f+fNcUNF2wpEhC2AyMLwF7POsSjBgfw3hJ1zjnNrZs=;
+	s=korg; t=1705969938;
+	bh=RGbJ14mPK3fOA56Ar21PRf3IwBEi9s84Vjit/FazBfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dlaLH+dbo9aFy0D/UkrA3+5Rm3Eeb+KJWfL5kv4G0WCRdk0vGhemvGZ/l3ucR+eRW
-	 2hkdPw+ZaV6z0bnxWBsSM5atYN3/x8dw9wCazbwm8PNN1UBpqQMbkz/+dPlRm3adUT
-	 Xu7gvkEv5Y679vaNLPBtssC2yx+eaoZDHWrbKSuc=
+	b=WlNY1O1Ybxcv5o/1YvDYYjHdZi1l6T3wXscTAv5YJNFdFfYzeEdpTNTGWhisRnf4Z
+	 rd6v7FaDdmPd+hBP4YgJN67aoho419jVnO14GCIC5OVplIS4VxpvtmFwKxuBURMwvq
+	 nLdGDg6jz2QXkhz4uoBmwfPHhk7A6pVoANrC85to=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	James Clark <james.clark@arm.com>,
+	Nick Forrington <nick.forrington@arm.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 506/641] iommu: Map reserved memory as cacheable if device is coherent
-Date: Mon, 22 Jan 2024 15:56:50 -0800
-Message-ID: <20240122235833.902172301@linuxfoundation.org>
+Subject: [PATCH 6.7 507/641] perf test: Remove atomics from test_loop to avoid test failures
+Date: Mon, 22 Jan 2024 15:56:51 -0800
+Message-ID: <20240122235833.935898924@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,41 +59,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurentiu Tudor <laurentiu.tudor@nxp.com>
+From: Nick Forrington <nick.forrington@arm.com>
 
-[ Upstream commit f1aad9df93f39267e890836a28d22511f23474e1 ]
+[ Upstream commit 72b4ca7e993e94f09bcf6d19fc385a2e8060c71f ]
 
-Check if the device is marked as DMA coherent in the DT and if so,
-map its reserved memory as cacheable in the IOMMU.
-This fixes the recently added IOMMU reserved memory support which
-uses IOMMU_RESV_DIRECT without properly building the PROT for the
-mapping.
+The current use of atomics can lead to test failures, as tests (such as
+tests/shell/record.sh) search for samples with "test_loop" as the
+top-most stack frame, but find frames related to the atomic operation
+(e.g. __aarch64_ldadd4_relax).
 
-Fixes: a5bf3cfce8cb ("iommu: Implement of_iommu_get_resv_regions()")
-Signed-off-by: Laurentiu Tudor <laurentiu.tudor@nxp.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20230926152600.8749-1-laurentiu.tudor@nxp.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+This change simply removes the "count" variable, as it is not necessary.
+
+Fixes: 1962ab6f6e0b39e4 ("perf test workload thloop: Make count increments atomic")
+Reviewed-by: James Clark <james.clark@arm.com>
+Signed-off-by: Nick Forrington <nick.forrington@arm.com>
+Acked-by: Leo Yan <leo.yan@linaro.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20231102162225.50028-1-nick.forrington@arm.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/of_iommu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/perf/tests/workloads/thloop.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/of_iommu.c b/drivers/iommu/of_iommu.c
-index 35ba090f3b5e..47302b637cc0 100644
---- a/drivers/iommu/of_iommu.c
-+++ b/drivers/iommu/of_iommu.c
-@@ -260,6 +260,9 @@ void of_iommu_get_resv_regions(struct device *dev, struct list_head *list)
- 				phys_addr_t iova;
- 				size_t length;
+diff --git a/tools/perf/tests/workloads/thloop.c b/tools/perf/tests/workloads/thloop.c
+index af05269c2eb8..457b29f91c3e 100644
+--- a/tools/perf/tests/workloads/thloop.c
++++ b/tools/perf/tests/workloads/thloop.c
+@@ -7,7 +7,6 @@
+ #include "../tests.h"
  
-+				if (of_dma_is_coherent(dev->of_node))
-+					prot |= IOMMU_CACHE;
-+
- 				maps = of_translate_dma_region(np, maps, &iova, &length);
- 				type = iommu_resv_region_get_type(dev, &phys, iova, length);
+ static volatile sig_atomic_t done;
+-static volatile unsigned count;
  
+ /* We want to check this symbol in perf report */
+ noinline void test_loop(void);
+@@ -19,8 +18,7 @@ static void sighandler(int sig __maybe_unused)
+ 
+ noinline void test_loop(void)
+ {
+-	while (!done)
+-		__atomic_fetch_add(&count, 1, __ATOMIC_RELAXED);
++	while (!done);
+ }
+ 
+ static void *thfunc(void *arg)
 -- 
 2.43.0
 
