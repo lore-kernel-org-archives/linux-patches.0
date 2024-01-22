@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06CC56742;
-	Tue, 23 Jan 2024 01:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2994051C44;
+	Tue, 23 Jan 2024 01:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974050; cv=none; b=ZpUypG4CdyvkQkcXIUfCe11xSadTCWVJlP1tcY4LyVyHaVSO0Q4UQCtTcbQs10Sebma/ZoRqkikKyCXGyFR/YvxoLoly8pxgRkSNr0xuuU+2tTJjM4+KNlxA5OXtlF2pYNcVYhyt5bSKJnyAKHHJFa1FF4LlRPTneRbbc5lXHls=
+	t=1705974052; cv=none; b=orsyCp15Jcky4Pjg8Jcqfk1mZ3xN5asUUyaY604gJgWYfSUPPUUSFADDVELAJ8jFsWZEcyUCF6ZwlGKuYX/+xpPNiJY6WhxQiienIE7V5mIllDyWNM4raOndOHY/wHg/9b0Jql8Niuah9mYIXcf6hlQGmfgbcDgeD/ZwbD+TcCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974050; c=relaxed/simple;
-	bh=fb7EEa6WhIlPojt6vbpB/exOFCSucvfSefy9Vol1Myg=;
+	s=arc-20240116; t=1705974052; c=relaxed/simple;
+	bh=m3Mq/rbEyt5zqMgFQHmTCmzwxjmfOocU2bXEfWN7INQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2dStBN/ghwOIvcKBJAD/K8aJlD6DkYAyd6/9RpdEOB8bLRaWz+0C5Ne5xFXer6czDk0vZ9FCkYF6zPv3SQSW0b9a8iEHE9ucsEb2qQrot4yX0yIdL5bna3vjnVc59kJbqMo/T0OD/PiSZ2kWCzuC9gIheHOLS3WpRFdNJezGK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5g9REZR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RtK1FG1Qo6XS3IoPompdV7C7zRAqcFvsHCE1g4/6L2VqjxYIb73ytBiUZjcYU++b1BqunfBxchQomywHCQt5ZqwwIdWyfyNqdoMuHDI0baEgkntR3BEdE7mZx3F9GopqARnHB/roP26sEYcdXVCEofcTXQpyvCHNw6RWxXI6Rvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c42DDETr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5g9REZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45762C43390;
-	Tue, 23 Jan 2024 01:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c42DDETr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F63BC433C7;
+	Tue, 23 Jan 2024 01:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974050;
-	bh=fb7EEa6WhIlPojt6vbpB/exOFCSucvfSefy9Vol1Myg=;
+	s=korg; t=1705974051;
+	bh=m3Mq/rbEyt5zqMgFQHmTCmzwxjmfOocU2bXEfWN7INQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R5g9REZRSIBxEI3ZdtDqOkQr3L+T6EzeXY3KhZKFxa9T73/5YDyiPAub9e2LutuwC
-	 sZ0xHBNvGUdD4pCG03d7CYjCvDFKZKl0glB4E+FGlSFmtkwEthDc8t7Ou6QhAOFJt2
-	 8SV4gNpVrwx9mQjv6x7U4PPyVUNyA9DV8sGrHmXs=
+	b=c42DDETrXzvXuSrF6QiVeWFlX9IDFrqF7mkZ6wBGbgYfpItMW6QNhfgj0uSwZ+1Le
+	 CjpnWZ+cC2HfsVP5LKc7KRxJ7VcHTrEqYMQWxJ269Gsz+YKxG0u3n0if4g1mUp/5Au
+	 tAmR390lgA6qBN8RdHUi5vf0IFSr8UcmlAb6lVxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Delevoryas <peter@pjd.dev>,
-	"David S. Miller" <davem@davemloft.net>,
+	Li Nan <linan122@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 123/374] net/ncsi: Fix netlink major/minor version numbers
-Date: Mon, 22 Jan 2024 15:56:19 -0800
-Message-ID: <20240122235748.923991412@linuxfoundation.org>
+Subject: [PATCH 5.15 141/374] block: Set memalloc_noio to false on device_add_disk() error path
+Date: Mon, 22 Jan 2024 15:56:37 -0800
+Message-ID: <20240122235749.533080395@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,202 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Delevoryas <peter@pjd.dev>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 3084b58bfd0b9e4b5e034f31f31b42977db35f12 ]
+[ Upstream commit 5fa3d1a00c2d4ba14f1300371ad39d5456e890d7 ]
 
-The netlink interface for major and minor version numbers doesn't actually
-return the major and minor version numbers.
+On the error path of device_add_disk(), device's memalloc_noio flag was
+set but not cleared. As the comment of pm_runtime_set_memalloc_noio(),
+"The function should be called between device_add() and device_del()".
+Clear this flag before device_del() now.
 
-It reports a u32 that contains the (major, minor, update, alpha1)
-components as the major version number, and then alpha2 as the minor
-version number.
-
-For whatever reason, the u32 byte order was reversed (ntohl): maybe it was
-assumed that the encoded value was a single big-endian u32, and alpha2 was
-the minor version.
-
-The correct way to get the supported NC-SI version from the network
-controller is to parse the Get Version ID response as described in 8.4.44
-of the NC-SI spec[1].
-
-    Get Version ID Response Packet Format
-
-              Bits
-            +--------+--------+--------+--------+
-     Bytes  | 31..24 | 23..16 | 15..8  | 7..0   |
-    +-------+--------+--------+--------+--------+
-    | 0..15 | NC-SI Header                      |
-    +-------+--------+--------+--------+--------+
-    | 16..19| Response code   | Reason code     |
-    +-------+--------+--------+--------+--------+
-    |20..23 | Major  | Minor  | Update | Alpha1 |
-    +-------+--------+--------+--------+--------+
-    |24..27 |         reserved         | Alpha2 |
-    +-------+--------+--------+--------+--------+
-    |            .... other stuff ....          |
-
-The major, minor, and update fields are all binary-coded decimal (BCD)
-encoded [2]. The spec provides examples below the Get Version ID response
-format in section 8.4.44.1, but for practical purposes, this is an example
-from a live network card:
-
-    root@bmc:~# ncsi-util 0x15
-    NC-SI Command Response:
-    cmd: GET_VERSION_ID(0x15)
-    Response: COMMAND_COMPLETED(0x0000)  Reason: NO_ERROR(0x0000)
-    Payload length = 40
-
-    20: 0xf1 0xf1 0xf0 0x00 <<<<<<<<< (major, minor, update, alpha1)
-    24: 0x00 0x00 0x00 0x00 <<<<<<<<< (_, _, _, alpha2)
-
-    28: 0x6d 0x6c 0x78 0x30
-    32: 0x2e 0x31 0x00 0x00
-    36: 0x00 0x00 0x00 0x00
-    40: 0x16 0x1d 0x07 0xd2
-    44: 0x10 0x1d 0x15 0xb3
-    48: 0x00 0x17 0x15 0xb3
-    52: 0x00 0x00 0x81 0x19
-
-This should be parsed as "1.1.0".
-
-"f" in the upper-nibble means to ignore it, contributing zero.
-
-If both nibbles are "f", I think the whole field is supposed to be ignored.
-Major and minor are "required", meaning they're not supposed to be "ff",
-but the update field is "optional" so I think it can be ff. I think the
-simplest thing to do is just set the major and minor to zero instead of
-juggling some conditional logic or something.
-
-bcd2bin() from "include/linux/bcd.h" seems to assume both nibbles are 0-9,
-so I've provided a custom BCD decoding function.
-
-Alpha1 and alpha2 are ISO/IEC 8859-1 encoded, which just means ASCII
-characters as far as I can tell, although the full encoding table for
-non-alphabetic characters is slightly different (I think).
-
-I imagine the alpha fields are just supposed to be alphabetic characters,
-but I haven't seen any network cards actually report a non-zero value for
-either.
-
-If people wrote software against this netlink behavior, and were parsing
-the major and minor versions themselves from the u32, then this would
-definitely break their code.
-
-[1] https://www.dmtf.org/sites/default/files/standards/documents/DSP0222_1.0.0.pdf
-[2] https://en.wikipedia.org/wiki/Binary-coded_decimal
-[2] https://en.wikipedia.org/wiki/ISO/IEC_8859-1
-
-Signed-off-by: Peter Delevoryas <peter@pjd.dev>
-Fixes: 138635cc27c9 ("net/ncsi: NCSI response packet handler")
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 25e823c8c37d ("block/genhd.c: apply pm_runtime_set_memalloc_noio on block devices")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20231211075356.1839282-1-linan666@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/internal.h     |  7 +++++--
- net/ncsi/ncsi-netlink.c |  4 ++--
- net/ncsi/ncsi-pkt.h     |  7 +++++--
- net/ncsi/ncsi-rsp.c     | 26 ++++++++++++++++++++++++--
- 4 files changed, 36 insertions(+), 8 deletions(-)
+ block/genhd.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
-index 03757e76bb6b..374412ed780b 100644
---- a/net/ncsi/internal.h
-+++ b/net/ncsi/internal.h
-@@ -105,8 +105,11 @@ enum {
- 
- 
- struct ncsi_channel_version {
--	u32 version;		/* Supported BCD encoded NCSI version */
--	u32 alpha2;		/* Supported BCD encoded NCSI version */
-+	u8   major;		/* NCSI version major */
-+	u8   minor;		/* NCSI version minor */
-+	u8   update;		/* NCSI version update */
-+	char alpha1;		/* NCSI version alpha1 */
-+	char alpha2;		/* NCSI version alpha2 */
- 	u8  fw_name[12];	/* Firmware name string                */
- 	u32 fw_version;		/* Firmware version                   */
- 	u16 pci_ids[4];		/* PCI identification                 */
-diff --git a/net/ncsi/ncsi-netlink.c b/net/ncsi/ncsi-netlink.c
-index c189b4c8a182..db350b8f5d88 100644
---- a/net/ncsi/ncsi-netlink.c
-+++ b/net/ncsi/ncsi-netlink.c
-@@ -71,8 +71,8 @@ static int ncsi_write_channel_info(struct sk_buff *skb,
- 	if (nc == nc->package->preferred_channel)
- 		nla_put_flag(skb, NCSI_CHANNEL_ATTR_FORCED);
- 
--	nla_put_u32(skb, NCSI_CHANNEL_ATTR_VERSION_MAJOR, nc->version.version);
--	nla_put_u32(skb, NCSI_CHANNEL_ATTR_VERSION_MINOR, nc->version.alpha2);
-+	nla_put_u32(skb, NCSI_CHANNEL_ATTR_VERSION_MAJOR, nc->version.major);
-+	nla_put_u32(skb, NCSI_CHANNEL_ATTR_VERSION_MINOR, nc->version.minor);
- 	nla_put_string(skb, NCSI_CHANNEL_ATTR_VERSION_STR, nc->version.fw_name);
- 
- 	vid_nest = nla_nest_start_noflag(skb, NCSI_CHANNEL_ATTR_VLAN_LIST);
-diff --git a/net/ncsi/ncsi-pkt.h b/net/ncsi/ncsi-pkt.h
-index ba66c7dc3a21..c9d1da34dc4d 100644
---- a/net/ncsi/ncsi-pkt.h
-+++ b/net/ncsi/ncsi-pkt.h
-@@ -197,9 +197,12 @@ struct ncsi_rsp_gls_pkt {
- /* Get Version ID */
- struct ncsi_rsp_gvi_pkt {
- 	struct ncsi_rsp_pkt_hdr rsp;          /* Response header */
--	__be32                  ncsi_version; /* NCSI version    */
-+	unsigned char           major;        /* NCSI version major */
-+	unsigned char           minor;        /* NCSI version minor */
-+	unsigned char           update;       /* NCSI version update */
-+	unsigned char           alpha1;       /* NCSI version alpha1 */
- 	unsigned char           reserved[3];  /* Reserved        */
--	unsigned char           alpha2;       /* NCSI version    */
-+	unsigned char           alpha2;       /* NCSI version alpha2 */
- 	unsigned char           fw_name[12];  /* f/w name string */
- 	__be32                  fw_version;   /* f/w version     */
- 	__be16                  pci_ids[4];   /* PCI IDs         */
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index 069c2659074b..480e80e3c283 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -19,6 +19,19 @@
- #include "ncsi-pkt.h"
- #include "ncsi-netlink.h"
- 
-+/* Nibbles within [0xA, 0xF] add zero "0" to the returned value.
-+ * Optional fields (encoded as 0xFF) will default to zero.
-+ */
-+static u8 decode_bcd_u8(u8 x)
-+{
-+	int lo = x & 0xF;
-+	int hi = x >> 4;
-+
-+	lo = lo < 0xA ? lo : 0;
-+	hi = hi < 0xA ? hi : 0;
-+	return lo + hi * 10;
-+}
-+
- static int ncsi_validate_rsp_pkt(struct ncsi_request *nr,
- 				 unsigned short payload)
- {
-@@ -755,9 +768,18 @@ static int ncsi_rsp_handler_gvi(struct ncsi_request *nr)
- 	if (!nc)
- 		return -ENODEV;
- 
--	/* Update to channel's version info */
-+	/* Update channel's version info
-+	 *
-+	 * Major, minor, and update fields are supposed to be
-+	 * unsigned integers encoded as packed BCD.
-+	 *
-+	 * Alpha1 and alpha2 are ISO/IEC 8859-1 characters.
-+	 */
- 	ncv = &nc->version;
--	ncv->version = ntohl(rsp->ncsi_version);
-+	ncv->major = decode_bcd_u8(rsp->major);
-+	ncv->minor = decode_bcd_u8(rsp->minor);
-+	ncv->update = decode_bcd_u8(rsp->update);
-+	ncv->alpha1 = rsp->alpha1;
- 	ncv->alpha2 = rsp->alpha2;
- 	memcpy(ncv->fw_name, rsp->fw_name, 12);
- 	ncv->fw_version = ntohl(rsp->fw_version);
--- 
-2.43.0
-
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -538,6 +538,7 @@ out_del_integrity:
+ out_del_block_link:
+ 	if (!sysfs_deprecated)
+ 		sysfs_remove_link(block_depr, dev_name(ddev));
++	pm_runtime_set_memalloc_noio(ddev, false);
+ out_device_del:
+ 	device_del(ddev);
+ out_free_ext_minor:
 
 
