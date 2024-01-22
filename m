@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399683984D;
-	Tue, 23 Jan 2024 01:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253233984D;
+	Tue, 23 Jan 2024 01:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974038; cv=none; b=azyHtADMjNr3syQffvlSApb/GhFgIxoVsTu4UddRs0VaRUtGcl7tdg9anQDzFbJjUyZ/3IGChL3xbZjM8u3AfE0qGOZGH5TWEax/qc4NVO7TBsrNpt60AGaqn3TqqhyBgXRqNqyVGE3CPwBIzw4oj80WcKDYpuJC2p1j3D5g+xc=
+	t=1705974039; cv=none; b=D+c4momeqks5Mkxh53pyFY3+hsn1WjptCDM0R1lbkAnLWSy47BLjbhjZMU4q8WN61FWuEh7R4VJAuvx3xl4KflPXurgBc3OYXNB7tflc5wGKH/lwcxnoL1A+YGPQkPiHmQTbDloyD08KpyIXouzToujm211IdJO55ekFcEmmXP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974038; c=relaxed/simple;
-	bh=Sb8kstc03dvf+jyYyA0/nMObdLG4diGYUtVcvwG6snI=;
+	s=arc-20240116; t=1705974039; c=relaxed/simple;
+	bh=YzPTa1W9Tyn49Ia5t5aoDa3nT5zIa1EzSKMU+psOVKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tIj4CMEppkoBVTODvuZOwKPL3rICS2gYWFUNapy9fGHzoizK0qq9wKtCXmgBbf+skZ0hAbRZB7O5hqJ5k83O6Rof6ymoEXhNFTowQcD38fhfGNY5ahEuLvyfq++HcWS1XQ18wE7xgYI+uT6/iu2OT7zjtI473U/BpQ4MLcO951g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5dpq8+T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ys3mMX2/VJ8NhSK+0CPBoc6s0EcwR8Uk6tTzK1xSYixK7zM3z8W/wgzo7pjrFOjMRUVFjeuETID15NfZrCYV2uL4Rg9Jgvj4t2h7h0+aNzcLbyalt1LUDJR1v09tX3LluxuieiNnUFdo2ldafMxnTWT9XiHX9itcsuMuOqmsENg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1U9jArV9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5dpq8+T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94DB9C43390;
-	Tue, 23 Jan 2024 01:40:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1U9jArV9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90550C43390;
+	Tue, 23 Jan 2024 01:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974037;
-	bh=Sb8kstc03dvf+jyYyA0/nMObdLG4diGYUtVcvwG6snI=;
+	s=korg; t=1705974038;
+	bh=YzPTa1W9Tyn49Ia5t5aoDa3nT5zIa1EzSKMU+psOVKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H5dpq8+T+qeHhgBsaspYeVPrDDHJ2zJXotFml6wsQUCtrQfq/hSOFTaZqCYBfk1Ry
-	 XdQexa5/mlcA1MqeIckBtukVpObnUl6bYe0FVlWzFe+pHWzzmejoF61zHw7G2FSavN
-	 yVpNI3s8m28NTzJqtvS/Bmgv9jOKaCpfCGpaWLIE=
+	b=1U9jArV9G8EZzf+vvyAXlKWK+Yhg8aCcSRkod2KltAsF5vvCwRe5lCOgap61ei7oI
+	 Yc/irD8LbSW94XMWkOEkDWXKVxC61iXDMKu7EDt5VUIlSCiJPMOpYX/nKkAPtH+xpl
+	 q7IVEneH7QPaTvrSaMOqkGJxcH4IP5JKSkT8TOuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Karan Tilak Kumar <kartilak@cisco.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 122/374] ARM: dts: qcom: apq8064: correct XOADC register address
-Date: Mon, 22 Jan 2024 15:56:18 -0800
-Message-ID: <20240122235748.881965535@linuxfoundation.org>
+Subject: [PATCH 5.15 136/374] scsi: fnic: Return error if vmalloc() failed
+Date: Mon, 22 Jan 2024 15:56:32 -0800
+Message-ID: <20240122235749.373479989@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -53,38 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-[ Upstream commit 554557542e709e190eff8a598f0cde02647d533a ]
+[ Upstream commit f5f27a332a14f43463aa0075efa3a0c662c0f4a8 ]
 
-The XOADC is present at the address 0x197 rather than just 197. It
-doesn't change a lot (since the driver hardcodes all register
-addresses), but the DT should present correct address anyway.
+In fnic_init_module() exists redundant check for return value from
+fnic_debugfs_init(), because at moment it only can return zero. It make
+sense to process theoretical vmalloc() failure.
 
-Fixes: c4b70883ee33 ("ARM: dts: add XOADC and IIO HWMON to APQ8064")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230928110309.1212221-3-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 9730ddfb123d ("scsi: fnic: remove redundant assignment of variable rc")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Link: https://lore.kernel.org/r/20231128111008.2280507-1-artem.chernyshev@red-soft.ru
+Reviewed-by: Karan Tilak Kumar <kartilak@cisco.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/fnic/fnic_debugfs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index 0e830476fefd..d70f071fd830 100644
---- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -760,7 +760,7 @@ pwrkey@1c {
+diff --git a/drivers/scsi/fnic/fnic_debugfs.c b/drivers/scsi/fnic/fnic_debugfs.c
+index e7326505cabb..f611e9f00a9d 100644
+--- a/drivers/scsi/fnic/fnic_debugfs.c
++++ b/drivers/scsi/fnic/fnic_debugfs.c
+@@ -66,9 +66,10 @@ int fnic_debugfs_init(void)
+ 		fc_trc_flag->fnic_trace = 2;
+ 		fc_trc_flag->fc_trace = 3;
+ 		fc_trc_flag->fc_clear = 4;
++		return 0;
+ 	}
  
- 				xoadc: xoadc@197 {
- 					compatible = "qcom,pm8921-adc";
--					reg = <197>;
-+					reg = <0x197>;
- 					interrupts-extended = <&pmicintc 78 IRQ_TYPE_EDGE_RISING>;
- 					#address-cells = <2>;
- 					#size-cells = <0>;
+-	return 0;
++	return -ENOMEM;
+ }
+ 
+ /*
 -- 
 2.43.0
 
