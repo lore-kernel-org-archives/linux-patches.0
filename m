@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482F41420A4;
-	Tue, 23 Jan 2024 00:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0FB148311;
+	Tue, 23 Jan 2024 00:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969143; cv=none; b=WB5Z6Xy8XYQVnvTnSBCFnzGZXD0yqlJRD5ceBVbAJTsDtFyCZAQzrsSTPFGBHLZ1dfrP9MXQxmhPKWeoQ2hj61DOa7Kk4Es7plF9mIgMb4A8YhRqaPHyp82Rskp0p9A8voZs6tULaVm5BrqPjGNemeRL0Z5QBCwoqlq8GnK76jY=
+	t=1705969144; cv=none; b=kQnbvaIpe6xlbKa/CV46BG6N5dAiyiJt5D4ZVgOV6zYzkvl7zMhWfZumYUMCocd1spDql8e5U0QEEM0t/JZUbDdG4ZY1dua+97jNnehSmcUXlWnCVwBFkI4gYCXUP567uuQ8FjJsTRdzEl/IhVk9hLBTsyBA0WrjhnsXuEWLRsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969143; c=relaxed/simple;
-	bh=IfPRX2bPbdA+ZRnzZ+RI9EvW+Nq3+KnAnc04E0WH/sw=;
+	s=arc-20240116; t=1705969144; c=relaxed/simple;
+	bh=OVfRMAiEua1gz2ytz5PN7o5OinXIDpLypplU0o/q0l8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QvPnu5jxgETvd5o3ODry+vGf0ZIDi5r2kAuf1a4s6gXoryK8veQfh1987e6kHBN8Jad1vtIHzumgHm0a95oQokGLx1YsSbq/Hj+QqsQW9NmeVyZpY4PKEQTMQnvM2Bb5AZlNiBOZ5FvfPlzRnatFUuE3HRld5oDOSDpecUb/Vs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYym6Eru; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m7R9nOX7f7r8vpx2DQOOWt86tZ1HfVwckMH2BDHo8Qucg03fGf7y0hA5+SKutElQur97ouoOZKpcwShimqWFNq8hzJRlHTzYVFy51no7471NGCTisNHhrVRqZyKQlAgX1g6Wu+j27Jd+gtY6WrZZoZOVVxZalyVQPx7eNJGKj2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ic05gzbv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYym6Eru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07641C433F1;
-	Tue, 23 Jan 2024 00:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ic05gzbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A07C43330;
+	Tue, 23 Jan 2024 00:19:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969143;
-	bh=IfPRX2bPbdA+ZRnzZ+RI9EvW+Nq3+KnAnc04E0WH/sw=;
+	s=korg; t=1705969144;
+	bh=OVfRMAiEua1gz2ytz5PN7o5OinXIDpLypplU0o/q0l8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cYym6EruHa3418454fRuDQlBwVtdDU+Df5MRc7pngF3LpfYMiEBKzdnFtI8HbAkko
-	 I07iSYfcVFJ3mXyV8RFNvckE9771Vy6ZdpDZBYjme9yTEJEZn92vmzyatQY5FVvRg2
-	 G4xuxkBTh3IXwlU0EpkAJ41uDj+NnIWlAcyPbYA8=
+	b=ic05gzbv/0HsGyc/LueJPMn7qtP7Z/My8FEgV4//MqMOjhIYOzpuS+6sePAQPjgNp
+	 jffKw6ocvGDSaaFM6zTbcIHW423PouMP6LeZWU+gTWVS9aEa2hcqFU3Y5TjzB1P0HW
+	 Xponl7AssMVdZ3qpr4ZOtP64Y90DLTp5uQqw95Xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 049/641] crypto: sa2ul - Return crypto_aead_setkey to transfer the error
-Date: Mon, 22 Jan 2024 15:49:13 -0800
-Message-ID: <20240122235819.609551067@linuxfoundation.org>
+Subject: [PATCH 6.7 050/641] crypto: ccp - fix memleak in ccp_init_dm_workarea
+Date: Mon, 22 Jan 2024 15:49:14 -0800
+Message-ID: <20240122235819.639369484@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,36 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit ce852f1308ac738e61c5b2502517deea593a1554 ]
+[ Upstream commit a1c95dd5bc1d6a5d7a75a376c2107421b7d6240d ]
 
-Return crypto_aead_setkey() in order to transfer the error if
-it fails.
+When dma_map_single() fails, wa->address is supposed to be freed
+by the callers of ccp_init_dm_workarea() through ccp_dm_free().
+However, many of the call spots don't expect to have to call
+ccp_dm_free() on failure of ccp_init_dm_workarea(), which may
+lead to a memleak. Let's free wa->address in ccp_init_dm_workarea()
+when dma_map_single() fails.
 
-Fixes: d2c8ac187fc9 ("crypto: sa2ul - Add AEAD algorithm support")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Fixes: 63b945091a07 ("crypto: ccp - CCP device driver and interface support")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sa2ul.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/crypto/ccp/ccp-ops.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
-index 6846a8429574..78a4930c6480 100644
---- a/drivers/crypto/sa2ul.c
-+++ b/drivers/crypto/sa2ul.c
-@@ -1869,9 +1869,8 @@ static int sa_aead_setkey(struct crypto_aead *authenc,
- 	crypto_aead_set_flags(ctx->fallback.aead,
- 			      crypto_aead_get_flags(authenc) &
- 			      CRYPTO_TFM_REQ_MASK);
--	crypto_aead_setkey(ctx->fallback.aead, key, keylen);
+diff --git a/drivers/crypto/ccp/ccp-ops.c b/drivers/crypto/ccp/ccp-ops.c
+index aa4e1a500691..cb8e99936abb 100644
+--- a/drivers/crypto/ccp/ccp-ops.c
++++ b/drivers/crypto/ccp/ccp-ops.c
+@@ -179,8 +179,11 @@ static int ccp_init_dm_workarea(struct ccp_dm_workarea *wa,
  
--	return 0;
-+	return crypto_aead_setkey(ctx->fallback.aead, key, keylen);
- }
+ 		wa->dma.address = dma_map_single(wa->dev, wa->address, len,
+ 						 dir);
+-		if (dma_mapping_error(wa->dev, wa->dma.address))
++		if (dma_mapping_error(wa->dev, wa->dma.address)) {
++			kfree(wa->address);
++			wa->address = NULL;
+ 			return -ENOMEM;
++		}
  
- static int sa_aead_setauthsize(struct crypto_aead *tfm, unsigned int authsize)
+ 		wa->dma.length = len;
+ 	}
 -- 
 2.43.0
 
