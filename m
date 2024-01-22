@@ -1,58 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F56604C8;
-	Tue, 23 Jan 2024 01:51:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72921604CC;
+	Tue, 23 Jan 2024 01:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974681; cv=none; b=DWzIy/Mn776d6evBL3X661huChambW/Yci2c25VdYX61/6KmV3T1E/vEDUNBp1E3GW3dHRoWzNfdbk9hP7n0oLoG7AeFlzKR0HrQiRxxGUMM3ocZKoMGf5BRun0r6M+VUh3j/fwPdlbbYgujae7nG95XPGWx7KSOo8E9UKpcDMQ=
+	t=1705974681; cv=none; b=E5q6dK8v8Wh+ne+nkkW+31m61PKf0DdEtk7FK70T0uWoBGXsGzXV15VeBLxUl9hYYE5zD/OqMTTXAVoNPwAwbNB9puECrJRGbRI5/oxj46otqrj6I5JbSmfeZdGGO9yVGep8Inrby3yDMwSTFw42COwbfB66Mwv4vwhbjUf2WlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705974681; c=relaxed/simple;
-	bh=yA2iL76hl8rgK1nibRnpqkKec6o2X7SEeiCiwxLsju4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=NXk/o+aotVTCq0NaEb4rtBhQ7HjhvWsJVR4ZtGa1sg+0XogqubwK11i9YxRWxFiyEK/R/S5zfBdDkWyEWlKb7z+zQlKfLAaSh+UfoChOxbD8Ebr8IC0OSCTxiXXYJUDDRvn9uU6RxNQxz8yCjYJUZbZIU2/PaHnJBh5fOuSBQG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FIt0/a1T; arc=none smtp.client-ip=10.30.226.201
+	bh=SdHTSdp9Z+rcnA94uOKm7zxIOrtYWLuhXZS5/aQLGDo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Pqe4JDImqFI7sMdZAFe92hS6gK2jTLhaq5LWvhB3ayghVLx3Y6xt1UzpKvJYsbC2adW94oUeeafsDNPqNGV0PWzKgZSd6gf/kKayg4NYy9mIFyizRfkha1VfFwsfYcv+k3Xdkx9A9IcNwb6LF1KOp5eXu67jFgvM0ZR5yHGMnOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wldw5GWF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FIt0/a1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C012C433F1;
-	Tue, 23 Jan 2024 01:51:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705974680;
-	bh=yA2iL76hl8rgK1nibRnpqkKec6o2X7SEeiCiwxLsju4=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wldw5GWF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35769C43390;
+	Tue, 23 Jan 2024 01:51:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1705974681;
+	bh=SdHTSdp9Z+rcnA94uOKm7zxIOrtYWLuhXZS5/aQLGDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FIt0/a1TPSyl9JpwUCbsOLZFrW8Td7lzUE+atTkEXEiCwb7NY2ktqeBQaQvMuNiLn
-	 U/i7r5Z36oqGtv2qdoDypona7czv7woyx9esXGNUHjwKW09ugbPIXSEhg8wISAdTqI
-	 /ngixO2ocbpePNnaVU3CYekdbX2AMkT0KLPjw8bmCGGDFyJjquMitlpnthQiV8ribC
-	 JuGzVVMcQCs3luQytgrNsClH2cVIHK32Pa4awLwNdz4gEZNacqLTqmCeZP2ZrWrB/h
-	 c+iPlMYPnVN12wNqlmJ+ihJhXVFwJusuh2QJb268zBhr1m+n9QF7aEcnwc3uBhO87A
-	 WruOpu6vQ35WQ==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
+	b=wldw5GWFAVghmomBGDQQSesYzqyHwtUikDUo0CCa6uKtQdpb4eYPt0rnzYc+T9qME
+	 9FQE2UuH7XGoSSf+lIZ1BlYn5BcL+pi3omBUl3c34p08iauWt0W6UNxA+i4Q1DVjGg
+	 SZqNAVxd6NbD5i+JDL3R2kqFjVAaILDCnBwXzqQI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.7 000/641] 6.7.2-rc1 review
-Date: Mon, 22 Jan 2024 17:51:17 -0800
-Message-Id: <20240123015117.86116-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
-References: 
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 121/583] selftests/net: specify the interface when do arping
+Date: Mon, 22 Jan 2024 15:52:52 -0800
+Message-ID: <20240122235815.849748568@linuxfoundation.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,65 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-On Mon, 22 Jan 2024 15:48:24 -0800 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+------------------
 
-> This is the start of the stable review cycle for the 6.7.2 release.
-> There are 641 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 24 Jan 2024 23:56:49 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.2-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
-> and the diffstat can be found below.
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+[ Upstream commit 7f770d28f2e5abfd442ad689ba1129dd66593529 ]
 
-Tested-by: SeongJae Park <sj@kernel.org>
+When do arping, the interface need to be specified. Or we will
+get error: Interface "lo" is not ARPable. And the test failed.
+]# ./arp_ndisc_untracked_subnets.sh
+    TEST: test_arp:  accept_arp=0                                       [ OK ]
+    TEST: test_arp:  accept_arp=1                                       [FAIL]
+    TEST: test_arp:  accept_arp=2  same_subnet=0                        [ OK ]
+    TEST: test_arp:  accept_arp=2  same_subnet=1                        [FAIL]
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 8538581d9e8e ("Linux 6.7.2-rc1")
+After fix:
+]# ./arp_ndisc_untracked_subnets.sh
+    TEST: test_arp:  accept_arp=0                                       [ OK ]
+    TEST: test_arp:  accept_arp=1                                       [ OK ]
+    TEST: test_arp:  accept_arp=2  same_subnet=0                        [ OK ]
+    TEST: test_arp:  accept_arp=2  same_subnet=1                        [ OK ]
 
-Thanks,
-SJ
-
-[...]
-
+Fixes: 0ea7b0a454ca ("selftests: net: arp_ndisc_untracked_subnets: test for arp_accept and accept_untracked_na")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+ tools/testing/selftests/net/arp_ndisc_untracked_subnets.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_m68k.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+diff --git a/tools/testing/selftests/net/arp_ndisc_untracked_subnets.sh b/tools/testing/selftests/net/arp_ndisc_untracked_subnets.sh
+index c899b446acb6..327427ec10f5 100755
+--- a/tools/testing/selftests/net/arp_ndisc_untracked_subnets.sh
++++ b/tools/testing/selftests/net/arp_ndisc_untracked_subnets.sh
+@@ -150,7 +150,7 @@ arp_test_gratuitous() {
+ 	fi
+ 	# Supply arp_accept option to set up which sets it in sysctl
+ 	setup ${arp_accept}
+-	ip netns exec ${HOST_NS} arping -A -U ${HOST_ADDR} -c1 2>&1 >/dev/null
++	ip netns exec ${HOST_NS} arping -A -I ${HOST_INTF} -U ${HOST_ADDR} -c1 2>&1 >/dev/null
+ 
+ 	if verify_arp $1 $2; then
+ 		printf "    TEST: %-60s  [ OK ]\n" "${test_msg[*]}"
+-- 
+2.43.0
+
+
+
