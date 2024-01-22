@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DA0380;
-	Tue, 23 Jan 2024 02:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB47380;
+	Tue, 23 Jan 2024 02:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975746; cv=none; b=HqPZU8lhNh8dpUTisNmXgpqvlM+rTnZA2mvD9zKf4n74Ju06r7ti068fHDWZOgm7wEnfqEfvVyckof7Iwp4I3m1bhxU6EFKL9zbn+DzR+aJYHNzKSRS6LZ5HNVM7bI8/7N3f2XGXIw6cWQWBzPWIE+J/szfVWymUi8L2Q1RuISY=
+	t=1705975747; cv=none; b=cOEOdYXRm52ZJInEDhPsWbPSA4/LBVGmkB/ziAecKjIF9SsgNmaefWYJl8HTLQUOHitQI6f0XmliUHyaHWs0Te8pmcoIKIrDpw4DJhGEY3uksmupY433B8LR1CfUU9zeGADW7a6wxzJ5b/0gXWuxRddO759AoFyEOmaEa0jDGc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975746; c=relaxed/simple;
-	bh=ArVpwiEGbIO1QU0DTdTdAzxkAQ6pXZMNHNLdvG71EZU=;
+	s=arc-20240116; t=1705975747; c=relaxed/simple;
+	bh=BHQhFvi6Z14u7q1CVYFQ94J/rotwdabJ9Jre3PRkSmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ushm4uTQmfHw8347oN48IxVDQrRmQl7+Bzs12THUAHDVKlT5wrS3vbAuBrbhzWvalXlMGv2/DtibG86ZdmDA14JbMlPm/Qf3pjgJ2/PVJ5DiE7ifw2sI4GarkJ0GK344MAyKJBPBa5QWBMyr3x7TdXn/A2Jrod1oYw4x0kbl2Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMeZcqSQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f6eLZGjfHWvksXVWNwwypAnPeyFPCnaBdq3lBxC1avHYEDYsOS946mYjKOSd/71qiAaVvgd6SfNQwTIAWpdHKijymxGEbXYCxM7Qr5OUBb5N0WLAKh+kCbUOU4AX8tIWbpYMvyeTijKYgW9MnvNOv4hsnbkgzuPRi+Xdn+N+s8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oubv/w0V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMeZcqSQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B43FC43394;
-	Tue, 23 Jan 2024 02:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oubv/w0V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB59C433F1;
+	Tue, 23 Jan 2024 02:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975746;
-	bh=ArVpwiEGbIO1QU0DTdTdAzxkAQ6pXZMNHNLdvG71EZU=;
+	s=korg; t=1705975747;
+	bh=BHQhFvi6Z14u7q1CVYFQ94J/rotwdabJ9Jre3PRkSmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bMeZcqSQf9qd90JGXjQGKWnObBN7DfxjbUd8Ys6+FxGGsWUJ0AfGJMXA6eBmfSNa2
-	 g3Ug+cKrgaDdKoi2nM5QyeXsn1LsiWYUlfAVcJpllqG9WDJfAB2q6u65L0jlqLz31U
-	 u/fy5Lm9+HQvMSTyaK3FTSh1a9Z8aP2e85GTpAbo=
+	b=oubv/w0VxYcDpHtveyKfKh3qOkDv2d08TiIhQEWTaAH4yROJ10n0+y8B1mlu8ypbZ
+	 yddQ83DXcFDObSZxeBVf6xXTOchSHcpOi+ou0dii3L1DuhHvf4n0MjwxaXAtxl9bAp
+	 nLmIrD/p3tFNnmFeOo4Su+Kp2uoqyg2WDTsZ9qT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Florian Westphal <fw@strlen.de>,
+	Peter Krystad <peter.krystad@linux.intel.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Mat Martineau <martineau@kernel.org>,
+	Geliang Tang <geliang.tang@linux.dev>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 531/583] ALSA: hda: Properly setup HDMI stream
-Date: Mon, 22 Jan 2024 15:59:42 -0800
-Message-ID: <20240122235828.358090234@linuxfoundation.org>
+Subject: [PATCH 6.6 532/583] mptcp: mptcp_parse_option() fix for MPTCPOPT_MP_JOIN
+Date: Mon, 22 Jan 2024 15:59:43 -0800
+Message-ID: <20240122235828.391050578@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -45,56 +52,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 454abb80e26ab85323a30e52aa7b0ee9aae1d38a ]
+[ Upstream commit 89e23277f9c16df6f9f9c1a1a07f8f132339c15c ]
 
-Since commit 4005d1ba0a7e ("ASoC: soc-dai: don't call PCM audio ops if
-the stream is not supported") HDMI playback is broken with avs driver.
-This happens because for HDMI stream (unlike generic HDA one)
-channels_min for stream is not set when creating PCMs. Fix this by
-setting the value based on first available converter.
+mptcp_parse_option() currently sets OPTIONS_MPTCP_MPJ, for the three
+possible cases handled for MPTCPOPT_MP_JOIN option.
 
-Fixes: 4005d1ba0a7e ("ASoC: soc-dai: don't call PCM audio ops if the stream is not supported")
-Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Link: https://lore.kernel.org/r/20240112113349.2905328-1-amadeuszx.slawinski@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+OPTIONS_MPTCP_MPJ is the combination of three flags:
+- OPTION_MPTCP_MPJ_SYN
+- OPTION_MPTCP_MPJ_SYNACK
+- OPTION_MPTCP_MPJ_ACK
+
+This is a problem, because backup, join_id, token, nonce and/or hmac fields
+could be left uninitialized in some cases.
+
+Distinguish the three cases, as following patches will need this step.
+
+Fixes: f296234c98a8 ("mptcp: Add handling of incoming MP_JOIN requests")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Florian Westphal <fw@strlen.de>
+Cc: Peter Krystad <peter.krystad@linux.intel.com>
+Cc: Matthieu Baerts <matttbe@kernel.org>
+Cc: Mat Martineau <martineau@kernel.org>
+Cc: Geliang Tang <geliang.tang@linux.dev>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20240111194917.4044654-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_hdmi.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/mptcp/options.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
-index 78cee53fee02..038db8902c9e 100644
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -2301,6 +2301,7 @@ static int generic_hdmi_build_pcms(struct hda_codec *codec)
- 	codec_dbg(codec, "hdmi: pcm_num set to %d\n", pcm_num);
+diff --git a/net/mptcp/options.c b/net/mptcp/options.c
+index c53914012d01..d2527d189a79 100644
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -123,8 +123,8 @@ static void mptcp_parse_option(const struct sk_buff *skb,
+ 		break;
  
- 	for (idx = 0; idx < pcm_num; idx++) {
-+		struct hdmi_spec_per_cvt *per_cvt;
- 		struct hda_pcm *info;
- 		struct hda_pcm_stream *pstr;
+ 	case MPTCPOPT_MP_JOIN:
+-		mp_opt->suboptions |= OPTIONS_MPTCP_MPJ;
+ 		if (opsize == TCPOLEN_MPTCP_MPJ_SYN) {
++			mp_opt->suboptions |= OPTION_MPTCP_MPJ_SYN;
+ 			mp_opt->backup = *ptr++ & MPTCPOPT_BACKUP;
+ 			mp_opt->join_id = *ptr++;
+ 			mp_opt->token = get_unaligned_be32(ptr);
+@@ -135,6 +135,7 @@ static void mptcp_parse_option(const struct sk_buff *skb,
+ 				 mp_opt->backup, mp_opt->join_id,
+ 				 mp_opt->token, mp_opt->nonce);
+ 		} else if (opsize == TCPOLEN_MPTCP_MPJ_SYNACK) {
++			mp_opt->suboptions |= OPTION_MPTCP_MPJ_SYNACK;
+ 			mp_opt->backup = *ptr++ & MPTCPOPT_BACKUP;
+ 			mp_opt->join_id = *ptr++;
+ 			mp_opt->thmac = get_unaligned_be64(ptr);
+@@ -145,11 +146,10 @@ static void mptcp_parse_option(const struct sk_buff *skb,
+ 				 mp_opt->backup, mp_opt->join_id,
+ 				 mp_opt->thmac, mp_opt->nonce);
+ 		} else if (opsize == TCPOLEN_MPTCP_MPJ_ACK) {
++			mp_opt->suboptions |= OPTION_MPTCP_MPJ_ACK;
+ 			ptr += 2;
+ 			memcpy(mp_opt->hmac, ptr, MPTCPOPT_HMAC_LEN);
+ 			pr_debug("MP_JOIN hmac");
+-		} else {
+-			mp_opt->suboptions &= ~OPTIONS_MPTCP_MPJ;
+ 		}
+ 		break;
  
-@@ -2316,6 +2317,11 @@ static int generic_hdmi_build_pcms(struct hda_codec *codec)
- 		pstr = &info->stream[SNDRV_PCM_STREAM_PLAYBACK];
- 		pstr->substreams = 1;
- 		pstr->ops = generic_ops;
-+
-+		per_cvt = get_cvt(spec, 0);
-+		pstr->channels_min = per_cvt->channels_min;
-+		pstr->channels_max = per_cvt->channels_max;
-+
- 		/* pcm number is less than pcm_rec array size */
- 		if (spec->pcm_used >= ARRAY_SIZE(spec->pcm_rec))
- 			break;
 -- 
 2.43.0
 
