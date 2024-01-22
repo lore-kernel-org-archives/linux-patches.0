@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5015397;
-	Tue, 23 Jan 2024 00:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3934D5384;
+	Tue, 23 Jan 2024 00:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970808; cv=none; b=DqoWyXA3Cev1pgsluxs5VvktHuCuyDlwiOFncck+/8G7IQk7QxG+9CpyqEKSLAClr3Pe22Oc9qw3K12VfhSat3bfIWFrHzpg9/pMEBVVqtNsk6AiqSSeK6YSspiu3xTXkcCMVtEKKwdkTnRMZU7KaBNx5BsOLBtYDR8mji/HS7U=
+	t=1705970810; cv=none; b=CmgE4r5kuelBV58Yka5krp/wAA6xbGZ7YkL9bhAIHHeiU/pYRfYu2d04SydvOiT9trmCKphiEGP1qVW9ztRJFYNLVZT/GsQKyi8CmUN3znQ1K4JrUoEgRj+TOmk7ukaMypd+RmWrvhZYm89IRp33oGY8O6kbsUzcd4PlpI9kMgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970808; c=relaxed/simple;
-	bh=vkJaJ9cbSlIYUtGUf1999cttgAJhKKLcdsNZn3hyd/Q=;
+	s=arc-20240116; t=1705970810; c=relaxed/simple;
+	bh=wBaD62AKbqe8sIB9a9kvEhIS5fefZ1v8Ub42dOBaHuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S48OSGR3Z78QeWqKPe9OK3jROfK6qWn6WHmqI4npYPTTkqdtpDGoRO6G6BN5lzpx9ZuoYiV6vSGZAvhDYuRBufb/zmk0P1y6vEgfT+ptjK1NEGQgw/LoejEH4FNyHz7wdMoF8y9hvWvCgXWf+bpFH1WofVsW53JNSXpOByAeAzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZztFnDF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U5k+Z+VIptyoaPoinOdUxTvNbzQw1KdL9qtoDJq0lc/HoolV3rZW0oQC7fotJOgXH/MJwLDymzi9npGlHwCWhahTD0o2lAZeHbOJuM3EIm/3+kn1i5SInj7gUscca+sC0ijG+kDz8nMRR44uUQCheS7tLWsWJf15l3jTBAH1CPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmyMkTbD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZztFnDF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38031C43390;
-	Tue, 23 Jan 2024 00:46:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmyMkTbD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87249C433F1;
+	Tue, 23 Jan 2024 00:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970808;
-	bh=vkJaJ9cbSlIYUtGUf1999cttgAJhKKLcdsNZn3hyd/Q=;
+	s=korg; t=1705970809;
+	bh=wBaD62AKbqe8sIB9a9kvEhIS5fefZ1v8Ub42dOBaHuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XZztFnDF24IN8Lja1/a3G9outv/T7bmHF8dmKrzQTuDm0wz9yxCt6MlbCuqwH8yQ2
-	 oJKHGc73szHx92BTpp2j9wr4cK9Vlhqx8h3jwvG4vqJpb/n8M3FjUC6aUWb6sHzvK7
-	 +V1LlBY6U0cJTsWnR2LxSJRzmpeqNk/nPztaAqA0=
+	b=RmyMkTbD1X2Ju3UAv4oVLXmUp+4MWI7cwglccHNXN+hjHrZ+RXhs71xKTSN1A94yN
+	 s7BCr8jJNLi5OwEtaN3aMx4evojJ2fY31jaFQuA8KYrHkljfoJOx/uJ5gPZmavVQGQ
+	 OlOXBNwcl3eEJwjSb2lHS4JEZ5Ba+r1+qS7M11xY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Weihao Li <cn.liweihao@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/417] block: Set memalloc_noio to false on device_add_disk() error path
-Date: Mon, 22 Jan 2024 15:54:41 -0800
-Message-ID: <20240122235755.680254290@linuxfoundation.org>
+Subject: [PATCH 5.10 021/286] clk: rockchip: rk3128: Fix HCLK_OTG gate register
+Date: Mon, 22 Jan 2024 15:55:27 -0800
+Message-ID: <20240122235732.842237409@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,38 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Weihao Li <cn.liweihao@gmail.com>
 
-[ Upstream commit 5fa3d1a00c2d4ba14f1300371ad39d5456e890d7 ]
+[ Upstream commit c6c5a5580dcb6631aa6369dabe12ef3ce784d1d2 ]
 
-On the error path of device_add_disk(), device's memalloc_noio flag was
-set but not cleared. As the comment of pm_runtime_set_memalloc_noio(),
-"The function should be called between device_add() and device_del()".
-Clear this flag before device_del() now.
+The HCLK_OTG gate control is in CRU_CLKGATE5_CON, not CRU_CLKGATE3_CON.
 
-Fixes: 25e823c8c37d ("block/genhd.c: apply pm_runtime_set_memalloc_noio on block devices")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20231211075356.1839282-1-linan666@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Weihao Li <cn.liweihao@gmail.com>
+Link: https://lore.kernel.org/r/20231031111816.8777-1-cn.liweihao@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/rockchip/clk-rk3128.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -567,6 +567,7 @@ out_del_integrity:
- out_del_block_link:
- 	if (!sysfs_deprecated)
- 		sysfs_remove_link(block_depr, dev_name(ddev));
-+	pm_runtime_set_memalloc_noio(ddev, false);
- out_device_del:
- 	device_del(ddev);
- out_free_ext_minor:
+diff --git a/drivers/clk/rockchip/clk-rk3128.c b/drivers/clk/rockchip/clk-rk3128.c
+index 4b1122e98e16..ddfe1c402e80 100644
+--- a/drivers/clk/rockchip/clk-rk3128.c
++++ b/drivers/clk/rockchip/clk-rk3128.c
+@@ -489,7 +489,7 @@ static struct rockchip_clk_branch common_clk_branches[] __initdata = {
+ 	GATE(HCLK_I2S_2CH, "hclk_i2s_2ch", "hclk_peri", 0, RK2928_CLKGATE_CON(7), 2, GFLAGS),
+ 	GATE(0, "hclk_usb_peri", "hclk_peri", CLK_IGNORE_UNUSED, RK2928_CLKGATE_CON(9), 13, GFLAGS),
+ 	GATE(HCLK_HOST2, "hclk_host2", "hclk_peri", 0, RK2928_CLKGATE_CON(7), 3, GFLAGS),
+-	GATE(HCLK_OTG, "hclk_otg", "hclk_peri", 0, RK2928_CLKGATE_CON(3), 13, GFLAGS),
++	GATE(HCLK_OTG, "hclk_otg", "hclk_peri", 0, RK2928_CLKGATE_CON(5), 13, GFLAGS),
+ 	GATE(0, "hclk_peri_ahb", "hclk_peri", CLK_IGNORE_UNUSED, RK2928_CLKGATE_CON(9), 14, GFLAGS),
+ 	GATE(HCLK_SPDIF, "hclk_spdif", "hclk_peri", 0, RK2928_CLKGATE_CON(10), 9, GFLAGS),
+ 	GATE(HCLK_TSP, "hclk_tsp", "hclk_peri", 0, RK2928_CLKGATE_CON(10), 12, GFLAGS),
+-- 
+2.43.0
+
 
 
