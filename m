@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C58605A4;
-	Tue, 23 Jan 2024 01:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331BA604DE;
+	Tue, 23 Jan 2024 01:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974689; cv=none; b=QKVvQ2tNpW/YgUBTE7stBSyy3+QK2hgxmvoCJDO+IfX0Xg785911PiUHGNxYDiaVsZ19Q/GL7mmKRxaRKtXsMhOeRlVCyyyw+ZuqDA8rho6/Vqy7yO9etJege3looHXusALR2kt9NYkVvN4vagoMXzM3m0DWnC76JoeIlZ9b+lo=
+	t=1705974691; cv=none; b=uyME3cKbmCKMVjM5sAlu78Xk0kDxUVwIwArNmV+KBmwn8XUQwI5ieP6iDstKO7lVOZSzXOGz/kbPar2TaCdrXDibXuQBx5zu7Atc3C6v69k0YGgU5YFcus0d06oGi3odQ3kgPp+Ko6Nrfg8VYgGTgDA9zPbkdRsTrAnqjWnJKSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974689; c=relaxed/simple;
-	bh=CFt5n9aJJovuveX0xeC9lp5fYtrxvBfCccFMMYE0//U=;
+	s=arc-20240116; t=1705974691; c=relaxed/simple;
+	bh=DJsQlQ24GVSez00z2ealBnRE9oF2GjjoSlq7zWlB5t8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hgo74w1gz/MkUyNY0qk8YP7owUH472f5UaeZ5LqqNGAxukpcEDtl7cJ+a7Tbicsb8fnPmg8RZcBh093qQgF7vlrl0gjbiWRmF6sI7w3Er3V4ESTVI7ax474nH63UZfk082cQ/4s3i6yvXpVghqmI4jU/rSv1lvD2CO/3KPYTa1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJwVjbpU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FMNfCu6LCUwzt+Pa+2l2sRB97TuJoQLDD0DH1A9ck9HkX5ssqbTrle//vSn7F7bIg8BoMsMx9f81W6vqzgAFh6WoC0cFcajucff7qW5grk7Sg0EI4N6gjwHyPWdSbEJvUQSe7z6Ubmi7fyT5qJmiVUj1VTBFAF7CeKdpmK9aRKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moHexOi+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJwVjbpU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F46C433F1;
-	Tue, 23 Jan 2024 01:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moHexOi+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8C9C433F1;
+	Tue, 23 Jan 2024 01:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974688;
-	bh=CFt5n9aJJovuveX0xeC9lp5fYtrxvBfCccFMMYE0//U=;
+	s=korg; t=1705974690;
+	bh=DJsQlQ24GVSez00z2ealBnRE9oF2GjjoSlq7zWlB5t8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DJwVjbpU7lgdnVhfjpoVd0rlgFs0s+BXqV4f6aW8x+af8XuLpQ1ivUk6sagnPMaR+
-	 UY09QFle364FdT41+1C639BygP4/bqZr2X72w+RAFadYFahWrSyO1JrP7xuZeF9gM7
-	 LzvRm+ykqlAwBp3xIW4jPzf+7rZEJ5cyNViFsUNA=
+	b=moHexOi+SevejD1gEfIuE2Ry+EsUj/fdlIs8yQH2q+unZ8T5/sFgj+6hnVay+wtdl
+	 WUqHS4MaEgo09zOBTH8sBaqlOD2E2uUABtEM+oyCli7kAMbJcxpaW1jREPCwwJ5qbV
+	 GZ/Dso+zIbXPX2pJ3kJOSpl1oehCc29UkZIrtw9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.15 251/374] binder: fix race between mmput() and do_exit()
-Date: Mon, 22 Jan 2024 15:58:27 -0800
-Message-ID: <20240122235753.499020645@linuxfoundation.org>
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 125/583] arm64: dts: qcom: qrb2210-rb1: use USB host mode
+Date: Mon, 22 Jan 2024 15:52:56 -0800
+Message-ID: <20240122235815.964049565@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,70 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Caleb Connolly <caleb.connolly@linaro.org>
 
-commit 9a9ab0d963621d9d12199df9817e66982582d5a5 upstream.
+[ Upstream commit e0cee8dc6757f9f18718eec553be9fffa503e103 ]
 
-Task A calls binder_update_page_range() to allocate and insert pages on
-a remote address space from Task B. For this, Task A pins the remote mm
-via mmget_not_zero() first. This can race with Task B do_exit() and the
-final mmput() refcount decrement will come from Task A.
+The default for the QCM2290 platform that this board is based on is OTG
+mode, however the role detection logic is not hooked up for this board
+and the dwc3 driver is configured to not allow role switching from
+userspace.
 
-  Task A            | Task B
-  ------------------+------------------
-  mmget_not_zero()  |
-                    |  do_exit()
-                    |    exit_mm()
-                    |      mmput()
-  mmput()           |
-    exit_mmap()     |
-      remove_vma()  |
-        fput()      |
+Force this board to host mode as this is the preferred usecase until we
+get role switching hooked up.
 
-In this case, the work of ____fput() from Task B is queued up in Task A
-as TWA_RESUME. So in theory, Task A returns to userspace and the cleanup
-work gets executed. However, Task A instead sleep, waiting for a reply
-from Task B that never comes (it's dead).
-
-This means the binder_deferred_release() is blocked until an unrelated
-binder event forces Task A to go back to userspace. All the associated
-death notifications will also be delayed until then.
-
-In order to fix this use mmput_async() that will schedule the work in
-the corresponding mm->async_put_work WQ instead of Task A.
-
-Fixes: 457b9a6f09f0 ("Staging: android: add binder driver")
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20231201172212.1813387-4-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e18771961336 ("arm64: dts: qcom: Add initial QTI RB1 device tree")
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231025-b4-rb1-usb-host-v1-1-522616c575ef@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder_alloc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -271,7 +271,7 @@ static int binder_update_page_range(stru
- 	}
- 	if (mm) {
- 		mmap_write_unlock(mm);
--		mmput(mm);
-+		mmput_async(mm);
- 	}
- 	return 0;
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+index 52be19d55aed..37abb83ea464 100644
+--- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
++++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+@@ -372,6 +372,10 @@ &usb_qmpphy {
+ 	status = "okay";
+ };
  
-@@ -304,7 +304,7 @@ err_page_ptr_cleared:
- err_no_vma:
- 	if (mm) {
- 		mmap_write_unlock(mm);
--		mmput(mm);
-+		mmput_async(mm);
- 	}
- 	return vma ? -ENOMEM : -ESRCH;
- }
++&usb_dwc3 {
++	dr_mode = "host";
++};
++
+ &usb_hsphy {
+ 	vdd-supply = <&pm2250_l12>;
+ 	vdda-pll-supply = <&pm2250_l13>;
+-- 
+2.43.0
+
 
 
