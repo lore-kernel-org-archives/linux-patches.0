@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE49148FE5;
-	Tue, 23 Jan 2024 00:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF05148FF0;
+	Tue, 23 Jan 2024 00:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969169; cv=none; b=o5Wv2sCISeGG0rsTj78Y44rAc2ZruKLH48R9k4calgcAnnADmBsRV2XwoMJa2poqFBFv4MKH7S4jlp19PJEV/gnq9du3SPTrI9vNc+FTD+VE0T7aQpRtE0D9fNdxk/9L238WYMzdzkziwtjHDvgesrlrFLuHHxKeI6Qu9VVt3pU=
+	t=1705969170; cv=none; b=GAHt3zbGQR5ruTYeI3KILqNpoPe82KnbuAPLT3iA2Fz8HUG2BGA38tvzDMAB2cMO1Lhuw3WCYBav9aXRKIB/UD7QcQ2G6FQE4ZI8rxAXx7dLYppDx5V1UnnjSjzwTjT2Js6vL5gJKiJfmDq5bio0jn/2daJ/Ks9/LSEEh4gHdTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969169; c=relaxed/simple;
-	bh=gGJTKi/uJccg7l9CSAqtBwLvNG1/g+nW28l9X1XtckI=;
+	s=arc-20240116; t=1705969170; c=relaxed/simple;
+	bh=RrYC75jwtZLLWeHF+ZJHNnx3XnxTO8GPD7CeZCF2sWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ho+1uUac6Ac5WelTcxFZjwWsg68HEnjTSWGwKMPiH7KOykNBNaxJxvR4mw+BlUrusfhRo4+m9ZIPjCpNg03Ll27Qv5TXRGhE69t/AKvxJovTCzoRdSTlQBFkHGZLvl6pdWVHFj9UTdaaga6gIjks+OjZuRseCaxzrljlLtxkNhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bYqrD+lX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kz6Y1uQuOoKJRyMRgZMTvl8DswHIWXnWzmkkyYkaEOknqSnB9+xcgRbCToaQYsfHgCtedJGlSY5ohq90wwSZS/BtHENdERuugmKbAahhAI4bFSy5/8Y37SCnRMOA90gGIbpP9qizQ8J6XhRS0GkGnCUKdV6zf7BZL3fOGgBPd4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHUcKr0i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bYqrD+lX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF18C433F1;
-	Tue, 23 Jan 2024 00:19:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHUcKr0i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617DBC433F1;
+	Tue, 23 Jan 2024 00:19:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969169;
-	bh=gGJTKi/uJccg7l9CSAqtBwLvNG1/g+nW28l9X1XtckI=;
+	s=korg; t=1705969170;
+	bh=RrYC75jwtZLLWeHF+ZJHNnx3XnxTO8GPD7CeZCF2sWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bYqrD+lXkndbhu9aQzOzMZBvuCM3IjLIuPkhmqZuNmOt9b4p5It7qXESca1uBE564
-	 M59idc/i4efJhLnKlwadqXTk4fXpwOTYy6ks/PieDR6SU7+Wwo6BIIBgnO687tNFL0
-	 h7hJtFkoLYSAuy8Glp/8DDRUKCzZXD3MeRI3t6lM=
+	b=QHUcKr0i/g8PfI/AebL28nRv44A1PAlmoyhmeQZ9bBboCISL+WfIRuqBfvpZFdh39
+	 3eMHkPo+soIXNrLZkzEgWTgPhZM59l5QoLKiZ+72yfT0JVpRzZjtctuS9fM5Cx4PVM
+	 ZceyW6UYx4x039CSKgS56QcJvSGb9IGuHrJ5ERaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 070/641] fs: indicate request originates from old mount API
-Date: Mon, 22 Jan 2024 15:49:34 -0800
-Message-ID: <20240122235820.229656894@linuxfoundation.org>
+	Osama Muhammad <osmtendev@gmail.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+da0fc229cc1ff4bb2e6d@syzkaller.appspotmail.com
+Subject: [PATCH 6.7 071/641] gfs2: Fix kernel NULL pointer dereference in gfs2_rgrp_dump
+Date: Mon, 22 Jan 2024 15:49:35 -0800
+Message-ID: <20240122235820.264037098@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -55,59 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Osama Muhammad <osmtendev@gmail.com>
 
-[ Upstream commit f67d922edb4e95a4a56d07d5d40a76dd4f23a85b ]
+[ Upstream commit 8877243beafa7c6bfc42022cbfdf9e39b25bd4fa ]
 
-We already communicate to filesystems when a remount request comes from
-the old mount API as some filesystems choose to implement different
-behavior in the new mount API than the old mount API to e.g., take the
-chance to fix significant API bugs. Allow the same for regular mount
-requests.
+Syzkaller has reported a NULL pointer dereference when accessing
+rgd->rd_rgl in gfs2_rgrp_dump().  This can happen when creating
+rgd->rd_gl fails in read_rindex_entry().  Add a NULL pointer check in
+gfs2_rgrp_dump() to prevent that.
 
-Fixes: b330966f79fb ("fuse: reject options on reconfigure via fsconfig(2)")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-and-tested-by: syzbot+da0fc229cc1ff4bb2e6d@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=da0fc229cc1ff4bb2e6d
+Fixes: 72244b6bc752 ("gfs2: improve debug information when lvb mismatches are found")
+Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/gfs2/rgrp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index fbf0e596fcd3..6c39ec020a5f 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2875,7 +2875,12 @@ static int do_remount(struct path *path, int ms_flags, int sb_flags,
- 	if (IS_ERR(fc))
- 		return PTR_ERR(fc);
+diff --git a/fs/gfs2/rgrp.c b/fs/gfs2/rgrp.c
+index c2060203b98a..396d0f4a259d 100644
+--- a/fs/gfs2/rgrp.c
++++ b/fs/gfs2/rgrp.c
+@@ -2306,7 +2306,7 @@ void gfs2_rgrp_dump(struct seq_file *seq, struct gfs2_rgrpd *rgd,
+ 		       (unsigned long long)rgd->rd_addr, rgd->rd_flags,
+ 		       rgd->rd_free, rgd->rd_free_clone, rgd->rd_dinodes,
+ 		       rgd->rd_requested, rgd->rd_reserved, rgd->rd_extfail_pt);
+-	if (rgd->rd_sbd->sd_args.ar_rgrplvb) {
++	if (rgd->rd_sbd->sd_args.ar_rgrplvb && rgd->rd_rgl) {
+ 		struct gfs2_rgrp_lvb *rgl = rgd->rd_rgl;
  
-+	/*
-+	 * Indicate to the filesystem that the remount request is coming
-+	 * from the legacy mount system call.
-+	 */
- 	fc->oldapi = true;
-+
- 	err = parse_monolithic_mount_data(fc, data);
- 	if (!err) {
- 		down_write(&sb->s_umount);
-@@ -3324,6 +3329,12 @@ static int do_new_mount(struct path *path, const char *fstype, int sb_flags,
- 	if (IS_ERR(fc))
- 		return PTR_ERR(fc);
- 
-+	/*
-+	 * Indicate to the filesystem that the mount request is coming
-+	 * from the legacy mount system call.
-+	 */
-+	fc->oldapi = true;
-+
- 	if (subtype)
- 		err = vfs_parse_fs_string(fc, "subtype",
- 					  subtype, strlen(subtype));
+ 		gfs2_print_dbg(seq, "%s  L: f:%02x b:%u i:%u\n", fs_id_buf,
 -- 
 2.43.0
 
