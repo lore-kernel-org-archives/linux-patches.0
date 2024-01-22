@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E98B1487E0;
-	Tue, 23 Jan 2024 00:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D981487F8;
+	Tue, 23 Jan 2024 00:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969165; cv=none; b=erLoKLPBVw5JYlb+12NHq7SmiUDrUU4fcN3eaXPQlhTo3hetcfDT9pmAKfwdVVSMiw4Hp5CW0xlx45SVT+9uS0bBVWR2YgeQ55H1ldv0ySb5Y/YhMssm6uD6eb43/ATWIVzS+DHl2//oObgB77JodyV+V2kwXdxg9dSdFxeII9w=
+	t=1705969165; cv=none; b=lMFWzd7pmh2r1dv74BfqP7JHzptJxAWqd5lz3wxOKIoF0i3sNdCMHffAjVH13aujCWtWQZbl4Dh6ORpout9HTaDzHnv0V5WQORY8IY5F72PjR5GihsBaEa5yQ1g38ayIKrCJWfK+jEtlFTJIU2pR6OM4jP1ZTLjKRZZgwaKmgZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705969165; c=relaxed/simple;
-	bh=jYbKejpB68fybNEEC66AjxdS/Gp1ZSKWBqfiRd+t8js=;
+	bh=rJg5QP3DRmWeUA2h9JYvQKk93WFg1KPuS95uc62XG/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dlyd/1kwqdyqedyYa0HIVFNGlNajbOuWmtbrj0CrPHnhDxP3c/HweTSWXcfl6gianVEQVdu6JMx+jPBBBqdWeZlSxcyxIenO34PzJctm/iXwTK7MaJBNu4z7vKclCHhtHHgC4Xp6eHV6NatPWk4JLq5IyCXP1ni2LeRtj39Fa/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8+rLvWC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jvh6zxr0Tx0XGcd194sjr43G9BxfUk7qgW2UemDwE+JAMNkqYlBloeaFSmP3r35oCUfnMbvI+ZuOshepce0J1XJCP3M8uBlhqRuGW3L+2b5oOd3f8ZTxmiakS2JstFv7Cyf/VvR1f2JI/B5CbgamYiKiti3eto2xbKBUthMStTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZ/7tEPc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8+rLvWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF60C433F1;
-	Tue, 23 Jan 2024 00:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZ/7tEPc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1769BC433C7;
+	Tue, 23 Jan 2024 00:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969163;
-	bh=jYbKejpB68fybNEEC66AjxdS/Gp1ZSKWBqfiRd+t8js=;
+	s=korg; t=1705969165;
+	bh=rJg5QP3DRmWeUA2h9JYvQKk93WFg1KPuS95uc62XG/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R8+rLvWCEbGu4IpP9epJQnX53YrjH67vr2AGYvQP4spxWA5HwVdjLYDtSCz2l/w2F
-	 N8kVR6q7p9FnTjnTvmwhmyZxdjo3TXkjXONnrhEvV40mvS/5hWuQmHhoSEEJEQ4KDi
-	 IAlyRz5fyOK7TmAQYXti9ZVKMh3D6pakB6dbN2bY=
+	b=xZ/7tEPcgoW8k6KeDoql5x1IzyOpiEypPgznaecrP6bihyDQjAZYWHCOMmfJ7Ew7D
+	 qHT1NKsl1FcvkG2zyS1oo+5nBSjWhmJ0G/fyf+ho7KFwesoFm9uQ5iMo1Ct2SLNubD
+	 V66cCNtmcsNoRenkT6Q93V6xTepjSa5jpcp7sAC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiqi Song <songzhiqi1@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 067/641] crypto: hisilicon/zip - save capability registers in probe process
-Date: Mon, 22 Jan 2024 15:49:31 -0800
-Message-ID: <20240122235820.146077407@linuxfoundation.org>
+Subject: [PATCH 6.7 068/641] pstore: ram_core: fix possible overflow in persistent_ram_init_ecc()
+Date: Mon, 22 Jan 2024 15:49:32 -0800
+Message-ID: <20240122235820.171788752@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,157 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiqi Song <songzhiqi1@huawei.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 2ff0ad847951d61c2d8b309e1ccefb26c57dcc7b ]
+[ Upstream commit 86222a8fc16ec517de8da2604d904c9df3a08e5d ]
 
-Pre-store the valid value of the zip alg support related capability
-register in hisi_zip_qm_init(), which will be called by hisi_zip_probe().
-It can reduce the number of capability register queries and avoid
-obtaining incorrect values in abnormal scenarios, such as reset failed
-and the memory space disabled.
+In persistent_ram_init_ecc(), on 64-bit arches DIV_ROUND_UP() will return
+64-bit value since persistent_ram_zone::buffer_size has type size_t which
+is derived from the 64-bit *unsigned long*, while the ecc_blocks variable
+this value gets assigned to has (always 32-bit) *int* type.  Even if that
+value fits into *int* type, an overflow is still possible when calculating
+the size_t typed ecc_total variable further below since there's no cast to
+any 64-bit type before multiplication.  Declaring the ecc_blocks variable
+as *size_t* should fix this mess...
 
-Fixes: db700974b69d ("crypto: hisilicon/zip - support zip capability")
-Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Found by Linux Verification Center (linuxtesting.org) with the SVACE static
+analysis tool.
+
+Fixes: 9cc05ad97c57 ("staging: android: persistent_ram: refactor ecc support")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20231105202936.25694-1-s.shtylyov@omp.ru
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/zip/zip_main.c | 73 ++++++++++++++++++++-----
- 1 file changed, 60 insertions(+), 13 deletions(-)
+ fs/pstore/ram_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/hisilicon/zip/zip_main.c b/drivers/crypto/hisilicon/zip/zip_main.c
-index f7cf54f02dd7..403b07468841 100644
---- a/drivers/crypto/hisilicon/zip/zip_main.c
-+++ b/drivers/crypto/hisilicon/zip/zip_main.c
-@@ -249,6 +249,26 @@ static struct hisi_qm_cap_info zip_basic_cap_info[] = {
- 	{ZIP_CAP_MAX, 0x317c, 0, GENMASK(0, 0), 0x0, 0x0, 0x0}
- };
- 
-+enum zip_pre_store_cap_idx {
-+	ZIP_CORE_NUM_CAP_IDX = 0x0,
-+	ZIP_CLUSTER_COMP_NUM_CAP_IDX,
-+	ZIP_CLUSTER_DECOMP_NUM_CAP_IDX,
-+	ZIP_DECOMP_ENABLE_BITMAP_IDX,
-+	ZIP_COMP_ENABLE_BITMAP_IDX,
-+	ZIP_DRV_ALG_BITMAP_IDX,
-+	ZIP_DEV_ALG_BITMAP_IDX,
-+};
-+
-+static const u32 zip_pre_store_caps[] = {
-+	ZIP_CORE_NUM_CAP,
-+	ZIP_CLUSTER_COMP_NUM_CAP,
-+	ZIP_CLUSTER_DECOMP_NUM_CAP,
-+	ZIP_DECOMP_ENABLE_BITMAP,
-+	ZIP_COMP_ENABLE_BITMAP,
-+	ZIP_DRV_ALG_BITMAP,
-+	ZIP_DEV_ALG_BITMAP,
-+};
-+
- enum {
- 	HZIP_COMP_CORE0,
- 	HZIP_COMP_CORE1,
-@@ -443,7 +463,7 @@ bool hisi_zip_alg_support(struct hisi_qm *qm, u32 alg)
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index 650e437b55e6..f1848cdd6d34 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -190,7 +190,7 @@ static int persistent_ram_init_ecc(struct persistent_ram_zone *prz,
  {
- 	u32 cap_val;
+ 	int numerr;
+ 	struct persistent_ram_buffer *buffer = prz->buffer;
+-	int ecc_blocks;
++	size_t ecc_blocks;
+ 	size_t ecc_total;
  
--	cap_val = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_DRV_ALG_BITMAP, qm->cap_ver);
-+	cap_val = qm->cap_tables.dev_cap_table[ZIP_DRV_ALG_BITMAP_IDX].cap_val;
- 	if ((alg & cap_val) == alg)
- 		return true;
- 
-@@ -568,10 +588,8 @@ static int hisi_zip_set_user_domain_and_cache(struct hisi_qm *qm)
- 	}
- 
- 	/* let's open all compression/decompression cores */
--	dcomp_bm = hisi_qm_get_hw_info(qm, zip_basic_cap_info,
--				       ZIP_DECOMP_ENABLE_BITMAP, qm->cap_ver);
--	comp_bm = hisi_qm_get_hw_info(qm, zip_basic_cap_info,
--				      ZIP_COMP_ENABLE_BITMAP, qm->cap_ver);
-+	dcomp_bm = qm->cap_tables.dev_cap_table[ZIP_DECOMP_ENABLE_BITMAP_IDX].cap_val;
-+	comp_bm = qm->cap_tables.dev_cap_table[ZIP_COMP_ENABLE_BITMAP_IDX].cap_val;
- 	writel(HZIP_DECOMP_CHECK_ENABLE | dcomp_bm | comp_bm, base + HZIP_CLOCK_GATE_CTRL);
- 
- 	/* enable sqc,cqc writeback */
-@@ -798,9 +816,8 @@ static int hisi_zip_core_debug_init(struct hisi_qm *qm)
- 	char buf[HZIP_BUF_SIZE];
- 	int i;
- 
--	zip_core_num = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_CORE_NUM_CAP, qm->cap_ver);
--	zip_comp_core_num = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_CLUSTER_COMP_NUM_CAP,
--						qm->cap_ver);
-+	zip_core_num = qm->cap_tables.dev_cap_table[ZIP_CORE_NUM_CAP_IDX].cap_val;
-+	zip_comp_core_num = qm->cap_tables.dev_cap_table[ZIP_CLUSTER_COMP_NUM_CAP_IDX].cap_val;
- 
- 	for (i = 0; i < zip_core_num; i++) {
- 		if (i < zip_comp_core_num)
-@@ -942,7 +959,7 @@ static int hisi_zip_show_last_regs_init(struct hisi_qm *qm)
- 	u32 zip_core_num;
- 	int i, j, idx;
- 
--	zip_core_num = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_CORE_NUM_CAP, qm->cap_ver);
-+	zip_core_num = qm->cap_tables.dev_cap_table[ZIP_CORE_NUM_CAP_IDX].cap_val;
- 
- 	debug->last_words = kcalloc(core_dfx_regs_num * zip_core_num + com_dfx_regs_num,
- 				    sizeof(unsigned int), GFP_KERNEL);
-@@ -998,9 +1015,9 @@ static void hisi_zip_show_last_dfx_regs(struct hisi_qm *qm)
- 				 hzip_com_dfx_regs[i].name, debug->last_words[i], val);
- 	}
- 
--	zip_core_num = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_CORE_NUM_CAP, qm->cap_ver);
--	zip_comp_core_num = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_CLUSTER_COMP_NUM_CAP,
--						qm->cap_ver);
-+	zip_core_num = qm->cap_tables.dev_cap_table[ZIP_CORE_NUM_CAP_IDX].cap_val;
-+	zip_comp_core_num = qm->cap_tables.dev_cap_table[ZIP_CLUSTER_COMP_NUM_CAP_IDX].cap_val;
-+
- 	for (i = 0; i < zip_core_num; i++) {
- 		if (i < zip_comp_core_num)
- 			scnprintf(buf, sizeof(buf), "Comp_core-%d", i);
-@@ -1156,6 +1173,28 @@ static int hisi_zip_pf_probe_init(struct hisi_zip *hisi_zip)
- 	return ret;
- }
- 
-+static int zip_pre_store_cap_reg(struct hisi_qm *qm)
-+{
-+	struct hisi_qm_cap_record *zip_cap;
-+	struct pci_dev *pdev = qm->pdev;
-+	size_t i, size;
-+
-+	size = ARRAY_SIZE(zip_pre_store_caps);
-+	zip_cap = devm_kzalloc(&pdev->dev, sizeof(*zip_cap) * size, GFP_KERNEL);
-+	if (!zip_cap)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < size; i++) {
-+		zip_cap[i].type = zip_pre_store_caps[i];
-+		zip_cap[i].cap_val = hisi_qm_get_hw_info(qm, zip_basic_cap_info,
-+				     zip_pre_store_caps[i], qm->cap_ver);
-+	}
-+
-+	qm->cap_tables.dev_cap_table = zip_cap;
-+
-+	return 0;
-+}
-+
- static int hisi_zip_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
- {
- 	u64 alg_msk;
-@@ -1194,7 +1233,15 @@ static int hisi_zip_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
- 		return ret;
- 	}
- 
--	alg_msk = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_DEV_ALG_BITMAP, qm->cap_ver);
-+	/* Fetch and save the value of capability registers */
-+	ret = zip_pre_store_cap_reg(qm);
-+	if (ret) {
-+		pci_err(qm->pdev, "Failed to pre-store capability registers!\n");
-+		hisi_qm_uninit(qm);
-+		return ret;
-+	}
-+
-+	alg_msk = qm->cap_tables.dev_cap_table[ZIP_DEV_ALG_BITMAP_IDX].cap_val;
- 	ret = hisi_qm_set_algs(qm, alg_msk, zip_dev_algs, ARRAY_SIZE(zip_dev_algs));
- 	if (ret) {
- 		pci_err(qm->pdev, "Failed to set zip algs!\n");
+ 	if (!ecc_info || !ecc_info->ecc_size)
 -- 
 2.43.0
 
