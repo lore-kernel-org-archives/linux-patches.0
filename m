@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988034E1AD;
-	Tue, 23 Jan 2024 01:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042F764CE7;
+	Tue, 23 Jan 2024 01:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971618; cv=none; b=Rm//EFaFwLOisYcOG4nz3BKpAxQj6FEuc3kaCh/xXwtgE3p4915uyYcxLbgig0zHpOl02aRJO80oeqJkbSeyeUUaArlBOUS1eizVPdsm5ixrXlmHDaQ48iIZf8lG8obUuKyOMTzjxFsrV/hejQQPaGrFZJe29qDLCIA0wCV2xes=
+	t=1705971621; cv=none; b=j+b/RJMaKjpjJgKCwZgd+E8/xgrkg2+JqmN7vso3nHHDRmh9kUPLT/Ktpuj5D6k8k0zvrN1xQJFcrPXB1iTSA+vu/O/H5sh6kZzsAikmRi/js8WwV/mUR0wSAA1TTk4l+kOGmi8imPz/URktSv4bPQKxeTmbuMrVn3XpLlZxp9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971618; c=relaxed/simple;
-	bh=laF12l0+J5Um/+L+czPVenIfraqZQFsOsq9fo2k7sF0=;
+	s=arc-20240116; t=1705971621; c=relaxed/simple;
+	bh=MkQjQF1bnF/m9s9kiTonpiaHMwFZwZ88mqklMdZCPHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OTZN5btPHMq1adlZg2s4KA/IYNAePvOVQiSy4O8X8YyQ2ijiifd1zIwsxAJM99gFKll5Vsc3g0Gkn9yBYHHzsBFORzpKluYjWemqGxfRK4pPIbQwyrb15Kb6sCPsplMdX9UxNha52TGXg51N1/FozHSia3I9xCl2vUAfhphUtWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1hj01uq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tEtLr/vsQcyFO5WpA51s5mu5l9RBc0cgGVRfK3ajvX/BeetKLi0jFPU5nE0XukpDcTIJPPrhYZbGRhjN5mR6acgOc3+gGK+qEcku12Jn4/7sOlQL9GAL8JZw0JfKaKjj3Zx54LK5uxBi9dPpd4ySSF8GJGcFYJGxm+ra0z1ZMJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Il2z3qqP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1hj01uq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40321C433C7;
-	Tue, 23 Jan 2024 01:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Il2z3qqP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11A3C433C7;
+	Tue, 23 Jan 2024 01:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971618;
-	bh=laF12l0+J5Um/+L+czPVenIfraqZQFsOsq9fo2k7sF0=;
+	s=korg; t=1705971620;
+	bh=MkQjQF1bnF/m9s9kiTonpiaHMwFZwZ88mqklMdZCPHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W1hj01uqKpwmbLYtu6UmpJrPvIMjZMtcZ0QnNI3IoBvtdk9dYjjBPPIT8b5J44HUS
-	 awCC8CQW9bNwWXgKg+1giq+3SI4L/lFHrY6uruB7/jmp6KbyWtH3GE/R9INydGp/Co
-	 aONyUeeGWhLRR/y07RAP1/NPgaC+K0VZOJurdPAQ=
+	b=Il2z3qqPshMG2oL+/Kk35Lyu7G5+tVv5P0aQxv/rrmIwqVdehjZSgmM2C0u3IQXeE
+	 buR54Io7QoQtDwdcpwyHrI/jP4hmpAUKXDz6ilzbCIsOx/JC5YMypDnp0qY37PIg6+
+	 Piffi6TwDic4hF+KSmaiQASivJqRWh1sgxWDQ/Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.1 266/417] usb: cdns3: Fix uvc fail when DMA cross 4k boundery since sg enabled
-Date: Mon, 22 Jan 2024 15:57:14 -0800
-Message-ID: <20240122235801.078553326@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 187/286] clk: fixed-rate: add devm_clk_hw_register_fixed_rate
+Date: Mon, 22 Jan 2024 15:58:13 -0800
+Message-ID: <20240122235739.331159819@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,89 +47,177 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit 40c304109e866a7dc123661a5c8ca72f6b5e14e0 upstream.
+[ Upstream commit 1d7d20658534c7d36fe6f4252f6f1a27d9631a99 ]
 
-Supposed DMA cross 4k bounder problem should be fixed at DEV_VER_V2, but
-still met problem when do ISO transfer if sg enabled.
+Add devm_clk_hw_register_fixed_rate(), devres-managed helper to register
+fixed-rate clock.
 
-Data pattern likes below when sg enabled, package size is 1k and mult is 2
-	[UVC Header(8B) ] [data(3k - 8)] ...
-
-The received data at offset 0xd000 will get 0xc000 data, len 0x70. Error
-happen position as below pattern:
-	0xd000: wrong
-	0xe000: wrong
-	0xf000: correct
-	0x10000: wrong
-	0x11000: wrong
-	0x12000: correct
-	...
-
-To avoid DMA cross 4k bounder at ISO transfer, reduce burst len according
-to start DMA address's alignment.
-
-Cc:  <stable@vger.kernel.org>
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20231224153816.1664687-4-Frank.Li@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20220916061740.87167-3-dmitry.baryshkov@linaro.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: ee0cf5e07f44 ("clk: fixed-rate: fix clk_hw_register_fixed_rate_with_accuracy_parent_hw")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/cdns3-gadget.c |   32 +++++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ drivers/clk/clk-fixed-rate.c | 28 ++++++++++++++++++++++++----
+ include/linux/clk-provider.h | 29 +++++++++++++++++++++--------
+ 2 files changed, 45 insertions(+), 12 deletions(-)
 
---- a/drivers/usb/cdns3/cdns3-gadget.c
-+++ b/drivers/usb/cdns3/cdns3-gadget.c
-@@ -1118,6 +1118,7 @@ static int cdns3_ep_run_transfer(struct
- 	u32 togle_pcs = 1;
- 	int sg_iter = 0;
- 	int num_trb_req;
-+	int trb_burst;
- 	int num_trb;
- 	int address;
- 	u32 control;
-@@ -1240,7 +1241,36 @@ static int cdns3_ep_run_transfer(struct
- 			total_tdl += DIV_ROUND_UP(length,
- 					       priv_ep->endpoint.maxpacket);
+diff --git a/drivers/clk/clk-fixed-rate.c b/drivers/clk/clk-fixed-rate.c
+index 45501637705c..62e994d18fe2 100644
+--- a/drivers/clk/clk-fixed-rate.c
++++ b/drivers/clk/clk-fixed-rate.c
+@@ -49,12 +49,24 @@ const struct clk_ops clk_fixed_rate_ops = {
+ };
+ EXPORT_SYMBOL_GPL(clk_fixed_rate_ops);
  
--		trb->length |= cpu_to_le32(TRB_BURST_LEN(priv_ep->trb_burst_size) |
-+		trb_burst = priv_ep->trb_burst_size;
++static void devm_clk_hw_register_fixed_rate_release(struct device *dev, void *res)
++{
++	struct clk_fixed_rate *fix = res;
 +
-+		/*
-+		 * Supposed DMA cross 4k bounder problem should be fixed at DEV_VER_V2, but still
-+		 * met problem when do ISO transfer if sg enabled.
-+		 *
-+		 * Data pattern likes below when sg enabled, package size is 1k and mult is 2
-+		 *       [UVC Header(8B) ] [data(3k - 8)] ...
-+		 *
-+		 * The received data at offset 0xd000 will get 0xc000 data, len 0x70. Error happen
-+		 * as below pattern:
-+		 *	0xd000: wrong
-+		 *	0xe000: wrong
-+		 *	0xf000: correct
-+		 *	0x10000: wrong
-+		 *	0x11000: wrong
-+		 *	0x12000: correct
-+		 *	...
-+		 *
-+		 * But it is still unclear about why error have not happen below 0xd000, it should
-+		 * cross 4k bounder. But anyway, the below code can fix this problem.
-+		 *
-+		 * To avoid DMA cross 4k bounder at ISO transfer, reduce burst len according to 16.
-+		 */
-+		if (priv_ep->type == USB_ENDPOINT_XFER_ISOC && priv_dev->dev_ver <= DEV_VER_V2)
-+			if (ALIGN_DOWN(trb->buffer, SZ_4K) !=
-+			    ALIGN_DOWN(trb->buffer + length, SZ_4K))
-+				trb_burst = 16;
++	/*
++	 * We can not use clk_hw_unregister_fixed_rate, since it will kfree()
++	 * the hw, resulting in double free. Just unregister the hw and let
++	 * devres code kfree() it.
++	 */
++	clk_hw_unregister(&fix->hw);
++}
 +
-+		trb->length |= cpu_to_le32(TRB_BURST_LEN(trb_burst) |
- 					TRB_LEN(length));
- 		pcs = priv_ep->pcs ? TRB_CYCLE : 0;
+ struct clk_hw *__clk_hw_register_fixed_rate(struct device *dev,
+ 		struct device_node *np, const char *name,
+ 		const char *parent_name, const struct clk_hw *parent_hw,
+ 		const struct clk_parent_data *parent_data, unsigned long flags,
+ 		unsigned long fixed_rate, unsigned long fixed_accuracy,
+-		unsigned long clk_fixed_flags)
++		unsigned long clk_fixed_flags, bool devm)
+ {
+ 	struct clk_fixed_rate *fixed;
+ 	struct clk_hw *hw;
+@@ -62,7 +74,11 @@ struct clk_hw *__clk_hw_register_fixed_rate(struct device *dev,
+ 	int ret = -EINVAL;
  
+ 	/* allocate fixed-rate clock */
+-	fixed = kzalloc(sizeof(*fixed), GFP_KERNEL);
++	if (devm)
++		fixed = devres_alloc(devm_clk_hw_register_fixed_rate_release,
++				     sizeof(*fixed), GFP_KERNEL);
++	else
++		fixed = kzalloc(sizeof(*fixed), GFP_KERNEL);
+ 	if (!fixed)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -90,9 +106,13 @@ struct clk_hw *__clk_hw_register_fixed_rate(struct device *dev,
+ 	else if (np)
+ 		ret = of_clk_hw_register(np, hw);
+ 	if (ret) {
+-		kfree(fixed);
++		if (devm)
++			devres_free(fixed);
++		else
++			kfree(fixed);
+ 		hw = ERR_PTR(ret);
+-	}
++	} else if (devm)
++		devres_add(dev, fixed);
+ 
+ 	return hw;
+ }
+diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+index aa8cbf882914..76f02b214f39 100644
+--- a/include/linux/clk-provider.h
++++ b/include/linux/clk-provider.h
+@@ -350,7 +350,7 @@ struct clk_hw *__clk_hw_register_fixed_rate(struct device *dev,
+ 		const char *parent_name, const struct clk_hw *parent_hw,
+ 		const struct clk_parent_data *parent_data, unsigned long flags,
+ 		unsigned long fixed_rate, unsigned long fixed_accuracy,
+-		unsigned long clk_fixed_flags);
++		unsigned long clk_fixed_flags, bool devm);
+ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
+ 		const char *parent_name, unsigned long flags,
+ 		unsigned long fixed_rate);
+@@ -365,7 +365,20 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
+  */
+ #define clk_hw_register_fixed_rate(dev, name, parent_name, flags, fixed_rate)  \
+ 	__clk_hw_register_fixed_rate((dev), NULL, (name), (parent_name), NULL, \
+-				     NULL, (flags), (fixed_rate), 0, 0)
++				     NULL, (flags), (fixed_rate), 0, 0, false)
++
++/**
++ * devm_clk_hw_register_fixed_rate - register fixed-rate clock with the clock
++ * framework
++ * @dev: device that is registering this clock
++ * @name: name of this clock
++ * @parent_name: name of clock's parent
++ * @flags: framework-specific flags
++ * @fixed_rate: non-adjustable clock rate
++ */
++#define devm_clk_hw_register_fixed_rate(dev, name, parent_name, flags, fixed_rate)  \
++	__clk_hw_register_fixed_rate((dev), NULL, (name), (parent_name), NULL, \
++				     NULL, (flags), (fixed_rate), 0, 0, true)
+ /**
+  * clk_hw_register_fixed_rate_parent_hw - register fixed-rate clock with
+  * the clock framework
+@@ -378,7 +391,7 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
+ #define clk_hw_register_fixed_rate_parent_hw(dev, name, parent_hw, flags,     \
+ 					     fixed_rate)		      \
+ 	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, (parent_hw),  \
+-				     NULL, (flags), (fixed_rate), 0, 0)
++				     NULL, (flags), (fixed_rate), 0, 0, false)
+ /**
+  * clk_hw_register_fixed_rate_parent_data - register fixed-rate clock with
+  * the clock framework
+@@ -392,7 +405,7 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
+ 					     fixed_rate)		      \
+ 	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, NULL,	      \
+ 				     (parent_data), (flags), (fixed_rate), 0, \
+-				     0)
++				     0, false)
+ /**
+  * clk_hw_register_fixed_rate_with_accuracy - register fixed-rate clock with
+  * the clock framework
+@@ -408,7 +421,7 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
+ 						 fixed_accuracy)	      \
+ 	__clk_hw_register_fixed_rate((dev), NULL, (name), (parent_name),      \
+ 				     NULL, NULL, (flags), (fixed_rate),       \
+-				     (fixed_accuracy), 0)
++				     (fixed_accuracy), 0, false)
+ /**
+  * clk_hw_register_fixed_rate_with_accuracy_parent_hw - register fixed-rate
+  * clock with the clock framework
+@@ -423,7 +436,7 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
+ 		parent_hw, flags, fixed_rate, fixed_accuracy)		      \
+ 	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, (parent_hw)   \
+ 				     NULL, NULL, (flags), (fixed_rate),	      \
+-				     (fixed_accuracy), 0)
++				     (fixed_accuracy), 0, false)
+ /**
+  * clk_hw_register_fixed_rate_with_accuracy_parent_data - register fixed-rate
+  * clock with the clock framework
+@@ -438,7 +451,7 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
+ 		parent_data, flags, fixed_rate, fixed_accuracy)		      \
+ 	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, NULL,	      \
+ 				     (parent_data), NULL, (flags),	      \
+-				     (fixed_rate), (fixed_accuracy), 0)
++				     (fixed_rate), (fixed_accuracy), 0, false)
+ /**
+  * clk_hw_register_fixed_rate_parent_accuracy - register fixed-rate clock with
+  * the clock framework
+@@ -452,7 +465,7 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
+ 						   flags, fixed_rate)	      \
+ 	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, NULL,      \
+ 				     (parent_data), (flags), (fixed_rate), 0,    \
+-				     CLK_FIXED_RATE_PARENT_ACCURACY)
++				     CLK_FIXED_RATE_PARENT_ACCURACY, false)
+ 
+ void clk_unregister_fixed_rate(struct clk *clk);
+ void clk_hw_unregister_fixed_rate(struct clk_hw *hw);
+-- 
+2.43.0
+
 
 
