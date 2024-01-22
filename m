@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFEDA131748;
-	Tue, 23 Jan 2024 00:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682E3131748;
+	Tue, 23 Jan 2024 00:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969447; cv=none; b=gOpXWtlNY6mbaGQlfqI3JfPRyMhKzOodBAQ5wjvi9ZzKEiUg/pP36FJBGZFSG50mYxuwUufAZP/r2FvOsyB77n1f4C+o/6QGngx4O5qGVb9zRe2cI6S4864zkJxkAnO77DaCS/syT+d+fVqYvucYjw+QojGD0MVKbRy1od/K7Ro=
+	t=1705969449; cv=none; b=dgrS0R2pQnFj82krK4UKgOyTKGoqbjdC88kjKPz6OAEvLazP9LGemALorIZOMgadjRHuJaUbGz4gJYaiFul2r8AzgIbATWehD641jN/429P1MRWixVCOTQ4/kgJVnZdNthlopAiol5GNL0dUD5n/fkPKs5L/jNAfgOXjUNqe0pQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969447; c=relaxed/simple;
-	bh=31IE789LQMFxm+yls3Pzg0NVGVMKbCW6EzCCuyaGZ2w=;
+	s=arc-20240116; t=1705969449; c=relaxed/simple;
+	bh=VqU16vs751sl3MpltP4VM0gTEC6ceVkGcPlts/SkR4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJwRBzHV1aChSQ6bVtxHnr476oiw5CaHSlL7NmXgiIiH5BD+s+V0u8LyzJ1FrDUUjRAEBtOLHSKGOLShDMYV0LC7z12YiZ+H92RvXUr5pRYS5zA6PfPsyy83gBe1DhqIUKNGTBfQRrEE3a+BYa44Mj9JBS5p+fBsGmCkWwrfk4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlQkm+YL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vcjed1fKpNDEcE/Ax1TZ58IGs1TvU0s/f47eWikhFx41ZucBFLY41lFk1yjyZb/Btp/hl5WxnGae3M+2pBq7U7wD1KqF8P90XOj0BV6EOaiIB6INAf2MVJu8MCvPzbK4UvI5L5RpKWRaNOYEByzm+UxT1dEkYTyrsxAZ7vq89VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7X09Pqi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlQkm+YL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FB3C43399;
-	Tue, 23 Jan 2024 00:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7X09Pqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACD2C43390;
+	Tue, 23 Jan 2024 00:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969447;
-	bh=31IE789LQMFxm+yls3Pzg0NVGVMKbCW6EzCCuyaGZ2w=;
+	s=korg; t=1705969449;
+	bh=VqU16vs751sl3MpltP4VM0gTEC6ceVkGcPlts/SkR4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AlQkm+YLPQhwI7cJKAiY3ONFTJJA/XIcQBYq/8yxdDC/WYaB7EZ3F4jXloTik7qcq
-	 ETnrbc6mV4O01PDlLhvV7kzG7pLdzPAPbkMxAQjboZsc63zOyOwk6o8eYtMZGuCV5w
-	 uOtu6pEwZJw9ficjrAhuXBg6K/IdkY+RXZPQArMg=
+	b=d7X09PqipuoOHRXkWzNyZbYqyFF43472aMC5YIxYmoF2RS8udwTMm0WZC2xu7bWYn
+	 T0XbCrgw2aHQhT/cFIzpW76WaD8/nLr9ohq9dTc6ulqtc+/I7p/Y4Opojzk+WqxBq/
+	 j2PQj91DPjg2x+NHps7JQSA47aqmfYhoWFjjq8v8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 253/641] drm/tilcdc: Fix irq free on unload
-Date: Mon, 22 Jan 2024 15:52:37 -0800
-Message-ID: <20240122235825.832218669@linuxfoundation.org>
+	"Ricardo B. Marliere" <ricardo@marliere.net>,
+	Mike Isely <isely@pobox.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+621409285c4156a009b3@syzkaller.appspotmail.com
+Subject: [PATCH 6.7 254/641] media: pvrusb2: fix use after free on context disconnection
+Date: Mon, 22 Jan 2024 15:52:38 -0800
+Message-ID: <20240122235825.861757443@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,38 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Ricardo B. Marliere <ricardo@marliere.net>
 
-[ Upstream commit 38360bf96d816e175bc602c4ee76953cd303b71d ]
+[ Upstream commit ded85b0c0edd8f45fec88783d7555a5b982449c1 ]
 
-The driver only frees the reserved irq if priv->irq_enabled is set to
-true. However, the driver mistakenly sets priv->irq_enabled to false,
-instead of true, in tilcdc_irq_install(), and thus the driver never
-frees the irq, causing issues on loading the driver a second time.
+Upon module load, a kthread is created targeting the
+pvr2_context_thread_func function, which may call pvr2_context_destroy
+and thus call kfree() on the context object. However, that might happen
+before the usb hub_event handler is able to notify the driver. This
+patch adds a sanity check before the invalid read reported by syzbot,
+within the context disconnection call stack.
 
-Fixes: b6366814fa77 ("drm/tilcdc: Convert to Linux IRQ interfaces")
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230919-lcdc-v1-1-ba60da7421e1@ideasonboard.com
+Reported-and-tested-by: syzbot+621409285c4156a009b3@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/000000000000a02a4205fff8eb92@google.com/
+
+Fixes: e5be15c63804 ("V4L/DVB (7711): pvrusb2: Fix race on module unload")
+Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
+Acked-by: Mike Isely <isely@pobox.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tilcdc/tilcdc_drv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/pvrusb2/pvrusb2-context.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/tilcdc/tilcdc_drv.c b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
-index 8ebd7134ee21..2f6eaac7f659 100644
---- a/drivers/gpu/drm/tilcdc/tilcdc_drv.c
-+++ b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
-@@ -138,7 +138,7 @@ static int tilcdc_irq_install(struct drm_device *dev, unsigned int irq)
- 	if (ret)
- 		return ret;
- 
--	priv->irq_enabled = false;
-+	priv->irq_enabled = true;
- 
- 	return 0;
+diff --git a/drivers/media/usb/pvrusb2/pvrusb2-context.c b/drivers/media/usb/pvrusb2/pvrusb2-context.c
+index 14170a5d72b3..1764674de98b 100644
+--- a/drivers/media/usb/pvrusb2/pvrusb2-context.c
++++ b/drivers/media/usb/pvrusb2/pvrusb2-context.c
+@@ -268,7 +268,8 @@ void pvr2_context_disconnect(struct pvr2_context *mp)
+ {
+ 	pvr2_hdw_disconnect(mp->hdw);
+ 	mp->disconnect_flag = !0;
+-	pvr2_context_notify(mp);
++	if (!pvr2_context_shutok())
++		pvr2_context_notify(mp);
  }
+ 
+ 
 -- 
 2.43.0
 
