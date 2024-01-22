@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB046A03B;
-	Tue, 23 Jan 2024 02:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666D66A03B;
+	Tue, 23 Jan 2024 02:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975329; cv=none; b=rry8FSIp+CnjyUBw0b9OeBccixjV0LOjNQhcGAzlfzAOeiwmVRACSJSLAuL7xVpUXS3WRIf08LFikMNTWfnk1DaHjvU1P27G3vczilrD6YEv5d/vXNb+Li9zi1KgLHjFP6aCz+M7VHTgzBeHfIdaUD5FC7VwfRvMwQgazMaS59g=
+	t=1705975330; cv=none; b=AEvB6Se6M/JeDdVi6Sf5h3B0gLr9f9F5mMS/sf08Oy0vjFikCv//Ya+jfpUr6YBnsEm864SnUxZEdmdBR19SNnaA1b+DMepdnZ7GkcgNuYOokiQ4e5St9Lz4daQoLzKojcfhknFyL/N4Mrdr36iL88r6aT8mIkHsk7ctiwRrXwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975329; c=relaxed/simple;
-	bh=9f+PTP4rZmhrLcVonrDvG4lnNrlQnId3BqzJ4b9apZk=;
+	s=arc-20240116; t=1705975330; c=relaxed/simple;
+	bh=aLUQAG31w2kJKmaxpHrfDue6/eVH9L8uPXnUgaq13cs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sUy8qV0HA4wR/aYMSb1XfPr5zKsdg56zgzQSy/MpAt+1tVMv4Rnldv+l0NNs1CF9Mrd+3oigdNV0MLHyHAv3VcDVnnmpHlWfNAAh/ADHZIj0/vCDk36kVEzyrS+ACWtMdPeSAu6FD+oNyzYNnrrxjcz3TTqYVaA02/WKZ+2dXsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03R6gsBZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UvsNuJrAOX9ZZgCETQDN+cvcJ9714zGjQy9EZ1e+rpq3O6pufX8MHQdaoE4FGFTpXthLdNzYcitUmL6XSh5a6BGZKjKjVkmvxFoYUKXWEKbfRQ/yy8f2mWBBuG3afp94zuu+7g5/OjsoCn4eMV5LxFWqf5vO2BUKz4UCvmGFuwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIGUmezT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03R6gsBZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4B1C43390;
-	Tue, 23 Jan 2024 02:02:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIGUmezT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BBE0C433C7;
+	Tue, 23 Jan 2024 02:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975329;
-	bh=9f+PTP4rZmhrLcVonrDvG4lnNrlQnId3BqzJ4b9apZk=;
+	s=korg; t=1705975330;
+	bh=aLUQAG31w2kJKmaxpHrfDue6/eVH9L8uPXnUgaq13cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=03R6gsBZr3o22nabkm/JaPYnD/5ez2aKlOiSYwLTEEMIPH2ptoKfRXDWLkQXMHJaO
-	 vMARlezviNTSNuX/OGGICDSwY581QeZza0np+1MMaVPTxaIyEE/PJs5dD3hydV+BGu
-	 gfXNJFDUX/hPIKNvhiTbSTetLtyi2gcAAcYQBrWQ=
+	b=NIGUmezTK2/Cmo12AIBXCwzyJjm3RS3Oux0fWKipGulnyMbE7BrqqaGdWE5dSXfbH
+	 BTFIu+661pe5uaf1NXeAbBbYrlUnHwuQ3QAshxzdxtDXd85DebVSBH4VNqx5t7Zw4Z
+	 C+SrVQg92/5nClvwgbXKJ7MKRHqKspRNhwFQTikg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 293/583] f2fs: fix to check return value of f2fs_recover_xattr_data
-Date: Mon, 22 Jan 2024 15:55:44 -0800
-Message-ID: <20240122235820.976688913@linuxfoundation.org>
+Subject: [PATCH 6.6 276/583] f2fs: fix to wait on block writeback for post_read case
+Date: Mon, 22 Jan 2024 15:55:27 -0800
+Message-ID: <20240122235820.443379431@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,68 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 86d7d57a3f096c8349b32a0cd5f6f314e4416a6d ]
+[ Upstream commit 55fdc1c24a1d6229fe0ecf31335fb9a2eceaaa00 ]
 
-Should check return value of f2fs_recover_xattr_data in
-__f2fs_setxattr rather than doing invalid retry if error happen.
+If inode is compressed, but not encrypted, it missed to call
+f2fs_wait_on_block_writeback() to wait for GCed page writeback
+in IPU write path.
 
-Also just do set_page_dirty in f2fs_recover_xattr_data when
-page is changed really.
+Thread A				GC-Thread
+					- f2fs_gc
+					 - do_garbage_collect
+					  - gc_data_segment
+					   - move_data_block
+					    - f2fs_submit_page_write
+					     migrate normal cluster's block via
+					     meta_inode's page cache
+- f2fs_write_single_data_page
+ - f2fs_do_write_data_page
+  - f2fs_inplace_write_data
+   - f2fs_submit_page_bio
 
-Fixes: 50a472bbc79f ("f2fs: do not return EFSCORRUPTED, but try to run online repair")
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+IRQ
+- f2fs_read_end_io
+					IRQ
+					old data overrides new data due to
+					out-of-order GC and common IO.
+					- f2fs_read_end_io
+
+Fixes: 4c8ff7095bef ("f2fs: support data compression")
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c  |  6 +++---
- fs/f2fs/xattr.c | 11 +++++++----
- 2 files changed, 10 insertions(+), 7 deletions(-)
+ fs/f2fs/data.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index 8b30f11f37b4..9e00932770d8 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -2751,11 +2751,11 @@ int f2fs_recover_xattr_data(struct inode *inode, struct page *page)
- 	f2fs_update_inode_page(inode);
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 1ac34eb49a0e..f5f33926acf8 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2568,9 +2568,6 @@ int f2fs_encrypt_one_page(struct f2fs_io_info *fio)
  
- 	/* 3: update and set xattr node page dirty */
--	if (page)
-+	if (page) {
- 		memcpy(F2FS_NODE(xpage), F2FS_NODE(page),
- 				VALID_XATTR_BLOCK_SIZE);
+ 	page = fio->compressed_page ? fio->compressed_page : fio->page;
+ 
+-	/* wait for GCed page writeback via META_MAPPING */
+-	f2fs_wait_on_block_writeback(inode, fio->old_blkaddr);
 -
--	set_page_dirty(xpage);
-+		set_page_dirty(xpage);
-+	}
- 	f2fs_put_page(xpage, 1);
+ 	if (fscrypt_inode_uses_inline_crypto(inode))
+ 		return 0;
  
- 	return 0;
-diff --git a/fs/f2fs/xattr.c b/fs/f2fs/xattr.c
-index e197657db36b..e47cc917d118 100644
---- a/fs/f2fs/xattr.c
-+++ b/fs/f2fs/xattr.c
-@@ -660,11 +660,14 @@ static int __f2fs_setxattr(struct inode *inode, int index,
- 	here = __find_xattr(base_addr, last_base_addr, NULL, index, len, name);
- 	if (!here) {
- 		if (!F2FS_I(inode)->i_xattr_nid) {
-+			error = f2fs_recover_xattr_data(inode, NULL);
- 			f2fs_notice(F2FS_I_SB(inode),
--				"recover xattr in inode (%lu)", inode->i_ino);
--			f2fs_recover_xattr_data(inode, NULL);
--			kfree(base_addr);
--			goto retry;
-+				"recover xattr in inode (%lu), error(%d)",
-+					inode->i_ino, error);
-+			if (!error) {
-+				kfree(base_addr);
-+				goto retry;
-+			}
- 		}
- 		f2fs_err(F2FS_I_SB(inode), "set inode (%lu) has corrupted xattr",
- 								inode->i_ino);
+@@ -2752,6 +2749,10 @@ int f2fs_do_write_data_page(struct f2fs_io_info *fio)
+ 		goto out_writepage;
+ 	}
+ 
++	/* wait for GCed page writeback via META_MAPPING */
++	if (fio->post_read)
++		f2fs_wait_on_block_writeback(inode, fio->old_blkaddr);
++
+ 	/*
+ 	 * If current allocation needs SSR,
+ 	 * it had better in-place writes for updated data.
 -- 
 2.43.0
 
