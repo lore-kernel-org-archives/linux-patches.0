@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0A94E1D8;
-	Tue, 23 Jan 2024 00:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26434E1D8;
+	Tue, 23 Jan 2024 00:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969985; cv=none; b=kXMJXszdt+E8zzDVUOkVnaJVz/pTUZCTiK5b2OhovBLM/Z7kD/TRFQCv5hPawffz+WHfvs5LbQ1+mFMm+IkpHD8CJPxqvNs9YqpHFlNI/vGV3uDjBqknKec367iUTvS4DGFqKNMZKnRtCD9XIm5yzDtocWxmXrqBhYBXHVuSrts=
+	t=1705969988; cv=none; b=EGOE3oiKmnqaCR5Be3ZayDw2fPCxcDjF4dVLcinNpI+FS1sx/Qt6dxErmTJToc1fteC9yrbL80GkKxaE0SPoJ+Znmwy2TzX8TbPIbIrROqawuZny2nc/Z5P7NIFu/aquzCGwAGxOYeYjNX/rObs71HtgZYKQPV2Y1Md2vymghqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969985; c=relaxed/simple;
-	bh=qffpP7hfvNJFv3sfr5ybEsyilsyo+397Mbb1DeIjQ8I=;
+	s=arc-20240116; t=1705969988; c=relaxed/simple;
+	bh=iWkH9lJynFBQlr4UE20U8wFdygMYEhlnRX2b9Tg/wrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmTf2J5/NCIfarJiQ8svrr1cgOHzRjgzDpnilye7fa8EbCb85wu+IxLhBSrfqBqLM4qwHIfVjQEcbSdXUB/JcyDC18gz/27T2MAAMjMj4Z/xFjtcoXS250RLpod5P6u09FYhrvW5pMgNHJuUOxrSiY6xLf0lCs80ETbBuNzYAbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDTcDRj/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sz43MuDgKQvs7FcbVgSQrWcdXIMZal7MUr0E3DM15t0ckgEQBp68+rYtWdGtnqVz76qee9v+1PfxKc7aGUMBtB+GIFYWzkbjg8SKpazY6YpwfcdiYfqbU1zw2ht2TgFMpIjy+hkgcZKqH41KbuAhIfInG+hf/l/SOupRahF+v9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0CdGagPN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDTcDRj/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61289C433F1;
-	Tue, 23 Jan 2024 00:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0CdGagPN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75093C433F1;
+	Tue, 23 Jan 2024 00:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969985;
-	bh=qffpP7hfvNJFv3sfr5ybEsyilsyo+397Mbb1DeIjQ8I=;
+	s=korg; t=1705969987;
+	bh=iWkH9lJynFBQlr4UE20U8wFdygMYEhlnRX2b9Tg/wrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IDTcDRj/BRJBH+SLU8zJgPMJkCTAKUVTven62ntYVZG4yiynPIjam0qKxrJrp/kLd
-	 QX0+0Gp/rzDvxk7HDMLHXI9iOjQ9m2xxVc1YayHElrE9mS8KC3FnEkMRi0uRiD5BwX
-	 VIwtTvxBcXCXtsDCBEyG+qYxXi/kKrH0doAfpeCY=
+	b=0CdGagPNzKbaJBgrsayJpEzGnWNKR9uctF07Faay3lQdSXI0nhkugFACpqa24lQuU
+	 jEdKtr/0qnBZ//zVBZFwIx29i5b7bBVjU1mII7AqMDZjgma1acSBgICXucXh2UkZwI
+	 tlpDmPM375QqqOnmBWoFrePcahmW63NncQNmMdcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 551/641] vdpa: Fix an error handling path in eni_vdpa_probe()
-Date: Mon, 22 Jan 2024 15:57:35 -0800
-Message-ID: <20240122235835.393892773@linuxfoundation.org>
+Subject: [PATCH 6.7 552/641] apparmor: Fix ref count leak in task_kill
+Date: Mon, 22 Jan 2024 15:57:36 -0800
+Message-ID: <20240122235835.420872938@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,53 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit c1b9f2c66eed3261db76cccd8a22a9affae8dcbf ]
+[ Upstream commit 2cb54a19ac7153b9a26a72098c495187f64c2276 ]
 
-After a successful vp_legacy_probe() call, vp_legacy_remove() should be
-called in the error handling path, as already done in the remove function.
+apparmor_task_kill was not putting the task_cred reference tc, or the
+cred_label reference tc when dealing with a passed in cred, fix this
+by using a single fn exit.
 
-Add the missing call.
-
-Fixes: e85087beedca ("eni_vdpa: add vDPA driver for Alibaba ENI")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Message-Id: <a7b0ef1eabd081f1c7c894e9b11de01678e85dee.1666293559.git.christophe.jaillet@wanadoo.fr>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Fixes: 90c436a64a6e ("apparmor: pass cred through to audit info.")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/alibaba/eni_vdpa.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ security/apparmor/lsm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/vdpa/alibaba/eni_vdpa.c b/drivers/vdpa/alibaba/eni_vdpa.c
-index 5a09a09cca70..cce3d1837104 100644
---- a/drivers/vdpa/alibaba/eni_vdpa.c
-+++ b/drivers/vdpa/alibaba/eni_vdpa.c
-@@ -497,7 +497,7 @@ static int eni_vdpa_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (!eni_vdpa->vring) {
- 		ret = -ENOMEM;
- 		ENI_ERR(pdev, "failed to allocate virtqueues\n");
--		goto err;
-+		goto err_remove_vp_legacy;
- 	}
- 
- 	for (i = 0; i < eni_vdpa->queues; i++) {
-@@ -509,11 +509,13 @@ static int eni_vdpa_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	ret = vdpa_register_device(&eni_vdpa->vdpa, eni_vdpa->queues);
- 	if (ret) {
- 		ENI_ERR(pdev, "failed to register to vdpa bus\n");
--		goto err;
-+		goto err_remove_vp_legacy;
- 	}
- 
- 	return 0;
- 
-+err_remove_vp_legacy:
-+	vp_legacy_remove(&eni_vdpa->ldev);
- err:
- 	put_device(&eni_vdpa->vdpa.dev);
- 	return ret;
+diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
+index 4981bdf02993..608a849a7468 100644
+--- a/security/apparmor/lsm.c
++++ b/security/apparmor/lsm.c
+@@ -954,7 +954,6 @@ static int apparmor_task_kill(struct task_struct *target, struct kernel_siginfo
+ 		cl = aa_get_newest_cred_label(cred);
+ 		error = aa_may_signal(cred, cl, tc, tl, sig);
+ 		aa_put_label(cl);
+-		return error;
+ 	} else {
+ 		cl = __begin_current_label_crit_section();
+ 		error = aa_may_signal(current_cred(), cl, tc, tl, sig);
 -- 
 2.43.0
 
