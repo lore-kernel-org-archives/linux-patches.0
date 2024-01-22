@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5957E2B9B7;
-	Tue, 23 Jan 2024 01:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302C02B9B7;
+	Tue, 23 Jan 2024 01:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974115; cv=none; b=h7zq2JvU5IFMrq18bUUBKq7mtSQv2Kx/pCf37JHiUz8zGBzNU4ytUDENBZ3k/gbpc2JYbZgHynFJHZQ9/0zLv7Wo5t1v2seMq0tnblUShiBvzvspe2J04yBKnjUnOLxOsqoz1mp9PLFx88Ovk5oCX8RR3G4re9yXgtfq3kP9QyM=
+	t=1705974116; cv=none; b=bvPJUmUYbRpeNBticqmNuoxXP9iD0N8O/mxXUDuzk7yb/YS4vco4G2l31VOGESE4LIEWFyJGVdgBWuRN+Hhf2hMVBf23h+cDXp6fB2gctHhaPFVY+14p2ECYrLxMP0IvnoTjHSCMZ7M42IaThe7MjMksjjvnN/2lINJpPbFXdbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974115; c=relaxed/simple;
-	bh=WWSGNH92+pzffta9sezzGIRhgquT/rtI/4JHx6duEnw=;
+	s=arc-20240116; t=1705974116; c=relaxed/simple;
+	bh=yE87BagCmzeNk7EFF94eBs1/2h2Ir3iYmREoFr9CtbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6qsf9fVCj+OhtLNoDLyAH5gPncqun40DM3uA1L4xLyzJ5mGdHOv68tcktAQj31jx8jP6WCelaWOw2/eUVM+taPuwT9BGQ0pMWKp5z4wNzlay1NpOmfXRERTxczb1OJYSKfcnrXV3zvqHszhSdjdE/W9hjidMQdnqDmpiwzJ20Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VmW+H0i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EhcSrcOmzUfe90QgoSwFKho0m7GO0qwpd+X9MDv75txcCJIP3ABEoGdQAeQsF3ddNYQSf0L84CJNtDYf+f+OYEpqti6dqS6a35B692dVvykCQsqt+XH4YGDFcrbk8jrBH9BxMKqDsX6UVLCnrW0yK6GMg/cEw3ZXYXc+UkIIJA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ekGWhSBC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VmW+H0i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12EEC433A6;
-	Tue, 23 Jan 2024 01:41:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ekGWhSBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C3AC433C7;
+	Tue, 23 Jan 2024 01:41:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974114;
-	bh=WWSGNH92+pzffta9sezzGIRhgquT/rtI/4JHx6duEnw=;
+	s=korg; t=1705974115;
+	bh=yE87BagCmzeNk7EFF94eBs1/2h2Ir3iYmREoFr9CtbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1VmW+H0iN/r+Cc0g480tXthQZWQG2ntuQLC3lCcr9YzRETlMVrrTMaMXeZELvIhLL
-	 yZLw4BeJK1pWXjMei2iGhQYe+NIbEwM09x6IBGX5buA08TmFbcadB092/ZZssLh3SG
-	 QD2X4KohcNCQlRQv/XcUPiO2ktm6yAPLdQsdDaOo=
+	b=ekGWhSBCG+XIsXZ/TvQgvNPfaZRvsPbV2Q0V3fAShwrwQAuy0YSWoxeaOEag0cfJl
+	 YCCusnYco39vPZW/3ZavuWnPbda8/R5SXVUEECVbfma3C0ZFMnU3NPM05UGzBt/tjh
+	 LjHBTIq6GmB2dSochVZ0OmPH4Dqh/h0yhaJNg608=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
-	wangyangxin <wangyangxin1@huawei.com>,
-	Gonglei <arei.gonglei@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 044/583] crypto: virtio - Handle dataq logic with tasklet
-Date: Mon, 22 Jan 2024 15:51:35 -0800
-Message-ID: <20240122235813.489668985@linuxfoundation.org>
+Subject: [PATCH 5.15 169/374] null_blk: dont cap max_hw_sectors to BLK_DEF_MAX_SECTORS
+Date: Mon, 22 Jan 2024 15:57:05 -0800
+Message-ID: <20240122235750.514244465@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,101 +47,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gonglei (Arei) <arei.gonglei@huawei.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit fed93fb62e05c38152b0fc1dc9609639e63eed76 ]
+[ Upstream commit 9a9525de865410047fa962867b4fcd33943b206f ]
 
-Doing ipsec produces a spinlock recursion warning.
-This is due to crypto_finalize_request() being called in the upper half.
-Move virtual data queue processing of virtio-crypto driver to tasklet.
+null_blk has some rather odd capping of the max_hw_sectors value to
+BLK_DEF_MAX_SECTORS, which doesn't make sense - max_hw_sector is the
+hardware limit, and BLK_DEF_MAX_SECTORS despite the confusing name is the
+default cap for the max_sectors field used for normal file system I/O.
 
-Fixes: dbaf0624ffa57 ("crypto: add virtio-crypto driver")
-Reported-by: Halil Pasic <pasic@linux.ibm.com>
-Signed-off-by: wangyangxin <wangyangxin1@huawei.com>
-Signed-off-by: Gonglei <arei.gonglei@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Remove all the capping, and simply leave it to the block layer or
+user to take up or not all of that for file system I/O.
+
+Fixes: ea17fd354ca8 ("null_blk: Allow controlling max_hw_sectors limit")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20231227092305.279567-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/virtio/virtio_crypto_common.h |  2 ++
- drivers/crypto/virtio/virtio_crypto_core.c   | 23 +++++++++++---------
- 2 files changed, 15 insertions(+), 10 deletions(-)
+ drivers/block/null_blk/main.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/crypto/virtio/virtio_crypto_common.h b/drivers/crypto/virtio/virtio_crypto_common.h
-index 154590e1f764..7059bbe5a2eb 100644
---- a/drivers/crypto/virtio/virtio_crypto_common.h
-+++ b/drivers/crypto/virtio/virtio_crypto_common.h
-@@ -10,6 +10,7 @@
- #include <linux/virtio.h>
- #include <linux/crypto.h>
- #include <linux/spinlock.h>
-+#include <linux/interrupt.h>
- #include <crypto/aead.h>
- #include <crypto/aes.h>
- #include <crypto/engine.h>
-@@ -28,6 +29,7 @@ struct data_queue {
- 	char name[32];
+diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
+index 4a867233b14a..87791265e09b 100644
+--- a/drivers/block/null_blk/main.c
++++ b/drivers/block/null_blk/main.c
+@@ -1900,10 +1900,8 @@ static int null_add_dev(struct nullb_device *dev)
  
- 	struct crypto_engine *engine;
-+	struct tasklet_struct done_task;
- };
+ 	blk_queue_logical_block_size(nullb->q, dev->blocksize);
+ 	blk_queue_physical_block_size(nullb->q, dev->blocksize);
+-	if (!dev->max_sectors)
+-		dev->max_sectors = queue_max_hw_sectors(nullb->q);
+-	dev->max_sectors = min(dev->max_sectors, BLK_DEF_MAX_SECTORS);
+-	blk_queue_max_hw_sectors(nullb->q, dev->max_sectors);
++	if (dev->max_sectors)
++		blk_queue_max_hw_sectors(nullb->q, dev->max_sectors);
  
- struct virtio_crypto {
-diff --git a/drivers/crypto/virtio/virtio_crypto_core.c b/drivers/crypto/virtio/virtio_crypto_core.c
-index 43a0838d31ff..428d76562447 100644
---- a/drivers/crypto/virtio/virtio_crypto_core.c
-+++ b/drivers/crypto/virtio/virtio_crypto_core.c
-@@ -72,27 +72,28 @@ int virtio_crypto_ctrl_vq_request(struct virtio_crypto *vcrypto, struct scatterl
- 	return 0;
- }
- 
--static void virtcrypto_dataq_callback(struct virtqueue *vq)
-+static void virtcrypto_done_task(unsigned long data)
- {
--	struct virtio_crypto *vcrypto = vq->vdev->priv;
-+	struct data_queue *data_vq = (struct data_queue *)data;
-+	struct virtqueue *vq = data_vq->vq;
- 	struct virtio_crypto_request *vc_req;
--	unsigned long flags;
- 	unsigned int len;
--	unsigned int qid = vq->index;
- 
--	spin_lock_irqsave(&vcrypto->data_vq[qid].lock, flags);
- 	do {
- 		virtqueue_disable_cb(vq);
- 		while ((vc_req = virtqueue_get_buf(vq, &len)) != NULL) {
--			spin_unlock_irqrestore(
--				&vcrypto->data_vq[qid].lock, flags);
- 			if (vc_req->alg_cb)
- 				vc_req->alg_cb(vc_req, len);
--			spin_lock_irqsave(
--				&vcrypto->data_vq[qid].lock, flags);
- 		}
- 	} while (!virtqueue_enable_cb(vq));
--	spin_unlock_irqrestore(&vcrypto->data_vq[qid].lock, flags);
-+}
-+
-+static void virtcrypto_dataq_callback(struct virtqueue *vq)
-+{
-+	struct virtio_crypto *vcrypto = vq->vdev->priv;
-+	struct data_queue *dq = &vcrypto->data_vq[vq->index];
-+
-+	tasklet_schedule(&dq->done_task);
- }
- 
- static int virtcrypto_find_vqs(struct virtio_crypto *vi)
-@@ -150,6 +151,8 @@ static int virtcrypto_find_vqs(struct virtio_crypto *vi)
- 			ret = -ENOMEM;
- 			goto err_engine;
- 		}
-+		tasklet_init(&vi->data_vq[i].done_task, virtcrypto_done_task,
-+				(unsigned long)&vi->data_vq[i]);
+ 	if (dev->virt_boundary)
+ 		blk_queue_virt_boundary(nullb->q, PAGE_SIZE - 1);
+@@ -1953,12 +1951,6 @@ static int __init null_init(void)
+ 		g_bs = PAGE_SIZE;
  	}
  
- 	kfree(names);
+-	if (g_max_sectors > BLK_DEF_MAX_SECTORS) {
+-		pr_warn("invalid max sectors\n");
+-		pr_warn("defaults max sectors to %u\n", BLK_DEF_MAX_SECTORS);
+-		g_max_sectors = BLK_DEF_MAX_SECTORS;
+-	}
+-
+ 	if (g_home_node != NUMA_NO_NODE && g_home_node >= nr_online_nodes) {
+ 		pr_err("invalid home_node value\n");
+ 		g_home_node = NUMA_NO_NODE;
 -- 
 2.43.0
 
