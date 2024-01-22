@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9778B14A0A7;
-	Tue, 23 Jan 2024 00:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA0614A0A7;
+	Tue, 23 Jan 2024 00:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969207; cv=none; b=HH1hu1pbYm4zOseZhifUrjnqcghRUSWIwr9L0xqvblQjmZ2oNuZnupU/Lnl26lTqg6zkGu1j6KS6jCOVIf0Kn0900czkcipruZ/j7PnSSGl1uPtKfzxtvRTQ6xlmWWdjzo3giaD4K4P5TI58Ysmbq7pHazcprhc0ddcI9Hxwm50=
+	t=1705969209; cv=none; b=jzhtyo3rkLwMSyYsGnh6jEc4IcoANUBsI++2ySc2jCYFO8KmHbhHs9IP9xvOWhSqdvZI1mcDqQWsz2dCEwCaxf/Ph1F4GvR6OXgDboFaudC4APXUFzjIjDNTKkXTa9LCzTTBKE8Tanb19lMSi7DSMXJOewp5X5/J2GsKuPVrJBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969207; c=relaxed/simple;
-	bh=hkIWcxuySXFrrotn/FVp6CrceO7Z4YdiES2EVaOTQLU=;
+	s=arc-20240116; t=1705969209; c=relaxed/simple;
+	bh=4bCrUNnfx9QGn0wUXxhn0dSZT13ZKHb19hbbif4xZR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=krNnUx0xxmM9leJDqpK8uO2VVrN6kOQKc1mC4i2263USQ5BEbpdMB8nqMx7ArvQy6KqRWTCOWcTHs21CBfppYxrMyjc4qT8XHC1BFNSuKhVKTxz7f8NCM7xDTWca63JiseWKwDwdjis5JN9ajSnHCPEcOtSHj5ODIm/DbdFtfAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fMdeSsFU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gsn9lZHES1sB0arLpTLCWuICruf0B+HkXDGkDTzgnxrpLb7jHpkEBylGdky1JVFJ7zJelWD6vYrd5S8lfsaVlUcP7ggPMoJ4l9sh4Pmj7/GxWn6R/wrwcpUcW89vZYUucEyBITsZ7rJ0EL8HCkCI9Ar9p8lhzU9ka6M4nA+A5Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgiZu9X4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMdeSsFU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A638C433A6;
-	Tue, 23 Jan 2024 00:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgiZu9X4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F02C43394;
+	Tue, 23 Jan 2024 00:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969207;
-	bh=hkIWcxuySXFrrotn/FVp6CrceO7Z4YdiES2EVaOTQLU=;
+	s=korg; t=1705969209;
+	bh=4bCrUNnfx9QGn0wUXxhn0dSZT13ZKHb19hbbif4xZR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fMdeSsFUEgk4zT6v73aHmD1A5cnyTp1kO9o0Dd91CLWBxDKdcWIJ+Rlr7x8vAIDOG
-	 ypOcj6eF1Y4A4mKcZEhN0Kyh548tdpiQJNt7I1yAmSus5PRZCEXC/AGEWBe4PiGTud
-	 3N+td/rCJz7jOqM04xj61s337b8I0ijEoyITkbGw=
+	b=WgiZu9X41IqL0VA9w3vl+BIa6pG2VLvWQBnBHCKiLX+JND0JpHplx4mClckp8YUJg
+	 h+eI00pFEv0iLd2jxCACVxUS4HrcUXyxsaqiNCOMKRps6I+s8QLUj5F7dh7Whg961v
+	 WIpx1HIx+Z/+khBZtaXGdZt5LI2HGgKx7ZWUcdgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Marchevsky <davemarchevsky@fb.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jordan Rome <jordalgo@meta.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 099/641] bpf: Add KF_RCU flag to bpf_refcount_acquire_impl
-Date: Mon, 22 Jan 2024 15:50:03 -0800
-Message-ID: <20240122235821.137157684@linuxfoundation.org>
+Subject: [PATCH 6.7 100/641] bpf: Add crosstask check to __bpf_get_stack
+Date: Mon, 22 Jan 2024 15:50:04 -0800
+Message-ID: <20240122235821.165712566@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,54 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Marchevsky <davemarchevsky@fb.com>
+From: Jordan Rome <jordalgo@meta.com>
 
-[ Upstream commit 1500a5d9f49cb66906d3ea1c9158df25cc41dd40 ]
+[ Upstream commit b8e3a87a627b575896e448021e5c2f8a3bc19931 ]
 
-Refcounted local kptrs are kptrs to user-defined types with a
-bpf_refcount field. Recent commits ([0], [1]) modified the lifetime of
-refcounted local kptrs such that the underlying memory is not reused
-until RCU grace period has elapsed.
+Currently get_perf_callchain only supports user stack walking for
+the current task. Passing the correct *crosstask* param will return
+0 frames if the task passed to __bpf_get_stack isn't the current
+one instead of a single incorrect frame/address. This change
+passes the correct *crosstask* param but also does a preemptive
+check in __bpf_get_stack if the task is current and returns
+-EOPNOTSUPP if it is not.
 
-Separately, verification of bpf_refcount_acquire calls currently
-succeeds for MAYBE_NULL non-owning reference input, which is a problem
-as bpf_refcount_acquire_impl has no handling for this case.
+This issue was found using bpf_get_task_stack inside a BPF
+iterator ("iter/task"), which iterates over all tasks.
+bpf_get_task_stack works fine for fetching kernel stacks
+but because get_perf_callchain relies on the caller to know
+if the requested *task* is the current one (via *crosstask*)
+it was failing in a confusing way.
 
-This patch takes advantage of aforementioned lifetime changes to tag
-bpf_refcount_acquire_impl kfunc KF_RCU, thereby preventing MAYBE_NULL
-input to the kfunc. The KF_RCU flag applies to all kfunc params; it's
-fine for it to apply to the void *meta__ign param as that's populated by
-the verifier and is tagged __ign regardless.
+It might be possible to get user stacks for all tasks utilizing
+something like access_process_vm but that requires the bpf
+program calling bpf_get_task_stack to be sleepable and would
+therefore be a breaking change.
 
-  [0]: commit 7e26cd12ad1c ("bpf: Use bpf_mem_free_rcu when
-       bpf_obj_dropping refcounted nodes") is the actual change to
-       allocation behaivor
-  [1]: commit 0816b8c6bf7f ("bpf: Consider non-owning refs to refcounted
-       nodes RCU protected") modified verifier understanding of
-       refcounted local kptrs to match [0]'s changes
-
-Signed-off-by: Dave Marchevsky <davemarchevsky@fb.com>
-Fixes: 7c50b1cb76ac ("bpf: Add bpf_refcount_acquire kfunc")
-Link: https://lore.kernel.org/r/20231107085639.3016113-2-davemarchevsky@fb.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: fa28dcb82a38 ("bpf: Introduce helper bpf_get_task_stack()")
+Signed-off-by: Jordan Rome <jordalgo@meta.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20231108112334.3433136-1-jordalgo@meta.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/uapi/linux/bpf.h       |  3 +++
+ kernel/bpf/stackmap.c          | 11 ++++++++++-
+ tools/include/uapi/linux/bpf.h |  3 +++
+ 3 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 56b0c1f678ee..6950f0461634 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -2520,7 +2520,7 @@ BTF_ID_FLAGS(func, bpf_obj_new_impl, KF_ACQUIRE | KF_RET_NULL)
- BTF_ID_FLAGS(func, bpf_percpu_obj_new_impl, KF_ACQUIRE | KF_RET_NULL)
- BTF_ID_FLAGS(func, bpf_obj_drop_impl, KF_RELEASE)
- BTF_ID_FLAGS(func, bpf_percpu_obj_drop_impl, KF_RELEASE)
--BTF_ID_FLAGS(func, bpf_refcount_acquire_impl, KF_ACQUIRE | KF_RET_NULL)
-+BTF_ID_FLAGS(func, bpf_refcount_acquire_impl, KF_ACQUIRE | KF_RET_NULL | KF_RCU)
- BTF_ID_FLAGS(func, bpf_list_push_front_impl)
- BTF_ID_FLAGS(func, bpf_list_push_back_impl)
- BTF_ID_FLAGS(func, bpf_list_pop_front, KF_ACQUIRE | KF_RET_NULL)
+diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
+index 0f6cdf52b1da..bda948a685e5 100644
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -4517,6 +4517,8 @@ union bpf_attr {
+  * long bpf_get_task_stack(struct task_struct *task, void *buf, u32 size, u64 flags)
+  *	Description
+  *		Return a user or a kernel stack in bpf program provided buffer.
++ *		Note: the user stack will only be populated if the *task* is
++ *		the current task; all other tasks will return -EOPNOTSUPP.
+  *		To achieve this, the helper needs *task*, which is a valid
+  *		pointer to **struct task_struct**. To store the stacktrace, the
+  *		bpf program provides *buf* with a nonnegative *size*.
+@@ -4528,6 +4530,7 @@ union bpf_attr {
+  *
+  *		**BPF_F_USER_STACK**
+  *			Collect a user space stack instead of a kernel stack.
++ *			The *task* must be the current task.
+  *		**BPF_F_USER_BUILD_ID**
+  *			Collect buildid+offset instead of ips for user stack,
+  *			only valid if **BPF_F_USER_STACK** is also specified.
+diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+index d6b277482085..dff7ba539701 100644
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -388,6 +388,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ {
+ 	u32 trace_nr, copy_len, elem_size, num_elem, max_depth;
+ 	bool user_build_id = flags & BPF_F_USER_BUILD_ID;
++	bool crosstask = task && task != current;
+ 	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
+ 	bool user = flags & BPF_F_USER_STACK;
+ 	struct perf_callchain_entry *trace;
+@@ -410,6 +411,14 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ 	if (task && user && !user_mode(regs))
+ 		goto err_fault;
+ 
++	/* get_perf_callchain does not support crosstask user stack walking
++	 * but returns an empty stack instead of NULL.
++	 */
++	if (crosstask && user) {
++		err = -EOPNOTSUPP;
++		goto clear;
++	}
++
+ 	num_elem = size / elem_size;
+ 	max_depth = num_elem + skip;
+ 	if (sysctl_perf_event_max_stack < max_depth)
+@@ -421,7 +430,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ 		trace = get_callchain_entry_for_task(task, max_depth);
+ 	else
+ 		trace = get_perf_callchain(regs, 0, kernel, user, max_depth,
+-					   false, false);
++					   crosstask, false);
+ 	if (unlikely(!trace))
+ 		goto err_fault;
+ 
+diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
+index 0f6cdf52b1da..bda948a685e5 100644
+--- a/tools/include/uapi/linux/bpf.h
++++ b/tools/include/uapi/linux/bpf.h
+@@ -4517,6 +4517,8 @@ union bpf_attr {
+  * long bpf_get_task_stack(struct task_struct *task, void *buf, u32 size, u64 flags)
+  *	Description
+  *		Return a user or a kernel stack in bpf program provided buffer.
++ *		Note: the user stack will only be populated if the *task* is
++ *		the current task; all other tasks will return -EOPNOTSUPP.
+  *		To achieve this, the helper needs *task*, which is a valid
+  *		pointer to **struct task_struct**. To store the stacktrace, the
+  *		bpf program provides *buf* with a nonnegative *size*.
+@@ -4528,6 +4530,7 @@ union bpf_attr {
+  *
+  *		**BPF_F_USER_STACK**
+  *			Collect a user space stack instead of a kernel stack.
++ *			The *task* must be the current task.
+  *		**BPF_F_USER_BUILD_ID**
+  *			Collect buildid+offset instead of ips for user stack,
+  *			only valid if **BPF_F_USER_STACK** is also specified.
 -- 
 2.43.0
 
