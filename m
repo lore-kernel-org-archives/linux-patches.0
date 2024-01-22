@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A275025C;
-	Tue, 23 Jan 2024 01:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FAB5025C;
+	Tue, 23 Jan 2024 01:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974730; cv=none; b=rg8WG+6PJq4pYh2cAJl8TynVDiG2Jg4CWP5RTMror9eFTCiQc8VHTWodHg4QKkZ/1UjIZsaRYyVbAgPrVSm5acECYCYNUp9lLaagSu4CH4Y/qZgkVL2wU1LtBY2Dmp3e1uCNH4GJtueX2kc6qk2INhfUH/75rZajrjnwUUP8yfo=
+	t=1705974731; cv=none; b=qVbkaOqyUdSek0WcVf2qasqNaHeg0lERiOybMArHBkUBWvkRT6wdxVuWXlBRbMy1D+orAoynVKSLEGQwyJBzcvoIIEdgzmCWmje2cXyIb+ppkHLS72KzjLWIjswifJT4ZW8HUVeTcMhKYqb0qrS0HlejQJ9HVEEfYMgPWm7vCnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974730; c=relaxed/simple;
-	bh=SM2FJC7LXdgWu7oleTk/yOU8/KGdQz1mczlOKywJoE8=;
+	s=arc-20240116; t=1705974731; c=relaxed/simple;
+	bh=01v0D7wxcdhCmbZnBdVqN0fuIAMpxF6zB6CjxdfxRP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cKOtdKAs9EUrnY4ENkEYxjWzvkOMo4xhgk2KA8mcmEAeq/vTReq77gMQjyjrRgsLk7+MuF5HSYRtT65xDQooy6VWAddO0UOmW0De6AwCccAU0nKAcFUcy5zkjPiNUl6dPL0nv1u8Q2OVS99OAiN3jFlatDBhqm1gaVafO5bruPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ChGveJD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ok/XZqyeqlYw9+CXgi7PBc7ItyetrA9iM7qaud2YkazIDQGz/Ya8f9aqSDRczz+JhqAlZ10pq1+u9YBfKSeJjsE7grGJGvR8GOdImSR9mWpiA46rS+KOnr8tnGAPQf9c/0gB0ftyJ69qugxOd9f4z6VWkOyLHX699v3fiyVOKSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVSlEzQB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ChGveJD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F417C433C7;
-	Tue, 23 Jan 2024 01:52:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVSlEzQB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF87C433F1;
+	Tue, 23 Jan 2024 01:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974730;
-	bh=SM2FJC7LXdgWu7oleTk/yOU8/KGdQz1mczlOKywJoE8=;
+	s=korg; t=1705974731;
+	bh=01v0D7wxcdhCmbZnBdVqN0fuIAMpxF6zB6CjxdfxRP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ChGveJDaWe06U21heu73r4WpT/iKd2gnayUJHdiNi42A+AWVFxT47C/ps7CdnJMa
-	 GfC8EYg0PtFRusGPn6gVywJ45i5d5UFj7DJDXHXhDiGRFTezjZ9oLFCcFDD6NFVIui
-	 sSnXHKTXcgLlmWQdPnRat42fgL0CpeOGTHI8JMbk=
+	b=yVSlEzQBvK+3XwwE4LywNBI4SlFlbIgebNCeHpwCjubTxnAZxPyOGd0dbXE49UOqE
+	 9kpG22D2mqhDMD/XIs61Pwhn2mLc1MvrIY6CQGpsOpHWWf5UcazsEpeg0y6yKm3fV+
+	 IK4ZfQLfjOQdMwhNb3KQbWXWWKBlvZHty67OuVXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Subject: [PATCH 5.15 271/374] pwm: jz4740: Dont use dev_err_probe() in .request()
-Date: Mon, 22 Jan 2024 15:58:47 -0800
-Message-ID: <20240122235754.194481678@linuxfoundation.org>
+	Moudy Ho <moudy.ho@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 147/583] arm64: dts: mediatek: mt8183: correct MDP3 DMA-related nodes
+Date: Mon, 22 Jan 2024 15:53:18 -0800
+Message-ID: <20240122235816.586097105@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,51 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Moudy Ho <moudy.ho@mediatek.com>
 
-commit 9320fc509b87b4d795fb37112931e2f4f8b5c55f upstream.
+[ Upstream commit 188ffcd7fea79af3cac441268fc99f60e87f03b3 ]
 
-dev_err_probe() is only supposed to be used in probe functions. While it
-probably doesn't hurt, both the EPROBE_DEFER handling and calling
-device_set_deferred_probe_reason() are conceptually wrong in the request
-callback. So replace the call by dev_err() and a separate return
-statement.
+In order to generalize the node names, the DMA-related nodes
+corresponding to MT8183 MDP3 need to be corrected.
 
-This effectively reverts commit c0bfe9606e03 ("pwm: jz4740: Simplify
-with dev_err_probe()").
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240106141302.1253365-2-u.kleine-koenig@pengutronix.de
-Fixes: c0bfe9606e03 ("pwm: jz4740: Simplify with dev_err_probe()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 60a2fb8d202a ("arm64: dts: mt8183: add MediaTek MDP3 nodes")
+Signed-off-by: Moudy Ho <moudy.ho@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-jz4740.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183.dtsi | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/pwm/pwm-jz4740.c
-+++ b/drivers/pwm/pwm-jz4740.c
-@@ -60,9 +60,10 @@ static int jz4740_pwm_request(struct pwm
- 	snprintf(name, sizeof(name), "timer%u", pwm->hwpwm);
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+index 976dc968b3ca..df6e9990cd5f 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+@@ -1660,7 +1660,7 @@ mmsys: syscon@14000000 {
+ 			mediatek,gce-client-reg = <&gce SUBSYS_1400XXXX 0 0x1000>;
+ 		};
  
- 	clk = clk_get(chip->dev, name);
--	if (IS_ERR(clk))
--		return dev_err_probe(chip->dev, PTR_ERR(clk),
--				     "Failed to get clock\n");
-+	if (IS_ERR(clk)) {
-+		dev_err(chip->dev, "error %pe: Failed to get clock\n", clk);
-+		return PTR_ERR(clk);
-+	}
+-		mdp3-rdma0@14001000 {
++		dma-controller0@14001000 {
+ 			compatible = "mediatek,mt8183-mdp3-rdma";
+ 			reg = <0 0x14001000 0 0x1000>;
+ 			mediatek,gce-client-reg = <&gce SUBSYS_1400XXXX 0x1000 0x1000>;
+@@ -1672,6 +1672,7 @@ mdp3-rdma0@14001000 {
+ 			iommus = <&iommu M4U_PORT_MDP_RDMA0>;
+ 			mboxes = <&gce 20 CMDQ_THR_PRIO_LOWEST 0>,
+ 				 <&gce 21 CMDQ_THR_PRIO_LOWEST 0>;
++			#dma-cells = <1>;
+ 		};
  
- 	err = clk_prepare_enable(clk);
- 	if (err < 0) {
+ 		mdp3-rsz0@14003000 {
+@@ -1692,7 +1693,7 @@ mdp3-rsz1@14004000 {
+ 			clocks = <&mmsys CLK_MM_MDP_RSZ1>;
+ 		};
+ 
+-		mdp3-wrot0@14005000 {
++		dma-controller@14005000 {
+ 			compatible = "mediatek,mt8183-mdp3-wrot";
+ 			reg = <0 0x14005000 0 0x1000>;
+ 			mediatek,gce-client-reg = <&gce SUBSYS_1400XXXX 0x5000 0x1000>;
+@@ -1701,6 +1702,7 @@ mdp3-wrot0@14005000 {
+ 			power-domains = <&spm MT8183_POWER_DOMAIN_DISP>;
+ 			clocks = <&mmsys CLK_MM_MDP_WROT0>;
+ 			iommus = <&iommu M4U_PORT_MDP_WROT0>;
++			#dma-cells = <1>;
+ 		};
+ 
+ 		mdp3-wdma@14006000 {
+-- 
+2.43.0
+
 
 
