@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A74B629E9;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F98629F1;
 	Tue, 23 Jan 2024 01:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974969; cv=none; b=iz3bsaqULgsqsx8txAf2pnZYcppqvmjyjC9Ory9kZQwBBPyw574kOi9gNTJrpKD6lu+kGgDbw8ZPJum8Di33p8MIpY56yg+bHDn9mztW9wEvtJPNo+leqplZpsIzW5DZUsZbQxbPinxppu67/sUaPz2vxmqTY9+3AoF86y7WQws=
+	t=1705974970; cv=none; b=RioxrfzCyWnh9VkgrGmyPAsnXrNsDUvp9mCGlNiUeYRe7U6sXHfafmWVLIaVtKtG3cTaaaV/XTuVzsbDqfRUIJ3Fbdczh4lznCgWjNOB4zhb6B8RiE5m//Dcy9hd3uLyxMkDNkeiXmcPyMf/yl3GdSUwAEKhLI5Tt5MjYEaiwac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974969; c=relaxed/simple;
-	bh=lwvUqJbpC/K8fuUtnvaFrttbpCc8poTJ569Pi3voZmU=;
+	s=arc-20240116; t=1705974970; c=relaxed/simple;
+	bh=CX6mkZ7HTySJKvkIMSUSqhzc48CAW6nMeP8OcZgNPac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xnlu0UIN52v5JwvjfMzpimGgrKGKoHmg91p90BouM7Bhkz0gZRcWvS4s+gH+QPd/q0S1p5ku+GHWUsO3nyM8h4gHTxmCrPb5lAsM54pnc49e0/9CiuNHTEpZRDYEFO1FO2B2ep2gACb7dsXFJJRJsPPJxPvpJk487XKLdH5zXRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4p7OSJO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WUt0m21O2LfYJw0wAAgR2eK0v9gF8TtbAPqidebNPZvJ4FORWWq5tAF7iIiRBHIi/INYyh/OGGtOG8ha5L/ghyPTArUK+iOIcWe4+qEfAlg1fO32Pvw7QiZIVcGuVl7yGRntHJpwp80vTLWHw+HCdqMgJroOzGrnD58MTSYDsZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRe6yMN5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4p7OSJO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D221BC433F1;
-	Tue, 23 Jan 2024 01:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRe6yMN5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6F9C433B1;
+	Tue, 23 Jan 2024 01:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974968;
-	bh=lwvUqJbpC/K8fuUtnvaFrttbpCc8poTJ569Pi3voZmU=;
+	s=korg; t=1705974969;
+	bh=CX6mkZ7HTySJKvkIMSUSqhzc48CAW6nMeP8OcZgNPac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N4p7OSJOCpfwrZIRvSj3KjKCv3eYEpoQb7kBPWzD3Zuk6vEBN3BkFYePMS7IekD09
-	 Is8cp49Ogkol/V+IPKb0Tk0+9yw7HS2zX2Y41toCLQyMwiFj56VwBCJe7ouAYbriDJ
-	 7wAv3TiIbl+wCeP/FHhGmfNP3CALphC6v0lnhxm0=
+	b=LRe6yMN5gyxz83+sCA3bx0+xGOM2sdwyr5Li4g0gYZVrsUogxG8hIpgyDzKKa/68Y
+	 fU2PqxxVyT1yYupGMjtjd0EnUw8bnyaGQC99Dm9yA9qb3XP1B46ylcPEyHOQTQtmGq
+	 ThVQ4uVS+uk2DGEoLpNoXKinsShKanm2K0WzfAVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Travkin <nikita@trvn.ru>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jan Palus <jpalus@fastmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 173/583] arm64: dts: qcom: acer-aspire1: Correct audio codec definition
-Date: Mon, 22 Jan 2024 15:53:44 -0800
-Message-ID: <20240122235817.321933679@linuxfoundation.org>
+Subject: [PATCH 5.15 301/374] power: supply: cw2015: correct time_to_empty units in sysfs
+Date: Mon, 22 Jan 2024 15:59:17 -0800
+Message-ID: <20240122235755.261988858@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,66 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Travkin <nikita@trvn.ru>
+From: Jan Palus <jpalus@fastmail.com>
 
-[ Upstream commit feec9f0add432a867f23e29afcd2f7088889b8e2 ]
+[ Upstream commit f37669119423ca852ca855b24732f25c0737aa57 ]
 
-When initially added, a mistake was made in the definition of the codec.
+RRT_ALRT register holds remaining battery time in minutes therefore it
+needs to be scaled accordingly when exposing TIME_TO_EMPTY via sysfs
+expressed in seconds
 
-Despite the fact that the DMIC line is connected on the side of the
-codec chip, and relevant passive components, including 0-ohm resistors
-connecting the dmics, are present, the dmic line is still cut in
-another place on the board, which was overlooked.
-
-Correct this by replacing the dmic configuration with a comment
-describing this hardware detail.
-
-While at it, also add missing regulators definitions. This is not a
-functional change as all the relevant regulators were already added via
-the other rail supplies.
-
-Fixes: 4a9f8f8f2ada ("arm64: dts: qcom: Add Acer Aspire 1")
-Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-Link: https://lore.kernel.org/r/20231205-aspire1-sound-v2-2-443b7ac0a06f@trvn.ru
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: b4c7715c10c1 ("power: supply: add CellWise cw2015 fuel gauge driver")
+Signed-off-by: Jan Palus <jpalus@fastmail.com>
+Link: https://lore.kernel.org/r/20231111221704.5579-1-jpalus@fastmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm64/boot/dts/qcom/sc7180-acer-aspire1.dts | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/power/supply/cw2015_battery.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-index dbb48934d499..3342cb048038 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-@@ -209,9 +209,22 @@ alc5682: codec@1a {
- 		AVDD-supply = <&vreg_l15a_1p8>;
- 		MICVDD-supply = <&reg_codec_3p3>;
- 		VBAT-supply = <&reg_codec_3p3>;
-+		DBVDD-supply = <&vreg_l15a_1p8>;
-+		LDO1-IN-supply = <&vreg_l15a_1p8>;
-+
-+		/*
-+		 * NOTE: The board has a path from this codec to the
-+		 * DMIC microphones in the lid, however some of the option
-+		 * resistors are absent and the microphones are connected
-+		 * to the SoC instead.
-+		 *
-+		 * If the resistors were to be changed by the user to
-+		 * connect the codec, the following could be used:
-+		 *
-+		 * realtek,dmic1-data-pin = <1>;
-+		 * realtek,dmic1-clk-pin = <1>;
-+		 */
+diff --git a/drivers/power/supply/cw2015_battery.c b/drivers/power/supply/cw2015_battery.c
+index 091868e9e9e8..587db9fd8624 100644
+--- a/drivers/power/supply/cw2015_battery.c
++++ b/drivers/power/supply/cw2015_battery.c
+@@ -490,7 +490,7 @@ static int cw_battery_get_property(struct power_supply *psy,
  
--		realtek,dmic1-data-pin = <1>;
--		realtek,dmic1-clk-pin = <1>;
- 		realtek,jd-src = <1>;
- 	};
- };
+ 	case POWER_SUPPLY_PROP_TIME_TO_EMPTY_NOW:
+ 		if (cw_battery_valid_time_to_empty(cw_bat))
+-			val->intval = cw_bat->time_to_empty;
++			val->intval = cw_bat->time_to_empty * 60;
+ 		else
+ 			val->intval = 0;
+ 		break;
 -- 
 2.43.0
 
