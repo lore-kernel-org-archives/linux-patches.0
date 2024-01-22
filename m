@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A6C149010;
-	Tue, 23 Jan 2024 00:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731C3149010;
+	Tue, 23 Jan 2024 00:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969191; cv=none; b=P1hlRtjtMVfzrTGu4m+/uaPUu+qDw+6UQ4sxgWo4jhih45HEuHvAf2S9nOgsuuuKqHEBrkn5t7po2hbwYGuMhGTVUyZYxMyd+NEHJ2WTkxAYmJpSdd3zbbnC+fSmAzde9PXhPNVqlvOFSC0TQSloMAT8FjQ6yKBiuOHWF6QAx0M=
+	t=1705969192; cv=none; b=AGBvirpuVJdnxtCoiPNzIFjtIwJ8AZ9bSqdkcb8rRQUb2Pd73glV1XNcbFozA1Zy4WsbiFqibyNubjjSJUR1LlkkAEgb0x3tyX4JS2fwobd49UQOKUm0BdBO5DhZU9XvN0XSICbI9SD9BNHOBIr8jlPazddO4TWJ3dPOt2o7UsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969191; c=relaxed/simple;
-	bh=zoRKJm+pnJLD09cTJflloRxuUNOXn7dMlFc0bbNdlLw=;
+	s=arc-20240116; t=1705969192; c=relaxed/simple;
+	bh=ts/n9xt5/bR/lORKKeQAf8YbCh2/8K5/ok54KUXRHFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CppXr+tgnFmYNlvIt9IIzHnh8mVh6Gthn1P2Q+Z2hZIPOdah6dyXJ0IFJVhMgX3mZy1O5t28YYcdcg1QYU1e8JiUPlPb5uLHV9dmbd5weZ4cTVYjpzIjhrT0A8FJki16rG9rQPPjBPtbj7KxfKpPK29PHR51/yO3Rn928vmdbdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYb3QP+C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q7LwnLEX51CS/yH1HCWgZMvy8+P0Nntuhe9DTpGfkOQtrCY4ZwjAGmld1ZifVcqZ015Cxmzedk4KLtGMQzLM+gwr2UpjE7wyNCor0EXA6SWGQrdnrO8rxFqfV9kEBnGXFlrb+pIMb2n/R07ve0XjADxEvW4Wlo+0W0qlyyQV7L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXE7qVgu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYb3QP+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047A6C433C7;
-	Tue, 23 Jan 2024 00:19:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXE7qVgu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099ADC43399;
+	Tue, 23 Jan 2024 00:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969191;
-	bh=zoRKJm+pnJLD09cTJflloRxuUNOXn7dMlFc0bbNdlLw=;
+	s=korg; t=1705969192;
+	bh=ts/n9xt5/bR/lORKKeQAf8YbCh2/8K5/ok54KUXRHFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UYb3QP+CVxnUK8F9KEUEdj1ePZjlkcnXdAkuk/yo5egY/ca+iOXV7P4OgiVRy877l
-	 YFpldgATVr/Y8V2ydaAb7bFcsX/ajWhuY7i+GN3I4xc5pF6ve59DFMba9rbEUjb1AD
-	 erR37CXFdFtMf+ukIv6Vkon/KEVD7iIb06/9BNNk=
+	b=PXE7qVguPkV9n3KOKQxObixtsZPB2tU/+NL6p1ediUZ7rQQWAQDHHoQjt56shxgYR
+	 VKp3uZD383xrQkhzF23EP9OhN/qC0exntbUYA2KtNtw5AG+57NBU8lWsr8qdfkJbSC
+	 pLxwiTd8490RIRZGdWk/xgp4njvPhFXuWMYgMrvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 088/641] SUNRPC: fix _xprt_switch_find_current_entry logic
-Date: Mon, 22 Jan 2024 15:49:52 -0800
-Message-ID: <20240122235820.795372822@linuxfoundation.org>
+Subject: [PATCH 6.7 089/641] pNFS: Fix the pnfs block drivers calculation of layoutget size
+Date: Mon, 22 Jan 2024 15:49:53 -0800
+Message-ID: <20240122235820.824200999@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,33 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 98b4e5137504a5bd9346562b1310cdc13486603b ]
+[ Upstream commit 8a6291bf3b0eae1bf26621e6419a91682f2d6227 ]
 
-Fix the logic for picking current transport entry.
+Instead of relying on the value of the 'bytes_left' field, we should
+calculate the layout size based on the offset of the request that is
+being written out.
 
-Fixes: 95d0d30c66b8 ("SUNRPC create an iterator to list only OFFLINE xprts")
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
+Reported-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 954998b60caa ("NFS: Fix error handling for O_DIRECT write scheduling")
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Tested-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtmultipath.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/blocklayout/blocklayout.c | 5 ++---
+ fs/nfs/direct.c                  | 5 +++--
+ fs/nfs/internal.h                | 2 +-
+ fs/nfs/pnfs.c                    | 3 ++-
+ 4 files changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/net/sunrpc/xprtmultipath.c b/net/sunrpc/xprtmultipath.c
-index 701250b305db..74ee2271251e 100644
---- a/net/sunrpc/xprtmultipath.c
-+++ b/net/sunrpc/xprtmultipath.c
-@@ -284,7 +284,7 @@ struct rpc_xprt *_xprt_switch_find_current_entry(struct list_head *head,
- 		if (cur == pos)
- 			found = true;
- 		if (found && ((find_active && xprt_is_active(pos)) ||
--			      (!find_active && xprt_is_active(pos))))
-+			      (!find_active && !xprt_is_active(pos))))
- 			return pos;
+diff --git a/fs/nfs/blocklayout/blocklayout.c b/fs/nfs/blocklayout/blocklayout.c
+index 1d1d7abc3205..6be13e0ec170 100644
+--- a/fs/nfs/blocklayout/blocklayout.c
++++ b/fs/nfs/blocklayout/blocklayout.c
+@@ -895,10 +895,9 @@ bl_pg_init_write(struct nfs_pageio_descriptor *pgio, struct nfs_page *req)
  	}
- 	return NULL;
+ 
+ 	if (pgio->pg_dreq == NULL)
+-		wb_size = pnfs_num_cont_bytes(pgio->pg_inode,
+-					      req->wb_index);
++		wb_size = pnfs_num_cont_bytes(pgio->pg_inode, req->wb_index);
+ 	else
+-		wb_size = nfs_dreq_bytes_left(pgio->pg_dreq);
++		wb_size = nfs_dreq_bytes_left(pgio->pg_dreq, req_offset(req));
+ 
+ 	pnfs_generic_pg_init_write(pgio, req, wb_size);
+ 
+diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
+index f6c74f424691..5918c67dae0d 100644
+--- a/fs/nfs/direct.c
++++ b/fs/nfs/direct.c
+@@ -205,9 +205,10 @@ static void nfs_direct_req_release(struct nfs_direct_req *dreq)
+ 	kref_put(&dreq->kref, nfs_direct_req_free);
+ }
+ 
+-ssize_t nfs_dreq_bytes_left(struct nfs_direct_req *dreq)
++ssize_t nfs_dreq_bytes_left(struct nfs_direct_req *dreq, loff_t offset)
+ {
+-	return dreq->bytes_left;
++	loff_t start = offset - dreq->io_start;
++	return dreq->max_count - start;
+ }
+ EXPORT_SYMBOL_GPL(nfs_dreq_bytes_left);
+ 
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index 9c9cf764f600..b1fa81c9dff6 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -655,7 +655,7 @@ extern int nfs_sillyrename(struct inode *dir, struct dentry *dentry);
+ /* direct.c */
+ void nfs_init_cinfo_from_dreq(struct nfs_commit_info *cinfo,
+ 			      struct nfs_direct_req *dreq);
+-extern ssize_t nfs_dreq_bytes_left(struct nfs_direct_req *dreq);
++extern ssize_t nfs_dreq_bytes_left(struct nfs_direct_req *dreq, loff_t offset);
+ 
+ /* nfs4proc.c */
+ extern struct nfs_client *nfs4_init_client(struct nfs_client *clp,
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index 21a365357629..0c0fed1ecd0b 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -2733,7 +2733,8 @@ pnfs_generic_pg_init_read(struct nfs_pageio_descriptor *pgio, struct nfs_page *r
+ 		if (pgio->pg_dreq == NULL)
+ 			rd_size = i_size_read(pgio->pg_inode) - req_offset(req);
+ 		else
+-			rd_size = nfs_dreq_bytes_left(pgio->pg_dreq);
++			rd_size = nfs_dreq_bytes_left(pgio->pg_dreq,
++						      req_offset(req));
+ 
+ 		pgio->pg_lseg =
+ 			pnfs_update_layout(pgio->pg_inode, nfs_req_openctx(req),
 -- 
 2.43.0
 
