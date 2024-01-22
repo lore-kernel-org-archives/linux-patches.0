@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB554EB34;
-	Tue, 23 Jan 2024 00:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1A54EB34;
+	Tue, 23 Jan 2024 00:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970131; cv=none; b=bHyeCMeOEH6+thsM+kr5wC20Ozo+HvfBtiSOu+dhoqWZnskJN4SUPSIIJiegVhsJbLmYvRPVN1UUkZUfkhyy+kNpbzcbIuU8LkNO29u38dd63WZUuDKeCN+HYQhP9KvCKBJ2n3Mlisoj5yvuc8bXHEUI/oglL/bgkblRzl12SYM=
+	t=1705970135; cv=none; b=fYQ8BXKJCdnPb25FMRVahMeWXnEbA2WYjbiLpjHdFgXev9+2mJEee6n+jo71q/avonR5AHUNGT2PIkWzdbeHVcOFaI3ePBzxq2PvtSVNMIls0+aCdDa0CQQ+ZwwmVwe6l45NdaGDKJsPdp9MvMopBCcFHIl6vbAvD272Ep6fE+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970131; c=relaxed/simple;
-	bh=gT6Et5ZgdQ2ncZTHtr+9VYUK1YdApEaUXPkiwhlTtkc=;
+	s=arc-20240116; t=1705970135; c=relaxed/simple;
+	bh=kvSGtuKTBNBBqjHEYhr3LxWcyH7Etq/lRMmu/OiklC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ahz/FuA7x0nqHT6+8JR+2dwLB/sYdpB+uLWbj0MfUDN29D/gRcbZeqM4+ToQ+6L4NSnvuUvqbzDPA4JAtQTFptmj8GdhIRZZvdbDjOY9N1JHAnF76N8AF/iA7zJuM5MkdCvQruAsItXQL7XTdhHnQIAXQ6C2YzC5TJdL3j5+9aE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=umHLIGQ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g6/IQg5LoDlD0ILsEmZXXHgtPxAzY2i+EJbWbBKASfq6kS+Ot6ai8CA9oDYfb9o2Cl9PaFRonS/FVUXhNQeO+6ZNfY3nhNvBC8PbZgONLhl8LmOchRbglqRb4YI0lbWWmE8Wamy08oKdcK9zzoEjP81YgN1w1gvf3bN4dzS/yqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxeY9Bzc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umHLIGQ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B90FEC433C7;
-	Tue, 23 Jan 2024 00:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxeY9Bzc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694DFC433C7;
+	Tue, 23 Jan 2024 00:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970131;
-	bh=gT6Et5ZgdQ2ncZTHtr+9VYUK1YdApEaUXPkiwhlTtkc=;
+	s=korg; t=1705970134;
+	bh=kvSGtuKTBNBBqjHEYhr3LxWcyH7Etq/lRMmu/OiklC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=umHLIGQ1WegsHmjVWzl970j6Vfr+TFh2PitUNAQCHvoHh49gqcnJSmWdMerrECmhu
-	 CaZOxfHTJGh3FMlYNh6WZNjgmYQsWNccAL0a5e8mzUIxpwQicLVqXw9VqMS3yqQKF5
-	 z+2Kbwk6tVyE3FIV96MpQnSHgpka8W0iige9Mg3o=
+	b=wxeY9BzcTE67/HxtVDyowBwNlO6WB+cDeS08DfiCbXXNKrYOguzaF7lntRnFpbjlI
+	 nUzykjjQ1A6tkkPVBd9Y8/0rJtIYlP1I4CM0lU/OBVQs4HR185N3APaYbZ8ppbm70v
+	 ZJbvV4I6U+NrGBRgy/k9BrXbqgiXVuujGOj3Fo+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 595/641] mptcp: refine opt_mp_capable determination
-Date: Mon, 22 Jan 2024 15:58:19 -0800
-Message-ID: <20240122235836.825924486@linuxfoundation.org>
+Subject: [PATCH 6.7 596/641] block: ensure we hold a queue reference when using queue limits
+Date: Mon, 22 Jan 2024 15:58:20 -0800
+Message-ID: <20240122235836.859517585@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -54,78 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 724b00c12957973656d312dce2a110c75ae2c680 ]
+[ Upstream commit 7b4f36cd22a65b750b4cb6ac14804fb7d6e6c67d ]
 
-OPTIONS_MPTCP_MPC is a combination of three flags.
+q_usage_counter is the only thing preventing us from the limits changing
+under us in __bio_split_to_limits, but blk_mq_submit_bio doesn't hold
+it while calling into it.
 
-It would be better to be strict about testing what
-flag is expected, at least for code readability.
+Move the splitting inside the region where we know we've got a queue
+reference. Ideally this could still remain a shared section of code, but
+let's keep the fix simple and defer any refactoring here to later.
 
-mptcp_parse_option() already makes the distinction.
-
-- subflow_check_req() should use OPTION_MPTCP_MPC_SYN.
-
-- mptcp_subflow_init_cookie_req() should use OPTION_MPTCP_MPC_ACK.
-
-- subflow_finish_connect() should use OPTION_MPTCP_MPC_SYNACK
-
-- subflow_syn_recv_sock should use OPTION_MPTCP_MPC_ACK
-
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Fixes: 74c7dfbee3e1 ("mptcp: consolidate in_opt sub-options fields in a bitmask")
-Link: https://lore.kernel.org/r/20240111194917.4044654-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Christoph Hellwig <hch@lst.de>
+Fixes: 900e08075202 ("block: move queue enter logic into blk_mq_submit_bio()")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/subflow.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ block/blk-mq.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index 09312d619018..91c1cda4228f 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -157,7 +157,7 @@ static int subflow_check_req(struct request_sock *req,
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index ac18f802c027..7e743ac58c31 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -2951,12 +2951,6 @@ void blk_mq_submit_bio(struct bio *bio)
+ 	blk_status_t ret;
  
- 	mptcp_get_options(skb, &mp_opt);
+ 	bio = blk_queue_bounce(bio, q);
+-	if (bio_may_exceed_limits(bio, &q->limits)) {
+-		bio = __bio_split_to_limits(bio, &q->limits, &nr_segs);
+-		if (!bio)
+-			return;
+-	}
+-
+ 	bio_set_ioprio(bio);
  
--	opt_mp_capable = !!(mp_opt.suboptions & OPTIONS_MPTCP_MPC);
-+	opt_mp_capable = !!(mp_opt.suboptions & OPTION_MPTCP_MPC_SYN);
- 	opt_mp_join = !!(mp_opt.suboptions & OPTION_MPTCP_MPJ_SYN);
- 	if (opt_mp_capable) {
- 		SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_MPCAPABLEPASSIVE);
-@@ -254,7 +254,7 @@ int mptcp_subflow_init_cookie_req(struct request_sock *req,
- 	subflow_init_req(req, sk_listener);
- 	mptcp_get_options(skb, &mp_opt);
- 
--	opt_mp_capable = !!(mp_opt.suboptions & OPTIONS_MPTCP_MPC);
-+	opt_mp_capable = !!(mp_opt.suboptions & OPTION_MPTCP_MPC_ACK);
- 	opt_mp_join = !!(mp_opt.suboptions & OPTION_MPTCP_MPJ_ACK);
- 	if (opt_mp_capable && opt_mp_join)
- 		return -EINVAL;
-@@ -486,7 +486,7 @@ static void subflow_finish_connect(struct sock *sk, const struct sk_buff *skb)
- 
- 	mptcp_get_options(skb, &mp_opt);
- 	if (subflow->request_mptcp) {
--		if (!(mp_opt.suboptions & OPTIONS_MPTCP_MPC)) {
-+		if (!(mp_opt.suboptions & OPTION_MPTCP_MPC_SYNACK)) {
- 			MPTCP_INC_STATS(sock_net(sk),
- 					MPTCP_MIB_MPCAPABLEACTIVEFALLBACK);
- 			mptcp_do_fallback(sk);
-@@ -783,7 +783,7 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
- 		 * options.
- 		 */
- 		mptcp_get_options(skb, &mp_opt);
--		if (!(mp_opt.suboptions & OPTIONS_MPTCP_MPC))
-+		if (!(mp_opt.suboptions & OPTION_MPTCP_MPC_ACK))
- 			fallback = true;
- 
- 	} else if (subflow_req->mp_join) {
+ 	if (plug) {
+@@ -2965,6 +2959,11 @@ void blk_mq_submit_bio(struct bio *bio)
+ 			rq = NULL;
+ 	}
+ 	if (rq) {
++		if (unlikely(bio_may_exceed_limits(bio, &q->limits))) {
++			bio = __bio_split_to_limits(bio, &q->limits, &nr_segs);
++			if (!bio)
++				return;
++		}
+ 		if (!bio_integrity_prep(bio))
+ 			return;
+ 		if (blk_mq_attempt_bio_merge(q, bio, nr_segs))
+@@ -2975,6 +2974,11 @@ void blk_mq_submit_bio(struct bio *bio)
+ 	} else {
+ 		if (unlikely(bio_queue_enter(bio)))
+ 			return;
++		if (unlikely(bio_may_exceed_limits(bio, &q->limits))) {
++			bio = __bio_split_to_limits(bio, &q->limits, &nr_segs);
++			if (!bio)
++				goto fail;
++		}
+ 		if (!bio_integrity_prep(bio))
+ 			goto fail;
+ 	}
 -- 
 2.43.0
 
