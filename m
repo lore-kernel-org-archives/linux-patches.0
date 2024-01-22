@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999CA50A81;
-	Tue, 23 Jan 2024 00:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD9850A81;
+	Tue, 23 Jan 2024 00:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970192; cv=none; b=ZSqxAON2beDijjv2xteGdR3g/Pk4inDl1iDq++eW+rm99h1ziT0Eh7/lyHxRwYNJrulPrDhd+rm5oYWjAyIZAzVCnwonQ3qoCcCJbEWGQ8Ms4tUItFq7JsVWqRiCPYFm8yQVh14X0TW8kbfKwTFfzjRvjiWA4Cg5INgsVbsFEFY=
+	t=1705970196; cv=none; b=BFhN3Osg37SOyEunLypOubGzTogASbxBytXf52EWvWLyjHTY+jN2H6XXRGPJbazSbBmyD8zinT7taea17U12Voc/kxsxSJY2zOyxuv53vcF09IPis6NDjpeJ9FYhs/nVqQZaHRlU6pmU/eRDI0MpzcINEBZ/P2zavdPENZlcutw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970192; c=relaxed/simple;
-	bh=mAR3KR06DFXa3IdyCc4SqfCh6lm7ZVYs6xR2/RYQsYI=;
+	s=arc-20240116; t=1705970196; c=relaxed/simple;
+	bh=zJDEtl5atR96EJlqVX7tPQ6CqwwK6VNkeNfb6fTozUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ljdK1tVUCo8jAOUbd1mz/0XJNMiDCbhzmz61IKU8YLli8XVKuPUEOU18DVIBOOkKCobetxRLcdpV8V/5LKbfOJ6eE1RAAqKFWBgsJiRBEfA6IqUqezRH4u/csSFgOPlahuK21D2S3Oa5DxjBH8j1lHji+ngn3YuYTDHoOY99FDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tUnMWwY3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nKLZhc/QYyU8R6j40+sfcTq5xPHElQqTiUnO1g9fF+2KdJ9aSFKdGM04SymceCvubue1wtiRY3qhFjJ23N0xSIxtlUKk+T7EReOCUdVS0CrIkb1h2uiKgGI0g2KVIvDPNsfWWjQbjQMenFzelZuOPzYJf0c/RsBJeAaUmJgdqjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xU9zZ6Hg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tUnMWwY3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E72C433C7;
-	Tue, 23 Jan 2024 00:36:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xU9zZ6Hg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56391C433C7;
+	Tue, 23 Jan 2024 00:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970192;
-	bh=mAR3KR06DFXa3IdyCc4SqfCh6lm7ZVYs6xR2/RYQsYI=;
+	s=korg; t=1705970195;
+	bh=zJDEtl5atR96EJlqVX7tPQ6CqwwK6VNkeNfb6fTozUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tUnMWwY3V5bcqLEBnZLjH3XLSehzDdbNdYDqoJaaly06rihUOmWHBYkmXhvUxUdGp
-	 YXCrcFRyqIKeUkCatwVcOHUej5m0cWZs3EKY29o6VCdQTrlfJQfjTyWpfsVooDR2ta
-	 FqIhuzUdl5ee6UHjok1EOygYsnb8vweljg1sF6EM=
+	b=xU9zZ6Hg08vUUb8kfJh4JovKEi5x1/sh5X+TICN723hdTlb4tfsZg8hn+pny8Lwfx
+	 r44djA1ZE/sBpZQhdImYlYWZI/KpCWyasSTA8q6ahTWOPxmkSSQfxiHlHLbQpfgXU5
+	 z8VZsJyNzmVpKnG8KTxMDBy4Cy9OUoPtPcS2TwEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Divya Koppera <divya.koppera@microchip.com>,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 588/641] net: micrel: Fix PTP frame parsing for lan8841
-Date: Mon, 22 Jan 2024 15:58:12 -0800
-Message-ID: <20240122235836.613089348@linuxfoundation.org>
+Subject: [PATCH 6.7 579/641] ASoC: mediatek: sof-common: Add NULL check for normal_link string
+Date: Mon, 22 Jan 2024 15:58:03 -0800
+Message-ID: <20240122235836.300731042@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,58 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit acd66c2126eb9b5da2d89ae07dbcd73b909c2111 ]
+[ Upstream commit e3b3ec967a7d93b9010a5af9a2394c8b5c8f31ed ]
 
-The HW has the capability to check each frame if it is a PTP frame,
-which domain it is, which ptp frame type it is, different ip address in
-the frame. And if one of these checks fail then the frame is not
-timestamp. Most of these checks were disabled except checking the field
-minorVersionPTP inside the PTP header. Meaning that once a partner sends
-a frame compliant to 8021AS which has minorVersionPTP set to 1, then the
-frame was not timestamp because the HW expected by default a value of 0
-in minorVersionPTP.
-Fix this issue by removing this check so the userspace can decide on this.
+It's not granted that all entries of struct sof_conn_stream declare
+a `normal_link` (a non-SOF, direct link) string, and this is the case
+for SoCs that support only SOF paths (hence do not support both direct
+and SOF usecases).
 
-Fixes: cafc3662ee3f ("net: micrel: Add PHC support for lan8841")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Divya Koppera <divya.koppera@microchip.com>
-Reviewed-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+For example, in the case of MT8188 there is no normal_link string in
+any of the sof_conn_stream entries and there will be more drivers
+doing that in the future.
+
+To avoid possible NULL pointer KPs, add a NULL check for `normal_link`.
+
+Fixes: 0caf1120c583 ("ASoC: mediatek: mt8195: extract SOF common code")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://msgid.link/r/20240111105226.117603-1-angelogioacchino.delregno@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/soc/mediatek/common/mtk-dsp-sof-common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index 08e3915001c3..73ee81c583ef 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -3335,8 +3335,10 @@ static int lan8814_probe(struct phy_device *phydev)
- #define LAN8841_ADC_CHANNEL_MASK		198
- #define LAN8841_PTP_RX_PARSE_L2_ADDR_EN		370
- #define LAN8841_PTP_RX_PARSE_IP_ADDR_EN		371
-+#define LAN8841_PTP_RX_VERSION			374
- #define LAN8841_PTP_TX_PARSE_L2_ADDR_EN		434
- #define LAN8841_PTP_TX_PARSE_IP_ADDR_EN		435
-+#define LAN8841_PTP_TX_VERSION			438
- #define LAN8841_PTP_CMD_CTL			256
- #define LAN8841_PTP_CMD_CTL_PTP_ENABLE		BIT(2)
- #define LAN8841_PTP_CMD_CTL_PTP_DISABLE		BIT(1)
-@@ -3380,6 +3382,12 @@ static int lan8841_config_init(struct phy_device *phydev)
- 	phy_write_mmd(phydev, KSZ9131RN_MMD_COMMON_CTRL_REG,
- 		      LAN8841_PTP_RX_PARSE_IP_ADDR_EN, 0);
+diff --git a/sound/soc/mediatek/common/mtk-dsp-sof-common.c b/sound/soc/mediatek/common/mtk-dsp-sof-common.c
+index f3894010f656..7ec8965a70c0 100644
+--- a/sound/soc/mediatek/common/mtk-dsp-sof-common.c
++++ b/sound/soc/mediatek/common/mtk-dsp-sof-common.c
+@@ -24,7 +24,7 @@ int mtk_sof_dai_link_fixup(struct snd_soc_pcm_runtime *rtd,
+ 		struct snd_soc_dai_link *sof_dai_link = NULL;
+ 		const struct sof_conn_stream *conn = &sof_priv->conn_streams[i];
  
-+	/* Disable checking for minorVersionPTP field */
-+	phy_write_mmd(phydev, KSZ9131RN_MMD_COMMON_CTRL_REG,
-+		      LAN8841_PTP_RX_VERSION, 0xff00);
-+	phy_write_mmd(phydev, KSZ9131RN_MMD_COMMON_CTRL_REG,
-+		      LAN8841_PTP_TX_VERSION, 0xff00);
-+
- 	/* 100BT Clause 40 improvenent errata */
- 	phy_write_mmd(phydev, LAN8841_MMD_ANALOG_REG,
- 		      LAN8841_ANALOG_CONTROL_1,
+-		if (strcmp(rtd->dai_link->name, conn->normal_link))
++		if (conn->normal_link && strcmp(rtd->dai_link->name, conn->normal_link))
+ 			continue;
+ 
+ 		for_each_card_rtds(card, runtime) {
 -- 
 2.43.0
 
