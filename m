@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93F65EE64;
-	Tue, 23 Jan 2024 12:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE115C5FB;
+	Tue, 23 Jan 2024 12:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706014173; cv=none; b=KUi3K0TOYQF+77qzWz8LN31HGIbYMFcK5nj4R6pDMoeHOvHyhf3L8+lPXDj6RIlz8tJPnCj1KNpV8W+hJqFQeT0Lxd7O+K8EEAegoFBW7qrW3OsZz0n7/Bf4eX8qYCgfChCWN/Yga4ii745j2T5e7JW/4AgSakC2Cli9xDfcvnk=
+	t=1706014176; cv=none; b=JbfscMYkZcxOBgZDhQmsa92124XPorGFsVFhKXJqWC8kmoN4Y2rnp8at+tBXEZlJbUhLvu6k9d/+9As7XYVApGFg/Hukx+S7VNJPw2J/BL+wfgivOXZ03diG7a1NWUF4H938p4DRP4jDrE5yDfdjyOeHBUYK4gfoWlzLBX0KjKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706014173; c=relaxed/simple;
-	bh=V3AWB9t1pbtDxFIVCwVVKA1rQbsU5Kyt5t48eN+gYgM=;
+	s=arc-20240116; t=1706014176; c=relaxed/simple;
+	bh=hvrxoMiGOsUX6FGhkQ0hZ/bYlfuVaEVVRR0/XyY5pbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h5Qp4Zg/3Vs4D7FOfHRut2J7lSizd8nz5IBJKN7KfFuvGdopX9brRdvS5cUSCsKL2QmjLUfpsED/lZ12QFh1x3SfQnpd/PhStfZZecfcRZMo/uB56X7lrUH67lDW1ICcC2eTvB2a5GCUVZfEwkMufMSIxwvxHwUAMShJIFdWVN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btKkdB20; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pVs4LCuvfu2ldYPYZ3wKOhKxSV5+DkXxcifQ2wzYquXLi7LZ8tbWgv4LTI1mcKvH/ij0vDr1wx7muuktaLQDWLESXqRm/kueyQKhSFy9z7Lhu7CQEAuXPMUfekBOKrwx7GgMXuUdSjy/hSbATo7hlfWG2shRGor2e2FOoICO1EA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0g779+LT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btKkdB20"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AEA6C433B1;
-	Tue, 23 Jan 2024 12:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0g779+LT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B697BC43394;
+	Tue, 23 Jan 2024 12:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706014173;
-	bh=V3AWB9t1pbtDxFIVCwVVKA1rQbsU5Kyt5t48eN+gYgM=;
+	s=korg; t=1706014175;
+	bh=hvrxoMiGOsUX6FGhkQ0hZ/bYlfuVaEVVRR0/XyY5pbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=btKkdB20lPqaFFN76/5fk4pGikU2BwLV02b5xECCxuvxi/XTZUSP+dS0QPfjQmm+1
-	 MjnkfmKJRnzQOmGX3MwWPETiTaQr7YXXnJCQPPu0SxtDKsNfFGgpSOBU5LfFGYSfwf
-	 wFs0FCerOh0ciqPwY9sv/TW/CnBTrImVHHM+jnkk=
+	b=0g779+LTIUsQB8Y1e2cejMa4OeyPNizRmdgSpeH/2YwZcU8HBXUfEAMe2hbgMgRX8
+	 gjusz3+U/hgklLl0FaB+CmGnC8/p54BHBZve+5cfDZOj7nlT8PE9RpYDBHpKhcdGMv
+	 IcR5WABY7C91WNy1t+DlEnVUZeJl/p8hBi4CCsAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.7 455/641] wifi: rtlwifi: Remove bogus and dangerous ASPM disable/enable code
-Date: Mon, 22 Jan 2024 15:55:59 -0800
-Message-ID: <20240122235832.256413627@linuxfoundation.org>
+Subject: [PATCH 6.1 308/417] wifi: rtlwifi: Remove bogus and dangerous ASPM disable/enable code
+Date: Mon, 22 Jan 2024 15:57:56 -0800
+Message-ID: <20240122235802.496914364@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
-References: <20240122235818.091081209@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,7 +47,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -184,7 +184,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  static void rtl_pci_parse_configuration(struct pci_dev *pdev,
  					struct ieee80211_hw *hw)
  {
-@@ -2028,12 +1980,6 @@ static bool _rtl_pci_find_adapter(struct
+@@ -2033,12 +1985,6 @@ static bool _rtl_pci_find_adapter(struct
  		    PCI_SLOT(bridge_pdev->devfn);
  		pcipriv->ndis_adapter.pcibridge_funcnum =
  		    PCI_FUNC(bridge_pdev->devfn);
@@ -197,7 +197,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  		if (pcipriv->ndis_adapter.pcibridge_vendor ==
  		    PCI_BRIDGE_VENDOR_AMD) {
-@@ -2050,13 +1996,11 @@ static bool _rtl_pci_find_adapter(struct
+@@ -2055,13 +2001,11 @@ static bool _rtl_pci_find_adapter(struct
  		pdev->vendor, pcipriv->ndis_adapter.linkctrl_reg);
  
  	rtl_dbg(rtlpriv, COMP_INIT, DBG_DMESG,
