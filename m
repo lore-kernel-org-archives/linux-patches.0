@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742C150267;
-	Tue, 23 Jan 2024 01:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F02450267;
+	Tue, 23 Jan 2024 01:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974695; cv=none; b=LbP0oCFZQ9B+omyBEK8fv52uJBlJSrBmccbO6WPBGwnucGuOKZ+vbtfuhD7F1W7Lyj2Jvizkdaa5ENH11+pNmr12bqH7XcbNi8FWt6jq246fqADRuo0jVILae3cD55TwNK6HWpIx8jHqw+vtODYJnQoOhp7rcTR/XeQ+Q3Kg7qk=
+	t=1705974696; cv=none; b=eTqX3j/r/W5nWYvY5/Fkqsx3oV3cQuo3BAaaBLlF9cNCTBQBeEORkKM7BqDTapXsgLn8swwHeVChkTk9V9h+83b1DRlaS/OkEpLcVUoQ2vZWZxy24EuTf2PEwUObyWSSzhPV7JZJE3T/ZXa/LESFgqHfA4/9G7NYApCXQy16W7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974695; c=relaxed/simple;
-	bh=XG9Ss97eAV/IvhZacd40AoQRv1W9vDN8bQkDoKVP0fc=;
+	s=arc-20240116; t=1705974696; c=relaxed/simple;
+	bh=tIAaZLFvP5NIdyRERNk+TpUHXiJI1hThqyUkMJ1HyM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uye2axUMkxj/4pPaEmHqtJGijD99xxZmMJLbnDrrI8JkTIwtR0RGUbmUEPSXtBHXFMbapV28IGyFWK0e9EsxvRHm2mlCZkNvxmqEbYWOHj5bmATr1jbdp2ZGk1JiedDzBtfrDdsDBnX+7XHalulB8l8XhyepcUqEVZ8oEAH3qh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+wNX5pI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VIDDXFUPyRYJEA4GVmXv/rs0D+zam0k2WxK6a0ZJqCZ99DMxXIMmwmdIa6ZEWaQ4w2GZCUuf9zva1H6zNYNMlDUE5jB8YLCVQnV39dPPcEaGNlZduQykWkqY/jDuKVQ+6SBQjX/5A8bH1Hb7xQo4ddmoGU2FgYX3YB5HtwroD00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnAm8qUl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+wNX5pI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AEBAC433F1;
-	Tue, 23 Jan 2024 01:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnAm8qUl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E39C43394;
+	Tue, 23 Jan 2024 01:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974695;
-	bh=XG9Ss97eAV/IvhZacd40AoQRv1W9vDN8bQkDoKVP0fc=;
+	s=korg; t=1705974696;
+	bh=tIAaZLFvP5NIdyRERNk+TpUHXiJI1hThqyUkMJ1HyM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+wNX5pImqB79AQmRSJRyMuaOiGiTs8bDRmvpo6sBrQvvSKYnjbZRtSImAl2+vama
-	 UKjMgRurnxkO6UDMnrAUL7Jx6WO4E2X4Qrgx9K3MyL4rBiBIqaE5XilLEgMWzl0lP6
-	 2dFxcp7AX//CW4rMSu3KQzRKqgyjUkCBmfzT9Ml4=
+	b=CnAm8qUlNAq3h38ZZ3zIn/l8gAug2IGLq79sPmbjBJ+6vk5l6/mtTjQlGET+/otYe
+	 u/upth68g+vpgyJThh+aN0/bZ8RC4edBPu0mjtrIqz+rmD5kATL5axSYA28EA1lR72
+	 BLW6iyEs9n0DOeGmrAoOUrR0jXzPRYUbOlOFHlms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 127/583] arm64: dts: qcom: sdm845-db845c: correct LED panic indicator
-Date: Mon, 22 Jan 2024 15:52:58 -0800
-Message-ID: <20240122235816.022707353@linuxfoundation.org>
+	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Subject: [PATCH 5.15 254/374] usb: dwc: ep0: Update request status in dwc3_ep0_stall_restart
+Date: Mon, 22 Jan 2024 15:58:30 -0800
+Message-ID: <20240122235753.607467869@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +45,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
 
-[ Upstream commit 0c90c75e663246203a2b7f6dd9e08a110f4c3c43 ]
+commit e9d40b215e38480fd94c66b06d79045717a59e9c upstream.
 
-There is no "panic-indicator" default trigger but a property with that
-name:
+Current implementation blocks the running operations when Plug-out and
+Plug-In is performed continuously, process gets stuck in
+dwc3_thread_interrupt().
 
-  sdm845-db845c.dtb: leds: led-0: Unevaluated properties are not allowed ('linux,default-trigger' was unexpected)
+Code Flow:
 
-Fixes: 3f72e2d3e682 ("arm64: dts: qcom: Add Dragonboard 845c")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20231111095617.16496-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	CPU1
+
+	->Gadget_start
+	->dwc3_interrupt
+	->dwc3_thread_interrupt
+	->dwc3_process_event_buf
+	->dwc3_process_event_entry
+	->dwc3_endpoint_interrupt
+	->dwc3_ep0_interrupt
+	->dwc3_ep0_inspect_setup
+	->dwc3_ep0_stall_and_restart
+
+By this time if pending_list is not empty, it will get the next request
+on the given list and calls dwc3_gadget_giveback which will unmap request
+and call its complete() callback to notify upper layers that it has
+completed. Currently dwc3_gadget_giveback status is set to -ECONNRESET,
+whereas it should be -ESHUTDOWN based on condition if not dwc->connected
+is true.
+
+Cc:  <stable@vger.kernel.org>
+Fixes: d742220b3577 ("usb: dwc3: ep0: giveback requests on stall_and_restart")
+Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Link: https://lore.kernel.org/r/20231222094704.20276-1-quic_uaggarwa@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/ep0.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index c7eba6c491be..7e7bf3fb3be6 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -67,8 +67,8 @@ led-0 {
- 			function = LED_FUNCTION_INDICATOR;
- 			color = <LED_COLOR_ID_GREEN>;
- 			gpios = <&pm8998_gpios 13 GPIO_ACTIVE_HIGH>;
--			linux,default-trigger = "panic-indicator";
- 			default-state = "off";
-+			panic-indicator;
- 		};
+--- a/drivers/usb/dwc3/ep0.c
++++ b/drivers/usb/dwc3/ep0.c
+@@ -236,7 +236,10 @@ static void dwc3_ep0_stall_and_restart(s
+ 		struct dwc3_request	*req;
  
- 		led-1 {
--- 
-2.43.0
-
+ 		req = next_request(&dep->pending_list);
+-		dwc3_gadget_giveback(dep, req, -ECONNRESET);
++		if (!dwc->connected)
++			dwc3_gadget_giveback(dep, req, -ESHUTDOWN);
++		else
++			dwc3_gadget_giveback(dep, req, -ECONNRESET);
+ 	}
+ 
+ 	dwc->ep0state = EP0_SETUP_PHASE;
 
 
