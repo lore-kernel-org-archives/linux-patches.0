@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E046D14D424;
-	Tue, 23 Jan 2024 00:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1706014D424;
+	Tue, 23 Jan 2024 00:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969278; cv=none; b=jR+WhVrWe7KMHJogwO3pxuiory1qVKc0AAGWR/PZpztGom0PErkAh1fyKzHA9dMymJUHXanWhSAg4HRuc09pyuBWODVGfXlYxAdPaljKChsiRPxjCWYg3o6w0LQYo249rqS6m0PCO4mI4kOrLKM9z1929yZRbjkokaedvCo1szg=
+	t=1705969279; cv=none; b=uOpRLZy2aBiAF9tMkZInARXhUrO5yyVercmT0KUXQ5COLMpWtc6SVBEPyQdeR4r8vcDGSiRZpiQhJLDcbrShOVvg6nmIRZmIuanq5rREGrGLNKXPHMGpJU1hreeeVwnNRMEmqchnYHcvlVfVzqnepwJ42hQbRXmFYS+szkYq/eE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969278; c=relaxed/simple;
-	bh=7c5w5/Ql0NYgRVSACQg5cdL8x3HtZB+T6smrBtb4HzQ=;
+	s=arc-20240116; t=1705969279; c=relaxed/simple;
+	bh=OH6bPyXq4pX1NqXIJaj2y+S4+LZOkLZI7d9jvFueiyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uo+0iBJ4Xlb4JutvmeWU9YCvGsRsZJPwYjGQqpRFMS92uOPo2JJi8ZknOmxmhi1Z9EUFn4PsoTmj8Oe41ylZ2nBrutoR0Eu9VGX7UNjZ8yPBHf859yLleSMWvgtglkHtL4ap8chqdEOiwt6CilDDOBFEuWfpLV6hzRLe6+tMiCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUnHf1kV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LEDVNoNDexwV1yxzngI+0HpbtBKaPbHGNHXlykcBsS4U5ElUreVClQ+FePC4JZ5xvWZ4d4t+VX7whHHJ7p8x80h/BdagWqr8nWhdYEjYiZ0tu7NwMwn/LmwEXJL/Q1aYp2DHQrn6E8TiYugjs8QrlW0vWdoq5Ku33F4gJ10rb54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7LUCWS+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUnHf1kV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA70C43394;
-	Tue, 23 Jan 2024 00:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7LUCWS+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C88C43394;
+	Tue, 23 Jan 2024 00:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969277;
-	bh=7c5w5/Ql0NYgRVSACQg5cdL8x3HtZB+T6smrBtb4HzQ=;
+	s=korg; t=1705969278;
+	bh=OH6bPyXq4pX1NqXIJaj2y+S4+LZOkLZI7d9jvFueiyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hUnHf1kVtrKaYm653coRPw44pfQ7VzS+xroM7TeId5JopH0Ms7IhKABJ4k7I8N2Gv
-	 PxEiq9qqbGBdNiWWEWDs4/10O7hqN/jYey0NIBto9zDtAKQfAgcU/e+mC/WwrDKqrr
-	 wusq5epn8I/VLZMYYQW8DgG6AG/co/ghGlmC04XI=
+	b=K7LUCWS+WVMzm8U7TceBcLTWOLxZozEl+ASNPbd0cAOZITxpqicmJQhLW9u3gMNqd
+	 dTJT5dIQXPTYR00j6leTlKkUp23/K/2UtdxfFTPKAoYwVqwtnFc/qGpkMScWlh/RDD
+	 m6YEhvb6g/RygBKa6aOgJrRZ+NxenXKcLGX6CRK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Delevoryas <peter@pjd.dev>,
-	"David S. Miller" <davem@davemloft.net>,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 105/641] net/ncsi: Fix netlink major/minor version numbers
-Date: Mon, 22 Jan 2024 15:50:09 -0800
-Message-ID: <20240122235821.329235202@linuxfoundation.org>
+Subject: [PATCH 6.7 132/641] bpf: Defer the free of inner map when necessary
+Date: Mon, 22 Jan 2024 15:50:36 -0800
+Message-ID: <20240122235822.181683579@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,200 +51,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Delevoryas <peter@pjd.dev>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 3084b58bfd0b9e4b5e034f31f31b42977db35f12 ]
+[ Upstream commit 876673364161da50eed6b472d746ef88242b2368 ]
 
-The netlink interface for major and minor version numbers doesn't actually
-return the major and minor version numbers.
+When updating or deleting an inner map in map array or map htab, the map
+may still be accessed by non-sleepable program or sleepable program.
+However bpf_map_fd_put_ptr() decreases the ref-counter of the inner map
+directly through bpf_map_put(), if the ref-counter is the last one
+(which is true for most cases), the inner map will be freed by
+ops->map_free() in a kworker. But for now, most .map_free() callbacks
+don't use synchronize_rcu() or its variants to wait for the elapse of a
+RCU grace period, so after the invocation of ops->map_free completes,
+the bpf program which is accessing the inner map may incur
+use-after-free problem.
 
-It reports a u32 that contains the (major, minor, update, alpha1)
-components as the major version number, and then alpha2 as the minor
-version number.
+Fix the free of inner map by invoking bpf_map_free_deferred() after both
+one RCU grace period and one tasks trace RCU grace period if the inner
+map has been removed from the outer map before. The deferment is
+accomplished by using call_rcu() or call_rcu_tasks_trace() when
+releasing the last ref-counter of bpf map. The newly-added rcu_head
+field in bpf_map shares the same storage space with work field to
+reduce the size of bpf_map.
 
-For whatever reason, the u32 byte order was reversed (ntohl): maybe it was
-assumed that the encoded value was a single big-endian u32, and alpha2 was
-the minor version.
-
-The correct way to get the supported NC-SI version from the network
-controller is to parse the Get Version ID response as described in 8.4.44
-of the NC-SI spec[1].
-
-    Get Version ID Response Packet Format
-
-              Bits
-            +--------+--------+--------+--------+
-     Bytes  | 31..24 | 23..16 | 15..8  | 7..0   |
-    +-------+--------+--------+--------+--------+
-    | 0..15 | NC-SI Header                      |
-    +-------+--------+--------+--------+--------+
-    | 16..19| Response code   | Reason code     |
-    +-------+--------+--------+--------+--------+
-    |20..23 | Major  | Minor  | Update | Alpha1 |
-    +-------+--------+--------+--------+--------+
-    |24..27 |         reserved         | Alpha2 |
-    +-------+--------+--------+--------+--------+
-    |            .... other stuff ....          |
-
-The major, minor, and update fields are all binary-coded decimal (BCD)
-encoded [2]. The spec provides examples below the Get Version ID response
-format in section 8.4.44.1, but for practical purposes, this is an example
-from a live network card:
-
-    root@bmc:~# ncsi-util 0x15
-    NC-SI Command Response:
-    cmd: GET_VERSION_ID(0x15)
-    Response: COMMAND_COMPLETED(0x0000)  Reason: NO_ERROR(0x0000)
-    Payload length = 40
-
-    20: 0xf1 0xf1 0xf0 0x00 <<<<<<<<< (major, minor, update, alpha1)
-    24: 0x00 0x00 0x00 0x00 <<<<<<<<< (_, _, _, alpha2)
-
-    28: 0x6d 0x6c 0x78 0x30
-    32: 0x2e 0x31 0x00 0x00
-    36: 0x00 0x00 0x00 0x00
-    40: 0x16 0x1d 0x07 0xd2
-    44: 0x10 0x1d 0x15 0xb3
-    48: 0x00 0x17 0x15 0xb3
-    52: 0x00 0x00 0x81 0x19
-
-This should be parsed as "1.1.0".
-
-"f" in the upper-nibble means to ignore it, contributing zero.
-
-If both nibbles are "f", I think the whole field is supposed to be ignored.
-Major and minor are "required", meaning they're not supposed to be "ff",
-but the update field is "optional" so I think it can be ff. I think the
-simplest thing to do is just set the major and minor to zero instead of
-juggling some conditional logic or something.
-
-bcd2bin() from "include/linux/bcd.h" seems to assume both nibbles are 0-9,
-so I've provided a custom BCD decoding function.
-
-Alpha1 and alpha2 are ISO/IEC 8859-1 encoded, which just means ASCII
-characters as far as I can tell, although the full encoding table for
-non-alphabetic characters is slightly different (I think).
-
-I imagine the alpha fields are just supposed to be alphabetic characters,
-but I haven't seen any network cards actually report a non-zero value for
-either.
-
-If people wrote software against this netlink behavior, and were parsing
-the major and minor versions themselves from the u32, then this would
-definitely break their code.
-
-[1] https://www.dmtf.org/sites/default/files/standards/documents/DSP0222_1.0.0.pdf
-[2] https://en.wikipedia.org/wiki/Binary-coded_decimal
-[2] https://en.wikipedia.org/wiki/ISO/IEC_8859-1
-
-Signed-off-by: Peter Delevoryas <peter@pjd.dev>
-Fixes: 138635cc27c9 ("net/ncsi: NCSI response packet handler")
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: bba1dc0b55ac ("bpf: Remove redundant synchronize_rcu.")
+Fixes: 638e4b825d52 ("bpf: Allows per-cpu maps and map-in-map in sleepable programs")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20231204140425.1480317-5-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/internal.h     |  7 +++++--
- net/ncsi/ncsi-netlink.c |  4 ++--
- net/ncsi/ncsi-pkt.h     |  7 +++++--
- net/ncsi/ncsi-rsp.c     | 26 ++++++++++++++++++++++++--
- 4 files changed, 36 insertions(+), 8 deletions(-)
+ include/linux/bpf.h     |  7 ++++++-
+ kernel/bpf/map_in_map.c | 11 ++++++++---
+ kernel/bpf/syscall.c    | 32 +++++++++++++++++++++++++++-----
+ 3 files changed, 41 insertions(+), 9 deletions(-)
 
-diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
-index 03757e76bb6b..374412ed780b 100644
---- a/net/ncsi/internal.h
-+++ b/net/ncsi/internal.h
-@@ -105,8 +105,11 @@ enum {
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 741af9e5cb9d..7a7859a5cce4 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -276,7 +276,11 @@ struct bpf_map {
+ 	 */
+ 	atomic64_t refcnt ____cacheline_aligned;
+ 	atomic64_t usercnt;
+-	struct work_struct work;
++	/* rcu is used before freeing and work is only used during freeing */
++	union {
++		struct work_struct work;
++		struct rcu_head rcu;
++	};
+ 	struct mutex freeze_mutex;
+ 	atomic64_t writecnt;
+ 	/* 'Ownership' of program-containing map is claimed by the first program
+@@ -292,6 +296,7 @@ struct bpf_map {
+ 	} owner;
+ 	bool bypass_spec_v1;
+ 	bool frozen; /* write-once; write-protected by freeze_mutex */
++	bool free_after_mult_rcu_gp;
+ 	s64 __percpu *elem_count;
+ };
  
+diff --git a/kernel/bpf/map_in_map.c b/kernel/bpf/map_in_map.c
+index 2dfeb5835e16..3248ff5d8161 100644
+--- a/kernel/bpf/map_in_map.c
++++ b/kernel/bpf/map_in_map.c
+@@ -129,10 +129,15 @@ void *bpf_map_fd_get_ptr(struct bpf_map *map,
  
- struct ncsi_channel_version {
--	u32 version;		/* Supported BCD encoded NCSI version */
--	u32 alpha2;		/* Supported BCD encoded NCSI version */
-+	u8   major;		/* NCSI version major */
-+	u8   minor;		/* NCSI version minor */
-+	u8   update;		/* NCSI version update */
-+	char alpha1;		/* NCSI version alpha1 */
-+	char alpha2;		/* NCSI version alpha2 */
- 	u8  fw_name[12];	/* Firmware name string                */
- 	u32 fw_version;		/* Firmware version                   */
- 	u16 pci_ids[4];		/* PCI identification                 */
-diff --git a/net/ncsi/ncsi-netlink.c b/net/ncsi/ncsi-netlink.c
-index a3a6753a1db7..2f872d064396 100644
---- a/net/ncsi/ncsi-netlink.c
-+++ b/net/ncsi/ncsi-netlink.c
-@@ -71,8 +71,8 @@ static int ncsi_write_channel_info(struct sk_buff *skb,
- 	if (nc == nc->package->preferred_channel)
- 		nla_put_flag(skb, NCSI_CHANNEL_ATTR_FORCED);
- 
--	nla_put_u32(skb, NCSI_CHANNEL_ATTR_VERSION_MAJOR, nc->version.version);
--	nla_put_u32(skb, NCSI_CHANNEL_ATTR_VERSION_MINOR, nc->version.alpha2);
-+	nla_put_u32(skb, NCSI_CHANNEL_ATTR_VERSION_MAJOR, nc->version.major);
-+	nla_put_u32(skb, NCSI_CHANNEL_ATTR_VERSION_MINOR, nc->version.minor);
- 	nla_put_string(skb, NCSI_CHANNEL_ATTR_VERSION_STR, nc->version.fw_name);
- 
- 	vid_nest = nla_nest_start_noflag(skb, NCSI_CHANNEL_ATTR_VLAN_LIST);
-diff --git a/net/ncsi/ncsi-pkt.h b/net/ncsi/ncsi-pkt.h
-index ba66c7dc3a21..c9d1da34dc4d 100644
---- a/net/ncsi/ncsi-pkt.h
-+++ b/net/ncsi/ncsi-pkt.h
-@@ -197,9 +197,12 @@ struct ncsi_rsp_gls_pkt {
- /* Get Version ID */
- struct ncsi_rsp_gvi_pkt {
- 	struct ncsi_rsp_pkt_hdr rsp;          /* Response header */
--	__be32                  ncsi_version; /* NCSI version    */
-+	unsigned char           major;        /* NCSI version major */
-+	unsigned char           minor;        /* NCSI version minor */
-+	unsigned char           update;       /* NCSI version update */
-+	unsigned char           alpha1;       /* NCSI version alpha1 */
- 	unsigned char           reserved[3];  /* Reserved        */
--	unsigned char           alpha2;       /* NCSI version    */
-+	unsigned char           alpha2;       /* NCSI version alpha2 */
- 	unsigned char           fw_name[12];  /* f/w name string */
- 	__be32                  fw_version;   /* f/w version     */
- 	__be16                  pci_ids[4];   /* PCI IDs         */
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index 069c2659074b..480e80e3c283 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -19,6 +19,19 @@
- #include "ncsi-pkt.h"
- #include "ncsi-netlink.h"
- 
-+/* Nibbles within [0xA, 0xF] add zero "0" to the returned value.
-+ * Optional fields (encoded as 0xFF) will default to zero.
-+ */
-+static u8 decode_bcd_u8(u8 x)
-+{
-+	int lo = x & 0xF;
-+	int hi = x >> 4;
+ void bpf_map_fd_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
+ {
+-	/* ptr->ops->map_free() has to go through one
+-	 * rcu grace period by itself.
++	struct bpf_map *inner_map = ptr;
 +
-+	lo = lo < 0xA ? lo : 0;
-+	hi = hi < 0xA ? hi : 0;
-+	return lo + hi * 10;
++	/* The inner map may still be used by both non-sleepable and sleepable
++	 * bpf program, so free it after one RCU grace period and one tasks
++	 * trace RCU grace period.
+ 	 */
+-	bpf_map_put(ptr);
++	if (need_defer)
++		WRITE_ONCE(inner_map->free_after_mult_rcu_gp, true);
++	bpf_map_put(inner_map);
+ }
+ 
+ u32 bpf_map_fd_sys_lookup_elem(void *ptr)
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 0ed286b8a0f0..c6579067eeea 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -719,6 +719,28 @@ static void bpf_map_put_uref(struct bpf_map *map)
+ 	}
+ }
+ 
++static void bpf_map_free_in_work(struct bpf_map *map)
++{
++	INIT_WORK(&map->work, bpf_map_free_deferred);
++	/* Avoid spawning kworkers, since they all might contend
++	 * for the same mutex like slab_mutex.
++	 */
++	queue_work(system_unbound_wq, &map->work);
 +}
 +
- static int ncsi_validate_rsp_pkt(struct ncsi_request *nr,
- 				 unsigned short payload)
- {
-@@ -755,9 +768,18 @@ static int ncsi_rsp_handler_gvi(struct ncsi_request *nr)
- 	if (!nc)
- 		return -ENODEV;
- 
--	/* Update to channel's version info */
-+	/* Update channel's version info
-+	 *
-+	 * Major, minor, and update fields are supposed to be
-+	 * unsigned integers encoded as packed BCD.
-+	 *
-+	 * Alpha1 and alpha2 are ISO/IEC 8859-1 characters.
-+	 */
- 	ncv = &nc->version;
--	ncv->version = ntohl(rsp->ncsi_version);
-+	ncv->major = decode_bcd_u8(rsp->major);
-+	ncv->minor = decode_bcd_u8(rsp->minor);
-+	ncv->update = decode_bcd_u8(rsp->update);
-+	ncv->alpha1 = rsp->alpha1;
- 	ncv->alpha2 = rsp->alpha2;
- 	memcpy(ncv->fw_name, rsp->fw_name, 12);
- 	ncv->fw_version = ntohl(rsp->fw_version);
++static void bpf_map_free_rcu_gp(struct rcu_head *rcu)
++{
++	bpf_map_free_in_work(container_of(rcu, struct bpf_map, rcu));
++}
++
++static void bpf_map_free_mult_rcu_gp(struct rcu_head *rcu)
++{
++	if (rcu_trace_implies_rcu_gp())
++		bpf_map_free_rcu_gp(rcu);
++	else
++		call_rcu(rcu, bpf_map_free_rcu_gp);
++}
++
+ /* decrement map refcnt and schedule it for freeing via workqueue
+  * (underlying map implementation ops->map_free() might sleep)
+  */
+@@ -728,11 +750,11 @@ void bpf_map_put(struct bpf_map *map)
+ 		/* bpf_map_free_id() must be called first */
+ 		bpf_map_free_id(map);
+ 		btf_put(map->btf);
+-		INIT_WORK(&map->work, bpf_map_free_deferred);
+-		/* Avoid spawning kworkers, since they all might contend
+-		 * for the same mutex like slab_mutex.
+-		 */
+-		queue_work(system_unbound_wq, &map->work);
++
++		if (READ_ONCE(map->free_after_mult_rcu_gp))
++			call_rcu_tasks_trace(&map->rcu, bpf_map_free_mult_rcu_gp);
++		else
++			bpf_map_free_in_work(map);
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(bpf_map_put);
 -- 
 2.43.0
 
