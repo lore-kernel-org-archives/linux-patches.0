@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B2BEAEF;
-	Tue, 23 Jan 2024 02:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF1A2114;
+	Tue, 23 Jan 2024 02:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975789; cv=none; b=j99ng+FDdgP0Rpa+Ieii36b3CY38GwSmB/nMPYgFPjcVqWFSLSCPpiXKHLj/3zkRP1NL6BmUU1Ff/UfzlGlZe3l0fqJ+WA3y5f8znRkUutHTkutXJgOHQXrkD6/WqOf9SOUX3wjKVzhqZi5HPc5wY9Sd1xmYczpc+9WnNZD/arA=
+	t=1705975790; cv=none; b=ux662wgmsG0/BY3caHcN5j+8nuW+K1WddboeqEGOdTXzDMjSnY2Fnuq8QCdwLByO4uS6qiyfUCLPAGZwyqfXSm5Rm6GKGob7NHD+Lsmys8tsilW8CLimS8L3ozLKedeuncASQ1uBadnChAgTqRjiqfQ+PHOS+pX0zIAy3ehQDq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975789; c=relaxed/simple;
-	bh=N6lCFlOUfK84rG1zDggH6ln4Qzu8KBJFlDrTHvjIQ8U=;
+	s=arc-20240116; t=1705975790; c=relaxed/simple;
+	bh=zCzBOdUGeRoQWlLGi/br9hqXLcfWy9zCYE/v80qWm2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e2Khh67Z7nM+OSYlO8g4jfQsrAGQAYaSFmgAx3AI1YPyHLVM+Q+m3f2XoklyuD5viaRfz6cwwPeaj7NpgQfLkfxCm8hdPjodlGE4Jmaun+/wNjlgwJK4Vt1dEGHQouUDOdwNFW4EnAD8QW7i2f8DRneVEGolpRywzOKeAsT18VI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQfllzLI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QhxwbYSBi35lkps58NJ6M9i9akibYb0Mw146JWWP2mj7hh4LNfbI9cM2yDTxURSRMGf8Jr2Na0ZUuT2+F1uh7YcR0dfdRJHNCSrGzNKcz5itqwA1aqs4/h33J3To0w3S7z7yW1u3ZWUa2J1JYywNnrSkQrKZht9M8p+lm0fCXDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2lJwJ3W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQfllzLI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E41AC43399;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2lJwJ3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F063CC43394;
 	Tue, 23 Jan 2024 02:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975789;
-	bh=N6lCFlOUfK84rG1zDggH6ln4Qzu8KBJFlDrTHvjIQ8U=;
+	s=korg; t=1705975790;
+	bh=zCzBOdUGeRoQWlLGi/br9hqXLcfWy9zCYE/v80qWm2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQfllzLIyFezA76tzwSYWSRUjyOSuWoQEI15SaJswLEQt3OY/sRhirzFmccyNa0Av
-	 /WmGA8MxkPsljbRm0U8VYzmVRyzKTqPuo3ztUa+pu92t1LD3nBFFIP++vhQWJSOrrg
-	 obifxXBWVfqU8NnFQBvte8zHMkpEZqkgiAi5Y6oc=
+	b=t2lJwJ3WV/k+LzXx14VQgXRGdmee+kU0dXPYBLei5WD+b2wya6reE5hce+9s/PoBG
+	 QlTWYBtjOFUZHTuFwRs0wcAX8ypvh0AEmQSUPlyIG9wxyvpFX7NTDrR0un8rU3NHLJ
+	 LsRtaf5x6rv0OtsoJR4SEiCc6bsZa6t3EJNbNFdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Nikita Yushchenko <nikita.yoush@cogentembedded.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+f2977222e0e95cec15c8@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 546/583] net: tls, fix WARNIING in __sk_msg_free
-Date: Mon, 22 Jan 2024 15:59:57 -0800
-Message-ID: <20240122235828.842083183@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 547/583] net: ravb: Fix dma_addr_t truncation in error case
+Date: Mon, 22 Jan 2024 15:59:58 -0800
+Message-ID: <20240122235828.878049694@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -48,66 +48,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Fastabend <john.fastabend@gmail.com>
+From: Nikita Yushchenko <nikita.yoush@cogentembedded.com>
 
-[ Upstream commit dc9dfc8dc629e42f2234e3327b75324ffc752bc9 ]
+[ Upstream commit e327b2372bc0f18c30433ac40be07741b59231c5 ]
 
-A splice with MSG_SPLICE_PAGES will cause tls code to use the
-tls_sw_sendmsg_splice path in the TLS sendmsg code to move the user
-provided pages from the msg into the msg_pl. This will loop over the
-msg until msg_pl is full, checked by sk_msg_full(msg_pl). The user
-can also set the MORE flag to hint stack to delay sending until receiving
-more pages and ideally a full buffer.
+In ravb_start_xmit(), ravb driver uses u32 variable to store result of
+dma_map_single() call. Since ravb hardware has 32-bit address fields in
+descriptors, this works properly when mapping is successful - it is
+platform's job to provide mapping addresses that fit into hardware
+limitations.
 
-If the user adds more pages to the msg than can fit in the msg_pl
-scatterlist (MAX_MSG_FRAGS) we should ignore the MORE flag and send
-the buffer anyways.
+However, in failure case dma_map_single() returns DMA_MAPPING_ERROR
+constant that is 64-bit when dma_addr_t is 64-bit. Storing this constant
+in u32 leads to truncation, and further call to dma_mapping_error()
+fails to notice the error.
 
-What actually happens though is we abort the msg to msg_pl scatterlist
-setup and then because we forget to set 'full record' indicating we
-can no longer consume data without a send we fallthrough to the 'continue'
-path which will check if msg_data_left(msg) has more bytes to send and
-then attempts to fit them in the already full msg_pl. Then next
-iteration of sender doing send will encounter a full msg_pl and throw
-the warning in the syzbot report.
+Fix that by storing result of dma_map_single() in a dma_addr_t
+variable.
 
-To fix simply check if we have a full_record in splice code path and
-if not send the msg regardless of MORE flag.
-
-Reported-and-tested-by: syzbot+f2977222e0e95cec15c8@syzkaller.appspotmail.com
-Reported-by: Edward Adam Davis <eadavis@qq.com>
-Fixes: fe1e81d4f73b ("tls/sw: Support MSG_SPLICE_PAGES")
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: John Fastabend <john.fastabend@gmail.com>
+Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
+Signed-off-by: Nikita Yushchenko <nikita.yoush@cogentembedded.com>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/renesas/ravb_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 27cc0f0a90e1..dba523cdc73d 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1052,7 +1052,11 @@ static int tls_sw_sendmsg_locked(struct sock *sk, struct msghdr *msg,
- 			if (ret < 0)
- 				goto send_end;
- 			tls_ctx->pending_open_record_frags = true;
--			if (full_record || eor || sk_msg_full(msg_pl))
-+
-+			if (sk_msg_full(msg_pl))
-+				full_record = true;
-+
-+			if (full_record || eor)
- 				goto copied;
- 			continue;
- 		}
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index 3c2a6b23c202..8fec0dbbbe7b 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -1949,7 +1949,7 @@ static netdev_tx_t ravb_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ 	struct ravb_tstamp_skb *ts_skb;
+ 	struct ravb_tx_desc *desc;
+ 	unsigned long flags;
+-	u32 dma_addr;
++	dma_addr_t dma_addr;
+ 	void *buffer;
+ 	u32 entry;
+ 	u32 len;
 -- 
 2.43.0
 
