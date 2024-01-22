@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F6E1DFEF;
-	Tue, 23 Jan 2024 12:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633921DFEF;
+	Tue, 23 Jan 2024 12:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706014222; cv=none; b=LOG/l/JbTSxXkyb3EGqJS/mXsNnJY9DbVy4vhQQYtPv6H09pwo6Uq/hIBp12roZULYgYLuLDWyHybfwiTUulXA/6K9ZUhUc1G0GQ9rZ+mY1XHfNgmqevlPtx2b4qxt+sLsLGJvc6h3oMlnFWPT+e3NwDD5xe1ci1znMcj8rMa6o=
+	t=1706014223; cv=none; b=j+QJ1TspBPGMFI/y/sd+S5xWBP5OT2a4T4gcVKC0dU5NtsCchliyaGGDu4TlIj9FeK6+xSpM9mYlYpI44o9Nx8tZlMwwBRyOkGNOkmsTynhEhbY7WFfK+kfNudLwkw4WfZfILVkjFqo8fFKKxxei2DVmOQrqXU8WT5qhB7nNpyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706014222; c=relaxed/simple;
-	bh=GGRkTi1Zr7qfzZXOfe/OvD9nvTQ2yobOAJCrxTYIkHo=;
+	s=arc-20240116; t=1706014223; c=relaxed/simple;
+	bh=02NFEf3aVfW9LZO7jgaLmo8FSq8LShd9hyM8wZXVW7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1cP9vlB3EBVE3j65vpkUqPrUjI9BS4JBKH5TzPNvIXfKTnEeFKZQU7bL8YNzfLaAE2wGRsAAf3GDheqQPpVLPDVQ4VfaxcTa2vPdBMK2hGTfKgjBZwI6HJX88pm8wCMO6uV58PZOL6dVc2nEQ9T9eA9OUNnRGxHsMNGiyu+Y18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zM6ihgiH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dmqeYvcLFjKsiurS6Iq3+vTdQr+Z7a/WWxEXLXFmpOea6V/AheW3osGmdmbGWhKX+ksiGR6ORrreRfJ7xlDWK+HKwf0ZSoaX1yYRfsov256QAXssdfYcxgz63PSl6P5oAlQM4bQ3z4325P135RwIsag343rDpvDFGuXNDChcsOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hg1fVGkX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zM6ihgiH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04AA8C43601;
-	Tue, 23 Jan 2024 12:50:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hg1fVGkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE2DC43390;
+	Tue, 23 Jan 2024 12:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706014222;
-	bh=GGRkTi1Zr7qfzZXOfe/OvD9nvTQ2yobOAJCrxTYIkHo=;
+	s=korg; t=1706014223;
+	bh=02NFEf3aVfW9LZO7jgaLmo8FSq8LShd9hyM8wZXVW7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zM6ihgiHzNmZKdT0hOGHPA4UJf3MeOmTLEuIcbTm6rLt+NygBichMEX2HSzCJ35JM
-	 xBjm6CFkuadPeDv5CPlw+xgZG4gKgcaT4UXfXZOp14n74xo72PJkAIoh2ec2OimyuD
-	 FIVYTa2JZekdFTPXSUZpJepgEz2EskJdrh02jpqw=
+	b=hg1fVGkXGHsRtFie935K/ydh+jp8+kq0z4FEqGH3gKW1ZQM+oCmdEnreoreI26hFL
+	 VgoxG6xFiWzUVuplj3vHnouAlBIBYvaQ0hBuHGzbESGtuP4jui/nfLua1qv5eIf3cq
+	 EC2WVRyhEfqNxRi9t135o+CoNqOuNxYbBLumanlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,12 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Maurizio Lombardi <mlombard@redhat.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 323/374] nvmet-tcp: fix a crash in nvmet_req_complete()
-Date: Mon, 22 Jan 2024 15:59:39 -0800
-Message-ID: <20240122235756.140346556@linuxfoundation.org>
+Subject: [PATCH 6.6 504/583] nvmet-tcp: fix a crash in nvmet_req_complete()
+Date: Mon, 22 Jan 2024 15:59:15 -0800
+Message-ID: <20240122235827.468485143@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,7 +48,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -76,10 +76,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index a0a7540f048e..d25ca0742f91 100644
+index 3d171061cc0f..7f7fa78f0698 100644
 --- a/drivers/nvme/target/tcp.c
 +++ b/drivers/nvme/target/tcp.c
-@@ -950,8 +950,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
+@@ -973,8 +973,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
  			data->ttag, le32_to_cpu(data->data_offset),
  			cmd->rbytes_done);
  		/* FIXME: use path and transport errors */
