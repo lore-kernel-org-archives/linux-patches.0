@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E493D3FFE;
-	Tue, 23 Jan 2024 00:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B523FFE;
+	Tue, 23 Jan 2024 00:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970957; cv=none; b=eS1UPm5Q5MQGkkaEQUHnc96u0nIsJLiYgjnasIS7QL/qidBBV1t/WPnsVgE1UGCellBFLthBxnPX/AfonxSN5mlo5M0DLtqKKkp3x8I1YVxi4M6YVodPum6F9owKfBTiNNyb20SsS/9clTpCigp15jQU1TzWmFARvqr/7/zFU2Y=
+	t=1705970958; cv=none; b=WE4t9BQRjo2g/dHqXUyfnOz6hYZlj3outYDzmLjyfGAiLv1okQsOMX4uoEyMPUKlfSIYsg6+80XVxFiWwizUIyV3O/ttCxeA6Mh8Mpd1gc0LVFOWglQP5bt/6Uzzt1f4R7hd8So+z38SF9axayj6Wd2WL9/BrF6ehC3QweGBzWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970957; c=relaxed/simple;
-	bh=8A6d55sYxPzABNhgWFWTzbp2KA7u0YveM37NLL+x+LE=;
+	s=arc-20240116; t=1705970958; c=relaxed/simple;
+	bh=IfB3qHli62QSHZAbeSRf1BBORuR+UMg2Hc5J5N7jbMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0DcDIto1K7KxwdfZ1Frn8wN44cKl2htrbF/EaTZLfq0Z3POz9+O/M6OmNODnfSgfRw8yBQDztS/9qO1BQjIFa/ltAXffzca1/Za+A8qUNwJNyAIt8HXKrc/ixYWGHRy2a/YbZ1A6p8x8oE3RQuD5UPPXwRjQTuLzQuHz9zBSsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFZCID5J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gEsmpJeidgMdB+X+BV4eg4zxPPu0IxnD/wXxVjhLkE5Jar1/fcvyF9kU2f+uQks8208JZiNVvSdPeZGOW7oxH9RG+0JIrTdZZrpzgXJbfS3Wjs7jGTRVzFlQL1zrx4jPXh1zGz2rrWSW6DBECTbWhLeVG0WusRsWXZI+qPGip9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVwq+ccc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFZCID5J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CC8C43390;
-	Tue, 23 Jan 2024 00:49:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVwq+ccc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55018C433C7;
+	Tue, 23 Jan 2024 00:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970956;
-	bh=8A6d55sYxPzABNhgWFWTzbp2KA7u0YveM37NLL+x+LE=;
+	s=korg; t=1705970958;
+	bh=IfB3qHli62QSHZAbeSRf1BBORuR+UMg2Hc5J5N7jbMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fFZCID5JpWnTg5ik+gTEpg4Pwa15QFtt0PLbB0Hs4nl4aL8vhPD+Z3zHfGX5xoR6m
-	 Ra0DQr8vS6jYxEWZvpzIw/s8H4hXpjZGAhqSlSkXYR287+1QmvJNNoKJayTCOjuBTZ
-	 CXLtmnsKvjwKduh0AWtq4iEwKQBCS3go+OxyeXUA=
+	b=tVwq+ccckiqjoi32R5rKxZ/dy8IBIqJ8yM15uUywnLZC8juHFQvlU9YktyAasISnZ
+	 /NLLOnGqRuhnunNoGF9xxaFDFQrm9R5eA2lMrAUzkvYEyXayVzOsDa6TXU4X4wOP8J
+	 r34mI5oUYHkBsmqsy5jyiSPzIfBWZlhajlBCVa1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 149/417] sctp: support MSG_ERRQUEUE flag in recvmsg()
-Date: Mon, 22 Jan 2024 15:55:17 -0800
-Message-ID: <20240122235756.993769404@linuxfoundation.org>
+Subject: [PATCH 5.10 057/286] powerpc/powernv: Add a null pointer check to scom_debug_init_one()
+Date: Mon, 22 Jan 2024 15:56:03 -0800
+Message-ID: <20240122235734.223377087@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,61 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit 4746b36b1abe11ca32987b2d21e1e770deab17cc ]
+[ Upstream commit 9a260f2dd827bbc82cc60eb4f4d8c22707d80742 ]
 
-For some reason sctp_poll() generates EPOLLERR if sk->sk_error_queue
-is not empty but recvmsg() can not drain the error queue yet.
+kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure.
+Add a null pointer check, and release 'ent' to avoid memory leaks.
 
-This is needed to better support timestamping.
-
-I had to export inet_recv_error(), since sctp
-can be compiled as a module.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Cc: Willem de Bruijn <willemb@google.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20231212145550.3872051-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a562c0a2d651 ("sctp: fix busy polling")
+Fixes: bfd2f0d49aef ("powerpc/powernv: Get rid of old scom_controller abstraction")
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231208085937.107210-1-chentao@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/af_inet.c | 1 +
- net/sctp/socket.c  | 3 +++
- 2 files changed, 4 insertions(+)
+ arch/powerpc/platforms/powernv/opal-xscom.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
-index 347c3768df6e..c13b8ed63f87 100644
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -1642,6 +1642,7 @@ int inet_recv_error(struct sock *sk, struct msghdr *msg, int len, int *addr_len)
- #endif
- 	return -EINVAL;
- }
-+EXPORT_SYMBOL(inet_recv_error);
- 
- int inet_gro_complete(struct sk_buff *skb, int nhoff)
- {
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index e25dc1709131..da56832179f0 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -2098,6 +2098,9 @@ static int sctp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	pr_debug("%s: sk:%p, msghdr:%p, len:%zd, flags:0x%x, addr_len:%p)\n",
- 		 __func__, sk, msg, len, flags, addr_len);
- 
-+	if (unlikely(flags & MSG_ERRQUEUE))
-+		return inet_recv_error(sk, msg, len, addr_len);
+diff --git a/arch/powerpc/platforms/powernv/opal-xscom.c b/arch/powerpc/platforms/powernv/opal-xscom.c
+index fd510d961b8c..d5814c5046ba 100644
+--- a/arch/powerpc/platforms/powernv/opal-xscom.c
++++ b/arch/powerpc/platforms/powernv/opal-xscom.c
+@@ -165,6 +165,11 @@ static int scom_debug_init_one(struct dentry *root, struct device_node *dn,
+ 	ent->chip = chip;
+ 	snprintf(ent->name, 16, "%08x", chip);
+ 	ent->path.data = (void *)kasprintf(GFP_KERNEL, "%pOF", dn);
++	if (!ent->path.data) {
++		kfree(ent);
++		return -ENOMEM;
++	}
 +
- 	lock_sock(sk);
+ 	ent->path.size = strlen((char *)ent->path.data);
  
- 	if (sctp_style(sk, TCP) && !sctp_sstate(sk, ESTABLISHED) &&
+ 	dir = debugfs_create_dir(ent->name, root);
 -- 
 2.43.0
 
