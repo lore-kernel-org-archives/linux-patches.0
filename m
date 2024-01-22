@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBB512A155;
-	Tue, 23 Jan 2024 00:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F136F129A86;
+	Tue, 23 Jan 2024 00:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971024; cv=none; b=J/iNGE3E+VnxmlbfPMRZPfjk9a+KsKLxBSn0hyReLM/fr0TVn0MUlaH2fnrO476CqJ4r4YgeCCGOoiGjKaYBc3ucgCCepJakuaXZg3uInHZcQEVg6KvSDX/4jnhDmNLQ3Vhh7xFolxG22hN7Ja/NmAmKPlzwzKRMlnJaWEafjYc=
+	t=1705971029; cv=none; b=s93y1yJdISe90ygnoC63oPwkhCe/8ccftbM4T3zB4C6QyRIm9s5ZF+MK26p1sP7nbyEpu980k1nka+j+glIKvC8MQZWqaqb16/UTj6drTRCwWITkGhcwFj5CmJU7UoSyWy9LErGGMP4VnQAkOE/G/8ZawZYtSDhP5zuhWevgERA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971024; c=relaxed/simple;
-	bh=wLOt+cTadRQUVYZJWU0xjgfg9EuXdjfKkTMMYR8/yfk=;
+	s=arc-20240116; t=1705971029; c=relaxed/simple;
+	bh=fgwzBqnj/CEwqiLS8DTlGD9yS+bQ5iCyI5nF8CtQQWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWouG8v4/MCsRM6yqaqg8aHwhZQHOK0BvOr6Z0RzoByvUu6Suwz/SZssSGYy2xwpQSWk5KjuWvoHJwOXxx43781ZulTXDvAqYJBesnbG1xfBtB/XBx4NKVfNnFiTXOw1dd4Pdvj6wzqEaLwTRbIqgDn2zOujHbDYKCMJjWKOr34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvdnTTdA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YXy6cFi1qeDC2zBUBuhrhfw/MfOUtKLKCWKvxHYzPS1RQulAZD2TysyCR2sD01v3cpbaCCNvoZVwROCFZt2DEJiJh9ctNSSDoGPqWE2R4nYa1b83fWhPM4rUiL+ClNUMgLoxr7DVYT8f6NN6w7D8aqhNP3p9SE0mf2shqhM/pr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqX3QECM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvdnTTdA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA46C43394;
-	Tue, 23 Jan 2024 00:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqX3QECM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9470C43394;
+	Tue, 23 Jan 2024 00:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971024;
-	bh=wLOt+cTadRQUVYZJWU0xjgfg9EuXdjfKkTMMYR8/yfk=;
+	s=korg; t=1705971028;
+	bh=fgwzBqnj/CEwqiLS8DTlGD9yS+bQ5iCyI5nF8CtQQWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AvdnTTdASrSttjbgEgDbG1GQZeXcaMUnGwJD57+JfENourh982txK30LAM1b4+Lsb
-	 G7sNTMlhERiFrYwUFfuxGvnMHeDNXe3C882MrE60CLbYd6G3dY9OjIW/FME2LawwGY
-	 lmTc9sI/4N1FJPG7Lm2EzpXFEm0p3Dj5WkGY0byA=
+	b=SqX3QECMBgg5uUgVVMl5gplrsGtp5VVcE/oI86EPlOcaxkadwFdePsxioTPdzVL/T
+	 E9yX237UAMLbKtfwsYJ5NiaMPOUb3I2+pnE3FXP2+Kd+iDa6NCgM2DgpHAUJnM/2/S
+	 tigeCy+bqDqxyr25ZD8Baf5nMMRV/mQTJzj1dTsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 164/417] drm/tilcdc: Fix irq free on unload
-Date: Mon, 22 Jan 2024 15:55:32 -0800
-Message-ID: <20240122235757.529156294@linuxfoundation.org>
+Subject: [PATCH 5.10 072/286] efivarfs: force RO when remounting if SetVariable is not supported
+Date: Mon, 22 Jan 2024 15:56:18 -0800
+Message-ID: <20240122235734.790058983@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +47,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Ilias Apalodimas <ilias.apalodimas@linaro.org>
 
-[ Upstream commit 38360bf96d816e175bc602c4ee76953cd303b71d ]
+[ Upstream commit 0e8d2444168dd519fea501599d150e62718ed2fe ]
 
-The driver only frees the reserved irq if priv->irq_enabled is set to
-true. However, the driver mistakenly sets priv->irq_enabled to false,
-instead of true, in tilcdc_irq_install(), and thus the driver never
-frees the irq, causing issues on loading the driver a second time.
+If SetVariable at runtime is not supported by the firmware we never assign
+a callback for that function. At the same time mount the efivarfs as
+RO so no one can call that.  However, we never check the permission flags
+when someone remounts the filesystem as RW. As a result this leads to a
+crash looking like this:
 
-Fixes: b6366814fa77 ("drm/tilcdc: Convert to Linux IRQ interfaces")
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230919-lcdc-v1-1-ba60da7421e1@ideasonboard.com
+$ mount -o remount,rw /sys/firmware/efi/efivars
+$ efi-updatevar -f PK.auth PK
+
+[  303.279166] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+[  303.280482] Mem abort info:
+[  303.280854]   ESR = 0x0000000086000004
+[  303.281338]   EC = 0x21: IABT (current EL), IL = 32 bits
+[  303.282016]   SET = 0, FnV = 0
+[  303.282414]   EA = 0, S1PTW = 0
+[  303.282821]   FSC = 0x04: level 0 translation fault
+[  303.283771] user pgtable: 4k pages, 48-bit VAs, pgdp=000000004258c000
+[  303.284913] [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
+[  303.286076] Internal error: Oops: 0000000086000004 [#1] PREEMPT SMP
+[  303.286936] Modules linked in: qrtr tpm_tis tpm_tis_core crct10dif_ce arm_smccc_trng rng_core drm fuse ip_tables x_tables ipv6
+[  303.288586] CPU: 1 PID: 755 Comm: efi-updatevar Not tainted 6.3.0-rc1-00108-gc7d0c4695c68 #1
+[  303.289748] Hardware name: Unknown Unknown Product/Unknown Product, BIOS 2023.04-00627-g88336918701d 04/01/2023
+[  303.291150] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  303.292123] pc : 0x0
+[  303.292443] lr : efivar_set_variable_locked+0x74/0xec
+[  303.293156] sp : ffff800008673c10
+[  303.293619] x29: ffff800008673c10 x28: ffff0000037e8000 x27: 0000000000000000
+[  303.294592] x26: 0000000000000800 x25: ffff000002467400 x24: 0000000000000027
+[  303.295572] x23: ffffd49ea9832000 x22: ffff0000020c9800 x21: ffff000002467000
+[  303.296566] x20: 0000000000000001 x19: 00000000000007fc x18: 0000000000000000
+[  303.297531] x17: 0000000000000000 x16: 0000000000000000 x15: 0000aaaac807ab54
+[  303.298495] x14: ed37489f673633c0 x13: 71c45c606de13f80 x12: 47464259e219acf4
+[  303.299453] x11: ffff000002af7b01 x10: 0000000000000003 x9 : 0000000000000002
+[  303.300431] x8 : 0000000000000010 x7 : ffffd49ea8973230 x6 : 0000000000a85201
+[  303.301412] x5 : 0000000000000000 x4 : ffff0000020c9800 x3 : 00000000000007fc
+[  303.302370] x2 : 0000000000000027 x1 : ffff000002467400 x0 : ffff000002467000
+[  303.303341] Call trace:
+[  303.303679]  0x0
+[  303.303938]  efivar_entry_set_get_size+0x98/0x16c
+[  303.304585]  efivarfs_file_write+0xd0/0x1a4
+[  303.305148]  vfs_write+0xc4/0x2e4
+[  303.305601]  ksys_write+0x70/0x104
+[  303.306073]  __arm64_sys_write+0x1c/0x28
+[  303.306622]  invoke_syscall+0x48/0x114
+[  303.307156]  el0_svc_common.constprop.0+0x44/0xec
+[  303.307803]  do_el0_svc+0x38/0x98
+[  303.308268]  el0_svc+0x2c/0x84
+[  303.308702]  el0t_64_sync_handler+0xf4/0x120
+[  303.309293]  el0t_64_sync+0x190/0x194
+[  303.309794] Code: ???????? ???????? ???????? ???????? (????????)
+[  303.310612] ---[ end trace 0000000000000000 ]---
+
+Fix this by adding a .reconfigure() function to the fs operations which
+we can use to check the requested flags and deny anything that's not RO
+if the firmware doesn't implement SetVariable at runtime.
+
+Fixes: f88814cc2578 ("efi/efivars: Expose RT service availability via efivars abstraction")
+Signed-off-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tilcdc/tilcdc_drv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/efivarfs/super.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/gpu/drm/tilcdc/tilcdc_drv.c b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
-index f72755b8ea14..86d34b77b37d 100644
---- a/drivers/gpu/drm/tilcdc/tilcdc_drv.c
-+++ b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
-@@ -138,7 +138,7 @@ static int tilcdc_irq_install(struct drm_device *dev, unsigned int irq)
- 	if (ret)
- 		return ret;
+diff --git a/fs/efivarfs/super.c b/fs/efivarfs/super.c
+index 15880a68faad..3626816b174a 100644
+--- a/fs/efivarfs/super.c
++++ b/fs/efivarfs/super.c
+@@ -13,6 +13,7 @@
+ #include <linux/ucs2_string.h>
+ #include <linux/slab.h>
+ #include <linux/magic.h>
++#include <linux/printk.h>
  
--	priv->irq_enabled = false;
-+	priv->irq_enabled = true;
+ #include "internal.h"
  
- 	return 0;
+@@ -231,8 +232,19 @@ static int efivarfs_get_tree(struct fs_context *fc)
+ 	return get_tree_single(fc, efivarfs_fill_super);
  }
+ 
++static int efivarfs_reconfigure(struct fs_context *fc)
++{
++	if (!efivar_supports_writes() && !(fc->sb_flags & SB_RDONLY)) {
++		pr_err("Firmware does not support SetVariableRT. Can not remount with rw\n");
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static const struct fs_context_operations efivarfs_context_ops = {
+ 	.get_tree	= efivarfs_get_tree,
++	.reconfigure	= efivarfs_reconfigure,
+ };
+ 
+ static int efivarfs_init_fs_context(struct fs_context *fc)
 -- 
 2.43.0
 
