@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92337691F;
-	Tue, 23 Jan 2024 02:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA9176908;
+	Tue, 23 Jan 2024 02:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975503; cv=none; b=Ao9ujPmTpPbTYWtVaBtv8dAKxSfljeFrbsMSgVslruu9s198gAIzltBDM77LgUCP283zp0Crp02c0gTrja4YNdT/GwzqASmi0Z51fKy7iTEuwzTWtPEqAiOAletD4NxPR8tMY+0t5atAVT+ai0QjZ0BLWS3MvSodvbm/t4lF3YE=
+	t=1705975504; cv=none; b=LYqLtqtCUTOr7fvzrq4CHjIuzS9kUvZiQc+b6Ak4mN8XLbK6Q8Qm3xxL4hx7DJvJ7e0cCZWRYXGI9sFUftyv2wBiSucEtRbf0eVcdnpnhjyxDz1CeDyheb6nDA/oGEfvWFAyLpEP2DNiXCBBhm9hHO1B+H7V3uHyiHI9uD5lZ6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975503; c=relaxed/simple;
-	bh=Jgcwjcx9U7XMCqDgSVIuAXqetSkKpzLir2uglplWXds=;
+	s=arc-20240116; t=1705975504; c=relaxed/simple;
+	bh=k1R0GQnjAv1wb6QW7Nf1s6xUVv4YELWEE4fXqyWDDWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ugQ4qOv0p2XzuuwSh5QAQfkVzyGdjurPNW3hR23q5nunk7iGwY64bvsWkjFlGN4kpDY1fy8K1PBXANYsCB10Z9k3hEML8mNPe2w03oXUY5dtfJbZhq9xa0MIuafijTrlCx/Kjt9ROWHMDOw+6wpD3nTpHx87/Qh7auo2ypv1Bcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXfLNJqQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=psGV+zJ7Hgn+Bz9yzlb8cWtEXvGmK5Kc3lq86s9FnuqugjDVrb/GDGKFvhQapOVBk4MHbW00oIdIALROZSbc+z7sZvDoIGgJg7bdjlCCrcavjGJpg1/WX+44JHPYNbtj7UG/fwnhmZSwZKbGSp2jTnWh77Q0URSJHCElRQ4K3wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qe3GUHat; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXfLNJqQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DA5C43390;
-	Tue, 23 Jan 2024 02:05:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qe3GUHat"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD356C43399;
+	Tue, 23 Jan 2024 02:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975502;
-	bh=Jgcwjcx9U7XMCqDgSVIuAXqetSkKpzLir2uglplWXds=;
+	s=korg; t=1705975503;
+	bh=k1R0GQnjAv1wb6QW7Nf1s6xUVv4YELWEE4fXqyWDDWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xXfLNJqQCJqGn3l9LtNyjLf4pSR86AuL7n2vgIt80T2RT7E8JyDuUNTdxbbXE3L6I
-	 IQu8FfTHq/a/ycTkaNdkNFVTCegVEp6ccfAeR9SNtxEk93cX0UbhgT/ilc74cdmRri
-	 RnekKAr3EGaSmyBoZWPBhF51HKQwAq6dpgQlM7mw=
+	b=qe3GUHath5+hMsdaT1+fUlMa7BwH/o1JOEYggqy+xY/O22LSZ7tTPaRAalb4m0gLd
+	 br6sBuOn0lRzWdLYUiaSF5EjuEiss6izp1+cVeV/61Waq3M7MedIfPDGVEx/U1Cds/
+	 DocGcoskEDA0n8mLgs8nTV4NI+XsEFhDAyC98o/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Jan Palus <jpalus@fastmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 455/583] MIPS: Alchemy: Fix an out-of-bound access in db1550_dev_setup()
-Date: Mon, 22 Jan 2024 15:58:26 -0800
-Message-ID: <20240122235825.894185432@linuxfoundation.org>
+Subject: [PATCH 6.6 456/583] power: supply: cw2015: correct time_to_empty units in sysfs
+Date: Mon, 22 Jan 2024 15:58:27 -0800
+Message-ID: <20240122235825.923122886@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,33 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jan Palus <jpalus@fastmail.com>
 
-[ Upstream commit 3c1e5abcda64bed0c7bffa65af2316995f269a61 ]
+[ Upstream commit f37669119423ca852ca855b24732f25c0737aa57 ]
 
-When calling spi_register_board_info(),
+RRT_ALRT register holds remaining battery time in minutes therefore it
+needs to be scaled accordingly when exposing TIME_TO_EMPTY via sysfs
+expressed in seconds
 
-Fixes: f869d42e580f ("MIPS: Alchemy: Improved DB1550 support, with audio and serial busses.")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: b4c7715c10c1 ("power: supply: add CellWise cw2015 fuel gauge driver")
+Signed-off-by: Jan Palus <jpalus@fastmail.com>
+Link: https://lore.kernel.org/r/20231111221704.5579-1-jpalus@fastmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/alchemy/devboards/db1550.c | 2 +-
+ drivers/power/supply/cw2015_battery.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/alchemy/devboards/db1550.c b/arch/mips/alchemy/devboards/db1550.c
-index fd91d9c9a252..6c6837181f55 100644
---- a/arch/mips/alchemy/devboards/db1550.c
-+++ b/arch/mips/alchemy/devboards/db1550.c
-@@ -589,7 +589,7 @@ int __init db1550_dev_setup(void)
- 	i2c_register_board_info(0, db1550_i2c_devs,
- 				ARRAY_SIZE(db1550_i2c_devs));
- 	spi_register_board_info(db1550_spi_devs,
--				ARRAY_SIZE(db1550_i2c_devs));
-+				ARRAY_SIZE(db1550_spi_devs));
+diff --git a/drivers/power/supply/cw2015_battery.c b/drivers/power/supply/cw2015_battery.c
+index bb29e9ebd24a..99f3ccdc30a6 100644
+--- a/drivers/power/supply/cw2015_battery.c
++++ b/drivers/power/supply/cw2015_battery.c
+@@ -491,7 +491,7 @@ static int cw_battery_get_property(struct power_supply *psy,
  
- 	c = clk_get(NULL, "psc0_intclk");
- 	if (!IS_ERR(c)) {
+ 	case POWER_SUPPLY_PROP_TIME_TO_EMPTY_NOW:
+ 		if (cw_battery_valid_time_to_empty(cw_bat))
+-			val->intval = cw_bat->time_to_empty;
++			val->intval = cw_bat->time_to_empty * 60;
+ 		else
+ 			val->intval = 0;
+ 		break;
 -- 
 2.43.0
 
