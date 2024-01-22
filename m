@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57EBD6A03B;
-	Tue, 23 Jan 2024 02:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F3D6A03B;
+	Tue, 23 Jan 2024 02:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975339; cv=none; b=D7hN71dQ+YoBOMliSzuJPYleSspQmYHCYQcq1koWrvMhFzjMN+PkJLNqs6gdhZJ7fwLwFoTW2Fd1pB/ar8ctyqKx2VBKJzE3JiGMo8g79cH5aob6URT1SM/YfFE6IyeV7ixl30yZMqmm5q0Rsr1r/Au8pCHpXzFXN5dkI5oXwkg=
+	t=1705975340; cv=none; b=mJ9xwfXee6P1h+osK0fhF9AEam1aSeIoXkX0PO9USpL16EZ/LIkP+RQvR7MaUARtyTsQkLNPMCej15S0oDZsgzKkDuAGYvMD/OT1Mk3079qpWJ6ttBgXFjAJr7ojylw4Ff9XcxvXdRvcxLAdZqyZ08w/QPMv5Ko5Nb5tyi321QQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975339; c=relaxed/simple;
-	bh=P9hACG/G3/8Zb4jwbiKKHwB4gCSNycoWHQDYbXnZ1iQ=;
+	s=arc-20240116; t=1705975340; c=relaxed/simple;
+	bh=h3VoQEETzUmAC9R36otMF+EObEAhkdXzNF2wqZPux48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZDbXsNIzlt4O30I0OH1W5UX2MUa6Uf08txr4dQpmV40NoWml1GV31VI7F4dOGZde1ndwzrfL6gMx/zNlEyz5WkrosMRaH9wOO9pA3daz4QFOdnRRGOpCKuLNmxDF0v6pwF/UPzyKO6tclx50ajqC8IebyojwtpoWe+o7BkdQXb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0O+6okNA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PvjYcuxcXueyWlRkPGAEidm/hJgPREDq0xXvKNO1Bp1iBSWiZW+oZaierTbq9MfaQF+26Gw32Synk2HBIklvmbFYmWY7xi7X77BUPHv7qteKxtEC680VqCKJSov3TItLoQtY+FsXkAuVKVVwy/dXPNZTgVq5sm1O8cUi9clvqKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4PNbqaw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0O+6okNA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA38C43394;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4PNbqaw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D70C43394;
 	Tue, 23 Jan 2024 02:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975339;
-	bh=P9hACG/G3/8Zb4jwbiKKHwB4gCSNycoWHQDYbXnZ1iQ=;
+	s=korg; t=1705975340;
+	bh=h3VoQEETzUmAC9R36otMF+EObEAhkdXzNF2wqZPux48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0O+6okNA63ojQrrROp+5YOKLGSJecyXt6s3ON/IWUxzkRzxcRe9pP/0TgcdcV1MAF
-	 2y4YhZq/3BPWpMSqco4pbCte7nAHzKZwKNUpx/2f9z3m080IXA83o0b4th+yNBdKGs
-	 Drg7kqlNbO7bTt2A5ZHzWpFFSddC0XUtrQa3YKHg=
+	b=i4PNbqawE7NWj7TblMmL2vk/I3uNm/y0upyoy37V29JhhBiqFXjHPd8zcBhQ4SjvE
+	 UGvrRUIt9eJlGVtazul+HPLaE+irAW6gCVSMIFmx5jyjIxgQuHUNWOXRY+bUVGFunE
+	 p6yM72TMjZ5qr4SDPsxtV640rIHJ63nDIWiwn3iU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Curtis Klein <curtis.klein@hpe.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 300/583] watchdog: set cdev owner before adding
-Date: Mon, 22 Jan 2024 15:55:51 -0800
-Message-ID: <20240122235821.198704241@linuxfoundation.org>
+Subject: [PATCH 6.6 277/583] f2fs: fix to check compress file in f2fs_move_file_range()
+Date: Mon, 22 Jan 2024 15:55:28 -0800
+Message-ID: <20240122235820.471219458@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,59 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Curtis Klein <curtis.klein@hpe.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 38d75297745f04206db9c29bdd75557f0344c7cc ]
+[ Upstream commit fb9b65340c818875ea86464faf3c744bdce0055c ]
 
-When the new watchdog character device is registered, it becomes
-available for opening. This creates a race where userspace may open the
-device before the character device's owner is set. This results in an
-imbalance in module_get calls as the cdev_get in cdev_open will not
-increment the reference count on the watchdog driver module.
+f2fs_move_file_range() doesn't support migrating compressed cluster
+data, let's add the missing check condition and return -EOPNOTSUPP
+for the case until we support it.
 
-This causes problems when the watchdog character device is released as
-the module loader's reference will also be released. This makes it
-impossible to open the watchdog device later on as it now appears that
-the module is being unloaded. The open will fail with -ENXIO from
-chrdev_open.
-
-The legacy watchdog device will fail with -EBUSY from the try_module_get
-in watchdog_open because it's module owner is the watchdog core module
-so it can still be opened but it will fail to get a refcount on the
-underlying watchdog device driver.
-
-Fixes: 72139dfa2464 ("watchdog: Fix the race between the release of watchdog_core_data and cdev")
-Signed-off-by: Curtis Klein <curtis.klein@hpe.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20231205190522.55153-1-curtis.klein@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 4c8ff7095bef ("f2fs: support data compression")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/watchdog_dev.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/f2fs/file.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/watchdog/watchdog_dev.c b/drivers/watchdog/watchdog_dev.c
-index 15df74e11a59..e2bd266b1b5b 100644
---- a/drivers/watchdog/watchdog_dev.c
-+++ b/drivers/watchdog/watchdog_dev.c
-@@ -1073,6 +1073,7 @@ static int watchdog_cdev_register(struct watchdog_device *wdd)
- 
- 	/* Fill in the data structures */
- 	cdev_init(&wd_data->cdev, &watchdog_fops);
-+	wd_data->cdev.owner = wdd->ops->owner;
- 
- 	/* Add the device */
- 	err = cdev_device_add(&wd_data->cdev, &wd_data->dev);
-@@ -1087,8 +1088,6 @@ static int watchdog_cdev_register(struct watchdog_device *wdd)
- 		return err;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index a06f03d23762..e36a3208a3e9 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2818,6 +2818,11 @@ static int f2fs_move_file_range(struct file *file_in, loff_t pos_in,
+ 			goto out;
  	}
  
--	wd_data->cdev.owner = wdd->ops->owner;
--
- 	/* Record time of most recent heartbeat as 'just before now'. */
- 	wd_data->last_hw_keepalive = ktime_sub(ktime_get(), 1);
- 	watchdog_set_open_deadline(wd_data);
++	if (f2fs_compressed_file(src) || f2fs_compressed_file(dst)) {
++		ret = -EOPNOTSUPP;
++		goto out_unlock;
++	}
++
+ 	ret = -EINVAL;
+ 	if (pos_in + len > src->i_size || pos_in + len < pos_in)
+ 		goto out_unlock;
 -- 
 2.43.0
 
