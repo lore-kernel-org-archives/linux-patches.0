@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CA559B5E;
-	Tue, 23 Jan 2024 00:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7D359B5E;
+	Tue, 23 Jan 2024 00:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970303; cv=none; b=ePalyYPOnhBeEZEAOak0FzuPOjJP35u4gTuDDfer+TwMDUeaavmwjMl0q2cGqSeEOd8Y/KSiQV2GXxIVsCmR+OV1HGelEjbYBB17gAmU1gupvAE8/mZG/4BlgeJ0ZK45FjevEf+riHsJyAlxgyxmPLMcWM03V0OS7k2q9sqy/0w=
+	t=1705970307; cv=none; b=ki1HZ140jA3OIRTBPyFzgh2dVsoX/HrvzOA3GmXs+6g/vS1ljSTNi1WQQ2J4DCFQBUhr3OiRr6ZbvcCVn0Ux5G54xpu6k0EeHx16d1ADCRIpAjYMeeGtuejLIy52Eq1tUI6hhYhZ/iHq/kBTkfVG1GNYWGiEiYKe9TewpaDnH38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970303; c=relaxed/simple;
-	bh=fJc3hrYKJWSCW6l+QvRs2RJpWpsoYOOo+x31fcGCum4=;
+	s=arc-20240116; t=1705970307; c=relaxed/simple;
+	bh=e4wIeT6YRzjjGDw4zpAZhQiLMMpTLKAq7pEf2ShSg9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tSbnCxgdz9KI8BXPRIWPPvpkhpgyvhMwmb5C5ekUU5ttwnoAL3G1d4nZ2PiQpAq5aUoNZ3SLhRbIfU6xciWNLvjAuArX2iW7wO1lWVpozH7LCxOuEyw2eux5t1+lh8WQiebVv3YsRK6gucEHAy8WSdixNIB2JJMAjk7W9o3x400=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDD5S4NS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=khMjEJMzYjVN5qqVNrLv5NZiiGmzyvFMEQjcCmyZVvX1MdVm/AymhcbQIkzyDD5VaWXbAzhARIA2rGI82eCFCmsAaTrGjs4Mtl4mA0u9dGgceBoDAMjSpZXTl3CNo+FLlOiPkWYtSfNMR77M3pDbmYjXlp2X8hW14wPydKjoMo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fkzD3lBC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDD5S4NS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0328C433C7;
-	Tue, 23 Jan 2024 00:38:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkzD3lBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E95FC433F1;
+	Tue, 23 Jan 2024 00:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970303;
-	bh=fJc3hrYKJWSCW6l+QvRs2RJpWpsoYOOo+x31fcGCum4=;
+	s=korg; t=1705970307;
+	bh=e4wIeT6YRzjjGDw4zpAZhQiLMMpTLKAq7pEf2ShSg9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZDD5S4NSS0tJIskML9RNYAu/82Gy/KfclUO6t2X/Ei6uSD+MpI+cqou895kpuvvmF
-	 anRIZXIqF4SUv5Rx3R9p+or9eGXx4qSmC21pSDA6nr9ZeeOf9iAeKlo7S3SWYNpPrq
-	 LA3laX9BNwo61WE2Aa6YLCYXv6ICmkivyHObhAaw=
+	b=fkzD3lBCFtvdK2BjK2WEGPVH0POE9mtb2e9P0nOBrXo7BgxIgZHW0JA/aiKdlT8Lz
+	 c8qUUP5bJWP7AT4H5tFvhkQGq+gKvEoZcEH9TBga2aFCrg88v5AITNlfLf6ZOtnflv
+	 5RFrsPjHAw07CiYSev0x8vxomSl3CT73oh9AUPiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 629/641] io_uring: adjust defer tw counting
-Date: Mon, 22 Jan 2024 15:58:53 -0800
-Message-ID: <20240122235837.947314350@linuxfoundation.org>
+Subject: [PATCH 6.7 630/641] kdb: Fix a potential buffer overflow in kdb_local()
+Date: Mon, 22 Jan 2024 15:58:54 -0800
+Message-ID: <20240122235837.983177958@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,43 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit dc12d1799ce710fd90abbe0ced71e7e1ae0894fc ]
+[ Upstream commit 4f41d30cd6dc865c3cbc1a852372321eba6d4e4c ]
 
-The UINT_MAX work item counting bias in io_req_local_work_add() in case
-of !IOU_F_TWQ_LAZY_WAKE works in a sense that we will not miss a wake up,
-however it's still eerie. In particular, if we add a lazy work item
-after a non-lazy one, we'll increment it and get nr_tw==0, and
-subsequent adds may try to unnecessarily wake up the task, which is
-though not so likely to happen in real workloads.
+When appending "[defcmd]" to 'kdb_prompt_str', the size of the string
+already in the buffer should be taken into account.
 
-Half the bias, it's still large enough to be larger than any valid
-->cq_wait_nr, which is limited by IORING_MAX_CQ_ENTRIES, but further
-have a good enough of space before it overflows.
+An option could be to switch from strncat() to strlcat() which does the
+correct test to avoid such an overflow.
 
-Fixes: 8751d15426a31 ("io_uring: reduce scheduling due to tw")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/108b971e958deaf7048342930c341ba90f75d806.1705438669.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+However, this actually looks as dead code, because 'defcmd_in_progress'
+can't be true here.
+See a more detailed explanation at [1].
+
+[1]: https://lore.kernel.org/all/CAD=FV=WSh7wKN7Yp-3wWiDgX4E3isQ8uh0LCzTmd1v9Cg9j+nQ@mail.gmail.com/
+
+Fixes: 5d5314d6795f ("kdb: core for kgdb back end (1 of 2)")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/debug/kdb/kdb_main.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 7f62f5990152..59f5791c90c3 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -1346,7 +1346,7 @@ static inline void io_req_local_work_add(struct io_kiocb *req, unsigned flags)
- 		nr_tw = nr_tw_prev + 1;
- 		/* Large enough to fail the nr_wait comparison below */
- 		if (!(flags & IOU_F_TWQ_LAZY_WAKE))
--			nr_tw = -1U;
-+			nr_tw = INT_MAX;
+diff --git a/kernel/debug/kdb/kdb_main.c b/kernel/debug/kdb/kdb_main.c
+index 6b213c8252d6..d05066cb40b2 100644
+--- a/kernel/debug/kdb/kdb_main.c
++++ b/kernel/debug/kdb/kdb_main.c
+@@ -1348,8 +1348,6 @@ static int kdb_local(kdb_reason_t reason, int error, struct pt_regs *regs,
+ 		/* PROMPT can only be set if we have MEM_READ permission. */
+ 		snprintf(kdb_prompt_str, CMD_BUFLEN, kdbgetenv("PROMPT"),
+ 			 raw_smp_processor_id());
+-		if (defcmd_in_progress)
+-			strncat(kdb_prompt_str, "[defcmd]", CMD_BUFLEN);
  
- 		req->nr_tw = nr_tw;
- 		req->io_task_work.node.next = first;
+ 		/*
+ 		 * Fetch command from keyboard
 -- 
 2.43.0
 
