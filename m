@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368364F5EA;
-	Tue, 23 Jan 2024 00:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D984F5EB;
+	Tue, 23 Jan 2024 00:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969885; cv=none; b=O/Pb6Gal7HynwBfaxrhO4lc62KEXFBK0S7Ye3wgTM6VOWo47Lf1X7X0oxKF+zcvpkTRzc2FxykO7R1uHGk7QqU3WkvYcNo52OeNPxcOuVGLPw0nXQLPwblurgBB06gZXvhAcrZepVMEAuKg2hKIUcRJl8aFV3FbQNtfYsVTbymg=
+	t=1705969885; cv=none; b=ipUMxBwMi/pcmOgxWobicqvEDYdDs7jb8bqGzCjWyoBS9x5dx8HqrqBRJuDP6wVj7UKhN+GdSnjUrQod/8cGodYNBruDaJrtqGM/jITGBASGGGS0jzy3txwgzhY1ohRR3u5zkasDo+Kt/3dw2cqiNzekecHVqkIHB11lqDCMWK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705969885; c=relaxed/simple;
-	bh=1uNxw76vvtKhRhnA+rFYgsae9+ELCBlQmPKDVVJfRC4=;
+	bh=fffo6dKiNSqsMzI2ffgAW2bhoDRlTngWPUfdwUxxDI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=InKty0iQSL+JTs9uoXdqHo84LmvsCyGsCfXAxIAsRgjE8o8MAj2N8jIwqeGm+h18eO71FzMJazXpe6Ugv9bhV4lDbUGRVHLcSB48u0kTe6TcFPuBtEF3X5QEi+qECLZRiB4H6iS2TLGC8vF7rpZ1+B3NjAyfrZU6vuZZCT4RDR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHqLI8BD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C8fZwBEnjKZhj4E1tyqbNgZvp5XEoEdVCSzbM64pEWm2JXNr2oELA5RgJJMSwJ6kuVXFsgonkig644LATPxiuzFcjXVBefmNr/2hEJM9fGIhdyIm3IUby4ob3WmsEmR/2bAq+ve6BL3GJ/GAbEc9Ep9E/6l0DXD2t1a/uhu7Cf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYkDfyfa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHqLI8BD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF002C43390;
-	Tue, 23 Jan 2024 00:31:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYkDfyfa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2C0C433C7;
+	Tue, 23 Jan 2024 00:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969885;
-	bh=1uNxw76vvtKhRhnA+rFYgsae9+ELCBlQmPKDVVJfRC4=;
+	s=korg; t=1705969883;
+	bh=fffo6dKiNSqsMzI2ffgAW2bhoDRlTngWPUfdwUxxDI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xHqLI8BDgfpz48d4O68vSu9SxeN7ZHmx9Coz2R11zhoovOFGEDvCQGMh8nX70QSF2
-	 KmENby2n1ev6YC0wy/mXAtNxBp7yDWaK3qzS05eEyqGqPYO/+S/6CpAOGL08eRFrIy
-	 EyLQTDOR3KxiLuVL45aX2qvbrcf66lRDzj8z6LbQ=
+	b=UYkDfyfag3K+5ZQIlx6ZnSt8CIWCNISuDIcKnE6yV/b2wqTjdfni45020f4XZ0tIn
+	 VYn7njT+8ht63lfTdACB5h0rojg+2WxVgwQS6CFCmLzAsy6Mn9T+NeyNnwHM6A7ew+
+	 V6XD1jgL/vEZJ4Znm9q+v2AyoLQkIN4u94HkkZhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Green <greena88@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Lee Jones <lee@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Arnd Bergmann <arnd@arndb.de>,
+	linux-arm-kernel@lists.infradead.org,
+	patches@armlinux.org.uk,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 482/641] mfd: rk8xx: fixup devices registration with PLATFORM_DEVID_AUTO
-Date: Mon, 22 Jan 2024 15:56:26 -0800
-Message-ID: <20240122235833.155470998@linuxfoundation.org>
+Subject: [PATCH 6.7 481/641] ARM: 9330/1: davinci: also select PINCTRL
+Date: Mon, 22 Jan 2024 15:56:25 -0800
+Message-ID: <20240122235833.119778255@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,171 +56,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 4aedcd4aa61d536ca17e67ecd5bc5d42529164f4 ]
+[ Upstream commit f54e8634d1366926c807e2af6125b33cff555fa7 ]
 
-Since commit 210f418f8ace ("mfd: rk8xx: Add rk806 support"), devices are
-registered with "0" as id, causing devices to not have an automatic device id
-and prevents having multiple RK8xx PMICs on the same system.
+kconfig warns when PINCTRL_SINGLE is selected but PINCTRL is not
+set, so also set PINCTRL for ARCH_DAVINCI. This prevents a
+kconfig/build warning:
 
-Properly pass PLATFORM_DEVID_AUTO to devm_mfd_add_devices() and since
-it will ignore the cells .id with this special value, also cleanup
-by removing all now ignored cells .id values.
+   WARNING: unmet direct dependencies detected for PINCTRL_SINGLE
+     Depends on [n]: PINCTRL [=n] && OF [=y] && HAS_IOMEM [=y]
+     Selected by [y]:
+     - ARCH_DAVINCI [=y] && ARCH_MULTI_V5 [=y]
 
-Now we have the same behaviour as before rk806 introduction and rk806
-retains the intended behavior.
+Closes: lore.kernel.org/r/202311070548.0f6XfBrh-lkp@intel.com
 
-This fixes a regression while booting the Odroid Go Ultra on v6.6.1:
-sysfs: cannot create duplicate filename '/bus/platform/devices/rk808-clkout'
-CPU: 3 PID: 97 Comm: kworker/u12:2 Not tainted 6.6.1 #1
-Hardware name: Hardkernel ODROID-GO-Ultra (DT)
-Workqueue: events_unbound deferred_probe_work_func
-Call trace:
-dump_backtrace+0x9c/0x11c
-show_stack+0x18/0x24
-dump_stack_lvl+0x78/0xc4
-dump_stack+0x18/0x24
-sysfs_warn_dup+0x64/0x80
-sysfs_do_create_link_sd+0xf0/0xf8
-sysfs_create_link+0x20/0x40
-bus_add_device+0x114/0x160
-device_add+0x3f0/0x7cc
-platform_device_add+0x180/0x270
-mfd_add_device+0x390/0x4a8
-devm_mfd_add_devices+0xb0/0x150
-rk8xx_probe+0x26c/0x410
-rk8xx_i2c_probe+0x64/0x98
-i2c_device_probe+0x104/0x2e8
-really_probe+0x184/0x3c8
-__driver_probe_device+0x7c/0x16c
-driver_probe_device+0x3c/0x10c
-__device_attach_driver+0xbc/0x158
-bus_for_each_drv+0x80/0xdc
-__device_attach+0x9c/0x1ac
-device_initial_probe+0x14/0x20
-bus_probe_device+0xac/0xb0
-deferred_probe_work_func+0xa0/0xf4
-process_one_work+0x1bc/0x378
-worker_thread+0x1dc/0x3d4
-kthread+0x104/0x118
-ret_from_fork+0x10/0x20
-rk8xx-i2c 0-001c: error -EEXIST: failed to add MFD devices
-rk8xx-i2c: probe of 0-001c failed with error -17
-
-Fixes: 210f418f8ace ("mfd: rk8xx: Add rk806 support")
-Reported-by: Adam Green <greena88@gmail.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20231116-topic-amlogic-upstream-fix-rk8xx-devid-auto-v2-1-3f1bad68ab9d@linaro.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: f962396ce292 ("ARM: davinci: support multiplatform build for ARM v5")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: patches@armlinux.org.uk
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/rk8xx-core.c | 34 +++++++++++++---------------------
- 1 file changed, 13 insertions(+), 21 deletions(-)
+ arch/arm/mach-davinci/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mfd/rk8xx-core.c b/drivers/mfd/rk8xx-core.c
-index c47164a3ec1d..b1ffc3b9e2be 100644
---- a/drivers/mfd/rk8xx-core.c
-+++ b/drivers/mfd/rk8xx-core.c
-@@ -53,76 +53,68 @@ static const struct resource rk817_charger_resources[] = {
- };
+diff --git a/arch/arm/mach-davinci/Kconfig b/arch/arm/mach-davinci/Kconfig
+index 59de137c6f53..2a8a9fe46586 100644
+--- a/arch/arm/mach-davinci/Kconfig
++++ b/arch/arm/mach-davinci/Kconfig
+@@ -11,6 +11,7 @@ menuconfig ARCH_DAVINCI
+ 	select PM_GENERIC_DOMAINS_OF if PM && OF
+ 	select REGMAP_MMIO
+ 	select RESET_CONTROLLER
++	select PINCTRL
+ 	select PINCTRL_SINGLE
  
- static const struct mfd_cell rk805s[] = {
--	{ .name = "rk808-clkout", .id = PLATFORM_DEVID_NONE, },
--	{ .name = "rk808-regulator", .id = PLATFORM_DEVID_NONE, },
--	{ .name = "rk805-pinctrl", .id = PLATFORM_DEVID_NONE, },
-+	{ .name = "rk808-clkout", },
-+	{ .name = "rk808-regulator", },
-+	{ .name = "rk805-pinctrl", },
- 	{
- 		.name = "rk808-rtc",
- 		.num_resources = ARRAY_SIZE(rtc_resources),
- 		.resources = &rtc_resources[0],
--		.id = PLATFORM_DEVID_NONE,
- 	},
- 	{	.name = "rk805-pwrkey",
- 		.num_resources = ARRAY_SIZE(rk805_key_resources),
- 		.resources = &rk805_key_resources[0],
--		.id = PLATFORM_DEVID_NONE,
- 	},
- };
- 
- static const struct mfd_cell rk806s[] = {
--	{ .name = "rk805-pinctrl", .id = PLATFORM_DEVID_AUTO, },
--	{ .name = "rk808-regulator", .id = PLATFORM_DEVID_AUTO, },
-+	{ .name = "rk805-pinctrl", },
-+	{ .name = "rk808-regulator", },
- 	{
- 		.name = "rk805-pwrkey",
- 		.resources = rk806_pwrkey_resources,
- 		.num_resources = ARRAY_SIZE(rk806_pwrkey_resources),
--		.id = PLATFORM_DEVID_AUTO,
- 	},
- };
- 
- static const struct mfd_cell rk808s[] = {
--	{ .name = "rk808-clkout", .id = PLATFORM_DEVID_NONE, },
--	{ .name = "rk808-regulator", .id = PLATFORM_DEVID_NONE, },
-+	{ .name = "rk808-clkout", },
-+	{ .name = "rk808-regulator", },
- 	{
- 		.name = "rk808-rtc",
- 		.num_resources = ARRAY_SIZE(rtc_resources),
- 		.resources = rtc_resources,
--		.id = PLATFORM_DEVID_NONE,
- 	},
- };
- 
- static const struct mfd_cell rk817s[] = {
--	{ .name = "rk808-clkout", .id = PLATFORM_DEVID_NONE, },
--	{ .name = "rk808-regulator", .id = PLATFORM_DEVID_NONE, },
-+	{ .name = "rk808-clkout", },
-+	{ .name = "rk808-regulator", },
- 	{
- 		.name = "rk805-pwrkey",
- 		.num_resources = ARRAY_SIZE(rk817_pwrkey_resources),
- 		.resources = &rk817_pwrkey_resources[0],
--		.id = PLATFORM_DEVID_NONE,
- 	},
- 	{
- 		.name = "rk808-rtc",
- 		.num_resources = ARRAY_SIZE(rk817_rtc_resources),
- 		.resources = &rk817_rtc_resources[0],
--		.id = PLATFORM_DEVID_NONE,
- 	},
--	{ .name = "rk817-codec", .id = PLATFORM_DEVID_NONE, },
-+	{ .name = "rk817-codec", },
- 	{
- 		.name = "rk817-charger",
- 		.num_resources = ARRAY_SIZE(rk817_charger_resources),
- 		.resources = &rk817_charger_resources[0],
--		.id = PLATFORM_DEVID_NONE,
- 	},
- };
- 
- static const struct mfd_cell rk818s[] = {
--	{ .name = "rk808-clkout", .id = PLATFORM_DEVID_NONE, },
--	{ .name = "rk808-regulator", .id = PLATFORM_DEVID_NONE, },
-+	{ .name = "rk808-clkout", },
-+	{ .name = "rk808-regulator", },
- 	{
- 		.name = "rk808-rtc",
- 		.num_resources = ARRAY_SIZE(rtc_resources),
- 		.resources = rtc_resources,
--		.id = PLATFORM_DEVID_NONE,
- 	},
- };
- 
-@@ -684,7 +676,7 @@ int rk8xx_probe(struct device *dev, int variant, unsigned int irq, struct regmap
- 					     pre_init_reg[i].addr);
- 	}
- 
--	ret = devm_mfd_add_devices(dev, 0, cells, nr_cells, NULL, 0,
-+	ret = devm_mfd_add_devices(dev, PLATFORM_DEVID_AUTO, cells, nr_cells, NULL, 0,
- 			      regmap_irq_get_domain(rk808->irq_data));
- 	if (ret)
- 		return dev_err_probe(dev, ret, "failed to add MFD devices\n");
+ if ARCH_DAVINCI
 -- 
 2.43.0
 
