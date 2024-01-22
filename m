@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BDD73176;
-	Tue, 23 Jan 2024 02:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8374768EC;
+	Tue, 23 Jan 2024 02:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975481; cv=none; b=rA7++ZYrWTk1P3jacsFF8IE8oj7LCYcWde+5K3IWZj1qTC4S65QUIJLT2cJvTXjR7vzfVHbPUbZB59aW1fT7D1SyIF5QZ6H64NROQErYQLlDY3jmHf6kWn4IhlVxPpkhg6LSvalLiP8ZZTxR3GYRi9yXsB6B2KqpWhCVcP/vB40=
+	t=1705975482; cv=none; b=Jubx9EIlDZP22AR5EEoT4FOKd8m67DZJXqCmWRIjXl29uY9Frstce6xtiTzrIP9lx2Kf83FxIgIgZVAraTcZ/984MNqMKMxvXjbV5wv+5E0s3sIB2Ov8xUIGRfFS2ZdHaWhbh1D1HtQIs7C1soM6e4ILQVfskKLQoqJMRJ548bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975481; c=relaxed/simple;
-	bh=UM/7y/E8xtraaL/XMbr703yOQnRmAYiRvC7wqJzRaR4=;
+	s=arc-20240116; t=1705975482; c=relaxed/simple;
+	bh=tDpEDVPfpApsiArWeOS6JoRZI3/T4SzPeE1ui/+lZHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sPfv/xx2QGFDS9uPI9Rw5TlCm3KqDUKQYx6omAdUONSE/M8d1MOBpTL3LDNIGZktEXmqjAFlBc1rrId0Z/gxDttNCvQB5//aY8y+KDdbWqW0N/TqFBHB6fgfichcOvOnSbEhRKVAtuXbzU02Ijvr8et+vjTg6vfHavVOERi+t/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9DjNNfk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qhzuQdgtL9QIaTbGAbMXTcEGLPY4S4hVwPqY1GnS8he2ON80aWwOONawTzN1BB5vs+PaqLsfd0qgY/NAY/atIsU829KBH5F6JNZgF2G3aWY4bxIKmUdRAek43SPMd7io/Uyk3hvTEC3yHxrzhIgOuxS6YUrrOcWVWHPZcmT1dd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejj654K0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9DjNNfk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81892C433C7;
-	Tue, 23 Jan 2024 02:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejj654K0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7957BC43399;
+	Tue, 23 Jan 2024 02:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975481;
-	bh=UM/7y/E8xtraaL/XMbr703yOQnRmAYiRvC7wqJzRaR4=;
+	s=korg; t=1705975482;
+	bh=tDpEDVPfpApsiArWeOS6JoRZI3/T4SzPeE1ui/+lZHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K9DjNNfkOuyf0ClGkmUxwrgB4PPymkUCbi5Wuy+YQ2Co13FFBG0lI7hQod3Hdh1NP
-	 vDa+s8/OsTZYls71dTEx4e06uwU+hE4CmqpRB8WUJxTmxRJiuBBtlrZgCH6RJzx7Z2
-	 gMYrbx7p81Y9z3lsYx8cCJbXZLsZGoRaxXOaCGIM=
+	b=ejj654K0IfMpMgcYBtaJeeN4yAW6g2khQYbJ9PKwFsPndX546jMhJ7XMk20fUnRNZ
+	 qAiEryOOz8ir3dsg6c+g//l+IZpXoQaREqZ9a6NQkbbbTkZzjvu7FxknFv8dYMRfEg
+	 alUbGbymbh7cUJyW5Vze7DVCR/IWXeZ//QvPyY88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.6 436/583] serial: sc16is7xx: set safe default SPI clock frequency
-Date: Mon, 22 Jan 2024 15:58:07 -0800
-Message-ID: <20240122235825.323534800@linuxfoundation.org>
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.6 413/583] wifi: mt76: fix broken precal loading from MTD for mt7915
+Date: Mon, 22 Jan 2024 15:57:44 -0800
+Message-ID: <20240122235824.608296928@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -49,44 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit 3ef79cd1412236d884ab0c46b4d1921380807b48 upstream.
+commit e874a79250b39447765ac13272b67ac36ccf2a75 upstream.
 
-15 MHz is supported only by 76x variants.
+Commit 495184ac91bb ("mt76: mt7915: add support for applying
+pre-calibration data") was fundamentally broken and never worked.
 
-If the SPI clock frequency is not specified, use a safe default clock value
-of 4 MHz that is supported by all variants.
+The idea (before NVMEM support) was to expand the MTD function and pass
+an additional offset. For normal EEPROM load the offset would always be
+0. For the purpose of precal loading, an offset was passed that was
+internally the size of EEPROM, since precal data is right after the
+EEPROM.
 
-Also use HZ_PER_MHZ macro to improve readability.
+Problem is that the offset value passed is never handled and is actually
+overwrite by
 
-Fixes: 2c837a8a8f9f ("sc16is7xx: spi interface is added")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20231221231823.2327894-4-hugo@hugovil.com
+	offset = be32_to_cpup(list);
+	ret = mtd_read(mtd, offset, len, &retlen, eep);
+
+resulting in the passed offset value always ingnored. (and even passing
+garbage data as precal as the start of the EEPROM is getting read)
+
+Fix this by adding to the current offset value, the offset from DT to
+correctly read the piece of data at the requested location.
+
+Cc: stable@vger.kernel.org
+Fixes: 495184ac91bb ("mt76: mt7915: add support for applying pre-calibration data")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/eeprom.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -24,6 +24,7 @@
- #include <linux/tty_flip.h>
- #include <linux/spi/spi.h>
- #include <linux/uaccess.h>
-+#include <linux/units.h>
- #include <uapi/linux/sched/types.h>
+--- a/drivers/net/wireless/mediatek/mt76/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/eeprom.c
+@@ -67,7 +67,7 @@ static int mt76_get_of_epprom_from_mtd(s
+ 		goto out_put_node;
+ 	}
  
- #define SC16IS7XX_NAME			"sc16is7xx"
-@@ -1719,7 +1720,7 @@ static int sc16is7xx_spi_probe(struct sp
- 		return dev_err_probe(&spi->dev, -EINVAL, "Unsupported SPI mode\n");
- 
- 	spi->mode		= spi->mode ? : SPI_MODE_0;
--	spi->max_speed_hz	= spi->max_speed_hz ? : 15000000;
-+	spi->max_speed_hz	= spi->max_speed_hz ? : 4 * HZ_PER_MHZ;
- 	ret = spi_setup(spi);
- 	if (ret)
- 		return ret;
+-	offset = be32_to_cpup(list);
++	offset += be32_to_cpup(list);
+ 	ret = mtd_read(mtd, offset, len, &retlen, eep);
+ 	put_mtd_device(mtd);
+ 	if (mtd_is_bitflip(ret))
 
 
