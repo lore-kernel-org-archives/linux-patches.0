@@ -1,41 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E898112F5A7;
-	Tue, 23 Jan 2024 00:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D2E12FF97;
+	Tue, 23 Jan 2024 00:17:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969042; cv=none; b=ns5bXsQQUMMp2CgXj+5MGAh2CEuTrsLRD5eaETYvTBqGK8kGUXJxBjN4i6RZtc2LxugikQQ05tRHXfEb1IExhuu/252xBSRl4Nais4eWmLRZ/9DrpBsgviGar0kzUBRSaA/GPFE+X0xOxX158KMBWgKLYEGhxSWORVEsCyXvF/E=
+	t=1705969043; cv=none; b=OlOv9XpxehT+ZrqpGQgo6Oo3FLLBIeaTZM4t7A2TofEk/mpCWx/wPvXhexFY5DuJQ8vDt/SDAAfjjB1JLtgcA/Q+AVX6P0ZSXhR0PUeEkTcrHEIjqmVhw8Sxyl+LrYwHX2gzoekhg04IssfjrWB/d9ZkjGLFnjjCh9LxhW0SI40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969042; c=relaxed/simple;
-	bh=b0cTGfOflUmMCwLe5PCgyd8p9BCtKMKzqQR6GtO/IEg=;
+	s=arc-20240116; t=1705969043; c=relaxed/simple;
+	bh=ubM7F5taHktyZN9XzRtKYMjQsNQ+eNnUUIPrYqwgELk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DjWsGJvUUGgSm7dbKqgdxbDhj1R0vT5v3Jm/kRcYFEJb36v+JAu0b0qszmLvPPIg1CCvTO9sYZ7PvriRehPS/x+3mooS6ZeZQPOlLBq7mXWB5VIcxxmVxWhe5u7t/a85fn6ce8zXM4qN8g3u7V9Q5xx6E3ohXKKWlnxKkEB6/3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Glr8orFs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PpDytCjE3EKP+9i5+tnDoKSXM7BiaDcxTsfBg9wZ07VfeHd7xgGTJuSNBAdu+JIKhG2YXxy26g/ZuM9U+YqooKa4qq6EOgLwjX0bYFtZ12MpTJxn2OXpbhXBvmVPkOyK2XIr7L4vu/BGrT85ZsedtJsB9LaYxCkuts5FZzMcfps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gk+TdcGc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Glr8orFs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A98C433C7;
-	Tue, 23 Jan 2024 00:17:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gk+TdcGc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08ED2C43390;
+	Tue, 23 Jan 2024 00:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969041;
-	bh=b0cTGfOflUmMCwLe5PCgyd8p9BCtKMKzqQR6GtO/IEg=;
+	s=korg; t=1705969043;
+	bh=ubM7F5taHktyZN9XzRtKYMjQsNQ+eNnUUIPrYqwgELk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Glr8orFsen4rR08yzrCwRYSLjiWoxvjEfgD//RY2usit8m6d68DnEuPam1yiMs/UJ
-	 5/Fe1MBJzjQzPYXoN7RQJXiVtCQbPRcQMAyCHOX223vkXa5sHTuC16HaRtgcRKk24T
-	 wNB/qQBEzblPMj5yIylMiYj8bVJasNzRFaI+hRGg=
+	b=Gk+TdcGclSM9d2ZVG3WoryDMGVdokSe4Q6DfawdUqSTyNyL/weR3Fc9kAoKkPJVzW
+	 dUhK/v6MFIk0DbFATp3J4coWgOvcmfyg8KlW1R9NMfvZIejszdCrnDkVFBddqHOQMw
+	 GsQaucvDHSZtrnpmnxn0plq0lHU558tcjXL9KptM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Song Liu <song@kernel.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Ming Wang <wangming01@loongson.cn>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Song Liu <songliubraving@fb.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 176/194] perf bpf: Decouple creating the evlist from adding the SB event
-Date: Mon, 22 Jan 2024 15:58:26 -0800
-Message-ID: <20240122235726.767620645@linuxfoundation.org>
+Subject: [PATCH 5.4 177/194] perf env: Avoid recursively taking env->bpf_progs.lock
+Date: Mon, 22 Jan 2024 15:58:27 -0800
+Message-ID: <20240122235726.811126879@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -54,195 +64,274 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit b38d85ef49cf6af9d1deaaf01daf0986d47e6c7a ]
+[ Upstream commit 9c51f8788b5d4e9f46afbcf563255cfd355690b3 ]
 
-Renaming bpf_event__add_sb_event() to evlist__add_sb_event() and
-requiring that the evlist be allocated beforehand.
+Add variants of perf_env__insert_bpf_prog_info(), perf_env__insert_btf()
+and perf_env__find_btf prefixed with __ to indicate the
+env->bpf_progs.lock is assumed held.
 
-This will allow using the same side band thread and evlist to be used
-for multiple purposes in addition to react to PERF_RECORD_BPF_EVENT soon
-after they are generated.
+Call these variants when the lock is held to avoid recursively taking it
+and potentially having a thread deadlock with itself.
 
-Acked-by: Jiri Olsa <jolsa@redhat.com>
+Fixes: f8dfeae009effc0b ("perf bpf: Show more BPF program info in print_bpf_prog_info()")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Song Liu <song@kernel.org>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Ming Wang <wangming01@loongson.cn>
 Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Song Liu <songliubraving@fb.com>
-Link: http://lore.kernel.org/lkml/20200429131106.27974-4-acme@kernel.org
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Link: https://lore.kernel.org/r/20231207014655.1252484-1-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 9c51f8788b5d ("perf env: Avoid recursively taking env->bpf_progs.lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-record.c | 17 ++++++++++++++---
- tools/perf/builtin-top.c    | 15 +++++++++++++--
- tools/perf/util/bpf-event.c |  3 +--
- tools/perf/util/bpf-event.h |  7 +++----
- tools/perf/util/evlist.c    | 21 ++++-----------------
- tools/perf/util/evlist.h    |  2 +-
- 6 files changed, 36 insertions(+), 29 deletions(-)
+ tools/perf/util/bpf-event.c |  8 +++---
+ tools/perf/util/bpf-event.h | 12 ++++-----
+ tools/perf/util/env.c       | 50 ++++++++++++++++++++++++-------------
+ tools/perf/util/env.h       |  4 +++
+ tools/perf/util/header.c    |  8 +++---
+ 5 files changed, 50 insertions(+), 32 deletions(-)
 
-diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
-index 7fc3dadfa156..a9891c9fe94d 100644
---- a/tools/perf/builtin-record.c
-+++ b/tools/perf/builtin-record.c
-@@ -1446,16 +1446,27 @@ static int __cmd_record(struct record *rec, int argc, const char **argv)
- 			goto out_child;
- 	}
- 
-+	err = -1;
- 	if (!rec->no_buildid
- 	    && !perf_header__has_feat(&session->header, HEADER_BUILD_ID)) {
- 		pr_err("Couldn't generate buildids. "
- 		       "Use --no-buildid to profile anyway.\n");
--		err = -1;
- 		goto out_child;
- 	}
- 
--	if (!opts->no_bpf_event)
--		bpf_event__add_sb_event(&rec->sb_evlist, &session->header.env);
-+	if (!opts->no_bpf_event) {
-+		rec->sb_evlist = evlist__new();
-+
-+		if (rec->sb_evlist == NULL) {
-+			pr_err("Couldn't create side band evlist.\n.");
-+			goto out_child;
-+		}
-+
-+		if (evlist__add_bpf_sb_event(rec->sb_evlist, &session->header.env)) {
-+			pr_err("Couldn't ask for PERF_RECORD_BPF_EVENT side band events.\n.");
-+			goto out_child;
-+		}
-+	}
- 
- 	if (perf_evlist__start_sb_thread(rec->sb_evlist, &rec->opts.target)) {
- 		pr_debug("Couldn't start the BPF side band thread:\nBPF programs starting from now on won't be annotatable\n");
-diff --git a/tools/perf/builtin-top.c b/tools/perf/builtin-top.c
-index d83954f75557..82642fe5cd21 100644
---- a/tools/perf/builtin-top.c
-+++ b/tools/perf/builtin-top.c
-@@ -1682,8 +1682,19 @@ int cmd_top(int argc, const char **argv)
- 		goto out_delete_evlist;
- 	}
- 
--	if (!top.record_opts.no_bpf_event)
--		bpf_event__add_sb_event(&top.sb_evlist, &perf_env);
-+	if (!top.record_opts.no_bpf_event) {
-+		top.sb_evlist = evlist__new();
-+
-+		if (top.sb_evlist == NULL) {
-+			pr_err("Couldn't create side band evlist.\n.");
-+			goto out_delete_evlist;
-+		}
-+
-+		if (evlist__add_bpf_sb_event(top.sb_evlist, &perf_env)) {
-+			pr_err("Couldn't ask for PERF_RECORD_BPF_EVENT side band events.\n.");
-+			goto out_delete_evlist;
-+		}
-+	}
- 
- 	if (perf_evlist__start_sb_thread(top.sb_evlist, target)) {
- 		pr_debug("Couldn't start the BPF side band thread:\nBPF programs starting from now on won't be annotatable\n");
 diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
-index 782c0c8a9a83..96e0a31a38f6 100644
+index 96e0a31a38f6..ae30e20af246 100644
 --- a/tools/perf/util/bpf-event.c
 +++ b/tools/perf/util/bpf-event.c
-@@ -422,8 +422,7 @@ static int bpf_event__sb_cb(union perf_event *event, void *data)
- 	return 0;
+@@ -442,9 +442,9 @@ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env)
+ 	return perf_evlist__add_sb_event(evlist, &attr, bpf_event__sb_cb, env);
  }
  
--int bpf_event__add_sb_event(struct evlist **evlist,
--			    struct perf_env *env)
-+int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env)
+-void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
+-				    struct perf_env *env,
+-				    FILE *fp)
++void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
++				      struct perf_env *env,
++				      FILE *fp)
  {
- 	struct perf_event_attr attr = {
- 		.type	          = PERF_TYPE_SOFTWARE,
+ 	__u32 *prog_lens = (__u32 *)(uintptr_t)(info->jited_func_lens);
+ 	__u64 *prog_addrs = (__u64 *)(uintptr_t)(info->jited_ksyms);
+@@ -460,7 +460,7 @@ void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
+ 	if (info->btf_id) {
+ 		struct btf_node *node;
+ 
+-		node = perf_env__find_btf(env, info->btf_id);
++		node = __perf_env__find_btf(env, info->btf_id);
+ 		if (node)
+ 			btf = btf__new((__u8 *)(node->data),
+ 				       node->data_size);
 diff --git a/tools/perf/util/bpf-event.h b/tools/perf/util/bpf-event.h
-index 81fdc88e6c1a..68f315c3df5b 100644
+index 68f315c3df5b..50f7412464df 100644
 --- a/tools/perf/util/bpf-event.h
 +++ b/tools/perf/util/bpf-event.h
-@@ -33,8 +33,7 @@ struct btf_node {
- #ifdef HAVE_LIBBPF_SUPPORT
+@@ -34,9 +34,9 @@ struct btf_node {
  int machine__process_bpf(struct machine *machine, union perf_event *event,
  			 struct perf_sample *sample);
--int bpf_event__add_sb_event(struct evlist **evlist,
--				 struct perf_env *env);
-+int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env);
- void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
- 				    struct perf_env *env,
- 				    FILE *fp);
-@@ -46,8 +45,8 @@ static inline int machine__process_bpf(struct machine *machine __maybe_unused,
+ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env);
+-void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
+-				    struct perf_env *env,
+-				    FILE *fp);
++void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
++				      struct perf_env *env,
++				      FILE *fp);
+ #else
+ static inline int machine__process_bpf(struct machine *machine __maybe_unused,
+ 				       union perf_event *event __maybe_unused,
+@@ -51,9 +51,9 @@ static inline int evlist__add_bpf_sb_event(struct evlist *evlist __maybe_unused,
  	return 0;
  }
  
--static inline int bpf_event__add_sb_event(struct evlist **evlist __maybe_unused,
--					  struct perf_env *env __maybe_unused)
-+static inline int evlist__add_bpf_sb_event(struct evlist *evlist __maybe_unused,
-+					   struct perf_env *env __maybe_unused)
+-static inline void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
+-						  struct perf_env *env __maybe_unused,
+-						  FILE *fp __maybe_unused)
++static inline void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
++						    struct perf_env *env __maybe_unused,
++						    FILE *fp __maybe_unused)
  {
- 	return 0;
- }
-diff --git a/tools/perf/util/evlist.c b/tools/perf/util/evlist.c
-index 505b890ac85c..b110deb88425 100644
---- a/tools/perf/util/evlist.c
-+++ b/tools/perf/util/evlist.c
-@@ -1672,39 +1672,26 @@ struct evsel *perf_evlist__reset_weak_group(struct evlist *evsel_list,
- 	return leader;
- }
  
--int perf_evlist__add_sb_event(struct evlist **evlist,
-+int perf_evlist__add_sb_event(struct evlist *evlist,
- 			      struct perf_event_attr *attr,
- 			      perf_evsel__sb_cb_t cb,
- 			      void *data)
+ }
+diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
+index 2d517f377053..953db9dd25eb 100644
+--- a/tools/perf/util/env.c
++++ b/tools/perf/util/env.c
+@@ -15,13 +15,19 @@ struct perf_env perf_env;
+ 
+ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 				    struct bpf_prog_info_node *info_node)
++{
++	down_write(&env->bpf_progs.lock);
++	__perf_env__insert_bpf_prog_info(env, info_node);
++	up_write(&env->bpf_progs.lock);
++}
++
++void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
  {
- 	struct evsel *evsel;
--	bool new_evlist = (*evlist) == NULL;
--
--	if (*evlist == NULL)
--		*evlist = evlist__new();
--	if (*evlist == NULL)
--		return -1;
+ 	__u32 prog_id = info_node->info_linear->info.id;
+ 	struct bpf_prog_info_node *node;
+ 	struct rb_node *parent = NULL;
+ 	struct rb_node **p;
  
- 	if (!attr->sample_id_all) {
- 		pr_warning("enabling sample_id_all for all side band events\n");
- 		attr->sample_id_all = 1;
+-	down_write(&env->bpf_progs.lock);
+ 	p = &env->bpf_progs.infos.rb_node;
+ 
+ 	while (*p != NULL) {
+@@ -33,15 +39,13 @@ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 			p = &(*p)->rb_right;
+ 		} else {
+ 			pr_debug("duplicated bpf prog info %u\n", prog_id);
+-			goto out;
++			return;
+ 		}
  	}
  
--	evsel = perf_evsel__new_idx(attr, (*evlist)->core.nr_entries);
-+	evsel = perf_evsel__new_idx(attr, evlist->core.nr_entries);
- 	if (!evsel)
--		goto out_err;
-+		return -1;
- 
- 	evsel->side_band.cb = cb;
- 	evsel->side_band.data = data;
--	evlist__add(*evlist, evsel);
-+	evlist__add(evlist, evsel);
- 	return 0;
--
--out_err:
--	if (new_evlist) {
--		evlist__delete(*evlist);
--		*evlist = NULL;
--	}
--	return -1;
+ 	rb_link_node(&info_node->rb_node, parent, p);
+ 	rb_insert_color(&info_node->rb_node, &env->bpf_progs.infos);
+ 	env->bpf_progs.infos_cnt++;
+-out:
+-	up_write(&env->bpf_progs.lock);
  }
  
- static void *perf_evlist__poll_thread(void *arg)
-diff --git a/tools/perf/util/evlist.h b/tools/perf/util/evlist.h
-index 7cfe75522ba5..6f920ca91a69 100644
---- a/tools/perf/util/evlist.h
-+++ b/tools/perf/util/evlist.h
-@@ -107,7 +107,7 @@ int __perf_evlist__add_default_attrs(struct evlist *evlist,
+ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+@@ -70,14 +74,22 @@ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+ }
  
- int perf_evlist__add_dummy(struct evlist *evlist);
+ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
++{
++	bool ret;
++
++	down_write(&env->bpf_progs.lock);
++	ret = __perf_env__insert_btf(env, btf_node);
++	up_write(&env->bpf_progs.lock);
++	return ret;
++}
++
++bool __perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
+ {
+ 	struct rb_node *parent = NULL;
+ 	__u32 btf_id = btf_node->id;
+ 	struct btf_node *node;
+ 	struct rb_node **p;
+-	bool ret = true;
  
--int perf_evlist__add_sb_event(struct evlist **evlist,
-+int perf_evlist__add_sb_event(struct evlist *evlist,
- 			      struct perf_event_attr *attr,
- 			      perf_evsel__sb_cb_t cb,
- 			      void *data);
+-	down_write(&env->bpf_progs.lock);
+ 	p = &env->bpf_progs.btfs.rb_node;
+ 
+ 	while (*p != NULL) {
+@@ -89,25 +101,31 @@ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
+ 			p = &(*p)->rb_right;
+ 		} else {
+ 			pr_debug("duplicated btf %u\n", btf_id);
+-			ret = false;
+-			goto out;
++			return false;
+ 		}
+ 	}
+ 
+ 	rb_link_node(&btf_node->rb_node, parent, p);
+ 	rb_insert_color(&btf_node->rb_node, &env->bpf_progs.btfs);
+ 	env->bpf_progs.btfs_cnt++;
+-out:
+-	up_write(&env->bpf_progs.lock);
+-	return ret;
++	return true;
+ }
+ 
+ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id)
++{
++	struct btf_node *res;
++
++	down_read(&env->bpf_progs.lock);
++	res = __perf_env__find_btf(env, btf_id);
++	up_read(&env->bpf_progs.lock);
++	return res;
++}
++
++struct btf_node *__perf_env__find_btf(struct perf_env *env, __u32 btf_id)
+ {
+ 	struct btf_node *node = NULL;
+ 	struct rb_node *n;
+ 
+-	down_read(&env->bpf_progs.lock);
+ 	n = env->bpf_progs.btfs.rb_node;
+ 
+ 	while (n) {
+@@ -117,13 +135,9 @@ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id)
+ 		else if (btf_id > node->id)
+ 			n = n->rb_right;
+ 		else
+-			goto out;
++			return node;
+ 	}
+-	node = NULL;
+-
+-out:
+-	up_read(&env->bpf_progs.lock);
+-	return node;
++	return NULL;
+ }
+ 
+ /* purge data in bpf_progs.infos tree */
+diff --git a/tools/perf/util/env.h b/tools/perf/util/env.h
+index ceddddace5cc..b0778483fa04 100644
+--- a/tools/perf/util/env.h
++++ b/tools/perf/util/env.h
+@@ -117,12 +117,16 @@ const char *perf_env__raw_arch(struct perf_env *env);
+ int perf_env__nr_cpus_avail(struct perf_env *env);
+ 
+ void perf_env__init(struct perf_env *env);
++void __perf_env__insert_bpf_prog_info(struct perf_env *env,
++				      struct bpf_prog_info_node *info_node);
+ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 				    struct bpf_prog_info_node *info_node);
+ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+ 							__u32 prog_id);
+ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node);
++bool __perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node);
+ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id);
++struct btf_node *__perf_env__find_btf(struct perf_env *env, __u32 btf_id);
+ 
+ int perf_env__numa_node(struct perf_env *env, int cpu);
+ #endif /* __PERF_ENV_H */
+diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
+index 642528613927..a68feeb3eb00 100644
+--- a/tools/perf/util/header.c
++++ b/tools/perf/util/header.c
+@@ -1546,8 +1546,8 @@ static void print_bpf_prog_info(struct feat_fd *ff, FILE *fp)
+ 		node = rb_entry(next, struct bpf_prog_info_node, rb_node);
+ 		next = rb_next(&node->rb_node);
+ 
+-		bpf_event__print_bpf_prog_info(&node->info_linear->info,
+-					       env, fp);
++		__bpf_event__print_bpf_prog_info(&node->info_linear->info,
++						 env, fp);
+ 	}
+ 
+ 	up_read(&env->bpf_progs.lock);
+@@ -2724,7 +2724,7 @@ static int process_bpf_prog_info(struct feat_fd *ff, void *data __maybe_unused)
+ 		/* after reading from file, translate offset to address */
+ 		bpf_program__bpil_offs_to_addr(info_linear);
+ 		info_node->info_linear = info_linear;
+-		perf_env__insert_bpf_prog_info(env, info_node);
++		__perf_env__insert_bpf_prog_info(env, info_node);
+ 	}
+ 
+ 	up_write(&env->bpf_progs.lock);
+@@ -2777,7 +2777,7 @@ static int process_bpf_btf(struct feat_fd *ff, void *data __maybe_unused)
+ 		if (__do_read(ff, node->data, data_size))
+ 			goto out;
+ 
+-		perf_env__insert_btf(env, node);
++		__perf_env__insert_btf(env, node);
+ 		node = NULL;
+ 	}
+ 
 -- 
 2.43.0
 
