@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DA314A09B;
-	Tue, 23 Jan 2024 01:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319A014A0B5;
+	Tue, 23 Jan 2024 01:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972100; cv=none; b=Qc0JsT3TN/Oy+7nSA1jbI7Y4eweak/c8DAv5XCL2CMFkGpZqj8gu7FP/V4tI2GvWLj7JU78O7EB1QZZKnD31hai2+4BvdgUeKQFZ3kKa7FrUmyerqrFu6uX7dm0gLDaF5Oed+kH3FTv/IAHaJeakqAkAcMCd3PHerTDV6KDjbrc=
+	t=1705972102; cv=none; b=OT7wI+d3tIZUdvP4XfoOdqN9Jo67IhZhaFxfzk76lS28S2uNzbUT6zpxjzFgeRS7NS1tleiIPg7t1AT0u2PI7qW09DCy5Pj3PuBIsk22gpkMRsph0PWXNZU63WXBJxpe9jcUstWwlbayAd8PxMhNO9aRwe3DbGeBWYf6AxXv7BE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972100; c=relaxed/simple;
-	bh=B7n3RBNqbmroLgWsgSJh8iJCBkLhRS3+7ucsYfimROU=;
+	s=arc-20240116; t=1705972102; c=relaxed/simple;
+	bh=x2F03w3h0EO7EnuiM24/ncnyVO5+UpoMkDTkoBU1rdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uGAX+JdJ55bvEYTekOgTWWDx6argtdYk4WENE2SB36ibGqZ9dVIimGixRZ+Ndr3GgB2pwDuGNR7D0lKGr5fOe1Ue4prcgIcEcTZLwKamqcRNXugnG27BEwf7js7vw5/21Egl7Dwd4apMYVKakHxsi6l8+plauGGMdVBZJds2eL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgaJVy68; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=POBfa11ZZP+ggvwuL/asYKmM4eBm0S1auF6Q2xoV08tzoqrOvyrZM52N/O1HinguBS6sQnrRsYVtM+8YGxQV+9cK6I6OqVTe6SK4x14nwUE8eagCQ6p3tZuhsZ4cP8WBdcBiCS7s3Muvmh86eQulS4K15687XBaxF61S9Y6TM1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=veL8+8jA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgaJVy68"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6084C43390;
-	Tue, 23 Jan 2024 01:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="veL8+8jA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17798C43399;
+	Tue, 23 Jan 2024 01:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972100;
-	bh=B7n3RBNqbmroLgWsgSJh8iJCBkLhRS3+7ucsYfimROU=;
+	s=korg; t=1705972101;
+	bh=x2F03w3h0EO7EnuiM24/ncnyVO5+UpoMkDTkoBU1rdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AgaJVy68+sBHnN4DzOgowM7FUVejehUiOT74M3YjNfU5K3KG55aYkGs3wQXpY2Zes
-	 qVKPHjIOtE9FRmKsEPmPI71mG9f25ceugwcDnLETfTIQYzKPCaiy1rOmdtzGtE4u7I
-	 XVaLXVvFhzjv4WeC08tKC+KPQOgzPskxkJlsqJU4=
+	b=veL8+8jANauTpw4w+0/4mvEWCkVIs7w9WWOfVhU7hiAqCrJJQOTOJg6srZh3tBJ9r
+	 tiy+4ZgcwkE2MNPTfJumZCupsu+34VpVQQifv1Db/chI120FXpjkwxb6xqewIHMqos
+	 VAIvp7h4ClRGhU8YwM3yMTfVHVHBf2LJVlLH23eQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang Ye <yesh25@mail2.sysu.edu.cn>,
-	gurevitch <mail@gurevit.ch>,
-	Egor Ignatov <egori@altlinux.org>,
-	Anton Zhilyaev <anton@cpp.in>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/374] Input: atkbd - skip ATKBD_CMD_GETID in translated mode
-Date: Mon, 22 Jan 2024 15:54:54 -0800
-Message-ID: <20240122235745.955513227@linuxfoundation.org>
+Subject: [PATCH 5.15 021/374] drm/amdgpu: Add NULL checks for function pointers
+Date: Mon, 22 Jan 2024 15:54:37 -0800
+Message-ID: <20240122235745.362171641@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -55,124 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 936e4d49ecbc8c404790504386e1422b599dec39 ]
+[ Upstream commit 81577503efb49f4ad76af22f9941d72900ef4aab ]
 
-There have been multiple reports of keyboard issues on recent laptop models
-which can be worked around by setting i8042.dumbkbd, with the downside
-being this breaks the capslock LED.
+Check if function is implemented before making the call.
 
-It seems that these issues are caused by recent laptops getting confused by
-ATKBD_CMD_GETID. Rather then adding and endless growing list of quirks for
-this, just skip ATKBD_CMD_GETID alltogether on laptops in translated mode.
-
-The main goal of sending ATKBD_CMD_GETID is to skip binding to ps/2
-mice/touchpads and those are never used in translated mode.
-
-Examples of laptop models which benefit from skipping ATKBD_CMD_GETID:
-
-* "HP Laptop 15s-fq2xxx", "HP laptop 15s-fq4xxx" and "HP Laptop 15-dy2xxx"
-  models the kbd stops working for the first 2 - 5 minutes after boot
-  (waiting for EC watchdog reset?)
-
-* On "HP Spectre x360 13-aw2xxx" atkbd fails to probe the keyboard
-
-* At least 9 different Lenovo models have issues with ATKBD_CMD_GETID, see:
-  https://github.com/yescallop/atkbd-nogetid
-
-This has been tested on:
-
-1. A MSI B550M PRO-VDH WIFI desktop, where the i8042 controller is not
-   in translated mode when no keyboard is plugged in and with a ps/2 kbd
-   a "AT Translated Set 2 keyboard" /dev/input/event# node shows up
-
-2. A Lenovo ThinkPad X1 Yoga gen 8 (always has a translated set 2 keyboard)
-
-Reported-by: Shang Ye <yesh25@mail2.sysu.edu.cn>
-Closes: https://lore.kernel.org/linux-input/886D6167733841AE+20231017135318.11142-1-yesh25@mail2.sysu.edu.cn/
-Closes: https://github.com/yescallop/atkbd-nogetid
-Reported-by: gurevitch <mail@gurevit.ch>
-Closes: https://lore.kernel.org/linux-input/2iAJTwqZV6lQs26cTb38RNYqxvsink6SRmrZ5h0cBUSuf9NT0tZTsf9fEAbbto2maavHJEOP8GA1evlKa6xjKOsaskDhtJWxjcnrgPigzVo=@gurevit.ch/
-Reported-by: Egor Ignatov <egori@altlinux.org>
-Closes: https://lore.kernel.org/all/20210609073333.8425-1-egori@altlinux.org/
-Reported-by: Anton Zhilyaev <anton@cpp.in>
-Closes: https://lore.kernel.org/linux-input/20210201160336.16008-1-anton@cpp.in/
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2086156
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231115174625.7462-1-hdegoede@redhat.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/keyboard/atkbd.c | 46 +++++++++++++++++++++++++++++++---
- 1 file changed, 42 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/soc15.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/input/keyboard/atkbd.c b/drivers/input/keyboard/atkbd.c
-index fbdef95291e9..8126ab2acd18 100644
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -756,6 +756,44 @@ static void atkbd_deactivate(struct atkbd *atkbd)
- 			ps2dev->serio->phys);
+diff --git a/drivers/gpu/drm/amd/amdgpu/soc15.c b/drivers/gpu/drm/amd/amdgpu/soc15.c
+index 529bb6c6ac6f..e8c0e77e1b01 100644
+--- a/drivers/gpu/drm/amd/amdgpu/soc15.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
+@@ -1615,9 +1615,11 @@ static void soc15_common_get_clockgating_state(void *handle, u32 *flags)
+ 	if (amdgpu_sriov_vf(adev))
+ 		*flags = 0;
+ 
+-	adev->nbio.funcs->get_clockgating_state(adev, flags);
++	if (adev->nbio.funcs && adev->nbio.funcs->get_clockgating_state)
++		adev->nbio.funcs->get_clockgating_state(adev, flags);
+ 
+-	adev->hdp.funcs->get_clock_gating_state(adev, flags);
++	if (adev->hdp.funcs && adev->hdp.funcs->get_clock_gating_state)
++		adev->hdp.funcs->get_clock_gating_state(adev, flags);
+ 
+ 	if (adev->asic_type != CHIP_ALDEBARAN) {
+ 
+@@ -1633,9 +1635,11 @@ static void soc15_common_get_clockgating_state(void *handle, u32 *flags)
+ 	}
+ 
+ 	/* AMD_CG_SUPPORT_ROM_MGCG */
+-	adev->smuio.funcs->get_clock_gating_state(adev, flags);
++	if (adev->smuio.funcs && adev->smuio.funcs->get_clock_gating_state)
++		adev->smuio.funcs->get_clock_gating_state(adev, flags);
+ 
+-	adev->df.funcs->get_clockgating_state(adev, flags);
++	if (adev->df.funcs && adev->df.funcs->get_clockgating_state)
++		adev->df.funcs->get_clockgating_state(adev, flags);
  }
  
-+#ifdef CONFIG_X86
-+static bool atkbd_is_portable_device(void)
-+{
-+	static const char * const chassis_types[] = {
-+		"8",	/* Portable */
-+		"9",	/* Laptop */
-+		"10",	/* Notebook */
-+		"14",	/* Sub-Notebook */
-+		"31",	/* Convertible */
-+		"32",	/* Detachable */
-+	};
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(chassis_types); i++)
-+		if (dmi_match(DMI_CHASSIS_TYPE, chassis_types[i]))
-+			return true;
-+
-+	return false;
-+}
-+
-+/*
-+ * On many modern laptops ATKBD_CMD_GETID may cause problems, on these laptops
-+ * the controller is always in translated mode. In this mode mice/touchpads will
-+ * not work. So in this case simply assume a keyboard is connected to avoid
-+ * confusing some laptop keyboards.
-+ *
-+ * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using a fake id is
-+ * ok in translated mode, only atkbd_select_set() checks atkbd->id and in
-+ * translated mode that is a no-op.
-+ */
-+static bool atkbd_skip_getid(struct atkbd *atkbd)
-+{
-+	return atkbd->translated && atkbd_is_portable_device();
-+}
-+#else
-+static inline bool atkbd_skip_getid(struct atkbd *atkbd) { return false; }
-+#endif
-+
- /*
-  * atkbd_probe() probes for an AT keyboard on a serio port.
-  */
-@@ -785,12 +823,12 @@ static int atkbd_probe(struct atkbd *atkbd)
-  */
- 
- 	param[0] = param[1] = 0xa5;	/* initialize with invalid values */
--	if (ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
-+	if (atkbd_skip_getid(atkbd) || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
- 
- /*
-- * If the get ID command failed, we check if we can at least set the LEDs on
-- * the keyboard. This should work on every keyboard out there. It also turns
-- * the LEDs off, which we want anyway.
-+ * If the get ID command was skipped or failed, we check if we can at least set
-+ * the LEDs on the keyboard. This should work on every keyboard out there.
-+ * It also turns the LEDs off, which we want anyway.
-  */
- 		param[0] = 0;
- 		if (ps2_command(ps2dev, param, ATKBD_CMD_SETLEDS))
+ static int soc15_common_set_powergating_state(void *handle,
 -- 
 2.43.0
 
