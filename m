@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401ADDDB5;
-	Tue, 23 Jan 2024 00:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F702371;
+	Tue, 23 Jan 2024 00:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968191; cv=none; b=Qh8UaHI5afsKIC9DsnUonSDK1I+f0Ynl2EaYGAc7Aq2+A20idA29nINKVMS1wfmorlY/R6ty9b6h93Q7g/g+0Br2Lj4BdcdtqXssJN0mdoqlBW7VxtvOoOtRfwkk/WoA3/6X/2qJE5HeZ5jqsFC5MHq+3WfH+FfYF5jUjVsScNs=
+	t=1705968195; cv=none; b=C45bns/bQ6bouhwOhoUQZ/Y9yd/uOYR9ilBa/IjoVqqVgCteO71zzmhDjwSKFaYSM6YdeQkh10xhwLW/QEe56BmnlGFGsEKY1cgB66teTYxIAOv3Z83i4uvsjD0L5Q5lhvYw+Tz8SYz3w/Qb5h+jt2WPClw5rl9TALAdu8COJFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968191; c=relaxed/simple;
-	bh=ZKMJGGsdUu7FpyQxsyLgl5t3/7hO0kwGR5On6mTJhVM=;
+	s=arc-20240116; t=1705968195; c=relaxed/simple;
+	bh=rRi9vNZ3QsGLLIqGCjYYJzIj8trGWgxOacGZM1W3bHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfHjlS3kjuFS3oaSS9D0wCXRJA/zGqgT27hkib0dSZNBk4zmFeyp8A2ICC22jgiw4kOQOYfrrwBxxe7Hocl8F6jq4rtz1GO/E35essRSIH02H12AlDOGQDDFwVjOOoP2D/5aZVvp6YjTTljY1Wwl7W/I7Wch5glUfkqAX2OkFXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjW4QSdU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nEWeaS3nm6//yn6MXZ+/1JIc1T9hTo49ccAHAwOTfBDZJPq5Q1Cf4+x/1fKYk4w4f6wW4UIymORbcDhRV+Q8m6gFQFSkOHTc91G4chiBJRQy7E0oq1KtquX66cl9y0egcqoxYMGmwHhxNqycPATflSBuXVu89QvUXFBwyklKfZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qoRN4oCA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjW4QSdU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1869C433F1;
-	Tue, 23 Jan 2024 00:03:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qoRN4oCA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11701C433C7;
+	Tue, 23 Jan 2024 00:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968191;
-	bh=ZKMJGGsdUu7FpyQxsyLgl5t3/7hO0kwGR5On6mTJhVM=;
+	s=korg; t=1705968195;
+	bh=rRi9vNZ3QsGLLIqGCjYYJzIj8trGWgxOacGZM1W3bHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OjW4QSdUwFopZ/P4s+AnMSoWqmf9E0TE9eyQEgpmwQjT6qUkOkpdHZWVBuQ5NC7Vy
-	 3rEAeYqcgxblcwpoEIJBV5DvCsMHoT11OuWrs+DpWIra/300wqeCcBTh8Jeer5jp4h
-	 95zmud3NyOZ6NHntSCGDJyzepzKJ7CU1Xa2gFL1k=
+	b=qoRN4oCA5sMPLFisGwEgJysb0BzMSoXYmhdTgXi5pg5CYl11HHdW7yU2w8HncF9/z
+	 x4dY1EIi5vT5cZ/29kOvuY5TA1vyl0SWQ+IYjH5NlO4XcvseG5YE9jRTlg0gtfV8by
+	 Nt5VXDovaK271fo+2YIZfXkQV1qNjKDFDsknLocw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Kiryushin <kiryushin@ancud.ru>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paul Moore <paul@paul-moore.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 039/148] ACPI: LPIT: Avoid u32 multiplication overflow
-Date: Mon, 22 Jan 2024 15:56:35 -0800
-Message-ID: <20240122235713.992727729@linuxfoundation.org>
+Subject: [PATCH 4.19 040/148] net: netlabel: Fix kerneldoc warnings
+Date: Mon, 22 Jan 2024 15:56:36 -0800
+Message-ID: <20240122235714.036043807@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -51,38 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Kiryushin <kiryushin@ancud.ru>
+From: Andrew Lunn <andrew@lunn.ch>
 
-[ Upstream commit 56d2eeda87995245300836ee4dbd13b002311782 ]
+[ Upstream commit 294ea29113104487a905d0f81c00dfd64121b3d9 ]
 
-In lpit_update_residency() there is a possibility of overflow
-in multiplication, if tsc_khz is large enough (> UINT_MAX/1000).
+net/netlabel/netlabel_calipso.c:376: warning: Function parameter or member 'ops' not described in 'netlbl_calipso_ops_register'
 
-Change multiplication to mul_u32_u32().
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: eeb2d80d502a ("ACPI / LPIT: Add Low Power Idle Table (LPIT) support")
-Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Link: https://lore.kernel.org/r/20201028005350.930299-1-andrew@lunn.ch
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: ec4e9d630a64 ("calipso: fix memory leak in netlbl_calipso_add_pass()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_lpit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netlabel/netlabel_calipso.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/acpi_lpit.c b/drivers/acpi/acpi_lpit.c
-index e43cb71b6972..c39c56904c52 100644
---- a/drivers/acpi/acpi_lpit.c
-+++ b/drivers/acpi/acpi_lpit.c
-@@ -106,7 +106,7 @@ static void lpit_update_residency(struct lpit_residency_info *info,
- 				 struct acpi_lpit_native *lpit_native)
- {
- 	info->frequency = lpit_native->counter_frequency ?
--				lpit_native->counter_frequency : tsc_khz * 1000;
-+				lpit_native->counter_frequency : mul_u32_u32(tsc_khz, 1000U);
- 	if (!info->frequency)
- 		info->frequency = 1;
+diff --git a/net/netlabel/netlabel_calipso.c b/net/netlabel/netlabel_calipso.c
+index 4d748975117d..5ae9b0f18a7e 100644
+--- a/net/netlabel/netlabel_calipso.c
++++ b/net/netlabel/netlabel_calipso.c
+@@ -379,6 +379,7 @@ static const struct netlbl_calipso_ops *calipso_ops;
  
+ /**
+  * netlbl_calipso_ops_register - Register the CALIPSO operations
++ * @ops: ops to register
+  *
+  * Description:
+  * Register the CALIPSO packet engine operations.
 -- 
 2.43.0
 
