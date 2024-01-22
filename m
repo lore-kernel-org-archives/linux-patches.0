@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADDC61673;
-	Tue, 23 Jan 2024 01:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EBD7627E7;
+	Tue, 23 Jan 2024 01:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974947; cv=none; b=sjd8gCMJp5XlEHpTXNtHxnbjelf/ZT/SvFh5+XrFgOGlon1hSLZPSJFmW62OlEDCJ7ewhZs1CyEV1MkPahepG0CYcJucfqZgrSFU8KOkbbOihmdpyuIXOBftAzW/SmhO8QHm4x9rXHmz9K2euYyhKlBDrhtfVBWRmjmWDhBGuXk=
+	t=1705974948; cv=none; b=NfbVuOnwkh3nUB3ss6EJ1EXyHipWNHQ3+TKJBvgIoYSCSzSetQLBTxjBkZRMXyqTUtS0KLX1hNsSLeajN4ed+HYPwPUFnF95J3K6pRCa4qneHpdhKAL276qiMua/KFOzIVa823T5RDjIhemuAS0mS9k1PgPQuDyvLcQZCLNyqX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974947; c=relaxed/simple;
-	bh=FiqN5Ykm7Wz+0NJP4AMHA6HT47mMYnWtHoZVZ7CKJQE=;
+	s=arc-20240116; t=1705974948; c=relaxed/simple;
+	bh=4yoSgJYKhq7oSYl4B/kv9wKnaSgR34XM2/TO2b+NSTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hHVYprsRmOK2EjaR779CYDqU6brff0GS8w16QpsEbn965rRi+Ezgzn/PhX3bfI4/qPisRx4/apAyaY73i1CN5ckxxhP/VHWmorBYte9GlKD6dBBRpn2mgmEEipUo0LT5BpO86TTwObLyzlpt5aqDms61ReNBtOR3UUIjOsN0Uu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qgv30rM4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=caQ6/5rMEeYw5R/c8n6daHjv0Pf0TFG2YzjaBvzp92Nz5XnqtVXg6b3XEPdUkaR0xSy3HFlEMUmS9I4m9EzvF4S7FBcUSoKX+vfbHpuTGRIdFCvZwAEfydQ61ijWL6aXLgCLjvD72EPt32ab8Y9nCksI2WcjQrhQsWgfbfETaAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Va0c+wHx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgv30rM4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCB4C433F1;
-	Tue, 23 Jan 2024 01:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Va0c+wHx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0DFC43399;
+	Tue, 23 Jan 2024 01:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974947;
-	bh=FiqN5Ykm7Wz+0NJP4AMHA6HT47mMYnWtHoZVZ7CKJQE=;
+	s=korg; t=1705974948;
+	bh=4yoSgJYKhq7oSYl4B/kv9wKnaSgR34XM2/TO2b+NSTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgv30rM4cT4tZlHL+BjNqdlcHOPshEaZ4yh6u56dc7X83ymI04twfiSePcjf6a/vm
-	 6tcqiXBANdj7HegC3k9WoFksWhXJrvmQCq5dnE40E/JVLBG6BGNCaPd1fSJnb76Ynq
-	 slaL2z4YPXxn3ULwLEd3V9oAXiMpao4kHvOc48GQ=
+	b=Va0c+wHxzwkVU57HCr9ptetTylQ/SpaC9/WyT3/KT9DcQJ4gSsqdys0ARF1ImOpmH
+	 khv0EdfZbou1OaCjl54Ob/CT+gnNe494kLwgFAm2oNwNy8xZQh2VTRd9fldQixATTi
+	 FiH4ZGLr81UkZf+kxu1QlFQqvKsZ2+Rur6uITfB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihang Li <liyihang9@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Arnd Bergmann <arnd@arndb.de>,
+	linux-arm-kernel@lists.infradead.org,
+	patches@armlinux.org.uk,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 163/583] scsi: hisi_sas: Correct the number of global debugfs registers
-Date: Mon, 22 Jan 2024 15:53:34 -0800
-Message-ID: <20240122235817.028235043@linuxfoundation.org>
+Subject: [PATCH 5.15 291/374] ARM: 9330/1: davinci: also select PINCTRL
+Date: Mon, 22 Jan 2024 15:59:07 -0800
+Message-ID: <20240122235754.911250742@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +52,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yihang Li <liyihang9@huawei.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 73e33f969ef05328766b23a99b2c07bfff765009 ]
+[ Upstream commit f54e8634d1366926c807e2af6125b33cff555fa7 ]
 
-In function debugfs_debugfs_snapshot_global_reg_v3_hw() it uses
-debugfs_axi_reg.count (which is the number of axi debugfs registers) to
-acquire the number of global debugfs registers.
+kconfig warns when PINCTRL_SINGLE is selected but PINCTRL is not
+set, so also set PINCTRL for ARCH_DAVINCI. This prevents a
+kconfig/build warning:
 
-Use debugfs_global_reg.count to acquire the number of global debugfs
-registers instead.
+   WARNING: unmet direct dependencies detected for PINCTRL_SINGLE
+     Depends on [n]: PINCTRL [=n] && OF [=y] && HAS_IOMEM [=y]
+     Selected by [y]:
+     - ARCH_DAVINCI [=y] && ARCH_MULTI_V5 [=y]
 
-Fixes: 623a4b6d5c2a ("scsi: hisi_sas: Move debugfs code to v3 hw driver")
-Signed-off-by: Yihang Li <liyihang9@huawei.com>
-Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1702525516-51258-6-git-send-email-chenxiang66@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Closes: lore.kernel.org/r/202311070548.0f6XfBrh-lkp@intel.com
+
+Fixes: f962396ce292 ("ARM: davinci: support multiplatform build for ARM v5")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: patches@armlinux.org.uk
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mach-davinci/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 53c955c4f080..520fffc14282 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -3478,7 +3478,7 @@ static void debugfs_snapshot_global_reg_v3_hw(struct hisi_hba *hisi_hba)
- 	u32 *databuf = hisi_hba->debugfs_regs[dump_index][DEBUGFS_GLOBAL].data;
- 	int i;
+diff --git a/arch/arm/mach-davinci/Kconfig b/arch/arm/mach-davinci/Kconfig
+index 01684347da9b..889f3b9255c7 100644
+--- a/arch/arm/mach-davinci/Kconfig
++++ b/arch/arm/mach-davinci/Kconfig
+@@ -10,6 +10,7 @@ menuconfig ARCH_DAVINCI
+ 	select PM_GENERIC_DOMAINS_OF if PM && OF
+ 	select REGMAP_MMIO
+ 	select RESET_CONTROLLER
++	select PINCTRL
+ 	select PINCTRL_SINGLE
  
--	for (i = 0; i < debugfs_axi_reg.count; i++, databuf++)
-+	for (i = 0; i < debugfs_global_reg.count; i++, databuf++)
- 		*databuf = hisi_sas_read32(hisi_hba, 4 * i);
- }
- 
+ if ARCH_DAVINCI
 -- 
 2.43.0
 
