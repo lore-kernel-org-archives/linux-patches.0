@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9B358127;
-	Tue, 23 Jan 2024 01:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8495820F;
+	Tue, 23 Jan 2024 01:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974062; cv=none; b=OIzArNDq9OKxmtZr6DNsQBOsrVi6MLElulnmm3V1sxQAditUIYPBmOmXBrJP6dSiIZw1sPGy95nf6WrcU39La4M3XlP4gr/Q051sgL3sISNLbPxdQrHoOibWk0bzJWxQsozPSawi35q2Mro7AeBy8sCOKpG+dhhjurgcg4h75zs=
+	t=1705974063; cv=none; b=PfR+7ev4wVQbPawusq1YzF4ut54ARlkQbtskxUzyOKkKJy3jElYgWtuVGLWA6pNGS+zEnWjkTnTGGJ6vs2oRqctChFjvFpA2+mYM1ZOChrxYh5EAJjkowA5tZFKauMG5q0+R+hyrrQhAZKu/8YzpRvHt74qFtjq8UoQAzVzAPjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974062; c=relaxed/simple;
-	bh=t0lWGX7T/U0kl3g/dWUMVeUSkHmnhsszjD1/eyRDKzA=;
+	s=arc-20240116; t=1705974063; c=relaxed/simple;
+	bh=uiVEUKeXS5wEbvbQ0u9q869wnW6Rnzoy/wS8Xe1Fhls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hO3wkLdI2XJew+UnQLmwvlkp/6jdc8dAnnrTcAaXTBY04Sos1ZN3NXiWnrWiWL0A/SThpamWaydF+KukjNQ+GoYOH16netnN7DBrihdhxy+3kHXRYMBI7YTg5O4fUFzlukEXXaoajQnSM2msFwQYCSGdfCGACF8h4y2x8BpVyM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rs/Uw/Aa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eGhxr3g0iGOBHyDNpMkosbvpHH50ttQAPIkuUc9pnUluDNnFm4t8BOheO5nOtw2tmkzV3+uFiYnMUfpcvC57JXcB3Ntq3D1gzwHBbW5RAfemDNSyQplc6Aq7cpcnca7/om1wDt99Hcef+7gEYQ5n2oLXRLjYlu61m87mhKnxxyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiKUu6pw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rs/Uw/Aa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8A5C43390;
-	Tue, 23 Jan 2024 01:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiKUu6pw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB63C43390;
+	Tue, 23 Jan 2024 01:41:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974061;
-	bh=t0lWGX7T/U0kl3g/dWUMVeUSkHmnhsszjD1/eyRDKzA=;
+	s=korg; t=1705974063;
+	bh=uiVEUKeXS5wEbvbQ0u9q869wnW6Rnzoy/wS8Xe1Fhls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rs/Uw/AaSk2HP1Tbk4VRyt8PmWyMIGGYWPl9g/UIWpXaiTKM7ktUlL3KD/uAZ+V0j
-	 AHv3EL024aGxVXc/y6p/iNQr1wq0egaXR+ZipOPyE3e2+5XV97RGyUmRNjeU9B8lGe
-	 Ea2YboNagET7VJNLUL4Ktk8MtEzB8J1TQr92kiTM=
+	b=QiKUu6pwHCmSsumAPzAPuhons8XMoP17u7HDrhUGnDK1smOparwY1mCXTtQd8kfjv
+	 Tf5za04sZnfTyv4v1+vMzrnOF98IpaXIn8jOHiObkrvCAQbHosERAZpuFEuXAUbpLc
+	 XL4vpiiaDrluXf+EMDecwtAZnAYqNoJGwvMLmryE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Yihang Li <liyihang9@huawei.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/583] x86/mce/inject: Clear test status value
-Date: Mon, 22 Jan 2024 15:50:53 -0800
-Message-ID: <20240122235812.309158304@linuxfoundation.org>
+Subject: [PATCH 5.15 144/374] scsi: hisi_sas: Replace with standard error code return value
+Date: Mon, 22 Jan 2024 15:56:40 -0800
+Message-ID: <20240122235749.639914868@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +48,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Yihang Li <liyihang9@huawei.com>
 
-[ Upstream commit 6175b407756b22e7fdc771181b7d832ebdedef5c ]
+[ Upstream commit d34ee535705eb43885bc0f561c63046f697355ad ]
 
-AMD systems generally allow MCA "simulation" where MCA registers can be
-written with valid data and the full MCA handling flow can be tested by
-software.
+In function hisi_sas_controller_prereset(), -ENOSYS (Function not
+implemented) should be returned if the driver does not support .soft_reset.
+Returns -EPERM (Operation not permitted) if HISI_SAS_RESETTING_BIT is
+already be set.
 
-However, the platform on Scalable MCA systems, can prevent software from
-writing data to the MCA registers. There is no architectural way to
-determine this configuration. Therefore, the MCE injection module will
-check for this behavior by writing and reading back a test status value.
-This is done during module init, and the check can run on any CPU with
-any valid MCA bank.
+In function _suspend_v3_hw(), returns -EPERM (Operation not permitted) if
+HISI_SAS_RESETTING_BIT is already be set.
 
-If MCA_STATUS writes are ignored by the platform, then there are no side
-effects on the hardware state.
-
-If the writes are not ignored, then the test status value will remain in
-the hardware MCA_STATUS register. It is likely that the value will not
-be overwritten by hardware or software, since the tested CPU and bank
-are arbitrary. Therefore, the user may see a spurious, synthetic MCA
-error reported whenever MCA is polled for this CPU.
-
-Clear the test value immediately after writing it. It is very unlikely
-that a valid MCA error is logged by hardware during the test. Errors
-that cause an #MC won't be affected.
-
-Fixes: 891e465a1bd8 ("x86/mce: Check whether writes to MCA_STATUS are getting ignored")
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20231118193248.1296798-2-yazen.ghannam@amd.com
+Fixes: 4522204ab218 ("scsi: hisi_sas: tidy host controller reset function a bit")
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
+Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
+Link: https://lore.kernel.org/r/1702525516-51258-3-git-send-email-chenxiang66@hisilicon.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/mce/inject.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/hisi_sas/hisi_sas_main.c  | 4 ++--
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/mce/inject.c b/arch/x86/kernel/cpu/mce/inject.c
-index 4d8d4bcf915d..72f0695c3dc1 100644
---- a/arch/x86/kernel/cpu/mce/inject.c
-+++ b/arch/x86/kernel/cpu/mce/inject.c
-@@ -746,6 +746,7 @@ static void check_hw_inj_possible(void)
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index 19081790f011..530f61df109a 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -1584,12 +1584,12 @@ EXPORT_SYMBOL_GPL(hisi_sas_controller_reset_done);
+ static int hisi_sas_controller_prereset(struct hisi_hba *hisi_hba)
+ {
+ 	if (!hisi_hba->hw->soft_reset)
+-		return -1;
++		return -ENOENT;
  
- 		wrmsrl_safe(mca_msr_reg(bank, MCA_STATUS), status);
- 		rdmsrl_safe(mca_msr_reg(bank, MCA_STATUS), &status);
-+		wrmsrl_safe(mca_msr_reg(bank, MCA_STATUS), 0);
+ 	down(&hisi_hba->sem);
+ 	if (test_and_set_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags)) {
+ 		up(&hisi_hba->sem);
+-		return -1;
++		return -EPERM;
+ 	}
  
- 		if (!status) {
- 			hw_injection_possible = false;
+ 	if (hisi_sas_debugfs_enable && hisi_hba->debugfs_itct[0].itct)
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index 0e57381121d5..88af529ab100 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -4983,7 +4983,7 @@ static int _suspend_v3_hw(struct device *device)
+ 	}
+ 
+ 	if (test_and_set_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags))
+-		return -1;
++		return -EPERM;
+ 
+ 	scsi_block_requests(shost);
+ 	set_bit(HISI_SAS_REJECT_CMD_BIT, &hisi_hba->flags);
 -- 
 2.43.0
 
