@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CA0633EB;
-	Tue, 23 Jan 2024 00:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F68963409;
+	Tue, 23 Jan 2024 00:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971176; cv=none; b=rSBwRkykSD4OFXQbOh6q7LcDEkgfhN7CqHSxQ4AatMIkohR38QgelVbKicKU6dcMrT3swrq/cuczwB/hylkh7FDOnARwX2FU6YgDHvXz+r4ntyUXauS+Swzp/rxL5RiTFZgWAUxjNdz3PM13atHqm5ED9p5QSdFi8qQQUzFN9G0=
+	t=1705971179; cv=none; b=IUZNYqxiokIFJ4XNIk0LHV56f4D9m4O0X8nKWAg0sp9bOTWEOx4SZqc4t/sD3bTVjXrU8eigZVr1szzZfkFJLiQmPFc0dWP54Cx/GtJ8Okd1BHjvs5qXGyfK5Fpn9cYT5hClHGphCCUdW1y02nVzLaxnN4aJyJnvkqPh9dlqJjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971176; c=relaxed/simple;
-	bh=DCIBPb8AgUdr929znAQdJaXhC7jZ5GPwWxWgxYXianA=;
+	s=arc-20240116; t=1705971179; c=relaxed/simple;
+	bh=3tsJPZszjcbkqklgwkMyoX8JmX1OBIGVFyHKNGk9/DA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VE5QZAe/P91HLhn3yV3G1y5YObNOK90lJFaFiQ6aG9tUHv3VT7tTF/+aKEv0cscqgPz8WvNPdLcjQYtmr1H1Im/ZcOw18LrcJFqcDBQreb0IxJG0T/KQyuxsHALkh82z5T48Mq9BmtiZahXBGVykkeN5MbOmo4hpmnxSpcqM5K4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6ZsmyMD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b+Zf2apkPeKDv7etw3oBERIZ/Vm1SlCkAgMyoNRo8MmfHvmWHD4R4zT+kbphq6dKibIethnkFbUnkW2/uZa5nTzuiNgEVJxzL5OQEigxmDcrVdFLKOzHhZj5Bwv2AimJVmC/lv3KW82/JjUhOsIhG+gBBXLpntZixsflPwEJtDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbtTOzlZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6ZsmyMD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA6CC433F1;
-	Tue, 23 Jan 2024 00:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbtTOzlZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F85C43390;
+	Tue, 23 Jan 2024 00:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971176;
-	bh=DCIBPb8AgUdr929znAQdJaXhC7jZ5GPwWxWgxYXianA=;
+	s=korg; t=1705971179;
+	bh=3tsJPZszjcbkqklgwkMyoX8JmX1OBIGVFyHKNGk9/DA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6ZsmyMDMVLDEfM/Miw62d+/399vVlxjwmqT9to25+uR5jzi1NUoc5aZJJrpnGg1d
-	 DQgY+ZTzNxpgYKvNmitkaswe+59cQzjQC5tjZs3hxoXJtz7wr7OiJOmgoNFC6LFyyI
-	 wIFfQbs73RiRzSMW/9f9oODHcarjJqeQMvui7bbw=
+	b=hbtTOzlZs6A/qvt/rrfnDSCiUfTZVTLDIlxIAc7LGq/8yMcdKV/mdfjXtrd99xLpb
+	 CDgXK57yDtlmiwy3axtdodN4EtOwDxsXqcbAsGc6RCredjsOTG1Ple48ylDAGvxPIK
+	 vRzWgFojjbJ4xjptdx4E9Gl5M0yzFgf5t91LSEQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	syzbot+3eff5e51bf1db122a16e@syzkaller.appspotmail.com,
+	Chengming Zhou <zhouchengming@bytedance.com>,
+	Barry Song <v-songbaohua@oppo.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 197/417] drm/panel: st7701: Fix AVCL calculation
-Date: Mon, 22 Jan 2024 15:56:05 -0800
-Message-ID: <20240122235758.760332770@linuxfoundation.org>
+Subject: [PATCH 5.10 105/286] crypto: scomp - fix req->dst buffer overflow
+Date: Mon, 22 Jan 2024 15:56:51 -0800
+Message-ID: <20240122235736.136974149@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +49,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Chengming Zhou <zhouchengming@bytedance.com>
 
-[ Upstream commit 799825aa87200ade1ba21db853d1c2ff720dcfe0 ]
+[ Upstream commit 744e1885922a9943458954cfea917b31064b4131 ]
 
-The AVCL register, according to the datasheet, comes in increments
-of -0.2v between -4.4v (represented by 0x0) to -5.0v (represented
-by 0x3). The current calculation is done by adding the defined
-AVCL value in mV to -4400 and then dividing by 200 to get the register
-value. Unfortunately if I subtract -4400 from -4400 I get -8800, which
-divided by 200 gives me -44. If I instead subtract -4400 from -4400
-I get 0, which divided by 200 gives me 0. Based on the datasheet this
-is the expected register value.
+The req->dst buffer size should be checked before copying from the
+scomp_scratch->dst to avoid req->dst buffer overflow problem.
 
-Fixes: 83b7a8e7e88e ("drm/panel/panel-sitronix-st7701: Parametrize voltage and timing")
-
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20231208154847.130615-2-macroalpha82@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231208154847.130615-2-macroalpha82@gmail.com
+Fixes: 1ab53a77b772 ("crypto: acomp - add driver-side scomp interface")
+Reported-by: syzbot+3eff5e51bf1db122a16e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/0000000000000b05cd060d6b5511@google.com/
+Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
+Reviewed-by: Barry Song <v-songbaohua@oppo.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-sitronix-st7701.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ crypto/scompress.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-sitronix-st7701.c b/drivers/gpu/drm/panel/panel-sitronix-st7701.c
-index 225b9884f61a..54b28992db5d 100644
---- a/drivers/gpu/drm/panel/panel-sitronix-st7701.c
-+++ b/drivers/gpu/drm/panel/panel-sitronix-st7701.c
-@@ -288,7 +288,7 @@ static void st7701_init_sequence(struct st7701 *st7701)
- 		   FIELD_PREP(DSI_CMD2_BK1_PWRCTRL2_AVDD_MASK,
- 			      DIV_ROUND_CLOSEST(desc->avdd_mv - 6200, 200)) |
- 		   FIELD_PREP(DSI_CMD2_BK1_PWRCTRL2_AVCL_MASK,
--			      DIV_ROUND_CLOSEST(-4400 + desc->avcl_mv, 200)));
-+			      DIV_ROUND_CLOSEST(-4400 - desc->avcl_mv, 200)));
+diff --git a/crypto/scompress.c b/crypto/scompress.c
+index 738f4f8f0f41..4d6366a44400 100644
+--- a/crypto/scompress.c
++++ b/crypto/scompress.c
+@@ -124,6 +124,7 @@ static int scomp_acomp_comp_decomp(struct acomp_req *req, int dir)
+ 	struct crypto_scomp *scomp = *tfm_ctx;
+ 	void **ctx = acomp_request_ctx(req);
+ 	struct scomp_scratch *scratch;
++	unsigned int dlen;
+ 	int ret;
  
- 	/* T2D = 0.2us * T2D[3:0] */
- 	ST7701_DSI(st7701, DSI_CMD2_BK1_SPD1,
+ 	if (!req->src || !req->slen || req->slen > SCOMP_SCRATCH_SIZE)
+@@ -135,6 +136,8 @@ static int scomp_acomp_comp_decomp(struct acomp_req *req, int dir)
+ 	if (!req->dlen || req->dlen > SCOMP_SCRATCH_SIZE)
+ 		req->dlen = SCOMP_SCRATCH_SIZE;
+ 
++	dlen = req->dlen;
++
+ 	scratch = raw_cpu_ptr(&scomp_scratch);
+ 	spin_lock(&scratch->lock);
+ 
+@@ -152,6 +155,9 @@ static int scomp_acomp_comp_decomp(struct acomp_req *req, int dir)
+ 				ret = -ENOMEM;
+ 				goto out;
+ 			}
++		} else if (req->dlen > dlen) {
++			ret = -ENOSPC;
++			goto out;
+ 		}
+ 		scatterwalk_map_and_copy(scratch->dst, req->dst, 0, req->dlen,
+ 					 1);
 -- 
 2.43.0
 
