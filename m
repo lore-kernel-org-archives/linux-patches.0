@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CA112F581;
-	Tue, 23 Jan 2024 01:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1061F12DDB0;
+	Tue, 23 Jan 2024 01:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971727; cv=none; b=WmUaM3CDlhbPRq4v8PXuI5rCHrTzD2hHgcQHQHwkyK0z0ND8byH23pbGoXbxC0lFXlhv/4E1JmUo1vjwoEt2WzMy6+Eu43GfHA1vCKV5q/WbE8mOqY3SgWZyklaINv/aAF/6SRi6B13kwoz4MUkzuWl9xukmGsue/eA0MRsV5Zw=
+	t=1705971728; cv=none; b=KRLN7MGfKobssFsBQG2+FTws2F+JW4JBJGfXxU/9JojA2ok4sVpbtdXvWxCXvGrB/R/6eSFSuhhUPQsudwrno99A1R01T4ZsslgQwwiT04xIkH1FsNWox8xd8DCJj9WdI06tY2flCnL4Sx5/kZiPZXbk7/qSCSkePiRctZBEO5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971727; c=relaxed/simple;
-	bh=l04qzBxT8b5YkdKn0xnnbiOdTBkghPPu9oMY20m3LdU=;
+	s=arc-20240116; t=1705971728; c=relaxed/simple;
+	bh=R/ddnG+c1aT8Bn/RPb9GgB2h1WwMncdmu1c565jGtLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fU0WUg+7rRof0XuTdeiS98KaAUPG3z0oA5jXd7kc/fd+9/lTsQUMACoioaP6aOl9+S4KCQqPn0tFIlyFuOC7YN4TbdCW8kWs4+el7j5V11EIMx4xjm1j6ZvgLfx+ugPs7kur5/1ggPI59gFiVfUU7xqmT+8ifB+TE0xjDs7gnrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWOQicdd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U2e1E86pHybevMDyWfMWlHfgHhrx7uVh+056vBCKLfxCYlMjSODU5GXBbVEap2CmcAnlgsEKDoRxbwl6IVLpTdbgJ7YW95LsRkaCUy02LvFSBGehuEGZ4lyyfM4GrTfRoRRLWxzp70mfZMmz06dJ8ZM91JlAIFe/8HvqHq+hLRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxbqXtPq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWOQicdd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC6DC433C7;
-	Tue, 23 Jan 2024 01:02:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxbqXtPq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E18C433F1;
+	Tue, 23 Jan 2024 01:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971726;
-	bh=l04qzBxT8b5YkdKn0xnnbiOdTBkghPPu9oMY20m3LdU=;
+	s=korg; t=1705971727;
+	bh=R/ddnG+c1aT8Bn/RPb9GgB2h1WwMncdmu1c565jGtLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWOQicddMEsgTRwCD5ZUya5/EihGsslDRECm18CLxWMgvovKS0+WHa3v/JlRxanI/
-	 Mht5JEYWlIEWecZXbG0j8blrH3HK8Qt+XfQmcDpkS5xLIWqaZ3hiOIUvYPHQztlVdw
-	 WRT68mGGW19nUF0Gl4y9n70v2tvdbEnVKgk8vEH0=
+	b=BxbqXtPqCELQBA5OI+FjwyE4NpLXLH1icaBNsv3jDUwuvv89dFuhWRLHnA9lc5zae
+	 4t2MzPSHFC/c4BDCJzItz55426CyGKBvDRsFVEpNf2tgZ+NV8O/nTybUhlR1NEYcv2
+	 2Y528ut6rOCPh+P0+InD7Srd7Uc/LXf/3+T5VMYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chen <peter.chen@kernel.org>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Li Jun <jun.li@nxp.com>
-Subject: [PATCH 5.10 215/286] usb: chipidea: wait controller resume finished for wakeup irq
-Date: Mon, 22 Jan 2024 15:58:41 -0800
-Message-ID: <20240122235740.362143762@linuxfoundation.org>
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.1 307/417] wifi: mt76: fix broken precal loading from MTD for mt7915
+Date: Mon, 22 Jan 2024 15:57:55 -0800
+Message-ID: <20240122235802.460042745@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +46,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit 128d849074d05545becf86e713715ce7676fc074 upstream.
+commit e874a79250b39447765ac13272b67ac36ccf2a75 upstream.
 
-After the chipidea driver introduce extcon for id and vbus, it's able
-to wakeup from another irq source, in case the system with extcon ID
-cable, wakeup from usb ID cable and device removal, the usb device
-disconnect irq may come firstly before the extcon notifier while system
-resume, so we will get 2 "wakeup" irq, one for usb device disconnect;
-and one for extcon ID cable change(real wakeup event), current driver
-treat them as 2 successive wakeup irq so can't handle it correctly, then
-finally the usb irq can't be enabled. This patch adds a check to bypass
-further usb events before controller resume finished to fix it.
+Commit 495184ac91bb ("mt76: mt7915: add support for applying
+pre-calibration data") was fundamentally broken and never worked.
 
-Fixes: 1f874edcb731 ("usb: chipidea: add runtime power management support")
-cc:  <stable@vger.kernel.org>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Signed-off-by: Li Jun <jun.li@nxp.com>
-Link: https://lore.kernel.org/r/20231228110753.1755756-2-xu.yang_2@nxp.com
+The idea (before NVMEM support) was to expand the MTD function and pass
+an additional offset. For normal EEPROM load the offset would always be
+0. For the purpose of precal loading, an offset was passed that was
+internally the size of EEPROM, since precal data is right after the
+EEPROM.
+
+Problem is that the offset value passed is never handled and is actually
+overwrite by
+
+	offset = be32_to_cpup(list);
+	ret = mtd_read(mtd, offset, len, &retlen, eep);
+
+resulting in the passed offset value always ingnored. (and even passing
+garbage data as precal as the start of the EEPROM is getting read)
+
+Fix this by adding to the current offset value, the offset from DT to
+correctly read the piece of data at the requested location.
+
+Cc: stable@vger.kernel.org
+Fixes: 495184ac91bb ("mt76: mt7915: add support for applying pre-calibration data")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/core.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/mediatek/mt76/eeprom.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/chipidea/core.c
-+++ b/drivers/usb/chipidea/core.c
-@@ -516,6 +516,13 @@ static irqreturn_t ci_irq_handler(int ir
- 	u32 otgsc = 0;
+--- a/drivers/net/wireless/mediatek/mt76/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/eeprom.c
+@@ -62,7 +62,7 @@ int mt76_get_of_eeprom(struct mt76_dev *
+ 		goto out_put_node;
+ 	}
  
- 	if (ci->in_lpm) {
-+		/*
-+		 * If we already have a wakeup irq pending there,
-+		 * let's just return to wait resume finished firstly.
-+		 */
-+		if (ci->wakeup_int)
-+			return IRQ_HANDLED;
-+
- 		disable_irq_nosync(irq);
- 		ci->wakeup_int = true;
- 		pm_runtime_get(ci->dev);
+-	offset = be32_to_cpup(list);
++	offset += be32_to_cpup(list);
+ 	ret = mtd_read(mtd, offset, len, &retlen, eep);
+ 	put_mtd_device(mtd);
+ 	if (mtd_is_bitflip(ret))
 
 
