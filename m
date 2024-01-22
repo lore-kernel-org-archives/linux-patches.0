@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E15E6313F;
-	Tue, 23 Jan 2024 01:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20B46313F;
+	Tue, 23 Jan 2024 01:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975019; cv=none; b=KcIN+xmQm9Tof9PlaxS4EBhq/4i2oWOn+dYoDbEa6L3dQMYDBubALID7BYSP/VYMcuCYDr59J7+Am6Ii6lcI0Q9UC90J4qe6tm6SzGkC8yjtS9k0qLZA8bSWShuRmTQPUxg/rAYtmp+SLB1tuJWRcjEVqInGGxENAb257kTHhw4=
+	t=1705975020; cv=none; b=hydyL3100+0uuRpIgDrdEoUmJJSo9wJrNx8X4dztBxB2mIrs27BaQMwASNwWVAANUmoE2prJcKi9bBvHSy+Ljq+Ks3HoP7AAC9ZQC2znYoK4m2OvXOC444MCQZNCXPVygLeGxkmpvaSRbQUG8Z38gccv4vjBGzVI7zDaNjvpQHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975019; c=relaxed/simple;
-	bh=ZJIv4dOnbvmQmJSPdM/4K1sz2uO1xlJjKtdIl5PF7Ys=;
+	s=arc-20240116; t=1705975020; c=relaxed/simple;
+	bh=Np3qn2IkeW42qhktV/o1y5UHPprgaNnFLAgeGC0drTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KB9lfE/rFCybbGMMsmuiyEzCuQp0gSMXyTwMzWwMzbNqPNSSwtkS2YwMOY2ZNZWvC68toMy7oYQsxZSrJ1NtcruKXVaF3kSI3dVG6qXPt8bGyXfPTwosay4NJbO/iHNS1dOSReQImsYIDMi4z3PhPXQG4+orRrTn0+p20YdNpWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyiE3tO8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shm0j01TabDh8N+8mS5GWdqi17/YnKYFaZVHa6JiqeXXiFvLBrupV02m2LOqVWprjF913S52PuDSSup5nYsSkfYGlqLwi1hH7AjxYp455+5OcAgqaRRchIh0+vgn1dWXJltevhlEyVMFNSsE/++Z+sjDtswI6m9uFhaBZdX+l+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+f8rbGa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyiE3tO8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98C6C43394;
-	Tue, 23 Jan 2024 01:56:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+f8rbGa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C864C43394;
+	Tue, 23 Jan 2024 01:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975019;
-	bh=ZJIv4dOnbvmQmJSPdM/4K1sz2uO1xlJjKtdIl5PF7Ys=;
+	s=korg; t=1705975020;
+	bh=Np3qn2IkeW42qhktV/o1y5UHPprgaNnFLAgeGC0drTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eyiE3tO8JBodi86tcIDlyp37pRtCjRqL3eh7ZErEA34OZg5mclHG4UVahVn/ARL6x
-	 +YZ2hwmNXNHsRATLaEZhQ0KcsnvwKMGCbCNsY9Cd7fKgVXEzUYOCFg3dqzlNJTkHEI
-	 lWCzfbbuCvHxfGU22YXT8/Qh7UPSvWHUysnEVnbc=
+	b=f+f8rbGa/Xk++tuWT9YOGeA5Ns7aS4YulGDW6NtktbPsUk+cX1u0FBrwW4Ylx9mXG
+	 M34SEt4BVQsQC67uL37QjPPg5MKHQg8WzkkVIufelhPTpHPhqw9bMmzal+yTvZy0Gy
+	 3VZLS7LxsmT7ghq0gyCcLZ9GnFZ0e9FCtPB3jIxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chunfeng Yun <chunfeng.yun@mediatek.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Luciano Coelho <luciano.coelho@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 326/374] usb: xhci-mtk: fix a short packet issue of gen1 isoc-in transfer
-Date: Mon, 22 Jan 2024 15:59:42 -0800
-Message-ID: <20240122235756.240071895@linuxfoundation.org>
+Subject: [PATCH 6.6 199/583] wifi: iwlwifi: mvm: set siso/mimo chains to 1 in FW SMPS request
+Date: Mon, 22 Jan 2024 15:54:10 -0800
+Message-ID: <20240122235818.063873304@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,131 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chunfeng Yun <chunfeng.yun@mediatek.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 017dbfc05c31284150819890b4cc86a699cbdb71 ]
+[ Upstream commit b1a2e5c310e063560760806d2cc5d2233c596067 ]
 
-For Gen1 isoc-in transfer, host still send out unexpected ACK after device
-finish the burst with a short packet, this will cause an exception on the
-connected device, such as, a usb 4k camera.
-It can be fixed by setting rxfifo depth less than 4k bytes, prefer to use
-3k here, the side-effect is that may cause performance drop about 10%,
-including bulk transfer.
+The firmware changed their mind, don't set the chains to zero,
+instead set them to 1 as we normally would for connections to
+APs that don't use MIMO.
 
-Fixes: 926d60ae64a6 ("usb: xhci-mtk: modify the SOF/ITP interval for mt8195")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Chunfeng Yun <chunfeng.yun@mediatek.com>
-Link: https://lore.kernel.org/r/20240104061640.7335-2-chunfeng.yun@mediatek.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2a7ce54ccc23 ("iwlwifi: mvm: honour firmware SMPS requests")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Luciano Coelho <luciano.coelho@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231219215605.7f031f1a127f.Idc816e0f604b07d22a9d5352bc23c445512fad14@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mtk.c | 40 +++++++++++++++++++++++++++++++++++--
- drivers/usb/host/xhci-mtk.h |  2 ++
- 2 files changed, 40 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-mtk.c b/drivers/usb/host/xhci-mtk.c
-index b55ddc1156cc..4e5c7d3fb4bc 100644
---- a/drivers/usb/host/xhci-mtk.c
-+++ b/drivers/usb/host/xhci-mtk.c
-@@ -7,6 +7,7 @@
-  *  Chunfeng Yun <chunfeng.yun@mediatek.com>
-  */
- 
-+#include <linux/bitfield.h>
- #include <linux/dma-mapping.h>
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
-@@ -72,6 +73,9 @@
- #define FRMCNT_LEV1_RANG	(0x12b << 8)
- #define FRMCNT_LEV1_RANG_MASK	GENMASK(19, 8)
- 
-+#define HSCH_CFG1		0x960
-+#define SCH3_RXFIFO_DEPTH_MASK	GENMASK(21, 20)
-+
- #define SS_GEN2_EOF_CFG		0x990
- #define SSG2EOF_OFFSET		0x3c
- 
-@@ -100,6 +104,8 @@
- #define SSC_IP_SLEEP_EN	BIT(4)
- #define SSC_SPM_INT_EN		BIT(1)
- 
-+#define SCH_FIFO_TO_KB(x)	((x) >> 10)
-+
- enum ssusb_uwk_vers {
- 	SSUSB_UWK_V1 = 1,
- 	SSUSB_UWK_V2,
-@@ -147,6 +153,35 @@ static void xhci_mtk_set_frame_interval(struct xhci_hcd_mtk *mtk)
- 	writel(value, hcd->regs + SS_GEN2_EOF_CFG);
- }
- 
-+/*
-+ * workaround: usb3.2 gen1 isoc rx hw issue
-+ * host send out unexpected ACK afer device fininsh a burst transfer with
-+ * a short packet.
-+ */
-+static void xhci_mtk_rxfifo_depth_set(struct xhci_hcd_mtk *mtk)
-+{
-+	struct usb_hcd *hcd = mtk->hcd;
-+	u32 value;
-+
-+	if (!mtk->rxfifo_depth)
-+		return;
-+
-+	value = readl(hcd->regs + HSCH_CFG1);
-+	value &= ~SCH3_RXFIFO_DEPTH_MASK;
-+	value |= FIELD_PREP(SCH3_RXFIFO_DEPTH_MASK,
-+			    SCH_FIFO_TO_KB(mtk->rxfifo_depth) - 1);
-+	writel(value, hcd->regs + HSCH_CFG1);
-+}
-+
-+static void xhci_mtk_init_quirk(struct xhci_hcd_mtk *mtk)
-+{
-+	/* workaround only for mt8195 */
-+	xhci_mtk_set_frame_interval(mtk);
-+
-+	/* workaround for SoCs using SSUSB about before IPM v1.6.0 */
-+	xhci_mtk_rxfifo_depth_set(mtk);
-+}
-+
- static int xhci_mtk_host_enable(struct xhci_hcd_mtk *mtk)
- {
- 	struct mu3c_ippc_regs __iomem *ippc = mtk->ippc_regs;
-@@ -429,8 +464,7 @@ static int xhci_mtk_setup(struct usb_hcd *hcd)
- 		if (ret)
- 			return ret;
- 
--		/* workaround only for mt8195 */
--		xhci_mtk_set_frame_interval(mtk);
-+		xhci_mtk_init_quirk(mtk);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c b/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c
+index a5b432bc9e2f..9c582e23ebba 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c
+@@ -99,17 +99,6 @@ static void iwl_mvm_phy_ctxt_set_rxchain(struct iwl_mvm *mvm,
+ 		active_cnt = 2;
  	}
  
- 	ret = xhci_gen_setup(hcd, xhci_mtk_quirks);
-@@ -517,6 +551,8 @@ static int xhci_mtk_probe(struct platform_device *pdev)
- 	of_property_read_u32(node, "mediatek,u2p-dis-msk",
- 			     &mtk->u2p_dis_msk);
- 
-+	of_property_read_u32(node, "rx-fifo-depth", &mtk->rxfifo_depth);
-+
- 	ret = usb_wakeup_of_property_parse(mtk, node);
- 	if (ret) {
- 		dev_err(dev, "failed to parse uwk property\n");
-diff --git a/drivers/usb/host/xhci-mtk.h b/drivers/usb/host/xhci-mtk.h
-index 4b1ea89f959a..153fc7ba1609 100644
---- a/drivers/usb/host/xhci-mtk.h
-+++ b/drivers/usb/host/xhci-mtk.h
-@@ -161,6 +161,8 @@ struct xhci_hcd_mtk {
- 	struct regmap *uwk;
- 	u32 uwk_reg_base;
- 	u32 uwk_vers;
-+	/* quirk */
-+	u32 rxfifo_depth;
- };
- 
- static inline struct xhci_hcd_mtk *hcd_to_mtk(struct usb_hcd *hcd)
+-	/*
+-	 * If the firmware requested it, then we know that it supports
+-	 * getting zero for the values to indicate "use one, but pick
+-	 * which one yourself", which means it can dynamically pick one
+-	 * that e.g. has better RSSI.
+-	 */
+-	if (mvm->fw_static_smps_request && active_cnt == 1 && idle_cnt == 1) {
+-		idle_cnt = 0;
+-		active_cnt = 0;
+-	}
+-
+ 	*rxchain_info = cpu_to_le32(iwl_mvm_get_valid_rx_ant(mvm) <<
+ 					PHY_RX_CHAIN_VALID_POS);
+ 	*rxchain_info |= cpu_to_le32(idle_cnt << PHY_RX_CHAIN_CNT_POS);
 -- 
 2.43.0
 
