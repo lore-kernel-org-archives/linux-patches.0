@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E97B29403;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48E429403;
 	Tue, 23 Jan 2024 01:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974741; cv=none; b=eQcCherWbopWSYyoYINOJrEnok5/wsz/OTlUxt36CnU7/yica4eOm18HeHZFyLWyf4zGOW8vn3XypNQ3dQMMYBKf5ki5/ysUkhICtzD76X9qSPdjyJMYFWfQrrGfNoAiC8sgAmkIX+5F1NQuSfUGxf5wtcvuT4+3SiqufyvY85Q=
+	t=1705974742; cv=none; b=BjZh/Rxwz3FFl5jEhJRdQ+pZB5u3VYJg0MQzciorei+34AE8GxNfo3ZDVQ/X+rLO/h3o3F2uPETFt1JTKKJLZUfkDAonrnwtn2z3ZQqMLkQFw1w5u9pnQcF2xqCKENvz/3YHHkQffXt/5c9Zg/61lChtTRWLpKYSb6x3oIhwrEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974741; c=relaxed/simple;
-	bh=9IOhxyCy5PxRRFQh37yfyPMTEK2OO+XFWIi9Bd7gzLU=;
+	s=arc-20240116; t=1705974742; c=relaxed/simple;
+	bh=qCx2JOvjUP3Nr16p8wN6OM1PVokLPcptMok1We+RYIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ePEEkJFWIi+Bw+o6ikPyPmvxQvB856+6DwtyOyZEhKIpEvJmAmmBM5S6y8caDBt2j/OId/L2EfqZzyz3Mfvp+Cck3lnBLu3eT5KrVpMrBn/vRPw9dpq85RX3KKVutq5RqmXM3Yb9SZ0TnsEX989Qquk7KqEHo4X9zEHxFjyZinM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEyP1Gw5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tsCQNnXYu0OJt1nb5f21MBvi1DJ7QUBD9Z3WKmmnZxMvwhSt2XMrCVqJJblu4tKaFr7XoZffSC+iLwKRIOAOGsLHaTB3oU9GdFl3eEjF3AShP5rebemMn7uIbkaDauZNbbXJick4v1o2HY7w6utMbL1iqdw5veLsIeX5l7jgsmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHYtOoG3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEyP1Gw5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FD3C43390;
-	Tue, 23 Jan 2024 01:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHYtOoG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95DBC43394;
+	Tue, 23 Jan 2024 01:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974740;
-	bh=9IOhxyCy5PxRRFQh37yfyPMTEK2OO+XFWIi9Bd7gzLU=;
+	s=korg; t=1705974741;
+	bh=qCx2JOvjUP3Nr16p8wN6OM1PVokLPcptMok1We+RYIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BEyP1Gw5d+yOGau3gqK3TT0CeriKvw/90F/ZxzA5jYgE9z09rA4EEX3pA39Sn2SS6
-	 5DgVenFuCu5vshK6nQgLlfOmP6oWml/x21LT/grDgYP2e15z4zLyD4SwVgj01Eq8x0
-	 oRnvEGpZsFHS7rd6Cg2mO+VmPaH0RjnSRz5/eT5Q=
+	b=iHYtOoG3mKrxuIKGJQtzQZ+Ho8BRPg4GINkwE+4m5aZXUMVCKovlPTtMlM39SCU9S
+	 JYCO2khN+R51n2Zx/EsSXEsmg1XrVP40f9Rf5K2Gn8aD4VbyskUt6lA17GkAk8gIbB
+	 3MceH6asEqajiU2YK3dINCG53PAJhtBZFarK/1ZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 151/583] wifi: mt76: mt7921: fix country count limitation for CLC
-Date: Mon, 22 Jan 2024 15:53:22 -0800
-Message-ID: <20240122235816.692913771@linuxfoundation.org>
+	Rob Clark <robdclark@chromium.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 5.15 276/374] iommu/arm-smmu-qcom: Add missing GMU entry to match table
+Date: Mon, 22 Jan 2024 15:58:52 -0800
+Message-ID: <20240122235754.374657615@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit fa6ad88e023ddfa6c5dcdb466d159e89f451e305 ]
+commit afc95681c3068956fed1241a1ff1612c066c75ac upstream.
 
-Due to the increase in the number of power tables for 6Ghz on CLC,
-the variable nr_country is no longer sufficient to represent the
-total quantity. Therefore, we have switched to calculating the
-length of clc buf to obtain the correct power table. Additionally,
-the version number has been incremented to 1.
+In some cases the firmware expects cbndx 1 to be assigned to the GMU,
+so we also want the default domain for the GMU to be an identy domain.
+This way it does not get a context bank assigned.  Without this, both
+of_dma_configure() and drm/msm's iommu_domain_attach() will trigger
+allocating and configuring a context bank.  So GMU ends up attached to
+both cbndx 1 and later cbndx 2.  This arrangement seemingly confounds
+and surprises the firmware if the GPU later triggers a translation
+fault, resulting (on sc8280xp / lenovo x13s, at least) in the SMMU
+getting wedged and the GPU stuck without memory access.
 
-Fixes: 23bdc5d8cadf ("wifi: mt76: mt7921: introduce Country Location Control support")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/20231210180655.75542-1-robdclark@gmail.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/mcu.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-index 90c93970acab..d1b1b8f767fc 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-@@ -1136,22 +1136,27 @@ int __mt7921_mcu_set_clc(struct mt792x_dev *dev, u8 *alpha2,
- 		u8 type[2];
- 		u8 rsvd[64];
- 	} __packed req = {
-+		.ver = 1,
- 		.idx = idx,
- 		.env = env_cap,
- 		.acpi_conf = mt792x_acpi_get_flags(&dev->phy),
- 	};
- 	int ret, valid_cnt = 0;
--	u8 i, *pos;
-+	u16 buf_len = 0;
-+	u8 *pos;
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -226,6 +226,7 @@ static int qcom_adreno_smmu_init_context
  
- 	if (!clc)
- 		return 0;
- 
-+	buf_len = le16_to_cpu(clc->len) - sizeof(*clc);
- 	pos = clc->data;
--	for (i = 0; i < clc->nr_country; i++) {
-+	while (buf_len > 16) {
- 		struct mt7921_clc_rule *rule = (struct mt7921_clc_rule *)pos;
- 		u16 len = le16_to_cpu(rule->len);
-+		u16 offset = len + sizeof(*rule);
- 
--		pos += len + sizeof(*rule);
-+		pos += offset;
-+		buf_len -= offset;
- 		if (rule->alpha2[0] != alpha2[0] ||
- 		    rule->alpha2[1] != alpha2[1])
- 			continue;
--- 
-2.43.0
-
+ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+ 	{ .compatible = "qcom,adreno" },
++	{ .compatible = "qcom,adreno-gmu" },
+ 	{ .compatible = "qcom,mdp4" },
+ 	{ .compatible = "qcom,mdss" },
+ 	{ .compatible = "qcom,sc7180-mdss" },
 
 
