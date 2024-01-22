@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6465F540;
-	Tue, 23 Jan 2024 01:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101C55F553;
+	Tue, 23 Jan 2024 01:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974419; cv=none; b=uXKVdLd7UZU5VLx2Rp+gtx3OgUIvFdHFlueX0Mjwpxdu1A5xUxr1wddiOLSmn1vmzHegoQgGk6KNDpXr4RS4Fep39jHhWDXotl8lV47BzUaz6+ZhGgTsmIr8p18nHXQSVpbQLK24ZPlUzZqfwDxOUKYVa0oKUF0zcB86R/9+bME=
+	t=1705974421; cv=none; b=Jp+waOZd/PY0RsDDwhnAz0RL4+8f8QVyCTlRF+aZftYGuVlWoojcB7WN/z3NJAJUKPF6uJfSIfvVUUvyfhqD6r00XCUjBSdkX3qXPoxky6Hhi3KMneuZTygOD7whBQAEUXbj4+eNQjni5DHnIULpzpVPcmvnJVhcwkiT4kSM8t0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974419; c=relaxed/simple;
-	bh=yxNjMFl+mwGj9v4E/1wOxcu0SudgbupA+aqU3mqijLg=;
+	s=arc-20240116; t=1705974421; c=relaxed/simple;
+	bh=0Y8LYC42WEp74deY802iOzFe8qi3F4IPk1/A3DKk+mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fzkX2ffO/1L6D9DVMeOkvejQawSZcfJ1yFUH1OLeBf1tEpk0gKLaWSxZL5lv4jy8H3aUJ9PaELf8KsigzpkN0Mpra1ikHPKjWxVityT9Hv9aqkaAVugTDKJfe9imOGxmuyrEcNGEDsittNEN/wwG1te8XpXDbAd6gz5OWeVTg14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/BIuypQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rpsUSWqrFon7BTSiSyyYs7++RqTMfE+J9ksppyZzFNoG1+soyBPtYyxQfyO4isUqIRFQ2zAQb+98ItsQUKrBF6IHJdU/2rCjTz6h1SFnp1XnaYjUpKFAyRGZxl2P3tbOQzWl7iN6/I/VG5hJ7OjgW+VYF8Oo3J4QUHRGCvwBUx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8nlLRUk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/BIuypQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64E9C433F1;
-	Tue, 23 Jan 2024 01:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8nlLRUk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F027C433F1;
+	Tue, 23 Jan 2024 01:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974419;
-	bh=yxNjMFl+mwGj9v4E/1wOxcu0SudgbupA+aqU3mqijLg=;
+	s=korg; t=1705974420;
+	bh=0Y8LYC42WEp74deY802iOzFe8qi3F4IPk1/A3DKk+mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/BIuypQy2qtWHMutmjOmTxWB65hFvAwBuPJ3Aafw21lZOXuMgSl/oHBhX2vplzpc
-	 EZB681nuNK92I7JC4UIn8ZwRI5sCn3t8xsWVmxAWJA1mrNEu7nTSJrhnxqQAJ7zxuk
-	 QLR3TBbLZc6GbFgZ6ApL6lhfzXrdeFpv1DzfOwSM=
+	b=p8nlLRUkvaBbcvaBeMPONfJrcTHFSSSIo7sCGK11klV46pv3K8iB+30nlSvlptuvk
+	 LvoDHigDfJkQ5WrUICfEP7TWgZWsiLj3Kd8uTNw/hcBnbpDKCSJjQrtxFyy+kpgebG
+	 icXRBPPmFqNl2LQncbSte+oBASdP1L8k5uWvsHVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/583] blocklayoutdriver: Fix reference leak of pnfs_device_node
-Date: Mon, 22 Jan 2024 15:52:07 -0800
-Message-ID: <20240122235814.489562889@linuxfoundation.org>
+Subject: [PATCH 6.6 094/583] firmware: ti_sci: Fix an off-by-one in ti_sci_debugfs_create()
+Date: Mon, 22 Jan 2024 15:52:25 -0800
+Message-ID: <20240122235815.051142879@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,34 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 1530827b90025cdf80c9b0d07a166d045a0a7b81 ]
+[ Upstream commit 964946b88887089f447a9b6a28c39ee97dc76360 ]
 
-The error path for blocklayout's device lookup is missing a reference drop
-for the case where a lookup finds the device, but the device is marked with
-NFS_DEVICEID_UNAVAILABLE.
+The ending NULL is not taken into account by strncat(), so switch to
+snprintf() to correctly build 'debug_name'.
 
-Fixes: b3dce6a2f060 ("pnfs/blocklayout: handle transient devices")
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Using snprintf() also makes the code more readable.
+
+Fixes: aa276781a64a ("firmware: Add basic support for TI System Control Interface (TI-SCI) protocol")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/7158db0a4d7b19855ddd542ec61b666973aad8dc.1698660720.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/blocklayout/blocklayout.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/firmware/ti_sci.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfs/blocklayout/blocklayout.c b/fs/nfs/blocklayout/blocklayout.c
-index 943aeea1eb16..1d1d7abc3205 100644
---- a/fs/nfs/blocklayout/blocklayout.c
-+++ b/fs/nfs/blocklayout/blocklayout.c
-@@ -580,6 +580,8 @@ bl_find_get_deviceid(struct nfs_server *server,
- 		nfs4_delete_deviceid(node->ld, node->nfs_client, id);
- 		goto retry;
- 	}
-+
-+	nfs4_put_deviceid_node(node);
- 	return ERR_PTR(-ENODEV);
- }
+diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
+index 66c3846c9147..3b4c9355cb60 100644
+--- a/drivers/firmware/ti_sci.c
++++ b/drivers/firmware/ti_sci.c
+@@ -161,7 +161,7 @@ static int ti_sci_debugfs_create(struct platform_device *pdev,
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct resource *res;
+-	char debug_name[50] = "ti_sci_debug@";
++	char debug_name[50];
+ 
+ 	/* Debug region is optional */
+ 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
+@@ -178,10 +178,10 @@ static int ti_sci_debugfs_create(struct platform_device *pdev,
+ 	/* Setup NULL termination */
+ 	info->debug_buffer[info->debug_region_size] = 0;
+ 
+-	info->d = debugfs_create_file(strncat(debug_name, dev_name(dev),
+-					      sizeof(debug_name) -
+-					      sizeof("ti_sci_debug@")),
+-				      0444, NULL, info, &ti_sci_debug_fops);
++	snprintf(debug_name, sizeof(debug_name), "ti_sci_debug@%s",
++		 dev_name(dev));
++	info->d = debugfs_create_file(debug_name, 0444, NULL, info,
++				      &ti_sci_debug_fops);
+ 	if (IS_ERR(info->d))
+ 		return PTR_ERR(info->d);
  
 -- 
 2.43.0
