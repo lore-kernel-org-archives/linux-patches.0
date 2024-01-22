@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8A3604D9;
-	Tue, 23 Jan 2024 01:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B482604CD;
+	Tue, 23 Jan 2024 01:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974682; cv=none; b=FrZsoynDadZTaAmvq9dElcOF+lBExK86vkZDRfHHT+Hn6Yd0Wuqcl0+NN/A0qo9AcR8/IXLWsYR6OfHhKbd0YnNGCyLtlO6LSEcnqtHlFdkmyoh071dR3AiUqq07TVtY7mnvXfFFy2GxrRytpntbNGJUKBIyfJXcgje1PhIejkA=
+	t=1705974683; cv=none; b=cQqaxshjv6Eaz0AN8RsRMj51fjsxk4d19fS/4ZEZ+gM8gYEtQTb9C/gko2ZYy0lB3Naq0nOiESbvSYzX3k0Iz5Z3CVOZBnevvxv33bXuUXhHPZslF+qZOG2NO1fH8TSrcYNhy7FAMRTxPBk7Dae3P14nAC7tvpfAhT32oUMjIvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974682; c=relaxed/simple;
-	bh=CtrMdcLzEKXbnKu4HVEKtjuU0v88+WrowJLOv0XVfYM=;
+	s=arc-20240116; t=1705974683; c=relaxed/simple;
+	bh=KS6vjBVyVGRd3s7yssDH6zjXF7Sk4u4ZDCTTiAkgj7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNaMAEFnYj9Oq6/Ba2EwF9i/nuknsGxWcigKVDU/Pc7TKTEMsYg+u2lPk5Bpd1u7IE4pqBVZDV872CZVWXI6ijXscn4MDgkl7HeRKXKjq9HeCh+Wcnmt8T9HQf/xcXivRYmgg18mLISwAwoiUO/+q2UaV+bX/wvSnQJ13zm9rVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kr+TGyvq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RW4X1GV+wNF8uCp74ofYtbhEETUl76uJydVBiNU1rIHKNBW6e36/VZHDlVzIdpGv9MNVgF1G6zv0y422BKbC13A+Lz691EY6lksetMT5LXXNeb+YBGcYwsu8xMEvG+b8R04myjtT0JGGKNrO7Wj7JvGu3nFCw6fkiarPdCJrwJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqpDaqu/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kr+TGyvq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C495C43394;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqpDaqu/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3328C433F1;
 	Tue, 23 Jan 2024 01:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974682;
-	bh=CtrMdcLzEKXbnKu4HVEKtjuU0v88+WrowJLOv0XVfYM=;
+	s=korg; t=1705974683;
+	bh=KS6vjBVyVGRd3s7yssDH6zjXF7Sk4u4ZDCTTiAkgj7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kr+TGyvqJTdajMkiP9Fzdcw56mgk2S2+HDsHdiZFZiPHNVq9dY4uYmh+9TBbF7FL7
-	 gJIRICLwdrOvmgQy1r9iUVX57NTD6sXCjo7LxJb7I4au5/ci1a1VwxLIfu+EM03f8R
-	 2EaxC40cozdVxMUuS6dZFEd48H9kj//v3M3htn+s=
+	b=lqpDaqu/qDXxzPj4m2uZkaWMUB89NKRjBBb/QCgkvRbIeoJ5Uzgfnt8SuikzgdMa4
+	 yIlxwshz4WYJuE1vbKamQ5s86BwgQiKbbpfhpLlq4gLD250BXwLTepngK8TNnpL83D
+	 M8YeiyiycK0a3AmZavGbmyxYhQ0QzcVqNof8ZpAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Chiu <chiu@endlessos.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 230/374] ASoC: rt5645: Drop double EF20 entry from dmi_platform_data[]
-Date: Mon, 22 Jan 2024 15:58:06 -0800
-Message-ID: <20240122235752.700626416@linuxfoundation.org>
+	Hulk Robot <hulkci@huawei.com>,
+	Ren Zhijie <renzhijie2@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 5.15 248/374] dma-mapping: Fix build error unused-value
+Date: Mon, 22 Jan 2024 15:58:24 -0800
+Message-ID: <20240122235753.397200045@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -46,59 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Ren Zhijie <renzhijie2@huawei.com>
 
-[ Upstream commit 51add1687f39292af626ac3c2046f49241713273 ]
+commit 50d6281ce9b8412f7ef02d1bc9d23aa62ae0cf98 upstream.
 
-dmi_platform_data[] first contains a DMI entry matching:
+If CONFIG_DMA_DECLARE_COHERENT is not set,
+make ARCH=x86_64 CROSS_COMPILE=x86_64-linux-gnu- will be failed, like this:
 
-   DMI_MATCH(DMI_PRODUCT_NAME, "EF20"),
+drivers/remoteproc/remoteproc_core.c: In function ‘rproc_rvdev_release’:
+./include/linux/dma-map-ops.h:182:42: error: statement with no effect [-Werror=unused-value]
+ #define dma_release_coherent_memory(dev) (0)
+                                          ^
+drivers/remoteproc/remoteproc_core.c:464:2: note: in expansion of macro ‘dma_release_coherent_memory’
+  dma_release_coherent_memory(dev);
+  ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
 
-and then contains an identical entry except for the match being:
+The return type of function dma_release_coherent_memory in CONFIG_DMA_DECLARE_COHERENT area is void, so in !CONFIG_DMA_DECLARE_COHERENT area it should neither return any value nor be defined as zero.
 
-   DMI_MATCH(DMI_PRODUCT_NAME, "EF20EA"),
-
-Since these are partial (non exact) DMI matches the first match
-will also match any board with "EF20EA" in their DMI product-name,
-drop the second, redundant, entry.
-
-Fixes: a4dae468cfdd ("ASoC: rt5645: Add ACPI-defined GPIO for ECS EF20 series")
-Cc: Chris Chiu <chiu@endlessos.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://msgid.link/r/20231126214024.300505-2-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Fixes: e61c451476e6 ("dma-mapping: Add dma_release_coherent_memory to DMA API")
+Signed-off-by: Ren Zhijie <renzhijie2@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20220630123528.251181-1-renzhijie2@huawei.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt5645.c | 8 --------
- 1 file changed, 8 deletions(-)
+ include/linux/dma-map-ops.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
-index e7009f704b99..2fdfec505192 100644
---- a/sound/soc/codecs/rt5645.c
-+++ b/sound/soc/codecs/rt5645.c
-@@ -3828,14 +3828,6 @@ static const struct dmi_system_id dmi_platform_data[] = {
- 		},
- 		.driver_data = (void *)&ecs_ef20_platform_data,
- 	},
--	{
--		.ident = "EF20EA",
--		.callback = cht_rt5645_ef20_quirk_cb,
--		.matches = {
--			DMI_MATCH(DMI_PRODUCT_NAME, "EF20EA"),
--		},
--		.driver_data = (void *)&ecs_ef20_platform_data,
--	},
- 	{ }
- };
+--- a/include/linux/dma-map-ops.h
++++ b/include/linux/dma-map-ops.h
+@@ -179,10 +179,10 @@ static inline int dma_declare_coherent_m
+ 	return -ENOSYS;
+ }
  
--- 
-2.43.0
-
+-#define dma_release_coherent_memory(dev) (0)
+ #define dma_alloc_from_dev_coherent(dev, size, handle, ret) (0)
+ #define dma_release_from_dev_coherent(dev, order, vaddr) (0)
+ #define dma_mmap_from_dev_coherent(dev, vma, vaddr, order, ret) (0)
++static inline void dma_release_coherent_memory(struct device *dev) { }
+ #endif /* CONFIG_DMA_DECLARE_COHERENT */
+ 
+ #ifdef CONFIG_DMA_GLOBAL_POOL
 
 
