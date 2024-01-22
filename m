@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B3F657AB;
-	Tue, 23 Jan 2024 00:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AEE564CEB;
+	Tue, 23 Jan 2024 00:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971580; cv=none; b=dPPC1I5Qr+qh1Uhy4Sbt9D5fI4LSapFreY7v71+y5NjRA3u4abbCQc5L55/H3S4MjC3MpnNKnRf8ve1oFdHNLCojcghMdPgT9kbOvEWYmt3vw0ztn9kV9Z6rhxBDk1cmGCQCHMmhsKENPpo0Ia5jE4my0TEg0AvJMsROvAIEdpU=
+	t=1705971582; cv=none; b=qHh2sQgcaOUpzq2inhTMbee3GcB6UhBwX/ByRR2s4+S/sUv0kC2iCtJXeaMlyGeDQsWRTpX79J4CxAn9r19MqGxobuIB+aPHcSwsK1ocVLNI/QniHpnHCd7PHqEy/fwPcS2F7QFey6DNMK9BTAByVTtW8LJrnGcKq1fOV9xWenI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971580; c=relaxed/simple;
-	bh=AUT75iNh/GrPMDYO1q6i/EIx9eom2WS80aNvXoqydGY=;
+	s=arc-20240116; t=1705971582; c=relaxed/simple;
+	bh=aDWgdRsg4ZbcNSykNndQAyQT8acCbVoMpd0bDAMA3bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G0pNtNdrIs+Ilq2R12lLloyOmqBcm6H8Aeejb0qORHmam0r+ACKY4Lx5o36flq8wUcPHZw//g0Peq6xlYcVEWr7/rEeUjgHBEoX9yXPQA5bln+w0bJ7m7l+xJocBTREKK7Fcob6IhanD8lgvzlMejWY17YJ8uwkaxAEJWsjdi+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMMdpbzi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBv4lQeulCtwaX33YJKAl2/3891J2OlE4t4FeLy1gVPcTgRV6tjW8h3Kssnx9qM+psnyxhm/ADfiJPncaP4phfqcM9o1yIhETfF5o0sFHsYAyLkflpX9LFPZW51XoDG119RE17iGLxvkSWHe9w27Q/4CcDVt1HG1AtlszRKiDqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RbOHNYK+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMMdpbzi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86EDC433F1;
-	Tue, 23 Jan 2024 00:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RbOHNYK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405B5C433C7;
+	Tue, 23 Jan 2024 00:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971580;
-	bh=AUT75iNh/GrPMDYO1q6i/EIx9eom2WS80aNvXoqydGY=;
+	s=korg; t=1705971582;
+	bh=aDWgdRsg4ZbcNSykNndQAyQT8acCbVoMpd0bDAMA3bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IMMdpbzi+oSJOFIb0hmb7u9+Tq+n9a91K5t5q18Fb9AApBX196cn0RYqdADdpFUhd
-	 lBcIGmLA6AzM7yP7e7q7zC3G5CUjzzVdP5tdB2zBOeFul/xbzc0AhmS5uOA/X1KoTD
-	 iNNkNoIE3M4TpJqyBhth4caiHoNkPMtTeQa1B4no=
+	b=RbOHNYK+x6rDBk40mYYzEi/UvogPuQZYZRJGj8a12cHO6x2YFvSXAQl64X+gKnMoA
+	 AyjilEnx5tFsRLPam2BzIcgOLd+VTfU4EP9YXr5Fg41vGOyxYSJ2KMd8AOGfbg7KSD
+	 LOyT4NrRZ/CpI9bLUnWdHmu879rUMg6c/fMUZC5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.1 273/417] serial: core, imx: do not set RS485 enabled if it is not supported
-Date: Mon, 22 Jan 2024 15:57:21 -0800
-Message-ID: <20240122235801.309496249@linuxfoundation.org>
+	Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 181/286] drivers: clk: zynqmp: update divider round rate logic
+Date: Mon, 22 Jan 2024 15:58:07 -0800
+Message-ID: <20240122235739.117169063@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,89 +45,127 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
 
-commit 74eab89b26ac433ad857292f4707b43c1a8f0209 upstream.
+[ Upstream commit 1fe15be1fb613534ecbac5f8c3f8744f757d237d ]
 
-If the imx driver cannot support RS485 it nullifies the ports
-rs485_supported structure. But it still calls uart_get_rs485_mode() which
-may set the RS485_ENABLED flag nevertheless.
+Currently zynqmp divider round rate is considering single parent and
+calculating rate and parent rate accordingly. But if divider clock flag
+is set to SET_RATE_PARENT then its not trying to traverse through all
+parent rate and not selecting best parent rate from that. So use common
+divider_round_rate() which is traversing through all clock parents and
+its rate and calculating proper parent rate.
 
-This may lead to an attempt to configure RS485 even if it is not supported
-when the flag is evaluated in uart_configure_port() at port startup.
-
-Avoid this by bailing out of uart_get_rs485_mode() if the RS485_ENABLED
-flag is not supported by the caller.
-
-With this fix a check for RTS availability is now obsolete in the imx
-driver, since it can not evaluate to true any more. So remove this check.
-
-Furthermore the explicit nullifcation of rs485_supported is not needed,
-since the memory has already been set to zeros at allocation. So remove
-this, too.
-
-Fixes: 00d7a00e2a6f ("serial: imx: Fill in rs485_supported")
-Cc: Shawn Guo <shawnguo@kernel.org>
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
-Cc:  <stable@vger.kernel.org>
-Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20240103061818.564-6-l.sanfilippo@kunbus.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3fde0e16d016 ("drivers: clk: Add ZynqMP clock driver")
+Signed-off-by: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
+Link: https://lore.kernel.org/r/20231129112916.23125-3-jay.buddhabhatti@amd.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/imx.c         |    7 -------
- drivers/tty/serial/serial_core.c |    3 +++
- 2 files changed, 3 insertions(+), 7 deletions(-)
+ drivers/clk/zynqmp/divider.c | 66 +++---------------------------------
+ 1 file changed, 5 insertions(+), 61 deletions(-)
 
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -2229,7 +2229,6 @@ static enum hrtimer_restart imx_trigger_
- 	return HRTIMER_NORESTART;
+diff --git a/drivers/clk/zynqmp/divider.c b/drivers/clk/zynqmp/divider.c
+index acdd5e48e147..acfd4878cce2 100644
+--- a/drivers/clk/zynqmp/divider.c
++++ b/drivers/clk/zynqmp/divider.c
+@@ -109,52 +109,6 @@ static unsigned long zynqmp_clk_divider_recalc_rate(struct clk_hw *hw,
+ 	return DIV_ROUND_UP_ULL(parent_rate, value);
  }
  
--static const struct serial_rs485 imx_no_rs485 = {};	/* No RS485 if no RTS */
- static const struct serial_rs485 imx_rs485_supported = {
- 	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RTS_AFTER_SEND |
- 		 SER_RS485_RX_DURING_TX,
-@@ -2319,8 +2318,6 @@ static int imx_uart_probe(struct platfor
- 	/* RTS is required to control the RS485 transmitter */
- 	if (sport->have_rtscts || sport->have_rtsgpio)
- 		sport->port.rs485_supported = imx_rs485_supported;
--	else
--		sport->port.rs485_supported = imx_no_rs485;
- 	sport->port.flags = UPF_BOOT_AUTOCONF;
- 	timer_setup(&sport->timer, imx_uart_timeout, 0);
+-static void zynqmp_get_divider2_val(struct clk_hw *hw,
+-				    unsigned long rate,
+-				    struct zynqmp_clk_divider *divider,
+-				    u32 *bestdiv)
+-{
+-	int div1;
+-	int div2;
+-	long error = LONG_MAX;
+-	unsigned long div1_prate;
+-	struct clk_hw *div1_parent_hw;
+-	struct zynqmp_clk_divider *pdivider;
+-	struct clk_hw *div2_parent_hw = clk_hw_get_parent(hw);
+-
+-	if (!div2_parent_hw)
+-		return;
+-
+-	pdivider = to_zynqmp_clk_divider(div2_parent_hw);
+-	if (!pdivider)
+-		return;
+-
+-	div1_parent_hw = clk_hw_get_parent(div2_parent_hw);
+-	if (!div1_parent_hw)
+-		return;
+-
+-	div1_prate = clk_hw_get_rate(div1_parent_hw);
+-	*bestdiv = 1;
+-	for (div1 = 1; div1 <= pdivider->max_div;) {
+-		for (div2 = 1; div2 <= divider->max_div;) {
+-			long new_error = ((div1_prate / div1) / div2) - rate;
+-
+-			if (abs(new_error) < abs(error)) {
+-				*bestdiv = div2;
+-				error = new_error;
+-			}
+-			if (divider->flags & CLK_DIVIDER_POWER_OF_TWO)
+-				div2 = div2 << 1;
+-			else
+-				div2++;
+-		}
+-		if (pdivider->flags & CLK_DIVIDER_POWER_OF_TWO)
+-			div1 = div1 << 1;
+-		else
+-			div1++;
+-	}
+-}
+-
+ /**
+  * zynqmp_clk_divider_round_rate() - Round rate of divider clock
+  * @hw:			handle between common and hardware-specific interfaces
+@@ -173,6 +127,7 @@ static long zynqmp_clk_divider_round_rate(struct clk_hw *hw,
+ 	u32 div_type = divider->div_type;
+ 	u32 bestdiv;
+ 	int ret;
++	u8 width;
  
-@@ -2364,10 +2361,6 @@ static int imx_uart_probe(struct platfor
- 		return ret;
+ 	/* if read only, just return current value */
+ 	if (divider->flags & CLK_DIVIDER_READ_ONLY) {
+@@ -192,23 +147,12 @@ static long zynqmp_clk_divider_round_rate(struct clk_hw *hw,
+ 		return DIV_ROUND_UP_ULL((u64)*prate, bestdiv);
  	}
  
--	if (sport->port.rs485.flags & SER_RS485_ENABLED &&
--	    (!sport->have_rtscts && !sport->have_rtsgpio))
--		dev_err(&pdev->dev, "no RTS control, disabling rs485\n");
+-	bestdiv = zynqmp_divider_get_val(*prate, rate, divider->flags);
 -
- 	/*
- 	 * If using the i.MX UART RTS/CTS control then the RTS (CTS_B)
- 	 * signal cannot be set low during transmission in case the
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -3428,6 +3428,9 @@ int uart_get_rs485_mode(struct uart_port
- 	u32 rs485_delay[2];
- 	int ret;
+-	/*
+-	 * In case of two divisors, compute best divider values and return
+-	 * divider2 value based on compute value. div1 will  be automatically
+-	 * set to optimum based on required total divider value.
+-	 */
+-	if (div_type == TYPE_DIV2 &&
+-	    (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT)) {
+-		zynqmp_get_divider2_val(hw, rate, divider, &bestdiv);
+-	}
++	width = fls(divider->max_div);
  
-+	if (!(port->rs485_supported.flags & SER_RS485_ENABLED))
-+		return 0;
-+
- 	ret = device_property_read_u32_array(dev, "rs485-rts-delay",
- 					     rs485_delay, 2);
- 	if (!ret) {
+-	if ((clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT) && divider->is_frac)
+-		bestdiv = rate % *prate ? 1 : bestdiv;
++	rate = divider_round_rate(hw, rate, prate, NULL, width, divider->flags);
+ 
+-	bestdiv = min_t(u32, bestdiv, divider->max_div);
+-	*prate = rate * bestdiv;
++	if (divider->is_frac && (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT) && (rate % *prate))
++		*prate = rate;
+ 
+ 	return rate;
+ }
+-- 
+2.43.0
+
 
 
