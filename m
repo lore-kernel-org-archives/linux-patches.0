@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3FE12A167;
-	Tue, 23 Jan 2024 00:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E23312A167;
+	Tue, 23 Jan 2024 00:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971053; cv=none; b=Hzz2TOwX6JOcL73/z/yNLwlQa78HklcUkmAfPf5cK8V9zYuX4EQ3gr9VEc7UFZTiWtVOqLYbMS7sk+Gc8fOWazhNx25TzpIlUIdvw1TugL+glCyu6z6koHXADHL6T6OaLDjbOXZNlzShY27/5izH4PQcW2QGHwKwIjhJ20smmX8=
+	t=1705971055; cv=none; b=dAUTzCaU/BE6G7N4r6FZhZQ655TY4JT08qHRJlqh9YLPwprW9UkrE5mDNjX8lHDG+EfCJExqYMPnJ8hYVDCh05UfPwTB+YXxZN270t0dt6Z9iVpviLsZzg2aUsWVqhOgRDOtW7poPBO5Q3cE3zuR2vZ0usuIIv+x+KgXMp+0PYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971053; c=relaxed/simple;
-	bh=qHI7uNcbGQg+hcHJCA2XpX9WwnR0sIA+mZBkGQWUDoU=;
+	s=arc-20240116; t=1705971055; c=relaxed/simple;
+	bh=CVLbk9Cb0ZQHuP8d1moc+00l4Gxl4rHFNiybJK/daxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9jlRt1+nVQPXCexTthRnNwqYiTUNFrLwj7689RAtVxcgSFmWuyFCKUWL1FmO71F0QS2Fw/MLvFMN36udI2iSyTiCy4ekA7A2xtJYnEMce4sXZVCDu2B5Q+35Bax8xPFI4oHdxopDX3gMEo7X6LCyXIO/BRzcY+kIrkEXnw3XOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgN5USi8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Q3zHV2jrv0RdNd+MkAGQ3b6sRxW11ysJPdKARVxreClUA5PKEUjknGwjyJ1Nguhft9x9L9Pa3k3ZAPM9zU60qGAzIB3qUY+L9fSe2Nm8a/+EGYTs95spAY7bCLz9BdosQZY3Cek2AbhIhOQit510JiIfxQyW3p26M3+D3Z2j7cM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYF4B7Cj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgN5USi8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D102DC43394;
-	Tue, 23 Jan 2024 00:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYF4B7Cj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B333FC43394;
+	Tue, 23 Jan 2024 00:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971053;
-	bh=qHI7uNcbGQg+hcHJCA2XpX9WwnR0sIA+mZBkGQWUDoU=;
+	s=korg; t=1705971055;
+	bh=CVLbk9Cb0ZQHuP8d1moc+00l4Gxl4rHFNiybJK/daxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DgN5USi8BV0QEYm5fSQkyurbxNMu261PBo3wa8PG919pKJG3C7w7dLsTauqMU8iN/
-	 VtdhGMZpw0RFLosZnZyPknQbzb1/L+LBtP2QW3/kU/TLEB5+65CIHmoeZ5BIdmW+uC
-	 BKef5Cd7yqd2wv7ncSD4K9QdBXJtYWE7mWfIiG9U=
+	b=OYF4B7Cjcw3zT21uh7JAncG0fgjceqOM5lBF+9WoAGYAVikyXX/LYeF0LWxVmD9dI
+	 eOzmGoj1VYJnPnSfMd5Bd0WHGupfrwTeNJBqilU9NV5xkVTe5lWVucpDDoXpb8wucF
+	 TCJGQxyoFOaFHBaIqolYvq7wbeTPCKhBQloTQtKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [PATCH 5.10 048/286] coresight: etm4x: Fix width of CCITMIN field
-Date: Mon, 22 Jan 2024 15:55:54 -0800
-Message-ID: <20240122235733.883021451@linuxfoundation.org>
+	ZhaoLong Wang <wangzhaolong1@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 075/286] mtd: Fix gluebi NULL pointer dereference caused by ftl notifier
+Date: Mon, 22 Jan 2024 15:56:21 -0800
+Message-ID: <20240122235734.927804626@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
 References: <20240122235732.009174833@linuxfoundation.org>
@@ -46,53 +47,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Clark <james.clark@arm.com>
+From: ZhaoLong Wang <wangzhaolong1@huawei.com>
 
-commit cc0271a339cc70cae914c3ec20edc2a8058407da upstream.
+[ Upstream commit a43bdc376deab5fff1ceb93dca55bcab8dbdc1d6 ]
 
-CCITMIN is a 12 bit field and doesn't fit in a u8, so extend it to u16.
-This probably wasn't an issue previously because values higher than 255
-never occurred.
+If both ftl.ko and gluebi.ko are loaded, the notifier of ftl
+triggers NULL pointer dereference when trying to access
+‘gluebi->desc’ in gluebi_read().
 
-But since commit 4aff040bcc8d ("coresight: etm: Override TRCIDR3.CCITMIN
-on errata affected cpus"), a comparison with 256 was done to enable the
-errata, generating the following W=1 build error:
+ubi_gluebi_init
+  ubi_register_volume_notifier
+    ubi_enumerate_volumes
+      ubi_notify_all
+        gluebi_notify    nb->notifier_call()
+          gluebi_create
+            mtd_device_register
+              mtd_device_parse_register
+                add_mtd_device
+                  blktrans_notify_add   not->add()
+                    ftl_add_mtd         tr->add_mtd()
+                      scan_header
+                        mtd_read
+                          mtd_read_oob
+                            mtd_read_oob_std
+                              gluebi_read   mtd->read()
+                                gluebi->desc - NULL
 
-  coresight-etm4x-core.c:1188:24: error: result of comparison of
-  constant 256 with expression of type 'u8' (aka 'unsigned char') is
-  always false [-Werror,-Wtautological-constant-out-of-range-compare]
+Detailed reproduction information available at the Link [1],
 
-   if (drvdata->ccitmin == 256)
+In the normal case, obtain gluebi->desc in the gluebi_get_device(),
+and access gluebi->desc in the gluebi_read(). However,
+gluebi_get_device() is not executed in advance in the
+ftl_add_mtd() process, which leads to NULL pointer dereference.
 
-Cc: stable@vger.kernel.org
-Fixes: 2e1cdfe184b5 ("coresight-etm4x: Adding CoreSight ETM4x driver")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310302043.as36UFED-lkp@intel.com/
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
-Signed-off-by: James Clark <james.clark@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20231101115206.70810-1-james.clark@arm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The solution for the gluebi module is to run jffs2 on the UBI
+volume without considering working with ftl or mtdblock [2].
+Therefore, this problem can be avoided by preventing gluebi from
+creating the mtdblock device after creating mtd partition of the
+type MTD_UBIVOLUME.
+
+Fixes: 2ba3d76a1e29 ("UBI: make gluebi a separate module")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217992 [1]
+Link: https://lore.kernel.org/lkml/441107100.23734.1697904580252.JavaMail.zimbra@nod.at/ [2]
+Signed-off-by: ZhaoLong Wang <wangzhaolong1@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Acked-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20231220024619.2138625-1-wangzhaolong1@huawei.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/mtd_blkdevs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/hwtracing/coresight/coresight-etm4x.h
-+++ b/drivers/hwtracing/coresight/coresight-etm4x.h
-@@ -440,7 +440,7 @@ struct etmv4_drvdata {
- 	u8				ctxid_size;
- 	u8				vmid_size;
- 	u8				ccsize;
--	u8				ccitmin;
-+	u16				ccitmin;
- 	u8				s_ex_level;
- 	u8				ns_ex_level;
- 	u8				q_support;
+diff --git a/drivers/mtd/mtd_blkdevs.c b/drivers/mtd/mtd_blkdevs.c
+index 0c05f77f9b21..dd0d0bf5f57f 100644
+--- a/drivers/mtd/mtd_blkdevs.c
++++ b/drivers/mtd/mtd_blkdevs.c
+@@ -533,7 +533,7 @@ static void blktrans_notify_add(struct mtd_info *mtd)
+ {
+ 	struct mtd_blktrans_ops *tr;
+ 
+-	if (mtd->type == MTD_ABSENT)
++	if (mtd->type == MTD_ABSENT || mtd->type == MTD_UBIVOLUME)
+ 		return;
+ 
+ 	list_for_each_entry(tr, &blktrans_majors, list)
+@@ -576,7 +576,7 @@ int register_mtd_blktrans(struct mtd_blktrans_ops *tr)
+ 	list_add(&tr->list, &blktrans_majors);
+ 
+ 	mtd_for_each_device(mtd)
+-		if (mtd->type != MTD_ABSENT)
++		if (mtd->type != MTD_ABSENT && mtd->type != MTD_UBIVOLUME)
+ 			tr->add_mtd(tr, mtd);
+ 
+ 	mutex_unlock(&mtd_table_mutex);
+-- 
+2.43.0
+
 
 
