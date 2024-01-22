@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E1B64AB3;
-	Tue, 23 Jan 2024 01:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA2B64CFC;
+	Tue, 23 Jan 2024 01:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975058; cv=none; b=mQXqzKoFKtYl/JJtDezdSX6DgkOXBpmZM3HapASDX3TXI3nNakSJMLTciPl7l29nW0U/jYyN+c/r8YC+ySqwuggKTAPlbusYXcI2ypHnKuMh/fcSN43j8pYlYKLFElSUV3bEntW4dEbP8nyyJGRRdjiY2ltUASaOKz8+U0N7Zmc=
+	t=1705975059; cv=none; b=dp7Y6i7kRnGcgG2w4qzEVaQ4fBCP9+gRZU6NS9MM+7rG8NX33rbfgpwFhn3t3tpHDGBiKrtgPTGN9P4icc9TJuzQyfi5Rl3+CqTb8+G08sEBv+p2bDxatsqsygQdUka02cInlL79+I31wOisbFEja3mlIaWgykykMmDXlhUFdx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975058; c=relaxed/simple;
-	bh=xkOsfdas6XjH1JDLq9j49UWoauPUijiLcmm9I+70yto=;
+	s=arc-20240116; t=1705975059; c=relaxed/simple;
+	bh=lITLzO4lTF5MsrPL7BAuMEhba9IQHbeIWdF9GHCc9Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sRf6hWCmoT2x/M82viKqXofJrz0EMiRZ1zSqLj3gaeCEE0Zr48vi037EfcGfW8NnZWUqDPeUHM8+O9JIw+/het6wgCpIxkZagXIJgvUYlEuLyz5OQthJ/HrWiJ9ZFYUiOF9DExkAOGDOzlPxuuVUsQYe6sFB2d+R45TfPqBGwlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1EUlLlC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TCooBkIoSTPqLqDGcedpw0T+6K8XD17bSNKe38+g9PEWC/Bp99abKHQZ2p0QOB/+wHEuVd9ioTME8mLXN2ax0I1AuaFB+qA0RMkzBrXE1JYOWSwd9ooiQJAATllmUnMGEwsNs8ORKiufzF+nvCApS/PBQ+rULYnLyjfF1RJcB/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uF0Rolal; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1EUlLlC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30238C43399;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uF0Rolal"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011F0C433B2;
 	Tue, 23 Jan 2024 01:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975058;
-	bh=xkOsfdas6XjH1JDLq9j49UWoauPUijiLcmm9I+70yto=;
+	s=korg; t=1705975059;
+	bh=lITLzO4lTF5MsrPL7BAuMEhba9IQHbeIWdF9GHCc9Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y1EUlLlC1rhHUF84OJVOZ/Df1sWnw0Jf4/aeWIgisnx4EDNP/jqjBT7mb3x/Q0WG0
-	 DYP93OvcnKUsuwALJrnmXQTUuwjop/1UWllcK5DFaygFzFT2dqcy59wGGgCnpQfKLk
-	 wzrgNej33bGUOVP/LZEBpJ+NUIeHTxn6I43QlbJY=
+	b=uF0Rolalpe0tdEQdmo9Njn2qrC/LtN29lHESfmFsEaoO7aU4jMIEF37eL0RzXfl99
+	 Ko9KB918XOMDfnglNwXYdkcgPvLGDWCgmcIdOLKjMJmmxWs2mXHZqUqkZYVWr/4ti5
+	 e7UqBbsX4U8NSGeFHtFsb6p4E+g7GmWCe36u1g1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Thompson <davthompson@nvidia.com>,
-	Asmaa Mnebhi <asmaa@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 217/583] mlxbf_gige: Fix intermittent no ip issue
-Date: Mon, 22 Jan 2024 15:54:28 -0800
-Message-ID: <20240122235818.649854197@linuxfoundation.org>
+Subject: [PATCH 5.15 319/374] tty: use if in send_break() instead of goto
+Date: Mon, 22 Jan 2024 15:59:35 -0800
+Message-ID: <20240122235755.983111169@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,94 +46,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asmaa Mnebhi <asmaa@nvidia.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit ef210ef85d5cb543ce34a57803ed856d0c8c08c2 ]
+[ Upstream commit 24f2cd019946fc2e88e632d2e24a34c2cc3f2be4 ]
 
-Although the link is up, there is no ip assigned on setups with high background
-traffic. Nothing is transmitted nor received. The RX error count keeps on
-increasing. After several minutes, the RX error count stagnates and the
-GigE interface finally gets an ip.
+Now, the "jumped-over" code is simple enough to be put inside an 'if'.
+Do so to make it 'goto'-less.
 
-The issue is that mlxbf_gige_rx_init() is called before phy_start().
-As soon as the RX DMA is enabled in mlxbf_gige_rx_init(), the RX CI reaches the max
-of 128, and becomes equal to RX PI. RX CI doesn't decrease since the code hasn't
-ran phy_start yet.
-Bring the PHY up before starting the RX.
-
-Fixes: f92e1869d74e ("Add Mellanox BlueField Gigabit Ethernet driver")
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Signed-off-by: Asmaa Mnebhi <asmaa@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20230919085156.1578-16-jirislaby@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 66aad7d8d3ec ("usb: cdc-acm: return correct error code on unsupported break")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c | 14 +++++++-------
- .../ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c   |  6 +++---
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/tty/tty_io.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-index 694de9513b9f..7d132a132a29 100644
---- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-+++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-@@ -147,14 +147,14 @@ static int mlxbf_gige_open(struct net_device *netdev)
- 	 */
- 	priv->valid_polarity = 0;
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index cdbf05e76bc7..82b49aa0f9de 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -2511,11 +2511,10 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
+ 		return -EINTR;
  
--	err = mlxbf_gige_rx_init(priv);
-+	phy_start(phydev);
-+
-+	err = mlxbf_gige_tx_init(priv);
- 	if (err)
- 		goto free_irqs;
--	err = mlxbf_gige_tx_init(priv);
-+	err = mlxbf_gige_rx_init(priv);
- 	if (err)
--		goto rx_deinit;
--
--	phy_start(phydev);
-+		goto tx_deinit;
+ 	retval = tty->ops->break_ctl(tty, -1);
+-	if (retval)
+-		goto out;
+-	msleep_interruptible(duration);
+-	retval = tty->ops->break_ctl(tty, 0);
+-out:
++	if (!retval) {
++		msleep_interruptible(duration);
++		retval = tty->ops->break_ctl(tty, 0);
++	}
+ 	tty_write_unlock(tty);
  
- 	netif_napi_add(netdev, &priv->napi, mlxbf_gige_poll);
- 	napi_enable(&priv->napi);
-@@ -176,8 +176,8 @@ static int mlxbf_gige_open(struct net_device *netdev)
- 
- 	return 0;
- 
--rx_deinit:
--	mlxbf_gige_rx_deinit(priv);
-+tx_deinit:
-+	mlxbf_gige_tx_deinit(priv);
- 
- free_irqs:
- 	mlxbf_gige_free_irqs(priv);
-diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
-index 227d01cace3f..699984358493 100644
---- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
-@@ -142,6 +142,9 @@ int mlxbf_gige_rx_init(struct mlxbf_gige *priv)
- 	writeq(MLXBF_GIGE_RX_MAC_FILTER_COUNT_PASS_EN,
- 	       priv->base + MLXBF_GIGE_RX_MAC_FILTER_COUNT_PASS);
- 
-+	writeq(ilog2(priv->rx_q_entries),
-+	       priv->base + MLXBF_GIGE_RX_WQE_SIZE_LOG2);
-+
- 	/* Clear MLXBF_GIGE_INT_MASK 'receive pkt' bit to
- 	 * indicate readiness to receive interrupts
- 	 */
-@@ -154,9 +157,6 @@ int mlxbf_gige_rx_init(struct mlxbf_gige *priv)
- 	data |= MLXBF_GIGE_RX_DMA_EN;
- 	writeq(data, priv->base + MLXBF_GIGE_RX_DMA);
- 
--	writeq(ilog2(priv->rx_q_entries),
--	       priv->base + MLXBF_GIGE_RX_WQE_SIZE_LOG2);
--
- 	return 0;
- 
- free_wqe_and_skb:
+ 	if (signal_pending(current))
 -- 
 2.43.0
 
