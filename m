@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0AF04E1CD;
-	Tue, 23 Jan 2024 00:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1654E1D1;
+	Tue, 23 Jan 2024 00:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970561; cv=none; b=erGN0R/MFAT0PCVvQnFgC6FSuiuvRY8AEun9jFHkf7fQ7VNRdfCA2QZR+tFoBTqIvnA5Ut1dhnzMLMDOtgsz3NMfAxvGH9JnIgMb+JtyGrn1nBO87QbxcKH0SV7GIunzTtJKIkk+iLXlDUU3+adOuptRNELzAEnLrXm+oQNAcpE=
+	t=1705970565; cv=none; b=VNpXb1QJ39TFuxjgEt31a33TsC4s18OulUIaicJGp18yoWyFQk5ggDxC+i53MBLicrZj0+1GzbdUFV2TxVfA/abIoI2pyjBDRzJrrsQ40VBCEFe3PLA5qdNdyRoZTlenVttA3igWRAzos6Hw1IJiIp6IJJ9Tp+BWbm4T7G75o6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970561; c=relaxed/simple;
-	bh=Orp7cTv2AO3sWWIW2yOV1DXjvOqD6RDrT2A6XoS0Jjo=;
+	s=arc-20240116; t=1705970565; c=relaxed/simple;
+	bh=pbzTVdD8QJLXLFuXAnZm6SCP2rNIAPc3TC6iBMHtH1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BxbvN8+fml0UDR1dbp+8gZOwOV3iF0DSnVbAsSUoEdIspulMb0wbR1mmeiCyK1bipbrmQ7xTfN0tVzFwQyMdM6DXVOeR7/xHLFFnW7Om3qgd9zAr272p4H2MmQUYK2mEHV0SBQfB5N13BXuttBoqkQJRja93hfZxeUkHhfbATvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUG0OWzx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=imn05/DSRjazXwEoYlMWbAC9Agh+2O8o24rLPg+h+CrpGRwlvnZAXhj99hdXLH2+FM5K+fX8NCa+YQaCq4OnIEq9Y754vpjAz0KJ90mjGCTRWEyFFURPOjcrtfxCt3xfbJPjePnhY1OAbcipD5UJq7We4I1YLpZhihgk6XrQ6nI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZdXVQWh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUG0OWzx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97467C433F1;
-	Tue, 23 Jan 2024 00:42:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZdXVQWh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980C7C433C7;
+	Tue, 23 Jan 2024 00:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970561;
-	bh=Orp7cTv2AO3sWWIW2yOV1DXjvOqD6RDrT2A6XoS0Jjo=;
+	s=korg; t=1705970565;
+	bh=pbzTVdD8QJLXLFuXAnZm6SCP2rNIAPc3TC6iBMHtH1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UUG0OWzxG7R62D/9rSPGrVnHxxlHJFqdVMhNCkbqX43ttAEdm5mDeYP2NbDByiR63
-	 5JOXSiym6sLz7YxzRDCeYnv5d4h4riBxwzfKq/Hn+/R+9TQrY9EC1Nw5QDtDcq6K0X
-	 QF753xGtNWOIMXw/j5G+hZVWJLi5sb/8syM0Vhmw=
+	b=jZdXVQWhRhS8lbq2CAuCVuKFxe09bLfyT38qXaL6K8diOfmk6BcizrVeHt/GlE1la
+	 p0sGMhruhZ6JIXWQLpx3w/Jn4D2th2DEM7gkf/wEBWKnxIyruxpQBRysK3R1lOLLiu
+	 QxwffOudETPzQD5SPJ9wnvvYVzMdoKrrxXMJHsLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/417] efivarfs: force RO when remounting if SetVariable is not supported
-Date: Mon, 22 Jan 2024 15:53:14 -0800
-Message-ID: <20240122235752.465305939@linuxfoundation.org>
+	Osama Muhammad <osmtendev@gmail.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+da0fc229cc1ff4bb2e6d@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 053/417] gfs2: Fix kernel NULL pointer dereference in gfs2_rgrp_dump
+Date: Mon, 22 Jan 2024 15:53:41 -0800
+Message-ID: <20240122235753.512825209@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -51,106 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+From: Osama Muhammad <osmtendev@gmail.com>
 
-[ Upstream commit 0e8d2444168dd519fea501599d150e62718ed2fe ]
+[ Upstream commit 8877243beafa7c6bfc42022cbfdf9e39b25bd4fa ]
 
-If SetVariable at runtime is not supported by the firmware we never assign
-a callback for that function. At the same time mount the efivarfs as
-RO so no one can call that.  However, we never check the permission flags
-when someone remounts the filesystem as RW. As a result this leads to a
-crash looking like this:
+Syzkaller has reported a NULL pointer dereference when accessing
+rgd->rd_rgl in gfs2_rgrp_dump().  This can happen when creating
+rgd->rd_gl fails in read_rindex_entry().  Add a NULL pointer check in
+gfs2_rgrp_dump() to prevent that.
 
-$ mount -o remount,rw /sys/firmware/efi/efivars
-$ efi-updatevar -f PK.auth PK
-
-[  303.279166] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-[  303.280482] Mem abort info:
-[  303.280854]   ESR = 0x0000000086000004
-[  303.281338]   EC = 0x21: IABT (current EL), IL = 32 bits
-[  303.282016]   SET = 0, FnV = 0
-[  303.282414]   EA = 0, S1PTW = 0
-[  303.282821]   FSC = 0x04: level 0 translation fault
-[  303.283771] user pgtable: 4k pages, 48-bit VAs, pgdp=000000004258c000
-[  303.284913] [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
-[  303.286076] Internal error: Oops: 0000000086000004 [#1] PREEMPT SMP
-[  303.286936] Modules linked in: qrtr tpm_tis tpm_tis_core crct10dif_ce arm_smccc_trng rng_core drm fuse ip_tables x_tables ipv6
-[  303.288586] CPU: 1 PID: 755 Comm: efi-updatevar Not tainted 6.3.0-rc1-00108-gc7d0c4695c68 #1
-[  303.289748] Hardware name: Unknown Unknown Product/Unknown Product, BIOS 2023.04-00627-g88336918701d 04/01/2023
-[  303.291150] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  303.292123] pc : 0x0
-[  303.292443] lr : efivar_set_variable_locked+0x74/0xec
-[  303.293156] sp : ffff800008673c10
-[  303.293619] x29: ffff800008673c10 x28: ffff0000037e8000 x27: 0000000000000000
-[  303.294592] x26: 0000000000000800 x25: ffff000002467400 x24: 0000000000000027
-[  303.295572] x23: ffffd49ea9832000 x22: ffff0000020c9800 x21: ffff000002467000
-[  303.296566] x20: 0000000000000001 x19: 00000000000007fc x18: 0000000000000000
-[  303.297531] x17: 0000000000000000 x16: 0000000000000000 x15: 0000aaaac807ab54
-[  303.298495] x14: ed37489f673633c0 x13: 71c45c606de13f80 x12: 47464259e219acf4
-[  303.299453] x11: ffff000002af7b01 x10: 0000000000000003 x9 : 0000000000000002
-[  303.300431] x8 : 0000000000000010 x7 : ffffd49ea8973230 x6 : 0000000000a85201
-[  303.301412] x5 : 0000000000000000 x4 : ffff0000020c9800 x3 : 00000000000007fc
-[  303.302370] x2 : 0000000000000027 x1 : ffff000002467400 x0 : ffff000002467000
-[  303.303341] Call trace:
-[  303.303679]  0x0
-[  303.303938]  efivar_entry_set_get_size+0x98/0x16c
-[  303.304585]  efivarfs_file_write+0xd0/0x1a4
-[  303.305148]  vfs_write+0xc4/0x2e4
-[  303.305601]  ksys_write+0x70/0x104
-[  303.306073]  __arm64_sys_write+0x1c/0x28
-[  303.306622]  invoke_syscall+0x48/0x114
-[  303.307156]  el0_svc_common.constprop.0+0x44/0xec
-[  303.307803]  do_el0_svc+0x38/0x98
-[  303.308268]  el0_svc+0x2c/0x84
-[  303.308702]  el0t_64_sync_handler+0xf4/0x120
-[  303.309293]  el0t_64_sync+0x190/0x194
-[  303.309794] Code: ???????? ???????? ???????? ???????? (????????)
-[  303.310612] ---[ end trace 0000000000000000 ]---
-
-Fix this by adding a .reconfigure() function to the fs operations which
-we can use to check the requested flags and deny anything that's not RO
-if the firmware doesn't implement SetVariable at runtime.
-
-Fixes: f88814cc2578 ("efi/efivars: Expose RT service availability via efivars abstraction")
-Signed-off-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Reported-and-tested-by: syzbot+da0fc229cc1ff4bb2e6d@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=da0fc229cc1ff4bb2e6d
+Fixes: 72244b6bc752 ("gfs2: improve debug information when lvb mismatches are found")
+Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/efivarfs/super.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/gfs2/rgrp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/efivarfs/super.c b/fs/efivarfs/super.c
-index 6780fc81cc11..f5966cd95918 100644
---- a/fs/efivarfs/super.c
-+++ b/fs/efivarfs/super.c
-@@ -13,6 +13,7 @@
- #include <linux/ucs2_string.h>
- #include <linux/slab.h>
- #include <linux/magic.h>
-+#include <linux/printk.h>
+diff --git a/fs/gfs2/rgrp.c b/fs/gfs2/rgrp.c
+index f602fb844951..dcaaa32efc4a 100644
+--- a/fs/gfs2/rgrp.c
++++ b/fs/gfs2/rgrp.c
+@@ -2306,7 +2306,7 @@ void gfs2_rgrp_dump(struct seq_file *seq, struct gfs2_rgrpd *rgd,
+ 		       (unsigned long long)rgd->rd_addr, rgd->rd_flags,
+ 		       rgd->rd_free, rgd->rd_free_clone, rgd->rd_dinodes,
+ 		       rgd->rd_requested, rgd->rd_reserved, rgd->rd_extfail_pt);
+-	if (rgd->rd_sbd->sd_args.ar_rgrplvb) {
++	if (rgd->rd_sbd->sd_args.ar_rgrplvb && rgd->rd_rgl) {
+ 		struct gfs2_rgrp_lvb *rgl = rgd->rd_rgl;
  
- #include "internal.h"
- 
-@@ -226,8 +227,19 @@ static int efivarfs_get_tree(struct fs_context *fc)
- 	return get_tree_single(fc, efivarfs_fill_super);
- }
- 
-+static int efivarfs_reconfigure(struct fs_context *fc)
-+{
-+	if (!efivar_supports_writes() && !(fc->sb_flags & SB_RDONLY)) {
-+		pr_err("Firmware does not support SetVariableRT. Can not remount with rw\n");
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static const struct fs_context_operations efivarfs_context_ops = {
- 	.get_tree	= efivarfs_get_tree,
-+	.reconfigure	= efivarfs_reconfigure,
- };
- 
- static int efivarfs_init_fs_context(struct fs_context *fc)
+ 		gfs2_print_dbg(seq, "%s  L: f:%02x b:%u i:%u\n", fs_id_buf,
 -- 
 2.43.0
 
