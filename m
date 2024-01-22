@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B3023BC;
-	Tue, 23 Jan 2024 01:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6677937C;
+	Tue, 23 Jan 2024 01:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972162; cv=none; b=T7qMCKaa62fomYx5hhFz2jBC02+uT84wbRRfRMUaxALdB5Mof7C3g8Zw133+i0oTKu9BHVOnUGHCQpZj4y3Vn/RN7919tUgck8DBPRQhhjN1E8WeSV8TXjbp7im1lIkddK0KbG/vK/OfN3ZpAHMSCAv5LXDC7UUhuX9W2RKPnOs=
+	t=1705972163; cv=none; b=fF+KKTV2JsVrBhj/rBdNiNAYezeUrbnU5up7z3NePfJwZ1kdZL3mujCjZt2ca6ZqqJwwciEsZHameTe0hzH4QJwjCtthCj2n9+6ppwjDCSGmfaoVbdBbNs+YlPYV08J6xzcT0cI2y5ChqvyLezxqilGOV1J/eXPqQAhI1ku3AOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972162; c=relaxed/simple;
-	bh=7X0mcwtiYK+/v9vTXZClEi1RSYZEM9YNydLotktvJ74=;
+	s=arc-20240116; t=1705972163; c=relaxed/simple;
+	bh=2AcKw7uRjM6U9qLY25KDNNAluC9QnnMZyqi6c3eyYUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rR8JmKU4rjls2NZPNqx+hsuAswC1OZ3HIjd9XhlnPAeMdcCL0p3VL+Tg6b9plUnYwTTJP5BYbt1/2/lMeo1EV/aIOxtFsTjlv6EywyDyxyAVkFDUd9UvqAKLMh2uDn5NMw1MfkbjIY444KNiTv3qwAwX8+eOuUSINB99TX/EQSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxz3LGH9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uO0uPNbSztmJdy+S/ghnZlIOXFhpTtHVNlc0pe/L+kjrIXEO5ytSMg2BG0VxLnMp6Yg6C5y8acuf2EwH077Fc6++S/hFPlL3Keh82RA/SZ8qnOZ675t5WufPxSUJqrFTHpNgIqZN9gjFp7vgppsCqLdSGb2VmP2SIxxY7RejI5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYp5+AHT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxz3LGH9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1692FC43390;
-	Tue, 23 Jan 2024 01:09:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYp5+AHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24530C433C7;
+	Tue, 23 Jan 2024 01:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972162;
-	bh=7X0mcwtiYK+/v9vTXZClEi1RSYZEM9YNydLotktvJ74=;
+	s=korg; t=1705972163;
+	bh=2AcKw7uRjM6U9qLY25KDNNAluC9QnnMZyqi6c3eyYUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pxz3LGH9OpKG5H9kZxzNjMrP6GsefTX1Iwrx4kVMjTef+xPbbQ9ZgQ/R/Rat20F7d
-	 vY/t2xbwfGAKYbojodZ1PaQ4VZU/SVd0Vr8TBYkaHzM150EAvfr1iDXmrErSeEPEcQ
-	 aJuSE7VvGGQbqQx125GJMgmrgb7svt/FzFfFep9s=
+	b=AYp5+AHTV0+N1r/XKXIMRN1p1nolqkw0K23s0gpsTgxWXKenjOjZt4xF395fqTlE3
+	 PdKNjNzkC7pltMImYMbpwFLuCMEjA6NKMou4mBcI+SiMdvTnZh1/IihvAmBGC3CWLH
+	 wXDf1raKQZG6sH0sJvL6F9qLdbz5i8DKxAkjfXqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.15 055/374] binder: use EPOLLERR from eventpoll.h
-Date: Mon, 22 Jan 2024 15:55:11 -0800
-Message-ID: <20240122235746.522072018@linuxfoundation.org>
+	Zhenghan Wang <wzhmmmmm@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 046/374] ida: Fix crash in ida_free when the bitmap is empty
+Date: Mon, 22 Jan 2024 15:55:02 -0800
+Message-ID: <20240122235746.215139538@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,38 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit 6ac061db9c58ca5b9270b1b3940d2464fb3ff183 upstream.
+[ Upstream commit af73483f4e8b6f5c68c9aa63257bdd929a9c194a ]
 
-Use EPOLLERR instead of POLLERR to make sure it is cast to the correct
-__poll_t type. This fixes the following sparse issue:
+The IDA usually detects double-frees, but that detection failed to
+consider the case when there are no nearby IDs allocated and so we have a
+NULL bitmap rather than simply having a clear bit.  Add some tests to the
+test-suite to be sure we don't inadvertently reintroduce this problem.
+Unfortunately they're quite noisy so include a message to disregard
+the warnings.
 
-  drivers/android/binder.c:5030:24: warning: incorrect type in return expression (different base types)
-  drivers/android/binder.c:5030:24:    expected restricted __poll_t
-  drivers/android/binder.c:5030:24:    got int
-
-Fixes: f88982679f54 ("binder: check for binder_thread allocation failure in binder_poll()")
-Cc: stable@vger.kernel.org
-Cc: Eric Biggers <ebiggers@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20231201172212.1813387-2-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Zhenghan Wang <wzhmmmmm@gmail.com>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/idr.c      |  2 +-
+ lib/test_ida.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+), 1 deletion(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -4836,7 +4836,7 @@ static __poll_t binder_poll(struct file
+diff --git a/lib/idr.c b/lib/idr.c
+index 13f2758c2377..da36054c3ca0 100644
+--- a/lib/idr.c
++++ b/lib/idr.c
+@@ -508,7 +508,7 @@ void ida_free(struct ida *ida, unsigned int id)
+ 			goto delete;
+ 		xas_store(&xas, xa_mk_value(v));
+ 	} else {
+-		if (!test_bit(bit, bitmap->bitmap))
++		if (!bitmap || !test_bit(bit, bitmap->bitmap))
+ 			goto err;
+ 		__clear_bit(bit, bitmap->bitmap);
+ 		xas_set_mark(&xas, XA_FREE_MARK);
+diff --git a/lib/test_ida.c b/lib/test_ida.c
+index b06880625961..55105baa19da 100644
+--- a/lib/test_ida.c
++++ b/lib/test_ida.c
+@@ -150,6 +150,45 @@ static void ida_check_conv(struct ida *ida)
+ 	IDA_BUG_ON(ida, !ida_is_empty(ida));
+ }
  
- 	thread = binder_get_thread(proc);
- 	if (!thread)
--		return POLLERR;
-+		return EPOLLERR;
++/*
++ * Check various situations where we attempt to free an ID we don't own.
++ */
++static void ida_check_bad_free(struct ida *ida)
++{
++	unsigned long i;
++
++	printk("vvv Ignore \"not allocated\" warnings\n");
++	/* IDA is empty; all of these will fail */
++	ida_free(ida, 0);
++	for (i = 0; i < 31; i++)
++		ida_free(ida, 1 << i);
++
++	/* IDA contains a single value entry */
++	IDA_BUG_ON(ida, ida_alloc_min(ida, 3, GFP_KERNEL) != 3);
++	ida_free(ida, 0);
++	for (i = 0; i < 31; i++)
++		ida_free(ida, 1 << i);
++
++	/* IDA contains a single bitmap */
++	IDA_BUG_ON(ida, ida_alloc_min(ida, 1023, GFP_KERNEL) != 1023);
++	ida_free(ida, 0);
++	for (i = 0; i < 31; i++)
++		ida_free(ida, 1 << i);
++
++	/* IDA contains a tree */
++	IDA_BUG_ON(ida, ida_alloc_min(ida, (1 << 20) - 1, GFP_KERNEL) != (1 << 20) - 1);
++	ida_free(ida, 0);
++	for (i = 0; i < 31; i++)
++		ida_free(ida, 1 << i);
++	printk("^^^ \"not allocated\" warnings over\n");
++
++	ida_free(ida, 3);
++	ida_free(ida, 1023);
++	ida_free(ida, (1 << 20) - 1);
++
++	IDA_BUG_ON(ida, !ida_is_empty(ida));
++}
++
+ static DEFINE_IDA(ida);
  
- 	binder_inner_proc_lock(thread->proc);
- 	thread->looper |= BINDER_LOOPER_STATE_POLL;
+ static int ida_checks(void)
+@@ -162,6 +201,7 @@ static int ida_checks(void)
+ 	ida_check_leaf(&ida, 1024 * 64);
+ 	ida_check_max(&ida);
+ 	ida_check_conv(&ida);
++	ida_check_bad_free(&ida);
+ 
+ 	printk("IDA: %u of %u tests passed\n", tests_passed, tests_run);
+ 	return (tests_run != tests_passed) ? 0 : -EINVAL;
+-- 
+2.43.0
+
 
 
