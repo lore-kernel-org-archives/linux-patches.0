@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6743514830F;
-	Tue, 23 Jan 2024 00:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD86626;
+	Tue, 23 Jan 2024 00:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968388; cv=none; b=JGXde6J2J/Pa1JXqGuHWH9K8f2F4AUAdgSotVKMPCO0WsYJONozFqbgczSWiiRLPZ4bt/AkXz2kcDA7/w5XbvZHZMzIsMwlF/Jc6WaVbnTDeIi8Ed6Eid5C5MkBkHnq8lA16FpYRqFM+c8Kuh8KONF3zRpLfy4xvMx+cDFXcPLU=
+	t=1705968392; cv=none; b=n9oF5NUynf1LhFG724dLA9QFahGBE0Fh1c6ovOH/rV82mx3xiuneGgoBD05DtvmoNCcxIuXshOv0yOBvvhZq/AYZe2K35pRGbSqKILPQ94K8uhMVfCnwhOGiJ+TGXMAWlQTCv2xTPIvlSKHzF8qHsu3GbyZvUMmvs3Ye1cmlzv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968388; c=relaxed/simple;
-	bh=qvZcMztYeRBU49SU+8PldygT7O2hyYfQkepP0VF7WJg=;
+	s=arc-20240116; t=1705968392; c=relaxed/simple;
+	bh=H/UY4yDzvVRAUixhoobMijKE6Q45+4cGvQS7mKeWDb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWCtdz7vzcUGAikYt5kcQ82JzR6B7Y+zHkqxhg7bd+NU8/sCCtGtHUl92leVRYfHgVioyrlgaBSOy2kQVrF7HggKbvuKNM/9NqrZTWMBPtk6QNH2/VfJdJwvN44pMLEaUDJesdEWxCjDljxVyJQ9rXZriDY97hZ+jAiOc1qNdRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rt7San1e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mI1DkAMVLS1QuASH3Fc0sXTiKLwOI2laTJrryDqLEW5/Lr2JEwhNhXC64JUcsb0ng2Lf/44ATb2LbRZf7xtQ3l7Vbh3OKlawbfX/FHEQ45Npbv7Lo80ZIRbZ1B8okLXYswqGoMOxhDroHEfPmytldHQtY6H6X/cb2baKk92n0AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbEVvXeC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rt7San1e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B823BC433F1;
-	Tue, 23 Jan 2024 00:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbEVvXeC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1850DC433F1;
+	Tue, 23 Jan 2024 00:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968387;
-	bh=qvZcMztYeRBU49SU+8PldygT7O2hyYfQkepP0VF7WJg=;
+	s=korg; t=1705968391;
+	bh=H/UY4yDzvVRAUixhoobMijKE6Q45+4cGvQS7mKeWDb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rt7San1epHBEvv+Rp4zerflxaK23cA2a6skyXoNMjfrzH07dIjzcYzSJnd/XUZKsY
-	 arL7pccZY460T0Ojp4i2tCk6/8TVJ6h9NnB8AOihAcq+g0Vzfdb7hAhzB6cMx8hQ+C
-	 4EkovA0EuyfhA+8jVqRC/+eXk2mtMJBytYxFw9Fo=
+	b=NbEVvXeCLBuBcrohIi+KSHlsuCi3/abYfxQWhOCJ0RzKkRbqYuoKztpxxLok3FX5H
+	 3u6xUHal59IntlzS2OnbpRJqfg02uu2WcLYBkPCgXnaGklMe5AtH71QI9Tmf9PTDvu
+	 xvbRQPSZzAQU+8bJY7sXP4A4FYkI6VBmnE5t8tTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 092/148] drm/radeon: check return value of radeon_ring_lock()
-Date: Mon, 22 Jan 2024 15:57:28 -0800
-Message-ID: <20240122235716.109475148@linuxfoundation.org>
+Subject: [PATCH 4.19 093/148] ASoC: cs35l33: Fix GPIO name and drop legacy include
+Date: Mon, 22 Jan 2024 15:57:29 -0800
+Message-ID: <20240122235716.147700684@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -51,40 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 71225e1c930942cb1e042fc08c5cc0c4ef30e95e ]
+[ Upstream commit 50678d339d670a92658e5538ebee30447c88ccb3 ]
 
-In the unlikely event of radeon_ring_lock() failing, its errno return
-value should be processed. This patch checks said return value and
-prints a debug message in case of an error.
+This driver includes the legacy GPIO APIs <linux/gpio.h> and
+<linux/of_gpio.h> but does not use any symbols from any of
+them.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+Drop the includes.
 
-Fixes: 48c0c902e2e6 ("drm/radeon/kms: add support for CP setup on SI")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Further the driver is requesting "reset-gpios" rather than
+just "reset" from the GPIO framework. This is wrong because
+the gpiolib core will add "-gpios" before processing the
+request from e.g. device tree. Drop the suffix.
+
+The last problem means that the optional RESET GPIO has
+never been properly retrieved and used even if it existed,
+but nobody noticed.
+
+Fixes: 3333cb7187b9 ("ASoC: cs35l33: Initial commit of the cs35l33 CODEC driver.")
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20231201-descriptors-sound-cirrus-v2-2-ee9f9d4655eb@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/si.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/codecs/cs35l33.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/si.c b/drivers/gpu/drm/radeon/si.c
-index 644ddd8d65ad..167dbcef0c38 100644
---- a/drivers/gpu/drm/radeon/si.c
-+++ b/drivers/gpu/drm/radeon/si.c
-@@ -3612,6 +3612,10 @@ static int si_cp_start(struct radeon_device *rdev)
- 	for (i = RADEON_RING_TYPE_GFX_INDEX; i <= CAYMAN_RING_TYPE_CP2_INDEX; ++i) {
- 		ring = &rdev->ring[i];
- 		r = radeon_ring_lock(rdev, ring, 2);
-+		if (r) {
-+			DRM_ERROR("radeon: cp failed to lock ring (%d).\n", r);
-+			return r;
-+		}
+diff --git a/sound/soc/codecs/cs35l33.c b/sound/soc/codecs/cs35l33.c
+index 73fa784646e5..8436df40bbda 100644
+--- a/sound/soc/codecs/cs35l33.c
++++ b/sound/soc/codecs/cs35l33.c
+@@ -26,13 +26,11 @@
+ #include <sound/soc-dapm.h>
+ #include <sound/initval.h>
+ #include <sound/tlv.h>
+-#include <linux/gpio.h>
+ #include <linux/gpio/consumer.h>
+ #include <sound/cs35l33.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/regulator/machine.h>
+-#include <linux/of_gpio.h>
+ #include <linux/of.h>
+ #include <linux/of_device.h>
+ #include <linux/of_irq.h>
+@@ -1171,7 +1169,7 @@ static int cs35l33_i2c_probe(struct i2c_client *i2c_client,
  
- 		/* clear the compute context state */
- 		radeon_ring_write(ring, PACKET3_COMPUTE(PACKET3_CLEAR_STATE, 0));
+ 	/* We could issue !RST or skip it based on AMP topology */
+ 	cs35l33->reset_gpio = devm_gpiod_get_optional(&i2c_client->dev,
+-			"reset-gpios", GPIOD_OUT_HIGH);
++			"reset", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(cs35l33->reset_gpio)) {
+ 		dev_err(&i2c_client->dev, "%s ERROR: Can't get reset GPIO\n",
+ 			__func__);
 -- 
 2.43.0
 
