@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9985F6A354;
-	Tue, 23 Jan 2024 02:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DD06A354;
+	Tue, 23 Jan 2024 02:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975399; cv=none; b=kYRJ+UM6tVX+Bf6TOdGWyGuRMQAQxN/BsQtu78z1sSuQl9HlpT11ShRo0PjyEsHFd7q4/FwPAVuM9gHGeiw4qveTwQ8yismoxrCVZ/JH97jGLiRu+KqNQclyX31efzqhioEn9M+g0hTnu7pCrQXEtPWkdmbyipNYRDK8hwVPpQY=
+	t=1705975400; cv=none; b=MEKHDLTCUiMHyOTCHt80ZYZ4BmSmfCnKJhHmZjJh5B0sGFIoUkhSkTNcZ/8okxZBn9xxiEqxV2KePyaIzRox2asJXPqr4Rd0XtBS7SrrQIagYIOB/pC6501C3xVTv3MCVUEXy+rCUCQJ+WR28XRxttrTHYoiasoQV44wF+eOqr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975399; c=relaxed/simple;
-	bh=UT7b9wn7RRFbh96ryjAvKe022W+FVz/NE3HbZTd1kBI=;
+	s=arc-20240116; t=1705975400; c=relaxed/simple;
+	bh=c8xwEGJmZiC4PEY0FW+gNYMISXxDbKQZe/pd9tqJpn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oZPTiAT51jxVF6dSGpUpFF1FOx+bxL0WEDmPPVzKOJvaWBDR9qkj92Eim8W2322AfhfcXV2KoVPNr2Cnr0iZa6/5EDal2J/m+jm+kmo7splw7pm4r7mvBEU777/hz5yq86UhOMGGrlUTgPRIFkxTauRomLcjIxOo5YYcA8ZM6Tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8ZBuDG3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ge6S1IqEInw2/sTR90PotnZCDKyS2OJTLsfRKKJP3TzWkPhPlUm8dywEosUHCkMuPgrMrBUDV1LfSG6RFfsUpCTZLwC8d6iFjGzcDdusvjjsXIvQ02/DsUHyOqK34oZDXZibEJOoSjcF8k7mnccOY41vrwmhP4LZCZCklDOAfjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1YLHgrni; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8ZBuDG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D862C433A6;
-	Tue, 23 Jan 2024 02:03:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YLHgrni"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BAAFC433A6;
+	Tue, 23 Jan 2024 02:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975399;
-	bh=UT7b9wn7RRFbh96ryjAvKe022W+FVz/NE3HbZTd1kBI=;
+	s=korg; t=1705975400;
+	bh=c8xwEGJmZiC4PEY0FW+gNYMISXxDbKQZe/pd9tqJpn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8ZBuDG3lyZQNXlk1NFcn5vs/jCXDc++1JdSjdwZalhbLSmATMgxu+CknOGK73REw
-	 qiCB+8x0BHsfBP7ikY/ZmAtMG7wIqf6mJc2k7c6HshN3OvgoPJjWKnNVyC4PHkZ4XI
-	 JtUGLopXg+2wttKrX7wevHr4QXiZxVffbdswQfWk=
+	b=1YLHgrnii0OaGB759RzptkHq++PzwubjUdM9n9ZIk2OPWBk6pI+hvZZHfFJGxAyah
+	 4v/3BuQSw/hFRl6neAcly4RMATXxo/D9Ef32+4gHqflMykTDFcEidmsCblZlRtlsnR
+	 kOxdprmrKayCk/vpy8M/qLLsfS38K+j5fyzltFow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Shuah Khan <shuah@kernel.org>,
+	linux-sound@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 333/583] drm/amd/display: avoid stringop-overflow warnings for dp_decide_lane_settings()
-Date: Mon, 22 Jan 2024 15:56:24 -0800
-Message-ID: <20240122235822.233179298@linuxfoundation.org>
+Subject: [PATCH 6.6 334/583] kselftest/alsa - mixer-test: fix the number of parameters to ksft_exit_fail_msg()
+Date: Mon, 22 Jan 2024 15:56:25 -0800
+Message-ID: <20240122235822.259476148@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -46,68 +52,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-[ Upstream commit c966dc0e9d96dc44423c404a2628236f1200c24e ]
+[ Upstream commit 8c51c13dc63d46e754c44215eabc0890a8bd9bfb ]
 
-gcc prints a warning about a possible array overflow for a couple of
-callers of dp_decide_lane_settings() after commit 1b56c90018f0 ("Makefile:
-Enable -Wstringop-overflow globally"):
+Minor fix in the number of arguments to error reporting function in the
+test program as reported by GCC 13.2.0 warning.
 
-drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c: In function 'dp_perform_fixed_vs_pe_training_sequence_legacy':
-drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c:426:25: error: 'dp_decide_lane_settings' accessing 4 bytes in a region of size 1 [-Werror=stringop-overflow=]
-  426 |                         dp_decide_lane_settings(lt_settings, dpcd_lane_adjust,
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  427 |                                         lt_settings->hw_lane_settings, lt_settings->dpcd_lane_settings);
-      |                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c:426:25: note: referencing argument 4 of type 'union dpcd_training_lane[4]'
+mixer-test.c: In function ‘find_controls’:
+mixer-test.c:169:44: warning: too many arguments for format [-Wformat-extra-args]
+  169 |                         ksft_exit_fail_msg("snd_ctl_poll_descriptors() failed for %d\n",
+      |                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-I'm not entirely sure what caused this, but changing the prototype to expect
-a pointer instead of an array avoids the warnings.
+The number of arguments in call to ksft_exit_fail_msg() doesn't correspond
+to the format specifiers, so this is adjusted resembling the sibling calls
+to the error function.
 
-Fixes: 7727e7b60f82 ("drm/amd/display: Improve robustness of FIXED_VS link training at DP1 rates")
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: b1446bda56456 ("kselftest: alsa: Check for event generation when we write to controls")
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: linux-sound@vger.kernel.org
+Cc: linux-kselftest@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Acked-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20240107173704.937824-2-mirsad.todorovac@alu.unizg.hr
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/link/protocols/link_dp_training.c    | 2 +-
- .../gpu/drm/amd/display/dc/link/protocols/link_dp_training.h    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/alsa/mixer-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
-index 90339c2dfd84..5a0b04518956 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
-@@ -807,7 +807,7 @@ void dp_decide_lane_settings(
- 		const struct link_training_settings *lt_settings,
- 		const union lane_adjust ln_adjust[LANE_COUNT_DP_MAX],
- 		struct dc_lane_settings hw_lane_settings[LANE_COUNT_DP_MAX],
--		union dpcd_training_lane dpcd_lane_settings[LANE_COUNT_DP_MAX])
-+		union dpcd_training_lane *dpcd_lane_settings)
- {
- 	uint32_t lane;
+diff --git a/tools/testing/selftests/alsa/mixer-test.c b/tools/testing/selftests/alsa/mixer-test.c
+index 23df154fcdd7..208c2170c074 100644
+--- a/tools/testing/selftests/alsa/mixer-test.c
++++ b/tools/testing/selftests/alsa/mixer-test.c
+@@ -166,7 +166,7 @@ static void find_controls(void)
+ 		err = snd_ctl_poll_descriptors(card_data->handle,
+ 					       &card_data->pollfd, 1);
+ 		if (err != 1) {
+-			ksft_exit_fail_msg("snd_ctl_poll_descriptors() failed for %d\n",
++			ksft_exit_fail_msg("snd_ctl_poll_descriptors() failed for card %d: %d\n",
+ 				       card, err);
+ 		}
  
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.h b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.h
-index 7d027bac8255..851bd17317a0 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.h
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.h
-@@ -111,7 +111,7 @@ void dp_decide_lane_settings(
- 	const struct link_training_settings *lt_settings,
- 	const union lane_adjust ln_adjust[LANE_COUNT_DP_MAX],
- 	struct dc_lane_settings hw_lane_settings[LANE_COUNT_DP_MAX],
--	union dpcd_training_lane dpcd_lane_settings[LANE_COUNT_DP_MAX]);
-+	union dpcd_training_lane *dpcd_lane_settings);
- 
- enum dc_dp_training_pattern decide_cr_training_pattern(
- 		const struct dc_link_settings *link_settings);
 -- 
 2.43.0
 
