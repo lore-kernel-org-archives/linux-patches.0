@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA5265189;
-	Tue, 23 Jan 2024 01:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93E6664B6;
+	Tue, 23 Jan 2024 01:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971658; cv=none; b=Sdo362ZjXDd0uGWrhb7Jvsfo6d8Zvkt97Z9z6bce1fmFBQ0Gxr9kUTUfi3+FMoEAfolAjkXY8CBvJ+/C4p0wyeUfhPYGfQL02ElDDaQ+kKfQqF0nMQmSz3guZ+AE4C7UGn+/3PSdNXGkMDy1tKtz++baxpOY5qMtjAk5Rp8c25s=
+	t=1705971659; cv=none; b=DAzHet8rHV5r1fR6/A7mreQSS5zc0k/Bm8WJk/NDiGjlvSnP1E06u9+u6agZNckPZ8vqxtNRmSLs4AeJ5dWRDilvZgdX9wVrYrj0jqTUFsz6gY8iyds+i84tWumF6ZDn4Th/O3qCa+U3CC+Vg0cWjACiFAsebG0/vMke41NhczQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971658; c=relaxed/simple;
-	bh=ugzQulhNXFFJ1xMiZKILUgJNl0Lm2h2HVV5s35BrWyo=;
+	s=arc-20240116; t=1705971659; c=relaxed/simple;
+	bh=yO5LkWCbm50B7hY5B770zd5Vxqh2nBFV3H8s23o6rm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfgU/03oKIHH0mCn9O6deoXl4/A/jreIy4jj3PskHe/GoVpDwYTS1xNohXRnAhsoKEOiPV9Csbx2HtckFVHkCaRP8PmmDeeDfvKZshHBozPLMRoW2NN+S35Fk/nSt/htfx/Jw/32uKzF6WoddxV0p7Alp9npgsErlg1cImAiggE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZwcpTU7A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IJQ69l5mf6rzcSB4nJ4ETU7kfv2AUK4Lcn204Zd+DZ6uUJ+wCNA8ft4sKMziknUd7uALXBVTqf9CDDte2CeflF9NRsnOjEpMtWrbwqusF64N+Wss54LoPc7dmgmqbrFov/HbluxcnzKHxmMlUeFFUxw/WfYr+GKDXIRv6RT4NQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NT+5NTzU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZwcpTU7A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8DCC433C7;
-	Tue, 23 Jan 2024 01:00:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NT+5NTzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60751C433C7;
+	Tue, 23 Jan 2024 01:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971658;
-	bh=ugzQulhNXFFJ1xMiZKILUgJNl0Lm2h2HVV5s35BrWyo=;
+	s=korg; t=1705971659;
+	bh=yO5LkWCbm50B7hY5B770zd5Vxqh2nBFV3H8s23o6rm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZwcpTU7AUSoqxcPN61e0eVXBJdtlh3IIRViclqqkA4uaKiNbfsEZlzOOgxnx5eHRo
-	 LBGnUxHEfTUSHo3GzqBF0fC70/HM7p7nZ11nuYmNwl1kyFJJ/iY17z3f6KNrPaYZ6Z
-	 EtlDgOdOYf1rksKuASW+kLYIIpnWr+2oTHbU39qQ=
+	b=NT+5NTzUMBi58zLboCTw4puq8EHc3uO/t7oUqLhPsEeT2FPn126PUyKeBAmOmjuoZ
+	 oU0qXqaT1jmW/NYNaCZ3K44nS6S6gkxGmkfUJX1J0n34xOdwVp6scudF9ChQiUc4Sa
+	 181v8sttJZLPrXjw0XQeS31B80oqenLlYhmyjquo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 288/417] fbdev: flush deferred IO before closing
-Date: Mon, 22 Jan 2024 15:57:36 -0800
-Message-ID: <20240122235801.810174864@linuxfoundation.org>
+	RD Babiera <rdbabiera@google.com>,
+	Chris Bainbridge <chris.bainbridge@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 267/417] Revert "usb: typec: class: fix typec_altmode_put_partner to put plugs"
+Date: Mon, 22 Jan 2024 15:57:15 -0800
+Message-ID: <20240122235801.112484118@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -51,46 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 33cd6ea9c0673517cdb06ad5c915c6f22e9615fc upstream.
+commit 9c6b789e954fae73c548f39332bcc56bdf0d4373 upstream.
 
-When framebuffer gets closed, the queued deferred IO gets cancelled. This
-can cause some last display data to vanish. This is problematic for users
-who send a still image to the framebuffer, then close the file: the image
-may never appear.
+This reverts commit b17b7fe6dd5c6ff74b38b0758ca799cdbb79e26e.
 
-To ensure none of display data get lost, flush the queued deferred IO
-first before closing.
+That commit messed up the reference counting, so it needs to
+be rethought.
 
-Another possible solution is to delete the cancel_delayed_work_sync()
-instead. The difference is that the display may appear some time after
-closing. However, the clearing of page mapping after this needs to be
-removed too, because the page mapping is used by the deferred work. It is
-not completely obvious whether it is okay to not clear the page mapping.
-For a patch intended for stable trees, go with the simple and obvious
-solution.
-
-Fixes: 60b59beafba8 ("fbdev: mm: Deferred IO support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: b17b7fe6dd5c ("usb: typec: class: fix typec_altmode_put_partner to put plugs")
+Cc:  <stable@vger.kernel.org>
+Cc: RD Babiera <rdbabiera@google.com>
+Reported-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Closes: https://lore.kernel.org/lkml/CAP-bSRb3SXpgo_BEdqZB-p1K5625fMegRZ17ZkPE1J8ZYgEHDg@mail.gmail.com/
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240102091142.2136472-1-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fb_defio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/class.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/video/fbdev/core/fb_defio.c
-+++ b/drivers/video/fbdev/core/fb_defio.c
-@@ -317,7 +317,7 @@ static void fb_deferred_io_lastclose(str
- 	struct page *page;
- 	int i;
+--- a/drivers/usb/typec/class.c
++++ b/drivers/usb/typec/class.c
+@@ -267,7 +267,7 @@ static void typec_altmode_put_partner(st
+ 	if (!partner)
+ 		return;
  
--	cancel_delayed_work_sync(&info->deferred_work);
-+	flush_delayed_work(&info->deferred_work);
+-	adev = &altmode->adev;
++	adev = &partner->adev;
  
- 	/* clear out the mapping that we setup */
- 	for (i = 0 ; i < info->fix.smem_len; i += PAGE_SIZE) {
+ 	if (is_typec_plug(adev->dev.parent)) {
+ 		struct typec_plug *plug = to_typec_plug(adev->dev.parent);
+@@ -497,8 +497,7 @@ static void typec_altmode_release(struct
+ {
+ 	struct altmode *alt = to_altmode(to_typec_altmode(dev));
+ 
+-	if (!is_typec_port(dev->parent))
+-		typec_altmode_put_partner(alt);
++	typec_altmode_put_partner(alt);
+ 
+ 	altmode_id_remove(alt->adev.dev.parent, alt->id);
+ 	kfree(alt);
 
 
