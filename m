@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB21E6168A;
-	Tue, 23 Jan 2024 01:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6F06168A;
+	Tue, 23 Jan 2024 01:55:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974945; cv=none; b=ozHUh2AkRYk6O8MrSSLIxLy0iOvl19OC76tHGEniXJMytHFeUUo86SvOvx/ij1jlCk0obnjyO+gjn4yWW5w6pSOPcX+tZQ7FFTIdoULq/oqO7gJ5soiyFy3BgaA4jzQqNYbsoXF1lUnG7Et4lziXPqWO6sBjxKICVrMQG+z8UY4=
+	t=1705974945; cv=none; b=cLJp/HcrI+BfIMT1IQveQhtGbmrb+vK8TUBmKWSkQFAFgf5C8ikAIBHpykfximCPE0Oky0ePN291qJAC8+xR0kwmpUJtRu85JDemPyICpsE6BNHJ/SGHtmR+Q3vBuYfWuVH5vgboA6uIb3/mSqZ77WkOBdGgP6iFV1vX9Ii2k4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705974945; c=relaxed/simple;
-	bh=nTzWqHn2STCqN2Td9mHisQPxHUw5dOESestZvFR4lhs=;
+	bh=KhPKd/iYAxDSmKMQ5WjXJ2CAtyvfRjqKcg95wFDKvSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aLplthHSJ+GCr1g8qZyc0auIZwEPGyWthbUPoLcXlIU3VD2qTmF+u2Sq6xoWlWw/pknx3cMpKk+GiT9/2XOzFV6Uhl4GVHp+J6pipQNCUpb0IJ5gc/iO87KSXWhns23wolbSltwx2aGc3dpZFMANJoQ0uv19nYnG8A4oRzy40U8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgd9/+U3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AL3UpaRiESyOLLzTpX67vhQKm/VPkBR0bL0oMmOo0kSOyp93VViEcZ1GPfF1hj28m92B4xdMPxfCHfzXWJPS29QMbJsGu9HhWygsABSCJ2NxXLS+zwZEP9sd2V9uge93g79hgTxKO/T9wUhhosRZLSAVkY2gsYzId7cA8RYnah4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkPnOi7+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgd9/+U3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2B4C433F1;
-	Tue, 23 Jan 2024 01:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkPnOi7+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7629EC433F1;
+	Tue, 23 Jan 2024 01:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974944;
-	bh=nTzWqHn2STCqN2Td9mHisQPxHUw5dOESestZvFR4lhs=;
+	s=korg; t=1705974945;
+	bh=KhPKd/iYAxDSmKMQ5WjXJ2CAtyvfRjqKcg95wFDKvSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tgd9/+U3rElgNt50pPD19T9YcYv5guO6JKLXyRyMuHUmbgicGeir8lOqWMlMCsNX5
-	 OTxz8edQ9S9p3VJCdgRn1G5U7V38quNvFhaiDVEuMir8h/oOXcEOg5pIHa6/5ISD+C
-	 fFGbP004EbgdWMb16gQoa07W6hADPC/K+M8dmfx0=
+	b=qkPnOi7+tTE0pv8aexJ7aHRjZoghjk/MOqoOC29krQy0u/HBfFTiUM5Jml00Zmstc
+	 kK/XI1acg2EXajSe5FYwO8UJYLqOEb36VVDZfox/rEaRbCBcZIGrhlbNw24MQ28Nt/
+	 ahTxixI3eES7/tirwnjakR4kEMGptpFloZYzAymE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihang Li <liyihang9@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 162/583] scsi: hisi_sas: Rollback some operations if FLR failed
-Date: Mon, 22 Jan 2024 15:53:33 -0800
-Message-ID: <20240122235817.001579156@linuxfoundation.org>
+	Tom Murphy <murphyt7@tcd.ie>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Saravana Kannan <saravanak@google.com>,
+	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 5.15 290/374] iommu/dma: Trace bounce buffer usage when mapping buffers
+Date: Mon, 22 Jan 2024 15:59:06 -0800
+Message-ID: <20240122235754.865626150@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +49,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yihang Li <liyihang9@huawei.com>
+From: Isaac J. Manjarres <isaacmanjarres@google.com>
 
-[ Upstream commit 7ea3e7763c50b20a8bd25cf524ea0c6463de69be ]
+commit a63c357b9fd56ad5fe64616f5b22835252c6a76a upstream.
 
-We obtain the semaphore and set HISI_SAS_RESETTING_BIT in
-hisi_sas_reset_prepare_v3_hw(), block the scsi host and set
-HISI_SAS_REJECT_CMD_BIT in hisi_sas_controller_reset_prepare(), released
-them in hisi_sas_controller_reset_done(). However, if the HW reset failure
-in FLR results in early return, the semaphore and flag bits will not be
-release.
+When commit 82612d66d51d ("iommu: Allow the dma-iommu api to
+use bounce buffers") was introduced, it did not add the logic
+for tracing the bounce buffer usage from iommu_dma_map_page().
 
-Rollback some operations including clearing flags / releasing semaphore
-when FLR is failed.
+All of the users of swiotlb_tbl_map_single() trace their bounce
+buffer usage, except iommu_dma_map_page(). This makes it difficult
+to track SWIOTLB usage from that function. Thus, trace bounce buffer
+usage from iommu_dma_map_page().
 
-Fixes: e5ea48014adc ("scsi: hisi_sas: Implement handlers of PCIe FLR for v3 hw")
-Signed-off-by: Yihang Li <liyihang9@huawei.com>
-Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1702525516-51258-5-git-send-email-chenxiang66@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 82612d66d51d ("iommu: Allow the dma-iommu api to use bounce buffers")
+Cc: stable@vger.kernel.org # v5.15+
+Cc: Tom Murphy <murphyt7@tcd.ie>
+Cc: Lu Baolu <baolu.lu@linux.intel.com>
+Cc: Saravana Kannan <saravanak@google.com>
+Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+Link: https://lore.kernel.org/r/20231208234141.2356157-1-isaacmanjarres@google.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iommu/dma-iommu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 568bd8052639..53c955c4f080 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -5098,6 +5098,7 @@ static void hisi_sas_reset_done_v3_hw(struct pci_dev *pdev)
- {
- 	struct sas_ha_struct *sha = pci_get_drvdata(pdev);
- 	struct hisi_hba *hisi_hba = sha->lldd_ha;
-+	struct Scsi_Host *shost = hisi_hba->shost;
- 	struct device *dev = hisi_hba->dev;
- 	int rc;
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -25,6 +25,7 @@
+ #include <linux/vmalloc.h>
+ #include <linux/crash_dump.h>
+ #include <linux/dma-direct.h>
++#include <trace/events/swiotlb.h>
  
-@@ -5106,6 +5107,10 @@ static void hisi_sas_reset_done_v3_hw(struct pci_dev *pdev)
- 	rc = hw_init_v3_hw(hisi_hba);
- 	if (rc) {
- 		dev_err(dev, "FLR: hw init failed rc=%d\n", rc);
-+		clear_bit(HISI_SAS_REJECT_CMD_BIT, &hisi_hba->flags);
-+		scsi_unblock_requests(shost);
-+		clear_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags);
-+		up(&hisi_hba->sem);
- 		return;
- 	}
+ struct iommu_dma_msi_page {
+ 	struct list_head	list;
+@@ -817,6 +818,8 @@ static dma_addr_t iommu_dma_map_page(str
+ 		void *padding_start;
+ 		size_t padding_size, aligned_size;
  
--- 
-2.43.0
-
++		trace_swiotlb_bounced(dev, phys, size, swiotlb_force);
++
+ 		aligned_size = iova_align(iovad, size);
+ 		phys = swiotlb_tbl_map_single(dev, phys, size, aligned_size,
+ 					      iova_mask(iovad), dir, attrs);
 
 
