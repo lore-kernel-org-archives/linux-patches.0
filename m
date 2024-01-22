@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339C367734;
-	Tue, 23 Jan 2024 02:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177066772E;
+	Tue, 23 Jan 2024 02:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975293; cv=none; b=NvtFF3dqDHj4HSw/4GBpQCv6gcRUhRfNVy1iyOtCKQHxyGVmXZORHSm0yUBgKzwNM2nGHXKmDpj9Wh8TJVq+g+dSUhGVS74yUaglpwV1sAcNuprB14+NL3WwSYHgQib91n65zzL2G2L6iIceiU2ZhxL7E2EZZGWd8WA4XBCgQHw=
+	t=1705975294; cv=none; b=OEm2h+Eres2NqVKWpeP/7z3XYFsuj2CHbdNbNuQhY6DA1f4XCg4ZQEFz9L5t+KTy8OwPmuKDyzz7/2mSs3UqpChKLRxIbBmVznzPTl3hdWYnxlsgbXFknOXCf6QNmGZKW0OfX2WyVTFPugOwLRzWQ2xeLKbEy+TOag6xSRJX+uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975293; c=relaxed/simple;
-	bh=wvzkcfuKssLakkjI7ByDFI0QuNGS9dH5W/Ocihkk7x4=;
+	s=arc-20240116; t=1705975294; c=relaxed/simple;
+	bh=9z2DoBo3thwganzj2vViWnZCrTEmSTXdpq0UGHoWhC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hAMULMuu0lYNVTt/9/XW9i2UMDjiYBXE6jr4wnyEwsCsusMHmaaPuXIgoviiLsw6SigX2A7yDYiCZrMlv5rdOBQ6pqgjy8U373n0jqp8J0KCGOClT5V3HbJenltKcAMYG/3y99olf32Nujdxn5BCMrSfY8iAF/lOdUFTXPfk1lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uaMtASFl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hZO5XGlAjFtFqTxQ2ahANt2t0kVPjI4nVmuPi3veU2XFAeknufUOrinICK0ISDVk3vB9loslWzywg7KlMcXPdsXhmzKJCxlvlXMJ5K1FTxtpPKF5uz2fJ2RwL8orC9zqpx61X74tFX4QLLuSOuZxxrLO4jqXNkyy2EEkFBgTnxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaUt/hss; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uaMtASFl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E709DC43394;
-	Tue, 23 Jan 2024 02:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaUt/hss"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCBE0C433C7;
+	Tue, 23 Jan 2024 02:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705975293;
-	bh=wvzkcfuKssLakkjI7ByDFI0QuNGS9dH5W/Ocihkk7x4=;
+	bh=9z2DoBo3thwganzj2vViWnZCrTEmSTXdpq0UGHoWhC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uaMtASFl9r74AXkudH+zArSGODtg+NPpCjyeJQkujTXf3nxs0rHlMPNgwrEErguBY
-	 sVZj2nXuhv1pxKEVtWeVGkwtY6ay64z8egjs/dLhfH+sHwpJwW8uCx3yaIi0vmz5+u
-	 yO88KwVfKvqylC+aapL4V8JIz+VvcEKJ/DOZp5R4=
+	b=WaUt/hssLQMFsv9F9RxvG+u3GQGQtA4TsR7sdLWcsHNVNOcY/qgclR3t1o1aQvVw4
+	 xpr71Z8j+WXuMZ8Rcab0RA24OjoJv9CsmIIYqPNo1L6GzP40BkTiGzk9C5xKSBP44k
+	 IxWFgwQ9TyBimTdteK+6ubpgEVP1WiSBJOxBk2A8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 249/583] ASoC: cs35l33: Fix GPIO name and drop legacy include
-Date: Mon, 22 Jan 2024 15:55:00 -0800
-Message-ID: <20240122235819.622293392@linuxfoundation.org>
+Subject: [PATCH 6.6 258/583] drm/panfrost: Ignore core_mask for poweroff and disable PWRTRANS irq
+Date: Mon, 22 Jan 2024 15:55:09 -0800
+Message-ID: <20240122235819.899467845@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,62 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 50678d339d670a92658e5538ebee30447c88ccb3 ]
+[ Upstream commit a4f5892914ca7709ea6d191f0edace93a5935966 ]
 
-This driver includes the legacy GPIO APIs <linux/gpio.h> and
-<linux/of_gpio.h> but does not use any symbols from any of
-them.
+Some SoCs may be equipped with a GPU containing two core groups
+and this is exactly the case of Samsung's Exynos 5422 featuring
+an ARM Mali-T628 MP6 GPU: the support for this GPU in Panfrost
+is partial, as this driver currently supports using only one
+core group and that's reflected on all parts of it, including
+the power on (and power off, previously to this patch) function.
 
-Drop the includes.
+The issue with this is that even though executing the soft reset
+operation should power off all cores unconditionally, on at least
+one platform we're seeing a crash that seems to be happening due
+to an interrupt firing which may be because we are calling power
+transition only on the first core group, leaving the second one
+unchanged, or because ISR execution was pending before entering
+the panfrost_gpu_power_off() function and executed after powering
+off the GPU cores, or all of the above.
 
-Further the driver is requesting "reset-gpios" rather than
-just "reset" from the GPIO framework. This is wrong because
-the gpiolib core will add "-gpios" before processing the
-request from e.g. device tree. Drop the suffix.
+Finally, solve this by:
+ - Avoid to enable the power transition interrupt on reset; and
+ - Ignoring the core_mask and ask the GPU to poweroff both core groups
 
-The last problem means that the optional RESET GPIO has
-never been properly retrieved and used even if it existed,
-but nobody noticed.
-
-Fixes: 3333cb7187b9 ("ASoC: cs35l33: Initial commit of the cs35l33 CODEC driver.")
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20231201-descriptors-sound-cirrus-v2-2-ee9f9d4655eb@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 22aa1a209018 ("drm/panfrost: Really power off GPU cores in panfrost_gpu_power_off()")
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231204114215.54575-2-angelogioacchino.delregno@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l33.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_gpu.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/cs35l33.c b/sound/soc/codecs/cs35l33.c
-index 9968c2e189e6..d25455f39566 100644
---- a/sound/soc/codecs/cs35l33.c
-+++ b/sound/soc/codecs/cs35l33.c
-@@ -22,13 +22,11 @@
- #include <sound/soc-dapm.h>
- #include <sound/initval.h>
- #include <sound/tlv.h>
--#include <linux/gpio.h>
- #include <linux/gpio/consumer.h>
- #include <sound/cs35l33.h>
- #include <linux/pm_runtime.h>
- #include <linux/regulator/consumer.h>
- #include <linux/regulator/machine.h>
--#include <linux/of_gpio.h>
- #include <linux/of.h>
- #include <linux/of_device.h>
- #include <linux/of_irq.h>
-@@ -1167,7 +1165,7 @@ static int cs35l33_i2c_probe(struct i2c_client *i2c_client)
+diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.c b/drivers/gpu/drm/panfrost/panfrost_gpu.c
+index e20619169fe1..eca45b83e4e6 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_gpu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_gpu.c
+@@ -71,7 +71,12 @@ int panfrost_gpu_soft_reset(struct panfrost_device *pfdev)
+ 	}
  
- 	/* We could issue !RST or skip it based on AMP topology */
- 	cs35l33->reset_gpio = devm_gpiod_get_optional(&i2c_client->dev,
--			"reset-gpios", GPIOD_OUT_HIGH);
-+			"reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(cs35l33->reset_gpio)) {
- 		dev_err(&i2c_client->dev, "%s ERROR: Can't get reset GPIO\n",
- 			__func__);
+ 	gpu_write(pfdev, GPU_INT_CLEAR, GPU_IRQ_MASK_ALL);
+-	gpu_write(pfdev, GPU_INT_MASK, GPU_IRQ_MASK_ALL);
++
++	/* Only enable the interrupts we care about */
++	gpu_write(pfdev, GPU_INT_MASK,
++		  GPU_IRQ_MASK_ERROR |
++		  GPU_IRQ_PERFCNT_SAMPLE_COMPLETED |
++		  GPU_IRQ_CLEAN_CACHES_COMPLETED);
+ 
+ 	return 0;
+ }
+@@ -377,11 +382,10 @@ void panfrost_gpu_power_on(struct panfrost_device *pfdev)
+ 
+ void panfrost_gpu_power_off(struct panfrost_device *pfdev)
+ {
+-	u64 core_mask = panfrost_get_core_mask(pfdev);
+ 	int ret;
+ 	u32 val;
+ 
+-	gpu_write(pfdev, SHADER_PWROFF_LO, pfdev->features.shader_present & core_mask);
++	gpu_write(pfdev, SHADER_PWROFF_LO, pfdev->features.shader_present);
+ 	ret = readl_relaxed_poll_timeout(pfdev->iomem + SHADER_PWRTRANS_LO,
+ 					 val, !val, 1, 1000);
+ 	if (ret)
+@@ -393,7 +397,7 @@ void panfrost_gpu_power_off(struct panfrost_device *pfdev)
+ 	if (ret)
+ 		dev_err(pfdev->dev, "tiler power transition timeout");
+ 
+-	gpu_write(pfdev, L2_PWROFF_LO, pfdev->features.l2_present & core_mask);
++	gpu_write(pfdev, L2_PWROFF_LO, pfdev->features.l2_present);
+ 	ret = readl_poll_timeout(pfdev->iomem + L2_PWRTRANS_LO,
+ 				 val, !val, 0, 1000);
+ 	if (ret)
 -- 
 2.43.0
 
