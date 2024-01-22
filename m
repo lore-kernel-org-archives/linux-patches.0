@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDD565194;
-	Tue, 23 Jan 2024 01:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8F665189;
+	Tue, 23 Jan 2024 01:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971645; cv=none; b=qi0dS2i10Y7gqX8p1HJ916AoUrzaHMTt/B52TW4g0nKkIvz7VwTDjLjZFGI+wtbvItcZJPQXZBjGQ8DxjJSmHE2zaUqmrYuEI/sS5KqtBcHcwNwK5AGOjcj8VlrIBTbSbGA5O9iZE8RqRRXySb2C2oyhFeIwr6Hjjy7LgBW9ois=
+	t=1705971647; cv=none; b=T/t6hv2VTbqn07Xcpx6b6JPmO9Wr5uLsL0aPvUDiHrc6uS26RwVdH31iCEzc6/7E/pD0j8wxOXtSE/ssr317SmLxQtpB/RbG0xN2cS8BlcV8W4c0jbYWLfRFE8c5cJDLsjnjsTAjxdgzYOAfiTXGoga9QT/JQOkTL9mfweI48MY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971645; c=relaxed/simple;
-	bh=byPOh+jAhoHEVSkiiVtuq9j4DYSfgq31BpAyTp+StHI=;
+	s=arc-20240116; t=1705971647; c=relaxed/simple;
+	bh=gMp54bHlf5ww9xcwiCjho/K0JX5uny3HMpB4v79WARM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PiCwuXFeshlnwgJi5wTp+MW/P4A+uvuFyPMlrgzqp1E6pqTWOySBb3WN58JhSS2oEbaHRLdwRr7cLKxWiZjufCd5g9He8Dj6rm7sy+i81ZaHpukMUg3/eQNS0TCSbDQ8Ssk8AN+3sVLEI+8m72bi1ILPfA3i4y/ukx8vOx+1yyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBA34ooR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GReW1SpqjtZlqRT0LPYVji167vD1xizU3l+M32CSD1bQtmcGzx7UtWmlvqnG6GWHgAu32IkioT7FaUxTnsfdTB87u60yp2R5zeV36uDENpB2VsGCKbuQZInEPnnV41QQ737Uv4/fq29q/mjdFc9E8da/vxzx2oK/eHXl6nYl2TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKFn/ugb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBA34ooR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2A1C433F1;
-	Tue, 23 Jan 2024 01:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKFn/ugb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129C2C433F1;
+	Tue, 23 Jan 2024 01:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971645;
-	bh=byPOh+jAhoHEVSkiiVtuq9j4DYSfgq31BpAyTp+StHI=;
+	s=korg; t=1705971647;
+	bh=gMp54bHlf5ww9xcwiCjho/K0JX5uny3HMpB4v79WARM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TBA34ooRQ8GkpP/9FJin6axUb3pDFG3Xq5W6C52PTyezZUbk6nE3yLFlKuwebxRC4
-	 TGOxKdYMZjwDEVTwMzrIuEv6ZRDK58lxhUnFjVow2IMm7ZhXaswJB3yxJts+kqdBqt
-	 TNszAz/KquZHy0cAui7aweML0olhwUMbcvBv3884=
+	b=pKFn/ugbDbUviVu+qd+EZ8jLWDQXZEltWey1/cD/SZ3bvKBsLHxFTGe5Nt0cW/Lnx
+	 rLX1u7udMWh2kAoZmXTGsHSXYXEJxQoZpbgW+trtlVoHlfvm14vRM7357ZVOXLcyQQ
+	 tJhccPg0Q3FrsBq1bwfbKZNZS6tK+37thjztZqkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 285/417] ksmbd: only v2 leases handle the directory
-Date: Mon, 22 Jan 2024 15:57:33 -0800
-Message-ID: <20240122235801.705609242@linuxfoundation.org>
+	Peter Robinson <pbrobinson@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 193/286] mmc: sdhci_omap: Fix TI SoC dependencies
+Date: Mon, 22 Jan 2024 15:58:19 -0800
+Message-ID: <20240122235739.555675143@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,41 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Peter Robinson <pbrobinson@gmail.com>
 
-commit 77bebd186442a7d703b796784db7495129cc3e70 upstream.
+[ Upstream commit 09f164d393a6671e5ff8342ba6b3cb7fe3f20208 ]
 
-When smb2 leases is disable, ksmbd can send oplock break notification
-and cause wait oplock break ack timeout. It may appear like hang when
-accessing a directory. This patch make only v2 leases handle the
-directory.
+The sdhci_omap is specific to  older TI SoCs, update the
+dependencies for those SoCs and compile testing. While we're
+at it update the text to reflect the wider range of
+supported TI SoCS the driver now supports.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7d326930d352 ("mmc: sdhci-omap: Add OMAP SDHCI driver")
+Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
+Link: https://lore.kernel.org/r/20231220135950.433588-2-pbrobinson@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/mmc/host/Kconfig | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -1191,6 +1191,12 @@ int smb_grant_oplock(struct ksmbd_work *
- 	bool prev_op_has_lease;
- 	__le32 prev_op_state = 0;
+diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
+index 1b12c9fa3048..8fe4a0fd6ef1 100644
+--- a/drivers/mmc/host/Kconfig
++++ b/drivers/mmc/host/Kconfig
+@@ -1065,14 +1065,15 @@ config MMC_SDHCI_XENON
  
-+	/* Only v2 leases handle the directory */
-+	if (S_ISDIR(file_inode(fp->filp)->i_mode)) {
-+		if (!lctx || lctx->version != 2)
-+			return 0;
-+	}
-+
- 	opinfo = alloc_opinfo(work, pid, tid);
- 	if (!opinfo)
- 		return -ENOMEM;
+ config MMC_SDHCI_OMAP
+ 	tristate "TI SDHCI Controller Support"
++	depends on ARCH_OMAP2PLUS || ARCH_KEYSTONE || COMPILE_TEST
+ 	depends on MMC_SDHCI_PLTFM && OF
+ 	select THERMAL
+ 	imply TI_SOC_THERMAL
+ 	select MMC_SDHCI_EXTERNAL_DMA if DMA_ENGINE
+ 	help
+ 	  This selects the Secure Digital Host Controller Interface (SDHCI)
+-	  support present in TI's DRA7 SOCs. The controller supports
+-	  SD/MMC/SDIO devices.
++	  support present in TI's Keystone/OMAP2+/DRA7 SOCs. The controller
++	  supports SD/MMC/SDIO devices.
+ 
+ 	  If you have a controller with this interface, say Y or M here.
+ 
+-- 
+2.43.0
+
 
 
