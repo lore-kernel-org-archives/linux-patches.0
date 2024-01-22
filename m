@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D0D60257;
-	Tue, 23 Jan 2024 00:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B643B60257;
+	Tue, 23 Jan 2024 00:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970902; cv=none; b=uXNAP6skaGp0LUcm3WZBy9XU/c7af3Lwf5hnjmGiZ8qn1v+5jPNwNq5AGwSZydJgKhaM2/aNq86FSP0+/1JT8dngWoEmot00joW14PSy3/Hi/nn7p1d/FjK1dmbinkiWYioOvVCZ64I74bT/cT5gZWOx8Fg1BomOfIl7lI0MaIY=
+	t=1705970903; cv=none; b=Ny7NGbqKtdwY2KSbRhL0foxBgRuYqMhr1CVXS6m9MdYXxJAVNWz2QYD+4JxC3owM/lldvlmBdmzXnU9NVu0+o4WAs8c8OEuyidVESyyzQ2ihPdPS7Bx3eNJQ/cjRd7HhPLN+ZA/8LdMHNEzrexhFDtKJk3riEHApCmZAOISQ2yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970902; c=relaxed/simple;
-	bh=jlJIgy0K6zzsvNgepoeR2P7aQplOs606W9QjLFTrsWk=;
+	s=arc-20240116; t=1705970903; c=relaxed/simple;
+	bh=G3j12jLVap1Up/ldGp14ZP7mzPOcTSxYCnmCdzly5lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dKKtNDTqFMyYoGYig0z5ew6U5zOP718BQBMEGuxBUvn8q1/ygAbFbsV+Xlbjvr4KlaQqa/MhzZlUVm7L9iilHLD4wEM/gZ9S+qx1B+ccX8S6QaBKz1V2oD2c98TfhT8a9A26Qe0EUr2V345e2bBTzq2gUnwehBedgCvSAB2/cOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhEA3Z3D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cgXH+j8yZgbQK7oEuKMinipZoE2Dfqtn0wJmd1RcEUG2r990dyiDG9v+cc0Y48rnBvZHjyvOXQfxygvj/K3nfSJ8AclHrz8WpAHKZe5jVCJEAtzB4YbykLkrEsSKnlHTbVIRqwJs4wJV5xTMoVEueyjuJAyKALw4d7CbJwkn73c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfhGwypI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhEA3Z3D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF39C433C7;
-	Tue, 23 Jan 2024 00:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfhGwypI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5CEC43390;
+	Tue, 23 Jan 2024 00:48:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970902;
-	bh=jlJIgy0K6zzsvNgepoeR2P7aQplOs606W9QjLFTrsWk=;
+	s=korg; t=1705970903;
+	bh=G3j12jLVap1Up/ldGp14ZP7mzPOcTSxYCnmCdzly5lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vhEA3Z3DQOYEngGu+2gaFAfVwChJQwpj40NA0aUGQpxUcSgs2niTTn0J4baJXCeKq
-	 pAVCPqFG5UWjK4AS8Gs49azWBWNg8oqVHl5qTqfQlZVStIjjjvt2KANsYAcLLh/Eax
-	 W3pEwTnzPaeeK8cDN56bHJeNlwobOtaLN4Yx7yho=
+	b=UfhGwypIcm7mu0p1eRwgpVdLqRIdYH6XSlytY9TGMoFRH04twWpryAOR2PKVkV6LY
+	 jy0yay0iJrIsxRO4H7sb+Ycx+B70Hpj/l6AJF7vm5rG8mL4EBWnOY+ToCWySBN0xqT
+	 nwUiI82aa/BZ9aA/EYipwYKuLs2uJUoiYZd+00I8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 136/417] wifi: rtlwifi: rtl8192cu: using calculate_bit_shift()
-Date: Mon, 22 Jan 2024 15:55:04 -0800
-Message-ID: <20240122235756.542936818@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 5.10 042/286] binder: fix trivial typo of binder_free_buf_locked()
+Date: Mon, 22 Jan 2024 15:55:48 -0800
+Message-ID: <20240122235733.639204593@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +46,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-[ Upstream commit f4088c8fcbabadad9dd17d17ae9ba24e9e3221ec ]
+commit 122a3c1cb0ff304c2b8934584fcfea4edb2fe5e3 upstream.
 
-Using calculate_bit_shift() to replace _rtl92c_phy_calculate_bit_shift().
-And fix an undefined bitwise shift behavior problem.
+Fix minor misspelling of the function in the comment section.
 
-Fixes: f0a39ae738d6 ("rtlwifi: rtl8192cu: Add routine phy")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231219065739.1895666-6-suhui@nfschina.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+No functional changes in this patch.
+
+Cc: stable@vger.kernel.org
+Fixes: 0f966cba95c7 ("binder: add flag to clear buffer on txn complete")
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Link: https://lore.kernel.org/r/20231201172212.1813387-7-cmllamas@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/android/binder_alloc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c
-index a8d9fe269f31..0b8cb7e61fd8 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c
-@@ -32,7 +32,7 @@ u32 rtl92cu_phy_query_rf_reg(struct ieee80211_hw *hw,
- 		original_value = _rtl92c_phy_fw_rf_serial_read(hw,
- 							       rfpath, regaddr);
- 	}
--	bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	readback_value = (original_value & bitmask) >> bitshift;
- 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
- 		"regaddr(%#x), rfpath(%#x), bitmask(%#x), original_value(%#x)\n",
-@@ -56,7 +56,7 @@ void rtl92cu_phy_set_rf_reg(struct ieee80211_hw *hw,
- 			original_value = _rtl92c_phy_rf_serial_read(hw,
- 								    rfpath,
- 								    regaddr);
--			bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data =
- 			    ((original_value & (~bitmask)) |
- 			     (data << bitshift));
-@@ -67,7 +67,7 @@ void rtl92cu_phy_set_rf_reg(struct ieee80211_hw *hw,
- 			original_value = _rtl92c_phy_fw_rf_serial_read(hw,
- 								       rfpath,
- 								       regaddr);
--			bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data =
- 			    ((original_value & (~bitmask)) |
- 			     (data << bitshift));
--- 
-2.43.0
-
+--- a/drivers/android/binder_alloc.c
++++ b/drivers/android/binder_alloc.c
+@@ -711,7 +711,7 @@ void binder_alloc_free_buf(struct binder
+ 	/*
+ 	 * We could eliminate the call to binder_alloc_clear_buf()
+ 	 * from binder_alloc_deferred_release() by moving this to
+-	 * binder_alloc_free_buf_locked(). However, that could
++	 * binder_free_buf_locked(). However, that could
+ 	 * increase contention for the alloc mutex if clear_on_free
+ 	 * is used frequently for large buffers. The mutex is not
+ 	 * needed for correctness here.
 
 
