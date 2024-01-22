@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66ED136658;
-	Tue, 23 Jan 2024 00:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DD21468E5;
+	Tue, 23 Jan 2024 00:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969703; cv=none; b=iar0wiBNpHP0OBrc0ireldY7lEVasqlzTsA5dnXkwf4RfZ+N+SyA8IreI06eeZX1whQ+oQRCU9L1wVBR21yc7ONgOUI2GLmZWokc4liBokD83qCT6tNSTJlqY/LeGbd6sWrXenCiTCyspgYN5/O4ZIalV4tg9Wi6SxcHkDa/AVg=
+	t=1705969706; cv=none; b=P+PK/BJhIKGiUzBTaANYCxIcvyeeRN2+VQ+gUXzcCYOCsCxLN9gu9SQ4lYTOyIiQeCJ47MUfoCLhcPH/2ngmpSkNOzkPSoBwOsUTZcPailxXy+MZw6KlfVlRZPbsUgz2mjDsRbF5DrBqDVsBRB9tqpNzCWR+7kDus9ldtYHHxGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969703; c=relaxed/simple;
-	bh=5pIdF8HLwHJEDYqBPAWc8X+NuY31VWW6j+0HPZPTWMU=;
+	s=arc-20240116; t=1705969706; c=relaxed/simple;
+	bh=/m/x2Vvii9XdORvaqbvjW7XUP2D7P9nOd0gk8HZdCFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yzm+3Hsq3b8cBwbKL3hpZ7vIGkEiYFoR8zlrkfyj1tTiEi86o6E8gzE7aCJnDk4ycWNMq8sIgV9MqQvLvwPi5ZpyVrmKyDgih7dDEjqobZqpL0D4Qll9pLCGMSfjW82wfgFpuLHXZP+fDGoW44UBXiUf7hHoC7khXoYZaSwQag4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwjOOs66; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WtLE8hq6DMzcedueyROsFz+s6a+UksizY8IHqx5AZi9n2iVWxoQ1JIwyloq1WqDlKE478x0KWivs2NCYidDetyN/N4KEHDn5857OJZD9KE31XPu51To9hk+Y/q5fMGQ+VWWUkzU7N4YWb9SzjhzVzRuyQKpz34tUuijOvEt0Fno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQ5yUUtH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwjOOs66"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4070FC433F1;
-	Tue, 23 Jan 2024 00:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQ5yUUtH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D99FFC433C7;
+	Tue, 23 Jan 2024 00:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969703;
-	bh=5pIdF8HLwHJEDYqBPAWc8X+NuY31VWW6j+0HPZPTWMU=;
+	s=korg; t=1705969706;
+	bh=/m/x2Vvii9XdORvaqbvjW7XUP2D7P9nOd0gk8HZdCFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pwjOOs66vqI7kCs1o3KX45yL7hZcIcKW9ArmHARF46BSRFBUHp1EljjAiS8vVQkjO
-	 amxnw7AanSLqLf0odViccOhh4A5Fzix+rwSWWOJ2OPBlT1L9aA6s9FtxOQnJokGfxs
-	 R6bUjc5vUnq977FunflXYlfSle9I2n7mEsj2TQRI=
+	b=SQ5yUUtHosc7LQ/YUrFz1c2QrufnE8Uw0V8eyAfw0gk6gNKllqBuhERcU8y+9JvQQ
+	 1oLcs9TZjp41TWeESJlTrEUhQ/O3Ft2u755b9oYeENwiDpU0nx/0aKt69etA/MucGR
+	 T+VS6ApwSUICynpXe67wGNFLQxBua7HAARlllZeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 6.7 413/641] serial: 8250_bcm2835aux: Restore clock error handling
-Date: Mon, 22 Jan 2024 15:55:17 -0800
-Message-ID: <20240122235830.898809657@linuxfoundation.org>
+	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Subject: [PATCH 6.7 396/641] usb: dwc: ep0: Update request status in dwc3_ep0_stall_restart
+Date: Mon, 22 Jan 2024 15:55:00 -0800
+Message-ID: <20240122235830.356054139@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,34 +49,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
 
-commit 83e571f054cd742eb9a46d46ef05193904adf53f upstream.
+commit e9d40b215e38480fd94c66b06d79045717a59e9c upstream.
 
-The commit fcc446c8aa63 ("serial: 8250_bcm2835aux: Add ACPI support")
-dropped the error handling for clock acquiring. But even an optional
-clock needs this.
+Current implementation blocks the running operations when Plug-out and
+Plug-In is performed continuously, process gets stuck in
+dwc3_thread_interrupt().
 
-Fixes: fcc446c8aa63 ("serial: 8250_bcm2835aux: Add ACPI support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20231220114334.4712-1-wahrenst@gmx.net
+Code Flow:
+
+	CPU1
+
+	->Gadget_start
+	->dwc3_interrupt
+	->dwc3_thread_interrupt
+	->dwc3_process_event_buf
+	->dwc3_process_event_entry
+	->dwc3_endpoint_interrupt
+	->dwc3_ep0_interrupt
+	->dwc3_ep0_inspect_setup
+	->dwc3_ep0_stall_and_restart
+
+By this time if pending_list is not empty, it will get the next request
+on the given list and calls dwc3_gadget_giveback which will unmap request
+and call its complete() callback to notify upper layers that it has
+completed. Currently dwc3_gadget_giveback status is set to -ECONNRESET,
+whereas it should be -ESHUTDOWN based on condition if not dwc->connected
+is true.
+
+Cc:  <stable@vger.kernel.org>
+Fixes: d742220b3577 ("usb: dwc3: ep0: giveback requests on stall_and_restart")
+Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Link: https://lore.kernel.org/r/20231222094704.20276-1-quic_uaggarwa@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_bcm2835aux.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/dwc3/ep0.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_bcm2835aux.c
-+++ b/drivers/tty/serial/8250/8250_bcm2835aux.c
-@@ -119,6 +119,8 @@ static int bcm2835aux_serial_probe(struc
+--- a/drivers/usb/dwc3/ep0.c
++++ b/drivers/usb/dwc3/ep0.c
+@@ -238,7 +238,10 @@ void dwc3_ep0_stall_and_restart(struct d
+ 		struct dwc3_request	*req;
  
- 	/* get the clock - this also enables the HW */
- 	data->clk = devm_clk_get_optional(&pdev->dev, NULL);
-+	if (IS_ERR(data->clk))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(data->clk), "could not get clk\n");
+ 		req = next_request(&dep->pending_list);
+-		dwc3_gadget_giveback(dep, req, -ECONNRESET);
++		if (!dwc->connected)
++			dwc3_gadget_giveback(dep, req, -ESHUTDOWN);
++		else
++			dwc3_gadget_giveback(dep, req, -ECONNRESET);
+ 	}
  
- 	/* get the interrupt */
- 	ret = platform_get_irq(pdev, 0);
+ 	dwc->eps[0]->trb_enqueue = 0;
 
 
