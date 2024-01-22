@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77C313AA52;
-	Tue, 23 Jan 2024 00:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93DD13BE9F;
+	Tue, 23 Jan 2024 00:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968131; cv=none; b=eXiom5pf1g9q/JRnN+BpB/Q1WljNkC+V8aj6XoxwHOIGiilb7J9NdvF5evfhsWbeJQ7tXE2M/mdD8jNLOcW5hUViiCUYDjpDVKR5H1prHBon6rLxpsTLtRcLnZ93Ol6ppl/C2NV4d4+D9cm6gl7MgnqpdauK0PlYnQF7TwX/Dp8=
+	t=1705968135; cv=none; b=ZeX0bPJz4hDJl8/8K+Cnj+XMd6amBMzr/V4BmLB1PYBzYpQOTYKaV96rwORDimX8jn0l8WSnruiUPY1Bg9Ja/J8Rr20WaihNsAxe7UA4dYvRdVQmEAQwZ9tJDqCz0vghI77bAFnwNp0OwsH+4yASyb2do6vPfIEWS3vls0vcHsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968131; c=relaxed/simple;
-	bh=H5hxi/9iN32AWmr2tGuibiDNemnd5MesdfXUDGE+xH8=;
+	s=arc-20240116; t=1705968135; c=relaxed/simple;
+	bh=9C4BHFFK8M3vledS6/sAYw09Xw+KjAGsM/HmF4WXNVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UT7FUIcOpomX4POgb4JAQg0rYG4n4hoFw6/Z9KXaDslliymRzrC+bkoxa29iocMODz0V8CSAxbceIsNL6H3Wdp38d2QQXq+vy2ae8VGfjjPDD98TnZ5B5CAWCs5njaA8UOjeXg86NR0zlyQROwuazK1xYJZxO3kWwx07hxaxi+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWU7XBI7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l+NbIwL0bh4MQeRYCAM7p5h8D1SUgY7bSnd2Ab5PU+HB/a+Wl2VnQnc5keFy7YohM6iteB4FAJp9THaUPnwSpc4v277Cd8qxBRQ0qwSGPymApAOw0+bhD3tP4GiagAfN7NilbdmRjFNu/wIw3xVv7KnzxfVlidFUGEdynu/skiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3pye5Xs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWU7XBI7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2642EC433F1;
-	Tue, 23 Jan 2024 00:02:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3pye5Xs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A5AC433C7;
+	Tue, 23 Jan 2024 00:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968131;
-	bh=H5hxi/9iN32AWmr2tGuibiDNemnd5MesdfXUDGE+xH8=;
+	s=korg; t=1705968135;
+	bh=9C4BHFFK8M3vledS6/sAYw09Xw+KjAGsM/HmF4WXNVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MWU7XBI7c9RNWANspiFho27vcTi3xQ9a7utxd/RPUcQg2qoQ6b31Mo+uDFo+4ShQp
-	 IQOi9l8CYq65JEHvFd2ooJuu/hmbGbds5N3jTvWztJZUuvKrDSsLhgSrzGGndyz3kp
-	 tHQ1bqV2v6JbZ6JBk/KZttTNTP8nx001w6djGSrY=
+	b=x3pye5XsTP2pCwpvrv0PuxE0AJ1qTY1JWJeNdmirSzuvjFQQBa0C8yzqP8npVnNHR
+	 AAcYo4ChC+rzmwsQzb/1Tlk9aFIvxpXNuHGRXAmpXWiFrkOp+Kg3kG91pMpBWdBuk4
+	 NbkzftTCjUe5pZ8DcJV/vY6wXdnH+XZ0Qr28H+mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 003/148] ASoC: cs43130: Fix the position of const qualifier
-Date: Mon, 22 Jan 2024 15:55:59 -0800
-Message-ID: <20240122235712.576993559@linuxfoundation.org>
+Subject: [PATCH 4.19 004/148] ASoC: cs43130: Fix incorrect frame delay configuration
+Date: Mon, 22 Jan 2024 15:56:00 -0800
+Message-ID: <20240122235712.612413847@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -54,39 +54,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej Strozek <mstrozek@opensource.cirrus.com>
 
-[ Upstream commit e7f289a59e76a5890a57bc27b198f69f175f75d9 ]
+[ Upstream commit aa7e8e5e4011571022dc06e4d7a2f108feb53d1a ]
 
 Signed-off-by: Maciej Strozek <mstrozek@opensource.cirrus.com>
 Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20231117141344.64320-2-mstrozek@opensource.cirrus.com
+Link: https://lore.kernel.org/r/20231117141344.64320-3-mstrozek@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs43130.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/cs43130.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/sound/soc/codecs/cs43130.c b/sound/soc/codecs/cs43130.c
-index cf29dec28b5e..95060ae7dbb4 100644
+index 95060ae7dbb4..0ffd93564555 100644
 --- a/sound/soc/codecs/cs43130.c
 +++ b/sound/soc/codecs/cs43130.c
-@@ -1686,7 +1686,7 @@ static ssize_t cs43130_show_dc_r(struct device *dev,
- 	return cs43130_show_dc(dev, buf, HP_RIGHT);
- }
- 
--static u16 const cs43130_ac_freq[CS43130_AC_FREQ] = {
-+static const u16 cs43130_ac_freq[CS43130_AC_FREQ] = {
- 	24,
- 	43,
- 	93,
-@@ -2365,7 +2365,7 @@ static const struct regmap_config cs43130_regmap = {
- 	.use_single_rw		= true, /* needed for regcache_sync */
- };
- 
--static u16 const cs43130_dc_threshold[CS43130_DC_THRESHOLD] = {
-+static const u16 cs43130_dc_threshold[CS43130_DC_THRESHOLD] = {
- 	50,
- 	120,
- };
+@@ -581,7 +581,7 @@ static int cs43130_set_sp_fmt(int dai_id, unsigned int bitwidth_sclk,
+ 		break;
+ 	case SND_SOC_DAIFMT_LEFT_J:
+ 		hi_size = bitwidth_sclk;
+-		frm_delay = 2;
++		frm_delay = 0;
+ 		frm_phase = 1;
+ 		break;
+ 	case SND_SOC_DAIFMT_DSP_A:
 -- 
 2.43.0
 
