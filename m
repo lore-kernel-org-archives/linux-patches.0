@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEF754279;
-	Tue, 23 Jan 2024 00:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E475313AA29;
+	Tue, 23 Jan 2024 00:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970646; cv=none; b=iTG+HOu/jpg6ICD5m3WW3TjpFhXINYTDJ/uEN+sGrbafyZaajqo61XUcdU6t/shpc1A+N9PzMZZmUqRRncAGkRcdLdPE6bfE1By73cYnySxEBqGIGfse0wTDE2x0/QWCfZxvdzOk+/p7NTN5/yTkWobYBi6RPTHn4WK/MKubosw=
+	t=1705970649; cv=none; b=Y6yqPUkeFSqn4i9wIyWN9F/utyNh7a750+j++/Su4dqoRUYaXdTq062OjRA4SjrbJmL0krFw4XnZUPoNd3fgPp57ryBUMkKnBq69T/23V46+cEQycMfc5nLXPdXbYoOhxrndFLTf6dQ3ZXfpmrA7uJSuvZpkvZ7X8XyTdnmXffU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970646; c=relaxed/simple;
-	bh=zx3+LR75HQJcmhvRVTBtpIdEwNaJeBsd5LefPB/eJic=;
+	s=arc-20240116; t=1705970649; c=relaxed/simple;
+	bh=ADKqFa8KGn6bOSx6S+blHHNhLRqtClZnhf+sQZ/TX+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lvIZNpVhqu3SaxKx8dP2+VmlKwkfuBTV5JTsyu7nYr7oLXGjvfd70K3UgwF2l4LD1gRUZW7xXBde7CgPCJYvrIquUsHXGS/PNojF5aBXA2ZlSb093i/kMx8QTkSIutV/PWZF3ENvwMGfEj6DLcReEEhnsZeNZK1Ef9k4rg3VS2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cc5RgAkL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SHR4TtjNuFipXueGeVrG0dD8ya4iEpanW14MRp0GhS6MVfKgL85fDr7sUNOzctRlje7/efIaavF+3VW+rdQYfcuhDwD88vy1unT2G55IsN4ro4ml5ciQcJ9ldPC+BY4/G5BzkPKYHsvqYVF7wpOv9LaG3iQ6LCODlCb7Ma7j9Rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2JXr4Op; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cc5RgAkL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27ADC433F1;
-	Tue, 23 Jan 2024 00:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2JXr4Op"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43B61C433C7;
+	Tue, 23 Jan 2024 00:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970646;
-	bh=zx3+LR75HQJcmhvRVTBtpIdEwNaJeBsd5LefPB/eJic=;
+	s=korg; t=1705970648;
+	bh=ADKqFa8KGn6bOSx6S+blHHNhLRqtClZnhf+sQZ/TX+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cc5RgAkL5N612KJN4h+Gg5ojF93h8bNV9Qlt+SWtB8Luy9oNWCGSMf7LhwvESvjeP
-	 4IlkovPJOObWaBzTN/yyiJojtKHr8GbVRC7OvJt+gR27c0MHZzI17ld1QJm6q1xgtr
-	 OKF4C3jfxxX8txWsB22lf2RQVQVuv3ScqNdHLBM4=
+	b=g2JXr4OplOiAjHmbNjdXbmECRLv2Py3OgImdFVbj75ypD5ejLk6L0itTIpC/KzAUX
+	 UMG2oWKhxUrONKfv3jMPdOqFMuLp0qgKVwZfmSHH2GiN2FfnpGLW3FUMGtx5MUliQh
+	 0agGlTK4+eNuT6lXubi2mkV0pLeZNK2JKZwFBB8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Rokosov <ddrokosov@sberdevices.ru>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Su Hui <suhui@nfschina.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/417] firmware: meson_sm: populate platform devices from sm device tree data
-Date: Mon, 22 Jan 2024 15:54:05 -0800
-Message-ID: <20240122235754.371274701@linuxfoundation.org>
+Subject: [PATCH 6.1 078/417] wifi: rtlwifi: rtl8821ae: phy: fix an undefined bitwise shift behavior
+Date: Mon, 22 Jan 2024 15:54:06 -0800
+Message-ID: <20240122235754.401008045@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -52,48 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Rokosov <ddrokosov@sberdevices.ru>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit e45f243409db98d610248c843b25435e7fb0baf3 ]
+[ Upstream commit bc8263083af60e7e57c6120edbc1f75d6c909a35 ]
 
-In some meson boards, secure monitor device has children, for example,
-power secure controller. By default, secure monitor isn't the bus in terms
-of device tree subsystem, so the of_platform initialization code doesn't
-populate its device tree data. As a result, secure monitor's children
-aren't probed at all.
+Clang static checker warns:
 
-Run the 'of_platform_populate()' routine manually to resolve such issues.
+drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c:184:49:
+	The result of the left shift is undefined due to shifting by '32',
+	which is greater or equal to the width of type 'u32'.
+	[core.UndefinedBinaryOperatorResult]
 
-Signed-off-by: Dmitry Rokosov <ddrokosov@sberdevices.ru>
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20230324145557.27797-1-ddrokosov@sberdevices.ru
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Stable-dep-of: d8385d7433f9 ("firmware: meson-sm: unmap out_base shmem in error path")
+If the value of the right operand is negative or is greater than or
+equal to the width of the promoted left operand, the behavior is
+undefined.[1][2]
+
+For example, when using different gcc's compilation optimization options
+(-O0 or -O2), the result of '(u32)data << 32' is different. One is 0, the
+other is old value of data. Let _rtl8821ae_phy_calculate_bit_shift()'s
+return value less than 32 to fix this problem. Warn if bitmask is zero.
+
+[1] https://stackoverflow.com/questions/11270492/what-does-the-c-standard-say-about-bitshifting-more-bits-than-the-width-of-type
+[2] https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf
+
+Fixes: 21e4b0726dc6 ("rtlwifi: rtl8821ae: Move driver from staging to regular tree")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20231127013511.26694-2-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/meson/meson_sm.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/meson/meson_sm.c b/drivers/firmware/meson/meson_sm.c
-index d081a6312627..bf19dd66c213 100644
---- a/drivers/firmware/meson/meson_sm.c
-+++ b/drivers/firmware/meson/meson_sm.c
-@@ -313,11 +313,14 @@ static int __init meson_sm_probe(struct platform_device *pdev)
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
+index 5323ead30db0..fa1839d8ee55 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
+@@ -29,9 +29,10 @@ static void _rtl8821ae_phy_rf_serial_write(struct ieee80211_hw *hw,
+ 					   u32 data);
+ static u32 _rtl8821ae_phy_calculate_bit_shift(u32 bitmask)
+ {
+-	u32 i = ffs(bitmask);
++	if (WARN_ON_ONCE(!bitmask))
++		return 0;
  
- 	platform_set_drvdata(pdev, fw);
- 
--	pr_info("secure-monitor enabled\n");
-+	if (devm_of_platform_populate(dev))
-+		goto out_in_base;
- 
- 	if (sysfs_create_group(&pdev->dev.kobj, &meson_sm_sysfs_attr_group))
- 		goto out_in_base;
- 
-+	pr_info("secure-monitor enabled\n");
-+
- 	return 0;
- 
- out_in_base:
+-	return i ? i - 1 : 32;
++	return __ffs(bitmask);
+ }
+ static bool _rtl8821ae_phy_bb8821a_config_parafile(struct ieee80211_hw *hw);
+ /*static bool _rtl8812ae_phy_config_mac_with_headerfile(struct ieee80211_hw *hw);*/
 -- 
 2.43.0
 
