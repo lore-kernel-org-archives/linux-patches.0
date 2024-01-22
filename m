@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED5912E56;
-	Tue, 23 Jan 2024 00:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEF754279;
+	Tue, 23 Jan 2024 00:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970644; cv=none; b=OawUqfIz1JGGi2jxbOpMKOO0iQ105TEQwkFPAUEHHHrGnf4oPOZcGTU4nz5iH7RN78bhFTvVEUQFYXRZUMj5wwgEUKyKKp67SAbqzR1rZ5Z99Qd5/8hvhML5kX54SdyVXZQK0pMaoHTQ2tDzG6Bv8IW/ctaSC0SEmrNEYAySMMo=
+	t=1705970646; cv=none; b=iTG+HOu/jpg6ICD5m3WW3TjpFhXINYTDJ/uEN+sGrbafyZaajqo61XUcdU6t/shpc1A+N9PzMZZmUqRRncAGkRcdLdPE6bfE1By73cYnySxEBqGIGfse0wTDE2x0/QWCfZxvdzOk+/p7NTN5/yTkWobYBi6RPTHn4WK/MKubosw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970644; c=relaxed/simple;
-	bh=ey5lNtK6eCYFDE+aiqGEk3roiPR71ZyjDRUUp0ANSfk=;
+	s=arc-20240116; t=1705970646; c=relaxed/simple;
+	bh=zx3+LR75HQJcmhvRVTBtpIdEwNaJeBsd5LefPB/eJic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g2YWiU+/1zv41oUyNVFRVAxk2GAhTPGbvaaP5MZ2Rz7520/3K00LDlVrsktueJF7PKhSDYLRVUwdwfpyOqsUau/icC3bchRT2S1igI6QxoD9rPlY99HgS8vnCcxrswLUoEcSGerm9SFjYkrnHl6EHXWHX1P8nOh47Fo+iMnpseg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVBJV6Fa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lvIZNpVhqu3SaxKx8dP2+VmlKwkfuBTV5JTsyu7nYr7oLXGjvfd70K3UgwF2l4LD1gRUZW7xXBde7CgPCJYvrIquUsHXGS/PNojF5aBXA2ZlSb093i/kMx8QTkSIutV/PWZF3ENvwMGfEj6DLcReEEhnsZeNZK1Ef9k4rg3VS2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cc5RgAkL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVBJV6Fa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD73AC433F1;
-	Tue, 23 Jan 2024 00:44:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cc5RgAkL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27ADC433F1;
+	Tue, 23 Jan 2024 00:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970643;
-	bh=ey5lNtK6eCYFDE+aiqGEk3roiPR71ZyjDRUUp0ANSfk=;
+	s=korg; t=1705970646;
+	bh=zx3+LR75HQJcmhvRVTBtpIdEwNaJeBsd5LefPB/eJic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lVBJV6FaP/oR6N9wTtzjMYU7uZexwTY8EmpVaN1AwCvnNMkJc8x6F37WWd0NouSMG
-	 17FfhGsFCQykjBXa9jfKvf3fz3cie5jCZEWAplzOtIC9oDF5sVIM6ERbQl/uluJAV2
-	 rzW8GUMRuVRPeNwwOIpBFkvfKLnsvlI3tVEaHSU4=
+	b=cc5RgAkL5N612KJN4h+Gg5ojF93h8bNV9Qlt+SWtB8Luy9oNWCGSMf7LhwvESvjeP
+	 4IlkovPJOObWaBzTN/yyiJojtKHr8GbVRC7OvJt+gR27c0MHZzI17ld1QJm6q1xgtr
+	 OKF4C3jfxxX8txWsB22lf2RQVQVuv3ScqNdHLBM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait@windriver.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Dmitry Rokosov <ddrokosov@sberdevices.ru>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/417] crypto: sahara - improve error handling in sahara_sha_process()
-Date: Mon, 22 Jan 2024 15:53:47 -0800
-Message-ID: <20240122235753.752719523@linuxfoundation.org>
+Subject: [PATCH 6.1 077/417] firmware: meson_sm: populate platform devices from sm device tree data
+Date: Mon, 22 Jan 2024 15:54:05 -0800
+Message-ID: <20240122235754.371274701@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -51,49 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait@windriver.com>
+From: Dmitry Rokosov <ddrokosov@sberdevices.ru>
 
-[ Upstream commit 5deff027fca49a1eb3b20359333cf2ae562a2343 ]
+[ Upstream commit e45f243409db98d610248c843b25435e7fb0baf3 ]
 
-sahara_sha_hw_data_descriptor_create() returns negative error codes on
-failure, so make sure the errors are correctly handled / propagated.
+In some meson boards, secure monitor device has children, for example,
+power secure controller. By default, secure monitor isn't the bus in terms
+of device tree subsystem, so the of_platform initialization code doesn't
+populate its device tree data. As a result, secure monitor's children
+aren't probed at all.
 
-Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Run the 'of_platform_populate()' routine manually to resolve such issues.
+
+Signed-off-by: Dmitry Rokosov <ddrokosov@sberdevices.ru>
+Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20230324145557.27797-1-ddrokosov@sberdevices.ru
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Stable-dep-of: d8385d7433f9 ("firmware: meson-sm: unmap out_base shmem in error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/firmware/meson/meson_sm.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index e2b1880ddeb0..6e112e41a0c7 100644
---- a/drivers/crypto/sahara.c
-+++ b/drivers/crypto/sahara.c
-@@ -988,7 +988,10 @@ static int sahara_sha_process(struct ahash_request *req)
- 		return ret;
+diff --git a/drivers/firmware/meson/meson_sm.c b/drivers/firmware/meson/meson_sm.c
+index d081a6312627..bf19dd66c213 100644
+--- a/drivers/firmware/meson/meson_sm.c
++++ b/drivers/firmware/meson/meson_sm.c
+@@ -313,11 +313,14 @@ static int __init meson_sm_probe(struct platform_device *pdev)
  
- 	if (rctx->first) {
--		sahara_sha_hw_data_descriptor_create(dev, rctx, req, 0);
-+		ret = sahara_sha_hw_data_descriptor_create(dev, rctx, req, 0);
-+		if (ret)
-+			return ret;
+ 	platform_set_drvdata(pdev, fw);
+ 
+-	pr_info("secure-monitor enabled\n");
++	if (devm_of_platform_populate(dev))
++		goto out_in_base;
+ 
+ 	if (sysfs_create_group(&pdev->dev.kobj, &meson_sm_sysfs_attr_group))
+ 		goto out_in_base;
+ 
++	pr_info("secure-monitor enabled\n");
 +
- 		dev->hw_desc[0]->next = 0;
- 		rctx->first = 0;
- 	} else {
-@@ -996,7 +999,10 @@ static int sahara_sha_process(struct ahash_request *req)
+ 	return 0;
  
- 		sahara_sha_hw_context_descriptor_create(dev, rctx, req, 0);
- 		dev->hw_desc[0]->next = dev->hw_phys_desc[1];
--		sahara_sha_hw_data_descriptor_create(dev, rctx, req, 1);
-+		ret = sahara_sha_hw_data_descriptor_create(dev, rctx, req, 1);
-+		if (ret)
-+			return ret;
-+
- 		dev->hw_desc[1]->next = 0;
- 	}
- 
+ out_in_base:
 -- 
 2.43.0
 
