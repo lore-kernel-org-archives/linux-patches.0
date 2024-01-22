@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988BF3FF4;
-	Tue, 23 Jan 2024 01:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889E43FF4;
+	Tue, 23 Jan 2024 01:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974633; cv=none; b=j/SVcTCb/pGkokhoayC3//Uk+oPr5A+GE4Xdq9nhFOYQJLehDMLiRieEZT9E0W3kAjhNez0Dwblza+PRE8R70MWOAmGn2cWfDnn7bjxFf1qpMcA+Rm4cJRn4eD+cbYsvM0wSAGJuhUzo0SSHh9iMetjVO+pK7BVguQZVza64yAA=
+	t=1705974634; cv=none; b=rWs9J97kl3iQDazDsoHrEHGLa2ftvgtDNh6SGW6toxc8yBkpKxVymrzIQawffZi9aYrD+XT8IBPm53wyKLaobtrvKzoBANSnErdbAF9MskRDcW4Ca7xakeYd3EcCH7oqhG0c9GKLt8ja8yJ55fgBlzZQFxg4oz7CjTSqN/zCG0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974633; c=relaxed/simple;
-	bh=piyFOrLqAV1dh27cQrWt6VvXmnQYs0MijMxJ2ikQwZA=;
+	s=arc-20240116; t=1705974634; c=relaxed/simple;
+	bh=xps5E6KKwQSWjv2Xk8Qmpdkt/iy9wJpIUcTbZjUXuo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XLRha/G2QvSaY9YTcAwdWUiI2mr1cyLRRGTGsLS6LsOJ/os2yAFdmMe1KjOZUb64iAWYYksGvttr66MTQUJ/Dh+T/XZhJviQA+RUELPsY+6LOli0gPY1QeTPkyOZj/x2bqhKVfXfH/Tsv4DC6YVoOiQph/j6Z5NYm5jV1yrg46Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IR+I81/V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=djXJaeUD1SFCtyuoJKjrxewoYiQTCp2yNw3vqXb1lanudKIKvO87Kl3wZCoXQXr85HAQInzU5us/JIDmlltZ5h5+/jKAKfYZtxAYSI7LIGIBW4pjhDxh51ZHYPGLusrYiwPMwF/HfCg932WfKL/Ae5r/+/6V0UJ1nykcs37xjW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsYETXGw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IR+I81/V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBEEC43394;
-	Tue, 23 Jan 2024 01:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsYETXGw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4150DC433C7;
+	Tue, 23 Jan 2024 01:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974633;
-	bh=piyFOrLqAV1dh27cQrWt6VvXmnQYs0MijMxJ2ikQwZA=;
+	s=korg; t=1705974634;
+	bh=xps5E6KKwQSWjv2Xk8Qmpdkt/iy9wJpIUcTbZjUXuo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IR+I81/VhC8RHVft3M8ZCEZuA448T8W2LGBNrfkgvZSWdmIAm63Npth6JSk2sCCPw
-	 r0X8ybdxNOFBBDoF4gXWfeSOV4zyBux11Zn/HQamizMdE1cAQ354PgT+umsYg6pxja
-	 Kny1392TB7XiMkr8AMzgLdcJYoHAt0N3OrkqdKUo=
+	b=WsYETXGwu+GIpy+CD9y7CnFXhKvDOvUt5aM3kufn+SS9qAdwjGiIk6PUJ2laMwSBP
+	 kl5UWThudlcVRrdoiVITXR33VVsvItUXuUBXgndAUa6dQpNEJScFW9f3ls/Zp/Yxr7
+	 HY/Vu2o3QZeNmHS0yT20iI0NVCzsqIo1jH+Q1Uek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Manorit Chawdhry <m-chawdhry@ti.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 222/374] watchdog: rti_wdt: Drop runtime pm reference count when watchdog is unused
-Date: Mon, 22 Jan 2024 15:57:58 -0800
-Message-ID: <20240122235752.389597323@linuxfoundation.org>
+Subject: [PATCH 6.6 098/583] arm64: dts: ti: k3-am65-main: Fix DSS irq trigger type
+Date: Mon, 22 Jan 2024 15:52:29 -0800
+Message-ID: <20240122235815.183620897@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,73 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vignesh Raghavendra <vigneshr@ti.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit c1a6edf3b541e44e78f10bc6024df779715723f1 ]
+[ Upstream commit b57160859263c083c49482b0d083a586b1517f78 ]
 
-Call runtime_pm_put*() if watchdog is not already started during probe and re
-enable it in watchdog start as required.
+DSS irq trigger type is set to IRQ_TYPE_EDGE_RISING in the DT file, but
+the TRM says it is level triggered.
 
-On K3 SoCs, watchdogs and their corresponding CPUs are under same
-power-domain, so if the reference count of unused watchdogs aren't
-dropped, it will lead to CPU hotplug failures as Device Management
-firmware won't allow to turn off the power-domain due to dangling
-reference count.
+For some reason triggering on rising edge results in double the amount
+of expected interrupts, e.g. for normal page flipping test the number of
+interrupts per second is 2 * fps. It is as if the IRQ triggers on both
+edges. There are no other side effects to this issue than slightly
+increased CPU & power consumption due to the extra interrupt.
 
-Fixes: 2d63908bdbfb ("watchdog: Add K3 RTI watchdog support")
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
-Tested-by: Manorit Chawdhry <m-chawdhry@ti.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20231213140110.938129-1-vigneshr@ti.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Switching to IRQ_TYPE_LEVEL_HIGH is correct and fixes the issue, so
+let's do that.
+
+Fixes: fc539b90eda2 ("arm64: dts: ti: am654: Add DSS node")
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Link: https://lore.kernel.org/r/20231106-am65-dss-clk-edge-v1-1-4a959fec0e1e@ideasonboard.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/rti_wdt.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am65-main.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/rti_wdt.c b/drivers/watchdog/rti_wdt.c
-index 46c2a4bd9ebe..daa00f3c5a6a 100644
---- a/drivers/watchdog/rti_wdt.c
-+++ b/drivers/watchdog/rti_wdt.c
-@@ -70,6 +70,11 @@ static int rti_wdt_start(struct watchdog_device *wdd)
- {
- 	u32 timer_margin;
- 	struct rti_wdt_device *wdt = watchdog_get_drvdata(wdd);
-+	int ret;
-+
-+	ret = pm_runtime_resume_and_get(wdd->parent);
-+	if (ret)
-+		return ret;
+diff --git a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+index bc460033a37a..c98068b6c122 100644
+--- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+@@ -1034,7 +1034,7 @@ dss: dss@4a00000 {
+ 		assigned-clocks = <&k3_clks 67 2>;
+ 		assigned-clock-parents = <&k3_clks 67 5>;
  
- 	/* set timeout period */
- 	timer_margin = (u64)wdd->timeout * wdt->freq;
-@@ -296,6 +301,9 @@ static int rti_wdt_probe(struct platform_device *pdev)
- 	if (last_ping)
- 		watchdog_set_last_hw_keepalive(wdd, last_ping);
+-		interrupts = <GIC_SPI 166 IRQ_TYPE_EDGE_RISING>;
++		interrupts = <GIC_SPI 166 IRQ_TYPE_LEVEL_HIGH>;
  
-+	if (!watchdog_hw_running(wdd))
-+		pm_runtime_put_sync(&pdev->dev);
-+
- 	return 0;
+ 		dma-coherent;
  
- err_iomap:
-@@ -310,7 +318,10 @@ static int rti_wdt_remove(struct platform_device *pdev)
- 	struct rti_wdt_device *wdt = platform_get_drvdata(pdev);
- 
- 	watchdog_unregister_device(&wdt->wdd);
--	pm_runtime_put(&pdev->dev);
-+
-+	if (!pm_runtime_suspended(&pdev->dev))
-+		pm_runtime_put(&pdev->dev);
-+
- 	pm_runtime_disable(&pdev->dev);
- 
- 	return 0;
 -- 
 2.43.0
 
