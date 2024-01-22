@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77A15025A;
-	Tue, 23 Jan 2024 01:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A535025A;
+	Tue, 23 Jan 2024 01:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974094; cv=none; b=f37LTX/XjcNgjWCC6RMjfSaZ/Q7x9MTJYqG7xVhAVYyZbmJFtZR2qZVbMq6CNMcW89ZRZ6lit0eD8TtsYaCsCYRCdrh5mP2ObIdcbw9kjKCcIYVwRY3SiilhQ8lYCklE2JeU8W1007xQxdr7WLQ9A4VwzPY4WRNFmfbJQsbbBlE=
+	t=1705974096; cv=none; b=maJ4bUaGa5gveQathWPKy3+rmCpA/DIkYshIU4SiFsu1c1neCadzTa4wArT26kXBHGL+TdVOmuDggSUdrEsdQ7uROMHKb59o+ITh9XOSL/alY1t7Wp8wgc0/8+0BF2qn9F89rURwtWCmUFaPjnX1DqHaJ/OveVevCUl86f53dNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974094; c=relaxed/simple;
-	bh=R9IZ+6p5L1yTdCE+G2aBUvnqeegXvWne8bk2HCUNLzw=;
+	s=arc-20240116; t=1705974096; c=relaxed/simple;
+	bh=EEDIW6NmsJXnJQPSX/ruCxNTTFEz2diwZpuhnYgRffA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZEACHJt/R5JjVmiQVFTxDqyQmeeUqhqv5gq/hfC2ZLZdlk9oE+HaU7AQeBtDPIh0WJ24YZ2LkVGo7I4OrP2RBAI3by1QczAcYuEIvI1xOWhHgCGcWOk6/Q3bZ7R3dhksRY9FiPPFHHQB0qQYaIKMZwCg2ORBdQmY5p1kKoAIi4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bjskFgL6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ajeWiGOaVMEciiemxAzibxMzWyDCuzipsH3VCW8y7rUos+qv3iemf5Za7jn+Ot6fy3OtLWyxejO8j7j9ZdOUOuesFPMkFIdW6dgvq6sb0lUyloatAtUyQkkBim+8ciylFmY+RX2ZUewPLSJrKEXYwI4XM2wv9b2Nf69mZtSMnnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJVON5Yt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bjskFgL6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650FCC43390;
-	Tue, 23 Jan 2024 01:41:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJVON5Yt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42ADFC43390;
+	Tue, 23 Jan 2024 01:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974094;
-	bh=R9IZ+6p5L1yTdCE+G2aBUvnqeegXvWne8bk2HCUNLzw=;
+	s=korg; t=1705974095;
+	bh=EEDIW6NmsJXnJQPSX/ruCxNTTFEz2diwZpuhnYgRffA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bjskFgL6othghlrmDO+OwJGe7VPINYEEGiDVwmu3CTIxE7OVuynZIRAiEMcHuvsrq
-	 N+XiiIPEMm6ZBiTZgI/mva2YKABbYkc5iKH5QtSO/t5cPdNoUxySWD9Pg8zzOH0b9o
-	 3wiUfCvNJVUMcPyRwYKxJ8PH9Vc5pVbz39GoiYEw=
+	b=HJVON5Yt0umqkLVHyl2doorTu7PS2h+GD08GvaPbkBxF4/17JCffQAO7AhdGOtGsO
+	 gDtHVPMpBSw6yT3RxynU+tyW3BY8UVuDpU4onx3joSYBTXT0UFRHl/T0Ddi60aSkKT
+	 ID2tbnb/JqOpjjx4dRfWNcEjDHy+T129pFBELLnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 160/374] wifi: rtlwifi: rtl8192de: using calculate_bit_shift()
-Date: Mon, 22 Jan 2024 15:56:56 -0800
-Message-ID: <20240122235750.180062807@linuxfoundation.org>
+Subject: [PATCH 6.6 036/583] thermal: core: Fix NULL pointer dereference in zone registration error path
+Date: Mon, 22 Jan 2024 15:51:27 -0800
+Message-ID: <20240122235813.264995853@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,80 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit b8b2baad2e652042cf8b6339939ac2f4e6f53de4 ]
+[ Upstream commit 04e6ccfc93c5a1aa1d75a537cf27e418895e20ea ]
 
-Using calculate_bit_shift() to replace _rtl92d_phy_calculate_bit_shift().
-And fix the undefined bitwise shift behavior problem.
+If device_register() in thermal_zone_device_register_with_trips()
+returns an error, the tz variable is set to NULL and subsequently
+dereferenced in kfree(tz->tzp).
 
-Fixes: 7274a8c22980 ("rtlwifi: rtl8192de: Merge phy routines")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231219065739.1895666-8-suhui@nfschina.com
+Commit adc8749b150c ("thermal/drivers/core: Use put_device() if
+device_register() fails") added the tz = NULL assignment in question to
+avoid a possible double-free after dropping the reference to the zone
+device.  However, after commit 4649620d9404 ("thermal: core: Make
+thermal_zone_device_unregister() return after freeing the zone"), that
+assignment has become redundant, because dropping the reference to the
+zone device does not cause the zone object to be freed any more.
+
+Drop it to address the NULL pointer dereference.
+
+Fixes: 3d439b1a2ad3 ("thermal/core: Alloc-copy-free the thermal zone parameters structure")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/realtek/rtlwifi/rtl8192de/phy.c  | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/thermal/thermal_core.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-index 4d153bd62c53..c3c07ca77614 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-@@ -169,13 +169,6 @@ static const u8 channel_all[59] = {
- 	157, 159, 161, 163, 165
- };
- 
--static u32 _rtl92d_phy_calculate_bit_shift(u32 bitmask)
--{
--	u32 i = ffs(bitmask);
--
--	return i ? i - 1 : 32;
--}
--
- u32 rtl92d_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
- {
- 	struct rtl_priv *rtlpriv = rtl_priv(hw);
-@@ -198,7 +191,7 @@ u32 rtl92d_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
- 	} else {
- 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
- 	}
--	bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	returnvalue = (originalvalue & bitmask) >> bitshift;
- 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
- 		"BBR MASK=0x%x Addr[0x%x]=0x%x\n",
-@@ -230,7 +223,7 @@ void rtl92d_phy_set_bb_reg(struct ieee80211_hw *hw,
- 					dbi_direct);
- 		else
- 			originalvalue = rtl_read_dword(rtlpriv, regaddr);
--		bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
-+		bitshift = calculate_bit_shift(bitmask);
- 		data = ((originalvalue & (~bitmask)) | (data << bitshift));
- 	}
- 	if (rtlhal->during_mac1init_radioa || rtlhal->during_mac0init_radiob)
-@@ -317,7 +310,7 @@ u32 rtl92d_phy_query_rf_reg(struct ieee80211_hw *hw,
- 		regaddr, rfpath, bitmask);
- 	spin_lock(&rtlpriv->locks.rf_lock);
- 	original_value = _rtl92d_phy_rf_serial_read(hw, rfpath, regaddr);
--	bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	readback_value = (original_value & bitmask) >> bitshift;
- 	spin_unlock(&rtlpriv->locks.rf_lock);
- 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
-@@ -343,7 +336,7 @@ void rtl92d_phy_set_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
- 		if (bitmask != RFREG_OFFSET_MASK) {
- 			original_value = _rtl92d_phy_rf_serial_read(hw,
- 				rfpath, regaddr);
--			bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data = ((original_value & (~bitmask)) |
- 				(data << bitshift));
- 		}
+diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+index e6f3166a9208..2de524fb7be5 100644
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -1382,7 +1382,6 @@ thermal_zone_device_register_with_trips(const char *type, struct thermal_trip *t
+ 	device_del(&tz->device);
+ release_device:
+ 	put_device(&tz->device);
+-	tz = NULL;
+ remove_id:
+ 	ida_free(&thermal_tz_ida, id);
+ free_tzp:
 -- 
 2.43.0
 
