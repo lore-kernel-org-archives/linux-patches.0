@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF64463512;
-	Tue, 23 Jan 2024 00:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0BE634F8;
+	Tue, 23 Jan 2024 00:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971260; cv=none; b=YtOlOdQ7wbL4AR7TOW/FzXx9git82gqgzmZHaqKn+j7PfzLdL/pHTIZ2cworPN4S93mcHUXwDcIeEDbIONuG9fZnZQGZXW63herqWGvtl+CWaPOIdFy3HhOLS198L9w5Jxq3Rmm7RePwMArLNT1iiXLXJBivF9+bZmQFaiP6pIk=
+	t=1705971262; cv=none; b=F9XnyY7LUsdZB9HFL7oPTnwI3qH6YXVjT9FFF7sX/C6qz+Tq651VaJKW3BPxbQU2u2CPgcr1pbg3CYh7o/iQC0OcTlTTMH1uoeoqZUr2m5FheKmYmsRaAIoqpquU2GOWp/hBMxQODD5DW3uzxr2h33wINCysn0dpPWCbdNLFpgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971260; c=relaxed/simple;
-	bh=G2PflnOaxwDdK1hOnjm3jFFouoF2BPAgr0FsZ3tWE4I=;
+	s=arc-20240116; t=1705971262; c=relaxed/simple;
+	bh=7F7EouEGhJtKZCMCPtmnN9eKkHm7zvO07RxMgrPMti4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b3YiDINXw/rAnluKOlNK06A8Jc5iLMJNdbXWRwoyqO8gxYR353jqBjX9cFOk5uce2jxXWHLdeDZlGb7mX/Uzdiz+kitRYwklTPkQAVSTbNiF6xRnOogoQEFw/fzzJ4ZxfX7FEBKvKXtmMaC4SbpCFD+TX5BuVh5fEpDwy1eoyt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tX+7t+5l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BFxibD/fUOV7Ia0+YeidHlQAmLZbskBv4urT+LxSBP2l7RVCGCoEpTi/Xh5ID6bntgJqu/dZ+Y0HM964erYG7+W/Y+Rf5a0cfqDXcvKNFgrpvZpd76i1dfD9LFkP1SAY3Yg9sEiaLIEi/7cDL6ZtYpfVzXuHbG3XZSasrO+7E5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P64VGROx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tX+7t+5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FAF3C433F1;
-	Tue, 23 Jan 2024 00:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P64VGROx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73AD6C433F1;
+	Tue, 23 Jan 2024 00:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971259;
-	bh=G2PflnOaxwDdK1hOnjm3jFFouoF2BPAgr0FsZ3tWE4I=;
+	s=korg; t=1705971261;
+	bh=7F7EouEGhJtKZCMCPtmnN9eKkHm7zvO07RxMgrPMti4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tX+7t+5lHmxLd1Q8UoC3n6SrY+bq3Kr+HkpbtVqtx05kthSDRlXZaJMIj6dmCd/MP
-	 9k+zdbIg5ogxbD4f9TtjWiZj6+/tWahTV9rABWSPWn1mFqskIJyr8x4PXwE/12YReM
-	 2hrL3q/sCOA0yDsGGR6oGC4D/1/ytDkS8i8Cp128=
+	b=P64VGROx3pupNOJQ/NyVzCK6WvZ8ROBHTFfIK8EfDC9w+pumofblnmBUlmilFYhVC
+	 tJ8SA6ZmANPTzEArSzyMB2Lvu+7KinSUBbXcM3/E2yhcXh99kDJ56KclKPQt6AcE81
+	 Rbcf6ba0mlVyCD/MWwLoBGBxUExO4c2b6Fwek/U4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 212/417] gpu/drm/radeon: fix two memleaks in radeon_vm_init
-Date: Mon, 22 Jan 2024 15:56:20 -0800
-Message-ID: <20240122235759.262137329@linuxfoundation.org>
+Subject: [PATCH 5.10 120/286] bpf: fix check for attempt to corrupt spilled pointer
+Date: Mon, 22 Jan 2024 15:57:06 -0800
+Message-ID: <20240122235736.753139278@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit c2709b2d6a537ca0fa0f1da36fdaf07e48ef447d ]
+[ Upstream commit ab125ed3ec1c10ccc36bc98c7a4256ad114a3dae ]
 
-When radeon_bo_create and radeon_vm_clear_bo fail, the vm->page_tables
-allocated before need to be freed. However, neither radeon_vm_init
-itself nor its caller have done such deallocation.
+When register is spilled onto a stack as a 1/2/4-byte register, we set
+slot_type[BPF_REG_SIZE - 1] (plus potentially few more below it,
+depending on actual spill size). So to check if some stack slot has
+spilled register we need to consult slot_type[7], not slot_type[0].
 
-Fixes: 6d2f2944e95e ("drm/radeon: use normal BOs for the page tables v4")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+To avoid the need to remember and double-check this in the future, just
+use is_spilled_reg() helper.
+
+Fixes: 27113c59b6d0 ("bpf: Check the other end of slot_type for STACK_SPILL")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20231205184248.1502704-4-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_vm.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_vm.c b/drivers/gpu/drm/radeon/radeon_vm.c
-index 987cabbf1318..c38b4d5d6a14 100644
---- a/drivers/gpu/drm/radeon/radeon_vm.c
-+++ b/drivers/gpu/drm/radeon/radeon_vm.c
-@@ -1204,13 +1204,17 @@ int radeon_vm_init(struct radeon_device *rdev, struct radeon_vm *vm)
- 	r = radeon_bo_create(rdev, pd_size, align, true,
- 			     RADEON_GEM_DOMAIN_VRAM, 0, NULL,
- 			     NULL, &vm->page_directory);
--	if (r)
-+	if (r) {
-+		kfree(vm->page_tables);
-+		vm->page_tables = NULL;
- 		return r;
--
-+	}
- 	r = radeon_vm_clear_bo(rdev, vm->page_directory);
- 	if (r) {
- 		radeon_bo_unref(&vm->page_directory);
- 		vm->page_directory = NULL;
-+		kfree(vm->page_tables);
-+		vm->page_tables = NULL;
- 		return r;
- 	}
- 
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 45c50ee9b037..ddfd33703f4d 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -2493,7 +2493,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
+ 	 * so it's aligned access and [off, off + size) are within stack limits
+ 	 */
+ 	if (!env->allow_ptr_leaks &&
+-	    state->stack[spi].slot_type[0] == STACK_SPILL &&
++	    is_spilled_reg(&state->stack[spi]) &&
+ 	    size != BPF_REG_SIZE) {
+ 		verbose(env, "attempt to corrupt spilled pointer on stack\n");
+ 		return -EACCES;
 -- 
 2.43.0
 
