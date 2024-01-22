@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC6C664B7;
-	Tue, 23 Jan 2024 01:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1452365BC5;
+	Tue, 23 Jan 2024 01:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971665; cv=none; b=ZUpEm2S2k6xHWuSbiR6I5oWJIcRlzoZtA1uULxXpAJMkDUOYJAPoguW4b7SXU+Q0PmCYKlGwGaBRUolgtOgdb7yYQXgsH6LJtHegk/BxLDMpaEQ2Oa4/s9KUjEkqUd8qG7K/oxw1KioLWrAjwsKLiXrmbkwhPPPY03AOCNpAEUc=
+	t=1705971667; cv=none; b=b+8aENclpkWetg5w8uROGtQFN7DsxrDmlbsiYcPBm9SFMoD7DlZKxZiKFXxTAEuuNNe9hRafYbONrt+A49zLeuQCz7PqDJWb0c6LMuOspBxljz7NpQsDBlm2WlMb7nBHaXKay9ygr9c/VVjKnWb2g4s8WbmgYmKmt4GNKYqTEPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971665; c=relaxed/simple;
-	bh=HV+KeWzecZmL5uGY+3ts5ft21dUgcMqF6LMpzJPahms=;
+	s=arc-20240116; t=1705971667; c=relaxed/simple;
+	bh=Eu0isBJan6MLYnnbTD0895FCnZ5kWCwMeZEQNRWxNeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrIZyPWzo3Xs6uq4stw7x5I8hmcRd1JOBnit2Wh8A3qBYu6kBmP6DH5E1T2dYXn4ubDZdnm2KFZL8cdH2/6JxzTKo+4zKSTgv1j1coqULR2XQ8tgl8lDsYCnEskjQbvLhAhnQIecZ/Fn29VEtFPyl85gLhaKNvbfCdrUo13HJ6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NwA7kvSb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KSMWOlnibFVuwowj40A+vErIt7CmvCHj40k3r+NQhOEcweapIJ9CnKJD+g3YM3Tb0xMcos7DFuIrq+1b/Qmi6yI2bAg0/yvxIiWibmuSdsD6nx7B9x6RvBII8tJ63EFeywmEO5x11Wkael3iWv+6m6L2ezbdQnsHfy2MS4WplVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7I/cUJo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NwA7kvSb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53780C433F1;
-	Tue, 23 Jan 2024 01:01:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7I/cUJo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38FFC433C7;
+	Tue, 23 Jan 2024 01:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971665;
-	bh=HV+KeWzecZmL5uGY+3ts5ft21dUgcMqF6LMpzJPahms=;
+	s=korg; t=1705971666;
+	bh=Eu0isBJan6MLYnnbTD0895FCnZ5kWCwMeZEQNRWxNeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NwA7kvSbALeZa6kTPpb+AVVnm9PrglBEOGe0jwijl/uOAtfQE6/MJtAC/KbNfQhlp
-	 CGyR6QNQ3lH8JmPYak1TPlVxW12T9mKPuzYi7KVmDJOzbSR8LmibEKrR23nxpILwy0
-	 9DIiRozmtTgrYOkmIUaeT4fdGSOER3T1lysbkNnk=
+	b=E7I/cUJovJSdI26tkNvBTQ+FA9Xb3mWfU9XULpzoixIBsbq6t7hZ9XYIVcJbACqJY
+	 keLS46LvENf/GCaMUSEA2uFIhRGeB2tEa3JBAl++4yjLJa/JGj6S2Ftutk0Mv2YytL
+	 8OdD3JpPgBXK4l9ZpUu/PLOEfWHzbuX43EKw72Pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <2045gemini@gmail.com>
-Subject: [PATCH 6.1 269/417] usb: mon: Fix atomicity violation in mon_bin_vma_fault
-Date: Mon, 22 Jan 2024 15:57:17 -0800
-Message-ID: <20240122235801.175303302@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.1 264/417] usb: cdns3: fix uvc failure work since sg support enabled
+Date: Mon, 22 Jan 2024 15:57:12 -0800
+Message-ID: <20240122235801.007861341@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -49,90 +49,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <2045gemini@gmail.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 2dd23cc4d0e6aa55cf9fb3b05f2f4165b01de81c upstream.
+commit 1b8be5ecff26201bafb0a554c74e91571299fb94 upstream.
 
-In mon_bin_vma_fault():
-    offset = vmf->pgoff << PAGE_SHIFT;
-    if (offset >= rp->b_size)
-        return VM_FAULT_SIGBUS;
-    chunk_idx = offset / CHUNK_SIZE;
-    pageptr = rp->b_vec[chunk_idx].pg;
-The code is executed without holding any lock.
+When IP version >= DEV_VER_V2, gadget:sg_supported is true. So uvc gadget
+function driver will use sg to equeue data, first is 8bytes header, the
+second is 1016bytes data.
 
-In mon_bin_vma_close():
-    spin_lock_irqsave(&rp->b_lock, flags);
-    rp->mmap_active--;
-    spin_unlock_irqrestore(&rp->b_lock, flags);
+    cdns3_prepare_trb: ep2in: trb 0000000000ac755f, dma buf: 0xbf455000, size: 8, burst: 128 ctrl: 0x00000415 (C=1, T=0, ISP, CHAIN, Normal)
+    cdns3_prepare_trb: ep2in: trb 00000000a574e693, dma buf: 0xc0200fe0, size: 1016, burst: 128 ctrl: 0x00000405 (C=1, T=0, ISP, Normal)
 
-In mon_bin_ioctl():
-    spin_lock_irqsave(&rp->b_lock, flags);
-    if (rp->mmap_active) {
-        ...
-    } else {
-        ...
-        kfree(rp->b_vec);
-        rp->b_vec  = vec;
-        rp->b_size = size;
-        ...
-    }
-    spin_unlock_irqrestore(&rp->b_lock, flags);
+But cdns3_ep_run_transfer() can't correctly handle this case, which only
+support one TRB for ISO transfer.
 
-Concurrent execution of mon_bin_vma_fault() with mon_bin_vma_close() and
-mon_bin_ioctl() could lead to atomicity violations. mon_bin_vma_fault()
-accesses rp->b_size and rp->b_vec without locking, risking array
-out-of-bounds access or use-after-free bugs due to possible modifications
-in mon_bin_ioctl().
+The controller requires duplicate the TD for each SOF if priv_ep->interval
+is not 1. DMA will read data from DDR to internal FIFO when get SOF. Send
+data to bus when receive IN token. DMA always refill FIFO when get SOF
+regardless host send IN token or not. If host send IN token later, some
+frames data will be lost.
 
-This possible bug is found by an experimental static analysis tool
-developed by our team, BassCheck[1]. This tool analyzes the locking APIs
-to extract function pairs that can be concurrently executed, and then
-analyzes the instructions in the paired functions to identify possible
-concurrency bugs including data races and atomicity violations. The above
-possible bug is reported when our tool analyzes the source code of
-Linux 6.2.
+Fixed it by below major steps:
 
-To address this issue, it is proposed to add a spin lock pair in
-mon_bin_vma_fault() to ensure atomicity. With this patch applied, our tool
-never reports the possible bug, with the kernel configuration allyesconfig
-for x86_64. Due to the lack of associated hardware, we cannot test the
-patch in runtime testing, and just verify it according to the code logic.
+1. Calculate numembers of TRB base on sg_nums and priv_ep->interval.
+2. Remove CHAIN flags for each end TRB of TD when duplicate TD.
+3. The controller requires LINK TRB must be first TRB of TD. When check
+there are not enough TRBs lefts, just fill LINK TRB for left TRBs.
 
-[1] https://sites.google.com/view/basscheck/
+.... CHAIN_TRB DATA_TRB, CHAIN_TRB DATA_TRB,  LINK_TRB ... LINK_TRB
+                                                           ^End of TRB List
 
-Fixes: 19e6317d24c2 ("usb: mon: Fix a deadlock in usbmon between ...")
 Cc:  <stable@vger.kernel.org>
-Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
-Link: https://lore.kernel.org/r/20240105052412.9377-1-2045gemini@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20231224153816.1664687-2-Frank.Li@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/mon/mon_bin.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/cdns3/cdns3-gadget.c |   51 ++++++++++++++++++++++++++++++---------
+ 1 file changed, 40 insertions(+), 11 deletions(-)
 
---- a/drivers/usb/mon/mon_bin.c
-+++ b/drivers/usb/mon/mon_bin.c
-@@ -1247,14 +1247,19 @@ static vm_fault_t mon_bin_vma_fault(stru
- 	struct mon_reader_bin *rp = vmf->vma->vm_private_data;
- 	unsigned long offset, chunk_idx;
- 	struct page *pageptr;
-+	unsigned long flags;
+--- a/drivers/usb/cdns3/cdns3-gadget.c
++++ b/drivers/usb/cdns3/cdns3-gadget.c
+@@ -1117,6 +1117,7 @@ static int cdns3_ep_run_transfer(struct
+ 	dma_addr_t trb_dma;
+ 	u32 togle_pcs = 1;
+ 	int sg_iter = 0;
++	int num_trb_req;
+ 	int num_trb;
+ 	int address;
+ 	u32 control;
+@@ -1125,15 +1126,13 @@ static int cdns3_ep_run_transfer(struct
+ 	struct scatterlist *s = NULL;
+ 	bool sg_supported = !!(request->num_mapped_sgs);
  
-+	spin_lock_irqsave(&rp->b_lock, flags);
- 	offset = vmf->pgoff << PAGE_SHIFT;
--	if (offset >= rp->b_size)
-+	if (offset >= rp->b_size) {
-+		spin_unlock_irqrestore(&rp->b_lock, flags);
- 		return VM_FAULT_SIGBUS;
++	num_trb_req = sg_supported ? request->num_mapped_sgs : 1;
++
++	/* ISO transfer require each SOF have a TD, each TD include some TRBs */
+ 	if (priv_ep->type == USB_ENDPOINT_XFER_ISOC)
+-		num_trb = priv_ep->interval;
++		num_trb = priv_ep->interval * num_trb_req;
+ 	else
+-		num_trb = sg_supported ? request->num_mapped_sgs : 1;
+-
+-	if (num_trb > priv_ep->free_trbs) {
+-		priv_ep->flags |= EP_RING_FULL;
+-		return -ENOBUFS;
+-	}
++		num_trb = num_trb_req;
+ 
+ 	priv_req = to_cdns3_request(request);
+ 	address = priv_ep->endpoint.desc->bEndpointAddress;
+@@ -1182,14 +1181,31 @@ static int cdns3_ep_run_transfer(struct
+ 
+ 		link_trb->control = cpu_to_le32(((priv_ep->pcs) ? TRB_CYCLE : 0) |
+ 				    TRB_TYPE(TRB_LINK) | TRB_TOGGLE | ch_bit);
++
++		if (priv_ep->type == USB_ENDPOINT_XFER_ISOC) {
++			/*
++			 * ISO require LINK TRB must be first one of TD.
++			 * Fill LINK TRBs for left trb space to simply software process logic.
++			 */
++			while (priv_ep->enqueue) {
++				*trb = *link_trb;
++				trace_cdns3_prepare_trb(priv_ep, trb);
++
++				cdns3_ep_inc_enq(priv_ep);
++				trb = priv_ep->trb_pool + priv_ep->enqueue;
++				priv_req->trb = trb;
++			}
++		}
 +	}
- 	chunk_idx = offset / CHUNK_SIZE;
- 	pageptr = rp->b_vec[chunk_idx].pg;
- 	get_page(pageptr);
- 	vmf->page = pageptr;
-+	spin_unlock_irqrestore(&rp->b_lock, flags);
- 	return 0;
- }
++
++	if (num_trb > priv_ep->free_trbs) {
++		priv_ep->flags |= EP_RING_FULL;
++		return -ENOBUFS;
+ 	}
  
+ 	if (priv_dev->dev_ver <= DEV_VER_V2)
+ 		togle_pcs = cdns3_wa1_update_guard(priv_ep, trb);
+ 
+-	if (sg_supported)
+-		s = request->sg;
+-
+ 	/* set incorrect Cycle Bit for first trb*/
+ 	control = priv_ep->pcs ? 0 : TRB_CYCLE;
+ 	trb->length = 0;
+@@ -1207,6 +1223,9 @@ static int cdns3_ep_run_transfer(struct
+ 	do {
+ 		u32 length;
+ 
++		if (!(sg_iter % num_trb_req) && sg_supported)
++			s = request->sg;
++
+ 		/* fill TRB */
+ 		control |= TRB_TYPE(TRB_NORMAL);
+ 		if (sg_supported) {
+@@ -1248,7 +1267,7 @@ static int cdns3_ep_run_transfer(struct
+ 		if (sg_supported) {
+ 			trb->control |= cpu_to_le32(TRB_ISP);
+ 			/* Don't set chain bit for last TRB */
+-			if (sg_iter < num_trb - 1)
++			if ((sg_iter % num_trb_req) < num_trb_req - 1)
+ 				trb->control |= cpu_to_le32(TRB_CHAIN);
+ 
+ 			s = sg_next(s);
+@@ -1506,6 +1525,12 @@ static void cdns3_transfer_completed(str
+ 
+ 		/* The TRB was changed as link TRB, and the request was handled at ep_dequeue */
+ 		while (TRB_FIELD_TO_TYPE(le32_to_cpu(trb->control)) == TRB_LINK) {
++
++			/* ISO ep_traddr may stop at LINK TRB */
++			if (priv_ep->dequeue == cdns3_get_dma_pos(priv_dev, priv_ep) &&
++			    priv_ep->type == USB_ENDPOINT_XFER_ISOC)
++				break;
++
+ 			trace_cdns3_complete_trb(priv_ep, trb);
+ 			cdns3_ep_inc_deq(priv_ep);
+ 			trb = priv_ep->trb_pool + priv_ep->dequeue;
+@@ -1538,6 +1563,10 @@ static void cdns3_transfer_completed(str
+ 			}
+ 
+ 			if (request_handled) {
++				/* TRBs are duplicated by priv_ep->interval time for ISO IN */
++				if (priv_ep->type == USB_ENDPOINT_XFER_ISOC && priv_ep->dir)
++					request->actual /= priv_ep->interval;
++
+ 				cdns3_gadget_giveback(priv_ep, priv_req, 0);
+ 				request_handled = false;
+ 				transfer_end = false;
 
 
