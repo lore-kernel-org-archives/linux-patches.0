@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA82114A098;
-	Tue, 23 Jan 2024 00:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29556149010;
+	Tue, 23 Jan 2024 00:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969195; cv=none; b=KtD+q5iUvOia4xtKKM+5EheWwAO36jL+woFmjFkxDrXSgKkbWPlZkiaxLgYGQUcuoZz70G/nJFltkAzeM49qUCut0FFoDkMoKjZtzjkF3i+nDEhCtechql4j1d1ImQGb9kgrdrQiQgKHgPdjoZtpIHZZlgF46iq0YKPuACHwFPY=
+	t=1705969198; cv=none; b=qoNJbkJoG0lD75tlQu/Oy8i8diDhayrrGuC84b4CYpmyv/+Rh9GIAeZTzAViM87cQwI18oUQ/fynL6eJT9zEhF65cukC7AKmq/v0xyNua3hdVkRdaNmv0RD63Pj71kiii6QLrt90y756z5hsctKofRpAwfDoJ/Gxd2zD3eGt0I0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969195; c=relaxed/simple;
-	bh=Oa2uWNFmcQyXek/gStqqnYcxTJ2SS/bBa8+MM0XVksE=;
+	s=arc-20240116; t=1705969198; c=relaxed/simple;
+	bh=grY1Uk/Ze6ipzQhb+J9ibNcjopAAzQenAV/ahVKOTlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xd/s8xB1WcJ/msAtwjZj9FzJtj5Je2yhNLTunjX4VBqOLXuzHDmc8+nJyXF6vc5u20BEOQpI/xvcPVOjBRxByeuhHP3z6q4+6hhez+3BKMSpwg9Bym+qa312Bl6+16fQ5Z5FxHqUYFBSaKZ7v9CDRyYl+/SdiRVqP+SQyUlyd4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pha0dZm7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F0AS80+OZuaiBw/IaDukgdOWpSHBlc4Fwu9wm+Y4FYYZkWqzQuxYjVHn/Db/562iLF6ov81AB9QGUaEK1A3Q1NaUjYTllT2lWP01CLJNqto16ZKmjESK0vfxzwbMWqM5BXZXB3pNWaJtlyTojtGp+oE5meGJ9R1R22Ru0PAB/Bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=buJYJSCw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pha0dZm7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B643C433C7;
-	Tue, 23 Jan 2024 00:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="buJYJSCw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9648C433C7;
+	Tue, 23 Jan 2024 00:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969195;
-	bh=Oa2uWNFmcQyXek/gStqqnYcxTJ2SS/bBa8+MM0XVksE=;
+	s=korg; t=1705969198;
+	bh=grY1Uk/Ze6ipzQhb+J9ibNcjopAAzQenAV/ahVKOTlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pha0dZm7FoMXQy1ITGXMvf8HJyOJvYujCldEWi4jYtnzBQhm8lNySnxHwqyuRbB3d
-	 ECz94krpQg6N2B1lT0xIIHzW9/n1OBO+bk8GEZB1sv9q/84FJom4HpIyZCvadGVQa5
-	 riR+Db29rHOYDrMCgpuuUFkVa5abFvZBkrSFMLrQ=
+	b=buJYJSCwc4TjzPbN3wN/5ieJBhlry5kbxSub7aqGnaq0hDe1laqGKwlFCmnncu8PM
+	 xKj0Q//4UTzQ3x2kRZXtlGGMLtY4jLhZoE1/qKoNtMBtx6Eg1/00erpM66PiwuBZOc
+	 Xrbg95efov2DDuaQ6YSk9o0v7S+YRlmUeXQK+MZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David McKay <david.mckay@codasip.com>,
-	Stuart Menefy <stuart.menefy@codasip.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 091/641] asm-generic: Fix 32 bit __generic_cmpxchg_local
-Date: Mon, 22 Jan 2024 15:49:55 -0800
-Message-ID: <20240122235820.881634191@linuxfoundation.org>
+Subject: [PATCH 6.7 092/641] arm64: dts: qcom: qrb4210-rb2: dont force usb peripheral mode
+Date: Mon, 22 Jan 2024 15:49:56 -0800
+Message-ID: <20240122235820.920473115@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,37 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David McKay <david.mckay@codasip.com>
+From: Caleb Connolly <caleb.connolly@linaro.org>
 
-[ Upstream commit d93cca2f3109f88c94a32d3322ec8b2854a9c339 ]
+[ Upstream commit 27c2ca90e2f34cd3c4849af996e1a96a69e700d3 ]
 
-Commit 656e9007ef58 ("asm-generic: avoid __generic_cmpxchg_local
-warnings") introduced a typo that means the code is incorrect for 32 bit
-values. It will work fine for postive numbers, but will fail for
-negative numbers on a system where longs are 64 bit.
+The rb2 only has a single USB controller, it can be switched between a
+type-c port and an internal USB hub via a DIP switch. Until dynamic
+role switching is available it's preferable to put the USB controller
+in host mode so that the type-A ports and ethernet are available.
 
-Fixes: 656e9007ef58 ("asm-generic: avoid __generic_cmpxchg_local warnings")
-Signed-off-by: David McKay <david.mckay@codasip.com>
-Signed-off-by: Stuart Menefy <stuart.menefy@codasip.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Fixes: eaa53a85748d ("arm64: dts: qcom: qrb4210-rb2: Enable USB node")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://lore.kernel.org/r/20231010-caleb-rb2-host-mode-v1-1-b057d443cd62@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/cmpxchg-local.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/asm-generic/cmpxchg-local.h b/include/asm-generic/cmpxchg-local.h
-index 3df9f59a544e..f27d66fdc00a 100644
---- a/include/asm-generic/cmpxchg-local.h
-+++ b/include/asm-generic/cmpxchg-local.h
-@@ -34,7 +34,7 @@ static inline unsigned long __generic_cmpxchg_local(volatile void *ptr,
- 			*(u16 *)ptr = (new & 0xffffu);
- 		break;
- 	case 4: prev = *(u32 *)ptr;
--		if (prev == (old & 0xffffffffffu))
-+		if (prev == (old & 0xffffffffu))
- 			*(u32 *)ptr = (new & 0xffffffffu);
- 		break;
- 	case 8: prev = *(u64 *)ptr;
+diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+index a7278a9472ed..9738c0dacd58 100644
+--- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
++++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+@@ -518,7 +518,6 @@ &usb {
+ 
+ &usb_dwc3 {
+ 	maximum-speed = "super-speed";
+-	dr_mode = "peripheral";
+ };
+ 
+ &usb_hsphy {
 -- 
 2.43.0
 
