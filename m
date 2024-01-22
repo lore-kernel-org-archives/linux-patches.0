@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797501350F9;
-	Tue, 23 Jan 2024 00:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA9A14D446;
+	Tue, 23 Jan 2024 00:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969355; cv=none; b=SYm2WZJiN34XguJJLtcBH2X+LjcMtfjX6jXyMsZavo/AqdluOHAj5u30am0/AZEPdpo8E3s7BA4/dbRCa3fO1JdwznNnUx2hO2ZIy/NotCiV36d+N0Ym7u2LsTTRF44q245jAgHJm3R0AwFNbS3jKtshNS6BDfaVrHfxZAXJc+U=
+	t=1705969357; cv=none; b=T02CvFn75QZ1hqYOrISQg3XWVpO3s8v+PBUA6ViyEP07st52pJDPSC2PhYsXNm6Wf1JPxIp+OFyYN+5ykR60OO5Zk0t2jbjBCWNIuim5boLvrwMlQn5JSZ/X5oPEhbld7mlqZqG6mhMVzCCJlFFetXGf03qwuX9zlXdVg/vL/s8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969355; c=relaxed/simple;
-	bh=LL85P5GR4gxVSvvi/HpofaknJwJufrRarvt2gqu73DY=;
+	s=arc-20240116; t=1705969357; c=relaxed/simple;
+	bh=AoWk6ZfQIk+rO0a5rTu2BYEV7FzM3VK1QHAC2vsX2uM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZE/6uF+9mT9+4sQsFiFlcbIhysCL1Sy3WE2Cls/v/R2CiMLrLm1ZRFED/IfP512kXwwDUpcy/BwCo/ieCCDWHf/YcXHAWCfHwSV+gVC30GcL3KU88CUOFsXjDaMqsLI3CS+D+9MkyfBpf3qjIEhZJB3hMs13IZewvVngfc0inZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4eMIt34; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c0tqfy+1Uhu+bR4nU4w7G1BpA20BeETJYNQ+LjBn5mobFlNIv3BbChYapViWiE9C5X62gDjmxjUW9nq50LQ/InAaUNhJ7cfsXS9VoOa5dPtUNgZhiRU+EZRsvY02igPDHHdjtckWqVVWY2sqRQsc8bzbEgFFoyw/Dbr/nRj9tXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiUvU0Iu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4eMIt34"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113DDC433F1;
-	Tue, 23 Jan 2024 00:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiUvU0Iu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9898C433F1;
+	Tue, 23 Jan 2024 00:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969355;
-	bh=LL85P5GR4gxVSvvi/HpofaknJwJufrRarvt2gqu73DY=;
+	s=korg; t=1705969357;
+	bh=AoWk6ZfQIk+rO0a5rTu2BYEV7FzM3VK1QHAC2vsX2uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c4eMIt34Z21MjmtHCu4oC+redE/BqGhM9vMndP4w3+4T6t7ROocEdDEhLD+HaHCkn
-	 I+IuIjTuh42tVAgom0YlZuKZP2Wvn1z3iUDAWiXl2+HwpDNPiO1omiAKg7Q3mFaJ3N
-	 gN2GGXDTE1QNPZu0dBRzfJieNrr0s+RunprZA2h0=
+	b=CiUvU0IuKKAvBGusbSlfDN2b5IKMywNecWMJKhhSRo5eGG1Mi+uCLXb+M3oy5gvsa
+	 vTdQi19jJaRcuSgeVBA7zL2zoLlns93VpgaiBl991VboSB7ZR0Knu+sh8wTyxpbSKE
+	 2S7DsU5SwX3WI1SLjfRyq30gxbLFMg62DeM+0z2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 184/641] selftests/net: fix grep checking for fib_nexthop_multiprefix
-Date: Mon, 22 Jan 2024 15:51:28 -0800
-Message-ID: <20240122235823.747838935@linuxfoundation.org>
+Subject: [PATCH 6.7 193/641] arm64: dts: qcom: sm6375: fix USB wakeup interrupt types
+Date: Mon, 22 Jan 2024 15:51:37 -0800
+Message-ID: <20240122235824.014481311@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,66 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit a33e9da3470499e9ff476138f271fb52d6bfe767 ]
+[ Upstream commit 41952be6661b20f56c2c5b06c431880dd975b747 ]
 
-When running fib_nexthop_multiprefix test I saw all IPv6 test failed.
-e.g.
+The DP/DM wakeup interrupts are edge triggered and which edge to trigger
+on depends on use-case and whether a Low speed or Full/High speed device
+is connected.
 
- ]# ./fib_nexthop_multiprefix.sh
- TEST: IPv4: host 0 to host 1, mtu 1300                              [ OK ]
- TEST: IPv6: host 0 to host 1, mtu 1300                              [FAIL]
-
- With -v it shows
-
- COMMAND: ip netns exec h0 /usr/sbin/ping6 -s 1350 -c5 -w5 2001:db8:101::1
- PING 2001:db8:101::1(2001:db8:101::1) 1350 data bytes
- From 2001:db8:100::64 icmp_seq=1 Packet too big: mtu=1300
-
- --- 2001:db8:101::1 ping statistics ---
- 1 packets transmitted, 0 received, +1 errors, 100% packet loss, time 0ms
-
- Route get
- 2001:db8:101::1 via 2001:db8:100::64 dev eth0 src 2001:db8:100::1 metric 1024 expires 599sec mtu 1300 pref medium
- Searching for:
-     2001:db8:101::1 from :: via 2001:db8:100::64 dev eth0 src 2001:db8:100::1 .* mtu 1300
-
-The reason is when CONFIG_IPV6_SUBTREES is not enabled, rt6_fill_node() will
-not put RTA_SRC info. After fix:
-
-]# ./fib_nexthop_multiprefix.sh
-TEST: IPv4: host 0 to host 1, mtu 1300                              [ OK ]
-TEST: IPv6: host 0 to host 1, mtu 1300                              [ OK ]
-
-Fixes: 735ab2f65dce ("selftests: Add test with multiple prefixes using single nexthop")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://lore.kernel.org/r/20231213060856.4030084-7-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 59d34ca97f91 ("arm64: dts: qcom: Add initial device tree for SM6375")
+Cc: stable@vger.kernel.org      # 6.2
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20231120164331.8116-10-johan+linaro@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: d3246a0cf43f ("arm64: dts: qcom: sm6375: Hook up MPM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/fib_nexthop_multiprefix.sh | 4 ++--
+ arch/arm64/boot/dts/qcom/sm6375.dtsi | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/fib_nexthop_multiprefix.sh b/tools/testing/selftests/net/fib_nexthop_multiprefix.sh
-index 51df5e305855..b52d59547fc5 100755
---- a/tools/testing/selftests/net/fib_nexthop_multiprefix.sh
-+++ b/tools/testing/selftests/net/fib_nexthop_multiprefix.sh
-@@ -209,12 +209,12 @@ validate_v6_exception()
- 		echo "Route get"
- 		ip -netns h0 -6 ro get ${dst}
- 		echo "Searching for:"
--		echo "    ${dst} from :: via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
-+		echo "    ${dst}.* via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
- 		echo
- 	fi
+diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+index e7ff55443da7..b479f3d9a3a8 100644
+--- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+@@ -1362,8 +1362,8 @@ usb_1: usb@4ef8800 {
  
- 	ip -netns h0 -6 ro get ${dst} | \
--	grep -q "${dst} from :: via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
-+	grep -q "${dst}.* via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
- 	rc=$?
- 
- 	log_test $rc 0 "IPv6: host 0 to host ${i}, mtu ${mtu}"
+ 			interrupts = <GIC_SPI 302 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 93 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>;
++				     <GIC_SPI 93 IRQ_TYPE_EDGE_BOTH>,
++				     <GIC_SPI 94 IRQ_TYPE_EDGE_BOTH>;
+ 			interrupt-names = "hs_phy_irq",
+ 					  "ss_phy_irq",
+ 					  "dm_hs_phy_irq",
 -- 
 2.43.0
 
