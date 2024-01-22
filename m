@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B9512F59D;
-	Tue, 23 Jan 2024 01:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADA712F59D;
+	Tue, 23 Jan 2024 01:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971869; cv=none; b=HLt+Uwd7Vf6JtTIElPWLori198lZeUXo9SVPiD9ziV9sDNIFs3i0K8jXC4c24di6OzVA2lAoZmnmRuEkicZrB376xQf13I+Rho/wpZ+1W40+pDWtlVOH0tP5/J3BEyAvhPbIv3aSU47YeBBjQ00MZO2FkCAuayNdehLqTd+CLww=
+	t=1705971870; cv=none; b=ES14bj8gsvpJgazUqbUIRmkLZx1fWMAfWeTkA7w1lhY53BrIuAmLbOOmEv7V/6c5GAtOFCslIZFuFBLbuZmSx2VK3hdX73xU0R9uuCQMPDm3WZgyZyfTYtfHbjk1kcE3gD5tJLxltt+b+hEf8e8PJAcnoV1l4c3DaPMdoZnoS5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971869; c=relaxed/simple;
-	bh=G0Z69RS8AKZlAN4LEsbqIRdoxsfUZxPfGoVe8qqMC88=;
+	s=arc-20240116; t=1705971870; c=relaxed/simple;
+	bh=EsWGJTWFIIU3vjNucytyAqgeF9g/LYJgb4PFADgbqEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kt26r6spt/pf7oWI6m8oBtskJYUZp0F7S9OHUK5U8fZkP4St0BZ2RgWnnL0Vbwwn60DohyS0ZPNTBrPi2op5w77SRFyP2NKy9MWJVbkTR8Kn86+mHQfzTTIHCVSJedXF07D/bJYE3+VKlf/vcjKKKSPKzEOR4ouOoSnGwgu6st8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPKll0JC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bzBSeJyr4YgK3LoWs38SjRFThLyE+DrEnMiqVHWOVN16BHgqfcIbZKWPi9t3HjkM+dXI+48zjeawZB2I/xIjnKH2FQwsxMMi2g0x/IA2JFpV+6kPBC/ZT1jvd+UTlZ5d2M2mBALnnICIoz4rV6vrul/9rE7BnRbrPzbn5yo7a/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MqxQ3gR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPKll0JC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850FDC433F1;
-	Tue, 23 Jan 2024 01:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MqxQ3gR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A793C433F1;
+	Tue, 23 Jan 2024 01:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971868;
-	bh=G0Z69RS8AKZlAN4LEsbqIRdoxsfUZxPfGoVe8qqMC88=;
+	s=korg; t=1705971870;
+	bh=EsWGJTWFIIU3vjNucytyAqgeF9g/LYJgb4PFADgbqEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPKll0JCzkgyZPLFOzl/7FqipBGq9kfFc+1HHcyoThyrGizvcT6iORo9JSSQGNHms
-	 UxQGph1YlAjlwvA9z1MLofY1O91K5Z4PUEgPTS1zLYiOuCjQiWLsgOQYG3ANxl/Yal
-	 7ZgOQXtEAui5yJ4XxHnQ9aOZgcspUcrETuoN1rCA=
+	b=1MqxQ3gRrN8N9Fnv0iQRCeoUK6gFeVJKRKRjx7tfOFUZmt5o6+wubz7vYQoU82xsq
+	 69XBK7OUyynkWT/eH2+ja924eIaJV87TyiX0DNhp1cRTzZOiUBE2JVLhBL1Ug20rEi
+	 5dbD2pxaKONdz/rRpkQ75tYb5y11XYnpvNIvAKvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Wanpeng Li <wanpengli@tencent.com>
-Subject: [PATCH 6.1 316/417] x86/kvm: Do not try to disable kvmclock if it was not enabled
-Date: Mon, 22 Jan 2024 15:58:04 -0800
-Message-ID: <20240122235802.762380153@linuxfoundation.org>
+	Rob Clark <robdclark@chromium.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 5.10 227/286] iommu/arm-smmu-qcom: Add missing GMU entry to match table
+Date: Mon, 22 Jan 2024 15:58:53 -0800
+Message-ID: <20240122235740.817334403@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,74 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Rob Clark <robdclark@chromium.org>
 
-commit 1c6d984f523f67ecfad1083bb04c55d91977bb15 upstream.
+commit afc95681c3068956fed1241a1ff1612c066c75ac upstream.
 
-kvm_guest_cpu_offline() tries to disable kvmclock regardless if it is
-present in the VM. It leads to write to a MSR that doesn't exist on some
-configurations, namely in TDX guest:
+In some cases the firmware expects cbndx 1 to be assigned to the GMU,
+so we also want the default domain for the GMU to be an identy domain.
+This way it does not get a context bank assigned.  Without this, both
+of_dma_configure() and drm/msm's iommu_domain_attach() will trigger
+allocating and configuring a context bank.  So GMU ends up attached to
+both cbndx 1 and later cbndx 2.  This arrangement seemingly confounds
+and surprises the firmware if the GPU later triggers a translation
+fault, resulting (on sc8280xp / lenovo x13s, at least) in the SMMU
+getting wedged and the GPU stuck without memory access.
 
-	unchecked MSR access error: WRMSR to 0x12 (tried to write 0x0000000000000000)
-	at rIP: 0xffffffff8110687c (kvmclock_disable+0x1c/0x30)
-
-kvmclock enabling is gated by CLOCKSOURCE and CLOCKSOURCE2 KVM paravirt
-features.
-
-Do not disable kvmclock if it was not enabled.
-
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Fixes: c02027b5742b ("x86/kvm: Disable kvmclock on all CPUs on shutdown")
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Wanpeng Li <wanpengli@tencent.com>
 Cc: stable@vger.kernel.org
-Message-Id: <20231205004510.27164-6-kirill.shutemov@linux.intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/20231210180655.75542-1-robdclark@gmail.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/kvmclock.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kernel/kvmclock.c
-+++ b/arch/x86/kernel/kvmclock.c
-@@ -24,8 +24,8 @@
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -21,6 +21,7 @@ static struct qcom_smmu *to_qcom_smmu(st
  
- static int kvmclock __initdata = 1;
- static int kvmclock_vsyscall __initdata = 1;
--static int msr_kvm_system_time __ro_after_init = MSR_KVM_SYSTEM_TIME;
--static int msr_kvm_wall_clock __ro_after_init = MSR_KVM_WALL_CLOCK;
-+static int msr_kvm_system_time __ro_after_init;
-+static int msr_kvm_wall_clock __ro_after_init;
- static u64 kvm_sched_clock_offset __ro_after_init;
- 
- static int __init parse_no_kvmclock(char *arg)
-@@ -195,7 +195,8 @@ static void kvm_setup_secondary_clock(vo
- 
- void kvmclock_disable(void)
- {
--	native_write_msr(msr_kvm_system_time, 0, 0);
-+	if (msr_kvm_system_time)
-+		native_write_msr(msr_kvm_system_time, 0, 0);
- }
- 
- static void __init kvmclock_init_mem(void)
-@@ -294,7 +295,10 @@ void __init kvmclock_init(void)
- 	if (kvm_para_has_feature(KVM_FEATURE_CLOCKSOURCE2)) {
- 		msr_kvm_system_time = MSR_KVM_SYSTEM_TIME_NEW;
- 		msr_kvm_wall_clock = MSR_KVM_WALL_CLOCK_NEW;
--	} else if (!kvm_para_has_feature(KVM_FEATURE_CLOCKSOURCE)) {
-+	} else if (kvm_para_has_feature(KVM_FEATURE_CLOCKSOURCE)) {
-+		msr_kvm_system_time = MSR_KVM_SYSTEM_TIME;
-+		msr_kvm_wall_clock = MSR_KVM_WALL_CLOCK;
-+	} else {
- 		return;
- 	}
- 
+ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+ 	{ .compatible = "qcom,adreno" },
++	{ .compatible = "qcom,adreno-gmu" },
+ 	{ .compatible = "qcom,mdp4" },
+ 	{ .compatible = "qcom,mdss" },
+ 	{ .compatible = "qcom,sc7180-mdss" },
 
 
