@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BD5604C8;
-	Tue, 23 Jan 2024 01:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3088660268;
+	Tue, 23 Jan 2024 01:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974684; cv=none; b=ug458bXAq1z0vQEsywyPE1fKogsqEXZC1TeAsBERcZyTQPWcD5h5d0DNfsn1V2E8WQJQuFd5sMycrZBttIqBs7AGvXy0h4a4lCVYlAzSmJQdhh54A4r8TAQXRauvg1z8hgKZNFzLEJW1F+JsFQ9Cz2Vtcd914FfDJH0EgHbAFUc=
+	t=1705974686; cv=none; b=IsS0gBhBtKbtwlTA+AW14wSFg5DofYjUMIDrEFo5p3bb4NiDFHNrGOHHmB8VYjzb6RA7K0V0Jd9Ij702qzj1J0I5DIgeEbRY1UoJ7Z+5npYHifEN1oYmUr/UO3fv8kZ/IDdc4ZjAr282j2ax19EvZp//TMCasYZxGbYxmwvwl7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974684; c=relaxed/simple;
-	bh=KoEGDonQtc1WRBiAVRcEBd1FmMMEK+cXjgOgpaOJDok=;
+	s=arc-20240116; t=1705974686; c=relaxed/simple;
+	bh=ECZpO4FV5Ds4PPDAegsz8K2ScNxhvP+E47kWBH38IkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HXT8Ni7o4gVAJ15kwHVTAo1MmRxd0v1iFmouNe90TT/IFtvBOClYJmUzkuZG810yHZz2fc4NevwDraV2EDFSifeiGQBoHqYgNuqQPAsBKpwt3NhN+YPyETOzkimsmmL1nQ2kD1WcSqFeE/9T9JBmRLfjmvFa8UYJ/zF/S8T0qIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjQ3mHPA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UaCO1aLvij4EvypDKSYduG1AOzA4cY0kOEumacmnMtJZzHL87CjROWCzLjqAPg82AFwj0NDBEXpwmvYQxIMkPWAtT+paUlT3rPDNawaVYsAAf+5pzWCDtsnNipPqN03xnMYqy6d5tAdLfKuRi4SF6iRl5quVBxcCjIl3zfxDrVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCE2Uc6Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjQ3mHPA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FFDC433C7;
-	Tue, 23 Jan 2024 01:51:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCE2Uc6Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2D4C433F1;
+	Tue, 23 Jan 2024 01:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974684;
-	bh=KoEGDonQtc1WRBiAVRcEBd1FmMMEK+cXjgOgpaOJDok=;
+	s=korg; t=1705974685;
+	bh=ECZpO4FV5Ds4PPDAegsz8K2ScNxhvP+E47kWBH38IkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjQ3mHPAIue4+hfzdyllSH9DSdrh5IY/aOszoBbnVmx9/mxsybdLi0cEeRwOKybOP
-	 WvWp2b6U+fqOAS8lUzQ+F/yml7TU6AG+osK/SutoQu/odnYpGPLVq8YT/enV66u8NX
-	 bKI/OBMqt5PRB0YG+paxWOvZNo48W1irzGQVC8NI=
+	b=eCE2Uc6ZsXjDNQZ3DQya0hp1xjlw/HLI1cYjDaXrp/e820iqVF66dAI1Gy+DHJf9L
+	 NW8ruAx8aIPRVcssUxk56b5Ooo0vRoYH0r5gSHE58jO2hk6rcNw6EkBOM2anMrcNeM
+	 8sfWFb5i9uSCHwA6ZtFzWIydIlfvZqQyy4os610Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Gonglei <arei.gonglei@huawei.com>,
-	zhenwei pi <pizhenwei@bytedance.com>,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 5.15 249/374] virtio-crypto: fix memory leak in virtio_crypto_alg_skcipher_close_session()
-Date: Mon, 22 Jan 2024 15:58:25 -0800
-Message-ID: <20240122235753.435385022@linuxfoundation.org>
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Karan Tilak Kumar <kartilak@cisco.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 123/583] scsi: fnic: Return error if vmalloc() failed
+Date: Mon, 22 Jan 2024 15:52:54 -0800
+Message-ID: <20240122235815.902129864@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,40 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-commit b1d65f717cd6305a396a8738e022c6f7c65cfbe8 upstream.
+[ Upstream commit f5f27a332a14f43463aa0075efa3a0c662c0f4a8 ]
 
-'vc_ctrl_req' is alloced in virtio_crypto_alg_skcipher_close_session(),
-and should be freed in the invalid ctrl_status->status error handling
-case. Otherwise there is a memory leak.
+In fnic_init_module() exists redundant check for return value from
+fnic_debugfs_init(), because at moment it only can return zero. It make
+sense to process theoretical vmalloc() failure.
 
-Fixes: 0756ad15b1fe ("virtio-crypto: use private buffer for control request")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Message-Id: <20221114110740.537276-1-weiyongjun@huaweicloud.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Gonglei <arei.gonglei@huawei.com>
-Acked-by: zhenwei pi<pizhenwei@bytedance.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 9730ddfb123d ("scsi: fnic: remove redundant assignment of variable rc")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Link: https://lore.kernel.org/r/20231128111008.2280507-1-artem.chernyshev@red-soft.ru
+Reviewed-by: Karan Tilak Kumar <kartilak@cisco.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/virtio/virtio_crypto_algs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/fnic/fnic_debugfs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/crypto/virtio/virtio_crypto_algs.c
-+++ b/drivers/crypto/virtio/virtio_crypto_algs.c
-@@ -255,7 +255,7 @@ static int virtio_crypto_alg_skcipher_cl
- 			vcrypto->ctrl_status.status,
- 			destroy_session->session_id);
- 
--		return -EINVAL;
-+		err = -EINVAL;
+diff --git a/drivers/scsi/fnic/fnic_debugfs.c b/drivers/scsi/fnic/fnic_debugfs.c
+index c4d9ed0d7d75..2619a2d4f5f1 100644
+--- a/drivers/scsi/fnic/fnic_debugfs.c
++++ b/drivers/scsi/fnic/fnic_debugfs.c
+@@ -52,9 +52,10 @@ int fnic_debugfs_init(void)
+ 		fc_trc_flag->fnic_trace = 2;
+ 		fc_trc_flag->fc_trace = 3;
+ 		fc_trc_flag->fc_clear = 4;
++		return 0;
  	}
- 	spin_unlock(&vcrypto->ctrl_lock);
  
+-	return 0;
++	return -ENOMEM;
+ }
+ 
+ /*
+-- 
+2.43.0
+
 
 
