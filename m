@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DE2137C53;
-	Tue, 23 Jan 2024 00:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090B81420A7;
+	Tue, 23 Jan 2024 00:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969441; cv=none; b=fNaxUQWDyjEX7Rd0A8eMctq7KyoOT5CEbm6uKMQd9VJ26tA1TF5qYOdbQuKI2X4JiTU6zg0/F5HvrPGjhV0bpcJMg/VRwOTDk2LoZf8bVg1gg9TyeFXhiLO53goQzo2NPr/ZkEXIp4p661MPdxFU0w6c+85LaTpYYLBT7bSUjqg=
+	t=1705969443; cv=none; b=BzCAG+FJake8Bic8aheVf0Uq+J/SLchznGvv2pAFt8m2eDsG8sVoDAQK015EuH6gSvpJc5luz4sTWyK3ODl1TUkhuIpPOiP/jw/CsPL03IbdInvbWzwu/rSxFheRorSbq+Pl5hqWH7HKZtMFPFu1BvOHq9EnsqqNNsQZ/pcBl7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969441; c=relaxed/simple;
-	bh=AONIZ6D8iB523CKL4qzd6cIgdNxzsCTyogf9ZnZj0/A=;
+	s=arc-20240116; t=1705969443; c=relaxed/simple;
+	bh=NWYKlE7Wf+xMY4AkbaHxa8EruIogKEaCuU7h8RI9ezE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oAsXkYpv6WK/48VVmVIcxrJEfixwLBzADDepocjnBjaVy3HmqKYj46QD4U0YB1fi0sjScM3yE90RKjnmN7iUR/iOdd/wzFoef/llsB5nF20f/MAUbsx/1OI77gP+OvlTKL3WeZCydCmL878p9fD9yJVqfSEteTE1Bqhq6WNEN6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U0wI0h5w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hUk0U7iIFGIqA7VhQLwaXw2N+kd9NxBMk6jZD2kLYJYwWqN1jGhhtaFVMe77VS/jcfWtXHkoCupZ4kZm8RL/WEwI0uW1eWuC11YgGd8HvUBs6OcdaxLuDbDj8C/aijGb5/lfDFuuuZZg9eMCpldJFy5rYfBlDW6AoTbxywhLep4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9WJf1K3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U0wI0h5w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E84C433F1;
-	Tue, 23 Jan 2024 00:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9WJf1K3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60108C43390;
+	Tue, 23 Jan 2024 00:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969441;
-	bh=AONIZ6D8iB523CKL4qzd6cIgdNxzsCTyogf9ZnZj0/A=;
+	s=korg; t=1705969442;
+	bh=NWYKlE7Wf+xMY4AkbaHxa8EruIogKEaCuU7h8RI9ezE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U0wI0h5w8hZE+OQek0WsIC1oAi5is2Pvp7KrvOtlNh8Syd+K9wGUxKqtSx/ai4wrT
-	 fv5CftUYpfVOGwVnge0IytiG2TgT5noSIB4y8g6g7/kcK/LXfK3zpF46dO6qlRXv3h
-	 OiGeNvWMuKcUMUPWk5a5cNWQMT0jLKga0wR/jVHA=
+	b=v9WJf1K3iSCrWTmZeeOPg/mKCX4CDB+3WENOD3Knz7ABthqxe1N/hnmf1xL8w+tNA
+	 jY+MQRt+jGwwIxU6PODrEiTKIRULhqFRlhaMCL7fBnr3aCWBOM2ohHXcEES+Zn1P/e
+	 vv/uYSYucVoTCo61ZmelkZCUDKN/+abJDn8sU6oY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 248/641] RDMA/hns: Fix inappropriate err code for unsupported operations
-Date: Mon, 22 Jan 2024 15:52:32 -0800
-Message-ID: <20240122235825.679435863@linuxfoundation.org>
+Subject: [PATCH 6.7 249/641] drm/panel: nv3051d: Hold panel in reset for unprepare
+Date: Mon, 22 Jan 2024 15:52:33 -0800
+Message-ID: <20240122235825.710225389@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,50 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Chris Morgan <macromorgan@hotmail.com>
 
-[ Upstream commit f45b83ad39f8033e717b1eee57e81811113d5a84 ]
+[ Upstream commit 697ebc319b942403a6fee894607fd2cd47cca069 ]
 
-EOPNOTSUPP is more situable than EINVAL for allocating XRCD while XRC
-is not supported and unsupported resizing SRQ.
+Improve the panel's ability to restore from suspend by holding the
+panel in suspend after unprepare.
 
-Fixes: 32548870d438 ("RDMA/hns: Add support for XRC on HIP09")
-Fixes: 221109e64316 ("RDMA/hns: Add interception for resizing SRQs")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20231114123449.1106162-2-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: b1d39f0f4264 ("drm/panel: Add NewVision NV3051D MIPI-DSI LCD panel")
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Link: https://lore.kernel.org/r/20231117202536.1387815-3-macroalpha82@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231117202536.1387815-3-macroalpha82@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 +-
- drivers/infiniband/hw/hns/hns_roce_pd.c    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-newvision-nv3051d.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 2bca9560f32d..e4753c802942 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -5671,7 +5671,7 @@ static int hns_roce_v2_modify_srq(struct ib_srq *ibsrq,
+diff --git a/drivers/gpu/drm/panel/panel-newvision-nv3051d.c b/drivers/gpu/drm/panel/panel-newvision-nv3051d.c
+index 79de6c886292..c44c6945662f 100644
+--- a/drivers/gpu/drm/panel/panel-newvision-nv3051d.c
++++ b/drivers/gpu/drm/panel/panel-newvision-nv3051d.c
+@@ -261,6 +261,8 @@ static int panel_nv3051d_unprepare(struct drm_panel *panel)
  
- 	/* Resizing SRQs is not supported yet */
- 	if (srq_attr_mask & IB_SRQ_MAX_WR)
--		return -EINVAL;
-+		return -EOPNOTSUPP;
+ 	usleep_range(10000, 15000);
  
- 	if (srq_attr_mask & IB_SRQ_LIMIT) {
- 		if (srq_attr->srq_limit > srq->wqe_cnt)
-diff --git a/drivers/infiniband/hw/hns/hns_roce_pd.c b/drivers/infiniband/hw/hns/hns_roce_pd.c
-index 783e71852c50..bd1fe89ca205 100644
---- a/drivers/infiniband/hw/hns/hns_roce_pd.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_pd.c
-@@ -150,7 +150,7 @@ int hns_roce_alloc_xrcd(struct ib_xrcd *ib_xrcd, struct ib_udata *udata)
- 	int ret;
++	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
++
+ 	regulator_disable(ctx->vdd);
  
- 	if (!(hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_XRC))
--		return -EINVAL;
-+		return -EOPNOTSUPP;
- 
- 	ret = hns_roce_xrcd_alloc(hr_dev, &xrcd->xrcdn);
- 	if (ret)
+ 	return 0;
 -- 
 2.43.0
 
