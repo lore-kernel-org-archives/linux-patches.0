@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77023FFE;
-	Tue, 23 Jan 2024 00:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E493D3FFE;
+	Tue, 23 Jan 2024 00:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970955; cv=none; b=JsGsVIU8amn09wB+KPrx/N7dacFYhZU4baU0i9wrxy/bKN0h91WHE0wb8V3FdX6wCv7N3UN9dtqvb2nYRUqdlbbOGTP6dBMarmsOCRBkx0BH1+AgXHOTFw3gNDmcmymyOE34D32qjEhxfeeloVVuTTQE7tRw9tkniddQFxX2KGA=
+	t=1705970957; cv=none; b=eS1UPm5Q5MQGkkaEQUHnc96u0nIsJLiYgjnasIS7QL/qidBBV1t/WPnsVgE1UGCellBFLthBxnPX/AfonxSN5mlo5M0DLtqKKkp3x8I1YVxi4M6YVodPum6F9owKfBTiNNyb20SsS/9clTpCigp15jQU1TzWmFARvqr/7/zFU2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970955; c=relaxed/simple;
-	bh=jZQBgdBvJNUgVMcBp9O5Bf6+4tKw66UJzfld0SRjGRI=;
+	s=arc-20240116; t=1705970957; c=relaxed/simple;
+	bh=8A6d55sYxPzABNhgWFWTzbp2KA7u0YveM37NLL+x+LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e9rPz90ami3VaqqrDRvDLynPWecaJo4iiulUJeA3bFDmADTsuoGB4ptHlrTlJE6yOithlh4BTnsLB+I9PK394/DzOYE/POKaBIq5GdhB7H4uvC7LX+Vuqa3sJCbpyx8ih2j8CZoCefznD9ilaJFvx8TTqBEQthlvtZpj1U/joqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WBwSf9zK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t0DcDIto1K7KxwdfZ1Frn8wN44cKl2htrbF/EaTZLfq0Z3POz9+O/M6OmNODnfSgfRw8yBQDztS/9qO1BQjIFa/ltAXffzca1/Za+A8qUNwJNyAIt8HXKrc/ixYWGHRy2a/YbZ1A6p8x8oE3RQuD5UPPXwRjQTuLzQuHz9zBSsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFZCID5J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WBwSf9zK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9009BC43390;
-	Tue, 23 Jan 2024 00:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFZCID5J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CC8C43390;
+	Tue, 23 Jan 2024 00:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970954;
-	bh=jZQBgdBvJNUgVMcBp9O5Bf6+4tKw66UJzfld0SRjGRI=;
+	s=korg; t=1705970956;
+	bh=8A6d55sYxPzABNhgWFWTzbp2KA7u0YveM37NLL+x+LE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WBwSf9zKRSBSOXQSxqQ655iu4J7djrXwsGcdoVfaamAWXjf5/XJJNr+619qL71UBW
-	 qSCncLGyBoXQEGzA5DsEQjjFg0ffuPNBJz4US8yGzXl4YAaej4fRcbFe1UoOEcn1Gy
-	 ggtHKQS5wabOGEuzDyN+WKwGHmHAt8pni4PS8Ing=
+	b=fFZCID5JpWnTg5ik+gTEpg4Pwa15QFtt0PLbB0Hs4nl4aL8vhPD+Z3zHfGX5xoR6m
+	 Ra0DQr8vS6jYxEWZvpzIw/s8H4hXpjZGAhqSlSkXYR287+1QmvJNNoKJayTCOjuBTZ
+	 CXLtmnsKvjwKduh0AWtq4iEwKQBCS3go+OxyeXUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Eric Dumazet <edumazet@google.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 056/286] selftests/powerpc: Fix error handling in FPU/VMX preemption tests
-Date: Mon, 22 Jan 2024 15:56:02 -0800
-Message-ID: <20240122235734.187985643@linuxfoundation.org>
+Subject: [PATCH 6.1 149/417] sctp: support MSG_ERRQUEUE flag in recvmsg()
+Date: Mon, 22 Jan 2024 15:55:17 -0800
+Message-ID: <20240122235756.993769404@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,90 +50,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9dbd5927408c4a0707de73ae9dd9306b184e8fee ]
+[ Upstream commit 4746b36b1abe11ca32987b2d21e1e770deab17cc ]
 
-The FPU & VMX preemption tests do not check for errors returned by the
-low-level asm routines, preempt_fpu() / preempt_vsx() respectively.
-That means any register corruption detected by the asm routines does not
-result in a test failure.
+For some reason sctp_poll() generates EPOLLERR if sk->sk_error_queue
+is not empty but recvmsg() can not drain the error queue yet.
 
-Fix it by returning the return value of the asm routines from the
-pthread child routines.
+This is needed to better support timestamping.
 
-Fixes: e5ab8be68e44 ("selftests/powerpc: Test preservation of FPU and VMX regs across preemption")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231128132748.1990179-1-mpe@ellerman.id.au
+I had to export inet_recv_error(), since sctp
+can be compiled as a module.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/20231212145550.3872051-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: a562c0a2d651 ("sctp: fix busy polling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/powerpc/math/fpu_preempt.c |  9 +++++----
- tools/testing/selftests/powerpc/math/vmx_preempt.c | 10 ++++++----
- 2 files changed, 11 insertions(+), 8 deletions(-)
+ net/ipv4/af_inet.c | 1 +
+ net/sctp/socket.c  | 3 +++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/powerpc/math/fpu_preempt.c b/tools/testing/selftests/powerpc/math/fpu_preempt.c
-index 5235bdc8c0b1..3e5b5663d244 100644
---- a/tools/testing/selftests/powerpc/math/fpu_preempt.c
-+++ b/tools/testing/selftests/powerpc/math/fpu_preempt.c
-@@ -37,19 +37,20 @@ __thread double darray[] = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,
- int threads_starting;
- int running;
- 
--extern void preempt_fpu(double *darray, int *threads_starting, int *running);
-+extern int preempt_fpu(double *darray, int *threads_starting, int *running);
- 
- void *preempt_fpu_c(void *p)
- {
-+	long rc;
- 	int i;
-+
- 	srand(pthread_self());
- 	for (i = 0; i < 21; i++)
- 		darray[i] = rand();
- 
--	/* Test failed if it ever returns */
--	preempt_fpu(darray, &threads_starting, &running);
-+	rc = preempt_fpu(darray, &threads_starting, &running);
- 
--	return p;
-+	return (void *)rc;
+diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
+index 347c3768df6e..c13b8ed63f87 100644
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -1642,6 +1642,7 @@ int inet_recv_error(struct sock *sk, struct msghdr *msg, int len, int *addr_len)
+ #endif
+ 	return -EINVAL;
  }
++EXPORT_SYMBOL(inet_recv_error);
  
- int test_preempt_fpu(void)
-diff --git a/tools/testing/selftests/powerpc/math/vmx_preempt.c b/tools/testing/selftests/powerpc/math/vmx_preempt.c
-index 6761d6ce30ec..6f7cf400c687 100644
---- a/tools/testing/selftests/powerpc/math/vmx_preempt.c
-+++ b/tools/testing/selftests/powerpc/math/vmx_preempt.c
-@@ -37,19 +37,21 @@ __thread vector int varray[] = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10,11,12},
- int threads_starting;
- int running;
- 
--extern void preempt_vmx(vector int *varray, int *threads_starting, int *running);
-+extern int preempt_vmx(vector int *varray, int *threads_starting, int *running);
- 
- void *preempt_vmx_c(void *p)
+ int inet_gro_complete(struct sk_buff *skb, int nhoff)
  {
- 	int i, j;
-+	long rc;
-+
- 	srand(pthread_self());
- 	for (i = 0; i < 12; i++)
- 		for (j = 0; j < 4; j++)
- 			varray[i][j] = rand();
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index e25dc1709131..da56832179f0 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -2098,6 +2098,9 @@ static int sctp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 	pr_debug("%s: sk:%p, msghdr:%p, len:%zd, flags:0x%x, addr_len:%p)\n",
+ 		 __func__, sk, msg, len, flags, addr_len);
  
--	/* Test fails if it ever returns */
--	preempt_vmx(varray, &threads_starting, &running);
--	return p;
-+	rc = preempt_vmx(varray, &threads_starting, &running);
++	if (unlikely(flags & MSG_ERRQUEUE))
++		return inet_recv_error(sk, msg, len, addr_len);
 +
-+	return (void *)rc;
- }
+ 	lock_sock(sk);
  
- int test_preempt_vmx(void)
+ 	if (sctp_style(sk, TCP) && !sctp_sstate(sk, ESTABLISHED) &&
 -- 
 2.43.0
 
