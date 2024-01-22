@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D10E2C687;
-	Tue, 23 Jan 2024 00:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D1B2C687;
+	Tue, 23 Jan 2024 00:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969525; cv=none; b=INj+gnu6UgOGpJ+Ps3Tc3eNwWn//ctV6OBccJuCLWqvezwGGPgXaLDNFN3c87GrfgIRUyEI+/0PhxK29ROkMBGLdaTRky8MHls0XL+FJEw6qLyVNohS5eHvQN91HVfrtdDmKYODU97KmvhmKFS0IiHTSiVbTFRAmVHQKNw8sXNM=
+	t=1705969528; cv=none; b=OfLtGDDSYGPR213rXCtPrLSa+z1aQnuTaFILRNyvfJW+FJKyatJ2z0UK/ZoQYVMERH4gltJ/gcMZYoEh8cqM9veZ6XWlGfeU9S6Fw41yTgbhfhwAx9IE7vLbByJeD4CbGgxmRqy0qgrP8nkf82bLI6Ukz5SL/efNfT3cjLRRcKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969525; c=relaxed/simple;
-	bh=RfWJeA/peY+HIJo5RU6VNMLORJzqMvlzdRLr/+O1uhI=;
+	s=arc-20240116; t=1705969528; c=relaxed/simple;
+	bh=97W6G7Ijd7Kejit2msU96t8NNkppR9gIcFmWgK0nnXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dy4zhhbWNX9YZvXilwRmIhcUfHeFl9r/sktKL3sm1LCVyarTVH+4NWRVS3/uyKfxyS1oeSJvzhYi82oXJSKDFPCVTpnVqfihR4UcOvjWjjqPTfk0qf43NelUw8x0uMlSTyLedEbrJU1dge63bsO9jZEJeAeD/xt3s04vXXUCx3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIt1WvRN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bod8QIRruzUdIbX+GAOCVmaxFbL4CCP2H7pQkqSH0Cgf04KtAuM//cQHkFLQ9jkDOUsv0nE+412AVJw3CmhaJaDAG+nOz5gYZkn46zU6f69x6NqCLfgxjpLIK/sVkQc2v2WjJtt3JIwxcTooQ8vI0GDv8DZLVLSW/onIlOxluEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPmjaxI1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIt1WvRN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A279AC433A6;
-	Tue, 23 Jan 2024 00:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPmjaxI1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EAE4C43390;
+	Tue, 23 Jan 2024 00:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969524;
-	bh=RfWJeA/peY+HIJo5RU6VNMLORJzqMvlzdRLr/+O1uhI=;
+	s=korg; t=1705969528;
+	bh=97W6G7Ijd7Kejit2msU96t8NNkppR9gIcFmWgK0nnXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SIt1WvRNQqgX4EOm2B2jKP3b1tL2dHgFNHSnx7qWOJJ+wlqZRgi3/htk7jrLTAy50
-	 FvRROXPgVFVAKpUIcHQrVlouW/phfpbG7M4FSt/tml1/IoIFDUgNeFpnGasHJI1a2+
-	 KeuS/k0LF2clXMJ/eV2S5p8JxVk4oABqNJoBRlow=
+	b=yPmjaxI1+cuDr38uaGwUvBl4vU7t+hN2+tVbQvfhljRkzUnQ8+FN0L2a6nD5UXzY/
+	 0e0xtLFq2YIVDE3CmucwH+KcVla4uDr6rUhFOzjv3g4ZqMdTpT2/X/v9gUT8oLZkf5
+	 bVG4Xeax7Shd+mv9pGkyC3QPENL0vt7wcXkLAEJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Dr. David Alan Gilbert" <dave@treblig.org>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 305/641] media: bttv: add back vbi hack
-Date: Mon, 22 Jan 2024 15:53:29 -0800
-Message-ID: <20240122235827.455375263@linuxfoundation.org>
+Subject: [PATCH 6.7 306/641] media: videobuf2: request more buffers for vb2_read
+Date: Mon, 22 Jan 2024 15:53:30 -0800
+Message-ID: <20240122235827.490836863@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -54,20 +54,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 3f1faa154a4316b1b585a25394697504b3c24e98 ]
+[ Upstream commit 350ab13e1382f2afcc2285041a1e75b80d771c2c ]
 
-The old (now removed) videobuf framework had an optional vbi hack where
-the sequence number of the frame counter was copied in the last 4 bytes
-of the buffer. This hack was active only for the read() interface
-(so not for streaming I/O), and it was enabled by bttv. This allowed
-applications that used read() for the VBI data to match it with the
-corresponding video frame.
+The vb2 read support requests 1 buffer, leaving it to the driver
+to increase this number to something that works.
 
-When bttv was converted to vb2 this hack was forgotten, but some old
-applications rely on this.
+Unfortunately, drivers do not deal with this reliably, and in fact
+this caused problems for the bttv driver and reading from /dev/vbiX,
+causing every other VBI frame to be all 0.
 
-So add this back, but this time in the bttv driver rather than in the
-vb2 framework.
+Instead, request as the number of buffers whatever is the maximum of
+2 and q->min_buffers_needed+1.
+
+In order to start streaming you need at least q->min_buffers_needed
+queued buffers, so add 1 buffer for processing. And if that field
+is 0, then choose 2 (again, one buffer is being filled while the
+other one is being processed).
+
+This certainly makes more sense than requesting just 1 buffer, and
+the VBI bttv support is now working again.
+
+It turns out that the old videobuf1 behavior of bttv was to allocate
+8 (video) and 4 (vbi) buffers when used with read(). After the vb2
+conversion that changed to 2 for both. With this patch it is 3, which
+is really all you need.
 
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Fixes: b7ec3212a73a ("media: bttv: convert to vb2")
@@ -75,41 +85,30 @@ Tested-by: Dr. David Alan Gilbert <dave@treblig.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/bt8xx/bttv-driver.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/media/common/videobuf2/videobuf2-core.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/pci/bt8xx/bttv-driver.c b/drivers/media/pci/bt8xx/bttv-driver.c
-index 8e8c9dada67a..49a3dd70ec0f 100644
---- a/drivers/media/pci/bt8xx/bttv-driver.c
-+++ b/drivers/media/pci/bt8xx/bttv-driver.c
-@@ -2772,6 +2772,27 @@ bttv_irq_wakeup_vbi(struct bttv *btv, struct bttv_buffer *wakeup,
- 		return;
- 	wakeup->vbuf.vb2_buf.timestamp = ktime_get_ns();
- 	wakeup->vbuf.sequence = btv->field_count >> 1;
-+
-+	/*
-+	 * Ugly hack for backwards compatibility.
-+	 * Some applications expect that the last 4 bytes of
-+	 * the VBI data contains the sequence number.
+diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+index 27aee92f3eea..19f80ff497b7 100644
+--- a/drivers/media/common/videobuf2/videobuf2-core.c
++++ b/drivers/media/common/videobuf2/videobuf2-core.c
+@@ -2648,9 +2648,14 @@ static int __vb2_init_fileio(struct vb2_queue *q, int read)
+ 		return -EBUSY;
+ 
+ 	/*
+-	 * Start with count 1, driver can increase it in queue_setup()
++	 * Start with q->min_buffers_needed + 1, driver can increase it in
++	 * queue_setup()
 +	 *
-+	 * This makes it possible to associate the VBI data
-+	 * with the video frame if you use read() to get the
-+	 * VBI data.
-+	 */
-+	if (vb2_fileio_is_active(wakeup->vbuf.vb2_buf.vb2_queue)) {
-+		u32 *vaddr = vb2_plane_vaddr(&wakeup->vbuf.vb2_buf, 0);
-+		unsigned long size =
-+			vb2_get_plane_payload(&wakeup->vbuf.vb2_buf, 0) / 4;
-+
-+		if (vaddr && size) {
-+			vaddr += size - 1;
-+			*vaddr = wakeup->vbuf.sequence;
-+		}
-+	}
-+
- 	vb2_buffer_done(&wakeup->vbuf.vb2_buf, state);
- 	if (btv->field_count == 0)
- 		btor(BT848_INT_VSYNC, BT848_INT_MASK);
++	 * 'min_buffers_needed' buffers need to be queued up before you
++	 * can start streaming, plus 1 for userspace (or in this case,
++	 * kernelspace) processing.
+ 	 */
+-	count = 1;
++	count = max(2, q->min_buffers_needed + 1);
+ 
+ 	dprintk(q, 3, "setting up file io: mode %s, count %d, read_once %d, write_immediately %d\n",
+ 		(read) ? "read" : "write", count, q->fileio_read_once,
 -- 
 2.43.0
 
