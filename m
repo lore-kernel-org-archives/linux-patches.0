@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B586F1350E3;
-	Tue, 23 Jan 2024 01:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFB61350E3;
+	Tue, 23 Jan 2024 01:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971950; cv=none; b=A4Jb6GGBQwldrbIuJwymXxvk+0iTylt+RAdng+ODVSFza9i4N20yoxwM6XHGK+se2zAp+JTDSKqXTHCu4Bdse36YQ4q/epeUfNM7cNG/vFvHNTLEfrY5EQ+7Da9DHBxBgAeJyroCaDJ2iywkwlNFK48uNJFYwnGifpwlBUzMWnQ=
+	t=1705971952; cv=none; b=PsuZsXA8uHbCvrvQdBULmZssRe6ak7LKd358KBKI1Hk0uZDnpa9aE8DUJzQNVjceMlsEF4s3vTiOer6QhTudxkJOa4nfWfep2ORaZJEzXVSFlR9vUenSg4tfo6rXu6eQjyP5ND3k5R0Z/t0IVh4OIvQYMLjFXG5EtApVgOjT5Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971950; c=relaxed/simple;
-	bh=JdKJGqwnp4Nq2SZhSt4ykXhoNRAOAzCFmfNeUaV89JU=;
+	s=arc-20240116; t=1705971952; c=relaxed/simple;
+	bh=jHJWw2Z00JORjiWxUBIsKTPIq9PcqQZbDmK8/n3ZrxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ST0nZjDWf+BO1lI6zaVyeHtIQSth9X1mqsptabhSgtaEHPzqS1M0+Z7ifG4litb/CPV7f1PMjqqnIJn2gCa1ODbWT6q5qGRekgiTPm+OtNOh16fojc0a0tntqu2TKMOekzzquDdDRPNUMbxklqKpNdd0IgLB9BEDcN4AiGyDmY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11bFDg9X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0FA87lnJ7cWA5GolSViwAMv4Ol3AOifuB8hqtect2HIfnEMdOQg5no0T720gDpzLOsfQXdKuIQg69SyN+U5ct+cNDiiSUPjwK2MogbyMAZ605UduoRYUoIo6UWcKP8EKfom5H4MuA99SNJNBI/2WCT1J3RUVG34Y0ctIXr3WQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04AC4e0j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11bFDg9X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A396C433C7;
-	Tue, 23 Jan 2024 01:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04AC4e0j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B522EC433C7;
+	Tue, 23 Jan 2024 01:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971950;
-	bh=JdKJGqwnp4Nq2SZhSt4ykXhoNRAOAzCFmfNeUaV89JU=;
+	s=korg; t=1705971951;
+	bh=jHJWw2Z00JORjiWxUBIsKTPIq9PcqQZbDmK8/n3ZrxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=11bFDg9X8wLI/EzkPDavwdzOTS/yKX5SETo7Rqq9f7bJ2yjdXpLpq+jdil5zLqNNg
-	 MXKR37TVCbZU+hZdpqzH9PykFKwzRuH1OW3MQJnDoRI3GEdTO74j+GzWFe9rKhpUT5
-	 er6+bWiAS35nt65+oMTczgxvChpH2Znz9nHUB2SU=
+	b=04AC4e0jpNf4L9DOB3WQu1a9kRW7x67Qyg2muU46DUjhjc5k0IjvUk/NKCUfI99yd
+	 eYRG5g06A5KyXOTFHxxBb7AYfdGM/r+3b5SbD9je+1srdxGl9m85Rdzdj8fpnL3c37
+	 GYxDA9AUenAmelfcaXedqoNk5onDY6RpKHlKja8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Su Hui <suhui@nfschina.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 359/417] tty: use if in send_break() instead of goto
-Date: Mon, 22 Jan 2024 15:58:47 -0800
-Message-ID: <20240122235804.253233028@linuxfoundation.org>
+Subject: [PATCH 6.1 337/417] power: supply: bq256xx: fix some problem in bq256xx_hw_init
+Date: Mon, 22 Jan 2024 15:58:25 -0800
+Message-ID: <20240122235803.457692601@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -50,42 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 24f2cd019946fc2e88e632d2e24a34c2cc3f2be4 ]
+[ Upstream commit b55d073e6501dc6077edaa945a6dad8ac5c8bbab ]
 
-Now, the "jumped-over" code is simple enough to be put inside an 'if'.
-Do so to make it 'goto'-less.
+smatch complains that there is a buffer overflow and clang complains
+'ret' is never read.
 
-Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20230919085156.1578-16-jirislaby@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 66aad7d8d3ec ("usb: cdc-acm: return correct error code on unsupported break")
+Smatch error:
+drivers/power/supply/bq256xx_charger.c:1578 bq256xx_hw_init() error:
+buffer overflow 'bq256xx_watchdog_time' 4 <= 4
+
+Clang static checker:
+Value stored to 'ret' is never read.
+
+Add check for buffer overflow and error code from regmap_update_bits().
+
+Fixes: 32e4978bb920 ("power: supply: bq256xx: Introduce the BQ256XX charger driver")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20231116041822.1378758-1-suhui@nfschina.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_io.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/power/supply/bq256xx_charger.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
-index 41e01a8ccc4c..43be3b42aaaf 100644
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -2479,11 +2479,10 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
- 		return -EINTR;
+diff --git a/drivers/power/supply/bq256xx_charger.c b/drivers/power/supply/bq256xx_charger.c
+index 01ad84fd147c..686eb8d86e22 100644
+--- a/drivers/power/supply/bq256xx_charger.c
++++ b/drivers/power/supply/bq256xx_charger.c
+@@ -1514,13 +1514,16 @@ static int bq256xx_hw_init(struct bq256xx_device *bq)
+ 			wd_reg_val = i;
+ 			break;
+ 		}
+-		if (bq->watchdog_timer > bq256xx_watchdog_time[i] &&
++		if (i + 1 < BQ256XX_NUM_WD_VAL &&
++		    bq->watchdog_timer > bq256xx_watchdog_time[i] &&
+ 		    bq->watchdog_timer < bq256xx_watchdog_time[i + 1])
+ 			wd_reg_val = i;
+ 	}
+ 	ret = regmap_update_bits(bq->regmap, BQ256XX_CHARGER_CONTROL_1,
+ 				 BQ256XX_WATCHDOG_MASK, wd_reg_val <<
+ 						BQ256XX_WDT_BIT_SHIFT);
++	if (ret)
++		return ret;
  
- 	retval = tty->ops->break_ctl(tty, -1);
--	if (retval)
--		goto out;
--	msleep_interruptible(duration);
--	retval = tty->ops->break_ctl(tty, 0);
--out:
-+	if (!retval) {
-+		msleep_interruptible(duration);
-+		retval = tty->ops->break_ctl(tty, 0);
-+	}
- 	tty_write_unlock(tty);
- 
- 	if (signal_pending(current))
+ 	ret = power_supply_get_battery_info(bq->charger, &bat_info);
+ 	if (ret == -ENOMEM)
 -- 
 2.43.0
 
