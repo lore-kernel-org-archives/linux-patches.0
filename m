@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20B46313F;
-	Tue, 23 Jan 2024 01:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD096313F;
+	Tue, 23 Jan 2024 01:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975020; cv=none; b=hydyL3100+0uuRpIgDrdEoUmJJSo9wJrNx8X4dztBxB2mIrs27BaQMwASNwWVAANUmoE2prJcKi9bBvHSy+Ljq+Ks3HoP7AAC9ZQC2znYoK4m2OvXOC444MCQZNCXPVygLeGxkmpvaSRbQUG8Z38gccv4vjBGzVI7zDaNjvpQHw=
+	t=1705975022; cv=none; b=SodZK9hFQ98YTxbTegMQd8Bqw7Zf/2GRHvpNVIstkR3Z5bUjcvQaRHL15JGpWEWtGy+siu0BNTcJrcicH616jUzbm/1p2hI8hj6hAiQbOpIcvfTivxHmwe42b8wwCHWk8JeL5zufh6maAD9/yTszJYKgZb2jbMyst/EqzWjO9Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975020; c=relaxed/simple;
-	bh=Np3qn2IkeW42qhktV/o1y5UHPprgaNnFLAgeGC0drTc=;
+	s=arc-20240116; t=1705975022; c=relaxed/simple;
+	bh=MKRn9BYvnGyJ5uAk+HDYsi44KDCz41Ib8nWvgB7il3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=shm0j01TabDh8N+8mS5GWdqi17/YnKYFaZVHa6JiqeXXiFvLBrupV02m2LOqVWprjF913S52PuDSSup5nYsSkfYGlqLwi1hH7AjxYp455+5OcAgqaRRchIh0+vgn1dWXJltevhlEyVMFNSsE/++Z+sjDtswI6m9uFhaBZdX+l+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+f8rbGa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nqlym94I6kd1wZ54EtCONssAm2sJCY/lCc1I5UOt+poKt90nIkX8gFtPlMhaopWK0KqkAZuaKMfcU9qzXvYq78bd0dH4m/Qv4m1SaguCxYv0wS1kLEhXEMBcB2ypOWd3Y23CzP5+i9Kwz9AXmTa3FdMZVLgqTsfi2iZHBwmpWvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2YRsuGZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+f8rbGa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C864C43394;
-	Tue, 23 Jan 2024 01:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2YRsuGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7BEC433F1;
+	Tue, 23 Jan 2024 01:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975020;
-	bh=Np3qn2IkeW42qhktV/o1y5UHPprgaNnFLAgeGC0drTc=;
+	s=korg; t=1705975022;
+	bh=MKRn9BYvnGyJ5uAk+HDYsi44KDCz41Ib8nWvgB7il3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f+f8rbGa/Xk++tuWT9YOGeA5Ns7aS4YulGDW6NtktbPsUk+cX1u0FBrwW4Ylx9mXG
-	 M34SEt4BVQsQC67uL37QjPPg5MKHQg8WzkkVIufelhPTpHPhqw9bMmzal+yTvZy0Gy
-	 3VZLS7LxsmT7ghq0gyCcLZ9GnFZ0e9FCtPB3jIxM=
+	b=x2YRsuGZyk0W9MSiKPSvH4VTCmJW8i7eJ/icZl90e16QJivuH97dlBO+45sYrQu3u
+	 w1IFiOPGZSQz+8lsuJ1uHkFCDG+QFCPiiGTy9ORJJ3S9oyVLMQv7NHHFgH7nA+V4XG
+	 YLfT+vyZLS8UfhfXKV3lyCH7715fP7eZZ9M9pyR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Luciano Coelho <luciano.coelho@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 199/583] wifi: iwlwifi: mvm: set siso/mimo chains to 1 in FW SMPS request
-Date: Mon, 22 Jan 2024 15:54:10 -0800
-Message-ID: <20240122235818.063873304@linuxfoundation.org>
+Subject: [PATCH 5.15 327/374] serial: imx: Correct clock error message in function probe()
+Date: Mon, 22 Jan 2024 15:59:43 -0800
+Message-ID: <20240122235756.277655292@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Christoph Niedermaier <cniedermaier@dh-electronics.com>
 
-[ Upstream commit b1a2e5c310e063560760806d2cc5d2233c596067 ]
+[ Upstream commit 3e189470cad27d41a3a9dc02649f965b7ed1c90f ]
 
-The firmware changed their mind, don't set the chains to zero,
-instead set them to 1 as we normally would for connections to
-APs that don't use MIMO.
+Correct the clock error message by changing the clock name.
 
-Fixes: 2a7ce54ccc23 ("iwlwifi: mvm: honour firmware SMPS requests")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Luciano Coelho <luciano.coelho@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20231219215605.7f031f1a127f.Idc816e0f604b07d22a9d5352bc23c445512fad14@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 1e512d45332b ("serial: imx: add error messages when .probe fails")
+Signed-off-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231224093209.2612-1-cniedermaier@dh-electronics.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ drivers/tty/serial/imx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c b/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c
-index a5b432bc9e2f..9c582e23ebba 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c
-@@ -99,17 +99,6 @@ static void iwl_mvm_phy_ctxt_set_rxchain(struct iwl_mvm *mvm,
- 		active_cnt = 2;
+diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
+index 52f183889c95..4504b5fcc171 100644
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -2318,7 +2318,7 @@ static int imx_uart_probe(struct platform_device *pdev)
+ 	/* For register access, we only need to enable the ipg clock. */
+ 	ret = clk_prepare_enable(sport->clk_ipg);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "failed to enable per clk: %d\n", ret);
++		dev_err(&pdev->dev, "failed to enable ipg clk: %d\n", ret);
+ 		return ret;
  	}
  
--	/*
--	 * If the firmware requested it, then we know that it supports
--	 * getting zero for the values to indicate "use one, but pick
--	 * which one yourself", which means it can dynamically pick one
--	 * that e.g. has better RSSI.
--	 */
--	if (mvm->fw_static_smps_request && active_cnt == 1 && idle_cnt == 1) {
--		idle_cnt = 0;
--		active_cnt = 0;
--	}
--
- 	*rxchain_info = cpu_to_le32(iwl_mvm_get_valid_rx_ant(mvm) <<
- 					PHY_RX_CHAIN_VALID_POS);
- 	*rxchain_info |= cpu_to_le32(idle_cnt << PHY_RX_CHAIN_CNT_POS);
 -- 
 2.43.0
 
