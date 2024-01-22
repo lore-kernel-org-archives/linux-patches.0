@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E146BB56;
-	Tue, 23 Jan 2024 02:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2DF6D1DA;
+	Tue, 23 Jan 2024 02:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975391; cv=none; b=GXxVlKcKFI+h1OgFzdo/+d3/WFCVjzoT6mLPc8QsLrVAPqLG2u0iOu+RTt7tFIWW+9UUFICwpXd5ossopU9gqlF3tzyV3OXX6UxDDI57VkIqbhb5Ofaffv7hsgblime5jfHKnIKUhT/v0ZJvVBCb5DqUsf0P9bYyX7Fs1uQOqmw=
+	t=1705975391; cv=none; b=X5XgkiNOj0IjGfWnPTXaImOQP2QEx2dMfNMQIcd9WrDwJ9mYbpL4Cu0SfYsXs+71qkDCmIi3ZcmrHO4NrbVPlHpSL+T565xTaEpSH0+mJeVJrQl4ICtVXPw9VjZ219qJltmjPt2CZIjZuQMAUqKR1xrVdd7Eby7rOffWYxCBdz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975391; c=relaxed/simple;
-	bh=3gSlDXo+f3JnD0JXd+zsJZ7Obl547L4QKXVbZxy1PSo=;
+	bh=VdQvV3YNp4bVMQdmBbZvS7RmHS17oLc/nqLCreLOguE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ax7u0J42hp/HehJt41haxjgmfzVrd4Z5M0YhPHXOUAenZQKG2MrD1RZMbswn+EYl3+qbaoWjTpaW9sGyC47k71PJe0y2f6VBfwUaf+87cqMT5X4AJfElYP7A353U2ntyA22bzc0tIJ14ZoAvkVMscgMYfs+onl3OZMsUp+tDlFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXnuU6NV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NPRdV7BlYuU62fzlSQ3+Cqtdtdp80D7a6NBSWZw7N2TSJi/8+gSs9D1oCD3pyMqYiUzwh/BwUGO7rsV5D6GyZVd4PggoQJ8SCl/gXAyPuSv0fen7uWAMaoUEXzM5ljnvRG6jsxochzvwBnUshkFfCc2syM03q7uasjW4Xt3uLDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uub+v7Bg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXnuU6NV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB461C433C7;
-	Tue, 23 Jan 2024 02:03:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uub+v7Bg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F0BC43390;
+	Tue, 23 Jan 2024 02:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975390;
-	bh=3gSlDXo+f3JnD0JXd+zsJZ7Obl547L4QKXVbZxy1PSo=;
+	s=korg; t=1705975391;
+	bh=VdQvV3YNp4bVMQdmBbZvS7RmHS17oLc/nqLCreLOguE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bXnuU6NVWncVUreSdY6hOEa59IhxSP7ddszUMmhduF2u4dyp4D0URN/pzsZrw577C
-	 KNU6biAlP8bQPSdLNPVyKqtlgcFuFZy9PgVKPmWTdqHgKJqxRUlT1frArFNZkkYrbj
-	 vpgnQNWwc8UFhR0peWNwOyqU2YW9tua6CogSLIl8=
+	b=Uub+v7BggA/saF1fHqMbz4W2S3QEo9HRumz4Jk+Wg9tERbsU1SL7YJ531UC7i2AVu
+	 epVRBTlb6evDw0eJYNkbqwcMDIIHF1rOXZOVfdehtoi85ygudX4dZhnG/D9kiX4VDp
+	 MCKjFpMgXiJd0EZFZNoDJkrIHUV+LreN842eWnKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Cornwall <jay.cornwall@amd.com>,
-	Kaibo Ma <ent3rm4n@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 351/583] Revert "drm/amdkfd: Relocate TBA/TMA to opposite side of VM hole"
-Date: Mon, 22 Jan 2024 15:56:42 -0800
-Message-ID: <20240122235822.760979587@linuxfoundation.org>
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
+	Paul Durrant <paul@xen.org>
+Subject: [PATCH 6.6 352/583] xen-netback: dont produce zero-size SKB frags
+Date: Mon, 22 Jan 2024 15:56:43 -0800
+Message-ID: <20240122235822.793870174@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,79 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaibo Ma <ent3rm4n@gmail.com>
+From: Jan Beulich <jbeulich@suse.com>
 
-commit 0f35b0a7b8fa402adbffa2565047cdcc4c480153 upstream.
+commit c7ec4f2d684e17d69bbdd7c4324db0ef5daac26a upstream.
 
-That commit causes NULL pointer dereferences in dmesgs when
-running applications using ROCm, including clinfo, blender,
-and PyTorch, since v6.6.1. Revert it to fix blender again.
+While frontends may submit zero-size requests (wasting a precious slot),
+core networking code as of at least 3ece782693c4b ("sock: skb_copy_ubufs
+support for compound pages") can't deal with SKBs when they have all
+zero-size fragments. Respond to empty requests right when populating
+fragments; all further processing is fragment based and hence won't
+encounter these empty requests anymore.
 
-This reverts commit 96c211f1f9ef82183493f4ceed4e347b52849149.
+In a way this should have been that way from the beginning: When no data
+is to be transferred for a particular request, there's not even a point
+in validating the respective grant ref. That's no different from e.g.
+passing NULL into memcpy() when at the same time the size is 0.
 
-Closes: https://github.com/ROCm/ROCm/issues/2596
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2991
-Reviewed-by: Jay Cornwall <jay.cornwall@amd.com>
-Signed-off-by: Kaibo Ma <ent3rm4n@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This is XSA-448 / CVE-2023-46838.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Paul Durrant <paul@xen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_flat_memory.c |   26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/net/xen-netback/netback.c |   44 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 38 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_flat_memory.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_flat_memory.c
-@@ -330,12 +330,6 @@ static void kfd_init_apertures_vi(struct
- 	pdd->gpuvm_limit =
- 		pdd->dev->kfd->shared_resources.gpuvm_size - 1;
+--- a/drivers/net/xen-netback/netback.c
++++ b/drivers/net/xen-netback/netback.c
+@@ -463,12 +463,25 @@ static void xenvif_get_requests(struct x
+ 	}
  
--	/* dGPUs: the reserved space for kernel
--	 * before SVM
--	 */
--	pdd->qpd.cwsr_base = SVM_CWSR_BASE;
--	pdd->qpd.ib_base = SVM_IB_BASE;
--
- 	pdd->scratch_base = MAKE_SCRATCH_APP_BASE_VI();
- 	pdd->scratch_limit = MAKE_SCRATCH_APP_LIMIT(pdd->scratch_base);
- }
-@@ -345,18 +339,18 @@ static void kfd_init_apertures_v9(struct
- 	pdd->lds_base = MAKE_LDS_APP_BASE_V9();
- 	pdd->lds_limit = MAKE_LDS_APP_LIMIT(pdd->lds_base);
- 
--	pdd->gpuvm_base = PAGE_SIZE;
-+        /* Raven needs SVM to support graphic handle, etc. Leave the small
-+         * reserved space before SVM on Raven as well, even though we don't
-+         * have to.
-+         * Set gpuvm_base and gpuvm_limit to CANONICAL addresses so that they
-+         * are used in Thunk to reserve SVM.
-+         */
-+        pdd->gpuvm_base = SVM_USER_BASE;
- 	pdd->gpuvm_limit =
- 		pdd->dev->kfd->shared_resources.gpuvm_size - 1;
- 
- 	pdd->scratch_base = MAKE_SCRATCH_APP_BASE_V9();
- 	pdd->scratch_limit = MAKE_SCRATCH_APP_LIMIT(pdd->scratch_base);
--
--	/*
--	 * Place TBA/TMA on opposite side of VM hole to prevent
--	 * stray faults from triggering SVM on these pages.
--	 */
--	pdd->qpd.cwsr_base = pdd->dev->kfd->shared_resources.gpuvm_size;
- }
- 
- int kfd_init_apertures(struct kfd_process *process)
-@@ -413,6 +407,12 @@ int kfd_init_apertures(struct kfd_proces
- 					return -EINVAL;
- 				}
- 			}
+ 	for (shinfo->nr_frags = 0; nr_slots > 0 && shinfo->nr_frags < MAX_SKB_FRAGS;
+-	     shinfo->nr_frags++, gop++, nr_slots--) {
++	     nr_slots--) {
++		if (unlikely(!txp->size)) {
++			unsigned long flags;
 +
-+                        /* dGPUs: the reserved space for kernel
-+                         * before SVM
-+                         */
-+                        pdd->qpd.cwsr_base = SVM_CWSR_BASE;
-+                        pdd->qpd.ib_base = SVM_IB_BASE;
++			spin_lock_irqsave(&queue->response_lock, flags);
++			make_tx_response(queue, txp, 0, XEN_NETIF_RSP_OKAY);
++			push_tx_responses(queue);
++			spin_unlock_irqrestore(&queue->response_lock, flags);
++			++txp;
++			continue;
++		}
++
+ 		index = pending_index(queue->pending_cons++);
+ 		pending_idx = queue->pending_ring[index];
+ 		xenvif_tx_create_map_op(queue, pending_idx, txp,
+ 				        txp == first ? extra_count : 0, gop);
+ 		frag_set_pending_idx(&frags[shinfo->nr_frags], pending_idx);
++		++shinfo->nr_frags;
++		++gop;
+ 
+ 		if (txp == first)
+ 			txp = txfrags;
+@@ -481,20 +494,39 @@ static void xenvif_get_requests(struct x
+ 		shinfo = skb_shinfo(nskb);
+ 		frags = shinfo->frags;
+ 
+-		for (shinfo->nr_frags = 0; shinfo->nr_frags < nr_slots;
+-		     shinfo->nr_frags++, txp++, gop++) {
++		for (shinfo->nr_frags = 0; shinfo->nr_frags < nr_slots; ++txp) {
++			if (unlikely(!txp->size)) {
++				unsigned long flags;
++
++				spin_lock_irqsave(&queue->response_lock, flags);
++				make_tx_response(queue, txp, 0,
++						 XEN_NETIF_RSP_OKAY);
++				push_tx_responses(queue);
++				spin_unlock_irqrestore(&queue->response_lock,
++						       flags);
++				continue;
++			}
++
+ 			index = pending_index(queue->pending_cons++);
+ 			pending_idx = queue->pending_ring[index];
+ 			xenvif_tx_create_map_op(queue, pending_idx, txp, 0,
+ 						gop);
+ 			frag_set_pending_idx(&frags[shinfo->nr_frags],
+ 					     pending_idx);
++			++shinfo->nr_frags;
++			++gop;
  		}
  
- 		dev_dbg(kfd_device, "node id %u\n", id);
+-		skb_shinfo(skb)->frag_list = nskb;
+-	} else if (nskb) {
++		if (shinfo->nr_frags) {
++			skb_shinfo(skb)->frag_list = nskb;
++			nskb = NULL;
++		}
++	}
++
++	if (nskb) {
+ 		/* A frag_list skb was allocated but it is no longer needed
+-		 * because enough slots were converted to copy ops above.
++		 * because enough slots were converted to copy ops above or some
++		 * were empty.
+ 		 */
+ 		kfree_skb(nskb);
+ 	}
 
 
