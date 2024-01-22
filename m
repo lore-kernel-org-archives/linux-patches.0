@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29D012F59D;
-	Tue, 23 Jan 2024 01:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D4612F59C;
+	Tue, 23 Jan 2024 01:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971760; cv=none; b=hwek9/VXiJVz4bN0IqyHeTLoe7k5d70WcT4UN++AVAvnLnE5xpl3yfCpAm+CGhNPTRZmcQuw2I4pefohS79Ps1W46TJ47NK8u7ngSnhWTLuxSvbBhvjcy1FQDQHYEXeWxf/n7tsszfjRO/qscxZjiu97yHuTKDXgHJhpgsnTrV0=
+	t=1705971763; cv=none; b=DaeWWOeiBSHBhHi6OXbKywImOhEW+CuxD9efs4YRgMvEcvOBV6WYI2BatwcHHbKS2CYPX55/38lYkgBGurHd5Uxu5q7SN8FUGM/9QIgf+XFV5Y6CWe0IX5AaJMaCIg4u3BXf8I3ZGD00kXdNE+h97FMrvAYpJounB9FXboLOoG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971760; c=relaxed/simple;
-	bh=qhHxDubtN+Ka1POXkGVdukPk7V2kRTfZmG8wkNojZYs=;
+	s=arc-20240116; t=1705971763; c=relaxed/simple;
+	bh=PWoxXgIq8WkWCVmYh7CYBmcxvsc4Xo+JF0V//Q6MmSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c0+mYkzrRCLvm+c7ET/f6w5fO1Cf1GNstMgV1EzUwKKAuRKMlFtrpEWXEf/VelgBow/vS53MH+NiSJMGV5/4FMe6fNvBhR4YuXKZsaUHAzS7wbjskLhwtMQcLUKGIq/1k0JdN3OyaH9y8kK3jpBkvS88bFlAk6CRsHm5foY0H84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5OJLmX8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=S+XkkMbBlo/jcDogAnft+XTmuXwdeSuYe78hI4HW3rRNWwYovPx8dc6mmVJHyP6uHAUeuouvpBALPRdIZWjZ+79A5Q9t9/cwvkd7o/s0mfIIWfhRs8GqYCHH684+qG/lyncsdbh6TQriS+/Z/kJv5kT2ohrs1FE4iBSVAiLmoR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyGlLa7K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5OJLmX8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487FDC433C7;
-	Tue, 23 Jan 2024 01:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyGlLa7K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B70C433C7;
+	Tue, 23 Jan 2024 01:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971760;
-	bh=qhHxDubtN+Ka1POXkGVdukPk7V2kRTfZmG8wkNojZYs=;
+	s=korg; t=1705971763;
+	bh=PWoxXgIq8WkWCVmYh7CYBmcxvsc4Xo+JF0V//Q6MmSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n5OJLmX82TFTokCOnfVqs56zehgGvVfARdu8rQkcd4+dq/PeQ9hzNxLdwVCfjMCm3
-	 En4Em3bb+dwxDU1oauZZpT9WSLDc4+GT8cY7BJY+F6sbx0nHO8hsU7iP+vY0rOBQd9
-	 1RyX3ftKTVQLvm4QpllhOZyrhvr4uNIWMJMflS/8=
+	b=jyGlLa7K24oepkF4357H6FsYFDdgmjNgoIJCeKxAeNKaBOWbetHcEZOFvytAEkXGe
+	 BDiX4N+lFN4+CzEDUqgKSIRGc3weeOlO2zK1cfXeTSnI1YMClWvdJMKip+oZeWqyOV
+	 9B6lYtHr+tAvE9ho6vtuLyAwcGbyZQE5cJuW0tC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Huang
-Subject: [PATCH 6.1 312/417] cxl/port: Fix decoder initialization when nr_targets > interleave_ways
-Date: Mon, 22 Jan 2024 15:58:00 -0800
-Message-ID: <20240122235802.626880036@linuxfoundation.org>
+	=?UTF-8?q?=C3=87a=C4=9Fhan=20Demir?= <caghandemir@marun.edu.tr>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 221/286] ALSA: hda/relatek: Enable Mute LED on HP Laptop 15s-fq2xxx
+Date: Mon, 22 Jan 2024 15:58:47 -0800
+Message-ID: <20240122235740.583415823@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +44,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huang Ying <ying.huang@intel.com>
+From: Çağhan Demir <caghandemir@marun.edu.tr>
 
-commit d6488fee66472b468ed88d265b14aa3f04dc3bdf upstream.
+commit bc7863d18677df66b2c7a0e172c91296ff380f11 upstream.
 
-The decoder_populate_targets() helper walks all of the targets in a port
-and makes sure they can be looked up in @target_map. Where @target_map
-is a lookup table from target position to target id (corresponding to a
-cxl_dport instance). However @target_map is only responsible for
-conveying the active dport instances as indicated by interleave_ways.
+This HP Laptop uses ALC236 codec with COEF 0x07 idx 1 controlling
+the mute LED. This patch enables the already existing quirk for
+this device.
 
-When nr_targets > interleave_ways it results in
-decoder_populate_targets() walking off the end of the valid entries in
-@target_map. Given target_map is initialized to 0 it results in the
-dport lookup failing if position 0 is not mapped to a dport with an id
-of 0:
-
-  cxl_port port3: Failed to populate active decoder targets
-  cxl_port port3: Failed to add decoder
-  cxl_port port3: Failed to add decoder3.0
-  cxl_bus_probe: cxl_port port3: probe: -6
-
-This bug also highlights that when the decoder's ->targets[] array is
-written in cxl_port_setup_targets() it is missing a hold of the
-targets_lock to synchronize against sysfs readers of the target list. A
-fix for that is saved for a later patch.
-
-Fixes: a5c258021689 ("cxl/bus: Populate the target list at decoder create")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Huang, Ying <ying.huang@intel.com>
-[djbw: rewrite the changelog, find the Fixes: tag]
-Co-developed-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Çağhan Demir <caghandemir@marun.edu.tr>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240115172303.4718-1-caghandemir@marun.edu.tr
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/port.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -1403,7 +1403,7 @@ static int decoder_populate_targets(stru
- 		return -EINVAL;
- 
- 	write_seqlock(&cxlsd->target_lock);
--	for (i = 0; i < cxlsd->nr_targets; i++) {
-+	for (i = 0; i < cxlsd->cxld.interleave_ways; i++) {
- 		struct cxl_dport *dport = find_dport(port, target_map[i]);
- 
- 		if (!dport) {
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9034,6 +9034,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x87f5, "HP", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87f6, "HP Spectre x360 14", ALC245_FIXUP_HP_X360_AMP),
+ 	SND_PCI_QUIRK(0x103c, 0x87f7, "HP Spectre x360 14", ALC245_FIXUP_HP_X360_AMP),
++	SND_PCI_QUIRK(0x103c, 0x87fe, "HP Laptop 15s-fq2xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8805, "HP ProBook 650 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x880d, "HP EliteBook 830 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8811, "HP Spectre x360 15-eb1xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
 
 
