@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DEC01FC4;
-	Tue, 23 Jan 2024 01:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB5A1FBF;
+	Tue, 23 Jan 2024 01:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972159; cv=none; b=Mwycuhnfbh8PYbvB2YlW6LRVlGAuMyJKjmHZ4pBzk0YdWUXmBmwBoGKP1MsiSMvhzFHIzCE6Rm0Gqy5fAZE4GqbqimOVupJhcvfR5BooFiWVUIkVVvr8VCJfN1dzQShcxrKorsgCFqmb6QBV+Wscwnu3aUN8+YBFShMdqPlSGvM=
+	t=1705972160; cv=none; b=TUCKNf3nspU/OfEIypp47+jRyIDE0u21b8fYNclxoVtvkPfWkeWlm6u3Ae3t+rgO1nJX6uzJ7bspyBX0kniZOwM4QeoL4yPl1oLmoB6GEj+7ZW4tEXWOlzSHP41Wzf8QrtuLYe0GUSHInnwj2IIkiAnm36N6wLRwvnT/9KE4jzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972159; c=relaxed/simple;
-	bh=//PaD9DJg5sU4LghpbQ7e4vz3mQ49GnOHLpmUUh1dgw=;
+	s=arc-20240116; t=1705972160; c=relaxed/simple;
+	bh=gIhuVS1TjYikEiSNocD8pZ3G1ITzq7kFVNaNayNmZdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FdJs+o+FLe6tjuPkdwJmsNa4mg/BBdmTU0PZMvaPl+hVu/cGK4XoJwjTny4D2PoXeNVi9jDYdpeBrwH2sJ6ZcphK3aWU7UZ1WcENyHK/Qu4przCCOmcbqnE+fbQ5ZqGZI92lnxGtq3Bw40sMcvevEjhSiC8C/Uxq9Y5Nr5Gp+0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAFQxNKE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kD9tQkJOYkDWc5Z/RPDFj90xg4Q4A6gfOAdM7HjHwg4/84ToIyxfAJg1xvCNK0iOZ9rpZ8SNSQdh/Rw4LiXfOusiLplgtigiMwxKeYguozLdd17ppsZNA9zHszRxLYagjHk0OfxCe2u6Vqs8MRSDtIHOrCUnNi7Fin0J1DFjxl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7Q4lUoH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAFQxNKE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2082C43394;
-	Tue, 23 Jan 2024 01:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7Q4lUoH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01027C43390;
+	Tue, 23 Jan 2024 01:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972159;
-	bh=//PaD9DJg5sU4LghpbQ7e4vz3mQ49GnOHLpmUUh1dgw=;
+	s=korg; t=1705972160;
+	bh=gIhuVS1TjYikEiSNocD8pZ3G1ITzq7kFVNaNayNmZdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sAFQxNKE8UIs7vYhfSvOb5YdtTNCBhgjV4Z0sIhIQiUPT9obznWvC4GU4z/PKfTz9
-	 sXHfjqOl+jpUSAV8AP5D36D1VMTOD2ntnHHwV8OpNUg5qWu3bgIQFdxbL5fDXFH3Fl
-	 H7Ju7DH5xfQQHyaj8Lb1frI7343Fztd7zw+sYRFo=
+	b=n7Q4lUoHvExsvny9UhdKSRNcWA5X9jQzlz+PlsEYRJ6dHnp/tUrY27G+ydeerpAwD
+	 1fmaJnaZfVUEvY5IsMJKqxecpdsBMtaImHY49ZpI6Csxrh9C8gEcN3NCdqqMJewyCS
+	 JWo2XP0tMBN0jyu9MQDHHIwworoo14p+mfkpItik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 5.15 052/374] bpf: Add --skip_encoding_btf_inconsistent_proto, --btf_gen_optimized to pahole flags for v1.25
-Date: Mon, 22 Jan 2024 15:55:08 -0800
-Message-ID: <20240122235746.410163500@linuxfoundation.org>
+	Pengfei Xu <pengfei.xu@intel.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>
+Subject: [PATCH 5.15 053/374] kprobes: Fix to handle forcibly unoptimized kprobes on freeing_list
+Date: Mon, 22 Jan 2024 15:55:09 -0800
+Message-ID: <20240122235746.447726038@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,46 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 7b99f75942da332e3f4f865e55a10fec95a30d4f upstream.
+commit 4fbd2f83fda0ca44a2ec6421ca3508b355b31858 upstream.
 
-v1.25 of pahole supports filtering out functions with multiple inconsistent
-function prototypes or optimized-out parameters from the BTF representation.
-These present problems because there is no additional info in BTF saying which
-inconsistent prototype matches which function instance to help guide attachment,
-and functions with optimized-out parameters can lead to incorrect assumptions
-about register contents.
+Since forcibly unoptimized kprobes will be put on the freeing_list directly
+in the unoptimize_kprobe(), do_unoptimize_kprobes() must continue to check
+the freeing_list even if unoptimizing_list is empty.
 
-So for now, filter out such functions while adding BTF representations for
-functions that have "."-suffixes (foo.isra.0) but not optimized-out parameters.
-This patch assumes that below linked changes land in pahole for v1.25.
+This bug can happen if a kprobe is put in an instruction which is in the
+middle of the jump-replaced instruction sequence of an optprobe, *and* the
+optprobe is recently unregistered and queued on unoptimizing_list.
+In this case, the optprobe will be unoptimized forcibly (means immediately)
+and put it into the freeing_list, expecting the optprobe will be handled in
+do_unoptimize_kprobe().
+But if there is no other optprobes on the unoptimizing_list, current code
+returns from the do_unoptimize_kprobe() soon and does not handle the
+optprobe which is on the freeing_list. Then the optprobe will hit the
+WARN_ON_ONCE() in the do_free_cleaned_kprobes(), because it is not handled
+in the latter loop of the do_unoptimize_kprobe().
 
-Issues with pahole filtering being too aggressive in removing functions
-appear to be resolved now, but CI and further testing will confirm.
+To solve this issue, do not return from do_unoptimize_kprobes() immediately
+even if unoptimizing_list is empty.
 
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20230510130241.1696561-1-alan.maguire@oracle.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-[ small context conflict because of not backported --lang_exclude=rust
-option, which is not needed in 5.15 ]
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Moreover, this change affects another case. kill_optimized_kprobes() expects
+kprobe_optimizer() will just free the optprobe on freeing_list.
+So I changed it to just do list_move() to freeing_list if optprobes are on
+unoptimizing list. And the do_unoptimize_kprobe() will skip
+arch_disarm_kprobe() if the probe on freeing_list has gone flag.
+
+Link: https://lore.kernel.org/all/Y8URdIfVr3pq2X8w@xpf.sh.intel.com/
+Link: https://lore.kernel.org/all/167448024501.3253718.13037333683110512967.stgit@devnote3/
+
+Fixes: e4add247789e ("kprobes: Fix optimize_kprobe()/unoptimize_kprobe() cancellation logic")
+Reported-by: Pengfei Xu <pengfei.xu@intel.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: stable@vger.kernel.org
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+[fp: adjust comment conflict regarding commit 223a76b268c9 ("kprobes: Fix
+ coding style issues")]
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/pahole-flags.sh |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/kprobes.c |   23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
---- a/scripts/pahole-flags.sh
-+++ b/scripts/pahole-flags.sh
-@@ -20,5 +20,8 @@ fi
- if [ "${pahole_ver}" -ge "124" ]; then
- 	extra_paholeopt="${extra_paholeopt} --skip_encoding_btf_enum64"
- fi
-+if [ "${pahole_ver}" -ge "125" ]; then
-+	extra_paholeopt="${extra_paholeopt} --skip_encoding_btf_inconsistent_proto --btf_gen_optimized"
-+fi
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -549,17 +549,15 @@ static void do_unoptimize_kprobes(void)
+ 	/* See comment in do_optimize_kprobes() */
+ 	lockdep_assert_cpus_held();
  
- echo ${extra_paholeopt}
+-	/* Unoptimization must be done anytime */
+-	if (list_empty(&unoptimizing_list))
+-		return;
++	if (!list_empty(&unoptimizing_list))
++		arch_unoptimize_kprobes(&unoptimizing_list, &freeing_list);
+ 
+-	arch_unoptimize_kprobes(&unoptimizing_list, &freeing_list);
+-	/* Loop free_list for disarming */
++	/* Loop on 'freeing_list' for disarming and removing from kprobe hash list */
+ 	list_for_each_entry_safe(op, tmp, &freeing_list, list) {
+ 		/* Switching from detour code to origin */
+ 		op->kp.flags &= ~KPROBE_FLAG_OPTIMIZED;
+-		/* Disarm probes if marked disabled */
+-		if (kprobe_disabled(&op->kp))
++		/* Disarm probes if marked disabled and not gone */
++		if (kprobe_disabled(&op->kp) && !kprobe_gone(&op->kp))
+ 			arch_disarm_kprobe(&op->kp);
+ 		if (kprobe_unused(&op->kp)) {
+ 			/*
+@@ -788,14 +786,13 @@ static void kill_optimized_kprobe(struct
+ 	op->kp.flags &= ~KPROBE_FLAG_OPTIMIZED;
+ 
+ 	if (kprobe_unused(p)) {
+-		/* Enqueue if it is unused */
+-		list_add(&op->list, &freeing_list);
+ 		/*
+-		 * Remove unused probes from the hash list. After waiting
+-		 * for synchronization, this probe is reclaimed.
+-		 * (reclaiming is done by do_free_cleaned_kprobes().)
++		 * Unused kprobe is on unoptimizing or freeing list. We move it
++		 * to freeing_list and let the kprobe_optimizer() remove it from
++		 * the kprobe hash list and free it.
+ 		 */
+-		hlist_del_rcu(&op->kp.hlist);
++		if (optprobe_queued_unopt(op))
++			list_move(&op->list, &freeing_list);
+ 	}
+ 
+ 	/* Don't touch the code, because it is already freed. */
 
 
