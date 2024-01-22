@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524406025A;
-	Tue, 23 Jan 2024 00:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B929260252;
+	Tue, 23 Jan 2024 00:47:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970863; cv=none; b=M2M3YgxR1iqvQXlsZsSq8RgtU8NGdMPCPHdT+3edNgrcsYO2dJ6rDktg9XexoPNAbm5VCQIJr3dsewy3FlUcyaOKDMTJXMaN74AfBYNtQLWI2AFQITXIicBJhum8M+iKqkKjrYlwWFxUyUpVx/nF52FNEAxUSGk9I4lxKNfvWcA=
+	t=1705970864; cv=none; b=GZaZYkNucBtH0EIU55ch3BUhr0WU04E1J2ao7YvRJBiGl87o4U74ASoIyutwXxZ47RMKniS9tG2hinNRB26ny0W5DD0F6FIe0Q/AO4W42Iei2ohTwa+cZwUgxK8C7UsQ6QBEjfkkEmaRx7WNNAUP/mMMUUIKb8iEAlAHiBJnj2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970863; c=relaxed/simple;
-	bh=3Jv1UgWeUCgQrfKOhC2inbAqh/03kp9zUKg7J9ha9EY=;
+	s=arc-20240116; t=1705970864; c=relaxed/simple;
+	bh=jb/9eM1TTe03DeCgMHqNA+zKpStFKbzu0oV8vmLwKTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lPFWZGnKvM8rBRHD2F5SLlKaUZhRpNuoR3y4oJZat076SUzs+aTkVCeXQMIK6MkkVOnQ/s9qj4DRwKXzgWnqPasrs6xsJ2YM4KktW1e8EnmCVND4lCHKPWXYSFmSJ8qri984fjF2i0HbxZL8nEqw4FLjNTTEwB8dbP0X1WGJYaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0mVR8Pm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZizTN0pTcj6QSAsI+WyrQE3/esFBqOJTHNkFXuvunTyuefDtIxn3ZQ8johH9cySDEaHBHrESNFcO55nJXsEHJlvR5juMLzKLJmH7serj2PQHxtWz2guAFWdtB1LkGsK/68ZMk6iEjNSQ17N38uHP0LxP+2N93WOTZqyyS+AEdS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOgbqx7H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0mVR8Pm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006AFC433C7;
-	Tue, 23 Jan 2024 00:47:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOgbqx7H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD06C43399;
+	Tue, 23 Jan 2024 00:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970863;
-	bh=3Jv1UgWeUCgQrfKOhC2inbAqh/03kp9zUKg7J9ha9EY=;
+	s=korg; t=1705970864;
+	bh=jb/9eM1TTe03DeCgMHqNA+zKpStFKbzu0oV8vmLwKTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0mVR8Pmni9e5pD60xJaTmEveTW7YHGiesELfXWE6LV4tjey8o/XYjaBW/nmw4M3X
-	 3vMg2Zl94hLNkYzHtXjthGXNz0OKX/8rdHTvJ7Y3Cj35rgWn9x99myjQ+V5MMpMYZi
-	 IJFCMW84+zixXKDfvi1LEthyfBCrdHDKxGZjT0KI=
+	b=rOgbqx7Hq6sqDB42YTlSRZMLlSh+G5uTos9ObHMyYZvCwzzlp50UvLAErDt59IcpK
+	 D3ahnl87a51GZ+sQ31pS/Y9KA/EkPVMNnm/M1WErLXQP+f5HRX1pY9XVzKbt85NIPg
+	 McViAo5nj8zN5pDH3VfrPWspVU33sD1wshoqkDSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Vineet Gupta <vgupta@kernel.org>,
+	Chukun Pan <amadeus@jmu.edu.cn>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 033/286] ARC: fix spare error
-Date: Mon, 22 Jan 2024 15:55:39 -0800
-Message-ID: <20240122235733.299437134@linuxfoundation.org>
+Subject: [PATCH 6.1 128/417] arm64: dts: qcom: ipq6018: fix clock rates for GCC_USB0_MOCK_UTMI_CLK
+Date: Mon, 22 Jan 2024 15:54:56 -0800
+Message-ID: <20240122235756.238128644@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vineet Gupta <vgupta@kernel.org>
+From: Chukun Pan <amadeus@jmu.edu.cn>
 
-[ Upstream commit aca02d933f63ba8bc84258bf35f9ffaf6b664336 ]
+[ Upstream commit 5c0dbe8b058436ad5daecb19c60869f832607ea3 ]
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202312082320.VDN5A9hb-lkp@intel.com/
-Signed-off-by: Vineet Gupta <vgupta@kernel.org>
+The downstream QSDK kernel [1] and GCC_USB1_MOCK_UTMI_CLK are both 24MHz.
+Adjust GCC_USB0_MOCK_UTMI_CLK to 24MHz to avoid the following error:
+
+clk: couldn't set gcc_usb0_mock_utmi_clk clk rate to 20000000 (-22), current rate: 24000000
+
+1. https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/commit/486c8485f59
+
+Fixes: 5726079cd486 ("arm64: dts: ipq6018: Use reference clock to set dwc3 period")
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Link: https://lore.kernel.org/r/20231218150805.1228160-1-amadeus@jmu.edu.cn
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arc/kernel/signal.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arc/kernel/signal.c b/arch/arc/kernel/signal.c
-index 4868bdebf586..c43d323bcb59 100644
---- a/arch/arc/kernel/signal.c
-+++ b/arch/arc/kernel/signal.c
-@@ -61,7 +61,7 @@ struct rt_sigframe {
- 	unsigned int sigret_magic;
- };
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+index 43ff8f1f1475..d436fa64caad 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+@@ -745,7 +745,7 @@ usb3: usb@8af8800 {
+ 					  <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+ 			assigned-clock-rates = <133330000>,
+ 					       <133330000>,
+-					       <20000000>;
++					       <24000000>;
  
--static int save_arcv2_regs(struct sigcontext *mctx, struct pt_regs *regs)
-+static int save_arcv2_regs(struct sigcontext __user *mctx, struct pt_regs *regs)
- {
- 	int err = 0;
- #ifndef CONFIG_ISA_ARCOMPACT
-@@ -74,12 +74,12 @@ static int save_arcv2_regs(struct sigcontext *mctx, struct pt_regs *regs)
- #else
- 	v2abi.r58 = v2abi.r59 = 0;
- #endif
--	err = __copy_to_user(&mctx->v2abi, &v2abi, sizeof(v2abi));
-+	err = __copy_to_user(&mctx->v2abi, (void const *)&v2abi, sizeof(v2abi));
- #endif
- 	return err;
- }
- 
--static int restore_arcv2_regs(struct sigcontext *mctx, struct pt_regs *regs)
-+static int restore_arcv2_regs(struct sigcontext __user *mctx, struct pt_regs *regs)
- {
- 	int err = 0;
- #ifndef CONFIG_ISA_ARCOMPACT
+ 			resets = <&gcc GCC_USB0_BCR>;
+ 			status = "disabled";
 -- 
 2.43.0
 
