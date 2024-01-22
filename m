@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF5856773;
-	Tue, 23 Jan 2024 00:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA975A78C;
+	Tue, 23 Jan 2024 00:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970526; cv=none; b=hFNKyTP+M2jZ4xfCc5k7jeErLqHaJ4h75JTB10dNySLjvUf065eRmDwgEXRAL3w6LTig2GXFP+ukndPEqv1G/MCvcWzFsMZ5JGdRcHRgDp92uiqgZ7XUKh+eIGR5fetMX9Ukrpr4dchoZm9mkwCS7pQknoQwGZPbUxASw2E795A=
+	t=1705970529; cv=none; b=qBOprdDAj6NHnmYH0zeIB7n/CGrePlDjuzAfmBOfy1aQlBSGslnMd5eBN2e6QMy+AyRkfj5c7EAyHMYpjLydkwUyLWSL8e4uI+7cCpkaRTwrujSOCmyL4RYQfw6H+0K26dxHxMq0XHacrbuqKijqFhmR4QK9biZDxI+CaJkHPHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970526; c=relaxed/simple;
-	bh=8znq1RDz5wcuFpGNo49SGyiEIEaa7vmDk408a9/JLo4=;
+	s=arc-20240116; t=1705970529; c=relaxed/simple;
+	bh=MSjRGNvwzIjME1Bs/P2P+oUHuwnZcLo58JfLSlIBQiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CGwz0tq3hfkWvwMvcPXmqC9aLRchiBJyZP4Y4vmQOjT44WYsH2u1GPfy9HL2QFSf8fjWFQmx0T7O/kcgL2r/h1/M8EslWNlpweoiU1yCQI29aBxQVH0kSFVfRgv9SjhrDx6uy5SgdMck6IfHWKu0aPA+RpWKZfs0Q1ELbUK0YK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQ0hN65t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VmEFF8iSNNE0bgvreyTVeXgqqkClRsutSJavX5VOZkfrkDBR8DDxd5KT8OJWmNfPlIbTVaJzR1vqmWk+Mpo3KPpyc7gNCAzQr702JIlnA0jFfcq+iI2DwqOtjrQqTsOWxatjuOEbyjk6Yr2QRxdDpMKhQ64BBnHxg5bwpgVtvIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yOr8szLA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQ0hN65t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DC1C43390;
-	Tue, 23 Jan 2024 00:42:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yOr8szLA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0081CC43390;
+	Tue, 23 Jan 2024 00:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970526;
-	bh=8znq1RDz5wcuFpGNo49SGyiEIEaa7vmDk408a9/JLo4=;
+	s=korg; t=1705970529;
+	bh=MSjRGNvwzIjME1Bs/P2P+oUHuwnZcLo58JfLSlIBQiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQ0hN65t9zGmHnb9E0pA4ZoaJ2bLg/3S1ZJQ7Hz0UWUP6tZdSLYLD6hRrzB1tVylf
-	 W9SosiBGRmqwfo+gpmi+sgiSFyRxGXhzNhdmqxiBvorXIDiws5iE35naqUoA+VvEWm
-	 +r/szl/tRxgRrLeiYiDVwjG3R4Eoil4YI17eYw3E=
+	b=yOr8szLASY/i3Gd50DzmK/+ecy7aoRWwlkyhufM1xRmeLrAR6P1lCGMyVZKfIlzHM
+	 DY89MNdqm/cpCIiA0VmenFyW6ZRMRwTA9R1JAEOxsSk2fXaRGJ9iCzlmUbPQdRrkoX
+	 o77EzkXe9ddD/uFggAKIl+MQPbKeIWqY6EWb/UmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Zhiqi Song <songzhiqi1@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/417] crypto: sahara - fix error handling in sahara_hw_descriptor_create()
-Date: Mon, 22 Jan 2024 15:53:31 -0800
-Message-ID: <20240122235753.142058735@linuxfoundation.org>
+Subject: [PATCH 6.1 044/417] crypto: hisilicon/qm - save capability registers in qm init process
+Date: Mon, 22 Jan 2024 15:53:32 -0800
+Message-ID: <20240122235753.187100323@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -51,52 +51,255 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait@windriver.com>
+From: Zhiqi Song <songzhiqi1@huawei.com>
 
-[ Upstream commit ee6e6f0a7f5b39d50a5ef5fcc006f4f693db18a7 ]
+[ Upstream commit cabe13d0bd2efb8dd50ed2310f57b33e1a69a0d4 ]
 
-Do not call dma_unmap_sg() for scatterlists that were not mapped
-successfully.
+In previous capability register implementation, qm irq related values
+were read from capability registers dynamically when needed. But in
+abnormal scenario, e.g. the core is timeout and the device needs to
+soft reset and reset failed after disabling the MSE, the device can
+not be removed normally, causing the following call trace:
 
-Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+	| Call trace:
+        |  pci_irq_vector+0xfc/0x140
+        |  hisi_qm_uninit+0x278/0x3b0 [hisi_qm]
+        |  hpre_remove+0x16c/0x1c0 [hisi_hpre]
+        |  pci_device_remove+0x6c/0x264
+        |  device_release_driver_internal+0x1ec/0x3e0
+        |  device_release_driver+0x3c/0x60
+        |  pci_stop_bus_device+0xfc/0x22c
+        |  pci_stop_and_remove_bus_device+0x38/0x70
+        |  pci_iov_remove_virtfn+0x108/0x1c0
+        |  sriov_disable+0x7c/0x1e4
+        |  pci_disable_sriov+0x4c/0x6c
+        |  hisi_qm_sriov_disable+0x90/0x160 [hisi_qm]
+        |  hpre_remove+0x1a8/0x1c0 [hisi_hpre]
+        |  pci_device_remove+0x6c/0x264
+        |  device_release_driver_internal+0x1ec/0x3e0
+        |  driver_detach+0x168/0x2d0
+        |  bus_remove_driver+0xc0/0x230
+        |  driver_unregister+0x58/0xdc
+        |  pci_unregister_driver+0x40/0x220
+        |  hpre_exit+0x34/0x64 [hisi_hpre]
+        |  __arm64_sys_delete_module+0x374/0x620
+        [...]
+
+        | Call trace:
+        |  free_msi_irqs+0x25c/0x300
+        |  pci_disable_msi+0x19c/0x264
+        |  pci_free_irq_vectors+0x4c/0x70
+        |  hisi_qm_pci_uninit+0x44/0x90 [hisi_qm]
+        |  hisi_qm_uninit+0x28c/0x3b0 [hisi_qm]
+        |  hpre_remove+0x16c/0x1c0 [hisi_hpre]
+        |  pci_device_remove+0x6c/0x264
+        [...]
+
+The reason for this call trace is that when the MSE is disabled, the value
+of capability registers in the BAR space become invalid. This will make the
+subsequent unregister process get the wrong irq vector through capability
+registers and get the wrong irq number by pci_irq_vector().
+
+So add a capability table structure to pre-store the valid value of the irq
+information capability register in qm init process, avoid obtaining invalid
+capability register value after the MSE is disabled.
+
+Fixes: 3536cc55cada ("crypto: hisilicon/qm - support get device irq information from hardware registers")
+Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/crypto/hisilicon/qm.c | 62 +++++++++++++++++++++++++++++------
+ include/linux/hisi_acc_qm.h   | 12 +++++++
+ 2 files changed, 64 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index e25636904aca..0b7a95dae9fe 100644
---- a/drivers/crypto/sahara.c
-+++ b/drivers/crypto/sahara.c
-@@ -484,13 +484,14 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
- 			 DMA_TO_DEVICE);
- 	if (!ret) {
- 		dev_err(dev->device, "couldn't map in sg\n");
--		goto unmap_in;
-+		return -EINVAL;
+diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
+index f9acf7ecc41b..d4c6a601c5f2 100644
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -315,6 +315,13 @@ enum qm_basic_type {
+ 	QM_VF_IRQ_NUM_CAP,
+ };
+ 
++enum qm_pre_store_cap_idx {
++	QM_EQ_IRQ_TYPE_CAP_IDX = 0x0,
++	QM_AEQ_IRQ_TYPE_CAP_IDX,
++	QM_ABN_IRQ_TYPE_CAP_IDX,
++	QM_PF2VF_IRQ_TYPE_CAP_IDX,
++};
++
+ static const struct hisi_qm_cap_info qm_cap_info_comm[] = {
+ 	{QM_SUPPORT_DB_ISOLATION, 0x30,   0, BIT(0),  0x0, 0x0, 0x0},
+ 	{QM_SUPPORT_FUNC_QOS,     0x3100, 0, BIT(8),  0x0, 0x0, 0x1},
+@@ -344,6 +351,13 @@ static const struct hisi_qm_cap_info qm_basic_info[] = {
+ 	{QM_VF_IRQ_NUM_CAP,     0x311c,   0,  GENMASK(15, 0), 0x1,       0x2,       0x3},
+ };
+ 
++static const u32 qm_pre_store_caps[] = {
++	QM_EQ_IRQ_TYPE_CAP,
++	QM_AEQ_IRQ_TYPE_CAP,
++	QM_ABN_IRQ_TYPE_CAP,
++	QM_PF2VF_IRQ_TYPE_CAP,
++};
++
+ struct qm_mailbox {
+ 	__le16 w0;
+ 	__le16 queue_num;
+@@ -4804,7 +4818,7 @@ static void qm_unregister_abnormal_irq(struct hisi_qm *qm)
+ 	if (qm->fun_type == QM_HW_VF)
+ 		return;
+ 
+-	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_ABN_IRQ_TYPE_CAP, qm->cap_ver);
++	val = qm->cap_tables.qm_cap_table[QM_ABN_IRQ_TYPE_CAP_IDX].cap_val;
+ 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_ABN_IRQ_TYPE_MASK))
+ 		return;
+ 
+@@ -4821,7 +4835,7 @@ static int qm_register_abnormal_irq(struct hisi_qm *qm)
+ 	if (qm->fun_type == QM_HW_VF)
+ 		return 0;
+ 
+-	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_ABN_IRQ_TYPE_CAP, qm->cap_ver);
++	val = qm->cap_tables.qm_cap_table[QM_ABN_IRQ_TYPE_CAP_IDX].cap_val;
+ 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_ABN_IRQ_TYPE_MASK))
+ 		return 0;
+ 
+@@ -4838,7 +4852,7 @@ static void qm_unregister_mb_cmd_irq(struct hisi_qm *qm)
+ 	struct pci_dev *pdev = qm->pdev;
+ 	u32 irq_vector, val;
+ 
+-	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_PF2VF_IRQ_TYPE_CAP, qm->cap_ver);
++	val = qm->cap_tables.qm_cap_table[QM_PF2VF_IRQ_TYPE_CAP_IDX].cap_val;
+ 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_IRQ_TYPE_MASK))
+ 		return;
+ 
+@@ -4852,7 +4866,7 @@ static int qm_register_mb_cmd_irq(struct hisi_qm *qm)
+ 	u32 irq_vector, val;
+ 	int ret;
+ 
+-	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_PF2VF_IRQ_TYPE_CAP, qm->cap_ver);
++	val = qm->cap_tables.qm_cap_table[QM_PF2VF_IRQ_TYPE_CAP_IDX].cap_val;
+ 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_IRQ_TYPE_MASK))
+ 		return 0;
+ 
+@@ -4869,7 +4883,7 @@ static void qm_unregister_aeq_irq(struct hisi_qm *qm)
+ 	struct pci_dev *pdev = qm->pdev;
+ 	u32 irq_vector, val;
+ 
+-	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_AEQ_IRQ_TYPE_CAP, qm->cap_ver);
++	val = qm->cap_tables.qm_cap_table[QM_AEQ_IRQ_TYPE_CAP_IDX].cap_val;
+ 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_IRQ_TYPE_MASK))
+ 		return;
+ 
+@@ -4883,7 +4897,7 @@ static int qm_register_aeq_irq(struct hisi_qm *qm)
+ 	u32 irq_vector, val;
+ 	int ret;
+ 
+-	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_AEQ_IRQ_TYPE_CAP, qm->cap_ver);
++	val = qm->cap_tables.qm_cap_table[QM_AEQ_IRQ_TYPE_CAP_IDX].cap_val;
+ 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_IRQ_TYPE_MASK))
+ 		return 0;
+ 
+@@ -4901,7 +4915,7 @@ static void qm_unregister_eq_irq(struct hisi_qm *qm)
+ 	struct pci_dev *pdev = qm->pdev;
+ 	u32 irq_vector, val;
+ 
+-	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_EQ_IRQ_TYPE_CAP, qm->cap_ver);
++	val = qm->cap_tables.qm_cap_table[QM_EQ_IRQ_TYPE_CAP_IDX].cap_val;
+ 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_IRQ_TYPE_MASK))
+ 		return;
+ 
+@@ -4915,7 +4929,7 @@ static int qm_register_eq_irq(struct hisi_qm *qm)
+ 	u32 irq_vector, val;
+ 	int ret;
+ 
+-	val = hisi_qm_get_hw_info(qm, qm_basic_info, QM_EQ_IRQ_TYPE_CAP, qm->cap_ver);
++	val = qm->cap_tables.qm_cap_table[QM_EQ_IRQ_TYPE_CAP_IDX].cap_val;
+ 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_IRQ_TYPE_MASK))
+ 		return 0;
+ 
+@@ -5003,7 +5017,29 @@ static int qm_get_qp_num(struct hisi_qm *qm)
+ 	return 0;
+ }
+ 
+-static void qm_get_hw_caps(struct hisi_qm *qm)
++static int qm_pre_store_irq_type_caps(struct hisi_qm *qm)
++{
++	struct hisi_qm_cap_record *qm_cap;
++	struct pci_dev *pdev = qm->pdev;
++	size_t i, size;
++
++	size = ARRAY_SIZE(qm_pre_store_caps);
++	qm_cap = devm_kzalloc(&pdev->dev, sizeof(*qm_cap) * size, GFP_KERNEL);
++	if (!qm_cap)
++		return -ENOMEM;
++
++	for (i = 0; i < size; i++) {
++		qm_cap[i].type = qm_pre_store_caps[i];
++		qm_cap[i].cap_val = hisi_qm_get_hw_info(qm, qm_basic_info,
++							qm_pre_store_caps[i], qm->cap_ver);
++	}
++
++	qm->cap_tables.qm_cap_table = qm_cap;
++
++	return 0;
++}
++
++static int qm_get_hw_caps(struct hisi_qm *qm)
+ {
+ 	const struct hisi_qm_cap_info *cap_info = qm->fun_type == QM_HW_PF ?
+ 						  qm_cap_info_pf : qm_cap_info_vf;
+@@ -5034,6 +5070,9 @@ static void qm_get_hw_caps(struct hisi_qm *qm)
+ 		if (val)
+ 			set_bit(cap_info[i].type, &qm->caps);
  	}
 +
- 	ret = dma_map_sg(dev->device, dev->out_sg, dev->nb_out_sg,
- 			 DMA_FROM_DEVICE);
- 	if (!ret) {
- 		dev_err(dev->device, "couldn't map out sg\n");
--		goto unmap_out;
-+		goto unmap_in;
++	/* Fetch and save the value of irq type related capability registers */
++	return qm_pre_store_irq_type_caps(qm);
+ }
+ 
+ static int qm_get_pci_res(struct hisi_qm *qm)
+@@ -5055,7 +5094,10 @@ static int qm_get_pci_res(struct hisi_qm *qm)
+ 		goto err_request_mem_regions;
  	}
  
- 	/* Create input links */
-@@ -538,9 +539,6 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
+-	qm_get_hw_caps(qm);
++	ret = qm_get_hw_caps(qm);
++	if (ret)
++		goto err_ioremap;
++
+ 	if (test_bit(QM_SUPPORT_DB_ISOLATION, &qm->caps)) {
+ 		qm->db_interval = QM_QP_DB_INTERVAL;
+ 		qm->db_phys_base = pci_resource_start(pdev, PCI_BAR_4);
+diff --git a/include/linux/hisi_acc_qm.h b/include/linux/hisi_acc_qm.h
+index 41203ce27d64..241b0dc3183e 100644
+--- a/include/linux/hisi_acc_qm.h
++++ b/include/linux/hisi_acc_qm.h
+@@ -266,6 +266,16 @@ struct hisi_qm_cap_info {
+ 	u32 v3_val;
+ };
  
- 	return 0;
++struct hisi_qm_cap_record {
++	u32 type;
++	u32 cap_val;
++};
++
++struct hisi_qm_cap_tables {
++	struct hisi_qm_cap_record *qm_cap_table;
++	struct hisi_qm_cap_record *dev_cap_table;
++};
++
+ struct hisi_qm_list {
+ 	struct mutex lock;
+ 	struct list_head list;
+@@ -348,6 +358,8 @@ struct hisi_qm {
+ 	struct qm_shaper_factor *factor;
+ 	u32 mb_qos;
+ 	u32 type_rate;
++
++	struct hisi_qm_cap_tables cap_tables;
+ };
  
--unmap_out:
--	dma_unmap_sg(dev->device, dev->out_sg, dev->nb_out_sg,
--		DMA_FROM_DEVICE);
- unmap_in:
- 	dma_unmap_sg(dev->device, dev->in_sg, dev->nb_in_sg,
- 		DMA_TO_DEVICE);
+ struct hisi_qp_status {
 -- 
 2.43.0
 
