@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FE42114;
-	Tue, 23 Jan 2024 00:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6399E2114;
+	Tue, 23 Jan 2024 00:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969493; cv=none; b=Y1G0VVu2PyR2ScgkZo2+e7Mwhkw/Q95ptwwPDUJekztUEWUbTQ4MtFk0g9dYmv7IOKlj4GtWKDLRLHYm8KQQheEkxjYj35a/qMQ2wTxSErjZj88XEWxr7Vy2nbEiQF6hluEsWDVOhFOh6mNSViN4+9tuNLZAtOMFkpErSjDpzrk=
+	t=1705969494; cv=none; b=EnHzWjATty3DHs0LEU4uYexhfFIGJjH1VfMYdwDSulFSQyzVTc88Mc/CB6L4U7pFGIYjQGTK1bjRGdyVGR28Bv1up2sKFSXaxFB25W2k+MH1RnHNFMV4ugAo7tWL9+3OHjdl0kNYljL47IyETGgmJhx4QKPtbWlbJ9LcJaWLa9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969493; c=relaxed/simple;
-	bh=bYr5SI3DL8Pi4VmQJnTkmGcW+Xc7y8sHf2jVWKpy22Q=;
+	s=arc-20240116; t=1705969494; c=relaxed/simple;
+	bh=pmH7iKS8+I1ZFsFm/FLKO4uDRcvJVpBxSHag4aUPrLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+BHZtvck54PeVlMq4oDFDdK96Qb0DeHcwXl553HBXLdLpwaA76bstDvfOSBvE7pWohrNY77q4htLumlELaccrX44L2qAm5ng86G2+V7L0ozzVUwEo3guVmaIRqKmPM4grSZO2O8LyZU3nS/KVfc2+GpEOtM9hdhfOjq+FFDdHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuF4Obmz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XmhqtwgwR1oqqaYjSx4ZiHFBGzob+z2wuo2yd4T2L6nGD5Q+qZ7xSH0uCUvcLNRAiWgrQYbPyrXhYLCn82JRz9A35e/wk1N86Y1bGAS1rjLgu/+aZY5iaRv6w9n//hGP3E46cL7pyCwTFlPamb/Yl4USBu4ZMgaPXuOnxcReMrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCXLcsVr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuF4Obmz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC059C43390;
-	Tue, 23 Jan 2024 00:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCXLcsVr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D78C43399;
+	Tue, 23 Jan 2024 00:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969493;
-	bh=bYr5SI3DL8Pi4VmQJnTkmGcW+Xc7y8sHf2jVWKpy22Q=;
+	s=korg; t=1705969494;
+	bh=pmH7iKS8+I1ZFsFm/FLKO4uDRcvJVpBxSHag4aUPrLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uuF4ObmzLjeHItjmDkm23/vi1z04N7W5BR1F9zQotJTQosuHhQ7AmFzobknCybzcf
-	 PO12JPhXNCr5XgTttKn4lhnFbs8qL7HG6KWVYKWGa19iQjYQu5TcKzIJPTZsEeFRzj
-	 IWwAXx7SWTtGm3BfLNXmGMA9dJlFloIkKxhtVKbI=
+	b=kCXLcsVrn6RZgUb5udB3/hIk2UVrS1ppK8j0Y1I3hiMjf+150JNzvlp2jvs4MdQzJ
+	 sHOxYAIygzkjC7+Be3hKFJg3FqCix14Ha39ykwzCw82rtOATMTVGHOVQefCA/Kt39b
+	 tCxrqsNzX+4XXuArgebOFKt33temPRzz+QJz8GM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Ji <xji@analogixsemi.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 264/641] Revert "drm/bridge: Add 200ms delay to wait FW HPD status stable"
-Date: Mon, 22 Jan 2024 15:52:48 -0800
-Message-ID: <20240122235826.188201133@linuxfoundation.org>
+Subject: [PATCH 6.7 282/641] drm/drv: propagate errors from drm_modeset_register_all()
+Date: Mon, 22 Jan 2024 15:53:06 -0800
+Message-ID: <20240122235826.729782824@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,39 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Ji <xji@analogixsemi.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit af3145aa142c92409d3b123ff87ff0b5fd0bf849 ]
+[ Upstream commit 5f8dec200923a76dc57187965fd59c1136f5d085 ]
 
-This reverts commit 330140d7319fcc4ec68bd924ea212e476bf12275
+In case the drm_modeset_register_all() function fails, its error code
+will be ignored. Instead make the drm_dev_register() bail out in case of
+such an error.
 
-200ms delay will cause panel display image later than backlight
-turn on, revert this patch.
-
-Fixes: 330140d7319fcc ("drm/bridge: Add 200ms delay to wait FW HPD status stable")
-Signed-off-by: Xin Ji <xji@analogixsemi.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231120091038.284825-1-xji@analogixsemi.com
+Fixes: 79190ea2658a ("drm: Add callbacks for late registering")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231202225552.1283638-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/analogix/anx7625.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/drm_drv.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-index 8f740154707d..51abe42c639e 100644
---- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-+++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-@@ -1464,9 +1464,6 @@ static int _anx7625_hpd_polling(struct anx7625_data *ctx,
- 	if (ctx->pdata.intp_irq)
- 		return 0;
+diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
+index 535f16e7882e..3c835c99daad 100644
+--- a/drivers/gpu/drm/drm_drv.c
++++ b/drivers/gpu/drm/drm_drv.c
+@@ -949,8 +949,11 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
+ 			goto err_minors;
+ 	}
  
--	/* Delay 200ms for FW HPD de-bounce */
--	msleep(200);
--
- 	ret = readx_poll_timeout(anx7625_read_hpd_status_p0,
- 				 ctx, val,
- 				 ((val & HPD_STATUS) || (val < 0)),
+-	if (drm_core_check_feature(dev, DRIVER_MODESET))
+-		drm_modeset_register_all(dev);
++	if (drm_core_check_feature(dev, DRIVER_MODESET)) {
++		ret = drm_modeset_register_all(dev);
++		if (ret)
++			goto err_unload;
++	}
+ 
+ 	DRM_INFO("Initialized %s %d.%d.%d %s for %s on minor %d\n",
+ 		 driver->name, driver->major, driver->minor,
+@@ -960,6 +963,9 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
+ 
+ 	goto out_unlock;
+ 
++err_unload:
++	if (dev->driver->unload)
++		dev->driver->unload(dev);
+ err_minors:
+ 	remove_compat_control_link(dev);
+ 	drm_minor_unregister(dev, DRM_MINOR_ACCEL);
 -- 
 2.43.0
 
