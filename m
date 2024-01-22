@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064124E1CD;
-	Tue, 23 Jan 2024 01:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D866251029;
+	Tue, 23 Jan 2024 01:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974004; cv=none; b=B0OLUZYL1OHEeC8Td9VIvdSCrY4Q1KnuJBSWQx4DaWsExObkSHmoHyoco8Cc+f854vRAL9+gPAiv2ns5fydza6eUK0b6iTURDMPXJ07QsMDhZGiuL3AHG2fKSIDusDQ7zDbP3ngNZpK6/Kc7yzDLxkIq39wDbCCxYZy3Cyre/HI=
+	t=1705974004; cv=none; b=HTT3AisJMEXosFbK36QeEP1fJx7ZpWrWDBiGg0VlJ/mHk8Far7EdkheZ2dXQnCt1t5j4wHRIOkC7bOkQC9013JIQvXxm4qorW3eF5sAR1LpcZDiR9uzsu3C5QzKuGcAWrrwHVudEvjgaY8ltXRfaFmJIsGytL70JWF3hlRSAU9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705974004; c=relaxed/simple;
-	bh=eqWZT8JHWsIt3uaiM7Z8m+D89fD29zMi9kSTCG7dkUo=;
+	bh=c48ejUes8Fu15iGOFP3b4pDfHzWaCxU+1wzJ2lXb+EU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ln69clOC5RAKXGOUF5xdteORiRKmDPcjtrI8ygooymutJBKr9ILc2iSK8G+elwzejMfdU7VJJmNANtKHYxjlyxy3cyni66n7dVj7rQjYir9vMMYiRoIZWBA1sPgw+0sSjRKC91JfcO2vy0A7I1AND3VehZ4W8+0K8yJ2pCHaVgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wsDP52gp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=prDfcBDehIFVVBO7AexgbgAULGBxVcyhGrVRscqvPsj0S0TDIwysmnfEtn/uRk5QhRUKiHObrVHJ7JLyGtucrJdoJreIcZuOPde4ggY+AhNMs+VOCrGqeWsO+T9HV2AJwGMCUvoWp2Ew9vVVRrYaxp72fR0QwusZo5P2RYsvpzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUk34aoL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wsDP52gp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51AC5C43390;
-	Tue, 23 Jan 2024 01:40:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUk34aoL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5FAC43394;
+	Tue, 23 Jan 2024 01:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974003;
-	bh=eqWZT8JHWsIt3uaiM7Z8m+D89fD29zMi9kSTCG7dkUo=;
+	s=korg; t=1705974004;
+	bh=c48ejUes8Fu15iGOFP3b4pDfHzWaCxU+1wzJ2lXb+EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wsDP52gpedPLZmsyI7cDZMye3MkqkZWpFddiiGXgRa5RAm/WMWOpG5kLWzNdFEOqM
-	 TzxBly7kFminZHj4Uz6ix78r1cRhgJNkccmxhF7ierkePRa7N2Boz5PMGf5NC4qg6S
-	 RWK3pGGe6G3zfijn6Vvb0bYqqYD48aMJPHQDKGxE=
+	b=kUk34aoLwBWopqXMVIdJ1knLSWYtYk8rMcMSSALAdRfjgYV2sRnAQGKaxtB5U3Sz4
+	 pSkUDYttjx96vy97WQSpkx9V6y+4rw/8c4dOOR08k5e0vVbPw0fMuXzm+HvaKp5+J7
+	 gcOc3tR6rlgClx2hs5ZYNHrkYinCNcn7rDstvCEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Chih-Kang Chang <gary.chang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 116/374] NFSv4.1/pnfs: Ensure we handle the error NFS4ERR_RETURNCONFLICT
-Date: Mon, 22 Jan 2024 15:56:12 -0800
-Message-ID: <20240122235748.670789949@linuxfoundation.org>
+Subject: [PATCH 5.15 117/374] wifi: rtw88: fix RX filter in FIF_ALLMULTI flag
+Date: Mon, 22 Jan 2024 15:56:13 -0800
+Message-ID: <20240122235748.709437083@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,51 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Chih-Kang Chang <gary.chang@realtek.com>
 
-[ Upstream commit 037e56a22ff37f9a9c2330b66cff55d3d1ff9b90 ]
+[ Upstream commit 53ee0b3b99edc6a47096bffef15695f5a895386f ]
 
-Once the client has processed the CB_LAYOUTRECALL, but has not yet
-successfully returned the layout, the server is supposed to switch to
-returning NFS4ERR_RETURNCONFLICT. This patch ensures that we handle
-that return value correctly.
+The broadcast packets will be filtered in the FIF_ALLMULTI flag in
+the original code, which causes beacon packets to be filtered out
+and disconnection. Therefore, we fix it.
 
-Fixes: 183d9e7b112a ("pnfs: rework LAYOUTGET retry handling")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20231103020851.102238-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/realtek/rtw88/mac80211.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index d65af9a60c35..a865b384f0fc 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -173,6 +173,7 @@ static int nfs4_map_errors(int err)
- 	case -NFS4ERR_RESOURCE:
- 	case -NFS4ERR_LAYOUTTRYLATER:
- 	case -NFS4ERR_RECALLCONFLICT:
-+	case -NFS4ERR_RETURNCONFLICT:
- 		return -EREMOTEIO;
- 	case -NFS4ERR_WRONGSEC:
- 	case -NFS4ERR_WRONG_CRED:
-@@ -560,6 +561,7 @@ static int nfs4_do_handle_exception(struct nfs_server *server,
- 		case -NFS4ERR_GRACE:
- 		case -NFS4ERR_LAYOUTTRYLATER:
- 		case -NFS4ERR_RECALLCONFLICT:
-+		case -NFS4ERR_RETURNCONFLICT:
- 			exception->delay = 1;
- 			return 0;
+diff --git a/drivers/net/wireless/realtek/rtw88/mac80211.c b/drivers/net/wireless/realtek/rtw88/mac80211.c
+index 6f5629852416..942bb2ab8b50 100644
+--- a/drivers/net/wireless/realtek/rtw88/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw88/mac80211.c
+@@ -267,9 +267,9 @@ static void rtw_ops_configure_filter(struct ieee80211_hw *hw,
  
-@@ -9588,6 +9590,7 @@ nfs4_layoutget_handle_exception(struct rpc_task *task,
- 		status = -EBUSY;
- 		break;
- 	case -NFS4ERR_RECALLCONFLICT:
-+	case -NFS4ERR_RETURNCONFLICT:
- 		status = -ERECALLCONFLICT;
- 		break;
- 	case -NFS4ERR_DELEG_REVOKED:
+ 	if (changed_flags & FIF_ALLMULTI) {
+ 		if (*new_flags & FIF_ALLMULTI)
+-			rtwdev->hal.rcr |= BIT_AM | BIT_AB;
++			rtwdev->hal.rcr |= BIT_AM;
+ 		else
+-			rtwdev->hal.rcr &= ~(BIT_AM | BIT_AB);
++			rtwdev->hal.rcr &= ~(BIT_AM);
+ 	}
+ 	if (changed_flags & FIF_FCSFAIL) {
+ 		if (*new_flags & FIF_FCSFAIL)
 -- 
 2.43.0
 
