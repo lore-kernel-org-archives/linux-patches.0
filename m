@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A00612BF15;
-	Tue, 23 Jan 2024 00:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D6D12BF1C;
+	Tue, 23 Jan 2024 00:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968901; cv=none; b=RGiyCVJm4vM7ik83+lJUFUX0aZBYPTS3iFAIGKu+YfGdTqoDIN8IuWfW2rf/nempeaHwDTG+c68KAqPtF/i60JYUOJed+1KbxQg9546f3PioC1jVl5H2WZOpGG7kekqDvshhsIM6D5jUS7T4ayGwhwaLpsABYZT3SKUu4vud2JE=
+	t=1705968903; cv=none; b=rNEE+NP9/+tZzQwPTzYPEZ6Cy20/umNRDtk20VfR4itWVYMghDZCCVXatJTGP86eT/isB+lWGbto63pFgYzxNeqjodaL0QAAaEHKFLMlUb6xLY8xU1b8dXpWjrDt7bMCn8u65Abl+A02qe1Zz1vW2/e76acztTX4m0+w+aFJiB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968901; c=relaxed/simple;
-	bh=K8caADRfhvwWdlaOEidDdOhYT5KlMEvErnFk3hmFRCM=;
+	s=arc-20240116; t=1705968903; c=relaxed/simple;
+	bh=hlxIBXinjbm7KpZnPXegkOadJC4WlyZgpOdDoWNVoeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f98XvfCTQoaf+kkGv1TShK9GS42ULtN0R6ElUvYUX3VEtSfRchT5nZ7khPwR7FfHKXJ/dFAwQW+wSKy6T5D7a2s486h/1CMqmeaPM2BY3eznA5uokE9RXHyrPWNnM46wpEaJSjxC4HFdwyK0JMQJOBDUUpsPypvXMQPQdFaUStw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kd3JB3Dc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C5g2WZN3U5rnnwDK8Eul1nLLy5LaSteKCvcNVaAgD/NY/nowTidOIhfFtrkXMzo28Ry2U28IHBiFNmKlpPvDF07toAAEKj4SYVnajxy7PvWWiBeh2rK34izA/4GEBDLMJyDOisHiI9OW3V0MIXTtuc+tktybxjAFJXKtBu4xPGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BKN46RDy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kd3JB3Dc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E2DC43390;
-	Tue, 23 Jan 2024 00:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKN46RDy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89376C43390;
+	Tue, 23 Jan 2024 00:15:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968901;
-	bh=K8caADRfhvwWdlaOEidDdOhYT5KlMEvErnFk3hmFRCM=;
+	s=korg; t=1705968902;
+	bh=hlxIBXinjbm7KpZnPXegkOadJC4WlyZgpOdDoWNVoeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kd3JB3DcMUVAlM+WlHzc5uYwodsHClubikmdrXMDdMiH414tBEAHa8h80PNzeweqT
-	 /qjsatuXj+lmxHnjD2KvxSzxy0OH/q9T2iJeON7VafREj8wu6xkXmTOQoyQ0o8Y+d8
-	 2lMiz+Q83zcQF7kGEugkH4yxlwtdHyZmIMYF24Ac=
+	b=BKN46RDy9CS5ED7qRVj/ysAfESRtVvmRv2BEcTMo9bmTr/wen3D8LEBgbbR2l5v2c
+	 h0shz12m9W8UGnEux3BKEse2jTIbVU1HCY68eSQMtUHBR0VZP8genjVz3AfUJqGkuy
+	 30t9BBU5hp2RU4AkFoBsoHf7kaMBDk9VtZXkjrxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	Karan Tilak Kumar <kartilak@cisco.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 089/194] scsi: fnic: Return error if vmalloc() failed
-Date: Mon, 22 Jan 2024 15:56:59 -0800
-Message-ID: <20240122235723.067989948@linuxfoundation.org>
+Subject: [PATCH 5.4 090/194] arm64: dts: qcom: sdm845-db845c: correct LED panic indicator
+Date: Mon, 22 Jan 2024 15:57:00 -0800
+Message-ID: <20240122235723.108644581@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -52,42 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit f5f27a332a14f43463aa0075efa3a0c662c0f4a8 ]
+[ Upstream commit 0c90c75e663246203a2b7f6dd9e08a110f4c3c43 ]
 
-In fnic_init_module() exists redundant check for return value from
-fnic_debugfs_init(), because at moment it only can return zero. It make
-sense to process theoretical vmalloc() failure.
+There is no "panic-indicator" default trigger but a property with that
+name:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+  sdm845-db845c.dtb: leds: led-0: Unevaluated properties are not allowed ('linux,default-trigger' was unexpected)
 
-Fixes: 9730ddfb123d ("scsi: fnic: remove redundant assignment of variable rc")
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Link: https://lore.kernel.org/r/20231128111008.2280507-1-artem.chernyshev@red-soft.ru
-Reviewed-by: Karan Tilak Kumar <kartilak@cisco.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 3f72e2d3e682 ("arm64: dts: qcom: Add Dragonboard 845c")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231111095617.16496-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/fnic/fnic_debugfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/fnic/fnic_debugfs.c b/drivers/scsi/fnic/fnic_debugfs.c
-index 13f7d88d6e57..3f2e164b5068 100644
---- a/drivers/scsi/fnic/fnic_debugfs.c
-+++ b/drivers/scsi/fnic/fnic_debugfs.c
-@@ -67,9 +67,10 @@ int fnic_debugfs_init(void)
- 		fc_trc_flag->fnic_trace = 2;
- 		fc_trc_flag->fc_trace = 3;
- 		fc_trc_flag->fc_clear = 4;
-+		return 0;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index bf4fde88011c..e99a58b76d86 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -53,8 +53,8 @@ leds {
+ 		user4 {
+ 			label = "green:user4";
+ 			gpios = <&pm8998_gpio 13 GPIO_ACTIVE_HIGH>;
+-			linux,default-trigger = "panic-indicator";
+ 			default-state = "off";
++			panic-indicator;
+ 		};
  
--	return 0;
-+	return -ENOMEM;
- }
- 
- /*
+ 		wlan {
 -- 
 2.43.0
 
