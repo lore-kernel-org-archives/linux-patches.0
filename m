@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7D913398C;
-	Tue, 23 Jan 2024 00:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6889813398C;
+	Tue, 23 Jan 2024 00:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969325; cv=none; b=Lc+KIqJJ23UGVNmbwtVH/FCb2iAINESpLlZhw68OXjItl2lVs3zjDuqK0KuGD4M8AnRwhwHhtBi60D0R3JOZISZmbkocIGNz0xbJGNGKmCax09PZ1FwOAn+FLBcLdu7hf8tYHnSczeJUxSaz+o7BuGe2BFcjdhSSREw98zQ1kVc=
+	t=1705969327; cv=none; b=hE5mql59lsvHQsdkw8vzMgBGYU8C//CCA8wI8zL611GPh2pCx3sW82XlBuFR3iLuK0zWmy0naW61AfxFN5jZsrK8ke6DZHmGr9q2SiTwJatBV8T/6V4jcKLOSGpZPgXHRuYT0TG/pl2lgy25dy7ceOBBIy7oIgbxt2/RQkDtMQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969325; c=relaxed/simple;
-	bh=RvB0GYgQgFGeOeHMOc67KM7ijicOp+rv1xT+j1N8pk4=;
+	s=arc-20240116; t=1705969327; c=relaxed/simple;
+	bh=pEq0Sul7zNlxTHUi5zmeHTvpY/vlph+rbfdqJLLUta4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iHA1r689w4mFfeAqyS6uMNkbxPHWs/jTIt/KCv4wigE3GaM0fuQD4PVIo5X/V2CKToy/RP/N2xSLImrI2Qx4IKwVnRDh0MbhQd1ylxNtvij4sZ34lX8ulyEErQj+kStBaa/JzgFwsRt5IvTe6oKW/nqT06QAQ9b4EsLjM5GputQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZA60EO4h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FlJx9/4Rtb9ljU9cN4A6ZMYaKe9VBUd64TR7yeeczT8rHOmIIfBqyVZnQvbys6xhIjkEdDSwaRvob1oqtTbRI1jZidnNwZ31qoRP6nNm9+sspENsSEzMl6fRObEsCJPbh2WUr+lwSc+U7udRwX3NWqNBorAfQ2aZyk6v4vudcfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9+/lVGp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZA60EO4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2933DC433F1;
-	Tue, 23 Jan 2024 00:22:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9+/lVGp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1250CC43394;
+	Tue, 23 Jan 2024 00:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969325;
-	bh=RvB0GYgQgFGeOeHMOc67KM7ijicOp+rv1xT+j1N8pk4=;
+	s=korg; t=1705969327;
+	bh=pEq0Sul7zNlxTHUi5zmeHTvpY/vlph+rbfdqJLLUta4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZA60EO4hxG69SyMbLF6w9e9anUgbg/JYpqTba7ketEq6qBlIzxHqibV5UACtrdSKI
-	 zIs92jFktp+Vi6kGLeGiQyynLnbivN5UyNu2h5Vk0Kfe6KnnCN6nWlVGnhkNPqMKoq
-	 dzeWlft6idz1Irgj8vDKyPkXs2ru6WNwqqXHCFK0=
+	b=n9+/lVGpLWyZCW+y5VEXTK5VicVhVQ+VSkHFBu3MLBWL3oAlEYNE+rbXyXvxNiukc
+	 JVefHR0algF9lpA8zh0yO3pS6g7cTOHB86jsGJN4xAgZMzv4ax0bohQ4ohaRIaxWp7
+	 sVMxn+fSepZFhV9Pf3wuZisp3UWsGKW4qUS9c8e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 174/641] arm64: dts: imx8mm: Reduce GPU to nominal speed
-Date: Mon, 22 Jan 2024 15:51:18 -0800
-Message-ID: <20240122235823.453719473@linuxfoundation.org>
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 6.7 175/641] scsi: ufs: qcom: Fix the return value of ufs_qcom_ice_program_key()
+Date: Mon, 22 Jan 2024 15:51:19 -0800
+Message-ID: <20240122235823.483533285@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,49 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 1f794d3eed5345413c2b0cf1bcccc92d77681220 ]
+[ Upstream commit 3bf7ab4ac30c03beecf57c052e87d5a38fb8aed6 ]
 
-When the GPU nodes were added, the GPU_PLL_OUT was configured
-for 1000MHz, but this requires the SoC to run in overdrive mode
-which requires an elevated voltage operating point.
+Currently, the function returns -EINVAL if algorithm other than AES-256-XTS
+is requested. But the correct error code is -EOPNOTSUPP. Fix it!
 
-Since this may run some boards out of spec, the default clock
-should be set to 800MHz for nominal operating mode. Boards
-that run at the higher voltage can update their clocks
-accordingly.
-
-Fixes: 4523be8e46be ("arm64: dts: imx8mm: Add GPU nodes for 2D and 3D core")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Cc: Abel Vesa <abel.vesa@linaro.org>
+Fixes: 56541c7c4468 ("scsi: ufs: ufs-qcom: Switch to the new ICE API")
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20231208065902.11006-3-manivannan.sadhasivam@linaro.org
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mm.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ufs/host/ufs-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mm.dtsi b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
-index 738024baaa57..54faf83cb436 100644
---- a/arch/arm64/boot/dts/freescale/imx8mm.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
-@@ -1408,7 +1408,7 @@ gpu_3d: gpu@38000000 {
- 			assigned-clocks = <&clk IMX8MM_CLK_GPU3D_CORE>,
- 					  <&clk IMX8MM_GPU_PLL_OUT>;
- 			assigned-clock-parents = <&clk IMX8MM_GPU_PLL_OUT>;
--			assigned-clock-rates = <0>, <1000000000>;
-+			assigned-clock-rates = <0>, <800000000>;
- 			power-domains = <&pgc_gpu>;
- 		};
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 17e24270477d..c92cdca21fe1 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -158,7 +158,7 @@ static int ufs_qcom_ice_program_key(struct ufs_hba *hba,
+ 	cap = hba->crypto_cap_array[cfg->crypto_cap_idx];
+ 	if (cap.algorithm_id != UFS_CRYPTO_ALG_AES_XTS ||
+ 	    cap.key_size != UFS_CRYPTO_KEY_SIZE_256)
+-		return -EINVAL;
++		return -EOPNOTSUPP;
  
-@@ -1423,7 +1423,7 @@ gpu_2d: gpu@38008000 {
- 			assigned-clocks = <&clk IMX8MM_CLK_GPU2D_CORE>,
- 					  <&clk IMX8MM_GPU_PLL_OUT>;
- 			assigned-clock-parents = <&clk IMX8MM_GPU_PLL_OUT>;
--			assigned-clock-rates = <0>, <1000000000>;
-+			assigned-clock-rates = <0>, <800000000>;
- 			power-domains = <&pgc_gpu>;
- 		};
- 
+ 	if (config_enable)
+ 		return qcom_ice_program_key(host->ice,
 -- 
 2.43.0
 
