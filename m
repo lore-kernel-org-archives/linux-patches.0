@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78B85A7B8;
-	Tue, 23 Jan 2024 01:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E131A5A7B8;
+	Tue, 23 Jan 2024 01:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974350; cv=none; b=uhLFZfXb1+7dM20aeU1GCTWewsHNyFdS4Ud8FN9YEeintNy1aUm2/hKNPi3FIv+CCdEvisvYetkJi23iX0cT2pPRUR3hZnn3f9W+N58zG+900hItWgnl1OAVhPqmfK+q8eTlyNZZa0Ebmz6A8/5xDe3jjbZu95C5uzHeJkyqLhI=
+	t=1705974352; cv=none; b=GSTNoBmvpWb+o/2vvhLnk5XCDUbJ5WU8LN+4r3WCOD5vd0Xy8wNNDfKS90j4xZXe3X5ieHCv+6IKECSVAkfW36BTVu1hBCQ2xxrERmMFHcz9oBNUP/gNxKxpHumS+zqZnQByKq4ipxP83RnXTOZzjY5EmdHzqjS1fDd5E3H9mbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974350; c=relaxed/simple;
-	bh=WXKGPf0EKTDeshpwou60I3rhaS6fJ5AlRnHdTPw3gmA=;
+	s=arc-20240116; t=1705974352; c=relaxed/simple;
+	bh=fbZRUCrxvH2l9HtJWm3v+o4clJOz/kZUGEia2jAYRk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ajBJ21kdunWBREvMk3oxySKUKCsHJMgW5BQTPFNRp4tsLCfJ6CHBk1cR7406TzP//Q8Qwoyx0RxNna7Odz0tjXqXOa/4u0O7PqdgzY95v29ydZ7nPqea8mobwLjtDer2DRnrsLZaREP3aJFP18Pjod2Rulo6Z+X161serPrt62o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBfDvI9R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DS3pk0eXEWyUMCOU5W1H+1orH/Gn2VF6i21x2xdxiHPZ7ncjXoh7oe2JRZHIBP8J2RB6ICn9Rpqa9FwDQavOCOBxfW3dBCXO7FHLTA4a0e4r4ywGMUnY4QrfRN6JOurey48tSqOb0obn+xli9jMSHIuk03Jsm7Uk7oer91rLjRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsGt+yxW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBfDvI9R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2B8C433C7;
-	Tue, 23 Jan 2024 01:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsGt+yxW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCCFC433F1;
+	Tue, 23 Jan 2024 01:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974350;
-	bh=WXKGPf0EKTDeshpwou60I3rhaS6fJ5AlRnHdTPw3gmA=;
+	s=korg; t=1705974351;
+	bh=fbZRUCrxvH2l9HtJWm3v+o4clJOz/kZUGEia2jAYRk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hBfDvI9RT+ug1+8VawrINyXXTcUxnftkQZI7wggkwMo4Rx2ftWHXfjtoWCcvh4bUA
-	 qAjZnhhVReNj1XUtz4p/t1LpzwkQainA3k47nUtzSh1xJKjLiMBCH6I7i5C3rlqsrW
-	 HQ7/Ok60D8qjpPW0SfXCxitNydzoStmIefDtDYag=
+	b=nsGt+yxWNiycB/vPQLyYpWcD/wAweOMRxuFVeRBKD+mKrIEkMyAhDcgoKOVvM1A2z
+	 AyXWC6eAdsyqma0GXkxR1MWvraJ4acZGIhVC15LcdhmlIhAm7Oo+wzBgojKFz7pjmx
+	 ZSym+FvevygANDGLsa2+N9xjPkQmaHaXin0w/rzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Yue Hu <huyue2@coolpad.com>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 187/374] drm/radeon/r600_cs: Fix possible int overflows in r600_cs_check_reg()
-Date: Mon, 22 Jan 2024 15:57:23 -0800
-Message-ID: <20240122235751.126874678@linuxfoundation.org>
+Subject: [PATCH 6.6 061/583] erofs: fix memory leak on short-lived bounced pages
+Date: Mon, 22 Jan 2024 15:51:52 -0800
+Message-ID: <20240122235813.993590053@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +48,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 39c960bbf9d9ea862398759e75736cfb68c3446f ]
+[ Upstream commit 93d6fda7f926451a0fa1121b9558d75ca47e861e ]
 
-While improbable, there may be a chance of hitting integer
-overflow when the result of radeon_get_ib_value() gets shifted
-left.
+Both MicroLZMA and DEFLATE algorithms can use short-lived pages on
+demand for the overlapped inplace I/O decompression.
 
-Avoid it by casting one of the operands to larger data type (u64).
+However, those short-lived pages are actually added to
+`be->compressed_pages`.  Thus, it should be checked instead of
+`pcl->compressed_bvecs`.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+The LZ4 algorithm doesn't work like this, so it won't be impacted.
 
-Fixes: 1729dd33d20b ("drm/radeon/kms: r600 CS parser fixes")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 67139e36d970 ("erofs: introduce `z_erofs_parse_in_bvecs'")
+Reviewed-by: Yue Hu <huyue2@coolpad.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20231128180431.4116991-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/r600_cs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/erofs/zdata.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/r600_cs.c b/drivers/gpu/drm/radeon/r600_cs.c
-index 8be4799a98ef..6ade5dd470d5 100644
---- a/drivers/gpu/drm/radeon/r600_cs.c
-+++ b/drivers/gpu/drm/radeon/r600_cs.c
-@@ -1277,7 +1277,7 @@ static int r600_cs_check_reg(struct radeon_cs_parser *p, u32 reg, u32 idx)
- 			return -EINVAL;
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index a7e6847f6f8f..a33cd6757f98 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -1309,12 +1309,11 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
+ 		put_page(page);
+ 	} else {
+ 		for (i = 0; i < pclusterpages; ++i) {
+-			page = pcl->compressed_bvecs[i].page;
++			/* consider shortlived pages added when decompressing */
++			page = be->compressed_pages[i];
+ 
+ 			if (erofs_page_is_managed(sbi, page))
+ 				continue;
+-
+-			/* recycle all individual short-lived pages */
+ 			(void)z_erofs_put_shortlivedpage(be->pagepool, page);
+ 			WRITE_ONCE(pcl->compressed_bvecs[i].page, NULL);
  		}
- 		tmp = (reg - CB_COLOR0_BASE) / 4;
--		track->cb_color_bo_offset[tmp] = radeon_get_ib_value(p, idx) << 8;
-+		track->cb_color_bo_offset[tmp] = (u64)radeon_get_ib_value(p, idx) << 8;
- 		ib[idx] += (u32)((reloc->gpu_offset >> 8) & 0xffffffff);
- 		track->cb_color_base_last[tmp] = ib[idx];
- 		track->cb_color_bo[tmp] = reloc->robj;
-@@ -1304,7 +1304,7 @@ static int r600_cs_check_reg(struct radeon_cs_parser *p, u32 reg, u32 idx)
- 					"0x%04X\n", reg);
- 			return -EINVAL;
- 		}
--		track->htile_offset = radeon_get_ib_value(p, idx) << 8;
-+		track->htile_offset = (u64)radeon_get_ib_value(p, idx) << 8;
- 		ib[idx] += (u32)((reloc->gpu_offset >> 8) & 0xffffffff);
- 		track->htile_bo = reloc->robj;
- 		track->db_dirty = true;
 -- 
 2.43.0
 
