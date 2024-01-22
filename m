@@ -1,38 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C0E1350CA;
-	Tue, 23 Jan 2024 01:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF4B1353E8;
+	Tue, 23 Jan 2024 01:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971966; cv=none; b=l+ii64EdWLBWT1DQG0eubvbJqc4ZLmCFBF6TI75zdM/dLkXmKm8p5nn/0Zy4H15giINzGjtzhu0LvC8Egjozx937d5KT87Jn8AjEW3cCmDBN6NWNUnvtZY3Gr/tsEUoImpNfNJF0VoxsszmcDr3JIsq+JrL2AL3t0/Ngs2GlDyY=
+	t=1705971967; cv=none; b=gw0wuh2kqb1Ob7j98V0z+JWv60lkKdeBdF/LeS8AcvRmXt/GHxe03SKr8WBk5yPl0v5BkZGFUXxSRwQSe+5tLNXIAxL48FQcRWYJtISxVbkL7vJvTiWbeX94vmaTLSd//KwrXYjMviUEvBGsono+NTOMyOQO+5Fv9d65bG86TXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971966; c=relaxed/simple;
-	bh=tGS4t30J65YdQZ1088v0wGOafuAuvu0bg4hPNeLwgtc=;
+	s=arc-20240116; t=1705971967; c=relaxed/simple;
+	bh=BVNjowA/amp7J2pRA9Ai64nbQMqlAKf+35M9e+M/9qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AvWz0whI3ahLjW5dlIVBQihBN0/peSY8yE6Qnl0hqEtq7DDzmBaHQbMLiBdiuL9X0zmEhsp/SQjVlkxWbvIYqfpplbKgReFmVwTNVyQpl7rnVZP8saFh/xXn85Rt2EcP35450PUFx6fqmAMFsbOAT+YnH1UxPgc4dJGC91RBEkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtwh79Vw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a+/dcRZu+gEZQtw9yiENxs4CeY4Jdx4PSX1Uejivq5voRmG6vkaYUtNqSDDocER0et71szFNQD3CjyxJ5a52ILUjbnB0ECYp76/gN1tA0rWlihUQR/ijE4/cvFPUfpYkdqrcL6zYvUdrFg6TAXS0Q9Fdt5MQw50QoEUPoAePLzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qxELaox; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtwh79Vw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32134C433F1;
-	Tue, 23 Jan 2024 01:06:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qxELaox"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AE8C43390;
+	Tue, 23 Jan 2024 01:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971966;
-	bh=tGS4t30J65YdQZ1088v0wGOafuAuvu0bg4hPNeLwgtc=;
+	s=korg; t=1705971967;
+	bh=BVNjowA/amp7J2pRA9Ai64nbQMqlAKf+35M9e+M/9qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xtwh79VwgYTG4J/J1msNMQsSFqL+mbMe2HMhhsM9bhKyvr+7NRFxtmlGXvyuDkGKs
-	 yLg4y0IYYOuBX6TFSOnqfZ7mPN9DGB7jkpFktGTLRjc/J0bqd5g+Ei17EekDz+FGsz
-	 GyOEvIY9kaeKMHLwGWXak3fBr+eA92zFXCE70lUI=
+	b=0qxELaoxb4BPRbK1HetCa6ht5LFmThRl/s076WX4TIM087goOu/n+gO6LnMvSaDnf
+	 Iua+ScjSp4OBgESgft2NECHOw9O4dc8TcbD/SnkmwOatQIThiEMce8P/C5y9SAAHOu
+	 C1cUSRthRhd8fhdcpiE3IHqoynkhTRyE0aVXX3oM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Douglas Anderson <dianders@chromium.org>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Song Liu <song@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Ming Wang <wangming01@loongson.cn>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 361/417] usb: core: Fix crash w/ usb_choose_configuration() if no driver
-Date: Mon, 22 Jan 2024 15:58:49 -0800
-Message-ID: <20240122235804.329671347@linuxfoundation.org>
+Subject: [PATCH 6.1 366/417] perf env: Avoid recursively taking env->bpf_progs.lock
+Date: Mon, 22 Jan 2024 15:58:54 -0800
+Message-ID: <20240122235804.499591844@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -51,62 +64,274 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 44995e6f07028f798efd0c3c11a1efc78330f600 ]
+[ Upstream commit 9c51f8788b5d4e9f46afbcf563255cfd355690b3 ]
 
-It's possible that usb_choose_configuration() can get called when a
-USB device has no driver. In this case the recent commit a87b8e3be926
-("usb: core: Allow subclassed USB drivers to override
-usb_choose_configuration()") can cause a crash since it dereferenced
-the driver structure without checking for NULL. Let's add a check.
+Add variants of perf_env__insert_bpf_prog_info(), perf_env__insert_btf()
+and perf_env__find_btf prefixed with __ to indicate the
+env->bpf_progs.lock is assumed held.
 
-A USB device with no driver is an anomaly, so make
-usb_choose_configuration() return immediately if there is no driver.
+Call these variants when the lock is held to avoid recursively taking it
+and potentially having a thread deadlock with itself.
 
-This was seen in the real world when usbguard got ahold of a r8152
-device at the wrong time. It can also be simulated via this on a
-computer with one r8152-based USB Ethernet adapter:
-  cd /sys/bus/usb/drivers/r8152-cfgselector
-  to_unbind="$(ls -d *-*)"
-  real_dir="$(readlink -f "${to_unbind}")"
-  echo "${to_unbind}" > unbind
-  cd "${real_dir}"
-  echo 0 > authorized
-  echo 1 > authorized
-
-Fixes: a87b8e3be926 ("usb: core: Allow subclassed USB drivers to override usb_choose_configuration()")
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20231211073237.v3.1.If27eb3bf7812f91ab83810f232292f032f4203e0@changeid
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f8dfeae009effc0b ("perf bpf: Show more BPF program info in print_bpf_prog_info()")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Song Liu <song@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Ming Wang <wangming01@loongson.cn>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Link: https://lore.kernel.org/r/20231207014655.1252484-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/generic.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ tools/perf/util/bpf-event.c |  8 +++---
+ tools/perf/util/bpf-event.h | 12 ++++-----
+ tools/perf/util/env.c       | 50 ++++++++++++++++++++++++-------------
+ tools/perf/util/env.h       |  4 +++
+ tools/perf/util/header.c    |  8 +++---
+ 5 files changed, 50 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/usb/core/generic.c b/drivers/usb/core/generic.c
-index dcb897158228..b134bff5c3fe 100644
---- a/drivers/usb/core/generic.c
-+++ b/drivers/usb/core/generic.c
-@@ -59,7 +59,16 @@ int usb_choose_configuration(struct usb_device *udev)
- 	int num_configs;
- 	int insufficient_power = 0;
- 	struct usb_host_config *c, *best;
--	struct usb_device_driver *udriver = to_usb_device_driver(udev->dev.driver);
-+	struct usb_device_driver *udriver;
-+
-+	/*
-+	 * If a USB device (not an interface) doesn't have a driver then the
-+	 * kernel has no business trying to select or install a configuration
-+	 * for it.
-+	 */
-+	if (!udev->dev.driver)
-+		return -1;
-+	udriver = to_usb_device_driver(udev->dev.driver);
+diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
+index cc7c1f90cf62..91c7bfa82a50 100644
+--- a/tools/perf/util/bpf-event.c
++++ b/tools/perf/util/bpf-event.c
+@@ -606,9 +606,9 @@ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env)
+ 	return evlist__add_sb_event(evlist, &attr, bpf_event__sb_cb, env);
+ }
  
- 	if (usb_device_is_owned(udev))
- 		return 0;
+-void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
+-				    struct perf_env *env,
+-				    FILE *fp)
++void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
++				      struct perf_env *env,
++				      FILE *fp)
+ {
+ 	__u32 *prog_lens = (__u32 *)(uintptr_t)(info->jited_func_lens);
+ 	__u64 *prog_addrs = (__u64 *)(uintptr_t)(info->jited_ksyms);
+@@ -624,7 +624,7 @@ void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
+ 	if (info->btf_id) {
+ 		struct btf_node *node;
+ 
+-		node = perf_env__find_btf(env, info->btf_id);
++		node = __perf_env__find_btf(env, info->btf_id);
+ 		if (node)
+ 			btf = btf__new((__u8 *)(node->data),
+ 				       node->data_size);
+diff --git a/tools/perf/util/bpf-event.h b/tools/perf/util/bpf-event.h
+index 1bcbd4fb6c66..e2f0420905f5 100644
+--- a/tools/perf/util/bpf-event.h
++++ b/tools/perf/util/bpf-event.h
+@@ -33,9 +33,9 @@ struct btf_node {
+ int machine__process_bpf(struct machine *machine, union perf_event *event,
+ 			 struct perf_sample *sample);
+ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env);
+-void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
+-				    struct perf_env *env,
+-				    FILE *fp);
++void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
++				      struct perf_env *env,
++				      FILE *fp);
+ #else
+ static inline int machine__process_bpf(struct machine *machine __maybe_unused,
+ 				       union perf_event *event __maybe_unused,
+@@ -50,9 +50,9 @@ static inline int evlist__add_bpf_sb_event(struct evlist *evlist __maybe_unused,
+ 	return 0;
+ }
+ 
+-static inline void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
+-						  struct perf_env *env __maybe_unused,
+-						  FILE *fp __maybe_unused)
++static inline void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
++						    struct perf_env *env __maybe_unused,
++						    FILE *fp __maybe_unused)
+ {
+ 
+ }
+diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
+index 5b8cf6a421a4..5d878bae7d9a 100644
+--- a/tools/perf/util/env.c
++++ b/tools/perf/util/env.c
+@@ -21,13 +21,19 @@ struct perf_env perf_env;
+ 
+ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 				    struct bpf_prog_info_node *info_node)
++{
++	down_write(&env->bpf_progs.lock);
++	__perf_env__insert_bpf_prog_info(env, info_node);
++	up_write(&env->bpf_progs.lock);
++}
++
++void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
+ {
+ 	__u32 prog_id = info_node->info_linear->info.id;
+ 	struct bpf_prog_info_node *node;
+ 	struct rb_node *parent = NULL;
+ 	struct rb_node **p;
+ 
+-	down_write(&env->bpf_progs.lock);
+ 	p = &env->bpf_progs.infos.rb_node;
+ 
+ 	while (*p != NULL) {
+@@ -39,15 +45,13 @@ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 			p = &(*p)->rb_right;
+ 		} else {
+ 			pr_debug("duplicated bpf prog info %u\n", prog_id);
+-			goto out;
++			return;
+ 		}
+ 	}
+ 
+ 	rb_link_node(&info_node->rb_node, parent, p);
+ 	rb_insert_color(&info_node->rb_node, &env->bpf_progs.infos);
+ 	env->bpf_progs.infos_cnt++;
+-out:
+-	up_write(&env->bpf_progs.lock);
+ }
+ 
+ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+@@ -76,14 +80,22 @@ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+ }
+ 
+ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
++{
++	bool ret;
++
++	down_write(&env->bpf_progs.lock);
++	ret = __perf_env__insert_btf(env, btf_node);
++	up_write(&env->bpf_progs.lock);
++	return ret;
++}
++
++bool __perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
+ {
+ 	struct rb_node *parent = NULL;
+ 	__u32 btf_id = btf_node->id;
+ 	struct btf_node *node;
+ 	struct rb_node **p;
+-	bool ret = true;
+ 
+-	down_write(&env->bpf_progs.lock);
+ 	p = &env->bpf_progs.btfs.rb_node;
+ 
+ 	while (*p != NULL) {
+@@ -95,25 +107,31 @@ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
+ 			p = &(*p)->rb_right;
+ 		} else {
+ 			pr_debug("duplicated btf %u\n", btf_id);
+-			ret = false;
+-			goto out;
++			return false;
+ 		}
+ 	}
+ 
+ 	rb_link_node(&btf_node->rb_node, parent, p);
+ 	rb_insert_color(&btf_node->rb_node, &env->bpf_progs.btfs);
+ 	env->bpf_progs.btfs_cnt++;
+-out:
+-	up_write(&env->bpf_progs.lock);
+-	return ret;
++	return true;
+ }
+ 
+ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id)
++{
++	struct btf_node *res;
++
++	down_read(&env->bpf_progs.lock);
++	res = __perf_env__find_btf(env, btf_id);
++	up_read(&env->bpf_progs.lock);
++	return res;
++}
++
++struct btf_node *__perf_env__find_btf(struct perf_env *env, __u32 btf_id)
+ {
+ 	struct btf_node *node = NULL;
+ 	struct rb_node *n;
+ 
+-	down_read(&env->bpf_progs.lock);
+ 	n = env->bpf_progs.btfs.rb_node;
+ 
+ 	while (n) {
+@@ -123,13 +141,9 @@ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id)
+ 		else if (btf_id > node->id)
+ 			n = n->rb_right;
+ 		else
+-			goto out;
++			return node;
+ 	}
+-	node = NULL;
+-
+-out:
+-	up_read(&env->bpf_progs.lock);
+-	return node;
++	return NULL;
+ }
+ 
+ /* purge data in bpf_progs.infos tree */
+diff --git a/tools/perf/util/env.h b/tools/perf/util/env.h
+index 4566c51f2fd9..359eff51cb85 100644
+--- a/tools/perf/util/env.h
++++ b/tools/perf/util/env.h
+@@ -164,12 +164,16 @@ const char *perf_env__raw_arch(struct perf_env *env);
+ int perf_env__nr_cpus_avail(struct perf_env *env);
+ 
+ void perf_env__init(struct perf_env *env);
++void __perf_env__insert_bpf_prog_info(struct perf_env *env,
++				      struct bpf_prog_info_node *info_node);
+ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 				    struct bpf_prog_info_node *info_node);
+ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+ 							__u32 prog_id);
+ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node);
++bool __perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node);
+ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id);
++struct btf_node *__perf_env__find_btf(struct perf_env *env, __u32 btf_id);
+ 
+ int perf_env__numa_node(struct perf_env *env, struct perf_cpu cpu);
+ char *perf_env__find_pmu_cap(struct perf_env *env, const char *pmu_name,
+diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
+index eaeeba8d65ec..b2b0293567f0 100644
+--- a/tools/perf/util/header.c
++++ b/tools/perf/util/header.c
+@@ -1809,8 +1809,8 @@ static void print_bpf_prog_info(struct feat_fd *ff, FILE *fp)
+ 		node = rb_entry(next, struct bpf_prog_info_node, rb_node);
+ 		next = rb_next(&node->rb_node);
+ 
+-		bpf_event__print_bpf_prog_info(&node->info_linear->info,
+-					       env, fp);
++		__bpf_event__print_bpf_prog_info(&node->info_linear->info,
++						 env, fp);
+ 	}
+ 
+ 	up_read(&env->bpf_progs.lock);
+@@ -3136,7 +3136,7 @@ static int process_bpf_prog_info(struct feat_fd *ff, void *data __maybe_unused)
+ 		/* after reading from file, translate offset to address */
+ 		bpil_offs_to_addr(info_linear);
+ 		info_node->info_linear = info_linear;
+-		perf_env__insert_bpf_prog_info(env, info_node);
++		__perf_env__insert_bpf_prog_info(env, info_node);
+ 	}
+ 
+ 	up_write(&env->bpf_progs.lock);
+@@ -3183,7 +3183,7 @@ static int process_bpf_btf(struct feat_fd *ff, void *data __maybe_unused)
+ 		if (__do_read(ff, node->data, data_size))
+ 			goto out;
+ 
+-		perf_env__insert_btf(env, node);
++		__perf_env__insert_btf(env, node);
+ 		node = NULL;
+ 	}
+ 
 -- 
 2.43.0
 
