@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F8C5C915;
-	Tue, 23 Jan 2024 01:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F8F5C8FC;
+	Tue, 23 Jan 2024 01:46:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974377; cv=none; b=BrBXHywHF439LjVO/AiV92sMzYlx8BZzEFwxSIgSAhelayImfzgnqtsLTyCXHSCDgOAvbphcYhLSWmiCnj9j5KIOij4DjJ0k9yd54S9c2xAXPyc5DEXFNhto0jkPUcE9q/OQ24lnsC5kFYIbkUHI1vcDQTAEYB0vT8e51vQDmRc=
+	t=1705974378; cv=none; b=gNHlQT5Dnbv/BG9jrtgWmr22+S0Q35TYvDi0/e+6qa14ClQ+/F9EAIIblZM4khKySjvxyOgJ74qAOQkyHmkPjHfg7Vrx6V7R2rqLABxIe5JRQdNVuVxH7lhScQfbeCxrJw+aypsyp1UV3eRydkv+HRQsK9f2TFoYR/Gplo80KXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974377; c=relaxed/simple;
-	bh=TXWxnDqzeOUYSFDfrW/v9QEnwfJjC0r9KG3lL9jpZX4=;
+	s=arc-20240116; t=1705974378; c=relaxed/simple;
+	bh=zF6zwedgcHaBN1+aFzcwh/pOqmVXZmxksmYWNFV5CeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uWG9KK8BhxHpHB5/Ec0JPxTYRRnPt2XQdwR1zMiFsevrWE8EgK1ih4c+KGO4ns+wINX17w2TP+FZl0NK2+//HJGh4c9hwzEKeiO02DsiXbdcdAkdMHQCIC8+WS+OmcFYyvBjFnjIgOH5oazsDdzZgomyBAjFxdWT1LyqZBG7SWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwhzwyLV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XUfgTYxgeNm+bKj5fsvgtMbeBRG7ijVeUupgWuOPsiNHMgET7YBFj0ZekeBm8QvcTmcMoLAeO9HnkTFdn2DZIRIfaIpwW0HRVqFAFqwSC3l9eXalTuJzn+v4zh9O9D0pBmztOacKocXUIF8zBmt9b87dtGoSP1MHUXFHbt95Xkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ul+8AZda; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwhzwyLV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C117C433F1;
-	Tue, 23 Jan 2024 01:46:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ul+8AZda"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 891D3C43390;
+	Tue, 23 Jan 2024 01:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974377;
-	bh=TXWxnDqzeOUYSFDfrW/v9QEnwfJjC0r9KG3lL9jpZX4=;
+	s=korg; t=1705974378;
+	bh=zF6zwedgcHaBN1+aFzcwh/pOqmVXZmxksmYWNFV5CeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lwhzwyLVnEjS2UoXB1RK1uAuXqagjiFWAe3I9iXe2sRhz8e9kjsJDVRl5vwzs2xuT
-	 tOhS7YxnoOhJtSmX6hzf+1nfd4xFZVmcO0SW3ATEnjlRN9kQvtWm85Cdw1T1bmWYox
-	 btG30/+FZgbxGmPu6zQGHAojHRn5BjyZ77KE0yq0=
+	b=Ul+8AZdaczkYLjCiyQBuI4ySSfyjvy2hHR4GkoMLCQZdbTNvRxvdiw6GXpyDIySbr
+	 Jo+dAMAWrf3FslGTrYW4sCWXdeKT2tWCSjCq0yO6ZWwjR26vsUrfs9fsWe/ffa+5Hc
+	 oT43OWLaydsKrNJDy9huOpQwvPBBufJ56gs9VE5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 198/374] drm/bridge: cdns-mhdp8546: Fix use of uninitialized variable
-Date: Mon, 22 Jan 2024 15:57:34 -0800
-Message-ID: <20240122235751.493934917@linuxfoundation.org>
+Subject: [PATCH 6.6 072/583] crypto: sahara - fix processing hash requests with req->nbytes < sg->length
+Date: Mon, 22 Jan 2024 15:52:03 -0800
+Message-ID: <20240122235814.357309253@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit 155d6fb61270dd297f128731cd155080deee8f3a ]
+[ Upstream commit 7bafa74d1ba35dcc173e1ce915e983d65905f77e ]
 
-'ret' could be uninitialized at the end of the function, although it's
-not clear if that can happen in practice.
+It's not always the case that the entire sg entry needs to be processed.
+Currently, when nbytes is less than sg->length, "Descriptor length" errors
+are encountered.
 
-Fixes: 6a3608eae6d3 ("drm: bridge: cdns-mhdp8546: Enable HDCP")
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231103-uninit-fixes-v2-3-c22b2444f5f5@ideasonboard.com
+To fix this, take the actual request size into account when populating the
+hw links.
+
+Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/sahara.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c
-index fccd6fbcc257..29c04012b701 100644
---- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c
-@@ -403,7 +403,8 @@ static int _cdns_mhdp_hdcp_disable(struct cdns_mhdp_device *mhdp)
- 
- static int _cdns_mhdp_hdcp_enable(struct cdns_mhdp_device *mhdp, u8 content_type)
+diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
+index 117aa4296c2a..477b4d8b450d 100644
+--- a/drivers/crypto/sahara.c
++++ b/drivers/crypto/sahara.c
+@@ -776,6 +776,7 @@ static int sahara_sha_hw_links_create(struct sahara_dev *dev,
+ 				       int start)
  {
--	int ret, tries = 3;
-+	int ret = -EINVAL;
-+	int tries = 3;
- 	u32 i;
+ 	struct scatterlist *sg;
++	unsigned int len;
+ 	unsigned int i;
+ 	int ret;
  
- 	for (i = 0; i < tries; i++) {
+@@ -797,12 +798,14 @@ static int sahara_sha_hw_links_create(struct sahara_dev *dev,
+ 	if (!ret)
+ 		return -EFAULT;
+ 
++	len = rctx->total;
+ 	for (i = start; i < dev->nb_in_sg + start; i++) {
+-		dev->hw_link[i]->len = sg->length;
++		dev->hw_link[i]->len = min(len, sg->length);
+ 		dev->hw_link[i]->p = sg->dma_address;
+ 		if (i == (dev->nb_in_sg + start - 1)) {
+ 			dev->hw_link[i]->next = 0;
+ 		} else {
++			len -= min(len, sg->length);
+ 			dev->hw_link[i]->next = dev->hw_phys_link[i + 1];
+ 			sg = sg_next(sg);
+ 		}
 -- 
 2.43.0
 
