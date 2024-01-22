@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AE012A17F;
-	Tue, 23 Jan 2024 00:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE3112A17F;
+	Tue, 23 Jan 2024 00:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968783; cv=none; b=hkew9BhSzp+sl0hbI0B7wglFXoQMGuaOK8jyZLFLJPWErAuUjEaNH5FGCTvgLfKqRnGuSqvPRXxq9eh6SA6a0DsSznKRO7DcFWleJvPUw1o2V0++yrjqSO9MlgH/bkQnvO6vgU7G0zhAOtlRp/KeWJwsnfc4Zw8m5FM89MddZpI=
+	t=1705968785; cv=none; b=bbxwk1Nw8ir3RLfsQRWYy4jDBgqqJy193Ir96XlTy+GFuOGEwjODrEAxN9dCE+0NRCN6tMFrlvSq8Wft4RkZDw90Cr0vuOqlF1FV6t+x7SQWCkAi0CzgOuwBoDGRpwA02K3PgmZ3QFvbYOmsgIS0OIw7qjWQcBVI08WlFIYxsj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968783; c=relaxed/simple;
-	bh=es8+dCoBIJRSpq6NOc9mJ0xOOnNfMRc4ZCPvv7Hc4Bc=;
+	s=arc-20240116; t=1705968785; c=relaxed/simple;
+	bh=KuuMHEG79UcNNLToiC9dqtUFC1/fLnKaIMP4c6v7YuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aekAKUvgr1P2BshLsAU8TwPyD0BLtGLfnp3u8PEJfWMVfa1eNH+gB7YKEFNmS+Dvg14e7JTfTuz96dpQ+/u2Ew1Ug3PIJWfWN+15w7TndGMuS2TF+pJy1kA0fwE0z5KcjUqwuwiyBLwyuWYVojPHTanSr6Og/NJlLOUK42kzHyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awIUjtcc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EAWKzElx30QB0pCmHskZ9DdYVuDewAu3An5x89tURqXBVYDxxfqRMsNSAGjBjCnv8NXflwKiuR5NqmrSe4C5/KRsXGR16+Npxwq2PTOzWpuNT3LOkrE8+H9/n7s1AtyJn4Ba0onAA6A8NFhPhxEtgpQlTGW15OlePG7pZE1ML10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsi2Vgz/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awIUjtcc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409F6C433F1;
-	Tue, 23 Jan 2024 00:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsi2Vgz/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0227BC433C7;
+	Tue, 23 Jan 2024 00:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968783;
-	bh=es8+dCoBIJRSpq6NOc9mJ0xOOnNfMRc4ZCPvv7Hc4Bc=;
+	s=korg; t=1705968785;
+	bh=KuuMHEG79UcNNLToiC9dqtUFC1/fLnKaIMP4c6v7YuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=awIUjtcc81hy+HJySixEv3amqwD/0ec6KFV7Sb3VbiaP2MPyE496+A74tQpUZjWXl
-	 v+81/7I9+Yh6HX1bcJqFpmOa6+XdbTzaPWxTw2x0oDw8Okk2xu+7qi1qdr1STUkm7v
-	 n/ToBT3n2IcxG20CDieTD0kLcyhUzlhz0eVonLrs=
+	b=gsi2Vgz/uGiw6edZnMxqrmyefSH9zGEnh8GOQPMlNYDp5Nsdztp46rFQ0mZJBPzFJ
+	 XlgPtykW0JBfp7xlKYfORra/iHaqGHkokJVzk5DRcUh+s8JaueGVg1g/28iy3PxKfX
+	 xOpuuSbBRnvSHqgvWsZwGIzEQX6fBH53v6Sjfez8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 049/194] powerpc/powernv: Add a null pointer check in opal_powercap_init()
-Date: Mon, 22 Jan 2024 15:56:19 -0800
-Message-ID: <20240122235721.306906945@linuxfoundation.org>
+	Luis Acuna <ldacuna@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.4 032/194] ACPI: resource: Add another DMI match for the TongFang GMxXGxx
+Date: Mon, 22 Jan 2024 15:56:02 -0800
+Message-ID: <20240122235720.589913688@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,41 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit e123015c0ba859cf48aa7f89c5016cc6e98e018d ]
+commit df0cced74159c79e36ce7971f0bf250673296d93 upstream.
 
-kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure.
+The TongFang GMxXGxx, which needs IRQ overriding for the keyboard to work,
+is also sold as the Eluktronics RP-15 which does not use the standard
+TongFang GMxXGxx DMI board_name.
 
-Fixes: b9ef7b4b867f ("powerpc: Convert to using %pOFn instead of device_node.name")
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231126095739.1501990-1-chentao@kylinos.cn
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add an entry for this laptop to the irq1_edge_low_force_override[] DMI
+table to make the internal keyboard functional.
+
+Reported-by: Luis Acuna <ldacuna@gmail.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/powernv/opal-powercap.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/acpi/resource.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/powerpc/platforms/powernv/opal-powercap.c b/arch/powerpc/platforms/powernv/opal-powercap.c
-index dc599e787f78..0de530b5fead 100644
---- a/arch/powerpc/platforms/powernv/opal-powercap.c
-+++ b/arch/powerpc/platforms/powernv/opal-powercap.c
-@@ -196,6 +196,12 @@ void __init opal_powercap_init(void)
- 
- 		j = 0;
- 		pcaps[i].pg.name = kasprintf(GFP_KERNEL, "%pOFn", node);
-+		if (!pcaps[i].pg.name) {
-+			kfree(pcaps[i].pattrs);
-+			kfree(pcaps[i].pg.attrs);
-+			goto out_pcaps_pattrs;
-+		}
-+
- 		if (has_min) {
- 			powercap_add_attr(min, "powercap-min",
- 					  &pcaps[i].pattrs[j]);
--- 
-2.43.0
-
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -456,6 +456,13 @@ static const struct dmi_system_id asus_l
+ 		},
+ 	},
+ 	{
++		/* TongFang GMxXGxx sold as Eluktronics Inc. RP-15 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Eluktronics Inc."),
++			DMI_MATCH(DMI_BOARD_NAME, "RP-15"),
++		},
++	},
++	{
+ 		/* TongFang GM6XGxX/TUXEDO Stellaris 16 Gen5 AMD */
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "GM6XGxX"),
 
 
