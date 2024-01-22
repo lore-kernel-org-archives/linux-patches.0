@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929E51487D4;
-	Tue, 23 Jan 2024 01:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604FA1487D2;
+	Tue, 23 Jan 2024 01:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972079; cv=none; b=u8oijnqY81R5Du9GFu4NilsPpe5d9vwwqn7kW+IXSt8A1DpRYcNvYbZfZAcY5UNb9BRdTIBkZiHJHT202IlplWBGjTuI8eVEudhLk0W/iVwSD9YnhNa7MWBc/5RMeYZ90LU7Z+UDT2mVIN9OK36PiYTt3N8afSXIyq8yOsvsPVU=
+	t=1705972081; cv=none; b=ZOaUxqdbQ57a/LF4y0FEB2DSiWyjxZQvWwfOA9+JRX76Oy45ml9uywP/ULX6TzXbrl9quEgWFY7EedNdjLEycHdeU19D0N+bYJNalkJNCYaWB4pDLd+j6R3OOjke/aAM98PoR129EcVc70R7cQ0CuFm15e63yNjRbPZXe7unbh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972079; c=relaxed/simple;
-	bh=O5yPergo4AQa1Tx1k119NWlAkAlRhzzcaY2+TqWfjCM=;
+	s=arc-20240116; t=1705972081; c=relaxed/simple;
+	bh=Xf0ade+jHGDpG+8q9yyGPiYEn1vKFXhpfl2YqTvh23s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fKg/Z96p68Uucz24uYNZLLC4ENFZ2QPfHv/8OvyX+w4zXFkXVDvNt5QNU0Yo8SxvzBnpgir8f32vuaaQ1znQ3bn8Z5Ic9ci+ZMS8l488YAzpBE4ZA/9fA7hrT+Mm2Yamgy5Rb14Xmgl5YjpsbYz9PAzNK0ZLEzSOekENCHplJas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elo+XmVm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mBIf8UKkWVAlX6ofCV27KeuT/4A3VtALAsfxk7fclkR6n5MbXHDjxLDHaROcngkrXMYi7ULUWx1kso4gW4u2v1sBdVIvZH4VCyYgX68DT1bH+2BRK5CHIKDFgW5yT42yGXTjs91HgF6gl8kmBt++j7DC5rfSykYvnRtyEvS87YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H444ofp9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elo+XmVm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DCBDC43330;
-	Tue, 23 Jan 2024 01:07:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H444ofp9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1452C433B2;
+	Tue, 23 Jan 2024 01:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972079;
-	bh=O5yPergo4AQa1Tx1k119NWlAkAlRhzzcaY2+TqWfjCM=;
+	s=korg; t=1705972080;
+	bh=Xf0ade+jHGDpG+8q9yyGPiYEn1vKFXhpfl2YqTvh23s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=elo+XmVmnE/yMeqlECHLiqNjvAxxa7zHl8+qP8Ug9xEXRM3QNT5NWUgEIYRTgjkTw
-	 lfxIkFIPHduA2qAywk2weuByyPDCqlR+AktRhqMBaVRmL2qYWL99Tk+x7kUpt2ZI3C
-	 hb+o7qiCjL2kbSn/tIOc06Dz8X2eEP+wg3eMph04=
+	b=H444ofp9ZG+/XOdhBX5Bek4gsZUVUT7c7wmZmRvJoWLFxyPf78IxP8YSwLyajS0X7
+	 mQjQYEoJntVqoDWMvMZ5jnnwGlM1l2YF8IUoBJhMyc/zEH6vegSCUDJlvXzjnuMmsq
+	 4724ys1Xh5Mg6UwND72Sq4y7vH3KRXmuMkcdWse0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b834a6b2decad004cfa1@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+7e59a5bfc7a897247e18@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/374] mptcp: fix uninit-value in mptcp_incoming_options
-Date: Mon, 22 Jan 2024 15:54:20 -0800
-Message-ID: <20240122235744.777885366@linuxfoundation.org>
+Subject: [PATCH 5.15 005/374] wifi: cfg80211: lock wiphy mutex for rfkill poll
+Date: Mon, 22 Jan 2024 15:54:21 -0800
+Message-ID: <20240122235744.810639319@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -53,33 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 237ff253f2d4f6307b7b20434d7cbcc67693298b ]
+[ Upstream commit 8e2f6f2366219b3304b227bdd2f04b64c92e3e12 ]
 
-Added initialization use_ack to mptcp_parse_option().
+We want to guarantee the mutex is held for pretty much
+all operations, so ensure that here as well.
 
-Reported-by: syzbot+b834a6b2decad004cfa1@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: syzbot+7e59a5bfc7a897247e18@syzkaller.appspotmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/options.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/mptcp/options.c b/net/mptcp/options.c
-index aa4b0cf7c638..012e0e352276 100644
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -103,6 +103,7 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 			mp_opt->suboptions |= OPTION_MPTCP_DSS;
- 			mp_opt->use_map = 1;
- 			mp_opt->mpc_map = 1;
-+			mp_opt->use_ack = 0;
- 			mp_opt->data_len = get_unaligned_be16(ptr);
- 			ptr += 2;
- 		}
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index d10686f4bf15..d51d27ff3729 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -216,7 +216,9 @@ static void cfg80211_rfkill_poll(struct rfkill *rfkill, void *data)
+ {
+ 	struct cfg80211_registered_device *rdev = data;
+ 
++	wiphy_lock(&rdev->wiphy);
+ 	rdev_rfkill_poll(rdev);
++	wiphy_unlock(&rdev->wiphy);
+ }
+ 
+ void cfg80211_stop_p2p_device(struct cfg80211_registered_device *rdev,
 -- 
 2.43.0
 
