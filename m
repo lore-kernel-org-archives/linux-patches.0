@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E864612BF3D;
-	Tue, 23 Jan 2024 00:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7E312BF3D;
+	Tue, 23 Jan 2024 00:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968938; cv=none; b=DuLsC1xiIcyLK6mgdCj57LzjHbDIL/VOCWFgvV7CVlJ8DfLnrNink7u5BkxGL1eb++nWPa1cpLQEuegs7TMCDM3FYexfQIh911kivOw0JzovOtEUAx065po9PJiiy2uAHYy1t1CrZwk1na4KHWJqZnuT8pyfUvHnDfuizH73X3s=
+	t=1705968939; cv=none; b=bsg8bgtC5ry51s7TT1NzW/a3zEgc0XTpSlU1QcPAfz8RtjUEWoZjmMi/cEKsT+/9oW5FYQIncMvVSIbLPL8QxcisDbPoYT1BZ0VZ7DkXzrtMFhaNuqb2I1L9R3jisT5xMG9fcbR+T7z1Q3xhuor/g/Nv2QlF74/7uxsIAmM8T/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968938; c=relaxed/simple;
-	bh=Vq3DUU2hKbkry7x0NpEAzVjx4yJKtuN2maLSYeHSqpI=;
+	s=arc-20240116; t=1705968939; c=relaxed/simple;
+	bh=Oh8nBS8EEv3ov9iIKgHgw8wUGg/ueVm4JlRmUuNBQa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=upWuQcrf3q+Ep+734rOPilJA2lxbAxr4RiaGcK1IEUdHToEapk6uyZVzW4YaZWhGIwTM0eE33zeHBwDOFusC8IgGC2qByk+R35gHE9/cRTYFIW9THej8cf7FqKFmRAg+nV3gya3APKoW8LVE4eeAt3rxMCQZRP5J/Qb3HzgDpfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9j861cz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rTAlArj7JX/fMLbdTfkSMBSugLQSXXBz8DRxMn2rq8rrFEuNmPvZeFavqjprYRgH6qp6s4xRxxsMMOFJeBKkIF3KE44DV1IV0kXGOK9gz7eJAPuKiaJEOPHxEbtPCcOB3YDndtOGsAJO4Wc80kTz2XhK+MiyUYods7fdOBb5XyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmeSGuXP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9j861cz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE176C43394;
-	Tue, 23 Jan 2024 00:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmeSGuXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FABC43390;
+	Tue, 23 Jan 2024 00:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968937;
-	bh=Vq3DUU2hKbkry7x0NpEAzVjx4yJKtuN2maLSYeHSqpI=;
+	s=korg; t=1705968939;
+	bh=Oh8nBS8EEv3ov9iIKgHgw8wUGg/ueVm4JlRmUuNBQa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f9j861czmI3wA+lIl/mDnrYU4bsNCkkeRNfNpcF1dwBQHJQPeYK5OgKek6EWNIkJp
-	 +n8/kU2kuoVG0my140A15f471MZ4CLNxdg83+lkNtDY5P/CXEXTmGqf/5scJxNCHqJ
-	 5NNDSnzthDxp2Ial6uYfi4udjQzBM/K/u/88SoM4=
+	b=mmeSGuXPfI79TAealvGqWLZvn4EcX+UwkFbdn+wEZ2H0Lxkx5LbUfsLLXkEBUBswP
+	 XlRrqox0OnxmDDtkvnIAqllHMJ1yADm6VmT8gqIUnbib+slhMZ2RrzNZ2Ay6FZSlHX
+	 ammwgX/pohg9DfqjTontQfrDfkSJiyVQ+AfZe6Y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 111/194] drm/bridge: Fix typo in post_disable() description
-Date: Mon, 22 Jan 2024 15:57:21 -0800
-Message-ID: <20240122235723.991627392@linuxfoundation.org>
+Subject: [PATCH 5.4 112/194] f2fs: fix to avoid dirent corruption
+Date: Mon, 22 Jan 2024 15:57:22 -0800
+Message-ID: <20240122235724.034323853@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,34 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 288b039db225676e0c520c981a1b5a2562d893a3 ]
+[ Upstream commit 53edb549565f55ccd0bdf43be3d66ce4c2d48b28 ]
 
-s/singals/signals/
+As Al reported in link[1]:
 
-Fixes: 199e4e967af4 ("drm: Extract drm_bridge.h")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231124094253.658064-1-dario.binacchi@amarulasolutions.com
+f2fs_rename()
+...
+	if (old_dir != new_dir && !whiteout)
+		f2fs_set_link(old_inode, old_dir_entry,
+					old_dir_page, new_dir);
+	else
+		f2fs_put_page(old_dir_page, 0);
+
+You want correct inumber in the ".." link.  And cross-directory
+rename does move the source to new parent, even if you'd been asked
+to leave a whiteout in the old place.
+
+[1] https://lore.kernel.org/all/20231017055040.GN800259@ZenIV/
+
+With below testcase, it may cause dirent corruption, due to it missed
+to call f2fs_set_link() to update ".." link to new directory.
+- mkdir -p dir/foo
+- renameat2 -w dir/foo bar
+
+[ASSERT] (__chk_dots_dentries:1421)  --> Bad inode number[0x4] for '..', parent parent ino is [0x3]
+[FSCK] other corrupted bugs                           [Fail]
+
+Fixes: 7e01e7ad746b ("f2fs: support RENAME_WHITEOUT")
+Cc: Jan Kara <jack@suse.cz>
+Reported-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/drm_bridge.h | 2 +-
+ fs/f2fs/namei.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
-index 9f7192366cfb..64172de5029d 100644
---- a/include/drm/drm_bridge.h
-+++ b/include/drm/drm_bridge.h
-@@ -162,7 +162,7 @@ struct drm_bridge_funcs {
- 	 * or &drm_encoder_helper_funcs.dpms hook.
- 	 *
- 	 * The bridge must assume that the display pipe (i.e. clocks and timing
--	 * singals) feeding it is no longer running when this callback is
-+	 * signals) feeding it is no longer running when this callback is
- 	 * called.
- 	 *
- 	 * The post_disable callback is optional.
+diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
+index ed95c27e9302..99a91c746b39 100644
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -1009,7 +1009,7 @@ static int f2fs_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 	}
+ 
+ 	if (old_dir_entry) {
+-		if (old_dir != new_dir && !whiteout)
++		if (old_dir != new_dir)
+ 			f2fs_set_link(old_inode, old_dir_entry,
+ 						old_dir_page, new_dir);
+ 		else
 -- 
 2.43.0
 
