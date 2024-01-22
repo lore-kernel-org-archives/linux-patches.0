@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D451292DF;
-	Tue, 23 Jan 2024 00:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2C67C0A5;
+	Tue, 23 Jan 2024 00:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970981; cv=none; b=oAJzUQ94JerwNC+MdROmH14716lbGdvWQ4T+3aIsk4EWV08PvQ/Tk8n+ZgD+AzZiYZPT5xZkDwGI+8t0pXBHTUUITFwFKSslPKMGR3pqpgyNgGUc6YcIphY0Ja6ibXHyouL1z6s8TasrXu20sGboA4+UaCBuBewUSZer8BN6xu8=
+	t=1705970984; cv=none; b=QiMQADoHh+ArZl/NVXXWpVYrU21py/FQFiF5nwVEQ5UC7uW8GqEP2nNUftuSMA0DY1lZ81sA7zrwVCeyHMaY0M4ieGk1tXVABbrIEmQdyoJjbUn2bh/rfOXKwdSCa57KFA3F9ELTJhNeeUYys9pjV8lo8I/QOxacOyN+X7QaIYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970981; c=relaxed/simple;
-	bh=V8asHHJMbDw+IJmIOxjRygwUycjLMyRBL5CF2lA3pLs=;
+	s=arc-20240116; t=1705970984; c=relaxed/simple;
+	bh=Z1e+5UNXgWhB5YLDb6homE/qGAby4SfPHRTv4yFD8/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AOnpq512b4g4dCk2xbGyLRktp7xhWG0IA3ZjPG5KpEAGoIdefnJ/6D0ExZ98QxDfHRQaVAFlIcdkWmwDQqqYEhCPIGLLDt24olL6RzSovreNO3bAB2xWPY4S35gl5Rk40EUo536NFd/Q+rFm9ZJ6gyHyPMkOK9UGH3/BviqfZsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0H3+adj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O8dLn00hmJ1qCehFxg7e+eQCdU1EA0XrFSjMQimbTNKBC/FDgaLS6p7mVPbe4AHuHRxalnrBfdGWgUKcdc8dylXc40sp2bb+BR+/qg+gigDSOCnaoRvtSo5WXx5GpvMgq2rAvJUkZtS5ye1QR2/QbGUGq0jmzde2p3KK9ZkVOYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KK4jXnJT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0H3+adj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD688C43390;
-	Tue, 23 Jan 2024 00:49:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KK4jXnJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D10AC433C7;
+	Tue, 23 Jan 2024 00:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970981;
-	bh=V8asHHJMbDw+IJmIOxjRygwUycjLMyRBL5CF2lA3pLs=;
+	s=korg; t=1705970984;
+	bh=Z1e+5UNXgWhB5YLDb6homE/qGAby4SfPHRTv4yFD8/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b0H3+adj44wKT5haRTyzi71QkthQ7WsSJrNucn4BNp79W528JZ8cAhO34+HrrhyIf
-	 y+vCGbKZ5nADQePe/nvomajWictAQXn2yckgRAaKkOdXm2EUtLdaaFubP43e0yujLF
-	 XeEKkL6lwZVwI+Otnig2XT6sdxPPH3OrKuOuq4AU=
+	b=KK4jXnJTkiO3Dzb7l/Di5wsL9Re8LaXE9G0sNfSNzsZaUHM8KFqiDpp1WEHyO1EM1
+	 2IIbxbThMyqbCTzRwhmoIBAG0jsddw84+MgiCb3YM0AQ7rZ15vmHoi7iovgG7spKGX
+	 e9VwQ5jUjxBUp5OlzzljW2MIC+BKB6ja7/gt3n58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Nikita Kiryushin <kiryushin@ancud.ru>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 155/417] ARM: davinci: always select CONFIG_CPU_ARM926T
-Date: Mon, 22 Jan 2024 15:55:23 -0800
-Message-ID: <20240122235757.207958208@linuxfoundation.org>
+Subject: [PATCH 5.10 063/286] ACPI: video: check for error while searching for backlight device parent
+Date: Mon, 22 Jan 2024 15:56:09 -0800
+Message-ID: <20240122235734.454549166@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Nikita Kiryushin <kiryushin@ancud.ru>
 
-[ Upstream commit 40974ee421b4d1fc74ac733d86899ce1b83d8f65 ]
+[ Upstream commit ccd45faf4973746c4f30ea41eec864e5cf191099 ]
 
-The select was lost by accident during the multiplatform conversion.
-Any davinci-only
+If acpi_get_parent() called in acpi_video_dev_register_backlight()
+fails, for example, because acpi_ut_acquire_mutex() fails inside
+acpi_get_parent), this can lead to incorrect (uninitialized)
+acpi_parent handle being passed to acpi_get_pci_dev() for detecting
+the parent pci device.
 
-arm-linux-gnueabi-ld: arch/arm/mach-davinci/sleep.o: in function `CACHE_FLUSH':
-(.text+0x168): undefined reference to `arm926_flush_kern_cache_all'
+Check acpi_get_parent() result and set parent device only in case of success.
 
-Fixes: f962396ce292 ("ARM: davinci: support multiplatform build for ARM v5")
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Link: https://lore.kernel.org/r/20240108110055.1531153-1-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 9661e92c10a9 ("acpi: tie ACPI backlight devices to PCI devices if possible")
+Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-davinci/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/acpi_video.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm/mach-davinci/Kconfig b/arch/arm/mach-davinci/Kconfig
-index c8cbd9a30791..0b54ca56555b 100644
---- a/arch/arm/mach-davinci/Kconfig
-+++ b/arch/arm/mach-davinci/Kconfig
-@@ -4,6 +4,7 @@ menuconfig ARCH_DAVINCI
- 	bool "TI DaVinci"
- 	depends on ARCH_MULTI_V5
- 	depends on CPU_LITTLE_ENDIAN
-+	select CPU_ARM926T
- 	select DAVINCI_TIMER
- 	select ZONE_DMA
- 	select PM_GENERIC_DOMAINS if PM
+diff --git a/drivers/acpi/acpi_video.c b/drivers/acpi/acpi_video.c
+index cf6c9ffe04a2..9d384656323a 100644
+--- a/drivers/acpi/acpi_video.c
++++ b/drivers/acpi/acpi_video.c
+@@ -1788,12 +1788,12 @@ static void acpi_video_dev_register_backlight(struct acpi_video_device *device)
+ 		return;
+ 	count++;
+ 
+-	acpi_get_parent(device->dev->handle, &acpi_parent);
+-
+-	pdev = acpi_get_pci_dev(acpi_parent);
+-	if (pdev) {
+-		parent = &pdev->dev;
+-		pci_dev_put(pdev);
++	if (ACPI_SUCCESS(acpi_get_parent(device->dev->handle, &acpi_parent))) {
++		pdev = acpi_get_pci_dev(acpi_parent);
++		if (pdev) {
++			parent = &pdev->dev;
++			pci_dev_put(pdev);
++		}
+ 	}
+ 
+ 	memset(&props, 0, sizeof(struct backlight_properties));
 -- 
 2.43.0
 
