@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A64462A0D;
-	Tue, 23 Jan 2024 00:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5A862A0C;
+	Tue, 23 Jan 2024 00:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971121; cv=none; b=ePqdclmDB4Ovh9ps8+bbNCMBetc+0KXR2ju14VkHEAO+1xI80RXi6/guYdqdN9ULJkWL46PdoqOx+/2u2166rAQROvDcvDZjPTkkoaYU5rg4ne9U8pn8YVSHDGKrZmF7MxUu3Dfy840pPU08IOmMOdvx1LP8ojE+hG26O6A7QLI=
+	t=1705971123; cv=none; b=HKM1GBmG69hY2iuZPqlVgXoavgjQHxQLMwaUGzqomPHZd0xM1lS1cTMi9yYdmPSHc9OwCF0MxrsTwWPZxA8E+5eHjeI5hmdUa5AhXQTo3UB4q/avFL3fyWbFeE6Jv7k7kIpMAl9sPh586FRs3SHXl6WhXFFP3k3UVB/+hpBJfQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971121; c=relaxed/simple;
-	bh=+0oHt1DOldmgmSlkGfnEuFkresg8Me9ny/jkth/sisE=;
+	s=arc-20240116; t=1705971123; c=relaxed/simple;
+	bh=0lKzXC9Kid5kT5epMfeI25CKGY6pLqJyCTKavM3Q/Zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5J0JWqsLFPC5b9S04kb5ECoGhkG6FE7xRt3THrLW/Sc7HfoG9mmbUu8q0px86TFIFp62xkuhrt61qwJYjokWwDz5eiAHwLP6iO6xYXjKVCDg32jJfvbHNp1GCWZ1RbDS9gZ3zctX00qj/IxK782WXKLPT9MlqGJq0xFVD96ilY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7I9BaLG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qt+q3MgM46pm2u8RgC6HctwjpqPObYU0DE9y1QjXsc/Imbxh/XMxZmWOX+QekcG4CBWDRo1cgSoKsEE5QQT31R/xDDF3cxh+7IDvhc6lz/Ywk3OBQYHwMhoSb+WbrUHtrziD+Du4rtUDA0zZNMyKAhCmfYlgcgWkpuMzWNo8hUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jI1ucQCP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7I9BaLG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D73C433A6;
-	Tue, 23 Jan 2024 00:52:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jI1ucQCP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22244C43390;
+	Tue, 23 Jan 2024 00:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971121;
-	bh=+0oHt1DOldmgmSlkGfnEuFkresg8Me9ny/jkth/sisE=;
+	s=korg; t=1705971123;
+	bh=0lKzXC9Kid5kT5epMfeI25CKGY6pLqJyCTKavM3Q/Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y7I9BaLGa8VXnMl3UXRez5J0wCf764I9+pKNluuKynqgBMGefSwJVj2/2pSEukPkd
-	 n/qTJFYScxmmeKlkqnKr9E0Vefl3WMbSdBKMBu8eba8cZcCkqwh5kAfHVmz7CLfoux
-	 LhsR2fk5ZGTICBMCuBWYpfi5LN6ZMGaSOFBbQNlI=
+	b=jI1ucQCPzWW87tGLnQ7OZN9UjhUSPvetp6i8RakPLeOSuWBtzvtXtemgDWg919XHV
+	 vaW+6IJu7Y5xBeF0gJTcwfwH9kyppQGAeQTgPXoAAMZf4828r5hajitplcVUCsWLKP
+	 tZhA+UYJitDXY+6j54nwoNUU5MS4x3xKIPOadd0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Kees Cook <keescook@chromium.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 092/286] pstore: ram_core: fix possible overflow in persistent_ram_init_ecc()
-Date: Mon, 22 Jan 2024 15:56:38 -0800
-Message-ID: <20240122235735.586389180@linuxfoundation.org>
+Subject: [PATCH 6.1 185/417] drm/panfrost: Ignore core_mask for poweroff and disable PWRTRANS irq
+Date: Mon, 22 Jan 2024 15:55:53 -0800
+Message-ID: <20240122235758.291969588@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +49,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 86222a8fc16ec517de8da2604d904c9df3a08e5d ]
+[ Upstream commit a4f5892914ca7709ea6d191f0edace93a5935966 ]
 
-In persistent_ram_init_ecc(), on 64-bit arches DIV_ROUND_UP() will return
-64-bit value since persistent_ram_zone::buffer_size has type size_t which
-is derived from the 64-bit *unsigned long*, while the ecc_blocks variable
-this value gets assigned to has (always 32-bit) *int* type.  Even if that
-value fits into *int* type, an overflow is still possible when calculating
-the size_t typed ecc_total variable further below since there's no cast to
-any 64-bit type before multiplication.  Declaring the ecc_blocks variable
-as *size_t* should fix this mess...
+Some SoCs may be equipped with a GPU containing two core groups
+and this is exactly the case of Samsung's Exynos 5422 featuring
+an ARM Mali-T628 MP6 GPU: the support for this GPU in Panfrost
+is partial, as this driver currently supports using only one
+core group and that's reflected on all parts of it, including
+the power on (and power off, previously to this patch) function.
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE static
-analysis tool.
+The issue with this is that even though executing the soft reset
+operation should power off all cores unconditionally, on at least
+one platform we're seeing a crash that seems to be happening due
+to an interrupt firing which may be because we are calling power
+transition only on the first core group, leaving the second one
+unchanged, or because ISR execution was pending before entering
+the panfrost_gpu_power_off() function and executed after powering
+off the GPU cores, or all of the above.
 
-Fixes: 9cc05ad97c57 ("staging: android: persistent_ram: refactor ecc support")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20231105202936.25694-1-s.shtylyov@omp.ru
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Finally, solve this by:
+ - Avoid to enable the power transition interrupt on reset; and
+ - Ignoring the core_mask and ask the GPU to poweroff both core groups
+
+Fixes: 22aa1a209018 ("drm/panfrost: Really power off GPU cores in panfrost_gpu_power_off()")
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231204114215.54575-2-angelogioacchino.delregno@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panfrost/panfrost_gpu.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
-index a0fa3820ef2a..5ac9b1f155a8 100644
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -190,7 +190,7 @@ static int persistent_ram_init_ecc(struct persistent_ram_zone *prz,
- {
- 	int numerr;
- 	struct persistent_ram_buffer *buffer = prz->buffer;
--	int ecc_blocks;
-+	size_t ecc_blocks;
- 	size_t ecc_total;
+diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.c b/drivers/gpu/drm/panfrost/panfrost_gpu.c
+index c08715f033c5..55d243048516 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_gpu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_gpu.c
+@@ -71,7 +71,12 @@ int panfrost_gpu_soft_reset(struct panfrost_device *pfdev)
+ 	}
  
- 	if (!ecc_info || !ecc_info->ecc_size)
+ 	gpu_write(pfdev, GPU_INT_CLEAR, GPU_IRQ_MASK_ALL);
+-	gpu_write(pfdev, GPU_INT_MASK, GPU_IRQ_MASK_ALL);
++
++	/* Only enable the interrupts we care about */
++	gpu_write(pfdev, GPU_INT_MASK,
++		  GPU_IRQ_MASK_ERROR |
++		  GPU_IRQ_PERFCNT_SAMPLE_COMPLETED |
++		  GPU_IRQ_CLEAN_CACHES_COMPLETED);
+ 
+ 	return 0;
+ }
+@@ -369,11 +374,10 @@ void panfrost_gpu_power_on(struct panfrost_device *pfdev)
+ 
+ void panfrost_gpu_power_off(struct panfrost_device *pfdev)
+ {
+-	u64 core_mask = panfrost_get_core_mask(pfdev);
+ 	int ret;
+ 	u32 val;
+ 
+-	gpu_write(pfdev, SHADER_PWROFF_LO, pfdev->features.shader_present & core_mask);
++	gpu_write(pfdev, SHADER_PWROFF_LO, pfdev->features.shader_present);
+ 	ret = readl_relaxed_poll_timeout(pfdev->iomem + SHADER_PWRTRANS_LO,
+ 					 val, !val, 1, 1000);
+ 	if (ret)
+@@ -385,7 +389,7 @@ void panfrost_gpu_power_off(struct panfrost_device *pfdev)
+ 	if (ret)
+ 		dev_err(pfdev->dev, "tiler power transition timeout");
+ 
+-	gpu_write(pfdev, L2_PWROFF_LO, pfdev->features.l2_present & core_mask);
++	gpu_write(pfdev, L2_PWROFF_LO, pfdev->features.l2_present);
+ 	ret = readl_poll_timeout(pfdev->iomem + L2_PWRTRANS_LO,
+ 				 val, !val, 0, 1000);
+ 	if (ret)
 -- 
 2.43.0
 
