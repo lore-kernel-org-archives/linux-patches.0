@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589D6130E42;
-	Tue, 23 Jan 2024 00:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7855313173A;
+	Tue, 23 Jan 2024 00:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969085; cv=none; b=bgU7g0ulFK1JZJLON9VY45oCgLKlSstxXl4FxvD7QBJN6hM1NgHkrlkVZ3wZgEthpf1sk7zWx8dM0DNpM+By4eZwcmAcEbvjKbMpJVw4H+PhBL0yADceSNHaCTh3PRFjhUfgNYS0nngaoSSNpfRI/ctE1LJ8bQAE5TcmEAiGi+k=
+	t=1705969086; cv=none; b=GIDl0nDqhlyLBOi3Z5fZsrCjTE6KfMqnDoiZZLU8He3aHcef8AgK3JbVoUan1rRS3bw4uRz0j7CL/u3Q+biWx2q0j/IalLLGECT9iOb/1rU1m40z35hO1L2loy4CSq59PfbQdpZSnJ3O/P5kJlbXNfzhWwaL93snEeG+EkKA38A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969085; c=relaxed/simple;
-	bh=gJfZhzMQPAKLnYrgKdeiAZFBwmBWEu5DlxM08gyJ5tc=;
+	s=arc-20240116; t=1705969086; c=relaxed/simple;
+	bh=ymhm9ePzqMpsA7CqH2bjO5QV+rrv1Sqlufi2ySSs0pM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TGl3pZBwJszLfAfpk5xcjxBUJgm82ypeWWPqaTLqfSgEnqwPii1sZZgYIa3UTDGs7BTm9O8MVjJJQTkyxIVtkFnbx+3OmI1v9l2URxROvRe4p+tAxHhv61dUKU1vTS0+ZfiT69B70tTuG4APE7t+V8KhyzMHJ+eg4TS7ywm56yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VaB1So/5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YQAtx7iGZrVaCUXrVvtgIPYndsK9RB9ZhtHDr35po4jnZjDY7e9swF6bkCVkKlwhXj90edYsFHShRQ4PJ3wWHYtYtGzj4pSmyscit4Bg/MENv+YHNHr9xWgTk8mSaQV9tvVmXmAmjYN90SRB95l990Do5ffsb3zteZRRI+H6JQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HczHGr9+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VaB1So/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0564CC433C7;
-	Tue, 23 Jan 2024 00:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HczHGr9+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE0BC433C7;
+	Tue, 23 Jan 2024 00:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969085;
-	bh=gJfZhzMQPAKLnYrgKdeiAZFBwmBWEu5DlxM08gyJ5tc=;
+	s=korg; t=1705969086;
+	bh=ymhm9ePzqMpsA7CqH2bjO5QV+rrv1Sqlufi2ySSs0pM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VaB1So/5AW72lLFxwvZW4Tz9ycSJ2bBgXF0NKeRnU41K41VTnIzy7f0w5C0U67Im4
-	 PfpPwp36MOWNVS9lgZUrTc7H53otMHK/O3Il1JLKTbQfyZwzv093puP1be981ExC7q
-	 Z4xamNHDUU2rG9RmSpE46XXw8XOL0DyDrcHvovm8=
+	b=HczHGr9+q0uuRDCE+TvRpCOqTq3TPRS19wQ4j2XZK7tTnJi1hpXGK/P7Kfo8Rin6r
+	 X3v3TCOXlAOuF9lMpHxLhRuL+o2VMlg+kH+Zb0S0KaumKOikiS2Te/VS/Alw3oYvk6
+	 pxRQnLffe2rGZYQm3eMfxC7Zz8ZbteCukBSk2wmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Jordan Niethe <jniethe5@gmail.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 012/641] KVM: PPC: Book3S HV: Handle pending exceptions on guest entry with MSR_EE
-Date: Mon, 22 Jan 2024 15:48:36 -0800
-Message-ID: <20240122235818.499700403@linuxfoundation.org>
+Subject: [PATCH 6.7 013/641] selftests/powerpc: Fix error handling in FPU/VMX preemption tests
+Date: Mon, 22 Jan 2024 15:48:37 -0800
+Message-ID: <20240122235818.527166174@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,59 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit ecd10702baae5c16a91d139bde7eff84ce55daee ]
+[ Upstream commit 9dbd5927408c4a0707de73ae9dd9306b184e8fee ]
 
-Commit 026728dc5d41 ("KVM: PPC: Book3S HV P9: Inject pending xive
-interrupts at guest entry") changed guest entry so that if external
-interrupts are enabled, BOOK3S_IRQPRIO_EXTERNAL is not tested for. Test
-for this regardless of MSR_EE.
+The FPU & VMX preemption tests do not check for errors returned by the
+low-level asm routines, preempt_fpu() / preempt_vsx() respectively.
+That means any register corruption detected by the asm routines does not
+result in a test failure.
 
-For an L1 host, do not inject an interrupt, but always
-use LPCR_MER. If the L0 desires it can inject an interrupt.
+Fix it by returning the return value of the asm routines from the
+pthread child routines.
 
-Fixes: 026728dc5d41 ("KVM: PPC: Book3S HV P9: Inject pending xive interrupts at guest entry")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-[jpn: use kvmpcc_get_msr(), write commit message]
-Signed-off-by: Jordan Niethe <jniethe5@gmail.com>
+Fixes: e5ab8be68e44 ("selftests/powerpc: Test preservation of FPU and VMX regs across preemption")
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231201132618.555031-7-vaibhav@linux.ibm.com
+Link: https://msgid.link/20231128132748.1990179-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kvm/book3s_hv.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ tools/testing/selftests/powerpc/math/fpu_preempt.c |  9 +++++----
+ tools/testing/selftests/powerpc/math/vmx_preempt.c | 10 ++++++----
+ 2 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
-index 1ed6ec140701..002a7573a5d4 100644
---- a/arch/powerpc/kvm/book3s_hv.c
-+++ b/arch/powerpc/kvm/book3s_hv.c
-@@ -4736,13 +4736,19 @@ int kvmhv_run_single_vcpu(struct kvm_vcpu *vcpu, u64 time_limit,
+diff --git a/tools/testing/selftests/powerpc/math/fpu_preempt.c b/tools/testing/selftests/powerpc/math/fpu_preempt.c
+index 5235bdc8c0b1..3e5b5663d244 100644
+--- a/tools/testing/selftests/powerpc/math/fpu_preempt.c
++++ b/tools/testing/selftests/powerpc/math/fpu_preempt.c
+@@ -37,19 +37,20 @@ __thread double darray[] = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,
+ int threads_starting;
+ int running;
  
- 	if (!nested) {
- 		kvmppc_core_prepare_to_enter(vcpu);
--		if (__kvmppc_get_msr_hv(vcpu) & MSR_EE) {
--			if (xive_interrupt_pending(vcpu))
-+		if (test_bit(BOOK3S_IRQPRIO_EXTERNAL,
-+			     &vcpu->arch.pending_exceptions) ||
-+		    xive_interrupt_pending(vcpu)) {
-+			/*
-+			 * For nested HV, don't synthesize but always pass MER,
-+			 * the L0 will be able to optimise that more
-+			 * effectively than manipulating registers directly.
-+			 */
-+			if (!kvmhv_on_pseries() && (__kvmppc_get_msr_hv(vcpu) & MSR_EE))
- 				kvmppc_inject_interrupt_hv(vcpu,
--						BOOK3S_INTERRUPT_EXTERNAL, 0);
--		} else if (test_bit(BOOK3S_IRQPRIO_EXTERNAL,
--			     &vcpu->arch.pending_exceptions)) {
--			lpcr |= LPCR_MER;
-+							   BOOK3S_INTERRUPT_EXTERNAL, 0);
-+			else
-+				lpcr |= LPCR_MER;
- 		}
- 	} else if (vcpu->arch.pending_exceptions ||
- 		   vcpu->arch.doorbell_request ||
+-extern void preempt_fpu(double *darray, int *threads_starting, int *running);
++extern int preempt_fpu(double *darray, int *threads_starting, int *running);
+ 
+ void *preempt_fpu_c(void *p)
+ {
++	long rc;
+ 	int i;
++
+ 	srand(pthread_self());
+ 	for (i = 0; i < 21; i++)
+ 		darray[i] = rand();
+ 
+-	/* Test failed if it ever returns */
+-	preempt_fpu(darray, &threads_starting, &running);
++	rc = preempt_fpu(darray, &threads_starting, &running);
+ 
+-	return p;
++	return (void *)rc;
+ }
+ 
+ int test_preempt_fpu(void)
+diff --git a/tools/testing/selftests/powerpc/math/vmx_preempt.c b/tools/testing/selftests/powerpc/math/vmx_preempt.c
+index 6761d6ce30ec..6f7cf400c687 100644
+--- a/tools/testing/selftests/powerpc/math/vmx_preempt.c
++++ b/tools/testing/selftests/powerpc/math/vmx_preempt.c
+@@ -37,19 +37,21 @@ __thread vector int varray[] = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10,11,12},
+ int threads_starting;
+ int running;
+ 
+-extern void preempt_vmx(vector int *varray, int *threads_starting, int *running);
++extern int preempt_vmx(vector int *varray, int *threads_starting, int *running);
+ 
+ void *preempt_vmx_c(void *p)
+ {
+ 	int i, j;
++	long rc;
++
+ 	srand(pthread_self());
+ 	for (i = 0; i < 12; i++)
+ 		for (j = 0; j < 4; j++)
+ 			varray[i][j] = rand();
+ 
+-	/* Test fails if it ever returns */
+-	preempt_vmx(varray, &threads_starting, &running);
+-	return p;
++	rc = preempt_vmx(varray, &threads_starting, &running);
++
++	return (void *)rc;
+ }
+ 
+ int test_preempt_vmx(void)
 -- 
 2.43.0
 
