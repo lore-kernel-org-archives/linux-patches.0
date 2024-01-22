@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F9A651A1;
-	Tue, 23 Jan 2024 00:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A437664A6;
+	Tue, 23 Jan 2024 00:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971554; cv=none; b=mI5uBs+eiQDhE/KUYELGI9YKWdEWIi2Lv6MOu7uYCF1j5WBUPsh7GQLuPnZ3L4S4MmJEiTf9IwtFCLoCBzZ+2He9dWdeJSD//xV1KcF769SSKopPvP8z4TzmTNCncaGry5y35/GjweBcRaI6VViJuiQ0u23jFZdhU+lEcJGUBSI=
+	t=1705971556; cv=none; b=gB7yZAVt2pg6GatmDEjcw/vgot4tIHxwk691hiwVPhjJPQgvfXSSaS1jscbqBTJ2FxSEr/boMeWsHwNfvg5Azq320fpCFmd5K4MChGIBUc5HBQv6B37Vdw0TbgMprw2CfF8LlzyGzBB4SwsW70ZnzrKZ+6tMHKuxemocoOpYsgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971554; c=relaxed/simple;
-	bh=mMOyQomBlqu/VYgddwV515FyJ7v48h/CrDWMqCLwmj0=;
+	s=arc-20240116; t=1705971556; c=relaxed/simple;
+	bh=NYqLkmoBJC8pHY4fcdVtVTp6e6MfTomP1ml1JCWAfZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BrLZwKU7zebm1EbJxLgANRXVx9ta8d0pLRFv127DwAyBp5ezRepM1YfFGtSTlbWI2C4mnqsJDjBnR+3No6Bhzg2OSk8wsF5lc+iGMCIwh7v+oUyV5uVcPmkZLFumgw70bPg3MtV1z36ewFAvoBM9T8dB7D65nWXrH5iy+7Ar4U0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5MQZVIi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qaWCVSvIu9aVekPJe59nlexTrPAXNHFJvIRQxm/buu1s6erDcr86enm7yYNSfHuin4xC3e009u4s9wMfON5giKv1HKGs2F70HsOmxGbiwWGsgdkMPm7hvfx5iNjfV046O74bwZAjAxiD6HdGFmsw0SZiMl0BtZmUQIuGN9n9pfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/Tz141v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5MQZVIi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19227C433C7;
-	Tue, 23 Jan 2024 00:59:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/Tz141v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7134C433C7;
+	Tue, 23 Jan 2024 00:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971554;
-	bh=mMOyQomBlqu/VYgddwV515FyJ7v48h/CrDWMqCLwmj0=;
+	s=korg; t=1705971555;
+	bh=NYqLkmoBJC8pHY4fcdVtVTp6e6MfTomP1ml1JCWAfZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5MQZVIicgr3jbhlUAmynJSoCuVbyAxklSFRdaSxP2txh94oACKmxAbZuc/fvFzmM
-	 RLuX5RIgJnzkp2gL/nuY9hdmk/mu1vOEKO9MiFktQJ5uPPvrB8NDmussGV/je+Xz/h
-	 fULeSSI4XYC25ODmhYRe1x0uJuhgM2n54ZWwgnhQ=
+	b=T/Tz141v475/G0ywH7j/528TbDlrdWZcIB0W7g3Xe+ZmLhOB126ABq1AVeUnzneMx
+	 8t/kue6OIYgysahlO5NeeQwwJV95Qsm3Zi4UDforcZ4U+WfdR/MYJmI/cQC4ghY9Nx
+	 pPpVcXkZ8dTGAXu2z2Jroc2HA3IblgO40aZ/ifQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhipeng Lu <alexious@zju.edu.cn>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 172/286] drm/amd/pm: fix a double-free in si_dpm_init
-Date: Mon, 22 Jan 2024 15:57:58 -0800
-Message-ID: <20240122235738.796848771@linuxfoundation.org>
+Subject: [PATCH 6.1 241/417] drm/amd/pm/smu7: fix a memleak in smu7_hwmgr_backend_init
+Date: Mon, 22 Jan 2024 15:56:49 -0800
+Message-ID: <20240122235800.231908426@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Zhipeng Lu <alexious@zju.edu.cn>
 
-[ Upstream commit ac16667237a82e2597e329eb9bc520d1cf9dff30 ]
+[ Upstream commit 2f3be3ca779b11c332441b10e00443a2510f4d7b ]
 
-When the allocation of
-adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries fails,
-amdgpu_free_extended_power_table is called to free some fields of adev.
-However, when the control flow returns to si_dpm_sw_init, it goes to
-label dpm_failed and calls si_dpm_fini, which calls
-amdgpu_free_extended_power_table again and free those fields again. Thus
-a double-free is triggered.
+The hwmgr->backend, (i.e. data) allocated by kzalloc is not freed in
+the error-handling paths of smu7_get_evv_voltages and
+smu7_update_edc_leakage_table. However, it did be freed in the
+error-handling of phm_initializa_dynamic_state_adjustment_rule_settings,
+by smu7_hwmgr_backend_fini. So the lack of free in smu7_get_evv_voltages
+and smu7_update_edc_leakage_table is considered a memleak in this patch.
 
-Fixes: 841686df9f7d ("drm/amdgpu: add SI DPM support (v4)")
+Fixes: 599a7e9fe1b6 ("drm/amd/powerplay: implement smu7 hwmgr to manager asics with smu ip version 7.")
+Fixes: 8f0804c6b7d0 ("drm/amd/pm: add edc leakage controller setting")
 Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/si_dpm.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-index d6544a6dabc7..6f0653c81f8f 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-@@ -7349,10 +7349,9 @@ static int si_dpm_init(struct amdgpu_device *adev)
- 		kcalloc(4,
- 			sizeof(struct amdgpu_clock_voltage_dependency_entry),
- 			GFP_KERNEL);
--	if (!adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries) {
--		amdgpu_free_extended_power_table(adev);
-+	if (!adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries)
- 		return -ENOMEM;
--	}
-+
- 	adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.count = 4;
- 	adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries[0].clk = 0;
- 	adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries[0].v = 0;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+index a31a62a1ce0b..5e9410117712 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+@@ -2987,6 +2987,8 @@ static int smu7_hwmgr_backend_init(struct pp_hwmgr *hwmgr)
+ 		result = smu7_get_evv_voltages(hwmgr);
+ 		if (result) {
+ 			pr_info("Get EVV Voltage Failed.  Abort Driver loading!\n");
++			kfree(hwmgr->backend);
++			hwmgr->backend = NULL;
+ 			return -EINVAL;
+ 		}
+ 	} else {
+@@ -3032,8 +3034,10 @@ static int smu7_hwmgr_backend_init(struct pp_hwmgr *hwmgr)
+ 	}
+ 
+ 	result = smu7_update_edc_leakage_table(hwmgr);
+-	if (result)
++	if (result) {
++		smu7_hwmgr_backend_fini(hwmgr);
+ 		return result;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
