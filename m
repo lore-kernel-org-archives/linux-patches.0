@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCEA59B7D;
-	Tue, 23 Jan 2024 01:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9753459B62;
+	Tue, 23 Jan 2024 01:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974110; cv=none; b=CwKbdkWaYSxtDCPcxzlXg6pEqfOVU5xb8yLH93rS8JSOZLX2WW8tZuQAETFZXO5jyUy+D+1W1JzSAdCCNY2duV3xwcOTpW8zOmehfJAeaeVRQLRgJQzzpxky4v17157tP7NPz5gPFAWKss2fwb4ElmMeuqghaIxwDAgmBo9ZiV0=
+	t=1705974111; cv=none; b=aIoD/opKZXgUU64s8lY4slrHdEJoGUB3B54s5csB/Pa6CN3rn6vzdu/yv9C02HlWzlD/sW0xwpeWaDUYi42tCdqz5NXir1DRqiUELLkmNU59ztDWo3CVwKE/qOKjyOn0y6JRbwX5E1CODReWF7NwAWe9TVWKUyZwCONGzCHc0GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974110; c=relaxed/simple;
-	bh=6igz5nsUDKnFOsILAESoVPTGAR/nsmJQJC9d76SYgS8=;
+	s=arc-20240116; t=1705974111; c=relaxed/simple;
+	bh=73MDIsAPft4HQX8jFLKQPHckBgeRwkx62YzsLMGXKtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fHsVFfzGBLRkBq8OEKGE8T//q0uEp/8ZOJRYZY9lF+y2EKbXAU4gPRB+OUVMFKFdWr27N+koDEc+sVhsMKRDd/N0e49QWw3gyE90yuoLbYSPgzVYgSi9Oo+zcWnxs9DkkFcjbwdqXHPiOuIbwR+2OxzeLHsdVzbl8D5WDpVxE1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09Fhu65V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/uviGvq848QjmxZtFFvQXiA/oNj4VI0/Ik6RVnrvJsldUVJV6Gt7fwa6ZO0bpSRcFXMyuC9JtjkDLpTMlCcTS0SXOUMcdHXE7MHh9XWQSbMuyKp4XYps0tOVCyue5RnbFsKuS1VfNPzDg0NBcA1o/qnTdf3O0/TVGcztfV/QSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TusC+FhU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09Fhu65V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16AE9C433C7;
-	Tue, 23 Jan 2024 01:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TusC+FhU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C22CC43394;
+	Tue, 23 Jan 2024 01:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974110;
-	bh=6igz5nsUDKnFOsILAESoVPTGAR/nsmJQJC9d76SYgS8=;
+	s=korg; t=1705974111;
+	bh=73MDIsAPft4HQX8jFLKQPHckBgeRwkx62YzsLMGXKtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=09Fhu65V0zwZ/MG9HgtX8xgehmceuTWLeSLlS4WJ2yApFRJlkD1Zfbc/Wo/agI3fj
-	 Vk3k5fDIXqd48hSxvleMt5qULTgXXeTDzhdJsVO4SUQN27IFn9ZcCanYrMDoJ/5Di9
-	 yDo2USLa58VAmUelwIuj/pK55tIVWPXONvMwqn3o=
+	b=TusC+FhUPn55kK6vHZ0hKZuboO9NYOJbyWN5JNgEI67Irvf358hgQsoEBx8IL0soR
+	 RVPYpV/hOs1HlxLN22isk1mJlH9us2iFjZsH4kXCDmckVpB8sEuVF5QtCMYJoDEET/
+	 q64+TU+nqXPy2+8hx8TBsZ9kBjE13U3cUSsTTEuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/583] crypto: rsa - add a check for allocation failure
-Date: Mon, 22 Jan 2024 15:51:33 -0800
-Message-ID: <20240122235813.434189588@linuxfoundation.org>
+Subject: [PATCH 5.15 167/374] Bluetooth: btmtkuart: fix recv_buf() return value
+Date: Mon, 22 Jan 2024 15:57:03 -0800
+Message-ID: <20240122235750.429483135@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit d872ca165cb67112f2841ef9c37d51ef7e63d1e4 ]
+[ Upstream commit 64057f051f20c2a2184b9db7f8037d928d68a4f4 ]
 
-Static checkers insist that the mpi_alloc() allocation can fail so add
-a check to prevent a NULL dereference.  Small allocations like this
-can't actually fail in current kernels, but adding a check is very
-simple and makes the static checkers happy.
+Serdev recv_buf() callback is supposed to return the amount of bytes
+consumed, therefore an int in between 0 and count.
 
-Fixes: 6637e11e4ad2 ("crypto: rsa - allow only odd e and restrict value in FIPS mode")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Do not return negative number in case of issue, just print an error and
+return count. This fixes a WARN in ttyport_receive_buf().
+
+Link: https://lore.kernel.org/all/087be419-ec6b-47ad-851a-5e1e3ea5cfcc@kernel.org/
+Fixes: 7237c4c9ec92 ("Bluetooth: mediatek: Add protocol support for MediaTek serial devices")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/rsa.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bluetooth/btmtkuart.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/crypto/rsa.c b/crypto/rsa.c
-index c79613cdce6e..b9cd11fb7d36 100644
---- a/crypto/rsa.c
-+++ b/crypto/rsa.c
-@@ -220,6 +220,8 @@ static int rsa_check_exponent_fips(MPI e)
+diff --git a/drivers/bluetooth/btmtkuart.c b/drivers/bluetooth/btmtkuart.c
+index 9ba22b13b4fa..a831d734cd9e 100644
+--- a/drivers/bluetooth/btmtkuart.c
++++ b/drivers/bluetooth/btmtkuart.c
+@@ -471,7 +471,7 @@ mtk_stp_split(struct btmtkuart_dev *bdev, const unsigned char *data, int count,
+ 	return data;
+ }
+ 
+-static int btmtkuart_recv(struct hci_dev *hdev, const u8 *data, size_t count)
++static void btmtkuart_recv(struct hci_dev *hdev, const u8 *data, size_t count)
+ {
+ 	struct btmtkuart_dev *bdev = hci_get_drvdata(hdev);
+ 	const unsigned char *p_left = data, *p_h4;
+@@ -510,25 +510,20 @@ static int btmtkuart_recv(struct hci_dev *hdev, const u8 *data, size_t count)
+ 			bt_dev_err(bdev->hdev,
+ 				   "Frame reassembly failed (%d)", err);
+ 			bdev->rx_skb = NULL;
+-			return err;
++			return;
+ 		}
+ 
+ 		sz_left -= sz_h4;
+ 		p_left += sz_h4;
  	}
+-
+-	return 0;
+ }
  
- 	e_max = mpi_alloc(0);
-+	if (!e_max)
-+		return -ENOMEM;
- 	mpi_set_bit(e_max, 256);
+ static int btmtkuart_receive_buf(struct serdev_device *serdev, const u8 *data,
+ 				 size_t count)
+ {
+ 	struct btmtkuart_dev *bdev = serdev_device_get_drvdata(serdev);
+-	int err;
  
- 	if (mpi_cmp(e, e_max) >= 0) {
+-	err = btmtkuart_recv(bdev->hdev, data, count);
+-	if (err < 0)
+-		return err;
++	btmtkuart_recv(bdev->hdev, data, count);
+ 
+ 	bdev->hdev->stat.byte_rx += count;
+ 
 -- 
 2.43.0
 
