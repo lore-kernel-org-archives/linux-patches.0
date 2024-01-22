@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404B5134723;
-	Tue, 23 Jan 2024 00:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46A71339BC;
+	Tue, 23 Jan 2024 00:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969307; cv=none; b=M1Gy3oMxguvBV/s7K3GEmUsu7iv7Dum2+RRZ1F839qc5ROcqTq9LJgRXMlnVCdTDYkang3sWmRh9/a5u60F6lTLOHCVCwlwxCgwlyr7VKnZT1NQZ8xaDOesQciR7tn1dilOpQmeUHOZxx3jYFZUOFGCS734lk7k7qzyeg4OT40o=
+	t=1705969308; cv=none; b=RrfqjRxgZxwSKKSHKqDzUOBL1c1ThD4bnu9tdiHTdA0rQxIuU+dgyFKuy7LrA/06ZKaREK6TA7RqFtwriiAPKmyoea1yJr+oTQosFZiaa4S+HzV+yZjH4WH7bUEYBVUEDwocEj5D64hhwJ1xgOi3uxP6+1lE0iTMiHwBEQoBGR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969307; c=relaxed/simple;
-	bh=mHxFZ27n8iKel0M9f0UgxonulI+nlHs8wQN5zyhNTGg=;
+	s=arc-20240116; t=1705969308; c=relaxed/simple;
+	bh=cB0m5WUgJTQ5K//99+ZUl4l4wMHGl48tNGi4DbCPXzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j2kDGRz6MlIlsiR0NyEKO5ccdZpdwbYyiO1nTdxVxKsAbVItBTozTdQ9Asw13yAtJ438MQD36M1XFGKoGAHqUKJNgc0VsOUyNTpVRxRroSBeVaeA5ddK8x5RqTjqyuoCoPTV1DRw97n2m/SyFXTzF2oHBPUBKoR1lE3rMzp5bBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTEx72fg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G2fv3PLF5XQ1GpJqRAP0kr7ZZINEWpjNpJO2iOaTTK1VN6Ez4Z6ZNi/3rce2g/srRcQjcOklmeXMk1D/DRRIQq61tgAnKOKD46oCDI+Bj/lMgRIw2IzyY4u00cThi7qlfvbulBz4pMMCposj0LfZUkWprR1briF08WmeW1KeSFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HpbRNdye; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTEx72fg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F97C43394;
-	Tue, 23 Jan 2024 00:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HpbRNdye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067B3C433B1;
+	Tue, 23 Jan 2024 00:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969307;
-	bh=mHxFZ27n8iKel0M9f0UgxonulI+nlHs8wQN5zyhNTGg=;
+	s=korg; t=1705969308;
+	bh=cB0m5WUgJTQ5K//99+ZUl4l4wMHGl48tNGi4DbCPXzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTEx72fg/tjlaU/8ph2Lpdf2BU3qeqL5wC9j+bU0tpWVuTx35I9TiL27/sfr1pVXe
-	 llO4q+T1TRWMxy3rp5Qx6Dsl1dsSnIYmJ1Sr8GaQyKzmm4ICRfXkAjWToX2PshRLz8
-	 VTD8JXfjcj0gEKSRPhSWPEaoTopBjn2L+rEm49wc=
+	b=HpbRNdyefjW4KDCmsFEyaVPBWF9DUlFk3OlxL1kCGlwwt3oC2ynpZPqWmy7Kwexu4
+	 YsZr82Ftr6H24RtKwnTeTN2USjzLUhQslkGBKeX2krgUeBgAHIyS5PZvFQgVkGJ4iS
+	 niSoGZYqIG4tc/yweD+WWWekb7fFIsYFytkXEREE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Nia Espera <nespera@igalia.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 139/641] arm64: dts: qcom: sm6125: add interrupts to DWC3 USB controller
-Date: Mon, 22 Jan 2024 15:50:43 -0800
-Message-ID: <20240122235822.403430168@linuxfoundation.org>
+Subject: [PATCH 6.7 140/641] arm64: dts: qcom: sm8350: Fix DMA0 address
+Date: Mon, 22 Jan 2024 15:50:44 -0800
+Message-ID: <20240122235822.432111902@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,44 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Nia Espera <nespera@igalia.com>
 
-[ Upstream commit 67e4656f4487b95a39e45884c99235f62ebfaa47 ]
+[ Upstream commit 01a9e9eb6cdbce175ddea3cbe1163daed6d54344 ]
 
-Add interrupts to SM6125 DWC3 USB controller, based on downstream/vendor
-code of Trinket DTSI from Xiaomi Laurel device, to fix dtbs_check
-warnings:
+DMA0 node downstream is specified at 0x900000, so fix the typo. Without
+this, enabling any i2c node using DMA0 causes a hang.
 
-  sm6125-xiaomi-laurel-sprout.dtb: usb@4ef8800: 'interrupt-names' is a required property
-  sm6125-xiaomi-laurel-sprout.dtb: usb@4ef8800: 'oneOf' conditional failed, one must be fixed:
-    'interrupts' is a required property
-    'interrupts-extended' is a required property
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Link: https://lore.kernel.org/r/20231111164229.63803-5-krzysztof.kozlowski@linaro.org
+Fixes: bc08fbf49bc8 ("arm64: dts: qcom: sm8350: Define GPI DMA engines")
+Fixes: 41d6bca799b3 ("arm64: dts: qcom: sm8350: correct DMA controller unit address")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Nia Espera <nespera@igalia.com>
+Link: https://lore.kernel.org/r/20231111-nia-sm8350-for-upstream-v4-2-3a638b02eea5@igalia.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6125.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index eb07eca3a48d..1dd3a4056e26 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -1185,6 +1185,10 @@ usb3: usb@4ef8800 {
- 					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <66666667>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index b46236235b7f..1d597af15bb3 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -919,9 +919,9 @@ spi19: spi@894000 {
+ 			};
+ 		};
  
-+			interrupts = <GIC_SPI 260 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hs_phy_irq", "ss_phy_irq";
-+
- 			power-domains = <&gcc USB30_PRIM_GDSC>;
- 			qcom,select-utmi-as-pipe-clk;
- 			status = "disabled";
+-		gpi_dma0: dma-controller@9800000 {
++		gpi_dma0: dma-controller@900000 {
+ 			compatible = "qcom,sm8350-gpi-dma", "qcom,sm6350-gpi-dma";
+-			reg = <0 0x09800000 0 0x60000>;
++			reg = <0 0x00900000 0 0x60000>;
+ 			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.43.0
 
