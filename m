@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1826313F;
-	Tue, 23 Jan 2024 01:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED5562805;
+	Tue, 23 Jan 2024 01:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975025; cv=none; b=oYg2emx6GyAlgl3Wz11m3ebOkZ6p7kTzjb09njkBS6/sivdMz6oQhTJKrgMJlsc4DtwVNG74q+yBAIg0y/+VpBcuZ7BzUCJeZnUepW3lL48efXZrZQBPLT1O2+rc7OsXndUfUb6two2FlLFGha3hOtkzHCHr8A/53csqsBl21aY=
+	t=1705975026; cv=none; b=H7jAO33FSmCQtWLHQi7M4fg5TPg+vbZzG/SKUkHrTtn4dMgK0KwZ1CdHuAO7TRXeL7AAnUy9bMg6nDNJcT/n6Av8X7KtVKaHblflFjrbPE46lNV0mx6+5E+sFLMO35moNMDsvd1kQvPA6YPpETKmn+3DZTgUo05ANfWSqruGy4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975025; c=relaxed/simple;
-	bh=+hg5hL6WvyDnoUOR/idODyZRcJuZg/Skj5a3SU4hIWY=;
+	s=arc-20240116; t=1705975026; c=relaxed/simple;
+	bh=nb8Laz0XxKjPQV07DCwHHqPNxJzMEf/osc4w3WZikck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8oscOp16RnZF8LmDdy6xWpF60k469LBJp1Dsca6jpkGMjLzTTlmx6r001DxMJlDyHClPlmIIKeh8/U7Qe6oebQiOMVlqxyzYN9j9vZWs8gMzRt7UXVFUzK2TzjPVve145I3thoOdeMCN1cxPokOaA+p1qoDWh8fG0kxtnB0h6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryD94hw1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JbldfiIlbpwyou+n4YVtpwHZlJ+LNRD0OuCfNtlHbOWGcFCiIyp7sjv4ASVGJyDD7oo0C/y38DmRVq/ste4R19Q3JGr+PIq/6DrdVyBv8Qa1Ys3WPhn1hzj0i9+Qi6/1T0HfMAWF/B0L35xrWbk2BiQY67r2gip2M0LJV8gCPpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZw4aOc7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryD94hw1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C953C433F1;
-	Tue, 23 Jan 2024 01:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZw4aOc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34524C43390;
+	Tue, 23 Jan 2024 01:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975025;
-	bh=+hg5hL6WvyDnoUOR/idODyZRcJuZg/Skj5a3SU4hIWY=;
+	s=korg; t=1705975026;
+	bh=nb8Laz0XxKjPQV07DCwHHqPNxJzMEf/osc4w3WZikck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ryD94hw17O5JAEHNS6Vz8Pxe3Bk/tCbMmwiGwIbq1fPQGSxTmhyKC0Qdx4BPDTjh+
-	 SzZb0cXY+dJu/yB02U8MKTQhFAh8q0D10Mgblc46cmpxTRC3zuRrRWQU8V4+Np6d+R
-	 H9fDmIBJxs9Eyyj2+p1ARVtkiR9+bzy+YZk7dG4U=
+	b=WZw4aOc7gQsgFDExA0S6JwZL6D564HeOTvqDnMRH05UU+WdmZ7GHdmQIYmCq62ucu
+	 Zm5qOUR4iADvmocXkMaIsLjea4BhVv26ZYAg2ng074gnUUOQOQ3NhMBvAiqoPnhQQv
+	 O/M0BRLTo6HZBml5msGw+UsjlAWDKwJh3x9Js5QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 329/374] nvmet-tcp: Fix the H2C expected PDU len calculation
-Date: Mon, 22 Jan 2024 15:59:45 -0800
-Message-ID: <20240122235756.342489086@linuxfoundation.org>
+Subject: [PATCH 6.6 202/583] wifi: iwlwifi: assign phy_ctxt before eSR activation
+Date: Mon, 22 Jan 2024 15:54:13 -0800
+Message-ID: <20240122235818.171712139@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,57 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 9a1abc24850eb759e36a2f8869161c3b7254c904 ]
+[ Upstream commit 9b6614e5ead5d19a71893bcca3f1a6569ca0c456 ]
 
-The nvmet_tcp_handle_h2c_data_pdu() function should take into
-consideration the possibility that the header digest and/or the data
-digests are enabled when calculating the expected PDU length, before
-comparing it to the value stored in cmd->pdu_len.
+eSR is activated when a chanctx is assigned to more than one link.
+During eSR activation we should disable RLC for both phys, and configure
+the FW with a special phy command for both phys.
+Currently we assign the phy_ctxt to the link only after eSR activation,
+so RLC is not disabled for the new phy_ctxt, and a cmd is not sent to FW.
+Fix this by first assigning the new phy_ctxt to the link and then
+doing the eSR activation.
 
-Fixes: efa56305908b ("nvmet-tcp: Fix a kernel panic when host sends an invalid H2C PDU length")
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 12bacfc2c065 ("wifi: iwlwifi: handle eSR transitions")
+Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231219215605.3d94507f5d9a.I537fcd73aedf94c7348c03157e486f24301fef14@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index d25ca0742f91..4f2164a3f466 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -931,7 +931,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- {
- 	struct nvme_tcp_data_pdu *data = &queue->pdu.data;
- 	struct nvmet_tcp_cmd *cmd;
--	unsigned int plen;
-+	unsigned int exp_data_len;
- 
- 	if (likely(queue->nr_cmds)) {
- 		if (unlikely(data->ttag >= queue->nr_cmds)) {
-@@ -954,9 +954,13 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		return -EPROTO;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+index 2ddb6f763a0b..1e58f0234293 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+@@ -269,17 +269,17 @@ __iwl_mvm_mld_assign_vif_chanctx(struct iwl_mvm *mvm,
+ 		}
  	}
  
--	plen = le32_to_cpu(data->hdr.plen);
-+	exp_data_len = le32_to_cpu(data->hdr.plen) -
-+			nvmet_tcp_hdgst_len(queue) -
-+			nvmet_tcp_ddgst_len(queue) -
-+			sizeof(*data);
++	mvmvif->link[link_id]->phy_ctxt = phy_ctxt;
 +
- 	cmd->pdu_len = le32_to_cpu(data->data_length);
--	if (unlikely(cmd->pdu_len != (plen - sizeof(*data)) ||
-+	if (unlikely(cmd->pdu_len != exp_data_len ||
- 		     cmd->pdu_len == 0 ||
- 		     cmd->pdu_len > NVMET_TCP_MAXH2CDATA)) {
- 		pr_err("H2CData PDU len %u is invalid\n", cmd->pdu_len);
+ 	if (iwl_mvm_is_esr_supported(mvm->fwrt.trans) && n_active > 1) {
+ 		mvmvif->link[link_id]->listen_lmac = true;
+ 		ret = iwl_mvm_esr_mode_active(mvm, vif);
+ 		if (ret) {
+ 			IWL_ERR(mvm, "failed to activate ESR mode (%d)\n", ret);
+-			return ret;
++			goto out;
+ 		}
+ 	}
+ 
+-	mvmvif->link[link_id]->phy_ctxt = phy_ctxt;
+-
+ 	if (switching_chanctx) {
+ 		/* reactivate if we turned this off during channel switch */
+ 		if (vif->type == NL80211_IFTYPE_AP)
 -- 
 2.43.0
 
