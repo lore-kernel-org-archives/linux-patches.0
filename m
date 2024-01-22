@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8952162A12;
-	Tue, 23 Jan 2024 01:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B7162A0B;
+	Tue, 23 Jan 2024 01:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974980; cv=none; b=lB/jbDrEv0gpI1RX1scgiEy4/mRNFrQWkDQXJpLKDEIxRkuM925wG3ff4qXVbcihdu+2PEPOYx4pNZW8mlAjm5TNx4opdkIsyvbtl8jgZP+jpcWQIwXqgQ1Qul66Oid2cXHKyprjv6xyxFMw6E2II/BlUfbODOceksyRYJdXU2M=
+	t=1705974981; cv=none; b=cb3gq6D3p1IcxFkwEGyriWQ8gKToqWWwI1iFZkd7zpemLRm6lETMQAJLiWU85X7FJ+QSawg+p5vAEkmSav5KS/v3MISWDdgWap7QNwBwS4B8osTkbB0XK6tO2tB5kItXic5o9DjIvS7OAFmTQ1k8WrVGe7E1YVVJzZWOSvx7EWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974980; c=relaxed/simple;
-	bh=5wG0n6rZd1gSyQ7QDK3wqawTa90yVWHd8B6Yes5Jb44=;
+	s=arc-20240116; t=1705974981; c=relaxed/simple;
+	bh=4CZMEQUDC+tbQbSXuSBcOqfEuJWeI5hhJDUbSYi8apI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aN9tjSZ3XE+3lnIMwAfaORLPqNbnl38JTam0DIp37WqXYdqoFzSqqTRbUko2x+XMeJXn0QwYKk/wQ6C5txQXpmHx/HKW8bQhJWCtw6SBFwjvGSBB3apL4zfRLDSjmxO9DZqBQCZ9fyIqjmoUHXcVuhu/16zmD9MnCf/HBUu8HJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVXOphKG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YDOQkJcivK//ZB6yQoppeuZ30dfDQSH+9z2aLc8ycwxHbE4E3bB6/MUEqOfuKkFg755g4oRukUMlfABSDddO3HDFXaYtgZrihk8aKNJ9Mp0K2kiUiSQFo87VF9GecQTSEIlQuQRtwlkBmCHeI8kD3eh4o3xMRZCjcMGTTeRiBAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmfMS821; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVXOphKG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056C8C433F1;
-	Tue, 23 Jan 2024 01:56:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmfMS821"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF551C433C7;
+	Tue, 23 Jan 2024 01:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974980;
-	bh=5wG0n6rZd1gSyQ7QDK3wqawTa90yVWHd8B6Yes5Jb44=;
+	s=korg; t=1705974981;
+	bh=4CZMEQUDC+tbQbSXuSBcOqfEuJWeI5hhJDUbSYi8apI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SVXOphKGLEI1UaeFJGdB+ZkAYgTTRjXerh0WUmCaNcSScGe6j3a6vyUm8HDzymE7o
-	 bI/XaOabZXWg7bErFf4yIN+EySGLOYkTRnwILZ7cZ07wdNhxMtN4Hc7DQ5syozLOgH
-	 6+OBTu8++LBrafW/EJ8GrPOYEoUQnG0y48g3dm+c=
+	b=HmfMS821TDxXbpFFLgP6tQ7kcUB7KO0BMIlEcIPhhnf80VRC5tbt4ewdWcLsXBf3K
+	 4wrJCe//1gN10bwYr2D5I5QiUDMrjQZmQV24gR3dcQtBoNxMUgDNyYNU4rdHyZBJ21
+	 D2tPMlYQcDeJ4btuO1wbEuJp9nKpSSRa4abRoRfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Douglas Anderson <dianders@chromium.org>,
+	Grant Grundler <grundler@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 178/583] arm64: dts: qcom: sm8150-hdk: fix SS USB regulators
-Date: Mon, 22 Jan 2024 15:53:49 -0800
-Message-ID: <20240122235817.462109490@linuxfoundation.org>
+Subject: [PATCH 5.15 306/374] r8152: Choose our USB config with choose_configuration() rather than probe()
+Date: Mon, 22 Jan 2024 15:59:22 -0800
+Message-ID: <20240122235755.485557629@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +48,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit a509adf05b2aac31b22781f5aa09e4768a5b6c39 ]
+[ Upstream commit aa4f2b3e418e8673e55145de8b8016a7a9920306 ]
 
-The SM8150-HDK uses two different regulators to power up SuperSpeed USB
-PHYs. The L5A regulator is used for the second USB host, while the first
-(OTG) USB host uses different regulator, L18A. Fix the regulator for the
-usb_1 QMPPHY and (to remove possible confusion) drop the
-usb_ss_dp_core_1/_2 labels.
+If you deauthorize the r8152 device (by writing 0 to the "authorized"
+field in sysfs) and then reauthorize it (by writing a 1) then it no
+longer works. This is because when you do the above we lose the
+special configuration that we set in rtl8152_cfgselector_probe().
+Deauthorizing causes the config to be set to -1 and then reauthorizing
+runs the default logic for choosing the best config.
 
-Fixes: 0ab1b2d10afe ("arm64: dts: qcom: add sm8150 hdk dts")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20231215174152.315403-4-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+I made an attempt to fix it so that the config is kept across
+deauthorizing / reauthorizing [1] but it was a bit ugly.
+
+Let's instead use the new USB core feature to override
+choose_configuration().
+
+This patch relies upon the patches ("usb: core: Don't force USB
+generic_subclass drivers to define probe()") and ("usb: core: Allow
+subclassed USB drivers to override usb_choose_configuration()")
+
+[1] https://lore.kernel.org/r/20231130154337.1.Ie00e07f07f87149c9ce0b27ae4e26991d307e14b@changeid
+
+Fixes: ec51fbd1b8a2 ("r8152: add USB device driver for config selection")
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Grant Grundler <grundler@chromium.org>
+Link: https://lore.kernel.org/r/20231201102946.v2.3.Ie00e07f07f87149c9ce0b27ae4e26991d307e14b@changeid
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150-hdk.dts | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/usb/r8152.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-index bb161b536da4..f4c6e1309a7e 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-@@ -127,8 +127,6 @@ vdda_qrefs_0p875_5:
- 		vdda_sp_sensor:
- 		vdda_ufs_2ln_core_1:
- 		vdda_ufs_2ln_core_2:
--		vdda_usb_ss_dp_core_1:
--		vdda_usb_ss_dp_core_2:
- 		vdda_qlink_lv:
- 		vdda_qlink_lv_ck:
- 		vreg_l5a_0p875: ldo5 {
-@@ -210,6 +208,12 @@ vreg_l17a_3p0: ldo17 {
- 			regulator-max-microvolt = <3008000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
-+
-+		vreg_l18a_0p8: ldo18 {
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
- 	};
- 
- 	regulators-1 {
-@@ -445,13 +449,13 @@ &usb_2_hsphy {
- &usb_1_qmpphy {
- 	status = "okay";
- 	vdda-phy-supply = <&vreg_l3c_1p2>;
--	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
-+	vdda-pll-supply = <&vreg_l18a_0p8>;
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index e8fd743a1509..85b98fd06ba2 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -9872,7 +9872,7 @@ static struct usb_driver rtl8152_driver = {
+ 	.disable_hub_initiated_lpm = 1,
  };
  
- &usb_2_qmpphy {
- 	status = "okay";
- 	vdda-phy-supply = <&vreg_l3c_1p2>;
--	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
-+	vdda-pll-supply = <&vreg_l5a_0p875>;
- };
+-static int rtl8152_cfgselector_probe(struct usb_device *udev)
++static int rtl8152_cfgselector_choose_configuration(struct usb_device *udev)
+ {
+ 	struct usb_host_config *c;
+ 	int i, num_configs;
+@@ -9899,19 +9899,13 @@ static int rtl8152_cfgselector_probe(struct usb_device *udev)
+ 	if (i == num_configs)
+ 		return -ENODEV;
  
- &usb_1 {
+-	if (usb_set_configuration(udev, c->desc.bConfigurationValue)) {
+-		dev_err(&udev->dev, "Failed to set configuration %d\n",
+-			c->desc.bConfigurationValue);
+-		return -ENODEV;
+-	}
+-
+-	return 0;
++	return c->desc.bConfigurationValue;
+ }
+ 
+ static struct usb_device_driver rtl8152_cfgselector_driver = {
+-	.name =		MODULENAME "-cfgselector",
+-	.probe =	rtl8152_cfgselector_probe,
+-	.id_table =	rtl8152_table,
++	.name =	MODULENAME "-cfgselector",
++	.choose_configuration = rtl8152_cfgselector_choose_configuration,
++	.id_table = rtl8152_table,
+ 	.generic_subclass = 1,
+ 	.supports_autosuspend = 1,
+ };
 -- 
 2.43.0
 
