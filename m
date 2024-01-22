@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A00E524BD;
-	Tue, 23 Jan 2024 00:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E544E1D0;
+	Tue, 23 Jan 2024 00:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970239; cv=none; b=n2ldtWUXVc3KJfjLNlZlISxFd5dhXMjvBAOcbgoVtOr5QlVCVBoOUehX4SEbCNMWnU1FLy0ols/evUHiC1nyp9upgpHSQNX5pOqo+Bd7sPpPWZ5JJaO1EX9mR37XPEiGCCG7xuB52oOiErVYLiDzgHJTetybOlwl/7a0QE/Ks8A=
+	t=1705970251; cv=none; b=Nfuuggh1RZdEE5R8sdH7TtJtqSFQCyNa2k8ZbroVYDbDzP7gtefyaesZqwYbRR0GHj/wubTR5pptz7WtHZCJiqhACg3P0O5SKex5iaHpcmZOEGdSj7roEqRYtIgsNXPEYE8gxV482Yc6/f3aQ4BgaGUAKjXsRZ+p1ruMgEaRUdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970239; c=relaxed/simple;
-	bh=qIDYOukiUFg/kBiuf0EJypfNWiLZRMkbKlObc4TPjWM=;
+	s=arc-20240116; t=1705970251; c=relaxed/simple;
+	bh=c8xfb0p2X7v2EC3uTsAGljthcyTWYohejugnV+cERN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bYgjqSdnaSnt91SHlH+ywY506DmGdczyNu6Wzk119PRBywFMDkhEXmSGSo/JtSoXjVtW8ruFazu5bWN4ZXtoTYiGqMpJt6goefDo7XU2ANswUb9cXnenaPpA6YQpXzNGppqmcu6+xEoJqnaI4aRdSuRyoxQXDIPYIWkmDVc/hRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17Q04y4C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WRrbfhubONaQXFPogjrTxZKi7j8JPzFdoaSqYsQeTBtP93lV3TS2uUklDSxOyAF70I27Q1sawpDXKk5v5Yj2HOasHd5Q3QnBxQxFSuVi0PJ13bpOE+LaQWkzGkFIUiArkWC5YVjS1V5g1L3Oz19Qe0T/kVwnTM2hSMETJXC4uRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ye+F2trp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17Q04y4C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11BDDC433C7;
-	Tue, 23 Jan 2024 00:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ye+F2trp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777E3C433C7;
+	Tue, 23 Jan 2024 00:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970239;
-	bh=qIDYOukiUFg/kBiuf0EJypfNWiLZRMkbKlObc4TPjWM=;
+	s=korg; t=1705970250;
+	bh=c8xfb0p2X7v2EC3uTsAGljthcyTWYohejugnV+cERN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=17Q04y4ChRXYBtf0Bit11aOVac+O9EWUsKQz4zubX0Yfbe1I1ugJK2uA59qzcfrb8
-	 7BPzIKWVVWY+nMfSO4IE6ya2EXkLLT7zpiXd6Bw/qmpxvO8tFL4F5UeBcQvP9xrbQH
-	 UlTieqWHdWRbIFIJPH7O0bp9XmBc702ikp3nc4eM=
+	b=ye+F2trpAjNIiGFNRzTcW8+w7qWWR1cSJW1NejpoOaoTgj5Q7VQPuBjE8JcdXF0HG
+	 a4lvlFpoii5Sl4L/uc1FYZovY3mLQ6TITDHc/2u17RFZeTLsy8L+ak7XCA/SYaCT+Y
+	 4/4SMYYfDZoKHx+4x6e33DPkh7Z8ZfqjuQ0eZRwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 619/641] netfilter: nf_tables: reject invalid set policy
-Date: Mon, 22 Jan 2024 15:58:43 -0800
-Message-ID: <20240122235837.613723970@linuxfoundation.org>
+Subject: [PATCH 6.7 620/641] netfilter: nft_limit: do not ignore unsupported flags
+Date: Mon, 22 Jan 2024 15:58:44 -0800
+Message-ID: <20240122235837.643903525@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,40 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 0617c3de9b4026b87be12b0cb5c35f42c7c66fcb ]
+[ Upstream commit 91a139cee1202a4599a380810d93c69b5bac6197 ]
 
-Report -EINVAL in case userspace provides a unsupported set backend
-policy.
+Bail out if userspace provides unsupported flags, otherwise future
+extensions to the limit expression will be silently ignored by the
+kernel.
 
-Fixes: c50b960ccc59 ("netfilter: nf_tables: implement proper set selection")
+Fixes: c7862a5f0de5 ("netfilter: nft_limit: allow to invert matching criteria")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/netfilter/nft_limit.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 5e7994898c76..3912a133324c 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -5048,8 +5048,16 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+diff --git a/net/netfilter/nft_limit.c b/net/netfilter/nft_limit.c
+index 145dc62c6247..79039afde34e 100644
+--- a/net/netfilter/nft_limit.c
++++ b/net/netfilter/nft_limit.c
+@@ -58,6 +58,7 @@ static inline bool nft_limit_eval(struct nft_limit_priv *priv, u64 cost)
+ static int nft_limit_init(struct nft_limit_priv *priv,
+ 			  const struct nlattr * const tb[], bool pkts)
+ {
++	bool invert = false;
+ 	u64 unit, tokens;
+ 
+ 	if (tb[NFTA_LIMIT_RATE] == NULL ||
+@@ -90,19 +91,23 @@ static int nft_limit_init(struct nft_limit_priv *priv,
+ 				 priv->rate);
  	}
  
- 	desc.policy = NFT_SET_POL_PERFORMANCE;
--	if (nla[NFTA_SET_POLICY] != NULL)
-+	if (nla[NFTA_SET_POLICY] != NULL) {
- 		desc.policy = ntohl(nla_get_be32(nla[NFTA_SET_POLICY]));
-+		switch (desc.policy) {
-+		case NFT_SET_POL_PERFORMANCE:
-+		case NFT_SET_POL_MEMORY:
-+			break;
-+		default:
++	if (tb[NFTA_LIMIT_FLAGS]) {
++		u32 flags = ntohl(nla_get_be32(tb[NFTA_LIMIT_FLAGS]));
++
++		if (flags & ~NFT_LIMIT_F_INV)
 +			return -EOPNOTSUPP;
-+		}
++
++		if (flags & NFT_LIMIT_F_INV)
++			invert = true;
 +	}
++
+ 	priv->limit = kmalloc(sizeof(*priv->limit), GFP_KERNEL_ACCOUNT);
+ 	if (!priv->limit)
+ 		return -ENOMEM;
  
- 	if (nla[NFTA_SET_DESC] != NULL) {
- 		err = nf_tables_set_desc_parse(&desc, nla[NFTA_SET_DESC]);
+ 	priv->limit->tokens = tokens;
+ 	priv->tokens_max = priv->limit->tokens;
+-
+-	if (tb[NFTA_LIMIT_FLAGS]) {
+-		u32 flags = ntohl(nla_get_be32(tb[NFTA_LIMIT_FLAGS]));
+-
+-		if (flags & NFT_LIMIT_F_INV)
+-			priv->invert = true;
+-	}
++	priv->invert = invert;
+ 	priv->limit->last = ktime_get_ns();
+ 	spin_lock_init(&priv->limit->lock);
+ 
 -- 
 2.43.0
 
