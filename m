@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94047745F2;
-	Tue, 23 Jan 2024 02:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8280745F2;
+	Tue, 23 Jan 2024 02:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975459; cv=none; b=X/Ueb4FCcWjheglbZbxcHT/AKTzFpMjbeRNFfExgcEAmN23dS2ixDeoYfb3JV7pkODMcXgPDwMl5J/UHW4eC3Lrh25zmCOSGNYV3T8ENAyxG/9oprXbXp7FxNAtimduF+Vx7nrHj7Avk/b0ikSeR3ig6/6I3ED1v308X2vnjMRA=
+	t=1705975460; cv=none; b=f6fQL9ddkowW+K3i1RTA2yla+Lr4ChuYnTzvasAU08Yh61Gtomo4uPggbVT+u7cx03RuojmhrEsMnTrT0SBtT2gaq7qo1aUSmDEtkmVPYqpZtyh8P/N36EbaVAePudaZC0zhK3DHFNC0JOvK7CJRbvkHgFTSEEgBknV7BArEnyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975459; c=relaxed/simple;
-	bh=GddwwWqm0IUKPK4DexHPrcYIVr1EnJPaAyeldVgOWEo=;
+	s=arc-20240116; t=1705975460; c=relaxed/simple;
+	bh=BW+2JAltHpNkJvsjFwOXYWkjZjuAjdaJoXrIR3cNaQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ukubhXZKlMrp3BekX+NsKe8FMDV7Ck0vyOf8UKhu14yv0T1QluXD9QO2tFimcVWRjbK12ni5ERhygPEiQrwg5qNGptZyoNiyTzkQcbMZcUGtwB2QXNab1iX3iudOzWLT3/FoVBGULELq0BE27xi1nJdgrjJIC2BaLZyiMKwGdvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ethd118l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KauAvjKZR+BwJKtoEBRPGR1v7cnptI4q1KOrwWqd1SpZpPEjQ2UkLBrTX5YQvh//cCQ8aE68ytdKHhvHN9xKseymzK8z7yBMm2HuMoDhaZoDd5ObpGoc3UsAOb+uOm3/N35h5mtVN+BR83jYjWuIi9nlJY8vxqQIxQKcvoz3O8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Anu54OE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ethd118l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59736C43390;
-	Tue, 23 Jan 2024 02:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Anu54OE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623DFC43399;
+	Tue, 23 Jan 2024 02:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975459;
-	bh=GddwwWqm0IUKPK4DexHPrcYIVr1EnJPaAyeldVgOWEo=;
+	s=korg; t=1705975460;
+	bh=BW+2JAltHpNkJvsjFwOXYWkjZjuAjdaJoXrIR3cNaQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ethd118lxDtLdXKaM5TOiKnZREsM90nr/rOypRPJUoa36Aqz5hwx+2ZrTfCcwSXCT
-	 9zhYyiOtqiluEWaZjUbaThIhWVs7/GMHXf+NtRrUxaiRL6zPDFXj5NUxXeD0BpXaCL
-	 Au45Auz5cePxBEXF8sPHGXwBnS0deXMYxoeSkXx0=
+	b=0Anu54OEfpjadt/4MQ4dlDO0L/qjWS1anLJQMlKNQcOG24hRTK2ei43Q+zovaS4zY
+	 CctZSRB0zIyEWklDiw07h01HpC0tVIWFr0g+ZqaKJMQsjtrmaLqIcyzLoHLECtu1Oa
+	 OFA7lXqYi9VzG8oGBwtuhPjnM6SvPSPfWBUpG7G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Helge Deller <deller@gmx.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 6.6 391/583] fbdev/acornfb: Fix name of fb_ops initializer macro
-Date: Mon, 22 Jan 2024 15:57:22 -0800
-Message-ID: <20240122235823.948797650@linuxfoundation.org>
+	Nam Cao <namcao@linutronix.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.6 392/583] fbdev: flush deferred work in fb_deferred_io_fsync()
+Date: Mon, 22 Jan 2024 15:57:23 -0800
+Message-ID: <20240122235823.981268028@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,38 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Nam Cao <namcao@linutronix.de>
 
-commit b48807788e7a2bd93044fe84cfe8ff64b85ec15e upstream.
+commit 15e4c1f462279b4e128f27de48133e0debe9e0df upstream.
 
-Fix build by using the correct name for the initializer macro
-for struct fb_ops.
+The driver's fsync() is supposed to flush any pending operation to
+hardware. It is implemented in this driver by cancelling the queued
+deferred IO first, then schedule it for "immediate execution" by calling
+schedule_delayed_work() again with delay=0. However, setting delay=0
+only means the work is scheduled immediately, it does not mean the work
+is executed immediately. There is no guarantee that the work is finished
+after schedule_delayed_work() returns. After this driver's fsync()
+returns, there can still be pending work. Furthermore, if close() is
+called by users immediately after fsync(), the pending work gets
+cancelled and fsync() may do nothing.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 9037afde8b9d ("fbdev/acornfb: Use fbdev I/O helpers")
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Cc: Helge Deller <deller@gmx.de>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: <stable@vger.kernel.org> # v6.6+
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231127131655.4020-2-tzimmermann@suse.de
+To ensure that the deferred IO completes, use flush_delayed_work()
+instead. Write operations to this driver either write to the device
+directly, or invoke schedule_delayed_work(); so by flushing the
+workqueue, it can be guaranteed that all previous writes make it to the
+device.
+
+Fixes: 5e841b88d23d ("fb: fsync() method for deferred I/O flush.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/acornfb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/core/fb_defio.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/drivers/video/fbdev/acornfb.c
-+++ b/drivers/video/fbdev/acornfb.c
-@@ -605,7 +605,7 @@ acornfb_pan_display(struct fb_var_screen
+--- a/drivers/video/fbdev/core/fb_defio.c
++++ b/drivers/video/fbdev/core/fb_defio.c
+@@ -132,11 +132,7 @@ int fb_deferred_io_fsync(struct file *fi
+ 		return 0;
  
- static const struct fb_ops acornfb_ops = {
- 	.owner		= THIS_MODULE,
--	FB_IOMEM_DEFAULT_OPS,
-+	FB_DEFAULT_IOMEM_OPS,
- 	.fb_check_var	= acornfb_check_var,
- 	.fb_set_par	= acornfb_set_par,
- 	.fb_setcolreg	= acornfb_setcolreg,
+ 	inode_lock(inode);
+-	/* Kill off the delayed work */
+-	cancel_delayed_work_sync(&info->deferred_work);
+-
+-	/* Run it immediately */
+-	schedule_delayed_work(&info->deferred_work, 0);
++	flush_delayed_work(&info->deferred_work);
+ 	inode_unlock(inode);
+ 
+ 	return 0;
 
 
