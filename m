@@ -1,41 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691D8664C3;
-	Tue, 23 Jan 2024 00:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A85651A1;
+	Tue, 23 Jan 2024 00:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971557; cv=none; b=etsTsrSctK+EPhZEXEkr1RVu0LHZWCubH1mOB7HbKrIZ8Emb9ddJAtGSrmNb+pYG+3oXqz9dtJPYy5TzAAgcD4j6Wf9spFS3781sw+x3M7h1MRgIWZrxu5LUB/xTEk8BI1+UVdq16jEGWYaSv+YYepC+4G4pNlK6Jn0M/U00aH8=
+	t=1705971558; cv=none; b=G9FzU0tZ8MNOKzAOmc71sznPUsPewdHAIUMrjxqI5vbZBUGPM2K/CBU4VzMPgdqbtwMXpJfAFh2uWKZENYqJqXuYBZ1kjTicOJSP36SZGKU3dsPSU1Ypq0vcu3EGD69/ADycaePouzTBt2wRzFmU8nqmX862V2a31PE5GzQl4Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971557; c=relaxed/simple;
-	bh=UbXDQztOKQYSffYz0U8IfJgBbpEbYGSMgpBGRXEQ2yQ=;
+	s=arc-20240116; t=1705971558; c=relaxed/simple;
+	bh=SwdYwyu5LPPC2k5+EfmJJnKF6mGVyeSyptesZsjsqvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aNWpRS01hdJwZBRFELFEk2DbkDH8MZAeR+SWvJHKKvnwi4sD+VTXcuSrdYWPNMyPf90+H7/OEmLsG/M7O6V1YD5Edk2WpzC9J/6a7Ymd3zDVQJnKq+SkqQ8E6ZztzBLyBy/JRN2189WgD0CX3fiRcJaNF1H5t+dRVT4ZjiJc10c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jodx5Hcw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oJlc7ZBni9zRDaIUZ2ENEbYSvLS/7BxZP1SAWLrg69TpsutoM29DXTucsfwzg3QGmBybgG2othy8gIuzbhoKGfL/J7va+33NGZX0rQSSYhEp55dDc0yD1JYPzn8PcHwNbDOHXZv1eK3k2HNnGG1s35PXPihsfLwrlDTYHwlbkaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvlNBUA/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jodx5Hcw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58B0C433C7;
-	Tue, 23 Jan 2024 00:59:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvlNBUA/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B02C433C7;
+	Tue, 23 Jan 2024 00:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971557;
-	bh=UbXDQztOKQYSffYz0U8IfJgBbpEbYGSMgpBGRXEQ2yQ=;
+	s=korg; t=1705971558;
+	bh=SwdYwyu5LPPC2k5+EfmJJnKF6mGVyeSyptesZsjsqvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jodx5HcwAkShikf5F3tZL6oxESnL+kBepcH3WM4Apuno5VlLgNpgkgiz6LqUZOJz3
-	 /6iL2QB+G6jhtA1fsmKqtZGEo3cFgqptZ3tC426KIl0gJFeSYzfTEhx4dJGcdSDQdP
-	 8xRockiHTJWqi+NoCK1fZY5s2Ii2uD9kBAVdwbgA=
+	b=VvlNBUA/boh7JJnV2+hnJ2z8sU3R4NsqRA7ZF/0kRF8UUSItJ/Y2M4swywOAX1+yv
+	 SAU5yjqm6ni6oxSet5hYd2Dwo1CjS43eosYdLdqrR7R0N4ukJN9SaY6mOKTGY/Ikay
+	 9YFKksvzwQaJX71ZieyjXgzyegViDvPV3ER6u5WQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Shuah Khan <shuah@kernel.org>,
+	linux-sound@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 150/286] drm/bridge: Fix typo in post_disable() description
-Date: Mon, 22 Jan 2024 15:57:36 -0800
-Message-ID: <20240122235737.932129858@linuxfoundation.org>
+Subject: [PATCH 6.1 242/417] kselftest/alsa - mixer-test: fix the number of parameters to ksft_exit_fail_msg()
+Date: Mon, 22 Jan 2024 15:56:50 -0800
+Message-ID: <20240122235800.264776887@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,40 +52,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-[ Upstream commit 288b039db225676e0c520c981a1b5a2562d893a3 ]
+[ Upstream commit 8c51c13dc63d46e754c44215eabc0890a8bd9bfb ]
 
-s/singals/signals/
+Minor fix in the number of arguments to error reporting function in the
+test program as reported by GCC 13.2.0 warning.
 
-Fixes: 199e4e967af4 ("drm: Extract drm_bridge.h")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231124094253.658064-1-dario.binacchi@amarulasolutions.com
+mixer-test.c: In function ‘find_controls’:
+mixer-test.c:169:44: warning: too many arguments for format [-Wformat-extra-args]
+  169 |                         ksft_exit_fail_msg("snd_ctl_poll_descriptors() failed for %d\n",
+      |                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The number of arguments in call to ksft_exit_fail_msg() doesn't correspond
+to the format specifiers, so this is adjusted resembling the sibling calls
+to the error function.
+
+Fixes: b1446bda56456 ("kselftest: alsa: Check for event generation when we write to controls")
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: linux-sound@vger.kernel.org
+Cc: linux-kselftest@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Acked-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20240107173704.937824-2-mirsad.todorovac@alu.unizg.hr
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/drm_bridge.h | 2 +-
+ tools/testing/selftests/alsa/mixer-test.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
-index 055486e35e68..3826cf9553c0 100644
---- a/include/drm/drm_bridge.h
-+++ b/include/drm/drm_bridge.h
-@@ -186,7 +186,7 @@ struct drm_bridge_funcs {
- 	 * or &drm_encoder_helper_funcs.dpms hook.
- 	 *
- 	 * The bridge must assume that the display pipe (i.e. clocks and timing
--	 * singals) feeding it is no longer running when this callback is
-+	 * signals) feeding it is no longer running when this callback is
- 	 * called.
- 	 *
- 	 * The @post_disable callback is optional.
+diff --git a/tools/testing/selftests/alsa/mixer-test.c b/tools/testing/selftests/alsa/mixer-test.c
+index 37da902545a4..d59910658c8c 100644
+--- a/tools/testing/selftests/alsa/mixer-test.c
++++ b/tools/testing/selftests/alsa/mixer-test.c
+@@ -205,7 +205,7 @@ static void find_controls(void)
+ 		err = snd_ctl_poll_descriptors(card_data->handle,
+ 					       &card_data->pollfd, 1);
+ 		if (err != 1) {
+-			ksft_exit_fail_msg("snd_ctl_poll_descriptors() failed for %d\n",
++			ksft_exit_fail_msg("snd_ctl_poll_descriptors() failed for card %d: %d\n",
+ 				       card, err);
+ 		}
+ 
 -- 
 2.43.0
 
