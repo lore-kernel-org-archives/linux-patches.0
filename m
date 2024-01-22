@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D601353F6;
-	Tue, 23 Jan 2024 00:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD2733097;
+	Tue, 23 Jan 2024 00:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969636; cv=none; b=gXA0s9yhRrqTLfkr1NeKv96Emut1z/gMPTZ5qvf1qOcfYgdHSjKkQ7G+0Z4VrPbLTdRVnavJUe6MvFuC3lvcwBGlFEbzr8BmSGISb745iCV71vijXl2xmmItmw7974icdR/w7tMByeogF6tWWBzktPSC/iqn5ubvjR7pVqoy188=
+	t=1705969637; cv=none; b=XBMYak30xLRFazNUN6sGI+rZXd7LcMo0s+YsJfSbZrWdCJd1FrCmxPbW3bPU2tMEFD9RffkcwWgzZFXErruwZMuNN/Y5l3klAjeU9GBfuvpB2wzSR/IbAf7jgMx2Y2c4e720ypzmbRZQs1BoL0lkESgKtX1hLR+Eo+cF2u/Vjfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969636; c=relaxed/simple;
-	bh=JvTul+SWomYj7T6vkGzYGi6S1HD/rkUVsXCGPPs+2EE=;
+	s=arc-20240116; t=1705969637; c=relaxed/simple;
+	bh=9NsIF/pxjYAbZQd+8K/GSubLkcNJFj5Sk7sSLaFChZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+9zLkO6uHfGU1s7qmSyHFT07MCjub1JNkOlObdP2AGL1DHf7lA0EWctz6c/leEV4QqR+uxStwkCkBmvnLhjz00xsFQlCat399vI+86EebvJMlDvLp4r5j6KXz35aa2iQxEL7uuGfc/t+3cxKerNMAjVlHBk3pVwWnjEvw2Y4Vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+zcSr5I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B00nMyrr3I0stoAP7ovuhqwoNzNkV0PBZQcAosbhEhCZbVAFeWl211EU2JzEK63KH0qDO97QwzY85XvEWsjovTc4opXVokGQO0skATuzlQuf5gT/XMoURRqvjMofJI7pYcts0cZfZB2fg9EH3FlqjjzF+u5Cd+4z3+O52VdY+FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNMq7AqQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+zcSr5I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE49C43399;
-	Tue, 23 Jan 2024 00:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNMq7AqQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9A7C433C7;
+	Tue, 23 Jan 2024 00:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969636;
-	bh=JvTul+SWomYj7T6vkGzYGi6S1HD/rkUVsXCGPPs+2EE=;
+	s=korg; t=1705969637;
+	bh=9NsIF/pxjYAbZQd+8K/GSubLkcNJFj5Sk7sSLaFChZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+zcSr5INLQg9Z0x75LsDrYiwTlDBfj0NgO2lxVxUfO/PfzpRKCWfl+MXvH1jAVdn
-	 VVjkhrav/nHeDvf3IFDfzb7oSLkdK+CtXftRS7sCnMDdPs8qYUSBncsCKNP15fCy8m
-	 OAVOCgzHl8WP3xgaQ3nPFV9/mVFBXELRgE/+nQy4=
+	b=yNMq7AqQS9qBAvlkEIrtCbHobIf8x5qPF0pI36KvxZD5tS+1ys1vtVBXjelRNAqHy
+	 sUF/HMkYLycb90nviPK5f+6BeZNknOasbiB6fM0iP3yvZYvRkfMgqEs3GTQIPslpmt
+	 rVVzt38aNoZ8YALaOtl6CffwVs5+dwL/ZLOITh0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Manorit Chawdhry <m-chawdhry@ti.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 349/641] clk: qcom: gcc-sm8550: use collapse-voting for PCIe GDSCs
-Date: Mon, 22 Jan 2024 15:54:13 -0800
-Message-ID: <20240122235828.842953465@linuxfoundation.org>
+Subject: [PATCH 6.7 340/641] watchdog: rti_wdt: Drop runtime pm reference count when watchdog is unused
+Date: Mon, 22 Jan 2024 15:54:04 -0800
+Message-ID: <20240122235828.554185440@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,68 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Vignesh Raghavendra <vigneshr@ti.com>
 
-[ Upstream commit 7e77a39265293ea4f05e20fff180755503c49918 ]
+[ Upstream commit c1a6edf3b541e44e78f10bc6024df779715723f1 ]
 
-The PCIe GDSCs can be shared with other masters and should use the APCS
-collapse-vote register when updating the power state.
+Call runtime_pm_put*() if watchdog is not already started during probe and re
+enable it in watchdog start as required.
 
-This is specifically also needed to be able to disable power domains
-that have been enabled by boot firmware using the vote register.
+On K3 SoCs, watchdogs and their corresponding CPUs are under same
+power-domain, so if the reference count of unused watchdogs aren't
+dropped, it will lead to CPU hotplug failures as Device Management
+firmware won't allow to turn off the power-domain due to dangling
+reference count.
 
-Following other recent Qualcomm platforms, describe this register and
-the corresponding mask for the PCIe (and _phy) GDSCs.
-
-Fixes: 955f2ea3b9e9 ("clk: qcom: Add GCC driver for SM8550")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20231218-topic-8550_fixes-v1-5-ce1272d77540@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 2d63908bdbfb ("watchdog: Add K3 RTI watchdog support")
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Tested-by: Manorit Chawdhry <m-chawdhry@ti.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20231213140110.938129-1-vigneshr@ti.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm8550.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/watchdog/rti_wdt.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
-index a16d07426b71..73bda0d03aa7 100644
---- a/drivers/clk/qcom/gcc-sm8550.c
-+++ b/drivers/clk/qcom/gcc-sm8550.c
-@@ -2998,6 +2998,8 @@ static struct clk_branch gcc_video_axi1_clk = {
+diff --git a/drivers/watchdog/rti_wdt.c b/drivers/watchdog/rti_wdt.c
+index 8e1be7ba0103..9215793a1c81 100644
+--- a/drivers/watchdog/rti_wdt.c
++++ b/drivers/watchdog/rti_wdt.c
+@@ -77,6 +77,11 @@ static int rti_wdt_start(struct watchdog_device *wdd)
+ {
+ 	u32 timer_margin;
+ 	struct rti_wdt_device *wdt = watchdog_get_drvdata(wdd);
++	int ret;
++
++	ret = pm_runtime_resume_and_get(wdd->parent);
++	if (ret)
++		return ret;
  
- static struct gdsc pcie_0_gdsc = {
- 	.gdscr = 0x6b004,
-+	.collapse_ctrl = 0x52020,
-+	.collapse_mask = BIT(0),
- 	.pd = {
- 		.name = "pcie_0_gdsc",
- 	},
-@@ -3007,6 +3009,8 @@ static struct gdsc pcie_0_gdsc = {
+ 	/* set timeout period */
+ 	timer_margin = (u64)wdd->timeout * wdt->freq;
+@@ -343,6 +348,9 @@ static int rti_wdt_probe(struct platform_device *pdev)
+ 	if (last_ping)
+ 		watchdog_set_last_hw_keepalive(wdd, last_ping);
  
- static struct gdsc pcie_0_phy_gdsc = {
- 	.gdscr = 0x6c000,
-+	.collapse_ctrl = 0x52020,
-+	.collapse_mask = BIT(3),
- 	.pd = {
- 		.name = "pcie_0_phy_gdsc",
- 	},
-@@ -3016,6 +3020,8 @@ static struct gdsc pcie_0_phy_gdsc = {
++	if (!watchdog_hw_running(wdd))
++		pm_runtime_put_sync(&pdev->dev);
++
+ 	return 0;
  
- static struct gdsc pcie_1_gdsc = {
- 	.gdscr = 0x8d004,
-+	.collapse_ctrl = 0x52020,
-+	.collapse_mask = BIT(1),
- 	.pd = {
- 		.name = "pcie_1_gdsc",
- 	},
-@@ -3025,6 +3031,8 @@ static struct gdsc pcie_1_gdsc = {
+ err_iomap:
+@@ -357,7 +365,10 @@ static void rti_wdt_remove(struct platform_device *pdev)
+ 	struct rti_wdt_device *wdt = platform_get_drvdata(pdev);
  
- static struct gdsc pcie_1_phy_gdsc = {
- 	.gdscr = 0x8e000,
-+	.collapse_ctrl = 0x52020,
-+	.collapse_mask = BIT(4),
- 	.pd = {
- 		.name = "pcie_1_phy_gdsc",
- 	},
+ 	watchdog_unregister_device(&wdt->wdd);
+-	pm_runtime_put(&pdev->dev);
++
++	if (!pm_runtime_suspended(&pdev->dev))
++		pm_runtime_put(&pdev->dev);
++
+ 	pm_runtime_disable(&pdev->dev);
+ }
+ 
 -- 
 2.43.0
 
