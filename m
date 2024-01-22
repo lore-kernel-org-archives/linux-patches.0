@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5398F5DF15;
-	Tue, 23 Jan 2024 00:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0AF04E1CD;
+	Tue, 23 Jan 2024 00:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970557; cv=none; b=PljsY88FrqJvrV28EGlDyNW8rOXGyi4aFRiNzUjfS30b6SoS+x24M+JeiHoEg9kNLoP3jYgI0Iq4uI3A5jH/P41SOdOKLQtTSp4guwiapwyPOCETaIdmtQG1cOlVIZEdVH2qYh3QP8yYqYEoHTXBixJRe/MRuMpsPwr5M0OyIX0=
+	t=1705970561; cv=none; b=erGN0R/MFAT0PCVvQnFgC6FSuiuvRY8AEun9jFHkf7fQ7VNRdfCA2QZR+tFoBTqIvnA5Ut1dhnzMLMDOtgsz3NMfAxvGH9JnIgMb+JtyGrn1nBO87QbxcKH0SV7GIunzTtJKIkk+iLXlDUU3+adOuptRNELzAEnLrXm+oQNAcpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970557; c=relaxed/simple;
-	bh=c2DAF+DjxveJh6uxIMEfjWYa+LCD1OBate2ApazTVEA=;
+	s=arc-20240116; t=1705970561; c=relaxed/simple;
+	bh=Orp7cTv2AO3sWWIW2yOV1DXjvOqD6RDrT2A6XoS0Jjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aGmGOH9ifUq+Ebx+4d9bXdc0PTrQeaDwdmZTtZTIqIqvcj2rC+VpTjon2dHCDeGRrVevJTH+VbjS7aa3bTneWRqk9g1RkqBuTtF8h8AektQLtrLenzM5ncJZsKXdYgFyr59pBiI4QyXvHOnfUZkYPCkyBdNbkvY1BlEeOqtXZNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwEN5rv8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BxbvN8+fml0UDR1dbp+8gZOwOV3iF0DSnVbAsSUoEdIspulMb0wbR1mmeiCyK1bipbrmQ7xTfN0tVzFwQyMdM6DXVOeR7/xHLFFnW7Om3qgd9zAr272p4H2MmQUYK2mEHV0SBQfB5N13BXuttBoqkQJRja93hfZxeUkHhfbATvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUG0OWzx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwEN5rv8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71DBC433F1;
-	Tue, 23 Jan 2024 00:42:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUG0OWzx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97467C433F1;
+	Tue, 23 Jan 2024 00:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970557;
-	bh=c2DAF+DjxveJh6uxIMEfjWYa+LCD1OBate2ApazTVEA=;
+	s=korg; t=1705970561;
+	bh=Orp7cTv2AO3sWWIW2yOV1DXjvOqD6RDrT2A6XoS0Jjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KwEN5rv8gM1qyHD1R2+DiWaVN3WtrFq7fNSje6gAwpUytpKwyJH5HOF1uF5EE/mXz
-	 0Vc/kg9vPVz2/oMVFC3c96QLHdo0ZdLRTqMx46o84SrqllajtFbm6H+bv7XnT3X5NH
-	 vkGXfvSK2Vq7q40jg+0naZ0UAqNGxLS2oYIdzQ7Y=
+	b=UUG0OWzxG7R62D/9rSPGrVnHxxlHJFqdVMhNCkbqX43ttAEdm5mDeYP2NbDByiR63
+	 5JOXSiym6sLz7YxzRDCeYnv5d4h4riBxwzfKq/Hn+/R+9TQrY9EC1Nw5QDtDcq6K0X
+	 QF753xGtNWOIMXw/j5G+hZVWJLi5sb/8syM0Vhmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/417] fs: indicate request originates from old mount API
-Date: Mon, 22 Jan 2024 15:53:40 -0800
-Message-ID: <20240122235753.479670275@linuxfoundation.org>
+Subject: [PATCH 6.1 026/417] efivarfs: force RO when remounting if SetVariable is not supported
+Date: Mon, 22 Jan 2024 15:53:14 -0800
+Message-ID: <20240122235752.465305939@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -55,59 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Ilias Apalodimas <ilias.apalodimas@linaro.org>
 
-[ Upstream commit f67d922edb4e95a4a56d07d5d40a76dd4f23a85b ]
+[ Upstream commit 0e8d2444168dd519fea501599d150e62718ed2fe ]
 
-We already communicate to filesystems when a remount request comes from
-the old mount API as some filesystems choose to implement different
-behavior in the new mount API than the old mount API to e.g., take the
-chance to fix significant API bugs. Allow the same for regular mount
-requests.
+If SetVariable at runtime is not supported by the firmware we never assign
+a callback for that function. At the same time mount the efivarfs as
+RO so no one can call that.  However, we never check the permission flags
+when someone remounts the filesystem as RW. As a result this leads to a
+crash looking like this:
 
-Fixes: b330966f79fb ("fuse: reject options on reconfigure via fsconfig(2)")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+$ mount -o remount,rw /sys/firmware/efi/efivars
+$ efi-updatevar -f PK.auth PK
+
+[  303.279166] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+[  303.280482] Mem abort info:
+[  303.280854]   ESR = 0x0000000086000004
+[  303.281338]   EC = 0x21: IABT (current EL), IL = 32 bits
+[  303.282016]   SET = 0, FnV = 0
+[  303.282414]   EA = 0, S1PTW = 0
+[  303.282821]   FSC = 0x04: level 0 translation fault
+[  303.283771] user pgtable: 4k pages, 48-bit VAs, pgdp=000000004258c000
+[  303.284913] [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
+[  303.286076] Internal error: Oops: 0000000086000004 [#1] PREEMPT SMP
+[  303.286936] Modules linked in: qrtr tpm_tis tpm_tis_core crct10dif_ce arm_smccc_trng rng_core drm fuse ip_tables x_tables ipv6
+[  303.288586] CPU: 1 PID: 755 Comm: efi-updatevar Not tainted 6.3.0-rc1-00108-gc7d0c4695c68 #1
+[  303.289748] Hardware name: Unknown Unknown Product/Unknown Product, BIOS 2023.04-00627-g88336918701d 04/01/2023
+[  303.291150] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  303.292123] pc : 0x0
+[  303.292443] lr : efivar_set_variable_locked+0x74/0xec
+[  303.293156] sp : ffff800008673c10
+[  303.293619] x29: ffff800008673c10 x28: ffff0000037e8000 x27: 0000000000000000
+[  303.294592] x26: 0000000000000800 x25: ffff000002467400 x24: 0000000000000027
+[  303.295572] x23: ffffd49ea9832000 x22: ffff0000020c9800 x21: ffff000002467000
+[  303.296566] x20: 0000000000000001 x19: 00000000000007fc x18: 0000000000000000
+[  303.297531] x17: 0000000000000000 x16: 0000000000000000 x15: 0000aaaac807ab54
+[  303.298495] x14: ed37489f673633c0 x13: 71c45c606de13f80 x12: 47464259e219acf4
+[  303.299453] x11: ffff000002af7b01 x10: 0000000000000003 x9 : 0000000000000002
+[  303.300431] x8 : 0000000000000010 x7 : ffffd49ea8973230 x6 : 0000000000a85201
+[  303.301412] x5 : 0000000000000000 x4 : ffff0000020c9800 x3 : 00000000000007fc
+[  303.302370] x2 : 0000000000000027 x1 : ffff000002467400 x0 : ffff000002467000
+[  303.303341] Call trace:
+[  303.303679]  0x0
+[  303.303938]  efivar_entry_set_get_size+0x98/0x16c
+[  303.304585]  efivarfs_file_write+0xd0/0x1a4
+[  303.305148]  vfs_write+0xc4/0x2e4
+[  303.305601]  ksys_write+0x70/0x104
+[  303.306073]  __arm64_sys_write+0x1c/0x28
+[  303.306622]  invoke_syscall+0x48/0x114
+[  303.307156]  el0_svc_common.constprop.0+0x44/0xec
+[  303.307803]  do_el0_svc+0x38/0x98
+[  303.308268]  el0_svc+0x2c/0x84
+[  303.308702]  el0t_64_sync_handler+0xf4/0x120
+[  303.309293]  el0t_64_sync+0x190/0x194
+[  303.309794] Code: ???????? ???????? ???????? ???????? (????????)
+[  303.310612] ---[ end trace 0000000000000000 ]---
+
+Fix this by adding a .reconfigure() function to the fs operations which
+we can use to check the requested flags and deny anything that's not RO
+if the firmware doesn't implement SetVariable at runtime.
+
+Fixes: f88814cc2578 ("efi/efivars: Expose RT service availability via efivars abstraction")
+Signed-off-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/efivarfs/super.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index e04a9e9e3f14..29a8d90dd107 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2693,7 +2693,12 @@ static int do_remount(struct path *path, int ms_flags, int sb_flags,
- 	if (IS_ERR(fc))
- 		return PTR_ERR(fc);
+diff --git a/fs/efivarfs/super.c b/fs/efivarfs/super.c
+index 6780fc81cc11..f5966cd95918 100644
+--- a/fs/efivarfs/super.c
++++ b/fs/efivarfs/super.c
+@@ -13,6 +13,7 @@
+ #include <linux/ucs2_string.h>
+ #include <linux/slab.h>
+ #include <linux/magic.h>
++#include <linux/printk.h>
  
-+	/*
-+	 * Indicate to the filesystem that the remount request is coming
-+	 * from the legacy mount system call.
-+	 */
- 	fc->oldapi = true;
-+
- 	err = parse_monolithic_mount_data(fc, data);
- 	if (!err) {
- 		down_write(&sb->s_umount);
-@@ -3027,6 +3032,12 @@ static int do_new_mount(struct path *path, const char *fstype, int sb_flags,
- 	if (IS_ERR(fc))
- 		return PTR_ERR(fc);
+ #include "internal.h"
  
-+	/*
-+	 * Indicate to the filesystem that the mount request is coming
-+	 * from the legacy mount system call.
-+	 */
-+	fc->oldapi = true;
+@@ -226,8 +227,19 @@ static int efivarfs_get_tree(struct fs_context *fc)
+ 	return get_tree_single(fc, efivarfs_fill_super);
+ }
+ 
++static int efivarfs_reconfigure(struct fs_context *fc)
++{
++	if (!efivar_supports_writes() && !(fc->sb_flags & SB_RDONLY)) {
++		pr_err("Firmware does not support SetVariableRT. Can not remount with rw\n");
++		return -EINVAL;
++	}
 +
- 	if (subtype)
- 		err = vfs_parse_fs_string(fc, "subtype",
- 					  subtype, strlen(subtype));
++	return 0;
++}
++
+ static const struct fs_context_operations efivarfs_context_ops = {
+ 	.get_tree	= efivarfs_get_tree,
++	.reconfigure	= efivarfs_reconfigure,
+ };
+ 
+ static int efivarfs_init_fs_context(struct fs_context *fc)
 -- 
 2.43.0
 
