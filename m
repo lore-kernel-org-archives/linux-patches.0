@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4527B745D6;
-	Tue, 23 Jan 2024 02:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7F274E23;
+	Tue, 23 Jan 2024 02:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975477; cv=none; b=GOWBPXUw88z3LJ6ubJry4qyuxO83DRicpkcS8uuA5h9usPSAnCoSAJvZjf6/Zc/zIgtlvqhEgh67+cKyREv6jeudA02j0nhuzULTQCzdbImxqQK1XYi/dK+KfHgKDwBYXSJ4x1MSG/I7OMBvYn82MSZKO7+gpXcOnTeBNGLzWZg=
+	t=1705975478; cv=none; b=qE0fE37k2cw6MiRlX9QIaUGnVXpjW14aW+BaKqQe3NKeCZddEkRUNZ6p1ATV6CSMkJfslzx1dxOgNSlP5SsI+FXES21mfE3Fxaia74lItpnkH/vCcYhZPZiRaPO010l//+B92FxBAs+CyYM9tfLqCT6HEeDxx+p5bcnrQB2pzQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975477; c=relaxed/simple;
-	bh=g2F2j0hPt+bqd3f78JnoscRGmcWg6VI/vrYiCBkpjBk=;
+	s=arc-20240116; t=1705975478; c=relaxed/simple;
+	bh=EzJvmnUSW2KaOFRALLEoPZfvdI4qJTIIbFokJR8yLmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t9T8ZJbD202unQJwCoTqujxBZMq61TODEiCZIp82dtCyxXxPptoensvUnpmRYhFNUEZiT1NggAQdm05oiCxjjdnlFXg6jjhTpo7rRxJuU2A7EXMZT8xUP5eY9oYp3bZHZK2vHHK+Rt7zPCGSWEuJddQazrs8vW8IBaINrP4NyYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2szPMjN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gDeYRplsLEYWy7fHAjl091v+ufEmLKyt4NNl5Mk4QSnUtlsCWAXeOlejOS+rPCSAULVMPCPEGwxV5z060rVdmOgbHd+0X2WM53sJh3X9NIeyQq1ZTgmMQAbTgUheWzp45xF7uD1NUtA/gUMwRM44vn0uQHzriuav5dJ3aTAk00U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NkZmiYki; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2szPMjN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08232C433C7;
-	Tue, 23 Jan 2024 02:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NkZmiYki"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E968BC43390;
+	Tue, 23 Jan 2024 02:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975477;
-	bh=g2F2j0hPt+bqd3f78JnoscRGmcWg6VI/vrYiCBkpjBk=;
+	s=korg; t=1705975478;
+	bh=EzJvmnUSW2KaOFRALLEoPZfvdI4qJTIIbFokJR8yLmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i2szPMjNx4sqGGZm42hyakSlzJbPrTaJMrKHanORjiawzSuR42NAo7eqt2J7qSUI6
-	 5DAgNwZ4AmaRSqhf8t0hU6K1uTZMGkkSHr5fRczyR7eFE1+qWSL+kS7pjm4pdvIlml
-	 fbddUmaXIua67r/2eRcndai4Y78D9pskng4u8XCc=
+	b=NkZmiYkixQ8Ha5NtDXqaAPieifrVkv3tOdpfhOTuTJDiWe2Q5PYoh3Mdga4Tzqnb9
+	 CXvK4IPwDDpQC5V3M6kq8bKkQEZjs+HzBrbA4OSbOS2BtYZMMcdTEhYG7UKP1p+PXn
+	 Vr5Vws2cLyqsLQT2tgYmXTN8TkPHzw6Z2XNPbEYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 431/583] KVM: x86/pmu: Reset the PMU, i.e. stop counters, before refreshing
-Date: Mon, 22 Jan 2024 15:58:02 -0800
-Message-ID: <20240122235825.170610265@linuxfoundation.org>
+	Marcelo Schmitt <marcelo.schmitt@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 432/583] iio: adc: ad7091r: Pass iio_dev to event handler
+Date: Mon, 22 Jan 2024 15:58:03 -0800
+Message-ID: <20240122235825.202428577@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -50,83 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Marcelo Schmitt <marcelo.schmitt@analog.com>
 
-commit 1647b52757d59131fe30cf73fa36fac834d4367f upstream.
+commit a25a7df518fc71b1ba981d691e9322e645d2689c upstream.
 
-Stop all counters and release all perf events before refreshing the vPMU,
-i.e. before reconfiguring the vPMU to respond to changes in the vCPU
-model.
+Previous version of ad7091r event handler received the ADC state pointer
+and retrieved the iio device from driver data field with dev_get_drvdata().
+However, no driver data have ever been set, which led to null pointer
+dereference when running the event handler.
 
-Clear need_cleanup in kvm_pmu_reset() as well so that KVM doesn't
-prematurely stop counters, e.g. if KVM enters the guest and enables
-counters before the vCPU is scheduled out.
+Pass the iio device to the event handler and retrieve the ADC state struct
+from it so we avoid the null pointer dereference and save the driver from
+filling the driver data field.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://lore.kernel.org/r/20231103230541.352265-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: ca69300173b6 ("iio: adc: Add support for AD7091R5 ADC")
+Signed-off-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
+Link: https://lore.kernel.org/r/5024b764107463de9578d5b3b0a3d5678e307b1a.1702746240.git.marcelo.schmitt1@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/pmu.c |   35 ++++++++++++++++++++++-------------
- 1 file changed, 22 insertions(+), 13 deletions(-)
+ drivers/iio/adc/ad7091r-base.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/pmu.c
-+++ b/arch/x86/kvm/pmu.c
-@@ -657,25 +657,14 @@ int kvm_pmu_set_msr(struct kvm_vcpu *vcp
- 	return 0;
- }
+--- a/drivers/iio/adc/ad7091r-base.c
++++ b/drivers/iio/adc/ad7091r-base.c
+@@ -174,8 +174,8 @@ static const struct iio_info ad7091r_inf
  
--/* refresh PMU settings. This function generally is called when underlying
-- * settings are changed (such as changes of PMU CPUID by guest VMs), which
-- * should rarely happen.
-- */
--void kvm_pmu_refresh(struct kvm_vcpu *vcpu)
--{
--	if (KVM_BUG_ON(kvm_vcpu_has_run(vcpu), vcpu->kvm))
--		return;
--
--	bitmap_zero(vcpu_to_pmu(vcpu)->all_valid_pmc_idx, X86_PMC_IDX_MAX);
--	static_call(kvm_x86_pmu_refresh)(vcpu);
--}
--
- void kvm_pmu_reset(struct kvm_vcpu *vcpu)
+ static irqreturn_t ad7091r_event_handler(int irq, void *private)
  {
- 	struct kvm_pmu *pmu = vcpu_to_pmu(vcpu);
- 	struct kvm_pmc *pmc;
- 	int i;
- 
-+	pmu->need_cleanup = false;
-+
- 	bitmap_zero(pmu->reprogram_pmi, X86_PMC_IDX_MAX);
- 
- 	for_each_set_bit(i, pmu->all_valid_pmc_idx, X86_PMC_IDX_MAX) {
-@@ -695,6 +684,26 @@ void kvm_pmu_reset(struct kvm_vcpu *vcpu
- 	static_call_cond(kvm_x86_pmu_reset)(vcpu);
- }
- 
-+
-+/*
-+ * Refresh the PMU configuration for the vCPU, e.g. if userspace changes CPUID
-+ * and/or PERF_CAPABILITIES.
-+ */
-+void kvm_pmu_refresh(struct kvm_vcpu *vcpu)
-+{
-+	if (KVM_BUG_ON(kvm_vcpu_has_run(vcpu), vcpu->kvm))
-+		return;
-+
-+	/*
-+	 * Stop/release all existing counters/events before realizing the new
-+	 * vPMU model.
-+	 */
-+	kvm_pmu_reset(vcpu);
-+
-+	bitmap_zero(vcpu_to_pmu(vcpu)->all_valid_pmc_idx, X86_PMC_IDX_MAX);
-+	static_call(kvm_x86_pmu_refresh)(vcpu);
-+}
-+
- void kvm_pmu_init(struct kvm_vcpu *vcpu)
- {
- 	struct kvm_pmu *pmu = vcpu_to_pmu(vcpu);
+-	struct ad7091r_state *st = (struct ad7091r_state *) private;
+-	struct iio_dev *iio_dev = dev_get_drvdata(st->dev);
++	struct iio_dev *iio_dev = private;
++	struct ad7091r_state *st = iio_priv(iio_dev);
+ 	unsigned int i, read_val;
+ 	int ret;
+ 	s64 timestamp = iio_get_time_ns(iio_dev);
+@@ -234,7 +234,7 @@ int ad7091r_probe(struct device *dev, co
+ 	if (irq) {
+ 		ret = devm_request_threaded_irq(dev, irq, NULL,
+ 				ad7091r_event_handler,
+-				IRQF_TRIGGER_FALLING | IRQF_ONESHOT, name, st);
++				IRQF_TRIGGER_FALLING | IRQF_ONESHOT, name, iio_dev);
+ 		if (ret)
+ 			return ret;
+ 	}
 
 
