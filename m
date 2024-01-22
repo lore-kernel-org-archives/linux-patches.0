@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EFA5D8E1;
-	Tue, 23 Jan 2024 01:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28005C8F6;
+	Tue, 23 Jan 2024 01:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974387; cv=none; b=Jl233tEx0pzOkBdmp0FhuZh2PS/IrRaph583rjq2cDwr2VsO2QvAtOtdzWSlLII76CcgY3LR4HmyhSLM96Nep4XVWhkogY8F1cgDryXDy2awajtO/jooHFK3lw6M2oKNhZqipOsqaltpYpiwuBdgnJH+PfMlZOIys3aS98HFsas=
+	t=1705974389; cv=none; b=Ffca6QBNOuJ4296bKIvwJ+ziCVMGXLIZiV7y/n98PkTpU3troaQC0dkSEDZQbsF7NZuYSX6wJ+KBa/7yqMNM4naSn5FhdeALTI5VpiFGWWBmNxk+K0fxMhyHFxRtEZAfRE8RhzmV/i8EClH7XJJV+iNR/zCH8EoFnYwHylmPJic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974387; c=relaxed/simple;
-	bh=0brcSGPxs2IeSjSL6ezBrIot1BiY2E9GZzAg5AUNw7A=;
+	s=arc-20240116; t=1705974389; c=relaxed/simple;
+	bh=OPrm+JpSEWTxC0d2TjigFf8+QVnyoKGOsnzcf87nah0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lEFRfyeKrMdp/GQviZ3AGyhmI/ti1YbKkX3iJ30TE02rc6oOLNnOP+LxvfOE5ye4wEj2w2zp/qJV5L0YtR+ebTo0rFb/+W5ahwNDirRFtozEmvHs5kaiU6K7RbXlRDYk6RIeJtegbVgv6AWQUI+ZW4+N4M/An+gmVlNvN5DVmpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROg3yAEB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hk7lUSzS0nIOE9OEszdAomory9eHbJflIiYkbyyAXwzGXGTYVmt+DEZBdpvBVb3nNzkBFiiupQfjrZq48ZU9LaWjwCvcWxX64TVseTDkiz6fue6SVPvYrll3jYWTwh4sHGf+wZY8S3zd81/PgQU66WXKujEdAEc5AsHdXOuH9JM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLpbGzCl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROg3yAEB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D97C433A6;
-	Tue, 23 Jan 2024 01:46:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLpbGzCl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80425C433F1;
+	Tue, 23 Jan 2024 01:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974387;
-	bh=0brcSGPxs2IeSjSL6ezBrIot1BiY2E9GZzAg5AUNw7A=;
+	s=korg; t=1705974388;
+	bh=OPrm+JpSEWTxC0d2TjigFf8+QVnyoKGOsnzcf87nah0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ROg3yAEBlQ+jNf5b/pJaVWaGb6NWvFJuhr465MXkwWSBf5bQriNBdhDACo1mYXSh6
-	 s8Pk983WkxbOaeT9CMebWWlVZVojYYNyjSIvAaWW944YO7dP9N3JZGWvyjwR/NXvrF
-	 0G5V3vl8mZL2tzTgtNuaxydVzTSa4T8clsEA56s4=
+	b=YLpbGzClOi6JFuRiQ6MhZmeOiis+QD78Baqm9wCXyCBez3OYV781GJeIkDZRyK0rT
+	 ChLBAkjKfQiTpzxoQHWCc1iPGsCcOV79JltjFvp6BWb3pLxr6udqZ3MLdTQKA0KAtq
+	 J8tEBLuSSP4coOQ9fMCiVqFIfzeyA11AopyCe94A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/583] pNFS: Fix the pnfs block drivers calculation of layoutget size
-Date: Mon, 22 Jan 2024 15:52:11 -0800
-Message-ID: <20240122235814.603024613@linuxfoundation.org>
+Subject: [PATCH 5.15 205/374] f2fs: fix the f2fs_file_write_iter tracepoint
+Date: Mon, 22 Jan 2024 15:57:41 -0800
+Message-ID: <20240122235751.742914230@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,94 +48,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 8a6291bf3b0eae1bf26621e6419a91682f2d6227 ]
+[ Upstream commit ccf7cf92373d1a53166582013430b3b9c05a6ba2 ]
 
-Instead of relying on the value of the 'bytes_left' field, we should
-calculate the layout size based on the offset of the request that is
-being written out.
+Pass in the original position and count rather than the position and
+count that were updated by the write.  Also use the correct types for
+all arguments, in particular the file offset which was being truncated
+to 32 bits on 32-bit platforms.
 
-Reported-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Fixes: 954998b60caa ("NFS: Fix error handling for O_DIRECT write scheduling")
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Tested-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: bb34cc6ca87f ("f2fs: fix to update iostat correctly in f2fs_filemap_fault()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/blocklayout/blocklayout.c | 5 ++---
- fs/nfs/direct.c                  | 5 +++--
- fs/nfs/internal.h                | 2 +-
- fs/nfs/pnfs.c                    | 3 ++-
- 4 files changed, 8 insertions(+), 7 deletions(-)
+ fs/f2fs/file.c              |  5 +++--
+ include/trace/events/f2fs.h | 12 ++++++------
+ 2 files changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/fs/nfs/blocklayout/blocklayout.c b/fs/nfs/blocklayout/blocklayout.c
-index 1d1d7abc3205..6be13e0ec170 100644
---- a/fs/nfs/blocklayout/blocklayout.c
-+++ b/fs/nfs/blocklayout/blocklayout.c
-@@ -895,10 +895,9 @@ bl_pg_init_write(struct nfs_pageio_descriptor *pgio, struct nfs_page *req)
- 	}
- 
- 	if (pgio->pg_dreq == NULL)
--		wb_size = pnfs_num_cont_bytes(pgio->pg_inode,
--					      req->wb_index);
-+		wb_size = pnfs_num_cont_bytes(pgio->pg_inode, req->wb_index);
- 	else
--		wb_size = nfs_dreq_bytes_left(pgio->pg_dreq);
-+		wb_size = nfs_dreq_bytes_left(pgio->pg_dreq, req_offset(req));
- 
- 	pnfs_generic_pg_init_write(pgio, req, wb_size);
- 
-diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
-index f6c74f424691..5918c67dae0d 100644
---- a/fs/nfs/direct.c
-+++ b/fs/nfs/direct.c
-@@ -205,9 +205,10 @@ static void nfs_direct_req_release(struct nfs_direct_req *dreq)
- 	kref_put(&dreq->kref, nfs_direct_req_free);
- }
- 
--ssize_t nfs_dreq_bytes_left(struct nfs_direct_req *dreq)
-+ssize_t nfs_dreq_bytes_left(struct nfs_direct_req *dreq, loff_t offset)
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 533ab259ce01..d220c4523982 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -4255,6 +4255,8 @@ static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
  {
--	return dreq->bytes_left;
-+	loff_t start = offset - dreq->io_start;
-+	return dreq->max_count - start;
- }
- EXPORT_SYMBOL_GPL(nfs_dreq_bytes_left);
+ 	struct file *file = iocb->ki_filp;
+ 	struct inode *inode = file_inode(file);
++	const loff_t orig_pos = iocb->ki_pos;
++	const size_t orig_count = iov_iter_count(from);
+ 	ssize_t ret;
  
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index 9c9cf764f600..b1fa81c9dff6 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -655,7 +655,7 @@ extern int nfs_sillyrename(struct inode *dir, struct dentry *dentry);
- /* direct.c */
- void nfs_init_cinfo_from_dreq(struct nfs_commit_info *cinfo,
- 			      struct nfs_direct_req *dreq);
--extern ssize_t nfs_dreq_bytes_left(struct nfs_direct_req *dreq);
-+extern ssize_t nfs_dreq_bytes_left(struct nfs_direct_req *dreq, loff_t offset);
+ 	if (unlikely(f2fs_cp_error(F2FS_I_SB(inode)))) {
+@@ -4358,8 +4360,7 @@ static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ unlock:
+ 	inode_unlock(inode);
+ out:
+-	trace_f2fs_file_write_iter(inode, iocb->ki_pos,
+-					iov_iter_count(from), ret);
++	trace_f2fs_file_write_iter(inode, orig_pos, orig_count, ret);
+ 	if (ret > 0)
+ 		ret = generic_write_sync(iocb, ret);
+ 	return ret;
+diff --git a/include/trace/events/f2fs.h b/include/trace/events/f2fs.h
+index f5dcf7c9b707..6033eaddcb74 100644
+--- a/include/trace/events/f2fs.h
++++ b/include/trace/events/f2fs.h
+@@ -540,17 +540,17 @@ TRACE_EVENT(f2fs_truncate_partial_nodes,
  
- /* nfs4proc.c */
- extern struct nfs_client *nfs4_init_client(struct nfs_client *clp,
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index 84343aefbbd6..9084f156d67b 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -2729,7 +2729,8 @@ pnfs_generic_pg_init_read(struct nfs_pageio_descriptor *pgio, struct nfs_page *r
- 		if (pgio->pg_dreq == NULL)
- 			rd_size = i_size_read(pgio->pg_inode) - req_offset(req);
- 		else
--			rd_size = nfs_dreq_bytes_left(pgio->pg_dreq);
-+			rd_size = nfs_dreq_bytes_left(pgio->pg_dreq,
-+						      req_offset(req));
+ TRACE_EVENT(f2fs_file_write_iter,
  
- 		pgio->pg_lseg =
- 			pnfs_update_layout(pgio->pg_inode, nfs_req_openctx(req),
+-	TP_PROTO(struct inode *inode, unsigned long offset,
+-		unsigned long length, int ret),
++	TP_PROTO(struct inode *inode, loff_t offset, size_t length,
++		 ssize_t ret),
+ 
+ 	TP_ARGS(inode, offset, length, ret),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(dev_t,	dev)
+ 		__field(ino_t,	ino)
+-		__field(unsigned long, offset)
+-		__field(unsigned long, length)
+-		__field(int,	ret)
++		__field(loff_t, offset)
++		__field(size_t, length)
++		__field(ssize_t, ret)
+ 	),
+ 
+ 	TP_fast_assign(
+@@ -562,7 +562,7 @@ TRACE_EVENT(f2fs_file_write_iter,
+ 	),
+ 
+ 	TP_printk("dev = (%d,%d), ino = %lu, "
+-		"offset = %lu, length = %lu, written(err) = %d",
++		"offset = %lld, length = %zu, written(err) = %zd",
+ 		show_dev_ino(__entry),
+ 		__entry->offset,
+ 		__entry->length,
 -- 
 2.43.0
 
