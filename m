@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855C7134746;
-	Tue, 23 Jan 2024 00:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7D913398C;
+	Tue, 23 Jan 2024 00:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969323; cv=none; b=WzVQfZMt3w/5bOzS1SsGJaQCW7UncnLuBpoMKvw1ntht3iGbDD9cMyDHOSf8qG8cpc/6EwHg3rvZKFn2br3vg4TIDjQl85J8b7LwgE4119qlAvvGpiBqI0ZCROSLsmnvBN1PMmsrqH/tSYQoDkc3VbDoJdTX+FQofQd40/qRckk=
+	t=1705969325; cv=none; b=Lc+KIqJJ23UGVNmbwtVH/FCb2iAINESpLlZhw68OXjItl2lVs3zjDuqK0KuGD4M8AnRwhwHhtBi60D0R3JOZISZmbkocIGNz0xbJGNGKmCax09PZ1FwOAn+FLBcLdu7hf8tYHnSczeJUxSaz+o7BuGe2BFcjdhSSREw98zQ1kVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969323; c=relaxed/simple;
-	bh=/MrWmlUOxqJFU5xQgb5vuqUi8OFO7RwHdYTXOPtxX3M=;
+	s=arc-20240116; t=1705969325; c=relaxed/simple;
+	bh=RvB0GYgQgFGeOeHMOc67KM7ijicOp+rv1xT+j1N8pk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LCj5EINpUgV1z+G03kJjt+ZjHRutcrFuSYxKPeY0qYKtQTs3UVqrL2e21vuU9KKjLsAgAl2EuoLnSYrW9HHzEc0fQH6Cu6hfwiDNmiXfBpXcgNurt7dZ8XHn9/JTYTys6JQIX4xtJaxmiURtHDVHRXlPLmCg/pw89VUatVMT5o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEKdjK/P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iHA1r689w4mFfeAqyS6uMNkbxPHWs/jTIt/KCv4wigE3GaM0fuQD4PVIo5X/V2CKToy/RP/N2xSLImrI2Qx4IKwVnRDh0MbhQd1ylxNtvij4sZ34lX8ulyEErQj+kStBaa/JzgFwsRt5IvTe6oKW/nqT06QAQ9b4EsLjM5GputQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZA60EO4h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEKdjK/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C17FC433B1;
-	Tue, 23 Jan 2024 00:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZA60EO4h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2933DC433F1;
+	Tue, 23 Jan 2024 00:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969323;
-	bh=/MrWmlUOxqJFU5xQgb5vuqUi8OFO7RwHdYTXOPtxX3M=;
+	s=korg; t=1705969325;
+	bh=RvB0GYgQgFGeOeHMOc67KM7ijicOp+rv1xT+j1N8pk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GEKdjK/PNkKBj4JTEx+lDL9nvMPF2mVZnxEWOVgmcbNykmBzptcervZobpNxADTeg
-	 mePAwsbL3xLGfo0IYFOcqe31C50NfLFKmieLWFotRTL0xEWF6H16dX7JO57NtlkPr5
-	 7VPp67oTphlYk8UQllvHogbUS9tuEIm2OvthV8ZI=
+	b=ZA60EO4hxG69SyMbLF6w9e9anUgbg/JYpqTba7ketEq6qBlIzxHqibV5UACtrdSKI
+	 zIs92jFktp+Vi6kGLeGiQyynLnbivN5UyNu2h5Vk0Kfe6KnnCN6nWlVGnhkNPqMKoq
+	 dzeWlft6idz1Irgj8vDKyPkXs2ru6WNwqqXHCFK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Adam Ford <aford173@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 173/641] arm64: dts: renesas: white-hawk-cpu: Fix missing serial console pin control
-Date: Mon, 22 Jan 2024 15:51:17 -0800
-Message-ID: <20240122235823.429505319@linuxfoundation.org>
+Subject: [PATCH 6.7 174/641] arm64: dts: imx8mm: Reduce GPU to nominal speed
+Date: Mon, 22 Jan 2024 15:51:18 -0800
+Message-ID: <20240122235823.453719473@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -50,35 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit fc67495680f60e88bb8ca43421c1dd628928d581 ]
+[ Upstream commit 1f794d3eed5345413c2b0cf1bcccc92d77681220 ]
 
-The pin control description for the serial console was added, but not
-enabled, due to missing pinctrl properties in the serial port device
-node.
+When the GPU nodes were added, the GPU_PLL_OUT was configured
+for 1000MHz, but this requires the SoC to run in overdrive mode
+which requires an elevated voltage operating point.
 
-Fixes: 7a8d590de8132853 ("arm64: dts: renesas: white-hawk-cpu: Add serial port pin control")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/8a51516581cd71ecbfa174af9c7cebad1fc83c5b.1702459865.git.geert+renesas@glider.be
+Since this may run some boards out of spec, the default clock
+should be set to 800MHz for nominal operating mode. Boards
+that run at the higher voltage can update their clocks
+accordingly.
+
+Fixes: 4523be8e46be ("arm64: dts: imx8mm: Add GPU nodes for 2D and 3D core")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-cpu.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8mm.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-cpu.dtsi b/arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-cpu.dtsi
-index bb4a5270f71b..913f70fe6c5c 100644
---- a/arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-cpu.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-cpu.dtsi
-@@ -187,6 +187,9 @@ &extalr_clk {
- };
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm.dtsi b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
+index 738024baaa57..54faf83cb436 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
+@@ -1408,7 +1408,7 @@ gpu_3d: gpu@38000000 {
+ 			assigned-clocks = <&clk IMX8MM_CLK_GPU3D_CORE>,
+ 					  <&clk IMX8MM_GPU_PLL_OUT>;
+ 			assigned-clock-parents = <&clk IMX8MM_GPU_PLL_OUT>;
+-			assigned-clock-rates = <0>, <1000000000>;
++			assigned-clock-rates = <0>, <800000000>;
+ 			power-domains = <&pgc_gpu>;
+ 		};
  
- &hscif0 {
-+	pinctrl-0 = <&hscif0_pins>;
-+	pinctrl-names = "default";
-+
- 	status = "okay";
- };
+@@ -1423,7 +1423,7 @@ gpu_2d: gpu@38008000 {
+ 			assigned-clocks = <&clk IMX8MM_CLK_GPU2D_CORE>,
+ 					  <&clk IMX8MM_GPU_PLL_OUT>;
+ 			assigned-clock-parents = <&clk IMX8MM_GPU_PLL_OUT>;
+-			assigned-clock-rates = <0>, <1000000000>;
++			assigned-clock-rates = <0>, <800000000>;
+ 			power-domains = <&pgc_gpu>;
+ 		};
  
 -- 
 2.43.0
