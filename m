@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F95745D6;
-	Tue, 23 Jan 2024 02:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C83D745D6;
+	Tue, 23 Jan 2024 02:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975474; cv=none; b=ae/CjodIgFx59HUFHAy/AQFIXJk0geD3V8ZbkCqSiauRUEL8ZkkB5IGrJZeYvJPkBrzZZV+nLk+4ZxxYBA95cLPh2GFskgpjsY2l2IwyLZQkrx38LAG8tUbmfxhNnjQ0sk7ZRkDe5AUMh3pUE7eQW6Ro6MJGPy+kVkRhEJRJyfc=
+	t=1705975475; cv=none; b=OxHZsZZNs1IlDDoL5Dzbo7NoEdT4tjBk6zduGAyOT460SLjOcFZYfpUIf0pHo8msJUFojKcRP5KlcasLEH1tHa9cT8zbCYroQLonk2TOH0tnXnpzbIZ5fhK8/C1Rl17JbILme6pb1oLD6Q0jV8YnPBs73lh8ZQxwJ9EQvc6aPgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975474; c=relaxed/simple;
-	bh=JbcoKEETEXgGV8bhjPMGIqAJn7Dn0S6vCE8Mr+aepE0=;
+	s=arc-20240116; t=1705975475; c=relaxed/simple;
+	bh=+GqPlwj2KbaimJ/xHrLkb405N9p1GKNICmbTgAYMp6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PAN2v8t6UMqbwMXJe4vv4QIADLjOBjBHqUW9+DEWHW9Y5Q6X5j3cSBuKOqhz9kcvBkHMnAEAI8j4mkNljciJGX+u3hyF9ajtq/BMyqkUxjUPFtoyhJh+ZvFQGxQ77PCe3KgHbFHAECdMkwe997cdcZEmH8GbV5i020z4qdw61FU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OOTGHZT3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sxGNlMRRz+nSl11waB12Frq/48Z3mtsmqeJnC8+O+vSK4SMGu68sURUCUnMA4gbpmdMC3bYITqDCeZYSoelG2yqqOu4T5cCzqWKsKZG7Fkj8clEbu3EOiTWOsTrmchc5kpB5k+cwnVGhgg+cAKDHBOxVEMCeIy+A8X15kFNnRW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTesbHAL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOTGHZT3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47992C433F1;
-	Tue, 23 Jan 2024 02:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTesbHAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F793C43390;
+	Tue, 23 Jan 2024 02:04:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975474;
-	bh=JbcoKEETEXgGV8bhjPMGIqAJn7Dn0S6vCE8Mr+aepE0=;
+	s=korg; t=1705975475;
+	bh=+GqPlwj2KbaimJ/xHrLkb405N9p1GKNICmbTgAYMp6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OOTGHZT3B4E/yfkXBm7vLm5Ki40+04i77IiD/z1H5zRMeMqJhGWtg0ROKYcRN+E2F
-	 RfbvwZMUvHG/mNZNShu8LCSRhGWBvz58E1csupcOB8Wq6ps0kctnVj5qtmFNIrBpkz
-	 oez/dHi9qhcSGup3BWdmHTDenMhJQj4LTGE3zYPY=
+	b=yTesbHALp9eqb1z/Ze0whFE28ku0H62GkKIvFiAUOuubFA1hcHpsiypnEx3DmOlsT
+	 PGmUlKSSX8fYjNSRXwI8tjOgPHWJmJ9kyTbD3jD7g7YF55A3SFaijuGInVJZQoZBMo
+	 lZluNG5WvcKAjhiOXofr4cGIzivjH5P/CpCp78wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.6 429/583] KVM: arm64: vgic-its: Avoid potential UAF in LPI translation cache
-Date: Mon, 22 Jan 2024 15:58:00 -0800
-Message-ID: <20240122235825.114135159@linuxfoundation.org>
+	Tom Murphy <murphyt7@tcd.ie>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Saravana Kannan <saravanak@google.com>,
+	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.6 412/583] iommu/dma: Trace bounce buffer usage when mapping buffers
+Date: Mon, 22 Jan 2024 15:57:43 -0800
+Message-ID: <20240122235824.578784319@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -50,49 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Isaac J. Manjarres <isaacmanjarres@google.com>
 
-commit ad362fe07fecf0aba839ff2cc59a3617bd42c33f upstream.
+commit a63c357b9fd56ad5fe64616f5b22835252c6a76a upstream.
 
-There is a potential UAF scenario in the case of an LPI translation
-cache hit racing with an operation that invalidates the cache, such
-as a DISCARD ITS command. The root of the problem is that
-vgic_its_check_cache() does not elevate the refcount on the vgic_irq
-before dropping the lock that serializes refcount changes.
+When commit 82612d66d51d ("iommu: Allow the dma-iommu api to
+use bounce buffers") was introduced, it did not add the logic
+for tracing the bounce buffer usage from iommu_dma_map_page().
 
-Have vgic_its_check_cache() raise the refcount on the returned vgic_irq
-and add the corresponding decrement after queueing the interrupt.
+All of the users of swiotlb_tbl_map_single() trace their bounce
+buffer usage, except iommu_dma_map_page(). This makes it difficult
+to track SWIOTLB usage from that function. Thus, trace bounce buffer
+usage from iommu_dma_map_page().
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20240104183233.3560639-1-oliver.upton@linux.dev
+Fixes: 82612d66d51d ("iommu: Allow the dma-iommu api to use bounce buffers")
+Cc: stable@vger.kernel.org # v5.15+
+Cc: Tom Murphy <murphyt7@tcd.ie>
+Cc: Lu Baolu <baolu.lu@linux.intel.com>
+Cc: Saravana Kannan <saravanak@google.com>
+Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+Link: https://lore.kernel.org/r/20231208234141.2356157-1-isaacmanjarres@google.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iommu/dma-iommu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -584,7 +584,11 @@ static struct vgic_irq *vgic_its_check_c
- 	unsigned long flags;
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -29,6 +29,7 @@
+ #include <linux/spinlock.h>
+ #include <linux/swiotlb.h>
+ #include <linux/vmalloc.h>
++#include <trace/events/swiotlb.h>
  
- 	raw_spin_lock_irqsave(&dist->lpi_list_lock, flags);
+ #include "dma-iommu.h"
+ 
+@@ -1052,6 +1053,8 @@ static dma_addr_t iommu_dma_map_page(str
+ 			return DMA_MAPPING_ERROR;
+ 		}
+ 
++		trace_swiotlb_bounced(dev, phys, size);
 +
- 	irq = __vgic_its_check_cache(dist, db, devid, eventid);
-+	if (irq)
-+		vgic_get_irq_kref(irq);
-+
- 	raw_spin_unlock_irqrestore(&dist->lpi_list_lock, flags);
- 
- 	return irq;
-@@ -763,6 +767,7 @@ int vgic_its_inject_cached_translation(s
- 	raw_spin_lock_irqsave(&irq->irq_lock, flags);
- 	irq->pending_latch = true;
- 	vgic_queue_irq_unlock(kvm, irq, flags);
-+	vgic_put_irq(kvm, irq);
- 
- 	return 0;
- }
+ 		aligned_size = iova_align(iovad, size);
+ 		phys = swiotlb_tbl_map_single(dev, phys, size, aligned_size,
+ 					      iova_mask(iovad), dir, attrs);
 
 
