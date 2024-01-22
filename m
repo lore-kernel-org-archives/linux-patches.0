@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB97812FF73;
-	Tue, 23 Jan 2024 01:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4277F657B3;
+	Tue, 23 Jan 2024 01:03:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971798; cv=none; b=cpDRJc4Su8jh98tz+SBd6d5IveHXszOdUZWeCgPShzGbn3w15KO1GGKM7EDdgkGxNSuiR6TAG1CIhh8+VZgV1ro4sD4igpVEqMQsmpwINeEKO2P2sfLe5feE6zxwfNV7LhSog9FqqQvuAJ4fsYp3JsyjF18EOWS6Qf7VV9WYSIA=
+	t=1705971799; cv=none; b=cbEzE+LX8Ih9dDZuyiXEZHeslguLMKtDnYAxfX7gNR5PRJtRZfasv6kCTBkh8sablDqaR/n5UmogJxR9Yd8XLEg6xi4XLUdtSWCXXiEHk4aD6U3AD60N+oSn3k1TH4ZptbPOYIs95cCegwgA5D9tP/p4dNT6N4RDp2/3OuC/Xmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971798; c=relaxed/simple;
-	bh=8vXtOfw4CQlwIwKxrLHPJh+IqYg561vnkN0oHEcN1N4=;
+	s=arc-20240116; t=1705971799; c=relaxed/simple;
+	bh=sd6nSTg5yErosQZVyVtHV0bsTpItzEtIh8O0Z/+2T38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aq7RL3jjQBFMfZzHIJ0LMef74KL0krwSZ6PqLXizGhd+QHLDKZyHUZptFYpxrGKkkxzMqDgzTnikRePRez5tyjjJ5+DP5PBwB51jGKuaHqsA19moR1mFXFjPNk+cKgvHC1KLS6ciXjSeQ+eZfq15bHvcOr+KsNn08nzrLSSoz9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYnEyJ3/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WOpR38xuqY0sTmPfMkn9qSFL7Sam9Mb6CUBfcjYHySK0aPx65rJD971VlJUmRnZGVp+7juvRrGNT+25GqjMAO3wwyEm0CYaP5bwUrXOt1+cnHGDrpLytCfYqdSQnS5I9e/YcTxw2PubMTgP5mKHjzxNwl2tdwIQlMFVdulrXcg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4BwoXto; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYnEyJ3/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A69C433F1;
-	Tue, 23 Jan 2024 01:03:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4BwoXto"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6114C43394;
+	Tue, 23 Jan 2024 01:03:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971797;
-	bh=8vXtOfw4CQlwIwKxrLHPJh+IqYg561vnkN0oHEcN1N4=;
+	s=korg; t=1705971799;
+	bh=sd6nSTg5yErosQZVyVtHV0bsTpItzEtIh8O0Z/+2T38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KYnEyJ3/4PS22K+wmyw1QjoXfL6D74/hnDPVX0GHmOtO5iJaEzMvNGCQizIvVtreJ
-	 WCA4+6vzWvN6ePUcFORpN5d1xu+D6q0bxQgzqp5ZlRdt+AeyJPs1Ik8TJm0lwh+GPV
-	 c4a5v8A1VC4gAbJj1/XwBDdRra9/XqSTGxVDn+pI=
+	b=v4BwoXtou4SMW7wobpCQF6X7VrVK8fUe9r3oLMbp010GSaOhcWVbDiXKRmMiVg8fs
+	 zrJpswLkmUftLgwdRo9ilhixPbvBuAD3E7RJwDBznfOGXU6SE2JWLhUA7cB7m143Hn
+	 3phYlrHUVfEMw8o8UKOq1f5jkt+wR+CqotELxy1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xingwei lee <xrivendell7@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 224/286] io_uring/rw: ensure io->bytes_done is always initialized
-Date: Mon, 22 Jan 2024 15:58:50 -0800
-Message-ID: <20240122235740.705716800@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.10 233/286] KVM: arm64: vgic-its: Avoid potential UAF in LPI translation cache
+Date: Mon, 22 Jan 2024 15:58:59 -0800
+Message-ID: <20240122235741.040987905@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
 References: <20240122235732.009174833@linuxfoundation.org>
@@ -50,47 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-commit 0a535eddbe0dc1de4386046ab849f08aeb2f8faf upstream.
+commit ad362fe07fecf0aba839ff2cc59a3617bd42c33f upstream.
 
-If IOSQE_ASYNC is set and we fail importing an iovec for a readv or
-writev request, then we leave ->bytes_done uninitialized and hence the
-eventual failure CQE posted can potentially have a random res value
-rather than the expected -EINVAL.
+There is a potential UAF scenario in the case of an LPI translation
+cache hit racing with an operation that invalidates the cache, such
+as a DISCARD ITS command. The root of the problem is that
+vgic_its_check_cache() does not elevate the refcount on the vgic_irq
+before dropping the lock that serializes refcount changes.
 
-Setup ->bytes_done before potentially failing, so we have a consistent
-value if we fail the request early.
+Have vgic_its_check_cache() raise the refcount on the returned vgic_irq
+and add the corresponding decrement after queueing the interrupt.
 
 Cc: stable@vger.kernel.org
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20240104183233.3560639-1-oliver.upton@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/vgic/vgic-its.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3485,14 +3485,17 @@ static inline int io_rw_prep_async(struc
- 	struct iovec *iov = iorw->fast_iov;
- 	int ret;
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -584,7 +584,11 @@ static struct vgic_irq *vgic_its_check_c
+ 	unsigned long flags;
  
-+	iorw->bytes_done = 0;
-+	iorw->free_iovec = NULL;
+ 	raw_spin_lock_irqsave(&dist->lpi_list_lock, flags);
 +
- 	ret = io_import_iovec(rw, req, &iov, &iorw->iter, false);
- 	if (unlikely(ret < 0))
- 		return ret;
+ 	irq = __vgic_its_check_cache(dist, db, devid, eventid);
++	if (irq)
++		vgic_get_irq_kref(irq);
++
+ 	raw_spin_unlock_irqrestore(&dist->lpi_list_lock, flags);
  
--	iorw->bytes_done = 0;
--	iorw->free_iovec = iov;
--	if (iov)
-+	if (iov) {
-+		iorw->free_iovec = iov;
- 		req->flags |= REQ_F_NEED_CLEANUP;
-+	}
- 	iov_iter_save_state(&iorw->iter, &iorw->iter_state);
+ 	return irq;
+@@ -763,6 +767,7 @@ int vgic_its_inject_cached_translation(s
+ 	raw_spin_lock_irqsave(&irq->irq_lock, flags);
+ 	irq->pending_latch = true;
+ 	vgic_queue_irq_unlock(kvm, irq, flags);
++	vgic_put_irq(kvm, irq);
+ 
  	return 0;
  }
 
