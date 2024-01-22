@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41141374;
-	Tue, 23 Jan 2024 01:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F500374;
+	Tue, 23 Jan 2024 01:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972150; cv=none; b=YCRrrYws9tXGNe92SyCdJ5yEynD33+Rkd5fAAKGx8ptlvCk7+k4Dhj6sjD/108zyCHalm652F68h8rcC6YnRW7VEk49ZoUk2VV77AldFG265v+gm8ciG8HkiSmywepcDoB/6NHkU7+5BG87hLkbcqsfN99ds3f5PRgQKjRemF+E=
+	t=1705972152; cv=none; b=fClLBRCxmQd1h3e8wdXrbPylrIM4kxzYJNxXFvKczROp8rEoo7DOmKfHFFXw6n95qyat19JYdjzEtHVBdHngGaQGoBUwDh6/45qV2sRwvfwDSs4x7TC5pFcDx3DUwl4sL9310R1U4nizlxY8WU5ifofQ6NbKrNprStAYf7QuDVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972150; c=relaxed/simple;
-	bh=NAzoZ4zmIqT7EuMjwmq7dvd82Jatgh5Ud3MfE4W9wKQ=;
+	s=arc-20240116; t=1705972152; c=relaxed/simple;
+	bh=AZx4UE4Wq/X1S038gc6JZWjabIWdTrAX8A3Looq4D7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sA2ciJTbDdliNXDvGNedYhVcgKm5x1uUHf0veQERMqhj723GqB7ihaPZYdBAmnfryd/X5ybKXi4+dN6sCSfXEpbb0G96yV+yZdZpy4UlWLkYoIci7hC/Z2dKK4nsvMtQILYWCpe8zXS0B/AMMGgIklr24/v6g9RLLHAKqzV4JsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hm81xtbi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KErGQ59DIvLpDNmjF18IwClz1di9M0IZDN4IplJLl2BBXmb/2oEmZIeBx2CFMDHkroMV9ihFnfUocYzzoSAzxAPzbn35vR+EbkzQeDAm/DK/ZJV7n2+/buzU++mocHVJszAA3HKsM7YB+6FPPpuewqJ1dYRLzcOr1JiFMburij0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJWylD1Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hm81xtbi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD26BC433C7;
-	Tue, 23 Jan 2024 01:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJWylD1Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF256C43390;
+	Tue, 23 Jan 2024 01:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972150;
-	bh=NAzoZ4zmIqT7EuMjwmq7dvd82Jatgh5Ud3MfE4W9wKQ=;
+	s=korg; t=1705972152;
+	bh=AZx4UE4Wq/X1S038gc6JZWjabIWdTrAX8A3Looq4D7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hm81xtbig6HZ/z6Gwm7k3DVrGeJjZ+sCYj2jpOkyY25zkD3FzQrHbErudQCCf5OAx
-	 +I4123fTBUYWejX3nwnE4bV1NdaZYxy1ey3aQ4RxPRhBqGZkXZmGnQ1AeJAkyDTcs8
-	 nfSRruPkSFBV8wZxbm5lVvKaEUyzsg4UlYIkIHOE=
+	b=iJWylD1Qdi/xFbln/x0a1zpsrrtG982aB5NbueFf4V7ht9afG/TChPEjjz6uDjz6S
+	 jAX1b9DhavJ2hZilEy5kDmLOVqexWlSwYwgiex7Za/fYfJzV2jd4OVwJJP+GNVwdfo
+	 uWrVHLDcNpcYWuhf5yt01wylQdRCefdoqrgvx4zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Ronald Monthero <debug.penguin32@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/374] spi: spi-zynqmp-gqspi: fix driver kconfig dependencies
-Date: Mon, 22 Jan 2024 15:55:34 -0800
-Message-ID: <20240122235747.330198493@linuxfoundation.org>
+Subject: [PATCH 5.15 079/374] mtd: rawnand: Increment IFC_TIMEOUT_MSECS for nand controller response
+Date: Mon, 22 Jan 2024 15:55:35 -0800
+Message-ID: <20240122235747.370600012@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -52,40 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
+From: Ronald Monthero <debug.penguin32@gmail.com>
 
-[ Upstream commit 424a8166764e462258fdccaaefbdeb07517c8b21 ]
+[ Upstream commit 923fb6238cb3ac529aa2bf13b3b1e53762186a8b ]
 
-ZynqMP GQSPI driver no longer uses spi-master framework. It had been
-converted to use spi-mem framework. So remove driver dependency from
-spi-master and replace it with spi-mem.
+Under heavy load it is likely that the controller is done
+with its own task but the thread unlocking the wait is not
+scheduled in time. Increasing IFC_TIMEOUT_MSECS allows the
+controller to respond within allowable timeslice of 1 sec.
 
-Fixes: 1c26372e5aa9 ("spi: spi-zynqmp-gqspi: Update driver to use spi-mem framework")
-Signed-off-by: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://lore.kernel.org/r/1699282435-884917-1-git-send-email-radhey.shyam.pandey@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+fsl,ifc-nand 7e800000.nand: Controller is not responding
+
+[<804b2047>] (nand_get_device) from [<804b5335>] (nand_write_oob+0x1b/0x4a)
+[<804b5335>] (nand_write_oob) from [<804a3585>] (mtd_write+0x41/0x5c)
+[<804a3585>] (mtd_write) from [<804c1d47>] (ubi_io_write+0x17f/0x22c)
+[<804c1d47>] (ubi_io_write) from [<804c047b>] (ubi_eba_write_leb+0x5b/0x1d0)
+
+Fixes: 82771882d960 ("NAND Machine support for Integrated Flash Controller")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Ronald Monthero <debug.penguin32@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20231118083156.776887-1-debug.penguin32@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/fsl_ifc_nand.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
-index 123689e457d1..412154732c46 100644
---- a/drivers/spi/Kconfig
-+++ b/drivers/spi/Kconfig
-@@ -984,9 +984,10 @@ config SPI_ZYNQ_QSPI
+diff --git a/drivers/mtd/nand/raw/fsl_ifc_nand.c b/drivers/mtd/nand/raw/fsl_ifc_nand.c
+index 02d500176838..bea1a7d3edd7 100644
+--- a/drivers/mtd/nand/raw/fsl_ifc_nand.c
++++ b/drivers/mtd/nand/raw/fsl_ifc_nand.c
+@@ -20,7 +20,7 @@
  
- config SPI_ZYNQMP_GQSPI
- 	tristate "Xilinx ZynqMP GQSPI controller"
--	depends on (SPI_MASTER && HAS_DMA) || COMPILE_TEST
-+	depends on (SPI_MEM && HAS_DMA) || COMPILE_TEST
- 	help
- 	  Enables Xilinx GQSPI controller driver for Zynq UltraScale+ MPSoC.
-+	  This controller only supports SPI memory interface.
+ #define ERR_BYTE		0xFF /* Value returned for read
+ 					bytes when read failed	*/
+-#define IFC_TIMEOUT_MSECS	500  /* Maximum number of mSecs to wait
++#define IFC_TIMEOUT_MSECS	1000 /* Maximum timeout to wait
+ 					for IFC NAND Machine	*/
  
- config SPI_AMD
- 	tristate "AMD SPI controller"
+ struct fsl_ifc_ctrl;
 -- 
 2.43.0
 
