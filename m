@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08FB13342F;
-	Tue, 23 Jan 2024 00:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088AE13343A;
+	Tue, 23 Jan 2024 00:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969131; cv=none; b=iAUuWNP2Fy6r3X22fBogCz3iefPATKSgidH1pzBzlOnHohfJek3ki62fK+VEpFJEcNWbfSRrO+Cxikw5SUCSiMwQNQK5iDX1eumSyzs6Az2rurnRSBZXt8DtKz8/5dgYu/hIwpVArlCkPRrUM6AaOqp+NTQLirAOewAq61Qu8oQ=
+	t=1705969133; cv=none; b=YqEcA05zMYYTCxZcyAoCw4l3M9d5TpXT8xKXyS10++QLbKlXSTXkF6yCXodzkWLeCNPe10/XIpztA/NvtW4NRFSUKXcb3toJiSDz7EK/yw0wYaxlteU7TmUkt/v3xoHT0dKGw1IMM1fyOYope1H6oNFiwN2rB5QX7stkTU6m6Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969131; c=relaxed/simple;
-	bh=4j5uJPv9a6Z6ZKrKerju5VuoJzFAMLD0B7Bd8Cgv8K4=;
+	s=arc-20240116; t=1705969133; c=relaxed/simple;
+	bh=3DocdzHES5lqoZgzI8CnCKRXJcV9ce+FbLRh65ccw4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U+FgmvIsZ1Usm1dkspuAIxjBwZEjgJ7+xqOdPfhPCveSLHsliAFJOd6vP3xed5mlvUGGfEtAdNjA0Lar2DDRNrChGOLEZfwRJeG1wa/1a5TWqhGonRyYMXh2JNVOVwavxjfCFit8W2/r/UeKYrpMK/a1M89t/JMp5imoCWbzoqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZHDozmg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F6hbBHijx1CVU0a4GxMK9MgNpT5X+hH+Zx5dNQ2Tn0FLtiJ5awoeEq8Ah2lafCL658MPFYfxE3hWzviDKFZc3umbZNsc46NZvDdTRPqO90yyLqJtaYY5zC1aCK/W0iF5TFOKMjmWjEIgjvfpe1NX4Hpqe52IMdkY3RIRVbbaWfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDz/qz4l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZHDozmg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754D8C433C7;
-	Tue, 23 Jan 2024 00:18:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDz/qz4l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B776EC433C7;
+	Tue, 23 Jan 2024 00:18:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969131;
-	bh=4j5uJPv9a6Z6ZKrKerju5VuoJzFAMLD0B7Bd8Cgv8K4=;
+	s=korg; t=1705969132;
+	bh=3DocdzHES5lqoZgzI8CnCKRXJcV9ce+FbLRh65ccw4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZHDozmgH9/MHr6qTcQ+W03hHikEOJDn7W1FItDAtd2LXYbufP2YuUBR8DBmy7tMl
-	 TzM+rxXgywpjbhUFglZ/RMz2teKQdH1Ux4LM3X+32v7iLiZHPCMztCuXHZ9jYhMyxI
-	 7iP9MNOtD6pPQBxccJ6CSj5Y23AF+7EC97zr4/cU=
+	b=FDz/qz4lhjJ7KtDSjCBUqBCqKUNRaVEmFzSb9cQr9n7tzR0QJ1ZHDaRHSnJSxOe4O
+	 yF0SJIz+k+MaUhSHXDP8JQMMT276Or/txQ4Gyl7jh98IMS9EN/Ehjz05YhvB/GD2e7
+	 uiGb9BAWEe0awssJY+ap/COKKOLIImllW3goDp/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Paris <eparis@parisplace.org>,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 042/641] selinux: Fix error priority for bind with AF_UNSPEC on PF_INET6 socket
-Date: Mon, 22 Jan 2024 15:49:06 -0800
-Message-ID: <20240122235819.399059111@linuxfoundation.org>
+Subject: [PATCH 6.7 043/641] crypto: rsa - add a check for allocation failure
+Date: Mon, 22 Jan 2024 15:49:07 -0800
+Message-ID: <20240122235819.429768031@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -49,56 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit bbf5a1d0e5d0fb3bdf90205aa872636122692a50 ]
+[ Upstream commit d872ca165cb67112f2841ef9c37d51ef7e63d1e4 ]
 
-The IPv6 network stack first checks the sockaddr length (-EINVAL error)
-before checking the family (-EAFNOSUPPORT error).
+Static checkers insist that the mpi_alloc() allocation can fail so add
+a check to prevent a NULL dereference.  Small allocations like this
+can't actually fail in current kernels, but adding a check is very
+simple and makes the static checkers happy.
 
-This was discovered thanks to commit a549d055a22e ("selftests/landlock:
-Add network tests").
-
-Cc: Eric Paris <eparis@parisplace.org>
-Cc: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Cc: Paul Moore <paul@paul-moore.com>
-Cc: Stephen Smalley <stephen.smalley.work@gmail.com>
-Reported-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Closes: https://lore.kernel.org/r/0584f91c-537c-4188-9e4f-04f192565667@collabora.com
-Fixes: 0f8db8cc73df ("selinux: add AF_UNSPEC and INADDR_ANY checks to selinux_socket_bind()")
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Tested-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 6637e11e4ad2 ("crypto: rsa - allow only odd e and restrict value in FIPS mode")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/hooks.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ crypto/rsa.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/security/selinux/hooks.c b/security/selinux/hooks.c
-index 340b2bbbb2dd..0fb890bd72cb 100644
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -4661,6 +4661,13 @@ static int selinux_socket_bind(struct socket *sock, struct sockaddr *address, in
- 				return -EINVAL;
- 			addr4 = (struct sockaddr_in *)address;
- 			if (family_sa == AF_UNSPEC) {
-+				if (family == PF_INET6) {
-+					/* Length check from inet6_bind_sk() */
-+					if (addrlen < SIN6_LEN_RFC2133)
-+						return -EINVAL;
-+					/* Family check from __inet6_bind() */
-+					goto err_af;
-+				}
- 				/* see __inet_bind(), we only want to allow
- 				 * AF_UNSPEC if the address is INADDR_ANY
- 				 */
+diff --git a/crypto/rsa.c b/crypto/rsa.c
+index c79613cdce6e..b9cd11fb7d36 100644
+--- a/crypto/rsa.c
++++ b/crypto/rsa.c
+@@ -220,6 +220,8 @@ static int rsa_check_exponent_fips(MPI e)
+ 	}
+ 
+ 	e_max = mpi_alloc(0);
++	if (!e_max)
++		return -ENOMEM;
+ 	mpi_set_bit(e_max, 256);
+ 
+ 	if (mpi_cmp(e, e_max) >= 0) {
 -- 
 2.43.0
 
