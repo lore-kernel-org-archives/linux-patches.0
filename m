@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8A7137C54;
-	Tue, 23 Jan 2024 00:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4934C5F875;
+	Tue, 23 Jan 2024 00:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970170; cv=none; b=mdzPZgLOZpmQMtCr/JFhBKBAjrcPHefpkojk4vl4J2qhAPbTtl5gPGBI4muNaBKReu9GHuDuI4+s1YBnbV+akMvAXdkcY9ZnLMYB8CSBMVvF/vJoADV/nTwB8vbhoi3cVto+sqceHU9NboACQUrGtaxWN6b0PwEc7vLk2H4p4cU=
+	t=1705970175; cv=none; b=miyX+3fiElRv6JBoqQ78bLzbQjsi7O2jRHCb+Mkt6RdkliEXH/f1YGeQhQJy02Bh2KDFrHE06GFVFl7yNvgDpeV2tghbloxS5SwUHcMW1bTkktGlpkha5TD4JDTzOhb4lMJ5Zn9SV/iojf9ECSF581ju1+MNQ2DvypqnTdzipfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970170; c=relaxed/simple;
-	bh=QxfyFBH40O1u02K1Dm0kYJ2/hSPkkXtn4N3xaiglyxI=;
+	s=arc-20240116; t=1705970175; c=relaxed/simple;
+	bh=XxaMc/KcPxjwYVg0sUFjkeG2Bbi9dy7HTXMzAQ4lEm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQmYF3xq44Lrmul03gmgDyALXmN6hFhHQUCntlwdyrSS14qFZ3POabv7uiUzjAnDLgKxdyK7ZfAl/wJ2kVtQQhVDWSARa2OcD47vMvypKW5hVlfv0qRvB6iMeCKnKSpUlMUGnrUuFweHOGn+cJ7RtfiRuHp1nqzYuTAfdNzfgjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k85NqKjB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SUY1xugu4APJDTSWuXLgMJTqsyckYAhxhwgmlK+GD0BsJboJV0LvY6FxuKPigF3LgQKUcrN7MO+IrgfMgwXVWjmG5KmOYzd0dA3piAiDCt2/tvU0mPqmOPrmEBtuBN3LvnLg6QBuZ/sJ3+zFzOP7COr9ZpbXC0Hy54YSaXmHb/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6KMFyv5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k85NqKjB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD4FC43394;
-	Tue, 23 Jan 2024 00:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6KMFyv5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55CAC433C7;
+	Tue, 23 Jan 2024 00:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970169;
-	bh=QxfyFBH40O1u02K1Dm0kYJ2/hSPkkXtn4N3xaiglyxI=;
+	s=korg; t=1705970175;
+	bh=XxaMc/KcPxjwYVg0sUFjkeG2Bbi9dy7HTXMzAQ4lEm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k85NqKjBcShbRfMStuj+R3RIwO8Md+JC8A6Evbj8cLyl+hBkIKqCNfGuXC9cGd3SL
-	 aD8icnrj1RdSK2dOJdPlAJ0ePiIHNnEJ30otNY7Z44VhFLo1GJgIyufIaVDy3uv0ke
-	 2Rj3dA9UJpaNZm04hRNuyZ1KXOlQYSyoeUH6tzAY=
+	b=D6KMFyv5jGFvjhaiQLWCVp35bvc3BKk6+6rWzFgGkObl+cV7HOjHM3ub+s8r6CSd9
+	 UpvULcy0ECYRLt7c7cQuIK9LBEBMFZh9YrStc0D3wyXqh/GxPtu9GoEM+btywooOfW
+	 6iMPt9BBSvYFtlCMsEvbjEI47dWLRHe+uR0L07rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	David Howells <dhowells@redhat.com>,
+	linux-afs@lists.infradead.org,
+	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+d81bcd883824180500c8@syzkaller.appspotmail.com
-Subject: [PATCH 6.7 582/641] net: dsa: fix netdev_priv() dereference before check on non-DSA netdevice events
-Date: Mon, 22 Jan 2024 15:58:06 -0800
-Message-ID: <20240122235836.397757504@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 583/641] rxrpc: Fix use of Dont Fragment flag
+Date: Mon, 22 Jan 2024 15:58:07 -0800
+Message-ID: <20240122235836.430153523@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -54,100 +54,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 844f104790bd69c2e4dbb9ee3eba46fde1fcea7b ]
+[ Upstream commit 8722014311e613244f33952354956a82fa4b0472 ]
 
-After the blamed commit, we started doing this dereference for every
-NETDEV_CHANGEUPPER and NETDEV_PRECHANGEUPPER event in the system.
+rxrpc normally has the Don't Fragment flag set on the UDP packets it
+transmits, except when it has decided that DATA packets aren't getting
+through - in which case it turns it off just for the DATA transmissions.
+This can be a problem, however, for RESPONSE packets that convey
+authentication and crypto data from the client to the server as ticket may
+be larger than can fit in the MTU.
 
-static inline struct dsa_port *dsa_user_to_port(const struct net_device *dev)
-{
-	struct dsa_user_priv *p = netdev_priv(dev);
+In such a case, rxrpc gets itself into an infinite loop as the sendmsg
+returns an error (EMSGSIZE), which causes rxkad_send_response() to return
+-EAGAIN - and the CHALLENGE packet is put back on the Rx queue to retry,
+leading to the I/O thread endlessly attempting to perform the transmission.
 
-	return p->dp;
-}
+Fix this by disabling DF on RESPONSE packets for now.  The use of DF and
+best data MTU determination needs reconsidering at some point in the
+future.
 
-Which is obviously bogus, because not all net_devices have a netdev_priv()
-of type struct dsa_user_priv. But struct dsa_user_priv is fairly small,
-and p->dp means dereferencing 8 bytes starting with offset 16. Most
-drivers allocate that much private memory anyway, making our access not
-fault, and we discard the bogus data quickly afterwards, so this wasn't
-caught.
-
-But the dummy interface is somewhat special in that it calls
-alloc_netdev() with a priv size of 0. So every netdev_priv() dereference
-is invalid, and we get this when we emit a NETDEV_PRECHANGEUPPER event
-with a VLAN as its new upper:
-
-$ ip link add dummy1 type dummy
-$ ip link add link dummy1 name dummy1.100 type vlan id 100
-[   43.309174] ==================================================================
-[   43.316456] BUG: KASAN: slab-out-of-bounds in dsa_user_prechangeupper+0x30/0xe8
-[   43.323835] Read of size 8 at addr ffff3f86481d2990 by task ip/374
-[   43.330058]
-[   43.342436] Call trace:
-[   43.366542]  dsa_user_prechangeupper+0x30/0xe8
-[   43.371024]  dsa_user_netdevice_event+0xb38/0xee8
-[   43.375768]  notifier_call_chain+0xa4/0x210
-[   43.379985]  raw_notifier_call_chain+0x24/0x38
-[   43.384464]  __netdev_upper_dev_link+0x3ec/0x5d8
-[   43.389120]  netdev_upper_dev_link+0x70/0xa8
-[   43.393424]  register_vlan_dev+0x1bc/0x310
-[   43.397554]  vlan_newlink+0x210/0x248
-[   43.401247]  rtnl_newlink+0x9fc/0xe30
-[   43.404942]  rtnetlink_rcv_msg+0x378/0x580
-
-Avoid the kernel oops by dereferencing after the type check, as customary.
-
-Fixes: 4c3f80d22b2e ("net: dsa: walk through all changeupper notifier functions")
-Reported-and-tested-by: syzbot+d81bcd883824180500c8@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/0000000000001d4255060e87545c@google.com/
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240110003354.2796778-1-vladimir.oltean@nxp.com
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Reported-by: Marc Dionne <marc.dionne@auristor.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: linux-afs@lists.infradead.org
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/1581852.1704813048@warthog.procyon.org.uk
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/user.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/rxrpc/ar-internal.h  |  1 +
+ net/rxrpc/local_object.c | 13 ++++++++++++-
+ net/rxrpc/output.c       |  6 ++----
+ net/rxrpc/rxkad.c        |  2 ++
+ 4 files changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/net/dsa/user.c b/net/dsa/user.c
-index d438884a4eb0..a82c7f5a1a12 100644
---- a/net/dsa/user.c
-+++ b/net/dsa/user.c
-@@ -2829,13 +2829,14 @@ EXPORT_SYMBOL_GPL(dsa_user_dev_check);
- static int dsa_user_changeupper(struct net_device *dev,
- 				struct netdev_notifier_changeupper_info *info)
- {
--	struct dsa_port *dp = dsa_user_to_port(dev);
- 	struct netlink_ext_ack *extack;
- 	int err = NOTIFY_DONE;
-+	struct dsa_port *dp;
+diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
+index e8e14c6f904d..e8b43408136a 100644
+--- a/net/rxrpc/ar-internal.h
++++ b/net/rxrpc/ar-internal.h
+@@ -1076,6 +1076,7 @@ void rxrpc_send_version_request(struct rxrpc_local *local,
+ /*
+  * local_object.c
+  */
++void rxrpc_local_dont_fragment(const struct rxrpc_local *local, bool set);
+ struct rxrpc_local *rxrpc_lookup_local(struct net *, const struct sockaddr_rxrpc *);
+ struct rxrpc_local *rxrpc_get_local(struct rxrpc_local *, enum rxrpc_local_trace);
+ struct rxrpc_local *rxrpc_get_local_maybe(struct rxrpc_local *, enum rxrpc_local_trace);
+diff --git a/net/rxrpc/local_object.c b/net/rxrpc/local_object.c
+index c553a30e9c83..34d307368135 100644
+--- a/net/rxrpc/local_object.c
++++ b/net/rxrpc/local_object.c
+@@ -36,6 +36,17 @@ static void rxrpc_encap_err_rcv(struct sock *sk, struct sk_buff *skb, int err,
+ 		return ipv6_icmp_error(sk, skb, err, port, info, payload);
+ }
  
- 	if (!dsa_user_dev_check(dev))
- 		return err;
- 
-+	dp = dsa_user_to_port(dev);
- 	extack = netdev_notifier_info_to_extack(&info->info);
- 
- 	if (netif_is_bridge_master(info->upper_dev)) {
-@@ -2888,11 +2889,13 @@ static int dsa_user_changeupper(struct net_device *dev,
- static int dsa_user_prechangeupper(struct net_device *dev,
- 				   struct netdev_notifier_changeupper_info *info)
- {
--	struct dsa_port *dp = dsa_user_to_port(dev);
-+	struct dsa_port *dp;
- 
- 	if (!dsa_user_dev_check(dev))
- 		return NOTIFY_DONE;
- 
-+	dp = dsa_user_to_port(dev);
++/*
++ * Set or clear the Don't Fragment flag on a socket.
++ */
++void rxrpc_local_dont_fragment(const struct rxrpc_local *local, bool set)
++{
++	if (set)
++		ip_sock_set_mtu_discover(local->socket->sk, IP_PMTUDISC_DO);
++	else
++		ip_sock_set_mtu_discover(local->socket->sk, IP_PMTUDISC_DONT);
++}
 +
- 	if (netif_is_bridge_master(info->upper_dev) && !info->linking)
- 		dsa_port_pre_bridge_leave(dp, info->upper_dev);
- 	else if (netif_is_lag_master(info->upper_dev) && !info->linking)
+ /*
+  * Compare a local to an address.  Return -ve, 0 or +ve to indicate less than,
+  * same or greater than.
+@@ -203,7 +214,7 @@ static int rxrpc_open_socket(struct rxrpc_local *local, struct net *net)
+ 		ip_sock_set_recverr(usk);
+ 
+ 		/* we want to set the don't fragment bit */
+-		ip_sock_set_mtu_discover(usk, IP_PMTUDISC_DO);
++		rxrpc_local_dont_fragment(local, true);
+ 
+ 		/* We want receive timestamps. */
+ 		sock_enable_timestamps(usk);
+diff --git a/net/rxrpc/output.c b/net/rxrpc/output.c
+index 5e53429c6922..a0906145e829 100644
+--- a/net/rxrpc/output.c
++++ b/net/rxrpc/output.c
+@@ -494,14 +494,12 @@ int rxrpc_send_data_packet(struct rxrpc_call *call, struct rxrpc_txbuf *txb)
+ 	switch (conn->local->srx.transport.family) {
+ 	case AF_INET6:
+ 	case AF_INET:
+-		ip_sock_set_mtu_discover(conn->local->socket->sk,
+-					 IP_PMTUDISC_DONT);
++		rxrpc_local_dont_fragment(conn->local, false);
+ 		rxrpc_inc_stat(call->rxnet, stat_tx_data_send_frag);
+ 		ret = do_udp_sendmsg(conn->local->socket, &msg, len);
+ 		conn->peer->last_tx_at = ktime_get_seconds();
+ 
+-		ip_sock_set_mtu_discover(conn->local->socket->sk,
+-					 IP_PMTUDISC_DO);
++		rxrpc_local_dont_fragment(conn->local, true);
+ 		break;
+ 
+ 	default:
+diff --git a/net/rxrpc/rxkad.c b/net/rxrpc/rxkad.c
+index 1bf571a66e02..b52dedcebce0 100644
+--- a/net/rxrpc/rxkad.c
++++ b/net/rxrpc/rxkad.c
+@@ -724,7 +724,9 @@ static int rxkad_send_response(struct rxrpc_connection *conn,
+ 	serial = atomic_inc_return(&conn->serial);
+ 	whdr.serial = htonl(serial);
+ 
++	rxrpc_local_dont_fragment(conn->local, false);
+ 	ret = kernel_sendmsg(conn->local->socket, &msg, iov, 3, len);
++	rxrpc_local_dont_fragment(conn->local, true);
+ 	if (ret < 0) {
+ 		trace_rxrpc_tx_fail(conn->debug_id, serial, ret,
+ 				    rxrpc_tx_point_rxkad_response);
 -- 
 2.43.0
 
