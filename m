@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB7E37C;
-	Tue, 23 Jan 2024 01:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1A437C;
+	Tue, 23 Jan 2024 01:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972190; cv=none; b=rjLXar4kLChtyvs17wVNqij029e6dcOl7A9XXPU7UhZElAKR1d12LwBc971nnSgu8z1ZiZc3x/36aiVg/dwkpoaJy8WcI9pKtrNM1l5Kjvw0Y0DadT2gkIUN5/lnhoKdxcESVXfg4ZoxJSy7TR+7vmsWt29wpZ7ANNGsdezw6WE=
+	t=1705972191; cv=none; b=Fy32aDSaUjr2iOs3BC3h8CcT+ymt+yfXH8vHWh+2XW1w/qy7bBxGxNEq8vFsPEUBTPWhTBbZZPQmu+gDsqy8Sbgf4XkezG22G86XafjolVamHlgikVzp3qqJDhWdQ7kEOON6a1hkuR9pzRXVZxb3bIlfhuhyEL0jeHu8KCQqRCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972190; c=relaxed/simple;
-	bh=wfOMFeVIMd9UGfWYhKTlyVKOwVtq4UkX0vP7NdBTH0M=;
+	s=arc-20240116; t=1705972191; c=relaxed/simple;
+	bh=cM9ssrk/iF/w/pnwyE/ZdgKWp5r9M9pLnFydCJxno8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IWLgt6Yc2gs4i1Z7ehbgXpDEWIqYQAQ06gvm1ncnbHQAiw42YE/IzVxNIlwDxPDR4OKfLwvBTKQTsPm6SmrhPJb2YXj9TQX5H3ViDFzryCw+W6IpFbrwxThSsWOZFsaLUvvCicbiEN51WU293NdwnwhovtpM3p2nkTN41yp59gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkps+yTM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JG7UjcQ8fp79blwKmsrN3Qi0S1T8pU4MbzEFkar7FEfFiggn8OiQnTcQf4VtpG7BTXM8E84mf521042VdfT2YrIghlhM6c07gt6nM/M49sqe6R776JEbqbtWCIjsXQb4wEJK6my9OlwAqk/U1HcVYeIAPmH6aC1wW6HjZVw8lb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhmGaHYR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkps+yTM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E33C43394;
-	Tue, 23 Jan 2024 01:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhmGaHYR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29331C43390;
+	Tue, 23 Jan 2024 01:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972190;
-	bh=wfOMFeVIMd9UGfWYhKTlyVKOwVtq4UkX0vP7NdBTH0M=;
+	s=korg; t=1705972191;
+	bh=cM9ssrk/iF/w/pnwyE/ZdgKWp5r9M9pLnFydCJxno8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkps+yTM/yFqvs8AVcKRxygjWGCKEaMIV4jAzN467y9jpSSYk2lJTwH944edhuSgE
-	 tnnViSNmZpgHiQrz8N4SzxJ8A2Cc7QOBAJEv2M9PQ0iMx16vk2JLAR0OhDITpU0XLq
-	 4vdHeDgg6ts7x6+pQwzoj06gCLZu6skPaC0kdDsE=
+	b=RhmGaHYR8Hr20jEagIYCNGPhQiOhDP2SVic/t0wqKiWBs1pE0Co8UEE4gQ2ju8yqm
+	 y2aPrjh9bUBePXVxlRhOObC8RCiwqmX+2FapjbPWx8/+RbaL5vr7a8Ll+zjzdYVjpt
+	 G2BR+d3cqMnpssBiiv3cGnPsYY9kOz2Wgv3rciXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait@windriver.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 112/374] crypto: sahara - fix processing hash requests with req->nbytes < sg->length
-Date: Mon, 22 Jan 2024 15:56:08 -0800
-Message-ID: <20240122235748.535688278@linuxfoundation.org>
+Subject: [PATCH 5.15 086/374] calipso: fix memory leak in netlbl_calipso_add_pass()
+Date: Mon, 22 Jan 2024 15:55:42 -0800
+Message-ID: <20240122235747.607445643@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,53 +51,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait@windriver.com>
+From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
 
-[ Upstream commit 7bafa74d1ba35dcc173e1ce915e983d65905f77e ]
+[ Upstream commit ec4e9d630a64df500641892f4e259e8149594a99 ]
 
-It's not always the case that the entire sg entry needs to be processed.
-Currently, when nbytes is less than sg->length, "Descriptor length" errors
-are encountered.
+If IPv6 support is disabled at boot (ipv6.disable=1),
+the calipso_init() -> netlbl_calipso_ops_register() function isn't called,
+and the netlbl_calipso_ops_get() function always returns NULL.
+In this case, the netlbl_calipso_add_pass() function allocates memory
+for the doi_def variable but doesn't free it with the calipso_doi_free().
 
-To fix this, take the actual request size into account when populating the
-hw links.
+BUG: memory leak
+unreferenced object 0xffff888011d68180 (size 64):
+  comm "syz-executor.1", pid 10746, jiffies 4295410986 (age 17.928s)
+  hex dump (first 32 bytes):
+    00 00 00 00 02 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<...>] kmalloc include/linux/slab.h:552 [inline]
+    [<...>] netlbl_calipso_add_pass net/netlabel/netlabel_calipso.c:76 [inline]
+    [<...>] netlbl_calipso_add+0x22e/0x4f0 net/netlabel/netlabel_calipso.c:111
+    [<...>] genl_family_rcv_msg_doit+0x22f/0x330 net/netlink/genetlink.c:739
+    [<...>] genl_family_rcv_msg net/netlink/genetlink.c:783 [inline]
+    [<...>] genl_rcv_msg+0x341/0x5a0 net/netlink/genetlink.c:800
+    [<...>] netlink_rcv_skb+0x14d/0x440 net/netlink/af_netlink.c:2515
+    [<...>] genl_rcv+0x29/0x40 net/netlink/genetlink.c:811
+    [<...>] netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
+    [<...>] netlink_unicast+0x54b/0x800 net/netlink/af_netlink.c:1339
+    [<...>] netlink_sendmsg+0x90a/0xdf0 net/netlink/af_netlink.c:1934
+    [<...>] sock_sendmsg_nosec net/socket.c:651 [inline]
+    [<...>] sock_sendmsg+0x157/0x190 net/socket.c:671
+    [<...>] ____sys_sendmsg+0x712/0x870 net/socket.c:2342
+    [<...>] ___sys_sendmsg+0xf8/0x170 net/socket.c:2396
+    [<...>] __sys_sendmsg+0xea/0x1b0 net/socket.c:2429
+    [<...>] do_syscall_64+0x30/0x40 arch/x86/entry/common.c:46
+    [<...>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
 
-Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with Syzkaller
+
+Fixes: cb72d38211ea ("netlabel: Initial support for the CALIPSO netlink protocol.")
+Signed-off-by: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+[PM: merged via the LSM tree at Jakub Kicinski request]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/netlabel/netlabel_calipso.c | 49 +++++++++++++++++----------------
+ 1 file changed, 26 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index 434c7e17d273..538beec3b062 100644
---- a/drivers/crypto/sahara.c
-+++ b/drivers/crypto/sahara.c
-@@ -777,6 +777,7 @@ static int sahara_sha_hw_links_create(struct sahara_dev *dev,
- 				       int start)
+diff --git a/net/netlabel/netlabel_calipso.c b/net/netlabel/netlabel_calipso.c
+index 91a19c3ea1a3..84ef4a29864b 100644
+--- a/net/netlabel/netlabel_calipso.c
++++ b/net/netlabel/netlabel_calipso.c
+@@ -54,6 +54,28 @@ static const struct nla_policy calipso_genl_policy[NLBL_CALIPSO_A_MAX + 1] = {
+ 	[NLBL_CALIPSO_A_MTYPE] = { .type = NLA_U32 },
+ };
+ 
++static const struct netlbl_calipso_ops *calipso_ops;
++
++/**
++ * netlbl_calipso_ops_register - Register the CALIPSO operations
++ * @ops: ops to register
++ *
++ * Description:
++ * Register the CALIPSO packet engine operations.
++ *
++ */
++const struct netlbl_calipso_ops *
++netlbl_calipso_ops_register(const struct netlbl_calipso_ops *ops)
++{
++	return xchg(&calipso_ops, ops);
++}
++EXPORT_SYMBOL(netlbl_calipso_ops_register);
++
++static const struct netlbl_calipso_ops *netlbl_calipso_ops_get(void)
++{
++	return READ_ONCE(calipso_ops);
++}
++
+ /* NetLabel Command Handlers
+  */
+ /**
+@@ -96,15 +118,18 @@ static int netlbl_calipso_add_pass(struct genl_info *info,
+  *
+  */
+ static int netlbl_calipso_add(struct sk_buff *skb, struct genl_info *info)
+-
  {
- 	struct scatterlist *sg;
-+	unsigned int len;
- 	unsigned int i;
- 	int ret;
+ 	int ret_val = -EINVAL;
+ 	struct netlbl_audit audit_info;
++	const struct netlbl_calipso_ops *ops = netlbl_calipso_ops_get();
  
-@@ -798,12 +799,14 @@ static int sahara_sha_hw_links_create(struct sahara_dev *dev,
- 	if (!ret)
- 		return -EFAULT;
+ 	if (!info->attrs[NLBL_CALIPSO_A_DOI] ||
+ 	    !info->attrs[NLBL_CALIPSO_A_MTYPE])
+ 		return -EINVAL;
  
-+	len = rctx->total;
- 	for (i = start; i < dev->nb_in_sg + start; i++) {
--		dev->hw_link[i]->len = sg->length;
-+		dev->hw_link[i]->len = min(len, sg->length);
- 		dev->hw_link[i]->p = sg->dma_address;
- 		if (i == (dev->nb_in_sg + start - 1)) {
- 			dev->hw_link[i]->next = 0;
- 		} else {
-+			len -= min(len, sg->length);
- 			dev->hw_link[i]->next = dev->hw_phys_link[i + 1];
- 			sg = sg_next(sg);
- 		}
++	if (!ops)
++		return -EOPNOTSUPP;
++
+ 	netlbl_netlink_auditinfo(&audit_info);
+ 	switch (nla_get_u32(info->attrs[NLBL_CALIPSO_A_MTYPE])) {
+ 	case CALIPSO_MAP_PASS:
+@@ -362,28 +387,6 @@ int __init netlbl_calipso_genl_init(void)
+ 	return genl_register_family(&netlbl_calipso_gnl_family);
+ }
+ 
+-static const struct netlbl_calipso_ops *calipso_ops;
+-
+-/**
+- * netlbl_calipso_ops_register - Register the CALIPSO operations
+- * @ops: ops to register
+- *
+- * Description:
+- * Register the CALIPSO packet engine operations.
+- *
+- */
+-const struct netlbl_calipso_ops *
+-netlbl_calipso_ops_register(const struct netlbl_calipso_ops *ops)
+-{
+-	return xchg(&calipso_ops, ops);
+-}
+-EXPORT_SYMBOL(netlbl_calipso_ops_register);
+-
+-static const struct netlbl_calipso_ops *netlbl_calipso_ops_get(void)
+-{
+-	return READ_ONCE(calipso_ops);
+-}
+-
+ /**
+  * calipso_doi_add - Add a new DOI to the CALIPSO protocol engine
+  * @doi_def: the DOI structure
 -- 
 2.43.0
 
