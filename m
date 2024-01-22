@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4305604B4;
-	Tue, 23 Jan 2024 01:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C9460278;
+	Tue, 23 Jan 2024 01:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974679; cv=none; b=LqEOokPRXi9yuX1ua8tfRYywaRxRFL+4bWuKPHLrHEjKahOeZ4eStx1WixA42sk5iaxMUz9tAwI1TPpbtjvADrgYLu95iRMoxgGVIkkzjdtn7Tzx6TsGy211Ax6tdgY5P06SGAH0eFP7xcNC7HUhFYWm7WK3aOsn/IfeRVFoti4=
+	t=1705974680; cv=none; b=NxW0Il23RjXVcCwtZRVVtA/XH3vwNhDGKS3uTTY+diNDgH9Hp72stlr6Nr8sQwYosIydh+wwnLICfelln7hDjlLdiyfJdQCvucNX18fayx1rjXUh6w8xFFLy7lqhiwOBVNROdYHqQ56fr5d2rn1aHysUxOWfsqaauakiWB1yuCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974679; c=relaxed/simple;
-	bh=v+enESAMYssOrt3LxEzMDUWK7A5hyjZXHIVrmqSV03s=;
+	s=arc-20240116; t=1705974680; c=relaxed/simple;
+	bh=82x0pqa7Y3msoM4GpIIkg1fEDaQow85oJl5hgYu/j8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aNeIhCJpTMG9dc5sz5aJ9X2YABrO2epbejEQBGMekK7gNU5QRfLMplGBMwxpzyjVKc6ozSZDqvt/fiGEP8ucVUAXOxVj4AoUAE//p14x3xB/atsLilS8p1qAYumLMhwT6C0/6EKhNxD4F0YVHP0TQYn2FxxAL4nSVQZnaCS624A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XeOGlY3F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Lbxct3dUY3oSHP229QcLhehw1p6tl+XX2Feqco4bCjLOAzxgQAwa9u8dj3TCH6L8mJC+z4/e9s5GuOxWZCui2qtTzwAjV+i1yYvpYNBub4UxYGOqHyuvWnWLMCQBqYypxgpZDSVmcrXXwTkz8Suac49EoSOdiOsFEavigvthr+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mvicddjm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XeOGlY3F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8603EC433C7;
-	Tue, 23 Jan 2024 01:51:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mvicddjm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57476C433C7;
+	Tue, 23 Jan 2024 01:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974679;
-	bh=v+enESAMYssOrt3LxEzMDUWK7A5hyjZXHIVrmqSV03s=;
+	s=korg; t=1705974680;
+	bh=82x0pqa7Y3msoM4GpIIkg1fEDaQow85oJl5hgYu/j8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XeOGlY3FfZK/Gk+lAF4w9GoQ0KoqiKJV0neWC5STH5lwVqhf3rxZxg+RTpl50GjZg
-	 slUnV2IivYzCm+wKISsJEouBpNvdwny2PqMPaDZacP1gAwn0FHnoEKumhHzPGzMVsE
-	 Vu9Dt4qrKYnHHVSZDHmdIYaslqY2RGVWk5YOus2E=
+	b=MvicddjmUC6QJlRKIrUIb5avigsjQjGwdP6ysxXUby3wq3mKbQ9MfvGkTmG0f4Tej
+	 N3uJ8ScsZQ2h/tDEOpDEBAGESKrwIOhffn7RqR7xtAcKaG4o1YG2nweg5W24TJMa14
+	 RVptyTmlOCCiStsLw8r/GwdTLnKs7SV2z9Ym9+B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 120/583] bpf: Defer the free of inner map when necessary
-Date: Mon, 22 Jan 2024 15:52:51 -0800
-Message-ID: <20240122235815.815293022@linuxfoundation.org>
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.15 247/374] Input: atkbd - use ab83 as id when skipping the getid command
+Date: Mon, 22 Jan 2024 15:58:23 -0800
+Message-ID: <20240122235753.353589075@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,147 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 876673364161da50eed6b472d746ef88242b2368 ]
+commit 58f65f9db7e0de366a5a115c2e2c0703858bba69 upstream.
 
-When updating or deleting an inner map in map array or map htab, the map
-may still be accessed by non-sleepable program or sleepable program.
-However bpf_map_fd_put_ptr() decreases the ref-counter of the inner map
-directly through bpf_map_put(), if the ref-counter is the last one
-(which is true for most cases), the inner map will be freed by
-ops->map_free() in a kworker. But for now, most .map_free() callbacks
-don't use synchronize_rcu() or its variants to wait for the elapse of a
-RCU grace period, so after the invocation of ops->map_free completes,
-the bpf program which is accessing the inner map may incur
-use-after-free problem.
+Barnabás reported that the change to skip the getid command
+when the controller is in translated mode on laptops caused
+the Version field of his "AT Translated Set 2 keyboard"
+input device to change from ab83 to abba, breaking a custom
+hwdb entry for this keyboard.
 
-Fix the free of inner map by invoking bpf_map_free_deferred() after both
-one RCU grace period and one tasks trace RCU grace period if the inner
-map has been removed from the outer map before. The deferment is
-accomplished by using call_rcu() or call_rcu_tasks_trace() when
-releasing the last ref-counter of bpf map. The newly-added rcu_head
-field in bpf_map shares the same storage space with work field to
-reduce the size of bpf_map.
+Use the standard ab83 id for keyboards when getid is skipped
+(rather then that getid fails) to avoid reporting a different
+Version to userspace then before skipping the getid.
 
-Fixes: bba1dc0b55ac ("bpf: Remove redundant synchronize_rcu.")
-Fixes: 638e4b825d52 ("bpf: Allows per-cpu maps and map-in-map in sleepable programs")
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20231204140425.1480317-5-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in translated mode")
+Reported-by: Barnabás Pőcze <pobrn@protonmail.com>
+Closes: https://lore.kernel.org/linux-input/W1ydwoG2fYv85Z3C3yfDOJcVpilEvGge6UGa9kZh8zI2-qkHXp7WLnl2hSkFz63j-c7WupUWI5TLL6n7Lt8DjRuU-yJBwLYWrreb1hbnd6A=@protonmail.com/
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240116204325.7719-1-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf.h     |  7 ++++++-
- kernel/bpf/map_in_map.c | 11 ++++++++---
- kernel/bpf/syscall.c    | 32 +++++++++++++++++++++++++++-----
- 3 files changed, 41 insertions(+), 9 deletions(-)
+ drivers/input/keyboard/atkbd.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 4bed78e47347..9b08d792fa95 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -275,7 +275,11 @@ struct bpf_map {
- 	 */
- 	atomic64_t refcnt ____cacheline_aligned;
- 	atomic64_t usercnt;
--	struct work_struct work;
-+	/* rcu is used before freeing and work is only used during freeing */
-+	union {
-+		struct work_struct work;
-+		struct rcu_head rcu;
-+	};
- 	struct mutex freeze_mutex;
- 	atomic64_t writecnt;
- 	/* 'Ownership' of program-containing map is claimed by the first program
-@@ -291,6 +295,7 @@ struct bpf_map {
- 	} owner;
- 	bool bypass_spec_v1;
- 	bool frozen; /* write-once; write-protected by freeze_mutex */
-+	bool free_after_mult_rcu_gp;
- 	s64 __percpu *elem_count;
- };
- 
-diff --git a/kernel/bpf/map_in_map.c b/kernel/bpf/map_in_map.c
-index 2dfeb5835e16..3248ff5d8161 100644
---- a/kernel/bpf/map_in_map.c
-+++ b/kernel/bpf/map_in_map.c
-@@ -129,10 +129,15 @@ void *bpf_map_fd_get_ptr(struct bpf_map *map,
- 
- void bpf_map_fd_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
- {
--	/* ptr->ops->map_free() has to go through one
--	 * rcu grace period by itself.
-+	struct bpf_map *inner_map = ptr;
-+
-+	/* The inner map may still be used by both non-sleepable and sleepable
-+	 * bpf program, so free it after one RCU grace period and one tasks
-+	 * trace RCU grace period.
- 	 */
--	bpf_map_put(ptr);
-+	if (need_defer)
-+		WRITE_ONCE(inner_map->free_after_mult_rcu_gp, true);
-+	bpf_map_put(inner_map);
- }
- 
- u32 bpf_map_fd_sys_lookup_elem(void *ptr)
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index d77b2f8b9364..1625b9d5202c 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -717,6 +717,28 @@ static void bpf_map_put_uref(struct bpf_map *map)
- 	}
- }
- 
-+static void bpf_map_free_in_work(struct bpf_map *map)
-+{
-+	INIT_WORK(&map->work, bpf_map_free_deferred);
-+	/* Avoid spawning kworkers, since they all might contend
-+	 * for the same mutex like slab_mutex.
-+	 */
-+	queue_work(system_unbound_wq, &map->work);
-+}
-+
-+static void bpf_map_free_rcu_gp(struct rcu_head *rcu)
-+{
-+	bpf_map_free_in_work(container_of(rcu, struct bpf_map, rcu));
-+}
-+
-+static void bpf_map_free_mult_rcu_gp(struct rcu_head *rcu)
-+{
-+	if (rcu_trace_implies_rcu_gp())
-+		bpf_map_free_rcu_gp(rcu);
-+	else
-+		call_rcu(rcu, bpf_map_free_rcu_gp);
-+}
-+
- /* decrement map refcnt and schedule it for freeing via workqueue
-  * (underlying map implementation ops->map_free() might sleep)
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -782,9 +782,9 @@ static bool atkbd_is_portable_device(voi
+  * not work. So in this case simply assume a keyboard is connected to avoid
+  * confusing some laptop keyboards.
+  *
+- * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using a fake id is
+- * ok in translated mode, only atkbd_select_set() checks atkbd->id and in
+- * translated mode that is a no-op.
++ * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using the standard
++ * 0xab83 id is ok in translated mode, only atkbd_select_set() checks atkbd->id
++ * and in translated mode that is a no-op.
   */
-@@ -726,11 +748,11 @@ void bpf_map_put(struct bpf_map *map)
- 		/* bpf_map_free_id() must be called first */
- 		bpf_map_free_id(map);
- 		btf_put(map->btf);
--		INIT_WORK(&map->work, bpf_map_free_deferred);
--		/* Avoid spawning kworkers, since they all might contend
--		 * for the same mutex like slab_mutex.
--		 */
--		queue_work(system_unbound_wq, &map->work);
-+
-+		if (READ_ONCE(map->free_after_mult_rcu_gp))
-+			call_rcu_tasks_trace(&map->rcu, bpf_map_free_mult_rcu_gp);
-+		else
-+			bpf_map_free_in_work(map);
+ static bool atkbd_skip_getid(struct atkbd *atkbd)
+ {
+@@ -802,6 +802,7 @@ static int atkbd_probe(struct atkbd *atk
+ {
+ 	struct ps2dev *ps2dev = &atkbd->ps2dev;
+ 	unsigned char param[2];
++	bool skip_getid;
+ 
+ /*
+  * Some systems, where the bit-twiddling when testing the io-lines of the
+@@ -823,7 +824,8 @@ static int atkbd_probe(struct atkbd *atk
+  */
+ 
+ 	param[0] = param[1] = 0xa5;	/* initialize with invalid values */
+-	if (atkbd_skip_getid(atkbd) || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
++	skip_getid = atkbd_skip_getid(atkbd);
++	if (skip_getid || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
+ 
+ /*
+  * If the get ID command was skipped or failed, we check if we can at least set
+@@ -833,7 +835,7 @@ static int atkbd_probe(struct atkbd *atk
+ 		param[0] = 0;
+ 		if (ps2_command(ps2dev, param, ATKBD_CMD_SETLEDS))
+ 			return -1;
+-		atkbd->id = 0xabba;
++		atkbd->id = skip_getid ? 0xab83 : 0xabba;
+ 		return 0;
  	}
- }
- EXPORT_SYMBOL_GPL(bpf_map_put);
--- 
-2.43.0
-
+ 
 
 
