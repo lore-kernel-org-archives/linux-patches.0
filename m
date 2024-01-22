@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D1B2C687;
-	Tue, 23 Jan 2024 00:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5814500F;
+	Tue, 23 Jan 2024 00:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969528; cv=none; b=OfLtGDDSYGPR213rXCtPrLSa+z1aQnuTaFILRNyvfJW+FJKyatJ2z0UK/ZoQYVMERH4gltJ/gcMZYoEh8cqM9veZ6XWlGfeU9S6Fw41yTgbhfhwAx9IE7vLbByJeD4CbGgxmRqy0qgrP8nkf82bLI6Ukz5SL/efNfT3cjLRRcKY=
+	t=1705969529; cv=none; b=f7DVIRCxa5xi3eV5emOrSenEPxhGEW83l5Q0IcyklWnJXHXthaTpPmT7kPbHoznXE/QCtYR/cvqO7fVZV/Ej3PLOMXFJ1LGqAGnwioC+yHwY1O1xsGGrFCmc1TZc/GGVkNUqlk//VfEFkPR+A9yQC05TunpPl10SB7TQ35K8JJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969528; c=relaxed/simple;
-	bh=97W6G7Ijd7Kejit2msU96t8NNkppR9gIcFmWgK0nnXs=;
+	s=arc-20240116; t=1705969529; c=relaxed/simple;
+	bh=C59Hm4u9B2esjic0HoEBLtI6XcIWWOT9gL9pogO6ee8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bod8QIRruzUdIbX+GAOCVmaxFbL4CCP2H7pQkqSH0Cgf04KtAuM//cQHkFLQ9jkDOUsv0nE+412AVJw3CmhaJaDAG+nOz5gYZkn46zU6f69x6NqCLfgxjpLIK/sVkQc2v2WjJtt3JIwxcTooQ8vI0GDv8DZLVLSW/onIlOxluEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPmjaxI1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XmkMgfXvZWx0vp7gY1dWuaprlX7tBsKDPv85jp8lsMeHEiXRFOwbVIiIVbF+62bbORv67iShdQobp2DYBa/trIPe+PytdTq0ibpGlQlE961Zv/lGB5tF5Am5t7FKH5ESZPJlbmt1ksE9L9zyobwTZPeSrFKg9HVakv9iJS54U2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwRqyAGC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPmjaxI1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EAE4C43390;
-	Tue, 23 Jan 2024 00:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwRqyAGC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C38C433B1;
+	Tue, 23 Jan 2024 00:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969528;
-	bh=97W6G7Ijd7Kejit2msU96t8NNkppR9gIcFmWgK0nnXs=;
+	s=korg; t=1705969529;
+	bh=C59Hm4u9B2esjic0HoEBLtI6XcIWWOT9gL9pogO6ee8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yPmjaxI1+cuDr38uaGwUvBl4vU7t+hN2+tVbQvfhljRkzUnQ8+FN0L2a6nD5UXzY/
-	 0e0xtLFq2YIVDE3CmucwH+KcVla4uDr6rUhFOzjv3g4ZqMdTpT2/X/v9gUT8oLZkf5
-	 bVG4Xeax7Shd+mv9pGkyC3QPENL0vt7wcXkLAEJc=
+	b=zwRqyAGClYsWBgIwWPtLQDIbgQMuQGJBQy7OO+nCdVoMEFx6Vpir8K6BIUyEUIcg3
+	 chPOuuAprAbjTYmZkrv32czSiP9LY5NEgP8JZvRqL7D2EAgis9QKzr4s+fG/WSVtg8
+	 LrsepVPtGuXm61wJhMvuT0x9zh1gzbX7YQPeLOic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	"Dr. David Alan Gilbert" <dave@treblig.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 306/641] media: videobuf2: request more buffers for vb2_read
-Date: Mon, 22 Jan 2024 15:53:30 -0800
-Message-ID: <20240122235827.490836863@linuxfoundation.org>
+Subject: [PATCH 6.7 307/641] media: imx-mipi-csis: Fix clock handling in remove()
+Date: Mon, 22 Jan 2024 15:53:31 -0800
+Message-ID: <20240122235827.525649517@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,63 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 350ab13e1382f2afcc2285041a1e75b80d771c2c ]
+[ Upstream commit 5705b0e0eb550ff834125a46a4ef99b62093d83d ]
 
-The vb2 read support requests 1 buffer, leaving it to the driver
-to increase this number to something that works.
+The driver always calls mipi_csis_runtime_suspend() and
+mipi_csis_clk_disable() in remove(). This causes multiple WARNs from the
+kernel, as the clocks get disabled too many times.
 
-Unfortunately, drivers do not deal with this reliably, and in fact
-this caused problems for the bttv driver and reading from /dev/vbiX,
-causing every other VBI frame to be all 0.
+Fix the remove() to call mipi_csis_runtime_suspend() and
+mipi_csis_clk_disable() in a way that reverses what is done in probe().
 
-Instead, request as the number of buffers whatever is the maximum of
-2 and q->min_buffers_needed+1.
+Link: https://lore.kernel.org/r/20231122-imx-csis-v2-1-e44b8dc4cb66@ideasonboard.com
 
-In order to start streaming you need at least q->min_buffers_needed
-queued buffers, so add 1 buffer for processing. And if that field
-is 0, then choose 2 (again, one buffer is being filled while the
-other one is being processed).
-
-This certainly makes more sense than requesting just 1 buffer, and
-the VBI bttv support is now working again.
-
-It turns out that the old videobuf1 behavior of bttv was to allocate
-8 (video) and 4 (vbi) buffers when used with read(). After the vb2
-conversion that changed to 2 for both. With this patch it is 3, which
-is really all you need.
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: b7ec3212a73a ("media: bttv: convert to vb2")
-Tested-by: Dr. David Alan Gilbert <dave@treblig.org>
+Fixes: 7807063b862b ("media: staging/imx7: add MIPI CSI-2 receiver subdev for i.MX7")
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/common/videobuf2/videobuf2-core.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/media/platform/nxp/imx-mipi-csis.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-index 27aee92f3eea..19f80ff497b7 100644
---- a/drivers/media/common/videobuf2/videobuf2-core.c
-+++ b/drivers/media/common/videobuf2/videobuf2-core.c
-@@ -2648,9 +2648,14 @@ static int __vb2_init_fileio(struct vb2_queue *q, int read)
- 		return -EBUSY;
+diff --git a/drivers/media/platform/nxp/imx-mipi-csis.c b/drivers/media/platform/nxp/imx-mipi-csis.c
+index 6cb20b45e0a1..b39d7aeba750 100644
+--- a/drivers/media/platform/nxp/imx-mipi-csis.c
++++ b/drivers/media/platform/nxp/imx-mipi-csis.c
+@@ -1502,8 +1502,10 @@ static void mipi_csis_remove(struct platform_device *pdev)
+ 	v4l2_async_nf_cleanup(&csis->notifier);
+ 	v4l2_async_unregister_subdev(&csis->sd);
  
- 	/*
--	 * Start with count 1, driver can increase it in queue_setup()
-+	 * Start with q->min_buffers_needed + 1, driver can increase it in
-+	 * queue_setup()
-+	 *
-+	 * 'min_buffers_needed' buffers need to be queued up before you
-+	 * can start streaming, plus 1 for userspace (or in this case,
-+	 * kernelspace) processing.
- 	 */
--	count = 1;
-+	count = max(2, q->min_buffers_needed + 1);
- 
- 	dprintk(q, 3, "setting up file io: mode %s, count %d, read_once %d, write_immediately %d\n",
- 		(read) ? "read" : "write", count, q->fileio_read_once,
++	if (!pm_runtime_enabled(&pdev->dev))
++		mipi_csis_runtime_suspend(&pdev->dev);
++
+ 	pm_runtime_disable(&pdev->dev);
+-	mipi_csis_runtime_suspend(&pdev->dev);
+ 	mipi_csis_clk_disable(csis);
+ 	v4l2_subdev_cleanup(&csis->sd);
+ 	media_entity_cleanup(&csis->sd.entity);
 -- 
 2.43.0
 
