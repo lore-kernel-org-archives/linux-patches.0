@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB6212F5A7;
-	Tue, 23 Jan 2024 00:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C42812FF7D;
+	Tue, 23 Jan 2024 00:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969031; cv=none; b=DUB1tKr/go1fy6wny2RmxYHtagGVifOM7p2yzwvCOTjmb0jfRNzjqHnBZxrHdeb5W1/hl8DWL7287hQL2qz5UJ7mG0/RsZdyZCKWJM4VDZ9m4gGx1NI5O3X/5cNJOKM1A6BSTFFLJRoeHuX2SSIPWM06EFoJH6bJv4NmbJV5y8o=
+	t=1705969034; cv=none; b=hF9K6dVXc0M5n0h9kPLL8iUgSQqZSKfD8eHUA0qXoZUUaexRy1W+FW8D4XCtgwpxKTXZx0ybS2D2LqUi/Sw3AxKxhfzHU9gyr3017jlB2FzvxknH5BWrF207/fZK8fxO7AVyAw2cLx5SIPv9bwKJmjcKUoBdEjerB0b0LPk3bk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969031; c=relaxed/simple;
-	bh=uOsOF6zfyNWZOKuDLZ97N0hpt0NKT0EiXMNAk1qfY4Y=;
+	s=arc-20240116; t=1705969034; c=relaxed/simple;
+	bh=IGVk8EKpb6HJlxhGpVTGxLvlcvvZTbWZzJxtVZY4kvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EkbhoyJ/WCaWDhpEP4HuwgOo7eK7eWlDx+qlaMnM6EXdFMDmvUtinU1F4EJHipFXFsP07kZYaYvC3tCyxYHb0RL5uQzTRQ4EHu+8AiqBpWh4ImJjbeDU6Gu7R/2u+DNCt/ZIn2RtL8ysp00Wdn1dfhybuTORTYK1FYpw91ks+4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jdos+z03; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lidEE5dTwP0V8NbNf7D0oiG4AUqokmUy0p0NXl1OI+w+QFglVI0TU12DOEnK6gV0GIIjbvm9kQ9imoK8QwXkhpku4oAiiy+wHexVmEempAgI62UAjuQaxF6/RhpZkKoerj7iD+rS38Jl6g3pUZk5GGP2RBlrqclfIZK2lSrL2a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OboMgV+J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jdos+z03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF19C433F1;
-	Tue, 23 Jan 2024 00:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OboMgV+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CEAC433F1;
+	Tue, 23 Jan 2024 00:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969030;
-	bh=uOsOF6zfyNWZOKuDLZ97N0hpt0NKT0EiXMNAk1qfY4Y=;
+	s=korg; t=1705969033;
+	bh=IGVk8EKpb6HJlxhGpVTGxLvlcvvZTbWZzJxtVZY4kvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jdos+z03Gm8+MOTmN8Ya5I+3eMmnXMgplKo3+VrWyGnq5xdpILOdRaXxGvfiXVL/C
-	 LS0wDuQYCS2hnG6aNW66GIsZ6/3QCo94zMS7CaE1nkhUWEvIEKIHP+mTAS5rNMLkEJ
-	 6riK+ovXwDKs6hhqiOmQtiSDWPEv1hmOd3j2YQGU=
+	b=OboMgV+JKSkxlehZGbRKZQ/kzLkO6VyrkbY8Qo096UIO4AG9yXAy7Y+xyzk5OWkVu
+	 763I0bY5HMga+3Cx3OeByJHJ1yVIs1KoAVQwdj0Tc27enW0EmkAxpU7tmBBOpGHxgl
+	 G0J1VX1cc5eUuE+G2sGQG3Z9mM1jcsD7FtiM+hcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Fangrui Song <maskray@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Lieven Hey <lieven.hey@kdab.com>,
-	Milian Wolff <milian.wolff@kdab.com>,
-	Pablo Galindo <pablogsal@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 170/194] perf genelf: Set ELF program header addresses properly
-Date: Mon, 22 Jan 2024 15:58:20 -0800
-Message-ID: <20240122235726.489019534@linuxfoundation.org>
+Subject: [PATCH 5.4 171/194] nvmet-tcp: Fix a kernel panic when host sends an invalid H2C PDU length
+Date: Mon, 22 Jan 2024 15:58:21 -0800
+Message-ID: <20240122235726.536393426@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -60,48 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 1af478903fc48c1409a8dd6b698383b62387adf1 ]
+[ Upstream commit efa56305908ba20de2104f1b8508c6a7401833be ]
 
-The text section starts after the ELF headers so PHDR.p_vaddr and
-others should have the correct addresses.
+If the host sends an H2CData command with an invalid DATAL,
+the kernel may crash in nvmet_tcp_build_pdu_iovec().
 
-Fixes: babd04386b1df8c3 ("perf jit: Include program header in ELF files")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Fangrui Song <maskray@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Lieven Hey <lieven.hey@kdab.com>
-Cc: Milian Wolff <milian.wolff@kdab.com>
-Cc: Pablo Galindo <pablogsal@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20231212070547.612536-2-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Unable to handle kernel NULL pointer dereference at
+virtual address 0000000000000000
+lr : nvmet_tcp_io_work+0x6ac/0x718 [nvmet_tcp]
+Call trace:
+  process_one_work+0x174/0x3c8
+  worker_thread+0x2d0/0x3e8
+  kthread+0x104/0x110
+
+Fix the bug by raising a fatal error if DATAL isn't coherent
+with the packet size.
+Also, the PDU length should never exceed the MAXH2CDATA parameter which
+has been communicated to the host in nvmet_tcp_handle_icreq().
+
+Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/genelf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/nvme/target/tcp.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/genelf.c b/tools/perf/util/genelf.c
-index 69744fd5db39..04509144ff84 100644
---- a/tools/perf/util/genelf.c
-+++ b/tools/perf/util/genelf.c
-@@ -296,9 +296,9 @@ jit_write_elf(int fd, uint64_t load_addr, const char *sym,
- 	 */
- 	phdr = elf_newphdr(e, 1);
- 	phdr[0].p_type = PT_LOAD;
--	phdr[0].p_offset = 0;
--	phdr[0].p_vaddr = 0;
--	phdr[0].p_paddr = 0;
-+	phdr[0].p_offset = GEN_ELF_TEXT_OFFSET;
-+	phdr[0].p_vaddr = GEN_ELF_TEXT_OFFSET;
-+	phdr[0].p_paddr = GEN_ELF_TEXT_OFFSET;
- 	phdr[0].p_filesz = csize;
- 	phdr[0].p_memsz = csize;
- 	phdr[0].p_flags = PF_X | PF_R;
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index e8c7135c4c11..1747d3c4fa32 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -18,6 +18,7 @@
+ #include "nvmet.h"
+ 
+ #define NVMET_TCP_DEF_INLINE_DATA_SIZE	(4 * PAGE_SIZE)
++#define NVMET_TCP_MAXH2CDATA		0x400000 /* 16M arbitrary limit */
+ 
+ #define NVMET_TCP_RECV_BUDGET		8
+ #define NVMET_TCP_SEND_BUDGET		8
+@@ -818,7 +819,7 @@ static int nvmet_tcp_handle_icreq(struct nvmet_tcp_queue *queue)
+ 	icresp->hdr.pdo = 0;
+ 	icresp->hdr.plen = cpu_to_le32(icresp->hdr.hlen);
+ 	icresp->pfv = cpu_to_le16(NVME_TCP_PFV_1_0);
+-	icresp->maxdata = cpu_to_le32(0x400000); /* 16M arbitrary limit */
++	icresp->maxdata = cpu_to_le32(NVMET_TCP_MAXH2CDATA);
+ 	icresp->cpda = 0;
+ 	if (queue->hdr_digest)
+ 		icresp->digest |= NVME_TCP_HDR_DIGEST_ENABLE;
+@@ -866,6 +867,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
+ {
+ 	struct nvme_tcp_data_pdu *data = &queue->pdu.data;
+ 	struct nvmet_tcp_cmd *cmd;
++	unsigned int plen;
+ 
+ 	if (likely(queue->nr_cmds)) {
+ 		if (unlikely(data->ttag >= queue->nr_cmds)) {
+@@ -889,7 +891,16 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
+ 		return -EPROTO;
+ 	}
+ 
++	plen = le32_to_cpu(data->hdr.plen);
+ 	cmd->pdu_len = le32_to_cpu(data->data_length);
++	if (unlikely(cmd->pdu_len != (plen - sizeof(*data)) ||
++		     cmd->pdu_len == 0 ||
++		     cmd->pdu_len > NVMET_TCP_MAXH2CDATA)) {
++		pr_err("H2CData PDU len %u is invalid\n", cmd->pdu_len);
++		/* FIXME: use proper transport errors */
++		nvmet_tcp_fatal_error(queue);
++		return -EPROTO;
++	}
+ 	cmd->pdu_recv = 0;
+ 	nvmet_tcp_map_pdu_iovec(cmd);
+ 	queue->cmd = cmd;
 -- 
 2.43.0
 
