@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86FE128380;
-	Tue, 23 Jan 2024 00:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02C7482ED;
+	Tue, 23 Jan 2024 00:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968674; cv=none; b=mHvNhGNzCAPyoFGcP3MSvzWu25S1gLDMGmNxO6eTpAwfwn4K6M22SLBQwRcFykgiIea5VxEcX3RWepm1FB4rVOggQ/W1PkxFkSObu85MBqGu7dhigvGhatU49Pfqf8txmcF8CroJ5qZLt6rTCdoOGotJq2EWjXMFG0JIHgharvc=
+	t=1705968675; cv=none; b=r6wAk4ieBDotjP7mFQ3ezK5CWTzoSfzgQbx3tRWIiHLbKJu5z005QIkrMuZuSHdIncL/X/lq3LS3Hsl2fcakqHJTjQVd2jmTiC74MfXq16XjmvLkvu7zBbkFtCxDdQ4Aqk4eB6/P2c7UW0z7RMLFrVjFdeuQtlANTpCQj+NIh20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968674; c=relaxed/simple;
-	bh=0jufXtfVRhnS8RrnTVtARcEodq/1fGhDVGKCLYtoTEA=;
+	s=arc-20240116; t=1705968675; c=relaxed/simple;
+	bh=C9z6Ur/AU2sPVItJlZwrZo/V3t8BpkgSrGTsH1jmx88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pACUXhCyGa6DuhB98crPvmdqjDsRnv7+i1YogAT4ieZE87vSfwNHUjgA8JxWfS0atgLQlwbLnxXm0vBskcPvcbR0cJn3Cu96DfFB/O9ZY3JczSSaM6DEE4kYBW/dUvj/lpEJuLYZfArEffPtxKw2Awq0B+0yL3I0yG/RCCdJzkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POeDE3lf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SEf2FkUt0Eb0vgiQXjqLqPUjx5JEJyJZbTh58vWHCdY5t4YdBNKz4zN3f+6mkH/sVDBKhdGP7j/hic2jbEpyB6Y/wujHTo/1Ghb+U9DSFmRo5bkzzj+3pMcuN9wmo2ACK7EWDHXTKR6u1EtatmrdNu1ff2v1pPZXwsZtPMJi4x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHsbZ81Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POeDE3lf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4126AC433F1;
-	Tue, 23 Jan 2024 00:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHsbZ81Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C4BC4AF5E;
+	Tue, 23 Jan 2024 00:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968673;
-	bh=0jufXtfVRhnS8RrnTVtARcEodq/1fGhDVGKCLYtoTEA=;
+	s=korg; t=1705968675;
+	bh=C9z6Ur/AU2sPVItJlZwrZo/V3t8BpkgSrGTsH1jmx88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=POeDE3lfQ6WtkUTiseEVL8fpH92QMkq2gAWBC6COKlxlTmY8gLAl3+Xx5LGrk8x1G
-	 3rl0mTgmIBgcDhSs7UzRZIzVbc3rpY6TycQGfU25MtzpwQpoGWyzrJja4oBDCdEfU/
-	 037+dSM8pGp5C6t2cEEPE6cKDhWq+reKU6miPppI=
+	b=JHsbZ81ZsM0ByFz0oHaZC7mBcj6E+3PeyxFgRQkGyIHZL+ONHpBkfMSzCeHrnBtnC
+	 Iz58n1hSwPGrBW/UiKCvxOp+Sh1F/VGh/WKL2aqOlkRPS57WsarTiThYpSe8A1K9sY
+	 VNP1gcKsi6htQ7rS0U2GShVyxXq3bpvJxqI44/bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 4.19 130/148] wifi: rtlwifi: Convert LNKCTL change to PCIe cap RMW accessors
-Date: Mon, 22 Jan 2024 15:58:06 -0800
-Message-ID: <20240122235717.805544110@linuxfoundation.org>
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 098/148] drm/radeon/dpm: fix a memleak in sumo_parse_power_table
+Date: Mon, 22 Jan 2024 15:57:34 -0800
+Message-ID: <20240122235716.359247322@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -44,82 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-commit 5894d0089cbc146063dcc0239a78ede0a8142efb upstream.
+[ Upstream commit 0737df9ed0997f5b8addd6e2b9699a8c6edba2e4 ]
 
-The rtlwifi driver comes with custom code to write into PCIe Link
-Control register. RMW access for the Link Control register requires
-locking that is already provided by the standard PCIe capability
-accessors.
+The rdev->pm.dpm.ps allocated by kcalloc should be freed in every
+following error-handling path. However, in the error-handling of
+rdev->pm.power_state[i].clock_info the rdev->pm.dpm.ps is not freed,
+resulting in a memleak in this function.
 
-Convert the custom RMW code writing into LNKCTL register to standard
-RMW capability accessors. The accesses are changed to cover the full
-LNKCTL register instead of touching just a single byte of the register.
-
-Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231124084725.12738-3-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 80ea2c129c76 ("drm/radeon/kms: add dpm support for sumo asics (v2)")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c |   21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/radeon/sumo_dpm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -186,21 +186,29 @@ static bool _rtl_pci_platform_switch_dev
- 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
- 	struct rtl_hal *rtlhal = rtl_hal(rtl_priv(hw));
- 
-+	value &= PCI_EXP_LNKCTL_ASPMC;
-+
- 	if (rtlhal->hw_type != HARDWARE_TYPE_RTL8192SE)
--		value |= 0x40;
-+		value |= PCI_EXP_LNKCTL_CCC;
- 
--	pci_write_config_byte(rtlpci->pdev, 0x80, value);
-+	pcie_capability_clear_and_set_word(rtlpci->pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_ASPMC | value,
-+					   value);
- 
- 	return false;
- }
- 
--/*When we set 0x01 to enable clk request. Set 0x0 to disable clk req.*/
--static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u8 value)
-+/* @value is PCI_EXP_LNKCTL_CLKREQ_EN or 0 to enable/disable clk request. */
-+static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u16 value)
- {
- 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
- 	struct rtl_hal *rtlhal = rtl_hal(rtl_priv(hw));
- 
--	pci_write_config_byte(rtlpci->pdev, 0x81, value);
-+	value &= PCI_EXP_LNKCTL_CLKREQ_EN;
-+
-+	pcie_capability_clear_and_set_word(rtlpci->pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_CLKREQ_EN,
-+					   value);
- 
- 	if (rtlhal->hw_type == HARDWARE_TYPE_RTL8192SE)
- 		udelay(100);
-@@ -281,7 +289,8 @@ static void rtl_pci_enable_aspm(struct i
- 
- 	if (ppsc->reg_rfps_level & RT_RF_OFF_LEVL_CLK_REQ) {
- 		_rtl_pci_switch_clk_req(hw, (ppsc->reg_rfps_level &
--					     RT_RF_OFF_LEVL_CLK_REQ) ? 1 : 0);
-+					     RT_RF_OFF_LEVL_CLK_REQ) ?
-+					     PCI_EXP_LNKCTL_CLKREQ_EN : 0);
- 		RT_SET_PS_LEVEL(ppsc, RT_RF_OFF_LEVL_CLK_REQ);
- 	}
- 	udelay(100);
+diff --git a/drivers/gpu/drm/radeon/sumo_dpm.c b/drivers/gpu/drm/radeon/sumo_dpm.c
+index 1e4975f3374c..b9dc3805d7fb 100644
+--- a/drivers/gpu/drm/radeon/sumo_dpm.c
++++ b/drivers/gpu/drm/radeon/sumo_dpm.c
+@@ -1494,8 +1494,10 @@ static int sumo_parse_power_table(struct radeon_device *rdev)
+ 		non_clock_array_index = power_state->v2.nonClockInfoIndex;
+ 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
+ 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
+-		if (!rdev->pm.power_state[i].clock_info)
++		if (!rdev->pm.power_state[i].clock_info) {
++			kfree(rdev->pm.dpm.ps);
+ 			return -EINVAL;
++		}
+ 		ps = kzalloc(sizeof(struct sumo_ps), GFP_KERNEL);
+ 		if (ps == NULL) {
+ 			kfree(rdev->pm.dpm.ps);
+-- 
+2.43.0
+
 
 
