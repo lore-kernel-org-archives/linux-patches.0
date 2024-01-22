@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B066281E;
-	Tue, 23 Jan 2024 01:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DFD4E1AD;
+	Tue, 23 Jan 2024 01:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971604; cv=none; b=m0s37c6LFaeZ6HT8h+2A0K0SBFoDsbla+Jt3cknFLUWugKN3pXIto1wM7nuq16BuGLqMJK0SHfCVQG7OUqG52UTbqjQBx+0MTE32SPl8VV2ybgc/2e5SGYs6L0UoQWvoQADYetdWGhH86SI/XmQLEScVFS857oDOt80nu7jkzZI=
+	t=1705971608; cv=none; b=lOWTOMppYrpUA9Uz90k7GQktkpP+Du2biFk4j7TIl0iXCqYnmhe2IhrSQ2P01ixzGaXrKXYg480dpmJVF3FZnKenh66fbcZxhQXPGVgSiEjulqE1MlibsAnHGjkWdmCsES0rPITOa54ifc+ar9kJlnTcnUOzMuV9aGUnLq5tx0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971604; c=relaxed/simple;
-	bh=b27axd30zMOSE/Q0XJiekndAgB92ItZjhHPMpHJSzeY=;
+	s=arc-20240116; t=1705971608; c=relaxed/simple;
+	bh=nYL7TS3YCDoGivL77dQccEjKYyuSbz2MDHGwTbsf8kI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oml/BXcB4he6csKNPWOTvWwUUztz98zE4naHCDGALt+YnanzMJX+kvUGJrGxQmF35nOE/MI+vwTNWWpYha19f6GdWL3p6DsbX3BnARg0al5y17fgJrrJaLF6hc+4l9hkGfer+ncA+fDVclH7mQ2gEkjNF66T0zR9yLHdddqIHQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3GQ4+41; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DxE/PQRsMFrmKqcr/avPgyZOBtRrIDPROw+sTc+VE2Rc//lU8SiQ8wFICA538xDrKmDu/C7T+/uo77uhFyiYIuQAGI99IiYNdJEjKYRAvFiSIUJQ5qFyAEywAC2JyKe54gaX9uG4TNxxKGEXzBg2G09n+/0B89mKLywR6VRWFAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6uMgigx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3GQ4+41"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD392C433F1;
-	Tue, 23 Jan 2024 01:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6uMgigx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D705C433C7;
+	Tue, 23 Jan 2024 01:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971604;
-	bh=b27axd30zMOSE/Q0XJiekndAgB92ItZjhHPMpHJSzeY=;
+	s=korg; t=1705971607;
+	bh=nYL7TS3YCDoGivL77dQccEjKYyuSbz2MDHGwTbsf8kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E3GQ4+41vQID1h0gqhvNTX5H6UIf7r1ljbPJUxYYexTAR5kaIN9FaMjDvkNjDa+2j
-	 kI1YYyxx4mTEoZVJgZ6wEim7oleiJgGqDeGx3MqtDS/8FNaZH+gtqe6IUt6j1vzR97
-	 RVN9Xo8C3SjT6xrNTDSlsM8LGFLRn9xt48a3Qf7w=
+	b=D6uMgigxsimFAphJqLslFaReT3xk7q2oG/wVx/9A0diUjqccWTTeabo5DhK+r0+cy
+	 jHM9K0/ZUpsXGs9I5+n98+RijHbRFVrIKzlqH9CjJatitn6/8KYy0ktbtUwfK7TzR1
+	 Gbu1tKegZZtOWM/x1blbI+mckyvEdxqShCRqrXXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zackr@vmware.com>,
-	Ian Forbes <iforbes@vmware.com>,
-	Maaz Mombasawala <mombasawalam@vmware.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>
-Subject: [PATCH 6.1 277/417] drm/vmwgfx: Fix possible invalid drm gem put calls
-Date: Mon, 22 Jan 2024 15:57:25 -0800
-Message-ID: <20240122235801.438762544@linuxfoundation.org>
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Manorit Chawdhry <m-chawdhry@ti.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 185/286] watchdog: rti_wdt: Drop runtime pm reference count when watchdog is unused
+Date: Mon, 22 Jan 2024 15:58:11 -0800
+Message-ID: <20240122235739.263864956@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,142 +49,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zack Rusin <zackr@vmware.com>
+From: Vignesh Raghavendra <vigneshr@ti.com>
 
-commit f9e96bf1905479f18e83a3a4c314a8dfa56ede2c upstream.
+[ Upstream commit c1a6edf3b541e44e78f10bc6024df779715723f1 ]
 
-vmw_bo_unreference sets the input buffer to null on exit, resulting in
-null ptr deref's on the subsequent drm gem put calls.
+Call runtime_pm_put*() if watchdog is not already started during probe and re
+enable it in watchdog start as required.
 
-This went unnoticed because only very old userspace would be exercising
-those paths but it wouldn't be hard to hit on old distros with brand
-new kernels.
+On K3 SoCs, watchdogs and their corresponding CPUs are under same
+power-domain, so if the reference count of unused watchdogs aren't
+dropped, it will lead to CPU hotplug failures as Device Management
+firmware won't allow to turn off the power-domain due to dangling
+reference count.
 
-Introduce a new function that abstracts unrefing of user bo's to make
-the code cleaner and more explicit.
-
-Signed-off-by: Zack Rusin <zackr@vmware.com>
-Reported-by: Ian Forbes <iforbes@vmware.com>
-Fixes: 9ef8d83e8e25 ("drm/vmwgfx: Do not drop the reference to the handle too soon")
-Cc: <stable@vger.kernel.org> # v6.4+
-Reviewed-by: Maaz Mombasawala<mombasawalam@vmware.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230818041301.407636-1-zack@kde.org
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2d63908bdbfb ("watchdog: Add K3 RTI watchdog support")
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Tested-by: Manorit Chawdhry <m-chawdhry@ti.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20231213140110.938129-1-vigneshr@ti.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_bo.c      |    6 ++----
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.h     |    8 ++++++++
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c |    6 ++----
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c     |    6 ++----
- drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c |    3 +--
- drivers/gpu/drm/vmwgfx/vmwgfx_shader.c  |    3 +--
- 6 files changed, 16 insertions(+), 16 deletions(-)
+ drivers/watchdog/rti_wdt.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
-@@ -595,10 +595,9 @@ static int vmw_user_bo_synccpu_release(s
- 		if (!(flags & drm_vmw_synccpu_allow_cs)) {
- 			atomic_dec(&vmw_bo->cpu_writers);
- 		}
--		ttm_bo_put(&vmw_bo->base);
-+		vmw_user_bo_unref(vmw_bo);
- 	}
- 
--	drm_gem_object_put(&vmw_bo->base.base);
- 	return ret;
- }
- 
-@@ -638,8 +637,7 @@ int vmw_user_bo_synccpu_ioctl(struct drm
- 			return ret;
- 
- 		ret = vmw_user_bo_synccpu_grab(vbo, arg->flags);
--		vmw_bo_unreference(&vbo);
--		drm_gem_object_put(&vbo->base.base);
-+		vmw_user_bo_unref(vbo);
- 		if (unlikely(ret != 0)) {
- 			if (ret == -ERESTARTSYS || ret == -EBUSY)
- 				return -EBUSY;
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-@@ -1600,6 +1600,14 @@ vmw_bo_reference(struct vmw_buffer_objec
- 	return buf;
- }
- 
-+static inline void vmw_user_bo_unref(struct vmw_buffer_object *vbo)
-+{
-+	if (vbo) {
-+		ttm_bo_put(&vbo->base);
-+		drm_gem_object_put(&vbo->base.base);
-+	}
-+}
-+
- static inline void vmw_fifo_resource_inc(struct vmw_private *dev_priv)
+diff --git a/drivers/watchdog/rti_wdt.c b/drivers/watchdog/rti_wdt.c
+index 46c2a4bd9ebe..daa00f3c5a6a 100644
+--- a/drivers/watchdog/rti_wdt.c
++++ b/drivers/watchdog/rti_wdt.c
+@@ -70,6 +70,11 @@ static int rti_wdt_start(struct watchdog_device *wdd)
  {
- 	atomic_inc(&dev_priv->num_fifo_resources);
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -1159,8 +1159,7 @@ static int vmw_translate_mob_ptr(struct
- 		return PTR_ERR(vmw_bo);
- 	}
- 	ret = vmw_validation_add_bo(sw_context->ctx, vmw_bo, true, false);
--	ttm_bo_put(&vmw_bo->base);
--	drm_gem_object_put(&vmw_bo->base.base);
-+	vmw_user_bo_unref(vmw_bo);
- 	if (unlikely(ret != 0))
- 		return ret;
+ 	u32 timer_margin;
+ 	struct rti_wdt_device *wdt = watchdog_get_drvdata(wdd);
++	int ret;
++
++	ret = pm_runtime_resume_and_get(wdd->parent);
++	if (ret)
++		return ret;
  
-@@ -1214,8 +1213,7 @@ static int vmw_translate_guest_ptr(struc
- 		return PTR_ERR(vmw_bo);
- 	}
- 	ret = vmw_validation_add_bo(sw_context->ctx, vmw_bo, false, false);
--	ttm_bo_put(&vmw_bo->base);
--	drm_gem_object_put(&vmw_bo->base.base);
-+	vmw_user_bo_unref(vmw_bo);
- 	if (unlikely(ret != 0))
- 		return ret;
+ 	/* set timeout period */
+ 	timer_margin = (u64)wdd->timeout * wdt->freq;
+@@ -296,6 +301,9 @@ static int rti_wdt_probe(struct platform_device *pdev)
+ 	if (last_ping)
+ 		watchdog_set_last_hw_keepalive(wdd, last_ping);
  
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -1599,10 +1599,8 @@ static struct drm_framebuffer *vmw_kms_f
++	if (!watchdog_hw_running(wdd))
++		pm_runtime_put_sync(&pdev->dev);
++
+ 	return 0;
  
- err_out:
- 	/* vmw_user_lookup_handle takes one ref so does new_fb */
--	if (bo) {
--		vmw_bo_unreference(&bo);
--		drm_gem_object_put(&bo->base.base);
--	}
-+	if (bo)
-+		vmw_user_bo_unref(bo);
- 	if (surface)
- 		vmw_surface_unreference(&surface);
+ err_iomap:
+@@ -310,7 +318,10 @@ static int rti_wdt_remove(struct platform_device *pdev)
+ 	struct rti_wdt_device *wdt = platform_get_drvdata(pdev);
  
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
-@@ -457,8 +457,7 @@ int vmw_overlay_ioctl(struct drm_device
+ 	watchdog_unregister_device(&wdt->wdd);
+-	pm_runtime_put(&pdev->dev);
++
++	if (!pm_runtime_suspended(&pdev->dev))
++		pm_runtime_put(&pdev->dev);
++
+ 	pm_runtime_disable(&pdev->dev);
  
- 	ret = vmw_overlay_update_stream(dev_priv, buf, arg, true);
- 
--	vmw_bo_unreference(&buf);
--	drm_gem_object_put(&buf->base.base);
-+	vmw_user_bo_unref(buf);
- 
- out_unlock:
- 	mutex_unlock(&overlay->mutex);
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
-@@ -806,8 +806,7 @@ static int vmw_shader_define(struct drm_
- 				    shader_type, num_input_sig,
- 				    num_output_sig, tfile, shader_handle);
- out_bad_arg:
--	vmw_bo_unreference(&buffer);
--	drm_gem_object_put(&buffer->base.base);
-+	vmw_user_bo_unref(buffer);
- 	return ret;
- }
- 
+ 	return 0;
+-- 
+2.43.0
+
 
 
