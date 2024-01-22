@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6201E154441;
-	Tue, 23 Jan 2024 00:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63A1154441;
+	Tue, 23 Jan 2024 00:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969383; cv=none; b=ExM0V+ywuZpXS71JkChfYacUU33EZFCph/epKUzoRI2r4iok47C9pn86n0jvZ/+qgAlaoJ2O6cAMs86dhcDUlE5Y46sBZtOiEuziizYJtc0Vb5zd3N6wxLV4ykl74jYm2jr7zgjwIwU8dHEWFQ/qjncS/axIpIBVn7cc2xavE1s=
+	t=1705969384; cv=none; b=tRj8t2rNHCYpPE3DCIiIRdB7ofnsxzcp69G+OIhLcRFEv/xLBbc+LBlhcyg4KM4v30x5Ek6E2sIGoMDgIhzc9PMdwQAys+FLGButPgl40EdS7fuQUIAK8Cq38R4aiUa0X61wNOeq5iFMdJSRPIlsC2ydiFQJahtlC+akbnQZyVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969383; c=relaxed/simple;
-	bh=QTttser246UF5wyHiZ8BgPJfWJDd8l72j/MqVWBOozI=;
+	s=arc-20240116; t=1705969384; c=relaxed/simple;
+	bh=SZX2+5ZmSUOzADCvx7hRSjLTT6qLTEMaj++IWHp1Pg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2hqLS02/kqbb/+Yr4/5vqQ87k+Iu8NkL6OACXMec+2TXeYPR/ui7z1C/4KEaybDgoZ9vXYnStcNzCovbuNY2UZdT1oLupG4zDjnDmUwQ1yAfb/0EM0rHrq0iYE8wSqO8xlex1LGPaWZjWKhD5CMy231/sCsSQLbH349+XMPlOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qOL8tgh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ArOQNNKljYdDilvTql5k+JHLOMrJUsgjKAW8Bl94+qL9NokNEgJG7E+mYx6VXSZWv3BFipUJTyX4CuPsQf7WTcyrl0u5EgYH0+3OFrHnSPNxi2il+NN9PB+S7B++Zo5AWH3EBSTljkfKKiMskuULdB4CBzX7MEWQUP6qQu1Qhkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVOwkeWg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qOL8tgh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B43C43399;
-	Tue, 23 Jan 2024 00:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVOwkeWg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6540BC433F1;
+	Tue, 23 Jan 2024 00:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969383;
-	bh=QTttser246UF5wyHiZ8BgPJfWJDd8l72j/MqVWBOozI=;
+	s=korg; t=1705969384;
+	bh=SZX2+5ZmSUOzADCvx7hRSjLTT6qLTEMaj++IWHp1Pg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2qOL8tghokU35ORqLmy1r8Cwafj6CvQX3hl+nGxzd0gVOKpRRoiZVqmkPocierqzS
-	 mObyX0Wh3dS+QIAZwyUjhYHWsx0CFKTi0tc8/R3dxM2wY3NrLUOf695ovY5vAB2LV9
-	 kkhb4xNnkdlEA0JqZ7WRHe6vOYJY0nR+rokzKDdg=
+	b=JVOwkeWgx45F0ApqISF5dwadXb9CepeaeL4GvrfjPYH3M8Mc01gmPwzStx8ZZi7Vt
+	 29op4VODXoCrd6HJfVFKOXsiKpL9RnptTOgQ2Nz9LLqPskgBuxao5Xhek5SLQ+b1NN
+	 AsUyp9jgDR08dbOOL7hKLNFzaXNo6wRGmFAinsRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 208/641] wifi: rtlwifi: rtl8188ee: phy: using calculate_bit_shift()
-Date: Mon, 22 Jan 2024 15:51:52 -0800
-Message-ID: <20240122235824.458826199@linuxfoundation.org>
+Subject: [PATCH 6.7 186/641] virtio/vsock: fix logic which reduces credit update messages
+Date: Mon, 22 Jan 2024 15:51:30 -0800
+Message-ID: <20240122235823.801583342@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,75 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-[ Upstream commit 969bc926f04b438676768aeffffffb050e480b62 ]
+[ Upstream commit 93b80887668226180ea5f5349cc728ca6dc700ab ]
 
-Using calculate_bit_shift() to replace _rtl88e_phy_calculate_bit_shift().
-And fix the undefined bitwise shift behavior problem.
+Add one more condition for sending credit update during dequeue from
+stream socket: when number of bytes in the rx queue is smaller than
+SO_RCVLOWAT value of the socket. This is actual for non-default value
+of SO_RCVLOWAT (e.g. not 1) - idea is to "kick" peer to continue data
+transmission, because we need at least SO_RCVLOWAT bytes in our rx
+queue to wake up user for reading data (in corner case it is also
+possible to stuck both tx and rx sides, this is why 'Fixes' is used).
 
-Fixes: f0eb856e0b6c ("rtlwifi: rtl8188ee: Add new driver")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231219065739.1895666-4-suhui@nfschina.com
+Fixes: b89d882dc9fc ("vsock/virtio: reduce credit update messages")
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/realtek/rtlwifi/rtl8188ee/phy.c   | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ net/vmw_vsock/virtio_transport_common.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/phy.c
-index 12d0b3a87af7..0fab3a0c7d49 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/phy.c
-@@ -16,12 +16,6 @@ static u32 _rtl88e_phy_rf_serial_read(struct ieee80211_hw *hw,
- static void _rtl88e_phy_rf_serial_write(struct ieee80211_hw *hw,
- 					enum radio_path rfpath, u32 offset,
- 					u32 data);
--static u32 _rtl88e_phy_calculate_bit_shift(u32 bitmask)
--{
--	u32 i = ffs(bitmask);
--
--	return i ? i - 1 : 32;
--}
- static bool _rtl88e_phy_bb8188e_config_parafile(struct ieee80211_hw *hw);
- static bool _rtl88e_phy_config_mac_with_headerfile(struct ieee80211_hw *hw);
- static bool phy_config_bb_with_headerfile(struct ieee80211_hw *hw,
-@@ -51,7 +45,7 @@ u32 rtl88e_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
- 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
- 		"regaddr(%#x), bitmask(%#x)\n", regaddr, bitmask);
- 	originalvalue = rtl_read_dword(rtlpriv, regaddr);
--	bitshift = _rtl88e_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	returnvalue = (originalvalue & bitmask) >> bitshift;
+diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
+index 6df246b53260..b35306dfcebe 100644
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -557,6 +557,8 @@ virtio_transport_stream_do_dequeue(struct vsock_sock *vsk,
+ 	struct virtio_vsock_sock *vvs = vsk->trans;
+ 	size_t bytes, total = 0;
+ 	struct sk_buff *skb;
++	u32 fwd_cnt_delta;
++	bool low_rx_bytes;
+ 	int err = -EFAULT;
+ 	u32 free_space;
  
- 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
-@@ -74,7 +68,7 @@ void rtl88e_phy_set_bb_reg(struct ieee80211_hw *hw,
- 
- 	if (bitmask != MASKDWORD) {
- 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
--		bitshift = _rtl88e_phy_calculate_bit_shift(bitmask);
-+		bitshift = calculate_bit_shift(bitmask);
- 		data = ((originalvalue & (~bitmask)) | (data << bitshift));
+@@ -600,7 +602,10 @@ virtio_transport_stream_do_dequeue(struct vsock_sock *vsk,
+ 		}
  	}
  
-@@ -99,7 +93,7 @@ u32 rtl88e_phy_query_rf_reg(struct ieee80211_hw *hw,
+-	free_space = vvs->buf_alloc - (vvs->fwd_cnt - vvs->last_fwd_cnt);
++	fwd_cnt_delta = vvs->fwd_cnt - vvs->last_fwd_cnt;
++	free_space = vvs->buf_alloc - fwd_cnt_delta;
++	low_rx_bytes = (vvs->rx_bytes <
++			sock_rcvlowat(sk_vsock(vsk), 0, INT_MAX));
  
+ 	spin_unlock_bh(&vvs->rx_lock);
  
- 	original_value = _rtl88e_phy_rf_serial_read(hw, rfpath, regaddr);
--	bitshift = _rtl88e_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	readback_value = (original_value & bitmask) >> bitshift;
+@@ -610,9 +615,11 @@ virtio_transport_stream_do_dequeue(struct vsock_sock *vsk,
+ 	 * too high causes extra messages. Too low causes transmitter
+ 	 * stalls. As stalls are in theory more expensive than extra
+ 	 * messages, we set the limit to a high value. TODO: experiment
+-	 * with different values.
++	 * with different values. Also send credit update message when
++	 * number of bytes in rx queue is not enough to wake up reader.
+ 	 */
+-	if (free_space < VIRTIO_VSOCK_MAX_PKT_BUF_SIZE)
++	if (fwd_cnt_delta &&
++	    (free_space < VIRTIO_VSOCK_MAX_PKT_BUF_SIZE || low_rx_bytes))
+ 		virtio_transport_send_credit_update(vsk);
  
- 	spin_unlock(&rtlpriv->locks.rf_lock);
-@@ -127,7 +121,7 @@ void rtl88e_phy_set_rf_reg(struct ieee80211_hw *hw,
- 			original_value = _rtl88e_phy_rf_serial_read(hw,
- 								    rfpath,
- 								    regaddr);
--			bitshift = _rtl88e_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data =
- 			    ((original_value & (~bitmask)) |
- 			     (data << bitshift));
+ 	return total;
 -- 
 2.43.0
 
