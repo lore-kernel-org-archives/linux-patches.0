@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682933984D;
-	Tue, 23 Jan 2024 00:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2B83984D;
+	Tue, 23 Jan 2024 00:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970514; cv=none; b=nYwMQB/PyLeLMPMJkUqR9SE72ZRhc0d5Av2QEla7puZOqbJy/Z8zn44qiZAv7rg8Ibl+VnvEMNCbeSggI0otBoQJSUz11qRfRKJN5DWYfybm/T52beRiQebDyPOFmROT9RJhR9Gu0QnWgaDGQ4eLlBjlhmoFsX8lTUMTmoddlnQ=
+	t=1705970518; cv=none; b=gqbt3js7hSlW9j8bq+4A67JeaWPp6DSvmIXddLSWdUxhLdvSjdwSGMg55bPD+2+iE/zxb8B8DN9Dnh0waCnGjc0KAnklxlPW4KJGzPYNU+bIk1vXimOSMsFh8ufbtMsdWwXoQN1KFdBR6HFM/kiZx0J5FniahEE1wpyZ/M/uqO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970514; c=relaxed/simple;
-	bh=nNh6/8KZNYPnJY6hZ0Wy2phbydG3/vI+Iak0J2kJl+E=;
+	s=arc-20240116; t=1705970518; c=relaxed/simple;
+	bh=SDORy2u3CAHHUKgTbtK/z/rwWoHs5y6xpGL+hXZDnRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mF7PbpzOlxy6EK9HFUiQ7ugmSEyZzTelyTkMxaZl70ydBB5c9vRdc5SwMIs2Ykn7zcfKak2Ex2eCXDKkDzpCA6R8uZKQhM6i5SybL/Qe50gbdrpj+ZIWfFMctbpy8vUKq/KGx+L+btgD+FVC7JxNVlDSOsa6Mi4xX7LQJIZly0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QyUutT7Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pzRIi2TwLj3f6X619fxkTpJPVVAeMsYlF7+c63GfXqR3l8TbmO0qUyyPOtCYSWxJ08IqJ4hEZm4lsC1G8lB8ZTqzemGCcReFRlyJLSXxfAVMQ5lfMTpD7QSrnmtPiajDp17/EEMlWtZoEG3a60jOSLQAQDTUFotl7pr861TrLpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0CDejbGn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QyUutT7Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E271AC433C7;
-	Tue, 23 Jan 2024 00:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0CDejbGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F89C43390;
+	Tue, 23 Jan 2024 00:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970514;
-	bh=nNh6/8KZNYPnJY6hZ0Wy2phbydG3/vI+Iak0J2kJl+E=;
+	s=korg; t=1705970518;
+	bh=SDORy2u3CAHHUKgTbtK/z/rwWoHs5y6xpGL+hXZDnRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QyUutT7YQLq1zTcxK0dW087zNmaoi9qMI+0RY2d/NKpBszOBK1uRNeGd4aTcrRknZ
-	 AK5ZEbz5DhhMrxTVaufUQ+qGZ++EsSLZy9KNJdcv6BS90Aak8x30lu+YwSsVGrnoSX
-	 1rUvR1BAlX3ksT0IvA4Z/Id3PWbAaK5aE9MAlH1k=
+	b=0CDejbGname9lOLB8lSnF99sx6YNvYYd5Yl9p60NokSTgqO+VL2f7JqhjbW5NmeB/
+	 N139hAqylvqkRFEj5V/3DJohJ6d/oS2EE4rqS1BjjoweMjWtRWUiXlF9PxwdZC+gp+
+	 VUqculJLRdLVtRGlhbJrqm/3GmugYkydlFBBguSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ovidiu Panait <ovidiu.panait@windriver.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/417] crypto: sahara - fix cbc selftest failure
-Date: Mon, 22 Jan 2024 15:53:28 -0800
-Message-ID: <20240122235753.024968207@linuxfoundation.org>
+Subject: [PATCH 6.1 041/417] crypto: sahara - fix ahash selftest failure
+Date: Mon, 22 Jan 2024 15:53:29 -0800
+Message-ID: <20240122235753.061708674@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -53,90 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit 9f10bc28c0fb676ae58aa3bfa358db8f5de124bb ]
+[ Upstream commit afffcf3db98b9495114b79d5381f8cc3f69476fb ]
 
-The kernel crypto API requires that all CBC implementations update the IV
-buffer to contain the last ciphertext block.
+update() calls should not modify the result buffer, so add an additional
+check for "rctx->last" to make sure that only the final hash value is
+copied into the buffer.
 
-This fixes the following cbc selftest error:
-alg: skcipher: sahara-cbc-aes encryption test failed (wrong output IV) on
-test vector 0, cfg="in-place (one sglist)"
+Fixes the following selftest failure:
+alg: ahash: sahara-sha256 update() used result buffer on test vector 3,
+cfg="init+update+final aligned buffer"
 
-Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
+Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
 Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 33 +++++++++++++++++++++++++++++++--
- 1 file changed, 31 insertions(+), 2 deletions(-)
+ drivers/crypto/sahara.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index 0e30d36b0a71..aa9c45ff0f5a 100644
+index aa9c45ff0f5a..5e0b26f36319 100644
 --- a/drivers/crypto/sahara.c
 +++ b/drivers/crypto/sahara.c
-@@ -149,6 +149,7 @@ struct sahara_ctx {
+@@ -1048,7 +1048,7 @@ static int sahara_sha_process(struct ahash_request *req)
  
- struct sahara_aes_reqctx {
- 	unsigned long mode;
-+	u8 iv_out[AES_BLOCK_SIZE];
- 	struct skcipher_request fallback_req;	// keep at the end
- };
+ 	memcpy(rctx->context, dev->context_base, rctx->context_size);
  
-@@ -542,8 +543,24 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
- 	return -EINVAL;
- }
+-	if (req->result)
++	if (req->result && rctx->last)
+ 		memcpy(req->result, rctx->context, rctx->digest_size);
  
-+static void sahara_aes_cbc_update_iv(struct skcipher_request *req)
-+{
-+	struct crypto_skcipher *skcipher = crypto_skcipher_reqtfm(req);
-+	struct sahara_aes_reqctx *rctx = skcipher_request_ctx(req);
-+	unsigned int ivsize = crypto_skcipher_ivsize(skcipher);
-+
-+	/* Update IV buffer to contain the last ciphertext block */
-+	if (rctx->mode & FLAGS_ENCRYPT) {
-+		sg_pcopy_to_buffer(req->dst, sg_nents(req->dst), req->iv,
-+				   ivsize, req->cryptlen - ivsize);
-+	} else {
-+		memcpy(req->iv, rctx->iv_out, ivsize);
-+	}
-+}
-+
- static int sahara_aes_process(struct skcipher_request *req)
- {
-+	struct crypto_skcipher *skcipher = crypto_skcipher_reqtfm(req);
- 	struct sahara_dev *dev = dev_ptr;
- 	struct sahara_ctx *ctx;
- 	struct sahara_aes_reqctx *rctx;
-@@ -565,8 +582,17 @@ static int sahara_aes_process(struct skcipher_request *req)
- 	rctx->mode &= FLAGS_MODE_MASK;
- 	dev->flags = (dev->flags & ~FLAGS_MODE_MASK) | rctx->mode;
- 
--	if ((dev->flags & FLAGS_CBC) && req->iv)
--		memcpy(dev->iv_base, req->iv, AES_KEYSIZE_128);
-+	if ((dev->flags & FLAGS_CBC) && req->iv) {
-+		unsigned int ivsize = crypto_skcipher_ivsize(skcipher);
-+
-+		memcpy(dev->iv_base, req->iv, ivsize);
-+
-+		if (!(dev->flags & FLAGS_ENCRYPT)) {
-+			sg_pcopy_to_buffer(req->src, sg_nents(req->src),
-+					   rctx->iv_out, ivsize,
-+					   req->cryptlen - ivsize);
-+		}
-+	}
- 
- 	/* assign new context to device */
- 	dev->ctx = ctx;
-@@ -589,6 +615,9 @@ static int sahara_aes_process(struct skcipher_request *req)
- 	dma_unmap_sg(dev->device, dev->in_sg, dev->nb_in_sg,
- 		DMA_TO_DEVICE);
- 
-+	if ((dev->flags & FLAGS_CBC) && req->iv)
-+		sahara_aes_cbc_update_iv(req);
-+
  	return 0;
- }
- 
 -- 
 2.43.0
 
