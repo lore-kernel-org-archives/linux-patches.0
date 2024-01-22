@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D3860252;
-	Tue, 23 Jan 2024 00:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E735A4E1BC;
+	Tue, 23 Jan 2024 00:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970888; cv=none; b=MmGx64aChFKbi1N5GeVkvOpx8b+aHWUQnQzb194dGBcyQWjGLcL9czPVP8XMZxCCJ/Y22Jyczj6eWaTKL/aCZPzkZV5hMKK/A23609lItdimh1iGusHZZXPmQtwgm8f60xvW0SA7H7zXLvFWgVUusRAvXekQ9ohaEOZLifbQOwc=
+	t=1705970890; cv=none; b=B8u4PR6SzHs2JHNH/jeLLrRNAue3OINw078KQZmSm45wKQIRvZIg2Zj5yRWoCKER77dMo9yuz++BFen/6k99PKBYtxSZYdzWOloVvwBA65Gq3ri+ZTuDGLXCpSr/JTk6MrhOOdZkE98ik8Nz+9fdcrXIIYQJF+W53WbG8qsbfpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970888; c=relaxed/simple;
-	bh=oDwL1LKIWfXo+fOgGpHyE6w4e/1Ko1ikrJky2izpYcs=;
+	s=arc-20240116; t=1705970890; c=relaxed/simple;
+	bh=SEE9sJ4ibXlwrun+N+xzM/wku9jDcnERRkHux28eXQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hWlKE2FdqxAdUDp1YYTGp+3IL0jouPUbMP8dqFVK+G21AERMkmdQKDR7FB3GYponPCp+hJT/2wbvsM53SZ1PByDQp5P1aiUmn1lbjePag8j3OsGPGkAjkEM3J1AQrBtfi/RY4roOyNpYfFu+wrxQogCTthWJ9N0YHhH4ZJqZZ+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PerrAPUq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uMMdYwFXjWKyB+95VvfXTPuczPP4E+LF8qlomqECWwRIr5zr0SKz9SOIs1rHX8eujB4fQJvaNmw5TDvVgMj3TkZOEvQrMZLAWefv/ydYQj+c9xT196J8Z55T661vups5gBqWm5PDXARKo7pqUZfGTMuOs6tFPQzLShYpfkKXnpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzdbdJkH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PerrAPUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FDF1C433C7;
-	Tue, 23 Jan 2024 00:48:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzdbdJkH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A3AC433C7;
+	Tue, 23 Jan 2024 00:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970888;
-	bh=oDwL1LKIWfXo+fOgGpHyE6w4e/1Ko1ikrJky2izpYcs=;
+	s=korg; t=1705970889;
+	bh=SEE9sJ4ibXlwrun+N+xzM/wku9jDcnERRkHux28eXQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PerrAPUq4hoj2UX66XGw70VtjELbTwh7TrBirc9aC37LGas+NNMLF6cvJP79SuhF6
-	 XqLFuMh67uCSGFeNJRYveoUuASHDltlt58M3G8luPawPyssYj7LDtxcxQ/ULLSWA+o
-	 GRQsPkO9Wy16aX9lT2ZL5zYOE2J7a6IZC/f2jOnE=
+	b=KzdbdJkH57AHDotEm+eL8PIxuFLUFp7/cx+eBrtXL96QVHP6QO26894SndEV80wxy
+	 ik1ip6NiCedG5fk3eQD4RkvXBTLFa3e4pIATU0EB1ykgDDVBp2oJnp3LAJiuTXFe1x
+	 o2MWwjoZbI/aCFi1xywh+mW+AVgJxZt/yHowWDhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	syzbot+4fad2e57beb6397ab2fc@syzkaller.appspotmail.com,
+	Ziqi Zhao <astrajoan@yahoo.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 133/417] wifi: rtlwifi: add calculate_bit_shift()
-Date: Mon, 22 Jan 2024 15:55:01 -0800
-Message-ID: <20240122235756.432560507@linuxfoundation.org>
+Subject: [PATCH 5.10 039/286] drm/crtc: fix uninitialized variable use
+Date: Mon, 22 Jan 2024 15:55:45 -0800
+Message-ID: <20240122235733.522397654@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +51,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 52221dfddbbfb5b4e029bb2efe9bb7da33ec1e46 ]
+[ Upstream commit 6e455f5dcdd15fa28edf0ffb5b44d3508512dccf ]
 
-There are many same functions like _rtl88e_phy_calculate_bit_shift(),
-_rtl92c_phy_calculate_bit_shift() and so on. And these functions can
-cause undefined bitwise shift behavior. Add calculate_bit_shift() to
-replace them and fix undefined behavior in subsequent patches.
+Commit 3823119b9c2b ("drm/crtc: Fix uninit-value bug in
+drm_mode_setcrtc") was supposed to fix use of an uninitialized variable,
+but introduced another.
 
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231219065739.1895666-2-suhui@nfschina.com
-Stable-dep-of: 969bc926f04b ("wifi: rtlwifi: rtl8188ee: phy: using calculate_bit_shift()")
+num_connectors is only initialized if crtc_req->count_connectors > 0,
+but it's used regardless. Fix it.
+
+Fixes: 3823119b9c2b ("drm/crtc: Fix uninit-value bug in drm_mode_setcrtc")
+Cc: syzbot+4fad2e57beb6397ab2fc@syzkaller.appspotmail.com
+Cc: Ziqi Zhao <astrajoan@yahoo.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231208131238.2924571-1-jani.nikula@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/wifi.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/drm_crtc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/wifi.h b/drivers/net/wireless/realtek/rtlwifi/wifi.h
-index 31f9e9e5c680..0bac788ccd6e 100644
---- a/drivers/net/wireless/realtek/rtlwifi/wifi.h
-+++ b/drivers/net/wireless/realtek/rtlwifi/wifi.h
-@@ -3105,4 +3105,11 @@ static inline struct ieee80211_sta *rtl_find_sta(struct ieee80211_hw *hw,
- 	return ieee80211_find_sta(mac->vif, mac_addr);
- }
+diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
+index b3c0a9ea8c6f..4ed3fc28d4da 100644
+--- a/drivers/gpu/drm/drm_crtc.c
++++ b/drivers/gpu/drm/drm_crtc.c
+@@ -562,7 +562,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
+ 	struct drm_mode_set set;
+ 	uint32_t __user *set_connectors_ptr;
+ 	struct drm_modeset_acquire_ctx ctx;
+-	int ret, i, num_connectors;
++	int ret, i, num_connectors = 0;
  
-+static inline u32 calculate_bit_shift(u32 bitmask)
-+{
-+	if (WARN_ON_ONCE(!bitmask))
-+		return 0;
-+
-+	return __ffs(bitmask);
-+}
- #endif
+ 	if (!drm_core_check_feature(dev, DRIVER_MODESET))
+ 		return -EOPNOTSUPP;
+@@ -700,7 +700,6 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
+ 			goto out;
+ 		}
+ 
+-		num_connectors = 0;
+ 		for (i = 0; i < crtc_req->count_connectors; i++) {
+ 			connector_set[i] = NULL;
+ 			set_connectors_ptr = (uint32_t __user *)(unsigned long)crtc_req->set_connectors_ptr;
 -- 
 2.43.0
 
