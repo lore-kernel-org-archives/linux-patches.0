@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B322913EFF3;
-	Tue, 23 Jan 2024 01:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3906F13EFF3;
+	Tue, 23 Jan 2024 01:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972027; cv=none; b=KrrpqE6nDcJYbz9wLcrHQWO4pJzeqiKKvc9Sdg6kTp8ro3Wr3CYFy6JUAzhz5VRZ+8AaW3GrfAY3b39df/JzRPbGOhH3cVe0037rWdCEH9nYGX/Q89LGrsaKkyC5WWigsERSmPlDv8VHvVLS5J2JwJ/MNvt6vkyQRE/zjGEl9YQ=
+	t=1705972029; cv=none; b=idandVNhwC/Ks/nhOxR9xYZyLJ92UZ5TEylsmauiga2OTty8QIT06tQdx3QkqfwM5ED7S+pwZPuxZ807gjiEeC8XN/dw2V0Na8bjm0Yg50kYKVkAHBdq2btf74LqVLGSpL397VnfkdNSsnSNfmGYgiMI0c2CcNUnU+YTgvqeY5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972027; c=relaxed/simple;
-	bh=nwJ64hJfzOcc/eiy8q2jy3tobS1sbfZxEPNsHvuVN6w=;
+	s=arc-20240116; t=1705972029; c=relaxed/simple;
+	bh=l2cnltviA0N7bUo2o8IOm7thPN6ozJFQ63nmS0L0GeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RIMksJ2DCtZghm5tN8ImK622nfjmlZ9Wo3y3I0Dm/vBn0VgH8VRs0JAe+cYw1Lboup6BgEbwJ1q5znM8laG5t7qxgmWPGpsOcSJPspcLSp5XqflGLez2hvdnq033WFg/FKRobyXdXYbyGbQjM8j/Xsq79Nh26b1RV0ilOFOFglE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e74LYRjh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p4hMJV5wJ50Pqzux2z3BJOFf8h7OcgR8yDeBUrpzawPN60iDhy4U2AUJjBkk59dUeWxNYSytoIPG+yFtShnvEpv15AO43iP1iN1oCQNGhBL0VWvbWX6c6CkToiLMoq2ciXiWf2OFSkAOZpWWA7kE3qc4+JnmNZRjTw7p3k+zpN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLq4Cmvj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e74LYRjh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E73C433F1;
-	Tue, 23 Jan 2024 01:07:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLq4Cmvj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3A2C43390;
+	Tue, 23 Jan 2024 01:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972027;
-	bh=nwJ64hJfzOcc/eiy8q2jy3tobS1sbfZxEPNsHvuVN6w=;
+	s=korg; t=1705972029;
+	bh=l2cnltviA0N7bUo2o8IOm7thPN6ozJFQ63nmS0L0GeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e74LYRjhgSUcdqXtkqbIu4RS3oqimEYgpS3ex+DQZqYo7vrnV0t9I2qV1UeJe0vIJ
-	 BpnIjGOPQI8uhNHuqOxPOHitNA1+PP4EjXWaMs9SxBtNIIyBRyy34nt4Kc/C0XwDdH
-	 YBuCUGh4Z+sqEQenz8xB2+3qMYrrcCtSEmzY+5V8=
+	b=SLq4Cmvjet6+EWU8dqgxxW7jrWCM3WIQW/v/68ahUXs1onyd5XM7HP2wdVkqAVFsH
+	 RHgXqijlLstdZRxWeI1tmd2hzwAVobw6zhFEBBzAtb9YU+kNm0mnyqp/TU+ZN5d6z1
+	 eXVIbtlgmIAKW4J0zCnJFc3vlleUdOUMZZkGApfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ludvig=20P=C3=A4rsson?= <ludvig.parsson@axis.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 276/286] ethtool: netlink: Add missing ethnl_ops_begin/complete
-Date: Mon, 22 Jan 2024 15:59:42 -0800
-Message-ID: <20240122235742.682494261@linuxfoundation.org>
+Subject: [PATCH 6.1 360/417] usb: cdc-acm: return correct error code on unsupported break
+Date: Mon, 22 Jan 2024 15:58:48 -0800
+Message-ID: <20240122235804.290867113@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,66 +44,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ludvig Pärsson <ludvig.parsson@axis.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit f1172f3ee3a98754d95b968968920a7d03fdebcc ]
+[ Upstream commit 66aad7d8d3ec5a3a8ec2023841bcec2ded5f65c9 ]
 
-Accessing an ethernet device that is powered off or clock gated might
-cause the CPU to hang. Add ethnl_ops_begin/complete in
-ethnl_set_features() to protect against this.
+In ACM support for sending breaks to devices is optional.
+If a device says that it doenot support sending breaks,
+the host must respect that.
+Given the number of optional features providing tty operations
+for each combination is not practical and errors need to be
+returned dynamically if unsupported features are requested.
 
-Fixes: 0980bfcd6954 ("ethtool: set netdev features with FEATURES_SET request")
-Signed-off-by: Ludvig Pärsson <ludvig.parsson@axis.com>
-Link: https://lore.kernel.org/r/20240117-etht2-v2-1-1a96b6e8c650@axis.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+In case a device does not support break, we want the tty layer
+to treat that like it treats drivers that statically cannot
+support sending a break. It ignores the inability and does nothing.
+This patch uses EOPNOTSUPP to indicate that.
+
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Fixes: 9e98966c7bb94 ("tty: rework break handling")
+Link: https://lore.kernel.org/r/20231207132639.18250-1-oneukum@suse.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/features.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/tty/tty_io.c        | 3 +++
+ drivers/usb/class/cdc-acm.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/net/ethtool/features.c b/net/ethtool/features.c
-index 1c9f4df273bd..faccab84d865 100644
---- a/net/ethtool/features.c
-+++ b/net/ethtool/features.c
-@@ -235,17 +235,20 @@ int ethnl_set_features(struct sk_buff *skb, struct genl_info *info)
- 	dev = req_info.dev;
- 
- 	rtnl_lock();
-+	ret = ethnl_ops_begin(dev);
-+	if (ret < 0)
-+		goto out_rtnl;
- 	ethnl_features_to_bitmap(old_active, dev->features);
- 	ethnl_features_to_bitmap(old_wanted, dev->wanted_features);
- 	ret = ethnl_parse_bitset(req_wanted, req_mask, NETDEV_FEATURE_COUNT,
- 				 tb[ETHTOOL_A_FEATURES_WANTED],
- 				 netdev_features_strings, info->extack);
- 	if (ret < 0)
--		goto out_rtnl;
-+		goto out_ops;
- 	if (ethnl_bitmap_to_features(req_mask) & ~NETIF_F_ETHTOOL_BITS) {
- 		GENL_SET_ERR_MSG(info, "attempt to change non-ethtool features");
- 		ret = -EINVAL;
--		goto out_rtnl;
-+		goto out_ops;
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index 43be3b42aaaf..aaf77a5616ff 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -2482,6 +2482,9 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
+ 	if (!retval) {
+ 		msleep_interruptible(duration);
+ 		retval = tty->ops->break_ctl(tty, 0);
++	} else if (retval == -EOPNOTSUPP) {
++		/* some drivers can tell only dynamically */
++		retval = 0;
  	}
+ 	tty_write_unlock(tty);
  
- 	/* set req_wanted bits not in req_mask from old_wanted */
-@@ -282,6 +285,8 @@ int ethnl_set_features(struct sk_buff *skb, struct genl_info *info)
- 	if (mod)
- 		netdev_features_change(dev);
+diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
+index 36bf051b345b..2a7eea4e251a 100644
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -892,6 +892,9 @@ static int acm_tty_break_ctl(struct tty_struct *tty, int state)
+ 	struct acm *acm = tty->driver_data;
+ 	int retval;
  
-+out_ops:
-+	ethnl_ops_complete(dev);
- out_rtnl:
- 	rtnl_unlock();
- 	dev_put(dev);
++	if (!(acm->ctrl_caps & USB_CDC_CAP_BRK))
++		return -EOPNOTSUPP;
++
+ 	retval = acm_send_break(acm, state ? 0xffff : 0);
+ 	if (retval < 0)
+ 		dev_dbg(&acm->control->dev,
 -- 
 2.43.0
 
