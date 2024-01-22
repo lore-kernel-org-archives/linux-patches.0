@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F54C15445E;
-	Tue, 23 Jan 2024 00:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A14415445E;
+	Tue, 23 Jan 2024 00:23:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969396; cv=none; b=U2eHh8e5H+/OqMEkGcQTy01pWK/cPfOavQ2MIZjmKnDhuITY1SIwUIiARimdRmonrJGlWZgAlRj/2AqxVcMgwYkArlIjJSCfV2wuEgzNnCJNykEW4hTD97DY/N5+vAJOMFTqXvlYSSY5FnxYBPVyjoDFMXC/ledkx1tY8I2wWxY=
+	t=1705969397; cv=none; b=H8UdrO1+9eufcOH+xB//H0DHUNAqcSU/F10YMMVTq2suPCnf0yjfAI6Ah303RnTxfhl1BIuK3YlPduP45S0DNbpcQIpdKDi2NCTdJO0wBlCklo64XOpmiT7RL35p6gQa2gyRhnnVGUVGLlrxODAbS0KLV3uuVVP8tx2xM/WPdLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969396; c=relaxed/simple;
-	bh=9oROOpqIxO+cilhEEpPg6QOy9/ag9o6l62eaQkBqnsU=;
+	s=arc-20240116; t=1705969397; c=relaxed/simple;
+	bh=fpfSuPRF9xMEUwV96O4LkJNwfJnOe2HplD3DbaCiTUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJka6iE/TOnAHKEBTbMkFwNc3J0zmRxnfS7TcDe5gr8aa9i/pKbvvcw5MOF838SU0hUnWE+8NSw+RzzFov3xafw6SkggyGwq9+CchboBHC3TCM0U9bCeZtksxiOnXbCkdD9FdJxMnShQ7lJhDGLYllWF1G4MhwVoWwEOoggt5vM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dh/Z7czM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VWEaEXjk751pS8arc9hg7oiCRQJ69HzrfpBLjYsGMMchpI3U+JbRVkBRtvif8KUn2+v2+7CZ7v0YEiKQ1ium0AgldMqOBi+LaAdQ+OueAgEOXTr53a7SYr6+XH4+baYZbttmxOhU5TtjY8Y9OWf2V41Jn9/2QlnQXPNMI/fjvD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rB0fZg0B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dh/Z7czM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F96C43399;
-	Tue, 23 Jan 2024 00:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rB0fZg0B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4A2C43394;
+	Tue, 23 Jan 2024 00:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969396;
-	bh=9oROOpqIxO+cilhEEpPg6QOy9/ag9o6l62eaQkBqnsU=;
+	s=korg; t=1705969397;
+	bh=fpfSuPRF9xMEUwV96O4LkJNwfJnOe2HplD3DbaCiTUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dh/Z7czM3/rEJsqmHxOJOSNOAWVoSipTBWh1cRJcAVGdYZCDZqyEwaQj4fgrZiHX4
-	 NlaKNX9k8k/Yw8QT9dFGaDlgA4Z/9FHhjkqbjtAbobmM3we/Nqi/kk+61Ky1a9yHwq
-	 znaqLcMOFG/TozQjtWlqXvhZuCu1bJgPMCO57myg=
+	b=rB0fZg0BNSUYrejYr0cl5UxbDXs0on2+L2zRONvCkbfLGV1Ui4xNmnRiXpHNJ7vlT
+	 bwgwRWqJQKdWLGNELG/wfmFICaTe/K/5oyTsXRHR5g+YojnW+svElXvgOJkw49QDYL
+	 xVWcCsyZWk6rFfvzq7R4Ubgu+fqcOe2nOzxCyR98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 210/641] wifi: rtlwifi: rtl8192cu: using calculate_bit_shift()
-Date: Mon, 22 Jan 2024 15:51:54 -0800
-Message-ID: <20240122235824.521452322@linuxfoundation.org>
+Subject: [PATCH 6.7 219/641] wifi: iwlwifi: fix out of bound copy_from_user
+Date: Mon, 22 Jan 2024 15:52:03 -0800
+Message-ID: <20240122235824.788395977@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,53 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 
-[ Upstream commit f4088c8fcbabadad9dd17d17ae9ba24e9e3221ec ]
+[ Upstream commit cb2dfacb197bed0241fbb4f84bd0995a47f4465e ]
 
-Using calculate_bit_shift() to replace _rtl92c_phy_calculate_bit_shift().
-And fix an undefined bitwise shift behavior problem.
+The driver copies the userspace buffer into an internal NUL
+byte terminated buffer. While doing so, it was reading beyond
+the end of the userspace buffer, overwriting its own NUL
+termination in the process.
 
-Fixes: f0a39ae738d6 ("rtlwifi: rtl8192cu: Add routine phy")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231219065739.1895666-6-suhui@nfschina.com
+Fix this by only copying the correct number of bytes.
+
+Fixes: 3f244876ef73 ("wifi: iwlwifi: make debugfs entries link specific")
+Signed-off-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
+Reviewed-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231219215605.e4913deb2ad4.Idcf6a7e909ff4b7801cd49c2f691f84a2f68eff9@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c
-index a8d9fe269f31..0b8cb7e61fd8 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c
-@@ -32,7 +32,7 @@ u32 rtl92cu_phy_query_rf_reg(struct ieee80211_hw *hw,
- 		original_value = _rtl92c_phy_fw_rf_serial_read(hw,
- 							       rfpath, regaddr);
- 	}
--	bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	readback_value = (original_value & bitmask) >> bitshift;
- 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
- 		"regaddr(%#x), rfpath(%#x), bitmask(%#x), original_value(%#x)\n",
-@@ -56,7 +56,7 @@ void rtl92cu_phy_set_rf_reg(struct ieee80211_hw *hw,
- 			original_value = _rtl92c_phy_rf_serial_read(hw,
- 								    rfpath,
- 								    regaddr);
--			bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data =
- 			    ((original_value & (~bitmask)) |
- 			     (data << bitshift));
-@@ -67,7 +67,7 @@ void rtl92cu_phy_set_rf_reg(struct ieee80211_hw *hw,
- 			original_value = _rtl92c_phy_fw_rf_serial_read(hw,
- 								       rfpath,
- 								       regaddr);
--			bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data =
- 			    ((original_value & (~bitmask)) |
- 			     (data << bitshift));
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+index 329c545f65fd..7737650e56cb 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+@@ -1815,7 +1815,7 @@ static ssize_t _iwl_dbgfs_link_sta_##name##_write(struct file *file,	\
+ 	char buf[buflen] = {};						\
+ 	size_t buf_size = min(count, sizeof(buf) -  1);			\
+ 									\
+-	if (copy_from_user(buf, user_buf, sizeof(buf)))			\
++	if (copy_from_user(buf, user_buf, buf_size))			\
+ 		return -EFAULT;						\
+ 									\
+ 	return _iwl_dbgfs_link_sta_wrap_write(iwl_dbgfs_##name##_write,	\
 -- 
 2.43.0
 
