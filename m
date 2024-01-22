@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177066772E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA8D67726;
 	Tue, 23 Jan 2024 02:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975294; cv=none; b=OEm2h+Eres2NqVKWpeP/7z3XYFsuj2CHbdNbNuQhY6DA1f4XCg4ZQEFz9L5t+KTy8OwPmuKDyzz7/2mSs3UqpChKLRxIbBmVznzPTl3hdWYnxlsgbXFknOXCf6QNmGZKW0OfX2WyVTFPugOwLRzWQ2xeLKbEy+TOag6xSRJX+uw=
+	t=1705975295; cv=none; b=kLy27CAi6Q5wD7C0FkjLT98QXAIAsJtQlXLGlCYwvyaQbKqCi0aXRtLHxLZ4FTKNYomWT7a48eM32RmVVeM9LT896mRU8itPmE0R+3WmFSrCxpOzjD44NFdmlHhl23ZDuc5XWBiDda9y1YpFToTOBfmgUR5Qb31/Fi11l6h8/6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975294; c=relaxed/simple;
-	bh=9z2DoBo3thwganzj2vViWnZCrTEmSTXdpq0UGHoWhC4=;
+	s=arc-20240116; t=1705975295; c=relaxed/simple;
+	bh=xVqTIhZbLYKxRYI8LHyieqHM4S/lBtK+89CpBmkAKfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hZO5XGlAjFtFqTxQ2ahANt2t0kVPjI4nVmuPi3veU2XFAeknufUOrinICK0ISDVk3vB9loslWzywg7KlMcXPdsXhmzKJCxlvlXMJ5K1FTxtpPKF5uz2fJ2RwL8orC9zqpx61X74tFX4QLLuSOuZxxrLO4jqXNkyy2EEkFBgTnxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaUt/hss; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZZaT0H+YP9nwd7+r7xmJP1Ob2wL6JCbcHwSNilNcZEmQe/IIMicfvKHOICFULxjuELSpkiXXJPFQx8BTlftDaIaLR6ikFhCHH/SDo9p5MfNPDPxM9IxYbw8ApCpZMBUA48wjTkMXWjjjVcptr5a3XrpFKD9svnc9DyOA0d6IdoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFSxmuL9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaUt/hss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCBE0C433C7;
-	Tue, 23 Jan 2024 02:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFSxmuL9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD221C43390;
+	Tue, 23 Jan 2024 02:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975293;
-	bh=9z2DoBo3thwganzj2vViWnZCrTEmSTXdpq0UGHoWhC4=;
+	s=korg; t=1705975294;
+	bh=xVqTIhZbLYKxRYI8LHyieqHM4S/lBtK+89CpBmkAKfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WaUt/hssLQMFsv9F9RxvG+u3GQGQtA4TsR7sdLWcsHNVNOcY/qgclR3t1o1aQvVw4
-	 xpr71Z8j+WXuMZ8Rcab0RA24OjoJv9CsmIIYqPNo1L6GzP40BkTiGzk9C5xKSBP44k
-	 IxWFgwQ9TyBimTdteK+6ubpgEVP1WiSBJOxBk2A8=
+	b=jFSxmuL9Zr3S00iHIpsL/Fzj/EwaVwpjCC9+wo6aGP2aPIzffp24TAGG5pti3lx1o
+	 4sSBGS2CRIiwxCkpxnzOgVx4vcCgtjtQsj6lAYiPfqjqh6XSD0FWWPld5LXJiDjt42
+	 rM1fvHOVcNWPWyoASGFc2Low2wt+ou1VGram5AKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Paloma Arellano <quic_parellan@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 258/583] drm/panfrost: Ignore core_mask for poweroff and disable PWRTRANS irq
-Date: Mon, 22 Jan 2024 15:55:09 -0800
-Message-ID: <20240122235819.899467845@linuxfoundation.org>
+Subject: [PATCH 6.6 259/583] drm/msm/dpu: correct clk bit for WB2 block
+Date: Mon, 22 Jan 2024 15:55:10 -0800
+Message-ID: <20240122235819.932421587@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,82 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit a4f5892914ca7709ea6d191f0edace93a5935966 ]
+[ Upstream commit e843ca2f30e630675e2d2a75c96f4844f2854430 ]
 
-Some SoCs may be equipped with a GPU containing two core groups
-and this is exactly the case of Samsung's Exynos 5422 featuring
-an ARM Mali-T628 MP6 GPU: the support for this GPU in Panfrost
-is partial, as this driver currently supports using only one
-core group and that's reflected on all parts of it, including
-the power on (and power off, previously to this patch) function.
+On sc7280 there are two clk bits for WB2: vbif_cli and clk_ctrl. While
+programming the VBIF params of WB, the driver should be toggling the
+former bit, while the sc7180_mdp, sc7280_mdp and sm8250_mdp structs
+list the latter one.
 
-The issue with this is that even though executing the soft reset
-operation should power off all cores unconditionally, on at least
-one platform we're seeing a crash that seems to be happening due
-to an interrupt firing which may be because we are calling power
-transition only on the first core group, leaving the second one
-unchanged, or because ISR execution was pending before entering
-the panfrost_gpu_power_off() function and executed after powering
-off the GPU cores, or all of the above.
+Correct that to ensure proper programming sequence for WB2 on these
+platforms.
 
-Finally, solve this by:
- - Avoid to enable the power transition interrupt on reset; and
- - Ignoring the core_mask and ask the GPU to poweroff both core groups
-
-Fixes: 22aa1a209018 ("drm/panfrost: Really power off GPU cores in panfrost_gpu_power_off()")
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231204114215.54575-2-angelogioacchino.delregno@collabora.com
+Fixes: 255f056181ac ("drm/msm/dpu: sc7180: add missing WB2 clock control")
+Fixes: 3ce166380567 ("drm/msm/dpu: add writeback support for sc7280")
+Fixes: 53324b99bd7b ("drm/msm/dpu: add writeback blocks to the sm8250 DPU catalog")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Tested-by: Paloma Arellano <quic_parellan@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/570185/
+Link: https://lore.kernel.org/r/20231203002437.1291595-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_gpu.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.c b/drivers/gpu/drm/panfrost/panfrost_gpu.c
-index e20619169fe1..eca45b83e4e6 100644
---- a/drivers/gpu/drm/panfrost/panfrost_gpu.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_gpu.c
-@@ -71,7 +71,12 @@ int panfrost_gpu_soft_reset(struct panfrost_device *pfdev)
- 	}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+index 5f9b437b82a6..ee781037ada9 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+@@ -32,7 +32,7 @@ static const struct dpu_mdp_cfg sm8250_mdp = {
+ 		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2bc, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_DMA3] = { .reg_off = 0x2c4, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_REG_DMA] = { .reg_off = 0x2bc, .bit_off = 20 },
+-		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x3b8, .bit_off = 24 },
++		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
+ 	},
+ };
  
- 	gpu_write(pfdev, GPU_INT_CLEAR, GPU_IRQ_MASK_ALL);
--	gpu_write(pfdev, GPU_INT_MASK, GPU_IRQ_MASK_ALL);
-+
-+	/* Only enable the interrupts we care about */
-+	gpu_write(pfdev, GPU_INT_MASK,
-+		  GPU_IRQ_MASK_ERROR |
-+		  GPU_IRQ_PERFCNT_SAMPLE_COMPLETED |
-+		  GPU_IRQ_CLEAN_CACHES_COMPLETED);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+index d030c08636b4..69d3f7e5e095 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+@@ -25,7 +25,7 @@ static const struct dpu_mdp_cfg sc7180_mdp = {
+ 		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2c4, .bit_off = 8 },
+-		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x3b8, .bit_off = 24 },
++		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
+ 	},
+ };
  
- 	return 0;
- }
-@@ -377,11 +382,10 @@ void panfrost_gpu_power_on(struct panfrost_device *pfdev)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+index 3b5061c4402a..9195cb996f44 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+@@ -25,7 +25,7 @@ static const struct dpu_mdp_cfg sc7280_mdp = {
+ 		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2c4, .bit_off = 8 },
+-		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x3b8, .bit_off = 24 },
++		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
+ 	},
+ };
  
- void panfrost_gpu_power_off(struct panfrost_device *pfdev)
- {
--	u64 core_mask = panfrost_get_core_mask(pfdev);
- 	int ret;
- 	u32 val;
- 
--	gpu_write(pfdev, SHADER_PWROFF_LO, pfdev->features.shader_present & core_mask);
-+	gpu_write(pfdev, SHADER_PWROFF_LO, pfdev->features.shader_present);
- 	ret = readl_relaxed_poll_timeout(pfdev->iomem + SHADER_PWRTRANS_LO,
- 					 val, !val, 1, 1000);
- 	if (ret)
-@@ -393,7 +397,7 @@ void panfrost_gpu_power_off(struct panfrost_device *pfdev)
- 	if (ret)
- 		dev_err(pfdev->dev, "tiler power transition timeout");
- 
--	gpu_write(pfdev, L2_PWROFF_LO, pfdev->features.l2_present & core_mask);
-+	gpu_write(pfdev, L2_PWROFF_LO, pfdev->features.l2_present);
- 	ret = readl_poll_timeout(pfdev->iomem + L2_PWRTRANS_LO,
- 				 val, !val, 0, 1000);
- 	if (ret)
 -- 
 2.43.0
 
