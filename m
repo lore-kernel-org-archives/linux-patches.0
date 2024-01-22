@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB052B9B7;
-	Tue, 23 Jan 2024 00:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B065150278;
+	Tue, 23 Jan 2024 00:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970705; cv=none; b=mg4kp8M5KjYeFknU0FnF4V937I63yYQP0mXEln6VJt8EiTlpm5eslhE96SZJwnSb8dXbJF0q5F+iU3lK0LOlBMUCTYjGSEsgECy89S0sTAnlLauiwDxbvx4lZmYk0OGvorZ41eFzDCSvpU4W3unAT8KqP1Aa83N4uMooBkQN9vU=
+	t=1705970707; cv=none; b=chg9mDv2Eg/csCnL2y9kH2nvuHZrb57yxF5ie/ZSGQC2hClvKCAEdNuS9Pe44jllxGjmk9YDg3dOT1/oiYG/fjFIXPTlaihc07WafhPvSKUS6MXmu235/aEoRhHqNXdjLa02wo/zmVb0/aap+NpKglSmC8iIGPzSb8D9iHU2fu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970705; c=relaxed/simple;
-	bh=eIha0vcb5o0T3kMLxzGc846GKBP6x3mhZfuahUHx21E=;
+	s=arc-20240116; t=1705970707; c=relaxed/simple;
+	bh=gFl8a8Zw6dNg4e1/eeyQLjfcQCNj3ikoenuBjhJ5Gq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xu0V2Gywc+Oc1V/+Mv1txw5EsJ/df/wRFeahZy+GEgafsw3gzhdK+GgFaDgf7Za0pcoI7v2mLutajYJqP21VycRj88nvU8qBpXn8Xi/7NZGkPiKCMvtC0v2NH+S9K8bJof1BoXnUhS6nLd1YvTT/4POVwpDv4/EFhXhelqaXjgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJtYcbzR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JjSCSbbbDPoM1S/MR33RqP8PTVu4UTPf/4ycW1+j4s1C5yDn3V4SrRjt4+q3AIMK087u98TpTLkVMKw4nU1/KA2fknDJseJjpJ7SUnVvZ+FUpCP8PATNtDfqmb2kdrpnh0saCdEwbd70hFIDXtE4DIz0BE7hg6dc0cCJ+bRDT30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOUsfSG2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJtYcbzR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B872C433F1;
-	Tue, 23 Jan 2024 00:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOUsfSG2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BC6C433F1;
+	Tue, 23 Jan 2024 00:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970704;
-	bh=eIha0vcb5o0T3kMLxzGc846GKBP6x3mhZfuahUHx21E=;
+	s=korg; t=1705970707;
+	bh=gFl8a8Zw6dNg4e1/eeyQLjfcQCNj3ikoenuBjhJ5Gq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJtYcbzRnoQvvhYYWeMRp0b83hQBpbBp2Xsw/DbqNewZKyPSj+yoOFHVT+SBqNnXV
-	 vp5VvKvBaWSFvdXSX7adE2V6lZTEiAYidzk+9sIcNPRLp1s8X7rm9G9lWxT5DzSWqd
-	 oK4YmJvd/vJV8Fsr6anI7Np9hJmmujhV+BLIZRZo=
+	b=EOUsfSG2a/IBSp5Wnhh0iA8203w6Fm8VhqtTvgMkQ8CcCYTy3o+ATREPmnseSgJGm
+	 vOJqWTjFwcLvnyrWyzq0mNoyAaiflQIVC+0M8zzhHzbfXajbfnCO88xBScGmV7rz0E
+	 NMSvOTfw3cZx2vVCGFvasm3t4X48UYMV1KaHeYDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 003/286] ALSA: hda - Fix speaker and headset mic pin config for CHUWI CoreBook XPro
-Date: Mon, 22 Jan 2024 15:55:09 -0800
-Message-ID: <20240122235732.135624183@linuxfoundation.org>
+Subject: [PATCH 6.1 096/417] bpf: Defer the free of inner map when necessary
+Date: Mon, 22 Jan 2024 15:54:24 -0800
+Message-ID: <20240122235755.015406171@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +47,143 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 7c9caa299335df94ad1c58f70a22f16a540eab60 ]
+[ Upstream commit 876673364161da50eed6b472d746ef88242b2368 ]
 
-This patch corrected the speaker and headset mic pin config to the more
-appropriate values.
+When updating or deleting an inner map in map array or map htab, the map
+may still be accessed by non-sleepable program or sleepable program.
+However bpf_map_fd_put_ptr() decreases the ref-counter of the inner map
+directly through bpf_map_put(), if the ref-counter is the last one
+(which is true for most cases), the inner map will be freed by
+ops->map_free() in a kworker. But for now, most .map_free() callbacks
+don't use synchronize_rcu() or its variants to wait for the elapse of a
+RCU grace period, so after the invocation of ops->map_free completes,
+the bpf program which is accessing the inner map may incur
+use-after-free problem.
 
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://lore.kernel.org/r/20231117170923.106822-1-kovalev@altlinux.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix the free of inner map by invoking bpf_map_free_deferred() after both
+one RCU grace period and one tasks trace RCU grace period if the inner
+map has been removed from the outer map before. The deferment is
+accomplished by using call_rcu() or call_rcu_tasks_trace() when
+releasing the last ref-counter of bpf map. The newly-added rcu_head
+field in bpf_map shares the same storage space with work field to
+reduce the size of bpf_map.
+
+Fixes: bba1dc0b55ac ("bpf: Remove redundant synchronize_rcu.")
+Fixes: 638e4b825d52 ("bpf: Allows per-cpu maps and map-in-map in sleepable programs")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20231204140425.1480317-5-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/linux/bpf.h     |  7 ++++++-
+ kernel/bpf/map_in_map.c | 11 ++++++++---
+ kernel/bpf/syscall.c    | 32 +++++++++++++++++++++++++++-----
+ 3 files changed, 41 insertions(+), 9 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 99ba89723cd3..c7e76bfad84d 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -6797,6 +6797,7 @@ enum {
- 	ALC290_FIXUP_SUBWOOFER_HSJACK,
- 	ALC269_FIXUP_THINKPAD_ACPI,
- 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
-+	ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO,
- 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
- 	ALC255_FIXUP_ASUS_MIC_NO_PRESENCE,
- 	ALC255_FIXUP_DELL1_MIC_NO_PRESENCE,
-@@ -7094,6 +7095,14 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc269_fixup_pincfg_U7x7_headset_mic,
- 	},
-+	[ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x18, 0x03a19020 }, /* headset mic */
-+			{ 0x1b, 0x90170150 }, /* speaker */
-+			{ }
-+		},
-+	},
- 	[ALC269_FIXUP_AMIC] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -9320,6 +9329,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 47420a973e58..c04a61ffac8a 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -237,7 +237,11 @@ struct bpf_map {
+ 	 */
+ 	atomic64_t refcnt ____cacheline_aligned;
+ 	atomic64_t usercnt;
+-	struct work_struct work;
++	/* rcu is used before freeing and work is only used during freeing */
++	union {
++		struct work_struct work;
++		struct rcu_head rcu;
++	};
+ 	struct mutex freeze_mutex;
+ 	atomic64_t writecnt;
+ 	/* 'Ownership' of program-containing map is claimed by the first program
+@@ -253,6 +257,7 @@ struct bpf_map {
+ 	} owner;
+ 	bool bypass_spec_v1;
+ 	bool frozen; /* write-once; write-protected by freeze_mutex */
++	bool free_after_mult_rcu_gp;
+ 	s64 __percpu *elem_count;
+ };
+ 
+diff --git a/kernel/bpf/map_in_map.c b/kernel/bpf/map_in_map.c
+index 47ecc4818c93..141f3332038c 100644
+--- a/kernel/bpf/map_in_map.c
++++ b/kernel/bpf/map_in_map.c
+@@ -117,10 +117,15 @@ void *bpf_map_fd_get_ptr(struct bpf_map *map,
+ 
+ void bpf_map_fd_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
+ {
+-	/* ptr->ops->map_free() has to go through one
+-	 * rcu grace period by itself.
++	struct bpf_map *inner_map = ptr;
++
++	/* The inner map may still be used by both non-sleepable and sleepable
++	 * bpf program, so free it after one RCU grace period and one tasks
++	 * trace RCU grace period.
+ 	 */
+-	bpf_map_put(ptr);
++	if (need_defer)
++		WRITE_ONCE(inner_map->free_after_mult_rcu_gp, true);
++	bpf_map_put(inner_map);
+ }
+ 
+ u32 bpf_map_fd_sys_lookup_elem(void *ptr)
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 0c8b7733573e..f019c0821c70 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -628,6 +628,28 @@ static void bpf_map_put_uref(struct bpf_map *map)
+ 	}
+ }
+ 
++static void bpf_map_free_in_work(struct bpf_map *map)
++{
++	INIT_WORK(&map->work, bpf_map_free_deferred);
++	/* Avoid spawning kworkers, since they all might contend
++	 * for the same mutex like slab_mutex.
++	 */
++	queue_work(system_unbound_wq, &map->work);
++}
++
++static void bpf_map_free_rcu_gp(struct rcu_head *rcu)
++{
++	bpf_map_free_in_work(container_of(rcu, struct bpf_map, rcu));
++}
++
++static void bpf_map_free_mult_rcu_gp(struct rcu_head *rcu)
++{
++	if (rcu_trace_implies_rcu_gp())
++		bpf_map_free_rcu_gp(rcu);
++	else
++		call_rcu(rcu, bpf_map_free_rcu_gp);
++}
++
+ /* decrement map refcnt and schedule it for freeing via workqueue
+  * (unrelying map implementation ops->map_free() might sleep)
+  */
+@@ -637,11 +659,11 @@ static void __bpf_map_put(struct bpf_map *map, bool do_idr_lock)
+ 		/* bpf_map_free_id() must be called first */
+ 		bpf_map_free_id(map, do_idr_lock);
+ 		btf_put(map->btf);
+-		INIT_WORK(&map->work, bpf_map_free_deferred);
+-		/* Avoid spawning kworkers, since they all might contend
+-		 * for the same mutex like slab_mutex.
+-		 */
+-		queue_work(system_unbound_wq, &map->work);
++
++		if (READ_ONCE(map->free_after_mult_rcu_gp))
++			call_rcu_tasks_trace(&map->rcu, bpf_map_free_mult_rcu_gp);
++		else
++			bpf_map_free_in_work(map);
+ 	}
+ }
+ 
 -- 
 2.43.0
 
