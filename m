@@ -1,49 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F59777F12;
-	Tue, 23 Jan 2024 02:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B39377636;
+	Tue, 23 Jan 2024 02:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975532; cv=none; b=UE1LlpTWK9VRMgDXYKUX/InTH6uED1xtYSiXdAMWCsBElNMmwrQvKfRYfLv+Vx9wzNcJfN5B9Gnln4xbVdgaR9IMlblX7eGmUVAmyzLKNRPuCUq1w23wYpoI2zhBy13OrdtPFecymCeOLdLQnxWOZG5AMexOazWjSksYz6dKQbY=
+	t=1705975533; cv=none; b=OWEzTi9G9hVdTlm2L52OLhnRCsWvrCtmXl+czlehMU8lsZRppBVnyM/fxXlJD2wCizvK4xuObuOLMuIH58opKe67QO0VemijlAjkHbijXpCnywX955PuwsTrVvBQDsB3flxyd7A84PcLswpxm7F5Uc/QLgzaES/u+apDwQAaQDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975532; c=relaxed/simple;
-	bh=fPM5h4ddzmu4fU41s0q6g/BSe2e1Uz+0Xk12ntLqIfU=;
+	s=arc-20240116; t=1705975533; c=relaxed/simple;
+	bh=LlMxxlXdPbAT2WUKUPWYDzVw9xjoihs9RvYjp393tRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLlwDXkE2S1x/itwgy868/yY1IkV2sV4Yz6G0PPW2ALebQak83JLSHNDU5tKuFFqre4S+WFWNe9iM+0w7GrO4MerrOUzBhrkE0CARWLoCLiXBXYJsjR6fU8qXIf0dUH3DTDjhQDrysgUdVPHl6P7H/gt872G2ckVTaH7hCRGDKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efY0voa7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G+Pc8+8SrwbhvvE4wUcyUjxu2AkLvFRbMk4XSu41ZUXaLT3qDqI804jP4Z0KmLVB6tyqdONsHOltyH5TJR755wIm/SMrrAqo4IfHfi1CV/D67A6TOoCMQulStW9xmytTzcOOzaeudqqeRvbpvGxVNwbhqUGCs+z1PyMAY28YP0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mCrc/nM0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efY0voa7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A7AC433C7;
-	Tue, 23 Jan 2024 02:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCrc/nM0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F187AC43390;
+	Tue, 23 Jan 2024 02:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975532;
-	bh=fPM5h4ddzmu4fU41s0q6g/BSe2e1Uz+0Xk12ntLqIfU=;
+	s=korg; t=1705975533;
+	bh=LlMxxlXdPbAT2WUKUPWYDzVw9xjoihs9RvYjp393tRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=efY0voa74ksZLviChFOsNw/qvHFyex3uFY39AYMbTkgQeXJbZZcsmeNT+nE6jCdw6
-	 6jvSACAP3Rd77FwFpirhV0igU8jLT7YnE4F8bIgLrr2795fQoENtooU4sfpLr+35mq
-	 GhDYRhsRj3dpSmAQg/HzMy7yEkISIyF295FCLOck=
+	b=mCrc/nM0TNgfuXW997jueuFLyVUMoluRNzi1417uhlVPaAVq15cM6bMHneu/hulGV
+	 zRsImYqqXnkHarDaXXgb7OShcnT4c3rEWxVMC2tUb1GHTDwqHXwL/jU77ePM8F5j0Z
+	 JuVMxpINcMoQzqfCO6Ig940KkubIYjduTIJvgQRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Junhao He <hejunhao3@huawei.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	linuxarm@huawei.com,
+	Leo Yan <leo.yan@linaro.org>,
+	Veronika Molnarova <vmolnaro@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Michael Petlan <mpetlan@redhat.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 483/583] perf header: Fix one memory leakage in perf_event__fprintf_event_update()
-Date: Mon, 22 Jan 2024 15:58:54 -0800
-Message-ID: <20240122235826.777843560@linuxfoundation.org>
+Subject: [PATCH 6.6 466/583] perf test record user-regs: Fix mask for vg register
+Date: Mon, 22 Jan 2024 15:58:37 -0800
+Message-ID: <20240122235826.252874630@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -62,54 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Veronika Molnarova <vmolnaro@redhat.com>
 
-[ Upstream commit 813900d19b923fc1b241c1ce292472f68066092b ]
+[ Upstream commit 28b01743ca752cea5ab182297d8b912b22f2a2d1 ]
 
-When dump the raw trace by `perf report -D` ASan reports a memory
-leakage in perf_event__fprintf_event_update().
+The 'vg' register for arm64 shows up in --user_regs as available when
+masking the variable AT_HWCAP with 1 << 22 returns '1' as done in
+perf_regs.c.
 
-It shows that we allocated a temporary cpumap for dumping the CPUs but
-doesn't release it and it's not used elsewhere. Fix this by free the
-cpumap after the dumping.
+However, in subtests for support of SVE, the check for the 'vg' register
+is done by masking the variable AT_HWCAP with the value 0x200000 which
+is equals to 1 << 21 instead of 1 << 22.
 
-Fixes: c853f9394b7bc189 ("perf tools: Add perf_event__fprintf_event_update function")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Junhao He <hejunhao3@huawei.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: linuxarm@huawei.com
-Link: https://lore.kernel.org/r/20231207081635.8427-2-yangyicong@huawei.com
+This results in inconsistencies on certain systems where the test
+expects that the 'vg' register is not operational when it is, and
+vice-versa.
+
+During the testing on a machine that the test expected not to have the
+'vg' register available, 'perf record' with the option --user-regs
+showed records for the 'vg' register together with all of the others,
+which means that the mask for the subtest of perf_event_attr is off by
+one.
+
+Change the value of the mask from 0x200000 to 0x400000 to correct it.
+
+Fixes: 9440ebdc333dd12e ("perf test arm64: Add attr tests for new VG register")
+Reviewed-by: Leo Yan <leo.yan@linaro.org>
+Signed-off-by: Veronika Molnarova <vmolnaro@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Michael Petlan <mpetlan@redhat.com>
+Link: https://lore.kernel.org/r/20231201194617.13012-1-vmolnaro@redhat.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/header.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64 | 2 +-
+ tools/perf/tests/attr/test-record-user-regs-sve-aarch64    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index 41032243774e..f6035c219b41 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -4363,9 +4363,10 @@ size_t perf_event__fprintf_event_update(union perf_event *event, FILE *fp)
- 		ret += fprintf(fp, "... ");
+diff --git a/tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64 b/tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64
+index fbb065842880..bed765450ca9 100644
+--- a/tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64
++++ b/tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64
+@@ -6,4 +6,4 @@ args    = --no-bpf-event --user-regs=vg kill >/dev/null 2>&1
+ ret     = 129
+ test_ret = true
+ arch    = aarch64
+-auxv    = auxv["AT_HWCAP"] & 0x200000 == 0
++auxv    = auxv["AT_HWCAP"] & 0x400000 == 0
+diff --git a/tools/perf/tests/attr/test-record-user-regs-sve-aarch64 b/tools/perf/tests/attr/test-record-user-regs-sve-aarch64
+index c598c803221d..a65113cd7311 100644
+--- a/tools/perf/tests/attr/test-record-user-regs-sve-aarch64
++++ b/tools/perf/tests/attr/test-record-user-regs-sve-aarch64
+@@ -6,7 +6,7 @@ args    = --no-bpf-event --user-regs=vg kill >/dev/null 2>&1
+ ret     = 1
+ test_ret = true
+ arch    = aarch64
+-auxv    = auxv["AT_HWCAP"] & 0x200000 == 0x200000
++auxv    = auxv["AT_HWCAP"] & 0x400000 == 0x400000
+ kernel_since = 6.1
  
- 		map = cpu_map__new_data(&ev->cpus.cpus);
--		if (map)
-+		if (map) {
- 			ret += cpu_map__fprintf(map, fp);
--		else
-+			perf_cpu_map__put(map);
-+		} else
- 			ret += fprintf(fp, "failed to get cpus\n");
- 		break;
- 	default:
+ [event:base-record]
 -- 
 2.43.0
 
