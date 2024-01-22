@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6832C4E1AD;
-	Tue, 23 Jan 2024 01:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48DC657BD;
+	Tue, 23 Jan 2024 01:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971626; cv=none; b=DIk9hdSfQAoLMhQTrzesG+1vFwRDz2toSiRirSJ9ZnsEeuGwiE6DDC3Nw9vUgXz/nPxU6UyvbAI9MLMeH7wUwBkz2osJfW8HGOZ77fpbNKd2nGoKG4zaIpv4q5WYUsOhANNZ042Y4uq9rihHKt5lrP/qgA0yxFsEFGEBNP6y7XY=
+	t=1705971628; cv=none; b=NtPsiB3dXAneobYpD50zg7U7jtC3T+pNCnOSD7t60rEw5COPiCjJpwRBHQTQoO+iu3eMmI+fQ6B7+XYbrUmYN7gMGNCFTiaGUg2Csb0sKg1aHBd5KUDLPQtelYqCfAfGVaiWuZCgF820HJi9eEBMVR/tUXCwu/gd5PsYYIaFbU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971626; c=relaxed/simple;
-	bh=jc7j0ggAkd2cP3evenRSycxGSVMytnEwI/IkUpXO9JE=;
+	s=arc-20240116; t=1705971628; c=relaxed/simple;
+	bh=qFZVtGIpI2vOrd+6MmIGVm3L5m8b320V5W7u7fXg0tM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HKG8xpCrhv7KKfX+EltHMSqphWWUsdFSuGeFoVzfMtw2weP/Z1D0zBcPDNyxshCwSuCAmZwkr+NZ0hI3XCona34frqcF1udYbasFXO3enV3r3jwsg0HsYFQNq0EZS/ypyMBrP04ELqJbBb8XaIAW77dN/omYLwUHGXIb2txLoMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxOFZn9r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PzvcfDRz1s0dxfMkfyTkEvtBFG7coa+w7WvUyc7sWi4Hm+CS1lGxg1BGvqQQeCFEOfS6eJwjeDgI+4lGsI2ypu96ADAncD/O9uyKncd6/7b2tJN0OdCrJqp5ufo8WFgICRpG3M1oFq8cne3EIQow1hKD36TDDqEEGuV3DOCoBIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YIhEpaAH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxOFZn9r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F052CC433C7;
-	Tue, 23 Jan 2024 01:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YIhEpaAH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B35C433C7;
+	Tue, 23 Jan 2024 01:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971626;
-	bh=jc7j0ggAkd2cP3evenRSycxGSVMytnEwI/IkUpXO9JE=;
+	s=korg; t=1705971628;
+	bh=qFZVtGIpI2vOrd+6MmIGVm3L5m8b320V5W7u7fXg0tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxOFZn9rEA7XQwnZUP0qo3NS5K5BvE/B9aq7G+NcDNbiKXVU4zlI8ihZ+fhqZjAQY
-	 u+zxQJsypcbzatmKTt/wAH3wNhPtZdKh+x80+h1DeMS3VLxwPld2lwbRayFeDpdnfB
-	 j2OtcW36zQ0C23cAXllqjz/08c/1Zdmlyfu7JcpY=
+	b=YIhEpaAHk70RdDQ3wfVpMzmpV0N+ZO9zP6EsVqngPCJSgmCRi93oHGt1iSzNOaQcg
+	 9z4NZAwswwKNq624CyfsEU2jSUTDSnSpGqkVfdxPYlcOmC8+kt2+7vEF4T6yyqi1Ck
+	 cLO+NdoDiyeQX6UkuyxbcspVU4dy6wxj6bUxO7PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 188/286] clk: fixed-rate: fix clk_hw_register_fixed_rate_with_accuracy_parent_hw
-Date: Mon, 22 Jan 2024 15:58:14 -0800
-Message-ID: <20240122235739.368847921@linuxfoundation.org>
+	Yo-Jung Lin <leo.lin@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 281/417] ALSA: hda/realtek: Enable mute/micmute LEDs and limit mic boost on HP ZBook
+Date: Mon, 22 Jan 2024 15:57:29 -0800
+Message-ID: <20240122235801.572902023@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,46 +44,37 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Théo Lebrun <theo.lebrun@bootlin.com>
+From: Yo-Jung Lin <leo.lin@canonical.com>
 
-[ Upstream commit ee0cf5e07f44a10fce8f1bfa9db226c0b5ecf880 ]
+commit b018cee7369896c7a15bfdbe88f168f3dbd8ba27 upstream.
 
-Add missing comma and remove extraneous NULL argument. The macro is
-currently used by no one which explains why the typo slipped by.
+On some HP ZBooks, the audio LEDs can be enabled by
+ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF. So use it accordingly.
 
-Fixes: 2d34f09e79c9 ("clk: fixed-rate: Add support for specifying parents via DT/pointers")
-Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Link: https://lore.kernel.org/r/20231218-mbly-clk-v1-1-44ce54108f06@bootlin.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Yo-Jung Lin <leo.lin@canonical.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240116020722.27236-1-leo.lin@canonical.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/clk-provider.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-index 76f02b214f39..6fa85be64b89 100644
---- a/include/linux/clk-provider.h
-+++ b/include/linux/clk-provider.h
-@@ -434,8 +434,8 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
-  */
- #define clk_hw_register_fixed_rate_with_accuracy_parent_hw(dev, name,	      \
- 		parent_hw, flags, fixed_rate, fixed_accuracy)		      \
--	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, (parent_hw)   \
--				     NULL, NULL, (flags), (fixed_rate),	      \
-+	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, (parent_hw),  \
-+				     NULL, (flags), (fixed_rate),	      \
- 				     (fixed_accuracy), 0, false)
- /**
-  * clk_hw_register_fixed_rate_with_accuracy_parent_data - register fixed-rate
--- 
-2.43.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9721,6 +9721,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8c71, "HP EliteBook 845 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c72, "HP EliteBook 865 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c96, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
++	SND_PCI_QUIRK(0x103c, 0x8c97, "HP ZBook", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8ca4, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ca7, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8cf5, "HP ZBook Studio 16", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
 
 
