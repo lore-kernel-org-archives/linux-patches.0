@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BAC13540A;
-	Tue, 23 Jan 2024 00:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AAF33097;
+	Tue, 23 Jan 2024 00:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969640; cv=none; b=dGqKdCpFRcjA8KwzBirs5U0qDrz+8ZiRC6++ia/vVIB+7PpolBFrKPdAFGvfX7KHB/fpENCjacgO4NGli2vAKTHOyCzjKYumquH8mcCmV6/ar4DpWxqI73YEjay/8qgsmbXLfEH/1UmXudK/1xK4WOkrzoZzI1w8cQl0PCyA9ac=
+	t=1705969642; cv=none; b=sA6lsnpBg+IiOenK0Fg5SrwMPNiBsN/aSfuZ6OqJ5axojJnGBBSQ/AILU0PtJnNaggV1OKoSbCEosK+/HvxQG+OpssPh7r8BZ/N3+osyQL6YWytvVZx7YlZaF1TZRnBZjVv2lgcSWPuofrEodPNCmZ3qB6WX9gN8F25Wufa+OF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969640; c=relaxed/simple;
-	bh=TgT/cH4jJmgzg3c6kUFIDwJcr0OfGDJpSrvUm3U7iac=;
+	s=arc-20240116; t=1705969642; c=relaxed/simple;
+	bh=PVG73AvuCnyiJUOw285dfhEpsVT8d7JJTAWFVIqGHV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GLt/G/eqd7bjjTo31ZI6BJs4oQR6ZcNsQ44YUxe53FzxzVj3jzx11CIkpEYzAw2YkZLMmEavIdF2Hc1UYXPtLIx5+77VzisbuLnBUUWSddEnFg6kFs6OrtL/+n3NKf4T+vx6LsgkB/1E82SkDIKNgq8F7Oz9rEUec5caCnstdnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNAxs0Lt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PVqjVQHMthB+Z4KjH32uUSURIS4n2U6Rtd6y4jFNtu2gPWCETFJi5B5xVU0lPd3z+Hb5xeNQl3zfPR2DgnAz5g+IMI8KlAufsuSQPqHaCj3rYRBt64UyIOYaCC9FeRdzieVdlBXIEnVoCIx+mdWc04lQ7L2ZkXXSj8UQEJHz7SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPgh3PwU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNAxs0Lt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015D7C433C7;
-	Tue, 23 Jan 2024 00:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPgh3PwU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58BFC433F1;
+	Tue, 23 Jan 2024 00:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969640;
-	bh=TgT/cH4jJmgzg3c6kUFIDwJcr0OfGDJpSrvUm3U7iac=;
+	s=korg; t=1705969641;
+	bh=PVG73AvuCnyiJUOw285dfhEpsVT8d7JJTAWFVIqGHV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TNAxs0Ltp+iZkrQOYgZtHUj1J3kirBt6x0Q/Zh8z22CIm8xqHL6UU6tp3enXw12O/
-	 ri0ZK6kAIvULFViV2VR5bDW0cbGE+cIJrxMCD4b7nN7ZBczi3dWAFHbfHfQYslv0th
-	 TXUJGYXfo3aS4qsKE+bA1eppXup0HBIPFoWlkABc=
+	b=pPgh3PwUcs6kb0NHmoZijKhkBg97V4+/TW9ubsOAA+4/mUdHqrAM/ktJkmjK9lSXp
+	 XPqxkwaYzzzUkUSbhnAWwBVW8q39Ry03vw/9kcUjHYJRr0PbswzqafNU7NmzkhSg7X
+	 9tmK3vtPc11Dh2YXb1cnpJVAmoSy2wa2o0FMw7Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Jing Xia <jing.xia@unisoc.com>,
-	Xuewen Yan <xuewen.yan@unisoc.com>
-Subject: [PATCH 6.7 377/641] class: fix use-after-free in class_register()
-Date: Mon, 22 Jan 2024 15:54:41 -0800
-Message-ID: <20240122235829.756276267@linuxfoundation.org>
+	Andrea Righi <andrea.righi@canonical.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.7 378/641] kernfs: convert kernfs_idr_lock to an irq safe raw spinlock
+Date: Mon, 22 Jan 2024 15:54:42 -0800
+Message-ID: <20240122235829.791311445@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,76 +51,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jing Xia <jing.xia@unisoc.com>
+From: Andrea Righi <andrea.righi@canonical.com>
 
-commit 93ec4a3b76404bce01bd5c9032bef5df6feb1d62 upstream.
+commit c312828c37a72fe2d033a961c47c227b0767e9f8 upstream.
 
-The lock_class_key is still registered and can be found in
-lock_keys_hash hlist after subsys_private is freed in error
-handler path.A task who iterate over the lock_keys_hash
-later may cause use-after-free.So fix that up and unregister
-the lock_class_key before kfree(cp).
+bpf_cgroup_from_id() is basically a wrapper to cgroup_get_from_id(),
+that is relying on kernfs to determine the right cgroup associated to
+the target id.
 
-On our platform, a driver fails to kset_register because of
-creating duplicate filename '/class/xxx'.With Kasan enabled,
-it prints a invalid-access bug report.
+As a kfunc, it has the potential to be attached to any function through
+BPF, particularly in contexts where certain locks are held.
 
-KASAN bug report:
+However, kernfs is not using an irq safe spinlock for kernfs_idr_lock,
+that means any kernfs function that is acquiring this lock can be
+interrupted and potentially hit bpf_cgroup_from_id() in the process,
+triggering a deadlock.
 
-BUG: KASAN: invalid-access in lockdep_register_key+0x19c/0x1bc
-Write of size 8 at addr 15ffff808b8c0368 by task modprobe/252
-Pointer tag: [15], memory tag: [fe]
+For example, it is really easy to trigger a lockdep splat between
+kernfs_idr_lock and rq->_lock, attaching a small BPF program to
+__set_cpus_allowed_ptr_locked() that just calls bpf_cgroup_from_id():
 
-CPU: 7 PID: 252 Comm: modprobe Tainted: G        W
- 6.6.0-mainline-maybe-dirty #1
+ =====================================================
+ WARNING: HARDIRQ-safe -> HARDIRQ-unsafe lock order detected
+ 6.7.0-rc7-virtme #5 Not tainted
+ -----------------------------------------------------
+ repro/131 [HC0[0]:SC0[0]:HE0:SE1] is trying to acquire:
+ ffffffffb2dc4578 (kernfs_idr_lock){+.+.}-{2:2}, at: kernfs_find_and_get_node_by_id+0x1d/0x80
 
-Call trace:
-dump_backtrace+0x1b0/0x1e4
-show_stack+0x2c/0x40
-dump_stack_lvl+0xac/0xe0
-print_report+0x18c/0x4d8
-kasan_report+0xe8/0x148
-__hwasan_store8_noabort+0x88/0x98
-lockdep_register_key+0x19c/0x1bc
-class_register+0x94/0x1ec
-init_module+0xbc/0xf48 [rfkill]
-do_one_initcall+0x17c/0x72c
-do_init_module+0x19c/0x3f8
-...
-Memory state around the buggy address:
-ffffff808b8c0100: 8a 8a 8a 8a 8a 8a 8a 8a 8a 8a 8a 8a 8a 8a 8a 8a
-ffffff808b8c0200: 8a 8a 8a 8a 8a 8a 8a 8a fe fe fe fe fe fe fe fe
->ffffff808b8c0300: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-                                     ^
-ffffff808b8c0400: 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03
+ and this task is already holding:
+ ffff911cbecaf218 (&rq->__lock){-.-.}-{2:2}, at: task_rq_lock+0x50/0xc0
+ which would create a new lock dependency:
+  (&rq->__lock){-.-.}-{2:2} -> (kernfs_idr_lock){+.+.}-{2:2}
 
-As CONFIG_KASAN_GENERIC is not set, Kasan reports invalid-access
-not use-after-free here.In this case, modprobe is manipulating
-the corrupted lock_keys_hash hlish where lock_class_key is already
-freed before.
+ but this new dependency connects a HARDIRQ-irq-safe lock:
+  (&rq->__lock){-.-.}-{2:2}
 
-It's worth noting that this only can happen if lockdep is enabled,
-which is not true for normal system.
+ ... which became HARDIRQ-irq-safe at:
+   lock_acquire+0xbf/0x2b0
+   _raw_spin_lock_nested+0x2e/0x40
+   scheduler_tick+0x5d/0x170
+   update_process_times+0x9c/0xb0
+   tick_periodic+0x27/0xe0
+   tick_handle_periodic+0x24/0x70
+   __sysvec_apic_timer_interrupt+0x64/0x1a0
+   sysvec_apic_timer_interrupt+0x6f/0x80
+   asm_sysvec_apic_timer_interrupt+0x1a/0x20
+   memcpy+0xc/0x20
+   arch_dup_task_struct+0x15/0x30
+   copy_process+0x1ce/0x1eb0
+   kernel_clone+0xac/0x390
+   kernel_thread+0x6f/0xa0
+   kthreadd+0x199/0x230
+   ret_from_fork+0x31/0x50
+   ret_from_fork_asm+0x1b/0x30
 
-Fixes: dcfbb67e48a2 ("driver core: class: use lock_class_key already present in struct subsys_private")
+ to a HARDIRQ-irq-unsafe lock:
+  (kernfs_idr_lock){+.+.}-{2:2}
+
+ ... which became HARDIRQ-irq-unsafe at:
+ ...
+   lock_acquire+0xbf/0x2b0
+   _raw_spin_lock+0x30/0x40
+   __kernfs_new_node.isra.0+0x83/0x280
+   kernfs_create_root+0xf6/0x1d0
+   sysfs_init+0x1b/0x70
+   mnt_init+0xd9/0x2a0
+   vfs_caches_init+0xcf/0xe0
+   start_kernel+0x58a/0x6a0
+   x86_64_start_reservations+0x18/0x30
+   x86_64_start_kernel+0xc5/0xe0
+   secondary_startup_64_no_verify+0x178/0x17b
+
+ other info that might help us debug this:
+
+  Possible interrupt unsafe locking scenario:
+
+        CPU0                    CPU1
+        ----                    ----
+   lock(kernfs_idr_lock);
+                                local_irq_disable();
+                                lock(&rq->__lock);
+                                lock(kernfs_idr_lock);
+   <Interrupt>
+     lock(&rq->__lock);
+
+  *** DEADLOCK ***
+
+Prevent this deadlock condition converting kernfs_idr_lock to a raw irq
+safe spinlock.
+
+The performance impact of this change should be negligible and it also
+helps to prevent similar deadlock conditions with any other subsystems
+that may depend on kernfs.
+
+Fixes: 332ea1f697be ("bpf: Add bpf_cgroup_from_id() kfunc")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Jing Xia <jing.xia@unisoc.com>
-Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
-Link: https://lore.kernel.org/r/20231220024603.186078-1-jing.xia@unisoc.com
+Signed-off-by: Andrea Righi <andrea.righi@canonical.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20231229074916.53547-1-andrea.righi@canonical.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/class.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/kernfs/dir.c |   23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
---- a/drivers/base/class.c
-+++ b/drivers/base/class.c
-@@ -213,6 +213,7 @@ int class_register(const struct class *c
- 	return 0;
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -27,7 +27,7 @@ static DEFINE_RWLOCK(kernfs_rename_lock)
+  */
+ static DEFINE_SPINLOCK(kernfs_pr_cont_lock);
+ static char kernfs_pr_cont_buf[PATH_MAX];	/* protected by pr_cont_lock */
+-static DEFINE_SPINLOCK(kernfs_idr_lock);	/* root->ino_idr */
++static DEFINE_RAW_SPINLOCK(kernfs_idr_lock);	/* root->ino_idr */
  
- err_out:
-+	lockdep_unregister_key(key);
- 	kfree(cp);
- 	return error;
+ #define rb_to_kn(X) rb_entry((X), struct kernfs_node, rb)
+ 
+@@ -539,6 +539,7 @@ void kernfs_put(struct kernfs_node *kn)
+ {
+ 	struct kernfs_node *parent;
+ 	struct kernfs_root *root;
++	unsigned long flags;
+ 
+ 	if (!kn || !atomic_dec_and_test(&kn->count))
+ 		return;
+@@ -563,9 +564,9 @@ void kernfs_put(struct kernfs_node *kn)
+ 		simple_xattrs_free(&kn->iattr->xattrs, NULL);
+ 		kmem_cache_free(kernfs_iattrs_cache, kn->iattr);
+ 	}
+-	spin_lock(&kernfs_idr_lock);
++	raw_spin_lock_irqsave(&kernfs_idr_lock, flags);
+ 	idr_remove(&root->ino_idr, (u32)kernfs_ino(kn));
+-	spin_unlock(&kernfs_idr_lock);
++	raw_spin_unlock_irqrestore(&kernfs_idr_lock, flags);
+ 	kmem_cache_free(kernfs_node_cache, kn);
+ 
+ 	kn = parent;
+@@ -607,6 +608,7 @@ static struct kernfs_node *__kernfs_new_
+ 	struct kernfs_node *kn;
+ 	u32 id_highbits;
+ 	int ret;
++	unsigned long irqflags;
+ 
+ 	name = kstrdup_const(name, GFP_KERNEL);
+ 	if (!name)
+@@ -617,13 +619,13 @@ static struct kernfs_node *__kernfs_new_
+ 		goto err_out1;
+ 
+ 	idr_preload(GFP_KERNEL);
+-	spin_lock(&kernfs_idr_lock);
++	raw_spin_lock_irqsave(&kernfs_idr_lock, irqflags);
+ 	ret = idr_alloc_cyclic(&root->ino_idr, kn, 1, 0, GFP_ATOMIC);
+ 	if (ret >= 0 && ret < root->last_id_lowbits)
+ 		root->id_highbits++;
+ 	id_highbits = root->id_highbits;
+ 	root->last_id_lowbits = ret;
+-	spin_unlock(&kernfs_idr_lock);
++	raw_spin_unlock_irqrestore(&kernfs_idr_lock, irqflags);
+ 	idr_preload_end();
+ 	if (ret < 0)
+ 		goto err_out2;
+@@ -659,9 +661,9 @@ static struct kernfs_node *__kernfs_new_
+ 	return kn;
+ 
+  err_out3:
+-	spin_lock(&kernfs_idr_lock);
++	raw_spin_lock_irqsave(&kernfs_idr_lock, irqflags);
+ 	idr_remove(&root->ino_idr, (u32)kernfs_ino(kn));
+-	spin_unlock(&kernfs_idr_lock);
++	raw_spin_unlock_irqrestore(&kernfs_idr_lock, irqflags);
+  err_out2:
+ 	kmem_cache_free(kernfs_node_cache, kn);
+  err_out1:
+@@ -702,8 +704,9 @@ struct kernfs_node *kernfs_find_and_get_
+ 	struct kernfs_node *kn;
+ 	ino_t ino = kernfs_id_ino(id);
+ 	u32 gen = kernfs_id_gen(id);
++	unsigned long flags;
+ 
+-	spin_lock(&kernfs_idr_lock);
++	raw_spin_lock_irqsave(&kernfs_idr_lock, flags);
+ 
+ 	kn = idr_find(&root->ino_idr, (u32)ino);
+ 	if (!kn)
+@@ -727,10 +730,10 @@ struct kernfs_node *kernfs_find_and_get_
+ 	if (unlikely(!__kernfs_active(kn) || !atomic_inc_not_zero(&kn->count)))
+ 		goto err_unlock;
+ 
+-	spin_unlock(&kernfs_idr_lock);
++	raw_spin_unlock_irqrestore(&kernfs_idr_lock, flags);
+ 	return kn;
+ err_unlock:
+-	spin_unlock(&kernfs_idr_lock);
++	raw_spin_unlock_irqrestore(&kernfs_idr_lock, flags);
+ 	return NULL;
  }
+ 
 
 
