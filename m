@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DCF73178;
-	Tue, 23 Jan 2024 02:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D0073178;
+	Tue, 23 Jan 2024 02:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975435; cv=none; b=a7BYjPBnVeYpyfnuYpSXP9suYwLC9A6AnfCmWnQ9HEJzbO8cO5BZ6Q0mGiBZvXiVtobDbcJ1bVLhw4JMznkD4ekLFhsFJZFrTCUA+qe6IAd/Mj8HkfC8D7J/xc4khNOusytlCeXJtaYruOzTpSMG88l8/LQSZmnQy78hR+1dp4Y=
+	t=1705975436; cv=none; b=t6FjZ7YoN5Teavp6ndc/Q5HpY2L805NDLNx+eOwoUTDX0rLgC13Nx4OOUBDGAWIQLPUiuXKWf7pCOSFMWz3i4QtpEIhLQEZoqH5EuNo+JDQRQ7KSsV1wmLDSevbdCw7j4G0uNWheMnpDAHzhn2SRs3ijf5pNfgf1pQeuT/Pr6J0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975435; c=relaxed/simple;
-	bh=T1Z3+xV/EE1jcFg3JpBlLmarNY59urRjiN8D0uzRH0M=;
+	s=arc-20240116; t=1705975436; c=relaxed/simple;
+	bh=eg9/4ukqphh6o1+WKlaNbs4t+S7ByDmPg3ldDNu/qTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nkoryl+xyGRE/I1UqDVFJjRb4QUNSgvRYY8+SrlpvmfUwg+IJmQGPiFhAwW+Rl84HLk0Z48E8LL7naoJcxEQsQ19FdwPh5NJF2t6rum3oO/kDLQW/p1Dqeb8Fll9fHCr4shKyXXOPr52E/P6Rz2dUFUdK6A+4pT7Whp579nrk1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=soAgqMPH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HUg20/MwWXS8yG19tbiMQQ8I4C3r4cpGfyxu/mE9UeOMDHPfQPbl/hlZ86WRC0aRsPIL6C/NZj6Q8lvXinxBGrECb/16AhOMIeJpr1TB/x7kQcPeMwzT2yIpvOgYTvXjbVGdTWRdQKcGc+4sH5ic4fyoIoWXp4NFt7tmJMbOLfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDpBAaZB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="soAgqMPH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F15C43399;
-	Tue, 23 Jan 2024 02:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDpBAaZB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EC1C433C7;
+	Tue, 23 Jan 2024 02:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975435;
-	bh=T1Z3+xV/EE1jcFg3JpBlLmarNY59urRjiN8D0uzRH0M=;
+	s=korg; t=1705975436;
+	bh=eg9/4ukqphh6o1+WKlaNbs4t+S7ByDmPg3ldDNu/qTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=soAgqMPHUth/qM3eTyIKJQgKK5gNTewoWr7ckl8MQHf7pZIzxegNNzKEdseFKYEX2
-	 Uzzx7gmhuNlpGJ+aZuZOTUcIKhqYmc8fvXBRt4YI3BGSuY+9UnPbmVQ3A5m6gQI7aT
-	 1MBQOMerVFsojpLSP2zvQRoLexl/iqEuZVTgJGcA=
+	b=WDpBAaZB9erRuouxekfnOijRTqQSOgpGEQnARYWLZLFcmDcAgPJ+2pMZ7kfbnyETv
+	 WYYTLDOVxmCn/rzOPSWctxd05TQmsKKFt8bdXD3230piYVcbSvBlGHt8F0ME8CCJiW
+	 bBN5V97plm47hZLZ6tfhNRMltbCxmo2xjev/nNyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Can Guo <quic_cang@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 394/583] scsi: ufs: core: Simplify power management during async scan
-Date: Mon, 22 Jan 2024 15:57:25 -0800
-Message-ID: <20240122235824.041593810@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.6 395/583] scsi: target: core: add missing file_{start,end}_write()
+Date: Mon, 22 Jan 2024 15:57:26 -0800
+Message-ID: <20240122235824.071173632@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,54 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit daf7795406bf307997366f694888bd317ae5b5fa upstream.
+commit 0db1d53937fafa8bb96e077375691e16902f4899 upstream.
 
-ufshcd_init() calls pm_runtime_get_sync() before it calls
-async_schedule(). ufshcd_async_scan() calls pm_runtime_put_sync() directly
-or indirectly from ufshcd_add_lus(). Simplify ufshcd_async_scan() by always
-calling pm_runtime_put_sync() from ufshcd_async_scan().
+The callers of vfs_iter_write() are required to hold file_start_write().
+file_start_write() is a no-op for the S_ISBLK() case, but it is really
+needed when the backing file is a regular file.
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20231218225229.2542156-2-bvanassche@acm.org
-Reviewed-by: Can Guo <quic_cang@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+We are going to move file_{start,end}_write() into vfs_iter_write(), but
+we need to fix this first, so that the fix could be backported to stable
+kernels.
+
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/ZV8ETIpM+wZa33B5@infradead.org/
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://lore.kernel.org/r/20231123092000.2665902-1-amir73il@gmail.com
+Acked-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/target/target_core_file.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -8540,7 +8540,6 @@ static int ufshcd_add_lus(struct ufs_hba
+--- a/drivers/target/target_core_file.c
++++ b/drivers/target/target_core_file.c
+@@ -332,11 +332,13 @@ static int fd_do_rw(struct se_cmd *cmd,
+ 	}
  
- 	ufs_bsg_probe(hba);
- 	scsi_scan_host(hba->host);
--	pm_runtime_put_sync(hba->dev);
+ 	iov_iter_bvec(&iter, is_write, bvec, sgl_nents, len);
+-	if (is_write)
++	if (is_write) {
++		file_start_write(fd);
+ 		ret = vfs_iter_write(fd, &iter, &pos, 0);
+-	else
++		file_end_write(fd);
++	} else {
+ 		ret = vfs_iter_read(fd, &iter, &pos, 0);
+-
++	}
+ 	if (is_write) {
+ 		if (ret < 0 || ret != data_length) {
+ 			pr_err("%s() write returned %d\n", __func__, ret);
+@@ -467,7 +469,9 @@ fd_execute_write_same(struct se_cmd *cmd
+ 	}
  
- out:
- 	return ret;
-@@ -8808,15 +8807,15 @@ static void ufshcd_async_scan(void *data
+ 	iov_iter_bvec(&iter, ITER_SOURCE, bvec, nolb, len);
++	file_start_write(fd_dev->fd_file);
+ 	ret = vfs_iter_write(fd_dev->fd_file, &iter, &pos, 0);
++	file_end_write(fd_dev->fd_file);
  
- 	/* Probe and add UFS logical units  */
- 	ret = ufshcd_add_lus(hba);
-+
- out:
-+	pm_runtime_put_sync(hba->dev);
- 	/*
- 	 * If we failed to initialize the device or the device is not
- 	 * present, turn off the power/clocks etc.
- 	 */
--	if (ret) {
--		pm_runtime_put_sync(hba->dev);
-+	if (ret)
- 		ufshcd_hba_exit(hba);
--	}
- }
- 
- static enum scsi_timeout_action ufshcd_eh_timed_out(struct scsi_cmnd *scmd)
+ 	kfree(bvec);
+ 	if (ret < 0 || ret != len) {
 
 
