@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38608810;
-	Tue, 23 Jan 2024 01:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340F7A47;
+	Tue, 23 Jan 2024 01:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972142; cv=none; b=N4RPf1E4O0eoRQ4Gy4TsLwj8oV/sY/PK79qMXeKiGtCgufykg8M70agvJGjZzKbHGd1pgCekPVuLKltjhUlnMzwWaOJZJYN8WJLGgGOVcHyJA3kEXTZB+aBh6vnx3ZmBMfQTNscUTxWDIpQGNY0x2cGf2d3biMM1d1YhGvBuNmg=
+	t=1705972143; cv=none; b=nJ9vY1QsDCS0xsrib41dZ0IAMxKuIZKgj5w0ag4QCBlBjqvuVoG8r9WNWauIGQEHa0MLT3B8dKmSdAGA9UJmAsBStZQq7cqma/zkVHPZwLQdS42u+/a7dKYpx0jISi/jskJqW0/D1JImz0CX8oFZI4SWP+jWJ89xKMN2GvYxSk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972142; c=relaxed/simple;
-	bh=ZDWwp8HKxVXbhfCAcIt7y5w7dG6XlO3I6aOq8/F4vG0=;
+	s=arc-20240116; t=1705972143; c=relaxed/simple;
+	bh=3W5W94eIL5WJhqFTC+MmmyqJ8EXMhNAvhgN17+gNX9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rlo5MRf4/Jkg9NKMXVoL/hH/dyJktZlSnfn8HPcHZOJ/PC2Mo/OOvrg3bDCAPBaKKcWU54sxVShJ3fd/3J7XUnjfUqKxylFmHbAMSMLaSyp7fbcTXML6Pqx4Xu1lc5u1BHGbWODwERfGCy4YUA6vSf3YP9o5VSOCDTA5nHS+wkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/e3Rs4z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oRgXBH7mUXkBbdQXm9zKHYdNTohty7K4koZNKkmm1ifp1oyKL/gIdrZfue7M0Nt1Bj2gn2dH4hPQgQkpEcQ0nEtUDUTc31CP8dMb3j7BjMbz5GmGiNQhB1/lu19XE5aFnqvH4FdSj08WNqxm1FVy7/oHPITk6G00fc/j5hpaaLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+vpvUgr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/e3Rs4z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC17C43390;
-	Tue, 23 Jan 2024 01:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+vpvUgr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E622FC43390;
+	Tue, 23 Jan 2024 01:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972142;
-	bh=ZDWwp8HKxVXbhfCAcIt7y5w7dG6XlO3I6aOq8/F4vG0=;
+	s=korg; t=1705972143;
+	bh=3W5W94eIL5WJhqFTC+MmmyqJ8EXMhNAvhgN17+gNX9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q/e3Rs4zlqxD67PtgLImie407sBc5IzITXBVanJgM98f4bb5DR3u42IomnPz+5SNL
-	 TqC6UW9SnlEtlavlvGuWrYLvFy7MeXBVbi457AFfCL8n/EYHtlMUbi3667EZAKegRa
-	 BNvDRx8NjYvMY5WUCXGyl9YK+b+YAz1zWWjytsCw=
+	b=a+vpvUgry/nBlk+BDQoU4eZ0SvmrQLt3UfhQQxF8sCphs+f9K2VBS8/kCYNZ/wn8V
+	 UnhBVpwr0ukzp/2UhptB+qJ0+XVTbUC5VivrGzCsLi3zAeefZmIPEc02NzAbVjjxII
+	 LSaXNpoU1avs7AP8V+vCKzf6ISbpFZd42aCFMhHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
+	Nathan Lynch <nathanl@linux.ibm.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/374] powerpc/44x: select I2C for CURRITUCK
-Date: Mon, 22 Jan 2024 15:55:27 -0800
-Message-ID: <20240122235747.085606690@linuxfoundation.org>
+Subject: [PATCH 5.15 072/374] powerpc/pseries/memhp: Fix access beyond end of drmem array
+Date: Mon, 22 Jan 2024 15:55:28 -0800
+Message-ID: <20240122235747.121077072@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -52,41 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-[ Upstream commit 4a74197b65e69c46fe6e53f7df2f4d6ce9ffe012 ]
+[ Upstream commit bd68ffce69f6cf8ddd3a3c32549d1d2275e49fc5 ]
 
-Fix build errors when CURRITUCK=y and I2C is not builtin (=m or is
-not set). Fixes these build errors:
+dlpar_memory_remove_by_index() may access beyond the bounds of the
+drmem lmb array when the LMB lookup fails to match an entry with the
+given DRC index. When the search fails, the cursor is left pointing to
+&drmem_info->lmbs[drmem_info->n_lmbs], which is one element past the
+last valid entry in the array. The debug message at the end of the
+function then dereferences this pointer:
 
-powerpc-linux-ld: arch/powerpc/platforms/44x/ppc476.o: in function `avr_halt_system':
-ppc476.c:(.text+0x58): undefined reference to `i2c_smbus_write_byte_data'
-powerpc-linux-ld: arch/powerpc/platforms/44x/ppc476.o: in function `ppc47x_device_probe':
-ppc476.c:(.init.text+0x18): undefined reference to `i2c_register_driver'
+        pr_debug("Failed to hot-remove memory at %llx\n",
+                 lmb->base_addr);
 
-Fixes: 2a2c74b2efcb ("IBM Akebono: Add the Akebono platform")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: lore.kernel.org/r/202312010820.cmdwF5X9-lkp@intel.com
+This was found by inspection and confirmed with KASAN:
+
+  pseries-hotplug-mem: Attempting to hot-remove LMB, drc index 1234
+  ==================================================================
+  BUG: KASAN: slab-out-of-bounds in dlpar_memory+0x298/0x1658
+  Read of size 8 at addr c000000364e97fd0 by task bash/949
+
+  dump_stack_lvl+0xa4/0xfc (unreliable)
+  print_report+0x214/0x63c
+  kasan_report+0x140/0x2e0
+  __asan_load8+0xa8/0xe0
+  dlpar_memory+0x298/0x1658
+  handle_dlpar_errorlog+0x130/0x1d0
+  dlpar_store+0x18c/0x3e0
+  kobj_attr_store+0x68/0xa0
+  sysfs_kf_write+0xc4/0x110
+  kernfs_fop_write_iter+0x26c/0x390
+  vfs_write+0x2d4/0x4e0
+  ksys_write+0xac/0x1a0
+  system_call_exception+0x268/0x530
+  system_call_vectored_common+0x15c/0x2ec
+
+  Allocated by task 1:
+   kasan_save_stack+0x48/0x80
+   kasan_set_track+0x34/0x50
+   kasan_save_alloc_info+0x34/0x50
+   __kasan_kmalloc+0xd0/0x120
+   __kmalloc+0x8c/0x320
+   kmalloc_array.constprop.0+0x48/0x5c
+   drmem_init+0x2a0/0x41c
+   do_one_initcall+0xe0/0x5c0
+   kernel_init_freeable+0x4ec/0x5a0
+   kernel_init+0x30/0x1e0
+   ret_from_kernel_user_thread+0x14/0x1c
+
+  The buggy address belongs to the object at c000000364e80000
+   which belongs to the cache kmalloc-128k of size 131072
+  The buggy address is located 0 bytes to the right of
+   allocated 98256-byte region [c000000364e80000, c000000364e97fd0)
+
+  ==================================================================
+  pseries-hotplug-mem: Failed to hot-remove memory at 0
+
+Log failed lookups with a separate message and dereference the
+cursor only when it points to a valid entry.
+
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+Fixes: 51925fb3c5c9 ("powerpc/pseries: Implement memory hotplug remove in the kernel")
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231201055159.8371-1-rdunlap@infradead.org
+Link: https://msgid.link/20231114-pseries-memhp-fixes-v1-1-fb8f2bb7c557@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/44x/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/platforms/pseries/hotplug-memory.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/platforms/44x/Kconfig b/arch/powerpc/platforms/44x/Kconfig
-index 83975ef50975..66c54cef3cfa 100644
---- a/arch/powerpc/platforms/44x/Kconfig
-+++ b/arch/powerpc/platforms/44x/Kconfig
-@@ -177,6 +177,7 @@ config ISS4xx
- config CURRITUCK
- 	bool "IBM Currituck (476fpe) Support"
- 	depends on PPC_47x
-+	select I2C
- 	select SWIOTLB
- 	select 476FPE
- 	select FORCE_PCI
+diff --git a/arch/powerpc/platforms/pseries/hotplug-memory.c b/arch/powerpc/platforms/pseries/hotplug-memory.c
+index 91cf23495ccb..642951c0d5f5 100644
+--- a/arch/powerpc/platforms/pseries/hotplug-memory.c
++++ b/arch/powerpc/platforms/pseries/hotplug-memory.c
+@@ -501,14 +501,15 @@ static int dlpar_memory_remove_by_index(u32 drc_index)
+ 		}
+ 	}
+ 
+-	if (!lmb_found)
++	if (!lmb_found) {
++		pr_debug("Failed to look up LMB for drc index %x\n", drc_index);
+ 		rc = -EINVAL;
+-
+-	if (rc)
++	} else if (rc) {
+ 		pr_debug("Failed to hot-remove memory at %llx\n",
+ 			 lmb->base_addr);
+-	else
++	} else {
+ 		pr_debug("Memory at %llx was hot-removed\n", lmb->base_addr);
++	}
+ 
+ 	return rc;
+ }
 -- 
 2.43.0
 
