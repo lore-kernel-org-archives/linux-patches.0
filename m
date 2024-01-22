@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2D051C49;
-	Tue, 23 Jan 2024 00:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BBD50A75;
+	Tue, 23 Jan 2024 00:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970395; cv=none; b=UV5WZUBy6gbfryj2SY6cEL64arUDxU1TUA7VqYxP88DIGMsdfcI7bp/Sio4x+StPeRqfHowpPWlC5yg54JwYWtTvblh+676oouUcDLE4Z9qvGnssarD/zh4SoQ9nI4Q1Htf5enk36Eqse9mm0xvX/aTAGLbnTXmxceb+avjpRck=
+	t=1705970402; cv=none; b=XCcL3JWUA2hOMJk+X5OBVHUUBsxQKh7ofl4w9l6Y7glgw0eTfyrUWgxvpZPwn9mCTrqCTjqJLTEYj8czz4ahHgCjOLUOBtn/ZbaZFzOA8RDJHl8eTdv1t9E+tqo7noWHYnFzkaLNKMo/j+UaiCi69MCiJfGNPn5sThA98zhW6Lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970395; c=relaxed/simple;
-	bh=Kt8sW6jke+9ufAg4Wv/+9SjjBx4rllEm97NQU/MvB00=;
+	s=arc-20240116; t=1705970402; c=relaxed/simple;
+	bh=XMdXYFU4x7IvbBlURtCMOg+VC68nd8r0zrQ2CQnjoPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lyUb0oTZRkY/IlJyVlfRIIR1VK7pHTVWyi3R4fSSHYXvYuRnnDluSwg4XWHaK05vCdHyjLGOpidOAfhRri5czPrJJF4CpTeNHe/IaCmhpBDgL6o5mPHGS+qcKYMCcGnpWAk7N1Vehu62UTyL8krZP7BiqozbPyRvZdQs+it9ZM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCLNEO6i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IEFUPUpRVLV3B/Tstdb6tc1X0Uu9KFZhvXArixnpcJbrqUdypIE4MmM60fZfxFy9NJ+PJpW6t+oDXGEwij5KodMSyBozpNa1xOQBFZKr1kKRnWTbShVBkl05py7oI5ehKdmkguRi5Wim4QSX3D/gwPZK2e/hGYwT7TWxhRyHLUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXBO/YcK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCLNEO6i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CBBEC433F1;
-	Tue, 23 Jan 2024 00:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXBO/YcK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE049C433C7;
+	Tue, 23 Jan 2024 00:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970395;
-	bh=Kt8sW6jke+9ufAg4Wv/+9SjjBx4rllEm97NQU/MvB00=;
+	s=korg; t=1705970401;
+	bh=XMdXYFU4x7IvbBlURtCMOg+VC68nd8r0zrQ2CQnjoPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCLNEO6iiADn1i02paUrwN7nwdK7zYgUcYCeiL1sfNAh/2FEaojclkLdy3srqnWf9
-	 SV9PC6+frfqyP0YnFNS6/GA+36/EWyb5nsDBIhklB6+MnD2Ktpot42UW0yau/IwMS0
-	 3lgvyzJtHQROnhCrwj6O7jgwYoD1S1kFdKas8JVo=
+	b=cXBO/YcKmzIC+StuxfS6tgljoB2kp6W42nxckK8YhNPRTip+vNazTxCKBdFyODnyn
+	 0PfrbpiPkSkUw/XYMX3pzW1NSdfNJzZzmwGP1DZb058WY6SisMCCjsqZynWl2u3rUx
+	 EqVLyd93L9bdGqlGYWK09CF6wAnWVdDTgv+aV8fY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/417] x86/lib: Fix overflow when counting digits
-Date: Mon, 22 Jan 2024 15:52:49 -0800
-Message-ID: <20240122235751.532178624@linuxfoundation.org>
+Subject: [PATCH 6.1 010/417] powerpc/powernv: Add a null pointer check in opal_event_init()
+Date: Mon, 22 Jan 2024 15:52:58 -0800
+Message-ID: <20240122235751.854101533@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -51,64 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit a24d61c609813963aacc9f6ec8343f4fcaac7243 ]
+[ Upstream commit 8649829a1dd25199bbf557b2621cedb4bf9b3050 ]
 
-tl;dr: The num_digits() function has a theoretical overflow issue.
-But it doesn't affect any actual in-tree users.  Fix it by using
-a larger type for one of the local variables.
+kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure.
 
-Long version:
-
-There is an overflow in variable m in function num_digits when val
-is >= 1410065408 which leads to the digit calculation loop to
-iterate more times than required. This results in either more
-digits being counted or in some cases (for example where val is
-1932683193) the value of m eventually overflows to zero and the
-while loop spins forever).
-
-Currently the function num_digits is currently only being used for
-small values of val in the SMP boot stage for digit counting on the
-number of cpus and NUMA nodes, so the overflow is never encountered.
-However it is useful to fix the overflow issue in case the function
-is used for other purposes in the future. (The issue was discovered
-while investigating the digit counting performance in various
-kernel helper functions rather than any real-world use-case).
-
-The simplest fix is to make m a long long, the overhead in
-multiplication speed for a long long is very minor for small values
-of val less than 10000 on modern processors. The alternative
-fix is to replace the multiplication with a constant division
-by 10 loop (this compiles down to an multiplication and shift)
-without needing to make m a long long, but this is slightly slower
-than the fix in this commit when measured on a range of x86
-processors).
-
-[ dhansen: subject and changelog tweaks ]
-
-Fixes: 646e29a1789a ("x86: Improve the printout of the SMP bootup CPU table")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20231102174901.2590325-1-colin.i.king%40gmail.com
+Fixes: 2717a33d6074 ("powerpc/opal-irqchip: Use interrupt names if present")
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231127030755.1546750-1-chentao@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/lib/misc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/powernv/opal-irqchip.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/lib/misc.c b/arch/x86/lib/misc.c
-index a018ec4fba53..c97be9a1430a 100644
---- a/arch/x86/lib/misc.c
-+++ b/arch/x86/lib/misc.c
-@@ -6,7 +6,7 @@
-  */
- int num_digits(int val)
- {
--	int m = 10;
-+	long long m = 10;
- 	int d = 1;
+diff --git a/arch/powerpc/platforms/powernv/opal-irqchip.c b/arch/powerpc/platforms/powernv/opal-irqchip.c
+index d55652b5f6fa..391f50535200 100644
+--- a/arch/powerpc/platforms/powernv/opal-irqchip.c
++++ b/arch/powerpc/platforms/powernv/opal-irqchip.c
+@@ -275,6 +275,8 @@ int __init opal_event_init(void)
+ 		else
+ 			name = kasprintf(GFP_KERNEL, "opal");
  
- 	if (val < 0) {
++		if (!name)
++			continue;
+ 		/* Install interrupt handler */
+ 		rc = request_irq(r->start, opal_interrupt, r->flags & IRQD_TRIGGER_MASK,
+ 				 name, NULL);
 -- 
 2.43.0
 
