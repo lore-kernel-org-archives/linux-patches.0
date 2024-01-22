@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF95937C;
-	Tue, 23 Jan 2024 01:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29BC37C;
+	Tue, 23 Jan 2024 01:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972177; cv=none; b=DhIhQR8hXW7OVRTyBq4GrBUKhVluFBusouFBAd5wG+uyT5YIZH5fgq3akdS4WLGSSy96RgJvt7iS2w0/mkVgx/ddhWuqIVgIJjgxgGtzj8q4TLTkbdJurDd+nYapGtMRyGG63708NDMRwQqefzVRvVQo7pIb+yHqO1i/5suz62A=
+	t=1705972178; cv=none; b=GSqV7F9BFgutdnjHTHF1ixAlwrbskB3eKpFQxsosYLesyx/bq91MbVOHfxbVSmmOqzpL125vqbTkpZ3idNJ6UN3xkv2SIUB0ObW3xoojhUIzferajRFlMe/ZcbByV3kpLrjZXmTHoMtJyxFpI8rIwemxx/GwaZy3mFMRk/OTzsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972177; c=relaxed/simple;
-	bh=b+/ad4Cf26qPk7IawLoKEWSSJY3ooSw+xvBBbaqKLAc=;
+	s=arc-20240116; t=1705972178; c=relaxed/simple;
+	bh=bXciTJwCOEQUKDYL2JZ4myI4iH8PTq1X/6VqmpZwJQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPU3MqNoaZp3kL8vservSkKddBD1Ey2TEvv0f3jTOpJTlSn7IS//i+jfPLsFX8D65gkhdnDI34RkOqi+VvjOU4YCpYiB9w83uCkSNEsV2uMbYJSkJ6scFxs5wBWO7qqQ6Lh9OckPbi2FLr1JlSFaRr8xlEiqI3vadbNIbeY4Pak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tE5jaN2A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aRw2f26imx2GlWMcm6823VVNa/l6B8izXRKJVQE8zuvoSdNJ3rlaSWv7WKI80Q4XfHll2eBVH+Ikp07J0M+p9VSmX7uoy49MqmvhGbZE8mrIWtnIQRcOTpWj48KKeW9F7ueIPCOHMC8MT/bxBumSH8U+Qwiv/An+BLMqoueRUmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aV+XIltU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tE5jaN2A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C5CC43399;
-	Tue, 23 Jan 2024 01:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aV+XIltU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97678C433C7;
+	Tue, 23 Jan 2024 01:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972177;
-	bh=b+/ad4Cf26qPk7IawLoKEWSSJY3ooSw+xvBBbaqKLAc=;
+	s=korg; t=1705972178;
+	bh=bXciTJwCOEQUKDYL2JZ4myI4iH8PTq1X/6VqmpZwJQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tE5jaN2A3ff3SkuhXXiQrZkp6Qr0N5cjAwD7ZngaeNxq0nVfUhkBOEq9rvU2paLto
-	 +dRRoLKKDKiEk5n2AkM3+hRJQzGbOzIuzCwIZu8vVteGBo8hHxC+MwJO2aKz5VCdwU
-	 yx8mgAFVjT8G5tGtaOby+zFhvZ6GPZz+liqwaRis=
+	b=aV+XIltUCraTirrA5EgmlcN60D7qC3nU2svIF6FCc69quX/RsBHQU6kX6zjJTplO1
+	 6iI18lm6gQtu+6uYHEt74mQSvEoj11OZ6QokinsCEYPlLCmxOTyJYHZlmW5Cl3QeO6
+	 MP0dM7nsfkXAY8DRVflJOBMNv5iwl2wf65pI462o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Diupina <adiupina@astralinux.ru>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/374] cpufreq: scmi: process the result of devm_of_clk_add_hw_provider()
-Date: Mon, 22 Jan 2024 15:55:41 -0800
-Message-ID: <20240122235747.573338492@linuxfoundation.org>
+Subject: [PATCH 5.15 103/374] pstore: ram_core: fix possible overflow in persistent_ram_init_ecc()
+Date: Mon, 22 Jan 2024 15:55:59 -0800
+Message-ID: <20240122235748.190005644@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,41 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Diupina <adiupina@astralinux.ru>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit c4a5118a3ae1eadc687d84eef9431f9e13eb015c ]
+[ Upstream commit 86222a8fc16ec517de8da2604d904c9df3a08e5d ]
 
-devm_of_clk_add_hw_provider() may return an errno, so
-add a return value check
+In persistent_ram_init_ecc(), on 64-bit arches DIV_ROUND_UP() will return
+64-bit value since persistent_ram_zone::buffer_size has type size_t which
+is derived from the 64-bit *unsigned long*, while the ecc_blocks variable
+this value gets assigned to has (always 32-bit) *int* type.  Even if that
+value fits into *int* type, an overflow is still possible when calculating
+the size_t typed ecc_total variable further below since there's no cast to
+any 64-bit type before multiplication.  Declaring the ecc_blocks variable
+as *size_t* should fix this mess...
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Found by Linux Verification Center (linuxtesting.org) with the SVACE static
+analysis tool.
 
-Fixes: 8410e7f3b31e ("cpufreq: scmi: Fix OPP addition failure with a dummy clock provider")
-Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: 9cc05ad97c57 ("staging: android: persistent_ram: refactor ecc support")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20231105202936.25694-1-s.shtylyov@omp.ru
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/scmi-cpufreq.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/pstore/ram_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-index 82e588c3c57b..c24e6373d341 100644
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -299,8 +299,11 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index ccdb71c3dc51..ec321722384d 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -190,7 +190,7 @@ static int persistent_ram_init_ecc(struct persistent_ram_zone *prz,
+ {
+ 	int numerr;
+ 	struct persistent_ram_buffer *buffer = prz->buffer;
+-	int ecc_blocks;
++	size_t ecc_blocks;
+ 	size_t ecc_total;
  
- #ifdef CONFIG_COMMON_CLK
- 	/* dummy clock provider as needed by OPP if clocks property is used */
--	if (of_property_present(dev->of_node, "#clock-cells"))
--		devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, NULL);
-+	if (of_property_present(dev->of_node, "#clock-cells")) {
-+		ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, NULL);
-+		if (ret)
-+			return dev_err_probe(dev, ret, "%s: registering clock provider failed\n", __func__);
-+	}
- #endif
- 
- 	ret = cpufreq_register_driver(&scmi_cpufreq_driver);
+ 	if (!ecc_info || !ecc_info->ecc_size)
 -- 
 2.43.0
 
