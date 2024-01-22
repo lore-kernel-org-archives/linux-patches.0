@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FB060274;
-	Tue, 23 Jan 2024 00:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A46560274;
+	Tue, 23 Jan 2024 00:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970840; cv=none; b=Y83kYMnSsuSf5uWvnmR43jeeEZ9ufk2p1Myxx5+X1vxiZqrKFOk89o0xrqrlGXEG4T3cmgiFXGI+funftNsa+SOWlcmwKEhx8FeXiG7oonoKuOAx00N5PTAFkZzQnaOMwpHSy7+alxBvZnoSfqv2eOXznsvMvcf+GmKyZPWplTs=
+	t=1705970841; cv=none; b=hOyBqqD5/hY/2z10U8XsJij+UnSN0SALY1UCLsUBu83cc/GbjiFiSTqi3tzNIe0utgqsQZKGbn2rUV8zsETSWXz33V4DV4xGTvWyRLEnjlRMDNfCqDzOkecne/s2Q/yC7SHju8AsGjN5TZnRcmG0b7z3TN19E3HYHo/LXaZKW+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970840; c=relaxed/simple;
-	bh=xJftf8uC3FtjOh/a64h3E1lwmJL3yaz7xDABHJXm5ic=;
+	s=arc-20240116; t=1705970841; c=relaxed/simple;
+	bh=7V3/Y51cDklvX0CtTRpsHWmxgvsWB2WvQwfESe/K61M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CenO8/VHuF01T2r4sOpjypXe4ShYk2+3w2Kr13AJmZsjdK7WfAJ0igSJw+4oFVoX2fe2Bm5vpFc+RQJnIGH700uWhnbnix/UeEEGZQ3/iSsdA3xiHU9EUA7it9RsZgTlEwmeNn0WCdGg1vXRuP1vuuAJgvQQFY5Evp0IsgqTiL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdtC15vU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pymsfnmlrlxoSPeWtf+iIX7Nrf+javz6WBi1RNMIvqfssHZqiyee2ZGamWv89BK1BgcFSHTP36YKBvGadVqzfhoaCf+48/uVtP5bBGyqIuveps1GvrRhsLXnjIJYVDQtf745oWUbZT6K+VwQdlffCfhb3yDeZ4Bstj83IStDXHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ktJrUpq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdtC15vU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CB0C43390;
-	Tue, 23 Jan 2024 00:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ktJrUpq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3ACC43390;
+	Tue, 23 Jan 2024 00:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970839;
-	bh=xJftf8uC3FtjOh/a64h3E1lwmJL3yaz7xDABHJXm5ic=;
+	s=korg; t=1705970841;
+	bh=7V3/Y51cDklvX0CtTRpsHWmxgvsWB2WvQwfESe/K61M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bdtC15vUA2qgM1SaSOIFj9iOn8oh0lMK6UnDhMX5mEO6Rixx4IufAZFfZ2J2GNjnz
-	 23MncJwUMVWDwM175+5Dsvv8Qm/63pTOel/shEamsURli0YgfdCmhFTYuzBUPmexwx
-	 5jbkJr802hPlehC6PSDhwuj73urMGauFyrEhN068=
+	b=0ktJrUpqc1z7i7SDwt9l2X2/doV+wP13lmZHzTLgTsLk8UhPwFuJ1gs81Fukw1R0s
+	 JugawNBmHYOaxSLilyGIQxHjovUViMRBZ/5f/SESRJL33ey8htxxIFNaPMY9Cq354w
+	 NNPcRt/poQMAyFncVpEA40JIeYo4XMxeicjpwQ54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Joakim Zhang <joakim.zhang@cixtech.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 028/286] ring-buffer: Do not record in NMI if the arch does not support cmpxchg in NMI
-Date: Mon, 22 Jan 2024 15:55:34 -0800
-Message-ID: <20240122235733.100356614@linuxfoundation.org>
+Subject: [PATCH 6.1 123/417] dma-mapping: clear dev->dma_mem to NULL after freeing it
+Date: Mon, 22 Jan 2024 15:54:51 -0800
+Message-ID: <20240122235756.060040401@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,46 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Joakim Zhang <joakim.zhang@cixtech.com>
 
-[ Upstream commit 712292308af2265cd9b126aedfa987f10f452a33 ]
+[ Upstream commit b07bc2347672cc8c7293c64499f1488278c5ca3d ]
 
-As the ring buffer recording requires cmpxchg() to work, if the
-architecture does not support cmpxchg in NMI, then do not do any recording
-within an NMI.
+Reproduced with below sequence:
+dma_declare_coherent_memory()->dma_release_coherent_memory()
+->dma_declare_coherent_memory()->"return -EBUSY" error
 
-Link: https://lore.kernel.org/linux-trace-kernel/20231213175403.6fc18540@gandalf.local.home
+It will return -EBUSY from the dma_assign_coherent_memory()
+in dma_declare_coherent_memory(), the reason is that dev->dma_mem
+pointer has not been set to NULL after it's freed.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: cf65a0f6f6ff ("dma-mapping: move all DMA mapping code to kernel/dma")
+Signed-off-by: Joakim Zhang <joakim.zhang@cixtech.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/dma/coherent.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 5abe88091803..041b91c2ba10 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -3444,6 +3444,12 @@ rb_reserve_next_event(struct trace_buffer *buffer,
- 	int nr_loops = 0;
- 	int add_ts_default;
+diff --git a/kernel/dma/coherent.c b/kernel/dma/coherent.c
+index c21abc77c53e..ff5683a57f77 100644
+--- a/kernel/dma/coherent.c
++++ b/kernel/dma/coherent.c
+@@ -132,8 +132,10 @@ int dma_declare_coherent_memory(struct device *dev, phys_addr_t phys_addr,
  
-+	/* ring buffer does cmpxchg, make sure it is safe in NMI context */
-+	if (!IS_ENABLED(CONFIG_ARCH_HAVE_NMI_SAFE_CMPXCHG) &&
-+	    (unlikely(in_nmi()))) {
-+		return NULL;
+ void dma_release_coherent_memory(struct device *dev)
+ {
+-	if (dev)
++	if (dev) {
+ 		_dma_release_coherent_memory(dev->dma_mem);
++		dev->dma_mem = NULL;
 +	}
-+
- 	rb_start_commit(cpu_buffer);
- 	/* The commit page can not change after this */
+ }
  
+ static void *__dma_alloc_from_coherent(struct device *dev,
 -- 
 2.43.0
 
