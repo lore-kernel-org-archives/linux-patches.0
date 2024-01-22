@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBAC1487CF;
-	Tue, 23 Jan 2024 01:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18D51487D2;
+	Tue, 23 Jan 2024 01:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972072; cv=none; b=YgiX+ZVaWdLodGkO4J2ZsolhnQI4dHMDxgfsp9qUAktRdfd8tQdDL+vss9BnNQbDWyrd2CDkavWHkP7AgIQbIaepIfjnOCNyuCPmgWCpOp6TLgAxkUoibySKMw4m52HSp8wclWBMhbE4hR+UiSb+aepK49XXJy7WSjhLRbfpPBU=
+	t=1705972073; cv=none; b=WwNQIzatzEF3b73wV4dRmqKZCqECn5JF8EQLl8Np7iEWTPiuR8sWa1IJONJAUKHZBWzG4J8uOuXI3uCsPnC7Zurxd44T/II61Ry913vb/w4to3xoJu93b3IcmwMjMF0Gu54Dt8XGAwQbBWwLEPV+NXXWuKC1cDH1BCkUu2Xn/tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972072; c=relaxed/simple;
-	bh=NFQyQaORWnc9XDWtL8PciVP5J8u3cYgFHXDJYDBp0XA=;
+	s=arc-20240116; t=1705972073; c=relaxed/simple;
+	bh=/jsssZ0eRJCnOHQZl6Z5FPkGfEyVwYvvSRJkLHv+Y/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U5V5/sy65NO6XXC2rvTScP3JoZmNu0xzC/BzLvPCdo5VuCvyQIa+We6pTFscH+1t9soKDbLvNk7R2sHwCFuYqlir/IIFkD49Th1g7S88qU1rXkvkenaKrpFa8/CEhy0o0yVWZgrqqTkDziz0NRQKxCHumKtRVdEwlik+FDoml2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2ciXU+E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DoD2uUEUWw1NymtcJpLWvR6Ku0ft7lfQN4hpLV7V7Ur4acrPFpGuUrS8Wyq5HtdJkgBSM7YqQRJqeicyYGcypx9LsRL9ss7TwGf0VKSOMjisclp3sanatjIzl3OgSEnrsrqic18Ht88ynXvkf7GIDPPAO4QxpOWUHtYt8dDx9Fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4rYjMQ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2ciXU+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC4CC43390;
-	Tue, 23 Jan 2024 01:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4rYjMQ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D025C43394;
+	Tue, 23 Jan 2024 01:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972072;
-	bh=NFQyQaORWnc9XDWtL8PciVP5J8u3cYgFHXDJYDBp0XA=;
+	s=korg; t=1705972073;
+	bh=/jsssZ0eRJCnOHQZl6Z5FPkGfEyVwYvvSRJkLHv+Y/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d2ciXU+EEioS6znEUSvUB1V//BZe5qxt3Hcss2SweHCymEMxbWqyzvGryKqwMJJWD
-	 JaMcGOolR+lHipiJ7MgQEW5B4GtrOkTqFojp/eGgKRXBeHIi1X4MVE/pHO3xZspEzM
-	 x18VTM/hRcRiZ8boAaIDdqBPxj1TnQDEJks7BXtE=
+	b=G4rYjMQ+xvRpRoySJvZaQ9VlSzh51lIcUDKGm0b7fKFLy0Em/IpH7pR7zFZHWIOdy
+	 d9Z3e/4/vpJ7HcUjXYjwbpG2bnr4z4ifXx7WIYG4ywRr03uvfopMVtSOYcN90mNtky
+	 gOcKZxOBBVhZGkCpzt4gnN4MqrC8PGYfnYSvaIgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>,
+	Thinh Tran <thinhtr@linux.vnet.ibm.com>,
+	Venkata Sai Duggi <venkata.sai.duggi@ibm.com>,
+	David Christensen <drc@linux.vnet.ibm.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 016/374] nouveau/tu102: flush all pdbs on vmm flush
-Date: Mon, 22 Jan 2024 15:54:32 -0800
-Message-ID: <20240122235745.193655119@linuxfoundation.org>
+Subject: [PATCH 5.15 017/374] net/tg3: fix race condition in tg3_reset_task()
+Date: Mon, 22 Jan 2024 15:54:33 -0800
+Message-ID: <20240122235745.230930208@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,36 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Thinh Tran <thinhtr@linux.vnet.ibm.com>
 
-[ Upstream commit cb9c919364653eeafb49e7ff5cd32f1ad64063ac ]
+[ Upstream commit 16b55b1f2269962fb6b5154b8bf43f37c9a96637 ]
 
-This is a hack around a bug exposed with the GSP code, I'm not sure
-what is happening exactly, but it appears some of our flushes don't
-result in proper tlb invalidation for out BAR2 and we get a BAR2
-fault from GSP and it all dies.
+When an EEH error is encountered by a PCI adapter, the EEH driver
+modifies the PCI channel's state as shown below:
 
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231130010852.4034774-1-airlied@gmail.com
+   enum {
+      /* I/O channel is in normal state */
+      pci_channel_io_normal = (__force pci_channel_state_t) 1,
+
+      /* I/O to channel is blocked */
+      pci_channel_io_frozen = (__force pci_channel_state_t) 2,
+
+      /* PCI card is dead */
+      pci_channel_io_perm_failure = (__force pci_channel_state_t) 3,
+   };
+
+If the same EEH error then causes the tg3 driver's transmit timeout
+logic to execute, the tg3_tx_timeout() function schedules a reset
+task via tg3_reset_task_schedule(), which may cause a race condition
+between the tg3 and EEH driver as both attempt to recover the HW via
+a reset action.
+
+EEH driver gets error event
+--> eeh_set_channel_state()
+    and set device to one of
+    error state above           scheduler: tg3_reset_task() get
+                                returned error from tg3_init_hw()
+                             --> dev_close() shuts down the interface
+tg3_io_slot_reset() and
+tg3_io_resume() fail to
+reset/resume the device
+
+To resolve this issue, we avoid the race condition by checking the PCI
+channel state in the tg3_reset_task() function and skip the tg3 driver
+initiated reset when the PCI channel is not in the normal state.  (The
+driver has no access to tg3 device registers at this point and cannot
+even complete the reset task successfully without external assistance.)
+We'll leave the reset procedure to be managed by the EEH driver which
+calls the tg3_io_error_detected(), tg3_io_slot_reset() and
+tg3_io_resume() functions as appropriate.
+
+Adding the same checking in tg3_dump_state() to avoid dumping all
+device registers when the PCI channel is not in the normal state.
+
+Signed-off-by: Thinh Tran <thinhtr@linux.vnet.ibm.com>
+Tested-by: Venkata Sai Duggi <venkata.sai.duggi@ibm.com>
+Reviewed-by: David Christensen <drc@linux.vnet.ibm.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/20231201001911.656-1-thinhtr@linux.vnet.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/tg3.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c b/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c
-index 6cb5eefa45e9..5a08458fe1b7 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c
-@@ -31,7 +31,7 @@ tu102_vmm_flush(struct nvkm_vmm *vmm, int depth)
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index fc487a6f050a..757138c33b75 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -6448,6 +6448,14 @@ static void tg3_dump_state(struct tg3 *tp)
+ 	int i;
+ 	u32 *regs;
  
- 	type |= 0x00000001; /* PAGE_ALL */
- 	if (atomic_read(&vmm->engref[NVKM_SUBDEV_BAR]))
--		type |= 0x00000004; /* HUB_ONLY */
-+		type |= 0x00000006; /* HUB_ONLY | ALL PDB (hack) */
++	/* If it is a PCI error, all registers will be 0xffff,
++	 * we don't dump them out, just report the error and return
++	 */
++	if (tp->pdev->error_state != pci_channel_io_normal) {
++		netdev_err(tp->dev, "PCI channel ERROR!\n");
++		return;
++	}
++
+ 	regs = kzalloc(TG3_REG_BLK_SIZE, GFP_ATOMIC);
+ 	if (!regs)
+ 		return;
+@@ -11186,7 +11194,8 @@ static void tg3_reset_task(struct work_struct *work)
+ 	rtnl_lock();
+ 	tg3_full_lock(tp, 0);
  
- 	mutex_lock(&vmm->mmu->mutex);
- 
+-	if (tp->pcierr_recovery || !netif_running(tp->dev)) {
++	if (tp->pcierr_recovery || !netif_running(tp->dev) ||
++	    tp->pdev->error_state != pci_channel_io_normal) {
+ 		tg3_flag_clear(tp, RESET_TASK_PENDING);
+ 		tg3_full_unlock(tp);
+ 		rtnl_unlock();
 -- 
 2.43.0
 
