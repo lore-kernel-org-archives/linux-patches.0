@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160F815445E;
-	Tue, 23 Jan 2024 00:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1CE15445E;
+	Tue, 23 Jan 2024 00:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969387; cv=none; b=qKFwi3zIgQxKoioJuzc5lriSZBtClv1cQdbCuW+goqOJ/QYneC1pPZUbdU3zUS6goPdEOvKATvM2Ky07/MFanUqW6t3yWwL13BO4ZFredbB6MBo9Em0JKWspg+U4/06N/XEMz3kMK+Rvsrtnhx/06PRTf9wJwp6M+0EgIW//d8g=
+	t=1705969388; cv=none; b=qChGzqStH1/B7ysPW2khJItUHJxd47T+R2dgGSPE37d3cGZziMER4UmJ6eqxKkmHRlF9UFo//1FFE8OohGuEoO9Gqu03rnfWHFkmpUHVqHxA/KO9t2fvVNux8vqOslVR0CZdj59MI1gglw+lXNVW7XX+Fp762MjrVc3309OD1vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969387; c=relaxed/simple;
-	bh=qNmO9Ijo6IgOzelHQLGjBzDLa2hhzcV595i5V5OJoeU=;
+	s=arc-20240116; t=1705969388; c=relaxed/simple;
+	bh=/+whhwBLaEXa9/o+OIab5ey+rNosoYEOt39mFYMYlDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sopiDO2rnv9IfAZFccQmANFYPdA75+Nb8KvYxfdKL3e7GExb9QPDrKE8T+keFb37+nhrv1GzEGAlVqj7a5gnvElK6uf9AwW2BI2IkCwsJnEmkOJWNJg0VONB3sxNTScf7bWMpGVF8mW3GGQzHPgCJB0+AHZzrGYHFLsuioGkkEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7iHkG5R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uxH51z1/Hopmn83r+iTXa0DbYWcqkiwMPWO43SnruGM1eIYgO77w9pz47HyMWTFsiNv1NPE6CAiGoRPWf1SOpnq3vdmZ+0FpgtC13JPUB8Pt9Lzfva6TQOsgK5zlegyqpI5PczUHCxMB7iPbsEBhw3wmzqCsPeSJ7S9bRQzxjdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tclLvF1m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7iHkG5R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F0DC433F1;
-	Tue, 23 Jan 2024 00:23:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tclLvF1m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7174C433F1;
+	Tue, 23 Jan 2024 00:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969386;
-	bh=qNmO9Ijo6IgOzelHQLGjBzDLa2hhzcV595i5V5OJoeU=;
+	s=korg; t=1705969388;
+	bh=/+whhwBLaEXa9/o+OIab5ey+rNosoYEOt39mFYMYlDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b7iHkG5RFc7kQQN8AuL5/0C0/RyO1BJ883e/prFV0TAq20UWmYxC4aRliKEkecfgz
-	 k1ZOCqeAgt8YyrWrbVsmOcFk73Au9OtPLmvq4pOiw7Sb4nGQNgT2CQ69+DJImLuD/M
-	 qSKNGJYQ4iQm+s3BAeYaWIClyBUgutL7NNXekxNk=
+	b=tclLvF1mqdHlsVaRxISbLB0kKLnj69Fg3oZHydllVoECLRmXREPIXqpGfqSrx75oi
+	 dl1spiqIhoqAO70Qjq8fXweCwHaDn7ERYvwPcybAjuMNSzgAYUN7lfQbXQKfOB9fRD
+	 d6ihIlbX22e5fjHVWkt6FJntskIzCKasLCZcxa3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joakim Zhang <joakim.zhang@cixtech.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Xingwei Lee <xrivendell7@gmail.com>,
+	Hou Tao <houtao1@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 188/641] dma-mapping: clear dev->dma_mem to NULL after freeing it
-Date: Mon, 22 Jan 2024 15:51:32 -0800
-Message-ID: <20240122235823.859199791@linuxfoundation.org>
+Subject: [PATCH 6.7 189/641] bpf: Limit the number of uprobes when attaching program to multiple uprobes
+Date: Mon, 22 Jan 2024 15:51:33 -0800
+Message-ID: <20240122235823.891002442@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,42 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joakim Zhang <joakim.zhang@cixtech.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit b07bc2347672cc8c7293c64499f1488278c5ca3d ]
+[ Upstream commit 8b2efe51ba85ca83460941672afac6fca4199df6 ]
 
-Reproduced with below sequence:
-dma_declare_coherent_memory()->dma_release_coherent_memory()
-->dma_declare_coherent_memory()->"return -EBUSY" error
+An abnormally big cnt may be passed to link_create.uprobe_multi.cnt,
+and it will trigger the following warning in kvmalloc_node():
 
-It will return -EBUSY from the dma_assign_coherent_memory()
-in dma_declare_coherent_memory(), the reason is that dev->dma_mem
-pointer has not been set to NULL after it's freed.
+	if (unlikely(size > INT_MAX)) {
+		WARN_ON_ONCE(!(flags & __GFP_NOWARN));
+		return NULL;
+	}
 
-Fixes: cf65a0f6f6ff ("dma-mapping: move all DMA mapping code to kernel/dma")
-Signed-off-by: Joakim Zhang <joakim.zhang@cixtech.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fix the warning by limiting the maximal number of uprobes in
+bpf_uprobe_multi_link_attach(). If the number of uprobes is greater than
+MAX_UPROBE_MULTI_CNT, the attachment will return -E2BIG.
+
+Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
+Reported-by: Xingwei Lee <xrivendell7@gmail.com>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Closes: https://lore.kernel.org/bpf/CABOYnLwwJY=yFAGie59LFsUsBAgHfroVqbzZ5edAXbFE3YiNVA@mail.gmail.com
+Link: https://lore.kernel.org/bpf/20231215100708.2265609-2-houtao@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/coherent.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/trace/bpf_trace.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/dma/coherent.c b/kernel/dma/coherent.c
-index c21abc77c53e..ff5683a57f77 100644
---- a/kernel/dma/coherent.c
-+++ b/kernel/dma/coherent.c
-@@ -132,8 +132,10 @@ int dma_declare_coherent_memory(struct device *dev, phys_addr_t phys_addr,
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 84e8a0f6e4e0..640b08818afa 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -41,6 +41,8 @@
+ #define bpf_event_rcu_dereference(p)					\
+ 	rcu_dereference_protected(p, lockdep_is_held(&bpf_event_mutex))
  
- void dma_release_coherent_memory(struct device *dev)
- {
--	if (dev)
-+	if (dev) {
- 		_dma_release_coherent_memory(dev->dma_mem);
-+		dev->dma_mem = NULL;
-+	}
- }
++#define MAX_UPROBE_MULTI_CNT (1U << 20)
++
+ #ifdef CONFIG_MODULES
+ struct bpf_trace_module {
+ 	struct module *module;
+@@ -3202,6 +3204,8 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
  
- static void *__dma_alloc_from_coherent(struct device *dev,
+ 	if (!upath || !uoffsets || !cnt)
+ 		return -EINVAL;
++	if (cnt > MAX_UPROBE_MULTI_CNT)
++		return -E2BIG;
+ 
+ 	uref_ctr_offsets = u64_to_user_ptr(attr->link_create.uprobe_multi.ref_ctr_offsets);
+ 	ucookies = u64_to_user_ptr(attr->link_create.uprobe_multi.cookies);
 -- 
 2.43.0
 
