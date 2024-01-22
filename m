@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E63950A8E;
-	Tue, 23 Jan 2024 00:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA50150A8E;
+	Tue, 23 Jan 2024 00:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970508; cv=none; b=cC6bI5fbnl0112U5138NPZNns3R7CX9lvvgvMn6ftMGmwGbYajptsqVez2wc66awgiy6Fb4C7Ehq0rYEX2hEFLJslIHDTr3SZI1eMo0ESBofL/mToX/SAStSTc2RN6O6vgqPSUgtMR7HT+BgpaJ595IxidnA4xkTUj9jgbCSZN0=
+	t=1705970510; cv=none; b=HkC38DvZqde941BxtYE9EeUzjuS4mxBBaciLbtxGroqEfpp8z3EtktbH3Xy2v62Hib85UMdfvv6TCGd79Mw3P707dQgoNCeHYmwVduZtOdxiu8Ti74WYbEs2GfBRdIC/c1gp/o6Cp3Yu/l0s7yxHqBjleoSX2gRg5I38xVPnnZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970508; c=relaxed/simple;
-	bh=bZk/QSxnr8D5Ct4asj631uz0Yx1RTDd+aozi9VPPoQA=;
+	s=arc-20240116; t=1705970510; c=relaxed/simple;
+	bh=KxSu+EF3nFtWGuE9JK6ua28c+tQ5fKOqSaa/psWJNcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HqTJPSxe7t+UzrNDwjA5voIJdmJ2HrI9kqZIs1JPP66DwVyNNNkGCXVEtI4a3QM7ch9f+Mj+DJ3rAzWnUlfGUHLzCDUJ+W7DWPLZfNgMDj7+lGM1WpB9p1AuHByJo8Qs2gFM7u44OF7RcrioUikpDpGb/wpSQWZjOlL9YB/bj1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+7OiQ8/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ApuglcZjIEGVMZsvdYuZGHVN5x6C/j82ZhYkZRCukMgeRY2q+bQ5Ha9Tuu91deDbSVEUC4B8jHVDMKkGUX4DZ1EV5cqRQL8ZICFNrSt4El8q4G7pG702fK1d+LdfA0WzR3w3f7uLeibRfP3nFPUO3R7tNtIrtGCfvfWVnXowsTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GzD8a+s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+7OiQ8/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F62C433C7;
-	Tue, 23 Jan 2024 00:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GzD8a+s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237A6C433F1;
+	Tue, 23 Jan 2024 00:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970507;
-	bh=bZk/QSxnr8D5Ct4asj631uz0Yx1RTDd+aozi9VPPoQA=;
+	s=korg; t=1705970510;
+	bh=KxSu+EF3nFtWGuE9JK6ua28c+tQ5fKOqSaa/psWJNcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+7OiQ8/be41CNnT4PFIXLKS1Gqo/SdQgM7xZpA9ahgE6GFm0MH5pyQxNzycsoMeJ
-	 H7IVn5PbhG3MfL09cAv/cZf6SS+x+NQZTEdpS4VjLwGHIAXF3obIamq9SE097jOEq2
-	 o0Jd5IvFoHcsg0F0T022QNyBkjoqbyo3Ey+zMmus=
+	b=1GzD8a+svWG4LVooWHdToaG9pEgrWNVzYpyQAoZaiqDphcWsuWtQ6eU/fa65d2glQ
+	 5IjuwZI3r058iVVKq6ECUD7e3qUbsjJ7kkjpZl8i0PmBRlmRfHFdIws5VErlLFWYx9
+	 DYXthXxM46lIvcz1xMndgPmYJtW91RN9BcVKs9Ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Antoine Tenart <atenart@kernel.org>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/417] crypto: safexcel - Add error handling for dma_map_sg() calls
-Date: Mon, 22 Jan 2024 15:53:26 -0800
-Message-ID: <20240122235752.938797245@linuxfoundation.org>
+Subject: [PATCH 6.1 039/417] crypto: sahara - remove FLAGS_NEW_KEY logic
+Date: Mon, 22 Jan 2024 15:53:27 -0800
+Message-ID: <20240122235752.982997216@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -52,70 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit 87e02063d07708cac5bfe9fd3a6a242898758ac8 ]
+[ Upstream commit 8fd183435728b139248a77978ea3732039341779 ]
 
-Macro dma_map_sg() may return 0 on error. This patch enables
-checks in case of the macro failure and ensures unmapping of
-previously mapped buffers with dma_unmap_sg().
+Remove the FLAGS_NEW_KEY logic as it has the following issues:
+- the wrong key may end up being used when there are multiple data streams:
+       t1            t2
+    setkey()
+    encrypt()
+                   setkey()
+                   encrypt()
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+    encrypt() <--- key from t2 is used
+- switching between encryption and decryption with the same key is not
+  possible, as the hdr flags are only updated when a new setkey() is
+  performed
 
-Fixes: 49186a7d9e46 ("crypto: inside_secure - Avoid dma map if size is zero")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
+With this change, the key is always sent along with the cryptdata when
+performing encryption/decryption operations.
+
+Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../crypto/inside-secure/safexcel_cipher.c    | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/crypto/sahara.c | 34 +++++++++++++---------------------
+ 1 file changed, 13 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/crypto/inside-secure/safexcel_cipher.c b/drivers/crypto/inside-secure/safexcel_cipher.c
-index 32a37e3850c5..f59e32115268 100644
---- a/drivers/crypto/inside-secure/safexcel_cipher.c
-+++ b/drivers/crypto/inside-secure/safexcel_cipher.c
-@@ -742,9 +742,9 @@ static int safexcel_send_req(struct crypto_async_request *base, int ring,
- 				max(totlen_src, totlen_dst));
- 			return -EINVAL;
- 		}
--		if (sreq->nr_src > 0)
--			dma_map_sg(priv->dev, src, sreq->nr_src,
--				   DMA_BIDIRECTIONAL);
-+		if (sreq->nr_src > 0 &&
-+		    !dma_map_sg(priv->dev, src, sreq->nr_src, DMA_BIDIRECTIONAL))
-+			return -EIO;
- 	} else {
- 		if (unlikely(totlen_src && (sreq->nr_src <= 0))) {
- 			dev_err(priv->dev, "Source buffer not large enough (need %d bytes)!",
-@@ -752,8 +752,9 @@ static int safexcel_send_req(struct crypto_async_request *base, int ring,
- 			return -EINVAL;
- 		}
+diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
+index 7ab20fb95166..0e30d36b0a71 100644
+--- a/drivers/crypto/sahara.c
++++ b/drivers/crypto/sahara.c
+@@ -44,7 +44,6 @@
+ #define FLAGS_MODE_MASK		0x000f
+ #define FLAGS_ENCRYPT		BIT(0)
+ #define FLAGS_CBC		BIT(1)
+-#define FLAGS_NEW_KEY		BIT(3)
  
--		if (sreq->nr_src > 0)
--			dma_map_sg(priv->dev, src, sreq->nr_src, DMA_TO_DEVICE);
-+		if (sreq->nr_src > 0 &&
-+		    !dma_map_sg(priv->dev, src, sreq->nr_src, DMA_TO_DEVICE))
-+			return -EIO;
+ #define SAHARA_HDR_BASE			0x00800000
+ #define SAHARA_HDR_SKHA_ALG_AES	0
+@@ -142,8 +141,6 @@ struct sahara_hw_link {
+ };
  
- 		if (unlikely(totlen_dst && (sreq->nr_dst <= 0))) {
- 			dev_err(priv->dev, "Dest buffer not large enough (need %d bytes)!",
-@@ -762,9 +763,11 @@ static int safexcel_send_req(struct crypto_async_request *base, int ring,
- 			goto unmap;
- 		}
+ struct sahara_ctx {
+-	unsigned long flags;
+-
+ 	/* AES-specific context */
+ 	int keylen;
+ 	u8 key[AES_KEYSIZE_128];
+@@ -448,26 +445,22 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
+ 	int i, j;
+ 	int idx = 0;
  
--		if (sreq->nr_dst > 0)
--			dma_map_sg(priv->dev, dst, sreq->nr_dst,
--				   DMA_FROM_DEVICE);
-+		if (sreq->nr_dst > 0 &&
-+		    !dma_map_sg(priv->dev, dst, sreq->nr_dst, DMA_FROM_DEVICE)) {
-+			ret = -EIO;
-+			goto unmap;
-+		}
+-	/* Copy new key if necessary */
+-	if (ctx->flags & FLAGS_NEW_KEY) {
+-		memcpy(dev->key_base, ctx->key, ctx->keylen);
+-		ctx->flags &= ~FLAGS_NEW_KEY;
++	memcpy(dev->key_base, ctx->key, ctx->keylen);
+ 
+-		if (dev->flags & FLAGS_CBC) {
+-			dev->hw_desc[idx]->len1 = AES_BLOCK_SIZE;
+-			dev->hw_desc[idx]->p1 = dev->iv_phys_base;
+-		} else {
+-			dev->hw_desc[idx]->len1 = 0;
+-			dev->hw_desc[idx]->p1 = 0;
+-		}
+-		dev->hw_desc[idx]->len2 = ctx->keylen;
+-		dev->hw_desc[idx]->p2 = dev->key_phys_base;
+-		dev->hw_desc[idx]->next = dev->hw_phys_desc[1];
++	if (dev->flags & FLAGS_CBC) {
++		dev->hw_desc[idx]->len1 = AES_BLOCK_SIZE;
++		dev->hw_desc[idx]->p1 = dev->iv_phys_base;
++	} else {
++		dev->hw_desc[idx]->len1 = 0;
++		dev->hw_desc[idx]->p1 = 0;
++	}
++	dev->hw_desc[idx]->len2 = ctx->keylen;
++	dev->hw_desc[idx]->p2 = dev->key_phys_base;
++	dev->hw_desc[idx]->next = dev->hw_phys_desc[1];
++	dev->hw_desc[idx]->hdr = sahara_aes_key_hdr(dev);
+ 
+-		dev->hw_desc[idx]->hdr = sahara_aes_key_hdr(dev);
++	idx++;
+ 
+-		idx++;
+-	}
+ 
+ 	dev->nb_in_sg = sg_nents_for_len(dev->in_sg, dev->total);
+ 	if (dev->nb_in_sg < 0) {
+@@ -609,7 +602,6 @@ static int sahara_aes_setkey(struct crypto_skcipher *tfm, const u8 *key,
+ 	/* SAHARA only supports 128bit keys */
+ 	if (keylen == AES_KEYSIZE_128) {
+ 		memcpy(ctx->key, key, keylen);
+-		ctx->flags |= FLAGS_NEW_KEY;
+ 		return 0;
  	}
  
- 	memcpy(ctx->base.ctxr->data, ctx->key, ctx->key_len);
 -- 
 2.43.0
 
