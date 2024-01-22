@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4322CA6;
-	Tue, 23 Jan 2024 00:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FE42114;
+	Tue, 23 Jan 2024 00:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969492; cv=none; b=P8F4Rj8IQI0oUu27QGjF+t8CSBeMfVcHAQCYMFpuwjnKfyO5B8XRS60vCpL51o1gAhF8ht7I5GS69uIrc+UZS8g/r1evlwJl6B2EN+kvnH4LHjmR/WN856FcueL4BRUSDBdSCORbPC7aXVc2rTU2PptZQd18AwFdRp9tOwQtHQI=
+	t=1705969493; cv=none; b=Y1G0VVu2PyR2ScgkZo2+e7Mwhkw/Q95ptwwPDUJekztUEWUbTQ4MtFk0g9dYmv7IOKlj4GtWKDLRLHYm8KQQheEkxjYj35a/qMQ2wTxSErjZj88XEWxr7Vy2nbEiQF6hluEsWDVOhFOh6mNSViN4+9tuNLZAtOMFkpErSjDpzrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969492; c=relaxed/simple;
-	bh=FyxF/wJE0x7TxZXFHqePav+Yll8EmStNCk5gGzkuWjk=;
+	s=arc-20240116; t=1705969493; c=relaxed/simple;
+	bh=bYr5SI3DL8Pi4VmQJnTkmGcW+Xc7y8sHf2jVWKpy22Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OxgVxFLA4zZmXqxwi8nvalQJUCjJGs6XirTG3j1VSIncQtH1dYBKN+2B45eCfOzrAvYbylIqGonZnl9APrcxb0Oo6LwLd6b6Hc3lMVC7urjCBGq4WX2S9uhVKcxFq4550eWCgcxBy7gaLOAciSwk4FTL06Ab5YSrP22xetFMufY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcONZDPG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h+BHZtvck54PeVlMq4oDFDdK96Qb0DeHcwXl553HBXLdLpwaA76bstDvfOSBvE7pWohrNY77q4htLumlELaccrX44L2qAm5ng86G2+V7L0ozzVUwEo3guVmaIRqKmPM4grSZO2O8LyZU3nS/KVfc2+GpEOtM9hdhfOjq+FFDdHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuF4Obmz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcONZDPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4A8C43399;
-	Tue, 23 Jan 2024 00:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuF4Obmz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC059C43390;
+	Tue, 23 Jan 2024 00:24:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969491;
-	bh=FyxF/wJE0x7TxZXFHqePav+Yll8EmStNCk5gGzkuWjk=;
+	s=korg; t=1705969493;
+	bh=bYr5SI3DL8Pi4VmQJnTkmGcW+Xc7y8sHf2jVWKpy22Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PcONZDPGAAqFI4ah02q4WCSJCcleo+e02xW6pniJoDYNa5mEvDQO28MdpVMGQB1+w
-	 vF8CB0XfvinI0GGIEfPtZX14yP6DJR+q81diK+cGEwTkN7uADYop4FmOl7pQe8eL1g
-	 Gh3Nj7qsZR72RiJbGcjDro2wMbd7WO0Lajg4i+vY=
+	b=uuF4ObmzLjeHItjmDkm23/vi1z04N7W5BR1F9zQotJTQosuHhQ7AmFzobknCybzcf
+	 PO12JPhXNCr5XgTttKn4lhnFbs8qL7HG6KWVYKWGa19iQjYQu5TcKzIJPTZsEeFRzj
+	 IWwAXx7SWTtGm3BfLNXmGMA9dJlFloIkKxhtVKbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Xin Ji <xji@analogixsemi.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 281/641] drm/msm/dsi: Use pm_runtime_resume_and_get to prevent refcnt leaks
-Date: Mon, 22 Jan 2024 15:53:05 -0800
-Message-ID: <20240122235826.703344503@linuxfoundation.org>
+Subject: [PATCH 6.7 264/641] Revert "drm/bridge: Add 200ms delay to wait FW HPD status stable"
+Date: Mon, 22 Jan 2024 15:52:48 -0800
+Message-ID: <20240122235826.188201133@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,41 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Xin Ji <xji@analogixsemi.com>
 
-[ Upstream commit 3d07a411b4faaf2b498760ccf12888f8de529de0 ]
+[ Upstream commit af3145aa142c92409d3b123ff87ff0b5fd0bf849 ]
 
-This helper has been introduced to avoid programmer errors (missing
-_put calls leading to dangling refcnt) when using pm_runtime_get, use it.
+This reverts commit 330140d7319fcc4ec68bd924ea212e476bf12275
 
-While at it, start checking the return value.
+200ms delay will cause panel display image later than backlight
+turn on, revert this patch.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: 5c8290284402 ("drm/msm/dsi: Split PHY drivers to separate files")
-Patchwork: https://patchwork.freedesktop.org/patch/543350/
-Link: https://lore.kernel.org/r/20230620-topic-dsiphy_rpm-v2-1-a11a751f34f0@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 330140d7319fcc ("drm/bridge: Add 200ms delay to wait FW HPD status stable")
+Signed-off-by: Xin Ji <xji@analogixsemi.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231120091038.284825-1-xji@analogixsemi.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/analogix/anx7625.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 05621e5e7d63..b6314bb66d2f 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -516,7 +516,9 @@ static int dsi_phy_enable_resource(struct msm_dsi_phy *phy)
- 	struct device *dev = &phy->pdev->dev;
- 	int ret;
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
+index 8f740154707d..51abe42c639e 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.c
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
+@@ -1464,9 +1464,6 @@ static int _anx7625_hpd_polling(struct anx7625_data *ctx,
+ 	if (ctx->pdata.intp_irq)
+ 		return 0;
  
--	pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret)
-+		return ret;
- 
- 	ret = clk_prepare_enable(phy->ahb_clk);
- 	if (ret) {
+-	/* Delay 200ms for FW HPD de-bounce */
+-	msleep(200);
+-
+ 	ret = readx_poll_timeout(anx7625_read_hpd_status_p0,
+ 				 ctx, val,
+ 				 ((val & HPD_STATUS) || (val < 0)),
 -- 
 2.43.0
 
