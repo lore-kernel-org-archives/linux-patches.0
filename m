@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99F6605B1;
-	Tue, 23 Jan 2024 01:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94F0605A4;
+	Tue, 23 Jan 2024 01:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974687; cv=none; b=Eo4icwgSPDY/RmsvohLgitKIWoyAnmjpOJnqU/23slJFXylwWnJ3UZF4TATKmooTK3ibYHGmhTywWvrZx7e/CORItw6V5L8XAOW5Ljk8M0o39H/13I0bi8uzw1E+AU1OabS61IwE1S8N9kYo0RFzg1zCMmNCIVTixZbdvo+ODAc=
+	t=1705974687; cv=none; b=ia1EgKMNl1kAKN5P1mh3m6j+sbIycQiq/4ORhVX6Naa8FzV/cLRI/YbsS/KEL/kiw9GJexwwADl1TQeO9kEW4wIN22lGXfMMV1t5728Y6SuwwuOAQrOp+7+5kPdOdhgJs2lqcEkuVeoDz+jMtkMG3KEv5bfXtSIMgh1p3vi2pns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705974687; c=relaxed/simple;
-	bh=DLb6ecuD19x079sNxLR7ObHY4uqI7D72FoIKox7vLlU=;
+	bh=iw+JglZIjjWzWzQzYscbA3q9hkVjwwUgG0JyuRf5Jck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4pXHqXE4mvz18O0v0VJtixJW4sExLE3sI9k6Pn629cjeNMlC8+HnT/xtJ9brND177s7fs4Q9uX/SmFjRaFlZd51dmso3ReAjYFLs4T1lMOFH35AL6Hr1dpUHhV5FSku0i4+wbgzyzDqUgcxy7J1yTcaJp+ESnz5bsvibKHyEvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhiZ30c3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R2Jtp/D9JurVZGeWTGTFZ4wxSV9mAtyI/PFssoc2OK5sVh8b8xaQXrXCSrz6jWMA5iYiH5swffd2XXnGQeLxfUlgYXD7lebTUBBzrfsQ+v7T+z5em4j0wEBUguPNO2WkI1fzdVKh7uvuXYmmPL9Fm8MFabONy2wSTIBTYbS+OWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kE7HAAa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhiZ30c3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61242C43394;
-	Tue, 23 Jan 2024 01:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kE7HAAa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C65C43390;
+	Tue, 23 Jan 2024 01:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974686;
-	bh=DLb6ecuD19x079sNxLR7ObHY4uqI7D72FoIKox7vLlU=;
+	s=korg; t=1705974687;
+	bh=iw+JglZIjjWzWzQzYscbA3q9hkVjwwUgG0JyuRf5Jck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MhiZ30c3gxPVmcT+9MBxk1X6RzZMy25LVIQrLtkPRbHnWuJpHQNI4dfTQ0ZHYQ0Ki
-	 ZiYeJBRqS+ZraC9FWNDlWFfFqAZooQZdaYSV+fn+t1g93N6RX8j/F2G7W5NiHoRuRz
-	 wWgZysTh1TOTGI94jcQelHr5F2ezGspo0bCkFosY=
+	b=0kE7HAAazYShQPhEumtUVW/hhCn8ulh9nf/WGYOQHWOY3sAoaHx5cnHzy8yGBbisf
+	 FCB4IP3HFKpl+WEP5uwut2V/hEITSqalhbjXLRWxPVJyXWMfCuIPJ4Rzsma659OjjA
+	 eMlrLPkAVloPkKghRt1Z6b8gY0I8pADKP1MkOHIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Juergen Gross <jgross@suse.com>,
-	Paul Durrant <paul@xen.org>
-Subject: [PATCH 5.15 250/374] xen-netback: dont produce zero-size SKB frags
-Date: Mon, 22 Jan 2024 15:58:26 -0800
-Message-ID: <20240122235753.467014762@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 124/583] arm64: dts: qcom: qrb2210-rb1: Hook up USB3
+Date: Mon, 22 Jan 2024 15:52:55 -0800
+Message-ID: <20240122235815.934911509@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,110 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-commit c7ec4f2d684e17d69bbdd7c4324db0ef5daac26a upstream.
+[ Upstream commit 59f9ff79cd9cf3bc10743d61662b5729fcffff24 ]
 
-While frontends may submit zero-size requests (wasting a precious slot),
-core networking code as of at least 3ece782693c4b ("sock: skb_copy_ubufs
-support for compound pages") can't deal with SKBs when they have all
-zero-size fragments. Respond to empty requests right when populating
-fragments; all further processing is fragment based and hence won't
-encounter these empty requests anymore.
+Configure the USB3 PHY to enable USB3 functionality
 
-In a way this should have been that way from the beginning: When no data
-is to be transferred for a particular request, there's not even a point
-in validating the respective grant ref. That's no different from e.g.
-passing NULL into memcpy() when at the same time the size is 0.
-
-This is XSA-448 / CVE-2023-46838.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Paul Durrant <paul@xen.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230906-topic-rb1_features_sans_icc-v1-5-e92ce6fbde16@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: e0cee8dc6757 ("arm64: dts: qcom: qrb2210-rb1: use USB host mode")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/xen-netback/netback.c |   44 ++++++++++++++++++++++++++++++++------
- 1 file changed, 38 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/xen-netback/netback.c
-+++ b/drivers/net/xen-netback/netback.c
-@@ -463,12 +463,25 @@ static void xenvif_get_requests(struct x
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+index 0f7c59187896..52be19d55aed 100644
+--- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
++++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+@@ -366,6 +366,12 @@ &usb {
+ 	status = "okay";
+ };
  
- 	for (shinfo->nr_frags = 0; nr_slots > 0 && shinfo->nr_frags < MAX_SKB_FRAGS;
--	     shinfo->nr_frags++, gop++, nr_slots--) {
-+	     nr_slots--) {
-+		if (unlikely(!txp->size)) {
-+			unsigned long flags;
++&usb_qmpphy {
++	vdda-phy-supply = <&pm2250_l12>;
++	vdda-pll-supply = <&pm2250_l13>;
++	status = "okay";
++};
 +
-+			spin_lock_irqsave(&queue->response_lock, flags);
-+			make_tx_response(queue, txp, 0, XEN_NETIF_RSP_OKAY);
-+			push_tx_responses(queue);
-+			spin_unlock_irqrestore(&queue->response_lock, flags);
-+			++txp;
-+			continue;
-+		}
-+
- 		index = pending_index(queue->pending_cons++);
- 		pending_idx = queue->pending_ring[index];
- 		xenvif_tx_create_map_op(queue, pending_idx, txp,
- 				        txp == first ? extra_count : 0, gop);
- 		frag_set_pending_idx(&frags[shinfo->nr_frags], pending_idx);
-+		++shinfo->nr_frags;
-+		++gop;
- 
- 		if (txp == first)
- 			txp = txfrags;
-@@ -481,20 +494,39 @@ static void xenvif_get_requests(struct x
- 		shinfo = skb_shinfo(nskb);
- 		frags = shinfo->frags;
- 
--		for (shinfo->nr_frags = 0; shinfo->nr_frags < nr_slots;
--		     shinfo->nr_frags++, txp++, gop++) {
-+		for (shinfo->nr_frags = 0; shinfo->nr_frags < nr_slots; ++txp) {
-+			if (unlikely(!txp->size)) {
-+				unsigned long flags;
-+
-+				spin_lock_irqsave(&queue->response_lock, flags);
-+				make_tx_response(queue, txp, 0,
-+						 XEN_NETIF_RSP_OKAY);
-+				push_tx_responses(queue);
-+				spin_unlock_irqrestore(&queue->response_lock,
-+						       flags);
-+				continue;
-+			}
-+
- 			index = pending_index(queue->pending_cons++);
- 			pending_idx = queue->pending_ring[index];
- 			xenvif_tx_create_map_op(queue, pending_idx, txp, 0,
- 						gop);
- 			frag_set_pending_idx(&frags[shinfo->nr_frags],
- 					     pending_idx);
-+			++shinfo->nr_frags;
-+			++gop;
- 		}
- 
--		skb_shinfo(skb)->frag_list = nskb;
--	} else if (nskb) {
-+		if (shinfo->nr_frags) {
-+			skb_shinfo(skb)->frag_list = nskb;
-+			nskb = NULL;
-+		}
-+	}
-+
-+	if (nskb) {
- 		/* A frag_list skb was allocated but it is no longer needed
--		 * because enough slots were converted to copy ops above.
-+		 * because enough slots were converted to copy ops above or some
-+		 * were empty.
- 		 */
- 		kfree_skb(nskb);
- 	}
+ &usb_hsphy {
+ 	vdd-supply = <&pm2250_l12>;
+ 	vdda-pll-supply = <&pm2250_l13>;
+-- 
+2.43.0
+
 
 
