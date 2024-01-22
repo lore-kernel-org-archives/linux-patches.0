@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B3812F59C;
-	Tue, 23 Jan 2024 01:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2A112F59C;
+	Tue, 23 Jan 2024 01:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971755; cv=none; b=XUuQap0UhOpKEqPwFLdfwV+DmxLqzMCMxdwf9WrZff6BPe9qZshag6CrvlTn4FrkBEDJNXi20S7zhYuu3AOCTsyS15PazU9k5P3g/1r62GAdVMkC34YHy6Py6QSwS5yFZGCI7OOxHCGhP37HdXwfsUOWCu6bzDdSgwL3MFzkLDU=
+	t=1705971758; cv=none; b=Ed1iRZHRL/ysmRzOKyNFevf6QyUXuAPo0J4nkDOv2kwm6zGftKqRMbkyskN1bxa+ouKgIVEWdYMRwNBiJ1RWNxTJPif7iK1VuMVFEOBPqdZYh/fq+wcGNqbzRUuQnqRLXgPkioNpT0UgUg1Ih3nwS+zpLb21t3kWp6NreSP5tQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971755; c=relaxed/simple;
-	bh=NOxBVvxjkrQZfHiHcZej9nfsT5V4SfuT/23gYgh1OKg=;
+	s=arc-20240116; t=1705971758; c=relaxed/simple;
+	bh=a8AzFp5d5/5w8NaD93HmPyzhUjZpkVWNId3QZLCyHFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EeoNjhAnUw8zD6cj9KFIkEADsT3pPoOf2BK+yViyBFvzGEX1FZE3iUzydn/zJoimADmqmsXnE6NQHCrqhyDfZeWaBIex+Lz/lstgaTpWy3sqU3otC076TM0ijVbJ8oEb7V2eWXMDNm/RZUEqCm6y8BYawd+lkO/tcQujUcGr9JA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s7rxlWHt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uvC+iKcz0LTrNEN5RbzD0FS30ZUzboQnmifpbYG6G5r8y5nytMv2QVAiTYVitYJVkPxZozstO3edTmrzfsT8DdxqVxmOEqHMcdoIMrGImSgQz8iHtzCll6zEAI/yaHDu5h31TSQvdhpKkhR/Si4w51Nf2D6+1zfxI1cjydEJmcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m04GrtfM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s7rxlWHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4306C433F1;
-	Tue, 23 Jan 2024 01:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m04GrtfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A650FC433C7;
+	Tue, 23 Jan 2024 01:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971755;
-	bh=NOxBVvxjkrQZfHiHcZej9nfsT5V4SfuT/23gYgh1OKg=;
+	s=korg; t=1705971757;
+	bh=a8AzFp5d5/5w8NaD93HmPyzhUjZpkVWNId3QZLCyHFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s7rxlWHtKUmyQcM+AzQQhXOPh+PWmorUpK9R4b328UICCVUvRL12EljwPXsk6xITU
-	 c5NZEiXlB5tsxcuw/MsTZFFhPTIvwVvzLAbKBm6zSKUts1UE32dgV3LW1C+3uTKIbj
-	 UsdUKcXQ+7tNK5Cejb4chLISFPrvigbHHS8qtnrI=
+	b=m04GrtfMau33PrlM8KG9OEAGQTrxgMUstqiF9TkNwFw/eNZwbKwNeZ/IQr3YB0fUb
+	 iZd6kxf5bEXEXyzM/xVzhy11JqKZ+bowSagEwlNxuc5bpb1oGJxFUJ4vffI5yrYqlm
+	 CJ0bUOguPLbyM1fE1COJ5Ik4774UnlWWVDw5nDUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 311/417] Revert "net: rtnetlink: Enslave device before bringing it up"
-Date: Mon, 22 Jan 2024 15:57:59 -0800
-Message-ID: <20240122235802.600186498@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 220/286] ALSA: oxygen: Fix right channel of capture volume mixer
+Date: Mon, 22 Jan 2024 15:58:46 -0800
+Message-ID: <20240122235740.544557991@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,69 +45,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit ec4ffd100ffb396eca13ebe7d18938ea80f399c3 upstream.
+commit a03cfad512ac24a35184d7d87ec0d5489e1cb763 upstream.
 
-This reverts commit a4abfa627c3865c37e036bccb681619a50d3d93c.
+There was a typo in oxygen mixer code that didn't update the right
+channel value properly for the capture volume.  Let's fix it.
 
-The patch broke:
-> ip link set dummy0 up
-> ip link set dummy0 master bond0 down
+This trivial fix was originally reported on Bugzilla.
 
-This last command is useful to be able to enslave an interface with only
-one netlink message.
-
-After discussion, there is no good reason to support:
-> ip link set dummy0 down
-> ip link set dummy0 master bond0 up
-because the bond interface already set the slave up when it is up.
-
-Cc: stable@vger.kernel.org
-Fixes: a4abfa627c38 ("net: rtnetlink: Enslave device before bringing it up")
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://lore.kernel.org/r/20240108094103.2001224-2-nicolas.dichtel@6wind.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a3601560496d ("[ALSA] oxygen: add front panel controls")
+Cc: <stable@vger.kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=156561
+Link: https://lore.kernel.org/r/20240112111023.6208-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ sound/pci/oxygen/oxygen_mixer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -2797,13 +2797,6 @@ static int do_setlink(const struct sk_bu
- 		call_netdevice_notifiers(NETDEV_CHANGEADDR, dev);
- 	}
- 
--	if (tb[IFLA_MASTER]) {
--		err = do_set_master(dev, nla_get_u32(tb[IFLA_MASTER]), extack);
--		if (err)
--			goto errout;
--		status |= DO_SETLINK_MODIFIED;
--	}
--
- 	if (ifm->ifi_flags || ifm->ifi_change) {
- 		err = dev_change_flags(dev, rtnl_dev_combine_flags(dev, ifm),
- 				       extack);
-@@ -2811,6 +2804,13 @@ static int do_setlink(const struct sk_bu
- 			goto errout;
- 	}
- 
-+	if (tb[IFLA_MASTER]) {
-+		err = do_set_master(dev, nla_get_u32(tb[IFLA_MASTER]), extack);
-+		if (err)
-+			goto errout;
-+		status |= DO_SETLINK_MODIFIED;
-+	}
-+
- 	if (tb[IFLA_CARRIER]) {
- 		err = dev_change_carrier(dev, nla_get_u8(tb[IFLA_CARRIER]));
- 		if (err)
+--- a/sound/pci/oxygen/oxygen_mixer.c
++++ b/sound/pci/oxygen/oxygen_mixer.c
+@@ -718,7 +718,7 @@ static int ac97_fp_rec_volume_put(struct
+ 	oldreg = oxygen_read_ac97(chip, 1, AC97_REC_GAIN);
+ 	newreg = oldreg & ~0x0707;
+ 	newreg = newreg | (value->value.integer.value[0] & 7);
+-	newreg = newreg | ((value->value.integer.value[0] & 7) << 8);
++	newreg = newreg | ((value->value.integer.value[1] & 7) << 8);
+ 	change = newreg != oldreg;
+ 	if (change)
+ 		oxygen_write_ac97(chip, 1, AC97_REC_GAIN, newreg);
 
 
