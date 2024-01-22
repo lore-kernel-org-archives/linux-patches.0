@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C6B145B34;
-	Tue, 23 Jan 2024 00:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F33C1468FF;
+	Tue, 23 Jan 2024 00:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968375; cv=none; b=s4rsOneIwR8G+icfV7Ob0HQO/Zn9DPXkZq0LdGp1b5L3wkGc+RVBfHiBjUkQ5J8PMPXkZQ965f3ryVeFEqFKBhQkkn1Fbk7ptoG4utS313/VmLrTWAQWY8l+wepceVSFRGnJtGlTLqGfp+n88ASJq1eZ50R+8dLNDFbTifTHohY=
+	t=1705968378; cv=none; b=o8FrwTICzR+mfSnsORhB1BcuIiJMLvkjevd9ha4Zn8l84jh8BT+MUiOg4Ja6WK7MOahtGlyQPtJQxmTJ+RfKg8LROdH220tm7AFGxbfk698QQCz5ESy7B2Sq3UjI0zCJ+Zvr0FiAo1Tg1TfyEKe87exFzHch1PrW3QSO89GfWHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968375; c=relaxed/simple;
-	bh=7wAFtwfLz0ybB6NvZ3tdflln7zmyvvmtf2a3PXgktuc=;
+	s=arc-20240116; t=1705968378; c=relaxed/simple;
+	bh=T817w6BBqwZpSU7+/CkAzPribvRUi8WB7b0heVm2yFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qTgbJ5NsiY7rZ1mpFEo1E8IhZY8F7pj3u2GVW+a4FdMRCKx6vsMmVD40lNct4Uu+q1AXBo3xzvmDMe8jrhFgJ2JJKfdffDNlx5cw77cYYhZzAWbVbEHrant8Qw1uJqEtxANTil7TTc6m8jIRqjg5XYI0vHayWVKr0w22Ug5b/BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JqKlWu62; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nIongt7KQvlJcNucI4dCaWEvKq0gyP5/JRzAnqprHQb0UMJclgJRa3ou1lGaRCk0njjDcLFxgw5MjDEZ506UTaCc/YaMsuxf9eqagCZsHeu9BwvWzPhGAlKQKg58Pk6PjQj/4OUPiJdjzK+EnqTzkKjcXPbMamTZCIT0tI5Kw/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2R1gsvRH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JqKlWu62"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1874C433C7;
-	Tue, 23 Jan 2024 00:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2R1gsvRH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A409AC43394;
+	Tue, 23 Jan 2024 00:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968375;
-	bh=7wAFtwfLz0ybB6NvZ3tdflln7zmyvvmtf2a3PXgktuc=;
+	s=korg; t=1705968378;
+	bh=T817w6BBqwZpSU7+/CkAzPribvRUi8WB7b0heVm2yFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JqKlWu62NXwd3gAoo/oDgpr0VTFO56Sf4QQY/BZdscxuRhE17XQZQY7+konJmQNqP
-	 436y5GbHR6cTmR1dI4kG1El50HnO8AzWoIZMejzDxEUIsvTXhxorLUsx2tnDcb8Rdc
-	 tgxYWi4EghN8kVs+3iiLzzYIeeIkK/LCp2WlJQTk=
+	b=2R1gsvRHojePVevigVRLsuQ3nPX4zarzDb+OIXN0WNBQuMZWpjJ9V/D0VnJNhB3OI
+	 roPiTH7VIkvZqRHZ2Qpy0xikGPP1w4DKvb7BtDLGXw9m2pn6FFFdTsUpEgKS+JyiCc
+	 IrpwIkYYoej1JuFGVoiSebVYbgQ0ZhJHXhNnrXcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 089/148] f2fs: fix to avoid dirent corruption
-Date: Mon, 22 Jan 2024 15:57:25 -0800
-Message-ID: <20240122235715.990003206@linuxfoundation.org>
+Subject: [PATCH 4.19 090/148] drm/radeon/r600_cs: Fix possible int overflows in r600_cs_check_reg()
+Date: Mon, 22 Jan 2024 15:57:26 -0800
+Message-ID: <20240122235716.024464637@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -53,58 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 53edb549565f55ccd0bdf43be3d66ce4c2d48b28 ]
+[ Upstream commit 39c960bbf9d9ea862398759e75736cfb68c3446f ]
 
-As Al reported in link[1]:
+While improbable, there may be a chance of hitting integer
+overflow when the result of radeon_get_ib_value() gets shifted
+left.
 
-f2fs_rename()
-...
-	if (old_dir != new_dir && !whiteout)
-		f2fs_set_link(old_inode, old_dir_entry,
-					old_dir_page, new_dir);
-	else
-		f2fs_put_page(old_dir_page, 0);
+Avoid it by casting one of the operands to larger data type (u64).
 
-You want correct inumber in the ".." link.  And cross-directory
-rename does move the source to new parent, even if you'd been asked
-to leave a whiteout in the old place.
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-[1] https://lore.kernel.org/all/20231017055040.GN800259@ZenIV/
-
-With below testcase, it may cause dirent corruption, due to it missed
-to call f2fs_set_link() to update ".." link to new directory.
-- mkdir -p dir/foo
-- renameat2 -w dir/foo bar
-
-[ASSERT] (__chk_dots_dentries:1421)  --> Bad inode number[0x4] for '..', parent parent ino is [0x3]
-[FSCK] other corrupted bugs                           [Fail]
-
-Fixes: 7e01e7ad746b ("f2fs: support RENAME_WHITEOUT")
-Cc: Jan Kara <jack@suse.cz>
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 1729dd33d20b ("drm/radeon/kms: r600 CS parser fixes")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/namei.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/r600_cs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
-index 9e4c38481830..2eb7b0e2b34a 100644
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -979,7 +979,7 @@ static int f2fs_rename(struct inode *old_dir, struct dentry *old_dentry,
- 	}
- 
- 	if (old_dir_entry) {
--		if (old_dir != new_dir && !whiteout)
-+		if (old_dir != new_dir)
- 			f2fs_set_link(old_inode, old_dir_entry,
- 						old_dir_page, new_dir);
- 		else
+diff --git a/drivers/gpu/drm/radeon/r600_cs.c b/drivers/gpu/drm/radeon/r600_cs.c
+index c96b31950ca7..b6bdfb3f4a7f 100644
+--- a/drivers/gpu/drm/radeon/r600_cs.c
++++ b/drivers/gpu/drm/radeon/r600_cs.c
+@@ -1278,7 +1278,7 @@ static int r600_cs_check_reg(struct radeon_cs_parser *p, u32 reg, u32 idx)
+ 			return -EINVAL;
+ 		}
+ 		tmp = (reg - CB_COLOR0_BASE) / 4;
+-		track->cb_color_bo_offset[tmp] = radeon_get_ib_value(p, idx) << 8;
++		track->cb_color_bo_offset[tmp] = (u64)radeon_get_ib_value(p, idx) << 8;
+ 		ib[idx] += (u32)((reloc->gpu_offset >> 8) & 0xffffffff);
+ 		track->cb_color_base_last[tmp] = ib[idx];
+ 		track->cb_color_bo[tmp] = reloc->robj;
+@@ -1305,7 +1305,7 @@ static int r600_cs_check_reg(struct radeon_cs_parser *p, u32 reg, u32 idx)
+ 					"0x%04X\n", reg);
+ 			return -EINVAL;
+ 		}
+-		track->htile_offset = radeon_get_ib_value(p, idx) << 8;
++		track->htile_offset = (u64)radeon_get_ib_value(p, idx) << 8;
+ 		ib[idx] += (u32)((reloc->gpu_offset >> 8) & 0xffffffff);
+ 		track->htile_bo = reloc->robj;
+ 		track->db_dirty = true;
 -- 
 2.43.0
 
