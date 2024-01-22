@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B651350D0;
-	Tue, 23 Jan 2024 00:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CEE1350D6;
+	Tue, 23 Jan 2024 00:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969339; cv=none; b=ryZinYMGxdyqRWFAWxJ9/eFNv8yaOYWJZe4RfPFpPKmMysqwrWXyC4kVJJWF3q6JewTfaAiU2qrx4vZcj1CbbM7BVFfWmJGFr9Nu45okch1brR4ZhJv0N0ouATV3Gweg9GhkfGYXLswlDmTaPVf1HMLm5UjSwpS8ueu2fqYq92o=
+	t=1705969341; cv=none; b=Ck8lwkFDGDyPhHavPlp2l5CjpojxUhgqVMdylOGDBO+VequNEQOYYah67wdQpRwv1Fep13ooYE/iZiIAUkxRRBMItv5+hHbFXkcWLxTFHbhpDlc52GQMUvmUvXo5i4XoVtoTFOsJ9cfxGf/HGHFbBmUflbLy0U7sTi3Q25RqyCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969339; c=relaxed/simple;
-	bh=/CmGZblg69YBUJyIPKzVriWtlgP7Cs2lY+vNkUntJpA=;
+	s=arc-20240116; t=1705969341; c=relaxed/simple;
+	bh=my5W7COMaksGhTlVElxoJgjLzPQHAwOogxqlb+R6wtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UpmexSqZ/fmjP7gzk4AuX1zNMJz4zuOQBkBFEXaOj7Rbov21oucN/SKCm7a2WT4O8sHZsoCnn1TtlD+HD3K+EHK9xVjzp9inuduSamHYOEkQETLBx3RAfUNPV1tqt/XO8DQvvTikoESAXmQ0/rtSUL4D8LAhq9sxSXZTHsch+6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvFy+KUG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nwkaxXw5AAPk+YyR7cj5XpEtzAHJEGe86Len7/HNJugk36iSMyUt5SWFEcufkfv68T0Wo3o0GuOX3FUv16u7Ds759W6eRCKeBYfru3HQpNbFdYh2Ar6u7aaGqJe4ZSv3OLiFUDLypxcMDVD+IvSUq257bCoMFAS/hig9OeB2MBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MvAElJAx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvFy+KUG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759B9C43399;
-	Tue, 23 Jan 2024 00:22:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvAElJAx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9934C433C7;
+	Tue, 23 Jan 2024 00:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969339;
-	bh=/CmGZblg69YBUJyIPKzVriWtlgP7Cs2lY+vNkUntJpA=;
+	s=korg; t=1705969341;
+	bh=my5W7COMaksGhTlVElxoJgjLzPQHAwOogxqlb+R6wtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JvFy+KUG3V3F8L+QGmqvWqWlFdw4NW1jJNK3+VU38Nw9aZQOT3hnkxPwmKb4/8Rte
-	 kpM7e2Zukha0UocNciNUIXxZIJaNScclKI0CGc9jI+pR/pc6B2z4MbsPqhID2Gu1JP
-	 Wt8Ots8jGawGBRs/Xt8S6FzF85iM/CQaOakYfxgw=
+	b=MvAElJAxzMTC2IxBCcxS9IGd4YJhlQyVUJ1una1atEL844/s3MSWdy2H5qCyoltEc
+	 bAw6krpNTmKeIlwzmEeMas3ONfAprD1SMxPFu5si8UUxUtgf4ODpgHVfEN/NT2Dpck
+	 PewWYlA0ankVvsDka3DyvVl89PX0tW5lOKEDb7GM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Tushar Vyavahare <tushar.vyavahare@intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 181/641] selftests/xsk: Fix for SEND_RECEIVE_UNALIGNED test
-Date: Mon, 22 Jan 2024 15:51:25 -0800
-Message-ID: <20240122235823.659042689@linuxfoundation.org>
+Subject: [PATCH 6.7 182/641] ARM: dts: stm32: dont mix SCMI and non-SCMI board compatibles
+Date: Mon, 22 Jan 2024 15:51:26 -0800
+Message-ID: <20240122235823.690316902@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,91 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tushar Vyavahare <tushar.vyavahare@intel.com>
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-[ Upstream commit 2e1d6a04116c373fbd25beddba4267178535bc60 ]
+[ Upstream commit bfc3c6743de0ecb169026c36cbdbc0d12d22a528 ]
 
-Fix test broken by shared umem test and framework enhancement commit.
+The binding erroneously decreed that the SCMI variants of the ST
+evaluation kits are compatible with the non-SCMI variants.
 
-Correct the current implementation of pkt_stream_replace_half() by
-ensuring that nb_valid_entries are not set to half, as this is not true
-for all the tests. Ensure that the expected value for valid_entries for
-the SEND_RECEIVE_UNALIGNED test equals the total number of packets sent,
-which is 4096.
+This is not correct, as a kernel or bootloader compatible with the non-SCMI
+variant is not necessarily able to function, when direct access
+to resources is replaced by having to talk SCMI to the secure monitor.
 
-Create a new function called pkt_stream_pkt_set() that allows for packet
-modification to meet specific requirements while ensuring the accurate
-maintenance of the valid packet count to prevent inconsistencies in packet
-tracking.
+The binding has been adjusted to reflect thus, so synchronize the device
+trees now.
 
-Fixes: 6d198a89c004 ("selftests/xsk: Add a test for shared umem feature")
-Reported-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Tushar Vyavahare <tushar.vyavahare@intel.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Link: https://lore.kernel.org/bpf/20231214130007.33281-1-tushar.vyavahare@intel.com
+Fixes: 5b7e58313a77 ("ARM: dts: stm32: Add SCMI version of STM32 boards (DK1/DK2/ED1/EV1)")
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/xskxceiver.c | 25 +++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ arch/arm/boot/dts/st/stm32mp157a-dk1-scmi.dts | 2 +-
+ arch/arm/boot/dts/st/stm32mp157c-dk2-scmi.dts | 2 +-
+ arch/arm/boot/dts/st/stm32mp157c-ed1-scmi.dts | 2 +-
+ arch/arm/boot/dts/st/stm32mp157c-ev1-scmi.dts | 3 +--
+ 4 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/xskxceiver.c b/tools/testing/selftests/bpf/xskxceiver.c
-index b604c570309a..b1102ee13faa 100644
---- a/tools/testing/selftests/bpf/xskxceiver.c
-+++ b/tools/testing/selftests/bpf/xskxceiver.c
-@@ -634,16 +634,24 @@ static u32 pkt_nb_frags(u32 frame_size, struct pkt_stream *pkt_stream, struct pk
- 	return nb_frags;
- }
+diff --git a/arch/arm/boot/dts/st/stm32mp157a-dk1-scmi.dts b/arch/arm/boot/dts/st/stm32mp157a-dk1-scmi.dts
+index afcd6285890c..c27963898b5e 100644
+--- a/arch/arm/boot/dts/st/stm32mp157a-dk1-scmi.dts
++++ b/arch/arm/boot/dts/st/stm32mp157a-dk1-scmi.dts
+@@ -11,7 +11,7 @@
  
-+static bool set_pkt_valid(int offset, u32 len)
-+{
-+	return len <= MAX_ETH_JUMBO_SIZE;
-+}
-+
- static void pkt_set(struct pkt_stream *pkt_stream, struct pkt *pkt, int offset, u32 len)
- {
- 	pkt->offset = offset;
- 	pkt->len = len;
--	if (len > MAX_ETH_JUMBO_SIZE) {
--		pkt->valid = false;
--	} else {
--		pkt->valid = true;
--		pkt_stream->nb_valid_entries++;
--	}
-+	pkt->valid = set_pkt_valid(offset, len);
-+}
-+
-+static void pkt_stream_pkt_set(struct pkt_stream *pkt_stream, struct pkt *pkt, int offset, u32 len)
-+{
-+	bool prev_pkt_valid = pkt->valid;
-+
-+	pkt_set(pkt_stream, pkt, offset, len);
-+	pkt_stream->nb_valid_entries += pkt->valid - prev_pkt_valid;
- }
+ / {
+ 	model = "STMicroelectronics STM32MP157A-DK1 SCMI Discovery Board";
+-	compatible = "st,stm32mp157a-dk1-scmi", "st,stm32mp157a-dk1", "st,stm32mp157";
++	compatible = "st,stm32mp157a-dk1-scmi", "st,stm32mp157";
  
- static u32 pkt_get_buffer_len(struct xsk_umem_info *umem, u32 len)
-@@ -665,7 +673,7 @@ static struct pkt_stream *__pkt_stream_generate(u32 nb_pkts, u32 pkt_len, u32 nb
- 	for (i = 0; i < nb_pkts; i++) {
- 		struct pkt *pkt = &pkt_stream->pkts[i];
+ 	reserved-memory {
+ 		optee@de000000 {
+diff --git a/arch/arm/boot/dts/st/stm32mp157c-dk2-scmi.dts b/arch/arm/boot/dts/st/stm32mp157c-dk2-scmi.dts
+index 39358d902000..622618943134 100644
+--- a/arch/arm/boot/dts/st/stm32mp157c-dk2-scmi.dts
++++ b/arch/arm/boot/dts/st/stm32mp157c-dk2-scmi.dts
+@@ -11,7 +11,7 @@
  
--		pkt_set(pkt_stream, pkt, 0, pkt_len);
-+		pkt_stream_pkt_set(pkt_stream, pkt, 0, pkt_len);
- 		pkt->pkt_nb = nb_start + i * nb_off;
- 	}
+ / {
+ 	model = "STMicroelectronics STM32MP157C-DK2 SCMI Discovery Board";
+-	compatible = "st,stm32mp157c-dk2-scmi", "st,stm32mp157c-dk2", "st,stm32mp157";
++	compatible = "st,stm32mp157c-dk2-scmi", "st,stm32mp157";
  
-@@ -700,10 +708,9 @@ static void __pkt_stream_replace_half(struct ifobject *ifobj, u32 pkt_len,
+ 	reserved-memory {
+ 		optee@de000000 {
+diff --git a/arch/arm/boot/dts/st/stm32mp157c-ed1-scmi.dts b/arch/arm/boot/dts/st/stm32mp157c-ed1-scmi.dts
+index 07ea765a4553..c7c4d7e89d61 100644
+--- a/arch/arm/boot/dts/st/stm32mp157c-ed1-scmi.dts
++++ b/arch/arm/boot/dts/st/stm32mp157c-ed1-scmi.dts
+@@ -11,7 +11,7 @@
  
- 	pkt_stream = pkt_stream_clone(ifobj->xsk->pkt_stream);
- 	for (i = 1; i < ifobj->xsk->pkt_stream->nb_pkts; i += 2)
--		pkt_set(pkt_stream, &pkt_stream->pkts[i], offset, pkt_len);
-+		pkt_stream_pkt_set(pkt_stream, &pkt_stream->pkts[i], offset, pkt_len);
+ / {
+ 	model = "STMicroelectronics STM32MP157C-ED1 SCMI eval daughter";
+-	compatible = "st,stm32mp157c-ed1-scmi", "st,stm32mp157c-ed1", "st,stm32mp157";
++	compatible = "st,stm32mp157c-ed1-scmi", "st,stm32mp157";
  
- 	ifobj->xsk->pkt_stream = pkt_stream;
--	pkt_stream->nb_valid_entries /= 2;
- }
+ 	reserved-memory {
+ 		optee@fe000000 {
+diff --git a/arch/arm/boot/dts/st/stm32mp157c-ev1-scmi.dts b/arch/arm/boot/dts/st/stm32mp157c-ev1-scmi.dts
+index 813086ec2489..2ab77e64f1bb 100644
+--- a/arch/arm/boot/dts/st/stm32mp157c-ev1-scmi.dts
++++ b/arch/arm/boot/dts/st/stm32mp157c-ev1-scmi.dts
+@@ -11,8 +11,7 @@
  
- static void pkt_stream_replace_half(struct test_spec *test, u32 pkt_len, int offset)
+ / {
+ 	model = "STMicroelectronics STM32MP157C-EV1 SCMI eval daughter on eval mother";
+-	compatible = "st,stm32mp157c-ev1-scmi", "st,stm32mp157c-ev1", "st,stm32mp157c-ed1",
+-		     "st,stm32mp157";
++	compatible = "st,stm32mp157c-ev1-scmi", "st,stm32mp157c-ed1", "st,stm32mp157";
+ 
+ 	reserved-memory {
+ 		optee@fe000000 {
 -- 
 2.43.0
 
