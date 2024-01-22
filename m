@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772255FEE3;
-	Tue, 23 Jan 2024 01:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021265A0F0;
+	Tue, 23 Jan 2024 01:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974659; cv=none; b=dz9GYDMek/oMlz2F60KePJ8ysiqKtXwUfFysPGAfWrj7UsRpkzCB8D3t992YVgM5xrhDKkWMI9CzRFln70e1ov0HjbqQ8yz4cokZ2KyDcfy90lEq+2KJba2d7xwZT5usM6FslqOrMdqgIyVrN+SB2v2TLdbG8Iet/RCkF3olPAc=
+	t=1705974661; cv=none; b=kSnTNk78hF6XkG+sLp5t0dVeDU3dUw0vDY5ILSg37mUQCVq2VIXZjEzcrQ6Vuvg1RXI+VyZi4hZhTrqRr8f5Z1tnsHFJiFV8+lLp2C7GLYWl6SSmcN28lqMdmYlcsPzMvs5FIlrF7DSY+8gAgOATG0dbZk4OtvOQ45CRalXIJo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974659; c=relaxed/simple;
-	bh=E1gdM4A27ZhTx9V+clqBdN0h77vB6zAc0o1niM4r2dI=;
+	s=arc-20240116; t=1705974661; c=relaxed/simple;
+	bh=JCiZm+XFmpSwgY1CbYa5JS7rMtwaKMskjOeGMUIyvCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XUJqymFVXJ9XdDLPDdkWEXqEdZo+DlC/0DuseBM/3OWAu33qb8jZwPym94tABVM7rkeoKeyZPmUSwDBLM08qU1tqBpW6WOMGnnBVfG4c+AwQYQEvBcZqHbNs77onrdUCGmQVMiADL5eKuK+lFnY6Gokb1PsqMi8t4uGhCYgs/hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wk/ABxux; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ot/q5AKROFcjmCFcVCKihI30c1k1rwjtjxVDzVUQHMBAek44RJqzvJ0VNav6YusxtMOGIUuuiC7UNMAZZei3XI12FSEbMblfRaAZuXMmj60k4dJ93W8E7yEWTV2TGzjD9gmduQErw8/cvqaoD6//G0/Y1XFIHRBBYyt47jVFj0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8vekrLm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wk/ABxux"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214AAC43394;
-	Tue, 23 Jan 2024 01:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8vekrLm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D0CC433C7;
+	Tue, 23 Jan 2024 01:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974659;
-	bh=E1gdM4A27ZhTx9V+clqBdN0h77vB6zAc0o1niM4r2dI=;
+	s=korg; t=1705974660;
+	bh=JCiZm+XFmpSwgY1CbYa5JS7rMtwaKMskjOeGMUIyvCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wk/ABxuxDBe94bwwsf2N0X+dhgfNw9iEsQHHqDRyxG6/WCO4Sbl34Sh1j5IUw3Uv3
-	 UAbGiaLS8uFMzck8IRqWqUdU07jL16ikd3eUC3x8rmsrWj6RPqh9/SBIwMukrFAtyR
-	 65MAHp+3RIVKJzNRZIG7ZGq59Hitg1zZ0l9AbGqU=
+	b=B8vekrLm4d8M+JsF/Pr0x3AqfbqTrUrzlyaDQ62U6HEIAuFTP4RaG56u5dn/UMYIy
+	 NpfMhElguQrsG3nivPhExh+KRyTvd7H5sq/OR5qbv9o2wzsf2kB19XYB6dBI/4VEjq
+	 NGma4Z6PquPqSrKvi5io+/4VCf9uzddtEKX6DvXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 111/583] arm64: dts: qcom: sc7280: Mark some nodes as reserved
-Date: Mon, 22 Jan 2024 15:52:42 -0800
-Message-ID: <20240122235815.562090986@linuxfoundation.org>
+Subject: [PATCH 5.15 229/374] pwm: stm32: Fix enable count for clk in .probe()
+Date: Mon, 22 Jan 2024 15:58:05 -0800
+Message-ID: <20240122235752.659714242@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,130 +47,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Philipp Zabel <p.zabel@pengutronix.de>
 
-[ Upstream commit 6da24ba932082bae110feb917a64bb54637fa7c0 ]
+[ Upstream commit 19f1016ea9600ed89bc24247c36ff5934ad94fbb ]
 
-With the standard Qualcomm TrustZone setup, components such as lpasscc,
-pdc_reset and watchdog shouldn't be touched by Linux. Mark them with
-the status 'reserved' and reenable them in the chrome-common dtsi.
+Make the driver take over hardware state without disabling in .probe()
+and enable the clock for each enabled channel.
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Link: https://lore.kernel.org/r/20230919-fp5-initial-v2-1-14bb7cedadf5@fairphone.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 6897fac411db ("arm64: dts: qcom: sc7280: Make watchdog bark interrupt edge triggered")
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+[ukleinek: split off from a patch that also implemented .get_state()]
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
+Reviewed-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/qcom/sc7280-chrome-common.dtsi   | 24 +++++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7280.dtsi          |  8 ++++++-
- 2 files changed, 31 insertions(+), 1 deletion(-)
+ drivers/pwm/pwm-stm32.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-index 2e1cd219fc18..5d462ae14ba1 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-@@ -46,6 +46,26 @@ wpss_mem: memory@9ae00000 {
- 	};
- };
+diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
+index 9c260aac442d..bdcdb7f38312 100644
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -575,17 +575,21 @@ static void stm32_pwm_detect_complementary(struct stm32_pwm *priv)
+ 	priv->have_complementary_output = (ccer != 0);
+ }
  
-+&lpass_aon {
-+	status = "okay";
-+};
+-static unsigned int stm32_pwm_detect_channels(struct stm32_pwm *priv)
++static unsigned int stm32_pwm_detect_channels(struct stm32_pwm *priv,
++					      unsigned int *num_enabled)
+ {
+-	u32 ccer;
++	u32 ccer, ccer_backup;
+ 
+ 	/*
+ 	 * If channels enable bits don't exist writing 1 will have no
+ 	 * effect so we can detect and count them.
+ 	 */
++	regmap_read(priv->regmap, TIM_CCER, &ccer_backup);
+ 	regmap_set_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
+ 	regmap_read(priv->regmap, TIM_CCER, &ccer);
+-	regmap_clear_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
++	regmap_write(priv->regmap, TIM_CCER, ccer_backup);
 +
-+&lpass_core {
-+	status = "okay";
-+};
++	*num_enabled = hweight32(ccer_backup & TIM_CCER_CCXE);
+ 
+ 	return hweight32(ccer & TIM_CCER_CCXE);
+ }
+@@ -596,6 +600,8 @@ static int stm32_pwm_probe(struct platform_device *pdev)
+ 	struct device_node *np = dev->of_node;
+ 	struct stm32_timers *ddata = dev_get_drvdata(pdev->dev.parent);
+ 	struct stm32_pwm *priv;
++	unsigned int num_enabled;
++	unsigned int i;
+ 	int ret;
+ 
+ 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+@@ -618,7 +624,11 @@ static int stm32_pwm_probe(struct platform_device *pdev)
+ 
+ 	priv->chip.dev = dev;
+ 	priv->chip.ops = &stm32pwm_ops;
+-	priv->chip.npwm = stm32_pwm_detect_channels(priv);
++	priv->chip.npwm = stm32_pwm_detect_channels(priv, &num_enabled);
 +
-+&lpass_hm {
-+	status = "okay";
-+};
-+
-+&lpasscc {
-+	status = "okay";
-+};
-+
-+&pdc_reset {
-+	status = "okay";
-+};
-+
- /* The PMIC PON code isn't compatible w/ how Chrome EC/BIOS handle things. */
- &pmk8350_pon {
- 	status = "disabled";
-@@ -84,6 +104,10 @@ &scm {
- 	dma-coherent;
- };
++	/* Initialize clock refcount to number of enabled PWM channels. */
++	for (i = 0; i < num_enabled; i++)
++		clk_enable(priv->clk);
  
-+&watchdog {
-+	status = "okay";
-+};
-+
- &wifi {
- 	status = "okay";
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 91bb58c6b1a6..6f2a8f60856d 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2255,6 +2255,7 @@ lpasscc: lpasscc@3000000 {
- 			clocks = <&gcc GCC_CFG_NOC_LPASS_CLK>;
- 			clock-names = "iface";
- 			#clock-cells = <1>;
-+			status = "reserved"; /* Owned by ADSP firmware */
- 		};
- 
- 		lpass_rx_macro: codec@3200000 {
-@@ -2406,6 +2407,7 @@ lpass_aon: clock-controller@3380000 {
- 			clock-names = "bi_tcxo", "bi_tcxo_ao", "iface";
- 			#clock-cells = <1>;
- 			#power-domain-cells = <1>;
-+			status = "reserved"; /* Owned by ADSP firmware */
- 		};
- 
- 		lpass_core: clock-controller@3900000 {
-@@ -2416,6 +2418,7 @@ lpass_core: clock-controller@3900000 {
- 			power-domains = <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>;
- 			#clock-cells = <1>;
- 			#power-domain-cells = <1>;
-+			status = "reserved"; /* Owned by ADSP firmware */
- 		};
- 
- 		lpass_cpu: audio@3987000 {
-@@ -2486,6 +2489,7 @@ lpass_hm: clock-controller@3c00000 {
- 			clock-names = "bi_tcxo";
- 			#clock-cells = <1>;
- 			#power-domain-cells = <1>;
-+			status = "reserved"; /* Owned by ADSP firmware */
- 		};
- 
- 		lpass_ag_noc: interconnect@3c40000 {
-@@ -4199,6 +4203,7 @@ pdc_reset: reset-controller@b5e0000 {
- 			compatible = "qcom,sc7280-pdc-global";
- 			reg = <0 0x0b5e0000 0 0x20000>;
- 			#reset-cells = <1>;
-+			status = "reserved"; /* Owned by firmware */
- 		};
- 
- 		tsens0: thermal-sensor@c263000 {
-@@ -5195,11 +5200,12 @@ msi-controller@17a40000 {
- 			};
- 		};
- 
--		watchdog@17c10000 {
-+		watchdog: watchdog@17c10000 {
- 			compatible = "qcom,apss-wdt-sc7280", "qcom,kpss-wdt";
- 			reg = <0 0x17c10000 0 0x1000>;
- 			clocks = <&sleep_clk>;
- 			interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "reserved"; /* Owned by Gunyah hyp */
- 		};
- 
- 		timer@17c20000 {
+ 	ret = pwmchip_add(&priv->chip);
+ 	if (ret < 0)
 -- 
 2.43.0
 
