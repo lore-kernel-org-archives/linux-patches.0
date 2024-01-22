@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68F36025E;
-	Tue, 23 Jan 2024 01:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DC65FF0E;
+	Tue, 23 Jan 2024 01:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974692; cv=none; b=hjid0NiFB69yOYq/ZZvy1Hh10TBVXlYF2mjC8g6qkzadQ0iKrVOmEFkkL63wLTydNhIWXFUaNAoGP73+39mzhptBzuKy/MjP3eG8XzhqAEHrfhvW5/nvFkp/JGyhbjllZmz10VHQXNSSfRlqODkmrxJT/aKOuFsttqx1OJspH/k=
+	t=1705974693; cv=none; b=D4HJZZkzu5T3oCis67GfQ2M2FjW6UcjJOlxWCIpAJh5uJOVfO4JN5gf5q31r3dD9MGLgsSc56GL3xNZwc7KH8g8TrCmDl3pQsgmrdR8vR0KJeJMyPDAWnZH5cXuqwneC5BYwE4Q0qVnitt2gb4OPAVtVoJ0gVwip/rSRzN8I/sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974692; c=relaxed/simple;
-	bh=mnigtyfK4oRTMwJGtR6k0dUe12oXFybOg2Y8WdFVWP4=;
+	s=arc-20240116; t=1705974693; c=relaxed/simple;
+	bh=+nWwzuBqr5XdUY8hOrQ3Z7RMcq5uUhHwsEYqfkFfbto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gjah+31HUbbazF8KRKlNO3buHGnAuKKDMnxpGy1CY5gQ5LpBec+et27fvJEahnZjqHfXAL27Ltz98sq4zA/rSXJB8YdR3Aucj4THxxSV9nPKDrX/5MrPbtQChcfWekmiFaBbFbuxPoi7Lm+P9WTAIoHEKQyzNMCWrNzpf4yttAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QULYkYv5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EzKAqc8E3XR+nRVC06jfIH52q2SXW6oNe6rKLjoRDGBO+GWynWXzZ9l884zk7AFFKhC9TGWSM1E8ua4RKY1sTmozztWpzDyBLooFQ9Bc4ShNFOyCAyuTLkoi7LUBjqIRS2hgEL8pBLV47HuTw39gPirLVhc6pbrTXadSkfHBZ5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GhokNfb7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QULYkYv5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4EFC43394;
-	Tue, 23 Jan 2024 01:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GhokNfb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A93C43394;
+	Tue, 23 Jan 2024 01:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974692;
-	bh=mnigtyfK4oRTMwJGtR6k0dUe12oXFybOg2Y8WdFVWP4=;
+	s=korg; t=1705974693;
+	bh=+nWwzuBqr5XdUY8hOrQ3Z7RMcq5uUhHwsEYqfkFfbto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QULYkYv5Rubg7/ZXOY0+E0bg9fGU6g1A3TWDOQ6N5Vz0pBo73S5tPBFYBmEgJsEOP
-	 noJwL3//wuH7hV3EpZI/AV0+rKN33ZWUaah+UwkIfiBpYg2qf3RGyw3S5r5xlnkwJT
-	 hJW1OBNG6COj6GQk04WIYKADyzm0gv2Mr6R21o6A=
+	b=GhokNfb7YKRKFZ/th1TGwqxL6P5VW+OV+AmaU7AOzHpYeICM2RWuEcBF4qMR8HCWZ
+	 SJ1iudo7YF2mUJEyzqET8TtVsVxtOCkpiDgOVVwQl0WesX4NAYVG43vgcfqq4asKXt
+	 8gRWHskhKL+QoNoO0OagMMyafjpXQQbcGA/kwiMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/583] arm64: dts: qcom: qrb5165-rb5: correct LED panic indicator
-Date: Mon, 22 Jan 2024 15:52:57 -0800
-Message-ID: <20240122235815.993496353@linuxfoundation.org>
+Subject: [PATCH 6.6 104/583] ARM: dts: qcom: sdx65: correct PCIe EP phy-names
+Date: Mon, 22 Jan 2024 15:52:35 -0800
+Message-ID: <20240122235815.349658810@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -55,38 +56,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit dc6b5562acbac0285ab3b2dad23930b6434bdfc6 ]
+[ Upstream commit 94da379dba88c4cdd562bad21c9ba5656e5ed5df ]
 
-There is no "panic-indicator" default trigger but a property with that
-name:
+Qualcomm PCIe endpoint bindings expect phy-names to be "pciephy":
 
-  qrb5165-rb5.dtb: leds: led-user4: Unevaluated properties are not allowed ('linux,default-trigger' was unexpected)
+  arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dtb: pcie-ep@1c00000: phy-names:0: 'pciephy' was expected
 
-Fixes: b5cbd84e499a ("arm64: dts: qcom: qrb5165-rb5: Add onboard LED support")
+Fixes: 9c0bb38414a4 ("ARM: dts: qcom: sdx65: Add support for PCIe EP")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20231111094623.12476-1-krzysztof.kozlowski@linaro.org
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230924183103.49487-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 2 +-
+ arch/arm/boot/dts/qcom/qcom-sdx65.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index dfa8ee5c75af..e95a004c3391 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -63,8 +63,8 @@ led-user4 {
- 			function = LED_FUNCTION_INDICATOR;
- 			color = <LED_COLOR_ID_GREEN>;
- 			gpios = <&pm8150_gpios 10 GPIO_ACTIVE_HIGH>;
--			linux,default-trigger = "panic-indicator";
- 			default-state = "off";
-+			panic-indicator;
- 		};
+diff --git a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
+index 1a3583029a64..35a887176b3c 100644
+--- a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
+@@ -338,7 +338,7 @@ pcie_ep: pcie-ep@1c00000 {
+ 			power-domains = <&gcc PCIE_GDSC>;
  
- 		led-wlan {
+ 			phys = <&pcie_phy>;
+-			phy-names = "pcie-phy";
++			phy-names = "pciephy";
+ 
+ 			max-link-speed = <3>;
+ 			num-lanes = <2>;
 -- 
 2.43.0
 
