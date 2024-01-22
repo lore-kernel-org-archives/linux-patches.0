@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A569C12CDB0;
-	Tue, 23 Jan 2024 00:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5ED212CDB0;
+	Tue, 23 Jan 2024 00:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968983; cv=none; b=L9XrfsQVBIavQO5XCNifKCkxwZn97X9wn/ByRrloCIUVKiELWmgiYG5Nt6inAtFEeg42dVSgOHdRs/7CREgtBRGYWiwMNErQ7TgSt8IOkRQlYB9k6ngbB2soEXeu+mXV3vQj2bLZ/DCEqHhxS3YAOYLZc6pijuYq9uLfcZfdGno=
+	t=1705968984; cv=none; b=WmES2MtZ43X1rriNji7WuURLvBZJ/HLd64mmJJLdVtZGnTIQMNfZ7UEZ0tGFVn6+38C8mFIhA5oiaJmCt/uuchWV6JU569eB/4tR3DKQ/GCSPtWwMQXUM778XL7jng1xcZN4itsiSDLkVdOl3CzvGzMk87vAQv+EpTgvTRIMF2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968983; c=relaxed/simple;
-	bh=FDqvTkAAZ/5XalZm5nXJJkIKik6ojauBxaWwH01AuVg=;
+	s=arc-20240116; t=1705968984; c=relaxed/simple;
+	bh=n8n2/9FY/9C0NnGLCaWq+yXW6w3xXd5uf66tkNjTa68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Pnir25kFkYdsvYDmpAQ+0fjfDG5yhlMFxK3EpChuVZBDzKKeDJ6446qcgl6E8KEHxbP67V2hXY6YLGuDFwAxg1eUxp7FMruIC+u9aOT3ilquPU+0pZn8ncbRxA50y8FdJijchLMicMxw0YqT2QL0moRE7ZG5VIrK9Nd8lCAkP/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l8AdAWPi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iJ8mmUGIr8tp4j/9qPQsVIjmibwAXM/6E1qJP/BUc51b/vSJUiTd4JoZviaYKGNnwpo7l/T9ixaa5tHayPjLBJ9IbBo4HZ7sr9YqzVJ0Wp0jlf/bY+TyDzcYniU31dOSm3VJ4/X5zHquupRwMeWi7dr7A2ziWasLyAZEdnlmzF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+y9SlGr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l8AdAWPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55532C433F1;
-	Tue, 23 Jan 2024 00:16:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+y9SlGr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799ADC433C7;
+	Tue, 23 Jan 2024 00:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968983;
-	bh=FDqvTkAAZ/5XalZm5nXJJkIKik6ojauBxaWwH01AuVg=;
+	s=korg; t=1705968984;
+	bh=n8n2/9FY/9C0NnGLCaWq+yXW6w3xXd5uf66tkNjTa68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l8AdAWPiOVYDzksAGqHrbJHFSuwGSBXfaHIOEit4FCJHOtD9btXs7ZRR6Z3GGEX4w
-	 CZtZ3BzWBBeILcsgLfTk5issKGlGfZBtaJ1b7SzWUcfNcchNztOz+4yxKkKnml2I14
-	 WKvHkP4n0M7uV1Hb2JhdjvoxbAeozRNS9mI/G0oA=
+	b=n+y9SlGr9kgrRrAYvQfYdQSG3rNmEhiC3ql9XSlxH+EVEkf/i5NdyER06W08JspCm
+	 m8WuUbXvrLJxypZgbQV4wgoEtUhuP9xZVb2JoS2CWSN7bK9m5TMexT3CcfNrrOAOz8
+	 WGCLDumG32eOAAliNS/ua+pjHviN1ZzbHU/MNfwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.4 141/194] Input: atkbd - use ab83 as id when skipping the getid command
-Date: Mon, 22 Jan 2024 15:57:51 -0800
-Message-ID: <20240122235725.285896835@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 142/194] Revert "ASoC: atmel: Remove system clock tree configuration for at91sam9g20ek"
+Date: Mon, 22 Jan 2024 15:57:52 -0800
+Message-ID: <20240122235725.333986747@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -45,79 +45,132 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 58f65f9db7e0de366a5a115c2e2c0703858bba69 upstream.
+This reverts commit 6a20bf46c6254e4e99613309c334519a5f54be53 which is
+commit c775cbf62ed4911e4f0f23880f01815753123690 upstream.
 
-Barnabás reported that the change to skip the getid command
-when the controller is in translated mode on laptops caused
-the Version field of his "AT Translated Set 2 keyboard"
-input device to change from ab83 to abba, breaking a custom
-hwdb entry for this keyboard.
+It is reported to cause problems, so drop it from the 5.4.y tree for now.
 
-Use the standard ab83 id for keyboards when getid is skipped
-(rather then that getid fails) to avoid reporting a different
-Version to userspace then before skipping the getid.
-
-Fixes: 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in translated mode")
-Reported-by: Barnabás Pőcze <pobrn@protonmail.com>
-Closes: https://lore.kernel.org/linux-input/W1ydwoG2fYv85Z3C3yfDOJcVpilEvGge6UGa9kZh8zI2-qkHXp7WLnl2hSkFz63j-c7WupUWI5TLL6n7Lt8DjRuU-yJBwLYWrreb1hbnd6A=@protonmail.com/
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240116204325.7719-1-hdegoede@redhat.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/r/845b3053-d47b-4717-9665-79b120da133b@sirena.org.uk
+Reported-by: Mark Brown <broonie@kernel.org>
+Cc: Codrin Ciubotariu <codrin.ciubotariu@microchip.com>
+Cc: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ sound/soc/atmel/sam9g20_wm8731.c |   61 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -741,9 +741,9 @@ static bool atkbd_is_portable_device(voi
-  * not work. So in this case simply assume a keyboard is connected to avoid
-  * confusing some laptop keyboards.
-  *
-- * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using a fake id is
-- * ok in translated mode, only atkbd_select_set() checks atkbd->id and in
-- * translated mode that is a no-op.
-+ * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using the standard
-+ * 0xab83 id is ok in translated mode, only atkbd_select_set() checks atkbd->id
-+ * and in translated mode that is a no-op.
+--- a/sound/soc/atmel/sam9g20_wm8731.c
++++ b/sound/soc/atmel/sam9g20_wm8731.c
+@@ -46,6 +46,35 @@
   */
- static bool atkbd_skip_getid(struct atkbd *atkbd)
+ #undef ENABLE_MIC_INPUT
+ 
++static struct clk *mclk;
++
++static int at91sam9g20ek_set_bias_level(struct snd_soc_card *card,
++					struct snd_soc_dapm_context *dapm,
++					enum snd_soc_bias_level level)
++{
++	static int mclk_on;
++	int ret = 0;
++
++	switch (level) {
++	case SND_SOC_BIAS_ON:
++	case SND_SOC_BIAS_PREPARE:
++		if (!mclk_on)
++			ret = clk_enable(mclk);
++		if (ret == 0)
++			mclk_on = 1;
++		break;
++
++	case SND_SOC_BIAS_OFF:
++	case SND_SOC_BIAS_STANDBY:
++		if (mclk_on)
++			clk_disable(mclk);
++		mclk_on = 0;
++		break;
++	}
++
++	return ret;
++}
++
+ static const struct snd_soc_dapm_widget at91sam9g20ek_dapm_widgets[] = {
+ 	SND_SOC_DAPM_MIC("Int Mic", NULL),
+ 	SND_SOC_DAPM_SPK("Ext Spk", NULL),
+@@ -106,6 +135,7 @@ static struct snd_soc_card snd_soc_at91s
+ 	.owner = THIS_MODULE,
+ 	.dai_link = &at91sam9g20ek_dai,
+ 	.num_links = 1,
++	.set_bias_level = at91sam9g20ek_set_bias_level,
+ 
+ 	.dapm_widgets = at91sam9g20ek_dapm_widgets,
+ 	.num_dapm_widgets = ARRAY_SIZE(at91sam9g20ek_dapm_widgets),
+@@ -118,6 +148,7 @@ static int at91sam9g20ek_audio_probe(str
  {
-@@ -761,6 +761,7 @@ static int atkbd_probe(struct atkbd *atk
- {
- 	struct ps2dev *ps2dev = &atkbd->ps2dev;
- 	unsigned char param[2];
-+	bool skip_getid;
+ 	struct device_node *np = pdev->dev.of_node;
+ 	struct device_node *codec_np, *cpu_np;
++	struct clk *pllb;
+ 	struct snd_soc_card *card = &snd_soc_at91sam9g20ek;
+ 	int ret;
  
- /*
-  * Some systems, where the bit-twiddling when testing the io-lines of the
-@@ -782,7 +783,8 @@ static int atkbd_probe(struct atkbd *atk
-  */
- 
- 	param[0] = param[1] = 0xa5;	/* initialize with invalid values */
--	if (atkbd_skip_getid(atkbd) || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
-+	skip_getid = atkbd_skip_getid(atkbd);
-+	if (skip_getid || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
- 
- /*
-  * If the get ID command was skipped or failed, we check if we can at least set
-@@ -792,7 +794,7 @@ static int atkbd_probe(struct atkbd *atk
- 		param[0] = 0;
- 		if (ps2_command(ps2dev, param, ATKBD_CMD_SETLEDS))
- 			return -1;
--		atkbd->id = 0xabba;
-+		atkbd->id = skip_getid ? 0xab83 : 0xabba;
- 		return 0;
+@@ -131,6 +162,31 @@ static int at91sam9g20ek_audio_probe(str
+ 		return -EINVAL;
  	}
+ 
++	/*
++	 * Codec MCLK is supplied by PCK0 - set it up.
++	 */
++	mclk = clk_get(NULL, "pck0");
++	if (IS_ERR(mclk)) {
++		dev_err(&pdev->dev, "Failed to get MCLK\n");
++		ret = PTR_ERR(mclk);
++		goto err;
++	}
++
++	pllb = clk_get(NULL, "pllb");
++	if (IS_ERR(pllb)) {
++		dev_err(&pdev->dev, "Failed to get PLLB\n");
++		ret = PTR_ERR(pllb);
++		goto err_mclk;
++	}
++	ret = clk_set_parent(mclk, pllb);
++	clk_put(pllb);
++	if (ret != 0) {
++		dev_err(&pdev->dev, "Failed to set MCLK parent\n");
++		goto err_mclk;
++	}
++
++	clk_set_rate(mclk, MCLK_RATE);
++
+ 	card->dev = &pdev->dev;
+ 
+ 	/* Parse device node info */
+@@ -174,6 +230,9 @@ static int at91sam9g20ek_audio_probe(str
+ 
+ 	return ret;
+ 
++err_mclk:
++	clk_put(mclk);
++	mclk = NULL;
+ err:
+ 	atmel_ssc_put_audio(0);
+ 	return ret;
+@@ -183,6 +242,8 @@ static int at91sam9g20ek_audio_remove(st
+ {
+ 	struct snd_soc_card *card = platform_get_drvdata(pdev);
+ 
++	clk_disable(mclk);
++	mclk = NULL;
+ 	snd_soc_unregister_card(card);
+ 	atmel_ssc_put_audio(0);
  
 
 
