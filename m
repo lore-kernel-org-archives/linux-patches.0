@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B91312A17F;
-	Tue, 23 Jan 2024 00:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C2612A17F;
+	Tue, 23 Jan 2024 00:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968889; cv=none; b=p01SbRY8Dv13yPlGz1tNnhbwU/+U0AOVlFX79QeumYMKjqtCG2ZcIPjEs2YzEHZvQ4xtZFUWqrnL6/tMXc9E80+d0Sefcg/pwDrZs9YVADuTO+1KbHowDa/BTIx1iUeLCaK19RkhbN/7z1/f+eDE6MmDthYGe0Q5Ufo+e1dupXY=
+	t=1705968890; cv=none; b=pHpxegrBz0RgDmTU+2UFN/ZC4qfnWNuTBAmcl2wlVYvVodYkquEZi+AG/Hm1JSipoakvO8CZPr1XcakfoGF79AtM9IuD8QqywEI90accLYecVwtdKE1doNZ1uyDZl9RRixGw69XRZOpAsjhXNi3QC02g7EzqrixSacS6sBNp/v0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968889; c=relaxed/simple;
-	bh=dAIUzhptMwX+wTMslwuFzgX/QFmrRnjHfc42jX/Mc2U=;
+	s=arc-20240116; t=1705968890; c=relaxed/simple;
+	bh=aLtnlYhe++hrtV90T0/97I/Vobwd0LgZL0EXgk8LhUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p6156hxaTDN6T+uNpITFkLdeTBxfsladESyoUsP7OIq6DUa6eZpbK7vaWM2o4UTaVr3uwhefD+5Nx7S0ob7+4wtmUiuPkctP56PwT0aUjmKSylKP7cWo8svW+HfneVGSLAxWJ92OrGvn7sTplnrG0r3kJRvHyFILWEq/2l/17cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06uA0a7V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EoJVZeMQCdKoMpGfq8ADUaXzl28pJgpmp7MpaubQKUGprXd3lpdM+H/IwUyzly/RKcYzGR7dbd995/c1wEunqDnML1ITKwm88JMdUv57ebO7QrBUfC3AWgex7zUpD8QgPWE8ThJLqkqX2/Jmmrnc+an3ETwo5SGTpnsIqQ+64FE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RsDUNgMw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06uA0a7V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF426C43390;
-	Tue, 23 Jan 2024 00:14:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RsDUNgMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2D1C43390;
+	Tue, 23 Jan 2024 00:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968889;
-	bh=dAIUzhptMwX+wTMslwuFzgX/QFmrRnjHfc42jX/Mc2U=;
+	s=korg; t=1705968890;
+	bh=aLtnlYhe++hrtV90T0/97I/Vobwd0LgZL0EXgk8LhUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=06uA0a7VDB5f0GA9pt+H6PT2acIpzp7yXaEJ3MSjCepGqIHfQNHR+MnqM4vQEu3Nw
-	 waEmazN+bZTvEMDhTYFZp63TwTL1bugtJq7Dq+nkEd70YiL3Vfntxln5Cm7K+QqxcP
-	 pHjzPiAnc1V9NsKBwRK9/U0/FX4//acUx4OnRDjA=
+	b=RsDUNgMwO4Hm26mJYB3lTEtWSC9ucwVQa6AXZTEZbidnepFCpJip+IQh3vdnBLbCM
+	 P+MTo1oYgZKjAHBy/GoGdMhh2rxqMoHmAu5WB3ki1ubQ0wQ2r5UJTTIZThqtt4DJL1
+	 r3ofdAI2i9LZxPzTYBOvJgtDPWtT2sJb4z3iOCyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kalle Valo <kvalo@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 082/194] wifi: libertas: stop selecting wext
-Date: Mon, 22 Jan 2024 15:56:52 -0800
-Message-ID: <20240122235722.768281022@linuxfoundation.org>
+Subject: [PATCH 5.4 083/194] ARM: dts: qcom: apq8064: correct XOADC register address
+Date: Mon, 22 Jan 2024 15:56:53 -0800
+Message-ID: <20240122235722.816060843@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,35 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 8170b04c2c92eee52ea50b96db4c54662197e512 ]
+[ Upstream commit 554557542e709e190eff8a598f0cde02647d533a ]
 
-Libertas no longer references the iw_handler infrastructure or wext_spy,
-so neither of the 'select' statements are used any more.
+The XOADC is present at the address 0x197 rather than just 197. It
+doesn't change a lot (since the driver hardcodes all register
+addresses), but the DT should present correct address anyway.
 
-Fixes: e86dc1ca4676 ("Libertas: cfg80211 support")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231108153409.1065286-1-arnd@kernel.org
+Fixes: c4b70883ee33 ("ARM: dts: add XOADC and IIO HWMON to APQ8064")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230928110309.1212221-3-dmitry.baryshkov@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas/Kconfig | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/marvell/libertas/Kconfig b/drivers/net/wireless/marvell/libertas/Kconfig
-index b9fe598130c3..38347a2e8320 100644
---- a/drivers/net/wireless/marvell/libertas/Kconfig
-+++ b/drivers/net/wireless/marvell/libertas/Kconfig
-@@ -2,8 +2,6 @@
- config LIBERTAS
- 	tristate "Marvell 8xxx Libertas WLAN driver support"
- 	depends on CFG80211
--	select WIRELESS_EXT
--	select WEXT_SPY
- 	select LIB80211
- 	select FW_LOADER
- 	---help---
+diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+index 8c8a576ab9c0..cd200910ccdf 100644
+--- a/arch/arm/boot/dts/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+@@ -759,7 +759,7 @@ pwrkey@1c {
+ 
+ 				xoadc: xoadc@197 {
+ 					compatible = "qcom,pm8921-adc";
+-					reg = <197>;
++					reg = <0x197>;
+ 					interrupts-extended = <&pmicintc 78 IRQ_TYPE_EDGE_RISING>;
+ 					#address-cells = <2>;
+ 					#size-cells = <0>;
 -- 
 2.43.0
 
