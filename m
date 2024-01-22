@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401D362A0E;
-	Tue, 23 Jan 2024 01:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23D563114;
+	Tue, 23 Jan 2024 01:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974982; cv=none; b=qT1onfZKUN7oFKh0rzzQc9v8jD8G4DgCtZodiZp2Fwlvwzd09fAyUux4N9rYMu0vP/bPfdm7HNbywcCTzYyMIAoOnyRIh6uWNvy3HAgFpodMcLKkNhk8XijQyd+M3SlY+XnW/RpQM+jd3w1thFs5R3I8gd98jecMx2Hq14i4CrU=
+	t=1705974982; cv=none; b=iieovcdOZnipwRKywxvs3AWBO4UIyoXGIQFmnt3y1UyDo1TVnVX7YxA+vWX07WFykj6bfMwGEE2jifbaTF90kr8HH0JYV8qxlVPdTvRksE4OngUT3cI6zyocwkmJFcwZsCoWyvg49tpuStSWaXDkHoHJJ4WMenNINiMqmP4G2as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705974982; c=relaxed/simple;
-	bh=1USQWhog3FzJ9o9Z7jdOwAg1PUsfHAAGIaDQMuSReug=;
+	bh=lk/m5v2uDFRILsfzD2K4MV+TKvES+F15+a+aDZUdRSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gkrYL1baQC3kgmbW0fwyND1tIyUtmWdjpRMUs0Nmc1h7rUjwyPIBVGjigPqXsDdFlBpK8WGc1KFod1Fpc1BsULsUSOZ3fYyJJgkecqk4c1QoIbodLw0y4rtyMhQkhyQqGp3uVqV0qn0kyB/L38umMQsrS7aTE684jL6+wrTVITk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AfAZHUTq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hlSNX2ggMtOv8z0UCw+1sJdLEuRhjwjZ8ra1uV2lxQHGw5NDarl36obcHfZ9OGII0fr+p5ajDfxR13sgB3UM52DY1C7AV9vejmT+K7euQo76ktyxRWyVgqf5rxdHpj1ce/OOAAPqUwewL6KFD3ilbAqzax3/60T8ZdOFI0NRR88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkrXKR/p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AfAZHUTq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8560C43390;
-	Tue, 23 Jan 2024 01:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkrXKR/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 845ADC433C7;
+	Tue, 23 Jan 2024 01:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974981;
-	bh=1USQWhog3FzJ9o9Z7jdOwAg1PUsfHAAGIaDQMuSReug=;
+	s=korg; t=1705974982;
+	bh=lk/m5v2uDFRILsfzD2K4MV+TKvES+F15+a+aDZUdRSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AfAZHUTqBpjhvyhKtWRL1L/GxV4VAdefpe2lOaVHFW8qp1o7s5NLLpeVyWVWNrbLS
-	 ekwT/bIcDPYyGMlftQdrlIm5x1iffKV5rF4IM3QdhRAnPYqVF4hsLz5PG9FpfniVDO
-	 P3l9m5hCuhubdQ8eTLmCT3ygmMKDv6IJt8UsFWcQ=
+	b=VkrXKR/prL3tARfOKMamlX6xCd0+udHd339IZdY7LWaAXurFEWtkm/eAWeDe5mYYI
+	 bBh5gJ+W69bXYZh+Wi8dTb3tbRF6iG3VRNp+c3EaHsPtT0GAMhXNyol5b5ioScpt8Y
+	 QJTd5KRRNCjiX48mYqDvU8B9EXPGHfF8CoKIMMnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Unnathi Chalicheemala <quic_uchalich@quicinc.com>,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 179/583] soc: qcom: llcc: Fix LLCC_TRP_ATTR2_CFGn offset
-Date: Mon, 22 Jan 2024 15:53:50 -0800
-Message-ID: <20240122235817.491025365@linuxfoundation.org>
+Subject: [PATCH 5.15 307/374] software node: Let args be NULL in software_node_get_reference_args
+Date: Mon, 22 Jan 2024 15:59:23 -0800
+Message-ID: <20240122235755.532463177@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,41 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit 110cb8d861cc1a040cdab495b22ac436c49d1454 ]
+[ Upstream commit 1eaea4b3604eb9ca7d9a1e73d88fc121bb4061f5 ]
 
-According to documentation, it has increments of 4, not 8.
+fwnode_get_property_reference_args() may not be called with args argument
+NULL and while OF already supports this. Add the missing NULL check.
 
-Fixes: c72ca343f911 ("soc: qcom: llcc: Add v4.1 HW version support")
-Reported-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-Reviewed-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20231012160509.184891-1-abel.vesa@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The purpose is to be able to count the references.
+
+Fixes: b06184acf751 ("software node: Add software_node_get_reference_args()")
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20231109101010.1329587-3-sakari.ailus@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/swnode.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 309c12f2d3bb..e877aace1155 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -46,7 +46,7 @@
- #define LLCC_TRP_STATUSn(n)           (4 + n * SZ_4K)
- #define LLCC_TRP_ATTR0_CFGn(n)        (0x21000 + SZ_8 * n)
- #define LLCC_TRP_ATTR1_CFGn(n)        (0x21004 + SZ_8 * n)
--#define LLCC_TRP_ATTR2_CFGn(n)        (0x21100 + SZ_8 * n)
-+#define LLCC_TRP_ATTR2_CFGn(n)        (0x21100 + SZ_4 * n)
+diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
+index 3ba1232ce845..15f149fc1940 100644
+--- a/drivers/base/swnode.c
++++ b/drivers/base/swnode.c
+@@ -547,6 +547,9 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
+ 	if (nargs > NR_FWNODE_REFERENCE_ARGS)
+ 		return -EINVAL;
  
- #define LLCC_TRP_SCID_DIS_CAP_ALLOC   0x21f00
- #define LLCC_TRP_PCB_ACT              0x21f04
++	if (!args)
++		return 0;
++
+ 	args->fwnode = software_node_get(refnode);
+ 	args->nargs = nargs;
+ 
 -- 
 2.43.0
 
