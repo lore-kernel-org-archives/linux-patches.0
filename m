@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632E462A0B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E9F62A13;
 	Tue, 23 Jan 2024 01:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974995; cv=none; b=SAqTE2q7grs+l+6HvAdZ38v9Req1gCTt56ES0nFXhQoOGPdb75V8zNznFhjIheTnSLQeDxzOJZrGLnE7ui3WVByIjaWkEfiyCk3oT3znm5O9HcJMCP5Mw3mmgGy2DwlRBp0z9NMrOc5mXu7W6aRWd2SRIBjQhZIC3m3EYNDZEvs=
+	t=1705974995; cv=none; b=YcRITLh141uDpQKsJrPOUNU/v9jaNNCADBgjwmUsU8I8oiwsCpx6ObYMxuu8ihXucWkBzj9GMCuUNnMugtDzLZ9hGs4rxP8fa4v6WfZEAJ35aWuHcRceuqQ6hzAYVGw6uFSSDm++b5MpNQDPDXXRGUG737ZZxSJTZVDPa69Kg2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705974995; c=relaxed/simple;
-	bh=+KrHzyFrJ9aJBebAWvLeIx9Bmn1N6fgQK2+9dYxxf9Q=;
+	bh=TaHfLp9Ic5qjfFdUXjr1+qEbBmaKel28jGayV3RuBBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYMZYBF5am+XnRb7JlGX3FtSzm+Tmypw6NYtV9WzQigVpVzCNxLe5VIkvNQeV34giEUZyeZytpRWT+J8Dw5k+PyNxYd0Y0yhrbFe6wbRs7NqM2FMnr6E/b2UzO7HcXbTWxvWXYoW2CvyLj1k885uXsUq1Ak92hEcZXoOsJd6uj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XguwHM6/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rqn+5dKZh9AT704zmy+zchZ21naa01wvJ3Ngc/NbjHUGnBMy+SzUHrbSfMxSBN5AoH9+ahGQD/nEkvt8GNQ8e6+zY/jhrKtXENOEDL23BbJAfuvygV2Z+umWdV8HXO2Lz6ifLDZNjmIR1COI4hOlXmD105/h+DogcK98X06Hz4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvLIBz/W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XguwHM6/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B45C433F1;
-	Tue, 23 Jan 2024 01:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvLIBz/W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0BB9C433F1;
+	Tue, 23 Jan 2024 01:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974994;
-	bh=+KrHzyFrJ9aJBebAWvLeIx9Bmn1N6fgQK2+9dYxxf9Q=;
+	s=korg; t=1705974995;
+	bh=TaHfLp9Ic5qjfFdUXjr1+qEbBmaKel28jGayV3RuBBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XguwHM6/+/isPm6iZL4gbLvzzuKhwHz/xZZhN6S+TyrWLK2qwJ+pQd+Bo3UKA4Jm6
-	 MTL6yIQ7KrOL7nF7m7HqeLKN2RGPvKRDLwhiKYJCEkdxpFjtN5qBlsc2HiyNS/OcCL
-	 k+hclzAEJkh5aGkiU0KVPgvJuGIJnSlZ8Bo9G5oU=
+	b=kvLIBz/WW+FfANZBzWZxf+BFD7zNuO6IURRf0f0tt6G5tvkkR0w+SklKi+E5E03PD
+	 M9G0WG2e5isRKKcw1W7ak4KH0sT88PfZou2RvODwu/dXtuPSTwhW6DPoTjRWcGOcnE
+	 nPgfSrCMIgcdjKeDcsMaxxUpCdzWQtVpbjf5mtpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 185/583] arm64: dts: qcom: sc8180x: Mark PCIe hosts cache-coherent
-Date: Mon, 22 Jan 2024 15:53:56 -0800
-Message-ID: <20240122235817.662141608@linuxfoundation.org>
+Subject: [PATCH 5.15 313/374] iio: adc: ad9467: dont ignore error codes
+Date: Mon, 22 Jan 2024 15:59:29 -0800
+Message-ID: <20240122235755.762777865@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +48,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit 45e8c72712345263208f7c94f334fa718634f557 ]
+[ Upstream commit e072e149cfb827e0ab4cafb0547e9658e35393cd ]
 
-The PCIe controllers on 8180 are cache-coherent. Mark them as such.
+Make sure functions that return errors are not ignored.
 
-Fixes: d20b6c84f56a ("arm64: dts: qcom: sc8180x: Add PCIe instances")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20231219-topic-8180_pcie_dmac-v1-1-5d00fc1b23fd@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: ad6797120238 ("iio: adc: ad9467: add support AD9467 ADC")
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20231207-iio-backend-prep-v2-2-a4a33bc4d70e@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/adc/ad9467.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index 486f7ffef43b..0d85bdec5a82 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -1751,6 +1751,7 @@ pcie0: pci@1c00000 {
+diff --git a/drivers/iio/adc/ad9467.c b/drivers/iio/adc/ad9467.c
+index 46c85748a07e..09ff5b27cee5 100644
+--- a/drivers/iio/adc/ad9467.c
++++ b/drivers/iio/adc/ad9467.c
+@@ -162,9 +162,10 @@ static int ad9467_reg_access(struct adi_axi_adc_conv *conv, unsigned int reg,
  
- 			phys = <&pcie0_lane>;
- 			phy-names = "pciephy";
-+			dma-coherent;
+ 	if (readval == NULL) {
+ 		ret = ad9467_spi_write(spi, reg, writeval);
+-		ad9467_spi_write(spi, AN877_ADC_REG_TRANSFER,
+-				 AN877_ADC_TRANSFER_SYNC);
+-		return ret;
++		if (ret)
++			return ret;
++		return ad9467_spi_write(spi, AN877_ADC_REG_TRANSFER,
++					AN877_ADC_TRANSFER_SYNC);
+ 	}
  
- 			status = "disabled";
- 		};
-@@ -1858,6 +1859,7 @@ pcie3: pci@1c08000 {
+ 	ret = ad9467_spi_read(spi, reg);
+@@ -272,10 +273,13 @@ static int ad9467_get_scale(struct adi_axi_adc_conv *conv, int *val, int *val2)
+ 	const struct ad9467_chip_info *info1 = to_ad9467_chip_info(info);
+ 	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
+ 	unsigned int i, vref_val;
++	int ret;
  
- 			phys = <&pcie3_lane>;
- 			phy-names = "pciephy";
-+			dma-coherent;
+-	vref_val = ad9467_spi_read(st->spi, AN877_ADC_REG_VREF);
++	ret = ad9467_spi_read(st->spi, AN877_ADC_REG_VREF);
++	if (ret < 0)
++		return ret;
  
- 			status = "disabled";
- 		};
-@@ -1965,6 +1967,7 @@ pcie1: pci@1c10000 {
+-	vref_val &= info1->vref_mask;
++	vref_val = ret & info1->vref_mask;
  
- 			phys = <&pcie1_lane>;
- 			phy-names = "pciephy";
-+			dma-coherent;
+ 	for (i = 0; i < info->num_scales; i++) {
+ 		if (vref_val == info->scale_table[i][1])
+@@ -296,6 +300,7 @@ static int ad9467_set_scale(struct adi_axi_adc_conv *conv, int val, int val2)
+ 	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
+ 	unsigned int scale_val[2];
+ 	unsigned int i;
++	int ret;
  
- 			status = "disabled";
- 		};
-@@ -2072,6 +2075,7 @@ pcie2: pci@1c18000 {
+ 	if (val != 0)
+ 		return -EINVAL;
+@@ -305,11 +310,13 @@ static int ad9467_set_scale(struct adi_axi_adc_conv *conv, int val, int val2)
+ 		if (scale_val[0] != val || scale_val[1] != val2)
+ 			continue;
  
- 			phys = <&pcie2_lane>;
- 			phy-names = "pciephy";
-+			dma-coherent;
+-		ad9467_spi_write(st->spi, AN877_ADC_REG_VREF,
+-				 info->scale_table[i][1]);
+-		ad9467_spi_write(st->spi, AN877_ADC_REG_TRANSFER,
+-				 AN877_ADC_TRANSFER_SYNC);
+-		return 0;
++		ret = ad9467_spi_write(st->spi, AN877_ADC_REG_VREF,
++				       info->scale_table[i][1]);
++		if (ret < 0)
++			return ret;
++
++		return ad9467_spi_write(st->spi, AN877_ADC_REG_TRANSFER,
++					AN877_ADC_TRANSFER_SYNC);
+ 	}
  
- 			status = "disabled";
- 		};
+ 	return -EINVAL;
 -- 
 2.43.0
 
