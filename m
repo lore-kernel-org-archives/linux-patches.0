@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D4766B52;
-	Tue, 23 Jan 2024 01:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A6966B52;
+	Tue, 23 Jan 2024 01:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971698; cv=none; b=XWj5teoWNVhnTQJuHpAC5AmXij2m0mjLWiKjM8yluNMI5bF1yLEFXElkqPHZCKN9bdgQys+GoDpTOzZgWzRRhppneS0FQx9SV/5PO8qSCCCc3SI0whGWI4L0Bt6YZITk86LLZMWU0f+nu2im0UPCqDVy0Hn9ljr7ckVWQTJXmT4=
+	t=1705971699; cv=none; b=HQF3ih8WOScEEYTQEFbEdBN4JPxS2ed07svEHGDHCsgLSUAUj7iP2sHoVqmEWbqKryxYxUp7I767fOTxSov0RPTDl5D3CjdONj4fsUMHWeCslC6Oo8yU88/JCTF9Dt0MX+Z73eaVSa+OEBJiLS8RSGdqK5Qrv5b/PxPtXydszE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971698; c=relaxed/simple;
-	bh=t2r2Lb1uwgL0rNgpIWnWx7Bf7osBVwCe4UO43qn/oew=;
+	s=arc-20240116; t=1705971699; c=relaxed/simple;
+	bh=CI36dVXjThb1LTS3ryW5oxpSlHcmPGPum+k4B7I9D1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/oqGtsYl0s9+vWAXCNpoux2rhYbj5lSg9l3NxYta4TfantiLGDdziHNQ+vpI0h3gbdMTkym/M30IS1WmF9rR75SqYYTXsFHY41KZ6Hu8XVSgn2NZJ+hRCb4fuq4e1hExvXIRuVmfQ03gOZPhpZvskzwPEM3X2ofxxixzJQ7Ujk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G416DMoB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b6Ncj9RJI08BVdHq6WkGLxVfDKIhjGkzzsXiYXDFBk7J82qQokrLGLrxEjCT5jef34oBBkSh5YaEmLbAhqjZDIO/pCBsaE13LpUsJdcYq8xd6s4UYRv8xRKOkpL/LNMccA6P68x6rfnC/uMQ5xrSA5Yza4OdRBVxGEczhBrFlso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zknUy566; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G416DMoB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38F2C43390;
-	Tue, 23 Jan 2024 01:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zknUy566"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B422C433A6;
+	Tue, 23 Jan 2024 01:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971698;
-	bh=t2r2Lb1uwgL0rNgpIWnWx7Bf7osBVwCe4UO43qn/oew=;
+	s=korg; t=1705971699;
+	bh=CI36dVXjThb1LTS3ryW5oxpSlHcmPGPum+k4B7I9D1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G416DMoB/r4ueY+6x5kDA+ndubThWwBWwneb3PmrCdxwgVkcooJs5Q/LYOnC3G3cC
-	 aGqO4fk0H34bAZTzHZyP1lcuuX7tc/lxJJvy6QdwYrj79/7QVrcgQQD1l8COJgQ66Q
-	 OtL/jKIws+wBYIRqyW6Bk/8JVlWr5cgTzsV36eXA=
+	b=zknUy566c6+GDcELFy5tjPwCPTx4CY8DM/ryTTBfD6xDCBTPBkfzcaO0SECEUKmUp
+	 PucDw2cSh0jA07CnpWUiuzaLWG9JSV8SqFSfTr4+kBoSYvWQW4+/0NsYdGN5u2aMNc
+	 INm3u5fdAIZAp5KzynSU1nDnjH+tUiEs+IyjzGRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Landley <rob@landley.net>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.1 301/417] rootfs: Fix support for rootfstype= when root= is given
-Date: Mon, 22 Jan 2024 15:57:49 -0800
-Message-ID: <20240122235802.259761221@linuxfoundation.org>
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>
+Subject: [PATCH 5.10 210/286] tick-sched: Fix idle and iowait sleeptime accounting vs CPU hotplug
+Date: Mon, 22 Jan 2024 15:58:36 -0800
+Message-ID: <20240122235740.179182777@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,74 +48,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Berger <stefanb@linux.ibm.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 21528c69a0d8483f7c6345b1a0bc8d8975e9a172 upstream.
+commit 71fee48fb772ac4f6cfa63dbebc5629de8b4cc09 upstream.
 
-Documentation/filesystems/ramfs-rootfs-initramfs.rst states:
+When offlining and onlining CPUs the overall reported idle and iowait
+times as reported by /proc/stat jump backward and forward:
 
-  If CONFIG_TMPFS is enabled, rootfs will use tmpfs instead of ramfs by
-  default.  To force ramfs, add "rootfstype=ramfs" to the kernel command
-  line.
+cpu  132 0 176 225249 47 6 6 21 0 0
+cpu0 80 0 115 112575 33 3 4 18 0 0
+cpu1 52 0 60 112673 13 3 1 2 0 0
 
-This currently does not work when root= is provided since then
-saved_root_name contains a string and rootfstype= is ignored. Therefore,
-ramfs is currently always chosen when root= is provided.
+cpu  133 0 177 226681 47 6 6 21 0 0
+cpu0 80 0 116 113387 33 3 4 18 0 0
 
-The current behavior for rootfs's filesystem is:
+cpu  133 0 178 114431 33 6 6 21 0 0 <---- jump backward
+cpu0 80 0 116 114247 33 3 4 18 0 0
+cpu1 52 0 61 183 0 3 1 2 0 0        <---- idle + iowait start with 0
 
-   root=       | rootfstype= | chosen rootfs filesystem
-   ------------+-------------+--------------------------
-   unspecified | unspecified | tmpfs
-   unspecified | tmpfs       | tmpfs
-   unspecified | ramfs       | ramfs
-    provided   | ignored     | ramfs
+cpu  133 0 178 228956 47 6 6 21 0 0 <---- jump forward
+cpu0 81 0 117 114929 33 3 4 18 0 0
 
-rootfstype= should be respected regardless whether root= is given,
-as shown below:
+Reason for this is that get_idle_time() in fs/proc/stat.c has different
+sources for both values depending on if a CPU is online or offline:
 
-   root=       | rootfstype= | chosen rootfs filesystem
-   ------------+-------------+--------------------------
-   unspecified | unspecified | tmpfs  (as before)
-   unspecified | tmpfs       | tmpfs  (as before)
-   unspecified | ramfs       | ramfs  (as before)
-    provided   | unspecified | ramfs  (compatibility with before)
-    provided   | tmpfs       | tmpfs  (new)
-    provided   | ramfs       | ramfs  (new)
+- if a CPU is online the values may be taken from its per cpu
+  tick_cpu_sched structure
 
-This table represents the new behavior.
+- if a CPU is offline the values are taken from its per cpu cpustat
+  structure
 
-Fixes: 6e19eded3684 ("initmpfs: use initramfs if rootfstype= or root= specified")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Rob Landley <rob@landley.net>
-Link: https://lore.kernel.org/lkml/8244c75f-445e-b15b-9dbf-266e7ca666e2@landley.net/
-Reviewed-and-Tested-by: Mimi Zohar <zohar@linux.ibm.com>
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-Link: https://lore.kernel.org/r/20231120011248.396012-1-stefanb@linux.ibm.com
+The problem is that the per cpu tick_cpu_sched structure is set to zero on
+CPU offline. See tick_cancel_sched_timer() in kernel/time/tick-sched.c.
+
+Therefore when a CPU is brought offline and online afterwards both its idle
+and iowait sleeptime will be zero, causing a jump backward in total system
+idle and iowait sleeptime. In a similar way if a CPU is then brought
+offline again the total idle and iowait sleeptimes will jump forward.
+
+It looks like this behavior was introduced with commit 4b0c0f294f60
+("tick: Cleanup NOHZ per cpu data on cpu down").
+
+This was only noticed now on s390, since we switched to generic idle time
+reporting with commit be76ea614460 ("s390/idle: remove arch_cpu_idle_time()
+and corresponding code").
+
+Fix this by preserving the values of idle_sleeptime and iowait_sleeptime
+members of the per-cpu tick_sched structure on CPU hotplug.
+
+Fixes: 4b0c0f294f60 ("tick: Cleanup NOHZ per cpu data on cpu down")
+Reported-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/r/20240115163555.1004144-1-hca@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- init/do_mounts.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ kernel/time/tick-sched.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/init/do_mounts.c
-+++ b/init/do_mounts.c
-@@ -665,7 +665,10 @@ struct file_system_type rootfs_fs_type =
- 
- void __init init_rootfs(void)
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -1439,13 +1439,18 @@ void tick_setup_sched_timer(void)
+ void tick_cancel_sched_timer(int cpu)
  {
--	if (IS_ENABLED(CONFIG_TMPFS) && !saved_root_name[0] &&
--		(!root_fs_names || strstr(root_fs_names, "tmpfs")))
--		is_tmpfs = true;
-+	if (IS_ENABLED(CONFIG_TMPFS)) {
-+		if (!saved_root_name[0] && !root_fs_names)
-+			is_tmpfs = true;
-+		else if (root_fs_names && !!strstr(root_fs_names, "tmpfs"))
-+			is_tmpfs = true;
-+	}
+ 	struct tick_sched *ts = &per_cpu(tick_cpu_sched, cpu);
++	ktime_t idle_sleeptime, iowait_sleeptime;
+ 
+ # ifdef CONFIG_HIGH_RES_TIMERS
+ 	if (ts->sched_timer.base)
+ 		hrtimer_cancel(&ts->sched_timer);
+ # endif
+ 
++	idle_sleeptime = ts->idle_sleeptime;
++	iowait_sleeptime = ts->iowait_sleeptime;
+ 	memset(ts, 0, sizeof(*ts));
++	ts->idle_sleeptime = idle_sleeptime;
++	ts->iowait_sleeptime = iowait_sleeptime;
  }
+ #endif
+ 
 
 
