@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F3D6A03B;
-	Tue, 23 Jan 2024 02:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447D26A03B;
+	Tue, 23 Jan 2024 02:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975340; cv=none; b=mJ9xwfXee6P1h+osK0fhF9AEam1aSeIoXkX0PO9USpL16EZ/LIkP+RQvR7MaUARtyTsQkLNPMCej15S0oDZsgzKkDuAGYvMD/OT1Mk3079qpWJ6ttBgXFjAJr7ojylw4Ff9XcxvXdRvcxLAdZqyZ08w/QPMv5Ko5Nb5tyi321QQ=
+	t=1705975341; cv=none; b=NXVFn7mrZI152i0QdWOhWbmjf3nBueqXTxkCpr1f2ABecN0InVFjuWCvHbjxIYkE5ua12yOKssDykAqPeCMoXOjBIovSrOSqJGs2N9E9tXOr0KcqnOKamVU/6J45A6PjoOoltCkU0PqJjo426inJwye60VlTdFAIf3N3xXwhfO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975340; c=relaxed/simple;
-	bh=h3VoQEETzUmAC9R36otMF+EObEAhkdXzNF2wqZPux48=;
+	s=arc-20240116; t=1705975341; c=relaxed/simple;
+	bh=EHxg1DX9nuDZRQ+Y7Nj308ZDUByqVtLwsT/5XJU0/Mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PvjYcuxcXueyWlRkPGAEidm/hJgPREDq0xXvKNO1Bp1iBSWiZW+oZaierTbq9MfaQF+26Gw32Synk2HBIklvmbFYmWY7xi7X77BUPHv7qteKxtEC680VqCKJSov3TItLoQtY+FsXkAuVKVVwy/dXPNZTgVq5sm1O8cUi9clvqKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4PNbqaw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MAY2Cy1JyDAQPP0gl9TkKjOiFAB9U/Dqxfad5HF5MMslHcX5QKw/zhjNE3P4vPlCL3/MRXnHegkmFbhi9IL2VZ3TRvotf5iJn8KxI2fY2BFFt5FqStH0O+Qdsb0l92bjnBwXn3ulva/qDTSQgPX7gU/Qi3INfA+QgYN/ZZw1gqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtqRTa+H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4PNbqaw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D70C43394;
-	Tue, 23 Jan 2024 02:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtqRTa+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065FDC433B1;
+	Tue, 23 Jan 2024 02:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975340;
-	bh=h3VoQEETzUmAC9R36otMF+EObEAhkdXzNF2wqZPux48=;
+	s=korg; t=1705975341;
+	bh=EHxg1DX9nuDZRQ+Y7Nj308ZDUByqVtLwsT/5XJU0/Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i4PNbqawE7NWj7TblMmL2vk/I3uNm/y0upyoy37V29JhhBiqFXjHPd8zcBhQ4SjvE
-	 UGvrRUIt9eJlGVtazul+HPLaE+irAW6gCVSMIFmx5jyjIxgQuHUNWOXRY+bUVGFunE
-	 p6yM72TMjZ5qr4SDPsxtV640rIHJ63nDIWiwn3iU=
+	b=CtqRTa+Hm4Z7SY8ATZLeS/cbOo5AGsokQiHaKhGZxS/7nX1lQ0CE6iGW/sKgBU6qE
+	 03k5HXPoicTHZLh6Hjhp1xNbLbZrG2juQSBR3xnuSIpmJOaWx3P5GTliWnLwRvqcc+
+	 dzx2vMDIWuQpRB58H/tuFGinkG9YYYqfvVlMXdtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 277/583] f2fs: fix to check compress file in f2fs_move_file_range()
-Date: Mon, 22 Jan 2024 15:55:28 -0800
-Message-ID: <20240122235820.471219458@linuxfoundation.org>
+Subject: [PATCH 6.6 278/583] f2fs: fix to update iostat correctly in f2fs_filemap_fault()
+Date: Mon, 22 Jan 2024 15:55:29 -0800
+Message-ID: <20240122235820.502030032@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,36 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit fb9b65340c818875ea86464faf3c744bdce0055c ]
+[ Upstream commit bb34cc6ca87ff78f9fb5913d7619dc1389554da6 ]
 
-f2fs_move_file_range() doesn't support migrating compressed cluster
-data, let's add the missing check condition and return -EOPNOTSUPP
-for the case until we support it.
+In f2fs_filemap_fault(), it fixes to update iostat info only if
+VM_FAULT_LOCKED is tagged in return value of filemap_fault().
 
-Fixes: 4c8ff7095bef ("f2fs: support data compression")
+Fixes: 8b83ac81f428 ("f2fs: support read iostat")
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/f2fs/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index a06f03d23762..e36a3208a3e9 100644
+index e36a3208a3e9..a631d706e117 100644
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -2818,6 +2818,11 @@ static int f2fs_move_file_range(struct file *file_in, loff_t pos_in,
- 			goto out;
- 	}
+@@ -42,7 +42,7 @@ static vm_fault_t f2fs_filemap_fault(struct vm_fault *vmf)
+ 	vm_fault_t ret;
  
-+	if (f2fs_compressed_file(src) || f2fs_compressed_file(dst)) {
-+		ret = -EOPNOTSUPP;
-+		goto out_unlock;
-+	}
-+
- 	ret = -EINVAL;
- 	if (pos_in + len > src->i_size || pos_in + len < pos_in)
- 		goto out_unlock;
+ 	ret = filemap_fault(vmf);
+-	if (!ret)
++	if (ret & VM_FAULT_LOCKED)
+ 		f2fs_update_iostat(F2FS_I_SB(inode), inode,
+ 					APP_MAPPED_READ_IO, F2FS_BLKSIZE);
+ 
 -- 
 2.43.0
 
