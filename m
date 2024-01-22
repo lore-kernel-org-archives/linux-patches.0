@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BBF153BC3;
-	Tue, 23 Jan 2024 00:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F9115443C;
+	Tue, 23 Jan 2024 00:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969372; cv=none; b=S9UMj25jcg9EaECpozdU3Bo9Ye8NsF1eHotcibfZujix2B5EBxZtZFI1iGIh0i9YLb7/B/tzB0Hp2G3gjX/Szq9HDOCtqbhNthlYaN144sbFcUi3KZ/7y8qQr5FplHsPzJA0RbMaJpMK8TkQ4qmXPlLF/1F5WnHwpNQxDLQ7caM=
+	t=1705969373; cv=none; b=agP+1FkpMxcN2/FjxaNzBx2+QHokQ72O6+dci9qosL3XZXhI469OYpqW0WXA118agazCQN3wGFUYp7XJzIL5jJMlXb2tiS3qIVt6E56PXatSoTVnvEihemhbKQGxTM5OCiyC/de7B0gjVXwqov44vaMR1uHZDROu3u+raTNYDsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969372; c=relaxed/simple;
-	bh=l6Ekw+TvCpzJgSvGze7YZVfx/EqsoXrDmlmct8sYPKE=;
+	s=arc-20240116; t=1705969373; c=relaxed/simple;
+	bh=QyrfuBdgTkYJGn/CX/c5z/hEAzYTDuxh108kwyaGUhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFdskZ+NCpMe9nXNPFbjruw/Rt56ERAyruY20AAEvvvgQ4A9msOmYwwQpwA9SS9k5ObrjrI0PVbYV14vHGa5BN/y90+/Bfi3gRc7s3bW59QT2R45dpbKKPTVvrRufFbqLJ9Fwp9XqdJYmvZcOjBaKJ5q4ItULLkB3UJX50bbXWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB0+TRv/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iaer7+4jPsEctaevkJwuTm9FQlzVsoGyiwC69hkYSgL/Af5Yv+XoODl5/CYCo0XBYKRS0F14ELb7kyvk9GjqwCC7LwYF4WpwMEoqdClgebLTGrdm232hzRkBoLhXP2ywStNBJS61KmfP1xtJRXiJESuMmpawxV/JyABa0pM/0Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R7ePHbvN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB0+TRv/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7258C433C7;
-	Tue, 23 Jan 2024 00:22:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R7ePHbvN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFE5C43394;
+	Tue, 23 Jan 2024 00:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969371;
-	bh=l6Ekw+TvCpzJgSvGze7YZVfx/EqsoXrDmlmct8sYPKE=;
+	s=korg; t=1705969373;
+	bh=QyrfuBdgTkYJGn/CX/c5z/hEAzYTDuxh108kwyaGUhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YB0+TRv/PvXNSSU6J7mqf/RTYxSametFfXj0bNuNFN6hTr4JbJySq/vxVXroxmPAW
-	 kDPACxg+7StFvxg0xLUpUBPpSsIkkXiuR8e7g3odO2Y7mdkIm4Y1QeQmBsvYBLBzwh
-	 QvKmN27P3dGVmyXf2XLhS9R4ID9ee/CCnxCj8D4k=
+	b=R7ePHbvNBLj+DH8KJjfxgNd1ALMela7qduM5YuSfkDuKg3XwGrI4PaIlyfCKavKJE
+	 QA3RHrQQkTfLCY+ul0AuyiiKPWEkP/n0gt2DQXYApinKMOk2zyB7ZytoXWD48+u7M6
+	 CF0n0eJOmRN4KAbRxHQ/VPu2p9zeXoMSTa+CCo1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leone Fernando <leone4fernando@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 185/641] ipmr: support IP_PKTINFO on cache report IGMP msg
-Date: Mon, 22 Jan 2024 15:51:29 -0800
-Message-ID: <20240122235823.775002073@linuxfoundation.org>
+Subject: [PATCH 6.7 203/641] arm64: dts: qcom: sm8550: Update idle state time requirements
+Date: Mon, 22 Jan 2024 15:51:47 -0800
+Message-ID: <20240122235824.309073526@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,70 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leone Fernando <leone4fernando@gmail.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit bb7403655b3c3eb245d0ee330047cd3e20b3c4af ]
+[ Upstream commit ad6556fb45d4ab91ad786a2025cbe2b0f2e6cf77 ]
 
-In order to support IP_PKTINFO on those packets, we need to call
-ipv4_pktinfo_prepare.
+The idle state entry/exit/residency times differ from what shipped on
+production devices, mostly being overly optimistic in entry times and
+overly pessimistic in minimal residency times. Align them with
+downstream sources.
 
-When sending mrouted/pimd daemons a cache report IGMP msg, it is
-unnecessary to set dst on the newly created skb.
-It used to be necessary on older versions until
-commit d826eb14ecef ("ipv4: PKTINFO doesnt need dst reference") which
-changed the way IP_PKTINFO struct is been retrieved.
-
-Changes from v1:
-1. Undo changes in ipv4_pktinfo_prepare function. use it directly
-   and copy the control block.
-
-Fixes: d826eb14ecef ("ipv4: PKTINFO doesnt need dst reference")
-Signed-off-by: Leone Fernando <leone4fernando@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231218-topic-8550_fixes-v1-12-ce1272d77540@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index 9e222a57bc2b..0063a237253b 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -1025,6 +1025,10 @@ static int ipmr_cache_report(const struct mr_table *mrt,
- 	struct sk_buff *skb;
- 	int ret;
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index a3aba04e4c4a..5cf813a579d5 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -285,9 +285,9 @@ LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "silver-rail-power-collapse";
+ 				arm,psci-suspend-param = <0x40000004>;
+-				entry-latency-us = <800>;
++				entry-latency-us = <550>;
+ 				exit-latency-us = <750>;
+-				min-residency-us = <4090>;
++				min-residency-us = <6700>;
+ 				local-timer-stop;
+ 			};
  
-+	mroute_sk = rcu_dereference(mrt->mroute_sk);
-+	if (!mroute_sk)
-+		return -EINVAL;
-+
- 	if (assert == IGMPMSG_WHOLEPKT || assert == IGMPMSG_WRVIFWHOLE)
- 		skb = skb_realloc_headroom(pkt, sizeof(struct iphdr));
- 	else
-@@ -1069,7 +1073,8 @@ static int ipmr_cache_report(const struct mr_table *mrt,
- 		msg = (struct igmpmsg *)skb_network_header(skb);
- 		msg->im_vif = vifi;
- 		msg->im_vif_hi = vifi >> 8;
--		skb_dst_set(skb, dst_clone(skb_dst(pkt)));
-+		ipv4_pktinfo_prepare(mroute_sk, pkt);
-+		memcpy(skb->cb, pkt->cb, sizeof(skb->cb));
- 		/* Add our header */
- 		igmp = skb_put(skb, sizeof(struct igmphdr));
- 		igmp->type = assert;
-@@ -1079,12 +1084,6 @@ static int ipmr_cache_report(const struct mr_table *mrt,
- 		skb->transport_header = skb->network_header;
- 	}
+@@ -296,8 +296,8 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+ 				idle-state-name = "gold-rail-power-collapse";
+ 				arm,psci-suspend-param = <0x40000004>;
+ 				entry-latency-us = <600>;
+-				exit-latency-us = <1550>;
+-				min-residency-us = <4791>;
++				exit-latency-us = <1300>;
++				min-residency-us = <8136>;
+ 				local-timer-stop;
+ 			};
  
--	mroute_sk = rcu_dereference(mrt->mroute_sk);
--	if (!mroute_sk) {
--		kfree_skb(skb);
--		return -EINVAL;
--	}
--
- 	igmpmsg_netlink_event(mrt, skb);
+@@ -316,17 +316,17 @@ domain-idle-states {
+ 			CLUSTER_SLEEP_0: cluster-sleep-0 {
+ 				compatible = "domain-idle-state";
+ 				arm,psci-suspend-param = <0x41000044>;
+-				entry-latency-us = <1050>;
+-				exit-latency-us = <2500>;
+-				min-residency-us = <5309>;
++				entry-latency-us = <750>;
++				exit-latency-us = <2350>;
++				min-residency-us = <9144>;
+ 			};
  
- 	/* Deliver to mrouted */
+ 			CLUSTER_SLEEP_1: cluster-sleep-1 {
+ 				compatible = "domain-idle-state";
+ 				arm,psci-suspend-param = <0x4100c344>;
+-				entry-latency-us = <2700>;
+-				exit-latency-us = <3500>;
+-				min-residency-us = <13959>;
++				entry-latency-us = <2800>;
++				exit-latency-us = <4400>;
++				min-residency-us = <10150>;
+ 			};
+ 		};
+ 	};
 -- 
 2.43.0
 
