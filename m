@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E359964A80;
-	Tue, 23 Jan 2024 00:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083EC64CDA;
+	Tue, 23 Jan 2024 00:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971319; cv=none; b=p5U35Sc+n0FTN8iZ+lKSsIrhYhEv1HmpMEKVBR+ZW3qN5pFaJn/hnET0Hiius6GWgHsIPVVPTxxgZmkumINY+MGSDLjkdxmkm2sO9pUE0eI44ncmOLq9E5uslsXQE2KUPRZjCbDQdRWhF3WmKB02INLc7UzNE7WfyPotoYwRHi0=
+	t=1705971322; cv=none; b=pXKeuJNXCstL30lCNwHtTe5XEwZzpm/82Dy+6GZ+Jxj2e8DXNYYL59HaWzF/9IFuBbdpCrtwmJl1K1JVEJhLACvznihTxSksgHJ4kZQeQzViBYNrWXq5Fo/kryGawQSwQFtkWfchsfPZrB9Xdb6cmGvBwpVpDwcIraa/mOvfeFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971319; c=relaxed/simple;
-	bh=VIqk3OPkCpBgndo6IuoqFczPc1esLEG0ig53irdKeJA=;
+	s=arc-20240116; t=1705971322; c=relaxed/simple;
+	bh=PY7Bh2i5rQQmkGrPalTjXnshcsSNiFagHDF0hn1Y2R8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o3ntWrw0uppnNOv7qeqiGucoriCl9laDJqe98xlPiCrp6UZbIfCMX4a7RZVJH/IkgpRyWfLoTh+UKy6w8a5PUXKNTprI0RBVeUtqxHmxaFqpd5lox6DunxsTuRHYb2AVOXfIT5duxV0fzgozF4dZ4uDOeWEpi9/hfS7UYUizXkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRwTQLL2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qL4jjJbU3eYsb6rVPKbqjL2ZBwOdTlEHEL3E8TYtGB8+2NKRoc0afxwzNxzD0xO6HY015XeWCB8R2QuDm31v9yO0om7B/LPySPT05fLNi1BAg2P1DyOrrEI1sYj25uB1PU2T4bbxHBGCdVSJKD3AKDAQlYK3MIrJeJHKdaJG4Hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZqaSDZd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRwTQLL2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D59C433F1;
-	Tue, 23 Jan 2024 00:55:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZqaSDZd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C45C43390;
+	Tue, 23 Jan 2024 00:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971318;
-	bh=VIqk3OPkCpBgndo6IuoqFczPc1esLEG0ig53irdKeJA=;
+	s=korg; t=1705971320;
+	bh=PY7Bh2i5rQQmkGrPalTjXnshcsSNiFagHDF0hn1Y2R8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PRwTQLL2LI/HBYqwcE4QSrABtt15+1o7USN3/WWwHwWfxJ/YCUrRz3uTLKBLuERVM
-	 +tY2F98RcfvSdu9hcNvlejwAhuOOIN6Tog1Uqnt+ib7sBtvqcJjKvuw0qGDMBNwrlz
-	 sYHk5f6aoG396xrlQj8F1AV3m82o0eepfwHQsE2I=
+	b=hZqaSDZdEQbWrf0dr91mLmU1GMOVr5dDpZQTEv7Y70rXpMOmUcOaWcZlwsmG0Tw9o
+	 Ga5rG3OcKjaH8ixGh3KscqmpHxLsFuXYEKmXIm8Pi/SahYnFz2dn/MdbuXFej+boSB
+	 Au8pCCmUYzh0ti+ek0MPEeVouaOcAnIipWBmVoVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Sun <sunhao.th@gmail.com>,
-	Andrei Matei <andreimatei1@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Manorit Chawdhry <m-chawdhry@ti.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 124/286] bpf: Fix verification of indirect var-off stack access
-Date: Mon, 22 Jan 2024 15:57:10 -0800
-Message-ID: <20240122235736.904800839@linuxfoundation.org>
+Subject: [PATCH 6.1 223/417] watchdog: rti_wdt: Drop runtime pm reference count when watchdog is unused
+Date: Mon, 22 Jan 2024 15:56:31 -0800
+Message-ID: <20240122235759.640901125@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,85 +49,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrei Matei <andreimatei1@gmail.com>
+From: Vignesh Raghavendra <vigneshr@ti.com>
 
-[ Upstream commit a833a17aeac73b33f79433d7cee68d5cafd71e4f ]
+[ Upstream commit c1a6edf3b541e44e78f10bc6024df779715723f1 ]
 
-This patch fixes a bug around the verification of possibly-zero-sized
-stack accesses. When the access was done through a var-offset stack
-pointer, check_stack_access_within_bounds was incorrectly computing the
-maximum-offset of a zero-sized read to be the same as the register's min
-offset. Instead, we have to take in account the register's maximum
-possible value. The patch also simplifies how the max offset is checked;
-the check is now simpler than for min offset.
+Call runtime_pm_put*() if watchdog is not already started during probe and re
+enable it in watchdog start as required.
 
-The bug was allowing accesses to erroneously pass the
-check_stack_access_within_bounds() checks, only to later crash in
-check_stack_range_initialized() when all the possibly-affected stack
-slots are iterated (this time with a correct max offset).
-check_stack_range_initialized() is relying on
-check_stack_access_within_bounds() for its accesses to the
-stack-tracking vector to be within bounds; in the case of zero-sized
-accesses, we were essentially only verifying that the lowest possible
-slot was within bounds. We would crash when the max-offset of the stack
-pointer was >= 0 (which shouldn't pass verification, and hopefully is
-not something anyone's code attempts to do in practice).
+On K3 SoCs, watchdogs and their corresponding CPUs are under same
+power-domain, so if the reference count of unused watchdogs aren't
+dropped, it will lead to CPU hotplug failures as Device Management
+firmware won't allow to turn off the power-domain due to dangling
+reference count.
 
-Thanks Hao for reporting!
-
-Fixes: 01f810ace9ed3 ("bpf: Allow variable-offset stack access")
-Reported-by: Hao Sun <sunhao.th@gmail.com>
-Signed-off-by: Andrei Matei <andreimatei1@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20231207041150.229139-2-andreimatei1@gmail.com
-
-Closes: https://lore.kernel.org/bpf/CACkBjsZGEUaRCHsmaX=h-efVogsRfK1FPxmkgb0Os_frnHiNdw@mail.gmail.com/
+Fixes: 2d63908bdbfb ("watchdog: Add K3 RTI watchdog support")
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Tested-by: Manorit Chawdhry <m-chawdhry@ti.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20231213140110.938129-1-vigneshr@ti.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ drivers/watchdog/rti_wdt.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index ddfd33703f4d..fce2345f600f 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -3926,10 +3926,7 @@ static int check_stack_access_within_bounds(
+diff --git a/drivers/watchdog/rti_wdt.c b/drivers/watchdog/rti_wdt.c
+index 6e9253761fc1..ea617c0f9747 100644
+--- a/drivers/watchdog/rti_wdt.c
++++ b/drivers/watchdog/rti_wdt.c
+@@ -70,6 +70,11 @@ static int rti_wdt_start(struct watchdog_device *wdd)
+ {
+ 	u32 timer_margin;
+ 	struct rti_wdt_device *wdt = watchdog_get_drvdata(wdd);
++	int ret;
++
++	ret = pm_runtime_resume_and_get(wdd->parent);
++	if (ret)
++		return ret;
  
- 	if (tnum_is_const(reg->var_off)) {
- 		min_off = reg->var_off.value + off;
--		if (access_size > 0)
--			max_off = min_off + access_size - 1;
--		else
--			max_off = min_off;
-+		max_off = min_off + access_size;
- 	} else {
- 		if (reg->smax_value >= BPF_MAX_VAR_OFF ||
- 		    reg->smin_value <= -BPF_MAX_VAR_OFF) {
-@@ -3938,15 +3935,12 @@ static int check_stack_access_within_bounds(
- 			return -EACCES;
- 		}
- 		min_off = reg->smin_value + off;
--		if (access_size > 0)
--			max_off = reg->smax_value + off + access_size - 1;
--		else
--			max_off = min_off;
-+		max_off = reg->smax_value + off + access_size;
- 	}
+ 	/* set timeout period */
+ 	timer_margin = (u64)wdd->timeout * wdt->freq;
+@@ -295,6 +300,9 @@ static int rti_wdt_probe(struct platform_device *pdev)
+ 	if (last_ping)
+ 		watchdog_set_last_hw_keepalive(wdd, last_ping);
  
- 	err = check_stack_slot_within_bounds(min_off, state, type);
--	if (!err)
--		err = check_stack_slot_within_bounds(max_off, state, type);
-+	if (!err && max_off > 0)
-+		err = -EINVAL; /* out of stack access into non-negative offsets */
++	if (!watchdog_hw_running(wdd))
++		pm_runtime_put_sync(&pdev->dev);
++
+ 	return 0;
  
- 	if (err) {
- 		if (tnum_is_const(reg->var_off)) {
+ err_iomap:
+@@ -309,7 +317,10 @@ static int rti_wdt_remove(struct platform_device *pdev)
+ 	struct rti_wdt_device *wdt = platform_get_drvdata(pdev);
+ 
+ 	watchdog_unregister_device(&wdt->wdd);
+-	pm_runtime_put(&pdev->dev);
++
++	if (!pm_runtime_suspended(&pdev->dev))
++		pm_runtime_put(&pdev->dev);
++
+ 	pm_runtime_disable(&pdev->dev);
+ 
+ 	return 0;
 -- 
 2.43.0
 
