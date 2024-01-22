@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C3A23DB;
-	Tue, 23 Jan 2024 00:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95AB023DB;
+	Tue, 23 Jan 2024 00:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969846; cv=none; b=PNtg8V8wPpCcvrXHSZf8IogxXlBKMMarQjFLAjVkYDNfev7uX+vPkrRGHsLrB74YKA0fBqrocg9wZVxtVF8ft/R2DqYJSSIpC4qFLTkS1VSdimHDJWBaUEoA3AzTMjQS005jpPDyAFfucKMacSUVgK4kn8CWh+nBz+2JfFsQNG0=
+	t=1705969847; cv=none; b=U1v2klBA+cLo/2sCLs7kQzdGHSIPoh4XjlPK42Ih2nEJN8i/fZ0LLPuPB5fOiSqJ2LhSX7anWTi3TNT2exJGoV0H2K02ItzFC9RqaIP7hpq0py/ysNvhJAP8134xjEJnyl5QUoKEjMQt5CfRGFlUT5p8mI6mPjN79rZQFQepMIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969846; c=relaxed/simple;
-	bh=qNMBhwK1KUAVAaJYSt4ODxNnjUzBOTIosDPQVgYDMXs=;
+	s=arc-20240116; t=1705969847; c=relaxed/simple;
+	bh=wOMIO5gZ3FYtvYIlckeiL1AYGwMZrLddTkul2gKFG58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZH4b/wqBBw0Fq4n66r9jnFUKmg1/qZKJ6mWAyYq7LNMSnyoKGhkTcz3lraKm2N5IRZq0GQKGgAMDZhhlG1qW7bziIRR6VlYBr7DuwmNi2tfI0EmDcxJ1islovgdaKwWvYRl3iF4Sc/jbRSXTMyCCwdSAuI9lXMd07xsOiPKXPH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6iOi5Za; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YWZTVG1JTdM1VD2DNEqEmOFVcSVh0Itj+dZGr54tIBwv6nr2j6S/EfRHeyXhXF2AMB2ueMt3EfaytAuwvTlC8vC6JdmmBVtFVtXVLNuClBAWyYxQ4ODMBQQlAzyBiY3uFe/M9bbF7hS2XHykxItEPC+bF0HKIj/GxdSZslJl8pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5q6nBsE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6iOi5Za"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CB2C433C7;
-	Tue, 23 Jan 2024 00:30:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5q6nBsE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DEFC433C7;
+	Tue, 23 Jan 2024 00:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969846;
-	bh=qNMBhwK1KUAVAaJYSt4ODxNnjUzBOTIosDPQVgYDMXs=;
+	s=korg; t=1705969847;
+	bh=wOMIO5gZ3FYtvYIlckeiL1AYGwMZrLddTkul2gKFG58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D6iOi5ZazDSiXgFzOhZRxKGGAbdmc3qFRKskLnPbFWe+2Vz1lQW7SkVE7mWcPcI1U
-	 GX1LEtuj1pmNhrt5f3LBxLQu/UEyo75Z6PmNsXiNr2oGewm+Bs67WUzwGQU0WeiiTp
-	 mEYRQ4ES6JB7KkWbPAVdWkPlhDUYFUKCdvH2+oeM=
+	b=q5q6nBsEyUsDLcdRXyol2KMrAnWJ8bc2q2s9ohCWjma1p9AK8nSQbG8CBKymblW6r
+	 HO6PlZrZ9Hb4eUf3g6IEvSov9Q5f8xa6HfWkzZ3tTS+mH8gnRcYMCojom6G5qNrET7
+	 MCDYR2OZ/+KwOEc5G2nY+uFCwVn5UCcXlSnT2y44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Lee Jones <lee@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	"Neeraj Upadhyay (AMD)" <neeraj.iitr10@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 484/641] mfd: syscon: Fix null pointer dereference in of_syscon_register()
-Date: Mon, 22 Jan 2024 15:56:28 -0800
-Message-ID: <20240122235833.227332357@linuxfoundation.org>
+Subject: [PATCH 6.7 485/641] rcu: Restrict access to RCU CPU stall notifiers
+Date: Mon, 22 Jan 2024 15:56:29 -0800
+Message-ID: <20240122235833.263499871@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,38 +53,248 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit 41673c66b3d0c09915698fec5c13b24336f18dd1 ]
+[ Upstream commit 4e58aaeebb3c27993c734c99eae6881b196b1ddb ]
 
-kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure.
+Although the RCU CPU stall notifiers can be useful for dumping state when
+tracking down delicate forward-progress bugs where NUMA effects cause
+cache lines to be delivered to a given CPU regularly, but always in a
+state that prevents that CPU from making forward progress.  These bugs can
+be detected by the RCU CPU stall-warning mechanism, but in some cases,
+the stall-warnings printk()s disrupt the forward-progress bug before
+any useful state can be obtained.
 
-Fixes: e15d7f2b81d2 ("mfd: syscon: Use a unique name with regmap_config")
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20231204092443.2462115-1-chentao@kylinos.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+Unfortunately, the notifier mechanism added by commit 5b404fdabacf ("rcu:
+Add RCU CPU stall notifier") can make matters worse if used at all
+carelessly. For example, if the stall warning was caused by a lock not
+being released, then any attempt to acquire that lock in the notifier
+will hang. This will prevent not only the notifier from producing any
+useful output, but it will also prevent the stall-warning message from
+ever appearing.
+
+This commit therefore hides this new RCU CPU stall notifier
+mechanism under a new RCU_CPU_STALL_NOTIFIER Kconfig option that
+depends on both DEBUG_KERNEL and RCU_EXPERT.  In addition, the
+rcupdate.rcu_cpu_stall_notifiers=1 kernel boot parameter must also
+be specified.  The RCU_CPU_STALL_NOTIFIER Kconfig option's help text
+contains a warning and explains the dangers of careless use, recommending
+lockless notifier code.  In addition, a WARN() is triggered each time
+that an attempt is made to register a stall-warning notifier in kernels
+built with CONFIG_RCU_CPU_STALL_NOTIFIER=y.
+
+This combination of measures will keep use of this mechanism confined to
+debug kernels and away from routine deployments.
+
+[ paulmck: Apply Dan Carpenter feedback. ]
+
+Fixes: 5b404fdabacf ("rcu: Add RCU CPU stall notifier")
+Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.iitr10@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/syscon.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../admin-guide/kernel-parameters.txt         |  6 +++++
+ include/linux/rcu_notifier.h                  |  6 ++---
+ kernel/rcu/Kconfig.debug                      | 25 +++++++++++++++++++
+ kernel/rcu/rcu.h                              |  8 +++---
+ kernel/rcu/rcutorture.c                       | 12 +++++----
+ kernel/rcu/tree_stall.h                       | 11 +++++++-
+ kernel/rcu/update.c                           |  6 +++++
+ 7 files changed, 62 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/mfd/syscon.c b/drivers/mfd/syscon.c
-index 57b29c325131..c9550368d9ea 100644
---- a/drivers/mfd/syscon.c
-+++ b/drivers/mfd/syscon.c
-@@ -105,6 +105,10 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_res)
- 	}
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 65731b060e3f..b72e2049c487 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -5302,6 +5302,12 @@
+ 			Dump ftrace buffer after reporting RCU CPU
+ 			stall warning.
  
- 	syscon_config.name = kasprintf(GFP_KERNEL, "%pOFn@%pa", np, &res.start);
-+	if (!syscon_config.name) {
-+		ret = -ENOMEM;
-+		goto err_regmap;
++	rcupdate.rcu_cpu_stall_notifiers= [KNL]
++			Provide RCU CPU stall notifiers, but see the
++			warnings in the RCU_CPU_STALL_NOTIFIER Kconfig
++			option's help text.  TL;DR:  You almost certainly
++			do not want rcupdate.rcu_cpu_stall_notifiers.
++
+ 	rcupdate.rcu_cpu_stall_suppress= [KNL]
+ 			Suppress RCU CPU stall warning messages.
+ 
+diff --git a/include/linux/rcu_notifier.h b/include/linux/rcu_notifier.h
+index ebf371364581..5640f024773b 100644
+--- a/include/linux/rcu_notifier.h
++++ b/include/linux/rcu_notifier.h
+@@ -13,7 +13,7 @@
+ #define RCU_STALL_NOTIFY_NORM	1
+ #define RCU_STALL_NOTIFY_EXP	2
+ 
+-#ifdef CONFIG_RCU_STALL_COMMON
++#if defined(CONFIG_RCU_STALL_COMMON) && defined(CONFIG_RCU_CPU_STALL_NOTIFIER)
+ 
+ #include <linux/notifier.h>
+ #include <linux/types.h>
+@@ -21,12 +21,12 @@
+ int rcu_stall_chain_notifier_register(struct notifier_block *n);
+ int rcu_stall_chain_notifier_unregister(struct notifier_block *n);
+ 
+-#else // #ifdef CONFIG_RCU_STALL_COMMON
++#else // #if defined(CONFIG_RCU_STALL_COMMON) && defined(CONFIG_RCU_CPU_STALL_NOTIFIER)
+ 
+ // No RCU CPU stall warnings in Tiny RCU.
+ static inline int rcu_stall_chain_notifier_register(struct notifier_block *n) { return -EEXIST; }
+ static inline int rcu_stall_chain_notifier_unregister(struct notifier_block *n) { return -ENOENT; }
+ 
+-#endif // #else // #ifdef CONFIG_RCU_STALL_COMMON
++#endif // #else // #if defined(CONFIG_RCU_STALL_COMMON) && defined(CONFIG_RCU_CPU_STALL_NOTIFIER)
+ 
+ #endif /* __LINUX_RCU_NOTIFIER_H */
+diff --git a/kernel/rcu/Kconfig.debug b/kernel/rcu/Kconfig.debug
+index 2984de629f74..9b0b52e1836f 100644
+--- a/kernel/rcu/Kconfig.debug
++++ b/kernel/rcu/Kconfig.debug
+@@ -105,6 +105,31 @@ config RCU_CPU_STALL_CPUTIME
+ 	  The boot option rcupdate.rcu_cpu_stall_cputime has the same function
+ 	  as this one, but will override this if it exists.
+ 
++config RCU_CPU_STALL_NOTIFIER
++	bool "Provide RCU CPU-stall notifiers"
++	depends on RCU_STALL_COMMON
++	depends on DEBUG_KERNEL
++	depends on RCU_EXPERT
++	default n
++	help
++	  WARNING:  You almost certainly do not want this!!!
++
++	  Enable RCU CPU-stall notifiers, which are invoked just before
++	  printing the RCU CPU stall warning.  As such, bugs in notifier
++	  callbacks can prevent stall warnings from being printed.
++	  And the whole reason that a stall warning is being printed is
++	  that something is hung up somewhere.	Therefore, the notifier
++	  callbacks must be written extremely carefully, preferably
++	  containing only lockless code.  After all, it is quite possible
++	  that the whole reason that the RCU CPU stall is happening in
++	  the first place is that someone forgot to release whatever lock
++	  that you are thinking of acquiring.  In which case, having your
++	  notifier callback acquire that lock will hang, preventing the
++	  RCU CPU stall warning from appearing.
++
++	  Say Y here if you want RCU CPU stall notifiers (you don't want them)
++	  Say N if you are unsure.
++
+ config RCU_TRACE
+ 	bool "Enable tracing for RCU"
+ 	depends on DEBUG_KERNEL
+diff --git a/kernel/rcu/rcu.h b/kernel/rcu/rcu.h
+index b531c33e9545..f94f65877f2b 100644
+--- a/kernel/rcu/rcu.h
++++ b/kernel/rcu/rcu.h
+@@ -262,6 +262,8 @@ static inline bool rcu_stall_is_suppressed_at_boot(void)
+ 	return rcu_cpu_stall_suppress_at_boot && !rcu_inkernel_boot_has_ended();
+ }
+ 
++extern int rcu_cpu_stall_notifiers;
++
+ #ifdef CONFIG_RCU_STALL_COMMON
+ 
+ extern int rcu_cpu_stall_ftrace_dump;
+@@ -659,10 +661,10 @@ static inline bool rcu_cpu_beenfullyonline(int cpu) { return true; }
+ bool rcu_cpu_beenfullyonline(int cpu);
+ #endif
+ 
+-#ifdef CONFIG_RCU_STALL_COMMON
++#if defined(CONFIG_RCU_STALL_COMMON) && defined(CONFIG_RCU_CPU_STALL_NOTIFIER)
+ int rcu_stall_notifier_call_chain(unsigned long val, void *v);
+-#else // #ifdef CONFIG_RCU_STALL_COMMON
++#else // #if defined(CONFIG_RCU_STALL_COMMON) && defined(CONFIG_RCU_CPU_STALL_NOTIFIER)
+ static inline int rcu_stall_notifier_call_chain(unsigned long val, void *v) { return NOTIFY_DONE; }
+-#endif // #else // #ifdef CONFIG_RCU_STALL_COMMON
++#endif // #else // #if defined(CONFIG_RCU_STALL_COMMON) && defined(CONFIG_RCU_CPU_STALL_NOTIFIER)
+ 
+ #endif /* __LINUX_RCU_H */
+diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
+index 30fc9d34e329..07a6a183c555 100644
+--- a/kernel/rcu/rcutorture.c
++++ b/kernel/rcu/rcutorture.c
+@@ -2450,10 +2450,12 @@ static int rcu_torture_stall(void *args)
+ 	unsigned long stop_at;
+ 
+ 	VERBOSE_TOROUT_STRING("rcu_torture_stall task started");
+-	ret = rcu_stall_chain_notifier_register(&rcu_torture_stall_block);
+-	if (ret)
+-		pr_info("%s: rcu_stall_chain_notifier_register() returned %d, %sexpected.\n",
+-			__func__, ret, !IS_ENABLED(CONFIG_RCU_STALL_COMMON) ? "un" : "");
++	if (rcu_cpu_stall_notifiers) {
++		ret = rcu_stall_chain_notifier_register(&rcu_torture_stall_block);
++		if (ret)
++			pr_info("%s: rcu_stall_chain_notifier_register() returned %d, %sexpected.\n",
++				__func__, ret, !IS_ENABLED(CONFIG_RCU_STALL_COMMON) ? "un" : "");
 +	}
- 	syscon_config.reg_stride = reg_io_width;
- 	syscon_config.val_bits = reg_io_width * 8;
- 	syscon_config.max_register = resource_size(&res) - reg_io_width;
+ 	if (stall_cpu_holdoff > 0) {
+ 		VERBOSE_TOROUT_STRING("rcu_torture_stall begin holdoff");
+ 		schedule_timeout_interruptible(stall_cpu_holdoff * HZ);
+@@ -2497,7 +2499,7 @@ static int rcu_torture_stall(void *args)
+ 		cur_ops->readunlock(idx);
+ 	}
+ 	pr_alert("%s end.\n", __func__);
+-	if (!ret) {
++	if (rcu_cpu_stall_notifiers && !ret) {
+ 		ret = rcu_stall_chain_notifier_unregister(&rcu_torture_stall_block);
+ 		if (ret)
+ 			pr_info("%s: rcu_stall_chain_notifier_unregister() returned %d.\n", __func__, ret);
+diff --git a/kernel/rcu/tree_stall.h b/kernel/rcu/tree_stall.h
+index ac8e86babe44..5d666428546b 100644
+--- a/kernel/rcu/tree_stall.h
++++ b/kernel/rcu/tree_stall.h
+@@ -1061,6 +1061,7 @@ static int __init rcu_sysrq_init(void)
+ }
+ early_initcall(rcu_sysrq_init);
+ 
++#ifdef CONFIG_RCU_CPU_STALL_NOTIFIER
+ 
+ //////////////////////////////////////////////////////////////////////////////
+ //
+@@ -1081,7 +1082,13 @@ static ATOMIC_NOTIFIER_HEAD(rcu_cpu_stall_notifier_list);
+  */
+ int rcu_stall_chain_notifier_register(struct notifier_block *n)
+ {
+-	return atomic_notifier_chain_register(&rcu_cpu_stall_notifier_list, n);
++	int rcsn = rcu_cpu_stall_notifiers;
++
++	WARN(1, "Adding %pS() to RCU stall notifier list (%s).\n", n->notifier_call,
++	     rcsn ? "possibly suppressing RCU CPU stall warnings" : "failed, so all is well");
++	if (rcsn)
++		return atomic_notifier_chain_register(&rcu_cpu_stall_notifier_list, n);
++	return -EEXIST;
+ }
+ EXPORT_SYMBOL_GPL(rcu_stall_chain_notifier_register);
+ 
+@@ -1115,3 +1122,5 @@ int rcu_stall_notifier_call_chain(unsigned long val, void *v)
+ {
+ 	return atomic_notifier_call_chain(&rcu_cpu_stall_notifier_list, val, v);
+ }
++
++#endif // #ifdef CONFIG_RCU_CPU_STALL_NOTIFIER
+diff --git a/kernel/rcu/update.c b/kernel/rcu/update.c
+index c534d6806d3d..46aaaa9fe339 100644
+--- a/kernel/rcu/update.c
++++ b/kernel/rcu/update.c
+@@ -538,9 +538,15 @@ long torture_sched_setaffinity(pid_t pid, const struct cpumask *in_mask)
+ EXPORT_SYMBOL_GPL(torture_sched_setaffinity);
+ #endif
+ 
++int rcu_cpu_stall_notifiers __read_mostly; // !0 = provide stall notifiers (rarely useful)
++EXPORT_SYMBOL_GPL(rcu_cpu_stall_notifiers);
++
+ #ifdef CONFIG_RCU_STALL_COMMON
+ int rcu_cpu_stall_ftrace_dump __read_mostly;
+ module_param(rcu_cpu_stall_ftrace_dump, int, 0644);
++#ifdef CONFIG_RCU_CPU_STALL_NOTIFIER
++module_param(rcu_cpu_stall_notifiers, int, 0444);
++#endif // #ifdef CONFIG_RCU_CPU_STALL_NOTIFIER
+ int rcu_cpu_stall_suppress __read_mostly; // !0 = suppress stall warnings.
+ EXPORT_SYMBOL_GPL(rcu_cpu_stall_suppress);
+ module_param(rcu_cpu_stall_suppress, int, 0644);
 -- 
 2.43.0
 
