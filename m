@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66537CF21;
-	Tue, 23 Jan 2024 02:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C847CF21;
+	Tue, 23 Jan 2024 02:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975733; cv=none; b=uQtWHPO8Voo+AhUGGdvB1OWtoWcO1ySLYL1qPcJMXwhsijJ2VLYUt3triGi/i/Wb4cnqS8VF2xQWkoIjaJGAxn8tNd6HOS0vRvYWsBwB3QA5xvDaM7BRx67BVXTdVii5kUeo5w5F9PlzKO+PP1ZX8BLFmiqBLZcyvBq12ws811k=
+	t=1705975734; cv=none; b=uAzdQwXcY1/fefLXR2ytuWrX0Hp590Qdn9SXAc+5s/awvVUfYblNizxeJ46e1nsti7LJ9J5TDTVL2SNnyyM833dtnA3kBSuQsP/qFMXKuLMwY18g2oJ0+2/9AzUgY3ksbsHtBXTgg9v9EB2seBsLAWRP0pVIxd4B1gEh0a2Ud4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975733; c=relaxed/simple;
-	bh=WNmPayOZVp7vMy5g9BFKt3TRx8Baw3X4cYoUkmgbcY0=;
+	s=arc-20240116; t=1705975734; c=relaxed/simple;
+	bh=uyReOaX54GpmO0FawoY6nRcd1nilzmxhr5I5lsCGgS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZFo1WxxzOY4sDaCDuKmqMJkCDgNhFzZbe+TV5yf9JkEJL4vw/Zko4A5RWTK4Iibusn9cblAiryP7ee/Cpw2hlQMrzglwGdbN2KT3u1LTanLmd9R6087534ExUWpxIxTWDNikqGUmIZxUDVfGBUQv3BsF9ZFjSREshXygLwWoVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHnDJ1N5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jFdYgKniKrZepuewBGkZnQte4F0NnQanzS5+dDQ2Sfv2tzHlV7HyUaWWtdU+9rAzw6JxwULSIWr+A5fspkvGDR1R0qHW5x25LsfV5tH8Yy059QcKddgfWrAXC9M4Vza1mshNnCXXzV/yjf76fj/QXjGl5Prqq/0OUII4cRjKG4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SELLbsPd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHnDJ1N5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975A0C43390;
-	Tue, 23 Jan 2024 02:08:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SELLbsPd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8237DC433F1;
+	Tue, 23 Jan 2024 02:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975733;
-	bh=WNmPayOZVp7vMy5g9BFKt3TRx8Baw3X4cYoUkmgbcY0=;
+	s=korg; t=1705975734;
+	bh=uyReOaX54GpmO0FawoY6nRcd1nilzmxhr5I5lsCGgS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHnDJ1N5bh+cLzYtCPIyNrmkBKjNV9ZOnp1RBqOJ2lopTgwdd6WNk4ler5+YSjc5I
-	 +KfoV4AOc0SgJKLv7u2kbMTnH5X9BB3GaiImfcVxbyIn7V+Wg1GSsUqmx/nqq8TYcm
-	 cSOpARuH3j3xMBQgw2Upas2wWwf+XfMrCkB0WRi0=
+	b=SELLbsPd7Wu5pL5urw7nqhywOIJlG2sw/eIZ5d7sX3FplwSYLXRXTwrviaC6S0au4
+	 urPVLoJeDK+xhIHsPDvPXj2VxYqEjawmUhTvqbBxhuNXx5OpbewmvgLqohYqm11NX9
+	 cMdZlXeSVOPfkDal7wP35L5LUOqylgethvmNEQoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 495/583] usb: cdc-acm: return correct error code on unsupported break
-Date: Mon, 22 Jan 2024 15:59:06 -0800
-Message-ID: <20240122235827.162559175@linuxfoundation.org>
+Subject: [PATCH 6.6 496/583] usb: core: Fix crash w/ usb_choose_configuration() if no driver
+Date: Mon, 22 Jan 2024 15:59:07 -0800
+Message-ID: <20240122235827.199069789@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -50,60 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 66aad7d8d3ec5a3a8ec2023841bcec2ded5f65c9 ]
+[ Upstream commit 44995e6f07028f798efd0c3c11a1efc78330f600 ]
 
-In ACM support for sending breaks to devices is optional.
-If a device says that it doenot support sending breaks,
-the host must respect that.
-Given the number of optional features providing tty operations
-for each combination is not practical and errors need to be
-returned dynamically if unsupported features are requested.
+It's possible that usb_choose_configuration() can get called when a
+USB device has no driver. In this case the recent commit a87b8e3be926
+("usb: core: Allow subclassed USB drivers to override
+usb_choose_configuration()") can cause a crash since it dereferenced
+the driver structure without checking for NULL. Let's add a check.
 
-In case a device does not support break, we want the tty layer
-to treat that like it treats drivers that statically cannot
-support sending a break. It ignores the inability and does nothing.
-This patch uses EOPNOTSUPP to indicate that.
+A USB device with no driver is an anomaly, so make
+usb_choose_configuration() return immediately if there is no driver.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Fixes: 9e98966c7bb94 ("tty: rework break handling")
-Link: https://lore.kernel.org/r/20231207132639.18250-1-oneukum@suse.com
+This was seen in the real world when usbguard got ahold of a r8152
+device at the wrong time. It can also be simulated via this on a
+computer with one r8152-based USB Ethernet adapter:
+  cd /sys/bus/usb/drivers/r8152-cfgselector
+  to_unbind="$(ls -d *-*)"
+  real_dir="$(readlink -f "${to_unbind}")"
+  echo "${to_unbind}" > unbind
+  cd "${real_dir}"
+  echo 0 > authorized
+  echo 1 > authorized
+
+Fixes: a87b8e3be926 ("usb: core: Allow subclassed USB drivers to override usb_choose_configuration()")
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20231211073237.v3.1.If27eb3bf7812f91ab83810f232292f032f4203e0@changeid
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_io.c        | 3 +++
- drivers/usb/class/cdc-acm.c | 3 +++
- 2 files changed, 6 insertions(+)
+ drivers/usb/core/generic.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
-index 724ebf82f2cd..493fc4742895 100644
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -2485,6 +2485,9 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
- 	if (!retval) {
- 		msleep_interruptible(duration);
- 		retval = tty->ops->break_ctl(tty, 0);
-+	} else if (retval == -EOPNOTSUPP) {
-+		/* some drivers can tell only dynamically */
-+		retval = 0;
- 	}
- 	tty_write_unlock(tty);
- 
-diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
-index a1f4e1ead97f..0e7439dba8fe 100644
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -916,6 +916,9 @@ static int acm_tty_break_ctl(struct tty_struct *tty, int state)
- 	struct acm *acm = tty->driver_data;
- 	int retval;
- 
-+	if (!(acm->ctrl_caps & USB_CDC_CAP_BRK))
-+		return -EOPNOTSUPP;
+diff --git a/drivers/usb/core/generic.c b/drivers/usb/core/generic.c
+index dcb897158228..b134bff5c3fe 100644
+--- a/drivers/usb/core/generic.c
++++ b/drivers/usb/core/generic.c
+@@ -59,7 +59,16 @@ int usb_choose_configuration(struct usb_device *udev)
+ 	int num_configs;
+ 	int insufficient_power = 0;
+ 	struct usb_host_config *c, *best;
+-	struct usb_device_driver *udriver = to_usb_device_driver(udev->dev.driver);
++	struct usb_device_driver *udriver;
 +
- 	retval = acm_send_break(acm, state ? 0xffff : 0);
- 	if (retval < 0)
- 		dev_dbg(&acm->control->dev,
++	/*
++	 * If a USB device (not an interface) doesn't have a driver then the
++	 * kernel has no business trying to select or install a configuration
++	 * for it.
++	 */
++	if (!udev->dev.driver)
++		return -1;
++	udriver = to_usb_device_driver(udev->dev.driver);
+ 
+ 	if (usb_device_is_owned(udev))
+ 		return 0;
 -- 
 2.43.0
 
