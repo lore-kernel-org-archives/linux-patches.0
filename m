@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2F4745D6;
-	Tue, 23 Jan 2024 02:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E2C745D6;
+	Tue, 23 Jan 2024 02:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975450; cv=none; b=hUgTTsfyB0UT3InFhNCj4CYsTbHauRtRWmoEAJ73XffeZrFV6fmrvLDsZtpglECR/EqOJY9gSje7AfJ3G1O+qsYl+WP94cKI/bnuGg74N45gM/QmilCfds2Ht8M1uvvyuNi9ik4TlXDzYVv2WN9/EEX/TO35gbLfiJLo22hoXaw=
+	t=1705975451; cv=none; b=Zmt9WgNK5pnPt6oz6FCxCpnmrbG0Xwl8Yrso6TwBuci7XJY5pW14B8pM5pvFHwOu7riVEd8nvzUx1vZInmDYx7f4hAMwUUDQRZ1Hl5mAbjgB+/a5a2ZTnIn6oWHgpkYu8QM2HkYVKpKfiQBPCffZJrRmIxsZ+oVe42NaMCsdAa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975450; c=relaxed/simple;
-	bh=GjfZkZZaEkXFiPVyGwah3+VPn3ETD24KD4tWZ3QONfQ=;
+	s=arc-20240116; t=1705975451; c=relaxed/simple;
+	bh=HG4d6VYL8mboTzAD3d7PfRGJ5csbWhf5wuyaWUVtD0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d9oiHa2wlKKS5pDMZ0isPzHFGQftwCwjy7npL3s3qSnav9nfgYPBgDIJUMwogkFpjY9SP1RlKc3VjEW3tB7+3RcUBRPpKWQeL03tfn130sE1J27ezGChnLCrSAy9IrAn+C63ySBF6kZh/WNkXcfHY4W0dXYmXQpdrWKu/QwOh4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9cDv/Z2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WQDmldxsJjC5bT6Eve0WzpGBlu67SkLne0w9x1m6qd3dbXmgvEqid0tQ2vKwuHxX1uiozFuIU6UcM4VLSBDSrvFdbvQTA2LJ1CfSBUx00cBkI35mp86wU0KDEkhfttaAZcQGAwDgepGQ6UUgsnady2rBfrxUUnivk8fB45ywUts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNmUhfL5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9cDv/Z2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E62C433F1;
-	Tue, 23 Jan 2024 02:04:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNmUhfL5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE27C433F1;
+	Tue, 23 Jan 2024 02:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975450;
-	bh=GjfZkZZaEkXFiPVyGwah3+VPn3ETD24KD4tWZ3QONfQ=;
+	s=korg; t=1705975451;
+	bh=HG4d6VYL8mboTzAD3d7PfRGJ5csbWhf5wuyaWUVtD0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9cDv/Z2FQZQ4nzP0vBE2Ooi12I75xm3Oh2zNpRgclnsp7qDrZoS5va4SfzWtRsgl
-	 wIM3mr0BwCzBFkSh6WXlh+BfNh6tThG/OTVSVb117PGIW/RyHvsnZHIqam64SFiL0d
-	 23/Graisu2s3pSQWotBsaYK5gu7Tak7oydG3fPac=
+	b=hNmUhfL5TWPlF3eexanbvJ29zRg8AAUxr5BqrGus5dKw6hfF3iVYgdL/UQzeZHtrV
+	 RVg4/SjF6gMR+7GjNn8WpPD0P55nlytNr8Gvm7SrEcwke/OSCBhZbWXePGhyy7JK5h
+	 iGnUxL7sZZKEJMCYtqDPV5StpGzoeNQV6BZNeox4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Subject: [PATCH 6.6 406/583] pwm: Fix out-of-bounds access in of_pwm_single_xlate()
-Date: Mon, 22 Jan 2024 15:57:37 -0800
-Message-ID: <20240122235824.400884078@linuxfoundation.org>
+	Song Liu <song@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	kernel test robot <lkp@intel.com>,
+	Bart Van Assche <bvanassche@acm.org>
+Subject: [PATCH 6.6 407/583] md/raid1: Use blk_opf_t for read and write operations
+Date: Mon, 22 Jan 2024 15:57:38 -0800
+Message-ID: <20240122235824.432440352@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -43,39 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit a297d07b9a1e4fb8cda25a4a2363a507d294b7c9 upstream.
+commit 7dab24554dedd4e6f408af8eb2d25c89997a6a1f upstream.
 
-With args->args_count == 2 args->args[2] is not defined. Actually the
-flags are contained in args->args[1].
+Use the type blk_opf_t for read and write operations instead of int. This
+patch does not affect the generated code but fixes the following sparse
+warning:
 
-Fixes: 3ab7b6ac5d82 ("pwm: Introduce single-PWM of_xlate function")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/243908750d306e018a3d4bf2eb745d53ab50f663.1704835845.git.u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+drivers/md/raid1.c:1993:60: sparse: sparse: incorrect type in argument 5 (different base types)
+     expected restricted blk_opf_t [usertype] opf
+     got int rw
+
+Cc: Song Liu <song@kernel.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Fixes: 3c5e514db58f ("md/raid1: Use the new blk_opf_t type")
+Cc: stable@vger.kernel.org # v6.0+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202401080657.UjFnvQgX-lkp@intel.com/
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240108001223.23835-1-bvanassche@acm.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/raid1.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/pwm/core.c
-+++ b/drivers/pwm/core.c
-@@ -176,7 +176,7 @@ of_pwm_single_xlate(struct pwm_chip *chi
- 	pwm->args.period = args->args[0];
- 	pwm->args.polarity = PWM_POLARITY_NORMAL;
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1983,12 +1983,12 @@ static void end_sync_write(struct bio *b
+ }
  
--	if (args->args_count == 2 && args->args[2] & PWM_POLARITY_INVERTED)
-+	if (args->args_count == 2 && args->args[1] & PWM_POLARITY_INVERTED)
- 		pwm->args.polarity = PWM_POLARITY_INVERSED;
- 
- 	return pwm;
+ static int r1_sync_page_io(struct md_rdev *rdev, sector_t sector,
+-			   int sectors, struct page *page, int rw)
++			   int sectors, struct page *page, blk_opf_t rw)
+ {
+ 	if (sync_page_io(rdev, sector, sectors << 9, page, rw, false))
+ 		/* success */
+ 		return 1;
+-	if (rw == WRITE) {
++	if (rw == REQ_OP_WRITE) {
+ 		set_bit(WriteErrorSeen, &rdev->flags);
+ 		if (!test_and_set_bit(WantReplacement,
+ 				      &rdev->flags))
+@@ -2105,7 +2105,7 @@ static int fix_sync_read_error(struct r1
+ 			rdev = conf->mirrors[d].rdev;
+ 			if (r1_sync_page_io(rdev, sect, s,
+ 					    pages[idx],
+-					    WRITE) == 0) {
++					    REQ_OP_WRITE) == 0) {
+ 				r1_bio->bios[d]->bi_end_io = NULL;
+ 				rdev_dec_pending(rdev, mddev);
+ 			}
+@@ -2120,7 +2120,7 @@ static int fix_sync_read_error(struct r1
+ 			rdev = conf->mirrors[d].rdev;
+ 			if (r1_sync_page_io(rdev, sect, s,
+ 					    pages[idx],
+-					    READ) != 0)
++					    REQ_OP_READ) != 0)
+ 				atomic_add(s, &rdev->corrected_errors);
+ 		}
+ 		sectors -= s;
+@@ -2332,7 +2332,7 @@ static void fix_read_error(struct r1conf
+ 				atomic_inc(&rdev->nr_pending);
+ 				rcu_read_unlock();
+ 				r1_sync_page_io(rdev, sect, s,
+-						conf->tmppage, WRITE);
++						conf->tmppage, REQ_OP_WRITE);
+ 				rdev_dec_pending(rdev, mddev);
+ 			} else
+ 				rcu_read_unlock();
+@@ -2349,7 +2349,7 @@ static void fix_read_error(struct r1conf
+ 				atomic_inc(&rdev->nr_pending);
+ 				rcu_read_unlock();
+ 				if (r1_sync_page_io(rdev, sect, s,
+-						    conf->tmppage, READ)) {
++						conf->tmppage, REQ_OP_READ)) {
+ 					atomic_add(s, &rdev->corrected_errors);
+ 					pr_info("md/raid1:%s: read error corrected (%d sectors at %llu on %pg)\n",
+ 						mdname(mddev), s,
 
 
