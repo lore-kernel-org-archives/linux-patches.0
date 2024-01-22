@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D397062805;
-	Tue, 23 Jan 2024 00:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B464A657C2;
+	Tue, 23 Jan 2024 00:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971503; cv=none; b=thWhWYEYEAaFLk03ShaKHw5dIDoY+6M25UD7AFSEh/Z+1XoM/sq1XmBrNfNSBw/pMpOMaHVQGjfUnCCK1j59A3GhyrpVmgKRnGi3PCeyLDTn9jpXsluP+A5MFUQD9P0aD+tvAKDXSr8c92K74VipK7Z4fVN35SJ8HHQk5YjsPvM=
+	t=1705971505; cv=none; b=Endv7Dat/38ZntC+7PWhhUwowNEcKp9Fb+EfWLuoHE6Cb1idvY8jnQp81VqOPRgPLkXhTkZpkbOw+u5A3mSTc5Avy6covEJ6od1VBbUEAWG/KWkUdCx7rhmUr6K20BtaJZdaZQMAd7w4PNHjQACE5cpQZ2uDP3OAHk3T/pfEPNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971503; c=relaxed/simple;
-	bh=bNGJAnoRVgvcmOBHcdbjDChNFSPuTS5tT2zFLY1TEAc=;
+	s=arc-20240116; t=1705971505; c=relaxed/simple;
+	bh=1xRXmbNaPOBAGdgMhodF1NhuSwFSD+c429zklcq6ZqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHUz0MzGpb/mxwSjs0VfC+ybVXN4M8rDnRjaFsHDzxWXcHooZDBXq4mdBTw2/fxNkV+9SyrTxVv1LDI7Ulw6B60tb5npQys67qX5WZBatHO03xaZhLe1PwtcZDEpsgmnKhosid7mKvOtEQ9UJpmOlxMKAnu9JihzHLz1hFnsH3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iY7L8Khs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D133NLe6VLmFnF4dH3nJpv4lPAMlobnD4zHB5MqtM5Y8f+sdVlIXWUGRxBc6yNgNEj7Zc4T1SJDS7TNdFwVu/B1ZVRLAYKwCGsI7w5jdZqrXOss0cNwvo6GeQFUju8tSpcbO7DOM2FlHgmr1p211ls7mwYKFmG15f1j5MP7wBEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLPMOYrH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iY7L8Khs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD45C433C7;
-	Tue, 23 Jan 2024 00:58:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLPMOYrH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44261C433F1;
+	Tue, 23 Jan 2024 00:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971503;
-	bh=bNGJAnoRVgvcmOBHcdbjDChNFSPuTS5tT2zFLY1TEAc=;
+	s=korg; t=1705971505;
+	bh=1xRXmbNaPOBAGdgMhodF1NhuSwFSD+c429zklcq6ZqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iY7L8Khsq92oPaI0AG9nlTd8Qf22RCcuDl8btRDTlytLIOi3/G2dk85bxlviVDqpm
-	 Yzk/cUUhFJJo+zJG83ii8S31vXksg569mMMjvz7u35m99aKkUZpUgazPPv0Qy2Ibo0
-	 fxEdbeMBtBMYMlyONTRCUqBM96FO0AvYWcG1GIj0=
+	b=XLPMOYrH69qvvseLbqUjxj0u3XOjxOFk4Qif1Nx7lRdi2fv6NYLGL3l6KGK6OwBwy
+	 Vx0Itr94fMGDJlU4VvGsE4yvod8fMAUdQ1fL4qwN6LUKr9fpOruqoAGZ+ba+KJBSnB
+	 I8mUxg8nWAimuF4OQdgHMFn/cmTOUVzSQeWwMi3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 162/286] drm/radeon/trinity_dpm: fix a memleak in trinity_parse_power_table
-Date: Mon, 22 Jan 2024 15:57:48 -0800
-Message-ID: <20240122235738.407718281@linuxfoundation.org>
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
+	Paul Durrant <paul@xen.org>
+Subject: [PATCH 6.1 254/417] xen-netback: dont produce zero-size SKB frags
+Date: Mon, 22 Jan 2024 15:57:02 -0800
+Message-ID: <20240122235800.681385812@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +47,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Jan Beulich <jbeulich@suse.com>
 
-[ Upstream commit 28c28d7f77c06ac2c0b8f9c82bc04eba22912b3b ]
+commit c7ec4f2d684e17d69bbdd7c4324db0ef5daac26a upstream.
 
-The rdev->pm.dpm.ps allocated by kcalloc should be freed in every
-following error-handling path. However, in the error-handling of
-rdev->pm.power_state[i].clock_info the rdev->pm.dpm.ps is not freed,
-resulting in a memleak in this function.
+While frontends may submit zero-size requests (wasting a precious slot),
+core networking code as of at least 3ece782693c4b ("sock: skb_copy_ubufs
+support for compound pages") can't deal with SKBs when they have all
+zero-size fragments. Respond to empty requests right when populating
+fragments; all further processing is fragment based and hence won't
+encounter these empty requests anymore.
 
-Fixes: d70229f70447 ("drm/radeon/kms: add dpm support for trinity asics")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In a way this should have been that way from the beginning: When no data
+is to be transferred for a particular request, there's not even a point
+in validating the respective grant ref. That's no different from e.g.
+passing NULL into memcpy() when at the same time the size is 0.
+
+This is XSA-448 / CVE-2023-46838.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Paul Durrant <paul@xen.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/trinity_dpm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/xen-netback/netback.c |   44 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 38 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/trinity_dpm.c b/drivers/gpu/drm/radeon/trinity_dpm.c
-index 4d93b84aa739..49c28fbe366e 100644
---- a/drivers/gpu/drm/radeon/trinity_dpm.c
-+++ b/drivers/gpu/drm/radeon/trinity_dpm.c
-@@ -1770,8 +1770,10 @@ static int trinity_parse_power_table(struct radeon_device *rdev)
- 		non_clock_array_index = power_state->v2.nonClockInfoIndex;
- 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
- 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
--		if (!rdev->pm.power_state[i].clock_info)
-+		if (!rdev->pm.power_state[i].clock_info) {
-+			kfree(rdev->pm.dpm.ps);
- 			return -EINVAL;
+--- a/drivers/net/xen-netback/netback.c
++++ b/drivers/net/xen-netback/netback.c
+@@ -463,12 +463,25 @@ static void xenvif_get_requests(struct x
+ 	}
+ 
+ 	for (shinfo->nr_frags = 0; nr_slots > 0 && shinfo->nr_frags < MAX_SKB_FRAGS;
+-	     shinfo->nr_frags++, gop++, nr_slots--) {
++	     nr_slots--) {
++		if (unlikely(!txp->size)) {
++			unsigned long flags;
++
++			spin_lock_irqsave(&queue->response_lock, flags);
++			make_tx_response(queue, txp, 0, XEN_NETIF_RSP_OKAY);
++			push_tx_responses(queue);
++			spin_unlock_irqrestore(&queue->response_lock, flags);
++			++txp;
++			continue;
 +		}
- 		ps = kzalloc(sizeof(struct sumo_ps), GFP_KERNEL);
- 		if (ps == NULL) {
- 			kfree(rdev->pm.dpm.ps);
--- 
-2.43.0
-
++
+ 		index = pending_index(queue->pending_cons++);
+ 		pending_idx = queue->pending_ring[index];
+ 		xenvif_tx_create_map_op(queue, pending_idx, txp,
+ 				        txp == first ? extra_count : 0, gop);
+ 		frag_set_pending_idx(&frags[shinfo->nr_frags], pending_idx);
++		++shinfo->nr_frags;
++		++gop;
+ 
+ 		if (txp == first)
+ 			txp = txfrags;
+@@ -481,20 +494,39 @@ static void xenvif_get_requests(struct x
+ 		shinfo = skb_shinfo(nskb);
+ 		frags = shinfo->frags;
+ 
+-		for (shinfo->nr_frags = 0; shinfo->nr_frags < nr_slots;
+-		     shinfo->nr_frags++, txp++, gop++) {
++		for (shinfo->nr_frags = 0; shinfo->nr_frags < nr_slots; ++txp) {
++			if (unlikely(!txp->size)) {
++				unsigned long flags;
++
++				spin_lock_irqsave(&queue->response_lock, flags);
++				make_tx_response(queue, txp, 0,
++						 XEN_NETIF_RSP_OKAY);
++				push_tx_responses(queue);
++				spin_unlock_irqrestore(&queue->response_lock,
++						       flags);
++				continue;
++			}
++
+ 			index = pending_index(queue->pending_cons++);
+ 			pending_idx = queue->pending_ring[index];
+ 			xenvif_tx_create_map_op(queue, pending_idx, txp, 0,
+ 						gop);
+ 			frag_set_pending_idx(&frags[shinfo->nr_frags],
+ 					     pending_idx);
++			++shinfo->nr_frags;
++			++gop;
+ 		}
+ 
+-		skb_shinfo(skb)->frag_list = nskb;
+-	} else if (nskb) {
++		if (shinfo->nr_frags) {
++			skb_shinfo(skb)->frag_list = nskb;
++			nskb = NULL;
++		}
++	}
++
++	if (nskb) {
+ 		/* A frag_list skb was allocated but it is no longer needed
+-		 * because enough slots were converted to copy ops above.
++		 * because enough slots were converted to copy ops above or some
++		 * were empty.
+ 		 */
+ 		kfree_skb(nskb);
+ 	}
 
 
