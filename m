@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20203A8F4;
-	Tue, 23 Jan 2024 00:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DFD3A8F4;
+	Tue, 23 Jan 2024 00:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969869; cv=none; b=bOYwOmzYucCjN1QiIHZ9M6ByOAVxrEJf7UF3GUtFwR9lkc7nb52pTblZR6uwu5aeiDf1rJ1y8c72riVPgyB79nBl/ldJQDeuy4T9ka64Nd2temSlIYbm+pmGcGJ0Yn/q2dbk2pDEyQhH/ghbllEVPVJc/st/agjWd4ML0/EFjJE=
+	t=1705969870; cv=none; b=Xkzt6ndpoWkWSx4gS6zQ5TGZrx7c0EQXw55vcn5tGOacWmE3cOrcIEJAZdUCkyYQpMLpmobBcrqTej9mtqDnEBAUEOzNcMWFlP5as/X1eelv/g83p3CFHvsN6d5OPt2JztPjk4VKT7C6uLB4Tq/OhN2wL1f+v0po+50uQzukzXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969869; c=relaxed/simple;
-	bh=jdUZ+wWHC2t4Hl+JrG1E1tW3pVuc//eIN3p/jlHxFsc=;
+	s=arc-20240116; t=1705969870; c=relaxed/simple;
+	bh=21tyZEPijBbq5A9B6w06fnm6aDPrF+SEVsfzMx+MdRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nReXXN5JVvIsSQ56TjZW5AIwkaKXfow6OhCS6SRc9Jj1npfrhQgNxPgeMQDDElFYJkulMYV79En9Df6YlxeqgsrQBE4u18C2TZ9OWYj8Fpr3Rgea8PBdJIMdyJub2a9f+Lc5hfKVk9HK+nrDWvV/PABTSQMUWP+3o6SSZvSYVgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkoe0zLL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JvB25ykeeNTk1rAE+lATGBcYRnowAZ1F8LE3eBn11fHsN8vGAoJUH5EDtNDOrht3LNOSzyVwdM6IMr4mLNkOmS3k7jdGP2RHIapmno02scGJ36nXGB8u0CsYnJFKC77ePQI0NV+3cCPRmDzJI0TFc36Ltk6LfOG0j0heu7XianM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fs6yt8gR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkoe0zLL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF67C433F1;
-	Tue, 23 Jan 2024 00:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fs6yt8gR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB59C433F1;
+	Tue, 23 Jan 2024 00:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969868;
-	bh=jdUZ+wWHC2t4Hl+JrG1E1tW3pVuc//eIN3p/jlHxFsc=;
+	s=korg; t=1705969870;
+	bh=21tyZEPijBbq5A9B6w06fnm6aDPrF+SEVsfzMx+MdRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkoe0zLLpPND692z5ZaFxf5Dy2iegnIuAGyiRFtkCmmCs/5ttEBxdcgSiXfi0Ohxt
-	 NfIiqao76STIjBappAOTYKOwGkTqSYpoW8sbSephBuAPdJBsNFLtIaYRvd1/OvTPh6
-	 H1P+xUWfRivRi0TJszxkxrCHIdkQsD+0H7jrMs4I=
+	b=fs6yt8gRbp5M1Ed672h/fZfb8H3BcAMyTHHDBushdAuoAS/m/N1RX5DISS1fI7qRw
+	 Lmh7U0/XPjMS1+/q7k29yNOfJClpeop34/u43nNXu0J6Ll2/+VSO68Jp79QQTVB21n
+	 38pE2ihi34Uq4D+VJCK1mV/HUca+AI215toIeSjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 496/641] riscv: Fix module_alloc() that did not reset the linear mapping permissions
-Date: Mon, 22 Jan 2024 15:56:40 -0800
-Message-ID: <20240122235833.588642626@linuxfoundation.org>
+Subject: [PATCH 6.7 497/641] riscv: Fix set_direct_map_default_noflush() to reset _PAGE_EXEC
+Date: Mon, 22 Jan 2024 15:56:41 -0800
+Message-ID: <20240122235833.615885340@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,51 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 749b94b08005929bbc636df21a23322733166e35 ]
+[ Upstream commit b8b2711336f03ece539de61479d6ffc44fb603d3 ]
 
-After unloading a module, we must reset the linear mapping permissions,
-see the example below:
+When resetting the linear mapping permissions, we must make sure that we
+clear the X bit so that do not end up with WX mappings (since we set
+PAGE_KERNEL).
 
-Before unloading a module:
-
-0xffffaf809d65d000-0xffffaf809d6dc000    0x000000011d65d000       508K PTE .   ..     ..   D A G . . W R V
-0xffffaf809d6dc000-0xffffaf809d6dd000    0x000000011d6dc000         4K PTE .   ..     ..   D A G . . . R V
-0xffffaf809d6dd000-0xffffaf809d6e1000    0x000000011d6dd000        16K PTE .   ..     ..   D A G . . W R V
-0xffffaf809d6e1000-0xffffaf809d6e7000    0x000000011d6e1000        24K PTE .   ..     ..   D A G . X . R V
-
-After unloading a module:
-
-0xffffaf809d65d000-0xffffaf809d6e1000    0x000000011d65d000       528K PTE .   ..     ..   D A G . . W R V
-0xffffaf809d6e1000-0xffffaf809d6e7000    0x000000011d6e1000        24K PTE .   ..     ..   D A G . X W R V
-
-The last mapping is not reset and we end up with WX mappings in the linear
-mapping.
-
-So add VM_FLUSH_RESET_PERMS to our module_alloc() definition.
-
-Fixes: 0cff8bff7af8 ("riscv: avoid the PIC offset of static percpu data in module beyond 2G limits")
+Fixes: 395a21ff859c ("riscv: add ARCH_HAS_SET_DIRECT_MAP support")
 Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20231213134027.155327-2-alexghiti@rivosinc.com
+Link: https://lore.kernel.org/r/20231213134027.155327-3-alexghiti@rivosinc.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/module.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/riscv/mm/pageattr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/module.c b/arch/riscv/kernel/module.c
-index aac019ed63b1..862834bb1d64 100644
---- a/arch/riscv/kernel/module.c
-+++ b/arch/riscv/kernel/module.c
-@@ -894,7 +894,8 @@ void *module_alloc(unsigned long size)
+diff --git a/arch/riscv/mm/pageattr.c b/arch/riscv/mm/pageattr.c
+index 96cbda683936..01398fee5cf8 100644
+--- a/arch/riscv/mm/pageattr.c
++++ b/arch/riscv/mm/pageattr.c
+@@ -383,7 +383,7 @@ int set_direct_map_invalid_noflush(struct page *page)
+ int set_direct_map_default_noflush(struct page *page)
  {
- 	return __vmalloc_node_range(size, 1, MODULES_VADDR,
- 				    MODULES_END, GFP_KERNEL,
--				    PAGE_KERNEL, 0, NUMA_NO_NODE,
-+				    PAGE_KERNEL, VM_FLUSH_RESET_PERMS,
-+				    NUMA_NO_NODE,
- 				    __builtin_return_address(0));
+ 	return __set_memory((unsigned long)page_address(page), 1,
+-			    PAGE_KERNEL, __pgprot(0));
++			    PAGE_KERNEL, __pgprot(_PAGE_EXEC));
  }
- #endif
+ 
+ #ifdef CONFIG_DEBUG_PAGEALLOC
 -- 
 2.43.0
 
