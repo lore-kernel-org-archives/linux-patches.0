@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9173C52F7C;
-	Tue, 23 Jan 2024 00:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5110452F7C;
+	Tue, 23 Jan 2024 00:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969907; cv=none; b=FJ1NcvGonFG0oNLAc7dvUcAJHEkgviHCv/8z8TJ22c5liq3zyvwNm7gdpuKsEOkh05wbUgJEH8itxa/LKTycejHyztfjGFMzbrf9TcB36+nyF2wwCti3eHsqhWYvQj1SSI/pX/QacxlhWgj8YK5A18PXOmuBRFu4Mtby6Ev8xRs=
+	t=1705969909; cv=none; b=ahURUKWZc3LaPY8eKSDXF3aId2Auyr8SaE61Hr4/MZd9d0CtXhS9HkHgo1zTpUiRPaam7S1wfMXLfgCAbwywQ2qOVuNu+8XXc3g7JKDVn9yd5BSdI7LmtnbZjHCiWdsZdyntl3Z3GwAdTPzH+pyWYvjwUSjIoVtQ+xEgCYmiNac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969907; c=relaxed/simple;
-	bh=hQAf0+OYJU7mThztzqfO4l9jMWCKVlrVunvoCMw2HA8=;
+	s=arc-20240116; t=1705969909; c=relaxed/simple;
+	bh=PbJV10MgpnbdkLkV5pMZ0tyFCPAtEIXy5PJ+kvJ1Jjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=siBymXfB64MGEkeIrCPx4iaQuU7V1SuGAg6YI2KB0OpqrpxJKFiFw2FE1HSt7ezEbqWxZaCm49JnDbgeo3HLMF5w+nUybEJwHzD11kjoFvLhqPcd6rx+LSL3xwHR6FyUZ9P1LTLaegtB8I+FTFwqNMkD+IZ/a5zLj3FpRL6gpLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQg7+y+v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u135m8JyBj2VYTal4tlIWGVz+VUsq16RpfDwP1yzsH8ZxwYNMDNnKtkm6VbR5OWQTRjbO365NER9+nqy5FeonBTya2Z52/2R3Loy3P3YD/P0xc12A8WWGHBBdTs3f4Z0QGpx85YUKb3IOUnxxgyEc1wXxNdnkbk0UWYNtLciE6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sariL3B5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQg7+y+v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE1FC433F1;
-	Tue, 23 Jan 2024 00:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sariL3B5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08478C433F1;
+	Tue, 23 Jan 2024 00:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969907;
-	bh=hQAf0+OYJU7mThztzqfO4l9jMWCKVlrVunvoCMw2HA8=;
+	s=korg; t=1705969909;
+	bh=PbJV10MgpnbdkLkV5pMZ0tyFCPAtEIXy5PJ+kvJ1Jjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aQg7+y+vOqCRNLvneOgfRuUl0I4y+lGz5GBs0eaFPzlX9OFxrz8CFJ29Zvkh/OZEO
-	 f6w57PqewiyAtNpqAZqMAopSe7Wq4mSwC7Rkyp+R3GIPIkfnoae6s4sXeBVy2HNLxf
-	 YDxvdQSQqwaRJfRech8dgrry71cHn7BKxnOxU/wc=
+	b=sariL3B5clvkXuQf6O9iNe4AA8tOAEowi9oPKSl83kxJC7a4Pbq+mcyV4SxJ1UO+v
+	 7exgjKUvv1lq1TAEuMTSyldm7NTjrKwTWI+uLL7NE4gug5AN+Y3L2bstCy5As/jpwp
+	 RoQv90cd3ujjjvI/jQMZxJTZ6cdQPBiRxtTBId9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Jan Palus <jpalus@fastmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 519/641] perf stat: Exit perf stat if parse groups fails
-Date: Mon, 22 Jan 2024 15:57:03 -0800
-Message-ID: <20240122235834.337210499@linuxfoundation.org>
+Subject: [PATCH 6.7 502/641] power: supply: cw2015: correct time_to_empty units in sysfs
+Date: Mon, 22 Jan 2024 15:56:46 -0800
+Message-ID: <20240122235833.776473614@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -58,70 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Jan Palus <jpalus@fastmail.com>
 
-[ Upstream commit 0713ab3bd169da82c35eefd012b07b715e4ebcf7 ]
+[ Upstream commit f37669119423ca852ca855b24732f25c0737aa57 ]
 
-Metrics were added by a callback but commit a4b8cfcabb1d90ec ("perf
-stat: Delay metric parsing") postponed this to allow optimizations based
-on the CPU configuration.
+RRT_ALRT register holds remaining battery time in minutes therefore it
+needs to be scaled accordingly when exposing TIME_TO_EMPTY via sysfs
+expressed in seconds
 
-In doing so it stopped errors in metric parsing from causing 'perf stat'
-termination.
-
-This change adds the termination for bad metric names back in.
-
-Fixes: a4b8cfcabb1d90ec ("perf stat: Delay metric parsing")
-Reported-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Closes: https://lore.kernel.org/lkml/ZXByT1K6enTh2EHT@kernel.org/
-Link: https://lore.kernel.org/r/20231206183533.972028-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: b4c7715c10c1 ("power: supply: add CellWise cw2015 fuel gauge driver")
+Signed-off-by: Jan Palus <jpalus@fastmail.com>
+Link: https://lore.kernel.org/r/20231111221704.5579-1-jpalus@fastmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-stat.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/power/supply/cw2015_battery.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-index a3af805a1d57..78c104922181 100644
---- a/tools/perf/builtin-stat.c
-+++ b/tools/perf/builtin-stat.c
-@@ -2695,15 +2695,19 @@ int cmd_stat(int argc, const char **argv)
- 	 */
- 	if (metrics) {
- 		const char *pmu = parse_events_option_args.pmu_filter ?: "all";
-+		int ret = metricgroup__parse_groups(evsel_list, pmu, metrics,
-+						stat_config.metric_no_group,
-+						stat_config.metric_no_merge,
-+						stat_config.metric_no_threshold,
-+						stat_config.user_requested_cpu_list,
-+						stat_config.system_wide,
-+						&stat_config.metric_events);
+diff --git a/drivers/power/supply/cw2015_battery.c b/drivers/power/supply/cw2015_battery.c
+index bb29e9ebd24a..99f3ccdc30a6 100644
+--- a/drivers/power/supply/cw2015_battery.c
++++ b/drivers/power/supply/cw2015_battery.c
+@@ -491,7 +491,7 @@ static int cw_battery_get_property(struct power_supply *psy,
  
--		metricgroup__parse_groups(evsel_list, pmu, metrics,
--					stat_config.metric_no_group,
--					stat_config.metric_no_merge,
--					stat_config.metric_no_threshold,
--					stat_config.user_requested_cpu_list,
--					stat_config.system_wide,
--					&stat_config.metric_events);
- 		zfree(&metrics);
-+		if (ret) {
-+			status = ret;
-+			goto out;
-+		}
- 	}
- 
- 	if (add_default_attributes())
+ 	case POWER_SUPPLY_PROP_TIME_TO_EMPTY_NOW:
+ 		if (cw_battery_valid_time_to_empty(cw_bat))
+-			val->intval = cw_bat->time_to_empty;
++			val->intval = cw_bat->time_to_empty * 60;
+ 		else
+ 			val->intval = 0;
+ 		break;
 -- 
 2.43.0
 
