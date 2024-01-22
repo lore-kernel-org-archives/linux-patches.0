@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682E3131748;
-	Tue, 23 Jan 2024 00:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FA71420A5;
+	Tue, 23 Jan 2024 00:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969449; cv=none; b=dgrS0R2pQnFj82krK4UKgOyTKGoqbjdC88kjKPz6OAEvLazP9LGemALorIZOMgadjRHuJaUbGz4gJYaiFul2r8AzgIbATWehD641jN/429P1MRWixVCOTQ4/kgJVnZdNthlopAiol5GNL0dUD5n/fkPKs5L/jNAfgOXjUNqe0pQ=
+	t=1705969451; cv=none; b=KNBirxBtjzHv+yfgSeL+eAlGfsIBpsvQ8AskmcjtxVfPEZTBW0pgkDjSrqEXO4jFa1b5tfW+3y2V4+A6Piyfq5bZgJj/GJeds+P4ae81SYSpsvJnOFjMNj5DB/a1OC5OkpioBrOAzMysFyiT+3hBchrfFRUpFd0rPs5nnKO64zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969449; c=relaxed/simple;
-	bh=VqU16vs751sl3MpltP4VM0gTEC6ceVkGcPlts/SkR4c=;
+	s=arc-20240116; t=1705969451; c=relaxed/simple;
+	bh=Erdy0CcfkIYRHT86T+PKyJH4DGwp4ITPjXPpthTOYYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vcjed1fKpNDEcE/Ax1TZ58IGs1TvU0s/f47eWikhFx41ZucBFLY41lFk1yjyZb/Btp/hl5WxnGae3M+2pBq7U7wD1KqF8P90XOj0BV6EOaiIB6INAf2MVJu8MCvPzbK4UvI5L5RpKWRaNOYEByzm+UxT1dEkYTyrsxAZ7vq89VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7X09Pqi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rCrMSRqDYWZrbflNOVzF0aF4TTABa7NmkFoudDAfl/HuGJGckORWyQzeWXyjDrh2EbPt80Y18M3Qkm6caeXPreWydFk51jV12CzptQP1EEct4a/eVw3neAqjj1LIYg1ASd9gRVQhqVfDO56A8cSsWpiCvKcL86opSrQ0EtU+fHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zf8myM7N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7X09Pqi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACD2C43390;
-	Tue, 23 Jan 2024 00:24:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zf8myM7N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEECBC43390;
+	Tue, 23 Jan 2024 00:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969449;
-	bh=VqU16vs751sl3MpltP4VM0gTEC6ceVkGcPlts/SkR4c=;
+	s=korg; t=1705969451;
+	bh=Erdy0CcfkIYRHT86T+PKyJH4DGwp4ITPjXPpthTOYYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7X09PqipuoOHRXkWzNyZbYqyFF43472aMC5YIxYmoF2RS8udwTMm0WZC2xu7bWYn
-	 T0XbCrgw2aHQhT/cFIzpW76WaD8/nLr9ohq9dTc6ulqtc+/I7p/Y4Opojzk+WqxBq/
-	 j2PQj91DPjg2x+NHps7JQSA47aqmfYhoWFjjq8v8=
+	b=Zf8myM7NQ39v+UFPySLY4d080u/el//mur8dw1FppwXHRKFoUqhUxseorGTDotNMp
+	 6vXK3LuVcP5bu9xZYouVN4dwrCVDz4vYxDdt7k1AKCCRXaqN1u2t2ayqMw0mVZnIDX
+	 fzE3/r42ID1QACcwQb1wujLNibqHzJxN2PEyvNFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ricardo B. Marliere" <ricardo@marliere.net>,
-	Mike Isely <isely@pobox.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+621409285c4156a009b3@syzkaller.appspotmail.com
-Subject: [PATCH 6.7 254/641] media: pvrusb2: fix use after free on context disconnection
-Date: Mon, 22 Jan 2024 15:52:38 -0800
-Message-ID: <20240122235825.861757443@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 255/641] media: mtk-jpeg: Remove cancel worker in mtk_jpeg_remove to avoid the crash of multi-core JPEG devices
+Date: Mon, 22 Jan 2024 15:52:39 -0800
+Message-ID: <20240122235825.890898027@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -54,44 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo B. Marliere <ricardo@marliere.net>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit ded85b0c0edd8f45fec88783d7555a5b982449c1 ]
+[ Upstream commit d8212c5c87c143ca01b78f6bf61244af07e0058e ]
 
-Upon module load, a kthread is created targeting the
-pvr2_context_thread_func function, which may call pvr2_context_destroy
-and thus call kfree() on the context object. However, that might happen
-before the usb hub_event handler is able to notify the driver. This
-patch adds a sanity check before the invalid read reported by syzbot,
-within the context disconnection call stack.
+This patch reverts commit c677d7ae8314
+("media: mtk-jpeg: Fix use after free bug due to uncanceled work").
+The job_timeout_work is initialized only for
+the single-core JPEG device so it will cause the crash for multi-core
+JPEG devices.
 
-Reported-and-tested-by: syzbot+621409285c4156a009b3@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000a02a4205fff8eb92@google.com/
+Fix it by removing the cancel_delayed_work_sync function.
 
-Fixes: e5be15c63804 ("V4L/DVB (7711): pvrusb2: Fix race on module unload")
-Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
-Acked-by: Mike Isely <isely@pobox.com>
+Fixes: c677d7ae8314 ("media: mtk-jpeg: Fix use after free bug due to uncanceled work")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/pvrusb2/pvrusb2-context.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/media/usb/pvrusb2/pvrusb2-context.c b/drivers/media/usb/pvrusb2/pvrusb2-context.c
-index 14170a5d72b3..1764674de98b 100644
---- a/drivers/media/usb/pvrusb2/pvrusb2-context.c
-+++ b/drivers/media/usb/pvrusb2/pvrusb2-context.c
-@@ -268,7 +268,8 @@ void pvr2_context_disconnect(struct pvr2_context *mp)
+diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+index 7194f88edc0f..60425c99a2b8 100644
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+@@ -1403,7 +1403,6 @@ static void mtk_jpeg_remove(struct platform_device *pdev)
  {
- 	pvr2_hdw_disconnect(mp->hdw);
- 	mp->disconnect_flag = !0;
--	pvr2_context_notify(mp);
-+	if (!pvr2_context_shutok())
-+		pvr2_context_notify(mp);
- }
+ 	struct mtk_jpeg_dev *jpeg = platform_get_drvdata(pdev);
  
- 
+-	cancel_delayed_work_sync(&jpeg->job_timeout_work);
+ 	pm_runtime_disable(&pdev->dev);
+ 	video_unregister_device(jpeg->vdev);
+ 	v4l2_m2m_release(jpeg->m2m_dev);
 -- 
 2.43.0
 
