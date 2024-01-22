@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6356BB56;
-	Tue, 23 Jan 2024 02:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250786BB56;
+	Tue, 23 Jan 2024 02:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975388; cv=none; b=UDjNYON5xGLYBuZ4xbL4NIbWz9kekO3m/Z4D+dJ35bQQXJuLXSR4T1EjJRbhzA6ZOIc/0pgpmAqZkTz5C1mWK5LyOdRQBlMQqdrn1hieAPxfkNaKgAap5I//ZQJlIcHFsSqU4I6PjgVlb4HndmPee9L0yMbJH+w46+Gh9+/eGdQ=
+	t=1705975389; cv=none; b=E74F5mpdLGxZDoH89L1d9MBCdmzKEwOV41IVS24yzBPiryrGMRXGdIo3gT8USjJQLG0Vvd3marNKyhnHDGbT931n/cbB3wntcPyl2lciEG+zFgkmqlNJNeBufTM5AFBoutNKJz2OTFwjsOruCyuL5+IMfYRt9GP+uSp3W9LlXRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975388; c=relaxed/simple;
-	bh=UdAN5tBOYok4x/v652DxjaxyJdVa6wJYwdwQVNJb9Pg=;
+	s=arc-20240116; t=1705975389; c=relaxed/simple;
+	bh=R4vnmwiKlCkkrm8zdZCTW1yhPwJdYlf0y3ebEuaYCqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+X8PD3+JE7eJbpzY3JxjpdZ8N6hPHjQBdXAUgdAqGIvSs0wex6G1jz2ZNiv3n0FiGzD2gWEaQDo9N2rHRoNnOdraGbSOvciEu9exCXkgGy7boN3eaeo9LNWMGLyLaAtvyhu6cj5J0gcnE4/E4OSJcuW02m9kApsh2V70yHsCRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Za9Og3SA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RfZgghJHeaG6HZWD3/+7CCUI8+n2dwhcOdNCSYBKmzSf0MlGv3yaztXhwP5DIX98Khk7yA9TGf3Cq37k6IPk1UzoRHR5s6L7NbhJs10xsFQVN8VJOVk9vt3uqnmOzEhN2BnS+oceaHbrTZPru8wouUGVPaUhNsu7BOybh3KrPXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ib8jTZy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Za9Og3SA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A50C43390;
-	Tue, 23 Jan 2024 02:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ib8jTZy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0B60C43394;
+	Tue, 23 Jan 2024 02:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975388;
-	bh=UdAN5tBOYok4x/v652DxjaxyJdVa6wJYwdwQVNJb9Pg=;
+	s=korg; t=1705975389;
+	bh=R4vnmwiKlCkkrm8zdZCTW1yhPwJdYlf0y3ebEuaYCqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Za9Og3SAYJ0XQ0FeukJMBpjoOdQSVF54f7WXw6Op+dWSLuoTiRHvBEJQfE2AEBK69
-	 kthmhx2wchyoNTzBCAOzHdb/zdt4P9gAJExsWsjr3xpsy0nw8iLCgYpNBQg5oXDAu5
-	 Yj2innCnPGu7Q8FzYoTlfFWQeJZtBXBF05c3tsB8=
+	b=1Ib8jTZywcCbb3XK6CS6jXMznY9Rc4H2jmWOxoHJJdfham6m/QEC5/qamB3iYIiMa
+	 fzn90Qit4zv4Axq9L9JnDRs0sHqCseSDm1FvOltjLYsENhprzc7Gt0F9CBTwk/uKN0
+	 QlU82bf8D0e4Ivdif1lCQkZwbeeVn1nYotcMmM+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wiehler <stefan.wiehler@nokia.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.6 348/583] mips/smp: Call rcutree_report_cpu_starting() earlier
-Date: Mon, 22 Jan 2024 15:56:39 -0800
-Message-ID: <20240122235822.670349324@linuxfoundation.org>
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 349/583] Input: atkbd - use ab83 as id when skipping the getid command
+Date: Mon, 22 Jan 2024 15:56:40 -0800
+Message-ID: <20240122235822.703066161@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -45,78 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Wiehler <stefan.wiehler@nokia.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 55702ec9603ebeffb15e6f7b113623fe1d8872f4 upstream.
+commit 58f65f9db7e0de366a5a115c2e2c0703858bba69 upstream.
 
-rcutree_report_cpu_starting() must be called before
-clockevents_register_device() to avoid the following lockdep splat triggered by
-calling list_add() when CONFIG_PROVE_RCU_LIST=y:
+Barnabás reported that the change to skip the getid command
+when the controller is in translated mode on laptops caused
+the Version field of his "AT Translated Set 2 keyboard"
+input device to change from ab83 to abba, breaking a custom
+hwdb entry for this keyboard.
 
-  WARNING: suspicious RCU usage
-  ...
-  -----------------------------
-  kernel/locking/lockdep.c:3680 RCU-list traversed in non-reader section!!
+Use the standard ab83 id for keyboards when getid is skipped
+(rather then that getid fails) to avoid reporting a different
+Version to userspace then before skipping the getid.
 
-  other info that might help us debug this:
-
-  RCU used illegally from offline CPU!
-  rcu_scheduler_active = 1, debug_locks = 1
-  no locks held by swapper/1/0.
-  ...
-  Call Trace:
-  [<ffffffff8012a434>] show_stack+0x64/0x158
-  [<ffffffff80a93d98>] dump_stack_lvl+0x90/0xc4
-  [<ffffffff801c9e9c>] __lock_acquire+0x1404/0x2940
-  [<ffffffff801cbf3c>] lock_acquire+0x14c/0x448
-  [<ffffffff80aa4260>] _raw_spin_lock_irqsave+0x50/0x88
-  [<ffffffff8021e0c8>] clockevents_register_device+0x60/0x1e8
-  [<ffffffff80130ff0>] r4k_clockevent_init+0x220/0x3a0
-  [<ffffffff801339d0>] start_secondary+0x50/0x3b8
-
-raw_smp_processor_id() is required in order to avoid calling into lockdep
-before RCU has declared the CPU to be watched for readers.
-
-See also commit 29368e093921 ("x86/smpboot:  Move rcu_cpu_starting() earlier"),
-commit de5d9dae150c ("s390/smp: move rcu_cpu_starting() earlier") and commit
-99f070b62322 ("powerpc/smp: Call rcu_cpu_starting() earlier").
-
-Signed-off-by: Stefan Wiehler <stefan.wiehler@nokia.com>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in translated mode")
+Reported-by: Barnabás Pőcze <pobrn@protonmail.com>
+Closes: https://lore.kernel.org/linux-input/W1ydwoG2fYv85Z3C3yfDOJcVpilEvGge6UGa9kZh8zI2-qkHXp7WLnl2hSkFz63j-c7WupUWI5TLL6n7Lt8DjRuU-yJBwLYWrreb1hbnd6A=@protonmail.com/
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240116204325.7719-1-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/smp.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/input/keyboard/atkbd.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/arch/mips/kernel/smp.c
-+++ b/arch/mips/kernel/smp.c
-@@ -351,10 +351,11 @@ early_initcall(mips_smp_ipi_init);
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -791,9 +791,9 @@ static bool atkbd_is_portable_device(voi
+  * not work. So in this case simply assume a keyboard is connected to avoid
+  * confusing some laptop keyboards.
+  *
+- * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using a fake id is
+- * ok in translated mode, only atkbd_select_set() checks atkbd->id and in
+- * translated mode that is a no-op.
++ * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using the standard
++ * 0xab83 id is ok in translated mode, only atkbd_select_set() checks atkbd->id
++ * and in translated mode that is a no-op.
   */
- asmlinkage void start_secondary(void)
+ static bool atkbd_skip_getid(struct atkbd *atkbd)
  {
--	unsigned int cpu;
-+	unsigned int cpu = raw_smp_processor_id();
+@@ -811,6 +811,7 @@ static int atkbd_probe(struct atkbd *atk
+ {
+ 	struct ps2dev *ps2dev = &atkbd->ps2dev;
+ 	unsigned char param[2];
++	bool skip_getid;
  
- 	cpu_probe();
- 	per_cpu_trap_init(false);
-+	rcu_cpu_starting(cpu);
- 	mips_clockevent_init();
- 	mp_ops->init_secondary();
- 	cpu_report();
-@@ -366,7 +367,6 @@ asmlinkage void start_secondary(void)
- 	 */
+ /*
+  * Some systems, where the bit-twiddling when testing the io-lines of the
+@@ -832,7 +833,8 @@ static int atkbd_probe(struct atkbd *atk
+  */
  
- 	calibrate_delay();
--	cpu = smp_processor_id();
- 	cpu_data[cpu].udelay_val = loops_per_jiffy;
+ 	param[0] = param[1] = 0xa5;	/* initialize with invalid values */
+-	if (atkbd_skip_getid(atkbd) || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
++	skip_getid = atkbd_skip_getid(atkbd);
++	if (skip_getid || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
  
- 	set_cpu_sibling_map(cpu);
+ /*
+  * If the get ID command was skipped or failed, we check if we can at least set
+@@ -842,7 +844,7 @@ static int atkbd_probe(struct atkbd *atk
+ 		param[0] = 0;
+ 		if (ps2_command(ps2dev, param, ATKBD_CMD_SETLEDS))
+ 			return -1;
+-		atkbd->id = 0xabba;
++		atkbd->id = skip_getid ? 0xab83 : 0xabba;
+ 		return 0;
+ 	}
+ 
 
 
