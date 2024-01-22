@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D71E3C0C;
-	Tue, 23 Jan 2024 02:09:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131267E562;
+	Tue, 23 Jan 2024 02:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975743; cv=none; b=cQE4Immy0YXnl8EEckG0lonMFZ0zNlaz0NTlsRVZ3hBchx+fovD85rVAYW9ljI5qeZGNnyX9JwofwzhSTgjG2R8nb5KfSnCWGA0pHzH3UPsqw90cn2FlIGoQegYi8QJBxEzZuVtWwA2bhvnJ/eJwGLDz+4/8kiyyae4iSESwXjA=
+	t=1705975744; cv=none; b=ssKUo7RZY7UQWsTjGG00VkPJEWspvLWUtkBLIRUPfvQNcGxyH68tYpq+FzcmlczQ9e9nGUMvs7s/ZgacM3I0Lp1RWd6UlRIxenHeUqqy1zB+39/oJw56BIoBghagrgF25VsC9D0ZSMocmn4heR2mdMIF3+ej8WYmEKpEgiURYe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975743; c=relaxed/simple;
-	bh=xhAdCx08AEBoOy+n/EWWJk1Zx+feKwSVOVhvrj+y90U=;
+	s=arc-20240116; t=1705975744; c=relaxed/simple;
+	bh=eUEREUW863k9qwK2ucoBLFHpLu1mRE8gBLJO0xU/npU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EG+6ctqIaok3ydZA/Fv3CVU/5AOfFT7pUR0HYPufP92ys57T402rCncMelkG+QdYdhI8TejIkgvMEeqRLBNMK1UTGh8gN8uHY4f+sQEvfXPHxWiZKXZBN4Rv2S7HdMwq5Mr71wwYPSa0IbuD8oeNdD7mECxUUqvguiLCc7XTCx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1K4yhRyu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g9pMZXJEesrJDF7HKThQNVgCrfvpqqI6q7D6HZK+BDVOP69XV9PbF+PFYrHmokLtCZ4Ukuvj1Rj6/jOSK+4g9tJI1ncK8X0fMMCK6w1vIqJKw7ohfP09+2Odn6Np/4BYgT+rc7ChxzdIfl27A32gvy8mQQkwnzDsuMVY/kmWDYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eWQuH32; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1K4yhRyu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD34EC433F1;
-	Tue, 23 Jan 2024 02:09:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eWQuH32"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE072C433F1;
+	Tue, 23 Jan 2024 02:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705975743;
-	bh=xhAdCx08AEBoOy+n/EWWJk1Zx+feKwSVOVhvrj+y90U=;
+	bh=eUEREUW863k9qwK2ucoBLFHpLu1mRE8gBLJO0xU/npU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1K4yhRyuvPVB9gJuwgzgXFzUGShHweIEQqOJsKM/BfjsbDZLYKS/RpQNe34zpGIz2
-	 ZAPHIK+T3SQexqITvFKTbAV58GVc25VDOW0JIrj25PO0hq9LaCuJsXRe/K/wuBTOaj
-	 V7d6rbB769ERFcTplIECBHpdI+zl5EbiLgs+2Xc0=
+	b=2eWQuH3221lL8G1oME/qs5uda7HOouk56pdLF4kkiQu4lj3BpejdOSe/aC97DmiAD
+	 yi6oaMkc2IuFQ19kBWKDfZ943OSQU119p29qjlJUpd1xjCveQ+tuCklVZC+oYFJkP1
+	 8/ZGCNjsqSwWPlqnLYvbN+lFriym6nx78TS/ijLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 527/583] net: ethernet: ti: am65-cpsw: Fix max mtu to fit ethernet frames
-Date: Mon, 22 Jan 2024 15:59:38 -0800
-Message-ID: <20240122235828.225122018@linuxfoundation.org>
+Subject: [PATCH 6.6 528/583] amt: do not use overwrapped cb area
+Date: Mon, 22 Jan 2024 15:59:39 -0800
+Message-ID: <20240122235828.261606422@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -47,65 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanjuán García, Jorge <Jorge.SanjuanGarcia@duagon.com>
+From: Taehee Yoo <ap420073@gmail.com>
 
-[ Upstream commit 64e47d8afb5ca533b27efc006405e5bcae2c4a7b ]
+[ Upstream commit bec161add35b478a7746bf58bcdea6faa19129ef ]
 
-The value of AM65_CPSW_MAX_PACKET_SIZE represents the maximum length
-of a received frame. This value is written to the register
-AM65_CPSW_PORT_REG_RX_MAXLEN.
+amt driver uses skb->cb for storing tunnel information.
+This job is worked before TC layer and then amt driver load tunnel info
+from skb->cb after TC layer.
+So, its cb area should not be overwrapped with CB area used by TC.
+In order to not use cb area used by TC, it skips the biggest cb
+structure used by TC, which was qdisc_skb_cb.
+But it's not anymore.
+Currently, biggest structure of TC's CB is tc_skb_cb.
+So, it should skip size of tc_skb_cb instead of qdisc_skb_cb.
 
-The maximum MTU configured on the network device should then leave
-some room for the ethernet headers and frame check. Otherwise, if
-the network interface is configured to its maximum mtu possible,
-the frames will be larger than AM65_CPSW_MAX_PACKET_SIZE and will
-get dropped as oversized.
-
-The switch supports ethernet frame sizes between 64 and 2024 bytes
-(including VLAN) as stated in the technical reference manual, so
-define AM65_CPSW_MAX_PACKET_SIZE with that maximum size.
-
-Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
-Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Link: https://lore.kernel.org/r/20240105085530.14070-2-jorge.sanjuangarcia@duagon.com
+Fixes: ec624fe740b4 ("net/sched: Extend qdisc control block with tc control block")
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/20240107144241.4169520-1-ap420073@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/amt.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 24120605502f..c62b0f99f2bc 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -56,7 +56,7 @@
- #define AM65_CPSW_MAX_PORTS	8
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index 2d20be6ffb7e..ddd087c2c3ed 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -11,7 +11,7 @@
+ #include <linux/net.h>
+ #include <linux/igmp.h>
+ #include <linux/workqueue.h>
+-#include <net/sch_generic.h>
++#include <net/pkt_sched.h>
+ #include <net/net_namespace.h>
+ #include <net/ip.h>
+ #include <net/udp.h>
+@@ -80,11 +80,11 @@ static struct mld2_grec mldv2_zero_grec;
  
- #define AM65_CPSW_MIN_PACKET_SIZE	VLAN_ETH_ZLEN
--#define AM65_CPSW_MAX_PACKET_SIZE	(VLAN_ETH_FRAME_LEN + ETH_FCS_LEN)
-+#define AM65_CPSW_MAX_PACKET_SIZE	2024
+ static struct amt_skb_cb *amt_skb_cb(struct sk_buff *skb)
+ {
+-	BUILD_BUG_ON(sizeof(struct amt_skb_cb) + sizeof(struct qdisc_skb_cb) >
++	BUILD_BUG_ON(sizeof(struct amt_skb_cb) + sizeof(struct tc_skb_cb) >
+ 		     sizeof_field(struct sk_buff, cb));
  
- #define AM65_CPSW_REG_CTL		0x004
- #define AM65_CPSW_REG_STAT_PORT_EN	0x014
-@@ -2167,7 +2167,8 @@ am65_cpsw_nuss_init_port_ndev(struct am65_cpsw_common *common, u32 port_idx)
- 	eth_hw_addr_set(port->ndev, port->slave.mac_addr);
+ 	return (struct amt_skb_cb *)((void *)skb->cb +
+-		sizeof(struct qdisc_skb_cb));
++		sizeof(struct tc_skb_cb));
+ }
  
- 	port->ndev->min_mtu = AM65_CPSW_MIN_PACKET_SIZE;
--	port->ndev->max_mtu = AM65_CPSW_MAX_PACKET_SIZE;
-+	port->ndev->max_mtu = AM65_CPSW_MAX_PACKET_SIZE -
-+			      (VLAN_ETH_HLEN + ETH_FCS_LEN);
- 	port->ndev->hw_features = NETIF_F_SG |
- 				  NETIF_F_RXCSUM |
- 				  NETIF_F_HW_CSUM |
+ static void __amt_source_gc_work(void)
 -- 
 2.43.0
 
