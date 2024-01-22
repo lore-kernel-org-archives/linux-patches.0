@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705FB22062;
-	Tue, 23 Jan 2024 00:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FC0627FB;
+	Tue, 23 Jan 2024 00:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971098; cv=none; b=hFMBJFmmEIHPDPpxFVEUorgTEVNV/fwx60YXTRQ1ZADZgXNRHLCAD0Xn1JZBd7syAkVqY28U50RjCLxSrh7fsO50YDK+xzR8uiUyxP7Z0pPk0gEQ62RhoB+iUwQmoacjQx/0MLe3ArjmUstg5WO9ik9DPpfNNwBw9Ilp1KcrUwE=
+	t=1705971103; cv=none; b=c6Xh3w3NYMHwPlQDI0b3qQnB5zBEB0+Wez+gRHJjt38Pnt6t4oxfYEuQbr4YW+YUnOvyAIV5EsH/OTSs2KkSZ7PI8hlNaYn57GfXamCVAL7+u+4llJoeIxRVQ+TirvewwKaV0wqhgsYyHOK9GK/gkwigXUax5Jey+FYa+XyNj7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971098; c=relaxed/simple;
-	bh=I0tBsHX1GsjDSqg3RmZuVBfP2z4A99aSyAdWGpl5d64=;
+	s=arc-20240116; t=1705971103; c=relaxed/simple;
+	bh=mtrWedbnCErhmeoIRnSgqj5Uj5IMRI3HyL6gZ6NjHa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/K/idUGCw0zoImmTOu++FBZd5hBYwXqAqzr9xwjkT40me25L5VHl8sSB4LnlU+sAiiIuywCyzFR/dals7E8/cSETalX87JbYpuZaP6vU9lYArSQDVkNXPK5kPVJQOBn7SWvB6mXO2v5Lza7XXlvsTqWGMdNkE2LQ8Y5ESsiljY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F43MQKqB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CHTEDaxx9L6Xgpva2xMdPa9XYvIlmRgcLfbA5tWExfwjzMpzh0PzKR5x196j0pAsDfAC7zn8aB/sLbmehoMagEWAAjCAVKuWkhoDD1owBH0rV9gONXaomLvl+ydHekSXjZF1BQUH7AKvh8bgjTFBt7JUD8ndYI4uu3IbyPBzy4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIxXh3o2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F43MQKqB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8671C433F1;
-	Tue, 23 Jan 2024 00:51:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIxXh3o2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961C6C43390;
+	Tue, 23 Jan 2024 00:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971098;
-	bh=I0tBsHX1GsjDSqg3RmZuVBfP2z4A99aSyAdWGpl5d64=;
+	s=korg; t=1705971102;
+	bh=mtrWedbnCErhmeoIRnSgqj5Uj5IMRI3HyL6gZ6NjHa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F43MQKqBeErK1n31i+5yU8YWihc8PC5wnLL4qc/P/J3ltAsMCkUT2zI7z2do4sanB
-	 7AFcKW7mCwQdkP5Mv/AShQu6Sx76o36UDxNzJQOGMcFfbvfA9wjH26klozVQ59lqng
-	 zXg8kTC33J8USRnh9Ikjv3PLUN9KGBdlXJcuhOSM=
+	b=IIxXh3o2VzACwwWDYs22P9M/SXJ/rA91d45WtRJed8zZsikCA8kVTya062sd2ixv0
+	 acLDOKblBiKqyJAIepYM+1ZBDvwSkG2ewGT2Fejd/Dtc15UULksD2iitsGlYSkcQhP
+	 bmE0wEmPwHpDK0ubbwN67UUSzFFgP2k9mwiwk3WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 180/417] ASoC: cs35l34: Fix GPIO name and drop legacy include
-Date: Mon, 22 Jan 2024 15:55:48 -0800
-Message-ID: <20240122235758.096450607@linuxfoundation.org>
+Subject: [PATCH 5.10 088/286] crypto: sahara - fix cbc selftest failure
+Date: Mon, 22 Jan 2024 15:56:34 -0800
+Message-ID: <20240122235735.423061701@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +47,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit a6122b0b4211d132934ef99e7b737910e6d54d2f ]
+[ Upstream commit 9f10bc28c0fb676ae58aa3bfa358db8f5de124bb ]
 
-This driver includes the legacy GPIO APIs <linux/gpio.h> and
-<linux/of_gpio.h> but does not use any symbols from any of
-them.
+The kernel crypto API requires that all CBC implementations update the IV
+buffer to contain the last ciphertext block.
 
-Drop the includes.
+This fixes the following cbc selftest error:
+alg: skcipher: sahara-cbc-aes encryption test failed (wrong output IV) on
+test vector 0, cfg="in-place (one sglist)"
 
-Further the driver is requesting "reset-gpios" rather than
-just "reset" from the GPIO framework. This is wrong because
-the gpiolib core will add "-gpios" before processing the
-request from e.g. device tree. Drop the suffix.
-
-The last problem means that the optional RESET GPIO has
-never been properly retrieved and used even if it existed,
-but nobody noticed.
-
-Fixes: c1124c09e103 ("ASoC: cs35l34: Initial commit of the cs35l34 CODEC driver.")
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20231201-descriptors-sound-cirrus-v2-3-ee9f9d4655eb@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l34.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/crypto/sahara.c | 33 +++++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/cs35l34.c b/sound/soc/codecs/cs35l34.c
-index b3f98023e6a7..57d125c03fad 100644
---- a/sound/soc/codecs/cs35l34.c
-+++ b/sound/soc/codecs/cs35l34.c
-@@ -20,14 +20,12 @@
- #include <linux/regulator/machine.h>
- #include <linux/pm_runtime.h>
- #include <linux/of_device.h>
--#include <linux/of_gpio.h>
- #include <linux/of_irq.h>
- #include <sound/core.h>
- #include <sound/pcm.h>
- #include <sound/pcm_params.h>
- #include <sound/soc.h>
- #include <sound/soc-dapm.h>
--#include <linux/gpio.h>
- #include <linux/gpio/consumer.h>
- #include <sound/initval.h>
- #include <sound/tlv.h>
-@@ -1061,7 +1059,7 @@ static int cs35l34_i2c_probe(struct i2c_client *i2c_client)
- 		dev_err(&i2c_client->dev, "Failed to request IRQ: %d\n", ret);
+diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
+index 0ae95767bb76..0b6e63a763ca 100644
+--- a/drivers/crypto/sahara.c
++++ b/drivers/crypto/sahara.c
+@@ -148,6 +148,7 @@ struct sahara_ctx {
  
- 	cs35l34->reset_gpio = devm_gpiod_get_optional(&i2c_client->dev,
--				"reset-gpios", GPIOD_OUT_LOW);
-+				"reset", GPIOD_OUT_LOW);
- 	if (IS_ERR(cs35l34->reset_gpio)) {
- 		ret = PTR_ERR(cs35l34->reset_gpio);
- 		goto err_regulator;
+ struct sahara_aes_reqctx {
+ 	unsigned long mode;
++	u8 iv_out[AES_BLOCK_SIZE];
+ 	struct skcipher_request fallback_req;	// keep at the end
+ };
+ 
+@@ -541,8 +542,24 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
+ 	return -EINVAL;
+ }
+ 
++static void sahara_aes_cbc_update_iv(struct skcipher_request *req)
++{
++	struct crypto_skcipher *skcipher = crypto_skcipher_reqtfm(req);
++	struct sahara_aes_reqctx *rctx = skcipher_request_ctx(req);
++	unsigned int ivsize = crypto_skcipher_ivsize(skcipher);
++
++	/* Update IV buffer to contain the last ciphertext block */
++	if (rctx->mode & FLAGS_ENCRYPT) {
++		sg_pcopy_to_buffer(req->dst, sg_nents(req->dst), req->iv,
++				   ivsize, req->cryptlen - ivsize);
++	} else {
++		memcpy(req->iv, rctx->iv_out, ivsize);
++	}
++}
++
+ static int sahara_aes_process(struct skcipher_request *req)
+ {
++	struct crypto_skcipher *skcipher = crypto_skcipher_reqtfm(req);
+ 	struct sahara_dev *dev = dev_ptr;
+ 	struct sahara_ctx *ctx;
+ 	struct sahara_aes_reqctx *rctx;
+@@ -564,8 +581,17 @@ static int sahara_aes_process(struct skcipher_request *req)
+ 	rctx->mode &= FLAGS_MODE_MASK;
+ 	dev->flags = (dev->flags & ~FLAGS_MODE_MASK) | rctx->mode;
+ 
+-	if ((dev->flags & FLAGS_CBC) && req->iv)
+-		memcpy(dev->iv_base, req->iv, AES_KEYSIZE_128);
++	if ((dev->flags & FLAGS_CBC) && req->iv) {
++		unsigned int ivsize = crypto_skcipher_ivsize(skcipher);
++
++		memcpy(dev->iv_base, req->iv, ivsize);
++
++		if (!(dev->flags & FLAGS_ENCRYPT)) {
++			sg_pcopy_to_buffer(req->src, sg_nents(req->src),
++					   rctx->iv_out, ivsize,
++					   req->cryptlen - ivsize);
++		}
++	}
+ 
+ 	/* assign new context to device */
+ 	dev->ctx = ctx;
+@@ -588,6 +614,9 @@ static int sahara_aes_process(struct skcipher_request *req)
+ 	dma_unmap_sg(dev->device, dev->in_sg, dev->nb_in_sg,
+ 		DMA_TO_DEVICE);
+ 
++	if ((dev->flags & FLAGS_CBC) && req->iv)
++		sahara_aes_cbc_update_iv(req);
++
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
