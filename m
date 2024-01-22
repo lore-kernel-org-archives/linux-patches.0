@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36365B210;
-	Tue, 23 Jan 2024 01:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657C55B5A1;
+	Tue, 23 Jan 2024 01:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974329; cv=none; b=aZAzcVZU/hf9BMcqol2469SBLlgpd1X+QwDSrLGyxfXa3+qw6AD1n9pH4Tz8WH44OqCKOcIsF2epttL1zSmlFz90qC4RhgnDaeJCzrV3lecS70ZEuHSLJpAWI3+KdBxD1sKV6lQJOQvvQ830YYYbgOBsL2QVoVRACv5ib7AxgcA=
+	t=1705974330; cv=none; b=B9fhsjSSXN+YaJHIsGURqcD7ItSCVIivVsyXGI5Jxny7cUsY8MMyGX5PPH9XKeJu9u87S+VQl1szlGBdHsK3Vqw2l40oewA/r/X0fkAB59AyQ/eZ6f0CXINQQ3rx0Y24Qh/cSaz98vSlEA8VkHpLLutpOKWYlUMXcCYU8Zvexmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974329; c=relaxed/simple;
-	bh=kK7E6O/CMPpE3S1gvFd/OejrXRm2CNPZlmImnXqe8+4=;
+	s=arc-20240116; t=1705974330; c=relaxed/simple;
+	bh=ghL55uhOregF0OtdBzomylxIwCVsOp95o8N8lInDr1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OUSmDZA/bHAD6LPs8Y1fc/Qi3pHaa0S0kombj8JR2cJOuswnIPYTfz5Le7gAdCanA+2ENtRPf1XqXgp2rmULzZVxodJG1uXtRGTjtrlC5Bmdpe9oUnsW1pBQc6DgV2po1C3rapSnp6f4MEVOiBck9zLF3pw+YX2ygBSnKra39qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqCYf7RS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P1SaUdAKdByf5yvpFEEM67Pdoa4b1iobqCYegCs8FjEgQrYkHN47549Cda1YXZpSXX558rKypLMkHBgDQ4kw9zB/Z7zS5bABi3e23ryGqol8s6a3htY3szBcU64OsNfpKzWcxqfhpW+1IE+fBQEckdYG0ILvoNG/H/29EvrqZ9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mCe2seuF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqCYf7RS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7FFC433C7;
-	Tue, 23 Jan 2024 01:45:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCe2seuF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B9AC43394;
+	Tue, 23 Jan 2024 01:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974328;
-	bh=kK7E6O/CMPpE3S1gvFd/OejrXRm2CNPZlmImnXqe8+4=;
+	s=korg; t=1705974330;
+	bh=ghL55uhOregF0OtdBzomylxIwCVsOp95o8N8lInDr1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LqCYf7RSXQhZbIf7k2cxO51JjdDkbBG3BgG8VShR1HKEy+cB8wcsMwbFWxKTGFNXj
-	 /TKWBFriVpiNYXmksoHS2HDqCCecH9mBwurv9krcXvnZCnBxQv0G1iP9//WAmDVsHh
-	 g/J9arKYW6k398pnwfOwtKFtE/E2PlEO6trjyLzo=
+	b=mCe2seuF2m6Yv7fZb1TuHEbzc6VBrHlaIyKfoZOs9eITGkkZYx1dKSjQ/+D9pQSuE
+	 Y7thvd3LJFCUAdxEtBf/6WJ1i84HNnj7KHSU6ifXYQ2IuTmiXzZETiPjDB8N2PS2iw
+	 lDj+F936gCkgUOQNf5okvXA+8BDtXqCCOMwGv8CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Liu <liuqi115@huawei.com>,
-	John Garry <john.garry@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	David Thompson <davthompson@nvidia.com>,
+	Asmaa Mnebhi <asmaa@nvidia.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 143/374] scsi: hisi_sas: Prevent parallel FLR and controller reset
-Date: Mon, 22 Jan 2024 15:56:39 -0800
-Message-ID: <20240122235749.603154552@linuxfoundation.org>
+Subject: [PATCH 5.15 173/374] mlxbf_gige: Enable the GigE port in mlxbf_gige_open
+Date: Mon, 22 Jan 2024 15:57:09 -0800
+Message-ID: <20240122235750.655011515@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -52,96 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Liu <liuqi115@huawei.com>
+From: Asmaa Mnebhi <asmaa@nvidia.com>
 
-[ Upstream commit 16775db613c2bdea09705dcb876942c0641a1098 ]
+[ Upstream commit a460f4a684511e007bbf1700758a41f05d9981e6 ]
 
-If we issue a controller reset command during executing a FLR a hung task
-may be found:
+At the moment, the GigE port is enabled in the mlxbf_gige_probe
+function. If the mlxbf_gige_open is not executed, this could cause
+pause frames to increase in the case where there is high backgroud
+traffic. This results in clogging the port.
+So move enabling the OOB port to mlxbf_gige_open.
 
- Call trace:
-  __switch_to+0x158/0x1cc
-  __schedule+0x2e8/0x85c
-  schedule+0x7c/0x110
-  schedule_timeout+0x190/0x1cc
-  __down+0x7c/0xd4
-  down+0x5c/0x7c
-  hisi_sas_task_exec+0x510/0x680 [hisi_sas_main]
-  hisi_sas_queue_command+0x24/0x30 [hisi_sas_main]
-  smp_execute_task_sg+0xf4/0x23c [libsas]
-  sas_smp_phy_control+0x110/0x1e0 [libsas]
-  transport_sas_phy_reset+0xc8/0x190 [libsas]
-  phy_reset_work+0x2c/0x40 [libsas]
-  process_one_work+0x1dc/0x48c
-  worker_thread+0x15c/0x464
-  kthread+0x160/0x170
-  ret_from_fork+0x10/0x18
-
-This is a race condition which occurs when the FLR completes first.
-
-Here the host HISI_SAS_RESETTING_BIT flag out gets of sync as
-HISI_SAS_RESETTING_BIT is not always cleared with the hisi_hba.sem held, so
-now only set/unset HISI_SAS_RESETTING_BIT under hisi_hba.sem .
-
-Link: https://lore.kernel.org/r/1639579061-179473-7-git-send-email-john.garry@huawei.com
-Signed-off-by: Qi Liu <liuqi115@huawei.com>
-Signed-off-by: John Garry <john.garry@huawei.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: d34ee535705e ("scsi: hisi_sas: Replace with standard error code return value")
+Fixes: f92e1869d74e ("Add Mellanox BlueField Gigabit Ethernet driver")
+Reviewed-by: David Thompson <davthompson@nvidia.com>
+Signed-off-by: Asmaa Mnebhi <asmaa@nvidia.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_main.c  | 8 +++++---
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 1 +
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ .../ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c   | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index 7744594cd3e3..19081790f011 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_main.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -1548,7 +1548,6 @@ void hisi_sas_controller_reset_prepare(struct hisi_hba *hisi_hba)
+diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
+index 181a0845a105..679415a64f25 100644
+--- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
++++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
+@@ -132,9 +132,15 @@ static int mlxbf_gige_open(struct net_device *netdev)
  {
- 	struct Scsi_Host *shost = hisi_hba->shost;
+ 	struct mlxbf_gige *priv = netdev_priv(netdev);
+ 	struct phy_device *phydev = netdev->phydev;
++	u64 control;
+ 	u64 int_en;
+ 	int err;
  
--	down(&hisi_hba->sem);
- 	hisi_hba->phy_state = hisi_hba->hw->get_phys_state(hisi_hba);
++	/* Perform general init of GigE block */
++	control = readq(priv->base + MLXBF_GIGE_CONTROL);
++	control |= MLXBF_GIGE_CONTROL_PORT_EN;
++	writeq(control, priv->base + MLXBF_GIGE_CONTROL);
++
+ 	err = mlxbf_gige_request_irqs(priv);
+ 	if (err)
+ 		return err;
+@@ -281,7 +287,6 @@ static int mlxbf_gige_probe(struct platform_device *pdev)
+ 	void __iomem *plu_base;
+ 	void __iomem *base;
+ 	int addr, phy_irq;
+-	u64 control;
+ 	int err;
  
- 	scsi_block_requests(shost);
-@@ -1574,9 +1573,9 @@ void hisi_sas_controller_reset_done(struct hisi_hba *hisi_hba)
- 	if (hisi_hba->reject_stp_links_msk)
- 		hisi_sas_terminate_stp_reject(hisi_hba);
- 	hisi_sas_reset_init_all_devices(hisi_hba);
--	up(&hisi_hba->sem);
- 	scsi_unblock_requests(shost);
- 	clear_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags);
-+	up(&hisi_hba->sem);
+ 	base = devm_platform_ioremap_resource(pdev, MLXBF_GIGE_RES_MAC);
+@@ -296,11 +301,6 @@ static int mlxbf_gige_probe(struct platform_device *pdev)
+ 	if (IS_ERR(plu_base))
+ 		return PTR_ERR(plu_base);
  
- 	hisi_sas_rescan_topology(hisi_hba, hisi_hba->phy_state);
- }
-@@ -1587,8 +1586,11 @@ static int hisi_sas_controller_prereset(struct hisi_hba *hisi_hba)
- 	if (!hisi_hba->hw->soft_reset)
- 		return -1;
- 
--	if (test_and_set_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags))
-+	down(&hisi_hba->sem);
-+	if (test_and_set_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags)) {
-+		up(&hisi_hba->sem);
- 		return -1;
-+	}
- 
- 	if (hisi_sas_debugfs_enable && hisi_hba->debugfs_itct[0].itct)
- 		hisi_hba->hw->debugfs_snapshot_regs(hisi_hba);
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 2ed787956fa8..0e57381121d5 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -4935,6 +4935,7 @@ static void hisi_sas_reset_prepare_v3_hw(struct pci_dev *pdev)
- 	int rc;
- 
- 	dev_info(dev, "FLR prepare\n");
-+	down(&hisi_hba->sem);
- 	set_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags);
- 	hisi_sas_controller_reset_prepare(hisi_hba);
- 
+-	/* Perform general init of GigE block */
+-	control = readq(base + MLXBF_GIGE_CONTROL);
+-	control |= MLXBF_GIGE_CONTROL_PORT_EN;
+-	writeq(control, base + MLXBF_GIGE_CONTROL);
+-
+ 	netdev = devm_alloc_etherdev(&pdev->dev, sizeof(*priv));
+ 	if (!netdev)
+ 		return -ENOMEM;
 -- 
 2.43.0
 
