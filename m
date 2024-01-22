@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA8D67726;
-	Tue, 23 Jan 2024 02:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51586772E;
+	Tue, 23 Jan 2024 02:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975295; cv=none; b=kLy27CAi6Q5wD7C0FkjLT98QXAIAsJtQlXLGlCYwvyaQbKqCi0aXRtLHxLZ4FTKNYomWT7a48eM32RmVVeM9LT896mRU8itPmE0R+3WmFSrCxpOzjD44NFdmlHhl23ZDuc5XWBiDda9y1YpFToTOBfmgUR5Qb31/Fi11l6h8/6U=
+	t=1705975296; cv=none; b=XvqXj7alqjpo59mE/aLlQxN2KARKMoGIWQUa5RdGi15j4YzMDXSU1dlX/VgUSAR58PjkZcqa91D1XkJosUuP2Sm0ZHyroVsoGcbrgtfv0RyYhuPEYXdQ9YV17lzLCTzRCNL2A65W8yx9DMFr4pobgfUYfewSHBKNfFxrAK5LQ1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975295; c=relaxed/simple;
-	bh=xVqTIhZbLYKxRYI8LHyieqHM4S/lBtK+89CpBmkAKfE=;
+	s=arc-20240116; t=1705975296; c=relaxed/simple;
+	bh=0XbKgeMh1op5oPG1iu2T44JCu/zNICjl6j7gmpZZZz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZZaT0H+YP9nwd7+r7xmJP1Ob2wL6JCbcHwSNilNcZEmQe/IIMicfvKHOICFULxjuELSpkiXXJPFQx8BTlftDaIaLR6ikFhCHH/SDo9p5MfNPDPxM9IxYbw8ApCpZMBUA48wjTkMXWjjjVcptr5a3XrpFKD9svnc9DyOA0d6IdoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFSxmuL9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NrQsf22SeeUdzr5jY4muLVQGTEhtOSe4eggW65N7BVgbs/Ee45zZD88SxGmRZzusr8siG2qLhMOnJ51cw16ZhqNiPfyn8RKwsTTIHCkJVo4kZw/uJA7piQqhYTjRUwsHGQkUgtRn+T66ipT9W5cGPZjl4DxHWaIvZLO+ZAvJzCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0hWfhnq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFSxmuL9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD221C43390;
-	Tue, 23 Jan 2024 02:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0hWfhnq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D6AC43394;
+	Tue, 23 Jan 2024 02:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975294;
-	bh=xVqTIhZbLYKxRYI8LHyieqHM4S/lBtK+89CpBmkAKfE=;
+	s=korg; t=1705975295;
+	bh=0XbKgeMh1op5oPG1iu2T44JCu/zNICjl6j7gmpZZZz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jFSxmuL9Zr3S00iHIpsL/Fzj/EwaVwpjCC9+wo6aGP2aPIzffp24TAGG5pti3lx1o
-	 4sSBGS2CRIiwxCkpxnzOgVx4vcCgtjtQsj6lAYiPfqjqh6XSD0FWWPld5LXJiDjt42
-	 rM1fvHOVcNWPWyoASGFc2Low2wt+ou1VGram5AKg=
+	b=y0hWfhnq0d5OfpvZ5eCUFxo2pNxGa5uBm6gm0prMLoB6TYEM+//E+KAMsEFbQekio
+	 oSCF+VURQ0Qf5XKpzLtbX99mBehpVBbLDckMgq3omeDlV7R++DZDXF6SwZsSx8sR7N
+	 QE353dyA7ae3OGLhNr0MEkrae+7yfFbAe50ovdQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Paloma Arellano <quic_parellan@quicinc.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 259/583] drm/msm/dpu: correct clk bit for WB2 block
-Date: Mon, 22 Jan 2024 15:55:10 -0800
-Message-ID: <20240122235819.932421587@linuxfoundation.org>
+Subject: [PATCH 6.6 260/583] drm/radeon: check the alloc_workqueue return value in radeon_crtc_init()
+Date: Mon, 22 Jan 2024 15:55:11 -0800
+Message-ID: <20240122235819.962766605@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,72 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit e843ca2f30e630675e2d2a75c96f4844f2854430 ]
+[ Upstream commit 7a2464fac80d42f6f8819fed97a553e9c2f43310 ]
 
-On sc7280 there are two clk bits for WB2: vbif_cli and clk_ctrl. While
-programming the VBIF params of WB, the driver should be toggling the
-former bit, while the sc7180_mdp, sc7280_mdp and sm8250_mdp structs
-list the latter one.
+check the alloc_workqueue return value in radeon_crtc_init()
+to avoid null-ptr-deref.
 
-Correct that to ensure proper programming sequence for WB2 on these
-platforms.
-
-Fixes: 255f056181ac ("drm/msm/dpu: sc7180: add missing WB2 clock control")
-Fixes: 3ce166380567 ("drm/msm/dpu: add writeback support for sc7280")
-Fixes: 53324b99bd7b ("drm/msm/dpu: add writeback blocks to the sm8250 DPU catalog")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Tested-by: Paloma Arellano <quic_parellan@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/570185/
-Link: https://lore.kernel.org/r/20231203002437.1291595-1-dmitry.baryshkov@linaro.org
+Fixes: fa7f517cb26e ("drm/radeon: rework page flip handling v4")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/radeon/radeon_display.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-index 5f9b437b82a6..ee781037ada9 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-@@ -32,7 +32,7 @@ static const struct dpu_mdp_cfg sm8250_mdp = {
- 		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2bc, .bit_off = 8 },
- 		[DPU_CLK_CTRL_DMA3] = { .reg_off = 0x2c4, .bit_off = 8 },
- 		[DPU_CLK_CTRL_REG_DMA] = { .reg_off = 0x2bc, .bit_off = 20 },
--		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x3b8, .bit_off = 24 },
-+		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
- 	},
- };
+diff --git a/drivers/gpu/drm/radeon/radeon_display.c b/drivers/gpu/drm/radeon/radeon_display.c
+index 901e75ec70ff..efd18c8d84c8 100644
+--- a/drivers/gpu/drm/radeon/radeon_display.c
++++ b/drivers/gpu/drm/radeon/radeon_display.c
+@@ -687,11 +687,16 @@ static void radeon_crtc_init(struct drm_device *dev, int index)
+ 	if (radeon_crtc == NULL)
+ 		return;
  
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-index d030c08636b4..69d3f7e5e095 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-@@ -25,7 +25,7 @@ static const struct dpu_mdp_cfg sc7180_mdp = {
- 		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
- 		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
- 		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2c4, .bit_off = 8 },
--		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x3b8, .bit_off = 24 },
-+		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
- 	},
- };
++	radeon_crtc->flip_queue = alloc_workqueue("radeon-crtc", WQ_HIGHPRI, 0);
++	if (!radeon_crtc->flip_queue) {
++		kfree(radeon_crtc);
++		return;
++	}
++
+ 	drm_crtc_init(dev, &radeon_crtc->base, &radeon_crtc_funcs);
  
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-index 3b5061c4402a..9195cb996f44 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-@@ -25,7 +25,7 @@ static const struct dpu_mdp_cfg sc7280_mdp = {
- 		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
- 		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
- 		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2c4, .bit_off = 8 },
--		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x3b8, .bit_off = 24 },
-+		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
- 	},
- };
+ 	drm_mode_crtc_set_gamma_size(&radeon_crtc->base, 256);
+ 	radeon_crtc->crtc_id = index;
+-	radeon_crtc->flip_queue = alloc_workqueue("radeon-crtc", WQ_HIGHPRI, 0);
+ 	rdev->mode_info.crtcs[index] = radeon_crtc;
  
+ 	if (rdev->family >= CHIP_BONAIRE) {
 -- 
 2.43.0
 
