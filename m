@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D61D65191;
-	Tue, 23 Jan 2024 01:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D6565191;
+	Tue, 23 Jan 2024 01:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975076; cv=none; b=qH21FaxAcmZdpqE4ISL9ZpCe5U/6JBt5jnyDLcFYme/FnRtmDwMcfbEyBZeu648kvdgQbTLIf6CmOrPcTCqZyV8rOEXcH1SZVEqD5plxEmFEjWLoikvw39oRChy3c4/gMlELQzSkR5Rd8oqhWa2z1eZm/upc2L9YRXjXraN8bnk=
+	t=1705975077; cv=none; b=G8SKyRdUtlE/OVYmD5AT30kwwb88Iv1+TgOskQgWLwYYGPkjvq+nsRS5FmsaIDQLFnimh4zyPcPRCUKPcMrZdfCPd29mojQU3CKJmU7qc5+rGmPzXsPKaUDYbexU9KlPoUDyHwEh6DiRGBBf2uya+X4QuYiy4ZmrbJd5DBeGozE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975076; c=relaxed/simple;
-	bh=KJ36RA+xRAVVfdbMCGegi6eD5ZVG8vYfdQlUFfFAHq4=;
+	s=arc-20240116; t=1705975077; c=relaxed/simple;
+	bh=BBXgBnAk0CqPDhUG9D24wQoy+GROAatm7K6MpCs/ZMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9JYI7vJpLt0oMfSISrgCXyaMAfz6yFC1Jie/6yXCTj179sva369C1Ml0VxT0nuBmG8LAK9OiuhSx4n6IleV8FBHJVLrepbN1mrxj+D+XE0mxC9gbSWKQvxedbq8Qn9NphGXFaqoICCB5PjpsZdBHhyRYT+fVL9cxauv/IgR518=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LAclnXZ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WL2YNG+euuzu/r3EGgFBGb9HHbxgFIKO5E+stJoXUTfaO4z19hm6E9c+GU9aDG6bNn3evxPutsAa2t3VIPXw6sepV9VwEdIHQHY31U8u1+WA6h7zfgeYWsUM12AFnnSeJZALwpjnoskzu9a2B9FMyYWNzq2mKWjgVJhTHREy0kI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfdFMH96; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LAclnXZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C6CDC43394;
-	Tue, 23 Jan 2024 01:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfdFMH96"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AB9C433C7;
+	Tue, 23 Jan 2024 01:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975076;
-	bh=KJ36RA+xRAVVfdbMCGegi6eD5ZVG8vYfdQlUFfFAHq4=;
+	s=korg; t=1705975077;
+	bh=BBXgBnAk0CqPDhUG9D24wQoy+GROAatm7K6MpCs/ZMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LAclnXZ6qijvnDodStHbOVWWCOHCh4hkbl6qCQTecIxyJl+jud+5LL0z94sOFaLAL
-	 bKsHmOexq08ly39sGrVLNNUjJwd1NIVCo4hcoMgQi7+KiucJFbkTxwNVcdtwox2e7L
-	 4L0TVSK/qhPLbQPpss7hzep+2DzA5az0hOimGhKE=
+	b=qfdFMH966EOBwtAIVnq/yp7FtkE0UYUFohFQ5obR7VwFpcuGWUq/cC+jGppl/1X0f
+	 yIf5vM1+zGSAkksbdSIgp7BC9oreV5Z3T0E61j468qm0VOoPqlz3UAe9DWi5r9TvaO
+	 aobwj9pbgRn47P2sd2aL9+xU9DUXbGc21VJCGGHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Julian Anastasov <ja@ssi.bg>,
-	Simon Horman <horms@kernel.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 355/374] ipvs: avoid stat macros calls from preemptible context
-Date: Mon, 22 Jan 2024 16:00:11 -0800
-Message-ID: <20240122235757.289067824@linuxfoundation.org>
+Subject: [PATCH 6.6 228/583] drm/panel: nv3051d: Hold panel in reset for unprepare
+Date: Mon, 22 Jan 2024 15:54:39 -0800
+Message-ID: <20240122235818.974795643@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,85 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Chris Morgan <macromorgan@hotmail.com>
 
-[ Upstream commit d6938c1c76c64f42363d0d1f051e1b4641c2ad40 ]
+[ Upstream commit 697ebc319b942403a6fee894607fd2cd47cca069 ]
 
-Inside decrement_ttl() upon discovering that the packet ttl has exceeded,
-__IP_INC_STATS and __IP6_INC_STATS macros can be called from preemptible
-context having the following backtrace:
+Improve the panel's ability to restore from suspend by holding the
+panel in suspend after unprepare.
 
-check_preemption_disabled: 48 callbacks suppressed
-BUG: using __this_cpu_add() in preemptible [00000000] code: curl/1177
-caller is decrement_ttl+0x217/0x830
-CPU: 5 PID: 1177 Comm: curl Not tainted 6.7.0+ #34
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0xbd/0xe0
- check_preemption_disabled+0xd1/0xe0
- decrement_ttl+0x217/0x830
- __ip_vs_get_out_rt+0x4e0/0x1ef0
- ip_vs_nat_xmit+0x205/0xcd0
- ip_vs_in_hook+0x9b1/0x26a0
- nf_hook_slow+0xc2/0x210
- nf_hook+0x1fb/0x770
- __ip_local_out+0x33b/0x640
- ip_local_out+0x2a/0x490
- __ip_queue_xmit+0x990/0x1d10
- __tcp_transmit_skb+0x288b/0x3d10
- tcp_connect+0x3466/0x5180
- tcp_v4_connect+0x1535/0x1bb0
- __inet_stream_connect+0x40d/0x1040
- inet_stream_connect+0x57/0xa0
- __sys_connect_file+0x162/0x1a0
- __sys_connect+0x137/0x160
- __x64_sys_connect+0x72/0xb0
- do_syscall_64+0x6f/0x140
- entry_SYSCALL_64_after_hwframe+0x6e/0x76
-RIP: 0033:0x7fe6dbbc34e0
-
-Use the corresponding preemption-aware variants: IP_INC_STATS and
-IP6_INC_STATS.
-
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 8d8e20e2d7bb ("ipvs: Decrement ttl")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Acked-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: b1d39f0f4264 ("drm/panel: Add NewVision NV3051D MIPI-DSI LCD panel")
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Link: https://lore.kernel.org/r/20231117202536.1387815-3-macroalpha82@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231117202536.1387815-3-macroalpha82@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_xmit.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-newvision-nv3051d.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index cd2130e98836..c87dbc897002 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -271,7 +271,7 @@ static inline bool decrement_ttl(struct netns_ipvs *ipvs,
- 			skb->dev = dst->dev;
- 			icmpv6_send(skb, ICMPV6_TIME_EXCEED,
- 				    ICMPV6_EXC_HOPLIMIT, 0);
--			__IP6_INC_STATS(net, idev, IPSTATS_MIB_INHDRERRORS);
-+			IP6_INC_STATS(net, idev, IPSTATS_MIB_INHDRERRORS);
+diff --git a/drivers/gpu/drm/panel/panel-newvision-nv3051d.c b/drivers/gpu/drm/panel/panel-newvision-nv3051d.c
+index ad98dd9322b4..227937afe257 100644
+--- a/drivers/gpu/drm/panel/panel-newvision-nv3051d.c
++++ b/drivers/gpu/drm/panel/panel-newvision-nv3051d.c
+@@ -261,6 +261,8 @@ static int panel_nv3051d_unprepare(struct drm_panel *panel)
  
- 			return false;
- 		}
-@@ -286,7 +286,7 @@ static inline bool decrement_ttl(struct netns_ipvs *ipvs,
- 	{
- 		if (ip_hdr(skb)->ttl <= 1) {
- 			/* Tell the sender its packet died... */
--			__IP_INC_STATS(net, IPSTATS_MIB_INHDRERRORS);
-+			IP_INC_STATS(net, IPSTATS_MIB_INHDRERRORS);
- 			icmp_send(skb, ICMP_TIME_EXCEEDED, ICMP_EXC_TTL, 0);
- 			return false;
- 		}
+ 	usleep_range(10000, 15000);
+ 
++	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
++
+ 	regulator_disable(ctx->vdd);
+ 
+ 	return 0;
 -- 
 2.43.0
 
