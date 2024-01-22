@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3C51292EC;
-	Tue, 23 Jan 2024 00:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A10129A73;
+	Tue, 23 Jan 2024 00:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971004; cv=none; b=caHMJtM78AWVvChnuk9vx7PA7nXb+6r7n4Q0vcwADZQdaKYqWiKXwF+5p+DdbNed7quMC3myxJFSHTVViJ2kBhaJd+UEe6xk3749qTOy2dcb+4owFKrLPyiirJcymPnXZpYX+1myDLSWz6kmWOyBZ6B6nmNzUwHeBlvZan134mY=
+	t=1705971006; cv=none; b=j1bKmfEc0aIiIKbyjGTOAlwrB0JF18HtVflUHyfpHCpy5fhgNhuJH0JvXFjn3iWt2KcC0gcA/LxY1kz5GltTBTZCvnFnvX70YegmgtH4EpFQ2Zv0Ox6+x/G6bazh6mKory93hxqZ44zBeS74opB50el266gN6EV/qCqT1ykeH2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971004; c=relaxed/simple;
-	bh=q4pB6jV+6BBGt6nKwg9FV9TvaF0xZlht6JGFmk9KGqs=;
+	s=arc-20240116; t=1705971006; c=relaxed/simple;
+	bh=JplukBa+PsSMnq9Xa6ba5EsGTzc9CnB+dZ1torIFjEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DjSZNXdp3u/FTAa9QUBUCVLtPJVs9gaQH2o+s9kZgPu6e0CfrMUAChWyLEc7XbWNGnDEk6/WXkj/zGV0s9PCXyOO64xvv2qD4k1l2tJDYmaQwwvQaTMV0bO2K49eUBZPR9pX+FJ0Ec3wayB0Y7/SsrmJrXtxjrRUmJ8LnwI6t98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/GlNQki; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r28ZpszCs+PlSEVMueygEYtnGRQPmbBuBOXd9FsFG4V2Do2KSnNIBXmPQEoQP6qYRRhHinVgopP+wl6y6mQ7Vx3LDDjaU2rUlrtZUgORr8TYOJ8X2KoeU984et1OqHwS6s9uSJdMw8nDC8WnJm5hvjMrQaa47TFSXmObi/PNROs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ox/BE0iU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/GlNQki"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2B3C433C7;
-	Tue, 23 Jan 2024 00:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ox/BE0iU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B687DC43390;
+	Tue, 23 Jan 2024 00:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971004;
-	bh=q4pB6jV+6BBGt6nKwg9FV9TvaF0xZlht6JGFmk9KGqs=;
+	s=korg; t=1705971005;
+	bh=JplukBa+PsSMnq9Xa6ba5EsGTzc9CnB+dZ1torIFjEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D/GlNQkiThq04zXGMgslF18ow6pnPqmxVBNs88S+yxL2bHR7xGrFTSgTHkhuWwqe4
-	 HyqNRQgxzWfI8E0OacnTAEQJm3icRSSaE4jei+Xpfrp9wnjxEZVvIAvoDB+2+3b8Ec
-	 qZ0D7umgxu5CCBrRgcRrko5p0HH09RbUJZtoZNsU=
+	b=ox/BE0iUTtqOftxvZIp+MHdRhHBwVPpjvPkD68mLMWE++s/hNBMOyiAgT4FrmMJ47
+	 30DOMaAseSKJ3JbisNfLg3x9RUutpHzaAITXRRo5qKzjqeELmpGqhyXg+wrnvbrEM6
+	 2rEiUWl2MEB1SsJD9SOuFQa8V/8DH3uep7y9WxCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 161/417] drm/panel-elida-kd35t133: hold panel in reset for unprepare
-Date: Mon, 22 Jan 2024 15:55:29 -0800
-Message-ID: <20240122235757.416716453@linuxfoundation.org>
+Subject: [PATCH 5.10 051/286] powerpc: add crtsavres.o to always-y instead of extra-y
+Date: Mon, 22 Jan 2024 15:55:57 -0800
+Message-ID: <20240122235733.998653498@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +48,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 03c5b2a5f6c39fe4e090346536cf1c14ee18b61e ]
+[ Upstream commit 1b1e38002648819c04773647d5242990e2824264 ]
 
-For devices like the Anbernic RG351M and RG351P the panel is wired to
-an always on regulator. When the device suspends and wakes up, there
-are some slight artifacts on the screen that go away over time. If
-instead we hold the panel in reset status after it is unprepared,
-this does not happen.
+crtsavres.o is linked to modules. However, as explained in commit
+d0e628cd817f ("kbuild: doc: clarify the difference between extra-y
+and always-y"), 'make modules' does not build extra-y.
 
-Fixes: 5b6603360c12 ("drm/panel: add panel driver for Elida KD35T133 panels")
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Link: https://lore.kernel.org/r/20231117194405.1386265-3-macroalpha82@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231117194405.1386265-3-macroalpha82@gmail.com
+For example, the following command fails:
+
+  $ make ARCH=powerpc LLVM=1 KBUILD_MODPOST_WARN=1 mrproper ps3_defconfig modules
+    [snip]
+    LD [M]  arch/powerpc/platforms/cell/spufs/spufs.ko
+  ld.lld: error: cannot open arch/powerpc/lib/crtsavres.o: No such file or directory
+  make[3]: *** [scripts/Makefile.modfinal:56: arch/powerpc/platforms/cell/spufs/spufs.ko] Error 1
+  make[2]: *** [Makefile:1844: modules] Error 2
+  make[1]: *** [/home/masahiro/workspace/linux-kbuild/Makefile:350: __build_one_by_one] Error 2
+  make: *** [Makefile:234: __sub-make] Error 2
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: baa25b571a16 ("powerpc/64: Do not link crtsavres.o in vmlinux")
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231120232332.4100288-1-masahiroy@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-elida-kd35t133.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/lib/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-elida-kd35t133.c b/drivers/gpu/drm/panel/panel-elida-kd35t133.c
-index eee714cf3f49..3a7fc3ca6a6f 100644
---- a/drivers/gpu/drm/panel/panel-elida-kd35t133.c
-+++ b/drivers/gpu/drm/panel/panel-elida-kd35t133.c
-@@ -112,6 +112,8 @@ static int kd35t133_unprepare(struct drm_panel *panel)
- 		return ret;
- 	}
+diff --git a/arch/powerpc/lib/Makefile b/arch/powerpc/lib/Makefile
+index 0697a0e014ae..321cab5c3ea0 100644
+--- a/arch/powerpc/lib/Makefile
++++ b/arch/powerpc/lib/Makefile
+@@ -38,7 +38,7 @@ obj-$(CONFIG_FUNCTION_ERROR_INJECTION)	+= error-inject.o
+ # so it is only needed for modules, and only for older linkers which
+ # do not support --save-restore-funcs
+ ifeq ($(call ld-ifversion, -lt, 225000000, y),y)
+-extra-$(CONFIG_PPC64)	+= crtsavres.o
++always-$(CONFIG_PPC64)	+= crtsavres.o
+ endif
  
-+	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-+
- 	regulator_disable(ctx->iovcc);
- 	regulator_disable(ctx->vdd);
- 
+ obj-$(CONFIG_PPC_BOOK3S_64) += copyuser_power7.o copypage_power7.o \
 -- 
 2.43.0
 
