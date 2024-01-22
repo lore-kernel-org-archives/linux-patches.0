@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E4C5D72F;
-	Tue, 23 Jan 2024 01:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F8C5C915;
+	Tue, 23 Jan 2024 01:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974376; cv=none; b=qkw9uOQmGph9w43Y7mf9wGwbTYhHFRMC8cti61xvheGWlxbF2SiMGDyZx32Z91a1SV7PhD8b865+Iwxa5SsFw7aXTVFLfK+DHSDlsvhlsdxM46I3F2n4Kg7V1RQW9Tk2/UfOoswz+vmv7LEyEaFxcW4wD1aKE12L5x5Kle9x1x4=
+	t=1705974377; cv=none; b=BrBXHywHF439LjVO/AiV92sMzYlx8BZzEFwxSIgSAhelayImfzgnqtsLTyCXHSCDgOAvbphcYhLSWmiCnj9j5KIOij4DjJ0k9yd54S9c2xAXPyc5DEXFNhto0jkPUcE9q/OQ24lnsC5kFYIbkUHI1vcDQTAEYB0vT8e51vQDmRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974376; c=relaxed/simple;
-	bh=o+qEUXyWO6sQetSKUoTW5i2Bjtmxxr4gHItNDcViKtw=;
+	s=arc-20240116; t=1705974377; c=relaxed/simple;
+	bh=TXWxnDqzeOUYSFDfrW/v9QEnwfJjC0r9KG3lL9jpZX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4ztmo3RnB6mSzvP7vAkL7LyckYKUs1JOOqx/+DIO/kDo6Dtu9G/xySzxbpJ8rr+KTypjxRI+Rd38mrabSFJcC2FgdjMQC0bnMk93CbUJQDJwzK8bLdWudFekHOtSXsT8w6SS7MapRzjB/yi6NWcamDh6mvqN6vO3X+cHlYuUcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GQ/gtlZm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uWG9KK8BhxHpHB5/Ec0JPxTYRRnPt2XQdwR1zMiFsevrWE8EgK1ih4c+KGO4ns+wINX17w2TP+FZl0NK2+//HJGh4c9hwzEKeiO02DsiXbdcdAkdMHQCIC8+WS+OmcFYyvBjFnjIgOH5oazsDdzZgomyBAjFxdWT1LyqZBG7SWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwhzwyLV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQ/gtlZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5032C43390;
-	Tue, 23 Jan 2024 01:46:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwhzwyLV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C117C433F1;
+	Tue, 23 Jan 2024 01:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974376;
-	bh=o+qEUXyWO6sQetSKUoTW5i2Bjtmxxr4gHItNDcViKtw=;
+	s=korg; t=1705974377;
+	bh=TXWxnDqzeOUYSFDfrW/v9QEnwfJjC0r9KG3lL9jpZX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQ/gtlZm/8osaqs5PhA6g5h3quyU9lR2toW8/BIcu5NauL45J+IX4LQ7JOzy+Ad4M
-	 XX1tzqVaC9wfUA7mvRYYWSEp/TqDghigwyX62V4rNzuYjrXb95aSrPWK5a4W0fNCv8
-	 aS43BAJRlRdZ4Q5Oh9HVz0ixkh9DlkgLGarUl1Zw=
+	b=lwhzwyLVnEjS2UoXB1RK1uAuXqagjiFWAe3I9iXe2sRhz8e9kjsJDVRl5vwzs2xuT
+	 tOhS7YxnoOhJtSmX6hzf+1nfd4xFZVmcO0SW3ATEnjlRN9kQvtWm85Cdw1T1bmWYox
+	 btG30/+FZgbxGmPu6zQGHAojHRn5BjyZ77KE0yq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait@windriver.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Maxime Ripard <mripard@kernel.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/583] crypto: sahara - remove FLAGS_NEW_KEY logic
-Date: Mon, 22 Jan 2024 15:51:40 -0800
-Message-ID: <20240122235813.632940824@linuxfoundation.org>
+Subject: [PATCH 5.15 198/374] drm/bridge: cdns-mhdp8546: Fix use of uninitialized variable
+Date: Mon, 22 Jan 2024 15:57:34 -0800
+Message-ID: <20240122235751.493934917@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,107 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait@windriver.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 8fd183435728b139248a77978ea3732039341779 ]
+[ Upstream commit 155d6fb61270dd297f128731cd155080deee8f3a ]
 
-Remove the FLAGS_NEW_KEY logic as it has the following issues:
-- the wrong key may end up being used when there are multiple data streams:
-       t1            t2
-    setkey()
-    encrypt()
-                   setkey()
-                   encrypt()
+'ret' could be uninitialized at the end of the function, although it's
+not clear if that can happen in practice.
 
-    encrypt() <--- key from t2 is used
-- switching between encryption and decryption with the same key is not
-  possible, as the hdr flags are only updated when a new setkey() is
-  performed
-
-With this change, the key is always sent along with the cryptdata when
-performing encryption/decryption operations.
-
-Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 6a3608eae6d3 ("drm: bridge: cdns-mhdp8546: Enable HDCP")
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231103-uninit-fixes-v2-3-c22b2444f5f5@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 34 +++++++++++++---------------------
- 1 file changed, 13 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index 62d93526920f..79708919260a 100644
---- a/drivers/crypto/sahara.c
-+++ b/drivers/crypto/sahara.c
-@@ -43,7 +43,6 @@
- #define FLAGS_MODE_MASK		0x000f
- #define FLAGS_ENCRYPT		BIT(0)
- #define FLAGS_CBC		BIT(1)
--#define FLAGS_NEW_KEY		BIT(3)
+diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c
+index fccd6fbcc257..29c04012b701 100644
+--- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c
++++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c
+@@ -403,7 +403,8 @@ static int _cdns_mhdp_hdcp_disable(struct cdns_mhdp_device *mhdp)
  
- #define SAHARA_HDR_BASE			0x00800000
- #define SAHARA_HDR_SKHA_ALG_AES	0
-@@ -141,8 +140,6 @@ struct sahara_hw_link {
- };
+ static int _cdns_mhdp_hdcp_enable(struct cdns_mhdp_device *mhdp, u8 content_type)
+ {
+-	int ret, tries = 3;
++	int ret = -EINVAL;
++	int tries = 3;
+ 	u32 i;
  
- struct sahara_ctx {
--	unsigned long flags;
--
- 	/* AES-specific context */
- 	int keylen;
- 	u8 key[AES_KEYSIZE_128];
-@@ -447,26 +444,22 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
- 	int i, j;
- 	int idx = 0;
- 
--	/* Copy new key if necessary */
--	if (ctx->flags & FLAGS_NEW_KEY) {
--		memcpy(dev->key_base, ctx->key, ctx->keylen);
--		ctx->flags &= ~FLAGS_NEW_KEY;
-+	memcpy(dev->key_base, ctx->key, ctx->keylen);
- 
--		if (dev->flags & FLAGS_CBC) {
--			dev->hw_desc[idx]->len1 = AES_BLOCK_SIZE;
--			dev->hw_desc[idx]->p1 = dev->iv_phys_base;
--		} else {
--			dev->hw_desc[idx]->len1 = 0;
--			dev->hw_desc[idx]->p1 = 0;
--		}
--		dev->hw_desc[idx]->len2 = ctx->keylen;
--		dev->hw_desc[idx]->p2 = dev->key_phys_base;
--		dev->hw_desc[idx]->next = dev->hw_phys_desc[1];
-+	if (dev->flags & FLAGS_CBC) {
-+		dev->hw_desc[idx]->len1 = AES_BLOCK_SIZE;
-+		dev->hw_desc[idx]->p1 = dev->iv_phys_base;
-+	} else {
-+		dev->hw_desc[idx]->len1 = 0;
-+		dev->hw_desc[idx]->p1 = 0;
-+	}
-+	dev->hw_desc[idx]->len2 = ctx->keylen;
-+	dev->hw_desc[idx]->p2 = dev->key_phys_base;
-+	dev->hw_desc[idx]->next = dev->hw_phys_desc[1];
-+	dev->hw_desc[idx]->hdr = sahara_aes_key_hdr(dev);
- 
--		dev->hw_desc[idx]->hdr = sahara_aes_key_hdr(dev);
-+	idx++;
- 
--		idx++;
--	}
- 
- 	dev->nb_in_sg = sg_nents_for_len(dev->in_sg, dev->total);
- 	if (dev->nb_in_sg < 0) {
-@@ -608,7 +601,6 @@ static int sahara_aes_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 	/* SAHARA only supports 128bit keys */
- 	if (keylen == AES_KEYSIZE_128) {
- 		memcpy(ctx->key, key, keylen);
--		ctx->flags |= FLAGS_NEW_KEY;
- 		return 0;
- 	}
- 
+ 	for (i = 0; i < tries; i++) {
 -- 
 2.43.0
 
