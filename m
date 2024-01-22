@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785FB62805;
-	Tue, 23 Jan 2024 00:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D423912DD89;
+	Tue, 23 Jan 2024 00:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971489; cv=none; b=kq27L9Bmi0qCI6ci70EaUAgk7rD3BSU5qslC1RrVLQzBOgT4a9VMqUQbl9jCxzt6+SbKgr0pQhc/y0sEVHMD8vMhlzFNH/QKPvOz07Ohnuy0G2QFw2SVX5IkWovAoADRpe66r6srlCBeQqcNty9vM+k/BD0qKMSp0uzi8oj5HAw=
+	t=1705971492; cv=none; b=s7PLDF3pneTcu4eBIY6zk9GH//R7/HWqC7ui1N0vhbumK0Qh0cy68h7B3hy0+9vyrE8uuc3YbESAYJpwHbzf0uawnksRN3VZpyJ9UuNb2Bx1mBAd9tbipLvY12NErRFl3UXD7Np/eqjFCXVOu56U1YoNvAyfzIdqi+Te/7Op0ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971489; c=relaxed/simple;
-	bh=QqrQby347UrsZQXYsrnc0PMM1Pjk4G+qC/fNMyfsopQ=;
+	s=arc-20240116; t=1705971492; c=relaxed/simple;
+	bh=+sK3TonfcDxfIrM0RrdBhN4wrKS8vjCYJmjJIbZXywE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShsEH5Rz57c1feX35Y+FXFS3QXgNRtKDJGcqlzEoumYUVp6dMvzALMez+3izKDeiQZTjrVvElhGK27cc8OCYKJw1pFQU7Lsqz4OKyGH7vlg+ib4u/z8r9L3yF/7uwTNAyjke72qsry5U/ftot/4yKYFBJRkhsZvVIXYBF0qgbqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lbuq9Zr1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d8wMHEOJNwN5RuzJLcGYaK0Kxq1bzxvT14r+gHSabYqr0tyAsArR/pMR2rY7pWQncb6tcvnJ2kwBppyCCLMnA1yiJwJG6nrmyXZCD+GPOq+h+RxDBPfpKXsyhwTEi4FbAHiUWDHyytfPHTtCQrqI0qepcFTwqOe6/9oXuYp875M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTg8Nolg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lbuq9Zr1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002B0C433C7;
-	Tue, 23 Jan 2024 00:58:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTg8Nolg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8D5C43390;
+	Tue, 23 Jan 2024 00:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971489;
-	bh=QqrQby347UrsZQXYsrnc0PMM1Pjk4G+qC/fNMyfsopQ=;
+	s=korg; t=1705971492;
+	bh=+sK3TonfcDxfIrM0RrdBhN4wrKS8vjCYJmjJIbZXywE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lbuq9Zr1U82QuYEHsdTkzDMpu0jDWAVwsKSEyRmIOzZi5/sWzSvIWysWgu4Xwm5+w
-	 hmUntOMPE+Vp4hvtvIe5pz8h2bnd33AkzFO5VW0AL8Bqy29YgIlsqpZKsiWN1BIo0E
-	 L1zjcmFwT3Wd4+pZC/MQtWh8N72ilKn//iWEjr9E=
+	b=rTg8NolgNEh38MOYciGpV7rwMlhiC4k7RtBcvdvN2yypTt2yFQD1zjagFE4f3tn3/
+	 sqhaYyWLqnusumne/4v+YZUf70CtLtHHYiRbuCCTR0Nc/tioqmGNZaMS5lb2cjfYFF
+	 +viDjonqQdK4Vk2AR5YdyroxwAXvG5zUTBHh+Q68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 6.1 251/417] binder: fix unused alloc->free_async_space
-Date: Mon, 22 Jan 2024 15:56:59 -0800
-Message-ID: <20240122235800.572305912@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 160/286] drm/radeon: check the alloc_workqueue return value in radeon_crtc_init()
+Date: Mon, 22 Jan 2024 15:57:46 -0800
+Message-ID: <20240122235738.339082515@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,86 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit c6d05e0762ab276102246d24affd1e116a46aa0c upstream.
+[ Upstream commit 7a2464fac80d42f6f8819fed97a553e9c2f43310 ]
 
-Each transaction is associated with a 'struct binder_buffer' that stores
-the metadata about its buffer area. Since commit 74310e06be4d ("android:
-binder: Move buffer out of area shared with user space") this struct is
-no longer embedded within the buffer itself but is instead allocated on
-the heap to prevent userspace access to this driver-exclusive info.
+check the alloc_workqueue return value in radeon_crtc_init()
+to avoid null-ptr-deref.
 
-Unfortunately, the space of this struct is still being accounted for in
-the total buffer size calculation, specifically for async transactions.
-This results in an additional 104 bytes added to every async buffer
-request, and this area is never used.
-
-This wasted space can be substantial. If we consider the maximum mmap
-buffer space of SZ_4M, the driver will reserve half of it for async
-transactions, or 0x200000. This area should, in theory, accommodate up
-to 262,144 buffers of the minimum 8-byte size. However, after adding
-the extra 'sizeof(struct binder_buffer)', the total number of buffers
-drops to only 18,724, which is a sad 7.14% of the actual capacity.
-
-This patch fixes the buffer size calculation to enable the utilization
-of the entire async buffer space. This is expected to reduce the number
-of -ENOSPC errors that are seen on the field.
-
-Fixes: 74310e06be4d ("android: binder: Move buffer out of area shared with user space")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20231201172212.1813387-6-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fa7f517cb26e ("drm/radeon: rework page flip handling v4")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder_alloc.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/radeon/radeon_display.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -344,8 +344,7 @@ static bool debug_low_async_space_locked
- 			continue;
- 		if (!buffer->async_transaction)
- 			continue;
--		total_alloc_size += binder_alloc_buffer_size(alloc, buffer)
--			+ sizeof(struct binder_buffer);
-+		total_alloc_size += binder_alloc_buffer_size(alloc, buffer);
- 		num_buffers++;
- 	}
+diff --git a/drivers/gpu/drm/radeon/radeon_display.c b/drivers/gpu/drm/radeon/radeon_display.c
+index 71bdafac9210..07d23a1e62a0 100644
+--- a/drivers/gpu/drm/radeon/radeon_display.c
++++ b/drivers/gpu/drm/radeon/radeon_display.c
+@@ -689,11 +689,16 @@ static void radeon_crtc_init(struct drm_device *dev, int index)
+ 	if (radeon_crtc == NULL)
+ 		return;
  
-@@ -411,8 +410,7 @@ static struct binder_buffer *binder_allo
- 	/* Pad 0-size buffers so they get assigned unique addresses */
- 	size = max(size, sizeof(void *));
++	radeon_crtc->flip_queue = alloc_workqueue("radeon-crtc", WQ_HIGHPRI, 0);
++	if (!radeon_crtc->flip_queue) {
++		kfree(radeon_crtc);
++		return;
++	}
++
+ 	drm_crtc_init(dev, &radeon_crtc->base, &radeon_crtc_funcs);
  
--	if (is_async &&
--	    alloc->free_async_space < size + sizeof(struct binder_buffer)) {
-+	if (is_async && alloc->free_async_space < size) {
- 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
- 			     "%d: binder_alloc_buf size %zd failed, no async space left\n",
- 			      alloc->pid, size);
-@@ -520,7 +518,7 @@ static struct binder_buffer *binder_allo
- 	buffer->pid = pid;
- 	buffer->oneway_spam_suspect = false;
- 	if (is_async) {
--		alloc->free_async_space -= size + sizeof(struct binder_buffer);
-+		alloc->free_async_space -= size;
- 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC_ASYNC,
- 			     "%d: binder_alloc_buf size %zd async free %zd\n",
- 			      alloc->pid, size, alloc->free_async_space);
-@@ -658,8 +656,7 @@ static void binder_free_buf_locked(struc
- 	BUG_ON(buffer->user_data > alloc->buffer + alloc->buffer_size);
+ 	drm_mode_crtc_set_gamma_size(&radeon_crtc->base, 256);
+ 	radeon_crtc->crtc_id = index;
+-	radeon_crtc->flip_queue = alloc_workqueue("radeon-crtc", WQ_HIGHPRI, 0);
+ 	rdev->mode_info.crtcs[index] = radeon_crtc;
  
- 	if (buffer->async_transaction) {
--		alloc->free_async_space += buffer_size + sizeof(struct binder_buffer);
--
-+		alloc->free_async_space += buffer_size;
- 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC_ASYNC,
- 			     "%d: binder_free_buf size %zd async free %zd\n",
- 			      alloc->pid, size, alloc->free_async_space);
+ 	if (rdev->family >= CHIP_BONAIRE) {
+-- 
+2.43.0
+
 
 
