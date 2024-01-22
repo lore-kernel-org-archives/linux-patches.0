@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464B21339A7;
-	Tue, 23 Jan 2024 01:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909711420A7;
+	Tue, 23 Jan 2024 01:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972117; cv=none; b=QK5fHHR4yPWqMvfjgXfKc2FXbbqw+GcetmUVHh7mp7WhcDEy77I1VguzPSerXoyrSmCfO2CRGgiBBEEoqpkEHZmCgFd8SBjJbXAu5BK1bngiz608fBP58kHFt0TGekDQe+bSEyYGw2TmDXfkDK92Lb0buHzDaqSFdTckWEl3+Ro=
+	t=1705972118; cv=none; b=TUGECm3Bbo06kVPiaV/5lP3VEp+kjEYg7Ov5aEDUYb2sqZB9ol7guE5+U/xqtXhljHrm4Bv76pK7zqqAzpCnNdEZD6/VAfWABD0R/77kydrx8T/WE31a9GZZf8tuw6gwS24rsCZ+b2Wf/Hhb5gV16Bsc84L/gcF3Aw/K6UwO7Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972117; c=relaxed/simple;
-	bh=oNpM4fhc5lfQ595gF7Yue7jCZUa80YdoYe1tZTd05kM=;
+	s=arc-20240116; t=1705972118; c=relaxed/simple;
+	bh=7jq9Bj0J01V3NWPNk46+xBdaahRC76FA3UjPFsZzOyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tNe1aUrSKqNx4N7uEnaV8jaFa/DHCg821VfCethC/HfOqaIDb6bkCnviZdPoxLSWfQnE4iMXcEY8Z7a+M4cfqwfOhBa7jDeMlzqh0/+XOHUH4UxjvwArgUzNBKmG08bWqqzuoy94s5b/F6eYK6uTIbidBwIYVr03vw9XcLCN0/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gd3lg3Wb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MlTCR6zFByp1a57rq+iyq0PWwVZrYJPaDTe3iY2btGoDVLFjrI1Ha4js0WmSXWp69s56qaAoIRJmosi6DU1DO6XEG2vNO5/L1fAOE1elFdKbjsrrdvxhX3ourncrdQBcr22sNDlZYPQc+jafK+6YovsgnMX1Kr0uTbf2pToAG28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9JZDF+q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gd3lg3Wb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08428C43390;
-	Tue, 23 Jan 2024 01:08:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9JZDF+q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F05EC43399;
+	Tue, 23 Jan 2024 01:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972117;
-	bh=oNpM4fhc5lfQ595gF7Yue7jCZUa80YdoYe1tZTd05kM=;
+	s=korg; t=1705972118;
+	bh=7jq9Bj0J01V3NWPNk46+xBdaahRC76FA3UjPFsZzOyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gd3lg3WbGd5/0xXFW8BAhqkeaihYq9/QEJPZQFBCDUF4n/td0wcEcRlx2A2wS6Fas
-	 Xcj6Ep/aqDeDBeeJ31VxT/08EQjhLg+ULnUZ60+fksFnPZiBpWV9xzH/RZzAaheIV1
-	 SLOX3w1pzxt16a9pS2cz8gJWZFXgiNX9LtsCsFLo=
+	b=D9JZDF+q3KuMORncsNDuxJOzo+CHd7FrqF4QD9v5jTLkG7RfignzH0uc64nxUxoSL
+	 y0R1vsI4nwh78swPVvyg2Il7ITnGK3sT7ecFhOPd7HZetgD+hAVISBbZW+Em5Vj6qd
+	 AaqzOjZ5vUEmL5Snq/n5w/LjRnoTrS9F7tt+yFf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4fad2e57beb6397ab2fc@syzkaller.appspotmail.com,
-	Ziqi Zhao <astrajoan@yahoo.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Judy Hsiao <judyhsiao@chromium.org>,
+	David Ahern <dsahern@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/374] drm/crtc: Fix uninit-value bug in drm_mode_setcrtc
-Date: Mon, 22 Jan 2024 15:54:43 -0800
-Message-ID: <20240122235745.582259963@linuxfoundation.org>
+Subject: [PATCH 5.15 028/374] neighbour: Dont let neigh_forced_gc() disable preemption for long
+Date: Mon, 22 Jan 2024 15:54:44 -0800
+Message-ID: <20240122235745.616749539@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -53,77 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziqi Zhao <astrajoan@yahoo.com>
+From: Judy Hsiao <judyhsiao@chromium.org>
 
-[ Upstream commit 3823119b9c2b5f9e9b760336f75bc989b805cde6 ]
+[ Upstream commit e5dc5afff62f3e97e86c3643ec9fcad23de4f2d3 ]
 
-The connector_set contains uninitialized values when allocated with
-kmalloc_array. However, in the "out" branch, the logic assumes that any
-element in connector_set would be equal to NULL if failed to
-initialize, which causes the bug reported by Syzbot. The fix is to use
-an extra variable to keep track of how many connectors are initialized
-indeed, and use that variable to decrease any refcounts in the "out"
-branch.
+We are seeing cases where neigh_cleanup_and_release() is called by
+neigh_forced_gc() many times in a row with preemption turned off.
+When running on a low powered CPU at a low CPU frequency, this has
+been measured to keep preemption off for ~10 ms. That's not great on a
+system with HZ=1000 which expects tasks to be able to schedule in
+with ~1ms latency.
 
-Reported-by: syzbot+4fad2e57beb6397ab2fc@syzkaller.appspotmail.com
-Signed-off-by: Ziqi Zhao <astrajoan@yahoo.com>
-Reported-and-tested-by: syzbot+4fad2e57beb6397ab2fc@syzkaller.appspotmail.com
-Tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20230721161446.8602-1-astrajoan@yahoo.com
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Suggested-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_crtc.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/core/neighbour.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
-index 26a77a735905..8b50ab4c5581 100644
---- a/drivers/gpu/drm/drm_crtc.c
-+++ b/drivers/gpu/drm/drm_crtc.c
-@@ -643,8 +643,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
- 	struct drm_mode_set set;
- 	uint32_t __user *set_connectors_ptr;
- 	struct drm_modeset_acquire_ctx ctx;
--	int ret;
--	int i;
-+	int ret, i, num_connectors;
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index 927c4db2703f..5829477efbba 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -225,9 +225,11 @@ static int neigh_forced_gc(struct neigh_table *tbl)
+ {
+ 	int max_clean = atomic_read(&tbl->gc_entries) -
+ 			READ_ONCE(tbl->gc_thresh2);
++	u64 tmax = ktime_get_ns() + NSEC_PER_MSEC;
+ 	unsigned long tref = jiffies - 5 * HZ;
+ 	struct neighbour *n, *tmp;
+ 	int shrunk = 0;
++	int loop = 0;
  
- 	if (!drm_core_check_feature(dev, DRIVER_MODESET))
- 		return -EOPNOTSUPP;
-@@ -779,6 +778,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
- 			goto out;
- 		}
+ 	NEIGH_CACHE_STAT_INC(tbl, forced_gc_runs);
  
-+		num_connectors = 0;
- 		for (i = 0; i < crtc_req->count_connectors; i++) {
- 			connector_set[i] = NULL;
- 			set_connectors_ptr = (uint32_t __user *)(unsigned long)crtc_req->set_connectors_ptr;
-@@ -799,6 +799,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
- 					connector->name);
- 
- 			connector_set[i] = connector;
-+			num_connectors++;
+@@ -250,11 +252,16 @@ static int neigh_forced_gc(struct neigh_table *tbl)
+ 				shrunk++;
+ 			if (shrunk >= max_clean)
+ 				break;
++			if (++loop == 16) {
++				if (ktime_get_ns() > tmax)
++					goto unlock;
++				loop = 0;
++			}
  		}
  	}
  
-@@ -807,7 +808,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
- 	set.y = crtc_req->y;
- 	set.mode = mode;
- 	set.connectors = connector_set;
--	set.num_connectors = crtc_req->count_connectors;
-+	set.num_connectors = num_connectors;
- 	set.fb = fb;
+ 	WRITE_ONCE(tbl->last_flush, jiffies);
+-
++unlock:
+ 	write_unlock_bh(&tbl->lock);
  
- 	if (drm_drv_uses_atomic_modeset(dev))
-@@ -820,7 +821,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
- 		drm_framebuffer_put(fb);
- 
- 	if (connector_set) {
--		for (i = 0; i < crtc_req->count_connectors; i++) {
-+		for (i = 0; i < num_connectors; i++) {
- 			if (connector_set[i])
- 				drm_connector_put(connector_set[i]);
- 		}
+ 	return shrunk;
 -- 
 2.43.0
 
