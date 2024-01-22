@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBBD14AD1F;
-	Tue, 23 Jan 2024 00:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A3914AD1F;
+	Tue, 23 Jan 2024 00:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969258; cv=none; b=F3i24oUe6ZHRoCe/O78+Lvyhse1Tj8WE8j3i+cLXI5iJzBeNwmq+3UgnbYzCwAXGWX9sY/454Oz7NWQeGLP/NWPIAdzzC7GRD9dw/Fq9CXWklqw9m53K6fW9h1ym/DrLZRsFMbZ/ewZbg7TOnMMw67/N2Xlz1QjVIc+/ETc3vM4=
+	t=1705969260; cv=none; b=Ck5E6uJO1kJkeMwJQxVDxERiu0nqC9+/zl85up26kSIIjVSxLvGsdzfQ8s1WZEY7z33zitWualpqk87+SUYjVBNKNT+Lr+6VfFCS0hC7KkWsP4f7MdNLcxae1zAuKofAFSyAJwe/FGts91rsgqR5TQOnlbdarZKxCQtMzRTwnvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969258; c=relaxed/simple;
-	bh=Zev4VHcSyKPtLv+2yXT61uMkK7J7lNAgshfV2aQCw4k=;
+	s=arc-20240116; t=1705969260; c=relaxed/simple;
+	bh=HrxSqcbYzT4U6clPfD2or4shCdyhHBEIa/crGv2B/Pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3hVEEwpKbopZ9c2vFHJLaplvip5vct1lrF3W8E6YCoRWoIyhSAOTQ0niH2y+HhUSxwuQugIkHy99MuzNWO0Z/ZAgyYOOn96JlZqbi7aoOmJIr0Dp8FKheBpxDGzRxaLc7RDnHWJG8ObUY1O5BRyZU0eF4z+Su7CZudeE7iyK+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHO8nVaW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mi3Uxk6wb30sYPSSOGbXxhDZEAMCGSvqRrqhWEp/AeQ6HMTj6zFpLkusvaN3isJ9MkE+JzO87rBJLHmznw5BQAqohMIqdHg64K2tUqj0nYlPQtH0cFzWhhw3EHVL4aJvaPeWW1PyBdDH4ZiFOGujn2wM+SDa8neSJCiZHi9TUyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHlWUafI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHO8nVaW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55DC6C433F1;
-	Tue, 23 Jan 2024 00:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHlWUafI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7640C433F1;
+	Tue, 23 Jan 2024 00:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969258;
-	bh=Zev4VHcSyKPtLv+2yXT61uMkK7J7lNAgshfV2aQCw4k=;
+	s=korg; t=1705969260;
+	bh=HrxSqcbYzT4U6clPfD2or4shCdyhHBEIa/crGv2B/Pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHO8nVaWV7Hw+3T2TUwx9eTmPyJiJ4q7l/SP1xIz9IsE9145M55aaA8R5Lgjs1z1Q
-	 uUnwPphVA7Awuy3mZWjCc4U28Y8UsE8S1fZ1FasVCSpDZ2SEs2y7Qll43XRB7uwPrx
-	 zzbqnMZhzQ5WlkzirWQSxgqxBQE+/Jcr5wDHSbMs=
+	b=QHlWUafIuqd48l/qq1YTdXoLkZfOYczjKQ3Ex4uHsLjZzB32Pq362E1Bel12IXW8T
+	 ZoYP7KUPQyvMJHXhKw6W+YstWFfh76xLzCF96Fz1i82a81ZXdvCjEvl8i4EXr2ZYTH
+	 XbIWFseeOmR7FtOLFxvuvufXvA5xqpyYxBNBiH3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,11 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Stephen Boyd <swboyd@chromium.org>,
 	Douglas Anderson <dianders@chromium.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 127/641] arm64: dts: qcom: sm8250: Make watchdog bark interrupt edge triggered
-Date: Mon, 22 Jan 2024 15:50:31 -0800
-Message-ID: <20240122235822.028462804@linuxfoundation.org>
+Subject: [PATCH 6.7 128/641] arm64: dts: qcom: sa8775p: Make watchdog bark interrupt edge triggered
+Date: Mon, 22 Jan 2024 15:50:32 -0800
+Message-ID: <20240122235822.061964058@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -55,36 +56,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 735d80e2e8e5d073ae8b1fff8b1589ea284aa5af ]
+[ Upstream commit 48d5cf4772ec6268853158d9ffc54612e988ebe6 ]
 
 As described in the patch ("arm64: dts: qcom: sc7180: Make watchdog
 bark interrupt edge triggered"), the Qualcomm watchdog timer's bark
 interrupt should be configured as edge triggered. Make the change.
 
-Fixes: 46a4359f9156 ("arm64: dts: qcom: sm8250: Add watchdog bark interrupt")
+Fixes: 09b701b89a76 ("arm64: dts: qcom: sa8775p: add the watchdog node")
 Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20231106144335.v2.5.I2910e7c10493d896841e9785c1817df9b9a58701@changeid
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20231106144335.v2.6.I909b7c4453d7b7fb0db4b6e49aa21666279d827d@changeid
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index be970472f6c4..72db75ca7731 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -6018,7 +6018,7 @@ watchdog@17c10000 {
- 			compatible = "qcom,apss-wdt-sm8250", "qcom,kpss-wdt";
- 			reg = <0 0x17c10000 0 0x1000>;
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index b6a93b11cbbd..5e1d6756f245 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -2181,7 +2181,7 @@ watchdog@17c10000 {
+ 			compatible = "qcom,apss-wdt-sa8775p", "qcom,kpss-wdt";
+ 			reg = <0x0 0x17c10000 0x0 0x1000>;
  			clocks = <&sleep_clk>;
 -			interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
 +			interrupts = <GIC_SPI 0 IRQ_TYPE_EDGE_RISING>;
  		};
  
- 		timer@17c20000 {
+ 		memtimer: timer@17c20000 {
 -- 
 2.43.0
 
