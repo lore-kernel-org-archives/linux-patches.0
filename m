@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C285FDDF;
-	Tue, 23 Jan 2024 00:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8F65BAC2;
+	Tue, 23 Jan 2024 00:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970533; cv=none; b=KahZFxW4DdOf2I3keuet0I4F3RLNB2k4J4le9uzgbY24m5qs0y7OUjkQM+gREwbvwbgRJenYCyKwUyqwN7ITMiZwA53s243vZ9kdihdaWmhSNFsTEbu+ov0kwGL3R/jZVi5g74lxzeN/por/HiMLcrHP+4lp0D/YycDc6/3g/JM=
+	t=1705970536; cv=none; b=jn/vC79Cad48aTWmx5Rq5w8flhENvdccp1/uPNjWcvIxoTtEhlpykMIUtgW+s6Hqg4NwvsFgdKi+QN0QC3j6cCqp3CTOZ15Ib7lZRVDnvGn7QatLFLl4NpCnZznd2bvXJEV0briREQA6KKDNnAfLPV3qTNaH/zbUSzRfiT9A6GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970533; c=relaxed/simple;
-	bh=Jn7oto7w1aG2MX+YbD8rklEHJC8eQKBbT3/IevpKJ2I=;
+	s=arc-20240116; t=1705970536; c=relaxed/simple;
+	bh=6gcU+wfNnJT8OE6w9U6xRcuGlgGECZmVaPcy6ZV5gE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ExcqatvFrxppoKAVyYSe1IRk2sN13SM/1szPJBErCd976mG7jFtxxtviTIRWCqvbhw08Fo5qvwRx2zOJSlHr5d4/UqXHcQsEGni/tfHfnTToiWSXUOCsRClTACGI3Z2LYcCgTqncFRNH8BJJGYngthpBfUkvvV9l7xEVw5SNNAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/gXsPi5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PaRaB9ummYVwjYQpDm52YCskUq/FKz5/g7eIbTQP98yWq6woxG/w2FhCHo99R48LUKATrGSvd4EWu5BhiyPBigCTB5tG/ms4r2Ow/lvcbftdypTzhEe7NtKW5LTD1bFQcoVnzhfYvnbTZkNJuKT/HrSgcXwwnRoeS0vshkO5ikg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKCYVMPp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/gXsPi5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427F5C43394;
-	Tue, 23 Jan 2024 00:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKCYVMPp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F473C433C7;
+	Tue, 23 Jan 2024 00:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970532;
-	bh=Jn7oto7w1aG2MX+YbD8rklEHJC8eQKBbT3/IevpKJ2I=;
+	s=korg; t=1705970536;
+	bh=6gcU+wfNnJT8OE6w9U6xRcuGlgGECZmVaPcy6ZV5gE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q/gXsPi5CO54uqt56nTbrfbDjvfMioI27ag9Jrvu9tEIOQodYtOGbqSoUYnJ3CrYi
-	 e/EWE8vWDK96X8uckZztnjCVNXULUCZ9Ut2fK+EwT8mIRKKbewPwY0c/NIKtD3/iBB
-	 GcqJ4nIUozm78vpLjEayKKkTYXKCVDGRFhNGh8f4=
+	b=iKCYVMPp7aROQXgG9PKsuwNr5L3H6OTKOwduPkaWktWssXXEY4F+x3Iq3AtLDDIiE
+	 WoZEhM8+y1Ga73MZW1DjCPMTYR4ixBDedieQxSFgyQ8RkI+T3Fhg4M4UEo30NdbUu6
+	 iANdE8SsJ3fJ4ZDUGKjidbnUPETPnKYkP1Ia29OI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenghai Huang <huangchenghai2@huawei.com>,
+	Wenkai Lin <linwenkai6@hisilicon.com>,
+	Hao Fang <fanghao11@huawei.com>,
+	Zhiqi Song <songzhiqi1@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/417] crypto: hisilicon/zip - add zip comp high perf mode configuration
-Date: Mon, 22 Jan 2024 15:53:33 -0800
-Message-ID: <20240122235753.225692031@linuxfoundation.org>
+Subject: [PATCH 6.1 046/417] crypto: hisilicon/qm - add a function to set qm algs
+Date: Mon, 22 Jan 2024 15:53:34 -0800
+Message-ID: <20240122235753.256806863@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -51,123 +53,383 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenghai Huang <huangchenghai2@huawei.com>
+From: Wenkai Lin <linwenkai6@hisilicon.com>
 
-[ Upstream commit a9864bae1806499ebf3757a9e71dddde5b9c48c6 ]
+[ Upstream commit f76f0d7f20672611974d3cc705996751fc403734 ]
 
-To meet specific application scenarios, the function of switching between
-the high performance mode and the high compression mode is added.
+Extract a public function to set qm algs and remove
+the similar code for setting qm algs in each module.
 
-Use the perf_mode=0/1 configuration to set the compression high perf mode,
-0(default, high compression mode), 1(high performance mode). These two
-modes only apply to the compression direction and are compatible with
-software algorithm in both directions.
-
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
+Signed-off-by: Hao Fang <fanghao11@huawei.com>
+Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Stable-dep-of: cf8b5156bbc8 ("crypto: hisilicon/hpre - save capability registers in probe process")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/zip/zip_main.c | 65 +++++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
+ drivers/crypto/hisilicon/hpre/hpre_main.c | 42 ++-----------------
+ drivers/crypto/hisilicon/qm.c             | 36 +++++++++++++++++
+ drivers/crypto/hisilicon/sec2/sec_main.c  | 47 ++++------------------
+ drivers/crypto/hisilicon/zip/zip_main.c   | 49 ++++-------------------
+ include/linux/hisi_acc_qm.h               |  8 +++-
+ 5 files changed, 62 insertions(+), 120 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/zip/zip_main.c b/drivers/crypto/hisilicon/zip/zip_main.c
-index 190b4fecfc74..2c5e805ffdc3 100644
---- a/drivers/crypto/hisilicon/zip/zip_main.c
-+++ b/drivers/crypto/hisilicon/zip/zip_main.c
-@@ -107,6 +107,14 @@
- #define HZIP_CLOCK_GATED_EN		(HZIP_CORE_GATED_EN | \
- 					 HZIP_CORE_GATED_OOO_EN)
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_main.c b/drivers/crypto/hisilicon/hpre/hpre_main.c
+index ff8a5f20a5df..cf02c9cde85a 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_main.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_main.c
+@@ -118,8 +118,6 @@
+ #define HPRE_DFX_COMMON2_LEN		0xE
+ #define HPRE_DFX_CORE_LEN		0x43
  
-+/* zip comp high performance */
-+#define HZIP_HIGH_PERF_OFFSET		0x301208
-+
-+enum {
-+	HZIP_HIGH_COMP_RATE,
-+	HZIP_HIGH_COMP_PERF,
-+};
-+
- static const char hisi_zip_name[] = "hisi_zip";
- static struct dentry *hzip_debugfs_root;
+-#define HPRE_DEV_ALG_MAX_LEN	256
+-
+ static const char hpre_name[] = "hisi_hpre";
+ static struct dentry *hpre_debugfs_root;
+ static const struct pci_device_id hpre_dev_ids[] = {
+@@ -135,12 +133,7 @@ struct hpre_hw_error {
+ 	const char *msg;
+ };
  
-@@ -352,6 +360,37 @@ static int hzip_diff_regs_show(struct seq_file *s, void *unused)
- 	return 0;
- }
- DEFINE_SHOW_ATTRIBUTE(hzip_diff_regs);
-+
-+static int perf_mode_set(const char *val, const struct kernel_param *kp)
-+{
-+	int ret;
-+	u32 n;
-+
-+	if (!val)
-+		return -EINVAL;
-+
-+	ret = kstrtou32(val, 10, &n);
-+	if (ret != 0 || (n != HZIP_HIGH_COMP_PERF &&
-+			 n != HZIP_HIGH_COMP_RATE))
-+		return -EINVAL;
-+
-+	return param_set_int(val, kp);
-+}
-+
-+static const struct kernel_param_ops zip_com_perf_ops = {
-+	.set = perf_mode_set,
-+	.get = param_get_int,
-+};
-+
-+/*
-+ * perf_mode = 0 means enable high compression rate mode,
-+ * perf_mode = 1 means enable high compression performance mode.
-+ * These two modes only apply to the compression direction.
-+ */
-+static u32 perf_mode = HZIP_HIGH_COMP_RATE;
-+module_param_cb(perf_mode, &zip_com_perf_ops, &perf_mode, 0444);
-+MODULE_PARM_DESC(perf_mode, "ZIP high perf mode 0(default), 1(enable)");
-+
- static const struct kernel_param_ops zip_uacce_mode_ops = {
- 	.set = uacce_mode_set,
- 	.get = param_get_int,
-@@ -417,6 +456,28 @@ bool hisi_zip_alg_support(struct hisi_qm *qm, u32 alg)
+-struct hpre_dev_alg {
+-	u32 alg_msk;
+-	const char *alg;
+-};
+-
+-static const struct hpre_dev_alg hpre_dev_algs[] = {
++static const struct qm_dev_alg hpre_dev_algs[] = {
+ 	{
+ 		.alg_msk = BIT(0),
+ 		.alg = "rsa\n"
+@@ -359,35 +352,6 @@ bool hpre_check_alg_support(struct hisi_qm *qm, u32 alg)
  	return false;
  }
  
-+static int hisi_zip_set_high_perf(struct hisi_qm *qm)
-+{
-+	u32 val;
-+	int ret;
-+
-+	val = readl_relaxed(qm->io_base + HZIP_HIGH_PERF_OFFSET);
-+	if (perf_mode == HZIP_HIGH_COMP_PERF)
-+		val |= HZIP_HIGH_COMP_PERF;
-+	else
-+		val &= ~HZIP_HIGH_COMP_PERF;
-+
-+	/* Set perf mode */
-+	writel(val, qm->io_base + HZIP_HIGH_PERF_OFFSET);
-+	ret = readl_relaxed_poll_timeout(qm->io_base + HZIP_HIGH_PERF_OFFSET,
-+					 val, val == perf_mode, HZIP_DELAY_1_US,
-+					 HZIP_POLL_TIMEOUT_US);
-+	if (ret)
-+		pci_err(qm->pdev, "failed to set perf mode\n");
-+
-+	return ret;
-+}
-+
- static int hisi_zip_set_qm_algs(struct hisi_qm *qm)
+-static int hpre_set_qm_algs(struct hisi_qm *qm)
+-{
+-	struct device *dev = &qm->pdev->dev;
+-	char *algs, *ptr;
+-	u32 alg_msk;
+-	int i;
+-
+-	if (!qm->use_sva)
+-		return 0;
+-
+-	algs = devm_kzalloc(dev, HPRE_DEV_ALG_MAX_LEN * sizeof(char), GFP_KERNEL);
+-	if (!algs)
+-		return -ENOMEM;
+-
+-	alg_msk = hisi_qm_get_hw_info(qm, hpre_basic_info, HPRE_DEV_ALG_BITMAP_CAP, qm->cap_ver);
+-
+-	for (i = 0; i < ARRAY_SIZE(hpre_dev_algs); i++)
+-		if (alg_msk & hpre_dev_algs[i].alg_msk)
+-			strcat(algs, hpre_dev_algs[i].alg);
+-
+-	ptr = strrchr(algs, '\n');
+-	if (ptr)
+-		*ptr = '\0';
+-
+-	qm->uacce->algs = algs;
+-
+-	return 0;
+-}
+-
+ static int hpre_diff_regs_show(struct seq_file *s, void *unused)
  {
- 	struct device *dev = &qm->pdev->dev;
-@@ -1115,6 +1176,10 @@ static int hisi_zip_pf_probe_init(struct hisi_zip *hisi_zip)
- 	if (ret)
- 		return ret;
+ 	struct hisi_qm *qm = s->private;
+@@ -1138,6 +1102,7 @@ static void hpre_debugfs_exit(struct hisi_qm *qm)
  
-+	ret = hisi_zip_set_high_perf(qm);
-+	if (ret)
-+		return ret;
+ static int hpre_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ {
++	u64 alg_msk;
+ 	int ret;
+ 
+ 	if (pdev->revision == QM_HW_V1) {
+@@ -1168,7 +1133,8 @@ static int hpre_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ 		return ret;
+ 	}
+ 
+-	ret = hpre_set_qm_algs(qm);
++	alg_msk = hisi_qm_get_hw_info(qm, hpre_basic_info, HPRE_DEV_ALG_BITMAP_CAP, qm->cap_ver);
++	ret = hisi_qm_set_algs(qm, alg_msk, hpre_dev_algs, ARRAY_SIZE(hpre_dev_algs));
+ 	if (ret) {
+ 		pci_err(pdev, "Failed to set hpre algs!\n");
+ 		hisi_qm_uninit(qm);
+diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
+index d4c6a601c5f2..5539be1bfb40 100644
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -237,6 +237,8 @@
+ #define QM_QOS_MAX_CIR_S		11
+ #define QM_AUTOSUSPEND_DELAY		3000
+ 
++#define QM_DEV_ALG_MAX_LEN		256
 +
- 	hisi_zip_open_sva_prefetch(qm);
- 	hisi_qm_dev_err_init(qm);
- 	hisi_zip_debug_regs_clear(qm);
+ #define QM_MK_CQC_DW3_V1(hop_num, pg_sz, buf_sz, cqe_sz) \
+ 	(((hop_num) << QM_CQ_HOP_NUM_SHIFT)	| \
+ 	((pg_sz) << QM_CQ_PAGE_SIZE_SHIFT)	| \
+@@ -795,6 +797,40 @@ static void qm_get_xqc_depth(struct hisi_qm *qm, u16 *low_bits,
+ 	*high_bits = (depth >> QM_XQ_DEPTH_SHIFT) & QM_XQ_DEPTH_MASK;
+ }
+ 
++int hisi_qm_set_algs(struct hisi_qm *qm, u64 alg_msk, const struct qm_dev_alg *dev_algs,
++		     u32 dev_algs_size)
++{
++	struct device *dev = &qm->pdev->dev;
++	char *algs, *ptr;
++	int i;
++
++	if (!qm->uacce)
++		return 0;
++
++	if (dev_algs_size >= QM_DEV_ALG_MAX_LEN) {
++		dev_err(dev, "algs size %u is equal or larger than %d.\n",
++			dev_algs_size, QM_DEV_ALG_MAX_LEN);
++		return -EINVAL;
++	}
++
++	algs = devm_kzalloc(dev, QM_DEV_ALG_MAX_LEN * sizeof(char), GFP_KERNEL);
++	if (!algs)
++		return -ENOMEM;
++
++	for (i = 0; i < dev_algs_size; i++)
++		if (alg_msk & dev_algs[i].alg_msk)
++			strcat(algs, dev_algs[i].alg);
++
++	ptr = strrchr(algs, '\n');
++	if (ptr) {
++		*ptr = '\0';
++		qm->uacce->algs = algs;
++	}
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(hisi_qm_set_algs);
++
+ static u32 qm_get_irq_num(struct hisi_qm *qm)
+ {
+ 	if (qm->fun_type == QM_HW_PF)
+diff --git a/drivers/crypto/hisilicon/sec2/sec_main.c b/drivers/crypto/hisilicon/sec2/sec_main.c
+index e384988bda91..3605f610699c 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_main.c
++++ b/drivers/crypto/hisilicon/sec2/sec_main.c
+@@ -121,7 +121,6 @@
+ 					GENMASK_ULL(42, 25))
+ #define SEC_AEAD_BITMAP			(GENMASK_ULL(7, 6) | GENMASK_ULL(18, 17) | \
+ 					GENMASK_ULL(45, 43))
+-#define SEC_DEV_ALG_MAX_LEN		256
+ 
+ struct sec_hw_error {
+ 	u32 int_msk;
+@@ -133,11 +132,6 @@ struct sec_dfx_item {
+ 	u32 offset;
+ };
+ 
+-struct sec_dev_alg {
+-	u64 alg_msk;
+-	const char *algs;
+-};
+-
+ static const char sec_name[] = "hisi_sec2";
+ static struct dentry *sec_debugfs_root;
+ 
+@@ -174,15 +168,15 @@ static const struct hisi_qm_cap_info sec_basic_info[] = {
+ 	{SEC_CORE4_ALG_BITMAP_HIGH, 0x3170, 0, GENMASK(31, 0), 0x3FFF, 0x3FFF, 0x3FFF},
+ };
+ 
+-static const struct sec_dev_alg sec_dev_algs[] = { {
++static const struct qm_dev_alg sec_dev_algs[] = { {
+ 		.alg_msk = SEC_CIPHER_BITMAP,
+-		.algs = "cipher\n",
++		.alg = "cipher\n",
+ 	}, {
+ 		.alg_msk = SEC_DIGEST_BITMAP,
+-		.algs = "digest\n",
++		.alg = "digest\n",
+ 	}, {
+ 		.alg_msk = SEC_AEAD_BITMAP,
+-		.algs = "aead\n",
++		.alg = "aead\n",
+ 	},
+ };
+ 
+@@ -1079,37 +1073,9 @@ static int sec_pf_probe_init(struct sec_dev *sec)
+ 	return ret;
+ }
+ 
+-static int sec_set_qm_algs(struct hisi_qm *qm)
+-{
+-	struct device *dev = &qm->pdev->dev;
+-	char *algs, *ptr;
+-	u64 alg_mask;
+-	int i;
+-
+-	if (!qm->use_sva)
+-		return 0;
+-
+-	algs = devm_kzalloc(dev, SEC_DEV_ALG_MAX_LEN * sizeof(char), GFP_KERNEL);
+-	if (!algs)
+-		return -ENOMEM;
+-
+-	alg_mask = sec_get_alg_bitmap(qm, SEC_DEV_ALG_BITMAP_HIGH, SEC_DEV_ALG_BITMAP_LOW);
+-
+-	for (i = 0; i < ARRAY_SIZE(sec_dev_algs); i++)
+-		if (alg_mask & sec_dev_algs[i].alg_msk)
+-			strcat(algs, sec_dev_algs[i].algs);
+-
+-	ptr = strrchr(algs, '\n');
+-	if (ptr)
+-		*ptr = '\0';
+-
+-	qm->uacce->algs = algs;
+-
+-	return 0;
+-}
+-
+ static int sec_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ {
++	u64 alg_msk;
+ 	int ret;
+ 
+ 	qm->pdev = pdev;
+@@ -1144,7 +1110,8 @@ static int sec_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ 		return ret;
+ 	}
+ 
+-	ret = sec_set_qm_algs(qm);
++	alg_msk = sec_get_alg_bitmap(qm, SEC_DEV_ALG_BITMAP_HIGH, SEC_DEV_ALG_BITMAP_LOW);
++	ret = hisi_qm_set_algs(qm, alg_msk, sec_dev_algs, ARRAY_SIZE(sec_dev_algs));
+ 	if (ret) {
+ 		pci_err(qm->pdev, "Failed to set sec algs!\n");
+ 		hisi_qm_uninit(qm);
+diff --git a/drivers/crypto/hisilicon/zip/zip_main.c b/drivers/crypto/hisilicon/zip/zip_main.c
+index 2c5e805ffdc3..a7a2091b6560 100644
+--- a/drivers/crypto/hisilicon/zip/zip_main.c
++++ b/drivers/crypto/hisilicon/zip/zip_main.c
+@@ -74,7 +74,6 @@
+ #define HZIP_AXI_SHUTDOWN_ENABLE	BIT(14)
+ #define HZIP_WR_PORT			BIT(11)
+ 
+-#define HZIP_DEV_ALG_MAX_LEN		256
+ #define HZIP_ALG_ZLIB_BIT		GENMASK(1, 0)
+ #define HZIP_ALG_GZIP_BIT		GENMASK(3, 2)
+ #define HZIP_ALG_DEFLATE_BIT		GENMASK(5, 4)
+@@ -128,23 +127,18 @@ struct zip_dfx_item {
+ 	u32 offset;
+ };
+ 
+-struct zip_dev_alg {
+-	u32 alg_msk;
+-	const char *algs;
+-};
+-
+-static const struct zip_dev_alg zip_dev_algs[] = { {
++static const struct qm_dev_alg zip_dev_algs[] = { {
+ 		.alg_msk = HZIP_ALG_ZLIB_BIT,
+-		.algs = "zlib\n",
++		.alg = "zlib\n",
+ 	}, {
+ 		.alg_msk = HZIP_ALG_GZIP_BIT,
+-		.algs = "gzip\n",
++		.alg = "gzip\n",
+ 	}, {
+ 		.alg_msk = HZIP_ALG_DEFLATE_BIT,
+-		.algs = "deflate\n",
++		.alg = "deflate\n",
+ 	}, {
+ 		.alg_msk = HZIP_ALG_LZ77_BIT,
+-		.algs = "lz77_zstd\n",
++		.alg = "lz77_zstd\n",
+ 	},
+ };
+ 
+@@ -478,35 +472,6 @@ static int hisi_zip_set_high_perf(struct hisi_qm *qm)
+ 	return ret;
+ }
+ 
+-static int hisi_zip_set_qm_algs(struct hisi_qm *qm)
+-{
+-	struct device *dev = &qm->pdev->dev;
+-	char *algs, *ptr;
+-	u32 alg_mask;
+-	int i;
+-
+-	if (!qm->use_sva)
+-		return 0;
+-
+-	algs = devm_kzalloc(dev, HZIP_DEV_ALG_MAX_LEN * sizeof(char), GFP_KERNEL);
+-	if (!algs)
+-		return -ENOMEM;
+-
+-	alg_mask = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_DEV_ALG_BITMAP, qm->cap_ver);
+-
+-	for (i = 0; i < ARRAY_SIZE(zip_dev_algs); i++)
+-		if (alg_mask & zip_dev_algs[i].alg_msk)
+-			strcat(algs, zip_dev_algs[i].algs);
+-
+-	ptr = strrchr(algs, '\n');
+-	if (ptr)
+-		*ptr = '\0';
+-
+-	qm->uacce->algs = algs;
+-
+-	return 0;
+-}
+-
+ static void hisi_zip_open_sva_prefetch(struct hisi_qm *qm)
+ {
+ 	u32 val;
+@@ -1193,6 +1158,7 @@ static int hisi_zip_pf_probe_init(struct hisi_zip *hisi_zip)
+ 
+ static int hisi_zip_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ {
++	u64 alg_msk;
+ 	int ret;
+ 
+ 	qm->pdev = pdev;
+@@ -1228,7 +1194,8 @@ static int hisi_zip_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ 		return ret;
+ 	}
+ 
+-	ret = hisi_zip_set_qm_algs(qm);
++	alg_msk = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_DEV_ALG_BITMAP, qm->cap_ver);
++	ret = hisi_qm_set_algs(qm, alg_msk, zip_dev_algs, ARRAY_SIZE(zip_dev_algs));
+ 	if (ret) {
+ 		pci_err(qm->pdev, "Failed to set zip algs!\n");
+ 		hisi_qm_uninit(qm);
+diff --git a/include/linux/hisi_acc_qm.h b/include/linux/hisi_acc_qm.h
+index 241b0dc3183e..b566ae420449 100644
+--- a/include/linux/hisi_acc_qm.h
++++ b/include/linux/hisi_acc_qm.h
+@@ -161,6 +161,11 @@ enum qm_cap_bits {
+ 	QM_SUPPORT_RPM,
+ };
+ 
++struct qm_dev_alg {
++	u64 alg_msk;
++	const char *alg;
++};
++
+ struct dfx_diff_registers {
+ 	u32 *regs;
+ 	u32 reg_offset;
+@@ -347,7 +352,6 @@ struct hisi_qm {
+ 	struct work_struct rst_work;
+ 	struct work_struct cmd_process;
+ 
+-	const char *algs;
+ 	bool use_sva;
+ 	bool is_frozen;
+ 
+@@ -533,6 +537,8 @@ void hisi_qm_regs_dump(struct seq_file *s, struct debugfs_regset32 *regset);
+ u32 hisi_qm_get_hw_info(struct hisi_qm *qm,
+ 			const struct hisi_qm_cap_info *info_table,
+ 			u32 index, bool is_read);
++int hisi_qm_set_algs(struct hisi_qm *qm, u64 alg_msk, const struct qm_dev_alg *dev_algs,
++		     u32 dev_algs_size);
+ 
+ /* Used by VFIO ACC live migration driver */
+ struct pci_driver *hisi_sec_get_pf_driver(void);
 -- 
 2.43.0
 
