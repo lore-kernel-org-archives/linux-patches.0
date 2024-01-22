@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF948657B3;
-	Tue, 23 Jan 2024 01:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011B2657B3;
+	Tue, 23 Jan 2024 01:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971766; cv=none; b=Jqu51rZdaL8+JNNosOkcHxxZ1BffVjBfr7Sb02kYVXXroRWWKGPJvFlCNBqB/KiZC3BMURtnuoUHvYSmkMf8jA5LxQ0+56z00Ay/fqM9CElls4lVXYikQKQFfb0VpXDyMkq5Etiac8bzxwntQAuPDYNaktrgxHbnFGam4uUrib4=
+	t=1705971768; cv=none; b=pftW289FgRZIwRjae7zLNSGch2kGK8ydcFIrjY18714yxxKrNURcprFdP3KhShUc7xmOLo0cfzZgnGUXF8uCP0oYDY4gq3RbOW6+fbQWLnDcwQPIo/0XOgBs+3SEiW3EBUJ2PiHgNqfaPn/KAmL3QAwqWpI+zOkHJXL0NUMEYm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971766; c=relaxed/simple;
-	bh=hCbzzWCpJjXT6YTMh99l0jBo6fx3ztVIaplCgMplzyM=;
+	s=arc-20240116; t=1705971768; c=relaxed/simple;
+	bh=osAyhIlLcbCAinmFGJ5NvwJKxstQ7GiuPuQnSg2BQrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W3+FwgKiYLy8Fa0zGK4PiQiOXTwmKjUJNQrnCd260ym5q0VnvUxnqCnFXe8RXOJOFOwo7wtaKpQoStHjuqhSwjNQnAkrmu3M7Op79xUAdfWSkV5zm6YC5DfoZOdMuRwCergdvFMNWUkydIIoFbrJ29GDU5z4Eg+KSciLVHnTsSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPDVf/v/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NQWQDaq90xOoyy4e/2Gw6uM8CiKRb1xU9KFKpiJfkObhRZ1fKWgnGn/yjm4GpuIyJ99S4ZqvP89LdXeRpf3/MEVLfsVGh3rivDCWh4bGFD4GYACKN0B29vkag1LvZdWZnZ32ZW6uWgpQQ4RnjMiSJUQorEHiVyoenOMBiW59Xn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e74qUoi8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPDVf/v/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C787C43390;
-	Tue, 23 Jan 2024 01:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e74qUoi8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B37AC43399;
+	Tue, 23 Jan 2024 01:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971766;
-	bh=hCbzzWCpJjXT6YTMh99l0jBo6fx3ztVIaplCgMplzyM=;
+	s=korg; t=1705971767;
+	bh=osAyhIlLcbCAinmFGJ5NvwJKxstQ7GiuPuQnSg2BQrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BPDVf/v/QueX1f+prpvyyw85UCV3BQmqY8krwlaJl5FK65C9ZBpMZW7OVjzh+gHoz
-	 9kSDBPEAdmy0lBhzhklnmKewbrvCt1XMzIQ5WEESNNmXOVIdj4MV+WoutO32wlzdKz
-	 ch6WVMkFlAo02P9TRsunSWVlU5kRueBMLsp3RecU=
+	b=e74qUoi8ET9pdZ7s2dG9C0y6+T5gl060EIsX7PUlueJqZ258CryamfD+jrNz3ldXS
+	 9r8RqrR7xlECmu47FpgOPhLPiL/pjaoz7sWrhchE/WULgfTAW0kWNDL0lFNE/Eva0U
+	 vXZ7KPlEoX3btf4x9tZHzvA9h3L8gDaAXPtx2Eto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tadeusz Struk <tstruk@gigaio.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	stable@kernel.org
-Subject: [PATCH 6.1 313/417] PCI/P2PDMA: Remove reference to pci_p2pdma_map_sg()
-Date: Mon, 22 Jan 2024 15:58:01 -0800
-Message-ID: <20240122235802.657387808@linuxfoundation.org>
+	Sathya Prakash <sathya.prakash@broadcom.com>,
+	Chandrakanth patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 291/417] scsi: mpi3mr: Refresh sdev queue depth after controller reset
+Date: Mon, 22 Jan 2024 15:57:39 -0800
+Message-ID: <20240122235801.911788065@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -52,53 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tadeusz Struk <tstruk@gigaio.com>
+From: Chandrakanth patil <chandrakanth.patil@broadcom.com>
 
-commit 9a000a72af75886e5de13f4edef7f0d788622e7d upstream.
+commit e5aab848dfdf7996d20ece4d28d2733c732c5e5a upstream.
 
-Update Documentation/driver-api/pci/p2pdma.rst doc and remove references to
-obsolete p2pdma mapping functions.
+After a controller reset, the firmware may modify the device queue depth.
+Therefore, update the device queue depth accordingly.
 
-Fixes: 0d06132fc84b ("PCI/P2PDMA: Remove pci_p2pdma_[un]map_sg()")
-Link: https://lore.kernel.org/r/20231113180325.444692-1-tstruk@gmail.com
-Signed-off-by: Tadeusz Struk <tstruk@gigaio.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Cc: stable@kernel.org
+Cc: <stable@vger.kernel.org> # v5.15+
+Co-developed-by: Sathya Prakash <sathya.prakash@broadcom.com>
+Signed-off-by: Sathya Prakash <sathya.prakash@broadcom.com>
+Signed-off-by: Chandrakanth patil <chandrakanth.patil@broadcom.com>
+Link: https://lore.kernel.org/r/20231126053134.10133-2-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/driver-api/pci/p2pdma.rst | 16 +++-------------
- 1 file changed, 3 insertions(+), 13 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/driver-api/pci/p2pdma.rst b/Documentation/driver-api/pci/p2pdma.rst
-index 44deb52beeb4..d0b241628cf1 100644
---- a/Documentation/driver-api/pci/p2pdma.rst
-+++ b/Documentation/driver-api/pci/p2pdma.rst
-@@ -83,19 +83,9 @@ this to include other types of resources like doorbells.
- Client Drivers
- --------------
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -1044,8 +1044,14 @@ void mpi3mr_rfresh_tgtdevs(struct mpi3mr
+ 	tgtdev = NULL;
+ 	list_for_each_entry(tgtdev, &mrioc->tgtdev_list, list) {
+ 		if ((tgtdev->dev_handle != MPI3MR_INVALID_DEV_HANDLE) &&
+-		    !tgtdev->is_hidden && !tgtdev->host_exposed)
+-			mpi3mr_report_tgtdev_to_host(mrioc, tgtdev->perst_id);
++		    !tgtdev->is_hidden) {
++			if (!tgtdev->host_exposed)
++				mpi3mr_report_tgtdev_to_host(mrioc,
++							     tgtdev->perst_id);
++			else if (tgtdev->starget)
++				starget_for_each_device(tgtdev->starget,
++							(void *)tgtdev, mpi3mr_update_sdev);
++	}
+ 	}
+ }
  
--A client driver typically only has to conditionally change its DMA map
--routine to use the mapping function :c:func:`pci_p2pdma_map_sg()` instead
--of the usual :c:func:`dma_map_sg()` function. Memory mapped in this
--way does not need to be unmapped.
--
--The client may also, optionally, make use of
--:c:func:`is_pci_p2pdma_page()` to determine when to use the P2P mapping
--functions and when to use the regular mapping functions. In some
--situations, it may be more appropriate to use a flag to indicate a
--given request is P2P memory and map appropriately. It is important to
--ensure that struct pages that back P2P memory stay out of code that
--does not have support for them as other code may treat the pages as
--regular memory which may not be appropriate.
-+A client driver only has to use the mapping API :c:func:`dma_map_sg()`
-+and :c:func:`dma_unmap_sg()` functions as usual, and the implementation
-+will do the right thing for the P2P capable memory.
- 
- 
- Orchestrator Drivers
--- 
-2.43.0
-
 
 
