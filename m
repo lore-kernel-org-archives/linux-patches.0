@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7484066B52;
-	Tue, 23 Jan 2024 01:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFC6664B7;
+	Tue, 23 Jan 2024 01:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971676; cv=none; b=urLQ12sSTCf9dPSYPxfFbjiLr+3TykXv/4YyyU9ZOOQGUIHTVs67uQTRuYijAph/2kXSU00ce3BJ3rD4WSp7ivKt/xbBkpKcvn51sRxh76NJOn9UonrbpWr6JSXyEJMXBs8MoAug3jfGrvgjAOme/7U6K82DYLmY1cq4TQtd/hI=
+	t=1705971677; cv=none; b=gbbixl3mPv5lHaRw4bFNYMT7HhPvCHAZGAk+PVrdnuXjvMNjODex0ndZSJEQCpOx8EX0PaNDryuqw9awYzNdt+oodH/63oe8EqsL7FWZMIJvLNbT5hQXrPyKEduXfmaz3qRH3G3mFQ5Y+6v5/OOERk6lbNW4YR6Ki4zW69KDvcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971676; c=relaxed/simple;
-	bh=dUkZz05+ZX5lW6tS0AJPqeuK4XMjFSSqq58ywjKLLQA=;
+	s=arc-20240116; t=1705971677; c=relaxed/simple;
+	bh=Rt4VtwL5bhjvRZ13s+y4yczdHzPBcwP6+CYDOEuwsGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CiNdQX77gMjfZluLX5ITiu0bpxILTJWg6sbT3LPvnbzsSz+gT1D0/WMxe8KLcaRRKTEAVI9QohKOekykBhKQuDQ6/Ol0Ro3geP7Z+cZteyS+haD/VQ8ubQnMlbhX6dlQ5FZWz72iDTH8e2JDE7qPEVqGrkcM/Z+eTuHhR1JIGug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FihFfpOH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vb3qJj4O47dSBzPhYrzuej658jwRs1ucdZGbb3TPAGgR00+gxjD3qurPgfA6HWPY25iM7gv+5pDexhu87DlX7hLESJtyoE6718FBQNOgmkbF7QUXc88fFI/bvP6LgH9oRKFzeBc9VlGc8dwGNIH1HDsRlZD8UogqUNBSHO0ynUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gj+bEG9Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FihFfpOH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2171AC433C7;
-	Tue, 23 Jan 2024 01:01:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gj+bEG9Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F193C433F1;
+	Tue, 23 Jan 2024 01:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971676;
-	bh=dUkZz05+ZX5lW6tS0AJPqeuK4XMjFSSqq58ywjKLLQA=;
+	s=korg; t=1705971677;
+	bh=Rt4VtwL5bhjvRZ13s+y4yczdHzPBcwP6+CYDOEuwsGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FihFfpOHkLBiV3J7CYWSaqB1WsEyOVyPOm4FMhC3RWF6NdX6CJF3FCpOxkC0/uARi
-	 OukKN8wWno7GI1MUFa1QsbndEkI9HbQH3c8O8yGf6rmtvOu4gIDT2T5NjpXvDPKK47
-	 gkuxqMLnBK6OuAAxZtilwmaGCRkU9lkZBox621V8=
+	b=Gj+bEG9YKgswcKaZhPRh8H0fPrOliwP/kSKkJf2bg25rKI9bx+4cVD/0n6PmLvTtB
+	 bwzmeXaKDUNI5K670gyGpvrgjll5zUIgXdgY2/J3xli85S2CNQzCfyguVWYHx1Bjsr
+	 9dk6C7Rbfkj3rztI3rEf1+mbKgu6ejmMGKvcpqxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lei he <helei.sig11@bytedance.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Gonglei <arei.gonglei@huawei.com>
-Subject: [PATCH 5.10 203/286] virtio-crypto: fix memory-leak
-Date: Mon, 22 Jan 2024 15:58:29 -0800
-Message-ID: <20240122235739.936869557@linuxfoundation.org>
+	Min Li <min15.li@samsung.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 295/417] block: add check that partition length needs to be aligned with block size
+Date: Mon, 22 Jan 2024 15:57:43 -0800
+Message-ID: <20240122235802.050527611@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,78 +49,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: lei he <helei.sig11@bytedance.com>
+From: Min Li <min15.li@samsung.com>
 
-commit 1bedcf22c081a6e9943f09937b2da8d3ef52d20d upstream.
+commit 6f64f866aa1ae6975c95d805ed51d7e9433a0016 upstream.
 
-Fix memory-leak for virtio-crypto akcipher request, this problem is
-introduced by 59ca6c93387d3(virtio-crypto: implement RSA algorithm).
-The leak can be reproduced and tested with the following script
-inside virtual machine:
+Before calling add partition or resize partition, there is no check
+on whether the length is aligned with the logical block size.
+If the logical block size of the disk is larger than 512 bytes,
+then the partition size maybe not the multiple of the logical block size,
+and when the last sector is read, bio_truncate() will adjust the bio size,
+resulting in an IO error if the size of the read command is smaller than
+the logical block size.If integrity data is supported, this will also
+result in a null pointer dereference when calling bio_integrity_free.
 
-#!/bin/bash
-
-LOOP_TIMES=10000
-
-# required module: pkcs8_key_parser, virtio_crypto
-modprobe pkcs8_key_parser # if CONFIG_PKCS8_PRIVATE_KEY_PARSER=m
-modprobe virtio_crypto # if CONFIG_CRYPTO_DEV_VIRTIO=m
-rm -rf /tmp/data
-dd if=/dev/random of=/tmp/data count=1 bs=230
-
-# generate private key and self-signed cert
-openssl req -nodes -x509 -newkey rsa:2048 -keyout key.pem \
-		-outform der -out cert.der  \
-		-subj "/C=CN/ST=GD/L=SZ/O=vihoo/OU=dev/CN=always.com/emailAddress=yy@always.com"
-# convert private key from pem to der
-openssl pkcs8 -in key.pem -topk8 -nocrypt -outform DER -out key.der
-
-# add key
-PRIV_KEY_ID=`cat key.der | keyctl padd asymmetric test_priv_key @s`
-echo "priv key id = "$PRIV_KEY_ID
-PUB_KEY_ID=`cat cert.der | keyctl padd asymmetric test_pub_key @s`
-echo "pub key id = "$PUB_KEY_ID
-
-# query key
-keyctl pkey_query $PRIV_KEY_ID 0
-keyctl pkey_query $PUB_KEY_ID 0
-
-# here we only run pkey_encrypt becasuse it is the fastest interface
-function bench_pub() {
-	keyctl pkey_encrypt $PUB_KEY_ID 0 /tmp/data enc=pkcs1 >/tmp/enc.pub
-}
-
-# do bench_pub in loop to obtain the memory leak
-for (( i = 0; i < ${LOOP_TIMES}; ++i )); do
-	bench_pub
-done
-
-Signed-off-by: lei he <helei.sig11@bytedance.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Gonglei <arei.gonglei@huawei.com>
-Message-Id: <20220919075158.3625-1-helei.sig11@bytedance.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Min Li <min15.li@samsung.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230629142517.121241-1-min15.li@samsung.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/virtio/virtio_crypto_akcipher_algs.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ block/ioctl.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
-+++ b/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
-@@ -56,6 +56,10 @@ static void virtio_crypto_akcipher_final
- 	struct virtio_crypto_akcipher_request *vc_akcipher_req,
- 	struct akcipher_request *req, int err)
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -18,7 +18,7 @@ static int blkpg_do_ioctl(struct block_d
  {
-+	kfree(vc_akcipher_req->src_buf);
-+	kfree(vc_akcipher_req->dst_buf);
-+	vc_akcipher_req->src_buf = NULL;
-+	vc_akcipher_req->dst_buf = NULL;
- 	virtcrypto_clear_request(&vc_akcipher_req->base);
+ 	struct gendisk *disk = bdev->bd_disk;
+ 	struct blkpg_partition p;
+-	long long start, length;
++	sector_t start, length;
  
- 	crypto_finalize_akcipher_request(vc_akcipher_req->base.dataq->engine, req, err);
+ 	if (disk->flags & GENHD_FL_NO_PART)
+ 		return -EINVAL;
+@@ -35,14 +35,17 @@ static int blkpg_do_ioctl(struct block_d
+ 	if (op == BLKPG_DEL_PARTITION)
+ 		return bdev_del_partition(disk, p.pno);
+ 
++	if (p.start < 0 || p.length <= 0 || p.start + p.length < 0)
++		return -EINVAL;
++	/* Check that the partition is aligned to the block size */
++	if (!IS_ALIGNED(p.start | p.length, bdev_logical_block_size(bdev)))
++		return -EINVAL;
++
+ 	start = p.start >> SECTOR_SHIFT;
+ 	length = p.length >> SECTOR_SHIFT;
+ 
+ 	switch (op) {
+ 	case BLKPG_ADD_PARTITION:
+-		/* check if partition is aligned to blocksize */
+-		if (p.start & (bdev_logical_block_size(bdev) - 1))
+-			return -EINVAL;
+ 		return bdev_add_partition(disk, p.pno, start, length);
+ 	case BLKPG_RESIZE_PARTITION:
+ 		return bdev_resize_partition(disk, p.pno, start, length);
 
 
