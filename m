@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657C55B5A1;
-	Tue, 23 Jan 2024 01:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCFD5B5A0;
+	Tue, 23 Jan 2024 01:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974330; cv=none; b=B9fhsjSSXN+YaJHIsGURqcD7ItSCVIivVsyXGI5Jxny7cUsY8MMyGX5PPH9XKeJu9u87S+VQl1szlGBdHsK3Vqw2l40oewA/r/X0fkAB59AyQ/eZ6f0CXINQQ3rx0Y24Qh/cSaz98vSlEA8VkHpLLutpOKWYlUMXcCYU8Zvexmk=
+	t=1705974332; cv=none; b=uUp/wn7IeVUDVYhlh80BKsEQgVCP3Kwb7AnJ0lbq16134E+7AtI8HNBlyu6wpaFIlSOqosC2dF+Jg/4k7SWe/FQqWwmUPZn3yO2XqYSRZlwHc3uzhFvRwuASUIrLsB2ojsLgUaWbLz8ys8tRInU9ujoBnpUg+rFZltZ8VkAcuSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974330; c=relaxed/simple;
-	bh=ghL55uhOregF0OtdBzomylxIwCVsOp95o8N8lInDr1k=;
+	s=arc-20240116; t=1705974332; c=relaxed/simple;
+	bh=dooU8+5FhSJVpyTYNGykAl/ZWR6G9uPRZxmdOxGtxIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1SaUdAKdByf5yvpFEEM67Pdoa4b1iobqCYegCs8FjEgQrYkHN47549Cda1YXZpSXX558rKypLMkHBgDQ4kw9zB/Z7zS5bABi3e23ryGqol8s6a3htY3szBcU64OsNfpKzWcxqfhpW+1IE+fBQEckdYG0ILvoNG/H/29EvrqZ9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mCe2seuF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j7g3DViHazfpjI5blpMBKn6O7PPf91RCcjtdAWVbFThAsRHk+DxJGUJwvgB74aUFhk/YyRUQC/3peoZc62WfntKlswpW4Wf2WTmb7CMSrosV/8TWX0YlWnOiaBcsuKcOQ1Fqa+ir2KsqrTGLIHBqPmgFm9H2GTLR6xIopnrRiE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHJhpXGI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCe2seuF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B9AC43394;
-	Tue, 23 Jan 2024 01:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHJhpXGI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769E3C433F1;
+	Tue, 23 Jan 2024 01:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974330;
-	bh=ghL55uhOregF0OtdBzomylxIwCVsOp95o8N8lInDr1k=;
+	s=korg; t=1705974331;
+	bh=dooU8+5FhSJVpyTYNGykAl/ZWR6G9uPRZxmdOxGtxIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mCe2seuF2m6Yv7fZb1TuHEbzc6VBrHlaIyKfoZOs9eITGkkZYx1dKSjQ/+D9pQSuE
-	 Y7thvd3LJFCUAdxEtBf/6WJ1i84HNnj7KHSU6ifXYQ2IuTmiXzZETiPjDB8N2PS2iw
-	 lDj+F936gCkgUOQNf5okvXA+8BDtXqCCOMwGv8CE=
+	b=AHJhpXGIjRHSY+3CQQN6ffnReTvzFp53OdxGJKx+bBLMCQIaXluCw9zG692GPlFlR
+	 Kws16jLGdrD7JbKWHoA1CjaIwcE/cqKSBrbR+6kY95hTTzvbW/fVrKmFB0cKcMiz+H
+	 Xsme/ZZI0qtnMf3WehwwDdUJfgXJ8koECSPoKt0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Thompson <davthompson@nvidia.com>,
-	Asmaa Mnebhi <asmaa@nvidia.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 173/374] mlxbf_gige: Enable the GigE port in mlxbf_gige_open
-Date: Mon, 22 Jan 2024 15:57:09 -0800
-Message-ID: <20240122235750.655011515@linuxfoundation.org>
+Subject: [PATCH 5.15 178/374] RDMA/usnic: Silence uninitialized symbol smatch warnings
+Date: Mon, 22 Jan 2024 15:57:14 -0800
+Message-ID: <20240122235750.829259926@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -53,66 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asmaa Mnebhi <asmaa@nvidia.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit a460f4a684511e007bbf1700758a41f05d9981e6 ]
+[ Upstream commit b9a85e5eec126d6ae6c362f94b447c223e8fe6e4 ]
 
-At the moment, the GigE port is enabled in the mlxbf_gige_probe
-function. If the mlxbf_gige_open is not executed, this could cause
-pause frames to increase in the case where there is high backgroud
-traffic. This results in clogging the port.
-So move enabling the OOB port to mlxbf_gige_open.
+The patch 1da177e4c3f4: "Linux-2.6.12-rc2" from Apr 16, 2005
+(linux-next), leads to the following Smatch static checker warning:
 
-Fixes: f92e1869d74e ("Add Mellanox BlueField Gigabit Ethernet driver")
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Signed-off-by: Asmaa Mnebhi <asmaa@nvidia.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+        drivers/infiniband/hw/mthca/mthca_cmd.c:644 mthca_SYS_EN()
+        error: uninitialized symbol 'out'.
+
+drivers/infiniband/hw/mthca/mthca_cmd.c
+    636 int mthca_SYS_EN(struct mthca_dev *dev)
+    637 {
+    638         u64 out;
+    639         int ret;
+    640
+    641         ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
+
+We pass out here and it gets used without being initialized.
+
+        err = mthca_cmd_post(dev, in_param,
+                             out_param ? *out_param : 0,
+                                         ^^^^^^^^^^
+                             in_modifier, op_modifier,
+                             op, context->token, 1);
+
+It's the same in mthca_cmd_wait() and mthca_cmd_poll().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/533bc3df-8078-4397-b93d-d1f6cec9b636@moroto.mountain
+Link: https://lore.kernel.org/r/c559cb7113158c02d75401ac162652072ef1b5f0.1699867650.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c   | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/mthca/mthca_cmd.c  | 4 ++--
+ drivers/infiniband/hw/mthca/mthca_main.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-index 181a0845a105..679415a64f25 100644
---- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-+++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-@@ -132,9 +132,15 @@ static int mlxbf_gige_open(struct net_device *netdev)
+diff --git a/drivers/infiniband/hw/mthca/mthca_cmd.c b/drivers/infiniband/hw/mthca/mthca_cmd.c
+index bdf5ed38de22..0307c45aa6d3 100644
+--- a/drivers/infiniband/hw/mthca/mthca_cmd.c
++++ b/drivers/infiniband/hw/mthca/mthca_cmd.c
+@@ -635,7 +635,7 @@ void mthca_free_mailbox(struct mthca_dev *dev, struct mthca_mailbox *mailbox)
+ 
+ int mthca_SYS_EN(struct mthca_dev *dev)
  {
- 	struct mlxbf_gige *priv = netdev_priv(netdev);
- 	struct phy_device *phydev = netdev->phydev;
-+	u64 control;
- 	u64 int_en;
+-	u64 out;
++	u64 out = 0;
+ 	int ret;
+ 
+ 	ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
+@@ -1955,7 +1955,7 @@ int mthca_WRITE_MGM(struct mthca_dev *dev, int index,
+ int mthca_MGID_HASH(struct mthca_dev *dev, struct mthca_mailbox *mailbox,
+ 		    u16 *hash)
+ {
+-	u64 imm;
++	u64 imm = 0;
  	int err;
  
-+	/* Perform general init of GigE block */
-+	control = readq(priv->base + MLXBF_GIGE_CONTROL);
-+	control |= MLXBF_GIGE_CONTROL_PORT_EN;
-+	writeq(control, priv->base + MLXBF_GIGE_CONTROL);
-+
- 	err = mlxbf_gige_request_irqs(priv);
- 	if (err)
- 		return err;
-@@ -281,7 +287,6 @@ static int mlxbf_gige_probe(struct platform_device *pdev)
- 	void __iomem *plu_base;
- 	void __iomem *base;
- 	int addr, phy_irq;
--	u64 control;
+ 	err = mthca_cmd_imm(dev, mailbox->dma, &imm, 0, 0, CMD_MGID_HASH,
+diff --git a/drivers/infiniband/hw/mthca/mthca_main.c b/drivers/infiniband/hw/mthca/mthca_main.c
+index f507c4cd46d3..f77c48b317f2 100644
+--- a/drivers/infiniband/hw/mthca/mthca_main.c
++++ b/drivers/infiniband/hw/mthca/mthca_main.c
+@@ -382,7 +382,7 @@ static int mthca_init_icm(struct mthca_dev *mdev,
+ 			  struct mthca_init_hca_param *init_hca,
+ 			  u64 icm_size)
+ {
+-	u64 aux_pages;
++	u64 aux_pages = 0;
  	int err;
  
- 	base = devm_platform_ioremap_resource(pdev, MLXBF_GIGE_RES_MAC);
-@@ -296,11 +301,6 @@ static int mlxbf_gige_probe(struct platform_device *pdev)
- 	if (IS_ERR(plu_base))
- 		return PTR_ERR(plu_base);
- 
--	/* Perform general init of GigE block */
--	control = readq(base + MLXBF_GIGE_CONTROL);
--	control |= MLXBF_GIGE_CONTROL_PORT_EN;
--	writeq(control, base + MLXBF_GIGE_CONTROL);
--
- 	netdev = devm_alloc_etherdev(&pdev->dev, sizeof(*priv));
- 	if (!netdev)
- 		return -ENOMEM;
+ 	err = mthca_SET_ICM_SIZE(mdev, icm_size, &aux_pages);
 -- 
 2.43.0
 
