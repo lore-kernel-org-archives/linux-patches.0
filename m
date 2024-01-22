@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D1C12DDB0;
-	Tue, 23 Jan 2024 01:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CA112F581;
+	Tue, 23 Jan 2024 01:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971723; cv=none; b=TjGUCj1NU3PKF6DRXSNkvvvpotvwKeXNk1s8P4I46ovkf3MOdchucA/5hk7ZORI0xgDrBiGjGEPP4j5tZaZTKPSvdySlj4CG8Vqv3knfUCtOl3VVSXocGh9TiTfjOjOj2aqSl06D40fl8qWFQpNOzVw3z0b/MyoYuW8CKJMcElg=
+	t=1705971727; cv=none; b=WmUaM3CDlhbPRq4v8PXuI5rCHrTzD2hHgcQHQHwkyK0z0ND8byH23pbGoXbxC0lFXlhv/4E1JmUo1vjwoEt2WzMy6+Eu43GfHA1vCKV5q/WbE8mOqY3SgWZyklaINv/aAF/6SRi6B13kwoz4MUkzuWl9xukmGsue/eA0MRsV5Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971723; c=relaxed/simple;
-	bh=UZFkgmRUCU42uplYt0tP1JGM/YSIwi7bZAaVviB0m8I=;
+	s=arc-20240116; t=1705971727; c=relaxed/simple;
+	bh=l04qzBxT8b5YkdKn0xnnbiOdTBkghPPu9oMY20m3LdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jaAg+njWicnCSsBawWs2Q+U/qJvJdVc77QXhReQvjSwSe+16Twx8YdH69nXGqyQeC8hkjRRwX7t6T1xk5U50tSfkJp6eqNa+13HyXBfpkySQtRtCXQUB8aGDmZ+moUL/zm5Y3aScd9PJegt9HUFKeQJpbZvjbGMmiFEodutP/rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWUm2rMX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fU0WUg+7rRof0XuTdeiS98KaAUPG3z0oA5jXd7kc/fd+9/lTsQUMACoioaP6aOl9+S4KCQqPn0tFIlyFuOC7YN4TbdCW8kWs4+el7j5V11EIMx4xjm1j6ZvgLfx+ugPs7kur5/1ggPI59gFiVfUU7xqmT+8ifB+TE0xjDs7gnrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWOQicdd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWUm2rMX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE08C433C7;
-	Tue, 23 Jan 2024 01:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWOQicdd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC6DC433C7;
+	Tue, 23 Jan 2024 01:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971723;
-	bh=UZFkgmRUCU42uplYt0tP1JGM/YSIwi7bZAaVviB0m8I=;
+	s=korg; t=1705971726;
+	bh=l04qzBxT8b5YkdKn0xnnbiOdTBkghPPu9oMY20m3LdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CWUm2rMXlbhusa/pJXABnPNuo0ngswLuDMWCHLvtQRGM9h8bpuXWduKJf5MBqEmkM
-	 BD7y8xMIgDv4pA56mrnWOsmWBPM/txOH8DtYV8Zg/pRsn6VVEbM3c4AwNFkS/4na2+
-	 OzLzf61F9bpMcqB0VvJyo4Oiwt3zB+vRCbqwo8S0=
+	b=BWOQicddMEsgTRwCD5ZUya5/EihGsslDRECm18CLxWMgvovKS0+WHa3v/JlRxanI/
+	 Mht5JEYWlIEWecZXbG0j8blrH3HK8Qt+XfQmcDpkS5xLIWqaZ3hiOIUvYPHQztlVdw
+	 WRT68mGGW19nUF0Gl4y9n70v2tvdbEnVKgk8vEH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Murphy <murphyt7@tcd.ie>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Saravana Kannan <saravanak@google.com>,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 6.1 306/417] iommu/dma: Trace bounce buffer usage when mapping buffers
-Date: Mon, 22 Jan 2024 15:57:54 -0800
-Message-ID: <20240122235802.425334565@linuxfoundation.org>
+	Peter Chen <peter.chen@kernel.org>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Li Jun <jun.li@nxp.com>
+Subject: [PATCH 5.10 215/286] usb: chipidea: wait controller resume finished for wakeup irq
+Date: Mon, 22 Jan 2024 15:58:41 -0800
+Message-ID: <20240122235740.362143762@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,54 +47,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Isaac J. Manjarres <isaacmanjarres@google.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit a63c357b9fd56ad5fe64616f5b22835252c6a76a upstream.
+commit 128d849074d05545becf86e713715ce7676fc074 upstream.
 
-When commit 82612d66d51d ("iommu: Allow the dma-iommu api to
-use bounce buffers") was introduced, it did not add the logic
-for tracing the bounce buffer usage from iommu_dma_map_page().
+After the chipidea driver introduce extcon for id and vbus, it's able
+to wakeup from another irq source, in case the system with extcon ID
+cable, wakeup from usb ID cable and device removal, the usb device
+disconnect irq may come firstly before the extcon notifier while system
+resume, so we will get 2 "wakeup" irq, one for usb device disconnect;
+and one for extcon ID cable change(real wakeup event), current driver
+treat them as 2 successive wakeup irq so can't handle it correctly, then
+finally the usb irq can't be enabled. This patch adds a check to bypass
+further usb events before controller resume finished to fix it.
 
-All of the users of swiotlb_tbl_map_single() trace their bounce
-buffer usage, except iommu_dma_map_page(). This makes it difficult
-to track SWIOTLB usage from that function. Thus, trace bounce buffer
-usage from iommu_dma_map_page().
-
-Fixes: 82612d66d51d ("iommu: Allow the dma-iommu api to use bounce buffers")
-Cc: stable@vger.kernel.org # v5.15+
-Cc: Tom Murphy <murphyt7@tcd.ie>
-Cc: Lu Baolu <baolu.lu@linux.intel.com>
-Cc: Saravana Kannan <saravanak@google.com>
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
-Link: https://lore.kernel.org/r/20231208234141.2356157-1-isaacmanjarres@google.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 1f874edcb731 ("usb: chipidea: add runtime power management support")
+cc:  <stable@vger.kernel.org>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Signed-off-by: Li Jun <jun.li@nxp.com>
+Link: https://lore.kernel.org/r/20231228110753.1755756-2-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/dma-iommu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/chipidea/core.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -28,6 +28,7 @@
- #include <linux/spinlock.h>
- #include <linux/swiotlb.h>
- #include <linux/vmalloc.h>
-+#include <trace/events/swiotlb.h>
+--- a/drivers/usb/chipidea/core.c
++++ b/drivers/usb/chipidea/core.c
+@@ -516,6 +516,13 @@ static irqreturn_t ci_irq_handler(int ir
+ 	u32 otgsc = 0;
  
- #include "dma-iommu.h"
- 
-@@ -999,6 +1000,8 @@ static dma_addr_t iommu_dma_map_page(str
- 			return DMA_MAPPING_ERROR;
- 		}
- 
-+		trace_swiotlb_bounced(dev, phys, size);
+ 	if (ci->in_lpm) {
++		/*
++		 * If we already have a wakeup irq pending there,
++		 * let's just return to wait resume finished firstly.
++		 */
++		if (ci->wakeup_int)
++			return IRQ_HANDLED;
 +
- 		aligned_size = iova_align(iovad, size);
- 		phys = swiotlb_tbl_map_single(dev, phys, size, aligned_size,
- 					      iova_mask(iovad), dir, attrs);
+ 		disable_irq_nosync(irq);
+ 		ci->wakeup_int = true;
+ 		pm_runtime_get(ci->dev);
 
 
