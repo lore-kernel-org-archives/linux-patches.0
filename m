@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62ED34EB24;
-	Tue, 23 Jan 2024 00:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF0850A73;
+	Tue, 23 Jan 2024 00:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970060; cv=none; b=QeFaxcl8dIRIn3mSnpm3RgQNXbiB43NfvOAMMGEizNNqScoqRSnQ5yNE9cEkR6gra7iOBVL0z05GsVq+mtkK+KKN5bzik/AIfuxq0W2ENlUB1FEwYS9ZJ3ZmgsdvjuE9GP5+XCaqyeUzhXK6YNvbEUuxvqaN5K+BHGKOGyFr75s=
+	t=1705970063; cv=none; b=XCKDU1yEFnRKQsx70AI/qdL0VOEp/jb2ah26ilNpNWhXffLeyoAYG/w+aLKPSbArL6c2qYnINs/L7wjmWyKw17pOL7PGFtzBZ7qaDnWaTzShiDt581ZwHpXmk+RY9j/qoS+/Nq6W2k5sZiLAylrArokaXb+sfaB2cmAlZiKLoEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970060; c=relaxed/simple;
-	bh=YpSnthyu7FYlNVxa0ewBwZiA0OwbikCbrm78ODeiJSM=;
+	s=arc-20240116; t=1705970063; c=relaxed/simple;
+	bh=lNa+fisM40NbeLCZMdbRZED1YfnKMoEvR/onE4IVfiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kXVwtXStehp+1iSlKanp6peotNGuVBHSBxE04/e/5vBWnyrtAmL9HdSRYn0x9N1fRu9zV0NAUbzUZARPfbJvXP9vPItrpWSXhibdJvSdDYK4TkelAuqoxx94cgxSh3mrgFYdDYRtHBxPJSy/73O8+dPeSh5sSWIf3KJoK+CR/6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QomAitF6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oHSrc+8AOE2dfKWwXczLCSjvbxIhJTXl2wqdRJr+oF11CJYFbsXfk92GHAaGEYl6QkQKRSC7Is2AltF4BNhFhy2f1cQeGBDc7LzHJrEZckRhlLo3RQ7Z+q4OAuFtiC5A4ior98oiedc0eXpf6Opo32MU1kPXmzjJbzKdTyZrSXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+JyY9kh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QomAitF6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030CFC433F1;
-	Tue, 23 Jan 2024 00:34:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+JyY9kh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F36C433C7;
+	Tue, 23 Jan 2024 00:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970060;
-	bh=YpSnthyu7FYlNVxa0ewBwZiA0OwbikCbrm78ODeiJSM=;
+	s=korg; t=1705970063;
+	bh=lNa+fisM40NbeLCZMdbRZED1YfnKMoEvR/onE4IVfiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QomAitF6XOI/f76GsFGges3MZuZsBQpWDn1988G+NO0laPMmWsETB8W1kY6dY0kjW
-	 /RAyEs+wudJKVD+zGXy0x6kn2BAdwubQCsSyymEGxPU0En01sGxM+3SUxC+zxXzuIR
-	 Zy70ubxjRJAnbmCBlNGPHbrNCT2f3VePrMgUrtbE=
+	b=O+JyY9khX7eG9VzdWnWva4Yw/guO0vKOSIw2vnbRsy4FxrhcwTXm4JfzWhIuu5wVk
+	 hikbZfBS3Du9/najUcPxJZCozn86VqnVaSmvyv0mYLlCuq0XSVW64r4UTvec1HHfYB
+	 Z+2YVLOpLla5rIOLX08BcIvPkqUWfKo5am5xH9q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Ravi Gunasekaran <r-gunasekaran@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 575/641] nvmet-tcp: Fix the H2C expected PDU len calculation
-Date: Mon, 22 Jan 2024 15:57:59 -0800
-Message-ID: <20240122235836.154484544@linuxfoundation.org>
+Subject: [PATCH 6.7 576/641] PCI: keystone: Fix race condition when initializing PHYs
+Date: Mon, 22 Jan 2024 15:58:00 -0800
+Message-ID: <20240122235836.189371778@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -46,59 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit 9a1abc24850eb759e36a2f8869161c3b7254c904 ]
+[ Upstream commit c12ca110c613a81cb0f0099019c839d078cd0f38 ]
 
-The nvmet_tcp_handle_h2c_data_pdu() function should take into
-consideration the possibility that the header digest and/or the data
-digests are enabled when calculating the expected PDU length, before
-comparing it to the value stored in cmd->pdu_len.
+The PCI driver invokes the PHY APIs using the ks_pcie_enable_phy()
+function. The PHY in this case is the Serdes. It is possible that the
+PCI instance is configured for two lane operation across two different
+Serdes instances, using one lane of each Serdes.
 
-Fixes: efa56305908b ("nvmet-tcp: Fix a kernel panic when host sends an invalid H2C PDU length")
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+In such a configuration, if the reference clock for one Serdes is
+provided by the other Serdes, it results in a race condition. After the
+Serdes providing the reference clock is initialized by the PCI driver by
+invoking its PHY APIs, it is not guaranteed that this Serdes remains
+powered on long enough for the PHY APIs based initialization of the
+dependent Serdes. In such cases, the PLL of the dependent Serdes fails
+to lock due to the absence of the reference clock from the former Serdes
+which has been powered off by the PM Core.
+
+Fix this by obtaining reference to the PHYs before invoking the PHY
+initialization APIs and releasing reference after the initialization is
+complete.
+
+Link: https://lore.kernel.org/linux-pci/20230927041845.1222080-1-s-vadapalli@ti.com
+Fixes: 49229238ab47 ("PCI: keystone: Cleanup PHY handling")
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Ravi Gunasekaran <r-gunasekaran@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/pci/controller/dwc/pci-keystone.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index e5a2cd9e8c13..80db64a4b09f 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -979,7 +979,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- {
- 	struct nvme_tcp_data_pdu *data = &queue->pdu.data;
- 	struct nvmet_tcp_cmd *cmd;
--	unsigned int plen;
-+	unsigned int exp_data_len;
- 
- 	if (likely(queue->nr_cmds)) {
- 		if (unlikely(data->ttag >= queue->nr_cmds)) {
-@@ -1002,9 +1002,13 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		return -EPROTO;
+diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+index 0def919f89fa..cf3836561316 100644
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -1218,7 +1218,16 @@ static int ks_pcie_probe(struct platform_device *pdev)
+ 		goto err_link;
  	}
  
--	plen = le32_to_cpu(data->hdr.plen);
-+	exp_data_len = le32_to_cpu(data->hdr.plen) -
-+			nvmet_tcp_hdgst_len(queue) -
-+			nvmet_tcp_ddgst_len(queue) -
-+			sizeof(*data);
++	/* Obtain references to the PHYs */
++	for (i = 0; i < num_lanes; i++)
++		phy_pm_runtime_get_sync(ks_pcie->phy[i]);
 +
- 	cmd->pdu_len = le32_to_cpu(data->data_length);
--	if (unlikely(cmd->pdu_len != (plen - sizeof(*data)) ||
-+	if (unlikely(cmd->pdu_len != exp_data_len ||
- 		     cmd->pdu_len == 0 ||
- 		     cmd->pdu_len > NVMET_TCP_MAXH2CDATA)) {
- 		pr_err("H2CData PDU len %u is invalid\n", cmd->pdu_len);
+ 	ret = ks_pcie_enable_phy(ks_pcie);
++
++	/* Release references to the PHYs */
++	for (i = 0; i < num_lanes; i++)
++		phy_pm_runtime_put_sync(ks_pcie->phy[i]);
++
+ 	if (ret) {
+ 		dev_err(dev, "failed to enable phy\n");
+ 		goto err_link;
 -- 
 2.43.0
 
