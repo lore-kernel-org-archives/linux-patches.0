@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1385112CDBD;
-	Tue, 23 Jan 2024 00:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF7A12CDB7;
+	Tue, 23 Jan 2024 00:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971479; cv=none; b=jXXl3uOMBmVYCQGA5nNQMff7PrzAMOjkzgkNX1dQjSkOQBt1H+KPEQ4YKwLG0itAz10oWAp/j72oqHlZp7MBUxRoVSw6DmiSc6DBaVAFSv5RD0AvZBB4DnBKSgUyww3IpZ+5jHpa8q9lU+D6+A7VRdt5KaMzyEbxbY3hjb720bM=
+	t=1705971480; cv=none; b=iVP3WFUXEeE2fW364ka/OnjstvRbyvUFRThG498ryelMWNYgdNR8jaPy7BiroQkmEPUnNdsTR2ygBl6LvEs2bLjbPe+cK5dl6Jv0XuRSLmt2No+myBSnpMTecTABaBU4m77iPO2hp4Mkrr0bH57b5fhjEeJ+ARzjztBEx5pbmBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971479; c=relaxed/simple;
-	bh=04iJCYRbLQR65wA+/Ylx332JvKn5DdsIf0ygInjXMyM=;
+	s=arc-20240116; t=1705971480; c=relaxed/simple;
+	bh=OKdIKxi9zOge00vowgo/2fJ+zkijyWqjPlycb9f5oOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H9KA6TRsVFmY644/cy+sJVSyZBn0Sdwv7t5EJT4MCZZdXJT+JFCC/MahmvCVK0C+brJhW1lEKLY9zayGep6fLjg/GIIn+aEau+5xjq6IOHTDeuOc4vawNpDHiZKsmub0zGUD21M3IAHH1NCaM8A2Xwvn8nGZmtCmNk509LMnBTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaUsrJXN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mGbac9bHvIbviqtkqMy7nkTnoEInQT9+vPho1LtTHq+LhOJNozFDAC6aPbZx47h+vESfOvGS1GuFmDSxWVbjygUX/W63sUuIwQ2+VK7tmQ8rF0k7i2meSFkVyuQwngQ4rQ1KLtym+2TlxKPF3R6hdIHQIz63GKdyCswJT5k+3ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+5qV1XD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaUsrJXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F85C433C7;
-	Tue, 23 Jan 2024 00:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+5qV1XD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D95C433C7;
+	Tue, 23 Jan 2024 00:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971478;
-	bh=04iJCYRbLQR65wA+/Ylx332JvKn5DdsIf0ygInjXMyM=;
+	s=korg; t=1705971480;
+	bh=OKdIKxi9zOge00vowgo/2fJ+zkijyWqjPlycb9f5oOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aaUsrJXN1H55pqiCMSgUrT5we9I+OowSAhZY7FLdIZej/aTzPTPdDZ/XZg2hcfJWm
-	 gyFlOEOi6kbQIpNJlCSrbD0woSbCstkOBDgzhvaW4cnFMLtPIqj4JU5Wwksy2Dt4DR
-	 qyiLssmyhP5W6s2i/8JbM6xNGGqBDNzjklfm0p3s=
+	b=m+5qV1XDqHvDcuGwwGV2V3DXTt6mzVdmzgDKrGq77ik8+RXMS+rTaOMvq2m78iTD6
+	 SRzqFJTbaoO+imJ50wo1tAMUoLT0+NDW17WTuwSBuUmmmXxygz9rTx5591ngdQVeTF
+	 wSQRo0k6eCZazuFr6iLNhhzFURMfk1K4klQ2Tq3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	David Howells <dhowells@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Petr Vorel <pvorel@suse.cz>
-Subject: [PATCH 6.1 249/417] keys, dns: Fix size check of V1 server-list header
-Date: Mon, 22 Jan 2024 15:56:57 -0800
-Message-ID: <20240122235800.504467747@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 158/286] drm/msm/dsi: Use pm_runtime_resume_and_get to prevent refcnt leaks
+Date: Mon, 22 Jan 2024 15:57:44 -0800
+Message-ID: <20240122235738.256550497@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-commit acc657692aed438e9931438f8c923b2b107aebf9 upstream.
+[ Upstream commit 3d07a411b4faaf2b498760ccf12888f8de529de0 ]
 
-Fix the size check added to dns_resolver_preparse() for the V1 server-list
-header so that it doesn't give EINVAL if the size supplied is the same as
-the size of the header struct (which should be valid).
+This helper has been introduced to avoid programmer errors (missing
+_put calls leading to dangling refcnt) when using pm_runtime_get, use it.
 
-This can be tested with:
+While at it, start checking the return value.
 
-        echo -n -e '\0\0\01\xff\0\0' | keyctl padd dns_resolver desc @p
-
-which will give "add_key: Invalid argument" without this fix.
-
-Fixes: 1997b3cb4217 ("keys, dns: Fix missing size check of V1 server-list header")
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-Link: https://lore.kernel.org/r/ZZ4fyY4r3rqgZL+4@xpf.sh.intel.com/
-Signed-off-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Petr Vorel <pvorel@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 5c8290284402 ("drm/msm/dsi: Split PHY drivers to separate files")
+Patchwork: https://patchwork.freedesktop.org/patch/543350/
+Link: https://lore.kernel.org/r/20230620-topic-dsiphy_rpm-v2-1-a11a751f34f0@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dns_resolver/dns_key.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/dns_resolver/dns_key.c
-+++ b/net/dns_resolver/dns_key.c
-@@ -104,7 +104,7 @@ dns_resolver_preparse(struct key_prepars
- 		const struct dns_server_list_v1_header *v1;
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+index 2e0be85ec394..10eacfd95fb1 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+@@ -558,7 +558,9 @@ static int dsi_phy_enable_resource(struct msm_dsi_phy *phy)
+ 	struct device *dev = &phy->pdev->dev;
+ 	int ret;
  
- 		/* It may be a server list. */
--		if (datalen <= sizeof(*v1))
-+		if (datalen < sizeof(*v1))
- 			return -EINVAL;
+-	pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret)
++		return ret;
  
- 		v1 = (const struct dns_server_list_v1_header *)data;
+ 	ret = clk_prepare_enable(phy->ahb_clk);
+ 	if (ret) {
+-- 
+2.43.0
+
 
 
