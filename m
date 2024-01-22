@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FAB144609;
-	Tue, 23 Jan 2024 00:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3756D144609;
+	Tue, 23 Jan 2024 00:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969534; cv=none; b=CWta+AdquvecGR4FQOmct8ot3CZYdCOb0fxKrMDJmJKvWUwYZoYrGlnj1IhYcqHU+0x2wol2WsNlCTIbOXmFNINjy1IqeHAlp9ppprTyZ9boF1IVmnDG9EPeHAkYYp+ryanwdcbXb1CZKNLy/iTC8O4R+C+HfdJgquEUgIyRH2k=
+	t=1705969535; cv=none; b=alto1LF1s2xn9XzhdnJ9XNlAMW9pcJ+IBuKVHrKLCAb1pPGzFgZqLhkpiZTQgVJNMIILh02bpJDMJOPmSkbJ4AsMIMZFXTmSUwok7fGEBOSbFOKevkXEPJ0xrLOUFgcgI4DzhIfkubGvVMJl1RU6BnDNKjrvLMZIF2LfChsdXKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969534; c=relaxed/simple;
-	bh=xQH5g176OSWTOmxHC+vUzRLVjK7mBATMaW8d/VP2GAY=;
+	s=arc-20240116; t=1705969535; c=relaxed/simple;
+	bh=48W56v2J8+/Igg6IEoCHUvXVirIF8tNO2Zxr+K1OyHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QNIt4wtdGIGVYxyhYPVylsnkdeahv+LcE1dBa+cBgoB3kjrVM7a5sdlCDb+tVH6GGdJdwN30Cc7rBYoNzyzt1Somw9gVz6INYvQGfznqX6j7yEpnZZINHEje/KhKbXmhvhOZS66b4uTJ8hd+kY8UbzxVaIYH7HjJ4X6WKH9qako=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N020bz3u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W6xBAjYSnFL9fCqaK+cmP54dEHpTeAq5WZffAnQ3lq2bbqu2B6WtdCQpZ4K6+T2xgch26uMfxmsKS0JpojxVu98qZQwafkCu1+b1MlE+hJlXBvX22MFO1X/U1zx4glLaq5eyEJ+VWmL8EPKMyH2Juc66U2VrPD/vzPe4UGoEcnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZic3fRE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N020bz3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D76C43394;
-	Tue, 23 Jan 2024 00:25:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZic3fRE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CA3C43394;
+	Tue, 23 Jan 2024 00:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969534;
-	bh=xQH5g176OSWTOmxHC+vUzRLVjK7mBATMaW8d/VP2GAY=;
+	s=korg; t=1705969535;
+	bh=48W56v2J8+/Igg6IEoCHUvXVirIF8tNO2Zxr+K1OyHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N020bz3ubgVzKTMOfcNYILcTVq7w4uOjxuoCc96wscSt+a5fHMVpjhqoUXMTXQFl6
-	 /TV+9OJP8EYwidoaBzvbY1JfBTYygaXlS82Q52p7TCG/+Q/k7r7yxXYUBCb0698zeK
-	 v1XmXxg4AIpkZki907SBQNmLYn9JyLBaz7eE5l1w=
+	b=fZic3fREHdLTDZ3KswfuTBb0TpCD7Dafoy635g/ERKDxU58zApQWDdvhKRugvlAbj
+	 5UL7dCM41CcaMa5Z3pn6wQp3lSmMG/UkLavZN0wVP6JQFVYpgr7DNVaP9RqxOzWCjf
+	 wKmIc0uxV8RdqZpRE3236LTfzLyL/HVVfxkEaGdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehdi Djait <mehdi.djait@bootlin.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Tommaso Merciai <tomm.merciai@gmail.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 309/641] media: dt-bindings: media: rkisp1: Fix the port description for the parallel interface
-Date: Mon, 22 Jan 2024 15:53:33 -0800
-Message-ID: <20240122235827.581693949@linuxfoundation.org>
+Subject: [PATCH 6.7 310/641] media: rkisp1: Fix media device memory leak
+Date: Mon, 22 Jan 2024 15:53:34 -0800
+Message-ID: <20240122235827.609827841@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,51 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mehdi Djait <mehdi.djait@bootlin.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 25bf28b25a2afa1864b7143259443160d9163ea0 ]
+[ Upstream commit 452f604a4683654f4d9472b3126d8da61d748443 ]
 
-The bus-type belongs to the endpoint's properties and should therefore
-be moved.
+Add missing calls to media_device_cleanup() to fix memory leak.
 
-Link: https://lore.kernel.org/r/20231115164407.99876-1-mehdi.djait@bootlin.com
+Link: https://lore.kernel.org/r/20231122-rkisp-fixes-v2-1-78bfb63cdcf8@ideasonboard.com
 
-Fixes: 6a0eaa25bf36 ("media: dt-bindings: media: rkisp1: Add port for parallel interface")
-Signed-off-by: Mehdi Djait <mehdi.djait@bootlin.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: d65dd85281fb ("media: staging: rkisp1: add Rockchip ISP1 base driver")
+Reviewed-by: Tommaso Merciai <tomm.merciai@gmail.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/media/rockchip-isp1.yaml      | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/media/rockchip-isp1.yaml b/Documentation/devicetree/bindings/media/rockchip-isp1.yaml
-index e466dff8286d..afcaa427d48b 100644
---- a/Documentation/devicetree/bindings/media/rockchip-isp1.yaml
-+++ b/Documentation/devicetree/bindings/media/rockchip-isp1.yaml
-@@ -90,15 +90,16 @@ properties:
-         description: connection point for input on the parallel interface
+diff --git a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
+index c41abd2833f1..894d5afaff4e 100644
+--- a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
++++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
+@@ -582,7 +582,7 @@ static int rkisp1_probe(struct platform_device *pdev)
  
-         properties:
--          bus-type:
--            enum: [5, 6]
--
-           endpoint:
-             $ref: video-interfaces.yaml#
-             unevaluatedProperties: false
+ 	ret = v4l2_device_register(rkisp1->dev, &rkisp1->v4l2_dev);
+ 	if (ret)
+-		goto err_pm_runtime_disable;
++		goto err_media_dev_cleanup;
  
--        required:
--          - bus-type
-+            properties:
-+              bus-type:
-+                enum: [5, 6]
+ 	ret = media_device_register(&rkisp1->media_dev);
+ 	if (ret) {
+@@ -617,6 +617,8 @@ static int rkisp1_probe(struct platform_device *pdev)
+ 	media_device_unregister(&rkisp1->media_dev);
+ err_unreg_v4l2_dev:
+ 	v4l2_device_unregister(&rkisp1->v4l2_dev);
++err_media_dev_cleanup:
++	media_device_cleanup(&rkisp1->media_dev);
+ err_pm_runtime_disable:
+ 	pm_runtime_disable(&pdev->dev);
+ 	return ret;
+@@ -637,6 +639,8 @@ static void rkisp1_remove(struct platform_device *pdev)
+ 	media_device_unregister(&rkisp1->media_dev);
+ 	v4l2_device_unregister(&rkisp1->v4l2_dev);
+ 
++	media_device_cleanup(&rkisp1->media_dev);
 +
-+            required:
-+              - bus-type
+ 	pm_runtime_disable(&pdev->dev);
+ }
  
-     anyOf:
-       - required:
 -- 
 2.43.0
 
