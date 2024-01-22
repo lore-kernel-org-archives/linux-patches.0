@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B44C651B3;
-	Tue, 23 Jan 2024 00:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6708C651AD;
+	Tue, 23 Jan 2024 00:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971570; cv=none; b=InUKi0gW9xcpfHogAXSFrPp3+HnTM9S30vDVWXBjQmVoNJutyHgvUcUqP51ZHMAP4JOazcYKG4JynRybmCBthfo6aAHENhQXNvBSSFy2enNk/P50je3Ix29xuDg/v6eFkxrFiwGJZcfYKQMg96hGKnkOOmfmawRYH8pedIkbr5c=
+	t=1705971572; cv=none; b=YIUQvbxjgILLhQOr35hBR6LsepihVFEr6GuW4hcVxvLNc44+ExRXR7lvj+nTXSZleae6qqs0JnRP6WiSHN5OiWGJBNhxh6DP2vNtHkMenX8bhrJHHRiOC/UHzhNkzrypgbVuoQZfNkxwW8m6p8e3oImt59as3+5gH6LhZiJpKjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971570; c=relaxed/simple;
-	bh=xCJbNeqg/40B0MN/xR4oyY3EYnZd7nsKGFdmVO4PGCI=;
+	s=arc-20240116; t=1705971572; c=relaxed/simple;
+	bh=avsU0DXmb3q6D0Dv2uzRP7T7OP3qJilcq0fVALbfYt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nVzXP3zhOEQlZDkxGMIV8O7A31GJ1eRu6ATOsLY3DpHAu5xbccEy/fV+F85XHqFHx1DSdbmDiVwmYSknpySGZIH0TQMPcjbYm90YkfnATSShUUe8qQKgW2AIC+jdrA9trWcccK+ApP53jJDCHBNdonWuXglYbzANFf5T+A9d9Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuqSYHNT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=daAUzWXPgg+cYb3VLfsbIvqn31rOTCVdxhuWco9n2xVkptzwqNJFemvLcuZmAt/OeTgki18LfFnc4RYVV2MRBeYn0c5tYCLJt4RLHT3n5J9lS41cPl1KfqcQX8CxHDVNLPX9O+QKmATiQYhpAONszHSFsgAQ23Hi/dz6kxHOGvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlsjpQ9J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuqSYHNT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC67C433C7;
-	Tue, 23 Jan 2024 00:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlsjpQ9J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24ED0C433F1;
+	Tue, 23 Jan 2024 00:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971570;
-	bh=xCJbNeqg/40B0MN/xR4oyY3EYnZd7nsKGFdmVO4PGCI=;
+	s=korg; t=1705971572;
+	bh=avsU0DXmb3q6D0Dv2uzRP7T7OP3qJilcq0fVALbfYt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MuqSYHNTBL8WyYuIDNVYs0KQVyUCTiBHzMxFnB7/BeW+zauCnuf5+d13LvscgDYHz
-	 jNUbQEPLfVPVERNHoFmB0X1zI5NUvCIFmbagzOgRR3m6D9tKw/zrkP3cSjTjh9B8uU
-	 nIHct5QwkNyszN+EMhU34heDdBQEfIFhI4QW1YRE=
+	b=UlsjpQ9JgCBJHsBClS+odLee6HO9XitnlHWbTZbwNRFQOsyAabKirZ21SXsGKeiuh
+	 fpgr+p8UnCIw+G4wNKYr7vpeY8FqL7XwMx6NkmSDD9T4q6NZzpW5Daz9g7yO8bWI5g
+	 mO/d2Ofi5bG17xkngKBU4EgXM9b2eSV/ZYny2PEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Subject: [PATCH 6.1 270/417] serial: core: fix sanitizing check for RTS settings
-Date: Mon, 22 Jan 2024 15:57:18 -0800
-Message-ID: <20240122235801.205865967@linuxfoundation.org>
+	Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 178/286] drivers: clk: zynqmp: calculate closest mux rate
+Date: Mon, 22 Jan 2024 15:58:04 -0800
+Message-ID: <20240122235739.017144952@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,83 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
 
-commit 4afeced55baa391490b61ed9164867e2927353ed upstream.
+[ Upstream commit b782921ddd7f84f524723090377903f399fdbbcb ]
 
-Among other things uart_sanitize_serial_rs485() tests the sanity of the RTS
-settings in a RS485 configuration that has been passed by userspace.
-If RTS-on-send and RTS-after-send are both set or unset the configuration
-is adjusted and RTS-after-send is disabled and RTS-on-send enabled.
+Currently zynqmp clock driver is not calculating closest mux rate and
+because of that Linux is not setting proper frequency for CPU and
+not able to set given frequency for dynamic frequency scaling.
 
-This however makes only sense if both RTS modes are actually supported by
-the driver.
+E.g., In current logic initial acpu clock parent and frequency as below
+apll1                  0    0    0  2199999978    0     0  50000      Y
+    acpu0_mux          0    0    0  2199999978    0     0  50000      Y
+        acpu0_idiv1    0    0    0  2199999978    0     0  50000      Y
+            acpu0      0    0    0  2199999978    0     0  50000      Y
 
-With commit be2e2cb1d281 ("serial: Sanitize rs485_struct") the code does
-take the driver support into account but only checks if one of both RTS
-modes are supported. This may lead to the errorneous result of RTS-on-send
-being set even if only RTS-after-send is supported.
+After changing acpu frequency to 549999994 Hz using CPU freq scaling its
+selecting incorrect parent which is not closest frequency.
+rpll_to_xpd            0    0    0  1599999984    0     0  50000      Y
+    acpu0_mux          0    0    0  1599999984    0     0  50000      Y
+        acpu0_div1     0    0    0   533333328    0     0  50000      Y
+            acpu0      0    0    0   533333328    0     0  50000      Y
 
-Fix this by changing the implemented logic: First clear all unsupported
-flags in the RS485 configuration, then adjust an invalid RTS setting by
-taking into account which RTS mode is supported.
+Parent should remain same since 549999994 = 2199999978 / 4.
 
-Cc:  <stable@vger.kernel.org>
-Fixes: be2e2cb1d281 ("serial: Sanitize rs485_struct")
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Link: https://lore.kernel.org/r/20240103061818.564-4-l.sanfilippo@kunbus.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+So use __clk_mux_determine_rate_closest() generic function to calculate
+closest rate for mux clock. After this change its selecting correct
+parent and correct clock rate.
+apll1                  0    0    0  2199999978    0     0  50000      Y
+    acpu0_mux          0    0    0  2199999978    0     0  50000      Y
+        acpu0_div1     0    0    0   549999995    0     0  50000      Y
+            acpu0      0    0    0   549999995    0     0  50000      Y
+
+Fixes: 3fde0e16d016 ("drivers: clk: Add ZynqMP clock driver")
+Signed-off-by: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
+Link: https://lore.kernel.org/r/20231129112916.23125-2-jay.buddhabhatti@amd.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial_core.c |   28 ++++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ drivers/clk/zynqmp/clk-mux-zynqmp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -1353,19 +1353,27 @@ static void uart_sanitize_serial_rs485(s
- 		return;
- 	}
+diff --git a/drivers/clk/zynqmp/clk-mux-zynqmp.c b/drivers/clk/zynqmp/clk-mux-zynqmp.c
+index 06194149be83..46ff5cb733ee 100644
+--- a/drivers/clk/zynqmp/clk-mux-zynqmp.c
++++ b/drivers/clk/zynqmp/clk-mux-zynqmp.c
+@@ -83,7 +83,7 @@ static int zynqmp_clk_mux_set_parent(struct clk_hw *hw, u8 index)
+ static const struct clk_ops zynqmp_clk_mux_ops = {
+ 	.get_parent = zynqmp_clk_mux_get_parent,
+ 	.set_parent = zynqmp_clk_mux_set_parent,
+-	.determine_rate = __clk_mux_determine_rate,
++	.determine_rate = __clk_mux_determine_rate_closest,
+ };
  
-+	rs485->flags &= supported_flags;
-+
- 	/* Pick sane settings if the user hasn't */
--	if ((supported_flags & (SER_RS485_RTS_ON_SEND|SER_RS485_RTS_AFTER_SEND)) &&
--	    !(rs485->flags & SER_RS485_RTS_ON_SEND) ==
-+	if (!(rs485->flags & SER_RS485_RTS_ON_SEND) ==
- 	    !(rs485->flags & SER_RS485_RTS_AFTER_SEND)) {
--		dev_warn_ratelimited(port->dev,
--			"%s (%d): invalid RTS setting, using RTS_ON_SEND instead\n",
--			port->name, port->line);
--		rs485->flags |= SER_RS485_RTS_ON_SEND;
--		rs485->flags &= ~SER_RS485_RTS_AFTER_SEND;
--		supported_flags |= SER_RS485_RTS_ON_SEND|SER_RS485_RTS_AFTER_SEND;
--	}
-+		if (supported_flags & SER_RS485_RTS_ON_SEND) {
-+			rs485->flags |= SER_RS485_RTS_ON_SEND;
-+			rs485->flags &= ~SER_RS485_RTS_AFTER_SEND;
- 
--	rs485->flags &= supported_flags;
-+			dev_warn_ratelimited(port->dev,
-+				"%s (%d): invalid RTS setting, using RTS_ON_SEND instead\n",
-+				port->name, port->line);
-+		} else {
-+			rs485->flags |= SER_RS485_RTS_AFTER_SEND;
-+			rs485->flags &= ~SER_RS485_RTS_ON_SEND;
-+
-+			dev_warn_ratelimited(port->dev,
-+				"%s (%d): invalid RTS setting, using RTS_AFTER_SEND instead\n",
-+				port->name, port->line);
-+		}
-+	}
- 
- 	uart_sanitize_serial_rs485_delays(port, rs485);
- 
+ static const struct clk_ops zynqmp_clk_mux_ro_ops = {
+-- 
+2.43.0
+
 
 
