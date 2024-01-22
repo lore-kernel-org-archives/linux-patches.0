@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446F97A706;
-	Tue, 23 Jan 2024 02:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6F477636;
+	Tue, 23 Jan 2024 02:05:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975547; cv=none; b=MkXYsgsuhyqQgPLIQxZ+foJPYZWKk8dRadN2DQNTCdNqtVgn+OCEYshfcXVwul3AsWn5YVex8jHpb3TR5slmF1X7REGoRnUoSEXqW+io6VP6HvyRU512dh55ySOJrLWLPbBIOAGhdOQx5B6ucRE6xToQrUMtIg5Pl5ftXV2w13Q=
+	t=1705975548; cv=none; b=ah1qBM0rNwYx6hlOlvEN6Gtu2tJSrVYYErKcRocl4sDQ29oju+1B280cGD5cFvrpc+yoyI/eK+RDDWJAKyx2xunK0N6m3z0YahYURTY+SCkxxFUxtRh7PKZkOqN8zzZsdxKEuxusOD4/lbTM02TgLihxMxFdhN93PeC8k/6Ffpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975547; c=relaxed/simple;
-	bh=pD+19n2ZrYi3N06Y/zsHOgIkZZJlrz0wqubDaLzR++o=;
+	s=arc-20240116; t=1705975548; c=relaxed/simple;
+	bh=Q23i1k3wd2LNLg7ozlWou0iyRCQw3bfbmDNps2Us6DQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r956rtZKBMKhXVLDJcSiJhTMwnDSeo5tBowmE/EZ4BYb1rZzExpcWx7x1jdlem4oNYiccm3V24nV5IQO1APSavM4ASVCb9XA8oPO++tPOyTces/nOA4scE+be2UzOSYpnyOxAGmZFzQ81LguA7r5NJUt9GJZQSC1Uab7nOriFN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wlq8hhaO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WC2HXj2tw5PG2dhp0I4Jld6fQqgv+qFyOIiQ227r86DsGOqZbFKgRt5lLyLBZN793ZFGP/9brQfQVHrnSX1JPKWfhUaNAQ5U040+OYlo5GRfvkgCbfG8WkjHbE5M2StpQv6QH+6UwjisxnrBRYgqyZANJ6IsYJdZL0sqVA/PTIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSb+uk3Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wlq8hhaO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0169FC433F1;
-	Tue, 23 Jan 2024 02:05:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSb+uk3Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B62C433B1;
+	Tue, 23 Jan 2024 02:05:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975547;
-	bh=pD+19n2ZrYi3N06Y/zsHOgIkZZJlrz0wqubDaLzR++o=;
+	s=korg; t=1705975548;
+	bh=Q23i1k3wd2LNLg7ozlWou0iyRCQw3bfbmDNps2Us6DQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wlq8hhaOQl2PvqhTLZYdDJxn/65UQGj5j81fWXYQu4zAUEIUre5LzfVZka+gWe5Ay
-	 GVGoCpstk60RJwJvNQ7jpSA3abImHdJ1X6LRSfmFXsqdtVSPvbSFt5yJqOncrOZo8s
-	 X4OlOucHeOirAZFqlA5QZSekEO3s6unXWkfWsXo4=
+	b=RSb+uk3Yc3oRynR/3QMcmihM78pmsMR7mYMdv6leU6rLkfI5v4UCPypBQPUYdooM6
+	 OfJ1pdYOFEWhRteG4ZODxfJaFxdDTeM6xk5bVTeTQKU1Uf/7jtlYgdtN2cYKM+QW9E
+	 w2kQGu+/+z5bjpeMMAYBPKLzUI/1Q98R+NwJXGp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Douglas Anderson <dianders@chromium.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 464/583] usb: core: Allow subclassed USB drivers to override usb_choose_configuration()
-Date: Mon, 22 Jan 2024 15:58:35 -0800
-Message-ID: <20240122235826.181781624@linuxfoundation.org>
+Subject: [PATCH 6.6 491/583] PCI: epf-mhi: Fix the DMA data direction of dma_unmap_single()
+Date: Mon, 22 Jan 2024 15:59:02 -0800
+Message-ID: <20240122235827.048101573@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -45,92 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit a87b8e3be926af0fc3b9b1af42b1127bd1ff077c ]
+[ Upstream commit 327ec5f70609cf00c6f961073c01857555c6a8eb ]
 
-For some USB devices we might want to do something different for
-usb_choose_configuration(). One example here is the r8152 driver where
-we want to end up using the vendor driver with the preferred
-interface.
+In the error path of pci_epf_mhi_edma_write() function, the DMA data
+direction passed (DMA_FROM_DEVICE) doesn't match the actual direction used
+for the data transfer. Fix it by passing the correct one (DMA_TO_DEVICE).
 
-The r8152 driver tried to make things work by implementing a USB
-generic_subclass driver and then overriding the normal config
-selection after it happened. This is less than ideal and also caused
-breakage if someone deauthorized and re-authorized the USB device
-because the USB core ended up going back to it's default logic for
-choosing the best config. I made an attempt to fix this [1] but it was
-a bit ugly.
-
-Let's do this better and allow USB generic_subclass drivers to
-override usb_choose_configuration().
-
-[1] https://lore.kernel.org/r/20231130154337.1.Ie00e07f07f87149c9ce0b27ae4e26991d307e14b@changeid
-
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20231201102946.v2.2.Iade5fa31997f1a0ca3e1dec0591633b02471df12@changeid
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: aa4f2b3e418e ("r8152: Choose our USB config with choose_configuration() rather than probe()")
+Fixes: 7b99aaaddabb ("PCI: epf-mhi: Add eDMA support")
+Reviewed-by: Krzysztof Wilczyński <kw@linux.com>
+Link: https://lore.kernel.org/r/20231214063328.40657-1-manivannan.sadhasivam@linaro.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/generic.c | 7 +++++++
- include/linux/usb.h        | 6 ++++++
- 2 files changed, 13 insertions(+)
+ drivers/pci/endpoint/functions/pci-epf-mhi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/core/generic.c b/drivers/usb/core/generic.c
-index 740342a2812a..dcb897158228 100644
---- a/drivers/usb/core/generic.c
-+++ b/drivers/usb/core/generic.c
-@@ -59,10 +59,17 @@ int usb_choose_configuration(struct usb_device *udev)
- 	int num_configs;
- 	int insufficient_power = 0;
- 	struct usb_host_config *c, *best;
-+	struct usb_device_driver *udriver = to_usb_device_driver(udev->dev.driver);
+diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+index ec5f4a38178b..6dc918a8a023 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
++++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+@@ -405,7 +405,7 @@ static int pci_epf_mhi_edma_write(struct mhi_ep_cntrl *mhi_cntrl,
+ 	}
  
- 	if (usb_device_is_owned(udev))
- 		return 0;
+ err_unmap:
+-	dma_unmap_single(dma_dev, src_addr, buf_info->size, DMA_FROM_DEVICE);
++	dma_unmap_single(dma_dev, src_addr, buf_info->size, DMA_TO_DEVICE);
+ err_unlock:
+ 	mutex_unlock(&epf_mhi->lock);
  
-+	if (udriver->choose_configuration) {
-+		i = udriver->choose_configuration(udev);
-+		if (i >= 0)
-+			return i;
-+	}
-+
- 	best = NULL;
- 	c = udev->config;
- 	num_configs = udev->descriptor.bNumConfigurations;
-diff --git a/include/linux/usb.h b/include/linux/usb.h
-index a21074861f91..bfd77ece0643 100644
---- a/include/linux/usb.h
-+++ b/include/linux/usb.h
-@@ -1264,6 +1264,9 @@ struct usb_driver {
-  *	module is being unloaded.
-  * @suspend: Called when the device is going to be suspended by the system.
-  * @resume: Called when the device is being resumed by the system.
-+ * @choose_configuration: If non-NULL, called instead of the default
-+ *	usb_choose_configuration(). If this returns an error then we'll go
-+ *	on to call the normal usb_choose_configuration().
-  * @dev_groups: Attributes attached to the device that will be created once it
-  *	is bound to the driver.
-  * @drvwrap: Driver-model core structure wrapper.
-@@ -1287,6 +1290,9 @@ struct usb_device_driver {
- 
- 	int (*suspend) (struct usb_device *udev, pm_message_t message);
- 	int (*resume) (struct usb_device *udev, pm_message_t message);
-+
-+	int (*choose_configuration) (struct usb_device *udev);
-+
- 	const struct attribute_group **dev_groups;
- 	struct usbdrv_wrap drvwrap;
- 	const struct usb_device_id *id_table;
 -- 
 2.43.0
 
