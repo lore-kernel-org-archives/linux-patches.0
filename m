@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6E57318E;
-	Tue, 23 Jan 2024 02:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B9A6A024;
+	Tue, 23 Jan 2024 02:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975445; cv=none; b=hV+CSGrktc2HNbLeQyduGmcRYnzMZqI0vDWtLilOaVtrDVNwZmOlovWpaMod6MDL1h0z23NAW2k3wpZAla+54yvTZrf0+JqnmXs2pGgvTKgop5KXNg4A+v3R6c8wXrIdIcQTdAWmyFLkmQxMvKwG2DvwcbrCKxdBbDxFWcg0M/g=
+	t=1705975446; cv=none; b=qDFALPHumfGB58Egg+3OkAtSVb1OhTU4RdH672e8CLi/5pO6A3oqm5/JsqZ2VzZfTAGn5aKToLf9+H32AenZYUfOa5o94WVLQFCwq9DB6S9szdGx35YIs+XOuig5esrHI9LFZoPU02qzyQm3vIAOQN4w4oMFVRoLF/y3EAqot18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975445; c=relaxed/simple;
-	bh=VEqKbTbwaeGRclxakFjwulsdPouKcvgMvgGpM/fIe0s=;
+	s=arc-20240116; t=1705975446; c=relaxed/simple;
+	bh=EKTMnDVybyCKS31nQfpaKx5ddb/EGbcOyytN9/CyQVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HnefE5AcvVSUUGRPjF2LReVaohdP0pyBj4G26qxZDNGzVc9tQvK/GKx0f1BQwGJhJskw3dC4ye9j8xv7bsTDpdAqUQnRjMetHA92q4mOWuYMOVddiTRwHmt45FYY4sEEsLu+OqQ2BCmUTpyPSiHGVeJgCfVorLYKD0+1l0egxk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QBU7bgX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H+rpt9Wmfp4/usrMi9u2ubkONQeooz8OztFu1SuHp7hq/16tc40T1qTpq3S7c+weEweUltlMG7mQ4TgxGCrewwh5HZs/+DCKGLl9gsInYIubzYpjrOroSoz2XKqwkdYy1oPXpcv6KNle3Yg2lT6JvjNNJKpyGIc4zmz3xWbTY6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoJDVQ+5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QBU7bgX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFD5C433F1;
-	Tue, 23 Jan 2024 02:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoJDVQ+5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A160C43399;
+	Tue, 23 Jan 2024 02:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975445;
-	bh=VEqKbTbwaeGRclxakFjwulsdPouKcvgMvgGpM/fIe0s=;
+	s=korg; t=1705975446;
+	bh=EKTMnDVybyCKS31nQfpaKx5ddb/EGbcOyytN9/CyQVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0QBU7bgXjX9Hzugj+x3k10TKuKggPzboZUWXQ1wuKpllqrm/C7cZHRYsRJhLSLbd2
-	 gyK1HZZG2hm1ycHRBqcUWaNUBgQYuC2bMMCh7PbPYTVWaJHe+vxwqU/9o4YngZiYEO
-	 NWSNq4Gvoiwomp0Cm/B/RAVrtuLRhqYsOxQ4a2nk=
+	b=HoJDVQ+5RkqH/1YjvqyEPXwogw9BWnXPktamvSsPV+1lUDJlDN/eD/fJt5pM/sdiU
+	 Q5i+nbybvoesSs5VC5DABz80J2mLyYvFddyVjz8kbzYPUGPGol2A96aYSZxp3oaicg
+	 rliR/KxWRDww2k6UHXa4gKBXX+I8Mu8Y6ahamo3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+8b23309d5788a79d3eea@syzkaller.appspotmail.com,
+	syzbot+004c1e0fced2b4bc3dcc@syzkaller.appspotmail.com,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 402/583] block: Remove special-casing of compound pages
-Date: Mon, 22 Jan 2024 15:57:33 -0800
-Message-ID: <20240122235824.286907217@linuxfoundation.org>
+Subject: [PATCH 6.6 403/583] block: Fix iterating over an empty bio with bio_for_each_folio_all
+Date: Mon, 22 Jan 2024 15:57:34 -0800
+Message-ID: <20240122235824.315022136@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,132 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit 1b151e2435fc3a9b10c8946c6aebe9f3e1938c55 upstream.
+commit 7bed6f3d08b7af27b7015da8dc3acf2b9c1f21d7 upstream.
 
-The special casing was originally added in pre-git history; reproducing
-the commit log here:
+If the bio contains no data, bio_first_folio() calls page_folio() on a
+NULL pointer and oopses.  Move the test that we've reached the end of
+the bio from bio_next_folio() to bio_first_folio().
 
-> commit a318a92567d77
-> Author: Andrew Morton <akpm@osdl.org>
-> Date:   Sun Sep 21 01:42:22 2003 -0700
->
->     [PATCH] Speed up direct-io hugetlbpage handling
->
->     This patch short-circuits all the direct-io page dirtying logic for
->     higher-order pages.  Without this, we pointlessly bounce BIOs up to
->     keventd all the time.
-
-In the last twenty years, compound pages have become used for more than
-just hugetlb.  Rewrite these functions to operate on folios instead
-of pages and remove the special case for hugetlbfs; I don't think
-it's needed any more (and if it is, we can put it back in as a call
-to folio_test_hugetlb()).
-
-This was found by inspection; as far as I can tell, this bug can lead
-to pages used as the destination of a direct I/O read not being marked
-as dirty.  If those pages are then reclaimed by the MM without being
-dirtied for some other reason, they won't be written out.  Then when
-they're faulted back in, they will not contain the data they should.
-It'll take a pretty unusual setup to produce this problem with several
-races all going the wrong way.
-
-This problem predates the folio work; it could for example have been
-triggered by mmaping a THP in tmpfs and using that as the target of an
-O_DIRECT read.
-
-Fixes: 800d8c63b2e98 ("shmem: add huge pages support")
-Cc:  <stable@vger.kernel.org>
+Reported-by: syzbot+8b23309d5788a79d3eea@syzkaller.appspotmail.com
+Reported-by: syzbot+004c1e0fced2b4bc3dcc@syzkaller.appspotmail.com
+Fixes: 640d1930bef4 ("block: Add bio_for_each_folio_all()")
+Cc: stable@vger.kernel.org
 Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://lore.kernel.org/r/20240116212959.3413014-1-willy@infradead.org
+[axboe: add unlikely() to error case]
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bio.c |   46 ++++++++++++++++++++++++----------------------
- 1 file changed, 24 insertions(+), 22 deletions(-)
+ include/linux/bio.h |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -1145,13 +1145,22 @@ EXPORT_SYMBOL(bio_add_folio);
- 
- void __bio_release_pages(struct bio *bio, bool mark_dirty)
+--- a/include/linux/bio.h
++++ b/include/linux/bio.h
+@@ -286,6 +286,11 @@ static inline void bio_first_folio(struc
  {
--	struct bvec_iter_all iter_all;
--	struct bio_vec *bvec;
-+	struct folio_iter fi;
+ 	struct bio_vec *bvec = bio_first_bvec_all(bio) + i;
  
--	bio_for_each_segment_all(bvec, bio, iter_all) {
--		if (mark_dirty && !PageCompound(bvec->bv_page))
--			set_page_dirty_lock(bvec->bv_page);
--		bio_release_page(bio, bvec->bv_page);
-+	bio_for_each_folio_all(fi, bio) {
-+		struct page *page;
-+		size_t done = 0;
++	if (unlikely(i >= bio->bi_vcnt)) {
++		fi->folio = NULL;
++		return;
++	}
 +
-+		if (mark_dirty) {
-+			folio_lock(fi.folio);
-+			folio_mark_dirty(fi.folio);
-+			folio_unlock(fi.folio);
-+		}
-+		page = folio_page(fi.folio, fi.offset / PAGE_SIZE);
-+		do {
-+			bio_release_page(bio, page++);
-+			done += PAGE_SIZE;
-+		} while (done < fi.length);
+ 	fi->folio = page_folio(bvec->bv_page);
+ 	fi->offset = bvec->bv_offset +
+ 			PAGE_SIZE * (bvec->bv_page - &fi->folio->page);
+@@ -303,10 +308,8 @@ static inline void bio_next_folio(struct
+ 		fi->offset = 0;
+ 		fi->length = min(folio_size(fi->folio), fi->_seg_count);
+ 		fi->_next = folio_next(fi->folio);
+-	} else if (fi->_i + 1 < bio->bi_vcnt) {
+-		bio_first_folio(fi, bio, fi->_i + 1);
+ 	} else {
+-		fi->folio = NULL;
++		bio_first_folio(fi, bio, fi->_i + 1);
  	}
  }
- EXPORT_SYMBOL_GPL(__bio_release_pages);
-@@ -1439,18 +1448,12 @@ EXPORT_SYMBOL(bio_free_pages);
-  * bio_set_pages_dirty() and bio_check_pages_dirty() are support functions
-  * for performing direct-IO in BIOs.
-  *
-- * The problem is that we cannot run set_page_dirty() from interrupt context
-+ * The problem is that we cannot run folio_mark_dirty() from interrupt context
-  * because the required locks are not interrupt-safe.  So what we can do is to
-  * mark the pages dirty _before_ performing IO.  And in interrupt context,
-  * check that the pages are still dirty.   If so, fine.  If not, redirty them
-  * in process context.
-  *
-- * We special-case compound pages here: normally this means reads into hugetlb
-- * pages.  The logic in here doesn't really work right for compound pages
-- * because the VM does not uniformly chase down the head page in all cases.
-- * But dirtiness of compound pages is pretty meaningless anyway: the VM doesn't
-- * handle them at all.  So we skip compound pages here at an early stage.
-- *
-  * Note that this code is very hard to test under normal circumstances because
-  * direct-io pins the pages with get_user_pages().  This makes
-  * is_page_cache_freeable return false, and the VM will not clean the pages.
-@@ -1466,12 +1469,12 @@ EXPORT_SYMBOL(bio_free_pages);
-  */
- void bio_set_pages_dirty(struct bio *bio)
- {
--	struct bio_vec *bvec;
--	struct bvec_iter_all iter_all;
-+	struct folio_iter fi;
- 
--	bio_for_each_segment_all(bvec, bio, iter_all) {
--		if (!PageCompound(bvec->bv_page))
--			set_page_dirty_lock(bvec->bv_page);
-+	bio_for_each_folio_all(fi, bio) {
-+		folio_lock(fi.folio);
-+		folio_mark_dirty(fi.folio);
-+		folio_unlock(fi.folio);
- 	}
- }
- EXPORT_SYMBOL_GPL(bio_set_pages_dirty);
-@@ -1515,12 +1518,11 @@ static void bio_dirty_fn(struct work_str
- 
- void bio_check_pages_dirty(struct bio *bio)
- {
--	struct bio_vec *bvec;
-+	struct folio_iter fi;
- 	unsigned long flags;
--	struct bvec_iter_all iter_all;
- 
--	bio_for_each_segment_all(bvec, bio, iter_all) {
--		if (!PageDirty(bvec->bv_page) && !PageCompound(bvec->bv_page))
-+	bio_for_each_folio_all(fi, bio) {
-+		if (!folio_test_dirty(fi.folio))
- 			goto defer;
- 	}
  
 
 
