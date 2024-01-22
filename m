@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381DC56468;
-	Tue, 23 Jan 2024 01:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E114E1D2;
+	Tue, 23 Jan 2024 01:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974020; cv=none; b=i1+O95ZYHt8u0kVzhTLDF3D8ocdrJqINKqTuf/PkmCP4pE11BF65hMK1srQVM59QvkWx3J2AOJJw5k8Z3BRyCwQKX3QRBb9wWkiEfLqIUF7H62vRYHMYeFgJuAZUM1WH3KXRFOgxiv6qDEc/RRIh/7YG58LnA7yYWPJFOxaoTiQ=
+	t=1705974021; cv=none; b=YO1qRbAcyOavu5O51Oo0Y28TFI+LZ3P/kSYZ3RVK+zIszlH0YgnADgbW+fNUXIVxmVTzCMvXfwja0qNuGfCaryPXzuX0xs+TytlXBaSa3GryZUU2oHWIaAFxjPnLkZsMZnFhY9XiIpiubzwRKgljGCuwKo04/Dq57+Wy26gIVM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974020; c=relaxed/simple;
-	bh=2L/n4EdP6brAZ7vTLr4K2mFNfr1UakdUTQT47y83MsE=;
+	s=arc-20240116; t=1705974021; c=relaxed/simple;
+	bh=hhGZqW6P78V3edxME/Kj8zpRZDXQIPxTIg7ZTCwlEhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVallhYgow0MinAcIZ7PWASHgbCa4+Wmy/bXYzVz+TDjsvAVxQ2NDB8vT92AMlVD4osEa/plwNdNiyF+Bu5rWMRNDv9tswBHqJ40zwGueNQh6/8mgqnpvlMgVu/1hrgo86qpmAj2zonbUw7x6e35+0Om6MpxEbGcQ3SWrww8ndc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a59W5zH6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AlxlPISq3Vx6mx3yaIddtaWBFdDd8Ia9LBGVDB1KGDuPzlKSsLjUQ63GIiYkvRB3cm1/sFl5ngtTdMI2yAnIAuy+MTKjXbIeQzj8FLkoVSCwiP1U1Os8GKJLB0BTXwcjm3aDZ7b+n4deeGJUIqF+BEkEe01vgz6W8n9PEgVbbsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DromsfFc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a59W5zH6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C895DC43390;
-	Tue, 23 Jan 2024 01:40:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DromsfFc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05A8C433C7;
+	Tue, 23 Jan 2024 01:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974019;
-	bh=2L/n4EdP6brAZ7vTLr4K2mFNfr1UakdUTQT47y83MsE=;
+	s=korg; t=1705974020;
+	bh=hhGZqW6P78V3edxME/Kj8zpRZDXQIPxTIg7ZTCwlEhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a59W5zH6t4KEoOnV5Ovpaoez/2juOir0SGabYICW+YLPGRRqiA3+jnYQjhtAxRys2
-	 aj17HxwIsWTeB86pOnokcVvaMJFcL8wWzXr2GRtIZeTZlo8V9OwMx+qS946/F6Aqz/
-	 zpzsv32E5lGiROSm+n+9zoubuzpTInIuxu90U7SM=
+	b=DromsfFcufH6X80DPuIIiYTWvMTW5JPvrtChfYD1h0GW1r1pNvnU1ZljZTtp5oTIr
+	 fVK35C1HeTyXNX2fbxvyBI3mQrNUXLQXTZq+lkzY3n6WhbJHtvKjatbqLfAzbNmiPv
+	 LdN+OBMsc+DagGzRGHJtJkUJTzBEHnBTeJqDbDEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 128/374] bpf: enforce precision of R0 on callback return
-Date: Mon, 22 Jan 2024 15:56:24 -0800
-Message-ID: <20240122235749.096196952@linuxfoundation.org>
+Subject: [PATCH 6.6 005/583] x86: Fix CPUIDLE_FLAG_IRQ_ENABLE leaking timer reprogram
+Date: Mon, 22 Jan 2024 15:50:56 -0800
+Message-ID: <20240122235812.400556155@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,48 +48,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 0acd03a5bd188b0c501d285d938439618bd855c4 ]
+[ Upstream commit edc8fc01f608108b0b7580cb2c29dfb5135e5f0e ]
 
-Given verifier checks actual value, r0 has to be precise, so we need to
-propagate precision properly. r0 also has to be marked as read,
-otherwise subsequent state comparisons will ignore such register as
-unimportant and precision won't really help here.
+intel_idle_irq() re-enables IRQs very early. As a result, an interrupt
+may fire before mwait() is eventually called. If such an interrupt queues
+a timer, it may go unnoticed until mwait returns and the idle loop
+handles the tick re-evaluation. And monitoring TIF_NEED_RESCHED doesn't
+help because a local timer enqueue doesn't set that flag.
 
-Fixes: 69c087ba6225 ("bpf: Add bpf_for_each_map_elem() helper")
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20231202175705.885270-4-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+The issue is mitigated by the fact that this idle handler is only invoked
+for shallow C-states when, presumably, the next tick is supposed to be
+close enough. There may still be rare cases though when the next tick
+is far away and the selected C-state is shallow, resulting in a timer
+getting ignored for a while.
+
+Fix this with using sti_mwait() whose IRQ-reenablement only triggers
+upon calling mwait(), dealing with the race while keeping the interrupt
+latency within acceptable bounds.
+
+Fixes: c227233ad64c (intel_idle: enable interrupts before C1 on Xeons)
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Link: https://lkml.kernel.org/r/20231115151325.6262-3-frederic@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/x86/include/asm/mwait.h | 11 +++++++++--
+ drivers/idle/intel_idle.c    | 19 +++++++------------
+ 2 files changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 5d8f352faebd..7318a5d44859 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -6244,6 +6244,13 @@ static int prepare_func_exit(struct bpf_verifier_env *env, int *insn_idx)
- 			verbose(env, "R0 not a scalar value\n");
- 			return -EACCES;
+diff --git a/arch/x86/include/asm/mwait.h b/arch/x86/include/asm/mwait.h
+index 778df05f8539..bae83810505b 100644
+--- a/arch/x86/include/asm/mwait.h
++++ b/arch/x86/include/asm/mwait.h
+@@ -115,8 +115,15 @@ static __always_inline void mwait_idle_with_hints(unsigned long eax, unsigned lo
  		}
+ 
+ 		__monitor((void *)&current_thread_info()->flags, 0, 0);
+-		if (!need_resched())
+-			__mwait(eax, ecx);
 +
-+		/* we are going to rely on register's precise value */
-+		err = mark_reg_read(env, r0, r0->parent, REG_LIVE_READ64);
-+		err = err ?: mark_chain_precision(env, BPF_REG_0);
-+		if (err)
-+			return err;
-+
- 		if (!tnum_in(range, r0->var_off)) {
- 			verbose_invalid_scalar(env, r0, &range, "callback return", "R0");
- 			return -EINVAL;
++		if (!need_resched()) {
++			if (ecx & 1) {
++				__mwait(eax, ecx);
++			} else {
++				__sti_mwait(eax, ecx);
++				raw_local_irq_disable();
++			}
++		}
+ 	}
+ 	current_clr_polling();
+ }
+diff --git a/drivers/idle/intel_idle.c b/drivers/idle/intel_idle.c
+index ea5a6a14c553..45500d2d5b4b 100644
+--- a/drivers/idle/intel_idle.c
++++ b/drivers/idle/intel_idle.c
+@@ -131,11 +131,12 @@ static unsigned int mwait_substates __initdata;
+ #define MWAIT2flg(eax) ((eax & 0xFF) << 24)
+ 
+ static __always_inline int __intel_idle(struct cpuidle_device *dev,
+-					struct cpuidle_driver *drv, int index)
++					struct cpuidle_driver *drv,
++					int index, bool irqoff)
+ {
+ 	struct cpuidle_state *state = &drv->states[index];
+ 	unsigned long eax = flg2MWAIT(state->flags);
+-	unsigned long ecx = 1; /* break on interrupt flag */
++	unsigned long ecx = 1*irqoff; /* break on interrupt flag */
+ 
+ 	mwait_idle_with_hints(eax, ecx);
+ 
+@@ -159,19 +160,13 @@ static __always_inline int __intel_idle(struct cpuidle_device *dev,
+ static __cpuidle int intel_idle(struct cpuidle_device *dev,
+ 				struct cpuidle_driver *drv, int index)
+ {
+-	return __intel_idle(dev, drv, index);
++	return __intel_idle(dev, drv, index, true);
+ }
+ 
+ static __cpuidle int intel_idle_irq(struct cpuidle_device *dev,
+ 				    struct cpuidle_driver *drv, int index)
+ {
+-	int ret;
+-
+-	raw_local_irq_enable();
+-	ret = __intel_idle(dev, drv, index);
+-	raw_local_irq_disable();
+-
+-	return ret;
++	return __intel_idle(dev, drv, index, false);
+ }
+ 
+ static __cpuidle int intel_idle_ibrs(struct cpuidle_device *dev,
+@@ -184,7 +179,7 @@ static __cpuidle int intel_idle_ibrs(struct cpuidle_device *dev,
+ 	if (smt_active)
+ 		native_wrmsrl(MSR_IA32_SPEC_CTRL, 0);
+ 
+-	ret = __intel_idle(dev, drv, index);
++	ret = __intel_idle(dev, drv, index, true);
+ 
+ 	if (smt_active)
+ 		native_wrmsrl(MSR_IA32_SPEC_CTRL, spec_ctrl);
+@@ -196,7 +191,7 @@ static __cpuidle int intel_idle_xstate(struct cpuidle_device *dev,
+ 				       struct cpuidle_driver *drv, int index)
+ {
+ 	fpu_idle_fpregs();
+-	return __intel_idle(dev, drv, index);
++	return __intel_idle(dev, drv, index, true);
+ }
+ 
+ /**
 -- 
 2.43.0
 
