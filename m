@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816FB745D6;
-	Tue, 23 Jan 2024 02:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BAF745D6;
+	Tue, 23 Jan 2024 02:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975463; cv=none; b=MQ8UkrGtycolHTXYewTf0Hnis/+TEcCkM2atgioIcN6XUrO1LzO1nm2NUIR61TcvTcIz2SedAENea/11Ovqqrk1UBA9dKDY41z4+Mu1c9f/Ng5nwwMrL/hZbzML+sQCyoYp1tHo8MDG+HHgfvaNK/LXTyL3ctCpdPr5lnpmgUdc=
+	t=1705975464; cv=none; b=KHUz6eHcuus+Ik/cMK0Sp2aWlJUmKzUEli9Uo7X53Segi2WXMoDglZpVILTVcKNgTYcqoWsnmc3j2cEgiY8tpC5+59Bxt7tMKUVsv4qB5mTezElPpkFx9pHUfdw/Ck5sW6BsBDvYF8ZmaSJgwedTmpDooHhuCEESVQeaR+PlmaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975463; c=relaxed/simple;
-	bh=ZXW7R36bJFm2satXuvZA6BBVyTUTbObN6/8cIh1XPg4=;
+	s=arc-20240116; t=1705975464; c=relaxed/simple;
+	bh=CE7oYr4bX7QGhO04/9OVKNNPDJTjVyThyr87DMMBU68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RVq7fdsjDo9+C3SeV4/yQ+5oMdR9+MeBNXwSOmPZ/jbvAD5xWw/q3VEyp1FZJRX5SYEArp6rSmaP47H9rJ7Dcn0nSDXyTs12+vGo0kl1WZ+BtMGW9KfPWS23044Sysqus8VYWgW3NqHmOeOcNP2d2S8LxbPW8a/DWmuQ/wLL84A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HgnQfRmF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=scMnjzKIDWidjLcq0Vl53oxdfNMymqg963YzGAyki4vJoGbNVE9QxIrxjQ38vcqqRcZn7pNgeMQz9MXWreUOQsTXcZ0V2oc4r+lPok3bp5d/ph/8qrrDvb8/CfpFR2X7pVQgL5hMmRFTPFwlMlzbyI9WfIe+4gfRADw4dl3GMeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1tYCmIs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HgnQfRmF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C29C433C7;
-	Tue, 23 Jan 2024 02:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1tYCmIs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39943C433C7;
+	Tue, 23 Jan 2024 02:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975463;
-	bh=ZXW7R36bJFm2satXuvZA6BBVyTUTbObN6/8cIh1XPg4=;
+	s=korg; t=1705975464;
+	bh=CE7oYr4bX7QGhO04/9OVKNNPDJTjVyThyr87DMMBU68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HgnQfRmFUtcT7+zEIKkJZSvoGA1AhNok5jfEq7MyBvAE51sUeNxDoKCq55/bj6Xt8
-	 H4fy8qtgt4opWHYv4aJ49Yh1T8bLwCNmjs6xWq6Kv938D5Cr0R2oDizFc9UNbsvIdp
-	 QzynG27LnqpdxYphVYmpOO8tjel/NoqHoHRlEQzw=
+	b=P1tYCmIsnmoiiO7XCNTFTStG4lyH2gXfDuQ1kPi/rMOiuL/nDWJsVb+5lW+D+3t5l
+	 zkfsiR6hRHCyHYiMJcuE9bfAQWmXBNHRn79R4V8qpG5LYu+++c+GvZZ2KGcRBSkTGQ
+	 Wdzvltf+ieJCs0WfAGDLTPBlkPhkCQ1As6f1R5L0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.6 411/583] iommu/arm-smmu-qcom: Add missing GMU entry to match table
-Date: Mon, 22 Jan 2024 15:57:42 -0800
-Message-ID: <20240122235824.545952731@linuxfoundation.org>
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 420/583] Revert "net: rtnetlink: Enslave device before bringing it up"
+Date: Mon, 22 Jan 2024 15:57:51 -0800
+Message-ID: <20240122235824.820883582@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,40 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 
-commit afc95681c3068956fed1241a1ff1612c066c75ac upstream.
+commit ec4ffd100ffb396eca13ebe7d18938ea80f399c3 upstream.
 
-In some cases the firmware expects cbndx 1 to be assigned to the GMU,
-so we also want the default domain for the GMU to be an identy domain.
-This way it does not get a context bank assigned.  Without this, both
-of_dma_configure() and drm/msm's iommu_domain_attach() will trigger
-allocating and configuring a context bank.  So GMU ends up attached to
-both cbndx 1 and later cbndx 2.  This arrangement seemingly confounds
-and surprises the firmware if the GPU later triggers a translation
-fault, resulting (on sc8280xp / lenovo x13s, at least) in the SMMU
-getting wedged and the GPU stuck without memory access.
+This reverts commit a4abfa627c3865c37e036bccb681619a50d3d93c.
+
+The patch broke:
+> ip link set dummy0 up
+> ip link set dummy0 master bond0 down
+
+This last command is useful to be able to enslave an interface with only
+one netlink message.
+
+After discussion, there is no good reason to support:
+> ip link set dummy0 down
+> ip link set dummy0 master bond0 up
+because the bond interface already set the slave up when it is up.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/20231210180655.75542-1-robdclark@gmail.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: a4abfa627c38 ("net: rtnetlink: Enslave device before bringing it up")
+Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20240108094103.2001224-2-nicolas.dichtel@6wind.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/core/rtnetlink.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -243,6 +243,7 @@ static int qcom_adreno_smmu_init_context
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -2869,13 +2869,6 @@ static int do_setlink(const struct sk_bu
+ 		call_netdevice_notifiers(NETDEV_CHANGEADDR, dev);
+ 	}
  
- static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
- 	{ .compatible = "qcom,adreno" },
-+	{ .compatible = "qcom,adreno-gmu" },
- 	{ .compatible = "qcom,mdp4" },
- 	{ .compatible = "qcom,mdss" },
- 	{ .compatible = "qcom,sc7180-mdss" },
+-	if (tb[IFLA_MASTER]) {
+-		err = do_set_master(dev, nla_get_u32(tb[IFLA_MASTER]), extack);
+-		if (err)
+-			goto errout;
+-		status |= DO_SETLINK_MODIFIED;
+-	}
+-
+ 	if (ifm->ifi_flags || ifm->ifi_change) {
+ 		err = dev_change_flags(dev, rtnl_dev_combine_flags(dev, ifm),
+ 				       extack);
+@@ -2883,6 +2876,13 @@ static int do_setlink(const struct sk_bu
+ 			goto errout;
+ 	}
+ 
++	if (tb[IFLA_MASTER]) {
++		err = do_set_master(dev, nla_get_u32(tb[IFLA_MASTER]), extack);
++		if (err)
++			goto errout;
++		status |= DO_SETLINK_MODIFIED;
++	}
++
+ 	if (tb[IFLA_CARRIER]) {
+ 		err = dev_change_carrier(dev, nla_get_u8(tb[IFLA_CARRIER]));
+ 		if (err)
 
 
