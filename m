@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CDF6772B;
-	Tue, 23 Jan 2024 01:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A7666B52;
+	Tue, 23 Jan 2024 01:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971703; cv=none; b=PI8B5KFO7b1kPWmOH90T5KlLkI3sQ8NIFwItAYuJNPEdDB9H5265Ztf+GVGv6Ex7qgPwR3HrCBs0bLrig49xtO+2mbnmyOpp8F59Zf19WiVSHFkNtv7NV2Q2Xtikf34f4HIvsGxZuWFPvynVN7tJQG1KDG8ruUYK5XLCzPpF56w=
+	t=1705971705; cv=none; b=oQteXCwpWA/Sw5EoL9kGcs0bKelNkq8B82rlFlaS1HYPM4MVjr6t6kuBuqN5m5xbVV0W0fBo0QZBiPddAJl+BUKG7m1076FW5awtxgDbOJy6Lkv64CrsqqGdJ5oUAjIK/wcm3/Dsu6VXHI7Qrj1rgLggilvF6un+vDV7GfhMSS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971703; c=relaxed/simple;
-	bh=fJzDlFVRJ67yCivJ55YXmnVKhQEWmAtOMsz7BsKYuRA=;
+	s=arc-20240116; t=1705971705; c=relaxed/simple;
+	bh=oBDFM97pDb1iKjFbTSe27sVDWrmcoiAgJcVv4YY4dJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmhfVuvIST9HI2yqysOUxJ40PvRRSPoaER4+6jdk/K71hoWlJ7edGh/hq74EUyM1srjhZHkJqUiLwfDN9Li/YY6NVL10p9JMMW7sOgqGXk1LyWfW0CzBnDFni7sT+qEUCFpDUiWHnIJyi82mzcw9E8ZwvvvvL1uIxUntE5ikxKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9Mmjy/l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W42O8FZryMcvMbVZ7saRuFdp7qc+Dn959lPMv3TiBbUh8POS4E6eCDBtWxq2e2m/sNPDshjvT64AkS8yTEkrW/EC0bZiiar0e9H0qVxJ4iLs4FJIeZ3pfyJtgSmopLN+d+8SNOtkygwmveQ9zTcteWx2PgD6WstI200M6q1QTB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVENTV+0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9Mmjy/l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACAB5C433F1;
-	Tue, 23 Jan 2024 01:01:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVENTV+0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B565BC433F1;
+	Tue, 23 Jan 2024 01:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971702;
-	bh=fJzDlFVRJ67yCivJ55YXmnVKhQEWmAtOMsz7BsKYuRA=;
+	s=korg; t=1705971704;
+	bh=oBDFM97pDb1iKjFbTSe27sVDWrmcoiAgJcVv4YY4dJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K9Mmjy/lcVHzDOPatW5fcElg84QE6stxCRduF7XsSUb07IgI85JgBiu6twMbLL6jQ
-	 7rP6quNFiEATV5nS3mEzhdLuNo9K4LOtqSkji6b4eiSG3QHEV8514MC09TK4ipAwcH
-	 9UVHlix8IKLmI1XSP31sxUfRVDZbqdNb+MJ10exw=
+	b=VVENTV+0/lDYSm7IYoW3whG3G29DaLuSVrc7xoqfLvNxIVsiVJXiZ+kTzcejaM4+l
+	 3AtE1VBs/Ary+0CC3skJOQGJ1JdS3lsbFu2gyDxmXZxVAoy68U3LsvuT0hOE/40EPM
+	 UK0wzSatkw62bJcgqkwKC+YeA16ukKf95i6gBmfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <2045gemini@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 302/417] Bluetooth: Fix atomicity violation in {min,max}_key_size_set
-Date: Mon, 22 Jan 2024 15:57:50 -0800
-Message-ID: <20240122235802.295814621@linuxfoundation.org>
+	Peter Chen <peter.chen@kernel.org>,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 5.10 211/286] usb: phy: mxs: remove CONFIG_USB_OTG condition for mxs_phy_is_otg_host()
+Date: Mon, 22 Jan 2024 15:58:37 -0800
+Message-ID: <20240122235740.211082148@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,96 +46,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gui-Dong Han <2045gemini@gmail.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit da9065caa594d19b26e1a030fd0cc27bd365d685 upstream.
+commit ff2b89de471da942a4d853443688113a44fd35ed upstream.
 
-In min_key_size_set():
-    if (val > hdev->le_max_key_size || val < SMP_MIN_ENC_KEY_SIZE)
-        return -EINVAL;
-    hci_dev_lock(hdev);
-    hdev->le_min_key_size = val;
-    hci_dev_unlock(hdev);
+When CONFIG_USB_OTG is not set, mxs_phy_is_otg_host() will always return
+false. This behaviour is wrong. Since phy.last_event will always be set
+for either host or device mode. Therefore, CONFIG_USB_OTG condition
+can be removed.
 
-In max_key_size_set():
-    if (val > SMP_MAX_ENC_KEY_SIZE || val < hdev->le_min_key_size)
-        return -EINVAL;
-    hci_dev_lock(hdev);
-    hdev->le_max_key_size = val;
-    hci_dev_unlock(hdev);
-
-The atomicity violation occurs due to concurrent execution of set_min and
-set_max funcs.Consider a scenario where setmin writes a new, valid 'min'
-value, and concurrently, setmax writes a value that is greater than the
-old 'min' but smaller than the new 'min'. In this case, setmax might check
-against the old 'min' value (before acquiring the lock) but write its
-value after the 'min' has been updated by setmin. This leads to a
-situation where the 'max' value ends up being smaller than the 'min'
-value, which is an inconsistency.
-
-This possible bug is found by an experimental static analysis tool
-developed by our team, BassCheck[1]. This tool analyzes the locking APIs
-to extract function pairs that can be concurrently executed, and then
-analyzes the instructions in the paired functions to identify possible
-concurrency bugs including data races and atomicity violations. The above
-possible bug is reported when our tool analyzes the source code of
-Linux 5.17.
-
-To resolve this issue, it is suggested to encompass the validity checks
-within the locked sections in both set_min and set_max funcs. The
-modification ensures that the validation of 'val' against the
-current min/max values is atomic, thus maintaining the integrity of the
-settings. With this patch applied, our tool no longer reports the bug,
-with the kernel configuration allyesconfig for x86_64. Due to the lack of
-associated hardware, we cannot test the patch in runtime testing, and just
-verify it according to the code logic.
-
-[1] https://sites.google.com/view/basscheck/
-
-Fixes: 18f81241b74f ("Bluetooth: Move {min,max}_key_size debugfs ...")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 5eda42aebb76 ("usb: phy: mxs: fix getting wrong state with mxs_phy_is_otg_host()")
+cc:  <stable@vger.kernel.org>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://lore.kernel.org/r/20231228110753.1755756-3-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_debugfs.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/usb/phy/phy-mxs-usb.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/net/bluetooth/hci_debugfs.c
-+++ b/net/bluetooth/hci_debugfs.c
-@@ -1045,10 +1045,12 @@ static int min_key_size_set(void *data,
+--- a/drivers/usb/phy/phy-mxs-usb.c
++++ b/drivers/usb/phy/phy-mxs-usb.c
+@@ -388,8 +388,7 @@ static void __mxs_phy_disconnect_line(st
+ 
+ static bool mxs_phy_is_otg_host(struct mxs_phy *mxs_phy)
  {
- 	struct hci_dev *hdev = data;
+-	return IS_ENABLED(CONFIG_USB_OTG) &&
+-		mxs_phy->phy.last_event == USB_EVENT_ID;
++	return mxs_phy->phy.last_event == USB_EVENT_ID;
+ }
  
--	if (val > hdev->le_max_key_size || val < SMP_MIN_ENC_KEY_SIZE)
-+	hci_dev_lock(hdev);
-+	if (val > hdev->le_max_key_size || val < SMP_MIN_ENC_KEY_SIZE) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->le_min_key_size = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -1073,10 +1075,12 @@ static int max_key_size_set(void *data,
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val > SMP_MAX_ENC_KEY_SIZE || val < hdev->le_min_key_size)
-+	hci_dev_lock(hdev);
-+	if (val > SMP_MAX_ENC_KEY_SIZE || val < hdev->le_min_key_size) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->le_max_key_size = val;
- 	hci_dev_unlock(hdev);
- 
+ static void mxs_phy_disconnect_line(struct mxs_phy *mxs_phy, bool on)
 
 
