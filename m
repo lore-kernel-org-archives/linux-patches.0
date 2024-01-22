@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617A61420C9;
-	Tue, 23 Jan 2024 01:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3E3137C55;
+	Tue, 23 Jan 2024 01:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972125; cv=none; b=iEwchKHyHYM1ue/2sCKoECOSQMnj2+nvA81juRUbJbSvVD4R1mjGCtTxcTg7h5pLBuvcVozJq9bbOxK+BLX1bsCJkeTk4wfgZxnUxg9Gqo8F3P8IBcxogX3cofScxIF1mQTgd4x5QyP0Q2QVczpmFf0AP0QALAeQupA2UOXivLE=
+	t=1705972126; cv=none; b=egqJQzUz62/EV12nQag7C0or3CbZeYBevLxWwE90cs78j7CQ5bzTC/IgnlMrXxeltrb0R1W2vvN95H7KP4XpHT5bj/+FmNFTzcguynurw7AMNvqO/2t7znTbJWVfYrLJ7kUJBVTYAdPXFJjhRmygX093PKi5dmYFkB7xVCMV5JM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972125; c=relaxed/simple;
-	bh=0B+4d/HY17Yx7kR8rhbUjd+ZKbNftYOwQxrhlwaL/74=;
+	s=arc-20240116; t=1705972126; c=relaxed/simple;
+	bh=n1XuVIRJ4k11X2S/jyUIryA7lFcXEVOpX0L5ARNRy7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ueplsGH+ngTsJQKLDC6zWRM4HUxSCeTKLegclvaeSpdrVFE6CyJ2vgc5tmullgPS9DsdSEQ0hZOo2dNmUBJU2WoPMWDhUDYsoham5ZHjVpKn9MMgfGbGvFzm9QepGkhrY9gYwqnqF+cgVvfqiQed4utcaK8zU/PeL661xH54wcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9F4C1UC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R1bssV7LIb9eP79rzxro0DL9sWBgm8VM2YLu2AZ/GrvMX3CWS1Zat0Pa7cPrFtCZb8NU1Pm+TZ94gCzblKXU66NPfQbqCJdGK9lv2hNaFfXfYMdf2THFGinVUa76WKmqql+7nOpzxN0ZeHwm2xsmJ4QbOAqdnXe0+xY21d13Z8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/EWiSZV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9F4C1UC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D925C43390;
-	Tue, 23 Jan 2024 01:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/EWiSZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEDDC43399;
+	Tue, 23 Jan 2024 01:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972125;
-	bh=0B+4d/HY17Yx7kR8rhbUjd+ZKbNftYOwQxrhlwaL/74=;
+	s=korg; t=1705972126;
+	bh=n1XuVIRJ4k11X2S/jyUIryA7lFcXEVOpX0L5ARNRy7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B9F4C1UCHRjgZedV/RGPkyNyDC8M9QSvLcT3EkkP6VWHHASMbgGuZbrStlz0QTKoN
-	 bukoxHUq6NBT8r+PkEia1NTxJVQKyofbcKSdp4iut0rpKHiSijgeqBoBH1gnu2LYHS
-	 knFiWpN1l7B+cM/UDV9cr8CQodZHl1NdgYX4Yylw=
+	b=C/EWiSZVG2rEhT06b5ISAlq8BZkZ71Fq0Io4x6kHkICnwIZBKcVRXcQ1p+HPwS0KH
+	 fRR6oGHLN36j3dDUtNsWN7b5cEgH4w7M24+dbjbpbomATsw8/W9wnQIzNEe4u8h57i
+	 LwY6ad5QjnmUnBzF47yk1CpQWFcLWM/VMpCxYZPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.15 058/374] binder: fix comment on binder_alloc_new_buf() return value
-Date: Mon, 22 Jan 2024 15:55:14 -0800
-Message-ID: <20240122235746.626462031@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>
+Subject: [PATCH 5.15 059/374] uio: Fix use-after-free in uio_open
+Date: Mon, 22 Jan 2024 15:55:15 -0800
+Message-ID: <20240122235746.658160536@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -50,35 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
 
-commit e1090371e02b601cbfcea175c2a6cc7c955fa830 upstream.
+commit 0c9ae0b8605078eafc3bea053cc78791e97ba2e2 upstream.
 
-Update the comments of binder_alloc_new_buf() to reflect that the return
-value of the function is now ERR_PTR(-errno) on failure.
+core-1				core-2
+-------------------------------------------------------
+uio_unregister_device		uio_open
+				idev = idr_find()
+device_unregister(&idev->dev)
+put_device(&idev->dev)
+uio_device_release
+				get_device(&idev->dev)
+kfree(idev)
+uio_free_minor(minor)
+				uio_release
+				put_device(&idev->dev)
+				kfree(idev)
+-------------------------------------------------------
 
-No functional changes in this patch.
+In the core-1 uio_unregister_device(), the device_unregister will kfree
+idev when the idev->dev kobject ref is 1. But after core-1
+device_unregister, put_device and before doing kfree, the core-2 may
+get_device. Then:
+1. After core-1 kfree idev, the core-2 will do use-after-free for idev.
+2. When core-2 do uio_release and put_device, the idev will be double
+   freed.
 
-Cc: stable@vger.kernel.org
-Fixes: 57ada2fb2250 ("binder: add log information for binder transaction failures")
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20231201172212.1813387-8-cmllamas@google.com
+To address this issue, we can get idev atomic & inc idev reference with
+minor_lock.
+
+Fixes: 57c5f4df0a5a ("uio: fix crash after the device is unregistered")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://lore.kernel.org/r/1703152663-59949-1-git-send-email-guanghuifeng@linux.alibaba.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder_alloc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/uio/uio.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -557,7 +557,7 @@ err_alloc_buf_struct_failed:
-  * is the sum of the three given sizes (each rounded up to
-  * pointer-sized boundary)
-  *
-- * Return:	The allocated buffer or %NULL if error
-+ * Return:	The allocated buffer or %ERR_PTR(-errno) if error
-  */
- struct binder_buffer *binder_alloc_new_buf(struct binder_alloc *alloc,
- 					   size_t data_size,
+--- a/drivers/uio/uio.c
++++ b/drivers/uio/uio.c
+@@ -464,13 +464,13 @@ static int uio_open(struct inode *inode,
+ 
+ 	mutex_lock(&minor_lock);
+ 	idev = idr_find(&uio_idr, iminor(inode));
+-	mutex_unlock(&minor_lock);
+ 	if (!idev) {
+ 		ret = -ENODEV;
++		mutex_unlock(&minor_lock);
+ 		goto out;
+ 	}
+-
+ 	get_device(&idev->dev);
++	mutex_unlock(&minor_lock);
+ 
+ 	if (!try_module_get(idev->owner)) {
+ 		ret = -ENODEV;
+@@ -1062,9 +1062,8 @@ void uio_unregister_device(struct uio_in
+ 	wake_up_interruptible(&idev->wait);
+ 	kill_fasync(&idev->async_queue, SIGIO, POLL_HUP);
+ 
+-	device_unregister(&idev->dev);
+-
+ 	uio_free_minor(minor);
++	device_unregister(&idev->dev);
+ 
+ 	return;
+ }
 
 
