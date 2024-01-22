@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C6D14A4C6;
-	Tue, 23 Jan 2024 00:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D66614A4D5;
+	Tue, 23 Jan 2024 00:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969217; cv=none; b=RN3rtS0rGSyGFl8Y3VGbnsByW5FnmRJvWsBRigIkpbsvg4phzvUWd6vcfeiNiqGDznZXXPNIps7CeoPU5ZASxSjhniN5ojrVzewQvxFMG7DufzDbkuL86b/89ZqbVlBpvcSC5uo4i8MoZfRzY44Xh6irzLaPFh6gqPgTiIJe9ow=
+	t=1705969218; cv=none; b=o0Ji7KRwMuUkMfoJNnpTNHfTSUtbIcrXp4pKMzGC2RjQlzoZW4t1FyAsdsoWKjhDYazAxpO5AuNclXhGzVYEL6by7PqsiZIeBbSQSZJRaZnQ4crwsy/QsljpnzkpXZtblG5VmSeOT/C1FlUG+LlZemMU0qL/Nd/RUSojHwMYAzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969217; c=relaxed/simple;
-	bh=Jdki+ZOY9SR1ppo5rxsvGhdTQzCcDSMA/WB0vLvbvkU=;
+	s=arc-20240116; t=1705969218; c=relaxed/simple;
+	bh=Ao99UsrgzoB5WRHBq6LhYFB4ZhHisWfypVDpUgeWBlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BrGX7/bAiW3ZZ6hkpg7iljU6ejak+omFQO/ZhR0QoI7xQOHiOHE1EGz6hUjmqsFTpjUUthEGyehgs5SOaEqwmsKh83yQtRWb6P3xQ48MK2I1WHf365RNmzSfkBUsK+dF4Si9iMJCpDiwlfs79hoSwTCbHQU8Sycea8g52uN+Z3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziUn6SUG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aVCNBIOZMnUWLTdvKAzz4BOS8oMq7d48kMY7Hag7FqWBuOQfH4eT6mbJVXZAD4QPEUNJhSKNSukZNDSC3D50YOKH+QdzPk6a6GulxnU1tmkHdTlwIWjz2AUo8za0Rb0YSGQG8swxb3tpS05mW65vu7E8HsUX+NdpO7sS+b/M5gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qb71FqC0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziUn6SUG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F4DC433F1;
-	Tue, 23 Jan 2024 00:20:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qb71FqC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26532C433C7;
+	Tue, 23 Jan 2024 00:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969217;
-	bh=Jdki+ZOY9SR1ppo5rxsvGhdTQzCcDSMA/WB0vLvbvkU=;
+	s=korg; t=1705969218;
+	bh=Ao99UsrgzoB5WRHBq6LhYFB4ZhHisWfypVDpUgeWBlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ziUn6SUGF67k1x8Ir8w57vS4IWuvxtmr3YXBhA5Z/eul7H8pQwyMotcFQlL/xgfEl
-	 dTe9lO9zQd1qSL8Gep4NJYjy0qp4iFxE8lM37/FoSf94NWFSmPYN5OgquN+FoLouF6
-	 jdKQF+mVFkiZ2OvU4kjMXIvBwwHDXfpsyb0AfsDg=
+	b=qb71FqC0S1I43yIgpyOmejSEa2x4SLub3C8QX0yARR66nhrebua/FG0RlWyp5jZ3E
+	 qYVQU/5ObkmJC7Kd1+nELX5YCILNs/Y8+QgbXcjV2YaU5Q66dwrfE/jVZfVHCH0JzV
+	 m0O4N0+aouJgC8fx4jiTyPKxIsQ4+v1ypF5aJ0Eg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	syzbot+3eff5e51bf1db122a16e@syzkaller.appspotmail.com,
+	Chengming Zhou <zhouchengming@bytedance.com>,
+	Barry Song <v-songbaohua@oppo.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 081/641] crypto: sahara - do not resize req->src when doing hash operations
-Date: Mon, 22 Jan 2024 15:49:45 -0800
-Message-ID: <20240122235820.567830516@linuxfoundation.org>
+Subject: [PATCH 6.7 082/641] crypto: scomp - fix req->dst buffer overflow
+Date: Mon, 22 Jan 2024 15:49:46 -0800
+Message-ID: <20240122235820.601657466@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,97 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait@windriver.com>
+From: Chengming Zhou <zhouchengming@bytedance.com>
 
-[ Upstream commit a3c6f4f4d249cecaf2f34471aadbfb4f4ef57298 ]
+[ Upstream commit 744e1885922a9943458954cfea917b31064b4131 ]
 
-When testing sahara sha256 speed performance with tcrypt (mode=404) on
-imx53-qsrb board, multiple "Invalid numbers of src SG." errors are
-reported. This was traced to sahara_walk_and_recalc() resizing req->src
-and causing the subsequent dma_map_sg() call to fail.
+The req->dst buffer size should be checked before copying from the
+scomp_scratch->dst to avoid req->dst buffer overflow problem.
 
-Now that the previous commit fixed sahara_sha_hw_links_create() to take
-into account the actual request size, rather than relying on sg->length
-values, the resize operation is no longer necessary.
-
-Therefore, remove sahara_walk_and_recalc() and simplify associated logic.
-
-Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Fixes: 1ab53a77b772 ("crypto: acomp - add driver-side scomp interface")
+Reported-by: syzbot+3eff5e51bf1db122a16e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/0000000000000b05cd060d6b5511@google.com/
+Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
+Reviewed-by: Barry Song <v-songbaohua@oppo.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 38 ++------------------------------------
- 1 file changed, 2 insertions(+), 36 deletions(-)
+ crypto/scompress.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index dd8291a4442c..fabe4f381fb6 100644
---- a/drivers/crypto/sahara.c
-+++ b/drivers/crypto/sahara.c
-@@ -886,24 +886,6 @@ static int sahara_sha_hw_context_descriptor_create(struct sahara_dev *dev,
- 	return 0;
- }
+diff --git a/crypto/scompress.c b/crypto/scompress.c
+index 442a82c9de7d..b108a30a7600 100644
+--- a/crypto/scompress.c
++++ b/crypto/scompress.c
+@@ -117,6 +117,7 @@ static int scomp_acomp_comp_decomp(struct acomp_req *req, int dir)
+ 	struct crypto_scomp *scomp = *tfm_ctx;
+ 	void **ctx = acomp_request_ctx(req);
+ 	struct scomp_scratch *scratch;
++	unsigned int dlen;
+ 	int ret;
  
--static int sahara_walk_and_recalc(struct scatterlist *sg, unsigned int nbytes)
--{
--	if (!sg || !sg->length)
--		return nbytes;
--
--	while (nbytes && sg) {
--		if (nbytes <= sg->length) {
--			sg->length = nbytes;
--			sg_mark_end(sg);
--			break;
--		}
--		nbytes -= sg->length;
--		sg = sg_next(sg);
--	}
--
--	return nbytes;
--}
--
- static int sahara_sha_prepare_request(struct ahash_request *req)
- {
- 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
-@@ -940,36 +922,20 @@ static int sahara_sha_prepare_request(struct ahash_request *req)
- 					hash_later, 0);
- 	}
+ 	if (!req->src || !req->slen || req->slen > SCOMP_SCRATCH_SIZE)
+@@ -128,6 +129,8 @@ static int scomp_acomp_comp_decomp(struct acomp_req *req, int dir)
+ 	if (!req->dlen || req->dlen > SCOMP_SCRATCH_SIZE)
+ 		req->dlen = SCOMP_SCRATCH_SIZE;
  
--	/* nbytes should now be multiple of blocksize */
--	req->nbytes = req->nbytes - hash_later;
--
--	sahara_walk_and_recalc(req->src, req->nbytes);
--
-+	rctx->total = len - hash_later;
- 	/* have data from previous operation and current */
- 	if (rctx->buf_cnt && req->nbytes) {
- 		sg_init_table(rctx->in_sg_chain, 2);
- 		sg_set_buf(rctx->in_sg_chain, rctx->rembuf, rctx->buf_cnt);
--
- 		sg_chain(rctx->in_sg_chain, 2, req->src);
--
--		rctx->total = req->nbytes + rctx->buf_cnt;
- 		rctx->in_sg = rctx->in_sg_chain;
--
--		req->src = rctx->in_sg_chain;
- 	/* only data from previous operation */
- 	} else if (rctx->buf_cnt) {
--		if (req->src)
--			rctx->in_sg = req->src;
--		else
--			rctx->in_sg = rctx->in_sg_chain;
--		/* buf was copied into rembuf above */
-+		rctx->in_sg = rctx->in_sg_chain;
- 		sg_init_one(rctx->in_sg, rctx->rembuf, rctx->buf_cnt);
--		rctx->total = rctx->buf_cnt;
- 	/* no data from previous operation */
- 	} else {
- 		rctx->in_sg = req->src;
--		rctx->total = req->nbytes;
--		req->src = rctx->in_sg;
- 	}
++	dlen = req->dlen;
++
+ 	scratch = raw_cpu_ptr(&scomp_scratch);
+ 	spin_lock(&scratch->lock);
  
- 	/* on next call, we only have the remaining data in the buffer */
+@@ -145,6 +148,9 @@ static int scomp_acomp_comp_decomp(struct acomp_req *req, int dir)
+ 				ret = -ENOMEM;
+ 				goto out;
+ 			}
++		} else if (req->dlen > dlen) {
++			ret = -ENOSPC;
++			goto out;
+ 		}
+ 		scatterwalk_map_and_copy(scratch->dst, req->dst, 0, req->dlen,
+ 					 1);
 -- 
 2.43.0
 
