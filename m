@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6FB12DDB0;
-	Tue, 23 Jan 2024 01:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9357412DDBC;
+	Tue, 23 Jan 2024 01:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971731; cv=none; b=N/d+CCPT7p3MTHBSjyNPITcGl5RytfyHLf5v2d35nbRP6A9+HS+v2ZkUP244aGE/dybcntSixAMwj0SPM4YrKA2KZ2GEv2S6ZLEZD5+FVBbDRIaoGOpSg0FtvSWSDCyobXf+SAGzK2/65LahHAGDfJTC3qS/doSaEWfvnxeniQQ=
+	t=1705971734; cv=none; b=QxBdHtCSfQrBPQv5ruFbGnSSfK/1+MvjdxbiWTf5I4gu/DpKWwfw/I2RpwMgJF0H9dmWsXrx1Ogk4r2Qly5LlKMQAjLvaos03uNLL6SYKlHv7PCm1iR8rnzqU1TUzo59Rnrr2K9vl2nZH2+PlFxyenZpD3Gehwi/KGv/l1pdidY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971731; c=relaxed/simple;
-	bh=4O/R8J0QZY68JMkE9x0ZcJLIhYYnyASdU48ciF+Orlo=;
+	s=arc-20240116; t=1705971734; c=relaxed/simple;
+	bh=FHLXCkYJG86N7i+xnhXeaZrbk2hoPKxlNfDibv7km6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rtp2JOskY7VIlBsaZMdokob0lsEomVMETQqhwQXvM5fDKLiZvy6mo0ulU9P7/T5nzsvBHLh0am8YL5TrV7f7kOGStJomC4mvZ3BWirHNz0SVe6Uv0PkjufbtdOTi0MYIZcEam2/WOyJh+p0yPpjkVpuXr0JUHjRzzct6HgEVkH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MoeYyVnX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GGxaw0tXQP0Q2RD6aZ3N61kclu6viUWUDdbKOZI//cyqngvPUPBpXzXzbW5X/5YqcYzKO2l4YQcBRGNBlG7lvoCoXjtRvCUnPq1vEOF20v7Nr1JRBFFlw9/fb04AVjILXpG8YvSyzqOy05e3tjYtP+diO1K63Cs3DabXPUqbg2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETTrFKVy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MoeYyVnX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8890EC433F1;
-	Tue, 23 Jan 2024 01:02:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETTrFKVy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBABC433C7;
+	Tue, 23 Jan 2024 01:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971730;
-	bh=4O/R8J0QZY68JMkE9x0ZcJLIhYYnyASdU48ciF+Orlo=;
+	s=korg; t=1705971734;
+	bh=FHLXCkYJG86N7i+xnhXeaZrbk2hoPKxlNfDibv7km6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MoeYyVnXdSFzk3AdUtG03vH0m/i2HviH843MxK+IWFw1qBIaCZmy+DfX6BjprN2Em
-	 XZ3hShruXfh9HY2hk88LdCgei7rlTO9UkQOJnq2LCm5+Y50vhH/J8TqKoMNdLsZ0Y5
-	 CuMAw8dWBIAb1FtYwercELnNI+G2UutbnaXsubYI=
+	b=ETTrFKVyu0ZPFIRDhdi6JydUx5zLqZvKgH6J6brHOD4K74QkcFlTXa+RrvaBppkdR
+	 SIqjDken/AvqTGlJyTFV0I0usfOLjU+Xhr6xyCGvHA6V9zOCJBPy+EMMRFs5AHUrjD
+	 dlgg1mv6mLnCIe6dP/dAxizL8tCeLZzRIbfFstww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RD Babiera <rdbabiera@google.com>,
-	Chris Bainbridge <chris.bainbridge@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.10 216/286] Revert "usb: typec: class: fix typec_altmode_put_partner to put plugs"
-Date: Mon, 22 Jan 2024 15:58:42 -0800
-Message-ID: <20240122235740.406258536@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 290/417] scsi: target: core: add missing file_{start,end}_write()
+Date: Mon, 22 Jan 2024 15:57:38 -0800
+Message-ID: <20240122235801.875755162@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +49,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 9c6b789e954fae73c548f39332bcc56bdf0d4373 upstream.
+commit 0db1d53937fafa8bb96e077375691e16902f4899 upstream.
 
-This reverts commit b17b7fe6dd5c6ff74b38b0758ca799cdbb79e26e.
+The callers of vfs_iter_write() are required to hold file_start_write().
+file_start_write() is a no-op for the S_ISBLK() case, but it is really
+needed when the backing file is a regular file.
 
-That commit messed up the reference counting, so it needs to
-be rethought.
+We are going to move file_{start,end}_write() into vfs_iter_write(), but
+we need to fix this first, so that the fix could be backported to stable
+kernels.
 
-Fixes: b17b7fe6dd5c ("usb: typec: class: fix typec_altmode_put_partner to put plugs")
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/ZV8ETIpM+wZa33B5@infradead.org/
 Cc:  <stable@vger.kernel.org>
-Cc: RD Babiera <rdbabiera@google.com>
-Reported-by: Chris Bainbridge <chris.bainbridge@gmail.com>
-Closes: https://lore.kernel.org/lkml/CAP-bSRb3SXpgo_BEdqZB-p1K5625fMegRZ17ZkPE1J8ZYgEHDg@mail.gmail.com/
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240102091142.2136472-1-heikki.krogerus@linux.intel.com
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://lore.kernel.org/r/20231123092000.2665902-1-amir73il@gmail.com
+Acked-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/class.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/target/target_core_file.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -194,7 +194,7 @@ static void typec_altmode_put_partner(st
- 	if (!partner)
- 		return;
+--- a/drivers/target/target_core_file.c
++++ b/drivers/target/target_core_file.c
+@@ -338,11 +338,13 @@ static int fd_do_rw(struct se_cmd *cmd,
+ 	}
  
--	adev = &altmode->adev;
-+	adev = &partner->adev;
+ 	iov_iter_bvec(&iter, is_write, bvec, sgl_nents, len);
+-	if (is_write)
++	if (is_write) {
++		file_start_write(fd);
+ 		ret = vfs_iter_write(fd, &iter, &pos, 0);
+-	else
++		file_end_write(fd);
++	} else {
+ 		ret = vfs_iter_read(fd, &iter, &pos, 0);
+-
++	}
+ 	if (is_write) {
+ 		if (ret < 0 || ret != data_length) {
+ 			pr_err("%s() write returned %d\n", __func__, ret);
+@@ -474,7 +476,9 @@ fd_execute_write_same(struct se_cmd *cmd
+ 	}
  
- 	if (is_typec_plug(adev->dev.parent)) {
- 		struct typec_plug *plug = to_typec_plug(adev->dev.parent);
-@@ -424,8 +424,7 @@ static void typec_altmode_release(struct
- {
- 	struct altmode *alt = to_altmode(to_typec_altmode(dev));
+ 	iov_iter_bvec(&iter, ITER_SOURCE, bvec, nolb, len);
++	file_start_write(fd_dev->fd_file);
+ 	ret = vfs_iter_write(fd_dev->fd_file, &iter, &pos, 0);
++	file_end_write(fd_dev->fd_file);
  
--	if (!is_typec_port(dev->parent))
--		typec_altmode_put_partner(alt);
-+	typec_altmode_put_partner(alt);
- 
- 	altmode_id_remove(alt->adev.dev.parent, alt->id);
- 	kfree(alt);
+ 	kfree(bvec);
+ 	if (ret < 0 || ret != len) {
 
 
