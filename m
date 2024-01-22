@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3D11292EC;
-	Tue, 23 Jan 2024 00:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE1B129A7F;
+	Tue, 23 Jan 2024 00:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971008; cv=none; b=CVqSF5xSkawFXwutnm1cD76UJuGAHDrYYa0u/pAHoosdp8NFQnAdPRpmeZq5B1adbJYWRa3XAu+iHnOTMgOMXb/gVbiEokGdNwK2PU+tf2pfccyVlgNlNQtHou+2tqDYg47y1g6DvjjNosugTXld2VLoSYbchM6oO1mQxyikAj8=
+	t=1705971012; cv=none; b=WNw6lH3flwjHV+N/Iq9Ohcm6fArKXWdc61YvDavh4kGsJpXrFv5CRAW33l1rrgCC+7RyHFaZr6Ck1xKL9zop9NrL+0m/0SkfsFuELtEGFoZyXtoPr2i5EK4m1UKBZGueeyWcpbANlRXIRbsaGG5OlwmMVYB2xMFhYBO7/b8G1cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971008; c=relaxed/simple;
-	bh=pAKDOqL5C+UheVRuqSbZsmg1bPmKaD832RDNv30Lztc=;
+	s=arc-20240116; t=1705971012; c=relaxed/simple;
+	bh=810wMwglj+HtWU+yc7qYBAsjaQsubQC8GOZJTgL7cHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UVxe0oYBsX8uNjRoUVP0z6T04IlC6ljX2x/6Qn2PI5JPWx8BD67nNQEdinauA2GblwjTBkutlWCiZuIZhcAgyaKFDbuaxsZreilv3pOcL4psowfJCw1gx9G+6uuYoXuGTduqeSYCZeErzpjitzEKYNPpt/ibJ7KqEYA1/YhZzCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkTev5zz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uTyQAur/l3uBYOMoElI9CY2EJBdzRIXVZ8TlOSEJXrWeP1hYfTiznub2lMg2b+3JZkOLlhulamhXadIarjYO+CRuEqFcQ9OXzBOgVKdqRvfijgqHjPoyBoFXbKFgf5VKO5NegacnXLL7zSKBJB+0pY5X9xoTW+oaFU/i8D0UXak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWmyutnl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkTev5zz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22879C43390;
-	Tue, 23 Jan 2024 00:50:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWmyutnl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A7EC433C7;
+	Tue, 23 Jan 2024 00:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971008;
-	bh=pAKDOqL5C+UheVRuqSbZsmg1bPmKaD832RDNv30Lztc=;
+	s=korg; t=1705971012;
+	bh=810wMwglj+HtWU+yc7qYBAsjaQsubQC8GOZJTgL7cHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LkTev5zzMEh+89zLcp0QyxBYuKjX6t5g2jbmUiIzeoIRmgXS0+8PLG7qDH/qBCznx
-	 zqBkG6VKG6mqL57E6546IELJ+XAHJGgT7ek3p93wPNV3AeGctvfgEcsLGbQFWGTKPD
-	 UAdNkB+mIkMawOSWFsnXN5DO6I9ph2TF3eoIUHxk=
+	b=ZWmyutnlIrSr8cANHN/9UYivwME4Z9gBVW/vuiqNo6HWYLahkPI0Eq6D9jeIX5yfB
+	 +0Gh6N4HkA/mgd3AaNCyzvZEhf9zVAmeOHXR5sylEgq+igC+hjMdFlI7VywYpIn5An
+	 lQdPM5iWRrSUXWeq0cF2a+8jD5fNKlJ9uceSNGXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paul Moore <paul@paul-moore.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Abhinav Singh <singhabhinav9051571833@gmail.com>,
+	Danilo Krummrich <dakr@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 069/286] net: netlabel: Fix kerneldoc warnings
-Date: Mon, 22 Jan 2024 15:56:15 -0800
-Message-ID: <20240122235734.677309898@linuxfoundation.org>
+Subject: [PATCH 6.1 162/417] drm/nouveau/fence:: fix warning directly dereferencing a rcu pointer
+Date: Mon, 22 Jan 2024 15:55:30 -0800
+Message-ID: <20240122235757.453435047@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,38 +47,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Lunn <andrew@lunn.ch>
+From: Abhinav Singh <singhabhinav9051571833@gmail.com>
 
-[ Upstream commit 294ea29113104487a905d0f81c00dfd64121b3d9 ]
+[ Upstream commit 5f35a624c1e30b5bae5023b3c256e94e0ad4f806 ]
 
-net/netlabel/netlabel_calipso.c:376: warning: Function parameter or member 'ops' not described in 'netlbl_calipso_ops_register'
+Fix a sparse warning with this message
+"warning:dereference of noderef expression". In this context it means we
+are dereferencing a __rcu tagged pointer directly.
 
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Link: https://lore.kernel.org/r/20201028005350.930299-1-andrew@lunn.ch
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: ec4e9d630a64 ("calipso: fix memory leak in netlbl_calipso_add_pass()")
+We should not be directly dereferencing a rcu pointer. To get a normal
+(non __rcu tagged pointer) from a __rcu tagged pointer we are using the
+function unrcu_pointer(...). The non __rcu tagged pointer then can be
+dereferenced just like a normal pointer.
+
+I tested with qemu with this command
+qemu-system-x86_64 \
+	-m 2G \
+	-smp 2 \
+	-kernel bzImage \
+	-append "console=ttyS0 root=/dev/sda earlyprintk=serial net.ifnames=0" \
+	-drive file=bullseye.img,format=raw \
+	-net user,host=10.0.2.10,hostfwd=tcp:127.0.0.1:10021-:22 \
+	-net nic,model=e1000 \
+	-enable-kvm \
+	-nographic \
+	-pidfile vm.pid \
+	2>&1 | tee vm.log
+with lockdep enabled.
+
+Fixes: 0ec5f02f0e2c ("drm/nouveau: prevent stale fence->channel pointers, and protect with rcu")
+Signed-off-by: Abhinav Singh <singhabhinav9051571833@gmail.com>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231113191303.3277733-1-singhabhinav9051571833@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlabel/netlabel_calipso.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/nouveau/nv04_fence.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netlabel/netlabel_calipso.c b/net/netlabel/netlabel_calipso.c
-index 4e62f2ad3575..f28c8947c730 100644
---- a/net/netlabel/netlabel_calipso.c
-+++ b/net/netlabel/netlabel_calipso.c
-@@ -366,6 +366,7 @@ static const struct netlbl_calipso_ops *calipso_ops;
- 
- /**
-  * netlbl_calipso_ops_register - Register the CALIPSO operations
-+ * @ops: ops to register
-  *
-  * Description:
-  * Register the CALIPSO packet engine operations.
+diff --git a/drivers/gpu/drm/nouveau/nv04_fence.c b/drivers/gpu/drm/nouveau/nv04_fence.c
+index 5b71a5a5cd85..cdbc75e3d1f6 100644
+--- a/drivers/gpu/drm/nouveau/nv04_fence.c
++++ b/drivers/gpu/drm/nouveau/nv04_fence.c
+@@ -39,7 +39,7 @@ struct nv04_fence_priv {
+ static int
+ nv04_fence_emit(struct nouveau_fence *fence)
+ {
+-	struct nvif_push *push = fence->channel->chan.push;
++	struct nvif_push *push = unrcu_pointer(fence->channel)->chan.push;
+ 	int ret = PUSH_WAIT(push, 2);
+ 	if (ret == 0) {
+ 		PUSH_NVSQ(push, NV_SW, 0x0150, fence->base.seqno);
 -- 
 2.43.0
 
