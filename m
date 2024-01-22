@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA435D75B;
-	Tue, 23 Jan 2024 00:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689CD4E1D8;
+	Tue, 23 Jan 2024 00:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970006; cv=none; b=majcAN4hVItjGgfEGqDvFYA+fYI6SpQoHbfrEnmSgZ23SfVjp9mbgVq+uA8KaBS4JckWw5JQC7HGdEtC+3x5sTCrRmjG+0bkz9iN1dbd5eeUEM3WGPJe91U+/m+mPL/JEHW2fYSUF1s366Ge0rWPqqQSVo20NMMtooxoOXj1iwY=
+	t=1705970015; cv=none; b=g5/iL4klA+rXpFuEYUw80O2F+E9dGBV6LydO0YC7svOCHVl7aoHIaitOjGphG2xRwiOT3Qk4VK0sHS0KNW8TbMsuUIeR/naoMOhhBVt8BO5uaL3AMvD9zsPnduis8QR2UoUv5ZMarVlKVyoqOQCHWxzMS7nD8aI78XnZzhNhxQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970006; c=relaxed/simple;
-	bh=NPnoMZeDHsv3vbjiguIZi8UUteSQWNmtPjefrKDPgrE=;
+	s=arc-20240116; t=1705970015; c=relaxed/simple;
+	bh=KPHNmeWFCPcl2u9XDCFWBVpFt3VUX3wzPsAqqi82kRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cPnP5Y7fBxBNsKZOn1Ing1AR6m4uBSFt6/XBJ+vzPT4xOj7yRlGoDidZ1ElXxa5We0xBBZ7TrHcRxBXOUfH0pzMH9Yp8wx3GiqEtMk9hKCCN0BKyVu2tg2bWTuWrVuFvGAr3es2OAUjthNUGHZb13+5wageUNj9IE2BZWFD11UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tle8LWbf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kzyoRqRpQKTLMerwZlIkX69QXTLPK1qQNPVqTGhy9vFA8VTF5TOhfhVtZWX4HbtWGTKKPYu4maIcvnFym1CcWFl9HM2jtbEuE1YiUIN74MD2HQAu53+wOi4eaOtNAL73xokNVGZm7EFYp+7WNis0ktUCpWEtFvl1YNTthjbNaoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGsVTW5p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tle8LWbf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0E3C433C7;
-	Tue, 23 Jan 2024 00:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGsVTW5p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114B1C433F1;
+	Tue, 23 Jan 2024 00:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970006;
-	bh=NPnoMZeDHsv3vbjiguIZi8UUteSQWNmtPjefrKDPgrE=;
+	s=korg; t=1705970015;
+	bh=KPHNmeWFCPcl2u9XDCFWBVpFt3VUX3wzPsAqqi82kRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tle8LWbfeoFIhYjaNtvM7qnz6blC43QKVuvVQn9g+5+HeO0fPRkq/98RAyBaQxY7l
-	 Kr9XUimmid/KL8mUsM8NKSohoXNe4ZCf2PsladzKPaeyJtyZtkzSLghnHzQfZIrm92
-	 kXmgmaqa/l3y3FfNEX00BGAUAWPUWDyuy/iD1AJ0=
+	b=LGsVTW5p6l/o9+DNMTgt7+R0vMMGD520V2T8W5maoWrS4wSXrAt7CAB0KYSq0efd7
+	 gt4yUyeWowsDibkrYxa8Bi8c0Cw86H+FEEEEn4JDvvX4Gx7vc5OFEmI5Hab6jH3FIF
+	 ogQj0ksfY0RgzLgJqHT6gjiMOR4pEozq2vZCAUhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 527/641] selftests/sgx: Skip non X86_64 platform
-Date: Mon, 22 Jan 2024 15:57:11 -0800
-Message-ID: <20240122235834.588278643@linuxfoundation.org>
+Subject: [PATCH 6.7 563/641] serial: imx: Correct clock error message in function probe()
+Date: Mon, 22 Jan 2024 15:57:47 -0800
+Message-ID: <20240122235835.774270526@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -46,52 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+From: Christoph Niedermaier <cniedermaier@dh-electronics.com>
 
-[ Upstream commit 981cf568a8644161c2f15c02278ebc2834b51ba6 ]
+[ Upstream commit 3e189470cad27d41a3a9dc02649f965b7ed1c90f ]
 
-When building whole selftests on arm64, rsync gives an erorr about sgx:
+Correct the clock error message by changing the clock name.
 
-rsync: [sender] link_stat "/root/linux-next/tools/testing/selftests/sgx/test_encl.elf" failed: No such file or directory (2)
-rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1327) [sender=3.2.5]
-
-The root casue is sgx only used on X86_64, and shall be skipped on other
-platforms.
-
-Fix this by moving TEST_CUSTOM_PROGS and TEST_FILES inside the if check,
-then the build result will be "Skipping non-existent dir: sgx".
-
-Fixes: 2adcba79e69d ("selftests/x86: Add a selftest for SGX")
-Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/all/20231206025605.3965302-1-zhaomzhao%40126.com
+Fixes: 1e512d45332b ("serial: imx: add error messages when .probe fails")
+Signed-off-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231224093209.2612-1-cniedermaier@dh-electronics.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/sgx/Makefile | 2 +-
+ drivers/tty/serial/imx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/sgx/Makefile b/tools/testing/selftests/sgx/Makefile
-index 50aab6b57da3..01abe4969b0f 100644
---- a/tools/testing/selftests/sgx/Makefile
-+++ b/tools/testing/selftests/sgx/Makefile
-@@ -16,10 +16,10 @@ HOST_CFLAGS := -Wall -Werror -g $(INCLUDES) -fPIC -z noexecstack
- ENCL_CFLAGS := -Wall -Werror -static -nostdlib -nostartfiles -fPIC \
- 	       -fno-stack-protector -mrdrnd $(INCLUDES)
- 
-+ifeq ($(CAN_BUILD_X86_64), 1)
- TEST_CUSTOM_PROGS := $(OUTPUT)/test_sgx
- TEST_FILES := $(OUTPUT)/test_encl.elf
- 
--ifeq ($(CAN_BUILD_X86_64), 1)
- all: $(TEST_CUSTOM_PROGS) $(OUTPUT)/test_encl.elf
- endif
+diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
+index 16207b9a8c81..81557a58f86f 100644
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -2315,7 +2315,7 @@ static int imx_uart_probe(struct platform_device *pdev)
+ 	/* For register access, we only need to enable the ipg clock. */
+ 	ret = clk_prepare_enable(sport->clk_ipg);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "failed to enable per clk: %d\n", ret);
++		dev_err(&pdev->dev, "failed to enable ipg clk: %d\n", ret);
+ 		return ret;
+ 	}
  
 -- 
 2.43.0
