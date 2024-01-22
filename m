@@ -1,83 +1,107 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C964CE11
-	for <patches@lists.linux.dev>; Mon, 22 Jan 2024 14:57:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F98C3D99F;
+	Mon, 22 Jan 2024 17:07:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705935461; cv=none; b=QsOmB/0SlPLeuptKZRmep50Z7XSO4udq+r+lHSJ75jddOTHOd+fac3VLQf6uwtexuKn+q0XugBnl/fcbkIP0C3dJogDsjWLJSt2zXUCzmiFcHiW8cAr1zOE+e/DjDcB3B/NDxV5zu0X+CaMJtb4smVD20FM7jpgAKkphhCrqDsg=
+	t=1705943251; cv=none; b=Vbl8vNUryzhRAzZI8+kG9Oltg2/As6XVu5aBY6lg58yA/Q++cVDUB5Q1eAvz15X4s8FLmwOyx7v3C6unR0l/+h0Y1ZGn9cR66Boj5I8Y/nRlzz4DNd3O3x7t0oXWE6VywUX5X0ih4tSPfxzJu9QQ2l3w8IzCqpJOzt3M7LyrKB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705935461; c=relaxed/simple;
-	bh=dbTjgoR71IIADj4OTs/qmqArIX3aIs/ADiasXrZWiOE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gipV7YIzaFzAy3DcQCZ1WSEzneiolrQLBBV2JF1FFQCcTXhV1huPfmJHWGUrcipMXJj6TmtmPTe2i2f98URlTesAQk6FFFrRNyudrQzgtqvPpl8a3HDwr1GjPph8MdktGb1fGFPTXYHzCAdlZriRBEhs5liY5dZoof8mGvzeVIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y8457sYZ; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1705943251; c=relaxed/simple;
+	bh=+JZz32rW4JTCFtXIffKZnVlpE+3nMpJ5etJGZvkKUt8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xbj4sI4LXUMBKJkV6F+rrjLFIWTZe2Spjc9AoZpeXAgOhsQup+L/tVaRQvbx9e0JJS4ZqdRmFHLR2P90mKLH6IYbSyAbmEXA2bYsC65HqHSMICUB3bp71jGs/8yJpEWwixH5FPtGX0edRpgxAHyQV4U/nG5a4vxrX2VKc5odcPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfju6/uT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y8457sYZ"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-5f0629e67f4so31912337b3.3
-        for <patches@lists.linux.dev>; Mon, 22 Jan 2024 06:57:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705935459; x=1706540259; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dbTjgoR71IIADj4OTs/qmqArIX3aIs/ADiasXrZWiOE=;
-        b=Y8457sYZi9Cb7ZAf4qkTu0j1mNXHShTWpTQfM1BrnBWnNi+F4cuemoYi19wnYJBP39
-         4GZrKLnkMBvPpSX6ytoKEp9kpqkn20T0aUfKCHsPpH1Ns66j0c/jBdx/K36H0jM+q1DH
-         adqhZaKvV9iTopIEdXLVRQF5rdwf3vOAekVtIu5lBryyar2PiMzddZZhxZxe0ev5wJkG
-         eL1wJflNpqEe2JvYukLKslnl/ebxO/N28PilBAawUIH8NO3tgndnayqLtKkh+RcVig5K
-         vQbJ51a0Td8mgtvSQ4zsGnxoUbxA6+AqHNOXNCspCJ0f0VaBj3nxPeRMZlY6qHyU4R30
-         bqRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705935459; x=1706540259;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dbTjgoR71IIADj4OTs/qmqArIX3aIs/ADiasXrZWiOE=;
-        b=TrJLIaltUag05ORdhTW3bUsAdUoAxdP7v1ZO1L4uj3dzl/5vnHxaO0siKOkWYv8OfQ
-         j18eggBhy1oX6QRVk3RkmKt9PX4/+5pzFEOw609QN7UcOk96OAhrSxT4JU3cT5muhbUx
-         m/M/xXphuyGmPdto8+AUgm+eHwmuiYYoaBlyR6rhFSIPppE0U9qG3RAu1UcA5ISKrAod
-         gVyfwWGp23c2dwrdMnGYq5nKce8JUX2rhqm4IYJEHd7PwlacVE/dyRCvdWLkRKG85fMf
-         w6mJh6IiNyZIALXSPA79v+MhKuxpMYHwZEJ6y12aPBBhicrIt7h/un/We+gibAwsP0BS
-         EdgA==
-X-Gm-Message-State: AOJu0YzFDruMAVCG0b9jMRwT87KWZmShW3jgLo8S7pQumeBvWVfXLLBQ
-	Eresz3VwLL0qMQdPhrHJ7kqbHY/RXjaznJISDnrqrc/8vjbplgfuPAGO1LA3jyiK5JbXP97ThkF
-	7AhR6V8uL6wKfETsspOOT+Ie84eE=
-X-Google-Smtp-Source: AGHT+IHnzUFy2p7+kzamAfzR3Cl3NIAZ1jewG5eGKn99WPEvuGAIsldzYT/dpEHMVi27978kTvLjmfmnsNil4jXRYOM=
-X-Received: by 2002:a25:ac1c:0:b0:dc2:3562:d234 with SMTP id
- w28-20020a25ac1c000000b00dc23562d234mr2243208ybi.12.1705935458861; Mon, 22
- Jan 2024 06:57:38 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfju6/uT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E083C433F1;
+	Mon, 22 Jan 2024 17:07:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1705943251;
+	bh=+JZz32rW4JTCFtXIffKZnVlpE+3nMpJ5etJGZvkKUt8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=vfju6/uTQDFy/inOO9Cv8BylCzmPH+WOUs2vKtKq+86zr9Iic/k0ivgFtFVKMEoBM
+	 z/wP15XKNngZzQbsiw/FTySNTZfYIYbriqSONjALL2bQb8cM7jRUX5vWnq1tqOl0Ha
+	 WSwmIc1v5GQXReigkzAOvcuAWPZ8G3J2UJ5usaUw=
+Date: Mon, 22 Jan 2024 09:07:28 -0800
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Florian Fainelli <f.fainelli@gmail.com>
+Cc: Stefan Wiehler <stefan.wiehler@nokia.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: Re: [PATCH] mips/smp: Call rcu_cpu_starting() earlier
+Message-ID: <2024012219-retiring-superbowl-1570@gregkh>
+References: <2024011935-snowman-regain-b820@gregkh>
+ <20240119163811.3884999-1-stefan.wiehler@nokia.com>
+ <2024012047-prompter-driveway-c418@gregkh>
+ <b3ddf95a-7f4a-4f15-b701-c37cfe95a4cb@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231224172128.271447-1-ojeda@kernel.org>
-In-Reply-To: <20231224172128.271447-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 22 Jan 2024 15:57:27 +0100
-Message-ID: <CANiq72nxur+5ms8QSUmFUcCU=RU0GYvkYggDvGxr4uowNEeSNg@mail.gmail.com>
-Subject: Re: [PATCH] rust: upgrade to Rust 1.75.0
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b3ddf95a-7f4a-4f15-b701-c37cfe95a4cb@gmail.com>
 
-On Sun, Dec 24, 2023 at 6:21=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> This is the next upgrade to the Rust toolchain, from 1.74.1 to 1.75.0
-> (i.e. the latest) [1].
+On Sun, Jan 21, 2024 at 08:52:55AM -0800, Florian Fainelli wrote:
+> 
+> 
+> On 1/19/2024 10:38 PM, Greg Kroah-Hartman wrote:
+> > On Fri, Jan 19, 2024 at 05:38:11PM +0100, Stefan Wiehler wrote:
+> > > rcu_cpu_starting() must be called before clockevents_register_device() to avoid
+> > > the following lockdep splat triggered by calling list_add() when
+> > > CONFIG_PROVE_RCU_LIST=y:
+> > > 
+> > >    WARNING: suspicious RCU usage
+> > >    ...
+> > >    -----------------------------
+> > >    kernel/locking/lockdep.c:3680 RCU-list traversed in non-reader section!!
+> > > 
+> > >    other info that might help us debug this:
+> > > 
+> > >    RCU used illegally from offline CPU!
+> > >    rcu_scheduler_active = 1, debug_locks = 1
+> > >    no locks held by swapper/1/0.
+> > >    ...
+> > >    Call Trace:
+> > >    [<ffffffff8012a434>] show_stack+0x64/0x158
+> > >    [<ffffffff80a93d98>] dump_stack_lvl+0x90/0xc4
+> > >    [<ffffffff801c9e9c>] __lock_acquire+0x1404/0x2940
+> > >    [<ffffffff801cbf3c>] lock_acquire+0x14c/0x448
+> > >    [<ffffffff80aa4260>] _raw_spin_lock_irqsave+0x50/0x88
+> > >    [<ffffffff8021e0c8>] clockevents_register_device+0x60/0x1e8
+> > >    [<ffffffff80130ff0>] r4k_clockevent_init+0x220/0x3a0
+> > >    [<ffffffff801339d0>] start_secondary+0x50/0x3b8
+> > > 
+> > > raw_smp_processor_id() is required in order to avoid calling into lockdep
+> > > before RCU has declared the CPU to be watched for readers.
+> > > 
+> > > See also commit 29368e093921 ("x86/smpboot:  Move rcu_cpu_starting() earlier"),
+> > > commit de5d9dae150c ("s390/smp: move rcu_cpu_starting() earlier") and commit
+> > > 99f070b62322 ("powerpc/smp: Call rcu_cpu_starting() earlier").
+> > > 
+> > > Signed-off-by: Stefan Wiehler <stefan.wiehler@nokia.com>
+> > > Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
+> > > Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+> > > ---
+> > >   arch/mips/kernel/smp.c | 4 ++--
+> > >   1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > What is the git commit id of this change in Linus's tree?  What
+> > kernel(s) should this be applied to?
+> 
+> The upstream commit is 55702ec9603ebeffb15e6f7b113623fe1d8872f4 ("mips/smp:
+> Call rcutree_report_cpu_starting() earlier") and this change from Stefan
+> should be applied to both the 6.1 stable and 6.6 stable branches. Thanks!
 
-Applied to `rust-next` -- thanks everyone!
+Thanks, now queued up.
 
-Cheers,
-Miguel
+greg k-h
