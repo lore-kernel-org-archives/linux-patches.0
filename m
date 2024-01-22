@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161322B9CD;
-	Tue, 23 Jan 2024 01:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD4F37C;
+	Tue, 23 Jan 2024 01:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972133; cv=none; b=Lm+mY83IQkNzXw2yVYozQ38rNQsvYhEQTflJQjgJotUhou9nQQsF2fkN84kn2F9AlR5o703bdBeinHvNAPIrvONYCJ+ln+ipsdC/USWIU19pHt7RsW5L9XsTbgYSfOYEWqlA/h62dJJy6+2wnhG3UaBkSZf+/k90U4SwT7YAbk0=
+	t=1705972133; cv=none; b=OomgAqsmot3A6vVdtAntHgDMOx6SaEAtep4NXFx+RQSkwCjPRHxmWT0rJ2iosoKDJySjr4hTXSlhe2GJAds8qbMSLLMFWpjFzGb3VsxQpgNPvxN5JWyEV/FCpYDXrNwebHNjpHPFqweTwH885Wp7VkEMglCAl8DNBads7CM8EAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705972133; c=relaxed/simple;
-	bh=ba45qjmJYUhoaYlU2F5DOjNhG8rECexJKGY8qwZ5LQ0=;
+	bh=pIZ/sU1C98VZefvGYgy6LOTx6SX3va0+gu+mC6mZsSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lA7ZUjjL+JYYxnslWbFJNNZt+1tehYA19Abd2H1ycFmLhKuYaWgj+pfxkizy83jwDuPfsEJ9l7S08Bj7eP47VoBYs1hpCw1SQZ5KtgaxLVCykIs/i/6ImSKoDrbGB1CkYjwXMvA/wqEl2sTnvoeAZiGwOF2S9vpQeZEZkv1ZZKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9kz88z8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d0cu2gDwzVKjnRSqXTMj3kTHVnQnLbgnjZsGHuDErxv+ueRTXzc9tisVOr3C7d3qEygsiuxNTyQViLLRb5d4YloxuTzFXnBcIjcWiuCUfmLSjVIo2LzYP53A3an/DAjjASr/jHqsUQI194dq3hafy2sxYZT8PW7eek3X6e3LQ3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrS3P/kn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9kz88z8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94061C433A6;
-	Tue, 23 Jan 2024 01:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrS3P/kn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CEF2C43394;
+	Tue, 23 Jan 2024 01:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972132;
-	bh=ba45qjmJYUhoaYlU2F5DOjNhG8rECexJKGY8qwZ5LQ0=;
+	s=korg; t=1705972133;
+	bh=pIZ/sU1C98VZefvGYgy6LOTx6SX3va0+gu+mC6mZsSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z9kz88z8rbfJmaFqMMiL9U+dJwAYMeUlfuDAxf/tOXuFgs7ND7uyRnvl7qPBUgAjR
-	 3Ojd/8c7LcpVkJJbZKkp2pmxJMeAnvRfhU7rO5D6eNrSy9n0vftIsAfaynAu1uFEzZ
-	 6ZSDS+bsxyHue4CbkWNZSqIEwQWgPr66UxTeDckw=
+	b=xrS3P/kn9xaVRGLC1oHhsaRI4miEM1JS7oo/F6g6tJZ+peEl27rmH/xl3hDvAZ1r0
+	 3LpJo/d0uwVnLWWa5T5KUOeKDhTHJdXGh/JieJZpg4wVX22CxNmplKJrSyXGORHYWV
+	 MNh3+41QwZxOM1Zh5S11ehxc3C3orl6bPBQALyjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/374] x86/lib: Fix overflow when counting digits
-Date: Mon, 22 Jan 2024 15:55:21 -0800
-Message-ID: <20240122235746.879108700@linuxfoundation.org>
+Subject: [PATCH 5.15 048/374] ARM: sun9i: smp: fix return code check of of_property_match_string
+Date: Mon, 22 Jan 2024 15:55:04 -0800
+Message-ID: <20240122235746.279888281@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,64 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit a24d61c609813963aacc9f6ec8343f4fcaac7243 ]
+[ Upstream commit 643fe70e7bcdcc9e2d96952f7fc2bab56385cce5 ]
 
-tl;dr: The num_digits() function has a theoretical overflow issue.
-But it doesn't affect any actual in-tree users.  Fix it by using
-a larger type for one of the local variables.
+of_property_match_string returns an int; either an index from 0 or
+greater if successful or negative on failure. Even it's very
+unlikely that the DT CPU node contains multiple enable-methods
+these checks should be fixed.
 
-Long version:
+This patch was inspired by the work of Nick Desaulniers.
 
-There is an overflow in variable m in function num_digits when val
-is >= 1410065408 which leads to the digit calculation loop to
-iterate more times than required. This results in either more
-digits being counted or in some cases (for example where val is
-1932683193) the value of m eventually overflows to zero and the
-while loop spins forever).
-
-Currently the function num_digits is currently only being used for
-small values of val in the SMP boot stage for digit counting on the
-number of cpus and NUMA nodes, so the overflow is never encountered.
-However it is useful to fix the overflow issue in case the function
-is used for other purposes in the future. (The issue was discovered
-while investigating the digit counting performance in various
-kernel helper functions rather than any real-world use-case).
-
-The simplest fix is to make m a long long, the overhead in
-multiplication speed for a long long is very minor for small values
-of val less than 10000 on modern processors. The alternative
-fix is to replace the multiplication with a constant division
-by 10 loop (this compiles down to an multiplication and shift)
-without needing to make m a long long, but this is slightly slower
-than the fix in this commit when measured on a range of x86
-processors).
-
-[ dhansen: subject and changelog tweaks ]
-
-Fixes: 646e29a1789a ("x86: Improve the printout of the SMP bootup CPU table")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20231102174901.2590325-1-colin.i.king%40gmail.com
+Link: https://lore.kernel.org/lkml/20230516-sunxi-v1-1-ac4b9651a8c1@google.com/T/
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20231228193903.9078-2-wahrenst@gmx.net
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/lib/misc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mach-sunxi/mc_smp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/lib/misc.c b/arch/x86/lib/misc.c
-index a018ec4fba53..c97be9a1430a 100644
---- a/arch/x86/lib/misc.c
-+++ b/arch/x86/lib/misc.c
-@@ -6,7 +6,7 @@
-  */
- int num_digits(int val)
- {
--	int m = 10;
-+	long long m = 10;
- 	int d = 1;
+diff --git a/arch/arm/mach-sunxi/mc_smp.c b/arch/arm/mach-sunxi/mc_smp.c
+index b2f5f4f28705..f779e386b6e7 100644
+--- a/arch/arm/mach-sunxi/mc_smp.c
++++ b/arch/arm/mach-sunxi/mc_smp.c
+@@ -804,12 +804,12 @@ static int __init sunxi_mc_smp_init(void)
+ 	for (i = 0; i < ARRAY_SIZE(sunxi_mc_smp_data); i++) {
+ 		ret = of_property_match_string(node, "enable-method",
+ 					       sunxi_mc_smp_data[i].enable_method);
+-		if (!ret)
++		if (ret >= 0)
+ 			break;
+ 	}
  
- 	if (val < 0) {
+ 	of_node_put(node);
+-	if (ret)
++	if (ret < 0)
+ 		return -ENODEV;
+ 
+ 	is_a83t = sunxi_mc_smp_data[i].is_a83t;
 -- 
 2.43.0
 
