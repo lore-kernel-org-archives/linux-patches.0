@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52C56518A;
-	Tue, 23 Jan 2024 01:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F5A6518A;
+	Tue, 23 Jan 2024 01:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971652; cv=none; b=CE7ukvQ4Kz+B4y+d2pRyvr68MKCDonvG8L0f/QcbvUXFYUUTpUupRGGSfRUdkiFNfF0v60nrira3cTnUDNVUn8LrZ2pU2wjKAfyz1orbVPHi/3vAX40g1I4MwniBVI6iZw5zYLJ0nG4X0NT+IOUbOqhI/XIu6FhgUw0dyU8pG4w=
+	t=1705971655; cv=none; b=lXIjX7Ze8uEfdsY3wkjDGorJ4lUNpXgD1HfZsXSLTm9ha9ypewjyMh4T9QPKmInb9x3k9k4XQluu4FKh1yPFo9hHYBeHh0YEBhJzVLQSL483685ifE88tObObIuZSeoYijYJEdGDh+1qD1xMCn85Nta/yhfvI9AOQy0VDKz4Cj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971652; c=relaxed/simple;
-	bh=aKIPzVrYLRrd/i1KiGSdpbXLLClowGtm+hO3UHQtSpA=;
+	s=arc-20240116; t=1705971655; c=relaxed/simple;
+	bh=l1rbrBjNlO2eQHzFIrrVP9+EsBFVGqk94cd8vsNNPLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZnZQparPdMjHyGDU+aJfuKd9nCSx0H+3wt2pfO+9qT8HwWTS1z0YZo92soNr6/0+aWpR02J+c1xFY3WEKBd3FFfDLOeyoX0qZJuVF7Gr1O+Mz/6vgyRSzJel/0A7Zck4dXZTNMfwsk8EFABBkgzd7DVSrJaGLwygnSNPztMdYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LtyC4YD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U1zTendrqi77yNlcnHBsSXWLiLr4e7TK9eql5daPXGOeiiDYbcXXQtu+GDvwnfmqcz3lOOTxFDFD/O4VrptrINsA1y6waZXOThAgOwZ3MLvG0ZHHXkkhgzr4ND+JLh8wN2A7/8V8xLIV8fuMLzxiDMSIUzBJge733c/IHsUBlis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoJIwUSv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LtyC4YD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9C2C433F1;
-	Tue, 23 Jan 2024 01:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoJIwUSv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD63C433C7;
+	Tue, 23 Jan 2024 01:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971652;
-	bh=aKIPzVrYLRrd/i1KiGSdpbXLLClowGtm+hO3UHQtSpA=;
+	s=korg; t=1705971655;
+	bh=l1rbrBjNlO2eQHzFIrrVP9+EsBFVGqk94cd8vsNNPLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2LtyC4YD22nU7f7Sx9r5nocUNyJVs06awyIakfgZIIRbr0SKSp0CZXCg593oGGKCn
-	 KRC0ssiYRpdaTZG9tznrz74ZSEIyhRabKAIKs1NGawrLIp+/M/n4vLDGWef64VBzmF
-	 tw/BUruGQIix9bGpMgW4DCM/H1OvqSBEXOL9hTa8=
+	b=xoJIwUSvYJewuPiW72uhUq+qS3NJ3H54LPJ4AvNnzB7RcpP5V+2vGWcRM3iUvsYAl
+	 p2GlfyrgWNXXuStH8YBaIKruDxf5zyVxcAvAzpTT4mQucqb6PEM+EDPj4DH0DAjyEL
+	 ybB8+SvgBGZQ4Td62YhfBe0ffZab5dHC79z/AB8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 287/417] fbdev: flush deferred work in fb_deferred_io_fsync()
-Date: Mon, 22 Jan 2024 15:57:35 -0800
-Message-ID: <20240122235801.778716103@linuxfoundation.org>
+	Stephen Boyd <stephen.boyd@linaro.org>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Rob Herring <robh@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 195/286] of: Fix double free in of_parse_phandle_with_args_map
+Date: Mon, 22 Jan 2024 15:58:21 -0800
+Message-ID: <20240122235739.637376247@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +48,235 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit 15e4c1f462279b4e128f27de48133e0debe9e0df upstream.
+[ Upstream commit 4dde83569832f9377362e50f7748463340c5db6b ]
 
-The driver's fsync() is supposed to flush any pending operation to
-hardware. It is implemented in this driver by cancelling the queued
-deferred IO first, then schedule it for "immediate execution" by calling
-schedule_delayed_work() again with delay=0. However, setting delay=0
-only means the work is scheduled immediately, it does not mean the work
-is executed immediately. There is no guarantee that the work is finished
-after schedule_delayed_work() returns. After this driver's fsync()
-returns, there can still be pending work. Furthermore, if close() is
-called by users immediately after fsync(), the pending work gets
-cancelled and fsync() may do nothing.
+In of_parse_phandle_with_args_map() the inner loop that
+iterates through the map entries calls of_node_put(new)
+to free the reference acquired by the previous iteration
+of the inner loop. This assumes that the value of "new" is
+NULL on the first iteration of the inner loop.
 
-To ensure that the deferred IO completes, use flush_delayed_work()
-instead. Write operations to this driver either write to the device
-directly, or invoke schedule_delayed_work(); so by flushing the
-workqueue, it can be guaranteed that all previous writes make it to the
-device.
+Make sure that this is true in all iterations of the outer
+loop by setting "new" to NULL after its value is assigned to "cur".
 
-Fixes: 5e841b88d23d ("fb: fsync() method for deferred I/O flush.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Extend the unittest to detect the double free and add an additional
+test case that actually triggers this path.
+
+Fixes: bd6f2fd5a1 ("of: Support parsing phandle argument lists through a nexus node")
+Cc: Stephen Boyd <stephen.boyd@linaro.org>
+Signed-off-by: "Christian A. Ehrhardt" <lk@c--e.de>
+Link: https://lore.kernel.org/r/20231229105411.1603434-1-lk@c--e.de
+Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fb_defio.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/of/base.c                           |  1 +
+ drivers/of/unittest-data/tests-phandle.dtsi | 10 ++-
+ drivers/of/unittest.c                       | 74 ++++++++++++---------
+ 3 files changed, 53 insertions(+), 32 deletions(-)
 
---- a/drivers/video/fbdev/core/fb_defio.c
-+++ b/drivers/video/fbdev/core/fb_defio.c
-@@ -132,11 +132,7 @@ int fb_deferred_io_fsync(struct file *fi
- 		return 0;
+diff --git a/drivers/of/base.c b/drivers/of/base.c
+index eb02974f36bd..0e428880d88b 100644
+--- a/drivers/of/base.c
++++ b/drivers/of/base.c
+@@ -1670,6 +1670,7 @@ int of_parse_phandle_with_args_map(const struct device_node *np,
+ 		out_args->np = new;
+ 		of_node_put(cur);
+ 		cur = new;
++		new = NULL;
+ 	}
+ put:
+ 	of_node_put(cur);
+diff --git a/drivers/of/unittest-data/tests-phandle.dtsi b/drivers/of/unittest-data/tests-phandle.dtsi
+index 6b33be4c4416..aa0d7027ffa6 100644
+--- a/drivers/of/unittest-data/tests-phandle.dtsi
++++ b/drivers/of/unittest-data/tests-phandle.dtsi
+@@ -38,6 +38,13 @@ provider4: provider4 {
+ 				phandle-map-pass-thru = <0x0 0xf0>;
+ 			};
  
- 	inode_lock(inode);
--	/* Kill off the delayed work */
--	cancel_delayed_work_sync(&info->deferred_work);
++			provider5: provider5 {
++				#phandle-cells = <2>;
++				phandle-map = <2 7 &provider4 2 3>;
++				phandle-map-mask = <0xff 0xf>;
++				phandle-map-pass-thru = <0x0 0xf0>;
++			};
++
+ 			consumer-a {
+ 				phandle-list =	<&provider1 1>,
+ 						<&provider2 2 0>,
+@@ -64,7 +71,8 @@ consumer-b {
+ 						<&provider4 4 0x100>,
+ 						<&provider4 0 0x61>,
+ 						<&provider0>,
+-						<&provider4 19 0x20>;
++						<&provider4 19 0x20>,
++						<&provider5 2 7>;
+ 				phandle-list-bad-phandle = <12345678 0 0>;
+ 				phandle-list-bad-args = <&provider2 1 0>,
+ 							<&provider4 0>;
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index 412d7ddb3b8b..197abe33b65c 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -447,6 +447,9 @@ static void __init of_unittest_parse_phandle_with_args(void)
+ 
+ 		unittest(passed, "index %i - data error on node %pOF rc=%i\n",
+ 			 i, args.np, rc);
++
++		if (rc == 0)
++			of_node_put(args.np);
+ 	}
+ 
+ 	/* Check for missing list property */
+@@ -536,8 +539,9 @@ static void __init of_unittest_parse_phandle_with_args(void)
+ 
+ static void __init of_unittest_parse_phandle_with_args_map(void)
+ {
+-	struct device_node *np, *p0, *p1, *p2, *p3;
++	struct device_node *np, *p[6] = {};
+ 	struct of_phandle_args args;
++	unsigned int prefs[6];
+ 	int i, rc;
+ 
+ 	np = of_find_node_by_path("/testcase-data/phandle-tests/consumer-b");
+@@ -546,34 +550,24 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 		return;
+ 	}
+ 
+-	p0 = of_find_node_by_path("/testcase-data/phandle-tests/provider0");
+-	if (!p0) {
+-		pr_err("missing testcase data\n");
+-		return;
+-	}
 -
--	/* Run it immediately */
--	schedule_delayed_work(&info->deferred_work, 0);
-+	flush_delayed_work(&info->deferred_work);
- 	inode_unlock(inode);
+-	p1 = of_find_node_by_path("/testcase-data/phandle-tests/provider1");
+-	if (!p1) {
+-		pr_err("missing testcase data\n");
+-		return;
+-	}
+-
+-	p2 = of_find_node_by_path("/testcase-data/phandle-tests/provider2");
+-	if (!p2) {
+-		pr_err("missing testcase data\n");
+-		return;
+-	}
+-
+-	p3 = of_find_node_by_path("/testcase-data/phandle-tests/provider3");
+-	if (!p3) {
+-		pr_err("missing testcase data\n");
+-		return;
++	p[0] = of_find_node_by_path("/testcase-data/phandle-tests/provider0");
++	p[1] = of_find_node_by_path("/testcase-data/phandle-tests/provider1");
++	p[2] = of_find_node_by_path("/testcase-data/phandle-tests/provider2");
++	p[3] = of_find_node_by_path("/testcase-data/phandle-tests/provider3");
++	p[4] = of_find_node_by_path("/testcase-data/phandle-tests/provider4");
++	p[5] = of_find_node_by_path("/testcase-data/phandle-tests/provider5");
++	for (i = 0; i < ARRAY_SIZE(p); ++i) {
++		if (!p[i]) {
++			pr_err("missing testcase data\n");
++			return;
++		}
++		prefs[i] = kref_read(&p[i]->kobj.kref);
+ 	}
  
- 	return 0;
+ 	rc = of_count_phandle_with_args(np, "phandle-list", "#phandle-cells");
+-	unittest(rc == 7, "of_count_phandle_with_args() returned %i, expected 7\n", rc);
++	unittest(rc == 8, "of_count_phandle_with_args() returned %i, expected 7\n", rc);
+ 
+-	for (i = 0; i < 8; i++) {
++	for (i = 0; i < 9; i++) {
+ 		bool passed = true;
+ 
+ 		memset(&args, 0, sizeof(args));
+@@ -584,13 +578,13 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 		switch (i) {
+ 		case 0:
+ 			passed &= !rc;
+-			passed &= (args.np == p1);
++			passed &= (args.np == p[1]);
+ 			passed &= (args.args_count == 1);
+ 			passed &= (args.args[0] == 1);
+ 			break;
+ 		case 1:
+ 			passed &= !rc;
+-			passed &= (args.np == p3);
++			passed &= (args.np == p[3]);
+ 			passed &= (args.args_count == 3);
+ 			passed &= (args.args[0] == 2);
+ 			passed &= (args.args[1] == 5);
+@@ -601,28 +595,36 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 			break;
+ 		case 3:
+ 			passed &= !rc;
+-			passed &= (args.np == p0);
++			passed &= (args.np == p[0]);
+ 			passed &= (args.args_count == 0);
+ 			break;
+ 		case 4:
+ 			passed &= !rc;
+-			passed &= (args.np == p1);
++			passed &= (args.np == p[1]);
+ 			passed &= (args.args_count == 1);
+ 			passed &= (args.args[0] == 3);
+ 			break;
+ 		case 5:
+ 			passed &= !rc;
+-			passed &= (args.np == p0);
++			passed &= (args.np == p[0]);
+ 			passed &= (args.args_count == 0);
+ 			break;
+ 		case 6:
+ 			passed &= !rc;
+-			passed &= (args.np == p2);
++			passed &= (args.np == p[2]);
+ 			passed &= (args.args_count == 2);
+ 			passed &= (args.args[0] == 15);
+ 			passed &= (args.args[1] == 0x20);
+ 			break;
+ 		case 7:
++			passed &= !rc;
++			passed &= (args.np == p[3]);
++			passed &= (args.args_count == 3);
++			passed &= (args.args[0] == 2);
++			passed &= (args.args[1] == 5);
++			passed &= (args.args[2] == 3);
++			break;
++		case 8:
+ 			passed &= (rc == -ENOENT);
+ 			break;
+ 		default:
+@@ -631,6 +633,9 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 
+ 		unittest(passed, "index %i - data error on node %s rc=%i\n",
+ 			 i, args.np->full_name, rc);
++
++		if (rc == 0)
++			of_node_put(args.np);
+ 	}
+ 
+ 	/* Check for missing list property */
+@@ -677,6 +682,13 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 		   "OF: /testcase-data/phandle-tests/consumer-b: #phandle-cells = 2 found -1");
+ 
+ 	unittest(rc == -EINVAL, "expected:%i got:%i\n", -EINVAL, rc);
++
++	for (i = 0; i < ARRAY_SIZE(p); ++i) {
++		unittest(prefs[i] == kref_read(&p[i]->kobj.kref),
++			 "provider%d: expected:%d got:%d\n",
++			 i, prefs[i], kref_read(&p[i]->kobj.kref));
++		of_node_put(p[i]);
++	}
+ }
+ 
+ static void __init of_unittest_property_string(void)
+-- 
+2.43.0
+
 
 
