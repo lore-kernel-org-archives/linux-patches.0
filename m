@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FC22581;
-	Tue, 23 Jan 2024 00:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673422581;
+	Tue, 23 Jan 2024 00:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969629; cv=none; b=IvCH6KVz15LUwknCkAoX8vweTEsS2NvrXZK4BTF0hy4CwRndMHIx+oP6fhtYpRgv//khyjXJ1a0XurB60blP6AF5lcyVsDFrOgnZuhLDB8ydgsherb3MEvAz2wLeCBKIGyALLQ0KM3YIfjDdvx5CIdRmFEPEUX5OmtvBdGBAwms=
+	t=1705969631; cv=none; b=aVZM/pYh6TZaKxyCIMIyzoIOceuh4UMu3CjO3h6fPGJhatYgIBwQ1PThOo223gNtp7wJAUZzKkcvnb+CJNe4ME+4i2Z3/TRK10xNx8dKGvyfVUg7jMqt8HNhaYTSjwP8PuZ6d8uBRZ8u113xpzPNtXD9aDc9FAYijqipf8T0Jqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969629; c=relaxed/simple;
-	bh=q5Hj4yTXIuyYQY2sZ2YExLrx9QOjbH6vxZyyK2CG2aM=;
+	s=arc-20240116; t=1705969631; c=relaxed/simple;
+	bh=BHM0avGNNUxruQKH7nxGd2ODEwOoZq1ekisH53K43UE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Tf1SBAAf8a48PGQ/HbWa2fMMu+vyJ0nToL7/jCXPEHBs2S+qUjdcVAYmA8xIHitGhq0h6APllsRT/zfKUuNTBIg03B7afiWkQqv1nudoec9plM58cyf8qQH8+MkCfhdSDOAZIl7lvxhL88sCIh8oELiEueK6Zstw0T6T8yd3lws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IfyvEZKe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i+b0y5mjA3D1gzRokd9fu6dDI3oKerjNRJ7IgoP/pZjWW23LNjFMQGY44CQ7gMoP69Eimu1d4uSs+g85h7GvWpT+8RRKu7Mea5Gl1i3x9Hq+Pe2DWgU6M52t9MNf7LGdDe9EftL6jJtnXbrKaIf3Qk/uyru+7djoGJz3uORm838=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjJW/eaU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IfyvEZKe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E94FC433F1;
-	Tue, 23 Jan 2024 00:27:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjJW/eaU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1716FC433F1;
+	Tue, 23 Jan 2024 00:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969629;
-	bh=q5Hj4yTXIuyYQY2sZ2YExLrx9QOjbH6vxZyyK2CG2aM=;
+	s=korg; t=1705969631;
+	bh=BHM0avGNNUxruQKH7nxGd2ODEwOoZq1ekisH53K43UE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IfyvEZKeQJGG5h+I+tjCkZYub79wJegbcX0AGk+AKt3WIRqeOzDz9UNS8sACY5Ib3
-	 Fq1mGLpjnpJsbPwAV0nT75WasM6o2cMs+1blXMxrBq9Ly7zY6a7KwuJOJsbFYjNLG3
-	 gXzqXaajSij3ve6bCPHUt7ZtG1rgDgnhbzxuUotc=
+	b=TjJW/eaUSh+Yk9K17ze3fkxegya9FDS3wlcInq51n/yWqIMDF/JrQKxyILEH6TcIq
+	 GPuQc4gIV3I2+1vCUoSuo1PvWc7PmtyPUdYRDWiCdb8BahE6vVNGqMZ3Vz+LTSEFzV
+	 r/TOzJcMigXcZepXs1EcpGEyAFIai1MgJwLv73EY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Guillaume Ranquet <granquet@baylibre.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Xingyuan Mo <hdthky0@gmail.com>,
+	Oded Gabbay <ogabbay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 345/641] drm/mediatek: dp: Add phy_mtk_dp module as pre-dependency
-Date: Mon, 22 Jan 2024 15:54:09 -0800
-Message-ID: <20240122235828.721520989@linuxfoundation.org>
+Subject: [PATCH 6.7 346/641] accel/habanalabs: fix information leak in sec_attest_info()
+Date: Mon, 22 Jan 2024 15:54:10 -0800
+Message-ID: <20240122235828.754167044@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -47,50 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Xingyuan Mo <hdthky0@gmail.com>
 
-[ Upstream commit c8048dd0b07df68724805254b9e994d99e9a7af4 ]
+[ Upstream commit a9f07790a4b2250f0140e9a61c7f842fd9b618c7 ]
 
-The mtk_dp driver registers a phy device which is handled by the
-phy_mtk_dp driver and assumes that the phy probe will complete
-synchronously, proceeding to make use of functionality exposed by that
-driver right away. This assumption however is false when the phy driver
-is built as a module, causing the mtk_dp driver to fail probe in this
-case.
+This function may copy the pad0 field of struct hl_info_sec_attest to user
+mode which has not been initialized, resulting in leakage of kernel heap
+data to user mode. To prevent this, use kzalloc() to allocate and zero out
+the buffer, which can also eliminate other uninitialized holes, if any.
 
-Add the phy_mtk_dp module as a pre-dependency to the mtk_dp module to
-ensure the phy module has been loaded before the dp, so that the phy
-probe happens synchrounously and the mtk_dp driver can probe
-successfully even with the phy driver built as a module.
-
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Guillaume Ranquet <granquet@baylibre.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20231121142938.460846-1-nfraprado@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 0c88760f8f5e ("habanalabs/gaudi2: add secured attestation info uapi")
+Signed-off-by: Xingyuan Mo <hdthky0@gmail.com>
+Reviewed-by: Oded Gabbay <ogabbay@kernel.org>
+Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/accel/habanalabs/common/habanalabs_ioctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
-index e4c16ba9902d..2136a596efa1 100644
---- a/drivers/gpu/drm/mediatek/mtk_dp.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dp.c
-@@ -2818,3 +2818,4 @@ MODULE_AUTHOR("Markus Schneider-Pargmann <msp@baylibre.com>");
- MODULE_AUTHOR("Bo-Chen Chen <rex-bc.chen@mediatek.com>");
- MODULE_DESCRIPTION("MediaTek DisplayPort Driver");
- MODULE_LICENSE("GPL");
-+MODULE_SOFTDEP("pre: phy_mtk_dp");
+diff --git a/drivers/accel/habanalabs/common/habanalabs_ioctl.c b/drivers/accel/habanalabs/common/habanalabs_ioctl.c
+index 8ef36effb95b..a7cd625d82c0 100644
+--- a/drivers/accel/habanalabs/common/habanalabs_ioctl.c
++++ b/drivers/accel/habanalabs/common/habanalabs_ioctl.c
+@@ -685,7 +685,7 @@ static int sec_attest_info(struct hl_fpriv *hpriv, struct hl_info_args *args)
+ 	if (!sec_attest_info)
+ 		return -ENOMEM;
+ 
+-	info = kmalloc(sizeof(*info), GFP_KERNEL);
++	info = kzalloc(sizeof(*info), GFP_KERNEL);
+ 	if (!info) {
+ 		rc = -ENOMEM;
+ 		goto free_sec_attest_info;
 -- 
 2.43.0
 
