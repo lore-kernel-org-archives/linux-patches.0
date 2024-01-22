@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1FD6775D;
-	Tue, 23 Jan 2024 02:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965F16775D;
+	Tue, 23 Jan 2024 02:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975303; cv=none; b=RwlswgoKWlG2Sc9ckHLA43HYt9G5Zy6bUO9+UEhR7X+1nBXHnDsdTcIyUZvXNTZD8dWLwfg0yS7gI+PW1wVVKy3WqPVy4mtCRx4auFIFbKQ0GwYctXmGtH40uPVQeR/rew2QJLnfT0yYKDnV3fjsYA9IyU1QJc+/h9qmtwKp/WE=
+	t=1705975305; cv=none; b=OxLPwSGXBVqt3UrvKB3Cop1cMj24k5q/gLwbu9YpT5R13eSdZgxARsT9kxnP1GG7TXrHwUV73Al4ZP7DDQ1j7p/lZ1CKJ8ErgKpD/mnk4mvUghKWS5Ckm6JIL8m/6OV5OhpxwR/AWhHywQ74j9l9jPadzBHlrt30uUDyCFAJkKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975303; c=relaxed/simple;
-	bh=ZWzszK4miFrUFCF2ZNRzGbgEUsXaxEXOvVKEQVYda4M=;
+	s=arc-20240116; t=1705975305; c=relaxed/simple;
+	bh=4HfOw+1VPwyCo8OUQ5m+5xXFTDTGtGm8OPRiHrcfZwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cFb3qqUfLE4ACRwJ8vohx9BpOezRIZzMUcxUyBCb6PL03KsDahwAZSlfELT3Ud7FtWwaI2T8fxBBDEy96R6FTuQyGcsmoL6hHwYQ5/jyGTxk5qU0qSIkG+ZTJigTUI24Tg3Ba/An6ZeodMtrfC8kADnvGTBeuBIMUge9rTvILLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYSf9IOK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bEYxgU/VLWDuXh1GASbBIxjNCrotz7uT9nyyR00gke+IuHRbISpDHxv2Pz8WauBsJ5qG+dG6MAKZ5C5ErtapGF0TAYc8u3B2o8mFHuqJ6PJcD2oFsnUtILX3xl98dwl75RIQvxhkS6D8IZBynf8Hswc52KAtWNjb/9gCXmIwXqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksVqWCvc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYSf9IOK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422F7C43390;
-	Tue, 23 Jan 2024 02:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksVqWCvc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFCBC433C7;
+	Tue, 23 Jan 2024 02:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975303;
-	bh=ZWzszK4miFrUFCF2ZNRzGbgEUsXaxEXOvVKEQVYda4M=;
+	s=korg; t=1705975305;
+	bh=4HfOw+1VPwyCo8OUQ5m+5xXFTDTGtGm8OPRiHrcfZwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yYSf9IOKqAkBv4MrimFqWPUyPRvCtBf5IXT5m/dGpcrxXyyR4yMmbA3sNivPnKjuw
-	 IL6vP7fm1iX6aQ0cHwbfEvbVPsRQt6MQBx0i3vjtfwDtgKdQiTeTQ4Occ+xdT2qvn1
-	 fXmN47r5H7cnvTASvMtQgIbecVihtEWtKb0Hainw=
+	b=ksVqWCvcKQkhUI0WfFIfJHRlcbAjGME4ot7bM0xpydHBAm4on/PTVPMC6ott98uMf
+	 LeFjyd+QOM3o/T1V1+zNyD/b8/f4ThFmDIfUzyp/k9qCgt2TlkkQgpvezTd3QC/z/N
+	 /N8zMRj84oQetOSNesXH5d94QpVqsnMZjmHOKVA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 250/583] drm/msm/mdp4: flush vblank event on disable
-Date: Mon, 22 Jan 2024 15:55:01 -0800
-Message-ID: <20240122235819.653093161@linuxfoundation.org>
+Subject: [PATCH 6.6 268/583] media: bttv: start_streaming should return a proper error code
+Date: Mon, 22 Jan 2024 15:55:19 -0800
+Message-ID: <20240122235820.201572322@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,51 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit c6721b3c6423d8a348ae885a0f4c85e14f9bf85c ]
+[ Upstream commit 0d75bb6ae127f5e3fd0e2239714908fd2038193d ]
 
-Flush queued events when disabling the crtc. This avoids timeouts when
-we come back and wait for dependencies (like the previous frame's
-flip_done).
+The start_streaming callback returned 0 or 1 instead of a
+proper error code. Fix that.
 
-Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/569127/
-Link: https://lore.kernel.org/r/20231127215401.4064128-1-dmitry.baryshkov@linaro.org
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: b7ec3212a73a ("media: bttv: convert to vb2")
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/media/pci/bt8xx/bttv-driver.c | 6 ++----
+ drivers/media/pci/bt8xx/bttv-vbi.c    | 8 +++-----
+ 2 files changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-index 169f9de4a12a..3100957225a7 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-@@ -269,6 +269,7 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
+diff --git a/drivers/media/pci/bt8xx/bttv-driver.c b/drivers/media/pci/bt8xx/bttv-driver.c
+index 09a193bb87df..8e8c9dada67a 100644
+--- a/drivers/media/pci/bt8xx/bttv-driver.c
++++ b/drivers/media/pci/bt8xx/bttv-driver.c
+@@ -1536,13 +1536,11 @@ static void buf_cleanup(struct vb2_buffer *vb)
+ 
+ static int start_streaming(struct vb2_queue *q, unsigned int count)
  {
- 	struct mdp4_crtc *mdp4_crtc = to_mdp4_crtc(crtc);
- 	struct mdp4_kms *mdp4_kms = get_kms(crtc);
-+	unsigned long flags;
+-	int ret = 1;
+ 	int seqnr = 0;
+ 	struct bttv_buffer *buf;
+ 	struct bttv *btv = vb2_get_drv_priv(q);
  
- 	DBG("%s", mdp4_crtc->name);
+-	ret = check_alloc_btres_lock(btv, RESOURCE_VIDEO_STREAM);
+-	if (ret == 0) {
++	if (!check_alloc_btres_lock(btv, RESOURCE_VIDEO_STREAM)) {
+ 		if (btv->field_count)
+ 			seqnr++;
+ 		while (!list_empty(&btv->capture)) {
+@@ -1553,7 +1551,7 @@ static int start_streaming(struct vb2_queue *q, unsigned int count)
+ 			vb2_buffer_done(&buf->vbuf.vb2_buf,
+ 					VB2_BUF_STATE_QUEUED);
+ 		}
+-		return !ret;
++		return -EBUSY;
+ 	}
+ 	if (!vb2_is_streaming(&btv->vbiq)) {
+ 		init_irqreg(btv);
+diff --git a/drivers/media/pci/bt8xx/bttv-vbi.c b/drivers/media/pci/bt8xx/bttv-vbi.c
+index ab213e51ec95..e489a3acb4b9 100644
+--- a/drivers/media/pci/bt8xx/bttv-vbi.c
++++ b/drivers/media/pci/bt8xx/bttv-vbi.c
+@@ -123,14 +123,12 @@ static void buf_cleanup_vbi(struct vb2_buffer *vb)
  
-@@ -281,6 +282,14 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
- 	mdp_irq_unregister(&mdp4_kms->base, &mdp4_crtc->err);
- 	mdp4_disable(mdp4_kms);
+ static int start_streaming_vbi(struct vb2_queue *q, unsigned int count)
+ {
+-	int ret;
+ 	int seqnr = 0;
+ 	struct bttv_buffer *buf;
+ 	struct bttv *btv = vb2_get_drv_priv(q);
  
-+	if (crtc->state->event && !crtc->state->active) {
-+		WARN_ON(mdp4_crtc->event);
-+		spin_lock_irqsave(&mdp4_kms->dev->event_lock, flags);
-+		drm_crtc_send_vblank_event(crtc, crtc->state->event);
-+		crtc->state->event = NULL;
-+		spin_unlock_irqrestore(&mdp4_kms->dev->event_lock, flags);
-+	}
-+
- 	mdp4_crtc->enabled = false;
+ 	btv->framedrop = 0;
+-	ret = check_alloc_btres_lock(btv, RESOURCE_VBI);
+-	if (ret == 0) {
++	if (!check_alloc_btres_lock(btv, RESOURCE_VBI)) {
+ 		if (btv->field_count)
+ 			seqnr++;
+ 		while (!list_empty(&btv->vcapture)) {
+@@ -141,13 +139,13 @@ static int start_streaming_vbi(struct vb2_queue *q, unsigned int count)
+ 			vb2_buffer_done(&buf->vbuf.vb2_buf,
+ 					VB2_BUF_STATE_QUEUED);
+ 		}
+-		return !ret;
++		return -EBUSY;
+ 	}
+ 	if (!vb2_is_streaming(&btv->capq)) {
+ 		init_irqreg(btv);
+ 		btv->field_count = 0;
+ 	}
+-	return !ret;
++	return 0;
  }
  
+ static void stop_streaming_vbi(struct vb2_queue *q)
 -- 
 2.43.0
 
