@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3248C12A17F;
-	Tue, 23 Jan 2024 00:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7F712A17F;
+	Tue, 23 Jan 2024 00:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968850; cv=none; b=NdocXyn9mv03lqbq/zYA63LKqoZEYXishrwTZHcKXRhX7CGMNXAbqX9yR76VbJ8oFYuxdl9w27Vds1lHHglZksRr/bcrZttmtAclBLXtir6LB4pzcSzXaapaAg1dGwLtTpGWYJGI5oOqil3y3x0O46cOMxEJCqtpd4x+goGPzsw=
+	t=1705968855; cv=none; b=e+Itc4Wj2NTtLL9hKYKlIAasVQko2AOjNQ7g5ZFpGo/EPDIkmiIpmTVbQZ6h86rP9tblYsF8O0QGDe2Er882HA2WcuzoCb2O4SP/8tcjgg3rngz1ufe1J5tEH1mT0SDYjaq1yc89WkMGIlAjrs6xadPDzuGjI0Fl9oNGgJiPea0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968850; c=relaxed/simple;
-	bh=TSWgq/abMZL0c0ApWnNe+KLUeT7x4DXHKqwnLCg/ga8=;
+	s=arc-20240116; t=1705968855; c=relaxed/simple;
+	bh=f4FZ8lF4d+yNZLdp6PjtmwEyn1enThQpT6U04YYcXG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N9pi9EBpukn3tZeYM2C0hTUMCXnmdf1fbn0/pgX/Zk4a4MSTT/nYVacaYQWp2WSq87sKbrIUUsary++dpE+GwfaaLMHmoNkX5XTboYcS3DKdf8u6IbQkM9yLpiiJ7GzYe//klPcgkhSh2Bl+79wAM/omgpX5zQpBXRvXLsAYquQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yo8K8hg6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hZzcAlnAPvwHohIiqBQhQhFSMz9s+uj8IQ+B08OapJ/59C1frp3wYaRbonoDxRudMIKK/3Z6WYi7gfZV7IFVG6DnIM4Qa13ssru3DkBScTFvvrbhe7J6hOygwnEMT4bHHAXnUZu1scTpz2fpUmjZU+rGosPdYNHihiJcgcyM9ZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Hui/fv4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yo8K8hg6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7948EC433F1;
-	Tue, 23 Jan 2024 00:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Hui/fv4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AD5C433C7;
+	Tue, 23 Jan 2024 00:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968849;
-	bh=TSWgq/abMZL0c0ApWnNe+KLUeT7x4DXHKqwnLCg/ga8=;
+	s=korg; t=1705968855;
+	bh=f4FZ8lF4d+yNZLdp6PjtmwEyn1enThQpT6U04YYcXG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yo8K8hg62kvtAwADVOaSA5VSNJMRRdZff5oyHN1deBOXt0IxeWkVEBKFj/N1L4b79
-	 Q5upVRyaJ/rvLpLrA0DWEkFr8OKny9mQrdWfC5A23ZuwcLoHO2SX0y8YOwDR4TTYDl
-	 pdeoL66txTeRbK//9R5gBAbKAQyegzUCFRfcICtk=
+	b=0Hui/fv4ItJxUXW6dhT3L+cOwsf+VofRNwKH4EIdyB+fTNT30+v3JEpOGeLLo34n0
+	 i4/+i1yK0Q96q4iZvznNiSh18E3hm493WHX9xhiVwA/uPSG6ee9wgQz+ReGqZkFCjH
+	 AL56cFZqAu7r2PXtve6QSvFFQ6E4QYMmrDlbx5Dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [PATCH 5.4 039/194] coresight: etm4x: Fix width of CCITMIN field
-Date: Mon, 22 Jan 2024 15:56:09 -0800
-Message-ID: <20240122235720.884477222@linuxfoundation.org>
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 030/194] ARM: sun9i: smp: fix return code check of of_property_match_string
+Date: Mon, 22 Jan 2024 15:56:00 -0800
+Message-ID: <20240122235720.501005750@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -52,47 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@arm.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-commit cc0271a339cc70cae914c3ec20edc2a8058407da upstream.
+[ Upstream commit 643fe70e7bcdcc9e2d96952f7fc2bab56385cce5 ]
 
-CCITMIN is a 12 bit field and doesn't fit in a u8, so extend it to u16.
-This probably wasn't an issue previously because values higher than 255
-never occurred.
+of_property_match_string returns an int; either an index from 0 or
+greater if successful or negative on failure. Even it's very
+unlikely that the DT CPU node contains multiple enable-methods
+these checks should be fixed.
 
-But since commit 4aff040bcc8d ("coresight: etm: Override TRCIDR3.CCITMIN
-on errata affected cpus"), a comparison with 256 was done to enable the
-errata, generating the following W=1 build error:
+This patch was inspired by the work of Nick Desaulniers.
 
-  coresight-etm4x-core.c:1188:24: error: result of comparison of
-  constant 256 with expression of type 'u8' (aka 'unsigned char') is
-  always false [-Werror,-Wtautological-constant-out-of-range-compare]
-
-   if (drvdata->ccitmin == 256)
-
-Cc: stable@vger.kernel.org
-Fixes: 2e1cdfe184b5 ("coresight-etm4x: Adding CoreSight ETM4x driver")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310302043.as36UFED-lkp@intel.com/
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
-Signed-off-by: James Clark <james.clark@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20231101115206.70810-1-james.clark@arm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/lkml/20230516-sunxi-v1-1-ac4b9651a8c1@google.com/T/
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20231228193903.9078-2-wahrenst@gmx.net
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mach-sunxi/mc_smp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/hwtracing/coresight/coresight-etm4x.h
-+++ b/drivers/hwtracing/coresight/coresight-etm4x.h
-@@ -361,7 +361,7 @@ struct etmv4_drvdata {
- 	u8				ctxid_size;
- 	u8				vmid_size;
- 	u8				ccsize;
--	u8				ccitmin;
-+	u16				ccitmin;
- 	u8				s_ex_level;
- 	u8				ns_ex_level;
- 	u8				q_support;
+diff --git a/arch/arm/mach-sunxi/mc_smp.c b/arch/arm/mach-sunxi/mc_smp.c
+index b2f5f4f28705..f779e386b6e7 100644
+--- a/arch/arm/mach-sunxi/mc_smp.c
++++ b/arch/arm/mach-sunxi/mc_smp.c
+@@ -804,12 +804,12 @@ static int __init sunxi_mc_smp_init(void)
+ 	for (i = 0; i < ARRAY_SIZE(sunxi_mc_smp_data); i++) {
+ 		ret = of_property_match_string(node, "enable-method",
+ 					       sunxi_mc_smp_data[i].enable_method);
+-		if (!ret)
++		if (ret >= 0)
+ 			break;
+ 	}
+ 
+ 	of_node_put(node);
+-	if (ret)
++	if (ret < 0)
+ 		return -ENODEV;
+ 
+ 	is_a83t = sunxi_mc_smp_data[i].is_a83t;
+-- 
+2.43.0
+
 
 
