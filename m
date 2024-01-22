@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9DF7317E;
-	Tue, 23 Jan 2024 02:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22C27317B;
+	Tue, 23 Jan 2024 02:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975430; cv=none; b=cVbU8onBNGqDhgpJ1NanpqCigAMwBT/46krUlaT4mQtEVsDKvPJ73rqzwZ3riUPJ1Odk2Op1dJ57nwEz3buyDd2y1nLQR4MmOFjjSmkN+6fFok5Eq4Ficz7pfIOLjOLTRGs8VPsLK+uODYbQSiTfmuGktSxw27nGKMNBf/fQs+k=
+	t=1705975432; cv=none; b=BSvTA/G2XzoQL9UvPNaYy/OAG6xyx6ESJvWxQyzr6dmfpnbqvOV918CEbCs7veFxmh1FqvTcw9axOx/EVWP3ENAe1XHtkCCPPefRGr0gKlAgxOx2b19F915N31uSFbFw5+pIlQ2F8MmC8UsDvEHF0aimEyabH7jP+y4w1f/G48E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975430; c=relaxed/simple;
-	bh=hglqWBY0nugXjHaYGam2nCN4Ax4vPH7XgXE+vABJ1Hk=;
+	s=arc-20240116; t=1705975432; c=relaxed/simple;
+	bh=pFUxMQyqowbt7q7H5HQZ9VydhI5ahPJcFe1B4prvues=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oHabi2AGbRb/3s7M0VS0dvJY4fz5vUag4cnnb1jDtxVklpIxpZWpShFxpiJrE1oPQtfc13AMYZQZzrzgycBHLqUNPsxmza7K8p497yPUTYhBu+ASjSx99bxR5cafoqHjGfTK0wAvoFAYioxWAPjfYBjNhL17J8qbBDG1wE0RvJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAZdWOML; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i6qf7snt2JsDjQZWrlMJr4BCgV8HybYzVcdChvlyDGEineAgVEjitRd/4F0SzcOjyhigzFXCLOuNr5fHKcC4BvltbMivmx4mQSEHxHGHsqkgYDNY2QmIB4GUVtZZGAnKZBYU2k3sKuz5peIgW8vxwFkv9TVwp/pZ/hNOmHxMtu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tH5ZFs6E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAZdWOML"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E453C43390;
-	Tue, 23 Jan 2024 02:03:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tH5ZFs6E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBB1C433C7;
+	Tue, 23 Jan 2024 02:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975430;
-	bh=hglqWBY0nugXjHaYGam2nCN4Ax4vPH7XgXE+vABJ1Hk=;
+	s=korg; t=1705975431;
+	bh=pFUxMQyqowbt7q7H5HQZ9VydhI5ahPJcFe1B4prvues=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PAZdWOML1ijsKPv/EVjjR2P4bRx0/mYBRuNrfmODwp7/rIk30ERghisXvIVZaiJjl
-	 qdq63cBJPfXe3alSehp1I6Af2iGadWXlD1kBPWdjpW7e6u4KWTz1l2xmUIVCz84hOY
-	 qdCTGAI6xKuzBiZw8CQbV3zfiBA0HaptcuNGSUb8=
+	b=tH5ZFs6EZHnOMin02uLpOpIsRda7hJwmr9HREYPtqczZxZUV9X3pmfxn8vXWuPln7
+	 k1WU0Z7fvPSVdpQ/yaU9w9pSJQi45OxZSO9Uu1ggobSeAprBxreXaIL1EHd045/nXD
+	 jt5ByG7u+RTvXyeeXv09BQ3Jl5dciwCGNRt/A3/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.6 363/583] Revert "usb: dwc3: dont reset device side if dwc3 was configured as host-only"
-Date: Mon, 22 Jan 2024 15:56:54 -0800
-Message-ID: <20240122235823.126649685@linuxfoundation.org>
+	Peter Chen <peter.chen@kernel.org>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Li Jun <jun.li@nxp.com>
+Subject: [PATCH 6.6 364/583] usb: chipidea: wait controller resume finished for wakeup irq
+Date: Mon, 22 Jan 2024 15:56:55 -0800
+Message-ID: <20240122235823.160438024@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -49,42 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit afe28cd686aeb77e8d9140d50fb1cf06a7ecb731 upstream.
+commit 128d849074d05545becf86e713715ce7676fc074 upstream.
 
-This reverts commit e835c0a4e23c38531dcee5ef77e8d1cf462658c7.
+After the chipidea driver introduce extcon for id and vbus, it's able
+to wakeup from another irq source, in case the system with extcon ID
+cable, wakeup from usb ID cable and device removal, the usb device
+disconnect irq may come firstly before the extcon notifier while system
+resume, so we will get 2 "wakeup" irq, one for usb device disconnect;
+and one for extcon ID cable change(real wakeup event), current driver
+treat them as 2 successive wakeup irq so can't handle it correctly, then
+finally the usb irq can't be enabled. This patch adds a check to bypass
+further usb events before controller resume finished to fix it.
 
-Don't omit soft-reset. During initialization, the driver may need to
-perform a soft reset to ensure the phy is ready when the controller
-updates the GCTL.PRTCAPDIR or other settings by issuing phy soft-reset.
-Many platforms often have access to DCTL register for soft-reset despite
-being host-only. If there are actual reported issues from the platforms
-that don't expose DCTL registers, then we will need to revisit (perhaps
-to teach dwc3 to perform xhci's soft-reset USBCMD.HCRST).
-
-Cc:  <stable@vger.kernel.org>
-Fixes: e835c0a4e23c ("usb: dwc3: don't reset device side if dwc3 was configured as host-only")
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/7668ab11a48f260820825274976eb41fec7f54d1.1703282469.git.Thinh.Nguyen@synopsys.com
+Fixes: 1f874edcb731 ("usb: chipidea: add runtime power management support")
+cc:  <stable@vger.kernel.org>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Signed-off-by: Li Jun <jun.li@nxp.com>
+Link: https://lore.kernel.org/r/20231228110753.1755756-2-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/chipidea/core.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -277,9 +277,9 @@ int dwc3_core_soft_reset(struct dwc3 *dw
- 	/*
- 	 * We're resetting only the device side because, if we're in host mode,
- 	 * XHCI driver will reset the host block. If dwc3 was configured for
--	 * host-only mode or current role is host, then we can return early.
-+	 * host-only mode, then we can return early.
- 	 */
--	if (dwc->dr_mode == USB_DR_MODE_HOST || dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
-+	if (dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
- 		return 0;
+--- a/drivers/usb/chipidea/core.c
++++ b/drivers/usb/chipidea/core.c
+@@ -523,6 +523,13 @@ static irqreturn_t ci_irq_handler(int ir
+ 	u32 otgsc = 0;
  
- 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
+ 	if (ci->in_lpm) {
++		/*
++		 * If we already have a wakeup irq pending there,
++		 * let's just return to wait resume finished firstly.
++		 */
++		if (ci->wakeup_int)
++			return IRQ_HANDLED;
++
+ 		disable_irq_nosync(irq);
+ 		ci->wakeup_int = true;
+ 		pm_runtime_get(ci->dev);
 
 
