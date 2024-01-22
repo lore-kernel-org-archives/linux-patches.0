@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E275F12FF86;
-	Tue, 23 Jan 2024 00:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF3412FF86;
+	Tue, 23 Jan 2024 00:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969055; cv=none; b=Xg1IARqt71tuXo4uP01e7st3Rj2UECLZqY4MY6VlCsvyHhPAoccyI1D/8uf6VYhZACayUuIy5bEHPLcHxPjFyq+6dNidMYm2mY9MktiiSoXwf2PtwgeUsNNib72djJLUkvvblzWuTwntfBYGIyyyzmlilt5RR63S1EWMtzxJEig=
+	t=1705969056; cv=none; b=BnEVQvDL584snRpvmCK78XJ9AoCdCsFAqJmlFT/GHPjHTgUJVMzJneHhgdlxSmJmUM6X0jqLIn8KT/YTmy79Bx0ht0uoFxi3zyLNlOCL5KOolHJKZVy3GKGKYrh9czpjPl2LrRJCI/DosAMNOtNsbHmJtFm4aEhdvlvXmvBM3vA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969055; c=relaxed/simple;
-	bh=jMOdMUMZCyEaDQGC4yKWEYV1Q3/wX+60mRwIXOUHeBM=;
+	s=arc-20240116; t=1705969056; c=relaxed/simple;
+	bh=iTa+kTdTN4CE5B8k64qIDCzjpOi5E1GuR9obp7pwmdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCAuDH8+oldtKsQLVUs8NFpyMg9s6AhtAwJagEsu2K9VpPEQdhJZoqlXR1myewExPnLixLvlaytnfd78Dx2tXSvpmvOZSZsyEKdBI6FBkF9LXtnathvK5+B5Cim8Led2c18r+XgWFEzU9uVqWhp7gk2zqt6MlPQOeD6CZKfVtAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zf9lGd8I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tO77qXYCYU0SyOL0hWwFYwTEnXbuID9mS+mJhWRg/KxjeNZ3l/8/+7jnF9q1FGkbfYizvD+p0SZUWBCckKVyZkeTx5+1An0GhD1DsIOCntgLlpJ89/v8iqSqoQRREgGptbrWdsOICbBFp1BvT/fVBr2sSEg/rB4ZN2Igc8lalX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGqd9E/w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zf9lGd8I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EC2C433F1;
-	Tue, 23 Jan 2024 00:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGqd9E/w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7664C433C7;
+	Tue, 23 Jan 2024 00:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969054;
-	bh=jMOdMUMZCyEaDQGC4yKWEYV1Q3/wX+60mRwIXOUHeBM=;
+	s=korg; t=1705969056;
+	bh=iTa+kTdTN4CE5B8k64qIDCzjpOi5E1GuR9obp7pwmdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zf9lGd8IVio3xx6J1N7dztcJDQO9rmwhKalq82v1kFxuMiK0DfzkmXvusgIBH63R9
-	 4gXNOYouRfq2nvK7wOVHRgY8TdUUCMRH7h9jEYWe5on5lFe1STfnq5rYdOMNooF6hK
-	 KTCKfGmp/qVWWct/IScYhJZ0U8l6UrCTrbtO0u9k=
+	b=RGqd9E/wVAIc0dsl4x1xJnyjaszeKXTq3I//7u3V658yUMH70aDNIpM1ZahT9Qp9O
+	 IpzSbGW7gJFDncSXQ9ANtbAzSQ1MGKPxeTPE9Yg0zqQQa2ePHa6Brj1j7jwFIaFpSD
+	 KGOfRk+ZxGRXrEkYO7QGaRAxK6t67sJ+ntMLo4vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lin <yu-hao.lin@nxp.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
-	Rafael Beims <rafael.beims@toradex.com>
-Subject: [PATCH 5.4 160/194] wifi: mwifiex: configure BSSID consistently when starting AP
-Date: Mon, 22 Jan 2024 15:58:10 -0800
-Message-ID: <20240122235726.047476326@linuxfoundation.org>
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Wanpeng Li <wanpengli@tencent.com>
+Subject: [PATCH 5.4 161/194] x86/kvm: Do not try to disable kvmclock if it was not enabled
+Date: Mon, 22 Jan 2024 15:58:11 -0800
+Message-ID: <20240122235726.098769158@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -53,90 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lin <yu-hao.lin@nxp.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-commit f0dd488e11e71ac095df7638d892209c629d9af2 upstream.
+commit 1c6d984f523f67ecfad1083bb04c55d91977bb15 upstream.
 
-AP BSSID configuration is missing at AP start.  Without this fix, FW returns
-STA interface MAC address after first init.  When hostapd restarts, it gets MAC
-address from netdev before driver sets STA MAC to netdev again. Now MAC address
-between hostapd and net interface are different causes STA cannot connect to
-AP.  After that MAC address of uap0 mlan0 become the same. And issue disappears
-after following hostapd restart (another issue is AP/STA MAC address become the
-same).
+kvm_guest_cpu_offline() tries to disable kvmclock regardless if it is
+present in the VM. It leads to write to a MSR that doesn't exist on some
+configurations, namely in TDX guest:
 
-This patch fixes the issue cleanly.
+	unchecked MSR access error: WRMSR to 0x12 (tried to write 0x0000000000000000)
+	at rIP: 0xffffffff8110687c (kvmclock_disable+0x1c/0x30)
 
-Signed-off-by: David Lin <yu-hao.lin@nxp.com>
-Fixes: 12190c5d80bd ("mwifiex: add cfg80211 start_ap and stop_ap handlers")
+kvmclock enabling is gated by CLOCKSOURCE and CLOCKSOURCE2 KVM paravirt
+features.
+
+Do not disable kvmclock if it was not enabled.
+
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Fixes: c02027b5742b ("x86/kvm: Disable kvmclock on all CPUs on shutdown")
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Wanpeng Li <wanpengli@tencent.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Tested-by: Rafael Beims <rafael.beims@toradex.com> # Verdin iMX8MP/SD8997 SD
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231215005118.17031-1-yu-hao.lin@nxp.com
+Message-Id: <20231205004510.27164-6-kirill.shutemov@linux.intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c |    2 ++
- drivers/net/wireless/marvell/mwifiex/fw.h       |    1 +
- drivers/net/wireless/marvell/mwifiex/ioctl.h    |    1 +
- drivers/net/wireless/marvell/mwifiex/uap_cmd.c  |    8 ++++++++
- 4 files changed, 12 insertions(+)
+ arch/x86/kernel/kvmclock.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -1984,6 +1984,8 @@ static int mwifiex_cfg80211_start_ap(str
+--- a/arch/x86/kernel/kvmclock.c
++++ b/arch/x86/kernel/kvmclock.c
+@@ -24,8 +24,8 @@
  
- 	mwifiex_set_sys_config_invalid_data(bss_cfg);
+ static int kvmclock __initdata = 1;
+ static int kvmclock_vsyscall __initdata = 1;
+-static int msr_kvm_system_time __ro_after_init = MSR_KVM_SYSTEM_TIME;
+-static int msr_kvm_wall_clock __ro_after_init = MSR_KVM_WALL_CLOCK;
++static int msr_kvm_system_time __ro_after_init;
++static int msr_kvm_wall_clock __ro_after_init;
+ static u64 kvm_sched_clock_offset __ro_after_init;
  
-+	memcpy(bss_cfg->mac_addr, priv->curr_addr, ETH_ALEN);
-+
- 	if (params->beacon_interval)
- 		bss_cfg->beacon_period = params->beacon_interval;
- 	if (params->dtim_period)
---- a/drivers/net/wireless/marvell/mwifiex/fw.h
-+++ b/drivers/net/wireless/marvell/mwifiex/fw.h
-@@ -177,6 +177,7 @@ enum MWIFIEX_802_11_PRIVACY_FILTER {
- #define TLV_TYPE_STA_MAC_ADDR       (PROPRIETARY_TLV_BASE_ID + 32)
- #define TLV_TYPE_BSSID              (PROPRIETARY_TLV_BASE_ID + 35)
- #define TLV_TYPE_CHANNELBANDLIST    (PROPRIETARY_TLV_BASE_ID + 42)
-+#define TLV_TYPE_UAP_MAC_ADDRESS    (PROPRIETARY_TLV_BASE_ID + 43)
- #define TLV_TYPE_UAP_BEACON_PERIOD  (PROPRIETARY_TLV_BASE_ID + 44)
- #define TLV_TYPE_UAP_DTIM_PERIOD    (PROPRIETARY_TLV_BASE_ID + 45)
- #define TLV_TYPE_UAP_BCAST_SSID     (PROPRIETARY_TLV_BASE_ID + 48)
---- a/drivers/net/wireless/marvell/mwifiex/ioctl.h
-+++ b/drivers/net/wireless/marvell/mwifiex/ioctl.h
-@@ -119,6 +119,7 @@ struct mwifiex_uap_bss_param {
- 	u8 qos_info;
- 	u8 power_constraint;
- 	struct mwifiex_types_wmm_info wmm_info;
-+	u8 mac_addr[ETH_ALEN];
- };
+ static int __init parse_no_kvmclock(char *arg)
+@@ -189,7 +189,8 @@ static void kvm_setup_secondary_clock(vo
  
- enum {
---- a/drivers/net/wireless/marvell/mwifiex/uap_cmd.c
-+++ b/drivers/net/wireless/marvell/mwifiex/uap_cmd.c
-@@ -479,6 +479,7 @@ void mwifiex_config_uap_11d(struct mwifi
- static int
- mwifiex_uap_bss_param_prepare(u8 *tlv, void *cmd_buf, u16 *param_size)
+ void kvmclock_disable(void)
  {
-+	struct host_cmd_tlv_mac_addr *mac_tlv;
- 	struct host_cmd_tlv_dtim_period *dtim_period;
- 	struct host_cmd_tlv_beacon_period *beacon_period;
- 	struct host_cmd_tlv_ssid *ssid;
-@@ -498,6 +499,13 @@ mwifiex_uap_bss_param_prepare(u8 *tlv, v
- 	int i;
- 	u16 cmd_size = *param_size;
+-	native_write_msr(msr_kvm_system_time, 0, 0);
++	if (msr_kvm_system_time)
++		native_write_msr(msr_kvm_system_time, 0, 0);
+ }
  
-+	mac_tlv = (struct host_cmd_tlv_mac_addr *)tlv;
-+	mac_tlv->header.type = cpu_to_le16(TLV_TYPE_UAP_MAC_ADDRESS);
-+	mac_tlv->header.len = cpu_to_le16(ETH_ALEN);
-+	memcpy(mac_tlv->mac_addr, bss_cfg->mac_addr, ETH_ALEN);
-+	cmd_size += sizeof(struct host_cmd_tlv_mac_addr);
-+	tlv += sizeof(struct host_cmd_tlv_mac_addr);
-+
- 	if (bss_cfg->ssid.ssid_len) {
- 		ssid = (struct host_cmd_tlv_ssid *)tlv;
- 		ssid->header.type = cpu_to_le16(TLV_TYPE_UAP_SSID);
+ static void __init kvmclock_init_mem(void)
+@@ -286,7 +287,10 @@ void __init kvmclock_init(void)
+ 	if (kvm_para_has_feature(KVM_FEATURE_CLOCKSOURCE2)) {
+ 		msr_kvm_system_time = MSR_KVM_SYSTEM_TIME_NEW;
+ 		msr_kvm_wall_clock = MSR_KVM_WALL_CLOCK_NEW;
+-	} else if (!kvm_para_has_feature(KVM_FEATURE_CLOCKSOURCE)) {
++	} else if (kvm_para_has_feature(KVM_FEATURE_CLOCKSOURCE)) {
++		msr_kvm_system_time = MSR_KVM_SYSTEM_TIME;
++		msr_kvm_wall_clock = MSR_KVM_WALL_CLOCK;
++	} else {
+ 		return;
+ 	}
+ 
 
 
