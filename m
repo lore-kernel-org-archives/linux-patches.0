@@ -1,54 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF4B1353E8;
-	Tue, 23 Jan 2024 01:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904DD1350FE;
+	Tue, 23 Jan 2024 01:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971967; cv=none; b=gw0wuh2kqb1Ob7j98V0z+JWv60lkKdeBdF/LeS8AcvRmXt/GHxe03SKr8WBk5yPl0v5BkZGFUXxSRwQSe+5tLNXIAxL48FQcRWYJtISxVbkL7vJvTiWbeX94vmaTLSd//KwrXYjMviUEvBGsono+NTOMyOQO+5Fv9d65bG86TXE=
+	t=1705971969; cv=none; b=memF5hKVr0s73BdM7QZS4+kwT28qL9Ar8yJwt/SWCCMmsdXNeJxnt+Ftyw3ZI4EUycjb1Wy+eCH+VUQI0L4nG7bmTGe49avhO7szklWRo9HcSIG7raOAZO9npFrXQVx51llWfU5gRJ83r3kZt3JKOKaP+DWTXfrp3BC+W753XMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971967; c=relaxed/simple;
-	bh=BVNjowA/amp7J2pRA9Ai64nbQMqlAKf+35M9e+M/9qw=;
+	s=arc-20240116; t=1705971969; c=relaxed/simple;
+	bh=CjY/z5qJZ1El0n1i54Dhz//9DlDST9z2lpNNWeO5S2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a+/dcRZu+gEZQtw9yiENxs4CeY4Jdx4PSX1Uejivq5voRmG6vkaYUtNqSDDocER0et71szFNQD3CjyxJ5a52ILUjbnB0ECYp76/gN1tA0rWlihUQR/ijE4/cvFPUfpYkdqrcL6zYvUdrFg6TAXS0Q9Fdt5MQw50QoEUPoAePLzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qxELaox; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n3K2yhSsBUUi6e1uxAFTpZZ7T/4aqMLKrU0kBAFA5t5TWA0YwYoFnP+fibR/UmdrDZj9qdXMnOd+HRwLhHZpyEcdR/+DAsF+kzm9J+SFnGwzmyO/oJ0AGEwcx/zm6Yf4axK0Darp2X7fx4JM+zbYSnc5XMhfX2DJ8qpDmD7yQdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRWSwvjm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qxELaox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AE8C43390;
-	Tue, 23 Jan 2024 01:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRWSwvjm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2986FC43390;
+	Tue, 23 Jan 2024 01:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971967;
-	bh=BVNjowA/amp7J2pRA9Ai64nbQMqlAKf+35M9e+M/9qw=;
+	s=korg; t=1705971969;
+	bh=CjY/z5qJZ1El0n1i54Dhz//9DlDST9z2lpNNWeO5S2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0qxELaoxb4BPRbK1HetCa6ht5LFmThRl/s076WX4TIM087goOu/n+gO6LnMvSaDnf
-	 Iua+ScjSp4OBgESgft2NECHOw9O4dc8TcbD/SnkmwOatQIThiEMce8P/C5y9SAAHOu
-	 C1cUSRthRhd8fhdcpiE3IHqoynkhTRyE0aVXX3oM=
+	b=bRWSwvjmuv55qcHMTLm+THZyVV40Cxx2rKP7Jon1AJD89Gml0NXr31EQafIpHjPuT
+	 44oVyXe+I2MLTfr8MqsD4xBxB81BLWg39Hx9R2JMktAGuoLODjs2r00b7i4NXmLygA
+	 S5BPI6xC3HcvN+Qrxz9YCom3dcFYHNxzTwAzt+k8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Ming Wang <wangming01@loongson.cn>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Amit Cohen <amcohen@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 366/417] perf env: Avoid recursively taking env->bpf_progs.lock
-Date: Mon, 22 Jan 2024 15:58:54 -0800
-Message-ID: <20240122235804.499591844@linuxfoundation.org>
+Subject: [PATCH 5.10 277/286] mlxsw: spectrum_acl_erp: Fix error flow of pool allocation failure
+Date: Mon, 22 Jan 2024 15:59:43 -0800
+Message-ID: <20240122235742.729424684@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -60,278 +50,187 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Amit Cohen <amcohen@nvidia.com>
 
-[ Upstream commit 9c51f8788b5d4e9f46afbcf563255cfd355690b3 ]
+[ Upstream commit 6d6eeabcfaba2fcadf5443b575789ea606f9de83 ]
 
-Add variants of perf_env__insert_bpf_prog_info(), perf_env__insert_btf()
-and perf_env__find_btf prefixed with __ to indicate the
-env->bpf_progs.lock is assumed held.
+Lately, a bug was found when many TC filters are added - at some point,
+several bugs are printed to dmesg [1] and the switch is crashed with
+segmentation fault.
 
-Call these variants when the lock is held to avoid recursively taking it
-and potentially having a thread deadlock with itself.
+The issue starts when gen_pool_free() fails because of unexpected
+behavior - a try to free memory which is already freed, this leads to BUG()
+call which crashes the switch and makes many other bugs.
 
-Fixes: f8dfeae009effc0b ("perf bpf: Show more BPF program info in print_bpf_prog_info()")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Song Liu <song@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Huacai Chen <chenhuacai@kernel.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Ming Wang <wangming01@loongson.cn>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lore.kernel.org/r/20231207014655.1252484-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Trying to track down the unexpected behavior led to a bug in eRP code. The
+function mlxsw_sp_acl_erp_table_alloc() gets a pointer to the allocated
+index, sets the value and returns an error code. When gen_pool_alloc()
+fails it returns address 0, we track it and return -ENOBUFS outside, BUT
+the call for gen_pool_alloc() already override the index in erp_table
+structure. This is a problem when such allocation is done as part of
+table expansion. This is not a new table, which will not be used in case
+of allocation failure. We try to expand eRP table and override the
+current index (non-zero) with zero. Then, it leads to an unexpected
+behavior when address 0 is freed twice. Note that address 0 is valid in
+erp_table->base_index and indeed other tables use it.
+
+gen_pool_alloc() fails in case that there is no space left in the
+pre-allocated pool, in our case, the pool is limited to
+ACL_MAX_ERPT_BANK_SIZE, which is read from hardware. When more than max
+erp entries are required, we exceed the limit and return an error, this
+error leads to "Failed to migrate vregion" print.
+
+Fix this by changing erp_table->base_index only in case of a successful
+allocation.
+
+Add a test case for such a scenario. Without this fix it causes
+segmentation fault:
+
+$ TESTS="max_erp_entries_test" ./tc_flower.sh
+./tc_flower.sh: line 988:  1560 Segmentation fault      tc filter del dev $h2 ingress chain $i protocol ip pref $i handle $j flower &>/dev/null
+
+[1]:
+kernel BUG at lib/genalloc.c:508!
+invalid opcode: 0000 [#1] PREEMPT SMP
+CPU: 6 PID: 3531 Comm: tc Not tainted 6.7.0-rc5-custom-ga6893f479f5e #1
+Hardware name: Mellanox Technologies Ltd. MSN4700/VMOD0010, BIOS 5.11 07/12/2021
+RIP: 0010:gen_pool_free_owner+0xc9/0xe0
+...
+Call Trace:
+ <TASK>
+ __mlxsw_sp_acl_erp_table_other_dec+0x70/0xa0 [mlxsw_spectrum]
+ mlxsw_sp_acl_erp_mask_destroy+0xf5/0x110 [mlxsw_spectrum]
+ objagg_obj_root_destroy+0x18/0x80 [objagg]
+ objagg_obj_destroy+0x12c/0x130 [objagg]
+ mlxsw_sp_acl_erp_mask_put+0x37/0x50 [mlxsw_spectrum]
+ mlxsw_sp_acl_ctcam_region_entry_remove+0x74/0xa0 [mlxsw_spectrum]
+ mlxsw_sp_acl_ctcam_entry_del+0x1e/0x40 [mlxsw_spectrum]
+ mlxsw_sp_acl_tcam_ventry_del+0x78/0xd0 [mlxsw_spectrum]
+ mlxsw_sp_flower_destroy+0x4d/0x70 [mlxsw_spectrum]
+ mlxsw_sp_flow_block_cb+0x73/0xb0 [mlxsw_spectrum]
+ tc_setup_cb_destroy+0xc1/0x180
+ fl_hw_destroy_filter+0x94/0xc0 [cls_flower]
+ __fl_delete+0x1ac/0x1c0 [cls_flower]
+ fl_destroy+0xc2/0x150 [cls_flower]
+ tcf_proto_destroy+0x1a/0xa0
+...
+mlxsw_spectrum3 0000:07:00.0: Failed to migrate vregion
+mlxsw_spectrum3 0000:07:00.0: Failed to migrate vregion
+
+Fixes: f465261aa105 ("mlxsw: spectrum_acl: Implement common eRP core")
+Signed-off-by: Amit Cohen <amcohen@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/4cfca254dfc0e5d283974801a24371c7b6db5989.1705502064.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-event.c |  8 +++---
- tools/perf/util/bpf-event.h | 12 ++++-----
- tools/perf/util/env.c       | 50 ++++++++++++++++++++++++-------------
- tools/perf/util/env.h       |  4 +++
- tools/perf/util/header.c    |  8 +++---
- 5 files changed, 50 insertions(+), 32 deletions(-)
+ .../mellanox/mlxsw/spectrum_acl_erp.c         |  8 +--
+ .../drivers/net/mlxsw/spectrum-2/tc_flower.sh | 52 ++++++++++++++++++-
+ 2 files changed, 56 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
-index cc7c1f90cf62..91c7bfa82a50 100644
---- a/tools/perf/util/bpf-event.c
-+++ b/tools/perf/util/bpf-event.c
-@@ -606,9 +606,9 @@ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env)
- 	return evlist__add_sb_event(evlist, &attr, bpf_event__sb_cb, env);
- }
- 
--void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
--				    struct perf_env *env,
--				    FILE *fp)
-+void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
-+				      struct perf_env *env,
-+				      FILE *fp)
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_erp.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_erp.c
+index 4c98950380d5..d231f4d2888b 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_erp.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_erp.c
+@@ -301,6 +301,7 @@ mlxsw_sp_acl_erp_table_alloc(struct mlxsw_sp_acl_erp_core *erp_core,
+ 			     unsigned long *p_index)
  {
- 	__u32 *prog_lens = (__u32 *)(uintptr_t)(info->jited_func_lens);
- 	__u64 *prog_addrs = (__u64 *)(uintptr_t)(info->jited_ksyms);
-@@ -624,7 +624,7 @@ void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
- 	if (info->btf_id) {
- 		struct btf_node *node;
+ 	unsigned int num_rows, entry_size;
++	unsigned long index;
  
--		node = perf_env__find_btf(env, info->btf_id);
-+		node = __perf_env__find_btf(env, info->btf_id);
- 		if (node)
- 			btf = btf__new((__u8 *)(node->data),
- 				       node->data_size);
-diff --git a/tools/perf/util/bpf-event.h b/tools/perf/util/bpf-event.h
-index 1bcbd4fb6c66..e2f0420905f5 100644
---- a/tools/perf/util/bpf-event.h
-+++ b/tools/perf/util/bpf-event.h
-@@ -33,9 +33,9 @@ struct btf_node {
- int machine__process_bpf(struct machine *machine, union perf_event *event,
- 			 struct perf_sample *sample);
- int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env);
--void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
--				    struct perf_env *env,
--				    FILE *fp);
-+void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
-+				      struct perf_env *env,
-+				      FILE *fp);
- #else
- static inline int machine__process_bpf(struct machine *machine __maybe_unused,
- 				       union perf_event *event __maybe_unused,
-@@ -50,9 +50,9 @@ static inline int evlist__add_bpf_sb_event(struct evlist *evlist __maybe_unused,
+ 	/* We only allow allocations of entire rows */
+ 	if (num_erps % erp_core->num_erp_banks != 0)
+@@ -309,10 +310,11 @@ mlxsw_sp_acl_erp_table_alloc(struct mlxsw_sp_acl_erp_core *erp_core,
+ 	entry_size = erp_core->erpt_entries_size[region_type];
+ 	num_rows = num_erps / erp_core->num_erp_banks;
+ 
+-	*p_index = gen_pool_alloc(erp_core->erp_tables, num_rows * entry_size);
+-	if (*p_index == 0)
++	index = gen_pool_alloc(erp_core->erp_tables, num_rows * entry_size);
++	if (!index)
+ 		return -ENOBUFS;
+-	*p_index -= MLXSW_SP_ACL_ERP_GENALLOC_OFFSET;
++
++	*p_index = index - MLXSW_SP_ACL_ERP_GENALLOC_OFFSET;
+ 
  	return 0;
  }
- 
--static inline void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
--						  struct perf_env *env __maybe_unused,
--						  FILE *fp __maybe_unused)
-+static inline void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
-+						    struct perf_env *env __maybe_unused,
-+						    FILE *fp __maybe_unused)
- {
- 
+diff --git a/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh b/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh
+index fb850e0ec837..7bf56ea161e3 100755
+--- a/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh
++++ b/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh
+@@ -10,7 +10,8 @@ lib_dir=$(dirname $0)/../../../../net/forwarding
+ ALL_TESTS="single_mask_test identical_filters_test two_masks_test \
+ 	multiple_masks_test ctcam_edge_cases_test delta_simple_test \
+ 	delta_two_masks_one_key_test delta_simple_rehash_test \
+-	bloom_simple_test bloom_complex_test bloom_delta_test"
++	bloom_simple_test bloom_complex_test bloom_delta_test \
++	max_erp_entries_test"
+ NUM_NETIFS=2
+ source $lib_dir/lib.sh
+ source $lib_dir/tc_common.sh
+@@ -983,6 +984,55 @@ bloom_delta_test()
+ 	log_test "bloom delta test ($tcflags)"
  }
-diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
-index 5b8cf6a421a4..5d878bae7d9a 100644
---- a/tools/perf/util/env.c
-+++ b/tools/perf/util/env.c
-@@ -21,13 +21,19 @@ struct perf_env perf_env;
  
- void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				    struct bpf_prog_info_node *info_node)
++max_erp_entries_test()
 +{
-+	down_write(&env->bpf_progs.lock);
-+	__perf_env__insert_bpf_prog_info(env, info_node);
-+	up_write(&env->bpf_progs.lock);
++	# The number of eRP entries is limited. Once the maximum number of eRPs
++	# has been reached, filters cannot be added. This test verifies that
++	# when this limit is reached, inserstion fails without crashing.
++
++	RET=0
++
++	local num_masks=32
++	local num_regions=15
++	local chain_failed
++	local mask_failed
++	local ret
++
++	if [[ "$tcflags" != "skip_sw" ]]; then
++		return 0;
++	fi
++
++	for ((i=1; i < $num_regions; i++)); do
++		for ((j=$num_masks; j >= 0; j--)); do
++			tc filter add dev $h2 ingress chain $i protocol ip \
++				pref $i	handle $j flower $tcflags \
++				dst_ip 192.1.0.0/$j &> /dev/null
++			ret=$?
++
++			if [ $ret -ne 0 ]; then
++				chain_failed=$i
++				mask_failed=$j
++				break 2
++			fi
++		done
++	done
++
++	# We expect to exceed the maximum number of eRP entries, so that
++	# insertion eventually fails. Otherwise, the test should be adjusted to
++	# add more filters.
++	check_fail $ret "expected to exceed number of eRP entries"
++
++	for ((; i >= 1; i--)); do
++		for ((j=0; j <= $num_masks; j++)); do
++			tc filter del dev $h2 ingress chain $i protocol ip \
++				pref $i handle $j flower &> /dev/null
++		done
++	done
++
++	log_test "max eRP entries test ($tcflags). " \
++		"max chain $chain_failed, mask $mask_failed"
 +}
 +
-+void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
+ setup_prepare()
  {
- 	__u32 prog_id = info_node->info_linear->info.id;
- 	struct bpf_prog_info_node *node;
- 	struct rb_node *parent = NULL;
- 	struct rb_node **p;
- 
--	down_write(&env->bpf_progs.lock);
- 	p = &env->bpf_progs.infos.rb_node;
- 
- 	while (*p != NULL) {
-@@ -39,15 +45,13 @@ void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 			p = &(*p)->rb_right;
- 		} else {
- 			pr_debug("duplicated bpf prog info %u\n", prog_id);
--			goto out;
-+			return;
- 		}
- 	}
- 
- 	rb_link_node(&info_node->rb_node, parent, p);
- 	rb_insert_color(&info_node->rb_node, &env->bpf_progs.infos);
- 	env->bpf_progs.infos_cnt++;
--out:
--	up_write(&env->bpf_progs.lock);
- }
- 
- struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
-@@ -76,14 +80,22 @@ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
- }
- 
- bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
-+{
-+	bool ret;
-+
-+	down_write(&env->bpf_progs.lock);
-+	ret = __perf_env__insert_btf(env, btf_node);
-+	up_write(&env->bpf_progs.lock);
-+	return ret;
-+}
-+
-+bool __perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
- {
- 	struct rb_node *parent = NULL;
- 	__u32 btf_id = btf_node->id;
- 	struct btf_node *node;
- 	struct rb_node **p;
--	bool ret = true;
- 
--	down_write(&env->bpf_progs.lock);
- 	p = &env->bpf_progs.btfs.rb_node;
- 
- 	while (*p != NULL) {
-@@ -95,25 +107,31 @@ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
- 			p = &(*p)->rb_right;
- 		} else {
- 			pr_debug("duplicated btf %u\n", btf_id);
--			ret = false;
--			goto out;
-+			return false;
- 		}
- 	}
- 
- 	rb_link_node(&btf_node->rb_node, parent, p);
- 	rb_insert_color(&btf_node->rb_node, &env->bpf_progs.btfs);
- 	env->bpf_progs.btfs_cnt++;
--out:
--	up_write(&env->bpf_progs.lock);
--	return ret;
-+	return true;
- }
- 
- struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id)
-+{
-+	struct btf_node *res;
-+
-+	down_read(&env->bpf_progs.lock);
-+	res = __perf_env__find_btf(env, btf_id);
-+	up_read(&env->bpf_progs.lock);
-+	return res;
-+}
-+
-+struct btf_node *__perf_env__find_btf(struct perf_env *env, __u32 btf_id)
- {
- 	struct btf_node *node = NULL;
- 	struct rb_node *n;
- 
--	down_read(&env->bpf_progs.lock);
- 	n = env->bpf_progs.btfs.rb_node;
- 
- 	while (n) {
-@@ -123,13 +141,9 @@ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id)
- 		else if (btf_id > node->id)
- 			n = n->rb_right;
- 		else
--			goto out;
-+			return node;
- 	}
--	node = NULL;
--
--out:
--	up_read(&env->bpf_progs.lock);
--	return node;
-+	return NULL;
- }
- 
- /* purge data in bpf_progs.infos tree */
-diff --git a/tools/perf/util/env.h b/tools/perf/util/env.h
-index 4566c51f2fd9..359eff51cb85 100644
---- a/tools/perf/util/env.h
-+++ b/tools/perf/util/env.h
-@@ -164,12 +164,16 @@ const char *perf_env__raw_arch(struct perf_env *env);
- int perf_env__nr_cpus_avail(struct perf_env *env);
- 
- void perf_env__init(struct perf_env *env);
-+void __perf_env__insert_bpf_prog_info(struct perf_env *env,
-+				      struct bpf_prog_info_node *info_node);
- void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				    struct bpf_prog_info_node *info_node);
- struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
- 							__u32 prog_id);
- bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node);
-+bool __perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node);
- struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id);
-+struct btf_node *__perf_env__find_btf(struct perf_env *env, __u32 btf_id);
- 
- int perf_env__numa_node(struct perf_env *env, struct perf_cpu cpu);
- char *perf_env__find_pmu_cap(struct perf_env *env, const char *pmu_name,
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index eaeeba8d65ec..b2b0293567f0 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -1809,8 +1809,8 @@ static void print_bpf_prog_info(struct feat_fd *ff, FILE *fp)
- 		node = rb_entry(next, struct bpf_prog_info_node, rb_node);
- 		next = rb_next(&node->rb_node);
- 
--		bpf_event__print_bpf_prog_info(&node->info_linear->info,
--					       env, fp);
-+		__bpf_event__print_bpf_prog_info(&node->info_linear->info,
-+						 env, fp);
- 	}
- 
- 	up_read(&env->bpf_progs.lock);
-@@ -3136,7 +3136,7 @@ static int process_bpf_prog_info(struct feat_fd *ff, void *data __maybe_unused)
- 		/* after reading from file, translate offset to address */
- 		bpil_offs_to_addr(info_linear);
- 		info_node->info_linear = info_linear;
--		perf_env__insert_bpf_prog_info(env, info_node);
-+		__perf_env__insert_bpf_prog_info(env, info_node);
- 	}
- 
- 	up_write(&env->bpf_progs.lock);
-@@ -3183,7 +3183,7 @@ static int process_bpf_btf(struct feat_fd *ff, void *data __maybe_unused)
- 		if (__do_read(ff, node->data, data_size))
- 			goto out;
- 
--		perf_env__insert_btf(env, node);
-+		__perf_env__insert_btf(env, node);
- 		node = NULL;
- 	}
- 
+ 	h1=${NETIFS[p1]}
 -- 
 2.43.0
 
