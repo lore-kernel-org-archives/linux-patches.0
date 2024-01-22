@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F649137C55;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C301339A7;
 	Tue, 23 Jan 2024 01:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972111; cv=none; b=Z869+hsLZqMl5BOlIRHQXUmjxxNwTFn/HAFETbX/I8fjwmYDID/5kXvaUzymndR1KRS8ZqTT88Kxq1t+XGkjfU0aM8v2YDnWj0mnqzWshBfswECHzv9Z0Xc92PgQ2+ApCrRKYFegop2bY3mrFRPyyVZJ1bYRTfejl11nxskdVxE=
+	t=1705972112; cv=none; b=LltOHFyTr5HTciCirvewS3KNCoKBrn4MheFLBRkuxZIFdLNDn8QZHNn5diVWlJnbZgoylu7tKDsLxEbrpkPFBQ8NxGSXYIgoN+OblCkacYkSyV9BdXrd8z0PfDmm0VQQRxl2A/57CBxOTcFC8KGuAm8ORHJoGIi/DadLaaKxjaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972111; c=relaxed/simple;
-	bh=8scI/XzvhUNGB6fY4QDuCO5GJ4g2YNOBjg/HtFD8hz0=;
+	s=arc-20240116; t=1705972112; c=relaxed/simple;
+	bh=uOQEL5cmTZHhfPeSrfGTcuDG+Rn17VyjOkSsFwYrlPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UeZ0gRIERgRBX78+MDYXY6f8NFGlxMGjvLdo64SN4SwI3cTi1K8PnJqDcEFUbHba/vCVuj4y2VDjucT7h/lAWlzPHNtBW9FlKJsdzh6ybzB/2Ksq3pESwXfcqYuR09R4qt6GvzeV2AZw8/293tDNrpgwx7TPpaaUmnYsh6OSbEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OHa+S9ng; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJuGCYp0lwhnov3x/M4JLgFzcMfg91zPSeOgQoLNoTO76yrAcbTnRzAAqztsjpwah9NPaOU3slhUK2el17mlcCoEBkoRK0e0Vn9F3dN0x2p5OGzESVR3Ya9eOzRVR15pJb4ikQPMUXClCj79og/fT0qJMr0Eii7j4yMdoM4q67s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s9D/N7tI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OHa+S9ng"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C519BC433C7;
-	Tue, 23 Jan 2024 01:08:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9D/N7tI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A850AC433C7;
+	Tue, 23 Jan 2024 01:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972110;
-	bh=8scI/XzvhUNGB6fY4QDuCO5GJ4g2YNOBjg/HtFD8hz0=;
+	s=korg; t=1705972111;
+	bh=uOQEL5cmTZHhfPeSrfGTcuDG+Rn17VyjOkSsFwYrlPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OHa+S9ng9HF9B+Pd4t6CkQJMjgs4zm+3dfF7B7zgBnEN47SW06Xpi2zE/s1JTNcCC
-	 PJUrnFG0fNVEu2b3sKDK+pPerKVK4CdDWw7LkWB8YDYERKqbHBp/csFjV6yVKBez63
-	 xVH29g91Zie7mBYCf8D5Zek1AxMMbYMKJSAwY+tA=
+	b=s9D/N7tI0kFSWCIWK0TbNYDmP+r1ujQwiy8xoYUs6k1+p9zU+OyySJLY4noJNW1Im
+	 MqbX7uYfIqvP4ttt7S6tdNmEYloKLd/7ycosuxidFtvA2QjVLSy2lU6ZDY7WGypvJq
+	 wD0PLzkK/OpiIlR3oIq/kxSq1d00Yfsk2Z8WGU9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jensen Huang <jensenhuang@friendlyarm.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	Xiang Yang <xiangyang3@huawei.com>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/374] i2c: rk3x: fix potential spinlock recursion on poll
-Date: Mon, 22 Jan 2024 15:55:01 -0800
-Message-ID: <20240122235746.185788225@linuxfoundation.org>
+Subject: [PATCH 5.15 022/374] drm/exynos: fix a potential error pointer dereference
+Date: Mon, 22 Jan 2024 15:54:38 -0800
+Message-ID: <20240122235745.404645862@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -53,82 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jensen Huang <jensenhuang@friendlyarm.com>
+From: Xiang Yang <xiangyang3@huawei.com>
 
-[ Upstream commit 19cde9c92b8d3b7ee555d0da3bcb0232d3a784f4 ]
+[ Upstream commit 73bf1c9ae6c054c53b8e84452c5e46f86dd28246 ]
 
-Possible deadlock scenario (on reboot):
-rk3x_i2c_xfer_common(polling)
-    -> rk3x_i2c_wait_xfer_poll()
-        -> rk3x_i2c_irq(0, i2c);
-            --> spin_lock(&i2c->lock);
-            ...
-        <rk3x i2c interrupt>
-        -> rk3x_i2c_irq(0, i2c);
-            --> spin_lock(&i2c->lock); (deadlock here)
+Smatch reports the warning below:
+drivers/gpu/drm/exynos/exynos_hdmi.c:1864 hdmi_bind()
+error: 'crtc' dereferencing possible ERR_PTR()
 
-Store the IRQ number and disable/enable it around the polling transfer.
-This patch has been tested on NanoPC-T4.
+The return value of exynos_drm_crtc_get_by_type maybe ERR_PTR(-ENODEV),
+which can not be used directly. Fix this by checking the return value
+before using it.
 
-Signed-off-by: Jensen Huang <jensenhuang@friendlyarm.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Xiang Yang <xiangyang3@huawei.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-rk3x.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/exynos/exynos_hdmi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-rk3x.c b/drivers/i2c/busses/i2c-rk3x.c
-index 13c14eb175e9..6abcf975a2db 100644
---- a/drivers/i2c/busses/i2c-rk3x.c
-+++ b/drivers/i2c/busses/i2c-rk3x.c
-@@ -178,6 +178,7 @@ struct rk3x_i2c_soc_data {
-  * @clk: function clk for rk3399 or function & Bus clks for others
-  * @pclk: Bus clk for rk3399
-  * @clk_rate_nb: i2c clk rate change notify
-+ * @irq: irq number
-  * @t: I2C known timing information
-  * @lock: spinlock for the i2c bus
-  * @wait: the waitqueue to wait for i2c transfer
-@@ -200,6 +201,7 @@ struct rk3x_i2c {
- 	struct clk *clk;
- 	struct clk *pclk;
- 	struct notifier_block clk_rate_nb;
-+	int irq;
- 
- 	/* Settings */
- 	struct i2c_timings t;
-@@ -1087,13 +1089,18 @@ static int rk3x_i2c_xfer_common(struct i2c_adapter *adap,
- 
- 		spin_unlock_irqrestore(&i2c->lock, flags);
- 
--		rk3x_i2c_start(i2c);
--
- 		if (!polling) {
-+			rk3x_i2c_start(i2c);
-+
- 			timeout = wait_event_timeout(i2c->wait, !i2c->busy,
- 						     msecs_to_jiffies(WAIT_TIMEOUT));
- 		} else {
-+			disable_irq(i2c->irq);
-+			rk3x_i2c_start(i2c);
-+
- 			timeout = rk3x_i2c_wait_xfer_poll(i2c);
-+
-+			enable_irq(i2c->irq);
- 		}
- 
- 		spin_lock_irqsave(&i2c->lock, flags);
-@@ -1301,6 +1308,8 @@ static int rk3x_i2c_probe(struct platform_device *pdev)
+diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
+index 7655142a4651..42b6b001405a 100644
+--- a/drivers/gpu/drm/exynos/exynos_hdmi.c
++++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
+@@ -1861,6 +1861,8 @@ static int hdmi_bind(struct device *dev, struct device *master, void *data)
  		return ret;
- 	}
  
-+	i2c->irq = irq;
-+
- 	platform_set_drvdata(pdev, i2c);
+ 	crtc = exynos_drm_crtc_get_by_type(drm_dev, EXYNOS_DISPLAY_TYPE_HDMI);
++	if (IS_ERR(crtc))
++		return PTR_ERR(crtc);
+ 	crtc->pipe_clk = &hdata->phy_clk;
  
- 	if (i2c->soc_data->calc_timings == rk3x_i2c_v0_calc_timings) {
+ 	ret = hdmi_create_connector(encoder);
 -- 
 2.43.0
 
