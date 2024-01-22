@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40EA74E23;
-	Tue, 23 Jan 2024 02:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC86876908;
+	Tue, 23 Jan 2024 02:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975495; cv=none; b=ugg7BVqmDPpOCFkR4IF8RfqiG0CtxSX3XyygEbFcYxWirqbYFlic2Po2xL6h4nIrPsdmfOq/mxPIes+i0Ya3JalxkJWaCIxOpGHCfExigrJgEl02zuP+VbImHx5t55a3LiVeuWOrnhy9kAoUoMieKgEbmSdEWjFZT9RlCwg+co8=
+	t=1705975495; cv=none; b=YvblTE5QGFKzEIukF7VcxYCPUsSHA5yKte7BFmU2Vns/gxjsTfFhSWciC8ACg9qwWIutPJ5eR8UYvLflpWlGBUKdHvhoOCa22yIJ8rgX2xQ0480VNhlk26pqs7ZuGIMY5Wqhjkecye1WJZFdeIoFTjC5UNhSbkm+FBdh7VvpmBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975495; c=relaxed/simple;
-	bh=ZvHcSKp9/mbQFrZZdNdIRXx48UaKO7wuod20Yhp/xJ8=;
+	bh=wnqYxSa/fd8p3H2fRM3XhwhB52i9X6OG3qEbwoGPQ2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YlDzc1fInlvdw2BTJ+smnfukUWp4bvu2W5mWD1zUMiJVZQjNuYOUbLA97+LLyLp8oyRqAc0zDXaLsFPzPzagCUFbxRfjtZqD99j3DaZaouDp+FR8UxDhemTanoLND+wELKjqymdlnsUo4ANvtadXYz+EzHSvfbRJBK4iGySIShg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCDG6vUh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rmmu3fRJVKmkh0rbXyffpWvDd1Abox9x3si982J4ZABaU2vT+QK8tV358siR9NeWCaE2gQAD1/kd1iXGll855JyLYE5+D4B6bDTSkxO4RpSaaMC0FGP6BNFlOc4Vb+rfuRqX2Z76F1iRuqkg1Vk5GxlwOCO5ScTUkSxTsYGaCyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTqi3iML; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCDG6vUh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B90EBC43390;
-	Tue, 23 Jan 2024 02:04:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTqi3iML"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B28C433F1;
+	Tue, 23 Jan 2024 02:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975494;
-	bh=ZvHcSKp9/mbQFrZZdNdIRXx48UaKO7wuod20Yhp/xJ8=;
+	s=korg; t=1705975495;
+	bh=wnqYxSa/fd8p3H2fRM3XhwhB52i9X6OG3qEbwoGPQ2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fCDG6vUhHgmXfcpMF3O5o9XXc5qzQNUdUlBr5H12CuItgiH5H4wrUn0TIgN5KrHmE
-	 948yylMHgdxy96RAiweTkB1PKVf4jqvmMTx7tve+0uYI8lCw4jWKQ1M0WXcm9kdICB
-	 OAZeSlbu7aWBGB2aXN1u5AWRWsng2hJWPsdjgXhg=
+	b=UTqi3iMLZd6u2vUiKP4847veMqph9vMVGHadLfN8C5zTakaZx6lxse42l6yeMAZbt
+	 0MLBEF6cc+n8TFRkh15u+YkvN5VAAQvdPzPizIMutf89yOxecdsN3drEHrKqKot8AA
+	 1M+8SHkMmNQ0kmZpNkTfjRACUKM9lisGulh1rFds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 449/583] riscv: Check if the code to patch lies in the exit section
-Date: Mon, 22 Jan 2024 15:58:20 -0800
-Message-ID: <20240122235825.718102658@linuxfoundation.org>
+Subject: [PATCH 6.6 450/583] riscv: Fix module_alloc() that did not reset the linear mapping permissions
+Date: Mon, 22 Jan 2024 15:58:21 -0800
+Message-ID: <20240122235825.744375953@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -54,106 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 420370f3ae3d3b883813fd3051a38805160b2b9f ]
+[ Upstream commit 749b94b08005929bbc636df21a23322733166e35 ]
 
-Otherwise we fall through to vmalloc_to_page() which panics since the
-address does not lie in the vmalloc region.
+After unloading a module, we must reset the linear mapping permissions,
+see the example below:
 
-Fixes: 043cb41a85de ("riscv: introduce interfaces to patch kernel code")
+Before unloading a module:
+
+0xffffaf809d65d000-0xffffaf809d6dc000    0x000000011d65d000       508K PTE .   ..     ..   D A G . . W R V
+0xffffaf809d6dc000-0xffffaf809d6dd000    0x000000011d6dc000         4K PTE .   ..     ..   D A G . . . R V
+0xffffaf809d6dd000-0xffffaf809d6e1000    0x000000011d6dd000        16K PTE .   ..     ..   D A G . . W R V
+0xffffaf809d6e1000-0xffffaf809d6e7000    0x000000011d6e1000        24K PTE .   ..     ..   D A G . X . R V
+
+After unloading a module:
+
+0xffffaf809d65d000-0xffffaf809d6e1000    0x000000011d65d000       528K PTE .   ..     ..   D A G . . W R V
+0xffffaf809d6e1000-0xffffaf809d6e7000    0x000000011d6e1000        24K PTE .   ..     ..   D A G . X W R V
+
+The last mapping is not reset and we end up with WX mappings in the linear
+mapping.
+
+So add VM_FLUSH_RESET_PERMS to our module_alloc() definition.
+
+Fixes: 0cff8bff7af8 ("riscv: avoid the PIC offset of static percpu data in module beyond 2G limits")
 Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Link: https://lore.kernel.org/r/20231214091926.203439-1-alexghiti@rivosinc.com
+Link: https://lore.kernel.org/r/20231213134027.155327-2-alexghiti@rivosinc.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/sections.h   |  1 +
- arch/riscv/kernel/patch.c           | 11 ++++++++++-
- arch/riscv/kernel/vmlinux-xip.lds.S |  2 ++
- arch/riscv/kernel/vmlinux.lds.S     |  2 ++
- 4 files changed, 15 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/module.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/include/asm/sections.h b/arch/riscv/include/asm/sections.h
-index 32336e8a17cb..a393d5035c54 100644
---- a/arch/riscv/include/asm/sections.h
-+++ b/arch/riscv/include/asm/sections.h
-@@ -13,6 +13,7 @@ extern char _start_kernel[];
- extern char __init_data_begin[], __init_data_end[];
- extern char __init_text_begin[], __init_text_end[];
- extern char __alt_start[], __alt_end[];
-+extern char __exittext_begin[], __exittext_end[];
- 
- static inline bool is_va_kernel_text(uintptr_t va)
+diff --git a/arch/riscv/kernel/module.c b/arch/riscv/kernel/module.c
+index 7c651d55fcbd..df4f6fec5d17 100644
+--- a/arch/riscv/kernel/module.c
++++ b/arch/riscv/kernel/module.c
+@@ -440,7 +440,8 @@ void *module_alloc(unsigned long size)
  {
-diff --git a/arch/riscv/kernel/patch.c b/arch/riscv/kernel/patch.c
-index 13ee7bf589a1..37e87fdcf6a0 100644
---- a/arch/riscv/kernel/patch.c
-+++ b/arch/riscv/kernel/patch.c
-@@ -14,6 +14,7 @@
- #include <asm/fixmap.h>
- #include <asm/ftrace.h>
- #include <asm/patch.h>
-+#include <asm/sections.h>
- 
- struct patch_insn {
- 	void *addr;
-@@ -25,6 +26,14 @@ struct patch_insn {
- int riscv_patch_in_stop_machine = false;
- 
- #ifdef CONFIG_MMU
-+
-+static inline bool is_kernel_exittext(uintptr_t addr)
-+{
-+	return system_state < SYSTEM_RUNNING &&
-+		addr >= (uintptr_t)__exittext_begin &&
-+		addr < (uintptr_t)__exittext_end;
-+}
-+
- /*
-  * The fix_to_virt(, idx) needs a const value (not a dynamic variable of
-  * reg-a0) or BUILD_BUG_ON failed with "idx >= __end_of_fixed_addresses".
-@@ -35,7 +44,7 @@ static __always_inline void *patch_map(void *addr, const unsigned int fixmap)
- 	uintptr_t uintaddr = (uintptr_t) addr;
- 	struct page *page;
- 
--	if (core_kernel_text(uintaddr))
-+	if (core_kernel_text(uintaddr) || is_kernel_exittext(uintaddr))
- 		page = phys_to_page(__pa_symbol(addr));
- 	else if (IS_ENABLED(CONFIG_STRICT_MODULE_RWX))
- 		page = vmalloc_to_page(addr);
-diff --git a/arch/riscv/kernel/vmlinux-xip.lds.S b/arch/riscv/kernel/vmlinux-xip.lds.S
-index 50767647fbc6..8c3daa1b0531 100644
---- a/arch/riscv/kernel/vmlinux-xip.lds.S
-+++ b/arch/riscv/kernel/vmlinux-xip.lds.S
-@@ -29,10 +29,12 @@ SECTIONS
- 	HEAD_TEXT_SECTION
- 	INIT_TEXT_SECTION(PAGE_SIZE)
- 	/* we have to discard exit text and such at runtime, not link time */
-+	__exittext_begin = .;
- 	.exit.text :
- 	{
- 		EXIT_TEXT
- 	}
-+	__exittext_end = .;
- 
- 	.text : {
- 		_text = .;
-diff --git a/arch/riscv/kernel/vmlinux.lds.S b/arch/riscv/kernel/vmlinux.lds.S
-index 492dd4b8f3d6..002ca58dd998 100644
---- a/arch/riscv/kernel/vmlinux.lds.S
-+++ b/arch/riscv/kernel/vmlinux.lds.S
-@@ -69,10 +69,12 @@ SECTIONS
- 		__soc_builtin_dtb_table_end = .;
- 	}
- 	/* we have to discard exit text and such at runtime, not link time */
-+	__exittext_begin = .;
- 	.exit.text :
- 	{
- 		EXIT_TEXT
- 	}
-+	__exittext_end = .;
- 
- 	__init_text_end = .;
- 	. = ALIGN(SECTION_ALIGN);
+ 	return __vmalloc_node_range(size, 1, MODULES_VADDR,
+ 				    MODULES_END, GFP_KERNEL,
+-				    PAGE_KERNEL, 0, NUMA_NO_NODE,
++				    PAGE_KERNEL, VM_FLUSH_RESET_PERMS,
++				    NUMA_NO_NODE,
+ 				    __builtin_return_address(0));
+ }
+ #endif
 -- 
 2.43.0
 
