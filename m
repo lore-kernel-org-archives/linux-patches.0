@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C513650A75;
-	Tue, 23 Jan 2024 00:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08ED350A75;
+	Tue, 23 Jan 2024 00:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970404; cv=none; b=iyQjUQsW4hfP2b3cl7+KTEMo2KI0Rs/NIWuDRZYhK4MmZW+/+NKb/ZI/htmzaRp2COmhNFm2bSXeYCBef51A96gBtCfC1GYpAH179co/u0FoBwUERW4e0eHHYOJP4jbnpGMR2Bug6D3jqDDzqG/3EAarJ8+hN/uoBqO/PxdbrNM=
+	t=1705970408; cv=none; b=Xh+jT4BQsKcmQ/wv/unCAIPxsM1BEacxFZqOStvmVomnEPfkvoz2c43lkPcBAkG3QK6d+2a/LHxKk3/FcAypqqwNy09i7md0fRKD7lmsFbFTmtOXW2Coo9+IrzfAS59fYcEps9IDcHsqft2MNR8ujMXMXGcHeswHo2Tom1JaJI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970404; c=relaxed/simple;
-	bh=t5qsxvzJvAn+Y5rE888nHzmxy3YrKKhR2Ck2X0X9bko=;
+	s=arc-20240116; t=1705970408; c=relaxed/simple;
+	bh=CdVIeeDOKiTpbCaqVDJpSruwqwqYWsCAZPfjpezyJa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K3b+6NMom6AhER21WxabEqE3byDk/a8in5PKsa09EHEhTeqR56AoCgpotSL9wDWXvbUzCtPbCUUH9SV1B4KZFKOxjF6fzYTXedKlmvZ6jozVySK2mtUaJdDgGPToeRSIGTqRiSv8ImaSfs00fAOB5ACxYYeoUeif1Uv5WGRLP30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TmJZnNhl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p3rtcLh2yAKiwLlBBE7Iwu7ZasLpzVfTi7x803foBrQ5gGP1vKX659mS+SGG5oSCO83d6PvVqlz5KmB953SyeN2PLEKiq410eH37vDL9vuM9cbQq9UAhfswzTl8zraA6xlwvoiayW2x3RT1pbG8MRirjDiKfoAc/qyrWDwKcWEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvjZZieQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TmJZnNhl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C400C433F1;
-	Tue, 23 Jan 2024 00:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvjZZieQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E519C433F1;
+	Tue, 23 Jan 2024 00:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970404;
-	bh=t5qsxvzJvAn+Y5rE888nHzmxy3YrKKhR2Ck2X0X9bko=;
+	s=korg; t=1705970407;
+	bh=CdVIeeDOKiTpbCaqVDJpSruwqwqYWsCAZPfjpezyJa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TmJZnNhl2t/04ANTmRdRYFtQ4QA/ps49Mog1SRvE+jCETOFde5aLh3GpZK07AQCij
-	 4bbflAofWx8oOJIrTBSU1I3jhM9ECOWqsjiy+QiWzYw27lbuG2DEarC/aDBQzHK7sd
-	 Adk2pJ3iEyPLa2dOEYVGoIHyKrMnCGt0X7nhLxhM=
+	b=TvjZZieQPw2ZO13bTiY/2rhtJWaOJ2bQFcHG0U9KcvRzR0WaNbmWmw1Z/en0143YA
+	 QLODWbL5WDzqpjd35YUKS5G3ysoC45HbZmwvXSKA1HJvhRaxNWQUHcq5XhxClLSzxV
+	 vwMo6y0il9Ko3+m5CWGuxnRwLbpsTZBFoC/A0jnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kunwu Chan <chentao@kylinos.cn>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/417] powerpc/powernv: Add a null pointer check in opal_powercap_init()
-Date: Mon, 22 Jan 2024 15:52:59 -0800
-Message-ID: <20240122235751.897241289@linuxfoundation.org>
+Subject: [PATCH 6.1 012/417] powerpc/imc-pmu: Add a null pointer check in update_events_in_group()
+Date: Mon, 22 Jan 2024 15:53:00 -0800
+Message-ID: <20240122235751.928493349@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -53,37 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit e123015c0ba859cf48aa7f89c5016cc6e98e018d ]
+[ Upstream commit 0a233867a39078ebb0f575e2948593bbff5826b3 ]
 
 kasprintf() returns a pointer to dynamically allocated memory
 which can be NULL upon failure.
 
-Fixes: b9ef7b4b867f ("powerpc: Convert to using %pOFn instead of device_node.name")
+Fixes: 885dcd709ba9 ("powerpc/perf: Add nest IMC PMU support")
 Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231126095739.1501990-1-chentao@kylinos.cn
+Link: https://msgid.link/20231126093719.1440305-1-chentao@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/powernv/opal-powercap.c | 6 ++++++
+ arch/powerpc/perf/imc-pmu.c | 6 ++++++
  1 file changed, 6 insertions(+)
 
-diff --git a/arch/powerpc/platforms/powernv/opal-powercap.c b/arch/powerpc/platforms/powernv/opal-powercap.c
-index 7bfe4cbeb35a..ea917266aa17 100644
---- a/arch/powerpc/platforms/powernv/opal-powercap.c
-+++ b/arch/powerpc/platforms/powernv/opal-powercap.c
-@@ -196,6 +196,12 @@ void __init opal_powercap_init(void)
+diff --git a/arch/powerpc/perf/imc-pmu.c b/arch/powerpc/perf/imc-pmu.c
+index ada817c49b72..56d82f7f9734 100644
+--- a/arch/powerpc/perf/imc-pmu.c
++++ b/arch/powerpc/perf/imc-pmu.c
+@@ -299,6 +299,8 @@ static int update_events_in_group(struct device_node *node, struct imc_pmu *pmu)
+ 	attr_group->attrs = attrs;
+ 	do {
+ 		ev_val_str = kasprintf(GFP_KERNEL, "event=0x%x", pmu->events[i].value);
++		if (!ev_val_str)
++			continue;
+ 		dev_str = device_str_attr_create(pmu->events[i].name, ev_val_str);
+ 		if (!dev_str)
+ 			continue;
+@@ -306,6 +308,8 @@ static int update_events_in_group(struct device_node *node, struct imc_pmu *pmu)
+ 		attrs[j++] = dev_str;
+ 		if (pmu->events[i].scale) {
+ 			ev_scale_str = kasprintf(GFP_KERNEL, "%s.scale", pmu->events[i].name);
++			if (!ev_scale_str)
++				continue;
+ 			dev_str = device_str_attr_create(ev_scale_str, pmu->events[i].scale);
+ 			if (!dev_str)
+ 				continue;
+@@ -315,6 +319,8 @@ static int update_events_in_group(struct device_node *node, struct imc_pmu *pmu)
  
- 		j = 0;
- 		pcaps[i].pg.name = kasprintf(GFP_KERNEL, "%pOFn", node);
-+		if (!pcaps[i].pg.name) {
-+			kfree(pcaps[i].pattrs);
-+			kfree(pcaps[i].pg.attrs);
-+			goto out_pcaps_pattrs;
-+		}
-+
- 		if (has_min) {
- 			powercap_add_attr(min, "powercap-min",
- 					  &pcaps[i].pattrs[j]);
+ 		if (pmu->events[i].unit) {
+ 			ev_unit_str = kasprintf(GFP_KERNEL, "%s.unit", pmu->events[i].name);
++			if (!ev_unit_str)
++				continue;
+ 			dev_str = device_str_attr_create(ev_unit_str, pmu->events[i].unit);
+ 			if (!dev_str)
+ 				continue;
 -- 
 2.43.0
 
