@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00F9651A1;
-	Tue, 23 Jan 2024 00:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F9A651A1;
+	Tue, 23 Jan 2024 00:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971552; cv=none; b=lcFUn4ihvNKsbhS7BCkPIhOkbTiR1gdmucrHmfuAO8r6qvCJCiQuBKYO56P91YEOmz2wJiafE0+NrcHaVt4ewDRXmPFOE1Gky/bqQdSYHl9U+rmgfSv+W09KoJI289SrgWcQdV7C7tAHeylJ0zYo55P1UPm5EFI9qFVL2KTdgxI=
+	t=1705971554; cv=none; b=mI5uBs+eiQDhE/KUYELGI9YKWdEWIi2Lv6MOu7uYCF1j5WBUPsh7GQLuPnZ3L4S4MmJEiTf9IwtFCLoCBzZ+2He9dWdeJSD//xV1KcF769SSKopPvP8z4TzmTNCncaGry5y35/GjweBcRaI6VViJuiQ0u23jFZdhU+lEcJGUBSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971552; c=relaxed/simple;
-	bh=ThTUD1BmyT1LzThahKUbvNJq0dkRG2EPAvoMuCrRy0w=;
+	s=arc-20240116; t=1705971554; c=relaxed/simple;
+	bh=mMOyQomBlqu/VYgddwV515FyJ7v48h/CrDWMqCLwmj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pfNVC0VFISWzWEn8AULAmJn8Vnr0FbUN5tjPFSe+M1dZm7tBZrD3Wwc/howsoNydkOXllCMTAKhMedKQOZH/3YMS5Lp3rNj9eX3Zhr9hlZb52giuE2U8l3W3W9O37HZrYz49CDG/r49mqpZt5AdWIM2J7bBjyywMq9lCq/JYE2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMmYmLxm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BrLZwKU7zebm1EbJxLgANRXVx9ta8d0pLRFv127DwAyBp5ezRepM1YfFGtSTlbWI2C4mnqsJDjBnR+3No6Bhzg2OSk8wsF5lc+iGMCIwh7v+oUyV5uVcPmkZLFumgw70bPg3MtV1z36ewFAvoBM9T8dB7D65nWXrH5iy+7Ar4U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5MQZVIi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMmYmLxm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8B4C433F1;
-	Tue, 23 Jan 2024 00:59:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5MQZVIi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19227C433C7;
+	Tue, 23 Jan 2024 00:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971552;
-	bh=ThTUD1BmyT1LzThahKUbvNJq0dkRG2EPAvoMuCrRy0w=;
+	s=korg; t=1705971554;
+	bh=mMOyQomBlqu/VYgddwV515FyJ7v48h/CrDWMqCLwmj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UMmYmLxm+8p1KxyU72ew1bMzR0P7f8AqHsfmkc9WvhFFmrGFQnmLuzXT53SHL6R6P
-	 b/JJk5jxLfhg4BB7BwmoJqb5Eo1rKZId54JGE9I+bRsQuUzl5mJzaCU8tZrVOoclEu
-	 plXXBmAyeCH9XQ8TuPOLkkSx3OcmO9Nh8a8ZXzeU=
+	b=F5MQZVIicgr3jbhlUAmynJSoCuVbyAxklSFRdaSxP2txh94oACKmxAbZuc/fvFzmM
+	 RLuX5RIgJnzkp2gL/nuY9hdmk/mu1vOEKO9MiFktQJ5uPPvrB8NDmussGV/je+Xz/h
+	 fULeSSI4XYC25ODmhYRe1x0uJuhgM2n54ZWwgnhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chen <peter.chen@kernel.org>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Li Jun <jun.li@nxp.com>
-Subject: [PATCH 6.1 263/417] usb: chipidea: wait controller resume finished for wakeup irq
-Date: Mon, 22 Jan 2024 15:57:11 -0800
-Message-ID: <20240122235800.977661775@linuxfoundation.org>
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 172/286] drm/amd/pm: fix a double-free in si_dpm_init
+Date: Mon, 22 Jan 2024 15:57:58 -0800
+Message-ID: <20240122235738.796848771@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-commit 128d849074d05545becf86e713715ce7676fc074 upstream.
+[ Upstream commit ac16667237a82e2597e329eb9bc520d1cf9dff30 ]
 
-After the chipidea driver introduce extcon for id and vbus, it's able
-to wakeup from another irq source, in case the system with extcon ID
-cable, wakeup from usb ID cable and device removal, the usb device
-disconnect irq may come firstly before the extcon notifier while system
-resume, so we will get 2 "wakeup" irq, one for usb device disconnect;
-and one for extcon ID cable change(real wakeup event), current driver
-treat them as 2 successive wakeup irq so can't handle it correctly, then
-finally the usb irq can't be enabled. This patch adds a check to bypass
-further usb events before controller resume finished to fix it.
+When the allocation of
+adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries fails,
+amdgpu_free_extended_power_table is called to free some fields of adev.
+However, when the control flow returns to si_dpm_sw_init, it goes to
+label dpm_failed and calls si_dpm_fini, which calls
+amdgpu_free_extended_power_table again and free those fields again. Thus
+a double-free is triggered.
 
-Fixes: 1f874edcb731 ("usb: chipidea: add runtime power management support")
-cc:  <stable@vger.kernel.org>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Signed-off-by: Li Jun <jun.li@nxp.com>
-Link: https://lore.kernel.org/r/20231228110753.1755756-2-xu.yang_2@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 841686df9f7d ("drm/amdgpu: add SI DPM support (v4)")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/core.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/pm/powerplay/si_dpm.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/chipidea/core.c
-+++ b/drivers/usb/chipidea/core.c
-@@ -523,6 +523,13 @@ static irqreturn_t ci_irq_handler(int ir
- 	u32 otgsc = 0;
- 
- 	if (ci->in_lpm) {
-+		/*
-+		 * If we already have a wakeup irq pending there,
-+		 * let's just return to wait resume finished firstly.
-+		 */
-+		if (ci->wakeup_int)
-+			return IRQ_HANDLED;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
+index d6544a6dabc7..6f0653c81f8f 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
+@@ -7349,10 +7349,9 @@ static int si_dpm_init(struct amdgpu_device *adev)
+ 		kcalloc(4,
+ 			sizeof(struct amdgpu_clock_voltage_dependency_entry),
+ 			GFP_KERNEL);
+-	if (!adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries) {
+-		amdgpu_free_extended_power_table(adev);
++	if (!adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries)
+ 		return -ENOMEM;
+-	}
 +
- 		disable_irq_nosync(irq);
- 		ci->wakeup_int = true;
- 		pm_runtime_get(ci->dev);
+ 	adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.count = 4;
+ 	adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries[0].clk = 0;
+ 	adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries[0].v = 0;
+-- 
+2.43.0
+
 
 
