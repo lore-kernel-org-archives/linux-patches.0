@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938EF745EF;
-	Tue, 23 Jan 2024 02:04:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEFA745D6;
+	Tue, 23 Jan 2024 02:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975461; cv=none; b=nGVQpcmcwqj0blLt9jIIjYAAf+JNswCDGJdnLEVye0Fg4K8FFKac/Vde33JyJpEhELEGPzF5D51tBcfkLaun2FZEYfFijHL+ojOg7xQ8pf5EZCUMJ2A1wX6IhdrMLHpYheW8ehIaG0UBL/RSHZzfwS4I6Tu4G+/pWqvEXr+k8k4=
+	t=1705975462; cv=none; b=WHtffkCZDUDY4UFPAGDNlDIyE2zECVZZRYcGHmzA5SIhNDQPTMOlYOhU1LC8d6Boni0mGVGb4mqJ7WK3b6nQfMEJBmpKyKpCX+tbo7gymaTSvZ7JkJTcGs2U1T16GfbE4sGOrhyJL7p4oIf8i7utPkbBZfkcw96ljBEcz0vIOSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975461; c=relaxed/simple;
-	bh=7ZUTIbTkyKZozp4L8flRsZSYhZ7cJJgtsGSC5671vdI=;
+	s=arc-20240116; t=1705975462; c=relaxed/simple;
+	bh=kVSw27/vRYf7zFQJ2c3UbKwzD9BL2MFYUdg7bwocrww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EwvPDi4bXAWIoYNNCIk+jL3ow+hIYYO3956N4FrKwf6VgX/cVEnhKe4RnAWhnhkAaFD9kW3/uhKjIZMCgToNVZpGe8Aj2qY9Pfbt1ZIBC2WgMo1mnNQfHezDPTyy9wN3N7P46KSKa/fljhbCwMuAO3+0mnukkXn1sBwIOEqQu04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oEcBXHW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fDD5vbi7BCMq+R6RBNcNI/2kJHl+hD0JDYZQOLAXdKjuLluQxGHvY69kDosADyqRHKXa7roADbFyFQCRZ76BEaIzeLf7akQ/6WMkdOsHdzvlLDFm0v62oiwZKEXtsd/fw++HCZiI9d9lbjdf+qmxJsUNlfgd7M+zwvFlxMcqh1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLdE4lzk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oEcBXHW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2C4C433C7;
-	Tue, 23 Jan 2024 02:04:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLdE4lzk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524E1C43399;
+	Tue, 23 Jan 2024 02:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975461;
-	bh=7ZUTIbTkyKZozp4L8flRsZSYhZ7cJJgtsGSC5671vdI=;
+	s=korg; t=1705975462;
+	bh=kVSw27/vRYf7zFQJ2c3UbKwzD9BL2MFYUdg7bwocrww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1oEcBXHWqECBB0o4nrmZyXFiKCW1OlxS03ZZ8+yxQQLd1jJySucNQcXHbXF6ITZOq
-	 UJO/ZCK6WpmEpHnvMmuUthjnxtnaylGPoHPPPzUhsD9XKBEslCKSFPTNiN8/qn+33M
-	 BGx5iyfSSwdWxz5nvZ7lxBQ8jp48+TGppsN+Qpfw=
+	b=wLdE4lzk1a5ENQKHmkxxX665VeUgR2SVblKNoCQu2Xe7PSAdAxf/9U0bycYRt5v6f
+	 WXMtj8uLGLXTPprLd4kwCgfTZ074c5zkY9wDzQxScisH5mObTYlwhPfLViO94Dv63W
+	 NrG29k82KAaFt54zYQ38OKncGR3GFKnf7NNNGbes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 393/583] fbdev: flush deferred IO before closing
-Date: Mon, 22 Jan 2024 15:57:24 -0800
-Message-ID: <20240122235824.006660297@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.6 384/583] ksmbd: fix UAF issue in ksmbd_tcp_new_connection()
+Date: Mon, 22 Jan 2024 15:57:15 -0800
+Message-ID: <20240122235823.747261159@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,46 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 33cd6ea9c0673517cdb06ad5c915c6f22e9615fc upstream.
+commit 38d20c62903d669693a1869aa68c4dd5674e2544 upstream.
 
-When framebuffer gets closed, the queued deferred IO gets cancelled. This
-can cause some last display data to vanish. This is problematic for users
-who send a still image to the framebuffer, then close the file: the image
-may never appear.
+The race is between the handling of a new TCP connection and
+its disconnection. It leads to UAF on `struct tcp_transport` in
+ksmbd_tcp_new_connection() function.
 
-To ensure none of display data get lost, flush the queued deferred IO
-first before closing.
-
-Another possible solution is to delete the cancel_delayed_work_sync()
-instead. The difference is that the display may appear some time after
-closing. However, the clearing of page mapping after this needs to be
-removed too, because the page mapping is used by the deferred work. It is
-not completely obvious whether it is okay to not clear the page mapping.
-For a patch intended for stable trees, go with the simple and obvious
-solution.
-
-Fixes: 60b59beafba8 ("fbdev: mm: Deferred IO support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-22991
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fb_defio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/connection.c     |    6 ------
+ fs/smb/server/connection.h     |    1 -
+ fs/smb/server/transport_rdma.c |   11 ++++++-----
+ fs/smb/server/transport_tcp.c  |   13 +++++++------
+ 4 files changed, 13 insertions(+), 18 deletions(-)
 
---- a/drivers/video/fbdev/core/fb_defio.c
-+++ b/drivers/video/fbdev/core/fb_defio.c
-@@ -313,7 +313,7 @@ static void fb_deferred_io_lastclose(str
- 	struct page *page;
- 	int i;
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -415,13 +415,7 @@ static void stop_sessions(void)
+ again:
+ 	down_read(&conn_list_lock);
+ 	list_for_each_entry(conn, &conn_list, conns_list) {
+-		struct task_struct *task;
+-
+ 		t = conn->transport;
+-		task = t->handler;
+-		if (task)
+-			ksmbd_debug(CONN, "Stop session handler %s/%d\n",
+-				    task->comm, task_pid_nr(task));
+ 		ksmbd_conn_set_exiting(conn);
+ 		if (t->ops->shutdown) {
+ 			up_read(&conn_list_lock);
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -135,7 +135,6 @@ struct ksmbd_transport_ops {
+ struct ksmbd_transport {
+ 	struct ksmbd_conn		*conn;
+ 	struct ksmbd_transport_ops	*ops;
+-	struct task_struct		*handler;
+ };
  
--	cancel_delayed_work_sync(&info->deferred_work);
-+	flush_delayed_work(&info->deferred_work);
+ #define KSMBD_TCP_RECV_TIMEOUT	(7 * HZ)
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -2039,6 +2039,7 @@ static bool rdma_frwr_is_supported(struc
+ static int smb_direct_handle_connect_request(struct rdma_cm_id *new_cm_id)
+ {
+ 	struct smb_direct_transport *t;
++	struct task_struct *handler;
+ 	int ret;
  
- 	/* clear out the mapping that we setup */
- 	for (i = 0 ; i < info->fix.smem_len; i += PAGE_SIZE) {
+ 	if (!rdma_frwr_is_supported(&new_cm_id->device->attrs)) {
+@@ -2056,11 +2057,11 @@ static int smb_direct_handle_connect_req
+ 	if (ret)
+ 		goto out_err;
+ 
+-	KSMBD_TRANS(t)->handler = kthread_run(ksmbd_conn_handler_loop,
+-					      KSMBD_TRANS(t)->conn, "ksmbd:r%u",
+-					      smb_direct_port);
+-	if (IS_ERR(KSMBD_TRANS(t)->handler)) {
+-		ret = PTR_ERR(KSMBD_TRANS(t)->handler);
++	handler = kthread_run(ksmbd_conn_handler_loop,
++			      KSMBD_TRANS(t)->conn, "ksmbd:r%u",
++			      smb_direct_port);
++	if (IS_ERR(handler)) {
++		ret = PTR_ERR(handler);
+ 		pr_err("Can't start thread\n");
+ 		goto out_err;
+ 	}
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -185,6 +185,7 @@ static int ksmbd_tcp_new_connection(stru
+ 	struct sockaddr *csin;
+ 	int rc = 0;
+ 	struct tcp_transport *t;
++	struct task_struct *handler;
+ 
+ 	t = alloc_transport(client_sk);
+ 	if (!t) {
+@@ -199,13 +200,13 @@ static int ksmbd_tcp_new_connection(stru
+ 		goto out_error;
+ 	}
+ 
+-	KSMBD_TRANS(t)->handler = kthread_run(ksmbd_conn_handler_loop,
+-					      KSMBD_TRANS(t)->conn,
+-					      "ksmbd:%u",
+-					      ksmbd_tcp_get_port(csin));
+-	if (IS_ERR(KSMBD_TRANS(t)->handler)) {
++	handler = kthread_run(ksmbd_conn_handler_loop,
++			      KSMBD_TRANS(t)->conn,
++			      "ksmbd:%u",
++			      ksmbd_tcp_get_port(csin));
++	if (IS_ERR(handler)) {
+ 		pr_err("cannot start conn thread\n");
+-		rc = PTR_ERR(KSMBD_TRANS(t)->handler);
++		rc = PTR_ERR(handler);
+ 		free_transport(t);
+ 	}
+ 	return rc;
 
 
