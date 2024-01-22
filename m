@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9CC651AD;
-	Tue, 23 Jan 2024 00:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839F864CEB;
+	Tue, 23 Jan 2024 00:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971573; cv=none; b=DjC59kUBa9u1Br23nMP+mB5vO2neSNNoUHLvHcifK+NRLVLWX/GmoWFy67w+SYnIE8c8V4qjBWJN0ZFxFKmXJF0aGWpPq6x4CRwhODwB9ALFNtA73o7th2Z0xHwQafJE67cWtDSamaBULaJylUGGYo5ikCzFf6Um/psktm3KQJs=
+	t=1705971575; cv=none; b=N6Slq5OYVYSSdA/A1RrrhABlyrvhdeEeH9ZsLeTmgyB4MJ4SgT+/ZDkM9ODm4LTayWCqU6O3ylqs7bhQwr36m9ArgG0v6SpBfTw/1NFV0/vrvFRnzEP3d6Q5MSkFkGgoOIEwmDHTrsCx2qx0Gpg3GZl4eBYelH3i4TTwonWSUTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971573; c=relaxed/simple;
-	bh=+oNPItChcscsU4la6nUQvieAtFd3P4sp+nvXIKKfZiw=;
+	s=arc-20240116; t=1705971575; c=relaxed/simple;
+	bh=Ddf4KDBrFpMbVYhMdZ4M/3/M3aguFQqt06+4mj6dRM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MfYaKfBhKLEE2AVq7Ad8l+UBJ62VgcudRyscWn5DWGc9Bq6E+WkO3G8+TCWiA7vpBPNM6VjibT4dqjD/Xngz1NPCAsIgKGhLb5PGfOAIAne0oIBDXn3xtlttXsRgZoYFodZxYb4HSLbyRKZTQO6TIf/c9b7XWD53ReLkyYEgD20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWK9DCoB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f8sdEWEHgLi3jeZYjqIljEtmstTKIvKXWrwrLZ8ewqCgmpI2MDAXCl+oftMlkV0uy8kRycSaC/O6pj8gN9TBUooVXa8ky238hFS5qW8wecvtGeZQrE7KbpexyQUHn8cfmEliEwca6xNV+tOS3ZLe0FDuliHLRr/3nV1G8OA6mIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZY4MkPkO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWK9DCoB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7146BC433C7;
-	Tue, 23 Jan 2024 00:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZY4MkPkO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35779C433C7;
+	Tue, 23 Jan 2024 00:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971573;
-	bh=+oNPItChcscsU4la6nUQvieAtFd3P4sp+nvXIKKfZiw=;
+	s=korg; t=1705971575;
+	bh=Ddf4KDBrFpMbVYhMdZ4M/3/M3aguFQqt06+4mj6dRM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWK9DCoBVr6mZdRG47X3+FQrMMv9jI9Fj479BOXpjoRRoHqyFS52uQsxhVKZvthuU
-	 wmYAY+wayCiB3hqbyTDw0f7AkpXdCp3MDU6EDX965nLOSejL5FsyRBhgeFCOdvjb4p
-	 a4lSVGc5O8RAaBqTGibaDg0ZagLpgpB6RjNcuAxU=
+	b=ZY4MkPkOl38U1wVo1rcokmbbeZLyH6xCyBOE8gXUBKXQDcUczThESTjkd+HVOwBy0
+	 bxg8n6ws/OfVNNhlmvzHdKpuEsXVJ5OM1ThmkdxBHQKZTJcjybh7w5Omix1RXquKTr
+	 QKbA/p9EywwJPb4Zw8zNKpZbPu8u2CnDrCnEcG1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Subject: [PATCH 6.1 271/417] serial: core: make sure RS485 cannot be enabled when it is not supported
-Date: Mon, 22 Jan 2024 15:57:19 -0800
-Message-ID: <20240122235801.239732478@linuxfoundation.org>
+	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 179/286] clk: zynqmp: make bestdiv unsigned
+Date: Mon, 22 Jan 2024 15:58:05 -0800
+Message-ID: <20240122235739.054167190@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,56 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
 
-commit c73986913fa47e71e0b1ad7f039f6444915e8810 upstream.
+[ Upstream commit d3954b51b475c4848179cd90b24ac73684cdc76b ]
 
-Some uart drivers specify a rs485_config() function and then decide later
-to disable RS485 support for some reason (e.g. imx and ar933).
+Divisor is always positive make it u32 *.
+Also the arguments passed are currently of u32 pointers.
 
-In these cases userspace may be able to activate RS485 via TIOCSRS485
-nevertheless, since in uart_set_rs485_config() an existing rs485_config()
-function indicates that RS485 is supported.
-
-Make sure that this is not longer possible by checking the uarts
-rs485_supported.flags instead and bailing out if SER_RS485_ENABLED is not
-set.
-
-Furthermore instead of returning an empty structure return -ENOTTY if the
-RS485 configuration is requested via TIOCGRS485 but RS485 is not supported.
-This has a small impact on userspace visibility but it is consistent with
-the -ENOTTY error for TIOCGRS485.
-
-Fixes: e849145e1fdd ("serial: ar933x: Fill in rs485_supported")
-Fixes: 55e18c6b6d42 ("serial: imx: Remove serial_rs485 sanitization")
-Cc: Shawn Guo <shawnguo@kernel.org>
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
-Cc:  <stable@vger.kernel.org>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Link: https://lore.kernel.org/r/20240103061818.564-5-l.sanfilippo@kunbus.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+Link: https://lore.kernel.org/r/20220818113153.14431-1-shubhrajyoti.datta@amd.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: 1fe15be1fb61 ("drivers: clk: zynqmp: update divider round rate logic")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial_core.c |    2 +-
+ drivers/clk/zynqmp/divider.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -1436,7 +1436,7 @@ static int uart_set_rs485_config(struct
- 	int ret;
- 	unsigned long flags;
- 
--	if (!port->rs485_config)
-+	if (!(port->rs485_supported.flags & SER_RS485_ENABLED))
- 		return -ENOTTY;
- 
- 	if (copy_from_user(&rs485, rs485_user, sizeof(*rs485_user)))
+diff --git a/drivers/clk/zynqmp/divider.c b/drivers/clk/zynqmp/divider.c
+index 66da02b83d39..57bf381f630d 100644
+--- a/drivers/clk/zynqmp/divider.c
++++ b/drivers/clk/zynqmp/divider.c
+@@ -112,7 +112,7 @@ static unsigned long zynqmp_clk_divider_recalc_rate(struct clk_hw *hw,
+ static void zynqmp_get_divider2_val(struct clk_hw *hw,
+ 				    unsigned long rate,
+ 				    struct zynqmp_clk_divider *divider,
+-				    int *bestdiv)
++				    u32 *bestdiv)
+ {
+ 	int div1;
+ 	int div2;
+-- 
+2.43.0
+
 
 
