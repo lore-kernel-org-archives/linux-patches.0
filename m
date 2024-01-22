@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC19912F59C;
-	Tue, 23 Jan 2024 01:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF948657B3;
+	Tue, 23 Jan 2024 01:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971765; cv=none; b=KG+DXPLDV6SApY63hJRlHIQ865++3vTeafSm/+558QoAj4XauaRx4yeYawGbo6HdkjiC3UnutLWErPXUxrNQuiT32tLciYdv8W6HxQJ68YaqYohPf3qmMQjT5g1lxXGHclOj+UKdeqkb6W3yOjm5SImFyb6fSf9RiqChtMHitBg=
+	t=1705971766; cv=none; b=Jqu51rZdaL8+JNNosOkcHxxZ1BffVjBfr7Sb02kYVXXroRWWKGPJvFlCNBqB/KiZC3BMURtnuoUHvYSmkMf8jA5LxQ0+56z00Ay/fqM9CElls4lVXYikQKQFfb0VpXDyMkq5Etiac8bzxwntQAuPDYNaktrgxHbnFGam4uUrib4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971765; c=relaxed/simple;
-	bh=5xKjPx/qzWNDCFNjPgn4gERkiJho0x6ZhrNJ1v3FOR0=;
+	s=arc-20240116; t=1705971766; c=relaxed/simple;
+	bh=hCbzzWCpJjXT6YTMh99l0jBo6fx3ztVIaplCgMplzyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qdhrYRZhk++o75daDLkN702jytRHFn2fgW/hhHlYdIYSQonB/TM034rumczQ+oNfE6/p0aA7Rg5alXFyXkiQSxuV2rUBr1MS8xG1b3XCbG39INNBGoWwF1JkOHFkt2YyPv0eWPzjos6Te5dqVcZumgmJwCHBtG02WMFRmGAeMjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jluBLaig; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W3+FwgKiYLy8Fa0zGK4PiQiOXTwmKjUJNQrnCd260ym5q0VnvUxnqCnFXe8RXOJOFOwo7wtaKpQoStHjuqhSwjNQnAkrmu3M7Op79xUAdfWSkV5zm6YC5DfoZOdMuRwCergdvFMNWUkydIIoFbrJ29GDU5z4Eg+KSciLVHnTsSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPDVf/v/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jluBLaig"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE25C433F1;
-	Tue, 23 Jan 2024 01:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPDVf/v/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C787C43390;
+	Tue, 23 Jan 2024 01:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971764;
-	bh=5xKjPx/qzWNDCFNjPgn4gERkiJho0x6ZhrNJ1v3FOR0=;
+	s=korg; t=1705971766;
+	bh=hCbzzWCpJjXT6YTMh99l0jBo6fx3ztVIaplCgMplzyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jluBLaigA7t1T8cDIihCm8cKl/ktvCX/8gx7Tzk76B8+B1wrP8dBBai+sxi5cxxtx
-	 q6f6fGesndRtXsnWuR9rBlQvAiQLLE6+Nn2kEH0kHjmoPANIKaRn6DxpxCrNsxtt3+
-	 AUwDX166+vWpox1IDSuq1f4cPnchGatEgu0ImFss=
+	b=BPDVf/v/QueX1f+prpvyyw85UCV3BQmqY8krwlaJl5FK65C9ZBpMZW7OVjzh+gHoz
+	 9kSDBPEAdmy0lBhzhklnmKewbrvCt1XMzIQ5WEESNNmXOVIdj4MV+WoutO32wlzdKz
+	 ch6WVMkFlAo02P9TRsunSWVlU5kRueBMLsp3RecU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 5.10 199/286] binder: fix unused alloc->free_async_space
-Date: Mon, 22 Jan 2024 15:58:25 -0800
-Message-ID: <20240122235739.776654735@linuxfoundation.org>
+	Tadeusz Struk <tstruk@gigaio.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	stable@kernel.org
+Subject: [PATCH 6.1 313/417] PCI/P2PDMA: Remove reference to pci_p2pdma_map_sg()
+Date: Mon, 22 Jan 2024 15:58:01 -0800
+Message-ID: <20240122235802.657387808@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,86 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Tadeusz Struk <tstruk@gigaio.com>
 
-commit c6d05e0762ab276102246d24affd1e116a46aa0c upstream.
+commit 9a000a72af75886e5de13f4edef7f0d788622e7d upstream.
 
-Each transaction is associated with a 'struct binder_buffer' that stores
-the metadata about its buffer area. Since commit 74310e06be4d ("android:
-binder: Move buffer out of area shared with user space") this struct is
-no longer embedded within the buffer itself but is instead allocated on
-the heap to prevent userspace access to this driver-exclusive info.
+Update Documentation/driver-api/pci/p2pdma.rst doc and remove references to
+obsolete p2pdma mapping functions.
 
-Unfortunately, the space of this struct is still being accounted for in
-the total buffer size calculation, specifically for async transactions.
-This results in an additional 104 bytes added to every async buffer
-request, and this area is never used.
-
-This wasted space can be substantial. If we consider the maximum mmap
-buffer space of SZ_4M, the driver will reserve half of it for async
-transactions, or 0x200000. This area should, in theory, accommodate up
-to 262,144 buffers of the minimum 8-byte size. However, after adding
-the extra 'sizeof(struct binder_buffer)', the total number of buffers
-drops to only 18,724, which is a sad 7.14% of the actual capacity.
-
-This patch fixes the buffer size calculation to enable the utilization
-of the entire async buffer space. This is expected to reduce the number
-of -ENOSPC errors that are seen on the field.
-
-Fixes: 74310e06be4d ("android: binder: Move buffer out of area shared with user space")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20231201172212.1813387-6-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0d06132fc84b ("PCI/P2PDMA: Remove pci_p2pdma_[un]map_sg()")
+Link: https://lore.kernel.org/r/20231113180325.444692-1-tstruk@gmail.com
+Signed-off-by: Tadeusz Struk <tstruk@gigaio.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder_alloc.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ Documentation/driver-api/pci/p2pdma.rst | 16 +++-------------
+ 1 file changed, 3 insertions(+), 13 deletions(-)
 
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -359,8 +359,7 @@ static void debug_low_async_space_locked
- 			continue;
- 		if (!buffer->async_transaction)
- 			continue;
--		total_alloc_size += binder_alloc_buffer_size(alloc, buffer)
--			+ sizeof(struct binder_buffer);
-+		total_alloc_size += binder_alloc_buffer_size(alloc, buffer);
- 		num_buffers++;
- 	}
+diff --git a/Documentation/driver-api/pci/p2pdma.rst b/Documentation/driver-api/pci/p2pdma.rst
+index 44deb52beeb4..d0b241628cf1 100644
+--- a/Documentation/driver-api/pci/p2pdma.rst
++++ b/Documentation/driver-api/pci/p2pdma.rst
+@@ -83,19 +83,9 @@ this to include other types of resources like doorbells.
+ Client Drivers
+ --------------
  
-@@ -419,8 +418,7 @@ static struct binder_buffer *binder_allo
- 	/* Pad 0-size buffers so they get assigned unique addresses */
- 	size = max(size, sizeof(void *));
- 
--	if (is_async &&
--	    alloc->free_async_space < size + sizeof(struct binder_buffer)) {
-+	if (is_async && alloc->free_async_space < size) {
- 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
- 			     "%d: binder_alloc_buf size %zd failed, no async space left\n",
- 			      alloc->pid, size);
-@@ -527,7 +525,7 @@ static struct binder_buffer *binder_allo
- 	buffer->extra_buffers_size = extra_buffers_size;
- 	buffer->pid = pid;
- 	if (is_async) {
--		alloc->free_async_space -= size + sizeof(struct binder_buffer);
-+		alloc->free_async_space -= size;
- 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC_ASYNC,
- 			     "%d: binder_alloc_buf size %zd async free %zd\n",
- 			      alloc->pid, size, alloc->free_async_space);
-@@ -663,8 +661,7 @@ static void binder_free_buf_locked(struc
- 	BUG_ON(buffer->user_data > alloc->buffer + alloc->buffer_size);
- 
- 	if (buffer->async_transaction) {
--		alloc->free_async_space += buffer_size + sizeof(struct binder_buffer);
+-A client driver typically only has to conditionally change its DMA map
+-routine to use the mapping function :c:func:`pci_p2pdma_map_sg()` instead
+-of the usual :c:func:`dma_map_sg()` function. Memory mapped in this
+-way does not need to be unmapped.
 -
-+		alloc->free_async_space += buffer_size;
- 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC_ASYNC,
- 			     "%d: binder_free_buf size %zd async free %zd\n",
- 			      alloc->pid, size, alloc->free_async_space);
+-The client may also, optionally, make use of
+-:c:func:`is_pci_p2pdma_page()` to determine when to use the P2P mapping
+-functions and when to use the regular mapping functions. In some
+-situations, it may be more appropriate to use a flag to indicate a
+-given request is P2P memory and map appropriately. It is important to
+-ensure that struct pages that back P2P memory stay out of code that
+-does not have support for them as other code may treat the pages as
+-regular memory which may not be appropriate.
++A client driver only has to use the mapping API :c:func:`dma_map_sg()`
++and :c:func:`dma_unmap_sg()` functions as usual, and the implementation
++will do the right thing for the P2P capable memory.
+ 
+ 
+ Orchestrator Drivers
+-- 
+2.43.0
+
 
 
