@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A011913473B;
-	Tue, 23 Jan 2024 01:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE1913473B;
+	Tue, 23 Jan 2024 01:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971916; cv=none; b=SyKSn2C8jgSpbqBVkKbAdKy6bbmnhsnJ6Z8sViQiix8YD/EusLV7/bCL5D7cG8a8ICSr+kl1WTWqPnN95riGWeiEtV4xGoCFTXt/LH+0ZUtr7humFNXtRsaaG/z6BbC6IgzdvRC3cCWi7qlAR14HGTNWDjPuh3dZD7sKx6Hicu8=
+	t=1705971917; cv=none; b=H6MdsWZj+TcsP356K/c8JsRwBLQPQeMdcHkCkC75y77NNTELwzWuF0QYtyQ4O1n+2RTRELJrgV97ycii8EfcQ0ifjsfZ5BecvTZUgOQCd6YH9675uUFXXjShzW9Qx3fFnXIs/GLU1UiADX/Znj/Kb96X9oG7E72H+T2Cg61Uidg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971916; c=relaxed/simple;
-	bh=ea56c1MGAZ6xSJx7bBC5c59b4w7uwnKMY5TMLOW8aUU=;
+	s=arc-20240116; t=1705971917; c=relaxed/simple;
+	bh=jev/IeSrGZvi4H0yiyHxDBIPjqhBzAvfnPUGvf+1Y1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZrRtAZwSDxieNxSfj0HUi1BmuQURU2VJvfJhl/9ltOjveWnEmVJQBoQhkawN3IxznNi/dAvzQBl7xOdLunkmekCc3Q5gXVj8BKLGz1+LuSmCNji0FhmQ3gFcRGD1oUOIS1NZl6A/kz2eQx1Xcv34Fqb0P7qlzGKevnCoOWMeaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWjN6E4w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EOBlPmx1M8n51aRfnsL+2RgnstjctSVQcUOaOHw4IT8zZxIf5x95MeygcO4IziLEROvE+0ooG5mLGG30pElp/d9A54kUJAZ0xnRRFKF3+o/Q+Ue6LKwAB64d6yCqncm5uS0CVq/W4u6gu2visKMHk38+X4fIcAZ3L38LpUcoqA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X65tGhtR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWjN6E4w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55AB0C433C7;
-	Tue, 23 Jan 2024 01:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X65tGhtR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E01C43394;
+	Tue, 23 Jan 2024 01:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971916;
-	bh=ea56c1MGAZ6xSJx7bBC5c59b4w7uwnKMY5TMLOW8aUU=;
+	s=korg; t=1705971917;
+	bh=jev/IeSrGZvi4H0yiyHxDBIPjqhBzAvfnPUGvf+1Y1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rWjN6E4wGBENr8E27yPMOaRjLtM16OIuF1uN0LNXJaSpd4n8/AKA88Q43C8GQs3b6
-	 92yXaA9rTbfoJBa8vU6ilgxcaWRE+bSM0wuePE/PtDOuskhICWOg9be9OZaWWoXI2m
-	 1FC6QcJHXTS+V/jTSLHGtR2xZAx25xKoMsm87V78=
+	b=X65tGhtRbltYmcRs64s1iPNlNhd55HcJfLIGt33/bY83jsnQSWishq6OAitcK+Ejx
+	 /B22fpxvijqocTOu3sKDUvrGnpSA3kJtBYqZ2fZKzpeVNx81939115W7yXjiM3WoDa
+	 eLir/FJe1K8gssEV2rhaE0W9+pds8d109X2wM34w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 350/417] iio: adc: ad9467: fix reset gpio handling
-Date: Mon, 22 Jan 2024 15:58:38 -0800
-Message-ID: <20240122235803.915747036@linuxfoundation.org>
+Subject: [PATCH 5.10 263/286] nvmet-tcp: Fix the H2C expected PDU len calculation
+Date: Mon, 22 Jan 2024 15:59:29 -0800
+Message-ID: <20240122235742.161832283@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,93 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 76f028539cf360f750efd8cde560edda298e4c6b ]
+[ Upstream commit 9a1abc24850eb759e36a2f8869161c3b7254c904 ]
 
-The reset gpio was being handled with inverted polarity. This means that
-as far as gpiolib is concerned we were actually leaving the pin asserted
-(in theory, this would mean reset). However, inverting the polarity in
-devicetree made things work. Fix it by doing it the proper way and how
-gpiolib expects it to be done.
+The nvmet_tcp_handle_h2c_data_pdu() function should take into
+consideration the possibility that the header digest and/or the data
+digests are enabled when calculating the expected PDU length, before
+comparing it to the value stored in cmd->pdu_len.
 
-While at it, moved the handling to it's own function and dropped
-'reset_gpio' from the 'struct ad9467_state' as we only need it during
-probe. On top of that, refactored things so that we now request the gpio
-asserted (i.e in reset) and then de-assert it. Also note that we now use
-gpiod_set_value_cansleep() instead of gpiod_direction_output() as we
-already request the pin as output.
-
-Fixes: ad6797120238 ("iio: adc: ad9467: add support AD9467 ADC")
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20231207-iio-backend-prep-v2-1-a4a33bc4d70e@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: efa56305908b ("nvmet-tcp: Fix a kernel panic when host sends an invalid H2C PDU length")
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad9467.c | 31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ drivers/nvme/target/tcp.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iio/adc/ad9467.c b/drivers/iio/adc/ad9467.c
-index 7534572f7475..3e8d1e8fda07 100644
---- a/drivers/iio/adc/ad9467.c
-+++ b/drivers/iio/adc/ad9467.c
-@@ -121,7 +121,6 @@ struct ad9467_state {
- 	unsigned int			output_mode;
- 
- 	struct gpio_desc		*pwrdown_gpio;
--	struct gpio_desc		*reset_gpio;
- };
- 
- static int ad9467_spi_read(struct spi_device *spi, unsigned int reg)
-@@ -378,6 +377,21 @@ static int ad9467_preenable_setup(struct adi_axi_adc_conv *conv)
- 	return ad9467_outputmode_set(st->spi, st->output_mode);
- }
- 
-+static int ad9467_reset(struct device *dev)
-+{
-+	struct gpio_desc *gpio;
-+
-+	gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
-+	if (IS_ERR_OR_NULL(gpio))
-+		return PTR_ERR_OR_ZERO(gpio);
-+
-+	fsleep(1);
-+	gpiod_set_value_cansleep(gpio, 0);
-+	fsleep(10 * USEC_PER_MSEC);
-+
-+	return 0;
-+}
-+
- static int ad9467_probe(struct spi_device *spi)
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 9ec8ed369eb7..116ae6fd35e2 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -919,7 +919,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
  {
- 	const struct ad9467_chip_info *info;
-@@ -406,18 +420,9 @@ static int ad9467_probe(struct spi_device *spi)
- 	if (IS_ERR(st->pwrdown_gpio))
- 		return PTR_ERR(st->pwrdown_gpio);
+ 	struct nvme_tcp_data_pdu *data = &queue->pdu.data;
+ 	struct nvmet_tcp_cmd *cmd;
+-	unsigned int plen;
++	unsigned int exp_data_len;
  
--	st->reset_gpio = devm_gpiod_get_optional(&spi->dev, "reset",
--						 GPIOD_OUT_LOW);
--	if (IS_ERR(st->reset_gpio))
--		return PTR_ERR(st->reset_gpio);
--
--	if (st->reset_gpio) {
--		udelay(1);
--		ret = gpiod_direction_output(st->reset_gpio, 1);
--		if (ret)
--			return ret;
--		mdelay(10);
--	}
-+	ret = ad9467_reset(&spi->dev);
-+	if (ret)
-+		return ret;
+ 	if (likely(queue->nr_cmds)) {
+ 		if (unlikely(data->ttag >= queue->nr_cmds)) {
+@@ -942,9 +942,13 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
+ 		return -EPROTO;
+ 	}
  
- 	conv->chip_info = &info->axi_adc_info;
- 
+-	plen = le32_to_cpu(data->hdr.plen);
++	exp_data_len = le32_to_cpu(data->hdr.plen) -
++			nvmet_tcp_hdgst_len(queue) -
++			nvmet_tcp_ddgst_len(queue) -
++			sizeof(*data);
++
+ 	cmd->pdu_len = le32_to_cpu(data->data_length);
+-	if (unlikely(cmd->pdu_len != (plen - sizeof(*data)) ||
++	if (unlikely(cmd->pdu_len != exp_data_len ||
+ 		     cmd->pdu_len == 0 ||
+ 		     cmd->pdu_len > NVMET_TCP_MAXH2CDATA)) {
+ 		pr_err("H2CData PDU len %u is invalid\n", cmd->pdu_len);
 -- 
 2.43.0
 
