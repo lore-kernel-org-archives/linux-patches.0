@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE6D137C53;
-	Tue, 23 Jan 2024 00:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DE2137C53;
+	Tue, 23 Jan 2024 00:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969440; cv=none; b=I2VprZ4ErOkVAQrFb9gI3cQWP+iXiqBVTchbp5l3eHDTwAMWLj2FI3UtOtVRnr5go3PU3qOIGlKldqSgNjpppshACXbZsl7Qfg7hDGigYKaPuAwvyF+8SAI0nd9SxWtOVxUlp9LnxKg/2bkhzo9BWofJ1cAkRw2dyLOKhsxR7EA=
+	t=1705969441; cv=none; b=fNaxUQWDyjEX7Rd0A8eMctq7KyoOT5CEbm6uKMQd9VJ26tA1TF5qYOdbQuKI2X4JiTU6zg0/F5HvrPGjhV0bpcJMg/VRwOTDk2LoZf8bVg1gg9TyeFXhiLO53goQzo2NPr/ZkEXIp4p661MPdxFU0w6c+85LaTpYYLBT7bSUjqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969440; c=relaxed/simple;
-	bh=X1ja0ACWtNXSQPCqAzfTFAqM25RC7Y3o/nafaR9LNi4=;
+	s=arc-20240116; t=1705969441; c=relaxed/simple;
+	bh=AONIZ6D8iB523CKL4qzd6cIgdNxzsCTyogf9ZnZj0/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bYmRdiKZBn7NflD+DGjbtBiNUIFh1Vgy/g5fsHt0VXsvpYD9vIC+tLb0edDMI1qqpwfrvUW+YYjDe8uoNNncderQgK2NodVd/L+wG7MdGBcTWLTfzvdfHznAxvrYBjmRaWUBxfhXMeYsurytIPl6XDG3hzQVfnv4JPB6Ohj8GTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCx7GG2z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oAsXkYpv6WK/48VVmVIcxrJEfixwLBzADDepocjnBjaVy3HmqKYj46QD4U0YB1fi0sjScM3yE90RKjnmN7iUR/iOdd/wzFoef/llsB5nF20f/MAUbsx/1OI77gP+OvlTKL3WeZCydCmL878p9fD9yJVqfSEteTE1Bqhq6WNEN6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U0wI0h5w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCx7GG2z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04043C43390;
-	Tue, 23 Jan 2024 00:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U0wI0h5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E84C433F1;
+	Tue, 23 Jan 2024 00:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969440;
-	bh=X1ja0ACWtNXSQPCqAzfTFAqM25RC7Y3o/nafaR9LNi4=;
+	s=korg; t=1705969441;
+	bh=AONIZ6D8iB523CKL4qzd6cIgdNxzsCTyogf9ZnZj0/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kCx7GG2zQAb9BZqwV/klmFZ5bvxavx1X+NzXn8POd5rRDOfHdJeSgEDqdDVZIXMZG
-	 zf/9HSGQDZHmp5erua2FZV3jWAHJ1BhemX7wirExqh6QYHS6+uH+TNRPA4C1HvckyX
-	 CDFX7SDSDKbvxXVBV1MAZziMWU/F/d5LevWLbSHM=
+	b=U0wI0h5w8hZE+OQek0WsIC1oAi5is2Pvp7KrvOtlNh8Syd+K9wGUxKqtSx/ai4wrT
+	 fv5CftUYpfVOGwVnge0IytiG2TgT5noSIB4y8g6g7/kcK/LXfK3zpF46dO6qlRXv3h
+	 OiGeNvWMuKcUMUPWk5a5cNWQMT0jLKga0wR/jVHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 247/641] RDMA/usnic: Silence uninitialized symbol smatch warnings
-Date: Mon, 22 Jan 2024 15:52:31 -0800
-Message-ID: <20240122235825.652563897@linuxfoundation.org>
+Subject: [PATCH 6.7 248/641] RDMA/hns: Fix inappropriate err code for unsupported operations
+Date: Mon, 22 Jan 2024 15:52:32 -0800
+Message-ID: <20240122235825.679435863@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,80 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit b9a85e5eec126d6ae6c362f94b447c223e8fe6e4 ]
+[ Upstream commit f45b83ad39f8033e717b1eee57e81811113d5a84 ]
 
-The patch 1da177e4c3f4: "Linux-2.6.12-rc2" from Apr 16, 2005
-(linux-next), leads to the following Smatch static checker warning:
+EOPNOTSUPP is more situable than EINVAL for allocating XRCD while XRC
+is not supported and unsupported resizing SRQ.
 
-        drivers/infiniband/hw/mthca/mthca_cmd.c:644 mthca_SYS_EN()
-        error: uninitialized symbol 'out'.
-
-drivers/infiniband/hw/mthca/mthca_cmd.c
-    636 int mthca_SYS_EN(struct mthca_dev *dev)
-    637 {
-    638         u64 out;
-    639         int ret;
-    640
-    641         ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
-
-We pass out here and it gets used without being initialized.
-
-        err = mthca_cmd_post(dev, in_param,
-                             out_param ? *out_param : 0,
-                                         ^^^^^^^^^^
-                             in_modifier, op_modifier,
-                             op, context->token, 1);
-
-It's the same in mthca_cmd_wait() and mthca_cmd_poll().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/533bc3df-8078-4397-b93d-d1f6cec9b636@moroto.mountain
-Link: https://lore.kernel.org/r/c559cb7113158c02d75401ac162652072ef1b5f0.1699867650.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 32548870d438 ("RDMA/hns: Add support for XRC on HIP09")
+Fixes: 221109e64316 ("RDMA/hns: Add interception for resizing SRQs")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20231114123449.1106162-2-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mthca/mthca_cmd.c  | 4 ++--
- drivers/infiniband/hw/mthca/mthca_main.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 +-
+ drivers/infiniband/hw/hns/hns_roce_pd.c    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mthca/mthca_cmd.c b/drivers/infiniband/hw/mthca/mthca_cmd.c
-index f330ce895d88..8fe0cef7e2be 100644
---- a/drivers/infiniband/hw/mthca/mthca_cmd.c
-+++ b/drivers/infiniband/hw/mthca/mthca_cmd.c
-@@ -635,7 +635,7 @@ void mthca_free_mailbox(struct mthca_dev *dev, struct mthca_mailbox *mailbox)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 2bca9560f32d..e4753c802942 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -5671,7 +5671,7 @@ static int hns_roce_v2_modify_srq(struct ib_srq *ibsrq,
  
- int mthca_SYS_EN(struct mthca_dev *dev)
- {
--	u64 out;
-+	u64 out = 0;
+ 	/* Resizing SRQs is not supported yet */
+ 	if (srq_attr_mask & IB_SRQ_MAX_WR)
+-		return -EINVAL;
++		return -EOPNOTSUPP;
+ 
+ 	if (srq_attr_mask & IB_SRQ_LIMIT) {
+ 		if (srq_attr->srq_limit > srq->wqe_cnt)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_pd.c b/drivers/infiniband/hw/hns/hns_roce_pd.c
+index 783e71852c50..bd1fe89ca205 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_pd.c
++++ b/drivers/infiniband/hw/hns/hns_roce_pd.c
+@@ -150,7 +150,7 @@ int hns_roce_alloc_xrcd(struct ib_xrcd *ib_xrcd, struct ib_udata *udata)
  	int ret;
  
- 	ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
-@@ -1955,7 +1955,7 @@ int mthca_WRITE_MGM(struct mthca_dev *dev, int index,
- int mthca_MGID_HASH(struct mthca_dev *dev, struct mthca_mailbox *mailbox,
- 		    u16 *hash)
- {
--	u64 imm;
-+	u64 imm = 0;
- 	int err;
+ 	if (!(hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_XRC))
+-		return -EINVAL;
++		return -EOPNOTSUPP;
  
- 	err = mthca_cmd_imm(dev, mailbox->dma, &imm, 0, 0, CMD_MGID_HASH,
-diff --git a/drivers/infiniband/hw/mthca/mthca_main.c b/drivers/infiniband/hw/mthca/mthca_main.c
-index b54bc8865dae..1ab268b77096 100644
---- a/drivers/infiniband/hw/mthca/mthca_main.c
-+++ b/drivers/infiniband/hw/mthca/mthca_main.c
-@@ -382,7 +382,7 @@ static int mthca_init_icm(struct mthca_dev *mdev,
- 			  struct mthca_init_hca_param *init_hca,
- 			  u64 icm_size)
- {
--	u64 aux_pages;
-+	u64 aux_pages = 0;
- 	int err;
- 
- 	err = mthca_SET_ICM_SIZE(mdev, icm_size, &aux_pages);
+ 	ret = hns_roce_xrcd_alloc(hr_dev, &xrcd->xrcdn);
+ 	if (ret)
 -- 
 2.43.0
 
