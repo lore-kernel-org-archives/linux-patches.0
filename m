@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D88212C55F;
-	Tue, 23 Jan 2024 00:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1159712CDA5;
+	Tue, 23 Jan 2024 00:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971451; cv=none; b=hbdlAb4nRNLITEcuzOGGkHbsNNzIZdZR6QC2+vuYH8CLjvP7Dc0zCVPTDrxHjc/rd2O6/iw/Vh8ler20T0oGZqLTklJ2XZXAF5Yy4Qtz70qRqsg9OvtcDitKjw2q+lkf0qIU5UqqsttQmoXolfFT7FqUPcmnWW0UMFpP7WuFmh0=
+	t=1705971454; cv=none; b=C3adfzljUQnX3t/svTORLBbjjK3C67blhYSczDrK4fYDHUrMCpsO8WCBvd7RQ/RRa49lzMXH6kJZJamh+01d9dHYHyvEn6SsAW6+8iZkozuTEir1ZcU5zxYR+OZFwvDAeYa4X+NImUzDEG9OBjB4MEXPpEhOTLAc88VcK6OkIdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971451; c=relaxed/simple;
-	bh=BIeocN7SSVO5H5+uf0nd4FKptYL9aPhW4b9uTKN3KMA=;
+	s=arc-20240116; t=1705971454; c=relaxed/simple;
+	bh=s/90pfQYsEXmbfAULhUq+oIbRFwG0RMcDpc5pheEAEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I0qnxpDWRrEsrmeNRVJ9Jtralu5K3vlSABcTxQTXKmZ3adyc1swi/w/UKcRE57veKzF9jo27QkwGuyudyRK9+KuD2TaKDguXWDtLeYp+3Mqb8yz0UbkktRZSsANKTvAt0cEF7MwcnR7dV3lxssSpKiyIczkg9baAgDJv8K5m4dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/JRrwPR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r1jE/av14DwmohfIGASO4qS/lICe9B3jVeranB6a80IyQo2Ji2vWfa22/JYkwODxS6aPc5F3s9HhCNtei0vVqkpww2cEEpGz/PwxAwpM7CES4c39PhI6Uy120BnIoK8VVAtElA/DhXQGmfeRKkVvTgvZgTk8tqDn3jd89Tk9EXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLMwhl1S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/JRrwPR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53108C433F1;
-	Tue, 23 Jan 2024 00:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLMwhl1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A801FC433F1;
+	Tue, 23 Jan 2024 00:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971450;
-	bh=BIeocN7SSVO5H5+uf0nd4FKptYL9aPhW4b9uTKN3KMA=;
+	s=korg; t=1705971453;
+	bh=s/90pfQYsEXmbfAULhUq+oIbRFwG0RMcDpc5pheEAEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/JRrwPRDfAHPR1Z6Om4aaQHCEjvzDXWSo2wwzlZmj+icp6Sl3LbQ1Sr/mq6VNza4
-	 uD3MXmqo5nxvqVCMzf6BQnusRhuqgkwf18zTE5eB11OyTEKNpGWVVZAfhJYBKK1h3+
-	 oq0V9L+5cLY3RkmnqI+HWlIqi8/vgBhEmsLwYqJU=
+	b=jLMwhl1SsfQJDhdlXb3u3Qr2+ypEQHA8NpBNY2Qq3f9YRwLd3lyAVo7wZ8MbB//f/
+	 JCqGvivLTzMasrPNblLgNgbseqjUOyqqHiyH8aTcryjF8aGNvtNq1lwj02nkMpUHkF
+	 dL70KnjmhW3OPtbvohFxjPjDlMky+GqKir8w7Clc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Tom Talpey <tom@talpey.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 244/417] ksmbd: validate the zero field of packet header
-Date: Mon, 22 Jan 2024 15:56:52 -0800
-Message-ID: <20240122235800.334105216@linuxfoundation.org>
+Subject: [PATCH 5.10 153/286] drm/radeon/r100: Fix integer overflow issues in r100_cs_track_check()
+Date: Mon, 22 Jan 2024 15:57:39 -0800
+Message-ID: <20240122235738.056276559@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,50 +47,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 516b3eb8c8065f7465f87608d37a7ed08298c7a5 ]
+[ Upstream commit b5c5baa458faa5430c445acd9a17481274d77ccf ]
 
-The SMB2 Protocol requires that "The first byte of the Direct TCP
-transport packet header MUST be zero (0x00)"[1]. Commit 1c1bcf2d3ea0
-("ksmbd: validate smb request protocol id") removed the validation of
-this 1-byte zero. Add the validation back now.
+It may be possible, albeit unlikely, to encounter integer overflow
+during the multiplication of several unsigned int variables, the
+result being assigned to a variable 'size' of wider type.
 
-[1]: [MS-SMB2] - v20230227, page 30.
-https://winprotocoldoc.blob.core.windows.net/productionwindowsarchives/MS-SMB2/%5bMS-SMB2%5d-230227.pdf
+Prevent this potential behaviour by converting one of the multiples
+to unsigned long.
 
-Fixes: 1c1bcf2d3ea0 ("ksmbd: validate smb request protocol id")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Acked-by: Tom Talpey <tom@talpey.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 0242f74d29df ("drm/radeon: clean up CS functions in r100.c")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb_common.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/r100.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
-index d160363c09eb..e90a1e8c1951 100644
---- a/fs/smb/server/smb_common.c
-+++ b/fs/smb/server/smb_common.c
-@@ -158,8 +158,12 @@ int ksmbd_verify_smb_message(struct ksmbd_work *work)
-  */
- bool ksmbd_smb_request(struct ksmbd_conn *conn)
- {
--	__le32 *proto = (__le32 *)smb2_get_msg(conn->request_buf);
-+	__le32 *proto;
- 
-+	if (conn->request_buf[0] != 0)
-+		return false;
-+
-+	proto = (__le32 *)smb2_get_msg(conn->request_buf);
- 	if (*proto == SMB2_COMPRESSION_TRANSFORM_ID) {
- 		pr_err_ratelimited("smb2 compression not support yet");
- 		return false;
+diff --git a/drivers/gpu/drm/radeon/r100.c b/drivers/gpu/drm/radeon/r100.c
+index 24c8db673931..6e4600c21697 100644
+--- a/drivers/gpu/drm/radeon/r100.c
++++ b/drivers/gpu/drm/radeon/r100.c
+@@ -2313,7 +2313,7 @@ int r100_cs_track_check(struct radeon_device *rdev, struct r100_cs_track *track)
+ 	switch (prim_walk) {
+ 	case 1:
+ 		for (i = 0; i < track->num_arrays; i++) {
+-			size = track->arrays[i].esize * track->max_indx * 4;
++			size = track->arrays[i].esize * track->max_indx * 4UL;
+ 			if (track->arrays[i].robj == NULL) {
+ 				DRM_ERROR("(PW %u) Vertex array %u no buffer "
+ 					  "bound\n", prim_walk, i);
+@@ -2332,7 +2332,7 @@ int r100_cs_track_check(struct radeon_device *rdev, struct r100_cs_track *track)
+ 		break;
+ 	case 2:
+ 		for (i = 0; i < track->num_arrays; i++) {
+-			size = track->arrays[i].esize * (nverts - 1) * 4;
++			size = track->arrays[i].esize * (nverts - 1) * 4UL;
+ 			if (track->arrays[i].robj == NULL) {
+ 				DRM_ERROR("(PW %u) Vertex array %u no buffer "
+ 					  "bound\n", prim_walk, i);
 -- 
 2.43.0
 
