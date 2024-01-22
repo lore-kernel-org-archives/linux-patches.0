@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78689140796;
-	Tue, 23 Jan 2024 01:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44F6141981;
+	Tue, 23 Jan 2024 01:07:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972044; cv=none; b=nqXWaO9/pZjxoVkJaO8UU7FoWyEQeWQ8qWD7s2LxgTutjfAGvHg9Q4lOVy0lzS20DZ4zPJuY42shh0JDWDOa/+0KTwW44L8q8xyD0Kp+RnMqXE6/X1R3zwbmd9shcAE8rXo9JBUjYMJjSptvc0xhZgPxjCWg+73rcRztorc8GY8=
+	t=1705972046; cv=none; b=f1D+3js1OEiG6qctD4A1KDKqN+k03Rz5Zh809McA973M8JZbD8rRLcH3t/ipNbVjLXZr54s9kFfehSUe7Vee1fQ5e6cP4zjMguS8PkkpTyCCSVlWtkZs/dLu6GGzI2298gW4EpqhsLBmOB/fJQLW6l+ozgpgLmE7ESeCzZeUGq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972044; c=relaxed/simple;
-	bh=APA+wQ0PLHAt+ThM/khiwjARNAgbxUeFVAsqtdPEtgQ=;
+	s=arc-20240116; t=1705972046; c=relaxed/simple;
+	bh=eDPU7fAu5Bhm1Qz68PTYNZWb+1jFt7nMeK9elVjOe2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PD2DQtqNV/IdItK8RrMadXjLdK0CPRYomHyxqD1YBrJQ3vASFbQpax7NHmdpPYO1mynJrZOUDzwkVN4ZW++jCbZqOYTr+5Db8qan5CH8N8eogS723GbrbUz0Bbjo5FEkq/KusqDj6QBYOOn6t2vdBFN1M9W+2VK4mh6G064daRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjgnnB46; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HAZBF1MaxDtnIm5KCMFUeigU2oRIvY90cQBW6zYLXsTAHHF8jAmQI/qrSoSoGDzXsMBrR8PV8a2A+PEdghsyfe3UCiUD2j9IpqCro9pHEU5Bkf4qSIGiWjaUBXUpZFvyJn9sEKv6ES5k2IoYcmoPslHYz1G+T8Foj24NVenYI2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJB1J0Yy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjgnnB46"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352C9C43394;
-	Tue, 23 Jan 2024 01:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJB1J0Yy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A77C433C7;
+	Tue, 23 Jan 2024 01:07:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972044;
-	bh=APA+wQ0PLHAt+ThM/khiwjARNAgbxUeFVAsqtdPEtgQ=;
+	s=korg; t=1705972045;
+	bh=eDPU7fAu5Bhm1Qz68PTYNZWb+1jFt7nMeK9elVjOe2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DjgnnB46kycpdCNni7pV6Q2YgRD1N7T3Am+Gj+sFUJwY1KDE6QBWBYML7kPSb6yIx
-	 wg4mS4lIOvl23JBzDieq3MPaatVYNvoqBTBca7W8o8CVZir9+EzcZ4+UW8r4rtUjD4
-	 EEQWESSuBhqL1lHNN7YEH9hXy0+UG8wIMgUfgNyM=
+	b=LJB1J0Yyr9wIMXs0fPKIgYFnLz1Cyjk6rjYrRqKb3uTMFyEBIX0qWUJ0SmhTZHYEU
+	 RrThdzSukcQ5nwQ+yaIdzaheDZQ08m79tdqq4NPZT4zHBonzSFn3ObiVx+5wecBWHf
+	 PwZVFNToZtq7QXwjliWXfw9ULzVGViE035suxD6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Sun <sunhao.th@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yonghong.song@linux.dev>,
+	Shuah Khan <shuah@kernel.org>,
+	Amit Cohen <amcohen@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 394/417] bpf: Reject variable offset alu on PTR_TO_FLOW_KEYS
-Date: Mon, 22 Jan 2024 15:59:22 -0800
-Message-ID: <20240122235805.399238965@linuxfoundation.org>
+Subject: [PATCH 6.1 412/417] selftests: mlxsw: qos_pfc: Adjust the test to support 8 lanes
+Date: Mon, 22 Jan 2024 15:59:40 -0800
+Message-ID: <20240122235805.961008261@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -52,86 +55,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Sun <sunhao.th@gmail.com>
+From: Amit Cohen <amcohen@nvidia.com>
 
-[ Upstream commit 22c7fa171a02d310e3a3f6ed46a698ca8a0060ed ]
+[ Upstream commit b34f4de6d30cbaa8fed905a5080b6eace8c84dc7 ]
 
-For PTR_TO_FLOW_KEYS, check_flow_keys_access() only uses fixed off
-for validation. However, variable offset ptr alu is not prohibited
-for this ptr kind. So the variable offset is not checked.
+'qos_pfc' test checks PFC behavior. The idea is to limit the traffic
+using a shaper somewhere in the flow of the packets. In this area, the
+buffer is smaller than the buffer at the beginning of the flow, so it fills
+up until there is no more space left. The test configures there PFC
+which is supposed to notice that the headroom is filling up and send PFC
+Xoff to indicate the transmitter to stop sending traffic for the priorities
+sharing this PG.
 
-The following prog is accepted:
+The Xon/Xoff threshold is auto-configured and always equal to
+2*(MTU rounded up to cell size). Even after sending the PFC Xoff packet,
+traffic will keep arriving until the transmitter receives and processes
+the PFC packet. This amount of traffic is known as the PFC delay allowance.
 
-  func#0 @0
-  0: R1=ctx() R10=fp0
-  0: (bf) r6 = r1                       ; R1=ctx() R6_w=ctx()
-  1: (79) r7 = *(u64 *)(r6 +144)        ; R6_w=ctx() R7_w=flow_keys()
-  2: (b7) r8 = 1024                     ; R8_w=1024
-  3: (37) r8 /= 1                       ; R8_w=scalar()
-  4: (57) r8 &= 1024                    ; R8_w=scalar(smin=smin32=0,
-  smax=umax=smax32=umax32=1024,var_off=(0x0; 0x400))
-  5: (0f) r7 += r8
-  mark_precise: frame0: last_idx 5 first_idx 0 subseq_idx -1
-  mark_precise: frame0: regs=r8 stack= before 4: (57) r8 &= 1024
-  mark_precise: frame0: regs=r8 stack= before 3: (37) r8 /= 1
-  mark_precise: frame0: regs=r8 stack= before 2: (b7) r8 = 1024
-  6: R7_w=flow_keys(smin=smin32=0,smax=umax=smax32=umax32=1024,var_off
-  =(0x0; 0x400)) R8_w=scalar(smin=smin32=0,smax=umax=smax32=umax32=1024,
-  var_off=(0x0; 0x400))
-  6: (79) r0 = *(u64 *)(r7 +0)          ; R0_w=scalar()
-  7: (95) exit
+Currently the buffer for the delay traffic is configured as 100KB. The
+MTU in the test is 10KB, therefore the threshold for Xoff is about 20KB.
+This allows 80KB extra to be stored in this buffer.
 
-This prog loads flow_keys to r7, and adds the variable offset r8
-to r7, and finally causes out-of-bounds access:
+8-lane ports use two buffers among which the configured buffer is split,
+the Xoff threshold then applies to each buffer in parallel.
 
-  BUG: unable to handle page fault for address: ffffc90014c80038
-  [...]
-  Call Trace:
-   <TASK>
-   bpf_dispatcher_nop_func include/linux/bpf.h:1231 [inline]
-   __bpf_prog_run include/linux/filter.h:651 [inline]
-   bpf_prog_run include/linux/filter.h:658 [inline]
-   bpf_prog_run_pin_on_cpu include/linux/filter.h:675 [inline]
-   bpf_flow_dissect+0x15f/0x350 net/core/flow_dissector.c:991
-   bpf_prog_test_run_flow_dissector+0x39d/0x620 net/bpf/test_run.c:1359
-   bpf_prog_test_run kernel/bpf/syscall.c:4107 [inline]
-   __sys_bpf+0xf8f/0x4560 kernel/bpf/syscall.c:5475
-   __do_sys_bpf kernel/bpf/syscall.c:5561 [inline]
-   __se_sys_bpf kernel/bpf/syscall.c:5559 [inline]
-   __x64_sys_bpf+0x73/0xb0 kernel/bpf/syscall.c:5559
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0x3f/0x110 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x63/0x6b
+The test does not take into account the behavior of 8-lane ports, when the
+ports are configured to 400Gbps with 8 lanes or 800Gbps with 8 lanes,
+packets are dropped and the test fails.
 
-Fix this by rejecting ptr alu with variable offset on flow_keys.
-Applying the patch rejects the program with "R7 pointer arithmetic
-on flow_keys prohibited".
+Check if the relevant ports use 8 lanes, in such case double the size of
+the buffer, as the headroom is split half-half.
 
-Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
-Signed-off-by: Hao Sun <sunhao.th@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/bpf/20240115082028.9992-1-sunhao.th@gmail.com
+Cc: Shuah Khan <shuah@kernel.org>
+Fixes: bfa804784e32 ("selftests: mlxsw: Add a PFC test")
+Signed-off-by: Amit Cohen <amcohen@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/23ff11b7dff031eb04a41c0f5254a2b636cd8ebb.1705502064.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../selftests/drivers/net/mlxsw/qos_pfc.sh     | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 95e7b638418e..23b6d57b5eef 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -8541,6 +8541,10 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 	}
+diff --git a/tools/testing/selftests/drivers/net/mlxsw/qos_pfc.sh b/tools/testing/selftests/drivers/net/mlxsw/qos_pfc.sh
+index f9858e221996..6a3002fbcf43 100755
+--- a/tools/testing/selftests/drivers/net/mlxsw/qos_pfc.sh
++++ b/tools/testing/selftests/drivers/net/mlxsw/qos_pfc.sh
+@@ -121,6 +121,9 @@ h2_destroy()
  
- 	switch (base_type(ptr_reg->type)) {
-+	case PTR_TO_FLOW_KEYS:
-+		if (known)
-+			break;
-+		fallthrough;
- 	case CONST_PTR_TO_MAP:
- 		/* smin_val represents the known value */
- 		if (known && smin_val == 0 && opcode == BPF_ADD)
+ switch_create()
+ {
++	local lanes_swp4
++	local pg1_size
++
+ 	# pools
+ 	# -----
+ 
+@@ -230,7 +233,20 @@ switch_create()
+ 	dcb pfc set dev $swp4 prio-pfc all:off 1:on
+ 	# PG0 will get autoconfigured to Xoff, give PG1 arbitrarily 100K, which
+ 	# is (-2*MTU) about 80K of delay provision.
+-	dcb buffer set dev $swp4 buffer-size all:0 1:$_100KB
++	pg1_size=$_100KB
++
++	setup_wait_dev_with_timeout $swp4
++
++	lanes_swp4=$(ethtool $swp4 | grep 'Lanes:')
++	lanes_swp4=${lanes_swp4#*"Lanes: "}
++
++	# 8-lane ports use two buffers among which the configured buffer
++	# is split, so double the size to get twice (20K + 80K).
++	if [[ $lanes_swp4 -eq 8 ]]; then
++		pg1_size=$((pg1_size * 2))
++	fi
++
++	dcb buffer set dev $swp4 buffer-size all:0 1:$pg1_size
+ 
+ 	# bridges
+ 	# -------
 -- 
 2.43.0
 
