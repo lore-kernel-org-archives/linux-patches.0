@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8715D2B9CA;
-	Tue, 23 Jan 2024 00:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDC63C0D;
+	Tue, 23 Jan 2024 00:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968184; cv=none; b=KlrLRbb6CVlkii0k9eLUTJEqSMvQbdXfhdEwwklKRoboSXaq7GUXq1TbEBMpWUOGOqJGQfngUySRrZxZ8Ca7wEhVI+C9EYG8xYBXjHWa29Z2gdYL4/pZn2p9i/ZbP01bVEteeza/G1ME0XG9nfB4fTKqELsC9ngXlQZbgOR5wJU=
+	t=1705968186; cv=none; b=ZtT9KH/UNtdq58WSDOIPNevee1nLxwLQaG+rGPUMQofyrZQsWQI2BEg3QjOBHW2Hfiww56YYB8v3ROyqIlmrcgdP95KQ1Kzv9qJT3iTaCtqEFNBxYxrRTlvHcpXhnAnidzQQm5y33Wotshdc6M2QxHMKsidK7KDb4+rIG1mIodg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968184; c=relaxed/simple;
-	bh=4+iXcYXCK0DOqXDt5cdF6rFaLewDb4HepE+SWLl/sI0=;
+	s=arc-20240116; t=1705968186; c=relaxed/simple;
+	bh=e4Ki2jnpkR2BcMdjBLcX9smAyR4DfJM4TtTjgmLlIrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RNVAqEC+ActAM5rVFANjPBd8ye9AB6411TyG6N5CYGa/m6UXR+DtaCvA1heVYibpjL+880fgg6Fx8hllGzulKtKKAvSjLwbYdys9AFre+jwCRmyaqMP2IgRnOFPDE4wEG2xY+IrDQ81o9HhvWuv8VfDhAWwZq7Zw9VMaywZTw3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOxPpJX1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LrlKFCmkO7Sz+2EFvMfV255DojJuLYUMK7w/LlKYiUgYg29kh9Tj9bsXvzvu4v7wLasLnX01AU7asDdpwyQwcwSyA2hCj4spBUGTYyevgQzT0XVytwghpn6XjTOeZrow8p+XVs5R1Y9LNHOphmwydnZ0Ylm47OVyCJyJ3jjgjnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qnf0QKe5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOxPpJX1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC51CC433F1;
-	Tue, 23 Jan 2024 00:03:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qnf0QKe5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EEDC433F1;
+	Tue, 23 Jan 2024 00:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968184;
-	bh=4+iXcYXCK0DOqXDt5cdF6rFaLewDb4HepE+SWLl/sI0=;
+	s=korg; t=1705968186;
+	bh=e4Ki2jnpkR2BcMdjBLcX9smAyR4DfJM4TtTjgmLlIrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOxPpJX10S6KcbUYJoYQ23r7WeyVdohYEC6Mh0tqnXTuC14u/uRrdHNRl72myZahg
-	 RhZrVOWjNnbqR/Q2ja97jc+wE0oMlW0F5ack6/vG5rLDm7Oi5zTHGu2rEaUGA9QMo7
-	 KLx2IwuP2BPs1C4OxR6HBNwLVSFKwaIEXBn8T3/Y=
+	b=Qnf0QKe5g9X5IDMQDRluCHQd2/pP01KM3bFBr3JKF9n/C0Oxnp8GV12ZCp1P56S7O
+	 10WigPacoz7BBlpGnWcRTqZv3nzsU/4VIVYl87Zey2lkJ5kMmOKFdsqNxanFZRdY1G
+	 fK1RLu0G8nHwxIOhArlslMXvzAYlJPFEaoVxCQMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Ronald Monthero <debug.penguin32@gmail.com>,
+	Nikita Kiryushin <kiryushin@ancud.ru>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 037/148] mtd: rawnand: Increment IFC_TIMEOUT_MSECS for nand controller response
-Date: Mon, 22 Jan 2024 15:56:33 -0800
-Message-ID: <20240122235713.915330439@linuxfoundation.org>
+Subject: [PATCH 4.19 038/148] ACPI: video: check for error while searching for backlight device parent
+Date: Mon, 22 Jan 2024 15:56:34 -0800
+Message-ID: <20240122235713.950185904@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -52,46 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronald Monthero <debug.penguin32@gmail.com>
+From: Nikita Kiryushin <kiryushin@ancud.ru>
 
-[ Upstream commit 923fb6238cb3ac529aa2bf13b3b1e53762186a8b ]
+[ Upstream commit ccd45faf4973746c4f30ea41eec864e5cf191099 ]
 
-Under heavy load it is likely that the controller is done
-with its own task but the thread unlocking the wait is not
-scheduled in time. Increasing IFC_TIMEOUT_MSECS allows the
-controller to respond within allowable timeslice of 1 sec.
+If acpi_get_parent() called in acpi_video_dev_register_backlight()
+fails, for example, because acpi_ut_acquire_mutex() fails inside
+acpi_get_parent), this can lead to incorrect (uninitialized)
+acpi_parent handle being passed to acpi_get_pci_dev() for detecting
+the parent pci device.
 
-fsl,ifc-nand 7e800000.nand: Controller is not responding
+Check acpi_get_parent() result and set parent device only in case of success.
 
-[<804b2047>] (nand_get_device) from [<804b5335>] (nand_write_oob+0x1b/0x4a)
-[<804b5335>] (nand_write_oob) from [<804a3585>] (mtd_write+0x41/0x5c)
-[<804a3585>] (mtd_write) from [<804c1d47>] (ubi_io_write+0x17f/0x22c)
-[<804c1d47>] (ubi_io_write) from [<804c047b>] (ubi_eba_write_leb+0x5b/0x1d0)
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 82771882d960 ("NAND Machine support for Integrated Flash Controller")
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Ronald Monthero <debug.penguin32@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20231118083156.776887-1-debug.penguin32@gmail.com
+Fixes: 9661e92c10a9 ("acpi: tie ACPI backlight devices to PCI devices if possible")
+Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/fsl_ifc_nand.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpi_video.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/fsl_ifc_nand.c b/drivers/mtd/nand/raw/fsl_ifc_nand.c
-index 70bf8e1552a5..bdb97460257c 100644
---- a/drivers/mtd/nand/raw/fsl_ifc_nand.c
-+++ b/drivers/mtd/nand/raw/fsl_ifc_nand.c
-@@ -34,7 +34,7 @@
+diff --git a/drivers/acpi/acpi_video.c b/drivers/acpi/acpi_video.c
+index eb7fca6f9444..c22297cce288 100644
+--- a/drivers/acpi/acpi_video.c
++++ b/drivers/acpi/acpi_video.c
+@@ -1797,12 +1797,12 @@ static void acpi_video_dev_register_backlight(struct acpi_video_device *device)
+ 		return;
+ 	count++;
  
- #define ERR_BYTE		0xFF /* Value returned for read
- 					bytes when read failed	*/
--#define IFC_TIMEOUT_MSECS	500  /* Maximum number of mSecs to wait
-+#define IFC_TIMEOUT_MSECS	1000 /* Maximum timeout to wait
- 					for IFC NAND Machine	*/
+-	acpi_get_parent(device->dev->handle, &acpi_parent);
+-
+-	pdev = acpi_get_pci_dev(acpi_parent);
+-	if (pdev) {
+-		parent = &pdev->dev;
+-		pci_dev_put(pdev);
++	if (ACPI_SUCCESS(acpi_get_parent(device->dev->handle, &acpi_parent))) {
++		pdev = acpi_get_pci_dev(acpi_parent);
++		if (pdev) {
++			parent = &pdev->dev;
++			pci_dev_put(pdev);
++		}
+ 	}
  
- struct fsl_ifc_ctrl;
+ 	memset(&props, 0, sizeof(struct backlight_properties));
 -- 
 2.43.0
 
