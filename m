@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C3C133435;
-	Tue, 23 Jan 2024 01:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B897133435;
+	Tue, 23 Jan 2024 01:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971882; cv=none; b=kQf+rfQ3Bi+W869Jq30PidsqaI58+97QRyVNYPx+WgM4zFB0unJsSKir8IvdHMsNTpaWE+P14Mvf8RHY6jh3P4TAauJpoOMaFEcQc1R8I8/JuYR7PyZccLJcYHjBWyU5AYhNABSO+ALn2wlp68l7mQlg4jNdPEwzEtFrLkFBJmQ=
+	t=1705971884; cv=none; b=fmqP7i+qYeeqPuO8PT1oy7Yf9f1Hq9vu/7pW2Ov70TzZ3vx4t5pa6rKa7THa9OiRRqqMBN2ePN5kRD5w7lWyoyrLr2rDxJL4m3bt5sGReVjFgSGyaON2TSXU9AilXzRtyYoVck3BjqmnqOEE9uadGEFv4cu5UYSvy0pZZPfh8uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971882; c=relaxed/simple;
-	bh=9jjt9EG6W4CP2GgL9O+0b3QFFpe2cXlxnrU54sgtWBU=;
+	s=arc-20240116; t=1705971884; c=relaxed/simple;
+	bh=vpBBiEFiwePtBHeai2xHm0SnitXqe35Kinih04d5HvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tLk5oznbcMAXmxC2wnuALUHKL7KVPQ7jzpgzqrM92e2N5tueOFW1Uv5RDmP6ZL7nBUgIEHKbJCQQsCkjVoZJ7mjLS1BgndMhyakBVpe6+IJmn7VsXTjUDk2uL7og90cduBdujx+aXx197vY71DTtPpF75lIRipLClN5cQ0t6Pgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6iZ+bP6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DLCoSTF52DWbBVreNUnGSC4oraTJtAiN/ZkJN62aixtB5Qr5Djv/jNnvuRKpplRARtEYGd5ZDOsFnU3D+nDRza37DDIxxh8+mZq4B8WcIJfhS0nsEhiPV9yESdNZkGISKMDC/VbxzpfAlVQNK2r9PRuGWVzN5E8FoNOTu5xd3tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0MSTRaR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6iZ+bP6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9EDDC433C7;
-	Tue, 23 Jan 2024 01:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0MSTRaR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAF2C433C7;
+	Tue, 23 Jan 2024 01:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971881;
-	bh=9jjt9EG6W4CP2GgL9O+0b3QFFpe2cXlxnrU54sgtWBU=;
+	s=korg; t=1705971884;
+	bh=vpBBiEFiwePtBHeai2xHm0SnitXqe35Kinih04d5HvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V6iZ+bP611NdUh7reMiTZ0PajthJJC23zhk5B+eNIzz2y6oJ7HxJT+0PzhXZ60rbC
-	 neiqoYyTdURF2Q/t0MSR+hmVtyl8o186pvCAaUyqitE6phfCoD4HTFw5A0VSrSTcQK
-	 pn7jxC4AIknAljR9f42N2VURB+cAGC8fEry7qF+4=
+	b=t0MSTRaRdXKhSwwAB5HK5zBhQkox7YzuBkvV5OuRTh9UKhux5+z2LJ2OETviGEMue
+	 q3o17b5r71z7PHRFxFF1oj30CNpodcK7TIST76hpGWzb7/AudUUT7j1HGX5VXEKHXR
+	 BpmXM3e9hdM+W3sl66Nnb//l80TGpAnEhDsNTod4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Douglas Anderson <dianders@chromium.org>,
+	Grant Grundler <grundler@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 253/286] tty: change tty_write_lock()s ndelay parameter to bool
-Date: Mon, 22 Jan 2024 15:59:19 -0800
-Message-ID: <20240122235741.789307320@linuxfoundation.org>
+Subject: [PATCH 6.1 341/417] r8152: Choose our USB config with choose_configuration() rather than probe()
+Date: Mon, 22 Jan 2024 15:58:29 -0800
+Message-ID: <20240122235803.613355820@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,84 +48,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit af815336556df28f800669c58ab3bdad7d786b98 ]
+[ Upstream commit aa4f2b3e418e8673e55145de8b8016a7a9920306 ]
 
-It's a yes-no parameter, so convert it to bool to be obvious.
+If you deauthorize the r8152 device (by writing 0 to the "authorized"
+field in sysfs) and then reauthorize it (by writing a 1) then it no
+longer works. This is because when you do the above we lose the
+special configuration that we set in rtl8152_cfgselector_probe().
+Deauthorizing causes the config to be set to -1 and then reauthorizing
+runs the default logic for choosing the best config.
 
-Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20230810091510.13006-6-jirislaby@kernel.org
+I made an attempt to fix it so that the config is kept across
+deauthorizing / reauthorizing [1] but it was a bit ugly.
+
+Let's instead use the new USB core feature to override
+choose_configuration().
+
+This patch relies upon the patches ("usb: core: Don't force USB
+generic_subclass drivers to define probe()") and ("usb: core: Allow
+subclassed USB drivers to override usb_choose_configuration()")
+
+[1] https://lore.kernel.org/r/20231130154337.1.Ie00e07f07f87149c9ce0b27ae4e26991d307e14b@changeid
+
+Fixes: ec51fbd1b8a2 ("r8152: add USB device driver for config selection")
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Grant Grundler <grundler@chromium.org>
+Link: https://lore.kernel.org/r/20231201102946.v2.3.Ie00e07f07f87149c9ce0b27ae4e26991d307e14b@changeid
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 66aad7d8d3ec ("usb: cdc-acm: return correct error code on unsupported break")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty.h       | 2 +-
- drivers/tty/tty_io.c    | 6 +++---
- drivers/tty/tty_ioctl.c | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/usb/r8152.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/tty/tty.h b/drivers/tty/tty.h
-index 1908f27a795a..3d2d82ff6a03 100644
---- a/drivers/tty/tty.h
-+++ b/drivers/tty/tty.h
-@@ -64,7 +64,7 @@ int tty_check_change(struct tty_struct *tty);
- void __stop_tty(struct tty_struct *tty);
- void __start_tty(struct tty_struct *tty);
- void tty_write_unlock(struct tty_struct *tty);
--int tty_write_lock(struct tty_struct *tty, int ndelay);
-+int tty_write_lock(struct tty_struct *tty, bool ndelay);
- void tty_vhangup_session(struct tty_struct *tty);
- void tty_open_proc_set_tty(struct file *filp, struct tty_struct *tty);
- int tty_signal_session_leader(struct tty_struct *tty, int exit_session);
-diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
-index 094e82a12d29..38877489f700 100644
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -948,7 +948,7 @@ void tty_write_unlock(struct tty_struct *tty)
- 	wake_up_interruptible_poll(&tty->write_wait, EPOLLOUT);
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 958a02b19554..0893e51f807b 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -9899,7 +9899,7 @@ static struct usb_driver rtl8152_driver = {
+ 	.disable_hub_initiated_lpm = 1,
+ };
+ 
+-static int rtl8152_cfgselector_probe(struct usb_device *udev)
++static int rtl8152_cfgselector_choose_configuration(struct usb_device *udev)
+ {
+ 	struct usb_host_config *c;
+ 	int i, num_configs;
+@@ -9926,19 +9926,13 @@ static int rtl8152_cfgselector_probe(struct usb_device *udev)
+ 	if (i == num_configs)
+ 		return -ENODEV;
+ 
+-	if (usb_set_configuration(udev, c->desc.bConfigurationValue)) {
+-		dev_err(&udev->dev, "Failed to set configuration %d\n",
+-			c->desc.bConfigurationValue);
+-		return -ENODEV;
+-	}
+-
+-	return 0;
++	return c->desc.bConfigurationValue;
  }
  
--int tty_write_lock(struct tty_struct *tty, int ndelay)
-+int tty_write_lock(struct tty_struct *tty, bool ndelay)
- {
- 	if (!mutex_trylock(&tty->atomic_write_lock)) {
- 		if (ndelay)
-@@ -1167,7 +1167,7 @@ int tty_send_xchar(struct tty_struct *tty, char ch)
- 		return 0;
- 	}
- 
--	if (tty_write_lock(tty, 0) < 0)
-+	if (tty_write_lock(tty, false) < 0)
- 		return -ERESTARTSYS;
- 
- 	down_read(&tty->termios_rwsem);
-@@ -2473,7 +2473,7 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
- 		retval = tty->ops->break_ctl(tty, duration);
- 	else {
- 		/* Do the work ourselves */
--		if (tty_write_lock(tty, 0) < 0)
-+		if (tty_write_lock(tty, false) < 0)
- 			return -EINTR;
- 		retval = tty->ops->break_ctl(tty, -1);
- 		if (retval)
-diff --git a/drivers/tty/tty_ioctl.c b/drivers/tty/tty_ioctl.c
-index 68b07250dcb6..12a30329abdb 100644
---- a/drivers/tty/tty_ioctl.c
-+++ b/drivers/tty/tty_ioctl.c
-@@ -404,7 +404,7 @@ static int set_termios(struct tty_struct *tty, void __user *arg, int opt)
- 		if (retval < 0)
- 			return retval;
- 
--		if (tty_write_lock(tty, 0) < 0)
-+		if (tty_write_lock(tty, false) < 0)
- 			goto retry_write_wait;
- 
- 		/* Racing writer? */
+ static struct usb_device_driver rtl8152_cfgselector_driver = {
+-	.name =		MODULENAME "-cfgselector",
+-	.probe =	rtl8152_cfgselector_probe,
+-	.id_table =	rtl8152_table,
++	.name =	MODULENAME "-cfgselector",
++	.choose_configuration = rtl8152_cfgselector_choose_configuration,
++	.id_table = rtl8152_table,
+ 	.generic_subclass = 1,
+ 	.supports_autosuspend = 1,
+ };
 -- 
 2.43.0
 
