@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9562A64CFE;
-	Tue, 23 Jan 2024 01:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8B364CFE;
+	Tue, 23 Jan 2024 01:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971710; cv=none; b=Siu3SmgbPZTUMtaociICBZKOgdwQ43uHiIy4xk4OCflVM7mRUPO0+hmv2ix1zvJ4nyLDHwAOafApCbl/kkPtZoVib0QjK6oV5Y/z4dg2VxjqOSae2z/7CFWeoF8RGr8WN2BE0aeGWSvPKeG7It0FyYTCVOPjJZQwGhWGSnDiTxE=
+	t=1705971712; cv=none; b=r+cy1t5zkst5hZcQ1e4eBeusx4WcfevZFjXojFP/u492os+Jz8ORKCCyqN/abaqig5DKaYyKWKSyRu93Hy1x5zBjm0YM9CWiMjxRzYjPGff2VS6WoEc4T8aPYIZik00bSBi+uBweGgp/0N3yVlc7w1UoiXl4DWkfHD5mO3Mhsxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971710; c=relaxed/simple;
-	bh=DqAzCTJNdoSYtx29iaH/OZ2uE95Xp6FFehnZBA+JClQ=;
+	s=arc-20240116; t=1705971712; c=relaxed/simple;
+	bh=b4dB7RdUM/d2MjwhvQ/mv4ND/jpe0geTaSApjgvDRXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BJdRaipcPh6sPaJkiNv8a4O142rupkKA/WDGnQTypqyiR9AeN1DF4pEI0KLdpHeSlVQ1PMSyNxOa5xa25j00jHlpmYRUnDwFOFO4s2QPR38ZKqNWCaaX69vBjvG+k6/HeNI1cxCY0k8marJw2ntyq+j4VBQw0I4EYJ0+yyuKDXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lfKcKiMs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W9cW6kZT6GPBB3VWkQxkc2CSCi9MxM0USQnBz7Oln/7rO/DKGSOjAchOOAPBZdVb5rGRdBV8foc70KgId4QwGAz0Z9kleEZeh/WVV7/fxfU/VK4QnYLtC+S9Ho6DzwAsd6ADexsI9nlml4tkL5RHes9NWFBuCrThPkdjrEEg9yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6Z0X7Pe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfKcKiMs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAAFCC433F1;
-	Tue, 23 Jan 2024 01:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6Z0X7Pe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61536C433F1;
+	Tue, 23 Jan 2024 01:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971710;
-	bh=DqAzCTJNdoSYtx29iaH/OZ2uE95Xp6FFehnZBA+JClQ=;
+	s=korg; t=1705971711;
+	bh=b4dB7RdUM/d2MjwhvQ/mv4ND/jpe0geTaSApjgvDRXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lfKcKiMs+t7wQLDUlQEaxbHfi+fxddCIDG16m9gG1j4ko+IxxBrbnHZZx1kKkQQ4V
-	 cFWKmxz/V+B9LBVmBQ1oUeBZzf195TZt9iwOFONz6qFYvomBK99TR9aDER54/E1DM5
-	 2IStRSdVuKq23GOLfu2ajukaajyUZ+mQSz3cVT7A=
+	b=u6Z0X7Pec8R7aTpc3030CHMi/6v14SvJNbWuqDdSMhMGgFDME4VVRt2ykEgf8mv3U
+	 7qGbdL/xtr6XJIgBsCz7FH5I1O0wYxQSGnD3SpuDFOvxsW300dxMOOXFJdGlsG/73+
+	 3BwMJhx9y+XqiyRxbZ0OuFUxSCUzonGEza6A31bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Subject: [PATCH 5.10 212/286] usb: dwc: ep0: Update request status in dwc3_ep0_stall_restart
-Date: Mon, 22 Jan 2024 15:58:38 -0800
-Message-ID: <20240122235740.256870168@linuxfoundation.org>
+	Xi Ruoyao <xry111@xry111.site>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 304/417] LoongArch: Fix and simplify fcsr initialization on execve()
+Date: Mon, 22 Jan 2024 15:57:52 -0800
+Message-ID: <20240122235802.360673641@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,61 +46,121 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+From: Xi Ruoyao <xry111@xry111.site>
 
-commit e9d40b215e38480fd94c66b06d79045717a59e9c upstream.
+commit c2396651309eba291c15e32db8fbe44c738b5921 upstream.
 
-Current implementation blocks the running operations when Plug-out and
-Plug-In is performed continuously, process gets stuck in
-dwc3_thread_interrupt().
+There has been a lingering bug in LoongArch Linux systems causing some
+GCC tests to intermittently fail (see Closes link).  I've made a minimal
+reproducer:
 
-Code Flow:
+    zsh% cat measure.s
+    .align 4
+    .globl _start
+    _start:
+        movfcsr2gr  $a0, $fcsr0
+        bstrpick.w  $a0, $a0, 16, 16
+        beqz        $a0, .ok
+        break       0
+    .ok:
+        li.w        $a7, 93
+        syscall     0
+    zsh% cc mesaure.s -o measure -nostdlib
+    zsh% echo $((1.0/3))
+    0.33333333333333331
+    zsh% while ./measure; do ; done
 
-	CPU1
+This while loop should not stop as POSIX is clear that execve must set
+fenv to the default, where FCSR should be zero.  But in fact it will
+just stop after running for a while (normally less than 30 seconds).
+Note that "$((1.0/3))" is needed to reproduce this issue because it
+raises FE_INVALID and makes fcsr0 non-zero.
 
-	->Gadget_start
-	->dwc3_interrupt
-	->dwc3_thread_interrupt
-	->dwc3_process_event_buf
-	->dwc3_process_event_entry
-	->dwc3_endpoint_interrupt
-	->dwc3_ep0_interrupt
-	->dwc3_ep0_inspect_setup
-	->dwc3_ep0_stall_and_restart
+The problem is we are currently relying on SET_PERSONALITY2() to reset
+current->thread.fpu.fcsr.  But SET_PERSONALITY2() is executed before
+start_thread which calls lose_fpu(0).  We can see if kernel preempt is
+enabled, we may switch to another thread after SET_PERSONALITY2() but
+before lose_fpu(0).  Then bad thing happens: during the thread switch
+the value of the fcsr0 register is stored into current->thread.fpu.fcsr,
+making it dirty again.
 
-By this time if pending_list is not empty, it will get the next request
-on the given list and calls dwc3_gadget_giveback which will unmap request
-and call its complete() callback to notify upper layers that it has
-completed. Currently dwc3_gadget_giveback status is set to -ECONNRESET,
-whereas it should be -ESHUTDOWN based on condition if not dwc->connected
-is true.
+The issue can be fixed by setting current->thread.fpu.fcsr after
+lose_fpu(0) because lose_fpu() clears TIF_USEDFPU, then the thread
+switch won't touch current->thread.fpu.fcsr.
 
-Cc:  <stable@vger.kernel.org>
-Fixes: d742220b3577 ("usb: dwc3: ep0: giveback requests on stall_and_restart")
-Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Link: https://lore.kernel.org/r/20231222094704.20276-1-quic_uaggarwa@quicinc.com
+The only other architecture setting FCSR in SET_PERSONALITY2() is MIPS.
+I've ran a similar test on MIPS with mainline kernel and it turns out
+MIPS is buggy, too.  Anyway MIPS do this for supporting different FP
+flavors (NaN encodings, etc.) which do not exist on LoongArch.  So for
+LoongArch, we can simply remove the current->thread.fpu.fcsr setting
+from SET_PERSONALITY2() and do it in start_thread(), after lose_fpu(0).
+
+The while loop failing with the mainline kernel has survived one hour
+after this change on LoongArch.
+
+Fixes: 803b0fc5c3f2baa ("LoongArch: Add process management")
+Closes: https://github.com/loongson-community/discussions/issues/7
+Link: https://lore.kernel.org/linux-mips/7a6aa1bbdbbe2e63ae96ff163fab0349f58f1b9e.camel@xry111.site/
+Cc: stable@vger.kernel.org
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/ep0.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/loongarch/include/asm/elf.h |    5 -----
+ arch/loongarch/kernel/elf.c      |    5 -----
+ arch/loongarch/kernel/process.c  |    1 +
+ 3 files changed, 1 insertion(+), 10 deletions(-)
 
---- a/drivers/usb/dwc3/ep0.c
-+++ b/drivers/usb/dwc3/ep0.c
-@@ -236,7 +236,10 @@ static void dwc3_ep0_stall_and_restart(s
- 		struct dwc3_request	*req;
+--- a/arch/loongarch/include/asm/elf.h
++++ b/arch/loongarch/include/asm/elf.h
+@@ -241,8 +241,6 @@ void loongarch_dump_regs64(u64 *uregs, c
+ do {									\
+ 	current->thread.vdso = &vdso_info;				\
+ 									\
+-	loongarch_set_personality_fcsr(state);				\
+-									\
+ 	if (personality(current->personality) != PER_LINUX)		\
+ 		set_personality(PER_LINUX);				\
+ } while (0)
+@@ -259,7 +257,6 @@ do {									\
+ 	clear_thread_flag(TIF_32BIT_ADDR);				\
+ 									\
+ 	current->thread.vdso = &vdso_info;				\
+-	loongarch_set_personality_fcsr(state);				\
+ 									\
+ 	p = personality(current->personality);				\
+ 	if (p != PER_LINUX32 && p != PER_LINUX)				\
+@@ -340,6 +337,4 @@ extern int arch_elf_pt_proc(void *ehdr,
+ extern int arch_check_elf(void *ehdr, bool has_interpreter, void *interp_ehdr,
+ 			  struct arch_elf_state *state);
  
- 		req = next_request(&dep->pending_list);
--		dwc3_gadget_giveback(dep, req, -ECONNRESET);
-+		if (!dwc->connected)
-+			dwc3_gadget_giveback(dep, req, -ESHUTDOWN);
-+		else
-+			dwc3_gadget_giveback(dep, req, -ECONNRESET);
- 	}
+-extern void loongarch_set_personality_fcsr(struct arch_elf_state *state);
+-
+ #endif /* _ASM_ELF_H */
+--- a/arch/loongarch/kernel/elf.c
++++ b/arch/loongarch/kernel/elf.c
+@@ -23,8 +23,3 @@ int arch_check_elf(void *_ehdr, bool has
+ {
+ 	return 0;
+ }
+-
+-void loongarch_set_personality_fcsr(struct arch_elf_state *state)
+-{
+-	current->thread.fpu.fcsr = boot_cpu_data.fpu_csr0;
+-}
+--- a/arch/loongarch/kernel/process.c
++++ b/arch/loongarch/kernel/process.c
+@@ -82,6 +82,7 @@ void start_thread(struct pt_regs *regs,
+ 	euen = regs->csr_euen & ~(CSR_EUEN_FPEN);
+ 	regs->csr_euen = euen;
+ 	lose_fpu(0);
++	current->thread.fpu.fcsr = boot_cpu_data.fpu_csr0;
  
- 	dwc->ep0state = EP0_SETUP_PHASE;
+ 	clear_thread_flag(TIF_LSX_CTX_LIVE);
+ 	clear_thread_flag(TIF_LASX_CTX_LIVE);
 
 
