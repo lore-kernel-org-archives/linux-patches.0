@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28005C8F6;
-	Tue, 23 Jan 2024 01:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474AA5D8F9;
+	Tue, 23 Jan 2024 01:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974389; cv=none; b=Ffca6QBNOuJ4296bKIvwJ+ziCVMGXLIZiV7y/n98PkTpU3troaQC0dkSEDZQbsF7NZuYSX6wJ+KBa/7yqMNM4naSn5FhdeALTI5VpiFGWWBmNxk+K0fxMhyHFxRtEZAfRE8RhzmV/i8EClH7XJJV+iNR/zCH8EoFnYwHylmPJic=
+	t=1705974391; cv=none; b=KNB+fOiyu+u5icCSLeVt9ZtPfGZNam6oXSrBSD9x+rq0aeIKu1MThSGoSr1cY/nqWQ5i3cDjjA1EFBi0Ywj3x5aA09JvlPasxVcWYXAnc/4TcEp10txA+rQi5usB4uFbuRJT8lxO/BFGJO+T8qt/NIukEGaPKXjcUNn/n9hZTqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974389; c=relaxed/simple;
-	bh=OPrm+JpSEWTxC0d2TjigFf8+QVnyoKGOsnzcf87nah0=;
+	s=arc-20240116; t=1705974391; c=relaxed/simple;
+	bh=FPA65sa25pXIEJ1GT9KuHhIK4ZwWFBvQmAkHq6+9e44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hk7lUSzS0nIOE9OEszdAomory9eHbJflIiYkbyyAXwzGXGTYVmt+DEZBdpvBVb3nNzkBFiiupQfjrZq48ZU9LaWjwCvcWxX64TVseTDkiz6fue6SVPvYrll3jYWTwh4sHGf+wZY8S3zd81/PgQU66WXKujEdAEc5AsHdXOuH9JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLpbGzCl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UHR0chMDuXCpFJUkdpdkaN6OOWN0g1DU9WcreZXpwXqbsR0xxeRTGOF1QCXDSmRIc0mtBXOzT683Qz+ZfiqxE5WtqHR27tffsRcu8KMO9ZV+SNeBFH+Yho9yeO9gOfl5hG3AOKyVblGEGH/cDsNLpVsaU9EFVREcWtpBM2I6RjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQ6d9Dmg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLpbGzCl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80425C433F1;
-	Tue, 23 Jan 2024 01:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQ6d9Dmg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11876C433C7;
+	Tue, 23 Jan 2024 01:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974388;
-	bh=OPrm+JpSEWTxC0d2TjigFf8+QVnyoKGOsnzcf87nah0=;
+	s=korg; t=1705974390;
+	bh=FPA65sa25pXIEJ1GT9KuHhIK4ZwWFBvQmAkHq6+9e44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLpbGzClOi6JFuRiQ6MhZmeOiis+QD78Baqm9wCXyCBez3OYV781GJeIkDZRyK0rT
-	 ChLBAkjKfQiTpzxoQHWCc1iPGsCcOV79JltjFvp6BWb3pLxr6udqZ3MLdTQKA0KAtq
-	 J8tEBLuSSP4coOQ9fMCiVqFIfzeyA11AopyCe94A=
+	b=yQ6d9Dmga5gVes18z8Vm2h/+MGDkVbYp7EF1ay5hlXHiyAf74eSx2BGZvarkmE/0G
+	 RTSOl78nfBj547RPkW+xvOWR9r9WrHJ8mOPvKUMg3HpIoJn3IB66Pj8uH++mqpzrN+
+	 FYU14a6jgZt6lPNodHYhiHSqaYVirDuIb/lB8OpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	David McKay <david.mckay@codasip.com>,
+	Stuart Menefy <stuart.menefy@codasip.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 205/374] f2fs: fix the f2fs_file_write_iter tracepoint
-Date: Mon, 22 Jan 2024 15:57:41 -0800
-Message-ID: <20240122235751.742914230@linuxfoundation.org>
+Subject: [PATCH 6.6 081/583] asm-generic: Fix 32 bit __generic_cmpxchg_local
+Date: Mon, 22 Jan 2024 15:52:12 -0800
+Message-ID: <20240122235814.632397807@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,88 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: David McKay <david.mckay@codasip.com>
 
-[ Upstream commit ccf7cf92373d1a53166582013430b3b9c05a6ba2 ]
+[ Upstream commit d93cca2f3109f88c94a32d3322ec8b2854a9c339 ]
 
-Pass in the original position and count rather than the position and
-count that were updated by the write.  Also use the correct types for
-all arguments, in particular the file offset which was being truncated
-to 32 bits on 32-bit platforms.
+Commit 656e9007ef58 ("asm-generic: avoid __generic_cmpxchg_local
+warnings") introduced a typo that means the code is incorrect for 32 bit
+values. It will work fine for postive numbers, but will fail for
+negative numbers on a system where longs are 64 bit.
 
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: bb34cc6ca87f ("f2fs: fix to update iostat correctly in f2fs_filemap_fault()")
+Fixes: 656e9007ef58 ("asm-generic: avoid __generic_cmpxchg_local warnings")
+Signed-off-by: David McKay <david.mckay@codasip.com>
+Signed-off-by: Stuart Menefy <stuart.menefy@codasip.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c              |  5 +++--
- include/trace/events/f2fs.h | 12 ++++++------
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ include/asm-generic/cmpxchg-local.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 533ab259ce01..d220c4523982 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -4255,6 +4255,8 @@ static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
- {
- 	struct file *file = iocb->ki_filp;
- 	struct inode *inode = file_inode(file);
-+	const loff_t orig_pos = iocb->ki_pos;
-+	const size_t orig_count = iov_iter_count(from);
- 	ssize_t ret;
- 
- 	if (unlikely(f2fs_cp_error(F2FS_I_SB(inode)))) {
-@@ -4358,8 +4360,7 @@ static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
- unlock:
- 	inode_unlock(inode);
- out:
--	trace_f2fs_file_write_iter(inode, iocb->ki_pos,
--					iov_iter_count(from), ret);
-+	trace_f2fs_file_write_iter(inode, orig_pos, orig_count, ret);
- 	if (ret > 0)
- 		ret = generic_write_sync(iocb, ret);
- 	return ret;
-diff --git a/include/trace/events/f2fs.h b/include/trace/events/f2fs.h
-index f5dcf7c9b707..6033eaddcb74 100644
---- a/include/trace/events/f2fs.h
-+++ b/include/trace/events/f2fs.h
-@@ -540,17 +540,17 @@ TRACE_EVENT(f2fs_truncate_partial_nodes,
- 
- TRACE_EVENT(f2fs_file_write_iter,
- 
--	TP_PROTO(struct inode *inode, unsigned long offset,
--		unsigned long length, int ret),
-+	TP_PROTO(struct inode *inode, loff_t offset, size_t length,
-+		 ssize_t ret),
- 
- 	TP_ARGS(inode, offset, length, ret),
- 
- 	TP_STRUCT__entry(
- 		__field(dev_t,	dev)
- 		__field(ino_t,	ino)
--		__field(unsigned long, offset)
--		__field(unsigned long, length)
--		__field(int,	ret)
-+		__field(loff_t, offset)
-+		__field(size_t, length)
-+		__field(ssize_t, ret)
- 	),
- 
- 	TP_fast_assign(
-@@ -562,7 +562,7 @@ TRACE_EVENT(f2fs_file_write_iter,
- 	),
- 
- 	TP_printk("dev = (%d,%d), ino = %lu, "
--		"offset = %lu, length = %lu, written(err) = %d",
-+		"offset = %lld, length = %zu, written(err) = %zd",
- 		show_dev_ino(__entry),
- 		__entry->offset,
- 		__entry->length,
+diff --git a/include/asm-generic/cmpxchg-local.h b/include/asm-generic/cmpxchg-local.h
+index 3df9f59a544e..f27d66fdc00a 100644
+--- a/include/asm-generic/cmpxchg-local.h
++++ b/include/asm-generic/cmpxchg-local.h
+@@ -34,7 +34,7 @@ static inline unsigned long __generic_cmpxchg_local(volatile void *ptr,
+ 			*(u16 *)ptr = (new & 0xffffu);
+ 		break;
+ 	case 4: prev = *(u32 *)ptr;
+-		if (prev == (old & 0xffffffffffu))
++		if (prev == (old & 0xffffffffu))
+ 			*(u32 *)ptr = (new & 0xffffffffu);
+ 		break;
+ 	case 8: prev = *(u64 *)ptr;
 -- 
 2.43.0
 
