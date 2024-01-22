@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3AC12CDB0;
-	Tue, 23 Jan 2024 00:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B586112CDB0;
+	Tue, 23 Jan 2024 00:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968995; cv=none; b=QbXjyT1PRd+4hwM/Qud9D79VbiE+C65gQnlNuDPx6wnnAykUnjjlZpVId099TJ1tpN/mcJJw7btjgcPJY4nlZB+mRtHasjcu5BV/vHXicmjTOAKFpfwKArDCWrV4uOf7qsMuZu0nG9XxaKzhwXtuYnQUksyahe0vvzLAGjCDPXc=
+	t=1705968996; cv=none; b=EZ3PahKdQo8dzh//ZPn1aBQ34A5Zg+DryBID9+UqkJI4lVZtIMlup80oy90+vLS+NXhySEXBkaza5Ac9MWYYF8SUxf1nrUYnnujhQ4Yq4hhvAappnvoOrdPuqnVsv4WPYI5/owu55XH5wFvOjlJ/Ssl2wZmXuW3M7qqszWCbQDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968995; c=relaxed/simple;
-	bh=LCSFfkzZi7dAOcdfCa1XSXTciN6bedYNz+YSOIB0Q38=;
+	s=arc-20240116; t=1705968996; c=relaxed/simple;
+	bh=lQ2bA6gPa/+8ARSC8/aBVMtM+jp1euyfImSoI2MHHy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r22DJl/yVctq/iEe9eIsSNR8/DQ/pnBCUwcN4jYz5C004x5sj57Fv6e7iez/mQsrvCnAL27iOD9XAkroM598x8BDiJYbtF55hPMQGEo1Kf3N8jrdZWceeJaeykulCxK3Nno1WQf4zrcqAY/bmi78ox6cRF+GlSzrGFmkN7O3X20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNqxou8b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SVO9WmeEbKKrQXVutD7GOULsGsopB154K8Rs1i3by5v+ygVs2xrnm0Qo6j2ZHrwqfPMZAgj7dyFwfgf1fHEwdxuPjm2gv05pnNSg/FbLoiuMHJsdLRitgMm9pqda5qcdTJXuHqYUTf4Jo1+Y0Kf7MBIloDcZsBKU9QMdFqH/9cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tS12iCsa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNqxou8b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 383E5C433F1;
-	Tue, 23 Jan 2024 00:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tS12iCsa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657A7C43390;
+	Tue, 23 Jan 2024 00:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968995;
-	bh=LCSFfkzZi7dAOcdfCa1XSXTciN6bedYNz+YSOIB0Q38=;
+	s=korg; t=1705968996;
+	bh=lQ2bA6gPa/+8ARSC8/aBVMtM+jp1euyfImSoI2MHHy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNqxou8bjFOLt68767njw2QtWVag38Ey/sggY2BpZdqZu1UirMnjWRtlQKrlUcnuk
-	 aHF+59DwuBAV+L5dOm2RrkVJLRW8M6SAt2eaEgtG+WbmoqC0n+x7yAXpeRoGZOBd5y
-	 ysNSOKdTiSg+iuXRf0USIYFad4ycPWS7Wl7eOb4Q=
+	b=tS12iCsaSAHd3y0kWLN5o5d66C3GhS5lL9Bx8RaTzonFZL5g0s8vtuUxy+NawVMIQ
+	 JSMxBC8ck95xC2buAPP9XaqtkRAK0bQgVbm7q8AhkHAB4h0v1dgvW3/fN9AQ0T73/k
+	 zinaq7U5tyFQFRMurAY0NoZuOfEg7GfhdlmfbZ3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Subject: [PATCH 5.4 148/194] usb: dwc: ep0: Update request status in dwc3_ep0_stall_restart
-Date: Mon, 22 Jan 2024 15:57:58 -0800
-Message-ID: <20240122235725.566602375@linuxfoundation.org>
+	=?UTF-8?q?K=C3=B6ry=20Maincent?= <kory.maincent@bootlin.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.4 149/194] Revert "usb: dwc3: Soft reset phy on probe for host"
+Date: Mon, 22 Jan 2024 15:57:59 -0800
+Message-ID: <20240122235725.605774760@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -43,63 +44,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit e9d40b215e38480fd94c66b06d79045717a59e9c upstream.
+commit 7059fbebcb00554c3f31e5b5d93ef6d2d96dc7b4 upstream.
 
-Current implementation blocks the running operations when Plug-out and
-Plug-In is performed continuously, process gets stuck in
-dwc3_thread_interrupt().
+This reverts commit 8bea147dfdf823eaa8d3baeccc7aeb041b41944b.
 
-Code Flow:
-
-	CPU1
-
-	->Gadget_start
-	->dwc3_interrupt
-	->dwc3_thread_interrupt
-	->dwc3_process_event_buf
-	->dwc3_process_event_entry
-	->dwc3_endpoint_interrupt
-	->dwc3_ep0_interrupt
-	->dwc3_ep0_inspect_setup
-	->dwc3_ep0_stall_and_restart
-
-By this time if pending_list is not empty, it will get the next request
-on the given list and calls dwc3_gadget_giveback which will unmap request
-and call its complete() callback to notify upper layers that it has
-completed. Currently dwc3_gadget_giveback status is set to -ECONNRESET,
-whereas it should be -ESHUTDOWN based on condition if not dwc->connected
-is true.
+The phy soft reset GUSB2PHYCFG.PHYSOFTRST only applies to UTMI phy, not
+ULPI. This fix is incomplete.
 
 Cc:  <stable@vger.kernel.org>
-Fixes: d742220b3577 ("usb: dwc3: ep0: giveback requests on stall_and_restart")
-Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Link: https://lore.kernel.org/r/20231222094704.20276-1-quic_uaggarwa@quicinc.com
+Fixes: 8bea147dfdf8 ("usb: dwc3: Soft reset phy on probe for host")
+Reported-by: Köry Maincent <kory.maincent@bootlin.com>
+Closes: https://lore.kernel.org/linux-usb/20231205151959.5236c231@kmaincent-XPS-13-7390
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/29a26593a60eba727de872a3e580a674807b3339.1703282469.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/ep0.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/core.c |   39 +--------------------------------------
+ 1 file changed, 1 insertion(+), 38 deletions(-)
 
---- a/drivers/usb/dwc3/ep0.c
-+++ b/drivers/usb/dwc3/ep0.c
-@@ -236,7 +236,10 @@ static void dwc3_ep0_stall_and_restart(s
- 		struct dwc3_request	*req;
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -250,46 +250,9 @@ int dwc3_core_soft_reset(struct dwc3 *dw
+ 	 * XHCI driver will reset the host block. If dwc3 was configured for
+ 	 * host-only mode or current role is host, then we can return early.
+ 	 */
+-	if (dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
++	if (dwc->dr_mode == USB_DR_MODE_HOST || dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
+ 		return 0;
  
- 		req = next_request(&dep->pending_list);
--		dwc3_gadget_giveback(dep, req, -ECONNRESET);
-+		if (!dwc->connected)
-+			dwc3_gadget_giveback(dep, req, -ESHUTDOWN);
-+		else
-+			dwc3_gadget_giveback(dep, req, -ECONNRESET);
- 	}
- 
- 	dwc->ep0state = EP0_SETUP_PHASE;
+-	/*
+-	 * If the dr_mode is host and the dwc->current_dr_role is not the
+-	 * corresponding DWC3_GCTL_PRTCAP_HOST, then the dwc3_core_init_mode
+-	 * isn't executed yet. Ensure the phy is ready before the controller
+-	 * updates the GCTL.PRTCAPDIR or other settings by soft-resetting
+-	 * the phy.
+-	 *
+-	 * Note: GUSB3PIPECTL[n] and GUSB2PHYCFG[n] are port settings where n
+-	 * is port index. If this is a multiport host, then we need to reset
+-	 * all active ports.
+-	 */
+-	if (dwc->dr_mode == USB_DR_MODE_HOST) {
+-		u32 usb3_port;
+-		u32 usb2_port;
+-
+-		usb3_port = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0));
+-		usb3_port |= DWC3_GUSB3PIPECTL_PHYSOFTRST;
+-		dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), usb3_port);
+-
+-		usb2_port = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
+-		usb2_port |= DWC3_GUSB2PHYCFG_PHYSOFTRST;
+-		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), usb2_port);
+-
+-		/* Small delay for phy reset assertion */
+-		usleep_range(1000, 2000);
+-
+-		usb3_port &= ~DWC3_GUSB3PIPECTL_PHYSOFTRST;
+-		dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), usb3_port);
+-
+-		usb2_port &= ~DWC3_GUSB2PHYCFG_PHYSOFTRST;
+-		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), usb2_port);
+-
+-		/* Wait for clock synchronization */
+-		msleep(50);
+-		return 0;
+-	}
+-
+ 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
+ 	reg |= DWC3_DCTL_CSFTRST;
+ 	dwc3_writel(dwc->regs, DWC3_DCTL, reg);
 
 
