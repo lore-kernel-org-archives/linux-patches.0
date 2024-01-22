@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BFF5662;
-	Tue, 23 Jan 2024 00:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AA1107A6;
+	Tue, 23 Jan 2024 00:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969503; cv=none; b=C4vagdQRmTx+k+7+NFXYSIHbywew26FdI4vacelhy8FR5xn6PLPSot5Fs5M5Rd6kluBudFNNw6qYEfllHY5DKXCeeoGxa0kzomBHr27Q7Z5hM2kL+apEwQksY7LVQEDKLfSGJLG+I76DszY7S1dy5sUfz+aBmTBaaeQiKYBjVdU=
+	t=1705969504; cv=none; b=IDiOu6mZs3txHNmKh6z5x7jT9fZEIvbXMEOZ2zN9u3C2Miadtp0Ti+wF661aq/aav9FlgsotBTmmPSPQbBTk8/3aUCjznsM+Po2z44nvuYPH5CUpnXfJWsjMvS3nMb3uKDQu4/Ks7XvrN+31mg2Zuqd1VqCtpJ46Nk3e+/peqEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969503; c=relaxed/simple;
-	bh=0DXwUaR0VggXMxYkKz32oLwLHF1KUpZrtX3PhcO0yeI=;
+	s=arc-20240116; t=1705969504; c=relaxed/simple;
+	bh=d30NF0P8t3iI5MOORp/AN/C6bFFAWeDAGy7pu3AXXVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j44/Y73E0acvX6KLUNXBKCv7wY+OMdQobuqvD0ck1fGc+gpGrrDxMbmLNU9iZ/71MSgI9648utpYU4bk/Y/n1FrwlDwGo5DOHr3a0kHPk1SO4/+RPiFKd6+MjShHREZoI6yv/C99oNfddDPrz+O4GTVXXrajxhpf9PDQHPq1LgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwQQcsbO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s3WzteZrL3jJWwWZLpn9JeLGaYS8p9Iqoi9lP2q6r68/meCnNxwzcQ6JIzp4Pmxqh4rm6xsG6PfM0Ni1XPHFIxCNwk1yPBNFK5PPvyiCmXy9PW8axDBwuwZW21EixamEwWcS5JSOSOc9kT2yBDkRAKrxfrX9xvNwe3nFjg6z5g4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iAjmi9Bj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwQQcsbO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19174C433A6;
-	Tue, 23 Jan 2024 00:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iAjmi9Bj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41947C43399;
+	Tue, 23 Jan 2024 00:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969503;
-	bh=0DXwUaR0VggXMxYkKz32oLwLHF1KUpZrtX3PhcO0yeI=;
+	s=korg; t=1705969504;
+	bh=d30NF0P8t3iI5MOORp/AN/C6bFFAWeDAGy7pu3AXXVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GwQQcsbOn68XpQvyN6no3Hw5Xv1xRduXnSx51LllB4vvAPvYFF/LhA1YuJv7ZLWEr
-	 b288lJrkT0AFJoVEUIhlaX26CF7Ec79y4AJr8Tv1D8qiqoW1sI8ij0wvMb89V92VPv
-	 RllGbY4cF58/nFt83o47xn3XtT3pVkw1chABmD6Y=
+	b=iAjmi9BjAnKluixIew3J2aLe1ZCQiHlpa4akN3oHNsjuQFh7bEMaH4wVbN2oOc4HQ
+	 yq3F4gYMydazpVLytXXgHGHB7Lckp3BA0w7zLUv1/wWFPo6wI3GxK3kGbWwBdk3Tzi
+	 g9dUxScU7sSxNGSmp9HxtXg3y0UKV5fPLLMn92FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
-	Teddy Wang <teddy.wang@siliconmotion.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Helge Deller <deller@gmx.de>,
 	Arnd Bergmann <arnd@arndb.de>,
-	linux-fbdev@vger.kernel.org,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 265/641] fbdev/sm712fb: Use correct initializer macros for struct fb_ops
-Date: Mon, 22 Jan 2024 15:52:49 -0800
-Message-ID: <20240122235826.218003281@linuxfoundation.org>
+Subject: [PATCH 6.7 266/641] ASoC: fsl_rpmsg: update Kconfig dependencies
+Date: Mon, 22 Jan 2024 15:52:50 -0800
+Message-ID: <20240122235826.245416045@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -57,75 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 12d55c013a09a2d490f004a324c20800e4ff35ec ]
+[ Upstream commit 9cce9c4806a89439ea34aad2e382150d68c7ea95 ]
 
-Only initialize mmap and draw helpers with macros; leave read/write
-callbacks to driver implementations. Fixes the following warnings:
+SND_SOC_IMX_RPMSG gained a new dependency and gets selected by SND_SOC_FSL_RPMSG,
+which as a result needs to have the same dependency, or produce a build failure
+based on that:
 
-  CC [M]  drivers/video/fbdev/sm712fb.o
-  sm712fb.c:1355:25: warning: initialized field overwritten [-Woverride-init]
-  1355 |         .fb_fillrect  = cfb_fillrect,
-       |                         ^~~~~~~~~~~~
-  sm712fb.c:1355:25: note: (near initialization for 'smtcfb_ops.fb_fillrect')
-  sm712fb.c:1356:25: warning: initialized field overwritten [-Woverride-init]
-  1356 |         .fb_imageblit = cfb_imageblit,
-       |                         ^~~~~~~~~~~~~
-  sm712fb.c:1356:25: note: (near initialization for 'smtcfb_ops.fb_imageblit')
-  sm712fb.c:1357:25: warning: initialized field overwritten [-Woverride-init]
-  1357 |         .fb_copyarea  = cfb_copyarea,
-       |                         ^~~~~~~~~~~~
-  sm712fb.c:1357:25: note: (near initialization for 'smtcfb_ops.fb_copyarea')
-  sm712fb.c:1358:25: warning: initialized field overwritten [-Woverride-init]
-  1358 |         .fb_read      = smtcfb_read,
-       |                         ^~~~~~~~~~~
-  sm712fb.c:1358:25: note: (near initialization for 'smtcfb_ops.fb_read')
-  sm712fb.c:1359:25: warning: initialized field overwritten [-Woverride-init]
-  1359 |         .fb_write     = smtcfb_write,
-       |                         ^~~~~~~~~~~~
-  sm712fb.c:1359:25: note: (near initialization for 'smtcfb_ops.fb_write')
+WARNING: unmet direct dependencies detected for SND_SOC_IMX_RPMSG
+  Depends on [n]: SOUND [=y] && SND [=y] && SND_SOC [=y] && SND_IMX_SOC [=y] && RPMSG [=y] && OF [=y] && I2C [=n]
+  Selected by [y]:
+  - SND_SOC_FSL_RPMSG [=y] && SOUND [=y] && SND [=y] && SND_SOC [=y] && COMMON_CLK [=y] && RPMSG [=y] && (SND_IMX_SOC [=y] || SND_IMX_SOC [=y]=n) && SND_IMX_SOC [=y]!=n
+x86_64-linux-ld: sound/soc/fsl/imx-rpmsg.o: in function `imx_rpmsg_late_probe':
+imx-rpmsg.c:(.text+0x11e): undefined reference to `i2c_find_device_by_fwnode'
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 586132cf1d38 ("fbdev/sm712fb: Initialize fb_ops to fbdev I/O-memory helpers")
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Cc: Teddy Wang <teddy.wang@siliconmotion.com>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Cc: Helge Deller <deller@gmx.de>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: linux-fbdev@vger.kernel.org
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231127131655.4020-3-tzimmermann@suse.de
+Fixes: f83d38def6b1 ("ASoC: imx-rpmsg: SND_SOC_IMX_RPMSG should depend on OF and I2C")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20231129113204.2869356-1-arnd@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sm712fb.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ sound/soc/fsl/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/video/fbdev/sm712fb.c b/drivers/video/fbdev/sm712fb.c
-index 3f8ef50e3209..104f122e0f27 100644
---- a/drivers/video/fbdev/sm712fb.c
-+++ b/drivers/video/fbdev/sm712fb.c
-@@ -1347,16 +1347,14 @@ static int smtc_set_par(struct fb_info *info)
- 
- static const struct fb_ops smtcfb_ops = {
- 	.owner        = THIS_MODULE,
--	FB_DEFAULT_IOMEM_OPS,
- 	.fb_check_var = smtc_check_var,
- 	.fb_set_par   = smtc_set_par,
- 	.fb_setcolreg = smtc_setcolreg,
- 	.fb_blank     = smtc_blank,
--	.fb_fillrect  = cfb_fillrect,
--	.fb_imageblit = cfb_imageblit,
--	.fb_copyarea  = cfb_copyarea,
-+	__FB_DEFAULT_IOMEM_OPS_DRAW,
- 	.fb_read      = smtcfb_read,
- 	.fb_write     = smtcfb_write,
-+	__FB_DEFAULT_IOMEM_OPS_MMAP,
- };
- 
- /*
+diff --git a/sound/soc/fsl/Kconfig b/sound/soc/fsl/Kconfig
+index be342ee03fb9..d14061e88e58 100644
+--- a/sound/soc/fsl/Kconfig
++++ b/sound/soc/fsl/Kconfig
+@@ -121,6 +121,7 @@ config SND_SOC_FSL_UTILS
+ config SND_SOC_FSL_RPMSG
+ 	tristate "NXP Audio Base On RPMSG support"
+ 	depends on COMMON_CLK
++	depends on OF && I2C
+ 	depends on RPMSG
+ 	depends on SND_IMX_SOC || SND_IMX_SOC = n
+ 	select SND_SOC_IMX_RPMSG if SND_IMX_SOC != n
 -- 
 2.43.0
 
