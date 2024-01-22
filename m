@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8B814A4FA;
-	Tue, 23 Jan 2024 00:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4436214A4FA;
+	Tue, 23 Jan 2024 00:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969234; cv=none; b=cSWdbdwIfq6NJVQVx/lxMqGzsjxeErq2cSbDKO4aAE8UUVXaUXO0SihofAuUlHzwg5daZn9vUqlm40sK8vdyxTWrxx0GsZR79G6CUD+2683m9wZuzF8YzZGDD06WQcj8buVPQnfsWqZa3l/hZOHosPZtqwtf3cQ02OVeZjWMZYg=
+	t=1705969236; cv=none; b=RmJMgOlYokr7/7879WCRX/1VmQP9RuCxFekcfBJmWU4bCbqxo1pUD//dQF1HIo6YM04qoynPD3VHrxDSjSPOc4X0dyidg/OyaDAktfvsy3qoRFO9Ipl1CvXeoMvrOPm9lzQBore1QzdCi1g74++nifnDyj9eKhtcaN/0utWyQvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969234; c=relaxed/simple;
-	bh=4HbiZDgzg66YElx1ahXSiFWSLl+bxAsWRbPYahlbVaA=;
+	s=arc-20240116; t=1705969236; c=relaxed/simple;
+	bh=3AkFxzG5A1L+AyLN0EXYxwdSycWF4yYUSqpbTVgmUH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cHbA5AGc5q1U6bejTRgckMHl2WG+AxQsqqwNaAEYVVEjASn2yEesNE8A+r/Z33JNi7Gg7zqGLHPA78D/C2C1Ky0sNTXc0gUGATpT8AoS/3k3lyFCCFVNEXXBG8PKPzde+JTRNdDiyOBNSmOKSrgSsA/3o5kekbI7Snej+bfd5dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ea+iLLV2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OnNkar5kUUWP3mk72zKYkjSLOdG6NWGxzRVxtUj8GfE7zi+QxwCP7pnMD/ZqKz9d4MMRSMi1FrzCdYxzdLOL56pJCNUXlsTKjmKZknvXP6IXEg4KAbY4wI3KSroH4LuVoXxtG/5o/AVFzl+k6NJ8M2Gyq0iw0ALVqGCIvcP1J1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/WeRWTG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ea+iLLV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BBDC433F1;
-	Tue, 23 Jan 2024 00:20:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/WeRWTG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071B2C43399;
+	Tue, 23 Jan 2024 00:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969234;
-	bh=4HbiZDgzg66YElx1ahXSiFWSLl+bxAsWRbPYahlbVaA=;
+	s=korg; t=1705969236;
+	bh=3AkFxzG5A1L+AyLN0EXYxwdSycWF4yYUSqpbTVgmUH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ea+iLLV2XXt1vhXGDFLDzGLUo5rchL/o7PVAyJ1LHQ6G9WubzVGSP8cYmclIIx4IL
-	 3snyBvRoXr/aMqCL31zGB5HDG8Y8rHFKTqOQ2Julb0HoVNA0r6OmRn31tKFSER2c8+
-	 fffikKaj3fH6NGNm28owVWnEhbKD5eMEI3avzAyY=
+	b=z/WeRWTGltSnSySg+ANtzauKbXF+pvbF16zZdSZpllhD1f3llM/Qez2xIVBHMkgQN
+	 7btCq0/Ww6+lAEh3NxqyVyCwdxY2aQrwjK1Mz5IeUz5l59hThkhuQ/EY08I7H7cs4Q
+	 NtTgxqlalhWGKlryIwW0D0gos6cekP2ibyAs8UmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 117/641] ARM: dts: qcom: sdx65: correct PCIe EP phy-names
-Date: Mon, 22 Jan 2024 15:50:21 -0800
-Message-ID: <20240122235821.709701542@linuxfoundation.org>
+Subject: [PATCH 6.7 118/641] ARM: dts: qcom: sdx65: correct SPMI node name
+Date: Mon, 22 Jan 2024 15:50:22 -0800
+Message-ID: <20240122235821.741359733@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -56,18 +55,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 94da379dba88c4cdd562bad21c9ba5656e5ed5df ]
+[ Upstream commit a900ad783f507cb396e402827052e70c0c565ae9 ]
 
-Qualcomm PCIe endpoint bindings expect phy-names to be "pciephy":
+Node names should not have vendor prefixes:
 
-  arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dtb: pcie-ep@1c00000: phy-names:0: 'pciephy' was expected
+  qcom-sdx65-mtp.dtb: qcom,spmi@c440000: $nodename:0: 'qcom,spmi@c440000' does not match '^spmi@.*
 
-Fixes: 9c0bb38414a4 ("ARM: dts: qcom: sdx65: Add support for PCIe EP")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230924183103.49487-1-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230924183103.49487-3-krzysztof.kozlowski@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -75,18 +72,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
-index e559adaaeee7..648899b5220f 100644
+index 648899b5220f..27b7f50a1832 100644
 --- a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
 +++ b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
-@@ -338,7 +338,7 @@ pcie_ep: pcie-ep@1c00000 {
- 			power-domains = <&gcc PCIE_GDSC>;
+@@ -530,7 +530,7 @@ restart@c264000 {
+ 			reg = <0x0c264000 0x1000>;
+ 		};
  
- 			phys = <&pcie_phy>;
--			phy-names = "pcie-phy";
-+			phy-names = "pciephy";
- 
- 			max-link-speed = <3>;
- 			num-lanes = <2>;
+-		spmi_bus: qcom,spmi@c440000 {
++		spmi_bus: spmi@c440000 {
+ 			compatible = "qcom,spmi-pmic-arb";
+ 			reg = <0xc440000 0xd00>,
+ 				<0xc600000 0x2000000>,
 -- 
 2.43.0
 
