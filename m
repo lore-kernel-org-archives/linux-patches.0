@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20F56AB9;
-	Tue, 23 Jan 2024 00:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E716FB3;
+	Tue, 23 Jan 2024 00:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968423; cv=none; b=ZZb4WZrjtF37A78xUOC3lLy+hRAdbI6MY6kFjX1xnW1K1cBH705at+vkHioZKgIQgXbBagIGHWHCAGWe8oCmfuY1B1BzQcFugQpbQQGg/RkrHcAbirwme1MF/ErQiEx7ZfQUCkxvdBGEfH5uejzLZqDAMnUQ1yym839qZZC+Owg=
+	t=1705968427; cv=none; b=ijCuEie94x9Xudo1yYJFnYOVjxtp+xTxQrkl0hDVcsFfE+IWfTuwfdmhSol1PKEqPPv2kmvHkOn0QWRQUg/qzKJh6wqJr3SEHigD23EykquBIvS7N0CUv2PSVLIHAUZen048bw5LRWuF6+UN2efRAn/gQ0RsOujscomAXXkSfBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968423; c=relaxed/simple;
-	bh=ywqw4rgJo3h/5xgVJ80ItlSLMf/7SoPRIeogiJiI6B4=;
+	s=arc-20240116; t=1705968427; c=relaxed/simple;
+	bh=G8oZ0XAQnMNWBz7ua7mz481KmZgCNMvEl1bO6a9J1F8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cnWSRWB0XiNvdX5nLcd8dRo4jY02oOjHvg3ScWqTSAKFmkCliR574EepA8uaS+QKxgJoq5NFf5d0jsXpy7AIMd/l6Fr2ygnwCjXBCDv2PqI+u7koeu38Q1PM/K/Rfm1pvgczPusKB54TNRjv8E5HjTBJdeBv1PMAQjJ4/GiFE+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=faKdbKEt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jvzyXCEPwzZJB3S4BsIRRP47UYcX5aCdwMgBG2Z1Ak9/hTf4RYpOWe0hr2onQMnTvx98rsSX6BX6qO/+ymfL5mSX9CnrNLdAnVyxnm3mhnpub1WyfRuTVaL/Z3fvykWcFVn/7rpBqEOb/UWWDp/rXbLkUDyPcxwYXoyqkOFTE1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFtzsA5W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faKdbKEt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CCDC43390;
-	Tue, 23 Jan 2024 00:07:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFtzsA5W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B0EC433C7;
+	Tue, 23 Jan 2024 00:07:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968423;
-	bh=ywqw4rgJo3h/5xgVJ80ItlSLMf/7SoPRIeogiJiI6B4=;
+	s=korg; t=1705968426;
+	bh=G8oZ0XAQnMNWBz7ua7mz481KmZgCNMvEl1bO6a9J1F8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=faKdbKEtCw0l4/n8KS9qWwSp94izA6CaBlkvJEI4hTnKIYvQLU800FPSBYUoF7K6r
-	 +r91hBQh6BoEnypr/xv4jA+sGIc+xVLg9upRnM/wFifvlafgRNVWD/1ahxY8FLw797
-	 yW56necrpRWWe3OELUcKWv9IajAljm1tuDPbLdHU=
+	b=GFtzsA5W9gJCOT9GyUu6qqdAjtFjxYv3mPdU7WpD22BlmW2mnhTGpGjgnjudAv3r0
+	 KfZRj7L+m9ug84ruqr4oHD3qdY9pFOIkRYi1BBCmQTUyGhEFQZ9JVT8C/6xKyqlcxC
+	 4jlLyONYplbuB8KQkfCqhZhjmhTzwZKIpPjo8LJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhipeng Lu <alexious@zju.edu.cn>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 104/148] drivers/amd/pm: fix a use-after-free in kv_parse_power_table
-Date: Mon, 22 Jan 2024 15:57:40 -0800
-Message-ID: <20240122235716.633198507@linuxfoundation.org>
+Subject: [PATCH 4.19 105/148] gpu/drm/radeon: fix two memleaks in radeon_vm_init
+Date: Mon, 22 Jan 2024 15:57:41 -0800
+Message-ID: <20240122235716.672210039@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -53,44 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhipeng Lu <alexious@zju.edu.cn>
 
-[ Upstream commit 28dd788382c43b330480f57cd34cde0840896743 ]
+[ Upstream commit c2709b2d6a537ca0fa0f1da36fdaf07e48ef447d ]
 
-When ps allocated by kzalloc equals to NULL, kv_parse_power_table
-frees adev->pm.dpm.ps that allocated before. However, after the control
-flow goes through the following call chains:
+When radeon_bo_create and radeon_vm_clear_bo fail, the vm->page_tables
+allocated before need to be freed. However, neither radeon_vm_init
+itself nor its caller have done such deallocation.
 
-kv_parse_power_table
-  |-> kv_dpm_init
-        |-> kv_dpm_sw_init
-	      |-> kv_dpm_fini
-
-The adev->pm.dpm.ps is used in the for loop of kv_dpm_fini after its
-first free in kv_parse_power_table and causes a use-after-free bug.
-
-Fixes: a2e73f56fa62 ("drm/amdgpu: Add support for CIK parts")
+Fixes: 6d2f2944e95e ("drm/radeon: use normal BOs for the page tables v4")
 Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/kv_dpm.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/radeon/radeon_vm.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/kv_dpm.c b/drivers/gpu/drm/amd/amdgpu/kv_dpm.c
-index 91504eccc60c..91a1628cd48f 100644
---- a/drivers/gpu/drm/amd/amdgpu/kv_dpm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/kv_dpm.c
-@@ -2734,10 +2734,8 @@ static int kv_parse_power_table(struct amdgpu_device *adev)
- 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
- 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
- 		ps = kzalloc(sizeof(struct kv_ps), GFP_KERNEL);
--		if (ps == NULL) {
--			kfree(adev->pm.dpm.ps);
-+		if (ps == NULL)
- 			return -ENOMEM;
--		}
- 		adev->pm.dpm.ps[i].ps_priv = ps;
- 		k = 0;
- 		idx = (u8 *)&power_state->v2.clockInfoIndex[0];
+diff --git a/drivers/gpu/drm/radeon/radeon_vm.c b/drivers/gpu/drm/radeon/radeon_vm.c
+index 7f1a9c787bd1..cecbd5282a47 100644
+--- a/drivers/gpu/drm/radeon/radeon_vm.c
++++ b/drivers/gpu/drm/radeon/radeon_vm.c
+@@ -1206,13 +1206,17 @@ int radeon_vm_init(struct radeon_device *rdev, struct radeon_vm *vm)
+ 	r = radeon_bo_create(rdev, pd_size, align, true,
+ 			     RADEON_GEM_DOMAIN_VRAM, 0, NULL,
+ 			     NULL, &vm->page_directory);
+-	if (r)
++	if (r) {
++		kfree(vm->page_tables);
++		vm->page_tables = NULL;
+ 		return r;
+-
++	}
+ 	r = radeon_vm_clear_bo(rdev, vm->page_directory);
+ 	if (r) {
+ 		radeon_bo_unref(&vm->page_directory);
+ 		vm->page_directory = NULL;
++		kfree(vm->page_tables);
++		vm->page_tables = NULL;
+ 		return r;
+ 	}
+ 
 -- 
 2.43.0
 
