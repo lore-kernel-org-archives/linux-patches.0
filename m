@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63834E1D7;
-	Tue, 23 Jan 2024 00:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120154E1D8;
+	Tue, 23 Jan 2024 00:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969949; cv=none; b=ma6dfZh8HvxcjdCkrYWArZWz37MdeTbN40psB+aFbTSTR+Qul+WkCA7tpYRMA3OE605DQ2rOS1IDRZxnEwAsvW4n3NOIrEJq96JWseISmPmULw1+a36MOaDOjFexRiww5OmY2TRdkrV+Ehkcpl6T6+xywmxnxVo1aAAVo2FsJic=
+	t=1705969951; cv=none; b=F9n9eg4zz+tFDPZp5qAAfd1J4VoUDrK4pwczM1cz25Sgf7elHxLdoaPTijIKJqWhARaEO5M9Kvxb6+eZDoiXn9fWoglNejrdN2BEV2q/Lcr5Bj0gOJGcTXipujaITDOFJKfd3JOTxvUwMULl+8Li+Xs8qfBtV8iSMKxGxEHCLCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969949; c=relaxed/simple;
-	bh=/Rq5wHzzelw3oKSLq07uL1luKg0u9mGa1sTCxpdc34o=;
+	s=arc-20240116; t=1705969951; c=relaxed/simple;
+	bh=Rm8Fhv8iuJKvmTtJ+QL4toP6IaCDEKVOstNMqT03ZvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L1kWrKdQgRuf/ALO6VmSBhJUHbzYG71gcN0XI66MgFETFT/QrblTqraaXveuSUKdph4Ch7rgIEc8SWi7rKXujFGMZBl63Ia49uyUjDh96ZIpYLEEyrhd8F2o5kiFSxB322lyC2G4imHI+K/OXTc/xa3Z8XnjO68PzHgsgKX8G4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qER+Npz/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ufZglDFhrziMPNNnxogr5eKRl2umy+RDYJPZTt8DON2WVZcTZYQC3NCNhE7s1nh6CzmhVwOZmk00gzEgWggqSFi2ft9XDejfq6a7zj2HoQ5L2fe5k1YCglq9RdFLrNT3tCcEJJ+QgtotG4Uvh88daM6NBL9tTfhgib+TcapAQFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKUDPpzo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qER+Npz/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25BDDC433C7;
-	Tue, 23 Jan 2024 00:32:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKUDPpzo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CE8C433F1;
+	Tue, 23 Jan 2024 00:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969949;
-	bh=/Rq5wHzzelw3oKSLq07uL1luKg0u9mGa1sTCxpdc34o=;
+	s=korg; t=1705969950;
+	bh=Rm8Fhv8iuJKvmTtJ+QL4toP6IaCDEKVOstNMqT03ZvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qER+Npz/+YHk48JnJibj3otauWAGygTHB2WpU79xu725nhsyCvfv3bxJBXZM69wYB
-	 hYRkGgeZqicHiLaByrx0JEJataEClBIOC/m5Bz+jQ4vhRiWmCtObxqPZUWuMfZdY2r
-	 TEC9PazSSgcO5Q74b14F7xBy4vkWF1l1ixpRYLok=
+	b=QKUDPpzorTB00p0/OdOjlL5ACwLkk5RMYYLimmPSrbWACKNEmYfD094hz4FzhFHs4
+	 l0F8fxzoqx9wrfz2sVMdscpPZOKtq4FwYiIRdldifd0XSk690iSHHiCPsrDpeFTXTo
+	 op6ldYEh1V2tEZ++QAg2GnZfrMu45p0pSYVmyj0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 528/641] iio: adc: ad9467: fix reset gpio handling
-Date: Mon, 22 Jan 2024 15:57:12 -0800
-Message-ID: <20240122235834.620981126@linuxfoundation.org>
+Subject: [PATCH 6.7 537/641] bus: mhi: ep: Do not allocate event ring element on stack
+Date: Mon, 22 Jan 2024 15:57:21 -0800
+Message-ID: <20240122235834.929686510@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,89 +50,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 76f028539cf360f750efd8cde560edda298e4c6b ]
+[ Upstream commit 987fdb5a43a66764808371b54e6047834170d565 ]
 
-The reset gpio was being handled with inverted polarity. This means that
-as far as gpiolib is concerned we were actually leaving the pin asserted
-(in theory, this would mean reset). However, inverting the polarity in
-devicetree made things work. Fix it by doing it the proper way and how
-gpiolib expects it to be done.
+It is possible that the host controller driver would use DMA framework to
+write the event ring element. So avoid allocating event ring element on the
+stack as DMA cannot work on vmalloc memory.
 
-While at it, moved the handling to it's own function and dropped
-'reset_gpio' from the 'struct ad9467_state' as we only need it during
-probe. On top of that, refactored things so that we now request the gpio
-asserted (i.e in reset) and then de-assert it. Also note that we now use
-gpiod_set_value_cansleep() instead of gpiod_direction_output() as we
-already request the pin as output.
-
-Fixes: ad6797120238 ("iio: adc: ad9467: add support AD9467 ADC")
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20231207-iio-backend-prep-v2-1-a4a33bc4d70e@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: stable@vger.kernel.org
+Fixes: 961aeb689224 ("bus: mhi: ep: Add support for sending events to the host")
+Link: https://lore.kernel.org/r/20230901073502.69385-1-manivannan.sadhasivam@linaro.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Stable-dep-of: 327ec5f70609 ("PCI: epf-mhi: Fix the DMA data direction of dma_unmap_single()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad9467.c | 31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ drivers/bus/mhi/ep/main.c | 68 ++++++++++++++++++++++++++++-----------
+ 1 file changed, 50 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/iio/adc/ad9467.c b/drivers/iio/adc/ad9467.c
-index 39eccc28debe..4fb9e48dc782 100644
---- a/drivers/iio/adc/ad9467.c
-+++ b/drivers/iio/adc/ad9467.c
-@@ -121,7 +121,6 @@ struct ad9467_state {
- 	unsigned int			output_mode;
+diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+index 600881808982..e2513f5f47a6 100644
+--- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -71,45 +71,77 @@ static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
+ static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_ring *ring,
+ 					struct mhi_ring_element *tre, u32 len, enum mhi_ev_ccs code)
+ {
+-	struct mhi_ring_element event = {};
++	struct mhi_ring_element *event;
++	int ret;
++
++	event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
++	if (!event)
++		return -ENOMEM;
  
- 	struct gpio_desc		*pwrdown_gpio;
--	struct gpio_desc		*reset_gpio;
- };
+-	event.ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(*tre));
+-	event.dword[0] = MHI_TRE_EV_DWORD0(code, len);
+-	event.dword[1] = MHI_TRE_EV_DWORD1(ring->ch_id, MHI_PKT_TYPE_TX_EVENT);
++	event->ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(*tre));
++	event->dword[0] = MHI_TRE_EV_DWORD0(code, len);
++	event->dword[1] = MHI_TRE_EV_DWORD1(ring->ch_id, MHI_PKT_TYPE_TX_EVENT);
  
- static int ad9467_spi_read(struct spi_device *spi, unsigned int reg)
-@@ -378,6 +377,21 @@ static int ad9467_preenable_setup(struct adi_axi_adc_conv *conv)
- 	return ad9467_outputmode_set(st->spi, st->output_mode);
+-	return mhi_ep_send_event(mhi_cntrl, ring->er_index, &event, MHI_TRE_DATA_GET_BEI(tre));
++	ret = mhi_ep_send_event(mhi_cntrl, ring->er_index, event, MHI_TRE_DATA_GET_BEI(tre));
++	kfree(event);
++
++	return ret;
  }
  
-+static int ad9467_reset(struct device *dev)
-+{
-+	struct gpio_desc *gpio;
-+
-+	gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
-+	if (IS_ERR_OR_NULL(gpio))
-+		return PTR_ERR_OR_ZERO(gpio);
-+
-+	fsleep(1);
-+	gpiod_set_value_cansleep(gpio, 0);
-+	fsleep(10 * USEC_PER_MSEC);
-+
-+	return 0;
-+}
-+
- static int ad9467_probe(struct spi_device *spi)
+ int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state state)
  {
- 	const struct ad9467_chip_info *info;
-@@ -408,18 +422,9 @@ static int ad9467_probe(struct spi_device *spi)
- 	if (IS_ERR(st->pwrdown_gpio))
- 		return PTR_ERR(st->pwrdown_gpio);
+-	struct mhi_ring_element event = {};
++	struct mhi_ring_element *event;
++	int ret;
++
++	event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
++	if (!event)
++		return -ENOMEM;
  
--	st->reset_gpio = devm_gpiod_get_optional(&spi->dev, "reset",
--						 GPIOD_OUT_LOW);
--	if (IS_ERR(st->reset_gpio))
--		return PTR_ERR(st->reset_gpio);
--
--	if (st->reset_gpio) {
--		udelay(1);
--		ret = gpiod_direction_output(st->reset_gpio, 1);
--		if (ret)
--			return ret;
--		mdelay(10);
--	}
-+	ret = ad9467_reset(&spi->dev);
-+	if (ret)
-+		return ret;
+-	event.dword[0] = MHI_SC_EV_DWORD0(state);
+-	event.dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_STATE_CHANGE_EVENT);
++	event->dword[0] = MHI_SC_EV_DWORD0(state);
++	event->dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_STATE_CHANGE_EVENT);
  
- 	conv->chip_info = &info->axi_adc_info;
+-	return mhi_ep_send_event(mhi_cntrl, 0, &event, 0);
++	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
++	kfree(event);
++
++	return ret;
+ }
  
+ int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ee_type exec_env)
+ {
+-	struct mhi_ring_element event = {};
++	struct mhi_ring_element *event;
++	int ret;
++
++	event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
++	if (!event)
++		return -ENOMEM;
+ 
+-	event.dword[0] = MHI_EE_EV_DWORD0(exec_env);
+-	event.dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_EE_EVENT);
++	event->dword[0] = MHI_EE_EV_DWORD0(exec_env);
++	event->dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_EE_EVENT);
+ 
+-	return mhi_ep_send_event(mhi_cntrl, 0, &event, 0);
++	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
++	kfree(event);
++
++	return ret;
+ }
+ 
+ static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ev_ccs code)
+ {
+ 	struct mhi_ep_ring *ring = &mhi_cntrl->mhi_cmd->ring;
+-	struct mhi_ring_element event = {};
++	struct mhi_ring_element *event;
++	int ret;
++
++	event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
++	if (!event)
++		return -ENOMEM;
+ 
+-	event.ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(struct mhi_ring_element));
+-	event.dword[0] = MHI_CC_EV_DWORD0(code);
+-	event.dword[1] = MHI_CC_EV_DWORD1(MHI_PKT_TYPE_CMD_COMPLETION_EVENT);
++	event->ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(struct mhi_ring_element));
++	event->dword[0] = MHI_CC_EV_DWORD0(code);
++	event->dword[1] = MHI_CC_EV_DWORD1(MHI_PKT_TYPE_CMD_COMPLETION_EVENT);
+ 
+-	return mhi_ep_send_event(mhi_cntrl, 0, &event, 0);
++	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
++	kfree(event);
++
++	return ret;
+ }
+ 
+ static int mhi_ep_process_cmd_ring(struct mhi_ep_ring *ring, struct mhi_ring_element *el)
 -- 
 2.43.0
 
