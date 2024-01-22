@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781294E1AD;
-	Tue, 23 Jan 2024 00:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC354E1AD;
+	Tue, 23 Jan 2024 00:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971392; cv=none; b=Ls/HooEo8u5IArFYKIlDD2NrhBjcht1TCRiZ68Yigzzro3MxerghRBvJ0UsIMBN2eYe0r4GTihhi8X7fcNBM+Ho8lNxak1h0/BJc/kf5NhxNa/2ZlWJgVJqSrfLuxNlAmyQ3ofObifIydt2IRQxXR7RgHEFE137KoU5/KKM41E8=
+	t=1705971394; cv=none; b=UlluJ6BAix4F0K1WBKkL96MN6Bk3Oa4eZOqLM6bnFxLune94VKgpk9dYRLQr/PPUtp37u6fBmFvQajGygnZrsYre/ZuAN7hnFHySFKUs43KYmDwX9T/T0EQqSdIAH54T8wvYGpIZo5yrJmgkqO9vAi+HFIoffxknab+huZGi7p4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971392; c=relaxed/simple;
-	bh=SH4cigonEG/g2Pc4QUaUHkWoB+R5xQ/hzty1Q7GI9ag=;
+	s=arc-20240116; t=1705971394; c=relaxed/simple;
+	bh=ziX9m6saqne7TO1OS//lyLipoHuJxi7/puAFRvn90Qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0v7Ri7XK5H8pOGlFP/IKMfDJFPhsiy4bIBkyoYwTtc2Ole+4tP3kk5LxwfaFqcy6efKFNbKciu5vT6TMJ85h0cg48qG75+c5F8f8T1GTxc70DFl73KVsQ64c6Ybwgq9kZ3uoGZ3Uo/15lDcW8/rD7Ds8jD05/3JsZ5anFxq1V0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fiUUQ5A4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lagfyTMUc0lWB6ByXpvjIKc9abOLhVqYZ4IaA7OEsj6S3FmEaTCsfJeKvjrFapELysA6ojplqQ0V+I1IoSyPAp+LV91oO4x21vqy3FwqAitlF8f8DaxCjRro93RTeZmOZrHKCrfD/Os1EJZQVO8WWnZYO5QXP1X7mey9hB22u5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzWiHBOs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiUUQ5A4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC48C43390;
-	Tue, 23 Jan 2024 00:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzWiHBOs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2641BC433C7;
+	Tue, 23 Jan 2024 00:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971392;
-	bh=SH4cigonEG/g2Pc4QUaUHkWoB+R5xQ/hzty1Q7GI9ag=;
+	s=korg; t=1705971394;
+	bh=ziX9m6saqne7TO1OS//lyLipoHuJxi7/puAFRvn90Qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fiUUQ5A4JP5/Ci4IO7MxtSRMI2HGD83jIDAEar5NU6FCyqVjlywrWsCRh9B+mXahV
-	 +/HQZf7hTR9zNxDzlICHgwnpIeW741odS/dsBWq3uW3NUAhOoZOJiUiHfRRw/m6coJ
-	 6NEo9J+WL7K7VYc0NRemaHjwWDXjOueat9u9zolo=
+	b=uzWiHBOsHr8LoPWkeVCvBY/uNIqos1oNoCoeSd+BA5ie/Z4Qs25qHCrKBYz4yoRtQ
+	 twXExwTJlSVYADom48XIfQUNKjmj7+eASpODmy2P3Tvo9OsCnHnQPRDFU4Gqg8qwkN
+	 LfeHC64u3M5e2Ks6aEu76yWTE3e3DHHy6vAqy1po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 234/417] ALSA: scarlett2: Allow passing any output to line_out_remap()
-Date: Mon, 22 Jan 2024 15:56:42 -0800
-Message-ID: <20240122235759.991324689@linuxfoundation.org>
+Subject: [PATCH 5.10 145/286] drm/panel-elida-kd35t133: hold panel in reset for unprepare
+Date: Mon, 22 Jan 2024 15:57:31 -0800
+Message-ID: <20240122235737.748151671@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,85 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Chris Morgan <macromorgan@hotmail.com>
 
-[ Upstream commit 2190b9aea4eb92ccf3176e35c17c959e40f1a81b ]
+[ Upstream commit 03c5b2a5f6c39fe4e090346536cf1c14ee18b61e ]
 
-Line outputs 3 & 4 on the Gen 3 18i8 are internally the analogue 7 and
-8 outputs, and this renumbering is hidden from the user by
-line_out_remap(). By allowing higher values (representing non-analogue
-outputs) to be passed to line_out_remap(), repeated code from
-scarlett2_mux_src_enum_ctl_get() and scarlett2_mux_src_enum_ctl_put()
-can be removed.
+For devices like the Anbernic RG351M and RG351P the panel is wired to
+an always on regulator. When the device suspends and wakes up, there
+are some slight artifacts on the screen that go away over time. If
+instead we hold the panel in reset status after it is unprepared,
+this does not happen.
 
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Link: https://lore.kernel.org/r/3b70267931f5994628ab27306c73cddd17b93c8f.1698342632.git.g@b4.vu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 50603a67daef ("ALSA: scarlett2: Add missing error checks to *_ctl_get()")
+Fixes: 5b6603360c12 ("drm/panel: add panel driver for Elida KD35T133 panels")
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Link: https://lore.kernel.org/r/20231117194405.1386265-3-macroalpha82@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231117194405.1386265-3-macroalpha82@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_scarlett_gen2.c | 25 +++++++++----------------
- 1 file changed, 9 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/panel/panel-elida-kd35t133.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/usb/mixer_scarlett_gen2.c b/sound/usb/mixer_scarlett_gen2.c
-index 94704581865b..f8a2ba479b7c 100644
---- a/sound/usb/mixer_scarlett_gen2.c
-+++ b/sound/usb/mixer_scarlett_gen2.c
-@@ -1901,9 +1901,16 @@ static int scarlett2_master_volume_ctl_get(struct snd_kcontrol *kctl,
- static int line_out_remap(struct scarlett2_data *private, int index)
- {
- 	const struct scarlett2_device_info *info = private->info;
-+	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
-+	int line_out_count =
-+		port_count[SCARLETT2_PORT_TYPE_ANALOGUE][SCARLETT2_PORT_OUT];
+diff --git a/drivers/gpu/drm/panel/panel-elida-kd35t133.c b/drivers/gpu/drm/panel/panel-elida-kd35t133.c
+index fe5ac3ef9018..9c1591f2920c 100644
+--- a/drivers/gpu/drm/panel/panel-elida-kd35t133.c
++++ b/drivers/gpu/drm/panel/panel-elida-kd35t133.c
+@@ -111,6 +111,8 @@ static int kd35t133_unprepare(struct drm_panel *panel)
+ 		return ret;
+ 	}
  
- 	if (!info->line_out_remap_enable)
- 		return index;
++	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
 +
-+	if (index >= line_out_count)
-+		return index;
-+
- 	return info->line_out_remap[index];
- }
+ 	regulator_disable(ctx->iovcc);
+ 	regulator_disable(ctx->vdd);
  
-@@ -3388,14 +3395,7 @@ static int scarlett2_mux_src_enum_ctl_get(struct snd_kcontrol *kctl,
- 	struct usb_mixer_elem_info *elem = kctl->private_data;
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
--	const struct scarlett2_device_info *info = private->info;
--	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
--	int line_out_count =
--		port_count[SCARLETT2_PORT_TYPE_ANALOGUE][SCARLETT2_PORT_OUT];
--	int index = elem->control;
--
--	if (index < line_out_count)
--		index = line_out_remap(private, index);
-+	int index = line_out_remap(private, elem->control);
- 
- 	mutex_lock(&private->data_mutex);
- 	if (private->mux_updated)
-@@ -3412,16 +3412,9 @@ static int scarlett2_mux_src_enum_ctl_put(struct snd_kcontrol *kctl,
- 	struct usb_mixer_elem_info *elem = kctl->private_data;
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
--	const struct scarlett2_device_info *info = private->info;
--	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
--	int line_out_count =
--		port_count[SCARLETT2_PORT_TYPE_ANALOGUE][SCARLETT2_PORT_OUT];
--	int index = elem->control;
-+	int index = line_out_remap(private, elem->control);
- 	int oval, val, err = 0;
- 
--	if (index < line_out_count)
--		index = line_out_remap(private, index);
--
- 	mutex_lock(&private->data_mutex);
- 
- 	oval = private->mux[index];
 -- 
 2.43.0
 
