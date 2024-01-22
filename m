@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F492114;
-	Tue, 23 Jan 2024 01:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF95937C;
+	Tue, 23 Jan 2024 01:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972176; cv=none; b=UjPTArYg1POZzBNqq08Prfs6skQeTFlRCYFoi9AAPbphoFIgWrQa1twdgme+GicxXCooJ/qBdJUsOfIAfqiK03adGE6M6qQnElKPRihgY/hQErfgNZOZ2YDzaT53qnVrnAQ6B80YPWfDlLyCLjLdE+QbeHeOOIQ2a7EFzDivAsE=
+	t=1705972177; cv=none; b=DhIhQR8hXW7OVRTyBq4GrBUKhVluFBusouFBAd5wG+uyT5YIZH5fgq3akdS4WLGSSy96RgJvt7iS2w0/mkVgx/ddhWuqIVgIJjgxgGtzj8q4TLTkbdJurDd+nYapGtMRyGG63708NDMRwQqefzVRvVQo7pIb+yHqO1i/5suz62A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972176; c=relaxed/simple;
-	bh=9OLn2RkMCZEK6j/mct6RhcEkKYPk058mgdSscuyNaoY=;
+	s=arc-20240116; t=1705972177; c=relaxed/simple;
+	bh=b+/ad4Cf26qPk7IawLoKEWSSJY3ooSw+xvBBbaqKLAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UyPuSIIzt5Fi9jw0Wc+vzvI7622stTfkq7akvPGIp8XRbJvz/RE+mCh6SZ6sfOPngHQv2AiHs3y8RL0UBpPP7mHoh2p9o3AiVatNUNUfnX2zcyNGKA8Wfcjb5f3wOf/+j3ktJPsq9b42tAdUp3fomMzpSNpA8rMBJDCiow6LvFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbCUqFua; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gPU3MqNoaZp3kL8vservSkKddBD1Ey2TEvv0f3jTOpJTlSn7IS//i+jfPLsFX8D65gkhdnDI34RkOqi+VvjOU4YCpYiB9w83uCkSNEsV2uMbYJSkJ6scFxs5wBWO7qqQ6Lh9OckPbi2FLr1JlSFaRr8xlEiqI3vadbNIbeY4Pak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tE5jaN2A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbCUqFua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9643AC43399;
-	Tue, 23 Jan 2024 01:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tE5jaN2A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C5CC43399;
+	Tue, 23 Jan 2024 01:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972176;
-	bh=9OLn2RkMCZEK6j/mct6RhcEkKYPk058mgdSscuyNaoY=;
+	s=korg; t=1705972177;
+	bh=b+/ad4Cf26qPk7IawLoKEWSSJY3ooSw+xvBBbaqKLAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JbCUqFuaoSg7EvtMqOOAnG/eXNs2Av08bhi9Si3b7unNXZDvOH9gU7SWb/ooz9tG9
-	 qXQyMjx2aKA8WVJ36mVr5anyw2dFDcORcoo+Rbnbe9FY4R4ZOdSyALKoSR9FcajlBV
-	 hXKeWbWfC7hM1QBxMr2lLF9Z6pJAW1XV2hU+eqYY=
+	b=tE5jaN2A3ff3SkuhXXiQrZkp6Qr0N5cjAwD7ZngaeNxq0nVfUhkBOEq9rvU2paLto
+	 +dRRoLKKDKiEk5n2AkM3+hRJQzGbOzIuzCwIZu8vVteGBo8hHxC+MwJO2aKz5VCdwU
+	 yx8mgAFVjT8G5tGtaOby+zFhvZ6GPZz+liqwaRis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait@windriver.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Alexandra Diupina <adiupina@astralinux.ru>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 102/374] crypto: sahara - fix error handling in sahara_hw_descriptor_create()
-Date: Mon, 22 Jan 2024 15:55:58 -0800
-Message-ID: <20240122235748.156651722@linuxfoundation.org>
+Subject: [PATCH 5.15 085/374] cpufreq: scmi: process the result of devm_of_clk_add_hw_provider()
+Date: Mon, 22 Jan 2024 15:55:41 -0800
+Message-ID: <20240122235747.573338492@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,52 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait@windriver.com>
+From: Alexandra Diupina <adiupina@astralinux.ru>
 
-[ Upstream commit ee6e6f0a7f5b39d50a5ef5fcc006f4f693db18a7 ]
+[ Upstream commit c4a5118a3ae1eadc687d84eef9431f9e13eb015c ]
 
-Do not call dma_unmap_sg() for scatterlists that were not mapped
-successfully.
+devm_of_clk_add_hw_provider() may return an errno, so
+add a return value check
 
-Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 8410e7f3b31e ("cpufreq: scmi: Fix OPP addition failure with a dummy clock provider")
+Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/cpufreq/scmi-cpufreq.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index caa54d5312e9..f9fd64178a59 100644
---- a/drivers/crypto/sahara.c
-+++ b/drivers/crypto/sahara.c
-@@ -484,13 +484,14 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
- 			 DMA_TO_DEVICE);
- 	if (ret != dev->nb_in_sg) {
- 		dev_err(dev->device, "couldn't map in sg\n");
--		goto unmap_in;
-+		return -EINVAL;
- 	}
-+
- 	ret = dma_map_sg(dev->device, dev->out_sg, dev->nb_out_sg,
- 			 DMA_FROM_DEVICE);
- 	if (ret != dev->nb_out_sg) {
- 		dev_err(dev->device, "couldn't map out sg\n");
--		goto unmap_out;
-+		goto unmap_in;
- 	}
+diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+index 82e588c3c57b..c24e6373d341 100644
+--- a/drivers/cpufreq/scmi-cpufreq.c
++++ b/drivers/cpufreq/scmi-cpufreq.c
+@@ -299,8 +299,11 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
  
- 	/* Create input links */
-@@ -538,9 +539,6 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
+ #ifdef CONFIG_COMMON_CLK
+ 	/* dummy clock provider as needed by OPP if clocks property is used */
+-	if (of_property_present(dev->of_node, "#clock-cells"))
+-		devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, NULL);
++	if (of_property_present(dev->of_node, "#clock-cells")) {
++		ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, NULL);
++		if (ret)
++			return dev_err_probe(dev, ret, "%s: registering clock provider failed\n", __func__);
++	}
+ #endif
  
- 	return 0;
- 
--unmap_out:
--	dma_unmap_sg(dev->device, dev->out_sg, dev->nb_out_sg,
--		DMA_FROM_DEVICE);
- unmap_in:
- 	dma_unmap_sg(dev->device, dev->in_sg, dev->nb_in_sg,
- 		DMA_TO_DEVICE);
+ 	ret = cpufreq_register_driver(&scmi_cpufreq_driver);
 -- 
 2.43.0
 
