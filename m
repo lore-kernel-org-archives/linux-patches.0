@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BBB4E1AD;
-	Tue, 23 Jan 2024 01:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988034E1AD;
+	Tue, 23 Jan 2024 01:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971615; cv=none; b=pKlc/vbT9dBYO491i2foQGUGfziVcn/fPufZCBLq/nlsoe22I4z6BIR70zmw2vSYLBp7Nx/5rqxTc6gXdNqT0J2cf15c+0A9ekpQpguxLV2bv6APjVVjThaS38VelKflCtk5ZY9dDuihHJAIgeNSdKwcbtXehKFYBpIENbaWwNE=
+	t=1705971618; cv=none; b=Rm//EFaFwLOisYcOG4nz3BKpAxQj6FEuc3kaCh/xXwtgE3p4915uyYcxLbgig0zHpOl02aRJO80oeqJkbSeyeUUaArlBOUS1eizVPdsm5ixrXlmHDaQ48iIZf8lG8obUuKyOMTzjxFsrV/hejQQPaGrFZJe29qDLCIA0wCV2xes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971615; c=relaxed/simple;
-	bh=VX3MmpQkC75k6MkhjMp0FUfOFut7nTIlf6omCdnDSUw=;
+	s=arc-20240116; t=1705971618; c=relaxed/simple;
+	bh=laF12l0+J5Um/+L+czPVenIfraqZQFsOsq9fo2k7sF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOQSEiNk+JLOhm+PCZ8F96hRk2wmFENcXWr7iAas8J6RME9raVkTXn/RkbINUAsakkMsJCTwfitsYdm6ycmCsZTY74ibsMKdrfNcGzO1X7PfHmRVONqtpFGsQ0qJqjAL6wmQWcN2grUqfee7hoKthw6y/L5b8MFsD7QuMSWQJD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4imNfVq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OTZN5btPHMq1adlZg2s4KA/IYNAePvOVQiSy4O8X8YyQ2ijiifd1zIwsxAJM99gFKll5Vsc3g0Gkn9yBYHHzsBFORzpKluYjWemqGxfRK4pPIbQwyrb15Kb6sCPsplMdX9UxNha52TGXg51N1/FozHSia3I9xCl2vUAfhphUtWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1hj01uq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4imNfVq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2833AC43390;
-	Tue, 23 Jan 2024 01:00:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1hj01uq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40321C433C7;
+	Tue, 23 Jan 2024 01:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971615;
-	bh=VX3MmpQkC75k6MkhjMp0FUfOFut7nTIlf6omCdnDSUw=;
+	s=korg; t=1705971618;
+	bh=laF12l0+J5Um/+L+czPVenIfraqZQFsOsq9fo2k7sF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a4imNfVq6WHoLOck1mSjYnGfqly07MH6HnNAYTGPj3pzBmInmK2z8Qc6hJZ6dhFCa
-	 zfkkG5EU93B75r2SMTWk2u27BU0Wtg48Sn7LlNaKLp/6rliz3HOJyporjZRoNeqHtT
-	 0s3YkuIf6Jf+ZYCsk9//Zl5inYoJ4DhLpHDWFgVc=
+	b=W1hj01uqKpwmbLYtu6UmpJrPvIMjZMtcZ0QnNI3IoBvtdk9dYjjBPPIT8b5J44HUS
+	 awCC8CQW9bNwWXgKg+1giq+3SI4L/lFHrY6uruB7/jmp6KbyWtH3GE/R9INydGp/Co
+	 aONyUeeGWhLRR/y07RAP1/NPgaC+K0VZOJurdPAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 279/417] ALSA: oxygen: Fix right channel of capture volume mixer
-Date: Mon, 22 Jan 2024 15:57:27 -0800
-Message-ID: <20240122235801.509215654@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.1 266/417] usb: cdns3: Fix uvc fail when DMA cross 4k boundery since sg enabled
+Date: Mon, 22 Jan 2024 15:57:14 -0800
+Message-ID: <20240122235801.078553326@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -49,35 +49,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit a03cfad512ac24a35184d7d87ec0d5489e1cb763 upstream.
+commit 40c304109e866a7dc123661a5c8ca72f6b5e14e0 upstream.
 
-There was a typo in oxygen mixer code that didn't update the right
-channel value properly for the capture volume.  Let's fix it.
+Supposed DMA cross 4k bounder problem should be fixed at DEV_VER_V2, but
+still met problem when do ISO transfer if sg enabled.
 
-This trivial fix was originally reported on Bugzilla.
+Data pattern likes below when sg enabled, package size is 1k and mult is 2
+	[UVC Header(8B) ] [data(3k - 8)] ...
 
-Fixes: a3601560496d ("[ALSA] oxygen: add front panel controls")
-Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=156561
-Link: https://lore.kernel.org/r/20240112111023.6208-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The received data at offset 0xd000 will get 0xc000 data, len 0x70. Error
+happen position as below pattern:
+	0xd000: wrong
+	0xe000: wrong
+	0xf000: correct
+	0x10000: wrong
+	0x11000: wrong
+	0x12000: correct
+	...
+
+To avoid DMA cross 4k bounder at ISO transfer, reduce burst len according
+to start DMA address's alignment.
+
+Cc:  <stable@vger.kernel.org>
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20231224153816.1664687-4-Frank.Li@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/oxygen/oxygen_mixer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/cdns3/cdns3-gadget.c |   32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
---- a/sound/pci/oxygen/oxygen_mixer.c
-+++ b/sound/pci/oxygen/oxygen_mixer.c
-@@ -718,7 +718,7 @@ static int ac97_fp_rec_volume_put(struct
- 	oldreg = oxygen_read_ac97(chip, 1, AC97_REC_GAIN);
- 	newreg = oldreg & ~0x0707;
- 	newreg = newreg | (value->value.integer.value[0] & 7);
--	newreg = newreg | ((value->value.integer.value[0] & 7) << 8);
-+	newreg = newreg | ((value->value.integer.value[1] & 7) << 8);
- 	change = newreg != oldreg;
- 	if (change)
- 		oxygen_write_ac97(chip, 1, AC97_REC_GAIN, newreg);
+--- a/drivers/usb/cdns3/cdns3-gadget.c
++++ b/drivers/usb/cdns3/cdns3-gadget.c
+@@ -1118,6 +1118,7 @@ static int cdns3_ep_run_transfer(struct
+ 	u32 togle_pcs = 1;
+ 	int sg_iter = 0;
+ 	int num_trb_req;
++	int trb_burst;
+ 	int num_trb;
+ 	int address;
+ 	u32 control;
+@@ -1240,7 +1241,36 @@ static int cdns3_ep_run_transfer(struct
+ 			total_tdl += DIV_ROUND_UP(length,
+ 					       priv_ep->endpoint.maxpacket);
+ 
+-		trb->length |= cpu_to_le32(TRB_BURST_LEN(priv_ep->trb_burst_size) |
++		trb_burst = priv_ep->trb_burst_size;
++
++		/*
++		 * Supposed DMA cross 4k bounder problem should be fixed at DEV_VER_V2, but still
++		 * met problem when do ISO transfer if sg enabled.
++		 *
++		 * Data pattern likes below when sg enabled, package size is 1k and mult is 2
++		 *       [UVC Header(8B) ] [data(3k - 8)] ...
++		 *
++		 * The received data at offset 0xd000 will get 0xc000 data, len 0x70. Error happen
++		 * as below pattern:
++		 *	0xd000: wrong
++		 *	0xe000: wrong
++		 *	0xf000: correct
++		 *	0x10000: wrong
++		 *	0x11000: wrong
++		 *	0x12000: correct
++		 *	...
++		 *
++		 * But it is still unclear about why error have not happen below 0xd000, it should
++		 * cross 4k bounder. But anyway, the below code can fix this problem.
++		 *
++		 * To avoid DMA cross 4k bounder at ISO transfer, reduce burst len according to 16.
++		 */
++		if (priv_ep->type == USB_ENDPOINT_XFER_ISOC && priv_dev->dev_ver <= DEV_VER_V2)
++			if (ALIGN_DOWN(trb->buffer, SZ_4K) !=
++			    ALIGN_DOWN(trb->buffer + length, SZ_4K))
++				trb_burst = 16;
++
++		trb->length |= cpu_to_le32(TRB_BURST_LEN(trb_burst) |
+ 					TRB_LEN(length));
+ 		pcs = priv_ep->pcs ? TRB_CYCLE : 0;
+ 
 
 
