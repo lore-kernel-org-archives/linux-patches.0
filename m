@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F0112BF3D;
-	Tue, 23 Jan 2024 00:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4249712CDA3;
+	Tue, 23 Jan 2024 00:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968960; cv=none; b=Sus8nE0DzX3zfMe5vmrk7SjH26bawnC8XwuBqhO9s7MNJ/Ggj7AAFSC36AYUmUkSU/RKFy6PojgXYfnhYh9BRVto9ZjB5c8wl1IyFePiXLtLgyBwEovJhON1zbiJesOaACCijNV9cZXl7DpRzAmjPOv/CB4EMh860FNjDJ1Xvpo=
+	t=1705968962; cv=none; b=OgUoQAqBi3pEVzVqsPaU7MpiEOqdb53ln6n02sHpJIf230usMsKWou8M2i8m0GHksjUR4eS8AuMn4WFyjC3aq7+YC9jaohvhCxK8S5BEpVbmcJmkE9UtAboLcuz2lH9ezkZp0CQ/1IPtGy6Vsm3cTagx225TrxD6F5S+FVwcrZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968960; c=relaxed/simple;
-	bh=Ayl7f9uNjTZbA9YpIKv65asgryV5eS+IgRlbD9QmDDk=;
+	s=arc-20240116; t=1705968962; c=relaxed/simple;
+	bh=kSuf6m6gQz5IDHApD7370nNmPGPaYFolgHVk2V3lKhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=goVWcN+GBzVgumGixpxyr8GRafN7zAxkhpB7NxhIhGAi0mzVOgPosp4M87ydfPrCtSR4plvv+cA2BVGUvg5l9kthoE3981ytMMD33ZDA82l/g4cMPV/IDRnrcTY1emgQMjBpufi32GdY7jZDxl7iJHQvgW5O5k8phz2F/fY2hv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btSsSAz/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jc/q5FkPJqp64JxJrj4dcm4WGLx4BmS8SbEE9gfJkzN9F9vzkbwdJhhx4fJafdRnK8kJeBK/GLHTMcFesCrunxIVAWHbbu739T0L7Ln7+vZ96AhOTxGS7qQsu7WLYVs1vU6y8KG4wmYF5TLQgzSmk7SJTJkezvfQxP2Z/T86zsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gExWwxfw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btSsSAz/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C77C433C7;
-	Tue, 23 Jan 2024 00:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gExWwxfw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4373C433C7;
+	Tue, 23 Jan 2024 00:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968960;
-	bh=Ayl7f9uNjTZbA9YpIKv65asgryV5eS+IgRlbD9QmDDk=;
+	s=korg; t=1705968962;
+	bh=kSuf6m6gQz5IDHApD7370nNmPGPaYFolgHVk2V3lKhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=btSsSAz/ED0VQ7OVhyGVsvZT7F9dmlIl9/DTFXsMzljb4TCM8SdyO/GZ1aefN87jN
-	 Wx28Q904oNJKIIAOm7hNhy6bM8QHdphKJdQwPKvBoLRaGjdMhWuIrQWZA2HtKbRfNw
-	 ighSLMNF3/uWrAKh2aB+tRTY5MVqUsHmDErLcelo=
+	b=gExWwxfwgNJoQ7qs7ZokL+kNNIYJn7o0TaslnVdQJo0IPPSQXLYS229t7nbv8GIVn
+	 +4+PesFcwHyXFlKaGXUjgcced9oLhrPWjH5xrWeWxMgUCleJnHGno1xN3GrLXSfM0M
+	 OuC6RtSYpnw1DZy50u6lt2KF0UlqJEj1mygQgcPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 123/194] drm/radeon/trinity_dpm: fix a memleak in trinity_parse_power_table
-Date: Mon, 22 Jan 2024 15:57:33 -0800
-Message-ID: <20240122235724.505700296@linuxfoundation.org>
+Subject: [PATCH 5.4 124/194] drm/bridge: tc358767: Fix return value on error case
+Date: Mon, 22 Jan 2024 15:57:34 -0800
+Message-ID: <20240122235724.552333723@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,39 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 28c28d7f77c06ac2c0b8f9c82bc04eba22912b3b ]
+[ Upstream commit 32bd29b619638256c5b75fb021d6d9f12fc4a984 ]
 
-The rdev->pm.dpm.ps allocated by kcalloc should be freed in every
-following error-handling path. However, in the error-handling of
-rdev->pm.power_state[i].clock_info the rdev->pm.dpm.ps is not freed,
-resulting in a memleak in this function.
+If the hpd_pin is invalid, the driver returns 'ret'. But 'ret' contains
+0, instead of an error value.
 
-Fixes: d70229f70447 ("drm/radeon/kms: add dpm support for trinity asics")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Return -EINVAL instead.
+
+Fixes: f25ee5017e4f ("drm/bridge: tc358767: add IRQ and HPD support")
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231103-uninit-fixes-v2-4-c22b2444f5f5@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/trinity_dpm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/tc358767.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/trinity_dpm.c b/drivers/gpu/drm/radeon/trinity_dpm.c
-index 65302f9d025e..fbb93d0feb71 100644
---- a/drivers/gpu/drm/radeon/trinity_dpm.c
-+++ b/drivers/gpu/drm/radeon/trinity_dpm.c
-@@ -1771,8 +1771,10 @@ static int trinity_parse_power_table(struct radeon_device *rdev)
- 		non_clock_array_index = power_state->v2.nonClockInfoIndex;
- 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
- 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
--		if (!rdev->pm.power_state[i].clock_info)
-+		if (!rdev->pm.power_state[i].clock_info) {
-+			kfree(rdev->pm.dpm.ps);
- 			return -EINVAL;
-+		}
- 		ps = kzalloc(sizeof(struct sumo_ps), GFP_KERNEL);
- 		if (ps == NULL) {
- 			kfree(rdev->pm.dpm.ps);
+diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+index 0454675a44cb..a58943115241 100644
+--- a/drivers/gpu/drm/bridge/tc358767.c
++++ b/drivers/gpu/drm/bridge/tc358767.c
+@@ -1574,7 +1574,7 @@ static int tc_probe(struct i2c_client *client, const struct i2c_device_id *id)
+ 	} else {
+ 		if (tc->hpd_pin < 0 || tc->hpd_pin > 1) {
+ 			dev_err(dev, "failed to parse HPD number\n");
+-			return ret;
++			return -EINVAL;
+ 		}
+ 	}
+ 
 -- 
 2.43.0
 
