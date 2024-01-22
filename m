@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169715B5D9;
-	Tue, 23 Jan 2024 01:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0964F5A7B8;
+	Tue, 23 Jan 2024 01:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974340; cv=none; b=bnbLqw1S1CAY5R8lM/1YLlUVSJnS3GZJB2C6xB+pk+ToomZnSC147kflbpjHtxP7lLL1a5kE6ECwX9lGbFgwAfiFb41SeoBkg9MoNiqNYSdtLouuIxorWPnYWgFJCWA76CLOLoQkxtpxQZQx0Wuz2iM89KCat5BihIdLfMMN8Ps=
+	t=1705974341; cv=none; b=WKS4lo5FzCuEjBLhMZXpgXAAwlbilDrL7Y3RPMabs65sU65AIq/q/8/Tc1jkfLG2T3jCvaoIE9TXW4cP10OnR9beHPjFwleH6SV8x7B/E7wGHQ1SopmQc6yswHROEPgqn4r5AymBLobNVMBms6Yz9UyJoQyrst29C65ul5LC8TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974340; c=relaxed/simple;
-	bh=cvXYlxEvq73+EyDYkxtL12ZFVCtQ2+S2skRLetCfjWU=;
+	s=arc-20240116; t=1705974341; c=relaxed/simple;
+	bh=xYvxTZT5pjF1+Vm8tV9VuBUdKmMJTtnAqFZ1gv3MvnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQRGtMZy6U5zuCCYWuiUO81+9X0glvlSb5a5kbc2Ee/r/oGIR4GpTnK8/E9XE9f3JCaUDfIRJRi7KpLtRHBgU3TFrBQHW9Nv+mb40Rmxf9eJ/ssdoddjZ/mB/CXy2RN0OzDWfu7m8JoEx04Ll/J8ljRUb0naPzSEpBNuDxPM6ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAaexk8v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e8ytUXFshxokCAbUgWQDF7x5ciogiIm0RDiL0H/sWW2bUio6ArVPnuOOqfa8bJevq7JpZaix3wjYdj9CyR5EV7hxHNJmVpwe209MzTdFImrFGeb3ha8ps2YK4sDV8Czyyy2kqgj2OSOJSwXkm7rlq7QqjViSY50jCzdMq8W2Ur4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dr2LYJah; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAaexk8v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAB0C43390;
-	Tue, 23 Jan 2024 01:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dr2LYJah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7196BC433C7;
+	Tue, 23 Jan 2024 01:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974339;
-	bh=cvXYlxEvq73+EyDYkxtL12ZFVCtQ2+S2skRLetCfjWU=;
+	s=korg; t=1705974340;
+	bh=xYvxTZT5pjF1+Vm8tV9VuBUdKmMJTtnAqFZ1gv3MvnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zAaexk8vcnsCKh0E39SktP+FLyp+Bcy80F2UvQbxbkJo/6I1ePSV7SwtwcHT79DeT
-	 WgvlD7HTXi/WE3xihMGiR6b9RTz24DKy7hMP4bc7Ed95aXdE2/glCIJ+TNWtL8lYCP
-	 DIu4skiQ2gFPgASLGHu9EZuwD/4koas49CCCs/GQ=
+	b=Dr2LYJahr7Lh+oeD2L8yco9PqfQgpmT9hEFFLTdKm/4rtaBv6ExBanbp1bLpGZVUs
+	 ZFCiGgjccdMCAx/5MFNjKL4EyxnEJ5W+gEjaogtSJFtw8Uvcwb1zrAHu6VCD/hnPJP
+	 vTLtpJ4/bAflaOvsk/PsQ+VlZ1EG7e3LOxfeLZHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenkai Lin <linwenkai6@hisilicon.com>,
-	Hao Fang <fanghao11@huawei.com>,
-	Zhiqi Song <songzhiqi1@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/583] crypto: hisilicon/qm - add a function to set qm algs
-Date: Mon, 22 Jan 2024 15:51:47 -0800
-Message-ID: <20240122235813.844827468@linuxfoundation.org>
+Subject: [PATCH 5.15 174/374] ip6_tunnel: fix NEXTHDR_FRAGMENT handling in ip6_tnl_parse_tlv_enc_lim()
+Date: Mon, 22 Jan 2024 15:57:10 -0800
+Message-ID: <20240122235750.695353093@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,387 +50,174 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wenkai Lin <linwenkai6@hisilicon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f76f0d7f20672611974d3cc705996751fc403734 ]
+[ Upstream commit d375b98e0248980681e5e56b712026174d617198 ]
 
-Extract a public function to set qm algs and remove
-the similar code for setting qm algs in each module.
+syzbot pointed out [1] that NEXTHDR_FRAGMENT handling is broken.
 
-Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
-Signed-off-by: Hao Fang <fanghao11@huawei.com>
-Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: cf8b5156bbc8 ("crypto: hisilicon/hpre - save capability registers in probe process")
+Reading frag_off can only be done if we pulled enough bytes
+to skb->head. Currently we might access garbage.
+
+[1]
+BUG: KMSAN: uninit-value in ip6_tnl_parse_tlv_enc_lim+0x94f/0xbb0
+ip6_tnl_parse_tlv_enc_lim+0x94f/0xbb0
+ipxip6_tnl_xmit net/ipv6/ip6_tunnel.c:1326 [inline]
+ip6_tnl_start_xmit+0xab2/0x1a70 net/ipv6/ip6_tunnel.c:1432
+__netdev_start_xmit include/linux/netdevice.h:4940 [inline]
+netdev_start_xmit include/linux/netdevice.h:4954 [inline]
+xmit_one net/core/dev.c:3548 [inline]
+dev_hard_start_xmit+0x247/0xa10 net/core/dev.c:3564
+__dev_queue_xmit+0x33b8/0x5130 net/core/dev.c:4349
+dev_queue_xmit include/linux/netdevice.h:3134 [inline]
+neigh_connected_output+0x569/0x660 net/core/neighbour.c:1592
+neigh_output include/net/neighbour.h:542 [inline]
+ip6_finish_output2+0x23a9/0x2b30 net/ipv6/ip6_output.c:137
+ip6_finish_output+0x855/0x12b0 net/ipv6/ip6_output.c:222
+NF_HOOK_COND include/linux/netfilter.h:303 [inline]
+ip6_output+0x323/0x610 net/ipv6/ip6_output.c:243
+dst_output include/net/dst.h:451 [inline]
+ip6_local_out+0xe9/0x140 net/ipv6/output_core.c:155
+ip6_send_skb net/ipv6/ip6_output.c:1952 [inline]
+ip6_push_pending_frames+0x1f9/0x560 net/ipv6/ip6_output.c:1972
+rawv6_push_pending_frames+0xbe8/0xdf0 net/ipv6/raw.c:582
+rawv6_sendmsg+0x2b66/0x2e70 net/ipv6/raw.c:920
+inet_sendmsg+0x105/0x190 net/ipv4/af_inet.c:847
+sock_sendmsg_nosec net/socket.c:730 [inline]
+__sock_sendmsg net/socket.c:745 [inline]
+____sys_sendmsg+0x9c2/0xd60 net/socket.c:2584
+___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
+__sys_sendmsg net/socket.c:2667 [inline]
+__do_sys_sendmsg net/socket.c:2676 [inline]
+__se_sys_sendmsg net/socket.c:2674 [inline]
+__x64_sys_sendmsg+0x307/0x490 net/socket.c:2674
+do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
+entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+Uninit was created at:
+slab_post_alloc_hook+0x129/0xa70 mm/slab.h:768
+slab_alloc_node mm/slub.c:3478 [inline]
+__kmem_cache_alloc_node+0x5c9/0x970 mm/slub.c:3517
+__do_kmalloc_node mm/slab_common.c:1006 [inline]
+__kmalloc_node_track_caller+0x118/0x3c0 mm/slab_common.c:1027
+kmalloc_reserve+0x249/0x4a0 net/core/skbuff.c:582
+pskb_expand_head+0x226/0x1a00 net/core/skbuff.c:2098
+__pskb_pull_tail+0x13b/0x2310 net/core/skbuff.c:2655
+pskb_may_pull_reason include/linux/skbuff.h:2673 [inline]
+pskb_may_pull include/linux/skbuff.h:2681 [inline]
+ip6_tnl_parse_tlv_enc_lim+0x901/0xbb0 net/ipv6/ip6_tunnel.c:408
+ipxip6_tnl_xmit net/ipv6/ip6_tunnel.c:1326 [inline]
+ip6_tnl_start_xmit+0xab2/0x1a70 net/ipv6/ip6_tunnel.c:1432
+__netdev_start_xmit include/linux/netdevice.h:4940 [inline]
+netdev_start_xmit include/linux/netdevice.h:4954 [inline]
+xmit_one net/core/dev.c:3548 [inline]
+dev_hard_start_xmit+0x247/0xa10 net/core/dev.c:3564
+__dev_queue_xmit+0x33b8/0x5130 net/core/dev.c:4349
+dev_queue_xmit include/linux/netdevice.h:3134 [inline]
+neigh_connected_output+0x569/0x660 net/core/neighbour.c:1592
+neigh_output include/net/neighbour.h:542 [inline]
+ip6_finish_output2+0x23a9/0x2b30 net/ipv6/ip6_output.c:137
+ip6_finish_output+0x855/0x12b0 net/ipv6/ip6_output.c:222
+NF_HOOK_COND include/linux/netfilter.h:303 [inline]
+ip6_output+0x323/0x610 net/ipv6/ip6_output.c:243
+dst_output include/net/dst.h:451 [inline]
+ip6_local_out+0xe9/0x140 net/ipv6/output_core.c:155
+ip6_send_skb net/ipv6/ip6_output.c:1952 [inline]
+ip6_push_pending_frames+0x1f9/0x560 net/ipv6/ip6_output.c:1972
+rawv6_push_pending_frames+0xbe8/0xdf0 net/ipv6/raw.c:582
+rawv6_sendmsg+0x2b66/0x2e70 net/ipv6/raw.c:920
+inet_sendmsg+0x105/0x190 net/ipv4/af_inet.c:847
+sock_sendmsg_nosec net/socket.c:730 [inline]
+__sock_sendmsg net/socket.c:745 [inline]
+____sys_sendmsg+0x9c2/0xd60 net/socket.c:2584
+___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
+__sys_sendmsg net/socket.c:2667 [inline]
+__do_sys_sendmsg net/socket.c:2676 [inline]
+__se_sys_sendmsg net/socket.c:2674 [inline]
+__x64_sys_sendmsg+0x307/0x490 net/socket.c:2674
+do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
+entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+CPU: 0 PID: 7345 Comm: syz-executor.3 Not tainted 6.7.0-rc8-syzkaller-00024-gac865f00af29 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
+
+Fixes: fbfa743a9d2a ("ipv6: fix ip6_tnl_parse_tlv_enc_lim()")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_main.c | 42 ++-----------------
- drivers/crypto/hisilicon/qm.c             | 36 +++++++++++++++++
- drivers/crypto/hisilicon/sec2/sec_main.c  | 47 ++++------------------
- drivers/crypto/hisilicon/zip/zip_main.c   | 49 ++++-------------------
- include/linux/hisi_acc_qm.h               |  8 +++-
- 5 files changed, 62 insertions(+), 120 deletions(-)
+ net/ipv6/ip6_tunnel.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_main.c b/drivers/crypto/hisilicon/hpre/hpre_main.c
-index 3dce35debf63..4b3cba95950b 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_main.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_main.c
-@@ -117,8 +117,6 @@
- #define HPRE_DFX_COMMON2_LEN		0xE
- #define HPRE_DFX_CORE_LEN		0x43
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index bc5d3188454d..a41ba4b161c4 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -401,7 +401,7 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
+ 	const struct ipv6hdr *ipv6h = (const struct ipv6hdr *)raw;
+ 	unsigned int nhoff = raw - skb->data;
+ 	unsigned int off = nhoff + sizeof(*ipv6h);
+-	u8 next, nexthdr = ipv6h->nexthdr;
++	u8 nexthdr = ipv6h->nexthdr;
  
--#define HPRE_DEV_ALG_MAX_LEN	256
--
- static const char hpre_name[] = "hisi_hpre";
- static struct dentry *hpre_debugfs_root;
- static const struct pci_device_id hpre_dev_ids[] = {
-@@ -134,12 +132,7 @@ struct hpre_hw_error {
- 	const char *msg;
- };
+ 	while (ipv6_ext_hdr(nexthdr) && nexthdr != NEXTHDR_NONE) {
+ 		struct ipv6_opt_hdr *hdr;
+@@ -412,25 +412,25 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
  
--struct hpre_dev_alg {
--	u32 alg_msk;
--	const char *alg;
--};
--
--static const struct hpre_dev_alg hpre_dev_algs[] = {
-+static const struct qm_dev_alg hpre_dev_algs[] = {
- 	{
- 		.alg_msk = BIT(0),
- 		.alg = "rsa\n"
-@@ -361,35 +354,6 @@ bool hpre_check_alg_support(struct hisi_qm *qm, u32 alg)
- 	return false;
- }
+ 		hdr = (struct ipv6_opt_hdr *)(skb->data + off);
+ 		if (nexthdr == NEXTHDR_FRAGMENT) {
+-			struct frag_hdr *frag_hdr = (struct frag_hdr *) hdr;
+-			if (frag_hdr->frag_off)
+-				break;
+ 			optlen = 8;
+ 		} else if (nexthdr == NEXTHDR_AUTH) {
+ 			optlen = ipv6_authlen(hdr);
+ 		} else {
+ 			optlen = ipv6_optlen(hdr);
+ 		}
+-		/* cache hdr->nexthdr, since pskb_may_pull() might
+-		 * invalidate hdr
+-		 */
+-		next = hdr->nexthdr;
+-		if (nexthdr == NEXTHDR_DEST) {
+-			u16 i = 2;
  
--static int hpre_set_qm_algs(struct hisi_qm *qm)
--{
--	struct device *dev = &qm->pdev->dev;
--	char *algs, *ptr;
--	u32 alg_msk;
--	int i;
--
--	if (!qm->use_sva)
--		return 0;
--
--	algs = devm_kzalloc(dev, HPRE_DEV_ALG_MAX_LEN * sizeof(char), GFP_KERNEL);
--	if (!algs)
--		return -ENOMEM;
--
--	alg_msk = hisi_qm_get_hw_info(qm, hpre_basic_info, HPRE_DEV_ALG_BITMAP_CAP, qm->cap_ver);
--
--	for (i = 0; i < ARRAY_SIZE(hpre_dev_algs); i++)
--		if (alg_msk & hpre_dev_algs[i].alg_msk)
--			strcat(algs, hpre_dev_algs[i].alg);
--
--	ptr = strrchr(algs, '\n');
--	if (ptr)
--		*ptr = '\0';
--
--	qm->uacce->algs = algs;
--
--	return 0;
--}
--
- static int hpre_diff_regs_show(struct seq_file *s, void *unused)
- {
- 	struct hisi_qm *qm = s->private;
-@@ -1140,6 +1104,7 @@ static void hpre_debugfs_exit(struct hisi_qm *qm)
+-			/* Remember : hdr is no longer valid at this point. */
+-			if (!pskb_may_pull(skb, off + optlen))
++		if (!pskb_may_pull(skb, off + optlen))
++			break;
++
++		hdr = (struct ipv6_opt_hdr *)(skb->data + off);
++		if (nexthdr == NEXTHDR_FRAGMENT) {
++			struct frag_hdr *frag_hdr = (struct frag_hdr *)hdr;
++
++			if (frag_hdr->frag_off)
+ 				break;
++		}
++		if (nexthdr == NEXTHDR_DEST) {
++			u16 i = 2;
  
- static int hpre_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
- {
-+	u64 alg_msk;
- 	int ret;
- 
- 	if (pdev->revision == QM_HW_V1) {
-@@ -1170,7 +1135,8 @@ static int hpre_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
- 		return ret;
+ 			while (1) {
+ 				struct ipv6_tlv_tnl_enc_lim *tel;
+@@ -451,7 +451,7 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
+ 					i++;
+ 			}
+ 		}
+-		nexthdr = next;
++		nexthdr = hdr->nexthdr;
+ 		off += optlen;
  	}
- 
--	ret = hpre_set_qm_algs(qm);
-+	alg_msk = hisi_qm_get_hw_info(qm, hpre_basic_info, HPRE_DEV_ALG_BITMAP_CAP, qm->cap_ver);
-+	ret = hisi_qm_set_algs(qm, alg_msk, hpre_dev_algs, ARRAY_SIZE(hpre_dev_algs));
- 	if (ret) {
- 		pci_err(pdev, "Failed to set hpre algs!\n");
- 		hisi_qm_uninit(qm);
-diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
-index 5872e0f0c094..e889363ed978 100644
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -228,6 +228,8 @@
- #define QM_QOS_MAX_CIR_U		6
- #define QM_AUTOSUSPEND_DELAY		3000
- 
-+#define QM_DEV_ALG_MAX_LEN		256
-+
- #define QM_MK_CQC_DW3_V1(hop_num, pg_sz, buf_sz, cqe_sz) \
- 	(((hop_num) << QM_CQ_HOP_NUM_SHIFT) | \
- 	((pg_sz) << QM_CQ_PAGE_SIZE_SHIFT) | \
-@@ -801,6 +803,40 @@ static void qm_get_xqc_depth(struct hisi_qm *qm, u16 *low_bits,
- 	*high_bits = (depth >> QM_XQ_DEPTH_SHIFT) & QM_XQ_DEPTH_MASK;
- }
- 
-+int hisi_qm_set_algs(struct hisi_qm *qm, u64 alg_msk, const struct qm_dev_alg *dev_algs,
-+		     u32 dev_algs_size)
-+{
-+	struct device *dev = &qm->pdev->dev;
-+	char *algs, *ptr;
-+	int i;
-+
-+	if (!qm->uacce)
-+		return 0;
-+
-+	if (dev_algs_size >= QM_DEV_ALG_MAX_LEN) {
-+		dev_err(dev, "algs size %u is equal or larger than %d.\n",
-+			dev_algs_size, QM_DEV_ALG_MAX_LEN);
-+		return -EINVAL;
-+	}
-+
-+	algs = devm_kzalloc(dev, QM_DEV_ALG_MAX_LEN * sizeof(char), GFP_KERNEL);
-+	if (!algs)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < dev_algs_size; i++)
-+		if (alg_msk & dev_algs[i].alg_msk)
-+			strcat(algs, dev_algs[i].alg);
-+
-+	ptr = strrchr(algs, '\n');
-+	if (ptr) {
-+		*ptr = '\0';
-+		qm->uacce->algs = algs;
-+	}
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(hisi_qm_set_algs);
-+
- static u32 qm_get_irq_num(struct hisi_qm *qm)
- {
- 	if (qm->fun_type == QM_HW_PF)
-diff --git a/drivers/crypto/hisilicon/sec2/sec_main.c b/drivers/crypto/hisilicon/sec2/sec_main.c
-index 62bd8936a915..5c39667507ab 100644
---- a/drivers/crypto/hisilicon/sec2/sec_main.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_main.c
-@@ -120,7 +120,6 @@
- 					GENMASK_ULL(42, 25))
- #define SEC_AEAD_BITMAP			(GENMASK_ULL(7, 6) | GENMASK_ULL(18, 17) | \
- 					GENMASK_ULL(45, 43))
--#define SEC_DEV_ALG_MAX_LEN		256
- 
- struct sec_hw_error {
- 	u32 int_msk;
-@@ -132,11 +131,6 @@ struct sec_dfx_item {
- 	u32 offset;
- };
- 
--struct sec_dev_alg {
--	u64 alg_msk;
--	const char *algs;
--};
--
- static const char sec_name[] = "hisi_sec2";
- static struct dentry *sec_debugfs_root;
- 
-@@ -173,15 +167,15 @@ static const struct hisi_qm_cap_info sec_basic_info[] = {
- 	{SEC_CORE4_ALG_BITMAP_HIGH, 0x3170, 0, GENMASK(31, 0), 0x3FFF, 0x3FFF, 0x3FFF},
- };
- 
--static const struct sec_dev_alg sec_dev_algs[] = { {
-+static const struct qm_dev_alg sec_dev_algs[] = { {
- 		.alg_msk = SEC_CIPHER_BITMAP,
--		.algs = "cipher\n",
-+		.alg = "cipher\n",
- 	}, {
- 		.alg_msk = SEC_DIGEST_BITMAP,
--		.algs = "digest\n",
-+		.alg = "digest\n",
- 	}, {
- 		.alg_msk = SEC_AEAD_BITMAP,
--		.algs = "aead\n",
-+		.alg = "aead\n",
- 	},
- };
- 
-@@ -1077,37 +1071,9 @@ static int sec_pf_probe_init(struct sec_dev *sec)
- 	return ret;
- }
- 
--static int sec_set_qm_algs(struct hisi_qm *qm)
--{
--	struct device *dev = &qm->pdev->dev;
--	char *algs, *ptr;
--	u64 alg_mask;
--	int i;
--
--	if (!qm->use_sva)
--		return 0;
--
--	algs = devm_kzalloc(dev, SEC_DEV_ALG_MAX_LEN * sizeof(char), GFP_KERNEL);
--	if (!algs)
--		return -ENOMEM;
--
--	alg_mask = sec_get_alg_bitmap(qm, SEC_DEV_ALG_BITMAP_HIGH, SEC_DEV_ALG_BITMAP_LOW);
--
--	for (i = 0; i < ARRAY_SIZE(sec_dev_algs); i++)
--		if (alg_mask & sec_dev_algs[i].alg_msk)
--			strcat(algs, sec_dev_algs[i].algs);
--
--	ptr = strrchr(algs, '\n');
--	if (ptr)
--		*ptr = '\0';
--
--	qm->uacce->algs = algs;
--
--	return 0;
--}
--
- static int sec_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
- {
-+	u64 alg_msk;
- 	int ret;
- 
- 	qm->pdev = pdev;
-@@ -1142,7 +1108,8 @@ static int sec_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
- 		return ret;
- 	}
- 
--	ret = sec_set_qm_algs(qm);
-+	alg_msk = sec_get_alg_bitmap(qm, SEC_DEV_ALG_BITMAP_HIGH, SEC_DEV_ALG_BITMAP_LOW);
-+	ret = hisi_qm_set_algs(qm, alg_msk, sec_dev_algs, ARRAY_SIZE(sec_dev_algs));
- 	if (ret) {
- 		pci_err(qm->pdev, "Failed to set sec algs!\n");
- 		hisi_qm_uninit(qm);
-diff --git a/drivers/crypto/hisilicon/zip/zip_main.c b/drivers/crypto/hisilicon/zip/zip_main.c
-index 0dfd6e240e1c..4d64a43515a9 100644
---- a/drivers/crypto/hisilicon/zip/zip_main.c
-+++ b/drivers/crypto/hisilicon/zip/zip_main.c
-@@ -73,7 +73,6 @@
- #define HZIP_AXI_SHUTDOWN_ENABLE	BIT(14)
- #define HZIP_WR_PORT			BIT(11)
- 
--#define HZIP_DEV_ALG_MAX_LEN		256
- #define HZIP_ALG_ZLIB_BIT		GENMASK(1, 0)
- #define HZIP_ALG_GZIP_BIT		GENMASK(3, 2)
- #define HZIP_ALG_DEFLATE_BIT		GENMASK(5, 4)
-@@ -127,23 +126,18 @@ struct zip_dfx_item {
- 	u32 offset;
- };
- 
--struct zip_dev_alg {
--	u32 alg_msk;
--	const char *algs;
--};
--
--static const struct zip_dev_alg zip_dev_algs[] = { {
-+static const struct qm_dev_alg zip_dev_algs[] = { {
- 		.alg_msk = HZIP_ALG_ZLIB_BIT,
--		.algs = "zlib\n",
-+		.alg = "zlib\n",
- 	}, {
- 		.alg_msk = HZIP_ALG_GZIP_BIT,
--		.algs = "gzip\n",
-+		.alg = "gzip\n",
- 	}, {
- 		.alg_msk = HZIP_ALG_DEFLATE_BIT,
--		.algs = "deflate\n",
-+		.alg = "deflate\n",
- 	}, {
- 		.alg_msk = HZIP_ALG_LZ77_BIT,
--		.algs = "lz77_zstd\n",
-+		.alg = "lz77_zstd\n",
- 	},
- };
- 
-@@ -477,35 +471,6 @@ static int hisi_zip_set_high_perf(struct hisi_qm *qm)
- 	return ret;
- }
- 
--static int hisi_zip_set_qm_algs(struct hisi_qm *qm)
--{
--	struct device *dev = &qm->pdev->dev;
--	char *algs, *ptr;
--	u32 alg_mask;
--	int i;
--
--	if (!qm->use_sva)
--		return 0;
--
--	algs = devm_kzalloc(dev, HZIP_DEV_ALG_MAX_LEN * sizeof(char), GFP_KERNEL);
--	if (!algs)
--		return -ENOMEM;
--
--	alg_mask = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_DEV_ALG_BITMAP, qm->cap_ver);
--
--	for (i = 0; i < ARRAY_SIZE(zip_dev_algs); i++)
--		if (alg_mask & zip_dev_algs[i].alg_msk)
--			strcat(algs, zip_dev_algs[i].algs);
--
--	ptr = strrchr(algs, '\n');
--	if (ptr)
--		*ptr = '\0';
--
--	qm->uacce->algs = algs;
--
--	return 0;
--}
--
- static void hisi_zip_open_sva_prefetch(struct hisi_qm *qm)
- {
- 	u32 val;
-@@ -1192,6 +1157,7 @@ static int hisi_zip_pf_probe_init(struct hisi_zip *hisi_zip)
- 
- static int hisi_zip_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
- {
-+	u64 alg_msk;
- 	int ret;
- 
- 	qm->pdev = pdev;
-@@ -1227,7 +1193,8 @@ static int hisi_zip_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
- 		return ret;
- 	}
- 
--	ret = hisi_zip_set_qm_algs(qm);
-+	alg_msk = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_DEV_ALG_BITMAP, qm->cap_ver);
-+	ret = hisi_qm_set_algs(qm, alg_msk, zip_dev_algs, ARRAY_SIZE(zip_dev_algs));
- 	if (ret) {
- 		pci_err(qm->pdev, "Failed to set zip algs!\n");
- 		hisi_qm_uninit(qm);
-diff --git a/include/linux/hisi_acc_qm.h b/include/linux/hisi_acc_qm.h
-index eff6ec42ccbe..5c4b3a68053f 100644
---- a/include/linux/hisi_acc_qm.h
-+++ b/include/linux/hisi_acc_qm.h
-@@ -160,6 +160,11 @@ enum qm_cap_bits {
- 	QM_SUPPORT_RPM,
- };
- 
-+struct qm_dev_alg {
-+	u64 alg_msk;
-+	const char *alg;
-+};
-+
- struct dfx_diff_registers {
- 	u32 *regs;
- 	u32 reg_offset;
-@@ -362,7 +367,6 @@ struct hisi_qm {
- 	struct work_struct rst_work;
- 	struct work_struct cmd_process;
- 
--	const char *algs;
- 	bool use_sva;
- 
- 	resource_size_t phys_base;
-@@ -548,6 +552,8 @@ void hisi_qm_regs_dump(struct seq_file *s, struct debugfs_regset32 *regset);
- u32 hisi_qm_get_hw_info(struct hisi_qm *qm,
- 			const struct hisi_qm_cap_info *info_table,
- 			u32 index, bool is_read);
-+int hisi_qm_set_algs(struct hisi_qm *qm, u64 alg_msk, const struct qm_dev_alg *dev_algs,
-+		     u32 dev_algs_size);
- 
- /* Used by VFIO ACC live migration driver */
- struct pci_driver *hisi_sec_get_pf_driver(void);
+ 	return 0;
 -- 
 2.43.0
 
