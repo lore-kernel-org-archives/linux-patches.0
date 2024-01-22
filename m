@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBABC657B3;
-	Tue, 23 Jan 2024 01:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCCD657B3;
+	Tue, 23 Jan 2024 01:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971783; cv=none; b=QSNy479f9qP5xDK2Y1YjHOBnv7y0TCjM/fshnxsV+XPs9p6HT6OTPkVkvcN6s54IWWnHApEh96J6ZI3UIx8kvdqtgvjUGF7nRPMMsDan8vJJgtK1RZ8cBGls1jFkYCVtv10TWxruu16T7UAfPZcfe3tJxoT/ve2n6pCFUIrtXGQ=
+	t=1705971784; cv=none; b=Jc3KPyiHfBBqlbr6vI5EUQBa/peMIj1vCy9OSivLDTZ6D3kG9MGYugpIkdrM+OsraljW/VUVW6luGdKdIgnO1h2J4ElOCREWbwziFzpDGmltAt+c2q6DrHL2ZpyRNjRanqfD1IDfwCyO2skj8Z9ogJ1kIhiJorR5Pq7ctetd02o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971783; c=relaxed/simple;
-	bh=7zs+r3xLG3SQjK33dRK/wftUr7LIMcADoYCZKgJPtvY=;
+	s=arc-20240116; t=1705971784; c=relaxed/simple;
+	bh=c8H7/5QDuokIQL80flM9oXrKXpBlo5bJutTtIePtIzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ffj7GPUcWCUh+7l42Atov4FDd2nvpSeKbnpgQ61cwMYj7LFlcesd7BnDYAUKWVYASq5YKFMMqlfGKqEf9w2eiUutGV0bCVRXguI+E/PgPh6/mw/aLJug73YAquJ7lFDNf/EPkjoGc5SJqxofScgOEbxYsusxVq0vYKkBBgJvPns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkrBSh/T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c/BP42qTEmj0ihXUQ96xiUxCHjzmaBfaB4yGyvBf+UZ1ZyqbO+q1IfmT+wWUGUvYz+0dBuDXOEW+d252SR77xfg8/4XVjlXT0XmaiGZorIaRnjsRqWQZqkCZWe+D53x0Ikn5zaQxoiWVGtEYGkHaAyL45treFL/vu+rblPjxHQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nCUjYT0M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkrBSh/T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578F8C433F1;
-	Tue, 23 Jan 2024 01:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nCUjYT0M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9864C433C7;
+	Tue, 23 Jan 2024 01:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971782;
-	bh=7zs+r3xLG3SQjK33dRK/wftUr7LIMcADoYCZKgJPtvY=;
+	s=korg; t=1705971783;
+	bh=c8H7/5QDuokIQL80flM9oXrKXpBlo5bJutTtIePtIzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gkrBSh/TB3RRjOXjIlMTgZ+or5Zh4QbYRSQX1dyg+7LYjUbl6SzbG0CcQ+ZHBD0O8
-	 j3p52EuoIYBDX2OEfGbyXUr8M6o3IoHDm82K+/sO8gplIecob8ghJusXl2XHONmWIR
-	 8iYztmW3sB0E7QYp7vP7J7zSfwmnDqrykb/S6IU0=
+	b=nCUjYT0Ml168gE4npxCFGaf3Uc/1CqtafzcPx9+JNpy5eZ6OkU/m3kTRDiJ/iTNQc
+	 e8ohyUNJXHqvNd3pvRmLplwEh2/UghTJQf9NMVRZMVWfiaabevP41W7pYbdWW0x9Qc
+	 SnqrUySWzbVYTHQQ9JelKoZVcU+OMFxvOEN0rIw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcelo Schmitt <marcelo.schmitt@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 319/417] iio: adc: ad7091r: Pass iio_dev to event handler
-Date: Mon, 22 Jan 2024 15:58:07 -0800
-Message-ID: <20240122235802.864187277@linuxfoundation.org>
+	David Lin <yu-hao.lin@nxp.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>,
+	Rafael Beims <rafael.beims@toradex.com>
+Subject: [PATCH 5.10 230/286] wifi: mwifiex: configure BSSID consistently when starting AP
+Date: Mon, 22 Jan 2024 15:58:56 -0800
+Message-ID: <20240122235740.935324371@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +49,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marcelo Schmitt <marcelo.schmitt@analog.com>
+From: David Lin <yu-hao.lin@nxp.com>
 
-commit a25a7df518fc71b1ba981d691e9322e645d2689c upstream.
+commit f0dd488e11e71ac095df7638d892209c629d9af2 upstream.
 
-Previous version of ad7091r event handler received the ADC state pointer
-and retrieved the iio device from driver data field with dev_get_drvdata().
-However, no driver data have ever been set, which led to null pointer
-dereference when running the event handler.
+AP BSSID configuration is missing at AP start.  Without this fix, FW returns
+STA interface MAC address after first init.  When hostapd restarts, it gets MAC
+address from netdev before driver sets STA MAC to netdev again. Now MAC address
+between hostapd and net interface are different causes STA cannot connect to
+AP.  After that MAC address of uap0 mlan0 become the same. And issue disappears
+after following hostapd restart (another issue is AP/STA MAC address become the
+same).
 
-Pass the iio device to the event handler and retrieve the ADC state struct
-from it so we avoid the null pointer dereference and save the driver from
-filling the driver data field.
+This patch fixes the issue cleanly.
 
-Fixes: ca69300173b6 ("iio: adc: Add support for AD7091R5 ADC")
-Signed-off-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
-Link: https://lore.kernel.org/r/5024b764107463de9578d5b3b0a3d5678e307b1a.1702746240.git.marcelo.schmitt1@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: David Lin <yu-hao.lin@nxp.com>
+Fixes: 12190c5d80bd ("mwifiex: add cfg80211 start_ap and stop_ap handlers")
+Cc: stable@vger.kernel.org
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Tested-by: Rafael Beims <rafael.beims@toradex.com> # Verdin iMX8MP/SD8997 SD
+Acked-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231215005118.17031-1-yu-hao.lin@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7091r-base.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/cfg80211.c |    2 ++
+ drivers/net/wireless/marvell/mwifiex/fw.h       |    1 +
+ drivers/net/wireless/marvell/mwifiex/ioctl.h    |    1 +
+ drivers/net/wireless/marvell/mwifiex/uap_cmd.c  |    8 ++++++++
+ 4 files changed, 12 insertions(+)
 
---- a/drivers/iio/adc/ad7091r-base.c
-+++ b/drivers/iio/adc/ad7091r-base.c
-@@ -174,8 +174,8 @@ static const struct iio_info ad7091r_inf
+--- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+@@ -1980,6 +1980,8 @@ static int mwifiex_cfg80211_start_ap(str
  
- static irqreturn_t ad7091r_event_handler(int irq, void *private)
+ 	mwifiex_set_sys_config_invalid_data(bss_cfg);
+ 
++	memcpy(bss_cfg->mac_addr, priv->curr_addr, ETH_ALEN);
++
+ 	if (params->beacon_interval)
+ 		bss_cfg->beacon_period = params->beacon_interval;
+ 	if (params->dtim_period)
+--- a/drivers/net/wireless/marvell/mwifiex/fw.h
++++ b/drivers/net/wireless/marvell/mwifiex/fw.h
+@@ -177,6 +177,7 @@ enum MWIFIEX_802_11_PRIVACY_FILTER {
+ #define TLV_TYPE_STA_MAC_ADDR       (PROPRIETARY_TLV_BASE_ID + 32)
+ #define TLV_TYPE_BSSID              (PROPRIETARY_TLV_BASE_ID + 35)
+ #define TLV_TYPE_CHANNELBANDLIST    (PROPRIETARY_TLV_BASE_ID + 42)
++#define TLV_TYPE_UAP_MAC_ADDRESS    (PROPRIETARY_TLV_BASE_ID + 43)
+ #define TLV_TYPE_UAP_BEACON_PERIOD  (PROPRIETARY_TLV_BASE_ID + 44)
+ #define TLV_TYPE_UAP_DTIM_PERIOD    (PROPRIETARY_TLV_BASE_ID + 45)
+ #define TLV_TYPE_UAP_BCAST_SSID     (PROPRIETARY_TLV_BASE_ID + 48)
+--- a/drivers/net/wireless/marvell/mwifiex/ioctl.h
++++ b/drivers/net/wireless/marvell/mwifiex/ioctl.h
+@@ -119,6 +119,7 @@ struct mwifiex_uap_bss_param {
+ 	u8 qos_info;
+ 	u8 power_constraint;
+ 	struct mwifiex_types_wmm_info wmm_info;
++	u8 mac_addr[ETH_ALEN];
+ };
+ 
+ enum {
+--- a/drivers/net/wireless/marvell/mwifiex/uap_cmd.c
++++ b/drivers/net/wireless/marvell/mwifiex/uap_cmd.c
+@@ -479,6 +479,7 @@ void mwifiex_config_uap_11d(struct mwifi
+ static int
+ mwifiex_uap_bss_param_prepare(u8 *tlv, void *cmd_buf, u16 *param_size)
  {
--	struct ad7091r_state *st = (struct ad7091r_state *) private;
--	struct iio_dev *iio_dev = dev_get_drvdata(st->dev);
-+	struct iio_dev *iio_dev = private;
-+	struct ad7091r_state *st = iio_priv(iio_dev);
- 	unsigned int i, read_val;
- 	int ret;
- 	s64 timestamp = iio_get_time_ns(iio_dev);
-@@ -234,7 +234,7 @@ int ad7091r_probe(struct device *dev, co
- 	if (irq) {
- 		ret = devm_request_threaded_irq(dev, irq, NULL,
- 				ad7091r_event_handler,
--				IRQF_TRIGGER_FALLING | IRQF_ONESHOT, name, st);
-+				IRQF_TRIGGER_FALLING | IRQF_ONESHOT, name, iio_dev);
- 		if (ret)
- 			return ret;
- 	}
++	struct host_cmd_tlv_mac_addr *mac_tlv;
+ 	struct host_cmd_tlv_dtim_period *dtim_period;
+ 	struct host_cmd_tlv_beacon_period *beacon_period;
+ 	struct host_cmd_tlv_ssid *ssid;
+@@ -498,6 +499,13 @@ mwifiex_uap_bss_param_prepare(u8 *tlv, v
+ 	int i;
+ 	u16 cmd_size = *param_size;
+ 
++	mac_tlv = (struct host_cmd_tlv_mac_addr *)tlv;
++	mac_tlv->header.type = cpu_to_le16(TLV_TYPE_UAP_MAC_ADDRESS);
++	mac_tlv->header.len = cpu_to_le16(ETH_ALEN);
++	memcpy(mac_tlv->mac_addr, bss_cfg->mac_addr, ETH_ALEN);
++	cmd_size += sizeof(struct host_cmd_tlv_mac_addr);
++	tlv += sizeof(struct host_cmd_tlv_mac_addr);
++
+ 	if (bss_cfg->ssid.ssid_len) {
+ 		ssid = (struct host_cmd_tlv_ssid *)tlv;
+ 		ssid->header.type = cpu_to_le16(TLV_TYPE_UAP_SSID);
 
 
