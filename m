@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BCB13340E;
-	Tue, 23 Jan 2024 01:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDF9133411;
+	Tue, 23 Jan 2024 01:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971829; cv=none; b=bydaKTRI+4AsOTb+vO/RJo+vg0jUuXJmkdBESlECuoT+2n+SOZVY9lPreHOMC4P936ad/t6UE3jQG2k/Aw9XWfZwBOhLTed+6t3GrUgAIxkOZmgZaueYS5CAdPj7QgFfsuXJ141stUkf31e3gSLToUene/vcFJCCZOc+z6KQG0Q=
+	t=1705971833; cv=none; b=e/uZY1J2VCf1Af3Zvm+QUhW7Cm8AtbcKtMUzcoe1D23FztHCYbr1Kvr1fuiozNvV/2zdgMhgs71weYa5gEUw6vRaKcL01uLE/pWMM/3XbWCWemf8HVd/T94T7oWKW9U6y7pI8q+YOfHBArf/xertVPWtjf8uOTe2ZglavOP+1cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971829; c=relaxed/simple;
-	bh=cVCBAv0EZocQ+AOrLTW2UGmXZY+K98S/AiWcTL1JnW4=;
+	s=arc-20240116; t=1705971833; c=relaxed/simple;
+	bh=YHlg0CLgXmEUus+O1EmKlmvwfyUKZwhCSK6kxkXlATI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oADBR7D6uTwq103u2l8wWiwCMrzLxqdV6meIZ8mbpagPm0E4Ms6kB/f9n7xbnmK506qmjsrIJdyr1i6rEwPeYTPkUAFPYBKK0gAqgJ9MHiT7tXFeBpES8pHcME8vUPA/7ZZ0NCVm2HFyWQp1fE8P1I65sv+4wXBcO2oUsY9PpVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjezm5pf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fCWWDpb+tKC9cIXYbdJVzvaMC4a3sDXUvFSohCxVRpDW1IkaOwltx0kxWPg7Vgwowpwpg3RkRAFP+JUAhOfx5lOsox6YEDG3+bF6sDAs6bRg1qD4RM7EEfYmT6tLw4CPZA0FHbElZGtbrtOYd6qko+U8PmCt0QwsNQ9r+8G9Ijc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJXYcbxK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjezm5pf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D7CC433F1;
-	Tue, 23 Jan 2024 01:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJXYcbxK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3617CC433F1;
+	Tue, 23 Jan 2024 01:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971829;
-	bh=cVCBAv0EZocQ+AOrLTW2UGmXZY+K98S/AiWcTL1JnW4=;
+	s=korg; t=1705971832;
+	bh=YHlg0CLgXmEUus+O1EmKlmvwfyUKZwhCSK6kxkXlATI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zjezm5pfK+HDCfs6MVjVgks8VseQ5aGM6GxtBUg1cmAfpaL52YddQ2RLMHQ61A/rA
-	 2MSW0nwHmGOfDXdy0TnpCgN9+bScVFhTY6RjFRO/sAoVdYFwujV4c3iG6KYnh82GX5
-	 HZzFuGyXNeL1IJFlconIN+PXbOdBuOUGQXj7YTVo=
+	b=mJXYcbxK9UrIO5gfB/C6MLpRYGYirWjmY17dJmjnWwpq+GcvsmH3wRctDO53ovDkQ
+	 TyBxFEhP7WA94zrSt1uAbFc7/SKly6FQ2a22D1Br96J6A9+00SUGm8g6vz2lii12D3
+	 o/oGcZ20ENskmuszYeqp3qsMpBHyhKn/NbuAJuaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 240/286] MIPS: Alchemy: Fix an out-of-bound access in db1200_dev_setup()
-Date: Mon, 22 Jan 2024 15:59:06 -0800
-Message-ID: <20240122235741.304998703@linuxfoundation.org>
+Subject: [PATCH 6.1 330/417] riscv: Fix module_alloc() that did not reset the linear mapping permissions
+Date: Mon, 22 Jan 2024 15:58:18 -0800
+Message-ID: <20240122235803.224323235@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,38 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 89c4b588d11e9acf01d604de4b0c715884f59213 ]
+[ Upstream commit 749b94b08005929bbc636df21a23322733166e35 ]
 
-When calling spi_register_board_info(), we should pass the number of
-elements in 'db1200_spi_devs', not 'db1200_i2c_devs'.
+After unloading a module, we must reset the linear mapping permissions,
+see the example below:
 
-Fixes: 63323ec54a7e ("MIPS: Alchemy: Extended DB1200 board support.")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Before unloading a module:
+
+0xffffaf809d65d000-0xffffaf809d6dc000    0x000000011d65d000       508K PTE .   ..     ..   D A G . . W R V
+0xffffaf809d6dc000-0xffffaf809d6dd000    0x000000011d6dc000         4K PTE .   ..     ..   D A G . . . R V
+0xffffaf809d6dd000-0xffffaf809d6e1000    0x000000011d6dd000        16K PTE .   ..     ..   D A G . . W R V
+0xffffaf809d6e1000-0xffffaf809d6e7000    0x000000011d6e1000        24K PTE .   ..     ..   D A G . X . R V
+
+After unloading a module:
+
+0xffffaf809d65d000-0xffffaf809d6e1000    0x000000011d65d000       528K PTE .   ..     ..   D A G . . W R V
+0xffffaf809d6e1000-0xffffaf809d6e7000    0x000000011d6e1000        24K PTE .   ..     ..   D A G . X W R V
+
+The last mapping is not reset and we end up with WX mappings in the linear
+mapping.
+
+So add VM_FLUSH_RESET_PERMS to our module_alloc() definition.
+
+Fixes: 0cff8bff7af8 ("riscv: avoid the PIC offset of static percpu data in module beyond 2G limits")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20231213134027.155327-2-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/alchemy/devboards/db1200.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/module.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/alchemy/devboards/db1200.c b/arch/mips/alchemy/devboards/db1200.c
-index 414f92eacb5e..9ad26215b004 100644
---- a/arch/mips/alchemy/devboards/db1200.c
-+++ b/arch/mips/alchemy/devboards/db1200.c
-@@ -847,7 +847,7 @@ int __init db1200_dev_setup(void)
- 	i2c_register_board_info(0, db1200_i2c_devs,
- 				ARRAY_SIZE(db1200_i2c_devs));
- 	spi_register_board_info(db1200_spi_devs,
--				ARRAY_SIZE(db1200_i2c_devs));
-+				ARRAY_SIZE(db1200_spi_devs));
- 
- 	/* SWITCHES:	S6.8 I2C/SPI selector  (OFF=I2C	 ON=SPI)
- 	 *		S6.7 AC97/I2S selector (OFF=AC97 ON=I2S)
+diff --git a/arch/riscv/kernel/module.c b/arch/riscv/kernel/module.c
+index 91fe16bfaa07..a331001e33e6 100644
+--- a/arch/riscv/kernel/module.c
++++ b/arch/riscv/kernel/module.c
+@@ -424,7 +424,8 @@ void *module_alloc(unsigned long size)
+ {
+ 	return __vmalloc_node_range(size, 1, MODULES_VADDR,
+ 				    MODULES_END, GFP_KERNEL,
+-				    PAGE_KERNEL, 0, NUMA_NO_NODE,
++				    PAGE_KERNEL, VM_FLUSH_RESET_PERMS,
++				    NUMA_NO_NODE,
+ 				    __builtin_return_address(0));
+ }
+ #endif
 -- 
 2.43.0
 
