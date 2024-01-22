@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB3D768F6;
-	Tue, 23 Jan 2024 02:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FBC877F00;
+	Tue, 23 Jan 2024 02:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975521; cv=none; b=UYeCOy8g34dLVt+rxbhauvHFQAaTcSRqawrmZfAeUhZOpQ8GrO2Wp/nvciy/HnR06MK/cQjNZ9/sbkNDPGxAZJgWkmrvKJJtd2jZrvEzoq25KGpo67vaux8QPwsfH54C+17uZ6YCmLe9ETA8Ti67nYdAjMsDK/IqHv2i57DAu4g=
+	t=1705975522; cv=none; b=n27arF+rgDjAFA9K/+QUt4t73dnlqwNytguxpT5eKo5n17465V7Q7TcxHWyCtnAKJ9rYfZGLDzADiI3g+65x1ErkmSvVhcwlSRUYUVA8cV1P93HIQSXVeIh3v6+Z15XRl4O12ByyUNIWhqexLwA/rOlXdp57P4pW11B/CdaScZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975521; c=relaxed/simple;
-	bh=gtHjBfq3jTpoowGZLSW/SUi7DM5Eakb5W3dRND937YE=;
+	s=arc-20240116; t=1705975522; c=relaxed/simple;
+	bh=btxgK08gQgro3Ges+RVe7NdhR/bwjlOaHYvnH40e9PU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KnbkIym7cFF7Xnt86JmhA0VFFJqKk8vmL15ZpbR4TZXebszTDnF8d/eSNYlq6NqqL8WDwO6cESzrGQ99AD2PDNDeKyev/dJlzmu0Stl8WbSFb/L5Rz37bgehvW/VijPvEW4Aelxfam4lsm0mfrCEzeH6akZuw6c8UMbdMKKfGVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cntJEcIg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=piF25ULtGyxcjlf+e7mzTSj9vU+aLFiQaHLyBcE+FJreNO4uLrCFu2lUJx/BvJNdVatbyZ0irSAyZ1VzqKZSpUsNFhl7gSpbWqDCiAUp5eZ1tAKmjHq3h0J3T3KHBvf5yqVd4AhJnaZ+gaMBVhHnxpMmiOr286F41RwFwY3+KRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHNKgSH1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cntJEcIg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63386C433F1;
-	Tue, 23 Jan 2024 02:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHNKgSH1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B45C43399;
+	Tue, 23 Jan 2024 02:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975521;
-	bh=gtHjBfq3jTpoowGZLSW/SUi7DM5Eakb5W3dRND937YE=;
+	s=korg; t=1705975522;
+	bh=btxgK08gQgro3Ges+RVe7NdhR/bwjlOaHYvnH40e9PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cntJEcIgw1Zf/nfCFGrTz1C9zwopSFhJMtiZzxKP/e8NCjpxwbr6tOvgErFZCGNdu
-	 MmKtTRksUxYONWIBSRHpKYtDO+YNPyhVF3UtUARY45EPITTvjCpA/6vMKUXygCEw/D
-	 pcj6zNEy58tv5CxQ6m0QJ1+5c7+GiQtOW4pzavLQ=
+	b=XHNKgSH1h1v2crXRtuL69ERtCXZQ5Y80y7lzhG9afPJAVakaGJ4EoLRrjvRZq5I1G
+	 8pofDBc6Z1eZUyURwhRCQr0c46OQtGNYQw5YD8iXpoqQmLg5uBESPS77GWkfKhb+BD
+	 FU+j4toQVLhNc/iHS1M+bon/BmcQEllRbqaAYwr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Douglas Anderson <dianders@chromium.org>,
-	Grant Grundler <grundler@chromium.org>,
+	Paul Geurts <paul_geurts@live.nl>,
+	Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
+	Eberhard Stoll <eberhard.stoll@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 465/583] r8152: Choose our USB config with choose_configuration() rather than probe()
-Date: Mon, 22 Jan 2024 15:58:36 -0800
-Message-ID: <20240122235826.215051259@linuxfoundation.org>
+Subject: [PATCH 6.6 474/583] serial: imx: fix tx statemachine deadlock
+Date: Mon, 22 Jan 2024 15:58:45 -0800
+Message-ID: <20240122235826.490312506@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,77 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Paul Geurts <paul_geurts@live.nl>
 
-[ Upstream commit aa4f2b3e418e8673e55145de8b8016a7a9920306 ]
+[ Upstream commit 78d60dae9a0c9f09aa3d6477c94047df2fe6f7b0 ]
 
-If you deauthorize the r8152 device (by writing 0 to the "authorized"
-field in sysfs) and then reauthorize it (by writing a 1) then it no
-longer works. This is because when you do the above we lose the
-special configuration that we set in rtl8152_cfgselector_probe().
-Deauthorizing causes the config to be set to -1 and then reauthorizing
-runs the default logic for choosing the best config.
+When using the serial port as RS485 port, the tx statemachine is used to
+control the RTS pin to drive the RS485 transceiver TX_EN pin. When the
+TTY port is closed in the middle of a transmission (for instance during
+userland application crash), imx_uart_shutdown disables the interface
+and disables the Transmission Complete interrupt. afer that,
+imx_uart_stop_tx bails on an incomplete transmission, to be retriggered
+by the TC interrupt. This interrupt is disabled and therefore the tx
+statemachine never transitions out of SEND. The statemachine is in
+deadlock now, and the TX_EN remains low, making the interface useless.
 
-I made an attempt to fix it so that the config is kept across
-deauthorizing / reauthorizing [1] but it was a bit ugly.
+imx_uart_stop_tx now checks for incomplete transmission AND whether TC
+interrupts are enabled before bailing to be retriggered. This makes sure
+the state machine handling is reached, and is properly set to
+WAIT_AFTER_SEND.
 
-Let's instead use the new USB core feature to override
-choose_configuration().
-
-This patch relies upon the patches ("usb: core: Don't force USB
-generic_subclass drivers to define probe()") and ("usb: core: Allow
-subclassed USB drivers to override usb_choose_configuration()")
-
-[1] https://lore.kernel.org/r/20231130154337.1.Ie00e07f07f87149c9ce0b27ae4e26991d307e14b@changeid
-
-Fixes: ec51fbd1b8a2 ("r8152: add USB device driver for config selection")
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Grant Grundler <grundler@chromium.org>
-Link: https://lore.kernel.org/r/20231201102946.v2.3.Ie00e07f07f87149c9ce0b27ae4e26991d307e14b@changeid
+Fixes: cb1a60923609 ("serial: imx: implement rts delaying for rs485")
+Signed-off-by: Paul Geurts <paul_geurts@live.nl>
+Tested-by: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
+Tested-by: Eberhard Stoll <eberhard.stoll@gmx.de>
+Link: https://lore.kernel.org/r/AM0PR09MB26758F651BC1B742EB45775995B8A@AM0PR09MB2675.eurprd09.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/r8152.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/tty/serial/imx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index 127b34dcc5b3..cca5b81c8b18 100644
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -10036,7 +10036,7 @@ static struct usb_driver rtl8152_driver = {
- 	.disable_hub_initiated_lpm = 1,
- };
+diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
+index 2e85c77e7c0d..c084ac3bb441 100644
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -421,13 +421,13 @@ static void imx_uart_stop_tx(struct uart_port *port)
+ 	ucr1 = imx_uart_readl(sport, UCR1);
+ 	imx_uart_writel(sport, ucr1 & ~UCR1_TRDYEN, UCR1);
  
--static int rtl8152_cfgselector_probe(struct usb_device *udev)
-+static int rtl8152_cfgselector_choose_configuration(struct usb_device *udev)
- {
- 	struct usb_host_config *c;
- 	int i, num_configs;
-@@ -10063,19 +10063,13 @@ static int rtl8152_cfgselector_probe(struct usb_device *udev)
- 	if (i == num_configs)
- 		return -ENODEV;
++	ucr4 = imx_uart_readl(sport, UCR4);
+ 	usr2 = imx_uart_readl(sport, USR2);
+-	if (!(usr2 & USR2_TXDC)) {
++	if ((!(usr2 & USR2_TXDC)) && (ucr4 & UCR4_TCEN)) {
+ 		/* The shifter is still busy, so retry once TC triggers */
+ 		return;
+ 	}
  
--	if (usb_set_configuration(udev, c->desc.bConfigurationValue)) {
--		dev_err(&udev->dev, "Failed to set configuration %d\n",
--			c->desc.bConfigurationValue);
--		return -ENODEV;
--	}
--
--	return 0;
-+	return c->desc.bConfigurationValue;
- }
+-	ucr4 = imx_uart_readl(sport, UCR4);
+ 	ucr4 &= ~UCR4_TCEN;
+ 	imx_uart_writel(sport, ucr4, UCR4);
  
- static struct usb_device_driver rtl8152_cfgselector_driver = {
--	.name =		MODULENAME "-cfgselector",
--	.probe =	rtl8152_cfgselector_probe,
--	.id_table =	rtl8152_table,
-+	.name =	MODULENAME "-cfgselector",
-+	.choose_configuration = rtl8152_cfgselector_choose_configuration,
-+	.id_table = rtl8152_table,
- 	.generic_subclass = 1,
- 	.supports_autosuspend = 1,
- };
 -- 
 2.43.0
 
