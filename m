@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB09612A170;
-	Tue, 23 Jan 2024 00:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5904312A170;
+	Tue, 23 Jan 2024 00:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968765; cv=none; b=Fa9fpWr1HwPkYcE03Z3s555kav0x8yLwaZl8Vdo3dg1tFLXmJVpqIqmlRU6Yf6kPWnw+GSHXj7K3HU2AsmKaNHxi6bOIhF7+UvxwvCCjT1ols2lpuJR88XI2stZhp/oiVi+ngh4a03XMVzFJ3WGrIA3JJQHMVvxkS+MdJv/NJEQ=
+	t=1705968767; cv=none; b=gmOv9rp8p3Vj8fHzeJG/xADj2Rul9tNYtJwp8JRACoeo7wizx1izDjR1sqLfYw9WvoYKrsxngpiGQF39mijlNw2NhbMYX5U3vxdJ+5jKF+ZjjSjWLvXtZFUkznFC4k665Rf+kcrqswisI4/PY1UJyKyc5Ak97BqE0sruilz1FAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968765; c=relaxed/simple;
-	bh=OMKx8WIwbwNTdxCL19wwo2d/RKfhRjj4Z7LwtmwwRyI=;
+	s=arc-20240116; t=1705968767; c=relaxed/simple;
+	bh=QQ6BOkGb4f93k/NzJMamDnfzCQI8oZgAwmLSKX3mOdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Asw6cc6mNcLl+P2hO+icyuj612fLXpHvVGURC3o/mahrvSfcTrMCETKmzmfdlGgCxXGehTBGIzi1LtsDSdN+9hBdwFLGGH/NFPyJL4tfkw2G+ljuJS3/ykfHATiOQrhrMdJhxttxTY8IASUlAqMv0wS5dbwzHGTDAOvb45ZeuzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZ9emtIY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tqxr3FfsB6oro0FukNDzb8MhBpNZUHgbR7beEkC6OJ4rAZHA4JJLNZbqS+pAu68GzM9u+r7507eMdatIotgRR7D0mFmriOvnAWXMaD9lVWaN/hfbkdqs2cSkINmmMQfge06E+o++2XQoG4gfOY7MlFJtM1wJbWedVIclhQpWAoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIISWgRB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZ9emtIY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E38AC43390;
-	Tue, 23 Jan 2024 00:12:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIISWgRB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD199C433F1;
+	Tue, 23 Jan 2024 00:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968765;
-	bh=OMKx8WIwbwNTdxCL19wwo2d/RKfhRjj4Z7LwtmwwRyI=;
+	s=korg; t=1705968766;
+	bh=QQ6BOkGb4f93k/NzJMamDnfzCQI8oZgAwmLSKX3mOdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZ9emtIYuRN3h6zq151a0SKV7LpAVeJvx+RAwqrqPGh4y9qkq4JsPUykSjKKyr4O8
-	 +eXEV0N+z/As3ez2syZLuTkxykdzgjn5x4/ScQP9YoRRFN/uk2q81qnTqlJu7iDKBj
-	 KEfwIAoT7jNu3GchNzhxVo4APcCPau/5PrGu4lYM=
+	b=lIISWgRBT50PXYRnVWpgbTNEO/F6ZS1vFhhuNhp0gIImcNYRc1Awn9xB3BZJpJ6Rc
+	 /tGOJ9mvr2eipwdCbEHxGmuFUrlZfhxWOk1WJK29+jyNvdox0XPh6Nexy+Tw2o5GMg
+	 7j6V6bXifOSQvBXk6YNaXoUixM6L71/lFbeoYWS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+4fad2e57beb6397ab2fc@syzkaller.appspotmail.com,
+	Ziqi Zhao <astrajoan@yahoo.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 003/194] ALSA: hda - Fix speaker and headset mic pin config for CHUWI CoreBook XPro
-Date: Mon, 22 Jan 2024 15:55:33 -0800
-Message-ID: <20240122235719.356296708@linuxfoundation.org>
+Subject: [PATCH 5.4 031/194] drm/crtc: fix uninitialized variable use
+Date: Mon, 22 Jan 2024 15:56:01 -0800
+Message-ID: <20240122235720.543601257@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,56 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 7c9caa299335df94ad1c58f70a22f16a540eab60 ]
+[ Upstream commit 6e455f5dcdd15fa28edf0ffb5b44d3508512dccf ]
 
-This patch corrected the speaker and headset mic pin config to the more
-appropriate values.
+Commit 3823119b9c2b ("drm/crtc: Fix uninit-value bug in
+drm_mode_setcrtc") was supposed to fix use of an uninitialized variable,
+but introduced another.
 
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://lore.kernel.org/r/20231117170923.106822-1-kovalev@altlinux.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+num_connectors is only initialized if crtc_req->count_connectors > 0,
+but it's used regardless. Fix it.
+
+Fixes: 3823119b9c2b ("drm/crtc: Fix uninit-value bug in drm_mode_setcrtc")
+Cc: syzbot+4fad2e57beb6397ab2fc@syzkaller.appspotmail.com
+Cc: Ziqi Zhao <astrajoan@yahoo.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231208131238.2924571-1-jani.nikula@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/drm_crtc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index bfa66b8e3040..36293836a48c 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -6398,6 +6398,7 @@ enum {
- 	ALC290_FIXUP_SUBWOOFER_HSJACK,
- 	ALC269_FIXUP_THINKPAD_ACPI,
- 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
-+	ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO,
- 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
- 	ALC255_FIXUP_ASUS_MIC_NO_PRESENCE,
- 	ALC255_FIXUP_DELL1_MIC_NO_PRESENCE,
-@@ -6645,6 +6646,14 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc269_fixup_pincfg_U7x7_headset_mic,
- 	},
-+	[ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x18, 0x03a19020 }, /* headset mic */
-+			{ 0x1b, 0x90170150 }, /* speaker */
-+			{ }
-+		},
-+	},
- 	[ALC269_FIXUP_AMIC] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -8481,6 +8490,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
+diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
+index 38ce608648b0..85d85a0ba85f 100644
+--- a/drivers/gpu/drm/drm_crtc.c
++++ b/drivers/gpu/drm/drm_crtc.c
+@@ -535,7 +535,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
+ 	struct drm_mode_set set;
+ 	uint32_t __user *set_connectors_ptr;
+ 	struct drm_modeset_acquire_ctx ctx;
+-	int ret, i, num_connectors;
++	int ret, i, num_connectors = 0;
+ 
+ 	if (!drm_core_check_feature(dev, DRIVER_MODESET))
+ 		return -EOPNOTSUPP;
+@@ -673,7 +673,6 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
+ 			goto out;
+ 		}
+ 
+-		num_connectors = 0;
+ 		for (i = 0; i < crtc_req->count_connectors; i++) {
+ 			connector_set[i] = NULL;
+ 			set_connectors_ptr = (uint32_t __user *)(unsigned long)crtc_req->set_connectors_ptr;
 -- 
 2.43.0
 
