@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD89F633E6;
-	Tue, 23 Jan 2024 01:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E855F633EA;
+	Tue, 23 Jan 2024 01:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975005; cv=none; b=eyWDzpQWy1BGdlo34tChSgAs52SogN4XlTTmF1XbuKxnyjiwy1DZc/Fr5ey3b2SAFhEEBr1Hh8fGomVMAKqGrUqSr1C+qa78ysYVyo7bJB8imDji3jEU55zz4YdGIWRMwXU55TdeV0Gl1To7Wv1zTYak9qNwxSTENMMn6+HgFdA=
+	t=1705975007; cv=none; b=LdI5E7YANjZEloKVXTPJNvw5BPISrvkRVKq+TRerlsjT2fQn30iBVZC+uugkQPt8npmktM8T6WZMJAh9jbEZEoQsF764cEDIR5OV3Llv6nU2N+xgHwX1img1XryXKvvWDdizHOvDz0cHx2rCHqngQ1DXMMXiU48cWk9lo7BrrPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975005; c=relaxed/simple;
-	bh=YwMOsLwhYZtQ7q3nv9XRO/hDgZeNejoC3T66p41XUq8=;
+	s=arc-20240116; t=1705975007; c=relaxed/simple;
+	bh=vzybYGrLk3HEJmal+nTA6KkpilCDF3nCe+SlRj8/Ytw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNgNRPz8SEUOGzCuzoRtsMIQjJuUvqfXp/BiJqTHA9rWWuLSfNEeJKBZrIOWEUnx7NvDh6ZehuUhXtKA0sOIiBMrs+JARrsA1eRFAa30nxR2O0gB1l+9Gp+n0/9qd5cljdsecUoM4j0D6AAInV2AQ3ebFC9R9xbE0No/5tiE5pE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwIkwMVl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CXCU1bNH+GqaYIxHUXP9gCrcmMLrLH3WqhDN4kW8RgSPuQZqyAGlqXDcU2gGXv5B8FT6q8ZoSGk4BJ9QwDNWSlOREjNt45cYX34v3xDrNFmn0rhDAjJ1rI0ZVawj9ST7vC0Td561ZDSedbGqm12k3NceMRdbMoVzg2YVq0+10b0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LE4EUClz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwIkwMVl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8674C433F1;
-	Tue, 23 Jan 2024 01:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LE4EUClz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA15C433F1;
+	Tue, 23 Jan 2024 01:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975005;
-	bh=YwMOsLwhYZtQ7q3nv9XRO/hDgZeNejoC3T66p41XUq8=;
+	s=korg; t=1705975006;
+	bh=vzybYGrLk3HEJmal+nTA6KkpilCDF3nCe+SlRj8/Ytw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DwIkwMVlbnQG53zMTUHb9GCok38cU0HeIjDeHOvwBx7w1ynNjVwazUleElsVah/9t
-	 icaVcskSaEENr7EIyaMkFVx12XxJ5d6eVsdN+ijzyIJ3QtI61ItWrIDM9bNMIoo1Cg
-	 pqpWYI0jB6YmqwvdWdabVi4JlJMj43lzfyGZjNNA=
+	b=LE4EUClz1Ck1CyA/h428tbS/r1dK6KVQh25SeihFEou/C6TVxjMy+ZkAZV75bOdaI
+	 e2YqEyBG5OqRaMyNcnsULv5ylo+dmstYymVOFlkdwBTfTmAUxRt6ldhTT/ea6xkjfq
+	 9ui0a93FEZcAR8YKjMTHuEc5KmpL76oopbRBzzic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 5.15 289/374] serial: sc16is7xx: set safe default SPI clock frequency
-Date: Mon, 22 Jan 2024 15:59:05 -0800
-Message-ID: <20240122235754.834029316@linuxfoundation.org>
+	qizhong cheng <qizhong.cheng@mediatek.com>,
+	Jianjun Wang <jianjun.wang@mediatek.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH 5.15 282/374] PCI: mediatek: Clear interrupt status before dispatching handler
+Date: Mon, 22 Jan 2024 15:58:58 -0800
+Message-ID: <20240122235754.575907523@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -43,50 +47,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: qizhong cheng <qizhong.cheng@mediatek.com>
 
-commit 3ef79cd1412236d884ab0c46b4d1921380807b48 upstream.
+commit 4e11c29873a8a296a20f99b3e03095e65ebf897d upstream.
 
-15 MHz is supported only by 76x variants.
+We found a failure when using the iperf tool during WiFi performance
+testing, where some MSIs were received while clearing the interrupt
+status, and these MSIs cannot be serviced.
 
-If the SPI clock frequency is not specified, use a safe default clock value
-of 4 MHz that is supported by all variants.
+The interrupt status can be cleared even if the MSI status remains pending.
+As such, given the edge-triggered interrupt type, its status should be
+cleared before being dispatched to the handler of the underling device.
 
-Also use HZ_PER_MHZ macro to improve readability.
-
-Fixes: 2c837a8a8f9f ("sc16is7xx: spi interface is added")
+[kwilczynski: commit log, code comment wording]
+Link: https://lore.kernel.org/linux-pci/20231211094923.31967-1-jianjun.wang@mediatek.com
+Fixes: 43e6409db64d ("PCI: mediatek: Add MSI support for MT2712 and MT7622")
+Signed-off-by: qizhong cheng <qizhong.cheng@mediatek.com>
+Signed-off-by: Jianjun Wang <jianjun.wang@mediatek.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+[bhelgaas: rewrap comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Cc:  <stable@vger.kernel.org>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20231221231823.2327894-4-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/controller/pcie-mediatek.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -24,6 +24,7 @@
- #include <linux/tty_flip.h>
- #include <linux/spi/spi.h>
- #include <linux/uaccess.h>
-+#include <linux/units.h>
- #include <uapi/linux/sched/types.h>
+--- a/drivers/pci/controller/pcie-mediatek.c
++++ b/drivers/pci/controller/pcie-mediatek.c
+@@ -624,12 +624,18 @@ static void mtk_pcie_intr_handler(struct
+ 		if (status & MSI_STATUS){
+ 			unsigned long imsi_status;
  
- #define SC16IS7XX_NAME			"sc16is7xx"
-@@ -1454,7 +1455,7 @@ static int sc16is7xx_spi_probe(struct sp
- 		return dev_err_probe(&spi->dev, -EINVAL, "Unsupported SPI mode\n");
++			/*
++			 * The interrupt status can be cleared even if the
++			 * MSI status remains pending. As such, given the
++			 * edge-triggered interrupt type, its status should
++			 * be cleared before being dispatched to the
++			 * handler of the underlying device.
++			 */
++			writel(MSI_STATUS, port->base + PCIE_INT_STATUS);
+ 			while ((imsi_status = readl(port->base + PCIE_IMSI_STATUS))) {
+ 				for_each_set_bit(bit, &imsi_status, MTK_MSI_IRQS_NUM)
+ 					generic_handle_domain_irq(port->inner_domain, bit);
+ 			}
+-			/* Clear MSI interrupt status */
+-			writel(MSI_STATUS, port->base + PCIE_INT_STATUS);
+ 		}
+ 	}
  
- 	spi->mode		= spi->mode ? : SPI_MODE_0;
--	spi->max_speed_hz	= spi->max_speed_hz ? : 15000000;
-+	spi->max_speed_hz	= spi->max_speed_hz ? : 4 * HZ_PER_MHZ;
- 	ret = spi_setup(spi);
- 	if (ret)
- 		return ret;
 
 
