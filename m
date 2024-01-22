@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3E3137C55;
-	Tue, 23 Jan 2024 01:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1BD131748;
+	Tue, 23 Jan 2024 01:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972126; cv=none; b=egqJQzUz62/EV12nQag7C0or3CbZeYBevLxWwE90cs78j7CQ5bzTC/IgnlMrXxeltrb0R1W2vvN95H7KP4XpHT5bj/+FmNFTzcguynurw7AMNvqO/2t7znTbJWVfYrLJ7kUJBVTYAdPXFJjhRmygX093PKi5dmYFkB7xVCMV5JM=
+	t=1705972127; cv=none; b=LSxhY5V4v2cqrXJ962FkkZOmGH8CKNZLdsZZkTpGzrNkOm5yHXo35XrhhSz+JMS6O6zmmqv3ZW94xiqiJUy3xyfS/pElcozw7IOfM/ZHzbeb7RiKan0z+CMu9eOGsS8J1olBIsO3AWGzUjRKBMArnCPOmWiz9fCrvDklMki7Xns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972126; c=relaxed/simple;
-	bh=n1XuVIRJ4k11X2S/jyUIryA7lFcXEVOpX0L5ARNRy7A=;
+	s=arc-20240116; t=1705972127; c=relaxed/simple;
+	bh=9kb7zZFIDXauJbx5pOxbW+gOiwuVaai9d1I7+cqvXXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R1bssV7LIb9eP79rzxro0DL9sWBgm8VM2YLu2AZ/GrvMX3CWS1Zat0Pa7cPrFtCZb8NU1Pm+TZ94gCzblKXU66NPfQbqCJdGK9lv2hNaFfXfYMdf2THFGinVUa76WKmqql+7nOpzxN0ZeHwm2xsmJ4QbOAqdnXe0+xY21d13Z8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/EWiSZV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dls+TJMZSBfs77OLIj0Oqsz1MUmZipoImJUJFgLR15s5W28G8Nfn2rYYFz8RfbdiQTzy2noOYl1xhxvuWXWL88frkWPp3byjNwshxCSTlm7+ugu5lVxMeAgoGngYT190Ev/sVwAfX/SWpXoEx9eXcoR8anDL8gpr9OrxjOE2ly8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNIZVPsp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/EWiSZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEDDC43399;
-	Tue, 23 Jan 2024 01:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNIZVPsp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50485C43390;
+	Tue, 23 Jan 2024 01:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972126;
-	bh=n1XuVIRJ4k11X2S/jyUIryA7lFcXEVOpX0L5ARNRy7A=;
+	s=korg; t=1705972127;
+	bh=9kb7zZFIDXauJbx5pOxbW+gOiwuVaai9d1I7+cqvXXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/EWiSZVG2rEhT06b5ISAlq8BZkZ71Fq0Io4x6kHkICnwIZBKcVRXcQ1p+HPwS0KH
-	 fRR6oGHLN36j3dDUtNsWN7b5cEgH4w7M24+dbjbpbomATsw8/W9wnQIzNEe4u8h57i
-	 LwY6ad5QjnmUnBzF47yk1CpQWFcLWM/VMpCxYZPs=
+	b=gNIZVPspmFMRRxBydwODaI2LV03iEaXL6yPdoXdCaLCahKs3YsbBjk0+gNBXTb2mn
+	 KZLSHK93ofwyBw360zHdVM/IaFFHOcFqrcw3JBoCGpGlJYWaT5gJy4aqcx8F7zw9BR
+	 p263gyXByVqzH3JP4WqCIxMkcabA+e5nQlfbi208=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>
-Subject: [PATCH 5.15 059/374] uio: Fix use-after-free in uio_open
-Date: Mon, 22 Jan 2024 15:55:15 -0800
-Message-ID: <20240122235746.658160536@linuxfoundation.org>
+	Cameron Williams <cang1@live.co.uk>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Subject: [PATCH 5.15 060/374] parport: parport_serial: Add Brainboxes BAR details
+Date: Mon, 22 Jan 2024 15:55:16 -0800
+Message-ID: <20240122235746.696419963@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,74 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: Cameron Williams <cang1@live.co.uk>
 
-commit 0c9ae0b8605078eafc3bea053cc78791e97ba2e2 upstream.
+commit 65fde134b0a4ffe838729f9ee11b459a2f6f2815 upstream.
 
-core-1				core-2
--------------------------------------------------------
-uio_unregister_device		uio_open
-				idev = idr_find()
-device_unregister(&idev->dev)
-put_device(&idev->dev)
-uio_device_release
-				get_device(&idev->dev)
-kfree(idev)
-uio_free_minor(minor)
-				uio_release
-				put_device(&idev->dev)
-				kfree(idev)
--------------------------------------------------------
+Add BAR/enum entries for Brainboxes serial/parallel cards.
 
-In the core-1 uio_unregister_device(), the device_unregister will kfree
-idev when the idev->dev kobject ref is 1. But after core-1
-device_unregister, put_device and before doing kfree, the core-2 may
-get_device. Then:
-1. After core-1 kfree idev, the core-2 will do use-after-free for idev.
-2. When core-2 do uio_release and put_device, the idev will be double
-   freed.
-
-To address this issue, we can get idev atomic & inc idev reference with
-minor_lock.
-
-Fixes: 57c5f4df0a5a ("uio: fix crash after the device is unregistered")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://lore.kernel.org/r/1703152663-59949-1-git-send-email-guanghuifeng@linux.alibaba.com
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Cameron Williams <cang1@live.co.uk>
+Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Link: https://lore.kernel.org/r/AS4PR02MB79035155C2D5C3333AE6FA52C4A6A@AS4PR02MB7903.eurprd02.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/uio/uio.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/parport/parport_serial.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/uio/uio.c
-+++ b/drivers/uio/uio.c
-@@ -464,13 +464,13 @@ static int uio_open(struct inode *inode,
+--- a/drivers/parport/parport_serial.c
++++ b/drivers/parport/parport_serial.c
+@@ -65,6 +65,10 @@ enum parport_pc_pci_cards {
+ 	sunix_5069a,
+ 	sunix_5079a,
+ 	sunix_5099a,
++	brainboxes_uc257,
++	brainboxes_is300,
++	brainboxes_uc414,
++	brainboxes_px263,
+ };
  
- 	mutex_lock(&minor_lock);
- 	idev = idr_find(&uio_idr, iminor(inode));
--	mutex_unlock(&minor_lock);
- 	if (!idev) {
- 		ret = -ENODEV;
-+		mutex_unlock(&minor_lock);
- 		goto out;
- 	}
--
- 	get_device(&idev->dev);
-+	mutex_unlock(&minor_lock);
+ /* each element directly indexed from enum list, above */
+@@ -158,6 +162,10 @@ static struct parport_pc_pci cards[] = {
+ 	/* sunix_5069a */		{ 1, { { 1, 2 }, } },
+ 	/* sunix_5079a */		{ 1, { { 1, 2 }, } },
+ 	/* sunix_5099a */		{ 1, { { 1, 2 }, } },
++	/* brainboxes_uc257 */	{ 1, { { 3, -1 }, } },
++	/* brainboxes_is300 */	{ 1, { { 3, -1 }, } },
++	/* brainboxes_uc414 */  { 1, { { 3, -1 }, } },
++	/* brainboxes_px263 */	{ 1, { { 3, -1 }, } },
+ };
  
- 	if (!try_module_get(idev->owner)) {
- 		ret = -ENODEV;
-@@ -1062,9 +1062,8 @@ void uio_unregister_device(struct uio_in
- 	wake_up_interruptible(&idev->wait);
- 	kill_fasync(&idev->async_queue, SIGIO, POLL_HUP);
- 
--	device_unregister(&idev->dev);
--
- 	uio_free_minor(minor);
-+	device_unregister(&idev->dev);
- 
- 	return;
- }
+ static struct pci_device_id parport_serial_pci_tbl[] = {
 
 
