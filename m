@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E5D1487F4;
-	Tue, 23 Jan 2024 00:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE49148FE5;
+	Tue, 23 Jan 2024 00:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969168; cv=none; b=j6TK/J/sIf07cYaTvM2462vSRXwgi4037gOvxKhQvF8Ho5zPUI4kLSPj9TMzkM4Vk+FYdctaJsAd5uqUqb6DWj/2RqjaQobmeJVzQKW39cKsknbxBhgLDGWH3ONBqt1jiwVU6+LxDdYg+wcAK3yXWEPDG24UZ/a0+U8i/gv9blE=
+	t=1705969169; cv=none; b=o5Wv2sCISeGG0rsTj78Y44rAc2ZruKLH48R9k4calgcAnnADmBsRV2XwoMJa2poqFBFv4MKH7S4jlp19PJEV/gnq9du3SPTrI9vNc+FTD+VE0T7aQpRtE0D9fNdxk/9L238WYMzdzkziwtjHDvgesrlrFLuHHxKeI6Qu9VVt3pU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969168; c=relaxed/simple;
-	bh=VSCkUW3i/TepBje1J30bBlZwpSLqsxPLH46obW93Pf0=;
+	s=arc-20240116; t=1705969169; c=relaxed/simple;
+	bh=gGJTKi/uJccg7l9CSAqtBwLvNG1/g+nW28l9X1XtckI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sb/I1FVxxpOSi9+lkfOOafHyKB1uM8+pVdTdtuSvdwHjL5dTjQE6e1UOsAzAj3nZpn9lA6sN+V4WTG+YuDpj+wwk4q5N2CISUDYz+81C4FpUko7+qELP/M5LAPdg1xkxBKdUm5CGQeVw6Y0eAUUYPBwHfpJgFjYZfm+5BTMPq48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=liGixdvx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ho+1uUac6Ac5WelTcxFZjwWsg68HEnjTSWGwKMPiH7KOykNBNaxJxvR4mw+BlUrusfhRo4+m9ZIPjCpNg03Ll27Qv5TXRGhE69t/AKvxJovTCzoRdSTlQBFkHGZLvl6pdWVHFj9UTdaaga6gIjks+OjZuRseCaxzrljlLtxkNhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bYqrD+lX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="liGixdvx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE17C433C7;
-	Tue, 23 Jan 2024 00:19:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bYqrD+lX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF18C433F1;
+	Tue, 23 Jan 2024 00:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969167;
-	bh=VSCkUW3i/TepBje1J30bBlZwpSLqsxPLH46obW93Pf0=;
+	s=korg; t=1705969169;
+	bh=gGJTKi/uJccg7l9CSAqtBwLvNG1/g+nW28l9X1XtckI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=liGixdvxUkJ+hY7h11YJJWUzIT27qlnlELz3rYmnwTo812a0p0YI16vmIoOkCzksH
-	 RDKCy4B1Lhc/28z5jqUUyW+F3aWw7b5HiPpNe3jYc/wckBhzg4kuT9XPkPgu5cA3Th
-	 SGVCfWTJnAZzzcCDk6CzASoIfq50oFRbMZRYy9iE=
+	b=bYqrD+lXkndbhu9aQzOzMZBvuCM3IjLIuPkhmqZuNmOt9b4p5It7qXESca1uBE564
+	 M59idc/i4efJhLnKlwadqXTk4fXpwOTYy6ks/PieDR6SU7+Wwo6BIIBgnO687tNFL0
+	 h7hJtFkoLYSAuy8Glp/8DDRUKCzZXD3MeRI3t6lM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Hu <huyue2@coolpad.com>,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 069/641] erofs: fix memory leak on short-lived bounced pages
-Date: Mon, 22 Jan 2024 15:49:33 -0800
-Message-ID: <20240122235820.201610714@linuxfoundation.org>
+Subject: [PATCH 6.7 070/641] fs: indicate request originates from old mount API
+Date: Mon, 22 Jan 2024 15:49:34 -0800
+Message-ID: <20240122235820.229656894@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,48 +55,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 93d6fda7f926451a0fa1121b9558d75ca47e861e ]
+[ Upstream commit f67d922edb4e95a4a56d07d5d40a76dd4f23a85b ]
 
-Both MicroLZMA and DEFLATE algorithms can use short-lived pages on
-demand for the overlapped inplace I/O decompression.
+We already communicate to filesystems when a remount request comes from
+the old mount API as some filesystems choose to implement different
+behavior in the new mount API than the old mount API to e.g., take the
+chance to fix significant API bugs. Allow the same for regular mount
+requests.
 
-However, those short-lived pages are actually added to
-`be->compressed_pages`.  Thus, it should be checked instead of
-`pcl->compressed_bvecs`.
-
-The LZ4 algorithm doesn't work like this, so it won't be impacted.
-
-Fixes: 67139e36d970 ("erofs: introduce `z_erofs_parse_in_bvecs'")
-Reviewed-by: Yue Hu <huyue2@coolpad.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20231128180431.4116991-1-hsiangkao@linux.alibaba.com
+Fixes: b330966f79fb ("fuse: reject options on reconfigure via fsconfig(2)")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/namespace.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index a7e6847f6f8f..a33cd6757f98 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1309,12 +1309,11 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
- 		put_page(page);
- 	} else {
- 		for (i = 0; i < pclusterpages; ++i) {
--			page = pcl->compressed_bvecs[i].page;
-+			/* consider shortlived pages added when decompressing */
-+			page = be->compressed_pages[i];
+diff --git a/fs/namespace.c b/fs/namespace.c
+index fbf0e596fcd3..6c39ec020a5f 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2875,7 +2875,12 @@ static int do_remount(struct path *path, int ms_flags, int sb_flags,
+ 	if (IS_ERR(fc))
+ 		return PTR_ERR(fc);
  
- 			if (erofs_page_is_managed(sbi, page))
- 				continue;
--
--			/* recycle all individual short-lived pages */
- 			(void)z_erofs_put_shortlivedpage(be->pagepool, page);
- 			WRITE_ONCE(pcl->compressed_bvecs[i].page, NULL);
- 		}
++	/*
++	 * Indicate to the filesystem that the remount request is coming
++	 * from the legacy mount system call.
++	 */
+ 	fc->oldapi = true;
++
+ 	err = parse_monolithic_mount_data(fc, data);
+ 	if (!err) {
+ 		down_write(&sb->s_umount);
+@@ -3324,6 +3329,12 @@ static int do_new_mount(struct path *path, const char *fstype, int sb_flags,
+ 	if (IS_ERR(fc))
+ 		return PTR_ERR(fc);
+ 
++	/*
++	 * Indicate to the filesystem that the mount request is coming
++	 * from the legacy mount system call.
++	 */
++	fc->oldapi = true;
++
+ 	if (subtype)
+ 		err = vfs_parse_fs_string(fc, "subtype",
+ 					  subtype, strlen(subtype));
 -- 
 2.43.0
 
