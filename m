@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8B364CFE;
-	Tue, 23 Jan 2024 01:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A17012DDB2;
+	Tue, 23 Jan 2024 01:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971712; cv=none; b=r+cy1t5zkst5hZcQ1e4eBeusx4WcfevZFjXojFP/u492os+Jz8ORKCCyqN/abaqig5DKaYyKWKSyRu93Hy1x5zBjm0YM9CWiMjxRzYjPGff2VS6WoEc4T8aPYIZik00bSBi+uBweGgp/0N3yVlc7w1UoiXl4DWkfHD5mO3Mhsxc=
+	t=1705971714; cv=none; b=RpEPoLWLdHtaqQrOjWaBzdt8khd3KCh95swmUjWJbNISycdwB3h1Fogald8OoGjX48g9gI23ThUHnYUJxwAoFV9VzCdXojol0ftefpZ2VsV9/pd2eEPS/mQTMS/qMUYRtpikfxLjAo40pl1dme+j6A/HYAZ/2VzxeZ30hpaYhVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971712; c=relaxed/simple;
-	bh=b4dB7RdUM/d2MjwhvQ/mv4ND/jpe0geTaSApjgvDRXE=;
+	s=arc-20240116; t=1705971714; c=relaxed/simple;
+	bh=DMt+idhsI6BvsR0/9+CW3L0PSWB4vYXIJG02B5ypkc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W9cW6kZT6GPBB3VWkQxkc2CSCi9MxM0USQnBz7Oln/7rO/DKGSOjAchOOAPBZdVb5rGRdBV8foc70KgId4QwGAz0Z9kleEZeh/WVV7/fxfU/VK4QnYLtC+S9Ho6DzwAsd6ADexsI9nlml4tkL5RHes9NWFBuCrThPkdjrEEg9yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6Z0X7Pe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FhkneUTX+vjg1YKQrF+Eesp+ztKkh13F4j0FZ5qgbWT2kwLn4oSs/dVmUnz1C8WQ80q6pF8VmkVjeWs+1zV3ap6ej9q9TKqWAA0qEQn7+94HNBQ0/sDNYfL7UkUW57CUbM5NJ7pATqsFRjntn3LwSqHh/dBpt6jbS7gDa+8S37g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kO1vkTFd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6Z0X7Pe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61536C433F1;
-	Tue, 23 Jan 2024 01:01:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kO1vkTFd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F104C43390;
+	Tue, 23 Jan 2024 01:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971711;
-	bh=b4dB7RdUM/d2MjwhvQ/mv4ND/jpe0geTaSApjgvDRXE=;
+	s=korg; t=1705971713;
+	bh=DMt+idhsI6BvsR0/9+CW3L0PSWB4vYXIJG02B5ypkc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u6Z0X7Pec8R7aTpc3030CHMi/6v14SvJNbWuqDdSMhMGgFDME4VVRt2ykEgf8mv3U
-	 7qGbdL/xtr6XJIgBsCz7FH5I1O0wYxQSGnD3SpuDFOvxsW300dxMOOXFJdGlsG/73+
-	 3BwMJhx9y+XqiyRxbZ0OuFUxSCUzonGEza6A31bc=
+	b=kO1vkTFdKwvPHlpUqXuhtNA0OLGSCLw7T/F33Sw/zHnTqjeP1jdvQeW/4c8etezVS
+	 YyCt8yvKn6w8N05LG45CcZY28FZdxFqxbKmitqwkE1ms/GYglHV0XkULlQB2nxCtqL
+	 0MrCUi0IbJaLMwSUKkVHVHGDxJjAgUTXd47tJHnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 304/417] LoongArch: Fix and simplify fcsr initialization on execve()
-Date: Mon, 22 Jan 2024 15:57:52 -0800
-Message-ID: <20240122235802.360673641@linuxfoundation.org>
+	=?UTF-8?q?K=C3=B6ry=20Maincent?= <kory.maincent@bootlin.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.10 213/286] Revert "usb: dwc3: Soft reset phy on probe for host"
+Date: Mon, 22 Jan 2024 15:58:39 -0800
+Message-ID: <20240122235740.291059638@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,123 +44,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit c2396651309eba291c15e32db8fbe44c738b5921 upstream.
+commit 7059fbebcb00554c3f31e5b5d93ef6d2d96dc7b4 upstream.
 
-There has been a lingering bug in LoongArch Linux systems causing some
-GCC tests to intermittently fail (see Closes link).  I've made a minimal
-reproducer:
+This reverts commit 8bea147dfdf823eaa8d3baeccc7aeb041b41944b.
 
-    zsh% cat measure.s
-    .align 4
-    .globl _start
-    _start:
-        movfcsr2gr  $a0, $fcsr0
-        bstrpick.w  $a0, $a0, 16, 16
-        beqz        $a0, .ok
-        break       0
-    .ok:
-        li.w        $a7, 93
-        syscall     0
-    zsh% cc mesaure.s -o measure -nostdlib
-    zsh% echo $((1.0/3))
-    0.33333333333333331
-    zsh% while ./measure; do ; done
+The phy soft reset GUSB2PHYCFG.PHYSOFTRST only applies to UTMI phy, not
+ULPI. This fix is incomplete.
 
-This while loop should not stop as POSIX is clear that execve must set
-fenv to the default, where FCSR should be zero.  But in fact it will
-just stop after running for a while (normally less than 30 seconds).
-Note that "$((1.0/3))" is needed to reproduce this issue because it
-raises FE_INVALID and makes fcsr0 non-zero.
-
-The problem is we are currently relying on SET_PERSONALITY2() to reset
-current->thread.fpu.fcsr.  But SET_PERSONALITY2() is executed before
-start_thread which calls lose_fpu(0).  We can see if kernel preempt is
-enabled, we may switch to another thread after SET_PERSONALITY2() but
-before lose_fpu(0).  Then bad thing happens: during the thread switch
-the value of the fcsr0 register is stored into current->thread.fpu.fcsr,
-making it dirty again.
-
-The issue can be fixed by setting current->thread.fpu.fcsr after
-lose_fpu(0) because lose_fpu() clears TIF_USEDFPU, then the thread
-switch won't touch current->thread.fpu.fcsr.
-
-The only other architecture setting FCSR in SET_PERSONALITY2() is MIPS.
-I've ran a similar test on MIPS with mainline kernel and it turns out
-MIPS is buggy, too.  Anyway MIPS do this for supporting different FP
-flavors (NaN encodings, etc.) which do not exist on LoongArch.  So for
-LoongArch, we can simply remove the current->thread.fpu.fcsr setting
-from SET_PERSONALITY2() and do it in start_thread(), after lose_fpu(0).
-
-The while loop failing with the mainline kernel has survived one hour
-after this change on LoongArch.
-
-Fixes: 803b0fc5c3f2baa ("LoongArch: Add process management")
-Closes: https://github.com/loongson-community/discussions/issues/7
-Link: https://lore.kernel.org/linux-mips/7a6aa1bbdbbe2e63ae96ff163fab0349f58f1b9e.camel@xry111.site/
-Cc: stable@vger.kernel.org
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc:  <stable@vger.kernel.org>
+Fixes: 8bea147dfdf8 ("usb: dwc3: Soft reset phy on probe for host")
+Reported-by: Köry Maincent <kory.maincent@bootlin.com>
+Closes: https://lore.kernel.org/linux-usb/20231205151959.5236c231@kmaincent-XPS-13-7390
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/29a26593a60eba727de872a3e580a674807b3339.1703282469.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/elf.h |    5 -----
- arch/loongarch/kernel/elf.c      |    5 -----
- arch/loongarch/kernel/process.c  |    1 +
- 3 files changed, 1 insertion(+), 10 deletions(-)
+ drivers/usb/dwc3/core.c |   39 +--------------------------------------
+ 1 file changed, 1 insertion(+), 38 deletions(-)
 
---- a/arch/loongarch/include/asm/elf.h
-+++ b/arch/loongarch/include/asm/elf.h
-@@ -241,8 +241,6 @@ void loongarch_dump_regs64(u64 *uregs, c
- do {									\
- 	current->thread.vdso = &vdso_info;				\
- 									\
--	loongarch_set_personality_fcsr(state);				\
--									\
- 	if (personality(current->personality) != PER_LINUX)		\
- 		set_personality(PER_LINUX);				\
- } while (0)
-@@ -259,7 +257,6 @@ do {									\
- 	clear_thread_flag(TIF_32BIT_ADDR);				\
- 									\
- 	current->thread.vdso = &vdso_info;				\
--	loongarch_set_personality_fcsr(state);				\
- 									\
- 	p = personality(current->personality);				\
- 	if (p != PER_LINUX32 && p != PER_LINUX)				\
-@@ -340,6 +337,4 @@ extern int arch_elf_pt_proc(void *ehdr,
- extern int arch_check_elf(void *ehdr, bool has_interpreter, void *interp_ehdr,
- 			  struct arch_elf_state *state);
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -277,46 +277,9 @@ int dwc3_core_soft_reset(struct dwc3 *dw
+ 	 * XHCI driver will reset the host block. If dwc3 was configured for
+ 	 * host-only mode or current role is host, then we can return early.
+ 	 */
+-	if (dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
++	if (dwc->dr_mode == USB_DR_MODE_HOST || dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
+ 		return 0;
  
--extern void loongarch_set_personality_fcsr(struct arch_elf_state *state);
+-	/*
+-	 * If the dr_mode is host and the dwc->current_dr_role is not the
+-	 * corresponding DWC3_GCTL_PRTCAP_HOST, then the dwc3_core_init_mode
+-	 * isn't executed yet. Ensure the phy is ready before the controller
+-	 * updates the GCTL.PRTCAPDIR or other settings by soft-resetting
+-	 * the phy.
+-	 *
+-	 * Note: GUSB3PIPECTL[n] and GUSB2PHYCFG[n] are port settings where n
+-	 * is port index. If this is a multiport host, then we need to reset
+-	 * all active ports.
+-	 */
+-	if (dwc->dr_mode == USB_DR_MODE_HOST) {
+-		u32 usb3_port;
+-		u32 usb2_port;
 -
- #endif /* _ASM_ELF_H */
---- a/arch/loongarch/kernel/elf.c
-+++ b/arch/loongarch/kernel/elf.c
-@@ -23,8 +23,3 @@ int arch_check_elf(void *_ehdr, bool has
- {
- 	return 0;
- }
+-		usb3_port = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0));
+-		usb3_port |= DWC3_GUSB3PIPECTL_PHYSOFTRST;
+-		dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), usb3_port);
 -
--void loongarch_set_personality_fcsr(struct arch_elf_state *state)
--{
--	current->thread.fpu.fcsr = boot_cpu_data.fpu_csr0;
--}
---- a/arch/loongarch/kernel/process.c
-+++ b/arch/loongarch/kernel/process.c
-@@ -82,6 +82,7 @@ void start_thread(struct pt_regs *regs,
- 	euen = regs->csr_euen & ~(CSR_EUEN_FPEN);
- 	regs->csr_euen = euen;
- 	lose_fpu(0);
-+	current->thread.fpu.fcsr = boot_cpu_data.fpu_csr0;
- 
- 	clear_thread_flag(TIF_LSX_CTX_LIVE);
- 	clear_thread_flag(TIF_LASX_CTX_LIVE);
+-		usb2_port = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
+-		usb2_port |= DWC3_GUSB2PHYCFG_PHYSOFTRST;
+-		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), usb2_port);
+-
+-		/* Small delay for phy reset assertion */
+-		usleep_range(1000, 2000);
+-
+-		usb3_port &= ~DWC3_GUSB3PIPECTL_PHYSOFTRST;
+-		dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), usb3_port);
+-
+-		usb2_port &= ~DWC3_GUSB2PHYCFG_PHYSOFTRST;
+-		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), usb2_port);
+-
+-		/* Wait for clock synchronization */
+-		msleep(50);
+-		return 0;
+-	}
+-
+ 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
+ 	reg |= DWC3_DCTL_CSFTRST;
+ 	reg &= ~DWC3_DCTL_RUN_STOP;
 
 
