@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE5513398C;
-	Tue, 23 Jan 2024 00:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2871339A9;
+	Tue, 23 Jan 2024 00:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969299; cv=none; b=jplylO3TAEWJ1WF7jj83fqf+eNxYNHg2s9KwWASD078RbSU7cO70iv/sZACEgvdremF/WxLk/tuSMvUXzDY/+WzoHfiEa/TXQpcgFdh1DCMYZJnfidCmWYS2fY3JRzepQfYbPACoXyfomEojB4v2ztvKFmykyGTh7VL8eUzQKSs=
+	t=1705969301; cv=none; b=YiM9LtikGwpSUe3jmX+8PfgooQs6wcnWo5slIf4GC/BH3Jp6vhyVQrId0YXjF2WRHyNx0fTLlKpyJUBWbV3rTARoUhXV7rkK40ZZAOa6UGghMlJgUK9Z1ij/+q/dQ2sl98v4sYV8wyxbOLBTUx6ABeTlkpbujRt7Yu6Qg3RNAgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969299; c=relaxed/simple;
-	bh=4ei17ryHzC7a/igYaQQ3rJJyy+n0pulGaEtFrJZjo4w=;
+	s=arc-20240116; t=1705969301; c=relaxed/simple;
+	bh=qtemqpwavAEfT34To54KPe9EsXcnCmwIYc1RDfXwx0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cThepvfHbFErAwwGE+mrm1aMcqpjk9Rz0HxFfvGPcNWOfFQp6xA8M/6FbP/wPKVJLffPkMIoB+oregk8Ww6cGyO+zGNxylfWHM9B3IZVMsthKfQLzvEbLw1c0wCM16XCxBaHR6HI2pcBtPVSo2YsKrQPp20JYz+A0OGwW6fOI0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdFJ31V/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZTB28LzqJ1My3QWczEBjQeflJ1KOhfVVJBwfAwfjr0qE7To0wRoa7i+2ys5JPEUfiV8EUgG9K+yZ5IR3uFe587hNYCEK9Oh/TuO8Big/oWmx4VUmnxoOpdwBjSie+LAQQ2lHcQdaTqTMRJLV7GxYAUyKQ/w2+ebzTB/bnoPrm4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfUutdSC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdFJ31V/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA95C433C7;
-	Tue, 23 Jan 2024 00:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfUutdSC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD37C43399;
+	Tue, 23 Jan 2024 00:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969299;
-	bh=4ei17ryHzC7a/igYaQQ3rJJyy+n0pulGaEtFrJZjo4w=;
+	s=korg; t=1705969300;
+	bh=qtemqpwavAEfT34To54KPe9EsXcnCmwIYc1RDfXwx0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IdFJ31V/+FBCmOeaVr26/Nf6F5m3LhkIIdPjyp0m4CQYrO9Hnjpi3HjeOK0pkQWBB
-	 daKLas+/RXJ9ImQcYrvYnTqYs0O2Hj4VzLfkv5m4T6Boz+zGxoaaX6rtA1yLny8lyy
-	 Vzz4qw1nWSCyL0S4Eiwe1TxCJ7CawTgvPX1ljwGY=
+	b=wfUutdSCHkBGiJPhH9xtjCFUBFVA9duOO2exDOFCYUNaCChKsaH6FV18XPc84fXAZ
+	 31jDT6sBI7LWWPhkcOyvchlDAchSP6QBPsZiTv/yfYu9Sf7wcAbOqhu/jr6aUdg1+Y
+	 alNuiu2MmWSQoyrtW7i3i59DBVviEUS7ClDnakjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Sun <sunhao.th@gmail.com>,
-	Andrei Matei <andreimatei1@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 156/641] bpf: Fix verification of indirect var-off stack access
-Date: Mon, 22 Jan 2024 15:51:00 -0800
-Message-ID: <20240122235822.911721456@linuxfoundation.org>
+Subject: [PATCH 6.7 134/641] bpf: fix check for attempt to corrupt spilled pointer
+Date: Mon, 22 Jan 2024 15:50:38 -0800
+Message-ID: <20240122235822.242868048@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,81 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Matei <andreimatei1@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit a833a17aeac73b33f79433d7cee68d5cafd71e4f ]
+[ Upstream commit ab125ed3ec1c10ccc36bc98c7a4256ad114a3dae ]
 
-This patch fixes a bug around the verification of possibly-zero-sized
-stack accesses. When the access was done through a var-offset stack
-pointer, check_stack_access_within_bounds was incorrectly computing the
-maximum-offset of a zero-sized read to be the same as the register's min
-offset. Instead, we have to take in account the register's maximum
-possible value. The patch also simplifies how the max offset is checked;
-the check is now simpler than for min offset.
+When register is spilled onto a stack as a 1/2/4-byte register, we set
+slot_type[BPF_REG_SIZE - 1] (plus potentially few more below it,
+depending on actual spill size). So to check if some stack slot has
+spilled register we need to consult slot_type[7], not slot_type[0].
 
-The bug was allowing accesses to erroneously pass the
-check_stack_access_within_bounds() checks, only to later crash in
-check_stack_range_initialized() when all the possibly-affected stack
-slots are iterated (this time with a correct max offset).
-check_stack_range_initialized() is relying on
-check_stack_access_within_bounds() for its accesses to the
-stack-tracking vector to be within bounds; in the case of zero-sized
-accesses, we were essentially only verifying that the lowest possible
-slot was within bounds. We would crash when the max-offset of the stack
-pointer was >= 0 (which shouldn't pass verification, and hopefully is
-not something anyone's code attempts to do in practice).
+To avoid the need to remember and double-check this in the future, just
+use is_spilled_reg() helper.
 
-Thanks Hao for reporting!
-
-Fixes: 01f810ace9ed3 ("bpf: Allow variable-offset stack access")
-Reported-by: Hao Sun <sunhao.th@gmail.com>
-Signed-off-by: Andrei Matei <andreimatei1@gmail.com>
+Fixes: 27113c59b6d0 ("bpf: Check the other end of slot_type for STACK_SPILL")
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20231207041150.229139-2-andreimatei1@gmail.com
-
-Closes: https://lore.kernel.org/bpf/CACkBjsZGEUaRCHsmaX=h-efVogsRfK1FPxmkgb0Os_frnHiNdw@mail.gmail.com/
+Link: https://lore.kernel.org/r/20231205184248.1502704-4-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ kernel/bpf/verifier.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index c4fbfe499475..acc1f3b7b183 100644
+index 4d59b200e898..c4fbfe499475 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -6804,10 +6804,7 @@ static int check_stack_access_within_bounds(
- 
- 	if (tnum_is_const(reg->var_off)) {
- 		min_off = reg->var_off.value + off;
--		if (access_size > 0)
--			max_off = min_off + access_size - 1;
--		else
--			max_off = min_off;
-+		max_off = min_off + access_size;
- 	} else {
- 		if (reg->smax_value >= BPF_MAX_VAR_OFF ||
- 		    reg->smin_value <= -BPF_MAX_VAR_OFF) {
-@@ -6816,15 +6813,12 @@ static int check_stack_access_within_bounds(
- 			return -EACCES;
- 		}
- 		min_off = reg->smin_value + off;
--		if (access_size > 0)
--			max_off = reg->smax_value + off + access_size - 1;
--		else
--			max_off = min_off;
-+		max_off = reg->smax_value + off + access_size;
- 	}
- 
- 	err = check_stack_slot_within_bounds(min_off, state, type);
--	if (!err)
--		err = check_stack_slot_within_bounds(max_off, state, type);
-+	if (!err && max_off > 0)
-+		err = -EINVAL; /* out of stack access into non-negative offsets */
- 
- 	if (err) {
- 		if (tnum_is_const(reg->var_off)) {
+@@ -4676,7 +4676,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
+ 	 * so it's aligned access and [off, off + size) are within stack limits
+ 	 */
+ 	if (!env->allow_ptr_leaks &&
+-	    state->stack[spi].slot_type[0] == STACK_SPILL &&
++	    is_spilled_reg(&state->stack[spi]) &&
+ 	    size != BPF_REG_SIZE) {
+ 		verbose(env, "attempt to corrupt spilled pointer on stack\n");
+ 		return -EACCES;
 -- 
 2.43.0
 
