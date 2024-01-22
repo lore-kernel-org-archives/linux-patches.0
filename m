@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330F562802;
-	Tue, 23 Jan 2024 01:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B251562806;
+	Tue, 23 Jan 2024 01:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974961; cv=none; b=NL0tLVj28W1tLiRy/Eitr16mp4R/xs9tQLvvmPmnIp9SBUUQimb0D5W5nLMl0jeYofMc6mdy8WMbyBF0a9m+1UhiRfB8QHtHpYCCAEwqLvrOz9k4TWczO3YN2GlfDzz9YzzjckNH48Yr1Wh4OK4+7j+Mnow/OoHnaamfwUe4ut4=
+	t=1705974962; cv=none; b=l0RCH/MWpCCZH4F+d6+8HyyoWBu9GQu4eYAG489vyDPwlJmlg/NbEJpCqjBxyr8XKmopIi/AVVMgDdhNhip5pICUq4RRkbMSyfJA+vq3ypAqiO7WMuJQbO8pPMqvx47Foq3BIAaStDAGsFbATDjtI3lXQ47ti5Z61W9poOPzJbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974961; c=relaxed/simple;
-	bh=1DH0bgOwtVF3kT1YGSHqPnsHy7qIQQig1BbLFfUeGR8=;
+	s=arc-20240116; t=1705974962; c=relaxed/simple;
+	bh=eFK6QNCx+gc09KdgvD8FtJ/dlskP+TTF705f88xQrT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pOWy3PANNXyxSaQRPpwXO5XExEaYEPo3wEqWi/h4T445QbqDYfdsveMzdpvfQlEwS4fHfPl/vYRkG1MG2dKh+kSUMAcfFWRJYkuzprkQiptfYC6jHodugDzfYNZpJFEGcms7ip3wbZiDzofFNUQtfbxzqDrmRfrXo7vBuFEjfMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsyOIgNX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R21pHhtmnatJ8P+7t713XYo4AbLv+MthEuMhwZGfoHq5/m5nrKh8jY2oNhpKAG3I2t3PPE9cMTkA0+YjDvkhvjgTFMpwCkn/djbIk7rDsmoX1Y7hb8u4EHoXUsEhekt6HiUDvZdEalQleeQIah0ERfeEqDKe9NiLyg7kMjvJpB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEDbwyeh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsyOIgNX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D25C433B1;
-	Tue, 23 Jan 2024 01:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEDbwyeh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752E7C433C7;
+	Tue, 23 Jan 2024 01:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974961;
-	bh=1DH0bgOwtVF3kT1YGSHqPnsHy7qIQQig1BbLFfUeGR8=;
+	s=korg; t=1705974962;
+	bh=eFK6QNCx+gc09KdgvD8FtJ/dlskP+TTF705f88xQrT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xsyOIgNX0OhmPzXGO5Q4iBknEx+QeI+F2i/JrtGVWAcKgj/XJGIoRSP3NdPEucnsQ
-	 0hQAAZ7vQHuuTJgnwaAj2eET7PMT3AxmE12FrWcZulGCQWEmYnuVFCNSydhknMR+qr
-	 gy++EyMCDNnLwXBFVKe/XtQ0Fp/gsZD2z38tYZMU=
+	b=iEDbwyehAxI4qqJ4CAQCSygQmWnKpYRdcZURbwANF6RIK8s4vkWVcwSFl97ph8hsB
+	 xlcmU3LT1/0risX1W91usNQOAOUOl21Ko7OnqCW4nl663EvLkORnqfAIwSSl/t5MGb
+	 96s9uCj6+zC5CdWocBLfjj5A4sJZ5RRMEt6VlNzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Joakim Zhang <joakim.zhang@cixtech.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 297/374] riscv: Check if the code to patch lies in the exit section
-Date: Mon, 22 Jan 2024 15:59:13 -0800
-Message-ID: <20240122235755.116673792@linuxfoundation.org>
+Subject: [PATCH 6.6 170/583] dma-mapping: clear dev->dma_mem to NULL after freeing it
+Date: Mon, 22 Jan 2024 15:53:41 -0800
+Message-ID: <20240122235817.231188911@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,112 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Joakim Zhang <joakim.zhang@cixtech.com>
 
-[ Upstream commit 420370f3ae3d3b883813fd3051a38805160b2b9f ]
+[ Upstream commit b07bc2347672cc8c7293c64499f1488278c5ca3d ]
 
-Otherwise we fall through to vmalloc_to_page() which panics since the
-address does not lie in the vmalloc region.
+Reproduced with below sequence:
+dma_declare_coherent_memory()->dma_release_coherent_memory()
+->dma_declare_coherent_memory()->"return -EBUSY" error
 
-Fixes: 043cb41a85de ("riscv: introduce interfaces to patch kernel code")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Link: https://lore.kernel.org/r/20231214091926.203439-1-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+It will return -EBUSY from the dma_assign_coherent_memory()
+in dma_declare_coherent_memory(), the reason is that dev->dma_mem
+pointer has not been set to NULL after it's freed.
+
+Fixes: cf65a0f6f6ff ("dma-mapping: move all DMA mapping code to kernel/dma")
+Signed-off-by: Joakim Zhang <joakim.zhang@cixtech.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/sections.h   |  1 +
- arch/riscv/kernel/patch.c           | 11 ++++++++++-
- arch/riscv/kernel/vmlinux-xip.lds.S |  2 ++
- arch/riscv/kernel/vmlinux.lds.S     |  2 ++
- 4 files changed, 15 insertions(+), 1 deletion(-)
+ kernel/dma/coherent.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/include/asm/sections.h b/arch/riscv/include/asm/sections.h
-index 32336e8a17cb..a393d5035c54 100644
---- a/arch/riscv/include/asm/sections.h
-+++ b/arch/riscv/include/asm/sections.h
-@@ -13,6 +13,7 @@ extern char _start_kernel[];
- extern char __init_data_begin[], __init_data_end[];
- extern char __init_text_begin[], __init_text_end[];
- extern char __alt_start[], __alt_end[];
-+extern char __exittext_begin[], __exittext_end[];
+diff --git a/kernel/dma/coherent.c b/kernel/dma/coherent.c
+index c21abc77c53e..ff5683a57f77 100644
+--- a/kernel/dma/coherent.c
++++ b/kernel/dma/coherent.c
+@@ -132,8 +132,10 @@ int dma_declare_coherent_memory(struct device *dev, phys_addr_t phys_addr,
  
- static inline bool is_va_kernel_text(uintptr_t va)
+ void dma_release_coherent_memory(struct device *dev)
  {
-diff --git a/arch/riscv/kernel/patch.c b/arch/riscv/kernel/patch.c
-index e099961453cc..160e5c1caa9c 100644
---- a/arch/riscv/kernel/patch.c
-+++ b/arch/riscv/kernel/patch.c
-@@ -13,6 +13,7 @@
- #include <asm/fixmap.h>
- #include <asm/ftrace.h>
- #include <asm/patch.h>
-+#include <asm/sections.h>
+-	if (dev)
++	if (dev) {
+ 		_dma_release_coherent_memory(dev->dma_mem);
++		dev->dma_mem = NULL;
++	}
+ }
  
- struct patch_insn {
- 	void *addr;
-@@ -23,6 +24,14 @@ struct patch_insn {
- int riscv_patch_in_stop_machine = false;
- 
- #ifdef CONFIG_MMU
-+
-+static inline bool is_kernel_exittext(uintptr_t addr)
-+{
-+	return system_state < SYSTEM_RUNNING &&
-+		addr >= (uintptr_t)__exittext_begin &&
-+		addr < (uintptr_t)__exittext_end;
-+}
-+
- /*
-  * The fix_to_virt(, idx) needs a const value (not a dynamic variable of
-  * reg-a0) or BUILD_BUG_ON failed with "idx >= __end_of_fixed_addresses".
-@@ -33,7 +42,7 @@ static __always_inline void *patch_map(void *addr, const unsigned int fixmap)
- 	uintptr_t uintaddr = (uintptr_t) addr;
- 	struct page *page;
- 
--	if (core_kernel_text(uintaddr))
-+	if (core_kernel_text(uintaddr) || is_kernel_exittext(uintaddr))
- 		page = phys_to_page(__pa_symbol(addr));
- 	else if (IS_ENABLED(CONFIG_STRICT_MODULE_RWX))
- 		page = vmalloc_to_page(addr);
-diff --git a/arch/riscv/kernel/vmlinux-xip.lds.S b/arch/riscv/kernel/vmlinux-xip.lds.S
-index 9c9f35091ef0..5407eafa166b 100644
---- a/arch/riscv/kernel/vmlinux-xip.lds.S
-+++ b/arch/riscv/kernel/vmlinux-xip.lds.S
-@@ -29,10 +29,12 @@ SECTIONS
- 	HEAD_TEXT_SECTION
- 	INIT_TEXT_SECTION(PAGE_SIZE)
- 	/* we have to discard exit text and such at runtime, not link time */
-+	__exittext_begin = .;
- 	.exit.text :
- 	{
- 		EXIT_TEXT
- 	}
-+	__exittext_end = .;
- 
- 	.text : {
- 		_text = .;
-diff --git a/arch/riscv/kernel/vmlinux.lds.S b/arch/riscv/kernel/vmlinux.lds.S
-index 5104f3a871e3..adcfe9c6a7bf 100644
---- a/arch/riscv/kernel/vmlinux.lds.S
-+++ b/arch/riscv/kernel/vmlinux.lds.S
-@@ -73,10 +73,12 @@ SECTIONS
- 		__soc_builtin_dtb_table_end = .;
- 	}
- 	/* we have to discard exit text and such at runtime, not link time */
-+	__exittext_begin = .;
- 	.exit.text :
- 	{
- 		EXIT_TEXT
- 	}
-+	__exittext_end = .;
- 
- 	__init_text_end = .;
- 	. = ALIGN(SECTION_ALIGN);
+ static void *__dma_alloc_from_coherent(struct device *dev,
 -- 
 2.43.0
 
