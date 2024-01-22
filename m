@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D6D12BF1C;
-	Tue, 23 Jan 2024 00:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5DA12BF15;
+	Tue, 23 Jan 2024 00:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968903; cv=none; b=rNEE+NP9/+tZzQwPTzYPEZ6Cy20/umNRDtk20VfR4itWVYMghDZCCVXatJTGP86eT/isB+lWGbto63pFgYzxNeqjodaL0QAAaEHKFLMlUb6xLY8xU1b8dXpWjrDt7bMCn8u65Abl+A02qe1Zz1vW2/e76acztTX4m0+w+aFJiB8=
+	t=1705968905; cv=none; b=m9AQmhnsALbdkOMprKaNs6+Z4z1s6jimxToKg/uLyvO7tvkcYeFdzvfkYEMObX1Y74vRjtRJzPOr+SIacYj0hceoUjK/Krfe1k5lZ44knD57lly6aAl14oDEhXD+YB7QoYQA1iHyXus/yO8t7u9a9MySqBt/uijsJ2yraAmUrrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968903; c=relaxed/simple;
-	bh=hlxIBXinjbm7KpZnPXegkOadJC4WlyZgpOdDoWNVoeE=;
+	s=arc-20240116; t=1705968905; c=relaxed/simple;
+	bh=qjOIJ2SHuAn2yw7IUrL2QdfLUr52cnFf78O61TrVbRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5g2WZN3U5rnnwDK8Eul1nLLy5LaSteKCvcNVaAgD/NY/nowTidOIhfFtrkXMzo28Ry2U28IHBiFNmKlpPvDF07toAAEKj4SYVnajxy7PvWWiBeh2rK34izA/4GEBDLMJyDOisHiI9OW3V0MIXTtuc+tktybxjAFJXKtBu4xPGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BKN46RDy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iggM4johoXDR+8hPu9Z6GD2saIEeEWsv+E6IjbFb6ySp+HRjTnSrqQorOZptuBDdAxLXLA+KItQuBGeEzTNSBmqXv1WKooojxvZMlx+QpSiTKT36H2fgOMhqdTd877dX4kBOu0ArDlYzXZ43qq0fSdOp1aLXR++q+q3Z+FG1DB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2T7LR1S+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKN46RDy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89376C43390;
-	Tue, 23 Jan 2024 00:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2T7LR1S+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B71C43390;
+	Tue, 23 Jan 2024 00:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968902;
-	bh=hlxIBXinjbm7KpZnPXegkOadJC4WlyZgpOdDoWNVoeE=;
+	s=korg; t=1705968904;
+	bh=qjOIJ2SHuAn2yw7IUrL2QdfLUr52cnFf78O61TrVbRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BKN46RDy9CS5ED7qRVj/ysAfESRtVvmRv2BEcTMo9bmTr/wen3D8LEBgbbR2l5v2c
-	 h0shz12m9W8UGnEux3BKEse2jTIbVU1HCY68eSQMtUHBR0VZP8genjVz3AfUJqGkuy
-	 30t9BBU5hp2RU4AkFoBsoHf7kaMBDk9VtZXkjrxA=
+	b=2T7LR1S+127JAeSA8vuCWGIbUIkNuoZuQVC0XSfWRUof68Kj1BqJbhVqibIzGmgxI
+	 JGjMctSC13XumPN8yo75nGxANnYKKj20CpDl2VRVYf1jUIF3wOWUhXq/cTzIONbyzB
+	 EkZKM8Fk5ypwnEBtihjGkOOF/bFZts4PE8oKm2CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yihang Li <liyihang9@huawei.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 090/194] arm64: dts: qcom: sdm845-db845c: correct LED panic indicator
-Date: Mon, 22 Jan 2024 15:57:00 -0800
-Message-ID: <20240122235723.108644581@linuxfoundation.org>
+Subject: [PATCH 5.4 091/194] scsi: hisi_sas: Replace with standard error code return value
+Date: Mon, 22 Jan 2024 15:57:01 -0800
+Message-ID: <20240122235723.142303138@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -52,39 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Yihang Li <liyihang9@huawei.com>
 
-[ Upstream commit 0c90c75e663246203a2b7f6dd9e08a110f4c3c43 ]
+[ Upstream commit d34ee535705eb43885bc0f561c63046f697355ad ]
 
-There is no "panic-indicator" default trigger but a property with that
-name:
+In function hisi_sas_controller_prereset(), -ENOSYS (Function not
+implemented) should be returned if the driver does not support .soft_reset.
+Returns -EPERM (Operation not permitted) if HISI_SAS_RESETTING_BIT is
+already be set.
 
-  sdm845-db845c.dtb: leds: led-0: Unevaluated properties are not allowed ('linux,default-trigger' was unexpected)
+In function _suspend_v3_hw(), returns -EPERM (Operation not permitted) if
+HISI_SAS_RESETTING_BIT is already be set.
 
-Fixes: 3f72e2d3e682 ("arm64: dts: qcom: Add Dragonboard 845c")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20231111095617.16496-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 4522204ab218 ("scsi: hisi_sas: tidy host controller reset function a bit")
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
+Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
+Link: https://lore.kernel.org/r/1702525516-51258-3-git-send-email-chenxiang66@hisilicon.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/hisi_sas/hisi_sas_main.c  | 4 ++--
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index bf4fde88011c..e99a58b76d86 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -53,8 +53,8 @@ leds {
- 		user4 {
- 			label = "green:user4";
- 			gpios = <&pm8998_gpio 13 GPIO_ACTIVE_HIGH>;
--			linux,default-trigger = "panic-indicator";
- 			default-state = "off";
-+			panic-indicator;
- 		};
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index 7135bbe5abb8..9de27c7f6b01 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -1577,10 +1577,10 @@ static int hisi_sas_controller_reset(struct hisi_hba *hisi_hba)
+ 		queue_work(hisi_hba->wq, &hisi_hba->debugfs_work);
  
- 		wlan {
+ 	if (!hisi_hba->hw->soft_reset)
+-		return -1;
++		return -ENOENT;
+ 
+ 	if (test_and_set_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags))
+-		return -1;
++		return -EPERM;
+ 
+ 	dev_info(dev, "controller resetting...\n");
+ 	hisi_sas_controller_reset_prepare(hisi_hba);
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index a86aae52d94f..c84d18b23e7b 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -3365,7 +3365,7 @@ static int hisi_sas_v3_suspend(struct pci_dev *pdev, pm_message_t state)
+ 	}
+ 
+ 	if (test_and_set_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags))
+-		return -1;
++		return -EPERM;
+ 
+ 	scsi_block_requests(shost);
+ 	set_bit(HISI_SAS_REJECT_CMD_BIT, &hisi_hba->flags);
 -- 
 2.43.0
 
