@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93E6664B6;
-	Tue, 23 Jan 2024 01:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215E6664B6;
+	Tue, 23 Jan 2024 01:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971659; cv=none; b=DAzHet8rHV5r1fR6/A7mreQSS5zc0k/Bm8WJk/NDiGjlvSnP1E06u9+u6agZNckPZ8vqxtNRmSLs4AeJ5dWRDilvZgdX9wVrYrj0jqTUFsz6gY8iyds+i84tWumF6ZDn4Th/O3qCa+U3CC+Vg0cWjACiFAsebG0/vMke41NhczQ=
+	t=1705971661; cv=none; b=dYqNd2a0Rms0BlArfPoM+uq9ssM0Wk8+oaJa5heoer7AX9/ibnmw98vqtOy6FP8+PTwHB/qQGYRp0dSD+zPrD7sgOt/UllLyAkIjeGJQEzCjxssTQh3SkQL+08Ea7flsyqTgpIQvDcAvz6/WbH1a99/BUki7gV9ZvMAR0ulNnJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971659; c=relaxed/simple;
-	bh=yO5LkWCbm50B7hY5B770zd5Vxqh2nBFV3H8s23o6rm8=;
+	s=arc-20240116; t=1705971661; c=relaxed/simple;
+	bh=pnj4pouiZD+M/yKsSvFEFmIPK4mAgKm6d44MIkH2nYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IJQ69l5mf6rzcSB4nJ4ETU7kfv2AUK4Lcn204Zd+DZ6uUJ+wCNA8ft4sKMziknUd7uALXBVTqf9CDDte2CeflF9NRsnOjEpMtWrbwqusF64N+Wss54LoPc7dmgmqbrFov/HbluxcnzKHxmMlUeFFUxw/WfYr+GKDXIRv6RT4NQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NT+5NTzU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B3qrPOUabs90/vGIQWC7OoR83WNkE98Sd1QXlrOuXd/pfxF9AMFKjrUESMUyN8l4w/DHig0lVE6bqsbYtO9zwdgKdwGvx+vUF0hXMk1QcykFB9Lcfa3IZ7Iqk7KdfgcdGjZJUuycA3UzZPLFiCN2aBucDST68dkNDIXlowyKiC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmfXd1/G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NT+5NTzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60751C433C7;
-	Tue, 23 Jan 2024 01:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmfXd1/G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C7DC433C7;
+	Tue, 23 Jan 2024 01:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971659;
-	bh=yO5LkWCbm50B7hY5B770zd5Vxqh2nBFV3H8s23o6rm8=;
+	s=korg; t=1705971661;
+	bh=pnj4pouiZD+M/yKsSvFEFmIPK4mAgKm6d44MIkH2nYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NT+5NTzUMBi58zLboCTw4puq8EHc3uO/t7oUqLhPsEeT2FPn126PUyKeBAmOmjuoZ
-	 oU0qXqaT1jmW/NYNaCZ3K44nS6S6gkxGmkfUJX1J0n34xOdwVp6scudF9ChQiUc4Sa
-	 181v8sttJZLPrXjw0XQeS31B80oqenLlYhmyjquo=
+	b=pmfXd1/Gc2Or2uNiqZtGJblF7fRfnMg2YRJwEzDKhRz5k/LwlPVeNWD4ADHDZb5BO
+	 9iUT4T7hy7rpTYLQ8Zazrs/kqrIf5aufcrj68iZ/gAhhJU7DOjNjDr7VkdZy5o/jrV
+	 cjiU8CpGmMiVVZf9bu1MWfw50yKPTBLaLjje3Z+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RD Babiera <rdbabiera@google.com>,
-	Chris Bainbridge <chris.bainbridge@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 267/417] Revert "usb: typec: class: fix typec_altmode_put_partner to put plugs"
-Date: Mon, 22 Jan 2024 15:57:15 -0800
-Message-ID: <20240122235801.112484118@linuxfoundation.org>
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 175/286] dt-bindings: clock: Update the videocc resets for sm8150
+Date: Mon, 22 Jan 2024 15:58:01 -0800
+Message-ID: <20240122235738.906629975@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-commit 9c6b789e954fae73c548f39332bcc56bdf0d4373 upstream.
+[ Upstream commit 3185f96968eedd117ec72ee7b87ead44b6d1bbbd ]
 
-This reverts commit b17b7fe6dd5c6ff74b38b0758ca799cdbb79e26e.
+Add all the available resets for the video clock controller
+on sm8150.
 
-That commit messed up the reference counting, so it needs to
-be rethought.
-
-Fixes: b17b7fe6dd5c ("usb: typec: class: fix typec_altmode_put_partner to put plugs")
-Cc:  <stable@vger.kernel.org>
-Cc: RD Babiera <rdbabiera@google.com>
-Reported-by: Chris Bainbridge <chris.bainbridge@gmail.com>
-Closes: https://lore.kernel.org/lkml/CAP-bSRb3SXpgo_BEdqZB-p1K5625fMegRZ17ZkPE1J8ZYgEHDg@mail.gmail.com/
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240102091142.2136472-1-heikki.krogerus@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20231201-videocc-8150-v3-1-56bec3a5e443@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 1fd9a939db24 ("clk: qcom: videocc-sm8150: Update the videocc resets")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/class.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/dt-bindings/clock/qcom,videocc-sm8150.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -267,7 +267,7 @@ static void typec_altmode_put_partner(st
- 	if (!partner)
- 		return;
+diff --git a/include/dt-bindings/clock/qcom,videocc-sm8150.h b/include/dt-bindings/clock/qcom,videocc-sm8150.h
+index e24ee840cfdb..c557b78dc572 100644
+--- a/include/dt-bindings/clock/qcom,videocc-sm8150.h
++++ b/include/dt-bindings/clock/qcom,videocc-sm8150.h
+@@ -16,6 +16,10 @@
  
--	adev = &altmode->adev;
-+	adev = &partner->adev;
+ /* VIDEO_CC Resets */
+ #define VIDEO_CC_MVSC_CORE_CLK_BCR	0
++#define VIDEO_CC_INTERFACE_BCR		1
++#define VIDEO_CC_MVS0_BCR		2
++#define VIDEO_CC_MVS1_BCR		3
++#define VIDEO_CC_MVSC_BCR		4
  
- 	if (is_typec_plug(adev->dev.parent)) {
- 		struct typec_plug *plug = to_typec_plug(adev->dev.parent);
-@@ -497,8 +497,7 @@ static void typec_altmode_release(struct
- {
- 	struct altmode *alt = to_altmode(to_typec_altmode(dev));
- 
--	if (!is_typec_port(dev->parent))
--		typec_altmode_put_partner(alt);
-+	typec_altmode_put_partner(alt);
- 
- 	altmode_id_remove(alt->adev.dev.parent, alt->id);
- 	kfree(alt);
+ /* VIDEO_CC GDSCRs */
+ #define VENUS_GDSC			0
+-- 
+2.43.0
+
 
 
