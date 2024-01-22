@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E002C23C6;
-	Tue, 23 Jan 2024 00:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B1E23C6;
+	Tue, 23 Jan 2024 00:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969588; cv=none; b=uO/6NOgdwUyGquf+kv5esyNbLC35bJPF3ORXeWzaeRCgvuhllG8Nc5y/9vyjfwwBC9P/gUmt3eAQDLReXcNJqNQD8N3NCDd/QU+GRMzWzZjMQNI0M4wFiXfujSFxx/CX3UokTInszNswq00YJENaEkxzPOKatpl8AKqoBhIct7U=
+	t=1705969589; cv=none; b=M5UfdaerYccmnBd7mN4D8KT7uMzFUO8Xi01L4DKj9R1HgK4/Hux0gv+hHAddodrq0lo3F8pwI8q9mdlEP3BC5kbF17iu1qor9R+zDjV/wcRhpby+5/b67tD6SXztVPKDA/BEtnx4SiRzRm2yRJ+NKdf/sOi9+zJ5xRL6hruaSTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969588; c=relaxed/simple;
-	bh=rbXyK/0UIDTai+bd6ahCwnWpBeLar12wyJ80HsXHrJQ=;
+	s=arc-20240116; t=1705969589; c=relaxed/simple;
+	bh=46iopOS9QSX7wU+OmJciXctQvU1oR1G8rYt0OhQ/9fs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Txcvpyj0/GYvpibJDcqzGi+z0kqsA8rZ5CuMHfhtk+ASxnqyHXhBFS6F2XDcXnF1Ztco3znYkhEvS7WvQvq7Cks+j8Oac5dnwdZtbwwdjsoQO/bEKwa8tYYihZVNjw5+cYaJyqGpCM5toAUTD9VfrRzpF9ip5IiQwz39+MMf6Pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPYdv/Se; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xd2AWIf4OUdgWZGR9PrGAMqlBPHqZ45tuNqF0C3e9w6YgaoUlH7qTWocQapYZH6g14Bi8+3TEnK/F/ikjlgJeNSgGGJVRmQnC5f18dXNRhPrYVhVZQLnFFFLnzvdhQfaL0V5GDuBzfLIutSMxgK5Vq+vjexNv+IceZTVyQ9GjAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTAF0f/S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPYdv/Se"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC2EC43390;
-	Tue, 23 Jan 2024 00:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTAF0f/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629D6C43390;
+	Tue, 23 Jan 2024 00:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969587;
-	bh=rbXyK/0UIDTai+bd6ahCwnWpBeLar12wyJ80HsXHrJQ=;
+	s=korg; t=1705969589;
+	bh=46iopOS9QSX7wU+OmJciXctQvU1oR1G8rYt0OhQ/9fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yPYdv/SekgV6031Hor67snsXS4bUbKpxhf0gih16uTeJMPLkpV1kD/fSWum0O0nB6
-	 p4iZHBm5pwt6j0Qkz7asTtG/0jLsJmsQLXmDhaE58Kwf8uemWyFI2dRowiWX/U0CAN
-	 0EKc/YQROmp9r/zoAXYnNHF7o29F0G7Kp9mS/clo=
+	b=rTAF0f/SHo0GomMa7cRcd1jqHdyaPGLs1MeYglsK39nFU7n8ChaAMNjDmO2xx2J14
+	 WMt+kkGD1SCTlgXdy+qwnDcIyuA6h9tv1NjeIo7d4+/nhtFhfr39y2qn5yrijKUwph
+	 x+mNNpG/JDRqDTfb4FGmHEAObm9zB/8WrijXqwhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 339/641] watchdog: bcm2835_wdt: Fix WDIOC_SETTIMEOUT handling
-Date: Mon, 22 Jan 2024 15:54:03 -0800
-Message-ID: <20240122235828.521100566@linuxfoundation.org>
+Subject: [PATCH 6.7 317/641] media: dvbdev: drop refcount on error path in dvb_device_open()
+Date: Mon, 22 Jan 2024 15:53:41 -0800
+Message-ID: <20240122235827.804890807@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,55 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit f33f5b1fd1be5f5106d16f831309648cb0f1c31d ]
+[ Upstream commit a2dd235df435a05d389240be748909ada91201d2 ]
 
-Users report about the unexpected behavior for setting timeouts above
-15 sec on Raspberry Pi. According to watchdog-api.rst the ioctl
-WDIOC_SETTIMEOUT shouldn't fail because of hardware limitations.
-But looking at the code shows that max_timeout based on the
-register value PM_WDOG_TIME_SET, which is the maximum.
+If call to file->f_op->open() fails, then call dvb_device_put(dvbdev).
 
-Since 664a39236e71 ("watchdog: Introduce hardware maximum heartbeat
-in watchdog core") the watchdog core is able to handle this problem.
-
-This fix has been tested with watchdog-test from selftests.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217374
-Fixes: 664a39236e71 ("watchdog: Introduce hardware maximum heartbeat in watchdog core")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20231112173251.4827-1-wahrenst@gmx.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 0fc044b2b5e2 ("media: dvbdev: adopts refcnt to avoid UAF")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/bcm2835_wdt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/dvb-core/dvbdev.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/watchdog/bcm2835_wdt.c b/drivers/watchdog/bcm2835_wdt.c
-index 7a855289ff5e..bb001c5d7f17 100644
---- a/drivers/watchdog/bcm2835_wdt.c
-+++ b/drivers/watchdog/bcm2835_wdt.c
-@@ -42,6 +42,7 @@
- 
- #define SECS_TO_WDOG_TICKS(x) ((x) << 16)
- #define WDOG_TICKS_TO_SECS(x) ((x) >> 16)
-+#define WDOG_TICKS_TO_MSECS(x) ((x) * 1000 >> 16)
- 
- struct bcm2835_wdt {
- 	void __iomem		*base;
-@@ -140,7 +141,7 @@ static struct watchdog_device bcm2835_wdt_wdd = {
- 	.info =		&bcm2835_wdt_info,
- 	.ops =		&bcm2835_wdt_ops,
- 	.min_timeout =	1,
--	.max_timeout =	WDOG_TICKS_TO_SECS(PM_WDOG_TIME_SET),
-+	.max_hw_heartbeat_ms =	WDOG_TICKS_TO_MSECS(PM_WDOG_TIME_SET),
- 	.timeout =	WDOG_TICKS_TO_SECS(PM_WDOG_TIME_SET),
- };
- 
+diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
+index 305bb21d843c..49f0eb7d0b9d 100644
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -104,6 +104,8 @@ static int dvb_device_open(struct inode *inode, struct file *file)
+ 			err = file->f_op->open(inode, file);
+ 		up_read(&minor_rwsem);
+ 		mutex_unlock(&dvbdev_mutex);
++		if (err)
++			dvb_device_put(dvbdev);
+ 		return err;
+ 	}
+ fail:
 -- 
 2.43.0
 
