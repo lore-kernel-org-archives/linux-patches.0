@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9103E12BF3D;
-	Tue, 23 Jan 2024 00:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1999A12BF3D;
+	Tue, 23 Jan 2024 00:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968943; cv=none; b=qU3KR29griAefwePfFF7yx18MhiWQW6xSJrCQmjGUN0VDNowtpmlJ6OKB46ZNQSJOT5YHH/quMcCT1QFdPdwo6vT9BkQJkbJehjXERKIa4kTWYcQWSaBLZRflK+ZGFhR1ZK3SL7zNxA4Tf3hda/yKrVTUznx2B/ojS5iYu9BT5Q=
+	t=1705968945; cv=none; b=uZtaR3XhkAXTRSTwpy2TnQgubejt9nwbjrZKGXGjj7600POULrVxXr7iEXcdKwDbzQRhH9xeZtkNl4s5U3ASao1CH7Tq/8pHs8YQQjdQ/xaXYP/NlCl6EsvNw5OR3HbXatrLPYSQCgdkwmY9yZ/ciuvrTxlDbocHuptgDcPtZU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968943; c=relaxed/simple;
-	bh=U+o+Jz50HZAqCpmejxqVgFO+iK+90iosNxjfJSVkdQU=;
+	s=arc-20240116; t=1705968945; c=relaxed/simple;
+	bh=LXjY2rlMppSROa1FDIlm/5jtj88MbOkkdAxR9vMw3sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qW2NK8IcDUKV+42CD1LOP3cEb4TIcAkUS225lyCEVPenkN3W6JSjn23b4Y/gauuUi6qhcMk7LqpFOOpJ2XoMYKqccSVfOqJ1mjLUTc4/r6GhEeboM6e/fK0g06ZctLHFqkzhlqQZNFDwsMumNjL++YhKGm3/aemuYfqQ9LgiBF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=djo+NGQs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t4voec59QFAy6/WUwu4X3Zg2Vlk2oQvQRJfnKFhk0T0jATet4m+W4x4mZwpDEzH/dCxdfcbXA8zKaK6wXa924BCjvcnlZSGlHpSDLY4r5g58k2kqdrI2KxBchXFYoolfi3i727VyL6R3AAfLtua0vKAEgW7DJzvhQmcN1gM5NaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IFKNQA9n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="djo+NGQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7D8C433C7;
-	Tue, 23 Jan 2024 00:15:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IFKNQA9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5760C433F1;
+	Tue, 23 Jan 2024 00:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968943;
-	bh=U+o+Jz50HZAqCpmejxqVgFO+iK+90iosNxjfJSVkdQU=;
+	s=korg; t=1705968944;
+	bh=LXjY2rlMppSROa1FDIlm/5jtj88MbOkkdAxR9vMw3sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=djo+NGQsHOaWz+m3bpIK4D+yysnuxCeWXaW31f47EtcKp8q2CTq+ZLY3E3+yw2Ejr
-	 R2P5RVATinWy4/clovG0tFHdBfltC3QZ7paUgOb3lKkxGd055sA1LhgwnJ5gkyYKYG
-	 /t7RB/+7pa7yFj0hKC1/XJ7oR0qzkoAuX7/FWkDI=
+	b=IFKNQA9nn7/o4eL7SSbMluJ7fFT6ZMIIyxn/rcybjYgSfuZAGj+Kw8YY+k5zDLdNh
+	 TogP3C+kKgb/id1XjAwoQUybyr7T1MqNAQelBqB7O3R4meoS6OIV2Cve5vywRetcZp
+	 GM/PBkYZjuNBo+tJMLc0VGCKevkgJqNdLoqW1A6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 114/194] drm/radeon/r100: Fix integer overflow issues in r100_cs_track_check()
-Date: Mon, 22 Jan 2024 15:57:24 -0800
-Message-ID: <20240122235724.129493885@linuxfoundation.org>
+Subject: [PATCH 5.4 115/194] drm/radeon: check return value of radeon_ring_lock()
+Date: Mon, 22 Jan 2024 15:57:25 -0800
+Message-ID: <20240122235724.172638595@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -53,48 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit b5c5baa458faa5430c445acd9a17481274d77ccf ]
+[ Upstream commit 71225e1c930942cb1e042fc08c5cc0c4ef30e95e ]
 
-It may be possible, albeit unlikely, to encounter integer overflow
-during the multiplication of several unsigned int variables, the
-result being assigned to a variable 'size' of wider type.
-
-Prevent this potential behaviour by converting one of the multiples
-to unsigned long.
+In the unlikely event of radeon_ring_lock() failing, its errno return
+value should be processed. This patch checks said return value and
+prints a debug message in case of an error.
 
 Found by Linux Verification Center (linuxtesting.org) with static
 analysis tool SVACE.
 
-Fixes: 0242f74d29df ("drm/radeon: clean up CS functions in r100.c")
+Fixes: 48c0c902e2e6 ("drm/radeon/kms: add support for CP setup on SI")
 Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/r100.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/radeon/si.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/radeon/r100.c b/drivers/gpu/drm/radeon/r100.c
-index 110fb38004b1..9d2e6112f70a 100644
---- a/drivers/gpu/drm/radeon/r100.c
-+++ b/drivers/gpu/drm/radeon/r100.c
-@@ -2313,7 +2313,7 @@ int r100_cs_track_check(struct radeon_device *rdev, struct r100_cs_track *track)
- 	switch (prim_walk) {
- 	case 1:
- 		for (i = 0; i < track->num_arrays; i++) {
--			size = track->arrays[i].esize * track->max_indx * 4;
-+			size = track->arrays[i].esize * track->max_indx * 4UL;
- 			if (track->arrays[i].robj == NULL) {
- 				DRM_ERROR("(PW %u) Vertex array %u no buffer "
- 					  "bound\n", prim_walk, i);
-@@ -2332,7 +2332,7 @@ int r100_cs_track_check(struct radeon_device *rdev, struct r100_cs_track *track)
- 		break;
- 	case 2:
- 		for (i = 0; i < track->num_arrays; i++) {
--			size = track->arrays[i].esize * (nverts - 1) * 4;
-+			size = track->arrays[i].esize * (nverts - 1) * 4UL;
- 			if (track->arrays[i].robj == NULL) {
- 				DRM_ERROR("(PW %u) Vertex array %u no buffer "
- 					  "bound\n", prim_walk, i);
+diff --git a/drivers/gpu/drm/radeon/si.c b/drivers/gpu/drm/radeon/si.c
+index 74cbed9377f0..ae74e8b01ee0 100644
+--- a/drivers/gpu/drm/radeon/si.c
++++ b/drivers/gpu/drm/radeon/si.c
+@@ -3616,6 +3616,10 @@ static int si_cp_start(struct radeon_device *rdev)
+ 	for (i = RADEON_RING_TYPE_GFX_INDEX; i <= CAYMAN_RING_TYPE_CP2_INDEX; ++i) {
+ 		ring = &rdev->ring[i];
+ 		r = radeon_ring_lock(rdev, ring, 2);
++		if (r) {
++			DRM_ERROR("radeon: cp failed to lock ring (%d).\n", r);
++			return r;
++		}
+ 
+ 		/* clear the compute context state */
+ 		radeon_ring_write(ring, PACKET3_COMPUTE(PACKET3_CLEAR_STATE, 0));
 -- 
 2.43.0
 
