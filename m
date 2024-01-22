@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9F212BF3D;
-	Tue, 23 Jan 2024 00:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291F312C52C;
+	Tue, 23 Jan 2024 00:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968935; cv=none; b=l8eUpfdPWPb8CoO6WXg6VeG9oTIgRti7z2gf3iTYid3ZArsb3qIx2qBYxuQVQjpy68iwgxE4KHUKfQzCLbzAxZZICL9gGIQust9FIyLRvU10DfPv9lPTuXhL66yCDL1hV+pqJYKvNq19S+mRRfcMHrKo0RbO1MWQdVBP1lBgMxc=
+	t=1705968937; cv=none; b=NOSkX86Caz2SYpPfbiRPmQ5HUKa4Ke6jn8ZdRzqzP7gmn7GO0656KHTgsrlIVSYFsv2a7l4WjBn4Jo8UdIx0cgS9GEfB2YBxcp2ckyNdCy+DsoLwhkTOIupYuV6If2f/YBEx6fCFtXfxWPeJ7kseBrD+d4ysKogGkd4beGzeskI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968935; c=relaxed/simple;
-	bh=Al1aTldJ9bJZFZCq45/Ig4vl2wNwT2MJ4CPofb/F9SY=;
+	s=arc-20240116; t=1705968937; c=relaxed/simple;
+	bh=AdvQvEoFsEe9+8WmQ6K84hdHcgRplZmuq5RUjTayJOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=py6v+6Kr5EChN1nNuxnv4vEe/qCbWWOMYsSOI+LRnMI/Zvr6k7h2by1Z8HsLcOAJsjeBBmjWhLi41akPEb+Umf0pgLXHoz68+qIM31qSpKhzvFjDfJCSYvgufkDC8Sn7foixYpmxK0S6B0KsQUmcmVdjBSBECnSdYdFfdEkmwCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GlZSV0bJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QiBwgcoiipgJ61JAZC/lfcupN8z00ato3cwx1MNH6wpGrc03iLImD0zmvbO5Xp4W073R4DNPLrRFP2/goGbcFeAi2hNVcax1yPWH3NUm9HmqkPSnOjViVeDTCXD2TZW5JGu4GlNeBtpnC1tYR8IPAfkMVMw2L5q9viAtdD5AIrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZ33vsUQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GlZSV0bJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA46C433C7;
-	Tue, 23 Jan 2024 00:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZ33vsUQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DBFC43390;
+	Tue, 23 Jan 2024 00:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968935;
-	bh=Al1aTldJ9bJZFZCq45/Ig4vl2wNwT2MJ4CPofb/F9SY=;
+	s=korg; t=1705968936;
+	bh=AdvQvEoFsEe9+8WmQ6K84hdHcgRplZmuq5RUjTayJOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GlZSV0bJSwXDSN2rHrKs3VcqHzI2W9D2C0JYdeKHLpWvKYWaehLd+BSsLRVortSzR
-	 EYL6cSLUGM5yBXpyzroeshBuO9VauLTIfaf3ksC4KWszTXHiVzVY/LsUObUC6l5pjy
-	 VSUNoFcJFhJyFo7OQQ+L4Hg3JLNsLkQFryadpC/s=
+	b=hZ33vsUQcbqsrNsgUrFUHOUcRrFsGLvZ4F3yIZSh6lmadI1PdNIhqiUOq8lRwa41R
+	 8UOUCViJsVRxvhj1K+m6uFjUiVAVnNuPg0F8ImTRsW4PHnNL8pGP4nRqeKBHC1bRLR
+	 kblnSH5OfKjbPbKUIqcXtgFDwRVjXa6tpzISrkP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 101/194] wifi: rtlwifi: rtl8192de: using calculate_bit_shift()
-Date: Mon, 22 Jan 2024 15:57:11 -0800
-Message-ID: <20240122235723.569347561@linuxfoundation.org>
+	"Ricardo B. Marliere" <ricardo@marliere.net>,
+	Mike Isely <isely@pobox.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+621409285c4156a009b3@syzkaller.appspotmail.com
+Subject: [PATCH 5.4 110/194] media: pvrusb2: fix use after free on context disconnection
+Date: Mon, 22 Jan 2024 15:57:20 -0800
+Message-ID: <20240122235723.950780333@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,76 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Ricardo B. Marliere <ricardo@marliere.net>
 
-[ Upstream commit b8b2baad2e652042cf8b6339939ac2f4e6f53de4 ]
+[ Upstream commit ded85b0c0edd8f45fec88783d7555a5b982449c1 ]
 
-Using calculate_bit_shift() to replace _rtl92d_phy_calculate_bit_shift().
-And fix the undefined bitwise shift behavior problem.
+Upon module load, a kthread is created targeting the
+pvr2_context_thread_func function, which may call pvr2_context_destroy
+and thus call kfree() on the context object. However, that might happen
+before the usb hub_event handler is able to notify the driver. This
+patch adds a sanity check before the invalid read reported by syzbot,
+within the context disconnection call stack.
 
-Fixes: 7274a8c22980 ("rtlwifi: rtl8192de: Merge phy routines")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231219065739.1895666-8-suhui@nfschina.com
+Reported-and-tested-by: syzbot+621409285c4156a009b3@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/000000000000a02a4205fff8eb92@google.com/
+
+Fixes: e5be15c63804 ("V4L/DVB (7711): pvrusb2: Fix race on module unload")
+Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
+Acked-by: Mike Isely <isely@pobox.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/realtek/rtlwifi/rtl8192de/phy.c  | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/media/usb/pvrusb2/pvrusb2-context.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-index 7ba2aeaf071f..fb9355b2f6be 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-@@ -169,13 +169,6 @@ static const u8 channel_all[59] = {
- 	157, 159, 161, 163, 165
- };
- 
--static u32 _rtl92d_phy_calculate_bit_shift(u32 bitmask)
--{
--	u32 i = ffs(bitmask);
--
--	return i ? i - 1 : 32;
--}
--
- u32 rtl92d_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
+diff --git a/drivers/media/usb/pvrusb2/pvrusb2-context.c b/drivers/media/usb/pvrusb2/pvrusb2-context.c
+index 14170a5d72b3..1764674de98b 100644
+--- a/drivers/media/usb/pvrusb2/pvrusb2-context.c
++++ b/drivers/media/usb/pvrusb2/pvrusb2-context.c
+@@ -268,7 +268,8 @@ void pvr2_context_disconnect(struct pvr2_context *mp)
  {
- 	struct rtl_priv *rtlpriv = rtl_priv(hw);
-@@ -198,7 +191,7 @@ u32 rtl92d_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
- 	} else {
- 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
- 	}
--	bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	returnvalue = (originalvalue & bitmask) >> bitshift;
- 	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
- 		 "BBR MASK=0x%x Addr[0x%x]=0x%x\n",
-@@ -230,7 +223,7 @@ void rtl92d_phy_set_bb_reg(struct ieee80211_hw *hw,
- 					dbi_direct);
- 		else
- 			originalvalue = rtl_read_dword(rtlpriv, regaddr);
--		bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
-+		bitshift = calculate_bit_shift(bitmask);
- 		data = ((originalvalue & (~bitmask)) | (data << bitshift));
- 	}
- 	if (rtlhal->during_mac1init_radioa || rtlhal->during_mac0init_radiob)
-@@ -318,7 +311,7 @@ u32 rtl92d_phy_query_rf_reg(struct ieee80211_hw *hw,
- 		 regaddr, rfpath, bitmask);
- 	spin_lock_irqsave(&rtlpriv->locks.rf_lock, flags);
- 	original_value = _rtl92d_phy_rf_serial_read(hw, rfpath, regaddr);
--	bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	readback_value = (original_value & bitmask) >> bitshift;
- 	spin_unlock_irqrestore(&rtlpriv->locks.rf_lock, flags);
- 	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
-@@ -345,7 +338,7 @@ void rtl92d_phy_set_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
- 		if (bitmask != RFREG_OFFSET_MASK) {
- 			original_value = _rtl92d_phy_rf_serial_read(hw,
- 				rfpath, regaddr);
--			bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data = ((original_value & (~bitmask)) |
- 				(data << bitshift));
- 		}
+ 	pvr2_hdw_disconnect(mp->hdw);
+ 	mp->disconnect_flag = !0;
+-	pvr2_context_notify(mp);
++	if (!pvr2_context_shutok())
++		pvr2_context_notify(mp);
+ }
+ 
+ 
 -- 
 2.43.0
 
