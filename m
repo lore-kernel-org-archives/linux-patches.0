@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145E17472;
-	Tue, 23 Jan 2024 00:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5EE2581;
+	Tue, 23 Jan 2024 00:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969611; cv=none; b=sOADxZ2L1ZIzaZqatK5eRfaom9QsemAFsuLTmnCdFLBhM99BPh0JtE6ifPTzKx8putPBsKPqyvXa/aBuUEylnGZ32nGPK7jcX0AYj7zBn0K0gHeoFYnJ3OtO1ZDX2cebW3XBVwF74HLquth+MQHKXGE/JO2XZtxt15kD8VZN3WQ=
+	t=1705969612; cv=none; b=GwTamJk1YRQbY/2AVQm8YUKHqEggO/xHkDozquC2XP6Fb4oruXL91rOlR3EVMz/e1Anwwgy90XRYsT8eThVDeUQYtdpXybcsAt7vjrEqo4MG8ztwI6BPwzFqd+1ILGQWd52lp8rBm3TMZ1Uppflu8eu0QSNbXiW+DqqvWmGHKaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969611; c=relaxed/simple;
-	bh=VhY+IKKpABJEa4o0QkdORIaBK6GMXEkADTUlqHEfEC4=;
+	s=arc-20240116; t=1705969612; c=relaxed/simple;
+	bh=qD3Yyq5dgTRyKcZk2Gz2cdTK2OBElVGGlpK0tbT7bCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gxNQZpl+Nr6vq+98gEcmNvsnxpqBZEmrIGcA3uRiugZY+NQUP99Jh3on/aV1X2VeBDK+Cd3K232NfC6V8DRlWsh2CtuOIDhaJ2Nq4E87/UZXgk0sL75WO3WjQe/ZzekTQP8CP+GJEQ5uSdUl7briUSVs92gnbfXc87Z8kVVQSkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQWJLZs3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oE72O46PIo1P6INH/dapgDAkegpRxNnH/hrcDlT8bokfg10sotyDIQ/Nxma16oDKg4P+MDrMwCoueFXbRVzifeuSPjEGA5SOi/8rCUkT9ZyLaRN/56sJGEe2uYySqVsdQ1Gb5cYzLV6kcsrK/BliywgRjzXa4wYGZ3SK6LPc7rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ai9Ffd6p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQWJLZs3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79FBC433F1;
-	Tue, 23 Jan 2024 00:26:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ai9Ffd6p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E3CC433C7;
+	Tue, 23 Jan 2024 00:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969610;
-	bh=VhY+IKKpABJEa4o0QkdORIaBK6GMXEkADTUlqHEfEC4=;
+	s=korg; t=1705969612;
+	bh=qD3Yyq5dgTRyKcZk2Gz2cdTK2OBElVGGlpK0tbT7bCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iQWJLZs383Xd9VQUuHsqLnOlSWomOkwgdkkgQpBNs50JXhCNL4LJYk4FYDfK0wd25
-	 brashLo/TyJct8sAnyd4uPQTSHeION6wgcGi1vmxU/NLqmF4x3jM5f+lIqZ38leEcE
-	 EvBB5eSdPbS2sPAlPr9jcdPz4JSGw5nEwnn1/nbM=
+	b=Ai9Ffd6p1ivKhftd8UT/7qxwIg3uv1bYHIlTlxLfLh538uafPKJfSvh9jBsRiyqA7
+	 13yKq3U81/RqzcqT73rNH/icyVlACe1L7npY43YMgvuhr9ZfVHwqjrNPUrSWfv/Ivr
+	 BdD27eyhHrkyAxuuIFKCrV+/NE5DjdCXYoX6dOrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Chiu <chiu@endlessos.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 357/641] ASoC: rt5645: Drop double EF20 entry from dmi_platform_data[]
-Date: Mon, 22 Jan 2024 15:54:21 -0800
-Message-ID: <20240122235829.102991904@linuxfoundation.org>
+Subject: [PATCH 6.7 358/641] ALSA: scarlett2: Add missing error check to scarlett2_config_save()
+Date: Mon, 22 Jan 2024 15:54:22 -0800
+Message-ID: <20240122235829.140156767@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,51 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Geoffrey D. Bennett <g@b4.vu>
 
-[ Upstream commit 51add1687f39292af626ac3c2046f49241713273 ]
+[ Upstream commit 5f6ff6931a1c0065a55448108940371e1ac8075f ]
 
-dmi_platform_data[] first contains a DMI entry matching:
+scarlett2_config_save() was ignoring the return value from
+scarlett2_usb(). As this function is not called from user-space we
+can't return the error, so call usb_audio_err() instead.
 
-   DMI_MATCH(DMI_PRODUCT_NAME, "EF20"),
-
-and then contains an identical entry except for the match being:
-
-   DMI_MATCH(DMI_PRODUCT_NAME, "EF20EA"),
-
-Since these are partial (non exact) DMI matches the first match
-will also match any board with "EF20EA" in their DMI product-name,
-drop the second, redundant, entry.
-
-Fixes: a4dae468cfdd ("ASoC: rt5645: Add ACPI-defined GPIO for ECS EF20 series")
-Cc: Chris Chiu <chiu@endlessos.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://msgid.link/r/20231126214024.300505-2-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Fixes: 9e4d5c1be21f ("ALSA: usb-audio: Scarlett Gen 2 mixer interface")
+Link: https://lore.kernel.org/r/bf0a15332d852d7825fa6da87d2a0d9c0b702053.1703001053.git.g@b4.vu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5645.c | 8 --------
- 1 file changed, 8 deletions(-)
+ sound/usb/mixer_scarlett2.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
-index a0d01d71d8b5..edcb85bd8ea7 100644
---- a/sound/soc/codecs/rt5645.c
-+++ b/sound/soc/codecs/rt5645.c
-@@ -3854,14 +3854,6 @@ static const struct dmi_system_id dmi_platform_data[] = {
- 		},
- 		.driver_data = (void *)&ecs_ef20_platform_data,
- 	},
--	{
--		.ident = "EF20EA",
--		.callback = cht_rt5645_ef20_quirk_cb,
--		.matches = {
--			DMI_MATCH(DMI_PRODUCT_NAME, "EF20EA"),
--		},
--		.driver_data = (void *)&ecs_ef20_platform_data,
--	},
- 	{ }
- };
+diff --git a/sound/usb/mixer_scarlett2.c b/sound/usb/mixer_scarlett2.c
+index 33a3d1161885..35e45c337383 100644
+--- a/sound/usb/mixer_scarlett2.c
++++ b/sound/usb/mixer_scarlett2.c
+@@ -1524,9 +1524,11 @@ static void scarlett2_config_save(struct usb_mixer_interface *mixer)
+ {
+ 	__le32 req = cpu_to_le32(SCARLETT2_USB_CONFIG_SAVE);
  
+-	scarlett2_usb(mixer, SCARLETT2_USB_DATA_CMD,
+-		      &req, sizeof(u32),
+-		      NULL, 0);
++	int err = scarlett2_usb(mixer, SCARLETT2_USB_DATA_CMD,
++				&req, sizeof(u32),
++				NULL, 0);
++	if (err < 0)
++		usb_audio_err(mixer->chip, "config save failed: %d\n", err);
+ }
+ 
+ /* Delayed work to save config */
 -- 
 2.43.0
 
