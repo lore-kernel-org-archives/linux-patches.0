@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D445683;
-	Tue, 23 Jan 2024 00:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636F35680;
+	Tue, 23 Jan 2024 00:06:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968401; cv=none; b=Cv3VWg6O12k4xkJAqVJ7y3jIgmuCrHKBtxdJpuRQuQzjcTWxYJ0NdjHs9DAuAcFlo0WRzlbMkcKPcy+veKj/xb3VGRKSGAO3lG0fPfT8BZco6Sfmp0b44mOfg58XXl58MY7SwFKkJuytuCVtF7FnDN9h3jPYogv2vqAsfvIJe0o=
+	t=1705968406; cv=none; b=dc/D3syODSwq7ZWuMvsAjNQ4dNRZQVifJ/PyORUCAb+pRa3ypm471rR06NbFcJYFPEnSQ/nsuAAJSBXXQ0Xw9w5cybQmR0LPJPXxnjyjPTrzhYX/9cDujMST+dkSQdUYdDKYCzIc15Nx6thxGmcY1SOy2Iwwi7J7Of76X2bnfh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968401; c=relaxed/simple;
-	bh=lK8RlYXVJdrIjT3u6bDIhlo/8OzCnG/rGme3cw331OU=;
+	s=arc-20240116; t=1705968406; c=relaxed/simple;
+	bh=AEesORLJcKV7eqKv1ud6fgddnOKMA68Ks7/qICYjV4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RlPv8U775jBVsCWFbUsTYiHl5lZfjQLBz0LwKiyEYEca+MPhmqqqdA3qek2VACpIYXIEmKjr17+Fr9e3EDAFxq14dxT1+8SySEm42pk9UnvRabzhdLbUIQFjNbUhUfCqAOXhhiRIT8yJfU+dY6jJtAGXcsonEfG1G5er1rGdlAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAd0307F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=huyhaWuKNmSJUZsnbVjjlfZssKEuN7dNqxB6WappCggC9LVI5NyUeaeIvC7jhor9RYJuzI5rm9EfwontbDT30sqkGkNt4sO4EoghJg+pg+9OrLN23Yfx+KP84k/tFiijnOc1ZcV9arY7ZjEbPUYB4ezVvNkeilLuBWp5WrrhDR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jw2jV44U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAd0307F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D38BC433F1;
-	Tue, 23 Jan 2024 00:06:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jw2jV44U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E1EC433F1;
+	Tue, 23 Jan 2024 00:06:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968400;
-	bh=lK8RlYXVJdrIjT3u6bDIhlo/8OzCnG/rGme3cw331OU=;
+	s=korg; t=1705968405;
+	bh=AEesORLJcKV7eqKv1ud6fgddnOKMA68Ks7/qICYjV4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IAd0307FYco4H1U3y0KR7qiag3SwMA5ZUQoRJVTZrwzCNAX/73AiPbLSYnmVPqEfH
-	 2yFQlkirqv/ZGAha3XDGXeKvvcInPtNR7Hh95OlmCJ64YHRG9DUtXJ3/bpSX5Zq5qG
-	 jz2d51nOcstr8cWQlSaeIh7GSDxFh+bgGrUJlvnw=
+	b=Jw2jV44UX6OgqpDMnTIw16WxgJL8M0IJbRICrFrFTtfJupEmb/Z47z927C/svgy/K
+	 db1niWrr8Tf/5m+aVHD3cMka3WX/jCFpTXkR8YwYpYVda9izr68p4oy0s3opJs7JF7
+	 GXFhC6Oo/a3nKG0cVJQs1lDWrpxAn7kFEi6X/Z64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3eff5e51bf1db122a16e@syzkaller.appspotmail.com,
-	Chengming Zhou <zhouchengming@bytedance.com>,
-	Barry Song <v-songbaohua@oppo.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 061/148] crypto: scomp - fix req->dst buffer overflow
-Date: Mon, 22 Jan 2024 15:56:57 -0800
-Message-ID: <20240122235714.878918816@linuxfoundation.org>
+Subject: [PATCH 4.19 062/148] blocklayoutdriver: Fix reference leak of pnfs_device_node
+Date: Mon, 22 Jan 2024 15:56:58 -0800
+Message-ID: <20240122235714.914715527@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -53,55 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengming Zhou <zhouchengming@bytedance.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit 744e1885922a9943458954cfea917b31064b4131 ]
+[ Upstream commit 1530827b90025cdf80c9b0d07a166d045a0a7b81 ]
 
-The req->dst buffer size should be checked before copying from the
-scomp_scratch->dst to avoid req->dst buffer overflow problem.
+The error path for blocklayout's device lookup is missing a reference drop
+for the case where a lookup finds the device, but the device is marked with
+NFS_DEVICEID_UNAVAILABLE.
 
-Fixes: 1ab53a77b772 ("crypto: acomp - add driver-side scomp interface")
-Reported-by: syzbot+3eff5e51bf1db122a16e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/0000000000000b05cd060d6b5511@google.com/
-Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
-Reviewed-by: Barry Song <v-songbaohua@oppo.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: b3dce6a2f060 ("pnfs/blocklayout: handle transient devices")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/scompress.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/nfs/blocklayout/blocklayout.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/crypto/scompress.c b/crypto/scompress.c
-index 3702f1648ea8..34174f55a6d6 100644
---- a/crypto/scompress.c
-+++ b/crypto/scompress.c
-@@ -132,6 +132,7 @@ static int scomp_acomp_comp_decomp(struct acomp_req *req, int dir)
- 	struct crypto_scomp *scomp = *tfm_ctx;
- 	void **ctx = acomp_request_ctx(req);
- 	struct scomp_scratch *scratch;
-+	unsigned int dlen;
- 	int ret;
- 
- 	if (!req->src || !req->slen || req->slen > SCOMP_SCRATCH_SIZE)
-@@ -143,6 +144,8 @@ static int scomp_acomp_comp_decomp(struct acomp_req *req, int dir)
- 	if (!req->dlen || req->dlen > SCOMP_SCRATCH_SIZE)
- 		req->dlen = SCOMP_SCRATCH_SIZE;
- 
-+	dlen = req->dlen;
+diff --git a/fs/nfs/blocklayout/blocklayout.c b/fs/nfs/blocklayout/blocklayout.c
+index 06cb0c1d9aee..a2bca78b80ab 100644
+--- a/fs/nfs/blocklayout/blocklayout.c
++++ b/fs/nfs/blocklayout/blocklayout.c
+@@ -604,6 +604,8 @@ bl_find_get_deviceid(struct nfs_server *server,
+ 		nfs4_delete_deviceid(node->ld, node->nfs_client, id);
+ 		goto retry;
+ 	}
 +
- 	scratch = raw_cpu_ptr(&scomp_scratch);
- 	spin_lock(&scratch->lock);
++	nfs4_put_deviceid_node(node);
+ 	return ERR_PTR(-ENODEV);
+ }
  
-@@ -160,6 +163,9 @@ static int scomp_acomp_comp_decomp(struct acomp_req *req, int dir)
- 				ret = -ENOMEM;
- 				goto out;
- 			}
-+		} else if (req->dlen > dlen) {
-+			ret = -ENOSPC;
-+			goto out;
- 		}
- 		scatterwalk_map_and_copy(scratch->dst, req->dst, 0, req->dlen,
- 					 1);
 -- 
 2.43.0
 
