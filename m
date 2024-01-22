@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8424745F0;
-	Tue, 23 Jan 2024 02:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44C97762F;
+	Tue, 23 Jan 2024 02:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975504; cv=none; b=PoYFU75PuzUbwv/ahMCVPT3las1fGCGIh/0+RyIDLNm4ItGAab83ifAr1KikoVlTnqwfBw0zxd5ZIZJdzVy3ghgbPNC/KmEBmdKEQWpQp2b8L9RHOAy5DL9Ch3VHpYcOH7lPs2DAe+NDTd43aFtM9ARAcQ8OuDQblVFEsynW6aE=
+	t=1705975505; cv=none; b=TV1jX9kmAjsHVlny1FuvXUlw3xZlNsS+u8Ed+TT48Xo2Iw7wNzU8qr50flWfyX0PuTKmCurxV5bJpmu6go/3HQcSkWYSkZXDwld4g6nFVA94JPzNfeoa6Ua7iFlMX+7iGw1htgCmQZkangvuvhcbhnNwooCL8SxwmsE2tA9LVr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975504; c=relaxed/simple;
-	bh=gW3UN6johKmXicP2sl4jdifwUGXiQDW+YG17Egz4jkk=;
+	s=arc-20240116; t=1705975505; c=relaxed/simple;
+	bh=0qV7VE7cAj+yYc8TVULnv1T/PB8Vd0Axy39jPYMySvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhfhTaVwnCFPn0gymb4tqY6E7ZHOWX2G9RZfarDmi8kgJ4xwDsZzpcMYn653MRENsSHYiomFNhhRB8YUxcWakPXDxV4v3zB9MYlgNeBtTlv+tCe0CcUJ5iP7RqtG6r35Gp1H5tXnfUuaIe9EJ/CCXvwQe/rNfVnTU2oAFUGrGPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TebvrXHv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DCy7HmJxnUcgA/MXLz5S//7KYLde9EW101uWyMWdDfl4kIvkz7qWEtupNIv1QzaruiNTgnQ79azWeBIxUZVVhN4om2OW9hh2HtSZ1CoO6uTL4JDwpk9IF95SI2x7GJpxKApXXYcLKM+G0sab6asGIgNrGDUDrFnwtWRNgjdOcmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/RxBPPG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TebvrXHv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6DEC433C7;
-	Tue, 23 Jan 2024 02:05:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/RxBPPG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D1AC433C7;
+	Tue, 23 Jan 2024 02:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975504;
-	bh=gW3UN6johKmXicP2sl4jdifwUGXiQDW+YG17Egz4jkk=;
+	s=korg; t=1705975505;
+	bh=0qV7VE7cAj+yYc8TVULnv1T/PB8Vd0Axy39jPYMySvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TebvrXHvsNCW2X8qSDI7m8Y1fZC4yRGlWQxiGVhL69HcQSRdvaNhsYWj552ebDP4y
-	 bHH1qud5q5Nu9R1VF9Yz1VnyqzAqsJExMCGkgwjYlSlIYMYM9eoEy/xsQ+qWdJClqo
-	 t+l2+znzGG9jHM5Pk6l4gzxRBUG5QdGqPMUrBym0=
+	b=p/RxBPPG0z18tqEhSbtzridMv+ceSW4SSB3t+AKSw/30aL44bU8dd5AzTNjVgFqvn
+	 FJd8CwlzZdGWNNyMN3/E8Rue2ytznVWMtmT6fMJQqVaNnVqsx51pvkqNggb7Svzczx
+	 KzxLQ2pa3CJqcESwuDJhM7USqMHgFb28VlptNLa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Lee Jones <lee@kernel.org>,
+	Su Hui <suhui@nfschina.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 439/583] mfd: cs42l43: Correct SoundWire port list
-Date: Mon, 22 Jan 2024 15:58:10 -0800
-Message-ID: <20240122235825.408140064@linuxfoundation.org>
+Subject: [PATCH 6.6 457/583] power: supply: bq256xx: fix some problem in bq256xx_hw_init
+Date: Mon, 22 Jan 2024 15:58:28 -0800
+Message-ID: <20240122235825.950796313@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,138 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 47b1b03dc56ebc302620ce43e967aa8f33516f6f ]
+[ Upstream commit b55d073e6501dc6077edaa945a6dad8ac5c8bbab ]
 
-Two ports are missing from the port list, and the wrong port is set
-to 4 channels. Also the attempt to list them by function is rather
-misguided, there is nothing in the hardware that fixes a particular
-port to one function. Factor out the port properties to an actual
-struct, fixing the missing ports and correcting the port set to 4
-channels.
+smatch complains that there is a buffer overflow and clang complains
+'ret' is never read.
 
-Fixes: ace6d1448138 ("mfd: cs42l43: Add support for cs42l43 core driver")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20231130115712.669180-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Smatch error:
+drivers/power/supply/bq256xx_charger.c:1578 bq256xx_hw_init() error:
+buffer overflow 'bq256xx_watchdog_time' 4 <= 4
+
+Clang static checker:
+Value stored to 'ret' is never read.
+
+Add check for buffer overflow and error code from regmap_update_bits().
+
+Fixes: 32e4978bb920 ("power: supply: bq256xx: Introduce the BQ256XX charger driver")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20231116041822.1378758-1-suhui@nfschina.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/cs42l43-sdw.c | 74 +++++++++++++++------------------------
- 1 file changed, 28 insertions(+), 46 deletions(-)
+ drivers/power/supply/bq256xx_charger.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/cs42l43-sdw.c b/drivers/mfd/cs42l43-sdw.c
-index 7392b3d2e6b9..4be4df9dd8cf 100644
---- a/drivers/mfd/cs42l43-sdw.c
-+++ b/drivers/mfd/cs42l43-sdw.c
-@@ -17,13 +17,12 @@
+diff --git a/drivers/power/supply/bq256xx_charger.c b/drivers/power/supply/bq256xx_charger.c
+index 82d3cd5ee2f9..c8368dae69c7 100644
+--- a/drivers/power/supply/bq256xx_charger.c
++++ b/drivers/power/supply/bq256xx_charger.c
+@@ -1574,13 +1574,16 @@ static int bq256xx_hw_init(struct bq256xx_device *bq)
+ 			wd_reg_val = i;
+ 			break;
+ 		}
+-		if (bq->watchdog_timer > bq256xx_watchdog_time[i] &&
++		if (i + 1 < BQ256XX_NUM_WD_VAL &&
++		    bq->watchdog_timer > bq256xx_watchdog_time[i] &&
+ 		    bq->watchdog_timer < bq256xx_watchdog_time[i + 1])
+ 			wd_reg_val = i;
+ 	}
+ 	ret = regmap_update_bits(bq->regmap, BQ256XX_CHARGER_CONTROL_1,
+ 				 BQ256XX_WATCHDOG_MASK, wd_reg_val <<
+ 						BQ256XX_WDT_BIT_SHIFT);
++	if (ret)
++		return ret;
  
- #include "cs42l43.h"
- 
--enum cs42l43_sdw_ports {
--	CS42L43_DMIC_DEC_ASP_PORT = 1,
--	CS42L43_SPK_TX_PORT,
--	CS42L43_SPDIF_HP_PORT,
--	CS42L43_SPK_RX_PORT,
--	CS42L43_ASP_PORT,
--};
-+#define CS42L43_SDW_PORT(port, chans) { \
-+	.num = port, \
-+	.max_ch = chans, \
-+	.type = SDW_DPN_FULL, \
-+	.max_word = 24, \
-+}
- 
- static const struct regmap_config cs42l43_sdw_regmap = {
- 	.reg_bits		= 32,
-@@ -42,65 +41,48 @@ static const struct regmap_config cs42l43_sdw_regmap = {
- 	.num_reg_defaults	= ARRAY_SIZE(cs42l43_reg_default),
- };
- 
-+static const struct sdw_dpn_prop cs42l43_src_port_props[] = {
-+	CS42L43_SDW_PORT(1, 4),
-+	CS42L43_SDW_PORT(2, 2),
-+	CS42L43_SDW_PORT(3, 2),
-+	CS42L43_SDW_PORT(4, 2),
-+};
-+
-+static const struct sdw_dpn_prop cs42l43_sink_port_props[] = {
-+	CS42L43_SDW_PORT(5, 2),
-+	CS42L43_SDW_PORT(6, 2),
-+	CS42L43_SDW_PORT(7, 2),
-+};
-+
- static int cs42l43_read_prop(struct sdw_slave *sdw)
- {
- 	struct sdw_slave_prop *prop = &sdw->prop;
- 	struct device *dev = &sdw->dev;
--	struct sdw_dpn_prop *dpn;
--	unsigned long addr;
--	int nval;
- 	int i;
--	u32 bit;
- 
- 	prop->use_domain_irq = true;
- 	prop->paging_support = true;
- 	prop->wake_capable = true;
--	prop->source_ports = BIT(CS42L43_DMIC_DEC_ASP_PORT) | BIT(CS42L43_SPK_TX_PORT);
--	prop->sink_ports = BIT(CS42L43_SPDIF_HP_PORT) |
--			   BIT(CS42L43_SPK_RX_PORT) | BIT(CS42L43_ASP_PORT);
- 	prop->quirks = SDW_SLAVE_QUIRKS_INVALID_INITIAL_PARITY;
- 	prop->scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY |
- 			      SDW_SCP_INT1_IMPL_DEF;
- 
--	nval = hweight32(prop->source_ports);
--	prop->src_dpn_prop = devm_kcalloc(dev, nval, sizeof(*prop->src_dpn_prop),
--					  GFP_KERNEL);
-+	for (i = 0; i < ARRAY_SIZE(cs42l43_src_port_props); i++)
-+		prop->source_ports |= BIT(cs42l43_src_port_props[i].num);
-+
-+	prop->src_dpn_prop = devm_kmemdup(dev, cs42l43_src_port_props,
-+					  sizeof(cs42l43_src_port_props), GFP_KERNEL);
- 	if (!prop->src_dpn_prop)
- 		return -ENOMEM;
- 
--	i = 0;
--	dpn = prop->src_dpn_prop;
--	addr = prop->source_ports;
--	for_each_set_bit(bit, &addr, 32) {
--		dpn[i].num = bit;
--		dpn[i].max_ch = 2;
--		dpn[i].type = SDW_DPN_FULL;
--		dpn[i].max_word = 24;
--		i++;
--	}
--	/*
--	 * All ports are 2 channels max, except the first one,
--	 * CS42L43_DMIC_DEC_ASP_PORT.
--	 */
--	dpn[CS42L43_DMIC_DEC_ASP_PORT].max_ch = 4;
-+	for (i = 0; i < ARRAY_SIZE(cs42l43_sink_port_props); i++)
-+		prop->sink_ports |= BIT(cs42l43_sink_port_props[i].num);
- 
--	nval = hweight32(prop->sink_ports);
--	prop->sink_dpn_prop = devm_kcalloc(dev, nval, sizeof(*prop->sink_dpn_prop),
--					   GFP_KERNEL);
-+	prop->sink_dpn_prop = devm_kmemdup(dev, cs42l43_sink_port_props,
-+					   sizeof(cs42l43_sink_port_props), GFP_KERNEL);
- 	if (!prop->sink_dpn_prop)
- 		return -ENOMEM;
- 
--	i = 0;
--	dpn = prop->sink_dpn_prop;
--	addr = prop->sink_ports;
--	for_each_set_bit(bit, &addr, 32) {
--		dpn[i].num = bit;
--		dpn[i].max_ch = 2;
--		dpn[i].type = SDW_DPN_FULL;
--		dpn[i].max_word = 24;
--		i++;
--	}
--
- 	return 0;
- }
- 
+ 	ret = power_supply_get_battery_info(bq->charger, &bat_info);
+ 	if (ret == -ENOMEM)
 -- 
 2.43.0
 
