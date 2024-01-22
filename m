@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0430E1427B;
-	Tue, 23 Jan 2024 02:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BFB6BB3A;
+	Tue, 23 Jan 2024 02:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975359; cv=none; b=N4QSDamrO5vWIADCdI74fEZI3VfWOsdzVQgboFhrXyp1J+WXbRa5+SJ+GhmwwsQXsS46w2An4eSMqqj1E5h37OqA80RVOJoKvknDR4yK2LXqmnKwWlB8I8OhLBUdiKnc14OheEsSTw8mW17fqL/udWSQUCX8luL4o3BqoMN6F5A=
+	t=1705975359; cv=none; b=cUDbYlAK4EFqnXdT3XDWccnneJEshu2ADse03yHAj+FyfOeK3SW+KQ/GlhZR7iYx5kK4egn11EHwj8An6xCah+d3FkI/WcfUVrKvnKg8azXSOHapqzVwmydlVKqo2XOpuBryZMDQHKQiu6AjG0UaowfToSrGCVTTyF6xeGeqgZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975359; c=relaxed/simple;
-	bh=qI9R8FjIaVSby/Gi+N8DeHYiSOfy/AUP3nparIrROS4=;
+	bh=EkGVycmBKI9n6wB3MotGnCwqRLjl75pmc3+UPvn6Q7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRcLELQSHXPnYdM+QhJWbTT6iOosdpg7WVvgEeog3Vh+Hv9mMM8CN5AgHA/URC5L/q6XrVszfIoO2XQXYtpbqw8mlIP3hdyNkKkhXMlOjF6i19IO23riXPX4QoQtR7iuTnIlG+AjtelC6QHCo+wq0dP5vAFU3U3oqFt1fQoP7FI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qs29Niqf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tk4nFRniAw11PqQYcXbHvNoJz2ETOFT9blP3bCK6q1BYr2SlOrUfmv+tbwxG/I+Ms4n41shT64SNoUaNg9Gmllu5eoHv9juOUJe5xo599UovT69exN9Jq465CQnAUk3xqJpCYhGfp/802E6au6rJN83c1xuK48E5hJtFqzfwIZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6I7VM1o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qs29Niqf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C12C43399;
-	Tue, 23 Jan 2024 02:02:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6I7VM1o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C457C43390;
+	Tue, 23 Jan 2024 02:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975358;
-	bh=qI9R8FjIaVSby/Gi+N8DeHYiSOfy/AUP3nparIrROS4=;
+	s=korg; t=1705975359;
+	bh=EkGVycmBKI9n6wB3MotGnCwqRLjl75pmc3+UPvn6Q7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qs29NiqfmsJd4sRI2mAvtQVPKnPhWQHDWdQ0NbzolRxLcM4LaWbRoHRZg5XBx8brt
-	 MIHipWCdjiIYLuO1HOly8qg1XciHAM7z2KCcvybUpESapwWYuptFucqkQhEfZA2bpa
-	 MYrzgQ2kA9s2/EiCIbSw9O/h2ByZqcXv5onro6BA=
+	b=j6I7VM1oe1EzQsie9mD+/uwZnFErWOlkn9vNZjfdBXS8RzxqLCvNMaPF4g6ca/2DX
+	 gsorFD/LsJDXX+VlomdIhT/U02W2TUTe/jOdOnGpu84NtaTRAS9Q0QuJZ37UTdaU/m
+	 0r4zktXzPYCawahoFgfAn6OVInTbXsfBqh/3R5ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Manorit Chawdhry <m-chawdhry@ti.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	"Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 303/583] watchdog: rti_wdt: Drop runtime pm reference count when watchdog is unused
-Date: Mon, 22 Jan 2024 15:55:54 -0800
-Message-ID: <20240122235821.295133377@linuxfoundation.org>
+Subject: [PATCH 6.6 321/583] ALSA: scarlett2: Allow passing any output to line_out_remap()
+Date: Mon, 22 Jan 2024 15:56:12 -0800
+Message-ID: <20240122235821.872308397@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,69 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vignesh Raghavendra <vigneshr@ti.com>
+From: Geoffrey D. Bennett <g@b4.vu>
 
-[ Upstream commit c1a6edf3b541e44e78f10bc6024df779715723f1 ]
+[ Upstream commit 2190b9aea4eb92ccf3176e35c17c959e40f1a81b ]
 
-Call runtime_pm_put*() if watchdog is not already started during probe and re
-enable it in watchdog start as required.
+Line outputs 3 & 4 on the Gen 3 18i8 are internally the analogue 7 and
+8 outputs, and this renumbering is hidden from the user by
+line_out_remap(). By allowing higher values (representing non-analogue
+outputs) to be passed to line_out_remap(), repeated code from
+scarlett2_mux_src_enum_ctl_get() and scarlett2_mux_src_enum_ctl_put()
+can be removed.
 
-On K3 SoCs, watchdogs and their corresponding CPUs are under same
-power-domain, so if the reference count of unused watchdogs aren't
-dropped, it will lead to CPU hotplug failures as Device Management
-firmware won't allow to turn off the power-domain due to dangling
-reference count.
-
-Fixes: 2d63908bdbfb ("watchdog: Add K3 RTI watchdog support")
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
-Tested-by: Manorit Chawdhry <m-chawdhry@ti.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20231213140110.938129-1-vigneshr@ti.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Link: https://lore.kernel.org/r/3b70267931f5994628ab27306c73cddd17b93c8f.1698342632.git.g@b4.vu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 50603a67daef ("ALSA: scarlett2: Add missing error checks to *_ctl_get()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/rti_wdt.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ sound/usb/mixer_scarlett_gen2.c | 25 +++++++++----------------
+ 1 file changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/watchdog/rti_wdt.c b/drivers/watchdog/rti_wdt.c
-index 8e1be7ba0103..9215793a1c81 100644
---- a/drivers/watchdog/rti_wdt.c
-+++ b/drivers/watchdog/rti_wdt.c
-@@ -77,6 +77,11 @@ static int rti_wdt_start(struct watchdog_device *wdd)
+diff --git a/sound/usb/mixer_scarlett_gen2.c b/sound/usb/mixer_scarlett_gen2.c
+index 834b936e7106..5e3118bd0dc1 100644
+--- a/sound/usb/mixer_scarlett_gen2.c
++++ b/sound/usb/mixer_scarlett_gen2.c
+@@ -1901,9 +1901,16 @@ static int scarlett2_master_volume_ctl_get(struct snd_kcontrol *kctl,
+ static int line_out_remap(struct scarlett2_data *private, int index)
  {
- 	u32 timer_margin;
- 	struct rti_wdt_device *wdt = watchdog_get_drvdata(wdd);
-+	int ret;
-+
-+	ret = pm_runtime_resume_and_get(wdd->parent);
-+	if (ret)
-+		return ret;
+ 	const struct scarlett2_device_info *info = private->info;
++	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
++	int line_out_count =
++		port_count[SCARLETT2_PORT_TYPE_ANALOGUE][SCARLETT2_PORT_OUT];
  
- 	/* set timeout period */
- 	timer_margin = (u64)wdd->timeout * wdt->freq;
-@@ -343,6 +348,9 @@ static int rti_wdt_probe(struct platform_device *pdev)
- 	if (last_ping)
- 		watchdog_set_last_hw_keepalive(wdd, last_ping);
- 
-+	if (!watchdog_hw_running(wdd))
-+		pm_runtime_put_sync(&pdev->dev);
+ 	if (!info->line_out_remap_enable)
+ 		return index;
 +
- 	return 0;
- 
- err_iomap:
-@@ -357,7 +365,10 @@ static void rti_wdt_remove(struct platform_device *pdev)
- 	struct rti_wdt_device *wdt = platform_get_drvdata(pdev);
- 
- 	watchdog_unregister_device(&wdt->wdd);
--	pm_runtime_put(&pdev->dev);
++	if (index >= line_out_count)
++		return index;
 +
-+	if (!pm_runtime_suspended(&pdev->dev))
-+		pm_runtime_put(&pdev->dev);
-+
- 	pm_runtime_disable(&pdev->dev);
+ 	return info->line_out_remap[index];
  }
  
+@@ -3388,14 +3395,7 @@ static int scarlett2_mux_src_enum_ctl_get(struct snd_kcontrol *kctl,
+ 	struct usb_mixer_elem_info *elem = kctl->private_data;
+ 	struct usb_mixer_interface *mixer = elem->head.mixer;
+ 	struct scarlett2_data *private = mixer->private_data;
+-	const struct scarlett2_device_info *info = private->info;
+-	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
+-	int line_out_count =
+-		port_count[SCARLETT2_PORT_TYPE_ANALOGUE][SCARLETT2_PORT_OUT];
+-	int index = elem->control;
+-
+-	if (index < line_out_count)
+-		index = line_out_remap(private, index);
++	int index = line_out_remap(private, elem->control);
+ 
+ 	mutex_lock(&private->data_mutex);
+ 	if (private->mux_updated)
+@@ -3412,16 +3412,9 @@ static int scarlett2_mux_src_enum_ctl_put(struct snd_kcontrol *kctl,
+ 	struct usb_mixer_elem_info *elem = kctl->private_data;
+ 	struct usb_mixer_interface *mixer = elem->head.mixer;
+ 	struct scarlett2_data *private = mixer->private_data;
+-	const struct scarlett2_device_info *info = private->info;
+-	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
+-	int line_out_count =
+-		port_count[SCARLETT2_PORT_TYPE_ANALOGUE][SCARLETT2_PORT_OUT];
+-	int index = elem->control;
++	int index = line_out_remap(private, elem->control);
+ 	int oval, val, err = 0;
+ 
+-	if (index < line_out_count)
+-		index = line_out_remap(private, index);
+-
+ 	mutex_lock(&private->data_mutex);
+ 
+ 	oval = private->mux[index];
 -- 
 2.43.0
 
