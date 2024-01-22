@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2871339A9;
-	Tue, 23 Jan 2024 00:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF4B13398C;
+	Tue, 23 Jan 2024 00:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969301; cv=none; b=YiM9LtikGwpSUe3jmX+8PfgooQs6wcnWo5slIf4GC/BH3Jp6vhyVQrId0YXjF2WRHyNx0fTLlKpyJUBWbV3rTARoUhXV7rkK40ZZAOa6UGghMlJgUK9Z1ij/+q/dQ2sl98v4sYV8wyxbOLBTUx6ABeTlkpbujRt7Yu6Qg3RNAgQ=
+	t=1705969302; cv=none; b=K+vrVqeuA4SjBQ08wWYOHWf9VHkEw48P2FDasSvYf96YlENVz3f0FasA6PzUyikylZrpqGGzgb2xpbJccM5VzViRFHbAZov8vSgYYNHsG+w2hIHLHxeI4ElgWzfdlSw+XVwgcsQ9ZogcM4jSuq+DMjd0NbnqpLUxuzAOIoOQw8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969301; c=relaxed/simple;
-	bh=qtemqpwavAEfT34To54KPe9EsXcnCmwIYc1RDfXwx0Q=;
+	s=arc-20240116; t=1705969302; c=relaxed/simple;
+	bh=rfEkE1D5ElLO5bG0VJGZ0dSh71pvxXN+rvAIq/IMToc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZTB28LzqJ1My3QWczEBjQeflJ1KOhfVVJBwfAwfjr0qE7To0wRoa7i+2ys5JPEUfiV8EUgG9K+yZ5IR3uFe587hNYCEK9Oh/TuO8Big/oWmx4VUmnxoOpdwBjSie+LAQQ2lHcQdaTqTMRJLV7GxYAUyKQ/w2+ebzTB/bnoPrm4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfUutdSC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/+RwzEfP/76aLWAl4xX+DXPsRsv81SdsfxNZBepy+lz7iqiwmfhq6KAj4zz1z9bMjKw/j/bnALalgCRjfeQzzxlKDqZsPsPOK5AvxVTk5kQiKm5woKQeOa1iutiOhCnYzySG8zNEd08dNxShejQU3+l+dP1JbubbLVAt9i7tjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylmHJP9t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfUutdSC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD37C43399;
-	Tue, 23 Jan 2024 00:21:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylmHJP9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36AF6C433F1;
+	Tue, 23 Jan 2024 00:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969300;
-	bh=qtemqpwavAEfT34To54KPe9EsXcnCmwIYc1RDfXwx0Q=;
+	s=korg; t=1705969302;
+	bh=rfEkE1D5ElLO5bG0VJGZ0dSh71pvxXN+rvAIq/IMToc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfUutdSCHkBGiJPhH9xtjCFUBFVA9duOO2exDOFCYUNaCChKsaH6FV18XPc84fXAZ
-	 31jDT6sBI7LWWPhkcOyvchlDAchSP6QBPsZiTv/yfYu9Sf7wcAbOqhu/jr6aUdg1+Y
-	 alNuiu2MmWSQoyrtW7i3i59DBVviEUS7ClDnakjc=
+	b=ylmHJP9tdwc6jA3PONHV6wKy8SQjaVxp0zXStFXa+nlaxW/Xn+3XE6mqvTmb2R/Mb
+	 6k18J+9G76H1PhH+Fv0tZ3pwLBqx1380yzJRniJrWFH3xWh6HDK+KrtlJt/fhb3oiz
+	 sBxZ6xZelv5ujiCUgEFNV3ko9s+sNWHKGspau4w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Karan Tilak Kumar <kartilak@cisco.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 134/641] bpf: fix check for attempt to corrupt spilled pointer
-Date: Mon, 22 Jan 2024 15:50:38 -0800
-Message-ID: <20240122235822.242868048@linuxfoundation.org>
+Subject: [PATCH 6.7 135/641] scsi: fnic: Return error if vmalloc() failed
+Date: Mon, 22 Jan 2024 15:50:39 -0800
+Message-ID: <20240122235822.275576228@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,40 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-[ Upstream commit ab125ed3ec1c10ccc36bc98c7a4256ad114a3dae ]
+[ Upstream commit f5f27a332a14f43463aa0075efa3a0c662c0f4a8 ]
 
-When register is spilled onto a stack as a 1/2/4-byte register, we set
-slot_type[BPF_REG_SIZE - 1] (plus potentially few more below it,
-depending on actual spill size). So to check if some stack slot has
-spilled register we need to consult slot_type[7], not slot_type[0].
+In fnic_init_module() exists redundant check for return value from
+fnic_debugfs_init(), because at moment it only can return zero. It make
+sense to process theoretical vmalloc() failure.
 
-To avoid the need to remember and double-check this in the future, just
-use is_spilled_reg() helper.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 27113c59b6d0 ("bpf: Check the other end of slot_type for STACK_SPILL")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20231205184248.1502704-4-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 9730ddfb123d ("scsi: fnic: remove redundant assignment of variable rc")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Link: https://lore.kernel.org/r/20231128111008.2280507-1-artem.chernyshev@red-soft.ru
+Reviewed-by: Karan Tilak Kumar <kartilak@cisco.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/fnic/fnic_debugfs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 4d59b200e898..c4fbfe499475 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -4676,7 +4676,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 	 * so it's aligned access and [off, off + size) are within stack limits
- 	 */
- 	if (!env->allow_ptr_leaks &&
--	    state->stack[spi].slot_type[0] == STACK_SPILL &&
-+	    is_spilled_reg(&state->stack[spi]) &&
- 	    size != BPF_REG_SIZE) {
- 		verbose(env, "attempt to corrupt spilled pointer on stack\n");
- 		return -EACCES;
+diff --git a/drivers/scsi/fnic/fnic_debugfs.c b/drivers/scsi/fnic/fnic_debugfs.c
+index c4d9ed0d7d75..2619a2d4f5f1 100644
+--- a/drivers/scsi/fnic/fnic_debugfs.c
++++ b/drivers/scsi/fnic/fnic_debugfs.c
+@@ -52,9 +52,10 @@ int fnic_debugfs_init(void)
+ 		fc_trc_flag->fnic_trace = 2;
+ 		fc_trc_flag->fc_trace = 3;
+ 		fc_trc_flag->fc_clear = 4;
++		return 0;
+ 	}
+ 
+-	return 0;
++	return -ENOMEM;
+ }
+ 
+ /*
 -- 
 2.43.0
 
