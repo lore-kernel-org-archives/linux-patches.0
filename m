@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66E71350CA;
-	Tue, 23 Jan 2024 01:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0F91350CA;
+	Tue, 23 Jan 2024 01:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971936; cv=none; b=YrG6vuxEGSKxvyWjinea3Ll2LknbRhN9ym0TDv6JLVxv6CvPu9N/EcXafrqwgMqpZmB7DyvwhkoNBrrRSViebxPTpShIzc0OCdXU7oqPgAbBUfwLDCH6BZRDHJWwRKnEg2Dv0xbEUqhF9+8kP4DQg6RCSs86rIJ2W7OXhIJ17oA=
+	t=1705971938; cv=none; b=sZcx6+Cb9SmDfC//SRPHcT34PeqE1jUhjS0dawEiZin1nkqXR+jWtkjhua4dzuuIZg3hzOSHSJR4OQO+92CSztRQZYiZqe20tPj3YcUWBzFyxe8Q0ghesbCGiTXM+8ThntXU5vUdLYr5Tko5VpAiYBiApprBPqQvSmpUGhtHPUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971936; c=relaxed/simple;
-	bh=/Th/w+wVvlmVjOuefWUvKUjAP0N24V9gWMU39lWdupY=;
+	s=arc-20240116; t=1705971938; c=relaxed/simple;
+	bh=J7hyuUdyHtBM5X46H3cUanTRLME4igCwM26WT2qNOfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h3x7eHglvhpJhpjBfGQi3XFcdmTfAsdu+Dek1T1q240NdGSk/PS/nRk82qWFQoxkcn4yPa5E6HZ5ZRWgfQDKW58YlJ7wR6mt16q3FpxVHoZmtjXDoxDqlG/otn3SAxoYX6ODeslqtyhVZzk1IxG1oWJMO8o4hQAsIHar/dcorZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxzfhqLC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nQzhWDUOpswWX7znKOLR4J3uW1o4vLxkllXEVwZbRYhqXDOU4kNqzBxtxmA+TVryjr9jHqtHDHlqx4pCHmdkAA9xe1fgH1iNIjnBDmmVy2O8grKL4ONQN+I0NVq5pLdk1Ja7/pMzuYZUs4rsWxdLiNuBUTC6p/H0pzsAP+Xp3Hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVm3F2he; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxzfhqLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C0FC433C7;
-	Tue, 23 Jan 2024 01:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVm3F2he"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8EDC433F1;
+	Tue, 23 Jan 2024 01:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971936;
-	bh=/Th/w+wVvlmVjOuefWUvKUjAP0N24V9gWMU39lWdupY=;
+	s=korg; t=1705971938;
+	bh=J7hyuUdyHtBM5X46H3cUanTRLME4igCwM26WT2qNOfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RxzfhqLCWI2lzIMO1Hh0Gvfy4everq9XAmgzGwDDY2zmdITg9mQJBHS9FcvI9k9OF
-	 4y+3uix3HMloJZfk1du93p0S53J3HQ94rRfXwmHWMO2o6JBZ8U0MbvtUX7gdlZUqn9
-	 pmIHmBwS9ET6kkZLjvnt9O4f9s9tHC9Qgtp+I9RY=
+	b=LVm3F2hegpE5F6OflQw65SZAlyjLowZo5WMfeaBuBu9ox1BnNsIOtvM4tJdsPYA54
+	 ZG1IiDaAKviKIAsEArG13SRkH+OA2LzeG8YEk9fSMCClKln5LkblxNUgol/J+aPlsp
+	 +HZPCc1/f6awFGRGx+V6CUTUm5FVbisDGtSpW+Sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 268/286] net: phy: micrel: populate .soft_reset for KSZ9131
-Date: Mon, 22 Jan 2024 15:59:34 -0800
-Message-ID: <20240122235742.364953102@linuxfoundation.org>
+Subject: [PATCH 6.1 356/417] tty: change tty_write_lock()s ndelay parameter to bool
+Date: Mon, 22 Jan 2024 15:58:44 -0800
+Message-ID: <20240122235804.142544683@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,102 +46,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit e398822c4751017fe401f57409488f5948d12fb5 ]
+[ Upstream commit af815336556df28f800669c58ab3bdad7d786b98 ]
 
-The RZ/G3S SMARC Module has 2 KSZ9131 PHYs. In this setup, the KSZ9131 PHY
-is used with the ravb Ethernet driver. It has been discovered that when
-bringing the Ethernet interface down/up continuously, e.g., with the
-following sh script:
+It's a yes-no parameter, so convert it to bool to be obvious.
 
-$ while :; do ifconfig eth0 down; ifconfig eth0 up; done
-
-the link speed and duplex are wrong after interrupting the bring down/up
-operation even though the Ethernet interface is up. To recover from this
-state the following configuration sequence is necessary (executed
-manually):
-
-$ ifconfig eth0 down
-$ ifconfig eth0 up
-
-The behavior has been identified also on the Microchip SAMA7G5-EK board
-which runs the macb driver and uses the same PHY.
-
-The order of PHY-related operations in ravb_open() is as follows:
-ravb_open() ->
-  ravb_phy_start() ->
-    ravb_phy_init() ->
-      of_phy_connect() ->
-        phy_connect_direct() ->
-	  phy_attach_direct() ->
-	    phy_init_hw() ->
-	      phydev->drv->soft_reset()
-	      phydev->drv->config_init()
-	      phydev->drv->config_intr()
-	    phy_resume()
-	      kszphy_resume()
-
-The order of PHY-related operations in ravb_close is as follows:
-ravb_close() ->
-  phy_stop() ->
-    phy_suspend() ->
-      kszphy_suspend() ->
-        genphy_suspend()
-	  // set BMCR_PDOWN bit in MII_BMCR
-
-In genphy_suspend() setting the BMCR_PDWN bit in MII_BMCR switches the PHY
-to Software Power-Down (SPD) mode (according to the KSZ9131 datasheet).
-Thus, when opening the interface after it has been  previously closed (via
-ravb_close()), the phydev->drv->config_init() and
-phydev->drv->config_intr() reach the KSZ9131 PHY driver via the
-ksz9131_config_init() and kszphy_config_intr() functions.
-
-KSZ9131 specifies that the MII management interface remains operational
-during SPD (Software Power-Down), but (according to manual):
-- Only access to the standard registers (0 through 31) is supported.
-- Access to MMD address spaces other than MMD address space 1 is possible
-  if the spd_clock_gate_override bit is set.
-- Access to MMD address space 1 is not possible.
-
-The spd_clock_gate_override bit is not used in the KSZ9131 driver.
-
-ksz9131_config_init() configures RGMII delay, pad skews and LEDs by
-accessesing MMD registers other than those in address space 1.
-
-The datasheet for the KSZ9131 does not specify what happens if registers
-from an unsupported address space are accessed while the PHY is in SPD.
-
-To fix the issue the .soft_reset method has been instantiated for KSZ9131,
-too. This resets the PHY to the default state before doing any
-configurations to it, thus switching it out of SPD.
-
-Fixes: bff5b4b37372 ("net: phy: micrel: add Microchip KSZ9131 initial driver")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20230810091510.13006-6-jirislaby@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 66aad7d8d3ec ("usb: cdc-acm: return correct error code on unsupported break")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/tty.h       | 2 +-
+ drivers/tty/tty_io.c    | 6 +++---
+ drivers/tty/tty_ioctl.c | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index bbbe198f83e8..2b7616f161d6 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -1345,6 +1345,7 @@ static struct phy_driver ksphy_driver[] = {
- 	/* PHY_GBIT_FEATURES */
- 	.driver_data	= &ksz9021_type,
- 	.probe		= kszphy_probe,
-+	.soft_reset	= genphy_soft_reset,
- 	.config_init	= ksz9131_config_init,
- 	.read_status	= genphy_read_status,
- 	.ack_interrupt	= kszphy_ack_interrupt,
+diff --git a/drivers/tty/tty.h b/drivers/tty/tty.h
+index c5ee21912755..91515e1ebc8d 100644
+--- a/drivers/tty/tty.h
++++ b/drivers/tty/tty.h
+@@ -63,7 +63,7 @@ int tty_check_change(struct tty_struct *tty);
+ void __stop_tty(struct tty_struct *tty);
+ void __start_tty(struct tty_struct *tty);
+ void tty_write_unlock(struct tty_struct *tty);
+-int tty_write_lock(struct tty_struct *tty, int ndelay);
++int tty_write_lock(struct tty_struct *tty, bool ndelay);
+ void tty_vhangup_session(struct tty_struct *tty);
+ void tty_open_proc_set_tty(struct file *filp, struct tty_struct *tty);
+ int tty_signal_session_leader(struct tty_struct *tty, int exit_session);
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index 8fb6c6853556..860990719d14 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -939,7 +939,7 @@ void tty_write_unlock(struct tty_struct *tty)
+ 	wake_up_interruptible_poll(&tty->write_wait, EPOLLOUT);
+ }
+ 
+-int tty_write_lock(struct tty_struct *tty, int ndelay)
++int tty_write_lock(struct tty_struct *tty, bool ndelay)
+ {
+ 	if (!mutex_trylock(&tty->atomic_write_lock)) {
+ 		if (ndelay)
+@@ -1153,7 +1153,7 @@ int tty_send_xchar(struct tty_struct *tty, char ch)
+ 		return 0;
+ 	}
+ 
+-	if (tty_write_lock(tty, 0) < 0)
++	if (tty_write_lock(tty, false) < 0)
+ 		return -ERESTARTSYS;
+ 
+ 	down_read(&tty->termios_rwsem);
+@@ -2475,7 +2475,7 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
+ 		retval = tty->ops->break_ctl(tty, duration);
+ 	else {
+ 		/* Do the work ourselves */
+-		if (tty_write_lock(tty, 0) < 0)
++		if (tty_write_lock(tty, false) < 0)
+ 			return -EINTR;
+ 		retval = tty->ops->break_ctl(tty, -1);
+ 		if (retval)
+diff --git a/drivers/tty/tty_ioctl.c b/drivers/tty/tty_ioctl.c
+index ad1cf51ecd11..8767c504b95d 100644
+--- a/drivers/tty/tty_ioctl.c
++++ b/drivers/tty/tty_ioctl.c
+@@ -506,7 +506,7 @@ static int set_termios(struct tty_struct *tty, void __user *arg, int opt)
+ 		if (retval < 0)
+ 			return retval;
+ 
+-		if (tty_write_lock(tty, 0) < 0)
++		if (tty_write_lock(tty, false) < 0)
+ 			goto retry_write_wait;
+ 
+ 		/* Racing writer? */
 -- 
 2.43.0
 
