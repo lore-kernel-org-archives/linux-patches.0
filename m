@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12B727456;
-	Tue, 23 Jan 2024 00:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3BF27456;
+	Tue, 23 Jan 2024 00:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968705; cv=none; b=m8h6iohstJ4RMX7oNn2YHlxmlBiTS9sWYBWAStjbLtHITxBA3Mev/uik2M1dRZ+qJFhVpQWptWM84SsqDLNP1IGTJo52OY3/Qy8Yx5LUQsumN87PK0MjHTJmPRglmMX5NQGtzB0w3xUBEta1rrgttEJBTscQ3uAIxC1FP9SuWxo=
+	t=1705968706; cv=none; b=tYH+oCbLmfB0JL2JKYxiQA4t9WV2IMC7b3Bq9NuDYgG28GFhnsX9BHQ1caERr6ntfoIVSNY2vLwxerlYX5SkICNO98EBaiRaIQZtwpu7uCiw6IOGdffI+H68NN/YI0P+BbkTYAEzwOq22M4zbqE4zkJ2o/cQFpwitILB+H1SeWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968705; c=relaxed/simple;
-	bh=IA3QQaB3WxWIb1aiQDw5mA3Y8zh/GId6J+wsO9ZMMQA=;
+	s=arc-20240116; t=1705968706; c=relaxed/simple;
+	bh=dOG+y8XOCIanoV/5H+h+2x1XCilAcQGGhSusrmZwBu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M4SpoCef+qcowMVoI4kpufoHpu2T9T/g4nsdIlMEN6HxrSXMWHLufFh4j20Eo5T32DL9bIDh9cNOOfXhnGjfRUSDduSU6zz9FlctDIycFYnKLOkh2Dsl4HXdR+LPjSok7rkUoV2wH6cEQhoTlAJA8KTE+bAt1x3yTj8qsZqPpuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2a0aI42O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rPrnnZX2PGT1qOnZM8iIYFKvKgfPnUZYGNIWLrnOhXEOf+g86G89gPtYkF16vI7wuKawR+8Pj0nbXcGQA3KEGJb/8vW0jkRa88OGnLajrUtSz8SSoL/7Zg/B4yNIsRQcfPL67KZtShDBEiPXcLvUOclPe8Nl+roAt6pzjywKUaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b2PSgBin; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2a0aI42O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB21C433C7;
-	Tue, 23 Jan 2024 00:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2PSgBin"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABDFC433F1;
+	Tue, 23 Jan 2024 00:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968704;
-	bh=IA3QQaB3WxWIb1aiQDw5mA3Y8zh/GId6J+wsO9ZMMQA=;
+	s=korg; t=1705968705;
+	bh=dOG+y8XOCIanoV/5H+h+2x1XCilAcQGGhSusrmZwBu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2a0aI42OrtVbh9Et4ZDR2VxrLE0JqzAheZ/JFD92eD+F8oWKl3q+TM/w+Ah2TAyO0
-	 ojGttgWmB8y3YqoAyqKHUhIcVejf8ksR9Rhas3UnyqpmqsB73rXOjJp0IlGJxPPCW0
-	 /MKsAHlc3kbIfC9ErrE/rZ2Hvr9EuflmnxRly/48=
+	b=b2PSgBinyeJB2Ug3m+qqM1FXybIvk2uhoOhANfs92y8Y8ebRE2MQgJ9eAe8btdr4u
+	 zoAN3UGNyobDg5+IQonQhGQSti1NXytRlonnzw/h29g3Fl6H5MuTmTBOv/8QrbVqXn
+	 Nbe/gzjSWSPbLH6PUiocvNidgzrt4H4gZYRS8kX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Fangrui Song <maskray@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Lieven Hey <lieven.hey@kdab.com>,
+	Milian Wolff <milian.wolff@kdab.com>,
+	Pablo Galindo <pablogsal@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 135/148] acpi: property: Let args be NULL in __acpi_node_get_property_reference
-Date: Mon, 22 Jan 2024 15:58:11 -0800
-Message-ID: <20240122235718.024199921@linuxfoundation.org>
+Subject: [PATCH 4.19 136/148] perf genelf: Set ELF program header addresses properly
+Date: Mon, 22 Jan 2024 15:58:12 -0800
+Message-ID: <20240122235718.060425311@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -52,49 +60,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit bef52aa0f3de1b7d8c258c13b16e577361dabf3a ]
+[ Upstream commit 1af478903fc48c1409a8dd6b698383b62387adf1 ]
 
-fwnode_get_property_reference_args() may not be called with args argument
-NULL on ACPI, OF already supports this. Add the missing NULL checks and
-document this.
+The text section starts after the ELF headers so PHDR.p_vaddr and
+others should have the correct addresses.
 
-The purpose is to be able to count the references.
-
-Fixes: 977d5ad39f3e ("ACPI: Convert ACPI reference args to generic fwnode reference args")
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20231109101010.1329587-2-sakari.ailus@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: babd04386b1df8c3 ("perf jit: Include program header in ELF files")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Fangrui Song <maskray@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Lieven Hey <lieven.hey@kdab.com>
+Cc: Milian Wolff <milian.wolff@kdab.com>
+Cc: Pablo Galindo <pablogsal@gmail.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20231212070547.612536-2-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/property.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/perf/util/genelf.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
-index c59235038bf2..cfee286ee5c5 100644
---- a/drivers/acpi/property.c
-+++ b/drivers/acpi/property.c
-@@ -566,6 +566,7 @@ acpi_fwnode_get_named_child_node(const struct fwnode_handle *fwnode,
-  * @index: Index of the reference to return
-  * @num_args: Maximum number of arguments after each reference
-  * @args: Location to store the returned reference with optional arguments
-+ *	  (may be NULL)
-  *
-  * Find property with @name, verifify that it is a package containing at least
-  * one object reference and if so, store the ACPI device object pointer to the
-@@ -624,6 +625,9 @@ int __acpi_node_get_property_reference(const struct fwnode_handle *fwnode,
- 		if (ret)
- 			return ret == -ENODEV ? -EINVAL : ret;
- 
-+		if (!args)
-+			return 0;
-+
- 		args->fwnode = acpi_fwnode_handle(device);
- 		args->nargs = 0;
- 		return 0;
+diff --git a/tools/perf/util/genelf.c b/tools/perf/util/genelf.c
+index 65e41e259af8..72860270e935 100644
+--- a/tools/perf/util/genelf.c
++++ b/tools/perf/util/genelf.c
+@@ -296,9 +296,9 @@ jit_write_elf(int fd, uint64_t load_addr, const char *sym,
+ 	 */
+ 	phdr = elf_newphdr(e, 1);
+ 	phdr[0].p_type = PT_LOAD;
+-	phdr[0].p_offset = 0;
+-	phdr[0].p_vaddr = 0;
+-	phdr[0].p_paddr = 0;
++	phdr[0].p_offset = GEN_ELF_TEXT_OFFSET;
++	phdr[0].p_vaddr = GEN_ELF_TEXT_OFFSET;
++	phdr[0].p_paddr = GEN_ELF_TEXT_OFFSET;
+ 	phdr[0].p_filesz = csize;
+ 	phdr[0].p_memsz = csize;
+ 	phdr[0].p_flags = PF_X | PF_R;
 -- 
 2.43.0
 
