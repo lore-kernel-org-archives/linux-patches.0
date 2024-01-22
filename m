@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318CC1852;
-	Tue, 23 Jan 2024 01:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB7E37C;
+	Tue, 23 Jan 2024 01:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972189; cv=none; b=By4LfiJtbxpQZZ6qgssYwCHNd6LK4DxFbxK0y355qP7xJOJ/cxqd6CTMPLLJjLVCP+BKx4yAhREe2iYZLI0eck5LcV/wDVRm4+2hA2UDPBfb0m4AyVNKYRNxwKXip0BfwwaSKH+estLmsRCaCZQazgcje3+Mk/Ql2ej02Wu0ya4=
+	t=1705972190; cv=none; b=rjLXar4kLChtyvs17wVNqij029e6dcOl7A9XXPU7UhZElAKR1d12LwBc971nnSgu8z1ZiZc3x/36aiVg/dwkpoaJy8WcI9pKtrNM1l5Kjvw0Y0DadT2gkIUN5/lnhoKdxcESVXfg4ZoxJSy7TR+7vmsWt29wpZ7ANNGsdezw6WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972189; c=relaxed/simple;
-	bh=xxbKOe+aw592RS5cxKgpvJzKgjszxST54QFXiFZB6Bk=;
+	s=arc-20240116; t=1705972190; c=relaxed/simple;
+	bh=wfOMFeVIMd9UGfWYhKTlyVKOwVtq4UkX0vP7NdBTH0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YwszK4WU4ScPxI5RfOelNS9VF/NwTN9nLt7INN7cKc6D/15BjupH/DyO1L/IFweAvXmSf9tUrTOuM+SnVCchLNJEGpCRE7rv6ePWgrCwi5CuQ/NTmHfCq0s6TRs1ChLQlUkVeyluOja9FmQC2hRZMDzs9JmTTrnpY/gNz407bLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nw8A+A8G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IWLgt6Yc2gs4i1Z7ehbgXpDEWIqYQAQ06gvm1ncnbHQAiw42YE/IzVxNIlwDxPDR4OKfLwvBTKQTsPm6SmrhPJb2YXj9TQX5H3ViDFzryCw+W6IpFbrwxThSsWOZFsaLUvvCicbiEN51WU293NdwnwhovtpM3p2nkTN41yp59gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkps+yTM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nw8A+A8G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EEEC433C7;
-	Tue, 23 Jan 2024 01:09:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkps+yTM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E33C43394;
+	Tue, 23 Jan 2024 01:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972189;
-	bh=xxbKOe+aw592RS5cxKgpvJzKgjszxST54QFXiFZB6Bk=;
+	s=korg; t=1705972190;
+	bh=wfOMFeVIMd9UGfWYhKTlyVKOwVtq4UkX0vP7NdBTH0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nw8A+A8G4r8I1kvRFHuRdEWj5Ao5MdgFC2fzfswEmNGrhHBp+ZMGiwdYmatPMQoXN
-	 +aHCksOBTXTaNeP4KFdK4RKUiBHuCcqskrPyqoHCpMN9PqatSCeq2z9yyUd71antvV
-	 8EnIfSjV2RC3D6OEJgY+6RleCMLSfT1dHpc5Tz7U=
+	b=qkps+yTM/yFqvs8AVcKRxygjWGCKEaMIV4jAzN467y9jpSSYk2lJTwH944edhuSgE
+	 tnnViSNmZpgHiQrz8N4SzxJ8A2Cc7QOBAJEv2M9PQ0iMx16vk2JLAR0OhDITpU0XLq
+	 4vdHeDgg6ts7x6+pQwzoj06gCLZu6skPaC0kdDsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ovidiu Panait <ovidiu.panait@windriver.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 111/374] crypto: sahara - improve error handling in sahara_sha_process()
-Date: Mon, 22 Jan 2024 15:56:07 -0800
-Message-ID: <20240122235748.496253384@linuxfoundation.org>
+Subject: [PATCH 5.15 112/374] crypto: sahara - fix processing hash requests with req->nbytes < sg->length
+Date: Mon, 22 Jan 2024 15:56:08 -0800
+Message-ID: <20240122235748.535688278@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -53,47 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit 5deff027fca49a1eb3b20359333cf2ae562a2343 ]
+[ Upstream commit 7bafa74d1ba35dcc173e1ce915e983d65905f77e ]
 
-sahara_sha_hw_data_descriptor_create() returns negative error codes on
-failure, so make sure the errors are correctly handled / propagated.
+It's not always the case that the entire sg entry needs to be processed.
+Currently, when nbytes is less than sg->length, "Descriptor length" errors
+are encountered.
+
+To fix this, take the actual request size into account when populating the
+hw links.
 
 Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
 Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/crypto/sahara.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index a5c40ef6d8af..434c7e17d273 100644
+index 434c7e17d273..538beec3b062 100644
 --- a/drivers/crypto/sahara.c
 +++ b/drivers/crypto/sahara.c
-@@ -988,7 +988,10 @@ static int sahara_sha_process(struct ahash_request *req)
- 		return ret;
+@@ -777,6 +777,7 @@ static int sahara_sha_hw_links_create(struct sahara_dev *dev,
+ 				       int start)
+ {
+ 	struct scatterlist *sg;
++	unsigned int len;
+ 	unsigned int i;
+ 	int ret;
  
- 	if (rctx->first) {
--		sahara_sha_hw_data_descriptor_create(dev, rctx, req, 0);
-+		ret = sahara_sha_hw_data_descriptor_create(dev, rctx, req, 0);
-+		if (ret)
-+			return ret;
-+
- 		dev->hw_desc[0]->next = 0;
- 		rctx->first = 0;
- 	} else {
-@@ -996,7 +999,10 @@ static int sahara_sha_process(struct ahash_request *req)
+@@ -798,12 +799,14 @@ static int sahara_sha_hw_links_create(struct sahara_dev *dev,
+ 	if (!ret)
+ 		return -EFAULT;
  
- 		sahara_sha_hw_context_descriptor_create(dev, rctx, req, 0);
- 		dev->hw_desc[0]->next = dev->hw_phys_desc[1];
--		sahara_sha_hw_data_descriptor_create(dev, rctx, req, 1);
-+		ret = sahara_sha_hw_data_descriptor_create(dev, rctx, req, 1);
-+		if (ret)
-+			return ret;
-+
- 		dev->hw_desc[1]->next = 0;
- 	}
- 
++	len = rctx->total;
+ 	for (i = start; i < dev->nb_in_sg + start; i++) {
+-		dev->hw_link[i]->len = sg->length;
++		dev->hw_link[i]->len = min(len, sg->length);
+ 		dev->hw_link[i]->p = sg->dma_address;
+ 		if (i == (dev->nb_in_sg + start - 1)) {
+ 			dev->hw_link[i]->next = 0;
+ 		} else {
++			len -= min(len, sg->length);
+ 			dev->hw_link[i]->next = dev->hw_phys_link[i + 1];
+ 			sg = sg_next(sg);
+ 		}
 -- 
 2.43.0
 
