@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906BA26ACB;
-	Tue, 23 Jan 2024 00:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB2B3FFE;
+	Tue, 23 Jan 2024 00:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970912; cv=none; b=ct4y2VvIqErBELki3fM0jzwh3miPBuHVxYSWoB3KjaIY2kYz66rorHx+GyNEloVXSaL5aKjkC+IxG20uD+fDDg3YGBjkodAXUdJ6qqCOAN6UYhufTyYUoPIUvymOCwV858fLD6Qnzb9ytgFwOvg4IIPIH0MluiMaq88DGRX9cSw=
+	t=1705970915; cv=none; b=FNBxMpgYsiLJKJrbpPSG8jK1nV7gZi3VSVh+nRgMq3xDuwYgLoIPocL1v7e15Mw8ag6eA9QL/14K/8JkzrsNdFltyRJwIisr6Lf08bPjruLrUK5KJ4OWCUVEk0sJ9uVtgrLp+5SzrSsQOz7/ZnWo51D4+aR0A/R+A7DyWPNRbuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970912; c=relaxed/simple;
-	bh=BY4EV9zbkAT6Ei4xhcckM2EnKI0bf4UKPUHEeRxGMRI=;
+	s=arc-20240116; t=1705970915; c=relaxed/simple;
+	bh=m1TjGWJXrhvFt6Uc0eB+dJp4seZ6LVebtM8IIR7BNgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ASVCNtC8NIHtoco1AzE00Zq0oayUewtVzrfWxIy2UuUmuHyIALG/9jhvQaNRf4WevcE9y0SCz+JK3ZuS0Oxti/3qqGUl3J8B9hKH6QqDEJbMx5rPXLjwIY146zcjeJEmmEX4gHqzpiOYkN1D5IFpJml2UmeQuqj9tEOjx0nhbro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBAyVo4j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZBB0dmrxjFHdBTyaHEaJyidKD46GqqJnPH0JnIicUvwPB7dRG0a2wv54beTEcnHD6m+4uBwJanvCXlJfl26OTzQP5ENiSXJiQ1tEYPdaPDyDjv+Pa/2ir9LoMPUIzWTLUg0vKhbD7GWLar54nDijuRCbAr1I5+enTUcPmaBHtf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hchLSS5w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBAyVo4j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AAB1C433C7;
-	Tue, 23 Jan 2024 00:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hchLSS5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6ACC433C7;
+	Tue, 23 Jan 2024 00:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970912;
-	bh=BY4EV9zbkAT6Ei4xhcckM2EnKI0bf4UKPUHEeRxGMRI=;
+	s=korg; t=1705970915;
+	bh=m1TjGWJXrhvFt6Uc0eB+dJp4seZ6LVebtM8IIR7BNgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dBAyVo4jxSi6FKmnEjU9iq0fijrSmh6CByP7LSvA7u7YlZGKu0mRDhclTGuQXsFKg
-	 xB842rMPIaWfIwwjlVnaWNg57xNcnkp0XCydmc60aDzW1sXCC9d1RTCZO138rq15Tb
-	 o4n0TVGRUsS3xMiXjgH+vf4S4rBspZuGhBoJnP9I=
+	b=hchLSS5wUf1i6CQa2EGp6OLX18ziZqr0vQ9o48uyrUhTPZxUq3nApGZgbmsXeWON0
+	 VT4GkVsvHmAjb21wiE3xcSphvTe5Gixj5AN8zaUgZxcR5VPbEZlPvP2OK/cdXRkxq+
+	 ig7Q2kkkBMukrBUz+MUYq9Qb8tXPP2PX5/V4E8mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>
-Subject: [PATCH 5.10 044/286] uio: Fix use-after-free in uio_open
-Date: Mon, 22 Jan 2024 15:55:50 -0800
-Message-ID: <20240122235733.724536121@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 139/417] wifi: rtlwifi: rtl8192ee: using calculate_bit_shift()
+Date: Mon, 22 Jan 2024 15:55:07 -0800
+Message-ID: <20240122235756.638432527@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,78 +47,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: Su Hui <suhui@nfschina.com>
 
-commit 0c9ae0b8605078eafc3bea053cc78791e97ba2e2 upstream.
+[ Upstream commit 63526897fc0d086069bcab67c3a112caaec751cb ]
 
-core-1				core-2
--------------------------------------------------------
-uio_unregister_device		uio_open
-				idev = idr_find()
-device_unregister(&idev->dev)
-put_device(&idev->dev)
-uio_device_release
-				get_device(&idev->dev)
-kfree(idev)
-uio_free_minor(minor)
-				uio_release
-				put_device(&idev->dev)
-				kfree(idev)
--------------------------------------------------------
+Using calculate_bit_shift() to replace _rtl92ee_phy_calculate_bit_shift().
+And fix the undefined bitwise shift behavior problem.
 
-In the core-1 uio_unregister_device(), the device_unregister will kfree
-idev when the idev->dev kobject ref is 1. But after core-1
-device_unregister, put_device and before doing kfree, the core-2 may
-get_device. Then:
-1. After core-1 kfree idev, the core-2 will do use-after-free for idev.
-2. When core-2 do uio_release and put_device, the idev will be double
-   freed.
-
-To address this issue, we can get idev atomic & inc idev reference with
-minor_lock.
-
-Fixes: 57c5f4df0a5a ("uio: fix crash after the device is unregistered")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://lore.kernel.org/r/1703152663-59949-1-git-send-email-guanghuifeng@linux.alibaba.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b1a3bfc97cd9 ("rtlwifi: rtl8192ee: Move driver from staging to the regular tree")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231219065739.1895666-9-suhui@nfschina.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/uio/uio.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ .../net/wireless/realtek/rtlwifi/rtl8192ee/phy.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
---- a/drivers/uio/uio.c
-+++ b/drivers/uio/uio.c
-@@ -464,13 +464,13 @@ static int uio_open(struct inode *inode,
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192ee/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192ee/phy.c
+index cc0bcaf13e96..73ef602bfb01 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192ee/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192ee/phy.c
+@@ -16,7 +16,6 @@ static u32 _rtl92ee_phy_rf_serial_read(struct ieee80211_hw *hw,
+ static void _rtl92ee_phy_rf_serial_write(struct ieee80211_hw *hw,
+ 					 enum radio_path rfpath, u32 offset,
+ 					 u32 data);
+-static u32 _rtl92ee_phy_calculate_bit_shift(u32 bitmask);
+ static bool _rtl92ee_phy_bb8192ee_config_parafile(struct ieee80211_hw *hw);
+ static bool _rtl92ee_phy_config_mac_with_headerfile(struct ieee80211_hw *hw);
+ static bool phy_config_bb_with_hdr_file(struct ieee80211_hw *hw,
+@@ -46,7 +45,7 @@ u32 rtl92ee_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
+ 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
+ 		"regaddr(%#x), bitmask(%#x)\n", regaddr, bitmask);
+ 	originalvalue = rtl_read_dword(rtlpriv, regaddr);
+-	bitshift = _rtl92ee_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	returnvalue = (originalvalue & bitmask) >> bitshift;
  
- 	mutex_lock(&minor_lock);
- 	idev = idr_find(&uio_idr, iminor(inode));
--	mutex_unlock(&minor_lock);
- 	if (!idev) {
- 		ret = -ENODEV;
-+		mutex_unlock(&minor_lock);
- 		goto out;
+ 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
+@@ -68,7 +67,7 @@ void rtl92ee_phy_set_bb_reg(struct ieee80211_hw *hw, u32 regaddr,
+ 
+ 	if (bitmask != MASKDWORD) {
+ 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
+-		bitshift = _rtl92ee_phy_calculate_bit_shift(bitmask);
++		bitshift = calculate_bit_shift(bitmask);
+ 		data = ((originalvalue & (~bitmask)) | (data << bitshift));
  	}
--
- 	get_device(&idev->dev);
-+	mutex_unlock(&minor_lock);
  
- 	if (!try_module_get(idev->owner)) {
- 		ret = -ENODEV;
-@@ -1062,9 +1062,8 @@ void uio_unregister_device(struct uio_in
- 	wake_up_interruptible(&idev->wait);
- 	kill_fasync(&idev->async_queue, SIGIO, POLL_HUP);
+@@ -92,7 +91,7 @@ u32 rtl92ee_phy_query_rf_reg(struct ieee80211_hw *hw,
+ 	spin_lock(&rtlpriv->locks.rf_lock);
  
--	device_unregister(&idev->dev);
--
- 	uio_free_minor(minor);
-+	device_unregister(&idev->dev);
+ 	original_value = _rtl92ee_phy_rf_serial_read(hw , rfpath, regaddr);
+-	bitshift = _rtl92ee_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
  
- 	return;
+ 	spin_unlock(&rtlpriv->locks.rf_lock);
+@@ -119,7 +118,7 @@ void rtl92ee_phy_set_rf_reg(struct ieee80211_hw *hw,
+ 
+ 	if (bitmask != RFREG_OFFSET_MASK) {
+ 		original_value = _rtl92ee_phy_rf_serial_read(hw, rfpath, addr);
+-		bitshift = _rtl92ee_phy_calculate_bit_shift(bitmask);
++		bitshift = calculate_bit_shift(bitmask);
+ 		data = (original_value & (~bitmask)) | (data << bitshift);
+ 	}
+ 
+@@ -201,13 +200,6 @@ static void _rtl92ee_phy_rf_serial_write(struct ieee80211_hw *hw,
+ 		pphyreg->rf3wire_offset, data_and_addr);
  }
+ 
+-static u32 _rtl92ee_phy_calculate_bit_shift(u32 bitmask)
+-{
+-	u32 i = ffs(bitmask);
+-
+-	return i ? i - 1 : 32;
+-}
+-
+ bool rtl92ee_phy_mac_config(struct ieee80211_hw *hw)
+ {
+ 	return _rtl92ee_phy_config_mac_with_headerfile(hw);
+-- 
+2.43.0
+
 
 
