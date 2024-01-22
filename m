@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13618154C05;
-	Tue, 23 Jan 2024 00:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF6B154C05;
+	Tue, 23 Jan 2024 00:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969399; cv=none; b=p4mAJp2EvV0dkEYPXpX2OcmVKp4oJ2UmuWCnQc9ru/h7T/iqQxqjObGJwJirqY06hTlDFb5DliSxCjK6kX90N6fK94xs59uf0UpglbV/6hQn3QoOgkodIMSUQj8MUqHGSwuXSui9YBK/Na1wGtnUHRr5xpVt60fzok22qjlF3MI=
+	t=1705969400; cv=none; b=N6Dm0GdOQlP3kIcsrXXTxRyIGym+pdJooK6zWVuhTDQOZ/Ycs9a9HufmveS1aWoKQqaOw40XU3x5CDxCW557XWioKhS0CoKJ4yDP+FPyV+i2pDIdaszyX+QHuObRABM22/fJPrMBd8HRqSXMTSy+IuDYlHSsyk0X+cdovExeBmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969399; c=relaxed/simple;
-	bh=zt6tEt9dr9uStX2a1XFZvKwbnk0n0kfWZqGmXyLPHZw=;
+	s=arc-20240116; t=1705969400; c=relaxed/simple;
+	bh=kOhOY8KJqGM+w7yXvKBe3SFRA8x1BzFKCmoHfmiXWek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rf1nK/30ATZC3IbM2KSWpthrcE0J550Ul1ZGNYMEn/r0RpPtDw2aetU8dpCtm4rk8/OWufUt87eLABGHAXuYLkkQrXRzxLmGn83MHQ/Z9DJaEIgaEDJuji9FPnuz/8rLSI9DvLj/jTobjjCzlB+IR9ku0I3N9VWz5ZE/HHUyVOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWXwJh1N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rohshSfNww4Qp269ijLpzeppLdc+xpBjd9ldrLINw2TpXTxrjm+2FTKGaesqU7Ksmd7QvsttWp2xw0scqGk16ZmPodnIPU2hvxxIqT3ZkhHi+vhsdzLPMHIbuh8jU0E7QNVs95mfbmTpTEj3sKznpwsQ0ShRrueKWMwxTOiHAuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbxiKW3j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWXwJh1N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73835C43399;
-	Tue, 23 Jan 2024 00:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbxiKW3j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC47BC43394;
+	Tue, 23 Jan 2024 00:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969398;
-	bh=zt6tEt9dr9uStX2a1XFZvKwbnk0n0kfWZqGmXyLPHZw=;
+	s=korg; t=1705969400;
+	bh=kOhOY8KJqGM+w7yXvKBe3SFRA8x1BzFKCmoHfmiXWek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jWXwJh1NBcaPspPJmZyURhdIBRLWYLNn/6rTF9JR3KmNG09KNDbWDZQf5v2SE1xWW
-	 xTBvtd5Vl663DwHvFDlK1mJNPNUe4l+QXtGaS8Zz7DO8adflDkTHcBB2PJ4wTqdSCz
-	 qjOVt3/kBcxooU9/B+hpkX3tWDAD1BSTVGnDOBcE=
+	b=NbxiKW3jMHkBvwkhzGGuWzd0UsPmI/0fg3UaP+TKpknQsJ75Ij9MMaBpwLBZUBbep
+	 fE3FDt8C1FnBtxxnEZZQ2MJHTQRZ2A0fZ6mNID366klrauazzb+R4028Fp3EIZzHG5
+	 nKFQeWhxmFumTmM16UfmDTHeeOv1/u5kexKtsfLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 220/641] wifi: iwlwifi: assign phy_ctxt before eSR activation
-Date: Mon, 22 Jan 2024 15:52:04 -0800
-Message-ID: <20240122235824.831619915@linuxfoundation.org>
+Subject: [PATCH 6.7 221/641] netfilter: nf_tables: mark newset as dead on transaction abort
+Date: Mon, 22 Jan 2024 15:52:05 -0800
+Message-ID: <20240122235824.857558492@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,53 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 9b6614e5ead5d19a71893bcca3f1a6569ca0c456 ]
+[ Upstream commit 08e4c8c5919fd405a4d709b4ba43d836894a26eb ]
 
-eSR is activated when a chanctx is assigned to more than one link.
-During eSR activation we should disable RLC for both phys, and configure
-the FW with a special phy command for both phys.
-Currently we assign the phy_ctxt to the link only after eSR activation,
-so RLC is not disabled for the new phy_ctxt, and a cmd is not sent to FW.
-Fix this by first assigning the new phy_ctxt to the link and then
-doing the eSR activation.
+If a transaction is aborted, we should mark the to-be-released NEWSET dead,
+just like commit path does for DEL and DESTROYSET commands.
 
-Fixes: 12bacfc2c065 ("wifi: iwlwifi: handle eSR transitions")
-Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20231219215605.3d94507f5d9a.I537fcd73aedf94c7348c03157e486f24301fef14@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+In both cases all remaining elements will be released via
+set->ops->destroy().
+
+The existing abort code does NOT post the actual release to the work queue.
+Also the entire __nf_tables_abort() function is wrapped in gc_seq
+begin/end pair.
+
+Therefore, async gc worker will never try to release the pending set
+elements, as gc sequence is always stale.
+
+It might be possible to speed up transaction aborts via work queue too,
+this would result in a race and a possible use-after-free.
+
+So fix this before it becomes an issue.
+
+Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/netfilter/nf_tables_api.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-index 8e263acbc763..61170173f917 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-@@ -271,17 +271,17 @@ __iwl_mvm_mld_assign_vif_chanctx(struct iwl_mvm *mvm,
- 		}
- 	}
- 
-+	mvmvif->link[link_id]->phy_ctxt = phy_ctxt;
-+
- 	if (iwl_mvm_is_esr_supported(mvm->fwrt.trans) && n_active > 1) {
- 		mvmvif->link[link_id]->listen_lmac = true;
- 		ret = iwl_mvm_esr_mode_active(mvm, vif);
- 		if (ret) {
- 			IWL_ERR(mvm, "failed to activate ESR mode (%d)\n", ret);
--			return ret;
-+			goto out;
- 		}
- 	}
- 
--	mvmvif->link[link_id]->phy_ctxt = phy_ctxt;
--
- 	if (switching_chanctx) {
- 		/* reactivate if we turned this off during channel switch */
- 		if (vif->type == NL80211_IFTYPE_AP)
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index be04af433988..bbb8d8533f77 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -10383,6 +10383,7 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 				nft_trans_destroy(trans);
+ 				break;
+ 			}
++			nft_trans_set(trans)->dead = 1;
+ 			list_del_rcu(&nft_trans_set(trans)->list);
+ 			break;
+ 		case NFT_MSG_DELSET:
 -- 
 2.43.0
 
