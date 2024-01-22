@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAF44F8AE;
-	Tue, 23 Jan 2024 01:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6275EE62;
+	Tue, 23 Jan 2024 01:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974406; cv=none; b=ugDHaemo0vqiNNvRk3QqL7dHuNGPUB6IeLmaTdtkGIA4wOWIo/9d0mjjK+lgcTKTD5RBSpgtXFwwMZZ4LPbpjPOU0pXZ2bBc3xDmqmMKXvF2TdwgVROVagZx9uDCo2e1D9c/ZeZfRBN7Lj80HyONrJ8pAfZRDcNZJD2QcLQGUzk=
+	t=1705974407; cv=none; b=TzzJO7EDkKZpR0gqj/1Il7z+Dkq4Rnviu7v0qFW0RKBJKZr2R1GFSXQPtsa77uFAqPXYxKISsFPHdTsWg/Lr5kICu+41w0tr6nW27aRV7Q7fO7RjH7DBj5INvxYac5xfFWFehTqjPf0We1Ws8YWk7hdTmCvFrKQwIXedltlBHLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974406; c=relaxed/simple;
-	bh=uYgevHvhF9iyFnKVdjrQbFUZhScWt/xXu1V/ErO76eI=;
+	s=arc-20240116; t=1705974407; c=relaxed/simple;
+	bh=xlaeMjpUDpnNwJqaklZVDRsKydLOLUR5N/ooyKijPas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0cIg47Kv87PNvszU0jA96JDV/r5ivaQX06D5Dx/gBL/V4gc5a8ntzOoYq8enPGV2Lfzv1YSdSQhyFkMAgxNn8CaUWv+7n3teR0h2kVGR7K0wWu52Ef6Qa5SX9pBdi32M1P5z0rDwQZEaPYsEV3vrzAutEfT0VjMBl02Hp3KYDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6uydr9v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mPplY97b7qkOUFDutJWVmQkiDIys4Dc/I8LDWsPHeSl+cn4EX917KLrh3Bp8IWagvW8ba7Ja7aQ/1VBzAhyrmWDGYiyAtPaSPHKI9a3UcO0xoTU5GbvSAXs7NeAqIch1voEKW0P6Rf/4lfZtgVrzpgjggBAFsM6TYnIuWjmXGvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17yTKPHc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6uydr9v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC751C433F1;
-	Tue, 23 Jan 2024 01:46:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17yTKPHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69AF5C433C7;
+	Tue, 23 Jan 2024 01:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974406;
-	bh=uYgevHvhF9iyFnKVdjrQbFUZhScWt/xXu1V/ErO76eI=;
+	s=korg; t=1705974407;
+	bh=xlaeMjpUDpnNwJqaklZVDRsKydLOLUR5N/ooyKijPas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p6uydr9v0XUqFx/0zsuu33Vmr1Pl8TMOd6MI2c73XFKV4HJ9F1JoN87HDimMf4FOX
-	 jH1s2YFk72rYZNslSJPifBHfbZjblLgjtjfFnds7cLBXN9Vn1fid3uiLxgL8V2GMMB
-	 cpY89wTU68j7YpqB0fG1k2Q5C+DrB8XA6h9ZHe4o=
+	b=17yTKPHcLwUU7D0R9vvZkdu7fcZYvHorzQr/BErb5S05x4hQncRJUWjtqyiZ9flgP
+	 Y6fwayFAY2GrnzCXoHentegTTJAA1hYL2VgAFPT0gIi5hl76k8x8s01t3p83sPO2iJ
+	 akMj7tXeGWTJXlBg1P8Sm6fuvH34yJFb6a9KVV/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Lehner <dev@der-flo.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/583] bpf, lpm: Fix check prefixlen before walking trie
-Date: Mon, 22 Jan 2024 15:52:19 -0800
-Message-ID: <20240122235814.861431869@linuxfoundation.org>
+Subject: [PATCH 5.15 213/374] clk: qcom: videocc-sm8150: Update the videocc resets
+Date: Mon, 22 Jan 2024 15:57:49 -0800
+Message-ID: <20240122235752.052856527@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +49,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Lehner <dev@der-flo.net>
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-[ Upstream commit 9b75dbeb36fcd9fc7ed51d370310d0518a387769 ]
+[ Upstream commit 1fd9a939db24d2f66e48f8bca3e3654add3fa205 ]
 
-When looking up an element in LPM trie, the condition 'matchlen ==
-trie->max_prefixlen' will never return true, if key->prefixlen is larger
-than trie->max_prefixlen. Consequently all elements in the LPM trie will
-be visited and no element is returned in the end.
+Add all the available resets for the video clock controller
+on sm8150.
 
-To resolve this, check key->prefixlen first before walking the LPM trie.
-
-Fixes: b95a5c4db09b ("bpf: add a longest prefix match trie map implementation")
-Signed-off-by: Florian Lehner <dev@der-flo.net>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20231105085801.3742-1-dev@der-flo.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 5658e8cf1a8a ("clk: qcom: add video clock controller driver for SM8150")
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231201-videocc-8150-v3-2-56bec3a5e443@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/lpm_trie.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/clk/qcom/videocc-sm8150.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
-index 17c7e7782a1f..b32be680da6c 100644
---- a/kernel/bpf/lpm_trie.c
-+++ b/kernel/bpf/lpm_trie.c
-@@ -231,6 +231,9 @@ static void *trie_lookup_elem(struct bpf_map *map, void *_key)
- 	struct lpm_trie_node *node, *found = NULL;
- 	struct bpf_lpm_trie_key *key = _key;
+diff --git a/drivers/clk/qcom/videocc-sm8150.c b/drivers/clk/qcom/videocc-sm8150.c
+index 1afdbe4a249d..6a5f89f53da8 100644
+--- a/drivers/clk/qcom/videocc-sm8150.c
++++ b/drivers/clk/qcom/videocc-sm8150.c
+@@ -214,6 +214,10 @@ static const struct regmap_config video_cc_sm8150_regmap_config = {
  
-+	if (key->prefixlen > trie->max_prefixlen)
-+		return NULL;
-+
- 	/* Start walking the trie from the root node ... */
+ static const struct qcom_reset_map video_cc_sm8150_resets[] = {
+ 	[VIDEO_CC_MVSC_CORE_CLK_BCR] = { 0x850, 2 },
++	[VIDEO_CC_INTERFACE_BCR] = { 0x8f0 },
++	[VIDEO_CC_MVS0_BCR] = { 0x870 },
++	[VIDEO_CC_MVS1_BCR] = { 0x8b0 },
++	[VIDEO_CC_MVSC_BCR] = { 0x810 },
+ };
  
- 	for (node = rcu_dereference_check(trie->root, rcu_read_lock_bh_held());
+ static const struct qcom_cc_desc video_cc_sm8150_desc = {
 -- 
 2.43.0
 
