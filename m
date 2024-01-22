@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1B6745F0;
-	Tue, 23 Jan 2024 02:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE7777630;
+	Tue, 23 Jan 2024 02:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975506; cv=none; b=nnVWHCEbxWWxScbam7mNHT4eUW6HDZcgs0EL5d/gnechSkHEnunC9mRgy9ZesmuNMYLV+61kGq0NmP0spZqjDiQGO/8eXYTahz77MBLkRJGCQ8H1kljOiotpmhsUzMO1k2xM14YmmJg7keemFdTZi228ADOzJcOLJYElaDM4hx4=
+	t=1705975507; cv=none; b=V1snzAW6xA/FLpVfFg7ES3ZdQU8vDJ0UFxfH5Fba2GhoCkl2yCxRfopLjCghmrIHxzpSRIdEDmqy2C0tvHvC1DbBZom0Y7VDZbCLJnvHQMEFeHyCYYrlniFsTbd7P1BMEl/1A0uAVdL3WqrVIWeUBV1aGiQ4waf5P8+Ged6co1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975506; c=relaxed/simple;
-	bh=2vatRWI28wmbIcaHzb8mSBPtB9bysN9b75iWVV2ewrY=;
+	s=arc-20240116; t=1705975507; c=relaxed/simple;
+	bh=TE6Kr3AEcvQVeg+WEIustMuIjwc9vPJDXeLaWennaxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mRgCy0gAysPwl2yRivQW0LB/8w3xRzKPXuWUe7xiDG6WpLnIr4sD+Qhi6wyrTCTpqHgDumD/4iU4STWXoi3Hhavi/3wnxaXyZlxwyPHpelYUBrEDigw8z0zlqgdCU7R8bKz8gYLvPNIJaCkgYxnBWqbLelK2LdBJokHyKyT/oY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4eqJauU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UEiiUE5yWWJJqvZaHjtJ/IB/u7ql+kiIEWr56KZ1f73lzKVA3F8Z1QN92kySi5oVOffQcxBurcu759IT6GEuALnwQrtVXBzl6r4wQ2hF5U8GBVlgWE8QxFhTiEH25GqHzUTr8KZimKH1TYMuAxSRRcMJL6G1qHk6pp5PxnurqME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eC4n0Rvf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4eqJauU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6107AC433F1;
-	Tue, 23 Jan 2024 02:05:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eC4n0Rvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500A8C433F1;
+	Tue, 23 Jan 2024 02:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975506;
-	bh=2vatRWI28wmbIcaHzb8mSBPtB9bysN9b75iWVV2ewrY=;
+	s=korg; t=1705975507;
+	bh=TE6Kr3AEcvQVeg+WEIustMuIjwc9vPJDXeLaWennaxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W4eqJauU5JI7+gnWqPZ6WoOEmG+C6+UsOrsdBjvdXrPSsqHB2cA9ZMebai/BcPtpS
-	 xeJs7Rd8/AgNWhCCLS0684vMXpPj8BCDwpNP0zFgGdtPcrdKdX+DxxLPwmlgvckmom
-	 ijJtqNIJdz2TifHcx5X5ukS6Nws0Xi/Q5WD0Do3U=
+	b=eC4n0RvfkGHyLZGIy+n8nldCfqDfcaOW2iUGX6gUuKzanK9NMmwkAuvcy1W4ioReM
+	 cVLcUY7eqml6KqXmnORP5sMQUKhKl9c/jEmgNips96ZqNifZnEBFIih0X5PVxz+rci
+	 THU8M4914AmTlbmjil3iZyec6qwDMnWVnpt5wX3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 458/583] PCI: Avoid potential out-of-bounds read in pci_dev_for_each_resource()
-Date: Mon, 22 Jan 2024 15:58:29 -0800
-Message-ID: <20240122235825.983987675@linuxfoundation.org>
+Subject: [PATCH 6.6 459/583] serial: 8250: omap: Dont skip resource freeing if pm_runtime_resume_and_get() failed
+Date: Mon, 22 Jan 2024 15:58:30 -0800
+Message-ID: <20240122235826.022072788@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -46,64 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 3171e46d677a668eed3086da78671f1e4f5b8405 ]
+[ Upstream commit ad90d0358bd3b4554f243a425168fc7cebe7d04e ]
 
-Coverity complains that pointer in the pci_dev_for_each_resource() may be
-wrong, i.e., might be used for the out-of-bounds read.
+Returning an error code from .remove() makes the driver core emit the
+little helpful error message:
 
-There is no actual issue right now because we have another check afterwards
-and the out-of-bounds read is not being performed. In any case it's better
-code with this fixed, hence the proposed change.
+	remove callback returned a non-zero value. This will be ignored.
 
-As Jonas pointed out "It probably makes the code slightly less performant
-as res will now be checked for being not NULL (which will always be true),
-but I doubt it will be significant (or in any hot paths)."
+and then remove the device anyhow. So all resources that were not freed
+are leaked in this case. Skipping serial8250_unregister_port() has the
+potential to keep enough of the UART around to trigger a use-after-free.
 
-Fixes: 09cc90063240 ("PCI: Introduce pci_dev_for_each_resource()")
-Reported-by: Bjorn Helgaas <bhelgaas@google.com>
-Closes: https://lore.kernel.org/r/20230509182122.GA1259567@bhelgaas
-Suggested-by: Jonas Gorski <jonas.gorski@gmail.com>
-Link: https://lore.kernel.org/r/20231030114218.2752236-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+So replace the error return (and with it the little helpful error
+message) by a more useful error message and continue to cleanup.
+
+Fixes: e3f0c638f428 ("serial: 8250: omap: Fix unpaired pm_runtime_put_sync() in omap8250_remove()")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20231110152927.70601-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pci.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/tty/serial/8250/8250_omap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 1596b1205b8d..3af5f2998551 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -2101,14 +2101,14 @@ int pci_iobar_pfn(struct pci_dev *pdev, int bar, struct vm_area_struct *vma);
- 	(pci_resource_end((dev), (bar)) ? 				\
- 	 resource_size(pci_resource_n((dev), (bar))) : 0)
+diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
+index 1122f37fe744..346167afe9e1 100644
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -1581,7 +1581,7 @@ static int omap8250_remove(struct platform_device *pdev)
  
--#define __pci_dev_for_each_res0(dev, res, ...)				\
--	for (unsigned int __b = 0;					\
--	     res = pci_resource_n(dev, __b), __b < PCI_NUM_RESOURCES;	\
-+#define __pci_dev_for_each_res0(dev, res, ...)				  \
-+	for (unsigned int __b = 0;					  \
-+	     __b < PCI_NUM_RESOURCES && (res = pci_resource_n(dev, __b)); \
- 	     __b++)
+ 	err = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (err)
+-		return err;
++		dev_err(&pdev->dev, "Failed to resume hardware\n");
  
--#define __pci_dev_for_each_res1(dev, res, __b)				\
--	for (__b = 0;							\
--	     res = pci_resource_n(dev, __b), __b < PCI_NUM_RESOURCES;	\
-+#define __pci_dev_for_each_res1(dev, res, __b)				  \
-+	for (__b = 0;							  \
-+	     __b < PCI_NUM_RESOURCES && (res = pci_resource_n(dev, __b)); \
- 	     __b++)
- 
- #define pci_dev_for_each_resource(dev, res, ...)			\
+ 	up = serial8250_get_port(priv->line);
+ 	omap_8250_shutdown(&up->port);
 -- 
 2.43.0
 
