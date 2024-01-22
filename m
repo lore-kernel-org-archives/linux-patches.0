@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8271463122;
-	Tue, 23 Jan 2024 00:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF186169A;
+	Tue, 23 Jan 2024 00:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971197; cv=none; b=fQeEEXI+3RHJ9K16HYVwXL0ls4cL6orNPS7g0v6H3qwoAtnFEQI2V4xZtKqF/l/s+6bBEDfBYvPPz6HhJJzGYayxbX1xGt8b/Q+cJSUWcbC0R7xVxlyjYXhrbWv3ZRSv1E47FEL+BnzT+o/iGi8xieNO5W+xZJTMRtt1u2qv8HQ=
+	t=1705971199; cv=none; b=oLKdbkRKgiIbvigDdDPJdbtmO+ybXEMbBSSX4GGI0bZASPVuSiEJJ2lD0nMhx30Kl/3NnONkRb41HuhxoHo1UWgLwEejnKM0KsN3JiBCcTE5QlpHticVwbVTaU/vdyV+5Xpb/fxgcVRMIR5kWxu2kVw2qFOLLmjdYLlE66y7MNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971197; c=relaxed/simple;
-	bh=kP9SJIHo6RfJL665ypiiGzTz72ez0UkkOWUSQgzU8oo=;
+	s=arc-20240116; t=1705971199; c=relaxed/simple;
+	bh=6xbtKkDVBKuwBCC3m9HdtZ1pbe/2siYkpiZCcGCfNWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rS60SHXNWr8v1x4IB0noZqU1qzA5WE/UJIX1YvGmmsDiQVLrn3M8/WQ2k4B8tFTWdj2WNbTbWp5HO26nNxv0evijc9SLm8W0t2mLd7Wad+FXOGhNuf1i4omJ0FQBLPXD5SBf1W1foD9h50X3iux7rs6JjDLvjAwbbWq6FPi1b2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bG8Ow9Kz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NVdX51PMVD1ZHJZ626mBuKA/dHmzEUWsC30qt5OjIpIQ7vwrPxLaa//BcUNC0R11gr10Vamsf53xioylxAoPdEq2o9rlGaqDRUbgL2fMeD5zHg3+yjlX0WUMP+I0cruO6j/z7QjQ6C0gYKtFMv8x2C8Jy5NS1BEr9iHXrzJM4HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A60YFfep; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bG8Ow9Kz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4112BC433F1;
-	Tue, 23 Jan 2024 00:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A60YFfep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A237FC433F1;
+	Tue, 23 Jan 2024 00:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971197;
-	bh=kP9SJIHo6RfJL665ypiiGzTz72ez0UkkOWUSQgzU8oo=;
+	s=korg; t=1705971198;
+	bh=6xbtKkDVBKuwBCC3m9HdtZ1pbe/2siYkpiZCcGCfNWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bG8Ow9Kzj1v3IvO9G+gPCTXCHetQcIouqOhbDQMiE3i+eaOV0dndsRKpo6SwnfoCc
-	 9QTMw9yFle1VJu1cwnh134ilompxDEBOrLtUaqphr/4yAvHw/nft1LY6wxd9+NP3z/
-	 E5JoLqosbSa+34n0HfwRCsxuLSl+E3vI/hBc9zhQ=
+	b=A60YFfephQC53GnN0Tvxr0X8/3jcbTuTmIwEEbjbcz7TreZE13S7mP4XkUAZeZw9b
+	 X4pcZmNJgCdrHYhD/HeAbJaPtr3smnOG9YSrtiM3w4xqSG/+jxte71myhdYnR1DcaM
+	 RgC0acXBoMo45kr4q5NVlX9NzwkHVjmCQMdAXOR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jordan Rome <jordalgo@meta.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 202/417] media: dvb-frontends: m88ds3103: Fix a memory leak in an error handling path of m88ds3103_probe()
-Date: Mon, 22 Jan 2024 15:56:10 -0800
-Message-ID: <20240122235758.929456472@linuxfoundation.org>
+Subject: [PATCH 5.10 110/286] bpf: Add crosstask check to __bpf_get_stack
+Date: Mon, 22 Jan 2024 15:56:56 -0800
+Message-ID: <20240122235736.328150930@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +47,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jordan Rome <jordalgo@meta.com>
 
-[ Upstream commit 5b2f885e2f6f482d05c23f04c8240f7b4fc5bdb5 ]
+[ Upstream commit b8e3a87a627b575896e448021e5c2f8a3bc19931 ]
 
-If an error occurs after a successful i2c_mux_add_adapter(), then
-i2c_mux_del_adapters() should be called to free some resources, as
-already done in the remove function.
+Currently get_perf_callchain only supports user stack walking for
+the current task. Passing the correct *crosstask* param will return
+0 frames if the task passed to __bpf_get_stack isn't the current
+one instead of a single incorrect frame/address. This change
+passes the correct *crosstask* param but also does a preemptive
+check in __bpf_get_stack if the task is current and returns
+-EOPNOTSUPP if it is not.
 
-Fixes: e6089feca460 ("media: m88ds3103: Add support for ds3103b demod")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+This issue was found using bpf_get_task_stack inside a BPF
+iterator ("iter/task"), which iterates over all tasks.
+bpf_get_task_stack works fine for fetching kernel stacks
+but because get_perf_callchain relies on the caller to know
+if the requested *task* is the current one (via *crosstask*)
+it was failing in a confusing way.
+
+It might be possible to get user stacks for all tasks utilizing
+something like access_process_vm but that requires the bpf
+program calling bpf_get_task_stack to be sleepable and would
+therefore be a breaking change.
+
+Fixes: fa28dcb82a38 ("bpf: Introduce helper bpf_get_task_stack()")
+Signed-off-by: Jordan Rome <jordalgo@meta.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20231108112334.3433136-1-jordalgo@meta.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/m88ds3103.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/uapi/linux/bpf.h       |  3 +++
+ kernel/bpf/stackmap.c          | 11 ++++++++++-
+ tools/include/uapi/linux/bpf.h |  3 +++
+ 3 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/dvb-frontends/m88ds3103.c b/drivers/media/dvb-frontends/m88ds3103.c
-index 9a0d43c7ba9e..ce99f7dfb5a5 100644
---- a/drivers/media/dvb-frontends/m88ds3103.c
-+++ b/drivers/media/dvb-frontends/m88ds3103.c
-@@ -1894,7 +1894,7 @@ static int m88ds3103_probe(struct i2c_client *client,
- 		/* get frontend address */
- 		ret = regmap_read(dev->regmap, 0x29, &utmp);
- 		if (ret)
--			goto err_kfree;
-+			goto err_del_adapters;
- 		dev->dt_addr = ((utmp & 0x80) == 0) ? 0x42 >> 1 : 0x40 >> 1;
- 		dev_dbg(&client->dev, "dt addr is 0x%02x\n", dev->dt_addr);
+diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
+index 36ddfb98b70e..29cc0eb2e488 100644
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -3424,6 +3424,8 @@ union bpf_attr {
+  * long bpf_get_task_stack(struct task_struct *task, void *buf, u32 size, u64 flags)
+  *	Description
+  *		Return a user or a kernel stack in bpf program provided buffer.
++ *		Note: the user stack will only be populated if the *task* is
++ *		the current task; all other tasks will return -EOPNOTSUPP.
+  *		To achieve this, the helper needs *task*, which is a valid
+  *		pointer to **struct task_struct**. To store the stacktrace, the
+  *		bpf program provides *buf* with a nonnegative *size*.
+@@ -3435,6 +3437,7 @@ union bpf_attr {
+  *
+  *		**BPF_F_USER_STACK**
+  *			Collect a user space stack instead of a kernel stack.
++ *			The *task* must be the current task.
+  *		**BPF_F_USER_BUILD_ID**
+  *			Collect buildid+offset instead of ips for user stack,
+  *			only valid if **BPF_F_USER_STACK** is also specified.
+diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+index 0c5bf98d5576..b8afea2ceeeb 100644
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -575,6 +575,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ {
+ 	u32 trace_nr, copy_len, elem_size, num_elem, max_depth;
+ 	bool user_build_id = flags & BPF_F_USER_BUILD_ID;
++	bool crosstask = task && task != current;
+ 	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
+ 	bool user = flags & BPF_F_USER_STACK;
+ 	struct perf_callchain_entry *trace;
+@@ -597,6 +598,14 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ 	if (task && user && !user_mode(regs))
+ 		goto err_fault;
  
-@@ -1902,11 +1902,14 @@ static int m88ds3103_probe(struct i2c_client *client,
- 						      dev->dt_addr);
- 		if (IS_ERR(dev->dt_client)) {
- 			ret = PTR_ERR(dev->dt_client);
--			goto err_kfree;
-+			goto err_del_adapters;
- 		}
- 	}
- 
- 	return 0;
++	/* get_perf_callchain does not support crosstask user stack walking
++	 * but returns an empty stack instead of NULL.
++	 */
++	if (crosstask && user) {
++		err = -EOPNOTSUPP;
++		goto clear;
++	}
 +
-+err_del_adapters:
-+	i2c_mux_del_adapters(dev->muxc);
- err_kfree:
- 	kfree(dev);
- err:
+ 	num_elem = size / elem_size;
+ 	max_depth = num_elem + skip;
+ 	if (sysctl_perf_event_max_stack < max_depth)
+@@ -608,7 +617,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ 		trace = get_callchain_entry_for_task(task, max_depth);
+ 	else
+ 		trace = get_perf_callchain(regs, 0, kernel, user, max_depth,
+-					   false, false);
++					   crosstask, false);
+ 	if (unlikely(!trace))
+ 		goto err_fault;
+ 
+diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
+index fd1a4d843e6f..63ea5bc6f1c4 100644
+--- a/tools/include/uapi/linux/bpf.h
++++ b/tools/include/uapi/linux/bpf.h
+@@ -3424,6 +3424,8 @@ union bpf_attr {
+  * long bpf_get_task_stack(struct task_struct *task, void *buf, u32 size, u64 flags)
+  *	Description
+  *		Return a user or a kernel stack in bpf program provided buffer.
++ *		Note: the user stack will only be populated if the *task* is
++ *		the current task; all other tasks will return -EOPNOTSUPP.
+  *		To achieve this, the helper needs *task*, which is a valid
+  *		pointer to **struct task_struct**. To store the stacktrace, the
+  *		bpf program provides *buf* with a nonnegative *size*.
+@@ -3435,6 +3437,7 @@ union bpf_attr {
+  *
+  *		**BPF_F_USER_STACK**
+  *			Collect a user space stack instead of a kernel stack.
++ *			The *task* must be the current task.
+  *		**BPF_F_USER_BUILD_ID**
+  *			Collect buildid+offset instead of ips for user stack,
+  *			only valid if **BPF_F_USER_STACK** is also specified.
 -- 
 2.43.0
 
