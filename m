@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35185A47;
-	Tue, 23 Jan 2024 01:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3578D7E9;
+	Tue, 23 Jan 2024 01:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972144; cv=none; b=CvuqBXuO+D+mMnW4a63fQH0zsOq4Efp0tIycSBe99jjSCSFK+MMktw6Z6x3mXRKGwQMzcpxyi0p09FrgTvLNjEL3xzfONP6tyxg89+eWP1gB24MedqHoMARLdtJlDDf5Jk10k17uv7E21IrichqvQtF3NLlWchyHKOpobT+BYF8=
+	t=1705972145; cv=none; b=qe0bZsV4oYLGBfOtaYH5LQAnSyVddeg0L4lYRILhBWmQ912+vig7YiLrIBTEaLkRiKrrzzR9l1JcQfXY2ZvXOPgutQgR5iIv0SPFXWogi/i0wfzXvD6DhXZztKmlzs9DWE4gWvdPy7/jbZok4vTjyt18MoRVqvxXzsCLIh5Ymdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972144; c=relaxed/simple;
-	bh=WfE7gzqkv1K71xf2lWgSZ4hzxKWC3kEEPo9runqji4U=;
+	s=arc-20240116; t=1705972145; c=relaxed/simple;
+	bh=Ewfl3mT50+zYIiik8oL/eWTJypf6oSS4lTSnss/WgpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q0wPrWMaPDP8GDHtLGILkzT92heyu6tTHQ5WAb0T+46RzBVuZWlT453aF8EgOgRImKRILM9MLlkr+zpt7l1RBkk2Otf/rCA95oAQ+HA2IG7+O/v1cmrRhfXfvnk2TSbTDgz2y4YhQliPr/daGg/ZwX85Btjt9OT3HIZMUoJwpW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JiNSeIQN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oM1ORiWgOIbrf6JN6yC4V3ZLPKHvNt1iIUiJ5nYSdagTGlspxbCE/5G5I1GxX0EX8JOJzqKwuoEDiynrqKQDYBzqFr3UWdiq7DGRGNhSiGfoNLqT9jxsudW/p0Ow+TVGZmgvzuQQiDKpbDN6gBtbv5gK1s1VeBcgRXGiBeAz8SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtIljjY1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JiNSeIQN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E84A1C43390;
-	Tue, 23 Jan 2024 01:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtIljjY1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CE4C433A6;
+	Tue, 23 Jan 2024 01:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972144;
-	bh=WfE7gzqkv1K71xf2lWgSZ4hzxKWC3kEEPo9runqji4U=;
+	s=korg; t=1705972145;
+	bh=Ewfl3mT50+zYIiik8oL/eWTJypf6oSS4lTSnss/WgpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JiNSeIQNax8JAgOoZbebrrwK4ev++aryp3fiNCqg6+qsxIwrKO2Tg+Z+UoRySfZff
-	 DGZMzHjLRiTJEfa6wpC6W7+Puu+/l8Za6+pGMqFV7Q12dUa4mSmJeskJjs576pPC9v
-	 JTRf1nr7+ewLv2jJJZEVn0vG08HgjCkLUSTqsoGU=
+	b=wtIljjY1a9ebheH0xlYI3ecLLzoFLsUMFvO9gssmK5mf243+oIY3KlCJw/FxyfV7m
+	 QAQyUNvoCiRZXwtr6AzEiurwYV3AajdhmccoN4BM3hC3soKqbqlikKMga0Rfyv2I+8
+	 Vu028+MMmZBQ9xcAP4RJH9h1Sn3rqWGNB+cD1fOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kunwu Chan <chentao@kylinos.cn>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 073/374] selftests/powerpc: Fix error handling in FPU/VMX preemption tests
-Date: Mon, 22 Jan 2024 15:55:29 -0800
-Message-ID: <20240122235747.155622726@linuxfoundation.org>
+Subject: [PATCH 5.15 074/374] powerpc/powernv: Add a null pointer check to scom_debug_init_one()
+Date: Mon, 22 Jan 2024 15:55:30 -0800
+Message-ID: <20240122235747.191950960@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -50,86 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit 9dbd5927408c4a0707de73ae9dd9306b184e8fee ]
+[ Upstream commit 9a260f2dd827bbc82cc60eb4f4d8c22707d80742 ]
 
-The FPU & VMX preemption tests do not check for errors returned by the
-low-level asm routines, preempt_fpu() / preempt_vsx() respectively.
-That means any register corruption detected by the asm routines does not
-result in a test failure.
+kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure.
+Add a null pointer check, and release 'ent' to avoid memory leaks.
 
-Fix it by returning the return value of the asm routines from the
-pthread child routines.
-
-Fixes: e5ab8be68e44 ("selftests/powerpc: Test preservation of FPU and VMX regs across preemption")
+Fixes: bfd2f0d49aef ("powerpc/powernv: Get rid of old scom_controller abstraction")
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231128132748.1990179-1-mpe@ellerman.id.au
+Link: https://msgid.link/20231208085937.107210-1-chentao@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/powerpc/math/fpu_preempt.c |  9 +++++----
- tools/testing/selftests/powerpc/math/vmx_preempt.c | 10 ++++++----
- 2 files changed, 11 insertions(+), 8 deletions(-)
+ arch/powerpc/platforms/powernv/opal-xscom.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/testing/selftests/powerpc/math/fpu_preempt.c b/tools/testing/selftests/powerpc/math/fpu_preempt.c
-index 5235bdc8c0b1..3e5b5663d244 100644
---- a/tools/testing/selftests/powerpc/math/fpu_preempt.c
-+++ b/tools/testing/selftests/powerpc/math/fpu_preempt.c
-@@ -37,19 +37,20 @@ __thread double darray[] = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,
- int threads_starting;
- int running;
- 
--extern void preempt_fpu(double *darray, int *threads_starting, int *running);
-+extern int preempt_fpu(double *darray, int *threads_starting, int *running);
- 
- void *preempt_fpu_c(void *p)
- {
-+	long rc;
- 	int i;
+diff --git a/arch/powerpc/platforms/powernv/opal-xscom.c b/arch/powerpc/platforms/powernv/opal-xscom.c
+index 6b4eed2ef4fa..f67235d1ba2c 100644
+--- a/arch/powerpc/platforms/powernv/opal-xscom.c
++++ b/arch/powerpc/platforms/powernv/opal-xscom.c
+@@ -165,6 +165,11 @@ static int scom_debug_init_one(struct dentry *root, struct device_node *dn,
+ 	ent->chip = chip;
+ 	snprintf(ent->name, 16, "%08x", chip);
+ 	ent->path.data = (void *)kasprintf(GFP_KERNEL, "%pOF", dn);
++	if (!ent->path.data) {
++		kfree(ent);
++		return -ENOMEM;
++	}
 +
- 	srand(pthread_self());
- 	for (i = 0; i < 21; i++)
- 		darray[i] = rand();
+ 	ent->path.size = strlen((char *)ent->path.data);
  
--	/* Test failed if it ever returns */
--	preempt_fpu(darray, &threads_starting, &running);
-+	rc = preempt_fpu(darray, &threads_starting, &running);
- 
--	return p;
-+	return (void *)rc;
- }
- 
- int test_preempt_fpu(void)
-diff --git a/tools/testing/selftests/powerpc/math/vmx_preempt.c b/tools/testing/selftests/powerpc/math/vmx_preempt.c
-index 6761d6ce30ec..6f7cf400c687 100644
---- a/tools/testing/selftests/powerpc/math/vmx_preempt.c
-+++ b/tools/testing/selftests/powerpc/math/vmx_preempt.c
-@@ -37,19 +37,21 @@ __thread vector int varray[] = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10,11,12},
- int threads_starting;
- int running;
- 
--extern void preempt_vmx(vector int *varray, int *threads_starting, int *running);
-+extern int preempt_vmx(vector int *varray, int *threads_starting, int *running);
- 
- void *preempt_vmx_c(void *p)
- {
- 	int i, j;
-+	long rc;
-+
- 	srand(pthread_self());
- 	for (i = 0; i < 12; i++)
- 		for (j = 0; j < 4; j++)
- 			varray[i][j] = rand();
- 
--	/* Test fails if it ever returns */
--	preempt_vmx(varray, &threads_starting, &running);
--	return p;
-+	rc = preempt_vmx(varray, &threads_starting, &running);
-+
-+	return (void *)rc;
- }
- 
- int test_preempt_vmx(void)
+ 	dir = debugfs_create_dir(ent->name, root);
 -- 
 2.43.0
 
