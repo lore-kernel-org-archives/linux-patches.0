@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D47814A4CF;
-	Tue, 23 Jan 2024 00:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E73A14A4CF;
+	Tue, 23 Jan 2024 00:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969232; cv=none; b=Yr2Vdb9Jkiln1YOAX00H5r8XPBVBLhjcM3SpOi55HWB3ZLiDFUFCR5Dfk85RsCJmpyhult3LOY6dncdW2HhiFu/QkOEitEZdVXuIpoDT9xFvijZHBkQAZmL/r9Y971XvtKs7374ucbYRFmtFMlvjMG+VVxb7u5rn4OU5P3UhogI=
+	t=1705969233; cv=none; b=mC98aC2rs1DWIxL5E0Vl/RVuGVAZssFZWQX4JoEvLX27MarhB5lirqMcanJ1kj/IlWFDbvAl63lQL9DZhxvpEgFx3LMEZlqm6uXsQAI0yncdzOyBbc9qVtcFHWEQFa/TQFZRI6qbiEtgWI5w8tdyPzkhBnJGxcS1eMvADQ7lFAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969232; c=relaxed/simple;
-	bh=Aicg9KelX1bTsnSKcTHE8oxO8acJ6M3mvqCzinyRxXY=;
+	s=arc-20240116; t=1705969233; c=relaxed/simple;
+	bh=toEF7pzim4e7Kd0CjGOIa+su3MGTHF+GmBGPyCOYV3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kvV1hUIm8FS39v8DhPqR9tT/+sR/dy9EPWMwEUmkwEDiW4iQ3AXaV5V6wDf/biadfJbwBDYXyBzQtgTNtPfamlYEh9OF2wZO+nri+tCvdGEeXfxs5O9PuucXn95FpU6OSp9CDlinucgjTKteMN+V5QO7Y/sT5EGD0sVUFUWz1VU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SpWHcly/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bAJpCqH5cLdq71Qn5sc7Ll6sM0ELm0ARv6BETiDbZXyD4F50dXX9saSVsD1dEaMJhzXvzBalvt3INP4llgg9GI8diJNr4R7hE0w3T8gKfwUq6SrPn9w6jiyyss9pHg8qMX42KC7XWA/2JSvVD8LBfmVDvA439nkK7y3fcSE+aLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T89jTxeQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SpWHcly/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CF9C433C7;
-	Tue, 23 Jan 2024 00:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T89jTxeQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BB7C43394;
+	Tue, 23 Jan 2024 00:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969232;
-	bh=Aicg9KelX1bTsnSKcTHE8oxO8acJ6M3mvqCzinyRxXY=;
+	s=korg; t=1705969233;
+	bh=toEF7pzim4e7Kd0CjGOIa+su3MGTHF+GmBGPyCOYV3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SpWHcly/5S0A2mdSUafQrC3be2zgR3lxVuZW5/SBzmxk/uStaZ6TkT1ozmY8ATBAj
-	 i/SBdzGc8N7X9O94oBR7sZl/Ap3cyZ0A0D4HH3IQreZWfdFX6Rrj+aki3SBVwcPZLZ
-	 /g1wN742VTlX9CO4TFTWulJYgcBdU9cz2YrottsY=
+	b=T89jTxeQAZabALQ1+rMiyG0rUsIT34GXHmlHy/SI4tQtZit+cYF4iFaf4WQ7ySaCC
+	 IyYpbEv49quPao/kF1jBqFUCOtf+z1WmLFGoWCOwxpMIufZICG4P3mnkZmB0zQjp3g
+	 F1Eigp3vYtdYrv+j4S0LXfRzr1FJegBpIjezTQDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 115/641] md: synchronize flush io with array reconfiguration
-Date: Mon, 22 Jan 2024 15:50:19 -0800
-Message-ID: <20240122235821.642948954@linuxfoundation.org>
+Subject: [PATCH 6.7 116/641] bpf: enforce precision of R0 on callback return
+Date: Mon, 22 Jan 2024 15:50:20 -0800
+Message-ID: <20240122235821.676170159@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,94 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit fa2bbff7b0b4e211fec5e5686ef96350690597b5 ]
+[ Upstream commit 0acd03a5bd188b0c501d285d938439618bd855c4 ]
 
-Currently rcu is used to protect iterating rdev from submit_flushes():
+Given verifier checks actual value, r0 has to be precise, so we need to
+propagate precision properly. r0 also has to be marked as read,
+otherwise subsequent state comparisons will ignore such register as
+unimportant and precision won't really help here.
 
-submit_flushes			remove_and_add_spares
-				synchronize_rcu
-				pers->hot_remove_disk()
- rcu_read_lock()
- rdev_for_each_rcu
-  if (rdev->raid_disk >= 0)
-				rdev->radi_disk = -1;
-   atomic_inc(&rdev->nr_pending)
-   rcu_read_unlock()
-   bi = bio_alloc_bioset()
-   bi->bi_end_io = md_end_flush
-   bi->private = rdev
-   submit_bio
-   // issue io for removed rdev
-
-Fix this problem by grabbing 'acive_io' before iterating rdev, make sure
-that remove_and_add_spares() won't concurrent with submit_flushes().
-
-Fixes: a2826aa92e2e ("md: support barrier requests on all personalities.")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20231129020234.1586910-1-yukuai1@huaweicloud.com
+Fixes: 69c087ba6225 ("bpf: Add bpf_for_each_map_elem() helper")
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20231202175705.885270-4-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ kernel/bpf/verifier.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 9bdd57324c37..f246bb0932b0 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -543,6 +543,9 @@ static void md_end_flush(struct bio *bio)
- 	rdev_dec_pending(rdev, mddev);
- 
- 	if (atomic_dec_and_test(&mddev->flush_pending)) {
-+		/* The pair is percpu_ref_get() from md_flush_request() */
-+		percpu_ref_put(&mddev->active_io);
-+
- 		/* The pre-request flush has finished */
- 		queue_work(md_wq, &mddev->flush_work);
- 	}
-@@ -562,12 +565,8 @@ static void submit_flushes(struct work_struct *ws)
- 	rdev_for_each_rcu(rdev, mddev)
- 		if (rdev->raid_disk >= 0 &&
- 		    !test_bit(Faulty, &rdev->flags)) {
--			/* Take two references, one is dropped
--			 * when request finishes, one after
--			 * we reclaim rcu_read_lock
--			 */
- 			struct bio *bi;
--			atomic_inc(&rdev->nr_pending);
-+
- 			atomic_inc(&rdev->nr_pending);
- 			rcu_read_unlock();
- 			bi = bio_alloc_bioset(rdev->bdev, 0,
-@@ -578,7 +577,6 @@ static void submit_flushes(struct work_struct *ws)
- 			atomic_inc(&mddev->flush_pending);
- 			submit_bio(bi);
- 			rcu_read_lock();
--			rdev_dec_pending(rdev, mddev);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index af2819d5c8ee..4d59b200e898 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -9829,6 +9829,13 @@ static int prepare_func_exit(struct bpf_verifier_env *env, int *insn_idx)
+ 			verbose(env, "R0 not a scalar value\n");
+ 			return -EACCES;
  		}
- 	rcu_read_unlock();
- 	if (atomic_dec_and_test(&mddev->flush_pending))
-@@ -631,6 +629,18 @@ bool md_flush_request(struct mddev *mddev, struct bio *bio)
- 	/* new request after previous flush is completed */
- 	if (ktime_after(req_start, mddev->prev_flush_start)) {
- 		WARN_ON(mddev->flush_bio);
-+		/*
-+		 * Grab a reference to make sure mddev_suspend() will wait for
-+		 * this flush to be done.
-+		 *
-+		 * md_flush_reqeust() is called under md_handle_request() and
-+		 * 'active_io' is already grabbed, hence percpu_ref_is_zero()
-+		 * won't pass, percpu_ref_tryget_live() can't be used because
-+		 * percpu_ref_kill() can be called by mddev_suspend()
-+		 * concurrently.
-+		 */
-+		WARN_ON(percpu_ref_is_zero(&mddev->active_io));
-+		percpu_ref_get(&mddev->active_io);
- 		mddev->flush_bio = bio;
- 		bio = NULL;
- 	}
++
++		/* we are going to rely on register's precise value */
++		err = mark_reg_read(env, r0, r0->parent, REG_LIVE_READ64);
++		err = err ?: mark_chain_precision(env, BPF_REG_0);
++		if (err)
++			return err;
++
+ 		if (!tnum_in(range, r0->var_off)) {
+ 			verbose_invalid_scalar(env, r0, &range, "callback return", "R0");
+ 			return -EINVAL;
 -- 
 2.43.0
 
