@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0869527456;
-	Tue, 23 Jan 2024 00:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106F93FFE;
+	Tue, 23 Jan 2024 00:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970940; cv=none; b=XMf+T0Ni8T2zntQrpAAhYf9cm2FwOL6sZNJaiNi8RaMhvt2m8Ilj7wJ6NoCY9OsH9FijkMcl2vwPK43oO1e+D2laJm8G7VbP7HJ4XdYugkXrjLCFYhA3YCLkDdt3Ez8LfxkcjUDUoxa2Q70Jg4INCELeWcp22dllBqFMyHqOAIA=
+	t=1705970942; cv=none; b=BMVt+HPbPHLKi1pcBXwSLBbvsf/LTTw9Yqf3CV4Jto45kwyK/4DQK9vxGmO5CQAlB5OsHntuYEyyXwO4VWLq4jLbc3FgcskcR1DSZRr8Bol9/s0WRq1/tz0Q0BvO1V/j0V1Fb74X4sHm+XlScf5YJmt4fhFowi0uqBrW7HtmTLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970940; c=relaxed/simple;
-	bh=kDm11rET1fT4c/QP1nHEm3oBT+dqRyEwwj27dmxbuM4=;
+	s=arc-20240116; t=1705970942; c=relaxed/simple;
+	bh=pCeV1kJ7rdpj8EbpJL6BGok+i4I8Ghstow2nucdyulE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g94foDsoPeiaS82BK0gXhL9RmJePx/Pfg9471BZSk93Vle1zQAcIFjcHKSxP2LdyO8SlLHLmuCRREMP8auT9zcv6g1UQBLYWofg8dBzas9bBsh/IThkyNVq6cr8S10bSIIrMF9FufzASJW5r0mRIIyDgyfnfNX2oOqNA3EGmQ9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjBYLv1x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gdWs1uJKYT3IavU5ij2F13uohKOHnuT1DEjkTUVxWeJoJ1nCwXVmYNq8oO1WeyCqcxd96D3wlg0VDpRxc0mD6/9pfVCVJxNtJJ6+RDokNSJK7tuIPjlfB8JOlr7sbPQf6+jUUTmox/uhOH85x4cAiGVZ4cR5ScBIOIRMXrcNxNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+ZFaizx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjBYLv1x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C459C433C7;
-	Tue, 23 Jan 2024 00:48:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+ZFaizx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85741C43390;
+	Tue, 23 Jan 2024 00:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970939;
-	bh=kDm11rET1fT4c/QP1nHEm3oBT+dqRyEwwj27dmxbuM4=;
+	s=korg; t=1705970941;
+	bh=pCeV1kJ7rdpj8EbpJL6BGok+i4I8Ghstow2nucdyulE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JjBYLv1x/0Uy00APLh0NcnZKlIP2mJwmpbi4bZnsg6bqA+WE4GLZfnQdtyqnVsICR
-	 OaeLsY04c84ZA3qaXfzv4NFx4FJXYhKZPG39ztJc/wc3nYQ8CCzeqUiXasqNTzI+k1
-	 SGr05LvHKg+pAGp6JPOJUPKawJzZxx4EcljdnSYY=
+	b=N+ZFaizxBOdvvRzFqi8u15DBKdH2pOn1TMsW62Vjp4GQBvDLmaR9d8Fo/LcLtx8Dm
+	 4zVwTmJRzed+5T6opttr1uGFTeYOFs70YH8oUNZL+RVYnA+GFZJLrUMmknybzP5X4e
+	 dEE5emFNY//KlvSdVO9I81OmntsIn+ZrD2m4ioyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/417] ARM: dts: stm32: dont mix SCMI and non-SCMI board compatibles
-Date: Mon, 22 Jan 2024 15:54:47 -0800
-Message-ID: <20240122235755.908402624@linuxfoundation.org>
+Subject: [PATCH 5.10 025/286] jbd2: fix soft lockup in journal_finish_inode_data_buffers()
+Date: Mon, 22 Jan 2024 15:55:31 -0800
+Message-ID: <20240122235732.988415316@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,88 +48,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit bfc3c6743de0ecb169026c36cbdbc0d12d22a528 ]
+[ Upstream commit 6c02757c936063f0631b4e43fe156f8c8f1f351f ]
 
-The binding erroneously decreed that the SCMI variants of the ST
-evaluation kits are compatible with the non-SCMI variants.
+There's issue when do io test:
+WARN: soft lockup - CPU#45 stuck for 11s! [jbd2/dm-2-8:4170]
+CPU: 45 PID: 4170 Comm: jbd2/dm-2-8 Kdump: loaded Tainted: G  OE
+Call trace:
+ dump_backtrace+0x0/0x1a0
+ show_stack+0x24/0x30
+ dump_stack+0xb0/0x100
+ watchdog_timer_fn+0x254/0x3f8
+ __hrtimer_run_queues+0x11c/0x380
+ hrtimer_interrupt+0xfc/0x2f8
+ arch_timer_handler_phys+0x38/0x58
+ handle_percpu_devid_irq+0x90/0x248
+ generic_handle_irq+0x3c/0x58
+ __handle_domain_irq+0x68/0xc0
+ gic_handle_irq+0x90/0x320
+ el1_irq+0xcc/0x180
+ queued_spin_lock_slowpath+0x1d8/0x320
+ jbd2_journal_commit_transaction+0x10f4/0x1c78 [jbd2]
+ kjournald2+0xec/0x2f0 [jbd2]
+ kthread+0x134/0x138
+ ret_from_fork+0x10/0x18
 
-This is not correct, as a kernel or bootloader compatible with the non-SCMI
-variant is not necessarily able to function, when direct access
-to resources is replaced by having to talk SCMI to the secure monitor.
+Analyzed informations from vmcore as follows:
+(1) There are about 5k+ jbd2_inode in 'commit_transaction->t_inode_list';
+(2) Now is processing the 855th jbd2_inode;
+(3) JBD2 task has TIF_NEED_RESCHED flag;
+(4) There's no pags in address_space around the 855th jbd2_inode;
+(5) There are some process is doing drop caches;
+(6) Mounted with 'nodioread_nolock' option;
+(7) 128 CPUs;
 
-The binding has been adjusted to reflect thus, so synchronize the device
-trees now.
+According to informations from vmcore we know 'journal->j_list_lock' spin lock
+competition is fierce. So journal_finish_inode_data_buffers() maybe process
+slowly. Theoretically, there is scheduling point in the filemap_fdatawait_range_keep_errors().
+However, if inode's address_space has no pages which taged with PAGECACHE_TAG_WRITEBACK,
+will not call cond_resched(). So may lead to soft lockup.
+journal_finish_inode_data_buffers
+  filemap_fdatawait_range_keep_errors
+    __filemap_fdatawait_range
+      while (index <= end)
+        nr_pages = pagevec_lookup_range_tag(&pvec, mapping, &index, end, PAGECACHE_TAG_WRITEBACK);
+        if (!nr_pages)
+           break;    --> If 'nr_pages' is equal zero will break, then will not call cond_resched()
+        for (i = 0; i < nr_pages; i++)
+          wait_on_page_writeback(page);
+        cond_resched();
 
-Fixes: 5b7e58313a77 ("ARM: dts: stm32: Add SCMI version of STM32 boards (DK1/DK2/ED1/EV1)")
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+To solve above issue, add scheduling point in the journal_finish_inode_data_buffers();
+
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20231211112544.3879780-1-yebin10@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32mp157a-dk1-scmi.dts | 2 +-
- arch/arm/boot/dts/stm32mp157c-dk2-scmi.dts | 2 +-
- arch/arm/boot/dts/stm32mp157c-ed1-scmi.dts | 2 +-
- arch/arm/boot/dts/stm32mp157c-ev1-scmi.dts | 3 +--
- 4 files changed, 4 insertions(+), 5 deletions(-)
+ fs/jbd2/commit.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/stm32mp157a-dk1-scmi.dts b/arch/arm/boot/dts/stm32mp157a-dk1-scmi.dts
-index e539cc80bef8..942a6ca38d97 100644
---- a/arch/arm/boot/dts/stm32mp157a-dk1-scmi.dts
-+++ b/arch/arm/boot/dts/stm32mp157a-dk1-scmi.dts
-@@ -11,7 +11,7 @@
- 
- / {
- 	model = "STMicroelectronics STM32MP157A-DK1 SCMI Discovery Board";
--	compatible = "st,stm32mp157a-dk1-scmi", "st,stm32mp157a-dk1", "st,stm32mp157";
-+	compatible = "st,stm32mp157a-dk1-scmi", "st,stm32mp157";
- 
- 	reserved-memory {
- 		optee@de000000 {
-diff --git a/arch/arm/boot/dts/stm32mp157c-dk2-scmi.dts b/arch/arm/boot/dts/stm32mp157c-dk2-scmi.dts
-index 97e4f94b0a24..99c4ff1f5c21 100644
---- a/arch/arm/boot/dts/stm32mp157c-dk2-scmi.dts
-+++ b/arch/arm/boot/dts/stm32mp157c-dk2-scmi.dts
-@@ -11,7 +11,7 @@
- 
- / {
- 	model = "STMicroelectronics STM32MP157C-DK2 SCMI Discovery Board";
--	compatible = "st,stm32mp157c-dk2-scmi", "st,stm32mp157c-dk2", "st,stm32mp157";
-+	compatible = "st,stm32mp157c-dk2-scmi", "st,stm32mp157";
- 
- 	reserved-memory {
- 		optee@de000000 {
-diff --git a/arch/arm/boot/dts/stm32mp157c-ed1-scmi.dts b/arch/arm/boot/dts/stm32mp157c-ed1-scmi.dts
-index 9cf0a44d2f47..21010458b36f 100644
---- a/arch/arm/boot/dts/stm32mp157c-ed1-scmi.dts
-+++ b/arch/arm/boot/dts/stm32mp157c-ed1-scmi.dts
-@@ -11,7 +11,7 @@
- 
- / {
- 	model = "STMicroelectronics STM32MP157C-ED1 SCMI eval daughter";
--	compatible = "st,stm32mp157c-ed1-scmi", "st,stm32mp157c-ed1", "st,stm32mp157";
-+	compatible = "st,stm32mp157c-ed1-scmi", "st,stm32mp157";
- 
- 	reserved-memory {
- 		optee@fe000000 {
-diff --git a/arch/arm/boot/dts/stm32mp157c-ev1-scmi.dts b/arch/arm/boot/dts/stm32mp157c-ev1-scmi.dts
-index 3b9dd6f4ccc9..d37637149919 100644
---- a/arch/arm/boot/dts/stm32mp157c-ev1-scmi.dts
-+++ b/arch/arm/boot/dts/stm32mp157c-ev1-scmi.dts
-@@ -11,8 +11,7 @@
- 
- / {
- 	model = "STMicroelectronics STM32MP157C-EV1 SCMI eval daughter on eval mother";
--	compatible = "st,stm32mp157c-ev1-scmi", "st,stm32mp157c-ev1", "st,stm32mp157c-ed1",
--		     "st,stm32mp157";
-+	compatible = "st,stm32mp157c-ev1-scmi", "st,stm32mp157c-ed1", "st,stm32mp157";
- 
- 	reserved-memory {
- 		optee@fe000000 {
+diff --git a/fs/jbd2/commit.c b/fs/jbd2/commit.c
+index fa24b407a9dc..db137671a41f 100644
+--- a/fs/jbd2/commit.c
++++ b/fs/jbd2/commit.c
+@@ -300,6 +300,7 @@ static int journal_finish_inode_data_buffers(journal_t *journal,
+ 			if (!ret)
+ 				ret = err;
+ 		}
++		cond_resched();
+ 		spin_lock(&journal->j_list_lock);
+ 		jinode->i_flags &= ~JI_COMMIT_RUNNING;
+ 		smp_mb();
 -- 
 2.43.0
 
