@@ -1,39 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FC277F2F;
-	Tue, 23 Jan 2024 02:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E50C7A720;
+	Tue, 23 Jan 2024 02:05:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975551; cv=none; b=iIolYWHthWTBWe5VnBUB5JQI5Q2ZzlVZp310aMVk9AT62Jg2fHEDh/LpcomwppoZE0GUW0PF+2lItkD+k3YkGMbkmPMI7sxFsFlNy999bLQ43X3g+Me5TH+i1b7Cfrxpi48KTwh1S5xUNUEeLBIKbKNds+Mtc2u8M2Wul2Ditls=
+	t=1705975554; cv=none; b=RyxQEKiAhEp7KF2Oztu81ixhlD+hZ6OrEQc0chMpasZEHKCzJj8YOklsIBdm4AB6XzpCIB5Vn2etCDs9SMXb4juCTX8HXs3vNzycrP+eKxm46NqgU9iT4RpV/raYocSa4+O70glnqJxW4nuA3UIFvOkh3dnzsN/gKcBmseMuimQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975551; c=relaxed/simple;
-	bh=GNeQuQFDiN+vWi3PC1ubZEg8eLZ01zwFWJha4Bjezus=;
+	s=arc-20240116; t=1705975554; c=relaxed/simple;
+	bh=4gPkxHZbEGI6JlznYNg1GyT8GEhVEz7lsaAsGs5gAEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4HPjvHDyO/OamcF033REmvGikR9tkPwuf0x0Z+DRhL6os4384CgSpwiUqQXS2ib17wD5DAHrtViBVq5AupE2rV89tdkf/NUPXujK+VS3hzB7AVTjxdiTRCdwuEPHCzg6rnIH6SOOYcn9Xh6CZRoWIFk7aHTRaugCcUfbCDWr1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JovGGGzp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SK/XyGZqa87PnNY8aSXBBd8GEET8j12Os6kqgZAzM/yzAeazl+QlQ5VJugVrJy22j648tC96kQ05aahb42TitY9m3ZbVDjsWs2KTm60Pz0xnY0Kld9vUDEGjnjinwO8wbVpk+f9h4/NCHsxz2t6DOlgbhXu1vGHKb/zQagH28QE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lX4I+00l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JovGGGzp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77615C43399;
-	Tue, 23 Jan 2024 02:05:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lX4I+00l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB71C433C7;
+	Tue, 23 Jan 2024 02:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975551;
-	bh=GNeQuQFDiN+vWi3PC1ubZEg8eLZ01zwFWJha4Bjezus=;
+	s=korg; t=1705975553;
+	bh=4gPkxHZbEGI6JlznYNg1GyT8GEhVEz7lsaAsGs5gAEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JovGGGzpn+2qky4INS2tCjbIr5Gsdm/PVjtBwgmmU3EJKQh94bxAv4+M0iv/6wcVI
-	 gE9goNeDeiMEHASksYffq1sw+gRveHZSOtCzfGDGBpRan9c8Xwk4r6x2I222I2UbhP
-	 noe7O5uWflwqTuUAuF18WLG4WrBctmlWoO35Euwk=
+	b=lX4I+00l0xmibLW9YNEXHS7UTALBU4J7ba+rORmyrwnCcQL1LIme5aXTiNY8A0F1B
+	 hzgMlnn0lkZCVs/lqDHXeWL2eA3SGiswaQXpA3u6a+dn8RTJ0SrL2SJ1VfH5+TOYIB
+	 LgzQtbrPMvNumjsiE26MbeItXKZeFNt3dVtt75JA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Song Liu <song@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Ming Wang <wangming01@loongson.cn>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 503/583] nvmet-tcp: Fix a kernel panic when host sends an invalid H2C PDU length
-Date: Mon, 22 Jan 2024 15:59:14 -0800
-Message-ID: <20240122235827.436137040@linuxfoundation.org>
+Subject: [PATCH 6.6 505/583] perf env: Avoid recursively taking env->bpf_progs.lock
+Date: Mon, 22 Jan 2024 15:59:16 -0800
+Message-ID: <20240122235827.495764510@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,81 +64,274 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit efa56305908ba20de2104f1b8508c6a7401833be ]
+[ Upstream commit 9c51f8788b5d4e9f46afbcf563255cfd355690b3 ]
 
-If the host sends an H2CData command with an invalid DATAL,
-the kernel may crash in nvmet_tcp_build_pdu_iovec().
+Add variants of perf_env__insert_bpf_prog_info(), perf_env__insert_btf()
+and perf_env__find_btf prefixed with __ to indicate the
+env->bpf_progs.lock is assumed held.
 
-Unable to handle kernel NULL pointer dereference at
-virtual address 0000000000000000
-lr : nvmet_tcp_io_work+0x6ac/0x718 [nvmet_tcp]
-Call trace:
-  process_one_work+0x174/0x3c8
-  worker_thread+0x2d0/0x3e8
-  kthread+0x104/0x110
+Call these variants when the lock is held to avoid recursively taking it
+and potentially having a thread deadlock with itself.
 
-Fix the bug by raising a fatal error if DATAL isn't coherent
-with the packet size.
-Also, the PDU length should never exceed the MAXH2CDATA parameter which
-has been communicated to the host in nvmet_tcp_handle_icreq().
-
-Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: f8dfeae009effc0b ("perf bpf: Show more BPF program info in print_bpf_prog_info()")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Song Liu <song@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Ming Wang <wangming01@loongson.cn>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Link: https://lore.kernel.org/r/20231207014655.1252484-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ tools/perf/util/bpf-event.c |  8 +++---
+ tools/perf/util/bpf-event.h | 12 ++++-----
+ tools/perf/util/env.c       | 50 ++++++++++++++++++++++++-------------
+ tools/perf/util/env.h       |  4 +++
+ tools/perf/util/header.c    |  8 +++---
+ 5 files changed, 50 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 197fc2ecb164..3d171061cc0f 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -19,6 +19,7 @@
- #include "nvmet.h"
+diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
+index 38fcf3ba5749..b00b5a2634c3 100644
+--- a/tools/perf/util/bpf-event.c
++++ b/tools/perf/util/bpf-event.c
+@@ -542,9 +542,9 @@ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env)
+ 	return evlist__add_sb_event(evlist, &attr, bpf_event__sb_cb, env);
+ }
  
- #define NVMET_TCP_DEF_INLINE_DATA_SIZE	(4 * PAGE_SIZE)
-+#define NVMET_TCP_MAXH2CDATA		0x400000 /* 16M arbitrary limit */
- 
- static int param_store_val(const char *str, int *val, int min, int max)
+-void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
+-				    struct perf_env *env,
+-				    FILE *fp)
++void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
++				      struct perf_env *env,
++				      FILE *fp)
  {
-@@ -900,7 +901,7 @@ static int nvmet_tcp_handle_icreq(struct nvmet_tcp_queue *queue)
- 	icresp->hdr.pdo = 0;
- 	icresp->hdr.plen = cpu_to_le32(icresp->hdr.hlen);
- 	icresp->pfv = cpu_to_le16(NVME_TCP_PFV_1_0);
--	icresp->maxdata = cpu_to_le32(0x400000); /* 16M arbitrary limit */
-+	icresp->maxdata = cpu_to_le32(NVMET_TCP_MAXH2CDATA);
- 	icresp->cpda = 0;
- 	if (queue->hdr_digest)
- 		icresp->digest |= NVME_TCP_HDR_DIGEST_ENABLE;
-@@ -953,6 +954,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- {
- 	struct nvme_tcp_data_pdu *data = &queue->pdu.data;
- 	struct nvmet_tcp_cmd *cmd;
-+	unsigned int plen;
+ 	__u32 *prog_lens = (__u32 *)(uintptr_t)(info->jited_func_lens);
+ 	__u64 *prog_addrs = (__u64 *)(uintptr_t)(info->jited_ksyms);
+@@ -560,7 +560,7 @@ void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
+ 	if (info->btf_id) {
+ 		struct btf_node *node;
  
- 	if (likely(queue->nr_cmds)) {
- 		if (unlikely(data->ttag >= queue->nr_cmds)) {
-@@ -976,7 +978,16 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		return -EPROTO;
+-		node = perf_env__find_btf(env, info->btf_id);
++		node = __perf_env__find_btf(env, info->btf_id);
+ 		if (node)
+ 			btf = btf__new((__u8 *)(node->data),
+ 				       node->data_size);
+diff --git a/tools/perf/util/bpf-event.h b/tools/perf/util/bpf-event.h
+index 1bcbd4fb6c66..e2f0420905f5 100644
+--- a/tools/perf/util/bpf-event.h
++++ b/tools/perf/util/bpf-event.h
+@@ -33,9 +33,9 @@ struct btf_node {
+ int machine__process_bpf(struct machine *machine, union perf_event *event,
+ 			 struct perf_sample *sample);
+ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env);
+-void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
+-				    struct perf_env *env,
+-				    FILE *fp);
++void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
++				      struct perf_env *env,
++				      FILE *fp);
+ #else
+ static inline int machine__process_bpf(struct machine *machine __maybe_unused,
+ 				       union perf_event *event __maybe_unused,
+@@ -50,9 +50,9 @@ static inline int evlist__add_bpf_sb_event(struct evlist *evlist __maybe_unused,
+ 	return 0;
+ }
+ 
+-static inline void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
+-						  struct perf_env *env __maybe_unused,
+-						  FILE *fp __maybe_unused)
++static inline void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
++						    struct perf_env *env __maybe_unused,
++						    FILE *fp __maybe_unused)
+ {
+ 
+ }
+diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
+index a164164001fb..d2c7b6e6eae5 100644
+--- a/tools/perf/util/env.c
++++ b/tools/perf/util/env.c
+@@ -22,13 +22,19 @@ struct perf_env perf_env;
+ 
+ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 				    struct bpf_prog_info_node *info_node)
++{
++	down_write(&env->bpf_progs.lock);
++	__perf_env__insert_bpf_prog_info(env, info_node);
++	up_write(&env->bpf_progs.lock);
++}
++
++void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
+ {
+ 	__u32 prog_id = info_node->info_linear->info.id;
+ 	struct bpf_prog_info_node *node;
+ 	struct rb_node *parent = NULL;
+ 	struct rb_node **p;
+ 
+-	down_write(&env->bpf_progs.lock);
+ 	p = &env->bpf_progs.infos.rb_node;
+ 
+ 	while (*p != NULL) {
+@@ -40,15 +46,13 @@ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 			p = &(*p)->rb_right;
+ 		} else {
+ 			pr_debug("duplicated bpf prog info %u\n", prog_id);
+-			goto out;
++			return;
+ 		}
  	}
  
-+	plen = le32_to_cpu(data->hdr.plen);
- 	cmd->pdu_len = le32_to_cpu(data->data_length);
-+	if (unlikely(cmd->pdu_len != (plen - sizeof(*data)) ||
-+		     cmd->pdu_len == 0 ||
-+		     cmd->pdu_len > NVMET_TCP_MAXH2CDATA)) {
-+		pr_err("H2CData PDU len %u is invalid\n", cmd->pdu_len);
-+		/* FIXME: use proper transport errors */
-+		nvmet_tcp_fatal_error(queue);
-+		return -EPROTO;
-+	}
- 	cmd->pdu_recv = 0;
- 	nvmet_tcp_build_pdu_iovec(cmd);
- 	queue->cmd = cmd;
+ 	rb_link_node(&info_node->rb_node, parent, p);
+ 	rb_insert_color(&info_node->rb_node, &env->bpf_progs.infos);
+ 	env->bpf_progs.infos_cnt++;
+-out:
+-	up_write(&env->bpf_progs.lock);
+ }
+ 
+ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+@@ -77,14 +81,22 @@ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+ }
+ 
+ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
++{
++	bool ret;
++
++	down_write(&env->bpf_progs.lock);
++	ret = __perf_env__insert_btf(env, btf_node);
++	up_write(&env->bpf_progs.lock);
++	return ret;
++}
++
++bool __perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
+ {
+ 	struct rb_node *parent = NULL;
+ 	__u32 btf_id = btf_node->id;
+ 	struct btf_node *node;
+ 	struct rb_node **p;
+-	bool ret = true;
+ 
+-	down_write(&env->bpf_progs.lock);
+ 	p = &env->bpf_progs.btfs.rb_node;
+ 
+ 	while (*p != NULL) {
+@@ -96,25 +108,31 @@ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
+ 			p = &(*p)->rb_right;
+ 		} else {
+ 			pr_debug("duplicated btf %u\n", btf_id);
+-			ret = false;
+-			goto out;
++			return false;
+ 		}
+ 	}
+ 
+ 	rb_link_node(&btf_node->rb_node, parent, p);
+ 	rb_insert_color(&btf_node->rb_node, &env->bpf_progs.btfs);
+ 	env->bpf_progs.btfs_cnt++;
+-out:
+-	up_write(&env->bpf_progs.lock);
+-	return ret;
++	return true;
+ }
+ 
+ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id)
++{
++	struct btf_node *res;
++
++	down_read(&env->bpf_progs.lock);
++	res = __perf_env__find_btf(env, btf_id);
++	up_read(&env->bpf_progs.lock);
++	return res;
++}
++
++struct btf_node *__perf_env__find_btf(struct perf_env *env, __u32 btf_id)
+ {
+ 	struct btf_node *node = NULL;
+ 	struct rb_node *n;
+ 
+-	down_read(&env->bpf_progs.lock);
+ 	n = env->bpf_progs.btfs.rb_node;
+ 
+ 	while (n) {
+@@ -124,13 +142,9 @@ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id)
+ 		else if (btf_id > node->id)
+ 			n = n->rb_right;
+ 		else
+-			goto out;
++			return node;
+ 	}
+-	node = NULL;
+-
+-out:
+-	up_read(&env->bpf_progs.lock);
+-	return node;
++	return NULL;
+ }
+ 
+ /* purge data in bpf_progs.infos tree */
+diff --git a/tools/perf/util/env.h b/tools/perf/util/env.h
+index 4566c51f2fd9..359eff51cb85 100644
+--- a/tools/perf/util/env.h
++++ b/tools/perf/util/env.h
+@@ -164,12 +164,16 @@ const char *perf_env__raw_arch(struct perf_env *env);
+ int perf_env__nr_cpus_avail(struct perf_env *env);
+ 
+ void perf_env__init(struct perf_env *env);
++void __perf_env__insert_bpf_prog_info(struct perf_env *env,
++				      struct bpf_prog_info_node *info_node);
+ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 				    struct bpf_prog_info_node *info_node);
+ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+ 							__u32 prog_id);
+ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node);
++bool __perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node);
+ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id);
++struct btf_node *__perf_env__find_btf(struct perf_env *env, __u32 btf_id);
+ 
+ int perf_env__numa_node(struct perf_env *env, struct perf_cpu cpu);
+ char *perf_env__find_pmu_cap(struct perf_env *env, const char *pmu_name,
+diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
+index f6035c219b41..1482567e5ac1 100644
+--- a/tools/perf/util/header.c
++++ b/tools/perf/util/header.c
+@@ -1849,8 +1849,8 @@ static void print_bpf_prog_info(struct feat_fd *ff, FILE *fp)
+ 		node = rb_entry(next, struct bpf_prog_info_node, rb_node);
+ 		next = rb_next(&node->rb_node);
+ 
+-		bpf_event__print_bpf_prog_info(&node->info_linear->info,
+-					       env, fp);
++		__bpf_event__print_bpf_prog_info(&node->info_linear->info,
++						 env, fp);
+ 	}
+ 
+ 	up_read(&env->bpf_progs.lock);
+@@ -3177,7 +3177,7 @@ static int process_bpf_prog_info(struct feat_fd *ff, void *data __maybe_unused)
+ 		/* after reading from file, translate offset to address */
+ 		bpil_offs_to_addr(info_linear);
+ 		info_node->info_linear = info_linear;
+-		perf_env__insert_bpf_prog_info(env, info_node);
++		__perf_env__insert_bpf_prog_info(env, info_node);
+ 	}
+ 
+ 	up_write(&env->bpf_progs.lock);
+@@ -3224,7 +3224,7 @@ static int process_bpf_btf(struct feat_fd *ff, void *data __maybe_unused)
+ 		if (__do_read(ff, node->data, data_size))
+ 			goto out;
+ 
+-		perf_env__insert_btf(env, node);
++		__perf_env__insert_btf(env, node);
+ 		node = NULL;
+ 	}
+ 
 -- 
 2.43.0
 
