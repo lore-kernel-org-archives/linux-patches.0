@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E925A133435;
-	Tue, 23 Jan 2024 01:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8849133435;
+	Tue, 23 Jan 2024 01:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971891; cv=none; b=qmDJcK8kG5XxkydvO3yL9FfmIue5q8f3keXQrN3DIAJls600SJWINzd3+ZNJrbAbD8wsLdlbWbj2km0qo9lPNhHTYhpPJf+ICmwE5/shItq4uv3WL/IatybNEw9Cjakja5ufZBpSd8wTsuY+3GeBPZqSC2Lh93cAB0khM3H2C3w=
+	t=1705971892; cv=none; b=dmXNwAfZpmWfQwrC2+kvC4EFyGs3MvlQGrCX3yp8kVY7wzhk6OIcidwcA7u21TdhNQ+VBKeOPM+Al9cWPf6F4Lr3YsKhkCRnt6AZatU5h8SRSNraF6wlniR8nlJW5pRxQDTNe/Jzbavc/3ilhgvZyS6dpGZJCUVSafbugUKHdeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971891; c=relaxed/simple;
-	bh=ipH2dBz8ESGoXGai6r17zMzq8fEmv7U5X7McE3zEZ2o=;
+	s=arc-20240116; t=1705971892; c=relaxed/simple;
+	bh=dZnbMliJHDNMgrvyN2J8iBlHNpT9VpBLWX72ZHn/D3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JPwrQ/qn4QenlSgCSEQmAGLmq+VSX5bWThfIGEannCgEFGy2xRYkHS0h+BpD6SCkqC+oVzy7o7LcTBj5tJV1ot0EOChiT529clQdZr1h+Fohj9kg04zOiVdhUPW6tqdz/Zfw/p4fQ1oQWQNp5+lI9rGJ5iEsxjoKxoXptaqPQjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysQpUN7q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D55menaWhuP5Bj6nYmDDA4rdsOE/YbW8Of4tW8YD6zhjaijUU5HQxnOXoOputF/VvNi8pj9thxHVvfUiA0V0xac0vguwZvWVSaPCI8aIDOZTQpFXiZPElOdSanVhaMhf8fRSIt4fo84Wqtwteu3UDeMVuvS7I8lVtUjG7gmFYMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taDUMKfM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysQpUN7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92FB4C433F1;
-	Tue, 23 Jan 2024 01:04:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taDUMKfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD6DC433C7;
+	Tue, 23 Jan 2024 01:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971890;
-	bh=ipH2dBz8ESGoXGai6r17zMzq8fEmv7U5X7McE3zEZ2o=;
+	s=korg; t=1705971892;
+	bh=dZnbMliJHDNMgrvyN2J8iBlHNpT9VpBLWX72ZHn/D3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ysQpUN7qfZF2SzgQcdysTXsc5dTpL0IlkQRSa+qgWkHPGpyt1bLKKzHZAbLz05Qzp
-	 NY5LfBvvdl9HzSCt5j8sfYIjAeA+TiNolPGfthAqx7tWxdTgyEFQ2+gJsCkmGJxxum
-	 8naOWIRnjY9soPLwjU9EU4J1lxRmMpkr95NoUFBI=
+	b=taDUMKfMenrlGmaS3QnwaUEAxBG1GbzlWJDTX0FRBEEpj/IiKC/sXvAzQW6W17kKs
+	 4/GgwjTpoOb8+Goo3C73JrrZtfGAva1D2l6DGXl0mmvBRVnyfRnEMiPP2e25zlOwtm
+	 R0d/ZJdk2R8tS+c2syZpfLkxyIVK5iGDUrBu2u9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 343/417] acpi: property: Let args be NULL in __acpi_node_get_property_reference
-Date: Mon, 22 Jan 2024 15:58:31 -0800
-Message-ID: <20240122235803.675128221@linuxfoundation.org>
+Subject: [PATCH 5.10 256/286] tty: use if in send_break() instead of goto
+Date: Mon, 22 Jan 2024 15:59:22 -0800
+Message-ID: <20240122235741.891087819@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +46,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit bef52aa0f3de1b7d8c258c13b16e577361dabf3a ]
+[ Upstream commit 24f2cd019946fc2e88e632d2e24a34c2cc3f2be4 ]
 
-fwnode_get_property_reference_args() may not be called with args argument
-NULL on ACPI, OF already supports this. Add the missing NULL checks and
-document this.
+Now, the "jumped-over" code is simple enough to be put inside an 'if'.
+Do so to make it 'goto'-less.
 
-The purpose is to be able to count the references.
-
-Fixes: 977d5ad39f3e ("ACPI: Convert ACPI reference args to generic fwnode reference args")
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20231109101010.1329587-2-sakari.ailus@linux.intel.com
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20230919085156.1578-16-jirislaby@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 66aad7d8d3ec ("usb: cdc-acm: return correct error code on unsupported break")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/property.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/tty/tty_io.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
-index 0565c18c2ee3..62aee900af3d 100644
---- a/drivers/acpi/property.c
-+++ b/drivers/acpi/property.c
-@@ -851,6 +851,7 @@ static int acpi_get_ref_args(struct fwnode_reference_args *args,
-  * @index: Index of the reference to return
-  * @num_args: Maximum number of arguments after each reference
-  * @args: Location to store the returned reference with optional arguments
-+ *	  (may be NULL)
-  *
-  * Find property with @name, verifify that it is a package containing at least
-  * one object reference and if so, store the ACPI device object pointer to the
-@@ -907,6 +908,9 @@ int __acpi_node_get_property_reference(const struct fwnode_handle *fwnode,
- 		if (!device)
- 			return -EINVAL;
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index a45e6e1423d8..1c76e77e2d07 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -2477,11 +2477,10 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
+ 		return -EINTR;
  
-+		if (!args)
-+			return 0;
-+
- 		args->fwnode = acpi_fwnode_handle(device);
- 		args->nargs = 0;
- 		return 0;
+ 	retval = tty->ops->break_ctl(tty, -1);
+-	if (retval)
+-		goto out;
+-	msleep_interruptible(duration);
+-	retval = tty->ops->break_ctl(tty, 0);
+-out:
++	if (!retval) {
++		msleep_interruptible(duration);
++		retval = tty->ops->break_ctl(tty, 0);
++	}
+ 	tty_write_unlock(tty);
+ 
+ 	if (signal_pending(current))
 -- 
 2.43.0
 
