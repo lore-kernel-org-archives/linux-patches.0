@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F15633F4;
-	Tue, 23 Jan 2024 01:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41070633E6;
+	Tue, 23 Jan 2024 01:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975010; cv=none; b=C4CwiqBZzNxX9KvLCU6BXjdnl/6vpd45ZeAFJ80nsQxisPudfuQMdXSGh0GYldKkSI+k37qKwhOGilStDjsOd8j5Bu9yU6UzzyhSBMjKH1r7iprPmpBkcrTgQ44L5AmH369dQDHi1Ii/8SL49KmtbxMgyvii7gS7qRY7jTKYPzA=
+	t=1705975011; cv=none; b=OGNTqZ+1thTbnLXpSlEGjmEvtFQaHz0op6eOP6WnZrvYV0tYYS2ERoZnZ2V67qwRJ0E4MlXnwr+jv28cEnW7F4WEQBWJNISNKIwuvmJUxtL+xoRifq5vkZQ8quUf9GC59e4h2daxRTPFdpc6Na2t8paCA+DSLPHwJpGfxCyowwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975010; c=relaxed/simple;
-	bh=mPDU6rXesskhxiDSLaEeTXmyL6yHvlop6hSQSM7SqB0=;
+	s=arc-20240116; t=1705975011; c=relaxed/simple;
+	bh=HbVg50eD6gZIW+B92+Wjq7hGQnL0mjHenK7xoEvB9hY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYWlfdrBhjHBwMr4xnf2wHbnEBr7cG/ccns88HKVS4X/3yXX9YMIMf0pnzNbZnmAqfQyWFAI21IoNO94hOYDExiHsoVH5kcbvPeZhLqOdZrCvhHUh/NKKLlqIfEiCCD2MCno88B4gn7ffY1lvN4Aq/q/ZXbwdBwgLEJ4rUPRgNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKrndZ2S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aN74uovzukYcRX56Z4Uq5JZLnxsSCC8RYwqAbREybGXV2abrd2HR0XPsBXhffL4nb7VJ2lfUa3PP+yMpU8ciCy5ajwiZIjqH7QEtFXCVCvLaQAUajQiovX1FjeUxxpNX2oNyJjQIJdQGZi7/H9nXA23rgu6dz64xP80pLq36G6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6OV7S1f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKrndZ2S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E0FC433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6OV7S1f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0975BC433C7;
 	Tue, 23 Jan 2024 01:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975010;
-	bh=mPDU6rXesskhxiDSLaEeTXmyL6yHvlop6hSQSM7SqB0=;
+	s=korg; t=1705975011;
+	bh=HbVg50eD6gZIW+B92+Wjq7hGQnL0mjHenK7xoEvB9hY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uKrndZ2S4vVaNqWlPNOPE5Q9xIXZJUXc/lrekc5gjSatvSvIRO7YqNMDPBLH3wba+
-	 ABScI60LiTQMbGfF5NXwJh51Bh70VVXqcxf3tfHypUF8TiravH6YoMCh0Uhas10tP3
-	 mX0CxkH5qIi+0JZRN3UvTKrO+0VEDOuR7MyQRH/I=
+	b=i6OV7S1f11Bo/VfWklnNQ+8QxAy9khXMpC3Iy9iMIvJHYR0dmazqKMf3r9PKSRRsD
+	 CQ6312Dh/HnENurjurda3Vjg+0ayj4mbxmneCB6TYT875BgAmJuDgXzM0oL+YGrfwU
+	 IBDkMDhubML9NunjdPcRgqbI8pZgxM3ZjC3PG5JQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Su Hui <suhui@nfschina.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 322/374] nvmet-tcp: Fix a kernel panic when host sends an invalid H2C PDU length
-Date: Mon, 22 Jan 2024 15:59:38 -0800
-Message-ID: <20240122235756.104052280@linuxfoundation.org>
+Subject: [PATCH 6.6 195/583] wifi: rtlwifi: rtl8192ce: using calculate_bit_shift()
+Date: Mon, 22 Jan 2024 15:54:06 -0800
+Message-ID: <20240122235817.951575238@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,85 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit efa56305908ba20de2104f1b8508c6a7401833be ]
+[ Upstream commit 3d03e8231031bcc65a48cd88ef9c71b6524ce70b ]
 
-If the host sends an H2CData command with an invalid DATAL,
-the kernel may crash in nvmet_tcp_build_pdu_iovec().
+Using calculate_bit_shift() to replace _rtl92c_phy_calculate_bit_shift().
+And fix the undefined bitwise shift behavior problem.
 
-Unable to handle kernel NULL pointer dereference at
-virtual address 0000000000000000
-lr : nvmet_tcp_io_work+0x6ac/0x718 [nvmet_tcp]
-Call trace:
-  process_one_work+0x174/0x3c8
-  worker_thread+0x2d0/0x3e8
-  kthread+0x104/0x110
-
-Fix the bug by raising a fatal error if DATAL isn't coherent
-with the packet size.
-Also, the PDU length should never exceed the MAXH2CDATA parameter which
-has been communicated to the host in nvmet_tcp_handle_icreq().
-
-Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231219065739.1895666-7-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c | 6 +++---
+ drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h | 1 -
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 6a57cf885db1..a0a7540f048e 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -18,6 +18,7 @@
- #include "nvmet.h"
- 
- #define NVMET_TCP_DEF_INLINE_DATA_SIZE	(4 * PAGE_SIZE)
-+#define NVMET_TCP_MAXH2CDATA		0x400000 /* 16M arbitrary limit */
- 
- /* Define the socket priority to use for connections were it is desirable
-  * that the NIC consider performing optimized packet processing or filtering.
-@@ -884,7 +885,7 @@ static int nvmet_tcp_handle_icreq(struct nvmet_tcp_queue *queue)
- 	icresp->hdr.pdo = 0;
- 	icresp->hdr.plen = cpu_to_le32(icresp->hdr.hlen);
- 	icresp->pfv = cpu_to_le16(NVME_TCP_PFV_1_0);
--	icresp->maxdata = cpu_to_le32(0x400000); /* 16M arbitrary limit */
-+	icresp->maxdata = cpu_to_le32(NVMET_TCP_MAXH2CDATA);
- 	icresp->cpda = 0;
- 	if (queue->hdr_digest)
- 		icresp->digest |= NVME_TCP_HDR_DIGEST_ENABLE;
-@@ -930,6 +931,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- {
- 	struct nvme_tcp_data_pdu *data = &queue->pdu.data;
- 	struct nvmet_tcp_cmd *cmd;
-+	unsigned int plen;
- 
- 	if (likely(queue->nr_cmds)) {
- 		if (unlikely(data->ttag >= queue->nr_cmds)) {
-@@ -953,7 +955,16 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		return -EPROTO;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c
+index da54e51badd3..fa70a7d5539f 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c
+@@ -39,7 +39,7 @@ u32 rtl92c_phy_query_rf_reg(struct ieee80211_hw *hw,
+ 							       rfpath, regaddr);
  	}
  
-+	plen = le32_to_cpu(data->hdr.plen);
- 	cmd->pdu_len = le32_to_cpu(data->data_length);
-+	if (unlikely(cmd->pdu_len != (plen - sizeof(*data)) ||
-+		     cmd->pdu_len == 0 ||
-+		     cmd->pdu_len > NVMET_TCP_MAXH2CDATA)) {
-+		pr_err("H2CData PDU len %u is invalid\n", cmd->pdu_len);
-+		/* FIXME: use proper transport errors */
-+		nvmet_tcp_fatal_error(queue);
-+		return -EPROTO;
-+	}
- 	cmd->pdu_recv = 0;
- 	nvmet_tcp_map_pdu_iovec(cmd);
- 	queue->cmd = cmd;
+-	bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
+ 
+ 	spin_unlock(&rtlpriv->locks.rf_lock);
+@@ -110,7 +110,7 @@ void rtl92ce_phy_set_rf_reg(struct ieee80211_hw *hw,
+ 			original_value = _rtl92c_phy_rf_serial_read(hw,
+ 								    rfpath,
+ 								    regaddr);
+-			bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data =
+ 			    ((original_value & (~bitmask)) |
+ 			     (data << bitshift));
+@@ -122,7 +122,7 @@ void rtl92ce_phy_set_rf_reg(struct ieee80211_hw *hw,
+ 			original_value = _rtl92c_phy_fw_rf_serial_read(hw,
+ 								       rfpath,
+ 								       regaddr);
+-			bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data =
+ 			    ((original_value & (~bitmask)) |
+ 			     (data << bitshift));
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h b/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h
+index 7582a162bd11..c7a0d4c776f0 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h
+@@ -94,7 +94,6 @@ u32 _rtl92c_phy_rf_serial_read(struct ieee80211_hw *hw, enum radio_path rfpath,
+ 			       u32 offset);
+ u32 _rtl92c_phy_fw_rf_serial_read(struct ieee80211_hw *hw,
+ 				  enum radio_path rfpath, u32 offset);
+-u32 _rtl92c_phy_calculate_bit_shift(u32 bitmask);
+ void _rtl92c_phy_rf_serial_write(struct ieee80211_hw *hw,
+ 				 enum radio_path rfpath, u32 offset, u32 data);
+ void _rtl92c_phy_fw_rf_serial_write(struct ieee80211_hw *hw,
 -- 
 2.43.0
 
