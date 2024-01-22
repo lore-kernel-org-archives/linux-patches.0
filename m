@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD46768F9;
-	Tue, 23 Jan 2024 02:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4863F768F0;
+	Tue, 23 Jan 2024 02:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975490; cv=none; b=WRYXcJTGsn0GKAz2N94fMuJ/sjpK4j1Kj5Z/Jql/htksWTfZb2eGG0j2SGHI05CxnqPImS7RQble0HIo+RmuRJNdrvmfjfpOoWVWJJA/vLY4f2SAPx30HXQBMriW3FZc5FOslzRucFOtsrAOtCd6Zy+sbZgiy5XXCS+OafHbupE=
+	t=1705975491; cv=none; b=Q8axzoSp7saLbJDzTL7rxwHWOHV3QbSkhLLpstfht99y3ILbHeJVKeQpX2sX1fEAvi3RCsq/RuN2j88TXIlaiD/t6NA3+D9e9VTJUzblJBMWhHjZOKdzkPmyjmPA/VfRNSOqqzFGw6Oj+iUi4L0W3bD7gmaN60gZ2akfeMmHkb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975490; c=relaxed/simple;
-	bh=LXUn4yf+G+di8j/j8wRWUmuZFuVCEVubRh1L2xbiGCw=;
+	s=arc-20240116; t=1705975491; c=relaxed/simple;
+	bh=v8qhGhxUS5ibETqEqGFRicMsCVJyl+dUq/25BLkJiT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nzKS2V6dPw0b35NKrVtz5Pr3XrN+84l4fkgQ2nHxSxsN7Bm33e4FIXvqh3zQnoKtcOL/JW82PziEqSGgxvDRmJ0IuBzWPeHCc4TUxFF2YnGN4YHAs6FHNavMELPR4WeuPSs8c9WWuGPu3nb/6xhD8ifMOp+w2p80qYHgQrZygeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpuVfL6x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qdOcr9ZJDdYAXGl8e1RYfFHiNvd7X1wqsnTRBdGP24wHwkmJI02kgfVQV4Ye+6pkWgo66t+5PWGSFmfBJf8ShMmUwlxEa7FIEC2bZOayic53W00JPuHKUSxEVAevBHm5gvwVusdYsA77p4zjlWdaMGq73U6tz0j8QHDvSrgXfVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yr2uy+hh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpuVfL6x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4AFC433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yr2uy+hh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 091A5C43399;
 	Tue, 23 Jan 2024 02:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975490;
-	bh=LXUn4yf+G+di8j/j8wRWUmuZFuVCEVubRh1L2xbiGCw=;
+	s=korg; t=1705975491;
+	bh=v8qhGhxUS5ibETqEqGFRicMsCVJyl+dUq/25BLkJiT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DpuVfL6xhHQR7a48c5PQxpGU59MJPk5mpbBiVSTc+6+lyUe3GUoRZYvl7Aqg5nX9u
-	 KDbv6YuKSyjE5ve4AcPV5Hw+oH1gaRKtiPQbEWj+OcwP3BDPJZLzZlTRxPS/1zlDZX
-	 uA+TtTycMx8Xx/kK9KCQiF2u2ZU/0o5wMMsHcaNE=
+	b=yr2uy+hhw1Jp+0PcBRIq9fFrWe4k/Je61PiQTU/KtXQMDJVuQBbzegNbe4JO2NZHF
+	 FAJr3N7xG4IHkjH0/1v5r+5rsfNC0RmkkJviBoZnB2BRzhpHbUYFbZOmSIvvoqjNhe
+	 EX238lEIyCm2tfg014VmvT1yavViWmRygQ2CKoX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Tesarik <petr@tesarici.cz>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 419/583] net: stmmac: fix ethtool per-queue statistics
-Date: Mon, 22 Jan 2024 15:57:50 -0800
-Message-ID: <20240122235824.788229303@linuxfoundation.org>
+	Jiri Olsa <olsajiri@gmail.com>,
+	Song Liu <song@kernel.org>,
+	Dmitrii Dolgov <9erthalion6@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.6 410/583] bpf: Fix re-attachment branch in bpf_tracing_prog_attach
+Date: Mon, 22 Jan 2024 15:57:41 -0800
+Message-ID: <20240122235824.515250071@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,83 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Tesarik <petr@tesarici.cz>
+From: Jiri Olsa <olsajiri@gmail.com>
 
-commit 61921bdaa132b580b6db6858e6d7dcdb870df5fe upstream.
+commit 715d82ba636cb3629a6e18a33bb9dbe53f9936ee upstream.
 
-Fix per-queue statistics for devices with more than one queue.
+The following case can cause a crash due to missing attach_btf:
 
-The output data pointer is currently reset in each loop iteration,
-effectively summing all queue statistics in the first four u64 values.
+1) load rawtp program
+2) load fentry program with rawtp as target_fd
+3) create tracing link for fentry program with target_fd = 0
+4) repeat 3
 
-The summary values are not even labeled correctly. For example, if eth0 has
-2 queues, ethtool -S eth0 shows:
+In the end we have:
 
-     q0_tx_pkt_n: 374 (actually tx_pkt_n over all queues)
-     q0_tx_irq_n: 23  (actually tx_normal_irq_n over all queues)
-     q1_tx_pkt_n: 462 (actually rx_pkt_n over all queues)
-     q1_tx_irq_n: 446 (actually rx_normal_irq_n over all queues)
-     q0_rx_pkt_n: 0
-     q0_rx_irq_n: 0
-     q1_rx_pkt_n: 0
-     q1_rx_irq_n: 0
+- prog->aux->dst_trampoline == NULL
+- tgt_prog == NULL (because we did not provide target_fd to link_create)
+- prog->aux->attach_btf == NULL (the program was loaded with attach_prog_fd=X)
+- the program was loaded for tgt_prog but we have no way to find out which one
 
-Fixes: 133466c3bbe1 ("net: stmmac: use per-queue 64 bit statistics where necessary")
+    BUG: kernel NULL pointer dereference, address: 0000000000000058
+    Call Trace:
+     <TASK>
+     ? __die+0x20/0x70
+     ? page_fault_oops+0x15b/0x430
+     ? fixup_exception+0x22/0x330
+     ? exc_page_fault+0x6f/0x170
+     ? asm_exc_page_fault+0x22/0x30
+     ? bpf_tracing_prog_attach+0x279/0x560
+     ? btf_obj_id+0x5/0x10
+     bpf_tracing_prog_attach+0x439/0x560
+     __sys_bpf+0x1cf4/0x2de0
+     __x64_sys_bpf+0x1c/0x30
+     do_syscall_64+0x41/0xf0
+     entry_SYSCALL_64_after_hwframe+0x6e/0x76
+
+Return -EINVAL in this situation.
+
+Fixes: f3a95075549e0 ("bpf: Allow trampoline re-attach for tracing and lsm programs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Petr Tesarik <petr@tesarici.cz>
-Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Jiri Olsa <olsajiri@gmail.com>
+Acked-by: Jiri Olsa <olsajiri@gmail.com>
+Acked-by: Song Liu <song@kernel.org>
+Signed-off-by: Dmitrii Dolgov <9erthalion6@gmail.com>
+Link: https://lore.kernel.org/r/20240103190559.14750-4-9erthalion6@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c |    9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ kernel/bpf/syscall.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-@@ -543,15 +543,12 @@ static void stmmac_get_per_qstats(struct
- 	u32 rx_cnt = priv->plat->rx_queues_to_use;
- 	unsigned int start;
- 	int q, stat;
--	u64 *pos;
- 	char *p;
- 
--	pos = data;
- 	for (q = 0; q < tx_cnt; q++) {
- 		struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[q];
- 		struct stmmac_txq_stats snapshot;
- 
--		data = pos;
- 		do {
- 			start = u64_stats_fetch_begin(&txq_stats->syncp);
- 			snapshot = *txq_stats;
-@@ -559,17 +556,15 @@ static void stmmac_get_per_qstats(struct
- 
- 		p = (char *)&snapshot + offsetof(struct stmmac_txq_stats, tx_pkt_n);
- 		for (stat = 0; stat < STMMAC_TXQ_STATS; stat++) {
--			*data++ += (*(u64 *)p);
-+			*data++ = (*(u64 *)p);
- 			p += sizeof(u64);
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -3197,6 +3197,10 @@ static int bpf_tracing_prog_attach(struc
+ 	 *
+ 	 * - if prog->aux->dst_trampoline and tgt_prog is NULL, the program
+ 	 *   was detached and is going for re-attachment.
++	 *
++	 * - if prog->aux->dst_trampoline is NULL and tgt_prog and prog->aux->attach_btf
++	 *   are NULL, then program was already attached and user did not provide
++	 *   tgt_prog_fd so we have no way to find out or create trampoline
+ 	 */
+ 	if (!prog->aux->dst_trampoline && !tgt_prog) {
+ 		/*
+@@ -3210,6 +3214,11 @@ static int bpf_tracing_prog_attach(struc
+ 			err = -EINVAL;
+ 			goto out_unlock;
  		}
- 	}
- 
--	pos = data;
- 	for (q = 0; q < rx_cnt; q++) {
- 		struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[q];
- 		struct stmmac_rxq_stats snapshot;
- 
--		data = pos;
- 		do {
- 			start = u64_stats_fetch_begin(&rxq_stats->syncp);
- 			snapshot = *rxq_stats;
-@@ -577,7 +572,7 @@ static void stmmac_get_per_qstats(struct
- 
- 		p = (char *)&snapshot + offsetof(struct stmmac_rxq_stats, rx_pkt_n);
- 		for (stat = 0; stat < STMMAC_RXQ_STATS; stat++) {
--			*data++ += (*(u64 *)p);
-+			*data++ = (*(u64 *)p);
- 			p += sizeof(u64);
- 		}
++		/* We can allow re-attach only if we have valid attach_btf. */
++		if (!prog->aux->attach_btf) {
++			err = -EINVAL;
++			goto out_unlock;
++		}
+ 		btf_id = prog->aux->attach_btf_id;
+ 		key = bpf_trampoline_compute_key(NULL, prog->aux->attach_btf, btf_id);
  	}
 
 
