@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D66012CDB0;
-	Tue, 23 Jan 2024 00:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4527312CDB0;
+	Tue, 23 Jan 2024 00:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968993; cv=none; b=RInnCb1g3x97pMmju2+07+HYrOdmJj00mRe/rGY2M06sXwIoAVgA21pfOdCfHbC1fXzIyUpEjZkY6+ei1yVwGcnFHKJH9DQeG4XeZomJbn4h0Ml6vGlH2Av0xVDwHj8e4bDHnTsNWeORAkNjE8EbCzMu+p/usjTMGjSOakhBv6o=
+	t=1705968994; cv=none; b=kx5PanpInwTbRxenXxeM6tavPkNe6t2Cej4ENGdhXvliPHkWrYFiUojg+rK8a3nFadfhtk1dNrjPmACqRmopXeox83hL7AdRV3af6lJvdTL8ndLj9lYxVgw/XY9CyCYhd6kZvXol4vTPY/UAHvPpW/lFysvOz8gxWYgx0A2YGcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968993; c=relaxed/simple;
-	bh=p1lYo5l+PytBoufEf/nxJmkmRqsJLHHxLqXhG2/ou48=;
+	s=arc-20240116; t=1705968994; c=relaxed/simple;
+	bh=GmGhFr6mXnQ+IT00XjsJaHqfWrJn3HXm2CRFVO7dHk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NkjpaYHRAIK3DfR0mqzRvcw8Aw7c9S/D4CfeoEijC38G1z/GGPytizUlJfLwIva5muRM8ag0rQoh/DXYClZ4DNsRqCj7RT96K+Pna847oX7xJyam4jjKHmXfdbDexUrp/ahNCHamd6kLPv0SW/M1U/VZttDzKhfR1l1I+Ry7vRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SrbtKgFJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ey1I29FpwEaTb0VuTQvvLjtRqCoT7vXQJAQeRasTOySq0WimHdY9T0Je7L5HaX+grZ0wojWoD7IPgLmQA9pP/4QJ5QKLNvYDPk3zJ+iFqcL1pQc3y55JliqbOCR/wEAvYEojt9z962obe10dzUWsVKIWm8T+XE4qnxgOhAY5R6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vy+6W+1S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SrbtKgFJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61B1C433C7;
-	Tue, 23 Jan 2024 00:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vy+6W+1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0056EC433F1;
+	Tue, 23 Jan 2024 00:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968993;
-	bh=p1lYo5l+PytBoufEf/nxJmkmRqsJLHHxLqXhG2/ou48=;
+	s=korg; t=1705968994;
+	bh=GmGhFr6mXnQ+IT00XjsJaHqfWrJn3HXm2CRFVO7dHk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SrbtKgFJ71Vhrh40+sp5cKbMnmRNJ2pAw/i30KxFtxj6xYiJPTdkF1vvA6ZUHwm/H
-	 No77X1jeR5/L/83Re4gh+sq2zaXH3IiCV657Mlh9/evM1DInno0VIIul2OI8aeNAcq
-	 3qcHnEBUxizvU7nyGYbv72ctTVI/6UaoqlApSffg=
+	b=vy+6W+1SWb5zFW8iagI8CwhkQnxW0EtrNoweYtALjaOr8Eewbd1XRQuoc3/r/+aye
+	 LCKjJs8yov4Gb52Hu4sLgqWWausqCrnfbCMDCZCI8IZZyoQTWJolZjRvVQ0fz9SZrj
+	 P4EIVXPWRhw8FL9dibYaTU829jw0sIh6PnW5BO48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chen <peter.chen@kernel.org>,
-	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 5.4 147/194] usb: phy: mxs: remove CONFIG_USB_OTG condition for mxs_phy_is_otg_host()
-Date: Mon, 22 Jan 2024 15:57:57 -0800
-Message-ID: <20240122235725.532111052@linuxfoundation.org>
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 130/194] gpu/drm/radeon: fix two memleaks in radeon_vm_init
+Date: Mon, 22 Jan 2024 15:57:40 -0800
+Message-ID: <20240122235724.808238551@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -50,36 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-commit ff2b89de471da942a4d853443688113a44fd35ed upstream.
+[ Upstream commit c2709b2d6a537ca0fa0f1da36fdaf07e48ef447d ]
 
-When CONFIG_USB_OTG is not set, mxs_phy_is_otg_host() will always return
-false. This behaviour is wrong. Since phy.last_event will always be set
-for either host or device mode. Therefore, CONFIG_USB_OTG condition
-can be removed.
+When radeon_bo_create and radeon_vm_clear_bo fail, the vm->page_tables
+allocated before need to be freed. However, neither radeon_vm_init
+itself nor its caller have done such deallocation.
 
-Fixes: 5eda42aebb76 ("usb: phy: mxs: fix getting wrong state with mxs_phy_is_otg_host()")
-cc:  <stable@vger.kernel.org>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://lore.kernel.org/r/20231228110753.1755756-3-xu.yang_2@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6d2f2944e95e ("drm/radeon: use normal BOs for the page tables v4")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/phy/phy-mxs-usb.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/radeon/radeon_vm.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/phy/phy-mxs-usb.c
-+++ b/drivers/usb/phy/phy-mxs-usb.c
-@@ -388,8 +388,7 @@ static void __mxs_phy_disconnect_line(st
+diff --git a/drivers/gpu/drm/radeon/radeon_vm.c b/drivers/gpu/drm/radeon/radeon_vm.c
+index e0ad547786e8..ef20c1f9b895 100644
+--- a/drivers/gpu/drm/radeon/radeon_vm.c
++++ b/drivers/gpu/drm/radeon/radeon_vm.c
+@@ -1206,13 +1206,17 @@ int radeon_vm_init(struct radeon_device *rdev, struct radeon_vm *vm)
+ 	r = radeon_bo_create(rdev, pd_size, align, true,
+ 			     RADEON_GEM_DOMAIN_VRAM, 0, NULL,
+ 			     NULL, &vm->page_directory);
+-	if (r)
++	if (r) {
++		kfree(vm->page_tables);
++		vm->page_tables = NULL;
+ 		return r;
+-
++	}
+ 	r = radeon_vm_clear_bo(rdev, vm->page_directory);
+ 	if (r) {
+ 		radeon_bo_unref(&vm->page_directory);
+ 		vm->page_directory = NULL;
++		kfree(vm->page_tables);
++		vm->page_tables = NULL;
+ 		return r;
+ 	}
  
- static bool mxs_phy_is_otg_host(struct mxs_phy *mxs_phy)
- {
--	return IS_ENABLED(CONFIG_USB_OTG) &&
--		mxs_phy->phy.last_event == USB_EVENT_ID;
-+	return mxs_phy->phy.last_event == USB_EVENT_ID;
- }
- 
- static void mxs_phy_disconnect_line(struct mxs_phy *mxs_phy, bool on)
+-- 
+2.43.0
+
 
 
