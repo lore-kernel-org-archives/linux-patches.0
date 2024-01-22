@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5491A6A354;
-	Tue, 23 Jan 2024 02:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E586A354;
+	Tue, 23 Jan 2024 02:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975386; cv=none; b=clSjQTXvGSsGFbXgkVs7vPVqA/uzlKRT7Vzo0nVTtX5uBwXM5I9phVteERmMLfD3OYYKqSMxqsLz0sEhPAZbbLVoLQ9yrpOwTWr12FKQmPedFLOA/FhIs3nCOK7D4qgskmoogBjFWWAgfYgG1g/eI8VxcKBxa1R98Ptz/TLqOA8=
+	t=1705975387; cv=none; b=P73kFcmZJpq7aiKFJMOP7LMCvy71oOut6ZWs1HZe9t03sfvPlzfk0h5oKGCGyJo8U5oby3We3lcc1wIKpPNvGc0rQuhJd4neOAj05zc56vhvU/rMKH3pndhOTsQtGd8m9n7wkRcWLLbkzoMxTW0Mp+Ak4ChqHPxS1WdVxh4s9WY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975386; c=relaxed/simple;
-	bh=OXaCuYi9gZUHq5JgRyvCo8mBcX+OV2a0ryD5YxK7d6w=;
+	s=arc-20240116; t=1705975387; c=relaxed/simple;
+	bh=T3BmczzOZ1nVWIUezOgwyXmyKNdRuVcUa8Zocu/QQb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MMyUWOUgvbWmXNxJgAUGcF9oZWMuaRXzZr7+BfHG/zv+kOxIaDTSS2EwHj7k3KEs14qQ0SE9Cyn7fdfw15tu/gWYS2l03sTx7HIIrH6Vgx4+SHNFA11fM3X5Od3mvlmMm7tHf2fWj2HyXNvrgg/ZXi41KYHbdnwb55rXCxWDkic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9XUwf5p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nn4kl1ktHPeeo9UwkYxx7UgwwSGM8Pnr9Th0fk/PImvxZL7/E/720lUp2LiiIJryQv96wteEUfdijJZC8iQhVCjuN7+9C87CSLHKQLwGPjwd+FSl23/zG8wUSFKWYBHmNTCrjb06Amkp04LJxGCQFR5TJlsHeGAJj+olBFktXWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTcfpsVp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9XUwf5p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A39C43394;
-	Tue, 23 Jan 2024 02:03:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTcfpsVp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1932CC433C7;
+	Tue, 23 Jan 2024 02:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975386;
-	bh=OXaCuYi9gZUHq5JgRyvCo8mBcX+OV2a0ryD5YxK7d6w=;
+	s=korg; t=1705975387;
+	bh=T3BmczzOZ1nVWIUezOgwyXmyKNdRuVcUa8Zocu/QQb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z9XUwf5p8K8qMmoBag/WX+3JxFXY4ADcEidhQbIkez9e4dHYIQP1ADGjokCNVIS0/
-	 2GHecNcI3gO9re4vM9UlPBs+5loOY6odNB0tI20/1UxVxc/Zq/I1qPOUO9MqpUptFJ
-	 dwe/cPuBfCNxukVqa5Vg9udawyN+V3FN6IMNlLK8=
+	b=PTcfpsVp8QFNe7pgkl4B6Bf9auQwpvN7xxYeync1rmlrNj74O1NcWCOvZI2b5dDkn
+	 eXNeAOxHDtBbvinrE8ZzZXuSC4ixVsZ5/8Ddd1Hrsyvx9Jb5gddAL4/WW8sgAfJtaU
+	 pOYNa57CsDV1PHnUim8Rz2XAKAmyaJyuuG5Kfe+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 6.6 347/583] binder: fix unused alloc->free_async_space
-Date: Mon, 22 Jan 2024 15:56:38 -0800
-Message-ID: <20240122235822.644359162@linuxfoundation.org>
+	Max Gurtovoy <mgurtovoy@nvidia.com>,
+	Sergey Gorenko <sergeygo@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 330/583] IB/iser: Prevent invalidating wrong MR
+Date: Mon, 22 Jan 2024 15:56:21 -0800
+Message-ID: <20240122235822.147556686@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -50,82 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Sergey Gorenko <sergeygo@nvidia.com>
 
-commit c6d05e0762ab276102246d24affd1e116a46aa0c upstream.
+[ Upstream commit 2f1888281e67205bd80d3e8f54dbd519a9653f26 ]
 
-Each transaction is associated with a 'struct binder_buffer' that stores
-the metadata about its buffer area. Since commit 74310e06be4d ("android:
-binder: Move buffer out of area shared with user space") this struct is
-no longer embedded within the buffer itself but is instead allocated on
-the heap to prevent userspace access to this driver-exclusive info.
+The iser_reg_resources structure has two pointers to MR but only one
+mr_valid field. The implementation assumes that we use only *sig_mr when
+pi_enable is true. Otherwise, we use only *mr. However, it is only
+sometimes correct. Read commands without protection information occur even
+when pi_enble is true. For example, the following SCSI commands have a
+Data-In buffer but never have protection information: READ CAPACITY (16),
+INQUIRY, MODE SENSE(6), MAINTENANCE IN. So, we use
+*sig_mr for some SCSI commands and *mr for the other SCSI commands.
 
-Unfortunately, the space of this struct is still being accounted for in
-the total buffer size calculation, specifically for async transactions.
-This results in an additional 104 bytes added to every async buffer
-request, and this area is never used.
+In most cases, it works fine because the remote invalidation is applied.
+However, there are two cases when the remote invalidation is not
+applicable.
+ 1. Small write commands when all data is sent as an immediate.
+ 2. The target does not support the remote invalidation feature.
 
-This wasted space can be substantial. If we consider the maximum mmap
-buffer space of SZ_4M, the driver will reserve half of it for async
-transactions, or 0x200000. This area should, in theory, accommodate up
-to 262,144 buffers of the minimum 8-byte size. However, after adding
-the extra 'sizeof(struct binder_buffer)', the total number of buffers
-drops to only 18,724, which is a sad 7.14% of the actual capacity.
+The lazy invalidation is used if the remote invalidation is impossible.
+Since, at the lazy invalidation, we always invalidate the MR we want to
+use, the wrong MR may be invalidated.
 
-This patch fixes the buffer size calculation to enable the utilization
-of the entire async buffer space. This is expected to reduce the number
-of -ENOSPC errors that are seen on the field.
+To fix the issue, we need a field per MR that indicates the MR needs
+invalidation. Since the ib_mr structure already has such a field, let's
+use ib_mr.need_inval instead of iser_reg_resources.mr_valid.
 
-Fixes: 74310e06be4d ("android: binder: Move buffer out of area shared with user space")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20231201172212.1813387-6-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b76a439982f8 ("IB/iser: Use IB_WR_REG_MR_INTEGRITY for PI handover")
+Link: https://lore.kernel.org/r/20231219072311.40989-1-sergeygo@nvidia.com
+Acked-by: Max Gurtovoy <mgurtovoy@nvidia.com>
+Signed-off-by: Sergey Gorenko <sergeygo@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder_alloc.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/infiniband/ulp/iser/iscsi_iser.h     | 2 --
+ drivers/infiniband/ulp/iser/iser_initiator.c | 5 ++++-
+ drivers/infiniband/ulp/iser/iser_memory.c    | 8 ++++----
+ drivers/infiniband/ulp/iser/iser_verbs.c     | 1 -
+ 4 files changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -344,8 +344,7 @@ static bool debug_low_async_space_locked
- 			continue;
- 		if (!buffer->async_transaction)
- 			continue;
--		total_alloc_size += binder_alloc_buffer_size(alloc, buffer)
--			+ sizeof(struct binder_buffer);
-+		total_alloc_size += binder_alloc_buffer_size(alloc, buffer);
- 		num_buffers++;
+diff --git a/drivers/infiniband/ulp/iser/iscsi_iser.h b/drivers/infiniband/ulp/iser/iscsi_iser.h
+index dee8c97ff056..d967d5532459 100644
+--- a/drivers/infiniband/ulp/iser/iscsi_iser.h
++++ b/drivers/infiniband/ulp/iser/iscsi_iser.h
+@@ -317,12 +317,10 @@ struct iser_device {
+  *
+  * @mr:         memory region
+  * @sig_mr:     signature memory region
+- * @mr_valid:   is mr valid indicator
+  */
+ struct iser_reg_resources {
+ 	struct ib_mr                     *mr;
+ 	struct ib_mr                     *sig_mr;
+-	u8				  mr_valid:1;
+ };
+ 
+ /**
+diff --git a/drivers/infiniband/ulp/iser/iser_initiator.c b/drivers/infiniband/ulp/iser/iser_initiator.c
+index 39ea73f69016..f5f090dc4f1e 100644
+--- a/drivers/infiniband/ulp/iser/iser_initiator.c
++++ b/drivers/infiniband/ulp/iser/iser_initiator.c
+@@ -581,7 +581,10 @@ static inline int iser_inv_desc(struct iser_fr_desc *desc, u32 rkey)
+ 		return -EINVAL;
  	}
  
-@@ -411,8 +410,7 @@ static struct binder_buffer *binder_allo
- 	/* Pad 0-size buffers so they get assigned unique addresses */
- 	size = max(size, sizeof(void *));
+-	desc->rsc.mr_valid = 0;
++	if (desc->sig_protected)
++		desc->rsc.sig_mr->need_inval = false;
++	else
++		desc->rsc.mr->need_inval = false;
  
--	if (is_async &&
--	    alloc->free_async_space < size + sizeof(struct binder_buffer)) {
-+	if (is_async && alloc->free_async_space < size) {
- 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
- 			     "%d: binder_alloc_buf size %zd failed, no async space left\n",
- 			      alloc->pid, size);
-@@ -520,7 +518,7 @@ static struct binder_buffer *binder_allo
- 	buffer->pid = pid;
- 	buffer->oneway_spam_suspect = false;
- 	if (is_async) {
--		alloc->free_async_space -= size + sizeof(struct binder_buffer);
-+		alloc->free_async_space -= size;
- 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC_ASYNC,
- 			     "%d: binder_alloc_buf size %zd async free %zd\n",
- 			      alloc->pid, size, alloc->free_async_space);
-@@ -658,8 +656,7 @@ static void binder_free_buf_locked(struc
- 	BUG_ON(buffer->user_data > alloc->buffer + alloc->buffer_size);
+ 	return 0;
+ }
+diff --git a/drivers/infiniband/ulp/iser/iser_memory.c b/drivers/infiniband/ulp/iser/iser_memory.c
+index 29ae2c6a250a..6efcb79c8efe 100644
+--- a/drivers/infiniband/ulp/iser/iser_memory.c
++++ b/drivers/infiniband/ulp/iser/iser_memory.c
+@@ -264,7 +264,7 @@ static int iser_reg_sig_mr(struct iscsi_iser_task *iser_task,
  
- 	if (buffer->async_transaction) {
--		alloc->free_async_space += buffer_size + sizeof(struct binder_buffer);
--
-+		alloc->free_async_space += buffer_size;
- 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC_ASYNC,
- 			     "%d: binder_free_buf size %zd async free %zd\n",
- 			      alloc->pid, size, alloc->free_async_space);
+ 	iser_set_prot_checks(iser_task->sc, &sig_attrs->check_mask);
+ 
+-	if (rsc->mr_valid)
++	if (rsc->sig_mr->need_inval)
+ 		iser_inv_rkey(&tx_desc->inv_wr, mr, cqe, &wr->wr);
+ 
+ 	ib_update_fast_reg_key(mr, ib_inc_rkey(mr->rkey));
+@@ -288,7 +288,7 @@ static int iser_reg_sig_mr(struct iscsi_iser_task *iser_task,
+ 	wr->access = IB_ACCESS_LOCAL_WRITE |
+ 		     IB_ACCESS_REMOTE_READ |
+ 		     IB_ACCESS_REMOTE_WRITE;
+-	rsc->mr_valid = 1;
++	rsc->sig_mr->need_inval = true;
+ 
+ 	sig_reg->sge.lkey = mr->lkey;
+ 	sig_reg->rkey = mr->rkey;
+@@ -313,7 +313,7 @@ static int iser_fast_reg_mr(struct iscsi_iser_task *iser_task,
+ 	struct ib_reg_wr *wr = &tx_desc->reg_wr;
+ 	int n;
+ 
+-	if (rsc->mr_valid)
++	if (rsc->mr->need_inval)
+ 		iser_inv_rkey(&tx_desc->inv_wr, mr, cqe, &wr->wr);
+ 
+ 	ib_update_fast_reg_key(mr, ib_inc_rkey(mr->rkey));
+@@ -336,7 +336,7 @@ static int iser_fast_reg_mr(struct iscsi_iser_task *iser_task,
+ 		     IB_ACCESS_REMOTE_WRITE |
+ 		     IB_ACCESS_REMOTE_READ;
+ 
+-	rsc->mr_valid = 1;
++	rsc->mr->need_inval = true;
+ 
+ 	reg->sge.lkey = mr->lkey;
+ 	reg->rkey = mr->rkey;
+diff --git a/drivers/infiniband/ulp/iser/iser_verbs.c b/drivers/infiniband/ulp/iser/iser_verbs.c
+index 95b8eebf7e04..6801b70dc9e0 100644
+--- a/drivers/infiniband/ulp/iser/iser_verbs.c
++++ b/drivers/infiniband/ulp/iser/iser_verbs.c
+@@ -129,7 +129,6 @@ iser_create_fastreg_desc(struct iser_device *device,
+ 			goto err_alloc_mr_integrity;
+ 		}
+ 	}
+-	desc->rsc.mr_valid = 0;
+ 
+ 	return desc;
+ 
+-- 
+2.43.0
+
 
 
