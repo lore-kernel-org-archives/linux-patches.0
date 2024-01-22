@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A45131741;
-	Tue, 23 Jan 2024 00:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C00131741;
+	Tue, 23 Jan 2024 00:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969419; cv=none; b=dOsrL5mB4SrhVXlRulbZPp3KQtK5icpKwjE3fckG8hqMYWe8nIP9HQJUG6cn89yXIooNsuQnf8onHyo2KPH2Bc8YUB27Ezvrh6MzLQ3SkoYWRcbDzEC3cNBsIa5GLKvpnTBIC+hCy7TkXav6UpDvjn8Te5WvWSYdIibLVra02E8=
+	t=1705969420; cv=none; b=iUvEfgy1N4usjAcrtVTkRo/Ope7Juve/+PCwk4yncl/xFHjwySrJeN5napSP2Acrx6UuqNdI4Su41aYwmtPCSaPSmMuQDpzd46N1sxxMdYQPATvd/dN7Bc5ol8BgrFSajSsqoMj9+ixT9zj1VcWcm8xljv6nOLB8gUgt1kHh6FA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969419; c=relaxed/simple;
-	bh=MrGB/PxYrKLjdWnbZdYS0Um86Ot/uI7Mzzz+7yYyu4k=;
+	s=arc-20240116; t=1705969420; c=relaxed/simple;
+	bh=FC+ddltwdPhEoGWlL+Jiwwmf6eOG5zzdAnCR+elJXws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mMWc4c5eC9QRIz/OTbr3Ff/mI9905cqFN6O97IxRWgGmQDJZY6kHiMYlLPnz+bno4QweqBjdDWOpl7MEeFMUjmLgXaUSZv8XfDT+Di9LE3psZpp9lrnIYF8v/mPT0VFtZxXdpdh8Mo5kxYbIAt2JLivwwaA5wQISPfdkh4x1+oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tY4AQHQT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HAwNiodVrRweOvoxLHeMYIxsGtZow78razn5A01oT4FwGg1Ydib+VdvXMHTisi6TDDxS2SzJIeK9AwEHyhrI7jAWmBEKRrCTMH8tdIhmnwgdOsH9NKxAod5O/WJUmYtZR5yE0pr58+63ND/+BdGqlIOmTCXyvOugMEmP6NwsfVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ir3oUwyi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tY4AQHQT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A10EC433B1;
-	Tue, 23 Jan 2024 00:23:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ir3oUwyi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7326C433F1;
+	Tue, 23 Jan 2024 00:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969418;
-	bh=MrGB/PxYrKLjdWnbZdYS0Um86Ot/uI7Mzzz+7yYyu4k=;
+	s=korg; t=1705969419;
+	bh=FC+ddltwdPhEoGWlL+Jiwwmf6eOG5zzdAnCR+elJXws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tY4AQHQTp+Z4JP1mY15gpyzVFcxTSQL5nNxUJCJw7WAEakPE5irpY1y6UX/oExuYS
-	 Es/drA4BvD9JOqGOC+EsUWXY1e/4ZUrVjwHc0b0+XCTFGjc92m07xAK3im+Xb1LU2m
-	 hTS04369eqTAh6xqopIuB3fI3WpeNzzUTEPPtkik=
+	b=Ir3oUwyiBcdYsmdCf/Cj046wHjA7iLjaghJ4DDRCQE9UbAz2+LIyEYLuuHnOyMSpp
+	 iYr926DfgGDHJ0RABI5duX1HAqN4AJCFBIWzAJyk2EM5qKRq8wydLRR2dt+ugOefRC
+	 rmetC6HRChaGx+uvXUkfRLbgS1/coiNcG1j/ghpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 233/641] sctp: fix busy polling
-Date: Mon, 22 Jan 2024 15:52:17 -0800
-Message-ID: <20240122235825.215196554@linuxfoundation.org>
+Subject: [PATCH 6.7 234/641] s390/bpf: Fix gotol with large offsets
+Date: Mon, 22 Jan 2024 15:52:18 -0800
+Message-ID: <20240122235825.251983845@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -54,52 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit a562c0a2d651e040681b0bfce9b4d229ac3b0b8c ]
+[ Upstream commit ecba66cb36e3428e9f0c2362b45e213ad43ba8d0 ]
 
-Busy polling while holding the socket lock makes litle sense,
-because incoming packets wont reach our receive queue.
+The gotol implementation uses a wrong data type for the offset: it
+should be s32, not s16.
 
-Fixes: 8465a5fcd1ce ("sctp: add support for busy polling to sctp protocol")
-Reported-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Cc: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c690191e23d8 ("s390/bpf: Implement unconditional jump with 32-bit offset")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20240102193531.3169422-2-iii@linux.ibm.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ arch/s390/net/bpf_jit_comp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 5fb02bbb4b34..6b9fcdb0952a 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -2102,6 +2102,10 @@ static int sctp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	if (unlikely(flags & MSG_ERRQUEUE))
- 		return inet_recv_error(sk, msg, len, addr_len);
- 
-+	if (sk_can_busy_loop(sk) &&
-+	    skb_queue_empty_lockless(&sk->sk_receive_queue))
-+		sk_busy_loop(sk, flags & MSG_DONTWAIT);
-+
- 	lock_sock(sk);
- 
- 	if (sctp_style(sk, TCP) && !sctp_sstate(sk, ESTABLISHED) &&
-@@ -9046,12 +9050,6 @@ struct sk_buff *sctp_skb_recv_datagram(struct sock *sk, int flags, int *err)
- 		if (sk->sk_shutdown & RCV_SHUTDOWN)
- 			break;
- 
--		if (sk_can_busy_loop(sk)) {
--			sk_busy_loop(sk, flags & MSG_DONTWAIT);
--
--			if (!skb_queue_empty_lockless(&sk->sk_receive_queue))
--				continue;
--		}
- 
- 		/* User doesn't want to wait.  */
- 		error = -EAGAIN;
+diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
+index bf06b7283f0c..c7fbeedeb0a4 100644
+--- a/arch/s390/net/bpf_jit_comp.c
++++ b/arch/s390/net/bpf_jit_comp.c
+@@ -779,7 +779,7 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
+ 				 int i, bool extra_pass, u32 stack_depth)
+ {
+ 	struct bpf_insn *insn = &fp->insnsi[i];
+-	s16 branch_oc_off = insn->off;
++	s32 branch_oc_off = insn->off;
+ 	u32 dst_reg = insn->dst_reg;
+ 	u32 src_reg = insn->src_reg;
+ 	int last, insn_count = 1;
 -- 
 2.43.0
 
