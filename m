@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12599A3F;
-	Tue, 23 Jan 2024 01:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41141374;
+	Tue, 23 Jan 2024 01:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972149; cv=none; b=PSCesabd0bQBSjIL0ZOIkp+aEZOtwl9UucuSpgAAPDVzyyyp413XpaboecfgAqacG8qL7+2eaLaU3+o9ZaLNbWj44tZ+tnC4oTrAJw2bZ5YsHS+FAiVSrj7Ge6DC3HcGRplhz0IBYNwKsFoUHt3wzWsyyIcRs2hHugyjWm919pg=
+	t=1705972150; cv=none; b=YCRrrYws9tXGNe92SyCdJ5yEynD33+Rkd5fAAKGx8ptlvCk7+k4Dhj6sjD/108zyCHalm652F68h8rcC6YnRW7VEk49ZoUk2VV77AldFG265v+gm8ciG8HkiSmywepcDoB/6NHkU7+5BG87hLkbcqsfN99ds3f5PRgQKjRemF+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972149; c=relaxed/simple;
-	bh=MJpDHo/zNXmcXYuLpm+hdFj3loJ01T6dLNcEcogBuRA=;
+	s=arc-20240116; t=1705972150; c=relaxed/simple;
+	bh=NAzoZ4zmIqT7EuMjwmq7dvd82Jatgh5Ud3MfE4W9wKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfJkik6OKTTaueXBEjil3V+7Tep+2ibqNNjX2JjTFTpbPZ0VjIIVx6ku+Srq+1Q/Rn3ey3crLEGj1j7lFlgbQyRf512o1aCAgBs8NxfMu2D7Ws4ZkMtvYSeAsOac5KC0s7FXAucL8Qcten642vqakaADwDOQp0bbfVkWhmcsBxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+/LVbPu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sA2ciJTbDdliNXDvGNedYhVcgKm5x1uUHf0veQERMqhj723GqB7ihaPZYdBAmnfryd/X5ybKXi4+dN6sCSfXEpbb0G96yV+yZdZpy4UlWLkYoIci7hC/Z2dKK4nsvMtQILYWCpe8zXS0B/AMMGgIklr24/v6g9RLLHAKqzV4JsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hm81xtbi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+/LVbPu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EDDC433B1;
-	Tue, 23 Jan 2024 01:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hm81xtbi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD26BC433C7;
+	Tue, 23 Jan 2024 01:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972148;
-	bh=MJpDHo/zNXmcXYuLpm+hdFj3loJ01T6dLNcEcogBuRA=;
+	s=korg; t=1705972150;
+	bh=NAzoZ4zmIqT7EuMjwmq7dvd82Jatgh5Ud3MfE4W9wKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r+/LVbPuC4fSbG5s3fAH3gujxH9/Ft+8h2nV2nMqpgytJ0S9b9TVoxMMiWbFa1uA/
-	 YmFjdUnkq3RKBiAAJ91/2OGNrL0ssUC8WOx/NRpDdcjrEbj1rY9RhF27+Fq03Yutb2
-	 UroDOgTnBnOXDQm5LI+DkJch9y0kXTkbpMMaRkzc=
+	b=hm81xtbig6HZ/z6Gwm7k3DVrGeJjZ+sCYj2jpOkyY25zkD3FzQrHbErudQCCf5OAx
+	 +I4123fTBUYWejX3nwnE4bV1NdaZYxy1ey3aQ4RxPRhBqGZkXZmGnQ1AeJAkyDTcs8
+	 nfSRruPkSFBV8wZxbm5lVvKaEUyzsg4UlYIkIHOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 077/374] powerpc/imc-pmu: Add a null pointer check in update_events_in_group()
-Date: Mon, 22 Jan 2024 15:55:33 -0800
-Message-ID: <20240122235747.290787396@linuxfoundation.org>
+Subject: [PATCH 5.15 078/374] spi: spi-zynqmp-gqspi: fix driver kconfig dependencies
+Date: Mon, 22 Jan 2024 15:55:34 -0800
+Message-ID: <20240122235747.330198493@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,53 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
 
-[ Upstream commit 0a233867a39078ebb0f575e2948593bbff5826b3 ]
+[ Upstream commit 424a8166764e462258fdccaaefbdeb07517c8b21 ]
 
-kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure.
+ZynqMP GQSPI driver no longer uses spi-master framework. It had been
+converted to use spi-mem framework. So remove driver dependency from
+spi-master and replace it with spi-mem.
 
-Fixes: 885dcd709ba9 ("powerpc/perf: Add nest IMC PMU support")
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231126093719.1440305-1-chentao@kylinos.cn
+Fixes: 1c26372e5aa9 ("spi: spi-zynqmp-gqspi: Update driver to use spi-mem framework")
+Signed-off-by: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://lore.kernel.org/r/1699282435-884917-1-git-send-email-radhey.shyam.pandey@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/imc-pmu.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/spi/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/perf/imc-pmu.c b/arch/powerpc/perf/imc-pmu.c
-index 55a853edc3be..e2f6fe259aa6 100644
---- a/arch/powerpc/perf/imc-pmu.c
-+++ b/arch/powerpc/perf/imc-pmu.c
-@@ -292,6 +292,8 @@ static int update_events_in_group(struct device_node *node, struct imc_pmu *pmu)
- 	attr_group->attrs = attrs;
- 	do {
- 		ev_val_str = kasprintf(GFP_KERNEL, "event=0x%x", pmu->events[i].value);
-+		if (!ev_val_str)
-+			continue;
- 		dev_str = device_str_attr_create(pmu->events[i].name, ev_val_str);
- 		if (!dev_str)
- 			continue;
-@@ -299,6 +301,8 @@ static int update_events_in_group(struct device_node *node, struct imc_pmu *pmu)
- 		attrs[j++] = dev_str;
- 		if (pmu->events[i].scale) {
- 			ev_scale_str = kasprintf(GFP_KERNEL, "%s.scale", pmu->events[i].name);
-+			if (!ev_scale_str)
-+				continue;
- 			dev_str = device_str_attr_create(ev_scale_str, pmu->events[i].scale);
- 			if (!dev_str)
- 				continue;
-@@ -308,6 +312,8 @@ static int update_events_in_group(struct device_node *node, struct imc_pmu *pmu)
+diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
+index 123689e457d1..412154732c46 100644
+--- a/drivers/spi/Kconfig
++++ b/drivers/spi/Kconfig
+@@ -984,9 +984,10 @@ config SPI_ZYNQ_QSPI
  
- 		if (pmu->events[i].unit) {
- 			ev_unit_str = kasprintf(GFP_KERNEL, "%s.unit", pmu->events[i].name);
-+			if (!ev_unit_str)
-+				continue;
- 			dev_str = device_str_attr_create(ev_unit_str, pmu->events[i].unit);
- 			if (!dev_str)
- 				continue;
+ config SPI_ZYNQMP_GQSPI
+ 	tristate "Xilinx ZynqMP GQSPI controller"
+-	depends on (SPI_MASTER && HAS_DMA) || COMPILE_TEST
++	depends on (SPI_MEM && HAS_DMA) || COMPILE_TEST
+ 	help
+ 	  Enables Xilinx GQSPI controller driver for Zynq UltraScale+ MPSoC.
++	  This controller only supports SPI memory interface.
+ 
+ config SPI_AMD
+ 	tristate "AMD SPI controller"
 -- 
 2.43.0
 
