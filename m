@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B21133097;
-	Tue, 23 Jan 2024 00:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438BF1353F6;
+	Tue, 23 Jan 2024 00:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969633; cv=none; b=lGCENS/my/l1WNg36+YFi4efsiitYZZd01FXs7GGj8s9GNiPFNqswmBSPjqD0cT8HQUkGGOll2+bcLM+s202vixOO4RloY6Ph7ldyjNBg74V5Cdq96Gfa3L37IO2bX1P6lfjFxOpcpHdVT/8uHpZrZoBWTa20LssXz37E9nJt/s=
+	t=1705969635; cv=none; b=cH4fgcNnbAuUtQSLYncZeJ1Y6qrHv6OcS/cqjG1Rengh0CGIcFdbCS5dayseAhOx9YyCYINf4+7Crb97GhEI846ghthtKBS7d4HuljjYC0pq9Atfa/dd8tTQ6BQph2fPDSHIiGvyw/MdXaA1tOaZgPwWfQe4DTKS2vgaNOaQIgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969633; c=relaxed/simple;
-	bh=lyWubrrxWPnWUPr9JjmNsosqiFMIGFyBuym922sV6go=;
+	s=arc-20240116; t=1705969635; c=relaxed/simple;
+	bh=J+6ITcS1p3cujqK6IMaeWEehf1IgazOV9oa5qWAUVwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ILS6hvmNclMAQG+WwiYw7LRftsPP1kI91RpaQfmM+irHdJs1uK7ydBpwlhWb912XxnGVO98LnZCjpYJmnFXa+FYI/RoLxAEn7iXXIDQ7TkBR2Of08GUQWmUW0HurbHsEEG+Ln/RQ8jdGKXrQ18qIXrEVKiXnIx2NsGpZy43nCXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=baKxC6DC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AS3PLrDpIpxqblMWdGgcfhoGYCOWXrJoknlPsJocoxTcYUOBZ2NYwghONiSE5WqEPuzgCXDgs8YIGfUtOSuWNps2VGbSjqZ7+685YqVEQoSXgMIEECcOPMxnJk9HCVIY+Q9UMkll28EdsUuZ6uB60+W79IxlnHHga7F3LuS+0Eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3zz3mAn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="baKxC6DC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F06DAC433F1;
-	Tue, 23 Jan 2024 00:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3zz3mAn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C6AC433C7;
+	Tue, 23 Jan 2024 00:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969633;
-	bh=lyWubrrxWPnWUPr9JjmNsosqiFMIGFyBuym922sV6go=;
+	s=korg; t=1705969635;
+	bh=J+6ITcS1p3cujqK6IMaeWEehf1IgazOV9oa5qWAUVwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=baKxC6DCN85uw13Nceeh6QzsyKRj/Ok0+FM1p+6GzWiRVj+yMZ3C28gBBkxtNyFkR
-	 RBY87/y+hV+Nz+fy13noop2wXKZGVhX1cJ+5d8qe/aC7t+V2cs6MGNQ0O+TlVjuAYU
-	 2X+0vh2tjKSczJ7nz1KnNIfXSgQBj/D3hc9JzgK4=
+	b=E3zz3mAn5KWWGhiuhRt08xWU5A8sX1WBYC+5DjTS1R31Jpv/eWAMe/neIBs11NVGC
+	 3KIiXn651yVczcWWqI03GStksjpDpPk4OClUGLTr0TInBpj6wBIooyGfpoenUtNRRX
+	 z30uB2gYuWMOzSXfJo+l+i/35pPUzlOG6ns46pY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 347/641] clk: qcom: gcc-sm8550: Add the missing RETAIN_FF_ENABLE GDSC flag
-Date: Mon, 22 Jan 2024 15:54:11 -0800
-Message-ID: <20240122235828.786680530@linuxfoundation.org>
+Subject: [PATCH 6.7 348/641] clk: qcom: gcc-sm8550: Mark the PCIe GDSCs votable
+Date: Mon, 22 Jan 2024 15:54:12 -0800
+Message-ID: <20240122235828.815238101@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,30 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 1fe8273c8d4088dd68faaab8640ec95f381cbf1e ]
+[ Upstream commit e7fe73fc6b68ee97b1e8f124a66a5ee50d8d5e5b ]
 
-All of the 8550's GCC GDSCs can and should use the retain registers so
-as not to lose their state when entering lower power modes.
+The PCIe GDSCs on most Qualcomm platforms expect the OS to always
+consider collapse requests as successful. This also concerns SM8550.
+
+Add the VOTABLE flag to the GDSCs in question to comply with these
+expectations.
 
 Fixes: 955f2ea3b9e9 ("clk: qcom: Add GCC driver for SM8550")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20231218-topic-8550_fixes-v1-3-ce1272d77540@linaro.org
+Link: https://lore.kernel.org/r/20231218-topic-8550_fixes-v1-4-ce1272d77540@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm8550.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/clk/qcom/gcc-sm8550.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
-index 586126c4dd90..1c3d78500392 100644
+index 1c3d78500392..a16d07426b71 100644
 --- a/drivers/clk/qcom/gcc-sm8550.c
 +++ b/drivers/clk/qcom/gcc-sm8550.c
 @@ -3002,7 +3002,7 @@ static struct gdsc pcie_0_gdsc = {
  		.name = "pcie_0_gdsc",
  	},
  	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR,
-+	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+-	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
  };
  
  static struct gdsc pcie_0_phy_gdsc = {
@@ -84,8 +87,8 @@ index 586126c4dd90..1c3d78500392 100644
  		.name = "pcie_0_phy_gdsc",
  	},
  	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR,
-+	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+-	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
  };
  
  static struct gdsc pcie_1_gdsc = {
@@ -93,8 +96,8 @@ index 586126c4dd90..1c3d78500392 100644
  		.name = "pcie_1_gdsc",
  	},
  	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR,
-+	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+-	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
  };
  
  static struct gdsc pcie_1_phy_gdsc = {
@@ -102,47 +105,11 @@ index 586126c4dd90..1c3d78500392 100644
  		.name = "pcie_1_phy_gdsc",
  	},
  	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR,
-+	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+-	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
  };
  
  static struct gdsc ufs_phy_gdsc = {
-@@ -3038,7 +3038,7 @@ static struct gdsc ufs_phy_gdsc = {
- 		.name = "ufs_phy_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR,
-+	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
- static struct gdsc ufs_mem_phy_gdsc = {
-@@ -3047,7 +3047,7 @@ static struct gdsc ufs_mem_phy_gdsc = {
- 		.name = "ufs_mem_phy_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR,
-+	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
- static struct gdsc usb30_prim_gdsc = {
-@@ -3056,7 +3056,7 @@ static struct gdsc usb30_prim_gdsc = {
- 		.name = "usb30_prim_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR,
-+	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
- static struct gdsc usb3_phy_gdsc = {
-@@ -3065,7 +3065,7 @@ static struct gdsc usb3_phy_gdsc = {
- 		.name = "usb3_phy_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR,
-+	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
- static struct clk_regmap *gcc_sm8550_clocks[] = {
 -- 
 2.43.0
 
