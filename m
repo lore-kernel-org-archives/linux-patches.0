@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B172F4A;
-	Tue, 23 Jan 2024 00:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC904566F;
+	Tue, 23 Jan 2024 00:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970666; cv=none; b=qMsIGZbukdVhDb84Nz9j8eHufT7JpysZp5H4gfVH+D6w/CesptJ6sIm+WpN+yMPAV+Vf7TWbDOt32mjGMH95Wj0U/JuWrAlGP6smztaj2o12Uy/xZpHp9y66R71FdUH3D1XzN0ZB8vBj7LCIx9bsRId6UPivQnt/pcJEQEqjT1g=
+	t=1705970668; cv=none; b=ZwHONpQDsPmPq3RVYxwlVf3t2NtxPS1VMavD2xUMLq2ZeJydil7RcBggUbqMCtbyaG3Ppwm1fHK+/md2ybU8oKX2TzBm8Q29hq7x0iDCQpbGeaZYtvp4708sNlryPGI1SV4A5uAk0AYivb2+8BJAV7rmaEJ1d++ILMN+7fHvvH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970666; c=relaxed/simple;
-	bh=dFhj9PvsMSaWlbi+3pIMSC34T4ej3fsSyOPMoOUEDFo=;
+	s=arc-20240116; t=1705970668; c=relaxed/simple;
+	bh=5+3n8Y5E53nM5RQMJJc6FGYFlORJFzxOQMwe7CLPRRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhCdtQqfG5rdeWCsf4PhqhRxCzbjgty5NbeGzKUXjOmTu5ywH/sZaMKPlXO4rSAJlUl1uRzR+hhusNLZiNL3y0dTf9nJVAb54N8fIyPiO2Tn3xDgknZRvONjr81f3xF2ueaiqEV6svM32T1nvmJvzxM9i/dgaZDiJ3a0cWqIb2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBEdNZw8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LGNfOUD8PwsZwsM5qh0cIXJu2rhX/lPE8Tt//n96GFqhDOZILeMDWXwd2lQuHjNHMNNp+d7/S2LZt5ROJFRsMKvMvOmv5NLi+Z6xCcivaiDLx2rAlyZuUVqwPtLajCgmBz6NskwFAssNZfrEixobcQkKvs5hdWSwUDgb+okqUp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6IMI5gP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBEdNZw8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6EA4C433C7;
-	Tue, 23 Jan 2024 00:44:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6IMI5gP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E671C433C7;
+	Tue, 23 Jan 2024 00:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970665;
-	bh=dFhj9PvsMSaWlbi+3pIMSC34T4ej3fsSyOPMoOUEDFo=;
+	s=korg; t=1705970668;
+	bh=5+3n8Y5E53nM5RQMJJc6FGYFlORJFzxOQMwe7CLPRRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IBEdNZw8rX8QdhUAbW6YBFfWvF0CDmThK96jbepFoas+ItW/aSSoxvvRaGgz2beaQ
-	 WxSv8S9iYYfQtV+Hj8mAlvoPca5NSSTgzl+Qaxs+QbJ91s+M91OqCCy4B7iluDaRXd
-	 Erqvr6/FRd04LyNr75vsFIfD6W1/tD03TRejRJBw=
+	b=M6IMI5gPKbaW49sTJ+BWTM2nti/W0b/KXncClcUdsveMbGRGSq+JMGyTVmLv1zK3z
+	 xlCHzN4jFEMCWKpMPW8NXPpdU0790vozUAvsN8B3/Gb5wl9XLCIsn/4SRYaERNnQ6x
+	 IBztAU3942l5NlJh4qm7vxzpMJi8slKXGucv14oU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 083/417] bpf: enforce precision of R0 on callback return
-Date: Mon, 22 Jan 2024 15:54:11 -0800
-Message-ID: <20240122235754.579408564@linuxfoundation.org>
+Subject: [PATCH 6.1 084/417] ARM: dts: qcom: sdx65: correct SPMI node name
+Date: Mon, 22 Jan 2024 15:54:12 -0800
+Message-ID: <20240122235754.616001166@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -53,44 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 0acd03a5bd188b0c501d285d938439618bd855c4 ]
+[ Upstream commit a900ad783f507cb396e402827052e70c0c565ae9 ]
 
-Given verifier checks actual value, r0 has to be precise, so we need to
-propagate precision properly. r0 also has to be marked as read,
-otherwise subsequent state comparisons will ignore such register as
-unimportant and precision won't really help here.
+Node names should not have vendor prefixes:
 
-Fixes: 69c087ba6225 ("bpf: Add bpf_for_each_map_elem() helper")
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20231202175705.885270-4-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+  qcom-sdx65-mtp.dtb: qcom,spmi@c440000: $nodename:0: 'qcom,spmi@c440000' does not match '^spmi@.*
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230924183103.49487-3-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm/boot/dts/qcom-sdx65.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 142e10d49fd8..024a2393613f 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -7284,6 +7284,13 @@ static int prepare_func_exit(struct bpf_verifier_env *env, int *insn_idx)
- 			verbose(env, "R0 not a scalar value\n");
- 			return -EACCES;
- 		}
-+
-+		/* we are going to rely on register's precise value */
-+		err = mark_reg_read(env, r0, r0->parent, REG_LIVE_READ64);
-+		err = err ?: mark_chain_precision(env, BPF_REG_0);
-+		if (err)
-+			return err;
-+
- 		if (!tnum_in(range, r0->var_off)) {
- 			verbose_invalid_scalar(env, r0, &range, "callback return", "R0");
- 			return -EINVAL;
+diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
+index ecb9171e4da5..ebb78b489e63 100644
+--- a/arch/arm/boot/dts/qcom-sdx65.dtsi
++++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
+@@ -401,7 +401,7 @@ restart@c264000 {
+ 			reg = <0x0c264000 0x1000>;
+ 		};
+ 
+-		spmi_bus: qcom,spmi@c440000 {
++		spmi_bus: spmi@c440000 {
+ 			compatible = "qcom,spmi-pmic-arb";
+ 			reg = <0xc440000 0xd00>,
+ 				<0xc600000 0x2000000>,
 -- 
 2.43.0
 
