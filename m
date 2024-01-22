@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94DF13F016;
-	Tue, 23 Jan 2024 01:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C0F14076D;
+	Tue, 23 Jan 2024 01:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972019; cv=none; b=KnO1mcgcpzRbf+V4EcTm7XImV97At176VhGq2JeVIbHq2JmtC2+DIddA52E9dEpbfTBaUEnb7zgL6j4Q6paM5ALy45zshBV4lzR8wLvXyHggbEow2af+jr05xLwrM+tzgLyZ7AvMuNHVt+qqnBPoWzeLi4ZO7lzvTt7G1cL24sM=
+	t=1705972020; cv=none; b=FHyhwFy20DoFLVqDnGJNTrS0e88J/ZCo65fPuhmclBIKeCnuB4zNyuj5TuD/1sVM/IkSWG8OeXI2nH1BeMdVooGqbfR7/c7HSOM+bnh+Pfa1jLMg5TrtYMcFdSLtj3uqI/LRy1dlF5Fx4rgm3q1nov9b2wM/lCvzDZwIsh8nau8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972019; c=relaxed/simple;
-	bh=O8symqwPI26kRMgGrk8Cib/ZqIXESmzPkj+iSZEzi+s=;
+	s=arc-20240116; t=1705972020; c=relaxed/simple;
+	bh=ywTn0/C42hr1G8GKR1Soau/qHM7ZRjlC4fOTUZCC+v8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bd4q77g/XC1hZAtfvLHeMps7bz0+PJeou8kPd7jGjLN3B5xrgU6rwAP3Yhc9LQNPE64X/9rKf82gH4CaEryzbGA1mLqWvMiwSvRYu3Krk9vaXG/NdzmsWgaa64HVEkK8+6HLXCgCwP6nZftKqUTK7La6YPjKXy0XJAgV9OQSVbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZIwBjb+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lsdyg6LgBGbF8xQfkKLBmOXP1AKcHYHgiHvrmDlUNprxJ5An0Is0yoQYlNggm2GowTBH/BOdZo4pm1oASibPpXnbpN5MX0l4GEkszmAgDjHah7zGBoF5W62V9jgTGKQYS/AXUauOY7WW5Gr/5PaVSez+80+mHC3YwyabcrgCFtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/IfxMf/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZIwBjb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBD6C433C7;
-	Tue, 23 Jan 2024 01:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/IfxMf/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6F2C433F1;
+	Tue, 23 Jan 2024 01:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972018;
-	bh=O8symqwPI26kRMgGrk8Cib/ZqIXESmzPkj+iSZEzi+s=;
+	s=korg; t=1705972020;
+	bh=ywTn0/C42hr1G8GKR1Soau/qHM7ZRjlC4fOTUZCC+v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gZIwBjb+ZuGCX7hqYq/XqJycGyRzi4EVIsfj2Hg9Zom5MUtQ7QRq1u5gmKhO7IgCj
-	 SArAFgLH9Il8m7zOVrLn5K71f8a1H/FtBjMDaZWOWpq3FNNSZsJlC8WA6lTWhR6FQG
-	 N985uL3pyLdE0z6cO9hOCMVWf3AmaSxNhNMK/Iq8=
+	b=p/IfxMf/oo5jisbveTpVrUfsUnicuOqaUiihwDk28zRBaLYtGEkfSantVQ70n0lOh
+	 Vib48hI8kZW6ZjO1uqmh1wx1tvt+lsdAKDueEjMGFnCsy1ktoWwLG8N4+HzaGXh/Ww
+	 cKpWjGBASqOrJAByJYkO7+EfqNqwocqhAYqQ+vFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Simek <michal.simek@amd.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Deepak R Varma <drv@mailo.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 390/417] dt-bindings: gpio: xilinx: Fix node address in gpio
-Date: Mon, 22 Jan 2024 15:59:18 -0800
-Message-ID: <20240122235805.274631091@linuxfoundation.org>
+Subject: [PATCH 6.1 391/417] drm/amdkfd: Use resource_size() helper function
+Date: Mon, 22 Jan 2024 15:59:19 -0800
+Message-ID: <20240122235805.308729869@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -52,34 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Simek <michal.simek@amd.com>
+From: Deepak R Varma <drv@mailo.com>
 
-[ Upstream commit 314c020c4ed3de72b15603eb6892250bc4b51702 ]
+[ Upstream commit 9d086e0ddaeb08876f4df3a1485166bfd7483252 ]
 
-Node address doesn't match reg property which is not correct.
+Use the resource_size() function instead of a open coded computation
+resource size. It makes the code more readable.
 
-Fixes: ba96b2e7974b ("dt-bindings: gpio: gpio-xilinx: Convert Xilinx axi gpio binding to YAML")
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Issue identified using resource_size.cocci coccinelle semantic patch.
+
+Signed-off-by: Deepak R Varma <drv@mailo.com>
+Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 02eed83abc13 ("drm/amdkfd: fixes for HMM mem allocation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/gpio/xlnx,gpio-xilinx.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_migrate.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/gpio/xlnx,gpio-xilinx.yaml b/Documentation/devicetree/bindings/gpio/xlnx,gpio-xilinx.yaml
-index f333ee2288e7..11ae8ec3c739 100644
---- a/Documentation/devicetree/bindings/gpio/xlnx,gpio-xilinx.yaml
-+++ b/Documentation/devicetree/bindings/gpio/xlnx,gpio-xilinx.yaml
-@@ -126,7 +126,7 @@ examples:
-   - |
-     #include <dt-bindings/interrupt-controller/arm-gic.h>
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
+index 88bf6221d4be..2d011daf5a39 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
+@@ -1038,8 +1038,7 @@ int svm_migrate_init(struct amdgpu_device *adev)
+ 		/* Disable SVM support capability */
+ 		pgmap->type = 0;
+ 		if (pgmap->type == MEMORY_DEVICE_PRIVATE)
+-			devm_release_mem_region(adev->dev, res->start,
+-						res->end - res->start + 1);
++			devm_release_mem_region(adev->dev, res->start, resource_size(res));
+ 		return PTR_ERR(r);
+ 	}
  
--        gpio@e000a000 {
-+        gpio@a0020000 {
-             compatible = "xlnx,xps-gpio-1.00.a";
-             reg = <0xa0020000 0x10000>;
-             #gpio-cells = <2>;
 -- 
 2.43.0
 
