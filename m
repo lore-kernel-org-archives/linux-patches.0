@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5DA12BF15;
-	Tue, 23 Jan 2024 00:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C9312BF15;
+	Tue, 23 Jan 2024 00:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968905; cv=none; b=m9AQmhnsALbdkOMprKaNs6+Z4z1s6jimxToKg/uLyvO7tvkcYeFdzvfkYEMObX1Y74vRjtRJzPOr+SIacYj0hceoUjK/Krfe1k5lZ44knD57lly6aAl14oDEhXD+YB7QoYQA1iHyXus/yO8t7u9a9MySqBt/uijsJ2yraAmUrrQ=
+	t=1705968906; cv=none; b=O7dOcLfoKAchrMP/CuNStMpLzXKCa4aBsav+pU1qdzm26u54CAUKY/O9XyMSizM7vFvUsnY6nTmWfOi6xFloWpmcmq6mlMf5NnrUyUkrPGn6QgsS0NvzIX4YVUojyyfRJeWnGWwzRZLlYJgoriZENd7RGtNvNoAVvcMa2c1yf6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968905; c=relaxed/simple;
-	bh=qjOIJ2SHuAn2yw7IUrL2QdfLUr52cnFf78O61TrVbRw=;
+	s=arc-20240116; t=1705968906; c=relaxed/simple;
+	bh=VwnhC8k8NQbdFdMTawoiQDa1l4YvEzm97IiyEs7Gwkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iggM4johoXDR+8hPu9Z6GD2saIEeEWsv+E6IjbFb6ySp+HRjTnSrqQorOZptuBDdAxLXLA+KItQuBGeEzTNSBmqXv1WKooojxvZMlx+QpSiTKT36H2fgOMhqdTd877dX4kBOu0ArDlYzXZ43qq0fSdOp1aLXR++q+q3Z+FG1DB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2T7LR1S+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VMcsz0xVrtgWCkj+ouVkQjvMlepOhONFtSmKbx6+MtAIpN3gs4DwUU98WViqzvdsVoOUX1jN7GOx671kKHI9uKMVCwode0rPVXfHp/nxsYDygNbtVEQer7IFSJjvHyQDTtsngahbi6e7ZDSuhkCzaj4nZFBLh4VdavjdvFhHxAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Li3qukx+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2T7LR1S+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B71C43390;
-	Tue, 23 Jan 2024 00:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Li3qukx+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39C5C43390;
+	Tue, 23 Jan 2024 00:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968904;
-	bh=qjOIJ2SHuAn2yw7IUrL2QdfLUr52cnFf78O61TrVbRw=;
+	s=korg; t=1705968906;
+	bh=VwnhC8k8NQbdFdMTawoiQDa1l4YvEzm97IiyEs7Gwkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2T7LR1S+127JAeSA8vuCWGIbUIkNuoZuQVC0XSfWRUof68Kj1BqJbhVqibIzGmgxI
-	 JGjMctSC13XumPN8yo75nGxANnYKKj20CpDl2VRVYf1jUIF3wOWUhXq/cTzIONbyzB
-	 EkZKM8Fk5ypwnEBtihjGkOOF/bFZts4PE8oKm2CY=
+	b=Li3qukx+iGsI/xGaTChDmlo/bwKk+db2VdDyLnEM4FNg2h5iMYEHBeyG9PEhM0UHS
+	 93wfxpzrseTSRwO1gS9W+z8euf26yFJVDrPlEwrzsASpF+8b65/5Y75mXBmiXRltoJ
+	 OdFngMr8QVM0SR7gj6Ygeqb097ny46CHRW9VdGT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihang Li <liyihang9@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 091/194] scsi: hisi_sas: Replace with standard error code return value
-Date: Mon, 22 Jan 2024 15:57:01 -0800
-Message-ID: <20240122235723.142303138@linuxfoundation.org>
+Subject: [PATCH 5.4 092/194] selftests/net: fix grep checking for fib_nexthop_multiprefix
+Date: Mon, 22 Jan 2024 15:57:02 -0800
+Message-ID: <20240122235723.191454698@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -52,59 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yihang Li <liyihang9@huawei.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit d34ee535705eb43885bc0f561c63046f697355ad ]
+[ Upstream commit a33e9da3470499e9ff476138f271fb52d6bfe767 ]
 
-In function hisi_sas_controller_prereset(), -ENOSYS (Function not
-implemented) should be returned if the driver does not support .soft_reset.
-Returns -EPERM (Operation not permitted) if HISI_SAS_RESETTING_BIT is
-already be set.
+When running fib_nexthop_multiprefix test I saw all IPv6 test failed.
+e.g.
 
-In function _suspend_v3_hw(), returns -EPERM (Operation not permitted) if
-HISI_SAS_RESETTING_BIT is already be set.
+ ]# ./fib_nexthop_multiprefix.sh
+ TEST: IPv4: host 0 to host 1, mtu 1300                              [ OK ]
+ TEST: IPv6: host 0 to host 1, mtu 1300                              [FAIL]
 
-Fixes: 4522204ab218 ("scsi: hisi_sas: tidy host controller reset function a bit")
-Signed-off-by: Yihang Li <liyihang9@huawei.com>
-Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1702525516-51258-3-git-send-email-chenxiang66@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+ With -v it shows
+
+ COMMAND: ip netns exec h0 /usr/sbin/ping6 -s 1350 -c5 -w5 2001:db8:101::1
+ PING 2001:db8:101::1(2001:db8:101::1) 1350 data bytes
+ From 2001:db8:100::64 icmp_seq=1 Packet too big: mtu=1300
+
+ --- 2001:db8:101::1 ping statistics ---
+ 1 packets transmitted, 0 received, +1 errors, 100% packet loss, time 0ms
+
+ Route get
+ 2001:db8:101::1 via 2001:db8:100::64 dev eth0 src 2001:db8:100::1 metric 1024 expires 599sec mtu 1300 pref medium
+ Searching for:
+     2001:db8:101::1 from :: via 2001:db8:100::64 dev eth0 src 2001:db8:100::1 .* mtu 1300
+
+The reason is when CONFIG_IPV6_SUBTREES is not enabled, rt6_fill_node() will
+not put RTA_SRC info. After fix:
+
+]# ./fib_nexthop_multiprefix.sh
+TEST: IPv4: host 0 to host 1, mtu 1300                              [ OK ]
+TEST: IPv6: host 0 to host 1, mtu 1300                              [ OK ]
+
+Fixes: 735ab2f65dce ("selftests: Add test with multiple prefixes using single nexthop")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20231213060856.4030084-7-liuhangbin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_main.c  | 4 ++--
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/fib_nexthop_multiprefix.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index 7135bbe5abb8..9de27c7f6b01 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_main.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -1577,10 +1577,10 @@ static int hisi_sas_controller_reset(struct hisi_hba *hisi_hba)
- 		queue_work(hisi_hba->wq, &hisi_hba->debugfs_work);
+diff --git a/tools/testing/selftests/net/fib_nexthop_multiprefix.sh b/tools/testing/selftests/net/fib_nexthop_multiprefix.sh
+index 51df5e305855..b52d59547fc5 100755
+--- a/tools/testing/selftests/net/fib_nexthop_multiprefix.sh
++++ b/tools/testing/selftests/net/fib_nexthop_multiprefix.sh
+@@ -209,12 +209,12 @@ validate_v6_exception()
+ 		echo "Route get"
+ 		ip -netns h0 -6 ro get ${dst}
+ 		echo "Searching for:"
+-		echo "    ${dst} from :: via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
++		echo "    ${dst}.* via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
+ 		echo
+ 	fi
  
- 	if (!hisi_hba->hw->soft_reset)
--		return -1;
-+		return -ENOENT;
+ 	ip -netns h0 -6 ro get ${dst} | \
+-	grep -q "${dst} from :: via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
++	grep -q "${dst}.* via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
+ 	rc=$?
  
- 	if (test_and_set_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags))
--		return -1;
-+		return -EPERM;
- 
- 	dev_info(dev, "controller resetting...\n");
- 	hisi_sas_controller_reset_prepare(hisi_hba);
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index a86aae52d94f..c84d18b23e7b 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -3365,7 +3365,7 @@ static int hisi_sas_v3_suspend(struct pci_dev *pdev, pm_message_t state)
- 	}
- 
- 	if (test_and_set_bit(HISI_SAS_RESET_BIT, &hisi_hba->flags))
--		return -1;
-+		return -EPERM;
- 
- 	scsi_block_requests(shost);
- 	set_bit(HISI_SAS_REJECT_CMD_BIT, &hisi_hba->flags);
+ 	log_test $rc 0 "IPv6: host 0 to host ${i}, mtu ${mtu}"
 -- 
 2.43.0
 
