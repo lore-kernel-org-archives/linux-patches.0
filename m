@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F689634F8;
-	Tue, 23 Jan 2024 01:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800DA634F8;
+	Tue, 23 Jan 2024 01:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975032; cv=none; b=kjYngFVkz6gSM6Q4pfRxhnkFOWM2j0lYuri/hAa+pbWtjgohNQe4lpI24D2NKr5732suxtGHCWcUmHgHSwt4OHPzZrYejW7xDRyivNDI6MnClYXK50jIW7yTI+SOCOKKPjhTk0YVD99Vbmtdeb2SxlAJFgkbNG9mKK6XRVnVeiI=
+	t=1705975034; cv=none; b=uNWxYCHRgvvn1GOabfFGs4ayKaHg0TPWEAYUKTTds8s42bpUUoo9LjgwIPe2+LObn+nJ+0/osWjtph9shFmdxbR9+QrBVkUg6ZcKHd/XW4PMPGmYZjE13iqXgJ8eLLsf2YhXNQeEMmhq4xIj+XVyRM03/ncGhdnVT9t47/3VLSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975032; c=relaxed/simple;
-	bh=OwlcfI2xnxctGlaGV/xFl+cZ3P8YwxEGfC8ZyT4Pex8=;
+	s=arc-20240116; t=1705975034; c=relaxed/simple;
+	bh=JIU0XhtJjoQe0nczUdSZVeG3MVr9mlahzyA5uC0EXTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdOkYc68zSKjvObGkxIjapR7+ppWw/eHUbQfjcBhdKbAAdX6rswzDnk1tChOi5/8pWEfLuvTgEiRZdWVAbYqaSt/0sw0ycL0KmhMaXT5t0SAoEyhLSHTyM9XdTdENzO4ETLG1ZF8EX3eXBT/eLwLiNLEulUOW0XPIMmADvI8weM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AcOq1DTI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=K8+fD3ZkrgLvWRAFb7VhK0N3AvHUgtZQK6nxHYqNQBPdfRAbwVqEbyg5UBPnILIXZsiGWS8nqGxLPlUrdKHkkm4cxLPStn0ggX/Dq7Y+Tzj6l252+KlIRvX2xYSkoHZbvfqHwI5gevATT3TeZsWfwt0zayu0Jik0S/WmaWH05dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyK6CLa8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcOq1DTI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46EB7C433F1;
-	Tue, 23 Jan 2024 01:57:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyK6CLa8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05C6C433F1;
+	Tue, 23 Jan 2024 01:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975032;
-	bh=OwlcfI2xnxctGlaGV/xFl+cZ3P8YwxEGfC8ZyT4Pex8=;
+	s=korg; t=1705975033;
+	bh=JIU0XhtJjoQe0nczUdSZVeG3MVr9mlahzyA5uC0EXTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AcOq1DTIFd+7lsRvmtTRUi+bDDxMNhBBBg7iNSkLb62BDrVBtBaGf5sUxJdGJDrOq
-	 vt+vBivfLCTA99DLO3SbdQTXOlUimvMxE/Zv8MZuCdTW5BFQKmGOI6icuAwI6/DpvZ
-	 M4zsxmRSJq04p2QKOh7gibM669hq+K4Kxdi6rCqY=
+	b=DyK6CLa8FLdUbohhNmBjh5o/ODaeVODkbPhzOVt/weXT9Z7GmQTV6Z/rUEg2QZ/6T
+	 JLx6vG4wnBfDlUUIOGnL2KL7CXUsOimcx1UXbj6jxqxZNxEYUKrxRKpLnWDHCynQqx
+	 ZrOtmDp0YN1cyBnR9oqrtKUHoEFJMC1Auedvtssc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 205/583] Bluetooth: Fix bogus check for re-auth no supported with non-ssp
-Date: Mon, 22 Jan 2024 15:54:16 -0800
-Message-ID: <20240122235818.267253828@linuxfoundation.org>
+Subject: [PATCH 5.15 333/374] net: ethernet: ti: am65-cpsw: Fix max mtu to fit ethernet frames
+Date: Mon, 22 Jan 2024 15:59:49 -0800
+Message-ID: <20240122235756.485917015@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,92 +47,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Sanjuán García, Jorge <Jorge.SanjuanGarcia@duagon.com>
 
-[ Upstream commit d03376c185926098cb4d668d6458801eb785c0a5 ]
+[ Upstream commit 64e47d8afb5ca533b27efc006405e5bcae2c4a7b ]
 
-This reverts 19f8def031bfa50c579149b200bfeeb919727b27
-"Bluetooth: Fix auth_complete_evt for legacy units" which seems to be
-working around a bug on a broken controller rather then any limitation
-imposed by the Bluetooth spec, in fact if there ws not possible to
-re-auth the command shall fail not succeed.
+The value of AM65_CPSW_MAX_PACKET_SIZE represents the maximum length
+of a received frame. This value is written to the register
+AM65_CPSW_PORT_REG_RX_MAXLEN.
 
-Fixes: 19f8def031bf ("Bluetooth: Fix auth_complete_evt for legacy units")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+The maximum MTU configured on the network device should then leave
+some room for the ethernet headers and frame check. Otherwise, if
+the network interface is configured to its maximum mtu possible,
+the frames will be larger than AM65_CPSW_MAX_PACKET_SIZE and will
+get dropped as oversized.
+
+The switch supports ethernet frame sizes between 64 and 2024 bytes
+(including VLAN) as stated in the technical reference manual, so
+define AM65_CPSW_MAX_PACKET_SIZE with that maximum size.
+
+Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
+Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Link: https://lore.kernel.org/r/20240105085530.14070-2-jorge.sanjuangarcia@duagon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h |  1 -
- net/bluetooth/hci_conn.c         |  8 +++-----
- net/bluetooth/hci_event.c        | 11 ++---------
- 3 files changed, 5 insertions(+), 15 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 7a4be33bd07a..b83cfcf66664 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -957,7 +957,6 @@ void hci_inquiry_cache_flush(struct hci_dev *hdev);
- /* ----- HCI Connections ----- */
- enum {
- 	HCI_CONN_AUTH_PEND,
--	HCI_CONN_REAUTH_PEND,
- 	HCI_CONN_ENCRYPT_PEND,
- 	HCI_CONN_RSWITCH_PEND,
- 	HCI_CONN_MODE_CHANGE_PEND,
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index f3139c4c20fc..1fdf4b905365 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2380,12 +2380,10 @@ static int hci_conn_auth(struct hci_conn *conn, __u8 sec_level, __u8 auth_type)
- 		hci_send_cmd(conn->hdev, HCI_OP_AUTH_REQUESTED,
- 			     sizeof(cp), &cp);
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 4aa9477ac597..1fa6f0dacd2d 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -53,7 +53,7 @@
+ #define AM65_CPSW_MAX_PORTS	8
  
--		/* If we're already encrypted set the REAUTH_PEND flag,
--		 * otherwise set the ENCRYPT_PEND.
-+		/* Set the ENCRYPT_PEND to trigger encryption after
-+		 * authentication.
- 		 */
--		if (test_bit(HCI_CONN_ENCRYPT, &conn->flags))
--			set_bit(HCI_CONN_REAUTH_PEND, &conn->flags);
--		else
-+		if (!test_bit(HCI_CONN_ENCRYPT, &conn->flags))
- 			set_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags);
- 	}
+ #define AM65_CPSW_MIN_PACKET_SIZE	VLAN_ETH_ZLEN
+-#define AM65_CPSW_MAX_PACKET_SIZE	(VLAN_ETH_FRAME_LEN + ETH_FCS_LEN)
++#define AM65_CPSW_MAX_PACKET_SIZE	2024
  
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index f7ebbbd30218..16e442773229 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3500,14 +3500,8 @@ static void hci_auth_complete_evt(struct hci_dev *hdev, void *data,
+ #define AM65_CPSW_REG_CTL		0x004
+ #define AM65_CPSW_REG_STAT_PORT_EN	0x014
+@@ -1985,7 +1985,8 @@ am65_cpsw_nuss_init_port_ndev(struct am65_cpsw_common *common, u32 port_idx)
+ 	eth_hw_addr_set(port->ndev, port->slave.mac_addr);
  
- 	if (!ev->status) {
- 		clear_bit(HCI_CONN_AUTH_FAILURE, &conn->flags);
--
--		if (!hci_conn_ssp_enabled(conn) &&
--		    test_bit(HCI_CONN_REAUTH_PEND, &conn->flags)) {
--			bt_dev_info(hdev, "re-auth of legacy device is not possible.");
--		} else {
--			set_bit(HCI_CONN_AUTH, &conn->flags);
--			conn->sec_level = conn->pending_sec_level;
--		}
-+		set_bit(HCI_CONN_AUTH, &conn->flags);
-+		conn->sec_level = conn->pending_sec_level;
- 	} else {
- 		if (ev->status == HCI_ERROR_PIN_OR_KEY_MISSING)
- 			set_bit(HCI_CONN_AUTH_FAILURE, &conn->flags);
-@@ -3516,7 +3510,6 @@ static void hci_auth_complete_evt(struct hci_dev *hdev, void *data,
- 	}
- 
- 	clear_bit(HCI_CONN_AUTH_PEND, &conn->flags);
--	clear_bit(HCI_CONN_REAUTH_PEND, &conn->flags);
- 
- 	if (conn->state == BT_CONFIG) {
- 		if (!ev->status && hci_conn_ssp_enabled(conn)) {
+ 	port->ndev->min_mtu = AM65_CPSW_MIN_PACKET_SIZE;
+-	port->ndev->max_mtu = AM65_CPSW_MAX_PACKET_SIZE;
++	port->ndev->max_mtu = AM65_CPSW_MAX_PACKET_SIZE -
++			      (VLAN_ETH_HLEN + ETH_FCS_LEN);
+ 	port->ndev->hw_features = NETIF_F_SG |
+ 				  NETIF_F_RXCSUM |
+ 				  NETIF_F_HW_CSUM |
 -- 
 2.43.0
 
