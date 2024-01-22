@@ -1,36 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACFF135A5D;
-	Tue, 23 Jan 2024 00:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18F4135A5D;
+	Tue, 23 Jan 2024 00:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969669; cv=none; b=Fbdvls/TtqXfzsQNlFBbAMc2ov70pB50Ic1LOfgoSTQknjd1KDaKnSHgpbEShzvyxIeGr3Gwguu41MnLjTRJXHDeMzj4kqdJgd5u4CLo0rdlCR/XJmSr8HEMXtMH5Urz1jZ9U3617c4kNeEPOo60M8cPhGq9L61nJ5FWiiOXeoo=
+	t=1705969672; cv=none; b=ezbpEaU5Ig9k9rBxbJBlxLt9QhaD4lSBGjqJCrbjvwfie6bU8m4lwPQ0/7mBqgKtPvrGQi5/hnGEaq6cMSXAubZQ+3GHaY3uUyJk3cZRnbzVz/4RtA6m7Sf+J13eFVmMbrZW6xU1ts24EOyCFXICghsHlclx7Vd0rxCkrohCH34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969669; c=relaxed/simple;
-	bh=5a78W5Im1W2+xc+sAQv41tfzSwvuMVqpejVftvB82gQ=;
+	s=arc-20240116; t=1705969672; c=relaxed/simple;
+	bh=VrDnV4sKkCbfB7rSu6GqqmN+jeteq48KPxaAT8t8XtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tkHjzaCZ9daLkAuhAfT0UuR/22CmWAQwStkYOur3c/Ek5XBftMdD11JQ1ahVtLaSNC1YiMnyhQSuVxmS5vPRVhZE1hpf9g49f5j0TKFNqKXiQ/jMnxaYIfcMc7KcN35/0HLtR9Sl9/Y1l5SZ1J45FLueVmRpXwMoj0iAQpczDEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ljp3KzNJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ij6pjGCg48LznPyIT/MPQROZsOMUo1LpNQ/giQMDQN1Y6RC6tlHyPMehBHv6TbkKr8NoM0GQ5uNQiBUuu6llZLU5ZjflJcikRFcWYkIkqtImYJlBmW1xt6Jcg3ERYq1JFRGi9pllR5bN8fpltIsVXgByXn7tBQ9sdS2x0g4HI6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrTokDvr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ljp3KzNJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69986C433C7;
-	Tue, 23 Jan 2024 00:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrTokDvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96353C433F1;
+	Tue, 23 Jan 2024 00:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969669;
-	bh=5a78W5Im1W2+xc+sAQv41tfzSwvuMVqpejVftvB82gQ=;
+	s=korg; t=1705969671;
+	bh=VrDnV4sKkCbfB7rSu6GqqmN+jeteq48KPxaAT8t8XtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ljp3KzNJaAC6s/9UKZazpIjKNXB5RqysffceznpyJRl70GUCB8ComOMTrFqzYid3+
-	 jGrLpyg5pYAJ1TGxjp11NsvKLlDd2xQPwxgnnF1uGUKYBCKQHVgkaohpS2ie8yyLBr
-	 tL5xE/47FHuXksDf3x31DmHEkm8M4Z+cOUyEzEkM=
+	b=MrTokDvrby0oluEFs8umIAQrf53qIWFa0QZOnhGlWHWi9mUb8U3rHHeCGHGfL6MX3
+	 Nx1SUBCwHm0n+NObaeM7bOSw9Gb1KD/4NavvM4tj32AKYU6X4y2jqkvAWQFLSdaUvh
+	 ayzymtrfjKPZ+jPDDpwxgqE6OTNByARyUd2EjTwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.7 393/641] Revert "usb: gadget: f_uvc: change endpoint allocation in uvc_function_bind()"
-Date: Mon, 22 Jan 2024 15:54:57 -0800
-Message-ID: <20240122235830.254702478@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Shuah Khan <shuah@kernel.org>,
+	linux-sound@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 370/641] kselftest/alsa - mixer-test: fix the number of parameters to ksft_exit_fail_msg()
+Date: Mon, 22 Jan 2024 15:54:34 -0800
+Message-ID: <20240122235829.531554436@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -43,65 +52,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-commit 895ee5aefb7e24203de5dffae7ce9a02d78fa3d1 upstream.
+[ Upstream commit 8c51c13dc63d46e754c44215eabc0890a8bd9bfb ]
 
-This reverts commit 3c5b006f3ee800b4bd9ed37b3a8f271b8560126e.
+Minor fix in the number of arguments to error reporting function in the
+test program as reported by GCC 13.2.0 warning.
 
-gadget_is_{super|dual}speed() API check UDC controller capitblity. It
-should pass down highest speed endpoint descriptor to UDC controller. So
-UDC controller driver can reserve enough resource at check_config(),
-especially mult and maxburst. So UDC driver (such as cdns3) can know need
-at least (mult + 1) * (maxburst + 1) * wMaxPacketSize internal memory for
-this uvc functions.
+mixer-test.c: In function ‘find_controls’:
+mixer-test.c:169:44: warning: too many arguments for format [-Wformat-extra-args]
+  169 |                         ksft_exit_fail_msg("snd_ctl_poll_descriptors() failed for %d\n",
+      |                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20231224153816.1664687-5-Frank.Li@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The number of arguments in call to ksft_exit_fail_msg() doesn't correspond
+to the format specifiers, so this is adjusted resembling the sibling calls
+to the error function.
+
+Fixes: b1446bda56456 ("kselftest: alsa: Check for event generation when we write to controls")
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: linux-sound@vger.kernel.org
+Cc: linux-kselftest@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Acked-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20240107173704.937824-2-mirsad.todorovac@alu.unizg.hr
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_uvc.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ tools/testing/selftests/alsa/mixer-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_uvc.c
-+++ b/drivers/usb/gadget/function/f_uvc.c
-@@ -722,13 +722,29 @@ uvc_function_bind(struct usb_configurati
- 	}
- 	uvc->enable_interrupt_ep = opts->enable_interrupt_ep;
+diff --git a/tools/testing/selftests/alsa/mixer-test.c b/tools/testing/selftests/alsa/mixer-test.c
+index 23df154fcdd7..208c2170c074 100644
+--- a/tools/testing/selftests/alsa/mixer-test.c
++++ b/tools/testing/selftests/alsa/mixer-test.c
+@@ -166,7 +166,7 @@ static void find_controls(void)
+ 		err = snd_ctl_poll_descriptors(card_data->handle,
+ 					       &card_data->pollfd, 1);
+ 		if (err != 1) {
+-			ksft_exit_fail_msg("snd_ctl_poll_descriptors() failed for %d\n",
++			ksft_exit_fail_msg("snd_ctl_poll_descriptors() failed for card %d: %d\n",
+ 				       card, err);
+ 		}
  
--	ep = usb_ep_autoconfig(cdev->gadget, &uvc_fs_streaming_ep);
-+	/*
-+	 * gadget_is_{super|dual}speed() API check UDC controller capitblity. It should pass down
-+	 * highest speed endpoint descriptor to UDC controller. So UDC controller driver can reserve
-+	 * enough resource at check_config(), especially mult and maxburst. So UDC driver (such as
-+	 * cdns3) can know need at least (mult + 1) * (maxburst + 1) * wMaxPacketSize internal
-+	 * memory for this uvc functions. This is the only straightforward method to resolve the UDC
-+	 * resource allocation issue in the current gadget framework.
-+	 */
-+	if (gadget_is_superspeed(c->cdev->gadget))
-+		ep = usb_ep_autoconfig_ss(cdev->gadget, &uvc_ss_streaming_ep,
-+					  &uvc_ss_streaming_comp);
-+	else if (gadget_is_dualspeed(cdev->gadget))
-+		ep = usb_ep_autoconfig(cdev->gadget, &uvc_hs_streaming_ep);
-+	else
-+		ep = usb_ep_autoconfig(cdev->gadget, &uvc_fs_streaming_ep);
-+
- 	if (!ep) {
- 		uvcg_info(f, "Unable to allocate streaming EP\n");
- 		goto error;
- 	}
- 	uvc->video.ep = ep;
- 
-+	uvc_fs_streaming_ep.bEndpointAddress = uvc->video.ep->address;
- 	uvc_hs_streaming_ep.bEndpointAddress = uvc->video.ep->address;
- 	uvc_ss_streaming_ep.bEndpointAddress = uvc->video.ep->address;
- 
+-- 
+2.43.0
+
 
 
