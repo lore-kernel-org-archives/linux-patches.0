@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023A112F5A7;
-	Tue, 23 Jan 2024 00:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C885712F5A7;
+	Tue, 23 Jan 2024 00:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969027; cv=none; b=Mx9ggML5aUTTlvZKbjxlUlH4Dl2oAdCGsKqZkDF60O/6cH83wpHpA1zpxkbeAenf0FOoNWW/5y3ugbJ00jDlGMgO0/IlgMpl4pPHMu96jLkw/+HCXatrdYNn/D8rzCFZnU9s9dttssX5a3BlCeHZePD0sNliSpTB7x7exbPb5a4=
+	t=1705969028; cv=none; b=QCNMMHspuo9u7EfKgjUUBcihT332XG0R0a57MDeM9YAu6pemX/m3J0ckWSzaXOiWDmyPmfYsRtFHeNron7OIanhqjOo1auOY4ZrwjsTjfDvbIY01tfhogwAkX5CZeg0FYdm8JPKExxGYVrMmyoYmemxv4HRnWnXqNfU054GsDXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969027; c=relaxed/simple;
-	bh=9c4JCoxqxdgeJV1PrfJu90FhJOlOgqQqFxCk1m8OvLo=;
+	s=arc-20240116; t=1705969028; c=relaxed/simple;
+	bh=zWsVDbQ+Cy8uiMzruxed2ifcRodh1MPboaIdpwc2tKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D58IPlbL5tcaZBhJDu8wwWh9MVWStRSdrbrqugfA68QFo4J2U7S46ZaT7iSBkbetUaQIc2mmuhFGxRQ0nq3Nvyg/UABsfiKVawJdmQ5goSy8u+CRXrydsK+4K3okBWKkAK/d3t419DKqyHFHmedhJHEg7shAHubpDLsUUrgtq4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7SYRESG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nlGNE0eqieA6X/AJAeCmkGYxVhM3G063WqfJ2NeD3eJatWsJdmYrVIVIysnZHQe9ptOL1fHaIhIrHinh0a6HOOaFFaYg/iJ2duxpSJlPWY0iE9J6qbUtPu0cZ1Pjg5zIfnLoq0lfxu3Ym8sMGQ7bs4gv7b5XlmK7tCCbBBcJsJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FyMaugGq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7SYRESG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90931C433C7;
-	Tue, 23 Jan 2024 00:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FyMaugGq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E8BC433F1;
+	Tue, 23 Jan 2024 00:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969026;
-	bh=9c4JCoxqxdgeJV1PrfJu90FhJOlOgqQqFxCk1m8OvLo=;
+	s=korg; t=1705969028;
+	bh=zWsVDbQ+Cy8uiMzruxed2ifcRodh1MPboaIdpwc2tKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z7SYRESG1TFN/xZK0e4c/RcX7rgasFmVb0Fl+gFO1nIBu0hWV4AC+O77D0P3xzxUF
-	 8jbetGBWRFR4Q6VdvdaklbiDDlCUrdk/HYB5ivRparzNnD4BaXSeXksHcULCfq1fYe
-	 of23S73Zo3svQx0B8IteqUIZ6IJdIhMsI0twFORk=
+	b=FyMaugGqQes05yn0B6rHiq4pbFeFaBYHRBPA4nDTwzYRLss9HuwVlncOmDeDkTC3A
+	 9vDLapfWkVha36HjlwuW7wRG5zfseX3ojiT4d51TwhfnP4zj+BnHxqemVOaI/qgnFO
+	 HyXOMSoGgIqYHetzyMq2BGJvI1hZ3XNtKMXiZf7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 168/194] acpi: property: Let args be NULL in __acpi_node_get_property_reference
-Date: Mon, 22 Jan 2024 15:58:18 -0800
-Message-ID: <20240122235726.417627908@linuxfoundation.org>
+Subject: [PATCH 5.4 169/194] software node: Let args be NULL in software_node_get_reference_args
+Date: Mon, 22 Jan 2024 15:58:19 -0800
+Message-ID: <20240122235726.453889657@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -54,47 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit bef52aa0f3de1b7d8c258c13b16e577361dabf3a ]
+[ Upstream commit 1eaea4b3604eb9ca7d9a1e73d88fc121bb4061f5 ]
 
 fwnode_get_property_reference_args() may not be called with args argument
-NULL on ACPI, OF already supports this. Add the missing NULL checks and
-document this.
+NULL and while OF already supports this. Add the missing NULL check.
 
 The purpose is to be able to count the references.
 
-Fixes: 977d5ad39f3e ("ACPI: Convert ACPI reference args to generic fwnode reference args")
+Fixes: b06184acf751 ("software node: Add software_node_get_reference_args()")
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20231109101010.1329587-2-sakari.ailus@linux.intel.com
+Link: https://lore.kernel.org/r/20231109101010.1329587-3-sakari.ailus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/property.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/base/swnode.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
-index 479856ceda9f..5906e247b9fa 100644
---- a/drivers/acpi/property.c
-+++ b/drivers/acpi/property.c
-@@ -646,6 +646,7 @@ acpi_fwnode_get_named_child_node(const struct fwnode_handle *fwnode,
-  * @index: Index of the reference to return
-  * @num_args: Maximum number of arguments after each reference
-  * @args: Location to store the returned reference with optional arguments
-+ *	  (may be NULL)
-  *
-  * Find property with @name, verifify that it is a package containing at least
-  * one object reference and if so, store the ACPI device object pointer to the
-@@ -704,6 +705,9 @@ int __acpi_node_get_property_reference(const struct fwnode_handle *fwnode,
- 		if (ret)
- 			return ret == -ENODEV ? -EINVAL : ret;
+diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
+index 4c3b9813b284..636d52d1a1b8 100644
+--- a/drivers/base/swnode.c
++++ b/drivers/base/swnode.c
+@@ -604,6 +604,9 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
+ 	if (nargs > NR_FWNODE_REFERENCE_ARGS)
+ 		return -EINVAL;
  
-+		if (!args)
-+			return 0;
++	if (!args)
++		return 0;
 +
- 		args->fwnode = acpi_fwnode_handle(device);
- 		args->nargs = 0;
- 		return 0;
+ 	args->fwnode = software_node_get(refnode);
+ 	args->nargs = nargs;
+ 
 -- 
 2.43.0
 
