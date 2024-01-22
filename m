@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E938250278;
-	Tue, 23 Jan 2024 00:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE0050272;
+	Tue, 23 Jan 2024 00:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968463; cv=none; b=hKxOoV+rtuTh5QN7o+UQmV5zu4kSckJ6eEBjnScSBKY/DLnVRPGB2AE994ggXZf7TcwihYbpxfNPyNVgXyXHdQv+qF7e39TcgerRzwKVvQSjOtdZRQAAxXwszCEG05xOK14cB3QjuxwM6SiMAx0QDDQy8Ml59Cjz2AQnTn7ZCK0=
+	t=1705968465; cv=none; b=acsf/PQPoXCPd7gmp7TiIJOTA9FtpWdxLsTUejUdYPojG/DF73Q+MBip5VuInEy632mhKw/YyhDtM94PgRakGlmoJPU1MHhy6FzX6scwsfG7FWzVwLXDtm9Km7javlh32BpqeNM49j8kbEO0ch9YLOqpyuIfqlHC5qsYsy+kZR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968463; c=relaxed/simple;
-	bh=eOhEN1MZ5TSsEeriQZc6Zlumwswls/i9cCP0kmPADV4=;
+	s=arc-20240116; t=1705968465; c=relaxed/simple;
+	bh=/TXn30JYox2/Q5c61VagW4JjUAoA3Z9gJdkZhiGdcGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=krQJfkmAcZYtro5cJUnPJVlYgPyJpxjk7OHfp2Yl+2dpsk4gT8FF0ZYrVAQ/Rw7Vi37teMQiQQpUxiNFNxUTTWaKkS9AwN5y5tULJD/Y+58Ux3s3l9YvBegEVJDMxtWN/b81LRuNL+o0/2MMnh7Td/3EUhRMYr3hTjbaLHU5uZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RT8z4Kjj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=odZKfdRonQYCyvhQ01Qw7aO642QY5Enx6VA0124+AFDPSfc8sh7vjwGES6S4dbxDRSh3xU/fbcrhtcWORzSj9pALnfvYTedzoUqfYkLx8mxZ0u0qBVup5Uu0Yk9qpJNso+apSJzumOu181AixaQ9OuiK0uR/tveKIxzj/IqtvHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbg6WOSD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RT8z4Kjj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E000C433F1;
-	Tue, 23 Jan 2024 00:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbg6WOSD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D999EC433F1;
+	Tue, 23 Jan 2024 00:07:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968462;
-	bh=eOhEN1MZ5TSsEeriQZc6Zlumwswls/i9cCP0kmPADV4=;
+	s=korg; t=1705968465;
+	bh=/TXn30JYox2/Q5c61VagW4JjUAoA3Z9gJdkZhiGdcGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RT8z4Kjji7c0leZhTsnCO7GfsssBQkjrjEYObXGZu1sRvMnyRRfq9vyx6T73S7TH6
-	 5GT984t+IxUaOEkK01/Ro3hVblR94JpwJNci2UQp5/E8OiM45zn9eJRRUFQIXhMOOI
-	 sNx0Xy/exHWBGqu8Q4E/iYDiTcpLYOgeD04ZfXo0=
+	b=vbg6WOSD3FY+teuFSZXum0D0CVtVb9+xv0aco8yJJCUZrdf2VzCC4RrIhCol+z6RQ
+	 1yCkHQxSuw/84s5sBP7yvV7u8TJAt1tHXsw69NIZLHIrVvsamycHLN/cFoVi7UeHpe
+	 n1Xq3uNJp6x16ZoUF3SuyJIawXcEgI1HZUOS2oL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Juergen Gross <jgross@suse.com>,
-	Paul Durrant <paul@xen.org>
-Subject: [PATCH 4.19 115/148] xen-netback: dont produce zero-size SKB frags
-Date: Mon, 22 Jan 2024 15:57:51 -0800
-Message-ID: <20240122235717.127396423@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 4.19 116/148] binder: fix race between mmput() and do_exit()
+Date: Mon, 22 Jan 2024 15:57:52 -0800
+Message-ID: <20240122235717.175173531@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -51,106 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit c7ec4f2d684e17d69bbdd7c4324db0ef5daac26a upstream.
+commit 9a9ab0d963621d9d12199df9817e66982582d5a5 upstream.
 
-While frontends may submit zero-size requests (wasting a precious slot),
-core networking code as of at least 3ece782693c4b ("sock: skb_copy_ubufs
-support for compound pages") can't deal with SKBs when they have all
-zero-size fragments. Respond to empty requests right when populating
-fragments; all further processing is fragment based and hence won't
-encounter these empty requests anymore.
+Task A calls binder_update_page_range() to allocate and insert pages on
+a remote address space from Task B. For this, Task A pins the remote mm
+via mmget_not_zero() first. This can race with Task B do_exit() and the
+final mmput() refcount decrement will come from Task A.
 
-In a way this should have been that way from the beginning: When no data
-is to be transferred for a particular request, there's not even a point
-in validating the respective grant ref. That's no different from e.g.
-passing NULL into memcpy() when at the same time the size is 0.
+  Task A            | Task B
+  ------------------+------------------
+  mmget_not_zero()  |
+                    |  do_exit()
+                    |    exit_mm()
+                    |      mmput()
+  mmput()           |
+    exit_mmap()     |
+      remove_vma()  |
+        fput()      |
 
-This is XSA-448 / CVE-2023-46838.
+In this case, the work of ____fput() from Task B is queued up in Task A
+as TWA_RESUME. So in theory, Task A returns to userspace and the cleanup
+work gets executed. However, Task A instead sleep, waiting for a reply
+from Task B that never comes (it's dead).
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Paul Durrant <paul@xen.org>
+This means the binder_deferred_release() is blocked until an unrelated
+binder event forces Task A to go back to userspace. All the associated
+death notifications will also be delayed until then.
+
+In order to fix this use mmput_async() that will schedule the work in
+the corresponding mm->async_put_work WQ instead of Task A.
+
+Fixes: 457b9a6f09f0 ("Staging: android: add binder driver")
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Link: https://lore.kernel.org/r/20231201172212.1813387-4-cmllamas@google.com
+[cmllamas: fix trivial conflict with missing d8ed45c5dcd4.]
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/xen-netback/netback.c |   44 ++++++++++++++++++++++++++++++++------
- 1 file changed, 38 insertions(+), 6 deletions(-)
+ drivers/android/binder_alloc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/xen-netback/netback.c
-+++ b/drivers/net/xen-netback/netback.c
-@@ -456,12 +456,25 @@ static void xenvif_get_requests(struct x
+--- a/drivers/android/binder_alloc.c
++++ b/drivers/android/binder_alloc.c
+@@ -290,7 +290,7 @@ static int binder_update_page_range(stru
  	}
- 
- 	for (shinfo->nr_frags = 0; nr_slots > 0 && shinfo->nr_frags < MAX_SKB_FRAGS;
--	     shinfo->nr_frags++, gop++, nr_slots--) {
-+	     nr_slots--) {
-+		if (unlikely(!txp->size)) {
-+			unsigned long flags;
-+
-+			spin_lock_irqsave(&queue->response_lock, flags);
-+			make_tx_response(queue, txp, 0, XEN_NETIF_RSP_OKAY);
-+			push_tx_responses(queue);
-+			spin_unlock_irqrestore(&queue->response_lock, flags);
-+			++txp;
-+			continue;
-+		}
-+
- 		index = pending_index(queue->pending_cons++);
- 		pending_idx = queue->pending_ring[index];
- 		xenvif_tx_create_map_op(queue, pending_idx, txp,
- 				        txp == first ? extra_count : 0, gop);
- 		frag_set_pending_idx(&frags[shinfo->nr_frags], pending_idx);
-+		++shinfo->nr_frags;
-+		++gop;
- 
- 		if (txp == first)
- 			txp = txfrags;
-@@ -474,20 +487,39 @@ static void xenvif_get_requests(struct x
- 		shinfo = skb_shinfo(nskb);
- 		frags = shinfo->frags;
- 
--		for (shinfo->nr_frags = 0; shinfo->nr_frags < nr_slots;
--		     shinfo->nr_frags++, txp++, gop++) {
-+		for (shinfo->nr_frags = 0; shinfo->nr_frags < nr_slots; ++txp) {
-+			if (unlikely(!txp->size)) {
-+				unsigned long flags;
-+
-+				spin_lock_irqsave(&queue->response_lock, flags);
-+				make_tx_response(queue, txp, 0,
-+						 XEN_NETIF_RSP_OKAY);
-+				push_tx_responses(queue);
-+				spin_unlock_irqrestore(&queue->response_lock,
-+						       flags);
-+				continue;
-+			}
-+
- 			index = pending_index(queue->pending_cons++);
- 			pending_idx = queue->pending_ring[index];
- 			xenvif_tx_create_map_op(queue, pending_idx, txp, 0,
- 						gop);
- 			frag_set_pending_idx(&frags[shinfo->nr_frags],
- 					     pending_idx);
-+			++shinfo->nr_frags;
-+			++gop;
- 		}
- 
--		skb_shinfo(skb)->frag_list = nskb;
--	} else if (nskb) {
-+		if (shinfo->nr_frags) {
-+			skb_shinfo(skb)->frag_list = nskb;
-+			nskb = NULL;
-+		}
-+	}
-+
-+	if (nskb) {
- 		/* A frag_list skb was allocated but it is no longer needed
--		 * because enough slots were converted to copy ops above.
-+		 * because enough slots were converted to copy ops above or some
-+		 * were empty.
- 		 */
- 		kfree_skb(nskb);
+ 	if (mm) {
+ 		up_read(&mm->mmap_sem);
+-		mmput(mm);
++		mmput_async(mm);
  	}
+ 	return 0;
+ 
+@@ -325,7 +325,7 @@ err_page_ptr_cleared:
+ err_no_vma:
+ 	if (mm) {
+ 		up_read(&mm->mmap_sem);
+-		mmput(mm);
++		mmput_async(mm);
+ 	}
+ 	return vma ? -ENOMEM : -ESRCH;
+ }
 
 
