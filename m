@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294B75BAFD;
-	Tue, 23 Jan 2024 01:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25955BAD4;
+	Tue, 23 Jan 2024 01:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974363; cv=none; b=bXhlvI83zUz6hkGedaEXz9lpoz55Wtkz7IuXnEuFauzDikq9bSmKLBT6Abn4DlC09ZlKZnu9l8xAbqLdUsa8hwDswVovbhhJ9pt9KdJlprJ1UR50EsftDXVSVtwy6/npAChIkKolekt+f51+t80c04d+kPnZtnaDkT7NG01p5zc=
+	t=1705974364; cv=none; b=tD/ylZjt3NamB+/WBAarG6tS6WeSUzK8S9tH2471eH7E6JUIBdLcWbEmGvDIixvFzy9aweWmD/E4lLDIYFxiqmvnSRBBDPSMkNQvxj4hetBSKGuLFyON8pCM1OuHlzWfZcvehqK8+bdSj5GdqpTNT/gjDsRfSELtua/nNKoFr5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974363; c=relaxed/simple;
-	bh=I0nF9wzn4Nb51WINtjz0iYi8eTKxAZjirIjiEJveHk4=;
+	s=arc-20240116; t=1705974364; c=relaxed/simple;
+	bh=DqkzRrHPS9pB+wG0rsY1MDW6bWvXJLHzF254yDG+21I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GB2xDciZEfgExX9XCGb7hV+ptphZEZ/EL0/moGq3bPH8C8Kw3tBoleLUm1rk+B7mRNBmOQce101ex3TXTeEHdQ+hbwZBGAgcStcwb5J41qMB/F6xFpN1F2kUb1NNo8WaDvWjH2jXc0ZjnOvFQv5WoSyegoJvjMF8m1IZ9kHqwNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkwsnuBl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=snxCJsWuEjj8lCkm7DQNbmC11AreXPaSOGZ8nza7CXVN++fd6R3UPXrHrGSZNNFl0ozxdUAKt4M6rh5S/YYTgWybJRjAnoKIcbk8O4/Bol/4JHMvDBVAjJgvAR4harmWDPI+w7bU/+8cyMOIFM6qjc0npNjVmI7GDYVTWXtE1SQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVh5rRJW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkwsnuBl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D00C43390;
-	Tue, 23 Jan 2024 01:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVh5rRJW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F361C433F1;
+	Tue, 23 Jan 2024 01:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974362;
-	bh=I0nF9wzn4Nb51WINtjz0iYi8eTKxAZjirIjiEJveHk4=;
+	s=korg; t=1705974363;
+	bh=DqkzRrHPS9pB+wG0rsY1MDW6bWvXJLHzF254yDG+21I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XkwsnuBlyC81SlYWbAsvk69SW44wVScdQZMkBwMEE+3Kp8zEWQUh4ZjxiaAwN8gUl
-	 NQnCkQKM3rWqnEW3+PQUaeDNKwn7gRJnljJqnbvHFz6xoOFndKR3BMQQIapny5Whe6
-	 oIyviGHg/pX0UhwmRmgdrw1vQz8vmxVktjGNXcuo=
+	b=UVh5rRJWitrzbc1PBzeK8V/dG3YInvyM82fcHx/vC8BwfWj8IEnVQMlYE+0zdIrxD
+	 2dNExCKord8SvAo8weVD7Ydx1i6OtYUM75b1+Np5iwzdvfBmEV7Xk8zVEgNry2XWQm
+	 7h9/4wLNPHnsncrOMD0TGdIIxrgEaKgeNkgWOR24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangyangxin <wangyangxin1@huawei.com>,
-	Gonglei <arei.gonglei@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 066/583] crypto: virtio - Wait for tasklet to complete on device remove
-Date: Mon, 22 Jan 2024 15:51:57 -0800
-Message-ID: <20240122235814.164404090@linuxfoundation.org>
+Subject: [PATCH 5.15 175/374] ARM: davinci: always select CONFIG_CPU_ARM926T
+Date: Mon, 22 Jan 2024 15:57:11 -0800
+Message-ID: <20240122235750.728789451@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: wangyangxin <wangyangxin1@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 67cc511e8d436456cc98033e6d4ba83ebfc8e672 ]
+[ Upstream commit 40974ee421b4d1fc74ac733d86899ce1b83d8f65 ]
 
-The scheduled tasklet needs to be executed on device remove.
+The select was lost by accident during the multiplatform conversion.
+Any davinci-only
 
-Fixes: fed93fb62e05 ("crypto: virtio - Handle dataq logic with tasklet")
-Signed-off-by: wangyangxin <wangyangxin1@huawei.com>
-Signed-off-by: Gonglei <arei.gonglei@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+arm-linux-gnueabi-ld: arch/arm/mach-davinci/sleep.o: in function `CACHE_FLUSH':
+(.text+0x168): undefined reference to `arm926_flush_kern_cache_all'
+
+Fixes: f962396ce292 ("ARM: davinci: support multiplatform build for ARM v5")
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20240108110055.1531153-1-arnd@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/virtio/virtio_crypto_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm/mach-davinci/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/virtio/virtio_crypto_core.c b/drivers/crypto/virtio/virtio_crypto_core.c
-index 428d76562447..b909c6a2bf1c 100644
---- a/drivers/crypto/virtio/virtio_crypto_core.c
-+++ b/drivers/crypto/virtio/virtio_crypto_core.c
-@@ -500,12 +500,15 @@ static void virtcrypto_free_unused_reqs(struct virtio_crypto *vcrypto)
- static void virtcrypto_remove(struct virtio_device *vdev)
- {
- 	struct virtio_crypto *vcrypto = vdev->priv;
-+	int i;
- 
- 	dev_info(&vdev->dev, "Start virtcrypto_remove.\n");
- 
- 	flush_work(&vcrypto->config_work);
- 	if (virtcrypto_dev_started(vcrypto))
- 		virtcrypto_dev_stop(vcrypto);
-+	for (i = 0; i < vcrypto->max_data_queues; i++)
-+		tasklet_kill(&vcrypto->data_vq[i].done_task);
- 	virtio_reset_device(vdev);
- 	virtcrypto_free_unused_reqs(vcrypto);
- 	virtcrypto_clear_crypto_engines(vcrypto);
+diff --git a/arch/arm/mach-davinci/Kconfig b/arch/arm/mach-davinci/Kconfig
+index 1d3aef84287d..01684347da9b 100644
+--- a/arch/arm/mach-davinci/Kconfig
++++ b/arch/arm/mach-davinci/Kconfig
+@@ -3,6 +3,7 @@
+ menuconfig ARCH_DAVINCI
+ 	bool "TI DaVinci"
+ 	depends on ARCH_MULTI_V5
++	select CPU_ARM926T
+ 	select DAVINCI_TIMER
+ 	select ZONE_DMA
+ 	select PM_GENERIC_DOMAINS if PM
 -- 
 2.43.0
 
