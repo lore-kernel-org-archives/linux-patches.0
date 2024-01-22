@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8AD7A705;
-	Tue, 23 Jan 2024 02:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6EB77F2F;
+	Tue, 23 Jan 2024 02:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975549; cv=none; b=i8lFQ0qU/LVaFc/st6Yd1v5IoMAppq9gfcH/z07ZPLxM/jmt+zZ+T0yRY7CrbjN4FmIeGQ4PTSj70sQY4lS3U+776Tcmz7eZ8GWKbkaXkYu5fG0riqhCGuG5uceRjLQIqB90RgwDGbf6pqtSrV5dDBrZ7F69KUcCbbNWvXAcUSY=
+	t=1705975550; cv=none; b=gQRmGpNECCC4ZUPuU+6IbQ7AQi5NuKSn5bnig4V0WfqvEOChi7XVnBe+tOIWv1IiyBHPe7CJljS+hqLGSUGE2sVi5kkppq/EPKEGqdrokBeeIzFJL0zSc1qfTrZ8kraaBxbwE4f4teY9NDDlzBmXx5j46ZrwdBQblisFs/B8b4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975549; c=relaxed/simple;
-	bh=evH1+6OjTDYSW0MtpfK18ZcUyKR3SzPc6zwBiFR4Kzw=;
+	s=arc-20240116; t=1705975550; c=relaxed/simple;
+	bh=e+g0t/ecXvpNp1wtslf7PyYOvhwRqeS9zLQFEpdr+S8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9WLXyRB7728mBkDj3dsazPLv+Ti3WUr2An9ty03SXzCkRnwJ/AlvdPVx24Vpif95INJPLdEd1vlLLPLMEyQPAR9Nd+uIToJuNfehTi1WRLVulnp8kx4pu9xgevhAgCOAn0MlErmx/impqhPK66wExS6qC0y7ZoM6nR8kBN8wrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylVjtb2L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=seQFd75J9cMWnerygXW636hTKOqtQK5r1U2tujjcuPIEQpJY8OL7uBfqpbpHaEoOnmPF+qF86Vj612AQEZd8CWJrNITrX/lJDXaz9yekK+JLuynHLLdYI3Npeg2KYE+U6WHDeYDJmY6zQwDOT2LGyelCim6V5NQMIYYwiNmFScM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05GKGveu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylVjtb2L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B2DC433B1;
-	Tue, 23 Jan 2024 02:05:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05GKGveu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F48C433F1;
+	Tue, 23 Jan 2024 02:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705975549;
-	bh=evH1+6OjTDYSW0MtpfK18ZcUyKR3SzPc6zwBiFR4Kzw=;
+	bh=e+g0t/ecXvpNp1wtslf7PyYOvhwRqeS9zLQFEpdr+S8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylVjtb2LpVY39M6lb97YEK7RjBm746XJxMIBzc6a6uw+W5jF3jH9/p4KI89gB5W0v
-	 waFHS573ZjnduR18plalNZoScn8d4DpZFtIF9kd1P6SQmUAvgtmtT9/AspjaURf/LB
-	 13KU1YPYvlhUIbQdrVckTH4/lFPgxzGyylUnc4kw=
+	b=05GKGveutuObhUcK0cQ6NR4khOrt39+HyyLnYEVW3RVH41e8WXFvFNQWiQqWqE47X
+	 oR71otM5b8EtdS4Ue9e8TM/2JtXZCBEz+hKnTxsat7KoHC+GPBeRVRBOxFw7V4apgj
+	 xGNqzA6CSECD6rKaxqvebgVvBtf5PaE6PH4Maavc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 500/583] power: supply: Fix null pointer dereference in smb2_probe
-Date: Mon, 22 Jan 2024 15:59:11 -0800
-Message-ID: <20240122235827.335886353@linuxfoundation.org>
+Subject: [PATCH 6.6 501/583] vdpa: Fix an error handling path in eni_vdpa_probe()
+Date: Mon, 22 Jan 2024 15:59:12 -0800
+Message-ID: <20240122235827.370194618@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,41 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 88f04bc3e737155e13caddf0ba8ed19db87f0212 ]
+[ Upstream commit c1b9f2c66eed3261db76cccd8a22a9affae8dcbf ]
 
-devm_kasprintf and devm_kzalloc return a pointer to dynamically
-allocated memory which can be NULL upon failure.
+After a successful vp_legacy_probe() call, vp_legacy_remove() should be
+called in the error handling path, as already done in the remove function.
 
-Fixes: 8648aeb5d7b7 ("power: supply: add Qualcomm PMI8998 SMB2 Charger driver")
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Link: https://lore.kernel.org/r/20231124075021.1335289-1-chentao@kylinos.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Add the missing call.
+
+Fixes: e85087beedca ("eni_vdpa: add vDPA driver for Alibaba ENI")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Message-Id: <a7b0ef1eabd081f1c7c894e9b11de01678e85dee.1666293559.git.christophe.jaillet@wanadoo.fr>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_pmi8998_charger.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/vdpa/alibaba/eni_vdpa.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/qcom_pmi8998_charger.c b/drivers/power/supply/qcom_pmi8998_charger.c
-index 10f4dd0caca1..22c7c0e7c522 100644
---- a/drivers/power/supply/qcom_pmi8998_charger.c
-+++ b/drivers/power/supply/qcom_pmi8998_charger.c
-@@ -973,10 +973,14 @@ static int smb2_probe(struct platform_device *pdev)
- 	supply_config.of_node = pdev->dev.of_node;
+diff --git a/drivers/vdpa/alibaba/eni_vdpa.c b/drivers/vdpa/alibaba/eni_vdpa.c
+index 5a09a09cca70..cce3d1837104 100644
+--- a/drivers/vdpa/alibaba/eni_vdpa.c
++++ b/drivers/vdpa/alibaba/eni_vdpa.c
+@@ -497,7 +497,7 @@ static int eni_vdpa_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	if (!eni_vdpa->vring) {
+ 		ret = -ENOMEM;
+ 		ENI_ERR(pdev, "failed to allocate virtqueues\n");
+-		goto err;
++		goto err_remove_vp_legacy;
+ 	}
  
- 	desc = devm_kzalloc(chip->dev, sizeof(smb2_psy_desc), GFP_KERNEL);
-+	if (!desc)
-+		return -ENOMEM;
- 	memcpy(desc, &smb2_psy_desc, sizeof(smb2_psy_desc));
- 	desc->name =
- 		devm_kasprintf(chip->dev, GFP_KERNEL, "%s-charger",
- 			       (const char *)device_get_match_data(chip->dev));
-+	if (!desc->name)
-+		return -ENOMEM;
+ 	for (i = 0; i < eni_vdpa->queues; i++) {
+@@ -509,11 +509,13 @@ static int eni_vdpa_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	ret = vdpa_register_device(&eni_vdpa->vdpa, eni_vdpa->queues);
+ 	if (ret) {
+ 		ENI_ERR(pdev, "failed to register to vdpa bus\n");
+-		goto err;
++		goto err_remove_vp_legacy;
+ 	}
  
- 	chip->chg_psy =
- 		devm_power_supply_register(chip->dev, desc, &supply_config);
+ 	return 0;
+ 
++err_remove_vp_legacy:
++	vp_legacy_remove(&eni_vdpa->ldev);
+ err:
+ 	put_device(&eni_vdpa->vdpa.dev);
+ 	return ret;
 -- 
 2.43.0
 
