@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D236860B8C;
-	Tue, 23 Jan 2024 00:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB414BAA4;
+	Tue, 23 Jan 2024 00:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970714; cv=none; b=KTgIIysRc546gtkqixa/uLkhAThIRrefp+pVb15eqDKRZINDumNeFoZXVKHds/F+s3tSyhKJqKWq8ByRKZxu7+8yrO4kZ6Grx4EkG2WQJEo2xdcqHATh94oxow/+YL/eYGwt4mlmESHtcsM9sU2aIoFnVPdSj91nuP4+N3AM1VM=
+	t=1705970717; cv=none; b=OvKBjGi5tEiqJXqp7w3oJVVHgEJJQFPHFd/c/Zkmr0wfHGM0PUiagTlFvOzIYoBaKI5/s4OYrBhD15BqWSfkmN1oaHpoTAI7ZtNOVMj4vsMbUj47EFg/mckRaA0UpdcNAJcKAmCtosuElKsS0BlIsDT332e2v5G6pZw9XWvXLUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970714; c=relaxed/simple;
-	bh=vg4LlBN3/gGjvY6M9NPj5CXMxmUHgbv1uINwrZNOqcY=;
+	s=arc-20240116; t=1705970717; c=relaxed/simple;
+	bh=CAkwx+q5kBIKnaUrqSopT0afF6VDWoX/P4zeGwvsgJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jo18Fkgr+izTGhiMwsIQmxvH1rqCVIdZ38gnWb0OuDSXkeLuCBoJclUM4zQxE35r28mq+8bJD/PF+AAuMiduB+xRTeEUOrLzBQfrSQa6slpW2eTDygCLdglytjI5Xzx6PKXgLwmNoggPod9iGnjJf0mh8z8uSnyaoonDkNv8LMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcvQAZoO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L0SOFuFL2ot4TMfO7+QzO+zosD8J+thE1p0GbqAPSRIWq8yJDKeVPwlYPkY+WRsJjnKA6t0bm9Gz9tqswlx+BiDkQnH4WbuMBkYAE3NJ5i+LVEh0tZ0UeYrMu1QtfcqxmBdT4U0i9Q1/BMxUQSI+X5x6IpVIcGmfnoxM0j20Oxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhgjhBKA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcvQAZoO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0AAC433F1;
-	Tue, 23 Jan 2024 00:45:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhgjhBKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70078C433C7;
+	Tue, 23 Jan 2024 00:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970714;
-	bh=vg4LlBN3/gGjvY6M9NPj5CXMxmUHgbv1uINwrZNOqcY=;
+	s=korg; t=1705970717;
+	bh=CAkwx+q5kBIKnaUrqSopT0afF6VDWoX/P4zeGwvsgJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qcvQAZoOSSJTuL5qhXK701m8/Kf0wMvR0VOvLjTNuaAi0mZw42+pBr0sSToG31i35
-	 his/12k0mzU8YAUMYZ3MpmMWw4b/R20RCM6eHEulPbMkyBPD82/E7gootxi1NWVJgU
-	 3GvbG/XEshMkqA2Fjnm3XQCDi03qDoJFeVEkGp7k=
+	b=zhgjhBKA9hm+sBoUIUr6sg8ZnzsHeKbsQaRt2UW7gwXEiGKiurkH6qqgCQLoAoXoQ
+	 aGXYhrMncOKsnsyAZe3OJhOSzJb3TrePVNAin47erO4rv/fdtTJl+sDtF8aOnQuVO6
+	 9Zjx/saytKE5rmAJoHNBVNm+fpCscbP8m4Wzl4do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 005/286] debugfs: fix automount d_fsdata usage
-Date: Mon, 22 Jan 2024 15:55:11 -0800
-Message-ID: <20240122235732.214131613@linuxfoundation.org>
+Subject: [PATCH 6.1 098/417] bpf: fix check for attempt to corrupt spilled pointer
+Date: Mon, 22 Jan 2024 15:54:26 -0800
+Message-ID: <20240122235755.088199771@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,151 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 0ed04a1847a10297595ac24dc7d46b35fb35f90a ]
+[ Upstream commit ab125ed3ec1c10ccc36bc98c7a4256ad114a3dae ]
 
-debugfs_create_automount() stores a function pointer in d_fsdata,
-but since commit 7c8d469877b1 ("debugfs: add support for more
-elaborate ->d_fsdata") debugfs_release_dentry() will free it, now
-conditionally on DEBUGFS_FSDATA_IS_REAL_FOPS_BIT, but that's not
-set for the function pointer in automount. As a result, removing
-an automount dentry would attempt to free the function pointer.
-Luckily, the only user of this (tracing) never removes it.
+When register is spilled onto a stack as a 1/2/4-byte register, we set
+slot_type[BPF_REG_SIZE - 1] (plus potentially few more below it,
+depending on actual spill size). So to check if some stack slot has
+spilled register we need to consult slot_type[7], not slot_type[0].
 
-Nevertheless, it's safer if we just handle the fsdata in one way,
-namely either DEBUGFS_FSDATA_IS_REAL_FOPS_BIT or allocated. Thus,
-change the automount to allocate it, and use the real_fops in the
-data to indicate whether or not automount is filled, rather than
-adding a type tag. At least for now this isn't actually needed,
-but the next changes will require it.
+To avoid the need to remember and double-check this in the future, just
+use is_spilled_reg() helper.
 
-Also check in debugfs_file_get() that it gets only called
-on regular files, just to make things clearer.
-
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 27113c59b6d0 ("bpf: Check the other end of slot_type for STACK_SPILL")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20231205184248.1502704-4-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/debugfs/file.c     |  8 ++++++++
- fs/debugfs/inode.c    | 27 ++++++++++++++++++++-------
- fs/debugfs/internal.h | 10 ++++++++--
- 3 files changed, 36 insertions(+), 9 deletions(-)
+ kernel/bpf/verifier.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
-index 42bab9270e7d..9c0aadedfbff 100644
---- a/fs/debugfs/file.c
-+++ b/fs/debugfs/file.c
-@@ -84,6 +84,14 @@ int debugfs_file_get(struct dentry *dentry)
- 	struct debugfs_fsdata *fsd;
- 	void *d_fsd;
- 
-+	/*
-+	 * This could only happen if some debugfs user erroneously calls
-+	 * debugfs_file_get() on a dentry that isn't even a file, let
-+	 * them know about it.
-+	 */
-+	if (WARN_ON(!d_is_reg(dentry)))
-+		return -EINVAL;
-+
- 	d_fsd = READ_ONCE(dentry->d_fsdata);
- 	if (!((unsigned long)d_fsd & DEBUGFS_FSDATA_IS_REAL_FOPS_BIT)) {
- 		fsd = d_fsd;
-diff --git a/fs/debugfs/inode.c b/fs/debugfs/inode.c
-index f47f0a7d2c3b..d04930c199cb 100644
---- a/fs/debugfs/inode.c
-+++ b/fs/debugfs/inode.c
-@@ -210,17 +210,19 @@ static const struct super_operations debugfs_super_operations = {
- 
- static void debugfs_release_dentry(struct dentry *dentry)
- {
--	void *fsd = dentry->d_fsdata;
-+	struct debugfs_fsdata *fsd = dentry->d_fsdata;
- 
--	if (!((unsigned long)fsd & DEBUGFS_FSDATA_IS_REAL_FOPS_BIT))
--		kfree(dentry->d_fsdata);
-+	if ((unsigned long)fsd & DEBUGFS_FSDATA_IS_REAL_FOPS_BIT)
-+		return;
-+
-+	kfree(fsd);
- }
- 
- static struct vfsmount *debugfs_automount(struct path *path)
- {
--	debugfs_automount_t f;
--	f = (debugfs_automount_t)path->dentry->d_fsdata;
--	return f(path->dentry, d_inode(path->dentry)->i_private);
-+	struct debugfs_fsdata *fsd = path->dentry->d_fsdata;
-+
-+	return fsd->automount(path->dentry, d_inode(path->dentry)->i_private);
- }
- 
- static const struct dentry_operations debugfs_dops = {
-@@ -598,13 +600,23 @@ struct dentry *debugfs_create_automount(const char *name,
- 					void *data)
- {
- 	struct dentry *dentry = start_creating(name, parent);
-+	struct debugfs_fsdata *fsd;
- 	struct inode *inode;
- 
- 	if (IS_ERR(dentry))
- 		return dentry;
- 
-+	fsd = kzalloc(sizeof(*fsd), GFP_KERNEL);
-+	if (!fsd) {
-+		failed_creating(dentry);
-+		return ERR_PTR(-ENOMEM);
-+	}
-+
-+	fsd->automount = f;
-+
- 	if (!(debugfs_allow & DEBUGFS_ALLOW_API)) {
- 		failed_creating(dentry);
-+		kfree(fsd);
- 		return ERR_PTR(-EPERM);
- 	}
- 
-@@ -612,13 +624,14 @@ struct dentry *debugfs_create_automount(const char *name,
- 	if (unlikely(!inode)) {
- 		pr_err("out of free dentries, can not create automount '%s'\n",
- 		       name);
-+		kfree(fsd);
- 		return failed_creating(dentry);
- 	}
- 
- 	make_empty_dir_inode(inode);
- 	inode->i_flags |= S_AUTOMOUNT;
- 	inode->i_private = data;
--	dentry->d_fsdata = (void *)f;
-+	dentry->d_fsdata = fsd;
- 	/* directory inodes start off with i_nlink == 2 (for "." entry) */
- 	inc_nlink(inode);
- 	d_instantiate(dentry, inode);
-diff --git a/fs/debugfs/internal.h b/fs/debugfs/internal.h
-index 92af8ae31313..f7c489b5a368 100644
---- a/fs/debugfs/internal.h
-+++ b/fs/debugfs/internal.h
-@@ -17,8 +17,14 @@ extern const struct file_operations debugfs_full_proxy_file_operations;
- 
- struct debugfs_fsdata {
- 	const struct file_operations *real_fops;
--	refcount_t active_users;
--	struct completion active_users_drained;
-+	union {
-+		/* automount_fn is used when real_fops is NULL */
-+		debugfs_automount_t automount;
-+		struct {
-+			refcount_t active_users;
-+			struct completion active_users_drained;
-+		};
-+	};
- };
- 
- /*
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 024a2393613f..adadf8546270 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -3284,7 +3284,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
+ 	 * so it's aligned access and [off, off + size) are within stack limits
+ 	 */
+ 	if (!env->allow_ptr_leaks &&
+-	    state->stack[spi].slot_type[0] == STACK_SPILL &&
++	    is_spilled_reg(&state->stack[spi]) &&
+ 	    size != BPF_REG_SIZE) {
+ 		verbose(env, "attempt to corrupt spilled pointer on stack\n");
+ 		return -EACCES;
 -- 
 2.43.0
 
