@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEEF6BB56;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E146BB56;
 	Tue, 23 Jan 2024 02:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975390; cv=none; b=RtSVooZgTdE6NLi0D8zhTS5dIA2HLNVKdAGsFygNxk2B0i5C5g7LvyE+2sXYBmiHDN/o0tj+l8hbnxb75/lo8/o1UzTa2DU1mk/DrRwRuP+lt0XuQ2Y30kT5kKXvOAeMBAq5rfAI5MHjIdmMwWf/BX87nc1Ae5+4El0uI4ba17o=
+	t=1705975391; cv=none; b=GXxVlKcKFI+h1OgFzdo/+d3/WFCVjzoT6mLPc8QsLrVAPqLG2u0iOu+RTt7tFIWW+9UUFICwpXd5ossopU9gqlF3tzyV3OXX6UxDDI57VkIqbhb5Ofaffv7hsgblime5jfHKnIKUhT/v0ZJvVBCb5DqUsf0P9bYyX7Fs1uQOqmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975390; c=relaxed/simple;
-	bh=oE46ogXbzCGExEnS1Rr9T3UloIPdyLt4Y+7xein2BdU=;
+	s=arc-20240116; t=1705975391; c=relaxed/simple;
+	bh=3gSlDXo+f3JnD0JXd+zsJZ7Obl547L4QKXVbZxy1PSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tOoQVBxxt9/clir/7vvjXc3M/RQ1N0w7QPDpqa/FfDzYYqcoC6X3s6fWRtou/tDHwjBoVaN0Xg0seHesH3peefNGZhLk5DrYqO71yqbPERJI7GRAASJptWJwVoaugeaGAHouPn5epTYVACXoFWbPyDp8cbD14xMWS6Hkm7mGhyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2aMU35N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ax7u0J42hp/HehJt41haxjgmfzVrd4Z5M0YhPHXOUAenZQKG2MrD1RZMbswn+EYl3+qbaoWjTpaW9sGyC47k71PJe0y2f6VBfwUaf+87cqMT5X4AJfElYP7A353U2ntyA22bzc0tIJ14ZoAvkVMscgMYfs+onl3OZMsUp+tDlFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXnuU6NV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2aMU35N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C550FC433A6;
-	Tue, 23 Jan 2024 02:03:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXnuU6NV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB461C433C7;
+	Tue, 23 Jan 2024 02:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975389;
-	bh=oE46ogXbzCGExEnS1Rr9T3UloIPdyLt4Y+7xein2BdU=;
+	s=korg; t=1705975390;
+	bh=3gSlDXo+f3JnD0JXd+zsJZ7Obl547L4QKXVbZxy1PSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o2aMU35Nc6TZodlbFBofN0kucjXGwcUDM/G2AVlG6adahOW/yj1GlNh2B2tuEYMd4
-	 tVs1WElllra0G4g59e1dP47yJ+y2mP8jTc9Y+P8KXBWHMje8Faq0TNJ6yMep6CYvzj
-	 pIcHrIjiNlc0jrWeFJOSQEw9phd0bBfp08KDhDDc=
+	b=bXnuU6NVWncVUreSdY6hOEa59IhxSP7ddszUMmhduF2u4dyp4D0URN/pzsZrw577C
+	 KNU6biAlP8bQPSdLNPVyKqtlgcFuFZy9PgVKPmWTdqHgKJqxRUlT1frArFNZkkYrbj
+	 vpgnQNWwc8UFhR0peWNwOyqU2YW9tua6CogSLIl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Maurer <mmaurer@google.com>,
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.6 350/583] rust: Ignore preserve-most functions
-Date: Mon, 22 Jan 2024 15:56:41 -0800
-Message-ID: <20240122235822.731854401@linuxfoundation.org>
+	Jay Cornwall <jay.cornwall@amd.com>,
+	Kaibo Ma <ent3rm4n@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 351/583] Revert "drm/amdkfd: Relocate TBA/TMA to opposite side of VM hole"
+Date: Mon, 22 Jan 2024 15:56:42 -0800
+Message-ID: <20240122235822.760979587@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,37 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Maurer <mmaurer@google.com>
+From: Kaibo Ma <ent3rm4n@gmail.com>
 
-commit bad098d76835c1379e1cf6afc935f8a7e050f83c upstream.
+commit 0f35b0a7b8fa402adbffa2565047cdcc4c480153 upstream.
 
-Neither bindgen nor Rust know about the preserve-most calling
-convention, and Clang describes it as unstable. Since we aren't using
-functions with this calling convention from Rust, blocklist them.
+That commit causes NULL pointer dereferences in dmesgs when
+running applications using ROCm, including clinfo, blender,
+and PyTorch, since v6.6.1. Revert it to fix blender again.
 
-These functions are only added to the build when list hardening is
-enabled, which is likely why others didn't notice this yet.
+This reverts commit 96c211f1f9ef82183493f4ceed4e347b52849149.
 
-Signed-off-by: Matthew Maurer <mmaurer@google.com>
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20231031201945.1412345-1-mmaurer@google.com
-[ Used Markdown for consistency with the other comments in the file. ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Closes: https://github.com/ROCm/ROCm/issues/2596
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2991
+Reviewed-by: Jay Cornwall <jay.cornwall@amd.com>
+Signed-off-by: Kaibo Ma <ent3rm4n@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/bindgen_parameters |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_flat_memory.c |   26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
---- a/rust/bindgen_parameters
-+++ b/rust/bindgen_parameters
-@@ -20,3 +20,7 @@
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_flat_memory.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_flat_memory.c
+@@ -330,12 +330,6 @@ static void kfd_init_apertures_vi(struct
+ 	pdd->gpuvm_limit =
+ 		pdd->dev->kfd->shared_resources.gpuvm_size - 1;
  
- # `seccomp`'s comment gets understood as a doctest
- --no-doc-comments
+-	/* dGPUs: the reserved space for kernel
+-	 * before SVM
+-	 */
+-	pdd->qpd.cwsr_base = SVM_CWSR_BASE;
+-	pdd->qpd.ib_base = SVM_IB_BASE;
+-
+ 	pdd->scratch_base = MAKE_SCRATCH_APP_BASE_VI();
+ 	pdd->scratch_limit = MAKE_SCRATCH_APP_LIMIT(pdd->scratch_base);
+ }
+@@ -345,18 +339,18 @@ static void kfd_init_apertures_v9(struct
+ 	pdd->lds_base = MAKE_LDS_APP_BASE_V9();
+ 	pdd->lds_limit = MAKE_LDS_APP_LIMIT(pdd->lds_base);
+ 
+-	pdd->gpuvm_base = PAGE_SIZE;
++        /* Raven needs SVM to support graphic handle, etc. Leave the small
++         * reserved space before SVM on Raven as well, even though we don't
++         * have to.
++         * Set gpuvm_base and gpuvm_limit to CANONICAL addresses so that they
++         * are used in Thunk to reserve SVM.
++         */
++        pdd->gpuvm_base = SVM_USER_BASE;
+ 	pdd->gpuvm_limit =
+ 		pdd->dev->kfd->shared_resources.gpuvm_size - 1;
+ 
+ 	pdd->scratch_base = MAKE_SCRATCH_APP_BASE_V9();
+ 	pdd->scratch_limit = MAKE_SCRATCH_APP_LIMIT(pdd->scratch_base);
+-
+-	/*
+-	 * Place TBA/TMA on opposite side of VM hole to prevent
+-	 * stray faults from triggering SVM on these pages.
+-	 */
+-	pdd->qpd.cwsr_base = pdd->dev->kfd->shared_resources.gpuvm_size;
+ }
+ 
+ int kfd_init_apertures(struct kfd_process *process)
+@@ -413,6 +407,12 @@ int kfd_init_apertures(struct kfd_proces
+ 					return -EINVAL;
+ 				}
+ 			}
 +
-+# These functions use the `__preserve_most` calling convention, which neither bindgen
-+# nor Rust currently understand, and which Clang currently declares to be unstable.
-+--blocklist-function __list_.*_report
++                        /* dGPUs: the reserved space for kernel
++                         * before SVM
++                         */
++                        pdd->qpd.cwsr_base = SVM_CWSR_BASE;
++                        pdd->qpd.ib_base = SVM_IB_BASE;
+ 		}
+ 
+ 		dev_dbg(kfd_device, "node id %u\n", id);
 
 
