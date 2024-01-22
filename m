@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA31E12BF3D;
-	Tue, 23 Jan 2024 00:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9F212BF3D;
+	Tue, 23 Jan 2024 00:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968933; cv=none; b=epaTsbsfgvCROm7W2EDUHKEdY4o9movnJKnf0E8t3qAnOKdXkKwhkQEjPUHZydjPEZesQm1/Bc+/itOiQ+veRafMU7jh83jF7SMFubYSfJpMPX1/qm+MXucBjVxIe8CjtdRcgMvQs96c9D9so22SQBXULVjddKvY4nTpV5q/f0U=
+	t=1705968935; cv=none; b=l8eUpfdPWPb8CoO6WXg6VeG9oTIgRti7z2gf3iTYid3ZArsb3qIx2qBYxuQVQjpy68iwgxE4KHUKfQzCLbzAxZZICL9gGIQust9FIyLRvU10DfPv9lPTuXhL66yCDL1hV+pqJYKvNq19S+mRRfcMHrKo0RbO1MWQdVBP1lBgMxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968933; c=relaxed/simple;
-	bh=0evbGtPBJAC/NYX2TypOanhOMlnoZ5TbFdE9Wa3sc5I=;
+	s=arc-20240116; t=1705968935; c=relaxed/simple;
+	bh=Al1aTldJ9bJZFZCq45/Ig4vl2wNwT2MJ4CPofb/F9SY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KhqvzaxvLmmT00DpWPKQG0n2SIJ1Ndfx3ED3uUDa3LyOnXA4qt2CNIxTS/0cnFPGAxMrtj8ZB8nICSOCB3zkUzktdAQvDizyqP42KX9LdSTsvIVE3bJ/jMzKf7XeQpnrXwEJMKt2/8TvC1A1LfmTpzpo0UasN82mLPshBOMNqFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HgfbHe9Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=py6v+6Kr5EChN1nNuxnv4vEe/qCbWWOMYsSOI+LRnMI/Zvr6k7h2by1Z8HsLcOAJsjeBBmjWhLi41akPEb+Umf0pgLXHoz68+qIM31qSpKhzvFjDfJCSYvgufkDC8Sn7foixYpmxK0S6B0KsQUmcmVdjBSBECnSdYdFfdEkmwCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GlZSV0bJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HgfbHe9Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2DE2C43390;
-	Tue, 23 Jan 2024 00:15:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GlZSV0bJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA46C433C7;
+	Tue, 23 Jan 2024 00:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968933;
-	bh=0evbGtPBJAC/NYX2TypOanhOMlnoZ5TbFdE9Wa3sc5I=;
+	s=korg; t=1705968935;
+	bh=Al1aTldJ9bJZFZCq45/Ig4vl2wNwT2MJ4CPofb/F9SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HgfbHe9YhEC5rJ+AlQgXpJWuNiWtaPWChLXZ95oHnr0rg2WKeHxlHQcetKbjWcgHU
-	 UbYdYms18GUdMVenwdwKKOqqfBG4y7EC4CRLo2Wfx6T9ml1x/XrcsxhseoCzm1yi4z
-	 GLLWfyBVZubb2oRw2JvuhjUQeQZTmnff/Fn2TK3E=
+	b=GlZSV0bJSwXDSN2rHrKs3VcqHzI2W9D2C0JYdeKHLpWvKYWaehLd+BSsLRVortSzR
+	 EYL6cSLUGM5yBXpyzroeshBuO9VauLTIfaf3ksC4KWszTXHiVzVY/LsUObUC6l5pjy
+	 VSUNoFcJFhJyFo7OQQ+L4Hg3JLNsLkQFryadpC/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Su Hui <suhui@nfschina.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 064/194] crypto: af_alg - Disallow multiple in-flight AIO requests
-Date: Mon, 22 Jan 2024 15:56:34 -0800
-Message-ID: <20240122235721.958237528@linuxfoundation.org>
+Subject: [PATCH 5.4 101/194] wifi: rtlwifi: rtl8192de: using calculate_bit_shift()
+Date: Mon, 22 Jan 2024 15:57:11 -0800
+Message-ID: <20240122235723.569347561@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -50,83 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 67b164a871af1d736f131fd6fe78a610909f06f3 ]
+[ Upstream commit b8b2baad2e652042cf8b6339939ac2f4e6f53de4 ]
 
-Having multiple in-flight AIO requests results in unpredictable
-output because they all share the same IV.  Fix this by only allowing
-one request at a time.
+Using calculate_bit_shift() to replace _rtl92d_phy_calculate_bit_shift().
+And fix the undefined bitwise shift behavior problem.
 
-Fixes: 83094e5e9e49 ("crypto: af_alg - add async support to algif_aead")
-Fixes: a596999b7ddf ("crypto: algif - change algif_skcipher to be asynchronous")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 7274a8c22980 ("rtlwifi: rtl8192de: Merge phy routines")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231219065739.1895666-8-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/af_alg.c         | 14 +++++++++++++-
- include/crypto/if_alg.h |  3 +++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ .../net/wireless/realtek/rtlwifi/rtl8192de/phy.c  | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/crypto/af_alg.c b/crypto/af_alg.c
-index 4a2e91baabde..bc96a4b21bec 100644
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -1029,9 +1029,13 @@ EXPORT_SYMBOL_GPL(af_alg_sendpage);
- void af_alg_free_resources(struct af_alg_async_req *areq)
- {
- 	struct sock *sk = areq->sk;
-+	struct af_alg_ctx *ctx;
- 
- 	af_alg_free_areq_sgls(areq);
- 	sock_kfree_s(sk, areq, areq->areqlen);
-+
-+	ctx = alg_sk(sk)->private;
-+	ctx->inflight = false;
- }
- EXPORT_SYMBOL_GPL(af_alg_free_resources);
- 
-@@ -1095,11 +1099,19 @@ EXPORT_SYMBOL_GPL(af_alg_poll);
- struct af_alg_async_req *af_alg_alloc_areq(struct sock *sk,
- 					   unsigned int areqlen)
- {
--	struct af_alg_async_req *areq = sock_kmalloc(sk, areqlen, GFP_KERNEL);
-+	struct af_alg_ctx *ctx = alg_sk(sk)->private;
-+	struct af_alg_async_req *areq;
-+
-+	/* Only one AIO request can be in flight. */
-+	if (ctx->inflight)
-+		return ERR_PTR(-EBUSY);
- 
-+	areq = sock_kmalloc(sk, areqlen, GFP_KERNEL);
- 	if (unlikely(!areq))
- 		return ERR_PTR(-ENOMEM);
- 
-+	ctx->inflight = true;
-+
- 	areq->areqlen = areqlen;
- 	areq->sk = sk;
- 	areq->last_rsgl = NULL;
-diff --git a/include/crypto/if_alg.h b/include/crypto/if_alg.h
-index c1a8d4a41bb1..f4ff7ae0128a 100644
---- a/include/crypto/if_alg.h
-+++ b/include/crypto/if_alg.h
-@@ -137,6 +137,7 @@ struct af_alg_async_req {
-  *			recvmsg is invoked.
-  * @init:		True if metadata has been sent.
-  * @len:		Length of memory allocated for this data structure.
-+ * @inflight:		Non-zero when AIO requests are in flight.
-  */
- struct af_alg_ctx {
- 	struct list_head tsgl_list;
-@@ -155,6 +156,8 @@ struct af_alg_ctx {
- 	bool init;
- 
- 	unsigned int len;
-+
-+	unsigned int inflight;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
+index 7ba2aeaf071f..fb9355b2f6be 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
+@@ -169,13 +169,6 @@ static const u8 channel_all[59] = {
+ 	157, 159, 161, 163, 165
  };
  
- int af_alg_register_type(const struct af_alg_type *type);
+-static u32 _rtl92d_phy_calculate_bit_shift(u32 bitmask)
+-{
+-	u32 i = ffs(bitmask);
+-
+-	return i ? i - 1 : 32;
+-}
+-
+ u32 rtl92d_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
+ {
+ 	struct rtl_priv *rtlpriv = rtl_priv(hw);
+@@ -198,7 +191,7 @@ u32 rtl92d_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
+ 	} else {
+ 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
+ 	}
+-	bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	returnvalue = (originalvalue & bitmask) >> bitshift;
+ 	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
+ 		 "BBR MASK=0x%x Addr[0x%x]=0x%x\n",
+@@ -230,7 +223,7 @@ void rtl92d_phy_set_bb_reg(struct ieee80211_hw *hw,
+ 					dbi_direct);
+ 		else
+ 			originalvalue = rtl_read_dword(rtlpriv, regaddr);
+-		bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
++		bitshift = calculate_bit_shift(bitmask);
+ 		data = ((originalvalue & (~bitmask)) | (data << bitshift));
+ 	}
+ 	if (rtlhal->during_mac1init_radioa || rtlhal->during_mac0init_radiob)
+@@ -318,7 +311,7 @@ u32 rtl92d_phy_query_rf_reg(struct ieee80211_hw *hw,
+ 		 regaddr, rfpath, bitmask);
+ 	spin_lock_irqsave(&rtlpriv->locks.rf_lock, flags);
+ 	original_value = _rtl92d_phy_rf_serial_read(hw, rfpath, regaddr);
+-	bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
+ 	spin_unlock_irqrestore(&rtlpriv->locks.rf_lock, flags);
+ 	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
+@@ -345,7 +338,7 @@ void rtl92d_phy_set_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
+ 		if (bitmask != RFREG_OFFSET_MASK) {
+ 			original_value = _rtl92d_phy_rf_serial_read(hw,
+ 				rfpath, regaddr);
+-			bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data = ((original_value & (~bitmask)) |
+ 				(data << bitshift));
+ 		}
 -- 
 2.43.0
 
