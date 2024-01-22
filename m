@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D6964CFA;
-	Tue, 23 Jan 2024 00:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B79657A3;
+	Tue, 23 Jan 2024 00:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971517; cv=none; b=JsUBdHHF19uEGsz/2/pPQJkIpeYa3ZMCdjGD8/qC8NG9qvnzo1iUxZE58Yu2Oon+3qt4Syxjwny4yud83I+EMLfzTzkLAT6tLF5MH410IvXHL0E5xSuswsLFnZZU8KMyAeujH0dKuJko32d+Ls1WXbPJJqRpW0B+5mdZz4Dgt+A=
+	t=1705971519; cv=none; b=DB/9T/B50AdoYSBUrI+Bs1wGz3kw9XEgYtD5G7XfoYF4xeH4TajJ1RoI0hdJXhQFg/N1sPrmkiJOfkqp1NlIY8feHbDRKqQF0eI7HLx23U8Xrf1KMdd0eVF11Scov3KuQoZDYUj3YCnvumTXttQdqbY80OxHezrIwDZGKd6dyHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971517; c=relaxed/simple;
-	bh=dDuGyux5xOgn63eU5LkWCt8Wi9pCQoZrF93N8COYXu0=;
+	s=arc-20240116; t=1705971519; c=relaxed/simple;
+	bh=DFuP1XSrQgoqOAXkA83ZFEQ2dR3XQF644d3364YxPaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uyVaxTiYorR5EVxJrRHMu46IglCr8eAwMJWkeMhfhb2oc1wswA5z5KbhVNRnt+T/AN5fON9KGnKSqP5/QYJeim9FT49ng7HzeEF0nT0tgPtWwDulSWVze+KNKiQqkJLc6kszzYvHhg50y4uMVZJIx3sJEZph55Fg9Jv816AKTTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5FikxKB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sQcX1exAqYZj4bLZW3wNiPYudFlSz1INySXOswZwH37Do+4F+LJX4VwW/Vi3MJvhnmp+YXLemqL1n0ZoUqbJcIWJqrHd4VIij88M/0WvThjmfifAtThHvKnb0I0jYTqWNg/Dhne3BPaHfb7cy14JmKbogiW6ATRqFHogXt1Xbww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5ORLyoU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5FikxKB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE24C433F1;
-	Tue, 23 Jan 2024 00:58:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5ORLyoU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487D1C433C7;
+	Tue, 23 Jan 2024 00:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971516;
-	bh=dDuGyux5xOgn63eU5LkWCt8Wi9pCQoZrF93N8COYXu0=;
+	s=korg; t=1705971518;
+	bh=DFuP1XSrQgoqOAXkA83ZFEQ2dR3XQF644d3364YxPaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5FikxKBBZYTI0Ijx882BdlEqEpn+XhmtUA+g40V6hCAlQiSI+R3KeZkBAf8ghUtf
-	 /+x48qX6RTpkuzpXPWWEH0Ug4PZsmkvoGu5OV1Q0yjhBYrwfBy2Guj2zXtscxkHCxb
-	 vkKftXpNhIyk/TtIQZjuZLnPQFnVQqh/sAVmMOFo=
+	b=L5ORLyoUD5YxAMFdG0xzYOKcQGiAYteF06po8uEZa2LhqyVDaGQx8wGtYUqN/YsaN
+	 EmglTPH112Gvr9YOoNo1q4mydhDwic6N6RK4bVYmEwW7Moz/rbsGePNl8uqxuCYDO2
+	 kTcTUtbVVjMaKeLxB8+4YB7V1nK7Ru479ZdS/Iwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: [PATCH 6.1 256/417] clocksource/drivers/timer-ti-dm: Fix make W=n kerneldoc warnings
-Date: Mon, 22 Jan 2024 15:57:04 -0800
-Message-ID: <20240122235800.747631416@linuxfoundation.org>
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 165/286] clk: qcom: gpucc-sm8150: Update the gpu_cc_pll1 config
+Date: Mon, 22 Jan 2024 15:57:51 -0800
+Message-ID: <20240122235738.531561699@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-commit b99a212a7697c542b460adaa15d4a98abf8223f0 upstream.
+[ Upstream commit 6ebd9a4f8b8d2b35cf965a04849c4ba763722f13 ]
 
-Kernel test robot reports of kerneldoc related warnings that happen with
-make W=n for "parameter or member not described".
+Update the test_ctl_hi_val and test_ctl_hi1_val of gpu_cc_pll1
+as per latest HW recommendation.
 
-These were caused by changes to function parameter names with
-earlier commits where the kerneldoc parts were not updated.
-
-Fixes: 49cd16bb573e ("clocksource/drivers/timer-ti-dm: Simplify register writes with dmtimer_write()")
-Fixes: a6e543f61531 ("clocksource/drivers/timer-ti-dm: Move struct omap_dm_timer fields to driver")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311040403.DzIiBuwU-lkp@intel.com/
-Closes: https://lore.kernel.org/oe-kbuild-all/202311040606.XL5OcR9O-lkp@intel.com/
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20231114072930.40615-1-tony@atomide.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0cef71f2ccc8 ("clk: qcom: Add graphics clock controller driver for SM8150")
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231122042814.4158076-1-quic_skakitap@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-ti-dm.c |    4 ++--
+ drivers/clk/qcom/gpucc-sm8150.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/clocksource/timer-ti-dm.c
-+++ b/drivers/clocksource/timer-ti-dm.c
-@@ -184,7 +184,7 @@ static inline u32 dmtimer_read(struct dm
-  * dmtimer_write - write timer registers in posted and non-posted mode
-  * @timer:      timer pointer over which write operation is to perform
-  * @reg:        lowest byte holds the register offset
-- * @value:      data to write into the register
-+ * @val:        data to write into the register
-  *
-  * The posted mode bit is encoded in reg. Note that in posted mode, the write
-  * pending bit must be checked. Otherwise a write on a register which has a
-@@ -937,7 +937,7 @@ static int omap_dm_timer_set_int_enable(
- 
- /**
-  * omap_dm_timer_set_int_disable - disable timer interrupts
-- * @timer:	pointer to timer handle
-+ * @cookie:	pointer to timer cookie
-  * @mask:	bit mask of interrupts to be disabled
-  *
-  * Disables the specified timer interrupts for a timer.
+diff --git a/drivers/clk/qcom/gpucc-sm8150.c b/drivers/clk/qcom/gpucc-sm8150.c
+index 27c40754b2c7..3d9b296a6e4a 100644
+--- a/drivers/clk/qcom/gpucc-sm8150.c
++++ b/drivers/clk/qcom/gpucc-sm8150.c
+@@ -38,8 +38,8 @@ static struct alpha_pll_config gpu_cc_pll1_config = {
+ 	.config_ctl_hi_val = 0x00002267,
+ 	.config_ctl_hi1_val = 0x00000024,
+ 	.test_ctl_val = 0x00000000,
+-	.test_ctl_hi_val = 0x00000002,
+-	.test_ctl_hi1_val = 0x00000000,
++	.test_ctl_hi_val = 0x00000000,
++	.test_ctl_hi1_val = 0x00000020,
+ 	.user_ctl_val = 0x00000000,
+ 	.user_ctl_hi_val = 0x00000805,
+ 	.user_ctl_hi1_val = 0x000000d0,
+-- 
+2.43.0
+
 
 
