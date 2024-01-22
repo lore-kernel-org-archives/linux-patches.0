@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAB16310D;
-	Tue, 23 Jan 2024 01:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B2962A12;
+	Tue, 23 Jan 2024 01:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974991; cv=none; b=uln8Hi8pte/Qo1dqCEYmXtDh+4BMzpbuq6cAK2eD1EOCWCuumiyufONdWQX2wS6Eq1rd074nQ5E52ahzB3YxTCpOF9CEKbMKUIh0BSUBNrvREPnEHXcslNzi+ixYNCWoFp7NWo/HhYK4Pg47DaWy9TxiRELEwYkuu4Q50hkowB0=
+	t=1705974992; cv=none; b=owDpWfJCjlaYBmKmzpDY0pvZCel/h6trz4nzDIlev9gVGF7urfE9MnrFo948QJQdGmZGYEhnTdwxmJncyNdIwDZPXKVu5aca0054zV7AGvdywpqnvkuG6xO1ONtGUNedJ0jWoh3wNBhksZ3rVi5jaVjAojZ2KGk8lYCTFTpiRtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974991; c=relaxed/simple;
-	bh=vZu2+7t5a3zobaLrnT6+RkAuQOf5oo1RWizYItctOM0=;
+	s=arc-20240116; t=1705974992; c=relaxed/simple;
+	bh=rlmEbisXTRme8IXNTqH/GIKH/zgH9XP3IrYp0UsVn7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kxtR0goxKY0bl9wlEBBQTWb5qKaBzLs9dTsr5V1aQspPdJL9YFwcgPnTJfZ17tiynQXO+HupVm4SnhWtESm/8Iepsq2EFKOe4gW30sOSPNs16RpKCYAHjy4SKrXpiX8q7JjwoI7XHA6k2lUfzKJIySO1g318tjrDtasfJFaigi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dz+1pOoh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i0Y+CQ3MWZQPalxXGC+PXfNcKghZzgS5whjKqM+1eirus1uAb/C0KLN3y1m+Mq0HiE/qgQ7W25hyZ+erBT0KWIse6pLT2t8Je4YmdkeDpB+ct0SYx4SacnTX+y55QFKYt60/nobro7HMVakBi4ObtvSkrwIl1+b6rE755jECukI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJnWwRkx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dz+1pOoh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422FBC43390;
-	Tue, 23 Jan 2024 01:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJnWwRkx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A58CC433C7;
+	Tue, 23 Jan 2024 01:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974991;
-	bh=vZu2+7t5a3zobaLrnT6+RkAuQOf5oo1RWizYItctOM0=;
+	s=korg; t=1705974992;
+	bh=rlmEbisXTRme8IXNTqH/GIKH/zgH9XP3IrYp0UsVn7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dz+1pOohBSebe4DX+3hbUhXkzbYXutHkShrQBiNO9lfO6dVhnhH4aj3+o+RRTNiCQ
-	 MQLZ51g9LwRqWu4tKfz9GLT80dPbkdn7t3FpsHSYBj4InW8hT1TtwRs7FFa27o4rfp
-	 iy/A9U3y5puMff6nGrSHFTLgIA3HTY8Bgt7y+rIw=
+	b=LJnWwRkxHJgNLmCJSngJzZA17quRuNpooR4n9vrbmtFHnSsarQoWkO0pg7fR3SqT0
+	 5T4ggHkXRyt+vUEbT1KZj0ycsvBGpw+H+nxbe1YXKLBvdMPPCA97AHjfHIeSXC7DlJ
+	 8D/o7oye760FjiDZyO/a/GxXSTopKWZXDaVneN0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 311/374] iio: adc: ad9467: Benefit from devm_clk_get_enabled() to simplify
-Date: Mon, 22 Jan 2024 15:59:27 -0800
-Message-ID: <20240122235755.695590436@linuxfoundation.org>
+Subject: [PATCH 6.6 184/583] arm64: dts: qcom: sm8550: Update idle state time requirements
+Date: Mon, 22 Jan 2024 15:53:55 -0800
+Message-ID: <20240122235817.633474500@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,68 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit cdd07b3ab94a020570132558442a26e74b70bc42 ]
+[ Upstream commit ad6556fb45d4ab91ad786a2025cbe2b0f2e6cf77 ]
 
-Make use of devm_clk_get_enabled() to replace some code that effectively
-open codes this new function.
+The idle state entry/exit/residency times differ from what shipped on
+production devices, mostly being overly optimistic in entry times and
+overly pessimistic in minimal residency times. Align them with
+downstream sources.
 
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20220808204740.307667-3-u.kleine-koenig@pengutronix.de
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 76f028539cf3 ("iio: adc: ad9467: fix reset gpio handling")
+Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231218-topic-8550_fixes-v1-12-ce1272d77540@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad9467.c | 17 +----------------
- 1 file changed, 1 insertion(+), 16 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/iio/adc/ad9467.c b/drivers/iio/adc/ad9467.c
-index dbfc8517cb8a..a07df0fd3329 100644
---- a/drivers/iio/adc/ad9467.c
-+++ b/drivers/iio/adc/ad9467.c
-@@ -378,13 +378,6 @@ static int ad9467_preenable_setup(struct adi_axi_adc_conv *conv)
- 	return ad9467_outputmode_set(st->spi, st->output_mode);
- }
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 15d91ace8703..3a228d4f0c14 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -283,9 +283,9 @@ LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "silver-rail-power-collapse";
+ 				arm,psci-suspend-param = <0x40000004>;
+-				entry-latency-us = <800>;
++				entry-latency-us = <550>;
+ 				exit-latency-us = <750>;
+-				min-residency-us = <4090>;
++				min-residency-us = <6700>;
+ 				local-timer-stop;
+ 			};
  
--static void ad9467_clk_disable(void *data)
--{
--	struct ad9467_state *st = data;
--
--	clk_disable_unprepare(st->clk);
--}
--
- static int ad9467_probe(struct spi_device *spi)
- {
- 	const struct ad9467_chip_info *info;
-@@ -404,18 +397,10 @@ static int ad9467_probe(struct spi_device *spi)
- 	st = adi_axi_adc_conv_priv(conv);
- 	st->spi = spi;
+@@ -294,8 +294,8 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+ 				idle-state-name = "gold-rail-power-collapse";
+ 				arm,psci-suspend-param = <0x40000004>;
+ 				entry-latency-us = <600>;
+-				exit-latency-us = <1550>;
+-				min-residency-us = <4791>;
++				exit-latency-us = <1300>;
++				min-residency-us = <8136>;
+ 				local-timer-stop;
+ 			};
  
--	st->clk = devm_clk_get(&spi->dev, "adc-clk");
-+	st->clk = devm_clk_get_enabled(&spi->dev, "adc-clk");
- 	if (IS_ERR(st->clk))
- 		return PTR_ERR(st->clk);
+@@ -314,17 +314,17 @@ domain-idle-states {
+ 			CLUSTER_SLEEP_0: cluster-sleep-0 {
+ 				compatible = "domain-idle-state";
+ 				arm,psci-suspend-param = <0x41000044>;
+-				entry-latency-us = <1050>;
+-				exit-latency-us = <2500>;
+-				min-residency-us = <5309>;
++				entry-latency-us = <750>;
++				exit-latency-us = <2350>;
++				min-residency-us = <9144>;
+ 			};
  
--	ret = clk_prepare_enable(st->clk);
--	if (ret < 0)
--		return ret;
--
--	ret = devm_add_action_or_reset(&spi->dev, ad9467_clk_disable, st);
--	if (ret)
--		return ret;
--
- 	st->pwrdown_gpio = devm_gpiod_get_optional(&spi->dev, "powerdown",
- 						   GPIOD_OUT_LOW);
- 	if (IS_ERR(st->pwrdown_gpio))
+ 			CLUSTER_SLEEP_1: cluster-sleep-1 {
+ 				compatible = "domain-idle-state";
+ 				arm,psci-suspend-param = <0x4100c344>;
+-				entry-latency-us = <2700>;
+-				exit-latency-us = <3500>;
+-				min-residency-us = <13959>;
++				entry-latency-us = <2800>;
++				exit-latency-us = <4400>;
++				min-residency-us = <10150>;
+ 			};
+ 		};
+ 	};
 -- 
 2.43.0
 
