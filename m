@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA75765BA2;
-	Tue, 23 Jan 2024 00:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42AAF64CE7;
+	Tue, 23 Jan 2024 00:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971594; cv=none; b=jb4BO1FWYak+TwD5CPcz9iD2zZ3ECpo2yvt/ngIV2+qTjRWZj03ei0d53Tc9+sRhtL+unu35kFOTpUCguIjMZtE3vANRzN1WyaIihPRAqDv67FOBvyHy4736ASGIf1LrB8xmIHJ7yLgcqUtT2S8YKINXGC7OsW79iYcj9b+W6es=
+	t=1705971599; cv=none; b=dzZaeviYjc+5yCqGGLOvPCpfeDjt8pgcz56iH5Yx68m+0R0tc4dR9HjlP4y2l35xHUUFVQLwxTuKmBIOPKTV3RBBNRIPjmhCPkP6+prSXn8LnEC7qBe888Nzh1/TBXu5X39BqpqDWxm9SLOIhHhQgxv2drhqdqXrtQV9ERUM2oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971594; c=relaxed/simple;
-	bh=atVIhm+JIkYatXpXK0HmXMnNEH4k7x242RbVOXrMjVo=;
+	s=arc-20240116; t=1705971599; c=relaxed/simple;
+	bh=bfAl/aRwiUuJitp+hPZXoBikc3SYRbE0yWS3vEz5c+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MKNIQlX30/tazMdWam+fKkclABZyKe8hxmOh9MVmXfDhx6LSzNWF+AElcy1xH8W8EZe3sNF8DhdT6It1YYGV1bRMY1fYeE2Doo8HkKCrEfCX7xVTTsjFBfm/LSvEkWXtNp1EvA4z+2enqjqHBSB8Z/M5r4yeFO+GGnv+ZigAOAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnbKn7OL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ubAhQ5moefuFv5Uq5P+rPXD1aAJPULDJUxR/lTx0zCDVaVZ/oJnwfHYuwvDNv4Rs9njIRhgMx41jzAmSmeLgSr/SjZmE6AqoI4Z2golF+XduvUwj6ZS1p8QLQyikJ5huoe/HO2FEcuCyHYzIqoxOcRvu1i6XQwfIpmfCYJftnEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S11q+rrA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnbKn7OL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD96C433F1;
-	Tue, 23 Jan 2024 00:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S11q+rrA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B0AC433C7;
+	Tue, 23 Jan 2024 00:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971594;
-	bh=atVIhm+JIkYatXpXK0HmXMnNEH4k7x242RbVOXrMjVo=;
+	s=korg; t=1705971599;
+	bh=bfAl/aRwiUuJitp+hPZXoBikc3SYRbE0yWS3vEz5c+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dnbKn7OLxwBZRT4WNNC8EhrpKk9uSUcu+gC8NnpI2Rxdjoe7rCBmWx/+xSxlU1/vb
-	 EbsINiebf08xe+pYCSORyQislCjHdlC0utS76lVWUzaEYJWDaFnV1St+D2FEQMoCbg
-	 r/FQ0UR1jXN1XJl72IHjeDRgPxSR11fAwQzRURJg=
+	b=S11q+rrAXSs+0bJXdtIgaEtrGULYc3P1do1axFAkt1gqHOroGeUMy36nY2h3iq1uy
+	 U3IuI0dWeQdWLrtyjaJbtvZ1rzGdKPWFR4PuLvMfq4/OOFPxJX50f9UNpmGBJKsog+
+	 xWquNwxj7rcyWL90Cuae9vlY2uYtu430o9O0eu2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.1 276/417] serial: omap: do not override settings for RS485 support
-Date: Mon, 22 Jan 2024 15:57:24 -0800
-Message-ID: <20240122235801.405706173@linuxfoundation.org>
+	Stefan Wahren <wahrenst@gmx.net>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 184/286] watchdog: bcm2835_wdt: Fix WDIOC_SETTIMEOUT handling
+Date: Mon, 22 Jan 2024 15:58:10 -0800
+Message-ID: <20240122235739.233392214@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,108 +47,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-commit 51f93776b84dee23e44a7be880736669a01cec2b upstream.
+[ Upstream commit f33f5b1fd1be5f5106d16f831309648cb0f1c31d ]
 
-The drivers RS485 support is deactivated if there is no RTS GPIO available.
-This is done by nullifying the ports rs485_supported struct. After that
-however the settings in serial_omap_rs485_supported are assigned to the
-same structure unconditionally, which results in an unintended reactivation
-of RS485 support.
+Users report about the unexpected behavior for setting timeouts above
+15 sec on Raspberry Pi. According to watchdog-api.rst the ioctl
+WDIOC_SETTIMEOUT shouldn't fail because of hardware limitations.
+But looking at the code shows that max_timeout based on the
+register value PM_WDOG_TIME_SET, which is the maximum.
 
-Fix this by moving the assignment to the beginning of
-serial_omap_probe_rs485() and thus before uart_get_rs485_mode() gets
-called.
+Since 664a39236e71 ("watchdog: Introduce hardware maximum heartbeat
+in watchdog core") the watchdog core is able to handle this problem.
 
-Also replace the assignment of rs485_config() to have the complete RS485
-setup in one function.
+This fix has been tested with watchdog-test from selftests.
 
-Fixes: e2752ae3cfc9 ("serial: omap: Disallow RS-485 if rts-gpio is not specified")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20240103061818.564-7-l.sanfilippo@kunbus.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217374
+Fixes: 664a39236e71 ("watchdog: Introduce hardware maximum heartbeat in watchdog core")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20231112173251.4827-1-wahrenst@gmx.net
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/omap-serial.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/watchdog/bcm2835_wdt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/omap-serial.c
-+++ b/drivers/tty/serial/omap-serial.c
-@@ -1512,6 +1512,13 @@ static struct omap_uart_port_info *of_ge
- 	return omap_up_info;
- }
+diff --git a/drivers/watchdog/bcm2835_wdt.c b/drivers/watchdog/bcm2835_wdt.c
+index dec6ca019bea..3a8dec05b591 100644
+--- a/drivers/watchdog/bcm2835_wdt.c
++++ b/drivers/watchdog/bcm2835_wdt.c
+@@ -42,6 +42,7 @@
  
-+static const struct serial_rs485 serial_omap_rs485_supported = {
-+	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RTS_AFTER_SEND |
-+		 SER_RS485_RX_DURING_TX,
-+	.delay_rts_before_send = 1,
-+	.delay_rts_after_send = 1,
-+};
-+
- static int serial_omap_probe_rs485(struct uart_omap_port *up,
- 				   struct device *dev)
- {
-@@ -1526,6 +1533,9 @@ static int serial_omap_probe_rs485(struc
- 	if (!np)
- 		return 0;
+ #define SECS_TO_WDOG_TICKS(x) ((x) << 16)
+ #define WDOG_TICKS_TO_SECS(x) ((x) >> 16)
++#define WDOG_TICKS_TO_MSECS(x) ((x) * 1000 >> 16)
  
-+	up->port.rs485_config = serial_omap_config_rs485;
-+	up->port.rs485_supported = serial_omap_rs485_supported;
-+
- 	ret = uart_get_rs485_mode(&up->port);
- 	if (ret)
- 		return ret;
-@@ -1560,13 +1570,6 @@ static int serial_omap_probe_rs485(struc
- 	return 0;
- }
+ struct bcm2835_wdt {
+ 	void __iomem		*base;
+@@ -140,7 +141,7 @@ static struct watchdog_device bcm2835_wdt_wdd = {
+ 	.info =		&bcm2835_wdt_info,
+ 	.ops =		&bcm2835_wdt_ops,
+ 	.min_timeout =	1,
+-	.max_timeout =	WDOG_TICKS_TO_SECS(PM_WDOG_TIME_SET),
++	.max_hw_heartbeat_ms =	WDOG_TICKS_TO_MSECS(PM_WDOG_TIME_SET),
+ 	.timeout =	WDOG_TICKS_TO_SECS(PM_WDOG_TIME_SET),
+ };
  
--static const struct serial_rs485 serial_omap_rs485_supported = {
--	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RTS_AFTER_SEND |
--		 SER_RS485_RX_DURING_TX,
--	.delay_rts_before_send = 1,
--	.delay_rts_after_send = 1,
--};
--
- static int serial_omap_probe(struct platform_device *pdev)
- {
- 	struct omap_uart_port_info *omap_up_info = dev_get_platdata(&pdev->dev);
-@@ -1634,17 +1637,11 @@ static int serial_omap_probe(struct plat
- 		dev_info(up->port.dev, "no wakeirq for uart%d\n",
- 			 up->port.line);
- 
--	ret = serial_omap_probe_rs485(up, &pdev->dev);
--	if (ret < 0)
--		goto err_rs485;
--
- 	sprintf(up->name, "OMAP UART%d", up->port.line);
- 	up->port.mapbase = mem->start;
- 	up->port.membase = base;
- 	up->port.flags = omap_up_info->flags;
- 	up->port.uartclk = omap_up_info->uartclk;
--	up->port.rs485_config = serial_omap_config_rs485;
--	up->port.rs485_supported = serial_omap_rs485_supported;
- 	if (!up->port.uartclk) {
- 		up->port.uartclk = DEFAULT_CLK_SPEED;
- 		dev_warn(&pdev->dev,
-@@ -1652,6 +1649,10 @@ static int serial_omap_probe(struct plat
- 			 DEFAULT_CLK_SPEED);
- 	}
- 
-+	ret = serial_omap_probe_rs485(up, &pdev->dev);
-+	if (ret < 0)
-+		goto err_rs485;
-+
- 	up->latency = PM_QOS_CPU_LATENCY_DEFAULT_VALUE;
- 	up->calc_latency = PM_QOS_CPU_LATENCY_DEFAULT_VALUE;
- 	cpu_latency_qos_add_request(&up->pm_qos_request, up->latency);
+-- 
+2.43.0
+
 
 
