@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94FE953E16;
-	Tue, 23 Jan 2024 00:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A5753E16;
+	Tue, 23 Jan 2024 00:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970345; cv=none; b=su145MB/3BbasXWDkyN4hT2S6VNMrKdHmn2gmTq6c2mu/jpb1atQz0uZ2M0c/+5VqV8vgS/Jbvr6mrKrawsS6Io5V/A59Qidb8Ky64yxTND95T8ysVL+l94SiWKGGfezhSd/NM/f26QuOqGLjA6B72723b7I3OLIsZC/wTcrTSU=
+	t=1705970348; cv=none; b=R+NGHt4Sh/i+J77F6LJYSHWG9tkeUNsaNI2UoIVOC6KleJ/3bpvDx1iC1X4dCbkjtb0C5HjvJdOISVf74Vn+g06rp9RXdIM2MXlEZj0BQ7Tt5wXPTBYsD9RGdk4E285E4Yf8BHksa0jHtT7hZrzsVARQLpmo3fUByTmGAt2FMeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970345; c=relaxed/simple;
-	bh=sUrPH9xjy85NwwGk0TWQGgi/8bQ5RMY7dDdSvZ95eF0=;
+	s=arc-20240116; t=1705970348; c=relaxed/simple;
+	bh=Z9M+oCeannoAnAH//HqwoEdLByCcc9yrmNiRMDLx4Cc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d9oI5iKHF9IywjpUlxO9PgRxFxWUEvptf7tiw8q2WL2HyI4JLciXn8Irl8QQwLNdT2l/1pNEKvU7SJdfWivzt+7vf+Hpbmw/feevBH6iEjvlK3EwTI5QPt4xhq1how7Gj0PDLLsx2R17dDSjl5qUo9bin8v4lwnR+BEcjXnJHHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYkJb7FP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nn10CEQs7CnFpqWcDc86sipOljU7hTjixzcy+vo1iTEwonOLMZvHMBKIUZu97QxuJSRsGGoecnbI9Hzob+5i9xoAR2/y/FzzB6UwXPT822oqcz2ZnZQRH94bimshPnrrtH0G9CFyuRJ9b9mHVgRaIWhqQSA8SPwZ4825WG+ToT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oeiuw5OE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYkJb7FP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CC6C433F1;
-	Tue, 23 Jan 2024 00:39:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeiuw5OE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDCDC433F1;
+	Tue, 23 Jan 2024 00:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970345;
-	bh=sUrPH9xjy85NwwGk0TWQGgi/8bQ5RMY7dDdSvZ95eF0=;
+	s=korg; t=1705970348;
+	bh=Z9M+oCeannoAnAH//HqwoEdLByCcc9yrmNiRMDLx4Cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JYkJb7FPi4CnU9Ux5YWp3pHKOcgmzgKS27QydBdBGxcX/z3ZZGVMK9iklY55PlG8y
-	 2i8/E6jjxgwhgnboSfY3UnZSur66tnyY0T0gxAnaSfAGXy16HlL2hBoM75pEwX8xK5
-	 3TjyNaK2rPbfm9vvPXcDNc6Qnb28YBeJKW6qgzbM=
+	b=oeiuw5OETZFAHP6OvcU68k+crBNc67fvKQ96DnDhZdF78C1yeDHBR163BWI86Zhfg
+	 6kJzc6JNYlxQNZPc/LDfgbvM9XmqlBamlp5sGoLo/issGbK6h+zlo9799qx6DRDUHi
+	 YTYa2XvIXFSX2sM/+c8Yg/SLB8gFIKN0vpGuhI10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Yushchenko <nikita.yoush@cogentembedded.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 605/641] net: ravb: Fix dma_addr_t truncation in error case
-Date: Mon, 22 Jan 2024 15:58:29 -0800
-Message-ID: <20240122235837.173414355@linuxfoundation.org>
+Subject: [PATCH 6.7 633/641] loop: fix the the direct I/O support check when used on top of block devices
+Date: Mon, 22 Jan 2024 15:58:57 -0800
+Message-ID: <20240122235838.079801656@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -48,55 +46,111 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Yushchenko <nikita.yoush@cogentembedded.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit e327b2372bc0f18c30433ac40be07741b59231c5 ]
+[ Upstream commit baa7d536077dcdfe2b70c476a8873d1745d3de0f ]
 
-In ravb_start_xmit(), ravb driver uses u32 variable to store result of
-dma_map_single() call. Since ravb hardware has 32-bit address fields in
-descriptors, this works properly when mapping is successful - it is
-platform's job to provide mapping addresses that fit into hardware
-limitations.
+__loop_update_dio only checks the alignment requirement for block backed
+file systems, but misses them for the case where the loop device is
+created directly on top of another block device.  Due to this creating
+a loop device with default option plus the direct I/O flag on a > 512 byte
+sector size file system will lead to incorrect I/O being submitted to the
+lower block device and a lot of error from the lock layer.  This can
+be seen with xfstests generic/563.
 
-However, in failure case dma_map_single() returns DMA_MAPPING_ERROR
-constant that is 64-bit when dma_addr_t is 64-bit. Storing this constant
-in u32 leads to truncation, and further call to dma_mapping_error()
-fails to notice the error.
+Fix the code in __loop_update_dio by factoring the alignment check into
+a helper, and calling that also for the struct block_device of a block
+device inode.
 
-Fix that by storing result of dma_map_single() in a dma_addr_t
-variable.
+Also remove the TODO comment talking about dynamically switching between
+buffered and direct I/O, which is a would be a recipe for horrible
+performance and occasional data loss.
 
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Signed-off-by: Nikita Yushchenko <nikita.yoush@cogentembedded.com>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2e5ab5f379f9 ("block: loop: prepare for supporing direct IO")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20240117175901.871796-1-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/loop.c | 52 +++++++++++++++++++++-----------------------
+ 1 file changed, 25 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 8649b3e90edb..0e3731f50fc2 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1949,7 +1949,7 @@ static netdev_tx_t ravb_start_xmit(struct sk_buff *skb, struct net_device *ndev)
- 	struct ravb_tstamp_skb *ts_skb;
- 	struct ravb_tx_desc *desc;
- 	unsigned long flags;
--	u32 dma_addr;
-+	dma_addr_t dma_addr;
- 	void *buffer;
- 	u32 entry;
- 	u32 len;
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 9f2d412fc560..552f56a84a7e 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -165,39 +165,37 @@ static loff_t get_loop_size(struct loop_device *lo, struct file *file)
+ 	return get_size(lo->lo_offset, lo->lo_sizelimit, file);
+ }
+ 
++/*
++ * We support direct I/O only if lo_offset is aligned with the logical I/O size
++ * of backing device, and the logical block size of loop is bigger than that of
++ * the backing device.
++ */
++static bool lo_bdev_can_use_dio(struct loop_device *lo,
++		struct block_device *backing_bdev)
++{
++	unsigned short sb_bsize = bdev_logical_block_size(backing_bdev);
++
++	if (queue_logical_block_size(lo->lo_queue) < sb_bsize)
++		return false;
++	if (lo->lo_offset & (sb_bsize - 1))
++		return false;
++	return true;
++}
++
+ static void __loop_update_dio(struct loop_device *lo, bool dio)
+ {
+ 	struct file *file = lo->lo_backing_file;
+-	struct address_space *mapping = file->f_mapping;
+-	struct inode *inode = mapping->host;
+-	unsigned short sb_bsize = 0;
+-	unsigned dio_align = 0;
++	struct inode *inode = file->f_mapping->host;
++	struct block_device *backing_bdev = NULL;
+ 	bool use_dio;
+ 
+-	if (inode->i_sb->s_bdev) {
+-		sb_bsize = bdev_logical_block_size(inode->i_sb->s_bdev);
+-		dio_align = sb_bsize - 1;
+-	}
++	if (S_ISBLK(inode->i_mode))
++		backing_bdev = I_BDEV(inode);
++	else if (inode->i_sb->s_bdev)
++		backing_bdev = inode->i_sb->s_bdev;
+ 
+-	/*
+-	 * We support direct I/O only if lo_offset is aligned with the
+-	 * logical I/O size of backing device, and the logical block
+-	 * size of loop is bigger than the backing device's.
+-	 *
+-	 * TODO: the above condition may be loosed in the future, and
+-	 * direct I/O may be switched runtime at that time because most
+-	 * of requests in sane applications should be PAGE_SIZE aligned
+-	 */
+-	if (dio) {
+-		if (queue_logical_block_size(lo->lo_queue) >= sb_bsize &&
+-		    !(lo->lo_offset & dio_align) &&
+-		    (file->f_mode & FMODE_CAN_ODIRECT))
+-			use_dio = true;
+-		else
+-			use_dio = false;
+-	} else {
+-		use_dio = false;
+-	}
++	use_dio = dio && (file->f_mode & FMODE_CAN_ODIRECT) &&
++		(!backing_bdev || lo_bdev_can_use_dio(lo, backing_bdev));
+ 
+ 	if (lo->use_dio == use_dio)
+ 		return;
 -- 
 2.43.0
 
