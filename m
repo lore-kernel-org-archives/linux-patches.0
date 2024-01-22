@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800DA634F8;
-	Tue, 23 Jan 2024 01:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097F4634FB;
+	Tue, 23 Jan 2024 01:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975034; cv=none; b=uNWxYCHRgvvn1GOabfFGs4ayKaHg0TPWEAYUKTTds8s42bpUUoo9LjgwIPe2+LObn+nJ+0/osWjtph9shFmdxbR9+QrBVkUg6ZcKHd/XW4PMPGmYZjE13iqXgJ8eLLsf2YhXNQeEMmhq4xIj+XVyRM03/ncGhdnVT9t47/3VLSU=
+	t=1705975036; cv=none; b=sszIuQTIMZQx4/OFjLfaKIoE8aghqPCZVs8CN/DM5vKU7D5NmjXEZAMHfHbmOjFHK2pEb/6wuyQpL+ubf6VmcPQRcWOeP0Sv1nJqceBWMhKmSi+Ds3nqa0utfMFYsKPp0EqFg6qmdbHVyp8GmhH5i+O28jfQiDc95pFL9YGuVuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975034; c=relaxed/simple;
-	bh=JIU0XhtJjoQe0nczUdSZVeG3MVr9mlahzyA5uC0EXTg=;
+	s=arc-20240116; t=1705975036; c=relaxed/simple;
+	bh=5g7kjPo/Olfe8KKmDyUq3QqeJtWd9g7sYvyboGp/3gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K8+fD3ZkrgLvWRAFb7VhK0N3AvHUgtZQK6nxHYqNQBPdfRAbwVqEbyg5UBPnILIXZsiGWS8nqGxLPlUrdKHkkm4cxLPStn0ggX/Dq7Y+Tzj6l252+KlIRvX2xYSkoHZbvfqHwI5gevATT3TeZsWfwt0zayu0Jik0S/WmaWH05dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyK6CLa8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZtSWzmfzW53O+k5bbJfOksf8PMaagheclpVH0pisnK46Bcak6vzBF0g1Cahtfx+oNg+0SWqc+cPxJkZmQMInFCfNGrnxwbKxJO1kYMUm87Fi9wzGYisfK6aMCu60hwzFIe82sh3KyfhEVtX3r6rDZDxSTD75PNE2s6yl+cjR1Nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=av1sq6Ef; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyK6CLa8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05C6C433F1;
-	Tue, 23 Jan 2024 01:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="av1sq6Ef"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD62C433C7;
+	Tue, 23 Jan 2024 01:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975033;
-	bh=JIU0XhtJjoQe0nczUdSZVeG3MVr9mlahzyA5uC0EXTg=;
+	s=korg; t=1705975035;
+	bh=5g7kjPo/Olfe8KKmDyUq3QqeJtWd9g7sYvyboGp/3gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DyK6CLa8FLdUbohhNmBjh5o/ODaeVODkbPhzOVt/weXT9Z7GmQTV6Z/rUEg2QZ/6T
-	 JLx6vG4wnBfDlUUIOGnL2KL7CXUsOimcx1UXbj6jxqxZNxEYUKrxRKpLnWDHCynQqx
-	 ZrOtmDp0YN1cyBnR9oqrtKUHoEFJMC1Auedvtssc=
+	b=av1sq6EfSAnPMUP+LbDZICYo1V8XfIjdcKIavsJL4VsutJqAeOr7/fd0QgbdVxNJt
+	 uXVXqvjYye3NGT7bQT2QnHEpehmB+L/Fo8d/+zGaF8wwAekIEIngodXF8yda/Xz5p9
+	 8OMV07pr0O1XseriE/HQM1UO+e4Nm8dGZyErY3Mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 333/374] net: ethernet: ti: am65-cpsw: Fix max mtu to fit ethernet frames
-Date: Mon, 22 Jan 2024 15:59:49 -0800
-Message-ID: <20240122235756.485917015@linuxfoundation.org>
+Subject: [PATCH 6.6 206/583] Bluetooth: btnxpuart: fix recv_buf() return value
+Date: Mon, 22 Jan 2024 15:54:17 -0800
+Message-ID: <20240122235818.303880287@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +45,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanjuán García, Jorge <Jorge.SanjuanGarcia@duagon.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 64e47d8afb5ca533b27efc006405e5bcae2c4a7b ]
+[ Upstream commit 94d05394254401e503867c16aff561d3e687dfdc ]
 
-The value of AM65_CPSW_MAX_PACKET_SIZE represents the maximum length
-of a received frame. This value is written to the register
-AM65_CPSW_PORT_REG_RX_MAXLEN.
+Serdev recv_buf() callback is supposed to return the amount of bytes
+consumed, therefore an int in between 0 and count.
 
-The maximum MTU configured on the network device should then leave
-some room for the ethernet headers and frame check. Otherwise, if
-the network interface is configured to its maximum mtu possible,
-the frames will be larger than AM65_CPSW_MAX_PACKET_SIZE and will
-get dropped as oversized.
+Do not return a negative number in case of issue, just print an error
+and return count. Before this change, in case of error, the returned
+negative number was internally converted to 0 in ttyport_receive_buf,
+now when the receive buffer is corrupted we return the size of the whole
+received data (`count`). This should allow for better recovery in case
+receiver/transmitter get out of sync if some data is lost.
 
-The switch supports ethernet frame sizes between 64 and 2024 bytes
-(including VLAN) as stated in the technical reference manual, so
-define AM65_CPSW_MAX_PACKET_SIZE with that maximum size.
+This fixes a WARN in ttyport_receive_buf().
 
-Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
-Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Link: https://lore.kernel.org/r/20240105085530.14070-2-jorge.sanjuangarcia@duagon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  Bluetooth: hci0: Frame reassembly failed (-84)
+  ------------[ cut here ]------------
+  serial serial0: receive_buf returns -84 (count = 6)
+  WARNING: CPU: 0 PID: 37 at drivers/tty/serdev/serdev-ttyport.c:37 ttyport_receive_buf+0xd8/0xf8
+  Modules linked in: mwifiex_sdio(+) ...
+  CPU: 0 PID: 37 Comm: kworker/u4:2 Not tainted 6.7.0-rc2-00147-gf1a09972a45a #1
+  Hardware name: Toradex Verdin AM62 WB on Verdin Development Board (DT)
+  Workqueue: events_unbound flush_to_ldisc
+  pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  pc : ttyport_receive_buf+0xd8/0xf8
+  lr : ttyport_receive_buf+0xd8/0xf8
+...
+  Call trace:
+   ttyport_receive_buf+0xd8/0xf8
+   flush_to_ldisc+0xbc/0x1a4
+   process_scheduled_works+0x16c/0x28c
+
+Closes: https://lore.kernel.org/all/ZWEIhcUXfutb5SY6@francesco-nb.int.toradex.com/
+Fixes: 689ca16e5232 ("Bluetooth: NXP: Add protocol support for NXP Bluetooth chipsets")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btnxpuart.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 4aa9477ac597..1fa6f0dacd2d 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -53,7 +53,7 @@
- #define AM65_CPSW_MAX_PORTS	8
- 
- #define AM65_CPSW_MIN_PACKET_SIZE	VLAN_ETH_ZLEN
--#define AM65_CPSW_MAX_PACKET_SIZE	(VLAN_ETH_FRAME_LEN + ETH_FCS_LEN)
-+#define AM65_CPSW_MAX_PACKET_SIZE	2024
- 
- #define AM65_CPSW_REG_CTL		0x004
- #define AM65_CPSW_REG_STAT_PORT_EN	0x014
-@@ -1985,7 +1985,8 @@ am65_cpsw_nuss_init_port_ndev(struct am65_cpsw_common *common, u32 port_idx)
- 	eth_hw_addr_set(port->ndev, port->slave.mac_addr);
- 
- 	port->ndev->min_mtu = AM65_CPSW_MIN_PACKET_SIZE;
--	port->ndev->max_mtu = AM65_CPSW_MAX_PACKET_SIZE;
-+	port->ndev->max_mtu = AM65_CPSW_MAX_PACKET_SIZE -
-+			      (VLAN_ETH_HLEN + ETH_FCS_LEN);
- 	port->ndev->hw_features = NETIF_F_SG |
- 				  NETIF_F_RXCSUM |
- 				  NETIF_F_HW_CSUM |
+diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
+index b7e66b7ac570..951fe3014a3f 100644
+--- a/drivers/bluetooth/btnxpuart.c
++++ b/drivers/bluetooth/btnxpuart.c
+@@ -1276,11 +1276,10 @@ static int btnxpuart_receive_buf(struct serdev_device *serdev, const u8 *data,
+ 	if (IS_ERR(nxpdev->rx_skb)) {
+ 		int err = PTR_ERR(nxpdev->rx_skb);
+ 		/* Safe to ignore out-of-sync bootloader signatures */
+-		if (is_fw_downloading(nxpdev))
+-			return count;
+-		bt_dev_err(nxpdev->hdev, "Frame reassembly failed (%d)", err);
++		if (!is_fw_downloading(nxpdev))
++			bt_dev_err(nxpdev->hdev, "Frame reassembly failed (%d)", err);
+ 		nxpdev->rx_skb = NULL;
+-		return err;
++		return count;
+ 	}
+ 	if (!is_fw_downloading(nxpdev))
+ 		nxpdev->hdev->stat.byte_rx += count;
 -- 
 2.43.0
 
