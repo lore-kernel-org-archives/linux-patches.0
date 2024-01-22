@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A6F64CC5;
-	Tue, 23 Jan 2024 00:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F54964A80;
+	Tue, 23 Jan 2024 00:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971312; cv=none; b=TDRAQSd70C//Ou+U1eu+6ybgLYIBw6MZVhFePB7FEyYgDHPfUx4uaCLWe8CLAy7idWjlwPw57g8aUrV7sx8I8iegscP+jvyMhvJoOr2dZisKdlMQ/+f0z9TqbBSRmB+9n5ZyqJK9aEngcJZAzxzq4jtCom6Vpb0HfaZZz6QtZPo=
+	t=1705971316; cv=none; b=RdqljySWLIZH9uuAE5PuvqcL37XolheCvsVzmbAomco/oMskrAVvlBCSg5Nex5W2g1iJhG3n62re3EHpPumI+/gxDqtkjs7B15gowZi1Vq5UC4JUxT5E97GV3gw8p2YeERU+8Lb398Uu0mna2jbvhgK5cTnprWhsjUE7mE2Ht4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971312; c=relaxed/simple;
-	bh=vgejRGLo9RFOcygaK/aogRD/1r2rOBSnRn+7k3sy4NE=;
+	s=arc-20240116; t=1705971316; c=relaxed/simple;
+	bh=ceLJMPnsUWIUOsFyUapN82k2ESwpZT2hWyp6cG+SdDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=joUPOeDIVCuKwf886Jy9FModyyZV8fQyM0jgXEMLlCgArfFlCcOq6u5Fe6yJ3tnsaMmsRssL+ttn+gqAwJsZv0CxZ45Kv3MClk4VvgLJX92syKsWhfKAS0+y9dyNFw8gZ7R1DQv2nCGoogsHguz+w69EdxtpURLrHWpQnJAktdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPDEoPQ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IGeF+krSCNqU4N+epHTwWd6O/hemEYCSyLeGc4bzGP4AbPTNdE3OMk2NKAsakikuDtjeQXSExBS2+Ri1e52Y/m0f232gHkdAT73k5+JBvPqUi7roc8/VJF0Q3aJpiaUjMvKcYKWaaU2GQxG3ynussHimGJzJeuCLZ9IfCrwY8XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ooz7gq8J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPDEoPQ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2557AC433F1;
-	Tue, 23 Jan 2024 00:55:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ooz7gq8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5495CC433F1;
+	Tue, 23 Jan 2024 00:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971312;
-	bh=vgejRGLo9RFOcygaK/aogRD/1r2rOBSnRn+7k3sy4NE=;
+	s=korg; t=1705971315;
+	bh=ceLJMPnsUWIUOsFyUapN82k2ESwpZT2hWyp6cG+SdDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPDEoPQ45IBsEsniplETslwnw4e9cjnnKSoeMeTdLTGbuY0GHnNOg6yrpC+mXn9TL
-	 xkUyULnAU+xeVHG77APjPNWZTNC5+P/EUSIwrmT6Al0rbCZuKSsQU5lOZfDnxZcN0V
-	 7eA+JYgAmQkxHOqVuCeM9RLLl0jZ7+xGtjJrmJ0A=
+	b=Ooz7gq8JZDSXCA9841+k5X+qE9TNb4ffKYtKaQLyR9TlNxKebD70HIboizt6HaYBX
+	 ddEI4DPcCz+74mYJKrw4GkeiC1++a9Ih7pyew4VnjGWsfHSq5iHu6HEy9h2a25CtQ6
+	 +k77dVLbDVIhfQd486M2gBR8RguC03sIuaAiGmWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Su Hui <suhui@nfschina.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 222/417] watchdog: bcm2835_wdt: Fix WDIOC_SETTIMEOUT handling
-Date: Mon, 22 Jan 2024 15:56:30 -0800
-Message-ID: <20240122235759.606795821@linuxfoundation.org>
+Subject: [PATCH 5.10 133/286] wifi: rtlwifi: rtl8192cu: using calculate_bit_shift()
+Date: Mon, 22 Jan 2024 15:57:19 -0800
+Message-ID: <20240122235737.268807121@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,59 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit f33f5b1fd1be5f5106d16f831309648cb0f1c31d ]
+[ Upstream commit f4088c8fcbabadad9dd17d17ae9ba24e9e3221ec ]
 
-Users report about the unexpected behavior for setting timeouts above
-15 sec on Raspberry Pi. According to watchdog-api.rst the ioctl
-WDIOC_SETTIMEOUT shouldn't fail because of hardware limitations.
-But looking at the code shows that max_timeout based on the
-register value PM_WDOG_TIME_SET, which is the maximum.
+Using calculate_bit_shift() to replace _rtl92c_phy_calculate_bit_shift().
+And fix an undefined bitwise shift behavior problem.
 
-Since 664a39236e71 ("watchdog: Introduce hardware maximum heartbeat
-in watchdog core") the watchdog core is able to handle this problem.
-
-This fix has been tested with watchdog-test from selftests.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217374
-Fixes: 664a39236e71 ("watchdog: Introduce hardware maximum heartbeat in watchdog core")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20231112173251.4827-1-wahrenst@gmx.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: f0a39ae738d6 ("rtlwifi: rtl8192cu: Add routine phy")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231219065739.1895666-6-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/bcm2835_wdt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/watchdog/bcm2835_wdt.c b/drivers/watchdog/bcm2835_wdt.c
-index 94907176a0e4..55c0f7b0e8fb 100644
---- a/drivers/watchdog/bcm2835_wdt.c
-+++ b/drivers/watchdog/bcm2835_wdt.c
-@@ -42,6 +42,7 @@
- 
- #define SECS_TO_WDOG_TICKS(x) ((x) << 16)
- #define WDOG_TICKS_TO_SECS(x) ((x) >> 16)
-+#define WDOG_TICKS_TO_MSECS(x) ((x) * 1000 >> 16)
- 
- struct bcm2835_wdt {
- 	void __iomem		*base;
-@@ -140,7 +141,7 @@ static struct watchdog_device bcm2835_wdt_wdd = {
- 	.info =		&bcm2835_wdt_info,
- 	.ops =		&bcm2835_wdt_ops,
- 	.min_timeout =	1,
--	.max_timeout =	WDOG_TICKS_TO_SECS(PM_WDOG_TIME_SET),
-+	.max_hw_heartbeat_ms =	WDOG_TICKS_TO_MSECS(PM_WDOG_TIME_SET),
- 	.timeout =	WDOG_TICKS_TO_SECS(PM_WDOG_TIME_SET),
- };
- 
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c
+index a8d9fe269f31..0b8cb7e61fd8 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/phy.c
+@@ -32,7 +32,7 @@ u32 rtl92cu_phy_query_rf_reg(struct ieee80211_hw *hw,
+ 		original_value = _rtl92c_phy_fw_rf_serial_read(hw,
+ 							       rfpath, regaddr);
+ 	}
+-	bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
+ 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
+ 		"regaddr(%#x), rfpath(%#x), bitmask(%#x), original_value(%#x)\n",
+@@ -56,7 +56,7 @@ void rtl92cu_phy_set_rf_reg(struct ieee80211_hw *hw,
+ 			original_value = _rtl92c_phy_rf_serial_read(hw,
+ 								    rfpath,
+ 								    regaddr);
+-			bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data =
+ 			    ((original_value & (~bitmask)) |
+ 			     (data << bitshift));
+@@ -67,7 +67,7 @@ void rtl92cu_phy_set_rf_reg(struct ieee80211_hw *hw,
+ 			original_value = _rtl92c_phy_fw_rf_serial_read(hw,
+ 								       rfpath,
+ 								       regaddr);
+-			bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data =
+ 			    ((original_value & (~bitmask)) |
+ 			     (data << bitshift));
 -- 
 2.43.0
 
