@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA57B2581;
-	Tue, 23 Jan 2024 00:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5FB24A27;
+	Tue, 23 Jan 2024 00:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969596; cv=none; b=J07shCu9veTdbp7S5qPZXtRj9KErVXpUwv9pQKx7f2actvreamkBbscf5R4nW64RnS46LNfuAFa62i5+mxfPhcw69zg3tuYypREwgl3pqcQSM4SEVdchoDdsG+fdUGgcTdfDzzwCUZoxH4S7lYp7bvwt80g0SGAvhUagSIzZ/CY=
+	t=1705969597; cv=none; b=efIzwrKAqCsFRqy1+A6RX25UST/5Ic7et2lYxy+9KweI7j47SQQby7i55AaZzL9DySubrCmoxY1fBDCBqALWfvBkCu3NqiME3iiM2jmlgJEGQnaO3N0cIAQ8H2WGcy5bFmRXLR+oCFohKihD5kZzgsrHcnuk2JWnufFCel5aXr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969596; c=relaxed/simple;
-	bh=oQAc6/xZuERuMnDysxF/DdSO8T1WxuAVlowAI7tOOSs=;
+	s=arc-20240116; t=1705969597; c=relaxed/simple;
+	bh=m5S36eezk8hnJlXABOJ2rgXJ9PkjG70gmrltTjme9r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f/aQsZynkJGK9/XkE+TqoKDlRiWv8Kb2/Rot+3VEhrZEZyUX/TnMtF9eJll+BeSYIubzJS2EfmUjkIXfXhWgY23tudpaSDTCnkO3feUGay9jX/S5Npulbn/UjG83FbEn7bAz/0/+Fb5I659QCEclvek7cBREa5V0qne6R7vDxNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2RcRqdF7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JJDX2NNNyEji2/NnOcojy6EndRUfCSl/MWOhjGexSHHP6bOFW//nkZklUz2fr9LbNIJ/cp3/bxdbE7H5vFcGVLUuebVbzKp1WxI3MMmWKNlqIMLvik+fJnd93cv6iRyLMzqgXsMxLsu3ac3JJX3rWPHojpj+MpXNWgAtJ+T7OGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXHSWRkw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2RcRqdF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E880C43390;
-	Tue, 23 Jan 2024 00:26:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXHSWRkw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C25DC43399;
+	Tue, 23 Jan 2024 00:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969596;
-	bh=oQAc6/xZuERuMnDysxF/DdSO8T1WxuAVlowAI7tOOSs=;
+	s=korg; t=1705969597;
+	bh=m5S36eezk8hnJlXABOJ2rgXJ9PkjG70gmrltTjme9r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2RcRqdF7wzosO83AKbwq6Aem2WN81SdCpxmEjtd+hTuxrIsUJOqUvnYuHdhG+LjeJ
-	 J7n048lJN6swNwC9YlO2qC32W37Q/yOGpSbjANbgMzB7HCPuhp+C6B6nvvIaVPqVWG
-	 kITj0r3mV6beZWEPRAVQwVXmk6KrHZOSQ2xUEXmw=
+	b=TXHSWRkwH7OYeOitI89hATD1sa/irl9EqlHob4MAcFANfiDM7fu2LE3MtkCuVpEms
+	 z6hfc57IV3l4K75QTgEluOQ4G5ga3iLFgWynAvXJIK1BjilIPOMAKxIemBGNleFvI/
+	 ZSPz/F9qLIABGZeTKkBPEGOVr5i4q0NxIoFcxZAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 323/641] media: i2c: mt9m114: use fsleep() in place of udelay()
-Date: Mon, 22 Jan 2024 15:53:47 -0800
-Message-ID: <20240122235828.001224639@linuxfoundation.org>
+Subject: [PATCH 6.7 314/641] f2fs: fix to wait on block writeback for post_read case
+Date: Mon, 22 Jan 2024 15:53:38 -0800
+Message-ID: <20240122235827.721363030@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -54,51 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 02d4e62ae2452c83e4a3e279b8e4cb4dcbad4b31 ]
+[ Upstream commit 55fdc1c24a1d6229fe0ecf31335fb9a2eceaaa00 ]
 
-With clang-16, building without COMMON_CLK triggers a range check on
-udelay() because of a constant division-by-zero calculation:
+If inode is compressed, but not encrypted, it missed to call
+f2fs_wait_on_block_writeback() to wait for GCed page writeback
+in IPU write path.
 
-ld.lld: error: undefined symbol: __bad_udelay
->>> referenced by mt9m114.c
->>>               drivers/media/i2c/mt9m114.o:(mt9m114_power_on) in archive vmlinux.a
+Thread A				GC-Thread
+					- f2fs_gc
+					 - do_garbage_collect
+					  - gc_data_segment
+					   - move_data_block
+					    - f2fs_submit_page_write
+					     migrate normal cluster's block via
+					     meta_inode's page cache
+- f2fs_write_single_data_page
+ - f2fs_do_write_data_page
+  - f2fs_inplace_write_data
+   - f2fs_submit_page_bio
 
-In this configuration, the driver already fails to probe, before
-this function gets called, so it's enough to suppress the assertion.
+IRQ
+- f2fs_read_end_io
+					IRQ
+					old data overrides new data due to
+					out-of-order GC and common IO.
+					- f2fs_read_end_io
 
-Do this by using fsleep(), which turns long delays into sleep() calls
-in place of the link failure.
-
-This is probably a good idea regardless to avoid overly long dynamic
-udelay() calls on a slow clock.
-
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>
-Fixes: 24d756e914fc ("media: i2c: Add driver for onsemi MT9M114 camera sensor")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 4c8ff7095bef ("f2fs: support data compression")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/mt9m114.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/data.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/i2c/mt9m114.c b/drivers/media/i2c/mt9m114.c
-index ac19078ceda3..1a535c098ded 100644
---- a/drivers/media/i2c/mt9m114.c
-+++ b/drivers/media/i2c/mt9m114.c
-@@ -2112,7 +2112,7 @@ static int mt9m114_power_on(struct mt9m114 *sensor)
- 		duration = DIV_ROUND_UP(2 * 50 * 1000000, freq);
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 4e42b5f24deb..bc3f05d43b62 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2566,9 +2566,6 @@ int f2fs_encrypt_one_page(struct f2fs_io_info *fio)
  
- 		gpiod_set_value(sensor->reset, 1);
--		udelay(duration);
-+		fsleep(duration);
- 		gpiod_set_value(sensor->reset, 0);
- 	} else {
- 		/*
+ 	page = fio->compressed_page ? fio->compressed_page : fio->page;
+ 
+-	/* wait for GCed page writeback via META_MAPPING */
+-	f2fs_wait_on_block_writeback(inode, fio->old_blkaddr);
+-
+ 	if (fscrypt_inode_uses_inline_crypto(inode))
+ 		return 0;
+ 
+@@ -2755,6 +2752,10 @@ int f2fs_do_write_data_page(struct f2fs_io_info *fio)
+ 		goto out_writepage;
+ 	}
+ 
++	/* wait for GCed page writeback via META_MAPPING */
++	if (fio->post_read)
++		f2fs_wait_on_block_writeback(inode, fio->old_blkaddr);
++
+ 	/*
+ 	 * If current allocation needs SSR,
+ 	 * it had better in-place writes for updated data.
 -- 
 2.43.0
 
