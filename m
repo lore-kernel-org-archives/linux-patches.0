@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055764F204;
-	Tue, 23 Jan 2024 00:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C6E4F204;
+	Tue, 23 Jan 2024 00:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970329; cv=none; b=g+q4u/lBxMek9a63bXGmOzv6I0aBoqxiev//0ljbPAM5NLRURBrTveLmgu25E0JQnbKc/5tB8ktciK+8CsgYT/EiA+aKIO4z+Ry132lWpO55cwo6JzK19Jyatsdq2Kk2GMkfOxcP7pRfJwwRre5BHfoWCiMyyRbLhRAqtVH15YM=
+	t=1705970331; cv=none; b=jkd8tVaAStFjTqLH9OYE1LuY10WDvAdY2x94nnYeqzLIEiat9xb+shhBAZosTkPYorXNa54okJQbPWc+062kYnpRDpYpIBZG+6CHKl7YbHEuO3ZiKNV4nnkOUJtk+foAZMIKmTymjAT0O6RCw7I4rm02dNrd6TuGs0F5EWzQcrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970329; c=relaxed/simple;
-	bh=yNj3eO+prH+xoJSIMmYUFtKEsLhWu6oCATHyqriDFhw=;
+	s=arc-20240116; t=1705970331; c=relaxed/simple;
+	bh=lEVHxmMnhjU5QpmujW5on1hVKV60t9bjCiS5WqfFVF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PHHfvEMsUrHzzMT604w91o7qeyHgji9GPsAPZbqGU/1zQOw8few7jb/JLFARb3o3PBIAJUlkQMJtyOEuXJwjOqWROqMJLc41m+MHBelqw7JCoGXKPiLnn22ndEf3xAZCulKkDh/AoOwXDCwbrw4lNyvsCN5ysUeSgtJ74eMj5EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkh+UIQJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YfIe3ixllknHC7TY49xO022qleCmoRZ8r1N4lLLSU3bfg2/winvgVNJVm5o2StbZ7ED1pu+QtfLUhMKowca2jE+G5uz+XZbDBcOyOazlijBSLNIJzQGBbmZtVUsEmHdqzxnfm61wObKw3vawuptBjUtRHp6+3e5ZCVcIehvDGhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qv5WNjHZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkh+UIQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3DEC433C7;
-	Tue, 23 Jan 2024 00:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qv5WNjHZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F47DC433F1;
+	Tue, 23 Jan 2024 00:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970328;
-	bh=yNj3eO+prH+xoJSIMmYUFtKEsLhWu6oCATHyqriDFhw=;
+	s=korg; t=1705970331;
+	bh=lEVHxmMnhjU5QpmujW5on1hVKV60t9bjCiS5WqfFVF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mkh+UIQJJgBAk4++7MmI08FK6F2yZ2BqAE5yRDFbL6I4yGieyTssRUduuw9olCa8i
-	 dBNbod+Jg6Sr7KYz4/eCdx5jlscrSa2sz7YnUBl844k48+CgJ5KNNXCVtSxLcGX6lu
-	 k3O3a4fx5Cl3FtxS01Jh3EpXBWVoyOW/sto2c6W0=
+	b=qv5WNjHZcZkm4WHczJkvSS1sBYaDKYHWaZMwJCYvqmwaXozradCkMVzRgvUWIGvHU
+	 Q3WklcBrgNegjJ6dBBAMZtZP9ks95nIPjIJ5Dx57qFk3bOA0TwQXTO5kMmaRtqDQoc
+	 GVeOq+Y5b33g5b44V7N6r2uocdEMjuHn2R9chtxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Dafna Hirschfeld <dhirschfeld@habana.ai>,
+	Yang Wang <kevinyang.wang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 610/641] drm/amdkfd: fixes for HMM mem allocation
-Date: Mon, 22 Jan 2024 15:58:34 -0800
-Message-ID: <20240122235837.321719710@linuxfoundation.org>
+Subject: [PATCH 6.7 611/641] drm/amdgpu: fall back to INPUT power for AVG power via INFO IOCTL
+Date: Mon, 22 Jan 2024 15:58:35 -0800
+Message-ID: <20240122235837.347890171@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,48 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dafna Hirschfeld <dhirschfeld@habana.ai>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 02eed83abc1395a1207591aafad9bcfc5cb1abcb ]
+[ Upstream commit d02069850fc102b07ae923535d5e212f2c8a34e9 ]
 
-Fix err return value and reset pgmap->type after checking it.
+For backwards compatibility with userspace.
 
-Fixes: c83dee9b6394 ("drm/amdkfd: add SPM support for SVM")
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Dafna Hirschfeld <dhirschfeld@habana.ai>
-Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Fixes: 47f1724db4fe ("drm/amd: Introduce `AMDGPU_PP_SENSOR_GPU_INPUT_POWER`")
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2897
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_migrate.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
-index 6c25dab051d5..b8680e0753ca 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
-@@ -1021,7 +1021,7 @@ int kgd2kfd_init_zone_device(struct amdgpu_device *adev)
- 	} else {
- 		res = devm_request_free_mem_region(adev->dev, &iomem_resource, size);
- 		if (IS_ERR(res))
--			return -ENOMEM;
-+			return PTR_ERR(res);
- 		pgmap->range.start = res->start;
- 		pgmap->range.end = res->end;
- 		pgmap->type = MEMORY_DEVICE_PRIVATE;
-@@ -1037,10 +1037,10 @@ int kgd2kfd_init_zone_device(struct amdgpu_device *adev)
- 	r = devm_memremap_pages(adev->dev, pgmap);
- 	if (IS_ERR(r)) {
- 		pr_err("failed to register HMM device memory\n");
--		/* Disable SVM support capability */
--		pgmap->type = 0;
- 		if (pgmap->type == MEMORY_DEVICE_PRIVATE)
- 			devm_release_mem_region(adev->dev, res->start, resource_size(res));
-+		/* Disable SVM support capability */
-+		pgmap->type = 0;
- 		return PTR_ERR(r);
- 	}
- 
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+index 583cf03950cd..598867919c4f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+@@ -1105,7 +1105,12 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
+ 			if (amdgpu_dpm_read_sensor(adev,
+ 						   AMDGPU_PP_SENSOR_GPU_AVG_POWER,
+ 						   (void *)&ui32, &ui32_size)) {
+-				return -EINVAL;
++				/* fall back to input power for backwards compat */
++				if (amdgpu_dpm_read_sensor(adev,
++							   AMDGPU_PP_SENSOR_GPU_INPUT_POWER,
++							   (void *)&ui32, &ui32_size)) {
++					return -EINVAL;
++				}
+ 			}
+ 			ui32 >>= 8;
+ 			break;
 -- 
 2.43.0
 
