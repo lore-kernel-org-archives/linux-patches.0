@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E9113399C;
-	Tue, 23 Jan 2024 00:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4654134749;
+	Tue, 23 Jan 2024 00:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968110; cv=none; b=ZoGUGMSJxnpwnXwCObj+F5YtxXZwTi9m1HEgUyiqDwOmW2t1DqNB2pWa2I54JMBIwfmio3nqPuT6HjpDgk6nXZVlnPwI2ZthryrdEoywbcFdXwOOJXPkMSdzEx0XVqoEcIXQUITAWvDRyTO3gVGhjRx6NXzDZQ30DZdnWi/ejWA=
+	t=1705968112; cv=none; b=Nz7W2yQkpcdU7Nsy/TcYuhzPT2LNlvntFZ3A06zd/mXCJu2IacZOii4y1fsg1kgw1fNHMKDoj/9LZroPdv/J/lXoolt0VVyzm19kscn9n2InbK+8put7L7YKkqR2k289ZDAOfYUl/znVuVwiLoDMy+hn6Mk3LHouxo8B4NhW60U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968110; c=relaxed/simple;
-	bh=7ttjiP3Sdpb+YT35kEUQD8wva32e70JN8mCP8ePXQoM=;
+	s=arc-20240116; t=1705968112; c=relaxed/simple;
+	bh=MFQGIwWqUp6j5KK0nHh9dXPrdwdQWX40C7iy1/JeXNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KVl2EujFdGhj63zQ/KEZTuhjwPCsnZ4PRabIIyofCaqJUwro+HlFqT+pX+CblUP/xCQsoAe8PmbA1/4xeingcEYtTyB1NgxE3vF2xeLlb1waDFBp9K52MmsTYmAV/Zc4Suj2Ue4oP1e8toGCfuUHNO0b4rGnNJGYQiegyGRDWNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8FGF+xk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QXJxH/bDRemhZHNDmdTXjoINCJPWzqyegUH7sMRvzoM89W685GOJGOtVQMo31KIpEHf8S8EEQ5q6CSlrs8AHIQBh7hKNZXJuAnWLgNcSt0A4PWXf+zZcv9M5xyLj+yRJl2PWop1XBChxzQBTnEQLzAzYKWaSLUMK+C1t2xxRPpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+V76cH1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8FGF+xk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88042C433C7;
-	Tue, 23 Jan 2024 00:01:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+V76cH1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B53C433F1;
+	Tue, 23 Jan 2024 00:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968110;
-	bh=7ttjiP3Sdpb+YT35kEUQD8wva32e70JN8mCP8ePXQoM=;
+	s=korg; t=1705968112;
+	bh=MFQGIwWqUp6j5KK0nHh9dXPrdwdQWX40C7iy1/JeXNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A8FGF+xkV0d+j4KtbbQVyl74zabmgo6Uh2WFRFSmNP8tm7BPmjvov0rdJBIZie1Fj
-	 +9vJQbpsnclrnga97XSAGuYSAXknm1uiWpylDXQs/yexVYkvDad5Ynij1HhTIusSin
-	 km7pwfK1vB/a8ieM/9BmlL/iKZmCdbtv5819wbfc=
+	b=l+V76cH1AFzQVV23B7V82M99T3wsAe8P4e8uFaMb/cnrNDI+V+MMR3VoN+Q3KYxhV
+	 j1mkXsVkeVbgQ2X4RPbp+nvnkjNzUL/9+EGwQc6Dtidovmrvj6o/z4dAJToFk+lFBR
+	 UxHd+ccMSJ13Mbpl3TAcHf8kBP68BS+RAkRp9npE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Masami Hiramatsu <mhiramat@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 013/148] tracing: Add size check when printing trace_marker output
-Date: Mon, 22 Jan 2024 15:56:09 -0800
-Message-ID: <20240122235712.976149522@linuxfoundation.org>
+Subject: [PATCH 4.19 014/148] ring-buffer: Do not record in NMI if the arch does not support cmpxchg in NMI
+Date: Mon, 22 Jan 2024 15:56:10 -0800
+Message-ID: <20240122235713.008763811@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -55,63 +55,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 60be76eeabb3d83858cc6577fc65c7d0f36ffd42 ]
+[ Upstream commit 712292308af2265cd9b126aedfa987f10f452a33 ]
 
-If for some reason the trace_marker write does not have a nul byte for the
-string, it will overflow the print:
+As the ring buffer recording requires cmpxchg() to work, if the
+architecture does not support cmpxchg in NMI, then do not do any recording
+within an NMI.
 
-  trace_seq_printf(s, ": %s", field->buf);
+Link: https://lore.kernel.org/linux-trace-kernel/20231213175403.6fc18540@gandalf.local.home
 
-The field->buf could be missing the nul byte. To prevent overflow, add the
-max size that the buf can be by using the event size and the field
-location.
-
-  int max = iter->ent_size - offsetof(struct print_entry, buf);
-
-  trace_seq_printf(s, ": %*.s", max, field->buf);
-
-Link: https://lore.kernel.org/linux-trace-kernel/20231212084444.4619b8ce@gandalf.local.home
-
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_output.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/kernel/trace/trace_output.c b/kernel/trace/trace_output.c
-index 62015d62dd6f..43fb832d26d2 100644
---- a/kernel/trace/trace_output.c
-+++ b/kernel/trace/trace_output.c
-@@ -1320,11 +1320,12 @@ static enum print_line_t trace_print_print(struct trace_iterator *iter,
- {
- 	struct print_entry *field;
- 	struct trace_seq *s = &iter->seq;
-+	int max = iter->ent_size - offsetof(struct print_entry, buf);
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index b627bc820540..d2903d8834fe 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2891,6 +2891,12 @@ rb_reserve_next_event(struct ring_buffer *buffer,
+ 	int nr_loops = 0;
+ 	u64 diff;
  
- 	trace_assign_type(field, iter->ent);
++	/* ring buffer does cmpxchg, make sure it is safe in NMI context */
++	if (!IS_ENABLED(CONFIG_ARCH_HAVE_NMI_SAFE_CMPXCHG) &&
++	    (unlikely(in_nmi()))) {
++		return NULL;
++	}
++
+ 	rb_start_commit(cpu_buffer);
  
- 	seq_print_ip_sym(s, field->ip, flags);
--	trace_seq_printf(s, ": %s", field->buf);
-+	trace_seq_printf(s, ": %.*s", max, field->buf);
- 
- 	return trace_handle_return(s);
- }
-@@ -1333,10 +1334,11 @@ static enum print_line_t trace_print_raw(struct trace_iterator *iter, int flags,
- 					 struct trace_event *event)
- {
- 	struct print_entry *field;
-+	int max = iter->ent_size - offsetof(struct print_entry, buf);
- 
- 	trace_assign_type(field, iter->ent);
- 
--	trace_seq_printf(&iter->seq, "# %lx %s", field->ip, field->buf);
-+	trace_seq_printf(&iter->seq, "# %lx %.*s", field->ip, max, field->buf);
- 
- 	return trace_handle_return(&iter->seq);
- }
+ #ifdef CONFIG_RING_BUFFER_ALLOW_SWAP
 -- 
 2.43.0
 
