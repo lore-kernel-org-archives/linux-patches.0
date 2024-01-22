@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADE014AD2B;
-	Tue, 23 Jan 2024 00:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1744114C580;
+	Tue, 23 Jan 2024 00:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969266; cv=none; b=MoyY5ct6USqKo8ctorPGlclPT16DYFfN9IdxBhCzYdtPKdygIx/yCOGzCXgUj1ppv/8LqgDBx7V9uLmrrPe7fP1fqVvkhDZXwfVQFr56m4pcjijj58SzWEHmgg71roGn3mjDvATEoIjT3/q0YlUEQ1XoTbmgwoYjXK/v5tuJnOU=
+	t=1705969268; cv=none; b=af95OYCZjBRGwObZ9IZ+3mrXyuiK/oSU6MlA6gRfMWsAgzRdNAgS/18aVMgILfrVr4FMLWi0CMwfsoZLlwB6fFHxcVNv4CqPHvPiVrq3jmxeVBEXL3pFa2AvdjnzStvr0WNPGaQU8wRl5nJRHj/cnUvpaxCVL2lR394tRPS6nlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969266; c=relaxed/simple;
-	bh=vGDosuZ3DcrV5eE5V6lsJIrPoPjTLMBTaW/AuIypB7Y=;
+	s=arc-20240116; t=1705969268; c=relaxed/simple;
+	bh=R6WlfNRryRYWampqypQCCNn2WOUIhfifJX3F8tDQxdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/Uj35tp/vHYtJbbr3VJWos2jET8uI3c9KdC/t1VRO/l474M1MbqgeJMHKCoCznlO3KjXNDIq70ao2Xa2IApSPFSdtDaNwXjTq6Q2eW3Jx+3QqH6BSPc5Ap2S9SG5VWfB1DlypYZQVugsOick9UFdF/OOzlf8joKb+m+so6QHLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VU2ixWkf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L+Yf8BXDqcq4zn/xhR/B6fYp5bnJO/qCOsNrMVWdmdHDw0e6g+xOd87/vUxgagC0ncoTGCk+MIknQHAiuCrDzcYVDIGvThLwjpUvs5UAIq9Zk9VPltdxX33Wh0y05HDmWifomtRijtAMmm3vDyRMvbTkO1pZ7Enk+8mjwyDk82M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HX6inG6Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VU2ixWkf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9DCC43394;
-	Tue, 23 Jan 2024 00:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HX6inG6Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2E4C433C7;
+	Tue, 23 Jan 2024 00:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969266;
-	bh=vGDosuZ3DcrV5eE5V6lsJIrPoPjTLMBTaW/AuIypB7Y=;
+	s=korg; t=1705969267;
+	bh=R6WlfNRryRYWampqypQCCNn2WOUIhfifJX3F8tDQxdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VU2ixWkf8OoL76W4SzQ6Uh1vWqnm9spZ7jw8veLon8u6ALSv/1kesfcnCBPk+hubp
-	 /19oKHtTcK586lJscSELumnvKF7s3S8CS0FaqcbB4kT9Y89AYBIBwIPOjs/01oV7xr
-	 v9q3PV2DdllQ/hIFnS5CqB/8flyb+Aj7klebanoQ=
+	b=HX6inG6ZoaOmYhvAGGuL406vvzHndAmJGR9CxsaV1dfu8tbv1BS5Q5O9C9Pz1wq9a
+	 AC3pBz8HqMMeyVlTeSDP5BMS8SABTOrQDcpSTzU+c5hjCvEGU0BNz06tlMdX4ck859
+	 MYC8+4/syn0puS0aNWNMbYAwGMo8lyBQsRHIoGM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Su Hui <suhui@nfschina.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 108/641] wifi: ath12k: fix the error handler of rfkill config
-Date: Mon, 22 Jan 2024 15:50:12 -0800
-Message-ID: <20240122235821.422737545@linuxfoundation.org>
+Subject: [PATCH 6.7 109/641] wifi: rtlwifi: rtl8821ae: phy: fix an undefined bitwise shift behavior
+Date: Mon, 22 Jan 2024 15:50:13 -0800
+Message-ID: <20240122235821.451650586@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,57 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 898d8b3e1414cd900492ee6a0b582f8095ba4a1a ]
+[ Upstream commit bc8263083af60e7e57c6120edbc1f75d6c909a35 ]
 
-When the core rfkill config throws error, it should free the
-allocated resources. Currently it is not freeing the core pdev
-create resources. Avoid this issue by calling the core pdev
-destroy in the error handler of core rfkill config.
+Clang static checker warns:
 
-Found this issue in the code review and it is compile tested only.
+drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c:184:49:
+	The result of the left shift is undefined due to shifting by '32',
+	which is greater or equal to the width of type 'u32'.
+	[core.UndefinedBinaryOperatorResult]
 
-Fixes: 004ccbc0dd49 ("wifi: ath12k: add support for hardware rfkill for WCN7850")
-Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20231111040107.18708-1-quic_periyasa@quicinc.com
+If the value of the right operand is negative or is greater than or
+equal to the width of the promoted left operand, the behavior is
+undefined.[1][2]
+
+For example, when using different gcc's compilation optimization options
+(-O0 or -O2), the result of '(u32)data << 32' is different. One is 0, the
+other is old value of data. Let _rtl8821ae_phy_calculate_bit_shift()'s
+return value less than 32 to fix this problem. Warn if bitmask is zero.
+
+[1] https://stackoverflow.com/questions/11270492/what-does-the-c-standard-say-about-bitshifting-more-bits-than-the-width-of-type
+[2] https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf
+
+Fixes: 21e4b0726dc6 ("rtlwifi: rtl8821ae: Move driver from staging to regular tree")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20231127013511.26694-2-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
-index b936760b5140..6c01b282fcd3 100644
---- a/drivers/net/wireless/ath/ath12k/core.c
-+++ b/drivers/net/wireless/ath/ath12k/core.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
+index 5323ead30db0..fa1839d8ee55 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
+@@ -29,9 +29,10 @@ static void _rtl8821ae_phy_rf_serial_write(struct ieee80211_hw *hw,
+ 					   u32 data);
+ static u32 _rtl8821ae_phy_calculate_bit_shift(u32 bitmask)
+ {
+-	u32 i = ffs(bitmask);
++	if (WARN_ON_ONCE(!bitmask))
++		return 0;
  
- #include <linux/module.h>
-@@ -698,13 +698,15 @@ int ath12k_core_qmi_firmware_ready(struct ath12k_base *ab)
- 	ret = ath12k_core_rfkill_config(ab);
- 	if (ret && ret != -EOPNOTSUPP) {
- 		ath12k_err(ab, "failed to config rfkill: %d\n", ret);
--		goto err_core_stop;
-+		goto err_core_pdev_destroy;
- 	}
- 
- 	mutex_unlock(&ab->core_lock);
- 
- 	return 0;
- 
-+err_core_pdev_destroy:
-+	ath12k_core_pdev_destroy(ab);
- err_core_stop:
- 	ath12k_core_stop(ab);
- 	ath12k_mac_destroy(ab);
+-	return i ? i - 1 : 32;
++	return __ffs(bitmask);
+ }
+ static bool _rtl8821ae_phy_bb8821a_config_parafile(struct ieee80211_hw *hw);
+ /*static bool _rtl8812ae_phy_config_mac_with_headerfile(struct ieee80211_hw *hw);*/
 -- 
 2.43.0
 
