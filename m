@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE5D605AF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BD5604C8;
 	Tue, 23 Jan 2024 01:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974684; cv=none; b=QJ4BGJVVhicx7tgv86sZSjQmsi5ooDGPP0r/T7EhqHMfCDaJFVL9kGKrYFKQQB7sKW0TMO0MsNlhlkucBJxdr4wjucSEqmu3ZeLuoF2/v9oM/XZk5XqJ4aMlSiHtVa7DcDVbqn8zDXihcUPVEInJm0HfI+ncL6zWhXb1SLhrv3s=
+	t=1705974684; cv=none; b=ug458bXAq1z0vQEsywyPE1fKogsqEXZC1TeAsBERcZyTQPWcD5h5d0DNfsn1V2E8WQJQuFd5sMycrZBttIqBs7AGvXy0h4a4lCVYlAzSmJQdhh54A4r8TAQXRauvg1z8hgKZNFzLEJW1F+JsFQ9Cz2Vtcd914FfDJH0EgHbAFUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705974684; c=relaxed/simple;
-	bh=w0VHpeha3wIwnMVWSypuSjZh4tcR+7GCF5Qqw8X5VRE=;
+	bh=KoEGDonQtc1WRBiAVRcEBd1FmMMEK+cXjgOgpaOJDok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2VplvLaQtbGz0y5SdQWuDoYGP0ui6VsuL13oCWNfzQK5rZoXyCOSv1AtRbuOxtTKDB5DyBBSK0n+R7L/oR5xJ6Le0d9J9IgSJjQJr+ZeXRsEehGEjR+VFiiHMbxncdUf6oKoBfnc4YBaugideI5CIjZxZ4d8dS0Lm8XPVFPd98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLD3Frbf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HXT8Ni7o4gVAJ15kwHVTAo1MmRxd0v1iFmouNe90TT/IFtvBOClYJmUzkuZG810yHZz2fc4NevwDraV2EDFSifeiGQBoHqYgNuqQPAsBKpwt3NhN+YPyETOzkimsmmL1nQ2kD1WcSqFeE/9T9JBmRLfjmvFa8UYJ/zF/S8T0qIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjQ3mHPA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLD3Frbf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A8AC43390;
-	Tue, 23 Jan 2024 01:51:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjQ3mHPA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FFDC433C7;
+	Tue, 23 Jan 2024 01:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974683;
-	bh=w0VHpeha3wIwnMVWSypuSjZh4tcR+7GCF5Qqw8X5VRE=;
+	s=korg; t=1705974684;
+	bh=KoEGDonQtc1WRBiAVRcEBd1FmMMEK+cXjgOgpaOJDok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pLD3FrbfO1FlgWbbFyp6NDdOjCmKh0n0S2O/EW45ucSLShzwkRjhUaAood9cZbriz
-	 1fgZ9kgIgl2SCwSzzZqMzCisj47lE5XEBIJSIMlNIhMUUAXMuzrzm6R+e7RrdZDa4b
-	 NZIW4wf9VE8LNHah2dMklaHBzL+xk3giFkPIQn2U=
+	b=XjQ3mHPAIue4+hfzdyllSH9DSdrh5IY/aOszoBbnVmx9/mxsybdLi0cEeRwOKybOP
+	 WvWp2b6U+fqOAS8lUzQ+F/yml7TU6AG+osK/SutoQu/odnYpGPLVq8YT/enV66u8NX
+	 bKI/OBMqt5PRB0YG+paxWOvZNo48W1irzGQVC8NI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 122/583] bpf: fix check for attempt to corrupt spilled pointer
-Date: Mon, 22 Jan 2024 15:52:53 -0800
-Message-ID: <20240122235815.875139114@linuxfoundation.org>
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Gonglei <arei.gonglei@huawei.com>,
+	zhenwei pi <pizhenwei@bytedance.com>,
+	Jason Wang <jasowang@redhat.com>
+Subject: [PATCH 5.15 249/374] virtio-crypto: fix memory leak in virtio_crypto_alg_skcipher_close_session()
+Date: Mon, 22 Jan 2024 15:58:25 -0800
+Message-ID: <20240122235753.435385022@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +49,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit ab125ed3ec1c10ccc36bc98c7a4256ad114a3dae ]
+commit b1d65f717cd6305a396a8738e022c6f7c65cfbe8 upstream.
 
-When register is spilled onto a stack as a 1/2/4-byte register, we set
-slot_type[BPF_REG_SIZE - 1] (plus potentially few more below it,
-depending on actual spill size). So to check if some stack slot has
-spilled register we need to consult slot_type[7], not slot_type[0].
+'vc_ctrl_req' is alloced in virtio_crypto_alg_skcipher_close_session(),
+and should be freed in the invalid ctrl_status->status error handling
+case. Otherwise there is a memory leak.
 
-To avoid the need to remember and double-check this in the future, just
-use is_spilled_reg() helper.
-
-Fixes: 27113c59b6d0 ("bpf: Check the other end of slot_type for STACK_SPILL")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20231205184248.1502704-4-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0756ad15b1fe ("virtio-crypto: use private buffer for control request")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Message-Id: <20221114110740.537276-1-weiyongjun@huaweicloud.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Gonglei <arei.gonglei@huawei.com>
+Acked-by: zhenwei pi<pizhenwei@bytedance.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c | 2 +-
+ drivers/crypto/virtio/virtio_crypto_algs.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 2deae0db03e8..24152ac6a393 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -4330,7 +4330,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 	 * so it's aligned access and [off, off + size) are within stack limits
- 	 */
- 	if (!env->allow_ptr_leaks &&
--	    state->stack[spi].slot_type[0] == STACK_SPILL &&
-+	    is_spilled_reg(&state->stack[spi]) &&
- 	    size != BPF_REG_SIZE) {
- 		verbose(env, "attempt to corrupt spilled pointer on stack\n");
- 		return -EACCES;
--- 
-2.43.0
-
+--- a/drivers/crypto/virtio/virtio_crypto_algs.c
++++ b/drivers/crypto/virtio/virtio_crypto_algs.c
+@@ -255,7 +255,7 @@ static int virtio_crypto_alg_skcipher_cl
+ 			vcrypto->ctrl_status.status,
+ 			destroy_session->session_id);
+ 
+-		return -EINVAL;
++		err = -EINVAL;
+ 	}
+ 	spin_unlock(&vcrypto->ctrl_lock);
+ 
 
 
