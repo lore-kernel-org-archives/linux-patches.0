@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE3112A17F;
-	Tue, 23 Jan 2024 00:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243F312A17F;
+	Tue, 23 Jan 2024 00:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968785; cv=none; b=bbxwk1Nw8ir3RLfsQRWYy4jDBgqqJy193Ir96XlTy+GFuOGEwjODrEAxN9dCE+0NRCN6tMFrlvSq8Wft4RkZDw90Cr0vuOqlF1FV6t+x7SQWCkAi0CzgOuwBoDGRpwA02K3PgmZ3QFvbYOmsgIS0OIw7qjWQcBVI08WlFIYxsj8=
+	t=1705968788; cv=none; b=icNOiX6zMa6vqtvG7mJV9BRkyb9X4TuGfMukRNPwN1RNDSa96cMfDn4UlM7JLp2Kpols3mk2KNI3XfN+7QX2UNn0reyMZdTbimPPRwQKrU6mPZeZ033Vmb28Xc5Wzs4fnh0+0lzS3BvXZ7EYbcsju2B0VO0w7zNNOQukfFjzLnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968785; c=relaxed/simple;
-	bh=KuuMHEG79UcNNLToiC9dqtUFC1/fLnKaIMP4c6v7YuY=;
+	s=arc-20240116; t=1705968788; c=relaxed/simple;
+	bh=yXiW5vkOl9UoQzxRx0zvbX9pUujuquKHX5Nbp6pF6qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EAWKzElx30QB0pCmHskZ9DdYVuDewAu3An5x89tURqXBVYDxxfqRMsNSAGjBjCnv8NXflwKiuR5NqmrSe4C5/KRsXGR16+Npxwq2PTOzWpuNT3LOkrE8+H9/n7s1AtyJn4Ba0onAA6A8NFhPhxEtgpQlTGW15OlePG7pZE1ML10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsi2Vgz/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u633fGKXezCLb1e+NJoYGqBw5Lc6zZLo9iigapxJtbbTr8LV2Rzr7M2x7kIPFC326f9wo5dJVDJyrDd4FaenE5ttpx/0v2afXcmC9NXmM9XIrrn+oK5hvLANV/Ngyygn2rM2qQuXrQVI5MXF6SYPjVNEEfOXmys91B0rPbqZVY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJeET49p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsi2Vgz/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0227BC433C7;
-	Tue, 23 Jan 2024 00:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJeET49p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA97AC433F1;
+	Tue, 23 Jan 2024 00:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968785;
-	bh=KuuMHEG79UcNNLToiC9dqtUFC1/fLnKaIMP4c6v7YuY=;
+	s=korg; t=1705968787;
+	bh=yXiW5vkOl9UoQzxRx0zvbX9pUujuquKHX5Nbp6pF6qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gsi2Vgz/uGiw6edZnMxqrmyefSH9zGEnh8GOQPMlNYDp5Nsdztp46rFQ0mZJBPzFJ
-	 XlgPtykW0JBfp7xlKYfORra/iHaqGHkokJVzk5DRcUh+s8JaueGVg1g/28iy3PxKfX
-	 xOpuuSbBRnvSHqgvWsZwGIzEQX6fBH53v6Sjfez8=
+	b=hJeET49pOGqxHG+Mq62Ugb7DuZaUNpA9/L5bKkU7Ie7u9XMzY6Ov9TvChAPBCJHpK
+	 3RHtfkx7COTeTV1e0jz7DuXVZzZGh09/sHqmrQ+wxj3envTGPovNqWHYiAfPXFWGgi
+	 Oi5L1662gQMH9cGH24IMWdPr1FxBj34Z/y1rNHmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Acuna <ldacuna@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.4 032/194] ACPI: resource: Add another DMI match for the TongFang GMxXGxx
-Date: Mon, 22 Jan 2024 15:56:02 -0800
-Message-ID: <20240122235720.589913688@linuxfoundation.org>
+	Kunwu Chan <chentao@kylinos.cn>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 050/194] powerpc/imc-pmu: Add a null pointer check in update_events_in_group()
+Date: Mon, 22 Jan 2024 15:56:20 -0800
+Message-ID: <20240122235721.349194522@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,41 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-commit df0cced74159c79e36ce7971f0bf250673296d93 upstream.
+[ Upstream commit 0a233867a39078ebb0f575e2948593bbff5826b3 ]
 
-The TongFang GMxXGxx, which needs IRQ overriding for the keyboard to work,
-is also sold as the Eluktronics RP-15 which does not use the standard
-TongFang GMxXGxx DMI board_name.
+kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure.
 
-Add an entry for this laptop to the irq1_edge_low_force_override[] DMI
-table to make the internal keyboard functional.
-
-Reported-by: Luis Acuna <ldacuna@gmail.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 885dcd709ba9 ("powerpc/perf: Add nest IMC PMU support")
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231126093719.1440305-1-chentao@kylinos.cn
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/powerpc/perf/imc-pmu.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -456,6 +456,13 @@ static const struct dmi_system_id asus_l
- 		},
- 	},
- 	{
-+		/* TongFang GMxXGxx sold as Eluktronics Inc. RP-15 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Eluktronics Inc."),
-+			DMI_MATCH(DMI_BOARD_NAME, "RP-15"),
-+		},
-+	},
-+	{
- 		/* TongFang GM6XGxX/TUXEDO Stellaris 16 Gen5 AMD */
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_NAME, "GM6XGxX"),
+diff --git a/arch/powerpc/perf/imc-pmu.c b/arch/powerpc/perf/imc-pmu.c
+index 872313021eaa..565dc073ceca 100644
+--- a/arch/powerpc/perf/imc-pmu.c
++++ b/arch/powerpc/perf/imc-pmu.c
+@@ -292,6 +292,8 @@ static int update_events_in_group(struct device_node *node, struct imc_pmu *pmu)
+ 	attr_group->attrs = attrs;
+ 	do {
+ 		ev_val_str = kasprintf(GFP_KERNEL, "event=0x%x", pmu->events[i].value);
++		if (!ev_val_str)
++			continue;
+ 		dev_str = device_str_attr_create(pmu->events[i].name, ev_val_str);
+ 		if (!dev_str)
+ 			continue;
+@@ -299,6 +301,8 @@ static int update_events_in_group(struct device_node *node, struct imc_pmu *pmu)
+ 		attrs[j++] = dev_str;
+ 		if (pmu->events[i].scale) {
+ 			ev_scale_str = kasprintf(GFP_KERNEL, "%s.scale", pmu->events[i].name);
++			if (!ev_scale_str)
++				continue;
+ 			dev_str = device_str_attr_create(ev_scale_str, pmu->events[i].scale);
+ 			if (!dev_str)
+ 				continue;
+@@ -308,6 +312,8 @@ static int update_events_in_group(struct device_node *node, struct imc_pmu *pmu)
+ 
+ 		if (pmu->events[i].unit) {
+ 			ev_unit_str = kasprintf(GFP_KERNEL, "%s.unit", pmu->events[i].name);
++			if (!ev_unit_str)
++				continue;
+ 			dev_str = device_str_attr_create(ev_unit_str, pmu->events[i].unit);
+ 			if (!dev_str)
+ 				continue;
+-- 
+2.43.0
+
 
 
