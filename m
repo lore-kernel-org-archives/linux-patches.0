@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DD46313F;
-	Tue, 23 Jan 2024 01:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8F96313F;
+	Tue, 23 Jan 2024 01:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975016; cv=none; b=lmBFY0bdUb+usjwy0Ts8ouUffOhuT/yx2EgruUJ2fCfMoWyq6YfgZdy+NqFaBIqmhhlWDQFQL3BQ6k7Bcqu7Y9+U/agf+xfed7MujrgVWidqsSN3i7HjsHsOahwvTK4WJut/CoQz3tEfK3dJveqoJRghOPl6nZqAFeFFxjyOmUs=
+	t=1705975016; cv=none; b=YdpadKHmr/3I+KKYWDfo0Xl/sIa9ihZCjWwoEuuhSBl5e++EF1rP5OZvr5gQ836yL+a6PJ0IDuQn38qKEhPyHQYGddATNtVpBZPSli8zYg9eyzRd7khXTAArhWoqLbS12AUo5xmxJGFgnUHhV6wHXCP7wQipV1vL/WcvYlLJ0Nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975016; c=relaxed/simple;
-	bh=x6/BEGnkFmlXSvF/NAv0hjtaZg4dTl7nlBLLHnLkUB0=;
+	bh=fDXl7Oyd7IIy1BURb/xYhbjFU4jC9vUFAjfCsW9FjrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VmYlZ1aF0OLwplriCzytMummGqhb2fbqGLQXnJfIdsE8K0auWCa3+SiaH/JKVXuW/pIRnQ1DYkxB9nWIJ43XwHQCiOHRQgwnEwkaf4zhHXGW0VJwzVlrkXMej1PHXv5ql+ukjvLQ13GAMdat0pL42lCMw9ix+W42AS6WPu5N+H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9xnVMzA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i3pl+fyue3O/3LWGklCJiLuMJGLQ/gvCplYW5oFfiviynunuBgoXtGmb3DuhGQqATm3zAXn8mfchPxIAPWRFnGf/P9EKDznJgQChOUc2lojrTu+xn7C1ZX1GNUKIH1Txw6hn59e1JKJnjqGn6GrxiC8bqivrhiJ2NNHEq86oMl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gmm0E8eb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9xnVMzA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA40C433F1;
-	Tue, 23 Jan 2024 01:56:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gmm0E8eb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9222DC433F1;
+	Tue, 23 Jan 2024 01:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975015;
-	bh=x6/BEGnkFmlXSvF/NAv0hjtaZg4dTl7nlBLLHnLkUB0=;
+	s=korg; t=1705975016;
+	bh=fDXl7Oyd7IIy1BURb/xYhbjFU4jC9vUFAjfCsW9FjrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D9xnVMzAdYb2wYHyOaPDR/2RslZJZuqica7PRMzwXapQCmhxiYtfW4bAFES3Vtsqr
-	 1S0J1NyGc1/RxTiYg+a/dFLBvToe3dOYWZeJaIrZmfVIp6PymF2cTjNr6jB20/G/Jl
-	 AVon2wN3kln7yREfMGiaMc0F98Ydq8DuNl7kosBg=
+	b=Gmm0E8eb5gXYh7AVjp3bJC2wsldZzdI1jajiBL78gPfvX+VL+qrNsqX//umo1LxOV
+	 c8HFV9Ln76LFbet4kK95ph/kKqyhLNScHzZ9baYhdiDweZTPyeZBNszNgxC1o1SYPs
+	 Wr9Q2G9Ppqn1EzYbLyDx53ETYsNlhzHl+c+Dek54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	John Johansen <john.johansen@canonical.com>,
+	Su Hui <suhui@nfschina.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 325/374] apparmor: avoid crash when parsed profile name is empty
-Date: Mon, 22 Jan 2024 15:59:41 -0800
-Message-ID: <20240122235756.204439316@linuxfoundation.org>
+Subject: [PATCH 6.6 198/583] wifi: rtlwifi: rtl8192se: using calculate_bit_shift()
+Date: Mon, 22 Jan 2024 15:54:09 -0800
+Message-ID: <20240122235818.034371156@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,84 +47,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 55a8210c9e7d21ff2644809699765796d4bfb200 ]
+[ Upstream commit ac32b9317063b101a8ff3d3e885f76f87a280419 ]
 
-When processing a packed profile in unpack_profile() described like
+Using calculate_bit_shift() to replace _rtl92s_phy_calculate_bit_shift().
+And fix the undefined bitwise shift behavior problem.
 
- "profile :ns::samba-dcerpcd /usr/lib*/samba/{,samba/}samba-dcerpcd {...}"
-
-a string ":samba-dcerpcd" is unpacked as a fully-qualified name and then
-passed to aa_splitn_fqname().
-
-aa_splitn_fqname() treats ":samba-dcerpcd" as only containing a namespace.
-Thus it returns NULL for tmpname, meanwhile tmpns is non-NULL. Later
-aa_alloc_profile() crashes as the new profile name is NULL now.
-
-general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 6 PID: 1657 Comm: apparmor_parser Not tainted 6.7.0-rc2-dirty #16
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
-RIP: 0010:strlen+0x1e/0xa0
-Call Trace:
- <TASK>
- ? strlen+0x1e/0xa0
- aa_policy_init+0x1bb/0x230
- aa_alloc_profile+0xb1/0x480
- unpack_profile+0x3bc/0x4960
- aa_unpack+0x309/0x15e0
- aa_replace_profiles+0x213/0x33c0
- policy_update+0x261/0x370
- profile_replace+0x20e/0x2a0
- vfs_write+0x2af/0xe00
- ksys_write+0x126/0x250
- do_syscall_64+0x46/0xf0
- entry_SYSCALL_64_after_hwframe+0x6e/0x76
- </TASK>
----[ end trace 0000000000000000 ]---
-RIP: 0010:strlen+0x1e/0xa0
-
-It seems such behaviour of aa_splitn_fqname() is expected and checked in
-other places where it is called (e.g. aa_remove_profiles). Well, there
-is an explicit comment "a ns name without a following profile is allowed"
-inside.
-
-AFAICS, nothing can prevent unpacked "name" to be in form like
-":samba-dcerpcd" - it is passed from userspace.
-
-Deny the whole profile set replacement in such case and inform user with
-EPROTO and an explaining message.
-
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 04dc715e24d0 ("apparmor: audit policy ns specified in policy load")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: d15853163bea ("rtlwifi: rtl8192se: Merge phy routines")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231219065739.1895666-10-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy_unpack.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../net/wireless/realtek/rtlwifi/rtl8192se/phy.c  | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
-index 5f758b289ace..d1a385b44d63 100644
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -696,6 +696,10 @@ static struct aa_profile *unpack_profile(struct aa_ext *e, char **ns_name)
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192se/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192se/phy.c
+index 09591a0b5a81..d9ef7e1da1db 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192se/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192se/phy.c
+@@ -14,13 +14,6 @@
+ #include "hw.h"
+ #include "table.h"
  
- 	tmpname = aa_splitn_fqname(name, strlen(name), &tmpns, &ns_len);
- 	if (tmpns) {
-+		if (!tmpname) {
-+			info = "empty profile name";
-+			goto fail;
-+		}
- 		*ns_name = kstrndup(tmpns, ns_len, GFP_KERNEL);
- 		if (!*ns_name) {
- 			info = "out of memory";
+-static u32 _rtl92s_phy_calculate_bit_shift(u32 bitmask)
+-{
+-	u32 i = ffs(bitmask);
+-
+-	return i ? i - 1 : 32;
+-}
+-
+ u32 rtl92s_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
+ {
+ 	struct rtl_priv *rtlpriv = rtl_priv(hw);
+@@ -30,7 +23,7 @@ u32 rtl92s_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
+ 		regaddr, bitmask);
+ 
+ 	originalvalue = rtl_read_dword(rtlpriv, regaddr);
+-	bitshift = _rtl92s_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	returnvalue = (originalvalue & bitmask) >> bitshift;
+ 
+ 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE, "BBR MASK=0x%x Addr[0x%x]=0x%x\n",
+@@ -52,7 +45,7 @@ void rtl92s_phy_set_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask,
+ 
+ 	if (bitmask != MASKDWORD) {
+ 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
+-		bitshift = _rtl92s_phy_calculate_bit_shift(bitmask);
++		bitshift = calculate_bit_shift(bitmask);
+ 		data = ((originalvalue & (~bitmask)) | (data << bitshift));
+ 	}
+ 
+@@ -157,7 +150,7 @@ u32 rtl92s_phy_query_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
+ 
+ 	original_value = _rtl92s_phy_rf_serial_read(hw, rfpath, regaddr);
+ 
+-	bitshift = _rtl92s_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
+ 
+ 	spin_unlock(&rtlpriv->locks.rf_lock);
+@@ -188,7 +181,7 @@ void rtl92s_phy_set_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
+ 	if (bitmask != RFREG_OFFSET_MASK) {
+ 		original_value = _rtl92s_phy_rf_serial_read(hw, rfpath,
+ 							    regaddr);
+-		bitshift = _rtl92s_phy_calculate_bit_shift(bitmask);
++		bitshift = calculate_bit_shift(bitmask);
+ 		data = ((original_value & (~bitmask)) | (data << bitshift));
+ 	}
+ 
 -- 
 2.43.0
 
