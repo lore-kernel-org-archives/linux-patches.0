@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AA0604B5;
-	Tue, 23 Jan 2024 01:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97486604B5;
+	Tue, 23 Jan 2024 01:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974700; cv=none; b=XeXE6+vsy6DTm49n+hySIrdNmPgnsjdJRQTYPAYKmNkc3IIFT0wc/UW38VId4eYhDYPdtJxzBt0nomfEs/2/215K9+lR62OIS0sXPcm7Ha5ECbp3YiEeQfdz5ouh3NXFGZ7wwbm/4+IfYawXkpod9l4LFQ3SjqwhF2do8O/2wx4=
+	t=1705974701; cv=none; b=kWPcmoqYfdeN39dllCEN9QTsx+wuRoGuehVUjnu/e+IFoiHIUrTbYMdPQT7nULV563fPvucjo4nt2qPVen5dGmpE+pv1HvU01KDrldxEeZC2s0x/9pAnMf7sChvv+riN3N3pe2AhuCHLS9yLgKBhxaLRm1c3s6OVmwsiGSPE6vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974700; c=relaxed/simple;
-	bh=7ep2YmWZXW8KRZ79Bm404oAtp32AXYpQ1tFriZkZ+Xs=;
+	s=arc-20240116; t=1705974701; c=relaxed/simple;
+	bh=rK96Vhz1x4dbFJK0v139ZCWNU4iTs0RD6P8Sl/RLTQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ov4+XyPC1HMlGr7livI3GVQxdpsuft2wV/aHDqMn9VxZuaHp5QsJcRsn5KF1OJzJFmLCxvhDpo0ypRwc3aH2I9f+srYPcVYW0E01vt5hRDU3jTnbzbWNoLwEIe/plWF2Me92hjK0feRDOHl4/9PwUIX9ANSzY7r6c/wIXf8ywV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wm1jSp9r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ckJBuQxNQFqum6mKdRY+zY+GsIHTC34IImwB5Sxm8zkkZz1HfTXRdPlI0uzBDcNMUkljHjGcbqNOd+2KX9b4SNej9ZLzd2xYi/4hs1MmZCCJC3ZjzYchww/rUzIvAAWI7nrhSIFDgu5PJHh2TwVMLosa8MZJlPFz/Fngk0PTuWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCsky05n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wm1jSp9r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4D0C43394;
-	Tue, 23 Jan 2024 01:51:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCsky05n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E63DC433F1;
+	Tue, 23 Jan 2024 01:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974700;
-	bh=7ep2YmWZXW8KRZ79Bm404oAtp32AXYpQ1tFriZkZ+Xs=;
+	s=korg; t=1705974701;
+	bh=rK96Vhz1x4dbFJK0v139ZCWNU4iTs0RD6P8Sl/RLTQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wm1jSp9rkuc73ixDh4QKu3tsXEoe2KdD9FwE1WgoXWQNQhbValWwdHsgZRZnQQdfa
-	 qMY4pOMoovOKwqjicDdu5iwPxqpbt5ABOxprI+zkB+J6b1hIJB4r7yfCnuXufNMIOF
-	 6aiinN5SNZGi7prsqD203eCd3/RC16Q4kbxkT0AQ=
+	b=tCsky05n4CU+POHZIjRtt4f3YbZr57hZYY7GmYGzygtAJf4kxb/7ZWGr/2sPh/h0y
+	 5KnnblqDU/TzQ46A3QYRnEGSfdWPH8L1dKw7cT9TvA2kqbb5VgecJ7pzeOsHmxz0en
+	 jhIGv16fJtEsJT+EZeyyFx6PwUyNytt2uNgaESOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 231/374] ALSA: scarlett2: Add missing error check to scarlett2_config_save()
-Date: Mon, 22 Jan 2024 15:58:07 -0800
-Message-ID: <20240122235752.745368712@linuxfoundation.org>
+Subject: [PATCH 6.6 105/583] ARM: dts: qcom: sdx65: correct SPMI node name
+Date: Mon, 22 Jan 2024 15:52:36 -0800
+Message-ID: <20240122235815.382006727@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +49,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 5f6ff6931a1c0065a55448108940371e1ac8075f ]
+[ Upstream commit a900ad783f507cb396e402827052e70c0c565ae9 ]
 
-scarlett2_config_save() was ignoring the return value from
-scarlett2_usb(). As this function is not called from user-space we
-can't return the error, so call usb_audio_err() instead.
+Node names should not have vendor prefixes:
 
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Fixes: 9e4d5c1be21f ("ALSA: usb-audio: Scarlett Gen 2 mixer interface")
-Link: https://lore.kernel.org/r/bf0a15332d852d7825fa6da87d2a0d9c0b702053.1703001053.git.g@b4.vu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  qcom-sdx65-mtp.dtb: qcom,spmi@c440000: $nodename:0: 'qcom,spmi@c440000' does not match '^spmi@.*
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230924183103.49487-3-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_scarlett_gen2.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/qcom/qcom-sdx65.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/mixer_scarlett_gen2.c b/sound/usb/mixer_scarlett_gen2.c
-index 53ebabf42472..6e79872e68c4 100644
---- a/sound/usb/mixer_scarlett_gen2.c
-+++ b/sound/usb/mixer_scarlett_gen2.c
-@@ -1213,9 +1213,11 @@ static void scarlett2_config_save(struct usb_mixer_interface *mixer)
- {
- 	__le32 req = cpu_to_le32(SCARLETT2_USB_CONFIG_SAVE);
+diff --git a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
+index 35a887176b3c..271899c861c0 100644
+--- a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
+@@ -530,7 +530,7 @@ restart@c264000 {
+ 			reg = <0x0c264000 0x1000>;
+ 		};
  
--	scarlett2_usb(mixer, SCARLETT2_USB_DATA_CMD,
--		      &req, sizeof(u32),
--		      NULL, 0);
-+	int err = scarlett2_usb(mixer, SCARLETT2_USB_DATA_CMD,
-+				&req, sizeof(u32),
-+				NULL, 0);
-+	if (err < 0)
-+		usb_audio_err(mixer->chip, "config save failed: %d\n", err);
- }
- 
- /* Delayed work to save config */
+-		spmi_bus: qcom,spmi@c440000 {
++		spmi_bus: spmi@c440000 {
+ 			compatible = "qcom,spmi-pmic-arb";
+ 			reg = <0xc440000 0xd00>,
+ 				<0xc600000 0x2000000>,
 -- 
 2.43.0
 
