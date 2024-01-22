@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E131A5A7B8;
-	Tue, 23 Jan 2024 01:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF4B5A7B8;
+	Tue, 23 Jan 2024 01:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974352; cv=none; b=GSTNoBmvpWb+o/2vvhLnk5XCDUbJ5WU8LN+4r3WCOD5vd0Xy8wNNDfKS90j4xZXe3X5ieHCv+6IKECSVAkfW36BTVu1hBCQ2xxrERmMFHcz9oBNUP/gNxKxpHumS+zqZnQByKq4ipxP83RnXTOZzjY5EmdHzqjS1fDd5E3H9mbw=
+	t=1705974352; cv=none; b=CJzCECAQ+du5jaGzL/06SBzjvx3IGogxs/TAEP4qgujfFOau9ecNGD0wkLENv5xqj7Sge2ZKRePsCXVlYgt/UZVGm/PyPIrgbjvS6snnuAvtehGlS/KnBjNxdp0KkLth3155QvCdWHzJboRNOaZmTARhsHSy9V1TtayvYXk7h70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705974352; c=relaxed/simple;
-	bh=fbZRUCrxvH2l9HtJWm3v+o4clJOz/kZUGEia2jAYRk8=;
+	bh=2AXQc3CF+xuzovZsoXOFxhoayCo2/x2pae1JjveM++8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DS3pk0eXEWyUMCOU5W1H+1orH/Gn2VF6i21x2xdxiHPZ7ncjXoh7oe2JRZHIBP8J2RB6ICn9Rpqa9FwDQavOCOBxfW3dBCXO7FHLTA4a0e4r4ywGMUnY4QrfRN6JOurey48tSqOb0obn+xli9jMSHIuk03Jsm7Uk7oer91rLjRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsGt+yxW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NYNRZ0OfLNgWjlzRqzcNe8PUhftdJvnVoedSq2E5aAUaN3bTfdG2n9SG6WPkhQ1wHwWjhJiRlSAEITKQDYIUnMHhwqoBo6+RESjl/jDAMazn6XVsKWjU+NIxLaUuqY8nXFFlC29HKjTGWt2Mrv2RWIRGh6HZDG4K0SVdxKb57NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKyBoRnE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsGt+yxW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCCFC433F1;
-	Tue, 23 Jan 2024 01:45:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKyBoRnE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E98C43399;
+	Tue, 23 Jan 2024 01:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974351;
-	bh=fbZRUCrxvH2l9HtJWm3v+o4clJOz/kZUGEia2jAYRk8=;
+	s=korg; t=1705974352;
+	bh=2AXQc3CF+xuzovZsoXOFxhoayCo2/x2pae1JjveM++8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nsGt+yxWNiycB/vPQLyYpWcD/wAweOMRxuFVeRBKD+mKrIEkMyAhDcgoKOVvM1A2z
-	 AyXWC6eAdsyqma0GXkxR1MWvraJ4acZGIhVC15LcdhmlIhAm7Oo+wzBgojKFz7pjmx
-	 ZSym+FvevygANDGLsa2+N9xjPkQmaHaXin0w/rzQ=
+	b=cKyBoRnEI/nJFyXmUZEd97oyZCjmido9P7I1TGyn1OFrYzim82q8E4HUKEGQD94t8
+	 pTv5vu1DStEG8aqa8x3tUFuMCO9Y2Bre3Hdw9mvVsNtTKzjNc0KPiLuLRX/savivQW
+	 OMNZjcBLDq4Rzj8fUKo7AfQ7ObkaZAURzxogy+HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Hu <huyue2@coolpad.com>,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Antoine Tenart <atenart@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 061/583] erofs: fix memory leak on short-lived bounced pages
-Date: Mon, 22 Jan 2024 15:51:52 -0800
-Message-ID: <20240122235813.993590053@linuxfoundation.org>
+Subject: [PATCH 6.6 048/583] crypto: safexcel - Add error handling for dma_map_sg() calls
+Date: Mon, 22 Jan 2024 15:51:39 -0800
+Message-ID: <20240122235813.608624333@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,48 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 93d6fda7f926451a0fa1121b9558d75ca47e861e ]
+[ Upstream commit 87e02063d07708cac5bfe9fd3a6a242898758ac8 ]
 
-Both MicroLZMA and DEFLATE algorithms can use short-lived pages on
-demand for the overlapped inplace I/O decompression.
+Macro dma_map_sg() may return 0 on error. This patch enables
+checks in case of the macro failure and ensures unmapping of
+previously mapped buffers with dma_unmap_sg().
 
-However, those short-lived pages are actually added to
-`be->compressed_pages`.  Thus, it should be checked instead of
-`pcl->compressed_bvecs`.
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-The LZ4 algorithm doesn't work like this, so it won't be impacted.
-
-Fixes: 67139e36d970 ("erofs: introduce `z_erofs_parse_in_bvecs'")
-Reviewed-by: Yue Hu <huyue2@coolpad.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20231128180431.4116991-1-hsiangkao@linux.alibaba.com
+Fixes: 49186a7d9e46 ("crypto: inside_secure - Avoid dma map if size is zero")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ .../crypto/inside-secure/safexcel_cipher.c    | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index a7e6847f6f8f..a33cd6757f98 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1309,12 +1309,11 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
- 		put_page(page);
- 	} else {
- 		for (i = 0; i < pclusterpages; ++i) {
--			page = pcl->compressed_bvecs[i].page;
-+			/* consider shortlived pages added when decompressing */
-+			page = be->compressed_pages[i];
- 
- 			if (erofs_page_is_managed(sbi, page))
- 				continue;
--
--			/* recycle all individual short-lived pages */
- 			(void)z_erofs_put_shortlivedpage(be->pagepool, page);
- 			WRITE_ONCE(pcl->compressed_bvecs[i].page, NULL);
+diff --git a/drivers/crypto/inside-secure/safexcel_cipher.c b/drivers/crypto/inside-secure/safexcel_cipher.c
+index 272c28b5a088..b83818634ae4 100644
+--- a/drivers/crypto/inside-secure/safexcel_cipher.c
++++ b/drivers/crypto/inside-secure/safexcel_cipher.c
+@@ -742,9 +742,9 @@ static int safexcel_send_req(struct crypto_async_request *base, int ring,
+ 				max(totlen_src, totlen_dst));
+ 			return -EINVAL;
  		}
+-		if (sreq->nr_src > 0)
+-			dma_map_sg(priv->dev, src, sreq->nr_src,
+-				   DMA_BIDIRECTIONAL);
++		if (sreq->nr_src > 0 &&
++		    !dma_map_sg(priv->dev, src, sreq->nr_src, DMA_BIDIRECTIONAL))
++			return -EIO;
+ 	} else {
+ 		if (unlikely(totlen_src && (sreq->nr_src <= 0))) {
+ 			dev_err(priv->dev, "Source buffer not large enough (need %d bytes)!",
+@@ -752,8 +752,9 @@ static int safexcel_send_req(struct crypto_async_request *base, int ring,
+ 			return -EINVAL;
+ 		}
+ 
+-		if (sreq->nr_src > 0)
+-			dma_map_sg(priv->dev, src, sreq->nr_src, DMA_TO_DEVICE);
++		if (sreq->nr_src > 0 &&
++		    !dma_map_sg(priv->dev, src, sreq->nr_src, DMA_TO_DEVICE))
++			return -EIO;
+ 
+ 		if (unlikely(totlen_dst && (sreq->nr_dst <= 0))) {
+ 			dev_err(priv->dev, "Dest buffer not large enough (need %d bytes)!",
+@@ -762,9 +763,11 @@ static int safexcel_send_req(struct crypto_async_request *base, int ring,
+ 			goto unmap;
+ 		}
+ 
+-		if (sreq->nr_dst > 0)
+-			dma_map_sg(priv->dev, dst, sreq->nr_dst,
+-				   DMA_FROM_DEVICE);
++		if (sreq->nr_dst > 0 &&
++		    !dma_map_sg(priv->dev, dst, sreq->nr_dst, DMA_FROM_DEVICE)) {
++			ret = -EIO;
++			goto unmap;
++		}
+ 	}
+ 
+ 	memcpy(ctx->base.ctxr->data, ctx->key, ctx->key_len);
 -- 
 2.43.0
 
