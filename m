@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31334E1AD;
-	Tue, 23 Jan 2024 00:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50ADD4E1AD;
+	Tue, 23 Jan 2024 00:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971397; cv=none; b=XxVFGlRQ7JxXFpd+s7G4RgSqyZc7yWfwlPVbVudwUtw0KlIn+y9yvBvKpr9TljV6bn2TReDNqGGGcoU+EP5MDzeeCHALbENCIUbi737M2TsQ9x1Gh1pIEVdhit0c/VjgCdDPGbkKLYpCPxE8bl4YzeQ8AXKQYVZsIt4A6dSVJRE=
+	t=1705971399; cv=none; b=CxOO9SubUl7eHO7FKrifybCjTcJHDxZZN2aIjTLhzSVYMMFifDVLb7cpiKxarvpZHML9eaO1q4ZGVZQmS/cxon0TZ+73c/brbKnjxg3eXMu1l67pKmHMrxPpHie73VhlkGXOwlpu5NsJyFYSjXNOnfi2KnAo93YqIeRlc3+nsCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971397; c=relaxed/simple;
-	bh=d3WQrNnaBiTeK51nhREj9Q+0Rh2ylG22DCQeGbTDw1Q=;
+	s=arc-20240116; t=1705971399; c=relaxed/simple;
+	bh=MKrwNiNRob3Trknt6JBlzMkHYmLESGk9V2AxpNB8jWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kPy0g4jdooUFLYdEEMZ4PS8+Fk31EPtZcWWFaiHVii40qULU+BMsHwjeQ9qwJ6krdjBs5InoyflqpK9EIYqRlQ1EYBhBuca/uoeu2RpiGDEPfKnP1aKaO8ukX/AZTJzi+6Vjs0BWd++qEO03Cbsk97mdDatwtBaesWZHXiMcLQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9was1Om; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OkUpNONYHM++XI6iTL5C7j8EeU6552YsJL0JvvYc81oghCwAfgfoQdiFyhQ2IImGipbPPjo5fAP7Yd/WW46erjDTU3wz2Cr/9rbtw8gH1NGywJO0lcD3pzEB5ncj88hKMbSIf0y1PDGJTHSxvlug5gxSH4ZUCBQ5uXA/oKn8A7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYkk34VS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9was1Om"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC3BC433C7;
-	Tue, 23 Jan 2024 00:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYkk34VS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBFDBC433C7;
+	Tue, 23 Jan 2024 00:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971396;
-	bh=d3WQrNnaBiTeK51nhREj9Q+0Rh2ylG22DCQeGbTDw1Q=;
+	s=korg; t=1705971399;
+	bh=MKrwNiNRob3Trknt6JBlzMkHYmLESGk9V2AxpNB8jWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z9was1OmMrsdkI+rF5FfDoBNpHX6pYdHfs0MR03BxaqsPzV1qPtUpbK3zcRspFXC0
-	 +BxhnJmDlKIvCBgbbtuc0quC1gxdtaxhpqN9QmsInnL+/pHeyEb+j9ij+bViVJM/v2
-	 RUiy9w9MZOAXI+TjyQHWYJSBMJEkMiB4PByPySng=
+	b=mYkk34VS3TyU23iT5x+ghe+yT5Z9lGhBJqa5mWymPIL735pAU1xRk8WC5hc/jb/Tb
+	 esLOzYUHyGN+mxiC/rxv1a2g/fSaXeMCTQewnG5YVr/gxU1hFW0hcW6/9yaZoBLHgf
+	 rhuFYsMhhIivqIM0k4czLqNyJ6cPApqXNbol5AXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 235/417] ALSA: scarlett2: Add missing error checks to *_ctl_get()
-Date: Mon, 22 Jan 2024 15:56:43 -0800
-Message-ID: <20240122235800.031064785@linuxfoundation.org>
+Subject: [PATCH 5.10 146/286] rcu: Create an unrcu_pointer() to remove __rcu from a pointer
+Date: Mon, 22 Jan 2024 15:57:32 -0800
+Message-ID: <20240122235737.783718691@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,360 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit 50603a67daef161c78c814580d57f7f0be57167e ]
+[ Upstream commit 76c8eaafe4f061f3790112842a2fbb297e4bea88 ]
 
-The *_ctl_get() functions which call scarlett2_update_*() were not
-checking the return value. Fix to check the return value and pass to
-the caller.
+The xchg() and cmpxchg() functions are sometimes used to carry out RCU
+updates.  Unfortunately, this can result in sparse warnings for both
+the old-value and new-value arguments, as well as for the return value.
+The arguments can be dealt with using RCU_INITIALIZER():
 
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Fixes: 9e4d5c1be21f ("ALSA: usb-audio: Scarlett Gen 2 mixer interface")
-Link: https://lore.kernel.org/r/32a5fdc83b05fa74e0fcdd672fbf71d75c5f0a6d.1703001053.git.g@b4.vu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+	old_p = xchg(&p, RCU_INITIALIZER(new_p));
+
+But a sparse warning still remains due to assigning the __rcu pointer
+returned from xchg to the (most likely) non-__rcu pointer old_p.
+
+This commit therefore provides an unrcu_pointer() macro that strips
+the __rcu.  This macro can be used as follows:
+
+	old_p = unrcu_pointer(xchg(&p, RCU_INITIALIZER(new_p)));
+
+Reported-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Stable-dep-of: 5f35a624c1e3 ("drm/nouveau/fence:: fix warning directly dereferencing a rcu pointer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_scarlett_gen2.c | 182 +++++++++++++++++++++++---------
- 1 file changed, 130 insertions(+), 52 deletions(-)
+ include/linux/rcupdate.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/sound/usb/mixer_scarlett_gen2.c b/sound/usb/mixer_scarlett_gen2.c
-index f8a2ba479b7c..eedac43eee7d 100644
---- a/sound/usb/mixer_scarlett_gen2.c
-+++ b/sound/usb/mixer_scarlett_gen2.c
-@@ -1798,14 +1798,20 @@ static int scarlett2_sync_ctl_get(struct snd_kcontrol *kctl,
- 	struct usb_mixer_elem_info *elem = kctl->private_data;
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
-+	int err = 0;
+diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
+index ef8d56b18da6..8716a1706351 100644
+--- a/include/linux/rcupdate.h
++++ b/include/linux/rcupdate.h
+@@ -366,6 +366,20 @@ static inline void rcu_preempt_sleep_check(void) { }
+ #define rcu_check_sparse(p, space)
+ #endif /* #else #ifdef __CHECKER__ */
  
- 	mutex_lock(&private->data_mutex);
--	if (private->sync_updated)
--		scarlett2_update_sync(mixer);
++/**
++ * unrcu_pointer - mark a pointer as not being RCU protected
++ * @p: pointer needing to lose its __rcu property
++ *
++ * Converts @p from an __rcu pointer to a __kernel pointer.
++ * This allows an __rcu pointer to be used with xchg() and friends.
++ */
++#define unrcu_pointer(p)						\
++({									\
++	typeof(*p) *_________p1 = (typeof(*p) *__force)(p);		\
++	rcu_check_sparse(p, __rcu); 					\
++	((typeof(*p) __force __kernel *)(_________p1)); 		\
++})
 +
-+	if (private->sync_updated) {
-+		err = scarlett2_update_sync(mixer);
-+		if (err < 0)
-+			goto unlock;
-+	}
- 	ucontrol->value.enumerated.item[0] = private->sync;
--	mutex_unlock(&private->data_mutex);
- 
--	return 0;
-+unlock:
-+	mutex_unlock(&private->data_mutex);
-+	return err;
- }
- 
- static const struct snd_kcontrol_new scarlett2_sync_ctl = {
-@@ -1888,14 +1894,20 @@ static int scarlett2_master_volume_ctl_get(struct snd_kcontrol *kctl,
- 	struct usb_mixer_elem_info *elem = kctl->private_data;
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
-+	int err = 0;
- 
- 	mutex_lock(&private->data_mutex);
--	if (private->vol_updated)
--		scarlett2_update_volumes(mixer);
--	mutex_unlock(&private->data_mutex);
- 
-+	if (private->vol_updated) {
-+		err = scarlett2_update_volumes(mixer);
-+		if (err < 0)
-+			goto unlock;
-+	}
- 	ucontrol->value.integer.value[0] = private->master_vol;
--	return 0;
-+
-+unlock:
-+	mutex_unlock(&private->data_mutex);
-+	return err;
- }
- 
- static int line_out_remap(struct scarlett2_data *private, int index)
-@@ -1921,14 +1933,20 @@ static int scarlett2_volume_ctl_get(struct snd_kcontrol *kctl,
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
- 	int index = line_out_remap(private, elem->control);
-+	int err = 0;
- 
- 	mutex_lock(&private->data_mutex);
--	if (private->vol_updated)
--		scarlett2_update_volumes(mixer);
--	mutex_unlock(&private->data_mutex);
- 
-+	if (private->vol_updated) {
-+		err = scarlett2_update_volumes(mixer);
-+		if (err < 0)
-+			goto unlock;
-+	}
- 	ucontrol->value.integer.value[0] = private->vol[index];
--	return 0;
-+
-+unlock:
-+	mutex_unlock(&private->data_mutex);
-+	return err;
- }
- 
- static int scarlett2_volume_ctl_put(struct snd_kcontrol *kctl,
-@@ -1995,14 +2013,20 @@ static int scarlett2_mute_ctl_get(struct snd_kcontrol *kctl,
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
- 	int index = line_out_remap(private, elem->control);
-+	int err = 0;
- 
- 	mutex_lock(&private->data_mutex);
--	if (private->vol_updated)
--		scarlett2_update_volumes(mixer);
--	mutex_unlock(&private->data_mutex);
- 
-+	if (private->vol_updated) {
-+		err = scarlett2_update_volumes(mixer);
-+		if (err < 0)
-+			goto unlock;
-+	}
- 	ucontrol->value.integer.value[0] = private->mute_switch[index];
--	return 0;
-+
-+unlock:
-+	mutex_unlock(&private->data_mutex);
-+	return err;
- }
- 
- static int scarlett2_mute_ctl_put(struct snd_kcontrol *kctl,
-@@ -2248,14 +2272,20 @@ static int scarlett2_level_enum_ctl_get(struct snd_kcontrol *kctl,
- 	const struct scarlett2_device_info *info = private->info;
- 
- 	int index = elem->control + info->level_input_first;
-+	int err = 0;
- 
- 	mutex_lock(&private->data_mutex);
--	if (private->input_other_updated)
--		scarlett2_update_input_other(mixer);
-+
-+	if (private->input_other_updated) {
-+		err = scarlett2_update_input_other(mixer);
-+		if (err < 0)
-+			goto unlock;
-+	}
- 	ucontrol->value.enumerated.item[0] = private->level_switch[index];
--	mutex_unlock(&private->data_mutex);
- 
--	return 0;
-+unlock:
-+	mutex_unlock(&private->data_mutex);
-+	return err;
- }
- 
- static int scarlett2_level_enum_ctl_put(struct snd_kcontrol *kctl,
-@@ -2306,15 +2336,21 @@ static int scarlett2_pad_ctl_get(struct snd_kcontrol *kctl,
- 	struct usb_mixer_elem_info *elem = kctl->private_data;
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
-+	int err = 0;
- 
- 	mutex_lock(&private->data_mutex);
--	if (private->input_other_updated)
--		scarlett2_update_input_other(mixer);
-+
-+	if (private->input_other_updated) {
-+		err = scarlett2_update_input_other(mixer);
-+		if (err < 0)
-+			goto unlock;
-+	}
- 	ucontrol->value.integer.value[0] =
- 		private->pad_switch[elem->control];
--	mutex_unlock(&private->data_mutex);
- 
--	return 0;
-+unlock:
-+	mutex_unlock(&private->data_mutex);
-+	return err;
- }
- 
- static int scarlett2_pad_ctl_put(struct snd_kcontrol *kctl,
-@@ -2364,14 +2400,20 @@ static int scarlett2_air_ctl_get(struct snd_kcontrol *kctl,
- 	struct usb_mixer_elem_info *elem = kctl->private_data;
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
-+	int err = 0;
- 
- 	mutex_lock(&private->data_mutex);
--	if (private->input_other_updated)
--		scarlett2_update_input_other(mixer);
-+
-+	if (private->input_other_updated) {
-+		err = scarlett2_update_input_other(mixer);
-+		if (err < 0)
-+			goto unlock;
-+	}
- 	ucontrol->value.integer.value[0] = private->air_switch[elem->control];
--	mutex_unlock(&private->data_mutex);
- 
--	return 0;
-+unlock:
-+	mutex_unlock(&private->data_mutex);
-+	return err;
- }
- 
- static int scarlett2_air_ctl_put(struct snd_kcontrol *kctl,
-@@ -2421,15 +2463,21 @@ static int scarlett2_phantom_ctl_get(struct snd_kcontrol *kctl,
- 	struct usb_mixer_elem_info *elem = kctl->private_data;
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
-+	int err = 0;
- 
- 	mutex_lock(&private->data_mutex);
--	if (private->input_other_updated)
--		scarlett2_update_input_other(mixer);
-+
-+	if (private->input_other_updated) {
-+		err = scarlett2_update_input_other(mixer);
-+		if (err < 0)
-+			goto unlock;
-+	}
- 	ucontrol->value.integer.value[0] =
- 		private->phantom_switch[elem->control];
--	mutex_unlock(&private->data_mutex);
- 
--	return 0;
-+unlock:
-+	mutex_unlock(&private->data_mutex);
-+	return err;
- }
- 
- static int scarlett2_phantom_ctl_put(struct snd_kcontrol *kctl,
-@@ -2601,14 +2649,20 @@ static int scarlett2_direct_monitor_ctl_get(
- 	struct usb_mixer_elem_info *elem = kctl->private_data;
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = elem->head.mixer->private_data;
-+	int err = 0;
- 
- 	mutex_lock(&private->data_mutex);
--	if (private->monitor_other_updated)
--		scarlett2_update_monitor_other(mixer);
-+
-+	if (private->monitor_other_updated) {
-+		err = scarlett2_update_monitor_other(mixer);
-+		if (err < 0)
-+			goto unlock;
-+	}
- 	ucontrol->value.enumerated.item[0] = private->direct_monitor_switch;
--	mutex_unlock(&private->data_mutex);
- 
--	return 0;
-+unlock:
-+	mutex_unlock(&private->data_mutex);
-+	return err;
- }
- 
- static int scarlett2_direct_monitor_ctl_put(
-@@ -2708,14 +2762,20 @@ static int scarlett2_speaker_switch_enum_ctl_get(
- 	struct usb_mixer_elem_info *elem = kctl->private_data;
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
-+	int err = 0;
- 
- 	mutex_lock(&private->data_mutex);
--	if (private->monitor_other_updated)
--		scarlett2_update_monitor_other(mixer);
-+
-+	if (private->monitor_other_updated) {
-+		err = scarlett2_update_monitor_other(mixer);
-+		if (err < 0)
-+			goto unlock;
-+	}
- 	ucontrol->value.enumerated.item[0] = private->speaker_switching_switch;
--	mutex_unlock(&private->data_mutex);
- 
--	return 0;
-+unlock:
-+	mutex_unlock(&private->data_mutex);
-+	return err;
- }
- 
- /* when speaker switching gets enabled, switch the main/alt speakers
-@@ -2863,14 +2923,20 @@ static int scarlett2_talkback_enum_ctl_get(
- 	struct usb_mixer_elem_info *elem = kctl->private_data;
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
-+	int err = 0;
- 
- 	mutex_lock(&private->data_mutex);
--	if (private->monitor_other_updated)
--		scarlett2_update_monitor_other(mixer);
-+
-+	if (private->monitor_other_updated) {
-+		err = scarlett2_update_monitor_other(mixer);
-+		if (err < 0)
-+			goto unlock;
-+	}
- 	ucontrol->value.enumerated.item[0] = private->talkback_switch;
--	mutex_unlock(&private->data_mutex);
- 
--	return 0;
-+unlock:
-+	mutex_unlock(&private->data_mutex);
-+	return err;
- }
- 
- static int scarlett2_talkback_enum_ctl_put(
-@@ -3018,14 +3084,20 @@ static int scarlett2_dim_mute_ctl_get(struct snd_kcontrol *kctl,
- 	struct usb_mixer_elem_info *elem = kctl->private_data;
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
-+	int err = 0;
- 
- 	mutex_lock(&private->data_mutex);
--	if (private->vol_updated)
--		scarlett2_update_volumes(mixer);
--	mutex_unlock(&private->data_mutex);
- 
-+	if (private->vol_updated) {
-+		err = scarlett2_update_volumes(mixer);
-+		if (err < 0)
-+			goto unlock;
-+	}
- 	ucontrol->value.integer.value[0] = private->dim_mute[elem->control];
--	return 0;
-+
-+unlock:
-+	mutex_unlock(&private->data_mutex);
-+	return err;
- }
- 
- static int scarlett2_dim_mute_ctl_put(struct snd_kcontrol *kctl,
-@@ -3396,14 +3468,20 @@ static int scarlett2_mux_src_enum_ctl_get(struct snd_kcontrol *kctl,
- 	struct usb_mixer_interface *mixer = elem->head.mixer;
- 	struct scarlett2_data *private = mixer->private_data;
- 	int index = line_out_remap(private, elem->control);
-+	int err = 0;
- 
- 	mutex_lock(&private->data_mutex);
--	if (private->mux_updated)
--		scarlett2_usb_get_mux(mixer);
-+
-+	if (private->mux_updated) {
-+		err = scarlett2_usb_get_mux(mixer);
-+		if (err < 0)
-+			goto unlock;
-+	}
- 	ucontrol->value.enumerated.item[0] = private->mux[index];
--	mutex_unlock(&private->data_mutex);
- 
--	return 0;
-+unlock:
-+	mutex_unlock(&private->data_mutex);
-+	return err;
- }
- 
- static int scarlett2_mux_src_enum_ctl_put(struct snd_kcontrol *kctl,
+ #define __rcu_access_pointer(p, space) \
+ ({ \
+ 	typeof(*p) *_________p1 = (typeof(*p) *__force)READ_ONCE(p); \
 -- 
 2.43.0
 
