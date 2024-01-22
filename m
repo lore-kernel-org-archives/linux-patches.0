@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474AA5D8F9;
-	Tue, 23 Jan 2024 01:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1AF5D8F9;
+	Tue, 23 Jan 2024 01:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974391; cv=none; b=KNB+fOiyu+u5icCSLeVt9ZtPfGZNam6oXSrBSD9x+rq0aeIKu1MThSGoSr1cY/nqWQ5i3cDjjA1EFBi0Ywj3x5aA09JvlPasxVcWYXAnc/4TcEp10txA+rQi5usB4uFbuRJT8lxO/BFGJO+T8qt/NIukEGaPKXjcUNn/n9hZTqw=
+	t=1705974391; cv=none; b=EZpI4QFgv4vOeImWiRs0V5SXBE0obHXIteyeXJJU4uNriV/i+yercrl2AoWuRm80Dx9ljcW1RfC8spGgfLJMupESPPGtNSdltpMpkpk6gDpmIByTUBLVIVjdiriuoV3ulZDuSM0rCbcIMOcTA/mfZGLzC/3jfwjHrUR3zGT/xDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705974391; c=relaxed/simple;
-	bh=FPA65sa25pXIEJ1GT9KuHhIK4ZwWFBvQmAkHq6+9e44=;
+	bh=PKBeKeQ6D+tmqJulcy5mxx96ts4qyKRPnWjx/gEUQhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHR0chMDuXCpFJUkdpdkaN6OOWN0g1DU9WcreZXpwXqbsR0xxeRTGOF1QCXDSmRIc0mtBXOzT683Qz+ZfiqxE5WtqHR27tffsRcu8KMO9ZV+SNeBFH+Yho9yeO9gOfl5hG3AOKyVblGEGH/cDsNLpVsaU9EFVREcWtpBM2I6RjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQ6d9Dmg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dgav1R88dA45ObhAX6ao1qTjzdTzPTOUcDufBPVnblieLLfQRy2P3U7l7Ew+wD30lhnVO6jiB5N93DJyhAWzdjelUKH9xXjhkYQGgG/J6lIaeMAX2zyjAWAmmmj+xXvqKwGLn6qlZKcm9Of09WqnuEJdf0acPKC7tLAJb1jiw8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xf84YLZ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQ6d9Dmg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11876C433C7;
-	Tue, 23 Jan 2024 01:46:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xf84YLZ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7919EC433C7;
+	Tue, 23 Jan 2024 01:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974390;
-	bh=FPA65sa25pXIEJ1GT9KuHhIK4ZwWFBvQmAkHq6+9e44=;
+	s=korg; t=1705974391;
+	bh=PKBeKeQ6D+tmqJulcy5mxx96ts4qyKRPnWjx/gEUQhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQ6d9Dmga5gVes18z8Vm2h/+MGDkVbYp7EF1ay5hlXHiyAf74eSx2BGZvarkmE/0G
-	 RTSOl78nfBj547RPkW+xvOWR9r9WrHJ8mOPvKUMg3HpIoJn3IB66Pj8uH++mqpzrN+
-	 FYU14a6jgZt6lPNodHYhiHSqaYVirDuIb/lB8OpM=
+	b=xf84YLZ72MJ1xdtMPKtpGPt7Cq0/hIfRFwSsQbJkAxo9Zy0G20vHPJ6azXgpSZ9m1
+	 HM1rohiibfyGhWVuLc0+t9DLcgK7tRVM9AC88zr/v/TFbUQ6V9367jGypGalhCPk3I
+	 dq2T9voUePA/K3x9fOh5eW10QlGg2eRGj07fxRiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David McKay <david.mckay@codasip.com>,
-	Stuart Menefy <stuart.menefy@codasip.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/583] asm-generic: Fix 32 bit __generic_cmpxchg_local
-Date: Mon, 22 Jan 2024 15:52:12 -0800
-Message-ID: <20240122235814.632397807@linuxfoundation.org>
+Subject: [PATCH 5.15 206/374] media: dvbdev: drop refcount on error path in dvb_device_open()
+Date: Mon, 22 Jan 2024 15:57:42 -0800
+Message-ID: <20240122235751.782706492@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +47,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David McKay <david.mckay@codasip.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit d93cca2f3109f88c94a32d3322ec8b2854a9c339 ]
+[ Upstream commit a2dd235df435a05d389240be748909ada91201d2 ]
 
-Commit 656e9007ef58 ("asm-generic: avoid __generic_cmpxchg_local
-warnings") introduced a typo that means the code is incorrect for 32 bit
-values. It will work fine for postive numbers, but will fail for
-negative numbers on a system where longs are 64 bit.
+If call to file->f_op->open() fails, then call dvb_device_put(dvbdev).
 
-Fixes: 656e9007ef58 ("asm-generic: avoid __generic_cmpxchg_local warnings")
-Signed-off-by: David McKay <david.mckay@codasip.com>
-Signed-off-by: Stuart Menefy <stuart.menefy@codasip.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 0fc044b2b5e2 ("media: dvbdev: adopts refcnt to avoid UAF")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/cmpxchg-local.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/dvb-core/dvbdev.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/asm-generic/cmpxchg-local.h b/include/asm-generic/cmpxchg-local.h
-index 3df9f59a544e..f27d66fdc00a 100644
---- a/include/asm-generic/cmpxchg-local.h
-+++ b/include/asm-generic/cmpxchg-local.h
-@@ -34,7 +34,7 @@ static inline unsigned long __generic_cmpxchg_local(volatile void *ptr,
- 			*(u16 *)ptr = (new & 0xffffu);
- 		break;
- 	case 4: prev = *(u32 *)ptr;
--		if (prev == (old & 0xffffffffffu))
-+		if (prev == (old & 0xffffffffu))
- 			*(u32 *)ptr = (new & 0xffffffffu);
- 		break;
- 	case 8: prev = *(u64 *)ptr;
+diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
+index 2ff8a1b776fb..3a83e8e09256 100644
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -114,6 +114,8 @@ static int dvb_device_open(struct inode *inode, struct file *file)
+ 			err = file->f_op->open(inode, file);
+ 		up_read(&minor_rwsem);
+ 		mutex_unlock(&dvbdev_mutex);
++		if (err)
++			dvb_device_put(dvbdev);
+ 		return err;
+ 	}
+ fail:
 -- 
 2.43.0
 
