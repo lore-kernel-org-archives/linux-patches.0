@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA686A320;
-	Tue, 23 Jan 2024 02:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2205D6A03B;
+	Tue, 23 Jan 2024 02:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975335; cv=none; b=gClyMcXoPSMIYe0uZHG0LR4Vjlyw51OXQ30rN//peGWB42muJHoFAKEW3jXk/5U2anr5YddfJecwoVz7p5Cb2E7aoUVpVNnH+xN6TI8iZIMZ7RhmyM1B+ngU1i3aglMcVuMRrCg+XptZcz1eakBgNL8Q4V00TI4Yn1LLQqu47N0=
+	t=1705975337; cv=none; b=e4h+tNYYiLl0oAD7h1E42okICfzPsUIoPcKBJ1xya4iCFlOhVrKYXimkuBucRpe3m0/nriOlfLi7ddhLDiJyH5ilR0yeHIu2zpkfNFPg8nfMLMglpEL9HXl5GvCj5vpQRUM9NTreSF65sW5iA4D+YpVcWmzdsjKEmDXI2NcafgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975335; c=relaxed/simple;
-	bh=XmWLCvI2rZ2MChlFG4+AHcXwhp7R46CYO4mwQRO49Z8=;
+	s=arc-20240116; t=1705975337; c=relaxed/simple;
+	bh=DH1R3A5mRFi3T6MFY6KR4UCynwpXjq1k3gzAKtsvk4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pa549XyvH8vCjy9YVpGWivlzYzLNc+leif3/BBROZ3S39ucaWUWXhnQcWq0vMwaIecJgrCRQuKOmZrImCiX+t1z3pYYrL+fb7khfGljT7vDiYFR5OEsSLE4KfcWG5LLx2Mqy8Ty9cImgo7hPFnmaIcMzOaa4CFgihsnPJw3+1oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HnxXodOc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ICcI0yOHc4Q3lFY1P1SFNQ5WPh/br+143RKAEy5fNjQrMWOs35XdncyV1Id2OPjtO484iFG8oL6x5xbXHjgV5Q4QnnjR9rueDN6fRFHmYFsIEM9OQmaLbElFySGQpJxh3+Umimi6r2gcYQkhXbrPe0K+uExVwtYsb+Iie2V1SUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ij66JbXX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HnxXodOc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5700C43390;
-	Tue, 23 Jan 2024 02:02:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ij66JbXX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16E0C43390;
+	Tue, 23 Jan 2024 02:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975335;
-	bh=XmWLCvI2rZ2MChlFG4+AHcXwhp7R46CYO4mwQRO49Z8=;
+	s=korg; t=1705975337;
+	bh=DH1R3A5mRFi3T6MFY6KR4UCynwpXjq1k3gzAKtsvk4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HnxXodOcY2rIgGgU97lFvlVgqXiNqd5tsSBseTVv19bRFUvqV6KW0CMdC86bhffTe
-	 zxLoXS/oNNFiM59uDcROAY+o3PAA/dyxORPhi14MFLVtqQVJlR7PbN8DPHm+JtOvJL
-	 xAdB+LJA6wyxUqJanvd9OnFLEuZ8Qtt7nhDcPOsw=
+	b=Ij66JbXXTD7ejc6YOkzcWNV0yNRkPPQRuX1bWIaqoaAydWB0cNXfU9cQbwHi0/zHc
+	 mYkmN+dqPeZ6kGujrWg/2XpWyYveJqffUDRgtllBjvKbf9WiOzNhDQut3WmHRk+UuK
+	 hTslHhzWi1PKIzyqlISaOyZ21BJjNJ516ltUCwNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 297/583] clk: sp7021: fix return value check in sp7021_clk_probe()
-Date: Mon, 22 Jan 2024 15:55:48 -0800
-Message-ID: <20240122235821.102722845@linuxfoundation.org>
+Subject: [PATCH 6.6 298/583] drivers: clk: zynqmp: calculate closest mux rate
+Date: Mon, 22 Jan 2024 15:55:49 -0800
+Message-ID: <20240122235821.138469117@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,48 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
 
-[ Upstream commit 1004c346a2b7393fce37dd1f320555e0a0d71e3f ]
+[ Upstream commit b782921ddd7f84f524723090377903f399fdbbcb ]
 
-devm_platform_ioremap_resource() never returns NULL pointer,
-it will return ERR_PTR() when it fails, so replace the check
-with IS_ERR().
+Currently zynqmp clock driver is not calculating closest mux rate and
+because of that Linux is not setting proper frequency for CPU and
+not able to set given frequency for dynamic frequency scaling.
 
-Fixes: d54c1fd4a51e ("clk: Add Sunplus SP7021 clock driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20231128133016.2494699-1-yangyingliang@huawei.com
+E.g., In current logic initial acpu clock parent and frequency as below
+apll1                  0    0    0  2199999978    0     0  50000      Y
+    acpu0_mux          0    0    0  2199999978    0     0  50000      Y
+        acpu0_idiv1    0    0    0  2199999978    0     0  50000      Y
+            acpu0      0    0    0  2199999978    0     0  50000      Y
+
+After changing acpu frequency to 549999994 Hz using CPU freq scaling its
+selecting incorrect parent which is not closest frequency.
+rpll_to_xpd            0    0    0  1599999984    0     0  50000      Y
+    acpu0_mux          0    0    0  1599999984    0     0  50000      Y
+        acpu0_div1     0    0    0   533333328    0     0  50000      Y
+            acpu0      0    0    0   533333328    0     0  50000      Y
+
+Parent should remain same since 549999994 = 2199999978 / 4.
+
+So use __clk_mux_determine_rate_closest() generic function to calculate
+closest rate for mux clock. After this change its selecting correct
+parent and correct clock rate.
+apll1                  0    0    0  2199999978    0     0  50000      Y
+    acpu0_mux          0    0    0  2199999978    0     0  50000      Y
+        acpu0_div1     0    0    0   549999995    0     0  50000      Y
+            acpu0      0    0    0   549999995    0     0  50000      Y
+
+Fixes: 3fde0e16d016 ("drivers: clk: Add ZynqMP clock driver")
+Signed-off-by: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
+Link: https://lore.kernel.org/r/20231129112916.23125-2-jay.buddhabhatti@amd.com
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-sp7021.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/clk/zynqmp/clk-mux-zynqmp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/clk-sp7021.c b/drivers/clk/clk-sp7021.c
-index 01d3c4c7b0b2..7cb7d501d7a6 100644
---- a/drivers/clk/clk-sp7021.c
-+++ b/drivers/clk/clk-sp7021.c
-@@ -604,14 +604,14 @@ static int sp7021_clk_probe(struct platform_device *pdev)
- 	int i;
+diff --git a/drivers/clk/zynqmp/clk-mux-zynqmp.c b/drivers/clk/zynqmp/clk-mux-zynqmp.c
+index 60359333f26d..9b5d3050b742 100644
+--- a/drivers/clk/zynqmp/clk-mux-zynqmp.c
++++ b/drivers/clk/zynqmp/clk-mux-zynqmp.c
+@@ -89,7 +89,7 @@ static int zynqmp_clk_mux_set_parent(struct clk_hw *hw, u8 index)
+ static const struct clk_ops zynqmp_clk_mux_ops = {
+ 	.get_parent = zynqmp_clk_mux_get_parent,
+ 	.set_parent = zynqmp_clk_mux_set_parent,
+-	.determine_rate = __clk_mux_determine_rate,
++	.determine_rate = __clk_mux_determine_rate_closest,
+ };
  
- 	clk_base = devm_platform_ioremap_resource(pdev, 0);
--	if (!clk_base)
--		return -ENXIO;
-+	if (IS_ERR(clk_base))
-+		return PTR_ERR(clk_base);
- 	pll_base = devm_platform_ioremap_resource(pdev, 1);
--	if (!pll_base)
--		return -ENXIO;
-+	if (IS_ERR(pll_base))
-+		return PTR_ERR(pll_base);
- 	sys_base = devm_platform_ioremap_resource(pdev, 2);
--	if (!sys_base)
--		return -ENXIO;
-+	if (IS_ERR(sys_base))
-+		return PTR_ERR(sys_base);
- 
- 	/* enable default clks */
- 	for (i = 0; i < ARRAY_SIZE(sp_clken); i++)
+ static const struct clk_ops zynqmp_clk_mux_ro_ops = {
 -- 
 2.43.0
 
