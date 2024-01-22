@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D3514A098;
-	Tue, 23 Jan 2024 00:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE5414A09C;
+	Tue, 23 Jan 2024 00:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969199; cv=none; b=LD1AfUjX25xvl3oD3cdqAVpQieJJ3ymm6wHQncKcFvFnpuauykwWMH1FZibb7ujW8PLW0X20GoYMHlKgqhwPCsc3SzxTojam9vRInx894jeKnrsyi7I4deoIpZOH/By4sAuJawqc+2KuIVmncyKuF9+MsvK0iBfJrddOfqbWlfo=
+	t=1705969200; cv=none; b=tSkd/r1iEBr+W3iMQUgiMURVUIYBGxIIwunth93tpfI9s4npKk9NT32AWQ3fxTlufwoVyXMflkHQqKEeqfDqr0zvyX+2SNQicSidSAC5sMWhW0JTFyanAgp9gBoSq/ahh9WiXrKaBA1GxJod3Nxoql5zWQoGdDPrR8TONTN/mn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969199; c=relaxed/simple;
-	bh=0iULTJcoVxFpkRocYFBfdrdDl2XahsJiHLjVnpahO9w=;
+	s=arc-20240116; t=1705969200; c=relaxed/simple;
+	bh=jmdQGdeqraQ5Wekpx5vz92EVIoFk3lCIodWTDS6nkFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tr6BInGnleccx67bzaaLGNtHjCdURLTYpGTr7Wm+GJFMC8m0r3dTWfEcsi/pfl5WxiQZ8MXxS4tWv45n3JWf69/IUvlRh46Rs5R53AbgvFYpTb5M1tjllrgF+MISOkrc0myAYEbvzFFqQTZfLgLaQopIinQpkPQjAXDgRnyTYlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcno3Oad; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OFZsYcUotw/gdRAG/R3S4M//aBN64Ewe+FTE1u1BAAhuMAWO9bsMUJIg9YrogSIjwdlm0hdrnJgSnd0n8WrsRHWblYQlAGs+I7SBXluhZbBIv9RUWounf5eYepqx51NTA3IQPVmt4y0hdU1lXpU8/t26Yq88HMe2zheDwopAvVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=laYL/qCu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcno3Oad"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CFAC433C7;
-	Tue, 23 Jan 2024 00:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="laYL/qCu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49988C433C7;
+	Tue, 23 Jan 2024 00:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969199;
-	bh=0iULTJcoVxFpkRocYFBfdrdDl2XahsJiHLjVnpahO9w=;
+	s=korg; t=1705969200;
+	bh=jmdQGdeqraQ5Wekpx5vz92EVIoFk3lCIodWTDS6nkFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qcno3OadkCcXqGeyYwiGSb7kt8gbsGfi1rJ9J/t21q8erP/42NN3HHm+pWCgGA6MK
-	 E9x5TLkgaiKHBXj3Gh2nn9JFq65LSFPQW8gFOSQyNviCmTNxeM3IYAuMf0s7CkoOlW
-	 UXZwoIv9dOqdcO5QLA280sU31+5x0eqNOTa8uDz8=
+	b=laYL/qCu60F2S7C1bbZl1GFFx2FqEhUj+0FvUzMDAOkJDQbADv+P5hB+zb2mxNpJf
+	 bwNAqR1O180HTRocPat+OpuFA1wVKoCdG4Rly6k+x9LnBdH+c8npeJnOeyvp8fcamO
+	 KSbuoWr/noW79u1AEsgf4Mqhcs0SRqwshSGnEwuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 093/641] arm64: dts: qcom: sc8280xp-x13s: Use the correct DP PHY compatible
-Date: Mon, 22 Jan 2024 15:49:57 -0800
-Message-ID: <20240122235820.952172894@linuxfoundation.org>
+Subject: [PATCH 6.7 094/641] arm64: dts: qcom: sc8280xp-x13s: add missing camera LED pin config
+Date: Mon, 22 Jan 2024 15:49:58 -0800
+Message-ID: <20240122235820.978801428@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,37 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 0cd080dd6d08817c9980d2069197b066636b0f23 ]
+[ Upstream commit a3457cc5bc30ad053c90ae9f14e9b7723d204a98 ]
 
-The DP PHY needs different settings when an eDP display is used.
-Make sure these apply on the X13s.
+Add the missing pin configuration for the recently added camera
+indicator LED.
 
-FWIW
-I could not notice any user-facing change stemming from this commit.
-
-Fixes: f48c70b111b4 ("arm64: dts: qcom: sc8280xp-x13s: enable eDP display")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230929-topic-x13s_edpphy-v1-1-ce59f9eb4226@linaro.org
+Fixes: 1c63dd1c5fda ("arm64: dts: qcom: sc8280xp-x13s: Add camera activity LED")
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20231003093647.3840-1-johan+linaro@kernel.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 1 +
- 1 file changed, 1 insertion(+)
+ .../boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 38edaf51aa34..6a4c6cc19c09 100644
+index 6a4c6cc19c09..f2055899ae7a 100644
 --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
 +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -601,6 +601,7 @@ mdss0_dp3_out: endpoint {
- };
+@@ -82,6 +82,9 @@ switch-lid {
+ 	leds {
+ 		compatible = "gpio-leds";
  
- &mdss0_dp3_phy {
-+	compatible = "qcom,sc8280xp-edp-phy";
- 	vdda-phy-supply = <&vreg_l6b>;
- 	vdda-pll-supply = <&vreg_l3b>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&cam_indicator_en>;
++
+ 		led-camera-indicator {
+ 			label = "white:camera-indicator";
+ 			function = LED_FUNCTION_INDICATOR;
+@@ -1278,6 +1281,13 @@ hstp-sw-ctrl-pins {
+ 		};
+ 	};
  
++	cam_indicator_en: cam-indicator-en-state {
++		pins = "gpio28";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
+ 	edp_reg_en: edp-reg-en-state {
+ 		pins = "gpio25";
+ 		function = "gpio";
 -- 
 2.43.0
 
