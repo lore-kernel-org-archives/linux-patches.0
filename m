@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810B44F211;
-	Tue, 23 Jan 2024 00:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB3A4E1D5;
+	Tue, 23 Jan 2024 00:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969778; cv=none; b=GwI4Ip5okP3qJFF8pty8HKrYrB9T1zzU5haiVcS0NQgxtg+X8DlhPS2/UWBlGcwszsJaVv/rDHL6O0jJ7yZPSuGdepvt525ieo9ZgjeJ62rKh8H+kkF993jlwkt8KKQVT9Dw/KXML1vlMPurDyrdOnOys89UNVRyowMwwQGg0s4=
+	t=1705969779; cv=none; b=n3zagJrq0E1XvoHdq7qvnqIC0XkSI1PDRpGrSRkNabOxnUd3JGYBSoK9yWYy/aWrKuHlMuwwITj3PuCWoFP3Mwk2mhOyKtZleQ+kwYw+x2Wzwms3O7xJfofjRhfzT3v+HWjb41BICnZZmYJceqqKLEUh4KDv8V7P/R3sjBnU7eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969778; c=relaxed/simple;
-	bh=Ox2jOULpuEVECoTLz9daIkKenRAK+Ghrl0PuxNKlzCQ=;
+	s=arc-20240116; t=1705969779; c=relaxed/simple;
+	bh=L10JW2MnL3F7lL75ZHTM9ArefxfiuZV9iH+SY36MUmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BsWbYF/qxs0hXiOGS+92NKA8nWywHLK2u/iWft7gZg83+G5X7YnmlT9fS+rR6KgVjKdio0K7nEVeV6V7poTm3lvAcALy9eJHBWRnGZkUBT6rZVDqYETioT9j2B/XYjqzaxUSkTOTRKLYkaDbslPMv3PcKuIFcOz6GXGJ6WPuxSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSuWSMmr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J0aUzgEhWTG618qX2nY2k7uOi9AmvsWEI8Shm8TMJ4fWxTPLN4y1q1BPlEvAo4+PgjcQ7bh06OMztiS461sl0j6SXv/cB3KOrwy1nkZcNGWAuaFFvFqLGwtYooCextR3h+P7qYUwcIVPpxslSwOqcIt5FFRObCcDfI0z7kboaLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mm2P/sRV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSuWSMmr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CA2C433C7;
-	Tue, 23 Jan 2024 00:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mm2P/sRV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7236DC433C7;
+	Tue, 23 Jan 2024 00:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969778;
-	bh=Ox2jOULpuEVECoTLz9daIkKenRAK+Ghrl0PuxNKlzCQ=;
+	s=korg; t=1705969779;
+	bh=L10JW2MnL3F7lL75ZHTM9ArefxfiuZV9iH+SY36MUmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WSuWSMmr0UU1+9PHEypGC06vspSh6HTb5QKkvf9OeoOkNLE3xxC8rrMzzhmRWADUZ
-	 CLY+oUZCFov1BRkc4LTa1zeuPhg4tNDyjTdC/dav2VIHotNXz25OHgP9U2h2PVz5Z+
-	 24ejEm5g/P0xEbtL2DddVsLJG46985T5KUB5XMt4=
+	b=mm2P/sRVEquKhO+nj5NCumOnEarDfT7JnBYt8qrmc5ja1DT5k+RKiajRVI+FyHjaa
+	 GnY021Ie5boQCNMMeKQvl8C/oLolx3PlODvAfluPMzpsr8yGBN4L7E7+RDS+YKVx02
+	 OZdt+O5cEb62vNsCVr0MC3tg/nxyLXguO8ZTD87U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8b23309d5788a79d3eea@syzkaller.appspotmail.com,
-	syzbot+004c1e0fced2b4bc3dcc@syzkaller.appspotmail.com,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.7 443/641] block: Fix iterating over an empty bio with bio_for_each_folio_all
-Date: Mon, 22 Jan 2024 15:55:47 -0800
-Message-ID: <20240122235831.883587008@linuxfoundation.org>
+	lonial con <kongln9170@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.7 444/641] netfilter: nf_tables: check if catch-all set element is active in next generation
+Date: Mon, 22 Jan 2024 15:55:48 -0800
+Message-ID: <20240122235831.916874964@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,52 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 7bed6f3d08b7af27b7015da8dc3acf2b9c1f21d7 upstream.
+commit b1db244ffd041a49ecc9618e8feb6b5c1afcdaa7 upstream.
 
-If the bio contains no data, bio_first_folio() calls page_folio() on a
-NULL pointer and oopses.  Move the test that we've reached the end of
-the bio from bio_next_folio() to bio_first_folio().
+When deactivating the catch-all set element, check the state in the next
+generation that represents this transaction.
 
-Reported-by: syzbot+8b23309d5788a79d3eea@syzkaller.appspotmail.com
-Reported-by: syzbot+004c1e0fced2b4bc3dcc@syzkaller.appspotmail.com
-Fixes: 640d1930bef4 ("block: Add bio_for_each_folio_all()")
+This bug uncovered after the recent removal of the element busy mark
+a2dd0233cbc4 ("netfilter: nf_tables: remove busy mark and gc batch API").
+
+Fixes: aaa31047a6d2 ("netfilter: nftables: add catch-all set element support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Link: https://lore.kernel.org/r/20240116212959.3413014-1-willy@infradead.org
-[axboe: add unlikely() to error case]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: lonial con <kongln9170@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bio.h |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/netfilter/nf_tables_api.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/bio.h
-+++ b/include/linux/bio.h
-@@ -286,6 +286,11 @@ static inline void bio_first_folio(struc
- {
- 	struct bio_vec *bvec = bio_first_bvec_all(bio) + i;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6487,7 +6487,7 @@ static int nft_setelem_catchall_deactiva
  
-+	if (unlikely(i >= bio->bi_vcnt)) {
-+		fi->folio = NULL;
-+		return;
-+	}
-+
- 	fi->folio = page_folio(bvec->bv_page);
- 	fi->offset = bvec->bv_offset +
- 			PAGE_SIZE * (bvec->bv_page - &fi->folio->page);
-@@ -303,10 +308,8 @@ static inline void bio_next_folio(struct
- 		fi->offset = 0;
- 		fi->length = min(folio_size(fi->folio), fi->_seg_count);
- 		fi->_next = folio_next(fi->folio);
--	} else if (fi->_i + 1 < bio->bi_vcnt) {
--		bio_first_folio(fi, bio, fi->_i + 1);
- 	} else {
--		fi->folio = NULL;
-+		bio_first_folio(fi, bio, fi->_i + 1);
- 	}
- }
+ 	list_for_each_entry(catchall, &set->catchall_list, list) {
+ 		ext = nft_set_elem_ext(set, catchall->elem);
+-		if (!nft_is_active(net, ext))
++		if (!nft_is_active_next(net, ext))
+ 			continue;
  
+ 		kfree(elem->priv);
 
 
