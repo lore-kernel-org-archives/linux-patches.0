@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9758C6EB61;
-	Tue, 23 Jan 2024 02:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1D36EB61;
+	Tue, 23 Jan 2024 02:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975413; cv=none; b=e5CftG9HJWO6T2m0E6Xx77/FtHhjtqs6ZoqfAZ+yCO9b4dvKOemIN8szhknKk8yacwEbRewqjpbOHFVEWtPQBufm2NDt/B0iYq8Afx+mjWUFxIoNDLPJM2sYiGAgDbTDLOqJFXyz4Ry+dteFV9ULZE6LGkU2fCTRbkCu/g2Luh4=
+	t=1705975414; cv=none; b=ZRT+KehCqX/3F9iLm8zxuwFIqiA6KWp65YxN7EpmcDtDtsBdSaqTvClL1UCmM7NajvUUVixqavHTPCEfwSqX7HVb2gidV91YYxZ13C1R+C+eJerpgZhh2Tob9VEFnlNrB04mT2SZzbyevJB7w/Kkw4bATmeeTBGsEhloh0hvJqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975413; c=relaxed/simple;
-	bh=JZJR6sPy54ZdoL0HiP3fzXIfhYlTc1+Si98iegLA/38=;
+	s=arc-20240116; t=1705975414; c=relaxed/simple;
+	bh=Gvi01fR+1rZALIfZAy6vsgdCcBlXcFcMLi6Gl1kp/9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oELc0QaoH0rQoLAJcqSIuddvMpXQzf2etRQeqytmOjB+Z4uIGZsF5bFtpLR45xtRp/aRTKUxo3swa3L2zfVKnO1r0RGRAjrkXqYR0DIXNU3IPW0sibPPLaOTU71E7Ges9hXW2GCSLhrHeyse4ZzA/kxsko9S8wt2FdGTpVjQRUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nP3ZqG2/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VgTxz3OCDU+0wg2ZpxG6YhKLQ/rkuw7ir9aEMIV50YiZ8No9Lr6UF3Ap4chcGsJJskkDPCy/ELWDQ310U2I1k8dcRxn1P8uaGgjvMTD+P+hrIeV6XwVUd0hWa4slLT6diZqMbp0dsFwF4Ei03w+4ddvbsJoRQDT8mi9uyEQb4KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgtoPFkd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nP3ZqG2/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B98C43390;
-	Tue, 23 Jan 2024 02:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgtoPFkd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11AB3C433C7;
+	Tue, 23 Jan 2024 02:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975413;
-	bh=JZJR6sPy54ZdoL0HiP3fzXIfhYlTc1+Si98iegLA/38=;
+	s=korg; t=1705975414;
+	bh=Gvi01fR+1rZALIfZAy6vsgdCcBlXcFcMLi6Gl1kp/9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nP3ZqG2/fR1HLPYPmpiq0I+58Lwtp1eGjkvVc3lTptj+yZptlHKQhoFeximqJu26R
-	 IPEQSAtdr4zi5q0VVv4Se1xNdEATBqm0/ytct4y0bxAL93XVAjmrvCxQxxKxWYm/NA
-	 4DgsCo2ofXzyYtpEhI3Rwl3VmIoJxhgcQ2rVnNNY=
+	b=rgtoPFkdQnzQx4GsA78NjfhtyKpmHVqt11cRUxmOO+9zMJjwJksoL3cCPQNJxz5/l
+	 CKFS/Julv5Co6sOVImnwyLYqhFetIg3MwhTp31/YzBr2oyJ45XuiNNuVaaTf7jkf0+
+	 /E3j7p2izx0DJYa//r6BCgNxHxrb8hUSZzlonEL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Subject: [PATCH 6.6 372/583] serial: core: fix sanitizing check for RTS settings
-Date: Mon, 22 Jan 2024 15:57:03 -0800
-Message-ID: <20240122235823.389331157@linuxfoundation.org>
+Subject: [PATCH 6.6 373/583] serial: core: make sure RS485 cannot be enabled when it is not supported
+Date: Mon, 22 Jan 2024 15:57:04 -0800
+Message-ID: <20240122235823.421977239@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,74 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-commit 4afeced55baa391490b61ed9164867e2927353ed upstream.
+commit c73986913fa47e71e0b1ad7f039f6444915e8810 upstream.
 
-Among other things uart_sanitize_serial_rs485() tests the sanity of the RTS
-settings in a RS485 configuration that has been passed by userspace.
-If RTS-on-send and RTS-after-send are both set or unset the configuration
-is adjusted and RTS-after-send is disabled and RTS-on-send enabled.
+Some uart drivers specify a rs485_config() function and then decide later
+to disable RS485 support for some reason (e.g. imx and ar933).
 
-This however makes only sense if both RTS modes are actually supported by
-the driver.
+In these cases userspace may be able to activate RS485 via TIOCSRS485
+nevertheless, since in uart_set_rs485_config() an existing rs485_config()
+function indicates that RS485 is supported.
 
-With commit be2e2cb1d281 ("serial: Sanitize rs485_struct") the code does
-take the driver support into account but only checks if one of both RTS
-modes are supported. This may lead to the errorneous result of RTS-on-send
-being set even if only RTS-after-send is supported.
+Make sure that this is not longer possible by checking the uarts
+rs485_supported.flags instead and bailing out if SER_RS485_ENABLED is not
+set.
 
-Fix this by changing the implemented logic: First clear all unsupported
-flags in the RS485 configuration, then adjust an invalid RTS setting by
-taking into account which RTS mode is supported.
+Furthermore instead of returning an empty structure return -ENOTTY if the
+RS485 configuration is requested via TIOCGRS485 but RS485 is not supported.
+This has a small impact on userspace visibility but it is consistent with
+the -ENOTTY error for TIOCGRS485.
 
+Fixes: e849145e1fdd ("serial: ar933x: Fill in rs485_supported")
+Fixes: 55e18c6b6d42 ("serial: imx: Remove serial_rs485 sanitization")
+Cc: Shawn Guo <shawnguo@kernel.org>
+Cc: Sascha Hauer <s.hauer@pengutronix.de>
 Cc:  <stable@vger.kernel.org>
-Fixes: be2e2cb1d281 ("serial: Sanitize rs485_struct")
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Link: https://lore.kernel.org/r/20240103061818.564-4-l.sanfilippo@kunbus.com
+Link: https://lore.kernel.org/r/20240103061818.564-5-l.sanfilippo@kunbus.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |   28 ++++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ drivers/tty/serial/serial_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/tty/serial/serial_core.c
 +++ b/drivers/tty/serial/serial_core.c
-@@ -1370,19 +1370,27 @@ static void uart_sanitize_serial_rs485(s
- 		return;
- 	}
+@@ -1453,7 +1453,7 @@ static int uart_set_rs485_config(struct
+ 	int ret;
+ 	unsigned long flags;
  
-+	rs485->flags &= supported_flags;
-+
- 	/* Pick sane settings if the user hasn't */
--	if ((supported_flags & (SER_RS485_RTS_ON_SEND|SER_RS485_RTS_AFTER_SEND)) &&
--	    !(rs485->flags & SER_RS485_RTS_ON_SEND) ==
-+	if (!(rs485->flags & SER_RS485_RTS_ON_SEND) ==
- 	    !(rs485->flags & SER_RS485_RTS_AFTER_SEND)) {
--		dev_warn_ratelimited(port->dev,
--			"%s (%d): invalid RTS setting, using RTS_ON_SEND instead\n",
--			port->name, port->line);
--		rs485->flags |= SER_RS485_RTS_ON_SEND;
--		rs485->flags &= ~SER_RS485_RTS_AFTER_SEND;
--		supported_flags |= SER_RS485_RTS_ON_SEND|SER_RS485_RTS_AFTER_SEND;
--	}
-+		if (supported_flags & SER_RS485_RTS_ON_SEND) {
-+			rs485->flags |= SER_RS485_RTS_ON_SEND;
-+			rs485->flags &= ~SER_RS485_RTS_AFTER_SEND;
+-	if (!port->rs485_config)
++	if (!(port->rs485_supported.flags & SER_RS485_ENABLED))
+ 		return -ENOTTY;
  
--	rs485->flags &= supported_flags;
-+			dev_warn_ratelimited(port->dev,
-+				"%s (%d): invalid RTS setting, using RTS_ON_SEND instead\n",
-+				port->name, port->line);
-+		} else {
-+			rs485->flags |= SER_RS485_RTS_AFTER_SEND;
-+			rs485->flags &= ~SER_RS485_RTS_ON_SEND;
-+
-+			dev_warn_ratelimited(port->dev,
-+				"%s (%d): invalid RTS setting, using RTS_AFTER_SEND instead\n",
-+				port->name, port->line);
-+		}
-+	}
- 
- 	uart_sanitize_serial_rs485_delays(port, rs485);
- 
+ 	if (copy_from_user(&rs485, rs485_user, sizeof(*rs485_user)))
 
 
