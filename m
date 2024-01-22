@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B931E1474B5;
-	Tue, 23 Jan 2024 00:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA921482ED;
+	Tue, 23 Jan 2024 00:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969715; cv=none; b=LxZHPEwqNJnbMDBrEKzEGyH3rJHEawJNA0iohszln1caCuM1uxNzsTF+e7Ey5yHF9JK8ubKQNtGQn/u+8h66Hnv+UdHH41/zxCjMHxGRZry8hrLzUhYKbIK8Xd4AU7M5Ixqagl6nX5DEX/ubGxE2sXYY1wzHhGaNI1YxvK8JaaE=
+	t=1705969718; cv=none; b=bBTHp+lRP/WFfNPFczUY5KYMpOGA9+IPjNprGSZZUW/hIxa6MLf1bepcTX8ZiZs1j36TLCTSYFhb6UgkulsRNO8yiBnxZWL7uZKMJJEO3jPIiScj1a/OYo3CTSBRKfrSQyg722b/d98pynuEg0aFA3BD5IwPkVX/Ukk3nyx1vzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969715; c=relaxed/simple;
-	bh=hwhH6eEFQZCtBsZDk4V3mKNkw09/uHpxp2ObkgyIpWY=;
+	s=arc-20240116; t=1705969718; c=relaxed/simple;
+	bh=whBWWlLkOlmA2ops6LImnMosfARiGc3h0PGxP2KPU9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WgoybfnX8ObKSgKbtp4d5+leK3bFNXEGpynQdAzV6OFCXxopMj3kE1lkJYjA+cK3Id0RFD0lLsg29clOve5jpOCBLEgMUM50CmWFYlPusCqT35cdQidfKrXOPlQaudNFAe0Zw78IfIc0+ktcBp6k800HT8mJvrXPOzeueuv1bPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzMm/Kn9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=g0zKhwIQUQ1spnmP3f0Qng2qBwxp58bsAKZK1LHsmeYgQ0n2c2naKAEigjRwFrzRtvHosDD0PbZzXsAhH0dI/v05YiAw+1OWCA3ungqENWZ3S7KrEVBtrL8cioayLt1hUhEyqz2+90Q3bNfA0/IV9sIge4SQEVMki9vpOEeRXLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2zIf4Hi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzMm/Kn9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 633F2C433C7;
-	Tue, 23 Jan 2024 00:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2zIf4Hi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1916C43399;
+	Tue, 23 Jan 2024 00:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969715;
-	bh=hwhH6eEFQZCtBsZDk4V3mKNkw09/uHpxp2ObkgyIpWY=;
+	s=korg; t=1705969718;
+	bh=whBWWlLkOlmA2ops6LImnMosfARiGc3h0PGxP2KPU9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gzMm/Kn9FjSYQmBhtAf4w2fLBmbg9oHABb20ODYgko33rmN/lfqEDExlXGFa9GFNG
-	 yh0ur2gb6oL+e/ObQZeral6/B25fXzFV6vb9oTKEDHnFuUYgk5CNhDo/475TWs8U+b
-	 LsDFXF12fvFOI+VqvhxfiNPdmPs+alo2azwTIqXo=
+	b=r2zIf4HiPLC7G7aLisQsbmTL8FFrM95vCYBDjM6rZNBnbTvEdWR5CuXAKEw5gbYma
+	 9gcEYktj6bMNuHwr9PguX/ERHDrhyxHPXru7Jw3bhr6Wio38e9ECTVSFi5PSsurR4j
+	 43BgdkyHXS26kff5SHmy6nIm9HJ2ThsICx5brcg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Subject: [PATCH 6.7 416/641] serial: 8250_exar: Set missing rs485_supported flag
-Date: Mon, 22 Jan 2024 15:55:20 -0800
-Message-ID: <20240122235830.992990144@linuxfoundation.org>
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.7 417/641] serial: omap: do not override settings for RS485 support
+Date: Mon, 22 Jan 2024 15:55:21 -0800
+Message-ID: <20240122235831.032802946@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,48 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-commit 0c2a5f471ce58bca8f8ab5fcb911aff91eaaa5eb upstream.
+commit 51f93776b84dee23e44a7be880736669a01cec2b upstream.
 
-The UART supports an auto-RTS mode in which the RTS pin is automatically
-activated during transmission. So mark this mode as being supported even
-if RTS is not controlled by the driver but the UART.
+The drivers RS485 support is deactivated if there is no RTS GPIO available.
+This is done by nullifying the ports rs485_supported struct. After that
+however the settings in serial_omap_rs485_supported are assigned to the
+same structure unconditionally, which results in an unintended reactivation
+of RS485 support.
 
-Also the serial core expects now at least one of both modes rts-on-send or
-rts-after-send to be supported. This is since during sanitization
-unsupported flags are deleted from a RS485 configuration set by userspace.
-However if the configuration ends up with both flags unset, the core prints
-a warning since it considers such a configuration invalid (see
-uart_sanitize_serial_rs485()).
+Fix this by moving the assignment to the beginning of
+serial_omap_probe_rs485() and thus before uart_get_rs485_mode() gets
+called.
 
+Also replace the assignment of rs485_config() to have the complete RS485
+setup in one function.
+
+Fixes: e2752ae3cfc9 ("serial: omap: Disallow RS-485 if rts-gpio is not specified")
 Cc:  <stable@vger.kernel.org>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Link: https://lore.kernel.org/r/20240103061818.564-8-l.sanfilippo@kunbus.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20240103061818.564-7-l.sanfilippo@kunbus.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_exar.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/tty/serial/omap-serial.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -480,7 +480,7 @@ static int sealevel_rs485_config(struct
+diff --git a/drivers/tty/serial/omap-serial.c b/drivers/tty/serial/omap-serial.c
+index 730755621879..f5a0b401af63 100644
+--- a/drivers/tty/serial/omap-serial.c
++++ b/drivers/tty/serial/omap-serial.c
+@@ -1483,6 +1483,13 @@ static struct omap_uart_port_info *of_get_uart_port_info(struct device *dev)
+ 	return omap_up_info;
  }
  
- static const struct serial_rs485 generic_rs485_supported = {
--	.flags = SER_RS485_ENABLED,
-+	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND,
- };
++static const struct serial_rs485 serial_omap_rs485_supported = {
++	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RTS_AFTER_SEND |
++		 SER_RS485_RX_DURING_TX,
++	.delay_rts_before_send = 1,
++	.delay_rts_after_send = 1,
++};
++
+ static int serial_omap_probe_rs485(struct uart_omap_port *up,
+ 				   struct device *dev)
+ {
+@@ -1497,6 +1504,9 @@ static int serial_omap_probe_rs485(struct uart_omap_port *up,
+ 	if (!np)
+ 		return 0;
  
- static const struct exar8250_platform exar8250_default_platform = {
-@@ -524,7 +524,8 @@ static int iot2040_rs485_config(struct u
++	up->port.rs485_config = serial_omap_config_rs485;
++	up->port.rs485_supported = serial_omap_rs485_supported;
++
+ 	ret = uart_get_rs485_mode(&up->port);
+ 	if (ret)
+ 		return ret;
+@@ -1531,13 +1541,6 @@ static int serial_omap_probe_rs485(struct uart_omap_port *up,
+ 	return 0;
  }
  
- static const struct serial_rs485 iot2040_rs485_supported = {
--	.flags = SER_RS485_ENABLED | SER_RS485_RX_DURING_TX | SER_RS485_TERMINATE_BUS,
-+	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND |
-+		 SER_RS485_RX_DURING_TX | SER_RS485_TERMINATE_BUS,
- };
+-static const struct serial_rs485 serial_omap_rs485_supported = {
+-	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RTS_AFTER_SEND |
+-		 SER_RS485_RX_DURING_TX,
+-	.delay_rts_before_send = 1,
+-	.delay_rts_after_send = 1,
+-};
+-
+ static int serial_omap_probe(struct platform_device *pdev)
+ {
+ 	struct omap_uart_port_info *omap_up_info = dev_get_platdata(&pdev->dev);
+@@ -1604,17 +1607,11 @@ static int serial_omap_probe(struct platform_device *pdev)
+ 		dev_info(up->port.dev, "no wakeirq for uart%d\n",
+ 			 up->port.line);
  
- static const struct property_entry iot2040_gpio_properties[] = {
+-	ret = serial_omap_probe_rs485(up, &pdev->dev);
+-	if (ret < 0)
+-		goto err_rs485;
+-
+ 	sprintf(up->name, "OMAP UART%d", up->port.line);
+ 	up->port.mapbase = mem->start;
+ 	up->port.membase = base;
+ 	up->port.flags = omap_up_info->flags;
+ 	up->port.uartclk = omap_up_info->uartclk;
+-	up->port.rs485_config = serial_omap_config_rs485;
+-	up->port.rs485_supported = serial_omap_rs485_supported;
+ 	if (!up->port.uartclk) {
+ 		up->port.uartclk = DEFAULT_CLK_SPEED;
+ 		dev_warn(&pdev->dev,
+@@ -1622,6 +1619,10 @@ static int serial_omap_probe(struct platform_device *pdev)
+ 			 DEFAULT_CLK_SPEED);
+ 	}
+ 
++	ret = serial_omap_probe_rs485(up, &pdev->dev);
++	if (ret < 0)
++		goto err_rs485;
++
+ 	up->latency = PM_QOS_CPU_LATENCY_DEFAULT_VALUE;
+ 	up->calc_latency = PM_QOS_CPU_LATENCY_DEFAULT_VALUE;
+ 	cpu_latency_qos_add_request(&up->pm_qos_request, up->latency);
+-- 
+2.43.0
+
 
 
