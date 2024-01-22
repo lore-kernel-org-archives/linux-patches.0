@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DCAEAF4;
-	Tue, 23 Jan 2024 00:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BFF5662;
+	Tue, 23 Jan 2024 00:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969502; cv=none; b=QP+65Aw2sLu/O3QcOXk1OziS6n+B14S/soV0zHKpG7ifbzd4PjDg1rn3Dm6H9fUPUcsxFwehIyWi6UjNN5Yvx/gGGbqdXOYkzVVjJqlSTIvqGBmK8b6KPDWQGgpoiMIonZDNghy5PWLms2CJQoFv3G7QpSFTCva7Yd0BhTcojzc=
+	t=1705969503; cv=none; b=C4vagdQRmTx+k+7+NFXYSIHbywew26FdI4vacelhy8FR5xn6PLPSot5Fs5M5Rd6kluBudFNNw6qYEfllHY5DKXCeeoGxa0kzomBHr27Q7Z5hM2kL+apEwQksY7LVQEDKLfSGJLG+I76DszY7S1dy5sUfz+aBmTBaaeQiKYBjVdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969502; c=relaxed/simple;
-	bh=umG1c/LBGj07P3/oK5Co0NVo5+qEjmSPkONzZbwtaWY=;
+	s=arc-20240116; t=1705969503; c=relaxed/simple;
+	bh=0DXwUaR0VggXMxYkKz32oLwLHF1KUpZrtX3PhcO0yeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UAt+Kae4B8whlvrrGnVFhjjCrEMaCHEAFXRUtApI0E5M4vMQu+UlRKoFRw4lz/QRTe9pWGY6bDfYXzMBDDaNvj5cczrzTAAhn/1WQr+XakwMnU76sQPfJmKJqVrpmukrhgX6b1i6zo2TdALvwheeE/8OK9jeXO5E98hnw7OkFpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Lgk3jVN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j44/Y73E0acvX6KLUNXBKCv7wY+OMdQobuqvD0ck1fGc+gpGrrDxMbmLNU9iZ/71MSgI9648utpYU4bk/Y/n1FrwlDwGo5DOHr3a0kHPk1SO4/+RPiFKd6+MjShHREZoI6yv/C99oNfddDPrz+O4GTVXXrajxhpf9PDQHPq1LgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwQQcsbO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Lgk3jVN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D6FC433A6;
-	Tue, 23 Jan 2024 00:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwQQcsbO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19174C433A6;
+	Tue, 23 Jan 2024 00:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969502;
-	bh=umG1c/LBGj07P3/oK5Co0NVo5+qEjmSPkONzZbwtaWY=;
+	s=korg; t=1705969503;
+	bh=0DXwUaR0VggXMxYkKz32oLwLHF1KUpZrtX3PhcO0yeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Lgk3jVNb9UL5koroLTfADkZ2ZXvItcqg7qajW9P04gCAoXPNQ9GZg6WhreYJ0jfl
-	 oIQiSUXX+mf9OMaoiacg/g3Ihe3QZP2PoOH6ldw+xLwTReIaYygpVTaLO6XY9HDF/Z
-	 OGbBFj8iPyBq2/wY8u1QWxBFfKjPYJyFIazNe6aw=
+	b=GwQQcsbOn68XpQvyN6no3Hw5Xv1xRduXnSx51LllB4vvAPvYFF/LhA1YuJv7ZLWEr
+	 b288lJrkT0AFJoVEUIhlaX26CF7Ec79y4AJr8Tv1D8qiqoW1sI8ij0wvMb89V92VPv
+	 RllGbY4cF58/nFt83o47xn3XtT3pVkw1chABmD6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
+	Teddy Wang <teddy.wang@siliconmotion.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Helge Deller <deller@gmx.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	linux-fbdev@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 287/641] drm/msm/dpu: enable SmartDMA on SM8450
-Date: Mon, 22 Jan 2024 15:53:11 -0800
-Message-ID: <20240122235826.875880197@linuxfoundation.org>
+Subject: [PATCH 6.7 265/641] fbdev/sm712fb: Use correct initializer macros for struct fb_ops
+Date: Mon, 22 Jan 2024 15:52:49 -0800
+Message-ID: <20240122235826.218003281@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,99 +57,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit a9bd555de5e9042fdf8ab8d6080b86f45c68ddf6 ]
+[ Upstream commit 12d55c013a09a2d490f004a324c20800e4ff35ec ]
 
-Enable the SmartDMA / multirect support on the SM8450 platform to
-support higher resoltion modes.
+Only initialize mmap and draw helpers with macros; leave read/write
+callbacks to driver implementations. Fixes the following warnings:
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/561590/
-Link: https://lore.kernel.org/r/20231009165627.2691015-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Stable-dep-of: 46b1f1b839ca ("drm/msm/dpu: populate SSPP scaler block version")
+  CC [M]  drivers/video/fbdev/sm712fb.o
+  sm712fb.c:1355:25: warning: initialized field overwritten [-Woverride-init]
+  1355 |         .fb_fillrect  = cfb_fillrect,
+       |                         ^~~~~~~~~~~~
+  sm712fb.c:1355:25: note: (near initialization for 'smtcfb_ops.fb_fillrect')
+  sm712fb.c:1356:25: warning: initialized field overwritten [-Woverride-init]
+  1356 |         .fb_imageblit = cfb_imageblit,
+       |                         ^~~~~~~~~~~~~
+  sm712fb.c:1356:25: note: (near initialization for 'smtcfb_ops.fb_imageblit')
+  sm712fb.c:1357:25: warning: initialized field overwritten [-Woverride-init]
+  1357 |         .fb_copyarea  = cfb_copyarea,
+       |                         ^~~~~~~~~~~~
+  sm712fb.c:1357:25: note: (near initialization for 'smtcfb_ops.fb_copyarea')
+  sm712fb.c:1358:25: warning: initialized field overwritten [-Woverride-init]
+  1358 |         .fb_read      = smtcfb_read,
+       |                         ^~~~~~~~~~~
+  sm712fb.c:1358:25: note: (near initialization for 'smtcfb_ops.fb_read')
+  sm712fb.c:1359:25: warning: initialized field overwritten [-Woverride-init]
+  1359 |         .fb_write     = smtcfb_write,
+       |                         ^~~~~~~~~~~~
+  sm712fb.c:1359:25: note: (near initialization for 'smtcfb_ops.fb_write')
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 586132cf1d38 ("fbdev/sm712fb: Initialize fb_ops to fbdev I/O-memory helpers")
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Cc: Teddy Wang <teddy.wang@siliconmotion.com>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: linux-fbdev@vger.kernel.org
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231127131655.4020-3-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/video/fbdev/sm712fb.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-index 7742f52be859..d18145c226da 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-@@ -75,7 +75,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 	{
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x32c,
--		.features = VIG_SC7180_MASK,
-+		.features = VIG_SC7180_MASK_SDMA,
- 		.sblk = &sm8250_vig_sblk_0,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
-@@ -83,7 +83,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 	}, {
- 		.name = "sspp_1", .id = SSPP_VIG1,
- 		.base = 0x6000, .len = 0x32c,
--		.features = VIG_SC7180_MASK,
-+		.features = VIG_SC7180_MASK_SDMA,
- 		.sblk = &sm8250_vig_sblk_1,
- 		.xin_id = 4,
- 		.type = SSPP_TYPE_VIG,
-@@ -91,7 +91,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 	}, {
- 		.name = "sspp_2", .id = SSPP_VIG2,
- 		.base = 0x8000, .len = 0x32c,
--		.features = VIG_SC7180_MASK,
-+		.features = VIG_SC7180_MASK_SDMA,
- 		.sblk = &sm8250_vig_sblk_2,
- 		.xin_id = 8,
- 		.type = SSPP_TYPE_VIG,
-@@ -99,7 +99,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 	}, {
- 		.name = "sspp_3", .id = SSPP_VIG3,
- 		.base = 0xa000, .len = 0x32c,
--		.features = VIG_SC7180_MASK,
-+		.features = VIG_SC7180_MASK_SDMA,
- 		.sblk = &sm8250_vig_sblk_3,
- 		.xin_id = 12,
- 		.type = SSPP_TYPE_VIG,
-@@ -107,7 +107,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 	}, {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x32c,
--		.features = DMA_SDM845_MASK,
-+		.features = DMA_SDM845_MASK_SDMA,
- 		.sblk = &sdm845_dma_sblk_0,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
-@@ -115,7 +115,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 	}, {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x32c,
--		.features = DMA_SDM845_MASK,
-+		.features = DMA_SDM845_MASK_SDMA,
- 		.sblk = &sdm845_dma_sblk_1,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
-@@ -123,7 +123,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 	}, {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x32c,
--		.features = DMA_CURSOR_SDM845_MASK,
-+		.features = DMA_CURSOR_SDM845_MASK_SDMA,
- 		.sblk = &sdm845_dma_sblk_2,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
-@@ -131,7 +131,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 	}, {
- 		.name = "sspp_11", .id = SSPP_DMA3,
- 		.base = 0x2a000, .len = 0x32c,
--		.features = DMA_CURSOR_SDM845_MASK,
-+		.features = DMA_CURSOR_SDM845_MASK_SDMA,
- 		.sblk = &sdm845_dma_sblk_3,
- 		.xin_id = 13,
- 		.type = SSPP_TYPE_DMA,
+diff --git a/drivers/video/fbdev/sm712fb.c b/drivers/video/fbdev/sm712fb.c
+index 3f8ef50e3209..104f122e0f27 100644
+--- a/drivers/video/fbdev/sm712fb.c
++++ b/drivers/video/fbdev/sm712fb.c
+@@ -1347,16 +1347,14 @@ static int smtc_set_par(struct fb_info *info)
+ 
+ static const struct fb_ops smtcfb_ops = {
+ 	.owner        = THIS_MODULE,
+-	FB_DEFAULT_IOMEM_OPS,
+ 	.fb_check_var = smtc_check_var,
+ 	.fb_set_par   = smtc_set_par,
+ 	.fb_setcolreg = smtc_setcolreg,
+ 	.fb_blank     = smtc_blank,
+-	.fb_fillrect  = cfb_fillrect,
+-	.fb_imageblit = cfb_imageblit,
+-	.fb_copyarea  = cfb_copyarea,
++	__FB_DEFAULT_IOMEM_OPS_DRAW,
+ 	.fb_read      = smtcfb_read,
+ 	.fb_write     = smtcfb_write,
++	__FB_DEFAULT_IOMEM_OPS_MMAP,
+ };
+ 
+ /*
 -- 
 2.43.0
 
