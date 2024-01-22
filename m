@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8495820F;
-	Tue, 23 Jan 2024 01:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B67B610E;
+	Tue, 23 Jan 2024 01:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974063; cv=none; b=PfR+7ev4wVQbPawusq1YzF4ut54ARlkQbtskxUzyOKkKJy3jElYgWtuVGLWA6pNGS+zEnWjkTnTGGJ6vs2oRqctChFjvFpA2+mYM1ZOChrxYh5EAJjkowA5tZFKauMG5q0+R+hyrrQhAZKu/8YzpRvHt74qFtjq8UoQAzVzAPjw=
+	t=1705974065; cv=none; b=tzvhd0fgJw/lNDgzidaFFwoOygr0KAheG0HcX2k7c0mP2RFSYyH5ULbv5t4aHmO4iOmkfWpyY28IirzYSd6mnGZmNV8fgTn30ByOTxBJ1zGI7flWLKWoqTB3urbT9MNvLleqdny4x0BZfJbDiSQt9s6ZRVNApmSu/HySNzdz5Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974063; c=relaxed/simple;
-	bh=uiVEUKeXS5wEbvbQ0u9q869wnW6Rnzoy/wS8Xe1Fhls=;
+	s=arc-20240116; t=1705974065; c=relaxed/simple;
+	bh=bB8etuSfJOHJ8ANnRcX0mfmSwFeUGFf942wtyMiNyf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eGhxr3g0iGOBHyDNpMkosbvpHH50ttQAPIkuUc9pnUluDNnFm4t8BOheO5nOtw2tmkzV3+uFiYnMUfpcvC57JXcB3Ntq3D1gzwHBbW5RAfemDNSyQplc6Aq7cpcnca7/om1wDt99Hcef+7gEYQ5n2oLXRLjYlu61m87mhKnxxyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiKUu6pw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E3CIEgabiYLFlsGggoS3xw4sA9QPk88T9rTTFrYEFEcIG1BKhA+rK3i/jfD0nI6KZRVn0ELN4P/d6mHFigOW2nLOigudE2kTO7TugHlNLxd3msnAIPPIX5Km8DvGEnW9lFImkTToSrsmcC79s1Wrf768U4/AbWj7YSV6CrryVJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mIG9tXln; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiKUu6pw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB63C43390;
-	Tue, 23 Jan 2024 01:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mIG9tXln"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F48C43390;
+	Tue, 23 Jan 2024 01:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974063;
-	bh=uiVEUKeXS5wEbvbQ0u9q869wnW6Rnzoy/wS8Xe1Fhls=;
+	s=korg; t=1705974065;
+	bh=bB8etuSfJOHJ8ANnRcX0mfmSwFeUGFf942wtyMiNyf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QiKUu6pwHCmSsumAPzAPuhons8XMoP17u7HDrhUGnDK1smOparwY1mCXTtQd8kfjv
-	 Tf5za04sZnfTyv4v1+vMzrnOF98IpaXIn8jOHiObkrvCAQbHosERAZpuFEuXAUbpLc
-	 XL4vpiiaDrluXf+EMDecwtAZnAYqNoJGwvMLmryE=
+	b=mIG9tXlnD8aK2J5ZrjKzjqqAFjwxo+i5BM0Saq0mS6SDDRV8zrXg8PduRP/Jr37q4
+	 SffoEa2KkjWnzh3laS6UKV6e5oxSaS8g6Ei1fXqmf+zyDqJaEJ03vluTpU9TD907Zc
+	 ISuE8fcA9FBWL866xGdNvSn6/jvYgSjFhgm/f62w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihang Li <liyihang9@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Nikita Kiryushin <kiryushin@ancud.ru>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 144/374] scsi: hisi_sas: Replace with standard error code return value
-Date: Mon, 22 Jan 2024 15:56:40 -0800
-Message-ID: <20240122235749.639914868@linuxfoundation.org>
+Subject: [PATCH 6.6 024/583] ACPI: video: check for error while searching for backlight device parent
+Date: Mon, 22 Jan 2024 15:51:15 -0800
+Message-ID: <20240122235812.939684951@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yihang Li <liyihang9@huawei.com>
+From: Nikita Kiryushin <kiryushin@ancud.ru>
 
-[ Upstream commit d34ee535705eb43885bc0f561c63046f697355ad ]
+[ Upstream commit ccd45faf4973746c4f30ea41eec864e5cf191099 ]
 
-In function hisi_sas_controller_prereset(), -ENOSYS (Function not
-implemented) should be returned if the driver does not support .soft_reset.
-Returns -EPERM (Operation not permitted) if HISI_SAS_RESETTING_BIT is
-already be set.
+If acpi_get_parent() called in acpi_video_dev_register_backlight()
+fails, for example, because acpi_ut_acquire_mutex() fails inside
+acpi_get_parent), this can lead to incorrect (uninitialized)
+acpi_parent handle being passed to acpi_get_pci_dev() for detecting
+the parent pci device.
 
-In function _suspend_v3_hw(), returns -EPERM (Operation not permitted) if
-HISI_SAS_RESETTING_BIT is already be set.
+Check acpi_get_parent() result and set parent device only in case of success.
 
-Fixes: 4522204ab218 ("scsi: hisi_sas: tidy host controller reset function a bit")
-Signed-off-by: Yihang Li <liyihang9@huawei.com>
-Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1702525516-51258-3-git-send-email-chenxiang66@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 9661e92c10a9 ("acpi: tie ACPI backlight devices to PCI devices if possible")
+Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_main.c  | 4 ++--
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/acpi/acpi_video.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index 19081790f011..530f61df109a 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_main.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -1584,12 +1584,12 @@ EXPORT_SYMBOL_GPL(hisi_sas_controller_reset_done);
- static int hisi_sas_controller_prereset(struct hisi_hba *hisi_hba)
- {
- 	if (!hisi_hba->hw->soft_reset)
--		return -1;
-+		return -ENOENT;
+diff --git a/drivers/acpi/acpi_video.c b/drivers/acpi/acpi_video.c
+index 35f071ad9532..27a6ae89f13a 100644
+--- a/drivers/acpi/acpi_video.c
++++ b/drivers/acpi/acpi_video.c
+@@ -1713,12 +1713,12 @@ static void acpi_video_dev_register_backlight(struct acpi_video_device *device)
+ 		return;
+ 	count++;
  
- 	down(&hisi_hba->sem);
- 	if (test_and_set_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags)) {
- 		up(&hisi_hba->sem);
--		return -1;
-+		return -EPERM;
+-	acpi_get_parent(device->dev->handle, &acpi_parent);
+-
+-	pdev = acpi_get_pci_dev(acpi_parent);
+-	if (pdev) {
+-		parent = &pdev->dev;
+-		pci_dev_put(pdev);
++	if (ACPI_SUCCESS(acpi_get_parent(device->dev->handle, &acpi_parent))) {
++		pdev = acpi_get_pci_dev(acpi_parent);
++		if (pdev) {
++			parent = &pdev->dev;
++			pci_dev_put(pdev);
++		}
  	}
  
- 	if (hisi_sas_debugfs_enable && hisi_hba->debugfs_itct[0].itct)
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 0e57381121d5..88af529ab100 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -4983,7 +4983,7 @@ static int _suspend_v3_hw(struct device *device)
- 	}
- 
- 	if (test_and_set_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags))
--		return -1;
-+		return -EPERM;
- 
- 	scsi_block_requests(shost);
- 	set_bit(HISI_SAS_REJECT_CMD_BIT, &hisi_hba->flags);
+ 	memset(&props, 0, sizeof(struct backlight_properties));
 -- 
 2.43.0
 
