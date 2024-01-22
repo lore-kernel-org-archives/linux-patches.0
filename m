@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617AE2A1AA;
-	Tue, 23 Jan 2024 00:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7459A27456;
+	Tue, 23 Jan 2024 00:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970925; cv=none; b=qUj/gDztKo0mC/nNcwtB8vZyMa6XxPbsr037ihG+Wa1vJYqFXz4POwoxq7M/RuvCNyBTKIz/iKgUWirrOILAi/tMpvS13ZpDE2jzgkHSfQXI2ZupmOY+twmuyqoYTiHO12mp8W+zvWLGkm/cHoLGjCXTK3K3DmfBiuHVZRMysIA=
+	t=1705970928; cv=none; b=S508pB0vWEwJm6bIBhmizhGPTqL/7+XKoJMhkhWghUfZ4EI1VPuRvj/Bntv6Qmg2Faa5Y7RfchJcMnnUmwvllWyzoX4DTmdoJ4Zi09M9Uggtk5ggfaXgpAHWvZTLJK1vX6O0I8NWdZNP9EETN9SIuawNKRfk7aJtQDOMV8dZN1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970925; c=relaxed/simple;
-	bh=ZRwtnAB1m4Pes1L4jwNVT6a15TgmFOV714fFEZyT0RA=;
+	s=arc-20240116; t=1705970928; c=relaxed/simple;
+	bh=KXeJcaiJOLBgRQJHi7RoKURD2JLG6W1zp2iehEKoGgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WUrBCc2+6SZxA9CowJ74KxfEh60OOWEikU+rPMCIVGop/8wo6NbFN56VWMA37SmfQvko7NAfRYpuLf5mDte0TIawVQXbiEhZhN6i5+qu1jGBDwpovfA9DO6Y4vYjPosQlrVmlGwzgBoQMV+a3QCJivpTnFiRVJS18ev0mfJL3Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=en7USdTD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q69qaAw79a3dmWW8IeolDtD6FoL+vwP/WqkqtijJvof8Gs+Zeb03nfs9Zz/byiEnpGAOR6rGvDzA/YiXMWFh8h5vn/Do9uatYBDJl77JA1ac3kqzBqcdJbI4oKLZwS5RDGh8rMGgAHGhrYYX6qdfnK5/o7ZTvHvfcUF7cCAs9hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scbn4jaI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="en7USdTD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CC1C433C7;
-	Tue, 23 Jan 2024 00:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scbn4jaI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06BE7C43390;
+	Tue, 23 Jan 2024 00:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970925;
-	bh=ZRwtnAB1m4Pes1L4jwNVT6a15TgmFOV714fFEZyT0RA=;
+	s=korg; t=1705970928;
+	bh=KXeJcaiJOLBgRQJHi7RoKURD2JLG6W1zp2iehEKoGgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=en7USdTDDAhfnd3ZEE/S7w9UJf8Uor3pXrY/lcqia8ccnQRTxDg7pIhLE6Q/lg0oO
-	 t3u1wSNOo74JuKDUVnqRcW3CzFU8M/LeSorjIAeieczbXvb0V441h82esibtDjHhvo
-	 J0Z1KGKJRXWp7uqFDc/TdvPZYV7LXtpKnPxxig/I=
+	b=scbn4jaIhdz/oqZwRRSnVg6edEMWATpYaUHrxxoKAAYhORmTxsnUyBehSlv5zw6H4
+	 A/lmkA5ODulZOyNZP6JB7d2p8YyQ+uUWwl9uRE5Blwy+SDOo0mIVLfNPxU5TV0zeRm
+	 v24tZtoQv+3Led/LG5y4xPMjryA9r1xcZ6j7ywTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cameron Williams <cang1@live.co.uk>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Subject: [PATCH 5.10 046/286] parport: parport_serial: Add Brainboxes device IDs and geometry
-Date: Mon, 22 Jan 2024 15:55:52 -0800
-Message-ID: <20240122235733.805746276@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Luciano Coelho <luciano.coelho@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 141/417] wifi: iwlwifi: mvm: set siso/mimo chains to 1 in FW SMPS request
+Date: Mon, 22 Jan 2024 15:55:09 -0800
+Message-ID: <20240122235756.714962902@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,99 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cameron Williams <cang1@live.co.uk>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 6aa1fc5a8085bbc01687aa708dcf2dbe637a5ee3 upstream.
+[ Upstream commit b1a2e5c310e063560760806d2cc5d2233c596067 ]
 
-Add device IDs for the Brainboxes UC-203, UC-257, UC-414, UC-475,
-IS-300/IS-500 and PX-263/PX-295 and define the relevant "geometry"
-for the cards.
-This patch requires part 1 of this series.
+The firmware changed their mind, don't set the chains to zero,
+instead set them to 1 as we normally would for connections to
+APs that don't use MIMO.
 
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Link: https://lore.kernel.org/r/AS4PR02MB7903A4094564BE28F1F926A6C4A6A@AS4PR02MB7903.eurprd02.prod.outlook.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2a7ce54ccc23 ("iwlwifi: mvm: honour firmware SMPS requests")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Luciano Coelho <luciano.coelho@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231219215605.7f031f1a127f.Idc816e0f604b07d22a9d5352bc23c445512fad14@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/parport/parport_serial.c |   56 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
---- a/drivers/parport/parport_serial.c
-+++ b/drivers/parport/parport_serial.c
-@@ -285,6 +285,38 @@ static struct pci_device_id parport_seri
- 	{ PCI_VENDOR_ID_SUNIX, PCI_DEVICE_ID_SUNIX_1999, PCI_VENDOR_ID_SUNIX,
- 	  0x0104, 0, 0, sunix_5099a },
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c b/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c
+index a3cefbc43e80..2c14188f34bb 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c
+@@ -99,17 +99,6 @@ static void iwl_mvm_phy_ctxt_set_rxchain(struct iwl_mvm *mvm,
+ 		active_cnt = 2;
+ 	}
  
-+	/* Brainboxes UC-203 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0bc1,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0bc2,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+
-+	/* Brainboxes UC-257 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0861,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0862,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0863,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+
-+	/* Brainboxes UC-414 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0e61,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc414 },
-+
-+	/* Brainboxes UC-475 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0981,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0982,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc257 },
-+
-+	/* Brainboxes IS-300/IS-500 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0da0,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_is300 },
-+
-+	/* Brainboxes PX-263/PX-295 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x402c,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_px263 },
-+
- 	{ 0, } /* terminate list */
- };
- MODULE_DEVICE_TABLE(pci,parport_serial_pci_tbl);
-@@ -550,6 +582,30 @@ static struct pciserial_board pci_parpor
- 		.base_baud      = 921600,
- 		.uart_offset	= 0x8,
- 	},
-+	[brainboxes_uc257] = {
-+		.flags		= FL_BASE2,
-+		.num_ports	= 2,
-+		.base_baud	= 115200,
-+		.uart_offset	= 8,
-+	},
-+	[brainboxes_is300] = {
-+		.flags		= FL_BASE2,
-+		.num_ports	= 1,
-+		.base_baud	= 115200,
-+		.uart_offset	= 8,
-+	},
-+	[brainboxes_uc414] = {
-+		.flags		= FL_BASE2,
-+		.num_ports	= 4,
-+		.base_baud	= 115200,
-+		.uart_offset	= 8,
-+	},
-+	[brainboxes_px263] = {
-+		.flags		= FL_BASE2,
-+		.num_ports	= 4,
-+		.base_baud	= 921600,
-+		.uart_offset	= 8,
-+	},
- };
- 
- struct parport_serial_private {
+-	/*
+-	 * If the firmware requested it, then we know that it supports
+-	 * getting zero for the values to indicate "use one, but pick
+-	 * which one yourself", which means it can dynamically pick one
+-	 * that e.g. has better RSSI.
+-	 */
+-	if (mvm->fw_static_smps_request && active_cnt == 1 && idle_cnt == 1) {
+-		idle_cnt = 0;
+-		active_cnt = 0;
+-	}
+-
+ 	*rxchain_info = cpu_to_le32(iwl_mvm_get_valid_rx_ant(mvm) <<
+ 					PHY_RX_CHAIN_VALID_POS);
+ 	*rxchain_info |= cpu_to_le32(idle_cnt << PHY_RX_CHAIN_CNT_POS);
+-- 
+2.43.0
+
 
 
