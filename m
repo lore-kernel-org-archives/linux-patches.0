@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBC45D909;
-	Tue, 23 Jan 2024 00:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BFB5D909;
+	Tue, 23 Jan 2024 00:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969769; cv=none; b=P6tazG20wo/9PH2OqLeIYfF/98u2Rx3OE+Ekh7TMBkaJ11UpYJbdFl5CWi2zF5Lr9go4MBg0QE6BwQX4ay8QxPx0NY6bqZqXT+1E3UNkTyPKbFQQJOhpKsLXdJ6wosvWkebafqPaIWhKzT9idWwmoO4iOUOO9FjjWnxxa6GQWKQ=
+	t=1705969771; cv=none; b=RIqNOKxcI6n+L//4QNnwSL2jK1h7ICPmy+UbU74hIjNiSnVMt17aXZpg4V6Tb2zmV3Z+WZ3CU55+rZluA8/y/CqlTTtgvor5Qii3bHLgPGzX/GqAY/SGdLEXwa70xtoj+7YJnYqinc/KrEaeNdtqx43zu+l0HGGfvBTPPM0b8wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969769; c=relaxed/simple;
-	bh=WspuN2o7u2MWDw6XT44LGybx7IZO3a+lbnMZ3lul2ME=;
+	s=arc-20240116; t=1705969771; c=relaxed/simple;
+	bh=kRwuIpKxgKz+6RpYRijGQjIlOSYrOv/1ayU4mJ1cksA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gc7S6zo1DsSpzMVPqzxOdci/QT9n2JXFINtuWv6NyCMNl+vCqsszoV0lzorx1NeXE3/qUIplmr0qHI0SNxlbstERrdiRFoPPXfuhLCiut9FDs/FoK3ocefIpxIaRaF3AodR7aiKHwaNPveymXjQZAOndQNI1iGjNgqiJQj7TsKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7OhZGgp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tZcgD0cfePrAyy2YuRLfkWdBRlWw3btAbrfMywB04SJXF9COcs9zKDgVagC406hBuk/TC41DKPLlPW7A5nJxnFcIv4Uyz4V4zWK3hOaIpHiJuj/xzfRBEKIJIqCAl2gq/TvMw5U0pknVwHCGPuZMQ6VTDoRvzl0HdEmTj0bgJtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RuqONe+b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7OhZGgp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA6DC433F1;
-	Tue, 23 Jan 2024 00:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RuqONe+b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80631C43390;
+	Tue, 23 Jan 2024 00:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969768;
-	bh=WspuN2o7u2MWDw6XT44LGybx7IZO3a+lbnMZ3lul2ME=;
+	s=korg; t=1705969770;
+	bh=kRwuIpKxgKz+6RpYRijGQjIlOSYrOv/1ayU4mJ1cksA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C7OhZGgpONwYbQ2laVPpOoQkNYNJSLxpe3SNOtXsJziDoy+HS2+JpZTwPhwTAawwz
-	 dMP+b10E7MBZ5RjAXZMs8FiIzNscVlXH2cn/rRDXbuLDNo77clymFjTA/3qwqjrBXA
-	 VnIrgNpJgD11wDw2NNZnignMLWzCH6R7JLmPexh0=
+	b=RuqONe+bgmmnhiVcmFzFL9OH4FtQL2BxldKuIeItrRtkepzpeujcgG4FaHZmD3jTr
+	 eEM63LOQ88axlW9q1sJQ8ZOmBcore29qUhgdv/3+fsRVof4L3cEH6Q4yoWktfPuXlQ
+	 E/CsTevsmWYm4MuAAylvaENuJndu1kG4wOSsQMUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yu Kuai <yukuai3@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
 	Song Liu <song@kernel.org>
-Subject: [PATCH 6.7 438/641] md: bypass block throttle for superblock update
-Date: Mon, 22 Jan 2024 15:55:42 -0800
-Message-ID: <20240122235831.717823754@linuxfoundation.org>
+Subject: [PATCH 6.7 439/641] md: Fix md_seq_ops() regressions
+Date: Mon, 22 Jan 2024 15:55:43 -0800
+Message-ID: <20240122235831.752230131@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,43 +50,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxiao Bi <junxiao.bi@oracle.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit d6e035aad6c09991da1c667fb83419329a3baed8 upstream.
+commit f9cfe7e7f96a9414a17d596e288693c4f2325d49 upstream.
 
-commit 5e2cf333b7bd ("md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d")
-introduced a hung bug and will be reverted in next patch, since the issue
-that commit is fixing is due to md superblock write is throttled by wbt,
-to fix it, we can have superblock write bypass block layer throttle.
+Commit cf1b6d4441ff ("md: simplify md_seq_ops") introduce following
+regressions:
 
-Fixes: 5e2cf333b7bd ("md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d")
-Cc: stable@vger.kernel.org # v5.19+
-Suggested-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+1) If list all_mddevs is emptly, personalities and unused devices won't
+   be showed to user anymore.
+2) If seq_file buffer overflowed from md_seq_show(), then md_seq_start()
+   will be called again, hence personalities will be showed to user
+   again.
+3) If seq_file buffer overflowed from md_seq_stop(), seq_read_iter()
+   doesn't handle this, hence unused devices won't be showed to user.
+
+Fix above problems by printing personalities and unused devices in
+md_seq_show().
+
+Fixes: cf1b6d4441ff ("md: simplify md_seq_ops")
+Cc: stable@vger.kernel.org # v6.7+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20231108182216.73611-1-junxiao.bi@oracle.com
+Link: https://lore.kernel.org/r/20240109133957.2975272-1-yukuai1@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/md/md.c |   40 +++++++++++++++++++++++++++-------------
+ 1 file changed, 27 insertions(+), 13 deletions(-)
 
 --- a/drivers/md/md.c
 +++ b/drivers/md/md.c
-@@ -1037,9 +1037,10 @@ void md_super_write(struct mddev *mddev,
- 		return;
+@@ -8123,6 +8123,19 @@ static void status_unused(struct seq_fil
+ 	seq_printf(seq, "\n");
+ }
  
- 	bio = bio_alloc_bioset(rdev->meta_bdev ? rdev->meta_bdev : rdev->bdev,
--			       1,
--			       REQ_OP_WRITE | REQ_SYNC | REQ_PREFLUSH | REQ_FUA,
--			       GFP_NOIO, &mddev->sync_set);
-+			      1,
-+			      REQ_OP_WRITE | REQ_SYNC | REQ_IDLE | REQ_META
-+				  | REQ_PREFLUSH | REQ_FUA,
-+			      GFP_NOIO, &mddev->sync_set);
++static void status_personalities(struct seq_file *seq)
++{
++	struct md_personality *pers;
++
++	seq_puts(seq, "Personalities : ");
++	spin_lock(&pers_lock);
++	list_for_each_entry(pers, &pers_list, list)
++		seq_printf(seq, "[%s] ", pers->name);
++
++	spin_unlock(&pers_lock);
++	seq_puts(seq, "\n");
++}
++
+ static int status_resync(struct seq_file *seq, struct mddev *mddev)
+ {
+ 	sector_t max_sectors, resync, res;
+@@ -8264,20 +8277,10 @@ static int status_resync(struct seq_file
+ static void *md_seq_start(struct seq_file *seq, loff_t *pos)
+ 	__acquires(&all_mddevs_lock)
+ {
+-	struct md_personality *pers;
+-
+-	seq_puts(seq, "Personalities : ");
+-	spin_lock(&pers_lock);
+-	list_for_each_entry(pers, &pers_list, list)
+-		seq_printf(seq, "[%s] ", pers->name);
+-
+-	spin_unlock(&pers_lock);
+-	seq_puts(seq, "\n");
+ 	seq->poll_event = atomic_read(&md_event_count);
+-
+ 	spin_lock(&all_mddevs_lock);
  
- 	atomic_inc(&rdev->nr_pending);
+-	return seq_list_start(&all_mddevs, *pos);
++	return seq_list_start_head(&all_mddevs, *pos);
+ }
+ 
+ static void *md_seq_next(struct seq_file *seq, void *v, loff_t *pos)
+@@ -8288,16 +8291,23 @@ static void *md_seq_next(struct seq_file
+ static void md_seq_stop(struct seq_file *seq, void *v)
+ 	__releases(&all_mddevs_lock)
+ {
+-	status_unused(seq);
+ 	spin_unlock(&all_mddevs_lock);
+ }
+ 
+ static int md_seq_show(struct seq_file *seq, void *v)
+ {
+-	struct mddev *mddev = list_entry(v, struct mddev, all_mddevs);
++	struct mddev *mddev;
+ 	sector_t sectors;
+ 	struct md_rdev *rdev;
+ 
++	if (v == &all_mddevs) {
++		status_personalities(seq);
++		if (list_empty(&all_mddevs))
++			status_unused(seq);
++		return 0;
++	}
++
++	mddev = list_entry(v, struct mddev, all_mddevs);
+ 	if (!mddev_get(mddev))
+ 		return 0;
+ 
+@@ -8373,6 +8383,10 @@ static int md_seq_show(struct seq_file *
+ 	}
+ 	spin_unlock(&mddev->lock);
+ 	spin_lock(&all_mddevs_lock);
++
++	if (mddev == list_last_entry(&all_mddevs, struct mddev, all_mddevs))
++		status_unused(seq);
++
+ 	if (atomic_dec_and_test(&mddev->active))
+ 		__mddev_put(mddev);
  
 
 
