@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB5D6A354;
-	Tue, 23 Jan 2024 02:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0036A354;
+	Tue, 23 Jan 2024 02:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975367; cv=none; b=knR8y6Vv7nHAeh6VxUzZbGlDqger2WTBiCrj1lJVR1y3EGj6QP2OJ1f/SlVAzohlDHYINvsNvXC5/8FTM5KMXcx/NcrgxoAvsuM8XlquqrNRBlssu/cSA1i7N96tsaQAzCkm1M6WR/0M7t91vtw+BlAJjRkmrboJBz82pGMwjp8=
+	t=1705975368; cv=none; b=oeDB+zOB6e8H52gxmUyMApvKCoTdKGYljkr2dcD6fJ2BCOY60OJunG5chuQLK5Q5uc3/yKnQO54/KsCY7W3eKtDp+AMC246HXnRdwo/fFFiATXy02YYX4TMLG8qV7Jkit+9U/Lknr8MEcTYFvOZXP78+h3fpzYXtZvGhpfM5J4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975367; c=relaxed/simple;
-	bh=64GswMfigJA4jIDg1f2RqdDlY8iF3+Fxyb8QRlkF0FA=;
+	s=arc-20240116; t=1705975368; c=relaxed/simple;
+	bh=DEvTQC0gKGWHLSTymDSg+yplk7T4Zj/w/zievL2wPSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GU5P4SteCb0N81GnEpZXn1SDDcTmhn94hSep3jj0CGWpQwhWmyFzPiFwqhxGp7xo1anZbK5aNg5se5VQEGB0302NNFOeK2rKqYoUwkl00w6LCYOv2+nLkxL6/WqmSk5pmLq2Hfz4xBZcGrHNab2lxfLQo3PY2KJniR6Ju35f0K4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TE1ov0m7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NtZBk764+uD1Qpbb0dUxgp9z0DIja/7N6XksI5hkh4dfqnMSR38iQO19gjF3P85IwTDb7zVA2Wjk+RdhsZrtZjVtQQaQr58Es49RS6qxC+JfwrBp2SI2SzfKVE5ShNN3oyPjOeqrc854Q7dotGLHKoYYkTnNR2mlkCcDiDwyYtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlQk2gvv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TE1ov0m7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18863C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlQk2gvv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3788C43390;
 	Tue, 23 Jan 2024 02:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975367;
-	bh=64GswMfigJA4jIDg1f2RqdDlY8iF3+Fxyb8QRlkF0FA=;
+	s=korg; t=1705975368;
+	bh=DEvTQC0gKGWHLSTymDSg+yplk7T4Zj/w/zievL2wPSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TE1ov0m7Y97UXYqxflBeEUFibovBqn48bX/z1bUtATeRl4PjV3kgyUDxSAPI/JjC8
-	 Tv3XvYQlMJOMyftQaQ03uox/lfq2yraZ4pQaJko8oXCttAj+Jq0pkBATtLvHZVzmRk
-	 GhMReJWjSJpkw6u4MifqYJQZRyiV7mst/uomKLrU=
+	b=ZlQk2gvvgxXTKw6ldHWXPdrFb8DFredSKCayq/mEKCJlCJk/cgUjAMd6/MDAYbI7u
+	 NvnVSvCm/9pEbgsYQA9eH3MJatyzx6WsO4IcjThl2+kiD6vDLgD4/F1czkphvAHZz+
+	 ZgRx3OKJYcKJL5hvAoB7GS04f0GczXJcZAfTAMtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Mike Looijmans <mike.looijmans@topic.nl>,
+	Su Hui <suhui@nfschina.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 304/583] clk: rs9: Fix DIF OEn bit placement on 9FGV0241
-Date: Mon, 22 Jan 2024 15:55:55 -0800
-Message-ID: <20240122235821.326082046@linuxfoundation.org>
+Subject: [PATCH 6.6 305/583] clk: si5341: fix an error code problem in si5341_output_clk_set_rate
+Date: Mon, 22 Jan 2024 15:55:56 -0800
+Message-ID: <20240122235821.361732844@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,38 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 29d861b5d29b6c80a887e93ad982cbbf4af2a06b ]
+[ Upstream commit 5607068ae5ab02c3ac9cabc6859d36e98004c341 ]
 
-On 9FGV0241, the DIF OE0 is BIT(1) and DIF OE1 is BIT(2), on the other
-chips like 9FGV0441 and 9FGV0841 DIF OE0 is BIT(0) and so on. Increment
-the index in BIT() macro instead of the result of BIT() macro to shift
-the bit correctly on 9FGV0241.
+regmap_bulk_write() return zero or negative error code, return the value
+of regmap_bulk_write() rather than '0'.
 
-Fixes: 603df193ec51 ("clk: rs9: Support device specific dif bit calculation")
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Link: https://lore.kernel.org/r/20231105200642.62792-1-marek.vasut+renesas@mailbox.org
-Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Fixes: 3044a860fd09 ("clk: Add Si5341/Si5340 driver")
+Acked-by: Mike Looijmans <mike.looijmans@topic.nl>
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20231101031633.996124-1-suhui@nfschina.com
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-renesas-pcie.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk-si5341.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/clk/clk-renesas-pcie.c b/drivers/clk/clk-renesas-pcie.c
-index 7d7b2cb75318..3b6ad2307a41 100644
---- a/drivers/clk/clk-renesas-pcie.c
-+++ b/drivers/clk/clk-renesas-pcie.c
-@@ -163,7 +163,7 @@ static u8 rs9_calc_dif(const struct rs9_driver_data *rs9, int idx)
- 	enum rs9_model model = rs9->chip_info->model;
+diff --git a/drivers/clk/clk-si5341.c b/drivers/clk/clk-si5341.c
+index 9599857842c7..2920fe2e5e8b 100644
+--- a/drivers/clk/clk-si5341.c
++++ b/drivers/clk/clk-si5341.c
+@@ -895,10 +895,8 @@ static int si5341_output_clk_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	r[0] = r_div ? (r_div & 0xff) : 1;
+ 	r[1] = (r_div >> 8) & 0xff;
+ 	r[2] = (r_div >> 16) & 0xff;
+-	err = regmap_bulk_write(output->data->regmap,
++	return regmap_bulk_write(output->data->regmap,
+ 			SI5341_OUT_R_REG(output), r, 3);
+-
+-	return 0;
+ }
  
- 	if (model == RENESAS_9FGV0241)
--		return BIT(idx) + 1;
-+		return BIT(idx + 1);
- 	else if (model == RENESAS_9FGV0441)
- 		return BIT(idx);
- 
+ static int si5341_output_reparent(struct clk_si5341_output *output, u8 index)
 -- 
 2.43.0
 
