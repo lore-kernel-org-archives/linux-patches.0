@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE5E15445E;
-	Tue, 23 Jan 2024 00:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D90215445E;
+	Tue, 23 Jan 2024 00:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969390; cv=none; b=ojGx7Hsy1LPOy3A0OkTvs1bGJ36ZnCxAwGiDKI/h6Hvni/JK2wBiDNUBgiHdJ2NkIvD6aHvtTwLA0Nk2wCSsIj988rrkY9NzpPc/ugwSUjhGsXh8cvWw53w/Rlf9OdYgdYGpbMN8oF6CPOgJWWUAcnCQV11a01gL4qvZy11G6GA=
+	t=1705969393; cv=none; b=G2X2svQpsxIfkvlrxkU6cMH/Fm2e4S2n1NAehhaAsISwYJuj1YtwF/G3yNfXiCa2P2Wqll+4otGv6Ufom9wl5bh+kK8ERkI5d+bJSiSqVan82hZ9PYNTiHVEv7360M6tVnbtzqb88GbZwdGbP4OunO/jaoDL/tWe1vDsqepPAYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969390; c=relaxed/simple;
-	bh=MgtB7bihR3OiTkIbUgwRHPvuHw5WEyfquR9zLkoyGHA=;
+	s=arc-20240116; t=1705969393; c=relaxed/simple;
+	bh=HXXVt66m1WxdXfJC4cKw/k6UIYNiJO8NCeM9iuxxtDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btZyddTu1/ustUHTOue2Nmpkx7FnXeokMLCQbNQ7CHviuU8+MhwMAsVqfIIjdztvB7Vdgz/xmgtGtHWxLGzZm+IcODMljD+HvKWksDEyIbTTKp1/MdqwAzD5TGb77UlEYstoEwktP+PioACwl3G8z4mnyNf2YiJtxapoy8zKAHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEzCH+Cs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tlGmn6ftOeQwj7vgD/3NyoLkWUSwNtkSmouKVc4BAPxkpe4EdeYtDEb/NqLs/Gnw197b5tCJSBLz4P+o+iBGT3+OpW3ispABKAXf+p5pniknvIu1fqAnr8D0OuGItME455Rv93FCwnqho0GSLsoknsgYnSgLiCG+s08VnphAnIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSrLAFAT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEzCH+Cs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357F7C433F1;
-	Tue, 23 Jan 2024 00:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSrLAFAT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD55C43394;
+	Tue, 23 Jan 2024 00:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969390;
-	bh=MgtB7bihR3OiTkIbUgwRHPvuHw5WEyfquR9zLkoyGHA=;
+	s=korg; t=1705969393;
+	bh=HXXVt66m1WxdXfJC4cKw/k6UIYNiJO8NCeM9iuxxtDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NEzCH+CsIpMcF7E4swszI055/LsU1o57mo9cNE5EZnfpVP3pvQZt3rOTSJNAFsI0J
-	 HuC3tTl4Et23IQP8AlP2FXci14ZbzujHjuS03K0yAVpOsOadtpV15NoeWY6s8DXmQ4
-	 3iPYqH9csrfl63jr393vLk04wkbL0sKXZ644DGmM=
+	b=HSrLAFATVOnOmbaR4KkdS8+gelaiA+6vqY+fKvFVrhBKae8H9mBS1PePxF918ZbbQ
+	 jxLWxOA1GJt6P6o/PXnCfWfsr4rCOYIUIoCZ0cyYFJISelqMqSutB4obzQc/aF1Erx
+	 GnQzlqFidgwNXYkU8PJzJ842EZMO13CdM+LTDr8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Travkin <nikita@trvn.ru>,
+	Atul Dhudase <quic_adhudase@quicinc.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 191/641] arm64: dts: qcom: acer-aspire1: Correct audio codec definition
-Date: Mon, 22 Jan 2024 15:51:35 -0800
-Message-ID: <20240122235823.950725409@linuxfoundation.org>
+Subject: [PATCH 6.7 192/641] soc: qcom: llcc: Fix dis_cap_alloc and retain_on_pc configuration
+Date: Mon, 22 Jan 2024 15:51:36 -0800
+Message-ID: <20240122235823.980057538@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,62 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Travkin <nikita@trvn.ru>
+From: Atul Dhudase <quic_adhudase@quicinc.com>
 
-[ Upstream commit feec9f0add432a867f23e29afcd2f7088889b8e2 ]
+[ Upstream commit eed6e57e9f3e2beac37563eb6a0129549daa330e ]
 
-When initially added, a mistake was made in the definition of the codec.
+Commit c14e64b46944 ("soc: qcom: llcc: Support chipsets that can
+ write to llcc") add the support for chipset where capacity based
+allocation and retention through power collapse can be programmed
+based on content of SCT table mentioned in the llcc driver where
+the target like sdm845 where the entire programming related to it
+is controlled in firmware. However, the commit introduces a bug
+where capacity/retention register get overwritten each time it
+gets programmed for each slice and that results in misconfiguration
+of the register based on SCT table and that is not expected
+behaviour instead it should be read modify write to retain the
+configuration of other slices.
 
-Despite the fact that the DMIC line is connected on the side of the
-codec chip, and relevant passive components, including 0-ohm resistors
-connecting the dmics, are present, the dmic line is still cut in
-another place on the board, which was overlooked.
+This issue is totally caught from code review and programming test
+and not through any power/perf numbers so, it is not known what
+impact this could make if we don't have this change however,
+this feature are for these targets and they should have been
+programmed accordingly as per their configuration mentioned in
+SCT table like others bits information.
 
-Correct this by replacing the dmic configuration with a comment
-describing this hardware detail.
+This change brings one difference where it keeps capacity/retention
+bits of the slices that are not mentioned in SCT table in unknown
+state where as earlier it was initialized to zero.
 
-While at it, also add missing regulators definitions. This is not a
-functional change as all the relevant regulators were already added via
-the other rail supplies.
-
-Fixes: 4a9f8f8f2ada ("arm64: dts: qcom: Add Acer Aspire 1")
-Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-Link: https://lore.kernel.org/r/20231205-aspire1-sound-v2-2-443b7ac0a06f@trvn.ru
+Fixes: c14e64b46944 ("soc: qcom: llcc: Support chipsets that can write to llcc")
+Signed-off-by: Atul Dhudase <quic_adhudase@quicinc.com>
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/1701876771-10695-1-git-send-email-quic_mojha@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm64/boot/dts/qcom/sc7180-acer-aspire1.dts | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/soc/qcom/llcc-qcom.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-index dbb48934d499..3342cb048038 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-@@ -209,9 +209,22 @@ alc5682: codec@1a {
- 		AVDD-supply = <&vreg_l15a_1p8>;
- 		MICVDD-supply = <&reg_codec_3p3>;
- 		VBAT-supply = <&reg_codec_3p3>;
-+		DBVDD-supply = <&vreg_l15a_1p8>;
-+		LDO1-IN-supply = <&vreg_l15a_1p8>;
-+
-+		/*
-+		 * NOTE: The board has a path from this codec to the
-+		 * DMIC microphones in the lid, however some of the option
-+		 * resistors are absent and the microphones are connected
-+		 * to the SoC instead.
-+		 *
-+		 * If the resistors were to be changed by the user to
-+		 * connect the codec, the following could be used:
-+		 *
-+		 * realtek,dmic1-data-pin = <1>;
-+		 * realtek,dmic1-clk-pin = <1>;
-+		 */
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index 674abd0d6700..2e32a0e521d5 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -941,15 +941,15 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config,
+ 		u32 disable_cap_alloc, retain_pc;
  
--		realtek,dmic1-data-pin = <1>;
--		realtek,dmic1-clk-pin = <1>;
- 		realtek,jd-src = <1>;
- 	};
- };
+ 		disable_cap_alloc = config->dis_cap_alloc << config->slice_id;
+-		ret = regmap_write(drv_data->bcast_regmap,
+-				LLCC_TRP_SCID_DIS_CAP_ALLOC, disable_cap_alloc);
++		ret = regmap_update_bits(drv_data->bcast_regmap, LLCC_TRP_SCID_DIS_CAP_ALLOC,
++					 BIT(config->slice_id), disable_cap_alloc);
+ 		if (ret)
+ 			return ret;
+ 
+ 		if (drv_data->version < LLCC_VERSION_4_1_0_0) {
+ 			retain_pc = config->retain_on_pc << config->slice_id;
+-			ret = regmap_write(drv_data->bcast_regmap,
+-					LLCC_TRP_PCB_ACT, retain_pc);
++			ret = regmap_update_bits(drv_data->bcast_regmap, LLCC_TRP_PCB_ACT,
++						 BIT(config->slice_id), retain_pc);
+ 			if (ret)
+ 				return ret;
+ 		}
 -- 
 2.43.0
 
