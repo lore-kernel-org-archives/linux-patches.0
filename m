@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B482604CD;
-	Tue, 23 Jan 2024 01:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE5D605AF;
+	Tue, 23 Jan 2024 01:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974683; cv=none; b=cQqaxshjv6Eaz0AN8RsRMj51fjsxk4d19fS/4ZEZ+gM8gYEtQTb9C/gko2ZYy0lB3Naq0nOiESbvSYzX3k0Iz5Z3CVOZBnevvxv33bXuUXhHPZslF+qZOG2NO1fH8TSrcYNhy7FAMRTxPBk7Dae3P14nAC7tvpfAhT32oUMjIvY=
+	t=1705974684; cv=none; b=QJ4BGJVVhicx7tgv86sZSjQmsi5ooDGPP0r/T7EhqHMfCDaJFVL9kGKrYFKQQB7sKW0TMO0MsNlhlkucBJxdr4wjucSEqmu3ZeLuoF2/v9oM/XZk5XqJ4aMlSiHtVa7DcDVbqn8zDXihcUPVEInJm0HfI+ncL6zWhXb1SLhrv3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974683; c=relaxed/simple;
-	bh=KS6vjBVyVGRd3s7yssDH6zjXF7Sk4u4ZDCTTiAkgj7Q=;
+	s=arc-20240116; t=1705974684; c=relaxed/simple;
+	bh=w0VHpeha3wIwnMVWSypuSjZh4tcR+7GCF5Qqw8X5VRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RW4X1GV+wNF8uCp74ofYtbhEETUl76uJydVBiNU1rIHKNBW6e36/VZHDlVzIdpGv9MNVgF1G6zv0y422BKbC13A+Lz691EY6lksetMT5LXXNeb+YBGcYwsu8xMEvG+b8R04myjtT0JGGKNrO7Wj7JvGu3nFCw6fkiarPdCJrwJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqpDaqu/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W2VplvLaQtbGz0y5SdQWuDoYGP0ui6VsuL13oCWNfzQK5rZoXyCOSv1AtRbuOxtTKDB5DyBBSK0n+R7L/oR5xJ6Le0d9J9IgSJjQJr+ZeXRsEehGEjR+VFiiHMbxncdUf6oKoBfnc4YBaugideI5CIjZxZ4d8dS0Lm8XPVFPd98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLD3Frbf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqpDaqu/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3328C433F1;
-	Tue, 23 Jan 2024 01:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLD3Frbf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A8AC43390;
+	Tue, 23 Jan 2024 01:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705974683;
-	bh=KS6vjBVyVGRd3s7yssDH6zjXF7Sk4u4ZDCTTiAkgj7Q=;
+	bh=w0VHpeha3wIwnMVWSypuSjZh4tcR+7GCF5Qqw8X5VRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lqpDaqu/qDXxzPj4m2uZkaWMUB89NKRjBBb/QCgkvRbIeoJ5Uzgfnt8SuikzgdMa4
-	 yIlxwshz4WYJuE1vbKamQ5s86BwgQiKbbpfhpLlq4gLD250BXwLTepngK8TNnpL83D
-	 M8YeiyiycK0a3AmZavGbmyxYhQ0QzcVqNof8ZpAc=
+	b=pLD3FrbfO1FlgWbbFyp6NDdOjCmKh0n0S2O/EW45ucSLShzwkRjhUaAood9cZbriz
+	 1fgZ9kgIgl2SCwSzzZqMzCisj47lE5XEBIJSIMlNIhMUUAXMuzrzm6R+e7RrdZDa4b
+	 NZIW4wf9VE8LNHah2dMklaHBzL+xk3giFkPIQn2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hulk Robot <hulkci@huawei.com>,
-	Ren Zhijie <renzhijie2@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 5.15 248/374] dma-mapping: Fix build error unused-value
-Date: Mon, 22 Jan 2024 15:58:24 -0800
-Message-ID: <20240122235753.397200045@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 122/583] bpf: fix check for attempt to corrupt spilled pointer
+Date: Mon, 22 Jan 2024 15:52:53 -0800
+Message-ID: <20240122235815.875139114@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,55 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ren Zhijie <renzhijie2@huawei.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit 50d6281ce9b8412f7ef02d1bc9d23aa62ae0cf98 upstream.
+[ Upstream commit ab125ed3ec1c10ccc36bc98c7a4256ad114a3dae ]
 
-If CONFIG_DMA_DECLARE_COHERENT is not set,
-make ARCH=x86_64 CROSS_COMPILE=x86_64-linux-gnu- will be failed, like this:
+When register is spilled onto a stack as a 1/2/4-byte register, we set
+slot_type[BPF_REG_SIZE - 1] (plus potentially few more below it,
+depending on actual spill size). So to check if some stack slot has
+spilled register we need to consult slot_type[7], not slot_type[0].
 
-drivers/remoteproc/remoteproc_core.c: In function ‘rproc_rvdev_release’:
-./include/linux/dma-map-ops.h:182:42: error: statement with no effect [-Werror=unused-value]
- #define dma_release_coherent_memory(dev) (0)
-                                          ^
-drivers/remoteproc/remoteproc_core.c:464:2: note: in expansion of macro ‘dma_release_coherent_memory’
-  dma_release_coherent_memory(dev);
-  ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
+To avoid the need to remember and double-check this in the future, just
+use is_spilled_reg() helper.
 
-The return type of function dma_release_coherent_memory in CONFIG_DMA_DECLARE_COHERENT area is void, so in !CONFIG_DMA_DECLARE_COHERENT area it should neither return any value nor be defined as zero.
-
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Fixes: e61c451476e6 ("dma-mapping: Add dma_release_coherent_memory to DMA API")
-Signed-off-by: Ren Zhijie <renzhijie2@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20220630123528.251181-1-renzhijie2@huawei.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 27113c59b6d0 ("bpf: Check the other end of slot_type for STACK_SPILL")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20231205184248.1502704-4-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dma-map-ops.h |    2 +-
+ kernel/bpf/verifier.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/dma-map-ops.h
-+++ b/include/linux/dma-map-ops.h
-@@ -179,10 +179,10 @@ static inline int dma_declare_coherent_m
- 	return -ENOSYS;
- }
- 
--#define dma_release_coherent_memory(dev) (0)
- #define dma_alloc_from_dev_coherent(dev, size, handle, ret) (0)
- #define dma_release_from_dev_coherent(dev, order, vaddr) (0)
- #define dma_mmap_from_dev_coherent(dev, vma, vaddr, order, ret) (0)
-+static inline void dma_release_coherent_memory(struct device *dev) { }
- #endif /* CONFIG_DMA_DECLARE_COHERENT */
- 
- #ifdef CONFIG_DMA_GLOBAL_POOL
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 2deae0db03e8..24152ac6a393 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4330,7 +4330,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
+ 	 * so it's aligned access and [off, off + size) are within stack limits
+ 	 */
+ 	if (!env->allow_ptr_leaks &&
+-	    state->stack[spi].slot_type[0] == STACK_SPILL &&
++	    is_spilled_reg(&state->stack[spi]) &&
+ 	    size != BPF_REG_SIZE) {
+ 		verbose(env, "attempt to corrupt spilled pointer on stack\n");
+ 		return -EACCES;
+-- 
+2.43.0
+
 
 
