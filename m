@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82982627E3;
-	Tue, 23 Jan 2024 00:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCAB63122;
+	Tue, 23 Jan 2024 00:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971194; cv=none; b=arql+qqHqxLa4kYmSM1ZdEUqraYGNhnc6lN+YzWzsMLNVJfPQZCL7vlfOoULbARd+Q9YO3MfQHfoyrTH8nL0W51DkmHOmsu9gAM5VpkvIWzhiU1IlhNRPBkEuB/4gUicshzgAM1Hg8RX6552ENYgacbPE4eRT+AM2x5g77vLBEE=
+	t=1705971196; cv=none; b=Cy1xEAmcqRcyfB4JaF+WWGA7oY39ZdS4uZc0/Prm+WA0OKpclvunMpdRkmSP204oe1dn+W0lVXzgnrL4ucXn42X6CG7HC8JJ0Jd1Vd6tIwmU8vayq5rWxruIRTvc5ZrDUEu6i/ltMe+o+lBjYsq2L4nP/qf7l6AdjndJfLHKjUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971194; c=relaxed/simple;
-	bh=vE9axcSn3gWwW7+xS1kjRMWBd25tFIuGal6mwq6uqfc=;
+	s=arc-20240116; t=1705971196; c=relaxed/simple;
+	bh=LGCayZVx0jy7CCG16T7QOxHHBzEmbKzTYgatr874bo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y8Ho5bnCqikniABilABumm/bL3ffw9nrAPr7WnJNVYOxpgTl2nD6lAONi343MyKF6EDbx4/ZFAeFhrq13TiPA7cK3w0g97DAyNoQwrjr0TFc4U1yZg70LWVkx4lRRR9WAWl/xG69Mg/JZibyEVDzhDg9MKl+qA+KJqq1gCFB9Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVhLH+08; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QnXlwPmIfD/MS5JLXT135VQX7Jh19QlE7aDTkG152MdEIcHZL0tNQ8QTalX7xkDd/UBdXdTp8Iuh13MXIjwXWAaSHDRpHLo53XYUMF6vr3I0ypiJNxoLYgEmUtQ1OFG9OzruxJikkBSqeOxDLrTaTPVUTUxb9hwa/b5dEvQ+dX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZI6+4s9w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVhLH+08"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE85C43390;
-	Tue, 23 Jan 2024 00:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZI6+4s9w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E74DBC43390;
+	Tue, 23 Jan 2024 00:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971194;
-	bh=vE9axcSn3gWwW7+xS1kjRMWBd25tFIuGal6mwq6uqfc=;
+	s=korg; t=1705971196;
+	bh=LGCayZVx0jy7CCG16T7QOxHHBzEmbKzTYgatr874bo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bVhLH+08DXE5/94xFpURhkT8hSyGJHSB5e3kzki2VUp50P5eZzdwBjsy1NUkXqEzS
-	 U/OCpoUKdY6xjRcbd+LpWpsXKYa5xbSjTnAKQnjU46Rn4DMxz+rZX5IBQ5nOxfcboE
-	 49evgiGWvmmONor39x/Hd9LssdgcPoq+LIO0zc/I=
+	b=ZI6+4s9wwTLlMYkuNEIej3WHPHXX7stxgl3Kb5UlDxRUy6QwaItp9kdkENm8gB6SL
+	 bJ6q/n7Ef0oMPikRxgELxTRk4TjSLUObXIOVJGtyuN0iCkLpjYxijN1rUBCV0tucNu
+	 xD/jvh2FsES6vnFxtryYVwQS9CYNPjaEV5WSdoV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Florian Lehner <dev@der-flo.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 201/417] media: dvbdev: drop refcount on error path in dvb_device_open()
-Date: Mon, 22 Jan 2024 15:56:09 -0800
-Message-ID: <20240122235758.895494870@linuxfoundation.org>
+Subject: [PATCH 5.10 109/286] bpf, lpm: Fix check prefixlen before walking trie
+Date: Mon, 22 Jan 2024 15:56:55 -0800
+Message-ID: <20240122235736.292838354@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,37 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Florian Lehner <dev@der-flo.net>
 
-[ Upstream commit a2dd235df435a05d389240be748909ada91201d2 ]
+[ Upstream commit 9b75dbeb36fcd9fc7ed51d370310d0518a387769 ]
 
-If call to file->f_op->open() fails, then call dvb_device_put(dvbdev).
+When looking up an element in LPM trie, the condition 'matchlen ==
+trie->max_prefixlen' will never return true, if key->prefixlen is larger
+than trie->max_prefixlen. Consequently all elements in the LPM trie will
+be visited and no element is returned in the end.
 
-Fixes: 0fc044b2b5e2 ("media: dvbdev: adopts refcnt to avoid UAF")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+To resolve this, check key->prefixlen first before walking the LPM trie.
+
+Fixes: b95a5c4db09b ("bpf: add a longest prefix match trie map implementation")
+Signed-off-by: Florian Lehner <dev@der-flo.net>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20231105085801.3742-1-dev@der-flo.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvbdev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/bpf/lpm_trie.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
-index 9f9a97652708..d352e028491a 100644
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -104,6 +104,8 @@ static int dvb_device_open(struct inode *inode, struct file *file)
- 			err = file->f_op->open(inode, file);
- 		up_read(&minor_rwsem);
- 		mutex_unlock(&dvbdev_mutex);
-+		if (err)
-+			dvb_device_put(dvbdev);
- 		return err;
- 	}
- fail:
+diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
+index 00e32f2ec3e6..3c2d8722d45b 100644
+--- a/kernel/bpf/lpm_trie.c
++++ b/kernel/bpf/lpm_trie.c
+@@ -230,6 +230,9 @@ static void *trie_lookup_elem(struct bpf_map *map, void *_key)
+ 	struct lpm_trie_node *node, *found = NULL;
+ 	struct bpf_lpm_trie_key *key = _key;
+ 
++	if (key->prefixlen > trie->max_prefixlen)
++		return NULL;
++
+ 	/* Start walking the trie from the root node ... */
+ 
+ 	for (node = rcu_dereference(trie->root); node;) {
 -- 
 2.43.0
 
