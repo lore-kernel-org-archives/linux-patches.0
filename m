@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49AF94F5E3;
-	Tue, 23 Jan 2024 00:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31BD4F207;
+	Tue, 23 Jan 2024 00:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970434; cv=none; b=f+2JSmueuu+taLHFgPoxvpE5iCxb1rGNvrW2lW4FLJES95Mli86hi3Fb+uQMHEbOiI3aZQZWi2llbJ0l79bPac1adcAHD+NKCwmCTHUAckEgtkNLHmKSiq/781oFSiYRTRAcI+0he1qM64sVA5Yx972etnX4j0eqbo5vr6bl/Xs=
+	t=1705970437; cv=none; b=AZ+hIO343JLPENO5PGfH3Pi7OyxOi2jHC7i+ZqVTuf+Wp2PvR5d+swTiq7+mhnrizkEFJYEb6R0ZSCsxrSpzQ62foWSNo2mPHn7Unq3k5I5cZ5whdPomp2BLNnsWk8w/zXVwQxFkppHiTK4P+1DqmVVsLxUBfJxwokeDxiIuo+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970434; c=relaxed/simple;
-	bh=YzP1aYGyK4P/sJ/5JfpA6CFmiJYlTE8SsUdBfyJGQc0=;
+	s=arc-20240116; t=1705970437; c=relaxed/simple;
+	bh=WWJd/GShoHhV5YJzAgSuwexsRDcJJ8TOxsyyzoRBAMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jitEuBpl4ts23cdErb7qh2rBl8o/I/f0rsxxvPJFyT1j7UnP6RiDbzgwSMpjMfvdiABL5iQHMTsBRJwxVmVUaVum5N2Q1fCW2EJDF55xN73XSc9lAq+t6ukkmH0MQZ4sXMJcy6XjhcellEoWYhU+QQFbpDqrQrD0o8BNeT2KDP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlQ9kOfh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Te+ugtVbPuKjY+lsEJmvzSlr2rL8JpO7gkGybv4cbXIU8aFYen4S+fBST/EkjBpo7SAJn52bBDgU4C1513R/4YA8yD6pfWb6xz/vP2iT+2KjvOUFbPwuxupJqyueRjl7M15mhaYRsFBg9fh4AqHdanGI4b7ba4SdpdN+LQlLN9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xcg37iRQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlQ9kOfh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7818C433C7;
-	Tue, 23 Jan 2024 00:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xcg37iRQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCECDC433C7;
+	Tue, 23 Jan 2024 00:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970434;
-	bh=YzP1aYGyK4P/sJ/5JfpA6CFmiJYlTE8SsUdBfyJGQc0=;
+	s=korg; t=1705970437;
+	bh=WWJd/GShoHhV5YJzAgSuwexsRDcJJ8TOxsyyzoRBAMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XlQ9kOfhRoSm7sqmIiJ+ysWhdHXmkwM4olGRAqQr5pcutrgC5YBGqZ1tXpvUqlET0
-	 sFAKV4ov0EeBCm+vGNLab7pUSE6670wJr60gJBC9MQYudHoQCPfN+ELehsxs5BG4+i
-	 2oK9qk03i+oImoQYYTxTwPzmmqEWouWWtiITfUyw=
+	b=Xcg37iRQeXm7lVU/vrU6+y8QsoA6MNRgxAQcJDSQMPZ72ACV28Srovq5RyXJS+VFc
+	 h39nYluOHjd+Cx/YLnYEENyTFzE4x9idGj5NPMAVLvAXaI7qhOsDcyQBmm8a3rezfj
+	 tOPl2r6JJvbIuTRU+WLoAMQI/VKWBAjXveITOUxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"David E. Box" <david.e.box@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/417] platform/x86/intel/vsec: Support private data
-Date: Mon, 22 Jan 2024 15:53:07 -0800
-Message-ID: <20240122235752.203100870@linuxfoundation.org>
+Subject: [PATCH 6.1 002/417] x86/mce/inject: Clear test status value
+Date: Mon, 22 Jan 2024 15:52:50 -0800
+Message-ID: <20240122235751.571079296@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -52,43 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-[ Upstream commit 4ec5d0231d2e4aebe41152d57c6b4f1e7ea14f08 ]
+[ Upstream commit 6175b407756b22e7fdc771181b7d832ebdedef5c ]
 
-Add fields to struct intel_vsec_device, so that core module (which
-creates aux bus devices) can pass private data to the client drivers.
+AMD systems generally allow MCA "simulation" where MCA registers can be
+written with valid data and the full MCA handling flow can be tested by
+software.
 
-For example there is one vsec device instance per CPU package. On a
-multi package system, this private data can be used to pass the package
-ID. This package id can be used by client drivers to change power
-settings for a specific CPU package by targeting MMIO space of the
-correct PCI device.
+However, the platform on Scalable MCA systems, can prevent software from
+writing data to the MCA registers. There is no architectural way to
+determine this configuration. Therefore, the MCE injection module will
+check for this behavior by writing and reading back a test status value.
+This is done during module init, and the check can run on any CPU with
+any valid MCA bank.
 
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Acked-by: David E. Box <david.e.box@linux.intel.com>
-Link: https://lore.kernel.org/r/20230202010738.2186174-4-srinivas.pandruvada@linux.intel.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Stable-dep-of: 8cbcc1dbf8a6 ("platform/x86/intel/vsec: Fix xa_alloc memory leak")
+If MCA_STATUS writes are ignored by the platform, then there are no side
+effects on the hardware state.
+
+If the writes are not ignored, then the test status value will remain in
+the hardware MCA_STATUS register. It is likely that the value will not
+be overwritten by hardware or software, since the tested CPU and bank
+are arbitrary. Therefore, the user may see a spurious, synthetic MCA
+error reported whenever MCA is polled for this CPU.
+
+Clear the test value immediately after writing it. It is very unlikely
+that a valid MCA error is logged by hardware during the test. Errors
+that cause an #MC won't be affected.
+
+Fixes: 891e465a1bd8 ("x86/mce: Check whether writes to MCA_STATUS are getting ignored")
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20231118193248.1296798-2-yazen.ghannam@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/vsec.h | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kernel/cpu/mce/inject.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/intel/vsec.h b/drivers/platform/x86/intel/vsec.h
-index d02c340fd458..ae8fe92c5595 100644
---- a/drivers/platform/x86/intel/vsec.h
-+++ b/drivers/platform/x86/intel/vsec.h
-@@ -38,6 +38,8 @@ struct intel_vsec_device {
- 	struct ida *ida;
- 	struct intel_vsec_platform_info *info;
- 	int num_resources;
-+	void *priv_data;
-+	size_t priv_data_size;
- };
+diff --git a/arch/x86/kernel/cpu/mce/inject.c b/arch/x86/kernel/cpu/mce/inject.c
+index 12cf2e7ca33c..87c15ab89651 100644
+--- a/arch/x86/kernel/cpu/mce/inject.c
++++ b/arch/x86/kernel/cpu/mce/inject.c
+@@ -747,6 +747,7 @@ static void check_hw_inj_possible(void)
  
- int intel_vsec_add_aux(struct pci_dev *pdev, struct device *parent,
+ 		wrmsrl_safe(mca_msr_reg(bank, MCA_STATUS), status);
+ 		rdmsrl_safe(mca_msr_reg(bank, MCA_STATUS), &status);
++		wrmsrl_safe(mca_msr_reg(bank, MCA_STATUS), 0);
+ 
+ 		if (!status) {
+ 			hw_injection_possible = false;
 -- 
 2.43.0
 
