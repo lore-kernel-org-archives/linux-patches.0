@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD8064AAF;
-	Tue, 23 Jan 2024 00:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17C360269;
+	Tue, 23 Jan 2024 00:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970776; cv=none; b=atLWmCL71KoOsGlMQPzxOz0ai0kHqzsf7FegZoBd2wQkTdHSGDBnNE1R+j7GoOOFJt8Pme6+LptBvZU/L0vUv6JfNQBXEPizDKTpXhxD3trFgtP+qAF+hXp3C32G8ZNzopB08x5DaRnHVlJyC7PVK6RLKHuqC13HuE8EakXdHVo=
+	t=1705970779; cv=none; b=nEpNOT88mT2Ny4JiQTxNo9vO1v9nvi90JXT5utcMxK7kkNyDMPea125tutolqGO7Iwn+uUCMA06ABWco03KzOZuEUOo+a+RKA6pnp0LF/Ah5Kt4ZqN145kkMN4uEw5ejdPn4vlG7PEzcjG4ElAlIiWvUsVWWbd/embElmKoeTzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970776; c=relaxed/simple;
-	bh=l0Iv1A+ILgwhQTqecSE1ZZIHUo17wWfM+dFLglCU0u8=;
+	s=arc-20240116; t=1705970779; c=relaxed/simple;
+	bh=CeAeoLEWyiZ0zPO7Ce89W5VH9dDVAD4E+sgE0xt+wnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RiEOWsXwZiiWqSJcqgp/e29oeF7NqrAcN6RfyFDgxzDj2flSUYBsVbg0YTx9TehxmAIf2zvgU12xvRd3QU7gHPk5yIcOViphS/iEi7DS6PSvzj7Neue8ftbR0C1mgiGETdX2G83Cxf/g8tOpCe8sVC5cN4kHb9YeKWZQQ4nuRIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7T4kMlU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCqYBzlqHrudYr/oilYqJbUmdVdtVPCRoyH3qOee/f1IFgh4PhQClIwaH0TUCMS9/KxBUEI0ZWUHJkCHxQ23gtUDSYa5DaPqIm5oFRyxvm+hSyMuOqL4mQAB4/X7RuILr11RO7ZRbt3YGCO1uOJNTqi6deuuGN/PkHo0Bu2/+F0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1jWmWdl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7T4kMlU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16429C433F1;
-	Tue, 23 Jan 2024 00:46:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1jWmWdl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C911C433C7;
+	Tue, 23 Jan 2024 00:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970776;
-	bh=l0Iv1A+ILgwhQTqecSE1ZZIHUo17wWfM+dFLglCU0u8=;
+	s=korg; t=1705970779;
+	bh=CeAeoLEWyiZ0zPO7Ce89W5VH9dDVAD4E+sgE0xt+wnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7T4kMlUiKFyyAGKJbw/Z+2mylIgb/y0T+7jgd8wMlMdZAJsL2gMkJfuZ7MNF1X8I
-	 VAWti5cF5nOvsp9wlygWle1yWSQer3hADcYTqdaxev8Wzo2VgyLY2jw9f81DKDoayP
-	 fGE9NyuwIH/rC//fvj1zzCPx9AjkBs/DTL8Kawpw=
+	b=x1jWmWdlBl3Fg5ehJLjL6kx10kyMEEJ6nwIqrYe244ZMxaA2zQsenp5+1h1rYMiSk
+	 uiaky1c6Xtxh/bocZtuLCFoJjyp5HgUb0Hz0e9IoUUTvHbsl16hhoWq+5nh8y4Mhn4
+	 zHSuWqKEgX6aCfWFtzUa/mPjix7E9ROx2h7+CSfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Sun <sunhao.th@gmail.com>,
-	Andrei Matei <andreimatei1@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Danilo Krummrich <dakr@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/417] bpf: Fix verification of indirect var-off stack access
-Date: Mon, 22 Jan 2024 15:54:35 -0800
-Message-ID: <20240122235755.429341809@linuxfoundation.org>
+Subject: [PATCH 5.10 015/286] nouveau/tu102: flush all pdbs on vmm flush
+Date: Mon, 22 Jan 2024 15:55:21 -0800
+Message-ID: <20240122235732.607133352@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,85 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrei Matei <andreimatei1@gmail.com>
+From: Dave Airlie <airlied@redhat.com>
 
-[ Upstream commit a833a17aeac73b33f79433d7cee68d5cafd71e4f ]
+[ Upstream commit cb9c919364653eeafb49e7ff5cd32f1ad64063ac ]
 
-This patch fixes a bug around the verification of possibly-zero-sized
-stack accesses. When the access was done through a var-offset stack
-pointer, check_stack_access_within_bounds was incorrectly computing the
-maximum-offset of a zero-sized read to be the same as the register's min
-offset. Instead, we have to take in account the register's maximum
-possible value. The patch also simplifies how the max offset is checked;
-the check is now simpler than for min offset.
+This is a hack around a bug exposed with the GSP code, I'm not sure
+what is happening exactly, but it appears some of our flushes don't
+result in proper tlb invalidation for out BAR2 and we get a BAR2
+fault from GSP and it all dies.
 
-The bug was allowing accesses to erroneously pass the
-check_stack_access_within_bounds() checks, only to later crash in
-check_stack_range_initialized() when all the possibly-affected stack
-slots are iterated (this time with a correct max offset).
-check_stack_range_initialized() is relying on
-check_stack_access_within_bounds() for its accesses to the
-stack-tracking vector to be within bounds; in the case of zero-sized
-accesses, we were essentially only verifying that the lowest possible
-slot was within bounds. We would crash when the max-offset of the stack
-pointer was >= 0 (which shouldn't pass verification, and hopefully is
-not something anyone's code attempts to do in practice).
-
-Thanks Hao for reporting!
-
-Fixes: 01f810ace9ed3 ("bpf: Allow variable-offset stack access")
-Reported-by: Hao Sun <sunhao.th@gmail.com>
-Signed-off-by: Andrei Matei <andreimatei1@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20231207041150.229139-2-andreimatei1@gmail.com
-
-Closes: https://lore.kernel.org/bpf/CACkBjsZGEUaRCHsmaX=h-efVogsRfK1FPxmkgb0Os_frnHiNdw@mail.gmail.com/
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231130010852.4034774-1-airlied@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index adadf8546270..95e7b638418e 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -4950,10 +4950,7 @@ static int check_stack_access_within_bounds(
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c b/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c
+index b1294d0076c0..72449bf613bf 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c
+@@ -32,7 +32,7 @@ tu102_vmm_flush(struct nvkm_vmm *vmm, int depth)
  
- 	if (tnum_is_const(reg->var_off)) {
- 		min_off = reg->var_off.value + off;
--		if (access_size > 0)
--			max_off = min_off + access_size - 1;
--		else
--			max_off = min_off;
-+		max_off = min_off + access_size;
- 	} else {
- 		if (reg->smax_value >= BPF_MAX_VAR_OFF ||
- 		    reg->smin_value <= -BPF_MAX_VAR_OFF) {
-@@ -4962,15 +4959,12 @@ static int check_stack_access_within_bounds(
- 			return -EACCES;
- 		}
- 		min_off = reg->smin_value + off;
--		if (access_size > 0)
--			max_off = reg->smax_value + off + access_size - 1;
--		else
--			max_off = min_off;
-+		max_off = reg->smax_value + off + access_size;
- 	}
+ 	type |= 0x00000001; /* PAGE_ALL */
+ 	if (atomic_read(&vmm->engref[NVKM_SUBDEV_BAR]))
+-		type |= 0x00000004; /* HUB_ONLY */
++		type |= 0x00000006; /* HUB_ONLY | ALL PDB (hack) */
  
- 	err = check_stack_slot_within_bounds(min_off, state, type);
--	if (!err)
--		err = check_stack_slot_within_bounds(max_off, state, type);
-+	if (!err && max_off > 0)
-+		err = -EINVAL; /* out of stack access into non-negative offsets */
+ 	mutex_lock(&subdev->mutex);
  
- 	if (err) {
- 		if (tnum_is_const(reg->var_off)) {
 -- 
 2.43.0
 
