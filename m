@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F96634F8;
-	Tue, 23 Jan 2024 00:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016AE627F3;
+	Tue, 23 Jan 2024 00:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971274; cv=none; b=L55pBTWFjXJFVHNeiSF47axWQu5er0LHafibrXR1KSoTdI+vgG2PJaBQP2TKNr//uB/98t706Hrttb8KNEa8pQHtn/dHGwZJtG+aitRkNQIdpqdvrd2L/c8Ql4USumaRth0oLQprk7OWQJkLq3PaPXd4YWcRTaKG3nGtvdjIulc=
+	t=1705971276; cv=none; b=ENcj2r2C9BdvHaeXBgqxL6uj8alLgq6qEQ9Q/PnuKCJalN1aA4lAP4e0smHl0fCAn8exVEq5/lEe4qjKTBMx2v8TEZy8AFgyG7n9yFcUVJ8KAp+GxcLw0h+fTs5Hx8snlpCFS0nnfHYBUdm+6lli/FVamlN89hdcgGsTySE7hbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971274; c=relaxed/simple;
-	bh=KN08VdIYh9MVXEY/7gcCxxx9MkUhI0jKCVATYPJBgxw=;
+	s=arc-20240116; t=1705971276; c=relaxed/simple;
+	bh=lv9dVNU+qwDf56pLV6KT4C0l3PGAClVeoK7MOucHg0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DgvaGq70834x8/eeP/+GasFKMcdG2xS5ToHrD5gZYCKjZSfX38U6dy+/uk+ws5rTkNQebhmtP7D5e6esIVoHiMY5QpKzFWXFwSBukT3Xky/rSuUTgRIgxLuKi7Vo/uUpGZgMKnyOSoC7aeUA9VOKMHPscWqtup0i61TRNaXF/ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSPTS7RU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R3AwzMzSe84EVpe8EmLRgahQGDxGkjMch/yAzkF5RX6cIsPPWJWuFMsAJKDh5wnT2enYKJVYgt5Dq1Q5sNZzvCYdUn2IOUk8Vml4raKoSuzRfsE9R4HHVQE+8crq3mGrOr8Doi5ida/NuKlvV1oJfCoZzQpCTrH1pIHJjg3L/kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vGjBvSS0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSPTS7RU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC516C433F1;
-	Tue, 23 Jan 2024 00:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGjBvSS0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D4FC433F1;
+	Tue, 23 Jan 2024 00:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971274;
-	bh=KN08VdIYh9MVXEY/7gcCxxx9MkUhI0jKCVATYPJBgxw=;
+	s=korg; t=1705971275;
+	bh=lv9dVNU+qwDf56pLV6KT4C0l3PGAClVeoK7MOucHg0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FSPTS7RUACqFR1gDaQXRYAOVt+2hn6Zq2qWkMqdzEq9YG0ZJVFFXKKIQz0uOkXBEJ
-	 ic6bGWn454NEW2c0q2+RnIgEaCLd2rwFOzrcy2H9BW7IKvTiX1fAtZG/+Ch9sULVse
-	 AQImkoQ/9RILSknDaSLfbjscgkef6fWqDBTnj2s4=
+	b=vGjBvSS01QqY2+ELr39CtJUN/55uxB8tSKukmpl4FapzDKLJykUc7i9Ffn1xrXOMi
+	 EKqm4r6AOaptSFA2q0+cRMRo08ILJGLlg1fwNRZW+lItkk5RRsBzVYoWCRbukWoIQ/
+	 iTZqWR/c5XH0ipUKvng5GWPYX7HD0oiJFTaMFbF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait@windriver.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 101/286] crypto: sahara - fix wait_for_completion_timeout() error handling
-Date: Mon, 22 Jan 2024 15:56:47 -0800
-Message-ID: <20240122235735.962486698@linuxfoundation.org>
+Subject: [PATCH 6.1 194/417] media: imx-mipi-csis: Fix clock handling in remove()
+Date: Mon, 22 Jan 2024 15:56:02 -0800
+Message-ID: <20240122235758.653727936@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait@windriver.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 2dba8e1d1a7957dcbe7888846268538847b471d1 ]
+[ Upstream commit 5705b0e0eb550ff834125a46a4ef99b62093d83d ]
 
-The sg lists are not unmapped in case of timeout errors. Fix this.
+The driver always calls mipi_csis_runtime_suspend() and
+mipi_csis_clk_disable() in remove(). This causes multiple WARNs from the
+kernel, as the clocks get disabled too many times.
 
-Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
-Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fix the remove() to call mipi_csis_runtime_suspend() and
+mipi_csis_clk_disable() in a way that reverses what is done in probe().
+
+Link: https://lore.kernel.org/r/20231122-imx-csis-v2-1-e44b8dc4cb66@ideasonboard.com
+
+Fixes: 7807063b862b ("media: staging/imx7: add MIPI CSI-2 receiver subdev for i.MX7")
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/media/platform/nxp/imx-mipi-csis.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index a97b1dadf6a4..67960acd786a 100644
---- a/drivers/crypto/sahara.c
-+++ b/drivers/crypto/sahara.c
-@@ -607,16 +607,17 @@ static int sahara_aes_process(struct skcipher_request *req)
+diff --git a/drivers/media/platform/nxp/imx-mipi-csis.c b/drivers/media/platform/nxp/imx-mipi-csis.c
+index 905072871ed2..196f2bba419f 100644
+--- a/drivers/media/platform/nxp/imx-mipi-csis.c
++++ b/drivers/media/platform/nxp/imx-mipi-csis.c
+@@ -1553,8 +1553,10 @@ static int mipi_csis_remove(struct platform_device *pdev)
+ 	v4l2_async_nf_cleanup(&csis->notifier);
+ 	v4l2_async_unregister_subdev(&csis->sd);
  
- 	timeout = wait_for_completion_timeout(&dev->dma_completion,
- 				msecs_to_jiffies(SAHARA_TIMEOUT_MS));
--	if (!timeout) {
--		dev_err(dev->device, "AES timeout\n");
--		return -ETIMEDOUT;
--	}
- 
- 	dma_unmap_sg(dev->device, dev->out_sg, dev->nb_out_sg,
- 		DMA_FROM_DEVICE);
- 	dma_unmap_sg(dev->device, dev->in_sg, dev->nb_in_sg,
- 		DMA_TO_DEVICE);
- 
-+	if (!timeout) {
-+		dev_err(dev->device, "AES timeout\n");
-+		return -ETIMEDOUT;
-+	}
++	if (!pm_runtime_enabled(&pdev->dev))
++		mipi_csis_runtime_suspend(&pdev->dev);
 +
- 	if ((dev->flags & FLAGS_CBC) && req->iv)
- 		sahara_aes_cbc_update_iv(req);
- 
-@@ -1007,15 +1008,16 @@ static int sahara_sha_process(struct ahash_request *req)
- 
- 	timeout = wait_for_completion_timeout(&dev->dma_completion,
- 				msecs_to_jiffies(SAHARA_TIMEOUT_MS));
--	if (!timeout) {
--		dev_err(dev->device, "SHA timeout\n");
--		return -ETIMEDOUT;
--	}
- 
- 	if (rctx->sg_in_idx)
- 		dma_unmap_sg(dev->device, dev->in_sg, dev->nb_in_sg,
- 			     DMA_TO_DEVICE);
- 
-+	if (!timeout) {
-+		dev_err(dev->device, "SHA timeout\n");
-+		return -ETIMEDOUT;
-+	}
-+
- 	memcpy(rctx->context, dev->context_base, rctx->context_size);
- 
- 	if (req->result && rctx->last)
+ 	pm_runtime_disable(&pdev->dev);
+-	mipi_csis_runtime_suspend(&pdev->dev);
+ 	mipi_csis_clk_disable(csis);
+ 	media_entity_cleanup(&csis->sd.entity);
+ 	fwnode_handle_put(csis->sd.fwnode);
 -- 
 2.43.0
 
