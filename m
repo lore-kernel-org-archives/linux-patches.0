@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429FF1FB2;
-	Tue, 23 Jan 2024 00:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C256420EE;
+	Tue, 23 Jan 2024 00:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968230; cv=none; b=DIux1Ph5dX5RJwTAcwOeaIrDnTVMpCT45kR4Pv/gjE5TorrsA2mXdZeS48LSVOt8bPRWkiN7u4S9LM3jnFdZdsYyHHCso4AAeVImn4ekEu0ncMmZyVuz5vuQPoV5KppPdGu4E+GY+//f561ES540OCewrh8J8rEMrKAe73VfEuk=
+	t=1705968236; cv=none; b=RerZdh90wWLDTKqubIhAMSwakZKzw5nFw/deb6yozQRS0oyBQWsBWNgQUWZEHZGPpaak2dgsbUc93vQ0kEYd2hOwy00gMRBEixK9omVXdtpVjDx2F4795vCEg9zrGG2teZCH2Mcsclxw+1Z/TQuSL+3y8/Or4uF6GtKTwCjjP/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968230; c=relaxed/simple;
-	bh=l5tgXypiQeI73omvvNTkhCxKkggUi7TV1DveBnybNA8=;
+	s=arc-20240116; t=1705968236; c=relaxed/simple;
+	bh=WeCPLbTLUZbTUFDHHOFk+iCUmOm7rEz6pqXac4Y7TeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DGt2pVvQ+FTOiXZb7l+hZdRVNwrFz1U75pp/g/h5u64euumd8DcWFBe4rUiGQKN6R9wXN3kUyB2LwqWV5sg7lUo25C657pXGs9+0Vwj6socodx5IcbznhXV9dpNhAbAGQulOi8nBroRnQFasj9eMWDAlztjVFYDs3u68aRMOKJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLBKPNqX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TXTOmkGC1EoBNQjap1Luep0Y1g7s9LBLFl2ZHrFUBQ3G0j7vUHljrXXXmsUGHNOvaS7egIubvCyqWshix6QcY9lVfP0w1N10H/P5s7vcEKsAvQkyAEmRXeUTngBF4CA1BorCjUFKSP1/m1y7ccnqiqeLu+qHkrup41y/TdP4j7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CavrUtqH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLBKPNqX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10EFFC43394;
-	Tue, 23 Jan 2024 00:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CavrUtqH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007F8C433C7;
+	Tue, 23 Jan 2024 00:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968230;
-	bh=l5tgXypiQeI73omvvNTkhCxKkggUi7TV1DveBnybNA8=;
+	s=korg; t=1705968236;
+	bh=WeCPLbTLUZbTUFDHHOFk+iCUmOm7rEz6pqXac4Y7TeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bLBKPNqXbNn0vzCaXeEY5I79fH6rdB7TPhaviGnFhQi+Vb8MFj464TvASJFDU82B4
-	 3Rt6H84b6bY18rcT+vSA1JafjsS0GTyZMfkJhpTxBZMBfyoKc6++59fTVNzjGrBdI5
-	 FCs9lxVgcI3A/MshLncFWpCMXId+dQRUjLQLxRCI=
+	b=CavrUtqHsLYBQtg+sm3PoKBdPzg9gfdDnLm1ueTuUqOMW+/wsdhGbjJpTfYKSI5N8
+	 vNrjCnlwjFr/AEZNdsaW0eFWZB6kucbphL7hccV9FhBFqrug4FSyz1RueUsPUSesKF
+	 rbORBOsjrwMBItjb1A74XpEYqXqv5a8Ln4LgbZrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait@windriver.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 051/148] crypto: sahara - fix error handling in sahara_hw_descriptor_create()
-Date: Mon, 22 Jan 2024 15:56:47 -0800
-Message-ID: <20240122235714.483313636@linuxfoundation.org>
+Subject: [PATCH 4.19 052/148] pstore: ram_core: fix possible overflow in persistent_ram_init_ecc()
+Date: Mon, 22 Jan 2024 15:56:48 -0800
+Message-ID: <20240122235714.526907705@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -51,52 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait@windriver.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit ee6e6f0a7f5b39d50a5ef5fcc006f4f693db18a7 ]
+[ Upstream commit 86222a8fc16ec517de8da2604d904c9df3a08e5d ]
 
-Do not call dma_unmap_sg() for scatterlists that were not mapped
-successfully.
+In persistent_ram_init_ecc(), on 64-bit arches DIV_ROUND_UP() will return
+64-bit value since persistent_ram_zone::buffer_size has type size_t which
+is derived from the 64-bit *unsigned long*, while the ecc_blocks variable
+this value gets assigned to has (always 32-bit) *int* type.  Even if that
+value fits into *int* type, an overflow is still possible when calculating
+the size_t typed ecc_total variable further below since there's no cast to
+any 64-bit type before multiplication.  Declaring the ecc_blocks variable
+as *size_t* should fix this mess...
 
-Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Found by Linux Verification Center (linuxtesting.org) with the SVACE static
+analysis tool.
+
+Fixes: 9cc05ad97c57 ("staging: android: persistent_ram: refactor ecc support")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20231105202936.25694-1-s.shtylyov@omp.ru
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/pstore/ram_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index ef0912b4d28c..011789df3590 100644
---- a/drivers/crypto/sahara.c
-+++ b/drivers/crypto/sahara.c
-@@ -484,13 +484,14 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
- 			 DMA_TO_DEVICE);
- 	if (ret != dev->nb_in_sg) {
- 		dev_err(dev->device, "couldn't map in sg\n");
--		goto unmap_in;
-+		return -EINVAL;
- 	}
-+
- 	ret = dma_map_sg(dev->device, dev->out_sg, dev->nb_out_sg,
- 			 DMA_FROM_DEVICE);
- 	if (ret != dev->nb_out_sg) {
- 		dev_err(dev->device, "couldn't map out sg\n");
--		goto unmap_out;
-+		goto unmap_in;
- 	}
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index efb765b8466f..a6e5022469ab 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -189,7 +189,7 @@ static int persistent_ram_init_ecc(struct persistent_ram_zone *prz,
+ {
+ 	int numerr;
+ 	struct persistent_ram_buffer *buffer = prz->buffer;
+-	int ecc_blocks;
++	size_t ecc_blocks;
+ 	size_t ecc_total;
  
- 	/* Create input links */
-@@ -538,9 +539,6 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
- 
- 	return 0;
- 
--unmap_out:
--	dma_unmap_sg(dev->device, dev->out_sg, dev->nb_out_sg,
--		DMA_FROM_DEVICE);
- unmap_in:
- 	dma_unmap_sg(dev->device, dev->in_sg, dev->nb_in_sg,
- 		DMA_TO_DEVICE);
+ 	if (!ecc_info || !ecc_info->ecc_size)
 -- 
 2.43.0
 
