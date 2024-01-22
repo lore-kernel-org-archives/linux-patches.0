@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F45D657B3;
-	Tue, 23 Jan 2024 01:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B212312FF73;
+	Tue, 23 Jan 2024 01:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971794; cv=none; b=hwQMtJf9XalvOIOnZE6Xe3jmzl1pvt4qbrzhX+c2+w2LUxx87ylaf2cNbwNmSxGQY0WHpIBnshcqKSG86cTf5AAdl9t5AC4AsuREKPgqV3e04O8X6X0+ggcFVc6e4lMxhAuO7askRViJUhqe3VIWdpHeEHY6ENb7eBL8mmKVoSA=
+	t=1705971796; cv=none; b=k4hkiwgNJvr4ukzhJLSF/eK5v+WThlVUPsnrFzC5cjj+hpi6WWtJU+eGcUPl3GOb78Uae7hmDxaDphNvUl4kUTdyxC6ch+r8t1sHUJ3ssWnpWSLoass88EZ57Fmhp/pUQ7Thj/OGy32ZG7cmA+qQIYNndav/B5BAijKGfKbjFt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971794; c=relaxed/simple;
-	bh=r1pcOx0OUp3TiixMlTQhhPcdwLWu6L+U15OMzLDMfIU=;
+	s=arc-20240116; t=1705971796; c=relaxed/simple;
+	bh=auqdmgquI4ieQRrzp17N/gauoSxnZjcBMhBl/z+Cymk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZIdTheUK+7oVWiW4J4JE6F+gFO8NotJ4uDa8P6gasYc4f/mOjp6PCPLCbnaHv60DSGYNskeyWhmvv52Z5w81qXwN4wGvn0hrKYhpnrY234d4Ryj8hcCxmv0pWwgF6pf8DIQBwkxRXb9myyb93MxC7Qa+6xQPPCouRAjmlVzgmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZQsZY1Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VbLZs7G8lQZ29U4MwKhl8srrE6AEjD4F8IdozX30CepqobJ07N60F80Aba1e0B0wU3nCExCucvWJt57ksM0Hs2mpHk2eXf1/zFBxJgnqu+B/QCq223jhDBp+LcvEoJ+vUltLwlxLMZU1XPtXPBncH0a4/H7HjHPxK7NSBelZKGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+9oiZZZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZQsZY1Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6D0C433F1;
-	Tue, 23 Jan 2024 01:03:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+9oiZZZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737CEC433F1;
+	Tue, 23 Jan 2024 01:03:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971794;
-	bh=r1pcOx0OUp3TiixMlTQhhPcdwLWu6L+U15OMzLDMfIU=;
+	s=korg; t=1705971796;
+	bh=auqdmgquI4ieQRrzp17N/gauoSxnZjcBMhBl/z+Cymk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XZQsZY1ZHfSmtbhPIRGmGXu/1ps5GdCBuujZvaDbZsJqG1Z+xo4s/UnNVeCbpZvSu
-	 O7fG0PLL/YrqArTytzmIwhVrf3gVlBxCOWbgU2H3M6Gpb3Dz0FVYYMg67fnawk0aYf
-	 t371AapNLUcv3k94fHm0tV5v8dPfXLBXprhyUGV4=
+	b=V+9oiZZZW4fbI3+q6KmQkyTsfWRdLPLkj2FWX2Mp8zkFoR1Umb7114CicEcNQD9hm
+	 OrYCBFfnByT9mAu/ZZIbZYhpvZJFPEBnsBrFxxo+gsvE4jhyCKBd6EsdCZTegk7qNJ
+	 1iIbdZm1SpmpfM96rQ9DXunkZoiroAzOymKpURG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunkun Jiang <jiangkunkun@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Zenghui Yu <yuzenghui@huawei.com>
-Subject: [PATCH 5.10 232/286] KVM: arm64: vgic-v4: Restore pending state on host userspace write
-Date: Mon, 22 Jan 2024 15:58:58 -0800
-Message-ID: <20240122235741.004487123@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Subject: [PATCH 6.1 322/417] serial: sc16is7xx: set safe default SPI clock frequency
+Date: Mon, 22 Jan 2024 15:58:10 -0800
+Message-ID: <20240122235802.957950334@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +45,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 7b95382f965133ef61ce44aaabc518c16eb46909 upstream.
+commit 3ef79cd1412236d884ab0c46b4d1921380807b48 upstream.
 
-When the VMM writes to ISPENDR0 to set the state pending state of
-an SGI, we fail to convey this to the HW if this SGI is already
-backed by a GICv4.1 vSGI.
+15 MHz is supported only by 76x variants.
 
-This is a bit of a corner case, as this would only occur if the
-vgic state is changed on an already running VM, but this can
-apparently happen across a guest reset driven by the VMM.
+If the SPI clock frequency is not specified, use a safe default clock value
+of 4 MHz that is supported by all variants.
 
-Fix this by always writing out the pending_latch value to the
-HW, and reseting it to false.
+Also use HZ_PER_MHZ macro to improve readability.
 
-Reported-by: Kunkun Jiang <jiangkunkun@huawei.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
-Cc: stable@vger.kernel.org # 5.10+
-Link: https://lore.kernel.org/r/7e7f2c0c-448b-10a9-8929-4b8f4f6e2a32@huawei.com
+Fixes: 2c837a8a8f9f ("sc16is7xx: spi interface is added")
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20231221231823.2327894-4-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-mmio-v3.c |   27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-@@ -356,19 +356,26 @@ static int vgic_v3_uaccess_write_pending
- 		struct vgic_irq *irq = vgic_get_irq(vcpu->kvm, vcpu, intid + i);
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -24,6 +24,7 @@
+ #include <linux/tty_flip.h>
+ #include <linux/spi/spi.h>
+ #include <linux/uaccess.h>
++#include <linux/units.h>
+ #include <uapi/linux/sched/types.h>
  
- 		raw_spin_lock_irqsave(&irq->irq_lock, flags);
--		if (test_bit(i, &val)) {
--			/*
--			 * pending_latch is set irrespective of irq type
--			 * (level or edge) to avoid dependency that VM should
--			 * restore irq config before pending info.
--			 */
--			irq->pending_latch = true;
--			vgic_queue_irq_unlock(vcpu->kvm, irq, flags);
--		} else {
-+
-+		/*
-+		 * pending_latch is set irrespective of irq type
-+		 * (level or edge) to avoid dependency that VM should
-+		 * restore irq config before pending info.
-+		 */
-+		irq->pending_latch = test_bit(i, &val);
-+
-+		if (irq->hw && vgic_irq_is_sgi(irq->intid)) {
-+			irq_set_irqchip_state(irq->host_irq,
-+					      IRQCHIP_STATE_PENDING,
-+					      irq->pending_latch);
- 			irq->pending_latch = false;
--			raw_spin_unlock_irqrestore(&irq->irq_lock, flags);
- 		}
+ #define SC16IS7XX_NAME			"sc16is7xx"
+@@ -1721,7 +1722,7 @@ static int sc16is7xx_spi_probe(struct sp
+ 		return dev_err_probe(&spi->dev, -EINVAL, "Unsupported SPI mode\n");
  
-+		if (irq->pending_latch)
-+			vgic_queue_irq_unlock(vcpu->kvm, irq, flags);
-+		else
-+			raw_spin_unlock_irqrestore(&irq->irq_lock, flags);
-+
- 		vgic_put_irq(vcpu->kvm, irq);
- 	}
- 
+ 	spi->mode		= spi->mode ? : SPI_MODE_0;
+-	spi->max_speed_hz	= spi->max_speed_hz ? : 15000000;
++	spi->max_speed_hz	= spi->max_speed_hz ? : 4 * HZ_PER_MHZ;
+ 	ret = spi_setup(spi);
+ 	if (ret)
+ 		return ret;
 
 
