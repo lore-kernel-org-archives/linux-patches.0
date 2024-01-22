@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2495B5C8;
-	Tue, 23 Jan 2024 01:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265855B5C6;
+	Tue, 23 Jan 2024 01:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974323; cv=none; b=k+XuPfF6gCknID3edRoCFgnSbeKXmYAr0LsFA5AAf1yl6RDhZwVr8AGCRtgJivsAcXjVylJ4YbzqV6BJBeUpXl8bokhFYevoSvswR8WvJc2goWgid90qU70cPsarUWYl0fNMqyYa7KIqV8mVkUHd28/6jqw1kokifeJxxr+bsqY=
+	t=1705974324; cv=none; b=qKc8nNPqhqWtMfrC1DVDcopB0nPfPwOkTf/FSM4Oe2Y4EJCkzwpxofvdXZEZVL33VUv8G/xdzFubEeT2Yh04RA/Izjm2yonazxybBvby0DpfLHIJpNNnYHSdw1J/mZFSTaX881AldQUO8uVj8ZazbwV02aKRr1xB/13KkxyUDc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974323; c=relaxed/simple;
-	bh=vasDXmm8TejDYihH+5URWOWNRqSleo7TY/UqPq5reLQ=;
+	s=arc-20240116; t=1705974324; c=relaxed/simple;
+	bh=c/s5E+K0yodD/tpkSO4zj3OaAmWIinBlp2mWpp5G+3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rWPLxyD0eV0ml8n1mwrNxj1wgx2dVh7qwNds7LAA+q1g+Qx5NopTq0VQjg66Ir4+R+1hArMLiapLOZtOnqAVZOr8+KiudLu74/BpFLFlRImUlFkS4DUuMbYY5cqIkRxuSF5qRfmHq5OI8yWjloHFldn6L+dosQQsQn1voXd2TYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkfcIeRL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ly66keoKvMfs9IlrnCWzYQWhpoSRyNt8xJOAiLT4WgvFDzKda1F83GL4qxIdSA2FXU+Gq+HCbP4zeEX6I5eiuY1LdKykUuNNQYjClp6BCQE0kLPEblcHNToogbF75j0/5GJMk0JNtROGhdIl4D/tB/bgYBcNB/QzXUGPSzvo9O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sxx6YOUh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkfcIeRL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FE4C43390;
-	Tue, 23 Jan 2024 01:45:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sxx6YOUh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1E0C43390;
+	Tue, 23 Jan 2024 01:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705974323;
-	bh=vasDXmm8TejDYihH+5URWOWNRqSleo7TY/UqPq5reLQ=;
+	bh=c/s5E+K0yodD/tpkSO4zj3OaAmWIinBlp2mWpp5G+3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkfcIeRLOAq/KBmhmY3Dn+AXcaCooNdXfkbKcrvpZl/zsNrLm591ZyF7TBdL+TrFs
-	 2pxUhtRAP2Efo5RiXFea1UQfP7zNrJlV4FdBb6vkX8fuy/EcwbNI9Td2PYjqxCLAu/
-	 VFOJUCqiu7f3fsZEDIs1qJDtTuJSocxq9XFrrfIY=
+	b=Sxx6YOUh9OixhzHvfQGu1+FXiThfLbGP4NOOEB2yTxDmzNWlBCRpVVUAE82mi/Pfx
+	 8cf2nbLon6IJqbqbTcx1XjXFQTpYcf859i4iQzJYSkpAPRZMuwbQaT8Mg+N7R/LTnC
+	 ++vOfmlixomEMxs0dUaPjewInMzUu+FQO7RtJM4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Thompson <davthompson@nvidia.com>,
-	Asmaa Mnebhi <asmaa@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 171/374] mlxbf_gige: Fix intermittent no ip issue
-Date: Mon, 22 Jan 2024 15:57:07 -0800
-Message-ID: <20240122235750.581267073@linuxfoundation.org>
+Subject: [PATCH 6.6 047/583] crypto: af_alg - Disallow multiple in-flight AIO requests
+Date: Mon, 22 Jan 2024 15:51:38 -0800
+Message-ID: <20240122235813.578030080@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,94 +46,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asmaa Mnebhi <asmaa@nvidia.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit ef210ef85d5cb543ce34a57803ed856d0c8c08c2 ]
+[ Upstream commit 67b164a871af1d736f131fd6fe78a610909f06f3 ]
 
-Although the link is up, there is no ip assigned on setups with high background
-traffic. Nothing is transmitted nor received. The RX error count keeps on
-increasing. After several minutes, the RX error count stagnates and the
-GigE interface finally gets an ip.
+Having multiple in-flight AIO requests results in unpredictable
+output because they all share the same IV.  Fix this by only allowing
+one request at a time.
 
-The issue is that mlxbf_gige_rx_init() is called before phy_start().
-As soon as the RX DMA is enabled in mlxbf_gige_rx_init(), the RX CI reaches the max
-of 128, and becomes equal to RX PI. RX CI doesn't decrease since the code hasn't
-ran phy_start yet.
-Bring the PHY up before starting the RX.
-
-Fixes: f92e1869d74e ("Add Mellanox BlueField Gigabit Ethernet driver")
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Signed-off-by: Asmaa Mnebhi <asmaa@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 83094e5e9e49 ("crypto: af_alg - add async support to algif_aead")
+Fixes: a596999b7ddf ("crypto: algif - change algif_skcipher to be asynchronous")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c | 14 +++++++-------
- .../ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c   |  6 +++---
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ crypto/af_alg.c         | 14 +++++++++++++-
+ include/crypto/if_alg.h |  3 +++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-index b990782c1eb1..2cbe0daafd41 100644
---- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-+++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-@@ -149,14 +149,14 @@ static int mlxbf_gige_open(struct net_device *netdev)
- 	 */
- 	priv->valid_polarity = 0;
+diff --git a/crypto/af_alg.c b/crypto/af_alg.c
+index ea6fb8e89d06..68cc9290cabe 100644
+--- a/crypto/af_alg.c
++++ b/crypto/af_alg.c
+@@ -1116,9 +1116,13 @@ EXPORT_SYMBOL_GPL(af_alg_sendmsg);
+ void af_alg_free_resources(struct af_alg_async_req *areq)
+ {
+ 	struct sock *sk = areq->sk;
++	struct af_alg_ctx *ctx;
  
--	err = mlxbf_gige_rx_init(priv);
-+	phy_start(phydev);
+ 	af_alg_free_areq_sgls(areq);
+ 	sock_kfree_s(sk, areq, areq->areqlen);
 +
-+	err = mlxbf_gige_tx_init(priv);
- 	if (err)
- 		goto free_irqs;
--	err = mlxbf_gige_tx_init(priv);
-+	err = mlxbf_gige_rx_init(priv);
- 	if (err)
--		goto rx_deinit;
--
--	phy_start(phydev);
-+		goto tx_deinit;
++	ctx = alg_sk(sk)->private;
++	ctx->inflight = false;
+ }
+ EXPORT_SYMBOL_GPL(af_alg_free_resources);
  
- 	netif_napi_add(netdev, &priv->napi, mlxbf_gige_poll, NAPI_POLL_WEIGHT);
- 	napi_enable(&priv->napi);
-@@ -178,8 +178,8 @@ static int mlxbf_gige_open(struct net_device *netdev)
- 
- 	return 0;
- 
--rx_deinit:
--	mlxbf_gige_rx_deinit(priv);
-+tx_deinit:
-+	mlxbf_gige_tx_deinit(priv);
- 
- free_irqs:
- 	mlxbf_gige_free_irqs(priv);
-diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
-index 227d01cace3f..699984358493 100644
---- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
-@@ -142,6 +142,9 @@ int mlxbf_gige_rx_init(struct mlxbf_gige *priv)
- 	writeq(MLXBF_GIGE_RX_MAC_FILTER_COUNT_PASS_EN,
- 	       priv->base + MLXBF_GIGE_RX_MAC_FILTER_COUNT_PASS);
- 
-+	writeq(ilog2(priv->rx_q_entries),
-+	       priv->base + MLXBF_GIGE_RX_WQE_SIZE_LOG2);
+@@ -1188,11 +1192,19 @@ EXPORT_SYMBOL_GPL(af_alg_poll);
+ struct af_alg_async_req *af_alg_alloc_areq(struct sock *sk,
+ 					   unsigned int areqlen)
+ {
+-	struct af_alg_async_req *areq = sock_kmalloc(sk, areqlen, GFP_KERNEL);
++	struct af_alg_ctx *ctx = alg_sk(sk)->private;
++	struct af_alg_async_req *areq;
 +
- 	/* Clear MLXBF_GIGE_INT_MASK 'receive pkt' bit to
- 	 * indicate readiness to receive interrupts
- 	 */
-@@ -154,9 +157,6 @@ int mlxbf_gige_rx_init(struct mlxbf_gige *priv)
- 	data |= MLXBF_GIGE_RX_DMA_EN;
- 	writeq(data, priv->base + MLXBF_GIGE_RX_DMA);
++	/* Only one AIO request can be in flight. */
++	if (ctx->inflight)
++		return ERR_PTR(-EBUSY);
  
--	writeq(ilog2(priv->rx_q_entries),
--	       priv->base + MLXBF_GIGE_RX_WQE_SIZE_LOG2);
--
- 	return 0;
++	areq = sock_kmalloc(sk, areqlen, GFP_KERNEL);
+ 	if (unlikely(!areq))
+ 		return ERR_PTR(-ENOMEM);
  
- free_wqe_and_skb:
++	ctx->inflight = true;
++
+ 	areq->areqlen = areqlen;
+ 	areq->sk = sk;
+ 	areq->first_rsgl.sgl.sgt.sgl = areq->first_rsgl.sgl.sgl;
+diff --git a/include/crypto/if_alg.h b/include/crypto/if_alg.h
+index ef8ce86b1f78..08b803a4fcde 100644
+--- a/include/crypto/if_alg.h
++++ b/include/crypto/if_alg.h
+@@ -136,6 +136,7 @@ struct af_alg_async_req {
+  *			recvmsg is invoked.
+  * @init:		True if metadata has been sent.
+  * @len:		Length of memory allocated for this data structure.
++ * @inflight:		Non-zero when AIO requests are in flight.
+  */
+ struct af_alg_ctx {
+ 	struct list_head tsgl_list;
+@@ -154,6 +155,8 @@ struct af_alg_ctx {
+ 	bool init;
+ 
+ 	unsigned int len;
++
++	unsigned int inflight;
+ };
+ 
+ int af_alg_register_type(const struct af_alg_type *type);
 -- 
 2.43.0
 
