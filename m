@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C016A320;
-	Tue, 23 Jan 2024 02:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C8D6A320;
+	Tue, 23 Jan 2024 02:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975345; cv=none; b=jmOnKZNjKTD1pEZw4I4cJKSab5X3CHocjRJD7chD43CkmYH7BaOL6O2CP3z0PvgRRY6iK8X3gVs4hqLo8zklVfyC/HiCl73iWUu3BxQXcNg1jH0Frr5Yebc8P+2+IRKXVDJfNM72ORqzbcZWePI/W/irqaEupHK/RKN7lZ+JAWE=
+	t=1705975345; cv=none; b=DHKN0lVSoaeSMlSU63zbSkqo5fUjRtDB+KFiQw/0A3/ct66HyzETGG5mul9fH9xZz1UXxXLDtcwzrC3f2OTdtrh8n5gleAeTZ3FwUTk4pYRX8fbWfKbWeFd8HQUAqmgXYKZ8uYpTPvSAfUUmeJAomrVOeHbydGbfuPKUyeioJVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975345; c=relaxed/simple;
-	bh=vJC2W/3Uhp1TGFpAuWe0RUdBR47mhwUAfDMOV8KQRfU=;
+	bh=G03V0MO601oyhjy+/uT4cAsBUzgp8Me1YiEz7qmtitc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g3acpGetMY0Y+0OBDCpXYvkyP3s1VC04mPjMn8Z4E/RZLgKb/egCH1e/NJbUOBNDZBJIOGoL4VeUVqzYE4u4gEApW/IBYVEnuSSFG3IHEJnt/ZE46ESmcgufbUVyJQmFW26zIMtc368j2W5cOqTWnnEwJdL5CCIOBY/L9Ec/pd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUq++4QY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i0yvSmA4qul3NqWfxsVzcS7BYT/Stuid7V+0nh4txDaZCzU6/PuxRGfyw+/WyrAee+ZnXNXbtn+oTeQpn6Lwg5Mh0CA1dPSRyM+fLCxBq5Nbgd6jEr3UsvPT/Itx8vTIQFz26JXItAjbFywJ+iP9RcUkAcdW+Anh2Gdeoeax5jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FEdTurdy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUq++4QY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9A2C43390;
-	Tue, 23 Jan 2024 02:02:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FEdTurdy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766E3C43394;
+	Tue, 23 Jan 2024 02:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975344;
-	bh=vJC2W/3Uhp1TGFpAuWe0RUdBR47mhwUAfDMOV8KQRfU=;
+	s=korg; t=1705975345;
+	bh=G03V0MO601oyhjy+/uT4cAsBUzgp8Me1YiEz7qmtitc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fUq++4QYe/pXP25tNr9wcv43+9ekKh8iT+fueHPzwtdh1PowzpAPs1CgChuHZS7tP
-	 3CUaFvy5NkJ315PWGdZYYaR6KPHRCiBYg07LUvQTcM78IRTUF8AS+e5lPteu/J0tWN
-	 733IG3sYpecHipclsodML1JFqgdh1yXWf4UiL2l0=
+	b=FEdTurdyd6x7p2+z0yaEIvn9hPoQUuNQgMod6ff8KK0E1tzzT9pfn2A71Vp3zOJkb
+	 +Hieb/ZU+8XYjsmAm4wf+VEr4m6gEuuMScTaTe3208wMGiToCAuaT1WDWmKfEfS2An
+	 ph7oPewaluri+yk3qaLeCWX85opjptSJSXQV9Yeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Rob Clark <robdclark@gmail.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 282/583] clk: renesas: rzg2l: Check reset monitor registers
-Date: Mon, 22 Jan 2024 15:55:33 -0800
-Message-ID: <20240122235820.622591329@linuxfoundation.org>
+Subject: [PATCH 6.6 283/583] drm/msm/dpu: Set input_sel bit for INTF
+Date: Mon, 22 Jan 2024 15:55:34 -0800
+Message-ID: <20240122235820.659483383@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,136 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-[ Upstream commit da235d2fac212d0add570e755feb1167a830bc99 ]
+[ Upstream commit 980fffd0c69e5df0f67ee089d405899d532aeeab ]
 
-The hardware manual of both RZ/G2L and RZ/G3S specifies that the reset
-monitor registers need to be interrogated when the reset signals are
-toggled (chapters "Procedures for Supplying and Stopping Reset Signals"
-and "Procedure for Activating Modules").  Without this, there is a
-chance that different modules (e.g. Ethernet) are not ready after their
-reset signal is toggled, leading to failures (on probe or resume from
-deep sleep states).
+Set the input_sel bit for encoders as it was missed in the initial
+implementation.
 
-The same indications are available for RZ/V2M for TYPE-B reset controls.
-
-Fixes: ef3c613ccd68 ("clk: renesas: Add CPG core wrapper for RZ/G2L SoC")
-Fixes: 8090bea32484 ("clk: renesas: rzg2l: Add support for RZ/V2M reset monitor reg")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20231207070700.4156557-2-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reported-by: Rob Clark <robdclark@gmail.com>
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/39
+Fixes: 91143873a05d ("drm/msm/dpu: Add MISR register support for interface")
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/572007/
+Link: https://lore.kernel.org/r/20231213-encoder-fixup-v4-1-6da6cd1bf118@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/rzg2l-cpg.c | 59 ++++++++++++++++++++++++---------
- 1 file changed, 44 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c | 9 +++++++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h | 3 ++-
+ 4 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
-index 8303282cf528..75f9eca020ce 100644
---- a/drivers/clk/renesas/rzg2l-cpg.c
-+++ b/drivers/clk/renesas/rzg2l-cpg.c
-@@ -1111,12 +1111,27 @@ static int rzg2l_cpg_assert(struct reset_controller_dev *rcdev,
- 	struct rzg2l_cpg_priv *priv = rcdev_to_priv(rcdev);
- 	const struct rzg2l_cpg_info *info = priv->info;
- 	unsigned int reg = info->resets[id].off;
--	u32 value = BIT(info->resets[id].bit) << 16;
-+	u32 mask = BIT(info->resets[id].bit);
-+	s8 monbit = info->resets[id].monbit;
-+	u32 value = mask << 16;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+index 8ec6505d9e78..bce8783d644c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+@@ -320,7 +320,7 @@ static u32 dpu_hw_intf_get_line_count(struct dpu_hw_intf *intf)
  
- 	dev_dbg(rcdev->dev, "assert id:%ld offset:0x%x\n", id, CLK_RST_R(reg));
- 
- 	writel(value, priv->base + CLK_RST_R(reg));
--	return 0;
-+
-+	if (info->has_clk_mon_regs) {
-+		reg = CLK_MRST_R(reg);
-+	} else if (monbit >= 0) {
-+		reg = CPG_RST_MON;
-+		mask = BIT(monbit);
-+	} else {
-+		/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
-+		udelay(35);
-+		return 0;
-+	}
-+
-+	return readl_poll_timeout_atomic(priv->base + reg, value,
-+					 value & mask, 10, 200);
- }
- 
- static int rzg2l_cpg_deassert(struct reset_controller_dev *rcdev,
-@@ -1125,14 +1140,28 @@ static int rzg2l_cpg_deassert(struct reset_controller_dev *rcdev,
- 	struct rzg2l_cpg_priv *priv = rcdev_to_priv(rcdev);
- 	const struct rzg2l_cpg_info *info = priv->info;
- 	unsigned int reg = info->resets[id].off;
--	u32 dis = BIT(info->resets[id].bit);
--	u32 value = (dis << 16) | dis;
-+	u32 mask = BIT(info->resets[id].bit);
-+	s8 monbit = info->resets[id].monbit;
-+	u32 value = (mask << 16) | mask;
- 
- 	dev_dbg(rcdev->dev, "deassert id:%ld offset:0x%x\n", id,
- 		CLK_RST_R(reg));
- 
- 	writel(value, priv->base + CLK_RST_R(reg));
--	return 0;
-+
-+	if (info->has_clk_mon_regs) {
-+		reg = CLK_MRST_R(reg);
-+	} else if (monbit >= 0) {
-+		reg = CPG_RST_MON;
-+		mask = BIT(monbit);
-+	} else {
-+		/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
-+		udelay(35);
-+		return 0;
-+	}
-+
-+	return readl_poll_timeout_atomic(priv->base + reg, value,
-+					 !(value & mask), 10, 200);
- }
- 
- static int rzg2l_cpg_reset(struct reset_controller_dev *rcdev,
-@@ -1144,9 +1173,6 @@ static int rzg2l_cpg_reset(struct reset_controller_dev *rcdev,
- 	if (ret)
- 		return ret;
- 
--	/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
--	udelay(35);
--
- 	return rzg2l_cpg_deassert(rcdev, id);
- }
- 
-@@ -1155,18 +1181,21 @@ static int rzg2l_cpg_status(struct reset_controller_dev *rcdev,
+ static void dpu_hw_intf_setup_misr(struct dpu_hw_intf *intf, bool enable, u32 frame_count)
  {
- 	struct rzg2l_cpg_priv *priv = rcdev_to_priv(rcdev);
- 	const struct rzg2l_cpg_info *info = priv->info;
--	unsigned int reg = info->resets[id].off;
--	u32 bitmask = BIT(info->resets[id].bit);
- 	s8 monbit = info->resets[id].monbit;
-+	unsigned int reg;
-+	u32 bitmask;
- 
- 	if (info->has_clk_mon_regs) {
--		return !!(readl(priv->base + CLK_MRST_R(reg)) & bitmask);
-+		reg = CLK_MRST_R(info->resets[id].off);
-+		bitmask = BIT(info->resets[id].bit);
- 	} else if (monbit >= 0) {
--		u32 monbitmask = BIT(monbit);
--
--		return !!(readl(priv->base + CPG_RST_MON) & monbitmask);
-+		reg = CPG_RST_MON;
-+		bitmask = BIT(monbit);
-+	} else {
-+		return -ENOTSUPP;
- 	}
--	return -ENOTSUPP;
-+
-+	return !!(readl(priv->base + reg) & bitmask);
+-	dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL, enable, frame_count);
++	dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL, enable, frame_count, 0x1);
  }
  
- static const struct reset_control_ops rzg2l_cpg_reset_ops = {
+ static int dpu_hw_intf_collect_misr(struct dpu_hw_intf *intf, u32 *misr_value)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+index d1c3bd8379ea..a34cf8c979cb 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+@@ -83,7 +83,7 @@ static void dpu_hw_lm_setup_border_color(struct dpu_hw_mixer *ctx,
+ 
+ static void dpu_hw_lm_setup_misr(struct dpu_hw_mixer *ctx, bool enable, u32 frame_count)
+ {
+-	dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL, enable, frame_count);
++	dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL, enable, frame_count, 0x0);
+ }
+ 
+ static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 *misr_value)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+index 9d2273fd2fed..da04a914b065 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+@@ -481,9 +481,13 @@ void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
+ 		      cfg->danger_safe_en ? QOS_QOS_CTRL_DANGER_SAFE_EN : 0);
+ }
+ 
++/*
++ * note: Aside from encoders, input_sel should be set to 0x0 by default
++ */
+ void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
+ 		u32 misr_ctrl_offset,
+-		bool enable, u32 frame_count)
++		bool enable, u32 frame_count,
++		u8 input_sel)
+ {
+ 	u32 config = 0;
+ 
+@@ -494,7 +498,8 @@ void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
+ 
+ 	if (enable) {
+ 		config = (frame_count & MISR_FRAME_COUNT_MASK) |
+-			MISR_CTRL_ENABLE | MISR_CTRL_FREE_RUN_MASK;
++			MISR_CTRL_ENABLE | MISR_CTRL_FREE_RUN_MASK |
++			((input_sel & 0xF) << 24);
+ 
+ 		DPU_REG_WRITE(c, misr_ctrl_offset, config);
+ 	} else {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+index 1f6079f47071..f7061fcc97f7 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+@@ -360,7 +360,8 @@ void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
+ void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
+ 		u32 misr_ctrl_offset,
+ 		bool enable,
+-		u32 frame_count);
++		u32 frame_count,
++		u8 input_sel);
+ 
+ int dpu_hw_collect_misr(struct dpu_hw_blk_reg_map *c,
+ 		u32 misr_ctrl_offset,
 -- 
 2.43.0
 
