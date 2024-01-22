@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAA854BD2;
-	Tue, 23 Jan 2024 00:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5CC38DCC;
+	Tue, 23 Jan 2024 00:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970624; cv=none; b=K52IQzFF5XVuaEG4Aa8ID9Ym4RdTYCJ9aO68ByTjSxsz9tPYnKNxoXSBBcevx03rQh2LxCA0adK9p+92FrQdUnE6rvuFypxYABIxVH84HJSKx7o7lU+55uJ828chE76femJdQZcg6MH/jnbP+F0USUArzRs8IAG+6R027o7cwsY=
+	t=1705970628; cv=none; b=p815saBHpx8/8dw30Rg3SPgZVJNxAATsWhTQha/UvGc4fLPW0HReSIiwTq6/9sQ3plviHUsYu+nKv7llg4Dw+HsY4Q2QA8xYpBlR2hRX890u2dVCP5BFLy+HvawtrsSL7WAaX4HbwTrAf5XjfXGvjzERj1qTW1gMjvhWgKpB18I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970624; c=relaxed/simple;
-	bh=/+HLT+z55Gie5yg1oUaenkzXqa4OkEIP2fsaDIz6WK0=;
+	s=arc-20240116; t=1705970628; c=relaxed/simple;
+	bh=+sg60xSOcseQ7a8KKzBBdDa5TdfVbdorMK4AtJIRYxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XhNeb7L3y4BpDve0ubUGQx+fzh2rX0S9V8RFijGt6oNm1oKoNxgEwdVWr7LMuZMT4bNwTjydH3xsbmUt7sQLqnoePnLTvtuBV/IqsgJ6Znq/2QDpyQ4et+S1TNGF13euSfw2PTGXpBpMMDGgiyabtQAlS12p8GFB0d8+wFqtluA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0wHgbvy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EHTzZ6iajMwW0z9RkNHh3Ij2M/kkVQhq6j7TNJDp4oCCpW8lExLyU3GqtgFkfgo3ZBDJeJl5MIL5zcBMRukFs9sXz8wmIHNSFegBCs8mt1U8DdHdi/y6x7pK/of4A6X+amDMGnqQDyHnGZ+rNE3s/ZaTopX+85TzC5rQb3hr8T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IcjpVg1M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0wHgbvy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CA3C433C7;
-	Tue, 23 Jan 2024 00:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IcjpVg1M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF44C433C7;
+	Tue, 23 Jan 2024 00:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970624;
-	bh=/+HLT+z55Gie5yg1oUaenkzXqa4OkEIP2fsaDIz6WK0=;
+	s=korg; t=1705970628;
+	bh=+sg60xSOcseQ7a8KKzBBdDa5TdfVbdorMK4AtJIRYxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O0wHgbvyn0yclQ6aUEKk5AmHuZHkKHj+nG3IRKbpnC5w8R32kNAfnwu8tUloljtwv
-	 B9KtfofHAs/BjnxnRJVekxxGgMd76yz+Fwhxad87TbRS6vauNJ9qjXwYm0c/jmghMC
-	 hmMNmlgGPFnfPWfetYBJCOsEx0Rjh/MXNoalwVRE=
+	b=IcjpVg1M7pekHdblbNhQvBuPA+N0a/RdtLVAwh5ptp2hiAKNG9JaaGoaJPDqWpxuE
+	 l++FcF8F58/wjWUE22K5p/fsAbjoBQHWV+CQ+zhs3YHTikiQ7XCzCKGwBx+fkYQmfO
+	 4Pnl0qe8TX/B6Rw66yiQt7RHxoere/drd8iTEIo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Rome <jordalgo@meta.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 071/417] bpf: Add crosstask check to __bpf_get_stack
-Date: Mon, 22 Jan 2024 15:53:59 -0800
-Message-ID: <20240122235754.169144896@linuxfoundation.org>
+Subject: [PATCH 6.1 072/417] wifi: ath11k: Defer on rproc_get failure
+Date: Mon, 22 Jan 2024 15:54:00 -0800
+Message-ID: <20240122235754.210143763@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -51,119 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rome <jordalgo@meta.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit b8e3a87a627b575896e448021e5c2f8a3bc19931 ]
+[ Upstream commit 2a3ec40b98b46c339adb57313d3b933ee5e7a8e8 ]
 
-Currently get_perf_callchain only supports user stack walking for
-the current task. Passing the correct *crosstask* param will return
-0 frames if the task passed to __bpf_get_stack isn't the current
-one instead of a single incorrect frame/address. This change
-passes the correct *crosstask* param but also does a preemptive
-check in __bpf_get_stack if the task is current and returns
--EOPNOTSUPP if it is not.
+If we already have gotten the rproc_handle (meaning the "qcom,rproc"
+property is defined in the devicetree), it's a valid state that the
+remoteproc module hasn't probed yet so we should defer probing instead
+of just failing to probe.
 
-This issue was found using bpf_get_task_stack inside a BPF
-iterator ("iter/task"), which iterates over all tasks.
-bpf_get_task_stack works fine for fetching kernel stacks
-but because get_perf_callchain relies on the caller to know
-if the requested *task* is the current one (via *crosstask*)
-it was failing in a confusing way.
+This resolves a race condition when the ath11k driver probes and fails
+before the wpss remoteproc driver has probed, like the following:
 
-It might be possible to get user stacks for all tasks utilizing
-something like access_process_vm but that requires the bpf
-program calling bpf_get_task_stack to be sleepable and would
-therefore be a breaking change.
+  [    6.232360] ath11k 17a10040.wifi: failed to get rproc
+  [    6.232366] ath11k 17a10040.wifi: failed to get rproc: -22
+  [    6.232478] ath11k: probe of 17a10040.wifi failed with error -22
+       ...
+  [    6.252415] remoteproc remoteproc2: 8a00000.remoteproc is available
+  [    6.252776] remoteproc remoteproc2: powering up 8a00000.remoteproc
+  [    6.252781] remoteproc remoteproc2: Booting fw image qcom/qcm6490/fairphone5/wpss.mdt, size 7188
 
-Fixes: fa28dcb82a38 ("bpf: Introduce helper bpf_get_task_stack()")
-Signed-off-by: Jordan Rome <jordalgo@meta.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20231108112334.3433136-1-jordalgo@meta.com
+So, defer the probe if we hit that so we can retry later once the wpss
+remoteproc is available.
+
+Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.1.0.1-01264-QCAMSLSWPLZ-1.37886.3
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20231027-ath11k-rproc-defer-v1-1-f6b6a812cd18@fairphone.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/bpf.h       |  3 +++
- kernel/bpf/stackmap.c          | 11 ++++++++++-
- tools/include/uapi/linux/bpf.h |  3 +++
- 3 files changed, 16 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/ahb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
-index 92dbe89dafbf..201dc77ebbd7 100644
---- a/include/uapi/linux/bpf.h
-+++ b/include/uapi/linux/bpf.h
-@@ -4353,6 +4353,8 @@ union bpf_attr {
-  * long bpf_get_task_stack(struct task_struct *task, void *buf, u32 size, u64 flags)
-  *	Description
-  *		Return a user or a kernel stack in bpf program provided buffer.
-+ *		Note: the user stack will only be populated if the *task* is
-+ *		the current task; all other tasks will return -EOPNOTSUPP.
-  *		To achieve this, the helper needs *task*, which is a valid
-  *		pointer to **struct task_struct**. To store the stacktrace, the
-  *		bpf program provides *buf* with a nonnegative *size*.
-@@ -4364,6 +4366,7 @@ union bpf_attr {
-  *
-  *		**BPF_F_USER_STACK**
-  *			Collect a user space stack instead of a kernel stack.
-+ *			The *task* must be the current task.
-  *		**BPF_F_USER_BUILD_ID**
-  *			Collect buildid+offset instead of ips for user stack,
-  *			only valid if **BPF_F_USER_STACK** is also specified.
-diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
-index aecea7451b61..f86db3cf7212 100644
---- a/kernel/bpf/stackmap.c
-+++ b/kernel/bpf/stackmap.c
-@@ -391,6 +391,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
- {
- 	u32 trace_nr, copy_len, elem_size, num_elem, max_depth;
- 	bool user_build_id = flags & BPF_F_USER_BUILD_ID;
-+	bool crosstask = task && task != current;
- 	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
- 	bool user = flags & BPF_F_USER_STACK;
- 	struct perf_callchain_entry *trace;
-@@ -413,6 +414,14 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
- 	if (task && user && !user_mode(regs))
- 		goto err_fault;
+diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
+index 76f275ca53e9..70d468f01338 100644
+--- a/drivers/net/wireless/ath/ath11k/ahb.c
++++ b/drivers/net/wireless/ath/ath11k/ahb.c
+@@ -813,8 +813,8 @@ static int ath11k_core_get_rproc(struct ath11k_base *ab)
  
-+	/* get_perf_callchain does not support crosstask user stack walking
-+	 * but returns an empty stack instead of NULL.
-+	 */
-+	if (crosstask && user) {
-+		err = -EOPNOTSUPP;
-+		goto clear;
-+	}
-+
- 	num_elem = size / elem_size;
- 	max_depth = num_elem + skip;
- 	if (sysctl_perf_event_max_stack < max_depth)
-@@ -424,7 +433,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
- 		trace = get_callchain_entry_for_task(task, max_depth);
- 	else
- 		trace = get_perf_callchain(regs, 0, kernel, user, max_depth,
--					   false, false);
-+					   crosstask, false);
- 	if (unlikely(!trace))
- 		goto err_fault;
+ 	prproc = rproc_get_by_phandle(rproc_phandle);
+ 	if (!prproc) {
+-		ath11k_err(ab, "failed to get rproc\n");
+-		return -EINVAL;
++		ath11k_dbg(ab, ATH11K_DBG_AHB, "failed to get rproc, deferring\n");
++		return -EPROBE_DEFER;
+ 	}
+ 	ab_ahb->tgt_rproc = prproc;
  
-diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
-index 92dbe89dafbf..201dc77ebbd7 100644
---- a/tools/include/uapi/linux/bpf.h
-+++ b/tools/include/uapi/linux/bpf.h
-@@ -4353,6 +4353,8 @@ union bpf_attr {
-  * long bpf_get_task_stack(struct task_struct *task, void *buf, u32 size, u64 flags)
-  *	Description
-  *		Return a user or a kernel stack in bpf program provided buffer.
-+ *		Note: the user stack will only be populated if the *task* is
-+ *		the current task; all other tasks will return -EOPNOTSUPP.
-  *		To achieve this, the helper needs *task*, which is a valid
-  *		pointer to **struct task_struct**. To store the stacktrace, the
-  *		bpf program provides *buf* with a nonnegative *size*.
-@@ -4364,6 +4366,7 @@ union bpf_attr {
-  *
-  *		**BPF_F_USER_STACK**
-  *			Collect a user space stack instead of a kernel stack.
-+ *			The *task* must be the current task.
-  *		**BPF_F_USER_BUILD_ID**
-  *			Collect buildid+offset instead of ips for user stack,
-  *			only valid if **BPF_F_USER_STACK** is also specified.
 -- 
 2.43.0
 
