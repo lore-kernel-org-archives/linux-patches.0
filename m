@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0472764CF0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF78F63400;
 	Tue, 23 Jan 2024 01:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975072; cv=none; b=QPHnfjQWHbCLFP2PffRNo688wrKQhoieZk5tT11sAOGXQgtf3TGqUOH26/ZnULJ8EVsr1P7H37jxYOTRAFh+DaMqabTqYqVdMDbsP5wvtJ0g9pTr8fKrhMYjCiX/W1ZRXegYUPMTG+8KvnWe6TmbJyKiuu5/ikjiAIt9nLXm9e4=
+	t=1705975073; cv=none; b=mZrypUP70yknT7v8Hh6tpNVCeDlQJR+P/x4cq8e3OMhz1KHkkfQBOQaDepYG4JOCsHjj+IZuh2LozF45gcsM77h1l9YsviwZ9GzGu5PXN/IeRKukKNCawq9GBeV+gs3uClAjuxE8moXX8aNPuroTEoKuYs8/ftg8UxJnQNW+oLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975072; c=relaxed/simple;
-	bh=1L5o7rVX9fCokRQISp3/eagaD/SvNCrvimIKOeFn/f8=;
+	s=arc-20240116; t=1705975073; c=relaxed/simple;
+	bh=na4F7ZzWklNgq2621xmUJ/l626rkR01p+44BT35vloM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qks8lNIbNYZ1AhaT4U+ykXSlrTCGE9FCJFVv2jdxrr5ot2SXErhQmop9YC4iIx+6S4j3HHlw2bg1rcuge1MHHuAHyuC+ZRAABiiQnnjz43eCyuDcGxyrU3AM92lrwyYBdKvGrYAQ7qLgy5s7MEePRuNSUAbkV9aYbSjdsWwePro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OTGO7ddI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PnI3IjMBOvZED6N7lIl40AFeNpuz4tMXM41uG8FKcNulDThPMo74jvntpQDdtpcSpnkNILupMfwyxzs2TEPSQRFAAKD0kaCPKN6ZaiwM2eYEjxXOTgo5cdEH6wwKACednVgP0s9GxsSvXAcJnuuR3OpEpGamAumakDJjgz74RQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgWZBinD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OTGO7ddI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99CDC433C7;
-	Tue, 23 Jan 2024 01:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgWZBinD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4746C433F1;
+	Tue, 23 Jan 2024 01:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975071;
-	bh=1L5o7rVX9fCokRQISp3/eagaD/SvNCrvimIKOeFn/f8=;
+	s=korg; t=1705975072;
+	bh=na4F7ZzWklNgq2621xmUJ/l626rkR01p+44BT35vloM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OTGO7ddIK3Kixsk9AAI+JsSAcg6qK2xiHN+40DLKakmjCKNgop1rGWDfWL0XJeVoZ
-	 6MiSY91f4GRbqZNYR4gvESCXXe130u6aU647g+/e7Rsr3nmipF2jbZnvX2BS73XlI2
-	 mxHsnTF8b5W26R70hCexa6mr0DLJE2c+50xDrBAc=
+	b=lgWZBinD/eTOIeQxvfEGK5F1bbXh4aF/lGQ3AaT2gYvxK3XFHCmW3AqPB5s62is7e
+	 ROoCcO90EQHF6mDRThB4Zd7s7PeaOnqVFNoI0zac+iicpRw8PedR5gJiXrCaEkd+rN
+	 K1kOFz+rlzgK/DEJCBZrli134/ft8rjWnMo5ahhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 353/374] netfilter: nf_tables: skip dead set elements in netlink dump
-Date: Mon, 22 Jan 2024 16:00:09 -0800
-Message-ID: <20240122235757.220748747@linuxfoundation.org>
+Subject: [PATCH 6.6 226/583] RDMA/usnic: Silence uninitialized symbol smatch warnings
+Date: Mon, 22 Jan 2024 15:54:37 -0800
+Message-ID: <20240122235818.918738366@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,49 +47,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 6b1ca88e4bb63673dc9f9c7f23c899f22c3cb17a ]
+[ Upstream commit b9a85e5eec126d6ae6c362f94b447c223e8fe6e4 ]
 
-Delete from packet path relies on the garbage collector to purge
-elements with NFT_SET_ELEM_DEAD_BIT on.
+The patch 1da177e4c3f4: "Linux-2.6.12-rc2" from Apr 16, 2005
+(linux-next), leads to the following Smatch static checker warning:
 
-Skip these dead elements from nf_tables_dump_setelem() path, I very
-rarely see tests/shell/testcases/maps/typeof_maps_add_delete reports
-[DUMP FAILED] showing a mismatch in the expected output with an element
-that should not be there.
+        drivers/infiniband/hw/mthca/mthca_cmd.c:644 mthca_SYS_EN()
+        error: uninitialized symbol 'out'.
 
-If the netlink dump happens before GC worker run, it might show dead
-elements in the ruleset listing.
+drivers/infiniband/hw/mthca/mthca_cmd.c
+    636 int mthca_SYS_EN(struct mthca_dev *dev)
+    637 {
+    638         u64 out;
+    639         int ret;
+    640
+    641         ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
 
-nft_rhash_get() already skips dead elements in nft_rhash_cmp(),
-therefore, it already does not show the element when getting a single
-element via netlink control plane.
+We pass out here and it gets used without being initialized.
 
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+        err = mthca_cmd_post(dev, in_param,
+                             out_param ? *out_param : 0,
+                                         ^^^^^^^^^^
+                             in_modifier, op_modifier,
+                             op, context->token, 1);
+
+It's the same in mthca_cmd_wait() and mthca_cmd_poll().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/533bc3df-8078-4397-b93d-d1f6cec9b636@moroto.mountain
+Link: https://lore.kernel.org/r/c559cb7113158c02d75401ac162652072ef1b5f0.1699867650.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/mthca/mthca_cmd.c  | 4 ++--
+ drivers/infiniband/hw/mthca/mthca_main.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 9f22f62a9b4d..967ad439e6b3 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -5348,7 +5348,7 @@ static int nf_tables_dump_setelem(const struct nft_ctx *ctx,
- 	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
- 	struct nft_set_dump_args *args;
+diff --git a/drivers/infiniband/hw/mthca/mthca_cmd.c b/drivers/infiniband/hw/mthca/mthca_cmd.c
+index f330ce895d88..8fe0cef7e2be 100644
+--- a/drivers/infiniband/hw/mthca/mthca_cmd.c
++++ b/drivers/infiniband/hw/mthca/mthca_cmd.c
+@@ -635,7 +635,7 @@ void mthca_free_mailbox(struct mthca_dev *dev, struct mthca_mailbox *mailbox)
  
--	if (nft_set_elem_expired(ext))
-+	if (nft_set_elem_expired(ext) || nft_set_elem_is_dead(ext))
- 		return 0;
+ int mthca_SYS_EN(struct mthca_dev *dev)
+ {
+-	u64 out;
++	u64 out = 0;
+ 	int ret;
  
- 	args = container_of(iter, struct nft_set_dump_args, iter);
+ 	ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
+@@ -1955,7 +1955,7 @@ int mthca_WRITE_MGM(struct mthca_dev *dev, int index,
+ int mthca_MGID_HASH(struct mthca_dev *dev, struct mthca_mailbox *mailbox,
+ 		    u16 *hash)
+ {
+-	u64 imm;
++	u64 imm = 0;
+ 	int err;
+ 
+ 	err = mthca_cmd_imm(dev, mailbox->dma, &imm, 0, 0, CMD_MGID_HASH,
+diff --git a/drivers/infiniband/hw/mthca/mthca_main.c b/drivers/infiniband/hw/mthca/mthca_main.c
+index b54bc8865dae..1ab268b77096 100644
+--- a/drivers/infiniband/hw/mthca/mthca_main.c
++++ b/drivers/infiniband/hw/mthca/mthca_main.c
+@@ -382,7 +382,7 @@ static int mthca_init_icm(struct mthca_dev *mdev,
+ 			  struct mthca_init_hca_param *init_hca,
+ 			  u64 icm_size)
+ {
+-	u64 aux_pages;
++	u64 aux_pages = 0;
+ 	int err;
+ 
+ 	err = mthca_SET_ICM_SIZE(mdev, icm_size, &aux_pages);
 -- 
 2.43.0
 
