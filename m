@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689CD4E1D8;
-	Tue, 23 Jan 2024 00:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1F24E1D8;
+	Tue, 23 Jan 2024 00:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970015; cv=none; b=g5/iL4klA+rXpFuEYUw80O2F+E9dGBV6LydO0YC7svOCHVl7aoHIaitOjGphG2xRwiOT3Qk4VK0sHS0KNW8TbMsuUIeR/naoMOhhBVt8BO5uaL3AMvD9zsPnduis8QR2UoUv5ZMarVlKVyoqOQCHWxzMS7nD8aI78XnZzhNhxQY=
+	t=1705970017; cv=none; b=UphmCtZ1RmzFv5NqU0JzYxyhHVfRurzA6r4Dsau4qSpym1pHl41iszHn91VZL1RGFrezBU4WngW74uGL+ot/Ad/jIHdF9eS1ycNKmC8ZuyDODuEpjWTDW4IdY/haUwMDF87CwtLNxHwrMa4avoJDxjHCSVQiMHmTpFzXaYLZIYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970015; c=relaxed/simple;
-	bh=KPHNmeWFCPcl2u9XDCFWBVpFt3VUX3wzPsAqqi82kRo=;
+	s=arc-20240116; t=1705970017; c=relaxed/simple;
+	bh=S/53sIyORfbtW3JOS2dHshgCOdYsZ3OWICKBCDBYBJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kzyoRqRpQKTLMerwZlIkX69QXTLPK1qQNPVqTGhy9vFA8VTF5TOhfhVtZWX4HbtWGTKKPYu4maIcvnFym1CcWFl9HM2jtbEuE1YiUIN74MD2HQAu53+wOi4eaOtNAL73xokNVGZm7EFYp+7WNis0ktUCpWEtFvl1YNTthjbNaoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGsVTW5p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tHcDxTz8+8xnTRn8s43smFFF6U/Jz+CImBfyH4eQzvjsxLEBsoP/Ubb71o8rwlcdhRNaGhxB3OKEgAAqGLibS0Z+M7+W5kFB90o36bOO3wgOBkdsPHYNn/gFLTE3cjXnSGFYgK2yBV35Qze3a4PErfnkzRBmrfN952/VOuW8URU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hD5KGhzq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGsVTW5p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114B1C433F1;
-	Tue, 23 Jan 2024 00:33:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hD5KGhzq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34279C433C7;
+	Tue, 23 Jan 2024 00:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970015;
-	bh=KPHNmeWFCPcl2u9XDCFWBVpFt3VUX3wzPsAqqi82kRo=;
+	s=korg; t=1705970017;
+	bh=S/53sIyORfbtW3JOS2dHshgCOdYsZ3OWICKBCDBYBJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGsVTW5p6l/o9+DNMTgt7+R0vMMGD520V2T8W5maoWrS4wSXrAt7CAB0KYSq0efd7
-	 gt4yUyeWowsDibkrYxa8Bi8c0Cw86H+FEEEEn4JDvvX4Gx7vc5OFEmI5Hab6jH3FIF
-	 ogQj0ksfY0RgzLgJqHT6gjiMOR4pEozq2vZCAUhI=
+	b=hD5KGhzqqppk5P/oKIrouzfVu+Osph+hQoA3nD9JeDUdcg/Dc14KXH/Lxb/EHMkjV
+	 WTT1huYA0zOuf1mcZ0hOznmcDH2xbPnoufsFGCzRZYnjKHiL63Ivz7WZpISJzQjLIQ
+	 7lKfgK1VCgDpZ+vjQw6xTjdK+tK8rlKdPYUO9dsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	linux-serial@vger.kernel.org,
+	sparclinux@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 563/641] serial: imx: Correct clock error message in function probe()
-Date: Mon, 22 Jan 2024 15:57:47 -0800
-Message-ID: <20240122235835.774270526@linuxfoundation.org>
+Subject: [PATCH 6.7 564/641] serial: apbuart: fix console prompt on qemu
+Date: Mon, 22 Jan 2024 15:57:48 -0800
+Message-ID: <20240122235835.807377892@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -45,42 +48,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+From: Sam Ravnborg <sam@ravnborg.org>
 
-[ Upstream commit 3e189470cad27d41a3a9dc02649f965b7ed1c90f ]
+[ Upstream commit c6dcd8050fb7c2efec6946ae9c49bc186b0a7475 ]
 
-Correct the clock error message by changing the clock name.
+When using a leon kernel with qemu there where no console prompt.
+The root cause is the handling of the fifo size in the tx part of the
+apbuart driver.
 
-Fixes: 1e512d45332b ("serial: imx: add error messages when .probe fails")
-Signed-off-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20231224093209.2612-1-cniedermaier@dh-electronics.com
+The qemu uart driver only have a very rudimentary status handling and do
+not report the number of chars queued in the tx fifo in the status register.
+So the driver ends up with a fifo size of 1.
+
+In the tx path the fifo size is divided by 2 - resulting in a fifo
+size of zero.
+
+The original implementation would always try to send one char, but
+after the introduction of uart_port_tx_limited() the fifo size is
+respected even for the first char.
+
+There seems to be no good reason to divide the fifo size with two - so
+remove this. It looks like something copied from the original amba driver.
+
+With qemu we now have a minimum fifo size of one char, so we show
+the prompt.
+
+Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+Fixes: d11cc8c3c4b6 ("tty: serial: use uart_port_tx_limited()")
+Cc: Andreas Larsson <andreas@gaisler.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc:  <linux-serial@vger.kernel.org>
+Cc:  <sparclinux@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231226121607.GA2622970@ravnborg.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/imx.c | 2 +-
+ drivers/tty/serial/apbuart.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
-index 16207b9a8c81..81557a58f86f 100644
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -2315,7 +2315,7 @@ static int imx_uart_probe(struct platform_device *pdev)
- 	/* For register access, we only need to enable the ipg clock. */
- 	ret = clk_prepare_enable(sport->clk_ipg);
- 	if (ret) {
--		dev_err(&pdev->dev, "failed to enable per clk: %d\n", ret);
-+		dev_err(&pdev->dev, "failed to enable ipg clk: %d\n", ret);
- 		return ret;
- 	}
+diff --git a/drivers/tty/serial/apbuart.c b/drivers/tty/serial/apbuart.c
+index 716cb014c028..364599f256db 100644
+--- a/drivers/tty/serial/apbuart.c
++++ b/drivers/tty/serial/apbuart.c
+@@ -122,7 +122,7 @@ static void apbuart_tx_chars(struct uart_port *port)
+ {
+ 	u8 ch;
  
+-	uart_port_tx_limited(port, ch, port->fifosize >> 1,
++	uart_port_tx_limited(port, ch, port->fifosize,
+ 		true,
+ 		UART_PUT_CHAR(port, ch),
+ 		({}));
 -- 
 2.43.0
 
