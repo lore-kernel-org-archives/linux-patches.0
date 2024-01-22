@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CCB4E1D7;
-	Tue, 23 Jan 2024 00:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA41758AD8;
+	Tue, 23 Jan 2024 00:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969968; cv=none; b=Z7SIXjK4PbZTzwvppI1c/fKEH87Nzl1DYdiKWeanDHJD/4z10x/5Nhm+Qen3sqrOqVTvtG5pIeeVPeyVFjn3PiVR4+QSx98K57W8XFjKg4qln/91PqKI5NmrzvGKwDffi2Ym5qLk5a3mYszp4YSo8PoFLxsh9TDwLANmRM4ccvs=
+	t=1705969971; cv=none; b=T5SYl1LvjpMXse8fKUnQSQuqi6T0J9CD6s5OAHEpmsrAztR+KgFKNXav4PwrT959ZUesJ8G+wgT1jTIEbL2alONvPo5t7z4yIeyD2oq3YGudOlFXyDFL/dUl4NM10JXg6osq5KIgry/TTNJkWQBpDHq0E012rvbzduAqXSB2WVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969968; c=relaxed/simple;
-	bh=YZIe/uJ+7/dGBSJLwtujx8m/A3S4ofK8rQJLW0Xt/hU=;
+	s=arc-20240116; t=1705969971; c=relaxed/simple;
+	bh=iFkvGjZ331CD6TaUmXR5mMFBD+aBzM9Kr2Q2eCBcMMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcbC5ZkeF3Y9Yo4mkJQTEWrBH4U2ZLtWldlewrok9SP+qvxC6EC1nb9kq1miH/zW4+FSLzxRr1mpuTTA28Y5X6CNa5gOn6KAI9IJAH6GNSSZIu4uySF2fIzhC/2QFkYgye271liSEzkPW4uj3ZWEJOV316+q0KAykL3LUqBYVA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOqJiXag; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pKTUqkxcTdH8EEzwByUNwI7Bl9o/ePHeKXSDrfDi9JWpCSZgLWVsMz6yE42jK9JrYYCM2W6nA8/qxzggRmfTYlIMdvIGYqpc5zx12J1uh9oPS/8JuGPQTZTPbovQ0zNS49OT8bYT76NWenHyqxHtfeDKnNGhAKTxRfQvRhpwK6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5FTYqxl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOqJiXag"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706B8C433F1;
-	Tue, 23 Jan 2024 00:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5FTYqxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBAF4C433C7;
+	Tue, 23 Jan 2024 00:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969968;
-	bh=YZIe/uJ+7/dGBSJLwtujx8m/A3S4ofK8rQJLW0Xt/hU=;
+	s=korg; t=1705969971;
+	bh=iFkvGjZ331CD6TaUmXR5mMFBD+aBzM9Kr2Q2eCBcMMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOqJiXagQoBXsYcKckMhaVoqp9w+eoALzxOhXdXChM+2SkizRAkv1GFDJc1jT6hUX
-	 nAF/M27pPMQpBspngPPQ100s5qdUTAGcC6CEgSwrn7vADN3y6i/AdC7hiu46dZEoJ/
-	 3v5MnoK1bcbQs/9lAKdc7dM7kFsmjnbBd0gf8Wz0=
+	b=n5FTYqxlYL9eKvQkB76n+fPMvuvIyMT9ra3KuyA9vpdZ1t7CPCbX/4nOphW01Fkw4
+	 Y4r7deh0ipcaEW30k89DBzM1bO/zyRDUL+OQEgZb5iHBz8MQU2Rb+L66mmfX37uTSk
+	 gg+9MdtBv5Bkj9a/zEojaP/KHC8E97z+kDBul4Vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Douglas Anderson <dianders@chromium.org>,
+	Rob Herring <robh@kernel.org>,
+	Nikhil Agarwal <Nikhil.agarwal@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 543/641] usb: core: Fix crash w/ usb_choose_configuration() if no driver
-Date: Mon, 22 Jan 2024 15:57:27 -0800
-Message-ID: <20240122235835.128782937@linuxfoundation.org>
+Subject: [PATCH 6.7 544/641] cdx: Explicitly include correct DT includes, again
+Date: Mon, 22 Jan 2024 15:57:28 -0800
+Message-ID: <20240122235835.165671685@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,62 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Rob Herring <robh@kernel.org>
 
-[ Upstream commit 44995e6f07028f798efd0c3c11a1efc78330f600 ]
+[ Upstream commit aaee477e3e2c7305a95ffc528bf831a13da3dacb ]
 
-It's possible that usb_choose_configuration() can get called when a
-USB device has no driver. In this case the recent commit a87b8e3be926
-("usb: core: Allow subclassed USB drivers to override
-usb_choose_configuration()") can cause a crash since it dereferenced
-the driver structure without checking for NULL. Let's add a check.
+The DT of_device.h and of_platform.h date back to the separate
+of_platform_bus_type before it was merged into the regular platform bus.
+As part of that merge prepping Arm DT support 13 years ago, they
+"temporarily" include each other. They also include platform_device.h
+and of.h. As a result, there's a pretty much random mix of those include
+files used throughout the tree. In order to detangle these headers and
+replace the implicit includes with struct declarations, users need to
+explicitly include the correct includes.
 
-A USB device with no driver is an anomaly, so make
-usb_choose_configuration() return immediately if there is no driver.
+CDX was fixed once, but commit ("cdx: Remove cdx controller list from cdx
+bus system") added another occurrence.
 
-This was seen in the real world when usbguard got ahold of a r8152
-device at the wrong time. It can also be simulated via this on a
-computer with one r8152-based USB Ethernet adapter:
-  cd /sys/bus/usb/drivers/r8152-cfgselector
-  to_unbind="$(ls -d *-*)"
-  real_dir="$(readlink -f "${to_unbind}")"
-  echo "${to_unbind}" > unbind
-  cd "${real_dir}"
-  echo 0 > authorized
-  echo 1 > authorized
-
-Fixes: a87b8e3be926 ("usb: core: Allow subclassed USB drivers to override usb_choose_configuration()")
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20231211073237.v3.1.If27eb3bf7812f91ab83810f232292f032f4203e0@changeid
+Fixes: 54b406e10f03 ("cdx: Remove cdx controller list from cdx bus system")
+Signed-off-by: Rob Herring <robh@kernel.org>
+Acked-by: Nikhil Agarwal <Nikhil.agarwal@amd.com>
+Link: https://lore.kernel.org/r/20231207163128.2707993-2-robh@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/generic.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/cdx/cdx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/core/generic.c b/drivers/usb/core/generic.c
-index dcb897158228..b134bff5c3fe 100644
---- a/drivers/usb/core/generic.c
-+++ b/drivers/usb/core/generic.c
-@@ -59,7 +59,16 @@ int usb_choose_configuration(struct usb_device *udev)
- 	int num_configs;
- 	int insufficient_power = 0;
- 	struct usb_host_config *c, *best;
--	struct usb_device_driver *udriver = to_usb_device_driver(udev->dev.driver);
-+	struct usb_device_driver *udriver;
-+
-+	/*
-+	 * If a USB device (not an interface) doesn't have a driver then the
-+	 * kernel has no business trying to select or install a configuration
-+	 * for it.
-+	 */
-+	if (!udev->dev.driver)
-+		return -1;
-+	udriver = to_usb_device_driver(udev->dev.driver);
+diff --git a/drivers/cdx/cdx.c b/drivers/cdx/cdx.c
+index 4461c6c9313f..d84d153078d7 100644
+--- a/drivers/cdx/cdx.c
++++ b/drivers/cdx/cdx.c
+@@ -57,7 +57,10 @@
  
- 	if (usb_device_is_owned(udev))
- 		return 0;
+ #include <linux/init.h>
+ #include <linux/kernel.h>
++#include <linux/of.h>
+ #include <linux/of_device.h>
++#include <linux/of_platform.h>
++#include <linux/platform_device.h>
+ #include <linux/slab.h>
+ #include <linux/mm.h>
+ #include <linux/idr.h>
 -- 
 2.43.0
 
