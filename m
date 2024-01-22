@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A174260268;
-	Tue, 23 Jan 2024 00:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D216024F;
+	Tue, 23 Jan 2024 00:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970781; cv=none; b=GGVOtcmTh1Ng0aTmk+mjho56TO/vZDTT5eZf/mKNC/ceOb/2UL2HRoaEUTs89uWIYQlakQ1/61HiaPOP99quGx8+fOxWaHJwTkfVfm/qmJfrmhFWLKbmpPQrCD0u2ncHgSZ6epUZRDm51/tqHdjy3RvH4GaLDq6ah112k5YeKU0=
+	t=1705970784; cv=none; b=DMVuj6GhhNoDwTLdY5t4JlVU1WqkBU9lcFj+Jud+qHhov3wAPMtZWYS6hblYOpDm65KVoIFzUKsv15kgP++QbGjyK8VVs1MLngqZhXL05UgNTRGGhpZLO5G3v21OXRWx93Y3xA3i3RrZYf1J4ItGcrJ4iYY9ilDZwPePN+Y7NGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970781; c=relaxed/simple;
-	bh=jtj3eVd7HCTqQNWS+egAtziw8CVYjU5RjW1IOa49suc=;
+	s=arc-20240116; t=1705970784; c=relaxed/simple;
+	bh=kJsqIo7zQbb40na+suNhl3zV0IRbdTpqohIXYPXZGP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gXP7f8uXOXuJzu5NqyqY9KCCUjiLc/ZN1yDNxj1WRaX8ha0JV/E+xL8KpkVwhsaZUiv4pHWyXvSC+at5a6nlVVGjyiB0Vv9OhRlLZcPQuG4InkK1+sYMJP/t1JEtb1XWJAVUFHBwhzjWByZsNj5oeSifGlHFmKeMsfiEIKz7Pu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1lYlYbcG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l20nk/5QkAhvcKDCqxi/J+IchJXze4w8KYP9jzpHcYV32oK+xi6+5TjblWuhVDRGhW09Czts7HhXYWzrvlDLRj1mx86fF5O9E4lLW/kMIKY8XK6aDn45FjnfCpJoJVp/rzuNhq/ghgTtBT5RkjtGd7ufwrcr60L9vba+LCKPSTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYty6Fh3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1lYlYbcG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A760C433F1;
-	Tue, 23 Jan 2024 00:46:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYty6Fh3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBF0C433C7;
+	Tue, 23 Jan 2024 00:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970781;
-	bh=jtj3eVd7HCTqQNWS+egAtziw8CVYjU5RjW1IOa49suc=;
+	s=korg; t=1705970783;
+	bh=kJsqIo7zQbb40na+suNhl3zV0IRbdTpqohIXYPXZGP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1lYlYbcGZ3obU+36VY6sfyThv27lmrjTX/R/Sdh3I1PHAaKNzbCwXsxL1nGYwHgf8
-	 ciTNkrvWJOhpIs8db54d/KdltWdSMC6h3VQ1b2u/6AMGP/d83NTVIplKlpz1gyEHp2
-	 8dAW1YFJvEgMHnhVoFmVWI2M+7NxfxeO9/vYFQfU=
+	b=uYty6Fh3Cn4v0x1zZBxH0Syt1NzGY1Ia8bfGiBwUtR7vdGqmLcLZnjAC5CsDIo21r
+	 LzhXscuq3niN8WZ2u2lzK3o5gmL46ceJtrbd0CV2d915Jrl9f+IS5dJ795w7wEAWmt
+	 D+mWf1HpSbG2t0stz5mduyd/rlggbuupy/LIzQ1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Wei Xu <xuwei5@hisilicon.com>,
+	Thinh Tran <thinhtr@linux.vnet.ibm.com>,
+	Venkata Sai Duggi <venkata.sai.duggi@ibm.com>,
+	David Christensen <drc@linux.vnet.ibm.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/417] arm64: dts: hisilicon: hikey970-pmic: fix regulator cells properties
-Date: Mon, 22 Jan 2024 15:54:36 -0800
-Message-ID: <20240122235755.477439624@linuxfoundation.org>
+Subject: [PATCH 5.10 016/286] net/tg3: fix race condition in tg3_reset_task()
+Date: Mon, 22 Jan 2024 15:55:22 -0800
+Message-ID: <20240122235732.640402797@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +50,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Thinh Tran <thinhtr@linux.vnet.ibm.com>
 
-[ Upstream commit 44ab3ee76a5a977864ba0bb6c352dcf6206804e0 ]
+[ Upstream commit 16b55b1f2269962fb6b5154b8bf43f37c9a96637 ]
 
-The Hi6421 PMIC regulator child nodes do not have unit addresses so drop
-the incorrect '#address-cells' and '#size-cells' properties.
+When an EEH error is encountered by a PCI adapter, the EEH driver
+modifies the PCI channel's state as shown below:
 
-Fixes: 6219b20e1ecd ("arm64: dts: hisilicon: Add support for Hikey 970 PMIC")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Wei Xu <xuwei5@hisilicon.com>
+   enum {
+      /* I/O channel is in normal state */
+      pci_channel_io_normal = (__force pci_channel_state_t) 1,
+
+      /* I/O to channel is blocked */
+      pci_channel_io_frozen = (__force pci_channel_state_t) 2,
+
+      /* PCI card is dead */
+      pci_channel_io_perm_failure = (__force pci_channel_state_t) 3,
+   };
+
+If the same EEH error then causes the tg3 driver's transmit timeout
+logic to execute, the tg3_tx_timeout() function schedules a reset
+task via tg3_reset_task_schedule(), which may cause a race condition
+between the tg3 and EEH driver as both attempt to recover the HW via
+a reset action.
+
+EEH driver gets error event
+--> eeh_set_channel_state()
+    and set device to one of
+    error state above           scheduler: tg3_reset_task() get
+                                returned error from tg3_init_hw()
+                             --> dev_close() shuts down the interface
+tg3_io_slot_reset() and
+tg3_io_resume() fail to
+reset/resume the device
+
+To resolve this issue, we avoid the race condition by checking the PCI
+channel state in the tg3_reset_task() function and skip the tg3 driver
+initiated reset when the PCI channel is not in the normal state.  (The
+driver has no access to tg3 device registers at this point and cannot
+even complete the reset task successfully without external assistance.)
+We'll leave the reset procedure to be managed by the EEH driver which
+calls the tg3_io_error_detected(), tg3_io_slot_reset() and
+tg3_io_resume() functions as appropriate.
+
+Adding the same checking in tg3_dump_state() to avoid dumping all
+device registers when the PCI channel is not in the normal state.
+
+Signed-off-by: Thinh Tran <thinhtr@linux.vnet.ibm.com>
+Tested-by: Venkata Sai Duggi <venkata.sai.duggi@ibm.com>
+Reviewed-by: David Christensen <drc@linux.vnet.ibm.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/20231201001911.656-1-thinhtr@linux.vnet.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi b/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
-index 970047f2dabd..c06e011a6c3f 100644
---- a/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
-+++ b/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
-@@ -25,9 +25,6 @@ pmic: pmic@0 {
- 			gpios = <&gpio28 0 0>;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index b010f28b0abf..fe2c9b110e60 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -6454,6 +6454,14 @@ static void tg3_dump_state(struct tg3 *tp)
+ 	int i;
+ 	u32 *regs;
  
- 			regulators {
--				#address-cells = <1>;
--				#size-cells = <0>;
--
- 				ldo3: ldo3 { /* HDMI */
- 					regulator-name = "ldo3";
- 					regulator-min-microvolt = <1500000>;
++	/* If it is a PCI error, all registers will be 0xffff,
++	 * we don't dump them out, just report the error and return
++	 */
++	if (tp->pdev->error_state != pci_channel_io_normal) {
++		netdev_err(tp->dev, "PCI channel ERROR!\n");
++		return;
++	}
++
+ 	regs = kzalloc(TG3_REG_BLK_SIZE, GFP_ATOMIC);
+ 	if (!regs)
+ 		return;
+@@ -11195,7 +11203,8 @@ static void tg3_reset_task(struct work_struct *work)
+ 	rtnl_lock();
+ 	tg3_full_lock(tp, 0);
+ 
+-	if (tp->pcierr_recovery || !netif_running(tp->dev)) {
++	if (tp->pcierr_recovery || !netif_running(tp->dev) ||
++	    tp->pdev->error_state != pci_channel_io_normal) {
+ 		tg3_flag_clear(tp, RESET_TASK_PENDING);
+ 		tg3_full_unlock(tp);
+ 		rtnl_unlock();
 -- 
 2.43.0
 
