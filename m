@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4934C5F875;
-	Tue, 23 Jan 2024 00:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC078160868;
+	Tue, 23 Jan 2024 00:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970175; cv=none; b=miyX+3fiElRv6JBoqQ78bLzbQjsi7O2jRHCb+Mkt6RdkliEXH/f1YGeQhQJy02Bh2KDFrHE06GFVFl7yNvgDpeV2tghbloxS5SwUHcMW1bTkktGlpkha5TD4JDTzOhb4lMJ5Zn9SV/iojf9ECSF581ju1+MNQ2DvypqnTdzipfA=
+	t=1705970178; cv=none; b=LcsFJDLehklGfWca6iu+Jt2A5a5kJthKXTEWjNRTjAb51aZw6XrIxcmYbyvsntxDkbQxsjkx3RUeAS/gQQBNYHyzlvsdigie06h/xf3A4MS3SJI1b567WpLy6LpY5bQOc1kKW0Zqg4/MEvmVzowrJHA9/piMdTHKeq/IF5NVEmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970175; c=relaxed/simple;
-	bh=XxaMc/KcPxjwYVg0sUFjkeG2Bbi9dy7HTXMzAQ4lEm4=;
+	s=arc-20240116; t=1705970178; c=relaxed/simple;
+	bh=1BogL52SUDpdkO8miax+1ylF+rxMT+TbH2S70L8xrR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUY1xugu4APJDTSWuXLgMJTqsyckYAhxhwgmlK+GD0BsJboJV0LvY6FxuKPigF3LgQKUcrN7MO+IrgfMgwXVWjmG5KmOYzd0dA3piAiDCt2/tvU0mPqmOPrmEBtuBN3LvnLg6QBuZ/sJ3+zFzOP7COr9ZpbXC0Hy54YSaXmHb/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6KMFyv5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oFNeWx+lfDbRee6ls53M+LzntSktjZp3VdTNgx7n95LIogVodO0patiQThUpNNzUwY1cTAFqWk29lM2ZnxLcLL5I4yOJqvjaMaNt8Y1iTZ7IAbb2NdYraKVDiCm3ZcUme8RkIPzsbdOIEakjB93ZirPZN1rC3sVZb8/9pm4mS6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=buXlUVW9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6KMFyv5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55CAC433C7;
-	Tue, 23 Jan 2024 00:36:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="buXlUVW9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B36C43399;
+	Tue, 23 Jan 2024 00:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970175;
-	bh=XxaMc/KcPxjwYVg0sUFjkeG2Bbi9dy7HTXMzAQ4lEm4=;
+	s=korg; t=1705970178;
+	bh=1BogL52SUDpdkO8miax+1ylF+rxMT+TbH2S70L8xrR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D6KMFyv5jGFvjhaiQLWCVp35bvc3BKk6+6rWzFgGkObl+cV7HOjHM3ub+s8r6CSd9
-	 UpvULcy0ECYRLt7c7cQuIK9LBEBMFZh9YrStc0D3wyXqh/GxPtu9GoEM+btywooOfW
-	 6iMPt9BBSvYFtlCMsEvbjEI47dWLRHe+uR0L07rk=
+	b=buXlUVW9xdK2qPJ61S3Lr8pRhOMKkjFAB5Xo47xNj+xSDvzvT1nk5nqh9S+HExVJK
+	 bH1VgWmXP7mhHP4bzWSx3HRfKTT32RE0D9mBy5AVc5N92CAsJqxxyVzLqzqRKbBewg
+	 nz+X/JMkhuZ69ecdUzNVHQFA0a7Lj0FHLXoom02o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	linux-afs@lists.infradead.org,
-	Paolo Abeni <pabeni@redhat.com>,
+	Nithin Dabilpuram <ndabilpuram@marvell.com>,
+	Naveen Mamindlapalli <naveenm@marvell.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 583/641] rxrpc: Fix use of Dont Fragment flag
-Date: Mon, 22 Jan 2024 15:58:07 -0800
-Message-ID: <20240122235836.430153523@linuxfoundation.org>
+Subject: [PATCH 6.7 584/641] octeontx2-af: CN10KB: Fix FIFO length calculation for RPM2
+Date: Mon, 22 Jan 2024 15:58:08 -0800
+Message-ID: <20240122235836.463163792@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -54,119 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Nithin Dabilpuram <ndabilpuram@marvell.com>
 
-[ Upstream commit 8722014311e613244f33952354956a82fa4b0472 ]
+[ Upstream commit a0cb76a770083a22167659e64ba69af6425b1d9b ]
 
-rxrpc normally has the Don't Fragment flag set on the UDP packets it
-transmits, except when it has decided that DATA packets aren't getting
-through - in which case it turns it off just for the DATA transmissions.
-This can be a problem, however, for RESPONSE packets that convey
-authentication and crypto data from the client to the server as ticket may
-be larger than can fit in the MTU.
+RPM0 and RPM1 on the CN10KB SoC have 8 LMACs each, whereas RPM2
+has only 4 LMACs. Similarly, the RPM0 and RPM1 have 256KB FIFO,
+whereas RPM2 has 128KB FIFO. This patch fixes an issue with
+improper TX credit programming for the RPM2 link.
 
-In such a case, rxrpc gets itself into an infinite loop as the sendmsg
-returns an error (EMSGSIZE), which causes rxkad_send_response() to return
--EAGAIN - and the CHALLENGE packet is put back on the Rx queue to retry,
-leading to the I/O thread endlessly attempting to perform the transmission.
-
-Fix this by disabling DF on RESPONSE packets for now.  The use of DF and
-best data MTU determination needs reconsidering at some point in the
-future.
-
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Reported-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: linux-afs@lists.infradead.org
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/1581852.1704813048@warthog.procyon.org.uk
+Fixes: b9d0fedc6234 ("octeontx2-af: cn10kb: Add RPM_USX MAC support")
+Signed-off-by: Nithin Dabilpuram <ndabilpuram@marvell.com>
+Signed-off-by: Naveen Mamindlapalli <naveenm@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240108073036.8766-1-naveenm@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/ar-internal.h  |  1 +
- net/rxrpc/local_object.c | 13 ++++++++++++-
- net/rxrpc/output.c       |  6 ++----
- net/rxrpc/rxkad.c        |  2 ++
- 4 files changed, 17 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rpm.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
-index e8e14c6f904d..e8b43408136a 100644
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -1076,6 +1076,7 @@ void rxrpc_send_version_request(struct rxrpc_local *local,
- /*
-  * local_object.c
-  */
-+void rxrpc_local_dont_fragment(const struct rxrpc_local *local, bool set);
- struct rxrpc_local *rxrpc_lookup_local(struct net *, const struct sockaddr_rxrpc *);
- struct rxrpc_local *rxrpc_get_local(struct rxrpc_local *, enum rxrpc_local_trace);
- struct rxrpc_local *rxrpc_get_local_maybe(struct rxrpc_local *, enum rxrpc_local_trace);
-diff --git a/net/rxrpc/local_object.c b/net/rxrpc/local_object.c
-index c553a30e9c83..34d307368135 100644
---- a/net/rxrpc/local_object.c
-+++ b/net/rxrpc/local_object.c
-@@ -36,6 +36,17 @@ static void rxrpc_encap_err_rcv(struct sock *sk, struct sk_buff *skb, int err,
- 		return ipv6_icmp_error(sk, skb, err, port, info, payload);
- }
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
+index 4728ba34b0e3..76218f1cb459 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
+@@ -506,6 +506,7 @@ u32 rpm2_get_lmac_fifo_len(void *rpmd, int lmac_id)
+ 	rpm_t *rpm = rpmd;
+ 	u8 num_lmacs;
+ 	u32 fifo_len;
++	u16 max_lmac;
  
-+/*
-+ * Set or clear the Don't Fragment flag on a socket.
-+ */
-+void rxrpc_local_dont_fragment(const struct rxrpc_local *local, bool set)
-+{
-+	if (set)
-+		ip_sock_set_mtu_discover(local->socket->sk, IP_PMTUDISC_DO);
+ 	lmac_info = rpm_read(rpm, 0, RPM2_CMRX_RX_LMACS);
+ 	/* LMACs are divided into two groups and each group
+@@ -513,7 +514,11 @@ u32 rpm2_get_lmac_fifo_len(void *rpmd, int lmac_id)
+ 	 * Group0 lmac_id range {0..3}
+ 	 * Group1 lmac_id range {4..7}
+ 	 */
+-	fifo_len = rpm->mac_ops->fifo_len / 2;
++	max_lmac = (rpm_read(rpm, 0, CGX_CONST) >> 24) & 0xFF;
++	if (max_lmac > 4)
++		fifo_len = rpm->mac_ops->fifo_len / 2;
 +	else
-+		ip_sock_set_mtu_discover(local->socket->sk, IP_PMTUDISC_DONT);
-+}
-+
- /*
-  * Compare a local to an address.  Return -ve, 0 or +ve to indicate less than,
-  * same or greater than.
-@@ -203,7 +214,7 @@ static int rxrpc_open_socket(struct rxrpc_local *local, struct net *net)
- 		ip_sock_set_recverr(usk);
++		fifo_len = rpm->mac_ops->fifo_len;
  
- 		/* we want to set the don't fragment bit */
--		ip_sock_set_mtu_discover(usk, IP_PMTUDISC_DO);
-+		rxrpc_local_dont_fragment(local, true);
- 
- 		/* We want receive timestamps. */
- 		sock_enable_timestamps(usk);
-diff --git a/net/rxrpc/output.c b/net/rxrpc/output.c
-index 5e53429c6922..a0906145e829 100644
---- a/net/rxrpc/output.c
-+++ b/net/rxrpc/output.c
-@@ -494,14 +494,12 @@ int rxrpc_send_data_packet(struct rxrpc_call *call, struct rxrpc_txbuf *txb)
- 	switch (conn->local->srx.transport.family) {
- 	case AF_INET6:
- 	case AF_INET:
--		ip_sock_set_mtu_discover(conn->local->socket->sk,
--					 IP_PMTUDISC_DONT);
-+		rxrpc_local_dont_fragment(conn->local, false);
- 		rxrpc_inc_stat(call->rxnet, stat_tx_data_send_frag);
- 		ret = do_udp_sendmsg(conn->local->socket, &msg, len);
- 		conn->peer->last_tx_at = ktime_get_seconds();
- 
--		ip_sock_set_mtu_discover(conn->local->socket->sk,
--					 IP_PMTUDISC_DO);
-+		rxrpc_local_dont_fragment(conn->local, true);
- 		break;
- 
- 	default:
-diff --git a/net/rxrpc/rxkad.c b/net/rxrpc/rxkad.c
-index 1bf571a66e02..b52dedcebce0 100644
---- a/net/rxrpc/rxkad.c
-+++ b/net/rxrpc/rxkad.c
-@@ -724,7 +724,9 @@ static int rxkad_send_response(struct rxrpc_connection *conn,
- 	serial = atomic_inc_return(&conn->serial);
- 	whdr.serial = htonl(serial);
- 
-+	rxrpc_local_dont_fragment(conn->local, false);
- 	ret = kernel_sendmsg(conn->local->socket, &msg, iov, 3, len);
-+	rxrpc_local_dont_fragment(conn->local, true);
- 	if (ret < 0) {
- 		trace_rxrpc_tx_fail(conn->debug_id, serial, ret,
- 				    rxrpc_tx_point_rxkad_response);
+ 	if (lmac_id < 4) {
+ 		num_lmacs = hweight8(lmac_info & 0xF);
 -- 
 2.43.0
 
