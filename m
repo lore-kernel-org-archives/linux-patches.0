@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2C17472;
-	Tue, 23 Jan 2024 00:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E847472;
+	Tue, 23 Jan 2024 00:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969607; cv=none; b=EhTIzqFcyjP0J/QsBg38mlWSwMSTpAB1ULrdymNGDoAHWWyj9cGDlW/D2YRxmO/rupx5CPQ/wyCMk6WhjROmnZhFa7OcISznQXZsZw5BlXV2kRE5g/hKx4EKAgnWktHznB7hHsWxtVJCSMZgXHaM55Hhum/ATAbITUq7J72qc7Q=
+	t=1705969608; cv=none; b=FBm6beeqPh0orwPFfF7EFRqXuMmjbtX4ZPIuFthihFKUS1yP3FaB4IaRM5sjTuSJeEIFn0OmraOFESubjGSe8ByziIUsbC66oV0Yg0A0Wt7xlTVO3c0ikJllIRQtP0Z4Mh1P6mMPtXng9GUOpJS1xZT802QBRT2a7zFrnU5CqSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969607; c=relaxed/simple;
-	bh=KNQ9yhSUh7+djwL34eDu7gsasqHCy0HSSZHoiX8Cx38=;
+	s=arc-20240116; t=1705969608; c=relaxed/simple;
+	bh=9aZZbFfP9UVQ1kR59c/RkMWHgMbqBAP0BE9sDXNPCnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PfqVhNowvubODgy8l8n5JcconetacJv0Na3yKn8SJa4axbb/T31IYr0mCNPoRyprGlt5PXNwrSZaZHRFDmO085Eo6Xkv3fV2SORIEOM0BpS+/NWvzHgzzfvFPQnR3FQgxxS7f1rsSE97XMRB7SLgtl0H2w9jl78WDYZUVUOrCIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3ZFz394; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZaHsCSChxkQ2FhRbmMNzEn+6h4lDldxM+hAqcSzMzjsQPQkwx7PPusuV47soF5tmUOSrJL6V9nkNkiRCS3wCiSsivcJufucwJT21z0ep71oMz8ieKUyEuU3lPPIABXjeVUVgAAyQrzrlJjeDqAHfujsQGZQzdRRdXSsOnm8g1Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3oEO7l3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3ZFz394"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C30C433C7;
-	Tue, 23 Jan 2024 00:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3oEO7l3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F7BC433F1;
+	Tue, 23 Jan 2024 00:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969607;
-	bh=KNQ9yhSUh7+djwL34eDu7gsasqHCy0HSSZHoiX8Cx38=;
+	s=korg; t=1705969608;
+	bh=9aZZbFfP9UVQ1kR59c/RkMWHgMbqBAP0BE9sDXNPCnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3ZFz394Ivq+V2S7i6Th6EPJTmNYKAaIkmxEvBVW4kRqdJtmEnonz1/4HC7plgNRH
-	 SSoMkJhide9DzEf1n/RnvZMuapLyvTyiPDmXL5BAwhjFeTLxwKkq/W7QJ6votjlsmN
-	 6DfaVoJRmgHdNPEst0f8Zo61lOXgkJ6zNYu9gQ8U=
+	b=z3oEO7l3r0QxlDbC/GIZI3i/XAr3UMOyuSauo+DFtXlv0pLIs7vbC0Hj42z1hUC/2
+	 wbx1FXrAx8oBtYp0ItWCdLp0Nex4l4bwxKkfEEVoyrwX0gCH9o5fE3TC8gZV4ihzd7
+	 dU9xvV1GzdusZrheFEeh9Skf9d4uEdQzcdbZNPEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 354/641] clk: fixed-rate: fix clk_hw_register_fixed_rate_with_accuracy_parent_hw
-Date: Mon, 22 Jan 2024 15:54:18 -0800
-Message-ID: <20240122235829.009671509@linuxfoundation.org>
+Subject: [PATCH 6.7 355/641] pwm: stm32: Use hweight32 in stm32_pwm_detect_channels
+Date: Mon, 22 Jan 2024 15:54:19 -0800
+Message-ID: <20240122235829.043256116@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,37 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Théo Lebrun <theo.lebrun@bootlin.com>
+From: Philipp Zabel <p.zabel@pengutronix.de>
 
-[ Upstream commit ee0cf5e07f44a10fce8f1bfa9db226c0b5ecf880 ]
+[ Upstream commit 41fa8f57c0d269243fe3bde2bce71e82c884b9ad ]
 
-Add missing comma and remove extraneous NULL argument. The macro is
-currently used by no one which explains why the typo slipped by.
+Use hweight32() to count the CCxE bits in stm32_pwm_detect_channels().
+Since the return value is assigned to chip.npwm, change it to unsigned
+int as well.
 
-Fixes: 2d34f09e79c9 ("clk: fixed-rate: Add support for specifying parents via DT/pointers")
-Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Link: https://lore.kernel.org/r/20231218-mbly-clk-v1-1-44ce54108f06@bootlin.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: 19f1016ea960 ("pwm: stm32: Fix enable count for clk in .probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/clk-provider.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pwm/pwm-stm32.c | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-index ace3a4ce2fc9..1293c38ddb7f 100644
---- a/include/linux/clk-provider.h
-+++ b/include/linux/clk-provider.h
-@@ -448,8 +448,8 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
-  */
- #define clk_hw_register_fixed_rate_with_accuracy_parent_hw(dev, name,	      \
- 		parent_hw, flags, fixed_rate, fixed_accuracy)		      \
--	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, (parent_hw)   \
--				     NULL, NULL, (flags), (fixed_rate),	      \
-+	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, (parent_hw),  \
-+				     NULL, (flags), (fixed_rate),	      \
- 				     (fixed_accuracy), 0, false)
- /**
-  * clk_hw_register_fixed_rate_with_accuracy_parent_data - register fixed-rate
+diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
+index 3303a754ea02..ffdfd81c0613 100644
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -578,10 +578,9 @@ static void stm32_pwm_detect_complementary(struct stm32_pwm *priv)
+ 	priv->have_complementary_output = (ccer != 0);
+ }
+ 
+-static int stm32_pwm_detect_channels(struct stm32_pwm *priv)
++static unsigned int stm32_pwm_detect_channels(struct stm32_pwm *priv)
+ {
+ 	u32 ccer;
+-	int npwm = 0;
+ 
+ 	/*
+ 	 * If channels enable bits don't exist writing 1 will have no
+@@ -591,19 +590,7 @@ static int stm32_pwm_detect_channels(struct stm32_pwm *priv)
+ 	regmap_read(priv->regmap, TIM_CCER, &ccer);
+ 	regmap_clear_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
+ 
+-	if (ccer & TIM_CCER_CC1E)
+-		npwm++;
+-
+-	if (ccer & TIM_CCER_CC2E)
+-		npwm++;
+-
+-	if (ccer & TIM_CCER_CC3E)
+-		npwm++;
+-
+-	if (ccer & TIM_CCER_CC4E)
+-		npwm++;
+-
+-	return npwm;
++	return hweight32(ccer & TIM_CCER_CCXE);
+ }
+ 
+ static int stm32_pwm_probe(struct platform_device *pdev)
 -- 
 2.43.0
 
