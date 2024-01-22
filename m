@@ -1,42 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329F164AB0;
-	Tue, 23 Jan 2024 01:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190C464AB0;
+	Tue, 23 Jan 2024 01:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975045; cv=none; b=avPFnQtDvfmFsiP1yJshPPyFlchGK9YppLFXgqCqDImGqVbHpB15QmXKKzx2oUtkuOvTh7/7h+tOOEoRH/7KyivmrzjFHIueApE8nUPfHYlSnjqU2oh1Ugq0yY+j0CAdDam0wnSOnKBRSxGn5AxzEGLXSvKwbEEY398NyCkrFj4=
+	t=1705975046; cv=none; b=CDXZ31t4obiOCGYEpEcV+iJVWKeqHsMruAUT0VVoC85JczyHuazfBrp8mkVIp9iwV9EKHAEm4UY0kkr12YznBQWgKxpIGeKgaiICLIpx/48mhrIDIBnplTnmTCXe9EzzShVYURZ0lBytZJCkA4C1QOztuhLhr9WpG//8qcGtVO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975045; c=relaxed/simple;
-	bh=DSBEri2wUMmxge5Sv9A5ESD/W/Aby4iUVcFvlf/G3TI=;
+	s=arc-20240116; t=1705975046; c=relaxed/simple;
+	bh=6l2SDmCIspASlYDKPuDVT5RY+jexk6aNvIpS4wgj9uA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qsv1koqmZdb54bneS7BFaPBtGQofUBcbQAczaoKa68rjn/xpjr+Vgkp/q+KeP2rQvAfzt+gIIcqLVRRTJngO0LZ9rNPizBgxjA9E7Ex5fv/y8cMhAnU9HzjSEGvOu3JJd1nVKYZVAm+o091Tm7kUCQwqnGDTkXVtPJksmK5qPOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhmkEZtF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rdG5MDX//q017e3Sq881qV2VwO3JNPKFNU0y5+44dTa0fSeDvWG0sY4I12gtcAWN8a6YxGTQU4gPQ7GC1S1J8GJwSoWNO5v+aQpIlqmz/BzI/5cxt4ZrZA/Wu0VT0IV2hzqGeFjch06vHWFMsxThK/kZ1GgyalRxQlKBxliWkYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRFsZcny; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhmkEZtF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE894C433F1;
-	Tue, 23 Jan 2024 01:57:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRFsZcny"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74CBC433F1;
+	Tue, 23 Jan 2024 01:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705975045;
-	bh=DSBEri2wUMmxge5Sv9A5ESD/W/Aby4iUVcFvlf/G3TI=;
+	bh=6l2SDmCIspASlYDKPuDVT5RY+jexk6aNvIpS4wgj9uA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LhmkEZtFfHeQscsho+FDjObDyjj2wwN7EvjeJ45JB6pk7NzpKxSjw8O0XxKSbGo0k
-	 Kk5Hhe/1oU7fkVrokMWfwQGEqL7XCLj9yOhqq2+5V40thIqu5phig1BSYQdzyaHSbd
-	 RGoAFVzbouiG1ecZvIB4KCqZ46HLkrgtjhgW4mqA=
+	b=zRFsZcnymCVAm78XF0DBF09pLHmATNA7+rhiPpwUrwb+Gpk/wgBNcjG92HN/bkWAP
+	 T1EcZRdcxaAnanAKKveT9zUEM/Y3YbuliYf+iERGYq6Z8ff2Sf5jsJej0MUAr1TxPR
+	 32tpsk8K6adXkGC+37gAtXrbORZjAJQTYu1iv4Sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Florian Westphal <fw@strlen.de>,
+	Peter Krystad <peter.krystad@linux.intel.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Mat Martineau <martineau@kernel.org>,
+	Geliang Tang <geliang.tang@linux.dev>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 211/583] wifi: cfg80211: parse all ML elements in an ML probe response
-Date: Mon, 22 Jan 2024 15:54:22 -0800
-Message-ID: <20240122235818.470690949@linuxfoundation.org>
+Subject: [PATCH 5.15 339/374] mptcp: use OPTION_MPTCP_MPJ_SYN in subflow_check_req()
+Date: Mon, 22 Jan 2024 15:59:55 -0800
+Message-ID: <20240122235756.702727246@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,100 +55,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit d18125b640309e925441ce49559be33867ae6b29 ]
+[ Upstream commit 66ff70df1a919a066942844bb095d6fcb748d78d ]
 
-A probe response from a transmitting AP in an Multi-BSSID setup will
-contain more than one Multi-Link element. Most likely, only one of these
-elements contains per-STA profiles.
+syzbot reported that subflow_check_req() was using uninitialized data in
+subflow_check_req() [1]
 
-Fixes: 2481b5da9c6b ("wifi: cfg80211: handle BSS data contained in ML probe responses")
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240102213313.6635eb152735.I94289002d4a2f7b6b44dfa428344854e37b0b29c@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This is because mp_opt.token is only set when OPTION_MPTCP_MPJ_SYN is also set.
+
+While we are are it, fix mptcp_subflow_init_cookie_req()
+to test for OPTION_MPTCP_MPJ_ACK.
+
+[1]
+
+BUG: KMSAN: uninit-value in subflow_token_join_request net/mptcp/subflow.c:91 [inline]
+ BUG: KMSAN: uninit-value in subflow_check_req+0x1028/0x15d0 net/mptcp/subflow.c:209
+  subflow_token_join_request net/mptcp/subflow.c:91 [inline]
+  subflow_check_req+0x1028/0x15d0 net/mptcp/subflow.c:209
+  subflow_v6_route_req+0x269/0x410 net/mptcp/subflow.c:367
+  tcp_conn_request+0x153a/0x4240 net/ipv4/tcp_input.c:7164
+ subflow_v6_conn_request+0x3ee/0x510
+  tcp_rcv_state_process+0x2e1/0x4ac0 net/ipv4/tcp_input.c:6659
+  tcp_v6_do_rcv+0x11bf/0x1fe0 net/ipv6/tcp_ipv6.c:1669
+  tcp_v6_rcv+0x480b/0x4fb0 net/ipv6/tcp_ipv6.c:1900
+  ip6_protocol_deliver_rcu+0xda6/0x2a60 net/ipv6/ip6_input.c:438
+  ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
+  NF_HOOK include/linux/netfilter.h:314 [inline]
+  ip6_input+0x15d/0x430 net/ipv6/ip6_input.c:492
+  dst_input include/net/dst.h:461 [inline]
+  ip6_rcv_finish+0x5db/0x870 net/ipv6/ip6_input.c:79
+  NF_HOOK include/linux/netfilter.h:314 [inline]
+  ipv6_rcv+0xda/0x390 net/ipv6/ip6_input.c:310
+  __netif_receive_skb_one_core net/core/dev.c:5532 [inline]
+  __netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5646
+  netif_receive_skb_internal net/core/dev.c:5732 [inline]
+  netif_receive_skb+0x58/0x660 net/core/dev.c:5791
+  tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1555
+  tun_get_user+0x53af/0x66d0 drivers/net/tun.c:2002
+  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
+  call_write_iter include/linux/fs.h:2020 [inline]
+  new_sync_write fs/read_write.c:491 [inline]
+  vfs_write+0x8ef/0x1490 fs/read_write.c:584
+  ksys_write+0x20f/0x4c0 fs/read_write.c:637
+  __do_sys_write fs/read_write.c:649 [inline]
+  __se_sys_write fs/read_write.c:646 [inline]
+  __x64_sys_write+0x93/0xd0 fs/read_write.c:646
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+Local variable mp_opt created at:
+  subflow_check_req+0x6d/0x15d0 net/mptcp/subflow.c:145
+  subflow_v6_route_req+0x269/0x410 net/mptcp/subflow.c:367
+
+CPU: 1 PID: 5924 Comm: syz-executor.3 Not tainted 6.7.0-rc8-syzkaller-00055-g5eff55d725a4 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
+
+Fixes: f296234c98a8 ("mptcp: Add handling of incoming MP_JOIN requests")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Florian Westphal <fw@strlen.de>
+Cc: Peter Krystad <peter.krystad@linux.intel.com>
+Cc: Matthieu Baerts <matttbe@kernel.org>
+Cc: Mat Martineau <martineau@kernel.org>
+Cc: Geliang Tang <geliang.tang@linux.dev>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20240111194917.4044654-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 40 ++++++++++++++++++++++++++--------------
- 1 file changed, 26 insertions(+), 14 deletions(-)
+ net/mptcp/subflow.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index a7d7469b10a4..bd4dd75e446e 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2569,10 +2569,12 @@ cfg80211_tbtt_info_for_mld_ap(const u8 *ie, size_t ielen, u8 mld_id, u8 link_id,
- 	return false;
- }
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index 297d2465c413..099bdfc12da9 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -155,7 +155,7 @@ static int subflow_check_req(struct request_sock *req,
+ 	mptcp_get_options(skb, &mp_opt);
  
--static void cfg80211_parse_ml_sta_data(struct wiphy *wiphy,
--				       struct cfg80211_inform_single_bss_data *tx_data,
--				       struct cfg80211_bss *source_bss,
--				       gfp_t gfp)
-+static void
-+cfg80211_parse_ml_elem_sta_data(struct wiphy *wiphy,
-+				struct cfg80211_inform_single_bss_data *tx_data,
-+				struct cfg80211_bss *source_bss,
-+				const struct element *elem,
-+				gfp_t gfp)
- {
- 	struct cfg80211_inform_single_bss_data data = {
- 		.drv_data = tx_data->drv_data,
-@@ -2581,7 +2583,6 @@ static void cfg80211_parse_ml_sta_data(struct wiphy *wiphy,
- 		.bss_source = BSS_SOURCE_STA_PROFILE,
- 	};
- 	struct ieee80211_multi_link_elem *ml_elem;
--	const struct element *elem;
- 	struct cfg80211_mle *mle;
- 	u16 control;
- 	u8 *new_ie;
-@@ -2591,15 +2592,7 @@ static void cfg80211_parse_ml_sta_data(struct wiphy *wiphy,
- 	const u8 *pos;
- 	u8 i;
+ 	opt_mp_capable = !!(mp_opt.suboptions & OPTIONS_MPTCP_MPC);
+-	opt_mp_join = !!(mp_opt.suboptions & OPTIONS_MPTCP_MPJ);
++	opt_mp_join = !!(mp_opt.suboptions & OPTION_MPTCP_MPJ_SYN);
+ 	if (opt_mp_capable) {
+ 		SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_MPCAPABLEPASSIVE);
  
--	if (!source_bss)
--		return;
--
--	if (tx_data->ftype != CFG80211_BSS_FTYPE_PRESP)
--		return;
--
--	elem = cfg80211_find_ext_elem(WLAN_EID_EXT_EHT_MULTI_LINK,
--				      tx_data->ie, tx_data->ielen);
--	if (!elem || !ieee80211_mle_size_ok(elem->data + 1, elem->datalen - 1))
-+	if (!ieee80211_mle_size_ok(elem->data + 1, elem->datalen - 1))
- 		return;
+@@ -252,7 +252,7 @@ int mptcp_subflow_init_cookie_req(struct request_sock *req,
+ 	mptcp_get_options(skb, &mp_opt);
  
- 	ml_elem = (void *)elem->data + 1;
-@@ -2734,6 +2727,25 @@ static void cfg80211_parse_ml_sta_data(struct wiphy *wiphy,
- 	kfree(mle);
- }
+ 	opt_mp_capable = !!(mp_opt.suboptions & OPTIONS_MPTCP_MPC);
+-	opt_mp_join = !!(mp_opt.suboptions & OPTIONS_MPTCP_MPJ);
++	opt_mp_join = !!(mp_opt.suboptions & OPTION_MPTCP_MPJ_ACK);
+ 	if (opt_mp_capable && opt_mp_join)
+ 		return -EINVAL;
  
-+static void cfg80211_parse_ml_sta_data(struct wiphy *wiphy,
-+				       struct cfg80211_inform_single_bss_data *tx_data,
-+				       struct cfg80211_bss *source_bss,
-+				       gfp_t gfp)
-+{
-+	const struct element *elem;
-+
-+	if (!source_bss)
-+		return;
-+
-+	if (tx_data->ftype != CFG80211_BSS_FTYPE_PRESP)
-+		return;
-+
-+	for_each_element_extid(elem, WLAN_EID_EXT_EHT_MULTI_LINK,
-+			       tx_data->ie, tx_data->ielen)
-+		cfg80211_parse_ml_elem_sta_data(wiphy, tx_data, source_bss,
-+						elem, gfp);
-+}
-+
- struct cfg80211_bss *
- cfg80211_inform_bss_data(struct wiphy *wiphy,
- 			 struct cfg80211_inform_bss *data,
 -- 
 2.43.0
 
