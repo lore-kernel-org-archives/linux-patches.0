@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DC422062;
-	Tue, 23 Jan 2024 00:51:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B25E62800;
+	Tue, 23 Jan 2024 00:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971114; cv=none; b=DogfXswew8xmFtRnTqNg8ymWXi5T459bzlq1OZA5m9m6NZ3WrnZg7JGkaVjfzyO8LWsxGQKvCw8SvZuCNtNN1VEVa2jV1K6jOIXjY4ENUdqYXN0uAkEuyfD4BAKHQqbEvgOlMoxH1oABNZ4ff4rAE7F45czxwIxAXFAZYB1W3Gw=
+	t=1705971117; cv=none; b=MhON9h7EUZfLBrVwVDqXhZuYDeBL3Ax7A0sIs7lSXfh2d/hMYZsQKUTdhiUoLNQgfo0NeERI0ru9VViKvUIqI4gpQw+wpFh697xiu0+xljFC2a1lW3dqVAB6omdnvQLtABYTCf3bL+oEEcGuC7+IMLXf+sVzPjScnlUBJkZEUHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971114; c=relaxed/simple;
-	bh=9nmvXxSNLbLQUrwHm3s0TtMZBVk0MWRj4B1P69QUT/M=;
+	s=arc-20240116; t=1705971117; c=relaxed/simple;
+	bh=fhgtEubQm2iQg3o3ywCcodhaoYHRKUMVyBlsigcRT5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jYiCF+D6Q3R165fv319iR9LqWqjEI4+Yr4EJH+kCLZObsW/fTigTIxDSh2W1jfvLqNkwM21+mN8nf1j/yWve2B/OSVC+gcpJ5iIKNwlZAeefn8fUdSFUk8QLG2O1vQeey4z4IQmPhC9fRyJ6RY+F44MdzyORyl+Xkk2iA0v1Ry8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnrodDOC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X9xNYBMILHentW4rCgHMJao13+xeADUCfeLo8gqAzmYqKcfi5HhU0q8MJ8l9STyanfc2ynHCy4aMU+lhI3vf174d0ou5N7NqoLX7eZHojC3HXxeyBA9ntS7AVHIINjo1H98OajNxPRNbve7TKkaTJx119E1SG5OK7+VmmTK0mSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTUo1LTi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnrodDOC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E45C43390;
-	Tue, 23 Jan 2024 00:51:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTUo1LTi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5AEDC433F1;
+	Tue, 23 Jan 2024 00:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971114;
-	bh=9nmvXxSNLbLQUrwHm3s0TtMZBVk0MWRj4B1P69QUT/M=;
+	s=korg; t=1705971116;
+	bh=fhgtEubQm2iQg3o3ywCcodhaoYHRKUMVyBlsigcRT5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CnrodDOC3MMoh+sfkp9KHaI4gIrZMaDWQfDBmDspQ7rqjLJVtKzHAGXVvxVXB3rCE
-	 QSMNDfURNzVz29Z4mGhoJPG974w474IingEcU9lIQ34wrn8z6FnYAHly8WYZQQV3GF
-	 51tla/KAo/fTYxlDxvz/d47pZNzgHAj4JqUdN6zE=
+	b=sTUo1LTiqmK5F/jbsYMJYa5/AT+jsy1xLeQkXMYuVDGshNc+N+zpdHx22qy69y8Qr
+	 GupfipvH8v6Xr8NPPXksqA1ahpw43sUVLckRbuEMRmg+GTTWof8a7YbZ7bQey6c7QE
+	 EYPYsMoly+8l46heThW72SfYBs1SZO2kCPEll2fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Maxime Ripard <mripard@kernel.org>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 183/417] drm/drv: propagate errors from drm_modeset_register_all()
-Date: Mon, 22 Jan 2024 15:55:51 -0800
-Message-ID: <20240122235758.209203769@linuxfoundation.org>
+Subject: [PATCH 5.10 091/286] crypto: sahara - fix error handling in sahara_hw_descriptor_create()
+Date: Mon, 22 Jan 2024 15:56:37 -0800
+Message-ID: <20240122235735.538812055@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,56 +47,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit 5f8dec200923a76dc57187965fd59c1136f5d085 ]
+[ Upstream commit ee6e6f0a7f5b39d50a5ef5fcc006f4f693db18a7 ]
 
-In case the drm_modeset_register_all() function fails, its error code
-will be ignored. Instead make the drm_dev_register() bail out in case of
-such an error.
+Do not call dma_unmap_sg() for scatterlists that were not mapped
+successfully.
 
-Fixes: 79190ea2658a ("drm: Add callbacks for late registering")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231202225552.1283638-1-dmitry.baryshkov@linaro.org
+Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_drv.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/crypto/sahara.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
-index 203bf8d6c34c..d41a5eaa3e89 100644
---- a/drivers/gpu/drm/drm_drv.c
-+++ b/drivers/gpu/drm/drm_drv.c
-@@ -895,8 +895,11 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
- 			goto err_minors;
+diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
+index 855c232d66a2..3cd872d282b4 100644
+--- a/drivers/crypto/sahara.c
++++ b/drivers/crypto/sahara.c
+@@ -483,13 +483,14 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
+ 			 DMA_TO_DEVICE);
+ 	if (ret != dev->nb_in_sg) {
+ 		dev_err(dev->device, "couldn't map in sg\n");
+-		goto unmap_in;
++		return -EINVAL;
+ 	}
++
+ 	ret = dma_map_sg(dev->device, dev->out_sg, dev->nb_out_sg,
+ 			 DMA_FROM_DEVICE);
+ 	if (ret != dev->nb_out_sg) {
+ 		dev_err(dev->device, "couldn't map out sg\n");
+-		goto unmap_out;
++		goto unmap_in;
  	}
  
--	if (drm_core_check_feature(dev, DRIVER_MODESET))
--		drm_modeset_register_all(dev);
-+	if (drm_core_check_feature(dev, DRIVER_MODESET)) {
-+		ret = drm_modeset_register_all(dev);
-+		if (ret)
-+			goto err_unload;
-+	}
+ 	/* Create input links */
+@@ -537,9 +538,6 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
  
- 	DRM_INFO("Initialized %s %d.%d.%d %s for %s on minor %d\n",
- 		 driver->name, driver->major, driver->minor,
-@@ -906,6 +909,9 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
+ 	return 0;
  
- 	goto out_unlock;
- 
-+err_unload:
-+	if (dev->driver->unload)
-+		dev->driver->unload(dev);
- err_minors:
- 	remove_compat_control_link(dev);
- 	drm_minor_unregister(dev, DRM_MINOR_PRIMARY);
+-unmap_out:
+-	dma_unmap_sg(dev->device, dev->out_sg, dev->nb_out_sg,
+-		DMA_FROM_DEVICE);
+ unmap_in:
+ 	dma_unmap_sg(dev->device, dev->in_sg, dev->nb_in_sg,
+ 		DMA_TO_DEVICE);
 -- 
 2.43.0
 
