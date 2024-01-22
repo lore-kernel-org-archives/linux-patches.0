@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101CA67E81;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC24D67E81;
 	Tue, 23 Jan 2024 02:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975312; cv=none; b=fqgsObm6Ircp7+mrallMaU/KsTSUymJx4sCdz9gvt5E/jHO68h7nTpjJLGlL8ea7b6LQG/R1KwkFST2qVthVvbv7zAPjo5Xl0t+BerZ53eBFGSH+Y2hnvAQVWEy2BcYuSoAk89Kyw9eGSso41H8eiCc5TTvtfpfexJGaztJr2CM=
+	t=1705975313; cv=none; b=dAxvI6gu0AcOtRl+ZGf7L7407a0HzM1yh84PZgVt69wsedS1pPw2fs+3ZdApKdgcORVDKyfQNUbr1wqo/gxypkq3eYuJ0EZj1Jmrhq4Gz5M00KA5KPudPKoMl1fYQtErUXep6Jfu1N1TkxGnLWM8SbqsHtRmbPOE5IMyHUgc1es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975312; c=relaxed/simple;
-	bh=XPUnAAdf43QAQGFY9axF80L3AOnp8MgtGtqd6SORMLY=;
+	s=arc-20240116; t=1705975313; c=relaxed/simple;
+	bh=pfjLIvadHTNTfKQKHSYTcOlvEAzBSeEWPgUcA+b567Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qDb/NBjOi0PwuByh6llKmFJBf+1vZ2tP3etkQ4nHjOjhg91hm2Po4N+DeL5FFzdbsruvABenMXjzrYo4QBI7COXXFr7sLEPzxy8FWHToUvaz7c9WfSZqTEnrRAtrCtcpGKCX13r0/sgO6/Fc9v2IT+cGWh4omAKYHIW3KrrThQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5uQbKHP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lul7546yRLUrk1m6FfwUFoO82QHjqpt4kRp4RhJu3svfRaB0335ZiwTkHrb/DdCCu/sixh+QDQL+MbcmYivzLQg6ddORiYRqVAEfqntGCz6O0fLAvis/sdCcfoC2x+icY6l98m8A8Fz7owLlN2JbS7bTjkuzoeFrZwNkcbfwMg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRR0YUQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5uQbKHP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84EFC43394;
-	Tue, 23 Jan 2024 02:01:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRR0YUQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0D7C433C7;
+	Tue, 23 Jan 2024 02:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975311;
-	bh=XPUnAAdf43QAQGFY9axF80L3AOnp8MgtGtqd6SORMLY=;
+	s=korg; t=1705975312;
+	bh=pfjLIvadHTNTfKQKHSYTcOlvEAzBSeEWPgUcA+b567Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P5uQbKHPFx0LcXoudgqOh232HmmtENS50Zu3lIQXzLrq9JfWoEuLkLTd3prWMyrSM
-	 kEaqWbkym/hkyPynd8tYCC4laHykJnV2ubn7A4edaloVHWwi5FNNkIMiWnf+AJxqjL
-	 Uk7Q0Hs3Xx1B1xqZrn6UoV+7j2ebtg2m4aZlNnJI=
+	b=FRR0YUQL7/vZzGfwH+i3SNMmAX2hWHoWdEXprK2iw4GJoVqCf4y9AeGxgyRTQTqHs
+	 w5gq7Ln89ZKizzKtXuWGKWee5Ppy1eq9ITn2KLeOmCcAOHlGsXfpBhqWCha3HtozDa
+	 9M99N4r/JOHc0WkqsebkaikN13DSbFovP/P2szro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 252/583] drm/msm/dsi: Use pm_runtime_resume_and_get to prevent refcnt leaks
-Date: Mon, 22 Jan 2024 15:55:03 -0800
-Message-ID: <20240122235819.715980814@linuxfoundation.org>
+Subject: [PATCH 6.6 253/583] drm/drv: propagate errors from drm_modeset_register_all()
+Date: Mon, 22 Jan 2024 15:55:04 -0800
+Message-ID: <20240122235819.745022369@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,41 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 3d07a411b4faaf2b498760ccf12888f8de529de0 ]
+[ Upstream commit 5f8dec200923a76dc57187965fd59c1136f5d085 ]
 
-This helper has been introduced to avoid programmer errors (missing
-_put calls leading to dangling refcnt) when using pm_runtime_get, use it.
+In case the drm_modeset_register_all() function fails, its error code
+will be ignored. Instead make the drm_dev_register() bail out in case of
+such an error.
 
-While at it, start checking the return value.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: 5c8290284402 ("drm/msm/dsi: Split PHY drivers to separate files")
-Patchwork: https://patchwork.freedesktop.org/patch/543350/
-Link: https://lore.kernel.org/r/20230620-topic-dsiphy_rpm-v2-1-a11a751f34f0@linaro.org
+Fixes: 79190ea2658a ("drm: Add callbacks for late registering")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231202225552.1283638-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_drv.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 05621e5e7d63..b6314bb66d2f 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -516,7 +516,9 @@ static int dsi_phy_enable_resource(struct msm_dsi_phy *phy)
- 	struct device *dev = &phy->pdev->dev;
- 	int ret;
+diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
+index 3eda026ffac6..71bb8806dc5f 100644
+--- a/drivers/gpu/drm/drm_drv.c
++++ b/drivers/gpu/drm/drm_drv.c
+@@ -940,8 +940,11 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
+ 			goto err_minors;
+ 	}
  
--	pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret)
-+		return ret;
+-	if (drm_core_check_feature(dev, DRIVER_MODESET))
+-		drm_modeset_register_all(dev);
++	if (drm_core_check_feature(dev, DRIVER_MODESET)) {
++		ret = drm_modeset_register_all(dev);
++		if (ret)
++			goto err_unload;
++	}
  
- 	ret = clk_prepare_enable(phy->ahb_clk);
- 	if (ret) {
+ 	DRM_INFO("Initialized %s %d.%d.%d %s for %s on minor %d\n",
+ 		 driver->name, driver->major, driver->minor,
+@@ -951,6 +954,9 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
+ 
+ 	goto out_unlock;
+ 
++err_unload:
++	if (dev->driver->unload)
++		dev->driver->unload(dev);
+ err_minors:
+ 	remove_compat_control_link(dev);
+ 	drm_minor_unregister(dev, DRM_MINOR_ACCEL);
 -- 
 2.43.0
 
