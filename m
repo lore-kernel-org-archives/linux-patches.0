@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559A660DCE;
-	Tue, 23 Jan 2024 00:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1854BAA4;
+	Tue, 23 Jan 2024 00:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970727; cv=none; b=SLiUfrwt6oVzJxMmAoz1OA13+GBOrpaezAcboP/IByeV08m5J4fKF18CxaFVRZJYH/Wt/3saELEUyF4L54IYFFQGzFOgsOqlc+sQ8fMg65YbBum0aqUPBCzZhvyi/bFHVySFHZqcZNgKMkkn1cV3w/DJLfknxjVmDd4xcIDFFwQ=
+	t=1705970730; cv=none; b=uZrZfv6CdIRV3RQs4Ws4fPOYfbJEveAGitdxAPdOprXggxsng95WRm+r0xmsZjVovbOgRJqDZRfIs8PRsVD5xTOumpDl3/WIgDbpCconRe+nrBI77IGHH1CB3yKxmwe49F9CQtEyS8inM/iEXCVds2KB7CfQgfPeWUW39aJq2oE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970727; c=relaxed/simple;
-	bh=ZvavzwcXjeQCAFgjhcb5kfAtHGOxBTJ1yg1dTcVCs9k=;
+	s=arc-20240116; t=1705970730; c=relaxed/simple;
+	bh=NGY/iVymPTlzntdJUrEZRja6Zn6abpX19LwcVxV8Nmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TfW13Ua4rsVVRHfXrJC3lLFjBhsIF3zyyH2gNlMnoIja/FlnVQ+wLGF4iDywHTrnW16D8TByxMBykxqhVkeH8dm6n6l83sX5MPE/IUBBd45k7myO3iKu/psUYVG2gTiEKLcls9XttoEJWo9OLB0vHfrlb4VgiBdjUuTaXQCoX3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+hsc11C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OFMJry0uflcI49acAJJz3otjDyVmbR+woABA4P20Nc+VH0T/8fxOPToofXR+Mo1o3hbnESH0PkcBXhin+Hz956eFWUeZin06aVERrFHyxPRmNLoHh/QeZ78JMW8mfn6S+MAzYUVuOEIQvKkZikvm10rIGf5cuBpXDHDNJscTTjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMeCcKC9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+hsc11C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18751C433C7;
-	Tue, 23 Jan 2024 00:45:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMeCcKC9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E67C433C7;
+	Tue, 23 Jan 2024 00:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970727;
-	bh=ZvavzwcXjeQCAFgjhcb5kfAtHGOxBTJ1yg1dTcVCs9k=;
+	s=korg; t=1705970730;
+	bh=NGY/iVymPTlzntdJUrEZRja6Zn6abpX19LwcVxV8Nmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q+hsc11CcxMV+IYvAGh9xOuWxn45HxtSR88s5C3Ed6ZJNjCACPbO2rpI0hCiQRUhr
-	 DDjJSePh2U6MWGdxhyiY2UoQUwqkKA+VGiC9PR1IdEWrjwJTycG45TqZQd4R8oL/z4
-	 +pktB7AghsWKDQodaqwX6ORNdInNOFWsx9jqZtgM=
+	b=DMeCcKC9ohh3HsQnqxusHueQfrMFM328w1SUxJFoYCBSbMg0dJOyxm3iegzK3C5Tx
+	 oAW6SJxKwI2CjUYuqOzHY06kr/wtHeqlYOCyEi7aVPPFEQFqCenijZwaE9LmMijTID
+	 fkVhv+ydIjH9TMJbg/kDFABrxvJjJOyNGPoQKFKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Keith Busch <kbusch@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 007/286] nvme-core: check for too small lba shift
-Date: Mon, 22 Jan 2024 15:55:13 -0800
-Message-ID: <20240122235732.289351134@linuxfoundation.org>
+Subject: [PATCH 6.1 100/417] arm64: dts: qcom: qrb5165-rb5: correct LED panic indicator
+Date: Mon, 22 Jan 2024 15:54:28 -0800
+Message-ID: <20240122235755.165566250@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +49,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 74fbc88e161424b3b96a22b23a8e3e1edab9d05c ]
+[ Upstream commit dc6b5562acbac0285ab3b2dad23930b6434bdfc6 ]
 
-The block layer doesn't support logical block sizes smaller than 512
-bytes. The nvme spec doesn't support that small either, but the driver
-isn't checking to make sure the device responded with usable data.
-Failing to catch this will result in a kernel bug, either from a
-division by zero when stacking, or a zero length bio.
+There is no "panic-indicator" default trigger but a property with that
+name:
 
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+  qrb5165-rb5.dtb: leds: led-user4: Unevaluated properties are not allowed ('linux,default-trigger' was unexpected)
+
+Fixes: b5cbd84e499a ("arm64: dts: qcom: qrb5165-rb5: Add onboard LED support")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231111094623.12476-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 07c41a149328..30a642c8f537 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2071,9 +2071,10 @@ static void nvme_update_disk_info(struct gendisk *disk,
+diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+index 9731a7c63d53..1defbe0404e2 100644
+--- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
++++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+@@ -63,8 +63,8 @@ led-user4 {
+ 			function = LED_FUNCTION_INDICATOR;
+ 			color = <LED_COLOR_ID_GREEN>;
+ 			gpios = <&pm8150_gpios 10 GPIO_ACTIVE_HIGH>;
+-			linux,default-trigger = "panic-indicator";
+ 			default-state = "off";
++			panic-indicator;
+ 		};
  
- 	/*
- 	 * The block layer can't support LBA sizes larger than the page size
--	 * yet, so catch this early and don't allow block I/O.
-+	 * or smaller than a sector size yet, so catch this early and don't
-+	 * allow block I/O.
- 	 */
--	if (ns->lba_shift > PAGE_SHIFT) {
-+	if (ns->lba_shift > PAGE_SHIFT || ns->lba_shift < SECTOR_SHIFT) {
- 		capacity = 0;
- 		bs = (1 << 9);
- 	}
+ 		led-wlan {
 -- 
 2.43.0
 
