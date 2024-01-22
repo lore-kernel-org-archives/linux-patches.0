@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603217691F;
-	Tue, 23 Jan 2024 02:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92337691F;
+	Tue, 23 Jan 2024 02:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975501; cv=none; b=fy+Ko583x5bgRCE79I/ZO7vAn12pBj2u/G1kDr68SiFGedLPck8jA1GQjC16dNOW/60f1anLY9k87K1I0qfs1d//OdzPYk4/zkt74S5Egv3q5/JWifKdlfnNNNd29+3bdtEMNS+SooUNc1xjrd0YVAW2MhftLwLjRq0kkHUa964=
+	t=1705975503; cv=none; b=Ao9ujPmTpPbTYWtVaBtv8dAKxSfljeFrbsMSgVslruu9s198gAIzltBDM77LgUCP283zp0Crp02c0gTrja4YNdT/GwzqASmi0Z51fKy7iTEuwzTWtPEqAiOAletD4NxPR8tMY+0t5atAVT+ai0QjZ0BLWS3MvSodvbm/t4lF3YE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975501; c=relaxed/simple;
-	bh=KLwb2cyEbI1+bHtUBJMl+gjNXPufeCGCMMPCUwIVu9k=;
+	s=arc-20240116; t=1705975503; c=relaxed/simple;
+	bh=Jgcwjcx9U7XMCqDgSVIuAXqetSkKpzLir2uglplWXds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YEJ6kSAYqiozho7bsbuhcy8E3H988v30Bet6clo1Xl1a98XxUHW3CedMmBkMJZEKdv60kH0n/6qCbYXCWdeYofwnwFO+4/9+fPubefMbqrPtuE7fE1AhrSfXtqVhRnF/5W1Dpoiph2Hx325g4UeXEuUhM36Krg2bq//+A/KwQUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXyK/vCS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ugQ4qOv0p2XzuuwSh5QAQfkVzyGdjurPNW3hR23q5nunk7iGwY64bvsWkjFlGN4kpDY1fy8K1PBXANYsCB10Z9k3hEML8mNPe2w03oXUY5dtfJbZhq9xa0MIuafijTrlCx/Kjt9ROWHMDOw+6wpD3nTpHx87/Qh7auo2ypv1Bcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXfLNJqQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXyK/vCS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEBA4C433F1;
-	Tue, 23 Jan 2024 02:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXfLNJqQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DA5C43390;
+	Tue, 23 Jan 2024 02:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975501;
-	bh=KLwb2cyEbI1+bHtUBJMl+gjNXPufeCGCMMPCUwIVu9k=;
+	s=korg; t=1705975502;
+	bh=Jgcwjcx9U7XMCqDgSVIuAXqetSkKpzLir2uglplWXds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WXyK/vCSsZMejwdZAwAUZRDbp/shcqLks23ZD7atdcQQiDZXcKwfWGknJShRypD6/
-	 DG+IvjaYa3Z/VsBClCriOHatVQJf7PvRQLokKcEMWvdlHuVSwCu8XxbGXdbD9GQcGc
-	 Jezh+dSEN3PkoBIkKej0CzWX65dcadA64ZotNngo=
+	b=xXfLNJqQCJqGn3l9LtNyjLf4pSR86AuL7n2vgIt80T2RT7E8JyDuUNTdxbbXE3L6I
+	 IQu8FfTHq/a/ycTkaNdkNFVTCegVEp6ccfAeR9SNtxEk93cX0UbhgT/ilc74cdmRri
+	 RnekKAr3EGaSmyBoZWPBhF51HKQwAq6dpgQlM7mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 454/583] MIPS: Alchemy: Fix an out-of-bound access in db1200_dev_setup()
-Date: Mon, 22 Jan 2024 15:58:25 -0800
-Message-ID: <20240122235825.868396080@linuxfoundation.org>
+Subject: [PATCH 6.6 455/583] MIPS: Alchemy: Fix an out-of-bound access in db1550_dev_setup()
+Date: Mon, 22 Jan 2024 15:58:26 -0800
+Message-ID: <20240122235825.894185432@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,32 +53,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 89c4b588d11e9acf01d604de4b0c715884f59213 ]
+[ Upstream commit 3c1e5abcda64bed0c7bffa65af2316995f269a61 ]
 
-When calling spi_register_board_info(), we should pass the number of
-elements in 'db1200_spi_devs', not 'db1200_i2c_devs'.
+When calling spi_register_board_info(),
 
-Fixes: 63323ec54a7e ("MIPS: Alchemy: Extended DB1200 board support.")
+Fixes: f869d42e580f ("MIPS: Alchemy: Improved DB1550 support, with audio and serial busses.")
 Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/alchemy/devboards/db1200.c | 2 +-
+ arch/mips/alchemy/devboards/db1550.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/alchemy/devboards/db1200.c b/arch/mips/alchemy/devboards/db1200.c
-index f521874ebb07..67f067706af2 100644
---- a/arch/mips/alchemy/devboards/db1200.c
-+++ b/arch/mips/alchemy/devboards/db1200.c
-@@ -847,7 +847,7 @@ int __init db1200_dev_setup(void)
- 	i2c_register_board_info(0, db1200_i2c_devs,
- 				ARRAY_SIZE(db1200_i2c_devs));
- 	spi_register_board_info(db1200_spi_devs,
--				ARRAY_SIZE(db1200_i2c_devs));
-+				ARRAY_SIZE(db1200_spi_devs));
+diff --git a/arch/mips/alchemy/devboards/db1550.c b/arch/mips/alchemy/devboards/db1550.c
+index fd91d9c9a252..6c6837181f55 100644
+--- a/arch/mips/alchemy/devboards/db1550.c
++++ b/arch/mips/alchemy/devboards/db1550.c
+@@ -589,7 +589,7 @@ int __init db1550_dev_setup(void)
+ 	i2c_register_board_info(0, db1550_i2c_devs,
+ 				ARRAY_SIZE(db1550_i2c_devs));
+ 	spi_register_board_info(db1550_spi_devs,
+-				ARRAY_SIZE(db1550_i2c_devs));
++				ARRAY_SIZE(db1550_spi_devs));
  
- 	/* SWITCHES:	S6.8 I2C/SPI selector  (OFF=I2C	 ON=SPI)
- 	 *		S6.7 AC97/I2S selector (OFF=AC97 ON=I2S)
+ 	c = clk_get(NULL, "psc0_intclk");
+ 	if (!IS_ERR(c)) {
 -- 
 2.43.0
 
