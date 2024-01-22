@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B2250278;
-	Tue, 23 Jan 2024 01:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77A15025A;
+	Tue, 23 Jan 2024 01:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974093; cv=none; b=iPPCM7cVj4HWrX6pNptxrczgdqRty0f6cmliUp0EXIPsQ28+Tc2IEBB1K/ob/Xemvc7J8Gk60+wSv3WyLrjvhOYew7UsTHNN2gym20Qn++0wWLSGCZIIWfe8OLBh8ATQoz6vZEuLJI+k4mBUYxzxj4ip5oacBGM8SWzZPDc31Oc=
+	t=1705974094; cv=none; b=f37LTX/XjcNgjWCC6RMjfSaZ/Q7x9MTJYqG7xVhAVYyZbmJFtZR2qZVbMq6CNMcW89ZRZ6lit0eD8TtsYaCsCYRCdrh5mP2ObIdcbw9kjKCcIYVwRY3SiilhQ8lYCklE2JeU8W1007xQxdr7WLQ9A4VwzPY4WRNFmfbJQsbbBlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974093; c=relaxed/simple;
-	bh=JAhp0lXK5r6OapOOtPN5UC894HqEZOQQ4lJpHYi206s=;
+	s=arc-20240116; t=1705974094; c=relaxed/simple;
+	bh=R9IZ+6p5L1yTdCE+G2aBUvnqeegXvWne8bk2HCUNLzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a3dLVYZ45YgHux3IRSsZt+Nx1ylxpzFkIfTejGTgxt86gZBQFmz3/kd8Xmoujh5Bv8MrtgWVgTGRzZ76OM8QurzU+b2GfzfQaPkiHs9PNvxu7OkGmvMe5w/5g2G7YTt1KIgEs7ckNBhHqASE7uWR9qOVlcV/AhyqqyG6N9upWeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FbBVNrdp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZEACHJt/R5JjVmiQVFTxDqyQmeeUqhqv5gq/hfC2ZLZdlk9oE+HaU7AQeBtDPIh0WJ24YZ2LkVGo7I4OrP2RBAI3by1QczAcYuEIvI1xOWhHgCGcWOk6/Q3bZ7R3dhksRY9FiPPFHHQB0qQYaIKMZwCg2ORBdQmY5p1kKoAIi4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bjskFgL6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FbBVNrdp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0824FC43390;
-	Tue, 23 Jan 2024 01:41:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bjskFgL6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650FCC43390;
+	Tue, 23 Jan 2024 01:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974093;
-	bh=JAhp0lXK5r6OapOOtPN5UC894HqEZOQQ4lJpHYi206s=;
+	s=korg; t=1705974094;
+	bh=R9IZ+6p5L1yTdCE+G2aBUvnqeegXvWne8bk2HCUNLzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FbBVNrdpkpamGJByYGAL7LhyyW2I5V83o9seoUwRCtqjAAwTTDjFtwsupWSFT0x37
-	 q92bUBAKpnvK9LYTXHUOjJiKELYJNzVG5/PBN4K7Q53kEjKBDqdyx7SNRpncNmhTmy
-	 3lSoPPFG83og69lNsy2JRZ4l30KwUb608hq2lBBE=
+	b=bjskFgL6othghlrmDO+OwJGe7VPINYEEGiDVwmu3CTIxE7OVuynZIRAiEMcHuvsrq
+	 N+XiiIPEMm6ZBiTZgI/mva2YKABbYkc5iKH5QtSO/t5cPdNoUxySWD9Pg8zzOH0b9o
+	 3wiUfCvNJVUMcPyRwYKxJ8PH9Vc5pVbz39GoiYEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erwin Tsaur <erwin.tsaur@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Su Hui <suhui@nfschina.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/583] ACPI: extlog: Clear Extended Error Log status when RAS_CEC handled the error
-Date: Mon, 22 Jan 2024 15:51:26 -0800
-Message-ID: <20240122235813.236919452@linuxfoundation.org>
+Subject: [PATCH 5.15 160/374] wifi: rtlwifi: rtl8192de: using calculate_bit_shift()
+Date: Mon, 22 Jan 2024 15:56:56 -0800
+Message-ID: <20240122235750.180062807@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,49 +47,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tony Luck <tony.luck@intel.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 38c872a9e96f72f2947affc0526cc05659367d3d ]
+[ Upstream commit b8b2baad2e652042cf8b6339939ac2f4e6f53de4 ]
 
-When both CONFIG_RAS_CEC and CONFIG_ACPI_EXTLOG are enabled, Linux does
-not clear the status word of the BIOS supplied error record for corrected
-errors. This may prevent logging of subsequent uncorrected errors.
+Using calculate_bit_shift() to replace _rtl92d_phy_calculate_bit_shift().
+And fix the undefined bitwise shift behavior problem.
 
-Fix by clearing the status.
-
-Fixes: 23ba710a0864 ("x86/mce: Fix all mce notifiers to update the mce->kflags bitmask")
-Reported-by: Erwin Tsaur <erwin.tsaur@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 7274a8c22980 ("rtlwifi: rtl8192de: Merge phy routines")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231219065739.1895666-8-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_extlog.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ .../net/wireless/realtek/rtlwifi/rtl8192de/phy.c  | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/acpi/acpi_extlog.c b/drivers/acpi/acpi_extlog.c
-index e120a96e1eae..71e8d4e7a36c 100644
---- a/drivers/acpi/acpi_extlog.c
-+++ b/drivers/acpi/acpi_extlog.c
-@@ -145,9 +145,14 @@ static int extlog_print(struct notifier_block *nb, unsigned long val,
- 	static u32 err_seq;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
+index 4d153bd62c53..c3c07ca77614 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
+@@ -169,13 +169,6 @@ static const u8 channel_all[59] = {
+ 	157, 159, 161, 163, 165
+ };
  
- 	estatus = extlog_elog_entry_check(cpu, bank);
--	if (estatus == NULL || (mce->kflags & MCE_HANDLED_CEC))
-+	if (!estatus)
- 		return NOTIFY_DONE;
- 
-+	if (mce->kflags & MCE_HANDLED_CEC) {
-+		estatus->block_status = 0;
-+		return NOTIFY_DONE;
-+	}
-+
- 	memcpy(elog_buf, (void *)estatus, ELOG_ENTRY_LEN);
- 	/* clear record status to enable BIOS to update it again */
- 	estatus->block_status = 0;
+-static u32 _rtl92d_phy_calculate_bit_shift(u32 bitmask)
+-{
+-	u32 i = ffs(bitmask);
+-
+-	return i ? i - 1 : 32;
+-}
+-
+ u32 rtl92d_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
+ {
+ 	struct rtl_priv *rtlpriv = rtl_priv(hw);
+@@ -198,7 +191,7 @@ u32 rtl92d_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
+ 	} else {
+ 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
+ 	}
+-	bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	returnvalue = (originalvalue & bitmask) >> bitshift;
+ 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
+ 		"BBR MASK=0x%x Addr[0x%x]=0x%x\n",
+@@ -230,7 +223,7 @@ void rtl92d_phy_set_bb_reg(struct ieee80211_hw *hw,
+ 					dbi_direct);
+ 		else
+ 			originalvalue = rtl_read_dword(rtlpriv, regaddr);
+-		bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
++		bitshift = calculate_bit_shift(bitmask);
+ 		data = ((originalvalue & (~bitmask)) | (data << bitshift));
+ 	}
+ 	if (rtlhal->during_mac1init_radioa || rtlhal->during_mac0init_radiob)
+@@ -317,7 +310,7 @@ u32 rtl92d_phy_query_rf_reg(struct ieee80211_hw *hw,
+ 		regaddr, rfpath, bitmask);
+ 	spin_lock(&rtlpriv->locks.rf_lock);
+ 	original_value = _rtl92d_phy_rf_serial_read(hw, rfpath, regaddr);
+-	bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
+ 	spin_unlock(&rtlpriv->locks.rf_lock);
+ 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
+@@ -343,7 +336,7 @@ void rtl92d_phy_set_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
+ 		if (bitmask != RFREG_OFFSET_MASK) {
+ 			original_value = _rtl92d_phy_rf_serial_read(hw,
+ 				rfpath, regaddr);
+-			bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data = ((original_value & (~bitmask)) |
+ 				(data << bitshift));
+ 		}
 -- 
 2.43.0
 
