@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8374768EC;
-	Tue, 23 Jan 2024 02:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3672768F0;
+	Tue, 23 Jan 2024 02:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975482; cv=none; b=Jubx9EIlDZP22AR5EEoT4FOKd8m67DZJXqCmWRIjXl29uY9Frstce6xtiTzrIP9lx2Kf83FxIgIgZVAraTcZ/984MNqMKMxvXjbV5wv+5E0s3sIB2Ov8xUIGRfFS2ZdHaWhbh1D1HtQIs7C1soM6e4ILQVfskKLQoqJMRJ548bY=
+	t=1705975486; cv=none; b=DryhO+3iu1o9RqOLjZYGGA+0okkDCd8G6vJtnOTb3HszZuPPa1/tyggF2ja6bZ3uMNlw3IisAtCbrbpqEkE3ZWTGjYEtiA1bteuCYGnKLWBWs/PD0FQPvGZsWzz57XhZvMsCQbSZW3d4n+v5/aKF056T510b3Ico3RbAifwrpag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975482; c=relaxed/simple;
-	bh=tDpEDVPfpApsiArWeOS6JoRZI3/T4SzPeE1ui/+lZHo=;
+	s=arc-20240116; t=1705975486; c=relaxed/simple;
+	bh=ot1jKDh9SOYmUvo8hb2OH/Mw+Le3orZaVQ7Lg5/zpf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qhzuQdgtL9QIaTbGAbMXTcEGLPY4S4hVwPqY1GnS8he2ON80aWwOONawTzN1BB5vs+PaqLsfd0qgY/NAY/atIsU829KBH5F6JNZgF2G3aWY4bxIKmUdRAek43SPMd7io/Uyk3hvTEC3yHxrzhIgOuxS6YUrrOcWVWHPZcmT1dd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejj654K0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JdMrLVaANdxMAiaW41/v1naG/5sESDVYQWg0tWZ9mbM8fNU/0RuMdUpO9bt/UxkS342RDGhRrXetVmbE12ghaHK3pd+lLl0915D53u7Mt52R8K+iZ4lnouxBYF8U1zWfv18BOp+sStbPJBGDVB3iwzNNLrbkotSWyvJXUC5b/lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxHny05Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejj654K0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7957BC43399;
-	Tue, 23 Jan 2024 02:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxHny05Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F746C433C7;
+	Tue, 23 Jan 2024 02:04:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975482;
-	bh=tDpEDVPfpApsiArWeOS6JoRZI3/T4SzPeE1ui/+lZHo=;
+	s=korg; t=1705975486;
+	bh=ot1jKDh9SOYmUvo8hb2OH/Mw+Le3orZaVQ7Lg5/zpf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ejj654K0IfMpMgcYBtaJeeN4yAW6g2khQYbJ9PKwFsPndX546jMhJ7XMk20fUnRNZ
-	 qAiEryOOz8ir3dsg6c+g//l+IZpXoQaREqZ9a6NQkbbbTkZzjvu7FxknFv8dYMRfEg
-	 alUbGbymbh7cUJyW5Vze7DVCR/IWXeZ//QvPyY88=
+	b=fxHny05ZdrzZWe/ppm6xH1PpPIRJLUyMwd6syvjO5hhPvzwvHlOFSM2KzyJoPhLtL
+	 2v0zfJqWtnC6wNTVlLe8DanLFpnnX4HiNb8cCabpNpcDtDD4OFbU4+esw9c7JYrsfQ
+	 MK/lsTMgN30Q4ztU5wFQjxVbWVBK/uD/aKoW5a1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.6 413/583] wifi: mt76: fix broken precal loading from MTD for mt7915
-Date: Mon, 22 Jan 2024 15:57:44 -0800
-Message-ID: <20240122235824.608296928@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.6 415/583] wifi: rtlwifi: Convert LNKCTL change to PCIe cap RMW accessors
+Date: Mon, 22 Jan 2024 15:57:46 -0800
+Message-ID: <20240122235824.666502259@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -44,56 +44,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit e874a79250b39447765ac13272b67ac36ccf2a75 upstream.
+commit 5894d0089cbc146063dcc0239a78ede0a8142efb upstream.
 
-Commit 495184ac91bb ("mt76: mt7915: add support for applying
-pre-calibration data") was fundamentally broken and never worked.
+The rtlwifi driver comes with custom code to write into PCIe Link
+Control register. RMW access for the Link Control register requires
+locking that is already provided by the standard PCIe capability
+accessors.
 
-The idea (before NVMEM support) was to expand the MTD function and pass
-an additional offset. For normal EEPROM load the offset would always be
-0. For the purpose of precal loading, an offset was passed that was
-internally the size of EEPROM, since precal data is right after the
-EEPROM.
+Convert the custom RMW code writing into LNKCTL register to standard
+RMW capability accessors. The accesses are changed to cover the full
+LNKCTL register instead of touching just a single byte of the register.
 
-Problem is that the offset value passed is never handled and is actually
-overwrite by
-
-	offset = be32_to_cpup(list);
-	ret = mtd_read(mtd, offset, len, &retlen, eep);
-
-resulting in the passed offset value always ingnored. (and even passing
-garbage data as precal as the start of the EEPROM is getting read)
-
-Fix this by adding to the current offset value, the offset from DT to
-correctly read the piece of data at the requested location.
-
+Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
 Cc: stable@vger.kernel.org
-Fixes: 495184ac91bb ("mt76: mt7915: add support for applying pre-calibration data")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20231124084725.12738-3-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/eeprom.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/pci.c |   21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/eeprom.c
-@@ -67,7 +67,7 @@ static int mt76_get_of_epprom_from_mtd(s
- 		goto out_put_node;
- 	}
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -164,21 +164,29 @@ static bool _rtl_pci_platform_switch_dev
+ 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
+ 	struct rtl_hal *rtlhal = rtl_hal(rtl_priv(hw));
  
--	offset = be32_to_cpup(list);
-+	offset += be32_to_cpup(list);
- 	ret = mtd_read(mtd, offset, len, &retlen, eep);
- 	put_mtd_device(mtd);
- 	if (mtd_is_bitflip(ret))
++	value &= PCI_EXP_LNKCTL_ASPMC;
++
+ 	if (rtlhal->hw_type != HARDWARE_TYPE_RTL8192SE)
+-		value |= 0x40;
++		value |= PCI_EXP_LNKCTL_CCC;
+ 
+-	pci_write_config_byte(rtlpci->pdev, 0x80, value);
++	pcie_capability_clear_and_set_word(rtlpci->pdev, PCI_EXP_LNKCTL,
++					   PCI_EXP_LNKCTL_ASPMC | value,
++					   value);
+ 
+ 	return false;
+ }
+ 
+-/*When we set 0x01 to enable clk request. Set 0x0 to disable clk req.*/
+-static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u8 value)
++/* @value is PCI_EXP_LNKCTL_CLKREQ_EN or 0 to enable/disable clk request. */
++static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u16 value)
+ {
+ 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
+ 	struct rtl_hal *rtlhal = rtl_hal(rtl_priv(hw));
+ 
+-	pci_write_config_byte(rtlpci->pdev, 0x81, value);
++	value &= PCI_EXP_LNKCTL_CLKREQ_EN;
++
++	pcie_capability_clear_and_set_word(rtlpci->pdev, PCI_EXP_LNKCTL,
++					   PCI_EXP_LNKCTL_CLKREQ_EN,
++					   value);
+ 
+ 	if (rtlhal->hw_type == HARDWARE_TYPE_RTL8192SE)
+ 		udelay(100);
+@@ -259,7 +267,8 @@ static void rtl_pci_enable_aspm(struct i
+ 
+ 	if (ppsc->reg_rfps_level & RT_RF_OFF_LEVL_CLK_REQ) {
+ 		_rtl_pci_switch_clk_req(hw, (ppsc->reg_rfps_level &
+-					     RT_RF_OFF_LEVL_CLK_REQ) ? 1 : 0);
++					     RT_RF_OFF_LEVL_CLK_REQ) ?
++					     PCI_EXP_LNKCTL_CLKREQ_EN : 0);
+ 		RT_SET_PS_LEVEL(ppsc, RT_RF_OFF_LEVL_CLK_REQ);
+ 	}
+ 	udelay(100);
 
 
