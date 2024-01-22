@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889E43FF4;
-	Tue, 23 Jan 2024 01:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787B73FF4;
+	Tue, 23 Jan 2024 01:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974634; cv=none; b=rWs9J97kl3iQDazDsoHrEHGLa2ftvgtDNh6SGW6toxc8yBkpKxVymrzIQawffZi9aYrD+XT8IBPm53wyKLaobtrvKzoBANSnErdbAF9MskRDcW4Ca7xakeYd3EcCH7oqhG0c9GKLt8ja8yJ55fgBlzZQFxg4oz7CjTSqN/zCG0o=
+	t=1705974635; cv=none; b=Y2KeJ3cNG+I0yXEcdqJ6Cb2uI260fqgvFGiNtUkJw9sF7u8OPERUOqjVM7wqPo3rJzfKjS1Hr/zzkQMWMZdcuRERpO1jOyrgcwcBC81M0nC7+JBjld2wUENUU6vIEKH2x3k9HcKYOBr12wDOxzUWHlo3DrsVhbiu4lek5puvAF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974634; c=relaxed/simple;
-	bh=xps5E6KKwQSWjv2Xk8Qmpdkt/iy9wJpIUcTbZjUXuo4=;
+	s=arc-20240116; t=1705974635; c=relaxed/simple;
+	bh=f/atErg02+hHUPemVezEHFdH3orHYMGyljYijJDCrNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=djXJaeUD1SFCtyuoJKjrxewoYiQTCp2yNw3vqXb1lanudKIKvO87Kl3wZCoXQXr85HAQInzU5us/JIDmlltZ5h5+/jKAKfYZtxAYSI7LIGIBW4pjhDxh51ZHYPGLusrYiwPMwF/HfCg932WfKL/Ae5r/+/6V0UJ1nykcs37xjW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsYETXGw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z0t0HlRRM+7rlkusVsFn8Zbb7P4mkFBzqHxBShphjAykn+VAUm9ZH+6ox3Qok1MLBMvsfdxtlZHCS4GsbwkohE0gpZNnarU1UG7b5La1N1KHh4zaCjt+JYfCgN0I6Tz/D2gq9s3P4mNRYULRE3+WW//tJj6oszpL0XICebg6bAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SItgwUBJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsYETXGw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4150DC433C7;
-	Tue, 23 Jan 2024 01:50:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SItgwUBJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396CBC43390;
+	Tue, 23 Jan 2024 01:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974634;
-	bh=xps5E6KKwQSWjv2Xk8Qmpdkt/iy9wJpIUcTbZjUXuo4=;
+	s=korg; t=1705974635;
+	bh=f/atErg02+hHUPemVezEHFdH3orHYMGyljYijJDCrNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WsYETXGwu+GIpy+CD9y7CnFXhKvDOvUt5aM3kufn+SS9qAdwjGiIk6PUJ2laMwSBP
-	 kl5UWThudlcVRrdoiVITXR33VVsvItUXuUBXgndAUa6dQpNEJScFW9f3ls/Zp/Yxr7
-	 HY/Vu2o3QZeNmHS0yT20iI0NVCzsqIo1jH+Q1Uek=
+	b=SItgwUBJicPybPMvSEg0EscGP60Ywj67uTNq7TC0bm9pU7Yh17XngGAz2JWvZthIw
+	 9NUCjmYa5usrVsj308UMzykDhslBxaBdqA7Km5EhxysipCdF2tTc5Bk74RNMBwMAbs
+	 D03G8nzO0Ixgsxqv0rryzDhpMW0ZOsLELnIlKdgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Mike Looijmans <mike.looijmans@topic.nl>,
+	Su Hui <suhui@nfschina.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 098/583] arm64: dts: ti: k3-am65-main: Fix DSS irq trigger type
-Date: Mon, 22 Jan 2024 15:52:29 -0800
-Message-ID: <20240122235815.183620897@linuxfoundation.org>
+Subject: [PATCH 5.15 223/374] clk: si5341: fix an error code problem in si5341_output_clk_set_rate
+Date: Mon, 22 Jan 2024 15:57:59 -0800
+Message-ID: <20240122235752.431524646@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,49 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit b57160859263c083c49482b0d083a586b1517f78 ]
+[ Upstream commit 5607068ae5ab02c3ac9cabc6859d36e98004c341 ]
 
-DSS irq trigger type is set to IRQ_TYPE_EDGE_RISING in the DT file, but
-the TRM says it is level triggered.
+regmap_bulk_write() return zero or negative error code, return the value
+of regmap_bulk_write() rather than '0'.
 
-For some reason triggering on rising edge results in double the amount
-of expected interrupts, e.g. for normal page flipping test the number of
-interrupts per second is 2 * fps. It is as if the IRQ triggers on both
-edges. There are no other side effects to this issue than slightly
-increased CPU & power consumption due to the extra interrupt.
-
-Switching to IRQ_TYPE_LEVEL_HIGH is correct and fixes the issue, so
-let's do that.
-
-Fixes: fc539b90eda2 ("arm64: dts: ti: am654: Add DSS node")
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Link: https://lore.kernel.org/r/20231106-am65-dss-clk-edge-v1-1-4a959fec0e1e@ideasonboard.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: 3044a860fd09 ("clk: Add Si5341/Si5340 driver")
+Acked-by: Mike Looijmans <mike.looijmans@topic.nl>
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20231101031633.996124-1-suhui@nfschina.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am65-main.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk-si5341.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
-index bc460033a37a..c98068b6c122 100644
---- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
-@@ -1034,7 +1034,7 @@ dss: dss@4a00000 {
- 		assigned-clocks = <&k3_clks 67 2>;
- 		assigned-clock-parents = <&k3_clks 67 5>;
+diff --git a/drivers/clk/clk-si5341.c b/drivers/clk/clk-si5341.c
+index 91a6bc74ebd5..cda5a0f4d9df 100644
+--- a/drivers/clk/clk-si5341.c
++++ b/drivers/clk/clk-si5341.c
+@@ -892,10 +892,8 @@ static int si5341_output_clk_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	r[0] = r_div ? (r_div & 0xff) : 1;
+ 	r[1] = (r_div >> 8) & 0xff;
+ 	r[2] = (r_div >> 16) & 0xff;
+-	err = regmap_bulk_write(output->data->regmap,
++	return regmap_bulk_write(output->data->regmap,
+ 			SI5341_OUT_R_REG(output), r, 3);
+-
+-	return 0;
+ }
  
--		interrupts = <GIC_SPI 166 IRQ_TYPE_EDGE_RISING>;
-+		interrupts = <GIC_SPI 166 IRQ_TYPE_LEVEL_HIGH>;
- 
- 		dma-coherent;
- 
+ static int si5341_output_reparent(struct clk_si5341_output *output, u8 index)
 -- 
 2.43.0
 
