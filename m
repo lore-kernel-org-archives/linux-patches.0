@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA046EB67;
-	Tue, 23 Jan 2024 02:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271CD6EB67;
+	Tue, 23 Jan 2024 02:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975425; cv=none; b=gpN7tA+qoGCShQJNe6sF5Lf/ZsqobE5hqIp7aNswj3JHwiqpEzkaXrz/i2vk2k+rz1nHOb0LkqVNpg1Z35S1m9P5wYDC7DLTmrlfk64ZuEZbLokFEAtCuciYWFm+mdRjCLLT+1viWvO4yvhngtsHfUjsCxpjHEn6bExtRPcyf4Y=
+	t=1705975427; cv=none; b=N0UlNByfL4r7rK04Cb4hOKbAMNXZesGKl16LE736rh3YyIpCibc4KJYPALQImEsIhBO/T8gtC9/DbfvMzwmJ4L3KFcwqykWyWRNKAu1DAbVsEH6MjzQAgdxtTIEm8qn1+pjDKt+rfF+JclTn1g2ealF35FcfIIhvc81rwiefQs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975425; c=relaxed/simple;
-	bh=Q9cBlMkE/gBUhNWPd1bHV/fDRApPa97i9Nfa2mR/J0s=;
+	s=arc-20240116; t=1705975427; c=relaxed/simple;
+	bh=lnyEXu7POPAXdrQqSZmGSPMfRwjPI8ddA8bAdwREXOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sAijrnzO0RC0VoVatZKfyuenStB/MhGzlmvwsZvl0ZYNIbeD1kFu/CrTsdfNPRvy2ojQd+ATmBrj2gcCvUVMfrDp6aSw6yM01dF0OL0j9P5SJowPwENktSDi8dIb66N7n8EL8J7BF/xbDa2/7XnvQIwxuPxjBFw8ZfC9d6ZHuXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WStUAwB9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W2ZOUJp9sdLFZpZe0s0enrdWTSexh/mrRYTA/I/RBoVkNwMLlIJvgpM1H3m3pplWkQI0vAJDWDbYROk7MLZprbgeKd5LKb2XQfC5/ZxRlHH1wZ+QZbmTzpEb9k1XvOmdOZthhVgiU+npw/vUeI2umO3TrTsNYt5hQtR4ZzjEYWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjHHWZkQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WStUAwB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84328C43390;
-	Tue, 23 Jan 2024 02:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjHHWZkQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB742C433C7;
+	Tue, 23 Jan 2024 02:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975425;
-	bh=Q9cBlMkE/gBUhNWPd1bHV/fDRApPa97i9Nfa2mR/J0s=;
+	s=korg; t=1705975427;
+	bh=lnyEXu7POPAXdrQqSZmGSPMfRwjPI8ddA8bAdwREXOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WStUAwB9AZXmRV/9hRBnj+JnMDMs9tVGUF9ImxGF5lWvuUSaL8v9KWm/8RwUf6kOg
-	 bSx6ogFATPPN/AACf7ateaqdnUQtxhULWCXgi3UA7islC1Ken9kif41ryWUjF/5GlL
-	 90YnfwJ9XKID4SCpYAekWzVsR3UDEOaHYjMCbuQ4=
+	b=mjHHWZkQJ6kJlCVSj61Bg0b6LsdLe/NcU7UaotUMbOueu1OwJxM1Wtiw0Kp595DU6
+	 dWYwp6cWLrvstylPo2GkMF/ZIWG17jlhpzuUEDh0U8oX4Cg6B4cgpsn36YVEYASZe1
+	 T5qPOQCkHy4qAbSaiaos3O+XCCaISSb/OsODqHCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.6 383/583] ksmbd: validate mech token in session setup
-Date: Mon, 22 Jan 2024 15:57:14 -0800
-Message-ID: <20240122235823.717350633@linuxfoundation.org>
+	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Subject: [PATCH 6.6 359/583] usb: dwc: ep0: Update request status in dwc3_ep0_stall_restart
+Date: Mon, 22 Jan 2024 15:56:50 -0800
+Message-ID: <20240122235823.007633462@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,104 +49,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
 
-commit 92e470163d96df8db6c4fa0f484e4a229edb903d upstream.
+commit e9d40b215e38480fd94c66b06d79045717a59e9c upstream.
 
-If client send invalid mech token in session setup request, ksmbd
-validate and make the error if it is invalid.
+Current implementation blocks the running operations when Plug-out and
+Plug-In is performed continuously, process gets stuck in
+dwc3_thread_interrupt().
 
-Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-22890
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Code Flow:
+
+	CPU1
+
+	->Gadget_start
+	->dwc3_interrupt
+	->dwc3_thread_interrupt
+	->dwc3_process_event_buf
+	->dwc3_process_event_entry
+	->dwc3_endpoint_interrupt
+	->dwc3_ep0_interrupt
+	->dwc3_ep0_inspect_setup
+	->dwc3_ep0_stall_and_restart
+
+By this time if pending_list is not empty, it will get the next request
+on the given list and calls dwc3_gadget_giveback which will unmap request
+and call its complete() callback to notify upper layers that it has
+completed. Currently dwc3_gadget_giveback status is set to -ECONNRESET,
+whereas it should be -ESHUTDOWN based on condition if not dwc->connected
+is true.
+
+Cc:  <stable@vger.kernel.org>
+Fixes: d742220b3577 ("usb: dwc3: ep0: giveback requests on stall_and_restart")
+Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Link: https://lore.kernel.org/r/20231222094704.20276-1-quic_uaggarwa@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/asn1.c       |    5 +++++
- fs/smb/server/connection.h |    1 +
- fs/smb/server/smb2pdu.c    |   22 +++++++++++++++++-----
- 3 files changed, 23 insertions(+), 5 deletions(-)
+ drivers/usb/dwc3/ep0.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/asn1.c
-+++ b/fs/smb/server/asn1.c
-@@ -214,10 +214,15 @@ static int ksmbd_neg_token_alloc(void *c
- {
- 	struct ksmbd_conn *conn = context;
+--- a/drivers/usb/dwc3/ep0.c
++++ b/drivers/usb/dwc3/ep0.c
+@@ -238,7 +238,10 @@ void dwc3_ep0_stall_and_restart(struct d
+ 		struct dwc3_request	*req;
  
-+	if (!vlen)
-+		return -EINVAL;
-+
- 	conn->mechToken = kmemdup_nul(value, vlen, GFP_KERNEL);
- 	if (!conn->mechToken)
- 		return -ENOMEM;
- 
-+	conn->mechTokenLen = (unsigned int)vlen;
-+
- 	return 0;
- }
- 
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -88,6 +88,7 @@ struct ksmbd_conn {
- 	__u16				dialect;
- 
- 	char				*mechToken;
-+	unsigned int			mechTokenLen;
- 
- 	struct ksmbd_conn_ops	*conn_ops;
- 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1414,7 +1414,10 @@ static struct ksmbd_user *session_user(s
- 	char *name;
- 	unsigned int name_off, name_len, secbuf_len;
- 
--	secbuf_len = le16_to_cpu(req->SecurityBufferLength);
-+	if (conn->use_spnego && conn->mechToken)
-+		secbuf_len = conn->mechTokenLen;
-+	else
-+		secbuf_len = le16_to_cpu(req->SecurityBufferLength);
- 	if (secbuf_len < sizeof(struct authenticate_message)) {
- 		ksmbd_debug(SMB, "blob len %d too small\n", secbuf_len);
- 		return NULL;
-@@ -1505,7 +1508,10 @@ static int ntlm_authenticate(struct ksmb
- 		struct authenticate_message *authblob;
- 
- 		authblob = user_authblob(conn, req);
--		sz = le16_to_cpu(req->SecurityBufferLength);
-+		if (conn->use_spnego && conn->mechToken)
-+			sz = conn->mechTokenLen;
+ 		req = next_request(&dep->pending_list);
+-		dwc3_gadget_giveback(dep, req, -ECONNRESET);
++		if (!dwc->connected)
++			dwc3_gadget_giveback(dep, req, -ESHUTDOWN);
 +		else
-+			sz = le16_to_cpu(req->SecurityBufferLength);
- 		rc = ksmbd_decode_ntlmssp_auth_blob(authblob, sz, conn, sess);
- 		if (rc) {
- 			set_user_flag(sess->user, KSMBD_USER_FLAG_BAD_PASSWORD);
-@@ -1778,8 +1784,7 @@ int smb2_sess_setup(struct ksmbd_work *w
- 
- 	negblob_off = le16_to_cpu(req->SecurityBufferOffset);
- 	negblob_len = le16_to_cpu(req->SecurityBufferLength);
--	if (negblob_off < offsetof(struct smb2_sess_setup_req, Buffer) ||
--	    negblob_len < offsetof(struct negotiate_message, NegotiateFlags)) {
-+	if (negblob_off < offsetof(struct smb2_sess_setup_req, Buffer)) {
- 		rc = -EINVAL;
- 		goto out_err;
- 	}
-@@ -1788,8 +1793,15 @@ int smb2_sess_setup(struct ksmbd_work *w
- 			negblob_off);
- 
- 	if (decode_negotiation_token(conn, negblob, negblob_len) == 0) {
--		if (conn->mechToken)
-+		if (conn->mechToken) {
- 			negblob = (struct negotiate_message *)conn->mechToken;
-+			negblob_len = conn->mechTokenLen;
-+		}
-+	}
-+
-+	if (negblob_len < offsetof(struct negotiate_message, NegotiateFlags)) {
-+		rc = -EINVAL;
-+		goto out_err;
++			dwc3_gadget_giveback(dep, req, -ECONNRESET);
  	}
  
- 	if (server_conf.auth_mechs & conn->auth_mechs) {
+ 	dwc->eps[0]->trb_enqueue = 0;
 
 
