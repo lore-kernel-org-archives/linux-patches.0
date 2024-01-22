@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2FA14010;
-	Tue, 23 Jan 2024 00:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D31C14010;
+	Tue, 23 Jan 2024 00:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968258; cv=none; b=Gbp2JzjADhJA1gH+VOdl+PY7M2LyaIILTDJj87hcDuRCJ3ziQ+So2EPRe318PwfitO8tfFtMYJmXQ3MzNPreTBgq0vVUQwcix7VyavnVw4nWYkY0YbYjXrEwI0A8IXudq77ZGHWxZH7+h0LC/Bis+4LC+E3OzixslHRGJ2bFwbk=
+	t=1705968262; cv=none; b=HjfIuI58LdlOwLyXGAjxpDOoY2TbXbRCleGw5dQS9cEFw8l07uNSrWZ38bMCMvDxd/vZYOKXNkiYjC0soWVlEA4QMBCsRma8E5C3Li2AaSqql5aIsYVTvgWwQIVsEkoV7ijfPtCLofVKu1AFVo9LgJ52k/x9ma92TOQ2dr5Eulc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968258; c=relaxed/simple;
-	bh=ADpL+Of5mkNa8NmULMnfqNRmeVZ8VPmm1tefyXcLTys=;
+	s=arc-20240116; t=1705968262; c=relaxed/simple;
+	bh=duHlOzaxpnEk6EhTnZi+iot+65Jr6fNF5EuK6m5/214=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jETcMuEtLqkHyl17VqIGRYTmkkAGy6IC23Db5GwxXxDJSOujD4+vO0Q5u9pD2lIbyyygGGejsnPNRw4F9oRogmyjWKSQNpZQ6QLEgG1RQtVrJFOGMJ8oNsZJeTNZ7VALkoy/yanXEMCfHHPyjA4wgrOhU8cW6KuQ1kQHdtbHZ3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qf5+J5vQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hKSUBadnKT/Sqze6CIJJgFXykmVTNATc7jqf742zXGRmE9w+dyqWlEf50/iXXhaVg1sDnsBg8qq60pwIW9q5nBo66vLni9KHCNDF+ORIGk7jTo7bUgho7jBxkF3GWTgQslpkSNfjfJ8zJotJnBPqFbySDyy5xSmarwwAGDsLWjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+c9bctE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qf5+J5vQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDB2C433F1;
-	Tue, 23 Jan 2024 00:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+c9bctE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454EBC433C7;
+	Tue, 23 Jan 2024 00:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968258;
-	bh=ADpL+Of5mkNa8NmULMnfqNRmeVZ8VPmm1tefyXcLTys=;
+	s=korg; t=1705968261;
+	bh=duHlOzaxpnEk6EhTnZi+iot+65Jr6fNF5EuK6m5/214=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qf5+J5vQYyX3srhzGQ3JApvWQMbv0Kmo6thDTX+MvbePrTPk3ebwU30yMYrInXdNi
-	 rTbGE04yxpZg66NrTNrqSKJ+1fmsMo6qjVQaEZy9k7/cegDk1KnTyrKP8KFVQe/a/P
-	 tecNMvN+8zPcx/IYWGoL6ukt3kws8TFj9ImlzjzM=
+	b=I+c9bctE/qTfRhX2DSc30TBEw8Wgiwf2o5QQeAf6pIJqnsA9aYHbYyRiBrTEe2EXT
+	 lmBnT9y4cB7KrCte89z+Ux05HzIBoK+FPdezcLRQiF0l9LsJQ0xy2X8Am43nqcZk7R
+	 vGotde8MBwOWNYdQ3y0Hkcm98wC1MXUkFYuJsbRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 027/148] x86/lib: Fix overflow when counting digits
-Date: Mon, 22 Jan 2024 15:56:23 -0800
-Message-ID: <20240122235713.508799482@linuxfoundation.org>
+Subject: [PATCH 4.19 028/148] EDAC/thunderx: Fix possible out-of-bounds string access
+Date: Mon, 22 Jan 2024 15:56:24 -0800
+Message-ID: <20240122235713.547838884@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -51,64 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit a24d61c609813963aacc9f6ec8343f4fcaac7243 ]
+[ Upstream commit 475c58e1a471e9b873e3e39958c64a2d278275c8 ]
 
-tl;dr: The num_digits() function has a theoretical overflow issue.
-But it doesn't affect any actual in-tree users.  Fix it by using
-a larger type for one of the local variables.
+Enabling -Wstringop-overflow globally exposes a warning for a common bug
+in the usage of strncat():
 
-Long version:
+  drivers/edac/thunderx_edac.c: In function 'thunderx_ocx_com_threaded_isr':
+  drivers/edac/thunderx_edac.c:1136:17: error: 'strncat' specified bound 1024 equals destination size [-Werror=stringop-overflow=]
+   1136 |                 strncat(msg, other, OCX_MESSAGE_SIZE);
+        |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   ...
+   1145 |                                 strncat(msg, other, OCX_MESSAGE_SIZE);
+   ...
+   1150 |                                 strncat(msg, other, OCX_MESSAGE_SIZE);
 
-There is an overflow in variable m in function num_digits when val
-is >= 1410065408 which leads to the digit calculation loop to
-iterate more times than required. This results in either more
-digits being counted or in some cases (for example where val is
-1932683193) the value of m eventually overflows to zero and the
-while loop spins forever).
+   ...
 
-Currently the function num_digits is currently only being used for
-small values of val in the SMP boot stage for digit counting on the
-number of cpus and NUMA nodes, so the overflow is never encountered.
-However it is useful to fix the overflow issue in case the function
-is used for other purposes in the future. (The issue was discovered
-while investigating the digit counting performance in various
-kernel helper functions rather than any real-world use-case).
+Apparently the author of this driver expected strncat() to behave the
+way that strlcat() does, which uses the size of the destination buffer
+as its third argument rather than the length of the source buffer. The
+result is that there is no check on the size of the allocated buffer.
 
-The simplest fix is to make m a long long, the overhead in
-multiplication speed for a long long is very minor for small values
-of val less than 10000 on modern processors. The alternative
-fix is to replace the multiplication with a constant division
-by 10 loop (this compiles down to an multiplication and shift)
-without needing to make m a long long, but this is slightly slower
-than the fix in this commit when measured on a range of x86
-processors).
+Change it to strlcat().
 
-[ dhansen: subject and changelog tweaks ]
+  [ bp: Trim compiler output, fixup commit message. ]
 
-Fixes: 646e29a1789a ("x86: Improve the printout of the SMP bootup CPU table")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20231102174901.2590325-1-colin.i.king%40gmail.com
+Fixes: 41003396f932 ("EDAC, thunderx: Add Cavium ThunderX EDAC driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/20231122222007.3199885-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/lib/misc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/edac/thunderx_edac.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/lib/misc.c b/arch/x86/lib/misc.c
-index a018ec4fba53..c97be9a1430a 100644
---- a/arch/x86/lib/misc.c
-+++ b/arch/x86/lib/misc.c
-@@ -6,7 +6,7 @@
-  */
- int num_digits(int val)
- {
--	int m = 10;
-+	long long m = 10;
- 	int d = 1;
+diff --git a/drivers/edac/thunderx_edac.c b/drivers/edac/thunderx_edac.c
+index 34be60fe6892..0fffb393415b 100644
+--- a/drivers/edac/thunderx_edac.c
++++ b/drivers/edac/thunderx_edac.c
+@@ -1133,7 +1133,7 @@ static irqreturn_t thunderx_ocx_com_threaded_isr(int irq, void *irq_id)
+ 		decode_register(other, OCX_OTHER_SIZE,
+ 				ocx_com_errors, ctx->reg_com_int);
  
- 	if (val < 0) {
+-		strncat(msg, other, OCX_MESSAGE_SIZE);
++		strlcat(msg, other, OCX_MESSAGE_SIZE);
+ 
+ 		for (lane = 0; lane < OCX_RX_LANES; lane++)
+ 			if (ctx->reg_com_int & BIT(lane)) {
+@@ -1142,12 +1142,12 @@ static irqreturn_t thunderx_ocx_com_threaded_isr(int irq, void *irq_id)
+ 					 lane, ctx->reg_lane_int[lane],
+ 					 lane, ctx->reg_lane_stat11[lane]);
+ 
+-				strncat(msg, other, OCX_MESSAGE_SIZE);
++				strlcat(msg, other, OCX_MESSAGE_SIZE);
+ 
+ 				decode_register(other, OCX_OTHER_SIZE,
+ 						ocx_lane_errors,
+ 						ctx->reg_lane_int[lane]);
+-				strncat(msg, other, OCX_MESSAGE_SIZE);
++				strlcat(msg, other, OCX_MESSAGE_SIZE);
+ 			}
+ 
+ 		if (ctx->reg_com_int & OCX_COM_INT_CE)
+@@ -1217,7 +1217,7 @@ static irqreturn_t thunderx_ocx_lnk_threaded_isr(int irq, void *irq_id)
+ 		decode_register(other, OCX_OTHER_SIZE,
+ 				ocx_com_link_errors, ctx->reg_com_link_int);
+ 
+-		strncat(msg, other, OCX_MESSAGE_SIZE);
++		strlcat(msg, other, OCX_MESSAGE_SIZE);
+ 
+ 		if (ctx->reg_com_link_int & OCX_COM_LINK_INT_UE)
+ 			edac_device_handle_ue(ocx->edac_dev, 0, 0, msg);
+@@ -1896,7 +1896,7 @@ static irqreturn_t thunderx_l2c_threaded_isr(int irq, void *irq_id)
+ 
+ 		decode_register(other, L2C_OTHER_SIZE, l2_errors, ctx->reg_int);
+ 
+-		strncat(msg, other, L2C_MESSAGE_SIZE);
++		strlcat(msg, other, L2C_MESSAGE_SIZE);
+ 
+ 		if (ctx->reg_int & mask_ue)
+ 			edac_device_handle_ue(l2c->edac_dev, 0, 0, msg);
 -- 
 2.43.0
 
