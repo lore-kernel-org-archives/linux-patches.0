@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202E21FC4;
-	Tue, 23 Jan 2024 01:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DEC01FC4;
+	Tue, 23 Jan 2024 01:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972158; cv=none; b=ms2Xj1ZRHK3hsaCqyc5HwwVRu9PYOEp5FBHJ3iszyDyMfMi8JdlEKCUotlB0c4ghnoN56CRyh2bUY6njq4xZ8iUdQ9X/6+6HHRiaWmyce2Ftqv9zvrkhtfV4uYfFIcyp2SOSx1PFqzsdlbgoFWbEQPzp0Uq4cIPQ5SZ5adWFQpU=
+	t=1705972159; cv=none; b=Mwycuhnfbh8PYbvB2YlW6LRVlGAuMyJKjmHZ4pBzk0YdWUXmBmwBoGKP1MsiSMvhzFHIzCE6Rm0Gqy5fAZE4GqbqimOVupJhcvfR5BooFiWVUIkVVvr8VCJfN1dzQShcxrKorsgCFqmb6QBV+Wscwnu3aUN8+YBFShMdqPlSGvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972158; c=relaxed/simple;
-	bh=tXsqFnF8Zkpm6vVatkPQnao1X/WvAKXXwAX59x/+Wtw=;
+	s=arc-20240116; t=1705972159; c=relaxed/simple;
+	bh=//PaD9DJg5sU4LghpbQ7e4vz3mQ49GnOHLpmUUh1dgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s9a66Zi2CTf35N1tXJxSYZSWuP0AxqWXcJxy7eYCtT2TfdAoOYujKQY2fkWgohVAbCEJghAmgvf8YtcMxOIGNmH+ZJEgjH+fENtgxE/tCzZkjnVmKxUs4JRU9wzjpACyjpRh2wmfCbxQO8zBVgXsEkbm6Y+b6mGdfya7uQ66ZIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYMPCyNf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FdJs+o+FLe6tjuPkdwJmsNa4mg/BBdmTU0PZMvaPl+hVu/cGK4XoJwjTny4D2PoXeNVi9jDYdpeBrwH2sJ6ZcphK3aWU7UZ1WcENyHK/Qu4przCCOmcbqnE+fbQ5ZqGZI92lnxGtq3Bw40sMcvevEjhSiC8C/Uxq9Y5Nr5Gp+0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAFQxNKE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYMPCyNf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F26C43394;
-	Tue, 23 Jan 2024 01:09:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAFQxNKE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2082C43394;
+	Tue, 23 Jan 2024 01:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972158;
-	bh=tXsqFnF8Zkpm6vVatkPQnao1X/WvAKXXwAX59x/+Wtw=;
+	s=korg; t=1705972159;
+	bh=//PaD9DJg5sU4LghpbQ7e4vz3mQ49GnOHLpmUUh1dgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yYMPCyNfvLMkbud2ZREnWMq1y0khyrieqh7x1DpaRVY2YyCtrLQzYpjX7ySoo7yo0
-	 FVyHflUmDRfRTlEVh8UPNnfwLLV0zK756DGj+BUB48B+s6t5Vt7PnjHltYAGSddBpc
-	 insup7V493K5NtIS8mGe1z7vqLnojywX205cbGsI=
+	b=sAFQxNKE8UIs7vYhfSvOb5YdtTNCBhgjV4Z0sIhIQiUPT9obznWvC4GU4z/PKfTz9
+	 sXHfjqOl+jpUSAV8AP5D36D1VMTOD2ntnHHwV8OpNUg5qWu3bgIQFdxbL5fDXFH3Fl
+	 H7Ju7DH5xfQQHyaj8Lb1frI7343Fztd7zw+sYRFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 051/374] Revert "ASoC: atmel: Remove system clock tree configuration for at91sam9g20ek"
-Date: Mon, 22 Jan 2024 15:55:07 -0800
-Message-ID: <20240122235746.375559321@linuxfoundation.org>
+	Alan Maguire <alan.maguire@oracle.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 5.15 052/374] bpf: Add --skip_encoding_btf_inconsistent_proto, --btf_gen_optimized to pahole flags for v1.25
+Date: Mon, 22 Jan 2024 15:55:08 -0800
+Message-ID: <20240122235746.410163500@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,126 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Alan Maguire <alan.maguire@oracle.com>
 
-This reverts commit bc7d0133181e5f33ac33ca4f6bb2bce876c8ad88 which is
-commit c775cbf62ed4911e4f0f23880f01815753123690 upstream.
+commit 7b99f75942da332e3f4f865e55a10fec95a30d4f upstream.
 
-It is reported to cause problems, so drop it from the 5.15.y tree for now.
+v1.25 of pahole supports filtering out functions with multiple inconsistent
+function prototypes or optimized-out parameters from the BTF representation.
+These present problems because there is no additional info in BTF saying which
+inconsistent prototype matches which function instance to help guide attachment,
+and functions with optimized-out parameters can lead to incorrect assumptions
+about register contents.
 
-Link: https://lore.kernel.org/r/845b3053-d47b-4717-9665-79b120da133b@sirena.org.uk
-Reported-by: Mark Brown <broonie@kernel.org>
-Cc: Codrin Ciubotariu <codrin.ciubotariu@microchip.com>
-Cc: Sasha Levin <sashal@kernel.org>
+So for now, filter out such functions while adding BTF representations for
+functions that have "."-suffixes (foo.isra.0) but not optimized-out parameters.
+This patch assumes that below linked changes land in pahole for v1.25.
+
+Issues with pahole filtering being too aggressive in removing functions
+appear to be resolved now, but CI and further testing will confirm.
+
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20230510130241.1696561-1-alan.maguire@oracle.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[ small context conflict because of not backported --lang_exclude=rust
+option, which is not needed in 5.15 ]
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/atmel/sam9g20_wm8731.c |   61 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 61 insertions(+)
+ scripts/pahole-flags.sh |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/soc/atmel/sam9g20_wm8731.c
-+++ b/sound/soc/atmel/sam9g20_wm8731.c
-@@ -46,6 +46,35 @@
-  */
- #undef ENABLE_MIC_INPUT
+--- a/scripts/pahole-flags.sh
++++ b/scripts/pahole-flags.sh
+@@ -20,5 +20,8 @@ fi
+ if [ "${pahole_ver}" -ge "124" ]; then
+ 	extra_paholeopt="${extra_paholeopt} --skip_encoding_btf_enum64"
+ fi
++if [ "${pahole_ver}" -ge "125" ]; then
++	extra_paholeopt="${extra_paholeopt} --skip_encoding_btf_inconsistent_proto --btf_gen_optimized"
++fi
  
-+static struct clk *mclk;
-+
-+static int at91sam9g20ek_set_bias_level(struct snd_soc_card *card,
-+					struct snd_soc_dapm_context *dapm,
-+					enum snd_soc_bias_level level)
-+{
-+	static int mclk_on;
-+	int ret = 0;
-+
-+	switch (level) {
-+	case SND_SOC_BIAS_ON:
-+	case SND_SOC_BIAS_PREPARE:
-+		if (!mclk_on)
-+			ret = clk_enable(mclk);
-+		if (ret == 0)
-+			mclk_on = 1;
-+		break;
-+
-+	case SND_SOC_BIAS_OFF:
-+	case SND_SOC_BIAS_STANDBY:
-+		if (mclk_on)
-+			clk_disable(mclk);
-+		mclk_on = 0;
-+		break;
-+	}
-+
-+	return ret;
-+}
-+
- static const struct snd_soc_dapm_widget at91sam9g20ek_dapm_widgets[] = {
- 	SND_SOC_DAPM_MIC("Int Mic", NULL),
- 	SND_SOC_DAPM_SPK("Ext Spk", NULL),
-@@ -106,6 +135,7 @@ static struct snd_soc_card snd_soc_at91s
- 	.owner = THIS_MODULE,
- 	.dai_link = &at91sam9g20ek_dai,
- 	.num_links = 1,
-+	.set_bias_level = at91sam9g20ek_set_bias_level,
- 
- 	.dapm_widgets = at91sam9g20ek_dapm_widgets,
- 	.num_dapm_widgets = ARRAY_SIZE(at91sam9g20ek_dapm_widgets),
-@@ -118,6 +148,7 @@ static int at91sam9g20ek_audio_probe(str
- {
- 	struct device_node *np = pdev->dev.of_node;
- 	struct device_node *codec_np, *cpu_np;
-+	struct clk *pllb;
- 	struct snd_soc_card *card = &snd_soc_at91sam9g20ek;
- 	int ret;
- 
-@@ -131,6 +162,31 @@ static int at91sam9g20ek_audio_probe(str
- 		return -EINVAL;
- 	}
- 
-+	/*
-+	 * Codec MCLK is supplied by PCK0 - set it up.
-+	 */
-+	mclk = clk_get(NULL, "pck0");
-+	if (IS_ERR(mclk)) {
-+		dev_err(&pdev->dev, "Failed to get MCLK\n");
-+		ret = PTR_ERR(mclk);
-+		goto err;
-+	}
-+
-+	pllb = clk_get(NULL, "pllb");
-+	if (IS_ERR(pllb)) {
-+		dev_err(&pdev->dev, "Failed to get PLLB\n");
-+		ret = PTR_ERR(pllb);
-+		goto err_mclk;
-+	}
-+	ret = clk_set_parent(mclk, pllb);
-+	clk_put(pllb);
-+	if (ret != 0) {
-+		dev_err(&pdev->dev, "Failed to set MCLK parent\n");
-+		goto err_mclk;
-+	}
-+
-+	clk_set_rate(mclk, MCLK_RATE);
-+
- 	card->dev = &pdev->dev;
- 
- 	/* Parse device node info */
-@@ -174,6 +230,9 @@ static int at91sam9g20ek_audio_probe(str
- 
- 	return ret;
- 
-+err_mclk:
-+	clk_put(mclk);
-+	mclk = NULL;
- err:
- 	atmel_ssc_put_audio(0);
- 	return ret;
-@@ -183,6 +242,8 @@ static int at91sam9g20ek_audio_remove(st
- {
- 	struct snd_soc_card *card = platform_get_drvdata(pdev);
- 
-+	clk_disable(mclk);
-+	mclk = NULL;
- 	snd_soc_unregister_card(card);
- 	atmel_ssc_put_audio(0);
- 
+ echo ${extra_paholeopt}
 
 
