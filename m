@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF4964CF1;
-	Tue, 23 Jan 2024 00:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF1D65BDD;
+	Tue, 23 Jan 2024 00:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971534; cv=none; b=FMg2HQkllO7C5aujcuLoOCXXfTX2jr8OdNXJg8EGD1R4zQIL+Zy2VyqM6atxj+SzrGetSxDs61ryTMgwNShXKXui1RuFzEt7oJ3s99V1L/Y+cbCwZy741m//3+0I8FAZBdFSOzMT4ySwT0uNfLWVpHxTO20DX1AKk9DoSlO42zs=
+	t=1705971538; cv=none; b=MlrBl9u0T6BY0gVn1Smy3wC3k5KHeK1TgTF4XPZKMWajG/wTxvInx5j8t6q1EahruUNp/NR4X2bHzRr4cHGWV8Oh4k8ZOw9g6XJzduG2uOi843i2kiUUbL3JvO6qZR/ByMOpCcNYVrMSmsZW+SFUxgOG6yIMhxS5vQToSDfZjGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971534; c=relaxed/simple;
-	bh=dOAD9QLRp5fdLaJzgsPiOuKe+bHNIPk1Nvq9lhn/AE0=;
+	s=arc-20240116; t=1705971538; c=relaxed/simple;
+	bh=W/2ZMJZtdSFxpOIuiwciYtQ7bs4HpIktNSTpkpZREU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UJDoHrAfDv/MC9hCuWk5d0geyBDRUBM22EIYhacLoJ7jmvOIq8kmEFV5jk4SwHz364nhMJ5URt1gC93jrVcF4+F9TgLtRmZJqx52znkxo/DQ0MWX+NurFjyez9HFiI7vmzYcqTSfJuUswTYLQ2M+jrnuKgOePyrCO8qJH1f3Yfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/VXNMCc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B2dWELibsienByKcdLNSI1nCSWpN9LuV0HPaZurmdBarOQDQWk1brL3zgnnmIQdpfbdZrBJp1wiIPr5NTd5BSZwqwk0Axod0zV7p6e+zpV1JMyDlBoZ0qziq55lg6HYofOUybMlzgG7h8w5+01XkIbLVlYMAAgdIY5GijcNF+N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ate4jK/k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/VXNMCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E38C43390;
-	Tue, 23 Jan 2024 00:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ate4jK/k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB9EC433F1;
+	Tue, 23 Jan 2024 00:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971534;
-	bh=dOAD9QLRp5fdLaJzgsPiOuKe+bHNIPk1Nvq9lhn/AE0=;
+	s=korg; t=1705971538;
+	bh=W/2ZMJZtdSFxpOIuiwciYtQ7bs4HpIktNSTpkpZREU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/VXNMCc9A4HZUXPbeTKBZ9qoqaRsJy+OdTW0RCOrP8X1jh3G6JF+Ldwv9jXRVZR8
-	 hJ8ac+x/BQUefUiv6aQEwjBf8K0Ib3xPvmjiiiIcSDRq3GDFMeBYS72w3sRkUYu3be
-	 jDnz0vIQ8T6EG690WI5O+IVnwGO17dm5jPLnJQ8c=
+	b=Ate4jK/k+9+TgMcNm+NCDtXnM4vWxRfRpTtpLX040BxJLHEscm9dhBN1/Oq9ePQlH
+	 sEHPqggozQBOZrCB8TEplOUDUH7OFoxUuj9oXIq0ZiLmAB4iaFX4A4Hob/ImtQcxmT
+	 n1MCZkk+Gtje+/fwJPYC8fGlJuaHLR3mukbyjKug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 168/286] f2fs: fix to update iostat correctly in f2fs_filemap_fault()
-Date: Mon, 22 Jan 2024 15:57:54 -0800
-Message-ID: <20240122235738.641951467@linuxfoundation.org>
+	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Subject: [PATCH 6.1 260/417] usb: dwc: ep0: Update request status in dwc3_ep0_stall_restart
+Date: Mon, 22 Jan 2024 15:57:08 -0800
+Message-ID: <20240122235800.871876726@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +45,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
 
-[ Upstream commit bb34cc6ca87ff78f9fb5913d7619dc1389554da6 ]
+commit e9d40b215e38480fd94c66b06d79045717a59e9c upstream.
 
-In f2fs_filemap_fault(), it fixes to update iostat info only if
-VM_FAULT_LOCKED is tagged in return value of filemap_fault().
+Current implementation blocks the running operations when Plug-out and
+Plug-In is performed continuously, process gets stuck in
+dwc3_thread_interrupt().
 
-Fixes: 8b83ac81f428 ("f2fs: support read iostat")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Code Flow:
+
+	CPU1
+
+	->Gadget_start
+	->dwc3_interrupt
+	->dwc3_thread_interrupt
+	->dwc3_process_event_buf
+	->dwc3_process_event_entry
+	->dwc3_endpoint_interrupt
+	->dwc3_ep0_interrupt
+	->dwc3_ep0_inspect_setup
+	->dwc3_ep0_stall_and_restart
+
+By this time if pending_list is not empty, it will get the next request
+on the given list and calls dwc3_gadget_giveback which will unmap request
+and call its complete() callback to notify upper layers that it has
+completed. Currently dwc3_gadget_giveback status is set to -ECONNRESET,
+whereas it should be -ESHUTDOWN based on condition if not dwc->connected
+is true.
+
+Cc:  <stable@vger.kernel.org>
+Fixes: d742220b3577 ("usb: dwc3: ep0: giveback requests on stall_and_restart")
+Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Link: https://lore.kernel.org/r/20231222094704.20276-1-quic_uaggarwa@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/ep0.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 98960c8d72c0..55818bd510fb 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -42,7 +42,7 @@ static vm_fault_t f2fs_filemap_fault(struct vm_fault *vmf)
- 	ret = filemap_fault(vmf);
- 	up_read(&F2FS_I(inode)->i_mmap_sem);
+--- a/drivers/usb/dwc3/ep0.c
++++ b/drivers/usb/dwc3/ep0.c
+@@ -236,7 +236,10 @@ void dwc3_ep0_stall_and_restart(struct d
+ 		struct dwc3_request	*req;
  
--	if (!ret)
-+	if (ret & VM_FAULT_LOCKED)
- 		f2fs_update_iostat(F2FS_I_SB(inode), APP_MAPPED_READ_IO,
- 							F2FS_BLKSIZE);
+ 		req = next_request(&dep->pending_list);
+-		dwc3_gadget_giveback(dep, req, -ECONNRESET);
++		if (!dwc->connected)
++			dwc3_gadget_giveback(dep, req, -ESHUTDOWN);
++		else
++			dwc3_gadget_giveback(dep, req, -ECONNRESET);
+ 	}
  
--- 
-2.43.0
-
+ 	dwc->eps[0]->trb_enqueue = 0;
 
 
