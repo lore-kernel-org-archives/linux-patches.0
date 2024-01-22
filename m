@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418C652F7C;
-	Tue, 23 Jan 2024 00:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BFE52F7C;
+	Tue, 23 Jan 2024 00:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969927; cv=none; b=ZgN4RHPXz8V9bJ9/Szk7PURfxmXjMcig6PO9bu19MSu8CMC9m6+7GCmUYAGhglgWNlHs8Jc6VjYuHfsPO7l3i3EUeWFxrJSUnFG9K4FT8NBTDr3r0Prdpna8QP8EvgdI5eA9e7Sw18F7e2yVAxZZLRrmZKPghjYiwyX7hEjgD+Y=
+	t=1705969929; cv=none; b=QNgayzPpRmJ3XbxjAvl4e/1hqjRqxXNfYDwS1XjdkbfYq+PcG00BvYPKg1Gb3VXNn+v5WBK29VbEicRZXM1oxycH/4UICVHPuqzoSjQ9uKjKvkWop5lBr/vtDz/oeakbHuY7HKQN1dYXx6iarNFmLBMEOVZiHrX/nphFoEh3Cfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969927; c=relaxed/simple;
-	bh=SoIUPcW8F7+2kLbv99gfVdxNE+eK+lOWJt3B4Lt8NN8=;
+	s=arc-20240116; t=1705969929; c=relaxed/simple;
+	bh=VooucQcIgDapA7yu2x4XtrcljtZUlAx7HN1gwSd+9KE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQhgfcln1MWLNsHnvqftdPYsE3uMSoFQTeboTN3gtFg9cocclzOHb5o/CAj0vn+YplgH9YGZdE+QBAv05x0g+xGfnf9OfK2w8uj8WBJS1bbQnjXSVwGpMev1oLXJUmXFkm06wDspt1u3jj3zmUcJFenB2fZSHk4I6yIWQm8Yi4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ovrVYAIc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ojl8d4zGHFqrr8BXdFw4OUsHaqeLqLX7h6r10xgbIpeKyvXV0iVhQLQlMU1EFxBth+KKGGkbsbpb5CPlrg+DpFPBVvErgs4xn65GUx9RtsBJRa6KtzQpWx16OEoLSbqjNz4k3nu7u4VOaUbb+mnx4s/chWxFupkzdjEJB59tKPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAHXxeye; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovrVYAIc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EE6C43390;
-	Tue, 23 Jan 2024 00:32:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAHXxeye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC8DC433C7;
+	Tue, 23 Jan 2024 00:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969927;
-	bh=SoIUPcW8F7+2kLbv99gfVdxNE+eK+lOWJt3B4Lt8NN8=;
+	s=korg; t=1705969929;
+	bh=VooucQcIgDapA7yu2x4XtrcljtZUlAx7HN1gwSd+9KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ovrVYAIcjl3Gki9/A17IyI8s6y+peanCZJDER5iEfoNKsDw3nP1ZLyM2gEB8Hz1Gb
-	 Ukj6iMw3tmL2WO4KHmBVLg5hM8Cd9WRaLm4n4KvkQ9nMkHmwheiAgBVtOk2NVK4v2Q
-	 0bgZ4VepVVqAQjtE1RB6+dZLOvdAohd66HnEuPp0=
+	b=TAHXxeye7C94TcCZRTsaXeMHz9EPXHGCiFLDum0Vib/HzaHLd3oWDj63yIEzxrx47
+	 UH5wTGYLZSelPmlO30Xy02ZJXLfFd1PLybhYE+6h1oH0qRK1NcXGWnZv5m+ambn9Gd
+	 foZsJfSQIv8ZKmHLlFVCtF9Fjajgvw/66e4j5Rng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 503/641] power: supply: bq256xx: fix some problem in bq256xx_hw_init
-Date: Mon, 22 Jan 2024 15:56:47 -0800
-Message-ID: <20240122235833.807475704@linuxfoundation.org>
+Subject: [PATCH 6.7 504/641] PCI: Avoid potential out-of-bounds read in pci_dev_for_each_resource()
+Date: Mon, 22 Jan 2024 15:56:48 -0800
+Message-ID: <20240122235833.844032233@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,53 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit b55d073e6501dc6077edaa945a6dad8ac5c8bbab ]
+[ Upstream commit 3171e46d677a668eed3086da78671f1e4f5b8405 ]
 
-smatch complains that there is a buffer overflow and clang complains
-'ret' is never read.
+Coverity complains that pointer in the pci_dev_for_each_resource() may be
+wrong, i.e., might be used for the out-of-bounds read.
 
-Smatch error:
-drivers/power/supply/bq256xx_charger.c:1578 bq256xx_hw_init() error:
-buffer overflow 'bq256xx_watchdog_time' 4 <= 4
+There is no actual issue right now because we have another check afterwards
+and the out-of-bounds read is not being performed. In any case it's better
+code with this fixed, hence the proposed change.
 
-Clang static checker:
-Value stored to 'ret' is never read.
+As Jonas pointed out "It probably makes the code slightly less performant
+as res will now be checked for being not NULL (which will always be true),
+but I doubt it will be significant (or in any hot paths)."
 
-Add check for buffer overflow and error code from regmap_update_bits().
-
-Fixes: 32e4978bb920 ("power: supply: bq256xx: Introduce the BQ256XX charger driver")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20231116041822.1378758-1-suhui@nfschina.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 09cc90063240 ("PCI: Introduce pci_dev_for_each_resource()")
+Reported-by: Bjorn Helgaas <bhelgaas@google.com>
+Closes: https://lore.kernel.org/r/20230509182122.GA1259567@bhelgaas
+Suggested-by: Jonas Gorski <jonas.gorski@gmail.com>
+Link: https://lore.kernel.org/r/20231030114218.2752236-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq256xx_charger.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/pci.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/power/supply/bq256xx_charger.c b/drivers/power/supply/bq256xx_charger.c
-index 789a31bd70c3..1a935bc88510 100644
---- a/drivers/power/supply/bq256xx_charger.c
-+++ b/drivers/power/supply/bq256xx_charger.c
-@@ -1574,13 +1574,16 @@ static int bq256xx_hw_init(struct bq256xx_device *bq)
- 			wd_reg_val = i;
- 			break;
- 		}
--		if (bq->watchdog_timer > bq256xx_watchdog_time[i] &&
-+		if (i + 1 < BQ256XX_NUM_WD_VAL &&
-+		    bq->watchdog_timer > bq256xx_watchdog_time[i] &&
- 		    bq->watchdog_timer < bq256xx_watchdog_time[i + 1])
- 			wd_reg_val = i;
- 	}
- 	ret = regmap_update_bits(bq->regmap, BQ256XX_CHARGER_CONTROL_1,
- 				 BQ256XX_WATCHDOG_MASK, wd_reg_val <<
- 						BQ256XX_WDT_BIT_SHIFT);
-+	if (ret)
-+		return ret;
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index dea043bc1e38..bc80960fad7c 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -2130,14 +2130,14 @@ int pci_iobar_pfn(struct pci_dev *pdev, int bar, struct vm_area_struct *vma);
+ 	(pci_resource_end((dev), (bar)) ? 				\
+ 	 resource_size(pci_resource_n((dev), (bar))) : 0)
  
- 	ret = power_supply_get_battery_info(bq->charger, &bat_info);
- 	if (ret == -ENOMEM)
+-#define __pci_dev_for_each_res0(dev, res, ...)				\
+-	for (unsigned int __b = 0;					\
+-	     res = pci_resource_n(dev, __b), __b < PCI_NUM_RESOURCES;	\
++#define __pci_dev_for_each_res0(dev, res, ...)				  \
++	for (unsigned int __b = 0;					  \
++	     __b < PCI_NUM_RESOURCES && (res = pci_resource_n(dev, __b)); \
+ 	     __b++)
+ 
+-#define __pci_dev_for_each_res1(dev, res, __b)				\
+-	for (__b = 0;							\
+-	     res = pci_resource_n(dev, __b), __b < PCI_NUM_RESOURCES;	\
++#define __pci_dev_for_each_res1(dev, res, __b)				  \
++	for (__b = 0;							  \
++	     __b < PCI_NUM_RESOURCES && (res = pci_resource_n(dev, __b)); \
+ 	     __b++)
+ 
+ #define pci_dev_for_each_resource(dev, res, ...)			\
 -- 
 2.43.0
 
