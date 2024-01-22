@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B1512BF00;
-	Tue, 23 Jan 2024 00:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07134E1AD;
+	Tue, 23 Jan 2024 00:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971388; cv=none; b=VoEgZdrP7nTJdCCaDkmXPywbQxqhi5AG1XvEODH0muWQtct05ifPmY8wZSZwo6BFip7fQ2XdEkb9HF0N/Ivie2h+SjaTVE58meOOjWLiqXoK/bMUzV94j9jKA7VZ4ST+0D6+vrSShryhMYwFENlO9pxfdmpchEaTDvtwWLI2/nY=
+	t=1705971391; cv=none; b=sf4MIe1ntVpIQrvFQLpj9UtBTkZCOcdOompTN8DcMKMx5gm/IWDKgYssoubKPOLLIXKMFxLW22EZ4fHYpk9ufaqt0l3GLBULcpzcKrbBux1zNC+XM7eCck0dFmS9Z4RIMuFfZNT/kXLFEjKmAqVRRaWXU+OZe2xsUNdxUc5ppg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971388; c=relaxed/simple;
-	bh=bfh4EteW1RJGLJXJBV7OFKmRE+OUtqbCTSL5zdk1kR0=;
+	s=arc-20240116; t=1705971391; c=relaxed/simple;
+	bh=d86bU+EIXAuZYp1L51AveAY+9xT9+h6UmxZQe5pM7BI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uGSlIeua2g7PVmCcPv7+3RCIHZqYDgZzCODbHxl8VzbAvTSE2w6L4Rkrn4kKzM6cx1ulKcLduzjbgsYjT7yUokYMlpRvXcUM5ovo1Yb5tt3K7CdB0aZcX5xLxEvmsab/4xDg0qGvFCAuIdUmuc7H8jmRh0giQ6wzvEqeymDd0Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3uQ75e4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p3BBJvbFvuicSySMOUy7Ae1a4UlIgik1tYqEn3xkIVnWuT2NYkbu4/9pqLUaGjs+EG4iTg+hMCh/cHVZPRmBDk0HbyA1riweoDtoAhxGcWlkgcKKfsPv3VchLcsEsqBrCWS9/e9t/epTB7l/X2wxQYbn4UNuLqtK9qzuXP+FJag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1sQ9NnV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3uQ75e4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475C0C433C7;
-	Tue, 23 Jan 2024 00:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1sQ9NnV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F45C433F1;
+	Tue, 23 Jan 2024 00:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971388;
-	bh=bfh4EteW1RJGLJXJBV7OFKmRE+OUtqbCTSL5zdk1kR0=;
+	s=korg; t=1705971390;
+	bh=d86bU+EIXAuZYp1L51AveAY+9xT9+h6UmxZQe5pM7BI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3uQ75e4GXGafHC2ZLdeEidOburFvq39XPHcnLGD5BuQkI22dJdGd72lPxz+K82Ne
-	 ElPd5afKpz8FKkVkVArqdACwW4SRyjBWaBkI/DwiUXb0rmkrCwmCESnhRA/gm8fbnU
-	 y+TkkomoNSs0QYTzx4FWjpCEXJcmjiAJ/AjHY7To=
+	b=k1sQ9NnVYAw0BM9KXAnjjIL1iNZic7amolGdMiCovKBSfjIrJBZUcsmy5VIjG9CRb
+	 ra/7na9HtnUG/sjvDdEA/priZfw5mBrAXOECkTj3k7m9eIRK/UF7QcLapzJpXY2gLh
+	 TeLJtFJAvhHlKSDqz/eYd6ApGvRfh2BmixISvgJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 233/417] ALSA: scarlett2: Add missing error check to scarlett2_usb_set_config()
-Date: Mon, 22 Jan 2024 15:56:41 -0800
-Message-ID: <20240122235759.963324793@linuxfoundation.org>
+Subject: [PATCH 5.10 144/286] RDMA/usnic: Silence uninitialized symbol smatch warnings
+Date: Mon, 22 Jan 2024 15:57:30 -0800
+Message-ID: <20240122235737.702218440@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +47,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit ca459dfa7d4ed9098fcf13e410963be6ae9b6bf3 ]
+[ Upstream commit b9a85e5eec126d6ae6c362f94b447c223e8fe6e4 ]
 
-scarlett2_usb_set_config() calls scarlett2_usb_get() but was not
-checking the result. Return the error if it fails rather than
-continuing with an invalid value.
+The patch 1da177e4c3f4: "Linux-2.6.12-rc2" from Apr 16, 2005
+(linux-next), leads to the following Smatch static checker warning:
 
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Fixes: 9e15fae6c51a ("ALSA: usb-audio: scarlett2: Allow bit-level access to config")
-Link: https://lore.kernel.org/r/def110c5c31dbdf0a7414d258838a0a31c0fab67.1703001053.git.g@b4.vu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+        drivers/infiniband/hw/mthca/mthca_cmd.c:644 mthca_SYS_EN()
+        error: uninitialized symbol 'out'.
+
+drivers/infiniband/hw/mthca/mthca_cmd.c
+    636 int mthca_SYS_EN(struct mthca_dev *dev)
+    637 {
+    638         u64 out;
+    639         int ret;
+    640
+    641         ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
+
+We pass out here and it gets used without being initialized.
+
+        err = mthca_cmd_post(dev, in_param,
+                             out_param ? *out_param : 0,
+                                         ^^^^^^^^^^
+                             in_modifier, op_modifier,
+                             op, context->token, 1);
+
+It's the same in mthca_cmd_wait() and mthca_cmd_poll().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/533bc3df-8078-4397-b93d-d1f6cec9b636@moroto.mountain
+Link: https://lore.kernel.org/r/c559cb7113158c02d75401ac162652072ef1b5f0.1699867650.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_scarlett_gen2.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mthca/mthca_cmd.c  | 4 ++--
+ drivers/infiniband/hw/mthca/mthca_main.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/usb/mixer_scarlett_gen2.c b/sound/usb/mixer_scarlett_gen2.c
-index 3da0d3167ebf..94704581865b 100644
---- a/sound/usb/mixer_scarlett_gen2.c
-+++ b/sound/usb/mixer_scarlett_gen2.c
-@@ -1390,7 +1390,10 @@ static int scarlett2_usb_set_config(
- 		size = 1;
- 		offset = config_item->offset;
+diff --git a/drivers/infiniband/hw/mthca/mthca_cmd.c b/drivers/infiniband/hw/mthca/mthca_cmd.c
+index bdf5ed38de22..0307c45aa6d3 100644
+--- a/drivers/infiniband/hw/mthca/mthca_cmd.c
++++ b/drivers/infiniband/hw/mthca/mthca_cmd.c
+@@ -635,7 +635,7 @@ void mthca_free_mailbox(struct mthca_dev *dev, struct mthca_mailbox *mailbox)
  
--		scarlett2_usb_get(mixer, offset, &tmp, 1);
-+		err = scarlett2_usb_get(mixer, offset, &tmp, 1);
-+		if (err < 0)
-+			return err;
-+
- 		if (value)
- 			tmp |= (1 << index);
- 		else
+ int mthca_SYS_EN(struct mthca_dev *dev)
+ {
+-	u64 out;
++	u64 out = 0;
+ 	int ret;
+ 
+ 	ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
+@@ -1955,7 +1955,7 @@ int mthca_WRITE_MGM(struct mthca_dev *dev, int index,
+ int mthca_MGID_HASH(struct mthca_dev *dev, struct mthca_mailbox *mailbox,
+ 		    u16 *hash)
+ {
+-	u64 imm;
++	u64 imm = 0;
+ 	int err;
+ 
+ 	err = mthca_cmd_imm(dev, mailbox->dma, &imm, 0, 0, CMD_MGID_HASH,
+diff --git a/drivers/infiniband/hw/mthca/mthca_main.c b/drivers/infiniband/hw/mthca/mthca_main.c
+index fe9654a7af71..3acd1372c814 100644
+--- a/drivers/infiniband/hw/mthca/mthca_main.c
++++ b/drivers/infiniband/hw/mthca/mthca_main.c
+@@ -382,7 +382,7 @@ static int mthca_init_icm(struct mthca_dev *mdev,
+ 			  struct mthca_init_hca_param *init_hca,
+ 			  u64 icm_size)
+ {
+-	u64 aux_pages;
++	u64 aux_pages = 0;
+ 	int err;
+ 
+ 	err = mthca_SET_ICM_SIZE(mdev, icm_size, &aux_pages);
 -- 
 2.43.0
 
