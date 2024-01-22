@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC86876908;
-	Tue, 23 Jan 2024 02:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5F376908;
+	Tue, 23 Jan 2024 02:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975495; cv=none; b=YvblTE5QGFKzEIukF7VcxYCPUsSHA5yKte7BFmU2Vns/gxjsTfFhSWciC8ACg9qwWIutPJ5eR8UYvLflpWlGBUKdHvhoOCa22yIJ8rgX2xQ0480VNhlk26pqs7ZuGIMY5Wqhjkecye1WJZFdeIoFTjC5UNhSbkm+FBdh7VvpmBg=
+	t=1705975496; cv=none; b=Yk4CiEZRpOfQB315Wv1JyxmCM7iFY6ATrymjyRPMIPQEVbeWmRC0F9jKTLE0wlN894uVQdvOtQhfA6ujnyG3x/e5tRjNk/FNNVBDYdAyQU3aE0NNAXkMpA4yJDtJaT++lIfUTgGXSRvJeN+MxyFBDeFza7s1375Sxg+O/RCUoGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975495; c=relaxed/simple;
-	bh=wnqYxSa/fd8p3H2fRM3XhwhB52i9X6OG3qEbwoGPQ2s=;
+	s=arc-20240116; t=1705975496; c=relaxed/simple;
+	bh=BC9duqeS4flUaDoiUmEpQWB8FVQw89p2y34sHGfcD9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rmmu3fRJVKmkh0rbXyffpWvDd1Abox9x3si982J4ZABaU2vT+QK8tV358siR9NeWCaE2gQAD1/kd1iXGll855JyLYE5+D4B6bDTSkxO4RpSaaMC0FGP6BNFlOc4Vb+rfuRqX2Z76F1iRuqkg1Vk5GxlwOCO5ScTUkSxTsYGaCyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTqi3iML; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fiyhW9VcgCH86CTsK1kze6jmofxj45VeMW0ISecm0PA4OujpCQ2OKn58t1ywqUVuSA/ekpDKxcLSuQIJZtGTJPayQLbUfj4+aW/xdUlfdSmLRAO6DnbMvBga5xqXZUXpek2llBWOmD3d5/UmbO4z9RoaUMmgAMXJJ2a5XYZ7OZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycubfe2t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTqi3iML"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B28C433F1;
-	Tue, 23 Jan 2024 02:04:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycubfe2t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5C2C43390;
+	Tue, 23 Jan 2024 02:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975495;
-	bh=wnqYxSa/fd8p3H2fRM3XhwhB52i9X6OG3qEbwoGPQ2s=;
+	s=korg; t=1705975496;
+	bh=BC9duqeS4flUaDoiUmEpQWB8FVQw89p2y34sHGfcD9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UTqi3iMLZd6u2vUiKP4847veMqph9vMVGHadLfN8C5zTakaZx6lxse42l6yeMAZbt
-	 0MLBEF6cc+n8TFRkh15u+YkvN5VAAQvdPzPizIMutf89yOxecdsN3drEHrKqKot8AA
-	 1M+8SHkMmNQ0kmZpNkTfjRACUKM9lisGulh1rFds=
+	b=ycubfe2t9nnwyet2MURKkagPO0NN7uvMrDYnc0sKXrDOqO0jWowU5uNm5ND6irXSf
+	 /SvQKdCIHwnQBfjDIHTN7RknLNFPVAk7Hje1yajL5rBDywOOEiJ4fAWiKNthx5SE3B
+	 0Vl7wTKeVtUK5o6vjL7ormephUVILIMLL8JGJwdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 450/583] riscv: Fix module_alloc() that did not reset the linear mapping permissions
-Date: Mon, 22 Jan 2024 15:58:21 -0800
-Message-ID: <20240122235825.744375953@linuxfoundation.org>
+Subject: [PATCH 6.6 451/583] riscv: Fix set_memory_XX() and set_direct_map_XX() by splitting huge linear mappings
+Date: Mon, 22 Jan 2024 15:58:22 -0800
+Message-ID: <20240122235825.772992112@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,51 +53,444 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 749b94b08005929bbc636df21a23322733166e35 ]
+[ Upstream commit 311cd2f6e25380cff0abc2884dc6a3d33bc9b5c3 ]
 
-After unloading a module, we must reset the linear mapping permissions,
-see the example below:
+When STRICT_KERNEL_RWX is set, any change of permissions on any kernel
+mapping (vmalloc/modules/kernel text...etc) should be applied on its
+linear mapping alias. The problem is that the riscv kernel uses huge
+mappings for the linear mapping and walk_page_range_novma() does not
+split those huge mappings.
 
-Before unloading a module:
+So this patchset implements such split in order to apply fine-grained
+permissions on the linear mapping.
 
-0xffffaf809d65d000-0xffffaf809d6dc000    0x000000011d65d000       508K PTE .   ..     ..   D A G . . W R V
-0xffffaf809d6dc000-0xffffaf809d6dd000    0x000000011d6dc000         4K PTE .   ..     ..   D A G . . . R V
-0xffffaf809d6dd000-0xffffaf809d6e1000    0x000000011d6dd000        16K PTE .   ..     ..   D A G . . W R V
-0xffffaf809d6e1000-0xffffaf809d6e7000    0x000000011d6e1000        24K PTE .   ..     ..   D A G . X . R V
+Below is the difference before and after (the first PUD mapping is split
+into PTE/PMD mappings):
 
-After unloading a module:
+Before:
 
-0xffffaf809d65d000-0xffffaf809d6e1000    0x000000011d65d000       528K PTE .   ..     ..   D A G . . W R V
-0xffffaf809d6e1000-0xffffaf809d6e7000    0x000000011d6e1000        24K PTE .   ..     ..   D A G . X W R V
+---[ Linear mapping ]---
+0xffffaf8000080000-0xffffaf8000200000    0x0000000080080000      1536K PTE     D A G . . W R V
+0xffffaf8000200000-0xffffaf8077c00000    0x0000000080200000      1914M PMD     D A G . . W R V
+0xffffaf8077c00000-0xffffaf8078800000    0x00000000f7c00000        12M PMD     D A G . . . R V
+0xffffaf8078800000-0xffffaf8078c00000    0x00000000f8800000         4M PMD     D A G . . W R V
+0xffffaf8078c00000-0xffffaf8079200000    0x00000000f8c00000         6M PMD     D A G . . . R V
+0xffffaf8079200000-0xffffaf807e600000    0x00000000f9200000        84M PMD     D A G . . W R V
+0xffffaf807e600000-0xffffaf807e716000    0x00000000fe600000      1112K PTE     D A G . . W R V
+0xffffaf807e717000-0xffffaf807e71a000    0x00000000fe717000        12K PTE     D A G . . W R V
+0xffffaf807e71d000-0xffffaf807e71e000    0x00000000fe71d000         4K PTE     D A G . . W R V
+0xffffaf807e722000-0xffffaf807e800000    0x00000000fe722000       888K PTE     D A G . . W R V
+0xffffaf807e800000-0xffffaf807fe00000    0x00000000fe800000        22M PMD     D A G . . W R V
+0xffffaf807fe00000-0xffffaf807ff54000    0x00000000ffe00000      1360K PTE     D A G . . W R V
+0xffffaf807ff55000-0xffffaf8080000000    0x00000000fff55000       684K PTE     D A G . . W R V
+0xffffaf8080000000-0xffffaf8400000000    0x0000000100000000        14G PUD     D A G . . W R V
 
-The last mapping is not reset and we end up with WX mappings in the linear
-mapping.
+After:
 
-So add VM_FLUSH_RESET_PERMS to our module_alloc() definition.
+---[ Linear mapping ]---
+0xffffaf8000080000-0xffffaf8000200000    0x0000000080080000      1536K PTE     D A G . . W R V
+0xffffaf8000200000-0xffffaf8077c00000    0x0000000080200000      1914M PMD     D A G . . W R V
+0xffffaf8077c00000-0xffffaf8078800000    0x00000000f7c00000        12M PMD     D A G . . . R V
+0xffffaf8078800000-0xffffaf8078a00000    0x00000000f8800000         2M PMD     D A G . . W R V
+0xffffaf8078a00000-0xffffaf8078c00000    0x00000000f8a00000         2M PTE     D A G . . W R V
+0xffffaf8078c00000-0xffffaf8079200000    0x00000000f8c00000         6M PMD     D A G . . . R V
+0xffffaf8079200000-0xffffaf807e600000    0x00000000f9200000        84M PMD     D A G . . W R V
+0xffffaf807e600000-0xffffaf807e716000    0x00000000fe600000      1112K PTE     D A G . . W R V
+0xffffaf807e717000-0xffffaf807e71a000    0x00000000fe717000        12K PTE     D A G . . W R V
+0xffffaf807e71d000-0xffffaf807e71e000    0x00000000fe71d000         4K PTE     D A G . . W R V
+0xffffaf807e722000-0xffffaf807e800000    0x00000000fe722000       888K PTE     D A G . . W R V
+0xffffaf807e800000-0xffffaf807fe00000    0x00000000fe800000        22M PMD     D A G . . W R V
+0xffffaf807fe00000-0xffffaf807ff54000    0x00000000ffe00000      1360K PTE     D A G . . W R V
+0xffffaf807ff55000-0xffffaf8080000000    0x00000000fff55000       684K PTE     D A G . . W R V
+0xffffaf8080000000-0xffffaf8080800000    0x0000000100000000         8M PMD     D A G . . W R V
+0xffffaf8080800000-0xffffaf8080af6000    0x0000000100800000      3032K PTE     D A G . . W R V
+0xffffaf8080af6000-0xffffaf8080af8000    0x0000000100af6000         8K PTE     D A G . X . R V
+0xffffaf8080af8000-0xffffaf8080c00000    0x0000000100af8000      1056K PTE     D A G . . W R V
+0xffffaf8080c00000-0xffffaf8081a00000    0x0000000100c00000        14M PMD     D A G . . W R V
+0xffffaf8081a00000-0xffffaf8081a40000    0x0000000101a00000       256K PTE     D A G . . W R V
+0xffffaf8081a40000-0xffffaf8081a44000    0x0000000101a40000        16K PTE     D A G . X . R V
+0xffffaf8081a44000-0xffffaf8081a52000    0x0000000101a44000        56K PTE     D A G . . W R V
+0xffffaf8081a52000-0xffffaf8081a54000    0x0000000101a52000         8K PTE     D A G . X . R V
+...
+0xffffaf809e800000-0xffffaf80c0000000    0x000000011e800000       536M PMD     D A G . . W R V
+0xffffaf80c0000000-0xffffaf8400000000    0x0000000140000000        13G PUD     D A G . . W R V
 
-Fixes: 0cff8bff7af8 ("riscv: avoid the PIC offset of static percpu data in module beyond 2G limits")
+Note that this also fixes memfd_secret() syscall which uses
+set_direct_map_invalid_noflush() and set_direct_map_default_noflush() to
+remove the pages from the linear mapping. Below is the kernel page table
+while a memfd_secret() syscall is running, you can see all the !valid
+page table entries in the linear mapping:
+
+...
+0xffffaf8082240000-0xffffaf8082241000    0x0000000102240000         4K PTE     D A G . . W R .
+0xffffaf8082241000-0xffffaf8082250000    0x0000000102241000        60K PTE     D A G . . W R V
+0xffffaf8082250000-0xffffaf8082252000    0x0000000102250000         8K PTE     D A G . . W R .
+0xffffaf8082252000-0xffffaf8082256000    0x0000000102252000        16K PTE     D A G . . W R V
+0xffffaf8082256000-0xffffaf8082257000    0x0000000102256000         4K PTE     D A G . . W R .
+0xffffaf8082257000-0xffffaf8082258000    0x0000000102257000         4K PTE     D A G . . W R V
+0xffffaf8082258000-0xffffaf8082259000    0x0000000102258000         4K PTE     D A G . . W R .
+0xffffaf8082259000-0xffffaf808225a000    0x0000000102259000         4K PTE     D A G . . W R V
+0xffffaf808225a000-0xffffaf808225c000    0x000000010225a000         8K PTE     D A G . . W R .
+0xffffaf808225c000-0xffffaf8082266000    0x000000010225c000        40K PTE     D A G . . W R V
+0xffffaf8082266000-0xffffaf8082268000    0x0000000102266000         8K PTE     D A G . . W R .
+0xffffaf8082268000-0xffffaf8082284000    0x0000000102268000       112K PTE     D A G . . W R V
+0xffffaf8082284000-0xffffaf8082288000    0x0000000102284000        16K PTE     D A G . . W R .
+0xffffaf8082288000-0xffffaf808229c000    0x0000000102288000        80K PTE     D A G . . W R V
+0xffffaf808229c000-0xffffaf80822a0000    0x000000010229c000        16K PTE     D A G . . W R .
+0xffffaf80822a0000-0xffffaf80822a5000    0x00000001022a0000        20K PTE     D A G . . W R V
+0xffffaf80822a5000-0xffffaf80822a6000    0x00000001022a5000         4K PTE     D A G . . . R V
+0xffffaf80822a6000-0xffffaf80822ab000    0x00000001022a6000        20K PTE     D A G . . W R V
+...
+
+And when the memfd_secret() fd is released, the linear mapping is
+correctly reset:
+
+...
+0xffffaf8082240000-0xffffaf80822a5000    0x0000000102240000       404K PTE     D A G . . W R V
+0xffffaf80822a5000-0xffffaf80822a6000    0x00000001022a5000         4K PTE     D A G . . . R V
+0xffffaf80822a6000-0xffffaf80822af000    0x00000001022a6000        36K PTE     D A G . . W R V
+...
+
 Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20231213134027.155327-2-alexghiti@rivosinc.com
+Link: https://lore.kernel.org/r/20231108075930.7157-3-alexghiti@rivosinc.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Stable-dep-of: b8b2711336f0 ("riscv: Fix set_direct_map_default_noflush() to reset _PAGE_EXEC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/module.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/riscv/mm/pageattr.c | 270 +++++++++++++++++++++++++++++++++------
+ 1 file changed, 230 insertions(+), 40 deletions(-)
 
-diff --git a/arch/riscv/kernel/module.c b/arch/riscv/kernel/module.c
-index 7c651d55fcbd..df4f6fec5d17 100644
---- a/arch/riscv/kernel/module.c
-+++ b/arch/riscv/kernel/module.c
-@@ -440,7 +440,8 @@ void *module_alloc(unsigned long size)
- {
- 	return __vmalloc_node_range(size, 1, MODULES_VADDR,
- 				    MODULES_END, GFP_KERNEL,
--				    PAGE_KERNEL, 0, NUMA_NO_NODE,
-+				    PAGE_KERNEL, VM_FLUSH_RESET_PERMS,
-+				    NUMA_NO_NODE,
- 				    __builtin_return_address(0));
+diff --git a/arch/riscv/mm/pageattr.c b/arch/riscv/mm/pageattr.c
+index 161d0b34c2cb..fc5fc4f785c4 100644
+--- a/arch/riscv/mm/pageattr.c
++++ b/arch/riscv/mm/pageattr.c
+@@ -5,6 +5,7 @@
+ 
+ #include <linux/pagewalk.h>
+ #include <linux/pgtable.h>
++#include <linux/vmalloc.h>
+ #include <asm/tlbflush.h>
+ #include <asm/bitops.h>
+ #include <asm/set_memory.h>
+@@ -25,19 +26,6 @@ static unsigned long set_pageattr_masks(unsigned long val, struct mm_walk *walk)
+ 	return new_val;
  }
- #endif
+ 
+-static int pageattr_pgd_entry(pgd_t *pgd, unsigned long addr,
+-			      unsigned long next, struct mm_walk *walk)
+-{
+-	pgd_t val = READ_ONCE(*pgd);
+-
+-	if (pgd_leaf(val)) {
+-		val = __pgd(set_pageattr_masks(pgd_val(val), walk));
+-		set_pgd(pgd, val);
+-	}
+-
+-	return 0;
+-}
+-
+ static int pageattr_p4d_entry(p4d_t *p4d, unsigned long addr,
+ 			      unsigned long next, struct mm_walk *walk)
+ {
+@@ -96,7 +84,6 @@ static int pageattr_pte_hole(unsigned long addr, unsigned long next,
+ }
+ 
+ static const struct mm_walk_ops pageattr_ops = {
+-	.pgd_entry = pageattr_pgd_entry,
+ 	.p4d_entry = pageattr_p4d_entry,
+ 	.pud_entry = pageattr_pud_entry,
+ 	.pmd_entry = pageattr_pmd_entry,
+@@ -105,12 +92,181 @@ static const struct mm_walk_ops pageattr_ops = {
+ 	.walk_lock = PGWALK_RDLOCK,
+ };
+ 
++#ifdef CONFIG_64BIT
++static int __split_linear_mapping_pmd(pud_t *pudp,
++				      unsigned long vaddr, unsigned long end)
++{
++	pmd_t *pmdp;
++	unsigned long next;
++
++	pmdp = pmd_offset(pudp, vaddr);
++
++	do {
++		next = pmd_addr_end(vaddr, end);
++
++		if (next - vaddr >= PMD_SIZE &&
++		    vaddr <= (vaddr & PMD_MASK) && end >= next)
++			continue;
++
++		if (pmd_leaf(*pmdp)) {
++			struct page *pte_page;
++			unsigned long pfn = _pmd_pfn(*pmdp);
++			pgprot_t prot = __pgprot(pmd_val(*pmdp) & ~_PAGE_PFN_MASK);
++			pte_t *ptep_new;
++			int i;
++
++			pte_page = alloc_page(GFP_KERNEL);
++			if (!pte_page)
++				return -ENOMEM;
++
++			ptep_new = (pte_t *)page_address(pte_page);
++			for (i = 0; i < PTRS_PER_PTE; ++i, ++ptep_new)
++				set_pte(ptep_new, pfn_pte(pfn + i, prot));
++
++			smp_wmb();
++
++			set_pmd(pmdp, pfn_pmd(page_to_pfn(pte_page), PAGE_TABLE));
++		}
++	} while (pmdp++, vaddr = next, vaddr != end);
++
++	return 0;
++}
++
++static int __split_linear_mapping_pud(p4d_t *p4dp,
++				      unsigned long vaddr, unsigned long end)
++{
++	pud_t *pudp;
++	unsigned long next;
++	int ret;
++
++	pudp = pud_offset(p4dp, vaddr);
++
++	do {
++		next = pud_addr_end(vaddr, end);
++
++		if (next - vaddr >= PUD_SIZE &&
++		    vaddr <= (vaddr & PUD_MASK) && end >= next)
++			continue;
++
++		if (pud_leaf(*pudp)) {
++			struct page *pmd_page;
++			unsigned long pfn = _pud_pfn(*pudp);
++			pgprot_t prot = __pgprot(pud_val(*pudp) & ~_PAGE_PFN_MASK);
++			pmd_t *pmdp_new;
++			int i;
++
++			pmd_page = alloc_page(GFP_KERNEL);
++			if (!pmd_page)
++				return -ENOMEM;
++
++			pmdp_new = (pmd_t *)page_address(pmd_page);
++			for (i = 0; i < PTRS_PER_PMD; ++i, ++pmdp_new)
++				set_pmd(pmdp_new,
++					pfn_pmd(pfn + ((i * PMD_SIZE) >> PAGE_SHIFT), prot));
++
++			smp_wmb();
++
++			set_pud(pudp, pfn_pud(page_to_pfn(pmd_page), PAGE_TABLE));
++		}
++
++		ret = __split_linear_mapping_pmd(pudp, vaddr, next);
++		if (ret)
++			return ret;
++	} while (pudp++, vaddr = next, vaddr != end);
++
++	return 0;
++}
++
++static int __split_linear_mapping_p4d(pgd_t *pgdp,
++				      unsigned long vaddr, unsigned long end)
++{
++	p4d_t *p4dp;
++	unsigned long next;
++	int ret;
++
++	p4dp = p4d_offset(pgdp, vaddr);
++
++	do {
++		next = p4d_addr_end(vaddr, end);
++
++		/*
++		 * If [vaddr; end] contains [vaddr & P4D_MASK; next], we don't
++		 * need to split, we'll change the protections on the whole P4D.
++		 */
++		if (next - vaddr >= P4D_SIZE &&
++		    vaddr <= (vaddr & P4D_MASK) && end >= next)
++			continue;
++
++		if (p4d_leaf(*p4dp)) {
++			struct page *pud_page;
++			unsigned long pfn = _p4d_pfn(*p4dp);
++			pgprot_t prot = __pgprot(p4d_val(*p4dp) & ~_PAGE_PFN_MASK);
++			pud_t *pudp_new;
++			int i;
++
++			pud_page = alloc_page(GFP_KERNEL);
++			if (!pud_page)
++				return -ENOMEM;
++
++			/*
++			 * Fill the pud level with leaf puds that have the same
++			 * protections as the leaf p4d.
++			 */
++			pudp_new = (pud_t *)page_address(pud_page);
++			for (i = 0; i < PTRS_PER_PUD; ++i, ++pudp_new)
++				set_pud(pudp_new,
++					pfn_pud(pfn + ((i * PUD_SIZE) >> PAGE_SHIFT), prot));
++
++			/*
++			 * Make sure the pud filling is not reordered with the
++			 * p4d store which could result in seeing a partially
++			 * filled pud level.
++			 */
++			smp_wmb();
++
++			set_p4d(p4dp, pfn_p4d(page_to_pfn(pud_page), PAGE_TABLE));
++		}
++
++		ret = __split_linear_mapping_pud(p4dp, vaddr, next);
++		if (ret)
++			return ret;
++	} while (p4dp++, vaddr = next, vaddr != end);
++
++	return 0;
++}
++
++static int __split_linear_mapping_pgd(pgd_t *pgdp,
++				      unsigned long vaddr,
++				      unsigned long end)
++{
++	unsigned long next;
++	int ret;
++
++	do {
++		next = pgd_addr_end(vaddr, end);
++		/* We never use PGD mappings for the linear mapping */
++		ret = __split_linear_mapping_p4d(pgdp, vaddr, next);
++		if (ret)
++			return ret;
++	} while (pgdp++, vaddr = next, vaddr != end);
++
++	return 0;
++}
++
++static int split_linear_mapping(unsigned long start, unsigned long end)
++{
++	return __split_linear_mapping_pgd(pgd_offset_k(start), start, end);
++}
++#endif	/* CONFIG_64BIT */
++
+ static int __set_memory(unsigned long addr, int numpages, pgprot_t set_mask,
+ 			pgprot_t clear_mask)
+ {
+ 	int ret;
+ 	unsigned long start = addr;
+ 	unsigned long end = start + PAGE_SIZE * numpages;
++	unsigned long __maybe_unused lm_start;
++	unsigned long __maybe_unused lm_end;
+ 	struct pageattr_masks masks = {
+ 		.set_mask = set_mask,
+ 		.clear_mask = clear_mask
+@@ -120,11 +276,67 @@ static int __set_memory(unsigned long addr, int numpages, pgprot_t set_mask,
+ 		return 0;
+ 
+ 	mmap_write_lock(&init_mm);
++
++#ifdef CONFIG_64BIT
++	/*
++	 * We are about to change the permissions of a kernel mapping, we must
++	 * apply the same changes to its linear mapping alias, which may imply
++	 * splitting a huge mapping.
++	 */
++
++	if (is_vmalloc_or_module_addr((void *)start)) {
++		struct vm_struct *area = NULL;
++		int i, page_start;
++
++		area = find_vm_area((void *)start);
++		page_start = (start - (unsigned long)area->addr) >> PAGE_SHIFT;
++
++		for (i = page_start; i < page_start + numpages; ++i) {
++			lm_start = (unsigned long)page_address(area->pages[i]);
++			lm_end = lm_start + PAGE_SIZE;
++
++			ret = split_linear_mapping(lm_start, lm_end);
++			if (ret)
++				goto unlock;
++
++			ret = walk_page_range_novma(&init_mm, lm_start, lm_end,
++						    &pageattr_ops, NULL, &masks);
++			if (ret)
++				goto unlock;
++		}
++	} else if (is_kernel_mapping(start) || is_linear_mapping(start)) {
++		lm_start = (unsigned long)lm_alias(start);
++		lm_end = (unsigned long)lm_alias(end);
++
++		ret = split_linear_mapping(lm_start, lm_end);
++		if (ret)
++			goto unlock;
++
++		ret = walk_page_range_novma(&init_mm, lm_start, lm_end,
++					    &pageattr_ops, NULL, &masks);
++		if (ret)
++			goto unlock;
++	}
++
+ 	ret =  walk_page_range_novma(&init_mm, start, end, &pageattr_ops, NULL,
+ 				     &masks);
++
++unlock:
++	mmap_write_unlock(&init_mm);
++
++	/*
++	 * We can't use flush_tlb_kernel_range() here as we may have split a
++	 * hugepage that is larger than that, so let's flush everything.
++	 */
++	flush_tlb_all();
++#else
++	ret =  walk_page_range_novma(&init_mm, start, end, &pageattr_ops, NULL,
++				     &masks);
++
+ 	mmap_write_unlock(&init_mm);
+ 
+ 	flush_tlb_kernel_range(start, end);
++#endif
+ 
+ 	return ret;
+ }
+@@ -159,36 +371,14 @@ int set_memory_nx(unsigned long addr, int numpages)
+ 
+ int set_direct_map_invalid_noflush(struct page *page)
+ {
+-	int ret;
+-	unsigned long start = (unsigned long)page_address(page);
+-	unsigned long end = start + PAGE_SIZE;
+-	struct pageattr_masks masks = {
+-		.set_mask = __pgprot(0),
+-		.clear_mask = __pgprot(_PAGE_PRESENT)
+-	};
+-
+-	mmap_read_lock(&init_mm);
+-	ret = walk_page_range(&init_mm, start, end, &pageattr_ops, &masks);
+-	mmap_read_unlock(&init_mm);
+-
+-	return ret;
++	return __set_memory((unsigned long)page_address(page), 1,
++			    __pgprot(0), __pgprot(_PAGE_PRESENT));
+ }
+ 
+ int set_direct_map_default_noflush(struct page *page)
+ {
+-	int ret;
+-	unsigned long start = (unsigned long)page_address(page);
+-	unsigned long end = start + PAGE_SIZE;
+-	struct pageattr_masks masks = {
+-		.set_mask = PAGE_KERNEL,
+-		.clear_mask = __pgprot(0)
+-	};
+-
+-	mmap_read_lock(&init_mm);
+-	ret = walk_page_range(&init_mm, start, end, &pageattr_ops, &masks);
+-	mmap_read_unlock(&init_mm);
+-
+-	return ret;
++	return __set_memory((unsigned long)page_address(page), 1,
++			    PAGE_KERNEL, __pgprot(0));
+ }
+ 
+ #ifdef CONFIG_DEBUG_PAGEALLOC
 -- 
 2.43.0
 
