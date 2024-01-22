@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B991487EA;
-	Tue, 23 Jan 2024 01:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECA91487FA;
+	Tue, 23 Jan 2024 01:08:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972082; cv=none; b=RwDED+tRLl9YmpPRRmtOhkTUKtOfbGfNW0jtMqNQ63HYFMAVgAWkpVRPOio9HyC9UQP3rpBarVpyjOsf0N70k8FBetmqCvgWmjuhWdOMj4s+sdfHh0/LRrbthpuiX2GY7U1BIz/zvAL1ld9yiXZqqVSiNemk3ifSXiinFEhCg/Q=
+	t=1705972083; cv=none; b=YBoTObN479aoxroQ/cfWrocnZD4srpP2UGVtNP9uINu/l1TAm47qKyzWfePI/2qJAjeKEquqHvtZiPSFxwYqj1uepu5RpnoAYs/A5EFgPM/6I1uIKiBfxm02v9fyIEPKpTb0g9VHdTecCuOeo720xkrj7rItzb2wYP4s7rzwaAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972082; c=relaxed/simple;
-	bh=bJbid+rd9vrP9AXncu/tl+9gK85nbedBJsSC6e/o2Nw=;
+	s=arc-20240116; t=1705972083; c=relaxed/simple;
+	bh=QWEJU3os0IWg0dW+O0Yk6OW7xyH4i6RQlsBz4xCxjxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XNNlzkNwLOzpWvWue3Kp+Eg1xGaWDqRYmovQk2vFrGd/LfXXDFAJQJrhthI2rsij+vpGDyw9Ji7wdB+t9jmI/u/LIwHT5k+vUyfTuC+3mIMNxOVN0GW5LwoGunMetnD4wUc1e9pklJNOti2AUUuw23DarG3tj6l/Y3MO8M9dZws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DWjjrLug; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q6MRX/mBy1F02Z/L0ZCPlnPyMOB51gMF8ONidyX3WVAoo2RfFOKV6jT/wWtdIJ5LajdCUCXA0evkXncBNQcfltkgwfABezK3wyo3SgNhT8z1ABdTZILBKKWIU1oWsXZKnzStDxR3hS6VhI2qV1F/hrUT6lgRaZAPhx7xSNq79Po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5mRvmaV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DWjjrLug"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7910C43390;
-	Tue, 23 Jan 2024 01:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5mRvmaV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB61CC433B1;
+	Tue, 23 Jan 2024 01:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972081;
-	bh=bJbid+rd9vrP9AXncu/tl+9gK85nbedBJsSC6e/o2Nw=;
+	s=korg; t=1705972082;
+	bh=QWEJU3os0IWg0dW+O0Yk6OW7xyH4i6RQlsBz4xCxjxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DWjjrLug0RDOlV3oDVCFQVl6W7KzJBd2g9Lp4j8bYM3nbMahXSDcUYDVGOkdpaxw+
-	 kjgBrApkGLxCKUInKChdJEugxgY/OkJOysO1ul1DTupRRkFP1QT+ejpjOPPBLcuphy
-	 MEXuEdCRe6YL9An0pm9qaRtiP66GxLK9pYWq2zio=
+	b=S5mRvmaVv6t+/0FjMfkFeW1nXFmxShBnQa6+IrEYlfZI61b56IumOrvu6Tfo6atRS
+	 Z5IS1jfNh361k5HI7ks4KJuI6fgCv2HJ6O678oHMm9Nh19onqFEfXpjLyA6GP3rVQX
+	 qy4ryJyiOGKYM2ySC79n2X5wYqGHoPdl58XevVJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Lu Yao <yaolu@kylinos.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 006/374] debugfs: fix automount d_fsdata usage
-Date: Mon, 22 Jan 2024 15:54:22 -0800
-Message-ID: <20240122235744.846569148@linuxfoundation.org>
+Subject: [PATCH 5.15 007/374] drm/amdgpu: Fix cat debugfs amdgpu_regs_didt causes kernel null pointer
+Date: Mon, 22 Jan 2024 15:54:23 -0800
+Message-ID: <20240122235744.882639643@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -44,153 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Lu Yao <yaolu@kylinos.cn>
 
-[ Upstream commit 0ed04a1847a10297595ac24dc7d46b35fb35f90a ]
+[ Upstream commit 2161e09cd05a50d80736fe397145340d2e8f6c05 ]
 
-debugfs_create_automount() stores a function pointer in d_fsdata,
-but since commit 7c8d469877b1 ("debugfs: add support for more
-elaborate ->d_fsdata") debugfs_release_dentry() will free it, now
-conditionally on DEBUGFS_FSDATA_IS_REAL_FOPS_BIT, but that's not
-set for the function pointer in automount. As a result, removing
-an automount dentry would attempt to free the function pointer.
-Luckily, the only user of this (tracing) never removes it.
+For 'AMDGPU_FAMILY_SI' family cards, in 'si_common_early_init' func, init
+'didt_rreg' and 'didt_wreg' to 'NULL'. But in func
+'amdgpu_debugfs_regs_didt_read/write', using 'RREG32_DIDT' 'WREG32_DIDT'
+lacks of relevant judgment. And other 'amdgpu_ip_block_version' that use
+these two definitions won't be added for 'AMDGPU_FAMILY_SI'.
 
-Nevertheless, it's safer if we just handle the fsdata in one way,
-namely either DEBUGFS_FSDATA_IS_REAL_FOPS_BIT or allocated. Thus,
-change the automount to allocate it, and use the real_fops in the
-data to indicate whether or not automount is filled, rather than
-adding a type tag. At least for now this isn't actually needed,
-but the next changes will require it.
+So, add null pointer judgment before calling.
 
-Also check in debugfs_file_get() that it gets only called
-on regular files, just to make things clearer.
-
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Lu Yao <yaolu@kylinos.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/debugfs/file.c     |  8 ++++++++
- fs/debugfs/inode.c    | 27 ++++++++++++++++++++-------
- fs/debugfs/internal.h | 10 ++++++++--
- 3 files changed, 36 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
-index 38930d9b0bb7..df5c2162e729 100644
---- a/fs/debugfs/file.c
-+++ b/fs/debugfs/file.c
-@@ -84,6 +84,14 @@ int debugfs_file_get(struct dentry *dentry)
- 	struct debugfs_fsdata *fsd;
- 	void *d_fsd;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+index beb199d13451..632d8df04ef4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -342,6 +342,9 @@ static ssize_t amdgpu_debugfs_regs_didt_read(struct file *f, char __user *buf,
+ 	if (size & 0x3 || *pos & 0x3)
+ 		return -EINVAL;
  
-+	/*
-+	 * This could only happen if some debugfs user erroneously calls
-+	 * debugfs_file_get() on a dentry that isn't even a file, let
-+	 * them know about it.
-+	 */
-+	if (WARN_ON(!d_is_reg(dentry)))
-+		return -EINVAL;
++	if (!adev->didt_rreg)
++		return -EOPNOTSUPP;
 +
- 	d_fsd = READ_ONCE(dentry->d_fsdata);
- 	if (!((unsigned long)d_fsd & DEBUGFS_FSDATA_IS_REAL_FOPS_BIT)) {
- 		fsd = d_fsd;
-diff --git a/fs/debugfs/inode.c b/fs/debugfs/inode.c
-index 26f9cd328291..5290a721a703 100644
---- a/fs/debugfs/inode.c
-+++ b/fs/debugfs/inode.c
-@@ -214,17 +214,19 @@ static const struct super_operations debugfs_super_operations = {
+ 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
+ 	if (r < 0) {
+ 		pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
+@@ -401,6 +404,9 @@ static ssize_t amdgpu_debugfs_regs_didt_write(struct file *f, const char __user
+ 	if (size & 0x3 || *pos & 0x3)
+ 		return -EINVAL;
  
- static void debugfs_release_dentry(struct dentry *dentry)
- {
--	void *fsd = dentry->d_fsdata;
-+	struct debugfs_fsdata *fsd = dentry->d_fsdata;
- 
--	if (!((unsigned long)fsd & DEBUGFS_FSDATA_IS_REAL_FOPS_BIT))
--		kfree(dentry->d_fsdata);
-+	if ((unsigned long)fsd & DEBUGFS_FSDATA_IS_REAL_FOPS_BIT)
-+		return;
++	if (!adev->didt_wreg)
++		return -EOPNOTSUPP;
 +
-+	kfree(fsd);
- }
- 
- static struct vfsmount *debugfs_automount(struct path *path)
- {
--	debugfs_automount_t f;
--	f = (debugfs_automount_t)path->dentry->d_fsdata;
--	return f(path->dentry, d_inode(path->dentry)->i_private);
-+	struct debugfs_fsdata *fsd = path->dentry->d_fsdata;
-+
-+	return fsd->automount(path->dentry, d_inode(path->dentry)->i_private);
- }
- 
- static const struct dentry_operations debugfs_dops = {
-@@ -602,13 +604,23 @@ struct dentry *debugfs_create_automount(const char *name,
- 					void *data)
- {
- 	struct dentry *dentry = start_creating(name, parent);
-+	struct debugfs_fsdata *fsd;
- 	struct inode *inode;
- 
- 	if (IS_ERR(dentry))
- 		return dentry;
- 
-+	fsd = kzalloc(sizeof(*fsd), GFP_KERNEL);
-+	if (!fsd) {
-+		failed_creating(dentry);
-+		return ERR_PTR(-ENOMEM);
-+	}
-+
-+	fsd->automount = f;
-+
- 	if (!(debugfs_allow & DEBUGFS_ALLOW_API)) {
- 		failed_creating(dentry);
-+		kfree(fsd);
- 		return ERR_PTR(-EPERM);
- 	}
- 
-@@ -616,13 +628,14 @@ struct dentry *debugfs_create_automount(const char *name,
- 	if (unlikely(!inode)) {
- 		pr_err("out of free dentries, can not create automount '%s'\n",
- 		       name);
-+		kfree(fsd);
- 		return failed_creating(dentry);
- 	}
- 
- 	make_empty_dir_inode(inode);
- 	inode->i_flags |= S_AUTOMOUNT;
- 	inode->i_private = data;
--	dentry->d_fsdata = (void *)f;
-+	dentry->d_fsdata = fsd;
- 	/* directory inodes start off with i_nlink == 2 (for "." entry) */
- 	inc_nlink(inode);
- 	d_instantiate(dentry, inode);
-diff --git a/fs/debugfs/internal.h b/fs/debugfs/internal.h
-index 92af8ae31313..f7c489b5a368 100644
---- a/fs/debugfs/internal.h
-+++ b/fs/debugfs/internal.h
-@@ -17,8 +17,14 @@ extern const struct file_operations debugfs_full_proxy_file_operations;
- 
- struct debugfs_fsdata {
- 	const struct file_operations *real_fops;
--	refcount_t active_users;
--	struct completion active_users_drained;
-+	union {
-+		/* automount_fn is used when real_fops is NULL */
-+		debugfs_automount_t automount;
-+		struct {
-+			refcount_t active_users;
-+			struct completion active_users_drained;
-+		};
-+	};
- };
- 
- /*
+ 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
+ 	if (r < 0) {
+ 		pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
 -- 
 2.43.0
 
