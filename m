@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88E155797;
-	Tue, 23 Jan 2024 00:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A98E5914C;
+	Tue, 23 Jan 2024 00:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970103; cv=none; b=rX31gkp+J0ZsUd/LtpRJY18SL4gFHq12S30ZxeazkASqG5EwoN3s8K7HXu50KURJUmmhNQPCLLJHNQhgN6rPZcnkD+XYCQYbIWhdZm1NJyUy3Etu2ov6qg2akwq24jUJZuTs2IefYT4OwWpDKgxuOB8u6oiEUJAK2hLPjy+6mn8=
+	t=1705970107; cv=none; b=XJSz4QBE3S/0z+4CJM6R5vzhlbDqoYHbL/EFFJrkRWAcd+qaZKz6cPfnvq+kOsDu2X1/6maOCTXVrJDCbgaHtZOJA0aHVWfM5Fhh/3K47xmXK/3zjxdB8OGdHdro850f74WgOzmqhRaB5kN2mnO/UYZ2Uysg316Hi2ijurcmWAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970103; c=relaxed/simple;
-	bh=maE2XnqWvrDKsk04bL3JYFVFtwZYwYwSjUByr5CPWMk=;
+	s=arc-20240116; t=1705970107; c=relaxed/simple;
+	bh=REZaYdpOqw7EuGlUgmzBpgeDxX+JyGGVH/nh1N2jQ/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HlAHSbFyNcqRsvhuihRBprDknN0BydnsvEdfGi0NlSlqRAnN1zLcqiyGm6Q/Xr4S6o0YKArb2yjgyuR2biGyB08tUdNCc9W6wKl8k8EtEx3/Mtpm7jDAIrevCP9MVJXgB0jmUO4V3WY8r9GLyJGgHStVxzOm94urVWcpauAO9bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPkpM7le; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aK0eatYmOcoz5e4cqsIv/72WiURBIl44wLbcueMp2iGnEdeeazES071tjSMK/J56NkABEJ8b93uOz22fKQ6CgpOLaMepRd5ihAuQqceuh/waSwhqhcRgfoLzi8nvEPfzTe1EI8nmJrRDFeVAtjxdt+gOAEfetXxOt3KlOTgUeik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3LA4bl6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPkpM7le"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288D9C433C7;
-	Tue, 23 Jan 2024 00:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3LA4bl6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E9FC433F1;
+	Tue, 23 Jan 2024 00:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970103;
-	bh=maE2XnqWvrDKsk04bL3JYFVFtwZYwYwSjUByr5CPWMk=;
+	s=korg; t=1705970107;
+	bh=REZaYdpOqw7EuGlUgmzBpgeDxX+JyGGVH/nh1N2jQ/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VPkpM7le9ECtD0KH4R+YVdF/yNdomKtQeULEK4uM2cvR37l763RFaupuIQJOB4NIL
-	 6WUs+vkZAMTEMdWOObWiKwe9KKe1WQY6c6j+rTy0pmUKqQlxsW/VZm4gjzZS8iT/kf
-	 6ILn7zadQ0ZEPZPxGVfZw9WjaOjt1kdJZ72+K/zw=
+	b=D3LA4bl6GoLsIv1X03TQ2gjy3Ykw6v1i0xor+ab84pvEIhdmBphvJCSRylHHA6gqh
+	 ZxDX2S6vp4+7vqoFLpXtB9IiJ/mP/CxOmw2IaizMaPNiZ+rX95Dk8GD//5KsuYN+P3
+	 tdOfslUTcBh+bYYn1eDq1IiwgJ1TiPFt2YKVbnpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 589/641] net: phy: micrel: populate .soft_reset for KSZ9131
-Date: Mon, 22 Jan 2024 15:58:13 -0800
-Message-ID: <20240122235836.645816448@linuxfoundation.org>
+Subject: [PATCH 6.7 590/641] ALSA: hda: Properly setup HDMI stream
+Date: Mon, 22 Jan 2024 15:58:14 -0800
+Message-ID: <20240122235836.681159604@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -47,104 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
 
-[ Upstream commit e398822c4751017fe401f57409488f5948d12fb5 ]
+[ Upstream commit 454abb80e26ab85323a30e52aa7b0ee9aae1d38a ]
 
-The RZ/G3S SMARC Module has 2 KSZ9131 PHYs. In this setup, the KSZ9131 PHY
-is used with the ravb Ethernet driver. It has been discovered that when
-bringing the Ethernet interface down/up continuously, e.g., with the
-following sh script:
+Since commit 4005d1ba0a7e ("ASoC: soc-dai: don't call PCM audio ops if
+the stream is not supported") HDMI playback is broken with avs driver.
+This happens because for HDMI stream (unlike generic HDA one)
+channels_min for stream is not set when creating PCMs. Fix this by
+setting the value based on first available converter.
 
-$ while :; do ifconfig eth0 down; ifconfig eth0 up; done
-
-the link speed and duplex are wrong after interrupting the bring down/up
-operation even though the Ethernet interface is up. To recover from this
-state the following configuration sequence is necessary (executed
-manually):
-
-$ ifconfig eth0 down
-$ ifconfig eth0 up
-
-The behavior has been identified also on the Microchip SAMA7G5-EK board
-which runs the macb driver and uses the same PHY.
-
-The order of PHY-related operations in ravb_open() is as follows:
-ravb_open() ->
-  ravb_phy_start() ->
-    ravb_phy_init() ->
-      of_phy_connect() ->
-        phy_connect_direct() ->
-	  phy_attach_direct() ->
-	    phy_init_hw() ->
-	      phydev->drv->soft_reset()
-	      phydev->drv->config_init()
-	      phydev->drv->config_intr()
-	    phy_resume()
-	      kszphy_resume()
-
-The order of PHY-related operations in ravb_close is as follows:
-ravb_close() ->
-  phy_stop() ->
-    phy_suspend() ->
-      kszphy_suspend() ->
-        genphy_suspend()
-	  // set BMCR_PDOWN bit in MII_BMCR
-
-In genphy_suspend() setting the BMCR_PDWN bit in MII_BMCR switches the PHY
-to Software Power-Down (SPD) mode (according to the KSZ9131 datasheet).
-Thus, when opening the interface after it has been  previously closed (via
-ravb_close()), the phydev->drv->config_init() and
-phydev->drv->config_intr() reach the KSZ9131 PHY driver via the
-ksz9131_config_init() and kszphy_config_intr() functions.
-
-KSZ9131 specifies that the MII management interface remains operational
-during SPD (Software Power-Down), but (according to manual):
-- Only access to the standard registers (0 through 31) is supported.
-- Access to MMD address spaces other than MMD address space 1 is possible
-  if the spd_clock_gate_override bit is set.
-- Access to MMD address space 1 is not possible.
-
-The spd_clock_gate_override bit is not used in the KSZ9131 driver.
-
-ksz9131_config_init() configures RGMII delay, pad skews and LEDs by
-accessesing MMD registers other than those in address space 1.
-
-The datasheet for the KSZ9131 does not specify what happens if registers
-from an unsupported address space are accessed while the PHY is in SPD.
-
-To fix the issue the .soft_reset method has been instantiated for KSZ9131,
-too. This resets the PHY to the default state before doing any
-configurations to it, thus switching it out of SPD.
-
-Fixes: bff5b4b37372 ("net: phy: micrel: add Microchip KSZ9131 initial driver")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4005d1ba0a7e ("ASoC: soc-dai: don't call PCM audio ops if the stream is not supported")
+Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20240112113349.2905328-1-amadeuszx.slawinski@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_hdmi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index 73ee81c583ef..ce5ad4a82481 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -4850,6 +4850,7 @@ static struct phy_driver ksphy_driver[] = {
- 	.flags		= PHY_POLL_CABLE_TEST,
- 	.driver_data	= &ksz9131_type,
- 	.probe		= kszphy_probe,
-+	.soft_reset	= genphy_soft_reset,
- 	.config_init	= ksz9131_config_init,
- 	.config_intr	= kszphy_config_intr,
- 	.config_aneg	= ksz9131_config_aneg,
+diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
+index 78cee53fee02..038db8902c9e 100644
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -2301,6 +2301,7 @@ static int generic_hdmi_build_pcms(struct hda_codec *codec)
+ 	codec_dbg(codec, "hdmi: pcm_num set to %d\n", pcm_num);
+ 
+ 	for (idx = 0; idx < pcm_num; idx++) {
++		struct hdmi_spec_per_cvt *per_cvt;
+ 		struct hda_pcm *info;
+ 		struct hda_pcm_stream *pstr;
+ 
+@@ -2316,6 +2317,11 @@ static int generic_hdmi_build_pcms(struct hda_codec *codec)
+ 		pstr = &info->stream[SNDRV_PCM_STREAM_PLAYBACK];
+ 		pstr->substreams = 1;
+ 		pstr->ops = generic_ops;
++
++		per_cvt = get_cvt(spec, 0);
++		pstr->channels_min = per_cvt->channels_min;
++		pstr->channels_max = per_cvt->channels_max;
++
+ 		/* pcm number is less than pcm_rec array size */
+ 		if (spec->pcm_used >= ARRAY_SIZE(spec->pcm_rec))
+ 			break;
 -- 
 2.43.0
 
