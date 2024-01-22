@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC417158D80;
-	Tue, 23 Jan 2024 00:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36524159574;
+	Tue, 23 Jan 2024 00:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969740; cv=none; b=PPWcSHJiPgdhkgiYtUlvFhGxT57LbbeWyIgwehgrjgLs+upgatbThXElOMoJxnJdzv6cSimVEs39lV46r6W8DAJtNsZ/Y0vw7M0cHnopclUg7L9CfcytzewbWL1iR9jwZZPcZmJRNPqnl0EME48P9DtSIPtyvlFhjrilixOsPa4=
+	t=1705969743; cv=none; b=QytR3cCBRg82UKlZUbwRHhU+rsPDTPR1n2VyBHx9aAwGWMfxoVlibYMX3JTfJpc8vGsdO0wVgnk30GMZ24ebJbziUfkYeRfOfcJqGF0Rkwn1+vW+TYOqczG4qlXX8uHqqpEGwGFiN0uOYHJHfBtd62+rMOX5xtSXUzWUNF4p0ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969740; c=relaxed/simple;
-	bh=7x6FOCtCntJEgjMDJxKm9lho0t0CO3HFLCxcbEeUGUY=;
+	s=arc-20240116; t=1705969743; c=relaxed/simple;
+	bh=z2b1xMLzzEvRZyGBKIl0nJUCSMGr1w8AxMsLihxjkYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4sxe5T7ZaEuMpORa9Ai5+QVcCfVixYPLSYdSWGHoBMO4U+jedNQaGQkbGVKNZW3Zzwk7dDTuitgUSLtv4p183lLH0U9RbbIgEPgBFb1Oj+XPGd9TX+EBSz5OmwusOZbLvA5M8gSEt0TzZdqxRQ19o6AsYmudIEBA9wZy0/chHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Moi64dVR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JfJJ5r+qtYrOgHZm5Upm0ikCkcL4sUdyH5cBQxsTV4vDa8EiiaW4J+ozENLaXLJiFadOkhkpwLy8Gelk53koMZbKnVBEGrMYLVXXRIEZlxX74rPJdkL6nYSaodFgYF4HJ/QosBvDbR4YWK0NEI2REyRSprGK3YMbXzxHtnVOJjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTf3hJut; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Moi64dVR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17EDC433F1;
-	Tue, 23 Jan 2024 00:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTf3hJut"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D28C433B1;
+	Tue, 23 Jan 2024 00:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969740;
-	bh=7x6FOCtCntJEgjMDJxKm9lho0t0CO3HFLCxcbEeUGUY=;
+	s=korg; t=1705969742;
+	bh=z2b1xMLzzEvRZyGBKIl0nJUCSMGr1w8AxMsLihxjkYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Moi64dVRQQDmLiqgor4fhxlimiJ7EhkVqwXwG/RXQQnP9qo6mkOxsFNYq8WUT3/BE
-	 tzFXPRdsjBnybHRb0Wqtq6slIYJv2R/Ucaaw6W6Z0M9+lh/uU9nGBiVou5MP4/U60f
-	 QcVFt3UOQt8xrNWcEvpc14ECUctRU4QJE8jMgArE=
+	b=LTf3hJutBTajuKmR9Bw2PgbGMlBWQ3wdBNiqWmPrnifWCEXQPv28xgz9enZvY5gcF
+	 1J7MUH9ZRlMqbuF5Y/UfQyYm0qXkRBM9zxw99q0k0GkcaNWwQOhYh4PWK8F3Z4uHt6
+	 V8tlpwzPZFrNBtpQEXR2UWPRlS0n0QIHXvm9SIb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chen <peter.chen@kernel.org>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Li Jun <jun.li@nxp.com>
-Subject: [PATCH 6.7 401/641] usb: chipidea: wait controller resume finished for wakeup irq
-Date: Mon, 22 Jan 2024 15:55:05 -0800
-Message-ID: <20240122235830.520880708@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.7 402/641] usb: cdns3: fix uvc failure work since sg support enabled
+Date: Mon, 22 Jan 2024 15:55:06 -0800
+Message-ID: <20240122235830.553112480@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,46 +49,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 128d849074d05545becf86e713715ce7676fc074 upstream.
+commit 1b8be5ecff26201bafb0a554c74e91571299fb94 upstream.
 
-After the chipidea driver introduce extcon for id and vbus, it's able
-to wakeup from another irq source, in case the system with extcon ID
-cable, wakeup from usb ID cable and device removal, the usb device
-disconnect irq may come firstly before the extcon notifier while system
-resume, so we will get 2 "wakeup" irq, one for usb device disconnect;
-and one for extcon ID cable change(real wakeup event), current driver
-treat them as 2 successive wakeup irq so can't handle it correctly, then
-finally the usb irq can't be enabled. This patch adds a check to bypass
-further usb events before controller resume finished to fix it.
+When IP version >= DEV_VER_V2, gadget:sg_supported is true. So uvc gadget
+function driver will use sg to equeue data, first is 8bytes header, the
+second is 1016bytes data.
 
-Fixes: 1f874edcb731 ("usb: chipidea: add runtime power management support")
-cc:  <stable@vger.kernel.org>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Signed-off-by: Li Jun <jun.li@nxp.com>
-Link: https://lore.kernel.org/r/20231228110753.1755756-2-xu.yang_2@nxp.com
+    cdns3_prepare_trb: ep2in: trb 0000000000ac755f, dma buf: 0xbf455000, size: 8, burst: 128 ctrl: 0x00000415 (C=1, T=0, ISP, CHAIN, Normal)
+    cdns3_prepare_trb: ep2in: trb 00000000a574e693, dma buf: 0xc0200fe0, size: 1016, burst: 128 ctrl: 0x00000405 (C=1, T=0, ISP, Normal)
+
+But cdns3_ep_run_transfer() can't correctly handle this case, which only
+support one TRB for ISO transfer.
+
+The controller requires duplicate the TD for each SOF if priv_ep->interval
+is not 1. DMA will read data from DDR to internal FIFO when get SOF. Send
+data to bus when receive IN token. DMA always refill FIFO when get SOF
+regardless host send IN token or not. If host send IN token later, some
+frames data will be lost.
+
+Fixed it by below major steps:
+
+1. Calculate numembers of TRB base on sg_nums and priv_ep->interval.
+2. Remove CHAIN flags for each end TRB of TD when duplicate TD.
+3. The controller requires LINK TRB must be first TRB of TD. When check
+there are not enough TRBs lefts, just fill LINK TRB for left TRBs.
+
+.... CHAIN_TRB DATA_TRB, CHAIN_TRB DATA_TRB,  LINK_TRB ... LINK_TRB
+                                                           ^End of TRB List
+
+Cc:  <stable@vger.kernel.org>
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20231224153816.1664687-2-Frank.Li@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/core.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/cdns3/cdns3-gadget.c |   51 ++++++++++++++++++++++++++++++---------
+ 1 file changed, 40 insertions(+), 11 deletions(-)
 
---- a/drivers/usb/chipidea/core.c
-+++ b/drivers/usb/chipidea/core.c
-@@ -523,6 +523,13 @@ static irqreturn_t ci_irq_handler(int ir
- 	u32 otgsc = 0;
+--- a/drivers/usb/cdns3/cdns3-gadget.c
++++ b/drivers/usb/cdns3/cdns3-gadget.c
+@@ -1119,6 +1119,7 @@ static int cdns3_ep_run_transfer(struct
+ 	dma_addr_t trb_dma;
+ 	u32 togle_pcs = 1;
+ 	int sg_iter = 0;
++	int num_trb_req;
+ 	int num_trb;
+ 	int address;
+ 	u32 control;
+@@ -1127,15 +1128,13 @@ static int cdns3_ep_run_transfer(struct
+ 	struct scatterlist *s = NULL;
+ 	bool sg_supported = !!(request->num_mapped_sgs);
  
- 	if (ci->in_lpm) {
-+		/*
-+		 * If we already have a wakeup irq pending there,
-+		 * let's just return to wait resume finished firstly.
-+		 */
-+		if (ci->wakeup_int)
-+			return IRQ_HANDLED;
++	num_trb_req = sg_supported ? request->num_mapped_sgs : 1;
 +
- 		disable_irq_nosync(irq);
- 		ci->wakeup_int = true;
- 		pm_runtime_get(ci->dev);
++	/* ISO transfer require each SOF have a TD, each TD include some TRBs */
+ 	if (priv_ep->type == USB_ENDPOINT_XFER_ISOC)
+-		num_trb = priv_ep->interval;
++		num_trb = priv_ep->interval * num_trb_req;
+ 	else
+-		num_trb = sg_supported ? request->num_mapped_sgs : 1;
+-
+-	if (num_trb > priv_ep->free_trbs) {
+-		priv_ep->flags |= EP_RING_FULL;
+-		return -ENOBUFS;
+-	}
++		num_trb = num_trb_req;
+ 
+ 	priv_req = to_cdns3_request(request);
+ 	address = priv_ep->endpoint.desc->bEndpointAddress;
+@@ -1184,14 +1183,31 @@ static int cdns3_ep_run_transfer(struct
+ 
+ 		link_trb->control = cpu_to_le32(((priv_ep->pcs) ? TRB_CYCLE : 0) |
+ 				    TRB_TYPE(TRB_LINK) | TRB_TOGGLE | ch_bit);
++
++		if (priv_ep->type == USB_ENDPOINT_XFER_ISOC) {
++			/*
++			 * ISO require LINK TRB must be first one of TD.
++			 * Fill LINK TRBs for left trb space to simply software process logic.
++			 */
++			while (priv_ep->enqueue) {
++				*trb = *link_trb;
++				trace_cdns3_prepare_trb(priv_ep, trb);
++
++				cdns3_ep_inc_enq(priv_ep);
++				trb = priv_ep->trb_pool + priv_ep->enqueue;
++				priv_req->trb = trb;
++			}
++		}
++	}
++
++	if (num_trb > priv_ep->free_trbs) {
++		priv_ep->flags |= EP_RING_FULL;
++		return -ENOBUFS;
+ 	}
+ 
+ 	if (priv_dev->dev_ver <= DEV_VER_V2)
+ 		togle_pcs = cdns3_wa1_update_guard(priv_ep, trb);
+ 
+-	if (sg_supported)
+-		s = request->sg;
+-
+ 	/* set incorrect Cycle Bit for first trb*/
+ 	control = priv_ep->pcs ? 0 : TRB_CYCLE;
+ 	trb->length = 0;
+@@ -1209,6 +1225,9 @@ static int cdns3_ep_run_transfer(struct
+ 	do {
+ 		u32 length;
+ 
++		if (!(sg_iter % num_trb_req) && sg_supported)
++			s = request->sg;
++
+ 		/* fill TRB */
+ 		control |= TRB_TYPE(TRB_NORMAL);
+ 		if (sg_supported) {
+@@ -1250,7 +1269,7 @@ static int cdns3_ep_run_transfer(struct
+ 		if (sg_supported) {
+ 			trb->control |= cpu_to_le32(TRB_ISP);
+ 			/* Don't set chain bit for last TRB */
+-			if (sg_iter < num_trb - 1)
++			if ((sg_iter % num_trb_req) < num_trb_req - 1)
+ 				trb->control |= cpu_to_le32(TRB_CHAIN);
+ 
+ 			s = sg_next(s);
+@@ -1508,6 +1527,12 @@ static void cdns3_transfer_completed(str
+ 
+ 		/* The TRB was changed as link TRB, and the request was handled at ep_dequeue */
+ 		while (TRB_FIELD_TO_TYPE(le32_to_cpu(trb->control)) == TRB_LINK) {
++
++			/* ISO ep_traddr may stop at LINK TRB */
++			if (priv_ep->dequeue == cdns3_get_dma_pos(priv_dev, priv_ep) &&
++			    priv_ep->type == USB_ENDPOINT_XFER_ISOC)
++				break;
++
+ 			trace_cdns3_complete_trb(priv_ep, trb);
+ 			cdns3_ep_inc_deq(priv_ep);
+ 			trb = priv_ep->trb_pool + priv_ep->dequeue;
+@@ -1540,6 +1565,10 @@ static void cdns3_transfer_completed(str
+ 			}
+ 
+ 			if (request_handled) {
++				/* TRBs are duplicated by priv_ep->interval time for ISO IN */
++				if (priv_ep->type == USB_ENDPOINT_XFER_ISOC && priv_ep->dir)
++					request->actual /= priv_ep->interval;
++
+ 				cdns3_gadget_giveback(priv_ep, priv_req, 0);
+ 				request_handled = false;
+ 				transfer_end = false;
 
 
