@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6828760887;
-	Tue, 23 Jan 2024 00:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14593FFE;
+	Tue, 23 Jan 2024 00:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970944; cv=none; b=B/Oak9PFN6Tj4Y+4/r9vRzy0Ux+XnBfkKcfACJp89cMjgCsvjqauXLdYwW63dH3sRna+1DDjiSRC0JsZ/Ja0WJ81UW/Pj6v+UxfNRQTDZ7HH6h5GHrbyGbSnq0WKWb5M+7AO1hVia/F5YcBo+jdws1wvGa7Re78CJgaps3SdX/I=
+	t=1705970946; cv=none; b=ndhz8sUan7WKXJcFVWIhHQhaKj/0nQQyR8fPrS/6U65R+d/Dz/RQ0bjNFHwYI62jMVJJFKxDhNHDGssXMClEQ/GyQdO1d/XhSwriVks2n0Udk0JvMGyA+gUgiufNzhyH8g6dunJWZtuYHy5Fe7OX3AnR/9Lz1xwhqcHn5HyYPZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970944; c=relaxed/simple;
-	bh=mVw0bpTvq/x/ZrG8rNKoQx3B1IuYcc+3mgWwJqc0Iuc=;
+	s=arc-20240116; t=1705970946; c=relaxed/simple;
+	bh=JejALwjfDkGcQLVmmUEFNesHqAbIdgGyN+zjpD5SPDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7CIuoIhhyEq1Y6kVgVXrK68ZerDWGf6IRG8ag9vpaqTnc9MVB2XCLxB6HrPrVt/TxzM5n8xw/mzbZeTdX4HmropwQKTu76Cdgc+/2isW6vc8tjB3xqcU5pD72cgS6ROdpcVaHF8/HI/snuxyI2k6yFsvHFtRalEHkpLqXHFl0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmsoNDyD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eIYO2k3/bbm4d0InYUwk++tttYTeJuzeXWt5MefIduWlQQq2BIqlcprHAzBtC4WNG6A49FTtT0zbcFhTL4BnOodnTDaNmZS5FG2cxfqAXLATfY172Ta3DiQQqoqpifeZoDleHXFfZr3RwYBDmGYmisOSZkT9zWPSOSX4MPd4Cl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Am4WkAeu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmsoNDyD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A232C43390;
-	Tue, 23 Jan 2024 00:49:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Am4WkAeu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B975BC43390;
+	Tue, 23 Jan 2024 00:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970944;
-	bh=mVw0bpTvq/x/ZrG8rNKoQx3B1IuYcc+3mgWwJqc0Iuc=;
+	s=korg; t=1705970945;
+	bh=JejALwjfDkGcQLVmmUEFNesHqAbIdgGyN+zjpD5SPDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kmsoNDyD2uQI/iX/P0tbX3TwX1JLcjHPFrb5+0kyhfb2GYEV8ZyExzP8awf+6wYlK
-	 jWnfBUCSdRr23qJx6VgSxQsMYTF48UDHXSdDt45FMUrSoHf7pQwsPG/L+ch4X0GkVF
-	 HZA+jEuxtOQjAY3pOafABzksWLdHeMP9y49h5dTU=
+	b=Am4WkAeuoj2NtbY/h0XlNC6Rxz0a2AcyyWhFQnB2urOfbT/nrFMx7UgLgRl8lNKKy
+	 CwJsLDqtnnUWXTnTihQJb9WmLLfVPT8Q9idUy8aaPlWlOWtUjb/4FQuRhr27pQCHo8
+	 tMdxrfgfRox1vbK+gYN4DeEpW7b/DiASy/hc+s80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 114/417] arm64: dts: renesas: white-hawk-cpu: Fix missing serial console pin control
-Date: Mon, 22 Jan 2024 15:54:42 -0800
-Message-ID: <20240122235755.717511677@linuxfoundation.org>
+Subject: [PATCH 5.10 049/286] x86/lib: Fix overflow when counting digits
+Date: Mon, 22 Jan 2024 15:55:55 -0800
+Message-ID: <20240122235733.920115507@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,40 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit fc67495680f60e88bb8ca43421c1dd628928d581 ]
+[ Upstream commit a24d61c609813963aacc9f6ec8343f4fcaac7243 ]
 
-The pin control description for the serial console was added, but not
-enabled, due to missing pinctrl properties in the serial port device
-node.
+tl;dr: The num_digits() function has a theoretical overflow issue.
+But it doesn't affect any actual in-tree users.  Fix it by using
+a larger type for one of the local variables.
 
-Fixes: 7a8d590de8132853 ("arm64: dts: renesas: white-hawk-cpu: Add serial port pin control")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/8a51516581cd71ecbfa174af9c7cebad1fc83c5b.1702459865.git.geert+renesas@glider.be
+Long version:
+
+There is an overflow in variable m in function num_digits when val
+is >= 1410065408 which leads to the digit calculation loop to
+iterate more times than required. This results in either more
+digits being counted or in some cases (for example where val is
+1932683193) the value of m eventually overflows to zero and the
+while loop spins forever).
+
+Currently the function num_digits is currently only being used for
+small values of val in the SMP boot stage for digit counting on the
+number of cpus and NUMA nodes, so the overflow is never encountered.
+However it is useful to fix the overflow issue in case the function
+is used for other purposes in the future. (The issue was discovered
+while investigating the digit counting performance in various
+kernel helper functions rather than any real-world use-case).
+
+The simplest fix is to make m a long long, the overhead in
+multiplication speed for a long long is very minor for small values
+of val less than 10000 on modern processors. The alternative
+fix is to replace the multiplication with a constant division
+by 10 loop (this compiles down to an multiplication and shift)
+without needing to make m a long long, but this is slightly slower
+than the fix in this commit when measured on a range of x86
+processors).
+
+[ dhansen: subject and changelog tweaks ]
+
+Fixes: 646e29a1789a ("x86: Improve the printout of the SMP bootup CPU table")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://lore.kernel.org/all/20231102174901.2590325-1-colin.i.king%40gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-cpu.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/lib/misc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-cpu.dtsi b/arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-cpu.dtsi
-index 895f0bd9f754..541b1e73b65e 100644
---- a/arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-cpu.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-cpu.dtsi
-@@ -125,6 +125,9 @@ &extalr_clk {
- };
+diff --git a/arch/x86/lib/misc.c b/arch/x86/lib/misc.c
+index a018ec4fba53..c97be9a1430a 100644
+--- a/arch/x86/lib/misc.c
++++ b/arch/x86/lib/misc.c
+@@ -6,7 +6,7 @@
+  */
+ int num_digits(int val)
+ {
+-	int m = 10;
++	long long m = 10;
+ 	int d = 1;
  
- &hscif0 {
-+	pinctrl-0 = <&hscif0_pins>;
-+	pinctrl-names = "default";
-+
- 	status = "okay";
- };
- 
+ 	if (val < 0) {
 -- 
 2.43.0
 
