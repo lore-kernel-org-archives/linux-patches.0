@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAB65C603;
-	Tue, 23 Jan 2024 00:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2BD56B89;
+	Tue, 23 Jan 2024 00:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969818; cv=none; b=ejVpuK7+tOvqVyFWBZJb29dWvSujhG023fjGuonQkKT36YpVB2e4P4Pz0MLwhhx0OGhFPOpq01BFEZV/6BR3yrW051svypoIpjS6QEYrxB9beZ0C4f8HoVzWzOmEluOPsVeKIRCgYgrzMMFmD1NRklzjvIo4/GtbAWvDqxRKiXY=
+	t=1705969820; cv=none; b=Af7zkkfHKn1ksdlcFvDFGfz8F/P4UORU8AFn2KxNY98p0Xwwe+QR5sHjNYykfOrcQYfxm6iVn7aDGN1OzosJ+0NxBeeiHbBUGg264Yp6qSJSyO2dvTYfGm0RAKr6bui5eAFgLqzFYo5+XLVSfwcZ6e7WZjts+tlbbMC/EQvhV98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969818; c=relaxed/simple;
-	bh=uzZqnJ3vGqupiapXo6qaxcx5BmAK8/EFJL0AzGrT6TA=;
+	s=arc-20240116; t=1705969820; c=relaxed/simple;
+	bh=1SEVr7f/RSdTjRGXfoIbZnxJ5O/cY70vZ1NMe4t/ZFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A68K3jLw23rvqRA6XwIIlOs54cT7OIVMGjAq9eSe1C2GCEvTZ3XX2XUAtQfDf8QoYLotkWMakxHjsolBuoNxeL9dkN1JEbadas48DUoOkkr9b4hTkVc9pxwlnXECxTRNn0DH7a03iFojkH+hehdB9vgCY6TQPlvlFyR8roVB7mM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hn61a1Ox; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fKdLtlp4gbWksG4LvKF8dnkRjzMKXcy26zpLv633jXGYSnExZaVsbl4SYvrpwo2DtwGr+EH8B6HD6qT4VctBcEz5sM+EmKdz8oeURwtgnwrOcBLySPTNrzmn+MpPBJuOimVUOXnANMIEtHF9CjhmHVzt1aH3xTufSBHYF1Qc7EA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgeEJzVt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hn61a1Ox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12EB1C433C7;
-	Tue, 23 Jan 2024 00:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgeEJzVt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0794AC433C7;
+	Tue, 23 Jan 2024 00:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969818;
-	bh=uzZqnJ3vGqupiapXo6qaxcx5BmAK8/EFJL0AzGrT6TA=;
+	s=korg; t=1705969820;
+	bh=1SEVr7f/RSdTjRGXfoIbZnxJ5O/cY70vZ1NMe4t/ZFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hn61a1OxQqyAhimVdONmgvv/tskTmNOvtL//umdKwYC78d7l4s2zgOIV5loE9kaXs
-	 dbBBSzAS74gydevsU6cyc4Bqn/p9qvNKd4AZMCrV+uj7vMqzpq3UeJcvaGrws7VXmQ
-	 nDWmLzG7Y+vcOIZZyxlsJSGNL6rQ2XR86rjz6c5U=
+	b=SgeEJzVtnUjIlATosc2umUr5JJpQsesnm6J6kqVA3b/4OCo4xWGpU6U3YEv0Vm/tT
+	 mbGhfBGgUliJJvWnEg4LsfZXEB7aMpzk3oU+NXiMt05lQaxXWQmzNqEkCt6/PbNDL7
+	 L1F26+wdjCsUJEc0COtWm2Zdl0U+tQ+QQM81Gvyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <niklas.cassel@wdc.com>,
+	qizhong cheng <qizhong.cheng@mediatek.com>,
+	Jianjun Wang <jianjun.wang@mediatek.com>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>
-Subject: [PATCH 6.7 468/641] PCI: dwc: endpoint: Fix dw_pcie_ep_raise_msix_irq() alignment support
-Date: Mon, 22 Jan 2024 15:56:12 -0800
-Message-ID: <20240122235832.684822707@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH 6.7 469/641] PCI: mediatek: Clear interrupt status before dispatching handler
+Date: Mon, 22 Jan 2024 15:56:13 -0800
+Message-ID: <20240122235832.716889199@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,45 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <niklas.cassel@wdc.com>
+From: qizhong cheng <qizhong.cheng@mediatek.com>
 
-commit 2217fffcd63f86776c985d42e76daa43a56abdf1 upstream.
+commit 4e11c29873a8a296a20f99b3e03095e65ebf897d upstream.
 
-Commit 6f5e193bfb55 ("PCI: dwc: Fix dw_pcie_ep_raise_msix_irq() to get
-correct MSI-X table address") modified dw_pcie_ep_raise_msix_irq() to
-support iATUs which require a specific alignment.
+We found a failure when using the iperf tool during WiFi performance
+testing, where some MSIs were received while clearing the interrupt
+status, and these MSIs cannot be serviced.
 
-However, this support cannot have been properly tested.
+The interrupt status can be cleared even if the MSI status remains pending.
+As such, given the edge-triggered interrupt type, its status should be
+cleared before being dispatched to the handler of the underling device.
 
-The whole point is for the iATU to map an address that is aligned,
-using dw_pcie_ep_map_addr(), and then let the writel() write to
-ep->msi_mem + aligned_offset.
-
-Thus, modify the address that is mapped such that it is aligned.
-With this change, dw_pcie_ep_raise_msix_irq() matches the logic in
-dw_pcie_ep_raise_msi_irq().
-
-Link: https://lore.kernel.org/linux-pci/20231128132231.2221614-1-nks@flawful.org
-Fixes: 6f5e193bfb55 ("PCI: dwc: Fix dw_pcie_ep_raise_msix_irq() to get correct MSI-X table address")
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
+[kwilczynski: commit log, code comment wording]
+Link: https://lore.kernel.org/linux-pci/20231211094923.31967-1-jianjun.wang@mediatek.com
+Fixes: 43e6409db64d ("PCI: mediatek: Add MSI support for MT2712 and MT7622")
+Signed-off-by: qizhong cheng <qizhong.cheng@mediatek.com>
+Signed-off-by: Jianjun Wang <jianjun.wang@mediatek.com>
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: stable@vger.kernel.org # 5.7
-Cc: Kishon Vijay Abraham I <kishon@kernel.org>
+[bhelgaas: rewrap comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc:  <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/controller/pcie-mediatek.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -615,6 +615,7 @@ int dw_pcie_ep_raise_msix_irq(struct dw_
+--- a/drivers/pci/controller/pcie-mediatek.c
++++ b/drivers/pci/controller/pcie-mediatek.c
+@@ -617,12 +617,18 @@ static void mtk_pcie_intr_handler(struct
+ 		if (status & MSI_STATUS){
+ 			unsigned long imsi_status;
+ 
++			/*
++			 * The interrupt status can be cleared even if the
++			 * MSI status remains pending. As such, given the
++			 * edge-triggered interrupt type, its status should
++			 * be cleared before being dispatched to the
++			 * handler of the underlying device.
++			 */
++			writel(MSI_STATUS, port->base + PCIE_INT_STATUS);
+ 			while ((imsi_status = readl(port->base + PCIE_IMSI_STATUS))) {
+ 				for_each_set_bit(bit, &imsi_status, MTK_MSI_IRQS_NUM)
+ 					generic_handle_domain_irq(port->inner_domain, bit);
+ 			}
+-			/* Clear MSI interrupt status */
+-			writel(MSI_STATUS, port->base + PCIE_INT_STATUS);
+ 		}
  	}
  
- 	aligned_offset = msg_addr & (epc->mem->window.page_size - 1);
-+	msg_addr &= ~aligned_offset;
- 	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
- 				  epc->mem->window.page_size);
- 	if (ret)
 
 
