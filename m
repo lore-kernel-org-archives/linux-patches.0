@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9132A14A4DA;
-	Tue, 23 Jan 2024 00:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0A114A4CF;
+	Tue, 23 Jan 2024 00:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969219; cv=none; b=QBGcuzlmP3TNdvfPn1Sqep5jlzYFxPY4da76ND12R4BfO5afm8BnzK0AEeE1D4Rt+3pJDTG2gxNmOJJ/z1/Y6X1HYHnNaIGlboF4yAIWCRsZZwOvwNlBOerKYsJ9c9vJWBGyjwKj4fq2NIWJpp3xQUHdY7KBXTH3zODQ+Vds97Y=
+	t=1705969220; cv=none; b=FVN0xsij/vTe2By/Wfqr9Usyx1qRBO5Wf/dI9UwWBHutOu5lh08twXZHUuchjliw3GTy+YnThXaXnoUDwZxFLBAbMjo49+5Qs/llu7RpgQY1rne9uLO1f+PrjKj0LaaOsTy0GFfiDfOW0wBALdq86XJmTvXMwsq/8x+JUkp63es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969219; c=relaxed/simple;
-	bh=9KOFSi6hv8E3mV+thkO1tLReIxWR6DtFKo76/ryEvC4=;
+	s=arc-20240116; t=1705969220; c=relaxed/simple;
+	bh=PS8reSd+/Szebk/j5zh93qM0puF9kNC4XX0QJKhPPbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JoI0glnrJa9ZTpJtL+u4xjyE+VoMkjn5IvwKXh2NHDnI/hUE5k2zWiud4FCzIGPbzKPa3x2P5TutItKPUAwkQHzPhJJhZL52wUFkx0AhWADaI2+H5C5LWTYAussvzxkUpmvuDh7GV4jYCzVk6ruu6nOOYa3A45WppxAOLz0Btnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+aHtNi3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hXu41VcUlAKp6+4F6S+5MRzCBpJFQlN+9TazvADWJugvt9Z3OxyUbQ3ruMP2g/98e/pc8V+4smZQ6WS2GBdOu0kgtmC7+ENf1hFxM/z+ZthFFol/HCpg/osY8P9DrwibYEh/OhZrtHtYzTcmfzAHw67s+QjnRplnUW96Ahk2B8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ffj30w3X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+aHtNi3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5208BC433F1;
-	Tue, 23 Jan 2024 00:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ffj30w3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB38C433C7;
+	Tue, 23 Jan 2024 00:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969219;
-	bh=9KOFSi6hv8E3mV+thkO1tLReIxWR6DtFKo76/ryEvC4=;
+	s=korg; t=1705969220;
+	bh=PS8reSd+/Szebk/j5zh93qM0puF9kNC4XX0QJKhPPbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+aHtNi3uz0bbPUTTguQVGllzE1NTrYvVpDyQGjkqRFoMrv1ZmtKzWMTiyVz++zFG
-	 wd5mfSMo1C0suLZfpRsjpnVWaySuuRfNt3iAlCSZYLd66nDtD/ucl7D56b9cZomSa3
-	 WmD01+0t30yfavVYKSR4moJ9z485figUAxnmF6As=
+	b=Ffj30w3X2H/9dlixav+E5pOVlkoKcSHdH8mBXlUqBO0/Q/CUhJ//R5flpACsWf+WL
+	 STQAhjCJpARzcakCJpp1Fhqovx52cihNJrKdGVr74iLbYIxKyyxJ+ovHQ66ewHpkTs
+	 LKh5/GA8qIcGTstpfyuMirlWf9RVJIE+pbgOqXxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	David Howells <dhowells@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Guo Ren <guoren@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 083/641] keys, dns: Fix size check of V1 server-list header
-Date: Mon, 22 Jan 2024 15:49:47 -0800
-Message-ID: <20240122235820.631500254@linuxfoundation.org>
+Subject: [PATCH 6.7 084/641] csky: fix arch_jump_label_transform_static override
+Date: Mon, 22 Jan 2024 15:49:48 -0800
+Message-ID: <20240122235820.658932644@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,43 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit acc657692aed438e9931438f8c923b2b107aebf9 ]
+[ Upstream commit ca8e45c8048a2c9503c74751d25414601f730580 ]
 
-Fix the size check added to dns_resolver_preparse() for the V1 server-list
-header so that it doesn't give EINVAL if the size supplied is the same as
-the size of the header struct (which should be valid).
+The arch_jump_label_transform_static() function in csky was originally meant to
+override the generic __weak function, but that got changed to an #ifndef check.
 
-This can be tested with:
+This showed up as a missing-prototype warning:
+arch/csky/kernel/jump_label.c:43:6: error: no previous prototype for 'arch_jump_label_transform_static' [-Werror=missing-prototypes]
 
-        echo -n -e '\0\0\01\xff\0\0' | keyctl padd dns_resolver desc @p
+Change the method to use the new method of having a #define and a prototype
+for the global function.
 
-which will give "add_key: Invalid argument" without this fix.
-
-Fixes: 1997b3cb4217 ("keys, dns: Fix missing size check of V1 server-list header")
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-Link: https://lore.kernel.org/r/ZZ4fyY4r3rqgZL+4@xpf.sh.intel.com/
-Signed-off-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 7e6b9db27de9 ("jump_label: make initial NOP patching the special case")
+Fixes: 4e8bb4ba5a55 ("csky: Add jump-label implementation")
+Reviewed-by: Guo Ren <guoren@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dns_resolver/dns_key.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/csky/include/asm/jump_label.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/dns_resolver/dns_key.c b/net/dns_resolver/dns_key.c
-index f18ca02aa95a..c42ddd85ff1f 100644
---- a/net/dns_resolver/dns_key.c
-+++ b/net/dns_resolver/dns_key.c
-@@ -104,7 +104,7 @@ dns_resolver_preparse(struct key_preparsed_payload *prep)
- 		const struct dns_server_list_v1_header *v1;
+diff --git a/arch/csky/include/asm/jump_label.h b/arch/csky/include/asm/jump_label.h
+index d488ba6084bc..98a3f4b168bd 100644
+--- a/arch/csky/include/asm/jump_label.h
++++ b/arch/csky/include/asm/jump_label.h
+@@ -43,5 +43,10 @@ static __always_inline bool arch_static_branch_jump(struct static_key *key,
+ 	return true;
+ }
  
- 		/* It may be a server list. */
--		if (datalen <= sizeof(*v1))
-+		if (datalen < sizeof(*v1))
- 			return -EINVAL;
- 
- 		v1 = (const struct dns_server_list_v1_header *)data;
++enum jump_label_type;
++void arch_jump_label_transform_static(struct jump_entry *entry,
++				      enum jump_label_type type);
++#define arch_jump_label_transform_static arch_jump_label_transform_static
++
+ #endif  /* __ASSEMBLY__ */
+ #endif	/* __ASM_CSKY_JUMP_LABEL_H */
 -- 
 2.43.0
 
