@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B739412CDB0;
-	Tue, 23 Jan 2024 00:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D66012CDB0;
+	Tue, 23 Jan 2024 00:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968991; cv=none; b=qQ5yOi5JJHXfEIF4fG6n3/JkDEIIyQQ64dvh0+CfHBKEI4nUe4ev72V4Tz8ZdUf8ELDL48sg6gwMYEyvnS1i8EAXMMKvnpXOE+OyFExmwppTjLEZ5qSrUQUWSc6eASehtqS7Zk9r+HkRRWoku+5frZ/wUfG1UYO1KSw+0+sZ/vI=
+	t=1705968993; cv=none; b=RInnCb1g3x97pMmju2+07+HYrOdmJj00mRe/rGY2M06sXwIoAVgA21pfOdCfHbC1fXzIyUpEjZkY6+ei1yVwGcnFHKJH9DQeG4XeZomJbn4h0Ml6vGlH2Av0xVDwHj8e4bDHnTsNWeORAkNjE8EbCzMu+p/usjTMGjSOakhBv6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968991; c=relaxed/simple;
-	bh=bEQYW3E4Z75j0picskT0J6xiUmDIuM+vSTB1HVwj+Eg=;
+	s=arc-20240116; t=1705968993; c=relaxed/simple;
+	bh=p1lYo5l+PytBoufEf/nxJmkmRqsJLHHxLqXhG2/ou48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQpGg5S0MwHhkb9gYl8sm73jeLvt6ziKl6iLIP+MjI7V2qUx1ctaroLptH/q6Ye5XtynwseWLM5f2PxfbF+wTf94hrIogcafJ9HHrO1LPB1cho13BD1Lcu/9/tvuCpAlfpJFVTNZ6C6bEcnfYSipEGHAfekICAQQzIn7i+dQb48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IH8EsA6R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NkjpaYHRAIK3DfR0mqzRvcw8Aw7c9S/D4CfeoEijC38G1z/GGPytizUlJfLwIva5muRM8ag0rQoh/DXYClZ4DNsRqCj7RT96K+Pna847oX7xJyam4jjKHmXfdbDexUrp/ahNCHamd6kLPv0SW/M1U/VZttDzKhfR1l1I+Ry7vRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SrbtKgFJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IH8EsA6R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546FEC43390;
-	Tue, 23 Jan 2024 00:16:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SrbtKgFJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61B1C433C7;
+	Tue, 23 Jan 2024 00:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968991;
-	bh=bEQYW3E4Z75j0picskT0J6xiUmDIuM+vSTB1HVwj+Eg=;
+	s=korg; t=1705968993;
+	bh=p1lYo5l+PytBoufEf/nxJmkmRqsJLHHxLqXhG2/ou48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IH8EsA6RckI+ovda6hrAPRIxn/2zSIDMo7ZL56Av5g/o46dkrHqs4l622srLm26VS
-	 dXWs/a43hj8aDl4945eclj1A0W9E/hC8aqSob4ul69birEj7Jhrzcj+c6vFudulKJu
-	 /CTHBPVEBd4F8NgkomB35JiYSxmxG27c/LZfFR0w=
+	b=SrbtKgFJ71Vhrh40+sp5cKbMnmRNJ2pAw/i30KxFtxj6xYiJPTdkF1vvA6ZUHwm/H
+	 No77X1jeR5/L/83Re4gh+sq2zaXH3IiCV657Mlh9/evM1DInno0VIIul2OI8aeNAcq
+	 3qcHnEBUxizvU7nyGYbv72ctTVI/6UaoqlApSffg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>
-Subject: [PATCH 5.4 146/194] tick-sched: Fix idle and iowait sleeptime accounting vs CPU hotplug
-Date: Mon, 22 Jan 2024 15:57:56 -0800
-Message-ID: <20240122235725.496781835@linuxfoundation.org>
+	Peter Chen <peter.chen@kernel.org>,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 5.4 147/194] usb: phy: mxs: remove CONFIG_USB_OTG condition for mxs_phy_is_otg_host()
+Date: Mon, 22 Jan 2024 15:57:57 -0800
+Message-ID: <20240122235725.532111052@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -52,85 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 71fee48fb772ac4f6cfa63dbebc5629de8b4cc09 upstream.
+commit ff2b89de471da942a4d853443688113a44fd35ed upstream.
 
-When offlining and onlining CPUs the overall reported idle and iowait
-times as reported by /proc/stat jump backward and forward:
+When CONFIG_USB_OTG is not set, mxs_phy_is_otg_host() will always return
+false. This behaviour is wrong. Since phy.last_event will always be set
+for either host or device mode. Therefore, CONFIG_USB_OTG condition
+can be removed.
 
-cpu  132 0 176 225249 47 6 6 21 0 0
-cpu0 80 0 115 112575 33 3 4 18 0 0
-cpu1 52 0 60 112673 13 3 1 2 0 0
-
-cpu  133 0 177 226681 47 6 6 21 0 0
-cpu0 80 0 116 113387 33 3 4 18 0 0
-
-cpu  133 0 178 114431 33 6 6 21 0 0 <---- jump backward
-cpu0 80 0 116 114247 33 3 4 18 0 0
-cpu1 52 0 61 183 0 3 1 2 0 0        <---- idle + iowait start with 0
-
-cpu  133 0 178 228956 47 6 6 21 0 0 <---- jump forward
-cpu0 81 0 117 114929 33 3 4 18 0 0
-
-Reason for this is that get_idle_time() in fs/proc/stat.c has different
-sources for both values depending on if a CPU is online or offline:
-
-- if a CPU is online the values may be taken from its per cpu
-  tick_cpu_sched structure
-
-- if a CPU is offline the values are taken from its per cpu cpustat
-  structure
-
-The problem is that the per cpu tick_cpu_sched structure is set to zero on
-CPU offline. See tick_cancel_sched_timer() in kernel/time/tick-sched.c.
-
-Therefore when a CPU is brought offline and online afterwards both its idle
-and iowait sleeptime will be zero, causing a jump backward in total system
-idle and iowait sleeptime. In a similar way if a CPU is then brought
-offline again the total idle and iowait sleeptimes will jump forward.
-
-It looks like this behavior was introduced with commit 4b0c0f294f60
-("tick: Cleanup NOHZ per cpu data on cpu down").
-
-This was only noticed now on s390, since we switched to generic idle time
-reporting with commit be76ea614460 ("s390/idle: remove arch_cpu_idle_time()
-and corresponding code").
-
-Fix this by preserving the values of idle_sleeptime and iowait_sleeptime
-members of the per-cpu tick_sched structure on CPU hotplug.
-
-Fixes: 4b0c0f294f60 ("tick: Cleanup NOHZ per cpu data on cpu down")
-Reported-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/r/20240115163555.1004144-1-hca@linux.ibm.com
+Fixes: 5eda42aebb76 ("usb: phy: mxs: fix getting wrong state with mxs_phy_is_otg_host()")
+cc:  <stable@vger.kernel.org>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://lore.kernel.org/r/20231228110753.1755756-3-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/tick-sched.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/phy/phy-mxs-usb.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -1397,13 +1397,18 @@ void tick_setup_sched_timer(void)
- void tick_cancel_sched_timer(int cpu)
+--- a/drivers/usb/phy/phy-mxs-usb.c
++++ b/drivers/usb/phy/phy-mxs-usb.c
+@@ -388,8 +388,7 @@ static void __mxs_phy_disconnect_line(st
+ 
+ static bool mxs_phy_is_otg_host(struct mxs_phy *mxs_phy)
  {
- 	struct tick_sched *ts = &per_cpu(tick_cpu_sched, cpu);
-+	ktime_t idle_sleeptime, iowait_sleeptime;
- 
- # ifdef CONFIG_HIGH_RES_TIMERS
- 	if (ts->sched_timer.base)
- 		hrtimer_cancel(&ts->sched_timer);
- # endif
- 
-+	idle_sleeptime = ts->idle_sleeptime;
-+	iowait_sleeptime = ts->iowait_sleeptime;
- 	memset(ts, 0, sizeof(*ts));
-+	ts->idle_sleeptime = idle_sleeptime;
-+	ts->iowait_sleeptime = iowait_sleeptime;
+-	return IS_ENABLED(CONFIG_USB_OTG) &&
+-		mxs_phy->phy.last_event == USB_EVENT_ID;
++	return mxs_phy->phy.last_event == USB_EVENT_ID;
  }
- #endif
  
+ static void mxs_phy_disconnect_line(struct mxs_phy *mxs_phy, bool on)
 
 
