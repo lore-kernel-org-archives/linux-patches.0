@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF10664B6;
-	Tue, 23 Jan 2024 01:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38461664B7;
+	Tue, 23 Jan 2024 01:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971662; cv=none; b=OitWBYVDlBtSktgTYV6pkznlzhuLWIPG/j0fGe0VSzfI4s7Dm9Fod12aUxGUI5iEya2EtQS2dNusymL+eEAWbSN+0GM7Te4t0+/WNRjFF17ZEEgg/cRGqk2Q66/JuM4SKye8GcQRo1Q+AluvtBt2GM4vJ3GMlNsrgXZww1S19iA=
+	t=1705971664; cv=none; b=mB6ogtl13FmKFOvEsSose0cnXANbcPlstUusvexjifvZ09FGUoAbIb9/046SVDU5Tff+skyThwgqp/jxUGW5MuZ6uupQat5zOWg+n+1nBSpMRtqmeBy3H3E9naGVF1sNFuzlGlpyc9oO4smRWXWE+ku/dmpllKryQoD/tUKZut4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971662; c=relaxed/simple;
-	bh=K4gTiJnRUatIJjYoVpuSt9VigozGH/XQ70zPESvIbJs=;
+	s=arc-20240116; t=1705971664; c=relaxed/simple;
+	bh=uVtXgHEDgaE9jCa8GZBb0+bDgP2oE2GfluBOSsGpgUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=htbkRl73meylvlbCD/A8nq6+jb8pz5c/S199s1qzoY2n0TSMs7SCzk+Kw56Rlal530qdwpuhlGYZM1IOHG9fzstnujD5PQOlv1umWHROUNeuTHohoKwzgCCYIPsb49R8yjMpVhmUB3yi/8LQYMyE1BrowrrKbxfxxWHfV00FyOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYclWEvQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jyktng1ndgrIdm4iQ02ZXe8N6AtwfjkugTqLSqvOmHUlAqgTgWbk00jNwjIwON3r0CVHhJbkuCfGQWXcLalO/i6n2S23IpFO9I6j/fnDRh/mQL3Uh87j6JJfKi6zBCCRmaCCL9Vnsis0Qe87xIeqf6nwbLTFA52hOUcOnveRBr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcXGBijU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYclWEvQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E56C433F1;
-	Tue, 23 Jan 2024 01:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcXGBijU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D98C433F1;
+	Tue, 23 Jan 2024 01:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971662;
-	bh=K4gTiJnRUatIJjYoVpuSt9VigozGH/XQ70zPESvIbJs=;
+	s=korg; t=1705971664;
+	bh=uVtXgHEDgaE9jCa8GZBb0+bDgP2oE2GfluBOSsGpgUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cYclWEvQ2m1+fKBBv0iPkLzxYMn5CyFa01ZWutYnFbEp22kqmJQTQWGzU5HuqsmK7
-	 prXgfo50DAHL1OdJnkcmIa6rUF3DqrIVJUGJ8uJJSsdMwwusQzZVrlPt1pHzPDpiiQ
-	 0GiGS3QY+13+LIyd9prXlsFPVmktytMb139HCH0k=
+	b=DcXGBijUoUNUCvhIHnqJ6gPu6TLhhgQ0ylD2/P8ZG9YwlC3Xf8wYM+xmOEPiTPkMt
+	 xqkQcTmEDsZgaofS6S66Lor8kkqwx78egy7GfVHmuYNmIOGI10Wrd/JQH2jCtikYnF
+	 U482IXL8WEVodelXPm5hVewvWBcFKd1LGK4vbOFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	RD Babiera <rdbabiera@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 268/417] usb: typec: class: fix typec_altmode_put_partner to put plugs
-Date: Mon, 22 Jan 2024 15:57:16 -0800
-Message-ID: <20240122235801.145747627@linuxfoundation.org>
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 176/286] clk: qcom: videocc-sm8150: Update the videocc resets
+Date: Mon, 22 Jan 2024 15:58:02 -0800
+Message-ID: <20240122235738.944585918@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +49,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: RD Babiera <rdbabiera@google.com>
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-commit 5962ded777d689cd8bf04454273e32228d7fb71f upstream.
+[ Upstream commit 1fd9a939db24d2f66e48f8bca3e3654add3fa205 ]
 
-When typec_altmode_put_partner is called by a plug altmode upon release,
-the port altmode the plug belongs to will not remove its reference to the
-plug. The check to see if the altmode being released is a plug evaluates
-against the released altmode's partner instead of the calling altmode, so
-change adev in typec_altmode_put_partner to properly refer to the altmode
-being released.
+Add all the available resets for the video clock controller
+on sm8150.
 
-Because typec_altmode_set_partner calls get_device() on the port altmode,
-add partner_adev that points to the port altmode in typec_put_partner to
-call put_device() on. typec_altmode_set_partner is not called for port
-altmodes, so add a check in typec_altmode_release to prevent
-typec_altmode_put_partner() calls on port altmode release.
-
-Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
-Cc:  <stable@vger.kernel.org>
-Co-developed-by: Christian A. Ehrhardt <lk@c--e.de>
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Signed-off-by: RD Babiera <rdbabiera@google.com>
-Tested-by: Christian A. Ehrhardt <lk@c--e.de>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240103181754.2492492-2-rdbabiera@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5658e8cf1a8a ("clk: qcom: add video clock controller driver for SM8150")
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231201-videocc-8150-v3-2-56bec3a5e443@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/class.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/videocc-sm8150.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -263,11 +263,13 @@ static void typec_altmode_put_partner(st
- {
- 	struct altmode *partner = altmode->partner;
- 	struct typec_altmode *adev;
-+	struct typec_altmode *partner_adev;
+diff --git a/drivers/clk/qcom/videocc-sm8150.c b/drivers/clk/qcom/videocc-sm8150.c
+index 3087e2ec8fd4..03697a7910fa 100644
+--- a/drivers/clk/qcom/videocc-sm8150.c
++++ b/drivers/clk/qcom/videocc-sm8150.c
+@@ -218,6 +218,10 @@ static const struct regmap_config video_cc_sm8150_regmap_config = {
  
- 	if (!partner)
- 		return;
+ static const struct qcom_reset_map video_cc_sm8150_resets[] = {
+ 	[VIDEO_CC_MVSC_CORE_CLK_BCR] = { 0x850, 2 },
++	[VIDEO_CC_INTERFACE_BCR] = { 0x8f0 },
++	[VIDEO_CC_MVS0_BCR] = { 0x870 },
++	[VIDEO_CC_MVS1_BCR] = { 0x8b0 },
++	[VIDEO_CC_MVSC_BCR] = { 0x810 },
+ };
  
--	adev = &partner->adev;
-+	adev = &altmode->adev;
-+	partner_adev = &partner->adev;
- 
- 	if (is_typec_plug(adev->dev.parent)) {
- 		struct typec_plug *plug = to_typec_plug(adev->dev.parent);
-@@ -276,7 +278,7 @@ static void typec_altmode_put_partner(st
- 	} else {
- 		partner->partner = NULL;
- 	}
--	put_device(&adev->dev);
-+	put_device(&partner_adev->dev);
- }
- 
- /**
-@@ -497,7 +499,8 @@ static void typec_altmode_release(struct
- {
- 	struct altmode *alt = to_altmode(to_typec_altmode(dev));
- 
--	typec_altmode_put_partner(alt);
-+	if (!is_typec_port(dev->parent))
-+		typec_altmode_put_partner(alt);
- 
- 	altmode_id_remove(alt->adev.dev.parent, alt->id);
- 	kfree(alt);
+ static const struct qcom_cc_desc video_cc_sm8150_desc = {
+-- 
+2.43.0
+
 
 
