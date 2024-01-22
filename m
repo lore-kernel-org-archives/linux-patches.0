@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EFB42A8D;
-	Tue, 23 Jan 2024 00:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936B642A8D;
+	Tue, 23 Jan 2024 00:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968454; cv=none; b=G2ngHrPiW+DPxQs+cJbC12Iy3fLnlmvg7SvjKsOlvvbVJfVOu0LOpdygUKi8JBPjtdn9luMYbpWxls+9AvQKNDKQbuN1ro6DoYTeZEqP3Ee3MNTSNPt/rRsm1XRQ3MdXI8Xrog5EmKZtm3MB0ThzFZkaH1QTLVdWZD6dsFjy0+E=
+	t=1705968458; cv=none; b=iWBYv/6kfdXya5Y+12fqwyBbymPObjIM5kk5xyGzpIuMDOgx0TIU0BEPJWH/JVbk6WX5DOQ+/p0HBrv2OtWtEXimSBE9bfi1pAwM9kWSDInbQbnnnQQGx+yc5XErPXMMWA9MFnBdJPLVw0RJ3IaUg2tsNupA/Ly9cSuLlU2kkRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968454; c=relaxed/simple;
-	bh=ImMqXOAmep9+3UdKkatyqWnuoDoeCYTHgGatAH5o5BU=;
+	s=arc-20240116; t=1705968458; c=relaxed/simple;
+	bh=POjRZA56w6UvqC9BeCY9jTcD4ZRe+704RqH/jsUb4V0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TJdj6jHBcjE6c3ZLWDrSbJCfXrO8jQDd1Y1DdoBvf/s8RQ2O3QyYbWKrbL104x6MYnGGd8p9nsCzaoJk0fnGLfd12BMftaZNpLnBiNKbBrS/QtQXU6vxWnI/J2EqVvfLGoCZLCDCwitwaMsWa7Uvt7uV4zVRU0CpOjrtak5GwFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZZeOKAY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vf6o/wK6JRIM8GIuk6U1p14KHhCDwTqtB5vq9cV8xKYbrcmDc79BaJTat2aklg/OdjHuXrxkWU6oYo5xKqnK5PigELKfoFYGbwWh/6dtxd84PgaFy22t04iJCuNn+JpqADmBjovzQItAfpQjP4LbuaDI4esrOtC5OvifhjXWiPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GA91k/B9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZZeOKAY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DCBC43390;
-	Tue, 23 Jan 2024 00:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GA91k/B9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE1AC43390;
+	Tue, 23 Jan 2024 00:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968454;
-	bh=ImMqXOAmep9+3UdKkatyqWnuoDoeCYTHgGatAH5o5BU=;
+	s=korg; t=1705968458;
+	bh=POjRZA56w6UvqC9BeCY9jTcD4ZRe+704RqH/jsUb4V0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZZeOKAYjfr7qJRcv6hAGD65K6Um31aibhvpK7OJLnofRN/DP9cQ215xZKN2Gj214
-	 BpVVlxlOJ6ovHLNsixZG+ZVNd/oWF3OYfa52pi6+cM/6Zx6X2slwWqOophK//jSV23
-	 NseXaGRpaETRbD/Y5M6Th48HfQEKdzNC0E9TCLHc=
+	b=GA91k/B94ZH/TVt54YSW0NbKoPzzxdNXLa7BXhcXrYcs9orA+Jaxgqxfn5yWNxvlI
+	 KXxhWPQzMj3f4vZHESwmwH/6gke1Kj44lUV5OEmdKHW4gf99NAFh/kZcbO50e7N/+j
+	 u8O9kHB5WVYuFec6EdYQJAsmdTPszQGXhbQAcSc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Maxime Ripard <mripard@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 096/148] drm/drv: propagate errors from drm_modeset_register_all()
-Date: Mon, 22 Jan 2024 15:57:32 -0800
-Message-ID: <20240122235716.270624063@linuxfoundation.org>
+Subject: [PATCH 4.19 114/148] Revert "ASoC: atmel: Remove system clock tree configuration for at91sam9g20ek"
+Date: Mon, 22 Jan 2024 15:57:50 -0800
+Message-ID: <20240122235717.083755528@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -52,54 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 5f8dec200923a76dc57187965fd59c1136f5d085 ]
+This reverts commit 6eb9b4a36d08da0230e6a7712b17eafdfd996991 which is
+commit c775cbf62ed4911e4f0f23880f01815753123690 upstream.
 
-In case the drm_modeset_register_all() function fails, its error code
-will be ignored. Instead make the drm_dev_register() bail out in case of
-such an error.
+It is reported to cause problems, so drop it from the 5.15.y tree for now.
 
-Fixes: 79190ea2658a ("drm: Add callbacks for late registering")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231202225552.1283638-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/845b3053-d47b-4717-9665-79b120da133b@sirena.org.uk
+Reported-by: Mark Brown <broonie@kernel.org>
+Cc: Codrin Ciubotariu <codrin.ciubotariu@microchip.com>
+Cc: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_drv.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ sound/soc/atmel/sam9g20_wm8731.c |   61 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
-index d8ae4ca129c7..e0c54de615fd 100644
---- a/drivers/gpu/drm/drm_drv.c
-+++ b/drivers/gpu/drm/drm_drv.c
-@@ -818,8 +818,11 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
- 			goto err_minors;
+--- a/sound/soc/atmel/sam9g20_wm8731.c
++++ b/sound/soc/atmel/sam9g20_wm8731.c
+@@ -59,6 +59,35 @@
+  */
+ #undef ENABLE_MIC_INPUT
+ 
++static struct clk *mclk;
++
++static int at91sam9g20ek_set_bias_level(struct snd_soc_card *card,
++					struct snd_soc_dapm_context *dapm,
++					enum snd_soc_bias_level level)
++{
++	static int mclk_on;
++	int ret = 0;
++
++	switch (level) {
++	case SND_SOC_BIAS_ON:
++	case SND_SOC_BIAS_PREPARE:
++		if (!mclk_on)
++			ret = clk_enable(mclk);
++		if (ret == 0)
++			mclk_on = 1;
++		break;
++
++	case SND_SOC_BIAS_OFF:
++	case SND_SOC_BIAS_STANDBY:
++		if (mclk_on)
++			clk_disable(mclk);
++		mclk_on = 0;
++		break;
++	}
++
++	return ret;
++}
++
+ static const struct snd_soc_dapm_widget at91sam9g20ek_dapm_widgets[] = {
+ 	SND_SOC_DAPM_MIC("Int Mic", NULL),
+ 	SND_SOC_DAPM_SPK("Ext Spk", NULL),
+@@ -117,6 +146,7 @@ static struct snd_soc_card snd_soc_at91s
+ 	.owner = THIS_MODULE,
+ 	.dai_link = &at91sam9g20ek_dai,
+ 	.num_links = 1,
++	.set_bias_level = at91sam9g20ek_set_bias_level,
+ 
+ 	.dapm_widgets = at91sam9g20ek_dapm_widgets,
+ 	.num_dapm_widgets = ARRAY_SIZE(at91sam9g20ek_dapm_widgets),
+@@ -129,6 +159,7 @@ static int at91sam9g20ek_audio_probe(str
+ {
+ 	struct device_node *np = pdev->dev.of_node;
+ 	struct device_node *codec_np, *cpu_np;
++	struct clk *pllb;
+ 	struct snd_soc_card *card = &snd_soc_at91sam9g20ek;
+ 	int ret;
+ 
+@@ -142,6 +173,31 @@ static int at91sam9g20ek_audio_probe(str
+ 		return -EINVAL;
  	}
  
--	if (drm_core_check_feature(dev, DRIVER_MODESET))
--		drm_modeset_register_all(dev);
-+	if (drm_core_check_feature(dev, DRIVER_MODESET)) {
-+		ret = drm_modeset_register_all(dev);
-+		if (ret)
-+			goto err_unload;
++	/*
++	 * Codec MCLK is supplied by PCK0 - set it up.
++	 */
++	mclk = clk_get(NULL, "pck0");
++	if (IS_ERR(mclk)) {
++		dev_err(&pdev->dev, "Failed to get MCLK\n");
++		ret = PTR_ERR(mclk);
++		goto err;
 +	}
++
++	pllb = clk_get(NULL, "pllb");
++	if (IS_ERR(pllb)) {
++		dev_err(&pdev->dev, "Failed to get PLLB\n");
++		ret = PTR_ERR(pllb);
++		goto err_mclk;
++	}
++	ret = clk_set_parent(mclk, pllb);
++	clk_put(pllb);
++	if (ret != 0) {
++		dev_err(&pdev->dev, "Failed to set MCLK parent\n");
++		goto err_mclk;
++	}
++
++	clk_set_rate(mclk, MCLK_RATE);
++
+ 	card->dev = &pdev->dev;
  
- 	ret = 0;
+ 	/* Parse device node info */
+@@ -185,6 +241,9 @@ static int at91sam9g20ek_audio_probe(str
  
-@@ -831,6 +834,9 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
+ 	return ret;
  
- 	goto out_unlock;
++err_mclk:
++	clk_put(mclk);
++	mclk = NULL;
+ err:
+ 	atmel_ssc_put_audio(0);
+ 	return ret;
+@@ -194,6 +253,8 @@ static int at91sam9g20ek_audio_remove(st
+ {
+ 	struct snd_soc_card *card = platform_get_drvdata(pdev);
  
-+err_unload:
-+	if (dev->driver->unload)
-+		dev->driver->unload(dev);
- err_minors:
- 	remove_compat_control_link(dev);
- 	drm_minor_unregister(dev, DRM_MINOR_PRIMARY);
--- 
-2.43.0
-
++	clk_disable(mclk);
++	mclk = NULL;
+ 	snd_soc_unregister_card(card);
+ 	atmel_ssc_put_audio(0);
+ 
 
 
