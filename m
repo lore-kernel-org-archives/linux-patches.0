@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641C45579B;
-	Tue, 23 Jan 2024 01:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9A655C34;
+	Tue, 23 Jan 2024 01:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974013; cv=none; b=i+crV8Y3RqHV6IEa3Io8aQIK4CZ8ZJy/1jHkqe83QwkWS1XuzBz8xDzTgx6D3uxt4TJ23u3PjtaL/OfN9ZFyN7jM4zTe/M+ZWwyqW51vfdoZvFv/JPN6w83ZeT4kXw98/Iuwe3Lvt5BqjjNQQU5M3riD2h/BWU6DJ452Kz6F048=
+	t=1705974015; cv=none; b=FhrGq3yNraMl1E311RMfLzD4ewYdAt0EX6hvFFYIiNE1QnyxDIpp8AHZAcJozENQfchYblp3wcUJLdBRYOhDn2LCLussmwtsZmz8AOMlCfIhzrOJJeadIzWsie4jbWy9TgBVG/+K8IW7HAzEzJfyN27W6RQFd32c4vxuzK2eEuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974013; c=relaxed/simple;
-	bh=QMLTt7emjdLvUjxRZLgRFLVDdqAliwSQJhrHXwvATsw=;
+	s=arc-20240116; t=1705974015; c=relaxed/simple;
+	bh=0evuUFbXAMh1ItDyCk3/GI9Nu0DkgG7kThtcZoWXWaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XFCh3mHxfXVhgTqZs8rYVXVSfBPnvOl2Ua+sSwpqRUY4O3E93MYHVwyAIf/kuMA1PsicETbeRKihTCd78PWvsU2EUAJ6jxoPWgvlSwqHSfDhzSPgH8xpoJQdAKcHQA005qsRbZcDfSZYwCWtd5lJ9fJ37TymBevxz0BTug51enk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqmnDCei; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WqzFZvel61jEO1rS21oQeM+WXvdCLJwK5hCy8ufDWfQd1b4Je0lXc8GCdnSvROewCiPSQ60757vhnT3duGPJ26Knl1Rym93mSYAnwYbliAeszkHBi7K3Q5ofdW/6kR+OSjOaMFunvMZ71UKtYrzBRuhkkBrX+KyX25vheOyuOdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9CpZFLN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqmnDCei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4E1C43394;
-	Tue, 23 Jan 2024 01:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9CpZFLN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70381C433A6;
+	Tue, 23 Jan 2024 01:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974012;
-	bh=QMLTt7emjdLvUjxRZLgRFLVDdqAliwSQJhrHXwvATsw=;
+	s=korg; t=1705974014;
+	bh=0evuUFbXAMh1ItDyCk3/GI9Nu0DkgG7kThtcZoWXWaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bqmnDCeit123fLeS7k+/3msUXPNGoWPaGAT0phcRjK4TXJb+xNxKAXaL7Z11YWQpk
-	 dpRAb4vZfZ6tOQ8LbO5Cr37aKqnCelzV/pWeIJijNM0OFrzPt7PoBWXPMz67QYThfU
-	 ZA8qLAGZL4DK+sI5eQBJhHeI/Z8tQVi3MP5EMni0=
+	b=f9CpZFLNjAATBfa8Cv16QnqutiCPm6wRDO9jHo7fOW16NMRId/F2EkOxD+sgsllNO
+	 VoOcDxZdRVC3s6PPo/S90Qlzsr4PH1Jh3bzjGleGdvvFJMWZgL0GyDYTVBH89RJjqi
+	 tY458dhPibWUeaMqpS86qKeOV18tPChhv0s1Y7Ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Su Hui <suhui@nfschina.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 120/374] wifi: ath11k: Defer on rproc_get failure
-Date: Mon, 22 Jan 2024 15:56:16 -0800
-Message-ID: <20240122235748.801876838@linuxfoundation.org>
+Subject: [PATCH 5.15 126/374] wifi: rtlwifi: rtl8821ae: phy: fix an undefined bitwise shift behavior
+Date: Mon, 22 Jan 2024 15:56:22 -0800
+Message-ID: <20240122235749.025386446@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,55 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 2a3ec40b98b46c339adb57313d3b933ee5e7a8e8 ]
+[ Upstream commit bc8263083af60e7e57c6120edbc1f75d6c909a35 ]
 
-If we already have gotten the rproc_handle (meaning the "qcom,rproc"
-property is defined in the devicetree), it's a valid state that the
-remoteproc module hasn't probed yet so we should defer probing instead
-of just failing to probe.
+Clang static checker warns:
 
-This resolves a race condition when the ath11k driver probes and fails
-before the wpss remoteproc driver has probed, like the following:
+drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c:184:49:
+	The result of the left shift is undefined due to shifting by '32',
+	which is greater or equal to the width of type 'u32'.
+	[core.UndefinedBinaryOperatorResult]
 
-  [    6.232360] ath11k 17a10040.wifi: failed to get rproc
-  [    6.232366] ath11k 17a10040.wifi: failed to get rproc: -22
-  [    6.232478] ath11k: probe of 17a10040.wifi failed with error -22
-       ...
-  [    6.252415] remoteproc remoteproc2: 8a00000.remoteproc is available
-  [    6.252776] remoteproc remoteproc2: powering up 8a00000.remoteproc
-  [    6.252781] remoteproc remoteproc2: Booting fw image qcom/qcm6490/fairphone5/wpss.mdt, size 7188
+If the value of the right operand is negative or is greater than or
+equal to the width of the promoted left operand, the behavior is
+undefined.[1][2]
 
-So, defer the probe if we hit that so we can retry later once the wpss
-remoteproc is available.
+For example, when using different gcc's compilation optimization options
+(-O0 or -O2), the result of '(u32)data << 32' is different. One is 0, the
+other is old value of data. Let _rtl8821ae_phy_calculate_bit_shift()'s
+return value less than 32 to fix this problem. Warn if bitmask is zero.
 
-Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.1.0.1-01264-QCAMSLSWPLZ-1.37886.3
+[1] https://stackoverflow.com/questions/11270492/what-does-the-c-standard-say-about-bitshifting-more-bits-than-the-width-of-type
+[2] https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20231027-ath11k-rproc-defer-v1-1-f6b6a812cd18@fairphone.com
+Fixes: 21e4b0726dc6 ("rtlwifi: rtl8821ae: Move driver from staging to regular tree")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20231127013511.26694-2-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/ahb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
-index 24bd0520926b..853a5df4f38c 100644
---- a/drivers/net/wireless/ath/ath11k/ahb.c
-+++ b/drivers/net/wireless/ath/ath11k/ahb.c
-@@ -650,8 +650,8 @@ static int ath11k_core_get_rproc(struct ath11k_base *ab)
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
+index 5323ead30db0..fa1839d8ee55 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
+@@ -29,9 +29,10 @@ static void _rtl8821ae_phy_rf_serial_write(struct ieee80211_hw *hw,
+ 					   u32 data);
+ static u32 _rtl8821ae_phy_calculate_bit_shift(u32 bitmask)
+ {
+-	u32 i = ffs(bitmask);
++	if (WARN_ON_ONCE(!bitmask))
++		return 0;
  
- 	prproc = rproc_get_by_phandle(rproc_phandle);
- 	if (!prproc) {
--		ath11k_err(ab, "failed to get rproc\n");
--		return -EINVAL;
-+		ath11k_dbg(ab, ATH11K_DBG_AHB, "failed to get rproc, deferring\n");
-+		return -EPROBE_DEFER;
- 	}
- 	ab_ahb->tgt_rproc = prproc;
- 
+-	return i ? i - 1 : 32;
++	return __ffs(bitmask);
+ }
+ static bool _rtl8821ae_phy_bb8821a_config_parafile(struct ieee80211_hw *hw);
+ /*static bool _rtl8812ae_phy_config_mac_with_headerfile(struct ieee80211_hw *hw);*/
 -- 
 2.43.0
 
