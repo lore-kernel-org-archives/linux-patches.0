@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467E912BF3D;
-	Tue, 23 Jan 2024 00:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF68D12CD99;
+	Tue, 23 Jan 2024 00:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968954; cv=none; b=Sscjm5yXwXxgxVEYnnsgIBRx/aoNfV3glUu/nduCk8c5pky4Nt9sTS3B15MCNQzMyQLF4rzFj6e+YDwL39CcukZQhcQdOcr5Nk6a5eX6jSyRN648OCTHS0ZAc0mFZYPR51ov9uJadQxXpJ/Muv3KNtWhJiCI6laRxuvb8voI6sc=
+	t=1705968956; cv=none; b=cKFY5Q3BFa5E5mQMWqXSuw6R5uQJ3iGCbDe+uGbK4GcJlPFql3PNVnPdMv1IlGSK2aEEY9eY57Ht9t/QmY6LbPD/qHbb/ZE82O9REnq8eMipml/MqAuQ4jZ7qxvxxdcDF6JaB0neO6+Af4u/2GboO0w1GAKndpbOYrhvi7RIcS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968954; c=relaxed/simple;
-	bh=Iji4IUNsfvdBLTX6JX77wPG6hDs2B2FxWEz2i6Cuq0c=;
+	s=arc-20240116; t=1705968956; c=relaxed/simple;
+	bh=MtOxzWvxV9LMSxSDSWD6rB7lieft94X8dVOSPDWgqOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nRinB4TaVMPRqkjeA23Z85iRiIWHX1G4Re5akSTPgFBSzbFDQbPfWtfk8U2OapTCdyy11v3eTFy1+3W3gPxuKHnJdUGwPfoo52ujh1xmlZDorfXKu65Nf8IoVJB0n6/s8XQqJKmi3CXGV/lBB1uoHaVeq6yckZL4Z0S96kTSthA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqoOrtup; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oosyR9U3o+Vf/VZ9T6c1+deX4BcJUNRSN3SKezQgmOUdqybLM4rqZF6CiMvpazRSKe67hQ86hSB8YvfwcVjfsREGQgWu3c6fiw6X3qj/huxIPQEFJVonHyE4IcP2KpUzBRy2TwnFKjsPga1Adfi+0IW01QyEXv8HonoU677eRrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u19jzpui; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqoOrtup"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D773AC43390;
-	Tue, 23 Jan 2024 00:15:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u19jzpui"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4240BC433C7;
+	Tue, 23 Jan 2024 00:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968954;
-	bh=Iji4IUNsfvdBLTX6JX77wPG6hDs2B2FxWEz2i6Cuq0c=;
+	s=korg; t=1705968956;
+	bh=MtOxzWvxV9LMSxSDSWD6rB7lieft94X8dVOSPDWgqOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QqoOrtupgjafF7JuxyHtztGU/h+V8/3uvWNaLziMYg08IrFTBCFkbuUOT16GpvaU6
-	 X1BV3dhBYVr3OR4aQgy8cSDYkFmsSv6wxvx6r2TUlxdDHT/pU1DxWxPf/kHneIVGK9
-	 Uy9rH3JHzeV+LlzETWFfrr4LB9Qh52TLSZl1qNGw=
+	b=u19jzpuissWhf3SHm37w7fEcvvrYr3yETqrbwBLRicsqyXrMcsT2WTyFZ2tyBXj/K
+	 vX1kCFjv2PH00Oi5boTmc30lPIfCUE3yKx/oiBiO2xI4Wiu5cgRquK5BTm1ludmREk
+	 DEd/DP0gNv9TN5LzQ74FjBzFdNn7sesLoCVr0GnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Maxime Ripard <mripard@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 120/194] drm/drv: propagate errors from drm_modeset_register_all()
-Date: Mon, 22 Jan 2024 15:57:30 -0800
-Message-ID: <20240122235724.372404284@linuxfoundation.org>
+Subject: [PATCH 5.4 121/194] drm/radeon: check the alloc_workqueue return value in radeon_crtc_init()
+Date: Mon, 22 Jan 2024 15:57:31 -0800
+Message-ID: <20240122235724.413187160@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -52,52 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 5f8dec200923a76dc57187965fd59c1136f5d085 ]
+[ Upstream commit 7a2464fac80d42f6f8819fed97a553e9c2f43310 ]
 
-In case the drm_modeset_register_all() function fails, its error code
-will be ignored. Instead make the drm_dev_register() bail out in case of
-such an error.
+check the alloc_workqueue return value in radeon_crtc_init()
+to avoid null-ptr-deref.
 
-Fixes: 79190ea2658a ("drm: Add callbacks for late registering")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231202225552.1283638-1-dmitry.baryshkov@linaro.org
+Fixes: fa7f517cb26e ("drm/radeon: rework page flip handling v4")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_drv.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/radeon/radeon_display.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
-index 769feefeeeef..c9529a808b8e 100644
---- a/drivers/gpu/drm/drm_drv.c
-+++ b/drivers/gpu/drm/drm_drv.c
-@@ -984,8 +984,11 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
- 			goto err_minors;
- 	}
+diff --git a/drivers/gpu/drm/radeon/radeon_display.c b/drivers/gpu/drm/radeon/radeon_display.c
+index 27b168936b2a..c7f50d9f7e37 100644
+--- a/drivers/gpu/drm/radeon/radeon_display.c
++++ b/drivers/gpu/drm/radeon/radeon_display.c
+@@ -682,11 +682,16 @@ static void radeon_crtc_init(struct drm_device *dev, int index)
+ 	if (radeon_crtc == NULL)
+ 		return;
  
--	if (drm_core_check_feature(dev, DRIVER_MODESET))
--		drm_modeset_register_all(dev);
-+	if (drm_core_check_feature(dev, DRIVER_MODESET)) {
-+		ret = drm_modeset_register_all(dev);
-+		if (ret)
-+			goto err_unload;
++	radeon_crtc->flip_queue = alloc_workqueue("radeon-crtc", WQ_HIGHPRI, 0);
++	if (!radeon_crtc->flip_queue) {
++		kfree(radeon_crtc);
++		return;
 +	}
++
+ 	drm_crtc_init(dev, &radeon_crtc->base, &radeon_crtc_funcs);
  
- 	ret = 0;
+ 	drm_mode_crtc_set_gamma_size(&radeon_crtc->base, 256);
+ 	radeon_crtc->crtc_id = index;
+-	radeon_crtc->flip_queue = alloc_workqueue("radeon-crtc", WQ_HIGHPRI, 0);
+ 	rdev->mode_info.crtcs[index] = radeon_crtc;
  
-@@ -997,6 +1000,9 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
- 
- 	goto out_unlock;
- 
-+err_unload:
-+	if (dev->driver->unload)
-+		dev->driver->unload(dev);
- err_minors:
- 	remove_compat_control_link(dev);
- 	drm_minor_unregister(dev, DRM_MINOR_PRIMARY);
+ 	if (rdev->family >= CHIP_BONAIRE) {
 -- 
 2.43.0
 
