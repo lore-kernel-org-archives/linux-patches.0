@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DEE627F7;
-	Tue, 23 Jan 2024 00:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0376312A;
+	Tue, 23 Jan 2024 00:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971082; cv=none; b=Ua+qRojYVUCrNJfYEVblQV8jx0yRGi6wMo9ilk2BE4QpW21h17zo2H3l3xMstiWFCaf9+Bn28INqiYO2SNBtR8JPZeAg2OVw7LhVmhOzKicNGLDhNCSZiSqmVbN2aoKJDsF8sk+9O/c0EzmNLb5P/8wJUaT+ckwGcMSN/k6lLTU=
+	t=1705971083; cv=none; b=lE3fb4LkEztymYL7XJ1IW6OvctKsVCKldTU4Oh3lnvztAs66EY0eaBaG5Lsy08esLaeh3CS7HYYuvzrYjoL2CPQsR+QBjo16+57WXf8Rm1dvrccE+P9HeaUS7o3UhHni83vd4Qe2pcE5paOAXBLuhzRiQbrJB18wkIZ6yNQVi2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971082; c=relaxed/simple;
-	bh=T+OOGixbI8xiM5GjiE1dT8gvmuMYnudW46nu3Io9nvg=;
+	s=arc-20240116; t=1705971083; c=relaxed/simple;
+	bh=HZYyiNi5L5UF7uhJW+Zits+TCcSK/J6bSHdwpG2mU64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IJQ6jD77Fb1Ki7C0oDG0o3Q+5JwYcGMeKY/KNQ4ySMT255AlKrP54LVihoALDuWKeSMsqHEOB+DqAi+9DPnHXkvGwQCXq+bG7OiSJ+RLltPsO9BPlqP/X8C3Tvb1HkDB8K4X5UCy04gA5Vvehi11YvtEBEvbRqOwrygmb0eIA7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QN2/VQvb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=taZOYAxuQlbzw5yEk2m4oZdzamFR6xfn+/Y1zneA5XAWoDdBKgHKjHa/glOswOJMTscGnrUytQXrAozLCyCH6sUTQ8REz9DXQAGI1wDskpr1VsWN1L9b/glYmTH/KIlpAcr5eG2+MKhGs5ZuarQXeryhgQo6FTsAyDAPx1WI0u8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7V4Aenp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QN2/VQvb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3774C433F1;
-	Tue, 23 Jan 2024 00:51:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7V4Aenp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BF4C43390;
+	Tue, 23 Jan 2024 00:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971082;
-	bh=T+OOGixbI8xiM5GjiE1dT8gvmuMYnudW46nu3Io9nvg=;
+	s=korg; t=1705971083;
+	bh=HZYyiNi5L5UF7uhJW+Zits+TCcSK/J6bSHdwpG2mU64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QN2/VQvbjtTURmtFrqz5XmYAsaKuzRwZ5Kfzgtm5mvDJdSpgsriukcS2hrurN4qJ1
-	 mKDJ227lhfN5lfRZGcv1sX5fVvHXGdDU7Sr1iLItp2QUT89Fmjm5oz9oYe8S8qOqCw
-	 H/yXNmj/8+KYLWJ7kzhInL/SGS1R3YCmUSagFtCE=
+	b=F7V4AenpDEOhb4rdro6gIb2gGjtfhlmGiPbnqviKpAu8HP9zNqRUXE43q5/WqzZNo
+	 ECUjbILmutfxsHXOV3zpN/ndQJu4h/X2mP3MYSa7nZ99NeSVLYkSNqx50EgfW2MAKS
+	 2goGb5RJivhxW6cLW3OIbwcAXwqxg430nBH/rvwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-	Daniel Almeida <daniel.almeida@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 168/417] media: verisilicon: Hook the (TRY_)DECODER_CMD stateless ioctls
-Date: Mon, 22 Jan 2024 15:55:36 -0800
-Message-ID: <20240122235757.669289680@linuxfoundation.org>
+Subject: [PATCH 6.1 177/417] drm/tidss: Check for K2G in in dispc_softreset()
+Date: Mon, 22 Jan 2024 15:55:45 -0800
+Message-ID: <20240122235757.997622296@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -53,54 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 6c0d9e12b1d12bbd95484e4b99f63feeb423765f ]
+[ Upstream commit 151825150cf9c2e9fb90763d35b9dff3783628ac ]
 
-The (TRY_)DECODER_CMD ioctls are used to support flushing when holding
-capture buffers is supported. This is the case of this driver but the
-ioctls were never hooked to the ioctl ops.
+K2G doesn't have softreset feature. Instead of having every caller of
+dispc_softreset() check for K2G, move the check into dispc_softreset(),
+and make dispc_softreset() return 0 in case of K2G.
 
-Add them to correctly support flushing.
-
-Fixes: 340ce50f75a6 ("media: hantro: Enable HOLD_CAPTURE_BUF for H.264")
-Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Link: https://lore.kernel.org/r/20231109-tidss-probe-v2-6-ac91b5ea35c0@ideasonboard.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Stable-dep-of: bc288a927815 ("drm/tidss: Fix dss reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_drv.c  | 2 ++
- drivers/media/platform/verisilicon/hantro_v4l2.c | 3 +++
- 2 files changed, 5 insertions(+)
+ drivers/gpu/drm/tidss/tidss_dispc.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
-index 08840ba313e7..69a2442f3122 100644
---- a/drivers/media/platform/verisilicon/hantro_drv.c
-+++ b/drivers/media/platform/verisilicon/hantro_drv.c
-@@ -813,6 +813,8 @@ static int hantro_add_func(struct hantro_dev *vpu, unsigned int funcid)
+diff --git a/drivers/gpu/drm/tidss/tidss_dispc.c b/drivers/gpu/drm/tidss/tidss_dispc.c
+index 591f0606f7f8..4bdd4c7b4991 100644
+--- a/drivers/gpu/drm/tidss/tidss_dispc.c
++++ b/drivers/gpu/drm/tidss/tidss_dispc.c
+@@ -2658,6 +2658,10 @@ static int dispc_softreset(struct dispc_device *dispc)
+ 	u32 val;
+ 	int ret = 0;
  
- 	if (funcid == MEDIA_ENT_F_PROC_VIDEO_ENCODER) {
- 		vpu->encoder = func;
-+		v4l2_disable_ioctl(vfd, VIDIOC_TRY_DECODER_CMD);
-+		v4l2_disable_ioctl(vfd, VIDIOC_DECODER_CMD);
- 	} else {
- 		vpu->decoder = func;
- 		v4l2_disable_ioctl(vfd, VIDIOC_TRY_ENCODER_CMD);
-diff --git a/drivers/media/platform/verisilicon/hantro_v4l2.c b/drivers/media/platform/verisilicon/hantro_v4l2.c
-index 30e650edaea8..b2da48936e3f 100644
---- a/drivers/media/platform/verisilicon/hantro_v4l2.c
-+++ b/drivers/media/platform/verisilicon/hantro_v4l2.c
-@@ -759,6 +759,9 @@ const struct v4l2_ioctl_ops hantro_ioctl_ops = {
- 	.vidioc_g_selection = vidioc_g_selection,
- 	.vidioc_s_selection = vidioc_s_selection,
- 
-+	.vidioc_decoder_cmd = v4l2_m2m_ioctl_stateless_decoder_cmd,
-+	.vidioc_try_decoder_cmd = v4l2_m2m_ioctl_stateless_try_decoder_cmd,
++	/* K2G display controller does not support soft reset */
++	if (dispc->feat->subrev == DISPC_K2G)
++		return 0;
 +
- 	.vidioc_try_encoder_cmd = v4l2_m2m_ioctl_try_encoder_cmd,
- 	.vidioc_encoder_cmd = vidioc_encoder_cmd,
- };
+ 	/* Soft reset */
+ 	REG_FLD_MOD(dispc, DSS_SYSCONFIG, 1, 1, 1);
+ 	/* Wait for reset to complete */
+@@ -2778,12 +2782,9 @@ int dispc_init(struct tidss_device *tidss)
+ 	of_property_read_u32(dispc->dev->of_node, "max-memory-bandwidth",
+ 			     &dispc->memory_bandwidth_limit);
+ 
+-	/* K2G display controller does not support soft reset */
+-	if (feat->subrev != DISPC_K2G) {
+-		r = dispc_softreset(dispc);
+-		if (r)
+-			return r;
+-	}
++	r = dispc_softreset(dispc);
++	if (r)
++		return r;
+ 
+ 	tidss->dispc = dispc;
+ 
 -- 
 2.43.0
 
