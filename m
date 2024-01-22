@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E855F633EA;
-	Tue, 23 Jan 2024 01:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2592C63127;
+	Tue, 23 Jan 2024 01:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975007; cv=none; b=LdI5E7YANjZEloKVXTPJNvw5BPISrvkRVKq+TRerlsjT2fQn30iBVZC+uugkQPt8npmktM8T6WZMJAh9jbEZEoQsF764cEDIR5OV3Llv6nU2N+xgHwX1img1XryXKvvWDdizHOvDz0cHx2rCHqngQ1DXMMXiU48cWk9lo7BrrPE=
+	t=1705975008; cv=none; b=UY9/MY0uTeAllfN85xDOdDGswPxNuCAVO8FwFyrWoT3rz1EFhvrzLduqBLo3OeEYwyu/kOWv4fPhGmmEYS8E0m72XC/m7o93dLFAwD15aAjqfs8ZKeiWwhSaK+sYWcE2QbEYM9DwR80PTv4ih5eiQKXq1KIsFbGHZhGBpw/X8Hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975007; c=relaxed/simple;
-	bh=vzybYGrLk3HEJmal+nTA6KkpilCDF3nCe+SlRj8/Ytw=;
+	s=arc-20240116; t=1705975008; c=relaxed/simple;
+	bh=3Nnzgaw1deQLGHux3FGVgHkNinRCh4iOjouOJ/TKIkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CXCU1bNH+GqaYIxHUXP9gCrcmMLrLH3WqhDN4kW8RgSPuQZqyAGlqXDcU2gGXv5B8FT6q8ZoSGk4BJ9QwDNWSlOREjNt45cYX34v3xDrNFmn0rhDAjJ1rI0ZVawj9ST7vC0Td561ZDSedbGqm12k3NceMRdbMoVzg2YVq0+10b0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LE4EUClz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nIHMapE6+H9xDPcOCkoY4cMKLDBt+7jyl+Vl0R3RCcBDEHcyu6/60Z36Ls0iYaY37LE7s5sHhT8fnTUdOZe1TPyNdXk3ZVdaq1IS8hGdXBE4UEjWgoZBCB1BHZI5KADK31iJeCfolPqHYlPGTUrsC1PYqjWpMkaiVGJu1yt3DRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+KxDbG1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LE4EUClz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA15C433F1;
-	Tue, 23 Jan 2024 01:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+KxDbG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5D4C433F1;
+	Tue, 23 Jan 2024 01:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975006;
-	bh=vzybYGrLk3HEJmal+nTA6KkpilCDF3nCe+SlRj8/Ytw=;
+	s=korg; t=1705975007;
+	bh=3Nnzgaw1deQLGHux3FGVgHkNinRCh4iOjouOJ/TKIkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LE4EUClz1Ck1CyA/h428tbS/r1dK6KVQh25SeihFEou/C6TVxjMy+ZkAZV75bOdaI
-	 e2YqEyBG5OqRaMyNcnsULv5ylo+dmstYymVOFlkdwBTfTmAUxRt6ldhTT/ea6xkjfq
-	 9ui0a93FEZcAR8YKjMTHuEc5KmpL76oopbRBzzic=
+	b=H+KxDbG1EwwfK0rXr9pNZgr0R8BEC7ikgnCCUaWcl+UlOAJk8axyQ5dG8YM+n5r9I
+	 xea5ZzRgFRxU7wVLQ68LN+vjAxIka6n4CkMCkFbq/vKP6SY2QccaLslNuj8SomS8RX
+	 ZeldQCt0mPVU4ZiLabmyfJRN0su82wzrfEvjtXdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	qizhong cheng <qizhong.cheng@mediatek.com>,
-	Jianjun Wang <jianjun.wang@mediatek.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 5.15 282/374] PCI: mediatek: Clear interrupt status before dispatching handler
-Date: Mon, 22 Jan 2024 15:58:58 -0800
-Message-ID: <20240122235754.575907523@linuxfoundation.org>
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 189/583] bpf: Use pcpu_alloc_size() in bpf_mem_free{_rcu}()
+Date: Mon, 22 Jan 2024 15:54:00 -0800
+Message-ID: <20240122235817.781314641@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,62 +45,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: qizhong cheng <qizhong.cheng@mediatek.com>
+From: Hou Tao <houtao1@huawei.com>
 
-commit 4e11c29873a8a296a20f99b3e03095e65ebf897d upstream.
+[ Upstream commit 3f2189e4f77b7a3e979d143dc4ff586488c7e8a5 ]
 
-We found a failure when using the iperf tool during WiFi performance
-testing, where some MSIs were received while clearing the interrupt
-status, and these MSIs cannot be serviced.
+For bpf_global_percpu_ma, the pointer passed to bpf_mem_free_rcu() is
+allocated by kmalloc() and its size is fixed (16-bytes on x86-64). So
+no matter which cache allocates the dynamic per-cpu area, on x86-64
+cache[2] will always be used to free the per-cpu area.
 
-The interrupt status can be cleared even if the MSI status remains pending.
-As such, given the edge-triggered interrupt type, its status should be
-cleared before being dispatched to the handler of the underling device.
+Fix the unbalance by checking whether the bpf memory allocator is
+per-cpu or not and use pcpu_alloc_size() instead of ksize() to
+find the correct cache for per-cpu free.
 
-[kwilczynski: commit log, code comment wording]
-Link: https://lore.kernel.org/linux-pci/20231211094923.31967-1-jianjun.wang@mediatek.com
-Fixes: 43e6409db64d ("PCI: mediatek: Add MSI support for MT2712 and MT7622")
-Signed-off-by: qizhong cheng <qizhong.cheng@mediatek.com>
-Signed-off-by: Jianjun Wang <jianjun.wang@mediatek.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-[bhelgaas: rewrap comment]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20231020133202.4043247-5-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 7ac5c53e0073 ("bpf: Use c->unit_size to select target cache during free")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-mediatek.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ include/linux/bpf_mem_alloc.h |  1 +
+ kernel/bpf/memalloc.c         | 17 +++++++++++++++--
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/controller/pcie-mediatek.c
-+++ b/drivers/pci/controller/pcie-mediatek.c
-@@ -624,12 +624,18 @@ static void mtk_pcie_intr_handler(struct
- 		if (status & MSI_STATUS){
- 			unsigned long imsi_status;
+diff --git a/include/linux/bpf_mem_alloc.h b/include/linux/bpf_mem_alloc.h
+index d644bbb298af..bb1223b21308 100644
+--- a/include/linux/bpf_mem_alloc.h
++++ b/include/linux/bpf_mem_alloc.h
+@@ -11,6 +11,7 @@ struct bpf_mem_caches;
+ struct bpf_mem_alloc {
+ 	struct bpf_mem_caches __percpu *caches;
+ 	struct bpf_mem_cache __percpu *cache;
++	bool percpu;
+ 	struct work_struct work;
+ };
  
-+			/*
-+			 * The interrupt status can be cleared even if the
-+			 * MSI status remains pending. As such, given the
-+			 * edge-triggered interrupt type, its status should
-+			 * be cleared before being dispatched to the
-+			 * handler of the underlying device.
-+			 */
-+			writel(MSI_STATUS, port->base + PCIE_INT_STATUS);
- 			while ((imsi_status = readl(port->base + PCIE_IMSI_STATUS))) {
- 				for_each_set_bit(bit, &imsi_status, MTK_MSI_IRQS_NUM)
- 					generic_handle_domain_irq(port->inner_domain, bit);
- 			}
--			/* Clear MSI interrupt status */
--			writel(MSI_STATUS, port->base + PCIE_INT_STATUS);
- 		}
- 	}
+diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
+index 9657d5951d78..5f93bafa4a26 100644
+--- a/kernel/bpf/memalloc.c
++++ b/kernel/bpf/memalloc.c
+@@ -522,6 +522,8 @@ int bpf_mem_alloc_init(struct bpf_mem_alloc *ma, int size, bool percpu)
+ 	struct bpf_mem_cache *c, __percpu *pc;
+ 	struct obj_cgroup *objcg = NULL;
  
++	ma->percpu = percpu;
++
+ 	if (size) {
+ 		pc = __alloc_percpu_gfp(sizeof(*pc), 8, GFP_KERNEL);
+ 		if (!pc)
+@@ -866,6 +868,17 @@ void notrace *bpf_mem_alloc(struct bpf_mem_alloc *ma, size_t size)
+ 	return !ret ? NULL : ret + LLIST_NODE_SZ;
+ }
+ 
++static notrace int bpf_mem_free_idx(void *ptr, bool percpu)
++{
++	size_t size;
++
++	if (percpu)
++		size = pcpu_alloc_size(*((void **)ptr));
++	else
++		size = ksize(ptr - LLIST_NODE_SZ);
++	return bpf_mem_cache_idx(size);
++}
++
+ void notrace bpf_mem_free(struct bpf_mem_alloc *ma, void *ptr)
+ {
+ 	int idx;
+@@ -873,7 +886,7 @@ void notrace bpf_mem_free(struct bpf_mem_alloc *ma, void *ptr)
+ 	if (!ptr)
+ 		return;
+ 
+-	idx = bpf_mem_cache_idx(ksize(ptr - LLIST_NODE_SZ));
++	idx = bpf_mem_free_idx(ptr, ma->percpu);
+ 	if (idx < 0)
+ 		return;
+ 
+@@ -887,7 +900,7 @@ void notrace bpf_mem_free_rcu(struct bpf_mem_alloc *ma, void *ptr)
+ 	if (!ptr)
+ 		return;
+ 
+-	idx = bpf_mem_cache_idx(ksize(ptr - LLIST_NODE_SZ));
++	idx = bpf_mem_free_idx(ptr, ma->percpu);
+ 	if (idx < 0)
+ 		return;
+ 
+-- 
+2.43.0
+
 
 
