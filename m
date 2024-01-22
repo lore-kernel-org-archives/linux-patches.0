@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB959155316;
-	Tue, 23 Jan 2024 00:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8DE23C6;
+	Tue, 23 Jan 2024 00:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969576; cv=none; b=W2YkEsiIKuZCb67M3IZKPOZD+vLldDXCVLQD8xEMmxhIiInI/uo8fwxfzAMQOqt0jGyAtZytiVKDLD+CY0lzYRhLEBv5d7rrqb4lRVfczIPXhxdZPrm7worAohs8OjQaBtsyKEybbDEQKtmw8k3fm/0eqJ4/1PEu06Zo6pIt7fc=
+	t=1705969577; cv=none; b=E6eHjn2cQ9algIB06frM864fIHWRc/RvIxgtCw+A5y9ZSMFD4N6KTs0iRzzD+J85W1ut7dQ00yaIyhs97RYwZu5LNjm9S9G5eIDMqWVf7BXZ+85temaA25fcu6UmeQEPEeDqO4eGmrLkFHtRKMksMesSHnoqoJ4IEnFfN1E6n3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969576; c=relaxed/simple;
-	bh=c6uMW6n16CUKl+tgAjmnjUJzR4ZxReQ+c9ndBc+zF84=;
+	s=arc-20240116; t=1705969577; c=relaxed/simple;
+	bh=MCeVCTpc3KW3W+ARZWsQcRFP3bHHnMfnz4GOOglM3so=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZCX7IbCGul6J1vP83vFdN1Jb6Uomgk2F9jX+sKFEtQEYV/dOulOnpy3gzE973P/lILShJ39EJiW83vFg0EEtC2oq/bMPnydqAo2YJ8tLxr1fOyLwF1gSl3dyHj+xT2gibRePEKo/AYHr1dMxgf57b0kCia4rblJsUUvp6fiNY30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2u/EN9eZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YYHASUfglqqSDMpM0f8GKhL/gp8zLLzpYqC5zcdGiGM06r649vYAEYr2fHnyiiDBf/AB/9VAV1TApyCgPk6PgZpzOCIG5V0sVeEt9CY42m2rJpUY5ndGKKzii+8BDzSPaR8Dk1mb9yyIX8J7sdBNNO7/DDF70SeJ4X1DJK7LGfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQXYTCWo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2u/EN9eZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0BDC433F1;
-	Tue, 23 Jan 2024 00:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQXYTCWo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1D8C43390;
+	Tue, 23 Jan 2024 00:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969575;
-	bh=c6uMW6n16CUKl+tgAjmnjUJzR4ZxReQ+c9ndBc+zF84=;
+	s=korg; t=1705969577;
+	bh=MCeVCTpc3KW3W+ARZWsQcRFP3bHHnMfnz4GOOglM3so=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2u/EN9eZwXJ73uYJ9tvx5U49b0Uo5X5FFpaguGHVz6Hw6r0MGFGgbe0HY+QvpUfKP
-	 2MZZGE1PSvVfOOzHCYUVpKHof+GwD2BAReI9YYAh16mITW4BVGTa1rKJnE1yBruvbb
-	 n82qWJLtRYa3/wLZd1+fZs9yzJH93TIw95BcZ9Vc=
+	b=lQXYTCWoL5okEg/jUleBOjIuUHsUAuvVNTqyPSnyeBBwcysRtaYF5+J1Z9nOry6mT
+	 LWlOGfnqS9XmBL3MXIBm8VyPAHiNWGHJ99ynmvLHXvyp1j4KVxpeB5rNjJ/KVBamZj
+	 7Q43zHgB3r42AUCF5gvOjG2MH0Qra20AKLObAVVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 332/641] f2fs: fix to check return value of f2fs_recover_xattr_data
-Date: Mon, 22 Jan 2024 15:53:56 -0800
-Message-ID: <20240122235828.293368156@linuxfoundation.org>
+Subject: [PATCH 6.7 333/641] clk: qcom: videocc-sm8150: Add missing PLL config property
+Date: Mon, 22 Jan 2024 15:53:57 -0800
+Message-ID: <20240122235828.323896805@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,68 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-[ Upstream commit 86d7d57a3f096c8349b32a0cd5f6f314e4416a6d ]
+[ Upstream commit 71f130c9193f613d497f7245365ed05ffdb0a401 ]
 
-Should check return value of f2fs_recover_xattr_data in
-__f2fs_setxattr rather than doing invalid retry if error happen.
+When the driver was ported upstream, PLL test_ctl_hi1 register value
+was omitted. Add it to ensure the PLLs are fully configured.
 
-Also just do set_page_dirty in f2fs_recover_xattr_data when
-page is changed really.
-
-Fixes: 50a472bbc79f ("f2fs: do not return EFSCORRUPTED, but try to run online repair")
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 5658e8cf1a8a ("clk: qcom: add video clock controller driver for SM8150")
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231201-videocc-8150-v3-3-56bec3a5e443@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c  |  6 +++---
- fs/f2fs/xattr.c | 11 +++++++----
- 2 files changed, 10 insertions(+), 7 deletions(-)
+ drivers/clk/qcom/videocc-sm8150.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index 6c7f6a649d27..9b546fd21010 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -2751,11 +2751,11 @@ int f2fs_recover_xattr_data(struct inode *inode, struct page *page)
- 	f2fs_update_inode_page(inode);
- 
- 	/* 3: update and set xattr node page dirty */
--	if (page)
-+	if (page) {
- 		memcpy(F2FS_NODE(xpage), F2FS_NODE(page),
- 				VALID_XATTR_BLOCK_SIZE);
--
--	set_page_dirty(xpage);
-+		set_page_dirty(xpage);
-+	}
- 	f2fs_put_page(xpage, 1);
- 
- 	return 0;
-diff --git a/fs/f2fs/xattr.c b/fs/f2fs/xattr.c
-index a8fc2cac6879..f290fe9327c4 100644
---- a/fs/f2fs/xattr.c
-+++ b/fs/f2fs/xattr.c
-@@ -660,11 +660,14 @@ static int __f2fs_setxattr(struct inode *inode, int index,
- 	here = __find_xattr(base_addr, last_base_addr, NULL, index, len, name);
- 	if (!here) {
- 		if (!F2FS_I(inode)->i_xattr_nid) {
-+			error = f2fs_recover_xattr_data(inode, NULL);
- 			f2fs_notice(F2FS_I_SB(inode),
--				"recover xattr in inode (%lu)", inode->i_ino);
--			f2fs_recover_xattr_data(inode, NULL);
--			kfree(base_addr);
--			goto retry;
-+				"recover xattr in inode (%lu), error(%d)",
-+					inode->i_ino, error);
-+			if (!error) {
-+				kfree(base_addr);
-+				goto retry;
-+			}
- 		}
- 		f2fs_err(F2FS_I_SB(inode), "set inode (%lu) has corrupted xattr",
- 								inode->i_ino);
+diff --git a/drivers/clk/qcom/videocc-sm8150.c b/drivers/clk/qcom/videocc-sm8150.c
+index 1afdbe4a249d..5579463f7e46 100644
+--- a/drivers/clk/qcom/videocc-sm8150.c
++++ b/drivers/clk/qcom/videocc-sm8150.c
+@@ -33,6 +33,7 @@ static struct alpha_pll_config video_pll0_config = {
+ 	.config_ctl_val = 0x20485699,
+ 	.config_ctl_hi_val = 0x00002267,
+ 	.config_ctl_hi1_val = 0x00000024,
++	.test_ctl_hi1_val = 0x00000020,
+ 	.user_ctl_val = 0x00000000,
+ 	.user_ctl_hi_val = 0x00000805,
+ 	.user_ctl_hi1_val = 0x000000D0,
 -- 
 2.43.0
 
