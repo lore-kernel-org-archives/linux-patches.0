@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2205D6A03B;
-	Tue, 23 Jan 2024 02:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE796A03B;
+	Tue, 23 Jan 2024 02:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975337; cv=none; b=e4h+tNYYiLl0oAD7h1E42okICfzPsUIoPcKBJ1xya4iCFlOhVrKYXimkuBucRpe3m0/nriOlfLi7ddhLDiJyH5ilR0yeHIu2zpkfNFPg8nfMLMglpEL9HXl5GvCj5vpQRUM9NTreSF65sW5iA4D+YpVcWmzdsjKEmDXI2NcafgA=
+	t=1705975338; cv=none; b=qghvLBR0dHxA1fCWQkAe69FcuothPfXLmWAyjbqom4lfe4nkUSIBqEvPt78OXbdDANYmf+2Sypfy/gLfNKNnh/eytTn5jPtFNZ5EThZ7vAEVgiAAptnDa+bQeng2HFhZ2bC+oNnexUMlhp9PtwTIkjT8ASLijBJ3OvgWEKleguY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975337; c=relaxed/simple;
-	bh=DH1R3A5mRFi3T6MFY6KR4UCynwpXjq1k3gzAKtsvk4w=;
+	s=arc-20240116; t=1705975338; c=relaxed/simple;
+	bh=lwn6LdBRTKi8k+ei37LrVkzkXqKK17/La9l4R5NXrxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ICcI0yOHc4Q3lFY1P1SFNQ5WPh/br+143RKAEy5fNjQrMWOs35XdncyV1Id2OPjtO484iFG8oL6x5xbXHjgV5Q4QnnjR9rueDN6fRFHmYFsIEM9OQmaLbElFySGQpJxh3+Umimi6r2gcYQkhXbrPe0K+uExVwtYsb+Iie2V1SUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ij66JbXX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lMERKXp/GOCWyZHx6dmZhDSZgSTKPvEUScbcmX2mlZp3xHKu4fJ+y4UAORRQkWMMBZ0s2LbwEK+qw+9IEfNjL0ozLr/nTKDmVi1lwEG5tPDbid5Z4gsjSZLp7jsPYCjyM1z1kyLUqNANI2KpkfYhNfRE4qKFx1GQCIIqpZOzVt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRAToSMG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ij66JbXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16E0C43390;
-	Tue, 23 Jan 2024 02:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRAToSMG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12EF6C43390;
+	Tue, 23 Jan 2024 02:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975337;
-	bh=DH1R3A5mRFi3T6MFY6KR4UCynwpXjq1k3gzAKtsvk4w=;
+	s=korg; t=1705975338;
+	bh=lwn6LdBRTKi8k+ei37LrVkzkXqKK17/La9l4R5NXrxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ij66JbXXTD7ejc6YOkzcWNV0yNRkPPQRuX1bWIaqoaAydWB0cNXfU9cQbwHi0/zHc
-	 mYkmN+dqPeZ6kGujrWg/2XpWyYveJqffUDRgtllBjvKbf9WiOzNhDQut3WmHRk+UuK
-	 hTslHhzWi1PKIzyqlISaOyZ21BJjNJ516ltUCwNc=
+	b=MRAToSMGstVTydYem3gsmQpbO9eRnWh8CT9CMiBajK8LAQkLAo/6zzIn1hilUSlJ5
+	 RgEEL0JzrsJdYKHDqhv53Nty53cMVPBx1/h5sYzhj7ePSejqNHZgbQeJdoxyX2yl8N
+	 f1Wa9qP6/rhUBIOuwELJw/IOI63cSbz5gtBacGmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 298/583] drivers: clk: zynqmp: calculate closest mux rate
-Date: Mon, 22 Jan 2024 15:55:49 -0800
-Message-ID: <20240122235821.138469117@linuxfoundation.org>
+Subject: [PATCH 6.6 299/583] drivers: clk: zynqmp: update divider round rate logic
+Date: Mon, 22 Jan 2024 15:55:50 -0800
+Message-ID: <20240122235821.166767595@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,57 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 From: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
 
-[ Upstream commit b782921ddd7f84f524723090377903f399fdbbcb ]
+[ Upstream commit 1fe15be1fb613534ecbac5f8c3f8744f757d237d ]
 
-Currently zynqmp clock driver is not calculating closest mux rate and
-because of that Linux is not setting proper frequency for CPU and
-not able to set given frequency for dynamic frequency scaling.
-
-E.g., In current logic initial acpu clock parent and frequency as below
-apll1                  0    0    0  2199999978    0     0  50000      Y
-    acpu0_mux          0    0    0  2199999978    0     0  50000      Y
-        acpu0_idiv1    0    0    0  2199999978    0     0  50000      Y
-            acpu0      0    0    0  2199999978    0     0  50000      Y
-
-After changing acpu frequency to 549999994 Hz using CPU freq scaling its
-selecting incorrect parent which is not closest frequency.
-rpll_to_xpd            0    0    0  1599999984    0     0  50000      Y
-    acpu0_mux          0    0    0  1599999984    0     0  50000      Y
-        acpu0_div1     0    0    0   533333328    0     0  50000      Y
-            acpu0      0    0    0   533333328    0     0  50000      Y
-
-Parent should remain same since 549999994 = 2199999978 / 4.
-
-So use __clk_mux_determine_rate_closest() generic function to calculate
-closest rate for mux clock. After this change its selecting correct
-parent and correct clock rate.
-apll1                  0    0    0  2199999978    0     0  50000      Y
-    acpu0_mux          0    0    0  2199999978    0     0  50000      Y
-        acpu0_div1     0    0    0   549999995    0     0  50000      Y
-            acpu0      0    0    0   549999995    0     0  50000      Y
+Currently zynqmp divider round rate is considering single parent and
+calculating rate and parent rate accordingly. But if divider clock flag
+is set to SET_RATE_PARENT then its not trying to traverse through all
+parent rate and not selecting best parent rate from that. So use common
+divider_round_rate() which is traversing through all clock parents and
+its rate and calculating proper parent rate.
 
 Fixes: 3fde0e16d016 ("drivers: clk: Add ZynqMP clock driver")
 Signed-off-by: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
-Link: https://lore.kernel.org/r/20231129112916.23125-2-jay.buddhabhatti@amd.com
+Link: https://lore.kernel.org/r/20231129112916.23125-3-jay.buddhabhatti@amd.com
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/zynqmp/clk-mux-zynqmp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/zynqmp/divider.c | 66 +++---------------------------------
+ 1 file changed, 5 insertions(+), 61 deletions(-)
 
-diff --git a/drivers/clk/zynqmp/clk-mux-zynqmp.c b/drivers/clk/zynqmp/clk-mux-zynqmp.c
-index 60359333f26d..9b5d3050b742 100644
---- a/drivers/clk/zynqmp/clk-mux-zynqmp.c
-+++ b/drivers/clk/zynqmp/clk-mux-zynqmp.c
-@@ -89,7 +89,7 @@ static int zynqmp_clk_mux_set_parent(struct clk_hw *hw, u8 index)
- static const struct clk_ops zynqmp_clk_mux_ops = {
- 	.get_parent = zynqmp_clk_mux_get_parent,
- 	.set_parent = zynqmp_clk_mux_set_parent,
--	.determine_rate = __clk_mux_determine_rate,
-+	.determine_rate = __clk_mux_determine_rate_closest,
- };
+diff --git a/drivers/clk/zynqmp/divider.c b/drivers/clk/zynqmp/divider.c
+index 33a3b2a22659..5a00487ae408 100644
+--- a/drivers/clk/zynqmp/divider.c
++++ b/drivers/clk/zynqmp/divider.c
+@@ -110,52 +110,6 @@ static unsigned long zynqmp_clk_divider_recalc_rate(struct clk_hw *hw,
+ 	return DIV_ROUND_UP_ULL(parent_rate, value);
+ }
  
- static const struct clk_ops zynqmp_clk_mux_ro_ops = {
+-static void zynqmp_get_divider2_val(struct clk_hw *hw,
+-				    unsigned long rate,
+-				    struct zynqmp_clk_divider *divider,
+-				    u32 *bestdiv)
+-{
+-	int div1;
+-	int div2;
+-	long error = LONG_MAX;
+-	unsigned long div1_prate;
+-	struct clk_hw *div1_parent_hw;
+-	struct zynqmp_clk_divider *pdivider;
+-	struct clk_hw *div2_parent_hw = clk_hw_get_parent(hw);
+-
+-	if (!div2_parent_hw)
+-		return;
+-
+-	pdivider = to_zynqmp_clk_divider(div2_parent_hw);
+-	if (!pdivider)
+-		return;
+-
+-	div1_parent_hw = clk_hw_get_parent(div2_parent_hw);
+-	if (!div1_parent_hw)
+-		return;
+-
+-	div1_prate = clk_hw_get_rate(div1_parent_hw);
+-	*bestdiv = 1;
+-	for (div1 = 1; div1 <= pdivider->max_div;) {
+-		for (div2 = 1; div2 <= divider->max_div;) {
+-			long new_error = ((div1_prate / div1) / div2) - rate;
+-
+-			if (abs(new_error) < abs(error)) {
+-				*bestdiv = div2;
+-				error = new_error;
+-			}
+-			if (divider->flags & CLK_DIVIDER_POWER_OF_TWO)
+-				div2 = div2 << 1;
+-			else
+-				div2++;
+-		}
+-		if (pdivider->flags & CLK_DIVIDER_POWER_OF_TWO)
+-			div1 = div1 << 1;
+-		else
+-			div1++;
+-	}
+-}
+-
+ /**
+  * zynqmp_clk_divider_round_rate() - Round rate of divider clock
+  * @hw:			handle between common and hardware-specific interfaces
+@@ -174,6 +128,7 @@ static long zynqmp_clk_divider_round_rate(struct clk_hw *hw,
+ 	u32 div_type = divider->div_type;
+ 	u32 bestdiv;
+ 	int ret;
++	u8 width;
+ 
+ 	/* if read only, just return current value */
+ 	if (divider->flags & CLK_DIVIDER_READ_ONLY) {
+@@ -193,23 +148,12 @@ static long zynqmp_clk_divider_round_rate(struct clk_hw *hw,
+ 		return DIV_ROUND_UP_ULL((u64)*prate, bestdiv);
+ 	}
+ 
+-	bestdiv = zynqmp_divider_get_val(*prate, rate, divider->flags);
+-
+-	/*
+-	 * In case of two divisors, compute best divider values and return
+-	 * divider2 value based on compute value. div1 will  be automatically
+-	 * set to optimum based on required total divider value.
+-	 */
+-	if (div_type == TYPE_DIV2 &&
+-	    (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT)) {
+-		zynqmp_get_divider2_val(hw, rate, divider, &bestdiv);
+-	}
++	width = fls(divider->max_div);
+ 
+-	if ((clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT) && divider->is_frac)
+-		bestdiv = rate % *prate ? 1 : bestdiv;
++	rate = divider_round_rate(hw, rate, prate, NULL, width, divider->flags);
+ 
+-	bestdiv = min_t(u32, bestdiv, divider->max_div);
+-	*prate = rate * bestdiv;
++	if (divider->is_frac && (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT) && (rate % *prate))
++		*prate = rate;
+ 
+ 	return rate;
+ }
 -- 
 2.43.0
 
