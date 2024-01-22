@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FB212BF3D;
-	Tue, 23 Jan 2024 00:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E121D12BF3D;
+	Tue, 23 Jan 2024 00:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968963; cv=none; b=qfxvFUwLPoVOcnjZLbCn3nZTR0TmUNsozCzo0J7RNrh8hw6vE9YoasyJOaTYkP6XSZcYdktkjEyinnWnUxOVbyyu2REpHD60CSR8wCSPGyR3NUmhzI6nRTjYNREWRFmhBLCz+g2MdXc/4kuXBEt8CdR1/Z6zYTMb/9aqyPGUkyw=
+	t=1705968965; cv=none; b=TibKemgvSCpJGTGqY60kA+y2EOyMTR9Ax/b/ZvRADqD3IBvRHfkqaF97sEBrRiiMm4rCiQTnNeOj63SjtcOtuMgG4AQGXQkDP7fFFqRmO4EbVOjdSReJw/RZFPIRm7MG1Mn1HvZfbF4/xjBRn+RsKM1X24T2dkYY+TJOjdVgy/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968963; c=relaxed/simple;
-	bh=F7Q447cNELYfucGkpEhk8wwp3up97htvzgutj7ywJ2E=;
+	s=arc-20240116; t=1705968965; c=relaxed/simple;
+	bh=mFhvM0Q0+AsMLYUZI5uFr5iSgnpzYzARxMJyfgbuzeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dseIAPigcMZbW57xMR3nk99Z83Jth96A0AO0SuB+YEnEOo03o3YSPc7T3wiIXwytDqHuqIhL10i+J0tzkVBj0222sdwJI+sqeJComPuyU16jm4d9FSVD26ETnOwwffH3lMSsllO2ul/NidCiJppFjjNK58Cg+cPYe+HJYKirjl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLzWVKuT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hEPZK2NQtibwz9VcFqLzVmANvLI37wNqTjHWIy44hfnIjg+SXsLH95tPd/ALT9I1388ct10/nj5vXPD5y6DkpiybXJ6hDHmY1qQjXRsXCK7ezN5bYfZTk1G1ko1/slKtpy2KxY749qGQAR3vAtnvudEnS3CitRe5GXoxXO2iXQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJUbYltm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLzWVKuT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C32DC433F1;
-	Tue, 23 Jan 2024 00:16:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJUbYltm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93210C433F1;
+	Tue, 23 Jan 2024 00:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968963;
-	bh=F7Q447cNELYfucGkpEhk8wwp3up97htvzgutj7ywJ2E=;
+	s=korg; t=1705968964;
+	bh=mFhvM0Q0+AsMLYUZI5uFr5iSgnpzYzARxMJyfgbuzeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vLzWVKuTVcRwdLhgJJUNj0qjOsdCZbtxv7xjQKrdvG5jPHbGUWFuxB419RhsRdrWu
-	 ZjlMAUpQT9x5JbdBbEd4PvbueRvcg9ghSK/mQaStfRtkmXtlzQEkzqn43Qt8TWd0HZ
-	 h+vEy9TBrPehHQVEnxUPlBbPtdaMND/jAcmbzkDM=
+	b=sJUbYltm2/4RQX4t9XSILC1BevrLM2t+gBQcBC54yJDVqy5C7U4YxWs/0Pm3w4JnG
+	 zNv7ik82BFvA5uD62DABe6NEs4gFYk74Zg3BWJNCGretfeR/sJB7t6rnBZZvnTalpT
+	 KGWpUYbSCtLspEV3imGyIBKJlFwtAjxnekszVURY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 125/194] media: cx231xx: fix a memleak in cx231xx_init_isoc
-Date: Mon, 22 Jan 2024 15:57:35 -0800
-Message-ID: <20240122235724.592585212@linuxfoundation.org>
+Subject: [PATCH 5.4 126/194] media: dvbdev: drop refcount on error path in dvb_device_open()
+Date: Mon, 22 Jan 2024 15:57:36 -0800
+Message-ID: <20240122235724.640921363@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,49 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 5d3c8990e2bbf929cb211563dadd70708f42e4e6 ]
+[ Upstream commit a2dd235df435a05d389240be748909ada91201d2 ]
 
-The dma_q->p_left_data alloced by kzalloc should be freed in all the
-following error handling paths. However, it hasn't been freed in the
-allocation error paths of dev->video_mode.isoc_ctl.urb and
-dev->video_mode.isoc_ctl.transfer_buffer.
+If call to file->f_op->open() fails, then call dvb_device_put(dvbdev).
 
-On the other hand, the dma_q->p_left_data did be freed in the
-error-handling paths after that of dev->video_mode.isoc_ctl.urb and
-dev->video_mode.isoc_ctl.transfer_buffer, by calling
-cx231xx_uninit_isoc(dev). So the same free operation should be done in
-error-handling paths of those two allocation.
-
-Fixes: 64fbf4445526 ("[media] cx231xx: Added support for Carraera, Shelby, RDx_253S and VIDEO_GRABBER")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Fixes: 0fc044b2b5e2 ("media: dvbdev: adopts refcnt to avoid UAF")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/cx231xx/cx231xx-core.c | 2 ++
+ drivers/media/dvb-core/dvbdev.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/usb/cx231xx/cx231xx-core.c b/drivers/media/usb/cx231xx/cx231xx-core.c
-index 982cb56e97e9..0f11f50c0ae4 100644
---- a/drivers/media/usb/cx231xx/cx231xx-core.c
-+++ b/drivers/media/usb/cx231xx/cx231xx-core.c
-@@ -1028,6 +1028,7 @@ int cx231xx_init_isoc(struct cx231xx *dev, int max_packets,
- 	if (!dev->video_mode.isoc_ctl.urb) {
- 		dev_err(dev->dev,
- 			"cannot alloc memory for usb buffers\n");
-+		kfree(dma_q->p_left_data);
- 		return -ENOMEM;
+diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
+index 31b299ced3c1..e7cd7b13fc28 100644
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -114,6 +114,8 @@ static int dvb_device_open(struct inode *inode, struct file *file)
+ 			err = file->f_op->open(inode, file);
+ 		up_read(&minor_rwsem);
+ 		mutex_unlock(&dvbdev_mutex);
++		if (err)
++			dvb_device_put(dvbdev);
+ 		return err;
  	}
- 
-@@ -1037,6 +1038,7 @@ int cx231xx_init_isoc(struct cx231xx *dev, int max_packets,
- 		dev_err(dev->dev,
- 			"cannot allocate memory for usbtransfer\n");
- 		kfree(dev->video_mode.isoc_ctl.urb);
-+		kfree(dma_q->p_left_data);
- 		return -ENOMEM;
- 	}
- 
+ fail:
 -- 
 2.43.0
 
