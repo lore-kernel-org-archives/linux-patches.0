@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6042677F00;
-	Tue, 23 Jan 2024 02:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2580F768F6;
+	Tue, 23 Jan 2024 02:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975523; cv=none; b=q+79o6Lbb5Fwl2xUzEWQDj0fpF/c1HyRnZKyd4YEUtChmqkfhCu80Q9jkuTaz8pq1o0GEsqBEIKd5BxxE13Skz53N/75SvinC+Nx3QiwRmObod7QuFF716d9OvD0VPvcWDGptAlFNSg+ODE1FAWYOMG942FPBWt6A/fc22nnyco=
+	t=1705975524; cv=none; b=lchULEGp+ja6lD3CxRmuKLCWSCaU9ZC7FcF7S2bbb1tvY6HbgX60966w+FXJPmoUWKh9StXJ1H83goqpOlbzIO3UWCYsdL5gs6EcNRCgnOLxOowwP8t+ZSQacsZ2m3j2NFLRtmst3XGqPti2BYAAahQY+VNvW7qNXco9RDM0RPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975523; c=relaxed/simple;
-	bh=SIJjYOiSw4MN//RZSZq5DIuoZ0mzIFHjs+3AGI/8VlI=;
+	s=arc-20240116; t=1705975524; c=relaxed/simple;
+	bh=/8777Ancit4khwf1AMQmWJsRB67PYGm5Q+sdztVoj4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TsURYyyVKbgt19FONOC/fqjXmgd8mh8J7UKAHSkziy7QwpzU+W2XikkgH0IEtjFT6naLRP0kWnIzC5eo1bDSZ/Dhe79vL930N3UECxMvmJFPvFb/U0ZiCjBLpM02lkBGvwAu24bHja/xy5N6IMdu77qZFUVII///MwYr3FoWmjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxyTAJ96; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eHYE+7yUiqxhQ4EBgiLk6fuN/HQs3x433lS6SYbfS4G22RtZJd8hUpSW3e29ad1oVf9gRhSmeBEQ/lfg3B2apJPxD+6d2ydR1AnALH7b54YPinxlGAsY2cZYbWC9K0HFOdiaJBcwQF03QK0mQ21s/NFf0hGC3fHXhTf7Ok6xPmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RRm3lzaR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxyTAJ96"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CA6C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RRm3lzaR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03CAC433B2;
 	Tue, 23 Jan 2024 02:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975523;
-	bh=SIJjYOiSw4MN//RZSZq5DIuoZ0mzIFHjs+3AGI/8VlI=;
+	s=korg; t=1705975524;
+	bh=/8777Ancit4khwf1AMQmWJsRB67PYGm5Q+sdztVoj4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JxyTAJ96ICZWfaTEyU2nirRn77G91qrCb4B3JKFDkDTIYGtF1JirfNDe5WQ/oUD/R
-	 +r4WaXnOrclknvX3lnLXNRaKzPSduSBzCPLw6i8aYobUeKDn1I+Vy1UGHhxeW6vjPY
-	 VNgRw0SW8O7ztbdcutiPqVX0bq/3RTav3x9hvKWY=
+	b=RRm3lzaRdbllO8SwwdaRbdjszPDbaEF0JO1LNsFANM6YXJ5zm5S3OYoQtJpGKdgG0
+	 v5kKXzKmK/0jSa1g13gqm5FausPASC1Ef5bGgAln8lOOricYk1uOmtdKCY1zZi59nX
+	 QJMCKnRoMk71v8iRmusb8sI3FbwiD8mjHTCyfMbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,11 +30,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
-	Kai Huang <kai.huang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 475/583] selftests/sgx: Fix uninitialized pointer dereference in error path
-Date: Mon, 22 Jan 2024 15:58:46 -0800
-Message-ID: <20240122235826.519543444@linuxfoundation.org>
+Subject: [PATCH 6.6 476/583] selftests/sgx: Fix uninitialized pointer dereferences in encl_get_entry
+Date: Mon, 22 Jan 2024 15:58:47 -0800
+Message-ID: <20240122235826.551657905@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -55,48 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>
 
-[ Upstream commit 79eba8c924f7decfa71ddf187d38cb9f5f2cd7b3 ]
+[ Upstream commit b84fc2e0139ba4b23b8039bd7cfd242894fe8f8b ]
 
-Ensure ctx is zero-initialized, such that the encl_measure function will
-not call EVP_MD_CTX_destroy with an uninitialized ctx pointer in case of an
-early error during key generation.
+Ensure sym_tab and sym_names are zero-initialized and add an early-out
+condition in the unlikely (erroneous) case that the enclave ELF file would
+not contain a symbol table.
 
-Fixes: 2adcba79e69d ("selftests/x86: Add a selftest for SGX")
+This addresses -Werror=maybe-uninitialized compiler warnings for gcc -O2.
+
+Fixes: 33c5aac3bf32 ("selftests/sgx: Test complete changing of page type flow")
 Signed-off-by: Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Acked-by: Kai Huang <kai.huang@intel.com>
-Link: https://lore.kernel.org/all/20231005153854.25566-2-jo.vanbulck%40cs.kuleuven.be
+Link: https://lore.kernel.org/all/20231005153854.25566-3-jo.vanbulck%40cs.kuleuven.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/sgx/sigstruct.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/testing/selftests/sgx/load.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/sgx/sigstruct.c b/tools/testing/selftests/sgx/sigstruct.c
-index a07896a46364..d73b29becf5b 100644
---- a/tools/testing/selftests/sgx/sigstruct.c
-+++ b/tools/testing/selftests/sgx/sigstruct.c
-@@ -318,9 +318,9 @@ bool encl_measure(struct encl *encl)
- 	struct sgx_sigstruct *sigstruct = &encl->sigstruct;
- 	struct sgx_sigstruct_payload payload;
- 	uint8_t digest[SHA256_DIGEST_LENGTH];
-+	EVP_MD_CTX *ctx = NULL;
- 	unsigned int siglen;
- 	RSA *key = NULL;
--	EVP_MD_CTX *ctx;
+diff --git a/tools/testing/selftests/sgx/load.c b/tools/testing/selftests/sgx/load.c
+index 94bdeac1cf04..c9f658e44de6 100644
+--- a/tools/testing/selftests/sgx/load.c
++++ b/tools/testing/selftests/sgx/load.c
+@@ -136,11 +136,11 @@ static bool encl_ioc_add_pages(struct encl *encl, struct encl_segment *seg)
+  */
+ uint64_t encl_get_entry(struct encl *encl, const char *symbol)
+ {
++	Elf64_Sym *symtab = NULL;
++	char *sym_names = NULL;
+ 	Elf64_Shdr *sections;
+-	Elf64_Sym *symtab;
+ 	Elf64_Ehdr *ehdr;
+-	char *sym_names;
+-	int num_sym;
++	int num_sym = 0;
  	int i;
  
- 	memset(sigstruct, 0, sizeof(*sigstruct));
-@@ -384,7 +384,8 @@ bool encl_measure(struct encl *encl)
- 	return true;
+ 	ehdr = encl->bin;
+@@ -161,6 +161,9 @@ uint64_t encl_get_entry(struct encl *encl, const char *symbol)
+ 		}
+ 	}
  
- err:
--	EVP_MD_CTX_destroy(ctx);
-+	if (ctx)
-+		EVP_MD_CTX_destroy(ctx);
- 	RSA_free(key);
- 	return false;
- }
++	if (!symtab || !sym_names)
++		return 0;
++
+ 	for (i = 0; i < num_sym; i++) {
+ 		Elf64_Sym *sym = &symtab[i];
+ 
 -- 
 2.43.0
 
