@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAAF52F7C;
-	Tue, 23 Jan 2024 00:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A0A4E1D7;
+	Tue, 23 Jan 2024 00:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969938; cv=none; b=qYMqsEP/FSL9bio155uNU/+i2p/Fx0H/bgkdYO+RYw5yEVpB+T9+BKVqy0bH7shv+G3RA8ednSLi6lM6tP+elufL8a7WD7hr0Pgta8/5aAXa1yiUxVrkHv/BgUDYpcY7ub3fja3A+89ydlC8WOcXwpUIJJhY2QpJzMsEKkJdEOc=
+	t=1705969942; cv=none; b=bF5J9lXqqVIVWMB9D2I4Qq+rC23z1GI+AVxd1l944p2ax1cs2QrVPnZV5G5GkBOqp+WREbiERAMlamvItDoKsA1ZREcljMYI9duJxj4JJYlb3gMV1lNpx9sg3SbMH0kgAx7/uw1SEktiHxflro8O26Stbj1ZT48105qwFjGMHy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969938; c=relaxed/simple;
-	bh=RGbJ14mPK3fOA56Ar21PRf3IwBEi9s84Vjit/FazBfg=;
+	s=arc-20240116; t=1705969942; c=relaxed/simple;
+	bh=q1U8mHsB4wLRUdMw+7immP+tqkWXNT6TPBBH5jBYA6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qJ50tTehBsH/KDpfuY8HyN33iXwMO6tIxeLZtPxTd/N0dv8whxNRu0kSVidrbgqz2LrbReSJFMGfesRxL2r9D3Nk0gg8mx8fgC1xZDhMRbvssavchpOptOOS5jAgGw4RPDDfIcKI0RixQBiZGLhlI2vHb7/S4TzEso6PJG3Togo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlNY1O1Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SSwW9EDqb+K26thTXfTyzBxv1QN+yP13+yqYJWGJKYcB0lTbm8i4+jtDrvHkhfA98Rs9PQshTugmqeaBQiZuojJJFp2UDtwoj0xtbUANhrKHLUWYyEr6QYnVKACytVnwMbNskidXaAERPAZuhnUDKWjXUAcwEFZaHj9LV+IO1MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pi2DiTW9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlNY1O1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2ECC433C7;
-	Tue, 23 Jan 2024 00:32:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pi2DiTW9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DCFC433C7;
+	Tue, 23 Jan 2024 00:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969938;
-	bh=RGbJ14mPK3fOA56Ar21PRf3IwBEi9s84Vjit/FazBfg=;
+	s=korg; t=1705969942;
+	bh=q1U8mHsB4wLRUdMw+7immP+tqkWXNT6TPBBH5jBYA6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WlNY1O1Ybxcv5o/1YvDYYjHdZi1l6T3wXscTAv5YJNFdFfYzeEdpTNTGWhisRnf4Z
-	 rd6v7FaDdmPd+hBP4YgJN67aoho419jVnO14GCIC5OVplIS4VxpvtmFwKxuBURMwvq
-	 nLdGDg6jz2QXkhz4uoBmwfPHhk7A6pVoANrC85to=
+	b=Pi2DiTW9+FaufPtyDk3dNdcd9MLbitCvu9cmAm43V0WozV2wC5gjdLa7HxfllN5QG
+	 OOHGYnANzVMQXCp1QRUdjbkoy81c6SGV/LPSqsAKD7Jm3lrdjq0+W4GHhdqte8WyQv
+	 UbVxCcpo8CfbyOFjaGh2DNQ3N2QhvDpUuwGQxdQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@arm.com>,
-	Nick Forrington <nick.forrington@arm.com>,
-	Leo Yan <leo.yan@linaro.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
 	Ian Rogers <irogers@google.com>,
+	German Gomez <german.gomez@arm.com>,
+	James Clark <james.clark@arm.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
+	Leo Yan <leo.yan@linaro.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 507/641] perf test: Remove atomics from test_loop to avoid test failures
-Date: Mon, 22 Jan 2024 15:56:51 -0800
-Message-ID: <20240122235833.935898924@linuxfoundation.org>
+Subject: [PATCH 6.7 508/641] perf header: Fix segfault on build_mem_topology() error path
+Date: Mon, 22 Jan 2024 15:56:52 -0800
+Message-ID: <20240122235833.971914972@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -59,56 +57,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Forrington <nick.forrington@arm.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 72b4ca7e993e94f09bcf6d19fc385a2e8060c71f ]
+[ Upstream commit 70df07838fc1c0acfab3325ae79014e241a88bdf ]
 
-The current use of atomics can lead to test failures, as tests (such as
-tests/shell/record.sh) search for samples with "test_loop" as the
-top-most stack frame, but find frames related to the atomic operation
-(e.g. __aarch64_ldadd4_relax).
+Do not increase the node count unless a node has been successfully read,
+because it can lead to a segfault if an error occurs.
 
-This change simply removes the "count" variable, as it is not necessary.
+For example, if perf exceeds the open file limit in memory_node__read(),
+which, on a test system, could be made to happen by setting the file limit
+to exactly 32:
 
-Fixes: 1962ab6f6e0b39e4 ("perf test workload thloop: Make count increments atomic")
-Reviewed-by: James Clark <james.clark@arm.com>
-Signed-off-by: Nick Forrington <nick.forrington@arm.com>
-Acked-by: Leo Yan <leo.yan@linaro.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+ Before:
+
+  $ ulimit -n 32
+  $ perf mem record --all-user -- sleep 1
+  [ perf record: Woken up 1 times to write data ]
+  failed: can't open memory sysfs data
+  perf: Segmentation fault
+  Obtained 14 stack frames.
+  perf(sighandler_dump_stack+0x48) [0x55f4b1f59558]
+  /lib/x86_64-linux-gnu/libc.so.6(+0x42520) [0x7f4ba1c42520]
+  /lib/x86_64-linux-gnu/libc.so.6(free+0x1e) [0x7f4ba1ca53fe]
+  perf(+0x178ff4) [0x55f4b1f48ff4]
+  perf(+0x179a70) [0x55f4b1f49a70]
+  perf(+0x17ef5d) [0x55f4b1f4ef5d]
+  perf(+0x85c0b) [0x55f4b1e55c0b]
+  perf(cmd_record+0xe1d) [0x55f4b1e5920d]
+  perf(cmd_mem+0xc96) [0x55f4b1e80e56]
+  perf(+0x130460) [0x55f4b1f00460]
+  perf(main+0x689) [0x55f4b1e427d9]
+  /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f4ba1c29d90]
+  /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f4ba1c29e40]
+  perf(_start+0x25) [0x55f4b1e42a25]
+  Segmentation fault (core dumped)
+  $
+
+After:
+
+  $ ulimit -n 32
+  $ perf mem record --all-user -- sleep 1
+  [ perf record: Woken up 1 times to write data ]
+  failed: can't open memory sysfs data
+  [ perf record: Captured and wrote 0.005 MB perf.data (11 samples) ]
+  $
+
+Fixes: f8e502b9d1b3b197 ("perf header: Ensure bitmaps are freed")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: German Gomez <german.gomez@arm.com>
 Cc: Ian Rogers <irogers@google.com>
+Cc: James Clark <james.clark@arm.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Leo Yan <leo.yan@linaro.org>
 Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20231102162225.50028-1-nick.forrington@arm.com
+Link: https://lore.kernel.org/r/20231123075848.9652-2-adrian.hunter@intel.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/workloads/thloop.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ tools/perf/util/header.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/tests/workloads/thloop.c b/tools/perf/tests/workloads/thloop.c
-index af05269c2eb8..457b29f91c3e 100644
---- a/tools/perf/tests/workloads/thloop.c
-+++ b/tools/perf/tests/workloads/thloop.c
-@@ -7,7 +7,6 @@
- #include "../tests.h"
- 
- static volatile sig_atomic_t done;
--static volatile unsigned count;
- 
- /* We want to check this symbol in perf report */
- noinline void test_loop(void);
-@@ -19,8 +18,7 @@ static void sighandler(int sig __maybe_unused)
- 
- noinline void test_loop(void)
- {
--	while (!done)
--		__atomic_fetch_add(&count, 1, __ATOMIC_RELAXED);
-+	while (!done);
- }
- 
- static void *thfunc(void *arg)
+diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
+index e86b9439ffee..7609b4d468dc 100644
+--- a/tools/perf/util/header.c
++++ b/tools/perf/util/header.c
+@@ -1444,7 +1444,9 @@ static int build_mem_topology(struct memory_node **nodesp, u64 *cntp)
+ 			nodes = new_nodes;
+ 			size += 4;
+ 		}
+-		ret = memory_node__read(&nodes[cnt++], idx);
++		ret = memory_node__read(&nodes[cnt], idx);
++		if (!ret)
++			cnt += 1;
+ 	}
+ out:
+ 	closedir(dir);
 -- 
 2.43.0
 
