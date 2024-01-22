@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A0A4E1D7;
-	Tue, 23 Jan 2024 00:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E464E1D7;
+	Tue, 23 Jan 2024 00:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969942; cv=none; b=bF5J9lXqqVIVWMB9D2I4Qq+rC23z1GI+AVxd1l944p2ax1cs2QrVPnZV5G5GkBOqp+WREbiERAMlamvItDoKsA1ZREcljMYI9duJxj4JJYlb3gMV1lNpx9sg3SbMH0kgAx7/uw1SEktiHxflro8O26Stbj1ZT48105qwFjGMHy0=
+	t=1705969944; cv=none; b=dJLLijQoydX+Y1p4YnrcVng9zG9TC1d74bLqAVIX59JUOmkWqFBvEIkAzNyr8B1LaSGdWumaru2VgngR86hkRmwMDOUq1dCemA6vjS4ivUs5mC1ALjscmxw0Zwx2VVvEPj9xRfJc+5xuDLdZNvzEc1hNMBcRxZK2lG86iEgynL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969942; c=relaxed/simple;
-	bh=q1U8mHsB4wLRUdMw+7immP+tqkWXNT6TPBBH5jBYA6w=;
+	s=arc-20240116; t=1705969944; c=relaxed/simple;
+	bh=DIOghlFQ5/9LVrejV/h2ZzO2qf3p+qqfjR/j2w6L/m4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SSwW9EDqb+K26thTXfTyzBxv1QN+yP13+yqYJWGJKYcB0lTbm8i4+jtDrvHkhfA98Rs9PQshTugmqeaBQiZuojJJFp2UDtwoj0xtbUANhrKHLUWYyEr6QYnVKACytVnwMbNskidXaAERPAZuhnUDKWjXUAcwEFZaHj9LV+IO1MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pi2DiTW9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E1wcBkoLAbnVSfvkCAVdInUgax+EFmEsOLBZc9ZLN7Y0JXk5elXdYLoV3iHrDYwv/sa0VIr9WTbDbcbTUsxMbaVx0+UxfWAAOvCXNMcAnzusIr1QKgAwFSa45231I3pQsIX20/tkpKWxzdKCoboILChvstWoZlztIH44jzeDKMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSk659f8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pi2DiTW9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DCFC433C7;
-	Tue, 23 Jan 2024 00:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSk659f8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F63C43390;
+	Tue, 23 Jan 2024 00:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969942;
-	bh=q1U8mHsB4wLRUdMw+7immP+tqkWXNT6TPBBH5jBYA6w=;
+	s=korg; t=1705969943;
+	bh=DIOghlFQ5/9LVrejV/h2ZzO2qf3p+qqfjR/j2w6L/m4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pi2DiTW9+FaufPtyDk3dNdcd9MLbitCvu9cmAm43V0WozV2wC5gjdLa7HxfllN5QG
-	 OOHGYnANzVMQXCp1QRUdjbkoy81c6SGV/LPSqsAKD7Jm3lrdjq0+W4GHhdqte8WyQv
-	 UbVxCcpo8CfbyOFjaGh2DNQ3N2QhvDpUuwGQxdQA=
+	b=WSk659f8eqKwGhW7Sr74H4mi+DCTPN5uCz82lLEKNE1x/70XKzgxdva4+vXIhy7lK
+	 8DXy6DjOxLbTPfA90cDQr/e6EEZcSFIr/IouZ3lXA/rn+xUVzYwzvBAKeazHh6lko3
+	 FlFOMe6CxQaOeH8kM1wk4v9wnFHxnlYJJvFKqhgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
 	Ian Rogers <irogers@google.com>,
-	German Gomez <german.gomez@arm.com>,
-	James Clark <james.clark@arm.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 508/641] perf header: Fix segfault on build_mem_topology() error path
-Date: Mon, 22 Jan 2024 15:56:52 -0800
-Message-ID: <20240122235833.971914972@linuxfoundation.org>
+Subject: [PATCH 6.7 509/641] libapi: Add missing linux/types.h header to get the __u64 type on io.h
+Date: Mon, 22 Jan 2024 15:56:53 -0800
+Message-ID: <20240122235834.003977802@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -57,82 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 70df07838fc1c0acfab3325ae79014e241a88bdf ]
+[ Upstream commit af76b2dec0984a079d8497bfa37d29a9b55932e1 ]
 
-Do not increase the node count unless a node has been successfully read,
-because it can lead to a segfault if an error occurs.
+There are functions using __u64, so we need to have the linux/types.h
+header otherwise we'll break when its not included before api/io.h.
 
-For example, if perf exceeds the open file limit in memory_node__read(),
-which, on a test system, could be made to happen by setting the file limit
-to exactly 32:
-
- Before:
-
-  $ ulimit -n 32
-  $ perf mem record --all-user -- sleep 1
-  [ perf record: Woken up 1 times to write data ]
-  failed: can't open memory sysfs data
-  perf: Segmentation fault
-  Obtained 14 stack frames.
-  perf(sighandler_dump_stack+0x48) [0x55f4b1f59558]
-  /lib/x86_64-linux-gnu/libc.so.6(+0x42520) [0x7f4ba1c42520]
-  /lib/x86_64-linux-gnu/libc.so.6(free+0x1e) [0x7f4ba1ca53fe]
-  perf(+0x178ff4) [0x55f4b1f48ff4]
-  perf(+0x179a70) [0x55f4b1f49a70]
-  perf(+0x17ef5d) [0x55f4b1f4ef5d]
-  perf(+0x85c0b) [0x55f4b1e55c0b]
-  perf(cmd_record+0xe1d) [0x55f4b1e5920d]
-  perf(cmd_mem+0xc96) [0x55f4b1e80e56]
-  perf(+0x130460) [0x55f4b1f00460]
-  perf(main+0x689) [0x55f4b1e427d9]
-  /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f4ba1c29d90]
-  /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f4ba1c29e40]
-  perf(_start+0x25) [0x55f4b1e42a25]
-  Segmentation fault (core dumped)
-  $
-
-After:
-
-  $ ulimit -n 32
-  $ perf mem record --all-user -- sleep 1
-  [ perf record: Woken up 1 times to write data ]
-  failed: can't open memory sysfs data
-  [ perf record: Captured and wrote 0.005 MB perf.data (11 samples) ]
-  $
-
-Fixes: f8e502b9d1b3b197 ("perf header: Ensure bitmaps are freed")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: German Gomez <german.gomez@arm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: James Clark <james.clark@arm.com>
+Fixes: e95770af4c4a280f ("tools api: Add a lightweight buffered reading api")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
 Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20231123075848.9652-2-adrian.hunter@intel.com
+Link: https://lore.kernel.org/lkml/ZWjDPL+IzPPsuC3X@kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/header.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/lib/api/io.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index e86b9439ffee..7609b4d468dc 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -1444,7 +1444,9 @@ static int build_mem_topology(struct memory_node **nodesp, u64 *cntp)
- 			nodes = new_nodes;
- 			size += 4;
- 		}
--		ret = memory_node__read(&nodes[cnt++], idx);
-+		ret = memory_node__read(&nodes[cnt], idx);
-+		if (!ret)
-+			cnt += 1;
- 	}
- out:
- 	closedir(dir);
+diff --git a/tools/lib/api/io.h b/tools/lib/api/io.h
+index a77b74c5fb65..2a7fe9758813 100644
+--- a/tools/lib/api/io.h
++++ b/tools/lib/api/io.h
+@@ -12,6 +12,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
++#include <linux/types.h>
+ 
+ struct io {
+ 	/* File descriptor being read/ */
 -- 
 2.43.0
 
