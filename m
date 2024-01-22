@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E9F76908;
-	Tue, 23 Jan 2024 02:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEF676908;
+	Tue, 23 Jan 2024 02:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975497; cv=none; b=ezq3CpI4b0m4apIUmthp80mexpA9+p8dyU0ri+kaYO7/pSO91sR2vGaSIxN57t4ZUPa0Je0Z/veDmbD0Zr8XnqagJs5pn9gS5SYgI31YGryandElLnMjMZB5cf1hB9g3DJkXfRgHeSplb8DMVzCScAVfwsM1f2f5fKLzo9c6n4k=
+	t=1705975499; cv=none; b=lpWN/KLo4lWjEJBSu6VvAMmyEQ3+zCaDKmuszZjQ0SEvU2cMZbPYz5Fqdh0zuB3z7d6B0lr7MrHyEvzG7/I2CAiNBAjfjYjfcQ9DVwO9Y9n4TvsM1ZLVBhecAyRSACkfM8a+3WtICUZepMjkf9XyuuNUJXrSqduCjpUGXVPwRXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975497; c=relaxed/simple;
-	bh=ggJ5nGFoUqqxI1vhcYh4ZI9rT90RKij07svmrGVtH3I=;
+	s=arc-20240116; t=1705975499; c=relaxed/simple;
+	bh=7J3a++afUoSmGB4FvUEe9kzAP3DO8b+cdLwbrY96GOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bHKlUq40/8IDqPhSlXuqcJvPLH1Wy0xW92hDOD+OmouhacLPvBfMdS7BiWnr/HKMrT+vIiD5LEjViJ48nrsrABG1wcdEDiTsUzuB9IWv5877yJ4hRvPN8VfaF8rF/J4oj/KekOc6cvHzr0+STCYlv3TuX9pAXUuyjHuNuQsCLB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYmIdJ/1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cM74yS+Grv4jaK+sGj9tLWPfz952VdBr2/MQxkLXVPSUQbeqxg8RU82ceHEWvqaDkLGa5ChznYszQdkYSLTXq3WrJWYPRV9kDVdSLgzMdxTh8/sgwtAKnpVbVnqAE/5CbW3grqv+vdxcYh0d+eFoAgzoZFeqUk3EZ6Pz9bvyH6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qGVkXVDS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYmIdJ/1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFBEC433F1;
-	Tue, 23 Jan 2024 02:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGVkXVDS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46096C433F1;
+	Tue, 23 Jan 2024 02:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975497;
-	bh=ggJ5nGFoUqqxI1vhcYh4ZI9rT90RKij07svmrGVtH3I=;
+	s=korg; t=1705975499;
+	bh=7J3a++afUoSmGB4FvUEe9kzAP3DO8b+cdLwbrY96GOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYmIdJ/1GXqR3CRrSdyX+K5n/unNr4AI07GyOGf2qX3Aas1uAXRW70v0b9dq0xXSq
-	 Z/6hS2f10T6Yg4ihHCyFwp5xUENdXWSoOqU7U0pDetPhW4Ezj2WA6et4I0KK3jG35b
-	 vDIivKK9F2o9LcQc2YeMXhS2MiDwPxkJIbDHhDWM=
+	b=qGVkXVDSvr2zm0Q+Bwh0cZd626mb4wD4AIDt1Lq3hkFQzOiy8qBxbZ+en00Nq31s3
+	 zFh0n38sHFtHrqTNg5V/p1R8mkZfbJxzcidLyymUCpDCg8NrCEpfAHjWWZdaJWzIk7
+	 OIwFsSSW8sKwIXIkzScQ58ZIwMmZMGNPCvTM3EKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Frederik Haxel <haxel@fzi.de>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 452/583] riscv: Fix set_direct_map_default_noflush() to reset _PAGE_EXEC
-Date: Mon, 22 Jan 2024 15:58:23 -0800
-Message-ID: <20240122235825.801065882@linuxfoundation.org>
+Subject: [PATCH 6.6 453/583] riscv: Fixed wrong register in XIP_FIXUP_FLASH_OFFSET macro
+Date: Mon, 22 Jan 2024 15:58:24 -0800
+Message-ID: <20240122235825.836824726@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,36 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Frederik Haxel <haxel@fzi.de>
 
-[ Upstream commit b8b2711336f03ece539de61479d6ffc44fb603d3 ]
+[ Upstream commit 5daa3726410288075ba73c336bb2e80d6b06aa4d ]
 
-When resetting the linear mapping permissions, we must make sure that we
-clear the X bit so that do not end up with WX mappings (since we set
-PAGE_KERNEL).
+During the refactoring, a bug was introduced in the rarly used
+XIP_FIXUP_FLASH_OFFSET macro.
 
-Fixes: 395a21ff859c ("riscv: add ARCH_HAS_SET_DIRECT_MAP support")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20231213134027.155327-3-alexghiti@rivosinc.com
+Fixes: bee7fbc38579 ("RISC-V CPU Idle Support")
+Fixes: e7681beba992 ("RISC-V: Split out the XIP fixups into their own file")
+
+Signed-off-by: Frederik Haxel <haxel@fzi.de>
+Link: https://lore.kernel.org/r/20231212130116.848530-3-haxel@fzi.de
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/mm/pageattr.c | 2 +-
+ arch/riscv/include/asm/xip_fixup.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/mm/pageattr.c b/arch/riscv/mm/pageattr.c
-index fc5fc4f785c4..e703a9b59fc3 100644
---- a/arch/riscv/mm/pageattr.c
-+++ b/arch/riscv/mm/pageattr.c
-@@ -378,7 +378,7 @@ int set_direct_map_invalid_noflush(struct page *page)
- int set_direct_map_default_noflush(struct page *page)
- {
- 	return __set_memory((unsigned long)page_address(page), 1,
--			    PAGE_KERNEL, __pgprot(0));
-+			    PAGE_KERNEL, __pgprot(_PAGE_EXEC));
- }
- 
- #ifdef CONFIG_DEBUG_PAGEALLOC
+diff --git a/arch/riscv/include/asm/xip_fixup.h b/arch/riscv/include/asm/xip_fixup.h
+index d4ffc3c37649..b65bf6306f69 100644
+--- a/arch/riscv/include/asm/xip_fixup.h
++++ b/arch/riscv/include/asm/xip_fixup.h
+@@ -13,7 +13,7 @@
+         add \reg, \reg, t0
+ .endm
+ .macro XIP_FIXUP_FLASH_OFFSET reg
+-	la t1, __data_loc
++	la t0, __data_loc
+ 	REG_L t1, _xip_phys_offset
+ 	sub \reg, \reg, t1
+ 	add \reg, \reg, t0
 -- 
 2.43.0
 
