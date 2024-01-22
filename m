@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDF46DCED;
-	Tue, 23 Jan 2024 02:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08E56BB56;
+	Tue, 23 Jan 2024 02:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975396; cv=none; b=AOEu42Eoq6Ql/JIXHkHcGy+EFd/XXCZK1wnA1wXOzAkU3jyR0RYZO8U/nqYigyCbme78GGZZu5MbdJDHz3pLTBU/osPIhm8kGv9inZ+/ghRJJgisNwuCS/rTtbPiCgaDzLfri/o8cQIkcNxZrld0+seMcQqDz2sPLIyhbEh8Idc=
+	t=1705975397; cv=none; b=ETF5CIiPcLhomQYU74yRzkU6y5WJhHXsqv5Q7JT3Ba9tMPc6vTMKNDDLp5cETAxZvl56BtBYmHs2tlx/SUemuhjptji8HAdGF8wFdYtwSY7ECaGHR9E686bckiPGoVYq5MmBX03GEMdJFXw0unroq6eOLAYZpPqnv6IaXqHBY5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975396; c=relaxed/simple;
-	bh=MudaizYSqXO1duRgE3/f7fzChF57VZe1ju8pLtbQukA=;
+	s=arc-20240116; t=1705975397; c=relaxed/simple;
+	bh=CfNg1xuxRZRNxQaRKj3kc0g+CgyPf6x0iV6eOtAUsE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVMhxwBp/wiNcqElrsNKSH2h7HQhCDS4/Q+qiX/7yz9Y9KP35AH7rAE5/3G/cbNRreCiT8Mo37AXvAmVeL6X0bZD2BfAm/o1h9qON+8P9bnzzlgZv8UQE6rGNC0Rl3iIOtvw8j/kUALCcwvL2050NM2yAp1TDWrlItjoPOPgwn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gaETezFK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O/Jf5NcNwTO90ReoiPtd0IVk1BeHTR9F8Fac6FvKAXGH/c7fQozQ7orVrNtI0f45HeeUuuDzueIeivE7ZPbrOmogcKhYAz7CkOk3X++iQvnYsXcP/8q2W2XYUpAyuuvS4p7k7ZtGpPZGPIoB2j34qWqGJKc6PbfLrUm7V8Sk+Ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ENwO9sQD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gaETezFK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0437C43390;
-	Tue, 23 Jan 2024 02:03:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ENwO9sQD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0AAC43390;
+	Tue, 23 Jan 2024 02:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975396;
-	bh=MudaizYSqXO1duRgE3/f7fzChF57VZe1ju8pLtbQukA=;
+	s=korg; t=1705975397;
+	bh=CfNg1xuxRZRNxQaRKj3kc0g+CgyPf6x0iV6eOtAUsE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gaETezFKiCSImPN0ZyRqr4e2aU3R13fRTOocGjT7U+ztTsUv09mrUtxioeflgqsBP
-	 KCQkEwwaaeYhlJX3Ega67oXAI1x2liQf/uVeT/WXrmTK3MBzVa9s0ZO2lkQm+foJlD
-	 n9MGenor8QRFCCOc3cQnhG6orXL2Q+yFZ6qyDM24=
+	b=ENwO9sQDOuhfruJ94U5x/xzwMRjC5McJlNyvT584gHKhTzJGwsLURDK1skAYBGYQ4
+	 i4QOd0vA91lxJvwG7LbIHLeZTPJnnNVdSco6gbIrTTcAqqxY75eO9FrR72jIr6yQp/
+	 Y3xq5mbGvyht2nJ7ybq6MhFRVr5tYmRwDCbzDMiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	"Aneesh Kumar K.V (IBM)" <aneesh.kumar@kernel.org>
-Subject: [PATCH 6.6 355/583] powerpc/64s: Increase default stack size to 32KB
-Date: Mon, 22 Jan 2024 15:56:46 -0800
-Message-ID: <20240122235822.879684229@linuxfoundation.org>
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 331/583] drm/amdkfd: Confirm list is non-empty before utilizing list_first_entry in kfd_topology.c
+Date: Mon, 22 Jan 2024 15:56:22 -0800
+Message-ID: <20240122235822.174179979@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -44,53 +49,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit 18f14afe281648e31ed35c9ad2fcb724c4838ad9 upstream.
+[ Upstream commit 499839eca34ad62d43025ec0b46b80e77065f6d8 ]
 
-There are reports of kernels crashing due to stack overflow while
-running OpenShift (Kubernetes). The primary contributor to the stack
-usage seems to be openvswitch, which is used by OVN-Kubernetes (based on
-OVN (Open Virtual Network)), but NFS also contributes in some stack
-traces.
+Before using list_first_entry, make sure to check that list is not
+empty, if list is empty return -ENODATA.
 
-There may be some opportunities to reduce stack usage in the openvswitch
-code, but doing so potentially require tradeoffs vs performance, and
-also requires testing across architectures.
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_topology.c:1347 kfd_create_indirect_link_prop() warn: can 'gpu_link' even be NULL?
+drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_topology.c:1428 kfd_add_peer_prop() warn: can 'iolink1' even be NULL?
+drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_topology.c:1433 kfd_add_peer_prop() warn: can 'iolink2' even be NULL?
 
-Looking at stack usage across the kernel (using -fstack-usage), shows
-that ppc64le stack frames are on average 50-100% larger than the
-equivalent function built for x86-64. Which is not surprising given the
-minimum stack frame size is 32 bytes on ppc64le vs 16 bytes on x86-64.
-
-So increase the default stack size to 32KB for the modern 64-bit Book3S
-platforms, ie. pseries (virtualised) and powernv (bare metal). That
-leaves the older systems like G5s, and the AmigaOne (pasemi) with a 16KB
-stack which should be sufficient on those machines.
-
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: Aneesh Kumar K.V (IBM) <aneesh.kumar@kernel.org>
-Link: https://msgid.link/20231215124449.317597-1-mpe@ellerman.id.au
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0f28cca87e9a ("drm/amdkfd: Extend KFD device topology to surface peer-to-peer links")
+Cc: Felix Kuehling <Felix.Kuehling@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Suggested-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_topology.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
---- a/arch/powerpc/Kconfig
-+++ b/arch/powerpc/Kconfig
-@@ -857,6 +857,7 @@ config THREAD_SHIFT
- 	int "Thread shift" if EXPERT
- 	range 13 15
- 	default "15" if PPC_256K_PAGES
-+	default "15" if PPC_PSERIES || PPC_POWERNV
- 	default "14" if PPC64
- 	default "13"
- 	help
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
+index c8c75ff7cea8..6e75e8fa18be 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
+@@ -1342,10 +1342,11 @@ static int kfd_create_indirect_link_prop(struct kfd_topology_device *kdev, int g
+ 		num_cpu++;
+ 	}
+ 
++	if (list_empty(&kdev->io_link_props))
++		return -ENODATA;
++
+ 	gpu_link = list_first_entry(&kdev->io_link_props,
+-					struct kfd_iolink_properties, list);
+-	if (!gpu_link)
+-		return -ENOMEM;
++				    struct kfd_iolink_properties, list);
+ 
+ 	for (i = 0; i < num_cpu; i++) {
+ 		/* CPU <--> GPU */
+@@ -1423,15 +1424,17 @@ static int kfd_add_peer_prop(struct kfd_topology_device *kdev,
+ 				peer->gpu->adev))
+ 		return ret;
+ 
++	if (list_empty(&kdev->io_link_props))
++		return -ENODATA;
++
+ 	iolink1 = list_first_entry(&kdev->io_link_props,
+-							struct kfd_iolink_properties, list);
+-	if (!iolink1)
+-		return -ENOMEM;
++				   struct kfd_iolink_properties, list);
++
++	if (list_empty(&peer->io_link_props))
++		return -ENODATA;
+ 
+ 	iolink2 = list_first_entry(&peer->io_link_props,
+-							struct kfd_iolink_properties, list);
+-	if (!iolink2)
+-		return -ENOMEM;
++				   struct kfd_iolink_properties, list);
+ 
+ 	props = kfd_alloc_struct(props);
+ 	if (!props)
+-- 
+2.43.0
+
 
 
