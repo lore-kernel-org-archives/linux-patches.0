@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9FC133402;
-	Tue, 23 Jan 2024 00:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B00613343B;
+	Tue, 23 Jan 2024 00:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969134; cv=none; b=khQlfmYAvPIp6E9pAt52NcyBkDGEnP7dlEdquAf0LqrOHTNzm+Ho87mJ1R64TP8xZ11w2g/jvC5hp6Y2gnHn4OGMoHl3WHF3JF3VKkj+b5x8gymXkHRFQGGNVOogFzyH9A0PUjaAGE6N/eYPc6t9D2MAlW1toe36zMTA1fq3MOg=
+	t=1705969136; cv=none; b=fPge5Iibs0M/KWSSkRGOkR4QnXkKrO0wbhadhZ+8fpCxCg5DGHxZc/Aw7f6icj6GONeH4EOs9EkoVQSNeesgkUzOzmCXCecGb/C8s22cCuZs3PebhUaJ2vQQkWj3HikDS2dPUHMWwgWj5Uc3raEyjaSL7DP86G3SpfDqoUn/nWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969134; c=relaxed/simple;
-	bh=5a1Qt70N1mscjsqKTu7+Glw+2vmv4L619owWIxq+wWU=;
+	s=arc-20240116; t=1705969136; c=relaxed/simple;
+	bh=xLEHs8LRg6SMA893lHjGv9jWQwn4R1JRbEydsiI2z00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W3hxOrpAEmgEnzUA1JeEDem3O0VF3+6Edj+FGV1LBiSJwKh25tvX9Su/OF7WzaemHDwdu9OJhC89tHZk6iaWjfu4WKtuL3YzK+m3Q+pyqxMPw8T718MWrnnM6zic6RXVOMr6+8t3uKA8Xc4s/fjFD666IrYd3xl+y43+Aj/k5Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ttiBRxCq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nq8bhmbqcIvK7VybLuHdF4qoMfmXP2q8hbAHKcMXIj0XDfKmsyT6th6Be9l7HV014ETM9Q+NVeIO+qAlSvQNHs/XTc0TAqTRMJ6iwW5a8VNdM862rXH3iix18WiEAlWYdlZsmd2XNC4SfwcmvJEJ4qetAnp84BUIWwz3mpA3tBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kkKxbE8j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttiBRxCq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1961C43399;
-	Tue, 23 Jan 2024 00:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kkKxbE8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F84C433C7;
+	Tue, 23 Jan 2024 00:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969134;
-	bh=5a1Qt70N1mscjsqKTu7+Glw+2vmv4L619owWIxq+wWU=;
+	s=korg; t=1705969135;
+	bh=xLEHs8LRg6SMA893lHjGv9jWQwn4R1JRbEydsiI2z00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ttiBRxCqmqjCIyseCJ7CnkndKLecFnHU2yrkU6ir5bGg7wbemjLBm43V2PVTkJnib
-	 p6TNfGm/Ga5r+cuNwtB28K5Qu64ukfSpA3b5dw46nqkTu7bIj9pySzyUfqRRkQRuNv
-	 s7iuUOFUyvct4SlC8iMBZvjKN6fTYmnpB8L57GDs=
+	b=kkKxbE8jJZ5ZXftH14wwvxFyZSyHvZX+iZxpBEtBuLqMc3lvntJAlUq0MTBMA8Isz
+	 THfcWAtjCPyarqygdbLUQHtbeG8t7Xj0/c1OY7dMXbI2BzeccxDU6pNIGkWc3fbACE
+	 dEdJp+5x59mfcrU1rTMdOyk7qvXJUjZtW6qlsNk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Chanho Park <chanho61.park@samsung.com>,
+	Jia Jie Ho <jiajie.ho@starfivetech.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 044/641] crypto: qat - prevent underflow in rp2srv_store()
-Date: Mon, 22 Jan 2024 15:49:08 -0800
-Message-ID: <20240122235819.464711764@linuxfoundation.org>
+Subject: [PATCH 6.7 045/641] crypto: jh7110 - Correct deferred probe return
+Date: Mon, 22 Jan 2024 15:49:09 -0800
+Message-ID: <20240122235819.493173146@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,37 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Chanho Park <chanho61.park@samsung.com>
 
-[ Upstream commit e53c741303a59ee1682e11f61b7772863e02526d ]
+[ Upstream commit d57343022b71b9f41e731282dbe0baf0cff6ada8 ]
 
-The "ring" variable has an upper bounds check but nothing checks for
-negatives.  This code uses kstrtouint() already and it was obviously
-intended to be declared as unsigned int.  Make it so.
+This fixes list_add corruption error when the driver is returned
+with -EPROBE_DEFER. It is also required to roll back the previous
+probe sequences in case of deferred_probe. So, this removes
+'err_probe_defer" goto label and just use err_dma_init instead.
 
-Fixes: dbc8876dd873 ("crypto: qat - add rp2svc sysfs attribute")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Fixes: 42ef0e944b01 ("crypto: starfive - Add crypto engine support")
+Signed-off-by: Chanho Park <chanho61.park@samsung.com>
+Reviewed-by: Jia Jie Ho <jiajie.ho@starfivetech.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_sysfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/starfive/jh7110-cryp.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_sysfs.c b/drivers/crypto/intel/qat/qat_common/adf_sysfs.c
-index ddffc98119c6..6f0b3629da13 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_sysfs.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_sysfs.c
-@@ -242,7 +242,8 @@ static ssize_t rp2srv_store(struct device *dev, struct device_attribute *attr,
- 			    const char *buf, size_t count)
- {
- 	struct adf_accel_dev *accel_dev;
--	int ring, num_rings, ret;
-+	int num_rings, ret;
-+	unsigned int ring;
+diff --git a/drivers/crypto/starfive/jh7110-cryp.c b/drivers/crypto/starfive/jh7110-cryp.c
+index 08e974e0dd12..3a67ddc4d936 100644
+--- a/drivers/crypto/starfive/jh7110-cryp.c
++++ b/drivers/crypto/starfive/jh7110-cryp.c
+@@ -180,12 +180,8 @@ static int starfive_cryp_probe(struct platform_device *pdev)
+ 	spin_unlock(&dev_list.lock);
  
- 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
- 	if (!accel_dev)
+ 	ret = starfive_dma_init(cryp);
+-	if (ret) {
+-		if (ret == -EPROBE_DEFER)
+-			goto err_probe_defer;
+-		else
+-			goto err_dma_init;
+-	}
++	if (ret)
++		goto err_dma_init;
+ 
+ 	/* Initialize crypto engine */
+ 	cryp->engine = crypto_engine_alloc_init(&pdev->dev, 1);
+@@ -233,7 +229,7 @@ static int starfive_cryp_probe(struct platform_device *pdev)
+ 
+ 	tasklet_kill(&cryp->aes_done);
+ 	tasklet_kill(&cryp->hash_done);
+-err_probe_defer:
++
+ 	return ret;
+ }
+ 
 -- 
 2.43.0
 
