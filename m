@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F8F5C8FC;
-	Tue, 23 Jan 2024 01:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965CB5D756;
+	Tue, 23 Jan 2024 01:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974378; cv=none; b=gNHlQT5Dnbv/BG9jrtgWmr22+S0Q35TYvDi0/e+6qa14ClQ+/F9EAIIblZM4khKySjvxyOgJ74qAOQkyHmkPjHfg7Vrx6V7R2rqLABxIe5JRQdNVuVxH7lhScQfbeCxrJw+aypsyp1UV3eRydkv+HRQsK9f2TFoYR/Gplo80KXU=
+	t=1705974379; cv=none; b=GMQQmOjFQt4UVRWYA1jZabs1NmNXhfSEme71+oKbssBnFbjZJDIm8GXk4PXI6WqI6NsTFwLpEyzJgvMYHut9ettJGnA+t5rwSKLRBojJTuZNn+hs0yEJONq+Rbxh745FS0WSUH6TkJWUKKnFSB450nu1z+jBasV0I2JBn9dLtKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974378; c=relaxed/simple;
-	bh=zF6zwedgcHaBN1+aFzcwh/pOqmVXZmxksmYWNFV5CeU=;
+	s=arc-20240116; t=1705974379; c=relaxed/simple;
+	bh=Qc1uHyfphXvWwaNGdLuTqfXeCfHiO0q+YNyTvOkrrx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XUfgTYxgeNm+bKj5fsvgtMbeBRG7ijVeUupgWuOPsiNHMgET7YBFj0ZekeBm8QvcTmcMoLAeO9HnkTFdn2DZIRIfaIpwW0HRVqFAFqwSC3l9eXalTuJzn+v4zh9O9D0pBmztOacKocXUIF8zBmt9b87dtGoSP1MHUXFHbt95Xkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ul+8AZda; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eB1fiuwi7JoGack/5NktOu+OuCdMIpkhP5G/9aDkihO7AmmUZ+4WuUaYOY8RoD/GchRGqypYhfHhVzvBVmzsWEsJ90q4cblCJmZk0lFcdaZ5QRUKLeNOEwwilXSqna7kQM37Crl+3Ww/K9gjV3Dz4WYAuElhktM1vheOFVCl6SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QeWQaida; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ul+8AZda"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 891D3C43390;
-	Tue, 23 Jan 2024 01:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QeWQaida"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579C1C43399;
+	Tue, 23 Jan 2024 01:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974378;
-	bh=zF6zwedgcHaBN1+aFzcwh/pOqmVXZmxksmYWNFV5CeU=;
+	s=korg; t=1705974379;
+	bh=Qc1uHyfphXvWwaNGdLuTqfXeCfHiO0q+YNyTvOkrrx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ul+8AZdaczkYLjCiyQBuI4ySSfyjvy2hHR4GkoMLCQZdbTNvRxvdiw6GXpyDIySbr
-	 Jo+dAMAWrf3FslGTrYW4sCWXdeKT2tWCSjCq0yO6ZWwjR26vsUrfs9fsWe/ffa+5Hc
-	 oT43OWLaydsKrNJDy9huOpQwvPBBufJ56gs9VE5M=
+	b=QeWQaidarPGWa5NXSIS2EQmWLIMXiJU+wNI0eNCEogkGvN3KqCN5SK7W7/4VtwCJ0
+	 wppNJyl+VTswyvcwTlW/cvhM8G7rGKHFLbG5L5X99x4F/9xhiqwRmFlqHPtSz3aOca
+	 vX9BvmFuP7hIi5UiGSJWctJC74IoKr0vqXmNdzcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait@windriver.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Maxime Ripard <mripard@kernel.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/583] crypto: sahara - fix processing hash requests with req->nbytes < sg->length
-Date: Mon, 22 Jan 2024 15:52:03 -0800
-Message-ID: <20240122235814.357309253@linuxfoundation.org>
+Subject: [PATCH 5.15 199/374] drm/bridge: tc358767: Fix return value on error case
+Date: Mon, 22 Jan 2024 15:57:35 -0800
+Message-ID: <20240122235751.523768567@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait@windriver.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 7bafa74d1ba35dcc173e1ce915e983d65905f77e ]
+[ Upstream commit 32bd29b619638256c5b75fb021d6d9f12fc4a984 ]
 
-It's not always the case that the entire sg entry needs to be processed.
-Currently, when nbytes is less than sg->length, "Descriptor length" errors
-are encountered.
+If the hpd_pin is invalid, the driver returns 'ret'. But 'ret' contains
+0, instead of an error value.
 
-To fix this, take the actual request size into account when populating the
-hw links.
+Return -EINVAL instead.
 
-Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: f25ee5017e4f ("drm/bridge: tc358767: add IRQ and HPD support")
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231103-uninit-fixes-v2-4-c22b2444f5f5@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/tc358767.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index 117aa4296c2a..477b4d8b450d 100644
---- a/drivers/crypto/sahara.c
-+++ b/drivers/crypto/sahara.c
-@@ -776,6 +776,7 @@ static int sahara_sha_hw_links_create(struct sahara_dev *dev,
- 				       int start)
- {
- 	struct scatterlist *sg;
-+	unsigned int len;
- 	unsigned int i;
- 	int ret;
- 
-@@ -797,12 +798,14 @@ static int sahara_sha_hw_links_create(struct sahara_dev *dev,
- 	if (!ret)
- 		return -EFAULT;
- 
-+	len = rctx->total;
- 	for (i = start; i < dev->nb_in_sg + start; i++) {
--		dev->hw_link[i]->len = sg->length;
-+		dev->hw_link[i]->len = min(len, sg->length);
- 		dev->hw_link[i]->p = sg->dma_address;
- 		if (i == (dev->nb_in_sg + start - 1)) {
- 			dev->hw_link[i]->next = 0;
- 		} else {
-+			len -= min(len, sg->length);
- 			dev->hw_link[i]->next = dev->hw_phys_link[i + 1];
- 			sg = sg_next(sg);
+diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+index 14d671742963..4c6f3052156b 100644
+--- a/drivers/gpu/drm/bridge/tc358767.c
++++ b/drivers/gpu/drm/bridge/tc358767.c
+@@ -1633,7 +1633,7 @@ static int tc_probe(struct i2c_client *client, const struct i2c_device_id *id)
+ 	} else {
+ 		if (tc->hpd_pin < 0 || tc->hpd_pin > 1) {
+ 			dev_err(dev, "failed to parse HPD number\n");
+-			return ret;
++			return -EINVAL;
  		}
+ 	}
+ 
 -- 
 2.43.0
 
