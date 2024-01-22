@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E43D1292FB;
-	Tue, 23 Jan 2024 00:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021B81292EC;
+	Tue, 23 Jan 2024 00:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970993; cv=none; b=Z9W/mhlTLquLB4/k2BaIaQO6TMAB/oYHC97z2NZPPvBMbr08XcFWKTx+/ii2gTsA6lceMM3s+ka8h7KYazR/GUD1FQdhDGYQx+oYDJe7/otjOHO6TfQL6n5VZU54+zI61mRpFrv3AVvim89+95wsrCCFk/bUPg2f6u2T8pBxH6A=
+	t=1705970995; cv=none; b=a97+kVr62jaGH8unsLaygRB6fEUsQANrxWsg/3oAnwUvWafE9r4NHo4B1Ju4UMRfxh9124KqHHsAKCWemmwdnSV8UaBuzai36y2GchZo/egFGWTN58WnQRiMCR5qMblypukEQ2+bnJLKt0hu8QjkgQ6X6XGq566ABrvU6ZFgyro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970993; c=relaxed/simple;
-	bh=eRUzO8fc5AZQ8n0yA5nlh8a5z4e3JgrG8e4q+qDWdyE=;
+	s=arc-20240116; t=1705970995; c=relaxed/simple;
+	bh=SW0rnjlcUyIFEVw1O+GJvUrDBODrFDgTMDYd8DrVCTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nX0pnCfDizQTnVYh8f2UqpsyyHeEIlPPuuxiGAvAOEbDmWe8wymxb0fF9k9/W3W44fdN0B0wGGkIzfYTFSTjrce7Dme/GOJy06UTeUYc4WpZmIBvYIKA+exNqmBiy9CYNBdWLezxqjg3qynLhn3uIpuHWsOsXVQ/wEOexCRg2to=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GMaokQ1R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nx8J9D+Ksw6zWeuGuzw0v0AIcxD3XxF6HAFqjqckT3bHFxFuWsBQ6bz9rIVkbrVF1/jLw7Xkzs8gcu7yA1pRe//n27MvzbDc79oRLxtJ1mr00z99DWeezAJiBlR1iGysrTQEJoxaQxoD7b6sfLAcFBdRqEWoxYiS0aPfCMG115A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qfk78f/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GMaokQ1R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE00FC43390;
-	Tue, 23 Jan 2024 00:49:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qfk78f/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0471C43390;
+	Tue, 23 Jan 2024 00:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970993;
-	bh=eRUzO8fc5AZQ8n0yA5nlh8a5z4e3JgrG8e4q+qDWdyE=;
+	s=korg; t=1705970994;
+	bh=SW0rnjlcUyIFEVw1O+GJvUrDBODrFDgTMDYd8DrVCTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GMaokQ1Rdl9n1bPSsU9qUCW1kSMGgeg9esQT5w+V1yN/pPhiKr3ksN+Bxm5OhaEOA
-	 Zas65KlGAO201g425PMI5kwP3U6DY66upMT+KPXN6jcWBwKAEnhViYZ0IPKsWPgu8L
-	 MzYXrV0AL0DVKvoimWlDuIIN2HZ7L0ECfm9bXZ+c=
+	b=0qfk78f/V3tYcycfTMe8mqjK0D+2ZWCevBUpyI0OK9y26tXteNnfLXus0BuxVA1hT
+	 K5MOCO/5Al7OMOUIKnDjLGuwDqpmQ6ScmC0m32Go/6r45k84hWPrTNpwqzo7xWofYg
+	 OhJuuCl5LkCG55L256/yotqiB1kvt56p4Sia7Fr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <michael@walle.cc>,
-	Rob Herring <robh@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 065/286] of: property: define of_property_read_u{8,16,32,64}_array() unconditionally
-Date: Mon, 22 Jan 2024 15:56:11 -0800
-Message-ID: <20240122235734.526353151@linuxfoundation.org>
+Subject: [PATCH 6.1 158/417] drm/panfrost: Really power off GPU cores in panfrost_gpu_power_off()
+Date: Mon, 22 Jan 2024 15:55:26 -0800
+Message-ID: <20240122235757.320392474@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,326 +47,129 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Walle <michael@walle.cc>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 2ca42c3ad9ed875b136065b010753a4caaaa1d38 ]
+[ Upstream commit 22aa1a209018dc2eca78745f7666db63637cd5dc ]
 
-We can get rid of all the empty stubs because all these functions call
-of_property_read_variable_u{8,16,32,64}_array() which already have an
-empty stub if CONFIG_OF is not defined.
+The layout of the registers {TILER,SHADER,L2}_PWROFF_LO, used to request
+powering off cores, is the same as the {TILER,SHADER,L2}_PWRON_LO ones:
+this means that in order to request poweroff of cores, we are supposed
+to write a bitmask of cores that should be powered off!
+This means that the panfrost_gpu_power_off() function has always been
+doing nothing.
 
-Signed-off-by: Michael Walle <michael@walle.cc>
-Signed-off-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20220118173504.2867523-3-michael@walle.cc
-Stable-dep-of: c4a5118a3ae1 ("cpufreq: scmi: process the result of devm_of_clk_add_hw_provider()")
+Fix powering off the GPU by writing a bitmask of the cores to poweroff
+to the relevant PWROFF_LO registers and then check that the transition
+(from ON to OFF) has finished by polling the relevant PWRTRANS_LO
+registers.
+
+While at it, in order to avoid code duplication, move the core mask
+logic from panfrost_gpu_power_on() to a new panfrost_get_core_mask()
+function, used in both poweron and poweroff.
+
+Fixes: f3ba91228e8e ("drm/panfrost: Add initial panfrost driver")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231102141507.73481-1-angelogioacchino.delregno@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/of.h | 274 ++++++++++++++++++++-------------------------
- 1 file changed, 124 insertions(+), 150 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_gpu.c | 64 ++++++++++++++++++-------
+ 1 file changed, 46 insertions(+), 18 deletions(-)
 
-diff --git a/include/linux/of.h b/include/linux/of.h
-index 57f2d3dddc0c..13d6243d202d 100644
---- a/include/linux/of.h
-+++ b/include/linux/of.h
-@@ -415,130 +415,6 @@ extern int of_detach_node(struct device_node *);
- 
- #define of_match_ptr(_ptr)	(_ptr)
- 
--/**
-- * of_property_read_u8_array - Find and read an array of u8 from a property.
-- *
-- * @np:		device node from which the property value is to be read.
-- * @propname:	name of the property to be searched.
-- * @out_values:	pointer to return value, modified only if return value is 0.
-- * @sz:		number of array elements to read
-- *
-- * Search for a property in a device node and read 8-bit value(s) from
-- * it.
-- *
-- * dts entry of array should be like:
-- *  ``property = /bits/ 8 <0x50 0x60 0x70>;``
-- *
-- * Return: 0 on success, -EINVAL if the property does not exist,
-- * -ENODATA if property does not have a value, and -EOVERFLOW if the
-- * property data isn't large enough.
-- *
-- * The out_values is modified only if a valid u8 value can be decoded.
-- */
--static inline int of_property_read_u8_array(const struct device_node *np,
--					    const char *propname,
--					    u8 *out_values, size_t sz)
--{
--	int ret = of_property_read_variable_u8_array(np, propname, out_values,
--						     sz, 0);
--	if (ret >= 0)
--		return 0;
--	else
--		return ret;
--}
--
--/**
-- * of_property_read_u16_array - Find and read an array of u16 from a property.
-- *
-- * @np:		device node from which the property value is to be read.
-- * @propname:	name of the property to be searched.
-- * @out_values:	pointer to return value, modified only if return value is 0.
-- * @sz:		number of array elements to read
-- *
-- * Search for a property in a device node and read 16-bit value(s) from
-- * it.
-- *
-- * dts entry of array should be like:
-- *  ``property = /bits/ 16 <0x5000 0x6000 0x7000>;``
-- *
-- * Return: 0 on success, -EINVAL if the property does not exist,
-- * -ENODATA if property does not have a value, and -EOVERFLOW if the
-- * property data isn't large enough.
-- *
-- * The out_values is modified only if a valid u16 value can be decoded.
-- */
--static inline int of_property_read_u16_array(const struct device_node *np,
--					     const char *propname,
--					     u16 *out_values, size_t sz)
--{
--	int ret = of_property_read_variable_u16_array(np, propname, out_values,
--						      sz, 0);
--	if (ret >= 0)
--		return 0;
--	else
--		return ret;
--}
--
--/**
-- * of_property_read_u32_array - Find and read an array of 32 bit integers
-- * from a property.
-- *
-- * @np:		device node from which the property value is to be read.
-- * @propname:	name of the property to be searched.
-- * @out_values:	pointer to return value, modified only if return value is 0.
-- * @sz:		number of array elements to read
-- *
-- * Search for a property in a device node and read 32-bit value(s) from
-- * it.
-- *
-- * Return: 0 on success, -EINVAL if the property does not exist,
-- * -ENODATA if property does not have a value, and -EOVERFLOW if the
-- * property data isn't large enough.
-- *
-- * The out_values is modified only if a valid u32 value can be decoded.
-- */
--static inline int of_property_read_u32_array(const struct device_node *np,
--					     const char *propname,
--					     u32 *out_values, size_t sz)
--{
--	int ret = of_property_read_variable_u32_array(np, propname, out_values,
--						      sz, 0);
--	if (ret >= 0)
--		return 0;
--	else
--		return ret;
--}
--
--/**
-- * of_property_read_u64_array - Find and read an array of 64 bit integers
-- * from a property.
-- *
-- * @np:		device node from which the property value is to be read.
-- * @propname:	name of the property to be searched.
-- * @out_values:	pointer to return value, modified only if return value is 0.
-- * @sz:		number of array elements to read
-- *
-- * Search for a property in a device node and read 64-bit value(s) from
-- * it.
-- *
-- * Return: 0 on success, -EINVAL if the property does not exist,
-- * -ENODATA if property does not have a value, and -EOVERFLOW if the
-- * property data isn't large enough.
-- *
-- * The out_values is modified only if a valid u64 value can be decoded.
-- */
--static inline int of_property_read_u64_array(const struct device_node *np,
--					     const char *propname,
--					     u64 *out_values, size_t sz)
--{
--	int ret = of_property_read_variable_u64_array(np, propname, out_values,
--						      sz, 0);
--	if (ret >= 0)
--		return 0;
--	else
--		return ret;
--}
--
- /*
-  * struct property *prop;
-  * const __be32 *p;
-@@ -726,32 +602,6 @@ static inline int of_property_count_elems_of_size(const struct device_node *np,
- 	return -ENOSYS;
+diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.c b/drivers/gpu/drm/panfrost/panfrost_gpu.c
+index 6452e4e900dd..c08715f033c5 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_gpu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_gpu.c
+@@ -313,28 +313,38 @@ static void panfrost_gpu_init_features(struct panfrost_device *pfdev)
+ 		 pfdev->features.shader_present, pfdev->features.l2_present);
  }
  
--static inline int of_property_read_u8_array(const struct device_node *np,
--			const char *propname, u8 *out_values, size_t sz)
--{
--	return -ENOSYS;
--}
--
--static inline int of_property_read_u16_array(const struct device_node *np,
--			const char *propname, u16 *out_values, size_t sz)
--{
--	return -ENOSYS;
--}
--
--static inline int of_property_read_u32_array(const struct device_node *np,
--					     const char *propname,
--					     u32 *out_values, size_t sz)
--{
--	return -ENOSYS;
--}
--
--static inline int of_property_read_u64_array(const struct device_node *np,
--					     const char *propname,
--					     u64 *out_values, size_t sz)
--{
--	return -ENOSYS;
--}
--
- static inline int of_property_read_u32_index(const struct device_node *np,
- 			const char *propname, u32 index, u32 *out_value)
++static u64 panfrost_get_core_mask(struct panfrost_device *pfdev)
++{
++	u64 core_mask;
++
++	if (pfdev->features.l2_present == 1)
++		return U64_MAX;
++
++	/*
++	 * Only support one core group now.
++	 * ~(l2_present - 1) unsets all bits in l2_present except
++	 * the bottom bit. (l2_present - 2) has all the bits in
++	 * the first core group set. AND them together to generate
++	 * a mask of cores in the first core group.
++	 */
++	core_mask = ~(pfdev->features.l2_present - 1) &
++		     (pfdev->features.l2_present - 2);
++	dev_info_once(pfdev->dev, "using only 1st core group (%lu cores from %lu)\n",
++		      hweight64(core_mask),
++		      hweight64(pfdev->features.shader_present));
++
++	return core_mask;
++}
++
+ void panfrost_gpu_power_on(struct panfrost_device *pfdev)
  {
-@@ -1223,6 +1073,130 @@ static inline bool of_property_read_bool(const struct device_node *np,
- 	return prop ? true : false;
+ 	int ret;
+ 	u32 val;
+-	u64 core_mask = U64_MAX;
++	u64 core_mask;
+ 
+ 	panfrost_gpu_init_quirks(pfdev);
++	core_mask = panfrost_get_core_mask(pfdev);
+ 
+-	if (pfdev->features.l2_present != 1) {
+-		/*
+-		 * Only support one core group now.
+-		 * ~(l2_present - 1) unsets all bits in l2_present except
+-		 * the bottom bit. (l2_present - 2) has all the bits in
+-		 * the first core group set. AND them together to generate
+-		 * a mask of cores in the first core group.
+-		 */
+-		core_mask = ~(pfdev->features.l2_present - 1) &
+-			     (pfdev->features.l2_present - 2);
+-		dev_info_once(pfdev->dev, "using only 1st core group (%lu cores from %lu)\n",
+-			      hweight64(core_mask),
+-			      hweight64(pfdev->features.shader_present));
+-	}
+ 	gpu_write(pfdev, L2_PWRON_LO, pfdev->features.l2_present & core_mask);
+ 	ret = readl_relaxed_poll_timeout(pfdev->iomem + L2_READY_LO,
+ 		val, val == (pfdev->features.l2_present & core_mask),
+@@ -359,9 +369,27 @@ void panfrost_gpu_power_on(struct panfrost_device *pfdev)
+ 
+ void panfrost_gpu_power_off(struct panfrost_device *pfdev)
+ {
+-	gpu_write(pfdev, TILER_PWROFF_LO, 0);
+-	gpu_write(pfdev, SHADER_PWROFF_LO, 0);
+-	gpu_write(pfdev, L2_PWROFF_LO, 0);
++	u64 core_mask = panfrost_get_core_mask(pfdev);
++	int ret;
++	u32 val;
++
++	gpu_write(pfdev, SHADER_PWROFF_LO, pfdev->features.shader_present & core_mask);
++	ret = readl_relaxed_poll_timeout(pfdev->iomem + SHADER_PWRTRANS_LO,
++					 val, !val, 1, 1000);
++	if (ret)
++		dev_err(pfdev->dev, "shader power transition timeout");
++
++	gpu_write(pfdev, TILER_PWROFF_LO, pfdev->features.tiler_present);
++	ret = readl_relaxed_poll_timeout(pfdev->iomem + TILER_PWRTRANS_LO,
++					 val, !val, 1, 1000);
++	if (ret)
++		dev_err(pfdev->dev, "tiler power transition timeout");
++
++	gpu_write(pfdev, L2_PWROFF_LO, pfdev->features.l2_present & core_mask);
++	ret = readl_poll_timeout(pfdev->iomem + L2_PWRTRANS_LO,
++				 val, !val, 0, 1000);
++	if (ret)
++		dev_err(pfdev->dev, "l2 power transition timeout");
  }
  
-+/**
-+ * of_property_read_u8_array - Find and read an array of u8 from a property.
-+ *
-+ * @np:		device node from which the property value is to be read.
-+ * @propname:	name of the property to be searched.
-+ * @out_values:	pointer to return value, modified only if return value is 0.
-+ * @sz:		number of array elements to read
-+ *
-+ * Search for a property in a device node and read 8-bit value(s) from
-+ * it.
-+ *
-+ * dts entry of array should be like:
-+ *  ``property = /bits/ 8 <0x50 0x60 0x70>;``
-+ *
-+ * Return: 0 on success, -EINVAL if the property does not exist,
-+ * -ENODATA if property does not have a value, and -EOVERFLOW if the
-+ * property data isn't large enough.
-+ *
-+ * The out_values is modified only if a valid u8 value can be decoded.
-+ */
-+static inline int of_property_read_u8_array(const struct device_node *np,
-+					    const char *propname,
-+					    u8 *out_values, size_t sz)
-+{
-+	int ret = of_property_read_variable_u8_array(np, propname, out_values,
-+						     sz, 0);
-+	if (ret >= 0)
-+		return 0;
-+	else
-+		return ret;
-+}
-+
-+/**
-+ * of_property_read_u16_array - Find and read an array of u16 from a property.
-+ *
-+ * @np:		device node from which the property value is to be read.
-+ * @propname:	name of the property to be searched.
-+ * @out_values:	pointer to return value, modified only if return value is 0.
-+ * @sz:		number of array elements to read
-+ *
-+ * Search for a property in a device node and read 16-bit value(s) from
-+ * it.
-+ *
-+ * dts entry of array should be like:
-+ *  ``property = /bits/ 16 <0x5000 0x6000 0x7000>;``
-+ *
-+ * Return: 0 on success, -EINVAL if the property does not exist,
-+ * -ENODATA if property does not have a value, and -EOVERFLOW if the
-+ * property data isn't large enough.
-+ *
-+ * The out_values is modified only if a valid u16 value can be decoded.
-+ */
-+static inline int of_property_read_u16_array(const struct device_node *np,
-+					     const char *propname,
-+					     u16 *out_values, size_t sz)
-+{
-+	int ret = of_property_read_variable_u16_array(np, propname, out_values,
-+						      sz, 0);
-+	if (ret >= 0)
-+		return 0;
-+	else
-+		return ret;
-+}
-+
-+/**
-+ * of_property_read_u32_array - Find and read an array of 32 bit integers
-+ * from a property.
-+ *
-+ * @np:		device node from which the property value is to be read.
-+ * @propname:	name of the property to be searched.
-+ * @out_values:	pointer to return value, modified only if return value is 0.
-+ * @sz:		number of array elements to read
-+ *
-+ * Search for a property in a device node and read 32-bit value(s) from
-+ * it.
-+ *
-+ * Return: 0 on success, -EINVAL if the property does not exist,
-+ * -ENODATA if property does not have a value, and -EOVERFLOW if the
-+ * property data isn't large enough.
-+ *
-+ * The out_values is modified only if a valid u32 value can be decoded.
-+ */
-+static inline int of_property_read_u32_array(const struct device_node *np,
-+					     const char *propname,
-+					     u32 *out_values, size_t sz)
-+{
-+	int ret = of_property_read_variable_u32_array(np, propname, out_values,
-+						      sz, 0);
-+	if (ret >= 0)
-+		return 0;
-+	else
-+		return ret;
-+}
-+
-+/**
-+ * of_property_read_u64_array - Find and read an array of 64 bit integers
-+ * from a property.
-+ *
-+ * @np:		device node from which the property value is to be read.
-+ * @propname:	name of the property to be searched.
-+ * @out_values:	pointer to return value, modified only if return value is 0.
-+ * @sz:		number of array elements to read
-+ *
-+ * Search for a property in a device node and read 64-bit value(s) from
-+ * it.
-+ *
-+ * Return: 0 on success, -EINVAL if the property does not exist,
-+ * -ENODATA if property does not have a value, and -EOVERFLOW if the
-+ * property data isn't large enough.
-+ *
-+ * The out_values is modified only if a valid u64 value can be decoded.
-+ */
-+static inline int of_property_read_u64_array(const struct device_node *np,
-+					     const char *propname,
-+					     u64 *out_values, size_t sz)
-+{
-+	int ret = of_property_read_variable_u64_array(np, propname, out_values,
-+						      sz, 0);
-+	if (ret >= 0)
-+		return 0;
-+	else
-+		return ret;
-+}
-+
- static inline int of_property_read_u8(const struct device_node *np,
- 				       const char *propname,
- 				       u8 *out_value)
+ int panfrost_gpu_init(struct panfrost_device *pfdev)
 -- 
 2.43.0
 
