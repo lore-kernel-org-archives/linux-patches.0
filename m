@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F8E12DD8D;
-	Tue, 23 Jan 2024 00:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785FB62805;
+	Tue, 23 Jan 2024 00:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971487; cv=none; b=DEj6Hb4vLHWEOYBFJwnngEybt4RVGzF6n1MHuLHXeBm3tFCqzZeCSSPI8wSlbiKUi51R7Lh7JELjbGuv9QphTA2o5L3SMetHvGOPZYmLkGoNXazQKmbLwEwHu/4W3qzS4QIFgc4+miRpL0y15gxP7PoWROHOh+RdRe9yojlpNmM=
+	t=1705971489; cv=none; b=kq27L9Bmi0qCI6ci70EaUAgk7rD3BSU5qslC1RrVLQzBOgT4a9VMqUQbl9jCxzt6+SbKgr0pQhc/y0sEVHMD8vMhlzFNH/QKPvOz07Ohnuy0G2QFw2SVX5IkWovAoADRpe66r6srlCBeQqcNty9vM+k/BD0qKMSp0uzi8oj5HAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971487; c=relaxed/simple;
-	bh=GxFNJzwfkajCDi+mjtSwtqhTzXvwbCDHPoR02bHF4CI=;
+	s=arc-20240116; t=1705971489; c=relaxed/simple;
+	bh=QqrQby347UrsZQXYsrnc0PMM1Pjk4G+qC/fNMyfsopQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNb8AhI8D5sj3em8EuQcey6p3lbHABOMlwNfWas+zoLc/gyt0H3K6ZjrKClf8029TQ5XbWUsopaqwNMv8cylJmx3It6zurom26m7c+mVbrMBKU4mk+OUQwaTNBJ3Xu2DiPknBKNy9bKIEUFq2AmjxU4IoRYuIcUArE7fPHbaAQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZRFhGPk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ShsEH5Rz57c1feX35Y+FXFS3QXgNRtKDJGcqlzEoumYUVp6dMvzALMez+3izKDeiQZTjrVvElhGK27cc8OCYKJw1pFQU7Lsqz4OKyGH7vlg+ib4u/z8r9L3yF/7uwTNAyjke72qsry5U/ftot/4yKYFBJRkhsZvVIXYBF0qgbqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lbuq9Zr1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZRFhGPk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4F3C43390;
-	Tue, 23 Jan 2024 00:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lbuq9Zr1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002B0C433C7;
+	Tue, 23 Jan 2024 00:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971486;
-	bh=GxFNJzwfkajCDi+mjtSwtqhTzXvwbCDHPoR02bHF4CI=;
+	s=korg; t=1705971489;
+	bh=QqrQby347UrsZQXYsrnc0PMM1Pjk4G+qC/fNMyfsopQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IZRFhGPkDCG2WA74tDrdDcoMBVco28HsLJZ38BtAQRnw21asy6BfjovQ3Qia1NBjG
-	 LSKp3NHD7YkfKLLtBVZTzmUC8w42RLlbhSZ7r1+LD3MoosEA5t5zrtAnT9rRTaToYT
-	 mrULbCmemQU7BzTx7851mz4jM4T+yrWRDHqlloYg=
+	b=Lbuq9Zr1U82QuYEHsdTkzDMpu0jDWAVwsKSEyRmIOzZi5/sWzSvIWysWgu4Xwm5+w
+	 hmUntOMPE+Vp4hvtvIe5pz8h2bnd33AkzFO5VW0AL8Bqy29YgIlsqpZKsiWN1BIo0E
+	 L1zjcmFwT3Wd4+pZC/MQtWh8N72ilKn//iWEjr9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Maxime Ripard <mripard@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 159/286] drm/drv: propagate errors from drm_modeset_register_all()
-Date: Mon, 22 Jan 2024 15:57:45 -0800
-Message-ID: <20240122235738.293737963@linuxfoundation.org>
+	Carlos Llamas <cmllamas@google.com>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 6.1 251/417] binder: fix unused alloc->free_async_space
+Date: Mon, 22 Jan 2024 15:56:59 -0800
+Message-ID: <20240122235800.572305912@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +46,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Carlos Llamas <cmllamas@google.com>
 
-[ Upstream commit 5f8dec200923a76dc57187965fd59c1136f5d085 ]
+commit c6d05e0762ab276102246d24affd1e116a46aa0c upstream.
 
-In case the drm_modeset_register_all() function fails, its error code
-will be ignored. Instead make the drm_dev_register() bail out in case of
-such an error.
+Each transaction is associated with a 'struct binder_buffer' that stores
+the metadata about its buffer area. Since commit 74310e06be4d ("android:
+binder: Move buffer out of area shared with user space") this struct is
+no longer embedded within the buffer itself but is instead allocated on
+the heap to prevent userspace access to this driver-exclusive info.
 
-Fixes: 79190ea2658a ("drm: Add callbacks for late registering")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231202225552.1283638-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Unfortunately, the space of this struct is still being accounted for in
+the total buffer size calculation, specifically for async transactions.
+This results in an additional 104 bytes added to every async buffer
+request, and this area is never used.
+
+This wasted space can be substantial. If we consider the maximum mmap
+buffer space of SZ_4M, the driver will reserve half of it for async
+transactions, or 0x200000. This area should, in theory, accommodate up
+to 262,144 buffers of the minimum 8-byte size. However, after adding
+the extra 'sizeof(struct binder_buffer)', the total number of buffers
+drops to only 18,724, which is a sad 7.14% of the actual capacity.
+
+This patch fixes the buffer size calculation to enable the utilization
+of the entire async buffer space. This is expected to reduce the number
+of -ENOSPC errors that are seen on the field.
+
+Fixes: 74310e06be4d ("android: binder: Move buffer out of area shared with user space")
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20231201172212.1813387-6-cmllamas@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_drv.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/android/binder_alloc.c |   11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
-index 4ca995ce19af..10831d8d7148 100644
---- a/drivers/gpu/drm/drm_drv.c
-+++ b/drivers/gpu/drm/drm_drv.c
-@@ -892,8 +892,11 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
- 			goto err_minors;
+--- a/drivers/android/binder_alloc.c
++++ b/drivers/android/binder_alloc.c
+@@ -344,8 +344,7 @@ static bool debug_low_async_space_locked
+ 			continue;
+ 		if (!buffer->async_transaction)
+ 			continue;
+-		total_alloc_size += binder_alloc_buffer_size(alloc, buffer)
+-			+ sizeof(struct binder_buffer);
++		total_alloc_size += binder_alloc_buffer_size(alloc, buffer);
+ 		num_buffers++;
  	}
  
--	if (drm_core_check_feature(dev, DRIVER_MODESET))
--		drm_modeset_register_all(dev);
-+	if (drm_core_check_feature(dev, DRIVER_MODESET)) {
-+		ret = drm_modeset_register_all(dev);
-+		if (ret)
-+			goto err_unload;
-+	}
+@@ -411,8 +410,7 @@ static struct binder_buffer *binder_allo
+ 	/* Pad 0-size buffers so they get assigned unique addresses */
+ 	size = max(size, sizeof(void *));
  
- 	ret = 0;
+-	if (is_async &&
+-	    alloc->free_async_space < size + sizeof(struct binder_buffer)) {
++	if (is_async && alloc->free_async_space < size) {
+ 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
+ 			     "%d: binder_alloc_buf size %zd failed, no async space left\n",
+ 			      alloc->pid, size);
+@@ -520,7 +518,7 @@ static struct binder_buffer *binder_allo
+ 	buffer->pid = pid;
+ 	buffer->oneway_spam_suspect = false;
+ 	if (is_async) {
+-		alloc->free_async_space -= size + sizeof(struct binder_buffer);
++		alloc->free_async_space -= size;
+ 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC_ASYNC,
+ 			     "%d: binder_alloc_buf size %zd async free %zd\n",
+ 			      alloc->pid, size, alloc->free_async_space);
+@@ -658,8 +656,7 @@ static void binder_free_buf_locked(struc
+ 	BUG_ON(buffer->user_data > alloc->buffer + alloc->buffer_size);
  
-@@ -905,6 +908,9 @@ int drm_dev_register(struct drm_device *dev, unsigned long flags)
- 
- 	goto out_unlock;
- 
-+err_unload:
-+	if (dev->driver->unload)
-+		dev->driver->unload(dev);
- err_minors:
- 	remove_compat_control_link(dev);
- 	drm_minor_unregister(dev, DRM_MINOR_PRIMARY);
--- 
-2.43.0
-
+ 	if (buffer->async_transaction) {
+-		alloc->free_async_space += buffer_size + sizeof(struct binder_buffer);
+-
++		alloc->free_async_space += buffer_size;
+ 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC_ASYNC,
+ 			     "%d: binder_free_buf size %zd async free %zd\n",
+ 			      alloc->pid, size, alloc->free_async_space);
 
 
