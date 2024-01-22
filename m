@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990B867741;
-	Tue, 23 Jan 2024 02:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943C867727;
+	Tue, 23 Jan 2024 02:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975285; cv=none; b=Qf4x+stmbhWjJdToHj0TifseUIUnoNJt8unqtlf8KkCg0vVPX2y8C6qMIRsep30X3Z2PtNQR46zZjgiw7j6sqKNOaQWsvA8p+hkWQirO50VN83DVHOf4bgc5P+27e9EkmsEnWCSUZ8g+MgM7iKMVwonCP6BQy7Nu5ibyuaP91KE=
+	t=1705975286; cv=none; b=kKzU0cHbDKuLOOOZWQ8zn6qYjXoJDD0n/7IzzDJR8M9aW5Wartl/Th/j2FLK7D52o48+wAeuQiD/iiMbdhAVJiFxygbYY6p6w6tYw9V6AEo/4vtIa2OgjZI/wli5n/KPKqy8nbKLrVpbPc0ujR3njVlOOdN2d1lS+yvmoHKlwpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975285; c=relaxed/simple;
-	bh=XmACvI3lyroW9SPfoyTgE3WyVMMZsmGwXqkryas+hTU=;
+	s=arc-20240116; t=1705975286; c=relaxed/simple;
+	bh=rCkw2SIp3NXDuvoCwwMF0HL2lneWALL4JzyQiS46K14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TMt01qE8IdXzDB+p0OPHuQeP1O8fOPypb5MP2X9lJg3dMMTbiG+UfBRwXNVZwjWigRW3IVvRaSpKQYbDywoZABSZOVkeLghOB+1c7GzcJpdT2RcERunvsOIKDsY+dxRHb3Wlce8HULPmGs6GgywoOqD40DC+XxHwkZP18CyZhcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EG6fW4nR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qmj3FWRzSN4flmHRyNgyN/zBBhgVgFklbTcE5sr4rU7d0ewOxm7zYcn/XhMeiaoz5B+qJv6hy1eASqJBAXRf2sif1CxnpdCD50lCL9yMtYmknsDDns3OZgB4gzoB6eQ6pr1zbylPTIXtg/JAHkuIiUUyLoyu+0KRerj12iNM0jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXEwt+45; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EG6fW4nR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F914C433C7;
-	Tue, 23 Jan 2024 02:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXEwt+45"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D1EC43390;
+	Tue, 23 Jan 2024 02:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975285;
-	bh=XmACvI3lyroW9SPfoyTgE3WyVMMZsmGwXqkryas+hTU=;
+	s=korg; t=1705975286;
+	bh=rCkw2SIp3NXDuvoCwwMF0HL2lneWALL4JzyQiS46K14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EG6fW4nRAe0co2+kX38bIHmNSEwxn4dgXpk1MNz2i+Db0oNX8fNJSNFiuMJt++RZc
-	 /V6K3NO7FrdfErwusRlqBe2VURmYmuDXPaGlrVZlvQkw5mKgV01l1jJCuEi/gKGRxj
-	 IDuAh96AKB1PUasFQ65dgCYkgiHn9uElZ/Y9G0L4=
+	b=GXEwt+45py78MzNlK+wcby96vubjLa1rj0YmLeOUhkhInWSy58Dv4hhRQn6sEfuRF
+	 YaDFi88VJbHT/Ob8myc2PVnfUaGFydgyakv9Xvfj+X0leZrQ7IX10QzB8UPBGgUMf1
+	 SePs9VURg1RySO3jL6fNjDGbW5km9FsQ7hI+LQrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 374/374] netfilter: nft_quota: copy content when cloning expression
-Date: Mon, 22 Jan 2024 16:00:30 -0800
-Message-ID: <20240122235758.000457628@linuxfoundation.org>
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 247/583] drm/tidss: Fix dss reset
+Date: Mon, 22 Jan 2024 15:54:58 -0800
+Message-ID: <20240122235819.552655115@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,45 +47,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit aabef97a35160461e9c576848ded737558d89055 upstream.
+[ Upstream commit bc288a927815efcf9d7f4a54d4d89c5df478c635 ]
 
-If the ruleset contains consumed quota, restore them accordingly.
-Otherwise, listing after restoration shows never used items.
+The probe function calls dispc_softreset() before runtime PM is enabled
+and without enabling any of the DSS clocks. This happens to work by
+luck, and we need to make sure the DSS HW is active and the fclk is
+enabled.
 
-Restore the user-defined quota and flags too.
+To fix the above, add a new function, dispc_init_hw(), which does:
 
-Fixes: ed0a0c60f0e5 ("netfilter: nft_quota: move stateful fields out of expression data")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+- pm_runtime_set_active()
+- clk_prepare_enable(fclk)
+- dispc_softreset().
+
+This ensures that the reset can be successfully accomplished.
+
+Note that we use pm_runtime_set_active(), not the normal
+pm_runtime_get(). The reason for this is that at this point we haven't
+enabled the runtime PM yet and also we don't want the normal resume
+callback to be called: the dispc resume callback does some initial HW
+setup, and it expects that the HW was off (no video ports are
+streaming). If the bootloader has enabled the DSS and has set up a
+boot time splash-screen, the DSS would be enabled and streaming which
+might lead to issues with the normal resume callback.
+
+Fixes: c9b2d923befd ("drm/tidss: Soft Reset DISPC on startup")
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Link: https://lore.kernel.org/r/20231109-tidss-probe-v2-8-ac91b5ea35c0@ideasonboard.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_quota.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/tidss/tidss_dispc.c | 45 ++++++++++++++++++++++++++++-
+ 1 file changed, 44 insertions(+), 1 deletion(-)
 
---- a/net/netfilter/nft_quota.c
-+++ b/net/netfilter/nft_quota.c
-@@ -235,12 +235,16 @@ static void nft_quota_destroy(const stru
- static int nft_quota_clone(struct nft_expr *dst, const struct nft_expr *src)
- {
- 	struct nft_quota *priv_dst = nft_expr_priv(dst);
-+	struct nft_quota *priv_src = nft_expr_priv(src);
-+
-+	priv_dst->quota = priv_src->quota;
-+	priv_dst->flags = priv_src->flags;
- 
- 	priv_dst->consumed = kmalloc(sizeof(*priv_dst->consumed), GFP_ATOMIC);
- 	if (!priv_dst->consumed)
- 		return -ENOMEM;
- 
--	atomic64_set(priv_dst->consumed, 0);
-+	*priv_dst->consumed = *priv_src->consumed;
- 
+diff --git a/drivers/gpu/drm/tidss/tidss_dispc.c b/drivers/gpu/drm/tidss/tidss_dispc.c
+index 2af623842cfb..98efbaf3b0c2 100644
+--- a/drivers/gpu/drm/tidss/tidss_dispc.c
++++ b/drivers/gpu/drm/tidss/tidss_dispc.c
+@@ -2724,6 +2724,49 @@ static int dispc_softreset(struct dispc_device *dispc)
  	return 0;
  }
+ 
++static int dispc_init_hw(struct dispc_device *dispc)
++{
++	struct device *dev = dispc->dev;
++	int ret;
++
++	ret = pm_runtime_set_active(dev);
++	if (ret) {
++		dev_err(dev, "Failed to set DSS PM to active\n");
++		return ret;
++	}
++
++	ret = clk_prepare_enable(dispc->fclk);
++	if (ret) {
++		dev_err(dev, "Failed to enable DSS fclk\n");
++		goto err_runtime_suspend;
++	}
++
++	ret = dispc_softreset(dispc);
++	if (ret)
++		goto err_clk_disable;
++
++	clk_disable_unprepare(dispc->fclk);
++	ret = pm_runtime_set_suspended(dev);
++	if (ret) {
++		dev_err(dev, "Failed to set DSS PM to suspended\n");
++		return ret;
++	}
++
++	return 0;
++
++err_clk_disable:
++	clk_disable_unprepare(dispc->fclk);
++
++err_runtime_suspend:
++	ret = pm_runtime_set_suspended(dev);
++	if (ret) {
++		dev_err(dev, "Failed to set DSS PM to suspended\n");
++		return ret;
++	}
++
++	return ret;
++}
++
+ int dispc_init(struct tidss_device *tidss)
+ {
+ 	struct device *dev = tidss->dev;
+@@ -2833,7 +2876,7 @@ int dispc_init(struct tidss_device *tidss)
+ 	of_property_read_u32(dispc->dev->of_node, "max-memory-bandwidth",
+ 			     &dispc->memory_bandwidth_limit);
+ 
+-	r = dispc_softreset(dispc);
++	r = dispc_init_hw(dispc);
+ 	if (r)
+ 		return r;
+ 
+-- 
+2.43.0
+
 
 
