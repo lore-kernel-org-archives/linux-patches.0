@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6889813398C;
-	Tue, 23 Jan 2024 00:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6C313398C;
+	Tue, 23 Jan 2024 00:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969327; cv=none; b=hE5mql59lsvHQsdkw8vzMgBGYU8C//CCA8wI8zL611GPh2pCx3sW82XlBuFR3iLuK0zWmy0naW61AfxFN5jZsrK8ke6DZHmGr9q2SiTwJatBV8T/6V4jcKLOSGpZPgXHRuYT0TG/pl2lgy25dy7ceOBBIy7oIgbxt2/RQkDtMQ0=
+	t=1705969328; cv=none; b=n3Q5HhP5QtUqVXrcKA19rVFttVSbQZ0u1f4DOciT1GqTBQaBP/Kfhqmn0X84OUXa+G5NRWct1YJNNxHZnl0bvFuWus4399/WkQieTpgmwoKKYRs0jQ4Rk7bvc+WP2UxDaiNAE5EjAmdf5Pzg1k8V5Eo/J3vt/gXzWalqG/8jCDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969327; c=relaxed/simple;
-	bh=pEq0Sul7zNlxTHUi5zmeHTvpY/vlph+rbfdqJLLUta4=;
+	s=arc-20240116; t=1705969328; c=relaxed/simple;
+	bh=mngxT/Ho3C1EL1R2R96gdlfRteOTfQmCyE+JkJ1svco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FlJx9/4Rtb9ljU9cN4A6ZMYaKe9VBUd64TR7yeeczT8rHOmIIfBqyVZnQvbys6xhIjkEdDSwaRvob1oqtTbRI1jZidnNwZ31qoRP6nNm9+sspENsSEzMl6fRObEsCJPbh2WUr+lwSc+U7udRwX3NWqNBorAfQ2aZyk6v4vudcfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9+/lVGp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n0dU4xiDUySpHj56wAgMHQmJqZN0btNRyScuuMD1+sqxYSFZUnFXYn9Lb64Lo5JhjThRUke9mTaNi5J6sDWykgU+ScDumbqvo0yG1RQ6SDC0iuCHq73aBo5P0WuIpxa7HSZDjlMguEgNxitUrWMBylNbhLYj3Q+xOjmgnVtJeAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLOIOPD8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9+/lVGp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1250CC43394;
-	Tue, 23 Jan 2024 00:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLOIOPD8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7174FC433B1;
+	Tue, 23 Jan 2024 00:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969327;
-	bh=pEq0Sul7zNlxTHUi5zmeHTvpY/vlph+rbfdqJLLUta4=;
+	s=korg; t=1705969328;
+	bh=mngxT/Ho3C1EL1R2R96gdlfRteOTfQmCyE+JkJ1svco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n9+/lVGpLWyZCW+y5VEXTK5VicVhVQ+VSkHFBu3MLBWL3oAlEYNE+rbXyXvxNiukc
-	 JVefHR0algF9lpA8zh0yO3pS6g7cTOHB86jsGJN4xAgZMzv4ax0bohQ4ohaRIaxWp7
-	 sVMxn+fSepZFhV9Pf3wuZisp3UWsGKW4qUS9c8e0=
+	b=XLOIOPD8bP+jurJLxycxQdwGQeTIVQLgWXUPT7KXbGTNqbg8gpV5krKRH8jq2THui
+	 HscSg4ykMRiSV3zUpwnXYGltAVgvW97mzCoUEcQXAyfhcr2g0smoMPCvhGOcKF/Z6B
+	 IlKtATnQKg95ujT/W3HdVfnDLaMWAiAqpNQyi5Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Andrew Halaney <ahalaney@redhat.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 6.7 175/641] scsi: ufs: qcom: Fix the return value of ufs_qcom_ice_program_key()
-Date: Mon, 22 Jan 2024 15:51:19 -0800
-Message-ID: <20240122235823.483533285@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 176/641] scsi: ufs: qcom: Fix the return value when platform_get_resource_byname() fails
+Date: Mon, 22 Jan 2024 15:51:20 -0800
+Message-ID: <20240122235823.511286725@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -55,16 +54,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 3bf7ab4ac30c03beecf57c052e87d5a38fb8aed6 ]
+[ Upstream commit 3a747c5cf9b6c36649783b28d2ef8f9c92b16a0f ]
 
-Currently, the function returns -EINVAL if algorithm other than AES-256-XTS
-is requested. But the correct error code is -EOPNOTSUPP. Fix it!
+The return value should be -ENODEV indicating that the resource is not
+provided in DT, not -ENOMEM. Fix it!
 
-Cc: Abel Vesa <abel.vesa@linaro.org>
-Fixes: 56541c7c4468 ("scsi: ufs: ufs-qcom: Switch to the new ICE API")
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: c263b4ef737e ("scsi: ufs: core: mcq: Configure resource regions")
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20231208065902.11006-3-manivannan.sadhasivam@linaro.org
+Link: https://lore.kernel.org/r/20231208065902.11006-4-manivannan.sadhasivam@linaro.org
 Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -73,18 +71,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 17e24270477d..c92cdca21fe1 100644
+index c92cdca21fe1..0f4b3f16d3d7 100644
 --- a/drivers/ufs/host/ufs-qcom.c
 +++ b/drivers/ufs/host/ufs-qcom.c
-@@ -158,7 +158,7 @@ static int ufs_qcom_ice_program_key(struct ufs_hba *hba,
- 	cap = hba->crypto_cap_array[cfg->crypto_cap_idx];
- 	if (cap.algorithm_id != UFS_CRYPTO_ALG_AES_XTS ||
- 	    cap.key_size != UFS_CRYPTO_KEY_SIZE_256)
--		return -EINVAL;
-+		return -EOPNOTSUPP;
- 
- 	if (config_enable)
- 		return qcom_ice_program_key(host->ice,
+@@ -1787,7 +1787,7 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
+ 		if (!res->resource) {
+ 			dev_info(hba->dev, "Resource %s not provided\n", res->name);
+ 			if (i == RES_UFS)
+-				return -ENOMEM;
++				return -ENODEV;
+ 			continue;
+ 		} else if (i == RES_UFS) {
+ 			res_mem = res->resource;
 -- 
 2.43.0
 
