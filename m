@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2082B5FDAB;
-	Tue, 23 Jan 2024 01:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD675FDB4;
+	Tue, 23 Jan 2024 01:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974642; cv=none; b=PFaGBZp0f5J+NrpVlpi5baG8WGMDtU5RRdufRq3G/N9btctAPkSzzBnZG5bRKfvzYZpC61KI6Rmft+GmQqtL8xwPLJwwmDzl4rIghcEw1wKw9GcEAJ8Ak8fZBHYoq1h7cdEUzKsTN+koAAPL0Gv51JVq1ZzCxEhJWcZ/7oUPxvM=
+	t=1705974642; cv=none; b=mISXch/udi1zFPxFb9CGiXuA5aRvJWZdg3WSY8xfgOvwqaHK7BmJofRHGaiClQitkPhOmZ/gotay06zDA4cdxHu6ZhWnhG+tjy74dEWovO2lDaYTkJB8r6VdUpmGGEhJdRFJcSBFq/B8cMbwjugCthdwuf2423cGIFjPDLIeSyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705974642; c=relaxed/simple;
-	bh=1TYCCYOnwqU63Zq02rdGoGwhZSeUB8JEd47No2RQ/NQ=;
+	bh=kV8NaC1iUrXG1DQiGUY43zHHpgWdCoYpXK3hpj+gJ3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kggawyh78mBItd8rOWMuCDWmf2SM/x3GdCNRb2WCNg6h6R3clOn85Foao4I6xPf3IGL3ziL2tgW1VIeexuhEC/FFyMBSLYnQrrofppk6wLKgvEFD7QPRngO1qf6mHIkL9TwREA6wS/rQCPOo3xJbjyKsh7qBE3ApUm4RD59qENw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PL5QAwht; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CBfINwYB1pn+krlIuLyk0nQnece6M6O5qFjLUsvUJZxZJP+WZTNX5NuCOOcl1bbLM9l8SwkIDMshbRo90YBR8qMWXuB6OtN0eCtIpDW4Qmt+sbpfBmMjjSigBfxGlG9OjKsTyK1ynq+GcZslTL1WChd7xCiEKjZ3PyBRK6e6J2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QcsS0gnu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PL5QAwht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D50DC43399;
-	Tue, 23 Jan 2024 01:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QcsS0gnu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72AA9C433C7;
+	Tue, 23 Jan 2024 01:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974641;
-	bh=1TYCCYOnwqU63Zq02rdGoGwhZSeUB8JEd47No2RQ/NQ=;
+	s=korg; t=1705974642;
+	bh=kV8NaC1iUrXG1DQiGUY43zHHpgWdCoYpXK3hpj+gJ3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PL5QAwhtY+CimX5XdGU6AzxkLimMEH1D82+Xtkv/oZmrJdfPuUYO/erifyZ+aX2yJ
-	 JFLt4sm+wfzefzH5tP7ahPOwth3xXLy5oYC2b0QoJmZFZdc0XHGWrNPyug3/IdLQ8o
-	 YHLcycqLcYskm3KynPJg6ve2NYbgVvvyFj01tX0E=
+	b=QcsS0gnuVGxZ2HrMAvJtvh7NOvI5BzC31kf4/8yxopd8ke6axzNMJ0KJYrzDL2BtT
+	 LbijZddJAcexyYn0bJt92bu99WxHA0jILJQrik+6x1Z3jWT0+72VtbUjIuZDJjFo6o
+	 rqiL44j8nPqZ/ENJCNHqlOSsSYptxrqcNxGYi4eY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 226/374] clk: fixed-rate: fix clk_hw_register_fixed_rate_with_accuracy_parent_hw
-Date: Mon, 22 Jan 2024 15:58:02 -0800
-Message-ID: <20240122235752.558025862@linuxfoundation.org>
+Subject: [PATCH 6.6 102/583] md: synchronize flush io with array reconfiguration
+Date: Mon, 22 Jan 2024 15:52:33 -0800
+Message-ID: <20240122235815.295828336@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,44 +45,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Théo Lebrun <theo.lebrun@bootlin.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit ee0cf5e07f44a10fce8f1bfa9db226c0b5ecf880 ]
+[ Upstream commit fa2bbff7b0b4e211fec5e5686ef96350690597b5 ]
 
-Add missing comma and remove extraneous NULL argument. The macro is
-currently used by no one which explains why the typo slipped by.
+Currently rcu is used to protect iterating rdev from submit_flushes():
 
-Fixes: 2d34f09e79c9 ("clk: fixed-rate: Add support for specifying parents via DT/pointers")
-Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Link: https://lore.kernel.org/r/20231218-mbly-clk-v1-1-44ce54108f06@bootlin.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+submit_flushes			remove_and_add_spares
+				synchronize_rcu
+				pers->hot_remove_disk()
+ rcu_read_lock()
+ rdev_for_each_rcu
+  if (rdev->raid_disk >= 0)
+				rdev->radi_disk = -1;
+   atomic_inc(&rdev->nr_pending)
+   rcu_read_unlock()
+   bi = bio_alloc_bioset()
+   bi->bi_end_io = md_end_flush
+   bi->private = rdev
+   submit_bio
+   // issue io for removed rdev
+
+Fix this problem by grabbing 'acive_io' before iterating rdev, make sure
+that remove_and_add_spares() won't concurrent with submit_flushes().
+
+Fixes: a2826aa92e2e ("md: support barrier requests on all personalities.")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20231129020234.1586910-1-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/clk-provider.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/md.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-index 43e177b3a4d3..6cace09ba63d 100644
---- a/include/linux/clk-provider.h
-+++ b/include/linux/clk-provider.h
-@@ -434,8 +434,8 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
-  */
- #define clk_hw_register_fixed_rate_with_accuracy_parent_hw(dev, name,	      \
- 		parent_hw, flags, fixed_rate, fixed_accuracy)		      \
--	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, (parent_hw)   \
--				     NULL, NULL, (flags), (fixed_rate),	      \
-+	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, (parent_hw),  \
-+				     NULL, (flags), (fixed_rate),	      \
- 				     (fixed_accuracy), 0, false)
- /**
-  * clk_hw_register_fixed_rate_with_accuracy_parent_data - register fixed-rate
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index b2ef6af8376a..8c40c1c3959c 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -494,6 +494,9 @@ static void md_end_flush(struct bio *bio)
+ 	rdev_dec_pending(rdev, mddev);
+ 
+ 	if (atomic_dec_and_test(&mddev->flush_pending)) {
++		/* The pair is percpu_ref_get() from md_flush_request() */
++		percpu_ref_put(&mddev->active_io);
++
+ 		/* The pre-request flush has finished */
+ 		queue_work(md_wq, &mddev->flush_work);
+ 	}
+@@ -513,12 +516,8 @@ static void submit_flushes(struct work_struct *ws)
+ 	rdev_for_each_rcu(rdev, mddev)
+ 		if (rdev->raid_disk >= 0 &&
+ 		    !test_bit(Faulty, &rdev->flags)) {
+-			/* Take two references, one is dropped
+-			 * when request finishes, one after
+-			 * we reclaim rcu_read_lock
+-			 */
+ 			struct bio *bi;
+-			atomic_inc(&rdev->nr_pending);
++
+ 			atomic_inc(&rdev->nr_pending);
+ 			rcu_read_unlock();
+ 			bi = bio_alloc_bioset(rdev->bdev, 0,
+@@ -529,7 +528,6 @@ static void submit_flushes(struct work_struct *ws)
+ 			atomic_inc(&mddev->flush_pending);
+ 			submit_bio(bi);
+ 			rcu_read_lock();
+-			rdev_dec_pending(rdev, mddev);
+ 		}
+ 	rcu_read_unlock();
+ 	if (atomic_dec_and_test(&mddev->flush_pending))
+@@ -582,6 +580,18 @@ bool md_flush_request(struct mddev *mddev, struct bio *bio)
+ 	/* new request after previous flush is completed */
+ 	if (ktime_after(req_start, mddev->prev_flush_start)) {
+ 		WARN_ON(mddev->flush_bio);
++		/*
++		 * Grab a reference to make sure mddev_suspend() will wait for
++		 * this flush to be done.
++		 *
++		 * md_flush_reqeust() is called under md_handle_request() and
++		 * 'active_io' is already grabbed, hence percpu_ref_is_zero()
++		 * won't pass, percpu_ref_tryget_live() can't be used because
++		 * percpu_ref_kill() can be called by mddev_suspend()
++		 * concurrently.
++		 */
++		WARN_ON(percpu_ref_is_zero(&mddev->active_io));
++		percpu_ref_get(&mddev->active_io);
+ 		mddev->flush_bio = bio;
+ 		bio = NULL;
+ 	}
 -- 
 2.43.0
 
