@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1906024F;
-	Tue, 23 Jan 2024 00:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E112570;
+	Tue, 23 Jan 2024 00:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970790; cv=none; b=vBRPHfuRJhY7ecxytMgfqF6GFuI+LdtSgr3ALWuT2wHq4pjPlsIrB4NnUJ6V6vkgZY/b45GamaB/+8G6rrbzOlgHdlEiTdLV11WOXmhorr/Xna8wMBigToggiJmUOwWr1aWIlWj2DldL7+7CdpW9DvOmWF1qrR7BX54ca1qn/Qs=
+	t=1705970791; cv=none; b=qAwPtJjHQ8v7O21SUUcx//6FipYvb5/fLbUNbEZRu6xkbcMJ89NgJeNkmtDEfrBkplru3HfIOEcQtyDKZs3GAI97tIdanNZeUK1re3aPQZW5zcIEkKdOdCAHEda3i+RzTwiWk/KI5WD7MBQQFggonGtAhmFVl4EhHS9x03wukXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970790; c=relaxed/simple;
-	bh=msqp7pFrVRAT4/4k1nDmtK6DM95uY1ptTaP1CbyDr+A=;
+	s=arc-20240116; t=1705970791; c=relaxed/simple;
+	bh=A3B4ApZwZRc3AMbZ4Td8sPT9rFUo0rd/lLdIQ14RPRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jKbB4zTVxxQj5fNQZJqlN6cseE0HqT4pXh7qfYAK6ZtPLuHx0RZg/NuTHh/9SqifbqoWuY+V2/FpRNOQ3QfGUODz7G6C1wXw6CUDF3KNXktGhy72rFBrxU+YPTXBwcOMeNnluEcQ0DlU6dAN0/thhIC7Wvy9XijIgJiI1rioKgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jn66oPmb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=elwXTMzMFZrR4mJWVdiuhscjEEryifm3LjQFz153ak7i4H28tMPBuobStxankbawXqLW4Hx0svA8CTXtjbFrozK3oz0LbEZU6RuuxjjbHl+2lguwb6CPVKfsrsIgfFuGfB3cSxZ40cNauF/bfU+S+1wdvPo/xep/TV5xytiuZaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8M4AjrW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jn66oPmb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE30C433F1;
-	Tue, 23 Jan 2024 00:46:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8M4AjrW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46BE1C433F1;
+	Tue, 23 Jan 2024 00:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970790;
-	bh=msqp7pFrVRAT4/4k1nDmtK6DM95uY1ptTaP1CbyDr+A=;
+	s=korg; t=1705970791;
+	bh=A3B4ApZwZRc3AMbZ4Td8sPT9rFUo0rd/lLdIQ14RPRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jn66oPmbCOkGITgRO5OgS/uDQbQJOejQP7Bb073DYo4W6+KEZmigK/zkjH3ZVch6x
-	 /V/MSH3yebAkpG5+pDO65sSu0BeqYhGddqChlAzTD1CA4fHnAzL/tO4rlVc2MmRTYo
-	 pzT0PsDPku/2rW4sDcNLLn4sM0UoUIsMbwVpyiWA=
+	b=A8M4AjrW5QQq0sF7tUyw2ogxUAKBJBBrXhVQGOq+p/mlXM1ZOYc5IbClpQIP2dyP+
+	 doO7ReD7JLk1xdbNjc16CbdZxHLpLkT7di3t8NS2hnlQAvHdgZKx0S7f7EsiN5/yB5
+	 4HZOqungqWxOwZ/HBPawF6A6XxjcNdBx87y+DGUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	David Rau <David.Rau.opensource@dm.renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/417] arm64: dts: qcom: sc8280xp: Make watchdog bark interrupt edge triggered
-Date: Mon, 22 Jan 2024 15:54:19 -0800
-Message-ID: <20240122235754.846394863@linuxfoundation.org>
+Subject: [PATCH 5.10 017/286] ASoC: da7219: Support low DC impedance headset
+Date: Mon, 22 Jan 2024 15:55:23 -0800
+Message-ID: <20240122235732.687713265@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,42 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: David Rau <David.Rau.opensource@dm.renesas.com>
 
-[ Upstream commit 6c4a9c7ea486da490400c84ba2768c90d228c283 ]
+[ Upstream commit 5f44de697383fcc9a9a1a78f99e09d1838704b90 ]
 
-As described in the patch ("arm64: dts: qcom: sc7180: Make watchdog
-bark interrupt edge triggered"), the Qualcomm watchdog timer's bark
-interrupt should be configured as edge triggered. Make the change.
+Change the default MIC detection impedance threshold to 200ohm
+to support low mic DC impedance headset.
 
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20231106144335.v2.7.I1c8ab71570f6906fd020decb80675f05fbe1fe74@changeid
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: David Rau <David.Rau.opensource@dm.renesas.com>
+Link: https://lore.kernel.org/r/20231201042933.26392-1-David.Rau.opensource@dm.renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
+ sound/soc/codecs/da7219-aad.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 405835ad28bc..7e3aaf5de3f5 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -1653,7 +1653,7 @@ watchdog@17c10000 {
- 			compatible = "qcom,apss-wdt-sc8280xp", "qcom,kpss-wdt";
- 			reg = <0 0x17c10000 0 0x1000>;
- 			clocks = <&sleep_clk>;
--			interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <GIC_SPI 0 IRQ_TYPE_EDGE_RISING>;
- 		};
+diff --git a/sound/soc/codecs/da7219-aad.c b/sound/soc/codecs/da7219-aad.c
+index b316d613a709..b6030709b6b6 100644
+--- a/sound/soc/codecs/da7219-aad.c
++++ b/sound/soc/codecs/da7219-aad.c
+@@ -654,7 +654,7 @@ static struct da7219_aad_pdata *da7219_aad_fw_to_pdata(struct device *dev)
+ 		aad_pdata->mic_det_thr =
+ 			da7219_aad_fw_mic_det_thr(dev, fw_val32);
+ 	else
+-		aad_pdata->mic_det_thr = DA7219_AAD_MIC_DET_THR_500_OHMS;
++		aad_pdata->mic_det_thr = DA7219_AAD_MIC_DET_THR_200_OHMS;
  
- 		timer@17c20000 {
+ 	if (fwnode_property_read_u32(aad_np, "dlg,jack-ins-deb", &fw_val32) >= 0)
+ 		aad_pdata->jack_ins_deb =
 -- 
 2.43.0
 
