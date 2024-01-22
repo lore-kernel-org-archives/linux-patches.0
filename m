@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CAF1350CA;
-	Tue, 23 Jan 2024 01:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B586F1350E3;
+	Tue, 23 Jan 2024 01:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971947; cv=none; b=ExzOXESZQ6Ld6CxnVqO7jRmnltKvzsowv5YqCqS+Bgd9xPDj2c1daQzzNBUkcxqy7s9O2AZepNje7ntRPkR/lvTND4PJyAGuNx1Hq4sY2DoxfO3fnYmv5ezzgCZ3hS9c9aVv5sfah6w7VDiBpFcw+X8kzu1DlXVSYba9rX6jYDs=
+	t=1705971950; cv=none; b=A4Jb6GGBQwldrbIuJwymXxvk+0iTylt+RAdng+ODVSFza9i4N20yoxwM6XHGK+se2zAp+JTDSKqXTHCu4Bdse36YQ4q/epeUfNM7cNG/vFvHNTLEfrY5EQ+7Da9DHBxBgAeJyroCaDJ2iywkwlNFK48uNJFYwnGifpwlBUzMWnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971947; c=relaxed/simple;
-	bh=y79POcjDGHVYRzDM78M6MywMhJuK2CmNlQv0YF8tj6A=;
+	s=arc-20240116; t=1705971950; c=relaxed/simple;
+	bh=JdKJGqwnp4Nq2SZhSt4ykXhoNRAOAzCFmfNeUaV89JU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NBc1X1oYH06XAksJRv/IeycxHhcRiBBF2bT38o/poUIAlndArN37QnzdavKqpWBD9PU5JfKdKLNN19pVnd/J8xsYso8dKojzNszO9PD+ztHMuRwoUQe0oxcIXJxLpzICS4FnXBZi5TsSYm4LjM2W4EVJiyuz/IP6cJVWfUVd5G0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjSFlRQY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ST0nZjDWf+BO1lI6zaVyeHtIQSth9X1mqsptabhSgtaEHPzqS1M0+Z7ifG4litb/CPV7f1PMjqqnIJn2gCa1ODbWT6q5qGRekgiTPm+OtNOh16fojc0a0tntqu2TKMOekzzquDdDRPNUMbxklqKpNdd0IgLB9BEDcN4AiGyDmY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11bFDg9X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjSFlRQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6591FC433F1;
-	Tue, 23 Jan 2024 01:05:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11bFDg9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A396C433C7;
+	Tue, 23 Jan 2024 01:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971947;
-	bh=y79POcjDGHVYRzDM78M6MywMhJuK2CmNlQv0YF8tj6A=;
+	s=korg; t=1705971950;
+	bh=JdKJGqwnp4Nq2SZhSt4ykXhoNRAOAzCFmfNeUaV89JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AjSFlRQYkekbV0FYCaio0ENX4HkzCLH8FDRUcfGGA26bMIamu0meAbr8ssz0tZOsL
-	 jDUn3/KyKVe5hJyJ2vzkTEog1l2PMBZHbcbLzbt7FjEo+zfn68uL8PxwXBFDSkpQ+e
-	 p73LAsE6usOQpIUM7Jeo+v86qK2xx+l3ozVIf87Y=
+	b=11bFDg9X8wLI/EzkPDavwdzOTS/yKX5SETo7Rqq9f7bJ2yjdXpLpq+jdil5zLqNNg
+	 MXKR37TVCbZU+hZdpqzH9PykFKwzRuH1OW3MQJnDoRI3GEdTO74j+GzWFe9rKhpUT5
+	 er6+bWiAS35nt65+oMTczgxvChpH2Znz9nHUB2SU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 271/286] netfilter: nf_tables: do not allow mismatch field size and set key length
-Date: Mon, 22 Jan 2024 15:59:37 -0800
-Message-ID: <20240122235742.489111964@linuxfoundation.org>
+Subject: [PATCH 6.1 359/417] tty: use if in send_break() instead of goto
+Date: Mon, 22 Jan 2024 15:58:47 -0800
+Message-ID: <20240122235804.253233028@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,52 +46,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 3ce67e3793f48c1b9635beb9bb71116ca1e51b58 ]
+[ Upstream commit 24f2cd019946fc2e88e632d2e24a34c2cc3f2be4 ]
 
-The set description provides the size of each field in the set whose sum
-should not mismatch the set key length, bail out otherwise.
+Now, the "jumped-over" code is simple enough to be put inside an 'if'.
+Do so to make it 'goto'-less.
 
-I did not manage to crash nft_set_pipapo with mismatch fields and set key
-length so far, but this is UB which must be disallowed.
-
-Fixes: f3a2181e16f1 ("netfilter: nf_tables: Support for sets with multiple ranged fields")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20230919085156.1578-16-jirislaby@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 66aad7d8d3ec ("usb: cdc-acm: return correct error code on unsupported break")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/tty/tty_io.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 6e91c743a4d4..009cb23bc972 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4302,8 +4302,8 @@ static int nft_set_desc_concat_parse(const struct nlattr *attr,
- static int nft_set_desc_concat(struct nft_set_desc *desc,
- 			       const struct nlattr *nla)
- {
-+	u32 num_regs = 0, key_num_regs = 0;
- 	struct nlattr *attr;
--	u32 num_regs = 0;
- 	int rem, err, i;
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index 41e01a8ccc4c..43be3b42aaaf 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -2479,11 +2479,10 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
+ 		return -EINTR;
  
- 	nla_for_each_nested(attr, nla, rem) {
-@@ -4318,6 +4318,10 @@ static int nft_set_desc_concat(struct nft_set_desc *desc,
- 	for (i = 0; i < desc->field_count; i++)
- 		num_regs += DIV_ROUND_UP(desc->field_len[i], sizeof(u32));
+ 	retval = tty->ops->break_ctl(tty, -1);
+-	if (retval)
+-		goto out;
+-	msleep_interruptible(duration);
+-	retval = tty->ops->break_ctl(tty, 0);
+-out:
++	if (!retval) {
++		msleep_interruptible(duration);
++		retval = tty->ops->break_ctl(tty, 0);
++	}
+ 	tty_write_unlock(tty);
  
-+	key_num_regs = DIV_ROUND_UP(desc->klen, sizeof(u32));
-+	if (key_num_regs != num_regs)
-+		return -EINVAL;
-+
- 	if (num_regs > NFT_REG32_COUNT)
- 		return -E2BIG;
- 
+ 	if (signal_pending(current))
 -- 
 2.43.0
 
