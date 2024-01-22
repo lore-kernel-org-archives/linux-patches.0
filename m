@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE8258AAC;
-	Tue, 23 Jan 2024 01:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC66C63BF;
+	Tue, 23 Jan 2024 01:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974070; cv=none; b=HqO50xX43F/jX6Zv0XsB8MGjaGHkK5Lf6hC5h2A2qQIVuyTOGSt77xyolOKPyZQ/ihmAV/BT3EAMqUuzMwrlSsiQb8KUtFjhw/QF1uWSbnM3GYoEJEYYCoLv8LaSAe+C8J8ixlhWQTb2to9/g2aHzOob+4d39u9ZEaz5Js/cWXs=
+	t=1705974070; cv=none; b=D62xc8UH/xyv+TBxUHGYzoWonzqMZOpnZxGztnXFgEjtwWALvLBLU7YrEFhXHGE1sL+M9xIFqzineoC6slg+fvR6LggkRM/091b5GhEnNUTtjmG+HxgdsffvDmvzcBgeU/kp3jm5o3/jZNx4I05LDnYgVXEVV3KftUbnGkZfrZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705974070; c=relaxed/simple;
-	bh=FfzmUb4cz1d/OhVGbzVaJ98VcFG9XoVaI+yh7lU4iU8=;
+	bh=QHxo855qmypYgjKF6ryMgijqptHfZJCN8QILIO0bF98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkT43CkCsDIMZAhgWc5trPywSv9brnUk8t/1TUgEr3E3ZDoaxWSGmaIssxZ+roSet82vj4gb7BZUMcmuaSCCYetbK7TFUKDPZ3NflNhVmPyi2D5jmcjKqSI47laegK2cOvRs6dA370uQULWzoxldICBI2WTLhNkRqm1VUpwCmvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DciVqi45; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S/pf4s2xiMkkGyv+bdGBCPmNZ9ROFYmUY0DXpVffdgJGtsZArL+SzSSd3U0+FlavwlPyqxB3kKpG8xxHzhh/8uPgHzu0s1tQI6PFDWDxSgRBFbMJU4KSmK6ZA6Yj/ZWcR2r2/AF2KCZrirhHoEffMxr1fj7j49ywTMDSbk06xQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcvSNUlR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DciVqi45"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B2EC43399;
-	Tue, 23 Jan 2024 01:41:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcvSNUlR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0DAC433A6;
+	Tue, 23 Jan 2024 01:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974068;
-	bh=FfzmUb4cz1d/OhVGbzVaJ98VcFG9XoVaI+yh7lU4iU8=;
+	s=korg; t=1705974070;
+	bh=QHxo855qmypYgjKF6ryMgijqptHfZJCN8QILIO0bF98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DciVqi45l721egKBdlo3hjZ2PCvZlSrqn0TEWHqaawhQgbf9l0WAL1OQAYnQsb3YY
-	 n0Y54tCKbvW+uWKFREr7uRyil4tJRzLqbInILqeV7nN0tVbgKE3fWl0YuZnj8oEEDk
-	 vzEB0exQzqALhOf80gaRDVPvX52CAyWQaCguU588=
+	b=hcvSNUlRbfGiIQjwJG/fXqZng4wXn7TUfIkz6ktJj6JY2p8dJVbsj/YuBL2SwADWp
+	 W66gliOUoatcC8BuiGx8qBxtx+/FBZoH1fnU52j7Anj4bPiCWpVG9gB+VyfJjU8gHu
+	 CWQhKBFsV86e0IGFj9dEjnE6pq7DwMIveemiaRfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joakim Zhang <joakim.zhang@cixtech.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Atul Dhudase <quic_adhudase@quicinc.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 150/374] dma-mapping: clear dev->dma_mem to NULL after freeing it
-Date: Mon, 22 Jan 2024 15:56:46 -0800
-Message-ID: <20240122235749.846045273@linuxfoundation.org>
+Subject: [PATCH 5.15 151/374] soc: qcom: llcc: Fix dis_cap_alloc and retain_on_pc configuration
+Date: Mon, 22 Jan 2024 15:56:47 -0800
+Message-ID: <20240122235749.875556569@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,42 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joakim Zhang <joakim.zhang@cixtech.com>
+From: Atul Dhudase <quic_adhudase@quicinc.com>
 
-[ Upstream commit b07bc2347672cc8c7293c64499f1488278c5ca3d ]
+[ Upstream commit eed6e57e9f3e2beac37563eb6a0129549daa330e ]
 
-Reproduced with below sequence:
-dma_declare_coherent_memory()->dma_release_coherent_memory()
-->dma_declare_coherent_memory()->"return -EBUSY" error
+Commit c14e64b46944 ("soc: qcom: llcc: Support chipsets that can
+ write to llcc") add the support for chipset where capacity based
+allocation and retention through power collapse can be programmed
+based on content of SCT table mentioned in the llcc driver where
+the target like sdm845 where the entire programming related to it
+is controlled in firmware. However, the commit introduces a bug
+where capacity/retention register get overwritten each time it
+gets programmed for each slice and that results in misconfiguration
+of the register based on SCT table and that is not expected
+behaviour instead it should be read modify write to retain the
+configuration of other slices.
 
-It will return -EBUSY from the dma_assign_coherent_memory()
-in dma_declare_coherent_memory(), the reason is that dev->dma_mem
-pointer has not been set to NULL after it's freed.
+This issue is totally caught from code review and programming test
+and not through any power/perf numbers so, it is not known what
+impact this could make if we don't have this change however,
+this feature are for these targets and they should have been
+programmed accordingly as per their configuration mentioned in
+SCT table like others bits information.
 
-Fixes: cf65a0f6f6ff ("dma-mapping: move all DMA mapping code to kernel/dma")
-Signed-off-by: Joakim Zhang <joakim.zhang@cixtech.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+This change brings one difference where it keeps capacity/retention
+bits of the slices that are not mentioned in SCT table in unknown
+state where as earlier it was initialized to zero.
+
+Fixes: c14e64b46944 ("soc: qcom: llcc: Support chipsets that can write to llcc")
+Signed-off-by: Atul Dhudase <quic_adhudase@quicinc.com>
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/1701876771-10695-1-git-send-email-quic_mojha@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/coherent.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/llcc-qcom.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/dma/coherent.c b/kernel/dma/coherent.c
-index ca05989d9901..2df824fa40ef 100644
---- a/kernel/dma/coherent.c
-+++ b/kernel/dma/coherent.c
-@@ -133,8 +133,10 @@ int dma_declare_coherent_memory(struct device *dev, phys_addr_t phys_addr,
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index fabc5ce828af..59e359e9062b 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -450,14 +450,14 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config,
+ 		u32 disable_cap_alloc, retain_pc;
  
- void dma_release_coherent_memory(struct device *dev)
- {
--	if (dev)
-+	if (dev) {
- 		_dma_release_coherent_memory(dev->dma_mem);
-+		dev->dma_mem = NULL;
-+	}
- }
+ 		disable_cap_alloc = config->dis_cap_alloc << config->slice_id;
+-		ret = regmap_write(drv_data->bcast_regmap,
+-				LLCC_TRP_SCID_DIS_CAP_ALLOC, disable_cap_alloc);
++		ret = regmap_update_bits(drv_data->bcast_regmap, LLCC_TRP_SCID_DIS_CAP_ALLOC,
++					 BIT(config->slice_id), disable_cap_alloc);
+ 		if (ret)
+ 			return ret;
  
- static void *__dma_alloc_from_coherent(struct device *dev,
+ 		retain_pc = config->retain_on_pc << config->slice_id;
+-		ret = regmap_write(drv_data->bcast_regmap,
+-				LLCC_TRP_PCB_ACT, retain_pc);
++		ret = regmap_update_bits(drv_data->bcast_regmap, LLCC_TRP_PCB_ACT,
++					 BIT(config->slice_id), retain_pc);
+ 		if (ret)
+ 			return ret;
+ 	}
 -- 
 2.43.0
 
