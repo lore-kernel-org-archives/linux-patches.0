@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A19F5A103;
-	Tue, 23 Jan 2024 01:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F5A5C908;
+	Tue, 23 Jan 2024 01:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974380; cv=none; b=bdVy6vb9LvrAxZ6i86Tp6fXWwncbmIrhpC1/y6/v4oBxYMsZstH7frTRyYZNorOoyptlLg77G7JP2E+8RbBBpbJa58zwf8rIk/LWCdpNyjpQJOmIm1LpCOHaTh09yAK0QCS22z1CiPwEV26EdwaMW6Rz2t97KuYEyoCVFk4p9D8=
+	t=1705974381; cv=none; b=Jp9QFdnHP/EieVMQJ6jL7lVKYzlaTGeU3jRv1pLL5T8lzj2Cb9D1QGSOaIgWzy72EINHxFfmlmbGfAFwv2NKtSLIFTzQBotJCSjQdazWvJgEulOVMLIA4O0TcxPXyIozgLMruWR/iZ+zsPtLb3nE4BiHG8UdTzk8VMKdfVy2MSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974380; c=relaxed/simple;
-	bh=dVDxwCJ+p2c0OfhJLgyKsUwRPB1dZcCLurgD7qi8svY=;
+	s=arc-20240116; t=1705974381; c=relaxed/simple;
+	bh=p4PDCaaA+piD2IpXoEVPvGEPLBBSpd0i0tBpOZFGhYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IoFGWKi21F5QoFjcEjKhUNnN+AH9O9+INpUZlOMKG1W66sPwIcihrHL9akZNL79qCDYsjL4IG9hcioFf0XqpQOvzR3lv35fExifjaMRuaQwraUdLCRI7oY3h+svK+IErjvKn0abHNbSwZYlSioJoRbhpsTe0ilY4YTlPpenW3Pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMBfGmMN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HR9erOd8yvvho9Cig+UkDsFGKfWBAamb0YymLv/IUwIM7QM3YoRM4AQtjidCy2CUMrtQqGB+q1KNnZuUUxTkaqMbC+C5D4OO894284/J26m1odlLuLX5Gc0Qr1BwR1tJXatL6DKNTYYlxUEiQNa/Mf3LRXaNWgtzpA4453w/b/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYURG26k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMBfGmMN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC70C433C7;
-	Tue, 23 Jan 2024 01:46:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYURG26k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA8EC433F1;
+	Tue, 23 Jan 2024 01:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974380;
-	bh=dVDxwCJ+p2c0OfhJLgyKsUwRPB1dZcCLurgD7qi8svY=;
+	s=korg; t=1705974381;
+	bh=p4PDCaaA+piD2IpXoEVPvGEPLBBSpd0i0tBpOZFGhYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EMBfGmMN18yv/jaTkevK0ezWKvBIhofhPTWRtw1Z415DoEQB+kwM8ZMoPNl/el2qh
-	 D2uB/NTuvElF9cwgrute/bWnbb/pEi3HCfO9NbJ9KHTET2aNRHS9+vRg0loCn3sja5
-	 dcby9xEW/qNBqWbEqx7zkCJCjcLErZF6TbJ026Fo=
+	b=DYURG26kS/cgECCBCftQownQyC02JPwaW4y5df5qaj/siBDJquK08nySHJGgZEO0i
+	 fTUaRU+YsfYOM4fqJbJQsD2ItkG0A7QABz6BFPFBtRjVibcx8LDZXzs60KNxtwMduV
+	 3tsw/F7kursdDEPPfj3GUQw9cxMLuGMvQP18Sc/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 176/374] Revert "drm/tidss: Annotate dma-fence critical section in commit path"
-Date: Mon, 22 Jan 2024 15:57:12 -0800
-Message-ID: <20240122235750.756061988@linuxfoundation.org>
+Subject: [PATCH 6.6 050/583] crypto: sahara - fix cbc selftest failure
+Date: Mon, 22 Jan 2024 15:51:41 -0800
+Message-ID: <20240122235813.666774103@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,177 +47,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit ca34d816558c3e4c3f8fe037b5a6b16c944693de ]
+[ Upstream commit 9f10bc28c0fb676ae58aa3bfa358db8f5de124bb ]
 
-This reverts commit 4d56a4f08391857ba93465de489707b66adad114.
+The kernel crypto API requires that all CBC implementations update the IV
+buffer to contain the last ciphertext block.
 
-The DMA-fence annotations cause a lockdep warning (see below). As per
-https://patchwork.freedesktop.org/patch/462170/ it sounds like the
-annotations don't work correctly.
+This fixes the following cbc selftest error:
+alg: skcipher: sahara-cbc-aes encryption test failed (wrong output IV) on
+test vector 0, cfg="in-place (one sglist)"
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.6.0-rc2+ #1 Not tainted
-------------------------------------------------------
-kmstest/733 is trying to acquire lock:
-ffff8000819377f0 (fs_reclaim){+.+.}-{0:0}, at: __kmem_cache_alloc_node+0x58/0x2d4
-
-but task is already holding lock:
-ffff800081a06aa0 (dma_fence_map){++++}-{0:0}, at: tidss_atomic_commit_tail+0x20/0xc0 [tidss]
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #2 (dma_fence_map){++++}-{0:0}:
-       __dma_fence_might_wait+0x5c/0xd0
-       dma_resv_lockdep+0x1a4/0x32c
-       do_one_initcall+0x84/0x2fc
-       kernel_init_freeable+0x28c/0x4c4
-       kernel_init+0x24/0x1dc
-       ret_from_fork+0x10/0x20
-
--> #1 (mmu_notifier_invalidate_range_start){+.+.}-{0:0}:
-       fs_reclaim_acquire+0x70/0xe4
-       __kmem_cache_alloc_node+0x58/0x2d4
-       kmalloc_trace+0x38/0x78
-       __kthread_create_worker+0x3c/0x150
-       kthread_create_worker+0x64/0x8c
-       workqueue_init+0x1e8/0x2f0
-       kernel_init_freeable+0x11c/0x4c4
-       kernel_init+0x24/0x1dc
-       ret_from_fork+0x10/0x20
-
--> #0 (fs_reclaim){+.+.}-{0:0}:
-       __lock_acquire+0x1370/0x20d8
-       lock_acquire+0x1e8/0x308
-       fs_reclaim_acquire+0xd0/0xe4
-       __kmem_cache_alloc_node+0x58/0x2d4
-       __kmalloc_node_track_caller+0x58/0xf0
-       kmemdup+0x34/0x60
-       regmap_bulk_write+0x64/0x2c0
-       tc358768_bridge_pre_enable+0x8c/0x12d0 [tc358768]
-       drm_atomic_bridge_call_pre_enable+0x68/0x80 [drm]
-       drm_atomic_bridge_chain_pre_enable+0x50/0x158 [drm]
-       drm_atomic_helper_commit_modeset_enables+0x164/0x264 [drm_kms_helper]
-       tidss_atomic_commit_tail+0x58/0xc0 [tidss]
-       commit_tail+0xa0/0x188 [drm_kms_helper]
-       drm_atomic_helper_commit+0x1a8/0x1c0 [drm_kms_helper]
-       drm_atomic_commit+0xa8/0xe0 [drm]
-       drm_mode_atomic_ioctl+0x9ec/0xc80 [drm]
-       drm_ioctl_kernel+0xc4/0x170 [drm]
-       drm_ioctl+0x234/0x4b0 [drm]
-       drm_compat_ioctl+0x110/0x12c [drm]
-       __arm64_compat_sys_ioctl+0x128/0x150
-       invoke_syscall+0x48/0x110
-       el0_svc_common.constprop.0+0x40/0xe0
-       do_el0_svc_compat+0x1c/0x38
-       el0_svc_compat+0x48/0xb4
-       el0t_32_sync_handler+0xb0/0x138
-       el0t_32_sync+0x194/0x198
-
-other info that might help us debug this:
-
-Chain exists of:
-  fs_reclaim --> mmu_notifier_invalidate_range_start --> dma_fence_map
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  rlock(dma_fence_map);
-                               lock(mmu_notifier_invalidate_range_start);
-                               lock(dma_fence_map);
-  lock(fs_reclaim);
-
- *** DEADLOCK ***
-
-3 locks held by kmstest/733:
- #0: ffff800082e5bba0 (crtc_ww_class_acquire){+.+.}-{0:0}, at: drm_mode_atomic_ioctl+0x118/0xc80 [drm]
- #1: ffff000004224c88 (crtc_ww_class_mutex){+.+.}-{3:3}, at: modeset_lock+0xdc/0x1a0 [drm]
- #2: ffff800081a06aa0 (dma_fence_map){++++}-{0:0}, at: tidss_atomic_commit_tail+0x20/0xc0 [tidss]
-
-stack backtrace:
-CPU: 0 PID: 733 Comm: kmstest Not tainted 6.6.0-rc2+ #1
-Hardware name: Toradex Verdin AM62 on Verdin Development Board (DT)
-Call trace:
- dump_backtrace+0x98/0x118
- show_stack+0x18/0x24
- dump_stack_lvl+0x60/0xac
- dump_stack+0x18/0x24
- print_circular_bug+0x288/0x368
- check_noncircular+0x168/0x17c
- __lock_acquire+0x1370/0x20d8
- lock_acquire+0x1e8/0x308
- fs_reclaim_acquire+0xd0/0xe4
- __kmem_cache_alloc_node+0x58/0x2d4
- __kmalloc_node_track_caller+0x58/0xf0
- kmemdup+0x34/0x60
- regmap_bulk_write+0x64/0x2c0
- tc358768_bridge_pre_enable+0x8c/0x12d0 [tc358768]
- drm_atomic_bridge_call_pre_enable+0x68/0x80 [drm]
- drm_atomic_bridge_chain_pre_enable+0x50/0x158 [drm]
- drm_atomic_helper_commit_modeset_enables+0x164/0x264 [drm_kms_helper]
- tidss_atomic_commit_tail+0x58/0xc0 [tidss]
- commit_tail+0xa0/0x188 [drm_kms_helper]
- drm_atomic_helper_commit+0x1a8/0x1c0 [drm_kms_helper]
- drm_atomic_commit+0xa8/0xe0 [drm]
- drm_mode_atomic_ioctl+0x9ec/0xc80 [drm]
- drm_ioctl_kernel+0xc4/0x170 [drm]
- drm_ioctl+0x234/0x4b0 [drm]
- drm_compat_ioctl+0x110/0x12c [drm]
- __arm64_compat_sys_ioctl+0x128/0x150
- invoke_syscall+0x48/0x110
- el0_svc_common.constprop.0+0x40/0xe0
- do_el0_svc_compat+0x1c/0x38
- el0_svc_compat+0x48/0xb4
- el0t_32_sync_handler+0xb0/0x138
- el0t_32_sync+0x194/0x198
-
-Fixes: 4d56a4f08391 ("drm/tidss: Annotate dma-fence critical section in commit path")
-Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230920-dma-fence-annotation-revert-v1-1-7ebf6f7f5bf6@ideasonboard.com
+Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tidss/tidss_kms.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/crypto/sahara.c | 33 +++++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/tidss/tidss_kms.c b/drivers/gpu/drm/tidss/tidss_kms.c
-index 666e527a0acf..cb0ab224282f 100644
---- a/drivers/gpu/drm/tidss/tidss_kms.c
-+++ b/drivers/gpu/drm/tidss/tidss_kms.c
-@@ -4,8 +4,6 @@
-  * Author: Tomi Valkeinen <tomi.valkeinen@ti.com>
-  */
+diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
+index 79708919260a..037a623271f3 100644
+--- a/drivers/crypto/sahara.c
++++ b/drivers/crypto/sahara.c
+@@ -148,6 +148,7 @@ struct sahara_ctx {
  
--#include <linux/dma-fence.h>
--
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_bridge.h>
-@@ -28,7 +26,6 @@ static void tidss_atomic_commit_tail(struct drm_atomic_state *old_state)
+ struct sahara_aes_reqctx {
+ 	unsigned long mode;
++	u8 iv_out[AES_BLOCK_SIZE];
+ 	struct skcipher_request fallback_req;	// keep at the end
+ };
+ 
+@@ -541,8 +542,24 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
+ 	return -EINVAL;
+ }
+ 
++static void sahara_aes_cbc_update_iv(struct skcipher_request *req)
++{
++	struct crypto_skcipher *skcipher = crypto_skcipher_reqtfm(req);
++	struct sahara_aes_reqctx *rctx = skcipher_request_ctx(req);
++	unsigned int ivsize = crypto_skcipher_ivsize(skcipher);
++
++	/* Update IV buffer to contain the last ciphertext block */
++	if (rctx->mode & FLAGS_ENCRYPT) {
++		sg_pcopy_to_buffer(req->dst, sg_nents(req->dst), req->iv,
++				   ivsize, req->cryptlen - ivsize);
++	} else {
++		memcpy(req->iv, rctx->iv_out, ivsize);
++	}
++}
++
+ static int sahara_aes_process(struct skcipher_request *req)
  {
- 	struct drm_device *ddev = old_state->dev;
- 	struct tidss_device *tidss = to_tidss(ddev);
--	bool fence_cookie = dma_fence_begin_signalling();
++	struct crypto_skcipher *skcipher = crypto_skcipher_reqtfm(req);
+ 	struct sahara_dev *dev = dev_ptr;
+ 	struct sahara_ctx *ctx;
+ 	struct sahara_aes_reqctx *rctx;
+@@ -564,8 +581,17 @@ static int sahara_aes_process(struct skcipher_request *req)
+ 	rctx->mode &= FLAGS_MODE_MASK;
+ 	dev->flags = (dev->flags & ~FLAGS_MODE_MASK) | rctx->mode;
  
- 	dev_dbg(ddev->dev, "%s\n", __func__);
+-	if ((dev->flags & FLAGS_CBC) && req->iv)
+-		memcpy(dev->iv_base, req->iv, AES_KEYSIZE_128);
++	if ((dev->flags & FLAGS_CBC) && req->iv) {
++		unsigned int ivsize = crypto_skcipher_ivsize(skcipher);
++
++		memcpy(dev->iv_base, req->iv, ivsize);
++
++		if (!(dev->flags & FLAGS_ENCRYPT)) {
++			sg_pcopy_to_buffer(req->src, sg_nents(req->src),
++					   rctx->iv_out, ivsize,
++					   req->cryptlen - ivsize);
++		}
++	}
  
-@@ -39,7 +36,6 @@ static void tidss_atomic_commit_tail(struct drm_atomic_state *old_state)
- 	drm_atomic_helper_commit_modeset_enables(ddev, old_state);
+ 	/* assign new context to device */
+ 	dev->ctx = ctx;
+@@ -588,6 +614,9 @@ static int sahara_aes_process(struct skcipher_request *req)
+ 	dma_unmap_sg(dev->device, dev->in_sg, dev->nb_in_sg,
+ 		DMA_TO_DEVICE);
  
- 	drm_atomic_helper_commit_hw_done(old_state);
--	dma_fence_end_signalling(fence_cookie);
- 	drm_atomic_helper_wait_for_flip_done(ddev, old_state);
++	if ((dev->flags & FLAGS_CBC) && req->iv)
++		sahara_aes_cbc_update_iv(req);
++
+ 	return 0;
+ }
  
- 	drm_atomic_helper_cleanup_planes(ddev, old_state);
 -- 
 2.43.0
 
