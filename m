@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD675FDB4;
-	Tue, 23 Jan 2024 01:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D114F8B0;
+	Tue, 23 Jan 2024 01:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974642; cv=none; b=mISXch/udi1zFPxFb9CGiXuA5aRvJWZdg3WSY8xfgOvwqaHK7BmJofRHGaiClQitkPhOmZ/gotay06zDA4cdxHu6ZhWnhG+tjy74dEWovO2lDaYTkJB8r6VdUpmGGEhJdRFJcSBFq/B8cMbwjugCthdwuf2423cGIFjPDLIeSyY=
+	t=1705974644; cv=none; b=F9krwv+X7PCbPjG0ZhKosUjTnF7Fx3QdLtc3ziOr0hNjs6NBWvmmcmdheType8JOm9JM1ZrwP+oIznoSllhySFvuJ8bTAddZslpqGi4wr7m8Rm/MaSLvY9RggxX89b1Z2HxoD+vbKWt3vE84BLoA6eJOtrdHRRdZ2K4mPUN/+0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974642; c=relaxed/simple;
-	bh=kV8NaC1iUrXG1DQiGUY43zHHpgWdCoYpXK3hpj+gJ3c=;
+	s=arc-20240116; t=1705974644; c=relaxed/simple;
+	bh=vTmtdlu8d+vyVWoxsY2W0FVSwwtBuEZxzpVslbcU3fQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CBfINwYB1pn+krlIuLyk0nQnece6M6O5qFjLUsvUJZxZJP+WZTNX5NuCOOcl1bbLM9l8SwkIDMshbRo90YBR8qMWXuB6OtN0eCtIpDW4Qmt+sbpfBmMjjSigBfxGlG9OjKsTyK1ynq+GcZslTL1WChd7xCiEKjZ3PyBRK6e6J2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QcsS0gnu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I3nEd45/rSehZiGQFkAsxHozjpbWwiMTfGliJo/WeNG3HD8RL+HdtDsMvcZUalyJ/nZ6re9kUp8T/2uX+feu5uwSoLa4OMwMPBXVvrxjkwwZMuUYijNgaohGaerJj3G+lTHKaERnvWA80SfbUCDMQP85QyRDgSNliDoUsJNphkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeBqMtIG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QcsS0gnu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72AA9C433C7;
-	Tue, 23 Jan 2024 01:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeBqMtIG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED78C433F1;
+	Tue, 23 Jan 2024 01:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974642;
-	bh=kV8NaC1iUrXG1DQiGUY43zHHpgWdCoYpXK3hpj+gJ3c=;
+	s=korg; t=1705974644;
+	bh=vTmtdlu8d+vyVWoxsY2W0FVSwwtBuEZxzpVslbcU3fQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QcsS0gnuVGxZ2HrMAvJtvh7NOvI5BzC31kf4/8yxopd8ke6axzNMJ0KJYrzDL2BtT
-	 LbijZddJAcexyYn0bJt92bu99WxHA0jILJQrik+6x1Z3jWT0+72VtbUjIuZDJjFo6o
-	 rqiL44j8nPqZ/ENJCNHqlOSsSYptxrqcNxGYi4eY=
+	b=LeBqMtIGAyduE+xHzCCPgBCzfGak5GneBImi4yMQYyyFkNdPl7HgF+C2i5uxVoZ98
+	 eVj47oGr7B850AzefhJVIKR8v1Rfx5w4B3WAe/OVWg5yU9egD6qGL70lFyQMKGp9Vt
+	 gl1rpwznAoVcbmmF7gmWnE/C016ze80Hh7MvbOBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Scott Mayhew <smayhew@redhat.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 102/583] md: synchronize flush io with array reconfiguration
-Date: Mon, 22 Jan 2024 15:52:33 -0800
-Message-ID: <20240122235815.295828336@linuxfoundation.org>
+Subject: [PATCH 6.6 077/583] NFS: Use parents objective cred in nfs_access_login_time()
+Date: Mon, 22 Jan 2024 15:52:08 -0800
+Message-ID: <20240122235814.517096813@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,94 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Scott Mayhew <smayhew@redhat.com>
 
-[ Upstream commit fa2bbff7b0b4e211fec5e5686ef96350690597b5 ]
+[ Upstream commit a10a9233073d984b239e22358ba21825e27e2e88 ]
 
-Currently rcu is used to protect iterating rdev from submit_flushes():
+The subjective cred (task->cred) can potentially be overridden and
+subsquently freed in non-RCU context, which could lead to a panic if we
+try to use it in cred_fscmp().  Use __task_cred(), which returns the
+objective cred (task->real_cred) instead.
 
-submit_flushes			remove_and_add_spares
-				synchronize_rcu
-				pers->hot_remove_disk()
- rcu_read_lock()
- rdev_for_each_rcu
-  if (rdev->raid_disk >= 0)
-				rdev->radi_disk = -1;
-   atomic_inc(&rdev->nr_pending)
-   rcu_read_unlock()
-   bi = bio_alloc_bioset()
-   bi->bi_end_io = md_end_flush
-   bi->private = rdev
-   submit_bio
-   // issue io for removed rdev
+Fixes: 0eb43812c027 ("NFS: Clear the file access cache upon login")
+Fixes: 5e9a7b9c2ea1 ("NFS: Fix up a sparse warning")
 
-Fix this problem by grabbing 'acive_io' before iterating rdev, make sure
-that remove_and_add_spares() won't concurrent with submit_flushes().
-
-Fixes: a2826aa92e2e ("md: support barrier requests on all personalities.")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20231129020234.1586910-1-yukuai1@huaweicloud.com
+Signed-off-by: Scott Mayhew <smayhew@redhat.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ fs/nfs/dir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index b2ef6af8376a..8c40c1c3959c 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -494,6 +494,9 @@ static void md_end_flush(struct bio *bio)
- 	rdev_dec_pending(rdev, mddev);
- 
- 	if (atomic_dec_and_test(&mddev->flush_pending)) {
-+		/* The pair is percpu_ref_get() from md_flush_request() */
-+		percpu_ref_put(&mddev->active_io);
-+
- 		/* The pre-request flush has finished */
- 		queue_work(md_wq, &mddev->flush_work);
- 	}
-@@ -513,12 +516,8 @@ static void submit_flushes(struct work_struct *ws)
- 	rdev_for_each_rcu(rdev, mddev)
- 		if (rdev->raid_disk >= 0 &&
- 		    !test_bit(Faulty, &rdev->flags)) {
--			/* Take two references, one is dropped
--			 * when request finishes, one after
--			 * we reclaim rcu_read_lock
--			 */
- 			struct bio *bi;
--			atomic_inc(&rdev->nr_pending);
-+
- 			atomic_inc(&rdev->nr_pending);
- 			rcu_read_unlock();
- 			bi = bio_alloc_bioset(rdev->bdev, 0,
-@@ -529,7 +528,6 @@ static void submit_flushes(struct work_struct *ws)
- 			atomic_inc(&mddev->flush_pending);
- 			submit_bio(bi);
- 			rcu_read_lock();
--			rdev_dec_pending(rdev, mddev);
- 		}
- 	rcu_read_unlock();
- 	if (atomic_dec_and_test(&mddev->flush_pending))
-@@ -582,6 +580,18 @@ bool md_flush_request(struct mddev *mddev, struct bio *bio)
- 	/* new request after previous flush is completed */
- 	if (ktime_after(req_start, mddev->prev_flush_start)) {
- 		WARN_ON(mddev->flush_bio);
-+		/*
-+		 * Grab a reference to make sure mddev_suspend() will wait for
-+		 * this flush to be done.
-+		 *
-+		 * md_flush_reqeust() is called under md_handle_request() and
-+		 * 'active_io' is already grabbed, hence percpu_ref_is_zero()
-+		 * won't pass, percpu_ref_tryget_live() can't be used because
-+		 * percpu_ref_kill() can be called by mddev_suspend()
-+		 * concurrently.
-+		 */
-+		WARN_ON(percpu_ref_is_zero(&mddev->active_io));
-+		percpu_ref_get(&mddev->active_io);
- 		mddev->flush_bio = bio;
- 		bio = NULL;
- 	}
+diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
+index e6a51fd94fea..9fc5061d51b2 100644
+--- a/fs/nfs/dir.c
++++ b/fs/nfs/dir.c
+@@ -2968,7 +2968,7 @@ static u64 nfs_access_login_time(const struct task_struct *task,
+ 	rcu_read_lock();
+ 	for (;;) {
+ 		parent = rcu_dereference(task->real_parent);
+-		pcred = rcu_dereference(parent->cred);
++		pcred = __task_cred(parent);
+ 		if (parent == task || cred_fscmp(pcred, cred) != 0)
+ 			break;
+ 		task = parent;
 -- 
 2.43.0
 
