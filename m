@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680DB33097;
-	Tue, 23 Jan 2024 00:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC8F33097;
+	Tue, 23 Jan 2024 00:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969654; cv=none; b=TljnXBjZd7WY/wq4mp+PPi5AfFnSdagOxfoq6hU4Pi5nKiacKlLdBuuqBIzVmN5cKhc7ed2Pl+7686RwCwGsphMVcsSJ74vTruRMKqjnZHD4FdMTMG0/ngZnozmyddmOlxXvgeAyLpiYxJdNAWkPFoId1VNahRytgGSp3CzR+IM=
+	t=1705969656; cv=none; b=bwVMV7SDarPkgRMOnqa/Kz2dAREYx375+f66Wx6ad1rp2STQqRLubaZMM24tUSEPoibytTeol/ewpVpZEN+GVvKKM5ShBaKPkL4qRngy+D5JiVVMVRUG4zxViYLlVxVTtyYgIAJ0TeH52sMr+nUMmKeKuJPF3mN8f9iQss3fT14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969654; c=relaxed/simple;
-	bh=cAGzozd6N2ik3uyuhJcqUL9KMJZckAOCuHQgclyo3AU=;
+	s=arc-20240116; t=1705969656; c=relaxed/simple;
+	bh=g8wZzSA+8kCGnNtCfKutOGnhHwK+5yaxU6cJguthez0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6Mys5Ufl/zEqi5twqFGdF1F4VEyHFV5wnarYwgMp3uNyfXzPrDy5ImDXhUdF50vjSQajMj4Wzb+fLXUl7mmPok/R0norwgxO5/83/egJyY0ZAgSNScp0umU6mNM4Laa/b5vhurJcwT5X5Z3rVghtAAUfIOgclsibjVyLnU5RsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bfIrZzXp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DajZKZ2bRxSzrKV+2AJ4JSTk3ZviAydpNmaP7i7La2s3YURbSIzCPzz3WTFWjY6wnIEL14q74amEfKgZ4m0gyi4u2a2dcqRTaphex9Fizm7jcNkrHTIWHi9Pl1gzFYaizvkGjtRqRQbENYywBfriu9Dt/U0wDGDrHGCSRz9wc3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=beHT0KzE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bfIrZzXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080CCC433C7;
-	Tue, 23 Jan 2024 00:27:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="beHT0KzE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82C7C433F1;
+	Tue, 23 Jan 2024 00:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969654;
-	bh=cAGzozd6N2ik3uyuhJcqUL9KMJZckAOCuHQgclyo3AU=;
+	s=korg; t=1705969655;
+	bh=g8wZzSA+8kCGnNtCfKutOGnhHwK+5yaxU6cJguthez0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bfIrZzXp38RJevvzmBvr1uMrl7S3DUFUaqx1Vz72BoZhmMlhOr8reI/Ze6nzPu4Ww
-	 YUKfR9FCOJRuvK8Ie1aIxoJNZfZpu8GFa+A2Mp8xtyOLMp/DNMazc5CnvEDbE1kpx6
-	 +NqaFM7vNYh2AXFK4/fsfXthDt+vbaSgy8QwuUT8=
+	b=beHT0KzE/kN/tAwOM0CQHk4Cgs1Pg4+psm0kqK8137EWQLOsFXJjYW6+pGwCwHf+H
+	 jTRKbV7wLfSvgtOoxzKZ4x3XQBD+isr0VGH8JjUhAEm0FL+GhYgVw/0YnjV+m8+MQT
+	 2+FOfAYGiWNY71UsS4sU7Q/k3wEd3qDRB4QRP8sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Juergen Gross <jgross@suse.com>,
-	Paul Durrant <paul@xen.org>
-Subject: [PATCH 6.7 386/641] xen-netback: dont produce zero-size SKB frags
-Date: Mon, 22 Jan 2024 15:54:50 -0800
-Message-ID: <20240122235830.035125369@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 369/641] drm/amd/display: avoid stringop-overflow warnings for dp_decide_lane_settings()
+Date: Mon, 22 Jan 2024 15:54:33 -0800
+Message-ID: <20240122235829.497882288@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,106 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit c7ec4f2d684e17d69bbdd7c4324db0ef5daac26a upstream.
+[ Upstream commit c966dc0e9d96dc44423c404a2628236f1200c24e ]
 
-While frontends may submit zero-size requests (wasting a precious slot),
-core networking code as of at least 3ece782693c4b ("sock: skb_copy_ubufs
-support for compound pages") can't deal with SKBs when they have all
-zero-size fragments. Respond to empty requests right when populating
-fragments; all further processing is fragment based and hence won't
-encounter these empty requests anymore.
+gcc prints a warning about a possible array overflow for a couple of
+callers of dp_decide_lane_settings() after commit 1b56c90018f0 ("Makefile:
+Enable -Wstringop-overflow globally"):
 
-In a way this should have been that way from the beginning: When no data
-is to be transferred for a particular request, there's not even a point
-in validating the respective grant ref. That's no different from e.g.
-passing NULL into memcpy() when at the same time the size is 0.
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c: In function 'dp_perform_fixed_vs_pe_training_sequence_legacy':
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c:426:25: error: 'dp_decide_lane_settings' accessing 4 bytes in a region of size 1 [-Werror=stringop-overflow=]
+  426 |                         dp_decide_lane_settings(lt_settings, dpcd_lane_adjust,
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  427 |                                         lt_settings->hw_lane_settings, lt_settings->dpcd_lane_settings);
+      |                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c:426:25: note: referencing argument 4 of type 'union dpcd_training_lane[4]'
 
-This is XSA-448 / CVE-2023-46838.
+I'm not entirely sure what caused this, but changing the prototype to expect
+a pointer instead of an array avoids the warnings.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Paul Durrant <paul@xen.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7727e7b60f82 ("drm/amd/display: Improve robustness of FIXED_VS link training at DP1 rates")
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/xen-netback/netback.c |   44 ++++++++++++++++++++++++++++++++------
- 1 file changed, 38 insertions(+), 6 deletions(-)
+ .../gpu/drm/amd/display/dc/link/protocols/link_dp_training.c    | 2 +-
+ .../gpu/drm/amd/display/dc/link/protocols/link_dp_training.h    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/xen-netback/netback.c
-+++ b/drivers/net/xen-netback/netback.c
-@@ -463,12 +463,25 @@ static void xenvif_get_requests(struct x
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+index 90339c2dfd84..5a0b04518956 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+@@ -807,7 +807,7 @@ void dp_decide_lane_settings(
+ 		const struct link_training_settings *lt_settings,
+ 		const union lane_adjust ln_adjust[LANE_COUNT_DP_MAX],
+ 		struct dc_lane_settings hw_lane_settings[LANE_COUNT_DP_MAX],
+-		union dpcd_training_lane dpcd_lane_settings[LANE_COUNT_DP_MAX])
++		union dpcd_training_lane *dpcd_lane_settings)
+ {
+ 	uint32_t lane;
  
- 	for (shinfo->nr_frags = 0; nr_slots > 0 && shinfo->nr_frags < MAX_SKB_FRAGS;
--	     shinfo->nr_frags++, gop++, nr_slots--) {
-+	     nr_slots--) {
-+		if (unlikely(!txp->size)) {
-+			unsigned long flags;
-+
-+			spin_lock_irqsave(&queue->response_lock, flags);
-+			make_tx_response(queue, txp, 0, XEN_NETIF_RSP_OKAY);
-+			push_tx_responses(queue);
-+			spin_unlock_irqrestore(&queue->response_lock, flags);
-+			++txp;
-+			continue;
-+		}
-+
- 		index = pending_index(queue->pending_cons++);
- 		pending_idx = queue->pending_ring[index];
- 		xenvif_tx_create_map_op(queue, pending_idx, txp,
- 				        txp == first ? extra_count : 0, gop);
- 		frag_set_pending_idx(&frags[shinfo->nr_frags], pending_idx);
-+		++shinfo->nr_frags;
-+		++gop;
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.h b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.h
+index 7d027bac8255..851bd17317a0 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.h
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.h
+@@ -111,7 +111,7 @@ void dp_decide_lane_settings(
+ 	const struct link_training_settings *lt_settings,
+ 	const union lane_adjust ln_adjust[LANE_COUNT_DP_MAX],
+ 	struct dc_lane_settings hw_lane_settings[LANE_COUNT_DP_MAX],
+-	union dpcd_training_lane dpcd_lane_settings[LANE_COUNT_DP_MAX]);
++	union dpcd_training_lane *dpcd_lane_settings);
  
- 		if (txp == first)
- 			txp = txfrags;
-@@ -481,20 +494,39 @@ static void xenvif_get_requests(struct x
- 		shinfo = skb_shinfo(nskb);
- 		frags = shinfo->frags;
- 
--		for (shinfo->nr_frags = 0; shinfo->nr_frags < nr_slots;
--		     shinfo->nr_frags++, txp++, gop++) {
-+		for (shinfo->nr_frags = 0; shinfo->nr_frags < nr_slots; ++txp) {
-+			if (unlikely(!txp->size)) {
-+				unsigned long flags;
-+
-+				spin_lock_irqsave(&queue->response_lock, flags);
-+				make_tx_response(queue, txp, 0,
-+						 XEN_NETIF_RSP_OKAY);
-+				push_tx_responses(queue);
-+				spin_unlock_irqrestore(&queue->response_lock,
-+						       flags);
-+				continue;
-+			}
-+
- 			index = pending_index(queue->pending_cons++);
- 			pending_idx = queue->pending_ring[index];
- 			xenvif_tx_create_map_op(queue, pending_idx, txp, 0,
- 						gop);
- 			frag_set_pending_idx(&frags[shinfo->nr_frags],
- 					     pending_idx);
-+			++shinfo->nr_frags;
-+			++gop;
- 		}
- 
--		skb_shinfo(skb)->frag_list = nskb;
--	} else if (nskb) {
-+		if (shinfo->nr_frags) {
-+			skb_shinfo(skb)->frag_list = nskb;
-+			nskb = NULL;
-+		}
-+	}
-+
-+	if (nskb) {
- 		/* A frag_list skb was allocated but it is no longer needed
--		 * because enough slots were converted to copy ops above.
-+		 * because enough slots were converted to copy ops above or some
-+		 * were empty.
- 		 */
- 		kfree_skb(nskb);
- 	}
+ enum dc_dp_training_pattern decide_cr_training_pattern(
+ 		const struct dc_link_settings *link_settings);
+-- 
+2.43.0
+
 
 
