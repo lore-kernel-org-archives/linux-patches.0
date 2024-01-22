@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF7312FF73;
-	Tue, 23 Jan 2024 01:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C04F131730;
+	Tue, 23 Jan 2024 01:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971819; cv=none; b=Gi9hMHTGhL4pzJfflJAPHad6ipwCAY7xpkMIGk7RvfjzKjUdtJSKGVxZVGjAVCMb36tTXGLDhtQ5XsLJgSgXYBI9Mk1MAE1IaoKa5GnUoMq/aCXBCWuuTK1xq5Lm0kgMocJtjffDmLWo3MSGY/zlf6dfboZw+IMtqn5mX0TulWQ=
+	t=1705971823; cv=none; b=em1UvQfKb3rffA2N0/Sftg1vuyyV3Desm3zBH47zzFgQox7Nw2VVaHPb+Hww5yGTas4V3mEkuG5NLdMZ0RU2kK03/wTHIQST7pTQSFVOlEucpDUbUgjO4pqySDuKWL5xiqKErFCx9PrA89mgMmNVdphpqMR6fFvXL8VZx2BUiuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971819; c=relaxed/simple;
-	bh=VrvLtvi34/In1AFG0heVUT3dH8ETtflgMzRrxKyg/iA=;
+	s=arc-20240116; t=1705971823; c=relaxed/simple;
+	bh=oEfdycPZvSztFcLlsaI9BoC5RMDEMuGsEkt47ImGdQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nBmSFxvLHpQT4NvIN/ozZWRbW4Dklu0EIdRjbp9C6EmbzPoW5W5QSTnaDN8oCWWeHg1057VLn9/XIXGCm/wbfEeC5qZfichFr5ByO6Y9QfGVROuO8dPVywsznMkdzWUZ9uOVxY7EJVhHUOue9x2I9wSjNAQ5iUSJAJqNSq6j48c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eES1u/nI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PJDA0/DxePtPm2DJe7mD+m2N19z+lNEHknDvzIj/iNGwrhwUmwAbiFGtAZ54B+t66t/xWo2sSozjX6Ftmf944t0vjsNZQDodsI2GCNPChO05PB2CC32O1b50wxN6QNc8c/toRbnl5IhjEMcFLHyCSf3JjtetW16AmxNFizPa9g0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kJLei1W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eES1u/nI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1A6C433F1;
-	Tue, 23 Jan 2024 01:03:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kJLei1W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C42BC433B1;
+	Tue, 23 Jan 2024 01:03:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971819;
-	bh=VrvLtvi34/In1AFG0heVUT3dH8ETtflgMzRrxKyg/iA=;
+	s=korg; t=1705971823;
+	bh=oEfdycPZvSztFcLlsaI9BoC5RMDEMuGsEkt47ImGdQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eES1u/nIV8V3cQ9le2LIdKcTxahOyAwviUzPZL2/wq8gmfbDqUR9Gjj2hiJ2GSs6p
-	 MgTimpsVFJ8B7v9kll2eufigR3tgz3W6TrTSmsskYEIK62wYTunYq8UONSsSR9fT/f
-	 8wieSrVGzzkm0OAyV+ERWm3+d+rK7VbrKa8X2KPo=
+	b=0kJLei1WZDGXMvFpgnFIBXSlMyNAa3U1fXhnn8JlgesCo/6J5KI81ZcwaUAADc1Cg
+	 5YGBnL9ujLZloIwT0KK3flI7Safxei6rE6Gn4PiniSJ+rh9wcpiPGNOrbz0ZGEIpa1
+	 pL5mwxG28NutkV8yE+LXU193qCSMsm1kDhtnoRwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Serge Semin <fancer.lancer@gmail.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 328/417] mips: Fix incorrect max_low_pfn adjustment
-Date: Mon, 22 Jan 2024 15:58:16 -0800
-Message-ID: <20240122235803.159487302@linuxfoundation.org>
+Subject: [PATCH 5.10 239/286] mips: Fix incorrect max_low_pfn adjustment
+Date: Mon, 22 Jan 2024 15:59:05 -0800
+Message-ID: <20240122235741.265438906@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,7 +47,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -106,10 +106,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/mips/kernel/setup.c b/arch/mips/kernel/setup.c
-index 7c540572f1f7..e46e7ec76b4f 100644
+index b7eb7dd96e17..66643cb65963 100644
 --- a/arch/mips/kernel/setup.c
 +++ b/arch/mips/kernel/setup.c
-@@ -326,11 +326,11 @@ static void __init bootmem_init(void)
+@@ -322,11 +322,11 @@ static void __init bootmem_init(void)
  		panic("Incorrect memory mapping !!!");
  
  	if (max_pfn > PFN_DOWN(HIGHMEM_START)) {
