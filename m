@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3B51657C7;
-	Tue, 23 Jan 2024 00:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD8064AAF;
+	Tue, 23 Jan 2024 00:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970774; cv=none; b=QsbUSJUS0Lwnky9raiPNCkkYdu/T+pQEOyL/9V+jAfPJanuL4b1dJZCLAV9Bjw39EmWxyhzA/L/mZ7HG5A0jHQ7Ys298KNYE3ME0tzJTRSgCVGURwZf/htEDI+032z5ozWbg9uA3nNgOxTUICCPXCWAstaEM7GqZX1MZWT8XYb0=
+	t=1705970776; cv=none; b=atLWmCL71KoOsGlMQPzxOz0ai0kHqzsf7FegZoBd2wQkTdHSGDBnNE1R+j7GoOOFJt8Pme6+LptBvZU/L0vUv6JfNQBXEPizDKTpXhxD3trFgtP+qAF+hXp3C32G8ZNzopB08x5DaRnHVlJyC7PVK6RLKHuqC13HuE8EakXdHVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970774; c=relaxed/simple;
-	bh=q0DrzLrSjByjmjnvJ/qogv7HdnU1IF2sWNM+yp0IvIQ=;
+	s=arc-20240116; t=1705970776; c=relaxed/simple;
+	bh=l0Iv1A+ILgwhQTqecSE1ZZIHUo17wWfM+dFLglCU0u8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sm5bZJMAUCAlJdD9E/CyB04Spz6SLWtEpr0vUorjQJEIbYl7VeWgHvy1bh41q6W/+/BNy/RQvuxMrU6VMjyuqtLwPe8WwpxM/41ldMAjBCa+lmeRTzHSmVhhRQ9ANBW6YEIMc/5/o4YgfkT3xioPKOxGbolYzxA2iHQxFJiuhiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9dAJ+xE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RiEOWsXwZiiWqSJcqgp/e29oeF7NqrAcN6RfyFDgxzDj2flSUYBsVbg0YTx9TehxmAIf2zvgU12xvRd3QU7gHPk5yIcOViphS/iEi7DS6PSvzj7Neue8ftbR0C1mgiGETdX2G83Cxf/g8tOpCe8sVC5cN4kHb9YeKWZQQ4nuRIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7T4kMlU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9dAJ+xE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75DFC433C7;
-	Tue, 23 Jan 2024 00:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7T4kMlU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16429C433F1;
+	Tue, 23 Jan 2024 00:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970774;
-	bh=q0DrzLrSjByjmjnvJ/qogv7HdnU1IF2sWNM+yp0IvIQ=;
+	s=korg; t=1705970776;
+	bh=l0Iv1A+ILgwhQTqecSE1ZZIHUo17wWfM+dFLglCU0u8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i9dAJ+xEmx/5DoToa+8Re8zCM+0jkrGh9HRqaJU2NiIFsf0RU/tOC19KRHKGXN8UK
-	 tyrQczfoP5TXlNgg6oEFqdyuzyH1OYcuIR1cLMuSejR+BJwT1udq76/e38HAfPppwX
-	 lmgiCTVcfNQYx3CbI7V5dnrewWhXof7/97qgBI+M=
+	b=f7T4kMlUiKFyyAGKJbw/Z+2mylIgb/y0T+7jgd8wMlMdZAJsL2gMkJfuZ7MNF1X8I
+	 VAWti5cF5nOvsp9wlygWle1yWSQer3hADcYTqdaxev8Wzo2VgyLY2jw9f81DKDoayP
+	 fGE9NyuwIH/rC//fvj1zzCPx9AjkBs/DTL8Kawpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuming Fan <shumingf@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hao Sun <sunhao.th@gmail.com>,
+	Andrei Matei <andreimatei1@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 014/286] ASoC: rt5650: add mutex to avoid the jack detection failure
-Date: Mon, 22 Jan 2024 15:55:20 -0800
-Message-ID: <20240122235732.573121185@linuxfoundation.org>
+Subject: [PATCH 6.1 107/417] bpf: Fix verification of indirect var-off stack access
+Date: Mon, 22 Jan 2024 15:54:35 -0800
+Message-ID: <20240122235755.429341809@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,81 +49,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Andrei Matei <andreimatei1@gmail.com>
 
-[ Upstream commit cdba4301adda7c60a2064bf808e48fccd352aaa9 ]
+[ Upstream commit a833a17aeac73b33f79433d7cee68d5cafd71e4f ]
 
-This patch adds the jd_mutex to protect the jack detection control flow.
-And only the headset type could check the button status.
+This patch fixes a bug around the verification of possibly-zero-sized
+stack accesses. When the access was done through a var-offset stack
+pointer, check_stack_access_within_bounds was incorrectly computing the
+maximum-offset of a zero-sized read to be the same as the register's min
+offset. Instead, we have to take in account the register's maximum
+possible value. The patch also simplifies how the max offset is checked;
+the check is now simpler than for min offset.
 
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Link: https://lore.kernel.org/r/20231122100123.2831753-1-shumingf@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The bug was allowing accesses to erroneously pass the
+check_stack_access_within_bounds() checks, only to later crash in
+check_stack_range_initialized() when all the possibly-affected stack
+slots are iterated (this time with a correct max offset).
+check_stack_range_initialized() is relying on
+check_stack_access_within_bounds() for its accesses to the
+stack-tracking vector to be within bounds; in the case of zero-sized
+accesses, we were essentially only verifying that the lowest possible
+slot was within bounds. We would crash when the max-offset of the stack
+pointer was >= 0 (which shouldn't pass verification, and hopefully is
+not something anyone's code attempts to do in practice).
+
+Thanks Hao for reporting!
+
+Fixes: 01f810ace9ed3 ("bpf: Allow variable-offset stack access")
+Reported-by: Hao Sun <sunhao.th@gmail.com>
+Signed-off-by: Andrei Matei <andreimatei1@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20231207041150.229139-2-andreimatei1@gmail.com
+
+Closes: https://lore.kernel.org/bpf/CACkBjsZGEUaRCHsmaX=h-efVogsRfK1FPxmkgb0Os_frnHiNdw@mail.gmail.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5645.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
-index 99d91bfb8812..7dc80183921e 100644
---- a/sound/soc/codecs/rt5645.c
-+++ b/sound/soc/codecs/rt5645.c
-@@ -421,6 +421,7 @@ struct rt5645_priv {
- 	struct regulator_bulk_data supplies[ARRAY_SIZE(rt5645_supply_names)];
- 	struct rt5645_eq_param_s *eq_param;
- 	struct timer_list btn_check_timer;
-+	struct mutex jd_mutex;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index adadf8546270..95e7b638418e 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4950,10 +4950,7 @@ static int check_stack_access_within_bounds(
  
- 	int codec_type;
- 	int sysclk;
-@@ -3179,6 +3180,8 @@ static int rt5645_jack_detect(struct snd_soc_component *component, int jack_inse
- 				rt5645_enable_push_button_irq(component, true);
- 			}
- 		} else {
-+			if (rt5645->en_button_func)
-+				rt5645_enable_push_button_irq(component, false);
- 			snd_soc_dapm_disable_pin(dapm, "Mic Det Power");
- 			snd_soc_dapm_sync(dapm);
- 			rt5645->jack_type = SND_JACK_HEADPHONE;
-@@ -3259,6 +3262,8 @@ static void rt5645_jack_detect_work(struct work_struct *work)
- 	if (!rt5645->component)
- 		return;
- 
-+	mutex_lock(&rt5645->jd_mutex);
-+
- 	switch (rt5645->pdata.jd_mode) {
- 	case 0: /* Not using rt5645 JD */
- 		if (rt5645->gpiod_hp_det) {
-@@ -3283,7 +3288,7 @@ static void rt5645_jack_detect_work(struct work_struct *work)
- 
- 	if (!val && (rt5645->jack_type == 0)) { /* jack in */
- 		report = rt5645_jack_detect(rt5645->component, 1);
--	} else if (!val && rt5645->jack_type != 0) {
-+	} else if (!val && rt5645->jack_type == SND_JACK_HEADSET) {
- 		/* for push button and jack out */
- 		btn_type = 0;
- 		if (snd_soc_component_read(rt5645->component, RT5645_INT_IRQ_ST) & 0x4) {
-@@ -3339,6 +3344,8 @@ static void rt5645_jack_detect_work(struct work_struct *work)
- 		rt5645_jack_detect(rt5645->component, 0);
+ 	if (tnum_is_const(reg->var_off)) {
+ 		min_off = reg->var_off.value + off;
+-		if (access_size > 0)
+-			max_off = min_off + access_size - 1;
+-		else
+-			max_off = min_off;
++		max_off = min_off + access_size;
+ 	} else {
+ 		if (reg->smax_value >= BPF_MAX_VAR_OFF ||
+ 		    reg->smin_value <= -BPF_MAX_VAR_OFF) {
+@@ -4962,15 +4959,12 @@ static int check_stack_access_within_bounds(
+ 			return -EACCES;
+ 		}
+ 		min_off = reg->smin_value + off;
+-		if (access_size > 0)
+-			max_off = reg->smax_value + off + access_size - 1;
+-		else
+-			max_off = min_off;
++		max_off = reg->smax_value + off + access_size;
  	}
  
-+	mutex_unlock(&rt5645->jd_mutex);
-+
- 	snd_soc_jack_report(rt5645->hp_jack, report, SND_JACK_HEADPHONE);
- 	snd_soc_jack_report(rt5645->mic_jack, report, SND_JACK_MICROPHONE);
- 	if (rt5645->en_button_func)
-@@ -4062,6 +4069,7 @@ static int rt5645_i2c_probe(struct i2c_client *i2c,
- 	}
- 	timer_setup(&rt5645->btn_check_timer, rt5645_btn_check_callback, 0);
+ 	err = check_stack_slot_within_bounds(min_off, state, type);
+-	if (!err)
+-		err = check_stack_slot_within_bounds(max_off, state, type);
++	if (!err && max_off > 0)
++		err = -EINVAL; /* out of stack access into non-negative offsets */
  
-+	mutex_init(&rt5645->jd_mutex);
- 	INIT_DELAYED_WORK(&rt5645->jack_detect_work, rt5645_jack_detect_work);
- 	INIT_DELAYED_WORK(&rt5645->rcclock_work, rt5645_rcclock_work);
- 
+ 	if (err) {
+ 		if (tnum_is_const(reg->var_off)) {
 -- 
 2.43.0
 
