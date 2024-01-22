@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264BD1350EE;
-	Tue, 23 Jan 2024 00:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797501350F9;
+	Tue, 23 Jan 2024 00:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969354; cv=none; b=MKIkgQoUUBmbBFoBeqtuoS/JpsXiBxK2Keajbe5Bn3DT86gpsBdGn0SSyQ2zOh9lDttiYrWDcV8bRNxIExE3lNwWFOa4UbeJ4q3fKLYe0TZkxrbmxkL42cMKuhj1kYLidMNV3eF3EvLj38QnmUk1gW9KV70Fyvi5StsPdCjwEUw=
+	t=1705969355; cv=none; b=SYm2WZJiN34XguJJLtcBH2X+LjcMtfjX6jXyMsZavo/AqdluOHAj5u30am0/AZEPdpo8E3s7BA4/dbRCa3fO1JdwznNnUx2hO2ZIy/NotCiV36d+N0Ym7u2LsTTRF44q245jAgHJm3R0AwFNbS3jKtshNS6BDfaVrHfxZAXJc+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969354; c=relaxed/simple;
-	bh=ZKII2TeeI/UuhqOWPCDiSdjJlix0BaqTA7G3iymHLVw=;
+	s=arc-20240116; t=1705969355; c=relaxed/simple;
+	bh=LL85P5GR4gxVSvvi/HpofaknJwJufrRarvt2gqu73DY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qq23ZGERQkQIVrANkBhZC19FlGzj+bg2aADF2uINwr675a1FDuIUTEyg44xFH86FkLqT4HILV1EBlDbF8IPTM0E/BLns4OEdOmycRmRjThffhe0zx/soDbrqooudKeN7hqM0sg4hf4e3uRwa/SFTZuSqKutTxpxsthNwk4V+Ctw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZ93vlWW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZE/6uF+9mT9+4sQsFiFlcbIhysCL1Sy3WE2Cls/v/R2CiMLrLm1ZRFED/IfP512kXwwDUpcy/BwCo/ieCCDWHf/YcXHAWCfHwSV+gVC30GcL3KU88CUOFsXjDaMqsLI3CS+D+9MkyfBpf3qjIEhZJB3hMs13IZewvVngfc0inZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4eMIt34; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZ93vlWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C57BC43394;
-	Tue, 23 Jan 2024 00:22:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4eMIt34"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113DDC433F1;
+	Tue, 23 Jan 2024 00:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969353;
-	bh=ZKII2TeeI/UuhqOWPCDiSdjJlix0BaqTA7G3iymHLVw=;
+	s=korg; t=1705969355;
+	bh=LL85P5GR4gxVSvvi/HpofaknJwJufrRarvt2gqu73DY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IZ93vlWWOC/u23z17LASIIZ6Uga+DiLJ7DH9SzeBF/GPUIj50R7115wsqxwPYujVT
-	 eUm4lzRTyzrHVBgqfGF4sgJLivl+BXNe1AxD87crmscgyqGDbUQH6yIM5FvaRS2ang
-	 4EXMfcbQu5RnFhywZaf9VyjmPWLzZv4QnS8x6s50=
+	b=c4eMIt34Z21MjmtHCu4oC+redE/BqGhM9vMndP4w3+4T6t7ROocEdDEhLD+HaHCkn
+	 I+IuIjTuh42tVAgom0YlZuKZP2Wvn1z3iUDAWiXl2+HwpDNPiO1omiAKg7Q3mFaJ3N
+	 gN2GGXDTE1QNPZu0dBRzfJieNrr0s+RunprZA2h0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Wei Xu <xuwei5@hisilicon.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 157/641] arm64: dts: hisilicon: hikey970-pmic: fix regulator cells properties
-Date: Mon, 22 Jan 2024 15:51:01 -0800
-Message-ID: <20240122235822.941419118@linuxfoundation.org>
+Subject: [PATCH 6.7 184/641] selftests/net: fix grep checking for fib_nexthop_multiprefix
+Date: Mon, 22 Jan 2024 15:51:28 -0800
+Message-ID: <20240122235823.747838935@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,35 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 44ab3ee76a5a977864ba0bb6c352dcf6206804e0 ]
+[ Upstream commit a33e9da3470499e9ff476138f271fb52d6bfe767 ]
 
-The Hi6421 PMIC regulator child nodes do not have unit addresses so drop
-the incorrect '#address-cells' and '#size-cells' properties.
+When running fib_nexthop_multiprefix test I saw all IPv6 test failed.
+e.g.
 
-Fixes: 6219b20e1ecd ("arm64: dts: hisilicon: Add support for Hikey 970 PMIC")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Wei Xu <xuwei5@hisilicon.com>
+ ]# ./fib_nexthop_multiprefix.sh
+ TEST: IPv4: host 0 to host 1, mtu 1300                              [ OK ]
+ TEST: IPv6: host 0 to host 1, mtu 1300                              [FAIL]
+
+ With -v it shows
+
+ COMMAND: ip netns exec h0 /usr/sbin/ping6 -s 1350 -c5 -w5 2001:db8:101::1
+ PING 2001:db8:101::1(2001:db8:101::1) 1350 data bytes
+ From 2001:db8:100::64 icmp_seq=1 Packet too big: mtu=1300
+
+ --- 2001:db8:101::1 ping statistics ---
+ 1 packets transmitted, 0 received, +1 errors, 100% packet loss, time 0ms
+
+ Route get
+ 2001:db8:101::1 via 2001:db8:100::64 dev eth0 src 2001:db8:100::1 metric 1024 expires 599sec mtu 1300 pref medium
+ Searching for:
+     2001:db8:101::1 from :: via 2001:db8:100::64 dev eth0 src 2001:db8:100::1 .* mtu 1300
+
+The reason is when CONFIG_IPV6_SUBTREES is not enabled, rt6_fill_node() will
+not put RTA_SRC info. After fix:
+
+]# ./fib_nexthop_multiprefix.sh
+TEST: IPv4: host 0 to host 1, mtu 1300                              [ OK ]
+TEST: IPv6: host 0 to host 1, mtu 1300                              [ OK ]
+
+Fixes: 735ab2f65dce ("selftests: Add test with multiple prefixes using single nexthop")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20231213060856.4030084-7-liuhangbin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi | 3 ---
- 1 file changed, 3 deletions(-)
+ tools/testing/selftests/net/fib_nexthop_multiprefix.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi b/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
-index 970047f2dabd..c06e011a6c3f 100644
---- a/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
-+++ b/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
-@@ -25,9 +25,6 @@ pmic: pmic@0 {
- 			gpios = <&gpio28 0 0>;
+diff --git a/tools/testing/selftests/net/fib_nexthop_multiprefix.sh b/tools/testing/selftests/net/fib_nexthop_multiprefix.sh
+index 51df5e305855..b52d59547fc5 100755
+--- a/tools/testing/selftests/net/fib_nexthop_multiprefix.sh
++++ b/tools/testing/selftests/net/fib_nexthop_multiprefix.sh
+@@ -209,12 +209,12 @@ validate_v6_exception()
+ 		echo "Route get"
+ 		ip -netns h0 -6 ro get ${dst}
+ 		echo "Searching for:"
+-		echo "    ${dst} from :: via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
++		echo "    ${dst}.* via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
+ 		echo
+ 	fi
  
- 			regulators {
--				#address-cells = <1>;
--				#size-cells = <0>;
--
- 				ldo3: ldo3 { /* HDMI */
- 					regulator-name = "ldo3";
- 					regulator-min-microvolt = <1500000>;
+ 	ip -netns h0 -6 ro get ${dst} | \
+-	grep -q "${dst} from :: via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
++	grep -q "${dst}.* via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
+ 	rc=$?
+ 
+ 	log_test $rc 0 "IPv6: host 0 to host ${i}, mtu ${mtu}"
 -- 
 2.43.0
 
