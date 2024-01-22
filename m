@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E99133419;
-	Tue, 23 Jan 2024 01:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F597133419;
+	Tue, 23 Jan 2024 01:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971853; cv=none; b=PAl7DpELQ44SOXfuQWwCzGy4TXs6mFOhmZRfvnY861vt3hkq7nk11anfszYaVVR8sN1D8lJLx+huf7K4Cu0rBZDuCjdq2SoA+mPe/wWKjJiUN72lKtvaw5/9hnRb6sHhAqav6fJTZukgXMILibd54w63Y0iXcfzFxgnitRxmV6k=
+	t=1705971857; cv=none; b=Uu6Rlr+YrTmqkqGdlBQfWKoZcMD9AhExZ9H6m1PaIDSuO7Ne1tL/QhM31WoTlrjckq10zFdcA5RnQzgcQR6KgYMkVdIDstw5b31sYX3LmHeX/8W+oJnJSzqZ1nFgB/2oiXucWClFrDOEuxBux0C0xbQPH/Ilc3DoTcIm9UMXOQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971853; c=relaxed/simple;
-	bh=6eLs79bqc0S3ADdftTsq0hJHhYbBg/hKnWmWE1LdC1w=;
+	s=arc-20240116; t=1705971857; c=relaxed/simple;
+	bh=FhI/BsLepawv459E8nDz5k0wecIK5/mLEbAwVj/YZRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMWOStoxFEEJitwkNkZlQVIEZ3D88s0/R/FDPKlQxseJE2imls5/pFnWM0OEwVIviMwc3vkVLROkOoNyDownC1P/z46vCgXd9O45aY7L0UOEpCSGZmGOkIYbW5AEIQ8F6tLAAs7SyQa2p7BxY8edZ+hs8xT888vAuNRdnLJ6uOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrYBvlCJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l+MBXA3D8Oyd55welkMiAIoSI4bQkbt27lYh/CfL+s5LR/7Vd82QJenEyNpWB9nZ1pygUBkYW8djm1RzOYc7I3YLMxaim3n5emON9rPN4hydX72DRmp6JrxzgamB5LC+nFvpTq9r2u2OUSJ7mRXp6AYGiBqA7EsGJxXlHJTysH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PgkcIKjp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrYBvlCJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 100C1C433F1;
-	Tue, 23 Jan 2024 01:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PgkcIKjp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3704BC433C7;
+	Tue, 23 Jan 2024 01:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971853;
-	bh=6eLs79bqc0S3ADdftTsq0hJHhYbBg/hKnWmWE1LdC1w=;
+	s=korg; t=1705971857;
+	bh=FhI/BsLepawv459E8nDz5k0wecIK5/mLEbAwVj/YZRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrYBvlCJAsl1NhJAkUFe6uOORWI/dpWfEhfcXFc8Rj9N6XTCCG9RzRx1ilEtESnvq
-	 Yoba+/KK5HiHr3ATHxNfuFC3cmozxf/pV9AEjbSeDZfenBFLyB3X9mO935iZfInY1K
-	 LsD2bvllOaeFwqCqQx8chdXgHgrWAfzDGbdLxAT8=
+	b=PgkcIKjpVjl4QSrVT6MQ1zuSy5HqE7yYvh/6Hbnq8vNNFTem/j/3YGtQ66KmP/QfK
+	 cHpV3QnF2qnkAc1Di+4tmvTewl/IEShqDvxom6kd2GAFJKmf3FPX24aWQvVO9P9nZN
+	 oQFAooz9LAbdMYI5rIuW8qaOnzl1KOyk246qpG/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 244/286] libapi: Add missing linux/types.h header to get the __u64 type on io.h
-Date: Mon, 22 Jan 2024 15:59:10 -0800
-Message-ID: <20240122235741.457859217@linuxfoundation.org>
+Subject: [PATCH 6.1 334/417] MIPS: Alchemy: Fix an out-of-bound access in db1200_dev_setup()
+Date: Mon, 22 Jan 2024 15:58:22 -0800
+Message-ID: <20240122235803.355504157@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,41 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit af76b2dec0984a079d8497bfa37d29a9b55932e1 ]
+[ Upstream commit 89c4b588d11e9acf01d604de4b0c715884f59213 ]
 
-There are functions using __u64, so we need to have the linux/types.h
-header otherwise we'll break when its not included before api/io.h.
+When calling spi_register_board_info(), we should pass the number of
+elements in 'db1200_spi_devs', not 'db1200_i2c_devs'.
 
-Fixes: e95770af4c4a280f ("tools api: Add a lightweight buffered reading api")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/lkml/ZWjDPL+IzPPsuC3X@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 63323ec54a7e ("MIPS: Alchemy: Extended DB1200 board support.")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/api/io.h | 1 +
- 1 file changed, 1 insertion(+)
+ arch/mips/alchemy/devboards/db1200.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/api/io.h b/tools/lib/api/io.h
-index 777c20f6b604..458acd294237 100644
---- a/tools/lib/api/io.h
-+++ b/tools/lib/api/io.h
-@@ -9,6 +9,7 @@
+diff --git a/arch/mips/alchemy/devboards/db1200.c b/arch/mips/alchemy/devboards/db1200.c
+index f521874ebb07..67f067706af2 100644
+--- a/arch/mips/alchemy/devboards/db1200.c
++++ b/arch/mips/alchemy/devboards/db1200.c
+@@ -847,7 +847,7 @@ int __init db1200_dev_setup(void)
+ 	i2c_register_board_info(0, db1200_i2c_devs,
+ 				ARRAY_SIZE(db1200_i2c_devs));
+ 	spi_register_board_info(db1200_spi_devs,
+-				ARRAY_SIZE(db1200_i2c_devs));
++				ARRAY_SIZE(db1200_spi_devs));
  
- #include <stdlib.h>
- #include <unistd.h>
-+#include <linux/types.h>
- 
- struct io {
- 	/* File descriptor being read/ */
+ 	/* SWITCHES:	S6.8 I2C/SPI selector  (OFF=I2C	 ON=SPI)
+ 	 *		S6.7 AC97/I2S selector (OFF=AC97 ON=I2S)
 -- 
 2.43.0
 
