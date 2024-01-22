@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFC6664B7;
-	Tue, 23 Jan 2024 01:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6B8664CD;
+	Tue, 23 Jan 2024 01:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971677; cv=none; b=gbbixl3mPv5lHaRw4bFNYMT7HhPvCHAZGAk+PVrdnuXjvMNjODex0ndZSJEQCpOx8EX0PaNDryuqw9awYzNdt+oodH/63oe8EqsL7FWZMIJvLNbT5hQXrPyKEduXfmaz3qRH3G3mFQ5Y+6v5/OOERk6lbNW4YR6Ki4zW69KDvcE=
+	t=1705971679; cv=none; b=C5rfaejfG45uWNRNuqPeWI/pPwT09ahkSzrv2InSpmTo/3UZ+DELKy9XHxOXq6AJuodbocWkj/szmxSL6lLf24OBJAzKcEMdt8vKr3+nDYKAa5s58rAYyVv9KOd/zn7L/n4kh6cvmlQaJdcRigfdRl4FoiRe/OOleh7JyF/FJRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971677; c=relaxed/simple;
-	bh=Rt4VtwL5bhjvRZ13s+y4yczdHzPBcwP6+CYDOEuwsGw=;
+	s=arc-20240116; t=1705971679; c=relaxed/simple;
+	bh=9kzvvZmQsCI43NU8mah4+p81lvbNVfPG5tWPJU3z1hY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vb3qJj4O47dSBzPhYrzuej658jwRs1ucdZGbb3TPAGgR00+gxjD3qurPgfA6HWPY25iM7gv+5pDexhu87DlX7hLESJtyoE6718FBQNOgmkbF7QUXc88fFI/bvP6LgH9oRKFzeBc9VlGc8dwGNIH1HDsRlZD8UogqUNBSHO0ynUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gj+bEG9Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OXZ+/9Wa1vvFsaEgAw+iB+egVX3fAkBaVMgDsSmDQMeFtsJvgvla7i0f9txLxx8RGNJYKcIeLotSPQYY7N/fQN+k+yEQ0EZojAA+s6J/5eqj81Wam0IuD6tyXyqfyIo9hIscbyKURpV/1BZgQONB6FpXiboMKTxGuAkYlb0cWfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZbNYV9D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gj+bEG9Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F193C433F1;
-	Tue, 23 Jan 2024 01:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZbNYV9D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3889C43394;
+	Tue, 23 Jan 2024 01:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971677;
-	bh=Rt4VtwL5bhjvRZ13s+y4yczdHzPBcwP6+CYDOEuwsGw=;
+	s=korg; t=1705971679;
+	bh=9kzvvZmQsCI43NU8mah4+p81lvbNVfPG5tWPJU3z1hY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gj+bEG9YKgswcKaZhPRh8H0fPrOliwP/kSKkJf2bg25rKI9bx+4cVD/0n6PmLvTtB
-	 bwzmeXaKDUNI5K670gyGpvrgjll5zUIgXdgY2/J3xli85S2CNQzCfyguVWYHx1Bjsr
-	 9dk6C7Rbfkj3rztI3rEf1+mbKgu6ejmMGKvcpqxQ=
+	b=OZbNYV9DTcn7AcIOmCyOZHFfRFczBjVla5fJuu7pUHE/UT2W+7mv2T4RNMG8RusFJ
+	 EeZXcPuQhOsaYFocG41GBqQ7bvgkCN5wRNMPg+11mvukMjk4ZV7Fu7Yiu0FHW47ZjG
+	 QfDDARIa0mZrtH58XTjSEt9DYfWMd547J3zRQuwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Min Li <min15.li@samsung.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 295/417] block: add check that partition length needs to be aligned with block size
-Date: Mon, 22 Jan 2024 15:57:43 -0800
-Message-ID: <20240122235802.050527611@linuxfoundation.org>
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Gonglei <arei.gonglei@huawei.com>,
+	zhenwei pi <pizhenwei@bytedance.com>,
+	Jason Wang <jasowang@redhat.com>
+Subject: [PATCH 5.10 204/286] virtio-crypto: fix memory leak in virtio_crypto_alg_skcipher_close_session()
+Date: Mon, 22 Jan 2024 15:58:30 -0800
+Message-ID: <20240122235739.966085949@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,66 +49,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Min Li <min15.li@samsung.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-commit 6f64f866aa1ae6975c95d805ed51d7e9433a0016 upstream.
+commit b1d65f717cd6305a396a8738e022c6f7c65cfbe8 upstream.
 
-Before calling add partition or resize partition, there is no check
-on whether the length is aligned with the logical block size.
-If the logical block size of the disk is larger than 512 bytes,
-then the partition size maybe not the multiple of the logical block size,
-and when the last sector is read, bio_truncate() will adjust the bio size,
-resulting in an IO error if the size of the read command is smaller than
-the logical block size.If integrity data is supported, this will also
-result in a null pointer dereference when calling bio_integrity_free.
+'vc_ctrl_req' is alloced in virtio_crypto_alg_skcipher_close_session(),
+and should be freed in the invalid ctrl_status->status error handling
+case. Otherwise there is a memory leak.
 
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Min Li <min15.li@samsung.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230629142517.121241-1-min15.li@samsung.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 0756ad15b1fe ("virtio-crypto: use private buffer for control request")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Message-Id: <20221114110740.537276-1-weiyongjun@huaweicloud.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Gonglei <arei.gonglei@huawei.com>
+Acked-by: zhenwei pi<pizhenwei@bytedance.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/ioctl.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/crypto/virtio/virtio_crypto_algs.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -18,7 +18,7 @@ static int blkpg_do_ioctl(struct block_d
- {
- 	struct gendisk *disk = bdev->bd_disk;
- 	struct blkpg_partition p;
--	long long start, length;
-+	sector_t start, length;
+--- a/drivers/crypto/virtio/virtio_crypto_algs.c
++++ b/drivers/crypto/virtio/virtio_crypto_algs.c
+@@ -239,7 +239,8 @@ static int virtio_crypto_alg_skcipher_cl
+ 		pr_err("virtio_crypto: Close session failed status: %u, session_id: 0x%llx\n",
+ 			ctrl_status->status, destroy_session->session_id);
  
- 	if (disk->flags & GENHD_FL_NO_PART)
- 		return -EINVAL;
-@@ -35,14 +35,17 @@ static int blkpg_do_ioctl(struct block_d
- 	if (op == BLKPG_DEL_PARTITION)
- 		return bdev_del_partition(disk, p.pno);
+-		return -EINVAL;
++		err = -EINVAL;
++		goto out;
+ 	}
  
-+	if (p.start < 0 || p.length <= 0 || p.start + p.length < 0)
-+		return -EINVAL;
-+	/* Check that the partition is aligned to the block size */
-+	if (!IS_ALIGNED(p.start | p.length, bdev_logical_block_size(bdev)))
-+		return -EINVAL;
-+
- 	start = p.start >> SECTOR_SHIFT;
- 	length = p.length >> SECTOR_SHIFT;
- 
- 	switch (op) {
- 	case BLKPG_ADD_PARTITION:
--		/* check if partition is aligned to blocksize */
--		if (p.start & (bdev_logical_block_size(bdev) - 1))
--			return -EINVAL;
- 		return bdev_add_partition(disk, p.pno, start, length);
- 	case BLKPG_RESIZE_PARTITION:
- 		return bdev_resize_partition(disk, p.pno, start, length);
+ 	err = 0;
 
 
