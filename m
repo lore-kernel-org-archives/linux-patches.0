@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9FD50A8F;
-	Tue, 23 Jan 2024 00:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E63950A8E;
+	Tue, 23 Jan 2024 00:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970504; cv=none; b=jfuBop+sJJulnoIOxMv+Z+b2aDWcZaJAmeYJ2sp5OMW5n1nmCpjhVO8vTGeoNJyRBzWFV2gYBmUPERDqdAXBHJJTju0QtsIl7KKS5QWvQnkRkAQEYIhO0FpZATJxd5d/Udg8mofx/aTp2Bi7X/A3ahBcxkQuJrNM3G8CJ4BQF9w=
+	t=1705970508; cv=none; b=cC6bI5fbnl0112U5138NPZNns3R7CX9lvvgvMn6ftMGmwGbYajptsqVez2wc66awgiy6Fb4C7Ehq0rYEX2hEFLJslIHDTr3SZI1eMo0ESBofL/mToX/SAStSTc2RN6O6vgqPSUgtMR7HT+BgpaJ595IxidnA4xkTUj9jgbCSZN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970504; c=relaxed/simple;
-	bh=o3AU3xcroDuuuVHujeb69GDmndxu/EsQdIlnVl1bK7o=;
+	s=arc-20240116; t=1705970508; c=relaxed/simple;
+	bh=bZk/QSxnr8D5Ct4asj631uz0Yx1RTDd+aozi9VPPoQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sqqOG/mg0M5WKXHvcQ61IuSNFjb9XH3wlLBnArUj7bdLf/0xgTP6ujBy48DnjLPyCAy6S0w/VeNcNXMxIDB8km6UJcyqIgQKTCMjeeH6o0CFnOAmADVCk1G1IA2Vvp7hLN9MYqe6T/PYGX5SFDN2h2g65B+Gj/Yo57RsxIBCgh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tsh1kcE6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HqTJPSxe7t+UzrNDwjA5voIJdmJ2HrI9kqZIs1JPP66DwVyNNNkGCXVEtI4a3QM7ch9f+Mj+DJ3rAzWnUlfGUHLzCDUJ+W7DWPLZfNgMDj7+lGM1WpB9p1AuHByJo8Qs2gFM7u44OF7RcrioUikpDpGb/wpSQWZjOlL9YB/bj1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+7OiQ8/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tsh1kcE6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEAB7C433C7;
-	Tue, 23 Jan 2024 00:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+7OiQ8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F62C433C7;
+	Tue, 23 Jan 2024 00:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970504;
-	bh=o3AU3xcroDuuuVHujeb69GDmndxu/EsQdIlnVl1bK7o=;
+	s=korg; t=1705970507;
+	bh=bZk/QSxnr8D5Ct4asj631uz0Yx1RTDd+aozi9VPPoQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tsh1kcE6TYnHLGUREeuaXHV9Bt8ZGdXlEkjl57xce/8bXEun71n0nyc94dFW+mlI8
-	 aTzWFmEmz9Y4YszPVbrmksZrkhItYaMY9R7C9nzmn18mGL1T5UVHZfSPMNWllnCY2U
-	 mPin5h5/afzNAE+UxfbL9cibBpzWTznmWOkkJNzI=
+	b=V+7OiQ8/be41CNnT4PFIXLKS1Gqo/SdQgM7xZpA9ahgE6GFm0MH5pyQxNzycsoMeJ
+	 H7IVn5PbhG3MfL09cAv/cZf6SS+x+NQZTEdpS4VjLwGHIAXF3obIamq9SE097jOEq2
+	 o0Jd5IvFoHcsg0F0T022QNyBkjoqbyo3Ey+zMmus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Antoine Tenart <atenart@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/417] crypto: af_alg - Disallow multiple in-flight AIO requests
-Date: Mon, 22 Jan 2024 15:53:25 -0800
-Message-ID: <20240122235752.901321180@linuxfoundation.org>
+Subject: [PATCH 6.1 038/417] crypto: safexcel - Add error handling for dma_map_sg() calls
+Date: Mon, 22 Jan 2024 15:53:26 -0800
+Message-ID: <20240122235752.938797245@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -50,83 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 67b164a871af1d736f131fd6fe78a610909f06f3 ]
+[ Upstream commit 87e02063d07708cac5bfe9fd3a6a242898758ac8 ]
 
-Having multiple in-flight AIO requests results in unpredictable
-output because they all share the same IV.  Fix this by only allowing
-one request at a time.
+Macro dma_map_sg() may return 0 on error. This patch enables
+checks in case of the macro failure and ensures unmapping of
+previously mapped buffers with dma_unmap_sg().
 
-Fixes: 83094e5e9e49 ("crypto: af_alg - add async support to algif_aead")
-Fixes: a596999b7ddf ("crypto: algif - change algif_skcipher to be asynchronous")
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 49186a7d9e46 ("crypto: inside_secure - Avoid dma map if size is zero")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/af_alg.c         | 14 +++++++++++++-
- include/crypto/if_alg.h |  3 +++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ .../crypto/inside-secure/safexcel_cipher.c    | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/crypto/af_alg.c b/crypto/af_alg.c
-index e893c0f6c879..fef69d2a6b18 100644
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -1045,9 +1045,13 @@ EXPORT_SYMBOL_GPL(af_alg_sendpage);
- void af_alg_free_resources(struct af_alg_async_req *areq)
- {
- 	struct sock *sk = areq->sk;
-+	struct af_alg_ctx *ctx;
+diff --git a/drivers/crypto/inside-secure/safexcel_cipher.c b/drivers/crypto/inside-secure/safexcel_cipher.c
+index 32a37e3850c5..f59e32115268 100644
+--- a/drivers/crypto/inside-secure/safexcel_cipher.c
++++ b/drivers/crypto/inside-secure/safexcel_cipher.c
+@@ -742,9 +742,9 @@ static int safexcel_send_req(struct crypto_async_request *base, int ring,
+ 				max(totlen_src, totlen_dst));
+ 			return -EINVAL;
+ 		}
+-		if (sreq->nr_src > 0)
+-			dma_map_sg(priv->dev, src, sreq->nr_src,
+-				   DMA_BIDIRECTIONAL);
++		if (sreq->nr_src > 0 &&
++		    !dma_map_sg(priv->dev, src, sreq->nr_src, DMA_BIDIRECTIONAL))
++			return -EIO;
+ 	} else {
+ 		if (unlikely(totlen_src && (sreq->nr_src <= 0))) {
+ 			dev_err(priv->dev, "Source buffer not large enough (need %d bytes)!",
+@@ -752,8 +752,9 @@ static int safexcel_send_req(struct crypto_async_request *base, int ring,
+ 			return -EINVAL;
+ 		}
  
- 	af_alg_free_areq_sgls(areq);
- 	sock_kfree_s(sk, areq, areq->areqlen);
-+
-+	ctx = alg_sk(sk)->private;
-+	ctx->inflight = false;
- }
- EXPORT_SYMBOL_GPL(af_alg_free_resources);
+-		if (sreq->nr_src > 0)
+-			dma_map_sg(priv->dev, src, sreq->nr_src, DMA_TO_DEVICE);
++		if (sreq->nr_src > 0 &&
++		    !dma_map_sg(priv->dev, src, sreq->nr_src, DMA_TO_DEVICE))
++			return -EIO;
  
-@@ -1117,11 +1121,19 @@ EXPORT_SYMBOL_GPL(af_alg_poll);
- struct af_alg_async_req *af_alg_alloc_areq(struct sock *sk,
- 					   unsigned int areqlen)
- {
--	struct af_alg_async_req *areq = sock_kmalloc(sk, areqlen, GFP_KERNEL);
-+	struct af_alg_ctx *ctx = alg_sk(sk)->private;
-+	struct af_alg_async_req *areq;
-+
-+	/* Only one AIO request can be in flight. */
-+	if (ctx->inflight)
-+		return ERR_PTR(-EBUSY);
+ 		if (unlikely(totlen_dst && (sreq->nr_dst <= 0))) {
+ 			dev_err(priv->dev, "Dest buffer not large enough (need %d bytes)!",
+@@ -762,9 +763,11 @@ static int safexcel_send_req(struct crypto_async_request *base, int ring,
+ 			goto unmap;
+ 		}
  
-+	areq = sock_kmalloc(sk, areqlen, GFP_KERNEL);
- 	if (unlikely(!areq))
- 		return ERR_PTR(-ENOMEM);
+-		if (sreq->nr_dst > 0)
+-			dma_map_sg(priv->dev, dst, sreq->nr_dst,
+-				   DMA_FROM_DEVICE);
++		if (sreq->nr_dst > 0 &&
++		    !dma_map_sg(priv->dev, dst, sreq->nr_dst, DMA_FROM_DEVICE)) {
++			ret = -EIO;
++			goto unmap;
++		}
+ 	}
  
-+	ctx->inflight = true;
-+
- 	areq->areqlen = areqlen;
- 	areq->sk = sk;
- 	areq->last_rsgl = NULL;
-diff --git a/include/crypto/if_alg.h b/include/crypto/if_alg.h
-index a5db86670bdf..a406e281ae57 100644
---- a/include/crypto/if_alg.h
-+++ b/include/crypto/if_alg.h
-@@ -138,6 +138,7 @@ struct af_alg_async_req {
-  *			recvmsg is invoked.
-  * @init:		True if metadata has been sent.
-  * @len:		Length of memory allocated for this data structure.
-+ * @inflight:		Non-zero when AIO requests are in flight.
-  */
- struct af_alg_ctx {
- 	struct list_head tsgl_list;
-@@ -156,6 +157,8 @@ struct af_alg_ctx {
- 	bool init;
- 
- 	unsigned int len;
-+
-+	unsigned int inflight;
- };
- 
- int af_alg_register_type(const struct af_alg_type *type);
+ 	memcpy(ctx->base.ctxr->data, ctx->key, ctx->key_len);
 -- 
 2.43.0
 
