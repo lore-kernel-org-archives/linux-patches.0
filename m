@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992605B5D2;
-	Tue, 23 Jan 2024 01:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82BAF5B5BB;
+	Tue, 23 Jan 2024 01:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974320; cv=none; b=iOD37XP6tn0Sm9yy6+i9UoktjYqmJfoQ0o33fsMiR0eeBKLG7MuZheb/HCN2F5/Y0bWV0uZODinJlQO2R2peeuT6WsXluElPwBQyqV9WoDT0dUZy5I/BCZVJQ9dGF+vIPPaRhkBHRKiIJWNkDN5DZu7Al55IAA7rCi2U6OSnPmE=
+	t=1705974321; cv=none; b=TrdAVNi5L+3zEa7qmGXbvY2F4Jch0qRS2DfcRLGZCGE1QdcfL4A4Bg7u2FeKJUhM4bsm2k0Fc/simXcPKvc4rtDrfZ4R11fdCNy3Z/Cn4WMuMgclsRnv0KanvcyQBND7FsoVFrVVzUzUI33L9clST6sCYl3DfQxrJE1cq7b0FSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974320; c=relaxed/simple;
-	bh=SBmchOqXTqBfsYDPI8OmhvfXjmcEJPEvfueDeQ7IjiU=;
+	s=arc-20240116; t=1705974321; c=relaxed/simple;
+	bh=XF89sDIfSJ3NezYKL1fkNOxTBmwI+nwh0eI/DPBIrOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=clghkl1eOXTJ058WzDbNUyWxmzcIQWG7+L2hIrpG29seoqZIW9n4DyFZGzAmUX1WHwsBqApz3pD5FPXbsroGMD5Eo8VK5JYKduOXIhGqPRPnt9Dkr6D3aGieGJTAI7pmatBskoKuXFqCT4zQQ4EIm48lDouDVgJQdEXdN9oFhHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBveZdgZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kqqtd2Q7LKtoU0SwmDZ49WTZDCWTHMf1tz1Dwlk3EkspN5I6eabVaCwl7GQEdwtMJvatNwgCPq6Ovxs/U3nNxAlSVrAkcRlhm0j3WCrZY1/i6CWqMpdvlj1UyoAfN2bIv9XnRKtcZublymvoq02ktDKnRTTPF6ys5+TQgWjaT8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YmCMvw9O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBveZdgZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FCFC433C7;
-	Tue, 23 Jan 2024 01:45:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YmCMvw9O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C71C43390;
+	Tue, 23 Jan 2024 01:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974320;
-	bh=SBmchOqXTqBfsYDPI8OmhvfXjmcEJPEvfueDeQ7IjiU=;
+	s=korg; t=1705974321;
+	bh=XF89sDIfSJ3NezYKL1fkNOxTBmwI+nwh0eI/DPBIrOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBveZdgZaGc6z6PTKZLpbQqUFEKt9uHIMOPFJ0Lt3ujWfswj4Flm7IRwNghgma8Ad
-	 WLZYN44bZk8c4yndQRczIYGHmznkCihkMWuGYQrz+GlVE5S776FQpkBov+y4WQOGwA
-	 zQhVIR4FshduBCed2jSfXTvJBJCbI0yOaUuKIAQQ=
+	b=YmCMvw9OmDGcF1rXFPVeaHXbTcECTsaPVFFbf2NtHK8yneKISqPXKGm4NMGEaiVsp
+	 urY1d7a1R3AyxaJierpupleZSqa9UnxEwNDCSXHfqm/i0wAYOy/YpMLWkPqr37+qDe
+	 88K/RtM5F0GzPdIS7hEg5WeLNRrmff0jVNgI0haI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Tao Liu <taoliu828@163.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 045/583] crypto: sa2ul - Return crypto_aead_setkey to transfer the error
-Date: Mon, 22 Jan 2024 15:51:36 -0800
-Message-ID: <20240122235813.517695760@linuxfoundation.org>
+Subject: [PATCH 5.15 170/374] net/sched: act_ct: fix skb leak and crash on ooo frags
+Date: Mon, 22 Jan 2024 15:57:06 -0800
+Message-ID: <20240122235750.545326789@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,151 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Tao Liu <taoliu828@163.com>
 
-[ Upstream commit ce852f1308ac738e61c5b2502517deea593a1554 ]
+[ Upstream commit 3f14b377d01d8357eba032b4cabc8c1149b458b6 ]
 
-Return crypto_aead_setkey() in order to transfer the error if
-it fails.
+act_ct adds skb->users before defragmentation. If frags arrive in order,
+the last frag's reference is reset in:
 
-Fixes: d2c8ac187fc9 ("crypto: sa2ul - Add AEAD algorithm support")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+  inet_frag_reasm_prepare
+    skb_morph
+
+which is not straightforward.
+
+However when frags arrive out of order, nobody unref the last frag, and
+all frags are leaked. The situation is even worse, as initiating packet
+capture can lead to a crash[0] when skb has been cloned and shared at the
+same time.
+
+Fix the issue by removing skb_get() before defragmentation. act_ct
+returns TC_ACT_CONSUMED when defrag failed or in progress.
+
+[0]:
+[  843.804823] ------------[ cut here ]------------
+[  843.809659] kernel BUG at net/core/skbuff.c:2091!
+[  843.814516] invalid opcode: 0000 [#1] PREEMPT SMP
+[  843.819296] CPU: 7 PID: 0 Comm: swapper/7 Kdump: loaded Tainted: G S 6.7.0-rc3 #2
+[  843.824107] Hardware name: XFUSION 1288H V6/BC13MBSBD, BIOS 1.29 11/25/2022
+[  843.828953] RIP: 0010:pskb_expand_head+0x2ac/0x300
+[  843.833805] Code: 8b 70 28 48 85 f6 74 82 48 83 c6 08 bf 01 00 00 00 e8 38 bd ff ff 8b 83 c0 00 00 00 48 03 83 c8 00 00 00 e9 62 ff ff ff 0f 0b <0f> 0b e8 8d d0 ff ff e9 b3 fd ff ff 81 7c 24 14 40 01 00 00 4c 89
+[  843.843698] RSP: 0018:ffffc9000cce07c0 EFLAGS: 00010202
+[  843.848524] RAX: 0000000000000002 RBX: ffff88811a211d00 RCX: 0000000000000820
+[  843.853299] RDX: 0000000000000640 RSI: 0000000000000000 RDI: ffff88811a211d00
+[  843.857974] RBP: ffff888127d39518 R08: 00000000bee97314 R09: 0000000000000000
+[  843.862584] R10: 0000000000000000 R11: ffff8881109f0000 R12: 0000000000000880
+[  843.867147] R13: ffff888127d39580 R14: 0000000000000640 R15: ffff888170f7b900
+[  843.871680] FS:  0000000000000000(0000) GS:ffff889ffffc0000(0000) knlGS:0000000000000000
+[  843.876242] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  843.880778] CR2: 00007fa42affcfb8 CR3: 000000011433a002 CR4: 0000000000770ef0
+[  843.885336] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  843.889809] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  843.894229] PKRU: 55555554
+[  843.898539] Call Trace:
+[  843.902772]  <IRQ>
+[  843.906922]  ? __die_body+0x1e/0x60
+[  843.911032]  ? die+0x3c/0x60
+[  843.915037]  ? do_trap+0xe2/0x110
+[  843.918911]  ? pskb_expand_head+0x2ac/0x300
+[  843.922687]  ? do_error_trap+0x65/0x80
+[  843.926342]  ? pskb_expand_head+0x2ac/0x300
+[  843.929905]  ? exc_invalid_op+0x50/0x60
+[  843.933398]  ? pskb_expand_head+0x2ac/0x300
+[  843.936835]  ? asm_exc_invalid_op+0x1a/0x20
+[  843.940226]  ? pskb_expand_head+0x2ac/0x300
+[  843.943580]  inet_frag_reasm_prepare+0xd1/0x240
+[  843.946904]  ip_defrag+0x5d4/0x870
+[  843.950132]  nf_ct_handle_fragments+0xec/0x130 [nf_conntrack]
+[  843.953334]  tcf_ct_act+0x252/0xd90 [act_ct]
+[  843.956473]  ? tcf_mirred_act+0x516/0x5a0 [act_mirred]
+[  843.959657]  tcf_action_exec+0xa1/0x160
+[  843.962823]  fl_classify+0x1db/0x1f0 [cls_flower]
+[  843.966010]  ? skb_clone+0x53/0xc0
+[  843.969173]  tcf_classify+0x24d/0x420
+[  843.972333]  tc_run+0x8f/0xf0
+[  843.975465]  __netif_receive_skb_core+0x67a/0x1080
+[  843.978634]  ? dev_gro_receive+0x249/0x730
+[  843.981759]  __netif_receive_skb_list_core+0x12d/0x260
+[  843.984869]  netif_receive_skb_list_internal+0x1cb/0x2f0
+[  843.987957]  ? mlx5e_handle_rx_cqe_mpwrq_rep+0xfa/0x1a0 [mlx5_core]
+[  843.991170]  napi_complete_done+0x72/0x1a0
+[  843.994305]  mlx5e_napi_poll+0x28c/0x6d0 [mlx5_core]
+[  843.997501]  __napi_poll+0x25/0x1b0
+[  844.000627]  net_rx_action+0x256/0x330
+[  844.003705]  __do_softirq+0xb3/0x29b
+[  844.006718]  irq_exit_rcu+0x9e/0xc0
+[  844.009672]  common_interrupt+0x86/0xa0
+[  844.012537]  </IRQ>
+[  844.015285]  <TASK>
+[  844.017937]  asm_common_interrupt+0x26/0x40
+[  844.020591] RIP: 0010:acpi_safe_halt+0x1b/0x20
+[  844.023247] Code: ff 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 65 48 8b 04 25 00 18 03 00 48 8b 00 a8 08 75 0c 66 90 0f 00 2d 81 d0 44 00 fb f4 <fa> c3 0f 1f 00 89 fa ec 48 8b 05 ee 88 ed 00 a9 00 00 00 80 75 11
+[  844.028900] RSP: 0018:ffffc90000533e70 EFLAGS: 00000246
+[  844.031725] RAX: 0000000000004000 RBX: 0000000000000001 RCX: 0000000000000000
+[  844.034553] RDX: ffff889ffffc0000 RSI: ffffffff828b7f20 RDI: ffff88a090f45c64
+[  844.037368] RBP: ffff88a0901a2800 R08: ffff88a090f45c00 R09: 00000000000317c0
+[  844.040155] R10: 00ec812281150475 R11: ffff889fffff0e04 R12: ffffffff828b7fa0
+[  844.042962] R13: ffffffff828b7f20 R14: 0000000000000001 R15: 0000000000000000
+[  844.045819]  acpi_idle_enter+0x7b/0xc0
+[  844.048621]  cpuidle_enter_state+0x7f/0x430
+[  844.051451]  cpuidle_enter+0x2d/0x40
+[  844.054279]  do_idle+0x1d4/0x240
+[  844.057096]  cpu_startup_entry+0x2a/0x30
+[  844.059934]  start_secondary+0x104/0x130
+[  844.062787]  secondary_startup_64_no_verify+0x16b/0x16b
+[  844.065674]  </TASK>
+
+Fixes: b57dc7c13ea9 ("net/sched: Introduce action ct")
+Signed-off-by: Tao Liu <taoliu828@163.com>
+Link: https://lore.kernel.org/r/20231228081457.936732-1-taoliu828@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sa2ul.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/sched/act_ct.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
-index 6238d34f8db2..94eb6f6afa25 100644
---- a/drivers/crypto/sa2ul.c
-+++ b/drivers/crypto/sa2ul.c
-@@ -1869,9 +1869,8 @@ static int sa_aead_setkey(struct crypto_aead *authenc,
- 	crypto_aead_set_flags(ctx->fallback.aead,
- 			      crypto_aead_get_flags(authenc) &
- 			      CRYPTO_TFM_REQ_MASK);
--	crypto_aead_setkey(ctx->fallback.aead, key, keylen);
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index 81a2d6cbfb44..b4c42b257ae7 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -705,7 +705,6 @@ static int tcf_ct_handle_fragments(struct net *net, struct sk_buff *skb,
+ 	if (err || !frag)
+ 		return err;
  
--	return 0;
-+	return crypto_aead_setkey(ctx->fallback.aead, key, keylen);
- }
+-	skb_get(skb);
+ 	mru = tc_skb_cb(skb)->mru;
  
- static int sa_aead_setauthsize(struct crypto_aead *tfm, unsigned int authsize)
+ 	if (family == NFPROTO_IPV4) {
+@@ -987,12 +986,8 @@ static int tcf_ct_act(struct sk_buff *skb, const struct tc_action *a,
+ 	nh_ofs = skb_network_offset(skb);
+ 	skb_pull_rcsum(skb, nh_ofs);
+ 	err = tcf_ct_handle_fragments(net, skb, family, p->zone, &defrag);
+-	if (err == -EINPROGRESS) {
+-		retval = TC_ACT_STOLEN;
+-		goto out_clear;
+-	}
+ 	if (err)
+-		goto drop;
++		goto out_frag;
+ 
+ 	err = tcf_ct_skb_network_trim(skb, family);
+ 	if (err)
+@@ -1059,6 +1054,11 @@ static int tcf_ct_act(struct sk_buff *skb, const struct tc_action *a,
+ 		qdisc_skb_cb(skb)->pkt_len = skb->len;
+ 	return retval;
+ 
++out_frag:
++	if (err != -EINPROGRESS)
++		tcf_action_inc_drop_qstats(&c->common);
++	return TC_ACT_CONSUMED;
++
+ drop:
+ 	tcf_action_inc_drop_qstats(&c->common);
+ 	return TC_ACT_SHOT;
 -- 
 2.43.0
 
