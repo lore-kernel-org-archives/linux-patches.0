@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F0812C557;
-	Tue, 23 Jan 2024 00:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7774512BF3D;
+	Tue, 23 Jan 2024 00:15:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968949; cv=none; b=SVpgf9ckqoRlOtSDE2g8rOg9XRanNxL4lpdSZytzWWTKVDxKwKik+sERzQgTzcOr+aNO2QWBxm+J5cQuKlRNuO5E/EUZpvmFaJ4bqkxI1ZDuMsSbP3/fgtPe2/QvwUk+t6mz4reexKzQy8m8hkDi8f6ubtlhwppUUZa7l0bQvMA=
+	t=1705968951; cv=none; b=bgk2n1dAKybpyPUUkDjLPUzTsJNZMCgmxytLpqJ0wJENTM5PWps+OWDYO8F+0t7mL4/Sin9ceFGZZDtoD2NSD9abXs9udMgI6wzh8wJnx1lFePJVlfMcwstJP62Q1cQ5yuw0aKQHOpONuoEiSJaIxZp0cymO2h6V+Ir0IThDlmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968949; c=relaxed/simple;
-	bh=jB+5kRyWo6p2GPSNVo5MBGRD3ifqnPR90w90xMw8DTg=;
+	s=arc-20240116; t=1705968951; c=relaxed/simple;
+	bh=Ar9OAi59UwpAFbE97/N3UmW542QaaZTB3LEtxoEgank=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=chUW40LtX3MzQzvuZSUQ4EZAq6jGY9llwRUnR7iJrcKUv65XqsYfCQlRYXAEmVyEC7lxRj8PkSb/ajRC1U4zgbYtK8rSZ395IXndno1yQ5PVc2xFzE0tmNrqYqQvxXf9o8Fyp86MUjU0C+LBoPGNLyyPvJEnPzAvkxwVY5KpfAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mA4Oqh3X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BtD9m75AJKxJsIo5UGR7BbDjljRX1Gmcetf0m4lvUWAyg0UzDGr/UedrMjFn0mm/CJlh68ELfImnUOL5D8u/20t/h5ux0F953PDmOd442ZD9LFQi8OAZ0pUqt0M2AlUefNXCYhj8438nMjOY/n43LWcVu2z0WPc/cn5CYOLVOtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pE6Ib2TJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mA4Oqh3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562C4C433C7;
-	Tue, 23 Jan 2024 00:15:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pE6Ib2TJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1A5C433F1;
+	Tue, 23 Jan 2024 00:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968949;
-	bh=jB+5kRyWo6p2GPSNVo5MBGRD3ifqnPR90w90xMw8DTg=;
+	s=korg; t=1705968951;
+	bh=Ar9OAi59UwpAFbE97/N3UmW542QaaZTB3LEtxoEgank=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mA4Oqh3XgorMfpy2mkJP7TBffxejvj9m/DtoIwWBtULrMZ1UCqBj9nxj7/xrL6lfU
-	 te6OVWXYq4kE6lFa1hrf5od5jvBTtynu/1fcm5OLfIjTcLFdbDTTecBb1yPPxWlxGP
-	 fprZSJ1f+e+LXyPJ/fKaOYnJtzteXveqFOZC7U1M=
+	b=pE6Ib2TJm6uN7z/d4laLyXVxZUdbQzPP2mPKlOoQPC2S1PHYLJ6KU9IqOZPoAtVNp
+	 LlRkunrIWaKqoXq2tUWud1zTHJfOOz5LGYfkpZ2fFQ92wbWh4ha7QH8uTyNF3AOMgU
+	 xvjg3+bdey87i7+rtTixNxF9OC0xBIBKzpwp2zeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 118/194] drm/msm/mdp4: flush vblank event on disable
-Date: Mon, 22 Jan 2024 15:57:28 -0800
-Message-ID: <20240122235724.295203989@linuxfoundation.org>
+Subject: [PATCH 5.4 119/194] drm/msm/dsi: Use pm_runtime_resume_and_get to prevent refcnt leaks
+Date: Mon, 22 Jan 2024 15:57:29 -0800
+Message-ID: <20240122235724.335180031@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,51 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit c6721b3c6423d8a348ae885a0f4c85e14f9bf85c ]
+[ Upstream commit 3d07a411b4faaf2b498760ccf12888f8de529de0 ]
 
-Flush queued events when disabling the crtc. This avoids timeouts when
-we come back and wait for dependencies (like the previous frame's
-flip_done).
+This helper has been introduced to avoid programmer errors (missing
+_put calls leading to dangling refcnt) when using pm_runtime_get, use it.
 
-Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
+While at it, start checking the return value.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 5c8290284402 ("drm/msm/dsi: Split PHY drivers to separate files")
+Patchwork: https://patchwork.freedesktop.org/patch/543350/
+Link: https://lore.kernel.org/r/20230620-topic-dsiphy_rpm-v2-1-a11a751f34f0@linaro.org
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/569127/
-Link: https://lore.kernel.org/r/20231127215401.4064128-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-index f34dca5d4532..38274227f2d5 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-@@ -268,6 +268,7 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
- {
- 	struct mdp4_crtc *mdp4_crtc = to_mdp4_crtc(crtc);
- 	struct mdp4_kms *mdp4_kms = get_kms(crtc);
-+	unsigned long flags;
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+index 08a95c3a9444..1582386fe162 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+@@ -464,7 +464,9 @@ static int dsi_phy_enable_resource(struct msm_dsi_phy *phy)
+ 	struct device *dev = &phy->pdev->dev;
+ 	int ret;
  
- 	DBG("%s", mdp4_crtc->name);
+-	pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret)
++		return ret;
  
-@@ -280,6 +281,14 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
- 	mdp_irq_unregister(&mdp4_kms->base, &mdp4_crtc->err);
- 	mdp4_disable(mdp4_kms);
- 
-+	if (crtc->state->event && !crtc->state->active) {
-+		WARN_ON(mdp4_crtc->event);
-+		spin_lock_irqsave(&mdp4_kms->dev->event_lock, flags);
-+		drm_crtc_send_vblank_event(crtc, crtc->state->event);
-+		crtc->state->event = NULL;
-+		spin_unlock_irqrestore(&mdp4_kms->dev->event_lock, flags);
-+	}
-+
- 	mdp4_crtc->enabled = false;
- }
- 
+ 	ret = clk_prepare_enable(phy->ahb_clk);
+ 	if (ret) {
 -- 
 2.43.0
 
