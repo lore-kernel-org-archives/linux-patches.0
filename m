@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051B15D724;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F025E5D746;
 	Tue, 23 Jan 2024 01:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974393; cv=none; b=YjJdjFCZze8RNY+lXG0bUsunMzonDZQMajlSOWA6E6tGXxuB8PyOKtPGL15N7tu0iqPni75Jjklyunju9nkySirQp7X/bjDESZgdpw2sK/hbjX5UeGpSZxtpdZcN4Aq9mkPlXuzH7HF9q4epM0KvTslFtlWhfG+9Hg5f6nwp6jw=
+	t=1705974394; cv=none; b=YdsuYGdh7NbnXLv/9gpbKCBfga2Kai/9fdTpVdXH1nkwUSkwfNJQL/ebfdFp8YZPcwwyK6ylxkzPmTV1JRdED5vK6cbFCJRYrkM4QS9pjokAXnjWgAkq5UT23+6Wwo+hH37pNWXfge/4KDufd8toAFZKEMuECcD/WtFRJBqmMB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974393; c=relaxed/simple;
-	bh=roWcD+6M1hd2pKkMXTiVZvdN6lss9Z1Eg30+9iWeO58=;
+	s=arc-20240116; t=1705974394; c=relaxed/simple;
+	bh=YcnDSCiMX+EqDuC0hOx4dx+Jr1Ub/q3q9LLFL582jcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qM0jWsN286iF4RUwlZutyoI3iOu5KLrulWK7kfNOmBjqHTiEhXy91bd3IT9En7/iNJlQgLXooperz4MlPi97aPibe9uO0yED6yPxn+xQCj5WU6fkar21TpjuD7qqEXfrpBrYe/0TPQu613L4cE5T9pSeauVIInrWt49iItnwCDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUU9CaS0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IhQLDJGQThhBqYm2D7THtWvWuOETwm7aPkPv71BNdIVKbjpZcvR8xPbeJNqyrwQpH6wCLVvZSvcKUwXN2j9I1CUGAycanW5CC2a5gkkBYEiInDPjfQScXGfhPp6DNxTOvQ6tgHZ79UTTqPYr/NMiHXvxRWa9ILSs/5ETiPjS2SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mo/bLGXE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUU9CaS0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA403C433F1;
-	Tue, 23 Jan 2024 01:46:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mo/bLGXE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE62C43390;
+	Tue, 23 Jan 2024 01:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974392;
-	bh=roWcD+6M1hd2pKkMXTiVZvdN6lss9Z1Eg30+9iWeO58=;
+	s=korg; t=1705974393;
+	bh=YcnDSCiMX+EqDuC0hOx4dx+Jr1Ub/q3q9LLFL582jcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mUU9CaS07wVMQCrQPOiIqJU5kSg4bBLN/2aynuQaRuXDdHqOKp7cRsxlkQ72/CbLy
-	 baa2osfd5dcLjWzAeBEVl/mHGxIZn4pM6kzTF8/onn6VnsN8pKObLPhbVgJUk/qiXW
-	 8vqa8JlZJdnygwOCMFSWt6JGSMv8TY2ghqJQiTik=
+	b=Mo/bLGXER2fc+epcrLmbAQsFYB7IgTGPOv4XzmhkGkFTFLsUu9aHpb2zIoovoiREO
+	 gbqk0v6ncIqbNI/MoXjqMW6m6nZcv7tZVV+nO6cpwPRxL7jQCVjgye+72ib/sfwMso
+	 Xbv1VL0lNsNNs36weHjKyEbZ7npVglTp5Rt4w9KM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 082/583] arm64: dts: qcom: qrb4210-rb2: dont force usb peripheral mode
-Date: Mon, 22 Jan 2024 15:52:13 -0800
-Message-ID: <20240122235814.667433725@linuxfoundation.org>
+Subject: [PATCH 5.15 207/374] media: dvb-frontends: m88ds3103: Fix a memory leak in an error handling path of m88ds3103_probe()
+Date: Mon, 22 Jan 2024 15:57:43 -0800
+Message-ID: <20240122235751.820637017@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,43 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Caleb Connolly <caleb.connolly@linaro.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 27c2ca90e2f34cd3c4849af996e1a96a69e700d3 ]
+[ Upstream commit 5b2f885e2f6f482d05c23f04c8240f7b4fc5bdb5 ]
 
-The rb2 only has a single USB controller, it can be switched between a
-type-c port and an internal USB hub via a DIP switch. Until dynamic
-role switching is available it's preferable to put the USB controller
-in host mode so that the type-A ports and ethernet are available.
+If an error occurs after a successful i2c_mux_add_adapter(), then
+i2c_mux_del_adapters() should be called to free some resources, as
+already done in the remove function.
 
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Fixes: eaa53a85748d ("arm64: dts: qcom: qrb4210-rb2: Enable USB node")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20231010-caleb-rb2-host-mode-v1-1-b057d443cd62@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: e6089feca460 ("media: m88ds3103: Add support for ds3103b demod")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/dvb-frontends/m88ds3103.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index a7278a9472ed..9738c0dacd58 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -518,7 +518,6 @@ &usb {
+diff --git a/drivers/media/dvb-frontends/m88ds3103.c b/drivers/media/dvb-frontends/m88ds3103.c
+index e03fac025b51..fdf993da3001 100644
+--- a/drivers/media/dvb-frontends/m88ds3103.c
++++ b/drivers/media/dvb-frontends/m88ds3103.c
+@@ -1898,7 +1898,7 @@ static int m88ds3103_probe(struct i2c_client *client,
+ 		/* get frontend address */
+ 		ret = regmap_read(dev->regmap, 0x29, &utmp);
+ 		if (ret)
+-			goto err_kfree;
++			goto err_del_adapters;
+ 		dev->dt_addr = ((utmp & 0x80) == 0) ? 0x42 >> 1 : 0x40 >> 1;
+ 		dev_dbg(&client->dev, "dt addr is 0x%02x\n", dev->dt_addr);
  
- &usb_dwc3 {
- 	maximum-speed = "super-speed";
--	dr_mode = "peripheral";
- };
+@@ -1906,11 +1906,14 @@ static int m88ds3103_probe(struct i2c_client *client,
+ 						      dev->dt_addr);
+ 		if (IS_ERR(dev->dt_client)) {
+ 			ret = PTR_ERR(dev->dt_client);
+-			goto err_kfree;
++			goto err_del_adapters;
+ 		}
+ 	}
  
- &usb_hsphy {
+ 	return 0;
++
++err_del_adapters:
++	i2c_mux_del_adapters(dev->muxc);
+ err_kfree:
+ 	kfree(dev);
+ err:
 -- 
 2.43.0
 
