@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179DB14D450;
-	Tue, 23 Jan 2024 00:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DC514E2D3;
+	Tue, 23 Jan 2024 00:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969359; cv=none; b=lf7e+Rb20oEryAHxeL9OXjtfBqwx0tnhU9t5/WWu9FM9QTUM+5kAY3uUfa9HSaGqzV9jy4sTXASSrpUXwOmdJznlYrVseSZnjuicvwRlv9367wnAUPUS0FF83b4JB/sjZcyPZ1d8Uiiyb2Y/2d3yMuio6I0GU4BJKRlSArkcpI8=
+	t=1705969361; cv=none; b=N6JmL7gIM9q7SwPwX60ysxVzCFor+dDQHMG/1jznx6F6jSQhqlO4QPSyEkteJYbZ4tMtWZOkqpIX/n4bH8sXOkM7LS6hk69YseYZTFMtYFGFDT/VjP220YLLN9U8sX7Oz3l9UgAhVFWySt+dNEV6SOuq4Ef00Xy/cZASSTJaVoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969359; c=relaxed/simple;
-	bh=Hz6WutdHYTF7x6Xb+DFSvckWRbWgbzwTj1gWVvEBbH8=;
+	s=arc-20240116; t=1705969361; c=relaxed/simple;
+	bh=N6Vv3PxULVIU1BR+Dy+PaF72CdyH6vlm2BIVSf1lpss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qqSSC/nP01vUEaOhtdXFOL3OKC8H0Mbmt6nDmstLbMTJw274f34HPMV8Z4u7+8wjPMIH3oTctcTyXeLbAycI4afK6GYHJjkPGtWDxjvNCskC+PVhtUxQ/5Aflz3yA9MQdc8goCUcCW3WgWohMsdnBSA8ya+Gd4Ollq0e1kMC/qU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THpsdSiI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KdN9KoL4D6K+17iwdxHYFZVlzkvzNWqm4f8YrMo1uKduKLYqPWB1a+GmLdJhu03OC3/LRnASgxOcpzMBXKUUpZuY0VymB0YAxrpS0xVcGi3OdQNLMUNcLseWUb73J72XyTYuC6W3KL45BgGVyJu2l3oCyG3Py42tM0ot5cOgqx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Au76ZAyT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THpsdSiI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C5F3C43394;
-	Tue, 23 Jan 2024 00:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Au76ZAyT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D55AC433F1;
+	Tue, 23 Jan 2024 00:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969358;
-	bh=Hz6WutdHYTF7x6Xb+DFSvckWRbWgbzwTj1gWVvEBbH8=;
+	s=korg; t=1705969361;
+	bh=N6Vv3PxULVIU1BR+Dy+PaF72CdyH6vlm2BIVSf1lpss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=THpsdSiI9rvY7vb/gCMNmdUc9s9upJ5SVc9dOx3eRvpVvwNozkAHxwl9OvPkkR177
-	 kVcv+otYRQAwSA/rNiduuHlXUr9O9//i28qDVBtEAcI90pbNx4QO0TTH84bP3cQlum
-	 jcbvUmc9xZW0TBpNFTeBbnaeU8pAJBvfKFhk/q28=
+	b=Au76ZAyTmsVIf3BPoCB183isSJI4/38nmuTSlzOl2y8PnPjcJgD3TG4i4i2tz2+9C
+	 m5cK/UeydJAWE6K1Vh/YaUidzpJV0gOhImG0lTKBDDWxUQ7OH1Qa1CmXUQHEbH3Jbx
+	 cFdZBF7chI0zNLIWXcLNQdZmka8G1yl8BQXlW1YI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 194/641] arm64: dts: qcom: sm6375: Hook up MPM
-Date: Mon, 22 Jan 2024 15:51:38 -0800
-Message-ID: <20240122235824.041523329@linuxfoundation.org>
+Subject: [PATCH 6.7 195/641] arm64: dts: qcom: sm8150: make dispcc cast minimal vote on MMCX
+Date: Mon, 22 Jan 2024 15:51:39 -0800
+Message-ID: <20240122235824.068498070@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,113 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit d3246a0cf43fd24a1986163284edd2389143809d ]
+[ Upstream commit 617de4ce7b1c4b41c1316e493d4717cd2f208def ]
 
-Add a node for MPM and wire it up on consumers that use it. This also
-fixes a very bad and sad assumption I made when initially porting this
-SoC that the downstream MPM-TLMM mappings were 1-1. That apparently
-changed some time ago, so with this patch the MPM consumers will actually
-be hooked up to the correct interrupt lines.
+Add required-opps property to the display clock controller. This makes
+it cast minimal vote on the MMCX lane and prevents further 'clock stuck'
+errors when enabling the display.
 
-Fixes: 59d34ca97f91 ("arm64: dts: qcom: Add initial device tree for SM6375")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20231215-topic-mpm_dt-v1-1-c6636fc75ce3@linaro.org
+Fixes: 2ef3bb17c45c ("arm64: dts: qcom: sm8150: Add DISPCC node")
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20231215174152.315403-2-dmitry.baryshkov@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6375.dtsi | 41 +++++++++++++++++++++++-----
- 1 file changed, 34 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-index b479f3d9a3a8..e56f7ea4ebc6 100644
---- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-@@ -311,6 +311,25 @@ scm {
- 		};
- 	};
- 
-+	mpm: interrupt-controller {
-+		compatible = "qcom,mpm";
-+		qcom,rpm-msg-ram = <&apss_mpm>;
-+		interrupts = <GIC_SPI 197 IRQ_TYPE_EDGE_RISING>;
-+		mboxes = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_SMP2P>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		#power-domain-cells = <0>;
-+		interrupt-parent = <&intc>;
-+		qcom,mpm-pin-count = <96>;
-+		qcom,mpm-pin-map = <5 296>,  /* Soundwire wake_irq */
-+				   <12 422>, /* DWC3 ss_phy_irq */
-+				   <86 183>, /* MPM wake, SPMI */
-+				   <89 314>, /* TSENS0 0C */
-+				   <90 315>, /* TSENS1 0C */
-+				   <93 164>, /* DWC3 dm_hs_phy_irq */
-+				   <94 165>; /* DWC3 dp_hs_phy_irq */
-+	};
-+
- 	memory@80000000 {
- 		device_type = "memory";
- 		/* We expect the bootloader to fill in the size */
-@@ -486,6 +505,7 @@ CPU_PD7: power-domain-cpu7 {
- 
- 		CLUSTER_PD: power-domain-cpu-cluster0 {
- 			#power-domain-cells = <0>;
-+			power-domains = <&mpm>;
- 			domain-idle-states = <&CLUSTER_SLEEP_0>;
- 		};
- 	};
-@@ -808,7 +828,7 @@ tlmm: pinctrl@500000 {
- 			reg = <0 0x00500000 0 0x800000>;
- 			interrupts = <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH>;
- 			gpio-ranges = <&tlmm 0 0 157>;
--			/* TODO: Hook up MPM as wakeup-parent when it's there */
-+			wakeup-parent = <&mpm>;
- 			interrupt-controller;
- 			gpio-controller;
- 			#interrupt-cells = <2>;
-@@ -930,7 +950,7 @@ spmi_bus: spmi@1c40000 {
- 			      <0 0x01c0a000 0 0x26000>;
- 			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
- 			interrupt-names = "periph_irq";
--			interrupts = <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts-extended = <&mpm 86 IRQ_TYPE_LEVEL_HIGH>;
- 			qcom,ee = <0>;
- 			qcom,channel = <0>;
- 			#address-cells = <2>;
-@@ -962,8 +982,15 @@ tsens1: thermal-sensor@4413000 {
- 		};
- 
- 		rpm_msg_ram: sram@45f0000 {
--			compatible = "qcom,rpm-msg-ram";
-+			compatible = "qcom,rpm-msg-ram", "mmio-sram";
- 			reg = <0 0x045f0000 0 0x7000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges = <0 0x0 0x045f0000 0x7000>;
-+
-+			apss_mpm: sram@1b8 {
-+				reg = <0x1b8 0x48>;
-+			};
- 		};
- 
- 		sram@4690000 {
-@@ -1360,10 +1387,10 @@ usb_1: usb@4ef8800 {
- 					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <133333333>;
- 
--			interrupts = <GIC_SPI 302 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 93 IRQ_TYPE_EDGE_BOTH>,
--				     <GIC_SPI 94 IRQ_TYPE_EDGE_BOTH>;
-+			interrupts-extended = <&intc GIC_SPI 302 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&mpm 12 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&mpm 93 IRQ_TYPE_EDGE_BOTH>,
-+					      <&mpm 94 IRQ_TYPE_EDGE_BOTH>;
- 			interrupt-names = "hs_phy_irq",
- 					  "ss_phy_irq",
- 					  "dm_hs_phy_irq",
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index ad4fab61222b..0e1aa8675879 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -3932,6 +3932,7 @@ dispcc: clock-controller@af00000 {
+ 				      "dp_phy_pll_link_clk",
+ 				      "dp_phy_pll_vco_div_clk";
+ 			power-domains = <&rpmhpd SM8150_MMCX>;
++			required-opps = <&rpmhpd_opp_low_svs>;
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+ 			#power-domain-cells = <1>;
 -- 
 2.43.0
 
