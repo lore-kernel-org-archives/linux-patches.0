@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777DB4F207;
-	Tue, 23 Jan 2024 00:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9F94F207;
+	Tue, 23 Jan 2024 00:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970454; cv=none; b=NHmlGEfux96KunF+wGmugg15qAdCNCS2nD0pw0Rk2ZBS78zCFr1/aQrQLrhpMdoc7f5AudyhU7s3yBRjqo75sYuXrTynjTEyShO4dbvQZW2eBUeRIIMDdlTt3RUXNOJhus0Rgck2AmVZZjEkkOM5eahIAwgfEyiABRoglNeS3zY=
+	t=1705970460; cv=none; b=uvetEDjfWv5buZLKJoN4preKH4b1vQck4Pms6azoVZ2A3vt1PukjInxWj4jfwo6YSfCYiXaMVQ/t686V0n2YZhw7Wxc2hu4UDd8Bm9XHflGI8Drl0ZwvEwwr1x7uwO4TKmx27ybuhAmj5XsIbnUOgH06fvux69jA6px+2ne97Kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970454; c=relaxed/simple;
-	bh=kLXIJtlWhDVyLxh3RMdGqmKjoZAkR2bkVslwrPCh9AI=;
+	s=arc-20240116; t=1705970460; c=relaxed/simple;
+	bh=9+BTKugS12MQXoTS37yzBQJlyHLZOFqKQ328/NEoWAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pz1TGwF9h0GFNip9cYQ95FDC5rtidAYybYs5FQ4jL7OyUSjOyq+ozxAKb2vvLrhjzSmNIPR8qO7DhOzj7zygAGiVFfmpFU03C3/9rAG4Y8Fe/RNxEf/2B8jQ6UTaGNzPri1BK0g0R/diS/8p+alYV9mfePcREFqxjtr9ZSPrDDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCZDhBnj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JlrjdslTO6+CC6UQ4Dj/ouRo47VqCBCYRBYQrZCZ68ZC5bbCHWpkL8si6gxGfsgup6yvo/hLcvH7dGmxBfzu2Ire6uZ3F53NN5HdxIVTyTiilDvUOqAkwx4M6gxhf219Yk4ClLRNK0F5sM/Puv2nZgjFDorrdG6T/ajPaGozius=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gyKMolIr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCZDhBnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5CB6C433F1;
-	Tue, 23 Jan 2024 00:40:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyKMolIr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE0EC433F1;
+	Tue, 23 Jan 2024 00:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970454;
-	bh=kLXIJtlWhDVyLxh3RMdGqmKjoZAkR2bkVslwrPCh9AI=;
+	s=korg; t=1705970460;
+	bh=9+BTKugS12MQXoTS37yzBQJlyHLZOFqKQ328/NEoWAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xCZDhBnja0H3H6UY1ouVFURlX8zdG9F+Ob4+5l7bWG2i8LavrggVif2K5rwj2qE4M
-	 0pkCmVFrsMYEuLy40c4qdbBrLPkdsItl60KHY++wd2v9JPQFi7tGUjCBGjNgTgR6sX
-	 Vg3LzDAOqlylpVtIty0loXTCv/Z28nwj4kV13YrA=
+	b=gyKMolIrOoqBcO6ozMJhhuOMlZ9LZ9yJZO0CRvzFwu7Mp6o461I8GG65Pzkl3QC6r
+	 vRPi09VdOYYsBgqekP6tFPJB5lXVUgQq3AqW06MPUmzv9YQQpXLT0PuqP1LfqhDX7l
+	 O6ooKZUkofS8p+Bv/dvV1PRANouTtHnjdxjYnkZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/417] EDAC/thunderx: Fix possible out-of-bounds string access
-Date: Mon, 22 Jan 2024 15:52:51 -0800
-Message-ID: <20240122235751.607478518@linuxfoundation.org>
+Subject: [PATCH 6.1 004/417] powerpc: remove checks for binutils older than 2.25
+Date: Mon, 22 Jan 2024 15:52:52 -0800
+Message-ID: <20240122235751.635715305@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -52,89 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 475c58e1a471e9b873e3e39958c64a2d278275c8 ]
+[ Upstream commit 54a11654de163994e32b24e3aa90ef81f4a3184d ]
 
-Enabling -Wstringop-overflow globally exposes a warning for a common bug
-in the usage of strncat():
+Commit e4412739472b ("Documentation: raise minimum supported version of
+binutils to 2.25") allows us to remove the checks for old binutils.
 
-  drivers/edac/thunderx_edac.c: In function 'thunderx_ocx_com_threaded_isr':
-  drivers/edac/thunderx_edac.c:1136:17: error: 'strncat' specified bound 1024 equals destination size [-Werror=stringop-overflow=]
-   1136 |                 strncat(msg, other, OCX_MESSAGE_SIZE);
-        |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   ...
-   1145 |                                 strncat(msg, other, OCX_MESSAGE_SIZE);
-   ...
-   1150 |                                 strncat(msg, other, OCX_MESSAGE_SIZE);
+There is no more user for ld-ifversion. Remove it as well.
 
-   ...
-
-Apparently the author of this driver expected strncat() to behave the
-way that strlcat() does, which uses the size of the destination buffer
-as its third argument rather than the length of the source buffer. The
-result is that there is no check on the size of the allocated buffer.
-
-Change it to strlcat().
-
-  [ bp: Trim compiler output, fixup commit message. ]
-
-Fixes: 41003396f932 ("EDAC, thunderx: Add Cavium ThunderX EDAC driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/20231122222007.3199885-1-arnd@kernel.org
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230119082250.151485-1-masahiroy@kernel.org
+Stable-dep-of: 1b1e38002648 ("powerpc: add crtsavres.o to always-y instead of extra-y")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/thunderx_edac.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/powerpc/Makefile     | 17 +----------------
+ arch/powerpc/lib/Makefile |  2 +-
+ scripts/Makefile.compiler |  4 ----
+ 3 files changed, 2 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/edac/thunderx_edac.c b/drivers/edac/thunderx_edac.c
-index f13674081cb6..4dca21b39bf7 100644
---- a/drivers/edac/thunderx_edac.c
-+++ b/drivers/edac/thunderx_edac.c
-@@ -1133,7 +1133,7 @@ static irqreturn_t thunderx_ocx_com_threaded_isr(int irq, void *irq_id)
- 		decode_register(other, OCX_OTHER_SIZE,
- 				ocx_com_errors, ctx->reg_com_int);
+diff --git a/arch/powerpc/Makefile b/arch/powerpc/Makefile
+index 054844153b1f..487e4967b60d 100644
+--- a/arch/powerpc/Makefile
++++ b/arch/powerpc/Makefile
+@@ -42,18 +42,13 @@ machine-$(CONFIG_PPC64) += 64
+ machine-$(CONFIG_CPU_LITTLE_ENDIAN) += le
+ UTS_MACHINE := $(subst $(space),,$(machine-y))
  
--		strncat(msg, other, OCX_MESSAGE_SIZE);
-+		strlcat(msg, other, OCX_MESSAGE_SIZE);
+-# XXX This needs to be before we override LD below
+-ifdef CONFIG_PPC32
+-KBUILD_LDFLAGS_MODULE += arch/powerpc/lib/crtsavres.o
+-else
+-ifeq ($(call ld-ifversion, -ge, 22500, y),y)
++ifeq ($(CONFIG_PPC64)$(CONFIG_LD_IS_BFD),yy)
+ # Have the linker provide sfpr if possible.
+ # There is a corresponding test in arch/powerpc/lib/Makefile
+ KBUILD_LDFLAGS_MODULE += --save-restore-funcs
+ else
+ KBUILD_LDFLAGS_MODULE += arch/powerpc/lib/crtsavres.o
+ endif
+-endif
  
- 		for (lane = 0; lane < OCX_RX_LANES; lane++)
- 			if (ctx->reg_com_int & BIT(lane)) {
-@@ -1142,12 +1142,12 @@ static irqreturn_t thunderx_ocx_com_threaded_isr(int irq, void *irq_id)
- 					 lane, ctx->reg_lane_int[lane],
- 					 lane, ctx->reg_lane_stat11[lane]);
+ ifdef CONFIG_CPU_LITTLE_ENDIAN
+ KBUILD_CFLAGS	+= -mlittle-endian
+@@ -391,17 +386,7 @@ endif
+ endif
  
--				strncat(msg, other, OCX_MESSAGE_SIZE);
-+				strlcat(msg, other, OCX_MESSAGE_SIZE);
+ PHONY += checkbin
+-# Check toolchain versions:
+-# - gcc-4.6 is the minimum kernel-wide version so nothing required.
+ checkbin:
+-	@if test "x${CONFIG_LD_IS_LLD}" != "xy" -a \
+-		"x$(call ld-ifversion, -le, 22400, y)" = "xy" ; then \
+-		echo -n '*** binutils 2.24 miscompiles weak symbols ' ; \
+-		echo 'in some circumstances.' ; \
+-		echo    '*** binutils 2.23 do not define the TOC symbol ' ; \
+-		echo -n '*** Please use a different binutils version.' ; \
+-		false ; \
+-	fi
+ 	@if test "x${CONFIG_FTRACE_MCOUNT_USE_RECORDMCOUNT}" = "xy" -a \
+ 		"x${CONFIG_LD_IS_BFD}" = "xy" -a \
+ 		"${CONFIG_LD_VERSION}" = "23700" ; then \
+diff --git a/arch/powerpc/lib/Makefile b/arch/powerpc/lib/Makefile
+index 8560c912186d..b705c89f3e21 100644
+--- a/arch/powerpc/lib/Makefile
++++ b/arch/powerpc/lib/Makefile
+@@ -42,7 +42,7 @@ obj-$(CONFIG_FUNCTION_ERROR_INJECTION)	+= error-inject.o
+ # 64-bit linker creates .sfpr on demand for final link (vmlinux),
+ # so it is only needed for modules, and only for older linkers which
+ # do not support --save-restore-funcs
+-ifeq ($(call ld-ifversion, -lt, 22500, y),y)
++ifndef CONFIG_LD_IS_BFD
+ extra-$(CONFIG_PPC64)	+= crtsavres.o
+ endif
  
- 				decode_register(other, OCX_OTHER_SIZE,
- 						ocx_lane_errors,
- 						ctx->reg_lane_int[lane]);
--				strncat(msg, other, OCX_MESSAGE_SIZE);
-+				strlcat(msg, other, OCX_MESSAGE_SIZE);
- 			}
- 
- 		if (ctx->reg_com_int & OCX_COM_INT_CE)
-@@ -1217,7 +1217,7 @@ static irqreturn_t thunderx_ocx_lnk_threaded_isr(int irq, void *irq_id)
- 		decode_register(other, OCX_OTHER_SIZE,
- 				ocx_com_link_errors, ctx->reg_com_link_int);
- 
--		strncat(msg, other, OCX_MESSAGE_SIZE);
-+		strlcat(msg, other, OCX_MESSAGE_SIZE);
- 
- 		if (ctx->reg_com_link_int & OCX_COM_LINK_INT_UE)
- 			edac_device_handle_ue(ocx->edac_dev, 0, 0, msg);
-@@ -1896,7 +1896,7 @@ static irqreturn_t thunderx_l2c_threaded_isr(int irq, void *irq_id)
- 
- 		decode_register(other, L2C_OTHER_SIZE, l2_errors, ctx->reg_int);
- 
--		strncat(msg, other, L2C_MESSAGE_SIZE);
-+		strlcat(msg, other, L2C_MESSAGE_SIZE);
- 
- 		if (ctx->reg_int & mask_ue)
- 			edac_device_handle_ue(l2c->edac_dev, 0, 0, msg);
+diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
+index 158c57f2acfd..87589a7ba27f 100644
+--- a/scripts/Makefile.compiler
++++ b/scripts/Makefile.compiler
+@@ -72,7 +72,3 @@ clang-min-version = $(shell [ $(CONFIG_CLANG_VERSION)0 -ge $(1)0 ] && echo y)
+ # ld-option
+ # Usage: KBUILD_LDFLAGS += $(call ld-option, -X, -Y)
+ ld-option = $(call try-run, $(LD) $(KBUILD_LDFLAGS) $(1) -v,$(1),$(2),$(3))
+-
+-# ld-ifversion
+-# Usage:  $(call ld-ifversion, -ge, 22252, y)
+-ld-ifversion = $(shell [ $(CONFIG_LD_VERSION)0 $(1) $(2)0 ] && echo $(3) || echo $(4))
 -- 
 2.43.0
 
