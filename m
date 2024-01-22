@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BD13FE1;
-	Tue, 23 Jan 2024 00:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93121FB2;
+	Tue, 23 Jan 2024 00:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970907; cv=none; b=cSOgOcGlSvkMc8LVo6Vjig00xn1C0iXuy/YtzOG8ifFdr7bW45OTBt+D1PzyN9rkEpEGkZDq+/B36RB4X09rco1y0V46PSwmGE5615HurbAlTSMZ1nxXwtH0EXskdwkfksnDa5dGK8UTXH6yYj2ByIuW0TDfwDewYGX/f9ywAHE=
+	t=1705970908; cv=none; b=aqi3yrZMY7vEIVLFI7tRC4oIM4pzeZWsGmXIdRa/e6YoQ9DXkU2x7imhZ9iz4GN/Mp7Q6UJlUGCm2sB1qLqKsXimVqMBeSmQmUT5NwfurnPwf5/7RZXLvBVpIQiVarjbHT0sEPArNQypGSp02qTxROd0ZW/BYLaboLT5qnEvUFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970907; c=relaxed/simple;
-	bh=JaUUiGC8d7TWOsmuzVI407b7pxYyOPolE+cQK3sjovw=;
+	s=arc-20240116; t=1705970908; c=relaxed/simple;
+	bh=WlvjXKe8b+8TxBd6/mXQTwL64z2Q5dY+tctKVAB9IN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/HWyQr3HKgxCgu6UdhaJFjUESncDIqM5c0a302l7kOrYZG0CT2logUPi6MRhzKfYtT9pil0peedcr6MSHMWhiVhtK1trncVCQIX3cFQlDt58ama4i0hdj2Dj28Sni116Liiyr49goCoVH/WY8s9LBWlSs8oWg/riNJczYqRJXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWSFJAxI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qxv7hCIGEzDqssivlTE1g6CAm+bpJZnUIhclfGDJllMBol7eseIoQhe/Ut3zbJ5iwd0wv8Vj6tCqYJsdnhCwClB8FTc0ulw9e1pV5PdpCSDmzcNl+EjcMabJZ3Ko3xRFSFSxQZ7HVB38AQ6b+Bp0A3brlJuSSApeufxX4c57itA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4vboHgU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWSFJAxI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6383EC43390;
-	Tue, 23 Jan 2024 00:48:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4vboHgU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CC8C433C7;
+	Tue, 23 Jan 2024 00:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970905;
-	bh=JaUUiGC8d7TWOsmuzVI407b7pxYyOPolE+cQK3sjovw=;
+	s=korg; t=1705970908;
+	bh=WlvjXKe8b+8TxBd6/mXQTwL64z2Q5dY+tctKVAB9IN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RWSFJAxIstyL0EA1l3HzRYVfHqU3rc00oaNg77BBh9Zwgyzmnl0+vHkjT54zpzane
-	 6LA9ttZPjR3/8z9U+DpGhnVsIW7gNLAx4gseOzSy/rzVzWfixab8/tsNcZs1dcS9xT
-	 9Kz75mKbyqHz8GRkIsZaK6Ch7BcEu6jpmRNfOlvQ=
+	b=n4vboHgU5jEehhDO3RRwIZYDYwH7XvUoEqPxm5KWrLu2iGgRa49ylmP0cvoYjYMB3
+	 8yQ7OF1wjiMkFsJxUpyfT2KA08zGJkQNh6RJ5QGSf2QNldqWnysN3PyIAUfqCDHs/U
+	 L/Zb7QaNnI2Ga81YoOH6Px85X3d5506uWRLRY8HE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 137/417] wifi: rtlwifi: rtl8192ce: using calculate_bit_shift()
-Date: Mon, 22 Jan 2024 15:55:05 -0800
-Message-ID: <20240122235756.577154234@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 5.10 043/286] binder: fix comment on binder_alloc_new_buf() return value
+Date: Mon, 22 Jan 2024 15:55:49 -0800
+Message-ID: <20240122235733.681799284@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-[ Upstream commit 3d03e8231031bcc65a48cd88ef9c71b6524ce70b ]
+commit e1090371e02b601cbfcea175c2a6cc7c955fa830 upstream.
 
-Using calculate_bit_shift() to replace _rtl92c_phy_calculate_bit_shift().
-And fix the undefined bitwise shift behavior problem.
+Update the comments of binder_alloc_new_buf() to reflect that the return
+value of the function is now ERR_PTR(-errno) on failure.
 
-Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231219065739.1895666-7-suhui@nfschina.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+No functional changes in this patch.
+
+Cc: stable@vger.kernel.org
+Fixes: 57ada2fb2250 ("binder: add log information for binder transaction failures")
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Link: https://lore.kernel.org/r/20231201172212.1813387-8-cmllamas@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c | 6 +++---
- drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h | 1 -
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ drivers/android/binder_alloc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c
-index da54e51badd3..fa70a7d5539f 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c
-@@ -39,7 +39,7 @@ u32 rtl92c_phy_query_rf_reg(struct ieee80211_hw *hw,
- 							       rfpath, regaddr);
- 	}
- 
--	bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	readback_value = (original_value & bitmask) >> bitshift;
- 
- 	spin_unlock(&rtlpriv->locks.rf_lock);
-@@ -110,7 +110,7 @@ void rtl92ce_phy_set_rf_reg(struct ieee80211_hw *hw,
- 			original_value = _rtl92c_phy_rf_serial_read(hw,
- 								    rfpath,
- 								    regaddr);
--			bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data =
- 			    ((original_value & (~bitmask)) |
- 			     (data << bitshift));
-@@ -122,7 +122,7 @@ void rtl92ce_phy_set_rf_reg(struct ieee80211_hw *hw,
- 			original_value = _rtl92c_phy_fw_rf_serial_read(hw,
- 								       rfpath,
- 								       regaddr);
--			bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data =
- 			    ((original_value & (~bitmask)) |
- 			     (data << bitshift));
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h b/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h
-index 7582a162bd11..c7a0d4c776f0 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h
-@@ -94,7 +94,6 @@ u32 _rtl92c_phy_rf_serial_read(struct ieee80211_hw *hw, enum radio_path rfpath,
- 			       u32 offset);
- u32 _rtl92c_phy_fw_rf_serial_read(struct ieee80211_hw *hw,
- 				  enum radio_path rfpath, u32 offset);
--u32 _rtl92c_phy_calculate_bit_shift(u32 bitmask);
- void _rtl92c_phy_rf_serial_write(struct ieee80211_hw *hw,
- 				 enum radio_path rfpath, u32 offset, u32 data);
- void _rtl92c_phy_fw_rf_serial_write(struct ieee80211_hw *hw,
--- 
-2.43.0
-
+--- a/drivers/android/binder_alloc.c
++++ b/drivers/android/binder_alloc.c
+@@ -562,7 +562,7 @@ err_alloc_buf_struct_failed:
+  * is the sum of the three given sizes (each rounded up to
+  * pointer-sized boundary)
+  *
+- * Return:	The allocated buffer or %NULL if error
++ * Return:	The allocated buffer or %ERR_PTR(-errno) if error
+  */
+ struct binder_buffer *binder_alloc_new_buf(struct binder_alloc *alloc,
+ 					   size_t data_size,
 
 
