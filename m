@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15684149010;
-	Tue, 23 Jan 2024 00:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF23149010;
+	Tue, 23 Jan 2024 00:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969204; cv=none; b=TQkE5nmbZ7BCzTZuFspm9QBtT18X00fK9tF0YKvk8eXj1xnww6079rwOWeuZiHgqx21Vd+SUtilwxZ04CvYMlf7ouQQPh84xwpvfbOCdU0KtE1eBhgWLuwj+PWJNfwWcVsGCOEjEBRt3giUl16fMkJAaXRBgCSuXMzdavKCv/vw=
+	t=1705969205; cv=none; b=blVuYOXp2Wu9VVUdxsdfxUv0+Gs/uhQqcm8DvaK+rrgsv4U/wecPWeO3UbDjbWj1wTr5I6rlOLJ3opHTaxlf4eSjffVBmeyraVHhjlvUc4dmSqfIaw86Zl9l1KULjMHquEkM2pt76Ovyfmdexc5jK2vUdxMtNx98wDdNsjBaxh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969204; c=relaxed/simple;
-	bh=rd7a+CKBDhMJNlfZTwRAKJww2MI3XH3dI45YpHUrJyU=;
+	s=arc-20240116; t=1705969205; c=relaxed/simple;
+	bh=gu1ePTZoDB2psYG3n5DNT78krbvJRfw2s/1Sqsz2vqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+zNqIAQqOVT2/M+40RelIpP/gWLUTMHXenLTosdk1A0a9RxnlYmKjGeLJAeBjc4pLjbeAGwQ39reSJW6DEluGnzkiQzmh6vrumIED5LRJn1C9/Xr3x2nAWIazYA42PNEoSrO/ipKJ9KN8E6l6x9S5GRImyica4CadWt7DiVC4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2zEIkZz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jxb44AU2WFuM35FeEQ12mf/+kNsJC29oh74TUazXJ0LG61OJgVr8Ct5DXEVeR/TZ4Hi4WwxR4nYrFnvq8XIipISM6vi3O0WTaL4b3wEKP7oCBntOEz3htBl7CBnTDb1X+lhgbY/NJzVznS5bfmcfmtz7hzJP4jmHN/x4gWDDoH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSuOp+qW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2zEIkZz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE472C433F1;
-	Tue, 23 Jan 2024 00:20:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSuOp+qW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099A0C433C7;
+	Tue, 23 Jan 2024 00:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969203;
-	bh=rd7a+CKBDhMJNlfZTwRAKJww2MI3XH3dI45YpHUrJyU=;
+	s=korg; t=1705969205;
+	bh=gu1ePTZoDB2psYG3n5DNT78krbvJRfw2s/1Sqsz2vqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u2zEIkZz8o5dhhPYvDEe3G62dGiGfsJqnOMhuRzWV0tYSgSFJytzHk+YPfsuVSVTd
-	 qG5n/DasguGwBDl/GROZReGmWVfbFGm5xV0yMYaP5d6jjr+OywfrCB4bkLOLcmU/cB
-	 IaFpkE4u4LUBGpODDZWDT+bul4peLPjH8XuTe4zk=
+	b=tSuOp+qWKn6cnqu23LJKQO6V0RuTbRhVTFT8qQWOx8nXCSNFY1NIzMRLP+UtospTm
+	 1Z2NvrsaIsisCKMNjz/fUyRW2+JOKtjNUPtPmrSZh7aNUJpxaiTIOwv/QbtEFxiEbs
+	 BJqpgeL842MSk2XdVVkVkJ/BLxdYt203wTTfEGEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Kang Chang <gary.chang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 097/641] wifi: rtw88: fix RX filter in FIF_ALLMULTI flag
-Date: Mon, 22 Jan 2024 15:50:01 -0800
-Message-ID: <20240122235821.072542896@linuxfoundation.org>
+Subject: [PATCH 6.7 080/641] crypto: sahara - fix processing hash requests with req->nbytes < sg->length
+Date: Mon, 22 Jan 2024 15:49:44 -0800
+Message-ID: <20240122235820.534033755@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,40 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chih-Kang Chang <gary.chang@realtek.com>
+From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit 53ee0b3b99edc6a47096bffef15695f5a895386f ]
+[ Upstream commit 7bafa74d1ba35dcc173e1ce915e983d65905f77e ]
 
-The broadcast packets will be filtered in the FIF_ALLMULTI flag in
-the original code, which causes beacon packets to be filtered out
-and disconnection. Therefore, we fix it.
+It's not always the case that the entire sg entry needs to be processed.
+Currently, when nbytes is less than sg->length, "Descriptor length" errors
+are encountered.
 
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231103020851.102238-1-pkshih@realtek.com
+To fix this, take the actual request size into account when populating the
+hw links.
+
+Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/mac80211.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/sahara.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/mac80211.c b/drivers/net/wireless/realtek/rtw88/mac80211.c
-index a99b53d44267..d8d68f16014e 100644
---- a/drivers/net/wireless/realtek/rtw88/mac80211.c
-+++ b/drivers/net/wireless/realtek/rtw88/mac80211.c
-@@ -280,9 +280,9 @@ static void rtw_ops_configure_filter(struct ieee80211_hw *hw,
+diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
+index cfb02905c1ab..dd8291a4442c 100644
+--- a/drivers/crypto/sahara.c
++++ b/drivers/crypto/sahara.c
+@@ -776,6 +776,7 @@ static int sahara_sha_hw_links_create(struct sahara_dev *dev,
+ 				       int start)
+ {
+ 	struct scatterlist *sg;
++	unsigned int len;
+ 	unsigned int i;
+ 	int ret;
  
- 	if (changed_flags & FIF_ALLMULTI) {
- 		if (*new_flags & FIF_ALLMULTI)
--			rtwdev->hal.rcr |= BIT_AM | BIT_AB;
-+			rtwdev->hal.rcr |= BIT_AM;
- 		else
--			rtwdev->hal.rcr &= ~(BIT_AM | BIT_AB);
-+			rtwdev->hal.rcr &= ~(BIT_AM);
- 	}
- 	if (changed_flags & FIF_FCSFAIL) {
- 		if (*new_flags & FIF_FCSFAIL)
+@@ -797,12 +798,14 @@ static int sahara_sha_hw_links_create(struct sahara_dev *dev,
+ 	if (!ret)
+ 		return -EFAULT;
+ 
++	len = rctx->total;
+ 	for (i = start; i < dev->nb_in_sg + start; i++) {
+-		dev->hw_link[i]->len = sg->length;
++		dev->hw_link[i]->len = min(len, sg->length);
+ 		dev->hw_link[i]->p = sg->dma_address;
+ 		if (i == (dev->nb_in_sg + start - 1)) {
+ 			dev->hw_link[i]->next = 0;
+ 		} else {
++			len -= min(len, sg->length);
+ 			dev->hw_link[i]->next = dev->hw_phys_link[i + 1];
+ 			sg = sg_next(sg);
+ 		}
 -- 
 2.43.0
 
