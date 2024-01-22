@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3604559B6F;
-	Tue, 23 Jan 2024 00:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB765BAF2;
+	Tue, 23 Jan 2024 00:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969810; cv=none; b=RE09Rlll+UombjeYHNINPGegqA+Qe/zNxNSvZnyibRVE5O2irzSWqGU+yu5LYhXKYQIPx724hgk13DkNTxNDWGy/ejX0H4DkeIv5fLBXBLwBliZtKbkjjwh17WxcSfflbQ4vsbyR4rh2/qT7ZTfPerJXY0faK203Ih+prebTLyI=
+	t=1705969812; cv=none; b=nztJ3eoaSBdJVjncLOG9t7gK0kdeeaJqS0thTI5pzwclyFzf2Wz+/TQRkj/SGaWSaWPd3kRjzoVWyxWOI3WLA+pLTBhZmAzbdccflUbOOf5T5ibdhCEZpXND/sbuT/zqOL2kjC5VsPdiMEu5PwNEPfGXehEew7PZuAYKYyH1BWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969810; c=relaxed/simple;
-	bh=97WQ2EJ4EncoWnKQHmTXYH+2VnwlAFIUIM38aGB7ji4=;
+	s=arc-20240116; t=1705969812; c=relaxed/simple;
+	bh=s9kp4RH5KtHyGtM5n8fKIiDkS0vglMKZo7rtKQOMW+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BjrFtV+hOjCh701rNmfV5wxoq7+tqCHYqHhF8MZjyRzIpkBqYonTfiGP0oGWwSlVpERnGqRDCFNQ3NCNneFaWi3bH+eOUF/STxOmJtud4Ld3dKOoTgJkWCZOD/H6Ej92FyDkRgGrXno5dClF4G8MYxaL8bjrTt8Tzqq4UI7MPRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWCGwHy0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I1hBBhDEz+5kmVibqMgpSH11IsgUb/VLK8+CPeFCiyb8FbMcYGQtM885a+kOui0IOh02yHH5qkAGhVSw4IvQDGV9DgHZQOY4dDm7m3/OoulEhEVcCy8C8fm1ywZFlXriNPAxLxdW4ghwK1zQ6kg6YeUCFk7ufqHPzWxK6oPa6qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OIcLblbJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWCGwHy0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF1AC43390;
-	Tue, 23 Jan 2024 00:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIcLblbJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7D8C433F1;
+	Tue, 23 Jan 2024 00:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969810;
-	bh=97WQ2EJ4EncoWnKQHmTXYH+2VnwlAFIUIM38aGB7ji4=;
+	s=korg; t=1705969812;
+	bh=s9kp4RH5KtHyGtM5n8fKIiDkS0vglMKZo7rtKQOMW+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWCGwHy0VcilxXCPMIGs07karzMEoMO8TtI03s90CYq6SRdjJd7/VPlabgojOUBzo
-	 0p0HFep87wGbvCbHwOOs7R28/IoZzIrsgphJP1LyuqZASXpcf4pBab7A34FwMpNj0W
-	 Qq8ESuwGnxDbGVL9n+tZZNEt/xmfWyvKG7Qp0FpI=
+	b=OIcLblbJnzOWNzh9ycOAr1tmzWNuAHPGb/0Pttvw/sgCEh18dl39u3ox+CcdJXVfI
+	 3mrmHBXYjppCxLeFj+cnQUZ6O9eiEGDEjzAM9gEKBCRtvnASE1l9g/oIujkAWA8VEw
+	 +Bmq7jYo6NI81VqgEShfeP+Dut3xCapaGhouIT/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.7 464/641] drm/amdgpu: revert "Adjust removal control flow for smu v13_0_2"
-Date: Mon, 22 Jan 2024 15:56:08 -0800
-Message-ID: <20240122235832.563225671@linuxfoundation.org>
+	"Huang, Ying" <ying.huang@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Huang
+Subject: [PATCH 6.7 465/641] cxl/port: Fix decoder initialization when nr_targets > interleave_ways
+Date: Mon, 22 Jan 2024 15:56:09 -0800
+Message-ID: <20240122235832.593845233@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -44,193 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Huang Ying <ying.huang@intel.com>
 
-commit fb1c93c2e9604a884467a773790016199f78ca08 upstream.
+commit d6488fee66472b468ed88d265b14aa3f04dc3bdf upstream.
 
-Calling amdgpu_device_ip_resume_phase1() during shutdown leaves the
-HW in an active state and is an unbalanced use of the IP callbacks.
+The decoder_populate_targets() helper walks all of the targets in a port
+and makes sure they can be looked up in @target_map. Where @target_map
+is a lookup table from target position to target id (corresponding to a
+cxl_dport instance). However @target_map is only responsible for
+conveying the active dport instances as indicated by interleave_ways.
 
-Using the IP callbacks like this can lead to memory leaks, double
-free and imbalanced reference counters.
+When nr_targets > interleave_ways it results in
+decoder_populate_targets() walking off the end of the valid entries in
+@target_map. Given target_map is initialized to 0 it results in the
+dport lookup failing if position 0 is not mapped to a dport with an id
+of 0:
 
-Leaving the HW in an active state can lead to DMA accesses to memory now
-freed by the driver.
+  cxl_port port3: Failed to populate active decoder targets
+  cxl_port port3: Failed to add decoder
+  cxl_port port3: Failed to add decoder3.0
+  cxl_bus_probe: cxl_port port3: probe: -6
 
-Both is a complete no-go for driver unload so completely revert the
-workaround for now.
+This bug also highlights that when the decoder's ->targets[] array is
+written in cxl_port_setup_targets() it is missing a hold of the
+targets_lock to synchronize against sysfs readers of the target list. A
+fix for that is saved for a later patch.
 
-This reverts commit f5c7e7797060255dbc8160734ccc5ad6183c5e04.
-
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Fixes: a5c258021689 ("cxl/bus: Populate the target list at decoder create")
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Huang, Ying <ying.huang@intel.com>
+[djbw: rewrite the changelog, find the Fixes: tag]
+Co-developed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   32 -----------------------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c    |   32 -----------------------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_reset.h  |    1 
- drivers/gpu/drm/amd/amdgpu/amdgpu_xgmi.h   |    1 
- 4 files changed, 1 insertion(+), 65 deletions(-)
+ drivers/cxl/core/port.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -5172,7 +5172,6 @@ int amdgpu_do_asic_reset(struct list_hea
- 	struct amdgpu_device *tmp_adev = NULL;
- 	bool need_full_reset, skip_hw_reset, vram_lost = false;
- 	int r = 0;
--	bool gpu_reset_for_dev_remove = 0;
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -1644,7 +1644,7 @@ static int decoder_populate_targets(stru
+ 		return -EINVAL;
  
- 	/* Try reset handler method first */
- 	tmp_adev = list_first_entry(device_list_handle, struct amdgpu_device,
-@@ -5192,10 +5191,6 @@ int amdgpu_do_asic_reset(struct list_hea
- 		test_bit(AMDGPU_NEED_FULL_RESET, &reset_context->flags);
- 	skip_hw_reset = test_bit(AMDGPU_SKIP_HW_RESET, &reset_context->flags);
+ 	write_seqlock(&cxlsd->target_lock);
+-	for (i = 0; i < cxlsd->nr_targets; i++) {
++	for (i = 0; i < cxlsd->cxld.interleave_ways; i++) {
+ 		struct cxl_dport *dport = find_dport(port, target_map[i]);
  
--	gpu_reset_for_dev_remove =
--		test_bit(AMDGPU_RESET_FOR_DEVICE_REMOVE, &reset_context->flags) &&
--			test_bit(AMDGPU_NEED_FULL_RESET, &reset_context->flags);
--
- 	/*
- 	 * ASIC reset has to be done on all XGMI hive nodes ASAP
- 	 * to allow proper links negotiation in FW (within 1 sec)
-@@ -5238,18 +5233,6 @@ int amdgpu_do_asic_reset(struct list_hea
- 		amdgpu_ras_intr_cleared();
- 	}
- 
--	/* Since the mode1 reset affects base ip blocks, the
--	 * phase1 ip blocks need to be resumed. Otherwise there
--	 * will be a BIOS signature error and the psp bootloader
--	 * can't load kdb on the next amdgpu install.
--	 */
--	if (gpu_reset_for_dev_remove) {
--		list_for_each_entry(tmp_adev, device_list_handle, reset_list)
--			amdgpu_device_ip_resume_phase1(tmp_adev);
--
--		goto end;
--	}
--
- 	list_for_each_entry(tmp_adev, device_list_handle, reset_list) {
- 		if (need_full_reset) {
- 			/* post card */
-@@ -5486,11 +5469,6 @@ int amdgpu_device_gpu_recover(struct amd
- 	int i, r = 0;
- 	bool need_emergency_restart = false;
- 	bool audio_suspended = false;
--	bool gpu_reset_for_dev_remove = false;
--
--	gpu_reset_for_dev_remove =
--			test_bit(AMDGPU_RESET_FOR_DEVICE_REMOVE, &reset_context->flags) &&
--				test_bit(AMDGPU_NEED_FULL_RESET, &reset_context->flags);
- 
- 	/*
- 	 * Special case: RAS triggered and full reset isn't supported
-@@ -5528,7 +5506,7 @@ int amdgpu_device_gpu_recover(struct amd
- 	if (!amdgpu_sriov_vf(adev) && (adev->gmc.xgmi.num_physical_nodes > 1)) {
- 		list_for_each_entry(tmp_adev, &hive->device_list, gmc.xgmi.head) {
- 			list_add_tail(&tmp_adev->reset_list, &device_list);
--			if (gpu_reset_for_dev_remove && adev->shutdown)
-+			if (adev->shutdown)
- 				tmp_adev->shutdown = true;
- 		}
- 		if (!list_is_first(&adev->reset_list, &device_list))
-@@ -5613,10 +5591,6 @@ int amdgpu_device_gpu_recover(struct amd
- 
- retry:	/* Rest of adevs pre asic reset from XGMI hive. */
- 	list_for_each_entry(tmp_adev, device_list_handle, reset_list) {
--		if (gpu_reset_for_dev_remove) {
--			/* Workaroud for ASICs need to disable SMC first */
--			amdgpu_device_smu_fini_early(tmp_adev);
--		}
- 		r = amdgpu_device_pre_asic_reset(tmp_adev, reset_context);
- 		/*TODO Should we stop ?*/
- 		if (r) {
-@@ -5648,9 +5622,6 @@ retry:	/* Rest of adevs pre asic reset f
- 		r = amdgpu_do_asic_reset(device_list_handle, reset_context);
- 		if (r && r == -EAGAIN)
- 			goto retry;
--
--		if (!r && gpu_reset_for_dev_remove)
--			goto recover_end;
- 	}
- 
- skip_hw_reset:
-@@ -5706,7 +5677,6 @@ skip_sched_resume:
- 		amdgpu_ras_set_error_query_ready(tmp_adev, true);
- 	}
- 
--recover_end:
- 	tmp_adev = list_first_entry(device_list_handle, struct amdgpu_device,
- 					    reset_list);
- 	amdgpu_device_unlock_reset_domain(tmp_adev->reset_domain);
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2315,38 +2315,6 @@ amdgpu_pci_remove(struct pci_dev *pdev)
- 		pm_runtime_forbid(dev->dev);
- 	}
- 
--	if (amdgpu_ip_version(adev, MP1_HWIP, 0) == IP_VERSION(13, 0, 2) &&
--	    !amdgpu_sriov_vf(adev)) {
--		bool need_to_reset_gpu = false;
--
--		if (adev->gmc.xgmi.num_physical_nodes > 1) {
--			struct amdgpu_hive_info *hive;
--
--			hive = amdgpu_get_xgmi_hive(adev);
--			if (hive->device_remove_count == 0)
--				need_to_reset_gpu = true;
--			hive->device_remove_count++;
--			amdgpu_put_xgmi_hive(hive);
--		} else {
--			need_to_reset_gpu = true;
--		}
--
--		/* Workaround for ASICs need to reset SMU.
--		 * Called only when the first device is removed.
--		 */
--		if (need_to_reset_gpu) {
--			struct amdgpu_reset_context reset_context;
--
--			adev->shutdown = true;
--			memset(&reset_context, 0, sizeof(reset_context));
--			reset_context.method = AMD_RESET_METHOD_NONE;
--			reset_context.reset_req_dev = adev;
--			set_bit(AMDGPU_NEED_FULL_RESET, &reset_context.flags);
--			set_bit(AMDGPU_RESET_FOR_DEVICE_REMOVE, &reset_context.flags);
--			amdgpu_device_gpu_recover(adev, NULL, &reset_context);
--		}
--	}
--
- 	amdgpu_driver_unload_kms(dev);
- 
- 	/*
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_reset.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_reset.h
-@@ -32,7 +32,6 @@ enum AMDGPU_RESET_FLAGS {
- 
- 	AMDGPU_NEED_FULL_RESET = 0,
- 	AMDGPU_SKIP_HW_RESET = 1,
--	AMDGPU_RESET_FOR_DEVICE_REMOVE = 2,
- };
- 
- struct amdgpu_reset_context {
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_xgmi.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_xgmi.h
-@@ -43,7 +43,6 @@ struct amdgpu_hive_info {
- 	} pstate;
- 
- 	struct amdgpu_reset_domain *reset_domain;
--	uint32_t device_remove_count;
- 	atomic_t ras_recovery;
- };
- 
+ 		if (!dport) {
 
 
