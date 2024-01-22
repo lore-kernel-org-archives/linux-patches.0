@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E78954BD2;
-	Tue, 23 Jan 2024 00:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8903A59175;
+	Tue, 23 Jan 2024 00:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970587; cv=none; b=sH+bfVjuBZMKfgmjcHrTrNBYpRyKKPYv4Mtg/Q4+KvUil9oqxLkyetwfnGGAolBtQP3FEa8zp7nMVOYu3Trt1DX5dmyG3tKEOwWfphDzQCSY8NJSwNF0Jp9b7v9XC4Kna/yaEzDJX3JYF0MVnq0Ma9g9nzpHEJk046xnpSv0lyI=
+	t=1705970592; cv=none; b=Jm+DP1MqA2Xj6KWfoiEWDal+/thzTDTAJarg2FZK2bd7nl8ul8LO4ZVtze7KYSsaE20nJ+ACTvSZy9iOj5BF7Tc9WnOr6kRTNmtjF1Z09r2sd4vmgrA2MMcTVemYZIHhj3WDnDcNN9vxiWeJ5Zlo6izJFEKJ/4rBy22mKQUOliU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970587; c=relaxed/simple;
-	bh=XUl5SCxzYDnF2ynwg8JHTSrr/llL3R9yU/HssKUULVc=;
+	s=arc-20240116; t=1705970592; c=relaxed/simple;
+	bh=s03/Tm5PrATMTDmGa0GoUxTyKPMck0MMbqKN3hND3kM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2en06cVp8kpvETC+oU7tB6poK9PidU1jdrfiz6fQcG1Sk8cTOWDAJGs9xqnSRKSBGPdePAwkyCC6KjSJLuYRVS2VoTSrkopB75Ygds4jitl60g6HZw/KTIv1YlK+ihndX3xhv5DYU9o8GFRiXImHXQ2/Bw7+ZmkQizskOl8XEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgP7xJD6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WcSgnr0x9G81y7aVq/q89bCaL4QP0jTOjqWMHJZ2fevmh50mrtZT2uS+ztn9GhprkLMAQz/hZDwdIgDVbc2+PA7BV8mCHblrnQpzBm3j20zbFgXzVlPtOBY6FEKnsA23Y7+A2UeLp8iccvkmcmRvHtica1PtdVNRJ/eUu3f0dxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dweqbige; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgP7xJD6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F31CC433F1;
-	Tue, 23 Jan 2024 00:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dweqbige"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F636C43390;
+	Tue, 23 Jan 2024 00:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970586;
-	bh=XUl5SCxzYDnF2ynwg8JHTSrr/llL3R9yU/HssKUULVc=;
+	s=korg; t=1705970592;
+	bh=s03/Tm5PrATMTDmGa0GoUxTyKPMck0MMbqKN3hND3kM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jgP7xJD61DLq6rDtUnm4rQ0pFutAq+p6fAMAFaeCdr+Dt8Bm8QbtK4AToG5DuZkiu
-	 RMm3g1U9L+RPcXIaNNHHrV+dAX1SHLGQeTeIEgpEDHsw9DjRFryIS+6yrVh6tGpWrM
-	 SPYvNcX32gk9lv34yrQK7/1p/Svrhfp+DvJErr2w=
+	b=dweqbigefuaG/8aOQHnjrVFxZZGijNkeAoHEz09BdSDVh8zwO7d97ocoS0gnXOy7z
+	 jHA1l3Us3MCRRtiBzyzJE2mkYpG25Vf5NXOVRUOFB1k/r6HNV2aRLvyOuusyBOImcU
+	 B37XVero2IF2rpyX2c9hHITgX4KLSu+hZciEM9xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Vinarskis <alex.vinarskis@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Erwin Tsaur <erwin.tsaur@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/417] ACPI: LPSS: Fix the fractional clock divider flags
-Date: Mon, 22 Jan 2024 15:53:17 -0800
-Message-ID: <20240122235752.588672904@linuxfoundation.org>
+Subject: [PATCH 6.1 030/417] ACPI: extlog: Clear Extended Error Log status when RAS_CEC handled the error
+Date: Mon, 22 Jan 2024 15:53:18 -0800
+Message-ID: <20240122235752.631352652@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -52,38 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Tony Luck <tony.luck@intel.com>
 
-[ Upstream commit 3ebccf1d1ca74bbb78e6f8c38d1d172e468d91f8 ]
+[ Upstream commit 38c872a9e96f72f2947affc0526cc05659367d3d ]
 
-The conversion to CLK_FRAC_DIVIDER_POWER_OF_TWO_PS uses wrong flags
-in the parameters and hence miscalculates the values in the clock
-divider. Fix this by applying the flag to the proper parameter.
+When both CONFIG_RAS_CEC and CONFIG_ACPI_EXTLOG are enabled, Linux does
+not clear the status word of the BIOS supplied error record for corrected
+errors. This may prevent logging of subsequent uncorrected errors.
 
-Fixes: 82f53f9ee577 ("clk: fractional-divider: Introduce POWER_OF_TWO_PS flag")
-Reported-by: Alex Vinarskis <alex.vinarskis@gmail.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fix by clearing the status.
+
+Fixes: 23ba710a0864 ("x86/mce: Fix all mce notifiers to update the mce->kflags bitmask")
+Reported-by: Erwin Tsaur <erwin.tsaur@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_lpss.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/acpi_extlog.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpi_lpss.c b/drivers/acpi/acpi_lpss.c
-index f08ffa75f4a7..8b44743945c8 100644
---- a/drivers/acpi/acpi_lpss.c
-+++ b/drivers/acpi/acpi_lpss.c
-@@ -450,8 +450,9 @@ static int register_device_clock(struct acpi_device *adev,
- 		if (!clk_name)
- 			return -ENOMEM;
- 		clk = clk_register_fractional_divider(NULL, clk_name, parent,
-+						      0, prv_base, 1, 15, 16, 15,
- 						      CLK_FRAC_DIVIDER_POWER_OF_TWO_PS,
--						      prv_base, 1, 15, 16, 15, 0, NULL);
-+						      NULL);
- 		parent = clk_name;
+diff --git a/drivers/acpi/acpi_extlog.c b/drivers/acpi/acpi_extlog.c
+index e648158368a7..088db2356998 100644
+--- a/drivers/acpi/acpi_extlog.c
++++ b/drivers/acpi/acpi_extlog.c
+@@ -145,9 +145,14 @@ static int extlog_print(struct notifier_block *nb, unsigned long val,
+ 	static u32 err_seq;
  
- 		clk_name = kasprintf(GFP_KERNEL, "%s-update", devname);
+ 	estatus = extlog_elog_entry_check(cpu, bank);
+-	if (estatus == NULL || (mce->kflags & MCE_HANDLED_CEC))
++	if (!estatus)
+ 		return NOTIFY_DONE;
+ 
++	if (mce->kflags & MCE_HANDLED_CEC) {
++		estatus->block_status = 0;
++		return NOTIFY_DONE;
++	}
++
+ 	memcpy(elog_buf, (void *)estatus, ELOG_ENTRY_LEN);
+ 	/* clear record status to enable BIOS to update it again */
+ 	estatus->block_status = 0;
 -- 
 2.43.0
 
