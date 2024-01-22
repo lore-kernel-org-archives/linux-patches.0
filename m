@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271621487CF;
-	Tue, 23 Jan 2024 01:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61522141981;
+	Tue, 23 Jan 2024 01:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972075; cv=none; b=mp3G0u2cK7XxDdqaFjMErzpVvTry1PMG2ZWiUgLnCkNaYKdK3QTu9PrvWWIroqPJN2nhwKl0BfdMKoAkxPJBlfLjBBbsalXAsVl9yiYKm/Mbkcjh+o+1fzBwO2sEgtwFdl9KRo0hwrUar9D7xASUeIrWhe5bgzyKwomw0xL3+xg=
+	t=1705972078; cv=none; b=kD+NPAqtdC0PV7eXEAJiIbduRKo3cR4uI2niivVVwO3fS4VR3gA96ebD9LUvzafIhSWNAXQtyT/rdVCSDPe0P8iI4hfYfgOM+zDUfW5mN0NTIxtklNMZU0kOBQ31BYyPpZKsFqST5DP4LQozCCZ8aa8CMJB9a2Vh/MuvkAKrZvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972075; c=relaxed/simple;
-	bh=W7q6BIdnOOcZDvZj7PLIezJ6gmCDdrPBmbCdLlou8+Y=;
+	s=arc-20240116; t=1705972078; c=relaxed/simple;
+	bh=YiLG6rPcWEv16S42ZRoS+HjQ+B4t5ZvXpAUJE2tsLqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hc/Sr19P+LQdh5BzFuMQYD98uU1M/aWhSGOgy+3aK14Z86ToGf6X2NW177H00JT/ISK/6dgaFLsU8LxFqsrzROAv3XvSu3cTz3LN0AiFmm8DckIR/0Vsa+2TJCuEP+mtYuhjsforolLzJkvpheoEQPKjCL+vQy3HiyxFAquLrMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwILD3y5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ssZd7nvNM+jcsnRsB+oDlfJ9GG2VGv3ZLIv7rAcevtf6cwJrzWKQXZkDwvh1Lx5uDeDlCDBPfhubwYiKee51oAZ0bz4YxAzV2bbywof7qIyE0go9NxM9JkDkuUaJbJNzo5KQD1RbtXRDrcIo2p5ctnugHh1jbfBDq8tg9IWmMag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3zKXPqt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwILD3y5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E71C43399;
-	Tue, 23 Jan 2024 01:07:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3zKXPqt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9DEC43390;
+	Tue, 23 Jan 2024 01:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972075;
-	bh=W7q6BIdnOOcZDvZj7PLIezJ6gmCDdrPBmbCdLlou8+Y=;
+	s=korg; t=1705972078;
+	bh=YiLG6rPcWEv16S42ZRoS+HjQ+B4t5ZvXpAUJE2tsLqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wwILD3y5Itl5VWClOwHASsAdl1/RVjzmN+BrdYlMB9+iYBMING7+rf94QZ3lDhI0J
-	 h8/LIDJD1quQUj74A5ppfHrksEO1Qc2geyFYntdWF7u9srfczVM0AELlVKHaZyD+r9
-	 I6pOMT39JqkYJZxdlPmevIT1IKi0NJaotnOXsVZg=
+	b=W3zKXPqtCEbISCCMNrL7SiNuNq9LB48SwOKeC+MzgTng1w0kjMZBK7xlVdjGjUo0S
+	 VVWYM7Hy+8s9ElXH/0KGsh5CCNCDGgtWVxuKespOIbHqyUAUNW6YJheqIbZRgKkZwf
+	 Gnqx0uQdDhm6XLUEG31jxXvKKRlHW9vAAOmWDmeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Rau <David.Rau.opensource@dm.renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/374] ASoC: da7219: Support low DC impedance headset
-Date: Mon, 22 Jan 2024 15:54:34 -0800
-Message-ID: <20240122235745.270037836@linuxfoundation.org>
+Subject: [PATCH 5.15 003/374] ALSA: hda - Fix speaker and headset mic pin config for CHUWI CoreBook XPro
+Date: Mon, 22 Jan 2024 15:54:19 -0800
+Message-ID: <20240122235744.736481592@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,34 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Rau <David.Rau.opensource@dm.renesas.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-[ Upstream commit 5f44de697383fcc9a9a1a78f99e09d1838704b90 ]
+[ Upstream commit 7c9caa299335df94ad1c58f70a22f16a540eab60 ]
 
-Change the default MIC detection impedance threshold to 200ohm
-to support low mic DC impedance headset.
+This patch corrected the speaker and headset mic pin config to the more
+appropriate values.
 
-Signed-off-by: David Rau <David.Rau.opensource@dm.renesas.com>
-Link: https://lore.kernel.org/r/20231201042933.26392-1-David.Rau.opensource@dm.renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://lore.kernel.org/r/20231117170923.106822-1-kovalev@altlinux.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/da7219-aad.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/soc/codecs/da7219-aad.c b/sound/soc/codecs/da7219-aad.c
-index 7d18de959439..4dc6eed6c18a 100644
---- a/sound/soc/codecs/da7219-aad.c
-+++ b/sound/soc/codecs/da7219-aad.c
-@@ -654,7 +654,7 @@ static struct da7219_aad_pdata *da7219_aad_fw_to_pdata(struct device *dev)
- 		aad_pdata->mic_det_thr =
- 			da7219_aad_fw_mic_det_thr(dev, fw_val32);
- 	else
--		aad_pdata->mic_det_thr = DA7219_AAD_MIC_DET_THR_500_OHMS;
-+		aad_pdata->mic_det_thr = DA7219_AAD_MIC_DET_THR_200_OHMS;
- 
- 	if (fwnode_property_read_u32(aad_np, "dlg,jack-ins-deb", &fw_val32) >= 0)
- 		aad_pdata->jack_ins_deb =
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 5e0e19c4b509..87de2cbd7f3e 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -6854,6 +6854,7 @@ enum {
+ 	ALC290_FIXUP_SUBWOOFER_HSJACK,
+ 	ALC269_FIXUP_THINKPAD_ACPI,
+ 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
++	ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO,
+ 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
+ 	ALC255_FIXUP_ASUS_MIC_NO_PRESENCE,
+ 	ALC255_FIXUP_DELL1_MIC_NO_PRESENCE,
+@@ -7152,6 +7153,14 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc269_fixup_pincfg_U7x7_headset_mic,
+ 	},
++	[ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x18, 0x03a19020 }, /* headset mic */
++			{ 0x1b, 0x90170150 }, /* speaker */
++			{ }
++		},
++	},
+ 	[ALC269_FIXUP_AMIC] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -9402,6 +9411,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
++	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
+ 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
+ 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
 -- 
 2.43.0
 
