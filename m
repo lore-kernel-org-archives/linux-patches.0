@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FC0627FB;
-	Tue, 23 Jan 2024 00:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B9122062;
+	Tue, 23 Jan 2024 00:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971103; cv=none; b=c6Xh3w3NYMHwPlQDI0b3qQnB5zBEB0+Wez+gRHJjt38Pnt6t4oxfYEuQbr4YW+YUnOvyAIV5EsH/OTSs2KkSZ7PI8hlNaYn57GfXamCVAL7+u+4llJoeIxRVQ+TirvewwKaV0wqhgsYyHOK9GK/gkwigXUax5Jey+FYa+XyNj7I=
+	t=1705971105; cv=none; b=smj1K6d6nue/IzV/2CgXyF5HOlJM95e9ofT4Jo2adwh0A0QgZ9dxeBCl1MNxsw4Y88P/gOgU9YgoBBTpQuNYsQrgwaYVbDn3tBi0LBRJAfTgkFycvdBe5o65IS9aBtNkYE0E06w6QdiQMPAjPVeFAZKi12sPWPdTel9MbMOJ5zU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971103; c=relaxed/simple;
-	bh=mtrWedbnCErhmeoIRnSgqj5Uj5IMRI3HyL6gZ6NjHa0=;
+	s=arc-20240116; t=1705971105; c=relaxed/simple;
+	bh=h2hajZE9GaV0JVlkUKg3BInbgO/7MNEPyVnWePTj4+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CHTEDaxx9L6Xgpva2xMdPa9XYvIlmRgcLfbA5tWExfwjzMpzh0PzKR5x196j0pAsDfAC7zn8aB/sLbmehoMagEWAAjCAVKuWkhoDD1owBH0rV9gONXaomLvl+ydHekSXjZF1BQUH7AKvh8bgjTFBt7JUD8ndYI4uu3IbyPBzy4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIxXh3o2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nfm3cQflImSWeM2HcJFXNVK0GWLlWPevmMBxh8G2pbbhdoozKzK0TqZ9cRGUv+FmGFP03vp14m6YJu/aFmXcjiQ6gnP/Ov1MF6u+c8p1YFNcdM+mM/cvYJz+xr2dukv+Xs4TiKa1TDSswnKgl7waD8BETEbYkbcKFHX/sPsJmO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtCe6coY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIxXh3o2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961C6C43390;
-	Tue, 23 Jan 2024 00:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtCe6coY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D81C43390;
+	Tue, 23 Jan 2024 00:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971102;
-	bh=mtrWedbnCErhmeoIRnSgqj5Uj5IMRI3HyL6gZ6NjHa0=;
+	s=korg; t=1705971105;
+	bh=h2hajZE9GaV0JVlkUKg3BInbgO/7MNEPyVnWePTj4+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IIxXh3o2VzACwwWDYs22P9M/SXJ/rA91d45WtRJed8zZsikCA8kVTya062sd2ixv0
-	 acLDOKblBiKqyJAIepYM+1ZBDvwSkG2ewGT2Fejd/Dtc15UULksD2iitsGlYSkcQhP
-	 bmE0wEmPwHpDK0ubbwN67UUSzFFgP2k9mwiwk3WY=
+	b=QtCe6coYpqmb950h5BkTVtxt2HEixkmINWh5cFafNWLcRkhxCZ93sGMlNq+S3dCxC
+	 2/ETKtkx9fz6gFpio/1VxHQGDEURaIPObImyO0xsFL15aKa5jx7fMVmijlMdCWk8Sn
+	 /DiPgwhO0TxSWqUwZ8ih3LNTpycjo6VYzPC0Kd+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait@windriver.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 088/286] crypto: sahara - fix cbc selftest failure
-Date: Mon, 22 Jan 2024 15:56:34 -0800
-Message-ID: <20240122235735.423061701@linuxfoundation.org>
+Subject: [PATCH 6.1 181/417] drm/msm/mdp4: flush vblank event on disable
+Date: Mon, 22 Jan 2024 15:55:49 -0800
+Message-ID: <20240122235758.138462680@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,94 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait@windriver.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 9f10bc28c0fb676ae58aa3bfa358db8f5de124bb ]
+[ Upstream commit c6721b3c6423d8a348ae885a0f4c85e14f9bf85c ]
 
-The kernel crypto API requires that all CBC implementations update the IV
-buffer to contain the last ciphertext block.
+Flush queued events when disabling the crtc. This avoids timeouts when
+we come back and wait for dependencies (like the previous frame's
+flip_done).
 
-This fixes the following cbc selftest error:
-alg: skcipher: sahara-cbc-aes encryption test failed (wrong output IV) on
-test vector 0, cfg="in-place (one sglist)"
-
-Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/569127/
+Link: https://lore.kernel.org/r/20231127215401.4064128-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 33 +++++++++++++++++++++++++++++++--
- 1 file changed, 31 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index 0ae95767bb76..0b6e63a763ca 100644
---- a/drivers/crypto/sahara.c
-+++ b/drivers/crypto/sahara.c
-@@ -148,6 +148,7 @@ struct sahara_ctx {
- 
- struct sahara_aes_reqctx {
- 	unsigned long mode;
-+	u8 iv_out[AES_BLOCK_SIZE];
- 	struct skcipher_request fallback_req;	// keep at the end
- };
- 
-@@ -541,8 +542,24 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
- 	return -EINVAL;
- }
- 
-+static void sahara_aes_cbc_update_iv(struct skcipher_request *req)
-+{
-+	struct crypto_skcipher *skcipher = crypto_skcipher_reqtfm(req);
-+	struct sahara_aes_reqctx *rctx = skcipher_request_ctx(req);
-+	unsigned int ivsize = crypto_skcipher_ivsize(skcipher);
-+
-+	/* Update IV buffer to contain the last ciphertext block */
-+	if (rctx->mode & FLAGS_ENCRYPT) {
-+		sg_pcopy_to_buffer(req->dst, sg_nents(req->dst), req->iv,
-+				   ivsize, req->cryptlen - ivsize);
-+	} else {
-+		memcpy(req->iv, rctx->iv_out, ivsize);
-+	}
-+}
-+
- static int sahara_aes_process(struct skcipher_request *req)
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
+index 169f9de4a12a..3100957225a7 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
+@@ -269,6 +269,7 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
  {
-+	struct crypto_skcipher *skcipher = crypto_skcipher_reqtfm(req);
- 	struct sahara_dev *dev = dev_ptr;
- 	struct sahara_ctx *ctx;
- 	struct sahara_aes_reqctx *rctx;
-@@ -564,8 +581,17 @@ static int sahara_aes_process(struct skcipher_request *req)
- 	rctx->mode &= FLAGS_MODE_MASK;
- 	dev->flags = (dev->flags & ~FLAGS_MODE_MASK) | rctx->mode;
+ 	struct mdp4_crtc *mdp4_crtc = to_mdp4_crtc(crtc);
+ 	struct mdp4_kms *mdp4_kms = get_kms(crtc);
++	unsigned long flags;
  
--	if ((dev->flags & FLAGS_CBC) && req->iv)
--		memcpy(dev->iv_base, req->iv, AES_KEYSIZE_128);
-+	if ((dev->flags & FLAGS_CBC) && req->iv) {
-+		unsigned int ivsize = crypto_skcipher_ivsize(skcipher);
-+
-+		memcpy(dev->iv_base, req->iv, ivsize);
-+
-+		if (!(dev->flags & FLAGS_ENCRYPT)) {
-+			sg_pcopy_to_buffer(req->src, sg_nents(req->src),
-+					   rctx->iv_out, ivsize,
-+					   req->cryptlen - ivsize);
-+		}
+ 	DBG("%s", mdp4_crtc->name);
+ 
+@@ -281,6 +282,14 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
+ 	mdp_irq_unregister(&mdp4_kms->base, &mdp4_crtc->err);
+ 	mdp4_disable(mdp4_kms);
+ 
++	if (crtc->state->event && !crtc->state->active) {
++		WARN_ON(mdp4_crtc->event);
++		spin_lock_irqsave(&mdp4_kms->dev->event_lock, flags);
++		drm_crtc_send_vblank_event(crtc, crtc->state->event);
++		crtc->state->event = NULL;
++		spin_unlock_irqrestore(&mdp4_kms->dev->event_lock, flags);
 +	}
- 
- 	/* assign new context to device */
- 	dev->ctx = ctx;
-@@ -588,6 +614,9 @@ static int sahara_aes_process(struct skcipher_request *req)
- 	dma_unmap_sg(dev->device, dev->in_sg, dev->nb_in_sg,
- 		DMA_TO_DEVICE);
- 
-+	if ((dev->flags & FLAGS_CBC) && req->iv)
-+		sahara_aes_cbc_update_iv(req);
 +
- 	return 0;
+ 	mdp4_crtc->enabled = false;
  }
  
 -- 
