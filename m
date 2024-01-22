@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB3148CCD;
-	Tue, 23 Jan 2024 00:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7707D3A8F4;
+	Tue, 23 Jan 2024 00:30:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969856; cv=none; b=pJJldxBh6XX+oQAmZL/TSHZrchahmetlBB1W9vYFp0ro1PrjRZtgc/BZk3NJSxdFdessc3NsJ+OKLqzssg/T2Di8Gie9qcou0BM+sL906OiH5wj+7SbrFSI3v7l+QcdHCtWn4pyDyKorWlV2GQqDbg/Nd+zyq1UfAQHvwmAc7x4=
+	t=1705969859; cv=none; b=BwD/mdTH5sClpsTs89CGUcAH/G20+NKqQHvvLag+AwAfA/M2KaRda495h9L+50cJS0g62o4sl1twSI9a4ve1kZ6OWiPx2z3egd1s8490eSNtrj/qwuTbAH9AdH2uuNMc03sRRq3qxKOYaW6Hsq0b8RZNxLmabc0ieAqTJF/6mxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969856; c=relaxed/simple;
-	bh=/zOZPwGvZWhe/cDPfHM8G77s3PBCUOs89JIS1j6cy44=;
+	s=arc-20240116; t=1705969859; c=relaxed/simple;
+	bh=/nBreDkfSTp/5/oRtvmFe7pcKhudwGvv8F3HhNUJTag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mlQ6820v2RCL4/EPEoT+C3MXF5okt6HRq/f8XSwCQ//E2kVJ9msXObuT6t2RltwjdbcgjbUcSYXeseExB7/lzKNuSvxDI1I7oa4uxgvJAjfYfaTbC8qGQOgfbtqdn+p/JK73rYwHmEaTRoamvBXe6qkTBKmy4Oo0doVBneb/gTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FPdVWVcJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FhzwZHSLuwRl4BIfLsCzbnhiwVZ5ylBcK2U0iDfSsQBxRya9HU4jsEcFH3yShg3bZWRGtM1v57sqXK3zASFIhsjt1uYg9tvEycwIt8uJV67jzAPzH+l9KUbSL44OvKSmT5QDrsR1iLa7yrDr6GIt1cdxRjdXEQfZxiSOVFoYJRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQazztGp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FPdVWVcJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92744C433C7;
-	Tue, 23 Jan 2024 00:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQazztGp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5EFC433F1;
+	Tue, 23 Jan 2024 00:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969855;
-	bh=/zOZPwGvZWhe/cDPfHM8G77s3PBCUOs89JIS1j6cy44=;
+	s=korg; t=1705969857;
+	bh=/nBreDkfSTp/5/oRtvmFe7pcKhudwGvv8F3HhNUJTag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FPdVWVcJ+9KJZ4XF/c3sInm36kA+dBUj80Ap80TnUg8ICGRzK0LTbMSFfQKwBAY/0
-	 x0O9LpgzNumGLgPPCBYXiYM3GrmxuDKdfZm2/Hg3ZedCiT5Yd/z3gq5hqHUShE3kw+
-	 s7p4F3AHsrCU/8KxvZUxz0hrjX4qAcgWZCvmsxGM=
+	b=AQazztGp53AoDlKp+Rr2lA2CtXRkz1KLp52u3S0Nqg7T4Zualgc81yLNVUsFCbgW8
+	 H4k9nf/81ypNVV5env/gBT/Wocu/VfhsCf0kJiPoy5QOrkG296fMJvMnc5I4DIyFYu
+	 0rSpfWiYBTFPyAlh/zLWBIwGv0H/HhaUrU2JkkFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alex Vinarskis <alex.vinarskis@gmail.com>,
 	Lee Jones <lee@kernel.org>,
-	Kunwu Chan <chentao@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 488/641] mfd: tps6594: Add null pointer check to tps6594_device_init()
-Date: Mon, 22 Jan 2024 15:56:32 -0800
-Message-ID: <20240122235833.352000098@linuxfoundation.org>
+Subject: [PATCH 6.7 489/641] mfd: intel-lpss: Fix the fractional clock divider flags
+Date: Mon, 22 Jan 2024 15:56:33 -0800
+Message-ID: <20240122235833.378605423@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,37 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 825906f2ebe83977d747d8bce61675dddd72485d ]
+[ Upstream commit 03d790f04fb2507173913cad9c213272ac983a60 ]
 
-devm_kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure.
+The conversion to CLK_FRAC_DIVIDER_POWER_OF_TWO_PS uses wrong flags
+in the parameters and hence miscalculates the values in the clock
+divider. Fix this by applying the flag to the proper parameter.
 
-Fixes: 325bec7157b3 ("mfd: tps6594: Add driver for TI TPS6594 PMIC")
-Suggested-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Link: https://lore.kernel.org/r/20231208033320.49345-1-chentao@kylinos.cn
+Fixes: 82f53f9ee577 ("clk: fractional-divider: Introduce POWER_OF_TWO_PS flag")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reported-by: Alex Vinarskis <alex.vinarskis@gmail.com>
+Link: https://lore.kernel.org/r/20231211111441.3910083-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tps6594-core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mfd/intel-lpss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/tps6594-core.c b/drivers/mfd/tps6594-core.c
-index 0fb9c5cf213a..783ee59901e8 100644
---- a/drivers/mfd/tps6594-core.c
-+++ b/drivers/mfd/tps6594-core.c
-@@ -433,6 +433,9 @@ int tps6594_device_init(struct tps6594 *tps, bool enable_crc)
- 	tps6594_irq_chip.name = devm_kasprintf(dev, GFP_KERNEL, "%s-%ld-0x%02x",
- 					       dev->driver->name, tps->chip_id, tps->reg);
+diff --git a/drivers/mfd/intel-lpss.c b/drivers/mfd/intel-lpss.c
+index 9591b354072a..00e7b578bb3e 100644
+--- a/drivers/mfd/intel-lpss.c
++++ b/drivers/mfd/intel-lpss.c
+@@ -301,8 +301,8 @@ static int intel_lpss_register_clock_divider(struct intel_lpss *lpss,
  
-+	if (!tps6594_irq_chip.name)
-+		return -ENOMEM;
-+
- 	ret = devm_regmap_add_irq_chip(dev, tps->regmap, tps->irq, IRQF_SHARED | IRQF_ONESHOT,
- 				       0, &tps6594_irq_chip, &tps->irq_data);
- 	if (ret)
+ 	snprintf(name, sizeof(name), "%s-div", devname);
+ 	tmp = clk_register_fractional_divider(NULL, name, __clk_get_name(tmp),
++					      0, lpss->priv, 1, 15, 16, 15,
+ 					      CLK_FRAC_DIVIDER_POWER_OF_TWO_PS,
+-					      lpss->priv, 1, 15, 16, 15, 0,
+ 					      NULL);
+ 	if (IS_ERR(tmp))
+ 		return PTR_ERR(tmp);
 -- 
 2.43.0
 
