@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021265A0F0;
-	Tue, 23 Jan 2024 01:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD145FDBB;
+	Tue, 23 Jan 2024 01:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974661; cv=none; b=kSnTNk78hF6XkG+sLp5t0dVeDU3dUw0vDY5ILSg37mUQCVq2VIXZjEzcrQ6Vuvg1RXI+VyZi4hZhTrqRr8f5Z1tnsHFJiFV8+lLp2C7GLYWl6SSmcN28lqMdmYlcsPzMvs5FIlrF7DSY+8gAgOATG0dbZk4OtvOQ45CRalXIJo8=
+	t=1705974662; cv=none; b=ndw7DI+Xuww1cUwKcDKncX+TW4pXi8eZ5MmhskJxhKkD9NDwvE8d2l+g7eE9urboWXB8LkseErvxlpI2AtWq9CsAr3qouZ3Kan7fG6Fb750k23MuiOwvM6bafw6uAfDNj0dIwagA9bVtC7xLim/xVRBy7Sdgwwpu5+WVM1xFuDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974661; c=relaxed/simple;
-	bh=JCiZm+XFmpSwgY1CbYa5JS7rMtwaKMskjOeGMUIyvCE=;
+	s=arc-20240116; t=1705974662; c=relaxed/simple;
+	bh=uqcDoSYQCRu13k0LnoxsJWbsnoWCWAklBr3ACg1sAvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ot/q5AKROFcjmCFcVCKihI30c1k1rwjtjxVDzVUQHMBAek44RJqzvJ0VNav6YusxtMOGIUuuiC7UNMAZZei3XI12FSEbMblfRaAZuXMmj60k4dJ93W8E7yEWTV2TGzjD9gmduQErw8/cvqaoD6//G0/Y1XFIHRBBYyt47jVFj0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8vekrLm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gHzdtAGXQNnmnDruV2i8xaQq16t4IWuZ55M5cYyz0Z3XJ0di3Gi0AhfBblXJihGfmTFmFVlZ5Zbi77VWQrRTFbe18rYrWZlqzf3db5X0g6hzyoGtWzeZbrbfNyX8lIvQE9bj9gQaf/rpt+9pXtxuxOMXJoseVi917QMR6xjxzh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFMfF0Fu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8vekrLm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D0CC433C7;
-	Tue, 23 Jan 2024 01:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFMfF0Fu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F62C43390;
+	Tue, 23 Jan 2024 01:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974660;
-	bh=JCiZm+XFmpSwgY1CbYa5JS7rMtwaKMskjOeGMUIyvCE=;
+	s=korg; t=1705974661;
+	bh=uqcDoSYQCRu13k0LnoxsJWbsnoWCWAklBr3ACg1sAvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B8vekrLm4d8M+JsF/Pr0x3AqfbqTrUrzlyaDQ62U6HEIAuFTP4RaG56u5dn/UMYIy
-	 NpfMhElguQrsG3nivPhExh+KRyTvd7H5sq/OR5qbv9o2wzsf2kB19XYB6dBI/4VEjq
-	 NGma4Z6PquPqSrKvi5io+/4VCf9uzddtEKX6DvXI=
+	b=TFMfF0Fu9m/e7jFckDtx200N4JCWLuSjXvn9e3mFV8WUTmxRN/SRLMJZQqfTbKUPi
+	 p4YGpvxWjcwOpwULhb819hapoibnQ1Z83n1vMuNIJ+8bq1KJz5ZrlNkST+XdmSXVJK
+	 Tu1svZextfaBszPjWdTs2aeqletXlFq55jEe0gys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Max Gurtovoy <mgurtovoy@nvidia.com>,
+	Sergey Gorenko <sergeygo@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 229/374] pwm: stm32: Fix enable count for clk in .probe()
-Date: Mon, 22 Jan 2024 15:58:05 -0800
-Message-ID: <20240122235752.659714242@linuxfoundation.org>
+Subject: [PATCH 5.15 238/374] IB/iser: Prevent invalidating wrong MR
+Date: Mon, 22 Jan 2024 15:58:14 -0800
+Message-ID: <20240122235753.014043749@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -47,82 +46,137 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philipp Zabel <p.zabel@pengutronix.de>
+From: Sergey Gorenko <sergeygo@nvidia.com>
 
-[ Upstream commit 19f1016ea9600ed89bc24247c36ff5934ad94fbb ]
+[ Upstream commit 2f1888281e67205bd80d3e8f54dbd519a9653f26 ]
 
-Make the driver take over hardware state without disabling in .probe()
-and enable the clock for each enabled channel.
+The iser_reg_resources structure has two pointers to MR but only one
+mr_valid field. The implementation assumes that we use only *sig_mr when
+pi_enable is true. Otherwise, we use only *mr. However, it is only
+sometimes correct. Read commands without protection information occur even
+when pi_enble is true. For example, the following SCSI commands have a
+Data-In buffer but never have protection information: READ CAPACITY (16),
+INQUIRY, MODE SENSE(6), MAINTENANCE IN. So, we use
+*sig_mr for some SCSI commands and *mr for the other SCSI commands.
 
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
-[ukleinek: split off from a patch that also implemented .get_state()]
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
-Reviewed-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+In most cases, it works fine because the remote invalidation is applied.
+However, there are two cases when the remote invalidation is not
+applicable.
+ 1. Small write commands when all data is sent as an immediate.
+ 2. The target does not support the remote invalidation feature.
+
+The lazy invalidation is used if the remote invalidation is impossible.
+Since, at the lazy invalidation, we always invalidate the MR we want to
+use, the wrong MR may be invalidated.
+
+To fix the issue, we need a field per MR that indicates the MR needs
+invalidation. Since the ib_mr structure already has such a field, let's
+use ib_mr.need_inval instead of iser_reg_resources.mr_valid.
+
+Fixes: b76a439982f8 ("IB/iser: Use IB_WR_REG_MR_INTEGRITY for PI handover")
+Link: https://lore.kernel.org/r/20231219072311.40989-1-sergeygo@nvidia.com
+Acked-by: Max Gurtovoy <mgurtovoy@nvidia.com>
+Signed-off-by: Sergey Gorenko <sergeygo@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/infiniband/ulp/iser/iscsi_iser.h     | 2 --
+ drivers/infiniband/ulp/iser/iser_initiator.c | 5 ++++-
+ drivers/infiniband/ulp/iser/iser_memory.c    | 8 ++++----
+ drivers/infiniband/ulp/iser/iser_verbs.c     | 1 -
+ 4 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
-index 9c260aac442d..bdcdb7f38312 100644
---- a/drivers/pwm/pwm-stm32.c
-+++ b/drivers/pwm/pwm-stm32.c
-@@ -575,17 +575,21 @@ static void stm32_pwm_detect_complementary(struct stm32_pwm *priv)
- 	priv->have_complementary_output = (ccer != 0);
+diff --git a/drivers/infiniband/ulp/iser/iscsi_iser.h b/drivers/infiniband/ulp/iser/iscsi_iser.h
+index 9f6ac0a09a78..35cc0a57e697 100644
+--- a/drivers/infiniband/ulp/iser/iscsi_iser.h
++++ b/drivers/infiniband/ulp/iser/iscsi_iser.h
+@@ -321,12 +321,10 @@ struct iser_device {
+  *
+  * @mr:         memory region
+  * @sig_mr:     signature memory region
+- * @mr_valid:   is mr valid indicator
+  */
+ struct iser_reg_resources {
+ 	struct ib_mr                     *mr;
+ 	struct ib_mr                     *sig_mr;
+-	u8				  mr_valid:1;
+ };
+ 
+ /**
+diff --git a/drivers/infiniband/ulp/iser/iser_initiator.c b/drivers/infiniband/ulp/iser/iser_initiator.c
+index 27a6f75a9912..9ea88dd6a414 100644
+--- a/drivers/infiniband/ulp/iser/iser_initiator.c
++++ b/drivers/infiniband/ulp/iser/iser_initiator.c
+@@ -602,7 +602,10 @@ iser_inv_desc(struct iser_fr_desc *desc, u32 rkey)
+ 		return -EINVAL;
+ 	}
+ 
+-	desc->rsc.mr_valid = 0;
++	if (desc->sig_protected)
++		desc->rsc.sig_mr->need_inval = false;
++	else
++		desc->rsc.mr->need_inval = false;
+ 
+ 	return 0;
  }
+diff --git a/drivers/infiniband/ulp/iser/iser_memory.c b/drivers/infiniband/ulp/iser/iser_memory.c
+index 9776b755d848..c362043e7f17 100644
+--- a/drivers/infiniband/ulp/iser/iser_memory.c
++++ b/drivers/infiniband/ulp/iser/iser_memory.c
+@@ -250,7 +250,7 @@ iser_reg_sig_mr(struct iscsi_iser_task *iser_task,
  
--static unsigned int stm32_pwm_detect_channels(struct stm32_pwm *priv)
-+static unsigned int stm32_pwm_detect_channels(struct stm32_pwm *priv,
-+					      unsigned int *num_enabled)
- {
--	u32 ccer;
-+	u32 ccer, ccer_backup;
+ 	iser_set_prot_checks(iser_task->sc, &sig_attrs->check_mask);
  
- 	/*
- 	 * If channels enable bits don't exist writing 1 will have no
- 	 * effect so we can detect and count them.
- 	 */
-+	regmap_read(priv->regmap, TIM_CCER, &ccer_backup);
- 	regmap_set_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
- 	regmap_read(priv->regmap, TIM_CCER, &ccer);
--	regmap_clear_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
-+	regmap_write(priv->regmap, TIM_CCER, ccer_backup);
-+
-+	*num_enabled = hweight32(ccer_backup & TIM_CCER_CCXE);
+-	if (rsc->mr_valid)
++	if (rsc->sig_mr->need_inval)
+ 		iser_inv_rkey(&tx_desc->inv_wr, mr, cqe, &wr->wr);
  
- 	return hweight32(ccer & TIM_CCER_CCXE);
- }
-@@ -596,6 +600,8 @@ static int stm32_pwm_probe(struct platform_device *pdev)
- 	struct device_node *np = dev->of_node;
- 	struct stm32_timers *ddata = dev_get_drvdata(pdev->dev.parent);
- 	struct stm32_pwm *priv;
-+	unsigned int num_enabled;
-+	unsigned int i;
- 	int ret;
+ 	ib_update_fast_reg_key(mr, ib_inc_rkey(mr->rkey));
+@@ -274,7 +274,7 @@ iser_reg_sig_mr(struct iscsi_iser_task *iser_task,
+ 	wr->access = IB_ACCESS_LOCAL_WRITE |
+ 		     IB_ACCESS_REMOTE_READ |
+ 		     IB_ACCESS_REMOTE_WRITE;
+-	rsc->mr_valid = 1;
++	rsc->sig_mr->need_inval = true;
  
- 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-@@ -618,7 +624,11 @@ static int stm32_pwm_probe(struct platform_device *pdev)
+ 	sig_reg->sge.lkey = mr->lkey;
+ 	sig_reg->rkey = mr->rkey;
+@@ -299,7 +299,7 @@ static int iser_fast_reg_mr(struct iscsi_iser_task *iser_task,
+ 	struct ib_reg_wr *wr = &tx_desc->reg_wr;
+ 	int n;
  
- 	priv->chip.dev = dev;
- 	priv->chip.ops = &stm32pwm_ops;
--	priv->chip.npwm = stm32_pwm_detect_channels(priv);
-+	priv->chip.npwm = stm32_pwm_detect_channels(priv, &num_enabled);
-+
-+	/* Initialize clock refcount to number of enabled PWM channels. */
-+	for (i = 0; i < num_enabled; i++)
-+		clk_enable(priv->clk);
+-	if (rsc->mr_valid)
++	if (rsc->mr->need_inval)
+ 		iser_inv_rkey(&tx_desc->inv_wr, mr, cqe, &wr->wr);
  
- 	ret = pwmchip_add(&priv->chip);
- 	if (ret < 0)
+ 	ib_update_fast_reg_key(mr, ib_inc_rkey(mr->rkey));
+@@ -322,7 +322,7 @@ static int iser_fast_reg_mr(struct iscsi_iser_task *iser_task,
+ 		     IB_ACCESS_REMOTE_WRITE |
+ 		     IB_ACCESS_REMOTE_READ;
+ 
+-	rsc->mr_valid = 1;
++	rsc->mr->need_inval = true;
+ 
+ 	reg->sge.lkey = mr->lkey;
+ 	reg->rkey = mr->rkey;
+diff --git a/drivers/infiniband/ulp/iser/iser_verbs.c b/drivers/infiniband/ulp/iser/iser_verbs.c
+index b566f7cb7797..8656664a15c5 100644
+--- a/drivers/infiniband/ulp/iser/iser_verbs.c
++++ b/drivers/infiniband/ulp/iser/iser_verbs.c
+@@ -136,7 +136,6 @@ iser_create_fastreg_desc(struct iser_device *device,
+ 			goto err_alloc_mr_integrity;
+ 		}
+ 	}
+-	desc->rsc.mr_valid = 0;
+ 
+ 	return desc;
+ 
 -- 
 2.43.0
 
