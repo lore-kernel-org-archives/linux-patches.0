@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC8F4E1AD;
-	Tue, 23 Jan 2024 01:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B275B4E1AD;
+	Tue, 23 Jan 2024 01:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975079; cv=none; b=EyCJ9MTvagX4rVjdklJO6Y8Ipz8PgZaj/ug7nJy98yarSpDSKJ51ZccMrFj1MyAUe1YyDm3CSWBr8NzFf3wQKc+lrOTJftUSAjue1DbGjm4iDKucScX6KY/3DHNRU4OqNDBEM2ORnuv6VgYAvEhi0LF45DY2WR87Lq62P9lbwC4=
+	t=1705975080; cv=none; b=VS303BtAQVZY3iTT1tc3iMpbq7DbEn//zhLScHPbVs0+6Y9XIxnyR1W1hrfNJBCZfUSAOkyHjwM3h63KWc52KUj+38ReA8d6thQbmWtHWOrmwBNWrirvEBhPna821YyoW+AIuD5UBw+mWylw12EFYepDRP+WSbDehhwVKK9ccr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975079; c=relaxed/simple;
-	bh=7E+0oduQjXiZLLuPPQlQbywNgINTGR4rZ3XpBjeM/kA=;
+	s=arc-20240116; t=1705975080; c=relaxed/simple;
+	bh=Nskk63iczY4wphG6jYoTrzd4wnOMvjI45TaybaKrrAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gufb/HfhHAB3XO2W0BEk6gdaBN0mSkpqxDQkc2UqEgt4nZvuidJXIXEM1vFU5x1ITeQb6TXEDEgfcEqtT9w5agh3tr1TeR0oGFLZbdgawmRY+BvjWh/iEofbuLFOFgtaOAZx+mcMY3ZaMceHg5X4swj3EJYzv3bGLZetNpeFc/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnxEpI/N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dceXJtbUeK+aeZTvCAf0EM7iP1TXKP1ciXEX/Fg4j9ddz8z6OksQv8EMpDHVPxFLQaCccdR2NrvgA9bQo1OIvSC2fVkqjwa3x04FquHtOnTdePK25uZmm3t/g9soCfzg93hjhbjpgvlrYdGxtHvtOfnHN5p9mUaBQV4T9BpDvfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MP1lqL1o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnxEpI/N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9D4C433F1;
-	Tue, 23 Jan 2024 01:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MP1lqL1o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD6AC433C7;
+	Tue, 23 Jan 2024 01:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975078;
-	bh=7E+0oduQjXiZLLuPPQlQbywNgINTGR4rZ3XpBjeM/kA=;
+	s=korg; t=1705975080;
+	bh=Nskk63iczY4wphG6jYoTrzd4wnOMvjI45TaybaKrrAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MnxEpI/NmDVeAaSOV20AOmTHaBaJqUoQBD9fUqqg5bu/IkD7iaVCs6mOXCLdh9QCo
-	 RNlUIZzJjIHgdrCwtbVPcVnCU1h3ThXWjsw+jxX2fSFr9zjiAuOITl9Q0BlUW0r69r
-	 btypZEj21A0ius8lglUuHUOLcWsSkYHQQ2YF8edA=
+	b=MP1lqL1oMHYvDFJKoXo0P3DZ5YgKeksUbvk3hDH4R3lOvTH86USy11dx0P3VmNYym
+	 lTei/IEoe40LltUppn72mKaC+QY2Ga+ic6yqzwiuSBKXvftg9ds8Y57T7qSZwg/9N4
+	 Ik35td8T+9bfth1gMnARFRIGQf9Cbn7Hh9vQnqbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Douglas Anderson <dianders@chromium.org>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 356/374] kdb: Fix a potential buffer overflow in kdb_local()
-Date: Mon, 22 Jan 2024 16:00:12 -0800
-Message-ID: <20240122235757.327557487@linuxfoundation.org>
+Subject: [PATCH 6.6 229/583] drm/panel-elida-kd35t133: hold panel in reset for unprepare
+Date: Mon, 22 Jan 2024 15:54:40 -0800
+Message-ID: <20240122235819.002321503@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Chris Morgan <macromorgan@hotmail.com>
 
-[ Upstream commit 4f41d30cd6dc865c3cbc1a852372321eba6d4e4c ]
+[ Upstream commit 03c5b2a5f6c39fe4e090346536cf1c14ee18b61e ]
 
-When appending "[defcmd]" to 'kdb_prompt_str', the size of the string
-already in the buffer should be taken into account.
+For devices like the Anbernic RG351M and RG351P the panel is wired to
+an always on regulator. When the device suspends and wakes up, there
+are some slight artifacts on the screen that go away over time. If
+instead we hold the panel in reset status after it is unprepared,
+this does not happen.
 
-An option could be to switch from strncat() to strlcat() which does the
-correct test to avoid such an overflow.
-
-However, this actually looks as dead code, because 'defcmd_in_progress'
-can't be true here.
-See a more detailed explanation at [1].
-
-[1]: https://lore.kernel.org/all/CAD=FV=WSh7wKN7Yp-3wWiDgX4E3isQ8uh0LCzTmd1v9Cg9j+nQ@mail.gmail.com/
-
-Fixes: 5d5314d6795f ("kdb: core for kgdb back end (1 of 2)")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Fixes: 5b6603360c12 ("drm/panel: add panel driver for Elida KD35T133 panels")
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Link: https://lore.kernel.org/r/20231117194405.1386265-3-macroalpha82@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231117194405.1386265-3-macroalpha82@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/debug/kdb/kdb_main.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/panel/panel-elida-kd35t133.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/debug/kdb/kdb_main.c b/kernel/debug/kdb/kdb_main.c
-index ead4da947127..23723c5727aa 100644
---- a/kernel/debug/kdb/kdb_main.c
-+++ b/kernel/debug/kdb/kdb_main.c
-@@ -1350,8 +1350,6 @@ static int kdb_local(kdb_reason_t reason, int error, struct pt_regs *regs,
- 		/* PROMPT can only be set if we have MEM_READ permission. */
- 		snprintf(kdb_prompt_str, CMD_BUFLEN, kdbgetenv("PROMPT"),
- 			 raw_smp_processor_id());
--		if (defcmd_in_progress)
--			strncat(kdb_prompt_str, "[defcmd]", CMD_BUFLEN);
+diff --git a/drivers/gpu/drm/panel/panel-elida-kd35t133.c b/drivers/gpu/drm/panel/panel-elida-kd35t133.c
+index e7be15b68102..6de117232346 100644
+--- a/drivers/gpu/drm/panel/panel-elida-kd35t133.c
++++ b/drivers/gpu/drm/panel/panel-elida-kd35t133.c
+@@ -104,6 +104,8 @@ static int kd35t133_unprepare(struct drm_panel *panel)
+ 		return ret;
+ 	}
  
- 		/*
- 		 * Fetch command from keyboard
++	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
++
+ 	regulator_disable(ctx->iovcc);
+ 	regulator_disable(ctx->vdd);
+ 
 -- 
 2.43.0
 
