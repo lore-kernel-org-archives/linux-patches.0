@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E94C60252;
-	Tue, 23 Jan 2024 00:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE1A60252;
+	Tue, 23 Jan 2024 00:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970857; cv=none; b=ctx2qHnyCRPvp7cFkkL//dJFAAET+3rnWs8HX6FyZh/Vp6kUl+GNWi8KgYD+L3BfxVS/NCqdXCg1GVbhmsVt0nUgkJFZnWqvcKsZZBjBD1ZT9N9Zis7IWvDoixZrqKCVJ2cycek4uEFP/5HRPDcOuhhe0e2H+5O35SBnkO18s9g=
+	t=1705970858; cv=none; b=LDjMgHyVcNDL/hdujP7yxbMHjL8XmYWa5RtSrG0RgXq9BArCP491qdzoKVH50D5ncKAy10ksQmtV5Jwl1fKnLiMaN3EQzvZhTkdEX0uY1QbQqSVBaB9ypg0fEPeIQp19l1dFMGdUmarsW47LdsMwNXjSQNqqLPQZ09GkKoZ9E8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970857; c=relaxed/simple;
-	bh=qDweAP6AwiHEp0NvNS/lpgWyPy2JUYQb+kMsMvEmo8k=;
+	s=arc-20240116; t=1705970858; c=relaxed/simple;
+	bh=WMYlOjXJIsboZTQrVqK3u+DeiYlBNkw0rdFk8HY7SSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g0Mp3xrG4pTIKzhTzWNmrJS22/qZV/1fnLUzlKPR4JsltPkjzZMOXgJB/+5MH5xwXAhYS92zeK26eXR/PADq6x7F0xm4hlRG8w6Wve+ExDbKL4b1bQd6gnC5asYMZG7hgpvKGMBwQvxE+ab+knQS9dmFVOtu1s7/vcFPJ53fIHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJ/NrIjA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qwxAssjgh77W1/+vPDIonKJI/yw9nHUor4Y5dAh4NJPgp6h2dNt5WD765Mzn7Y8fiuzU3zYofhkkFnfHlUI9CNIIUwz2y+Ho/hOnxPWap0Z64+L9Ne5g/jgBAY9pffi+tSL6bNsX01+c7g6mYBdJuH7XhjJ/pA7YTOh9oumnXrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziSkNLLs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJ/NrIjA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ACBDC43390;
-	Tue, 23 Jan 2024 00:47:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziSkNLLs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D9EC433B1;
+	Tue, 23 Jan 2024 00:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970857;
-	bh=qDweAP6AwiHEp0NvNS/lpgWyPy2JUYQb+kMsMvEmo8k=;
+	s=korg; t=1705970858;
+	bh=WMYlOjXJIsboZTQrVqK3u+DeiYlBNkw0rdFk8HY7SSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJ/NrIjAD2BAxKQga9VLoK2rV7aP1Nz53LT1+ZVb34lBYSphcTw7DH6SJwCc5z37e
-	 Aoh+IVGU2RfZs0Mf1B7fqSS9aCTZ/m+dhVE0W2g/bhO959O3JDw6tthy4r2VbdodBb
-	 wtisSLAvr/+yiynsYEmno4gKxHWxJtLTqvUSNixk=
+	b=ziSkNLLsmB5chKEtaXoogFC+JavA6UQo+CgbPYX7Wpopgd2t9bLHKSXkuTDbTYjF4
+	 1siYqcwKDd5UEbE4iysuYcRNWb9kTML6B+ZtRimPSABK1yjuYvZdPv4pG2BCBCz+jB
+	 RIFzBanjDhGg1Y6rf5/Thwxt0L/NXEROPIRVGNoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 126/417] block: add check of minors and first_minor in device_add_disk()
-Date: Mon, 22 Jan 2024 15:54:54 -0800
-Message-ID: <20240122235756.167113946@linuxfoundation.org>
+Subject: [PATCH 5.10 032/286] s390/scm: fix virtual vs physical address confusion
+Date: Mon, 22 Jan 2024 15:55:38 -0800
+Message-ID: <20240122235733.256599214@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Vineeth Vijayan <vneethv@linux.ibm.com>
 
-[ Upstream commit 4c434392c4777881d01beada6701eff8c76b43fe ]
+[ Upstream commit b1a6a1a77f0666a5a6dc0893ab6ec8fcae46f24c ]
 
-'first_minor' represents the starting minor number of disks, and
-'minors' represents the number of partitions in the device. Neither
-of them can be greater than MINORMASK + 1.
+Fix virtual vs physical address confusion (which currently are the same).
 
-Commit e338924bd05d ("block: check minor range in device_add_disk()")
-only added the check of 'first_minor + minors'. However, their sum might
-be less than MINORMASK but their values are wrong. Complete the checks now.
-
-Fixes: e338924bd05d ("block: check minor range in device_add_disk()")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20231219075942.840255-1-linan666@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/s390/block/scm_blk.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 5b23f2c3d692..8e9d162cbdbd 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -444,7 +444,9 @@ int __must_check device_add_disk(struct device *parent, struct gendisk *disk,
- 				DISK_MAX_PARTS);
- 			disk->minors = DISK_MAX_PARTS;
- 		}
--		if (disk->first_minor + disk->minors > MINORMASK + 1)
-+		if (disk->first_minor > MINORMASK ||
-+		    disk->minors > MINORMASK + 1 ||
-+		    disk->first_minor + disk->minors > MINORMASK + 1)
- 			goto out_exit_elevator;
- 	} else {
- 		if (WARN_ON(disk->minors))
+diff --git a/drivers/s390/block/scm_blk.c b/drivers/s390/block/scm_blk.c
+index a4f6f2e62b1d..b5b36217b15e 100644
+--- a/drivers/s390/block/scm_blk.c
++++ b/drivers/s390/block/scm_blk.c
+@@ -18,6 +18,7 @@
+ #include <linux/genhd.h>
+ #include <linux/slab.h>
+ #include <linux/list.h>
++#include <linux/io.h>
+ #include <asm/eadm.h>
+ #include "scm_blk.h"
+ 
+@@ -131,7 +132,7 @@ static void scm_request_done(struct scm_request *scmrq)
+ 
+ 	for (i = 0; i < nr_requests_per_io && scmrq->request[i]; i++) {
+ 		msb = &scmrq->aob->msb[i];
+-		aidaw = msb->data_addr;
++		aidaw = (u64)phys_to_virt(msb->data_addr);
+ 
+ 		if ((msb->flags & MSB_FLAG_IDA) && aidaw &&
+ 		    IS_ALIGNED(aidaw, PAGE_SIZE))
+@@ -196,12 +197,12 @@ static int scm_request_prepare(struct scm_request *scmrq)
+ 	msb->scm_addr = scmdev->address + ((u64) blk_rq_pos(req) << 9);
+ 	msb->oc = (rq_data_dir(req) == READ) ? MSB_OC_READ : MSB_OC_WRITE;
+ 	msb->flags |= MSB_FLAG_IDA;
+-	msb->data_addr = (u64) aidaw;
++	msb->data_addr = (u64)virt_to_phys(aidaw);
+ 
+ 	rq_for_each_segment(bv, req, iter) {
+ 		WARN_ON(bv.bv_offset);
+ 		msb->blk_count += bv.bv_len >> 12;
+-		aidaw->data_addr = (u64) page_address(bv.bv_page);
++		aidaw->data_addr = virt_to_phys(page_address(bv.bv_page));
+ 		aidaw++;
+ 	}
+ 
 -- 
 2.43.0
 
