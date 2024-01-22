@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B514F14A081;
-	Tue, 23 Jan 2024 01:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A3714901A;
+	Tue, 23 Jan 2024 01:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972094; cv=none; b=Mk4wNgLU0tS6QUT3Z3a5c0Tc7SNWACgWwgnSotDtHYWVppIlgDfELLG7fqbvY3LDOHNzrO2aavafMNL330Z5jZfM14tEHDWdIC3eIMBwQJIdCaqlOQKD86oSw++8+j9VdYYAOlahy5oE42YtSoV/aO4NhN2hXdr0zNHzoDs0Krk=
+	t=1705972095; cv=none; b=Xd2O9QF5glvqCyH0rc+APVnmlr96Xs7pVJYQ3oOP3MkCwJ+NQBHmNdBzEBD9U6oK0iPUcfyY3u2frAUq8s3PgYCfxwjs0TxfLgqsOwLXhAiFNFksW3jVZSMo3lhPu/yVA5pnrGQKfRKxFMN6kfMT9gXecF6L0h2BlxLyoHP0xoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972094; c=relaxed/simple;
-	bh=vv/9t2JFDqO05oCGvKTkh53DqMzY0dLZOxRU+YukSng=;
+	s=arc-20240116; t=1705972095; c=relaxed/simple;
+	bh=Ufke1clUGDsFUGtyHVE4P12AflyIoI0r9EGtAo7k33M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iZn7EXE7VZJD/fLM6UC75vvOS+YOVn9+KjffSmqK+Q1l+RQfPZjh4yWCzgVjrsBTwKMUmQuVTr1Xx9ddkiSQ4xpTHfsMkqRt5iwfDMACOaTaL8yylpGAdAvZTJT28K6ZSGwhvP1MjRHMnTbzTvtaAKFQvA0SUuGO9szspAo3pe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZesSJyZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fYjP92rlfGRCIy7SiQPuYvtnMiTra2hq83ktm3QqocE88DQGzphVEvyLjeu2FkCyXJ0wvTIbMzZG/mfzX9hEVmDXpKFY8FwzGU1gxDEQEG9NEXuRsqudoZHJLVRBD7jh4S3MBrN6axnHZY9T3TcK1XWphfrOjeKCwJKifrOdxzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaytkMb7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZesSJyZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17428C433B1;
-	Tue, 23 Jan 2024 01:08:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaytkMb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4019AC433C7;
+	Tue, 23 Jan 2024 01:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972094;
-	bh=vv/9t2JFDqO05oCGvKTkh53DqMzY0dLZOxRU+YukSng=;
+	s=korg; t=1705972095;
+	bh=Ufke1clUGDsFUGtyHVE4P12AflyIoI0r9EGtAo7k33M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bZesSJyZ6CK92TB0ZJF5N5xIYyK7pogXL36MgOL0Y5wqvJcVVSQ7+heXrhDeuB638
-	 oU2K49gk23s+V646O2L2TJzJRaRz905NsJvYu17xa0s77tCA4HeoSI6odMHIeoGf+Z
-	 SBbJzPDAMJ+gY/0DaBD5qb7z/WL6QquqrdNo16us=
+	b=TaytkMb7QuaODW9xJYYt34JyCg2JwrXbF52m+EDwPlp7btIf07bO4VJdRXBlECScU
+	 rYCJMkgZh9BJrVWjXB+4RA2FntdFnLkcQ0O39ROX6PSV5TL62brDmFerUprSsfMTTg
+	 dZljbMf15i7Po98lnVRn2cHwqrWdUGM/eALFTD14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/374] stmmac: dwmac-loongson: drop useless check for compatible fallback
-Date: Mon, 22 Jan 2024 15:54:49 -0800
-Message-ID: <20240122235745.798169956@linuxfoundation.org>
+Subject: [PATCH 5.15 034/374] MIPS: dts: loongson: drop incorrect dwmac fallback compatible
+Date: Mon, 22 Jan 2024 15:54:50 -0800
+Message-ID: <20240122235745.838629979@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -56,7 +56,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 31fea092c6f9f8fb2c40a08137907f5fbeae55dd ]
+[ Upstream commit 4907a3f54b12b8209864572a312cf967befcae80 ]
 
 Device binds to proper PCI ID (LOONGSON, 0x7a03), already listed in DTS,
 so checking for some other compatible does not make sense.  It cannot be
@@ -71,25 +71,38 @@ Acked-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c | 5 -----
- 1 file changed, 5 deletions(-)
+ arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi | 3 +--
+ arch/mips/boot/dts/loongson/ls7a-pch.dtsi          | 3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-index cef9734ef259..da7b5d26a589 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-@@ -59,11 +59,6 @@ static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id
- 		return -ENODEV;
- 	}
+diff --git a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
+index bfc3d3243ee7..d73d8f4fd78e 100644
+--- a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
++++ b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
+@@ -118,8 +118,7 @@ gmac@3,0 {
+ 				compatible = "pci0014,7a03.0",
+ 						   "pci0014,7a03",
+ 						   "pciclass0c0320",
+-						   "pciclass0c03",
+-						   "loongson, pci-gmac";
++						   "pciclass0c03";
  
--	if (!of_device_is_compatible(np, "loongson, pci-gmac")) {
--		pr_info("dwmac_loongson_pci: Incompatible OF node\n");
--		return -ENODEV;
--	}
--
- 	plat = devm_kzalloc(&pdev->dev, sizeof(*plat), GFP_KERNEL);
- 	if (!plat)
- 		return -ENOMEM;
+ 				reg = <0x1800 0x0 0x0 0x0 0x0>;
+ 				interrupts = <12 IRQ_TYPE_LEVEL_LOW>,
+diff --git a/arch/mips/boot/dts/loongson/ls7a-pch.dtsi b/arch/mips/boot/dts/loongson/ls7a-pch.dtsi
+index 2f45fce2cdc4..ed99ee316feb 100644
+--- a/arch/mips/boot/dts/loongson/ls7a-pch.dtsi
++++ b/arch/mips/boot/dts/loongson/ls7a-pch.dtsi
+@@ -186,8 +186,7 @@ gmac@3,0 {
+ 				compatible = "pci0014,7a03.0",
+ 						   "pci0014,7a03",
+ 						   "pciclass020000",
+-						   "pciclass0200",
+-						   "loongson, pci-gmac";
++						   "pciclass0200";
+ 
+ 				reg = <0x1800 0x0 0x0 0x0 0x0>;
+ 				interrupts = <12 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.43.0
 
