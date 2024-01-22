@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65D75B5D5;
-	Tue, 23 Jan 2024 01:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169715B5D9;
+	Tue, 23 Jan 2024 01:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974339; cv=none; b=hF8jcxj7WAWbpwRKwmWZG5Gc4N4QbQvcoU1lYvmOP10bXb7fjwzZzqlxagdAowhf+yw3cFlrSroXNyB528LpoLIF2wwg7HmDUcQLfvRp1Jq9r5bZAYtTT5PTMPguqZOixqq+xfBIlz+3QaqjAsDx2FzhBmq7AznrC8b2GsPs93c=
+	t=1705974340; cv=none; b=bnbLqw1S1CAY5R8lM/1YLlUVSJnS3GZJB2C6xB+pk+ToomZnSC147kflbpjHtxP7lLL1a5kE6ECwX9lGbFgwAfiFb41SeoBkg9MoNiqNYSdtLouuIxorWPnYWgFJCWA76CLOLoQkxtpxQZQx0Wuz2iM89KCat5BihIdLfMMN8Ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974339; c=relaxed/simple;
-	bh=lo3ovHxrEtFbo8yist3VLhFK1u80DChUemkVTLDk9VM=;
+	s=arc-20240116; t=1705974340; c=relaxed/simple;
+	bh=cvXYlxEvq73+EyDYkxtL12ZFVCtQ2+S2skRLetCfjWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jk3jL/6ACJ14fCsajD2TYedDBNJ2irodNN6PsZ7kuBrjBq2k6GEhFJXuM5mym6FfUUxtTRki/3Xp/+O5ejk6rC4hJjEXqSMllCcv8o6g/tzusq7t4FcCb6K1EJQ/zsyjhN/pFVhFzYAtjiiQA2dzaaIbgpF84gM1uiuWMCqeDCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZN6LL193; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aQRGtMZy6U5zuCCYWuiUO81+9X0glvlSb5a5kbc2Ee/r/oGIR4GpTnK8/E9XE9f3JCaUDfIRJRi7KpLtRHBgU3TFrBQHW9Nv+mb40Rmxf9eJ/ssdoddjZ/mB/CXy2RN0OzDWfu7m8JoEx04Ll/J8ljRUb0naPzSEpBNuDxPM6ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAaexk8v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZN6LL193"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81C4C433F1;
-	Tue, 23 Jan 2024 01:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAaexk8v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAB0C43390;
+	Tue, 23 Jan 2024 01:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974338;
-	bh=lo3ovHxrEtFbo8yist3VLhFK1u80DChUemkVTLDk9VM=;
+	s=korg; t=1705974339;
+	bh=cvXYlxEvq73+EyDYkxtL12ZFVCtQ2+S2skRLetCfjWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZN6LL193bHSmD1biK1Y8EGdjSg+DslRNE3Rim3842CvEzfFvfKiATdswOOdLk31lZ
-	 pafY4UgYxfAVOSt8/XP1rABDdJRsvU+SivGqKrjtz5eVDvhp4r55zfK3IJ1CgfVIXR
-	 KzSzoM5E/rBRAEAO1TqiqUY7kcqU4Cm+lBnxK9Pc=
+	b=zAaexk8vcnsCKh0E39SktP+FLyp+Bcy80F2UvQbxbkJo/6I1ePSV7SwtwcHT79DeT
+	 WgvlD7HTXi/WE3xihMGiR6b9RTz24DKy7hMP4bc7Ed95aXdE2/glCIJ+TNWtL8lYCP
+	 DIu4skiQ2gFPgASLGHu9EZuwD/4koas49CCCs/GQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Wenkai Lin <linwenkai6@hisilicon.com>,
+	Hao Fang <fanghao11@huawei.com>,
+	Zhiqi Song <songzhiqi1@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 182/374] drm/bridge: tpd12s015: Drop buggy __exit annotation for remove function
-Date: Mon, 22 Jan 2024 15:57:18 -0800
-Message-ID: <20240122235750.965066035@linuxfoundation.org>
+Subject: [PATCH 6.6 056/583] crypto: hisilicon/qm - add a function to set qm algs
+Date: Mon, 22 Jan 2024 15:51:47 -0800
+Message-ID: <20240122235813.844827468@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,53 +47,389 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Wenkai Lin <linwenkai6@hisilicon.com>
 
-[ Upstream commit ce3e112e7ae854249d8755906acc5f27e1542114 ]
+[ Upstream commit f76f0d7f20672611974d3cc705996751fc403734 ]
 
-With tpd12s015_remove() marked with __exit this function is discarded
-when the driver is compiled as a built-in. The result is that when the
-driver unbinds there is no cleanup done which results in resource
-leakage or worse.
+Extract a public function to set qm algs and remove
+the similar code for setting qm algs in each module.
 
-Fixes: cff5e6f7e83f ("drm/bridge: Add driver for the TI TPD12S015 HDMI level shifter")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231102165640.3307820-19-u.kleine-koenig@pengutronix.de
+Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
+Signed-off-by: Hao Fang <fanghao11@huawei.com>
+Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: cf8b5156bbc8 ("crypto: hisilicon/hpre - save capability registers in probe process")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-tpd12s015.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/hisilicon/hpre/hpre_main.c | 42 ++-----------------
+ drivers/crypto/hisilicon/qm.c             | 36 +++++++++++++++++
+ drivers/crypto/hisilicon/sec2/sec_main.c  | 47 ++++------------------
+ drivers/crypto/hisilicon/zip/zip_main.c   | 49 ++++-------------------
+ include/linux/hisi_acc_qm.h               |  8 +++-
+ 5 files changed, 62 insertions(+), 120 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-tpd12s015.c b/drivers/gpu/drm/bridge/ti-tpd12s015.c
-index e0e015243a60..b588fea12502 100644
---- a/drivers/gpu/drm/bridge/ti-tpd12s015.c
-+++ b/drivers/gpu/drm/bridge/ti-tpd12s015.c
-@@ -179,7 +179,7 @@ static int tpd12s015_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_main.c b/drivers/crypto/hisilicon/hpre/hpre_main.c
+index 3dce35debf63..4b3cba95950b 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_main.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_main.c
+@@ -117,8 +117,6 @@
+ #define HPRE_DFX_COMMON2_LEN		0xE
+ #define HPRE_DFX_CORE_LEN		0x43
+ 
+-#define HPRE_DEV_ALG_MAX_LEN	256
+-
+ static const char hpre_name[] = "hisi_hpre";
+ static struct dentry *hpre_debugfs_root;
+ static const struct pci_device_id hpre_dev_ids[] = {
+@@ -134,12 +132,7 @@ struct hpre_hw_error {
+ 	const char *msg;
+ };
+ 
+-struct hpre_dev_alg {
+-	u32 alg_msk;
+-	const char *alg;
+-};
+-
+-static const struct hpre_dev_alg hpre_dev_algs[] = {
++static const struct qm_dev_alg hpre_dev_algs[] = {
+ 	{
+ 		.alg_msk = BIT(0),
+ 		.alg = "rsa\n"
+@@ -361,35 +354,6 @@ bool hpre_check_alg_support(struct hisi_qm *qm, u32 alg)
+ 	return false;
  }
  
--static int __exit tpd12s015_remove(struct platform_device *pdev)
-+static int tpd12s015_remove(struct platform_device *pdev)
+-static int hpre_set_qm_algs(struct hisi_qm *qm)
+-{
+-	struct device *dev = &qm->pdev->dev;
+-	char *algs, *ptr;
+-	u32 alg_msk;
+-	int i;
+-
+-	if (!qm->use_sva)
+-		return 0;
+-
+-	algs = devm_kzalloc(dev, HPRE_DEV_ALG_MAX_LEN * sizeof(char), GFP_KERNEL);
+-	if (!algs)
+-		return -ENOMEM;
+-
+-	alg_msk = hisi_qm_get_hw_info(qm, hpre_basic_info, HPRE_DEV_ALG_BITMAP_CAP, qm->cap_ver);
+-
+-	for (i = 0; i < ARRAY_SIZE(hpre_dev_algs); i++)
+-		if (alg_msk & hpre_dev_algs[i].alg_msk)
+-			strcat(algs, hpre_dev_algs[i].alg);
+-
+-	ptr = strrchr(algs, '\n');
+-	if (ptr)
+-		*ptr = '\0';
+-
+-	qm->uacce->algs = algs;
+-
+-	return 0;
+-}
+-
+ static int hpre_diff_regs_show(struct seq_file *s, void *unused)
  {
- 	struct tpd12s015_device *tpd = platform_get_drvdata(pdev);
+ 	struct hisi_qm *qm = s->private;
+@@ -1140,6 +1104,7 @@ static void hpre_debugfs_exit(struct hisi_qm *qm)
  
-@@ -197,7 +197,7 @@ MODULE_DEVICE_TABLE(of, tpd12s015_of_match);
+ static int hpre_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ {
++	u64 alg_msk;
+ 	int ret;
  
- static struct platform_driver tpd12s015_driver = {
- 	.probe	= tpd12s015_probe,
--	.remove	= __exit_p(tpd12s015_remove),
-+	.remove = tpd12s015_remove,
- 	.driver	= {
- 		.name	= "tpd12s015",
- 		.of_match_table = tpd12s015_of_match,
+ 	if (pdev->revision == QM_HW_V1) {
+@@ -1170,7 +1135,8 @@ static int hpre_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ 		return ret;
+ 	}
+ 
+-	ret = hpre_set_qm_algs(qm);
++	alg_msk = hisi_qm_get_hw_info(qm, hpre_basic_info, HPRE_DEV_ALG_BITMAP_CAP, qm->cap_ver);
++	ret = hisi_qm_set_algs(qm, alg_msk, hpre_dev_algs, ARRAY_SIZE(hpre_dev_algs));
+ 	if (ret) {
+ 		pci_err(pdev, "Failed to set hpre algs!\n");
+ 		hisi_qm_uninit(qm);
+diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
+index 5872e0f0c094..e889363ed978 100644
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -228,6 +228,8 @@
+ #define QM_QOS_MAX_CIR_U		6
+ #define QM_AUTOSUSPEND_DELAY		3000
+ 
++#define QM_DEV_ALG_MAX_LEN		256
++
+ #define QM_MK_CQC_DW3_V1(hop_num, pg_sz, buf_sz, cqe_sz) \
+ 	(((hop_num) << QM_CQ_HOP_NUM_SHIFT) | \
+ 	((pg_sz) << QM_CQ_PAGE_SIZE_SHIFT) | \
+@@ -801,6 +803,40 @@ static void qm_get_xqc_depth(struct hisi_qm *qm, u16 *low_bits,
+ 	*high_bits = (depth >> QM_XQ_DEPTH_SHIFT) & QM_XQ_DEPTH_MASK;
+ }
+ 
++int hisi_qm_set_algs(struct hisi_qm *qm, u64 alg_msk, const struct qm_dev_alg *dev_algs,
++		     u32 dev_algs_size)
++{
++	struct device *dev = &qm->pdev->dev;
++	char *algs, *ptr;
++	int i;
++
++	if (!qm->uacce)
++		return 0;
++
++	if (dev_algs_size >= QM_DEV_ALG_MAX_LEN) {
++		dev_err(dev, "algs size %u is equal or larger than %d.\n",
++			dev_algs_size, QM_DEV_ALG_MAX_LEN);
++		return -EINVAL;
++	}
++
++	algs = devm_kzalloc(dev, QM_DEV_ALG_MAX_LEN * sizeof(char), GFP_KERNEL);
++	if (!algs)
++		return -ENOMEM;
++
++	for (i = 0; i < dev_algs_size; i++)
++		if (alg_msk & dev_algs[i].alg_msk)
++			strcat(algs, dev_algs[i].alg);
++
++	ptr = strrchr(algs, '\n');
++	if (ptr) {
++		*ptr = '\0';
++		qm->uacce->algs = algs;
++	}
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(hisi_qm_set_algs);
++
+ static u32 qm_get_irq_num(struct hisi_qm *qm)
+ {
+ 	if (qm->fun_type == QM_HW_PF)
+diff --git a/drivers/crypto/hisilicon/sec2/sec_main.c b/drivers/crypto/hisilicon/sec2/sec_main.c
+index 62bd8936a915..5c39667507ab 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_main.c
++++ b/drivers/crypto/hisilicon/sec2/sec_main.c
+@@ -120,7 +120,6 @@
+ 					GENMASK_ULL(42, 25))
+ #define SEC_AEAD_BITMAP			(GENMASK_ULL(7, 6) | GENMASK_ULL(18, 17) | \
+ 					GENMASK_ULL(45, 43))
+-#define SEC_DEV_ALG_MAX_LEN		256
+ 
+ struct sec_hw_error {
+ 	u32 int_msk;
+@@ -132,11 +131,6 @@ struct sec_dfx_item {
+ 	u32 offset;
+ };
+ 
+-struct sec_dev_alg {
+-	u64 alg_msk;
+-	const char *algs;
+-};
+-
+ static const char sec_name[] = "hisi_sec2";
+ static struct dentry *sec_debugfs_root;
+ 
+@@ -173,15 +167,15 @@ static const struct hisi_qm_cap_info sec_basic_info[] = {
+ 	{SEC_CORE4_ALG_BITMAP_HIGH, 0x3170, 0, GENMASK(31, 0), 0x3FFF, 0x3FFF, 0x3FFF},
+ };
+ 
+-static const struct sec_dev_alg sec_dev_algs[] = { {
++static const struct qm_dev_alg sec_dev_algs[] = { {
+ 		.alg_msk = SEC_CIPHER_BITMAP,
+-		.algs = "cipher\n",
++		.alg = "cipher\n",
+ 	}, {
+ 		.alg_msk = SEC_DIGEST_BITMAP,
+-		.algs = "digest\n",
++		.alg = "digest\n",
+ 	}, {
+ 		.alg_msk = SEC_AEAD_BITMAP,
+-		.algs = "aead\n",
++		.alg = "aead\n",
+ 	},
+ };
+ 
+@@ -1077,37 +1071,9 @@ static int sec_pf_probe_init(struct sec_dev *sec)
+ 	return ret;
+ }
+ 
+-static int sec_set_qm_algs(struct hisi_qm *qm)
+-{
+-	struct device *dev = &qm->pdev->dev;
+-	char *algs, *ptr;
+-	u64 alg_mask;
+-	int i;
+-
+-	if (!qm->use_sva)
+-		return 0;
+-
+-	algs = devm_kzalloc(dev, SEC_DEV_ALG_MAX_LEN * sizeof(char), GFP_KERNEL);
+-	if (!algs)
+-		return -ENOMEM;
+-
+-	alg_mask = sec_get_alg_bitmap(qm, SEC_DEV_ALG_BITMAP_HIGH, SEC_DEV_ALG_BITMAP_LOW);
+-
+-	for (i = 0; i < ARRAY_SIZE(sec_dev_algs); i++)
+-		if (alg_mask & sec_dev_algs[i].alg_msk)
+-			strcat(algs, sec_dev_algs[i].algs);
+-
+-	ptr = strrchr(algs, '\n');
+-	if (ptr)
+-		*ptr = '\0';
+-
+-	qm->uacce->algs = algs;
+-
+-	return 0;
+-}
+-
+ static int sec_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ {
++	u64 alg_msk;
+ 	int ret;
+ 
+ 	qm->pdev = pdev;
+@@ -1142,7 +1108,8 @@ static int sec_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ 		return ret;
+ 	}
+ 
+-	ret = sec_set_qm_algs(qm);
++	alg_msk = sec_get_alg_bitmap(qm, SEC_DEV_ALG_BITMAP_HIGH, SEC_DEV_ALG_BITMAP_LOW);
++	ret = hisi_qm_set_algs(qm, alg_msk, sec_dev_algs, ARRAY_SIZE(sec_dev_algs));
+ 	if (ret) {
+ 		pci_err(qm->pdev, "Failed to set sec algs!\n");
+ 		hisi_qm_uninit(qm);
+diff --git a/drivers/crypto/hisilicon/zip/zip_main.c b/drivers/crypto/hisilicon/zip/zip_main.c
+index 0dfd6e240e1c..4d64a43515a9 100644
+--- a/drivers/crypto/hisilicon/zip/zip_main.c
++++ b/drivers/crypto/hisilicon/zip/zip_main.c
+@@ -73,7 +73,6 @@
+ #define HZIP_AXI_SHUTDOWN_ENABLE	BIT(14)
+ #define HZIP_WR_PORT			BIT(11)
+ 
+-#define HZIP_DEV_ALG_MAX_LEN		256
+ #define HZIP_ALG_ZLIB_BIT		GENMASK(1, 0)
+ #define HZIP_ALG_GZIP_BIT		GENMASK(3, 2)
+ #define HZIP_ALG_DEFLATE_BIT		GENMASK(5, 4)
+@@ -127,23 +126,18 @@ struct zip_dfx_item {
+ 	u32 offset;
+ };
+ 
+-struct zip_dev_alg {
+-	u32 alg_msk;
+-	const char *algs;
+-};
+-
+-static const struct zip_dev_alg zip_dev_algs[] = { {
++static const struct qm_dev_alg zip_dev_algs[] = { {
+ 		.alg_msk = HZIP_ALG_ZLIB_BIT,
+-		.algs = "zlib\n",
++		.alg = "zlib\n",
+ 	}, {
+ 		.alg_msk = HZIP_ALG_GZIP_BIT,
+-		.algs = "gzip\n",
++		.alg = "gzip\n",
+ 	}, {
+ 		.alg_msk = HZIP_ALG_DEFLATE_BIT,
+-		.algs = "deflate\n",
++		.alg = "deflate\n",
+ 	}, {
+ 		.alg_msk = HZIP_ALG_LZ77_BIT,
+-		.algs = "lz77_zstd\n",
++		.alg = "lz77_zstd\n",
+ 	},
+ };
+ 
+@@ -477,35 +471,6 @@ static int hisi_zip_set_high_perf(struct hisi_qm *qm)
+ 	return ret;
+ }
+ 
+-static int hisi_zip_set_qm_algs(struct hisi_qm *qm)
+-{
+-	struct device *dev = &qm->pdev->dev;
+-	char *algs, *ptr;
+-	u32 alg_mask;
+-	int i;
+-
+-	if (!qm->use_sva)
+-		return 0;
+-
+-	algs = devm_kzalloc(dev, HZIP_DEV_ALG_MAX_LEN * sizeof(char), GFP_KERNEL);
+-	if (!algs)
+-		return -ENOMEM;
+-
+-	alg_mask = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_DEV_ALG_BITMAP, qm->cap_ver);
+-
+-	for (i = 0; i < ARRAY_SIZE(zip_dev_algs); i++)
+-		if (alg_mask & zip_dev_algs[i].alg_msk)
+-			strcat(algs, zip_dev_algs[i].algs);
+-
+-	ptr = strrchr(algs, '\n');
+-	if (ptr)
+-		*ptr = '\0';
+-
+-	qm->uacce->algs = algs;
+-
+-	return 0;
+-}
+-
+ static void hisi_zip_open_sva_prefetch(struct hisi_qm *qm)
+ {
+ 	u32 val;
+@@ -1192,6 +1157,7 @@ static int hisi_zip_pf_probe_init(struct hisi_zip *hisi_zip)
+ 
+ static int hisi_zip_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ {
++	u64 alg_msk;
+ 	int ret;
+ 
+ 	qm->pdev = pdev;
+@@ -1227,7 +1193,8 @@ static int hisi_zip_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ 		return ret;
+ 	}
+ 
+-	ret = hisi_zip_set_qm_algs(qm);
++	alg_msk = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_DEV_ALG_BITMAP, qm->cap_ver);
++	ret = hisi_qm_set_algs(qm, alg_msk, zip_dev_algs, ARRAY_SIZE(zip_dev_algs));
+ 	if (ret) {
+ 		pci_err(qm->pdev, "Failed to set zip algs!\n");
+ 		hisi_qm_uninit(qm);
+diff --git a/include/linux/hisi_acc_qm.h b/include/linux/hisi_acc_qm.h
+index eff6ec42ccbe..5c4b3a68053f 100644
+--- a/include/linux/hisi_acc_qm.h
++++ b/include/linux/hisi_acc_qm.h
+@@ -160,6 +160,11 @@ enum qm_cap_bits {
+ 	QM_SUPPORT_RPM,
+ };
+ 
++struct qm_dev_alg {
++	u64 alg_msk;
++	const char *alg;
++};
++
+ struct dfx_diff_registers {
+ 	u32 *regs;
+ 	u32 reg_offset;
+@@ -362,7 +367,6 @@ struct hisi_qm {
+ 	struct work_struct rst_work;
+ 	struct work_struct cmd_process;
+ 
+-	const char *algs;
+ 	bool use_sva;
+ 
+ 	resource_size_t phys_base;
+@@ -548,6 +552,8 @@ void hisi_qm_regs_dump(struct seq_file *s, struct debugfs_regset32 *regset);
+ u32 hisi_qm_get_hw_info(struct hisi_qm *qm,
+ 			const struct hisi_qm_cap_info *info_table,
+ 			u32 index, bool is_read);
++int hisi_qm_set_algs(struct hisi_qm *qm, u64 alg_msk, const struct qm_dev_alg *dev_algs,
++		     u32 dev_algs_size);
+ 
+ /* Used by VFIO ACC live migration driver */
+ struct pci_driver *hisi_sec_get_pf_driver(void);
 -- 
 2.43.0
 
