@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1963912A17F;
-	Tue, 23 Jan 2024 00:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9A412A17F;
+	Tue, 23 Jan 2024 00:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968805; cv=none; b=mManFyyrPE/Ua5mXuFMLnhaqvIfPTMN3Qbydpis55jYVVoQqkvq4yhQEd0t49eT6ZkrlzK/lxH08TE0UKjj+4VnThBXPhio0hsMHe6SWEeOmQXXakx62WSEImuGRTp8xF1iO2apOuscuHb9+T1fwkW0sYA0/K6fab7AoQAOFwY8=
+	t=1705968809; cv=none; b=TbW2OJSVys7zsoONECeTgVnpsBhsofXzGlnsR/32zeEntrowR8D9f6e36SMXG2PpilIVMVQrcogPQmd34JeyXML03f12kEhHZXi8ZJIvB1WhE29xQriaL1O4skQyVZt1qSOy4kCio7t4G7lvAIS8smwFKqtW6VqljN5mPG0+zE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968805; c=relaxed/simple;
-	bh=T8td0OHLE/VaJn+tWYOMCV2MmNzVMkwEIANbgGCWDNc=;
+	s=arc-20240116; t=1705968809; c=relaxed/simple;
+	bh=VAdiwpNE2RKfuTUQ5+mUignes6MHI0OaSEYjedqAsR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nzFfbvYzzZQoALllMdR3TtrHymwOfVzB4GlDiPdxTnLH1JVcCbL9EJAjHRshTAhh3lGox6ON8Nfd/uYqWokMW7dJw3mnY9vgUjgdzgq1TSuZfVjFI36kkrhOvkvvM9FDjp0yH6GFXf0wzOp63a8DsB0Zr5c7noyUe7XpSIOVe+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ET2PS0Bm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UeG1UMHWWQtwMuAQumna3rMX5Q/N8wzxFZkDsNrJyIU++CtZ73z+oVjzts8tYfkKTI1K0LeNsBJvJWVRJYwkYzwYH8FxGabmgGws9T3Tqk8HjQ7L5+zRBrB7IAWrlaXsakhGdGOCRMKqOadSJgcDd/jA+c/Gt+xAgGiTaolm9bU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/VDgDlc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ET2PS0Bm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E228C433C7;
-	Tue, 23 Jan 2024 00:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/VDgDlc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E458C433F1;
+	Tue, 23 Jan 2024 00:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968804;
-	bh=T8td0OHLE/VaJn+tWYOMCV2MmNzVMkwEIANbgGCWDNc=;
+	s=korg; t=1705968808;
+	bh=VAdiwpNE2RKfuTUQ5+mUignes6MHI0OaSEYjedqAsR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ET2PS0Bmzcc4VUZ9H8dgqOg8ihnsBGl5smL6l90g63pzGZRczJOHq+dRiC/ngViDf
-	 +7zh7WBeZIwLy6zdzv/z5bcYchRZkpEvikIxSJareWCkP0PLavpV6fWUhW7SosV0ek
-	 5dezfe5yTaa5vP1cq3Fz012b+JYyNBl+2dmhvJ2E=
+	b=N/VDgDlc9om2W4SsLJiv+RcHMNfhjo4bTwXib2B3PEbA0H6Ph83LRxPZIrF3S0+uP
+	 TrMeKvd66NsIkbuUffNP0MrDdMCyEreQGOIvq0FpfglQb0cTqco6pWeeFpJPeeWsSH
+	 ZCNy3kiF0ZP+Tge/boypEsrAcDB613lX2uc0/mcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>,
-	Paul Moore <paul@paul-moore.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 056/194] calipso: fix memory leak in netlbl_calipso_add_pass()
-Date: Mon, 22 Jan 2024 15:56:26 -0800
-Message-ID: <20240122235721.603324878@linuxfoundation.org>
+Subject: [PATCH 5.4 057/194] spi: sh-msiof: Enforce fixed DTDL for R-Car H3
+Date: Mon, 22 Jan 2024 15:56:27 -0800
+Message-ID: <20240122235721.645407043@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,136 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit ec4e9d630a64df500641892f4e259e8149594a99 ]
+[ Upstream commit e5c7bcb499840551cfbe85c6df177ebc50432bf0 ]
 
-If IPv6 support is disabled at boot (ipv6.disable=1),
-the calipso_init() -> netlbl_calipso_ops_register() function isn't called,
-and the netlbl_calipso_ops_get() function always returns NULL.
-In this case, the netlbl_calipso_add_pass() function allocates memory
-for the doi_def variable but doesn't free it with the calipso_doi_free().
+Documentation says only DTDL of 200 is allowed for this SoC.
 
-BUG: memory leak
-unreferenced object 0xffff888011d68180 (size 64):
-  comm "syz-executor.1", pid 10746, jiffies 4295410986 (age 17.928s)
-  hex dump (first 32 bytes):
-    00 00 00 00 02 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<...>] kmalloc include/linux/slab.h:552 [inline]
-    [<...>] netlbl_calipso_add_pass net/netlabel/netlabel_calipso.c:76 [inline]
-    [<...>] netlbl_calipso_add+0x22e/0x4f0 net/netlabel/netlabel_calipso.c:111
-    [<...>] genl_family_rcv_msg_doit+0x22f/0x330 net/netlink/genetlink.c:739
-    [<...>] genl_family_rcv_msg net/netlink/genetlink.c:783 [inline]
-    [<...>] genl_rcv_msg+0x341/0x5a0 net/netlink/genetlink.c:800
-    [<...>] netlink_rcv_skb+0x14d/0x440 net/netlink/af_netlink.c:2515
-    [<...>] genl_rcv+0x29/0x40 net/netlink/genetlink.c:811
-    [<...>] netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
-    [<...>] netlink_unicast+0x54b/0x800 net/netlink/af_netlink.c:1339
-    [<...>] netlink_sendmsg+0x90a/0xdf0 net/netlink/af_netlink.c:1934
-    [<...>] sock_sendmsg_nosec net/socket.c:651 [inline]
-    [<...>] sock_sendmsg+0x157/0x190 net/socket.c:671
-    [<...>] ____sys_sendmsg+0x712/0x870 net/socket.c:2342
-    [<...>] ___sys_sendmsg+0xf8/0x170 net/socket.c:2396
-    [<...>] __sys_sendmsg+0xea/0x1b0 net/socket.c:2429
-    [<...>] do_syscall_64+0x30/0x40 arch/x86/entry/common.c:46
-    [<...>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
-
-Found by InfoTeCS on behalf of Linux Verification Center
-(linuxtesting.org) with Syzkaller
-
-Fixes: cb72d38211ea ("netlabel: Initial support for the CALIPSO netlink protocol.")
-Signed-off-by: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
-[PM: merged via the LSM tree at Jakub Kicinski request]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 4286db8456f4 ("spi: sh-msiof: Add R-Car Gen 2 and 3 fallback bindings")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://msgid.link/r/20231212081239.14254-1-wsa+renesas@sang-engineering.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlabel/netlabel_calipso.c | 49 +++++++++++++++++----------------
- 1 file changed, 26 insertions(+), 23 deletions(-)
+ drivers/spi/spi-sh-msiof.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/net/netlabel/netlabel_calipso.c b/net/netlabel/netlabel_calipso.c
-index 33502b1f07c0..1bb2a7404dc4 100644
---- a/net/netlabel/netlabel_calipso.c
-+++ b/net/netlabel/netlabel_calipso.c
-@@ -54,6 +54,28 @@ static const struct nla_policy calipso_genl_policy[NLBL_CALIPSO_A_MAX + 1] = {
- 	[NLBL_CALIPSO_A_MTYPE] = { .type = NLA_U32 },
+diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
+index 8f134735291f..edb26b085706 100644
+--- a/drivers/spi/spi-sh-msiof.c
++++ b/drivers/spi/spi-sh-msiof.c
+@@ -32,12 +32,15 @@
+ 
+ #include <asm/unaligned.h>
+ 
++#define SH_MSIOF_FLAG_FIXED_DTDL_200	BIT(0)
++
+ struct sh_msiof_chipdata {
+ 	u32 bits_per_word_mask;
+ 	u16 tx_fifo_size;
+ 	u16 rx_fifo_size;
+ 	u16 ctlr_flags;
+ 	u16 min_div_pow;
++	u32 flags;
  };
  
-+static const struct netlbl_calipso_ops *calipso_ops;
-+
-+/**
-+ * netlbl_calipso_ops_register - Register the CALIPSO operations
-+ * @ops: ops to register
-+ *
-+ * Description:
-+ * Register the CALIPSO packet engine operations.
-+ *
-+ */
-+const struct netlbl_calipso_ops *
-+netlbl_calipso_ops_register(const struct netlbl_calipso_ops *ops)
-+{
-+	return xchg(&calipso_ops, ops);
-+}
-+EXPORT_SYMBOL(netlbl_calipso_ops_register);
-+
-+static const struct netlbl_calipso_ops *netlbl_calipso_ops_get(void)
-+{
-+	return READ_ONCE(calipso_ops);
-+}
-+
- /* NetLabel Command Handlers
-  */
- /**
-@@ -96,15 +118,18 @@ static int netlbl_calipso_add_pass(struct genl_info *info,
-  *
-  */
- static int netlbl_calipso_add(struct sk_buff *skb, struct genl_info *info)
--
- {
- 	int ret_val = -EINVAL;
- 	struct netlbl_audit audit_info;
-+	const struct netlbl_calipso_ops *ops = netlbl_calipso_ops_get();
+ struct sh_msiof_spi_priv {
+@@ -1072,6 +1075,16 @@ static const struct sh_msiof_chipdata rcar_gen3_data = {
+ 	.min_div_pow = 1,
+ };
  
- 	if (!info->attrs[NLBL_CALIPSO_A_DOI] ||
- 	    !info->attrs[NLBL_CALIPSO_A_MTYPE])
- 		return -EINVAL;
- 
-+	if (!ops)
-+		return -EOPNOTSUPP;
++static const struct sh_msiof_chipdata rcar_r8a7795_data = {
++	.bits_per_word_mask = SPI_BPW_MASK(8) | SPI_BPW_MASK(16) |
++			      SPI_BPW_MASK(24) | SPI_BPW_MASK(32),
++	.tx_fifo_size = 64,
++	.rx_fifo_size = 64,
++	.ctlr_flags = SPI_CONTROLLER_MUST_TX,
++	.min_div_pow = 1,
++	.flags = SH_MSIOF_FLAG_FIXED_DTDL_200,
++};
 +
- 	netlbl_netlink_auditinfo(&audit_info);
- 	switch (nla_get_u32(info->attrs[NLBL_CALIPSO_A_MTYPE])) {
- 	case CALIPSO_MAP_PASS:
-@@ -362,28 +387,6 @@ int __init netlbl_calipso_genl_init(void)
- 	return genl_register_family(&netlbl_calipso_gnl_family);
- }
+ static const struct of_device_id sh_msiof_match[] = {
+ 	{ .compatible = "renesas,sh-mobile-msiof", .data = &sh_data },
+ 	{ .compatible = "renesas,msiof-r8a7743",   .data = &rcar_gen2_data },
+@@ -1082,6 +1095,7 @@ static const struct of_device_id sh_msiof_match[] = {
+ 	{ .compatible = "renesas,msiof-r8a7793",   .data = &rcar_gen2_data },
+ 	{ .compatible = "renesas,msiof-r8a7794",   .data = &rcar_gen2_data },
+ 	{ .compatible = "renesas,rcar-gen2-msiof", .data = &rcar_gen2_data },
++	{ .compatible = "renesas,msiof-r8a7795",   .data = &rcar_r8a7795_data },
+ 	{ .compatible = "renesas,msiof-r8a7796",   .data = &rcar_gen3_data },
+ 	{ .compatible = "renesas,rcar-gen3-msiof", .data = &rcar_gen3_data },
+ 	{ .compatible = "renesas,sh-msiof",        .data = &sh_data }, /* Deprecated */
+@@ -1317,6 +1331,9 @@ static int sh_msiof_spi_probe(struct platform_device *pdev)
+ 		return -ENXIO;
+ 	}
  
--static const struct netlbl_calipso_ops *calipso_ops;
--
--/**
-- * netlbl_calipso_ops_register - Register the CALIPSO operations
-- * @ops: ops to register
-- *
-- * Description:
-- * Register the CALIPSO packet engine operations.
-- *
-- */
--const struct netlbl_calipso_ops *
--netlbl_calipso_ops_register(const struct netlbl_calipso_ops *ops)
--{
--	return xchg(&calipso_ops, ops);
--}
--EXPORT_SYMBOL(netlbl_calipso_ops_register);
--
--static const struct netlbl_calipso_ops *netlbl_calipso_ops_get(void)
--{
--	return READ_ONCE(calipso_ops);
--}
--
- /**
-  * calipso_doi_add - Add a new DOI to the CALIPSO protocol engine
-  * @doi_def: the DOI structure
++	if (chipdata->flags & SH_MSIOF_FLAG_FIXED_DTDL_200)
++		info->dtdl = 200;
++
+ 	if (info->mode == MSIOF_SPI_SLAVE)
+ 		ctlr = spi_alloc_slave(&pdev->dev,
+ 				       sizeof(struct sh_msiof_spi_priv));
 -- 
 2.43.0
 
