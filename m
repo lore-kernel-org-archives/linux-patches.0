@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B9864AB3;
-	Tue, 23 Jan 2024 01:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5E464CCD;
+	Tue, 23 Jan 2024 01:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975049; cv=none; b=H2P0MXyVzloTTAIOfXr8GVnYO9C6BaW9s7vELQVUWNJeMsnI7O+9GFfGCKTu57CPLfZZ8nMGlYKTHjZjwzLQMqsTj1l46yUKtqRtElrQL6uHpLk8arlpyVFMjODICTdjQC6VLrnQn+b8te7b2DU/s8qmny6yErKXcxTugA30SN0=
+	t=1705975051; cv=none; b=Cfu0rYGHmWyymXhMyBXc/5FV2kHsbz4lp5gB+FBFIzG4WsAhoHy9HvLzhWCso1dz8X+VE6Xi47XtFvLqfgQCv4li7XL3M+SAw+nsezrspkLrAxW7LR3BvlESpeY1+bSRyMTvJq+OLj8mIs5KZ315jFJTy8SGN8XhVAk7oKxt95w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975049; c=relaxed/simple;
-	bh=eqpFdUvn4p2IzkXJ8MPBt9ubVMwpAQ3Fsygaugz75jg=;
+	s=arc-20240116; t=1705975051; c=relaxed/simple;
+	bh=i+9/g249AA/4JdH0fo3BnwvYYTomP2FadM3f984gzW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GczgsTbJ8VDiSJzuHat26onPi0t4QuvLLPqsaw82L25j6T7hmmz3qu4Umr8c7Y90Qaje/yvUO1YI7OkZzQ2Hxs/BNljS93beDbPdxbGRCx/AxHHSI7zD8I7u4K7YCyn2Si8iZjH6iELyEqWR4hdnQ6zYX5npQn2BRZMtrpLTYhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOkbVK28; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ODiRGd1fNeLx8b9GQt/Q4m0TXdo46ceUmjyLp9sKCAvyaduISuhkpcIIy2Gg9RLnbMVVlEF0k0WWlpznvJfhcYreOEokMSxMtNfrqDiV4pIPpe9BSFKb9d8ryA1PIbjsSffojFGzZmPxIHykk5pubwJZoHyHpGBzPylO89xsqiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgU3bkVZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOkbVK28"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E03FC433C7;
-	Tue, 23 Jan 2024 01:57:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgU3bkVZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7331C433F1;
+	Tue, 23 Jan 2024 01:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975049;
-	bh=eqpFdUvn4p2IzkXJ8MPBt9ubVMwpAQ3Fsygaugz75jg=;
+	s=korg; t=1705975050;
+	bh=i+9/g249AA/4JdH0fo3BnwvYYTomP2FadM3f984gzW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IOkbVK28N8Y8JG81y/EqiYPRPanwMF4Z0A4eXOsxySaDDiG6h3UTnWLTzAHZutvza
-	 e5nY3/n2BNp97tYrHGSNruXDB6hutNXq3+G1xcIBErVAX4ZlcCVqkwDzOKF1ghq0zM
-	 gekv2207jeUzzPvws6NDc3dJtti71rmYv9trRYNo=
+	b=xgU3bkVZelAneEJ7A+ImZO2ZoyhVaPjJPOekzNa9HG41ySy8akJPLhhJuH3yj3khA
+	 9EBWybkUdh9BiEjjEh97Zu42H1n4Uun70tM+GVLiZynjRTPDk1QMThB6+uba0X605R
+	 IsYEotIw90JE4NERWbNT6fbD5N50BTYpRHWG70mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Su Hui <suhui@nfschina.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 213/583] sctp: support MSG_ERRQUEUE flag in recvmsg()
-Date: Mon, 22 Jan 2024 15:54:24 -0800
-Message-ID: <20240122235818.530586721@linuxfoundation.org>
+Subject: [PATCH 6.6 191/583] wifi: rtlwifi: add calculate_bit_shift()
+Date: Mon, 22 Jan 2024 15:54:02 -0800
+Message-ID: <20240122235817.837197292@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -54,57 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 4746b36b1abe11ca32987b2d21e1e770deab17cc ]
+[ Upstream commit 52221dfddbbfb5b4e029bb2efe9bb7da33ec1e46 ]
 
-For some reason sctp_poll() generates EPOLLERR if sk->sk_error_queue
-is not empty but recvmsg() can not drain the error queue yet.
+There are many same functions like _rtl88e_phy_calculate_bit_shift(),
+_rtl92c_phy_calculate_bit_shift() and so on. And these functions can
+cause undefined bitwise shift behavior. Add calculate_bit_shift() to
+replace them and fix undefined behavior in subsequent patches.
 
-This is needed to better support timestamping.
-
-I had to export inet_recv_error(), since sctp
-can be compiled as a module.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Cc: Willem de Bruijn <willemb@google.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20231212145550.3872051-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a562c0a2d651 ("sctp: fix busy polling")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231219065739.1895666-2-suhui@nfschina.com
+Stable-dep-of: 969bc926f04b ("wifi: rtlwifi: rtl8188ee: phy: using calculate_bit_shift()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/af_inet.c | 1 +
- net/sctp/socket.c  | 3 +++
- 2 files changed, 4 insertions(+)
+ drivers/net/wireless/realtek/rtlwifi/wifi.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
-index 2713c9b06c4c..b0a5de1303b5 100644
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -1632,6 +1632,7 @@ int inet_recv_error(struct sock *sk, struct msghdr *msg, int len, int *addr_len)
- #endif
- 	return -EINVAL;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/wifi.h b/drivers/net/wireless/realtek/rtlwifi/wifi.h
+index 2e7e04f91279..8cbf3fb38853 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/wifi.h
++++ b/drivers/net/wireless/realtek/rtlwifi/wifi.h
+@@ -3080,4 +3080,11 @@ static inline struct ieee80211_sta *rtl_find_sta(struct ieee80211_hw *hw,
+ 	return ieee80211_find_sta(mac->vif, mac_addr);
  }
-+EXPORT_SYMBOL(inet_recv_error);
  
- int inet_gro_complete(struct sk_buff *skb, int nhoff)
- {
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 7f89e43154c0..5fb02bbb4b34 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -2099,6 +2099,9 @@ static int sctp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	pr_debug("%s: sk:%p, msghdr:%p, len:%zd, flags:0x%x, addr_len:%p)\n",
- 		 __func__, sk, msg, len, flags, addr_len);
- 
-+	if (unlikely(flags & MSG_ERRQUEUE))
-+		return inet_recv_error(sk, msg, len, addr_len);
++static inline u32 calculate_bit_shift(u32 bitmask)
++{
++	if (WARN_ON_ONCE(!bitmask))
++		return 0;
 +
- 	lock_sock(sk);
- 
- 	if (sctp_style(sk, TCP) && !sctp_sstate(sk, ESTABLISHED) &&
++	return __ffs(bitmask);
++}
+ #endif
 -- 
 2.43.0
 
