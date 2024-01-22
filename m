@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E73864CDA;
-	Tue, 23 Jan 2024 00:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9B512AAF4;
+	Tue, 23 Jan 2024 00:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971331; cv=none; b=RctMotesnxS8OhZnXgO9RKa/YZNSQsBVFQvmJdrgK3BPBfxSQyo7hwXj0lffusen8wTgmDygt2ria2+9iUAPgPP+sSTLXBwTqvx0bozq5kzZ60CGew6R2YPOClhLVmAxeBOzzpi7EznYnZeeHL3GdqQZAfYDbg5VXbSM3VbD3Mk=
+	t=1705971334; cv=none; b=r9eXzus02CQ/6oD542JLrv+3NmRs50H2+KOjOgPgpO06123X0/5hhpZVPgWKSqA35oTnjSPauXwKYFd4Y0BKr3MVf3yape0SGA7QPv2WeQ1qAaHovEGsNjtIjhj0E0joCvHumfSeL7+Tm++nZ++glLgjQ2JGuUq2v1O7n+Ey/ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971331; c=relaxed/simple;
-	bh=kSo3OZOpkXFJyFJP2PWukdqrmANEdag8uZh3HM/FoUE=;
+	s=arc-20240116; t=1705971334; c=relaxed/simple;
+	bh=u7NeRdSgIQOCox0zX4WBOZ83aoZYA12vcMRVRlv4uIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/3dkPNb3Aeu2P/O/tZ+2jYJuDKbkJ+gIG6tJ8p/MYkeL+uRp9JRRTIKEH2W+aau6djfbpBLnXN2rSigr+vF6WeiirreBll+fcPzLfCs3v477j9iKerDvU55WSC5kkwflJb31dSRdlmVYzp51YJh6FHh5Tqt+8wD/t6xOJmqCc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=It0FRXYj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jUTC0NptouUE6zgQDDXK8mTBrV83HlGCTvHH/f1t2ggw+t7FwnyYKyJulrcLlDJY2LUZRMJNuyt//mEaNhj88brxwWM9mCdnbRbt2Xww0Vy0XeiVklhzJmM49DT24DY9xa/A54LgoGjk6FzPJB3t2P7VcHlmMiJZQtIu89RJdd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlE2rJK0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="It0FRXYj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF49C433C7;
-	Tue, 23 Jan 2024 00:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlE2rJK0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75E1C43390;
+	Tue, 23 Jan 2024 00:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971331;
-	bh=kSo3OZOpkXFJyFJP2PWukdqrmANEdag8uZh3HM/FoUE=;
+	s=korg; t=1705971334;
+	bh=u7NeRdSgIQOCox0zX4WBOZ83aoZYA12vcMRVRlv4uIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=It0FRXYj48VWhth7WxoSzw62GCIyvZDKin6Jrw2TQzdh7CE1t8I093m9+OU3V6Rvp
-	 hpIpYJzUDGsMAdX4wP+OdwZdNUQxZzLm0161AX8BPWGdsSVCvmDal5WB92hcud32Yp
-	 blMzK+tXhmWnehNNsVLpFSkKFizDkDCdSn2K6vM0=
+	b=rlE2rJK0EAVoCKL/6qo4lDsEEDdvrUJKsP/nJU4sWrhZbqKuJj1G0gcqgLX6H4cVA
+	 SKBE0+LlWhqrSW+XjH9+yJkfxChEwHgg5wAKUubz3sBNek7R/AbgF6ApGYuHD0It4x
+	 YfHt0tz2py3KS5LeeBiBZ3+WpWnhJGKT2DhFmCmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.king@canonical.com>,
-	Kalle Valo <kvalo@codeaurora.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Guillaume Ranquet <granquet@baylibre.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 135/286] rtlwifi: rtl8192de: make arrays static const, makes object smaller
-Date: Mon, 22 Jan 2024 15:57:21 -0800
-Message-ID: <20240122235737.343840578@linuxfoundation.org>
+Subject: [PATCH 6.1 225/417] drm/mediatek: dp: Add phy_mtk_dp module as pre-dependency
+Date: Mon, 22 Jan 2024 15:56:33 -0800
+Message-ID: <20240122235759.707761441@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,123 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Colin Ian King <colin.king@canonical.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit b05897ca8c821a16ac03850c4704fe460b3f21a0 ]
+[ Upstream commit c8048dd0b07df68724805254b9e994d99e9a7af4 ]
 
-Don't populate arrays the stack but instead make them static const. Replace
-array channel_info with channel_all since it contains the same data as
-channel_all. Makes object code smaller by 961 bytes.
+The mtk_dp driver registers a phy device which is handled by the
+phy_mtk_dp driver and assumes that the phy probe will complete
+synchronously, proceeding to make use of functionality exposed by that
+driver right away. This assumption however is false when the phy driver
+is built as a module, causing the mtk_dp driver to fail probe in this
+case.
 
-Before:
-   text	   data	    bss	    dec	   hex	filename
- 128147	  44250	   1024	 173421	 2a56d	../realtek/rtlwifi/rtl8192de/phy.o
+Add the phy_mtk_dp module as a pre-dependency to the mtk_dp module to
+ensure the phy module has been loaded before the dp, so that the phy
+probe happens synchrounously and the mtk_dp driver can probe
+successfully even with the phy driver built as a module.
 
-After
-   text	   data	    bss	    dec	   hex	filename
- 127122	  44314	   1024	 172460	 2a1ac	../realtek/rtlwifi/rtl8192de/phy.o
-
-(gcc version 10.2.0)
-
-Signed-off-by: Colin Ian King <colin.king@canonical.com>
-Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
-Link: https://lore.kernel.org/r/20210803144949.79433-2-colin.king@canonical.com
-Stable-dep-of: b8b2baad2e65 ("wifi: rtlwifi: rtl8192de: using calculate_bit_shift()")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Guillaume Ranquet <granquet@baylibre.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20231121142938.460846-1-nfraprado@collabora.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/realtek/rtlwifi/rtl8192de/phy.c  | 48 ++++++++-----------
- 1 file changed, 20 insertions(+), 28 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-index d3027f8fbd38..f0692d67b300 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-@@ -160,6 +160,15 @@ static u32 targetchnl_2g[TARGET_CHNL_NUM_2G] = {
- 	25711, 25658, 25606, 25554, 25502, 25451, 25328
- };
- 
-+static const u8 channel_all[59] = {
-+	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-+	36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58,
-+	60, 62, 64, 100, 102, 104, 106, 108, 110, 112,
-+	114, 116, 118, 120, 122, 124, 126, 128,	130,
-+	132, 134, 136, 138, 140, 149, 151, 153, 155,
-+	157, 159, 161, 163, 165
-+};
-+
- static u32 _rtl92d_phy_calculate_bit_shift(u32 bitmask)
- {
- 	u32 i = ffs(bitmask);
-@@ -1354,14 +1363,6 @@ static void _rtl92d_phy_switch_rf_setting(struct ieee80211_hw *hw, u8 channel)
- 
- u8 rtl92d_get_rightchnlplace_for_iqk(u8 chnl)
- {
--	u8 channel_all[59] = {
--		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
--		36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58,
--		60, 62, 64, 100, 102, 104, 106, 108, 110, 112,
--		114, 116, 118, 120, 122, 124, 126, 128,	130,
--		132, 134, 136, 138, 140, 149, 151, 153, 155,
--		157, 159, 161, 163, 165
--	};
- 	u8 place = chnl;
- 
- 	if (chnl > 14) {
-@@ -3216,37 +3217,28 @@ void rtl92d_phy_config_macphymode_info(struct ieee80211_hw *hw)
- u8 rtl92d_get_chnlgroup_fromarray(u8 chnl)
- {
- 	u8 group;
--	u8 channel_info[59] = {
--		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
--		36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56,
--		58, 60, 62, 64, 100, 102, 104, 106, 108,
--		110, 112, 114, 116, 118, 120, 122, 124,
--		126, 128, 130, 132, 134, 136, 138, 140,
--		149, 151, 153, 155, 157, 159, 161, 163,
--		165
--	};
- 
--	if (channel_info[chnl] <= 3)
-+	if (channel_all[chnl] <= 3)
- 		group = 0;
--	else if (channel_info[chnl] <= 9)
-+	else if (channel_all[chnl] <= 9)
- 		group = 1;
--	else if (channel_info[chnl] <= 14)
-+	else if (channel_all[chnl] <= 14)
- 		group = 2;
--	else if (channel_info[chnl] <= 44)
-+	else if (channel_all[chnl] <= 44)
- 		group = 3;
--	else if (channel_info[chnl] <= 54)
-+	else if (channel_all[chnl] <= 54)
- 		group = 4;
--	else if (channel_info[chnl] <= 64)
-+	else if (channel_all[chnl] <= 64)
- 		group = 5;
--	else if (channel_info[chnl] <= 112)
-+	else if (channel_all[chnl] <= 112)
- 		group = 6;
--	else if (channel_info[chnl] <= 126)
-+	else if (channel_all[chnl] <= 126)
- 		group = 7;
--	else if (channel_info[chnl] <= 140)
-+	else if (channel_all[chnl] <= 140)
- 		group = 8;
--	else if (channel_info[chnl] <= 153)
-+	else if (channel_all[chnl] <= 153)
- 		group = 9;
--	else if (channel_info[chnl] <= 159)
-+	else if (channel_all[chnl] <= 159)
- 		group = 10;
- 	else
- 		group = 11;
+diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+index 2c850b6d945b..519e23a2a017 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -2669,3 +2669,4 @@ MODULE_AUTHOR("Markus Schneider-Pargmann <msp@baylibre.com>");
+ MODULE_AUTHOR("Bo-Chen Chen <rex-bc.chen@mediatek.com>");
+ MODULE_DESCRIPTION("MediaTek DisplayPort Driver");
+ MODULE_LICENSE("GPL");
++MODULE_SOFTDEP("pre: phy_mtk_dp");
 -- 
 2.43.0
 
