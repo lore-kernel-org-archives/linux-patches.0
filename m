@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C111252F7C;
-	Tue, 23 Jan 2024 00:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A12F52F7C;
+	Tue, 23 Jan 2024 00:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969897; cv=none; b=kZV3Ct30/t2wY+3xmjqycYLCngifMsRCXvoav3Xsz9O4/ZJpEPrSuo4Wng4xUsJfgIq25eun5SVMmsWll1g95R+2V5kWsxurUfTxvPUfsZXaVpa/ZbwfCgRgXs2R0Fn1420/mfbDkVyjUgiGLIn5MWDYRKGjDRAjBoEBxdIRODU=
+	t=1705969899; cv=none; b=mgX+wEbprth2FtcDuVImIqOSWN5GGl0c9JBT72ON6gMMlCNzBE+diosIBfMaLzL+f7QAugW4cZTVockoosWZVTVsG0K6/OoIy/3B4DVUN7ZJ4OQm+cdhOJyGYU//6SXEuudywA28KrUXOUmAEPna9RWdJ0ViqoiJDGnPJx3eElk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969897; c=relaxed/simple;
-	bh=Jrq+2aKfG8JI8p7FXFJ2RiZ69d9LGrp8ZAQp/Ltgwys=;
+	s=arc-20240116; t=1705969899; c=relaxed/simple;
+	bh=Tx9DwdWCbOJ/q3nPoPsHMbEQFbjvJgeuOBEidwS1tCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPB4IBQ9smdeVA4bJruwAfRtxsa0vbfTQtoq4C9Q7FzZxSNSSdLXylYs4abjDRcgbELMh7BGmojOZ3NR203X/K/fRFNQglvvkJey0RjR/1L3SlOutDS5ySqoTu8fgosZ83P0X1Piekwc2NjVcEHFG/o4TZfjWnM8o+HLWHYOSvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDq0Me7t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0PFrKkJXFxNG6UwIXbU22E2I0sEJrXlpr1Rzy51uziDU4ki0aXlw35CwXW0EAm4jvdjmkmo9/E2NFG4LQnpiinVvNb0p3k/xOCESuh2/sn9Lc5BBbLGFMcuY95hAVEc0/xH/snCkM7I9sJa1j//aIeN73R4/FgXz0AmxXblp28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6Sr997o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDq0Me7t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B2BC43390;
-	Tue, 23 Jan 2024 00:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6Sr997o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3752C433C7;
+	Tue, 23 Jan 2024 00:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969897;
-	bh=Jrq+2aKfG8JI8p7FXFJ2RiZ69d9LGrp8ZAQp/Ltgwys=;
+	s=korg; t=1705969898;
+	bh=Tx9DwdWCbOJ/q3nPoPsHMbEQFbjvJgeuOBEidwS1tCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDq0Me7tIjEprJdrjPz9IPUySB0y4JnMJKkGrNvPtUJs/0Dodh8pITbWX2goF1Yc+
-	 UrqxDR2BysjlqQNgtYJNvUy2oIU0LlwxndeAoaWsJ5MFTq/6cGBwPFLIwMvOAGMhAj
-	 u5tQF1H1NBKBB2GF5bkxlkJOhGDuu+lY8ozldhhU=
+	b=i6Sr997ou7wvBOnovwcu9/R0SFWb6CqwGao+SIPwfN0C25iTMCZWPFl0xPnnjMsS1
+	 ny42nZz9f7q0FOd/hMPwrV3f0dv4nf2HY1eH+gbD4NLXcSa3WmTmaH0gkk/X9p0ieP
+	 W4DtLzfc9BqbE5SmPKFOUpsof1v8z6Q2GXnqogmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Douglas Anderson <dianders@chromium.org>,
-	Grant Grundler <grundler@chromium.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Veronika Molnarova <vmolnaro@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 513/641] r8152: Choose our USB config with choose_configuration() rather than probe()
-Date: Mon, 22 Jan 2024 15:56:57 -0800
-Message-ID: <20240122235834.140046480@linuxfoundation.org>
+Subject: [PATCH 6.7 514/641] perf test record user-regs: Fix mask for vg register
+Date: Mon, 22 Jan 2024 15:56:58 -0800
+Message-ID: <20240122235834.172295462@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,77 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Veronika Molnarova <vmolnaro@redhat.com>
 
-[ Upstream commit aa4f2b3e418e8673e55145de8b8016a7a9920306 ]
+[ Upstream commit 28b01743ca752cea5ab182297d8b912b22f2a2d1 ]
 
-If you deauthorize the r8152 device (by writing 0 to the "authorized"
-field in sysfs) and then reauthorize it (by writing a 1) then it no
-longer works. This is because when you do the above we lose the
-special configuration that we set in rtl8152_cfgselector_probe().
-Deauthorizing causes the config to be set to -1 and then reauthorizing
-runs the default logic for choosing the best config.
+The 'vg' register for arm64 shows up in --user_regs as available when
+masking the variable AT_HWCAP with 1 << 22 returns '1' as done in
+perf_regs.c.
 
-I made an attempt to fix it so that the config is kept across
-deauthorizing / reauthorizing [1] but it was a bit ugly.
+However, in subtests for support of SVE, the check for the 'vg' register
+is done by masking the variable AT_HWCAP with the value 0x200000 which
+is equals to 1 << 21 instead of 1 << 22.
 
-Let's instead use the new USB core feature to override
-choose_configuration().
+This results in inconsistencies on certain systems where the test
+expects that the 'vg' register is not operational when it is, and
+vice-versa.
 
-This patch relies upon the patches ("usb: core: Don't force USB
-generic_subclass drivers to define probe()") and ("usb: core: Allow
-subclassed USB drivers to override usb_choose_configuration()")
+During the testing on a machine that the test expected not to have the
+'vg' register available, 'perf record' with the option --user-regs
+showed records for the 'vg' register together with all of the others,
+which means that the mask for the subtest of perf_event_attr is off by
+one.
 
-[1] https://lore.kernel.org/r/20231130154337.1.Ie00e07f07f87149c9ce0b27ae4e26991d307e14b@changeid
+Change the value of the mask from 0x200000 to 0x400000 to correct it.
 
-Fixes: ec51fbd1b8a2 ("r8152: add USB device driver for config selection")
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Grant Grundler <grundler@chromium.org>
-Link: https://lore.kernel.org/r/20231201102946.v2.3.Ie00e07f07f87149c9ce0b27ae4e26991d307e14b@changeid
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9440ebdc333dd12e ("perf test arm64: Add attr tests for new VG register")
+Reviewed-by: Leo Yan <leo.yan@linaro.org>
+Signed-off-by: Veronika Molnarova <vmolnaro@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Michael Petlan <mpetlan@redhat.com>
+Link: https://lore.kernel.org/r/20231201194617.13012-1-vmolnaro@redhat.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/r8152.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64 | 2 +-
+ tools/perf/tests/attr/test-record-user-regs-sve-aarch64    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index 9bf2140fd0a1..0d0672d2a654 100644
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -10069,7 +10069,7 @@ static struct usb_driver rtl8152_driver = {
- 	.disable_hub_initiated_lpm = 1,
- };
+diff --git a/tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64 b/tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64
+index fbb065842880..bed765450ca9 100644
+--- a/tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64
++++ b/tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64
+@@ -6,4 +6,4 @@ args    = --no-bpf-event --user-regs=vg kill >/dev/null 2>&1
+ ret     = 129
+ test_ret = true
+ arch    = aarch64
+-auxv    = auxv["AT_HWCAP"] & 0x200000 == 0
++auxv    = auxv["AT_HWCAP"] & 0x400000 == 0
+diff --git a/tools/perf/tests/attr/test-record-user-regs-sve-aarch64 b/tools/perf/tests/attr/test-record-user-regs-sve-aarch64
+index c598c803221d..a65113cd7311 100644
+--- a/tools/perf/tests/attr/test-record-user-regs-sve-aarch64
++++ b/tools/perf/tests/attr/test-record-user-regs-sve-aarch64
+@@ -6,7 +6,7 @@ args    = --no-bpf-event --user-regs=vg kill >/dev/null 2>&1
+ ret     = 1
+ test_ret = true
+ arch    = aarch64
+-auxv    = auxv["AT_HWCAP"] & 0x200000 == 0x200000
++auxv    = auxv["AT_HWCAP"] & 0x400000 == 0x400000
+ kernel_since = 6.1
  
--static int rtl8152_cfgselector_probe(struct usb_device *udev)
-+static int rtl8152_cfgselector_choose_configuration(struct usb_device *udev)
- {
- 	struct usb_host_config *c;
- 	int i, num_configs;
-@@ -10096,19 +10096,13 @@ static int rtl8152_cfgselector_probe(struct usb_device *udev)
- 	if (i == num_configs)
- 		return -ENODEV;
- 
--	if (usb_set_configuration(udev, c->desc.bConfigurationValue)) {
--		dev_err(&udev->dev, "Failed to set configuration %d\n",
--			c->desc.bConfigurationValue);
--		return -ENODEV;
--	}
--
--	return 0;
-+	return c->desc.bConfigurationValue;
- }
- 
- static struct usb_device_driver rtl8152_cfgselector_driver = {
--	.name =		MODULENAME "-cfgselector",
--	.probe =	rtl8152_cfgselector_probe,
--	.id_table =	rtl8152_table,
-+	.name =	MODULENAME "-cfgselector",
-+	.choose_configuration = rtl8152_cfgselector_choose_configuration,
-+	.id_table = rtl8152_table,
- 	.generic_subclass = 1,
- 	.supports_autosuspend = 1,
- };
+ [event:base-record]
 -- 
 2.43.0
 
