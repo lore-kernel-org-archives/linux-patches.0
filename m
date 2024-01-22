@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F3412CDB0;
-	Tue, 23 Jan 2024 00:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0514512CDB0;
+	Tue, 23 Jan 2024 00:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968970; cv=none; b=eLPJA2/JQmiKaC4QuVgSlYV6Db1eW6i3+ivIvrfeFWoPzstoX7ibZKRL3r4yA40jutZv0O9HR2G+5N58E2zYejmcT/4ZG+684sEO9mrHfJ1I2iRvWP+tYpBoAaHAOXfFNiKRorA1RFS2RRxY54qLGneU8uvtx2VEncUJ0YcBXAM=
+	t=1705968972; cv=none; b=kIYuZpFpxjjs0rliun/izFr+p+oqbmZuqm32fF5iOVWJVr7kRPmymmVvVSUD2sN8ElIKROoI0HIphBc31wjbnjxTxBCwkwj6zKyuofzwAAasgjNR8Nn/q+ONc9KzBmYWu11VkF4a0tYjmLpb6/yz4+f570G1mQ44bOuICgF7lCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968970; c=relaxed/simple;
-	bh=XohR6lDQhO8V1U00G3xw9dBlHflqBnkdjargBv4poEo=;
+	s=arc-20240116; t=1705968972; c=relaxed/simple;
+	bh=T/oxLGwwrC1ozeFbKBP0Apar2Mx/tw1U2LP1/muZMkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KqUgd6cVCbYWcDs9L/ykc0qVDL+ZR8lmpMypKJuFq1mQR+G6HhiT+uS8qg0jBYjf/7+xKuO9njifLPNGh9noIhQOarsH6of+mWfuu/y995GPbVvCv+7pMFrtt8HPGZkOgCMP4lDwV8Ml0q2/Xr9T2LCDSJmaS53f57FcjLCcwJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZNnaYgx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P5yQHpWjcGbIb9R+JVZ3mRAlvuptLCp5x4JJv4MQQDu9wNh6jKJXrUOighvWyBMVve55klD4NWkWbiEAaQmDJ6jrFoSKWuh8eIxO77EPbRKKCBW3iTT7HyXDlZjOOf7/I+MwDQNNPCmjJ4svdzpRleZkQMuXfnsde14Hg6PEvdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FNU8hE9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZNnaYgx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89916C433C7;
-	Tue, 23 Jan 2024 00:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FNU8hE9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2430EC433C7;
+	Tue, 23 Jan 2024 00:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968969;
-	bh=XohR6lDQhO8V1U00G3xw9dBlHflqBnkdjargBv4poEo=;
+	s=korg; t=1705968971;
+	bh=T/oxLGwwrC1ozeFbKBP0Apar2Mx/tw1U2LP1/muZMkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZNnaYgxrkhoOfoqVRif1DYAVy5nnTatgFR/qRtTBH0MjDbGWJopN/2nrCt37/9DB
-	 CtVgq990PpXlv/Yy+nSUGhxvGjqv1bn3UBM3PMmpgMdD/85MOcsKEb0Ub64hF7ChzL
-	 5kMRApxi1Fnhr6eIBCaABvter+Yp8J4HFXVk/DhA=
+	b=0FNU8hE9Wrtm8XC2uQsYXr9Ypx6aGU9KlkO8IY0Rn17bvNU1eYzgzymTVEU53zQyW
+	 xIJ2gPXjuZvpd4fEGs0sEyU3LDRG7HZDOyXwrXBWkwvr5XfAgpvxjVK7TIIsnwT7Tv
+	 LYvDJsakNxXXOxSHbBuQMdXAiNoeBTa3S0iGTacU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 105/194] Bluetooth: Fix bogus check for re-auth no supported with non-ssp
-Date: Mon, 22 Jan 2024 15:57:15 -0800
-Message-ID: <20240122235723.746912984@linuxfoundation.org>
+Subject: [PATCH 5.4 106/194] Bluetooth: btmtkuart: fix recv_buf() return value
+Date: Mon, 22 Jan 2024 15:57:16 -0800
+Message-ID: <20240122235723.794369437@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -50,86 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit d03376c185926098cb4d668d6458801eb785c0a5 ]
+[ Upstream commit 64057f051f20c2a2184b9db7f8037d928d68a4f4 ]
 
-This reverts 19f8def031bfa50c579149b200bfeeb919727b27
-"Bluetooth: Fix auth_complete_evt for legacy units" which seems to be
-working around a bug on a broken controller rather then any limitation
-imposed by the Bluetooth spec, in fact if there ws not possible to
-re-auth the command shall fail not succeed.
+Serdev recv_buf() callback is supposed to return the amount of bytes
+consumed, therefore an int in between 0 and count.
 
-Fixes: 19f8def031bf ("Bluetooth: Fix auth_complete_evt for legacy units")
+Do not return negative number in case of issue, just print an error and
+return count. This fixes a WARN in ttyport_receive_buf().
+
+Link: https://lore.kernel.org/all/087be419-ec6b-47ad-851a-5e1e3ea5cfcc@kernel.org/
+Fixes: 7237c4c9ec92 ("Bluetooth: mediatek: Add protocol support for MediaTek serial devices")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h |  1 -
- net/bluetooth/hci_conn.c         |  8 +++-----
- net/bluetooth/hci_event.c        | 11 ++---------
- 3 files changed, 5 insertions(+), 15 deletions(-)
+ drivers/bluetooth/btmtkuart.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index b54f17677ac0..26983d26af19 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -673,7 +673,6 @@ void hci_inquiry_cache_flush(struct hci_dev *hdev);
- /* ----- HCI Connections ----- */
- enum {
- 	HCI_CONN_AUTH_PEND,
--	HCI_CONN_REAUTH_PEND,
- 	HCI_CONN_ENCRYPT_PEND,
- 	HCI_CONN_RSWITCH_PEND,
- 	HCI_CONN_MODE_CHANGE_PEND,
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index e129b7fb6540..d55973cb5b54 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1341,12 +1341,10 @@ static int hci_conn_auth(struct hci_conn *conn, __u8 sec_level, __u8 auth_type)
- 		hci_send_cmd(conn->hdev, HCI_OP_AUTH_REQUESTED,
- 			     sizeof(cp), &cp);
+diff --git a/drivers/bluetooth/btmtkuart.c b/drivers/bluetooth/btmtkuart.c
+index 2beb2321825e..e7e3c8e0ed0e 100644
+--- a/drivers/bluetooth/btmtkuart.c
++++ b/drivers/bluetooth/btmtkuart.c
+@@ -471,7 +471,7 @@ mtk_stp_split(struct btmtkuart_dev *bdev, const unsigned char *data, int count,
+ 	return data;
+ }
  
--		/* If we're already encrypted set the REAUTH_PEND flag,
--		 * otherwise set the ENCRYPT_PEND.
-+		/* Set the ENCRYPT_PEND to trigger encryption after
-+		 * authentication.
- 		 */
--		if (test_bit(HCI_CONN_ENCRYPT, &conn->flags))
--			set_bit(HCI_CONN_REAUTH_PEND, &conn->flags);
--		else
-+		if (!test_bit(HCI_CONN_ENCRYPT, &conn->flags))
- 			set_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags);
+-static int btmtkuart_recv(struct hci_dev *hdev, const u8 *data, size_t count)
++static void btmtkuart_recv(struct hci_dev *hdev, const u8 *data, size_t count)
+ {
+ 	struct btmtkuart_dev *bdev = hci_get_drvdata(hdev);
+ 	const unsigned char *p_left = data, *p_h4;
+@@ -510,25 +510,20 @@ static int btmtkuart_recv(struct hci_dev *hdev, const u8 *data, size_t count)
+ 			bt_dev_err(bdev->hdev,
+ 				   "Frame reassembly failed (%d)", err);
+ 			bdev->rx_skb = NULL;
+-			return err;
++			return;
+ 		}
+ 
+ 		sz_left -= sz_h4;
+ 		p_left += sz_h4;
  	}
- 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 74695df78122..f5b46ea9d4c4 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2806,14 +2806,8 @@ static void hci_auth_complete_evt(struct hci_dev *hdev, struct sk_buff *skb)
- 
- 	if (!ev->status) {
- 		clear_bit(HCI_CONN_AUTH_FAILURE, &conn->flags);
 -
--		if (!hci_conn_ssp_enabled(conn) &&
--		    test_bit(HCI_CONN_REAUTH_PEND, &conn->flags)) {
--			bt_dev_info(hdev, "re-auth of legacy device is not possible.");
--		} else {
--			set_bit(HCI_CONN_AUTH, &conn->flags);
--			conn->sec_level = conn->pending_sec_level;
--		}
-+		set_bit(HCI_CONN_AUTH, &conn->flags);
-+		conn->sec_level = conn->pending_sec_level;
- 	} else {
- 		if (ev->status == HCI_ERROR_PIN_OR_KEY_MISSING)
- 			set_bit(HCI_CONN_AUTH_FAILURE, &conn->flags);
-@@ -2822,7 +2816,6 @@ static void hci_auth_complete_evt(struct hci_dev *hdev, struct sk_buff *skb)
- 	}
+-	return 0;
+ }
  
- 	clear_bit(HCI_CONN_AUTH_PEND, &conn->flags);
--	clear_bit(HCI_CONN_REAUTH_PEND, &conn->flags);
+ static int btmtkuart_receive_buf(struct serdev_device *serdev, const u8 *data,
+ 				 size_t count)
+ {
+ 	struct btmtkuart_dev *bdev = serdev_device_get_drvdata(serdev);
+-	int err;
  
- 	if (conn->state == BT_CONFIG) {
- 		if (!ev->status && hci_conn_ssp_enabled(conn)) {
+-	err = btmtkuart_recv(bdev->hdev, data, count);
+-	if (err < 0)
+-		return err;
++	btmtkuart_recv(bdev->hdev, data, count);
+ 
+ 	bdev->hdev->stat.byte_rx += count;
+ 
 -- 
 2.43.0
 
