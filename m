@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17C360269;
-	Tue, 23 Jan 2024 00:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A174260268;
+	Tue, 23 Jan 2024 00:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970779; cv=none; b=nEpNOT88mT2Ny4JiQTxNo9vO1v9nvi90JXT5utcMxK7kkNyDMPea125tutolqGO7Iwn+uUCMA06ABWco03KzOZuEUOo+a+RKA6pnp0LF/Ah5Kt4ZqN145kkMN4uEw5ejdPn4vlG7PEzcjG4ElAlIiWvUsVWWbd/embElmKoeTzY=
+	t=1705970781; cv=none; b=GGVOtcmTh1Ng0aTmk+mjho56TO/vZDTT5eZf/mKNC/ceOb/2UL2HRoaEUTs89uWIYQlakQ1/61HiaPOP99quGx8+fOxWaHJwTkfVfm/qmJfrmhFWLKbmpPQrCD0u2ncHgSZ6epUZRDm51/tqHdjy3RvH4GaLDq6ah112k5YeKU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970779; c=relaxed/simple;
-	bh=CeAeoLEWyiZ0zPO7Ce89W5VH9dDVAD4E+sgE0xt+wnE=;
+	s=arc-20240116; t=1705970781; c=relaxed/simple;
+	bh=jtj3eVd7HCTqQNWS+egAtziw8CVYjU5RjW1IOa49suc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCqYBzlqHrudYr/oilYqJbUmdVdtVPCRoyH3qOee/f1IFgh4PhQClIwaH0TUCMS9/KxBUEI0ZWUHJkCHxQ23gtUDSYa5DaPqIm5oFRyxvm+hSyMuOqL4mQAB4/X7RuILr11RO7ZRbt3YGCO1uOJNTqi6deuuGN/PkHo0Bu2/+F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1jWmWdl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gXP7f8uXOXuJzu5NqyqY9KCCUjiLc/ZN1yDNxj1WRaX8ha0JV/E+xL8KpkVwhsaZUiv4pHWyXvSC+at5a6nlVVGjyiB0Vv9OhRlLZcPQuG4InkK1+sYMJP/t1JEtb1XWJAVUFHBwhzjWByZsNj5oeSifGlHFmKeMsfiEIKz7Pu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1lYlYbcG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1jWmWdl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C911C433C7;
-	Tue, 23 Jan 2024 00:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1lYlYbcG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A760C433F1;
+	Tue, 23 Jan 2024 00:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970779;
-	bh=CeAeoLEWyiZ0zPO7Ce89W5VH9dDVAD4E+sgE0xt+wnE=;
+	s=korg; t=1705970781;
+	bh=jtj3eVd7HCTqQNWS+egAtziw8CVYjU5RjW1IOa49suc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x1jWmWdlBl3Fg5ehJLjL6kx10kyMEEJ6nwIqrYe244ZMxaA2zQsenp5+1h1rYMiSk
-	 uiaky1c6Xtxh/bocZtuLCFoJjyp5HgUb0Hz0e9IoUUTvHbsl16hhoWq+5nh8y4Mhn4
-	 zHSuWqKEgX6aCfWFtzUa/mPjix7E9ROx2h7+CSfM=
+	b=1lYlYbcGZ3obU+36VY6sfyThv27lmrjTX/R/Sdh3I1PHAaKNzbCwXsxL1nGYwHgf8
+	 ciTNkrvWJOhpIs8db54d/KdltWdSMC6h3VQ1b2u/6AMGP/d83NTVIplKlpz1gyEHp2
+	 8dAW1YFJvEgMHnhVoFmVWI2M+7NxfxeO9/vYFQfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Wei Xu <xuwei5@hisilicon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/286] nouveau/tu102: flush all pdbs on vmm flush
-Date: Mon, 22 Jan 2024 15:55:21 -0800
-Message-ID: <20240122235732.607133352@linuxfoundation.org>
+Subject: [PATCH 6.1 108/417] arm64: dts: hisilicon: hikey970-pmic: fix regulator cells properties
+Date: Mon, 22 Jan 2024 15:54:36 -0800
+Message-ID: <20240122235755.477439624@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit cb9c919364653eeafb49e7ff5cd32f1ad64063ac ]
+[ Upstream commit 44ab3ee76a5a977864ba0bb6c352dcf6206804e0 ]
 
-This is a hack around a bug exposed with the GSP code, I'm not sure
-what is happening exactly, but it appears some of our flushes don't
-result in proper tlb invalidation for out BAR2 and we get a BAR2
-fault from GSP and it all dies.
+The Hi6421 PMIC regulator child nodes do not have unit addresses so drop
+the incorrect '#address-cells' and '#size-cells' properties.
 
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231130010852.4034774-1-airlied@gmail.com
+Fixes: 6219b20e1ecd ("arm64: dts: hisilicon: Add support for Hikey 970 PMIC")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Wei Xu <xuwei5@hisilicon.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c b/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c
-index b1294d0076c0..72449bf613bf 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmmtu102.c
-@@ -32,7 +32,7 @@ tu102_vmm_flush(struct nvkm_vmm *vmm, int depth)
+diff --git a/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi b/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
+index 970047f2dabd..c06e011a6c3f 100644
+--- a/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
++++ b/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
+@@ -25,9 +25,6 @@ pmic: pmic@0 {
+ 			gpios = <&gpio28 0 0>;
  
- 	type |= 0x00000001; /* PAGE_ALL */
- 	if (atomic_read(&vmm->engref[NVKM_SUBDEV_BAR]))
--		type |= 0x00000004; /* HUB_ONLY */
-+		type |= 0x00000006; /* HUB_ONLY | ALL PDB (hack) */
- 
- 	mutex_lock(&subdev->mutex);
- 
+ 			regulators {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+ 				ldo3: ldo3 { /* HDMI */
+ 					regulator-name = "ldo3";
+ 					regulator-min-microvolt = <1500000>;
 -- 
 2.43.0
 
