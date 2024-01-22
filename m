@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CEC6313F;
-	Tue, 23 Jan 2024 01:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66C06313F;
+	Tue, 23 Jan 2024 01:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975024; cv=none; b=o4TWbufkYiY8lZk5/+QYIz4c9xrup/ZkOWvJ+knsvE82LsLlFz9A9xFIYRXn1rCRZto3DNomZuIqIh9SD48KHtF0Saoql2Ey0HbL6ALsynHuXyrZdUU+z1GZxnNonK7CMM2cffWYgHj02s0mNT4d2sSOZB6bjAXGNZfrfNwL78k=
+	t=1705975024; cv=none; b=jLuXkqmHD9nDMEyLyuQmPnN1kRKUys4xnr9gkKc3AIh9gwamE9ned3OzcSrwj4Hh8YNaoel5AJFr2KoojgBTmQw50KZ0BvqzS+rXZjkM9BABhJetGEwzbW2ydTzUJR/yQnHykXYFrfGz1zZwv5eyvnyNV9FXFty8hk1RDH2hmLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975024; c=relaxed/simple;
-	bh=gX8QS4GztEV8tTIjLnS7Dt2BdlKyHbH0jlwhW9i+nKQ=;
+	bh=r61aYmHeE7ihlNAMhDk1gw/Ues/fxDSRuLKZ8MEDA4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MOL/I0cQAfsDcypmVAYe9kxF5brp4N9+oYzGkNNc7NxBqFwQXsRL7sZQ5BQpZnbTgSK6YSWrfNjTOSyulP5I5vmEuXTG4AwALLwVqR6FxGaWQo9L+TujaENN7Bk/78K2a56EqdpD55hKuxjTAe64zIs9HQyxuFyTEL3Dv5ppc1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FEv1PVx7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oZ1D4UTN7q7sG5Cf+INzB6RM7/nphnZiaGPFz74j6kdecBfQ88oIzXYYQJB3nhGZ7PF8joBWdxTSdybeRC6Gcz4NY0XAQQx2ukriNJs5gC2LJudq2ECRVNpBgHZ3mERIkHeLhLBsU2wPz+D0aThz7j9D1nmdHA5c0qQw3lHwy6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0zsFc/P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FEv1PVx7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC312C433B1;
-	Tue, 23 Jan 2024 01:57:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0zsFc/P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C00C433A6;
+	Tue, 23 Jan 2024 01:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975023;
-	bh=gX8QS4GztEV8tTIjLnS7Dt2BdlKyHbH0jlwhW9i+nKQ=;
+	s=korg; t=1705975024;
+	bh=r61aYmHeE7ihlNAMhDk1gw/Ues/fxDSRuLKZ8MEDA4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FEv1PVx75ONrszvAwGt8+W1q11NRi9Imp8a4vefigIFAXLtYtP7y6ZO7peedwL2JC
-	 jwgGWdT6WJL6t11emrc9S7/veX7knNPoSfnhCDEKegIvPHJkBzB7yWtne0EPLg6NrO
-	 Ch9BAHCdJNDdm/KSOx9O0P9Zfr6tfctsk495TW0g=
+	b=R0zsFc/P4/8NW2izsyVIXHYB8+HgZ77tVbA/KN0iiywFT1q2xu18E9HKul45/kfxy
+	 UPCupN7RVW3vWpalF+ALFxgecsdtUiu+yJ7Wv4mqs41fYtO1S3JtAf9EuXY8iDtfK2
+	 G1fAeWeks6ADuRqm3tHFNrybEcpWEW38CN4NDWeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 328/374] nvmet: re-fix tracing strncpy() warning
-Date: Mon, 22 Jan 2024 15:59:44 -0800
-Message-ID: <20240122235756.311993468@linuxfoundation.org>
+Subject: [PATCH 6.6 201/583] wifi: iwlwifi: fix out of bound copy_from_user
+Date: Mon, 22 Jan 2024 15:54:12 -0800
+Message-ID: <20240122235818.135692758@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,53 +48,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 
-[ Upstream commit 4ee7ffeb4ce50c80bc4504db6f39b25a2df6bcf4 ]
+[ Upstream commit cb2dfacb197bed0241fbb4f84bd0995a47f4465e ]
 
-An earlier patch had tried to address a warning about a string copy with
-missing zero termination:
+The driver copies the userspace buffer into an internal NUL
+byte terminated buffer. While doing so, it was reading beyond
+the end of the userspace buffer, overwriting its own NUL
+termination in the process.
 
-drivers/nvme/target/trace.h:52:3: warning: ‘strncpy’ specified bound 32 equals destination size [-Wstringop-truncation]
+Fix this by only copying the correct number of bytes.
 
-The new version causes a different warning with some compiler versions, notably
-gcc-9 and gcc-10, and also misses the zero padding that was apparently done
-intentionally in the original code:
-
-drivers/nvme/target/trace.h:56:2: error: 'strncpy' specified bound depends on the length of the source argument [-Werror=stringop-overflow=]
-
-Change it to use strscpy_pad() with the original length, which will give
-a properly padded and zero-terminated string as well as avoiding the warning.
-
-Fixes: d86481e924a7 ("nvmet: use min of device_path and disk len")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 3f244876ef73 ("wifi: iwlwifi: make debugfs entries link specific")
+Signed-off-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
+Reviewed-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231219215605.e4913deb2ad4.Idcf6a7e909ff4b7801cd49c2f691f84a2f68eff9@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/trace.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/trace.h b/drivers/nvme/target/trace.h
-index 6109b3806b12..155334ddc13f 100644
---- a/drivers/nvme/target/trace.h
-+++ b/drivers/nvme/target/trace.h
-@@ -53,8 +53,7 @@ static inline void __assign_req_name(char *name, struct nvmet_req *req)
- 		return;
- 	}
- 
--	strncpy(name, req->ns->device_path,
--		min_t(size_t, DISK_NAME_LEN, strlen(req->ns->device_path)));
-+	strscpy_pad(name, req->ns->device_path, DISK_NAME_LEN);
- }
- #endif
- 
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+index cf27f106d4d5..7057421e513b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+@@ -1673,7 +1673,7 @@ static ssize_t _iwl_dbgfs_link_sta_##name##_write(struct file *file,	\
+ 	char buf[buflen] = {};						\
+ 	size_t buf_size = min(count, sizeof(buf) -  1);			\
+ 									\
+-	if (copy_from_user(buf, user_buf, sizeof(buf)))			\
++	if (copy_from_user(buf, user_buf, buf_size))			\
+ 		return -EFAULT;						\
+ 									\
+ 	return _iwl_dbgfs_link_sta_wrap_write(iwl_dbgfs_##name##_write,	\
 -- 
 2.43.0
 
