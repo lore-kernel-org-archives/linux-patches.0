@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93638137C48;
-	Tue, 23 Jan 2024 00:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622F313A246;
+	Tue, 23 Jan 2024 00:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968123; cv=none; b=QR3eLDRE5jXO4dTNqPHPYFXOHDle7AYx3gqSfUjp9dvbQLoVo1dLuSyft1m9rnOkvvJDEz3NA7EcXhmKXw9ax0YWUbabo5H0T1be2gHLKqBdrgfxxMSmA4m9IWyrdBPDB3++7VuByUwVUCvIu1Y6g8qpeskNRbKCl1BuwcNPtxQ=
+	t=1705968127; cv=none; b=a5RNNVRaIIUY1vnfXp1Hv0Gztc6BmQmJ3Pz/2mGUs7w8PEriLX8GN4QVgreb+jen8ySzj9q+q48Ii2MCX8z5oW+eD8jg6ZadeAOh1T7rTu5/gefedw+k7JWN8yZ4WRBE5zKJmngPP5L+J/BFMv9+iayj1ZLRfuHvl8KU8a97TEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968123; c=relaxed/simple;
-	bh=Xo/bv46EKmxeQbMPHrF1eDnBhOKIBf+L7yw/s2fw/c4=;
+	s=arc-20240116; t=1705968127; c=relaxed/simple;
+	bh=EjDe6KE/KcS3UYMjN2XZDFx4mKzp9+ZTcKe8kh0JuHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tEEIGsmIpTK1PkOfMpUMLDy4WFew5PaO9sjos2XSkieURl6wmXmB3AZWXf1gqJUFucZ0r4JXseAYhGUzopKLz91a06RnHcf08gkzMiKH0cNrW75IpMaqPcj05WiW9nxThbUoDqG+flzeqYsUbyNct3pHq4JJoBuwTEU85StRlX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYQYvnn7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q4//SDiEdj8xycxixkqNaGZalaf+en9ahh6P0R8AKymAhPm7mJDebhcv83URObQx5ptVzV26pUzaQ03xIMYoCa4MdMISknmjzwH9Al/Lh1wcB6OBvsgqkAL9r6BUiATR9vCYnab/mWcOtwLB4NONIHxyVlcLHBZRMhiKZUVa+nA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6f9uckm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYQYvnn7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310A9C433F1;
-	Tue, 23 Jan 2024 00:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6f9uckm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3BAFC433F1;
+	Tue, 23 Jan 2024 00:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968123;
-	bh=Xo/bv46EKmxeQbMPHrF1eDnBhOKIBf+L7yw/s2fw/c4=;
+	s=korg; t=1705968127;
+	bh=EjDe6KE/KcS3UYMjN2XZDFx4mKzp9+ZTcKe8kh0JuHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zYQYvnn7eAfYk5NRxPXAyrHZswsohCqjn4TMdimT6f6JpYnP5uLZmVh9M06sDSAt5
-	 qySkCfAlf7NAE3nKDvZti9L/o2vwBxm4uybcAnQGAtM7VIMUHlKXQt6hcwXr2YUvxq
-	 t3rtV6QA4Ww1KzeAqCxDc1Swuc1rUtIr9o9wYa+o=
+	b=Q6f9uckmiK7PgQA02KKl0ry7nyS3Cb0sJDegNnghK17kZizgjK3FmvRxx6DjoOKE3
+	 obrv8rBa8NTD0ac2S+vVMfUFkzeW041T0VbxYeFC6LshXa5xDojthO21GNOUYPDTjN
+	 rTxBV+9TgH5WAwOCFlwJNJbe3yQJPf94VM5W00J0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Esther Shimanovich <eshimanovich@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 017/148] Input: i8042 - add nomux quirk for Acer P459-G2-M
-Date: Mon, 22 Jan 2024 15:56:13 -0800
-Message-ID: <20240122235713.123199221@linuxfoundation.org>
+Subject: [PATCH 4.19 018/148] s390/scm: fix virtual vs physical address confusion
+Date: Mon, 22 Jan 2024 15:56:14 -0800
+Message-ID: <20240122235713.164677270@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -51,43 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esther Shimanovich <eshimanovich@chromium.org>
+From: Vineeth Vijayan <vneethv@linux.ibm.com>
 
-[ Upstream commit 335fe00319e030d481a54d5e0e68d50c5e672c0e ]
+[ Upstream commit b1a6a1a77f0666a5a6dc0893ab6ec8fcae46f24c ]
 
-After the laptop lid is opened, and the device resumes from S3 deep
-sleep, if the user presses a keyboard key while the screen is still black,
-the mouse and keyboard become unusable.
+Fix virtual vs physical address confusion (which currently are the same).
 
-Enabling this quirk prevents this behavior from occurring.
-
-Signed-off-by: Esther Shimanovich <eshimanovich@chromium.org>
-Link: https://lore.kernel.org/r/20231130195615.v2.1.Ibe78a9df97ecd18dc227a5cff67d3029631d9c11@changeid
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/serio/i8042-x86ia64io.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/s390/block/scm_blk.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/input/serio/i8042-x86ia64io.h b/drivers/input/serio/i8042-x86ia64io.h
-index 2d4df82d65af..06d99931519b 100644
---- a/drivers/input/serio/i8042-x86ia64io.h
-+++ b/drivers/input/serio/i8042-x86ia64io.h
-@@ -355,6 +355,14 @@ static const struct dmi_system_id i8042_dmi_quirk_table[] __initconst = {
- 		},
- 		.driver_data = (void *)(SERIO_QUIRK_DRITEK)
- 	},
-+	{
-+		/* Acer TravelMate P459-G2-M */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "TravelMate P459-G2-M"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
-+	},
- 	{
- 		/* Amoi M636/A737 */
- 		.matches = {
+diff --git a/drivers/s390/block/scm_blk.c b/drivers/s390/block/scm_blk.c
+index e01889394c84..d3133023a557 100644
+--- a/drivers/s390/block/scm_blk.c
++++ b/drivers/s390/block/scm_blk.c
+@@ -18,6 +18,7 @@
+ #include <linux/genhd.h>
+ #include <linux/slab.h>
+ #include <linux/list.h>
++#include <linux/io.h>
+ #include <asm/eadm.h>
+ #include "scm_blk.h"
+ 
+@@ -131,7 +132,7 @@ static void scm_request_done(struct scm_request *scmrq)
+ 
+ 	for (i = 0; i < nr_requests_per_io && scmrq->request[i]; i++) {
+ 		msb = &scmrq->aob->msb[i];
+-		aidaw = msb->data_addr;
++		aidaw = (u64)phys_to_virt(msb->data_addr);
+ 
+ 		if ((msb->flags & MSB_FLAG_IDA) && aidaw &&
+ 		    IS_ALIGNED(aidaw, PAGE_SIZE))
+@@ -196,12 +197,12 @@ static int scm_request_prepare(struct scm_request *scmrq)
+ 	msb->scm_addr = scmdev->address + ((u64) blk_rq_pos(req) << 9);
+ 	msb->oc = (rq_data_dir(req) == READ) ? MSB_OC_READ : MSB_OC_WRITE;
+ 	msb->flags |= MSB_FLAG_IDA;
+-	msb->data_addr = (u64) aidaw;
++	msb->data_addr = (u64)virt_to_phys(aidaw);
+ 
+ 	rq_for_each_segment(bv, req, iter) {
+ 		WARN_ON(bv.bv_offset);
+ 		msb->blk_count += bv.bv_len >> 12;
+-		aidaw->data_addr = (u64) page_address(bv.bv_page);
++		aidaw->data_addr = virt_to_phys(page_address(bv.bv_page));
+ 		aidaw++;
+ 	}
+ 
 -- 
 2.43.0
 
