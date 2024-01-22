@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D4612F59C;
-	Tue, 23 Jan 2024 01:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC19912F59C;
+	Tue, 23 Jan 2024 01:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971763; cv=none; b=DaeWWOeiBSHBhHi6OXbKywImOhEW+CuxD9efs4YRgMvEcvOBV6WYI2BatwcHHbKS2CYPX55/38lYkgBGurHd5Uxu5q7SN8FUGM/9QIgf+XFV5Y6CWe0IX5AaJMaCIg4u3BXf8I3ZGD00kXdNE+h97FMrvAYpJounB9FXboLOoG8=
+	t=1705971765; cv=none; b=KG+DXPLDV6SApY63hJRlHIQ865++3vTeafSm/+558QoAj4XauaRx4yeYawGbo6HdkjiC3UnutLWErPXUxrNQuiT32tLciYdv8W6HxQJ68YaqYohPf3qmMQjT5g1lxXGHclOj+UKdeqkb6W3yOjm5SImFyb6fSf9RiqChtMHitBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971763; c=relaxed/simple;
-	bh=PWoxXgIq8WkWCVmYh7CYBmcxvsc4Xo+JF0V//Q6MmSg=;
+	s=arc-20240116; t=1705971765; c=relaxed/simple;
+	bh=5xKjPx/qzWNDCFNjPgn4gERkiJho0x6ZhrNJ1v3FOR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S+XkkMbBlo/jcDogAnft+XTmuXwdeSuYe78hI4HW3rRNWwYovPx8dc6mmVJHyP6uHAUeuouvpBALPRdIZWjZ+79A5Q9t9/cwvkd7o/s0mfIIWfhRs8GqYCHH684+qG/lyncsdbh6TQriS+/Z/kJv5kT2ohrs1FE4iBSVAiLmoR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyGlLa7K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qdhrYRZhk++o75daDLkN702jytRHFn2fgW/hhHlYdIYSQonB/TM034rumczQ+oNfE6/p0aA7Rg5alXFyXkiQSxuV2rUBr1MS8xG1b3XCbG39INNBGoWwF1JkOHFkt2YyPv0eWPzjos6Te5dqVcZumgmJwCHBtG02WMFRmGAeMjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jluBLaig; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyGlLa7K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B70C433C7;
-	Tue, 23 Jan 2024 01:02:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jluBLaig"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE25C433F1;
+	Tue, 23 Jan 2024 01:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971763;
-	bh=PWoxXgIq8WkWCVmYh7CYBmcxvsc4Xo+JF0V//Q6MmSg=;
+	s=korg; t=1705971764;
+	bh=5xKjPx/qzWNDCFNjPgn4gERkiJho0x6ZhrNJ1v3FOR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jyGlLa7K24oepkF4357H6FsYFDdgmjNgoIJCeKxAeNKaBOWbetHcEZOFvytAEkXGe
-	 BDiX4N+lFN4+CzEDUqgKSIRGc3weeOlO2zK1cfXeTSnI1YMClWvdJMKip+oZeWqyOV
-	 9B6lYtHr+tAvE9ho6vtuLyAwcGbyZQE5cJuW0tC4=
+	b=jluBLaigA7t1T8cDIihCm8cKl/ktvCX/8gx7Tzk76B8+B1wrP8dBBai+sxi5cxxtx
+	 q6f6fGesndRtXsnWuR9rBlQvAiQLLE6+Nn2kEH0kHjmoPANIKaRn6DxpxCrNsxtt3+
+	 AUwDX166+vWpox1IDSuq1f4cPnchGatEgu0ImFss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C3=87a=C4=9Fhan=20Demir?= <caghandemir@marun.edu.tr>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 221/286] ALSA: hda/relatek: Enable Mute LED on HP Laptop 15s-fq2xxx
-Date: Mon, 22 Jan 2024 15:58:47 -0800
-Message-ID: <20240122235740.583415823@linuxfoundation.org>
+	Carlos Llamas <cmllamas@google.com>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 5.10 199/286] binder: fix unused alloc->free_async_space
+Date: Mon, 22 Jan 2024 15:58:25 -0800
+Message-ID: <20240122235739.776654735@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
 References: <20240122235732.009174833@linuxfoundation.org>
@@ -44,39 +44,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Çağhan Demir <caghandemir@marun.edu.tr>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit bc7863d18677df66b2c7a0e172c91296ff380f11 upstream.
+commit c6d05e0762ab276102246d24affd1e116a46aa0c upstream.
 
-This HP Laptop uses ALC236 codec with COEF 0x07 idx 1 controlling
-the mute LED. This patch enables the already existing quirk for
-this device.
+Each transaction is associated with a 'struct binder_buffer' that stores
+the metadata about its buffer area. Since commit 74310e06be4d ("android:
+binder: Move buffer out of area shared with user space") this struct is
+no longer embedded within the buffer itself but is instead allocated on
+the heap to prevent userspace access to this driver-exclusive info.
 
-Signed-off-by: Çağhan Demir <caghandemir@marun.edu.tr>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240115172303.4718-1-caghandemir@marun.edu.tr
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Unfortunately, the space of this struct is still being accounted for in
+the total buffer size calculation, specifically for async transactions.
+This results in an additional 104 bytes added to every async buffer
+request, and this area is never used.
+
+This wasted space can be substantial. If we consider the maximum mmap
+buffer space of SZ_4M, the driver will reserve half of it for async
+transactions, or 0x200000. This area should, in theory, accommodate up
+to 262,144 buffers of the minimum 8-byte size. However, after adding
+the extra 'sizeof(struct binder_buffer)', the total number of buffers
+drops to only 18,724, which is a sad 7.14% of the actual capacity.
+
+This patch fixes the buffer size calculation to enable the utilization
+of the entire async buffer space. This is expected to reduce the number
+of -ENOSPC errors that are seen on the field.
+
+Fixes: 74310e06be4d ("android: binder: Move buffer out of area shared with user space")
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20231201172212.1813387-6-cmllamas@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/android/binder_alloc.c |   11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9034,6 +9034,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x87f5, "HP", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87f6, "HP Spectre x360 14", ALC245_FIXUP_HP_X360_AMP),
- 	SND_PCI_QUIRK(0x103c, 0x87f7, "HP Spectre x360 14", ALC245_FIXUP_HP_X360_AMP),
-+	SND_PCI_QUIRK(0x103c, 0x87fe, "HP Laptop 15s-fq2xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8805, "HP ProBook 650 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x880d, "HP EliteBook 830 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8811, "HP Spectre x360 15-eb1xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
+--- a/drivers/android/binder_alloc.c
++++ b/drivers/android/binder_alloc.c
+@@ -359,8 +359,7 @@ static void debug_low_async_space_locked
+ 			continue;
+ 		if (!buffer->async_transaction)
+ 			continue;
+-		total_alloc_size += binder_alloc_buffer_size(alloc, buffer)
+-			+ sizeof(struct binder_buffer);
++		total_alloc_size += binder_alloc_buffer_size(alloc, buffer);
+ 		num_buffers++;
+ 	}
+ 
+@@ -419,8 +418,7 @@ static struct binder_buffer *binder_allo
+ 	/* Pad 0-size buffers so they get assigned unique addresses */
+ 	size = max(size, sizeof(void *));
+ 
+-	if (is_async &&
+-	    alloc->free_async_space < size + sizeof(struct binder_buffer)) {
++	if (is_async && alloc->free_async_space < size) {
+ 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
+ 			     "%d: binder_alloc_buf size %zd failed, no async space left\n",
+ 			      alloc->pid, size);
+@@ -527,7 +525,7 @@ static struct binder_buffer *binder_allo
+ 	buffer->extra_buffers_size = extra_buffers_size;
+ 	buffer->pid = pid;
+ 	if (is_async) {
+-		alloc->free_async_space -= size + sizeof(struct binder_buffer);
++		alloc->free_async_space -= size;
+ 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC_ASYNC,
+ 			     "%d: binder_alloc_buf size %zd async free %zd\n",
+ 			      alloc->pid, size, alloc->free_async_space);
+@@ -663,8 +661,7 @@ static void binder_free_buf_locked(struc
+ 	BUG_ON(buffer->user_data > alloc->buffer + alloc->buffer_size);
+ 
+ 	if (buffer->async_transaction) {
+-		alloc->free_async_space += buffer_size + sizeof(struct binder_buffer);
+-
++		alloc->free_async_space += buffer_size;
+ 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC_ASYNC,
+ 			     "%d: binder_free_buf size %zd async free %zd\n",
+ 			      alloc->pid, size, alloc->free_async_space);
 
 
