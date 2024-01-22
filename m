@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E47612DDAA;
-	Tue, 23 Jan 2024 01:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322B467726;
+	Tue, 23 Jan 2024 01:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971707; cv=none; b=CgFotmyXaW/pmsM8U9JuUKEhcYmnAB3566j/y0eVpd9jr3Gn2TdG0Si6WOXhra7ASCJj7UJG0ctIQq3zDgbSls/TD8iNFmztn4ZSMUQytaFnGK16dGUZjCirARoUTOrlNrQe4Nkp3+vw8bAjYJRT4vaDUSnA+Vw7o7GB/eF/ZRA=
+	t=1705971709; cv=none; b=JnN4sRDANyMnOcWQ1TaWmJSxScwIUrpK2M+w4uXdGg1CCCSI7TPuIWhlPNzl4xsWj43qhOoB4Iw4lYE/dSdz8aaeKyXd2p72DKROOnR/Z+C5ylyYFgC6Gfk/Hus+zQpaJ5AO+sl7yRhZ7bHUSz/b1WsqEE/Um0fNIvAIsazGS3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971707; c=relaxed/simple;
-	bh=hGp7eyFscusuLwGSpVM0qH8ciEtoPbBQF+iFe6Ij/Gc=;
+	s=arc-20240116; t=1705971709; c=relaxed/simple;
+	bh=ZhbD0I/i6DqxCsMWSd2OXTZH6gcXB0xu4ulLjnGwsg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jGvtBHQcvjIH9tmxfEBlpPkoZmoWZrmsfFc1JazjCWiu01e21VpwiPtMvns+w0Qw/rUgnSlwkpsTsI216hTZarvsVOQvZ+cGfH7NUpUOSPylhsVb+tzXN1x/e+OenKNWUPQoVO5JzGkwBOtwiI7isbWFLnTaJQxvcK+Hv/jyB5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GA+HuP9e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iW/7Fp0Xo4URVg8X80NQAqbG2BaNwRK8zuXAqp071Vpl/JwjY3h0emNgoISU9XBbB2LZ1/Hlz5VxQeg/8W91c3K+wbpH8oZr5rPQgR5kwHLfVwAfp06AsI4aQFTx+Wjsvaw16wD9ZUOh1+jiQfwjLpI0DXJzHiuRByRJETzb3tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyfBiPUy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GA+HuP9e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0456C433C7;
-	Tue, 23 Jan 2024 01:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyfBiPUy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B989C43394;
+	Tue, 23 Jan 2024 01:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971707;
-	bh=hGp7eyFscusuLwGSpVM0qH8ciEtoPbBQF+iFe6Ij/Gc=;
+	s=korg; t=1705971708;
+	bh=ZhbD0I/i6DqxCsMWSd2OXTZH6gcXB0xu4ulLjnGwsg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GA+HuP9eYK+yG0MYCwi+5ZOWQOTomBfW3IhgwU8Kiwp5+Efg2E0GGFADLZV2BXNFH
-	 Iop9c7cJ35bJLaHe88wOBCpIqmr2keBdESRkqkXqK99Hu4BmEFVOXr62rkfDRiY9X7
-	 UbI9OyORzGKgzVrsFLpP/6CKlaFuDm5eGbJpeAYE=
+	b=WyfBiPUyVf4bhcxZeEZTsIpJekCha1SyIXBInYJZV/K7UhscUQUB3hyc1DwJ+tx5X
+	 L1W9aL1axExEkBaIQFNEt3IfezQqRFsu5wWzY1KZjE1H2xxKjqQN20cb2eI+PF9Arj
+	 c0n9d645gwdU5RNan6ulq5n+vghuRa83tw6qUVdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.10 198/286] binder: fix async space check for 0-sized buffers
-Date: Mon, 22 Jan 2024 15:58:24 -0800
-Message-ID: <20240122235739.741638894@linuxfoundation.org>
+	Jiri Olsa <olsajiri@gmail.com>,
+	Song Liu <song@kernel.org>,
+	Dmitrii Dolgov <9erthalion6@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.1 303/417] bpf: Fix re-attachment branch in bpf_tracing_prog_attach
+Date: Mon, 22 Jan 2024 15:57:51 -0800
+Message-ID: <20240122235802.326424160@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,48 +48,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Jiri Olsa <olsajiri@gmail.com>
 
-commit 3091c21d3e9322428691ce0b7a0cfa9c0b239eeb upstream.
+commit 715d82ba636cb3629a6e18a33bb9dbe53f9936ee upstream.
 
-Move the padding of 0-sized buffers to an earlier stage to account for
-this round up during the alloc->free_async_space check.
+The following case can cause a crash due to missing attach_btf:
 
-Fixes: 74310e06be4d ("android: binder: Move buffer out of area shared with user space")
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20231201172212.1813387-5-cmllamas@google.com
+1) load rawtp program
+2) load fentry program with rawtp as target_fd
+3) create tracing link for fentry program with target_fd = 0
+4) repeat 3
+
+In the end we have:
+
+- prog->aux->dst_trampoline == NULL
+- tgt_prog == NULL (because we did not provide target_fd to link_create)
+- prog->aux->attach_btf == NULL (the program was loaded with attach_prog_fd=X)
+- the program was loaded for tgt_prog but we have no way to find out which one
+
+    BUG: kernel NULL pointer dereference, address: 0000000000000058
+    Call Trace:
+     <TASK>
+     ? __die+0x20/0x70
+     ? page_fault_oops+0x15b/0x430
+     ? fixup_exception+0x22/0x330
+     ? exc_page_fault+0x6f/0x170
+     ? asm_exc_page_fault+0x22/0x30
+     ? bpf_tracing_prog_attach+0x279/0x560
+     ? btf_obj_id+0x5/0x10
+     bpf_tracing_prog_attach+0x439/0x560
+     __sys_bpf+0x1cf4/0x2de0
+     __x64_sys_bpf+0x1c/0x30
+     do_syscall_64+0x41/0xf0
+     entry_SYSCALL_64_after_hwframe+0x6e/0x76
+
+Return -EINVAL in this situation.
+
+Fixes: f3a95075549e0 ("bpf: Allow trampoline re-attach for tracing and lsm programs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiri Olsa <olsajiri@gmail.com>
+Acked-by: Jiri Olsa <olsajiri@gmail.com>
+Acked-by: Song Liu <song@kernel.org>
+Signed-off-by: Dmitrii Dolgov <9erthalion6@gmail.com>
+Link: https://lore.kernel.org/r/20240103190559.14750-4-9erthalion6@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder_alloc.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ kernel/bpf/syscall.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -415,6 +415,10 @@ static struct binder_buffer *binder_allo
- 				alloc->pid, extra_buffers_size);
- 		return ERR_PTR(-EINVAL);
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -3058,6 +3058,10 @@ static int bpf_tracing_prog_attach(struc
+ 	 *
+ 	 * - if prog->aux->dst_trampoline and tgt_prog is NULL, the program
+ 	 *   was detached and is going for re-attachment.
++	 *
++	 * - if prog->aux->dst_trampoline is NULL and tgt_prog and prog->aux->attach_btf
++	 *   are NULL, then program was already attached and user did not provide
++	 *   tgt_prog_fd so we have no way to find out or create trampoline
+ 	 */
+ 	if (!prog->aux->dst_trampoline && !tgt_prog) {
+ 		/*
+@@ -3071,6 +3075,11 @@ static int bpf_tracing_prog_attach(struc
+ 			err = -EINVAL;
+ 			goto out_unlock;
+ 		}
++		/* We can allow re-attach only if we have valid attach_btf. */
++		if (!prog->aux->attach_btf) {
++			err = -EINVAL;
++			goto out_unlock;
++		}
+ 		btf_id = prog->aux->attach_btf_id;
+ 		key = bpf_trampoline_compute_key(NULL, prog->aux->attach_btf, btf_id);
  	}
-+
-+	/* Pad 0-size buffers so they get assigned unique addresses */
-+	size = max(size, sizeof(void *));
-+
- 	if (is_async &&
- 	    alloc->free_async_space < size + sizeof(struct binder_buffer)) {
- 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
-@@ -423,9 +427,6 @@ static struct binder_buffer *binder_allo
- 		return ERR_PTR(-ENOSPC);
- 	}
- 
--	/* Pad 0-size buffers so they get assigned unique addresses */
--	size = max(size, sizeof(void *));
--
- 	while (n) {
- 		buffer = rb_entry(n, struct binder_buffer, rb_node);
- 		BUG_ON(!buffer->free);
 
 
