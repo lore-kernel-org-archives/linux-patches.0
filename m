@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FD15DF19;
-	Tue, 23 Jan 2024 01:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3055DF2F;
+	Tue, 23 Jan 2024 01:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974398; cv=none; b=LJIuk1xOjbyfR1ckLh2HO7y+ToOWl2smz1SbGcH4l2Ax3s6MOXWN8V+tjvBaJ2C46a3vo0cPfzOuTynoYrI/PCwKbgLrzso+ma7Ig7087+bJfHhMCf+0Q1qCfKSI71XyvtNwnYkHm3Pxevs4QstBGZCuZG/KEVSh/7Zc+CJ1kLg=
+	t=1705974399; cv=none; b=QZpzngyyanNrkccwqrw8zQi2096CCYpg7rYiwcgj0visCIc4+pfEP25pNEK2AluUPQuHfGq4tbF/UsY3zgLJNZDivHFpNfB9OLI+xmUAy8qrHBtnQxW6vGOUaInH+rS4BrcWJOzr3nIhKZzY3nyG0pDrt3LQ38abOp/pYy3mjE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974398; c=relaxed/simple;
-	bh=aG4LkcdEIgzUUvUSXYmcnvyeAABUnxvaR/Isq5Kacrk=;
+	s=arc-20240116; t=1705974399; c=relaxed/simple;
+	bh=9plvsaCSy508dlM/BMjAuVJ7zdwVy8j2V7r4wqcjcG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RY4IU8R2PcjHuH5AA/l8cJsPWNnqLModVdIoCIf5vDhVXwl4YT4Mla8HJt4hu4/RRwm3/Lvsvh9twxE1R/G18JrCl+7grEVLDvOQb93ZBcxJ9OI8Uf7bRzO1jPsLJtNpHbyFwHntcZRitiljYf/UF385h9ajj8XVDWNMMITJADM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxDxxn5p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=djXPV1Oq3XaWMYE6unBmU3nmwsiEC1heDDjdnH4R86PPUu2BVo6CKh3TnGtcFqHU8Zapz5JrIL+H9IKLPnU7BxNGMkcTX6AOrJoZ02a0Tp7jpkvSwEixjQ9414ACX7A77PmoU/G8gzJSZD6XSnX+3NlryuWnJIByIXQ1l34G0r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8cx2E0Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxDxxn5p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEFBC43390;
-	Tue, 23 Jan 2024 01:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8cx2E0Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23814C43390;
+	Tue, 23 Jan 2024 01:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974398;
-	bh=aG4LkcdEIgzUUvUSXYmcnvyeAABUnxvaR/Isq5Kacrk=;
+	s=korg; t=1705974399;
+	bh=9plvsaCSy508dlM/BMjAuVJ7zdwVy8j2V7r4wqcjcG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SxDxxn5pqyv6CNis/MOJRSgQEADRoKZM//dK/LrDPVpZRhdDNcMIw/FBx7WGtTETZ
-	 hxPu5VxX3fIvK5BvkSt86zDChZp6D5ZBv/GQbfwwIJr/NuoiKvqnxSbBb/bfb1zXEK
-	 srEJdCa611PumJGnLDF45FpfOxy8tN+qeFiydAs0=
+	b=U8cx2E0Q0H4T+v4hBYZJEHY0JP6kjKMfERkOHJdWYXR26X6xKgMx5V29r6TsvXKLZ
+	 I/xKTLLpstdVyHCH1uajj4Icz8SUYnxnkJMiTj/VlJ9XA3fK+Hx1UsbhCdShd1gk5L
+	 UAuQV1Fdwp1/bKLiqjQ5OQUg5G4wFlcFsB3j9id0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Luca Weiss <luca@z3ntu.xyz>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 209/374] drm/amd/pm: fix a double-free in si_dpm_init
-Date: Mon, 22 Jan 2024 15:57:45 -0800
-Message-ID: <20240122235751.897288055@linuxfoundation.org>
+Subject: [PATCH 6.6 085/583] ARM: dts: qcom: msm8226: provide dsi phy clocks to mmcc
+Date: Mon, 22 Jan 2024 15:52:16 -0800
+Message-ID: <20240122235814.765296981@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +49,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Luca Weiss <luca@z3ntu.xyz>
 
-[ Upstream commit ac16667237a82e2597e329eb9bc520d1cf9dff30 ]
+[ Upstream commit 836d083524888069cd358776a4e6c4ceec04962e ]
 
-When the allocation of
-adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries fails,
-amdgpu_free_extended_power_table is called to free some fields of adev.
-However, when the control flow returns to si_dpm_sw_init, it goes to
-label dpm_failed and calls si_dpm_fini, which calls
-amdgpu_free_extended_power_table again and free those fields again. Thus
-a double-free is triggered.
+Some mmcc clocks have dsi0pll & dsi0pllbyte as clock parents so we
+should provide them in the dt, which I missed in the commit adding the
+mdss nodes.
 
-Fixes: 841686df9f7d ("drm/amdgpu: add SI DPM support (v4)")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: d5fb01ad5eb4 ("ARM: dts: qcom: msm8226: Add mdss nodes")
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230712-msm8226-dsi-clock-fixup-v1-1-71010b0b89ca@z3ntu.xyz
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/si_dpm.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-index 66fc63f1f1c1..09e78575db87 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-@@ -7346,10 +7346,9 @@ static int si_dpm_init(struct amdgpu_device *adev)
- 		kcalloc(4,
- 			sizeof(struct amdgpu_clock_voltage_dependency_entry),
- 			GFP_KERNEL);
--	if (!adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries) {
--		amdgpu_free_extended_power_table(adev);
-+	if (!adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries)
- 		return -ENOMEM;
--	}
-+
- 	adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.count = 4;
- 	adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries[0].clk = 0;
- 	adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries[0].v = 0;
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+index 44f3f0127fd7..78738371f634 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+@@ -404,8 +404,8 @@ mmcc: clock-controller@fd8c0000 {
+ 				 <&gcc GPLL0_VOTE>,
+ 				 <&gcc GPLL1_VOTE>,
+ 				 <&rpmcc RPM_SMD_GFX3D_CLK_SRC>,
+-				 <0>,
+-				 <0>;
++				 <&mdss_dsi0_phy 1>,
++				 <&mdss_dsi0_phy 0>;
+ 			clock-names = "xo",
+ 				      "mmss_gpll0_vote",
+ 				      "gpll0_vote",
 -- 
 2.43.0
 
