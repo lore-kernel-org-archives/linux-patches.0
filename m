@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AC764AA7;
-	Tue, 23 Jan 2024 01:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0816E64AA7;
+	Tue, 23 Jan 2024 01:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975041; cv=none; b=AQTVAgAgISy18tYl8u56FG6L8YomU8JbXRXdW8UYT0Jejmtvfyq8+IfWl3MrZlLukrz2mTyoIG09KoVCF0DEjmoH+I7LyUKE2P0jD1VYQ1whnMwuzxVGmHErlMs5AaFkgn6pSom8fzj6N7Z4KgnG0w0oO3ES1TkOqPL0NZa3bW0=
+	t=1705975043; cv=none; b=FhdjCMKXIv8Ti0uOfTZh79FUVp4m1obYD3F/Cr/oV5QfSzB+8jDYKSPkkRdjMfLakqSN9zwMmYkadXwnQ28eEwkfkSSAbuoZ8z2Pvl9naBnxwXuHZvh4Zqv+EB9aTeoTmoFhmH7iJSnsoy4jss9frL9M/DEfG9KDdmJ7NQhwqMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975041; c=relaxed/simple;
-	bh=OZRHMFFn5fqDOuDGytNI52TjZk22rvOOJQM/CFNOXSY=;
+	s=arc-20240116; t=1705975043; c=relaxed/simple;
+	bh=AKsQkva4vtMizkjBNfidLgsJ/aXHreAzaOCuaVqFLYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cw0uGvkzEG5QU/brbbCm6U7UtTU4Syw3E65nUInlIsIzwI0DovFSj6Jep5BcpBY+LBb8RwAftTd849GqeejUnmcMb672K5DKf9S7VK1ZkeeNVivBawJ8WJm1ckb00COyfAmLzBGHsk5/6c/GmOaO8HHooISC+6vuSsr44tapZqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+sZWQGf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i/22umBPms4ZK7oOSJUj7XeQQEtsfeaZh4ou/Z4uGeyRZ7/JHcTqgH4MxcsxX487Lq3WXZfapRM/3yfRxmh0sgpwbm6mnJwHmeQYj0GeTLgyRGtYWuPHS6rJdbo2PGMUGISAzJ8vQ6ekLF37DJpdLzW+udxsneV0NWphI+EioTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vER1odGn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+sZWQGf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9927BC43394;
-	Tue, 23 Jan 2024 01:57:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vER1odGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64627C43394;
+	Tue, 23 Jan 2024 01:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975041;
-	bh=OZRHMFFn5fqDOuDGytNI52TjZk22rvOOJQM/CFNOXSY=;
+	s=korg; t=1705975042;
+	bh=AKsQkva4vtMizkjBNfidLgsJ/aXHreAzaOCuaVqFLYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A+sZWQGfIIYuB5U8oyHCrjQT8k/pKMSrKhF4llg3IuDgjNRgeb91Q27dhDugim3v/
-	 cLw6Z+frz4jVYKVl7Ze6aH4VDI4Ua/vNRflF+4ttsUqmuKs8i25h+ZhhEnZaRwxVo1
-	 ZgvBIkQTH+dZK0+5waHC7eVcE2wA8MGvMFs1zmdo=
+	b=vER1odGnNCJ++HCfCf5MS4fWbSNJ4D8I6jVRH14MWRO65v3WxqFIiWRws//w6A05k
+	 VaDzKQWss02s7yURsq/6mXpGB9YCZPHfDd1r0DOaSjau2yD2/wkXaDWXZhwmSGcexe
+	 F58QxkfqVO9gXBUcYK3NZH6aMGamii/fkIVNS5Xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Ning <zhangn1985@outlook.com>,
-	Andy Yan <andyshrk@163.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Florian Westphal <fw@strlen.de>,
+	Peter Krystad <peter.krystad@linux.intel.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Mat Martineau <martineau@kernel.org>,
+	Geliang Tang <geliang.tang@linux.dev>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 209/583] arm64: dts: rockchip: Fix led pinctrl of lubancat 1
-Date: Mon, 22 Jan 2024 15:54:20 -0800
-Message-ID: <20240122235818.402045259@linuxfoundation.org>
+Subject: [PATCH 5.15 337/374] mptcp: strict validation before using mp_opt->hmac
+Date: Mon, 22 Jan 2024 15:59:53 -0800
+Message-ID: <20240122235756.626833744@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,40 +54,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Yan <andyshrk@163.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8586a5d217ef7bfeee24943c600a8a7890d6f477 ]
+[ Upstream commit c1665273bdc7c201766c65e561c06711f2e050dc ]
 
-According to the schematics, the gpio control sys_led is GPIO0_C5.
+mp_opt->hmac contains uninitialized data unless OPTION_MPTCP_MPJ_ACK
+was set in mptcp_parse_option().
 
-Fixes: 8d94da58de53 ("arm64: dts: rockchip: Add EmbedFire LubanCat 1")
-Reported-by: Zhang Ning <zhangn1985@outlook.com>
-Closes: https://lore.kernel.org/linux-rockchip/OS0P286MB06412D049D8BF7B063D41350CD95A@OS0P286MB0641.JPNP286.PROD.OUTLOOK.COM/T/#u
-Signed-off-by: Andy Yan <andyshrk@163.com>
-Link: https://lore.kernel.org/r/20231225005055.3102743-1-andyshrk@163.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+We must refine the condition before we call subflow_hmac_valid().
+
+Fixes: f296234c98a8 ("mptcp: Add handling of incoming MP_JOIN requests")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Florian Westphal <fw@strlen.de>
+Cc: Peter Krystad <peter.krystad@linux.intel.com>
+Cc: Matthieu Baerts <matttbe@kernel.org>
+Cc: Mat Martineau <martineau@kernel.org>
+Cc: Geliang Tang <geliang.tang@linux.dev>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20240111194917.4044654-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts | 2 +-
+ net/mptcp/subflow.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts b/arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts
-index 1c6d83b47cd2..6ecdf5d28339 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts
-@@ -455,7 +455,7 @@ &pcie2x1 {
- &pinctrl {
- 	leds {
- 		sys_led_pin: sys-status-led-pin {
--			rockchip,pins = <0 RK_PC7 RK_FUNC_GPIO &pcfg_pull_none>;
-+			rockchip,pins = <0 RK_PC5 RK_FUNC_GPIO &pcfg_pull_none>;
- 		};
- 	};
- 
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index a1349c6eda46..c2c30724b322 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -698,7 +698,7 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 			fallback = true;
+ 	} else if (subflow_req->mp_join) {
+ 		mptcp_get_options(skb, &mp_opt);
+-		if (!(mp_opt.suboptions & OPTIONS_MPTCP_MPJ) ||
++		if (!(mp_opt.suboptions & OPTION_MPTCP_MPJ_ACK) ||
+ 		    !subflow_hmac_valid(req, &mp_opt) ||
+ 		    !mptcp_can_accept_new_subflow(subflow_req->msk)) {
+ 			SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_JOINACKMAC);
 -- 
 2.43.0
 
