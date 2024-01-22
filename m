@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1A437C;
-	Tue, 23 Jan 2024 01:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B79837C;
+	Tue, 23 Jan 2024 01:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972191; cv=none; b=Fy32aDSaUjr2iOs3BC3h8CcT+ymt+yfXH8vHWh+2XW1w/qy7bBxGxNEq8vFsPEUBTPWhTBbZZPQmu+gDsqy8Sbgf4XkezG22G86XafjolVamHlgikVzp3qqJDhWdQ7kEOON6a1hkuR9pzRXVZxb3bIlfhuhyEL0jeHu8KCQqRCM=
+	t=1705972192; cv=none; b=ffmogmtgOcWKGtPx9TaDYAowx0/nm5xBeXiUt470ZhK9far6eoRgKiSvnZhxr5YZpOob1XepDLkQZibsDKoueosELQDnBU1QKo0AeApW7EQHirKyLkCcTU+sYu9ZjZ8CvYpAJQRQZ4M+9oR5XXdrsIU2HitADRf51B6ySItuK5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972191; c=relaxed/simple;
-	bh=cM9ssrk/iF/w/pnwyE/ZdgKWp5r9M9pLnFydCJxno8Q=;
+	s=arc-20240116; t=1705972192; c=relaxed/simple;
+	bh=Gu9kSAaBUAp2z8Ixb360pSuxCKgbn6dAhdIlF7vjxw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JG7UjcQ8fp79blwKmsrN3Qi0S1T8pU4MbzEFkar7FEfFiggn8OiQnTcQf4VtpG7BTXM8E84mf521042VdfT2YrIghlhM6c07gt6nM/M49sqe6R776JEbqbtWCIjsXQb4wEJK6my9OlwAqk/U1HcVYeIAPmH6aC1wW6HjZVw8lb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhmGaHYR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d6bdfSPL6pSTRtQfTz1PhlPmxcYNEIUdsWX8569BB4fpJjAy96YgEFIp2w1dvXO3n6LUv+0XumfRVDFqEWMYfjHHIxeamDP0LTeXhMnCM3uMxMoC7ibhB0ycIvlzvLTcFwL0omZsBccUt3zo4ILP3ZEv/w8tIFDshUpNfnywJy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xh1rADfe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhmGaHYR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29331C43390;
-	Tue, 23 Jan 2024 01:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xh1rADfe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480E6C433C7;
+	Tue, 23 Jan 2024 01:09:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972191;
-	bh=cM9ssrk/iF/w/pnwyE/ZdgKWp5r9M9pLnFydCJxno8Q=;
+	s=korg; t=1705972192;
+	bh=Gu9kSAaBUAp2z8Ixb360pSuxCKgbn6dAhdIlF7vjxw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RhmGaHYR8Hr20jEagIYCNGPhQiOhDP2SVic/t0wqKiWBs1pE0Co8UEE4gQ2ju8yqm
-	 y2aPrjh9bUBePXVxlRhOObC8RCiwqmX+2FapjbPWx8/+RbaL5vr7a8Ll+zjzdYVjpt
-	 G2BR+d3cqMnpssBiiv3cGnPsYY9kOz2Wgv3rciXQ=
+	b=xh1rADfeHemqBIViKp0VwbduN3ZsFs8rhV4Jc1MURImmAdjRSezzW/lzZviH5xXig
+	 zb/1JJZtMLi/grqxNJG4R0zEBpVikwrVX7lh33NnslVzzeFr0Jj4DUYlFmnygnhpoU
+	 ks9E0Se8cwnsegTtbFxU6UFb/PVb3tC1z1x43Uao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>,
-	Paul Moore <paul@paul-moore.com>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 086/374] calipso: fix memory leak in netlbl_calipso_add_pass()
-Date: Mon, 22 Jan 2024 15:55:42 -0800
-Message-ID: <20240122235747.607445643@linuxfoundation.org>
+Subject: [PATCH 5.15 113/374] crypto: sahara - do not resize req->src when doing hash operations
+Date: Mon, 22 Jan 2024 15:56:09 -0800
+Message-ID: <20240122235748.574314955@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,136 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit ec4e9d630a64df500641892f4e259e8149594a99 ]
+[ Upstream commit a3c6f4f4d249cecaf2f34471aadbfb4f4ef57298 ]
 
-If IPv6 support is disabled at boot (ipv6.disable=1),
-the calipso_init() -> netlbl_calipso_ops_register() function isn't called,
-and the netlbl_calipso_ops_get() function always returns NULL.
-In this case, the netlbl_calipso_add_pass() function allocates memory
-for the doi_def variable but doesn't free it with the calipso_doi_free().
+When testing sahara sha256 speed performance with tcrypt (mode=404) on
+imx53-qsrb board, multiple "Invalid numbers of src SG." errors are
+reported. This was traced to sahara_walk_and_recalc() resizing req->src
+and causing the subsequent dma_map_sg() call to fail.
 
-BUG: memory leak
-unreferenced object 0xffff888011d68180 (size 64):
-  comm "syz-executor.1", pid 10746, jiffies 4295410986 (age 17.928s)
-  hex dump (first 32 bytes):
-    00 00 00 00 02 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<...>] kmalloc include/linux/slab.h:552 [inline]
-    [<...>] netlbl_calipso_add_pass net/netlabel/netlabel_calipso.c:76 [inline]
-    [<...>] netlbl_calipso_add+0x22e/0x4f0 net/netlabel/netlabel_calipso.c:111
-    [<...>] genl_family_rcv_msg_doit+0x22f/0x330 net/netlink/genetlink.c:739
-    [<...>] genl_family_rcv_msg net/netlink/genetlink.c:783 [inline]
-    [<...>] genl_rcv_msg+0x341/0x5a0 net/netlink/genetlink.c:800
-    [<...>] netlink_rcv_skb+0x14d/0x440 net/netlink/af_netlink.c:2515
-    [<...>] genl_rcv+0x29/0x40 net/netlink/genetlink.c:811
-    [<...>] netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
-    [<...>] netlink_unicast+0x54b/0x800 net/netlink/af_netlink.c:1339
-    [<...>] netlink_sendmsg+0x90a/0xdf0 net/netlink/af_netlink.c:1934
-    [<...>] sock_sendmsg_nosec net/socket.c:651 [inline]
-    [<...>] sock_sendmsg+0x157/0x190 net/socket.c:671
-    [<...>] ____sys_sendmsg+0x712/0x870 net/socket.c:2342
-    [<...>] ___sys_sendmsg+0xf8/0x170 net/socket.c:2396
-    [<...>] __sys_sendmsg+0xea/0x1b0 net/socket.c:2429
-    [<...>] do_syscall_64+0x30/0x40 arch/x86/entry/common.c:46
-    [<...>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
+Now that the previous commit fixed sahara_sha_hw_links_create() to take
+into account the actual request size, rather than relying on sg->length
+values, the resize operation is no longer necessary.
 
-Found by InfoTeCS on behalf of Linux Verification Center
-(linuxtesting.org) with Syzkaller
+Therefore, remove sahara_walk_and_recalc() and simplify associated logic.
 
-Fixes: cb72d38211ea ("netlabel: Initial support for the CALIPSO netlink protocol.")
-Signed-off-by: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
-[PM: merged via the LSM tree at Jakub Kicinski request]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlabel/netlabel_calipso.c | 49 +++++++++++++++++----------------
- 1 file changed, 26 insertions(+), 23 deletions(-)
+ drivers/crypto/sahara.c | 38 ++------------------------------------
+ 1 file changed, 2 insertions(+), 36 deletions(-)
 
-diff --git a/net/netlabel/netlabel_calipso.c b/net/netlabel/netlabel_calipso.c
-index 91a19c3ea1a3..84ef4a29864b 100644
---- a/net/netlabel/netlabel_calipso.c
-+++ b/net/netlabel/netlabel_calipso.c
-@@ -54,6 +54,28 @@ static const struct nla_policy calipso_genl_policy[NLBL_CALIPSO_A_MAX + 1] = {
- 	[NLBL_CALIPSO_A_MTYPE] = { .type = NLA_U32 },
- };
- 
-+static const struct netlbl_calipso_ops *calipso_ops;
-+
-+/**
-+ * netlbl_calipso_ops_register - Register the CALIPSO operations
-+ * @ops: ops to register
-+ *
-+ * Description:
-+ * Register the CALIPSO packet engine operations.
-+ *
-+ */
-+const struct netlbl_calipso_ops *
-+netlbl_calipso_ops_register(const struct netlbl_calipso_ops *ops)
-+{
-+	return xchg(&calipso_ops, ops);
-+}
-+EXPORT_SYMBOL(netlbl_calipso_ops_register);
-+
-+static const struct netlbl_calipso_ops *netlbl_calipso_ops_get(void)
-+{
-+	return READ_ONCE(calipso_ops);
-+}
-+
- /* NetLabel Command Handlers
-  */
- /**
-@@ -96,15 +118,18 @@ static int netlbl_calipso_add_pass(struct genl_info *info,
-  *
-  */
- static int netlbl_calipso_add(struct sk_buff *skb, struct genl_info *info)
--
- {
- 	int ret_val = -EINVAL;
- 	struct netlbl_audit audit_info;
-+	const struct netlbl_calipso_ops *ops = netlbl_calipso_ops_get();
- 
- 	if (!info->attrs[NLBL_CALIPSO_A_DOI] ||
- 	    !info->attrs[NLBL_CALIPSO_A_MTYPE])
- 		return -EINVAL;
- 
-+	if (!ops)
-+		return -EOPNOTSUPP;
-+
- 	netlbl_netlink_auditinfo(&audit_info);
- 	switch (nla_get_u32(info->attrs[NLBL_CALIPSO_A_MTYPE])) {
- 	case CALIPSO_MAP_PASS:
-@@ -362,28 +387,6 @@ int __init netlbl_calipso_genl_init(void)
- 	return genl_register_family(&netlbl_calipso_gnl_family);
+diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
+index 538beec3b062..b9832978b935 100644
+--- a/drivers/crypto/sahara.c
++++ b/drivers/crypto/sahara.c
+@@ -887,24 +887,6 @@ static int sahara_sha_hw_context_descriptor_create(struct sahara_dev *dev,
+ 	return 0;
  }
  
--static const struct netlbl_calipso_ops *calipso_ops;
--
--/**
-- * netlbl_calipso_ops_register - Register the CALIPSO operations
-- * @ops: ops to register
-- *
-- * Description:
-- * Register the CALIPSO packet engine operations.
-- *
-- */
--const struct netlbl_calipso_ops *
--netlbl_calipso_ops_register(const struct netlbl_calipso_ops *ops)
+-static int sahara_walk_and_recalc(struct scatterlist *sg, unsigned int nbytes)
 -{
--	return xchg(&calipso_ops, ops);
--}
--EXPORT_SYMBOL(netlbl_calipso_ops_register);
+-	if (!sg || !sg->length)
+-		return nbytes;
 -
--static const struct netlbl_calipso_ops *netlbl_calipso_ops_get(void)
--{
--	return READ_ONCE(calipso_ops);
+-	while (nbytes && sg) {
+-		if (nbytes <= sg->length) {
+-			sg->length = nbytes;
+-			sg_mark_end(sg);
+-			break;
+-		}
+-		nbytes -= sg->length;
+-		sg = sg_next(sg);
+-	}
+-
+-	return nbytes;
 -}
 -
- /**
-  * calipso_doi_add - Add a new DOI to the CALIPSO protocol engine
-  * @doi_def: the DOI structure
+ static int sahara_sha_prepare_request(struct ahash_request *req)
+ {
+ 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
+@@ -941,36 +923,20 @@ static int sahara_sha_prepare_request(struct ahash_request *req)
+ 					hash_later, 0);
+ 	}
+ 
+-	/* nbytes should now be multiple of blocksize */
+-	req->nbytes = req->nbytes - hash_later;
+-
+-	sahara_walk_and_recalc(req->src, req->nbytes);
+-
++	rctx->total = len - hash_later;
+ 	/* have data from previous operation and current */
+ 	if (rctx->buf_cnt && req->nbytes) {
+ 		sg_init_table(rctx->in_sg_chain, 2);
+ 		sg_set_buf(rctx->in_sg_chain, rctx->rembuf, rctx->buf_cnt);
+-
+ 		sg_chain(rctx->in_sg_chain, 2, req->src);
+-
+-		rctx->total = req->nbytes + rctx->buf_cnt;
+ 		rctx->in_sg = rctx->in_sg_chain;
+-
+-		req->src = rctx->in_sg_chain;
+ 	/* only data from previous operation */
+ 	} else if (rctx->buf_cnt) {
+-		if (req->src)
+-			rctx->in_sg = req->src;
+-		else
+-			rctx->in_sg = rctx->in_sg_chain;
+-		/* buf was copied into rembuf above */
++		rctx->in_sg = rctx->in_sg_chain;
+ 		sg_init_one(rctx->in_sg, rctx->rembuf, rctx->buf_cnt);
+-		rctx->total = rctx->buf_cnt;
+ 	/* no data from previous operation */
+ 	} else {
+ 		rctx->in_sg = req->src;
+-		rctx->total = req->nbytes;
+-		req->src = rctx->in_sg;
+ 	}
+ 
+ 	/* on next call, we only have the remaining data in the buffer */
 -- 
 2.43.0
 
