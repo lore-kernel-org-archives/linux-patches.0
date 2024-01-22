@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D825FF12;
-	Tue, 23 Jan 2024 00:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F73715E296;
+	Tue, 23 Jan 2024 00:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969782; cv=none; b=KFcd1Rd2NOn2x+VVsArK4Wy1H06fz4EXzALgXhMEH1aOygzFVLqNSKhUyL2R8s7zsi4NXI3tDaolkIdXgjh9mxeJG6KoOAbekB2NMgrwaksfuTohrLYWDYNVUFZa1oto4QLFWKBSaXcv9RuEDgd3vvGf3w/F3F1g7f4fMvrjgS4=
+	t=1705969784; cv=none; b=M6ENjzeaGj+3UTRKI5MztbVJsctIh9+nmK8zy8RH2iehHgpekqIa4/1Dpk0f5VBuA4/V7o79PWEK0xlmAWlTKDzUx/uqdqa2gl9l+v4fbFZJilApBXpwZFeUD8PV4tE+CflX/VmSUf31PR7tnOd6FXqhOzMBuYdLNB8LhfwdYMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969782; c=relaxed/simple;
-	bh=k2e18aVFUmi+wyB5JaKx29VpxczWzy1MO4JKJErp8I0=;
+	s=arc-20240116; t=1705969784; c=relaxed/simple;
+	bh=8djTW4HbNtPPXgPgI9OQIxBT6aMX/pOPcyfNqYdbUlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZnjnADEVgn/MI5fxWbe8XjSxJNmrR4WNYCELRLHhxymyOVGptpVDuyWxfIP1MMDY6KlSjCj6L6CfiIdiwGf/rYCjZec0r3u9IoApN06FQoksavIuVzNIVQ1Sf71VnFJnqwxrW2vUNNOhxvR80izDdI1VENkQuOPCJT4M6myGBSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mAEk1Sva; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eV0cIgiXUOq0I5/J1sBcljpWQb4AQhgr2gV+O5voYSuLouAOlkK6EGzpxNuykM4UvOWJOT0MbkURPIqLLRBYOr4Jwubh/tixdTdaif1y5cB5Zb88RagMtpFLaaMwQEcqMXWLLtPnMtGKVHMiFyMUKA86yqkSvKE+rSrpBmEGoKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6rFwGMS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAEk1Sva"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D53F4C433C7;
-	Tue, 23 Jan 2024 00:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6rFwGMS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A23C433C7;
+	Tue, 23 Jan 2024 00:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969782;
-	bh=k2e18aVFUmi+wyB5JaKx29VpxczWzy1MO4JKJErp8I0=;
+	s=korg; t=1705969784;
+	bh=8djTW4HbNtPPXgPgI9OQIxBT6aMX/pOPcyfNqYdbUlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mAEk1SvaxcrKtbn0UxsLsp/I1ljeTSdVlWECXqv1hmLarI8w/pDx707U8ELGzk9p7
-	 mcs+Gvcrc3rW/Gaz+/5OcHroGJHYAwbAAG9t8dKoqoOhzST6YS0qSRDtGTZRdsr5yK
-	 rAowa+a5GhbBfeRYsp1gk0oYEXCUkU8kS0IZ/Gn8=
+	b=z6rFwGMSWiDg/jzBOUZTwnHsEKPm6S0lF4pbjV33BdSJRyqjjp81GVAKNmzkprp2T
+	 UxpUYD+PjnLyt02TOuAAq+7L/u2AF0zxavDPoWsMv6vj7BFKe+21TajhcHLyK6Dzrx
+	 j45QTPO3PFx7YZ+7TPCXlTieeXmrUvMg1JzvRyQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Subject: [PATCH 6.7 445/641] pwm: jz4740: Dont use dev_err_probe() in .request()
-Date: Mon, 22 Jan 2024 15:55:49 -0800
-Message-ID: <20240122235831.948366986@linuxfoundation.org>
+Subject: [PATCH 6.7 446/641] pwm: Fix out-of-bounds access in of_pwm_single_xlate()
+Date: Mon, 22 Jan 2024 15:55:50 -0800
+Message-ID: <20240122235831.975185466@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,42 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 9320fc509b87b4d795fb37112931e2f4f8b5c55f upstream.
+commit a297d07b9a1e4fb8cda25a4a2363a507d294b7c9 upstream.
 
-dev_err_probe() is only supposed to be used in probe functions. While it
-probably doesn't hurt, both the EPROBE_DEFER handling and calling
-device_set_deferred_probe_reason() are conceptually wrong in the request
-callback. So replace the call by dev_err() and a separate return
-statement.
+With args->args_count == 2 args->args[2] is not defined. Actually the
+flags are contained in args->args[1].
 
-This effectively reverts commit c0bfe9606e03 ("pwm: jz4740: Simplify
-with dev_err_probe()").
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240106141302.1253365-2-u.kleine-koenig@pengutronix.de
-Fixes: c0bfe9606e03 ("pwm: jz4740: Simplify with dev_err_probe()")
+Fixes: 3ab7b6ac5d82 ("pwm: Introduce single-PWM of_xlate function")
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/243908750d306e018a3d4bf2eb745d53ab50f663.1704835845.git.u.kleine-koenig@pengutronix.de
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-jz4740.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/pwm/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pwm/pwm-jz4740.c
-+++ b/drivers/pwm/pwm-jz4740.c
-@@ -61,9 +61,10 @@ static int jz4740_pwm_request(struct pwm
- 	snprintf(name, sizeof(name), "timer%u", pwm->hwpwm);
+--- a/drivers/pwm/core.c
++++ b/drivers/pwm/core.c
+@@ -176,7 +176,7 @@ of_pwm_single_xlate(struct pwm_chip *chi
+ 	pwm->args.period = args->args[0];
+ 	pwm->args.polarity = PWM_POLARITY_NORMAL;
  
- 	clk = clk_get(chip->dev, name);
--	if (IS_ERR(clk))
--		return dev_err_probe(chip->dev, PTR_ERR(clk),
--				     "Failed to get clock\n");
-+	if (IS_ERR(clk)) {
-+		dev_err(chip->dev, "error %pe: Failed to get clock\n", clk);
-+		return PTR_ERR(clk);
-+	}
+-	if (args->args_count == 2 && args->args[2] & PWM_POLARITY_INVERTED)
++	if (args->args_count == 2 && args->args[1] & PWM_POLARITY_INVERTED)
+ 		pwm->args.polarity = PWM_POLARITY_INVERSED;
  
- 	err = clk_prepare_enable(clk);
- 	if (err < 0) {
+ 	return pwm;
 
 
