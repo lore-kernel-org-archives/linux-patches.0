@@ -1,111 +1,86 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA2410785;
-	Mon, 22 Jan 2024 22:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC79130E2B;
+	Tue, 23 Jan 2024 00:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705963686; cv=none; b=GiDwDQe8GqSGZWbdBTmHy4rHPCnx19wJVXo8GpCIgNJrNlFfmZlsU3Yw2kU93dOYRI6YiLSJNdFMGQ7FBrOdIZtqsQfjV3mhtLxYRiiDdmGg9gcyjnEwM6DHaLn6KqGOHgX/bRcDdccB2B6rj666BVlxuneNFLWUqtxtCOuRVIk=
+	t=1705968090; cv=none; b=ISt/HeihVCrlaK854SyxTdLcaApBmGvbl6PEGpDfNzhDVhthZpVbspVk6uiEnrPVBBwqR5bmS+sl4F1p56mih9/dfbIYLO/w5OFxYyF0YQ93/1S9reYbSP4Y0FXMdOtibEYs9BOEc5xnPWixXpZTP+kpH/4Nn+Z5sKsxQUe5zOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705963686; c=relaxed/simple;
-	bh=aRO5rI2gBLdjP2Ow80R5wBiyllC8SGlBK8PAr36wVzM=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=fXCtJ3tcsMedYrV6ABxVJ8KAfS1zpRGlQN/PK7xvZ+uW6bO7pZfUvuXdrA7OUjJIcZ31d/Zjov2+VxBCDC8yaRvLtWUsVQDn45TebrZF64q9B3WB8ZA/FMmms6itnHHYCBazkI4zs3L+3A5ERGXmvljaBjrr4Qie/+87fyNY1ZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SIjjwsOE; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1705968090; c=relaxed/simple;
+	bh=FQ0Seh4IFclKNQIrt4jxR5RENdiZ+VGOIedcVhvHs1Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UlarWPgTXVT/P8vLjPRqXIco+njQ8gzyEwovU7cWlzMT5ku95qkO+B2Q4/Wp2zvQ9eQ+rI4pZW2oCs399s0MtNiL+wdBpQPlzRZhiKY1I5MGsqwG3mB3Rg4aZac32JZXPkOU+UUl9hhpBWCv5THqlr5Ze23Os3KjFmiyOtmK2Bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgogFwXX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SIjjwsOE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA8FC433C7;
-	Mon, 22 Jan 2024 22:48:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705963686;
-	bh=aRO5rI2gBLdjP2Ow80R5wBiyllC8SGlBK8PAr36wVzM=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=SIjjwsOE6XK+oLQbheaQg4QVbT9JVjy30vmiv3ORQOgq7S6FQv8k4XG1s+wW0x7pV
-	 rx0n35Uq4nT+ZfAzyV16EE9P7CUcDxdy4Icwo2SNAdM9eOEySqywBnNzQ7Q2hl9E6p
-	 Tgywv2wmPhDPHpupI2h6rmRx1SHz6teEPZdyv/hgNuoZeaFCxSSi3LMVS1B+ibfCbK
-	 vKIDGeQ4xW+0SRKkxmJ2tElQ/1pSXE32RtcqnyaHKQaD1NOYmigFdzJeoeZzVPXj3/
-	 b1n491PKznHSazyiLrteCXRpQiM73c5yKwOCGbF6NbuFEgi04cxyKmCb29ES6WsT/2
-	 KFWIaCNP3a57Q==
-Message-ID: <47062115ff518edf8c4b02e22f3058bc.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgogFwXX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3851DC433F1;
+	Tue, 23 Jan 2024 00:01:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1705968090;
+	bh=FQ0Seh4IFclKNQIrt4jxR5RENdiZ+VGOIedcVhvHs1Y=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=JgogFwXXQ43rZhBxcX9I9pFeEA58c5GVRlSBhFhFU4QdwGrwczXC/zGIi+CG/8Uc/
+	 vAje4ghYqBeDRY9zdV6OQoJtk4uoBS5d4Jx/YkfUT8UcNpPmuOLfgsli9yGtRYw9Gz
+	 8OtfbbC1gTEI6SycmIdf0JeNxIeEYuysFsu06VzQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Eric Biggers <ebiggers@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 4.19 001/148] f2fs: explicitly null-terminate the xattr list
+Date: Mon, 22 Jan 2024 15:55:57 -0800
+Message-ID: <20240122235712.492047719@linuxfoundation.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
+References: <20240122235712.442097787@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CABVgOSkymMzaOFtJ-6OuVaB4i4zoVafPMqssA=GHByMJ9VTsKg@mail.gmail.com>
-References: <20240112200750.4062441-1-sboyd@kernel.org> <20240112200750.4062441-7-sboyd@kernel.org> <CABVgOSkymMzaOFtJ-6OuVaB4i4zoVafPMqssA=GHByMJ9VTsKg@mail.gmail.com>
-Subject: Re: [PATCH 6/6] of: Add KUnit test to confirm DTB is loaded
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, linux-um@lists.infradead.org, linux-arm-kernel@lists.infradead.org, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Frank Rowand <frowand.list@gmail.com>, Brendan Higgins <brendan.higgins@linux.dev>
-To: David Gow <davidgow@google.com>
-Date: Mon, 22 Jan 2024 14:48:03 -0800
-User-Agent: alot/0.10
+Content-Transfer-Encoding: 8bit
 
-Quoting David Gow (2024-01-15 21:03:12)
-> On Sat, 13 Jan 2024 at 04:07, Stephen Boyd <sboyd@kernel.org> wrote:
-> >
-> > Add a KUnit test that confirms a DTB has been loaded, i.e. there is a
-> > root node, and that the of_have_populated_dt() API works properly.
-> >
-> > Cc: Rob Herring <robh+dt@kernel.org>
-> > Cc: Frank Rowand <frowand.list@gmail.com>
-> > Cc: David Gow <davidgow@google.com>
-> > Cc: Brendan Higgins <brendan.higgins@linux.dev>
-> > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> > ---
->=20
-> I won't pretend to be a devicetree expert, but this looks good to me
-> from a KUnit point of view, and passes comfortably here.
->=20
-> checkpatch seems to have one complaint about the kconfig help text.
-> Personally, I think the brief description is fine.
->=20
-> Reviewed-by: David Gow <davidgow@google.com>
->=20
+4.19-stable review patch.  If anyone has any objections, please let me know.
 
-Thanks! I noticed that x86 has some devicetree init code. Did you happen
-to try on an x86 kvm instance? Or only run on UML?
+------------------
 
-----8<----
-diff --git a/arch/x86/kernel/devicetree.c b/arch/x86/kernel/devicetree.c
-index afd09924094e..650752d112a6 100644
---- a/arch/x86/kernel/devicetree.c
-+++ b/arch/x86/kernel/devicetree.c
-@@ -283,22 +283,24 @@ void __init x86_flattree_get_config(void)
- 	u32 size, map_len;
- 	void *dt;
-=20
--	if (!initial_dtb)
--		return;
-+	if (initial_dtb) {
-+		map_len =3D max(PAGE_SIZE - (initial_dtb & ~PAGE_MASK), (u64)128);
-=20
--	map_len =3D max(PAGE_SIZE - (initial_dtb & ~PAGE_MASK), (u64)128);
-+		dt =3D early_memremap(initial_dtb, map_len);
-+		size =3D fdt_totalsize(dt);
-+		if (map_len < size) {
-+			early_memunmap(dt, map_len);
-+			dt =3D early_memremap(initial_dtb, size);
-+			map_len =3D size;
-+		}
-=20
--	dt =3D early_memremap(initial_dtb, map_len);
--	size =3D fdt_totalsize(dt);
--	if (map_len < size) {
--		early_memunmap(dt, map_len);
--		dt =3D early_memremap(initial_dtb, size);
--		map_len =3D size;
-+		early_init_dt_verify(dt);
+From: Eric Biggers <ebiggers@google.com>
+
+commit e26b6d39270f5eab0087453d9b544189a38c8564 upstream.
+
+When setting an xattr, explicitly null-terminate the xattr list.  This
+eliminates the fragile assumption that the unused xattr space is always
+zeroed.
+
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ fs/f2fs/xattr.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
+
+--- a/fs/f2fs/xattr.c
++++ b/fs/f2fs/xattr.c
+@@ -717,6 +717,12 @@ static int __f2fs_setxattr(struct inode
+ 		memcpy(pval, value, size);
+ 		last->e_value_size = cpu_to_le16(size);
+ 		new_hsize += newsize;
++		/*
++		 * Explicitly add the null terminator.  The unused xattr space
++		 * is supposed to always be zeroed, which would make this
++		 * unnecessary, but don't depend on that.
++		 */
++		*(u32 *)((u8 *)last + newsize) = 0;
  	}
-=20
--	early_init_dt_verify(dt);
- 	unflatten_and_copy_device_tree();
--	early_memunmap(dt, map_len);
-+
-+	if (initial_dtb)
-+		early_memunmap(dt, map_len);
- }
- #endif
+ 
+ 	error = write_all_xattrs(inode, new_hsize, base_addr, ipage);
+
+
