@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FBC877F00;
-	Tue, 23 Jan 2024 02:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6042677F00;
+	Tue, 23 Jan 2024 02:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975522; cv=none; b=n27arF+rgDjAFA9K/+QUt4t73dnlqwNytguxpT5eKo5n17465V7Q7TcxHWyCtnAKJ9rYfZGLDzADiI3g+65x1ErkmSvVhcwlSRUYUVA8cV1P93HIQSXVeIh3v6+Z15XRl4O12ByyUNIWhqexLwA/rOlXdp57P4pW11B/CdaScZw=
+	t=1705975523; cv=none; b=q+79o6Lbb5Fwl2xUzEWQDj0fpF/c1HyRnZKyd4YEUtChmqkfhCu80Q9jkuTaz8pq1o0GEsqBEIKd5BxxE13Skz53N/75SvinC+Nx3QiwRmObod7QuFF716d9OvD0VPvcWDGptAlFNSg+ODE1FAWYOMG942FPBWt6A/fc22nnyco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975522; c=relaxed/simple;
-	bh=btxgK08gQgro3Ges+RVe7NdhR/bwjlOaHYvnH40e9PU=;
+	s=arc-20240116; t=1705975523; c=relaxed/simple;
+	bh=SIJjYOiSw4MN//RZSZq5DIuoZ0mzIFHjs+3AGI/8VlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=piF25ULtGyxcjlf+e7mzTSj9vU+aLFiQaHLyBcE+FJreNO4uLrCFu2lUJx/BvJNdVatbyZ0irSAyZ1VzqKZSpUsNFhl7gSpbWqDCiAUp5eZ1tAKmjHq3h0J3T3KHBvf5yqVd4AhJnaZ+gaMBVhHnxpMmiOr286F41RwFwY3+KRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHNKgSH1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TsURYyyVKbgt19FONOC/fqjXmgd8mh8J7UKAHSkziy7QwpzU+W2XikkgH0IEtjFT6naLRP0kWnIzC5eo1bDSZ/Dhe79vL930N3UECxMvmJFPvFb/U0ZiCjBLpM02lkBGvwAu24bHja/xy5N6IMdu77qZFUVII///MwYr3FoWmjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxyTAJ96; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHNKgSH1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B45C43399;
-	Tue, 23 Jan 2024 02:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxyTAJ96"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CA6C433C7;
+	Tue, 23 Jan 2024 02:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975522;
-	bh=btxgK08gQgro3Ges+RVe7NdhR/bwjlOaHYvnH40e9PU=;
+	s=korg; t=1705975523;
+	bh=SIJjYOiSw4MN//RZSZq5DIuoZ0mzIFHjs+3AGI/8VlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XHNKgSH1h1v2crXRtuL69ERtCXZQ5Y80y7lzhG9afPJAVakaGJ4EoLRrjvRZq5I1G
-	 8pofDBc6Z1eZUyURwhRCQr0c46OQtGNYQw5YD8iXpoqQmLg5uBESPS77GWkfKhb+BD
-	 FU+j4toQVLhNc/iHS1M+bon/BmcQEllRbqaAYwr0=
+	b=JxyTAJ96ICZWfaTEyU2nirRn77G91qrCb4B3JKFDkDTIYGtF1JirfNDe5WQ/oUD/R
+	 +r4WaXnOrclknvX3lnLXNRaKzPSduSBzCPLw6i8aYobUeKDn1I+Vy1UGHhxeW6vjPY
+	 VNgRw0SW8O7ztbdcutiPqVX0bq/3RTav3x9hvKWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Geurts <paul_geurts@live.nl>,
-	Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
-	Eberhard Stoll <eberhard.stoll@gmx.de>,
+	Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Kai Huang <kai.huang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 474/583] serial: imx: fix tx statemachine deadlock
-Date: Mon, 22 Jan 2024 15:58:45 -0800
-Message-ID: <20240122235826.490312506@linuxfoundation.org>
+Subject: [PATCH 6.6 475/583] selftests/sgx: Fix uninitialized pointer dereference in error path
+Date: Mon, 22 Jan 2024 15:58:46 -0800
+Message-ID: <20240122235826.519543444@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,56 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Geurts <paul_geurts@live.nl>
+From: Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>
 
-[ Upstream commit 78d60dae9a0c9f09aa3d6477c94047df2fe6f7b0 ]
+[ Upstream commit 79eba8c924f7decfa71ddf187d38cb9f5f2cd7b3 ]
 
-When using the serial port as RS485 port, the tx statemachine is used to
-control the RTS pin to drive the RS485 transceiver TX_EN pin. When the
-TTY port is closed in the middle of a transmission (for instance during
-userland application crash), imx_uart_shutdown disables the interface
-and disables the Transmission Complete interrupt. afer that,
-imx_uart_stop_tx bails on an incomplete transmission, to be retriggered
-by the TC interrupt. This interrupt is disabled and therefore the tx
-statemachine never transitions out of SEND. The statemachine is in
-deadlock now, and the TX_EN remains low, making the interface useless.
+Ensure ctx is zero-initialized, such that the encl_measure function will
+not call EVP_MD_CTX_destroy with an uninitialized ctx pointer in case of an
+early error during key generation.
 
-imx_uart_stop_tx now checks for incomplete transmission AND whether TC
-interrupts are enabled before bailing to be retriggered. This makes sure
-the state machine handling is reached, and is properly set to
-WAIT_AFTER_SEND.
-
-Fixes: cb1a60923609 ("serial: imx: implement rts delaying for rs485")
-Signed-off-by: Paul Geurts <paul_geurts@live.nl>
-Tested-by: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
-Tested-by: Eberhard Stoll <eberhard.stoll@gmx.de>
-Link: https://lore.kernel.org/r/AM0PR09MB26758F651BC1B742EB45775995B8A@AM0PR09MB2675.eurprd09.prod.outlook.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2adcba79e69d ("selftests/x86: Add a selftest for SGX")
+Signed-off-by: Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Acked-by: Kai Huang <kai.huang@intel.com>
+Link: https://lore.kernel.org/all/20231005153854.25566-2-jo.vanbulck%40cs.kuleuven.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/imx.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/sgx/sigstruct.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
-index 2e85c77e7c0d..c084ac3bb441 100644
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -421,13 +421,13 @@ static void imx_uart_stop_tx(struct uart_port *port)
- 	ucr1 = imx_uart_readl(sport, UCR1);
- 	imx_uart_writel(sport, ucr1 & ~UCR1_TRDYEN, UCR1);
+diff --git a/tools/testing/selftests/sgx/sigstruct.c b/tools/testing/selftests/sgx/sigstruct.c
+index a07896a46364..d73b29becf5b 100644
+--- a/tools/testing/selftests/sgx/sigstruct.c
++++ b/tools/testing/selftests/sgx/sigstruct.c
+@@ -318,9 +318,9 @@ bool encl_measure(struct encl *encl)
+ 	struct sgx_sigstruct *sigstruct = &encl->sigstruct;
+ 	struct sgx_sigstruct_payload payload;
+ 	uint8_t digest[SHA256_DIGEST_LENGTH];
++	EVP_MD_CTX *ctx = NULL;
+ 	unsigned int siglen;
+ 	RSA *key = NULL;
+-	EVP_MD_CTX *ctx;
+ 	int i;
  
-+	ucr4 = imx_uart_readl(sport, UCR4);
- 	usr2 = imx_uart_readl(sport, USR2);
--	if (!(usr2 & USR2_TXDC)) {
-+	if ((!(usr2 & USR2_TXDC)) && (ucr4 & UCR4_TCEN)) {
- 		/* The shifter is still busy, so retry once TC triggers */
- 		return;
- 	}
+ 	memset(sigstruct, 0, sizeof(*sigstruct));
+@@ -384,7 +384,8 @@ bool encl_measure(struct encl *encl)
+ 	return true;
  
--	ucr4 = imx_uart_readl(sport, UCR4);
- 	ucr4 &= ~UCR4_TCEN;
- 	imx_uart_writel(sport, ucr4, UCR4);
- 
+ err:
+-	EVP_MD_CTX_destroy(ctx);
++	if (ctx)
++		EVP_MD_CTX_destroy(ctx);
+ 	RSA_free(key);
+ 	return false;
+ }
 -- 
 2.43.0
 
