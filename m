@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0956F54BD2;
-	Tue, 23 Jan 2024 00:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D26954BD2;
+	Tue, 23 Jan 2024 00:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970611; cv=none; b=d/7TuUFVQCc8fUbeWakVS2eJU72tGPKNpKomXURrC/JFkfYS0sLy08/44MGSsYqVt9c+o/XzovWHrBZ868B48MWSYun3PrpBzxwIk05EWRCc9h8pyaP1x8KFgoLD0snbvdPJ1vxbHxUH7GKUBZakGeIlZ9dOag565IzAtwfK6Vc=
+	t=1705970614; cv=none; b=iRSnwfoFPOD8t7sy/WF2FLzLMyem05iF6ePZKDWwDYGquJrWW4FCTzkPRtcK++vQdcdwWb2XRHy+Xqr54C0xUuNsMa7JAtGMJobliVP2JqTyZC9mwZwYtAqlOS0WldMnrKqij+ZDrujLtKVCJCrwt/6qU6QsJSfR4ETe9660FqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970611; c=relaxed/simple;
-	bh=pOhraDwCzhL4PE70rWbgCxJiPLdY8JaQmuVQ6mfRd9I=;
+	s=arc-20240116; t=1705970614; c=relaxed/simple;
+	bh=qU4R3fnziwOtK6ccxH8nsBLJyK00c6IW+wFXDc3+tp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P4c7CYIdTMke5jL4MW/gGw87D2Gp+Ytc6H1VGtlFey6KaEY4tzRlUAicN+UgC+RM2/ipWn+6GpGvLQk51xKvplayd4Z+zYBJ31vXW3WXks66O+i9kWdjKDyABiQ7B64OoDyxlXZpl+EhOWOqojUf9DU5GIRbm22hfHpSyl4F0xQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSNu6vMe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g+00DMsbqxRhwLZ2MKLK5ErswbQcBOwEF6rRvIwW6u2L8Hi+yIJWHRcGTc9F/d3aizLJNqjuowT5ULTTSklPkdNmiIEgo7jl0NEkL1etsAJndaB45cMIf6vIRgTP0P+tpCb4zP6+4eC5AA3Fyoyr5bbachh4Y+uvac4+v6vAK54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNlGgSoP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSNu6vMe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC28C433C7;
-	Tue, 23 Jan 2024 00:43:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNlGgSoP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908CDC43390;
+	Tue, 23 Jan 2024 00:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970610;
-	bh=pOhraDwCzhL4PE70rWbgCxJiPLdY8JaQmuVQ6mfRd9I=;
+	s=korg; t=1705970614;
+	bh=qU4R3fnziwOtK6ccxH8nsBLJyK00c6IW+wFXDc3+tp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hSNu6vMerKSlgH/TMszB+2ZL0DgUDnQ6/EWEujaunPXPyyHbd0znaA/WHX3uk6UfD
-	 UyvtX6TDNOUAAkDoAk8ejSVj48W7m7oXovApJoi9bbm3TNP8p4lP3tkJUHeAR4EmFQ
-	 p2TJ0PUPP/2d21cFr3uPaOJHG8i8YActfTnTpEpo=
+	b=PNlGgSoP3WZtWBCNgdI1FZEaTNpDJS4i8Ym1uDer9lkY1RlTupALJuwsF36uPF9dJ
+	 x3toJr6w7Nl4qAhERq4FVvmtAESG4rhHmtJb8qWYOJ2CVppc5XsuhENVSDdTVkiUaQ
+	 QvvgymE+TPTVpI19vfPAOOaNq91179Rg0dNYaw7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 067/417] pNFS: Fix the pnfs block drivers calculation of layoutget size
-Date: Mon, 22 Jan 2024 15:53:55 -0800
-Message-ID: <20240122235754.031354977@linuxfoundation.org>
+Subject: [PATCH 6.1 068/417] wifi: plfxlc: check for allocation failure in plfxlc_usb_wreq_async()
+Date: Mon, 22 Jan 2024 15:53:56 -0800
+Message-ID: <20240122235754.060905860@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -53,90 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 8a6291bf3b0eae1bf26621e6419a91682f2d6227 ]
+[ Upstream commit 40018a8fa9aa63ca5b26e803502138158fb0ff96 ]
 
-Instead of relying on the value of the 'bytes_left' field, we should
-calculate the layout size based on the offset of the request that is
-being written out.
+Check for if the usb_alloc_urb() failed.
 
-Reported-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Fixes: 954998b60caa ("NFS: Fix error handling for O_DIRECT write scheduling")
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Tested-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: 68d57a07bfe5 ("wireless: add plfxlc driver for pureLiFi X, XL, XC devices")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/e8d4a19a-f251-4101-a89b-607345e938cb@moroto.mountain
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/blocklayout/blocklayout.c | 5 ++---
- fs/nfs/direct.c                  | 5 +++--
- fs/nfs/internal.h                | 2 +-
- fs/nfs/pnfs.c                    | 3 ++-
- 4 files changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/wireless/purelifi/plfxlc/usb.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/blocklayout/blocklayout.c b/fs/nfs/blocklayout/blocklayout.c
-index 1d1d7abc3205..6be13e0ec170 100644
---- a/fs/nfs/blocklayout/blocklayout.c
-+++ b/fs/nfs/blocklayout/blocklayout.c
-@@ -895,10 +895,9 @@ bl_pg_init_write(struct nfs_pageio_descriptor *pgio, struct nfs_page *req)
- 	}
- 
- 	if (pgio->pg_dreq == NULL)
--		wb_size = pnfs_num_cont_bytes(pgio->pg_inode,
--					      req->wb_index);
-+		wb_size = pnfs_num_cont_bytes(pgio->pg_inode, req->wb_index);
- 	else
--		wb_size = nfs_dreq_bytes_left(pgio->pg_dreq);
-+		wb_size = nfs_dreq_bytes_left(pgio->pg_dreq, req_offset(req));
- 
- 	pnfs_generic_pg_init_write(pgio, req, wb_size);
- 
-diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
-index 3bb530d4bb5c..8fdb65e1b14a 100644
---- a/fs/nfs/direct.c
-+++ b/fs/nfs/direct.c
-@@ -195,9 +195,10 @@ static void nfs_direct_req_release(struct nfs_direct_req *dreq)
- 	kref_put(&dreq->kref, nfs_direct_req_free);
- }
- 
--ssize_t nfs_dreq_bytes_left(struct nfs_direct_req *dreq)
-+ssize_t nfs_dreq_bytes_left(struct nfs_direct_req *dreq, loff_t offset)
+diff --git a/drivers/net/wireless/purelifi/plfxlc/usb.c b/drivers/net/wireless/purelifi/plfxlc/usb.c
+index 76d0a778636a..311676c1ece0 100644
+--- a/drivers/net/wireless/purelifi/plfxlc/usb.c
++++ b/drivers/net/wireless/purelifi/plfxlc/usb.c
+@@ -493,9 +493,12 @@ int plfxlc_usb_wreq_async(struct plfxlc_usb *usb, const u8 *buffer,
+ 			  void *context)
  {
--	return dreq->bytes_left;
-+	loff_t start = offset - dreq->io_start;
-+	return dreq->max_count - start;
- }
- EXPORT_SYMBOL_GPL(nfs_dreq_bytes_left);
+ 	struct usb_device *udev = interface_to_usbdev(usb->ez_usb);
+-	struct urb *urb = usb_alloc_urb(0, GFP_ATOMIC);
++	struct urb *urb;
+ 	int r;
  
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index 4b07a0508f9d..35a8ae46b6c3 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -640,7 +640,7 @@ extern int nfs_sillyrename(struct inode *dir, struct dentry *dentry);
- /* direct.c */
- void nfs_init_cinfo_from_dreq(struct nfs_commit_info *cinfo,
- 			      struct nfs_direct_req *dreq);
--extern ssize_t nfs_dreq_bytes_left(struct nfs_direct_req *dreq);
-+extern ssize_t nfs_dreq_bytes_left(struct nfs_direct_req *dreq, loff_t offset);
++	urb = usb_alloc_urb(0, GFP_ATOMIC);
++	if (!urb)
++		return -ENOMEM;
+ 	usb_fill_bulk_urb(urb, udev, usb_sndbulkpipe(udev, EP_DATA_OUT),
+ 			  (void *)buffer, buffer_len, complete_fn, context);
  
- /* nfs4proc.c */
- extern struct nfs_client *nfs4_init_client(struct nfs_client *clp,
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index 1ffb1068216b..4448ff829cbb 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -2729,7 +2729,8 @@ pnfs_generic_pg_init_read(struct nfs_pageio_descriptor *pgio, struct nfs_page *r
- 		if (pgio->pg_dreq == NULL)
- 			rd_size = i_size_read(pgio->pg_inode) - req_offset(req);
- 		else
--			rd_size = nfs_dreq_bytes_left(pgio->pg_dreq);
-+			rd_size = nfs_dreq_bytes_left(pgio->pg_dreq,
-+						      req_offset(req));
- 
- 		pgio->pg_lseg =
- 			pnfs_update_layout(pgio->pg_inode, nfs_req_openctx(req),
 -- 
 2.43.0
 
