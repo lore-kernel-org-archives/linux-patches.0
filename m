@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE9F63AF;
-	Tue, 23 Jan 2024 00:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20F56AB9;
+	Tue, 23 Jan 2024 00:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968421; cv=none; b=lz0NwNVdpbcuUz9rac0jFTKpdy4OKDM97mf3TcoB3z/gNmlB5VX7wlpgzLmhpiIeIWuNiulhRPJ6TFNAyMo0TlM8v5VRRQFx5pURT+M0pN0f9mGJ0yHjiKxZIQl42Nnsfm0OmwjUaOu7IFIUg0CQzoXzi/sDxWZlT7XKaIg2LjY=
+	t=1705968423; cv=none; b=ZZb4WZrjtF37A78xUOC3lLy+hRAdbI6MY6kFjX1xnW1K1cBH705at+vkHioZKgIQgXbBagIGHWHCAGWe8oCmfuY1B1BzQcFugQpbQQGg/RkrHcAbirwme1MF/ErQiEx7ZfQUCkxvdBGEfH5uejzLZqDAMnUQ1yym839qZZC+Owg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968421; c=relaxed/simple;
-	bh=qGBxV9x+c8mdWkG50pCVV2WICYYm81mNTbdC0yMjTvs=;
+	s=arc-20240116; t=1705968423; c=relaxed/simple;
+	bh=ywqw4rgJo3h/5xgVJ80ItlSLMf/7SoPRIeogiJiI6B4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hL6/gts3aWrRnCfeYvDqNcfNC6/8QeEkPWoaLQ4e8Q3kMIP82txVSrJnkB+9dyTAgvmHEO1pw8Bn1TGjjWz2nlr54um14O6STRk1NuhLPNNXFU7Mduxpo4s5IEW24pWUj3nqT3RCDgCGMGZETHuTBt5q8L+ZjM5Kz/WtO00mngc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XB6vOQrF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cnWSRWB0XiNvdX5nLcd8dRo4jY02oOjHvg3ScWqTSAKFmkCliR574EepA8uaS+QKxgJoq5NFf5d0jsXpy7AIMd/l6Fr2ygnwCjXBCDv2PqI+u7koeu38Q1PM/K/Rfm1pvgczPusKB54TNRjv8E5HjTBJdeBv1PMAQjJ4/GiFE+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=faKdbKEt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XB6vOQrF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD71BC433F1;
-	Tue, 23 Jan 2024 00:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faKdbKEt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CCDC43390;
+	Tue, 23 Jan 2024 00:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968421;
-	bh=qGBxV9x+c8mdWkG50pCVV2WICYYm81mNTbdC0yMjTvs=;
+	s=korg; t=1705968423;
+	bh=ywqw4rgJo3h/5xgVJ80ItlSLMf/7SoPRIeogiJiI6B4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XB6vOQrF2Arkq/DqnJRJjsCsoH80NdAacXINexdDWfnU7flsMDiIy48dnUjKEFxDA
-	 1iQSTuqALrd388hBXum/jTn3ZqNI9lhAAHl3ZIKFDIs1fTvN/F6jM1NzWhS/e/OFiB
-	 obkS5crZp4c095yjpdGNGuKoRkrrcQMhCKLtHFRU=
+	b=faKdbKEtCw0l4/n8KS9qWwSp94izA6CaBlkvJEI4hTnKIYvQLU800FPSBYUoF7K6r
+	 +r91hBQh6BoEnypr/xv4jA+sGIc+xVLg9upRnM/wFifvlafgRNVWD/1ahxY8FLw797
+	 yW56necrpRWWe3OELUcKWv9IajAljm1tuDPbLdHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 095/148] drm/msm/mdp4: flush vblank event on disable
-Date: Mon, 22 Jan 2024 15:57:31 -0800
-Message-ID: <20240122235716.224486633@linuxfoundation.org>
+Subject: [PATCH 4.19 104/148] drivers/amd/pm: fix a use-after-free in kv_parse_power_table
+Date: Mon, 22 Jan 2024 15:57:40 -0800
+Message-ID: <20240122235716.633198507@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -51,51 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-[ Upstream commit c6721b3c6423d8a348ae885a0f4c85e14f9bf85c ]
+[ Upstream commit 28dd788382c43b330480f57cd34cde0840896743 ]
 
-Flush queued events when disabling the crtc. This avoids timeouts when
-we come back and wait for dependencies (like the previous frame's
-flip_done).
+When ps allocated by kzalloc equals to NULL, kv_parse_power_table
+frees adev->pm.dpm.ps that allocated before. However, after the control
+flow goes through the following call chains:
 
-Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/569127/
-Link: https://lore.kernel.org/r/20231127215401.4064128-1-dmitry.baryshkov@linaro.org
+kv_parse_power_table
+  |-> kv_dpm_init
+        |-> kv_dpm_sw_init
+	      |-> kv_dpm_fini
+
+The adev->pm.dpm.ps is used in the for loop of kv_dpm_fini after its
+first free in kv_parse_power_table and causes a use-after-free bug.
+
+Fixes: a2e73f56fa62 ("drm/amdgpu: Add support for CIK parts")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/kv_dpm.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-index 457c29dba4a1..6d3074db8975 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-@@ -284,6 +284,7 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
- {
- 	struct mdp4_crtc *mdp4_crtc = to_mdp4_crtc(crtc);
- 	struct mdp4_kms *mdp4_kms = get_kms(crtc);
-+	unsigned long flags;
- 
- 	DBG("%s", mdp4_crtc->name);
- 
-@@ -296,6 +297,14 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
- 	mdp_irq_unregister(&mdp4_kms->base, &mdp4_crtc->err);
- 	mdp4_disable(mdp4_kms);
- 
-+	if (crtc->state->event && !crtc->state->active) {
-+		WARN_ON(mdp4_crtc->event);
-+		spin_lock_irqsave(&mdp4_kms->dev->event_lock, flags);
-+		drm_crtc_send_vblank_event(crtc, crtc->state->event);
-+		crtc->state->event = NULL;
-+		spin_unlock_irqrestore(&mdp4_kms->dev->event_lock, flags);
-+	}
-+
- 	mdp4_crtc->enabled = false;
- }
- 
+diff --git a/drivers/gpu/drm/amd/amdgpu/kv_dpm.c b/drivers/gpu/drm/amd/amdgpu/kv_dpm.c
+index 91504eccc60c..91a1628cd48f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/kv_dpm.c
++++ b/drivers/gpu/drm/amd/amdgpu/kv_dpm.c
+@@ -2734,10 +2734,8 @@ static int kv_parse_power_table(struct amdgpu_device *adev)
+ 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
+ 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
+ 		ps = kzalloc(sizeof(struct kv_ps), GFP_KERNEL);
+-		if (ps == NULL) {
+-			kfree(adev->pm.dpm.ps);
++		if (ps == NULL)
+ 			return -ENOMEM;
+-		}
+ 		adev->pm.dpm.ps[i].ps_priv = ps;
+ 		k = 0;
+ 		idx = (u8 *)&power_state->v2.clockInfoIndex[0];
 -- 
 2.43.0
 
