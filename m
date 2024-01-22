@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE93113D50F;
-	Tue, 23 Jan 2024 00:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B03D13DBB0;
+	Tue, 23 Jan 2024 00:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968138; cv=none; b=sp/7e9JgcAJtC9XInBaTBLRDccJ9ZuHYC+6PbTEWEIf6qe7QUM7YzjytXtNC+IoizwEzIDoz8MpI5ifHy8VFcQaZkEcWkxv91CwVg/93K6rnfSJ1bEFZDoA/BaFva4Zq9FerUjZPP/WNRwfAMl44Wl4MywrRfMmlvTnRrNU+BK8=
+	t=1705968141; cv=none; b=RKszHqwQGTSl24kkh3MbP3GMpu3S4Y2ElBR9ExndczdDjgxuHkbmAd2iqMFMnvQjIIuekQOSuYGWAXQLzwkABCmzU+ggD89qH20OB0dKHx4irV+UtZ2ZcS+88ej74i36bQKUDKZcvtqLTYxGJzJ/tG4I8hadIFrxqMSR98RLejo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968138; c=relaxed/simple;
-	bh=L9mEqYY2ZHy2FoGMIDV+g+DhxE2QRW6+E+sWCPjoVbI=;
+	s=arc-20240116; t=1705968141; c=relaxed/simple;
+	bh=Lfi0ZY/C4j0GSx4LLCRnCF907OhCeU6hAF52950/zDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ks+GR5IJkWxzM2ajTY8J7x6zFZ0UYxDvuhYJCcVyX9vVJpV3NAOS4om+d5rSAWn946fUpIWiMPhE+qKWzqYka5MtYscHCZBmvsl0utQ2y6cwNwF+Hc4qA3N57AYmz7ncFhq9FgFnaOXF5KcCIaLOpjyO3GjQnUMppZj4v8hTW18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHmuQUq2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nxLDYM/JOsynMdbyrF0uqrmEELqMIMN3V5xMp7uYcFiQk3TYDZFCfOJNc8R/8v+6Fw+PIKlp0EPEMcOYLB/4juAH7fkXwXFVf5YA/SWdsIRAzVr1ssYr8Y+N8XMbvU6qApUbRNYtgZMsySlEuznW9ah+R827XKV4m7QEH6fmSYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gz2yr6dV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHmuQUq2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A9CC433C7;
-	Tue, 23 Jan 2024 00:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gz2yr6dV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BB5C43394;
+	Tue, 23 Jan 2024 00:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968138;
-	bh=L9mEqYY2ZHy2FoGMIDV+g+DhxE2QRW6+E+sWCPjoVbI=;
+	s=korg; t=1705968141;
+	bh=Lfi0ZY/C4j0GSx4LLCRnCF907OhCeU6hAF52950/zDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHmuQUq2TOo0EmmbMuhUQnmtky7zq1k+qBEM1x6LenKKT9pnLsy9MK67+spR0RTd/
-	 VoUaYInt/SjqQR2WnCDNxiyou/Tu+bOnltJl1979iYMe29EhrJLLuEreyvZcapN5We
-	 7kPOqxsf1xRWstLqcwRsTA95FLi6yXkgUZIEkkHA=
+	b=gz2yr6dV186rlSW0/tz4MUOGSWCoGox5B0L2HkTAMkL4mHtoZKRS2DRcDMwb2Iybs
+	 2BYmVZwnNIHuUWYftEvfHf6RfmXHu3lLSkxuZSQANhWG2436B1rfRIs4RLm6TB+eUc
+	 kG1+S4u2H7UgqYRZM+DctVGS/05pGLxVdhAjPvVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuming Fan <shumingf@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	Thinh Tran <thinhtr@linux.vnet.ibm.com>,
+	Venkata Sai Duggi <venkata.sai.duggi@ibm.com>,
+	David Christensen <drc@linux.vnet.ibm.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 005/148] ASoC: rt5650: add mutex to avoid the jack detection failure
-Date: Mon, 22 Jan 2024 15:56:01 -0800
-Message-ID: <20240122235712.651384703@linuxfoundation.org>
+Subject: [PATCH 4.19 006/148] net/tg3: fix race condition in tg3_reset_task()
+Date: Mon, 22 Jan 2024 15:56:02 -0800
+Message-ID: <20240122235712.690031188@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -51,77 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Thinh Tran <thinhtr@linux.vnet.ibm.com>
 
-[ Upstream commit cdba4301adda7c60a2064bf808e48fccd352aaa9 ]
+[ Upstream commit 16b55b1f2269962fb6b5154b8bf43f37c9a96637 ]
 
-This patch adds the jd_mutex to protect the jack detection control flow.
-And only the headset type could check the button status.
+When an EEH error is encountered by a PCI adapter, the EEH driver
+modifies the PCI channel's state as shown below:
 
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Link: https://lore.kernel.org/r/20231122100123.2831753-1-shumingf@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+   enum {
+      /* I/O channel is in normal state */
+      pci_channel_io_normal = (__force pci_channel_state_t) 1,
+
+      /* I/O to channel is blocked */
+      pci_channel_io_frozen = (__force pci_channel_state_t) 2,
+
+      /* PCI card is dead */
+      pci_channel_io_perm_failure = (__force pci_channel_state_t) 3,
+   };
+
+If the same EEH error then causes the tg3 driver's transmit timeout
+logic to execute, the tg3_tx_timeout() function schedules a reset
+task via tg3_reset_task_schedule(), which may cause a race condition
+between the tg3 and EEH driver as both attempt to recover the HW via
+a reset action.
+
+EEH driver gets error event
+--> eeh_set_channel_state()
+    and set device to one of
+    error state above           scheduler: tg3_reset_task() get
+                                returned error from tg3_init_hw()
+                             --> dev_close() shuts down the interface
+tg3_io_slot_reset() and
+tg3_io_resume() fail to
+reset/resume the device
+
+To resolve this issue, we avoid the race condition by checking the PCI
+channel state in the tg3_reset_task() function and skip the tg3 driver
+initiated reset when the PCI channel is not in the normal state.  (The
+driver has no access to tg3 device registers at this point and cannot
+even complete the reset task successfully without external assistance.)
+We'll leave the reset procedure to be managed by the EEH driver which
+calls the tg3_io_error_detected(), tg3_io_slot_reset() and
+tg3_io_resume() functions as appropriate.
+
+Adding the same checking in tg3_dump_state() to avoid dumping all
+device registers when the PCI channel is not in the normal state.
+
+Signed-off-by: Thinh Tran <thinhtr@linux.vnet.ibm.com>
+Tested-by: Venkata Sai Duggi <venkata.sai.duggi@ibm.com>
+Reviewed-by: David Christensen <drc@linux.vnet.ibm.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/20231201001911.656-1-thinhtr@linux.vnet.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5645.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/tg3.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
-index a713e9649b56..37ad3bee66a4 100644
---- a/sound/soc/codecs/rt5645.c
-+++ b/sound/soc/codecs/rt5645.c
-@@ -419,6 +419,7 @@ struct rt5645_priv {
- 	struct regulator_bulk_data supplies[ARRAY_SIZE(rt5645_supply_names)];
- 	struct rt5645_eq_param_s *eq_param;
- 	struct timer_list btn_check_timer;
-+	struct mutex jd_mutex;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 68bb4a2ff7ce..af0186a527a3 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -6449,6 +6449,14 @@ static void tg3_dump_state(struct tg3 *tp)
+ 	int i;
+ 	u32 *regs;
  
- 	int codec_type;
- 	int sysclk;
-@@ -3216,6 +3217,8 @@ static int rt5645_jack_detect(struct snd_soc_component *component, int jack_inse
- 				rt5645_enable_push_button_irq(component, true);
- 			}
- 		} else {
-+			if (rt5645->en_button_func)
-+				rt5645_enable_push_button_irq(component, false);
- 			snd_soc_dapm_disable_pin(dapm, "Mic Det Power");
- 			snd_soc_dapm_sync(dapm);
- 			rt5645->jack_type = SND_JACK_HEADPHONE;
-@@ -3296,6 +3299,8 @@ static void rt5645_jack_detect_work(struct work_struct *work)
- 	if (!rt5645->component)
++	/* If it is a PCI error, all registers will be 0xffff,
++	 * we don't dump them out, just report the error and return
++	 */
++	if (tp->pdev->error_state != pci_channel_io_normal) {
++		netdev_err(tp->dev, "PCI channel ERROR!\n");
++		return;
++	}
++
+ 	regs = kzalloc(TG3_REG_BLK_SIZE, GFP_ATOMIC);
+ 	if (!regs)
  		return;
+@@ -11199,7 +11207,8 @@ static void tg3_reset_task(struct work_struct *work)
+ 	rtnl_lock();
+ 	tg3_full_lock(tp, 0);
  
-+	mutex_lock(&rt5645->jd_mutex);
-+
- 	switch (rt5645->pdata.jd_mode) {
- 	case 0: /* Not using rt5645 JD */
- 		if (rt5645->gpiod_hp_det) {
-@@ -3320,7 +3325,7 @@ static void rt5645_jack_detect_work(struct work_struct *work)
- 
- 	if (!val && (rt5645->jack_type == 0)) { /* jack in */
- 		report = rt5645_jack_detect(rt5645->component, 1);
--	} else if (!val && rt5645->jack_type != 0) {
-+	} else if (!val && rt5645->jack_type == SND_JACK_HEADSET) {
- 		/* for push button and jack out */
- 		btn_type = 0;
- 		if (snd_soc_component_read32(rt5645->component, RT5645_INT_IRQ_ST) & 0x4) {
-@@ -3376,6 +3381,8 @@ static void rt5645_jack_detect_work(struct work_struct *work)
- 		rt5645_jack_detect(rt5645->component, 0);
- 	}
- 
-+	mutex_unlock(&rt5645->jd_mutex);
-+
- 	snd_soc_jack_report(rt5645->hp_jack, report, SND_JACK_HEADPHONE);
- 	snd_soc_jack_report(rt5645->mic_jack, report, SND_JACK_MICROPHONE);
- 	if (rt5645->en_button_func)
-@@ -4072,6 +4079,7 @@ static int rt5645_i2c_probe(struct i2c_client *i2c,
- 	}
- 	timer_setup(&rt5645->btn_check_timer, rt5645_btn_check_callback, 0);
- 
-+	mutex_init(&rt5645->jd_mutex);
- 	INIT_DELAYED_WORK(&rt5645->jack_detect_work, rt5645_jack_detect_work);
- 	INIT_DELAYED_WORK(&rt5645->rcclock_work, rt5645_rcclock_work);
- 
+-	if (tp->pcierr_recovery || !netif_running(tp->dev)) {
++	if (tp->pcierr_recovery || !netif_running(tp->dev) ||
++	    tp->pdev->error_state != pci_channel_io_normal) {
+ 		tg3_flag_clear(tp, RESET_TASK_PENDING);
+ 		tg3_full_unlock(tp);
+ 		rtnl_unlock();
 -- 
 2.43.0
 
