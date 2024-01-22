@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744A7657D6;
-	Tue, 23 Jan 2024 01:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D234E1AD;
+	Tue, 23 Jan 2024 01:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975088; cv=none; b=PDNnvZZYpleu5wr27quCPQzy5w8JbK+Z5fbDQ9qH5mk2ifGXDZtdbsbee+YeYhzI4GsxfPDdRc3UlFAxrDYA2Ha9AifZTYUbQCLHbDov8FizdkJFWKDEpIss8J9us3oZzKhZWK2y+/DMEJXQcGUHbBM43hzI2kJr8/GgL1YcmUY=
+	t=1705975089; cv=none; b=g0vNMJA/cvsSSlKQTC5KlGBN8uNrOho6LJrIMpdyCterVVUy28qWFvmruoI+6zP46w+SjE8BhM5F0s42Gv7UV+I2Epltwk2C6lVSePkJqdNvEedq1+DFviaoVnhPRHh3GD+CPXWdJEii+sWc+d59mc5UB+jc2AgowDeEiPe/uZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975088; c=relaxed/simple;
-	bh=llwV6XSjMWTCBJSOWR6BcisvfnNmBgdzxeoxd8/daGQ=;
+	s=arc-20240116; t=1705975089; c=relaxed/simple;
+	bh=owmShYNwcaWJ462hD2bfGkLszbpbPG7EOaGx+2excMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAFlMTIddNLWfB2Ek57g83W9pMC/p/8tgHP3/NdKv8EwLlZ8YqnDOT3+N3aj0Xm5BBZkzrq58h2Yuw+ebGMHaB+bI52JJMXa6Bs9OD36jVLwGXpgV50ACCShOildpIYrCq+eH7yv6iW6hRJUN4FNBbpOMnv+KpTlOP10MkeZu8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1o6teaf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NRDtpE51+lx4DSNICAd2FoDEQ6uZICQPFuptamYbvexEn2vodGGbcD1N2XG9RKhffqV2eKkvsg7vSjYULmA661/OiltAFPvmHzsuvvJJyMwqnYg7ZoYA1qP2wuvvPO5Pz3oXxYEon76BB10Vq44F7p/IV2vQwM9P+vMBQ7XXj0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqJkKq7l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1o6teaf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3589EC433F1;
-	Tue, 23 Jan 2024 01:58:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqJkKq7l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF1EC433C7;
+	Tue, 23 Jan 2024 01:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975088;
-	bh=llwV6XSjMWTCBJSOWR6BcisvfnNmBgdzxeoxd8/daGQ=;
+	s=korg; t=1705975089;
+	bh=owmShYNwcaWJ462hD2bfGkLszbpbPG7EOaGx+2excMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H1o6teafMc7f3Ygq2cDtXZvrdXJ95EF4/ESl/F/TOqgw1iz5XoaGzeAB3TGMosRgx
-	 BSe6Vn2Dmsih0Ppl/DkfIbk06FTTpMkROA3TTzYDKyhdB47VEa2yiZaZzpqFNu1aK7
-	 GCBmJD2AtLCc52LORHimajuJQhJw2euHM4TEil7U=
+	b=nqJkKq7lYrR4ryU6pUluBxbTuKPPG4dzNs5zsevvHgn8HKNJaIQ3NTqAh4vWFMxje
+	 pVNXoRqXuQdTJi9H8OPYvQyrPN5vZEYVESWMe3PCd4gsWeSsog2wlhqN9c+4B/4YrV
+	 2RYMzqsybXx49qGabACe7WohLA56mNW4aSDAcF1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 360/374] mlxsw: spectrum_acl_tcam: Add missing mutex_destroy()
-Date: Mon, 22 Jan 2024 16:00:16 -0800
-Message-ID: <20240122235757.470265155@linuxfoundation.org>
+	"Ricardo B. Marliere" <ricardo@marliere.net>,
+	Mike Isely <isely@pobox.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+621409285c4156a009b3@syzkaller.appspotmail.com
+Subject: [PATCH 6.6 233/583] media: pvrusb2: fix use after free on context disconnection
+Date: Mon, 22 Jan 2024 15:54:44 -0800
+Message-ID: <20240122235819.117359027@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,53 +50,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Ricardo B. Marliere <ricardo@marliere.net>
 
-[ Upstream commit 65823e07b1e4055b6278725fd92f4d7e6f8d53fd ]
+[ Upstream commit ded85b0c0edd8f45fec88783d7555a5b982449c1 ]
 
-Pair mutex_init() with a mutex_destroy() in the error path. Found during
-code review. No functional changes.
+Upon module load, a kthread is created targeting the
+pvr2_context_thread_func function, which may call pvr2_context_destroy
+and thus call kfree() on the context object. However, that might happen
+before the usb hub_event handler is able to notify the driver. This
+patch adds a sanity check before the invalid read reported by syzbot,
+within the context disconnection call stack.
 
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 483ae90d8f97 ("mlxsw: spectrum_acl_tcam: Fix stack corruption")
+Reported-and-tested-by: syzbot+621409285c4156a009b3@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/000000000000a02a4205fff8eb92@google.com/
+
+Fixes: e5be15c63804 ("V4L/DVB (7711): pvrusb2: Fix race on module unload")
+Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
+Acked-by: Mike Isely <isely@pobox.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/usb/pvrusb2/pvrusb2-context.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index 31f7f4c3acc3..c8d9f523242e 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -52,8 +52,10 @@ int mlxsw_sp_acl_tcam_init(struct mlxsw_sp *mlxsw_sp,
- 		max_regions = max_tcam_regions;
- 
- 	tcam->used_regions = bitmap_zalloc(max_regions, GFP_KERNEL);
--	if (!tcam->used_regions)
--		return -ENOMEM;
-+	if (!tcam->used_regions) {
-+		err = -ENOMEM;
-+		goto err_alloc_used_regions;
-+	}
- 	tcam->max_regions = max_regions;
- 
- 	max_groups = MLXSW_CORE_RES_GET(mlxsw_sp->core, ACL_MAX_GROUPS);
-@@ -76,6 +78,8 @@ int mlxsw_sp_acl_tcam_init(struct mlxsw_sp *mlxsw_sp,
- 	bitmap_free(tcam->used_groups);
- err_alloc_used_groups:
- 	bitmap_free(tcam->used_regions);
-+err_alloc_used_regions:
-+	mutex_destroy(&tcam->lock);
- 	return err;
+diff --git a/drivers/media/usb/pvrusb2/pvrusb2-context.c b/drivers/media/usb/pvrusb2/pvrusb2-context.c
+index 14170a5d72b3..1764674de98b 100644
+--- a/drivers/media/usb/pvrusb2/pvrusb2-context.c
++++ b/drivers/media/usb/pvrusb2/pvrusb2-context.c
+@@ -268,7 +268,8 @@ void pvr2_context_disconnect(struct pvr2_context *mp)
+ {
+ 	pvr2_hdw_disconnect(mp->hdw);
+ 	mp->disconnect_flag = !0;
+-	pvr2_context_notify(mp);
++	if (!pvr2_context_shutok())
++		pvr2_context_notify(mp);
  }
+ 
  
 -- 
 2.43.0
