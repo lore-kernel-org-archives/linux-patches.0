@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB4A59B5E;
-	Tue, 23 Jan 2024 00:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD5C4F204;
+	Tue, 23 Jan 2024 00:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970314; cv=none; b=Jj7FzhiUQIqVTGy90za/deJkh7GFqH8iaxXdHCQtmW5XYDvHiYuu33LviPFUxo6QhPP0Mz5mDS8EKrEXMbLDj6loBGl/7rMGwRasaoACtBJ60nI/xQdCoXPBXGKQlqGVnZrVwV0EqdeAsAkKKe4wwMuLE5DZixsALOD8aSGkudU=
+	t=1705970318; cv=none; b=WM2tqM2WWYmmoYMbwmfsIPKj7GdqTZc6RtADTNJlP6qg3LCkuFwkkwtMLtyMoQw9efmfQitl3U9li7w/wqU4FSlSaN6+LTSr6KhKEuhiCrE+B/FPUV2Rxz2JbobYhd4qEWcfYwlG2LpES7cpALvRwoHEQdLdOV7fWbGnyP6Lt+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970314; c=relaxed/simple;
-	bh=Bfs+V2gJ6jt/67/MJgbx49Vzbp+clD5wexVVr1wR6V8=;
+	s=arc-20240116; t=1705970318; c=relaxed/simple;
+	bh=HZhgzkqof9RJd4k1zhDkHP4QfYBogxhHoBvkvVGMugE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kUx6GvSlu+Jr0/Pizfk+vCAQK5upCxdMSpe75W/kE7bE690NpZ5NA9McWTOfJ6Yrji9Q5+4NFWHFQUQdOvye8C+eyKlqCM+Bslu1C5QANIK5eKInp4Thipo3Nu9fUiJBJCb/U1Er/8dx0bm3VUP6VWTeLebqZk9KL+u7Z7sfBzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hie0zlZ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VOdL9pt11UhRek20LYlWd9jhSwdaJ1SH0nVF1O8LsHQ+rIaqvbOgH4cFiYrIphiddeKAk3Ymm38+/C45QfcgA+ZXihThGlVmPHac4vNYj/KNZ/Ed2eubFr2/qMQDecMA6sfRlEqt+0+z9xfBNkywxsJDTrRvEb69iAz5slQoMxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtwKwXFG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hie0zlZ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525FAC433F1;
-	Tue, 23 Jan 2024 00:38:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtwKwXFG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D223BC433F1;
+	Tue, 23 Jan 2024 00:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970314;
-	bh=Bfs+V2gJ6jt/67/MJgbx49Vzbp+clD5wexVVr1wR6V8=;
+	s=korg; t=1705970318;
+	bh=HZhgzkqof9RJd4k1zhDkHP4QfYBogxhHoBvkvVGMugE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hie0zlZ5fvqZFMDMs/2Nv+d9ZIGQjJwK62FvwBQHuo9QKA6yWA/ETWyXLO3FVYIgC
-	 5NcmXebtsiIqy0d5OybVx72j5SNGeltlaQZWRO4GdNFiTjD+03jToU0MVVx139S6Hn
-	 3twQbjVJhhzLI53lauJLtzBHiWVf3atTMq60/tUA=
+	b=rtwKwXFGDZvjWNxDMYcQ9UoIpUuRQLy0FykFR8q7OlkVpiQArrESbos11HYHWbjxU
+	 0xqL2E0Idji5GVbqmi3eKVS4EPhv+smp3bjPfsIE4eeLYxlOLqiIbXweBN5I8RPAx/
+	 d1BL0kwiluWRB5MaJyZ7pEJ6f9Rmv8esQsFPAJ7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
 	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 631/641] arm64/ptrace: Dont flush ZA/ZT storage when writing ZA via ptrace
-Date: Mon, 22 Jan 2024 15:58:55 -0800
-Message-ID: <20240122235838.020500249@linuxfoundation.org>
+Subject: [PATCH 6.7 608/641] ASoC: SOF: ipc4-loader: remove the CPC check warnings
+Date: Mon, 22 Jan 2024 15:58:32 -0800
+Message-ID: <20240122235837.267622906@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -45,59 +48,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-[ Upstream commit b7c510d049049409e8945b932f4b0b357fa17415 ]
+[ Upstream commit ab09fb9c629ed3aaea6a82467f08595dbc549726 ]
 
-When writing ZA we currently unconditionally flush the buffer used to store
-it as part of ensuring that it is allocated. Since this buffer is shared
-with ZT0 this means that a write to ZA when PSTATE.ZA is already set will
-corrupt the value of ZT0 on a SME2 system. Fix this by only flushing the
-backing storage if PSTATE.ZA was not previously set.
+Warnings related to missing data in firmware manifest have
+proven to be too verbose. This relates to description of
+DSP module cost expressed in cycles per chunk (CPC). If
+a matching value is not found in the manifest, kernel will
+pass a zero value and DSP firmware will use a conservative
+value in its place.
 
-This will mean that short or failed writes may leave stale data in the
-buffer, this seems as correct as our current behaviour and unlikely to be
-something that userspace will rely on.
+Downgrade the warnings to dev_dbg().
 
-Fixes: f90b529bcbe5 ("arm64/sme: Implement ZT0 ptrace support")
+Fixes: d8a2c9879349 ("ASoC: SOF: ipc4-loader/topology: Query the CPC value from manifest")
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://msgid.link/r/20240115092209.7184-3-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20240115-arm64-fix-ptrace-za-zt-v1-1-48617517028a@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/ptrace.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ sound/soc/sof/ipc4-loader.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
-index 20d7ef82de90..b3f64144b5cd 100644
---- a/arch/arm64/kernel/ptrace.c
-+++ b/arch/arm64/kernel/ptrace.c
-@@ -1107,12 +1107,13 @@ static int za_set(struct task_struct *target,
- 		}
- 	}
+diff --git a/sound/soc/sof/ipc4-loader.c b/sound/soc/sof/ipc4-loader.c
+index eaa04762eb11..4d37e89b592a 100644
+--- a/sound/soc/sof/ipc4-loader.c
++++ b/sound/soc/sof/ipc4-loader.c
+@@ -479,13 +479,10 @@ void sof_ipc4_update_cpc_from_manifest(struct snd_sof_dev *sdev,
+ 		msg = "No CPC match in the firmware file's manifest";
  
--	/* Allocate/reinit ZA storage */
--	sme_alloc(target, true);
--	if (!target->thread.sme_state) {
--		ret = -ENOMEM;
--		goto out;
--	}
-+	/*
-+	 * Only flush the storage if PSTATE.ZA was not already set,
-+	 * otherwise preserve any existing data.
-+	 */
-+	sme_alloc(target, !thread_za_enabled(&target->thread));
-+	if (!target->thread.sme_state)
-+		return -ENOMEM;
+ no_cpc:
+-	dev_warn(sdev->dev, "%s (UUID: %pUL): %s (ibs/obs: %u/%u)\n",
+-		 fw_module->man4_module_entry.name,
+-		 &fw_module->man4_module_entry.uuid, msg, basecfg->ibs,
+-		 basecfg->obs);
+-	dev_warn_once(sdev->dev, "Please try to update the firmware.\n");
+-	dev_warn_once(sdev->dev, "If the issue persists, file a bug at\n");
+-	dev_warn_once(sdev->dev, "https://github.com/thesofproject/sof/issues/\n");
++	dev_dbg(sdev->dev, "%s (UUID: %pUL): %s (ibs/obs: %u/%u)\n",
++		fw_module->man4_module_entry.name,
++		&fw_module->man4_module_entry.uuid, msg, basecfg->ibs,
++		basecfg->obs);
+ }
  
- 	/* If there is no data then disable ZA */
- 	if (!count) {
+ const struct sof_ipc_fw_loader_ops ipc4_loader_ops = {
 -- 
 2.43.0
 
