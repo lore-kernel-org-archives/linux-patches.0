@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4A75BAC9;
-	Tue, 23 Jan 2024 00:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA2E604C5;
+	Tue, 23 Jan 2024 00:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970819; cv=none; b=nlYFSDrGwE24gzVnAYq3KirS3aD8Cn9dPpwGQSLapMKAzCscaqnCEAuCaMY/kpQxsGZgMHnKbqJQw148tUFAhZbpgp5O4KV/+A0jYrNFnnnDNBCW90ShYB6mSA199rxGkI5EdkZr0EOf+LTe0JzcUslmv0GuelRo6w5fcUv44kk=
+	t=1705970821; cv=none; b=tpKWj6WsP5UpWycAnMHANiUCxykTvveqVIQEiDSEPwpX7uVWZyRMWt+nL7Pejt4snxbfNalrO8uKK3JfDN2eiOq6NVoI1AWGPFGTpacfNF2uMYevWmr7Yve8NZN0x41j5WDw5AoPBJy6hEG/jUvkNndBWsDs19UI7BDtJ47L8v4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970819; c=relaxed/simple;
-	bh=DIp90eRzznl3IuZcjHdVWDEjfK38SGGMX83KfNg+CUI=;
+	s=arc-20240116; t=1705970821; c=relaxed/simple;
+	bh=nwIRKbaxOTeu792JI4Pb4kyTZVgFb/O2ndCG44cNMiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4TheaJzVVWR21PgoyDN29sH9eXCOenltZ7pj6UYVlgfScUsCSWP/sH83XuBmw4Yzg86QpfrJa0F/abzT3f2qIAxjgRePTkHsSjMuIc/rdYpbaw3Xhjh5KVQhnZ6F0pslsClcKjKmOvSCRUxQTj+r1r9xCygUs3WCtT9+fsTUcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7PugRyM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qupi/TA2wgggN6fdEUmP2E4Zn4bvMFh5GxBazTRC47nXMSMjMQ28me+D/UXQfCu/Q6l4RwCUZKiqcOG0mkhY4FXy6xlyZNu42kKxB+nLpruSMSRDaVNOZpI47eKkZbKarI+4w6X5SeppnxdLBOqOkiSZbV9qarrNmi/djn8j7q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rfqn3mIB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7PugRyM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11AC3C433C7;
-	Tue, 23 Jan 2024 00:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rfqn3mIB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D75C433F1;
+	Tue, 23 Jan 2024 00:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970819;
-	bh=DIp90eRzznl3IuZcjHdVWDEjfK38SGGMX83KfNg+CUI=;
+	s=korg; t=1705970821;
+	bh=nwIRKbaxOTeu792JI4Pb4kyTZVgFb/O2ndCG44cNMiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M7PugRyMSABITQNwdH6YbqLuOMU16HBVAYlwVXJRuREeVkms1taezcr6oBU6atL/z
-	 +wnzUdryuSsgAgFiWmON3DbonaIWuYX3BJ0PfCcM4rejggizzx/tg4aWhQLTU83abU
-	 ZrVuLYPFYFuJUpjlxkb0N5xxGSNEk525aU61U6uY=
+	b=Rfqn3mIBG7nW5/RQ1maYd+hjnK/XQOX/+iHK+pEyR3PIHaWzchx98LcsX16bvVh9i
+	 F4g8/LadLT9XHbytNIRfko0PgIhncUFSf1jwmhb9IX48OcoF+Kqobpr2jM+0mzbcdO
+	 EcDZYFFNePEXuFKY3HYMsvacBpwXIzpf07px0p9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 5.10 001/286] f2fs: explicitly null-terminate the xattr list
-Date: Mon, 22 Jan 2024 15:55:07 -0800
-Message-ID: <20240122235732.056543308@linuxfoundation.org>
+	Anton Protopopov <aspsk@isovalent.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 094/417] bpf: add percpu stats for bpf_map elements insertions/deletions
+Date: Mon, 22 Jan 2024 15:54:22 -0800
+Message-ID: <20240122235754.948596489@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Anton Protopopov <aspsk@isovalent.com>
 
-commit e26b6d39270f5eab0087453d9b544189a38c8564 upstream.
+[ Upstream commit 25954730461af01f66afa9e17036b051986b007e ]
 
-When setting an xattr, explicitly null-terminate the xattr list.  This
-eliminates the fragile assumption that the unused xattr space is always
-zeroed.
+Add a generic percpu stats for bpf_map elements insertions/deletions in order
+to keep track of both, the current (approximate) number of elements in a map
+and per-cpu statistics on update/delete operations.
 
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To expose these stats a particular map implementation should initialize the
+counter and adjust it as needed using the 'bpf_map_*_elem_count' helpers
+provided by this commit.
+
+Signed-off-by: Anton Protopopov <aspsk@isovalent.com>
+Link: https://lore.kernel.org/r/20230706133932.45883-2-aspsk@isovalent.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 876673364161 ("bpf: Defer the free of inner map when necessary")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/xattr.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ include/linux/bpf.h | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
---- a/fs/f2fs/xattr.c
-+++ b/fs/f2fs/xattr.c
-@@ -741,6 +741,12 @@ static int __f2fs_setxattr(struct inode
- 		memcpy(pval, value, size);
- 		last->e_value_size = cpu_to_le16(size);
- 		new_hsize += newsize;
-+		/*
-+		 * Explicitly add the null terminator.  The unused xattr space
-+		 * is supposed to always be zeroed, which would make this
-+		 * unnecessary, but don't depend on that.
-+		 */
-+		*(u32 *)((u8 *)last + newsize) = 0;
- 	}
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index ba22cf4f5fc0..21b192ce018a 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -249,6 +249,7 @@ struct bpf_map {
+ 	} owner;
+ 	bool bypass_spec_v1;
+ 	bool frozen; /* write-once; write-protected by freeze_mutex */
++	s64 __percpu *elem_count;
+ };
  
- 	error = write_all_xattrs(inode, new_hsize, base_addr, ipage);
+ static inline bool map_value_has_spin_lock(const struct bpf_map *map)
+@@ -1791,6 +1792,35 @@ bpf_map_alloc_percpu(const struct bpf_map *map, size_t size, size_t align,
+ }
+ #endif
+ 
++static inline int
++bpf_map_init_elem_count(struct bpf_map *map)
++{
++	size_t size = sizeof(*map->elem_count), align = size;
++	gfp_t flags = GFP_USER | __GFP_NOWARN;
++
++	map->elem_count = bpf_map_alloc_percpu(map, size, align, flags);
++	if (!map->elem_count)
++		return -ENOMEM;
++
++	return 0;
++}
++
++static inline void
++bpf_map_free_elem_count(struct bpf_map *map)
++{
++	free_percpu(map->elem_count);
++}
++
++static inline void bpf_map_inc_elem_count(struct bpf_map *map)
++{
++	this_cpu_inc(*map->elem_count);
++}
++
++static inline void bpf_map_dec_elem_count(struct bpf_map *map)
++{
++	this_cpu_dec(*map->elem_count);
++}
++
+ extern int sysctl_unprivileged_bpf_disabled;
+ 
+ static inline bool bpf_allow_ptr_leaks(void)
+-- 
+2.43.0
+
 
 
