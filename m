@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FA71420A5;
-	Tue, 23 Jan 2024 00:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8A81420A5;
+	Tue, 23 Jan 2024 00:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969451; cv=none; b=KNBirxBtjzHv+yfgSeL+eAlGfsIBpsvQ8AskmcjtxVfPEZTBW0pgkDjSrqEXO4jFa1b5tfW+3y2V4+A6Piyfq5bZgJj/GJeds+P4ae81SYSpsvJnOFjMNj5DB/a1OC5OkpioBrOAzMysFyiT+3hBchrfFRUpFd0rPs5nnKO64zg=
+	t=1705969453; cv=none; b=IcbXkVOK2pfh4FKP/y5pSQTGtXiBjsG3vOhShN5s5m6/EKWq+TwG5uI8g6KFQLquxsaWW3KEbcL3Ein6/PkvtvCKRkxtcNnLWdkU9mlfPMhppLWgmUqZnMr2j4ph8tiixoDIVAoTHA6Q7dgZP015JsmUPt6s/FZvwEQ3RRQH2w8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969451; c=relaxed/simple;
-	bh=Erdy0CcfkIYRHT86T+PKyJH4DGwp4ITPjXPpthTOYYg=;
+	s=arc-20240116; t=1705969453; c=relaxed/simple;
+	bh=S2zmGTOEb/3+SDu+mH+iDuQRBE67nIHyVVWCXqgHSP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rCrMSRqDYWZrbflNOVzF0aF4TTABa7NmkFoudDAfl/HuGJGckORWyQzeWXyjDrh2EbPt80Y18M3Qkm6caeXPreWydFk51jV12CzptQP1EEct4a/eVw3neAqjj1LIYg1ASd9gRVQhqVfDO56A8cSsWpiCvKcL86opSrQ0EtU+fHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zf8myM7N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iDxU+TQBRgaknNcWnUZrMN8Wzo9ByLB/lsrUk6PfeM+T6nrTOVo1YSxE4wq8t7Z5crSGF9ftkZL9Vy4J9s3B1bu2vbxnac+9e6YJWtB7ONb/tuUfuVPhsXJo/+p5M2ha0vegAjiKB2G0lH7LEEeHyTHTIUhGiL0kOzIh6SwxVoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoBqP48h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zf8myM7N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEECBC43390;
-	Tue, 23 Jan 2024 00:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoBqP48h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1796C43390;
+	Tue, 23 Jan 2024 00:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969451;
-	bh=Erdy0CcfkIYRHT86T+PKyJH4DGwp4ITPjXPpthTOYYg=;
+	s=korg; t=1705969453;
+	bh=S2zmGTOEb/3+SDu+mH+iDuQRBE67nIHyVVWCXqgHSP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zf8myM7NQ39v+UFPySLY4d080u/el//mur8dw1FppwXHRKFoUqhUxseorGTDotNMp
-	 6vXK3LuVcP5bu9xZYouVN4dwrCVDz4vYxDdt7k1AKCCRXaqN1u2t2ayqMw0mVZnIDX
-	 fzE3/r42ID1QACcwQb1wujLNibqHzJxN2PEyvNFs=
+	b=CoBqP48h+HBlrGhF8S1HggGoYfErjnzN0yVIXu8k8CX+6vnen9AwLoGBloJ66oLDO
+	 /FlxmHMeT3DyCQ+7v/N5nNzqIX76AfRsSjbF9sOktOJwn2Azbv5HdUbaDYFcWWSstX
+	 fUZFF+YkLnNpuU27PRg38w2AAzNGWRKjXwtFs8cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	David Thompson <davthompson@nvidia.com>,
+	Asmaa Mnebhi <asmaa@nvidia.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 255/641] media: mtk-jpeg: Remove cancel worker in mtk_jpeg_remove to avoid the crash of multi-core JPEG devices
-Date: Mon, 22 Jan 2024 15:52:39 -0800
-Message-ID: <20240122235825.890898027@linuxfoundation.org>
+Subject: [PATCH 6.7 238/641] mlxbf_gige: Enable the GigE port in mlxbf_gige_open
+Date: Mon, 22 Jan 2024 15:52:22 -0800
+Message-ID: <20240122235825.378679763@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,40 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Asmaa Mnebhi <asmaa@nvidia.com>
 
-[ Upstream commit d8212c5c87c143ca01b78f6bf61244af07e0058e ]
+[ Upstream commit a460f4a684511e007bbf1700758a41f05d9981e6 ]
 
-This patch reverts commit c677d7ae8314
-("media: mtk-jpeg: Fix use after free bug due to uncanceled work").
-The job_timeout_work is initialized only for
-the single-core JPEG device so it will cause the crash for multi-core
-JPEG devices.
+At the moment, the GigE port is enabled in the mlxbf_gige_probe
+function. If the mlxbf_gige_open is not executed, this could cause
+pause frames to increase in the case where there is high backgroud
+traffic. This results in clogging the port.
+So move enabling the OOB port to mlxbf_gige_open.
 
-Fix it by removing the cancel_delayed_work_sync function.
-
-Fixes: c677d7ae8314 ("media: mtk-jpeg: Fix use after free bug due to uncanceled work")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: f92e1869d74e ("Add Mellanox BlueField Gigabit Ethernet driver")
+Reviewed-by: David Thompson <davthompson@nvidia.com>
+Signed-off-by: Asmaa Mnebhi <asmaa@nvidia.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 1 -
- 1 file changed, 1 deletion(-)
+ .../ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c   | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-index 7194f88edc0f..60425c99a2b8 100644
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-@@ -1403,7 +1403,6 @@ static void mtk_jpeg_remove(struct platform_device *pdev)
+diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
+index ac7f0128619c..3d09fa54598f 100644
+--- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
++++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
+@@ -130,9 +130,15 @@ static int mlxbf_gige_open(struct net_device *netdev)
  {
- 	struct mtk_jpeg_dev *jpeg = platform_get_drvdata(pdev);
+ 	struct mlxbf_gige *priv = netdev_priv(netdev);
+ 	struct phy_device *phydev = netdev->phydev;
++	u64 control;
+ 	u64 int_en;
+ 	int err;
  
--	cancel_delayed_work_sync(&jpeg->job_timeout_work);
- 	pm_runtime_disable(&pdev->dev);
- 	video_unregister_device(jpeg->vdev);
- 	v4l2_m2m_release(jpeg->m2m_dev);
++	/* Perform general init of GigE block */
++	control = readq(priv->base + MLXBF_GIGE_CONTROL);
++	control |= MLXBF_GIGE_CONTROL_PORT_EN;
++	writeq(control, priv->base + MLXBF_GIGE_CONTROL);
++
+ 	err = mlxbf_gige_request_irqs(priv);
+ 	if (err)
+ 		return err;
+@@ -365,7 +371,6 @@ static int mlxbf_gige_probe(struct platform_device *pdev)
+ 	void __iomem *plu_base;
+ 	void __iomem *base;
+ 	int addr, phy_irq;
+-	u64 control;
+ 	int err;
+ 
+ 	base = devm_platform_ioremap_resource(pdev, MLXBF_GIGE_RES_MAC);
+@@ -380,11 +385,6 @@ static int mlxbf_gige_probe(struct platform_device *pdev)
+ 	if (IS_ERR(plu_base))
+ 		return PTR_ERR(plu_base);
+ 
+-	/* Perform general init of GigE block */
+-	control = readq(base + MLXBF_GIGE_CONTROL);
+-	control |= MLXBF_GIGE_CONTROL_PORT_EN;
+-	writeq(control, base + MLXBF_GIGE_CONTROL);
+-
+ 	netdev = devm_alloc_etherdev(&pdev->dev, sizeof(*priv));
+ 	if (!netdev)
+ 		return -ENOMEM;
 -- 
 2.43.0
 
