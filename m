@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F02450267;
-	Tue, 23 Jan 2024 01:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219135025B;
+	Tue, 23 Jan 2024 01:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974696; cv=none; b=eTqX3j/r/W5nWYvY5/Fkqsx3oV3cQuo3BAaaBLlF9cNCTBQBeEORkKM7BqDTapXsgLn8swwHeVChkTk9V9h+83b1DRlaS/OkEpLcVUoQ2vZWZxy24EuTf2PEwUObyWSSzhPV7JZJE3T/ZXa/LESFgqHfA4/9G7NYApCXQy16W7k=
+	t=1705974697; cv=none; b=D6EX7m2ODHzIwuqbM9f7xmO03jwc9Rhn5Jj8M0/u+X+1vSftgl4tWzeVwvmCNpulp9oGdnVC8XsDcZ2wOD7GVkUkLcrLPoN+/MfF5ILXYaRVMc+ENoM3nYiavcZd+4wSgutdHqZikowKffFKQrtvz9/kezCCpw1Buocowbn8508=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974696; c=relaxed/simple;
-	bh=tIAaZLFvP5NIdyRERNk+TpUHXiJI1hThqyUkMJ1HyM4=;
+	s=arc-20240116; t=1705974697; c=relaxed/simple;
+	bh=5mcWKA0I6Nc9lGCQZowv0XmJhWz6UytnvFJ45FB6nxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VIDDXFUPyRYJEA4GVmXv/rs0D+zam0k2WxK6a0ZJqCZ99DMxXIMmwmdIa6ZEWaQ4w2GZCUuf9zva1H6zNYNMlDUE5jB8YLCVQnV39dPPcEaGNlZduQykWkqY/jDuKVQ+6SBQjX/5A8bH1Hb7xQo4ddmoGU2FgYX3YB5HtwroD00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnAm8qUl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VkluRXklBds5M7CZdjtbH8X5/D6jAG1B4zqDflf8L24Vym2dV3HkQiBlyV/61R7uoyt1Wz1gUUtqOJtDm7ocydEVz1ur4tmSyihwNxGxeZPiUyGs1axZdOTmsI8R6F0Fh4aGkbo3iZLSZ3Buo+CCTw3MLWc7TnaybGXz/Mu7c3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K59x4Oiy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnAm8qUl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E39C43394;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K59x4Oiy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAEDEC433C7;
 	Tue, 23 Jan 2024 01:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974696;
-	bh=tIAaZLFvP5NIdyRERNk+TpUHXiJI1hThqyUkMJ1HyM4=;
+	s=korg; t=1705974697;
+	bh=5mcWKA0I6Nc9lGCQZowv0XmJhWz6UytnvFJ45FB6nxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CnAm8qUlNAq3h38ZZ3zIn/l8gAug2IGLq79sPmbjBJ+6vk5l6/mtTjQlGET+/otYe
-	 u/upth68g+vpgyJThh+aN0/bZ8RC4edBPu0mjtrIqz+rmD5kATL5axSYA28EA1lR72
-	 BLW6iyEs9n0DOeGmrAoOUrR0jXzPRYUbOlOFHlms=
+	b=K59x4OiyPwDU1Uh+8yhu1dSE4pp6ms60GASfTBq9hoY9ozHP+s1ODW70Zfc/hYU1+
+	 v2eCwBjpR9HT7uRqzeRf8GoB+lcoqxupauCs13+C/UMD6eO3j3IQXzFSWzVaPZF8o6
+	 Hyxnljder2ADYGmhU43PmkDJxMe6pAtNjSVh8UtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Subject: [PATCH 5.15 254/374] usb: dwc: ep0: Update request status in dwc3_ep0_stall_restart
-Date: Mon, 22 Jan 2024 15:58:30 -0800
-Message-ID: <20240122235753.607467869@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 128/583] arm64: dts: qcom: sm6125: add interrupts to DWC3 USB controller
+Date: Mon, 22 Jan 2024 15:52:59 -0800
+Message-ID: <20240122235816.054279329@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,61 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit e9d40b215e38480fd94c66b06d79045717a59e9c upstream.
+[ Upstream commit 67e4656f4487b95a39e45884c99235f62ebfaa47 ]
 
-Current implementation blocks the running operations when Plug-out and
-Plug-In is performed continuously, process gets stuck in
-dwc3_thread_interrupt().
+Add interrupts to SM6125 DWC3 USB controller, based on downstream/vendor
+code of Trinket DTSI from Xiaomi Laurel device, to fix dtbs_check
+warnings:
 
-Code Flow:
+  sm6125-xiaomi-laurel-sprout.dtb: usb@4ef8800: 'interrupt-names' is a required property
+  sm6125-xiaomi-laurel-sprout.dtb: usb@4ef8800: 'oneOf' conditional failed, one must be fixed:
+    'interrupts' is a required property
+    'interrupts-extended' is a required property
 
-	CPU1
-
-	->Gadget_start
-	->dwc3_interrupt
-	->dwc3_thread_interrupt
-	->dwc3_process_event_buf
-	->dwc3_process_event_entry
-	->dwc3_endpoint_interrupt
-	->dwc3_ep0_interrupt
-	->dwc3_ep0_inspect_setup
-	->dwc3_ep0_stall_and_restart
-
-By this time if pending_list is not empty, it will get the next request
-on the given list and calls dwc3_gadget_giveback which will unmap request
-and call its complete() callback to notify upper layers that it has
-completed. Currently dwc3_gadget_giveback status is set to -ECONNRESET,
-whereas it should be -ESHUTDOWN based on condition if not dwc->connected
-is true.
-
-Cc:  <stable@vger.kernel.org>
-Fixes: d742220b3577 ("usb: dwc3: ep0: giveback requests on stall_and_restart")
-Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Link: https://lore.kernel.org/r/20231222094704.20276-1-quic_uaggarwa@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Link: https://lore.kernel.org/r/20231111164229.63803-5-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/ep0.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm6125.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/dwc3/ep0.c
-+++ b/drivers/usb/dwc3/ep0.c
-@@ -236,7 +236,10 @@ static void dwc3_ep0_stall_and_restart(s
- 		struct dwc3_request	*req;
+diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+index 197f8fed19a2..07081088ba14 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+@@ -1165,6 +1165,10 @@ usb3: usb@4ef8800 {
+ 					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+ 			assigned-clock-rates = <19200000>, <66666667>;
  
- 		req = next_request(&dep->pending_list);
--		dwc3_gadget_giveback(dep, req, -ECONNRESET);
-+		if (!dwc->connected)
-+			dwc3_gadget_giveback(dep, req, -ESHUTDOWN);
-+		else
-+			dwc3_gadget_giveback(dep, req, -ECONNRESET);
- 	}
- 
- 	dwc->ep0state = EP0_SETUP_PHASE;
++			interrupts = <GIC_SPI 260 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hs_phy_irq", "ss_phy_irq";
++
+ 			power-domains = <&gcc USB30_PRIM_GDSC>;
+ 			qcom,select-utmi-as-pipe-clk;
+ 			status = "disabled";
+-- 
+2.43.0
+
 
 
