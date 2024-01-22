@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9BC1350CA;
-	Tue, 23 Jan 2024 01:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0E51350E1;
+	Tue, 23 Jan 2024 01:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971944; cv=none; b=Iiz0qpwJx7Hqe/pIGwWqSGYunlbrHpcr6UkdbR3BJO5xFhV8oCLubc/6GIbEn16t+BeW6RSyhPln1miJnvWCwaKjrxkLZbI1bUKbgsJDMP1/sFNGU5woMZexIUBvrTKYpmJfMBYQ9oqwRWDvAma96+N+hwZ7Wfe106X1sfsiUXM=
+	t=1705971946; cv=none; b=VmAKWdGd9Zo2lSlN713k/6g5vZjL3rMxlcheuVYcRgzON0awfIboBfBOYo3Hh9ZAg1ok9WusAGRFA4HDZ4mCYk5hmnPf20GESQ9dZUQGT1HuKW+W4+ipBnIHx4VPZevNyC7JITK8PoKVtBYd9Hm82kX8b8PVpliIsi9ZoA5rLjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971944; c=relaxed/simple;
-	bh=LXRYKtgJZa6tij/vb/SIIYcIob9sXiJxWWBayO8wqAs=;
+	s=arc-20240116; t=1705971946; c=relaxed/simple;
+	bh=DAWgWSXmAjaeNNeCcnwVOfu0lR9ffHdo+Tw78qoa4Vw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e7MdYxvkziUnwfPeWQo+ieqscSVpFCVZTTkbiYFRXvCLGOpH5vKFe2fa8qJ13HVH/UWND12actMele7skAyITiEdBYsWLSa/foIAkQQY3S1VBxaPoJfhGB2kO/Ia7LrgRel8hAols2ddPKZoYom+kgELO+j3c/yLs1JX32Oz2kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xI5yQipM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n9pMLDe7KXnLPc3QcX2bS6xJLALL9LkQo39y19oCSniO7SH/QoIelzqDKFcoQ4XPxkSmlD+i6G+QSn9+ilPOq1VeqfYWRS/fhRcs837HUiSAxcvdZg0xvcdQc6FGYBuld//3T4YOohRSA/CaXxdrzT62hrygApNEVfh0s3WPwqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpB21PpD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xI5yQipM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C836C433F1;
-	Tue, 23 Jan 2024 01:05:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpB21PpD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4881C433F1;
+	Tue, 23 Jan 2024 01:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971944;
-	bh=LXRYKtgJZa6tij/vb/SIIYcIob9sXiJxWWBayO8wqAs=;
+	s=korg; t=1705971946;
+	bh=DAWgWSXmAjaeNNeCcnwVOfu0lR9ffHdo+Tw78qoa4Vw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xI5yQipMEgV3gQVk9yslOEZ4eViZyr7GYJy9nd5OCodPGGXcOzCX9KbLweiP5rwS0
-	 9QbKBLVHUTwBHuujs8Iv+eUMAd2S2ynki5nhBK+WkrBg/J/9oeDDdPkC6CtcT2OFF3
-	 smIK+ic3YupWSHZh0BfcygqEbvlwjqexaqFPMLJ4=
+	b=fpB21PpDPBKVVMnLNsUfGzEpwzAkQ5wW4v930A36I2ae27WgaVDX2HUuQvi2MDozd
+	 xLzR8xyylIUkvBEhIoeNPoUeXcoRnHcxk2U6Jp3jFD9ArzxR3pfprMgTO/qcGhla4M
+	 hdwqOpeY2yPClzU1lxJBmNBQ8U4+zbbvEGoabNis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Simon Horman <horms@kernel.org>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 270/286] net: dsa: vsc73xx: Add null pointer check to vsc73xx_gpio_probe
-Date: Mon, 22 Jan 2024 15:59:36 -0800
-Message-ID: <20240122235742.455951408@linuxfoundation.org>
+Subject: [PATCH 6.1 358/417] tty: dont check for signal_pending() in send_break()
+Date: Mon, 22 Jan 2024 15:58:46 -0800
+Message-ID: <20240122235804.214135572@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +46,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 776dac5a662774f07a876b650ba578d0a62d20db ]
+[ Upstream commit fd99392b643b824813df2edbaebe26a2136d31e6 ]
 
-devm_kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure.
+msleep_interruptible() will check on its own. So no need to do the check
+in send_break() before calling the above.
 
-Fixes: 05bd97fc559d ("net: dsa: Add Vitesse VSC73xx DSA router driver")
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240111072018.75971-1-chentao@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20230919085156.1578-15-jirislaby@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 66aad7d8d3ec ("usb: cdc-acm: return correct error code on unsupported break")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/vitesse-vsc73xx-core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/tty_io.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/vitesse-vsc73xx-core.c b/drivers/net/dsa/vitesse-vsc73xx-core.c
-index 80eadf509c0a..018988b95035 100644
---- a/drivers/net/dsa/vitesse-vsc73xx-core.c
-+++ b/drivers/net/dsa/vitesse-vsc73xx-core.c
-@@ -1119,6 +1119,8 @@ static int vsc73xx_gpio_probe(struct vsc73xx *vsc)
- 
- 	vsc->gc.label = devm_kasprintf(vsc->dev, GFP_KERNEL, "VSC%04x",
- 				       vsc->chipid);
-+	if (!vsc->gc.label)
-+		return -ENOMEM;
- 	vsc->gc.ngpio = 4;
- 	vsc->gc.owner = THIS_MODULE;
- 	vsc->gc.parent = vsc->dev;
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index 745fc4ec4399..41e01a8ccc4c 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -2481,8 +2481,7 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
+ 	retval = tty->ops->break_ctl(tty, -1);
+ 	if (retval)
+ 		goto out;
+-	if (!signal_pending(current))
+-		msleep_interruptible(duration);
++	msleep_interruptible(duration);
+ 	retval = tty->ops->break_ctl(tty, 0);
+ out:
+ 	tty_write_unlock(tty);
 -- 
 2.43.0
 
