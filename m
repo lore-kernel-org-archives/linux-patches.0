@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50ADD4E1AD;
-	Tue, 23 Jan 2024 00:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B819412BF15;
+	Tue, 23 Jan 2024 00:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971399; cv=none; b=CxOO9SubUl7eHO7FKrifybCjTcJHDxZZN2aIjTLhzSVYMMFifDVLb7cpiKxarvpZHML9eaO1q4ZGVZQmS/cxon0TZ+73c/brbKnjxg3eXMu1l67pKmHMrxPpHie73VhlkGXOwlpu5NsJyFYSjXNOnfi2KnAo93YqIeRlc3+nsCI=
+	t=1705971403; cv=none; b=OeO3svv1VV3uTAuO4zzBCq87VDfy/+s2FlOUjRAXicgpppqZ5I/04adSrtKwv/S9xmkVz3EtpASUtdJ5r4LxQkQLLAoYciG4/gn3CdgWjq1eP+d0L5Dqufs8Ps7SWwbcZvzVLvM63t+Fb/wFFjlfX7wj+u+b9XEXioIMMY1pAlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971399; c=relaxed/simple;
-	bh=MKrwNiNRob3Trknt6JBlzMkHYmLESGk9V2AxpNB8jWo=;
+	s=arc-20240116; t=1705971403; c=relaxed/simple;
+	bh=I0RU/jxr+pqtF3PMK/2J1Za9EZegSaRCASwOi4nvtSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OkUpNONYHM++XI6iTL5C7j8EeU6552YsJL0JvvYc81oghCwAfgfoQdiFyhQ2IImGipbPPjo5fAP7Yd/WW46erjDTU3wz2Cr/9rbtw8gH1NGywJO0lcD3pzEB5ncj88hKMbSIf0y1PDGJTHSxvlug5gxSH4ZUCBQ5uXA/oKn8A7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYkk34VS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lPmBbX3hA0AlILGyInm52N8mx3g9AUUXcSShqjNMewYHfpdrbq9Hx82RomZBaRSNRR+gf+w1E0pbE9mdqa4tHPsR74VZzgCagVVy9C5rbZAC5rDWK+Cmku0d6bvfXmsEFFIpKDxA5Q0zJ0xZdaBjHy2N4P4bkGe6eQihuo+TG7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yH13XUA7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYkk34VS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBFDBC433C7;
-	Tue, 23 Jan 2024 00:56:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yH13XUA7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28930C433C7;
+	Tue, 23 Jan 2024 00:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971399;
-	bh=MKrwNiNRob3Trknt6JBlzMkHYmLESGk9V2AxpNB8jWo=;
+	s=korg; t=1705971403;
+	bh=I0RU/jxr+pqtF3PMK/2J1Za9EZegSaRCASwOi4nvtSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYkk34VS3TyU23iT5x+ghe+yT5Z9lGhBJqa5mWymPIL735pAU1xRk8WC5hc/jb/Tb
-	 esLOzYUHyGN+mxiC/rxv1a2g/fSaXeMCTQewnG5YVr/gxU1hFW0hcW6/9yaZoBLHgf
-	 rhuFYsMhhIivqIM0k4czLqNyJ6cPApqXNbol5AXA=
+	b=yH13XUA7BtV6WXmoskLe62Fk0FTGvHUZ4VeiKeV1fbCoQdUURWh/jrACZ9Zeimq27
+	 3txbNdm3S5em5K4Pc23tzsvZNwes7ODGwXLCnX2de6UwAwsriyFZRk8boiNjTD0eUu
+	 ASYWtuLhgF3FQMICzY2TnBACnv8D+0+KpPGWUeZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 146/286] rcu: Create an unrcu_pointer() to remove __rcu from a pointer
-Date: Mon, 22 Jan 2024 15:57:32 -0800
-Message-ID: <20240122235737.783718691@linuxfoundation.org>
+Subject: [PATCH 6.1 236/417] ALSA: scarlett2: Add clamp() in scarlett2_mixer_ctl_put()
+Date: Mon, 22 Jan 2024 15:56:44 -0800
+Message-ID: <20240122235800.067279969@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,65 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Geoffrey D. Bennett <g@b4.vu>
 
-[ Upstream commit 76c8eaafe4f061f3790112842a2fbb297e4bea88 ]
+[ Upstream commit 04f8f053252b86c7583895c962d66747ecdc61b7 ]
 
-The xchg() and cmpxchg() functions are sometimes used to carry out RCU
-updates.  Unfortunately, this can result in sparse warnings for both
-the old-value and new-value arguments, as well as for the return value.
-The arguments can be dealt with using RCU_INITIALIZER():
+Ensure the value passed to scarlett2_mixer_ctl_put() is between 0 and
+SCARLETT2_MIXER_MAX_VALUE so we don't attempt to access outside
+scarlett2_mixer_values[].
 
-	old_p = xchg(&p, RCU_INITIALIZER(new_p));
-
-But a sparse warning still remains due to assigning the __rcu pointer
-returned from xchg to the (most likely) non-__rcu pointer old_p.
-
-This commit therefore provides an unrcu_pointer() macro that strips
-the __rcu.  This macro can be used as follows:
-
-	old_p = unrcu_pointer(xchg(&p, RCU_INITIALIZER(new_p)));
-
-Reported-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Stable-dep-of: 5f35a624c1e3 ("drm/nouveau/fence:: fix warning directly dereferencing a rcu pointer")
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Fixes: 9e4d5c1be21f ("ALSA: usb-audio: Scarlett Gen 2 mixer interface")
+Link: https://lore.kernel.org/r/3b19fb3da641b587749b85fe1daa1b4e696c0c1b.1703001053.git.g@b4.vu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rcupdate.h | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ sound/usb/mixer_scarlett_gen2.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
-index ef8d56b18da6..8716a1706351 100644
---- a/include/linux/rcupdate.h
-+++ b/include/linux/rcupdate.h
-@@ -366,6 +366,20 @@ static inline void rcu_preempt_sleep_check(void) { }
- #define rcu_check_sparse(p, space)
- #endif /* #else #ifdef __CHECKER__ */
+diff --git a/sound/usb/mixer_scarlett_gen2.c b/sound/usb/mixer_scarlett_gen2.c
+index eedac43eee7d..1bcb05c73e0a 100644
+--- a/sound/usb/mixer_scarlett_gen2.c
++++ b/sound/usb/mixer_scarlett_gen2.c
+@@ -3361,7 +3361,8 @@ static int scarlett2_mixer_ctl_put(struct snd_kcontrol *kctl,
+ 	mutex_lock(&private->data_mutex);
  
-+/**
-+ * unrcu_pointer - mark a pointer as not being RCU protected
-+ * @p: pointer needing to lose its __rcu property
-+ *
-+ * Converts @p from an __rcu pointer to a __kernel pointer.
-+ * This allows an __rcu pointer to be used with xchg() and friends.
-+ */
-+#define unrcu_pointer(p)						\
-+({									\
-+	typeof(*p) *_________p1 = (typeof(*p) *__force)(p);		\
-+	rcu_check_sparse(p, __rcu); 					\
-+	((typeof(*p) __force __kernel *)(_________p1)); 		\
-+})
-+
- #define __rcu_access_pointer(p, space) \
- ({ \
- 	typeof(*p) *_________p1 = (typeof(*p) *__force)READ_ONCE(p); \
+ 	oval = private->mix[index];
+-	val = ucontrol->value.integer.value[0];
++	val = clamp(ucontrol->value.integer.value[0],
++		    0L, (long)SCARLETT2_MIXER_MAX_VALUE);
+ 	num_mixer_in = port_count[SCARLETT2_PORT_TYPE_MIX][SCARLETT2_PORT_OUT];
+ 	mix_num = index / num_mixer_in;
+ 
 -- 
 2.43.0
 
