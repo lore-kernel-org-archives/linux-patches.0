@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD33922060;
-	Tue, 23 Jan 2024 01:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1B722060;
+	Tue, 23 Jan 2024 01:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974963; cv=none; b=sDNni3qoAsKyGyJpI3zlAqD+QTICSG37TZo0WB0W+53AuQtaMQfwpd/iVdF6TwJKzJpDTNxiaMJzwaFTGGXM/FbYbH/UYP3BqrzL+MHAgutwfuF097ECPfj94w3wYmWPuShkWn9gNmGGSj5MHgbe6j5rVKhaD3xdx2KW1E1o/2s=
+	t=1705974964; cv=none; b=HsdHNDL2TABlV53q/MvSIlGBLm8fTFdP0nb+BhC4fPR1y5WQBOAptI5fqjKHAyu1IoRBAYkxZVZcTLAGbA2mvIFTjIuMa1F6QCchrGtsdpfWzOHa5oJ+D9NZJzCBC14En0HKGQzdSO9KT7Yl9X+g6xw19G0JHwgQj+SC9X/8P/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974963; c=relaxed/simple;
-	bh=kLB7FB1XPXgI9LuUwLGVHicJ1iTbR5aMotFWOiY0US8=;
+	s=arc-20240116; t=1705974964; c=relaxed/simple;
+	bh=q6KSqTh68k3oDq51Iiw217elzCcVT47w9CcXN7oRSMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OKbJPiggZnWOP9OC9p83f7T49WbLVuXbpEOtGZn0WryCsdkXGlHsrw27fvIolLZ5GLdms4sOrICNYF6YYCvnKYiIO+v/A0ixW6TnQdQwBGSrvfehQabDP8zkWRT0Qx4WDCfJyjcC94kgzSZsMlh6Mlnurx2uo20GTklee3jzG6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lBPXq0sT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tv6duw4Lr800QVaxdeHgD+9r41pFipafSEp4pVegxRwTxCn97JQVrSNOjkl2LMnZwnHS32eJVX/DrInK/e7Lk5o8UD4Suq7ltm8oiqiiop8a20m08XGBDDxaR1OSKOHAX7auk9vQNAnEsL2uK8QxLBpGRouU+HotEGHgNmI6WcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZGSS2Zh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBPXq0sT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73655C433F1;
-	Tue, 23 Jan 2024 01:56:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZGSS2Zh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6910DC433C7;
+	Tue, 23 Jan 2024 01:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974963;
-	bh=kLB7FB1XPXgI9LuUwLGVHicJ1iTbR5aMotFWOiY0US8=;
+	s=korg; t=1705974964;
+	bh=q6KSqTh68k3oDq51Iiw217elzCcVT47w9CcXN7oRSMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lBPXq0sTFvm/mqKmjvxxfFjkfNaVrhPk35c1S9SVy0WwLieAyfp1LrOhu/eeiulLC
-	 FerIMaKGl/ntWHLsI1Ndp1fRsqnfIVRAHZXDaad0QGmsco+7CxDQ1Y/JnfY9a9M9XR
-	 kL/5jRGi9Jg9zpr5CezX1HYgnPkw2f3a59skyuao=
+	b=lZGSS2ZhcwX4jC2BhXDaA43O5/LRVvkk+pSEi3N1YtrUhvEzdY9DK3LjS8kBMKcXy
+	 eYjF/17txBeMF7ht8Bk24bFyKR+mtwtpW+v38XmS+5CYXHMyRcN6eqgzLnkAeqwGSl
+	 SvKYPNg9kXlxHfDjivJ3imcvBiufSnLcxKBAJTw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Xingwei Lee <xrivendell7@gmail.com>,
+	Hou Tao <houtao1@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 298/374] riscv: Fix module_alloc() that did not reset the linear mapping permissions
-Date: Mon, 22 Jan 2024 15:59:14 -0800
-Message-ID: <20240122235755.152313531@linuxfoundation.org>
+Subject: [PATCH 6.6 171/583] bpf: Limit the number of uprobes when attaching program to multiple uprobes
+Date: Mon, 22 Jan 2024 15:53:42 -0800
+Message-ID: <20240122235817.262954608@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +50,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 749b94b08005929bbc636df21a23322733166e35 ]
+[ Upstream commit 8b2efe51ba85ca83460941672afac6fca4199df6 ]
 
-After unloading a module, we must reset the linear mapping permissions,
-see the example below:
+An abnormally big cnt may be passed to link_create.uprobe_multi.cnt,
+and it will trigger the following warning in kvmalloc_node():
 
-Before unloading a module:
+	if (unlikely(size > INT_MAX)) {
+		WARN_ON_ONCE(!(flags & __GFP_NOWARN));
+		return NULL;
+	}
 
-0xffffaf809d65d000-0xffffaf809d6dc000    0x000000011d65d000       508K PTE .   ..     ..   D A G . . W R V
-0xffffaf809d6dc000-0xffffaf809d6dd000    0x000000011d6dc000         4K PTE .   ..     ..   D A G . . . R V
-0xffffaf809d6dd000-0xffffaf809d6e1000    0x000000011d6dd000        16K PTE .   ..     ..   D A G . . W R V
-0xffffaf809d6e1000-0xffffaf809d6e7000    0x000000011d6e1000        24K PTE .   ..     ..   D A G . X . R V
+Fix the warning by limiting the maximal number of uprobes in
+bpf_uprobe_multi_link_attach(). If the number of uprobes is greater than
+MAX_UPROBE_MULTI_CNT, the attachment will return -E2BIG.
 
-After unloading a module:
-
-0xffffaf809d65d000-0xffffaf809d6e1000    0x000000011d65d000       528K PTE .   ..     ..   D A G . . W R V
-0xffffaf809d6e1000-0xffffaf809d6e7000    0x000000011d6e1000        24K PTE .   ..     ..   D A G . X W R V
-
-The last mapping is not reset and we end up with WX mappings in the linear
-mapping.
-
-So add VM_FLUSH_RESET_PERMS to our module_alloc() definition.
-
-Fixes: 0cff8bff7af8 ("riscv: avoid the PIC offset of static percpu data in module beyond 2G limits")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20231213134027.155327-2-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
+Reported-by: Xingwei Lee <xrivendell7@gmail.com>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Closes: https://lore.kernel.org/bpf/CABOYnLwwJY=yFAGie59LFsUsBAgHfroVqbzZ5edAXbFE3YiNVA@mail.gmail.com
+Link: https://lore.kernel.org/bpf/20231215100708.2265609-2-houtao@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/module.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/bpf_trace.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/riscv/kernel/module.c b/arch/riscv/kernel/module.c
-index 4a48287513c3..24c3883c80d0 100644
---- a/arch/riscv/kernel/module.c
-+++ b/arch/riscv/kernel/module.c
-@@ -423,7 +423,8 @@ void *module_alloc(unsigned long size)
- {
- 	return __vmalloc_node_range(size, 1, MODULES_VADDR,
- 				    MODULES_END, GFP_KERNEL,
--				    PAGE_KERNEL, 0, NUMA_NO_NODE,
-+				    PAGE_KERNEL, VM_FLUSH_RESET_PERMS,
-+				    NUMA_NO_NODE,
- 				    __builtin_return_address(0));
- }
- #endif
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 868008f56fec..39c4cef98b95 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -41,6 +41,8 @@
+ #define bpf_event_rcu_dereference(p)					\
+ 	rcu_dereference_protected(p, lockdep_is_held(&bpf_event_mutex))
+ 
++#define MAX_UPROBE_MULTI_CNT (1U << 20)
++
+ #ifdef CONFIG_MODULES
+ struct bpf_trace_module {
+ 	struct module *module;
+@@ -3198,6 +3200,8 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
+ 
+ 	if (!upath || !uoffsets || !cnt)
+ 		return -EINVAL;
++	if (cnt > MAX_UPROBE_MULTI_CNT)
++		return -E2BIG;
+ 
+ 	uref_ctr_offsets = u64_to_user_ptr(attr->link_create.uprobe_multi.ref_ctr_offsets);
+ 	ucookies = u64_to_user_ptr(attr->link_create.uprobe_multi.cookies);
 -- 
 2.43.0
 
