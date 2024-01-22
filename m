@@ -1,54 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811C063127;
-	Tue, 23 Jan 2024 01:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B2163404;
+	Tue, 23 Jan 2024 01:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975014; cv=none; b=O6F6SX1m9fsnSSUW77qi1tMoeh+da85WbSlkuYR4OtT12ot5IZE/1RyuP4CeKqWNsk4iPEweEuQ0cVazJz4TbDqjTLl6qIAGfRqwbkp/NaptcVd9Yb1y2S+E7vthicomkL4kNIwaNeMs01ZYr4CmQvmosOLon04sNtgVDkywsTI=
+	t=1705975015; cv=none; b=Y8sFX+H9r0ge5akT0HohHcn6IJdX3kY9FszE0Hp4eDi0c89ubXjchvlQViDi+BLJZu+UD456798dwGPufyi/VGl54f6eSSMwHR9RUxIcq32hgsOiwhbwRTqcxy2iG77SSEvXPoi35MI0wkE1tipInGgn56vSQL9jZEanoRBYz2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975014; c=relaxed/simple;
-	bh=I0i/uIMvdt2e63Bjau/DNCFINomAOQmaDQ++h1x/xko=;
+	s=arc-20240116; t=1705975015; c=relaxed/simple;
+	bh=nJZ4pOYag90ZdOEv//9l2lDMsZhuc5QPUPwIV/WQAMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mVYUJX+udpIqmna6R0HZTHNoxzd4Q5f2/oJwxqr3Sf8MJnf9RGsCxRGVSm3F64RB7662+q/WDcHtjPexB6qhkfuBKJr1ZnsoW1+5/LOG1ycgvAr6MMAsQbJgQ9mQE6/6oY/gIDLxCrJBTVF82ZgTNvlFE2AuiPU3+7JU8b2NUM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13ukVHEj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DlQToi7Ng3eUAPmX7xKWpL0fsdETUfNH4dFMZSAI33FijKGqsb4aAIYGWvZLkFw74js1JR2hVm40XPOB1+8GA8MLJ6pf8KnLJKewpGKGbr2mrLpjzHv/XqgHsigi8oLlJW9eCnjcUVMhWJbfQk+uY8Ex1wV9XMFIQFfqYbOwQmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxRutcWl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13ukVHEj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA46FC43390;
-	Tue, 23 Jan 2024 01:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxRutcWl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A8CC433F1;
+	Tue, 23 Jan 2024 01:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975014;
-	bh=I0i/uIMvdt2e63Bjau/DNCFINomAOQmaDQ++h1x/xko=;
+	s=korg; t=1705975015;
+	bh=nJZ4pOYag90ZdOEv//9l2lDMsZhuc5QPUPwIV/WQAMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13ukVHEjiKut+LOhHtLNQ5VRX/LDkFqqchLxJAgSfadIRMoMVAzuWYsA7SpAYeB9A
-	 LHPbHNn/RQ8XtD6Mo138c/OqSxw41dgxrbOme+S9bidGEVOg9bxGTc+yLVQRh2369L
-	 WcMh/LwI6HvqzwUvoTzDNSCFpXe+AOHyguPbMAy4=
+	b=sxRutcWlzz1Fnco3ayqFDktOzKHePw36UgNXpCju5zgguhlwEc11vNxVIw2as6El9
+	 6aqIjG6n0qs1VFnUl3U4RoW3Dwx3ABgX2o74PV/MZCwb2Y4oqG7LL/ahtgHQXYj4li
+	 mcwQuPrxzfKTo+KiJdBjFdmCUwtw5SurAIjd95t0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Ming Wang <wangming01@loongson.cn>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Su Hui <suhui@nfschina.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 324/374] perf env: Avoid recursively taking env->bpf_progs.lock
-Date: Mon, 22 Jan 2024 15:59:40 -0800
-Message-ID: <20240122235756.169702304@linuxfoundation.org>
+Subject: [PATCH 6.6 197/583] wifi: rtlwifi: rtl8192ee: using calculate_bit_shift()
+Date: Mon, 22 Jan 2024 15:54:08 -0800
+Message-ID: <20240122235818.007108782@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -60,278 +47,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 9c51f8788b5d4e9f46afbcf563255cfd355690b3 ]
+[ Upstream commit 63526897fc0d086069bcab67c3a112caaec751cb ]
 
-Add variants of perf_env__insert_bpf_prog_info(), perf_env__insert_btf()
-and perf_env__find_btf prefixed with __ to indicate the
-env->bpf_progs.lock is assumed held.
+Using calculate_bit_shift() to replace _rtl92ee_phy_calculate_bit_shift().
+And fix the undefined bitwise shift behavior problem.
 
-Call these variants when the lock is held to avoid recursively taking it
-and potentially having a thread deadlock with itself.
-
-Fixes: f8dfeae009effc0b ("perf bpf: Show more BPF program info in print_bpf_prog_info()")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Song Liu <song@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Huacai Chen <chenhuacai@kernel.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Ming Wang <wangming01@loongson.cn>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lore.kernel.org/r/20231207014655.1252484-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: b1a3bfc97cd9 ("rtlwifi: rtl8192ee: Move driver from staging to the regular tree")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231219065739.1895666-9-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-event.c |  8 +++---
- tools/perf/util/bpf-event.h | 12 ++++-----
- tools/perf/util/env.c       | 50 ++++++++++++++++++++++++-------------
- tools/perf/util/env.h       |  4 +++
- tools/perf/util/header.c    |  8 +++---
- 5 files changed, 50 insertions(+), 32 deletions(-)
+ .../net/wireless/realtek/rtlwifi/rtl8192ee/phy.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
-index cf1b9f6ec0db..ce74bc367e9c 100644
---- a/tools/perf/util/bpf-event.c
-+++ b/tools/perf/util/bpf-event.c
-@@ -554,9 +554,9 @@ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env)
- 	return evlist__add_sb_event(evlist, &attr, bpf_event__sb_cb, env);
- }
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192ee/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192ee/phy.c
+index cc0bcaf13e96..73ef602bfb01 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192ee/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192ee/phy.c
+@@ -16,7 +16,6 @@ static u32 _rtl92ee_phy_rf_serial_read(struct ieee80211_hw *hw,
+ static void _rtl92ee_phy_rf_serial_write(struct ieee80211_hw *hw,
+ 					 enum radio_path rfpath, u32 offset,
+ 					 u32 data);
+-static u32 _rtl92ee_phy_calculate_bit_shift(u32 bitmask);
+ static bool _rtl92ee_phy_bb8192ee_config_parafile(struct ieee80211_hw *hw);
+ static bool _rtl92ee_phy_config_mac_with_headerfile(struct ieee80211_hw *hw);
+ static bool phy_config_bb_with_hdr_file(struct ieee80211_hw *hw,
+@@ -46,7 +45,7 @@ u32 rtl92ee_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
+ 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
+ 		"regaddr(%#x), bitmask(%#x)\n", regaddr, bitmask);
+ 	originalvalue = rtl_read_dword(rtlpriv, regaddr);
+-	bitshift = _rtl92ee_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	returnvalue = (originalvalue & bitmask) >> bitshift;
  
--void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
--				    struct perf_env *env,
--				    FILE *fp)
-+void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
-+				      struct perf_env *env,
-+				      FILE *fp)
- {
- 	__u32 *prog_lens = (__u32 *)(uintptr_t)(info->jited_func_lens);
- 	__u64 *prog_addrs = (__u64 *)(uintptr_t)(info->jited_ksyms);
-@@ -572,7 +572,7 @@ void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
- 	if (info->btf_id) {
- 		struct btf_node *node;
+ 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
+@@ -68,7 +67,7 @@ void rtl92ee_phy_set_bb_reg(struct ieee80211_hw *hw, u32 regaddr,
  
--		node = perf_env__find_btf(env, info->btf_id);
-+		node = __perf_env__find_btf(env, info->btf_id);
- 		if (node)
- 			btf = btf__new((__u8 *)(node->data),
- 				       node->data_size);
-diff --git a/tools/perf/util/bpf-event.h b/tools/perf/util/bpf-event.h
-index 68f315c3df5b..50f7412464df 100644
---- a/tools/perf/util/bpf-event.h
-+++ b/tools/perf/util/bpf-event.h
-@@ -34,9 +34,9 @@ struct btf_node {
- int machine__process_bpf(struct machine *machine, union perf_event *event,
- 			 struct perf_sample *sample);
- int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env);
--void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
--				    struct perf_env *env,
--				    FILE *fp);
-+void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
-+				      struct perf_env *env,
-+				      FILE *fp);
- #else
- static inline int machine__process_bpf(struct machine *machine __maybe_unused,
- 				       union perf_event *event __maybe_unused,
-@@ -51,9 +51,9 @@ static inline int evlist__add_bpf_sb_event(struct evlist *evlist __maybe_unused,
- 	return 0;
- }
- 
--static inline void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
--						  struct perf_env *env __maybe_unused,
--						  FILE *fp __maybe_unused)
-+static inline void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
-+						    struct perf_env *env __maybe_unused,
-+						    FILE *fp __maybe_unused)
- {
- 
- }
-diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
-index 5b24eb010336..d3d67ce70f55 100644
---- a/tools/perf/util/env.c
-+++ b/tools/perf/util/env.c
-@@ -20,13 +20,19 @@ struct perf_env perf_env;
- 
- void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				    struct bpf_prog_info_node *info_node)
-+{
-+	down_write(&env->bpf_progs.lock);
-+	__perf_env__insert_bpf_prog_info(env, info_node);
-+	up_write(&env->bpf_progs.lock);
-+}
-+
-+void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
- {
- 	__u32 prog_id = info_node->info_linear->info.id;
- 	struct bpf_prog_info_node *node;
- 	struct rb_node *parent = NULL;
- 	struct rb_node **p;
- 
--	down_write(&env->bpf_progs.lock);
- 	p = &env->bpf_progs.infos.rb_node;
- 
- 	while (*p != NULL) {
-@@ -38,15 +44,13 @@ void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 			p = &(*p)->rb_right;
- 		} else {
- 			pr_debug("duplicated bpf prog info %u\n", prog_id);
--			goto out;
-+			return;
- 		}
+ 	if (bitmask != MASKDWORD) {
+ 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
+-		bitshift = _rtl92ee_phy_calculate_bit_shift(bitmask);
++		bitshift = calculate_bit_shift(bitmask);
+ 		data = ((originalvalue & (~bitmask)) | (data << bitshift));
  	}
  
- 	rb_link_node(&info_node->rb_node, parent, p);
- 	rb_insert_color(&info_node->rb_node, &env->bpf_progs.infos);
- 	env->bpf_progs.infos_cnt++;
--out:
--	up_write(&env->bpf_progs.lock);
- }
+@@ -92,7 +91,7 @@ u32 rtl92ee_phy_query_rf_reg(struct ieee80211_hw *hw,
+ 	spin_lock(&rtlpriv->locks.rf_lock);
  
- struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
-@@ -75,14 +79,22 @@ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
- }
+ 	original_value = _rtl92ee_phy_rf_serial_read(hw , rfpath, regaddr);
+-	bitshift = _rtl92ee_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
  
- bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
-+{
-+	bool ret;
-+
-+	down_write(&env->bpf_progs.lock);
-+	ret = __perf_env__insert_btf(env, btf_node);
-+	up_write(&env->bpf_progs.lock);
-+	return ret;
-+}
-+
-+bool __perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
- {
- 	struct rb_node *parent = NULL;
- 	__u32 btf_id = btf_node->id;
- 	struct btf_node *node;
- 	struct rb_node **p;
--	bool ret = true;
+ 	spin_unlock(&rtlpriv->locks.rf_lock);
+@@ -119,7 +118,7 @@ void rtl92ee_phy_set_rf_reg(struct ieee80211_hw *hw,
  
--	down_write(&env->bpf_progs.lock);
- 	p = &env->bpf_progs.btfs.rb_node;
- 
- 	while (*p != NULL) {
-@@ -94,25 +106,31 @@ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
- 			p = &(*p)->rb_right;
- 		} else {
- 			pr_debug("duplicated btf %u\n", btf_id);
--			ret = false;
--			goto out;
-+			return false;
- 		}
+ 	if (bitmask != RFREG_OFFSET_MASK) {
+ 		original_value = _rtl92ee_phy_rf_serial_read(hw, rfpath, addr);
+-		bitshift = _rtl92ee_phy_calculate_bit_shift(bitmask);
++		bitshift = calculate_bit_shift(bitmask);
+ 		data = (original_value & (~bitmask)) | (data << bitshift);
  	}
  
- 	rb_link_node(&btf_node->rb_node, parent, p);
- 	rb_insert_color(&btf_node->rb_node, &env->bpf_progs.btfs);
- 	env->bpf_progs.btfs_cnt++;
--out:
--	up_write(&env->bpf_progs.lock);
--	return ret;
-+	return true;
+@@ -201,13 +200,6 @@ static void _rtl92ee_phy_rf_serial_write(struct ieee80211_hw *hw,
+ 		pphyreg->rf3wire_offset, data_and_addr);
  }
  
- struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id)
-+{
-+	struct btf_node *res;
-+
-+	down_read(&env->bpf_progs.lock);
-+	res = __perf_env__find_btf(env, btf_id);
-+	up_read(&env->bpf_progs.lock);
-+	return res;
-+}
-+
-+struct btf_node *__perf_env__find_btf(struct perf_env *env, __u32 btf_id)
- {
- 	struct btf_node *node = NULL;
- 	struct rb_node *n;
- 
--	down_read(&env->bpf_progs.lock);
- 	n = env->bpf_progs.btfs.rb_node;
- 
- 	while (n) {
-@@ -122,13 +140,9 @@ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id)
- 		else if (btf_id > node->id)
- 			n = n->rb_right;
- 		else
--			goto out;
-+			return node;
- 	}
--	node = NULL;
+-static u32 _rtl92ee_phy_calculate_bit_shift(u32 bitmask)
+-{
+-	u32 i = ffs(bitmask);
 -
--out:
--	up_read(&env->bpf_progs.lock);
--	return node;
-+	return NULL;
- }
- 
- /* purge data in bpf_progs.infos tree */
-diff --git a/tools/perf/util/env.h b/tools/perf/util/env.h
-index 163e5ec503a2..192318054e12 100644
---- a/tools/perf/util/env.h
-+++ b/tools/perf/util/env.h
-@@ -163,12 +163,16 @@ const char *perf_env__raw_arch(struct perf_env *env);
- int perf_env__nr_cpus_avail(struct perf_env *env);
- 
- void perf_env__init(struct perf_env *env);
-+void __perf_env__insert_bpf_prog_info(struct perf_env *env,
-+				      struct bpf_prog_info_node *info_node);
- void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				    struct bpf_prog_info_node *info_node);
- struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
- 							__u32 prog_id);
- bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node);
-+bool __perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node);
- struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id);
-+struct btf_node *__perf_env__find_btf(struct perf_env *env, __u32 btf_id);
- 
- int perf_env__numa_node(struct perf_env *env, int cpu);
- #endif /* __PERF_ENV_H */
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index 25947d013603..8b0a8ac7afef 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -1735,8 +1735,8 @@ static void print_bpf_prog_info(struct feat_fd *ff, FILE *fp)
- 		node = rb_entry(next, struct bpf_prog_info_node, rb_node);
- 		next = rb_next(&node->rb_node);
- 
--		bpf_event__print_bpf_prog_info(&node->info_linear->info,
--					       env, fp);
-+		__bpf_event__print_bpf_prog_info(&node->info_linear->info,
-+						 env, fp);
- 	}
- 
- 	up_read(&env->bpf_progs.lock);
-@@ -3073,7 +3073,7 @@ static int process_bpf_prog_info(struct feat_fd *ff, void *data __maybe_unused)
- 		/* after reading from file, translate offset to address */
- 		bpf_program__bpil_offs_to_addr(info_linear);
- 		info_node->info_linear = info_linear;
--		perf_env__insert_bpf_prog_info(env, info_node);
-+		__perf_env__insert_bpf_prog_info(env, info_node);
- 	}
- 
- 	up_write(&env->bpf_progs.lock);
-@@ -3120,7 +3120,7 @@ static int process_bpf_btf(struct feat_fd *ff, void *data __maybe_unused)
- 		if (__do_read(ff, node->data, data_size))
- 			goto out;
- 
--		perf_env__insert_btf(env, node);
-+		__perf_env__insert_btf(env, node);
- 		node = NULL;
- 	}
- 
+-	return i ? i - 1 : 32;
+-}
+-
+ bool rtl92ee_phy_mac_config(struct ieee80211_hw *hw)
+ {
+ 	return _rtl92ee_phy_config_mac_with_headerfile(hw);
 -- 
 2.43.0
 
