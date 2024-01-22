@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A6012F5A7;
-	Tue, 23 Jan 2024 00:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D9C12F5A7;
+	Tue, 23 Jan 2024 00:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969021; cv=none; b=BuvrcSpD9aYOu+mO4i0oN7K79loUxqFCI+IKFAFU7FcLAtJWEi7y1AzDsZyatCWsPZf1h3e68DV+xa2UDUrkkBIwsZ2O5QothdquM8gTdfOifK08jFmtDoVngpkVGUr1EfUNFucF7Sq5adU9ipEfxv/X0eI01hp0TMPAWhgMvKs=
+	t=1705969023; cv=none; b=SGCA7gxvsQM5nGyRZ3yVgldUf/iD/VWVyBMmYwf6Ni/tz3qYskyz9vW7wgQ8A9j0ZIrreEKGU6pAVrOVOjwhwCJealQm4QVAlvWnmWphra6rUBqCv/rFOVaDUz41PtNbMVc+l3jB0xBG5akmIuy1AxnL8DSZ+NyT9B34F1W6tYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969021; c=relaxed/simple;
-	bh=RBBTIsfF+z1LKqaqb3U65u8rvMOVP4vS/ZcZamBwSX4=;
+	s=arc-20240116; t=1705969023; c=relaxed/simple;
+	bh=oOBI5bI83M/lJA7o8l2vS6Tlz3lNyEeDk5/S+V8C0DI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZniS9xJTKSclpojceYZA7O5sckouXbYP60j2N6F4MUpGCY/bpIC+OwOatmjW00DEmWOdCnuYKp4zVJhYhBvz3BrglTmyDreI62P/ZRrYv2fJkukEnKS2euwtkPTCBTiBlOlV1hGedLQRn0UCtIPFx8xgb+5Ly6FqP7XUOpQiBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QD+pGm3U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=p1xt6KqmNRgcAJZb3qBQJqaTRc7SiWTRV0jdwPLB0lIMxC3fylB2OtHDKRi+XujDpfQWGgbWsPc/DK8NdRpSNRD9Np0etJrRgcbfVAKxhLPtMioTDlQZDqeCYZLAvsrr6kBm1Vdvn565S6uwFiT9z7B4V7ubON8N/3I9N/XTsEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGg7GhLg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QD+pGm3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7A4FC433C7;
-	Tue, 23 Jan 2024 00:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGg7GhLg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF39EC433C7;
+	Tue, 23 Jan 2024 00:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969020;
-	bh=RBBTIsfF+z1LKqaqb3U65u8rvMOVP4vS/ZcZamBwSX4=;
+	s=korg; t=1705969022;
+	bh=oOBI5bI83M/lJA7o8l2vS6Tlz3lNyEeDk5/S+V8C0DI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QD+pGm3UfchHyw9QMiD9X8HCfcUZrJ1nriWYpq0Wd5DhzLDZ5Cw6cMYzlPz/B+Wts
-	 YEw6KGvfvCYbB9sHx4WhI7LGmGx9trgJhAGsXiWlhWKRzndeOaPBdv3zrnjQAKYoqW
-	 dWlLOe9RoYX1x9QEbbu/CRA2fRLbIolDKu77uEpo=
+	b=rGg7GhLgbvsaMNccLzIqJLkSIzGz6QLWitehhqW8VZmr7a+bo+VN3UGaJnS2bZOIJ
+	 F8DqHWkra7Trk+Jx5gxRGiWDLFgk73CUN+PDm3Vz0Kumd8bmssS5ImEYzVe8fGZKJO
+	 375jgem5mpqNofs5wUJGvPFaeUrYxCZDH4TmFt/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 165/194] MIPS: Alchemy: Fix an out-of-bound access in db1550_dev_setup()
-Date: Mon, 22 Jan 2024 15:58:15 -0800
-Message-ID: <20240122235726.282165242@linuxfoundation.org>
+Subject: [PATCH 5.4 166/194] serial: 8250: omap: Dont skip resource freeing if pm_runtime_resume_and_get() failed
+Date: Mon, 22 Jan 2024 15:58:16 -0800
+Message-ID: <20240122235726.325619621@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -45,39 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 3c1e5abcda64bed0c7bffa65af2316995f269a61 ]
+[ Upstream commit ad90d0358bd3b4554f243a425168fc7cebe7d04e ]
 
-When calling spi_register_board_info(),
+Returning an error code from .remove() makes the driver core emit the
+little helpful error message:
 
-Fixes: f869d42e580f ("MIPS: Alchemy: Improved DB1550 support, with audio and serial busses.")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+	remove callback returned a non-zero value. This will be ignored.
+
+and then remove the device anyhow. So all resources that were not freed
+are leaked in this case. Skipping serial8250_unregister_port() has the
+potential to keep enough of the UART around to trigger a use-after-free.
+
+So replace the error return (and with it the little helpful error
+message) by a more useful error message and continue to cleanup.
+
+Fixes: e3f0c638f428 ("serial: 8250: omap: Fix unpaired pm_runtime_put_sync() in omap8250_remove()")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20231110152927.70601-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/alchemy/devboards/db1550.c | 2 +-
+ drivers/tty/serial/8250/8250_omap.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/alchemy/devboards/db1550.c b/arch/mips/alchemy/devboards/db1550.c
-index 3e0c75c0ece0..583b265d7407 100644
---- a/arch/mips/alchemy/devboards/db1550.c
-+++ b/arch/mips/alchemy/devboards/db1550.c
-@@ -588,7 +588,7 @@ int __init db1550_dev_setup(void)
- 	i2c_register_board_info(0, db1550_i2c_devs,
- 				ARRAY_SIZE(db1550_i2c_devs));
- 	spi_register_board_info(db1550_spi_devs,
--				ARRAY_SIZE(db1550_i2c_devs));
-+				ARRAY_SIZE(db1550_spi_devs));
+diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
+index a2db055278a1..6bb8bbaa4fdb 100644
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -1278,7 +1278,7 @@ static int omap8250_remove(struct platform_device *pdev)
  
- 	c = clk_get(NULL, "psc0_intclk");
- 	if (!IS_ERR(c)) {
+ 	err = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (err)
+-		return err;
++		dev_err(&pdev->dev, "Failed to resume hardware\n");
+ 
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_put_sync(&pdev->dev);
 -- 
 2.43.0
 
