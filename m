@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93DD9129A63;
-	Tue, 23 Jan 2024 00:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D05129A63;
+	Tue, 23 Jan 2024 00:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968729; cv=none; b=f5RqyRTzBvS3QpSMNbn+30mEmVvXA00ixyoGfIBmpr+eeqX+AqIIlN9I6szckomMzjKcGfFS48i0Gcdeu1Nup/vekha//sjcOB91URccf7OUPotWtIAUlPHvme+VgaGn/IIdPqx2bGL+fS1R7PiS3Oj2p/gBKlikUPY4G5Ld9y0=
+	t=1705968732; cv=none; b=kDUm/K5VqmDeRSTZrjBEEEXTdfTPf5wXNHjmdXSUOFpzjcVu2nKG7tGG/VNkTt47LcExw2ykjEfQSOUffuI/x8bbI07LIefCQJxHLYqsr+WqNkKd35cptg3klGEqUHceCEViZPiMFsWdtYzp1T+RmmajVI/qBsStjwiqVuRHsOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968729; c=relaxed/simple;
-	bh=4ttioyCrV43EPU4fLErzTtJIZYwpK3LJQE5kE7FRCoU=;
+	s=arc-20240116; t=1705968732; c=relaxed/simple;
+	bh=gUVse2SdHRuuD43gyMlg0W2uWyu5pFDA5fqtETk9Kyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lklZZzcmh/nZw9HX4PG06bLwzZk+sMyt0wg/GkVn24dZjLP83yxLAdN/3pXdaMuJ3vocBF9Mifqmvk2NKYbl9Dmie0WVjjXvPVCebh+lITlUDzRSl8fni97w9pzJgg4UhXVr8R9W+AJWJ+CvlaqJgZFnU2qwaaXLhZM/wdb8KEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QY7STQK/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h7Zdk7p7fgY+HTPXx1PeiopMC97foYhtZz04oVs9kWxxUwY8JIDN/ynt5Yja07pzMyv5uaJPxSv23DZUtqnZEflrfNC+MLRibYi8nhfZ1BgmQPWKb7h92zxhRd3fhbXI8+XAXtEpflFjf+pbmaDrbUg7m9dvkZjS7UKvhgfYVLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KnCEseSt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QY7STQK/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54433C43390;
-	Tue, 23 Jan 2024 00:12:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KnCEseSt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A107C433F1;
+	Tue, 23 Jan 2024 00:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968729;
-	bh=4ttioyCrV43EPU4fLErzTtJIZYwpK3LJQE5kE7FRCoU=;
+	s=korg; t=1705968732;
+	bh=gUVse2SdHRuuD43gyMlg0W2uWyu5pFDA5fqtETk9Kyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QY7STQK/+pebef0WJ2p9PwBWpZX5n2sRtdit3T4piAz9gNMuFzJENWj+Cf9mG15L8
-	 kOXf/knhhAkqf8YWPvGQCmSFNd+Fm6TgFePt8gTqmiqmk6dcVpU1+gpirNZgZRRw4t
-	 wqdu9SwaATVGmj8EQ69CCmKNLXwS1I7V+h2s+/xI=
+	b=KnCEseStQqXRozdSGSU1nG9SuTKuvmpuzE90W8GhbYH74Toh3SUZA3CRkow8nNUDj
+	 69yM4wfg3qYw1zvLaYzqkgbzZR/GNTzGuvAZwT2uBMZdnu102282LCsF/PHB4CxYy8
+	 UnqYOJOPK8b1ZgQ9ECGAIpCpdk83o36GL8YBFbbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Judy Hsiao <judyhsiao@chromium.org>,
-	David Ahern <dsahern@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 019/194] neighbour: Dont let neigh_forced_gc() disable preemption for long
-Date: Mon, 22 Jan 2024 15:55:49 -0800
-Message-ID: <20240122235720.042209447@linuxfoundation.org>
+Subject: [PATCH 5.4 020/194] tracing: Have large events show up as [LINE TOO BIG] instead of nothing
+Date: Mon, 22 Jan 2024 15:55:50 -0800
+Message-ID: <20240122235720.090812481@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -54,62 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judy Hsiao <judyhsiao@chromium.org>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit e5dc5afff62f3e97e86c3643ec9fcad23de4f2d3 ]
+[ Upstream commit b55b0a0d7c4aa2dac3579aa7e6802d1f57445096 ]
 
-We are seeing cases where neigh_cleanup_and_release() is called by
-neigh_forced_gc() many times in a row with preemption turned off.
-When running on a low powered CPU at a low CPU frequency, this has
-been measured to keep preemption off for ~10 ms. That's not great on a
-system with HZ=1000 which expects tasks to be able to schedule in
-with ~1ms latency.
+If a large event was added to the ring buffer that is larger than what the
+trace_seq can handle, it just drops the output:
 
-Suggested-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+ ~# cat /sys/kernel/tracing/trace
+ # tracer: nop
+ #
+ # entries-in-buffer/entries-written: 2/2   #P:8
+ #
+ #                                _-----=> irqs-off/BH-disabled
+ #                               / _----=> need-resched
+ #                              | / _---=> hardirq/softirq
+ #                              || / _--=> preempt-depth
+ #                              ||| / _-=> migrate-disable
+ #                              |||| /     delay
+ #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+ #              | |         |   |||||     |         |
+            <...>-859     [001] .....   141.118951: tracing_mark_write           <...>-859     [001] .....   141.148201: tracing_mark_write: 78901234
+
+Instead, catch this case and add some context:
+
+ ~# cat /sys/kernel/tracing/trace
+ # tracer: nop
+ #
+ # entries-in-buffer/entries-written: 2/2   #P:8
+ #
+ #                                _-----=> irqs-off/BH-disabled
+ #                               / _----=> need-resched
+ #                              | / _---=> hardirq/softirq
+ #                              || / _--=> preempt-depth
+ #                              ||| / _-=> migrate-disable
+ #                              |||| /     delay
+ #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+ #              | |         |   |||||     |         |
+            <...>-852     [001] .....   121.550551: tracing_mark_write[LINE TOO BIG]
+            <...>-852     [001] .....   121.550581: tracing_mark_write: 78901234
+
+This now emulates the same output as trace_pipe.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20231209171058.78c1a026@gandalf.local.home
+
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 9d631b7adb7b..e571007d083c 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -226,9 +226,11 @@ static int neigh_forced_gc(struct neigh_table *tbl)
- {
- 	int max_clean = atomic_read(&tbl->gc_entries) -
- 			READ_ONCE(tbl->gc_thresh2);
-+	u64 tmax = ktime_get_ns() + NSEC_PER_MSEC;
- 	unsigned long tref = jiffies - 5 * HZ;
- 	struct neighbour *n, *tmp;
- 	int shrunk = 0;
-+	int loop = 0;
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index d7ca8f97b315..35c150085556 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -4078,7 +4078,11 @@ static int s_show(struct seq_file *m, void *v)
+ 		iter->leftover = ret;
  
- 	NEIGH_CACHE_STAT_INC(tbl, forced_gc_runs);
- 
-@@ -251,11 +253,16 @@ static int neigh_forced_gc(struct neigh_table *tbl)
- 				shrunk++;
- 			if (shrunk >= max_clean)
- 				break;
-+			if (++loop == 16) {
-+				if (ktime_get_ns() > tmax)
-+					goto unlock;
-+				loop = 0;
-+			}
- 		}
- 	}
- 
- 	WRITE_ONCE(tbl->last_flush, jiffies);
--
-+unlock:
- 	write_unlock_bh(&tbl->lock);
- 
- 	return shrunk;
+ 	} else {
+-		print_trace_line(iter);
++		ret = print_trace_line(iter);
++		if (ret == TRACE_TYPE_PARTIAL_LINE) {
++			iter->seq.full = 0;
++			trace_seq_puts(&iter->seq, "[LINE TOO BIG]\n");
++		}
+ 		ret = trace_print_seq(m, &iter->seq);
+ 		/*
+ 		 * If we overflow the seq_file buffer, then it will
 -- 
 2.43.0
 
