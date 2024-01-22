@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBF87CF0E;
-	Tue, 23 Jan 2024 02:08:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED4E7CF16;
+	Tue, 23 Jan 2024 02:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975729; cv=none; b=GzO/OeJsua0FCKbltJwyTQOqCCUIfK1Xn63NI9QRMCW7XOX/46lGUytsHqozXIRtw0s1OZefOFKuEFmeYrjxEsO2MHw8dFBmFihSx0AFvRzX+6wDXYvdqXFPcdk0HmkJK9o7Iv7Gf09z6ky/SQnrEef5YuSbMbI2YZWLRFy7FFc=
+	t=1705975730; cv=none; b=Dq329ujI9gFcY/KK+WqUNTNiY504CF6hNxzGZAnChPc+H7Xe4yPdQclQrnt+5DeiP5VwxfBBQL9OGGuPdkGsrAO+bXpYTcJ1DohOhdw7qEf9ISiZh8A9s5CJygHs1HQnzk1C0t8pAz7Dr6NNr5CZAdht6sCt/+T0PJ4FyZBNetM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975729; c=relaxed/simple;
-	bh=Dg5AlIfMNifJ3hLyf1B3nxRg5IuwndycYvbQBJtOCqE=;
+	s=arc-20240116; t=1705975730; c=relaxed/simple;
+	bh=Iq0vBRYt7sgr9cGjJ9L/hLIaqX6spYCp3veU5KRqxtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nqjzQe7Chx8UoyILQvx41AIpjm9JDPuyIybL7kU6BiPUk5lk8fYKkuLMCFVG3Z6ODHZnSTua2e0uOSczVDJf0wTzzsQx1aSNqe5RUJJOXHD2oqMBcWKoa+Xb9YlO6A06Lx5XcKmUUOtTtbsXI6RsPLnlU9MbuPyWdxRcWFG3Ch0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qz8ngsL0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=df6Ul9Yt6oMKQU4gBLQMwHOoRGNGvSEs14xjXwqBB0zq5snq+BB3azscfvAmRLGJpNyGfLFMG7QiuIvKDN1ffGuXtl2Qsof9Fmkqi8oJs3JxWS0UDQGdbqs62B0U1Q/6SvAEdP17jl7/O9Fmg98UlTnf5Z81O5//wxsBch9P55s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XSYMVgIj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qz8ngsL0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0905AC433A6;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XSYMVgIj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5558C433B2;
 	Tue, 23 Jan 2024 02:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975729;
-	bh=Dg5AlIfMNifJ3hLyf1B3nxRg5IuwndycYvbQBJtOCqE=;
+	s=korg; t=1705975730;
+	bh=Iq0vBRYt7sgr9cGjJ9L/hLIaqX6spYCp3veU5KRqxtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qz8ngsL0IcJZrtzZlNK4M/An+x5gp3BCJ81sFU03xApAZaNv9STnw6EQPh/FO7XBh
-	 2JSyST2n61oo9WmVdTl+AFOM9pcTA5BIobjg84rV/FTWWXZFsuy+Ix6Gp2Y+699me2
-	 C2lo8eY5r3WxxTJWxiUTQTklMh2F8sEqWpNDtyfQ=
+	b=XSYMVgIjyOqILBuFT6tNnart8nk1+8jYK64CDOo6TqA95lHUOwXAZEsYx+oH9LJBV
+	 TxbdkznasIAa04aG/oiTy6YM13/uCDE7hrCpVJiObb9nvvNeeb8QMqFfmCqu57Telj
+	 pg81SVWr1jYXStk1xZBk1dq2BBOYblv+LZHaHSqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Gainey <ben.gainey@arm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 513/583] perf db-export: Fix missing reference count get in call_path_from_sample()
-Date: Mon, 22 Jan 2024 15:59:24 -0800
-Message-ID: <20240122235827.778933133@linuxfoundation.org>
+Subject: [PATCH 6.6 514/583] cxl/port: Fix missing target list lock
+Date: Mon, 22 Jan 2024 15:59:25 -0800
+Message-ID: <20240122235827.813539007@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -59,71 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Gainey <ben.gainey@arm.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 1e24ce402c97dc3c0ab050593f1d5f6fde524564 ]
+[ Upstream commit 5459e186a5c9f412334321cff58d70dcb0e48a04 ]
 
-The addr_location map and maps fields in the inner loop were missing
-calls to map__get()/maps__get(). The subsequent addr_location__exit()
-call in each loop puts the map/maps fields causing use-after-free
-aborts.
+cxl_port_setup_targets() modifies the ->targets[] array of a switch
+decoder. target_list_show() expects to be able to emit a coherent
+snapshot of that array by "holding" ->target_lock for read. The
+target_lock is held for write during initialization of the ->targets[]
+array, but it is not held for write during cxl_port_setup_targets().
 
-This issue reproduces on at least arm64 and x86_64 with something
-simple like `perf record -g ls` followed by `perf script -s script.py`
-with the following script:
+The ->target_lock() predates the introduction of @cxl_region_rwsem. That
+semaphore protects changes to host-physical-address (HPA) decode which
+is precisely what writes to a switch decoder's target list affects.
 
-    perf_db_export_mode = True
-    perf_db_export_calls = False
-    perf_db_export_callchains = True
+Replace ->target_lock with @cxl_region_rwsem.
 
-    def sample_table(*args):
-        print(f'sample_table({args})')
+Now the side-effect of snapshotting a unstable view of a decoder's
+target list is likely benign so the Fixes: tag is presumptive.
 
-    def call_path_table(*args):
-        print(f'call_path_table({args}')
-
-Committer testing:
-
-This test, just introduced by Ian Rogers, now passes, not segfaulting
-anymore:
-
-  # perf test "perf script tests"
-   95: perf script tests                                               : Ok
-  #
-
-Fixes: 0dd5041c9a0eaf8c ("perf addr_location: Add init/exit/copy functions")
-Signed-off-by: Ben Gainey <ben.gainey@arm.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20231207140911.3240408-1-ben.gainey@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 27b3f8d13830 ("cxl/region: Program target lists")
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/db-export.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/cxl/core/port.c | 22 +++++++---------------
+ drivers/cxl/cxl.h       |  2 --
+ 2 files changed, 7 insertions(+), 17 deletions(-)
 
-diff --git a/tools/perf/util/db-export.c b/tools/perf/util/db-export.c
-index b9fb71ab7a73..106429155c2e 100644
---- a/tools/perf/util/db-export.c
-+++ b/tools/perf/util/db-export.c
-@@ -253,8 +253,8 @@ static struct call_path *call_path_from_sample(struct db_export *dbe,
- 		 */
- 		addr_location__init(&al);
- 		al.sym = node->ms.sym;
--		al.map = node->ms.map;
--		al.maps = thread__maps(thread);
-+		al.map = map__get(node->ms.map);
-+		al.maps = maps__get(thread__maps(thread));
- 		al.addr = node->ip;
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 4081052bb385..c67cc8c9d5cc 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -172,14 +172,10 @@ static ssize_t target_list_show(struct device *dev,
+ {
+ 	struct cxl_switch_decoder *cxlsd = to_cxl_switch_decoder(dev);
+ 	ssize_t offset;
+-	unsigned int seq;
+ 	int rc;
  
- 		if (al.map && !al.sym)
+-	do {
+-		seq = read_seqbegin(&cxlsd->target_lock);
+-		rc = emit_target_list(cxlsd, buf);
+-	} while (read_seqretry(&cxlsd->target_lock, seq));
+-
++	guard(rwsem_read)(&cxl_region_rwsem);
++	rc = emit_target_list(cxlsd, buf);
+ 	if (rc < 0)
+ 		return rc;
+ 	offset = rc;
+@@ -1579,7 +1575,7 @@ EXPORT_SYMBOL_NS_GPL(cxl_mem_find_port, CXL);
+ static int decoder_populate_targets(struct cxl_switch_decoder *cxlsd,
+ 				    struct cxl_port *port, int *target_map)
+ {
+-	int i, rc = 0;
++	int i;
+ 
+ 	if (!target_map)
+ 		return 0;
+@@ -1589,19 +1585,16 @@ static int decoder_populate_targets(struct cxl_switch_decoder *cxlsd,
+ 	if (xa_empty(&port->dports))
+ 		return -EINVAL;
+ 
+-	write_seqlock(&cxlsd->target_lock);
++	guard(rwsem_write)(&cxl_region_rwsem);
+ 	for (i = 0; i < cxlsd->cxld.interleave_ways; i++) {
+ 		struct cxl_dport *dport = find_dport(port, target_map[i]);
+ 
+-		if (!dport) {
+-			rc = -ENXIO;
+-			break;
+-		}
++		if (!dport)
++			return -ENXIO;
+ 		cxlsd->target[i] = dport;
+ 	}
+-	write_sequnlock(&cxlsd->target_lock);
+ 
+-	return rc;
++	return 0;
+ }
+ 
+ struct cxl_dport *cxl_hb_modulo(struct cxl_root_decoder *cxlrd, int pos)
+@@ -1671,7 +1664,6 @@ static int cxl_switch_decoder_init(struct cxl_port *port,
+ 		return -EINVAL;
+ 
+ 	cxlsd->nr_targets = nr_targets;
+-	seqlock_init(&cxlsd->target_lock);
+ 	return cxl_decoder_init(port, &cxlsd->cxld);
+ }
+ 
+diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+index 6c6afda0e4c6..de2c250c894b 100644
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -404,7 +404,6 @@ struct cxl_endpoint_decoder {
+ /**
+  * struct cxl_switch_decoder - Switch specific CXL HDM Decoder
+  * @cxld: base cxl_decoder object
+- * @target_lock: coordinate coherent reads of the target list
+  * @nr_targets: number of elements in @target
+  * @target: active ordered target list in current decoder configuration
+  *
+@@ -416,7 +415,6 @@ struct cxl_endpoint_decoder {
+  */
+ struct cxl_switch_decoder {
+ 	struct cxl_decoder cxld;
+-	seqlock_t target_lock;
+ 	int nr_targets;
+ 	struct cxl_dport *target[];
+ };
 -- 
 2.43.0
 
