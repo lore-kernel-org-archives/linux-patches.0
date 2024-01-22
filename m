@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CD07472;
-	Tue, 23 Jan 2024 00:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145E17472;
+	Tue, 23 Jan 2024 00:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969609; cv=none; b=r+YkKM7V5Mx59zJvQYAgmMEff6Jyt29OFAIjAZOSFafZfT9m7Emia4b6nt/d8r3txQbqADM3/yDpF4s/JeK5boZBt91sI0V0D6H3s17leuBNl8yNznQh1u3PNjA+lhqb3vWNGBE5g/HuMoEwPObYi6pFQYpsY9RMdVG2D8Qltmo=
+	t=1705969611; cv=none; b=sOADxZ2L1ZIzaZqatK5eRfaom9QsemAFsuLTmnCdFLBhM99BPh0JtE6ifPTzKx8putPBsKPqyvXa/aBuUEylnGZ32nGPK7jcX0AYj7zBn0K0gHeoFYnJ3OtO1ZDX2cebW3XBVwF74HLquth+MQHKXGE/JO2XZtxt15kD8VZN3WQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969609; c=relaxed/simple;
-	bh=1NhWBYP/E5S90L/4EVIseuVeZy84RuhbLj3RMPrgvfs=;
+	s=arc-20240116; t=1705969611; c=relaxed/simple;
+	bh=VhY+IKKpABJEa4o0QkdORIaBK6GMXEkADTUlqHEfEC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nC9t42DAwfSECDsrFjIzG2HSfQ6tKy8Y+ny/wuYR05BvwriiAAh2V9Io69Vh9apLb0Vdt4nbsbBNy/g0Ir6lF6TNUhS5BliFBNgpMpzaFcIxYzdCrvbD7UvgtCnUEmIUDsXYIZXD7LIqg23Z7tinJWj2cSFZGN+jGsfJEufVjyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/933Eab; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gxNQZpl+Nr6vq+98gEcmNvsnxpqBZEmrIGcA3uRiugZY+NQUP99Jh3on/aV1X2VeBDK+Cd3K232NfC6V8DRlWsh2CtuOIDhaJ2Nq4E87/UZXgk0sL75WO3WjQe/ZzekTQP8CP+GJEQ5uSdUl7briUSVs92gnbfXc87Z8kVVQSkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQWJLZs3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/933Eab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 436D8C433C7;
-	Tue, 23 Jan 2024 00:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQWJLZs3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79FBC433F1;
+	Tue, 23 Jan 2024 00:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969609;
-	bh=1NhWBYP/E5S90L/4EVIseuVeZy84RuhbLj3RMPrgvfs=;
+	s=korg; t=1705969610;
+	bh=VhY+IKKpABJEa4o0QkdORIaBK6GMXEkADTUlqHEfEC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/933Eabs8/tGaA5oxWsG6sQqSqP5plzeJCcXUDEzqh9cHurXXvRhL7DzeIjATHIG
-	 J88C3vkbp60bBwSM4NU8bnGX3P101LRmWmzWiS+ghCMBQGzqJEoBmQrA5wyzEITZJi
-	 96rRcQZlEFxjlPrL+1PNbYWirPD+VoQWC+J62mxA=
+	b=iQWJLZs383Xd9VQUuHsqLnOlSWomOkwgdkkgQpBNs50JXhCNL4LJYk4FYDfK0wd25
+	 brashLo/TyJct8sAnyd4uPQTSHeION6wgcGi1vmxU/NLqmF4x3jM5f+lIqZ38leEcE
+	 EvBB5eSdPbS2sPAlPr9jcdPz4JSGw5nEwnn1/nbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Chris Chiu <chiu@endlessos.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 356/641] pwm: stm32: Fix enable count for clk in .probe()
-Date: Mon, 22 Jan 2024 15:54:20 -0800
-Message-ID: <20240122235829.073004850@linuxfoundation.org>
+Subject: [PATCH 6.7 357/641] ASoC: rt5645: Drop double EF20 entry from dmi_platform_data[]
+Date: Mon, 22 Jan 2024 15:54:21 -0800
+Message-ID: <20240122235829.102991904@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -47,82 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philipp Zabel <p.zabel@pengutronix.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 19f1016ea9600ed89bc24247c36ff5934ad94fbb ]
+[ Upstream commit 51add1687f39292af626ac3c2046f49241713273 ]
 
-Make the driver take over hardware state without disabling in .probe()
-and enable the clock for each enabled channel.
+dmi_platform_data[] first contains a DMI entry matching:
 
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
-[ukleinek: split off from a patch that also implemented .get_state()]
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
-Reviewed-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+   DMI_MATCH(DMI_PRODUCT_NAME, "EF20"),
+
+and then contains an identical entry except for the match being:
+
+   DMI_MATCH(DMI_PRODUCT_NAME, "EF20EA"),
+
+Since these are partial (non exact) DMI matches the first match
+will also match any board with "EF20EA" in their DMI product-name,
+drop the second, redundant, entry.
+
+Fixes: a4dae468cfdd ("ASoC: rt5645: Add ACPI-defined GPIO for ECS EF20 series")
+Cc: Chris Chiu <chiu@endlessos.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://msgid.link/r/20231126214024.300505-2-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ sound/soc/codecs/rt5645.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
-index ffdfd81c0613..58ece15ef6c3 100644
---- a/drivers/pwm/pwm-stm32.c
-+++ b/drivers/pwm/pwm-stm32.c
-@@ -578,17 +578,21 @@ static void stm32_pwm_detect_complementary(struct stm32_pwm *priv)
- 	priv->have_complementary_output = (ccer != 0);
- }
+diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
+index a0d01d71d8b5..edcb85bd8ea7 100644
+--- a/sound/soc/codecs/rt5645.c
++++ b/sound/soc/codecs/rt5645.c
+@@ -3854,14 +3854,6 @@ static const struct dmi_system_id dmi_platform_data[] = {
+ 		},
+ 		.driver_data = (void *)&ecs_ef20_platform_data,
+ 	},
+-	{
+-		.ident = "EF20EA",
+-		.callback = cht_rt5645_ef20_quirk_cb,
+-		.matches = {
+-			DMI_MATCH(DMI_PRODUCT_NAME, "EF20EA"),
+-		},
+-		.driver_data = (void *)&ecs_ef20_platform_data,
+-	},
+ 	{ }
+ };
  
--static unsigned int stm32_pwm_detect_channels(struct stm32_pwm *priv)
-+static unsigned int stm32_pwm_detect_channels(struct stm32_pwm *priv,
-+					      unsigned int *num_enabled)
- {
--	u32 ccer;
-+	u32 ccer, ccer_backup;
- 
- 	/*
- 	 * If channels enable bits don't exist writing 1 will have no
- 	 * effect so we can detect and count them.
- 	 */
-+	regmap_read(priv->regmap, TIM_CCER, &ccer_backup);
- 	regmap_set_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
- 	regmap_read(priv->regmap, TIM_CCER, &ccer);
--	regmap_clear_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
-+	regmap_write(priv->regmap, TIM_CCER, ccer_backup);
-+
-+	*num_enabled = hweight32(ccer_backup & TIM_CCER_CCXE);
- 
- 	return hweight32(ccer & TIM_CCER_CCXE);
- }
-@@ -599,6 +603,8 @@ static int stm32_pwm_probe(struct platform_device *pdev)
- 	struct device_node *np = dev->of_node;
- 	struct stm32_timers *ddata = dev_get_drvdata(pdev->dev.parent);
- 	struct stm32_pwm *priv;
-+	unsigned int num_enabled;
-+	unsigned int i;
- 	int ret;
- 
- 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-@@ -621,7 +627,11 @@ static int stm32_pwm_probe(struct platform_device *pdev)
- 
- 	priv->chip.dev = dev;
- 	priv->chip.ops = &stm32pwm_ops;
--	priv->chip.npwm = stm32_pwm_detect_channels(priv);
-+	priv->chip.npwm = stm32_pwm_detect_channels(priv, &num_enabled);
-+
-+	/* Initialize clock refcount to number of enabled PWM channels. */
-+	for (i = 0; i < num_enabled; i++)
-+		clk_enable(priv->clk);
- 
- 	ret = devm_pwmchip_add(dev, &priv->chip);
- 	if (ret < 0)
 -- 
 2.43.0
 
