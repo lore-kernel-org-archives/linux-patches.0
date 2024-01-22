@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A587313473B;
-	Tue, 23 Jan 2024 01:05:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA9613473B;
+	Tue, 23 Jan 2024 01:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971918; cv=none; b=BWwCR4d838nSQeRmDdRGJBFf+6aPo8zhqFUesNDcVhEyFRTpJEJRBbHCQCRV8TToJazNFl0oZ8mX4jTMbhANd2U9xVxK+d0HC67MJorVkBh10bo79ZVDKZOTSeaTRVfWydsxu6/nItAD6YUV1YiiVBt3yndU5UagwyO4ku1flhs=
+	t=1705971919; cv=none; b=DTW5SdfOx4dUWnyD1/mvwrLw6FirAle4o8E7YyBsPQt1ajctsba7xavFuL7T0ZGwUI0JRwh+fWQpG9UTGLxt7SBMeMR0FBc+OKHJmYz6FWElLni5JtIny0Z4bx3zdBs4jmwSVbSW4+4iXhucLJoaaMap0b5C8jokIz3rhYxqApo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971918; c=relaxed/simple;
-	bh=eNkmMTjPm4rI0rO009IFX6MEbtFFi5KlDJ8Rf0iMkrY=;
+	s=arc-20240116; t=1705971919; c=relaxed/simple;
+	bh=gOTRJQXL+mxmJL2T9EEuove4J3VePHT8csgeKXfA/Bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kop+2uoKzWh+FCddc3tIEfbmgE9AeINJl5teV5OKChkbAloo6RHXgeDRE9auBWEYfYDZorSuP27I5+5vo0K2BzMdPdH3XttuVRQkq4CuxwvRkv8VR0v1iC4ubpTbEONS8E8P5MC+kbpzItJRXPrMYphCFcJRv5znfSz7r5/7JwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7a6yCRG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LTOPsFlZBMI+FkKuiRB6WgpVPaS3Ormo64apy9eskU4iiP6r3q7J3HmRGGwshbFW+zwJOtMQG4Rsa8/n9kmSwLKhoYs78RZUOZgXLPdnI8w/OtORt7V/8MTUOilfMb5zGtEZgut0dov8y4AFyN/PDHcrLGzh7vq6aBpamqNfM7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sA4+rNpW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7a6yCRG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BAF2C433C7;
-	Tue, 23 Jan 2024 01:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sA4+rNpW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76FCFC43390;
+	Tue, 23 Jan 2024 01:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971918;
-	bh=eNkmMTjPm4rI0rO009IFX6MEbtFFi5KlDJ8Rf0iMkrY=;
+	s=korg; t=1705971919;
+	bh=gOTRJQXL+mxmJL2T9EEuove4J3VePHT8csgeKXfA/Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c7a6yCRGhbWP1UnQ4ediNasWxPsl7mHjMcRim8izCLFmzDeULmv+WiGTcZHOiRM2D
-	 8ylRVJtzyxpK7ahF1fQFjX1RBg6jwToLip1F0UaqLVqJGR7jkTdXXLj9Vx57EgpgW3
-	 /3CYUISHFOpppo+v/Opr2ZOhwoStfcQm9YTsysUs=
+	b=sA4+rNpW+BeGf62OZ2kBz0vXfvK39YpUoHBdmFllQ0/1+pWe9mKAFPWcPjuicobVd
+	 tfkFXVgqaMruIiscUbt5Xm7F7ZxQsiIcNTPiuaizGu4TeLyVxxkecvhJTYQeHSSOWA
+	 2e1w9Kgb/oO9PAwK+kZy/3WLs3R1MiTpXbZ2Jfb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Ravi Gunasekaran <r-gunasekaran@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 351/417] iio: adc: ad9467: dont ignore error codes
-Date: Mon, 22 Jan 2024 15:58:39 -0800
-Message-ID: <20240122235803.956270770@linuxfoundation.org>
+Subject: [PATCH 5.10 264/286] PCI: keystone: Fix race condition when initializing PHYs
+Date: Mon, 22 Jan 2024 15:59:30 -0800
+Message-ID: <20240122235742.207398599@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,89 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit e072e149cfb827e0ab4cafb0547e9658e35393cd ]
+[ Upstream commit c12ca110c613a81cb0f0099019c839d078cd0f38 ]
 
-Make sure functions that return errors are not ignored.
+The PCI driver invokes the PHY APIs using the ks_pcie_enable_phy()
+function. The PHY in this case is the Serdes. It is possible that the
+PCI instance is configured for two lane operation across two different
+Serdes instances, using one lane of each Serdes.
 
-Fixes: ad6797120238 ("iio: adc: ad9467: add support AD9467 ADC")
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20231207-iio-backend-prep-v2-2-a4a33bc4d70e@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+In such a configuration, if the reference clock for one Serdes is
+provided by the other Serdes, it results in a race condition. After the
+Serdes providing the reference clock is initialized by the PCI driver by
+invoking its PHY APIs, it is not guaranteed that this Serdes remains
+powered on long enough for the PHY APIs based initialization of the
+dependent Serdes. In such cases, the PLL of the dependent Serdes fails
+to lock due to the absence of the reference clock from the former Serdes
+which has been powered off by the PM Core.
+
+Fix this by obtaining reference to the PHYs before invoking the PHY
+initialization APIs and releasing reference after the initialization is
+complete.
+
+Link: https://lore.kernel.org/linux-pci/20230927041845.1222080-1-s-vadapalli@ti.com
+Fixes: 49229238ab47 ("PCI: keystone: Cleanup PHY handling")
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Ravi Gunasekaran <r-gunasekaran@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad9467.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/pci/controller/dwc/pci-keystone.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/iio/adc/ad9467.c b/drivers/iio/adc/ad9467.c
-index 3e8d1e8fda07..eefd5ed7216c 100644
---- a/drivers/iio/adc/ad9467.c
-+++ b/drivers/iio/adc/ad9467.c
-@@ -162,9 +162,10 @@ static int ad9467_reg_access(struct adi_axi_adc_conv *conv, unsigned int reg,
- 
- 	if (readval == NULL) {
- 		ret = ad9467_spi_write(spi, reg, writeval);
--		ad9467_spi_write(spi, AN877_ADC_REG_TRANSFER,
--				 AN877_ADC_TRANSFER_SYNC);
--		return ret;
-+		if (ret)
-+			return ret;
-+		return ad9467_spi_write(spi, AN877_ADC_REG_TRANSFER,
-+					AN877_ADC_TRANSFER_SYNC);
+diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+index afaea201a5af..d3c3ca3ef4ba 100644
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -1261,7 +1261,16 @@ static int ks_pcie_probe(struct platform_device *pdev)
+ 		goto err_link;
  	}
  
- 	ret = ad9467_spi_read(spi, reg);
-@@ -272,10 +273,13 @@ static int ad9467_get_scale(struct adi_axi_adc_conv *conv, int *val, int *val2)
- 	const struct ad9467_chip_info *info1 = to_ad9467_chip_info(info);
- 	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
- 	unsigned int i, vref_val;
-+	int ret;
- 
--	vref_val = ad9467_spi_read(st->spi, AN877_ADC_REG_VREF);
-+	ret = ad9467_spi_read(st->spi, AN877_ADC_REG_VREF);
-+	if (ret < 0)
-+		return ret;
- 
--	vref_val &= info1->vref_mask;
-+	vref_val = ret & info1->vref_mask;
- 
- 	for (i = 0; i < info->num_scales; i++) {
- 		if (vref_val == info->scale_table[i][1])
-@@ -296,6 +300,7 @@ static int ad9467_set_scale(struct adi_axi_adc_conv *conv, int val, int val2)
- 	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
- 	unsigned int scale_val[2];
- 	unsigned int i;
-+	int ret;
- 
- 	if (val != 0)
- 		return -EINVAL;
-@@ -305,11 +310,13 @@ static int ad9467_set_scale(struct adi_axi_adc_conv *conv, int val, int val2)
- 		if (scale_val[0] != val || scale_val[1] != val2)
- 			continue;
- 
--		ad9467_spi_write(st->spi, AN877_ADC_REG_VREF,
--				 info->scale_table[i][1]);
--		ad9467_spi_write(st->spi, AN877_ADC_REG_TRANSFER,
--				 AN877_ADC_TRANSFER_SYNC);
--		return 0;
-+		ret = ad9467_spi_write(st->spi, AN877_ADC_REG_VREF,
-+				       info->scale_table[i][1]);
-+		if (ret < 0)
-+			return ret;
++	/* Obtain references to the PHYs */
++	for (i = 0; i < num_lanes; i++)
++		phy_pm_runtime_get_sync(ks_pcie->phy[i]);
 +
-+		return ad9467_spi_write(st->spi, AN877_ADC_REG_TRANSFER,
-+					AN877_ADC_TRANSFER_SYNC);
- 	}
- 
- 	return -EINVAL;
+ 	ret = ks_pcie_enable_phy(ks_pcie);
++
++	/* Release references to the PHYs */
++	for (i = 0; i < num_lanes; i++)
++		phy_pm_runtime_put_sync(ks_pcie->phy[i]);
++
+ 	if (ret) {
+ 		dev_err(dev, "failed to enable phy\n");
+ 		goto err_link;
 -- 
 2.43.0
 
