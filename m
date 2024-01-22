@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECA01350D6;
-	Tue, 23 Jan 2024 00:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8C41350D6;
+	Tue, 23 Jan 2024 00:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969342; cv=none; b=DI7NhbHv3mZgMJyRAkkR7J4IxyOGTC/njUa7Ei1kYybWk8Ie1m5tIKV9Bf8czRURCgGWZXSPLn+kX+R7PD21frPMs/Hm9kV9srIiXi0zu8j9S17M3hp9PguQACwgB4WZifP8QT+hrJL0L09mBQhSt+rI96C8dxOc5sBFGQC4ZJA=
+	t=1705969343; cv=none; b=kOR3XsqJTe7uEuD0vVndrRJhdTGv0FitIVauGBJQZgB8XTifpZNcyPxVYYg3v56ZKj8K5ZLlwLUttAx4ISs6ZupLcTKtiMBd516uw8KRDBb8tt/+EkSY4b5iRVocU9i34dhLiL20aokg+NCnQyV55D7t5Iu+nhFd31jTHUIfEGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969342; c=relaxed/simple;
-	bh=dE9vsgGpsC3kHTuJ0mCYMZTmeJkXf/i9+FFpTyvsjK0=;
+	s=arc-20240116; t=1705969343; c=relaxed/simple;
+	bh=eWEzClH9QYgXz6xbXreSSc1jXSml6IZwBA+f9L3DkT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WvLXEZrfdb7RaUWxfGCjphZA08FLzztyFd6oClbVlB6CiXbjnrASBDQuXFm0zOYPWLcKyYzGYEQ4yykTFC4qE6vABhDnjW/0wkJNEInl7qT8Z8h5sODXlE9JDWiPnnazhViIBloOor7YoSFXlmuCxUFbOwb7IbEz2Q3fDkN8Nj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DODRLdbF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HOFY7Uv1MErHEd9+n5b94t9M0YNVwmKl6BiAwquCqwD86gwzn2UbJu6CfZlEJVca8HiNc29dE+aBw1zSfrCdUjPSc32HNPxw4rmUVgd9Qhm83pcQK//AalgcJ3JYEKMLUJ0/XJ4CZNtfwKcpdvnW0+DfkY+S1d8mdwQULAoreMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMCzIcTB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DODRLdbF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB26C433C7;
-	Tue, 23 Jan 2024 00:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMCzIcTB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8BAC43394;
+	Tue, 23 Jan 2024 00:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969342;
-	bh=dE9vsgGpsC3kHTuJ0mCYMZTmeJkXf/i9+FFpTyvsjK0=;
+	s=korg; t=1705969343;
+	bh=eWEzClH9QYgXz6xbXreSSc1jXSml6IZwBA+f9L3DkT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DODRLdbFbjedRQ4j3QwSHopWaBM0OFRYXkH1GG81HT+7UHy/T3dh8u/2k4mDQ+gjO
-	 NOcvkBrDrGOtgwRKnewwMzKkBwN2bU9kEcGJgwi1SD1wHQOzNvWw4fmEyoX9TRmfMX
-	 9zCRep7TvoDUIlvfkkiCHVgPMSJn0dt54ea6iQr4=
+	b=iMCzIcTB1TE9QD/jqOPvc7c6Pwtajhfi4eBurA7i2hQz6CtrTeC9NAd5AyV1JQR7d
+	 0R5NgCnH+0N/PsCDX0JX228m/BDOn+8iH1fPfGSgcXEUQgcsaEkqigmvHl1zM40Y7e
+	 AFJD1Zy+1cKjGMBnxaGkxzip8RqDeOa8vmx3FEzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Moudy Ho <moudy.ho@mediatek.com>,
+	Rob Herring <robh@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 160/641] test_bpf: Rename second ALU64_SMOD_X to ALU64_SMOD_K
-Date: Mon, 22 Jan 2024 15:51:04 -0800
-Message-ID: <20240122235823.042728220@linuxfoundation.org>
+Subject: [PATCH 6.7 161/641] dt-bindings: media: mediatek: mdp3: correct RDMA and WROT node with generic names
+Date: Mon, 22 Jan 2024 15:51:05 -0800
+Message-ID: <20240122235823.069796074@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,46 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Moudy Ho <moudy.ho@mediatek.com>
 
-[ Upstream commit 5181dc08f79583c6dead80208137a97e68ff07b0 ]
+[ Upstream commit f5f185bf7c42f6ca885202fefc40fc871d08a722 ]
 
-Currently, there are two test cases with same name
-"ALU64_SMOD_X: -7 % 2 = -1", the first one is right,
-the second one should be ALU64_SMOD_K because its
-code is BPF_ALU64 | BPF_MOD | BPF_K.
+The DMA-related nodes RDMA/WROT in MDP3 should be changed to generic names.
+In addition, fix improper space indent in example.
 
-Before:
-test_bpf: #170 ALU64_SMOD_X: -7 % 2 = -1 jited:1 4 PASS
-test_bpf: #171 ALU64_SMOD_X: -7 % 2 = -1 jited:1 4 PASS
-
-After:
-test_bpf: #170 ALU64_SMOD_X: -7 % 2 = -1 jited:1 4 PASS
-test_bpf: #171 ALU64_SMOD_K: -7 % 2 = -1 jited:1 4 PASS
-
-Fixes: daabb2b098e0 ("bpf/tests: add tests for cpuv4 instructions")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20231207040851.19730-1-yangtiezhu@loongson.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 4ad7b39623ab ("media: dt-binding: mediatek: add bindings for MediaTek MDP3 components")
+Signed-off-by: Moudy Ho <moudy.ho@mediatek.com>
+Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_bpf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../bindings/media/mediatek,mdp3-rdma.yaml    | 29 +++++++++++--------
+ .../bindings/media/mediatek,mdp3-wrot.yaml    | 23 +++++++++------
+ 2 files changed, 31 insertions(+), 21 deletions(-)
 
-diff --git a/lib/test_bpf.c b/lib/test_bpf.c
-index 7916503e6a6a..3c5a1ca06219 100644
---- a/lib/test_bpf.c
-+++ b/lib/test_bpf.c
-@@ -6293,7 +6293,7 @@ static struct bpf_test tests[] = {
- 	},
- 	/* BPF_ALU64 | BPF_MOD | BPF_K off=1 (SMOD64) */
- 	{
--		"ALU64_SMOD_X: -7 % 2 = -1",
-+		"ALU64_SMOD_K: -7 % 2 = -1",
- 		.u.insns_int = {
- 			BPF_LD_IMM64(R0, -7),
- 			BPF_ALU64_IMM_OFF(BPF_MOD, R0, 2, 1),
+diff --git a/Documentation/devicetree/bindings/media/mediatek,mdp3-rdma.yaml b/Documentation/devicetree/bindings/media/mediatek,mdp3-rdma.yaml
+index 7032c7e15039..3e128733ef53 100644
+--- a/Documentation/devicetree/bindings/media/mediatek,mdp3-rdma.yaml
++++ b/Documentation/devicetree/bindings/media/mediatek,mdp3-rdma.yaml
+@@ -61,6 +61,9 @@ properties:
+       - description: used for 1st data pipe from RDMA
+       - description: used for 2nd data pipe from RDMA
+ 
++  '#dma-cells':
++    const: 1
++
+ required:
+   - compatible
+   - reg
+@@ -70,6 +73,7 @@ required:
+   - clocks
+   - iommus
+   - mboxes
++  - '#dma-cells'
+ 
+ additionalProperties: false
+ 
+@@ -80,16 +84,17 @@ examples:
+     #include <dt-bindings/power/mt8183-power.h>
+     #include <dt-bindings/memory/mt8183-larb-port.h>
+ 
+-    mdp3_rdma0: mdp3-rdma0@14001000 {
+-      compatible = "mediatek,mt8183-mdp3-rdma";
+-      reg = <0x14001000 0x1000>;
+-      mediatek,gce-client-reg = <&gce SUBSYS_1400XXXX 0x1000 0x1000>;
+-      mediatek,gce-events = <CMDQ_EVENT_MDP_RDMA0_SOF>,
+-                            <CMDQ_EVENT_MDP_RDMA0_EOF>;
+-      power-domains = <&spm MT8183_POWER_DOMAIN_DISP>;
+-      clocks = <&mmsys CLK_MM_MDP_RDMA0>,
+-               <&mmsys CLK_MM_MDP_RSZ1>;
+-      iommus = <&iommu>;
+-      mboxes = <&gce 20 CMDQ_THR_PRIO_LOWEST>,
+-               <&gce 21 CMDQ_THR_PRIO_LOWEST>;
++    dma-controller@14001000 {
++        compatible = "mediatek,mt8183-mdp3-rdma";
++        reg = <0x14001000 0x1000>;
++        mediatek,gce-client-reg = <&gce SUBSYS_1400XXXX 0x1000 0x1000>;
++        mediatek,gce-events = <CMDQ_EVENT_MDP_RDMA0_SOF>,
++                              <CMDQ_EVENT_MDP_RDMA0_EOF>;
++        power-domains = <&spm MT8183_POWER_DOMAIN_DISP>;
++        clocks = <&mmsys CLK_MM_MDP_RDMA0>,
++                 <&mmsys CLK_MM_MDP_RSZ1>;
++        iommus = <&iommu>;
++        mboxes = <&gce 20 CMDQ_THR_PRIO_LOWEST>,
++                 <&gce 21 CMDQ_THR_PRIO_LOWEST>;
++        #dma-cells = <1>;
+     };
+diff --git a/Documentation/devicetree/bindings/media/mediatek,mdp3-wrot.yaml b/Documentation/devicetree/bindings/media/mediatek,mdp3-wrot.yaml
+index 0baa77198fa2..64ea98aa0592 100644
+--- a/Documentation/devicetree/bindings/media/mediatek,mdp3-wrot.yaml
++++ b/Documentation/devicetree/bindings/media/mediatek,mdp3-wrot.yaml
+@@ -50,6 +50,9 @@ properties:
+   iommus:
+     maxItems: 1
+ 
++  '#dma-cells':
++    const: 1
++
+ required:
+   - compatible
+   - reg
+@@ -58,6 +61,7 @@ required:
+   - power-domains
+   - clocks
+   - iommus
++  - '#dma-cells'
+ 
+ additionalProperties: false
+ 
+@@ -68,13 +72,14 @@ examples:
+     #include <dt-bindings/power/mt8183-power.h>
+     #include <dt-bindings/memory/mt8183-larb-port.h>
+ 
+-    mdp3_wrot0: mdp3-wrot0@14005000 {
+-      compatible = "mediatek,mt8183-mdp3-wrot";
+-      reg = <0x14005000 0x1000>;
+-      mediatek,gce-client-reg = <&gce SUBSYS_1400XXXX 0x5000 0x1000>;
+-      mediatek,gce-events = <CMDQ_EVENT_MDP_WROT0_SOF>,
+-                            <CMDQ_EVENT_MDP_WROT0_EOF>;
+-      power-domains = <&spm MT8183_POWER_DOMAIN_DISP>;
+-      clocks = <&mmsys CLK_MM_MDP_WROT0>;
+-      iommus = <&iommu>;
++    dma-controller@14005000 {
++        compatible = "mediatek,mt8183-mdp3-wrot";
++        reg = <0x14005000 0x1000>;
++        mediatek,gce-client-reg = <&gce SUBSYS_1400XXXX 0x5000 0x1000>;
++        mediatek,gce-events = <CMDQ_EVENT_MDP_WROT0_SOF>,
++                              <CMDQ_EVENT_MDP_WROT0_EOF>;
++        power-domains = <&spm MT8183_POWER_DOMAIN_DISP>;
++        clocks = <&mmsys CLK_MM_MDP_WROT0>;
++        iommus = <&iommu>;
++        #dma-cells = <1>;
+     };
 -- 
 2.43.0
 
