@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B192C63124;
-	Tue, 23 Jan 2024 00:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEB062807;
+	Tue, 23 Jan 2024 00:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971203; cv=none; b=OJPq5iwyPvedIwHpf3CV5SdnHiSs2p5wbPSnKT9cIxpl2tBn5L+Vyns10J0Gxo5ctdxmm3ge0P5luWwrPtStq3XwZYK8ycuWAM7fd5MpK7jrRrCLsl+wLv0c0T9i2mDlxF/zvCKcYEjKwbs6sZWpmNbFqWlDpPJ/FlRS9RO7Nok=
+	t=1705971205; cv=none; b=HoeDbFEizybPTM0MJ+XAxUpKZt7AjauqajzBddUXUqr9ByzYzGXie5jvjI9G24kewFkINv1O5xgVm2oZuczSSGNOyEpH1VtZUzDidk1F+/lFNK1h3RJLLPlRNjpdT1jHJtSxgAT8c8vtYu5WhPSuHGJ2KCXMpI/17hlRKCNPPy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971203; c=relaxed/simple;
-	bh=tHEJIARD26GpZWRsiLCHEQweJiU6XdLOeDvnIP3y3wI=;
+	s=arc-20240116; t=1705971205; c=relaxed/simple;
+	bh=2zGg8UUoz59qgDBTDiXvo3CfbXer+h7O39+TUHMvfwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SloBQ1nPGWml1a3R10y0h/GMghdymkkP3weRT6kc2ZGDXM5EABtLfA6ngV+7Ai/QTJcQ5kdswMxr7V9U1xyByfcmCG03ij4d+o0XBfzcW+wJTxnrG/EZ2stYDOvvxQStJEaVZ7W6U1cf4FD+4g2vBPYH2MCV8F9wrtqcO/7rMdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+jPSt+B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CP+ZwsI6w5GcyBCHd+4xuy55S51gO+mIPzmNeraiIv3O0VADxWGJn+4mHjo2jDfJMdLI9jVKjYcNUYiE/Fhg/bEePME+DEAWCLgV6OmShPJjTlSnFNGSrU7ANfXftAT1u4I7FqoWsdpeSJGM8u5LxI6sKYVRWeogf6Yhp4KWHB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiUOETsO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+jPSt+B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E683C433F1;
-	Tue, 23 Jan 2024 00:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiUOETsO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33656C433F1;
+	Tue, 23 Jan 2024 00:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971203;
-	bh=tHEJIARD26GpZWRsiLCHEQweJiU6XdLOeDvnIP3y3wI=;
+	s=korg; t=1705971205;
+	bh=2zGg8UUoz59qgDBTDiXvo3CfbXer+h7O39+TUHMvfwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P+jPSt+BdvhdfV+pDElgm9pTawnpgopskmAuxOXZsvCUu9bmTQA6/mqfjQoZWPcx3
-	 d/SKHcDRfm5NMvhR9uy0qlB3eFDRx1egoEQwWTqK2CQ2+TnFgRhgBKhro05c3sRafh
-	 IPwgonj3MfMPqRFKYlL0rxGoIHosXZhvT+ewv5PQ=
+	b=qiUOETsOY8FuJ3IVvGFCAp5D2kh2aBbLOD1ZekALu+xKvLZf4oRAph2rDYC2Mh7tj
+	 qxmDoY6GZKJpmMNqjCC5A2yDGEj74ZYJWzseiiCuICVvGBNwWodaSXT1YCFr2IoD4E
+	 p7jQQV/Ns1n5iKA5gvBMZzskxNTVW7awPivEGSPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 204/417] clk: renesas: rzg2l: Check reset monitor registers
-Date: Mon, 22 Jan 2024 15:56:12 -0800
-Message-ID: <20240122235758.997514615@linuxfoundation.org>
+Subject: [PATCH 5.10 112/286] wifi: libertas: stop selecting wext
+Date: Mon, 22 Jan 2024 15:56:58 -0800
+Message-ID: <20240122235736.415056721@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,140 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit da235d2fac212d0add570e755feb1167a830bc99 ]
+[ Upstream commit 8170b04c2c92eee52ea50b96db4c54662197e512 ]
 
-The hardware manual of both RZ/G2L and RZ/G3S specifies that the reset
-monitor registers need to be interrogated when the reset signals are
-toggled (chapters "Procedures for Supplying and Stopping Reset Signals"
-and "Procedure for Activating Modules").  Without this, there is a
-chance that different modules (e.g. Ethernet) are not ready after their
-reset signal is toggled, leading to failures (on probe or resume from
-deep sleep states).
+Libertas no longer references the iw_handler infrastructure or wext_spy,
+so neither of the 'select' statements are used any more.
 
-The same indications are available for RZ/V2M for TYPE-B reset controls.
-
-Fixes: ef3c613ccd68 ("clk: renesas: Add CPG core wrapper for RZ/G2L SoC")
-Fixes: 8090bea32484 ("clk: renesas: rzg2l: Add support for RZ/V2M reset monitor reg")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20231207070700.4156557-2-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: e86dc1ca4676 ("Libertas: cfg80211 support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20231108153409.1065286-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/rzg2l-cpg.c | 59 ++++++++++++++++++++++++---------
- 1 file changed, 44 insertions(+), 15 deletions(-)
+ drivers/net/wireless/marvell/libertas/Kconfig | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
-index 93720f319409..473feb36a38f 100644
---- a/drivers/clk/renesas/rzg2l-cpg.c
-+++ b/drivers/clk/renesas/rzg2l-cpg.c
-@@ -1121,12 +1121,27 @@ static int rzg2l_cpg_assert(struct reset_controller_dev *rcdev,
- 	struct rzg2l_cpg_priv *priv = rcdev_to_priv(rcdev);
- 	const struct rzg2l_cpg_info *info = priv->info;
- 	unsigned int reg = info->resets[id].off;
--	u32 value = BIT(info->resets[id].bit) << 16;
-+	u32 mask = BIT(info->resets[id].bit);
-+	s8 monbit = info->resets[id].monbit;
-+	u32 value = mask << 16;
- 
- 	dev_dbg(rcdev->dev, "assert id:%ld offset:0x%x\n", id, CLK_RST_R(reg));
- 
- 	writel(value, priv->base + CLK_RST_R(reg));
--	return 0;
-+
-+	if (info->has_clk_mon_regs) {
-+		reg = CLK_MRST_R(reg);
-+	} else if (monbit >= 0) {
-+		reg = CPG_RST_MON;
-+		mask = BIT(monbit);
-+	} else {
-+		/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
-+		udelay(35);
-+		return 0;
-+	}
-+
-+	return readl_poll_timeout_atomic(priv->base + reg, value,
-+					 value & mask, 10, 200);
- }
- 
- static int rzg2l_cpg_deassert(struct reset_controller_dev *rcdev,
-@@ -1135,14 +1150,28 @@ static int rzg2l_cpg_deassert(struct reset_controller_dev *rcdev,
- 	struct rzg2l_cpg_priv *priv = rcdev_to_priv(rcdev);
- 	const struct rzg2l_cpg_info *info = priv->info;
- 	unsigned int reg = info->resets[id].off;
--	u32 dis = BIT(info->resets[id].bit);
--	u32 value = (dis << 16) | dis;
-+	u32 mask = BIT(info->resets[id].bit);
-+	s8 monbit = info->resets[id].monbit;
-+	u32 value = (mask << 16) | mask;
- 
- 	dev_dbg(rcdev->dev, "deassert id:%ld offset:0x%x\n", id,
- 		CLK_RST_R(reg));
- 
- 	writel(value, priv->base + CLK_RST_R(reg));
--	return 0;
-+
-+	if (info->has_clk_mon_regs) {
-+		reg = CLK_MRST_R(reg);
-+	} else if (monbit >= 0) {
-+		reg = CPG_RST_MON;
-+		mask = BIT(monbit);
-+	} else {
-+		/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
-+		udelay(35);
-+		return 0;
-+	}
-+
-+	return readl_poll_timeout_atomic(priv->base + reg, value,
-+					 !(value & mask), 10, 200);
- }
- 
- static int rzg2l_cpg_reset(struct reset_controller_dev *rcdev,
-@@ -1154,9 +1183,6 @@ static int rzg2l_cpg_reset(struct reset_controller_dev *rcdev,
- 	if (ret)
- 		return ret;
- 
--	/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
--	udelay(35);
--
- 	return rzg2l_cpg_deassert(rcdev, id);
- }
- 
-@@ -1165,18 +1191,21 @@ static int rzg2l_cpg_status(struct reset_controller_dev *rcdev,
- {
- 	struct rzg2l_cpg_priv *priv = rcdev_to_priv(rcdev);
- 	const struct rzg2l_cpg_info *info = priv->info;
--	unsigned int reg = info->resets[id].off;
--	u32 bitmask = BIT(info->resets[id].bit);
- 	s8 monbit = info->resets[id].monbit;
-+	unsigned int reg;
-+	u32 bitmask;
- 
- 	if (info->has_clk_mon_regs) {
--		return !!(readl(priv->base + CLK_MRST_R(reg)) & bitmask);
-+		reg = CLK_MRST_R(info->resets[id].off);
-+		bitmask = BIT(info->resets[id].bit);
- 	} else if (monbit >= 0) {
--		u32 monbitmask = BIT(monbit);
--
--		return !!(readl(priv->base + CPG_RST_MON) & monbitmask);
-+		reg = CPG_RST_MON;
-+		bitmask = BIT(monbit);
-+	} else {
-+		return -ENOTSUPP;
- 	}
--	return -ENOTSUPP;
-+
-+	return !!(readl(priv->base + reg) & bitmask);
- }
- 
- static const struct reset_control_ops rzg2l_cpg_reset_ops = {
+diff --git a/drivers/net/wireless/marvell/libertas/Kconfig b/drivers/net/wireless/marvell/libertas/Kconfig
+index 6d62ab49aa8d..c7d02adb3eea 100644
+--- a/drivers/net/wireless/marvell/libertas/Kconfig
++++ b/drivers/net/wireless/marvell/libertas/Kconfig
+@@ -2,8 +2,6 @@
+ config LIBERTAS
+ 	tristate "Marvell 8xxx Libertas WLAN driver support"
+ 	depends on CFG80211
+-	select WIRELESS_EXT
+-	select WEXT_SPY
+ 	select LIB80211
+ 	select FW_LOADER
+ 	help
 -- 
 2.43.0
 
