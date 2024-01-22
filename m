@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49B3133416;
-	Tue, 23 Jan 2024 01:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37B7133419;
+	Tue, 23 Jan 2024 01:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971847; cv=none; b=OcxfPBEpoItnebd3mRBjut+uaQdCmUvGPs3MXdKG3qL5aguacLtyfdQGM8hi8i0b1LAwFHpX/qO+fjaogvBg98v2VXGr6ZnXo3ngA9YhcH/rmmK5qA2DFBX4gsDTMdFw0BCCyjbxDOKpN/oNHyOnp9AZSOJuEbnCKk25po6GNjA=
+	t=1705971849; cv=none; b=S07Thn/aFnbeBy02DWvsOEWBXDfCIMFBXyL9UKQatLya38HSmbcjsln90F3jQ7BJR/MXeBhGg3Axt2AzW3JOs1OZhgh/1MATQM/xa9oio2j0BOqwInS0Fb2Ihm0kElFmnkS3Q0h+aT9EeKdhNSPjUIegoCWc+rnSZLMERQD1T/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971847; c=relaxed/simple;
-	bh=iRr0Aynx4a42XTnyrkK6bIZXnXxKSgwUOISdeJTTh5s=;
+	s=arc-20240116; t=1705971849; c=relaxed/simple;
+	bh=BRdwWXwgY7MIJqQg5ceCNOBIk4jKxDarGJdVixAQQbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ij7ozlAhcTX2gf1K9YRGg1lPKzpjepv1QZZBZetGpZyuh89LhTM5qu/UazfsVeEcQK9EJcip2NdUIvkBhwx6ZjxfJNlYwQLxB2nNBmErgZVatdFztQScj0AtYgCYSglhz4AJXdyNI0Xn3/xJa23N4UgZcJWSnWuu39lA+GVpUNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOjOCsPq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pDYNwrVay7LlEnNZYAdCA+pu7sUKnxoV9mOsM1A3gcB6c4I0lFwviqsmpU6e0RBsOTvpx2N9mokBg/MLF6W55ptAsHO9nLtEn3PnxaF01FxIvZOStO47nkgCpNGzOQYdxAhNInSoOQ/lYmtQA27l4VzRRCu2rWatM3JcFjs0L0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oudmbxRC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOjOCsPq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FAFBC433C7;
-	Tue, 23 Jan 2024 01:04:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oudmbxRC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED6BC433F1;
+	Tue, 23 Jan 2024 01:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971847;
-	bh=iRr0Aynx4a42XTnyrkK6bIZXnXxKSgwUOISdeJTTh5s=;
+	s=korg; t=1705971849;
+	bh=BRdwWXwgY7MIJqQg5ceCNOBIk4jKxDarGJdVixAQQbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EOjOCsPqGWC6SZJlS+QqZ7I8RyteDSdddyDCHJ7Ye8kQwJsQ4oW0gQ30khwYxzYwb
-	 dN7UXXwH8B6H5njw7X6DyePK07ZqXkELP3vhVK+xdg8FNagXTahgeclg/vL3qqlL67
-	 a12CWYgtS22nZ/Em+UYwlt+3TZuGOug0uYRa+LFE=
+	b=oudmbxRC0KbQ0XbIf9h16VLWWjbvZtn0EBTNLQEr70blYI7cLYFr0DcxsiWvUYdUK
+	 uVeZhPrbmpWQVHlwZDg2JIRaT5IhyTBYP0G4+HCX30E8KQxQBQzElD7vdQTsysgTiR
+	 DqblGujhzJoXbqpwrrZWsIWxT7hPsNVa7xG2Ehas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Tony Lindgren <tony@atomide.com>,
+	Frederik Haxel <haxel@fzi.de>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 243/286] serial: 8250: omap: Dont skip resource freeing if pm_runtime_resume_and_get() failed
-Date: Mon, 22 Jan 2024 15:59:09 -0800
-Message-ID: <20240122235741.422026126@linuxfoundation.org>
+Subject: [PATCH 6.1 333/417] riscv: Fixed wrong register in XIP_FIXUP_FLASH_OFFSET macro
+Date: Mon, 22 Jan 2024 15:58:21 -0800
+Message-ID: <20240122235803.319686779@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,52 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Frederik Haxel <haxel@fzi.de>
 
-[ Upstream commit ad90d0358bd3b4554f243a425168fc7cebe7d04e ]
+[ Upstream commit 5daa3726410288075ba73c336bb2e80d6b06aa4d ]
 
-Returning an error code from .remove() makes the driver core emit the
-little helpful error message:
+During the refactoring, a bug was introduced in the rarly used
+XIP_FIXUP_FLASH_OFFSET macro.
 
-	remove callback returned a non-zero value. This will be ignored.
+Fixes: bee7fbc38579 ("RISC-V CPU Idle Support")
+Fixes: e7681beba992 ("RISC-V: Split out the XIP fixups into their own file")
 
-and then remove the device anyhow. So all resources that were not freed
-are leaked in this case. Skipping serial8250_unregister_port() has the
-potential to keep enough of the UART around to trigger a use-after-free.
-
-So replace the error return (and with it the little helpful error
-message) by a more useful error message and continue to cleanup.
-
-Fixes: e3f0c638f428 ("serial: 8250: omap: Fix unpaired pm_runtime_put_sync() in omap8250_remove()")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20231110152927.70601-2-u.kleine-koenig@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Frederik Haxel <haxel@fzi.de>
+Link: https://lore.kernel.org/r/20231212130116.848530-3-haxel@fzi.de
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 2 +-
+ arch/riscv/include/asm/xip_fixup.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index bd4118f1b694..25765ebb756a 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -1497,7 +1497,7 @@ static int omap8250_remove(struct platform_device *pdev)
- 
- 	err = pm_runtime_resume_and_get(&pdev->dev);
- 	if (err)
--		return err;
-+		dev_err(&pdev->dev, "Failed to resume hardware\n");
- 
- 	serial8250_unregister_port(priv->line);
- 	priv->line = -ENODEV;
+diff --git a/arch/riscv/include/asm/xip_fixup.h b/arch/riscv/include/asm/xip_fixup.h
+index d4ffc3c37649..b65bf6306f69 100644
+--- a/arch/riscv/include/asm/xip_fixup.h
++++ b/arch/riscv/include/asm/xip_fixup.h
+@@ -13,7 +13,7 @@
+         add \reg, \reg, t0
+ .endm
+ .macro XIP_FIXUP_FLASH_OFFSET reg
+-	la t1, __data_loc
++	la t0, __data_loc
+ 	REG_L t1, _xip_phys_offset
+ 	sub \reg, \reg, t1
+ 	add \reg, \reg, t0
 -- 
 2.43.0
 
