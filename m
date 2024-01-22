@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAB114A4C6;
-	Tue, 23 Jan 2024 00:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C6D14A4C6;
+	Tue, 23 Jan 2024 00:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969216; cv=none; b=LH6k/3eRkFE6Q3732IuwuvNYxuHOxILHay2D+W/6I3VYOQqoNk+fwUnUfdiJk5CDDURUHWll/6qidhXf8k/pPiVDi0ucsDa0naVa9X/mLBS5tLnekJbaMB7VIs9XE+8YK2ZcelUnsCelCwWPS9/9wJceBKROUcdmrDAOqMA0ZdM=
+	t=1705969217; cv=none; b=RN3rtS0rGSyGFl8Y3VGbnsByW5FnmRJvWsBRigIkpbsvg4phzvUWd6vcfeiNiqGDznZXXPNIps7CeoPU5ZASxSjhniN5ojrVzewQvxFMG7DufzDbkuL86b/89ZqbVlBpvcSC5uo4i8MoZfRzY44Xh6irzLaPFh6gqPgTiIJe9ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969216; c=relaxed/simple;
-	bh=BEAfPGmCWuzIdTzstsbrX1WK9lxGfu57cczCaFriGNc=;
+	s=arc-20240116; t=1705969217; c=relaxed/simple;
+	bh=Jdki+ZOY9SR1ppo5rxsvGhdTQzCcDSMA/WB0vLvbvkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgkoozwqTotNmwNNn/iKqcVswO/fygRFy88rragUMtLQFmupDj08FRYfQ11gT8kN+dp3qDzvM7gQsmGGEblhlhMpO6OVw7soSXte8t8blgEn7UW1fYkB7oBcKgpuCo2cZscGr8qOXHhX9H/q6LXPJiDWXtNsad6u5gnV7d6mCfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5dfz6bB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BrGX7/bAiW3ZZ6hkpg7iljU6ejak+omFQO/ZhR0QoI7xQOHiOHE1EGz6hUjmqsFTpjUUthEGyehgs5SOaEqwmsKh83yQtRWb6P3xQ48MK2I1WHf365RNmzSfkBUsK+dF4Si9iMJCpDiwlfs79hoSwTCbHQU8Sycea8g52uN+Z3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziUn6SUG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5dfz6bB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C331FC433F1;
-	Tue, 23 Jan 2024 00:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziUn6SUG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F4DC433F1;
+	Tue, 23 Jan 2024 00:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969215;
-	bh=BEAfPGmCWuzIdTzstsbrX1WK9lxGfu57cczCaFriGNc=;
+	s=korg; t=1705969217;
+	bh=Jdki+ZOY9SR1ppo5rxsvGhdTQzCcDSMA/WB0vLvbvkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u5dfz6bBMBXagzFyt+Km0jCOlcr79BlTOTugsabQk7m8V6IBg9EEwhHtvZRD9dHl0
-	 pc9aUC+nkuNL6b/+PjSFplEysnBBWXx5P3vOnojF2/czydTN1S3vRjJaT6x0x1BB9k
-	 qA0ZijlE/KjEnVCqzt8MZagAiW83Q22OTBG0JRBE=
+	b=ziUn6SUGF67k1x8Ir8w57vS4IWuvxtmr3YXBhA5Z/eul7H8pQwyMotcFQlL/xgfEl
+	 dTe9lO9zQd1qSL8Gep4NJYjy0qp4iFxE8lM37/FoSf94NWFSmPYN5OgquN+FoLouF6
+	 jdKQF+mVFkiZ2OvU4kjMXIvBwwHDXfpsyb0AfsDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Justin Tee <justin.tee@broadcom.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 104/641] scsi: lpfc: Fix list_entry null check warning in lpfc_cmpl_els_plogi()
-Date: Mon, 22 Jan 2024 15:50:08 -0800
-Message-ID: <20240122235821.295185059@linuxfoundation.org>
+Subject: [PATCH 6.7 081/641] crypto: sahara - do not resize req->src when doing hash operations
+Date: Mon, 22 Jan 2024 15:49:45 -0800
+Message-ID: <20240122235820.567830516@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,47 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit 1dec1311b9b6cc9c5fd26a77b936f542f03c51d1 ]
+[ Upstream commit a3c6f4f4d249cecaf2f34471aadbfb4f4ef57298 ]
 
-Smatch called out a warning for null checking a ptr that is assigned by
-list_entry(). list_entry() does not return null and, if the list is empty,
-can return an invalid ptr. Thus, the !psrp check does not execute properly.
+When testing sahara sha256 speed performance with tcrypt (mode=404) on
+imx53-qsrb board, multiple "Invalid numbers of src SG." errors are
+reported. This was traced to sahara_walk_and_recalc() resizing req->src
+and causing the subsequent dma_map_sg() call to fail.
 
- drivers/scsi/lpfc/lpfc_els.c:2133 lpfc_cmpl_els_plogi()
- warn: list_entry() does not return NULL 'prsp'
+Now that the previous commit fixed sahara_sha_hw_links_create() to take
+into account the actual request size, rather than relying on sg->length
+values, the resize operation is no longer necessary.
 
-Replace list_entry() with list_get_first(), which does a list_empty() check
-before returning the first entry.
+Therefore, remove sahara_walk_and_recalc() and simplify associated logic.
 
-Fixes: a3c3c0a806f1 ("scsi: lpfc: Validate ELS LS_ACC completion payload")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-scsi/01b7568f-4ab4-4d56-bfa6-9ecc5fc261fe@moroto.mountain/
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20231031191224.150862-4-justintee8345@gmail.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_els.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/sahara.c | 38 ++------------------------------------
+ 1 file changed, 2 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
-index f9627eddab08..0829fe6ddff8 100644
---- a/drivers/scsi/lpfc/lpfc_els.c
-+++ b/drivers/scsi/lpfc/lpfc_els.c
-@@ -2128,8 +2128,8 @@ lpfc_cmpl_els_plogi(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
- 						NLP_EVT_DEVICE_RM);
+diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
+index dd8291a4442c..fabe4f381fb6 100644
+--- a/drivers/crypto/sahara.c
++++ b/drivers/crypto/sahara.c
+@@ -886,24 +886,6 @@ static int sahara_sha_hw_context_descriptor_create(struct sahara_dev *dev,
+ 	return 0;
+ }
+ 
+-static int sahara_walk_and_recalc(struct scatterlist *sg, unsigned int nbytes)
+-{
+-	if (!sg || !sg->length)
+-		return nbytes;
+-
+-	while (nbytes && sg) {
+-		if (nbytes <= sg->length) {
+-			sg->length = nbytes;
+-			sg_mark_end(sg);
+-			break;
+-		}
+-		nbytes -= sg->length;
+-		sg = sg_next(sg);
+-	}
+-
+-	return nbytes;
+-}
+-
+ static int sahara_sha_prepare_request(struct ahash_request *req)
+ {
+ 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
+@@ -940,36 +922,20 @@ static int sahara_sha_prepare_request(struct ahash_request *req)
+ 					hash_later, 0);
+ 	}
+ 
+-	/* nbytes should now be multiple of blocksize */
+-	req->nbytes = req->nbytes - hash_later;
+-
+-	sahara_walk_and_recalc(req->src, req->nbytes);
+-
++	rctx->total = len - hash_later;
+ 	/* have data from previous operation and current */
+ 	if (rctx->buf_cnt && req->nbytes) {
+ 		sg_init_table(rctx->in_sg_chain, 2);
+ 		sg_set_buf(rctx->in_sg_chain, rctx->rembuf, rctx->buf_cnt);
+-
+ 		sg_chain(rctx->in_sg_chain, 2, req->src);
+-
+-		rctx->total = req->nbytes + rctx->buf_cnt;
+ 		rctx->in_sg = rctx->in_sg_chain;
+-
+-		req->src = rctx->in_sg_chain;
+ 	/* only data from previous operation */
+ 	} else if (rctx->buf_cnt) {
+-		if (req->src)
+-			rctx->in_sg = req->src;
+-		else
+-			rctx->in_sg = rctx->in_sg_chain;
+-		/* buf was copied into rembuf above */
++		rctx->in_sg = rctx->in_sg_chain;
+ 		sg_init_one(rctx->in_sg, rctx->rembuf, rctx->buf_cnt);
+-		rctx->total = rctx->buf_cnt;
+ 	/* no data from previous operation */
  	} else {
- 		/* Good status, call state machine */
--		prsp = list_entry(cmdiocb->cmd_dmabuf->list.next,
--				  struct lpfc_dmabuf, list);
-+		prsp = list_get_first(&cmdiocb->cmd_dmabuf->list,
-+				      struct lpfc_dmabuf, list);
- 		if (!prsp)
- 			goto out;
- 		if (!lpfc_is_els_acc_rsp(prsp))
+ 		rctx->in_sg = req->src;
+-		rctx->total = req->nbytes;
+-		req->src = rctx->in_sg;
+ 	}
+ 
+ 	/* on next call, we only have the remaining data in the buffer */
 -- 
 2.43.0
 
