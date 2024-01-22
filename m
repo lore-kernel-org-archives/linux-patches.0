@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534ED12F5BC;
-	Tue, 23 Jan 2024 01:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBABC657B3;
+	Tue, 23 Jan 2024 01:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971781; cv=none; b=dHBNNKsUtFj292E1Z8noockeaN1oNrHucAbpV2SLxRg0NT8LdmC+slPZ8glXqg/or81uIU7mYhpEPIHRLIkLMBDAnMMPMyfQ4uFUDL4qHFAE4EpHuylNfGm7CDH3IAvjsxuoR2Tta4rXGsg5EpMgFwG3ZP3I0BNSThl3EYzWy7g=
+	t=1705971783; cv=none; b=QSNy479f9qP5xDK2Y1YjHOBnv7y0TCjM/fshnxsV+XPs9p6HT6OTPkVkvcN6s54IWWnHApEh96J6ZI3UIx8kvdqtgvjUGF7nRPMMsDan8vJJgtK1RZ8cBGls1jFkYCVtv10TWxruu16T7UAfPZcfe3tJxoT/ve2n6pCFUIrtXGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971781; c=relaxed/simple;
-	bh=Wy8LiaWRQLaYGkWQjaIMNjG6GsOjhD6iXmDiU+cDcG0=;
+	s=arc-20240116; t=1705971783; c=relaxed/simple;
+	bh=7zs+r3xLG3SQjK33dRK/wftUr7LIMcADoYCZKgJPtvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FmvLxK96n6GYLOw6mQh6qaXn/ivJI//AvJDtJ5YAmgC3wO28RmT60IYKVaqC3jv9kwPq+nwTLwZvJcTeeC/cEdnj+qAkKGsUT2luUczWV1tMvWpp4KmjL+OpjZp+m8A6sIP2bMSAKLhXl5lx9zJdK49fQ/Uvh8VcgEmwUvl68eM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00n2OETn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ffj7GPUcWCUh+7l42Atov4FDd2nvpSeKbnpgQ61cwMYj7LFlcesd7BnDYAUKWVYASq5YKFMMqlfGKqEf9w2eiUutGV0bCVRXguI+E/PgPh6/mw/aLJug73YAquJ7lFDNf/EPkjoGc5SJqxofScgOEbxYsusxVq0vYKkBBgJvPns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkrBSh/T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00n2OETn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D3BC433F1;
-	Tue, 23 Jan 2024 01:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkrBSh/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578F8C433F1;
+	Tue, 23 Jan 2024 01:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971781;
-	bh=Wy8LiaWRQLaYGkWQjaIMNjG6GsOjhD6iXmDiU+cDcG0=;
+	s=korg; t=1705971782;
+	bh=7zs+r3xLG3SQjK33dRK/wftUr7LIMcADoYCZKgJPtvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=00n2OETnLNofncHLUenEubziuFY6NjM3Qa7r4PA1Tr9hrQmZZEJ6G8YpPH0sPR+54
-	 LvcroyPEKFKPsRvSkPEzQehJDNOIuc9Y8YMJRGLQKZtDx/nbQp4dVP6YHGPNSMoOdu
-	 ri1qX9/dIa36RXHZqRBWYt5xoEhqPcYA3/XlUN1o=
+	b=gkrBSh/TB3RRjOXjIlMTgZ+or5Zh4QbYRSQX1dyg+7LYjUbl6SzbG0CcQ+ZHBD0O8
+	 j3p52EuoIYBDX2OEfGbyXUr8M6o3IoHDm82K+/sO8gplIecob8ghJusXl2XHONmWIR
+	 8iYztmW3sB0E7QYp7vP7J7zSfwmnDqrykb/S6IU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.10 229/286] wifi: rtlwifi: Convert LNKCTL change to PCIe cap RMW accessors
-Date: Mon, 22 Jan 2024 15:58:55 -0800
-Message-ID: <20240122235740.888064378@linuxfoundation.org>
+	Marcelo Schmitt <marcelo.schmitt@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 319/417] iio: adc: ad7091r: Pass iio_dev to event handler
+Date: Mon, 22 Jan 2024 15:58:07 -0800
+Message-ID: <20240122235802.864187277@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,82 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Marcelo Schmitt <marcelo.schmitt@analog.com>
 
-commit 5894d0089cbc146063dcc0239a78ede0a8142efb upstream.
+commit a25a7df518fc71b1ba981d691e9322e645d2689c upstream.
 
-The rtlwifi driver comes with custom code to write into PCIe Link
-Control register. RMW access for the Link Control register requires
-locking that is already provided by the standard PCIe capability
-accessors.
+Previous version of ad7091r event handler received the ADC state pointer
+and retrieved the iio device from driver data field with dev_get_drvdata().
+However, no driver data have ever been set, which led to null pointer
+dereference when running the event handler.
 
-Convert the custom RMW code writing into LNKCTL register to standard
-RMW capability accessors. The accesses are changed to cover the full
-LNKCTL register instead of touching just a single byte of the register.
+Pass the iio device to the event handler and retrieve the ADC state struct
+from it so we avoid the null pointer dereference and save the driver from
+filling the driver data field.
 
-Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231124084725.12738-3-ilpo.jarvinen@linux.intel.com
+Fixes: ca69300173b6 ("iio: adc: Add support for AD7091R5 ADC")
+Signed-off-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
+Link: https://lore.kernel.org/r/5024b764107463de9578d5b3b0a3d5678e307b1a.1702746240.git.marcelo.schmitt1@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c |   21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/iio/adc/ad7091r-base.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -164,21 +164,29 @@ static bool _rtl_pci_platform_switch_dev
- 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
- 	struct rtl_hal *rtlhal = rtl_hal(rtl_priv(hw));
+--- a/drivers/iio/adc/ad7091r-base.c
++++ b/drivers/iio/adc/ad7091r-base.c
+@@ -174,8 +174,8 @@ static const struct iio_info ad7091r_inf
  
-+	value &= PCI_EXP_LNKCTL_ASPMC;
-+
- 	if (rtlhal->hw_type != HARDWARE_TYPE_RTL8192SE)
--		value |= 0x40;
-+		value |= PCI_EXP_LNKCTL_CCC;
- 
--	pci_write_config_byte(rtlpci->pdev, 0x80, value);
-+	pcie_capability_clear_and_set_word(rtlpci->pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_ASPMC | value,
-+					   value);
- 
- 	return false;
- }
- 
--/*When we set 0x01 to enable clk request. Set 0x0 to disable clk req.*/
--static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u8 value)
-+/* @value is PCI_EXP_LNKCTL_CLKREQ_EN or 0 to enable/disable clk request. */
-+static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u16 value)
+ static irqreturn_t ad7091r_event_handler(int irq, void *private)
  {
- 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
- 	struct rtl_hal *rtlhal = rtl_hal(rtl_priv(hw));
- 
--	pci_write_config_byte(rtlpci->pdev, 0x81, value);
-+	value &= PCI_EXP_LNKCTL_CLKREQ_EN;
-+
-+	pcie_capability_clear_and_set_word(rtlpci->pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_CLKREQ_EN,
-+					   value);
- 
- 	if (rtlhal->hw_type == HARDWARE_TYPE_RTL8192SE)
- 		udelay(100);
-@@ -259,7 +267,8 @@ static void rtl_pci_enable_aspm(struct i
- 
- 	if (ppsc->reg_rfps_level & RT_RF_OFF_LEVL_CLK_REQ) {
- 		_rtl_pci_switch_clk_req(hw, (ppsc->reg_rfps_level &
--					     RT_RF_OFF_LEVL_CLK_REQ) ? 1 : 0);
-+					     RT_RF_OFF_LEVL_CLK_REQ) ?
-+					     PCI_EXP_LNKCTL_CLKREQ_EN : 0);
- 		RT_SET_PS_LEVEL(ppsc, RT_RF_OFF_LEVL_CLK_REQ);
+-	struct ad7091r_state *st = (struct ad7091r_state *) private;
+-	struct iio_dev *iio_dev = dev_get_drvdata(st->dev);
++	struct iio_dev *iio_dev = private;
++	struct ad7091r_state *st = iio_priv(iio_dev);
+ 	unsigned int i, read_val;
+ 	int ret;
+ 	s64 timestamp = iio_get_time_ns(iio_dev);
+@@ -234,7 +234,7 @@ int ad7091r_probe(struct device *dev, co
+ 	if (irq) {
+ 		ret = devm_request_threaded_irq(dev, irq, NULL,
+ 				ad7091r_event_handler,
+-				IRQF_TRIGGER_FALLING | IRQF_ONESHOT, name, st);
++				IRQF_TRIGGER_FALLING | IRQF_ONESHOT, name, iio_dev);
+ 		if (ret)
+ 			return ret;
  	}
- 	udelay(100);
 
 
