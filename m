@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E5023DB;
-	Tue, 23 Jan 2024 00:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02C223DB;
+	Tue, 23 Jan 2024 00:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969840; cv=none; b=UMv4BLut2oSJH6K07znKR7C0GyGpptwZe9SgEWZfnurNVXLfGlSsXumfRqvm44VJ39qX8TceiIMTOzAKDxUxvNlVj/UZOfRKPGY4UMfxOoSiEAT4a8kCaJfLm/zdjMN+0onuDGeAhrsWiMT49t3M9h1InWCQFb2MJcAioUKV7Fs=
+	t=1705969842; cv=none; b=gZua7uJnTomwx5KLEX3zSfisWClXlWFQmYRpOBV5Ygik/DEosTqhP8EUFOfLlfxehEv6Nn8GR7mufQbSn6/1DbbEclqnW+2IxPPjdeqKVMrg32zn9LsTWjXr4klG0r7u+IjfLg6yKq8ddoqTGCgS3i5kdLNUtCGiy+nSXb5jOeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969840; c=relaxed/simple;
-	bh=8wipFKPVz2ZVu4TachhBa9fARkSuWo8q8ABGwYIpL54=;
+	s=arc-20240116; t=1705969842; c=relaxed/simple;
+	bh=KCUbabQrJFXUHPGR2VPyzRYA3V75BBNeaVLaP1C3SiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VYgI1FVayNKiqiwlVLmBJWBQb1rsvFmT047YH+HH0A6fQmaYPv6l4JFWF4rpOYnpvaLa69/eB5o5UZ+12k5M9Cb9TWBajuutn2JSM1AtgV3hgId3Oy4vsz+O0pDxdv27RUjHBcoUy7HUCqTKGo7mm8T6RkQz5MCRrI+XS27/wcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IoUleSSA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e2JbNyyuc101pzL4Lb27hKX+WpTn9fWJQnDz3pDnQWJ7fN5tD58gKij99AFsynmVH4rYbH7buaVlFnqY2eDkUwJ4+0EUR6//8lSZHyqTbC2DWdkAeB5jK6yUSVqk+/JiHMhPJghDV47N82T9WkFtN1TV8+8IT7sfPUrh4HKakx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccDeXIFx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IoUleSSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D88C43390;
-	Tue, 23 Jan 2024 00:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccDeXIFx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E263C433F1;
+	Tue, 23 Jan 2024 00:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969839;
-	bh=8wipFKPVz2ZVu4TachhBa9fARkSuWo8q8ABGwYIpL54=;
+	s=korg; t=1705969842;
+	bh=KCUbabQrJFXUHPGR2VPyzRYA3V75BBNeaVLaP1C3SiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IoUleSSAz7bb54X2dOcVWVW25kely6kvQZrzUR+ADdSNcl5w3ZE+BCc24Gt9SR31Y
-	 7WEOyrOp+mHYvy/s6h2jIhNLy/pr93hufWhyxWqzZebamnqYi+wy+QvzjuW8/+xVDN
-	 372iFvxGevhNON/vhyrxyOEjwCAiJkAemBSnHep8=
+	b=ccDeXIFxAkwDD/aV5J22sfTOkZGPg3dVD9MyPCL0UTiE9yDOTp8vXjYzxphMBjMse
+	 qvAW66OcENGpwpU/OdEFwa7e4pcrya26tILoW0VxytuR50L42Tia6XWBPZn6K+uvrZ
+	 K9yGNlqYFnV4+Y1NbXRaoVSRaQ/1v09R7ClOvXM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	kernel test robot <lkp@intel.com>,
-	Bart Van Assche <bvanassche@acm.org>
-Subject: [PATCH 6.7 447/641] md/raid1: Use blk_opf_t for read and write operations
-Date: Mon, 22 Jan 2024 15:55:51 -0800
-Message-ID: <20240122235832.008200584@linuxfoundation.org>
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.7 474/641] KVM: x86/pmu: Move PMU reset logic to common x86 code
+Date: Mon, 22 Jan 2024 15:56:18 -0800
+Message-ID: <20240122235832.897381361@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,84 +50,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 7dab24554dedd4e6f408af8eb2d25c89997a6a1f upstream.
+commit cbb359d81a2695bb5e63ec9de06fcbef28518891 upstream.
 
-Use the type blk_opf_t for read and write operations instead of int. This
-patch does not affect the generated code but fixes the following sparse
-warning:
+Move the common (or at least "ignored") aspects of resetting the vPMU to
+common x86 code, along with the stop/release helpers that are no used only
+by the common pmu.c.
 
-drivers/md/raid1.c:1993:60: sparse: sparse: incorrect type in argument 5 (different base types)
-     expected restricted blk_opf_t [usertype] opf
-     got int rw
+There is no need to manually handle fixed counters as all_valid_pmc_idx
+tracks both fixed and general purpose counters, and resetting the vPMU is
+far from a hot path, i.e. the extra bit of overhead to the PMC from the
+index is a non-issue.
 
-Cc: Song Liu <song@kernel.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Fixes: 3c5e514db58f ("md/raid1: Use the new blk_opf_t type")
-Cc: stable@vger.kernel.org # v6.0+
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202401080657.UjFnvQgX-lkp@intel.com/
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240108001223.23835-1-bvanassche@acm.org
+Zero fixed_ctr_ctrl in common code even though it's Intel specific.
+Ensuring it's zero doesn't harm AMD/SVM in any way, and stopping the fixed
+counters via all_valid_pmc_idx, but not clearing the associated control
+bits, would be odd/confusing.
+
+Make the .reset() hook optional as SVM no longer needs vendor specific
+handling.
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Link: https://lore.kernel.org/r/20231103230541.352265-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid1.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/kvm-x86-pmu-ops.h |    2 -
+ arch/x86/kvm/pmu.c                     |   40 ++++++++++++++++++++++++++++++++-
+ arch/x86/kvm/pmu.h                     |   18 --------------
+ arch/x86/kvm/svm/pmu.c                 |   16 -------------
+ arch/x86/kvm/vmx/pmu_intel.c           |   20 ----------------
+ 5 files changed, 40 insertions(+), 56 deletions(-)
 
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1984,12 +1984,12 @@ static void end_sync_write(struct bio *b
+--- a/arch/x86/include/asm/kvm-x86-pmu-ops.h
++++ b/arch/x86/include/asm/kvm-x86-pmu-ops.h
+@@ -22,7 +22,7 @@ KVM_X86_PMU_OP(get_msr)
+ KVM_X86_PMU_OP(set_msr)
+ KVM_X86_PMU_OP(refresh)
+ KVM_X86_PMU_OP(init)
+-KVM_X86_PMU_OP(reset)
++KVM_X86_PMU_OP_OPTIONAL(reset)
+ KVM_X86_PMU_OP_OPTIONAL(deliver_pmi)
+ KVM_X86_PMU_OP_OPTIONAL(cleanup)
+ 
+--- a/arch/x86/kvm/pmu.c
++++ b/arch/x86/kvm/pmu.c
+@@ -250,6 +250,24 @@ static bool pmc_resume_counter(struct kv
+ 	return true;
  }
  
- static int r1_sync_page_io(struct md_rdev *rdev, sector_t sector,
--			   int sectors, struct page *page, int rw)
-+			   int sectors, struct page *page, blk_opf_t rw)
++static void pmc_release_perf_event(struct kvm_pmc *pmc)
++{
++	if (pmc->perf_event) {
++		perf_event_release_kernel(pmc->perf_event);
++		pmc->perf_event = NULL;
++		pmc->current_config = 0;
++		pmc_to_pmu(pmc)->event_count--;
++	}
++}
++
++static void pmc_stop_counter(struct kvm_pmc *pmc)
++{
++	if (pmc->perf_event) {
++		pmc->counter = pmc_read_counter(pmc);
++		pmc_release_perf_event(pmc);
++	}
++}
++
+ static int filter_cmp(const void *pa, const void *pb, u64 mask)
  {
- 	if (sync_page_io(rdev, sector, sectors << 9, page, rw, false))
- 		/* success */
- 		return 1;
--	if (rw == WRITE) {
-+	if (rw == REQ_OP_WRITE) {
- 		set_bit(WriteErrorSeen, &rdev->flags);
- 		if (!test_and_set_bit(WantReplacement,
- 				      &rdev->flags))
-@@ -2106,7 +2106,7 @@ static int fix_sync_read_error(struct r1
- 			rdev = conf->mirrors[d].rdev;
- 			if (r1_sync_page_io(rdev, sect, s,
- 					    pages[idx],
--					    WRITE) == 0) {
-+					    REQ_OP_WRITE) == 0) {
- 				r1_bio->bios[d]->bi_end_io = NULL;
- 				rdev_dec_pending(rdev, mddev);
- 			}
-@@ -2121,7 +2121,7 @@ static int fix_sync_read_error(struct r1
- 			rdev = conf->mirrors[d].rdev;
- 			if (r1_sync_page_io(rdev, sect, s,
- 					    pages[idx],
--					    READ) != 0)
-+					    REQ_OP_READ) != 0)
- 				atomic_add(s, &rdev->corrected_errors);
- 		}
- 		sectors -= s;
-@@ -2333,7 +2333,7 @@ static void fix_read_error(struct r1conf
- 				atomic_inc(&rdev->nr_pending);
- 				rcu_read_unlock();
- 				r1_sync_page_io(rdev, sect, s,
--						conf->tmppage, WRITE);
-+						conf->tmppage, REQ_OP_WRITE);
- 				rdev_dec_pending(rdev, mddev);
- 			} else
- 				rcu_read_unlock();
-@@ -2350,7 +2350,7 @@ static void fix_read_error(struct r1conf
- 				atomic_inc(&rdev->nr_pending);
- 				rcu_read_unlock();
- 				if (r1_sync_page_io(rdev, sect, s,
--						    conf->tmppage, READ)) {
-+						conf->tmppage, REQ_OP_READ)) {
- 					atomic_add(s, &rdev->corrected_errors);
- 					pr_info("md/raid1:%s: read error corrected (%d sectors at %llu on %pg)\n",
- 						mdname(mddev), s,
+ 	u64 a = *(u64 *)pa & mask;
+@@ -654,7 +672,27 @@ void kvm_pmu_refresh(struct kvm_vcpu *vc
+ 
+ void kvm_pmu_reset(struct kvm_vcpu *vcpu)
+ {
+-	static_call(kvm_x86_pmu_reset)(vcpu);
++	struct kvm_pmu *pmu = vcpu_to_pmu(vcpu);
++	struct kvm_pmc *pmc;
++	int i;
++
++	bitmap_zero(pmu->reprogram_pmi, X86_PMC_IDX_MAX);
++
++	for_each_set_bit(i, pmu->all_valid_pmc_idx, X86_PMC_IDX_MAX) {
++		pmc = static_call(kvm_x86_pmu_pmc_idx_to_pmc)(pmu, i);
++		if (!pmc)
++			continue;
++
++		pmc_stop_counter(pmc);
++		pmc->counter = 0;
++
++		if (pmc_is_gp(pmc))
++			pmc->eventsel = 0;
++	}
++
++	pmu->fixed_ctr_ctrl = pmu->global_ctrl = pmu->global_status = 0;
++
++	static_call_cond(kvm_x86_pmu_reset)(vcpu);
+ }
+ 
+ void kvm_pmu_init(struct kvm_vcpu *vcpu)
+--- a/arch/x86/kvm/pmu.h
++++ b/arch/x86/kvm/pmu.h
+@@ -80,24 +80,6 @@ static inline void pmc_write_counter(str
+ 	pmc->counter &= pmc_bitmask(pmc);
+ }
+ 
+-static inline void pmc_release_perf_event(struct kvm_pmc *pmc)
+-{
+-	if (pmc->perf_event) {
+-		perf_event_release_kernel(pmc->perf_event);
+-		pmc->perf_event = NULL;
+-		pmc->current_config = 0;
+-		pmc_to_pmu(pmc)->event_count--;
+-	}
+-}
+-
+-static inline void pmc_stop_counter(struct kvm_pmc *pmc)
+-{
+-	if (pmc->perf_event) {
+-		pmc->counter = pmc_read_counter(pmc);
+-		pmc_release_perf_event(pmc);
+-	}
+-}
+-
+ static inline bool pmc_is_gp(struct kvm_pmc *pmc)
+ {
+ 	return pmc->type == KVM_PMC_GP;
+--- a/arch/x86/kvm/svm/pmu.c
++++ b/arch/x86/kvm/svm/pmu.c
+@@ -233,21 +233,6 @@ static void amd_pmu_init(struct kvm_vcpu
+ 	}
+ }
+ 
+-static void amd_pmu_reset(struct kvm_vcpu *vcpu)
+-{
+-	struct kvm_pmu *pmu = vcpu_to_pmu(vcpu);
+-	int i;
+-
+-	for (i = 0; i < KVM_AMD_PMC_MAX_GENERIC; i++) {
+-		struct kvm_pmc *pmc = &pmu->gp_counters[i];
+-
+-		pmc_stop_counter(pmc);
+-		pmc->counter = pmc->prev_counter = pmc->eventsel = 0;
+-	}
+-
+-	pmu->global_ctrl = pmu->global_status = 0;
+-}
+-
+ struct kvm_pmu_ops amd_pmu_ops __initdata = {
+ 	.hw_event_available = amd_hw_event_available,
+ 	.pmc_idx_to_pmc = amd_pmc_idx_to_pmc,
+@@ -259,7 +244,6 @@ struct kvm_pmu_ops amd_pmu_ops __initdat
+ 	.set_msr = amd_pmu_set_msr,
+ 	.refresh = amd_pmu_refresh,
+ 	.init = amd_pmu_init,
+-	.reset = amd_pmu_reset,
+ 	.EVENTSEL_EVENT = AMD64_EVENTSEL_EVENT,
+ 	.MAX_NR_GP_COUNTERS = KVM_AMD_PMC_MAX_GENERIC,
+ 	.MIN_NR_GP_COUNTERS = AMD64_NUM_COUNTERS,
+--- a/arch/x86/kvm/vmx/pmu_intel.c
++++ b/arch/x86/kvm/vmx/pmu_intel.c
+@@ -632,26 +632,6 @@ static void intel_pmu_init(struct kvm_vc
+ 
+ static void intel_pmu_reset(struct kvm_vcpu *vcpu)
+ {
+-	struct kvm_pmu *pmu = vcpu_to_pmu(vcpu);
+-	struct kvm_pmc *pmc = NULL;
+-	int i;
+-
+-	for (i = 0; i < KVM_INTEL_PMC_MAX_GENERIC; i++) {
+-		pmc = &pmu->gp_counters[i];
+-
+-		pmc_stop_counter(pmc);
+-		pmc->counter = pmc->prev_counter = pmc->eventsel = 0;
+-	}
+-
+-	for (i = 0; i < KVM_PMC_MAX_FIXED; i++) {
+-		pmc = &pmu->fixed_counters[i];
+-
+-		pmc_stop_counter(pmc);
+-		pmc->counter = pmc->prev_counter = 0;
+-	}
+-
+-	pmu->fixed_ctr_ctrl = pmu->global_ctrl = pmu->global_status = 0;
+-
+ 	intel_pmu_release_guest_lbr_event(vcpu);
+ }
+ 
 
 
