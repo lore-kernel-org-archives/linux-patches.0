@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836A613DBB7;
-	Tue, 23 Jan 2024 01:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBB013E204;
+	Tue, 23 Jan 2024 01:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971992; cv=none; b=fHK/q9DRiBNPMO9faTrHcH72Lrw4sU6P1B+K90i4oSiQj3SJwOcJ0QtDyngwazzhIKyQYtR19ZgZAQxFE3XK4XuRLpBWcmwGyLzSc0pRD/s91cfBdV/4U54nSxjDhOFu61j4YTlEaW8GMXC+NP7oZ0jXJV304q8WR9rko/dOHMA=
+	t=1705971993; cv=none; b=pqhwFPqOph2IMiEBFn2GRFatnLmfK/lsGsF4xcCK7RnwmNgOXgYIicPdNJi84qVD6twuMADObZjeQVSVaVs/bSAMF7fomWVv0CuxmdL83QAEv5DPlT7g2B8P+GLa3NGPY5rPTpVRi7uMyy1en/9mdUknKc06lEPwFiq/Vogq/os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971992; c=relaxed/simple;
-	bh=3r/VwjX90zSYCIe5IgSBj5eCWTyCzoEpkj4p9Uh125M=;
+	s=arc-20240116; t=1705971993; c=relaxed/simple;
+	bh=4Q5Yva7uCy5oQmqLMuKx8EpGvPOHjUBp3TH7RiAEVpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6IiV0WamhtDFzhNNJi/2emaY6CFQu/DlQJOzk4pwZ3PxeXuVLmnWyqNMUqLFFO9DBOFiJLh+XtCaXCxzc1W7JcWRx/1mgoZu1nJopls0M2V069VX+xKfUodNJRSbtIVSsWoa0Dthj/3B7XGvRG/lxKRJFjr4zgeYq2mPWi0HR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yT6LE96Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dfp3F6v3H4Onoo8Z0EKZXD794aPtPDcdKajIuwC0J4o7yLLaxLZu+2KEuaeKm/i/en/wJLP9jmSVhbxQLiGSzy9p5oSFeNww7Me6rM2AKEeZaS/qg1otCvpwJbOsQofVvmFLP/XlyWy9NPVuEMtHTLf56ke9Nm2DEdsNeK6E2K8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4bCprsB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yT6LE96Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB5FC433C7;
-	Tue, 23 Jan 2024 01:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4bCprsB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B156C433F1;
+	Tue, 23 Jan 2024 01:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971992;
-	bh=3r/VwjX90zSYCIe5IgSBj5eCWTyCzoEpkj4p9Uh125M=;
+	s=korg; t=1705971993;
+	bh=4Q5Yva7uCy5oQmqLMuKx8EpGvPOHjUBp3TH7RiAEVpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yT6LE96QoE51tfAYzrwgk/jn9eU7FdcHtwXKlumxBGV87qumRp4lGDNoPJhogH8SM
-	 0dhsVKXYeTCF3ymFuCcuiUiPcy54Svcc1R9z/oJ0ZPSwQX1n/DOabWnvNDdvAIDbp+
-	 jybDalgwLzMwpWMVhSYUlm+nmGqPUuulZkbKu3wo=
+	b=r4bCprsBFcRZIN0wBP6FZ/X/qGo9wsycbEcExfBqmpFmv8vrQe/GFIpyB4omSWV02
+	 tUGQ4ozPDAD0wESm6vkqngfp4IV951hFjlGYQOUY0v+hr/vF30S3tr5lLciSra28h7
+	 t0N2nVE/kOIcS8S7+DTWwB1+Qa2X9tkmrp0NoyyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <shuah@kernel.org>,
-	Amit Cohen <amcohen@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Ravi Gunasekaran <r-gunasekaran@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 284/286] selftests: mlxsw: qos_pfc: Adjust the test to support 8 lanes
-Date: Mon, 22 Jan 2024 15:59:50 -0800
-Message-ID: <20240122235742.984457633@linuxfoundation.org>
+Subject: [PATCH 6.1 374/417] PCI: keystone: Fix race condition when initializing PHYs
+Date: Mon, 22 Jan 2024 15:59:02 -0800
+Message-ID: <20240122235804.757795054@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,92 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Cohen <amcohen@nvidia.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit b34f4de6d30cbaa8fed905a5080b6eace8c84dc7 ]
+[ Upstream commit c12ca110c613a81cb0f0099019c839d078cd0f38 ]
 
-'qos_pfc' test checks PFC behavior. The idea is to limit the traffic
-using a shaper somewhere in the flow of the packets. In this area, the
-buffer is smaller than the buffer at the beginning of the flow, so it fills
-up until there is no more space left. The test configures there PFC
-which is supposed to notice that the headroom is filling up and send PFC
-Xoff to indicate the transmitter to stop sending traffic for the priorities
-sharing this PG.
+The PCI driver invokes the PHY APIs using the ks_pcie_enable_phy()
+function. The PHY in this case is the Serdes. It is possible that the
+PCI instance is configured for two lane operation across two different
+Serdes instances, using one lane of each Serdes.
 
-The Xon/Xoff threshold is auto-configured and always equal to
-2*(MTU rounded up to cell size). Even after sending the PFC Xoff packet,
-traffic will keep arriving until the transmitter receives and processes
-the PFC packet. This amount of traffic is known as the PFC delay allowance.
+In such a configuration, if the reference clock for one Serdes is
+provided by the other Serdes, it results in a race condition. After the
+Serdes providing the reference clock is initialized by the PCI driver by
+invoking its PHY APIs, it is not guaranteed that this Serdes remains
+powered on long enough for the PHY APIs based initialization of the
+dependent Serdes. In such cases, the PLL of the dependent Serdes fails
+to lock due to the absence of the reference clock from the former Serdes
+which has been powered off by the PM Core.
 
-Currently the buffer for the delay traffic is configured as 100KB. The
-MTU in the test is 10KB, therefore the threshold for Xoff is about 20KB.
-This allows 80KB extra to be stored in this buffer.
+Fix this by obtaining reference to the PHYs before invoking the PHY
+initialization APIs and releasing reference after the initialization is
+complete.
 
-8-lane ports use two buffers among which the configured buffer is split,
-the Xoff threshold then applies to each buffer in parallel.
-
-The test does not take into account the behavior of 8-lane ports, when the
-ports are configured to 400Gbps with 8 lanes or 800Gbps with 8 lanes,
-packets are dropped and the test fails.
-
-Check if the relevant ports use 8 lanes, in such case double the size of
-the buffer, as the headroom is split half-half.
-
-Cc: Shuah Khan <shuah@kernel.org>
-Fixes: bfa804784e32 ("selftests: mlxsw: Add a PFC test")
-Signed-off-by: Amit Cohen <amcohen@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/23ff11b7dff031eb04a41c0f5254a2b636cd8ebb.1705502064.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/linux-pci/20230927041845.1222080-1-s-vadapalli@ti.com
+Fixes: 49229238ab47 ("PCI: keystone: Cleanup PHY handling")
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Ravi Gunasekaran <r-gunasekaran@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/drivers/net/mlxsw/qos_pfc.sh     | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pci-keystone.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/tools/testing/selftests/drivers/net/mlxsw/qos_pfc.sh b/tools/testing/selftests/drivers/net/mlxsw/qos_pfc.sh
-index 5d5622fc2758..56761de1ca3b 100755
---- a/tools/testing/selftests/drivers/net/mlxsw/qos_pfc.sh
-+++ b/tools/testing/selftests/drivers/net/mlxsw/qos_pfc.sh
-@@ -121,6 +121,9 @@ h2_destroy()
+diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+index d2634dafb68e..7ecad72cff7e 100644
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -1219,7 +1219,16 @@ static int ks_pcie_probe(struct platform_device *pdev)
+ 		goto err_link;
+ 	}
  
- switch_create()
- {
-+	local lanes_swp4
-+	local pg1_size
++	/* Obtain references to the PHYs */
++	for (i = 0; i < num_lanes; i++)
++		phy_pm_runtime_get_sync(ks_pcie->phy[i]);
 +
- 	# pools
- 	# -----
- 
-@@ -230,7 +233,20 @@ switch_create()
- 	dcb pfc set dev $swp4 prio-pfc all:off 1:on
- 	# PG0 will get autoconfigured to Xoff, give PG1 arbitrarily 100K, which
- 	# is (-2*MTU) about 80K of delay provision.
--	dcb buffer set dev $swp4 buffer-size all:0 1:$_100KB
-+	pg1_size=$_100KB
+ 	ret = ks_pcie_enable_phy(ks_pcie);
 +
-+	setup_wait_dev_with_timeout $swp4
++	/* Release references to the PHYs */
++	for (i = 0; i < num_lanes; i++)
++		phy_pm_runtime_put_sync(ks_pcie->phy[i]);
 +
-+	lanes_swp4=$(ethtool $swp4 | grep 'Lanes:')
-+	lanes_swp4=${lanes_swp4#*"Lanes: "}
-+
-+	# 8-lane ports use two buffers among which the configured buffer
-+	# is split, so double the size to get twice (20K + 80K).
-+	if [[ $lanes_swp4 -eq 8 ]]; then
-+		pg1_size=$((pg1_size * 2))
-+	fi
-+
-+	dcb buffer set dev $swp4 buffer-size all:0 1:$pg1_size
- 
- 	# bridges
- 	# -------
+ 	if (ret) {
+ 		dev_err(dev, "failed to enable phy\n");
+ 		goto err_link;
 -- 
 2.43.0
 
