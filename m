@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386076A354;
-	Tue, 23 Jan 2024 02:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7E96BB5B;
+	Tue, 23 Jan 2024 02:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975372; cv=none; b=RfpknnYyMtHAj40L+BT6BWlmHhZJUrcaLSI067sEb9SLk0O7cYcQSGgcrbV7dPwJnx7v9QedA7A/M4DDA3/XU6XFqEUEjNwPHxFXySQ7o2Cw4Ddk6bINojbzYPcOOSEROvhuD5vAyVnx6iu+ECPeeP7P1kWkPsiyh3Hqg4r5NPI=
+	t=1705975373; cv=none; b=bLUjFAA1S7itoOHzlHoMrjVeLspPvBW/VEEV0l02IpVTlkx6/D0TekdXwQ9hbuELLm9QhmSPKLtreH3brSz4woNY6K28BQ1/XVLrHtjwqGjWwZcF5fLu117jLB+lZ6wH7ivzkVKq5MYI6nPTEH9seBPOz+w2x3i6PkGRvBN4aM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975372; c=relaxed/simple;
-	bh=eLeU5xlDBPy/kD//MsCCBsu6RNKMyBYHzhp/eCNwpJ8=;
+	s=arc-20240116; t=1705975373; c=relaxed/simple;
+	bh=/i9+coTjahBXLS/JwBFX8Dt0a6I5FZHcx8DWH/nYiTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OzlzZvmDKh3N/nE6t38Txh2itYgQdNXPqetirDY/huC9FDmYmwefy8uRjux2d0RPfL8a1XTtk7P667qLVzdc/GjoDEVFQzVw4049gg3ZDKe/OIyu+HLJUfzv0+WF5TwPn2ZTeGryvW2mEu5uPD/s5s7Bh+rnwIEZWNdiKcoPTgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IfyAYJYM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rwe98xwrTs+EEFEwPpuDUkmvfuVZ9eSMNz6UyVSqYVdXyzfejQaEEl/HhXzLjsPeU/dDpInkD+8am/CQB6LA5m3JL7Q/NsVHLg+UiwTIqQ21kG/g+Zk2szEG6mJlkHx3kZFCUkAIFxeGU7TE9W+DmRSTwaJ+i57647txzDJWgFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erozlHyB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IfyAYJYM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5ED5C433C7;
-	Tue, 23 Jan 2024 02:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erozlHyB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A4CC433C7;
+	Tue, 23 Jan 2024 02:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975372;
-	bh=eLeU5xlDBPy/kD//MsCCBsu6RNKMyBYHzhp/eCNwpJ8=;
+	s=korg; t=1705975373;
+	bh=/i9+coTjahBXLS/JwBFX8Dt0a6I5FZHcx8DWH/nYiTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IfyAYJYMV2GsvdTDVaTmhxZIoJerQfcOPL9ywrvMPnVYgxtbgeZO/G1HCCPFsWEiU
-	 q1BnokPaCpCWduLrGzMNGcRjOeJp4oSMKOtpH/Ed5OSJSPOPAMyvSfhBixbCIGvWzt
-	 ccqJMiHIHrfyB/MeXqYKBS8fY7tToZhKV956jIC0=
+	b=erozlHyBjUhO+SipNh1Lavggt3s1c+p/ji2oyd0qbUTl5dFTvlE39IJTze2uvTH0q
+	 /S85vr2aqTPtgfb8eFlfcQFu88Rkj2h9Q9vOKyeAOcOGJi+WDPj2qU0nPBEIY8qpst
+	 J9lVxeI/Cnq39hjnX7WZR0pEAvJR8fsjjud1dcFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyuan Mo <hdthky0@gmail.com>,
-	Oded Gabbay <ogabbay@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 309/583] accel/habanalabs: fix information leak in sec_attest_info()
-Date: Mon, 22 Jan 2024 15:56:00 -0800
-Message-ID: <20240122235821.482251221@linuxfoundation.org>
+Subject: [PATCH 6.6 310/583] clk: qcom: gcc-sm8550: Add the missing RETAIN_FF_ENABLE GDSC flag
+Date: Mon, 22 Jan 2024 15:56:01 -0800
+Message-ID: <20240122235821.511023412@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,37 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingyuan Mo <hdthky0@gmail.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit a9f07790a4b2250f0140e9a61c7f842fd9b618c7 ]
+[ Upstream commit 1fe8273c8d4088dd68faaab8640ec95f381cbf1e ]
 
-This function may copy the pad0 field of struct hl_info_sec_attest to user
-mode which has not been initialized, resulting in leakage of kernel heap
-data to user mode. To prevent this, use kzalloc() to allocate and zero out
-the buffer, which can also eliminate other uninitialized holes, if any.
+All of the 8550's GCC GDSCs can and should use the retain registers so
+as not to lose their state when entering lower power modes.
 
-Fixes: 0c88760f8f5e ("habanalabs/gaudi2: add secured attestation info uapi")
-Signed-off-by: Xingyuan Mo <hdthky0@gmail.com>
-Reviewed-by: Oded Gabbay <ogabbay@kernel.org>
-Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
+Fixes: 955f2ea3b9e9 ("clk: qcom: Add GCC driver for SM8550")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231218-topic-8550_fixes-v1-3-ce1272d77540@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/habanalabs/common/habanalabs_ioctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-sm8550.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/accel/habanalabs/common/habanalabs_ioctl.c b/drivers/accel/habanalabs/common/habanalabs_ioctl.c
-index 6a45a92344e9..a7f6c54c123e 100644
---- a/drivers/accel/habanalabs/common/habanalabs_ioctl.c
-+++ b/drivers/accel/habanalabs/common/habanalabs_ioctl.c
-@@ -682,7 +682,7 @@ static int sec_attest_info(struct hl_fpriv *hpriv, struct hl_info_args *args)
- 	if (!sec_attest_info)
- 		return -ENOMEM;
+diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
+index 586126c4dd90..1c3d78500392 100644
+--- a/drivers/clk/qcom/gcc-sm8550.c
++++ b/drivers/clk/qcom/gcc-sm8550.c
+@@ -3002,7 +3002,7 @@ static struct gdsc pcie_0_gdsc = {
+ 		.name = "pcie_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR,
++	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
  
--	info = kmalloc(sizeof(*info), GFP_KERNEL);
-+	info = kzalloc(sizeof(*info), GFP_KERNEL);
- 	if (!info) {
- 		rc = -ENOMEM;
- 		goto free_sec_attest_info;
+ static struct gdsc pcie_0_phy_gdsc = {
+@@ -3011,7 +3011,7 @@ static struct gdsc pcie_0_phy_gdsc = {
+ 		.name = "pcie_0_phy_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR,
++	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc pcie_1_gdsc = {
+@@ -3020,7 +3020,7 @@ static struct gdsc pcie_1_gdsc = {
+ 		.name = "pcie_1_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR,
++	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc pcie_1_phy_gdsc = {
+@@ -3029,7 +3029,7 @@ static struct gdsc pcie_1_phy_gdsc = {
+ 		.name = "pcie_1_phy_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR,
++	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc ufs_phy_gdsc = {
+@@ -3038,7 +3038,7 @@ static struct gdsc ufs_phy_gdsc = {
+ 		.name = "ufs_phy_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR,
++	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc ufs_mem_phy_gdsc = {
+@@ -3047,7 +3047,7 @@ static struct gdsc ufs_mem_phy_gdsc = {
+ 		.name = "ufs_mem_phy_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR,
++	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc usb30_prim_gdsc = {
+@@ -3056,7 +3056,7 @@ static struct gdsc usb30_prim_gdsc = {
+ 		.name = "usb30_prim_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR,
++	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc usb3_phy_gdsc = {
+@@ -3065,7 +3065,7 @@ static struct gdsc usb3_phy_gdsc = {
+ 		.name = "usb3_phy_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR,
++	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
+ static struct clk_regmap *gcc_sm8550_clocks[] = {
 -- 
 2.43.0
 
