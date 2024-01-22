@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016AE627F3;
-	Tue, 23 Jan 2024 00:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C56064A80;
+	Tue, 23 Jan 2024 00:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971276; cv=none; b=ENcj2r2C9BdvHaeXBgqxL6uj8alLgq6qEQ9Q/PnuKCJalN1aA4lAP4e0smHl0fCAn8exVEq5/lEe4qjKTBMx2v8TEZy8AFgyG7n9yFcUVJ8KAp+GxcLw0h+fTs5Hx8snlpCFS0nnfHYBUdm+6lli/FVamlN89hdcgGsTySE7hbc=
+	t=1705971277; cv=none; b=b1Gr9k3UmYUDyEKOJppMffrv3lFX/UF8EXq8NLpBc4qvedCQnbly2SSePuyLUA3iyQFB804+3PcNZtvXvYtueMRb8MG+WK/h4CgNqOVk5XWazPJCmLk/JyxWiRPSasvA4qpSH+PP11IJZDkuB703Z4VCPSt+x472FJo+Ws5Qi5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971276; c=relaxed/simple;
-	bh=lv9dVNU+qwDf56pLV6KT4C0l3PGAClVeoK7MOucHg0g=;
+	s=arc-20240116; t=1705971277; c=relaxed/simple;
+	bh=jclE65WoMfMo6/EYEh4Oi3qlNMye/emCgEbec2zSiR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R3AwzMzSe84EVpe8EmLRgahQGDxGkjMch/yAzkF5RX6cIsPPWJWuFMsAJKDh5wnT2enYKJVYgt5Dq1Q5sNZzvCYdUn2IOUk8Vml4raKoSuzRfsE9R4HHVQE+8crq3mGrOr8Doi5ida/NuKlvV1oJfCoZzQpCTrH1pIHJjg3L/kU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vGjBvSS0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qw/cd9WhBnygOWpoNHQsnBQ+3g7FF3uPcRssKbl/TBkNCc7qHoj4/aXgcfL3SkiAIOr8+izy2lZrOufWTNg7Y32ZrGnD5eGuLmGzVcAsZChj7kEVdIL1SRo4QbFWriUDCoexYeNyD168MafCp3K7sBLhZCCc6QHUAgODn/8+Kz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKqHNP/a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGjBvSS0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D4FC433F1;
-	Tue, 23 Jan 2024 00:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKqHNP/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C63FC433F1;
+	Tue, 23 Jan 2024 00:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971275;
-	bh=lv9dVNU+qwDf56pLV6KT4C0l3PGAClVeoK7MOucHg0g=;
+	s=korg; t=1705971277;
+	bh=jclE65WoMfMo6/EYEh4Oi3qlNMye/emCgEbec2zSiR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vGjBvSS01QqY2+ELr39CtJUN/55uxB8tSKukmpl4FapzDKLJykUc7i9Ffn1xrXOMi
-	 EKqm4r6AOaptSFA2q0+cRMRo08ILJGLlg1fwNRZW+lItkk5RRsBzVYoWCRbukWoIQ/
-	 iTZqWR/c5XH0ipUKvng5GWPYX7HD0oiJFTaMFbF4=
+	b=EKqHNP/aDHJZW5ybpNJUjz5QZz3W6hj+RfJmZeC1o5C5yF4/4q623W/U5d38aVJbV
+	 X+R543Tw+typZJ45gNB349NgsasVz0qvn1J4lt06FEroyO4fXxakilA77IywsFUNp0
+	 aF+lAZI95+tpJ13HInKZSUpDH1exHP/KGIPkfAlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 194/417] media: imx-mipi-csis: Fix clock handling in remove()
-Date: Mon, 22 Jan 2024 15:56:02 -0800
-Message-ID: <20240122235758.653727936@linuxfoundation.org>
+Subject: [PATCH 5.10 102/286] crypto: sahara - improve error handling in sahara_sha_process()
+Date: Mon, 22 Jan 2024 15:56:48 -0800
+Message-ID: <20240122235736.010609768@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit 5705b0e0eb550ff834125a46a4ef99b62093d83d ]
+[ Upstream commit 5deff027fca49a1eb3b20359333cf2ae562a2343 ]
 
-The driver always calls mipi_csis_runtime_suspend() and
-mipi_csis_clk_disable() in remove(). This causes multiple WARNs from the
-kernel, as the clocks get disabled too many times.
+sahara_sha_hw_data_descriptor_create() returns negative error codes on
+failure, so make sure the errors are correctly handled / propagated.
 
-Fix the remove() to call mipi_csis_runtime_suspend() and
-mipi_csis_clk_disable() in a way that reverses what is done in probe().
-
-Link: https://lore.kernel.org/r/20231122-imx-csis-v2-1-e44b8dc4cb66@ideasonboard.com
-
-Fixes: 7807063b862b ("media: staging/imx7: add MIPI CSI-2 receiver subdev for i.MX7")
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/nxp/imx-mipi-csis.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/crypto/sahara.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/nxp/imx-mipi-csis.c b/drivers/media/platform/nxp/imx-mipi-csis.c
-index 905072871ed2..196f2bba419f 100644
---- a/drivers/media/platform/nxp/imx-mipi-csis.c
-+++ b/drivers/media/platform/nxp/imx-mipi-csis.c
-@@ -1553,8 +1553,10 @@ static int mipi_csis_remove(struct platform_device *pdev)
- 	v4l2_async_nf_cleanup(&csis->notifier);
- 	v4l2_async_unregister_subdev(&csis->sd);
+diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
+index 67960acd786a..0ac793f03e28 100644
+--- a/drivers/crypto/sahara.c
++++ b/drivers/crypto/sahara.c
+@@ -987,7 +987,10 @@ static int sahara_sha_process(struct ahash_request *req)
+ 		return ret;
  
-+	if (!pm_runtime_enabled(&pdev->dev))
-+		mipi_csis_runtime_suspend(&pdev->dev);
+ 	if (rctx->first) {
+-		sahara_sha_hw_data_descriptor_create(dev, rctx, req, 0);
++		ret = sahara_sha_hw_data_descriptor_create(dev, rctx, req, 0);
++		if (ret)
++			return ret;
 +
- 	pm_runtime_disable(&pdev->dev);
--	mipi_csis_runtime_suspend(&pdev->dev);
- 	mipi_csis_clk_disable(csis);
- 	media_entity_cleanup(&csis->sd.entity);
- 	fwnode_handle_put(csis->sd.fwnode);
+ 		dev->hw_desc[0]->next = 0;
+ 		rctx->first = 0;
+ 	} else {
+@@ -995,7 +998,10 @@ static int sahara_sha_process(struct ahash_request *req)
+ 
+ 		sahara_sha_hw_context_descriptor_create(dev, rctx, req, 0);
+ 		dev->hw_desc[0]->next = dev->hw_phys_desc[1];
+-		sahara_sha_hw_data_descriptor_create(dev, rctx, req, 1);
++		ret = sahara_sha_hw_data_descriptor_create(dev, rctx, req, 1);
++		if (ret)
++			return ret;
++
+ 		dev->hw_desc[1]->next = 0;
+ 	}
+ 
 -- 
 2.43.0
 
