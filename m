@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D12745E1;
-	Tue, 23 Jan 2024 02:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18557745E1;
+	Tue, 23 Jan 2024 02:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975452; cv=none; b=d3K8yGVO0HivvyXvz8jfyP4p4Zl/ludPOzBr168bggM0WYfx410oErTJaUmpKfQiY/lzgO+xfoag4J5vSK+k6cVffe8Vj5A5fAcD1UQ2p5xr8gCS9UqTAHXb3VZ0uAxQqeW5vDlNK01NFlSzR0Mmr4SF9dRGIVHiMqleQZvo7oQ=
+	t=1705975453; cv=none; b=A7ttXukhcOsgDDoKLnE3yswQIFHFAClBosGHKBVxTrxtgQcgatJGFWmuJCZFOsVIY43scB8P4up0WHPKhJlVZMHFyeeKPdUmehqrtSysK7CVy1qYryrYZjnphmVN1aoio59uIQbhgAvLenpdnxsIhpAiALar9ZzSrMqWQsDVlIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975452; c=relaxed/simple;
-	bh=5gQamw7OGDgIeb9q6gGIxMO0lKW8YVi1D9OT5xuWdCE=;
+	s=arc-20240116; t=1705975453; c=relaxed/simple;
+	bh=5LR//FK2dFJP9PDJacFAXBGQle6PngcfrCgFk8yg5BQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o1rSRVkvNStNbAg3pHvD3cPWSaH4xlezp3tVh4OyoDHSNq7tMykOv4YY1zc9HDfe1W7IxUVbvZPmPtO7FH74w3ba6SX/RbypygbuxIzfbBhFY64NH1aiKQ+Gk/DPhzw+6HK0LEX1qSjPERtIZCQcGhHXOb1xpVyFWYDcZsfiLhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ct/dcrkR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YK+e51kSpy659pq5EvukFzyQbSnoiXbscMvlSn7Km/p6LhGWlmvEDuLSmZDIXGcoVPZxiM4DhslVeoaz8zjHRYcxCkYkOO2tPzOQZjWcuHhn2EJptnGsRuGlcgiHLBn6JuvRC3AaIQTTC3J6Y/ImP/e9BSHH47iss1r6YyF2vkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwXLHOi/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ct/dcrkR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB55BC43399;
-	Tue, 23 Jan 2024 02:04:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwXLHOi/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FDFC43390;
+	Tue, 23 Jan 2024 02:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975451;
-	bh=5gQamw7OGDgIeb9q6gGIxMO0lKW8YVi1D9OT5xuWdCE=;
+	s=korg; t=1705975452;
+	bh=5LR//FK2dFJP9PDJacFAXBGQle6PngcfrCgFk8yg5BQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ct/dcrkRJCdi+P649Ijl/W474oxsxU5Oxjqlet7mzF4hST6SFKxAEufF52RuLTsjH
-	 imWLgGBuEiNeGRm3j6Q5BvUNB3EXD1Vf+fxNOw0Bu7Pm2CJihR3n9rfcEihdnwnBOf
-	 H6Lx2FoJ9KfaZvPcycNwRKK9jZAYw1YjkmCH6urM=
+	b=nwXLHOi/YdCCufalPIAzA8zuRo0cnRQmxsVnvM88gXykgMIIA6ZNVSYximISNuPky
+	 Lwi7z0RB3rxCes6TGtoVA+nlpPl/xchoZIQ+f1fY18xYqInMMSdljvpvPbEKfOrTiE
+	 KNK4DTRro0dV8yQF89QhLfZr8TmtdUXl22/b8zy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Landley <rob@landley.net>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.6 408/583] rootfs: Fix support for rootfstype= when root= is given
-Date: Mon, 22 Jan 2024 15:57:39 -0800
-Message-ID: <20240122235824.461404511@linuxfoundation.org>
+	Gui-Dong Han <2045gemini@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 409/583] Bluetooth: Fix atomicity violation in {min,max}_key_size_set
+Date: Mon, 22 Jan 2024 15:57:40 -0800
+Message-ID: <20240122235824.488513957@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,70 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Berger <stefanb@linux.ibm.com>
+From: Gui-Dong Han <2045gemini@gmail.com>
 
-commit 21528c69a0d8483f7c6345b1a0bc8d8975e9a172 upstream.
+commit da9065caa594d19b26e1a030fd0cc27bd365d685 upstream.
 
-Documentation/filesystems/ramfs-rootfs-initramfs.rst states:
+In min_key_size_set():
+    if (val > hdev->le_max_key_size || val < SMP_MIN_ENC_KEY_SIZE)
+        return -EINVAL;
+    hci_dev_lock(hdev);
+    hdev->le_min_key_size = val;
+    hci_dev_unlock(hdev);
 
-  If CONFIG_TMPFS is enabled, rootfs will use tmpfs instead of ramfs by
-  default.  To force ramfs, add "rootfstype=ramfs" to the kernel command
-  line.
+In max_key_size_set():
+    if (val > SMP_MAX_ENC_KEY_SIZE || val < hdev->le_min_key_size)
+        return -EINVAL;
+    hci_dev_lock(hdev);
+    hdev->le_max_key_size = val;
+    hci_dev_unlock(hdev);
 
-This currently does not work when root= is provided since then
-saved_root_name contains a string and rootfstype= is ignored. Therefore,
-ramfs is currently always chosen when root= is provided.
+The atomicity violation occurs due to concurrent execution of set_min and
+set_max funcs.Consider a scenario where setmin writes a new, valid 'min'
+value, and concurrently, setmax writes a value that is greater than the
+old 'min' but smaller than the new 'min'. In this case, setmax might check
+against the old 'min' value (before acquiring the lock) but write its
+value after the 'min' has been updated by setmin. This leads to a
+situation where the 'max' value ends up being smaller than the 'min'
+value, which is an inconsistency.
 
-The current behavior for rootfs's filesystem is:
+This possible bug is found by an experimental static analysis tool
+developed by our team, BassCheck[1]. This tool analyzes the locking APIs
+to extract function pairs that can be concurrently executed, and then
+analyzes the instructions in the paired functions to identify possible
+concurrency bugs including data races and atomicity violations. The above
+possible bug is reported when our tool analyzes the source code of
+Linux 5.17.
 
-   root=       | rootfstype= | chosen rootfs filesystem
-   ------------+-------------+--------------------------
-   unspecified | unspecified | tmpfs
-   unspecified | tmpfs       | tmpfs
-   unspecified | ramfs       | ramfs
-    provided   | ignored     | ramfs
+To resolve this issue, it is suggested to encompass the validity checks
+within the locked sections in both set_min and set_max funcs. The
+modification ensures that the validation of 'val' against the
+current min/max values is atomic, thus maintaining the integrity of the
+settings. With this patch applied, our tool no longer reports the bug,
+with the kernel configuration allyesconfig for x86_64. Due to the lack of
+associated hardware, we cannot test the patch in runtime testing, and just
+verify it according to the code logic.
 
-rootfstype= should be respected regardless whether root= is given,
-as shown below:
+[1] https://sites.google.com/view/basscheck/
 
-   root=       | rootfstype= | chosen rootfs filesystem
-   ------------+-------------+--------------------------
-   unspecified | unspecified | tmpfs  (as before)
-   unspecified | tmpfs       | tmpfs  (as before)
-   unspecified | ramfs       | ramfs  (as before)
-    provided   | unspecified | ramfs  (compatibility with before)
-    provided   | tmpfs       | tmpfs  (new)
-    provided   | ramfs       | ramfs  (new)
-
-This table represents the new behavior.
-
-Fixes: 6e19eded3684 ("initmpfs: use initramfs if rootfstype= or root= specified")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Rob Landley <rob@landley.net>
-Link: https://lore.kernel.org/lkml/8244c75f-445e-b15b-9dbf-266e7ca666e2@landley.net/
-Reviewed-and-Tested-by: Mimi Zohar <zohar@linux.ibm.com>
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-Link: https://lore.kernel.org/r/20231120011248.396012-1-stefanb@linux.ibm.com
+Fixes: 18f81241b74f ("Bluetooth: Move {min,max}_key_size debugfs ...")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- init/do_mounts.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_debugfs.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/init/do_mounts.c
-+++ b/init/do_mounts.c
-@@ -510,7 +510,10 @@ struct file_system_type rootfs_fs_type =
- 
- void __init init_rootfs(void)
+--- a/net/bluetooth/hci_debugfs.c
++++ b/net/bluetooth/hci_debugfs.c
+@@ -1046,10 +1046,12 @@ static int min_key_size_set(void *data,
  {
--	if (IS_ENABLED(CONFIG_TMPFS) && !saved_root_name[0] &&
--		(!root_fs_names || strstr(root_fs_names, "tmpfs")))
--		is_tmpfs = true;
-+	if (IS_ENABLED(CONFIG_TMPFS)) {
-+		if (!saved_root_name[0] && !root_fs_names)
-+			is_tmpfs = true;
-+		else if (root_fs_names && !!strstr(root_fs_names, "tmpfs"))
-+			is_tmpfs = true;
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val > hdev->le_max_key_size || val < SMP_MIN_ENC_KEY_SIZE)
++	hci_dev_lock(hdev);
++	if (val > hdev->le_max_key_size || val < SMP_MIN_ENC_KEY_SIZE) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
 +	}
- }
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->le_min_key_size = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -1074,10 +1076,12 @@ static int max_key_size_set(void *data,
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val > SMP_MAX_ENC_KEY_SIZE || val < hdev->le_min_key_size)
++	hci_dev_lock(hdev);
++	if (val > SMP_MAX_ENC_KEY_SIZE || val < hdev->le_min_key_size) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->le_max_key_size = val;
+ 	hci_dev_unlock(hdev);
+ 
 
 
