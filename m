@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37DF50A77;
-	Tue, 23 Jan 2024 00:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6853150A75;
+	Tue, 23 Jan 2024 00:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970385; cv=none; b=dFDEjPVBroyGnYAqXb6P8rdfncpAqcU8kLi3q7h+4346X7nKH7DlXJl/olNBO8nSdvwXlTMzBmdbMUhk7Yk3ASYuc7KjZuNSRmxpfVS6yEiaPlVOSy28A+2Fjzz1krmmZfJrblZJQIXDP8ry8SsZTGLRMiT3rrIYDcgoTU5HlG4=
+	t=1705970389; cv=none; b=ljMH1lvXl2p0xChEiv5VWcjCdaqBzULsrJJGmRt0rnzHeMVa0MOUo9vfVMbb4h6Ev+2ndSZG0ccZjKOiMZn9WxETyjOk8j69lIQsLp+UMqqqjVTFmfQNDGUnHxmlGNlAy5JhWiOd7td6NVp8UvNBQm/4ci6C2nbjaOOIzaOEvCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970385; c=relaxed/simple;
-	bh=hElil6CFwDxdjqgTaomk462b6JpQCOX5Wcg7xKsOlx8=;
+	s=arc-20240116; t=1705970389; c=relaxed/simple;
+	bh=qt06AEzndtFWNw/11YLickqloyK+Z7K4H33TyO2uU98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TrlJVjq6S7m7vP/OGmA3vFsLpdC546SWZLXIXkuatrMGVjPEjJpUpTQJ1sLE15MlLfPn3qFFO/MPjmKDqe579pfvbPUBEmX3RDFq4oflE70jhKM96sBmd8sTSqTGk3kYVA3YSn/rRPhXYN+5X11KsxaZlsnGLmhi2Ok5tQ92Szs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfORpHn5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qYeO+B5nMq99+/VPE7zYj9eqD5ykft7X0A3afd8RLb0IgyZf7t4amyjt5k6R7Vs2xp2lHpp9fz/ddJ9wTpBxeWxMIKlWktzk4ei21uKatJqFnmnB9Ke1vUW5WZLI0XfX2Qm3VDX8GRRu+H7IByS7X15DcpvRFp7nribwAOM8muU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELF7YSp1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfORpHn5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80036C433F1;
-	Tue, 23 Jan 2024 00:39:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELF7YSp1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C005BC433F1;
+	Tue, 23 Jan 2024 00:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970384;
-	bh=hElil6CFwDxdjqgTaomk462b6JpQCOX5Wcg7xKsOlx8=;
+	s=korg; t=1705970389;
+	bh=qt06AEzndtFWNw/11YLickqloyK+Z7K4H33TyO2uU98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pfORpHn5eSjqGqf6k+YdfWVQ1NjkhHleWhgpqWOIuoqU2dT2tMLSEcEwd9khA7bAA
-	 tsZKS9PPfXguL3viqiWPzPaHmXyFoZdtRf8LPXBqFP1bJKmI7mCichdiHcxFO0vDc8
-	 OV6FIVi5Uxq0t1VHPUEA9xd6vqETYgFzIzXNyaKM=
+	b=ELF7YSp18SPIXigfdNWnk2dPY8ZdkILFKNL+uvdsG3I5DkShrVM5d/n/i0Mi35PiA
+	 4zIxnf+tSbqIsUp2lyGloHwdVNKdSgT2Z0csWvBNozPQ3EyKpDn5fKjIxN6poJz4VY
+	 fRDbTdEBbp5MzhSqYoH06iuOIxHENVxv1c1VT1Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	=?UTF-8?q?Ludvig=20P=C3=A4rsson?= <ludvig.parsson@axis.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 641/641] i2c: s3c24xx: fix transferring more than one message in polling mode
-Date: Mon, 22 Jan 2024 15:59:05 -0800
-Message-ID: <20240122235838.339607207@linuxfoundation.org>
+Subject: [PATCH 6.7 632/641] ethtool: netlink: Add missing ethnl_ops_begin/complete
+Date: Mon, 22 Jan 2024 15:58:56 -0800
+Message-ID: <20240122235838.051842301@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -46,92 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Ludvig Pärsson <ludvig.parsson@axis.com>
 
-[ Upstream commit 990489e1042c6c5d6bccf56deca68f8dbeed8180 ]
+[ Upstream commit f1172f3ee3a98754d95b968968920a7d03fdebcc ]
 
-To properly handle ACK on the bus when transferring more than one
-message in polling mode, move the polling handling loop from
-s3c24xx_i2c_message_start() to s3c24xx_i2c_doxfer(). This way
-i2c_s3c_irq_nextbyte() is always executed till the end, properly
-acknowledging the IRQ bits and no recursive calls to
-i2c_s3c_irq_nextbyte() are made.
+Accessing an ethernet device that is powered off or clock gated might
+cause the CPU to hang. Add ethnl_ops_begin/complete in
+ethnl_set_features() to protect against this.
 
-While touching this, also fix finishing transfers in polling mode by
-using common code path and always waiting for the bus to become idle
-and disabled.
-
-Fixes: 117053f77a5a ("i2c: s3c2410: Add polling mode support")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fixes: 0980bfcd6954 ("ethtool: set netdev features with FEATURES_SET request")
+Signed-off-by: Ludvig Pärsson <ludvig.parsson@axis.com>
+Link: https://lore.kernel.org/r/20240117-etht2-v2-1-1a96b6e8c650@axis.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-s3c2410.c | 27 ++++++++++-----------------
- 1 file changed, 10 insertions(+), 17 deletions(-)
+ net/ethtool/features.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-s3c2410.c b/drivers/i2c/busses/i2c-s3c2410.c
-index bf9a5670ef33..c0fe96a4f2c4 100644
---- a/drivers/i2c/busses/i2c-s3c2410.c
-+++ b/drivers/i2c/busses/i2c-s3c2410.c
-@@ -279,16 +279,6 @@ static void s3c24xx_i2c_message_start(struct s3c24xx_i2c *i2c,
+diff --git a/net/ethtool/features.c b/net/ethtool/features.c
+index a79af8c25a07..b6cb101d7f19 100644
+--- a/net/ethtool/features.c
++++ b/net/ethtool/features.c
+@@ -234,17 +234,20 @@ int ethnl_set_features(struct sk_buff *skb, struct genl_info *info)
+ 	dev = req_info.dev;
  
- 	stat |= S3C2410_IICSTAT_START;
- 	writel(stat, i2c->regs + S3C2410_IICSTAT);
--
--	if (i2c->quirks & QUIRK_POLL) {
--		while ((i2c->msg_num != 0) && is_ack(i2c)) {
--			i2c_s3c_irq_nextbyte(i2c, stat);
--			stat = readl(i2c->regs + S3C2410_IICSTAT);
--
--			if (stat & S3C2410_IICSTAT_ARBITR)
--				dev_err(i2c->dev, "deal with arbitration loss\n");
--		}
--	}
- }
- 
- static inline void s3c24xx_i2c_stop(struct s3c24xx_i2c *i2c, int ret)
-@@ -694,7 +684,7 @@ static void s3c24xx_i2c_wait_idle(struct s3c24xx_i2c *i2c)
- static int s3c24xx_i2c_doxfer(struct s3c24xx_i2c *i2c,
- 			      struct i2c_msg *msgs, int num)
- {
--	unsigned long timeout;
-+	unsigned long timeout = 0;
- 	int ret;
- 
- 	ret = s3c24xx_i2c_set_master(i2c);
-@@ -714,16 +704,19 @@ static int s3c24xx_i2c_doxfer(struct s3c24xx_i2c *i2c,
- 	s3c24xx_i2c_message_start(i2c, msgs);
- 
- 	if (i2c->quirks & QUIRK_POLL) {
--		ret = i2c->msg_idx;
-+		while ((i2c->msg_num != 0) && is_ack(i2c)) {
-+			unsigned long stat = readl(i2c->regs + S3C2410_IICSTAT);
- 
--		if (ret != num)
--			dev_dbg(i2c->dev, "incomplete xfer (%d)\n", ret);
-+			i2c_s3c_irq_nextbyte(i2c, stat);
- 
--		goto out;
-+			stat = readl(i2c->regs + S3C2410_IICSTAT);
-+			if (stat & S3C2410_IICSTAT_ARBITR)
-+				dev_err(i2c->dev, "deal with arbitration loss\n");
-+		}
-+	} else {
-+		timeout = wait_event_timeout(i2c->wait, i2c->msg_num == 0, HZ * 5);
+ 	rtnl_lock();
++	ret = ethnl_ops_begin(dev);
++	if (ret < 0)
++		goto out_rtnl;
+ 	ethnl_features_to_bitmap(old_active, dev->features);
+ 	ethnl_features_to_bitmap(old_wanted, dev->wanted_features);
+ 	ret = ethnl_parse_bitset(req_wanted, req_mask, NETDEV_FEATURE_COUNT,
+ 				 tb[ETHTOOL_A_FEATURES_WANTED],
+ 				 netdev_features_strings, info->extack);
+ 	if (ret < 0)
+-		goto out_rtnl;
++		goto out_ops;
+ 	if (ethnl_bitmap_to_features(req_mask) & ~NETIF_F_ETHTOOL_BITS) {
+ 		GENL_SET_ERR_MSG(info, "attempt to change non-ethtool features");
+ 		ret = -EINVAL;
+-		goto out_rtnl;
++		goto out_ops;
  	}
  
--	timeout = wait_event_timeout(i2c->wait, i2c->msg_num == 0, HZ * 5);
--
- 	ret = i2c->msg_idx;
+ 	/* set req_wanted bits not in req_mask from old_wanted */
+@@ -281,6 +284,8 @@ int ethnl_set_features(struct sk_buff *skb, struct genl_info *info)
+ 	if (mod)
+ 		netdev_features_change(dev);
  
- 	/*
++out_ops:
++	ethnl_ops_complete(dev);
+ out_rtnl:
+ 	rtnl_unlock();
+ 	ethnl_parse_header_dev_put(&req_info);
 -- 
 2.43.0
 
