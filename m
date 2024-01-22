@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D165E14A4C2;
-	Tue, 23 Jan 2024 00:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAB114A4C6;
+	Tue, 23 Jan 2024 00:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969214; cv=none; b=Jtx4CySbKtTK/HOpkSnWAJajmTMK+RXSrygvx2ahFqytecUH3hXCEDKp9ShgIjcEgt7+CPWT7rhKdUXDrNjj+44MSSHSsYVCKURC1+5iD/JJHhGCTHUhW/4Km73iRCbmN/IaN/FRk8LdlXbp1ce4Xhnk5/jzdDZjPgTFlq/6c9E=
+	t=1705969216; cv=none; b=LH6k/3eRkFE6Q3732IuwuvNYxuHOxILHay2D+W/6I3VYOQqoNk+fwUnUfdiJk5CDDURUHWll/6qidhXf8k/pPiVDi0ucsDa0naVa9X/mLBS5tLnekJbaMB7VIs9XE+8YK2ZcelUnsCelCwWPS9/9wJceBKROUcdmrDAOqMA0ZdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969214; c=relaxed/simple;
-	bh=cVLkGBp3N6FTt0O2iV+LA+UFO5uQrXrUEIbZ28kxqBY=;
+	s=arc-20240116; t=1705969216; c=relaxed/simple;
+	bh=BEAfPGmCWuzIdTzstsbrX1WK9lxGfu57cczCaFriGNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Awa96tH/epx9+tesfh9FTby60xaVjf0NWDCGgVC9EBWM0HdQrqLdaRtG392GyfsI8PVLgbRf0BtgnU6K5Ram2JC9MjW/QOgLFcK2GGSLWK7105Qd2gg1NlfUyf1Voy3WXPFM55WKs5kEKo5+cIrnzEwNXWuO4/jPA9y9jikP9ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DdrVbF93; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dgkoozwqTotNmwNNn/iKqcVswO/fygRFy88rragUMtLQFmupDj08FRYfQ11gT8kN+dp3qDzvM7gQsmGGEblhlhMpO6OVw7soSXte8t8blgEn7UW1fYkB7oBcKgpuCo2cZscGr8qOXHhX9H/q6LXPJiDWXtNsad6u5gnV7d6mCfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5dfz6bB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DdrVbF93"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8806FC433C7;
-	Tue, 23 Jan 2024 00:20:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5dfz6bB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C331FC433F1;
+	Tue, 23 Jan 2024 00:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969214;
-	bh=cVLkGBp3N6FTt0O2iV+LA+UFO5uQrXrUEIbZ28kxqBY=;
+	s=korg; t=1705969215;
+	bh=BEAfPGmCWuzIdTzstsbrX1WK9lxGfu57cczCaFriGNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DdrVbF93WYruv37lTO6Mtj/dumJslr0DEUsJKJq0teGrk7YeM6bS7BfSv0IOF85Se
-	 cDWrMypVzP0JGwb8cLz/4EvHWaOKcWViQP3MCbv18uUMiRiJPBKA12W3t/D6dgdbX4
-	 3hf1FilDuqAA+MjiSNyDEvZK05+mDhCFuquqIEZE=
+	b=u5dfz6bBMBXagzFyt+Km0jCOlcr79BlTOTugsabQk7m8V6IBg9EEwhHtvZRD9dHl0
+	 pc9aUC+nkuNL6b/+PjSFplEysnBBWXx5P3vOnojF2/czydTN1S3vRjJaT6x0x1BB9k
+	 qA0ZijlE/KjEnVCqzt8MZagAiW83Q22OTBG0JRBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Justin Tee <justin.tee@broadcom.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 103/641] ARM: dts: qcom: apq8064: correct XOADC register address
-Date: Mon, 22 Jan 2024 15:50:07 -0800
-Message-ID: <20240122235821.260539239@linuxfoundation.org>
+Subject: [PATCH 6.7 104/641] scsi: lpfc: Fix list_entry null check warning in lpfc_cmpl_els_plogi()
+Date: Mon, 22 Jan 2024 15:50:08 -0800
+Message-ID: <20240122235821.295185059@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,38 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 554557542e709e190eff8a598f0cde02647d533a ]
+[ Upstream commit 1dec1311b9b6cc9c5fd26a77b936f542f03c51d1 ]
 
-The XOADC is present at the address 0x197 rather than just 197. It
-doesn't change a lot (since the driver hardcodes all register
-addresses), but the DT should present correct address anyway.
+Smatch called out a warning for null checking a ptr that is assigned by
+list_entry(). list_entry() does not return null and, if the list is empty,
+can return an invalid ptr. Thus, the !psrp check does not execute properly.
 
-Fixes: c4b70883ee33 ("ARM: dts: add XOADC and IIO HWMON to APQ8064")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230928110309.1212221-3-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+ drivers/scsi/lpfc/lpfc_els.c:2133 lpfc_cmpl_els_plogi()
+ warn: list_entry() does not return NULL 'prsp'
+
+Replace list_entry() with list_get_first(), which does a list_empty() check
+before returning the first entry.
+
+Fixes: a3c3c0a806f1 ("scsi: lpfc: Validate ELS LS_ACC completion payload")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-scsi/01b7568f-4ab4-4d56-bfa6-9ecc5fc261fe@moroto.mountain/
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20231031191224.150862-4-justintee8345@gmail.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/qcom/qcom-apq8064.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_els.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
-index 59fd86b9fb47..099a16c34e1f 100644
---- a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
-@@ -738,7 +738,7 @@ pwrkey@1c {
- 
- 				xoadc: xoadc@197 {
- 					compatible = "qcom,pm8921-adc";
--					reg = <197>;
-+					reg = <0x197>;
- 					interrupts-extended = <&pmicintc 78 IRQ_TYPE_EDGE_RISING>;
- 					#address-cells = <2>;
- 					#size-cells = <0>;
+diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
+index f9627eddab08..0829fe6ddff8 100644
+--- a/drivers/scsi/lpfc/lpfc_els.c
++++ b/drivers/scsi/lpfc/lpfc_els.c
+@@ -2128,8 +2128,8 @@ lpfc_cmpl_els_plogi(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
+ 						NLP_EVT_DEVICE_RM);
+ 	} else {
+ 		/* Good status, call state machine */
+-		prsp = list_entry(cmdiocb->cmd_dmabuf->list.next,
+-				  struct lpfc_dmabuf, list);
++		prsp = list_get_first(&cmdiocb->cmd_dmabuf->list,
++				      struct lpfc_dmabuf, list);
+ 		if (!prsp)
+ 			goto out;
+ 		if (!lpfc_is_els_acc_rsp(prsp))
 -- 
 2.43.0
 
