@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6EB48CFD;
-	Tue, 23 Jan 2024 00:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1385112CDBD;
+	Tue, 23 Jan 2024 00:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971475; cv=none; b=R9ICkP+/9dwNKCVeJozszdWqPP7CQn99CuXrAmf8BwU/h0ADeE75eig19KbZIMPAlBEUg4IE2++VIxble9IXBjdt4JJv/DSPySragRR7m1Jq7lbA5M5dadsGrA9fvZuEssQ4JNzEXRQ91kiz15jmoqH5iOp6RCvy+B1qqoq1ois=
+	t=1705971479; cv=none; b=jXXl3uOMBmVYCQGA5nNQMff7PrzAMOjkzgkNX1dQjSkOQBt1H+KPEQ4YKwLG0itAz10oWAp/j72oqHlZp7MBUxRoVSw6DmiSc6DBaVAFSv5RD0AvZBB4DnBKSgUyww3IpZ+5jHpa8q9lU+D6+A7VRdt5KaMzyEbxbY3hjb720bM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971475; c=relaxed/simple;
-	bh=tuZN3/aRluOYILGRzdLE7HXZrLtZEoWGMvp9pQXWNJc=;
+	s=arc-20240116; t=1705971479; c=relaxed/simple;
+	bh=04iJCYRbLQR65wA+/Ylx332JvKn5DdsIf0ygInjXMyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fD+nY6ZprmGOBF3hcNbfokjNQaeZ9Hsumm5YiAMvI7GI0Ebz09ulFawxED2fKAFupOPQG3BFlQqnaCDDTol/Kr2TUsJl+TY17q3uWXU5ZZbamWKGRyXD7yDneYuWjCgHj8+Rg7cgFmd/5cckhuI81wMgXW9OqtzSBIMTcOGsN64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XiMnn1Tq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H9KA6TRsVFmY644/cy+sJVSyZBn0Sdwv7t5EJT4MCZZdXJT+JFCC/MahmvCVK0C+brJhW1lEKLY9zayGep6fLjg/GIIn+aEau+5xjq6IOHTDeuOc4vawNpDHiZKsmub0zGUD21M3IAHH1NCaM8A2Xwvn8nGZmtCmNk509LMnBTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaUsrJXN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XiMnn1Tq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605DBC433F1;
-	Tue, 23 Jan 2024 00:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaUsrJXN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F85C433C7;
+	Tue, 23 Jan 2024 00:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971475;
-	bh=tuZN3/aRluOYILGRzdLE7HXZrLtZEoWGMvp9pQXWNJc=;
+	s=korg; t=1705971478;
+	bh=04iJCYRbLQR65wA+/Ylx332JvKn5DdsIf0ygInjXMyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XiMnn1TqSw7liKJxDgGBRXMpy//mdfnaJ0EwTvBvfMEQjmWXMXnDIKD0WCYQ4sl6B
-	 e1nhQeU3C9u41Ok75MgfsKq8nHVazFiTvIyzq6BZIqE72Bf8/gbLI5n8QcaOnVNGED
-	 DNQ/Bn5XkXH1KSkAVpWRghPNBG7O+dCtye3AC4EY=
+	b=aaUsrJXN1H55pqiCMSgUrT5we9I+OowSAhZY7FLdIZej/aTzPTPdDZ/XZg2hcfJWm
+	 gyFlOEOi6kbQIpNJlCSrbD0woSbCstkOBDgzhvaW4cnFMLtPIqj4JU5Wwksy2Dt4DR
+	 qyiLssmyhP5W6s2i/8JbM6xNGGqBDNzjklfm0p3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 157/286] drm/msm/mdp4: flush vblank event on disable
-Date: Mon, 22 Jan 2024 15:57:43 -0800
-Message-ID: <20240122235738.218329658@linuxfoundation.org>
+	Pengfei Xu <pengfei.xu@intel.com>,
+	David Howells <dhowells@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Petr Vorel <pvorel@suse.cz>
+Subject: [PATCH 6.1 249/417] keys, dns: Fix size check of V1 server-list header
+Date: Mon, 22 Jan 2024 15:56:57 -0800
+Message-ID: <20240122235800.504467747@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c6721b3c6423d8a348ae885a0f4c85e14f9bf85c ]
+commit acc657692aed438e9931438f8c923b2b107aebf9 upstream.
 
-Flush queued events when disabling the crtc. This avoids timeouts when
-we come back and wait for dependencies (like the previous frame's
-flip_done).
+Fix the size check added to dns_resolver_preparse() for the V1 server-list
+header so that it doesn't give EINVAL if the size supplied is the same as
+the size of the header struct (which should be valid).
 
-Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/569127/
-Link: https://lore.kernel.org/r/20231127215401.4064128-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This can be tested with:
+
+        echo -n -e '\0\0\01\xff\0\0' | keyctl padd dns_resolver desc @p
+
+which will give "add_key: Invalid argument" without this fix.
+
+Fixes: 1997b3cb4217 ("keys, dns: Fix missing size check of V1 server-list header")
+Reported-by: Pengfei Xu <pengfei.xu@intel.com>
+Link: https://lore.kernel.org/r/ZZ4fyY4r3rqgZL+4@xpf.sh.intel.com/
+Signed-off-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Petr Vorel <pvorel@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/dns_resolver/dns_key.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-index a0253297bc76..bf54b9e4fd61 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-@@ -268,6 +268,7 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
- {
- 	struct mdp4_crtc *mdp4_crtc = to_mdp4_crtc(crtc);
- 	struct mdp4_kms *mdp4_kms = get_kms(crtc);
-+	unsigned long flags;
+--- a/net/dns_resolver/dns_key.c
++++ b/net/dns_resolver/dns_key.c
+@@ -104,7 +104,7 @@ dns_resolver_preparse(struct key_prepars
+ 		const struct dns_server_list_v1_header *v1;
  
- 	DBG("%s", mdp4_crtc->name);
+ 		/* It may be a server list. */
+-		if (datalen <= sizeof(*v1))
++		if (datalen < sizeof(*v1))
+ 			return -EINVAL;
  
-@@ -280,6 +281,14 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
- 	mdp_irq_unregister(&mdp4_kms->base, &mdp4_crtc->err);
- 	mdp4_disable(mdp4_kms);
- 
-+	if (crtc->state->event && !crtc->state->active) {
-+		WARN_ON(mdp4_crtc->event);
-+		spin_lock_irqsave(&mdp4_kms->dev->event_lock, flags);
-+		drm_crtc_send_vblank_event(crtc, crtc->state->event);
-+		crtc->state->event = NULL;
-+		spin_unlock_irqrestore(&mdp4_kms->dev->event_lock, flags);
-+	}
-+
- 	mdp4_crtc->enabled = false;
- }
- 
--- 
-2.43.0
-
+ 		v1 = (const struct dns_server_list_v1_header *)data;
 
 
