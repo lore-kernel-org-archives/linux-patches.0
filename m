@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F410F6EB67;
-	Tue, 23 Jan 2024 02:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2276EB67;
+	Tue, 23 Jan 2024 02:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975417; cv=none; b=jce047JFigUoKMZOwK9Om3cHZPSK6AN+l4Caozmu6vI9abJFPGXshAUbtC+9VSPaRedlAlKNLZCLlkienRdZygcS2yUD60Z1MbMGv3JlRSS/EfuPNoMxysj6LXPSEdI4PALy9/ZSRwjsoqDLD+eW04eDh2QEfDCQtcQTstexslY=
+	t=1705975418; cv=none; b=kEqevNsz2u9kBYY8HZr8zM1sy+6AbwtN9K+sJd5j55s7kV4a3A307rlOh802uht4WmJMil8aK8GzJI+uPRzhE8pYHH7/rSOXu0HuszZQvrh6rALzP4uhKrJwE/TeR/UakDyGMsZIpUEdXpNyYEgUFYdqrsR7fPysMmudtXNdVuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975417; c=relaxed/simple;
-	bh=XdWy96IerQWHofbVXQIJpdkjCFB3FgSTUGo0vQ3fLoQ=;
+	s=arc-20240116; t=1705975418; c=relaxed/simple;
+	bh=69W/GtYNyW4FFBoDD3rh8vrXI/DvPIeNzKLF3aSJ/9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DO/EfvPgA+jxPEhETnNtzaggdRn0454wnaxIebXsoM1GxUAqj5El9n6ByE9f5k8mX+4V546roMwvNUyYxkjHKmUBGgthFB4v61eZi+bZj8ipf7SGmoSqFUNTLhS58SRxGXvGK9JTYM5JL4lwlSvOsqG90FWhgcJ6U9zKFYhCxXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAczcSj8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sSNyjORjbe+Owx7lQtQye3RgowGXjyZgp11PKstahuO8+2/SumIQeouL/5KT/sY1ZM71xUvQdQRb9xfgxSmWlIr0NBMDfjjV0KTw1igTgUkthxjVw+dxsctOOeLmDG+Qzi5e4Tz87GomUxY8eH3t6AFHVJx7pfPSVTanJ46tBpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9YnBRF8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAczcSj8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B904FC43390;
-	Tue, 23 Jan 2024 02:03:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9YnBRF8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA23C433C7;
+	Tue, 23 Jan 2024 02:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975416;
-	bh=XdWy96IerQWHofbVXQIJpdkjCFB3FgSTUGo0vQ3fLoQ=;
+	s=korg; t=1705975417;
+	bh=69W/GtYNyW4FFBoDD3rh8vrXI/DvPIeNzKLF3aSJ/9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CAczcSj8zD0pSES9vutFd6ZlC0VDR75tjGs6d0dPtVIV7SxU9xbJIrQ4Xl+c0YoFw
-	 2nqbdA/vIhZ5NZS9nltPqq4CJ9Rz0Q/4Ck+CKKPQJhMZIcZa4pV/ykIvItmpw4GQKD
-	 IU9jFhLtv2SvU1rialgEJpwociO2Ysof8TzHGzLs=
+	b=H9YnBRF8LK8mY88GvGHUXMZY7lLAwRMZ13P2D1jzdnwlOE0MCRW+vbrNl1GNxPCfj
+	 og1t57YYFvITIUk17byOF/hP1XNJ4KtuRP2z6WXb+XZ80s80NHoF96xiKGvaBXadSs
+	 SU+79BrwiDxgg4J+odbv63d0gzZAnQdaCFDTE/jE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chen <peter.chen@kernel.org>,
-	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 6.6 358/583] usb: phy: mxs: remove CONFIG_USB_OTG condition for mxs_phy_is_otg_host()
-Date: Mon, 22 Jan 2024 15:56:49 -0800
-Message-ID: <20240122235822.980893127@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: [PATCH 6.6 376/583] serial: imx: Ensure that imx_uart_rs485_config() is called with enabled clock
+Date: Mon, 22 Jan 2024 15:57:07 -0800
+Message-ID: <20240122235823.524747864@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -50,36 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Christoph Niedermaier <cniedermaier@dh-electronics.com>
 
-commit ff2b89de471da942a4d853443688113a44fd35ed upstream.
+commit 7c45eaa813476bd195ac1227a64b52f9cf2e2030 upstream.
 
-When CONFIG_USB_OTG is not set, mxs_phy_is_otg_host() will always return
-false. This behaviour is wrong. Since phy.last_event will always be set
-for either host or device mode. Therefore, CONFIG_USB_OTG condition
-can be removed.
+There are register accesses in the function imx_uart_rs485_config(). The
+clock must be enabled for these accesses. This was ensured by calling it
+via the function uart_rs485_config() in the probe() function within the
+range where the clock is enabled. With the commit 7c7f9bc986e6 ("serial:
+Deassert Transmit Enable on probe in driver-specific way") it was removed
+from the probe() function and is now only called through the function
+uart_add_one_port() which is located at the end of the probe() function.
+But the clock is already switched off in this area. To ensure that the
+clock is enabled during register access, move the disabling of the clock
+to the very end of the probe() function. To avoid leaking enabled clocks
+on error also add an error path for exiting with disabling the clock.
 
-Fixes: 5eda42aebb76 ("usb: phy: mxs: fix getting wrong state with mxs_phy_is_otg_host()")
-cc:  <stable@vger.kernel.org>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://lore.kernel.org/r/20231228110753.1755756-3-xu.yang_2@nxp.com
+Fixes: 7c7f9bc986e6 ("serial: Deassert Transmit Enable on probe in driver-specific way")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Link: https://lore.kernel.org/r/20231226113647.39376-1-cniedermaier@dh-electronics.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/phy/phy-mxs-usb.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/tty/serial/imx.c |   23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
---- a/drivers/usb/phy/phy-mxs-usb.c
-+++ b/drivers/usb/phy/phy-mxs-usb.c
-@@ -388,8 +388,7 @@ static void __mxs_phy_disconnect_line(st
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -2328,10 +2328,8 @@ static int imx_uart_probe(struct platfor
+ 	}
  
- static bool mxs_phy_is_otg_host(struct mxs_phy *mxs_phy)
- {
--	return IS_ENABLED(CONFIG_USB_OTG) &&
--		mxs_phy->phy.last_event == USB_EVENT_ID;
-+	return mxs_phy->phy.last_event == USB_EVENT_ID;
+ 	ret = uart_get_rs485_mode(&sport->port);
+-	if (ret) {
+-		clk_disable_unprepare(sport->clk_ipg);
+-		return ret;
+-	}
++	if (ret)
++		goto err_clk;
+ 
+ 	/*
+ 	 * If using the i.MX UART RTS/CTS control then the RTS (CTS_B)
+@@ -2411,8 +2409,6 @@ static int imx_uart_probe(struct platfor
+ 		imx_uart_writel(sport, ucr3, UCR3);
+ 	}
+ 
+-	clk_disable_unprepare(sport->clk_ipg);
+-
+ 	hrtimer_init(&sport->trigger_start_tx, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
+ 	hrtimer_init(&sport->trigger_stop_tx, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
+ 	sport->trigger_start_tx.function = imx_trigger_start_tx;
+@@ -2428,7 +2424,7 @@ static int imx_uart_probe(struct platfor
+ 		if (ret) {
+ 			dev_err(&pdev->dev, "failed to request rx irq: %d\n",
+ 				ret);
+-			return ret;
++			goto err_clk;
+ 		}
+ 
+ 		ret = devm_request_irq(&pdev->dev, txirq, imx_uart_txint, 0,
+@@ -2436,7 +2432,7 @@ static int imx_uart_probe(struct platfor
+ 		if (ret) {
+ 			dev_err(&pdev->dev, "failed to request tx irq: %d\n",
+ 				ret);
+-			return ret;
++			goto err_clk;
+ 		}
+ 
+ 		ret = devm_request_irq(&pdev->dev, rtsirq, imx_uart_rtsint, 0,
+@@ -2444,14 +2440,14 @@ static int imx_uart_probe(struct platfor
+ 		if (ret) {
+ 			dev_err(&pdev->dev, "failed to request rts irq: %d\n",
+ 				ret);
+-			return ret;
++			goto err_clk;
+ 		}
+ 	} else {
+ 		ret = devm_request_irq(&pdev->dev, rxirq, imx_uart_int, 0,
+ 				       dev_name(&pdev->dev), sport);
+ 		if (ret) {
+ 			dev_err(&pdev->dev, "failed to request irq: %d\n", ret);
+-			return ret;
++			goto err_clk;
+ 		}
+ 	}
+ 
+@@ -2459,7 +2455,12 @@ static int imx_uart_probe(struct platfor
+ 
+ 	platform_set_drvdata(pdev, sport);
+ 
+-	return uart_add_one_port(&imx_uart_uart_driver, &sport->port);
++	ret = uart_add_one_port(&imx_uart_uart_driver, &sport->port);
++
++err_clk:
++	clk_disable_unprepare(sport->clk_ipg);
++
++	return ret;
  }
  
- static void mxs_phy_disconnect_line(struct mxs_phy *mxs_phy, bool on)
+ static int imx_uart_remove(struct platform_device *pdev)
 
 
