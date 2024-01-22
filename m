@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B212312FF73;
-	Tue, 23 Jan 2024 01:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB97812FF73;
+	Tue, 23 Jan 2024 01:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971796; cv=none; b=k4hkiwgNJvr4ukzhJLSF/eK5v+WThlVUPsnrFzC5cjj+hpi6WWtJU+eGcUPl3GOb78Uae7hmDxaDphNvUl4kUTdyxC6ch+r8t1sHUJ3ssWnpWSLoass88EZ57Fmhp/pUQ7Thj/OGy32ZG7cmA+qQIYNndav/B5BAijKGfKbjFt4=
+	t=1705971798; cv=none; b=cpDRJc4Su8jh98tz+SBd6d5IveHXszOdUZWeCgPShzGbn3w15KO1GGKM7EDdgkGxNSuiR6TAG1CIhh8+VZgV1ro4sD4igpVEqMQsmpwINeEKO2P2sfLe5feE6zxwfNV7LhSog9FqqQvuAJ4fsYp3JsyjF18EOWS6Qf7VV9WYSIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971796; c=relaxed/simple;
-	bh=auqdmgquI4ieQRrzp17N/gauoSxnZjcBMhBl/z+Cymk=;
+	s=arc-20240116; t=1705971798; c=relaxed/simple;
+	bh=8vXtOfw4CQlwIwKxrLHPJh+IqYg561vnkN0oHEcN1N4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VbLZs7G8lQZ29U4MwKhl8srrE6AEjD4F8IdozX30CepqobJ07N60F80Aba1e0B0wU3nCExCucvWJt57ksM0Hs2mpHk2eXf1/zFBxJgnqu+B/QCq223jhDBp+LcvEoJ+vUltLwlxLMZU1XPtXPBncH0a4/H7HjHPxK7NSBelZKGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+9oiZZZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aq7RL3jjQBFMfZzHIJ0LMef74KL0krwSZ6PqLXizGhd+QHLDKZyHUZptFYpxrGKkkxzMqDgzTnikRePRez5tyjjJ5+DP5PBwB51jGKuaHqsA19moR1mFXFjPNk+cKgvHC1KLS6ciXjSeQ+eZfq15bHvcOr+KsNn08nzrLSSoz9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYnEyJ3/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+9oiZZZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737CEC433F1;
-	Tue, 23 Jan 2024 01:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYnEyJ3/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A69C433F1;
+	Tue, 23 Jan 2024 01:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971796;
-	bh=auqdmgquI4ieQRrzp17N/gauoSxnZjcBMhBl/z+Cymk=;
+	s=korg; t=1705971797;
+	bh=8vXtOfw4CQlwIwKxrLHPJh+IqYg561vnkN0oHEcN1N4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+9oiZZZW4fbI3+q6KmQkyTsfWRdLPLkj2FWX2Mp8zkFoR1Umb7114CicEcNQD9hm
-	 OrYCBFfnByT9mAu/ZZIbZYhpvZJFPEBnsBrFxxo+gsvE4jhyCKBd6EsdCZTegk7qNJ
-	 1iIbdZm1SpmpfM96rQ9DXunkZoiroAzOymKpURG0=
+	b=KYnEyJ3/4PS22K+wmyw1QjoXfL6D74/hnDPVX0GHmOtO5iJaEzMvNGCQizIvVtreJ
+	 WCA4+6vzWvN6ePUcFORpN5d1xu+D6q0bxQgzqp5ZlRdt+AeyJPs1Ik8TJm0lwh+GPV
+	 c4a5v8A1VC4gAbJj1/XwBDdRra9/XqSTGxVDn+pI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.1 322/417] serial: sc16is7xx: set safe default SPI clock frequency
-Date: Mon, 22 Jan 2024 15:58:10 -0800
-Message-ID: <20240122235802.957950334@linuxfoundation.org>
+	xingwei lee <xrivendell7@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 224/286] io_uring/rw: ensure io->bytes_done is always initialized
+Date: Mon, 22 Jan 2024 15:58:50 -0800
+Message-ID: <20240122235740.705716800@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,48 +46,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 3ef79cd1412236d884ab0c46b4d1921380807b48 upstream.
+commit 0a535eddbe0dc1de4386046ab849f08aeb2f8faf upstream.
 
-15 MHz is supported only by 76x variants.
+If IOSQE_ASYNC is set and we fail importing an iovec for a readv or
+writev request, then we leave ->bytes_done uninitialized and hence the
+eventual failure CQE posted can potentially have a random res value
+rather than the expected -EINVAL.
 
-If the SPI clock frequency is not specified, use a safe default clock value
-of 4 MHz that is supported by all variants.
+Setup ->bytes_done before potentially failing, so we have a consistent
+value if we fail the request early.
 
-Also use HZ_PER_MHZ macro to improve readability.
-
-Fixes: 2c837a8a8f9f ("sc16is7xx: spi interface is added")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20231221231823.2327894-4-hugo@hugovil.com
+Cc: stable@vger.kernel.org
+Reported-by: xingwei lee <xrivendell7@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ io_uring/io_uring.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -24,6 +24,7 @@
- #include <linux/tty_flip.h>
- #include <linux/spi/spi.h>
- #include <linux/uaccess.h>
-+#include <linux/units.h>
- #include <uapi/linux/sched/types.h>
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3485,14 +3485,17 @@ static inline int io_rw_prep_async(struc
+ 	struct iovec *iov = iorw->fast_iov;
+ 	int ret;
  
- #define SC16IS7XX_NAME			"sc16is7xx"
-@@ -1721,7 +1722,7 @@ static int sc16is7xx_spi_probe(struct sp
- 		return dev_err_probe(&spi->dev, -EINVAL, "Unsupported SPI mode\n");
- 
- 	spi->mode		= spi->mode ? : SPI_MODE_0;
--	spi->max_speed_hz	= spi->max_speed_hz ? : 15000000;
-+	spi->max_speed_hz	= spi->max_speed_hz ? : 4 * HZ_PER_MHZ;
- 	ret = spi_setup(spi);
- 	if (ret)
++	iorw->bytes_done = 0;
++	iorw->free_iovec = NULL;
++
+ 	ret = io_import_iovec(rw, req, &iov, &iorw->iter, false);
+ 	if (unlikely(ret < 0))
  		return ret;
+ 
+-	iorw->bytes_done = 0;
+-	iorw->free_iovec = iov;
+-	if (iov)
++	if (iov) {
++		iorw->free_iovec = iov;
+ 		req->flags |= REQ_F_NEED_CLEANUP;
++	}
+ 	iov_iter_save_state(&iorw->iter, &iorw->iter_state);
+ 	return 0;
+ }
 
 
