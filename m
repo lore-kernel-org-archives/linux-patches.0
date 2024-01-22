@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB841140781;
-	Tue, 23 Jan 2024 01:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA6513EFF3;
+	Tue, 23 Jan 2024 01:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972022; cv=none; b=t6iX0ouRrzAw8oNvDIkvtNvfpYIcfObQPBj5c2AwwRuXOKz4TwmGrQJcvJcZzWzmzW5BGakOEh8mbVKqX4eZ0H4kBsMmJx2dURbh2SwwCaXBiZl5VvS9yHq7GXF4UArj1LheWDJxY/56dZLGFSowYfym1wjF2L8zla0u8+jgEMo=
+	t=1705972024; cv=none; b=QmKnRpjE9rGbqVuKeS04E7F1JiQdlcrdEie12MdkyiSkESlUvzIskviZufW+7kPF+DX6JBhhnO91Z1vaxobHq/5NF1YnA92x+UGnpzcvN5yEB/93HE/84SICpJ/9Cj3v+SIBsy5EPtaPAh7MWRYQoLCN5a5nmnOrb9FUMD8IpFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972022; c=relaxed/simple;
-	bh=XjTUgQyD6AVcuEBMGIJYoGPtN1UeieSvV8d8Kb5W2I8=;
+	s=arc-20240116; t=1705972024; c=relaxed/simple;
+	bh=qQINM3uy05Bno41EVy6B0UtSBfwEYVAhym4jbF7sD7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b0QabmLq/q8N5DDxxHRLNsJ44aMHWHABL5+9mLZsxQ78Ls41bUI6Gtl5wl0qzcUoZorRb0mUYiuFg+KZ3fUdbjZLX4jLAWcbTsrD43SwRdNvJFo1zrVTDASYON7RwOujt+6nhMwHWg+mhA7M09xqJ6dpNkTZeX/gFaF8mQId10U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SP+LtnVd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f4B9EmRfNM29ubRY310eFA8WS/9+TZsvjodxi3da6jJLMbvxfB16W1eKH8jXGy47zdGYw65h9TVq5lwd97EMEYErW1jrzfbPVROM+yCadTVyN8C6plghsoB0d3m3mzGzeslZ+Zwmz2vrhefOqgUXmEue10tWYCYNl7v6avCcSrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzihAowi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SP+LtnVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3ACC433C7;
-	Tue, 23 Jan 2024 01:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzihAowi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C53F5C433C7;
+	Tue, 23 Jan 2024 01:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972022;
-	bh=XjTUgQyD6AVcuEBMGIJYoGPtN1UeieSvV8d8Kb5W2I8=;
+	s=korg; t=1705972024;
+	bh=qQINM3uy05Bno41EVy6B0UtSBfwEYVAhym4jbF7sD7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SP+LtnVdLFylYIeQ9qDF2RoCrrj8sQf4vox76meUj9h6i0QhdudbS4mqNS0Zit7ub
-	 ecCoy6oNFu1b66h6NpvhaJ9Dds+iMZRIzrDRiaG9UckM73oyQLbnlQ20zIojeNLLAk
-	 Xrq/hVlMXiWn6PX8KgcC5paKDEhwTwmnZJkRiTbU=
+	b=VzihAowiNuPpjAX9bj9ctaANlIrr1TW47q8rk3/Ex1KK9uJEXNKBgZfZsBVf78deq
+	 Ef2N2/8cH0LVjDu47aD+xUf79Nxb1oaL958hLL5xsLNjX+xr6SccXsCyBAaygvPqVl
+	 uppdgh8v9masjZDqr6gge9VvPu9EdS22gUq3nzp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 364/417] nvmet-tcp: Fix a kernel panic when host sends an invalid H2C PDU length
-Date: Mon, 22 Jan 2024 15:58:52 -0800
-Message-ID: <20240122235804.430055801@linuxfoundation.org>
+Subject: [PATCH 5.10 275/286] kdb: Fix a potential buffer overflow in kdb_local()
+Date: Mon, 22 Jan 2024 15:59:41 -0800
+Message-ID: <20240122235742.639496943@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,85 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit efa56305908ba20de2104f1b8508c6a7401833be ]
+[ Upstream commit 4f41d30cd6dc865c3cbc1a852372321eba6d4e4c ]
 
-If the host sends an H2CData command with an invalid DATAL,
-the kernel may crash in nvmet_tcp_build_pdu_iovec().
+When appending "[defcmd]" to 'kdb_prompt_str', the size of the string
+already in the buffer should be taken into account.
 
-Unable to handle kernel NULL pointer dereference at
-virtual address 0000000000000000
-lr : nvmet_tcp_io_work+0x6ac/0x718 [nvmet_tcp]
-Call trace:
-  process_one_work+0x174/0x3c8
-  worker_thread+0x2d0/0x3e8
-  kthread+0x104/0x110
+An option could be to switch from strncat() to strlcat() which does the
+correct test to avoid such an overflow.
 
-Fix the bug by raising a fatal error if DATAL isn't coherent
-with the packet size.
-Also, the PDU length should never exceed the MAXH2CDATA parameter which
-has been communicated to the host in nvmet_tcp_handle_icreq().
+However, this actually looks as dead code, because 'defcmd_in_progress'
+can't be true here.
+See a more detailed explanation at [1].
 
-Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+[1]: https://lore.kernel.org/all/CAD=FV=WSh7wKN7Yp-3wWiDgX4E3isQ8uh0LCzTmd1v9Cg9j+nQ@mail.gmail.com/
+
+Fixes: 5d5314d6795f ("kdb: core for kgdb back end (1 of 2)")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ kernel/debug/kdb/kdb_main.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 355d80323b83..7310f65af849 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -18,6 +18,7 @@
- #include "nvmet.h"
+diff --git a/kernel/debug/kdb/kdb_main.c b/kernel/debug/kdb/kdb_main.c
+index 4e09fab52faf..c27b3dfa1921 100644
+--- a/kernel/debug/kdb/kdb_main.c
++++ b/kernel/debug/kdb/kdb_main.c
+@@ -1364,8 +1364,6 @@ static int kdb_local(kdb_reason_t reason, int error, struct pt_regs *regs,
+ 		/* PROMPT can only be set if we have MEM_READ permission. */
+ 		snprintf(kdb_prompt_str, CMD_BUFLEN, kdbgetenv("PROMPT"),
+ 			 raw_smp_processor_id());
+-		if (defcmd_in_progress)
+-			strncat(kdb_prompt_str, "[defcmd]", CMD_BUFLEN);
  
- #define NVMET_TCP_DEF_INLINE_DATA_SIZE	(4 * PAGE_SIZE)
-+#define NVMET_TCP_MAXH2CDATA		0x400000 /* 16M arbitrary limit */
- 
- /* Define the socket priority to use for connections were it is desirable
-  * that the NIC consider performing optimized packet processing or filtering.
-@@ -861,7 +862,7 @@ static int nvmet_tcp_handle_icreq(struct nvmet_tcp_queue *queue)
- 	icresp->hdr.pdo = 0;
- 	icresp->hdr.plen = cpu_to_le32(icresp->hdr.hlen);
- 	icresp->pfv = cpu_to_le16(NVME_TCP_PFV_1_0);
--	icresp->maxdata = cpu_to_le32(0x400000); /* 16M arbitrary limit */
-+	icresp->maxdata = cpu_to_le32(NVMET_TCP_MAXH2CDATA);
- 	icresp->cpda = 0;
- 	if (queue->hdr_digest)
- 		icresp->digest |= NVME_TCP_HDR_DIGEST_ENABLE;
-@@ -914,6 +915,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- {
- 	struct nvme_tcp_data_pdu *data = &queue->pdu.data;
- 	struct nvmet_tcp_cmd *cmd;
-+	unsigned int plen;
- 
- 	if (likely(queue->nr_cmds)) {
- 		if (unlikely(data->ttag >= queue->nr_cmds)) {
-@@ -937,7 +939,16 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		return -EPROTO;
- 	}
- 
-+	plen = le32_to_cpu(data->hdr.plen);
- 	cmd->pdu_len = le32_to_cpu(data->data_length);
-+	if (unlikely(cmd->pdu_len != (plen - sizeof(*data)) ||
-+		     cmd->pdu_len == 0 ||
-+		     cmd->pdu_len > NVMET_TCP_MAXH2CDATA)) {
-+		pr_err("H2CData PDU len %u is invalid\n", cmd->pdu_len);
-+		/* FIXME: use proper transport errors */
-+		nvmet_tcp_fatal_error(queue);
-+		return -EPROTO;
-+	}
- 	cmd->pdu_recv = 0;
- 	nvmet_tcp_build_pdu_iovec(cmd);
- 	queue->cmd = cmd;
+ 		/*
+ 		 * Fetch command from keyboard
 -- 
 2.43.0
 
