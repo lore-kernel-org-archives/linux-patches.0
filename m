@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5334F1350D6;
-	Tue, 23 Jan 2024 00:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264BD1350EE;
+	Tue, 23 Jan 2024 00:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969352; cv=none; b=Vqc6y93cp0N41Xau7IoieuxHJdQws89v6AZHwh89t89/3KyGZ6iMWkSk9wv+qmvmUwlg9aWwu1CQeuTiw1kNNGiES+XJ+mUjzEIRsMaLmCZiCWH5o7PcYeOH62cNIy55uhSQmFsCuWBBRZFw9YQlgR5p63ubhjvp3rwg5RGENq4=
+	t=1705969354; cv=none; b=MKIkgQoUUBmbBFoBeqtuoS/JpsXiBxK2Keajbe5Bn3DT86gpsBdGn0SSyQ2zOh9lDttiYrWDcV8bRNxIExE3lNwWFOa4UbeJ4q3fKLYe0TZkxrbmxkL42cMKuhj1kYLidMNV3eF3EvLj38QnmUk1gW9KV70Fyvi5StsPdCjwEUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969352; c=relaxed/simple;
-	bh=LietFI/ybLJIIaagksfy74z/jOHraVht0gaPj+9Ovlo=;
+	s=arc-20240116; t=1705969354; c=relaxed/simple;
+	bh=ZKII2TeeI/UuhqOWPCDiSdjJlix0BaqTA7G3iymHLVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQOxVs4t50YgF3W4064op1XtXR657dNmnynmT4+uf/e4I3+oKg4w2BEBA049ArcHi6YkSswJu9siMdk6lWaoCYAxagU+nWs4mNwZo0wXlyST/fpAvurErtzR0oD+2RelhngIgPrAIpMlti4YVNuig2knzRKTNIG2s5uxbsWhIQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5t5GBH/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qq23ZGERQkQIVrANkBhZC19FlGzj+bg2aADF2uINwr675a1FDuIUTEyg44xFH86FkLqT4HILV1EBlDbF8IPTM0E/BLns4OEdOmycRmRjThffhe0zx/soDbrqooudKeN7hqM0sg4hf4e3uRwa/SFTZuSqKutTxpxsthNwk4V+Ctw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZ93vlWW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5t5GBH/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A05C43394;
-	Tue, 23 Jan 2024 00:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZ93vlWW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C57BC43394;
+	Tue, 23 Jan 2024 00:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969352;
-	bh=LietFI/ybLJIIaagksfy74z/jOHraVht0gaPj+9Ovlo=;
+	s=korg; t=1705969353;
+	bh=ZKII2TeeI/UuhqOWPCDiSdjJlix0BaqTA7G3iymHLVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o5t5GBH/VnpuRKlKPuxhTLxVJkifGEzrMOUkRKMhUTZI5IDXbCrvP50C1xIH458yW
-	 oVp9g+7q/AfsHj07ssGtPLjZpNkh4BBS+3lW3h9MUW9ndvnKLjfBDnVKpQ0IC2u7be
-	 BmIkIFfjKH42VH+Dr+uA9OHfbHOco3gRgf2kfr3A=
+	b=IZ93vlWWOC/u23z17LASIIZ6Uga+DiLJ7DH9SzeBF/GPUIj50R7115wsqxwPYujVT
+	 eUm4lzRTyzrHVBgqfGF4sgJLivl+BXNe1AxD87crmscgyqGDbUQH6yIM5FvaRS2ang
+	 4EXMfcbQu5RnFhywZaf9VyjmPWLzZv4QnS8x6s50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Wei Xu <xuwei5@hisilicon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 166/641] wifi: mt76: mt7921: fix country count limitation for CLC
-Date: Mon, 22 Jan 2024 15:51:10 -0800
-Message-ID: <20240122235823.214157662@linuxfoundation.org>
+Subject: [PATCH 6.7 157/641] arm64: dts: hisilicon: hikey970-pmic: fix regulator cells properties
+Date: Mon, 22 Jan 2024 15:51:01 -0800
+Message-ID: <20240122235822.941419118@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,63 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit fa6ad88e023ddfa6c5dcdb466d159e89f451e305 ]
+[ Upstream commit 44ab3ee76a5a977864ba0bb6c352dcf6206804e0 ]
 
-Due to the increase in the number of power tables for 6Ghz on CLC,
-the variable nr_country is no longer sufficient to represent the
-total quantity. Therefore, we have switched to calculating the
-length of clc buf to obtain the correct power table. Additionally,
-the version number has been incremented to 1.
+The Hi6421 PMIC regulator child nodes do not have unit addresses so drop
+the incorrect '#address-cells' and '#size-cells' properties.
 
-Fixes: 23bdc5d8cadf ("wifi: mt76: mt7921: introduce Country Location Control support")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 6219b20e1ecd ("arm64: dts: hisilicon: Add support for Hikey 970 PMIC")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Wei Xu <xuwei5@hisilicon.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/mcu.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-index 2cc2d2788f83..399d7ca6bebc 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-@@ -1263,13 +1263,15 @@ int __mt7921_mcu_set_clc(struct mt792x_dev *dev, u8 *alpha2,
- 		u8 env_6g;
- 		u8 rsvd[63];
- 	} __packed req = {
-+		.ver = 1,
- 		.idx = idx,
- 		.env = env_cap,
- 		.env_6g = dev->phy.power_type,
- 		.acpi_conf = mt792x_acpi_get_flags(&dev->phy),
- 	};
- 	int ret, valid_cnt = 0;
--	u8 i, *pos;
-+	u16 buf_len = 0;
-+	u8 *pos;
+diff --git a/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi b/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
+index 970047f2dabd..c06e011a6c3f 100644
+--- a/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
++++ b/arch/arm64/boot/dts/hisilicon/hikey970-pmic.dtsi
+@@ -25,9 +25,6 @@ pmic: pmic@0 {
+ 			gpios = <&gpio28 0 0>;
  
- 	if (!clc)
- 		return 0;
-@@ -1279,12 +1281,15 @@ int __mt7921_mcu_set_clc(struct mt792x_dev *dev, u8 *alpha2,
- 	if (mt76_find_power_limits_node(&dev->mt76))
- 		req.cap |= CLC_CAP_DTS_EN;
- 
-+	buf_len = le16_to_cpu(clc->len) - sizeof(*clc);
- 	pos = clc->data;
--	for (i = 0; i < clc->nr_country; i++) {
-+	while (buf_len > 16) {
- 		struct mt7921_clc_rule *rule = (struct mt7921_clc_rule *)pos;
- 		u16 len = le16_to_cpu(rule->len);
-+		u16 offset = len + sizeof(*rule);
- 
--		pos += len + sizeof(*rule);
-+		pos += offset;
-+		buf_len -= offset;
- 		if (rule->alpha2[0] != alpha2[0] ||
- 		    rule->alpha2[1] != alpha2[1])
- 			continue;
+ 			regulators {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+ 				ldo3: ldo3 { /* HDMI */
+ 					regulator-name = "ldo3";
+ 					regulator-min-microvolt = <1500000>;
 -- 
 2.43.0
 
