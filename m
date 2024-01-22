@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011B2657B3;
-	Tue, 23 Jan 2024 01:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3D9657B3;
+	Tue, 23 Jan 2024 01:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971768; cv=none; b=pftW289FgRZIwRjae7zLNSGch2kGK8ydcFIrjY18714yxxKrNURcprFdP3KhShUc7xmOLo0cfzZgnGUXF8uCP0oYDY4gq3RbOW6+fbQWLnDcwQPIo/0XOgBs+3SEiW3EBUJ2PiHgNqfaPn/KAmL3QAwqWpI+zOkHJXL0NUMEYm8=
+	t=1705971769; cv=none; b=F1zq+SI5vtizZD5nGxjopvdftRUAr1rfnceflvmLSIaEYgpqAJtnTQKO8PSVAWSvkCZNG7neK6AmOMQe9lSiUo3CnmkMNRqipJhSfQwl8XgT9P5qfL+FaEMBAozaHstsyySPsEh/i6XdT7R3Rld6knLGVLdNLJj84FkAStirkEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971768; c=relaxed/simple;
-	bh=osAyhIlLcbCAinmFGJ5NvwJKxstQ7GiuPuQnSg2BQrk=;
+	s=arc-20240116; t=1705971769; c=relaxed/simple;
+	bh=K42lcmuLTGlj2YMH9OPxvTTrM8FSo8LRBmR7VKOCc6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NQWQDaq90xOoyy4e/2Gw6uM8CiKRb1xU9KFKpiJfkObhRZ1fKWgnGn/yjm4GpuIyJ99S4ZqvP89LdXeRpf3/MEVLfsVGh3rivDCWh4bGFD4GYACKN0B29vkag1LvZdWZnZ32ZW6uWgpQQ4RnjMiSJUQorEHiVyoenOMBiW59Xn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e74qUoi8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eDMFNJ2bi4FtqscvoJJeg/vMVpYaOqf420K0LmMNslqzB/IistDnQ5Px5XcDkfmXKgXQ8LZLr/0DJgNwwpSKX4m3hOK2CjnLyq5/RZw/yiVwt33Ec18e1rPAcOWV8ztfCrcMRpj980BBY3kSDUawpmgkbKyQBaj8DX62q2NzL1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFV+PO8p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e74qUoi8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B37AC43399;
-	Tue, 23 Jan 2024 01:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFV+PO8p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A10C433F1;
+	Tue, 23 Jan 2024 01:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971767;
-	bh=osAyhIlLcbCAinmFGJ5NvwJKxstQ7GiuPuQnSg2BQrk=;
+	s=korg; t=1705971768;
+	bh=K42lcmuLTGlj2YMH9OPxvTTrM8FSo8LRBmR7VKOCc6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e74qUoi8ET9pdZ7s2dG9C0y6+T5gl060EIsX7PUlueJqZ258CryamfD+jrNz3ldXS
-	 9r8RqrR7xlECmu47FpgOPhLPiL/pjaoz7sWrhchE/WULgfTAW0kWNDL0lFNE/Eva0U
-	 vXZ7KPlEoX3btf4x9tZHzvA9h3L8gDaAXPtx2Eto=
+	b=VFV+PO8p8lh0v2SZ2F5/ZUF2iFK8Zi/kkuW6LzymJ17DZKrg87PQy95/A3eHTSg0r
+	 0I5Lkehjq5brMkEO96WvLEO9Ecb8pUFiIBeVSxr/yHj9ISV1nqpRK3aaikqZD+mMJ5
+	 41MA8/Ayiv1cCNjfriEt3wM4z7O9zkjvftdWgYkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sathya Prakash <sathya.prakash@broadcom.com>,
-	Chandrakanth patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 291/417] scsi: mpi3mr: Refresh sdev queue depth after controller reset
-Date: Mon, 22 Jan 2024 15:57:39 -0800
-Message-ID: <20240122235801.911788065@linuxfoundation.org>
+	Liam Howlett <liam.howlett@oracle.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 5.10 200/286] binder: fix use-after-free in shinkers callback
+Date: Mon, 22 Jan 2024 15:58:26 -0800
+Message-ID: <20240122235739.815261205@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +48,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chandrakanth patil <chandrakanth.patil@broadcom.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit e5aab848dfdf7996d20ece4d28d2733c732c5e5a upstream.
+commit 3f489c2067c5824528212b0fc18b28d51332d906 upstream.
 
-After a controller reset, the firmware may modify the device queue depth.
-Therefore, update the device queue depth accordingly.
+The mmap read lock is used during the shrinker's callback, which means
+that using alloc->vma pointer isn't safe as it can race with munmap().
+As of commit dd2283f2605e ("mm: mmap: zap pages with read mmap_sem in
+munmap") the mmap lock is downgraded after the vma has been isolated.
 
-Cc: <stable@vger.kernel.org> # v5.15+
-Co-developed-by: Sathya Prakash <sathya.prakash@broadcom.com>
-Signed-off-by: Sathya Prakash <sathya.prakash@broadcom.com>
-Signed-off-by: Chandrakanth patil <chandrakanth.patil@broadcom.com>
-Link: https://lore.kernel.org/r/20231126053134.10133-2-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+I was able to reproduce this issue by manually adding some delays and
+triggering page reclaiming through the shrinker's debug sysfs. The
+following KASAN report confirms the UAF:
+
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in zap_page_range_single+0x470/0x4b8
+  Read of size 8 at addr ffff356ed50e50f0 by task bash/478
+
+  CPU: 1 PID: 478 Comm: bash Not tainted 6.6.0-rc5-00055-g1c8b86a3799f-dirty #70
+  Hardware name: linux,dummy-virt (DT)
+  Call trace:
+   zap_page_range_single+0x470/0x4b8
+   binder_alloc_free_page+0x608/0xadc
+   __list_lru_walk_one+0x130/0x3b0
+   list_lru_walk_node+0xc4/0x22c
+   binder_shrink_scan+0x108/0x1dc
+   shrinker_debugfs_scan_write+0x2b4/0x500
+   full_proxy_write+0xd4/0x140
+   vfs_write+0x1ac/0x758
+   ksys_write+0xf0/0x1dc
+   __arm64_sys_write+0x6c/0x9c
+
+  Allocated by task 492:
+   kmem_cache_alloc+0x130/0x368
+   vm_area_alloc+0x2c/0x190
+   mmap_region+0x258/0x18bc
+   do_mmap+0x694/0xa60
+   vm_mmap_pgoff+0x170/0x29c
+   ksys_mmap_pgoff+0x290/0x3a0
+   __arm64_sys_mmap+0xcc/0x144
+
+  Freed by task 491:
+   kmem_cache_free+0x17c/0x3c8
+   vm_area_free_rcu_cb+0x74/0x98
+   rcu_core+0xa38/0x26d4
+   rcu_core_si+0x10/0x1c
+   __do_softirq+0x2fc/0xd24
+
+  Last potentially related work creation:
+   __call_rcu_common.constprop.0+0x6c/0xba0
+   call_rcu+0x10/0x1c
+   vm_area_free+0x18/0x24
+   remove_vma+0xe4/0x118
+   do_vmi_align_munmap.isra.0+0x718/0xb5c
+   do_vmi_munmap+0xdc/0x1fc
+   __vm_munmap+0x10c/0x278
+   __arm64_sys_munmap+0x58/0x7c
+
+Fix this issue by performing instead a vma_lookup() which will fail to
+find the vma that was isolated before the mmap lock downgrade. Note that
+this option has better performance than upgrading to a mmap write lock
+which would increase contention. Plus, mmap_write_trylock() has been
+recently removed anyway.
+
+Fixes: dd2283f2605e ("mm: mmap: zap pages with read mmap_sem in munmap")
+Cc: stable@vger.kernel.org
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Link: https://lore.kernel.org/r/20231201172212.1813387-3-cmllamas@google.com
+[cmllamas: use find_vma() instead of vma_lookup() as commit ce6d42f2e4a2
+ is missing in v5.10. This only works because we check the vma against
+ our cached alloc->vma pointer.]
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/android/binder_alloc.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -1044,8 +1044,14 @@ void mpi3mr_rfresh_tgtdevs(struct mpi3mr
- 	tgtdev = NULL;
- 	list_for_each_entry(tgtdev, &mrioc->tgtdev_list, list) {
- 		if ((tgtdev->dev_handle != MPI3MR_INVALID_DEV_HANDLE) &&
--		    !tgtdev->is_hidden && !tgtdev->host_exposed)
--			mpi3mr_report_tgtdev_to_host(mrioc, tgtdev->perst_id);
-+		    !tgtdev->is_hidden) {
-+			if (!tgtdev->host_exposed)
-+				mpi3mr_report_tgtdev_to_host(mrioc,
-+							     tgtdev->perst_id);
-+			else if (tgtdev->starget)
-+				starget_for_each_device(tgtdev->starget,
-+							(void *)tgtdev, mpi3mr_update_sdev);
-+	}
- 	}
- }
+--- a/drivers/android/binder_alloc.c
++++ b/drivers/android/binder_alloc.c
+@@ -1000,7 +1000,9 @@ enum lru_status binder_alloc_free_page(s
+ 		goto err_mmget;
+ 	if (!mmap_read_trylock(mm))
+ 		goto err_mmap_read_lock_failed;
+-	vma = binder_alloc_get_vma(alloc);
++	vma = find_vma(mm, page_addr);
++	if (vma && vma != binder_alloc_get_vma(alloc))
++		goto err_invalid_vma;
  
+ 	list_lru_isolate(lru, item);
+ 	spin_unlock(lock);
+@@ -1026,6 +1028,8 @@ enum lru_status binder_alloc_free_page(s
+ 	mutex_unlock(&alloc->mutex);
+ 	return LRU_REMOVED_RETRY;
+ 
++err_invalid_vma:
++	mmap_read_unlock(mm);
+ err_mmap_read_lock_failed:
+ 	mmput_async(mm);
+ err_mmget:
 
 
