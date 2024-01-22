@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A5F27456;
-	Tue, 23 Jan 2024 00:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BA927456;
+	Tue, 23 Jan 2024 00:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968699; cv=none; b=kTmtkrYWF4ji2ra98pvQMnPSpPlAu0Z8gSLPOqLZXpd6t0B2OFDMIKR1AL0vlM2tjtB41dus9slupM2F5Og6FtcXxwV4RLWuMmpxTwDbk8e6SQJ5wou6BKzQghvqA43YV/7tkwarnLmouKMxOg5Sd4BGFYpmI/OCmoJot6BEswo=
+	t=1705968701; cv=none; b=tQazX0+871KLOUgeBcH0jIZgTjgNvUDk5D95BhKJVqspLu7q2Zf311BbHtSnKI1zzVLqYedGB72C5JW0qRrrQNvlQDaoVF7ckhXTJaI6Apn6t3xAPDC+FOAmFcD1OZB/daBDVBEXcKGZeeT5qXK2cRAHaz0fxWUQ7HEgfNMe18I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968699; c=relaxed/simple;
-	bh=KmmyPVdnqknwd200f15r45DvozXxj0oj2bn5wNgpEWM=;
+	s=arc-20240116; t=1705968701; c=relaxed/simple;
+	bh=ffvy+RPIt6ngLd4xxqzIdvJvN5GOU/AshztjWgGN4ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k2pBHnJC5/6FHZMGqmK3Ck4KnM9YVeHTGCUxKqK5HwQC+XDEkNAVyx9m5J1HBo+18BYqWgcZy8igj+jbCK7vrWUrpqtfFa5CPakCzVBKkwmGIjLYI7z5+Or7uZ+a5b/baFxCyuTMJEfOXJR3T1k7+2ZBRwpG8pIAGfZeJ0NYetg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2CpEitRN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XHE6iRqgAQHwAGJSqwAKZvmdbvadg2JMbBmYwnAA0ael5zyg0hIxvMI/j0vX+rnjftV3w/Cnl+RishVE9U/Ua8Shvlmpms4ijZMvXQOTM1rR6TJZaLgCKI93tYuN9FJ2CNPHZKPLq+UuSx1Z1ybitpSLNsszE+DYh+oOo0HEwi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYAH3eAG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2CpEitRN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87667C433F1;
-	Tue, 23 Jan 2024 00:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYAH3eAG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB0BC433C7;
+	Tue, 23 Jan 2024 00:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968699;
-	bh=KmmyPVdnqknwd200f15r45DvozXxj0oj2bn5wNgpEWM=;
+	s=korg; t=1705968701;
+	bh=ffvy+RPIt6ngLd4xxqzIdvJvN5GOU/AshztjWgGN4ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2CpEitRNk/SpcVOPJi2nNmT5yMQf1qELRK40yBxO++oAXDLrFPvroDq8I3jrBdVsl
-	 NNxCZBGc0e4v7kIDtHXgaJdq8jjBi9H94jtlwRZJxQLd09dcdPY07cvqXyiETbcikI
-	 a5OPP90kIdwkV9MLwzeOcTT4XtRbTyEnddMjaIJQ=
+	b=FYAH3eAGl4YJsgW8SNYHGJLkR9Va5GZTZCNYCtRyH4jrTushY3Sgq86vhPoRSFfnf
+	 oneMSH6ZwwOQpWcyh8v7GIfVAqOi9FTL63aS4wWegoa1qqgCW5+Uu21Y0Qf507GBSs
+	 hrDZIeCxl/GDNdAHTGOrgIIHhIPm9WUiYCNXeGQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 4.19 148/148] crypto: scompress - initialize per-CPU variables on each CPU
-Date: Mon, 22 Jan 2024 15:58:24 -0800
-Message-ID: <20240122235718.618961241@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 133/148] MIPS: Alchemy: Fix an out-of-bound access in db1200_dev_setup()
+Date: Mon, 22 Jan 2024 15:58:09 -0800
+Message-ID: <20240122235717.942088164@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -51,48 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 8c3fffe3993b06dd1955a79bd2f0f3b143d259b3 upstream.
+[ Upstream commit 89c4b588d11e9acf01d604de4b0c715884f59213 ]
 
-In commit 71052dcf4be70 ("crypto: scompress - Use per-CPU struct instead
-multiple variables") I accidentally initialized multiple times the memory on a
-random CPU. I should have initialize the memory on every CPU like it has
-been done earlier. I didn't notice this because the scheduler didn't
-move the task to another CPU.
-Guenter managed to do that and the code crashed as expected.
+When calling spi_register_board_info(), we should pass the number of
+elements in 'db1200_spi_devs', not 'db1200_i2c_devs'.
 
-Allocate / free per-CPU memory on each CPU.
-
-Fixes: 71052dcf4be70 ("crypto: scompress - Use per-CPU struct instead multiple variables")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 63323ec54a7e ("MIPS: Alchemy: Extended DB1200 board support.")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/scompress.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/mips/alchemy/devboards/db1200.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/crypto/scompress.c
-+++ b/crypto/scompress.c
-@@ -79,7 +79,7 @@ static void crypto_scomp_free_scratches(
- 	int i;
+diff --git a/arch/mips/alchemy/devboards/db1200.c b/arch/mips/alchemy/devboards/db1200.c
+index 48840e48e79a..e47bac04cf75 100644
+--- a/arch/mips/alchemy/devboards/db1200.c
++++ b/arch/mips/alchemy/devboards/db1200.c
+@@ -864,7 +864,7 @@ int __init db1200_dev_setup(void)
+ 	i2c_register_board_info(0, db1200_i2c_devs,
+ 				ARRAY_SIZE(db1200_i2c_devs));
+ 	spi_register_board_info(db1200_spi_devs,
+-				ARRAY_SIZE(db1200_i2c_devs));
++				ARRAY_SIZE(db1200_spi_devs));
  
- 	for_each_possible_cpu(i) {
--		scratch = raw_cpu_ptr(&scomp_scratch);
-+		scratch = per_cpu_ptr(&scomp_scratch, i);
- 
- 		vfree(scratch->src);
- 		vfree(scratch->dst);
-@@ -96,7 +96,7 @@ static int crypto_scomp_alloc_scratches(
- 	for_each_possible_cpu(i) {
- 		void *mem;
- 
--		scratch = raw_cpu_ptr(&scomp_scratch);
-+		scratch = per_cpu_ptr(&scomp_scratch, i);
- 
- 		mem = vmalloc_node(SCOMP_SCRATCH_SIZE, cpu_to_node(i));
- 		if (!mem)
+ 	/* SWITCHES:	S6.8 I2C/SPI selector  (OFF=I2C	 ON=SPI)
+ 	 *		S6.7 AC97/I2S selector (OFF=AC97 ON=I2S)
+-- 
+2.43.0
+
 
 
