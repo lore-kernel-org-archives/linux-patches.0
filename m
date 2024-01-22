@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC66C63BF;
-	Tue, 23 Jan 2024 01:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198206AA6;
+	Tue, 23 Jan 2024 01:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974070; cv=none; b=D62xc8UH/xyv+TBxUHGYzoWonzqMZOpnZxGztnXFgEjtwWALvLBLU7YrEFhXHGE1sL+M9xIFqzineoC6slg+fvR6LggkRM/091b5GhEnNUTtjmG+HxgdsffvDmvzcBgeU/kp3jm5o3/jZNx4I05LDnYgVXEVV3KftUbnGkZfrZQ=
+	t=1705974072; cv=none; b=L9RmEi40eXbV80O5cRAlUqz+hc+GQHAIdDISxWhGSbATChDr5xpfVNF/dMCZEh+XcW3HnT3yMok2yCn1EKKBexmRs2KA0sOyF1oCYG9J2HatZaoWVGGuuYg6sLUmge9wg5i3GpTufid8PSVuaVyVF3MalmTMYEfmNWuflG69rcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974070; c=relaxed/simple;
-	bh=QHxo855qmypYgjKF6ryMgijqptHfZJCN8QILIO0bF98=;
+	s=arc-20240116; t=1705974072; c=relaxed/simple;
+	bh=K/T8+aLoHHH01xsiYVUADmcC4KN2/VIM8yxH1yvkbh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/pf4s2xiMkkGyv+bdGBCPmNZ9ROFYmUY0DXpVffdgJGtsZArL+SzSSd3U0+FlavwlPyqxB3kKpG8xxHzhh/8uPgHzu0s1tQI6PFDWDxSgRBFbMJU4KSmK6ZA6Yj/ZWcR2r2/AF2KCZrirhHoEffMxr1fj7j49ywTMDSbk06xQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcvSNUlR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i3vihgb8CJncyDgE0UTlsgz73JxhVVhUu5ztjezuSoyhm4D2jqe8xKLMhHI9ToYbkkw/I4D9eMeqd1clJDfVsqaYD7XMWFmaW6lq2NUCP/8knlo2mWRgi/TKe4nx/XhHaZYOxJwyoX2IyLZDzTISpYqLnXTvjQCre/kiAojEyQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=foqzr/gL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcvSNUlR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0DAC433A6;
-	Tue, 23 Jan 2024 01:41:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="foqzr/gL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75844C43390;
+	Tue, 23 Jan 2024 01:41:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974070;
-	bh=QHxo855qmypYgjKF6ryMgijqptHfZJCN8QILIO0bF98=;
+	s=korg; t=1705974071;
+	bh=K/T8+aLoHHH01xsiYVUADmcC4KN2/VIM8yxH1yvkbh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hcvSNUlRbfGiIQjwJG/fXqZng4wXn7TUfIkz6ktJj6JY2p8dJVbsj/YuBL2SwADWp
-	 W66gliOUoatcC8BuiGx8qBxtx+/FBZoH1fnU52j7Anj4bPiCWpVG9gB+VyfJjU8gHu
-	 CWQhKBFsV86e0IGFj9dEjnE6pq7DwMIveemiaRfU=
+	b=foqzr/gL4Whv7BFSBABVfvLfBu1PE/C9YGPmdzvK+lUPe5USS/8MmMffazPcERF51
+	 m/IcQkiPDSW11xJRLOFr+eUoO67I1tEkT2LQDphRz/9bS0W8vHrBpOf0CHw+QYhRiX
+	 IunD6Ya9F7C1MraWPN/knZBEadbKJzj8ilD4+uwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Atul Dhudase <quic_adhudase@quicinc.com>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 151/374] soc: qcom: llcc: Fix dis_cap_alloc and retain_on_pc configuration
-Date: Mon, 22 Jan 2024 15:56:47 -0800
-Message-ID: <20240122235749.875556569@linuxfoundation.org>
+Subject: [PATCH 6.6 027/583] spi: cadence-quadspi: add missing clk_disable_unprepare() in cqspi_probe()
+Date: Mon, 22 Jan 2024 15:51:18 -0800
+Message-ID: <20240122235813.022604180@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,71 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Atul Dhudase <quic_adhudase@quicinc.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit eed6e57e9f3e2beac37563eb6a0129549daa330e ]
+[ Upstream commit 5cb475174cce1bfedf1025b6e235e2c43d81144f ]
 
-Commit c14e64b46944 ("soc: qcom: llcc: Support chipsets that can
- write to llcc") add the support for chipset where capacity based
-allocation and retention through power collapse can be programmed
-based on content of SCT table mentioned in the llcc driver where
-the target like sdm845 where the entire programming related to it
-is controlled in firmware. However, the commit introduces a bug
-where capacity/retention register get overwritten each time it
-gets programmed for each slice and that results in misconfiguration
-of the register based on SCT table and that is not expected
-behaviour instead it should be read modify write to retain the
-configuration of other slices.
+cqspi_jh7110_clk_init() is called after clk_prepare_enable(cqspi->clk),
+if it fails, it should goto label 'probe_reset_failed' to disable
+cqspi->clk.
 
-This issue is totally caught from code review and programming test
-and not through any power/perf numbers so, it is not known what
-impact this could make if we don't have this change however,
-this feature are for these targets and they should have been
-programmed accordingly as per their configuration mentioned in
-SCT table like others bits information.
+In the error path after calling cqspi_jh7110_clk_init(),
+cqspi_jh7110_disable_clk() need be called.
 
-This change brings one difference where it keeps capacity/retention
-bits of the slices that are not mentioned in SCT table in unknown
-state where as earlier it was initialized to zero.
-
-Fixes: c14e64b46944 ("soc: qcom: llcc: Support chipsets that can write to llcc")
-Signed-off-by: Atul Dhudase <quic_adhudase@quicinc.com>
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/1701876771-10695-1-git-send-email-quic_mojha@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 33f1ef6d4eb6 ("spi: cadence-quadspi: Add clock configuration for StarFive JH7110 QSPI")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20231129081147.628004-1-yangyingliang@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/spi/spi-cadence-quadspi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index fabc5ce828af..59e359e9062b 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -450,14 +450,14 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config,
- 		u32 disable_cap_alloc, retain_pc;
+diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
+index b50db71ac4cc..2064dc4ea935 100644
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -1825,7 +1825,7 @@ static int cqspi_probe(struct platform_device *pdev)
+ 		if (ddata->jh7110_clk_init) {
+ 			ret = cqspi_jh7110_clk_init(pdev, cqspi);
+ 			if (ret)
+-				goto probe_clk_failed;
++				goto probe_reset_failed;
+ 		}
  
- 		disable_cap_alloc = config->dis_cap_alloc << config->slice_id;
--		ret = regmap_write(drv_data->bcast_regmap,
--				LLCC_TRP_SCID_DIS_CAP_ALLOC, disable_cap_alloc);
-+		ret = regmap_update_bits(drv_data->bcast_regmap, LLCC_TRP_SCID_DIS_CAP_ALLOC,
-+					 BIT(config->slice_id), disable_cap_alloc);
- 		if (ret)
- 			return ret;
- 
- 		retain_pc = config->retain_on_pc << config->slice_id;
--		ret = regmap_write(drv_data->bcast_regmap,
--				LLCC_TRP_PCB_ACT, retain_pc);
-+		ret = regmap_update_bits(drv_data->bcast_regmap, LLCC_TRP_PCB_ACT,
-+					 BIT(config->slice_id), retain_pc);
- 		if (ret)
- 			return ret;
- 	}
+ 		if (of_device_is_compatible(pdev->dev.of_node,
+@@ -1872,6 +1872,8 @@ static int cqspi_probe(struct platform_device *pdev)
+ probe_setup_failed:
+ 	cqspi_controller_enable(cqspi, 0);
+ probe_reset_failed:
++	if (cqspi->is_jh7110)
++		cqspi_jh7110_disable_clk(pdev, cqspi);
+ 	clk_disable_unprepare(cqspi->clk);
+ probe_clk_failed:
+ 	pm_runtime_put_sync(dev);
 -- 
 2.43.0
 
