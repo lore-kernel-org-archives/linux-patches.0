@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF3412FF86;
-	Tue, 23 Jan 2024 00:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD561130E33;
+	Tue, 23 Jan 2024 00:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969056; cv=none; b=BnEVQvDL584snRpvmCK78XJ9AoCdCsFAqJmlFT/GHPjHTgUJVMzJneHhgdlxSmJmUM6X0jqLIn8KT/YTmy79Bx0ht0uoFxi3zyLNlOCL5KOolHJKZVy3GKGKYrh9czpjPl2LrRJCI/DosAMNOtNsbHmJtFm4aEhdvlvXmvBM3vA=
+	t=1705969058; cv=none; b=VHSimDIEN7a+IgnmrBCg/JLuW/LqB8ukv1PtFSobzidvPTqo93ABVZHvWIn6XjWIOco5MFrXEjTXHgaz4QXyTmiSddDxta31BWlBWGHiTggqMTqw0QYOlTeFTM9Xb3rRnySko5irAXR02YasxJribwb9mlc4OHT1Fp9rn5rCAZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969056; c=relaxed/simple;
-	bh=iTa+kTdTN4CE5B8k64qIDCzjpOi5E1GuR9obp7pwmdQ=;
+	s=arc-20240116; t=1705969058; c=relaxed/simple;
+	bh=b4Oiv4aX6Dy7bMpm7rXw9duaozSTfDRzZzl8iJUfyco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tO77qXYCYU0SyOL0hWwFYwTEnXbuID9mS+mJhWRg/KxjeNZ3l/8/+7jnF9q1FGkbfYizvD+p0SZUWBCckKVyZkeTx5+1An0GhD1DsIOCntgLlpJ89/v8iqSqoQRREgGptbrWdsOICbBFp1BvT/fVBr2sSEg/rB4ZN2Igc8lalX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGqd9E/w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hl1pczOP2O4s7VvyLY1ZF9XpV8iJL/j6QWLytY96MA5A1zf/TOlQuXuG/viw7PUKqmWqBeZJ3/LX0iVy0WF1igesbSzcGeGIcMZl3/n+woWp1YN0HQKmJimyU/BPTOz5TZ2FgIJyZSVn5AoEDMYneTf/Xqzq3bJJrQLcIGbnFeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYzdlXls; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGqd9E/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7664C433C7;
-	Tue, 23 Jan 2024 00:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYzdlXls"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E014C43390;
+	Tue, 23 Jan 2024 00:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969056;
-	bh=iTa+kTdTN4CE5B8k64qIDCzjpOi5E1GuR9obp7pwmdQ=;
+	s=korg; t=1705969057;
+	bh=b4Oiv4aX6Dy7bMpm7rXw9duaozSTfDRzZzl8iJUfyco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RGqd9E/wVAIc0dsl4x1xJnyjaszeKXTq3I//7u3V658yUMH70aDNIpM1ZahT9Qp9O
-	 IpzSbGW7gJFDncSXQ9ANtbAzSQ1MGKPxeTPE9Yg0zqQQa2ePHa6Brj1j7jwFIaFpSD
-	 KGOfRk+ZxGRXrEkYO7QGaRAxK6t67sJ+ntMLo4vw=
+	b=GYzdlXlsD15iTQ4W6gtUR0qgX9lnFAXDHbsLCL6XOcz3mkhbzEQmEPl1kms/nxDs+
+	 DnBJ9h9VZLTi05GJxY0b/Z9ZmXhE5Ss1pDOCFd4mO/7FZFU9mcsUR+F0pmtzO4liMm
+	 WusvD6PpgbFn0mKw9O4saKsyo0AmjwYbTU7v3u8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Wanpeng Li <wanpengli@tencent.com>
-Subject: [PATCH 5.4 161/194] x86/kvm: Do not try to disable kvmclock if it was not enabled
-Date: Mon, 22 Jan 2024 15:58:11 -0800
-Message-ID: <20240122235726.098769158@linuxfoundation.org>
+	Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>,
+	Ping Cheng <ping.cheng@wacom.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.4 162/194] HID: wacom: Correct behavior when processing some confidence == false touches
+Date: Mon, 22 Jan 2024 15:58:12 -0800
+Message-ID: <20240122235726.138330866@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -53,70 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Jason Gerecke <jason.gerecke@wacom.com>
 
-commit 1c6d984f523f67ecfad1083bb04c55d91977bb15 upstream.
+commit 502296030ec6b0329e00f9fb15018e170cc63037 upstream.
 
-kvm_guest_cpu_offline() tries to disable kvmclock regardless if it is
-present in the VM. It leads to write to a MSR that doesn't exist on some
-configurations, namely in TDX guest:
+There appear to be a few different ways that Wacom devices can deal with
+confidence:
 
-	unchecked MSR access error: WRMSR to 0x12 (tried to write 0x0000000000000000)
-	at rIP: 0xffffffff8110687c (kvmclock_disable+0x1c/0x30)
+  1. If the device looses confidence in a touch, it will first clear
+     the tipswitch flag in one report, and then clear the confidence
+     flag in a second report. This behavior is used by e.g. DTH-2452.
 
-kvmclock enabling is gated by CLOCKSOURCE and CLOCKSOURCE2 KVM paravirt
-features.
+  2. If the device looses confidence in a touch, it will clear both
+     the tipswitch and confidence flags within the same report. This
+     behavior is used by some AES devices.
 
-Do not disable kvmclock if it was not enabled.
+  3. If the device looses confidence in a touch, it will clear *only*
+     the confidence bit. The tipswitch bit will remain set so long as
+     the touch is tracked. This behavior may be used in future devices.
 
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Fixes: c02027b5742b ("x86/kvm: Disable kvmclock on all CPUs on shutdown")
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Wanpeng Li <wanpengli@tencent.com>
+The driver does not currently handle situation 3 properly. Touches that
+loose confidence will remain "in prox" and essentially frozen in place
+until the tipswitch bit is finally cleared. Not only does this result
+in userspace seeing a stuck touch, but it also prevents pen arbitration
+from working properly (the pen won't send events until all touches are
+up, but we don't currently process events from non-confident touches).
+
+This commit centralizes the checking of the confidence bit in the
+wacom_wac_finger_slot() function and has 'prox' depend on it. In the
+case where situation 3 is encountered, the treat the touch as though
+it was removed, allowing both userspace and the pen arbitration to
+act normally.
+
+Signed-off-by: Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>
+Signed-off-by: Ping Cheng <ping.cheng@wacom.com>
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Fixes: 7fb0413baa7f ("HID: wacom: Use "Confidence" flag to prevent reporting invalid contacts")
 Cc: stable@vger.kernel.org
-Message-Id: <20231205004510.27164-6-kirill.shutemov@linux.intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/kvmclock.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/hid/wacom_wac.c |   32 ++++----------------------------
+ 1 file changed, 4 insertions(+), 28 deletions(-)
 
---- a/arch/x86/kernel/kvmclock.c
-+++ b/arch/x86/kernel/kvmclock.c
-@@ -24,8 +24,8 @@
- 
- static int kvmclock __initdata = 1;
- static int kvmclock_vsyscall __initdata = 1;
--static int msr_kvm_system_time __ro_after_init = MSR_KVM_SYSTEM_TIME;
--static int msr_kvm_wall_clock __ro_after_init = MSR_KVM_WALL_CLOCK;
-+static int msr_kvm_system_time __ro_after_init;
-+static int msr_kvm_wall_clock __ro_after_init;
- static u64 kvm_sched_clock_offset __ro_after_init;
- 
- static int __init parse_no_kvmclock(char *arg)
-@@ -189,7 +189,8 @@ static void kvm_setup_secondary_clock(vo
- 
- void kvmclock_disable(void)
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -2612,8 +2612,8 @@ static void wacom_wac_finger_slot(struct
  {
--	native_write_msr(msr_kvm_system_time, 0, 0);
-+	if (msr_kvm_system_time)
-+		native_write_msr(msr_kvm_system_time, 0, 0);
+ 	struct hid_data *hid_data = &wacom_wac->hid_data;
+ 	bool mt = wacom_wac->features.touch_max > 1;
+-	bool prox = hid_data->tipswitch &&
+-		    report_touch_events(wacom_wac);
++	bool touch_down = hid_data->tipswitch && hid_data->confidence;
++	bool prox = touch_down && report_touch_events(wacom_wac);
+ 
+ 	if (wacom_wac->shared->has_mute_touch_switch &&
+ 	    !wacom_wac->shared->is_touch_on) {
+@@ -2652,24 +2652,6 @@ static void wacom_wac_finger_slot(struct
+ 	}
  }
  
- static void __init kvmclock_init_mem(void)
-@@ -286,7 +287,10 @@ void __init kvmclock_init(void)
- 	if (kvm_para_has_feature(KVM_FEATURE_CLOCKSOURCE2)) {
- 		msr_kvm_system_time = MSR_KVM_SYSTEM_TIME_NEW;
- 		msr_kvm_wall_clock = MSR_KVM_WALL_CLOCK_NEW;
--	} else if (!kvm_para_has_feature(KVM_FEATURE_CLOCKSOURCE)) {
-+	} else if (kvm_para_has_feature(KVM_FEATURE_CLOCKSOURCE)) {
-+		msr_kvm_system_time = MSR_KVM_SYSTEM_TIME;
-+		msr_kvm_wall_clock = MSR_KVM_WALL_CLOCK;
-+	} else {
- 		return;
+-static bool wacom_wac_slot_is_active(struct input_dev *dev, int key)
+-{
+-	struct input_mt *mt = dev->mt;
+-	struct input_mt_slot *s;
+-
+-	if (!mt)
+-		return false;
+-
+-	for (s = mt->slots; s != mt->slots + mt->num_slots; s++) {
+-		if (s->key == key &&
+-			input_mt_get_value(s, ABS_MT_TRACKING_ID) >= 0) {
+-			return true;
+-		}
+-	}
+-
+-	return false;
+-}
+-
+ static void wacom_wac_finger_event(struct hid_device *hdev,
+ 		struct hid_field *field, struct hid_usage *usage, __s32 value)
+ {
+@@ -2717,14 +2699,8 @@ static void wacom_wac_finger_event(struc
  	}
+ 
+ 	if (usage->usage_index + 1 == field->report_count) {
+-		if (equivalent_usage == wacom_wac->hid_data.last_slot_field) {
+-			bool touch_removed = wacom_wac_slot_is_active(wacom_wac->touch_input,
+-				wacom_wac->hid_data.id) && !wacom_wac->hid_data.tipswitch;
+-
+-			if (wacom_wac->hid_data.confidence || touch_removed) {
+-				wacom_wac_finger_slot(wacom_wac, wacom_wac->touch_input);
+-			}
+-		}
++		if (equivalent_usage == wacom_wac->hid_data.last_slot_field)
++			wacom_wac_finger_slot(wacom_wac, wacom_wac->touch_input);
+ 	}
+ }
  
 
 
