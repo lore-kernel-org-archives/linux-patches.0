@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394936086A;
-	Tue, 23 Jan 2024 01:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E3B605DF;
+	Tue, 23 Jan 2024 01:51:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974715; cv=none; b=L+24qQ87CATV+srhhqYlJEU0ROxOkm30aUl++Wrn+m6CxV3rjSK1wjoAKoev0vHKVNVRAS9jlYgClanBQE0eFJre0FjQi8N38KsUzkdDKOfN04FASlNn2PSeaFjyL5jg1GYD8aYyZSgj01T6xsLpwbeD9TMv48J8HLmI8a5Cxh0=
+	t=1705974716; cv=none; b=jWZ8+X+6RRHhvtLVFD2XBX3cceqtCRtpjW0L9QZYyDejtye1pl1SYh3lSBn1ligexPwqMSfAx/is+jC+J5urx2Jf/hgmHz199I3ny92FF1BsmgbLf1b82wZSwEaOtr01acfSCwXdhQ1z4/lCBbTLmg/tvd25Ce6/LI2vRX3KU3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974715; c=relaxed/simple;
-	bh=1LvaeeoNVCHncp+ZMMuiksgx9DpZbxGz/BXH9l+QJSo=;
+	s=arc-20240116; t=1705974716; c=relaxed/simple;
+	bh=6V+bxqUjsjKc0YmTGuEbJ8c8W/pHI4PwEEZS+PsXagE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LeKUEn5GrFlP3JQuhtStK3wJU/vKHcCNpBi2bV2LAgdgLVDfpjZe1n60rg7+1lqAf2d7fcWnLeTCbyLQ3jhRdipQOeCiaxYRmrbxchbS13IWr8mujbi6BLWQRPykaqWi8UOZZHUuX0qD6gT2+Y8Q46tWSyKJiR9YUvzbHaGhrEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZGXaLZo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kg9FeaQlxiMArDiXZPqkbchaG20yPGvENSdUDvjdE9hdvL7sORgfHWEbYEoE+MI78mVZsWEtFeA45j4Ce/ob6Y6RROiV0sZrYBO6QI+EKXrcGvCxna/kZcttXE+Ob9+ycpidv2Kx9eMt1Ry4jAlR7Le+OX5D8F3MgR3pxtGRHI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7Z/SZCG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZGXaLZo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2CBFC43394;
-	Tue, 23 Jan 2024 01:51:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7Z/SZCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB62C43399;
+	Tue, 23 Jan 2024 01:51:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974715;
-	bh=1LvaeeoNVCHncp+ZMMuiksgx9DpZbxGz/BXH9l+QJSo=;
+	s=korg; t=1705974716;
+	bh=6V+bxqUjsjKc0YmTGuEbJ8c8W/pHI4PwEEZS+PsXagE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VZGXaLZoSENXmnx1t5hUcOBULQCO6KhQaEEN+TdUOPL2nP8DssPC9pG+VOni4Jmvz
-	 HCGTIA2BBdqCmA+1cu/ugjEMMPHX7R9a67IQmi3KpTU3dgD26O+xElDKRwFQC4xBYr
-	 HsLbeT9ze1vcHrq7ogWVhhWyxR2nwLvtAJykebl8=
+	b=L7Z/SZCGzgWcqsX2vU+qelpCeaKdQQ/+VmPsg3DWBMtsO/I79fiU1/j3xlcrOvpor
+	 4pffYl9smt8ctkpE/TJxmi2mYpbFdyUg8Gax0j5gvU3zE61h5OFX9We0ko/dJg7LlN
+	 Ftjry3xq/jiFRDqoUTmHYSYXnf516gPztaIgtR5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Felix Fietkau <nbd@nbd.name>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 140/583] wifi: mt76: mt7915: also MT7981 is 3T3R but nss2 on 5 GHz band
-Date: Mon, 22 Jan 2024 15:53:11 -0800
-Message-ID: <20240122235816.383287140@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 265/374] ALSA: oxygen: Fix right channel of capture volume mixer
+Date: Mon, 22 Jan 2024 15:58:41 -0800
+Message-ID: <20240122235753.989272387@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +45,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit ff434cc129d6907e6dbc89dd0ebc59fd3646d4c2 ]
+commit a03cfad512ac24a35184d7d87ec0d5489e1cb763 upstream.
 
-Just like MT7916 also MT7981 can handle 3T3R DBDC frontend and should
-hence be included in the corresponding conditional expression in the
-driver. Add it.
+There was a typo in oxygen mixer code that didn't update the right
+channel value properly for the capture volume.  Let's fix it.
 
-Fixes: 6bad146d162e ("wifi: mt76: mt7915: add support for MT7981")
-Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This trivial fix was originally reported on Bugzilla.
+
+Fixes: a3601560496d ("[ALSA] oxygen: add front panel controls")
+Cc: <stable@vger.kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=156561
+Link: https://lore.kernel.org/r/20240112111023.6208-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/pci/oxygen/oxygen_mixer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index d85105a43d70..3196f56cdf4a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -1047,8 +1047,9 @@ mt7915_set_antenna(struct ieee80211_hw *hw, u32 tx_ant, u32 rx_ant)
- 
- 	phy->mt76->antenna_mask = tx_ant;
- 
--	/* handle a variant of mt7916 which has 3T3R but nss2 on 5 GHz band */
--	if (is_mt7916(&dev->mt76) && band && hweight8(tx_ant) == max_nss)
-+	/* handle a variant of mt7916/mt7981 which has 3T3R but nss2 on 5 GHz band */
-+	if ((is_mt7916(&dev->mt76) || is_mt7981(&dev->mt76)) &&
-+	    band && hweight8(tx_ant) == max_nss)
- 		phy->mt76->chainmask = (dev->chainmask >> chainshift) << chainshift;
- 	else
- 		phy->mt76->chainmask = tx_ant << (chainshift * band);
--- 
-2.43.0
-
+--- a/sound/pci/oxygen/oxygen_mixer.c
++++ b/sound/pci/oxygen/oxygen_mixer.c
+@@ -718,7 +718,7 @@ static int ac97_fp_rec_volume_put(struct
+ 	oldreg = oxygen_read_ac97(chip, 1, AC97_REC_GAIN);
+ 	newreg = oldreg & ~0x0707;
+ 	newreg = newreg | (value->value.integer.value[0] & 7);
+-	newreg = newreg | ((value->value.integer.value[0] & 7) << 8);
++	newreg = newreg | ((value->value.integer.value[1] & 7) << 8);
+ 	change = newreg != oldreg;
+ 	if (change)
+ 		oxygen_write_ac97(chip, 1, AC97_REC_GAIN, newreg);
 
 
