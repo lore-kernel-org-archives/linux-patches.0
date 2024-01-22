@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E845733D;
-	Tue, 23 Jan 2024 01:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4764EB2A;
+	Tue, 23 Jan 2024 01:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974057; cv=none; b=Null5XJjkca5EN8HNyGD+1QyMBjjkZmHMAMQ3ApkaT/pWcCOHvm6HCa7WsuhYIzkZeWJnOps8QfH3yhhQM6mA8epHPx4GpvS1/zI3bvTJ8ouYkRQF5A+UTPz+1lr4JsVZUvXJ0yU6R96LU/kBIpo1SvFPBP0qEH70BE4gJrJddk=
+	t=1705974059; cv=none; b=m0JXW+YotGye0PjBXrFxHzgeR/pVY5soX+CMsufmrqxalZsBs25GDMQy7iG5P5ntVsde/gLXwKL1GwgE+d0g9inRtfFbS32N4U/iDtPVJASk1Jw3eiWlaHx1hwAxNwa8pFHumCDffFFd1g3sygCdN62xFFPdTD2s0W0D8859aE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974057; c=relaxed/simple;
-	bh=wnn4XEZCDOpzouXIWjzOoZJkWxt8rdG08eZ0+E3yjD8=;
+	s=arc-20240116; t=1705974059; c=relaxed/simple;
+	bh=s2dd8PnCtRkuD50g7cwbDfcqlQm52wD5hKzQhbYVZXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qRLNk9RSjn/0OmCLDe/5mU34SdN0TI+kkBxUE9bH9B3bEShY18pq5eV7KLIw5MJkfhxhFvE1SDzeTF0hLYX5epPV+cIDQstb/iRAvTmPKYfL2nTW3Xoij4HhyXlzg1SGkOK74pSdRc4TgCOz+7TZU0iUSTY9eXefjURwjza49NE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvtjLyL1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HHoUMOWCascENJrJLunfLbDgrg8yl0IQugqnuPIBigtL5fUmY1QPru7U+ca0747c4RdbyfHqpUzOBR46qi8EKNfXOgcY4b+vOCrDSgwSRozdc4eMj16+sHinwJUwKJ+dlMiU/2DEBhrV8hkc4MuvRfmUBebZ7JYuDrZOMmJmqjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGgKIMyl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvtjLyL1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4174AC433C7;
-	Tue, 23 Jan 2024 01:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGgKIMyl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DD5C433C7;
+	Tue, 23 Jan 2024 01:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974057;
-	bh=wnn4XEZCDOpzouXIWjzOoZJkWxt8rdG08eZ0+E3yjD8=;
+	s=korg; t=1705974059;
+	bh=s2dd8PnCtRkuD50g7cwbDfcqlQm52wD5hKzQhbYVZXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvtjLyL1DA1a5SEEt+ECdFNHXg1/ueQ06KRElQWuiFfXTAtnMxeBcvnQBEj0hJqRa
-	 +mrxxsCVLEzJrNvWFbKMcVkbb198T9kAJLage6eOGE0fyEkOaNU+o+VgazxXztde+Y
-	 nDMQOS73NxcQo+/W8FT+/GOZ3LZxSi5KHGl41QUg=
+	b=eGgKIMylWNUIsJEpr8fnrROMdMbOjkxxnG7V8K2UXO/Ih7amJioL7D4nwaGNpI0Ya
+	 4GpetazqnJyag4/jxCffU2IF3lqehiHrYn0wVnkui+An8BPP5dQxU0EGgs1tel2ma9
+	 Yl+I1Z3hi92lqcT0gA2Mfxbhgcvb7sf/HuKFPBVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Nishanth Menon <nm@ti.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 124/374] firmware: ti_sci: Fix an off-by-one in ti_sci_debugfs_create()
-Date: Mon, 22 Jan 2024 15:56:20 -0800
-Message-ID: <20240122235748.960153993@linuxfoundation.org>
+Subject: [PATCH 6.6 001/583] x86/lib: Fix overflow when counting digits
+Date: Mon, 22 Jan 2024 15:50:52 -0800
+Message-ID: <20240122235812.281262872@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,57 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 964946b88887089f447a9b6a28c39ee97dc76360 ]
+[ Upstream commit a24d61c609813963aacc9f6ec8343f4fcaac7243 ]
 
-The ending NULL is not taken into account by strncat(), so switch to
-snprintf() to correctly build 'debug_name'.
+tl;dr: The num_digits() function has a theoretical overflow issue.
+But it doesn't affect any actual in-tree users.  Fix it by using
+a larger type for one of the local variables.
 
-Using snprintf() also makes the code more readable.
+Long version:
 
-Fixes: aa276781a64a ("firmware: Add basic support for TI System Control Interface (TI-SCI) protocol")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/7158db0a4d7b19855ddd542ec61b666973aad8dc.1698660720.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Nishanth Menon <nm@ti.com>
+There is an overflow in variable m in function num_digits when val
+is >= 1410065408 which leads to the digit calculation loop to
+iterate more times than required. This results in either more
+digits being counted or in some cases (for example where val is
+1932683193) the value of m eventually overflows to zero and the
+while loop spins forever).
+
+Currently the function num_digits is currently only being used for
+small values of val in the SMP boot stage for digit counting on the
+number of cpus and NUMA nodes, so the overflow is never encountered.
+However it is useful to fix the overflow issue in case the function
+is used for other purposes in the future. (The issue was discovered
+while investigating the digit counting performance in various
+kernel helper functions rather than any real-world use-case).
+
+The simplest fix is to make m a long long, the overhead in
+multiplication speed for a long long is very minor for small values
+of val less than 10000 on modern processors. The alternative
+fix is to replace the multiplication with a constant division
+by 10 loop (this compiles down to an multiplication and shift)
+without needing to make m a long long, but this is slightly slower
+than the fix in this commit when measured on a range of x86
+processors).
+
+[ dhansen: subject and changelog tweaks ]
+
+Fixes: 646e29a1789a ("x86: Improve the printout of the SMP bootup CPU table")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://lore.kernel.org/all/20231102174901.2590325-1-colin.i.king%40gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/ti_sci.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/x86/lib/misc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
-index c2fafe49c2e8..b313337e4f19 100644
---- a/drivers/firmware/ti_sci.c
-+++ b/drivers/firmware/ti_sci.c
-@@ -161,7 +161,7 @@ static int ti_sci_debugfs_create(struct platform_device *pdev,
+diff --git a/arch/x86/lib/misc.c b/arch/x86/lib/misc.c
+index 92cd8ecc3a2c..40b81c338ae5 100644
+--- a/arch/x86/lib/misc.c
++++ b/arch/x86/lib/misc.c
+@@ -8,7 +8,7 @@
+  */
+ int num_digits(int val)
  {
- 	struct device *dev = &pdev->dev;
- 	struct resource *res;
--	char debug_name[50] = "ti_sci_debug@";
-+	char debug_name[50];
+-	int m = 10;
++	long long m = 10;
+ 	int d = 1;
  
- 	/* Debug region is optional */
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
-@@ -178,10 +178,10 @@ static int ti_sci_debugfs_create(struct platform_device *pdev,
- 	/* Setup NULL termination */
- 	info->debug_buffer[info->debug_region_size] = 0;
- 
--	info->d = debugfs_create_file(strncat(debug_name, dev_name(dev),
--					      sizeof(debug_name) -
--					      sizeof("ti_sci_debug@")),
--				      0444, NULL, info, &ti_sci_debug_fops);
-+	snprintf(debug_name, sizeof(debug_name), "ti_sci_debug@%s",
-+		 dev_name(dev));
-+	info->d = debugfs_create_file(debug_name, 0444, NULL, info,
-+				      &ti_sci_debug_fops);
- 	if (IS_ERR(info->d))
- 		return PTR_ERR(info->d);
- 
+ 	if (val < 0) {
 -- 
 2.43.0
 
