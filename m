@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9753459B62;
-	Tue, 23 Jan 2024 01:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9B24EB52;
+	Tue, 23 Jan 2024 01:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974111; cv=none; b=aIoD/opKZXgUU64s8lY4slrHdEJoGUB3B54s5csB/Pa6CN3rn6vzdu/yv9C02HlWzlD/sW0xwpeWaDUYi42tCdqz5NXir1DRqiUELLkmNU59ztDWo3CVwKE/qOKjyOn0y6JRbwX5E1CODReWF7NwAWe9TVWKUyZwCONGzCHc0GE=
+	t=1705974112; cv=none; b=bF720NKl4CEXcSP/xipAYIrjxbzWIir8M4uR0v+77Bhk387dnZv05YAL9744pznOgMXBkr14qcqX6FS/KeAqLnXf4/VyNrlNPBtgKx+QrEAwtSUHe6ZmWYCW+bG2XCpH5IauS09xiScBOWaH02/aU7tW3RIE4BPFCdWH8Q43wz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974111; c=relaxed/simple;
-	bh=73MDIsAPft4HQX8jFLKQPHckBgeRwkx62YzsLMGXKtE=;
+	s=arc-20240116; t=1705974112; c=relaxed/simple;
+	bh=8cimbuj8ofjgfkd6+jIACAKIzsMQo8WX+YRE6VcpHgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M/uviGvq848QjmxZtFFvQXiA/oNj4VI0/Ik6RVnrvJsldUVJV6Gt7fwa6ZO0bpSRcFXMyuC9JtjkDLpTMlCcTS0SXOUMcdHXE7MHh9XWQSbMuyKp4XYps0tOVCyue5RnbFsKuS1VfNPzDg0NBcA1o/qnTdf3O0/TVGcztfV/QSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TusC+FhU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QZxbAmL7BpWuwpW2NMLOXdw5xP+CItVkhu5zQ3C0cxKcNLQiHxOUAQUJzz31uDK1RVbmyepk08Sd93mZBCUJZ0PJdmw21Q2Nu/nqgYDBGq02K935zE13+Nq3461aI1EDJFOSKeEtn86X3YhygVXdAHgV6s9ujCssLn3mAdGiffU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMRfxFC+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TusC+FhU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C22CC43394;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMRfxFC+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FE3C433C7;
 	Tue, 23 Jan 2024 01:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974111;
-	bh=73MDIsAPft4HQX8jFLKQPHckBgeRwkx62YzsLMGXKtE=;
+	s=korg; t=1705974112;
+	bh=8cimbuj8ofjgfkd6+jIACAKIzsMQo8WX+YRE6VcpHgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TusC+FhUPn55kK6vHZ0hKZuboO9NYOJbyWN5JNgEI67Irvf358hgQsoEBx8IL0soR
-	 RVPYpV/hOs1HlxLN22isk1mJlH9us2iFjZsH4kXCDmckVpB8sEuVF5QtCMYJoDEET/
-	 q64+TU+nqXPy2+8hx8TBsZ9kBjE13U3cUSsTTEuM=
+	b=sMRfxFC+L47+oNQ3P3AxKlIH/CQvQACwQZkIubY8HDlofXn6PE7rxnzW3V7TJons/
+	 FgVIb0QnZlJZ9AmfvWHZqjEHZuHLexgY6gm1/B/R9Q4VawC4MN5B5Wtfl3e6JJzfVV
+	 Hini09M9r74A26TAppTe4j86vJDQaNDwiFcOxSsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Chanho Park <chanho61.park@samsung.com>,
+	Jia Jie Ho <jiajie.ho@starfivetech.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 167/374] Bluetooth: btmtkuart: fix recv_buf() return value
-Date: Mon, 22 Jan 2024 15:57:03 -0800
-Message-ID: <20240122235750.429483135@linuxfoundation.org>
+Subject: [PATCH 6.6 043/583] crypto: jh7110 - Correct deferred probe return
+Date: Mon, 22 Jan 2024 15:51:34 -0800
+Message-ID: <20240122235813.462205211@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,69 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Chanho Park <chanho61.park@samsung.com>
 
-[ Upstream commit 64057f051f20c2a2184b9db7f8037d928d68a4f4 ]
+[ Upstream commit d57343022b71b9f41e731282dbe0baf0cff6ada8 ]
 
-Serdev recv_buf() callback is supposed to return the amount of bytes
-consumed, therefore an int in between 0 and count.
+This fixes list_add corruption error when the driver is returned
+with -EPROBE_DEFER. It is also required to roll back the previous
+probe sequences in case of deferred_probe. So, this removes
+'err_probe_defer" goto label and just use err_dma_init instead.
 
-Do not return negative number in case of issue, just print an error and
-return count. This fixes a WARN in ttyport_receive_buf().
-
-Link: https://lore.kernel.org/all/087be419-ec6b-47ad-851a-5e1e3ea5cfcc@kernel.org/
-Fixes: 7237c4c9ec92 ("Bluetooth: mediatek: Add protocol support for MediaTek serial devices")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 42ef0e944b01 ("crypto: starfive - Add crypto engine support")
+Signed-off-by: Chanho Park <chanho61.park@samsung.com>
+Reviewed-by: Jia Jie Ho <jiajie.ho@starfivetech.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmtkuart.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/crypto/starfive/jh7110-cryp.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/bluetooth/btmtkuart.c b/drivers/bluetooth/btmtkuart.c
-index 9ba22b13b4fa..a831d734cd9e 100644
---- a/drivers/bluetooth/btmtkuart.c
-+++ b/drivers/bluetooth/btmtkuart.c
-@@ -471,7 +471,7 @@ mtk_stp_split(struct btmtkuart_dev *bdev, const unsigned char *data, int count,
- 	return data;
+diff --git a/drivers/crypto/starfive/jh7110-cryp.c b/drivers/crypto/starfive/jh7110-cryp.c
+index 08e974e0dd12..3a67ddc4d936 100644
+--- a/drivers/crypto/starfive/jh7110-cryp.c
++++ b/drivers/crypto/starfive/jh7110-cryp.c
+@@ -180,12 +180,8 @@ static int starfive_cryp_probe(struct platform_device *pdev)
+ 	spin_unlock(&dev_list.lock);
+ 
+ 	ret = starfive_dma_init(cryp);
+-	if (ret) {
+-		if (ret == -EPROBE_DEFER)
+-			goto err_probe_defer;
+-		else
+-			goto err_dma_init;
+-	}
++	if (ret)
++		goto err_dma_init;
+ 
+ 	/* Initialize crypto engine */
+ 	cryp->engine = crypto_engine_alloc_init(&pdev->dev, 1);
+@@ -233,7 +229,7 @@ static int starfive_cryp_probe(struct platform_device *pdev)
+ 
+ 	tasklet_kill(&cryp->aes_done);
+ 	tasklet_kill(&cryp->hash_done);
+-err_probe_defer:
++
+ 	return ret;
  }
- 
--static int btmtkuart_recv(struct hci_dev *hdev, const u8 *data, size_t count)
-+static void btmtkuart_recv(struct hci_dev *hdev, const u8 *data, size_t count)
- {
- 	struct btmtkuart_dev *bdev = hci_get_drvdata(hdev);
- 	const unsigned char *p_left = data, *p_h4;
-@@ -510,25 +510,20 @@ static int btmtkuart_recv(struct hci_dev *hdev, const u8 *data, size_t count)
- 			bt_dev_err(bdev->hdev,
- 				   "Frame reassembly failed (%d)", err);
- 			bdev->rx_skb = NULL;
--			return err;
-+			return;
- 		}
- 
- 		sz_left -= sz_h4;
- 		p_left += sz_h4;
- 	}
--
--	return 0;
- }
- 
- static int btmtkuart_receive_buf(struct serdev_device *serdev, const u8 *data,
- 				 size_t count)
- {
- 	struct btmtkuart_dev *bdev = serdev_device_get_drvdata(serdev);
--	int err;
- 
--	err = btmtkuart_recv(bdev->hdev, data, count);
--	if (err < 0)
--		return err;
-+	btmtkuart_recv(bdev->hdev, data, count);
- 
- 	bdev->hdev->stat.byte_rx += count;
  
 -- 
 2.43.0
