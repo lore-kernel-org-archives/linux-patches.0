@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6FF6A320;
-	Tue, 23 Jan 2024 02:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D846A352;
+	Tue, 23 Jan 2024 02:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975347; cv=none; b=WR3fzKjjwgbRQmaBAGswsRIEEUGeqsGa1lB5ER9okrZZlonMXJfgUBPSxycnNFlrrzLcK0SUPqi1qBb027YfOgfHpHRMw2F+BTflkRADb1rvjppM8mzQjv0T01DqmGHkxedJLtgjGK/JkXhaPs6z20LdX7VvisFQcC9BwhPxhI4=
+	t=1705975349; cv=none; b=Ndt1a8fJI35mvQfdQ4LlPXzuD5ItzQvO3u9pC1XTlcWUH3uCKBTekKUTaglkA/3aDgGm/StSIA6nttZZhYyoDhRYTDKXT7k3AL/ODxVIJUceuNe7OPn2dGtZwYrd+zDqsJ6vEKuyODmPBU9bozKTX9P3WdochABfJFjPv9xR5Kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975347; c=relaxed/simple;
-	bh=JEZdAveXQvZIrfbl1eW4eI4EqtVM3lZLvkmqCdRdVNU=;
+	s=arc-20240116; t=1705975349; c=relaxed/simple;
+	bh=4qnwlnDeCK0OV7dURB1HcKoV8eGmhjXCmKFyjzcFpUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tWxstLh5RDyYhLq1lko169MC3VNOwg/wTzLq/ElCTKwrC5nVg5FSjfM7AFnrcgQhA+pcBwATTS7gYCIL2QYVf0o/KdVe905/kbdj/Lqfef155ovrjd4AHBFFnu+z1ehXGHMvGruT1gkJZEE4YlfFG1iPsGvJOusjed3rM7gFxaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0j9m1ee; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oN+srHHdajTamhLw0iZah6s0or7PvlYZeEAySgTXhBgymmt28TVFDsm4S2IwecSXwz8Tc/Ba0VS6Af1+3gGrcCPmrc5a5jHwyIUjtdPeD5C1xpzdFaY6maLqOrIMrMp4ASBFZET2JAFgu+s7c4FcVmxxHVqiFTQO8yvCWtJBGqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpvdT79E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0j9m1ee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A36DC433C7;
-	Tue, 23 Jan 2024 02:02:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpvdT79E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B5DAC43390;
+	Tue, 23 Jan 2024 02:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975347;
-	bh=JEZdAveXQvZIrfbl1eW4eI4EqtVM3lZLvkmqCdRdVNU=;
+	s=korg; t=1705975348;
+	bh=4qnwlnDeCK0OV7dURB1HcKoV8eGmhjXCmKFyjzcFpUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F0j9m1eeKP5n03uoPec2BQM8fxCuIkm+BJY3/dxXffgEaMRJGtT9T0tMZRQLe7PE1
-	 q9fjgsvy50Ck4+BZIB8Sxisx1pMYOx4ahtR8cbKJ8m9wQvBCr2YsOfXnuISElkUp4D
-	 xFqr8b+w2+2EGyDh7DNgALgfIyQkN9h/OFAWmqfk=
+	b=xpvdT79E1tenz7tHuUqqRSOmxdVBN6xAdLONZUcG82su9/rHLpXc4ufhfBCVUQ+0A
+	 uJJTTLOR6qY8nYDm5TyhZqONq1d1q45Mf6HhB7ZIYiTLa24T5BsmItBpcV+n2uKBHb
+	 uECh35wNfmcMrhyJ9FXHcBbhGCVNv9XBNUD+HSx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 302/583] watchdog: bcm2835_wdt: Fix WDIOC_SETTIMEOUT handling
-Date: Mon, 22 Jan 2024 15:55:53 -0800
-Message-ID: <20240122235821.261132452@linuxfoundation.org>
+Subject: [PATCH 6.6 311/583] clk: qcom: gcc-sm8550: Mark the PCIe GDSCs votable
+Date: Mon, 22 Jan 2024 15:56:02 -0800
+Message-ID: <20240122235821.544128713@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,55 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit f33f5b1fd1be5f5106d16f831309648cb0f1c31d ]
+[ Upstream commit e7fe73fc6b68ee97b1e8f124a66a5ee50d8d5e5b ]
 
-Users report about the unexpected behavior for setting timeouts above
-15 sec on Raspberry Pi. According to watchdog-api.rst the ioctl
-WDIOC_SETTIMEOUT shouldn't fail because of hardware limitations.
-But looking at the code shows that max_timeout based on the
-register value PM_WDOG_TIME_SET, which is the maximum.
+The PCIe GDSCs on most Qualcomm platforms expect the OS to always
+consider collapse requests as successful. This also concerns SM8550.
 
-Since 664a39236e71 ("watchdog: Introduce hardware maximum heartbeat
-in watchdog core") the watchdog core is able to handle this problem.
+Add the VOTABLE flag to the GDSCs in question to comply with these
+expectations.
 
-This fix has been tested with watchdog-test from selftests.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217374
-Fixes: 664a39236e71 ("watchdog: Introduce hardware maximum heartbeat in watchdog core")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20231112173251.4827-1-wahrenst@gmx.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 955f2ea3b9e9 ("clk: qcom: Add GCC driver for SM8550")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231218-topic-8550_fixes-v1-4-ce1272d77540@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/bcm2835_wdt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-sm8550.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/watchdog/bcm2835_wdt.c b/drivers/watchdog/bcm2835_wdt.c
-index 7a855289ff5e..bb001c5d7f17 100644
---- a/drivers/watchdog/bcm2835_wdt.c
-+++ b/drivers/watchdog/bcm2835_wdt.c
-@@ -42,6 +42,7 @@
- 
- #define SECS_TO_WDOG_TICKS(x) ((x) << 16)
- #define WDOG_TICKS_TO_SECS(x) ((x) >> 16)
-+#define WDOG_TICKS_TO_MSECS(x) ((x) * 1000 >> 16)
- 
- struct bcm2835_wdt {
- 	void __iomem		*base;
-@@ -140,7 +141,7 @@ static struct watchdog_device bcm2835_wdt_wdd = {
- 	.info =		&bcm2835_wdt_info,
- 	.ops =		&bcm2835_wdt_ops,
- 	.min_timeout =	1,
--	.max_timeout =	WDOG_TICKS_TO_SECS(PM_WDOG_TIME_SET),
-+	.max_hw_heartbeat_ms =	WDOG_TICKS_TO_MSECS(PM_WDOG_TIME_SET),
- 	.timeout =	WDOG_TICKS_TO_SECS(PM_WDOG_TIME_SET),
+diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
+index 1c3d78500392..a16d07426b71 100644
+--- a/drivers/clk/qcom/gcc-sm8550.c
++++ b/drivers/clk/qcom/gcc-sm8550.c
+@@ -3002,7 +3002,7 @@ static struct gdsc pcie_0_gdsc = {
+ 		.name = "pcie_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
  };
  
+ static struct gdsc pcie_0_phy_gdsc = {
+@@ -3011,7 +3011,7 @@ static struct gdsc pcie_0_phy_gdsc = {
+ 		.name = "pcie_0_phy_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc pcie_1_gdsc = {
+@@ -3020,7 +3020,7 @@ static struct gdsc pcie_1_gdsc = {
+ 		.name = "pcie_1_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc pcie_1_phy_gdsc = {
+@@ -3029,7 +3029,7 @@ static struct gdsc pcie_1_phy_gdsc = {
+ 		.name = "pcie_1_phy_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
+ static struct gdsc ufs_phy_gdsc = {
 -- 
 2.43.0
 
