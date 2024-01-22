@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C424D151CEA;
-	Tue, 23 Jan 2024 00:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8404152DFB;
+	Tue, 23 Jan 2024 00:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969367; cv=none; b=Sju/qdgWI0a3/t4eSDDiFMhYMSQDRdED0n64BhzmusY4zY5yhZJ1a0cMQDvOj7Envtr1bJ7+oERpaJFUh+ojkTSJMQp22KHIEtrf9IlWvhYXDs0rH8XUggHCRARlkNSv/z9rFZJr+jf9jLN6Rdzhc5spS53NM7+8Oiz5/zr/mio=
+	t=1705969368; cv=none; b=gQvXCCUeFZe235KPgiSNlLpkSIzL/mtNr6KBM20WO/0Qz8eza7MifciR2OeHdglVjYFfta/ZNqOiIdHrcqgH6XSlIF24Ue1GxaIswtCHbQcUq/E365qzsIPXGfEtrxOo6aAiikcYHSNyBQ/mOFezb0p1te7j0TWni5oPYgDX2AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969367; c=relaxed/simple;
-	bh=zXcoTGpO6QWLAwCOzNCOqi0u+94ptEDsBRFkdivTMHM=;
+	s=arc-20240116; t=1705969368; c=relaxed/simple;
+	bh=K0ClK/eDCwX/Fe+l/4hj269lOYED+04qsdAMRoFMZDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IB1ufdcLk1IVROJR2sCQPlFTA4uOlgbOdntP9i+CCV44wFCdoXO/0GYiVEzDIbTJpWUaFzqdZaF2UILU5P1w8cQIvmSVLCBeCb2bsndGiWX8PynEGU23u1FH/2kaSADkUsZ0+yYL8gj4DI/k+ioJ1xVn7cG4X0ERtk/oCnwH8aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4YEstGR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pGJ3zn3hcdPYsXALVtw8PGXfD4sgVmhoKmlgHBRNhlog7+5OiK4pjsuYESDH620rXGbeCrqVcjbI9BFcu4K6oZCmEDMVpk8G1cYr0NU0CDSbQEJgRy5SqANRU3OmEsmq/sdLxYFlAdgxoyriCjYjYVHe8t6KjtDwXfZ6MMtSwtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+lh0Vi3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4YEstGR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593DDC433F1;
-	Tue, 23 Jan 2024 00:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+lh0Vi3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75183C433C7;
+	Tue, 23 Jan 2024 00:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969367;
-	bh=zXcoTGpO6QWLAwCOzNCOqi0u+94ptEDsBRFkdivTMHM=;
+	s=korg; t=1705969368;
+	bh=K0ClK/eDCwX/Fe+l/4hj269lOYED+04qsdAMRoFMZDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k4YEstGR8JtAYdU14oY0nbJfRWOAtkhG8SxZwb5tkSyUH3vUeu9VbR71UbBn1FG0Z
-	 06B1eDJx/R3mN9c5IeesVVHITZo0bN04Rdbtwg3IuTxiCb1AUaE+K5wENo9dYx0bvR
-	 H/LvgjbehHXm+5Mfn/d5faxmGS6XA5pmsnsAkiLY=
+	b=e+lh0Vi3xDmFxQuIvMPnVSx7ITklxoqSOBpCop5Eik9mbhmUqZi+Qn96XrMiy2VEx
+	 aI2E5kA8+f6A6LGPn9SSwLFOW0iUnEG8lCt0eKSBhdH1A2AuaqAcKtlCcTk/o+5+LH
+	 qglcI4SteSFFdgiowtsNBUXsIW6eQ1Eh8F7dWgLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 199/641] block: add check of minors and first_minor in device_add_disk()
-Date: Mon, 22 Jan 2024 15:51:43 -0800
-Message-ID: <20240122235824.187897021@linuxfoundation.org>
+Subject: [PATCH 6.7 200/641] arm64: dts: qcom: sc7280: Mark SDHCI hosts as cache-coherent
+Date: Mon, 22 Jan 2024 15:51:44 -0800
+Message-ID: <20240122235824.217616122@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,43 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 4c434392c4777881d01beada6701eff8c76b43fe ]
+[ Upstream commit 827f5fc8d912203c1f971e47d61130b13c6820ba ]
 
-'first_minor' represents the starting minor number of disks, and
-'minors' represents the number of partitions in the device. Neither
-of them can be greater than MINORMASK + 1.
+The SDHCI hosts on SC7280 are cache-coherent, just like on most fairly
+recent Qualcomm SoCs. Mark them as such.
 
-Commit e338924bd05d ("block: check minor range in device_add_disk()")
-only added the check of 'first_minor + minors'. However, their sum might
-be less than MINORMASK but their values are wrong. Complete the checks now.
-
-Fixes: e338924bd05d ("block: check minor range in device_add_disk()")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20231219075942.840255-1-linan666@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 298c81a7d44f ("arm64: dts: qcom: sc7280: Add nodes for eMMC and SD card")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231218-topic-7280_dmac_sdhci-v1-1-97af7efd64a1@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 13db3a7943d8..d74fb5b4ae68 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -432,7 +432,9 @@ int __must_check device_add_disk(struct device *parent, struct gendisk *disk,
- 				DISK_MAX_PARTS);
- 			disk->minors = DISK_MAX_PARTS;
- 		}
--		if (disk->first_minor + disk->minors > MINORMASK + 1)
-+		if (disk->first_minor > MINORMASK ||
-+		    disk->minors > MINORMASK + 1 ||
-+		    disk->first_minor + disk->minors > MINORMASK + 1)
- 			goto out_exit_elevator;
- 	} else {
- 		if (WARN_ON(disk->minors))
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 1dac0b10582e..f7f616906f6f 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -974,6 +974,7 @@ sdhc_1: mmc@7c4000 {
+ 
+ 			bus-width = <8>;
+ 			supports-cqe;
++			dma-coherent;
+ 
+ 			qcom,dll-config = <0x0007642c>;
+ 			qcom,ddr-config = <0x80040868>;
+@@ -3331,6 +3332,7 @@ sdhc_2: mmc@8804000 {
+ 			operating-points-v2 = <&sdhc2_opp_table>;
+ 
+ 			bus-width = <4>;
++			dma-coherent;
+ 
+ 			qcom,dll-config = <0x0007642c>;
+ 
 -- 
 2.43.0
 
