@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCE6130E42;
-	Tue, 23 Jan 2024 00:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A6A130E42;
+	Tue, 23 Jan 2024 00:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969073; cv=none; b=kG4uB8YlfR8r4YZ65RcA6qrnXFq0Sk/IKf7OlCBTQUtD6dC7Br/pVoJD2oJIUfrcerRkPvwM1Ie0hqd1iHhCaRhu4TDMAjuw/s5Xi6wzU8wny0ZOr08mLjG9kFFtezCOQBFxB5y3Zn4ADA79Ez9NHQrojdxkNKzQVhvrBG47WSM=
+	t=1705969075; cv=none; b=upol9QNDfA/iBzCoVRheIvwvkYpPGLSz13fUwrZBZsTgJ4wZBd5/XDVvTwX0mFYxTuI6Ck+pa+EH2a9rjBbn5dXDrvC8R3prFO6pLWzjlIgqKFgowTYKLdk0zQfXFtYOibakYDWcfJaD6ZgSoSS65D04QtAPdh7kcFdfK7JlqoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969073; c=relaxed/simple;
-	bh=rjI43STLYu8TZDfGakDbdOZ7gkWFdprOMdxQeZhFPyo=;
+	s=arc-20240116; t=1705969075; c=relaxed/simple;
+	bh=fAV0opdsiXYjkBShC6U0lPP9yvyoIK5Q6nU9ZtH2eXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EbeXZUj2UTSdtjYKOcQaTmZPh82cjpn96KXc0Lvyxfh0IdC4LsyaUyGCT/sU+3D38kRSb8ePpXb7sjRbZddgk/SUlURjhaK45LZ0BzWp074mAu0icGbxqqFgphVYFrd9xKM2sg+CZ9niTv/MH4y6BiMf01NconKMoSclv1K4s+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOCdZskz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I2YONvujkQvgOhjwddDWHxCvCQzCu+WMICmYtx44093KKEJzWuJ1GqL99kUcfXa9NcEYBTePWp4TLs9l6458gXEQpjgQ65T22Dw7PWWrZI8WDv9weB6po/fTWX7ZMg8cLpdRVKDukZ5t3Xa8W7QMF/M4gGv71dja1l2bOIcl+yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjFPJHHN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOCdZskz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3F4C433F1;
-	Tue, 23 Jan 2024 00:17:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjFPJHHN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB044C433F1;
+	Tue, 23 Jan 2024 00:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969073;
-	bh=rjI43STLYu8TZDfGakDbdOZ7gkWFdprOMdxQeZhFPyo=;
+	s=korg; t=1705969075;
+	bh=fAV0opdsiXYjkBShC6U0lPP9yvyoIK5Q6nU9ZtH2eXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOCdZskzjtxqWVePH04+3oZFa9tlCILu8zlcB+jEmlswQvgnItwOM5XQvcKRz+Ilu
-	 StXu2Egpkgmk2+QBLDm15CJEfxlb2eqYLl6NcKqRwg1e3Ag+oAR+ZKBmulBOZE1PZf
-	 h3zW/KU2X3iK6hp7WpNre/yJzvdsqyli+OkvMIlY=
+	b=TjFPJHHNjA1vkGOhSYOuIn0LhddjTgQuErCeaYUlRYTl7BR5ezVb5pGMVB+AXMmt3
+	 sWMdiGrkq57CHaqW6fyKg3mMJvbeCqbhcZGIPtD05SnmZdKNBlVgVyQKbQ4uRFGCeJ
+	 /zziYawkYpec/w8dXkCGQNiXgyrFQVjcpBvw9Ls8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Julian Anastasov <ja@ssi.bg>,
-	Simon Horman <horms@kernel.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Wang Xiayang <xywang.sjtu@sjtu.edu.cn>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 188/194] ipvs: avoid stat macros calls from preemptible context
-Date: Mon, 22 Jan 2024 15:58:38 -0800
-Message-ID: <20240122235727.279497539@linuxfoundation.org>
+Subject: [PATCH 5.4 189/194] kdb: Censor attempts to set PROMPT without ENABLE_MEM_READ
+Date: Mon, 22 Jan 2024 15:58:39 -0800
+Message-ID: <20240122235727.324232473@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -53,81 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Daniel Thompson <daniel.thompson@linaro.org>
 
-[ Upstream commit d6938c1c76c64f42363d0d1f051e1b4641c2ad40 ]
+[ Upstream commit ad99b5105c0823ff02126497f4366e6a8009453e ]
 
-Inside decrement_ttl() upon discovering that the packet ttl has exceeded,
-__IP_INC_STATS and __IP6_INC_STATS macros can be called from preemptible
-context having the following backtrace:
+Currently the PROMPT variable could be abused to provoke the printf()
+machinery to read outside the current stack frame. Normally this
+doesn't matter becaues md is already a much better tool for reading
+from memory.
 
-check_preemption_disabled: 48 callbacks suppressed
-BUG: using __this_cpu_add() in preemptible [00000000] code: curl/1177
-caller is decrement_ttl+0x217/0x830
-CPU: 5 PID: 1177 Comm: curl Not tainted 6.7.0+ #34
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0xbd/0xe0
- check_preemption_disabled+0xd1/0xe0
- decrement_ttl+0x217/0x830
- __ip_vs_get_out_rt+0x4e0/0x1ef0
- ip_vs_nat_xmit+0x205/0xcd0
- ip_vs_in_hook+0x9b1/0x26a0
- nf_hook_slow+0xc2/0x210
- nf_hook+0x1fb/0x770
- __ip_local_out+0x33b/0x640
- ip_local_out+0x2a/0x490
- __ip_queue_xmit+0x990/0x1d10
- __tcp_transmit_skb+0x288b/0x3d10
- tcp_connect+0x3466/0x5180
- tcp_v4_connect+0x1535/0x1bb0
- __inet_stream_connect+0x40d/0x1040
- inet_stream_connect+0x57/0xa0
- __sys_connect_file+0x162/0x1a0
- __sys_connect+0x137/0x160
- __x64_sys_connect+0x72/0xb0
- do_syscall_64+0x6f/0x140
- entry_SYSCALL_64_after_hwframe+0x6e/0x76
-RIP: 0033:0x7fe6dbbc34e0
+However the md command can be disabled by not setting KDB_ENABLE_MEM_READ.
+Let's also prevent PROMPT from being modified in these circumstances.
 
-Use the corresponding preemption-aware variants: IP_INC_STATS and
-IP6_INC_STATS.
+Whilst adding a comment to help future code reviewers we also remove
+the #ifdef where PROMPT in consumed. There is no problem passing an
+unused (0) to snprintf when !CONFIG_SMP.
+argument
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 8d8e20e2d7bb ("ipvs: Decrement ttl")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Acked-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: Wang Xiayang <xywang.sjtu@sjtu.edu.cn>
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Stable-dep-of: 4f41d30cd6dc ("kdb: Fix a potential buffer overflow in kdb_local()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_xmit.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/debug/kdb/kdb_main.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index 43ef3e25ea7d..5c81772158d8 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -271,7 +271,7 @@ static inline bool decrement_ttl(struct netns_ipvs *ipvs,
- 			skb->dev = dst->dev;
- 			icmpv6_send(skb, ICMPV6_TIME_EXCEED,
- 				    ICMPV6_EXC_HOPLIMIT, 0);
--			__IP6_INC_STATS(net, idev, IPSTATS_MIB_INHDRERRORS);
-+			IP6_INC_STATS(net, idev, IPSTATS_MIB_INHDRERRORS);
+diff --git a/kernel/debug/kdb/kdb_main.c b/kernel/debug/kdb/kdb_main.c
+index 7c96bf9a6c2c..f8f087193644 100644
+--- a/kernel/debug/kdb/kdb_main.c
++++ b/kernel/debug/kdb/kdb_main.c
+@@ -452,6 +452,13 @@ int kdb_set(int argc, const char **argv)
+ 	if (argc != 2)
+ 		return KDB_ARGCOUNT;
  
- 			return false;
- 		}
-@@ -286,7 +286,7 @@ static inline bool decrement_ttl(struct netns_ipvs *ipvs,
- 	{
- 		if (ip_hdr(skb)->ttl <= 1) {
- 			/* Tell the sender its packet died... */
--			__IP_INC_STATS(net, IPSTATS_MIB_INHDRERRORS);
-+			IP_INC_STATS(net, IPSTATS_MIB_INHDRERRORS);
- 			icmp_send(skb, ICMP_TIME_EXCEEDED, ICMP_EXC_TTL, 0);
- 			return false;
- 		}
++	/*
++	 * Censor sensitive variables
++	 */
++	if (strcmp(argv[1], "PROMPT") == 0 &&
++	    !kdb_check_flags(KDB_ENABLE_MEM_READ, kdb_cmd_enabled, false))
++		return KDB_NOPERM;
++
+ 	/*
+ 	 * Check for internal variables
+ 	 */
+@@ -1355,12 +1362,9 @@ static int kdb_local(kdb_reason_t reason, int error, struct pt_regs *regs,
+ 		*(cmd_hist[cmd_head]) = '\0';
+ 
+ do_full_getstr:
+-#if defined(CONFIG_SMP)
++		/* PROMPT can only be set if we have MEM_READ permission. */
+ 		snprintf(kdb_prompt_str, CMD_BUFLEN, kdbgetenv("PROMPT"),
+ 			 raw_smp_processor_id());
+-#else
+-		snprintf(kdb_prompt_str, CMD_BUFLEN, kdbgetenv("PROMPT"));
+-#endif
+ 		if (defcmd_in_progress)
+ 			strncat(kdb_prompt_str, "[defcmd]", CMD_BUFLEN);
+ 
 -- 
 2.43.0
 
