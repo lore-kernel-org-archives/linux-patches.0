@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79B060BB7;
-	Tue, 23 Jan 2024 01:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EF529403;
+	Tue, 23 Jan 2024 01:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974747; cv=none; b=KS/xTaMHyzQrPXzxnUsCejFHh94MvwCjFvd5i14xg6Qgpn+iSf/2zK4AvCa98qKBdFGAbvnH3d0tdrdro8PDiNtJ5Dfh6/GsGA6iA5yPVD53cGanH20QOPgRHHnlA92Mt2qZ/W3P2TovbVXiq3m+emBbQFM7zcDzDUYmyezO4HE=
+	t=1705974749; cv=none; b=ow6LFEjWnXfsYN+ZEX8MvXWtRYpBUPKbJA8i2dMfBFOiV21en1VbYi+CwNW3MWUibXQJqxvbmAJTeEPc7eJp3LXLuDREifRZz5/M3wBlWMk+W00wYd1uZ8mKB0t3jSM9GqZHW/X99NG9RtpjTSjzfOKhyMhGUQQpbozttGbzfNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974747; c=relaxed/simple;
-	bh=L5jvRi9ohVeXroUwspnKRxLWa8egxhvVXGN8gjAA6h8=;
+	s=arc-20240116; t=1705974749; c=relaxed/simple;
+	bh=J39zBbUDAzxslJBVoj1Enz16+7P3BUiH1ObnGqlXTtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GBIbUfMhRCeWyxqpJS+cDwoN8E60/gVUatmlqPQTouH3nJSabcIgt4n/LD5P8PQTdJGtNBaR7ZIydXX2lMwmuE/yZGRBVolSLTQnE2fmeCaYQsS08TfkagnBblWrV2E0cZgI08+2zSTevoMcfVtNpM6RsL0kF2sts27Gyd1ndjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpVI+keU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GyyNUDAkpwTty0pcdJs7awW46qjL2iZQT0p8DE4W6BfH+FP5ZgFeZ7bYMB1mUHDU59nv7MNgXpe8V7BAKoZ93gvueHxWajwMVwqB7uxIgGuTL7jwNrQ4ZmizeWoKA4yziiu28HzZkyvArSiA2qjKKb17gilBQTPfLJfJyQsf2C0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWO5Yz5U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpVI+keU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B5EC433A6;
-	Tue, 23 Jan 2024 01:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWO5Yz5U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118DBC433C7;
+	Tue, 23 Jan 2024 01:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974747;
-	bh=L5jvRi9ohVeXroUwspnKRxLWa8egxhvVXGN8gjAA6h8=;
+	s=korg; t=1705974749;
+	bh=J39zBbUDAzxslJBVoj1Enz16+7P3BUiH1ObnGqlXTtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpVI+keUKoLbjRWQPMULgSgUyiRK71/vHAPhZJ0uhhJ6rrB95aOt0WcWViBE/8Vke
-	 L0Ikqeca5/yAqwFSzalIdVraBkQZ5SzOk7654jyHzBa95+6iq7wfd0vtzMF7XcSTz3
-	 OLU7CdLOlh6aQRcqkt1cZxIPbuGFGwOiM+f7TL5w=
+	b=RWO5Yz5UgzZbwzIyMXddUxjSMKRfd7w38AlJvPLkVh6SuXcX1UV9fwpchyTXs2yNy
+	 gq3sNZ983NR/x7QPjZX9PHt0zMVrL8YfWsu9R+tvEPN4+P6xroYPTxp0lwkw3TFQRQ
+	 yWfIDJQl+P0Qt5++FoEIPi/bFIwQGIDOA8oHuGmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.15 279/374] wifi: rtlwifi: Convert LNKCTL change to PCIe cap RMW accessors
-Date: Mon, 22 Jan 2024 15:58:55 -0800
-Message-ID: <20240122235754.475379392@linuxfoundation.org>
+	Rob Herring <robh@kernel.org>,
+	Michal Simek <michal.simek@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 155/583] arm64: dts: xilinx: Apply overlays to base dtbs
+Date: Mon, 22 Jan 2024 15:53:26 -0800
+Message-ID: <20240122235816.796210226@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,82 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Rob Herring <robh@kernel.org>
 
-commit 5894d0089cbc146063dcc0239a78ede0a8142efb upstream.
+[ Upstream commit 23b697ec85f3e7beed271b9f344c54821de2251e ]
 
-The rtlwifi driver comes with custom code to write into PCIe Link
-Control register. RMW access for the Link Control register requires
-locking that is already provided by the standard PCIe capability
-accessors.
+DT overlays in tree need to be applied to a base DTB to validate they
+apply, to run schema checks on them, and to catch any errors at compile
+time. Defining the "-dtbs" variable is not enough as the combined DT must
+be added to dtbs-y.
 
-Convert the custom RMW code writing into LNKCTL register to standard
-RMW capability accessors. The accesses are changed to cover the full
-LNKCTL register instead of touching just a single byte of the register.
+zynqmp-sck-kr-g-revA.dtso and zynqmp-sck-kr-g-revB.dtso don't exist, so drop
+them.
 
-Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231124084725.12738-3-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Rob Herring <robh@kernel.org>
+Fixes: 45fe0dc4ea2e ("arm64: xilinx: Use zynqmp prefix for SOM dt overlays")
+Link: https://lore.kernel.org/r/20230911214751.2202913-1-robh@kernel.org
+Signed-off-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c |   21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/xilinx/Makefile | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -164,21 +164,29 @@ static bool _rtl_pci_platform_switch_dev
- 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
- 	struct rtl_hal *rtlhal = rtl_hal(rtl_priv(hw));
+diff --git a/arch/arm64/boot/dts/xilinx/Makefile b/arch/arm64/boot/dts/xilinx/Makefile
+index 5e40c0b4fa0a..1068b0fa8e98 100644
+--- a/arch/arm64/boot/dts/xilinx/Makefile
++++ b/arch/arm64/boot/dts/xilinx/Makefile
+@@ -22,11 +22,10 @@ dtb-$(CONFIG_ARCH_ZYNQMP) += zynqmp-sm-k26-revA.dtb
+ dtb-$(CONFIG_ARCH_ZYNQMP) += zynqmp-smk-k26-revA.dtb
  
-+	value &= PCI_EXP_LNKCTL_ASPMC;
-+
- 	if (rtlhal->hw_type != HARDWARE_TYPE_RTL8192SE)
--		value |= 0x40;
-+		value |= PCI_EXP_LNKCTL_CCC;
- 
--	pci_write_config_byte(rtlpci->pdev, 0x80, value);
-+	pcie_capability_clear_and_set_word(rtlpci->pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_ASPMC | value,
-+					   value);
- 
- 	return false;
- }
- 
--/*When we set 0x01 to enable clk request. Set 0x0 to disable clk req.*/
--static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u8 value)
-+/* @value is PCI_EXP_LNKCTL_CLKREQ_EN or 0 to enable/disable clk request. */
-+static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u16 value)
- {
- 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
- 	struct rtl_hal *rtlhal = rtl_hal(rtl_priv(hw));
- 
--	pci_write_config_byte(rtlpci->pdev, 0x81, value);
-+	value &= PCI_EXP_LNKCTL_CLKREQ_EN;
-+
-+	pcie_capability_clear_and_set_word(rtlpci->pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_CLKREQ_EN,
-+					   value);
- 
- 	if (rtlhal->hw_type == HARDWARE_TYPE_RTL8192SE)
- 		udelay(100);
-@@ -259,7 +267,8 @@ static void rtl_pci_enable_aspm(struct i
- 
- 	if (ppsc->reg_rfps_level & RT_RF_OFF_LEVL_CLK_REQ) {
- 		_rtl_pci_switch_clk_req(hw, (ppsc->reg_rfps_level &
--					     RT_RF_OFF_LEVL_CLK_REQ) ? 1 : 0);
-+					     RT_RF_OFF_LEVL_CLK_REQ) ?
-+					     PCI_EXP_LNKCTL_CLKREQ_EN : 0);
- 		RT_SET_PS_LEVEL(ppsc, RT_RF_OFF_LEVL_CLK_REQ);
- 	}
- 	udelay(100);
+ zynqmp-sm-k26-revA-sck-kv-g-revA-dtbs := zynqmp-sm-k26-revA.dtb zynqmp-sck-kv-g-revA.dtbo
++dtb-$(CONFIG_ARCH_ZYNQMP) += zynqmp-sm-k26-revA-sck-kv-g-revA.dtb
+ zynqmp-sm-k26-revA-sck-kv-g-revB-dtbs := zynqmp-sm-k26-revA.dtb zynqmp-sck-kv-g-revB.dtbo
++dtb-$(CONFIG_ARCH_ZYNQMP) += zynqmp-sm-k26-revA-sck-kv-g-revB.dtb
+ zynqmp-smk-k26-revA-sck-kv-g-revA-dtbs := zynqmp-smk-k26-revA.dtb zynqmp-sck-kv-g-revA.dtbo
++dtb-$(CONFIG_ARCH_ZYNQMP) += zynqmp-smk-k26-revA-sck-kv-g-revA.dtb
+ zynqmp-smk-k26-revA-sck-kv-g-revB-dtbs := zynqmp-smk-k26-revA.dtb zynqmp-sck-kv-g-revB.dtbo
+-
+-zynqmp-sm-k26-revA-sck-kr-g-revA-dtbs := zynqmp-sm-k26-revA.dtb zynqmp-sck-kr-g-revA.dtbo
+-zynqmp-sm-k26-revA-sck-kr-g-revB-dtbs := zynqmp-sm-k26-revA.dtb zynqmp-sck-kr-g-revB.dtbo
+-zynqmp-smk-k26-revA-sck-kr-g-revA-dtbs := zynqmp-smk-k26-revA.dtb zynqmp-sck-kr-g-revA.dtbo
+-zynqmp-smk-k26-revA-sck-kr-g-revB-dtbs := zynqmp-smk-k26-revA.dtb zynqmp-sck-kr-g-revB.dtbo
++dtb-$(CONFIG_ARCH_ZYNQMP) += zynqmp-smk-k26-revA-sck-kv-g-revB.dtb
+-- 
+2.43.0
+
 
 
