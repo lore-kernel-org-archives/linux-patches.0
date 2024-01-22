@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33620629E2;
-	Tue, 23 Jan 2024 00:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6FA6280B;
+	Tue, 23 Jan 2024 00:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971144; cv=none; b=XEe9c1DSXHQuaK75BwKj3SHpLAhNLmLeo93fYp0v6QdEVGpk1JK5FZgzjXLBmINNQSl9HDMFfcUqRgrB7WhUU4aQitIk2SM2gDSR/CZ9O8WrwklFHznLzR9gxjzzUI7Nc6Xbp9s2AN4ZhTivEOAKS1IOqwA/mFtSWmxlYpG7t+k=
+	t=1705971145; cv=none; b=gmiC2F2153XlnZx3X71afL/ZyDGU461ETHGZ3KSWKuWECNIhtt7AlUYMZz7m2c5XAsoMMb+3RiA5ZI8jUOGt+ovzaqfl4gMVFF6oy98PLGAXBwnrcZ4aEH4tA1hyNADu81QAnvn49sS5PCEpzbSxzDNbPKeR6aPncMbmFyDGodU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971144; c=relaxed/simple;
-	bh=yMqOdIrFgOWqtR1n2DtCnG817Vsb2mj+M6pfEydbC0I=;
+	s=arc-20240116; t=1705971145; c=relaxed/simple;
+	bh=xlpIp4GovZyMZchsc7cbKs2nh7qYZ9aaYklq/mZhucY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RfNDEwRNHg/zRBT2rJriZVmKvz+mf2M2VYNrd0X0YyH9/i8ZNFXwiFFt8jDWX6ONqyPPK3IQpjt6PZLATM/WVfgunR5UA+YXNxHLsP39w35eWT6riOw+gATmcOFlJjeUQxIEcow0MN4kWYKVY1DiRCJMztYy8tNt4GOCiITlavE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSsREJHo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ffRJyXPdhfzBchJDKmks4FSHgPKJ8W2rkQuXKzXmr4Q6slm3n9PfXXN24J0dl9qMwiZxpEzEhBbUBat5yxj3dC5ikX0XRcoK+AIaomSciWZYcfVzi7GaOOy0+aae55m636XLckNJr1HsKt27O37SoTJz4BwCDzyZ1sqhQjTdso8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wYM7Utk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSsREJHo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DEAAC43390;
-	Tue, 23 Jan 2024 00:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wYM7Utk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0988EC43390;
+	Tue, 23 Jan 2024 00:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971142;
-	bh=yMqOdIrFgOWqtR1n2DtCnG817Vsb2mj+M6pfEydbC0I=;
+	s=korg; t=1705971145;
+	bh=xlpIp4GovZyMZchsc7cbKs2nh7qYZ9aaYklq/mZhucY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hSsREJHoy3RF6BYml8tOWRHAAUibEIbgzltFO5DAwGFI4JXLVQG/vsuyaccb4lgvr
-	 4Z8Zcv5THVPLwvhYigLrLGD2quCLr/HNoU9Z8t2QQK80/p5jFNcfVg6txIYuNBLK0C
-	 1Tfh1I8OnWcU3GTWW12ZcbfUYtSh7tp+5LICLBYI=
+	b=0wYM7UtkZ7ZHmPSJisPbbkM+eAVMC70SwxriglZ7/jNHrfANNGMfr2hPgHfbMOni+
+	 UX4dmqwkYnfK/T9Jya7Xu0zwf/+Zq+c3Fb9gVHtVRYn2hiOaKoBToRS3pol7HYH3s3
+	 YlVspDVNtGbJ1wJWn9W4pnT/HyZAUUrjpuv80+y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangyangxin <wangyangxin1@huawei.com>,
-	Gonglei <arei.gonglei@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Maxime Ripard <mripard@kernel.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/286] crypto: virtio - Wait for tasklet to complete on device remove
-Date: Mon, 22 Jan 2024 15:56:43 -0800
-Message-ID: <20240122235735.804963582@linuxfoundation.org>
+Subject: [PATCH 6.1 190/417] drm/bridge: tc358767: Fix return value on error case
+Date: Mon, 22 Jan 2024 15:55:58 -0800
+Message-ID: <20240122235758.495189740@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: wangyangxin <wangyangxin1@huawei.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 67cc511e8d436456cc98033e6d4ba83ebfc8e672 ]
+[ Upstream commit 32bd29b619638256c5b75fb021d6d9f12fc4a984 ]
 
-The scheduled tasklet needs to be executed on device remove.
+If the hpd_pin is invalid, the driver returns 'ret'. But 'ret' contains
+0, instead of an error value.
 
-Fixes: fed93fb62e05 ("crypto: virtio - Handle dataq logic with tasklet")
-Signed-off-by: wangyangxin <wangyangxin1@huawei.com>
-Signed-off-by: Gonglei <arei.gonglei@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Return -EINVAL instead.
+
+Fixes: f25ee5017e4f ("drm/bridge: tc358767: add IRQ and HPD support")
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231103-uninit-fixes-v2-4-c22b2444f5f5@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/virtio/virtio_crypto_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/bridge/tc358767.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/virtio/virtio_crypto_core.c b/drivers/crypto/virtio/virtio_crypto_core.c
-index 630af33929ef..3da956145892 100644
---- a/drivers/crypto/virtio/virtio_crypto_core.c
-+++ b/drivers/crypto/virtio/virtio_crypto_core.c
-@@ -488,11 +488,14 @@ static void virtcrypto_free_unused_reqs(struct virtio_crypto *vcrypto)
- static void virtcrypto_remove(struct virtio_device *vdev)
- {
- 	struct virtio_crypto *vcrypto = vdev->priv;
-+	int i;
+diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+index 7ef78283e3d3..926ab5c3c31a 100644
+--- a/drivers/gpu/drm/bridge/tc358767.c
++++ b/drivers/gpu/drm/bridge/tc358767.c
+@@ -2097,7 +2097,7 @@ static int tc_probe(struct i2c_client *client, const struct i2c_device_id *id)
+ 	} else {
+ 		if (tc->hpd_pin < 0 || tc->hpd_pin > 1) {
+ 			dev_err(dev, "failed to parse HPD number\n");
+-			return ret;
++			return -EINVAL;
+ 		}
+ 	}
  
- 	dev_info(&vdev->dev, "Start virtcrypto_remove.\n");
- 
- 	if (virtcrypto_dev_started(vcrypto))
- 		virtcrypto_dev_stop(vcrypto);
-+	for (i = 0; i < vcrypto->max_data_queues; i++)
-+		tasklet_kill(&vcrypto->data_vq[i].done_task);
- 	vdev->config->reset(vdev);
- 	virtcrypto_free_unused_reqs(vcrypto);
- 	virtcrypto_clear_crypto_engines(vcrypto);
 -- 
 2.43.0
 
