@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471B7133435;
-	Tue, 23 Jan 2024 01:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C3C133435;
+	Tue, 23 Jan 2024 01:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971880; cv=none; b=EwSX4MuruBSCWa7wmbE76y+HV7N2euaLMA7Z62Smo8NVZ4Ap4p0xtaYOBWb1p67fORCm+TBYJ3kpCug5x0XQNc/D/P3uKZq1G9kuZCKD17lmN8XqwmmCas0LDui5K/PBsOyqdtYavyrtYfv+82Jv4t01wsxNhdojr2f2WwaOMpQ=
+	t=1705971882; cv=none; b=kQf+rfQ3Bi+W869Jq30PidsqaI58+97QRyVNYPx+WgM4zFB0unJsSKir8IvdHMsNTpaWE+P14Mvf8RHY6jh3P4TAauJpoOMaFEcQc1R8I8/JuYR7PyZccLJcYHjBWyU5AYhNABSO+ALn2wlp68l7mQlg4jNdPEwzEtFrLkFBJmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971880; c=relaxed/simple;
-	bh=oOC1RBp8TRcxF7GrV82qCazfF6olbEhd2lIwhyIb5ZQ=;
+	s=arc-20240116; t=1705971882; c=relaxed/simple;
+	bh=9jjt9EG6W4CP2GgL9O+0b3QFFpe2cXlxnrU54sgtWBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n+ku0FAW6rCKl0b7OPKpWaNoN85S9Cd+d/swBm8perqzIjOC6xNBf/Tcur3w7LETNRyEu5OpO3UyWKNNvRf7C+/8qZJc+SI+mjGr4QMz/WBc5Y/IS2/Qz7X4ZKgCK86uSNISW610N7LRcSl+niNPnLRfnSkE78e87K8/cBOpWQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qz/vkYLQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tLk5oznbcMAXmxC2wnuALUHKL7KVPQ7jzpgzqrM92e2N5tueOFW1Uv5RDmP6ZL7nBUgIEHKbJCQQsCkjVoZJ7mjLS1BgndMhyakBVpe6+IJmn7VsXTjUDk2uL7og90cduBdujx+aXx197vY71DTtPpF75lIRipLClN5cQ0t6Pgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6iZ+bP6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qz/vkYLQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23DBC433F1;
-	Tue, 23 Jan 2024 01:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6iZ+bP6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9EDDC433C7;
+	Tue, 23 Jan 2024 01:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971879;
-	bh=oOC1RBp8TRcxF7GrV82qCazfF6olbEhd2lIwhyIb5ZQ=;
+	s=korg; t=1705971881;
+	bh=9jjt9EG6W4CP2GgL9O+0b3QFFpe2cXlxnrU54sgtWBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qz/vkYLQZydHj4ILLRwJxWYGdC494z0IjGRw96HTZ6hbE5g8Z6AzGKZj+PFoMAj3n
-	 vqPdBkpFk9iw0Uy559OsyD+TPVRgaeg+xOLMl/AJXLoAoGknVfmujarCbUQsOQnGES
-	 s+WfFCKS6tiFtgGtvvcRBunOisH37hSsQX6viTW8=
+	b=V6iZ+bP611NdUh7reMiTZ0PajthJJC23zhk5B+eNIzz2y6oJ7HxJT+0PzhXZ60rbC
+	 neiqoYyTdURF2Q/t0MSR+hmVtyl8o186pvCAaUyqitE6phfCoD4HTFw5A0VSrSTcQK
+	 pn7jxC4AIknAljR9f42N2VURB+cAGC8fEry7qF+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Douglas Anderson <dianders@chromium.org>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 340/417] usb: core: Allow subclassed USB drivers to override usb_choose_configuration()
-Date: Mon, 22 Jan 2024 15:58:28 -0800
-Message-ID: <20240122235803.576580466@linuxfoundation.org>
+Subject: [PATCH 5.10 253/286] tty: change tty_write_lock()s ndelay parameter to bool
+Date: Mon, 22 Jan 2024 15:59:19 -0800
+Message-ID: <20240122235741.789307320@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,90 +46,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit a87b8e3be926af0fc3b9b1af42b1127bd1ff077c ]
+[ Upstream commit af815336556df28f800669c58ab3bdad7d786b98 ]
 
-For some USB devices we might want to do something different for
-usb_choose_configuration(). One example here is the r8152 driver where
-we want to end up using the vendor driver with the preferred
-interface.
+It's a yes-no parameter, so convert it to bool to be obvious.
 
-The r8152 driver tried to make things work by implementing a USB
-generic_subclass driver and then overriding the normal config
-selection after it happened. This is less than ideal and also caused
-breakage if someone deauthorized and re-authorized the USB device
-because the USB core ended up going back to it's default logic for
-choosing the best config. I made an attempt to fix this [1] but it was
-a bit ugly.
-
-Let's do this better and allow USB generic_subclass drivers to
-override usb_choose_configuration().
-
-[1] https://lore.kernel.org/r/20231130154337.1.Ie00e07f07f87149c9ce0b27ae4e26991d307e14b@changeid
-
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20231201102946.v2.2.Iade5fa31997f1a0ca3e1dec0591633b02471df12@changeid
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20230810091510.13006-6-jirislaby@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: aa4f2b3e418e ("r8152: Choose our USB config with choose_configuration() rather than probe()")
+Stable-dep-of: 66aad7d8d3ec ("usb: cdc-acm: return correct error code on unsupported break")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/generic.c | 7 +++++++
- include/linux/usb.h        | 6 ++++++
- 2 files changed, 13 insertions(+)
+ drivers/tty/tty.h       | 2 +-
+ drivers/tty/tty_io.c    | 6 +++---
+ drivers/tty/tty_ioctl.c | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/usb/core/generic.c b/drivers/usb/core/generic.c
-index 740342a2812a..dcb897158228 100644
---- a/drivers/usb/core/generic.c
-+++ b/drivers/usb/core/generic.c
-@@ -59,10 +59,17 @@ int usb_choose_configuration(struct usb_device *udev)
- 	int num_configs;
- 	int insufficient_power = 0;
- 	struct usb_host_config *c, *best;
-+	struct usb_device_driver *udriver = to_usb_device_driver(udev->dev.driver);
+diff --git a/drivers/tty/tty.h b/drivers/tty/tty.h
+index 1908f27a795a..3d2d82ff6a03 100644
+--- a/drivers/tty/tty.h
++++ b/drivers/tty/tty.h
+@@ -64,7 +64,7 @@ int tty_check_change(struct tty_struct *tty);
+ void __stop_tty(struct tty_struct *tty);
+ void __start_tty(struct tty_struct *tty);
+ void tty_write_unlock(struct tty_struct *tty);
+-int tty_write_lock(struct tty_struct *tty, int ndelay);
++int tty_write_lock(struct tty_struct *tty, bool ndelay);
+ void tty_vhangup_session(struct tty_struct *tty);
+ void tty_open_proc_set_tty(struct file *filp, struct tty_struct *tty);
+ int tty_signal_session_leader(struct tty_struct *tty, int exit_session);
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index 094e82a12d29..38877489f700 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -948,7 +948,7 @@ void tty_write_unlock(struct tty_struct *tty)
+ 	wake_up_interruptible_poll(&tty->write_wait, EPOLLOUT);
+ }
  
- 	if (usb_device_is_owned(udev))
+-int tty_write_lock(struct tty_struct *tty, int ndelay)
++int tty_write_lock(struct tty_struct *tty, bool ndelay)
+ {
+ 	if (!mutex_trylock(&tty->atomic_write_lock)) {
+ 		if (ndelay)
+@@ -1167,7 +1167,7 @@ int tty_send_xchar(struct tty_struct *tty, char ch)
  		return 0;
+ 	}
  
-+	if (udriver->choose_configuration) {
-+		i = udriver->choose_configuration(udev);
-+		if (i >= 0)
-+			return i;
-+	}
-+
- 	best = NULL;
- 	c = udev->config;
- 	num_configs = udev->descriptor.bNumConfigurations;
-diff --git a/include/linux/usb.h b/include/linux/usb.h
-index 3ce7b052a19f..08b1d6fbcd3c 100644
---- a/include/linux/usb.h
-+++ b/include/linux/usb.h
-@@ -1234,6 +1234,9 @@ struct usb_driver {
-  *	module is being unloaded.
-  * @suspend: Called when the device is going to be suspended by the system.
-  * @resume: Called when the device is being resumed by the system.
-+ * @choose_configuration: If non-NULL, called instead of the default
-+ *	usb_choose_configuration(). If this returns an error then we'll go
-+ *	on to call the normal usb_choose_configuration().
-  * @dev_groups: Attributes attached to the device that will be created once it
-  *	is bound to the driver.
-  * @drvwrap: Driver-model core structure wrapper.
-@@ -1257,6 +1260,9 @@ struct usb_device_driver {
+-	if (tty_write_lock(tty, 0) < 0)
++	if (tty_write_lock(tty, false) < 0)
+ 		return -ERESTARTSYS;
  
- 	int (*suspend) (struct usb_device *udev, pm_message_t message);
- 	int (*resume) (struct usb_device *udev, pm_message_t message);
-+
-+	int (*choose_configuration) (struct usb_device *udev);
-+
- 	const struct attribute_group **dev_groups;
- 	struct usbdrv_wrap drvwrap;
- 	const struct usb_device_id *id_table;
+ 	down_read(&tty->termios_rwsem);
+@@ -2473,7 +2473,7 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
+ 		retval = tty->ops->break_ctl(tty, duration);
+ 	else {
+ 		/* Do the work ourselves */
+-		if (tty_write_lock(tty, 0) < 0)
++		if (tty_write_lock(tty, false) < 0)
+ 			return -EINTR;
+ 		retval = tty->ops->break_ctl(tty, -1);
+ 		if (retval)
+diff --git a/drivers/tty/tty_ioctl.c b/drivers/tty/tty_ioctl.c
+index 68b07250dcb6..12a30329abdb 100644
+--- a/drivers/tty/tty_ioctl.c
++++ b/drivers/tty/tty_ioctl.c
+@@ -404,7 +404,7 @@ static int set_termios(struct tty_struct *tty, void __user *arg, int opt)
+ 		if (retval < 0)
+ 			return retval;
+ 
+-		if (tty_write_lock(tty, 0) < 0)
++		if (tty_write_lock(tty, false) < 0)
+ 			goto retry_write_wait;
+ 
+ 		/* Racing writer? */
 -- 
 2.43.0
 
