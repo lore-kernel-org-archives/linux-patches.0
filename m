@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EE06350A;
-	Tue, 23 Jan 2024 00:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935AB627F3;
+	Tue, 23 Jan 2024 00:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971255; cv=none; b=jBCgZOaxO2QzG6w4Zwy+6lSiMry6Qlbdv3Es/HOWYIC212kv3X8fSd6HC0hhP7n/s34lx2R8BicsD9sZt9xmB4Nb0VaMiioCKYHkjIedWRj4oGjcR2Kz1pHkGU01YhHxk/8yCdhjpREIX2Pk9Mqkm1WmAARI/1UfNx3obLSV+yM=
+	t=1705971257; cv=none; b=kzXlM+73Rzo4ukLS/HfuK4pQA7DozvKw4xH+KK9Gr34YWF9Z8Fc/x5htde2uweGgEEYGGKhdzbUyr8YTrs+qEa4k+HqeEBC6YRpIs5NqDDrJvCM325k8YFlcbv+0pOR/BLiQ4R5uIGepIbtgbuZ0vcFEVmJTXb72XUW4WCdLVO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971255; c=relaxed/simple;
-	bh=+58vjNGq8i6PvO1YQewNGgie8AJQjWo/d6YKAiZtvec=;
+	s=arc-20240116; t=1705971257; c=relaxed/simple;
+	bh=PJ7LU4glwfvABsssfXQ5o/W29CMn+ByjfpR4hfcyoS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaSIxd/gv/FSSlXly+1YzxPm7yEwFCl1a6g9T0ybN/DkNAprMOLMd6GhI4y9AD8GJR3Z1Ibe6N6vUALZZ6tYpc+yIs2YV3QkR1PTTQnCPo1WwDc08twjZ5vaa4hblCKSSbMt40tIKL5P8sKl5h3oySNX3GkA9q66/nC7tuthCTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kb0KTVuN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5MtmKz71b5geG8byIm8mwO6M+GZgWafTDPNxbTIcN2iWx8iGPi6dBtgbz5Yqr/Nh0vZ6OlpbsnLW8xLB1jG8EI8T4gzYL8p8BWZG/E+CvXTGjpJi4q5oXu3UuqpBDj6NcW+EP6E0B6tmKtnoTiHGskew2l1obpANpf9JPyaOJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQzbiGro; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kb0KTVuN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02436C433C7;
-	Tue, 23 Jan 2024 00:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQzbiGro"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49201C433F1;
+	Tue, 23 Jan 2024 00:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971255;
-	bh=+58vjNGq8i6PvO1YQewNGgie8AJQjWo/d6YKAiZtvec=;
+	s=korg; t=1705971257;
+	bh=PJ7LU4glwfvABsssfXQ5o/W29CMn+ByjfpR4hfcyoS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kb0KTVuNmtiocYHSOgW1MlN0NqAaeGEdOTtVdvlno3jHTCRKOxS+t0cyoiGFU1h6W
-	 +5ikJ6R9txTzPZzM3ArWXlAwmjVwJTz5OhwDIpiHziOS3r9gPnIk+2qThALkRILoW4
-	 XeVByp1nRPqjSosPo3XJcXPJZb7dFEglf9SShwm0=
+	b=sQzbiGroEqHe5Fb3caifsfVzAGe4Y5/3T0dTrgdyrXYlJhjfNLwE521eRgP10g4M3
+	 CnBKd4HCwTECmIJYAUQdHqio5QYUG7fmFeQwN5JRHwJo2/SF3Ak9pav0mB+p2HcFcO
+	 /wbxRGWyTSkX58DDt+DOq5bfO0P9fU2FpDisGmCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 211/417] drivers/amd/pm: fix a use-after-free in kv_parse_power_table
-Date: Mon, 22 Jan 2024 15:56:19 -0800
-Message-ID: <20240122235759.230407843@linuxfoundation.org>
+Subject: [PATCH 5.10 119/286] arm64: dts: ti: k3-am65-main: Fix DSS irq trigger type
+Date: Mon, 22 Jan 2024 15:57:05 -0800
+Message-ID: <20240122235736.710365180@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 28dd788382c43b330480f57cd34cde0840896743 ]
+[ Upstream commit b57160859263c083c49482b0d083a586b1517f78 ]
 
-When ps allocated by kzalloc equals to NULL, kv_parse_power_table
-frees adev->pm.dpm.ps that allocated before. However, after the control
-flow goes through the following call chains:
+DSS irq trigger type is set to IRQ_TYPE_EDGE_RISING in the DT file, but
+the TRM says it is level triggered.
 
-kv_parse_power_table
-  |-> kv_dpm_init
-        |-> kv_dpm_sw_init
-	      |-> kv_dpm_fini
+For some reason triggering on rising edge results in double the amount
+of expected interrupts, e.g. for normal page flipping test the number of
+interrupts per second is 2 * fps. It is as if the IRQ triggers on both
+edges. There are no other side effects to this issue than slightly
+increased CPU & power consumption due to the extra interrupt.
 
-The adev->pm.dpm.ps is used in the for loop of kv_dpm_fini after its
-first free in kv_parse_power_table and causes a use-after-free bug.
+Switching to IRQ_TYPE_LEVEL_HIGH is correct and fixes the issue, so
+let's do that.
 
-Fixes: a2e73f56fa62 ("drm/amdgpu: Add support for CIK parts")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: fc539b90eda2 ("arm64: dts: ti: am654: Add DSS node")
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Link: https://lore.kernel.org/r/20231106-am65-dss-clk-edge-v1-1-4a959fec0e1e@ideasonboard.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am65-main.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
-index f5e08b60f66e..d17bfa111aa7 100644
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
-@@ -2748,10 +2748,8 @@ static int kv_parse_power_table(struct amdgpu_device *adev)
- 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
- 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
- 		ps = kzalloc(sizeof(struct kv_ps), GFP_KERNEL);
--		if (ps == NULL) {
--			kfree(adev->pm.dpm.ps);
-+		if (ps == NULL)
- 			return -ENOMEM;
--		}
- 		adev->pm.dpm.ps[i].ps_priv = ps;
- 		k = 0;
- 		idx = (u8 *)&power_state->v2.clockInfoIndex[0];
+diff --git a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+index 4265f627ca16..a3538279d710 100644
+--- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+@@ -865,7 +865,7 @@ dss: dss@4a00000 {
+ 		assigned-clocks = <&k3_clks 67 2>;
+ 		assigned-clock-parents = <&k3_clks 67 5>;
+ 
+-		interrupts = <GIC_SPI 166 IRQ_TYPE_EDGE_RISING>;
++		interrupts = <GIC_SPI 166 IRQ_TYPE_LEVEL_HIGH>;
+ 
+ 		status = "disabled";
+ 
 -- 
 2.43.0
 
