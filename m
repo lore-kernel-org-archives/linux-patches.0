@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DED67E81;
-	Tue, 23 Jan 2024 02:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95DB67E81;
+	Tue, 23 Jan 2024 02:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975313; cv=none; b=Lw18f0Qm4s7NQ0jiyCdRs8PY1wE+yVsThIGw7wslf4UfOQrbZ1iA2F1wbk+Uy6wPp9M9pc91UlF/SFBOw8CLEXeFPBnz8HkP4TT2tVaEAhw1p3mT4snfTVljxB0WEPwuzq/fNEXl9YpDTERNkgzpoPc96r/XGCAfBu3bG7REuNU=
+	t=1705975314; cv=none; b=F7SC5cT6LJ+CYfOR0uwWkcIw0Eht3P6Pln1WgT1EOebzuVStbPEeuXdkbg8w8Ty1DtvgLxjxNF8ii4kZpZ7zf+AiQk7+lwY//UBI5zA2KQaNeR1R9j9ljXozx7J5BblAytdCY/yZ3V2OjxueyM4CjlG/kPMMl71/On3ieohKpuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975313; c=relaxed/simple;
-	bh=6faO5ETKWNj6CLGa0Gv1OkNfGp2rSghOy4EFU6E5Ip4=;
+	s=arc-20240116; t=1705975314; c=relaxed/simple;
+	bh=CAVaCXjzW35KLT7iEfKhL0YoszXa/9JE7pEUIKSxDGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=djJ42k50WuXIeW4NFWpSRi5lRRa5nxtlHNzcO5xq2F6aAsY7Jweg5tBC1kTECKk3q+1PXVVSe2k5JejJ/q5JlEc4DwljSsTM/O1HnwFDJda96Oi9y+CuZ+uLBU4Mm4oFU3+WmRIbQVrEf8xv25AHh7di43Il8FwLC0Q6sBDqedI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSs8slJV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DFDpZWrR0XFU2xZQACH6oZgeL/9CtojeN+VLHkojdtmiFq1TmRqOiIdW/EXfFoN8pa8xksICt3r10xGCLplmGPgmAOzLFzgdLGINqS6hZKfxoMB19/dMyGPjwosw2oL8AdWhTyw45l6sv3Ve8RUy8tPeCpMEXBHeC8VyOG7wArg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fcv5cDaL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSs8slJV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D353C433C7;
-	Tue, 23 Jan 2024 02:01:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fcv5cDaL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ACA6C433C7;
+	Tue, 23 Jan 2024 02:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975313;
-	bh=6faO5ETKWNj6CLGa0Gv1OkNfGp2rSghOy4EFU6E5Ip4=;
+	s=korg; t=1705975314;
+	bh=CAVaCXjzW35KLT7iEfKhL0YoszXa/9JE7pEUIKSxDGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BSs8slJVoGT+8oUV4O4rgDEbmv2Gm2J20fyFXFa9QUySvk1wk//5oxxejZkYr87sa
-	 65ZyBP8gkkNLL/3ji+HGpDPIJbY20oFs/+1OyxGjdqqgSBHhy0YNLarAZBC2btzQRa
-	 p6tCaG+2qZQykd3r2cU/vM+UmDib/F44zkfMIcBw=
+	b=Fcv5cDaLnoTnQ+iCu0CypU9wXpAxoYSXdBd1L9MKpHkgakv7NVf5ogI8rh8CYQCPd
+	 S+uEq3aCzmq1BWckQ53l1GS50U+2DHEoLvbaA2wF2YjFswythqIxNjN8SSRbR9BLDd
+	 mEyIgVaM4FgPYakf3OW6SA7HJ5XC5H8j/uYiBJow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sre@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Curtis Malainey <cujomalainey@chromium.org>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Brent Lu <brent.lu@intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 254/583] media: v4l: async: Fix duplicated list deletion
-Date: Mon, 22 Jan 2024 15:55:05 -0800
-Message-ID: <20240122235819.773721006@linuxfoundation.org>
+Subject: [PATCH 6.6 255/583] ASoC: Intel: glk_rt5682_max98357a: fix board id mismatch
+Date: Mon, 22 Jan 2024 15:55:06 -0800
+Message-ID: <20240122235819.809851574@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,40 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sre@kernel.org>
+From: Brent Lu <brent.lu@intel.com>
 
-[ Upstream commit 3de6ee94aae701fa949cd3b5df6b6a440ddfb8f2 ]
+[ Upstream commit 486ede0df82dd74472c6f5651e38ff48f7f766c1 ]
 
-The list deletion call dropped here is already called from the
-helper function in the line before. Having a second list_del()
-call results in either a warning (with CONFIG_DEBUG_LIST=y):
+The drv_name in enumeration table for ALC5682I-VS codec does not match
+the board id string in machine driver. Modify the entry of "10EC5682"
+to enumerate "RTL5682" as well and remove invalid entry.
 
-list_del corruption, c46c8198->next is LIST_POISON1 (00000100)
-
-If CONFIG_DEBUG_LIST is disabled the operation results in a
-kernel error due to NULL pointer dereference.
-
-Fixes: 28a1295795d8 ("media: v4l: async: Allow multiple connections between entities")
-Signed-off-by: Sebastian Reichel <sre@kernel.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 88b4d77d6035 ("ASoC: Intel: glk_rt5682_max98357a: support ALC5682I-VS codec")
+Reported-by: Curtis Malainey <cujomalainey@chromium.org>
+Reviewed-by: Curtis Malainey <cujomalainey@chromium.org>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Brent Lu <brent.lu@intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20231204214200.203100-4-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-async.c | 1 -
- 1 file changed, 1 deletion(-)
+ sound/soc/intel/common/soc-acpi-intel-glk-match.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
-index 091e8cf4114b..8cfd593d293d 100644
---- a/drivers/media/v4l2-core/v4l2-async.c
-+++ b/drivers/media/v4l2-core/v4l2-async.c
-@@ -880,7 +880,6 @@ void v4l2_async_unregister_subdev(struct v4l2_subdev *sd)
- 				  &asc->notifier->waiting_list);
+diff --git a/sound/soc/intel/common/soc-acpi-intel-glk-match.c b/sound/soc/intel/common/soc-acpi-intel-glk-match.c
+index 387e73100884..8911c90bbaf6 100644
+--- a/sound/soc/intel/common/soc-acpi-intel-glk-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-glk-match.c
+@@ -19,6 +19,11 @@ static const struct snd_soc_acpi_codecs glk_codecs = {
+ 	.codecs = {"MX98357A"}
+ };
  
- 			v4l2_async_unbind_subdev_one(asc->notifier, asc);
--			list_del(&asc->asc_subdev_entry);
- 		}
- 	}
- 
++static const struct snd_soc_acpi_codecs glk_rt5682_rt5682s_hp = {
++	.num_codecs = 2,
++	.codecs = {"10EC5682", "RTL5682"},
++};
++
+ struct snd_soc_acpi_mach snd_soc_acpi_intel_glk_machines[] = {
+ 	{
+ 		.id = "INT343A",
+@@ -35,20 +40,13 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_glk_machines[] = {
+ 		.sof_tplg_filename = "sof-glk-da7219.tplg",
+ 	},
+ 	{
+-		.id = "10EC5682",
++		.comp_ids = &glk_rt5682_rt5682s_hp,
+ 		.drv_name = "glk_rt5682_mx98357a",
+ 		.fw_filename = "intel/dsp_fw_glk.bin",
+ 		.machine_quirk = snd_soc_acpi_codec_list,
+ 		.quirk_data = &glk_codecs,
+ 		.sof_tplg_filename = "sof-glk-rt5682.tplg",
+ 	},
+-	{
+-		.id = "RTL5682",
+-		.drv_name = "glk_rt5682_max98357a",
+-		.machine_quirk = snd_soc_acpi_codec_list,
+-		.quirk_data = &glk_codecs,
+-		.sof_tplg_filename = "sof-glk-rt5682.tplg",
+-	},
+ 	{
+ 		.id = "10134242",
+ 		.drv_name = "glk_cs4242_mx98357a",
 -- 
 2.43.0
 
