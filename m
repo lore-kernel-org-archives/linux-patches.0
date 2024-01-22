@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E008912FF86;
-	Tue, 23 Jan 2024 00:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368AF12FF86;
+	Tue, 23 Jan 2024 00:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969045; cv=none; b=XfZ/QFTuls0AxvznUa4WlTLz5fDCqW1L2jsU8hXtSC/W0ympHaO/Fq3ihx3/U337nUUBDn888Edut9HiXycPgmuu5y8VhaojzQmxZxfx2g7PyZnmedPiPxvK5M9HJ+Pl9+lvov9wRMIlQlSs+/PLEAPZNCLxLFd3v2Jp+W3MiJw=
+	t=1705969047; cv=none; b=dY4ioB10VzDTwMxNQHtGGsBTOsuAiyf+1cFuMhPVs7JMK/8uBJyKsntt/bCMhmvyXmG8EUK45kInwrhvcds5KhB8BAoeXoRrGLGCxiTc9SKaBSmwY6muhHLt2hxO4+hPMOD51xN9iU/jovr8HseRokMwutN+zeSlnIKlcMwSbVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969045; c=relaxed/simple;
-	bh=vWZZe5QqLwmJ0wB9V2DoKRF4rDua89ltnPu2+EKntsc=;
+	s=arc-20240116; t=1705969047; c=relaxed/simple;
+	bh=jlLQY90WY2pUoWhvivaSmfV9MhszRQs2S6lzmrfIFQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H8f36snKREb11Zu5JcEiQaWWFVgbw2ziD/6jnCUt2B1jbT0OitcquaQ9MzCJbBlv+reQDsEaQ9dbktpZB8bwaWqnRuA8oOYVyvpUH4huVCE7yZQ850LACH8DO09ocrMsmU/GmAHJkEMysKVWN6kXYZgCbGLdK0B7SZTed4PXPOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2hchdAHP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FvUoKuc5J8VOa6T3/MHXGCvp4XKArjXRo5gs+PWkX6xji9VoIo/9Oora24hKBJdGn3Hc1z+POg9oqlPWqqKsgvb6iEtsafnyqYRqCUN4cz2hHNuusAZmcrtdgxBUkboldMAoCh0PYd9g6kufUAhbeOFrYckDo20gQpTd/WTm0+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0e7rzbO7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2hchdAHP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958F6C43394;
-	Tue, 23 Jan 2024 00:17:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0e7rzbO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9214CC43390;
+	Tue, 23 Jan 2024 00:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969044;
-	bh=vWZZe5QqLwmJ0wB9V2DoKRF4rDua89ltnPu2+EKntsc=;
+	s=korg; t=1705969047;
+	bh=jlLQY90WY2pUoWhvivaSmfV9MhszRQs2S6lzmrfIFQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2hchdAHP0yoqXBy3f51SYyMeBbYdGq1Up34tdME4lekGo45pzSTklw9u8uj80+4bD
-	 lUSakBJ6gj0M8jJpIdRF2v9Oyjjyh9icWL0ATHpZwOz4nxaaNZbObiVkCG8qqLDoKh
-	 J0gCmnlqpf3l6//jGFQ9Jmmq2z9BVtGFxKNocuhA=
+	b=0e7rzbO7cAraqCNqiRa3u41AnEm5YoA4cRh2KFbqs5I/lXQO3COgpj/8yJy2Chsks
+	 ZQZNS6shbQYdujmV4IAfXCT5n6SV3UjGL4mr+jCDGj97dPj5i0RPxqbdoDEmUWL3nM
+	 TpgBMCzYD6pBg1SzCUdar2BbyorP5ITJ66Og/GFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	John Johansen <john.johansen@canonical.com>,
+	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 178/194] apparmor: avoid crash when parsed profile name is empty
-Date: Mon, 22 Jan 2024 15:58:28 -0800
-Message-ID: <20240122235726.862746242@linuxfoundation.org>
+Subject: [PATCH 5.4 179/194] serial: imx: Correct clock error message in function probe()
+Date: Mon, 22 Jan 2024 15:58:29 -0800
+Message-ID: <20240122235726.913522628@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -45,86 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Christoph Niedermaier <cniedermaier@dh-electronics.com>
 
-[ Upstream commit 55a8210c9e7d21ff2644809699765796d4bfb200 ]
+[ Upstream commit 3e189470cad27d41a3a9dc02649f965b7ed1c90f ]
 
-When processing a packed profile in unpack_profile() described like
+Correct the clock error message by changing the clock name.
 
- "profile :ns::samba-dcerpcd /usr/lib*/samba/{,samba/}samba-dcerpcd {...}"
-
-a string ":samba-dcerpcd" is unpacked as a fully-qualified name and then
-passed to aa_splitn_fqname().
-
-aa_splitn_fqname() treats ":samba-dcerpcd" as only containing a namespace.
-Thus it returns NULL for tmpname, meanwhile tmpns is non-NULL. Later
-aa_alloc_profile() crashes as the new profile name is NULL now.
-
-general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 6 PID: 1657 Comm: apparmor_parser Not tainted 6.7.0-rc2-dirty #16
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
-RIP: 0010:strlen+0x1e/0xa0
-Call Trace:
- <TASK>
- ? strlen+0x1e/0xa0
- aa_policy_init+0x1bb/0x230
- aa_alloc_profile+0xb1/0x480
- unpack_profile+0x3bc/0x4960
- aa_unpack+0x309/0x15e0
- aa_replace_profiles+0x213/0x33c0
- policy_update+0x261/0x370
- profile_replace+0x20e/0x2a0
- vfs_write+0x2af/0xe00
- ksys_write+0x126/0x250
- do_syscall_64+0x46/0xf0
- entry_SYSCALL_64_after_hwframe+0x6e/0x76
- </TASK>
----[ end trace 0000000000000000 ]---
-RIP: 0010:strlen+0x1e/0xa0
-
-It seems such behaviour of aa_splitn_fqname() is expected and checked in
-other places where it is called (e.g. aa_remove_profiles). Well, there
-is an explicit comment "a ns name without a following profile is allowed"
-inside.
-
-AFAICS, nothing can prevent unpacked "name" to be in form like
-":samba-dcerpcd" - it is passed from userspace.
-
-Deny the whole profile set replacement in such case and inform user with
-EPROTO and an explaining message.
-
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 04dc715e24d0 ("apparmor: audit policy ns specified in policy load")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: 1e512d45332b ("serial: imx: add error messages when .probe fails")
+Signed-off-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231224093209.2612-1-cniedermaier@dh-electronics.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy_unpack.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/tty/serial/imx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
-index 7e32c09249b1..8bd79aad37fd 100644
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -693,6 +693,10 @@ static struct aa_profile *unpack_profile(struct aa_ext *e, char **ns_name)
+diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
+index 3f5878e367c7..80cb72350cea 100644
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -2277,7 +2277,7 @@ static int imx_uart_probe(struct platform_device *pdev)
+ 	/* For register access, we only need to enable the ipg clock. */
+ 	ret = clk_prepare_enable(sport->clk_ipg);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "failed to enable per clk: %d\n", ret);
++		dev_err(&pdev->dev, "failed to enable ipg clk: %d\n", ret);
+ 		return ret;
+ 	}
  
- 	tmpname = aa_splitn_fqname(name, strlen(name), &tmpns, &ns_len);
- 	if (tmpns) {
-+		if (!tmpname) {
-+			info = "empty profile name";
-+			goto fail;
-+		}
- 		*ns_name = kstrndup(tmpns, ns_len, GFP_KERNEL);
- 		if (!*ns_name) {
- 			info = "out of memory";
 -- 
 2.43.0
 
