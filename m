@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69C31FDB;
-	Tue, 23 Jan 2024 00:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE27B2113;
+	Tue, 23 Jan 2024 00:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969488; cv=none; b=OE4bFynP9mlAJ5YP8Nc2TsSWJ54ccs84elHNOhP7rg99CGC9skDil01JjWHYAqHEbjS/+ZeXh9V+1JsZ6ph3yQ8In2eL+bzjNKEau4lYbqgQKdw0ImdqrhdR4YyiVlkcPjsMKqOLqoF6v+NNj8iu3/crTpRLL3XIzyymAY9+CKA=
+	t=1705969489; cv=none; b=UnWAUUkhvmYzmOWnA4Zsz7TZZmdsIyYl0zWRDNlbU0EJtxC+e7Spw/fi+fq5yIyAMOcgAnw+nP4vNET1w++xL88iEE6FK3lr1ygwQivVnjaGESZ4EQ+OuC9wmaUxTstwxGE6E49oH99LLJ3WY1IsMT3w1z30YBMmsmSdojUEjJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969488; c=relaxed/simple;
-	bh=N/mdc422U8S8qQ28tKuRS3M6oiqaVCAjyu+FgCXwpBk=;
+	s=arc-20240116; t=1705969489; c=relaxed/simple;
+	bh=X0c6wRlP1fpqDXU+ge+dyn+dQTo5PeKLlAwTEgq1++M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LGo1nrQP6NSh43Bk/vUXXz+PYqZhLMuaXZqyLjzcViyKhXv/SWsNFux9Yk+cgOYAxVyEDpB2F++FC3mJWCPl5SladCpEhjlTfBlvVJUY27geW7pV6NGSre5099WAwA/2aD1dU02GpqHKRH6JHBS7fYwv+HiG0VSt0sRqlMxyZh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1pD3R2N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M+90ljz8UVr/0FrV+1VYL8gk82c3EKASzkMP+rCCjSXW299BpO//Gs97KCoEBPaF7isU9NfQcfE6ewl18vKMJ70LiaUNFuE7qqYYO7Ycq7J/gMt8glPLvGOfSy4Pa5kUEml0hfk14C+vwv4dMFaPTYoZe7/71oazXHOFDxGPAzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akSR4Alh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1pD3R2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A05C433A6;
-	Tue, 23 Jan 2024 00:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akSR4Alh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC78C43390;
+	Tue, 23 Jan 2024 00:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969488;
-	bh=N/mdc422U8S8qQ28tKuRS3M6oiqaVCAjyu+FgCXwpBk=;
+	s=korg; t=1705969489;
+	bh=X0c6wRlP1fpqDXU+ge+dyn+dQTo5PeKLlAwTEgq1++M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L1pD3R2NBuzqAOoqTVRGlkLdCHwIMy3o6yAggI0VFu1BPXixIXK68ETKco4Fw8IMO
-	 44ela/bZj/i/GwoPO4zuA1/jVzP/xYCe0u7cBngLjkxoK2Mstvf1EiY1tJ1EumRV5f
-	 ARfkDuQl/ujr7wnmlHefQMyJ9wAsLrIDlhsATtoo=
+	b=akSR4AlhwWLZoccd+A4I2paCmQLzA8Rku9yCciVu1Ch9A9vhwqxXNplo9/dFiD29M
+	 rxrkEnS2/co9zhqEayHzV0fCK75irjwaVyuy7nsWPvtKCMAjn7xrtDmLdgaluC/VYm
+	 bWvYRfShLnWfE0o5GzWhYjUuIrzNhE2ui+Pq9PNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 278/641] drm/msm/a6xx: add QMP dependency
-Date: Mon, 22 Jan 2024 15:53:02 -0800
-Message-ID: <20240122235826.610235002@linuxfoundation.org>
+Subject: [PATCH 6.7 279/641] drm/msm/mdp4: flush vblank event on disable
+Date: Mon, 22 Jan 2024 15:53:03 -0800
+Message-ID: <20240122235826.640794240@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,43 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 96ab215b2d5edc39310c00f50b33d8ab72ac3fe3 ]
+[ Upstream commit c6721b3c6423d8a348ae885a0f4c85e14f9bf85c ]
 
-When QMP is in a loadable module, the A6xx GPU driver fails to link
-as built-in:
+Flush queued events when disabling the crtc. This avoids timeouts when
+we come back and wait for dependencies (like the previous frame's
+flip_done).
 
-x86_64-linux-ld: drivers/gpu/drm/msm/adreno/a6xx_gmu.o: in function `a6xx_gmu_resume':
-a6xx_gmu.c:(.text+0xd62): undefined reference to `qmp_send'
-
-Add the usual dependency that still allows compiling without QMP but
-otherwise avoids the broken combination of options.
-
-Fixes: 88a0997f2f949 ("drm/msm/a6xx: Send ACD state to QMP at GMU resume")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/562945/
-Link: https://lore.kernel.org/r/20231016200415.791090-1-arnd@kernel.org
+Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/569127/
+Link: https://lore.kernel.org/r/20231127215401.4064128-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-index 6309a857ca31..ad70b611b44f 100644
---- a/drivers/gpu/drm/msm/Kconfig
-+++ b/drivers/gpu/drm/msm/Kconfig
-@@ -6,6 +6,7 @@ config DRM_MSM
- 	depends on ARCH_QCOM || SOC_IMX5 || COMPILE_TEST
- 	depends on COMMON_CLK
- 	depends on IOMMU_SUPPORT
-+	depends on QCOM_AOSS_QMP || QCOM_AOSS_QMP=n
- 	depends on QCOM_OCMEM || QCOM_OCMEM=n
- 	depends on QCOM_LLCC || QCOM_LLCC=n
- 	depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=n
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
+index 169f9de4a12a..3100957225a7 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
+@@ -269,6 +269,7 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
+ {
+ 	struct mdp4_crtc *mdp4_crtc = to_mdp4_crtc(crtc);
+ 	struct mdp4_kms *mdp4_kms = get_kms(crtc);
++	unsigned long flags;
+ 
+ 	DBG("%s", mdp4_crtc->name);
+ 
+@@ -281,6 +282,14 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
+ 	mdp_irq_unregister(&mdp4_kms->base, &mdp4_crtc->err);
+ 	mdp4_disable(mdp4_kms);
+ 
++	if (crtc->state->event && !crtc->state->active) {
++		WARN_ON(mdp4_crtc->event);
++		spin_lock_irqsave(&mdp4_kms->dev->event_lock, flags);
++		drm_crtc_send_vblank_event(crtc, crtc->state->event);
++		crtc->state->event = NULL;
++		spin_unlock_irqrestore(&mdp4_kms->dev->event_lock, flags);
++	}
++
+ 	mdp4_crtc->enabled = false;
+ }
+ 
 -- 
 2.43.0
 
