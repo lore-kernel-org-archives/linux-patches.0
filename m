@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F123E768F6;
-	Tue, 23 Jan 2024 02:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB027768F6;
+	Tue, 23 Jan 2024 02:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975525; cv=none; b=NBh/U+F1a+bTauHGmJc/4vAMglsy20vjTg4M80woBqJ4qPp3dnmvhs8ySKfno63vz00TkCKiyeyJT1spQYw5DQrG+oZp6duz21Y4pfWFxwpHy13aNrzs7sXQeHSMmuu7AOrQEbNJnZ8WTePbuCChgN5XdargHExWHdCs0F/tszc=
+	t=1705975525; cv=none; b=Ajphi1Oww5xN0JHfc9K0QVRNcn6Z2duFaq4LSsglfIVg+Ix5zEaO4v7znJ7LBuXjtAQh8raXD2cKGcJb50XhvN1foErhqVSxCEwdKVop2K6yyKU8As0m67EUXetKty4pFFbTCz2zjVYwkfSXFTPaaEXRnW24tXpjs1N2+MP4gqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975525; c=relaxed/simple;
-	bh=jhkBkCsMKS9nVMhlCI3AQBYjb66I8s19AwDaYtgEwNM=;
+	bh=fo2vU9AhyqXp96PfCJpVb1SchcBHK7sEgiUpbmhb5kw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XFOkO0YY4CaFWjw/VKUUfhiibu3FiFN2+HzWPI5fcifK7BM3zBjlihIbIhSRAMHb+uQSfTUYSqzdKUSprusg/IKjHy4V60el//s4P/byXbUkm26Ikg+Rl1k8y8ECdBKl4VsM3h8XiHRvggEL13vhC6OAGQBCDHCz7LCz2MsqADc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHggsgyR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P2FwVVSMbISrbmAa/u0SBu0tHaqV1Aofc9pobqwipVAWrNSZc73hsAk618X/wYlB0EIiWGnHWLT0UQZl3baQHOt+y9yCDu1uBsawWCl5Bv7fGoxQ8WDT0z70HX+NbaVv0LNLmDtBzH1iv1op3WR5QgZ1NXY3UKBvkId/vGzk8ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKfJ9uNU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHggsgyR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4DABC433C7;
-	Tue, 23 Jan 2024 02:05:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKfJ9uNU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8126FC43390;
+	Tue, 23 Jan 2024 02:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975524;
-	bh=jhkBkCsMKS9nVMhlCI3AQBYjb66I8s19AwDaYtgEwNM=;
+	s=korg; t=1705975525;
+	bh=fo2vU9AhyqXp96PfCJpVb1SchcBHK7sEgiUpbmhb5kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHggsgyRdPSqlnUW67ScNTUfin6LgQmwKQiG85cOVJ+zFsLsHC9aNFINHk8PPMAMN
-	 LgPW2OpKDrJ1Y5Z/TYfyJZ1cReK0j6a+CPEafiAQw7UqW/oVQtgLAwlxkAlmp8ZKes
-	 SfAh1cn4uokM0fgWrjkYNHUUVj3fPHb7LIgvcn1I=
+	b=uKfJ9uNUD2vHOzJDkUSDc36M3WZByTqHKhgHaqGeENdC4xJMqVgfgUWbekrq6DSbh
+	 b6DHoAfuZjU5R5EoNUAaPC5rHaLYeYz3xeIr3vDyDjgcQWtC1fWIZNo67yq1rVgxUN
+	 8M8vUvbR1RxEdWuEw7h2QeF0+NCvJOdxH9Jyh5zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>,
+	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
-	Kai Huang <kai.huang@intel.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 477/583] selftests/sgx: Include memory clobber for inline asm in test enclave
-Date: Mon, 22 Jan 2024 15:58:48 -0800
-Message-ID: <20240122235826.578698033@linuxfoundation.org>
+Subject: [PATCH 6.6 478/583] selftests/sgx: Skip non X86_64 platform
+Date: Mon, 22 Jan 2024 15:58:49 -0800
+Message-ID: <20240122235826.613178835@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,54 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-[ Upstream commit 853a57a43ebdb8c024160c1a0990bae85f4bcc2f ]
+[ Upstream commit 981cf568a8644161c2f15c02278ebc2834b51ba6 ]
 
-Add the "memory" clobber to the EMODPE and EACCEPT asm blocks to tell the
-compiler the assembly code accesses to the secinfo struct. This ensures
-the compiler treats the asm block as a memory barrier and the write to
-secinfo will be visible to ENCLU.
+When building whole selftests on arm64, rsync gives an erorr about sgx:
 
-Fixes: 20404a808593 ("selftests/sgx: Add test for EPCM permission changes")
-Signed-off-by: Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>
+rsync: [sender] link_stat "/root/linux-next/tools/testing/selftests/sgx/test_encl.elf" failed: No such file or directory (2)
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1327) [sender=3.2.5]
+
+The root casue is sgx only used on X86_64, and shall be skipped on other
+platforms.
+
+Fix this by moving TEST_CUSTOM_PROGS and TEST_FILES inside the if check,
+then the build result will be "Skipping non-existent dir: sgx".
+
+Fixes: 2adcba79e69d ("selftests/x86: Add a selftest for SGX")
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/all/20231005153854.25566-4-jo.vanbulck%40cs.kuleuven.be
+Link: https://lore.kernel.org/all/20231206025605.3965302-1-zhaomzhao%40126.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/sgx/test_encl.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ tools/testing/selftests/sgx/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/sgx/test_encl.c b/tools/testing/selftests/sgx/test_encl.c
-index c0d6397295e3..ae791df3e5a5 100644
---- a/tools/testing/selftests/sgx/test_encl.c
-+++ b/tools/testing/selftests/sgx/test_encl.c
-@@ -24,10 +24,11 @@ static void do_encl_emodpe(void *_op)
- 	secinfo.flags = op->flags;
+diff --git a/tools/testing/selftests/sgx/Makefile b/tools/testing/selftests/sgx/Makefile
+index 50aab6b57da3..01abe4969b0f 100644
+--- a/tools/testing/selftests/sgx/Makefile
++++ b/tools/testing/selftests/sgx/Makefile
+@@ -16,10 +16,10 @@ HOST_CFLAGS := -Wall -Werror -g $(INCLUDES) -fPIC -z noexecstack
+ ENCL_CFLAGS := -Wall -Werror -static -nostdlib -nostartfiles -fPIC \
+ 	       -fno-stack-protector -mrdrnd $(INCLUDES)
  
- 	asm volatile(".byte 0x0f, 0x01, 0xd7"
--				:
-+				: /* no outputs */
- 				: "a" (EMODPE),
- 				  "b" (&secinfo),
--				  "c" (op->epc_addr));
-+				  "c" (op->epc_addr)
-+				: "memory" /* read from secinfo pointer */);
- }
++ifeq ($(CAN_BUILD_X86_64), 1)
+ TEST_CUSTOM_PROGS := $(OUTPUT)/test_sgx
+ TEST_FILES := $(OUTPUT)/test_encl.elf
  
- static void do_encl_eaccept(void *_op)
-@@ -42,7 +43,8 @@ static void do_encl_eaccept(void *_op)
- 				: "=a" (rax)
- 				: "a" (EACCEPT),
- 				  "b" (&secinfo),
--				  "c" (op->epc_addr));
-+				  "c" (op->epc_addr)
-+				: "memory" /* read from secinfo pointer */);
+-ifeq ($(CAN_BUILD_X86_64), 1)
+ all: $(TEST_CUSTOM_PROGS) $(OUTPUT)/test_encl.elf
+ endif
  
- 	op->ret = rax;
- }
 -- 
 2.43.0
 
