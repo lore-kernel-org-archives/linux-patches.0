@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A10129A73;
-	Tue, 23 Jan 2024 00:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3D11292EC;
+	Tue, 23 Jan 2024 00:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971006; cv=none; b=j1bKmfEc0aIiIKbyjGTOAlwrB0JF18HtVflUHyfpHCpy5fhgNhuJH0JvXFjn3iWt2KcC0gcA/LxY1kz5GltTBTZCvnFnvX70YegmgtH4EpFQ2Zv0Ox6+x/G6bazh6mKory93hxqZ44zBeS74opB50el266gN6EV/qCqT1ykeH2E=
+	t=1705971008; cv=none; b=CVqSF5xSkawFXwutnm1cD76UJuGAHDrYYa0u/pAHoosdp8NFQnAdPRpmeZq5B1adbJYWRa3XAu+iHnOTMgOMXb/gVbiEokGdNwK2PU+tf2pfccyVlgNlNQtHou+2tqDYg47y1g6DvjjNosugTXld2VLoSYbchM6oO1mQxyikAj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971006; c=relaxed/simple;
-	bh=JplukBa+PsSMnq9Xa6ba5EsGTzc9CnB+dZ1torIFjEc=;
+	s=arc-20240116; t=1705971008; c=relaxed/simple;
+	bh=pAKDOqL5C+UheVRuqSbZsmg1bPmKaD832RDNv30Lztc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r28ZpszCs+PlSEVMueygEYtnGRQPmbBuBOXd9FsFG4V2Do2KSnNIBXmPQEoQP6qYRRhHinVgopP+wl6y6mQ7Vx3LDDjaU2rUlrtZUgORr8TYOJ8X2KoeU984et1OqHwS6s9uSJdMw8nDC8WnJm5hvjMrQaa47TFSXmObi/PNROs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ox/BE0iU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UVxe0oYBsX8uNjRoUVP0z6T04IlC6ljX2x/6Qn2PI5JPWx8BD67nNQEdinauA2GblwjTBkutlWCiZuIZhcAgyaKFDbuaxsZreilv3pOcL4psowfJCw1gx9G+6uuYoXuGTduqeSYCZeErzpjitzEKYNPpt/ibJ7KqEYA1/YhZzCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkTev5zz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ox/BE0iU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B687DC43390;
-	Tue, 23 Jan 2024 00:50:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkTev5zz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22879C43390;
+	Tue, 23 Jan 2024 00:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971005;
-	bh=JplukBa+PsSMnq9Xa6ba5EsGTzc9CnB+dZ1torIFjEc=;
+	s=korg; t=1705971008;
+	bh=pAKDOqL5C+UheVRuqSbZsmg1bPmKaD832RDNv30Lztc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ox/BE0iUTtqOftxvZIp+MHdRhHBwVPpjvPkD68mLMWE++s/hNBMOyiAgT4FrmMJ47
-	 30DOMaAseSKJ3JbisNfLg3x9RUutpHzaAITXRRo5qKzjqeELmpGqhyXg+wrnvbrEM6
-	 2rEiUWl2MEB1SsJD9SOuFQa8V/8DH3uep7y9WxCA=
+	b=LkTev5zzMEh+89zLcp0QyxBYuKjX6t5g2jbmUiIzeoIRmgXS0+8PLG7qDH/qBCznx
+	 zqBkG6VKG6mqL57E6546IELJ+XAHJGgT7ek3p93wPNV3AeGctvfgEcsLGbQFWGTKPD
+	 UAdNkB+mIkMawOSWFsnXN5DO6I9ph2TF3eoIUHxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paul Moore <paul@paul-moore.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 051/286] powerpc: add crtsavres.o to always-y instead of extra-y
-Date: Mon, 22 Jan 2024 15:55:57 -0800
-Message-ID: <20240122235733.998653498@linuxfoundation.org>
+Subject: [PATCH 5.10 069/286] net: netlabel: Fix kerneldoc warnings
+Date: Mon, 22 Jan 2024 15:56:15 -0800
+Message-ID: <20240122235734.677309898@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
 References: <20240122235732.009174833@linuxfoundation.org>
@@ -52,48 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Andrew Lunn <andrew@lunn.ch>
 
-[ Upstream commit 1b1e38002648819c04773647d5242990e2824264 ]
+[ Upstream commit 294ea29113104487a905d0f81c00dfd64121b3d9 ]
 
-crtsavres.o is linked to modules. However, as explained in commit
-d0e628cd817f ("kbuild: doc: clarify the difference between extra-y
-and always-y"), 'make modules' does not build extra-y.
+net/netlabel/netlabel_calipso.c:376: warning: Function parameter or member 'ops' not described in 'netlbl_calipso_ops_register'
 
-For example, the following command fails:
-
-  $ make ARCH=powerpc LLVM=1 KBUILD_MODPOST_WARN=1 mrproper ps3_defconfig modules
-    [snip]
-    LD [M]  arch/powerpc/platforms/cell/spufs/spufs.ko
-  ld.lld: error: cannot open arch/powerpc/lib/crtsavres.o: No such file or directory
-  make[3]: *** [scripts/Makefile.modfinal:56: arch/powerpc/platforms/cell/spufs/spufs.ko] Error 1
-  make[2]: *** [Makefile:1844: modules] Error 2
-  make[1]: *** [/home/masahiro/workspace/linux-kbuild/Makefile:350: __build_one_by_one] Error 2
-  make: *** [Makefile:234: __sub-make] Error 2
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Fixes: baa25b571a16 ("powerpc/64: Do not link crtsavres.o in vmlinux")
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231120232332.4100288-1-masahiroy@kernel.org
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Link: https://lore.kernel.org/r/20201028005350.930299-1-andrew@lunn.ch
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: ec4e9d630a64 ("calipso: fix memory leak in netlbl_calipso_add_pass()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/lib/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netlabel/netlabel_calipso.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/lib/Makefile b/arch/powerpc/lib/Makefile
-index 0697a0e014ae..321cab5c3ea0 100644
---- a/arch/powerpc/lib/Makefile
-+++ b/arch/powerpc/lib/Makefile
-@@ -38,7 +38,7 @@ obj-$(CONFIG_FUNCTION_ERROR_INJECTION)	+= error-inject.o
- # so it is only needed for modules, and only for older linkers which
- # do not support --save-restore-funcs
- ifeq ($(call ld-ifversion, -lt, 225000000, y),y)
--extra-$(CONFIG_PPC64)	+= crtsavres.o
-+always-$(CONFIG_PPC64)	+= crtsavres.o
- endif
+diff --git a/net/netlabel/netlabel_calipso.c b/net/netlabel/netlabel_calipso.c
+index 4e62f2ad3575..f28c8947c730 100644
+--- a/net/netlabel/netlabel_calipso.c
++++ b/net/netlabel/netlabel_calipso.c
+@@ -366,6 +366,7 @@ static const struct netlbl_calipso_ops *calipso_ops;
  
- obj-$(CONFIG_PPC_BOOK3S_64) += copyuser_power7.o copypage_power7.o \
+ /**
+  * netlbl_calipso_ops_register - Register the CALIPSO operations
++ * @ops: ops to register
+  *
+  * Description:
+  * Register the CALIPSO packet engine operations.
 -- 
 2.43.0
 
