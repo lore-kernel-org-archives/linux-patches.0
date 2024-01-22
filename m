@@ -1,49 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3363277F23;
-	Tue, 23 Jan 2024 02:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0821F77F1D;
+	Tue, 23 Jan 2024 02:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975534; cv=none; b=ZZrxYX1NagpNHFjUK676hUCXFL/hmeGEKBQNjvy0nn3xqKLTNPwiAAaqDIMVof3vxJV1sx3XZuxHWu0jATocaJgUpq6RGFx/3KJCaGPBAKrwcKg2wEG1XUMAtqeBV07+Ci3FpV9H2u/dEsadz2VOEa4wdHidQ7p64GZOuyjx6Vw=
+	t=1705975535; cv=none; b=nshdaF/ZexCk6qi/cnUTdxbQNXnSZKVelXUPnfxkwKVGxGBsWuiw+5QcwySbLxvE8tPIa4TOGiPjqLbZHKp8vK6Q+QZiuHonecMqY9v7578MkqBDvrw42PJwOGNY2GiR8pNStTNJMI8bMqrh3BLsHueU/ezbA/c+P1qUmaABb6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975534; c=relaxed/simple;
-	bh=k8SrcaUi8yz025xytcjJu2TNcXoc5JEBpyl985XPKJc=;
+	s=arc-20240116; t=1705975535; c=relaxed/simple;
+	bh=yM4Y2Nd+T5SrPE2U3fOgseA39tOpGALo2EwO8s7AQGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3izmusBdOdVZE30FEhZgWy1k1szPrKYxiUVOj4iZC0MFmP7FH76sHbwwTS1KS8oCy3dsdTl3/4gxLMsl6R+6bBJ7o4tEV4mauuV1Q7kfwbpfTfKdeliapN9PxT7AX3RsKmw3mp5TJdMsRk/hPZXTDv9hgT1cnpPuhRDBgobnG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEQuAHF3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JQVhpebJqhLGidgGvvRnVaxmsJ+zb6KpOvHvaxhb1M7sbpuOAFXAZzIdu63uk2Ki7oVZ/nWwm4kyiRt9cew+GtREJlnR6zekQNR3wxJxCsscK/3v2NPzEmk+rCBnIrBl5JB5ne9rwyYcTMniLqo9TiX0f8SGmjmB6Ei0QPDcYMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdAwPeXR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEQuAHF3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8098C43399;
-	Tue, 23 Jan 2024 02:05:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdAwPeXR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9747C433C7;
+	Tue, 23 Jan 2024 02:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705975534;
-	bh=k8SrcaUi8yz025xytcjJu2TNcXoc5JEBpyl985XPKJc=;
+	bh=yM4Y2Nd+T5SrPE2U3fOgseA39tOpGALo2EwO8s7AQGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QEQuAHF3uRMxhl/vaRvhpKy5E7RdCOBMtPVrNs/8PQyBz1hDz99xTW3+aH1+6rwT6
-	 pS/tWPYreTv9Ktj0EwgZdDumfb9Ym26EsELB+qNYsIvbgR/kMsw6xsVaL1AjODjfW4
-	 vPnnRariop/A1lJvyLG2fj7e/2tGqW/4pXJQs5G0=
+	b=fdAwPeXRL7YTKe2D0c46XovGPMTSoLsRdtFmfoQwZSyr5rF+phqrkKEctlmudslQ/
+	 pFOqRooC5hyh+lPR41BtnbUGAW7kZjgsBFogdAvuFOsIlq9O2qoXUrhCLvD3A6r3/s
+	 +5IjAq84IaC4frbm9x9qo5AQqzcm3WYAky+1gf9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Namhyung Kim <Namhyung@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
+	Fangrui Song <maskray@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Junhao He <hejunhao3@huawei.com>,
-	Mark Rutland <mark.rutland@arm.com>,
+	Lieven Hey <lieven.hey@kdab.com>,
+	Milian Wolff <milian.wolff@kdab.com>,
+	Pablo Galindo <pablogsal@gmail.com>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Qi Liu <liuqi115@huawei.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 484/583] perf hisi-ptt: Fix one memory leakage in hisi_ptt_process_auxtrace_event()
-Date: Mon, 22 Jan 2024 15:58:55 -0800
-Message-ID: <20240122235826.816023919@linuxfoundation.org>
+Subject: [PATCH 6.6 485/583] perf genelf: Set ELF program header addresses properly
+Date: Mon, 22 Jan 2024 15:58:56 -0800
+Message-ID: <20240122235826.851082675@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -62,47 +60,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 1bc479d665bc25a9a4e8168d5b400a47491511f9 ]
+[ Upstream commit 1af478903fc48c1409a8dd6b698383b62387adf1 ]
 
-ASan complains a memory leakage in hisi_ptt_process_auxtrace_event()
-that the data buffer is not freed. Since currently we only support the
-raw dump trace mode, the data buffer is used only within this function.
-So fix this by freeing the data buffer before going out.
+The text section starts after the ELF headers so PHDR.p_vaddr and
+others should have the correct addresses.
 
-Fixes: 5e91e57e68090c0e ("perf auxtrace arm64: Add support for parsing HiSilicon PCIe Trace packet")
+Fixes: babd04386b1df8c3 ("perf jit: Include program header in ELF files")
 Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Acked-by: Namhyung Kim <Namhyung@kernel.org>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Fangrui Song <maskray@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Junhao He <hejunhao3@huawei.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Lieven Hey <lieven.hey@kdab.com>
+Cc: Milian Wolff <milian.wolff@kdab.com>
+Cc: Pablo Galindo <pablogsal@gmail.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Qi Liu <liuqi115@huawei.com>
-Link: https://lore.kernel.org/r/20231207081635.8427-3-yangyicong@huawei.com
+Link: https://lore.kernel.org/r/20231212070547.612536-2-namhyung@kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/hisi-ptt.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/util/genelf.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/hisi-ptt.c b/tools/perf/util/hisi-ptt.c
-index 45b614bb73bf..764d660d30e2 100644
---- a/tools/perf/util/hisi-ptt.c
-+++ b/tools/perf/util/hisi-ptt.c
-@@ -121,6 +121,7 @@ static int hisi_ptt_process_auxtrace_event(struct perf_session *session,
- 	if (dump_trace)
- 		hisi_ptt_dump_event(ptt, data, size);
- 
-+	free(data);
- 	return 0;
- }
- 
+diff --git a/tools/perf/util/genelf.c b/tools/perf/util/genelf.c
+index fefc72066c4e..ac17a3cb59dc 100644
+--- a/tools/perf/util/genelf.c
++++ b/tools/perf/util/genelf.c
+@@ -293,9 +293,9 @@ jit_write_elf(int fd, uint64_t load_addr, const char *sym,
+ 	 */
+ 	phdr = elf_newphdr(e, 1);
+ 	phdr[0].p_type = PT_LOAD;
+-	phdr[0].p_offset = 0;
+-	phdr[0].p_vaddr = 0;
+-	phdr[0].p_paddr = 0;
++	phdr[0].p_offset = GEN_ELF_TEXT_OFFSET;
++	phdr[0].p_vaddr = GEN_ELF_TEXT_OFFSET;
++	phdr[0].p_paddr = GEN_ELF_TEXT_OFFSET;
+ 	phdr[0].p_filesz = csize;
+ 	phdr[0].p_memsz = csize;
+ 	phdr[0].p_flags = PF_X | PF_R;
 -- 
 2.43.0
 
