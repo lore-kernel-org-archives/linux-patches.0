@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD6D62814;
-	Tue, 23 Jan 2024 00:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3706280A;
+	Tue, 23 Jan 2024 00:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971138; cv=none; b=KdhEl8eTYlQXIGGCz+oEjl921+L7EG5Wak4dajy7fJdrJcI3PNwb4SQxm+ym9r+b3UVkvHwVet0jM4MtEjYc7hmeO2jLQQyiCkC/W11qaUkZC6yQQ7fprN2HWS250QsTmw2wDHCioWjXLHToGrwOIFswtZwlr4EaGICdOqP5cTw=
+	t=1705971139; cv=none; b=EnMFHCa+O33/wDVbAPEIo5QC0ZQTVhGRhLQ29D7JFX3d8/EoWsjCJ5x38O6Bn8O3Jtsl3U3MjPxnV2EMWi4Z3IgBQ/Sjkp2qDsMXbZTVdcP6Jc2LQNO+8oqFyK6VCChg1dUcuw5tmj5kSvdNxI8HijZZa95ajuL5WrPc/3t5XpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971138; c=relaxed/simple;
-	bh=LCtYnopr7599kg5vWIQSIDWSZtPlar3LSN5nnugy7Jc=;
+	s=arc-20240116; t=1705971139; c=relaxed/simple;
+	bh=3dtQpsyoN6XXyp15C61A3Mt1ee9qdX/lcaVlwyXLJbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oPRmzAkQuoXQGr4ekv+Hz+GAqw8FiwZi6TtvDRcfcUozJ2GBBzZ8sysUgNmsXXvGAmbF3Ij0Up0wvf9Y4rhqZCyOWPZ+EO/Df/7z5E/5Mi5qZWPBoyg65H1hGp8E+CxPVyAdA/Bz99FLgROAQabWQPm0L6gP/glv3ZtJhTPTff4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCNVm60x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Stx7BDJil1BHbMJPEDFMbkL8NJnazt+eIJVAkWDRO+aeGge21hLn1uRCSUrLPY8YehhMErOaAEf7p5cxbT4zlxUneoe9VA8PCsU54cjAYCA3aGJHcADCKT4aHSvL4Sc89pFozqcc1WuIUYjOSpeedOJwoNqmnlKNdwHXYxCJcFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=en+xl5a9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCNVm60x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B69DC43390;
-	Tue, 23 Jan 2024 00:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="en+xl5a9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9F6C433F1;
+	Tue, 23 Jan 2024 00:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971137;
-	bh=LCtYnopr7599kg5vWIQSIDWSZtPlar3LSN5nnugy7Jc=;
+	s=korg; t=1705971139;
+	bh=3dtQpsyoN6XXyp15C61A3Mt1ee9qdX/lcaVlwyXLJbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lCNVm60xSUwGRwtASfiNWmsc0NG55dfTqwnAoVtmsmSxVRZh+7ZeNtvL3oPXsrnQs
-	 0uJQB82MtvaTwYCxFOGHs8sVXTlcF/VWtwV820daSPyOLKL3Y+zEXCNTRhVDwjO34h
-	 JdFNAfyIy0vJudI2CF5xNoy8wUvwktIaIIrmBaGs=
+	b=en+xl5a9fIBtukh9lWz+jvjrq8DOzTWj39hUfMbqHXxYwn+uL7wyNImv3f6nUG0oS
+	 BO+DY2dzCrnwQ6ckiEa8L7WB64J5Y45gLEohDz+jOs3/L4BDvuuptnhE0PDS9Bcrzw
+	 9PNkQUZdkF9u8ZMYfK+ZcZ6jjGwE+vAmdVENLaNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Muhammad <osmtendev@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+da0fc229cc1ff4bb2e6d@syzkaller.appspotmail.com
-Subject: [PATCH 5.10 096/286] gfs2: Fix kernel NULL pointer dereference in gfs2_rgrp_dump
-Date: Mon, 22 Jan 2024 15:56:42 -0800
-Message-ID: <20240122235735.762506094@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 189/417] drm/bridge: cdns-mhdp8546: Fix use of uninitialized variable
+Date: Mon, 22 Jan 2024 15:55:57 -0800
+Message-ID: <20240122235758.457044038@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Osama Muhammad <osmtendev@gmail.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 8877243beafa7c6bfc42022cbfdf9e39b25bd4fa ]
+[ Upstream commit 155d6fb61270dd297f128731cd155080deee8f3a ]
 
-Syzkaller has reported a NULL pointer dereference when accessing
-rgd->rd_rgl in gfs2_rgrp_dump().  This can happen when creating
-rgd->rd_gl fails in read_rindex_entry().  Add a NULL pointer check in
-gfs2_rgrp_dump() to prevent that.
+'ret' could be uninitialized at the end of the function, although it's
+not clear if that can happen in practice.
 
-Reported-and-tested-by: syzbot+da0fc229cc1ff4bb2e6d@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=da0fc229cc1ff4bb2e6d
-Fixes: 72244b6bc752 ("gfs2: improve debug information when lvb mismatches are found")
-Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: 6a3608eae6d3 ("drm: bridge: cdns-mhdp8546: Enable HDCP")
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231103-uninit-fixes-v2-3-c22b2444f5f5@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/rgrp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/rgrp.c b/fs/gfs2/rgrp.c
-index ac0715aafa8e..1ffdc4ad6246 100644
---- a/fs/gfs2/rgrp.c
-+++ b/fs/gfs2/rgrp.c
-@@ -2231,7 +2231,7 @@ void gfs2_rgrp_dump(struct seq_file *seq, struct gfs2_rgrpd *rgd,
- 		       (unsigned long long)rgd->rd_addr, rgd->rd_flags,
- 		       rgd->rd_free, rgd->rd_free_clone, rgd->rd_dinodes,
- 		       rgd->rd_reserved, rgd->rd_extfail_pt);
--	if (rgd->rd_sbd->sd_args.ar_rgrplvb) {
-+	if (rgd->rd_sbd->sd_args.ar_rgrplvb && rgd->rd_rgl) {
- 		struct gfs2_rgrp_lvb *rgl = rgd->rd_rgl;
+diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c
+index 946212a95598..5e3b8edcf794 100644
+--- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c
++++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c
+@@ -403,7 +403,8 @@ static int _cdns_mhdp_hdcp_disable(struct cdns_mhdp_device *mhdp)
  
- 		gfs2_print_dbg(seq, "%s  L: f:%02x b:%u i:%u\n", fs_id_buf,
+ static int _cdns_mhdp_hdcp_enable(struct cdns_mhdp_device *mhdp, u8 content_type)
+ {
+-	int ret, tries = 3;
++	int ret = -EINVAL;
++	int tries = 3;
+ 	u32 i;
+ 
+ 	for (i = 0; i < tries; i++) {
 -- 
 2.43.0
 
