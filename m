@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D006772E;
-	Tue, 23 Jan 2024 02:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC0D67734;
+	Tue, 23 Jan 2024 02:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975291; cv=none; b=HoklB6etFoskpHN9jH0xS2U3q4oyo7qsEQ+trZ+qHK0lQExX2ORWJ/fVOQiHSOmWpvVT34cp1ZDSuhK3so7vAzt6c201N4MSoOdJiQkt8QdDlAUUzl9w0Pkmt+Xx783jlQ+JQeOBru46wz6zvFwROzRbdoOhhRSheSSoThLHSbU=
+	t=1705975291; cv=none; b=klWI/orC61KevXjxAKpsE4BKiVjwi/DhlgtLu6tQhlR9Re738tIa+xueJItb48k93WOraAQHfLtpxWq99gFyb+RJgJTsr5LX5OtehniQsIbfsZvb+aVJdeGqeG4OENmcDY3OA0PA3M/9QLV6cdn4SRizAWZ6hk6VtrIN240ZEZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975291; c=relaxed/simple;
-	bh=7ubf1BClcqPedgqjXyVGquKUgQg1IDxJwk+3+dxPLgQ=;
+	bh=fqgU4+8ooqteAdiXC8/5qwSO2Ue0xZq7QJss1/zWYXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cZ8NAxHxYJ3UaIA6Gc1167cW3JXH0aJhp5VO9GBpN8pvQuVuVLNBRolrJwT5bUXsZsgrajPlqujssEXJbPJ1Dg7dSgSkRFZH44wZtoDJT/2OSgxWMpt+2mev1o4ahYVFidt6FyGOOhBoUcZRyNPzivTiiQ4lSFxsrTQn9uPFjc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtJ4Y2Qq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YpIsMGON3JGcLRqjGz0Dv7hA3VIchvZtAxHQv15O/UMgLgq4SX62xcxxrMtIEcu/X26BK5d4uiGbnBH3EIm4ZPDoWmWCcDp37Ddej8PgerIV+gQv1sDqz7aUmfWjCqExzvktdCKzuptqCtgoKZ+3xvQLq5iGVErpteT43O7UB+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdQPwcWC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtJ4Y2Qq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB84C433C7;
-	Tue, 23 Jan 2024 02:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdQPwcWC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB46C43390;
+	Tue, 23 Jan 2024 02:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975290;
-	bh=7ubf1BClcqPedgqjXyVGquKUgQg1IDxJwk+3+dxPLgQ=;
+	s=korg; t=1705975291;
+	bh=fqgU4+8ooqteAdiXC8/5qwSO2Ue0xZq7QJss1/zWYXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wtJ4Y2QqdrSx1MuYp5Cfi2tML7bEZv3VlDYd6k5cFzFa60eU4BS35uPwq4jsLUx+H
-	 QGtffU1ceWyv0ayAYVuv7vn6J7DJ0E8xo4VYg9ddYEdx7i5PpgeEmoZSWcSvpaj02h
-	 WLMdMQsWqBD8G1QlnT13Xaymz7PnK5d+j0zmJ6oY=
+	b=gdQPwcWCw6Zeu0dZLI58VruvDTQLVeOvHioliNeXR160mtHoHki+sCZ7lSdYWbqmv
+	 gvoqSu39kCIGWRl53/L7yYfG/pMmNM2fLBB0QoY0UslGK3me53UvDq052UQkdLUlxH
+	 d03mC6Tc+EIhsdKWOTpZguCn4iswfyTGdTbeSgwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 349/374] netfilter: nft_limit: move stateful fields out of expression data
-Date: Mon, 22 Jan 2024 16:00:05 -0800
-Message-ID: <20240122235757.068305108@linuxfoundation.org>
+Subject: [PATCH 6.6 222/583] Revert "drm/tidss: Annotate dma-fence critical section in commit path"
+Date: Mon, 22 Jan 2024 15:54:33 -0800
+Message-ID: <20240122235818.794134154@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,193 +47,177 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 3b9e2ea6c11bff72ac1d607f6b954e7666b47409 ]
+[ Upstream commit ca34d816558c3e4c3f8fe037b5a6b16c944693de ]
 
-In preparation for the rule blob representation.
+This reverts commit 4d56a4f08391857ba93465de489707b66adad114.
 
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 91a139cee120 ("netfilter: nft_limit: do not ignore unsupported flags")
+The DMA-fence annotations cause a lockdep warning (see below). As per
+https://patchwork.freedesktop.org/patch/462170/ it sounds like the
+annotations don't work correctly.
+
+======================================================
+WARNING: possible circular locking dependency detected
+6.6.0-rc2+ #1 Not tainted
+------------------------------------------------------
+kmstest/733 is trying to acquire lock:
+ffff8000819377f0 (fs_reclaim){+.+.}-{0:0}, at: __kmem_cache_alloc_node+0x58/0x2d4
+
+but task is already holding lock:
+ffff800081a06aa0 (dma_fence_map){++++}-{0:0}, at: tidss_atomic_commit_tail+0x20/0xc0 [tidss]
+
+which lock already depends on the new lock.
+
+the existing dependency chain (in reverse order) is:
+
+-> #2 (dma_fence_map){++++}-{0:0}:
+       __dma_fence_might_wait+0x5c/0xd0
+       dma_resv_lockdep+0x1a4/0x32c
+       do_one_initcall+0x84/0x2fc
+       kernel_init_freeable+0x28c/0x4c4
+       kernel_init+0x24/0x1dc
+       ret_from_fork+0x10/0x20
+
+-> #1 (mmu_notifier_invalidate_range_start){+.+.}-{0:0}:
+       fs_reclaim_acquire+0x70/0xe4
+       __kmem_cache_alloc_node+0x58/0x2d4
+       kmalloc_trace+0x38/0x78
+       __kthread_create_worker+0x3c/0x150
+       kthread_create_worker+0x64/0x8c
+       workqueue_init+0x1e8/0x2f0
+       kernel_init_freeable+0x11c/0x4c4
+       kernel_init+0x24/0x1dc
+       ret_from_fork+0x10/0x20
+
+-> #0 (fs_reclaim){+.+.}-{0:0}:
+       __lock_acquire+0x1370/0x20d8
+       lock_acquire+0x1e8/0x308
+       fs_reclaim_acquire+0xd0/0xe4
+       __kmem_cache_alloc_node+0x58/0x2d4
+       __kmalloc_node_track_caller+0x58/0xf0
+       kmemdup+0x34/0x60
+       regmap_bulk_write+0x64/0x2c0
+       tc358768_bridge_pre_enable+0x8c/0x12d0 [tc358768]
+       drm_atomic_bridge_call_pre_enable+0x68/0x80 [drm]
+       drm_atomic_bridge_chain_pre_enable+0x50/0x158 [drm]
+       drm_atomic_helper_commit_modeset_enables+0x164/0x264 [drm_kms_helper]
+       tidss_atomic_commit_tail+0x58/0xc0 [tidss]
+       commit_tail+0xa0/0x188 [drm_kms_helper]
+       drm_atomic_helper_commit+0x1a8/0x1c0 [drm_kms_helper]
+       drm_atomic_commit+0xa8/0xe0 [drm]
+       drm_mode_atomic_ioctl+0x9ec/0xc80 [drm]
+       drm_ioctl_kernel+0xc4/0x170 [drm]
+       drm_ioctl+0x234/0x4b0 [drm]
+       drm_compat_ioctl+0x110/0x12c [drm]
+       __arm64_compat_sys_ioctl+0x128/0x150
+       invoke_syscall+0x48/0x110
+       el0_svc_common.constprop.0+0x40/0xe0
+       do_el0_svc_compat+0x1c/0x38
+       el0_svc_compat+0x48/0xb4
+       el0t_32_sync_handler+0xb0/0x138
+       el0t_32_sync+0x194/0x198
+
+other info that might help us debug this:
+
+Chain exists of:
+  fs_reclaim --> mmu_notifier_invalidate_range_start --> dma_fence_map
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  rlock(dma_fence_map);
+                               lock(mmu_notifier_invalidate_range_start);
+                               lock(dma_fence_map);
+  lock(fs_reclaim);
+
+ *** DEADLOCK ***
+
+3 locks held by kmstest/733:
+ #0: ffff800082e5bba0 (crtc_ww_class_acquire){+.+.}-{0:0}, at: drm_mode_atomic_ioctl+0x118/0xc80 [drm]
+ #1: ffff000004224c88 (crtc_ww_class_mutex){+.+.}-{3:3}, at: modeset_lock+0xdc/0x1a0 [drm]
+ #2: ffff800081a06aa0 (dma_fence_map){++++}-{0:0}, at: tidss_atomic_commit_tail+0x20/0xc0 [tidss]
+
+stack backtrace:
+CPU: 0 PID: 733 Comm: kmstest Not tainted 6.6.0-rc2+ #1
+Hardware name: Toradex Verdin AM62 on Verdin Development Board (DT)
+Call trace:
+ dump_backtrace+0x98/0x118
+ show_stack+0x18/0x24
+ dump_stack_lvl+0x60/0xac
+ dump_stack+0x18/0x24
+ print_circular_bug+0x288/0x368
+ check_noncircular+0x168/0x17c
+ __lock_acquire+0x1370/0x20d8
+ lock_acquire+0x1e8/0x308
+ fs_reclaim_acquire+0xd0/0xe4
+ __kmem_cache_alloc_node+0x58/0x2d4
+ __kmalloc_node_track_caller+0x58/0xf0
+ kmemdup+0x34/0x60
+ regmap_bulk_write+0x64/0x2c0
+ tc358768_bridge_pre_enable+0x8c/0x12d0 [tc358768]
+ drm_atomic_bridge_call_pre_enable+0x68/0x80 [drm]
+ drm_atomic_bridge_chain_pre_enable+0x50/0x158 [drm]
+ drm_atomic_helper_commit_modeset_enables+0x164/0x264 [drm_kms_helper]
+ tidss_atomic_commit_tail+0x58/0xc0 [tidss]
+ commit_tail+0xa0/0x188 [drm_kms_helper]
+ drm_atomic_helper_commit+0x1a8/0x1c0 [drm_kms_helper]
+ drm_atomic_commit+0xa8/0xe0 [drm]
+ drm_mode_atomic_ioctl+0x9ec/0xc80 [drm]
+ drm_ioctl_kernel+0xc4/0x170 [drm]
+ drm_ioctl+0x234/0x4b0 [drm]
+ drm_compat_ioctl+0x110/0x12c [drm]
+ __arm64_compat_sys_ioctl+0x128/0x150
+ invoke_syscall+0x48/0x110
+ el0_svc_common.constprop.0+0x40/0xe0
+ do_el0_svc_compat+0x1c/0x38
+ el0_svc_compat+0x48/0xb4
+ el0t_32_sync_handler+0xb0/0x138
+ el0t_32_sync+0x194/0x198
+
+Fixes: 4d56a4f08391 ("drm/tidss: Annotate dma-fence critical section in commit path")
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230920-dma-fence-annotation-revert-v1-1-7ebf6f7f5bf6@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_limit.c | 94 ++++++++++++++++++++++++++++++++++-----
- 1 file changed, 82 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/tidss/tidss_kms.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/net/netfilter/nft_limit.c b/net/netfilter/nft_limit.c
-index d6e0226b7603..f04be5be73a0 100644
---- a/net/netfilter/nft_limit.c
-+++ b/net/netfilter/nft_limit.c
-@@ -14,10 +14,14 @@
- #include <linux/netfilter/nf_tables.h>
- #include <net/netfilter/nf_tables.h>
+diff --git a/drivers/gpu/drm/tidss/tidss_kms.c b/drivers/gpu/drm/tidss/tidss_kms.c
+index c979ad1af236..d096d8d2bc8f 100644
+--- a/drivers/gpu/drm/tidss/tidss_kms.c
++++ b/drivers/gpu/drm/tidss/tidss_kms.c
+@@ -4,8 +4,6 @@
+  * Author: Tomi Valkeinen <tomi.valkeinen@ti.com>
+  */
  
--struct nft_limit_priv {
-+struct nft_limit {
- 	spinlock_t	lock;
- 	u64		last;
- 	u64		tokens;
-+};
-+
-+struct nft_limit_priv {
-+	struct nft_limit *limit;
- 	u64		tokens_max;
- 	u64		rate;
- 	u64		nsecs;
-@@ -30,21 +34,21 @@ static inline bool nft_limit_eval(struct nft_limit_priv *priv, u64 cost)
- 	u64 now, tokens;
- 	s64 delta;
+-#include <linux/dma-fence.h>
+-
+ #include <drm/drm_atomic.h>
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_bridge.h>
+@@ -25,7 +23,6 @@ static void tidss_atomic_commit_tail(struct drm_atomic_state *old_state)
+ {
+ 	struct drm_device *ddev = old_state->dev;
+ 	struct tidss_device *tidss = to_tidss(ddev);
+-	bool fence_cookie = dma_fence_begin_signalling();
  
--	spin_lock_bh(&priv->lock);
-+	spin_lock_bh(&priv->limit->lock);
- 	now = ktime_get_ns();
--	tokens = priv->tokens + now - priv->last;
-+	tokens = priv->limit->tokens + now - priv->limit->last;
- 	if (tokens > priv->tokens_max)
- 		tokens = priv->tokens_max;
+ 	dev_dbg(ddev->dev, "%s\n", __func__);
  
--	priv->last = now;
-+	priv->limit->last = now;
- 	delta = tokens - cost;
- 	if (delta >= 0) {
--		priv->tokens = delta;
--		spin_unlock_bh(&priv->lock);
-+		priv->limit->tokens = delta;
-+		spin_unlock_bh(&priv->limit->lock);
- 		return priv->invert;
- 	}
--	priv->tokens = tokens;
--	spin_unlock_bh(&priv->lock);
-+	priv->limit->tokens = tokens;
-+	spin_unlock_bh(&priv->limit->lock);
- 	return !priv->invert;
- }
+@@ -36,7 +33,6 @@ static void tidss_atomic_commit_tail(struct drm_atomic_state *old_state)
+ 	drm_atomic_helper_commit_modeset_enables(ddev, old_state);
  
-@@ -86,8 +90,12 @@ static int nft_limit_init(struct nft_limit_priv *priv,
- 				 priv->rate);
- 	}
+ 	drm_atomic_helper_commit_hw_done(old_state);
+-	dma_fence_end_signalling(fence_cookie);
+ 	drm_atomic_helper_wait_for_flip_done(ddev, old_state);
  
--	priv->tokens = tokens;
--	priv->tokens_max = priv->tokens;
-+	priv->limit = kmalloc(sizeof(*priv->limit), GFP_KERNEL);
-+	if (!priv->limit)
-+		return -ENOMEM;
-+
-+	priv->limit->tokens = tokens;
-+	priv->tokens_max = priv->limit->tokens;
- 
- 	if (tb[NFTA_LIMIT_FLAGS]) {
- 		u32 flags = ntohl(nla_get_be32(tb[NFTA_LIMIT_FLAGS]));
-@@ -95,8 +103,8 @@ static int nft_limit_init(struct nft_limit_priv *priv,
- 		if (flags & NFT_LIMIT_F_INV)
- 			priv->invert = true;
- 	}
--	priv->last = ktime_get_ns();
--	spin_lock_init(&priv->lock);
-+	priv->limit->last = ktime_get_ns();
-+	spin_lock_init(&priv->limit->lock);
- 
- 	return 0;
- }
-@@ -121,6 +129,32 @@ static int nft_limit_dump(struct sk_buff *skb, const struct nft_limit_priv *priv
- 	return -1;
- }
- 
-+static void nft_limit_destroy(const struct nft_ctx *ctx,
-+			      const struct nft_limit_priv *priv)
-+{
-+	kfree(priv->limit);
-+}
-+
-+static int nft_limit_clone(struct nft_limit_priv *priv_dst,
-+			   const struct nft_limit_priv *priv_src)
-+{
-+	priv_dst->tokens_max = priv_src->tokens_max;
-+	priv_dst->rate = priv_src->rate;
-+	priv_dst->nsecs = priv_src->nsecs;
-+	priv_dst->burst = priv_src->burst;
-+	priv_dst->invert = priv_src->invert;
-+
-+	priv_dst->limit = kmalloc(sizeof(*priv_dst->limit), GFP_ATOMIC);
-+	if (priv_dst->limit)
-+		return -ENOMEM;
-+
-+	spin_lock_init(&priv_dst->limit->lock);
-+	priv_dst->limit->tokens = priv_src->tokens_max;
-+	priv_dst->limit->last = ktime_get_ns();
-+
-+	return 0;
-+}
-+
- struct nft_limit_priv_pkts {
- 	struct nft_limit_priv	limit;
- 	u64			cost;
-@@ -166,12 +200,30 @@ static int nft_limit_pkts_dump(struct sk_buff *skb, const struct nft_expr *expr)
- 	return nft_limit_dump(skb, &priv->limit, NFT_LIMIT_PKTS);
- }
- 
-+static void nft_limit_pkts_destroy(const struct nft_ctx *ctx,
-+				   const struct nft_expr *expr)
-+{
-+	const struct nft_limit_priv_pkts *priv = nft_expr_priv(expr);
-+
-+	nft_limit_destroy(ctx, &priv->limit);
-+}
-+
-+static int nft_limit_pkts_clone(struct nft_expr *dst, const struct nft_expr *src)
-+{
-+	struct nft_limit_priv_pkts *priv_dst = nft_expr_priv(dst);
-+	struct nft_limit_priv_pkts *priv_src = nft_expr_priv(src);
-+
-+	return nft_limit_clone(&priv_dst->limit, &priv_src->limit);
-+}
-+
- static struct nft_expr_type nft_limit_type;
- static const struct nft_expr_ops nft_limit_pkts_ops = {
- 	.type		= &nft_limit_type,
- 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_limit_priv_pkts)),
- 	.eval		= nft_limit_pkts_eval,
- 	.init		= nft_limit_pkts_init,
-+	.destroy	= nft_limit_pkts_destroy,
-+	.clone		= nft_limit_pkts_clone,
- 	.dump		= nft_limit_pkts_dump,
- };
- 
-@@ -203,12 +255,30 @@ static int nft_limit_bytes_dump(struct sk_buff *skb,
- 	return nft_limit_dump(skb, priv, NFT_LIMIT_PKT_BYTES);
- }
- 
-+static void nft_limit_bytes_destroy(const struct nft_ctx *ctx,
-+				    const struct nft_expr *expr)
-+{
-+	const struct nft_limit_priv *priv = nft_expr_priv(expr);
-+
-+	nft_limit_destroy(ctx, priv);
-+}
-+
-+static int nft_limit_bytes_clone(struct nft_expr *dst, const struct nft_expr *src)
-+{
-+	struct nft_limit_priv *priv_dst = nft_expr_priv(dst);
-+	struct nft_limit_priv *priv_src = nft_expr_priv(src);
-+
-+	return nft_limit_clone(priv_dst, priv_src);
-+}
-+
- static const struct nft_expr_ops nft_limit_bytes_ops = {
- 	.type		= &nft_limit_type,
- 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_limit_priv)),
- 	.eval		= nft_limit_bytes_eval,
- 	.init		= nft_limit_bytes_init,
- 	.dump		= nft_limit_bytes_dump,
-+	.clone		= nft_limit_bytes_clone,
-+	.destroy	= nft_limit_bytes_destroy,
- };
- 
- static const struct nft_expr_ops *
+ 	drm_atomic_helper_cleanup_planes(ddev, old_state);
 -- 
 2.43.0
 
