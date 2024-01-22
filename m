@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95BD6121;
-	Tue, 23 Jan 2024 01:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC3858AD2;
+	Tue, 23 Jan 2024 01:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974098; cv=none; b=OYXPHrFdjr035ErpT6Om2LErLa3x9oU+gBTXsuZiJYv3Vhy2Xxs4bB6dc9PpybPKf7zwX7+O/NULyH5clKszRRYRCvzZ1sygW6vacArnRs/vYmg9BthEALokqMgF+xKrYsacQWpTob+yp/Jhgauuv3I6U6HFpyeiajwmIbKRvSE=
+	t=1705974099; cv=none; b=mnbj/8Tk42++Rwl2Fj1z1QRIfRR2S22zbDczxM85+G5n1ynctdbX+eUdeLhGP6QG29Cs8jiQCsW8ryitH2klrG11uRjAyALW8oAdeDKfA+29a8bWiZw5BSnkQijGTfiDJySatohMiEe7YRH/PjdWY1Sg6r3N9z1RBltbGioJx2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974098; c=relaxed/simple;
-	bh=6t8niMm2YGTwbS3Qt7VWhNPZuFZWS29Zg1DR0Wzg530=;
+	s=arc-20240116; t=1705974099; c=relaxed/simple;
+	bh=H8I9qC6TVZZK94I1yjoua0QNRkRFCZXj/7u772tSbHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UH1CvHVbajACqFbpGeC0qxvoOSnxCl3R/DMzBho9G8EpnMudpl/1F1+kJywzTM7TzHgV2GbLK/uBrevUKts93waQRcQQTisEzt8B9axadS/ZSPqGaxli0lT535wOctJOrmrc0oeeMC4ppMukK9hREcpXVNlfAL4EtPqM/ztTOJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPteYbl5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kav8zzkA+P8cR2iD92nN4GrimmT50aXQwj8v8tsz6lR0Syhw2aRQKPyrDyiQ5GS5bSZju2zAraepRtzzbVfq1xyvVLUKPuTt4nRCjOvtEiSIilLfNMovB8Ou38ogYktMkLVx7fW3YTpJq8zXGQcjbxLUzbb6VN3Vq6xkL3jAmZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKx8cb0t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPteYbl5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB83C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKx8cb0t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDF0C433C7;
 	Tue, 23 Jan 2024 01:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974098;
-	bh=6t8niMm2YGTwbS3Qt7VWhNPZuFZWS29Zg1DR0Wzg530=;
+	s=korg; t=1705974099;
+	bh=H8I9qC6TVZZK94I1yjoua0QNRkRFCZXj/7u772tSbHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dPteYbl58aq5NWi+3VmJMDBVFdJ7gFEWKota9Z9EVHaNpIzQ2QnXVqH1qNhWsxwPX
-	 PON6A90m5q619P5Us9N0cA2NMmundv6Nuqw12I4OamFuu/HZqneW7MrUXvwjfcQUpa
-	 sR6MijZEDgXfUkGJFtuYQwFy8xPdmrDF0g0NqWwk=
+	b=MKx8cb0tRjGi2bp7Rhp2P3bTeF++ecWGBpG4kOyr8eCq1EfrmAl1kTni3Rnw7uDrw
+	 /VIFFtvcQZay4wdWSyk0CXFky5EWPOm5Asstwrg2dIgphUh5KEDOodOzx9r9JLCSp9
+	 2NXOzbb+mNrYmF3IXUONL5r4sktrmp3ousEOFpcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	ZhaoLong Wang <wangzhaolong1@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 162/374] wifi: rtlwifi: rtl8192se: using calculate_bit_shift()
-Date: Mon, 22 Jan 2024 15:56:58 -0800
-Message-ID: <20240122235750.244673728@linuxfoundation.org>
+Subject: [PATCH 6.6 038/583] mtd: Fix gluebi NULL pointer dereference caused by ftl notifier
+Date: Mon, 22 Jan 2024 15:51:29 -0800
+Message-ID: <20240122235813.320764655@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,82 +47,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: ZhaoLong Wang <wangzhaolong1@huawei.com>
 
-[ Upstream commit ac32b9317063b101a8ff3d3e885f76f87a280419 ]
+[ Upstream commit a43bdc376deab5fff1ceb93dca55bcab8dbdc1d6 ]
 
-Using calculate_bit_shift() to replace _rtl92s_phy_calculate_bit_shift().
-And fix the undefined bitwise shift behavior problem.
+If both ftl.ko and gluebi.ko are loaded, the notifier of ftl
+triggers NULL pointer dereference when trying to access
+‘gluebi->desc’ in gluebi_read().
 
-Fixes: d15853163bea ("rtlwifi: rtl8192se: Merge phy routines")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231219065739.1895666-10-suhui@nfschina.com
+ubi_gluebi_init
+  ubi_register_volume_notifier
+    ubi_enumerate_volumes
+      ubi_notify_all
+        gluebi_notify    nb->notifier_call()
+          gluebi_create
+            mtd_device_register
+              mtd_device_parse_register
+                add_mtd_device
+                  blktrans_notify_add   not->add()
+                    ftl_add_mtd         tr->add_mtd()
+                      scan_header
+                        mtd_read
+                          mtd_read_oob
+                            mtd_read_oob_std
+                              gluebi_read   mtd->read()
+                                gluebi->desc - NULL
+
+Detailed reproduction information available at the Link [1],
+
+In the normal case, obtain gluebi->desc in the gluebi_get_device(),
+and access gluebi->desc in the gluebi_read(). However,
+gluebi_get_device() is not executed in advance in the
+ftl_add_mtd() process, which leads to NULL pointer dereference.
+
+The solution for the gluebi module is to run jffs2 on the UBI
+volume without considering working with ftl or mtdblock [2].
+Therefore, this problem can be avoided by preventing gluebi from
+creating the mtdblock device after creating mtd partition of the
+type MTD_UBIVOLUME.
+
+Fixes: 2ba3d76a1e29 ("UBI: make gluebi a separate module")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217992 [1]
+Link: https://lore.kernel.org/lkml/441107100.23734.1697904580252.JavaMail.zimbra@nod.at/ [2]
+Signed-off-by: ZhaoLong Wang <wangzhaolong1@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Acked-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20231220024619.2138625-1-wangzhaolong1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/realtek/rtlwifi/rtl8192se/phy.c  | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/mtd/mtd_blkdevs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192se/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192se/phy.c
-index aaa004d4d6d0..0e2b9698088b 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192se/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192se/phy.c
-@@ -14,13 +14,6 @@
- #include "hw.h"
- #include "table.h"
- 
--static u32 _rtl92s_phy_calculate_bit_shift(u32 bitmask)
--{
--	u32 i = ffs(bitmask);
--
--	return i ? i - 1 : 32;
--}
--
- u32 rtl92s_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
+diff --git a/drivers/mtd/mtd_blkdevs.c b/drivers/mtd/mtd_blkdevs.c
+index ff18636e0889..5bc32108ca03 100644
+--- a/drivers/mtd/mtd_blkdevs.c
++++ b/drivers/mtd/mtd_blkdevs.c
+@@ -463,7 +463,7 @@ static void blktrans_notify_add(struct mtd_info *mtd)
  {
- 	struct rtl_priv *rtlpriv = rtl_priv(hw);
-@@ -30,7 +23,7 @@ u32 rtl92s_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
- 		regaddr, bitmask);
+ 	struct mtd_blktrans_ops *tr;
  
- 	originalvalue = rtl_read_dword(rtlpriv, regaddr);
--	bitshift = _rtl92s_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	returnvalue = (originalvalue & bitmask) >> bitshift;
+-	if (mtd->type == MTD_ABSENT)
++	if (mtd->type == MTD_ABSENT || mtd->type == MTD_UBIVOLUME)
+ 		return;
  
- 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE, "BBR MASK=0x%x Addr[0x%x]=0x%x\n",
-@@ -52,7 +45,7 @@ void rtl92s_phy_set_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask,
- 
- 	if (bitmask != MASKDWORD) {
- 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
--		bitshift = _rtl92s_phy_calculate_bit_shift(bitmask);
-+		bitshift = calculate_bit_shift(bitmask);
- 		data = ((originalvalue & (~bitmask)) | (data << bitshift));
- 	}
- 
-@@ -160,7 +153,7 @@ u32 rtl92s_phy_query_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
- 
- 	original_value = _rtl92s_phy_rf_serial_read(hw, rfpath, regaddr);
- 
--	bitshift = _rtl92s_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	readback_value = (original_value & bitmask) >> bitshift;
- 
- 	spin_unlock(&rtlpriv->locks.rf_lock);
-@@ -191,7 +184,7 @@ void rtl92s_phy_set_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
- 	if (bitmask != RFREG_OFFSET_MASK) {
- 		original_value = _rtl92s_phy_rf_serial_read(hw, rfpath,
- 							    regaddr);
--		bitshift = _rtl92s_phy_calculate_bit_shift(bitmask);
-+		bitshift = calculate_bit_shift(bitmask);
- 		data = ((original_value & (~bitmask)) | (data << bitshift));
- 	}
- 
+ 	list_for_each_entry(tr, &blktrans_majors, list)
+@@ -503,7 +503,7 @@ int register_mtd_blktrans(struct mtd_blktrans_ops *tr)
+ 	mutex_lock(&mtd_table_mutex);
+ 	list_add(&tr->list, &blktrans_majors);
+ 	mtd_for_each_device(mtd)
+-		if (mtd->type != MTD_ABSENT)
++		if (mtd->type != MTD_ABSENT && mtd->type != MTD_UBIVOLUME)
+ 			tr->add_mtd(tr, mtd);
+ 	mutex_unlock(&mtd_table_mutex);
+ 	return 0;
 -- 
 2.43.0
 
