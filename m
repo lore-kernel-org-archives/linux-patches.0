@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077C14E1D7;
-	Tue, 23 Jan 2024 00:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94F94E1D7;
+	Tue, 23 Jan 2024 00:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969954; cv=none; b=nvcROFbToIYmXVTahBdum+fBEwFzP2gfDW9axcdUhpnwHJVCtINI4H4OlzdoQ/LJYq/VLD9dPBh6mba6JLCf2qarFojM+hT2BfMa/UhCnMUF2Efn6uMhCypKEbVET8ht1UTysBWkcRCTYTkxfspIWkVSCH+/cxaTlnBb4w5lfk8=
+	t=1705969959; cv=none; b=X/rYlEI0aoAH9oN8BadH1E7YMQ1MDPLJZLKGodiAMqJZ9tqfb8ln52dpzdRrW1SZVQ1/pTWwnVBLDn8E0dHqjf+ase+nhRTLBpn5+Ex4rUR3DAjcUPEYHKUbMKhnR657xHdfU/poLqR/efp/9OM6fnMSyAfagTQIqU2U4YcyPbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969954; c=relaxed/simple;
-	bh=w0ON2+R4mKjZNUJ1bjBfdyMXOnjFuzrqVVkZ1XmeloQ=;
+	s=arc-20240116; t=1705969959; c=relaxed/simple;
+	bh=5PuCZmfsHZXa9m0FZKxsMFeJANAMnA99r/y+9wv/Xww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UzIVMxeLfFZCfNRN/eE6Wolwtiqrcc3bbjCpsTVJQFTx3yyBevutl41L5nf+muYiYb8rJGJrqc3VMNeWE296kga54VNU/va59FUs0F2CuSVzCpp5IZi+WQ02aliVlqIWd+7XO1gujj7gxkPH4isaQPxW5KtvXSJC7ieUmn4tDPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKXGIThn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z2vTHoxy4VIq5utAdgmcGIFHzQD/JJ/WwwmBrDsZ09Rzy4ho47xzzg2PsH/caF6/iuKqZZHpKpbDp/8pJRkQMQvngPaeyA7ckqNzfeZcV7gH7P+gPOtEqi2IOcsPed6VzmLME34Dy5cIAHufWEggmJBa4lZW1U6r1Bfl+s/ZR9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrE48R4S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKXGIThn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A952FC433F1;
-	Tue, 23 Jan 2024 00:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrE48R4S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA956C43390;
+	Tue, 23 Jan 2024 00:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969953;
-	bh=w0ON2+R4mKjZNUJ1bjBfdyMXOnjFuzrqVVkZ1XmeloQ=;
+	s=korg; t=1705969958;
+	bh=5PuCZmfsHZXa9m0FZKxsMFeJANAMnA99r/y+9wv/Xww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oKXGIThn/gxSup8KbVcyAHI/JdGSz7i/tNi2kknpu1pXXXiW9fiP7GjETvrqXwlvH
-	 ryWDKfQc65g45VQMpl9gb+WxEXJRRCknNKI6MXpeszdKAPdqiHQtwmyp/v9EmkcIKk
-	 29RSTkVBAayl1rgJeQCq+lKgjjxd119FoHkOV4O8=
+	b=rrE48R4Sd+9Ld8loUpyLSmq9F2dENwBR9ahNU3PYjvbH2EDdyw3djoJhfqU8PA+ym
+	 XukfEYisz027lD2nn9ZI6wBRhjMokxILGbTfbGd3ZFjKw6zs4WolU34AHGLaJGO0nV
+	 ghU0MGTuKRzW+pYI9wQIr+XdQIIAHOg9fqPSv1sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Elder <elder@linaro.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 538/641] bus: mhi: ep: Use slab allocator where applicable
-Date: Mon, 22 Jan 2024 15:57:22 -0800
-Message-ID: <20240122235834.964802182@linuxfoundation.org>
+Subject: [PATCH 6.7 539/641] bus: mhi: ep: Pass mhi_ep_buf_info struct to read/write APIs
+Date: Mon, 22 Jan 2024 15:57:23 -0800
+Message-ID: <20240122235834.998598752@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,242 +52,402 @@ Content-Transfer-Encoding: 8bit
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 62210a26cd4f8ad52683a71c0226dfe85de1144d ]
+[ Upstream commit b08ded2ef2e98768d5ee5f71da8fe768b1f7774b ]
 
-Use slab allocator for allocating the memory for objects used frequently
-and are of fixed size. This reduces the overheard associated with
-kmalloc().
+In the preparation of DMA async support, let's pass the parameters to
+read_from_host() and write_to_host() APIs using mhi_ep_buf_info structure.
 
-Suggested-by: Alex Elder <elder@linaro.org>
-Link: https://lore.kernel.org/r/20231018122812.47261-1-manivannan.sadhasivam@linaro.org
+No functional change.
+
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Stable-dep-of: 327ec5f70609 ("PCI: epf-mhi: Fix the DMA data direction of dma_unmap_single()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/ep/main.c | 66 +++++++++++++++++++++++++++++----------
- include/linux/mhi_ep.h    |  3 ++
- 2 files changed, 52 insertions(+), 17 deletions(-)
+ drivers/bus/mhi/ep/main.c                    | 23 +++----
+ drivers/bus/mhi/ep/ring.c                    | 41 ++++++------
+ drivers/pci/endpoint/functions/pci-epf-mhi.c | 66 +++++++++++---------
+ include/linux/mhi_ep.h                       | 16 ++++-
+ 4 files changed, 84 insertions(+), 62 deletions(-)
 
 diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index e2513f5f47a6..517279600645 100644
+index 517279600645..582d5c166a75 100644
 --- a/drivers/bus/mhi/ep/main.c
 +++ b/drivers/bus/mhi/ep/main.c
-@@ -74,7 +74,7 @@ static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl, struct m
- 	struct mhi_ring_element *event;
+@@ -324,10 +324,9 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
+ 	struct mhi_ep_chan *mhi_chan = &mhi_cntrl->mhi_chan[ring->ch_id];
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 	size_t tr_len, read_offset, write_offset;
++	struct mhi_ep_buf_info buf_info = {};
+ 	struct mhi_ring_element *el;
+ 	bool tr_done = false;
+-	void *write_addr;
+-	u64 read_addr;
+ 	u32 buf_left;
  	int ret;
  
--	event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
-+	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
- 	if (!event)
- 		return -ENOMEM;
+@@ -356,11 +355,13 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
  
-@@ -83,7 +83,7 @@ static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl, struct m
- 	event->dword[1] = MHI_TRE_EV_DWORD1(ring->ch_id, MHI_PKT_TYPE_TX_EVENT);
- 
- 	ret = mhi_ep_send_event(mhi_cntrl, ring->er_index, event, MHI_TRE_DATA_GET_BEI(tre));
--	kfree(event);
-+	kmem_cache_free(mhi_cntrl->ev_ring_el_cache, event);
- 
- 	return ret;
- }
-@@ -93,7 +93,7 @@ int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_stat
- 	struct mhi_ring_element *event;
- 	int ret;
- 
--	event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
-+	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
- 	if (!event)
- 		return -ENOMEM;
- 
-@@ -101,7 +101,7 @@ int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_stat
- 	event->dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_STATE_CHANGE_EVENT);
- 
- 	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
--	kfree(event);
-+	kmem_cache_free(mhi_cntrl->ev_ring_el_cache, event);
- 
- 	return ret;
- }
-@@ -111,7 +111,7 @@ int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ee_type exec_e
- 	struct mhi_ring_element *event;
- 	int ret;
- 
--	event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
-+	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
- 	if (!event)
- 		return -ENOMEM;
- 
-@@ -119,7 +119,7 @@ int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ee_type exec_e
- 	event->dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_EE_EVENT);
- 
- 	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
--	kfree(event);
-+	kmem_cache_free(mhi_cntrl->ev_ring_el_cache, event);
- 
- 	return ret;
- }
-@@ -130,7 +130,7 @@ static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_e
- 	struct mhi_ring_element *event;
- 	int ret;
- 
--	event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
-+	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
- 	if (!event)
- 		return -ENOMEM;
- 
-@@ -139,7 +139,7 @@ static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_e
- 	event->dword[1] = MHI_CC_EV_DWORD1(MHI_PKT_TYPE_CMD_COMPLETION_EVENT);
- 
- 	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
--	kfree(event);
-+	kmem_cache_free(mhi_cntrl->ev_ring_el_cache, event);
- 
- 	return ret;
- }
-@@ -451,7 +451,7 @@ static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring, struct mhi_ring_elem
- 		mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
- 	} else {
- 		/* UL channel */
--		result.buf_addr = kzalloc(len, GFP_KERNEL);
-+		result.buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL | GFP_DMA);
- 		if (!result.buf_addr)
- 			return -ENOMEM;
- 
-@@ -459,7 +459,7 @@ static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring, struct mhi_ring_elem
- 			ret = mhi_ep_read_channel(mhi_cntrl, ring, &result, len);
- 			if (ret < 0) {
- 				dev_err(&mhi_chan->mhi_dev->dev, "Failed to read channel\n");
--				kfree(result.buf_addr);
-+				kmem_cache_free(mhi_cntrl->tre_buf_cache, result.buf_addr);
- 				return ret;
- 			}
- 
-@@ -471,7 +471,7 @@ static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring, struct mhi_ring_elem
- 			/* Read until the ring becomes empty */
- 		} while (!mhi_ep_queue_is_empty(mhi_chan->mhi_dev, DMA_TO_DEVICE));
- 
--		kfree(result.buf_addr);
-+		kmem_cache_free(mhi_cntrl->tre_buf_cache, result.buf_addr);
- 	}
- 
- 	return 0;
-@@ -780,14 +780,14 @@ static void mhi_ep_ch_ring_worker(struct work_struct *work)
- 		if (ret) {
- 			dev_err(dev, "Error updating write offset for ring\n");
- 			mutex_unlock(&chan->lock);
--			kfree(itr);
-+			kmem_cache_free(mhi_cntrl->ring_item_cache, itr);
- 			continue;
- 		}
- 
- 		/* Sanity check to make sure there are elements in the ring */
- 		if (ring->rd_offset == ring->wr_offset) {
- 			mutex_unlock(&chan->lock);
--			kfree(itr);
-+			kmem_cache_free(mhi_cntrl->ring_item_cache, itr);
- 			continue;
- 		}
- 
-@@ -799,12 +799,12 @@ static void mhi_ep_ch_ring_worker(struct work_struct *work)
- 			dev_err(dev, "Error processing ring for channel (%u): %d\n",
- 				ring->ch_id, ret);
- 			mutex_unlock(&chan->lock);
--			kfree(itr);
-+			kmem_cache_free(mhi_cntrl->ring_item_cache, itr);
- 			continue;
- 		}
- 
- 		mutex_unlock(&chan->lock);
--		kfree(itr);
-+		kmem_cache_free(mhi_cntrl->ring_item_cache, itr);
- 	}
- }
- 
-@@ -860,7 +860,7 @@ static void mhi_ep_queue_channel_db(struct mhi_ep_cntrl *mhi_cntrl, unsigned lon
- 		u32 ch_id = ch_idx + i;
- 
- 		ring = &mhi_cntrl->mhi_chan[ch_id].ring;
--		item = kzalloc(sizeof(*item), GFP_ATOMIC);
-+		item = kmem_cache_zalloc(mhi_cntrl->ring_item_cache, GFP_ATOMIC);
- 		if (!item)
- 			return;
- 
-@@ -1407,6 +1407,29 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 		goto err_free_ch;
- 	}
- 
-+	mhi_cntrl->ev_ring_el_cache = kmem_cache_create("mhi_ep_event_ring_el",
-+							sizeof(struct mhi_ring_element), 0,
-+							SLAB_CACHE_DMA, NULL);
-+	if (!mhi_cntrl->ev_ring_el_cache) {
-+		ret = -ENOMEM;
-+		goto err_free_cmd;
-+	}
+ 		read_offset = mhi_chan->tre_size - mhi_chan->tre_bytes_left;
+ 		write_offset = len - buf_left;
+-		read_addr = mhi_chan->tre_loc + read_offset;
+-		write_addr = result->buf_addr + write_offset;
 +
-+	mhi_cntrl->tre_buf_cache = kmem_cache_create("mhi_ep_tre_buf", MHI_EP_DEFAULT_MTU, 0,
-+						      SLAB_CACHE_DMA, NULL);
-+	if (!mhi_cntrl->tre_buf_cache) {
-+		ret = -ENOMEM;
-+		goto err_destroy_ev_ring_el_cache;
-+	}
++		buf_info.host_addr = mhi_chan->tre_loc + read_offset;
++		buf_info.dev_addr = result->buf_addr + write_offset;
++		buf_info.size = tr_len;
+ 
+ 		dev_dbg(dev, "Reading %zd bytes from channel (%u)\n", tr_len, ring->ch_id);
+-		ret = mhi_cntrl->read_from_host(mhi_cntrl, read_addr, write_addr, tr_len);
++		ret = mhi_cntrl->read_from_host(mhi_cntrl, &buf_info);
+ 		if (ret < 0) {
+ 			dev_err(&mhi_chan->mhi_dev->dev, "Error reading from channel\n");
+ 			return ret;
+@@ -483,12 +484,11 @@ int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, struct sk_buff *skb)
+ 	struct mhi_ep_cntrl *mhi_cntrl = mhi_dev->mhi_cntrl;
+ 	struct mhi_ep_chan *mhi_chan = mhi_dev->dl_chan;
+ 	struct device *dev = &mhi_chan->mhi_dev->dev;
++	struct mhi_ep_buf_info buf_info = {};
+ 	struct mhi_ring_element *el;
+ 	u32 buf_left, read_offset;
+ 	struct mhi_ep_ring *ring;
+ 	enum mhi_ev_ccs code;
+-	void *read_addr;
+-	u64 write_addr;
+ 	size_t tr_len;
+ 	u32 tre_len;
+ 	int ret;
+@@ -517,11 +517,13 @@ int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, struct sk_buff *skb)
+ 
+ 		tr_len = min(buf_left, tre_len);
+ 		read_offset = skb->len - buf_left;
+-		read_addr = skb->data + read_offset;
+-		write_addr = MHI_TRE_DATA_GET_PTR(el);
 +
-+	mhi_cntrl->ring_item_cache = kmem_cache_create("mhi_ep_ring_item",
-+							sizeof(struct mhi_ep_ring_item), 0,
-+							0, NULL);
-+	if (!mhi_cntrl->ev_ring_el_cache) {
-+		ret = -ENOMEM;
-+		goto err_destroy_tre_buf_cache;
-+	}
-+
++		buf_info.dev_addr = skb->data + read_offset;
++		buf_info.host_addr = MHI_TRE_DATA_GET_PTR(el);
++		buf_info.size = tr_len;
+ 
+ 		dev_dbg(dev, "Writing %zd bytes to channel (%u)\n", tr_len, ring->ch_id);
+-		ret = mhi_cntrl->write_to_host(mhi_cntrl, read_addr, write_addr, tr_len);
++		ret = mhi_cntrl->write_to_host(mhi_cntrl, &buf_info);
+ 		if (ret < 0) {
+ 			dev_err(dev, "Error writing to the channel\n");
+ 			goto err_exit;
+@@ -1429,7 +1431,6 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+ 		ret = -ENOMEM;
+ 		goto err_destroy_tre_buf_cache;
+ 	}
+-
  	INIT_WORK(&mhi_cntrl->state_work, mhi_ep_state_worker);
  	INIT_WORK(&mhi_cntrl->reset_work, mhi_ep_reset_worker);
  	INIT_WORK(&mhi_cntrl->cmd_ring_work, mhi_ep_cmd_ring_worker);
-@@ -1415,7 +1438,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 	mhi_cntrl->wq = alloc_workqueue("mhi_ep_wq", 0, 0);
- 	if (!mhi_cntrl->wq) {
- 		ret = -ENOMEM;
--		goto err_free_cmd;
-+		goto err_destroy_ring_item_cache;
+diff --git a/drivers/bus/mhi/ep/ring.c b/drivers/bus/mhi/ep/ring.c
+index 115518ec76a4..c673d7200b3e 100644
+--- a/drivers/bus/mhi/ep/ring.c
++++ b/drivers/bus/mhi/ep/ring.c
+@@ -30,7 +30,8 @@ static int __mhi_ep_cache_ring(struct mhi_ep_ring *ring, size_t end)
+ {
+ 	struct mhi_ep_cntrl *mhi_cntrl = ring->mhi_cntrl;
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+-	size_t start, copy_size;
++	struct mhi_ep_buf_info buf_info = {};
++	size_t start;
+ 	int ret;
+ 
+ 	/* Don't proceed in the case of event ring. This happens during mhi_ep_ring_start(). */
+@@ -43,30 +44,34 @@ static int __mhi_ep_cache_ring(struct mhi_ep_ring *ring, size_t end)
+ 
+ 	start = ring->wr_offset;
+ 	if (start < end) {
+-		copy_size = (end - start) * sizeof(struct mhi_ring_element);
+-		ret = mhi_cntrl->read_from_host(mhi_cntrl, ring->rbase +
+-						(start * sizeof(struct mhi_ring_element)),
+-						&ring->ring_cache[start], copy_size);
++		buf_info.size = (end - start) * sizeof(struct mhi_ring_element);
++		buf_info.host_addr = ring->rbase + (start * sizeof(struct mhi_ring_element));
++		buf_info.dev_addr = &ring->ring_cache[start];
++
++		ret = mhi_cntrl->read_from_host(mhi_cntrl, &buf_info);
+ 		if (ret < 0)
+ 			return ret;
+ 	} else {
+-		copy_size = (ring->ring_size - start) * sizeof(struct mhi_ring_element);
+-		ret = mhi_cntrl->read_from_host(mhi_cntrl, ring->rbase +
+-						(start * sizeof(struct mhi_ring_element)),
+-						&ring->ring_cache[start], copy_size);
++		buf_info.size = (ring->ring_size - start) * sizeof(struct mhi_ring_element);
++		buf_info.host_addr = ring->rbase + (start * sizeof(struct mhi_ring_element));
++		buf_info.dev_addr = &ring->ring_cache[start];
++
++		ret = mhi_cntrl->read_from_host(mhi_cntrl, &buf_info);
+ 		if (ret < 0)
+ 			return ret;
+ 
+ 		if (end) {
+-			ret = mhi_cntrl->read_from_host(mhi_cntrl, ring->rbase,
+-							&ring->ring_cache[0],
+-							end * sizeof(struct mhi_ring_element));
++			buf_info.host_addr = ring->rbase;
++			buf_info.dev_addr = &ring->ring_cache[0];
++			buf_info.size = end * sizeof(struct mhi_ring_element);
++
++			ret = mhi_cntrl->read_from_host(mhi_cntrl, &buf_info);
+ 			if (ret < 0)
+ 				return ret;
+ 		}
  	}
  
- 	INIT_LIST_HEAD(&mhi_cntrl->st_transition_list);
-@@ -1474,6 +1497,12 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 	ida_free(&mhi_ep_cntrl_ida, mhi_cntrl->index);
- err_destroy_wq:
- 	destroy_workqueue(mhi_cntrl->wq);
-+err_destroy_ring_item_cache:
-+	kmem_cache_destroy(mhi_cntrl->ring_item_cache);
-+err_destroy_ev_ring_el_cache:
-+	kmem_cache_destroy(mhi_cntrl->ev_ring_el_cache);
-+err_destroy_tre_buf_cache:
-+	kmem_cache_destroy(mhi_cntrl->tre_buf_cache);
- err_free_cmd:
- 	kfree(mhi_cntrl->mhi_cmd);
- err_free_ch:
-@@ -1495,6 +1524,9 @@ void mhi_ep_unregister_controller(struct mhi_ep_cntrl *mhi_cntrl)
+-	dev_dbg(dev, "Cached ring: start %zu end %zu size %zu\n", start, end, copy_size);
++	dev_dbg(dev, "Cached ring: start %zu end %zu size %zu\n", start, end, buf_info.size);
  
- 	free_irq(mhi_cntrl->irq, mhi_cntrl);
+ 	return 0;
+ }
+@@ -102,6 +107,7 @@ int mhi_ep_ring_add_element(struct mhi_ep_ring *ring, struct mhi_ring_element *e
+ {
+ 	struct mhi_ep_cntrl *mhi_cntrl = ring->mhi_cntrl;
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
++	struct mhi_ep_buf_info buf_info = {};
+ 	size_t old_offset = 0;
+ 	u32 num_free_elem;
+ 	__le64 rp;
+@@ -133,12 +139,11 @@ int mhi_ep_ring_add_element(struct mhi_ep_ring *ring, struct mhi_ring_element *e
+ 	rp = cpu_to_le64(ring->rd_offset * sizeof(*el) + ring->rbase);
+ 	memcpy_toio((void __iomem *) &ring->ring_ctx->generic.rp, &rp, sizeof(u64));
  
-+	kmem_cache_destroy(mhi_cntrl->tre_buf_cache);
-+	kmem_cache_destroy(mhi_cntrl->ev_ring_el_cache);
-+	kmem_cache_destroy(mhi_cntrl->ring_item_cache);
- 	kfree(mhi_cntrl->mhi_cmd);
- 	kfree(mhi_cntrl->mhi_chan);
+-	ret = mhi_cntrl->write_to_host(mhi_cntrl, el, ring->rbase + (old_offset * sizeof(*el)),
+-				       sizeof(*el));
+-	if (ret < 0)
+-		return ret;
++	buf_info.host_addr = ring->rbase + (old_offset * sizeof(*el));
++	buf_info.dev_addr = el;
++	buf_info.size = sizeof(*el);
+ 
+-	return 0;
++	return mhi_cntrl->write_to_host(mhi_cntrl, &buf_info);
+ }
+ 
+ void mhi_ep_ring_init(struct mhi_ep_ring *ring, enum mhi_ep_ring_type type, u32 id)
+diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+index b7b9d3e21f97..ec5f4a38178b 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
++++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+@@ -209,28 +209,28 @@ static void pci_epf_mhi_raise_irq(struct mhi_ep_cntrl *mhi_cntrl, u32 vector)
+ 			  vector + 1);
+ }
+ 
+-static int pci_epf_mhi_iatu_read(struct mhi_ep_cntrl *mhi_cntrl, u64 from,
+-				 void *to, size_t size)
++static int pci_epf_mhi_iatu_read(struct mhi_ep_cntrl *mhi_cntrl,
++				 struct mhi_ep_buf_info *buf_info)
+ {
+ 	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
+-	size_t offset = get_align_offset(epf_mhi, from);
++	size_t offset = get_align_offset(epf_mhi, buf_info->host_addr);
+ 	void __iomem *tre_buf;
+ 	phys_addr_t tre_phys;
+ 	int ret;
+ 
+ 	mutex_lock(&epf_mhi->lock);
+ 
+-	ret = __pci_epf_mhi_alloc_map(mhi_cntrl, from, &tre_phys, &tre_buf,
+-				      offset, size);
++	ret = __pci_epf_mhi_alloc_map(mhi_cntrl, buf_info->host_addr, &tre_phys,
++				      &tre_buf, offset, buf_info->size);
+ 	if (ret) {
+ 		mutex_unlock(&epf_mhi->lock);
+ 		return ret;
+ 	}
+ 
+-	memcpy_fromio(to, tre_buf, size);
++	memcpy_fromio(buf_info->dev_addr, tre_buf, buf_info->size);
+ 
+-	__pci_epf_mhi_unmap_free(mhi_cntrl, from, tre_phys, tre_buf, offset,
+-				 size);
++	__pci_epf_mhi_unmap_free(mhi_cntrl, buf_info->host_addr, tre_phys,
++				 tre_buf, offset, buf_info->size);
+ 
+ 	mutex_unlock(&epf_mhi->lock);
+ 
+@@ -238,27 +238,27 @@ static int pci_epf_mhi_iatu_read(struct mhi_ep_cntrl *mhi_cntrl, u64 from,
+ }
+ 
+ static int pci_epf_mhi_iatu_write(struct mhi_ep_cntrl *mhi_cntrl,
+-				  void *from, u64 to, size_t size)
++				  struct mhi_ep_buf_info *buf_info)
+ {
+ 	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
+-	size_t offset = get_align_offset(epf_mhi, to);
++	size_t offset = get_align_offset(epf_mhi, buf_info->host_addr);
+ 	void __iomem *tre_buf;
+ 	phys_addr_t tre_phys;
+ 	int ret;
+ 
+ 	mutex_lock(&epf_mhi->lock);
+ 
+-	ret = __pci_epf_mhi_alloc_map(mhi_cntrl, to, &tre_phys, &tre_buf,
+-				      offset, size);
++	ret = __pci_epf_mhi_alloc_map(mhi_cntrl, buf_info->host_addr, &tre_phys,
++				      &tre_buf, offset, buf_info->size);
+ 	if (ret) {
+ 		mutex_unlock(&epf_mhi->lock);
+ 		return ret;
+ 	}
+ 
+-	memcpy_toio(tre_buf, from, size);
++	memcpy_toio(tre_buf, buf_info->dev_addr, buf_info->size);
+ 
+-	__pci_epf_mhi_unmap_free(mhi_cntrl, to, tre_phys, tre_buf, offset,
+-				 size);
++	__pci_epf_mhi_unmap_free(mhi_cntrl, buf_info->host_addr, tre_phys,
++				 tre_buf, offset, buf_info->size);
+ 
+ 	mutex_unlock(&epf_mhi->lock);
+ 
+@@ -270,8 +270,8 @@ static void pci_epf_mhi_dma_callback(void *param)
+ 	complete(param);
+ }
+ 
+-static int pci_epf_mhi_edma_read(struct mhi_ep_cntrl *mhi_cntrl, u64 from,
+-				 void *to, size_t size)
++static int pci_epf_mhi_edma_read(struct mhi_ep_cntrl *mhi_cntrl,
++				 struct mhi_ep_buf_info *buf_info)
+ {
+ 	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
+ 	struct device *dma_dev = epf_mhi->epf->epc->dev.parent;
+@@ -284,13 +284,13 @@ static int pci_epf_mhi_edma_read(struct mhi_ep_cntrl *mhi_cntrl, u64 from,
+ 	dma_addr_t dst_addr;
+ 	int ret;
+ 
+-	if (size < SZ_4K)
+-		return pci_epf_mhi_iatu_read(mhi_cntrl, from, to, size);
++	if (buf_info->size < SZ_4K)
++		return pci_epf_mhi_iatu_read(mhi_cntrl, buf_info);
+ 
+ 	mutex_lock(&epf_mhi->lock);
+ 
+ 	config.direction = DMA_DEV_TO_MEM;
+-	config.src_addr = from;
++	config.src_addr = buf_info->host_addr;
+ 
+ 	ret = dmaengine_slave_config(chan, &config);
+ 	if (ret) {
+@@ -298,14 +298,16 @@ static int pci_epf_mhi_edma_read(struct mhi_ep_cntrl *mhi_cntrl, u64 from,
+ 		goto err_unlock;
+ 	}
+ 
+-	dst_addr = dma_map_single(dma_dev, to, size, DMA_FROM_DEVICE);
++	dst_addr = dma_map_single(dma_dev, buf_info->dev_addr, buf_info->size,
++				  DMA_FROM_DEVICE);
+ 	ret = dma_mapping_error(dma_dev, dst_addr);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to map remote memory\n");
+ 		goto err_unlock;
+ 	}
+ 
+-	desc = dmaengine_prep_slave_single(chan, dst_addr, size, DMA_DEV_TO_MEM,
++	desc = dmaengine_prep_slave_single(chan, dst_addr, buf_info->size,
++					   DMA_DEV_TO_MEM,
+ 					   DMA_CTRL_ACK | DMA_PREP_INTERRUPT);
+ 	if (!desc) {
+ 		dev_err(dev, "Failed to prepare DMA\n");
+@@ -332,15 +334,15 @@ static int pci_epf_mhi_edma_read(struct mhi_ep_cntrl *mhi_cntrl, u64 from,
+ 	}
+ 
+ err_unmap:
+-	dma_unmap_single(dma_dev, dst_addr, size, DMA_FROM_DEVICE);
++	dma_unmap_single(dma_dev, dst_addr, buf_info->size, DMA_FROM_DEVICE);
+ err_unlock:
+ 	mutex_unlock(&epf_mhi->lock);
+ 
+ 	return ret;
+ }
+ 
+-static int pci_epf_mhi_edma_write(struct mhi_ep_cntrl *mhi_cntrl, void *from,
+-				  u64 to, size_t size)
++static int pci_epf_mhi_edma_write(struct mhi_ep_cntrl *mhi_cntrl,
++				  struct mhi_ep_buf_info *buf_info)
+ {
+ 	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
+ 	struct device *dma_dev = epf_mhi->epf->epc->dev.parent;
+@@ -353,13 +355,13 @@ static int pci_epf_mhi_edma_write(struct mhi_ep_cntrl *mhi_cntrl, void *from,
+ 	dma_addr_t src_addr;
+ 	int ret;
+ 
+-	if (size < SZ_4K)
+-		return pci_epf_mhi_iatu_write(mhi_cntrl, from, to, size);
++	if (buf_info->size < SZ_4K)
++		return pci_epf_mhi_iatu_write(mhi_cntrl, buf_info);
+ 
+ 	mutex_lock(&epf_mhi->lock);
+ 
+ 	config.direction = DMA_MEM_TO_DEV;
+-	config.dst_addr = to;
++	config.dst_addr = buf_info->host_addr;
+ 
+ 	ret = dmaengine_slave_config(chan, &config);
+ 	if (ret) {
+@@ -367,14 +369,16 @@ static int pci_epf_mhi_edma_write(struct mhi_ep_cntrl *mhi_cntrl, void *from,
+ 		goto err_unlock;
+ 	}
+ 
+-	src_addr = dma_map_single(dma_dev, from, size, DMA_TO_DEVICE);
++	src_addr = dma_map_single(dma_dev, buf_info->dev_addr, buf_info->size,
++				  DMA_TO_DEVICE);
+ 	ret = dma_mapping_error(dma_dev, src_addr);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to map remote memory\n");
+ 		goto err_unlock;
+ 	}
+ 
+-	desc = dmaengine_prep_slave_single(chan, src_addr, size, DMA_MEM_TO_DEV,
++	desc = dmaengine_prep_slave_single(chan, src_addr, buf_info->size,
++					   DMA_MEM_TO_DEV,
+ 					   DMA_CTRL_ACK | DMA_PREP_INTERRUPT);
+ 	if (!desc) {
+ 		dev_err(dev, "Failed to prepare DMA\n");
+@@ -401,7 +405,7 @@ static int pci_epf_mhi_edma_write(struct mhi_ep_cntrl *mhi_cntrl, void *from,
+ 	}
+ 
+ err_unmap:
+-	dma_unmap_single(dma_dev, src_addr, size, DMA_FROM_DEVICE);
++	dma_unmap_single(dma_dev, src_addr, buf_info->size, DMA_FROM_DEVICE);
+ err_unlock:
+ 	mutex_unlock(&epf_mhi->lock);
  
 diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-index f198a8ac7ee7..ce85d42b685d 100644
+index ce85d42b685d..96f3a133540d 100644
 --- a/include/linux/mhi_ep.h
 +++ b/include/linux/mhi_ep.h
-@@ -128,6 +128,9 @@ struct mhi_ep_cntrl {
- 	struct work_struct reset_work;
- 	struct work_struct cmd_ring_work;
- 	struct work_struct ch_ring_work;
-+	struct kmem_cache *ring_item_cache;
-+	struct kmem_cache *ev_ring_el_cache;
-+	struct kmem_cache *tre_buf_cache;
+@@ -49,6 +49,18 @@ struct mhi_ep_db_info {
+ 	u32 status;
+ };
  
- 	void (*raise_irq)(struct mhi_ep_cntrl *mhi_cntrl, u32 vector);
- 	int (*alloc_map)(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr, phys_addr_t *phys_ptr,
++/**
++ * struct mhi_ep_buf_info - MHI Endpoint transfer buffer info
++ * @dev_addr: Address of the buffer in endpoint
++ * @host_addr: Address of the bufffer in host
++ * @size: Size of the buffer
++ */
++struct mhi_ep_buf_info {
++	void *dev_addr;
++	u64 host_addr;
++	size_t size;
++};
++
+ /**
+  * struct mhi_ep_cntrl - MHI Endpoint controller structure
+  * @cntrl_dev: Pointer to the struct device of physical bus acting as the MHI
+@@ -137,8 +149,8 @@ struct mhi_ep_cntrl {
+ 			 void __iomem **virt, size_t size);
+ 	void (*unmap_free)(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr, phys_addr_t phys,
+ 			   void __iomem *virt, size_t size);
+-	int (*read_from_host)(struct mhi_ep_cntrl *mhi_cntrl, u64 from, void *to, size_t size);
+-	int (*write_to_host)(struct mhi_ep_cntrl *mhi_cntrl, void *from, u64 to, size_t size);
++	int (*read_from_host)(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_buf_info *buf_info);
++	int (*write_to_host)(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_buf_info *buf_info);
+ 
+ 	enum mhi_state mhi_state;
+ 
 -- 
 2.43.0
 
