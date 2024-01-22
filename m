@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C5E12BF3D;
-	Tue, 23 Jan 2024 00:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB6412BF3C;
+	Tue, 23 Jan 2024 00:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968920; cv=none; b=XaofsEaqi/zBo8zo3VqtHsIVCrd+H3Fl/iGPvl2GO+QMafvta36S3OtLeoB1WJTIIflwdv5ce+yd316qrJrKgYzFR69aAT4y30EX1vXxM+aoOwbEQ1PY7fmj8vV29g+MWc2ivDHmqzCXc0lI4foh5M3x728qYs5zGDK0EXtBMF0=
+	t=1705968923; cv=none; b=V6IpBzzWgd2mPJbEVGBODLH6DUQUi9/FZVqE3SU8De9CHoNWALEWH/8FpmiGBqfrIEP7b/OyXfVzRP1JmzFjH3DWNoFXNGBDQSmU2nE0LwNXIKXoJAKsuAyT4UnFIO41CZUU5EtFwdkx50yGtl5VpvCTIRPLxr+KMxQU5zh4qBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968920; c=relaxed/simple;
-	bh=3Cfh775jY+UmIQEurMoezYCeWhf/AHgQIgjbVXBCIa8=;
+	s=arc-20240116; t=1705968923; c=relaxed/simple;
+	bh=JKwamMGh5LzRdCjg2s6Fq4geAVQZmkFryJvnVvsIRWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EaoGWIuiVHSKBBH3mUl51LdZkdzBnkt56JDKakkIGDYkuG1s7+fhDtTSQJNe6UClqG+IalESUu4bdHro6//b+XvLkdjwLEEJk5d/8BbhVU91uD++lwhXfts+Dcw+YUXwYdDoUdJ9H/BIXlUn1ngg5//0tAaWXYcnNFugVBwZJdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTUG4WMz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NePUi2y8D9ZHyyNngs5UEW5oh7OaaXG+LwYImpe/+OWYV9PAsIwsPrpSFTmFNhGFwdwHH6VmLzgmzQgdAhCs1VLS4nrk41uVdE7WP4oN1Klrfw3qCwPe5RRvIOw2zcxFIU3YVHZV8f3pYha9ry6TxxjxwBe4nQ4X4gdDuIVuTBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuRaMeHz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTUG4WMz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4C3C433C7;
-	Tue, 23 Jan 2024 00:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuRaMeHz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B8CC433C7;
+	Tue, 23 Jan 2024 00:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968920;
-	bh=3Cfh775jY+UmIQEurMoezYCeWhf/AHgQIgjbVXBCIa8=;
+	s=korg; t=1705968923;
+	bh=JKwamMGh5LzRdCjg2s6Fq4geAVQZmkFryJvnVvsIRWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NTUG4WMz4Q4/47Uu9EPUjY/tqlAwTOVMubdZTWIeZXX2An5OW1pXYvCddIzOOHQec
-	 MWYcWiAxDQaIkLBJAWj39YxJjQdC9pc++sMn1k5AvKFV3s9XMhHhfBp+GH3RkkzoDj
-	 no5yRJ7swXpb5ZDL5Paj/BluO9J7yVUH7kU/dRCo=
+	b=uuRaMeHzHELaHd6mxoBx+nil047t/7AIyeQHInOqHixZ2qh99ydrrQqcFQrtj/vpp
+	 UDjWIrxD7InHfc5Zs7K4vdNVf12VeobK6JZw+3sOxoEvAmrCXn++J5b3MoVT1E2m3g
+	 ifwVSXGORknNwtHsjUQaJfP/Url0OTJtvTu+/FEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 099/194] wifi: rtlwifi: rtl8192ce: using calculate_bit_shift()
-Date: Mon, 22 Jan 2024 15:57:09 -0800
-Message-ID: <20240122235723.486151757@linuxfoundation.org>
+Subject: [PATCH 5.4 068/194] crypto: sahara - fix error handling in sahara_hw_descriptor_create()
+Date: Mon, 22 Jan 2024 15:56:38 -0800
+Message-ID: <20240122235722.125411525@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,66 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit 3d03e8231031bcc65a48cd88ef9c71b6524ce70b ]
+[ Upstream commit ee6e6f0a7f5b39d50a5ef5fcc006f4f693db18a7 ]
 
-Using calculate_bit_shift() to replace _rtl92c_phy_calculate_bit_shift().
-And fix the undefined bitwise shift behavior problem.
+Do not call dma_unmap_sg() for scatterlists that were not mapped
+successfully.
 
-Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231219065739.1895666-7-suhui@nfschina.com
+Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c | 6 +++---
- drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h | 1 -
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ drivers/crypto/sahara.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c
-index f6574f31fa3b..e17d97550dbd 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.c
-@@ -39,7 +39,7 @@ u32 rtl92c_phy_query_rf_reg(struct ieee80211_hw *hw,
- 							       rfpath, regaddr);
+diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
+index c62f9ce6adc0..e505c01b7a05 100644
+--- a/drivers/crypto/sahara.c
++++ b/drivers/crypto/sahara.c
+@@ -481,13 +481,14 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
+ 			 DMA_TO_DEVICE);
+ 	if (ret != dev->nb_in_sg) {
+ 		dev_err(dev->device, "couldn't map in sg\n");
+-		goto unmap_in;
++		return -EINVAL;
+ 	}
++
+ 	ret = dma_map_sg(dev->device, dev->out_sg, dev->nb_out_sg,
+ 			 DMA_FROM_DEVICE);
+ 	if (ret != dev->nb_out_sg) {
+ 		dev_err(dev->device, "couldn't map out sg\n");
+-		goto unmap_out;
++		goto unmap_in;
  	}
  
--	bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	readback_value = (original_value & bitmask) >> bitshift;
+ 	/* Create input links */
+@@ -535,9 +536,6 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
  
- 	spin_unlock(&rtlpriv->locks.rf_lock);
-@@ -110,7 +110,7 @@ void rtl92ce_phy_set_rf_reg(struct ieee80211_hw *hw,
- 			original_value = _rtl92c_phy_rf_serial_read(hw,
- 								    rfpath,
- 								    regaddr);
--			bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data =
- 			    ((original_value & (~bitmask)) |
- 			     (data << bitshift));
-@@ -122,7 +122,7 @@ void rtl92ce_phy_set_rf_reg(struct ieee80211_hw *hw,
- 			original_value = _rtl92c_phy_fw_rf_serial_read(hw,
- 								       rfpath,
- 								       regaddr);
--			bitshift = _rtl92c_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data =
- 			    ((original_value & (~bitmask)) |
- 			     (data << bitshift));
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h b/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h
-index 7582a162bd11..c7a0d4c776f0 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192ce/phy.h
-@@ -94,7 +94,6 @@ u32 _rtl92c_phy_rf_serial_read(struct ieee80211_hw *hw, enum radio_path rfpath,
- 			       u32 offset);
- u32 _rtl92c_phy_fw_rf_serial_read(struct ieee80211_hw *hw,
- 				  enum radio_path rfpath, u32 offset);
--u32 _rtl92c_phy_calculate_bit_shift(u32 bitmask);
- void _rtl92c_phy_rf_serial_write(struct ieee80211_hw *hw,
- 				 enum radio_path rfpath, u32 offset, u32 data);
- void _rtl92c_phy_fw_rf_serial_write(struct ieee80211_hw *hw,
+ 	return 0;
+ 
+-unmap_out:
+-	dma_unmap_sg(dev->device, dev->out_sg, dev->nb_out_sg,
+-		DMA_FROM_DEVICE);
+ unmap_in:
+ 	dma_unmap_sg(dev->device, dev->in_sg, dev->nb_in_sg,
+ 		DMA_TO_DEVICE);
 -- 
 2.43.0
 
