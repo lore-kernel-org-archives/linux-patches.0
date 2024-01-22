@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E449A60BAC;
-	Tue, 23 Jan 2024 00:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D6860EC7;
+	Tue, 23 Jan 2024 00:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970750; cv=none; b=q9Rf7Ggz2CqM5DyfflceJQv8uGlH9Mfy963zq7kID8mqDdFHT7GCMqAPJoLnqk9dWR7rgT1ieZVuL7WAgGVmdV665ztY8o2GAIPI+tFjXgS3XS/uqQYj89za5zhWTBL/Y2AjqqLLfLMVAgo3QmMshiZLXeLKG7Xt76Bhw7iZtg0=
+	t=1705970752; cv=none; b=C2etZ/VKQL7b6szRB/b2uhfjwsr7cSMzTBlxKR1S3su4Jm9ro/SFCmaK5z8rF3zsDmkL+xO9H265nt/+x0hEj4jeygunnNtBSQl14/HBbxBVT1BrBAPVGFlSchSU2exiL9A7npbPeW6KHn5wnCmpgVhyGZGX4ta001lTriuqQaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970750; c=relaxed/simple;
-	bh=iV57wsX90Zc6WcBB5+cOfWADT6+OszjirUCkxWoPeX0=;
+	s=arc-20240116; t=1705970752; c=relaxed/simple;
+	bh=f0gexUZLGEersWFHd/9GD+McCt0b1Ul1LYzbdCYJ24c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QjNUhL6ZaeOVTCKMMG0NXLjkZIRQgtUrvTw1XaB4VrAzFkZU1HYyQfuEuY9EwIt+V2woejpGnmv8JtHDwxtVgPq4T2a5QHzkUcLu6mKgnQCNq5IxlL1QYr8G+0u7VA9E8W1HqRfs2VKWdVGslt8rgLiMlxJFPK5twOKSzI+XbQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9tQGdAS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SJhhgeoXjpMz/4AtNUR2tRbis2yXPVChSnL3c7uGYWge/LeCY3xWaa8hjPNxK9ABBX5Af9bvC/pyR2Bu7vMgY8ueUTdwtcGrxvAmS665jR54DFmS5DkczZmEahnpjqgOVwAo/I8qNBm39aYI0bVUIxxWhVfBUUWIKeylYe22BME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAtUTNTY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9tQGdAS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DCF5C433F1;
-	Tue, 23 Jan 2024 00:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAtUTNTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC756C433F1;
+	Tue, 23 Jan 2024 00:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970749;
-	bh=iV57wsX90Zc6WcBB5+cOfWADT6+OszjirUCkxWoPeX0=;
+	s=korg; t=1705970752;
+	bh=f0gexUZLGEersWFHd/9GD+McCt0b1Ul1LYzbdCYJ24c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A9tQGdASyl//PSRl9U+bLjE125BKZ0JDELfu7EAb63sAJ42P5ZKdAIDCOPWiNF8Lm
-	 VQ1erW67MDQSsyG9xCMyTVXJLR4+Cp+7KOM/HlmwTXtm/yOc1OQWSGLh9G9p/YpqAV
-	 kCqON+MdM660KxXRq/60InfvzIA3HH53rwqEug7k=
+	b=AAtUTNTYioGIJ91DfPD1d94MTsOJPjvJGnOQWx+6HHdrwnF4DCqnlGW9zQ8iOq4xd
+	 MACX3YcXVsekmBBc0FTPVEdf/sUMZYakEa1Pmen1QWv4MkqfCzEVLY4bU8g2vao+Pv
+	 wszULzF+9+0AOQZtrgIgiOUz9ou0zVIcJ7WBIwUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Kamil Duljas <kamil.duljas@gmail.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 103/417] arm64: dts: qcom: sc7280: Fix up GPU SIDs
-Date: Mon, 22 Jan 2024 15:54:31 -0800
-Message-ID: <20240122235755.263415878@linuxfoundation.org>
+Subject: [PATCH 5.10 011/286] ASoC: Intel: Skylake: mem leak in skl register function
+Date: Mon, 22 Jan 2024 15:55:17 -0800
+Message-ID: <20240122235732.449596600@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,48 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Kamil Duljas <kamil.duljas@gmail.com>
 
-[ Upstream commit 94085049fdad7a36fe14dd55e72e712fe55d6bca ]
+[ Upstream commit f8ba14b780273fd290ddf7ee0d7d7decb44cc365 ]
 
-GPU_SMMU SID 1 is meant for Adreno LPAC (Low Priority Async Compute).
-On platforms that support it (in firmware), it is necessary to
-describe that link, or Adreno register access will hang the board.
+skl_platform_register() uses krealloc. When krealloc is fail,
+then previous memory is not freed. The leak is also when soc
+component registration failed.
 
-The current settings are functionally identical, *but* due to what is
-likely hardcoded security policies, the secure firmware rejects them,
-resulting in the board hanging. To avoid that, alter the settings such
-that SID 0 and 1 are described separately.
-
-Fixes: 96c471970b7b ("arm64: dts: qcom: sc7280: Add gpu support")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230926-topic-a643-v2-2-06fa3d899c0a@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Kamil Duljas <kamil.duljas@gmail.com>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20231116224112.2209-2-kamil.duljas@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/intel/skylake/skl-pcm.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index b1016ccdf032..30e18ce54921 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2533,7 +2533,8 @@ gpu: gpu@3d00000 {
- 				    "cx_mem",
- 				    "cx_dbgc";
- 			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
--			iommus = <&adreno_smmu 0 0x401>;
-+			iommus = <&adreno_smmu 0 0x400>,
-+				 <&adreno_smmu 1 0x400>;
- 			operating-points-v2 = <&gpu_opp_table>;
- 			qcom,gmu = <&gmu>;
- 			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
+diff --git a/sound/soc/intel/skylake/skl-pcm.c b/sound/soc/intel/skylake/skl-pcm.c
+index c7e76111f68b..935c871abdaa 100644
+--- a/sound/soc/intel/skylake/skl-pcm.c
++++ b/sound/soc/intel/skylake/skl-pcm.c
+@@ -1477,6 +1477,7 @@ int skl_platform_register(struct device *dev)
+ 		dais = krealloc(skl->dais, sizeof(skl_fe_dai) +
+ 				sizeof(skl_platform_dai), GFP_KERNEL);
+ 		if (!dais) {
++			kfree(skl->dais);
+ 			ret = -ENOMEM;
+ 			goto err;
+ 		}
+@@ -1489,8 +1490,10 @@ int skl_platform_register(struct device *dev)
+ 
+ 	ret = devm_snd_soc_register_component(dev, &skl_component,
+ 					 skl->dais, num_dais);
+-	if (ret)
++	if (ret) {
++		kfree(skl->dais);
+ 		dev_err(dev, "soc component registration failed %d\n", ret);
++	}
+ err:
+ 	return ret;
+ }
 -- 
 2.43.0
 
