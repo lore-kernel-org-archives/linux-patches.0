@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0698612F5A7;
-	Tue, 23 Jan 2024 00:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CBD12F5A7;
+	Tue, 23 Jan 2024 00:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969018; cv=none; b=IyoTe76FNLZlvxIPcfX2m8PPSE5l7laSY710l4I7YMnFhTsZqBWBSlFbWQxYcs0caxtbzWf1LKmzp5DMWVdUUOR0qbSqsc9VlNYGLfmo77yzWVPSXDQ3ppPVP5H8dZ7VWKp4cF8cNbHkfs3F/vvi9GZTwl188UgZyBaRau4VGnM=
+	t=1705969019; cv=none; b=O6kCZ3O5dFActkFV2eohyscN4uxNoi2yg7JqT91+IJzJHh/9qc1gHQPjYNbiMWbD4Iu065bZHKepKpoG+aUNbcQebswdMYXTPJX7CizF1mlRrmcV1x3yIekr6vvGhYKLAPw+V1CBHb62Ru9PThmYJoQzfCYt653bUve2YwkFeKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969018; c=relaxed/simple;
-	bh=BVn12pJa/tLgogceAFesw0LRy4+elAnkqJ6ix4XFeJA=;
+	s=arc-20240116; t=1705969019; c=relaxed/simple;
+	bh=L68J52t/c7OopDjKsEsLdEkxPRccGmM5s4YUkg2ez+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FOwzPlg8CToonTHt32kiLUtfds7R73vVETcmsc66t8vJIz19jWXem5dsWSmCnJwJx2pLwEf/HI4kO8eL51y/0/MgFxVJQTMOUGQM27FssAcIU0Oq1qgGUQWUSHQVVLp3crxyxN5bKY8NcfsEU+Fv1f5mXMwBJL7uXBOgR8AaoS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8hi3Vl8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vGDe6m2/z02DFnjZwqrjwH1uu5KfalpW+5B/ReJG0VAZ6f/5AqJYZcuJlTWCPo3F4hmTj/7tD2QLYD3Koi+t3LPEdkji6NoeOquaBMymExz1CLEt/kynCs55V/7FBSnCK+Y8KWjpagrV8C2PByntq3o2a3ETNJAVRAH676ssfiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcWFUHMH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8hi3Vl8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB15C433F1;
-	Tue, 23 Jan 2024 00:16:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcWFUHMH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46BDCC43399;
+	Tue, 23 Jan 2024 00:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969017;
-	bh=BVn12pJa/tLgogceAFesw0LRy4+elAnkqJ6ix4XFeJA=;
+	s=korg; t=1705969019;
+	bh=L68J52t/c7OopDjKsEsLdEkxPRccGmM5s4YUkg2ez+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O8hi3Vl8MlbERRwc/UB2l0poPlz4L/6nu93ykC5UYwDO/ZVa8MvYG9aWhMfQI1C7t
-	 cPDX3iNBzjxhPKtZP3vykm+qW9omdzsiVuLnxrTTrWTySn74tND2J5ARMPFRvJpwNm
-	 J/aMVgJa7hmvCapF5GEzNMgLqp2+2u0b5FUZJAos=
+	b=kcWFUHMH6zvjsedISymCG3e2AKxDJe4WzecejMEeWxoFH+21+QjH0nnX0GvF5YEXt
+	 jW3U06Ub05QXoUDUMX0KIi7k3OvxJJasabHVAc7fouhdB+07OPBwc+R6TNdyEjRBbo
+	 Vg/breCJPB52tUyp8xsOcJA1PFR56RzvYdXkEd64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 128/194] drm/amd/pm: fix a double-free in si_dpm_init
-Date: Mon, 22 Jan 2024 15:57:38 -0800
-Message-ID: <20240122235724.725717509@linuxfoundation.org>
+	Nam Cao <namcao@linutronix.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.4 156/194] fbdev: flush deferred work in fb_deferred_io_fsync()
+Date: Mon, 22 Jan 2024 15:58:06 -0800
+Message-ID: <20240122235725.881928211@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,45 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Nam Cao <namcao@linutronix.de>
 
-[ Upstream commit ac16667237a82e2597e329eb9bc520d1cf9dff30 ]
+commit 15e4c1f462279b4e128f27de48133e0debe9e0df upstream.
 
-When the allocation of
-adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries fails,
-amdgpu_free_extended_power_table is called to free some fields of adev.
-However, when the control flow returns to si_dpm_sw_init, it goes to
-label dpm_failed and calls si_dpm_fini, which calls
-amdgpu_free_extended_power_table again and free those fields again. Thus
-a double-free is triggered.
+The driver's fsync() is supposed to flush any pending operation to
+hardware. It is implemented in this driver by cancelling the queued
+deferred IO first, then schedule it for "immediate execution" by calling
+schedule_delayed_work() again with delay=0. However, setting delay=0
+only means the work is scheduled immediately, it does not mean the work
+is executed immediately. There is no guarantee that the work is finished
+after schedule_delayed_work() returns. After this driver's fsync()
+returns, there can still be pending work. Furthermore, if close() is
+called by users immediately after fsync(), the pending work gets
+cancelled and fsync() may do nothing.
 
-Fixes: 841686df9f7d ("drm/amdgpu: add SI DPM support (v4)")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To ensure that the deferred IO completes, use flush_delayed_work()
+instead. Write operations to this driver either write to the device
+directly, or invoke schedule_delayed_work(); so by flushing the
+workqueue, it can be guaranteed that all previous writes make it to the
+device.
+
+Fixes: 5e841b88d23d ("fb: fsync() method for deferred I/O flush.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/si_dpm.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/core/fb_defio.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/si_dpm.c b/drivers/gpu/drm/amd/amdgpu/si_dpm.c
-index 9931d5c17cfb..6d7fd45b3129 100644
---- a/drivers/gpu/drm/amd/amdgpu/si_dpm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/si_dpm.c
-@@ -7349,10 +7349,9 @@ static int si_dpm_init(struct amdgpu_device *adev)
- 		kcalloc(4,
- 			sizeof(struct amdgpu_clock_voltage_dependency_entry),
- 			GFP_KERNEL);
--	if (!adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries) {
--		amdgpu_free_extended_power_table(adev);
-+	if (!adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries)
- 		return -ENOMEM;
--	}
-+
- 	adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.count = 4;
- 	adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries[0].clk = 0;
- 	adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries[0].v = 0;
--- 
-2.43.0
-
+--- a/drivers/video/fbdev/core/fb_defio.c
++++ b/drivers/video/fbdev/core/fb_defio.c
+@@ -78,11 +78,7 @@ int fb_deferred_io_fsync(struct file *fi
+ 		return 0;
+ 
+ 	inode_lock(inode);
+-	/* Kill off the delayed work */
+-	cancel_delayed_work_sync(&info->deferred_work);
+-
+-	/* Run it immediately */
+-	schedule_delayed_work(&info->deferred_work, 0);
++	flush_delayed_work(&info->deferred_work);
+ 	inode_unlock(inode);
+ 
+ 	return 0;
 
 
