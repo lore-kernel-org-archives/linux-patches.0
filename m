@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD6815E265;
-	Tue, 23 Jan 2024 00:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD4215E272;
+	Tue, 23 Jan 2024 00:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969764; cv=none; b=naCKP2TvM93QhcHgi9zPgBncmOzwK3X7ZbJdWiaJ594/W0K5w6uS6ttEVLf4lL/wqud89B+WCHq4HC/onlfgY5DwEdjxb6BTtTUGW8VIJXO2OisGJFjzAePQIF1jCxb17LshK+NOsvvAxvC6CXOf0sq0up9mXQMs6xeEIIiWkfk=
+	t=1705969764; cv=none; b=tVqebBq8mI27KwrgEOytQEYgh5rLbVNfeu3xDwhFAywK52HB0eIh/3HCWNwdHoST/dJNYOG9vI2gUYkio5hURFQQ60TImE2eqGZsGllZIhf2lgg7nJypk3/Qinit+Arsbwl8tEvKQ/Dyeg52PLEkZM9BVNHRrDYvKorpIRJfzAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705969764; c=relaxed/simple;
-	bh=25pfj5bKD6fLtqcoAmzjpsjm0LS+NzAtdIpxkfmjAXM=;
+	bh=DzdoeayJhfmuJv9tVvRTTqftDLfw1vN3018M+Y2M8Yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHP26Ekq/GufT5jpsys7TALMa2Zij7HYhe0uMXBQQGz06TjXP1Vdq9rbuRpkPQuvRGdpjicPGhj7pLSorQ5KThZBAxcJEOuysMmJQpj5EPhq7ZbiZElCZbzkIJz1tnYvPx/fYwmv1b8NFFKH7kGDXu56BC4QRHlGxy6QaawH33k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEDGGAv7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IqcBuRduGpemtIFQkNTnrLcCWsn/2mmoUJBsw2pzNbFSs7hCKZ1xzIIVLbDsiuG9M9FJ99jRn5S/ExiPe0MpBdd5LkqgPybXpUJoGOyM84F87/iT4cz6oHU5+P0bOWrPMz3pcIpMtl7Ato0SEoSAO7onc9lYff0guz+NzhKo/8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDPmojSC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEDGGAv7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC00C43601;
-	Tue, 23 Jan 2024 00:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDPmojSC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7449FC433F1;
+	Tue, 23 Jan 2024 00:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969764;
-	bh=25pfj5bKD6fLtqcoAmzjpsjm0LS+NzAtdIpxkfmjAXM=;
+	s=korg; t=1705969762;
+	bh=DzdoeayJhfmuJv9tVvRTTqftDLfw1vN3018M+Y2M8Yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fEDGGAv7gp/NSKRLmzEwcyhyn8hYgiat4dA1dPWJLhulOYYsAwhuN+TQXD58+9hBk
-	 hCx3H5tuQcS4uJwIGDgVM/4hT8HGM69lmPdsnWIxevCqIQ9uyJ1B+5QEy/S7VrfVj2
-	 XYFpQhhs5KSl52XiuGQ8gjrwfZ52qLAoBGxDuG9k=
+	b=QDPmojSCuAvwXtMe/xv185H1z2mKPDSR0CCYjel9SjpaCyuV+ijrn4yoAafoW5PJi
+	 kOuFv+q6Xy965vLTJjF5RwrLJFSzKHHUUoBxlkdQ4sFDIJkCURYc2H9Ama58IkyNJ1
+	 Dop97n1T28jo6EHpV8EsAV2b8VVo+kNpOfw4/tzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sathya Prakash <sathya.prakash@broadcom.com>,
 	Chandrakanth patil <chandrakanth.patil@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.7 436/641] scsi: mpi3mr: Clean up block devices post controller reset
-Date: Mon, 22 Jan 2024 15:55:40 -0800
-Message-ID: <20240122235831.638714642@linuxfoundation.org>
+Subject: [PATCH 6.7 435/641] scsi: mpi3mr: Refresh sdev queue depth after controller reset
+Date: Mon, 22 Jan 2024 15:55:39 -0800
+Message-ID: <20240122235831.603086807@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,46 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Chandrakanth patil <chandrakanth.patil@broadcom.com>
 
-commit c01d515687e358b22aa8414d6dac60d7defa6eb9 upstream.
+commit e5aab848dfdf7996d20ece4d28d2733c732c5e5a upstream.
 
-After a controller reset, if the firmware changes the state of devices to
-"hide", then remove those devices from the OS.
+After a controller reset, the firmware may modify the device queue depth.
+Therefore, update the device queue depth accordingly.
 
-Cc: <stable@vger.kernel.org> # v6.6+
+Cc: <stable@vger.kernel.org> # v5.15+
 Co-developed-by: Sathya Prakash <sathya.prakash@broadcom.com>
 Signed-off-by: Sathya Prakash <sathya.prakash@broadcom.com>
 Signed-off-by: Chandrakanth patil <chandrakanth.patil@broadcom.com>
-Link: https://lore.kernel.org/r/20231126053134.10133-3-chandrakanth.patil@broadcom.com
+Link: https://lore.kernel.org/r/20231126053134.10133-2-chandrakanth.patil@broadcom.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 --- a/drivers/scsi/mpi3mr/mpi3mr_os.c
 +++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -1047,8 +1047,9 @@ void mpi3mr_rfresh_tgtdevs(struct mpi3mr
- 	list_for_each_entry_safe(tgtdev, tgtdev_next, &mrioc->tgtdev_list,
- 	    list) {
- 		if ((tgtdev->dev_handle == MPI3MR_INVALID_DEV_HANDLE) &&
--		    tgtdev->host_exposed && tgtdev->starget &&
--		    tgtdev->starget->hostdata) {
-+		     tgtdev->is_hidden &&
-+		     tgtdev->host_exposed && tgtdev->starget &&
-+		     tgtdev->starget->hostdata) {
- 			tgt_priv = tgtdev->starget->hostdata;
- 			tgt_priv->dev_removed = 1;
- 			atomic_set(&tgt_priv->block_io, 0);
-@@ -1064,6 +1065,10 @@ void mpi3mr_rfresh_tgtdevs(struct mpi3mr
- 				mpi3mr_remove_tgtdev_from_host(mrioc, tgtdev);
- 			mpi3mr_tgtdev_del_from_list(mrioc, tgtdev, true);
- 			mpi3mr_tgtdev_put(tgtdev);
-+		} else if (tgtdev->is_hidden & tgtdev->host_exposed) {
-+			dprint_reset(mrioc, "hiding target device with perst_id(%d)\n",
-+				     tgtdev->perst_id);
-+			mpi3mr_remove_tgtdev_from_host(mrioc, tgtdev);
- 		}
+@@ -1070,8 +1070,14 @@ void mpi3mr_rfresh_tgtdevs(struct mpi3mr
+ 	tgtdev = NULL;
+ 	list_for_each_entry(tgtdev, &mrioc->tgtdev_list, list) {
+ 		if ((tgtdev->dev_handle != MPI3MR_INVALID_DEV_HANDLE) &&
+-		    !tgtdev->is_hidden && !tgtdev->host_exposed)
+-			mpi3mr_report_tgtdev_to_host(mrioc, tgtdev->perst_id);
++		    !tgtdev->is_hidden) {
++			if (!tgtdev->host_exposed)
++				mpi3mr_report_tgtdev_to_host(mrioc,
++							     tgtdev->perst_id);
++			else if (tgtdev->starget)
++				starget_for_each_device(tgtdev->starget,
++							(void *)tgtdev, mpi3mr_update_sdev);
++	}
  	}
+ }
  
 
 
