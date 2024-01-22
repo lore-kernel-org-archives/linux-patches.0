@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA077F4;
-	Tue, 23 Jan 2024 01:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCDA811;
+	Tue, 23 Jan 2024 01:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972135; cv=none; b=ArW/A7ugLwPM7dqc/KuU6ZE8KQTHFktnzW6QovsRsJ3zcJlkyHzj3EJT2H/Z+o84BXVk2bGnIHNPoXo4iJu/FSb+l7g11JrqSVHefPlSlNcG+Mw/2t9HETjolibDUgyNypgVo/4K1Ff8BRoY/xhfGyPHgK9MwRkb9chuGV3petE=
+	t=1705972136; cv=none; b=hEusK7V9tjndLg1jc9f66AOdEP/+XALUWf9vJSH4OsUsm+mT1AQStPSwWSKgNljWGFwW068RxVQGMk7GlAqjgNbYgXbdL77E0nQIGX7YcaMVkzdHs/B4kByTTsSlXeOQI4fKhQb1wx59tP0YYolX4nTlxVoxVCJ0qVQsQTsZXs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972135; c=relaxed/simple;
-	bh=AbXbEpwhZnXARX0TfrLI3SGe9eqXVHzrG4x6lDX506k=;
+	s=arc-20240116; t=1705972136; c=relaxed/simple;
+	bh=os+ABS+x3eGK53OQ3TQedJMZwjYh6u9F6aIbMLa6JLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nn86wzLBO2BnFMiONIzqHb/FtZmrmO3P04RaF9iIL0iWLEJ5bS/nQb99o7cjdLE4fd5Hd+7nkgW/wmVgVTFObngrQtbiTlpgn2HQdaSA3jsRnBnecIhVLeIuRHDR4LdPuzB079OlmMTxcIQhhPlJJ+RxiaCFu+prCpUOj5E9I88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MkYYvwiY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PlOHOCP4snDwJMTd+WiqphYf5Mnpj8kdgRYlqw0tsoTOW84TG6R1WoYd4yBMNxWUvtXEFlUOwmUqagPr2/OHCp1V1zhIhLQB0hSSG1P3KSuCSElsk1F25KKW6T2OOiqlzJwsKaq1xfi5P27LrV+kABD9nkSmKjIqDTc717SshJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwXx3yFT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MkYYvwiY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD99C433C7;
-	Tue, 23 Jan 2024 01:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwXx3yFT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F394C433C7;
+	Tue, 23 Jan 2024 01:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972134;
-	bh=AbXbEpwhZnXARX0TfrLI3SGe9eqXVHzrG4x6lDX506k=;
+	s=korg; t=1705972136;
+	bh=os+ABS+x3eGK53OQ3TQedJMZwjYh6u9F6aIbMLa6JLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MkYYvwiYLLwsijBrLIumkr72c7Oir362FiDOgScHddDpFXVULqwn4PFqmsyUG3pT7
-	 K/wxtHYEA7cdrgiY/W1GWQwHwgiSGEq7JOtgBkYmHHuCbQgsyV1akST2+4OBO9V6Ri
-	 mFfn36fj/pFKeVocDOVJI+xtYUqqqGdItNEfXbxU=
+	b=QwXx3yFTR5VAoLquTsNN3jBlI63WQKPfcKXPAlle8ZlnOWICZpgOR92t1Amq/NmyX
+	 hxRNaZRnNWutIMQNYqdVVvao+3yH3rTJolEXPGaS/GN/3p15eAJuTj0076gO+FdBV3
+	 N9c6Z+AWbDe3sw1TRAQ/ZBdDOetwhUTIZqFLPC+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/374] EDAC/thunderx: Fix possible out-of-bounds string access
-Date: Mon, 22 Jan 2024 15:55:22 -0800
-Message-ID: <20240122235746.912831115@linuxfoundation.org>
+Subject: [PATCH 5.15 067/374] powerpc: Mark .opd section read-only
+Date: Mon, 22 Jan 2024 15:55:23 -0800
+Message-ID: <20240122235746.942965373@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -52,89 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 475c58e1a471e9b873e3e39958c64a2d278275c8 ]
+[ Upstream commit 3091f5fc5f1df7741ddf326561384e0997eca2a1 ]
 
-Enabling -Wstringop-overflow globally exposes a warning for a common bug
-in the usage of strncat():
+.opd section contains function descriptors used to locate
+functions in the kernel. If someone is able to modify a
+function descriptor he will be able to run arbitrary
+kernel function instead of another.
 
-  drivers/edac/thunderx_edac.c: In function 'thunderx_ocx_com_threaded_isr':
-  drivers/edac/thunderx_edac.c:1136:17: error: 'strncat' specified bound 1024 equals destination size [-Werror=stringop-overflow=]
-   1136 |                 strncat(msg, other, OCX_MESSAGE_SIZE);
-        |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   ...
-   1145 |                                 strncat(msg, other, OCX_MESSAGE_SIZE);
-   ...
-   1150 |                                 strncat(msg, other, OCX_MESSAGE_SIZE);
+To avoid that, move .opd section inside read-only memory.
 
-   ...
-
-Apparently the author of this driver expected strncat() to behave the
-way that strlcat() does, which uses the size of the destination buffer
-as its third argument rather than the length of the source buffer. The
-result is that there is no check on the size of the allocated buffer.
-
-Change it to strlcat().
-
-  [ bp: Trim compiler output, fixup commit message. ]
-
-Fixes: 41003396f932 ("EDAC, thunderx: Add Cavium ThunderX EDAC driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/20231122222007.3199885-1-arnd@kernel.org
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/3cd40b682fb6f75bb40947b55ca0bac20cb3f995.1634136222.git.christophe.leroy@csgroup.eu
+Stable-dep-of: 1b1e38002648 ("powerpc: add crtsavres.o to always-y instead of extra-y")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/thunderx_edac.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/powerpc/kernel/vmlinux.lds.S | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/edac/thunderx_edac.c b/drivers/edac/thunderx_edac.c
-index f13674081cb6..4dca21b39bf7 100644
---- a/drivers/edac/thunderx_edac.c
-+++ b/drivers/edac/thunderx_edac.c
-@@ -1133,7 +1133,7 @@ static irqreturn_t thunderx_ocx_com_threaded_isr(int irq, void *irq_id)
- 		decode_register(other, OCX_OTHER_SIZE,
- 				ocx_com_errors, ctx->reg_com_int);
+diff --git a/arch/powerpc/kernel/vmlinux.lds.S b/arch/powerpc/kernel/vmlinux.lds.S
+index d4531902d8c6..d8301ce7c675 100644
+--- a/arch/powerpc/kernel/vmlinux.lds.S
++++ b/arch/powerpc/kernel/vmlinux.lds.S
+@@ -148,6 +148,12 @@ SECTIONS
+ 	SOFT_MASK_TABLE(8)
+ 	RESTART_TABLE(8)
  
--		strncat(msg, other, OCX_MESSAGE_SIZE);
-+		strlcat(msg, other, OCX_MESSAGE_SIZE);
++	.opd : AT(ADDR(.opd) - LOAD_OFFSET) {
++		__start_opd = .;
++		KEEP(*(.opd))
++		__end_opd = .;
++	}
++
+ 	. = ALIGN(8);
+ 	__stf_entry_barrier_fixup : AT(ADDR(__stf_entry_barrier_fixup) - LOAD_OFFSET) {
+ 		__start___stf_entry_barrier_fixup = .;
+@@ -346,12 +352,6 @@ SECTIONS
+ 		*(.branch_lt)
+ 	}
  
- 		for (lane = 0; lane < OCX_RX_LANES; lane++)
- 			if (ctx->reg_com_int & BIT(lane)) {
-@@ -1142,12 +1142,12 @@ static irqreturn_t thunderx_ocx_com_threaded_isr(int irq, void *irq_id)
- 					 lane, ctx->reg_lane_int[lane],
- 					 lane, ctx->reg_lane_stat11[lane]);
- 
--				strncat(msg, other, OCX_MESSAGE_SIZE);
-+				strlcat(msg, other, OCX_MESSAGE_SIZE);
- 
- 				decode_register(other, OCX_OTHER_SIZE,
- 						ocx_lane_errors,
- 						ctx->reg_lane_int[lane]);
--				strncat(msg, other, OCX_MESSAGE_SIZE);
-+				strlcat(msg, other, OCX_MESSAGE_SIZE);
- 			}
- 
- 		if (ctx->reg_com_int & OCX_COM_INT_CE)
-@@ -1217,7 +1217,7 @@ static irqreturn_t thunderx_ocx_lnk_threaded_isr(int irq, void *irq_id)
- 		decode_register(other, OCX_OTHER_SIZE,
- 				ocx_com_link_errors, ctx->reg_com_link_int);
- 
--		strncat(msg, other, OCX_MESSAGE_SIZE);
-+		strlcat(msg, other, OCX_MESSAGE_SIZE);
- 
- 		if (ctx->reg_com_link_int & OCX_COM_LINK_INT_UE)
- 			edac_device_handle_ue(ocx->edac_dev, 0, 0, msg);
-@@ -1896,7 +1896,7 @@ static irqreturn_t thunderx_l2c_threaded_isr(int irq, void *irq_id)
- 
- 		decode_register(other, L2C_OTHER_SIZE, l2_errors, ctx->reg_int);
- 
--		strncat(msg, other, L2C_MESSAGE_SIZE);
-+		strlcat(msg, other, L2C_MESSAGE_SIZE);
- 
- 		if (ctx->reg_int & mask_ue)
- 			edac_device_handle_ue(l2c->edac_dev, 0, 0, msg);
+-	.opd : AT(ADDR(.opd) - LOAD_OFFSET) {
+-		__start_opd = .;
+-		KEEP(*(.opd))
+-		__end_opd = .;
+-	}
+-
+ 	. = ALIGN(256);
+ 	.got : AT(ADDR(.got) - LOAD_OFFSET) {
+ 		__toc_start = .;
 -- 
 2.43.0
 
