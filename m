@@ -1,49 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190C464AB0;
-	Tue, 23 Jan 2024 01:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B53664CC9;
+	Tue, 23 Jan 2024 01:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975046; cv=none; b=CDXZ31t4obiOCGYEpEcV+iJVWKeqHsMruAUT0VVoC85JczyHuazfBrp8mkVIp9iwV9EKHAEm4UY0kkr12YznBQWgKxpIGeKgaiICLIpx/48mhrIDIBnplTnmTCXe9EzzShVYURZ0lBytZJCkA4C1QOztuhLhr9WpG//8qcGtVO0=
+	t=1705975047; cv=none; b=Mcioieq49kVaM/MGdujhvOnP6qG1ZcxAknluYTxDi8Az35oV+MYQ8jYqHV6Ewk22M81Nk0XXyI3E6H+D0FRK2kVG0J32lEsYYc98mR8a8GKdZEjG0Aj85QAS0TZ7F1PeLGempu+bbuXoT69YS6gJMD4c70TcPYCDKwpOLMH/DoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975046; c=relaxed/simple;
-	bh=6l2SDmCIspASlYDKPuDVT5RY+jexk6aNvIpS4wgj9uA=;
+	s=arc-20240116; t=1705975047; c=relaxed/simple;
+	bh=X7PgeLi2SXzy5Fxof7xWoLD4FRyEyM5+xt1RPv/8M2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rdG5MDX//q017e3Sq881qV2VwO3JNPKFNU0y5+44dTa0fSeDvWG0sY4I12gtcAWN8a6YxGTQU4gPQ7GC1S1J8GJwSoWNO5v+aQpIlqmz/BzI/5cxt4ZrZA/Wu0VT0IV2hzqGeFjch06vHWFMsxThK/kZ1GgyalRxQlKBxliWkYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRFsZcny; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ClVyi6VRAXYSIyb0sQGaAodZAuR5Ki+8TiUucJIFuFyA1PzarA49S75PnvQWpeLUGR+2iLn5WDlSWFaMQ/cuj6Q7AuwP13rkFHolLOA72mib3jWgtD3+WPgAi/wSztoIUNSqWeCHZtTNGxARs77MHbhJ8YFrh0fdkcMXnHJXNqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cF2/rVZQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRFsZcny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74CBC433F1;
-	Tue, 23 Jan 2024 01:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cF2/rVZQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE14FC433C7;
+	Tue, 23 Jan 2024 01:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975045;
-	bh=6l2SDmCIspASlYDKPuDVT5RY+jexk6aNvIpS4wgj9uA=;
+	s=korg; t=1705975046;
+	bh=X7PgeLi2SXzy5Fxof7xWoLD4FRyEyM5+xt1RPv/8M2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zRFsZcnymCVAm78XF0DBF09pLHmATNA7+rhiPpwUrwb+Gpk/wgBNcjG92HN/bkWAP
-	 T1EcZRdcxaAnanAKKveT9zUEM/Y3YbuliYf+iERGYq6Z8ff2Sf5jsJej0MUAr1TxPR
-	 32tpsk8K6adXkGC+37gAtXrbORZjAJQTYu1iv4Sg=
+	b=cF2/rVZQzim5QKBj58WEKt1Hl3obx4y7TIGO0jeIceb6+d497WfT1U/R7aVLqxon4
+	 SuAmKkDzRsUDwmTsFZKkccgag7moHjyr+NPyl5mWpz9XCtlg+Gxd1hvldGrccgyiRh
+	 lUw5svKZ6eGcIRNM22NKRPAuk1ZIQol5GpuHZatk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Florian Westphal <fw@strlen.de>,
-	Peter Krystad <peter.krystad@linux.intel.com>,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
-	Geliang Tang <geliang.tang@linux.dev>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xingwei Lee <xrivendell7@gmail.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 339/374] mptcp: use OPTION_MPTCP_MPJ_SYN in subflow_check_req()
-Date: Mon, 22 Jan 2024 15:59:55 -0800
-Message-ID: <20240122235756.702727246@linuxfoundation.org>
+Subject: [PATCH 6.6 212/583] bpf: sockmap, fix proto update hook to avoid dup calls
+Date: Mon, 22 Jan 2024 15:54:23 -0800
+Message-ID: <20240122235818.499934945@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -55,107 +49,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: John Fastabend <john.fastabend@gmail.com>
 
-[ Upstream commit 66ff70df1a919a066942844bb095d6fcb748d78d ]
+[ Upstream commit 16b2f264983dc264c1560cc0170e760dec1bf54f ]
 
-syzbot reported that subflow_check_req() was using uninitialized data in
-subflow_check_req() [1]
+When sockets are added to a sockmap or sockhash we allocate and init a
+psock. Then update the proto ops with sock_map_init_proto the flow is
 
-This is because mp_opt.token is only set when OPTION_MPTCP_MPJ_SYN is also set.
+  sock_hash_update_common
+    sock_map_link
+      psock = sock_map_psock_get_checked() <-returns existing psock
+      sock_map_init_proto(sk, psock)       <- updates sk_proto
 
-While we are are it, fix mptcp_subflow_init_cookie_req()
-to test for OPTION_MPTCP_MPJ_ACK.
+If the socket is already in a map this results in the sock_map_init_proto
+being called multiple times on the same socket. We do this because when
+a socket is added to multiple maps this might result in a new set of BPF
+programs being attached to the socket requiring an updated ops struct.
 
-[1]
+This creates a rule where it must be safe to call psock_update_sk_prot
+multiple times. When we added a fix for UAF through unix sockets in patch
+4dd9a38a753fc we broke this rule by adding a sock_hold in that path
+to ensure the sock is not released. The result is if a af_unix stream sock
+is placed in multiple maps it results in a memory leak because we call
+sock_hold multiple times with only a single sock_put on it.
 
-BUG: KMSAN: uninit-value in subflow_token_join_request net/mptcp/subflow.c:91 [inline]
- BUG: KMSAN: uninit-value in subflow_check_req+0x1028/0x15d0 net/mptcp/subflow.c:209
-  subflow_token_join_request net/mptcp/subflow.c:91 [inline]
-  subflow_check_req+0x1028/0x15d0 net/mptcp/subflow.c:209
-  subflow_v6_route_req+0x269/0x410 net/mptcp/subflow.c:367
-  tcp_conn_request+0x153a/0x4240 net/ipv4/tcp_input.c:7164
- subflow_v6_conn_request+0x3ee/0x510
-  tcp_rcv_state_process+0x2e1/0x4ac0 net/ipv4/tcp_input.c:6659
-  tcp_v6_do_rcv+0x11bf/0x1fe0 net/ipv6/tcp_ipv6.c:1669
-  tcp_v6_rcv+0x480b/0x4fb0 net/ipv6/tcp_ipv6.c:1900
-  ip6_protocol_deliver_rcu+0xda6/0x2a60 net/ipv6/ip6_input.c:438
-  ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
-  NF_HOOK include/linux/netfilter.h:314 [inline]
-  ip6_input+0x15d/0x430 net/ipv6/ip6_input.c:492
-  dst_input include/net/dst.h:461 [inline]
-  ip6_rcv_finish+0x5db/0x870 net/ipv6/ip6_input.c:79
-  NF_HOOK include/linux/netfilter.h:314 [inline]
-  ipv6_rcv+0xda/0x390 net/ipv6/ip6_input.c:310
-  __netif_receive_skb_one_core net/core/dev.c:5532 [inline]
-  __netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5646
-  netif_receive_skb_internal net/core/dev.c:5732 [inline]
-  netif_receive_skb+0x58/0x660 net/core/dev.c:5791
-  tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1555
-  tun_get_user+0x53af/0x66d0 drivers/net/tun.c:2002
-  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
-  call_write_iter include/linux/fs.h:2020 [inline]
-  new_sync_write fs/read_write.c:491 [inline]
-  vfs_write+0x8ef/0x1490 fs/read_write.c:584
-  ksys_write+0x20f/0x4c0 fs/read_write.c:637
-  __do_sys_write fs/read_write.c:649 [inline]
-  __se_sys_write fs/read_write.c:646 [inline]
-  __x64_sys_write+0x93/0xd0 fs/read_write.c:646
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-Local variable mp_opt created at:
-  subflow_check_req+0x6d/0x15d0 net/mptcp/subflow.c:145
-  subflow_v6_route_req+0x269/0x410 net/mptcp/subflow.c:367
-
-CPU: 1 PID: 5924 Comm: syz-executor.3 Not tainted 6.7.0-rc8-syzkaller-00055-g5eff55d725a4 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
-
-Fixes: f296234c98a8 ("mptcp: Add handling of incoming MP_JOIN requests")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Florian Westphal <fw@strlen.de>
-Cc: Peter Krystad <peter.krystad@linux.intel.com>
-Cc: Matthieu Baerts <matttbe@kernel.org>
-Cc: Mat Martineau <martineau@kernel.org>
-Cc: Geliang Tang <geliang.tang@linux.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20240111194917.4044654-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8866730aed51 ("bpf, sockmap: af_unix stream sockets need to hold ref for pair sock")
+Reported-by: Xingwei Lee <xrivendell7@gmail.com>
+Signed-off-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/r/20231221232327.43678-2-john.fastabend@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/subflow.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/unix/unix_bpf.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index 297d2465c413..099bdfc12da9 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -155,7 +155,7 @@ static int subflow_check_req(struct request_sock *req,
- 	mptcp_get_options(skb, &mp_opt);
+diff --git a/net/unix/unix_bpf.c b/net/unix/unix_bpf.c
+index 7ea7c3a0d0d0..bd84785bf8d6 100644
+--- a/net/unix/unix_bpf.c
++++ b/net/unix/unix_bpf.c
+@@ -161,15 +161,30 @@ int unix_stream_bpf_update_proto(struct sock *sk, struct sk_psock *psock, bool r
+ {
+ 	struct sock *sk_pair;
  
- 	opt_mp_capable = !!(mp_opt.suboptions & OPTIONS_MPTCP_MPC);
--	opt_mp_join = !!(mp_opt.suboptions & OPTIONS_MPTCP_MPJ);
-+	opt_mp_join = !!(mp_opt.suboptions & OPTION_MPTCP_MPJ_SYN);
- 	if (opt_mp_capable) {
- 		SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_MPCAPABLEPASSIVE);
++	/* Restore does not decrement the sk_pair reference yet because we must
++	 * keep the a reference to the socket until after an RCU grace period
++	 * and any pending sends have completed.
++	 */
+ 	if (restore) {
+ 		sk->sk_write_space = psock->saved_write_space;
+ 		sock_replace_proto(sk, psock->sk_proto);
+ 		return 0;
+ 	}
  
-@@ -252,7 +252,7 @@ int mptcp_subflow_init_cookie_req(struct request_sock *req,
- 	mptcp_get_options(skb, &mp_opt);
- 
- 	opt_mp_capable = !!(mp_opt.suboptions & OPTIONS_MPTCP_MPC);
--	opt_mp_join = !!(mp_opt.suboptions & OPTIONS_MPTCP_MPJ);
-+	opt_mp_join = !!(mp_opt.suboptions & OPTION_MPTCP_MPJ_ACK);
- 	if (opt_mp_capable && opt_mp_join)
- 		return -EINVAL;
- 
+-	sk_pair = unix_peer(sk);
+-	sock_hold(sk_pair);
+-	psock->sk_pair = sk_pair;
++	/* psock_update_sk_prot can be called multiple times if psock is
++	 * added to multiple maps and/or slots in the same map. There is
++	 * also an edge case where replacing a psock with itself can trigger
++	 * an extra psock_update_sk_prot during the insert process. So it
++	 * must be safe to do multiple calls. Here we need to ensure we don't
++	 * increment the refcnt through sock_hold many times. There will only
++	 * be a single matching destroy operation.
++	 */
++	if (!psock->sk_pair) {
++		sk_pair = unix_peer(sk);
++		sock_hold(sk_pair);
++		psock->sk_pair = sk_pair;
++	}
++
+ 	unix_stream_bpf_check_needs_rebuild(psock->sk_proto);
+ 	sock_replace_proto(sk, &unix_stream_bpf_prot);
+ 	return 0;
 -- 
 2.43.0
 
