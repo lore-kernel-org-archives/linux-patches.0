@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC078160868;
-	Tue, 23 Jan 2024 00:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778521615A6;
+	Tue, 23 Jan 2024 00:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970178; cv=none; b=LcsFJDLehklGfWca6iu+Jt2A5a5kJthKXTEWjNRTjAb51aZw6XrIxcmYbyvsntxDkbQxsjkx3RUeAS/gQQBNYHyzlvsdigie06h/xf3A4MS3SJI1b567WpLy6LpY5bQOc1kKW0Zqg4/MEvmVzowrJHA9/piMdTHKeq/IF5NVEmo=
+	t=1705970181; cv=none; b=DsgPdk0hNzV3KK45+y3udm3tn8tWndONZdGDMdF4SkxWOxejBp7Au7RFBSacCovnZRSDQsKg5b6V51LqdMlTQLGRhrD4WdexbFzlzmsD8K/wv4AUZXVgrf2zm1wrBuQ1YlgkNaqTTX3hW2dwmaM0HG+SOdDmZaa8uvEdSUsWBRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970178; c=relaxed/simple;
-	bh=1BogL52SUDpdkO8miax+1ylF+rxMT+TbH2S70L8xrR8=;
+	s=arc-20240116; t=1705970181; c=relaxed/simple;
+	bh=kzfHHTSA9u3PsIJvd5sKOip/6xBOEj+GR45N3qsU0/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oFNeWx+lfDbRee6ls53M+LzntSktjZp3VdTNgx7n95LIogVodO0patiQThUpNNzUwY1cTAFqWk29lM2ZnxLcLL5I4yOJqvjaMaNt8Y1iTZ7IAbb2NdYraKVDiCm3ZcUme8RkIPzsbdOIEakjB93ZirPZN1rC3sVZb8/9pm4mS6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=buXlUVW9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RNwUQKd4N312YfF0uHbBcTH8goEahE/WMKeRkwLI+LbpRYpZjexHNWYFg5qGYVT7DcCph/xvecLn7Ut5tvANQkOZy4kV1a3+q6G/uOKQrK8E1dmb5tyeL0Fkw5Kho8uFJJZlt+qO98FV00eCLbLIis9/dw/Q435/8lCNTzmF5TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3ABIkZJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="buXlUVW9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B36C43399;
-	Tue, 23 Jan 2024 00:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3ABIkZJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF7EC433C7;
+	Tue, 23 Jan 2024 00:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970178;
-	bh=1BogL52SUDpdkO8miax+1ylF+rxMT+TbH2S70L8xrR8=;
+	s=korg; t=1705970181;
+	bh=kzfHHTSA9u3PsIJvd5sKOip/6xBOEj+GR45N3qsU0/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=buXlUVW9xdK2qPJ61S3Lr8pRhOMKkjFAB5Xo47xNj+xSDvzvT1nk5nqh9S+HExVJK
-	 bH1VgWmXP7mhHP4bzWSx3HRfKTT32RE0D9mBy5AVc5N92CAsJqxxyVzLqzqRKbBewg
-	 nz+X/JMkhuZ69ecdUzNVHQFA0a7Lj0FHLXoom02o=
+	b=E3ABIkZJs8KmpFcOS6QsxkmUIdQJZ/iYsPQVTlnd5tHOZTqMTkBfWqr0AKQbVoJ8G
+	 posA0d3Xi1oPjKgy3tow7T5PO99dGnqPDeuz9OrnGkklwhlU72VpwzbH44r8LZJ4nL
+	 TrVonGwc8h9/dluQdCj8lGTT6xHiEomOxgGcvo5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nithin Dabilpuram <ndabilpuram@marvell.com>,
-	Naveen Mamindlapalli <naveenm@marvell.com>,
-	Simon Horman <horms@kernel.org>,
+	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 584/641] octeontx2-af: CN10KB: Fix FIFO length calculation for RPM2
-Date: Mon, 22 Jan 2024 15:58:08 -0800
-Message-ID: <20240122235836.463163792@linuxfoundation.org>
+Subject: [PATCH 6.7 585/641] net: ethernet: ti: am65-cpsw: Fix max mtu to fit ethernet frames
+Date: Mon, 22 Jan 2024 15:58:09 -0800
+Message-ID: <20240122235836.502626731@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -47,57 +47,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nithin Dabilpuram <ndabilpuram@marvell.com>
+From: Sanjuán García, Jorge <Jorge.SanjuanGarcia@duagon.com>
 
-[ Upstream commit a0cb76a770083a22167659e64ba69af6425b1d9b ]
+[ Upstream commit 64e47d8afb5ca533b27efc006405e5bcae2c4a7b ]
 
-RPM0 and RPM1 on the CN10KB SoC have 8 LMACs each, whereas RPM2
-has only 4 LMACs. Similarly, the RPM0 and RPM1 have 256KB FIFO,
-whereas RPM2 has 128KB FIFO. This patch fixes an issue with
-improper TX credit programming for the RPM2 link.
+The value of AM65_CPSW_MAX_PACKET_SIZE represents the maximum length
+of a received frame. This value is written to the register
+AM65_CPSW_PORT_REG_RX_MAXLEN.
 
-Fixes: b9d0fedc6234 ("octeontx2-af: cn10kb: Add RPM_USX MAC support")
-Signed-off-by: Nithin Dabilpuram <ndabilpuram@marvell.com>
-Signed-off-by: Naveen Mamindlapalli <naveenm@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240108073036.8766-1-naveenm@marvell.com
+The maximum MTU configured on the network device should then leave
+some room for the ethernet headers and frame check. Otherwise, if
+the network interface is configured to its maximum mtu possible,
+the frames will be larger than AM65_CPSW_MAX_PACKET_SIZE and will
+get dropped as oversized.
+
+The switch supports ethernet frame sizes between 64 and 2024 bytes
+(including VLAN) as stated in the technical reference manual, so
+define AM65_CPSW_MAX_PACKET_SIZE with that maximum size.
+
+Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
+Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Link: https://lore.kernel.org/r/20240105085530.14070-2-jorge.sanjuangarcia@duagon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rpm.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-index 4728ba34b0e3..76218f1cb459 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
-@@ -506,6 +506,7 @@ u32 rpm2_get_lmac_fifo_len(void *rpmd, int lmac_id)
- 	rpm_t *rpm = rpmd;
- 	u8 num_lmacs;
- 	u32 fifo_len;
-+	u16 max_lmac;
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index ece9f8df98ae..f7a6d720ebb3 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -56,7 +56,7 @@
+ #define AM65_CPSW_MAX_PORTS	8
  
- 	lmac_info = rpm_read(rpm, 0, RPM2_CMRX_RX_LMACS);
- 	/* LMACs are divided into two groups and each group
-@@ -513,7 +514,11 @@ u32 rpm2_get_lmac_fifo_len(void *rpmd, int lmac_id)
- 	 * Group0 lmac_id range {0..3}
- 	 * Group1 lmac_id range {4..7}
- 	 */
--	fifo_len = rpm->mac_ops->fifo_len / 2;
-+	max_lmac = (rpm_read(rpm, 0, CGX_CONST) >> 24) & 0xFF;
-+	if (max_lmac > 4)
-+		fifo_len = rpm->mac_ops->fifo_len / 2;
-+	else
-+		fifo_len = rpm->mac_ops->fifo_len;
+ #define AM65_CPSW_MIN_PACKET_SIZE	VLAN_ETH_ZLEN
+-#define AM65_CPSW_MAX_PACKET_SIZE	(VLAN_ETH_FRAME_LEN + ETH_FCS_LEN)
++#define AM65_CPSW_MAX_PACKET_SIZE	2024
  
- 	if (lmac_id < 4) {
- 		num_lmacs = hweight8(lmac_info & 0xF);
+ #define AM65_CPSW_REG_CTL		0x004
+ #define AM65_CPSW_REG_STAT_PORT_EN	0x014
+@@ -2167,7 +2167,8 @@ am65_cpsw_nuss_init_port_ndev(struct am65_cpsw_common *common, u32 port_idx)
+ 	eth_hw_addr_set(port->ndev, port->slave.mac_addr);
+ 
+ 	port->ndev->min_mtu = AM65_CPSW_MIN_PACKET_SIZE;
+-	port->ndev->max_mtu = AM65_CPSW_MAX_PACKET_SIZE;
++	port->ndev->max_mtu = AM65_CPSW_MAX_PACKET_SIZE -
++			      (VLAN_ETH_HLEN + ETH_FCS_LEN);
+ 	port->ndev->hw_features = NETIF_F_SG |
+ 				  NETIF_F_RXCSUM |
+ 				  NETIF_F_HW_CSUM |
 -- 
 2.43.0
 
