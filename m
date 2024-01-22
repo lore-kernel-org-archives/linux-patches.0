@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AC213EFE1;
-	Tue, 23 Jan 2024 01:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9AE13E236;
+	Tue, 23 Jan 2024 01:06:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972007; cv=none; b=KlMWXhrkVC+1+SuPzFfDKu7STGWTpyBiZaL0KLyH6Jg9woTK8hs0uETRsuLTJWxuUbBpjhwwdaAxCXh62/pniA0mdKhdKSSmcuxB28aJcKguDgjWLfnbiduU+4G87Ms6wWocObXG/uwGeYwsvQqFm5w3JCh/Q3p2fj874lLSth0=
+	t=1705972008; cv=none; b=Mw22f1qr1pJD4UFnP9BTleiu+LITx34IppGpW3LprZz2KRSaNhG98j3NuI3k5bGWZMBSuUNnrrQYYZQ11wppf6bUg0MejRLYnspRSfRucXSyJOIMw5d/Q66BRDBRU24O1eH33rDhi+fL3hwclR29ULEgjTwsPMaXnB5IYUV9YPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972007; c=relaxed/simple;
-	bh=9JYWAXzCNuBMhvZIbsEdt7U+7o5LaWP7qhB+cL1fjsk=;
+	s=arc-20240116; t=1705972008; c=relaxed/simple;
+	bh=NaPnc82OTViF1j4+VDqO8MY/JtKJDTmfUjGhfHgbdyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SNJLXDlc6pY0wCqivFavFUYGYZNGVRMZaWQhIHp0zbowkbh19BhThV8oZL3DEsLRZZi4gBsNG6qE3KRSmwqbleUeiOXzcOe7Bp6eN8WFSfPNcdU7j0o0XJa+YDsjRN3nr7WiBE/FpCsj84GRxXJZY6T5y1fjMoQ5ZvTlw58dneI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+OCEmUi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZW1EswcmHT3WZzkghi3sl1nrfCiyRAjsYshGJZ7q+TyWezqyTiRARni9FnBkfNbC25BApJlk7W4Ej33YYTjgqmjYMom/rQt9bZUpSFnPGED+3JCL3ZQNloPVJxSn1NEIox1ur7aa+WAA2tys7wQgHs8RoIjxtcs7Aw1baxTyn4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRbZLFU5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+OCEmUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C99C433C7;
-	Tue, 23 Jan 2024 01:06:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRbZLFU5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790FAC433C7;
+	Tue, 23 Jan 2024 01:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972007;
-	bh=9JYWAXzCNuBMhvZIbsEdt7U+7o5LaWP7qhB+cL1fjsk=;
+	s=korg; t=1705972008;
+	bh=NaPnc82OTViF1j4+VDqO8MY/JtKJDTmfUjGhfHgbdyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f+OCEmUidMx/1IaqTIok7LysPMzqSUyVQ/FcxuofHZXOilhDTTe+FAiTSBd1PTK6k
-	 lQy8xo9gygSykomH94OSXQYLlxxzyum3rmBv56pJ78ydCo5AqOsnAEDeixsQz6ze9W
-	 e0CH4UcOq7sNDBgIeqO6nQIYNFf0M5h8g57eNjCs=
+	b=ZRbZLFU5N3C768jovo+Tv4XQj8rTSMCuGNgZUHw/sHfFNtnxCHqHIPHXueTGevtnV
+	 LmmKkCQt4UlqLs9S6F8+1poXtAJTXbwSTxCZJJyYsbjW1vdYRI5AcA+aQ+zUuHC0T8
+	 JV+LTAe7fZHnLRPVWLdQjo/QsEOkSEu/DmDYD8cY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -37,9 +37,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 382/417] mptcp: mptcp_parse_option() fix for MPTCPOPT_MP_JOIN
-Date: Mon, 22 Jan 2024 15:59:10 -0800
-Message-ID: <20240122235805.008793275@linuxfoundation.org>
+Subject: [PATCH 6.1 383/417] mptcp: strict validation before using mp_opt->hmac
+Date: Mon, 22 Jan 2024 15:59:11 -0800
+Message-ID: <20240122235805.038354718@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -60,20 +60,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 89e23277f9c16df6f9f9c1a1a07f8f132339c15c ]
+[ Upstream commit c1665273bdc7c201766c65e561c06711f2e050dc ]
 
-mptcp_parse_option() currently sets OPTIONS_MPTCP_MPJ, for the three
-possible cases handled for MPTCPOPT_MP_JOIN option.
+mp_opt->hmac contains uninitialized data unless OPTION_MPTCP_MPJ_ACK
+was set in mptcp_parse_option().
 
-OPTIONS_MPTCP_MPJ is the combination of three flags:
-- OPTION_MPTCP_MPJ_SYN
-- OPTION_MPTCP_MPJ_SYNACK
-- OPTION_MPTCP_MPJ_ACK
-
-This is a problem, because backup, join_id, token, nonce and/or hmac fields
-could be left uninitialized in some cases.
-
-Distinguish the three cases, as following patches will need this step.
+We must refine the condition before we call subflow_hmac_valid().
 
 Fixes: f296234c98a8 ("mptcp: Add handling of incoming MP_JOIN requests")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
@@ -85,48 +77,26 @@ Cc: Geliang Tang <geliang.tang@linux.dev>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Acked-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20240111194917.4044654-2-edumazet@google.com
+Link: https://lore.kernel.org/r/20240111194917.4044654-3-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/options.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/mptcp/subflow.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mptcp/options.c b/net/mptcp/options.c
-index 74027bb5b429..a718ebcb5bc6 100644
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -118,8 +118,8 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 		break;
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index 8ed7769cae83..a7090922480e 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -718,7 +718,7 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
  
- 	case MPTCPOPT_MP_JOIN:
--		mp_opt->suboptions |= OPTIONS_MPTCP_MPJ;
- 		if (opsize == TCPOLEN_MPTCP_MPJ_SYN) {
-+			mp_opt->suboptions |= OPTION_MPTCP_MPJ_SYN;
- 			mp_opt->backup = *ptr++ & MPTCPOPT_BACKUP;
- 			mp_opt->join_id = *ptr++;
- 			mp_opt->token = get_unaligned_be32(ptr);
-@@ -130,6 +130,7 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 				 mp_opt->backup, mp_opt->join_id,
- 				 mp_opt->token, mp_opt->nonce);
- 		} else if (opsize == TCPOLEN_MPTCP_MPJ_SYNACK) {
-+			mp_opt->suboptions |= OPTION_MPTCP_MPJ_SYNACK;
- 			mp_opt->backup = *ptr++ & MPTCPOPT_BACKUP;
- 			mp_opt->join_id = *ptr++;
- 			mp_opt->thmac = get_unaligned_be64(ptr);
-@@ -140,11 +141,10 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 				 mp_opt->backup, mp_opt->join_id,
- 				 mp_opt->thmac, mp_opt->nonce);
- 		} else if (opsize == TCPOLEN_MPTCP_MPJ_ACK) {
-+			mp_opt->suboptions |= OPTION_MPTCP_MPJ_ACK;
- 			ptr += 2;
- 			memcpy(mp_opt->hmac, ptr, MPTCPOPT_HMAC_LEN);
- 			pr_debug("MP_JOIN hmac");
--		} else {
--			mp_opt->suboptions &= ~OPTIONS_MPTCP_MPJ;
- 		}
- 		break;
- 
+ 	} else if (subflow_req->mp_join) {
+ 		mptcp_get_options(skb, &mp_opt);
+-		if (!(mp_opt.suboptions & OPTIONS_MPTCP_MPJ) ||
++		if (!(mp_opt.suboptions & OPTION_MPTCP_MPJ_ACK) ||
+ 		    !subflow_hmac_valid(req, &mp_opt) ||
+ 		    !mptcp_can_accept_new_subflow(subflow_req->msk)) {
+ 			SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_JOINACKMAC);
 -- 
 2.43.0
 
