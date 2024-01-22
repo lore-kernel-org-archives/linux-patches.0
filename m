@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0834E64CFD;
-	Tue, 23 Jan 2024 00:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F4664CEB;
+	Tue, 23 Jan 2024 00:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971591; cv=none; b=hiMYXeOUM9tEQcdx9Mpeu46SoS5fNC9uZQx7/U4da6bL18nkDeTBjVGy2F5Vbtx7akQiIa9PiogcoMGWFEYDfWHfAkYs2B4GW9KLiuTFYEXlajkqrt60nJ+XZk563c+tTXxIM4HFdFLbTFeDUSauw5xuyVAoVJk4Ru4dN5KieS0=
+	t=1705971593; cv=none; b=S/QloifcJPACCRrNdOzOYR8moPbY9uB+TevN0WBtL5y0UvveaJX0Ev2xoRkM6isH2x8WaG9Wzz6tfGZNc3scWQ685pXSsNLtCBdpJ1gDvls3N5srrLt8AT8ERYaKi17sO6fn/GXq5FUEINCPM174O4JuY3dGgQcCGhS1KWjREA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971591; c=relaxed/simple;
-	bh=WdU9xLpKsf5M8/OxwKQGXXd+d7qtdIR5OZK6UEyuxVA=;
+	s=arc-20240116; t=1705971593; c=relaxed/simple;
+	bh=4RwgCmSODM/y/I8WQX0AJRwuR7f22gHDD1Jw8VF28QQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NjV5UBob3Ovg9gwutfWIQoEc5DAbU8RxFjVGeAzgU75K+nIxYJip7UAiHDyZHYbv9/K3+P26cHBckXJQPFM6fRxAH7WMQxlvswp8c5WmWZpQdXeMx49zDu1/+bRfvXfLuwXJf5nQEyWVTFXvqdT01HpBS8csw67wBZTF/mW9Om4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s70aRrJu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WyWsA09Kwqkx/fOf+u0Evp6chgYmqvIU2p+jO62Ztzcsc1wKqRJDjv1nL3M9ZZpg6rOOAEhsDjEvQf0x07wALsnvxKpPXtrxorBNvg4LFIbqXyD3X/NfYdeVqkqvNIgoxJ5iarw38TfW/SDarLI+Gpvl5pkwKQQOnMl3irAwz0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRaUirwm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s70aRrJu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE391C433C7;
-	Tue, 23 Jan 2024 00:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRaUirwm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FC5C433F1;
+	Tue, 23 Jan 2024 00:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971590;
-	bh=WdU9xLpKsf5M8/OxwKQGXXd+d7qtdIR5OZK6UEyuxVA=;
+	s=korg; t=1705971592;
+	bh=4RwgCmSODM/y/I8WQX0AJRwuR7f22gHDD1Jw8VF28QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s70aRrJuA09/3uDmP6LMGbCxiE2/ZZ6exvQTGZI99Yrer/l+xiQq923lhsjhSWUSI
-	 ZxVi76g3BLocB85EVciV7WCtoiV0uxLOdSNV5jSEDSKrMsOa2apiKsXiazgBlb7rQF
-	 xGK1OEMkNVU3Jwt3V54Y+dOxbZ0AL2/dmaLCN74U=
+	b=qRaUirwmfIlE39RUisJJcULlZB0DJTf9SA3ix9A0Z50qweYX2MyThN5fIoJneFk5M
+	 0hy4r/iqgiFqf9yBqywgR5kB2twaB9ty3cqmRVlB6xF9OTtTlzpdRq+ceHvzmg903I
+	 aMO/fhmXVBNx/d5uhBq1sHdGlvCaGfKkf802JuGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Subject: [PATCH 6.1 275/417] serial: 8250_exar: Set missing rs485_supported flag
-Date: Mon, 22 Jan 2024 15:57:23 -0800
-Message-ID: <20240122235801.375814402@linuxfoundation.org>
+	Jerry Hoemann <jerry.hoemann@hpe.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 183/286] watchdog/hpwdt: Only claim UNKNOWN NMI if from iLO
+Date: Mon, 22 Jan 2024 15:58:09 -0800
+Message-ID: <20240122235739.199388982@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,57 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Jerry Hoemann <jerry.hoemann@hpe.com>
 
-commit 0c2a5f471ce58bca8f8ab5fcb911aff91eaaa5eb upstream.
+[ Upstream commit dced0b3e51dd2af3730efe14dd86b5e3173f0a65 ]
 
-The UART supports an auto-RTS mode in which the RTS pin is automatically
-activated during transmission. So mark this mode as being supported even
-if RTS is not controlled by the driver but the UART.
+Avoid unnecessary crashes by claiming only NMIs that are due to
+ERROR signalling or generated by the hpwdt hardware device.
 
-Also the serial core expects now at least one of both modes rts-on-send or
-rts-after-send to be supported. This is since during sanitization
-unsupported flags are deleted from a RS485 configuration set by userspace.
-However if the configuration ends up with both flags unset, the core prints
-a warning since it considers such a configuration invalid (see
-uart_sanitize_serial_rs485()).
+The code does this, but only for iLO5.
 
-Cc:  <stable@vger.kernel.org>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Link: https://lore.kernel.org/r/20240103061818.564-8-l.sanfilippo@kunbus.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The intent was to preserve legacy, Gen9 and earlier, semantics of
+using hpwdt for error containtment as hardware/firmware would signal
+fatal IO errors as an NMI with the expectation of hpwdt crashing
+the system.  Howerver, these IO errors should be received by hpwdt
+as an NMI_IO_CHECK.  So the test is overly permissive and should
+not be limited to only ilo5.
+
+We need to enable this protection for future iLOs not matching the
+current PCI IDs.
+
+Fixes: 62290a5c194b ("watchdog: hpwdt: Claim NMIs generated by iLO5")
+Signed-off-by: Jerry Hoemann <jerry.hoemann@hpe.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20231213215340.495734-2-jerry.hoemann@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_exar.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/watchdog/hpwdt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -442,7 +442,7 @@ static int generic_rs485_config(struct u
- }
+diff --git a/drivers/watchdog/hpwdt.c b/drivers/watchdog/hpwdt.c
+index 7d34bcf1c45b..53573c3ddd1a 100644
+--- a/drivers/watchdog/hpwdt.c
++++ b/drivers/watchdog/hpwdt.c
+@@ -174,7 +174,7 @@ static int hpwdt_pretimeout(unsigned int ulReason, struct pt_regs *regs)
+ 		"3. OA Forward Progress Log\n"
+ 		"4. iLO Event Log";
  
- static const struct serial_rs485 generic_rs485_supported = {
--	.flags = SER_RS485_ENABLED,
-+	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND,
- };
+-	if (ilo5 && ulReason == NMI_UNKNOWN && !mynmi)
++	if (ulReason == NMI_UNKNOWN && !mynmi)
+ 		return NMI_DONE;
  
- static const struct exar8250_platform exar8250_default_platform = {
-@@ -486,7 +486,8 @@ static int iot2040_rs485_config(struct u
- }
- 
- static const struct serial_rs485 iot2040_rs485_supported = {
--	.flags = SER_RS485_ENABLED | SER_RS485_RX_DURING_TX | SER_RS485_TERMINATE_BUS,
-+	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND |
-+		 SER_RS485_RX_DURING_TX | SER_RS485_TERMINATE_BUS,
- };
- 
- static const struct property_entry iot2040_gpio_properties[] = {
+ 	if (ilo5 && !pretimeout && !mynmi)
+-- 
+2.43.0
+
 
 
