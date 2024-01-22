@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437565FDBB;
-	Tue, 23 Jan 2024 01:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F20650258;
+	Tue, 23 Jan 2024 01:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974649; cv=none; b=WxyAl34q1e2BamnaLbj77nSwSzEnaRJi8TMv01Nw1q0Z5Oolbe0GLVp7L8KH07mXtgYkxmYlin7AYECJJm9SwwxMJ0Cv7FkaCipoZcXeKAbUoy3qnINo2hadJFWRs29dO3ea4/hck58r5DE5LV3F2NgnkhePxiylYMtgnlJ8sb0=
+	t=1705974650; cv=none; b=m2+pCyjccvbJpd0b1LAok9vHCHfHmGsmzh1BJSI/RPei3VSuiane/mHh9SfBsrBycPC47Zdl/31H/uqqA9mqWpQno5AJPC7RoCFyLxXBlpsDlMz7DWZ7Fv+wzdxs6Rrp3uW9D8H45TdSyQWpRXvYz5vCzxeNy+RsJHsLUTJxCPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974649; c=relaxed/simple;
-	bh=EEcn7JEHHpqjS7Gg50C1DxDu/1a/j+3TBFcwpXnJj5I=;
+	s=arc-20240116; t=1705974650; c=relaxed/simple;
+	bh=PAdJ0hTGfatsgOri0BQ8CsiugY//gcK5y4Pi124UL5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JeG1ZdsVskJeAHedo9ANqZxPPmIkL7ziENkm8tLJvGCQhD/IoenYM6s/0cHX6DvumVebtA0Ma936zv4xhlNNm73I+HKeqiwdae4/ZbC35y8erZbigdLA+PibdPDHSW61fzjSkMh0g3xmUi3Fdl1n+H5E4zEyRPNNfCE1Ar1BY+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1swg/kQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BZNpU8Jj6XwboFXxraOPc2OEJN5tG5TSw+L4MZ8u5ZBe28blxkSID8XRv6w0UgrSU/vMUMTMyY3q27bHsve6JrcHFrchn564gvVFeSju52XqpuaM2sWi3te6KrvBQVs5fzmjKYOjn5ICb8YidBTZJkBn/SZvjO43WxBdw4upg7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PivSGnWn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1swg/kQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C31C433F1;
-	Tue, 23 Jan 2024 01:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PivSGnWn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76DFC43394;
+	Tue, 23 Jan 2024 01:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974649;
-	bh=EEcn7JEHHpqjS7Gg50C1DxDu/1a/j+3TBFcwpXnJj5I=;
+	s=korg; t=1705974650;
+	bh=PAdJ0hTGfatsgOri0BQ8CsiugY//gcK5y4Pi124UL5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z1swg/kQBEqgkSBWXsiOzNYzlo0p4cGNK0Xj12L3R2p0tJj0WiruuyHMTyc15DG5Q
-	 NJYlPiCZCdBz4kVB8yvMbOsqEfyZnCN+6+0iRi9N7KMjwxEYn0NS/h9fuYGwAynY7O
-	 fBFaJgGG+rNrRxGGkM8hDm1dYIIoVWdXKQ3j/Gms=
+	b=PivSGnWn8aOXwxpt2xrko0BfBC52mgIrGSZ2ah2B13WlvVQwj49q8QWo4dzMO36sG
+	 b9t7iUOSmSes6T71VeYAi4IDVePnB/ETx859xSheYT139hkNfFMm9muZv/d/bnlpcD
+	 RLMH4lSNJNLelEgk6/EdIJZm5cV4sLAW1mAQQjkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait@windriver.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/583] crypto: sahara - do not resize req->src when doing hash operations
-Date: Mon, 22 Jan 2024 15:52:04 -0800
-Message-ID: <20240122235814.388678943@linuxfoundation.org>
+Subject: [PATCH 5.15 228/374] pwm: stm32: Use hweight32 in stm32_pwm_detect_channels
+Date: Mon, 22 Jan 2024 15:58:04 -0800
+Message-ID: <20240122235752.628083117@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,103 +47,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait@windriver.com>
+From: Philipp Zabel <p.zabel@pengutronix.de>
 
-[ Upstream commit a3c6f4f4d249cecaf2f34471aadbfb4f4ef57298 ]
+[ Upstream commit 41fa8f57c0d269243fe3bde2bce71e82c884b9ad ]
 
-When testing sahara sha256 speed performance with tcrypt (mode=404) on
-imx53-qsrb board, multiple "Invalid numbers of src SG." errors are
-reported. This was traced to sahara_walk_and_recalc() resizing req->src
-and causing the subsequent dma_map_sg() call to fail.
+Use hweight32() to count the CCxE bits in stm32_pwm_detect_channels().
+Since the return value is assigned to chip.npwm, change it to unsigned
+int as well.
 
-Now that the previous commit fixed sahara_sha_hw_links_create() to take
-into account the actual request size, rather than relying on sg->length
-values, the resize operation is no longer necessary.
-
-Therefore, remove sahara_walk_and_recalc() and simplify associated logic.
-
-Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: 19f1016ea960 ("pwm: stm32: Fix enable count for clk in .probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 38 ++------------------------------------
- 1 file changed, 2 insertions(+), 36 deletions(-)
+ drivers/pwm/pwm-stm32.c | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index 477b4d8b450d..8e84dd98a273 100644
---- a/drivers/crypto/sahara.c
-+++ b/drivers/crypto/sahara.c
-@@ -886,24 +886,6 @@ static int sahara_sha_hw_context_descriptor_create(struct sahara_dev *dev,
- 	return 0;
+diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
+index 21e4a34dfff3..9c260aac442d 100644
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -575,10 +575,9 @@ static void stm32_pwm_detect_complementary(struct stm32_pwm *priv)
+ 	priv->have_complementary_output = (ccer != 0);
  }
  
--static int sahara_walk_and_recalc(struct scatterlist *sg, unsigned int nbytes)
--{
--	if (!sg || !sg->length)
--		return nbytes;
--
--	while (nbytes && sg) {
--		if (nbytes <= sg->length) {
--			sg->length = nbytes;
--			sg_mark_end(sg);
--			break;
--		}
--		nbytes -= sg->length;
--		sg = sg_next(sg);
--	}
--
--	return nbytes;
--}
--
- static int sahara_sha_prepare_request(struct ahash_request *req)
+-static int stm32_pwm_detect_channels(struct stm32_pwm *priv)
++static unsigned int stm32_pwm_detect_channels(struct stm32_pwm *priv)
  {
- 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
-@@ -940,36 +922,20 @@ static int sahara_sha_prepare_request(struct ahash_request *req)
- 					hash_later, 0);
- 	}
+ 	u32 ccer;
+-	int npwm = 0;
  
--	/* nbytes should now be multiple of blocksize */
--	req->nbytes = req->nbytes - hash_later;
--
--	sahara_walk_and_recalc(req->src, req->nbytes);
--
-+	rctx->total = len - hash_later;
- 	/* have data from previous operation and current */
- 	if (rctx->buf_cnt && req->nbytes) {
- 		sg_init_table(rctx->in_sg_chain, 2);
- 		sg_set_buf(rctx->in_sg_chain, rctx->rembuf, rctx->buf_cnt);
--
- 		sg_chain(rctx->in_sg_chain, 2, req->src);
--
--		rctx->total = req->nbytes + rctx->buf_cnt;
- 		rctx->in_sg = rctx->in_sg_chain;
--
--		req->src = rctx->in_sg_chain;
- 	/* only data from previous operation */
- 	} else if (rctx->buf_cnt) {
--		if (req->src)
--			rctx->in_sg = req->src;
--		else
--			rctx->in_sg = rctx->in_sg_chain;
--		/* buf was copied into rembuf above */
-+		rctx->in_sg = rctx->in_sg_chain;
- 		sg_init_one(rctx->in_sg, rctx->rembuf, rctx->buf_cnt);
--		rctx->total = rctx->buf_cnt;
- 	/* no data from previous operation */
- 	} else {
- 		rctx->in_sg = req->src;
--		rctx->total = req->nbytes;
--		req->src = rctx->in_sg;
- 	}
+ 	/*
+ 	 * If channels enable bits don't exist writing 1 will have no
+@@ -588,19 +587,7 @@ static int stm32_pwm_detect_channels(struct stm32_pwm *priv)
+ 	regmap_read(priv->regmap, TIM_CCER, &ccer);
+ 	regmap_clear_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
  
- 	/* on next call, we only have the remaining data in the buffer */
+-	if (ccer & TIM_CCER_CC1E)
+-		npwm++;
+-
+-	if (ccer & TIM_CCER_CC2E)
+-		npwm++;
+-
+-	if (ccer & TIM_CCER_CC3E)
+-		npwm++;
+-
+-	if (ccer & TIM_CCER_CC4E)
+-		npwm++;
+-
+-	return npwm;
++	return hweight32(ccer & TIM_CCER_CCXE);
+ }
+ 
+ static int stm32_pwm_probe(struct platform_device *pdev)
 -- 
 2.43.0
 
