@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772641487DE;
-	Tue, 23 Jan 2024 01:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929E51487D4;
+	Tue, 23 Jan 2024 01:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972078; cv=none; b=jVP0C5XOsrLwAE/B1v2J1jW7lh7SPIbXVSk9jSOmmK7r87ySMEmiROQixqiWTKCZ9R+jCJjiKS4u+Xnh0vJEe17vtoheMoIINJz8EDE75y2mwdQ4xbCYQVBIEroHWtGMgDYia5MyjQbf6KXOXZXRBL3FfeKDS2tJ3T7k53Yq5go=
+	t=1705972079; cv=none; b=u8oijnqY81R5Du9GFu4NilsPpe5d9vwwqn7kW+IXSt8A1DpRYcNvYbZfZAcY5UNb9BRdTIBkZiHJHT202IlplWBGjTuI8eVEudhLk0W/iVwSD9YnhNa7MWBc/5RMeYZ90LU7Z+UDT2mVIN9OK36PiYTt3N8afSXIyq8yOsvsPVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972078; c=relaxed/simple;
-	bh=vsCEfh/p7YkwWUN07Bhe4iVAyqRcTQyKQSi/+eHXJEw=;
+	s=arc-20240116; t=1705972079; c=relaxed/simple;
+	bh=O5yPergo4AQa1Tx1k119NWlAkAlRhzzcaY2+TqWfjCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SpMVPWyHdQ9a7aiuBzygvEB3Z4WgasEXrGDdQkMwimNp+JQP2XMyprpnxQViddHzTqxtS98rQivkxNLL9vU0bQvJ/jutIqcyhZVfp0yD5wwbASHZNiHsDFRu/nkEpsfuGzxL6GqDZaZzRjEouS+B7y0RxIYN+iRkZa1fkCCylVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTJ/jk7A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fKg/Z96p68Uucz24uYNZLLC4ENFZ2QPfHv/8OvyX+w4zXFkXVDvNt5QNU0Yo8SxvzBnpgir8f32vuaaQ1znQ3bn8Z5Ic9ci+ZMS8l488YAzpBE4ZA/9fA7hrT+Mm2Yamgy5Rb14Xmgl5YjpsbYz9PAzNK0ZLEzSOekENCHplJas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elo+XmVm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTJ/jk7A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44BEC433F1;
-	Tue, 23 Jan 2024 01:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elo+XmVm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DCBDC43330;
+	Tue, 23 Jan 2024 01:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972077;
-	bh=vsCEfh/p7YkwWUN07Bhe4iVAyqRcTQyKQSi/+eHXJEw=;
+	s=korg; t=1705972079;
+	bh=O5yPergo4AQa1Tx1k119NWlAkAlRhzzcaY2+TqWfjCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mTJ/jk7AQZApuW8OSOgTGTXSNnU4FASl6UPdaRf8C5d+hXKXyV+azjYfCcrepJdOz
-	 OQ5NEMp0cqOIxlr+tQy9pTIsLe2HYobXmxi9+RqiQPN5ADUpOcpz6rFEhs7SfWtNOA
-	 7Bgk7oT+9jZL9yhb8LVrIiw61lN5AROZW5BTPGy0=
+	b=elo+XmVmnE/yMeqlECHLiqNjvAxxa7zHl8+qP8Ug9xEXRM3QNT5NWUgEIYRTgjkTw
+	 lfxIkFIPHduA2qAywk2weuByyPDCqlR+AktRhqMBaVRmL2qYWL99Tk+x7kUpt2ZI3C
+	 hb+o7qiCjL2kbSn/tIOc06Dz8X2eEP+wg3eMph04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	syzbot+b834a6b2decad004cfa1@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 002/374] pinctrl: lochnagar: Dont build on MIPS
-Date: Mon, 22 Jan 2024 15:54:18 -0800
-Message-ID: <20240122235744.697234765@linuxfoundation.org>
+Subject: [PATCH 5.15 004/374] mptcp: fix uninit-value in mptcp_incoming_options
+Date: Mon, 22 Jan 2024 15:54:20 -0800
+Message-ID: <20240122235744.777885366@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -52,40 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 6588732445ff19f6183f0fa72ddedf67e5a5be32 ]
+[ Upstream commit 237ff253f2d4f6307b7b20434d7cbcc67693298b ]
 
-MIPS appears to define a RST symbol at a high level, which clashes
-with some register naming in the driver. Since there is currently
-no case for running this driver on MIPS devices simply cut off the
-build of this driver on MIPS.
+Added initialization use_ack to mptcp_parse_option().
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311071303.JJMAOjy4-lkp@intel.com/
-Suggested-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20231115162853.1891940-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reported-by: syzbot+b834a6b2decad004cfa1@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/cirrus/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mptcp/options.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/cirrus/Kconfig b/drivers/pinctrl/cirrus/Kconfig
-index 530426a74f75..b3cea8d56c4f 100644
---- a/drivers/pinctrl/cirrus/Kconfig
-+++ b/drivers/pinctrl/cirrus/Kconfig
-@@ -1,7 +1,8 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config PINCTRL_LOCHNAGAR
- 	tristate "Cirrus Logic Lochnagar pinctrl driver"
--	depends on MFD_LOCHNAGAR
-+	# Avoid clash caused by MIPS defining RST, which is used in the driver
-+	depends on MFD_LOCHNAGAR && !MIPS
- 	select GPIOLIB
- 	select PINMUX
- 	select PINCONF
+diff --git a/net/mptcp/options.c b/net/mptcp/options.c
+index aa4b0cf7c638..012e0e352276 100644
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -103,6 +103,7 @@ static void mptcp_parse_option(const struct sk_buff *skb,
+ 			mp_opt->suboptions |= OPTION_MPTCP_DSS;
+ 			mp_opt->use_map = 1;
+ 			mp_opt->mpc_map = 1;
++			mp_opt->use_ack = 0;
+ 			mp_opt->data_len = get_unaligned_be16(ptr);
+ 			ptr += 2;
+ 		}
 -- 
 2.43.0
 
