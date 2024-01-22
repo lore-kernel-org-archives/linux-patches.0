@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2592C63127;
-	Tue, 23 Jan 2024 01:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276D06313F;
+	Tue, 23 Jan 2024 01:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975008; cv=none; b=UY9/MY0uTeAllfN85xDOdDGswPxNuCAVO8FwFyrWoT3rz1EFhvrzLduqBLo3OeEYwyu/kOWv4fPhGmmEYS8E0m72XC/m7o93dLFAwD15aAjqfs8ZKeiWwhSaK+sYWcE2QbEYM9DwR80PTv4ih5eiQKXq1KIsFbGHZhGBpw/X8Hg=
+	t=1705975009; cv=none; b=sdISEadCcfb9iGQcnaXtV6jXRUeB8rkH0ysElZHKlnllm2WeqBx7qug4RzKOq+8whtDob/1fj7srzomFd45OUiLYvRaWffxdFaktvaRlXPr83sCcSwwu2gsGFsD7CQ6IpFglU/d6uofs/Nv9UZ7+pyGsuns45GpoCI11STI/mtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975008; c=relaxed/simple;
-	bh=3Nnzgaw1deQLGHux3FGVgHkNinRCh4iOjouOJ/TKIkA=;
+	s=arc-20240116; t=1705975009; c=relaxed/simple;
+	bh=uqx0WdfAAuava7/b3IH8R+R12G2C+QQNbaBd1Lswt9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nIHMapE6+H9xDPcOCkoY4cMKLDBt+7jyl+Vl0R3RCcBDEHcyu6/60Z36Ls0iYaY37LE7s5sHhT8fnTUdOZe1TPyNdXk3ZVdaq1IS8hGdXBE4UEjWgoZBCB1BHZI5KADK31iJeCfolPqHYlPGTUrsC1PYqjWpMkaiVGJu1yt3DRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+KxDbG1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DEZFlCKvqRJgHkCZgbgTmB/UlMasWIhOckXwgj9bU9D7IvbrR2mspsasJwgnZw3811XOA+2j1Fm8XfZJvto8SZYm2zA9i3oBalYfR5rC8L5SijvekSwhUCMeNyUkBsHKvZ1t4I9Q2FyVq6G6qSoVCPAjxGCg5c2HaKdz62Dqc8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcFGzTCG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+KxDbG1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5D4C433F1;
-	Tue, 23 Jan 2024 01:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcFGzTCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870D9C433C7;
+	Tue, 23 Jan 2024 01:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975007;
-	bh=3Nnzgaw1deQLGHux3FGVgHkNinRCh4iOjouOJ/TKIkA=;
+	s=korg; t=1705975008;
+	bh=uqx0WdfAAuava7/b3IH8R+R12G2C+QQNbaBd1Lswt9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H+KxDbG1EwwfK0rXr9pNZgr0R8BEC7ikgnCCUaWcl+UlOAJk8axyQ5dG8YM+n5r9I
-	 xea5ZzRgFRxU7wVLQ68LN+vjAxIka6n4CkMCkFbq/vKP6SY2QccaLslNuj8SomS8RX
-	 ZeldQCt0mPVU4ZiLabmyfJRN0su82wzrfEvjtXdU=
+	b=NcFGzTCGAGiVz3/QS0ymjVhKkaZSE6JG8MPVASskwRH93/dgxvqpeREZxlrjt42cS
+	 Xzup/KqX8L5qsVJEHSBeD1AQzfQ0Ns9Jg5kfch4g9GBi1Z0JZQ25ergr+3AtvKS3jj
+	 FnKBkyUoRgqJbaBLHkcV+XPzzoZcm45fiwKbNMYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 189/583] bpf: Use pcpu_alloc_size() in bpf_mem_free{_rcu}()
-Date: Mon, 22 Jan 2024 15:54:00 -0800
-Message-ID: <20240122235817.781314641@linuxfoundation.org>
+Subject: [PATCH 5.15 321/374] usb: core: Fix crash w/ usb_choose_configuration() if no driver
+Date: Mon, 22 Jan 2024 15:59:37 -0800
+Message-ID: <20240122235756.063182715@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,94 +47,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 3f2189e4f77b7a3e979d143dc4ff586488c7e8a5 ]
+[ Upstream commit 44995e6f07028f798efd0c3c11a1efc78330f600 ]
 
-For bpf_global_percpu_ma, the pointer passed to bpf_mem_free_rcu() is
-allocated by kmalloc() and its size is fixed (16-bytes on x86-64). So
-no matter which cache allocates the dynamic per-cpu area, on x86-64
-cache[2] will always be used to free the per-cpu area.
+It's possible that usb_choose_configuration() can get called when a
+USB device has no driver. In this case the recent commit a87b8e3be926
+("usb: core: Allow subclassed USB drivers to override
+usb_choose_configuration()") can cause a crash since it dereferenced
+the driver structure without checking for NULL. Let's add a check.
 
-Fix the unbalance by checking whether the bpf memory allocator is
-per-cpu or not and use pcpu_alloc_size() instead of ksize() to
-find the correct cache for per-cpu free.
+A USB device with no driver is an anomaly, so make
+usb_choose_configuration() return immediately if there is no driver.
 
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20231020133202.4043247-5-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 7ac5c53e0073 ("bpf: Use c->unit_size to select target cache during free")
+This was seen in the real world when usbguard got ahold of a r8152
+device at the wrong time. It can also be simulated via this on a
+computer with one r8152-based USB Ethernet adapter:
+  cd /sys/bus/usb/drivers/r8152-cfgselector
+  to_unbind="$(ls -d *-*)"
+  real_dir="$(readlink -f "${to_unbind}")"
+  echo "${to_unbind}" > unbind
+  cd "${real_dir}"
+  echo 0 > authorized
+  echo 1 > authorized
+
+Fixes: a87b8e3be926 ("usb: core: Allow subclassed USB drivers to override usb_choose_configuration()")
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20231211073237.v3.1.If27eb3bf7812f91ab83810f232292f032f4203e0@changeid
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_mem_alloc.h |  1 +
- kernel/bpf/memalloc.c         | 17 +++++++++++++++--
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/usb/core/generic.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf_mem_alloc.h b/include/linux/bpf_mem_alloc.h
-index d644bbb298af..bb1223b21308 100644
---- a/include/linux/bpf_mem_alloc.h
-+++ b/include/linux/bpf_mem_alloc.h
-@@ -11,6 +11,7 @@ struct bpf_mem_caches;
- struct bpf_mem_alloc {
- 	struct bpf_mem_caches __percpu *caches;
- 	struct bpf_mem_cache __percpu *cache;
-+	bool percpu;
- 	struct work_struct work;
- };
- 
-diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
-index 9657d5951d78..5f93bafa4a26 100644
---- a/kernel/bpf/memalloc.c
-+++ b/kernel/bpf/memalloc.c
-@@ -522,6 +522,8 @@ int bpf_mem_alloc_init(struct bpf_mem_alloc *ma, int size, bool percpu)
- 	struct bpf_mem_cache *c, __percpu *pc;
- 	struct obj_cgroup *objcg = NULL;
- 
-+	ma->percpu = percpu;
+diff --git a/drivers/usb/core/generic.c b/drivers/usb/core/generic.c
+index 57f6cab36ef6..77aefe0f4fc5 100644
+--- a/drivers/usb/core/generic.c
++++ b/drivers/usb/core/generic.c
+@@ -59,7 +59,16 @@ int usb_choose_configuration(struct usb_device *udev)
+ 	int num_configs;
+ 	int insufficient_power = 0;
+ 	struct usb_host_config *c, *best;
+-	struct usb_device_driver *udriver = to_usb_device_driver(udev->dev.driver);
++	struct usb_device_driver *udriver;
 +
- 	if (size) {
- 		pc = __alloc_percpu_gfp(sizeof(*pc), 8, GFP_KERNEL);
- 		if (!pc)
-@@ -866,6 +868,17 @@ void notrace *bpf_mem_alloc(struct bpf_mem_alloc *ma, size_t size)
- 	return !ret ? NULL : ret + LLIST_NODE_SZ;
- }
++	/*
++	 * If a USB device (not an interface) doesn't have a driver then the
++	 * kernel has no business trying to select or install a configuration
++	 * for it.
++	 */
++	if (!udev->dev.driver)
++		return -1;
++	udriver = to_usb_device_driver(udev->dev.driver);
  
-+static notrace int bpf_mem_free_idx(void *ptr, bool percpu)
-+{
-+	size_t size;
-+
-+	if (percpu)
-+		size = pcpu_alloc_size(*((void **)ptr));
-+	else
-+		size = ksize(ptr - LLIST_NODE_SZ);
-+	return bpf_mem_cache_idx(size);
-+}
-+
- void notrace bpf_mem_free(struct bpf_mem_alloc *ma, void *ptr)
- {
- 	int idx;
-@@ -873,7 +886,7 @@ void notrace bpf_mem_free(struct bpf_mem_alloc *ma, void *ptr)
- 	if (!ptr)
- 		return;
- 
--	idx = bpf_mem_cache_idx(ksize(ptr - LLIST_NODE_SZ));
-+	idx = bpf_mem_free_idx(ptr, ma->percpu);
- 	if (idx < 0)
- 		return;
- 
-@@ -887,7 +900,7 @@ void notrace bpf_mem_free_rcu(struct bpf_mem_alloc *ma, void *ptr)
- 	if (!ptr)
- 		return;
- 
--	idx = bpf_mem_cache_idx(ksize(ptr - LLIST_NODE_SZ));
-+	idx = bpf_mem_free_idx(ptr, ma->percpu);
- 	if (idx < 0)
- 		return;
- 
+ 	if (usb_device_is_owned(udev))
+ 		return 0;
 -- 
 2.43.0
 
