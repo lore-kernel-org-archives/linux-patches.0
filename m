@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119ED7CF23;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3307CF30;
 	Tue, 23 Jan 2024 02:08:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975731; cv=none; b=bBXrAO99hofaIfvhRKZ8L0VA3RFZQYS1HhQFBBBMl4slb2yg0CZOEgDt/JVOCXJLCzOIvPov45iVpGvGXDnbntaftzbgGa1E0PNpQRmnsOGUzsLZThjqf95OJkC6NyH95upcbMvN2FjomQcXakmjq2DCDaWv+uMK7Z7U+JSZf2E=
+	t=1705975732; cv=none; b=N3W1c9byoejA3hKivxgopGM3ntgGDtaI1+FScoctQJz0gsXNHAx1SmPkLgh6H8cwXK7r/Lkn2oHhgR9gXavtadN+17vChGwyxSAlUkGZCmaxS0gnO9Vx0BnlCls1BRLjh6zYM/PK+njh9vZ8HJk9BP3gjz3XiLEJ8RzXNcz6rTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975731; c=relaxed/simple;
-	bh=SwsN6L0TGbsnhDbYwJeBngGYdY0Cwe2kpmGA6+7RCX8=;
+	s=arc-20240116; t=1705975732; c=relaxed/simple;
+	bh=7cgBVp2eIdpteAvTCIdWCKW0evmFQCL4Am4OiTxAZSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QwVj8YSlLX8tt+8VHqSd0qrqz+Sdp6mxv6V9iTjZIHXzup5e2GAkZPWgvtqRvER5vNCU9LPpIznhLxyrmx9nl+2mmoijbw0b26VA9fpsbpZ9GFG6RfqdT5hDaGF3pH95uqagZE/I1snhpZyV9cnkxRVDevE+Y87bqqOcRRj3Gw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CV0aMHrC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PvxKiqdYkTBl03JJdJXuXOBaFJPj7qpmhlCc0LQwwgw49UuWdW1SpMLLyg8DbpE1mVyF28DId8h5Dit7yonv3FyPtVFU6E87BlC1xDhap9QB6ZO4/XUryappAfb5oYufCD9rq73wGiwjHwn9SIL9Z2UuApaahXRphqjNy2SnDH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUm3RmT6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CV0aMHrC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C92F9C43394;
-	Tue, 23 Jan 2024 02:08:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUm3RmT6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B135EC433A6;
+	Tue, 23 Jan 2024 02:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975730;
-	bh=SwsN6L0TGbsnhDbYwJeBngGYdY0Cwe2kpmGA6+7RCX8=;
+	s=korg; t=1705975731;
+	bh=7cgBVp2eIdpteAvTCIdWCKW0evmFQCL4Am4OiTxAZSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CV0aMHrCGIaF1ayUOTSOZAQBTRr29Hjf5v57HoGqfJRD48T2KCw4S5oRGRQtGA4lH
-	 s+o5M9h1tfkCA0UnnBl0CSFgkXFzg4kEslTEgsqZwPSMPZyde02ocLLz6va4CfHWOa
-	 AAkQW7JqkiA454r+JPJ5FkjkntMvmCwrYN0avHqI=
+	b=OUm3RmT6xpDdmsc1FNZnVpCsSxz3USkZCRcAYR+wb/PkQFBl0AD5/D3tQzA76Jemi
+	 1LgdF7WS3k0zwhhtw/kfEMGeBKNrRga3sbc/7F8aVfRio5rbQJj+pXVzIhdch0hqOc
+	 UBNFfEbLCXLRaj7RmEyo/P5TLblQiqjhje9H7nz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Mark Brown <broonie@kernel.org>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 515/583] spi: coldfire-qspi: Remove an erroneous clk_disable_unprepare() from the remove function
-Date: Mon, 22 Jan 2024 15:59:26 -0800
-Message-ID: <20240122235827.840545347@linuxfoundation.org>
+Subject: [PATCH 6.6 493/583] tty: dont check for signal_pending() in send_break()
+Date: Mon, 22 Jan 2024 15:59:04 -0800
+Message-ID: <20240122235827.103003704@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,39 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 17dc11a02d8dacc7e78968daa2a8c16281eb7d1e ]
+[ Upstream commit fd99392b643b824813df2edbaebe26a2136d31e6 ]
 
-The commit in Fixes has changed a devm_clk_get()/clk_prepare_enable() into
-a devm_clk_get_enabled().
-It has updated the error handling path of the probe accordingly, but the
-remove has been left unchanged.
+msleep_interruptible() will check on its own. So no need to do the check
+in send_break() before calling the above.
 
-Remove now the redundant clk_disable_unprepare() call from the remove
-function.
-
-Fixes: a90a987ebe00 ("spi: use devm_clk_get_enabled() in mcfqspi_probe()")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://msgid.link/r/6670aed303e1f7680e0911387606a8ae069e2cef.1704464447.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20230919085156.1578-15-jirislaby@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 66aad7d8d3ec ("usb: cdc-acm: return correct error code on unsupported break")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-coldfire-qspi.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/tty/tty_io.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-coldfire-qspi.c b/drivers/spi/spi-coldfire-qspi.c
-index f0b630fe16c3..b341b6908df0 100644
---- a/drivers/spi/spi-coldfire-qspi.c
-+++ b/drivers/spi/spi-coldfire-qspi.c
-@@ -441,7 +441,6 @@ static void mcfqspi_remove(struct platform_device *pdev)
- 	mcfqspi_wr_qmr(mcfqspi, MCFQSPI_QMR_MSTR);
- 
- 	mcfqspi_cs_teardown(mcfqspi);
--	clk_disable_unprepare(mcfqspi->clk);
- }
- 
- #ifdef CONFIG_PM_SLEEP
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index b6ddc1bf307b..ddcaf967f64b 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -2484,8 +2484,7 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
+ 	retval = tty->ops->break_ctl(tty, -1);
+ 	if (retval)
+ 		goto out;
+-	if (!signal_pending(current))
+-		msleep_interruptible(duration);
++	msleep_interruptible(duration);
+ 	retval = tty->ops->break_ctl(tty, 0);
+ out:
+ 	tty_write_unlock(tty);
 -- 
 2.43.0
 
