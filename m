@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5980D2B9B7;
-	Tue, 23 Jan 2024 01:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7A06121;
+	Tue, 23 Jan 2024 01:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974100; cv=none; b=Qquhdu4XEsIqtSEoja4mkmSsTNfhFH/96cwV81v8CqNcTLxKpMS9M1JcYlYfz0XHcQovH+LL8aBqKLogXyE2OmGwSD2Cs5MIaRwaPGqfQU+210SkqGgp4dYCBdRWuyHK2XGf5y0Izw7Kkz2dQVvgpaapFH4USQUhYlKO6D/T4dI=
+	t=1705974101; cv=none; b=YOMGDrd2WBXui+Z7QvoOelCMMgCNI5432YJnC3vZILz0mlSgZ5JK29PDVb1yjTt43q1s+UGDGobsq17kojW9cwtxG6bzheHubLyREtybhnq06RzTTqeKpiNeCo+AfHDoTnhBCf59R6IVgz0zcDNs8EjRDbzI/N4ddG8U8SlWndo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974100; c=relaxed/simple;
-	bh=siULYyd6sn4kxKk5ZuXEEX+KWBkpR5pIWDSQD7DWMNs=;
+	s=arc-20240116; t=1705974101; c=relaxed/simple;
+	bh=JWmf85/XV7TbSEDTsNU6S71WFaa0FWMcmKoSMFnf2MY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lorg1WBW2EwVYlIHqC2I6foXlVCO+tFpjLtONTAPEkJMHF1tm8tVub956ucOgYQrcfR4hsxV04eGpffPYoTQdmoJahLOc8W5pPmdmwKyb1jwktSxutbJwkhRs5GWYdskjY6zi2Hzmh8Xhlc26F2NA6zDBNQk5Alnza+rsjrPt18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXI/T1g3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTPhbug+LWw0hhJohV6MQU1H4qgkcjjo9RUzqCcDPT5Br7tdY9hqNmbpVJzaMv13OzfYuPFL+dAorv8BfWnRb1RzmJESocsh1AmfcdZV4RfA+xe5wKjcPgSWBNa+xWo01wlB8WF8i/GdD9rS3gQN4+/gp8vrzpJKy9u8xn4aAVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwaXTuWP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXI/T1g3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB08C433C7;
-	Tue, 23 Jan 2024 01:41:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwaXTuWP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7485C43390;
+	Tue, 23 Jan 2024 01:41:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974099;
-	bh=siULYyd6sn4kxKk5ZuXEEX+KWBkpR5pIWDSQD7DWMNs=;
+	s=korg; t=1705974101;
+	bh=JWmf85/XV7TbSEDTsNU6S71WFaa0FWMcmKoSMFnf2MY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VXI/T1g3JuFPnLcnA4wcBS0X57f3+JP9U22olWcQP4CVwjPPPXMYqDDnYjMIIU+lu
-	 +ZKH1noVlRExuEPYdm3X4wXaNr7UF3kmn+jS6vjD2Bt1nTvrCqWMgTYjk2Mi/HX3aP
-	 cetnym2xq0JnTIiuy4WQo+uTM1zVDS+vFxZ3x1Dg=
+	b=KwaXTuWPNqlvJC5IuWa9vxwYvYSrXUtlpa6Uhz9FvLKFqBJtUPJodG8GkB5jmb0gT
+	 dby1+BOGOHZb+QxWev2do9kKiIWHUbtd8vHwK6Cpy54iHDU0JmCFazklUzF6EHbhkW
+	 3IFMpHeoMgIQo+5L85BwFywRrToT5vagAnPN/Q7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Luciano Coelho <luciano.coelho@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Kyle Meyer <kyle.meyer@hpe.com>,
+	Alexander Antonov <alexander.antonov@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 163/374] wifi: iwlwifi: mvm: set siso/mimo chains to 1 in FW SMPS request
-Date: Mon, 22 Jan 2024 15:56:59 -0800
-Message-ID: <20240122235750.276192954@linuxfoundation.org>
+Subject: [PATCH 6.6 021/583] perf/x86/intel/uncore: Fix NULL pointer dereference issue in upi_fill_topology()
+Date: Mon, 22 Jan 2024 15:51:12 -0800
+Message-ID: <20240122235812.863075023@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +49,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Alexander Antonov <alexander.antonov@linux.intel.com>
 
-[ Upstream commit b1a2e5c310e063560760806d2cc5d2233c596067 ]
+[ Upstream commit 1692cf434ba13ee212495b5af795b6a07e986ce4 ]
 
-The firmware changed their mind, don't set the chains to zero,
-instead set them to 1 as we normally would for connections to
-APs that don't use MIMO.
+Get logical socket id instead of physical id in discover_upi_topology()
+to avoid out-of-bound access on 'upi = &type->topology[nid][idx];' line
+that leads to NULL pointer dereference in upi_fill_topology()
 
-Fixes: 2a7ce54ccc23 ("iwlwifi: mvm: honour firmware SMPS requests")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Luciano Coelho <luciano.coelho@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20231219215605.7f031f1a127f.Idc816e0f604b07d22a9d5352bc23c445512fad14@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: f680b6e6062e ("perf/x86/intel/uncore: Enable UPI topology discovery for Icelake Server")
+Reported-by: Kyle Meyer <kyle.meyer@hpe.com>
+Signed-off-by: Alexander Antonov <alexander.antonov@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Tested-by: Kyle Meyer <kyle.meyer@hpe.com>
+Link: https://lore.kernel.org/r/20231127185246.2371939-2-alexander.antonov@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ arch/x86/events/intel/uncore_snbep.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c b/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c
-index 6d82725cb87d..32ed8227d985 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/phy-ctxt.c
-@@ -99,17 +99,6 @@ static void iwl_mvm_phy_ctxt_set_rxchain(struct iwl_mvm *mvm,
- 		active_cnt = 2;
- 	}
+diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
+index 8250f0f59c2b..49bc27ab26ad 100644
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -5596,7 +5596,7 @@ static int discover_upi_topology(struct intel_uncore_type *type, int ubox_did, i
+ 	struct pci_dev *ubox = NULL;
+ 	struct pci_dev *dev = NULL;
+ 	u32 nid, gid;
+-	int i, idx, ret = -EPERM;
++	int i, idx, lgc_pkg, ret = -EPERM;
+ 	struct intel_uncore_topology *upi;
+ 	unsigned int devfn;
  
--	/*
--	 * If the firmware requested it, then we know that it supports
--	 * getting zero for the values to indicate "use one, but pick
--	 * which one yourself", which means it can dynamically pick one
--	 * that e.g. has better RSSI.
--	 */
--	if (mvm->fw_static_smps_request && active_cnt == 1 && idle_cnt == 1) {
--		idle_cnt = 0;
--		active_cnt = 0;
--	}
--
- 	*rxchain_info = cpu_to_le32(iwl_mvm_get_valid_rx_ant(mvm) <<
- 					PHY_RX_CHAIN_VALID_POS);
- 	*rxchain_info |= cpu_to_le32(idle_cnt << PHY_RX_CHAIN_CNT_POS);
+@@ -5614,8 +5614,13 @@ static int discover_upi_topology(struct intel_uncore_type *type, int ubox_did, i
+ 		for (i = 0; i < 8; i++) {
+ 			if (nid != GIDNIDMAP(gid, i))
+ 				continue;
++			lgc_pkg = topology_phys_to_logical_pkg(i);
++			if (lgc_pkg < 0) {
++				ret = -EPERM;
++				goto err;
++			}
+ 			for (idx = 0; idx < type->num_boxes; idx++) {
+-				upi = &type->topology[nid][idx];
++				upi = &type->topology[lgc_pkg][idx];
+ 				devfn = PCI_DEVFN(dev_link0 + idx, ICX_UPI_REGS_ADDR_FUNCTION);
+ 				dev = pci_get_domain_bus_and_slot(pci_domain_nr(ubox->bus),
+ 								  ubox->bus->number,
+@@ -5626,6 +5631,7 @@ static int discover_upi_topology(struct intel_uncore_type *type, int ubox_did, i
+ 						goto err;
+ 				}
+ 			}
++			break;
+ 		}
+ 	}
+ err:
 -- 
 2.43.0
 
