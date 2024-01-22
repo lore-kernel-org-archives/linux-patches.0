@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6891FAD;
-	Tue, 23 Jan 2024 00:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830391C02;
+	Tue, 23 Jan 2024 00:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969483; cv=none; b=o8iy+9C2O2uAPYY7YbUut5x1vZolFG0z+6tfBHWv+4mcIDkLdHwXLJ5nO1jR8kuwg7iCA4pkjA5qTe4x8t5X5B0XG6Bue+9zNYJ6woWrb29N5wBRG/Rys5U2S7B3lWsU3tS3MHWVdt632OjC+UNSz7p5fXPSxlQ1noTgGdddbRQ=
+	t=1705969484; cv=none; b=oPguMtPfWFenLwcZLfXqW8iudAHPAvPff13AYSKP3D8kEHPU0sywqGO4sKYPR5nN+KfJQapunnjg7Yg/ZmWaLCtBVcR6fn4fWPGvpA8JM6ZzFnv+R6pr6LFQow3Gky1NrAybdh4rSjO7H+GcQ7tnJaY8ldCN7r/QjHZxmyqaaV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969483; c=relaxed/simple;
-	bh=CHr7ycBq8O22gokO5hGudjFlehdNP4xUtDcytc/xoq8=;
+	s=arc-20240116; t=1705969484; c=relaxed/simple;
+	bh=vR9Ps+A2UXaeqNrbdwRuIW2M1xcK8td7RL0xDYb4cKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tryP3OY4Vz+ZHNA+6Qr3A772RelDgmFEd/b36HydN+bIzEm6AOUmRFWUg08FigwARDaTsmcNT1XLuujlBoLFgRMg82xKHu1VX3fqMWomRnGhDEhdBOOqbZztbSoxveRYWMNmb7IR1Q6jMtM+ccJcVfG4myKxY735yBIO7ziFcfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iamCEHFY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cCFMZqCicfT/W4j2c4xBOS11lDGiEyGhHb5sAtpUk0OtU4MwnkJasIZOwWzEiVLZTJZQTPT8wQWlrfkiS7cnGHJMSptcjbjTXId1wMqcenkkST9zLdEWlC0DvU90DvcXQVh5shu1XVqTceFnSn2S7CTZPzWag0G5Pq1bRLr/r6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oA8eXZxP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iamCEHFY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BFBC43390;
-	Tue, 23 Jan 2024 00:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oA8eXZxP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD47C433F1;
+	Tue, 23 Jan 2024 00:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969482;
-	bh=CHr7ycBq8O22gokO5hGudjFlehdNP4xUtDcytc/xoq8=;
+	s=korg; t=1705969484;
+	bh=vR9Ps+A2UXaeqNrbdwRuIW2M1xcK8td7RL0xDYb4cKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iamCEHFYB9LYdP+b0ikVqsrUJCu8RoYdu2pKz7zDrbpy2DdoXPX6n+2jbQmQI4aTt
-	 LIZpPLmwC9MNYtZbxTWo/ebjwxYVy8xfRTnfxRB00XA0HurqVtvdOlOKM4pL1tRM6z
-	 sYT65mterxWy+lsovQdcIt/mT5DM4k8RCiArg2SY=
+	b=oA8eXZxPSpgHWtx1mEc8R45YUMQAfJHBefB+fo7cqx3nLYTtVfkCcpaSs7R2NMwI2
+	 s875qIt751GdGe2BQYOCcmDEL8sRtxapoqtzO9LEguS9U3wJL5QXa6Gm1narcj1W8E
+	 AzrFNv3jeCuyAQvv3OgbALx3fOI06ESvzgGOdITM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Philipp Zabel <philipp.zabel@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 274/641] drm/tidss: Fix dss reset
-Date: Mon, 22 Jan 2024 15:52:58 -0800
-Message-ID: <20240122235826.492960286@linuxfoundation.org>
+Subject: [PATCH 6.7 275/641] drm/imx/lcdc: Fix double-free of driver data
+Date: Mon, 22 Jan 2024 15:52:59 -0800
+Message-ID: <20240122235826.522388184@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -45,110 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit bc288a927815efcf9d7f4a54d4d89c5df478c635 ]
+[ Upstream commit ff3670877e7c73d06c2a835d9abb62efcae0145c ]
 
-The probe function calls dispc_softreset() before runtime PM is enabled
-and without enabling any of the DSS clocks. This happens to work by
-luck, and we need to make sure the DSS HW is active and the fclk is
-enabled.
+The struct imx_lcdc driver data is allocated using devm_drm_dev_alloc()
+so it must not be explicitly kfree()d.
 
-To fix the above, add a new function, dispc_init_hw(), which does:
+Also drm_kms_helper_poll_fini() should not be called as there is no
+matching drm_kms_helper_poll_init(). So drop the release function
+completely.
 
-- pm_runtime_set_active()
-- clk_prepare_enable(fclk)
-- dispc_softreset().
-
-This ensures that the reset can be successfully accomplished.
-
-Note that we use pm_runtime_set_active(), not the normal
-pm_runtime_get(). The reason for this is that at this point we haven't
-enabled the runtime PM yet and also we don't want the normal resume
-callback to be called: the dispc resume callback does some initial HW
-setup, and it expects that the HW was off (no video ports are
-streaming). If the bootloader has enabled the DSS and has set up a
-boot time splash-screen, the DSS would be enabled and streaming which
-might lead to issues with the normal resume callback.
-
-Fixes: c9b2d923befd ("drm/tidss: Soft Reset DISPC on startup")
-Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Link: https://lore.kernel.org/r/20231109-tidss-probe-v2-8-ac91b5ea35c0@ideasonboard.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Fixes: c87e859cdeb5 ("drm/imx/lcdc: Implement DRM driver for imx25")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Philipp Zabel <philipp.zabel@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230706092731.2630232-1-u.kleine-koenig@pengutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tidss/tidss_dispc.c | 45 ++++++++++++++++++++++++++++-
- 1 file changed, 44 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/imx/lcdc/imx-lcdc.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/tidss/tidss_dispc.c b/drivers/gpu/drm/tidss/tidss_dispc.c
-index 2af623842cfb..98efbaf3b0c2 100644
---- a/drivers/gpu/drm/tidss/tidss_dispc.c
-+++ b/drivers/gpu/drm/tidss/tidss_dispc.c
-@@ -2724,6 +2724,49 @@ static int dispc_softreset(struct dispc_device *dispc)
- 	return 0;
- }
+diff --git a/drivers/gpu/drm/imx/lcdc/imx-lcdc.c b/drivers/gpu/drm/imx/lcdc/imx-lcdc.c
+index 22b65f4a0e30..4beb3b4bd694 100644
+--- a/drivers/gpu/drm/imx/lcdc/imx-lcdc.c
++++ b/drivers/gpu/drm/imx/lcdc/imx-lcdc.c
+@@ -342,21 +342,12 @@ static const struct drm_mode_config_helper_funcs imx_lcdc_mode_config_helpers =
+ 	.atomic_commit_tail = drm_atomic_helper_commit_tail_rpm,
+ };
  
-+static int dispc_init_hw(struct dispc_device *dispc)
-+{
-+	struct device *dev = dispc->dev;
-+	int ret;
-+
-+	ret = pm_runtime_set_active(dev);
-+	if (ret) {
-+		dev_err(dev, "Failed to set DSS PM to active\n");
-+		return ret;
-+	}
-+
-+	ret = clk_prepare_enable(dispc->fclk);
-+	if (ret) {
-+		dev_err(dev, "Failed to enable DSS fclk\n");
-+		goto err_runtime_suspend;
-+	}
-+
-+	ret = dispc_softreset(dispc);
-+	if (ret)
-+		goto err_clk_disable;
-+
-+	clk_disable_unprepare(dispc->fclk);
-+	ret = pm_runtime_set_suspended(dev);
-+	if (ret) {
-+		dev_err(dev, "Failed to set DSS PM to suspended\n");
-+		return ret;
-+	}
-+
-+	return 0;
-+
-+err_clk_disable:
-+	clk_disable_unprepare(dispc->fclk);
-+
-+err_runtime_suspend:
-+	ret = pm_runtime_set_suspended(dev);
-+	if (ret) {
-+		dev_err(dev, "Failed to set DSS PM to suspended\n");
-+		return ret;
-+	}
-+
-+	return ret;
-+}
-+
- int dispc_init(struct tidss_device *tidss)
- {
- 	struct device *dev = tidss->dev;
-@@ -2833,7 +2876,7 @@ int dispc_init(struct tidss_device *tidss)
- 	of_property_read_u32(dispc->dev->of_node, "max-memory-bandwidth",
- 			     &dispc->memory_bandwidth_limit);
+-static void imx_lcdc_release(struct drm_device *drm)
+-{
+-	struct imx_lcdc *lcdc = imx_lcdc_from_drmdev(drm);
+-
+-	drm_kms_helper_poll_fini(drm);
+-	kfree(lcdc);
+-}
+-
+ DEFINE_DRM_GEM_DMA_FOPS(imx_lcdc_drm_fops);
  
--	r = dispc_softreset(dispc);
-+	r = dispc_init_hw(dispc);
- 	if (r)
- 		return r;
- 
+ static struct drm_driver imx_lcdc_drm_driver = {
+ 	.driver_features = DRIVER_GEM | DRIVER_MODESET | DRIVER_ATOMIC,
+ 	.fops = &imx_lcdc_drm_fops,
+ 	DRM_GEM_DMA_DRIVER_OPS_VMAP,
+-	.release = imx_lcdc_release,
+ 	.name = "imx-lcdc",
+ 	.desc = "i.MX LCDC driver",
+ 	.date = "20200716",
 -- 
 2.43.0
 
