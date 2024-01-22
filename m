@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC70C5B5A1;
-	Tue, 23 Jan 2024 00:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6CEF59B72;
+	Tue, 23 Jan 2024 00:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969808; cv=none; b=RKpFioXQtU1Dd0NN+D9mKvXSl4Sv5EfdpFodHwseTbLjLIsRD2EQmT+yooYJIj6K/rhPIWFGu08pSbfvel4EGwkFRw2maSxsv/dxZaTo7I43wsp/6U2zrdxzYxSCUUvwavwt5Hn+2iTd6+lMisz4zcAEGs5o4CPFSAgiQeNMZLo=
+	t=1705969808; cv=none; b=cBEvDoJMYMTdL8nS2RKQNjVaB7qqCImolo+b60GGzxYmIwpvSoS+CGYxc08qOVIE9f7Mx9KTiq2WQJMkSzlIXr87ayQ0I0JZqjM1GHHKDrT7F2l2e1eQC7wKaBLP1dHg5/3ANmsGwkyA+ArGQUyzF+4m+T05VwWqm8A2IY2nDuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705969808; c=relaxed/simple;
-	bh=VdWkLRRjmmd8qFOLbwjIwZ6LizXZXjeBZ9xGy3LVdMM=;
+	bh=QSkMfCFYnnIUwzr4f9d5QhxDyYyeHC6tx+8+OdMkvBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hz00KKPRD2APNzgniuogKh8b7gmqa/qiCNeXbJEHDi7G0qaTdSha+XrLvNhKKJ4F5WtGwC1mcdAw+5qffVLq3FFdfqoNl4ODe11A43XuD3PJtfEt+SdG55fQ1QAuDweYEoGWIyrlfkcTiBVCT5MnmoSn+xi3+5FcoDGdr2Qj5Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uHXOf1Fg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c7KWmFYtktmxJVhsACBO1I9X10nr8yXLOeGI6H4xoKFHprj22d82MuJOc0IudvRV8v1BzuxV8d+Aragx63mZpUVidbLFJ0w7iZicwIj1d5NI6IGicN5bMH7RJmdTl4eyag/yu5gviYvEVhuWsdPG18eMg6xoGnV3chyRCC3ZgTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykRQObfU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uHXOf1Fg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41548C433B1;
-	Tue, 23 Jan 2024 00:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykRQObfU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777CEC433C7;
+	Tue, 23 Jan 2024 00:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969807;
-	bh=VdWkLRRjmmd8qFOLbwjIwZ6LizXZXjeBZ9xGy3LVdMM=;
+	s=korg; t=1705969808;
+	bh=QSkMfCFYnnIUwzr4f9d5QhxDyYyeHC6tx+8+OdMkvBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uHXOf1FgJdFuMUOE9vwyBPoiBhQXs35/pkfrfLK/hE1+FCy3b6SC+FnFlLTABQx77
-	 nGUb1Q7cm3Y3EBIUjwekj3Piw/b6UJETwWwPIWnBW3YWmqDBDLh0KDyp26jvorNHEn
-	 YZ9Krv24+z3qyofWJZuFzni2DOk42hsEVCBjpVeo=
+	b=ykRQObfUprA06ta7hJC7sfpBrXL7aCmX2LC8HtZg4eJeH4Hc1mrPgI3F7f4fgKplV
+	 lSwEU4HnJyCiPvSdzoEBssNj/gwvi7YDe6E+VPg12RkqoZnZBv8iM77Zbti8YSG2ik
+	 23bixkdeFp6e94gIrw09SwOT/MWOsuVJtbGUdZqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.7 462/641] Revert "net: rtnetlink: Enslave device before bringing it up"
-Date: Mon, 22 Jan 2024 15:56:06 -0800
-Message-ID: <20240122235832.496336255@linuxfoundation.org>
+	Stefan Sterz <s.sterz@proxmox.com>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.7 463/641] Revert "nSVM: Check for reserved encodings of TLB_CONTROL in nested VMCB"
+Date: Mon, 22 Jan 2024 15:56:07 -0800
+Message-ID: <20240122235832.528055551@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,65 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit ec4ffd100ffb396eca13ebe7d18938ea80f399c3 upstream.
+commit a484755ab2526ebdbe042397cdd6e427eb4b1a68 upstream.
 
-This reverts commit a4abfa627c3865c37e036bccb681619a50d3d93c.
+Revert KVM's made-up consistency check on SVM's TLB control.  The APM says
+that unsupported encodings are reserved, but the APM doesn't state that
+VMRUN checks for a supported encoding.  Unless something is called out
+in "Canonicalization and Consistency Checks" or listed as MBZ (Must Be
+Zero), AMD behavior is typically to let software shoot itself in the foot.
 
-The patch broke:
-> ip link set dummy0 up
-> ip link set dummy0 master bond0 down
+This reverts commit 174a921b6975ef959dd82ee9e8844067a62e3ec1.
 
-This last command is useful to be able to enslave an interface with only
-one netlink message.
-
-After discussion, there is no good reason to support:
-> ip link set dummy0 down
-> ip link set dummy0 master bond0 up
-because the bond interface already set the slave up when it is up.
-
+Fixes: 174a921b6975 ("nSVM: Check for reserved encodings of TLB_CONTROL in nested VMCB")
+Reported-by: Stefan Sterz <s.sterz@proxmox.com>
+Closes: https://lkml.kernel.org/r/b9915c9c-4cf6-051a-2d91-44cc6380f455%40proxmox.com
 Cc: stable@vger.kernel.org
-Fixes: a4abfa627c38 ("net: rtnetlink: Enslave device before bringing it up")
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://lore.kernel.org/r/20240108094103.2001224-2-nicolas.dichtel@6wind.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+Link: https://lore.kernel.org/r/20231018194104.1896415-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/x86/kvm/svm/nested.c |   15 ---------------
+ 1 file changed, 15 deletions(-)
 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -2905,13 +2905,6 @@ static int do_setlink(const struct sk_bu
- 		call_netdevice_notifiers(NETDEV_CHANGEADDR, dev);
- 	}
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -247,18 +247,6 @@ static bool nested_svm_check_bitmap_pa(s
+ 	    kvm_vcpu_is_legal_gpa(vcpu, addr + size - 1);
+ }
  
--	if (tb[IFLA_MASTER]) {
--		err = do_set_master(dev, nla_get_u32(tb[IFLA_MASTER]), extack);
--		if (err)
--			goto errout;
--		status |= DO_SETLINK_MODIFIED;
+-static bool nested_svm_check_tlb_ctl(struct kvm_vcpu *vcpu, u8 tlb_ctl)
+-{
+-	/* Nested FLUSHBYASID is not supported yet.  */
+-	switch(tlb_ctl) {
+-		case TLB_CONTROL_DO_NOTHING:
+-		case TLB_CONTROL_FLUSH_ALL_ASID:
+-			return true;
+-		default:
+-			return false;
 -	}
+-}
 -
- 	if (ifm->ifi_flags || ifm->ifi_change) {
- 		err = dev_change_flags(dev, rtnl_dev_combine_flags(dev, ifm),
- 				       extack);
-@@ -2919,6 +2912,13 @@ static int do_setlink(const struct sk_bu
- 			goto errout;
- 	}
+ static bool __nested_vmcb_check_controls(struct kvm_vcpu *vcpu,
+ 					 struct vmcb_ctrl_area_cached *control)
+ {
+@@ -278,9 +266,6 @@ static bool __nested_vmcb_check_controls
+ 					   IOPM_SIZE)))
+ 		return false;
  
-+	if (tb[IFLA_MASTER]) {
-+		err = do_set_master(dev, nla_get_u32(tb[IFLA_MASTER]), extack);
-+		if (err)
-+			goto errout;
-+		status |= DO_SETLINK_MODIFIED;
-+	}
-+
- 	if (tb[IFLA_CARRIER]) {
- 		err = dev_change_carrier(dev, nla_get_u8(tb[IFLA_CARRIER]));
- 		if (err)
+-	if (CC(!nested_svm_check_tlb_ctl(vcpu, control->tlb_ctl)))
+-		return false;
+-
+ 	if (CC((control->int_ctl & V_NMI_ENABLE_MASK) &&
+ 	       !vmcb12_is_intercept(control, INTERCEPT_NMI))) {
+ 		return false;
 
 
