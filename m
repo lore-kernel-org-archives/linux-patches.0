@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203CA5BAD4;
-	Tue, 23 Jan 2024 01:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639755A7B8;
+	Tue, 23 Jan 2024 01:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974348; cv=none; b=WYastIOoZ1PS5WCyVpTf1OZYg8/DztA9TkhogPWSTCPJB7vtmKN7VbGQsiIZnrnlFNcVsYUaCeliZEdGsbObBdN9EicZx+1wfipxPhZqgxAPVIz7R2ND363vyng7ANgWffhhAfEeW6S4K/RMqKVCHs6TsCuIwpCCN/rWaSpfjf4=
+	t=1705974349; cv=none; b=KhbXthbmRLUhyxMkJeE+MICPVTNoTo5qa9rhd5ZHp2dwb5L4ushfTSWhFITqlrcnU3ls0aRfDZF7HT03rrI4QeJKOVomvxFUgoa6bR/1ZrrQkQ7AD//qY5BFRVp/HtnzkoDObt8Z3PUE4f4kPbGDt5kSQxf4SHd52iY0ugpVP7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974348; c=relaxed/simple;
-	bh=/tNzrbVTp+k+Eqx9OkYVLUYvsRzdp0jwb4vfNvUprS8=;
+	s=arc-20240116; t=1705974349; c=relaxed/simple;
+	bh=6SBgCHWrvdlz43g7ab+lcdEPzc5VVlMUZu1pF/e1Jm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LsWbvLvLZddtgc6jPw4mzB+x7TiayC7sC6ywU6uAEZ5wj0mhVzmq9v1EcEFv9xPA/7UiHmFmj2Q7QSnvFz9up0XYfbvUn19/6yMtpHv8ZCKWETGb3GtX3g1u9XdXrisaAK+UWmjXflY86GF7XWGeH1Ti65qFbBX1OcYTW6rhJIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Yri2H1D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pu5wevapA+jm8uODSAXdJR+5pahz5Qb3EY/ti7UUtFvwAcGvegC9pRcI2aLxZQiDe37QiWFTeU/FtkMQGNgIsxZxwsQIdndgsigVgLxEjfsHFK8K49NqBARUNZX11OBpAAHsOE2ZSLusoluF6Ko1bjHuE8nq5Sd8EGDyVJjXFAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFaM5r4v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Yri2H1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29D4C433F1;
-	Tue, 23 Jan 2024 01:45:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFaM5r4v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4287C43394;
+	Tue, 23 Jan 2024 01:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705974348;
-	bh=/tNzrbVTp+k+Eqx9OkYVLUYvsRzdp0jwb4vfNvUprS8=;
+	bh=6SBgCHWrvdlz43g7ab+lcdEPzc5VVlMUZu1pF/e1Jm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Yri2H1DGhnLf6PdAteE7GscyUlK/VaETbWiweEl2E7bkAE7uzCWcFkYtBsnQL27y
-	 Sb+d5gH20H4KSZp7NOzelc1Qx6ZeFG6ll072E1x3Q8yklrZ9vBVfvXipW11VUWy4Ah
-	 G9+RVvUdPw2ecjvlCBdopVI2X7/h5yIHUTSmUZXI=
+	b=TFaM5r4v7tS2KaJDuV+VE3xAwUjBHDuZqvWMBU7rNSNJIP6r02hoq1YnglHml9w5o
+	 vI5GpHm26yBUKU6DnVU0pb5/GAfsCtvkBXSraG0ap41vB9R9rdWkXGPBaypCui+kgr
+	 024c3Wfe90RbQZ06bTH6KGhx3uy3oC0dEg/AN5nE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiqi Song <songzhiqi1@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jan Kara <jack@suse.cz>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/583] crypto: hisilicon/zip - save capability registers in probe process
-Date: Mon, 22 Jan 2024 15:51:50 -0800
-Message-ID: <20240122235813.929001085@linuxfoundation.org>
+Subject: [PATCH 5.15 186/374] f2fs: fix to avoid dirent corruption
+Date: Mon, 22 Jan 2024 15:57:22 -0800
+Message-ID: <20240122235751.092292114@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,161 +49,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiqi Song <songzhiqi1@huawei.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 2ff0ad847951d61c2d8b309e1ccefb26c57dcc7b ]
+[ Upstream commit 53edb549565f55ccd0bdf43be3d66ce4c2d48b28 ]
 
-Pre-store the valid value of the zip alg support related capability
-register in hisi_zip_qm_init(), which will be called by hisi_zip_probe().
-It can reduce the number of capability register queries and avoid
-obtaining incorrect values in abnormal scenarios, such as reset failed
-and the memory space disabled.
+As Al reported in link[1]:
 
-Fixes: db700974b69d ("crypto: hisilicon/zip - support zip capability")
-Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+f2fs_rename()
+...
+	if (old_dir != new_dir && !whiteout)
+		f2fs_set_link(old_inode, old_dir_entry,
+					old_dir_page, new_dir);
+	else
+		f2fs_put_page(old_dir_page, 0);
+
+You want correct inumber in the ".." link.  And cross-directory
+rename does move the source to new parent, even if you'd been asked
+to leave a whiteout in the old place.
+
+[1] https://lore.kernel.org/all/20231017055040.GN800259@ZenIV/
+
+With below testcase, it may cause dirent corruption, due to it missed
+to call f2fs_set_link() to update ".." link to new directory.
+- mkdir -p dir/foo
+- renameat2 -w dir/foo bar
+
+[ASSERT] (__chk_dots_dentries:1421)  --> Bad inode number[0x4] for '..', parent parent ino is [0x3]
+[FSCK] other corrupted bugs                           [Fail]
+
+Fixes: 7e01e7ad746b ("f2fs: support RENAME_WHITEOUT")
+Cc: Jan Kara <jack@suse.cz>
+Reported-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/zip/zip_main.c | 73 ++++++++++++++++++++-----
- 1 file changed, 60 insertions(+), 13 deletions(-)
+ fs/f2fs/namei.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/hisilicon/zip/zip_main.c b/drivers/crypto/hisilicon/zip/zip_main.c
-index 4d64a43515a9..cd7ecb2180bf 100644
---- a/drivers/crypto/hisilicon/zip/zip_main.c
-+++ b/drivers/crypto/hisilicon/zip/zip_main.c
-@@ -248,6 +248,26 @@ static struct hisi_qm_cap_info zip_basic_cap_info[] = {
- 	{ZIP_CAP_MAX, 0x317c, 0, GENMASK(0, 0), 0x0, 0x0, 0x0}
- };
- 
-+enum zip_pre_store_cap_idx {
-+	ZIP_CORE_NUM_CAP_IDX = 0x0,
-+	ZIP_CLUSTER_COMP_NUM_CAP_IDX,
-+	ZIP_CLUSTER_DECOMP_NUM_CAP_IDX,
-+	ZIP_DECOMP_ENABLE_BITMAP_IDX,
-+	ZIP_COMP_ENABLE_BITMAP_IDX,
-+	ZIP_DRV_ALG_BITMAP_IDX,
-+	ZIP_DEV_ALG_BITMAP_IDX,
-+};
-+
-+static const u32 zip_pre_store_caps[] = {
-+	ZIP_CORE_NUM_CAP,
-+	ZIP_CLUSTER_COMP_NUM_CAP,
-+	ZIP_CLUSTER_DECOMP_NUM_CAP,
-+	ZIP_DECOMP_ENABLE_BITMAP,
-+	ZIP_COMP_ENABLE_BITMAP,
-+	ZIP_DRV_ALG_BITMAP,
-+	ZIP_DEV_ALG_BITMAP,
-+};
-+
- enum {
- 	HZIP_COMP_CORE0,
- 	HZIP_COMP_CORE1,
-@@ -442,7 +462,7 @@ bool hisi_zip_alg_support(struct hisi_qm *qm, u32 alg)
- {
- 	u32 cap_val;
- 
--	cap_val = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_DRV_ALG_BITMAP, qm->cap_ver);
-+	cap_val = qm->cap_tables.dev_cap_table[ZIP_DRV_ALG_BITMAP_IDX].cap_val;
- 	if ((alg & cap_val) == alg)
- 		return true;
- 
-@@ -567,10 +587,8 @@ static int hisi_zip_set_user_domain_and_cache(struct hisi_qm *qm)
+diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
+index 7a86a8dcf4f1..0d6906644feb 100644
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -1088,7 +1088,7 @@ static int f2fs_rename(struct inode *old_dir, struct dentry *old_dentry,
  	}
  
- 	/* let's open all compression/decompression cores */
--	dcomp_bm = hisi_qm_get_hw_info(qm, zip_basic_cap_info,
--				       ZIP_DECOMP_ENABLE_BITMAP, qm->cap_ver);
--	comp_bm = hisi_qm_get_hw_info(qm, zip_basic_cap_info,
--				      ZIP_COMP_ENABLE_BITMAP, qm->cap_ver);
-+	dcomp_bm = qm->cap_tables.dev_cap_table[ZIP_DECOMP_ENABLE_BITMAP_IDX].cap_val;
-+	comp_bm = qm->cap_tables.dev_cap_table[ZIP_COMP_ENABLE_BITMAP_IDX].cap_val;
- 	writel(HZIP_DECOMP_CHECK_ENABLE | dcomp_bm | comp_bm, base + HZIP_CLOCK_GATE_CTRL);
- 
- 	/* enable sqc,cqc writeback */
-@@ -797,9 +815,8 @@ static int hisi_zip_core_debug_init(struct hisi_qm *qm)
- 	char buf[HZIP_BUF_SIZE];
- 	int i;
- 
--	zip_core_num = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_CORE_NUM_CAP, qm->cap_ver);
--	zip_comp_core_num = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_CLUSTER_COMP_NUM_CAP,
--						qm->cap_ver);
-+	zip_core_num = qm->cap_tables.dev_cap_table[ZIP_CORE_NUM_CAP_IDX].cap_val;
-+	zip_comp_core_num = qm->cap_tables.dev_cap_table[ZIP_CLUSTER_COMP_NUM_CAP_IDX].cap_val;
- 
- 	for (i = 0; i < zip_core_num; i++) {
- 		if (i < zip_comp_core_num)
-@@ -941,7 +958,7 @@ static int hisi_zip_show_last_regs_init(struct hisi_qm *qm)
- 	u32 zip_core_num;
- 	int i, j, idx;
- 
--	zip_core_num = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_CORE_NUM_CAP, qm->cap_ver);
-+	zip_core_num = qm->cap_tables.dev_cap_table[ZIP_CORE_NUM_CAP_IDX].cap_val;
- 
- 	debug->last_words = kcalloc(core_dfx_regs_num * zip_core_num + com_dfx_regs_num,
- 				    sizeof(unsigned int), GFP_KERNEL);
-@@ -997,9 +1014,9 @@ static void hisi_zip_show_last_dfx_regs(struct hisi_qm *qm)
- 				 hzip_com_dfx_regs[i].name, debug->last_words[i], val);
- 	}
- 
--	zip_core_num = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_CORE_NUM_CAP, qm->cap_ver);
--	zip_comp_core_num = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_CLUSTER_COMP_NUM_CAP,
--						qm->cap_ver);
-+	zip_core_num = qm->cap_tables.dev_cap_table[ZIP_CORE_NUM_CAP_IDX].cap_val;
-+	zip_comp_core_num = qm->cap_tables.dev_cap_table[ZIP_CLUSTER_COMP_NUM_CAP_IDX].cap_val;
-+
- 	for (i = 0; i < zip_core_num; i++) {
- 		if (i < zip_comp_core_num)
- 			scnprintf(buf, sizeof(buf), "Comp_core-%d", i);
-@@ -1155,6 +1172,28 @@ static int hisi_zip_pf_probe_init(struct hisi_zip *hisi_zip)
- 	return ret;
- }
- 
-+static int zip_pre_store_cap_reg(struct hisi_qm *qm)
-+{
-+	struct hisi_qm_cap_record *zip_cap;
-+	struct pci_dev *pdev = qm->pdev;
-+	size_t i, size;
-+
-+	size = ARRAY_SIZE(zip_pre_store_caps);
-+	zip_cap = devm_kzalloc(&pdev->dev, sizeof(*zip_cap) * size, GFP_KERNEL);
-+	if (!zip_cap)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < size; i++) {
-+		zip_cap[i].type = zip_pre_store_caps[i];
-+		zip_cap[i].cap_val = hisi_qm_get_hw_info(qm, zip_basic_cap_info,
-+				     zip_pre_store_caps[i], qm->cap_ver);
-+	}
-+
-+	qm->cap_tables.dev_cap_table = zip_cap;
-+
-+	return 0;
-+}
-+
- static int hisi_zip_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
- {
- 	u64 alg_msk;
-@@ -1193,7 +1232,15 @@ static int hisi_zip_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
- 		return ret;
- 	}
- 
--	alg_msk = hisi_qm_get_hw_info(qm, zip_basic_cap_info, ZIP_DEV_ALG_BITMAP, qm->cap_ver);
-+	/* Fetch and save the value of capability registers */
-+	ret = zip_pre_store_cap_reg(qm);
-+	if (ret) {
-+		pci_err(qm->pdev, "Failed to pre-store capability registers!\n");
-+		hisi_qm_uninit(qm);
-+		return ret;
-+	}
-+
-+	alg_msk = qm->cap_tables.dev_cap_table[ZIP_DEV_ALG_BITMAP_IDX].cap_val;
- 	ret = hisi_qm_set_algs(qm, alg_msk, zip_dev_algs, ARRAY_SIZE(zip_dev_algs));
- 	if (ret) {
- 		pci_err(qm->pdev, "Failed to set zip algs!\n");
+ 	if (old_dir_entry) {
+-		if (old_dir != new_dir && !whiteout)
++		if (old_dir != new_dir)
+ 			f2fs_set_link(old_inode, old_dir_entry,
+ 						old_dir_page, new_dir);
+ 		else
 -- 
 2.43.0
 
