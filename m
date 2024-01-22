@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10ECDEEB9;
-	Tue, 23 Jan 2024 00:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C170EEB9;
+	Tue, 23 Jan 2024 00:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969540; cv=none; b=iY83DDa6A1cxhmDvKKO+sYD1/XbkQsE0xTAIyz4i/hxXta41j2JXGtK4ikOUpksgVWgn4GluLtmxdPZcnBCTcay+6g8retBDsYb68VMjgV1yd5wiQGvIDCDT2/KWhaYrsfs1P3dIiOQMznqvvdVkMz32FeMp89phk6VRDNdvf/A=
+	t=1705969541; cv=none; b=DnH3CCx9Siyew8oNg0O2IM/k1np9aCbi8lCjvelfSOnoAw7sRiFmpdeHR4aIbZUQaoCt5i8o/kuqQy2Yy886LEwo2zIKwEv6RSD+PvQxiTFcAmMANLW1tOycJ8EngjqSgmTkcfNjj4/78ZAS3bqmTJDVmr/PNseyWXCqt+NFn+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969540; c=relaxed/simple;
-	bh=lc5EtGfJwhNr0+crBK3k9xOxw5M86yPg/G7QRD5ZWIk=;
+	s=arc-20240116; t=1705969541; c=relaxed/simple;
+	bh=l9KH4Y8S7qNjsIYQjyYoqdHPvjUecMN610aMiwlAG9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijHoKN5/RVWJr+JqLnVARXdfZGVSaaXj8uoDYdRqA6gDWjcFUeGn0w1unor1F+SQGz7gywVtadul0IWq5BdjsiASzbkOwU1nffKVUxfMX1gYYSYekSG5TL2xuO6atMpDT6zbE2mWvhECRInp8pCwzy2JHltxxmsl385aKrzKHgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REMNPrpO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ctgb+t01w4PN3Y5kp0M7xYFPzxZKxOUioUtB8uTgLIiSBJPVkE/9yHiA4x2rBTdCwPFrbjmgwkqPH3aaqctWDnr1OeHO6z9v/6vpTYLdaFSkr7HvlJe5tXgNbE+2dA4jru8Cwnnz6CQ+lZ6IHxk6aaXVZwnkzEM2zXlemLWUDxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ivju4Hzp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REMNPrpO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E898C433F1;
-	Tue, 23 Jan 2024 00:25:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ivju4Hzp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07ADDC433F1;
+	Tue, 23 Jan 2024 00:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969539;
-	bh=lc5EtGfJwhNr0+crBK3k9xOxw5M86yPg/G7QRD5ZWIk=;
+	s=korg; t=1705969541;
+	bh=l9KH4Y8S7qNjsIYQjyYoqdHPvjUecMN610aMiwlAG9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=REMNPrpObP+AWIboysADfRvCjCvJnSuV77wGBvi3xNgbmToarX8Pko1twEOypZMu9
-	 z6bmZ8H3VmHWocD7T6JaBPS+AzCvinA73PothY2WzwI648ZlR0y79xhleqwIuwCHGm
-	 rJA6scb9y5XC2nouCmZQ0rfC+Ou6rBOXOJUIjjvw=
+	b=ivju4HzpSWnJnjawkEOiq2G2/aqSMWUPxCNGgoBNT6AVBS5EZuF1qM0Irwak8azDZ
+	 10auT9mfgZNXBLXiRRTVtFcy7vfczQ0SE4LlcI5cSoSIL3SsoBwwfnMHKuTV6qCFqt
+	 FZQzd8Vh55aEtSjR+l/RoL5mETAgEpC+29JAzkj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 313/641] drm/panel: st7701: Fix AVCL calculation
-Date: Mon, 22 Jan 2024 15:53:37 -0800
-Message-ID: <20240122235827.694961851@linuxfoundation.org>
+Subject: [PATCH 6.7 291/641] drm/amd/display: Return drm_connector from find_first_crtc_matching_connector
+Date: Mon, 22 Jan 2024 15:53:15 -0800
+Message-ID: <20240122235827.002294112@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,44 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-[ Upstream commit 799825aa87200ade1ba21db853d1c2ff720dcfe0 ]
+[ Upstream commit 748b091d641638e68330b1b24195eaba9aadf997 ]
 
-The AVCL register, according to the datasheet, comes in increments
-of -0.2v between -4.4v (represented by 0x0) to -5.0v (represented
-by 0x3). The current calculation is done by adding the defined
-AVCL value in mV to -4400 and then dividing by 200 to get the register
-value. Unfortunately if I subtract -4400 from -4400 I get -8800, which
-divided by 200 gives me -44. If I instead subtract -4400 from -4400
-I get 0, which divided by 200 gives me 0. Based on the datasheet this
-is the expected register value.
+[WHY]
+We will be dealing with two types of connector: amdgpu_dm_connector
+and drm_writeback_connector.
 
-Fixes: 83b7a8e7e88e ("drm/panel/panel-sitronix-st7701: Parametrize voltage and timing")
+[HOW]
+We want to find both and then cast to the appriopriate type afterwards.
 
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20231208154847.130615-2-macroalpha82@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231208154847.130615-2-macroalpha82@gmail.com
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: dbf5d3d02987 ("drm/amd/display: Check writeback connectors in create_validate_stream_for_sink")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-sitronix-st7701.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c         | 8 +++++---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h         | 2 +-
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c   | 4 +++-
+ 3 files changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-sitronix-st7701.c b/drivers/gpu/drm/panel/panel-sitronix-st7701.c
-index 0459965e1b4f..036ac403ed21 100644
---- a/drivers/gpu/drm/panel/panel-sitronix-st7701.c
-+++ b/drivers/gpu/drm/panel/panel-sitronix-st7701.c
-@@ -288,7 +288,7 @@ static void st7701_init_sequence(struct st7701 *st7701)
- 		   FIELD_PREP(DSI_CMD2_BK1_PWRCTRL2_AVDD_MASK,
- 			      DIV_ROUND_CLOSEST(desc->avdd_mv - 6200, 200)) |
- 		   FIELD_PREP(DSI_CMD2_BK1_PWRCTRL2_AVCL_MASK,
--			      DIV_ROUND_CLOSEST(-4400 + desc->avcl_mv, 200)));
-+			      DIV_ROUND_CLOSEST(-4400 - desc->avcl_mv, 200)));
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index d8c967cee498..5cf919a489a1 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2660,7 +2660,7 @@ static int dm_suspend(void *handle)
+ 	return 0;
+ }
  
- 	/* T2D = 0.2us * T2D[3:0] */
- 	ST7701_DSI(st7701, DSI_CMD2_BK1_SPD1,
+-struct amdgpu_dm_connector *
++struct drm_connector *
+ amdgpu_dm_find_first_crtc_matching_connector(struct drm_atomic_state *state,
+ 					     struct drm_crtc *crtc)
+ {
+@@ -2673,7 +2673,7 @@ amdgpu_dm_find_first_crtc_matching_connector(struct drm_atomic_state *state,
+ 		crtc_from_state = new_con_state->crtc;
+ 
+ 		if (crtc_from_state == crtc)
+-			return to_amdgpu_dm_connector(connector);
++			return connector;
+ 	}
+ 
+ 	return NULL;
+@@ -9354,6 +9354,7 @@ static int dm_update_crtc_state(struct amdgpu_display_manager *dm,
+ 	 * update changed items
+ 	 */
+ 	struct amdgpu_crtc *acrtc = NULL;
++	struct drm_connector *connector = NULL;
+ 	struct amdgpu_dm_connector *aconnector = NULL;
+ 	struct drm_connector_state *drm_new_conn_state = NULL, *drm_old_conn_state = NULL;
+ 	struct dm_connector_state *dm_new_conn_state = NULL, *dm_old_conn_state = NULL;
+@@ -9363,7 +9364,8 @@ static int dm_update_crtc_state(struct amdgpu_display_manager *dm,
+ 	dm_old_crtc_state = to_dm_crtc_state(old_crtc_state);
+ 	dm_new_crtc_state = to_dm_crtc_state(new_crtc_state);
+ 	acrtc = to_amdgpu_crtc(crtc);
+-	aconnector = amdgpu_dm_find_first_crtc_matching_connector(state, crtc);
++	connector = amdgpu_dm_find_first_crtc_matching_connector(state, crtc);
++	aconnector = to_amdgpu_dm_connector(connector);
+ 
+ 	/* TODO This hack should go away */
+ 	if (aconnector && enable) {
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+index 3d480be802cb..3710f4d0f2cb 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -834,7 +834,7 @@ struct dc_stream_state *
+ int dm_atomic_get_state(struct drm_atomic_state *state,
+ 			struct dm_atomic_state **dm_state);
+ 
+-struct amdgpu_dm_connector *
++struct drm_connector *
+ amdgpu_dm_find_first_crtc_matching_connector(struct drm_atomic_state *state,
+ 					     struct drm_crtc *crtc);
+ 
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index 9b71643d8a89..602a2ab98abf 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1500,14 +1500,16 @@ int pre_validate_dsc(struct drm_atomic_state *state,
+ 		int ind = find_crtc_index_in_state_by_stream(state, stream);
+ 
+ 		if (ind >= 0) {
++			struct drm_connector *connector;
+ 			struct amdgpu_dm_connector *aconnector;
+ 			struct drm_connector_state *drm_new_conn_state;
+ 			struct dm_connector_state *dm_new_conn_state;
+ 			struct dm_crtc_state *dm_old_crtc_state;
+ 
+-			aconnector =
++			connector =
+ 				amdgpu_dm_find_first_crtc_matching_connector(state,
+ 									     state->crtcs[ind].ptr);
++			aconnector = to_amdgpu_dm_connector(connector);
+ 			drm_new_conn_state =
+ 				drm_atomic_get_new_connector_state(state,
+ 								   &aconnector->base);
 -- 
 2.43.0
 
