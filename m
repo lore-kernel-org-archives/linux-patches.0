@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F4664CEB;
-	Tue, 23 Jan 2024 00:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA75765BA2;
+	Tue, 23 Jan 2024 00:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971593; cv=none; b=S/QloifcJPACCRrNdOzOYR8moPbY9uB+TevN0WBtL5y0UvveaJX0Ev2xoRkM6isH2x8WaG9Wzz6tfGZNc3scWQ685pXSsNLtCBdpJ1gDvls3N5srrLt8AT8ERYaKi17sO6fn/GXq5FUEINCPM174O4JuY3dGgQcCGhS1KWjREA4=
+	t=1705971594; cv=none; b=jb4BO1FWYak+TwD5CPcz9iD2zZ3ECpo2yvt/ngIV2+qTjRWZj03ei0d53Tc9+sRhtL+unu35kFOTpUCguIjMZtE3vANRzN1WyaIihPRAqDv67FOBvyHy4736ASGIf1LrB8xmIHJ7yLgcqUtT2S8YKINXGC7OsW79iYcj9b+W6es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971593; c=relaxed/simple;
-	bh=4RwgCmSODM/y/I8WQX0AJRwuR7f22gHDD1Jw8VF28QQ=;
+	s=arc-20240116; t=1705971594; c=relaxed/simple;
+	bh=atVIhm+JIkYatXpXK0HmXMnNEH4k7x242RbVOXrMjVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WyWsA09Kwqkx/fOf+u0Evp6chgYmqvIU2p+jO62Ztzcsc1wKqRJDjv1nL3M9ZZpg6rOOAEhsDjEvQf0x07wALsnvxKpPXtrxorBNvg4LFIbqXyD3X/NfYdeVqkqvNIgoxJ5iarw38TfW/SDarLI+Gpvl5pkwKQQOnMl3irAwz0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRaUirwm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MKNIQlX30/tazMdWam+fKkclABZyKe8hxmOh9MVmXfDhx6LSzNWF+AElcy1xH8W8EZe3sNF8DhdT6It1YYGV1bRMY1fYeE2Doo8HkKCrEfCX7xVTTsjFBfm/LSvEkWXtNp1EvA4z+2enqjqHBSB8Z/M5r4yeFO+GGnv+ZigAOAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnbKn7OL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRaUirwm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FC5C433F1;
-	Tue, 23 Jan 2024 00:59:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnbKn7OL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD96C433F1;
+	Tue, 23 Jan 2024 00:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971592;
-	bh=4RwgCmSODM/y/I8WQX0AJRwuR7f22gHDD1Jw8VF28QQ=;
+	s=korg; t=1705971594;
+	bh=atVIhm+JIkYatXpXK0HmXMnNEH4k7x242RbVOXrMjVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qRaUirwmfIlE39RUisJJcULlZB0DJTf9SA3ix9A0Z50qweYX2MyThN5fIoJneFk5M
-	 0hy4r/iqgiFqf9yBqywgR5kB2twaB9ty3cqmRVlB6xF9OTtTlzpdRq+ceHvzmg903I
-	 aMO/fhmXVBNx/d5uhBq1sHdGlvCaGfKkf802JuGg=
+	b=dnbKn7OLxwBZRT4WNNC8EhrpKk9uSUcu+gC8NnpI2Rxdjoe7rCBmWx/+xSxlU1/vb
+	 EbsINiebf08xe+pYCSORyQislCjHdlC0utS76lVWUzaEYJWDaFnV1St+D2FEQMoCbg
+	 r/FQ0UR1jXN1XJl72IHjeDRgPxSR11fAwQzRURJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerry Hoemann <jerry.hoemann@hpe.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 183/286] watchdog/hpwdt: Only claim UNKNOWN NMI if from iLO
-Date: Mon, 22 Jan 2024 15:58:09 -0800
-Message-ID: <20240122235739.199388982@linuxfoundation.org>
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.1 276/417] serial: omap: do not override settings for RS485 support
+Date: Mon, 22 Jan 2024 15:57:24 -0800
+Message-ID: <20240122235801.405706173@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,57 +44,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jerry Hoemann <jerry.hoemann@hpe.com>
+From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-[ Upstream commit dced0b3e51dd2af3730efe14dd86b5e3173f0a65 ]
+commit 51f93776b84dee23e44a7be880736669a01cec2b upstream.
 
-Avoid unnecessary crashes by claiming only NMIs that are due to
-ERROR signalling or generated by the hpwdt hardware device.
+The drivers RS485 support is deactivated if there is no RTS GPIO available.
+This is done by nullifying the ports rs485_supported struct. After that
+however the settings in serial_omap_rs485_supported are assigned to the
+same structure unconditionally, which results in an unintended reactivation
+of RS485 support.
 
-The code does this, but only for iLO5.
+Fix this by moving the assignment to the beginning of
+serial_omap_probe_rs485() and thus before uart_get_rs485_mode() gets
+called.
 
-The intent was to preserve legacy, Gen9 and earlier, semantics of
-using hpwdt for error containtment as hardware/firmware would signal
-fatal IO errors as an NMI with the expectation of hpwdt crashing
-the system.  Howerver, these IO errors should be received by hpwdt
-as an NMI_IO_CHECK.  So the test is overly permissive and should
-not be limited to only ilo5.
+Also replace the assignment of rs485_config() to have the complete RS485
+setup in one function.
 
-We need to enable this protection for future iLOs not matching the
-current PCI IDs.
-
-Fixes: 62290a5c194b ("watchdog: hpwdt: Claim NMIs generated by iLO5")
-Signed-off-by: Jerry Hoemann <jerry.hoemann@hpe.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20231213215340.495734-2-jerry.hoemann@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e2752ae3cfc9 ("serial: omap: Disallow RS-485 if rts-gpio is not specified")
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20240103061818.564-7-l.sanfilippo@kunbus.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/hpwdt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/omap-serial.c |   27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/watchdog/hpwdt.c b/drivers/watchdog/hpwdt.c
-index 7d34bcf1c45b..53573c3ddd1a 100644
---- a/drivers/watchdog/hpwdt.c
-+++ b/drivers/watchdog/hpwdt.c
-@@ -174,7 +174,7 @@ static int hpwdt_pretimeout(unsigned int ulReason, struct pt_regs *regs)
- 		"3. OA Forward Progress Log\n"
- 		"4. iLO Event Log";
+--- a/drivers/tty/serial/omap-serial.c
++++ b/drivers/tty/serial/omap-serial.c
+@@ -1512,6 +1512,13 @@ static struct omap_uart_port_info *of_ge
+ 	return omap_up_info;
+ }
  
--	if (ilo5 && ulReason == NMI_UNKNOWN && !mynmi)
-+	if (ulReason == NMI_UNKNOWN && !mynmi)
- 		return NMI_DONE;
++static const struct serial_rs485 serial_omap_rs485_supported = {
++	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RTS_AFTER_SEND |
++		 SER_RS485_RX_DURING_TX,
++	.delay_rts_before_send = 1,
++	.delay_rts_after_send = 1,
++};
++
+ static int serial_omap_probe_rs485(struct uart_omap_port *up,
+ 				   struct device *dev)
+ {
+@@ -1526,6 +1533,9 @@ static int serial_omap_probe_rs485(struc
+ 	if (!np)
+ 		return 0;
  
- 	if (ilo5 && !pretimeout && !mynmi)
--- 
-2.43.0
-
++	up->port.rs485_config = serial_omap_config_rs485;
++	up->port.rs485_supported = serial_omap_rs485_supported;
++
+ 	ret = uart_get_rs485_mode(&up->port);
+ 	if (ret)
+ 		return ret;
+@@ -1560,13 +1570,6 @@ static int serial_omap_probe_rs485(struc
+ 	return 0;
+ }
+ 
+-static const struct serial_rs485 serial_omap_rs485_supported = {
+-	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RTS_AFTER_SEND |
+-		 SER_RS485_RX_DURING_TX,
+-	.delay_rts_before_send = 1,
+-	.delay_rts_after_send = 1,
+-};
+-
+ static int serial_omap_probe(struct platform_device *pdev)
+ {
+ 	struct omap_uart_port_info *omap_up_info = dev_get_platdata(&pdev->dev);
+@@ -1634,17 +1637,11 @@ static int serial_omap_probe(struct plat
+ 		dev_info(up->port.dev, "no wakeirq for uart%d\n",
+ 			 up->port.line);
+ 
+-	ret = serial_omap_probe_rs485(up, &pdev->dev);
+-	if (ret < 0)
+-		goto err_rs485;
+-
+ 	sprintf(up->name, "OMAP UART%d", up->port.line);
+ 	up->port.mapbase = mem->start;
+ 	up->port.membase = base;
+ 	up->port.flags = omap_up_info->flags;
+ 	up->port.uartclk = omap_up_info->uartclk;
+-	up->port.rs485_config = serial_omap_config_rs485;
+-	up->port.rs485_supported = serial_omap_rs485_supported;
+ 	if (!up->port.uartclk) {
+ 		up->port.uartclk = DEFAULT_CLK_SPEED;
+ 		dev_warn(&pdev->dev,
+@@ -1652,6 +1649,10 @@ static int serial_omap_probe(struct plat
+ 			 DEFAULT_CLK_SPEED);
+ 	}
+ 
++	ret = serial_omap_probe_rs485(up, &pdev->dev);
++	if (ret < 0)
++		goto err_rs485;
++
+ 	up->latency = PM_QOS_CPU_LATENCY_DEFAULT_VALUE;
+ 	up->calc_latency = PM_QOS_CPU_LATENCY_DEFAULT_VALUE;
+ 	cpu_latency_qos_add_request(&up->pm_qos_request, up->latency);
 
 
