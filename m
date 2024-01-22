@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07134E1AD;
-	Tue, 23 Jan 2024 00:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781294E1AD;
+	Tue, 23 Jan 2024 00:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971391; cv=none; b=sf4MIe1ntVpIQrvFQLpj9UtBTkZCOcdOompTN8DcMKMx5gm/IWDKgYssoubKPOLLIXKMFxLW22EZ4fHYpk9ufaqt0l3GLBULcpzcKrbBux1zNC+XM7eCck0dFmS9Z4RIMuFfZNT/kXLFEjKmAqVRRaWXU+OZe2xsUNdxUc5ppg4=
+	t=1705971392; cv=none; b=Ls/HooEo8u5IArFYKIlDD2NrhBjcht1TCRiZ68Yigzzro3MxerghRBvJ0UsIMBN2eYe0r4GTihhi8X7fcNBM+Ho8lNxak1h0/BJc/kf5NhxNa/2ZlWJgVJqSrfLuxNlAmyQ3ofObifIydt2IRQxXR7RgHEFE137KoU5/KKM41E8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971391; c=relaxed/simple;
-	bh=d86bU+EIXAuZYp1L51AveAY+9xT9+h6UmxZQe5pM7BI=;
+	s=arc-20240116; t=1705971392; c=relaxed/simple;
+	bh=SH4cigonEG/g2Pc4QUaUHkWoB+R5xQ/hzty1Q7GI9ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3BBJvbFvuicSySMOUy7Ae1a4UlIgik1tYqEn3xkIVnWuT2NYkbu4/9pqLUaGjs+EG4iTg+hMCh/cHVZPRmBDk0HbyA1riweoDtoAhxGcWlkgcKKfsPv3VchLcsEsqBrCWS9/e9t/epTB7l/X2wxQYbn4UNuLqtK9qzuXP+FJag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1sQ9NnV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h0v7Ri7XK5H8pOGlFP/IKMfDJFPhsiy4bIBkyoYwTtc2Ole+4tP3kk5LxwfaFqcy6efKFNbKciu5vT6TMJ85h0cg48qG75+c5F8f8T1GTxc70DFl73KVsQ64c6Ybwgq9kZ3uoGZ3Uo/15lDcW8/rD7Ds8jD05/3JsZ5anFxq1V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fiUUQ5A4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1sQ9NnV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F45C433F1;
-	Tue, 23 Jan 2024 00:56:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiUUQ5A4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC48C43390;
+	Tue, 23 Jan 2024 00:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971390;
-	bh=d86bU+EIXAuZYp1L51AveAY+9xT9+h6UmxZQe5pM7BI=;
+	s=korg; t=1705971392;
+	bh=SH4cigonEG/g2Pc4QUaUHkWoB+R5xQ/hzty1Q7GI9ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k1sQ9NnVYAw0BM9KXAnjjIL1iNZic7amolGdMiCovKBSfjIrJBZUcsmy5VIjG9CRb
-	 ra/7na9HtnUG/sjvDdEA/priZfw5mBrAXOECkTj3k7m9eIRK/UF7QcLapzJpXY2gLh
-	 TeLJtFJAvhHlKSDqz/eYd6ApGvRfh2BmixISvgJc=
+	b=fiUUQ5A4JP5/Ci4IO7MxtSRMI2HGD83jIDAEar5NU6FCyqVjlywrWsCRh9B+mXahV
+	 +/HQZf7hTR9zNxDzlICHgwnpIeW741odS/dsBWq3uW3NUAhOoZOJiUiHfRRw/m6coJ
+	 6NEo9J+WL7K7VYc0NRemaHjwWDXjOueat9u9zolo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	"Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 144/286] RDMA/usnic: Silence uninitialized symbol smatch warnings
-Date: Mon, 22 Jan 2024 15:57:30 -0800
-Message-ID: <20240122235737.702218440@linuxfoundation.org>
+Subject: [PATCH 6.1 234/417] ALSA: scarlett2: Allow passing any output to line_out_remap()
+Date: Mon, 22 Jan 2024 15:56:42 -0800
+Message-ID: <20240122235759.991324689@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,84 +47,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Geoffrey D. Bennett <g@b4.vu>
 
-[ Upstream commit b9a85e5eec126d6ae6c362f94b447c223e8fe6e4 ]
+[ Upstream commit 2190b9aea4eb92ccf3176e35c17c959e40f1a81b ]
 
-The patch 1da177e4c3f4: "Linux-2.6.12-rc2" from Apr 16, 2005
-(linux-next), leads to the following Smatch static checker warning:
+Line outputs 3 & 4 on the Gen 3 18i8 are internally the analogue 7 and
+8 outputs, and this renumbering is hidden from the user by
+line_out_remap(). By allowing higher values (representing non-analogue
+outputs) to be passed to line_out_remap(), repeated code from
+scarlett2_mux_src_enum_ctl_get() and scarlett2_mux_src_enum_ctl_put()
+can be removed.
 
-        drivers/infiniband/hw/mthca/mthca_cmd.c:644 mthca_SYS_EN()
-        error: uninitialized symbol 'out'.
-
-drivers/infiniband/hw/mthca/mthca_cmd.c
-    636 int mthca_SYS_EN(struct mthca_dev *dev)
-    637 {
-    638         u64 out;
-    639         int ret;
-    640
-    641         ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
-
-We pass out here and it gets used without being initialized.
-
-        err = mthca_cmd_post(dev, in_param,
-                             out_param ? *out_param : 0,
-                                         ^^^^^^^^^^
-                             in_modifier, op_modifier,
-                             op, context->token, 1);
-
-It's the same in mthca_cmd_wait() and mthca_cmd_poll().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/533bc3df-8078-4397-b93d-d1f6cec9b636@moroto.mountain
-Link: https://lore.kernel.org/r/c559cb7113158c02d75401ac162652072ef1b5f0.1699867650.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Link: https://lore.kernel.org/r/3b70267931f5994628ab27306c73cddd17b93c8f.1698342632.git.g@b4.vu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 50603a67daef ("ALSA: scarlett2: Add missing error checks to *_ctl_get()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mthca/mthca_cmd.c  | 4 ++--
- drivers/infiniband/hw/mthca/mthca_main.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ sound/usb/mixer_scarlett_gen2.c | 25 +++++++++----------------
+ 1 file changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mthca/mthca_cmd.c b/drivers/infiniband/hw/mthca/mthca_cmd.c
-index bdf5ed38de22..0307c45aa6d3 100644
---- a/drivers/infiniband/hw/mthca/mthca_cmd.c
-+++ b/drivers/infiniband/hw/mthca/mthca_cmd.c
-@@ -635,7 +635,7 @@ void mthca_free_mailbox(struct mthca_dev *dev, struct mthca_mailbox *mailbox)
- 
- int mthca_SYS_EN(struct mthca_dev *dev)
+diff --git a/sound/usb/mixer_scarlett_gen2.c b/sound/usb/mixer_scarlett_gen2.c
+index 94704581865b..f8a2ba479b7c 100644
+--- a/sound/usb/mixer_scarlett_gen2.c
++++ b/sound/usb/mixer_scarlett_gen2.c
+@@ -1901,9 +1901,16 @@ static int scarlett2_master_volume_ctl_get(struct snd_kcontrol *kctl,
+ static int line_out_remap(struct scarlett2_data *private, int index)
  {
--	u64 out;
-+	u64 out = 0;
- 	int ret;
+ 	const struct scarlett2_device_info *info = private->info;
++	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
++	int line_out_count =
++		port_count[SCARLETT2_PORT_TYPE_ANALOGUE][SCARLETT2_PORT_OUT];
  
- 	ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
-@@ -1955,7 +1955,7 @@ int mthca_WRITE_MGM(struct mthca_dev *dev, int index,
- int mthca_MGID_HASH(struct mthca_dev *dev, struct mthca_mailbox *mailbox,
- 		    u16 *hash)
- {
--	u64 imm;
-+	u64 imm = 0;
- 	int err;
+ 	if (!info->line_out_remap_enable)
+ 		return index;
++
++	if (index >= line_out_count)
++		return index;
++
+ 	return info->line_out_remap[index];
+ }
  
- 	err = mthca_cmd_imm(dev, mailbox->dma, &imm, 0, 0, CMD_MGID_HASH,
-diff --git a/drivers/infiniband/hw/mthca/mthca_main.c b/drivers/infiniband/hw/mthca/mthca_main.c
-index fe9654a7af71..3acd1372c814 100644
---- a/drivers/infiniband/hw/mthca/mthca_main.c
-+++ b/drivers/infiniband/hw/mthca/mthca_main.c
-@@ -382,7 +382,7 @@ static int mthca_init_icm(struct mthca_dev *mdev,
- 			  struct mthca_init_hca_param *init_hca,
- 			  u64 icm_size)
- {
--	u64 aux_pages;
-+	u64 aux_pages = 0;
- 	int err;
+@@ -3388,14 +3395,7 @@ static int scarlett2_mux_src_enum_ctl_get(struct snd_kcontrol *kctl,
+ 	struct usb_mixer_elem_info *elem = kctl->private_data;
+ 	struct usb_mixer_interface *mixer = elem->head.mixer;
+ 	struct scarlett2_data *private = mixer->private_data;
+-	const struct scarlett2_device_info *info = private->info;
+-	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
+-	int line_out_count =
+-		port_count[SCARLETT2_PORT_TYPE_ANALOGUE][SCARLETT2_PORT_OUT];
+-	int index = elem->control;
+-
+-	if (index < line_out_count)
+-		index = line_out_remap(private, index);
++	int index = line_out_remap(private, elem->control);
  
- 	err = mthca_SET_ICM_SIZE(mdev, icm_size, &aux_pages);
+ 	mutex_lock(&private->data_mutex);
+ 	if (private->mux_updated)
+@@ -3412,16 +3412,9 @@ static int scarlett2_mux_src_enum_ctl_put(struct snd_kcontrol *kctl,
+ 	struct usb_mixer_elem_info *elem = kctl->private_data;
+ 	struct usb_mixer_interface *mixer = elem->head.mixer;
+ 	struct scarlett2_data *private = mixer->private_data;
+-	const struct scarlett2_device_info *info = private->info;
+-	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
+-	int line_out_count =
+-		port_count[SCARLETT2_PORT_TYPE_ANALOGUE][SCARLETT2_PORT_OUT];
+-	int index = elem->control;
++	int index = line_out_remap(private, elem->control);
+ 	int oval, val, err = 0;
+ 
+-	if (index < line_out_count)
+-		index = line_out_remap(private, index);
+-
+ 	mutex_lock(&private->data_mutex);
+ 
+ 	oval = private->mux[index];
 -- 
 2.43.0
 
