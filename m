@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B63165BB4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004ED629F8;
 	Tue, 23 Jan 2024 01:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975112; cv=none; b=nNJTj47uoXzueQzVZMcNXxfrkxeMhmqxoxhTw9LKc076fiKiKXt3QK/vJr7u5XObkJ6746Fg2Q/uiJoY8RImyaTJvYiFtELXDgMNnxLXNuXK818p4BgjA80z0CmI0Tn8i5g91AClcswHjeg+oyU3Y559I2Pt0A4cgLCESuJaki4=
+	t=1705975113; cv=none; b=dEdRcEtXEYxI+RXTyId85gNUDPe4JKP4s1c7HCBbmtqpeLSVLnJIi/ivtmK/0R6BQuhgaYa3N23TgdlPCVp2Zms8+fN6STOvRTYc3chAm1h0skT96AAmGlf/AX53Ev3bNv4fS+tHsNNfLUVCFi9w+mw7cdMJc4dViJvpyWWc2gI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975112; c=relaxed/simple;
-	bh=Q7I1+5o5+P6MHg7RQV3SG2QQv2+aLldC4Isjk4Q7ZIQ=;
+	s=arc-20240116; t=1705975113; c=relaxed/simple;
+	bh=rKRcNzFyMmWIHEc43uT/Shly7ssqisWuojPS1frUIEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DqO66VbU289wubwbLW1QOjOHVmZ/Q1o1WlOoTw7d97HImWFfptc6ayJbrV5KNrelDZqhL4GoukXKv9vC6W7JNjD/deawxKJM8yhPo4nQntk10IUTrkOuzdUwr4ioGK7a5C69BDcD95qWqx2UgHLwpTrBsv3CnWkFiNujS6OZfZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pM+8k3Il; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uC7eiqnRidZxz5gwCjhDSePBpK1MdA128ecuo2jecx1oscnrSPaBD1h68PdGr43kLp99bHD8Blm7bet539HnQmq4gFRI9RvNzxqjQ85YIjGayorNTkO13q+TAFMmFWdyGmOkZadQqVHpcGUUKljGjX5lETmFBJe8goYen99Lhy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbCHQQpi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pM+8k3Il"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F09C433F1;
-	Tue, 23 Jan 2024 01:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbCHQQpi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA040C433B1;
+	Tue, 23 Jan 2024 01:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705975112;
-	bh=Q7I1+5o5+P6MHg7RQV3SG2QQv2+aLldC4Isjk4Q7ZIQ=;
+	bh=rKRcNzFyMmWIHEc43uT/Shly7ssqisWuojPS1frUIEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pM+8k3IlpQnpBhRoYVW9tU2u64FQW7/C73LzfP98d+22/s1Wg2jMC7wtKAe5i1wyO
-	 e4Gq8dRfrvWJP35/ndXiUhECJwp46TTtC1z2+9SbdBAtHtzMKzrrLVBEYCfEW9+2tP
-	 Q5SCyX3latGqT7vc1/FLS2HY5WtmZR9vUMzVGK54=
+	b=QbCHQQpizoCAbQXiJqq9e+opBAi11xtmQcMcs6GFq95Tg/91s+2sZBwQ1qFaJ/F1+
+	 X2AEpek+QwK9JDV64fs60A/lIW9JxtmnGR8b27SW+jC2qv1wQJsHHaGRfAtKuA1n64
+	 dksjmV6+PbwmTzxXLZTm0glPS1zzz8QS9bBjMU8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 370/374] netfilter: nft_connlimit: memleak if nf_ct_netns_get() fails
-Date: Mon, 22 Jan 2024 16:00:26 -0800
-Message-ID: <20240122235757.849876804@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 243/583] drm/radeon: check return value of radeon_ring_lock()
+Date: Mon, 22 Jan 2024 15:54:54 -0800
+Message-ID: <20240122235819.430966760@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,50 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 7d70984a1ad4c445dff08edb9aacce8906b6a222 upstream.
+[ Upstream commit 71225e1c930942cb1e042fc08c5cc0c4ef30e95e ]
 
-Check if nf_ct_netns_get() fails then release the limit object
-previously allocated via kmalloc().
+In the unlikely event of radeon_ring_lock() failing, its errno return
+value should be processed. This patch checks said return value and
+prints a debug message in case of an error.
 
-Fixes: 37f319f37d90 ("netfilter: nft_connlimit: move stateful fields out of expression data")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 48c0c902e2e6 ("drm/radeon/kms: add support for CP setup on SI")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_connlimit.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/si.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/netfilter/nft_connlimit.c
-+++ b/net/netfilter/nft_connlimit.c
-@@ -62,6 +62,7 @@ static int nft_connlimit_do_init(const s
- {
- 	bool invert = false;
- 	u32 flags, limit;
-+	int err;
+diff --git a/drivers/gpu/drm/radeon/si.c b/drivers/gpu/drm/radeon/si.c
+index a91012447b56..85e9cba49cec 100644
+--- a/drivers/gpu/drm/radeon/si.c
++++ b/drivers/gpu/drm/radeon/si.c
+@@ -3611,6 +3611,10 @@ static int si_cp_start(struct radeon_device *rdev)
+ 	for (i = RADEON_RING_TYPE_GFX_INDEX; i <= CAYMAN_RING_TYPE_CP2_INDEX; ++i) {
+ 		ring = &rdev->ring[i];
+ 		r = radeon_ring_lock(rdev, ring, 2);
++		if (r) {
++			DRM_ERROR("radeon: cp failed to lock ring (%d).\n", r);
++			return r;
++		}
  
- 	if (!tb[NFTA_CONNLIMIT_COUNT])
- 		return -EINVAL;
-@@ -84,7 +85,15 @@ static int nft_connlimit_do_init(const s
- 	priv->limit	= limit;
- 	priv->invert	= invert;
- 
--	return nf_ct_netns_get(ctx->net, ctx->family);
-+	err = nf_ct_netns_get(ctx->net, ctx->family);
-+	if (err < 0)
-+		goto err_netns;
-+
-+	return 0;
-+err_netns:
-+	kfree(priv->list);
-+
-+	return err;
- }
- 
- static void nft_connlimit_do_destroy(const struct nft_ctx *ctx,
+ 		/* clear the compute context state */
+ 		radeon_ring_write(ring, PACKET3_COMPUTE(PACKET3_CLEAR_STATE, 0));
+-- 
+2.43.0
+
 
 
