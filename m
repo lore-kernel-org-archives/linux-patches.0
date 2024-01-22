@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56716BB56;
-	Tue, 23 Jan 2024 02:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A716BB56;
+	Tue, 23 Jan 2024 02:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975375; cv=none; b=BSnTJg4ggD1QPTS8+mz+GFqt6Wy+59S2oSVuzzOsjxqm6rX8e7YW/eiTXZNTnsturBmGlKhMKQFKwk4zEF4Tlu78pAT0JOHhHzTeAHjedbGeD3I+uSJEdI9EFbG58AI/t7DTNu337FLoV8xOAIR7jxi2bML0tkJW97ay/vxazVg=
+	t=1705975375; cv=none; b=B9unlskg+seRtFvdpCpEEYflPRKFZTTKmZZFL8La7dAIvV2fTY/B/cZSZrgI1LXPhSA+3bETQKUGgwH+HTuXhl3hBrA1Nu7H0Md4DCqrsQCxJJlqPbjGg+4BQwqf7JvMcOFRCbWA/uNMjWyPPFSmgbqHwOSbvjbIhQ/yrI2dwsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975375; c=relaxed/simple;
-	bh=1rQSdOYTvyyeB4Zm2uUC7L5zYEenqFlKLLLJqwdFPnM=;
+	bh=c9OJkjFaidb38QdJuPI2vzsIWYFU2xc7M09H9f1gKBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NqlTh3POZQxZ4gVwROXRcZ6yXAfRt3KOXUz6oGQJBnRpMu3RMQixPIRGHLleZt5Hfb3TGdubhoYPTC+xO62uspLfHN9A5vHxkBocPrGMFOSJQI+bhScCG1iQk/ONX/XIx/yILRVQ7WwxrduLcEK+WOX8XqvPxXFKse5+BNoXve8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjwsVM3i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gpebe5SQ5ld+J3rmw2Mm/G7u5Lqz9+vLI8H4GB6tCHq1XjQQ82OaZ3p2QmCnm39HXl50OTBBC8FPwazn9wqqx0OCgq0zSgrHRsKuQzEPojpmrPKFkGk/KF9vJO7iPwUcb4NaoYRivIBieuAhuCI9cb8UKJph3pMrkXnW3IIz7EY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jP62I/54; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjwsVM3i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99C8C433C7;
-	Tue, 23 Jan 2024 02:02:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jP62I/54"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E5DC43390;
+	Tue, 23 Jan 2024 02:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975374;
-	bh=1rQSdOYTvyyeB4Zm2uUC7L5zYEenqFlKLLLJqwdFPnM=;
+	s=korg; t=1705975375;
+	bh=c9OJkjFaidb38QdJuPI2vzsIWYFU2xc7M09H9f1gKBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WjwsVM3il5ajxtMhFL4p0dU60rFmpsgYRHKER7MwuXusy2SdIug6wC+iAaRWBWblO
-	 d0ghQWuba1Crjm5cjx2853NAlCSRXAuPzeR2ryQKFkKgmg71fMWtIKPO/IcOT/9dYH
-	 /RwxyOAFHFEPMJHoCkcrC3d0mveMsCgb2m723BtU=
+	b=jP62I/54uIGFI3qUMCN5cJlaFy9kzHJsAAzphqnFgZ0pV4rECdNW7bAO0AxwKnyV1
+	 Cm3MvuS7/lFpvZX8gwEK20Pxa6BJmL+oBwTj6S6fVlmn9Mh2a/5EgodWlXiHmqLeMp
+	 hCKn+DseOSOpbTBIvItLWQaLlTG+LzLeakLI0lyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Stephen Boyd <stephen.boyd@linaro.org>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 329/583] gpio: sysfs: drop the mention of gpiochip_find() from sysfs code
-Date: Mon, 22 Jan 2024 15:56:20 -0800
-Message-ID: <20240122235822.112631801@linuxfoundation.org>
+Subject: [PATCH 6.6 338/583] of: Fix double free in of_parse_phandle_with_args_map
+Date: Mon, 22 Jan 2024 15:56:29 -0800
+Message-ID: <20240122235822.369828605@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,34 +52,229 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-[ Upstream commit e404b0cc9f0b0b551f3276a814d38abf1f26d98f ]
+[ Upstream commit 4dde83569832f9377362e50f7748463340c5db6b ]
 
-We have removed all callers of gpiochip_find() so don't mention it in
-gpiolib-sysfs.c.
+In of_parse_phandle_with_args_map() the inner loop that
+iterates through the map entries calls of_node_put(new)
+to free the reference acquired by the previous iteration
+of the inner loop. This assumes that the value of "new" is
+NULL on the first iteration of the inner loop.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: 48e1b4d369cf ("gpiolib: remove the GPIO device from the list when it's unregistered")
+Make sure that this is true in all iterations of the outer
+loop by setting "new" to NULL after its value is assigned to "cur".
+
+Extend the unittest to detect the double free and add an additional
+test case that actually triggers this path.
+
+Fixes: bd6f2fd5a1 ("of: Support parsing phandle argument lists through a nexus node")
+Cc: Stephen Boyd <stephen.boyd@linaro.org>
+Signed-off-by: "Christian A. Ehrhardt" <lk@c--e.de>
+Link: https://lore.kernel.org/r/20231229105411.1603434-1-lk@c--e.de
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-sysfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/base.c                           |  1 +
+ drivers/of/unittest-data/tests-phandle.dtsi | 10 ++-
+ drivers/of/unittest.c                       | 74 ++++++++++++---------
+ 3 files changed, 53 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-sysfs.c b/drivers/gpio/gpiolib-sysfs.c
-index c7c5c19ebc66..12d853845bb8 100644
---- a/drivers/gpio/gpiolib-sysfs.c
-+++ b/drivers/gpio/gpiolib-sysfs.c
-@@ -817,7 +817,7 @@ static int __init gpiolib_sysfs_init(void)
- 		 * gpiochip_sysfs_register() acquires a mutex. This is unsafe
- 		 * and needs to be fixed.
- 		 *
--		 * Also it would be nice to use gpiochip_find() here so we
-+		 * Also it would be nice to use gpio_device_find() here so we
- 		 * can keep gpio_chips local to gpiolib.c, but the yield of
- 		 * gpio_lock prevents us from doing this.
- 		 */
+diff --git a/drivers/of/base.c b/drivers/of/base.c
+index 8d93cb6ea9cd..b0ad8fc06e80 100644
+--- a/drivers/of/base.c
++++ b/drivers/of/base.c
+@@ -1464,6 +1464,7 @@ int of_parse_phandle_with_args_map(const struct device_node *np,
+ 		out_args->np = new;
+ 		of_node_put(cur);
+ 		cur = new;
++		new = NULL;
+ 	}
+ put:
+ 	of_node_put(cur);
+diff --git a/drivers/of/unittest-data/tests-phandle.dtsi b/drivers/of/unittest-data/tests-phandle.dtsi
+index d01f92f0f0db..554a996b2ef1 100644
+--- a/drivers/of/unittest-data/tests-phandle.dtsi
++++ b/drivers/of/unittest-data/tests-phandle.dtsi
+@@ -40,6 +40,13 @@ provider4: provider4 {
+ 				phandle-map-pass-thru = <0x0 0xf0>;
+ 			};
+ 
++			provider5: provider5 {
++				#phandle-cells = <2>;
++				phandle-map = <2 7 &provider4 2 3>;
++				phandle-map-mask = <0xff 0xf>;
++				phandle-map-pass-thru = <0x0 0xf0>;
++			};
++
+ 			consumer-a {
+ 				phandle-list =	<&provider1 1>,
+ 						<&provider2 2 0>,
+@@ -66,7 +73,8 @@ consumer-b {
+ 						<&provider4 4 0x100>,
+ 						<&provider4 0 0x61>,
+ 						<&provider0>,
+-						<&provider4 19 0x20>;
++						<&provider4 19 0x20>,
++						<&provider5 2 7>;
+ 				phandle-list-bad-phandle = <12345678 0 0>;
+ 				phandle-list-bad-args = <&provider2 1 0>,
+ 							<&provider4 0>;
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index ad2b7879cc67..c63f5963751b 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -456,6 +456,9 @@ static void __init of_unittest_parse_phandle_with_args(void)
+ 
+ 		unittest(passed, "index %i - data error on node %pOF rc=%i\n",
+ 			 i, args.np, rc);
++
++		if (rc == 0)
++			of_node_put(args.np);
+ 	}
+ 
+ 	/* Check for missing list property */
+@@ -545,8 +548,9 @@ static void __init of_unittest_parse_phandle_with_args(void)
+ 
+ static void __init of_unittest_parse_phandle_with_args_map(void)
+ {
+-	struct device_node *np, *p0, *p1, *p2, *p3;
++	struct device_node *np, *p[6] = {};
+ 	struct of_phandle_args args;
++	unsigned int prefs[6];
+ 	int i, rc;
+ 
+ 	np = of_find_node_by_path("/testcase-data/phandle-tests/consumer-b");
+@@ -555,34 +559,24 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 		return;
+ 	}
+ 
+-	p0 = of_find_node_by_path("/testcase-data/phandle-tests/provider0");
+-	if (!p0) {
+-		pr_err("missing testcase data\n");
+-		return;
+-	}
+-
+-	p1 = of_find_node_by_path("/testcase-data/phandle-tests/provider1");
+-	if (!p1) {
+-		pr_err("missing testcase data\n");
+-		return;
+-	}
+-
+-	p2 = of_find_node_by_path("/testcase-data/phandle-tests/provider2");
+-	if (!p2) {
+-		pr_err("missing testcase data\n");
+-		return;
+-	}
+-
+-	p3 = of_find_node_by_path("/testcase-data/phandle-tests/provider3");
+-	if (!p3) {
+-		pr_err("missing testcase data\n");
+-		return;
++	p[0] = of_find_node_by_path("/testcase-data/phandle-tests/provider0");
++	p[1] = of_find_node_by_path("/testcase-data/phandle-tests/provider1");
++	p[2] = of_find_node_by_path("/testcase-data/phandle-tests/provider2");
++	p[3] = of_find_node_by_path("/testcase-data/phandle-tests/provider3");
++	p[4] = of_find_node_by_path("/testcase-data/phandle-tests/provider4");
++	p[5] = of_find_node_by_path("/testcase-data/phandle-tests/provider5");
++	for (i = 0; i < ARRAY_SIZE(p); ++i) {
++		if (!p[i]) {
++			pr_err("missing testcase data\n");
++			return;
++		}
++		prefs[i] = kref_read(&p[i]->kobj.kref);
+ 	}
+ 
+ 	rc = of_count_phandle_with_args(np, "phandle-list", "#phandle-cells");
+-	unittest(rc == 7, "of_count_phandle_with_args() returned %i, expected 7\n", rc);
++	unittest(rc == 8, "of_count_phandle_with_args() returned %i, expected 7\n", rc);
+ 
+-	for (i = 0; i < 8; i++) {
++	for (i = 0; i < 9; i++) {
+ 		bool passed = true;
+ 
+ 		memset(&args, 0, sizeof(args));
+@@ -593,13 +587,13 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 		switch (i) {
+ 		case 0:
+ 			passed &= !rc;
+-			passed &= (args.np == p1);
++			passed &= (args.np == p[1]);
+ 			passed &= (args.args_count == 1);
+ 			passed &= (args.args[0] == 1);
+ 			break;
+ 		case 1:
+ 			passed &= !rc;
+-			passed &= (args.np == p3);
++			passed &= (args.np == p[3]);
+ 			passed &= (args.args_count == 3);
+ 			passed &= (args.args[0] == 2);
+ 			passed &= (args.args[1] == 5);
+@@ -610,28 +604,36 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 			break;
+ 		case 3:
+ 			passed &= !rc;
+-			passed &= (args.np == p0);
++			passed &= (args.np == p[0]);
+ 			passed &= (args.args_count == 0);
+ 			break;
+ 		case 4:
+ 			passed &= !rc;
+-			passed &= (args.np == p1);
++			passed &= (args.np == p[1]);
+ 			passed &= (args.args_count == 1);
+ 			passed &= (args.args[0] == 3);
+ 			break;
+ 		case 5:
+ 			passed &= !rc;
+-			passed &= (args.np == p0);
++			passed &= (args.np == p[0]);
+ 			passed &= (args.args_count == 0);
+ 			break;
+ 		case 6:
+ 			passed &= !rc;
+-			passed &= (args.np == p2);
++			passed &= (args.np == p[2]);
+ 			passed &= (args.args_count == 2);
+ 			passed &= (args.args[0] == 15);
+ 			passed &= (args.args[1] == 0x20);
+ 			break;
+ 		case 7:
++			passed &= !rc;
++			passed &= (args.np == p[3]);
++			passed &= (args.args_count == 3);
++			passed &= (args.args[0] == 2);
++			passed &= (args.args[1] == 5);
++			passed &= (args.args[2] == 3);
++			break;
++		case 8:
+ 			passed &= (rc == -ENOENT);
+ 			break;
+ 		default:
+@@ -640,6 +642,9 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 
+ 		unittest(passed, "index %i - data error on node %s rc=%i\n",
+ 			 i, args.np->full_name, rc);
++
++		if (rc == 0)
++			of_node_put(args.np);
+ 	}
+ 
+ 	/* Check for missing list property */
+@@ -686,6 +691,13 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 		   "OF: /testcase-data/phandle-tests/consumer-b: #phandle-cells = 2 found 1");
+ 
+ 	unittest(rc == -EINVAL, "expected:%i got:%i\n", -EINVAL, rc);
++
++	for (i = 0; i < ARRAY_SIZE(p); ++i) {
++		unittest(prefs[i] == kref_read(&p[i]->kobj.kref),
++			 "provider%d: expected:%d got:%d\n",
++			 i, prefs[i], kref_read(&p[i]->kobj.kref));
++		of_node_put(p[i]);
++	}
+ }
+ 
+ static void __init of_unittest_property_string(void)
 -- 
 2.43.0
 
