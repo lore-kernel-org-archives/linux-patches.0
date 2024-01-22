@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024941339B4;
-	Tue, 23 Jan 2024 01:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B761339A8;
+	Tue, 23 Jan 2024 01:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971894; cv=none; b=LBnA+xs7RWdmi/P3zx3+IvJIUjx4di58jewlVvUu9t2hija0uVQaZYABOQ498GSe+DK3lDwKEPpu88naHWWHHIOq1d6pPHM+ScyzXyX2QMhkPZvmFoF1Tdg0sZRZ8tc4Q7gVQdkTl1pm3FOw4Gyo1hMW6CakLuaJ9TcATmctrZ0=
+	t=1705971895; cv=none; b=nKIaXxC8pSb3t4l8scKboK0AzMwnOQUwjxzZRgf3VrjWR7pWvL7yOLw0CQdOuQqpQjciGUd0VAd9uOgKm/jEdV1/2p2l8seqNCx9nfcnrI3UM3/9p4beOFBPbGnXY5gsVbKoL1G23UWhbJ9kIki491ZBTPqg7OSF5SX1BVza/2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971894; c=relaxed/simple;
-	bh=9WAaShs0zB7YOEv1wn77yxF3V09uDwYRMqWq0bu/0Yo=;
+	s=arc-20240116; t=1705971895; c=relaxed/simple;
+	bh=uazdqqdFf6P99vvG0NUiCBxsHVHK0jGy8nUM4I0VwN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uvo+X4Nre+OlNQWjdAdmwAjdXCpMaO8ofC5JYbHzrLZX70odznjrKTH4kDNZktrDNPbv/F1krHPAXXoAnXQ3PHqfjMeiZeL87XcW1y9Lg91uqSdVff84hwoLeRBVPJlaeJfgWARbidPbJvHvibC4RrTEKT7bsnLpNuYtgItJswo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdmxGk0k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kiu5vmEMZfwJWhLZmnBLYvL61+/zE9FF49qOD/7pGwz/R86E2iRWKi8QrhQAatMzJCSrW4/xruI9EHVrKP94wbrk5F/rXfdU2bd3NMQLdHruu3Y5wDM0+bQrQ99/7svugBfdYo/kXpViuWHf/Ta/nZKrbvfXUnkN7L8Oinz5v5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XiVYthK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdmxGk0k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E64C433F1;
-	Tue, 23 Jan 2024 01:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XiVYthK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F53CC433C7;
+	Tue, 23 Jan 2024 01:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971893;
-	bh=9WAaShs0zB7YOEv1wn77yxF3V09uDwYRMqWq0bu/0Yo=;
+	s=korg; t=1705971895;
+	bh=uazdqqdFf6P99vvG0NUiCBxsHVHK0jGy8nUM4I0VwN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FdmxGk0k2nQRL5W/AaM0g/Y4R5QIi6uIdLD3rnoDlhsGML2M6Toif/3rxS+cO9lr1
-	 kiny5JL3RjQdYShGNPgF8+FTUbWQ1sCvaR0Cy2qjdshMxb5WmBXhkSoTgjELgnIh2N
-	 /U4nqzL2t5vAVP+mSHQDudjg2ipqdpAFBOuBtCmc=
+	b=1XiVYthKK5EIgMIktBSB/ln/mlCJ9q6TeUdpJI/w3Dp9B0yZesJrGu2MENks0dJVL
+	 XlqJ+5VVjRLRj7UH85Q70cdl4pa/SYgXc6ejzZg0ktWEb397WQwBvIKlvP6qFbIQWd
+	 a+VLWgD+0almnun2CWyBJL0LtMGnlH08L0J/9b+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 344/417] software node: Let args be NULL in software_node_get_reference_args
-Date: Mon, 22 Jan 2024 15:58:32 -0800
-Message-ID: <20240122235803.710193708@linuxfoundation.org>
+Subject: [PATCH 5.10 248/286] iio: adc: ad9467: Benefit from devm_clk_get_enabled() to simplify
+Date: Mon, 22 Jan 2024 15:59:14 -0800
+Message-ID: <20240122235741.623296657@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,46 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 1eaea4b3604eb9ca7d9a1e73d88fc121bb4061f5 ]
+[ Upstream commit cdd07b3ab94a020570132558442a26e74b70bc42 ]
 
-fwnode_get_property_reference_args() may not be called with args argument
-NULL and while OF already supports this. Add the missing NULL check.
+Make use of devm_clk_get_enabled() to replace some code that effectively
+open codes this new function.
 
-The purpose is to be able to count the references.
-
-Fixes: b06184acf751 ("software node: Add software_node_get_reference_args()")
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20231109101010.1329587-3-sakari.ailus@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20220808204740.307667-3-u.kleine-koenig@pengutronix.de
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 76f028539cf3 ("iio: adc: ad9467: fix reset gpio handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/swnode.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/adc/ad9467.c | 17 +----------------
+ 1 file changed, 1 insertion(+), 16 deletions(-)
 
-diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
-index 0a482212c7e8..44153caa893a 100644
---- a/drivers/base/swnode.c
-+++ b/drivers/base/swnode.c
-@@ -541,6 +541,9 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
- 	if (nargs > NR_FWNODE_REFERENCE_ARGS)
- 		return -EINVAL;
+diff --git a/drivers/iio/adc/ad9467.c b/drivers/iio/adc/ad9467.c
+index 19a45dd43796..92837dcbc170 100644
+--- a/drivers/iio/adc/ad9467.c
++++ b/drivers/iio/adc/ad9467.c
+@@ -378,13 +378,6 @@ static int ad9467_preenable_setup(struct adi_axi_adc_conv *conv)
+ 	return ad9467_outputmode_set(st->spi, st->output_mode);
+ }
  
-+	if (!args)
-+		return 0;
-+
- 	args->fwnode = software_node_get(refnode);
- 	args->nargs = nargs;
+-static void ad9467_clk_disable(void *data)
+-{
+-	struct ad9467_state *st = data;
+-
+-	clk_disable_unprepare(st->clk);
+-}
+-
+ static int ad9467_probe(struct spi_device *spi)
+ {
+ 	const struct ad9467_chip_info *info;
+@@ -404,18 +397,10 @@ static int ad9467_probe(struct spi_device *spi)
+ 	st = adi_axi_adc_conv_priv(conv);
+ 	st->spi = spi;
  
+-	st->clk = devm_clk_get(&spi->dev, "adc-clk");
++	st->clk = devm_clk_get_enabled(&spi->dev, "adc-clk");
+ 	if (IS_ERR(st->clk))
+ 		return PTR_ERR(st->clk);
+ 
+-	ret = clk_prepare_enable(st->clk);
+-	if (ret < 0)
+-		return ret;
+-
+-	ret = devm_add_action_or_reset(&spi->dev, ad9467_clk_disable, st);
+-	if (ret)
+-		return ret;
+-
+ 	st->pwrdown_gpio = devm_gpiod_get_optional(&spi->dev, "powerdown",
+ 						   GPIOD_OUT_LOW);
+ 	if (IS_ERR(st->pwrdown_gpio))
 -- 
 2.43.0
 
