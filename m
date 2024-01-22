@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A665112F5A7;
-	Tue, 23 Jan 2024 00:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE5F12F5A7;
+	Tue, 23 Jan 2024 00:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969006; cv=none; b=eiJDMf4hh+B+C7zx4miEtbdFcV/99ktxo2spv2fxMLrm/KQrkRGggfmUFo2rYQrMJIx1VV7Dei7cnOq+fQsddiwBtDRBMMS2SmjhLM5IXq7IAKQTDYlyPDFGeCe140S3EhyyM9c4HI2qyMrBsPM8PzokDpUwVJ/XjEnVdUR5T6g=
+	t=1705969008; cv=none; b=YshIp6OXHOvLSc4ZWzSlbzhwak4RQ6mb0IPRQWLYpdl6m+C71K7AI9UvjEAEBGAL+X8Fr8ZPBiP+5Cgc707ZYrCFeztiiduzyj2urzcb6RG/tcaAf/kFqsH8AA0PyqH84WKsK3Wqe3/5+k/vuAkx5xDSbAn41Mce/IC2OUlL/4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969006; c=relaxed/simple;
-	bh=9DVaz2eYakxm+azd4EnLjrf2JcH8RaWuvaqFd6WJDSM=;
+	s=arc-20240116; t=1705969008; c=relaxed/simple;
+	bh=PS3Nks3T0kECLI2LXnK9sUSvQ0IZIFG/s5YsmJw4Cro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F46xlchdQ/evN8ArUPK0YCBOaOe6DbdRvXYmM/FovT6Cl6rxbnfnMz5F8iaxheRl4aMYDe4GggcDUdCvi+ihuoPucZ/U30Zh0Qrbie+e2opK2VlDviG68V8uWnQ3oeivFl6fbYJOfvyEytgb3uaI1QIXQE26xLgDrALZ0eFA61M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCETN/Q7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AOEhrFLia76NhO1Ca+nxKJqPSxwGIZuKpYnemIHgUORGm4lUBxZ3volGWbxKu5JTZlEeRqNv47hfFUmQajOnWMZhFltYv2I6bZLHBTqiNDhBAaojcKICR9RaGB9Fd6ltbAln9V5PR4gyTqN46F2yKM0lr9lPQQCoR51QHVIrIaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dl83stve; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCETN/Q7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619A4C433C7;
-	Tue, 23 Jan 2024 00:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dl83stve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6737C433F1;
+	Tue, 23 Jan 2024 00:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969006;
-	bh=9DVaz2eYakxm+azd4EnLjrf2JcH8RaWuvaqFd6WJDSM=;
+	s=korg; t=1705969007;
+	bh=PS3Nks3T0kECLI2LXnK9sUSvQ0IZIFG/s5YsmJw4Cro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FCETN/Q7GQuYVhjeA5i6JbsknI1VPRXQ5FcBqBTwRoKAAEQe/euYfB6lXRFkIqQ7K
-	 saw5b/6UP6HRDUCxRvPW6sxhAACbHXpabRdezKQkEmHo/AC8u58SIwOCL3tGoTLuEb
-	 h5HbDXNkWgUmQHnCzeg2gomTiDC5ptltTf8UVXh4=
+	b=dl83stvecx9sWGhcTdpYex7bOvJsjgn1WuUiwc3Y/IYmQAmZjdmnClvhPLlljGuFZ
+	 nzpIveR0rk9mFl1dJ+Bos6yCidZOzmWuh5rE4r6mtiYf/mGIeaMSQLtLMLP1FakOKZ
+	 JT3+kufMKMkQzULFIsKT07+ENLFeZXZhI4l62gJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Curtis Klein <curtis.klein@hpe.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 131/194] drivers: clk: zynqmp: calculate closest mux rate
-Date: Mon, 22 Jan 2024 15:57:41 -0800
-Message-ID: <20240122235724.848518678@linuxfoundation.org>
+Subject: [PATCH 5.4 132/194] watchdog: set cdev owner before adding
+Date: Mon, 22 Jan 2024 15:57:42 -0800
+Message-ID: <20240122235724.890352577@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -51,59 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
+From: Curtis Klein <curtis.klein@hpe.com>
 
-[ Upstream commit b782921ddd7f84f524723090377903f399fdbbcb ]
+[ Upstream commit 38d75297745f04206db9c29bdd75557f0344c7cc ]
 
-Currently zynqmp clock driver is not calculating closest mux rate and
-because of that Linux is not setting proper frequency for CPU and
-not able to set given frequency for dynamic frequency scaling.
+When the new watchdog character device is registered, it becomes
+available for opening. This creates a race where userspace may open the
+device before the character device's owner is set. This results in an
+imbalance in module_get calls as the cdev_get in cdev_open will not
+increment the reference count on the watchdog driver module.
 
-E.g., In current logic initial acpu clock parent and frequency as below
-apll1                  0    0    0  2199999978    0     0  50000      Y
-    acpu0_mux          0    0    0  2199999978    0     0  50000      Y
-        acpu0_idiv1    0    0    0  2199999978    0     0  50000      Y
-            acpu0      0    0    0  2199999978    0     0  50000      Y
+This causes problems when the watchdog character device is released as
+the module loader's reference will also be released. This makes it
+impossible to open the watchdog device later on as it now appears that
+the module is being unloaded. The open will fail with -ENXIO from
+chrdev_open.
 
-After changing acpu frequency to 549999994 Hz using CPU freq scaling its
-selecting incorrect parent which is not closest frequency.
-rpll_to_xpd            0    0    0  1599999984    0     0  50000      Y
-    acpu0_mux          0    0    0  1599999984    0     0  50000      Y
-        acpu0_div1     0    0    0   533333328    0     0  50000      Y
-            acpu0      0    0    0   533333328    0     0  50000      Y
+The legacy watchdog device will fail with -EBUSY from the try_module_get
+in watchdog_open because it's module owner is the watchdog core module
+so it can still be opened but it will fail to get a refcount on the
+underlying watchdog device driver.
 
-Parent should remain same since 549999994 = 2199999978 / 4.
-
-So use __clk_mux_determine_rate_closest() generic function to calculate
-closest rate for mux clock. After this change its selecting correct
-parent and correct clock rate.
-apll1                  0    0    0  2199999978    0     0  50000      Y
-    acpu0_mux          0    0    0  2199999978    0     0  50000      Y
-        acpu0_div1     0    0    0   549999995    0     0  50000      Y
-            acpu0      0    0    0   549999995    0     0  50000      Y
-
-Fixes: 3fde0e16d016 ("drivers: clk: Add ZynqMP clock driver")
-Signed-off-by: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
-Link: https://lore.kernel.org/r/20231129112916.23125-2-jay.buddhabhatti@amd.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 72139dfa2464 ("watchdog: Fix the race between the release of watchdog_core_data and cdev")
+Signed-off-by: Curtis Klein <curtis.klein@hpe.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20231205190522.55153-1-curtis.klein@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/zynqmp/clk-mux-zynqmp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/watchdog/watchdog_dev.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/clk/zynqmp/clk-mux-zynqmp.c b/drivers/clk/zynqmp/clk-mux-zynqmp.c
-index 0af8f74c5fa5..880ea34c0038 100644
---- a/drivers/clk/zynqmp/clk-mux-zynqmp.c
-+++ b/drivers/clk/zynqmp/clk-mux-zynqmp.c
-@@ -85,7 +85,7 @@ static int zynqmp_clk_mux_set_parent(struct clk_hw *hw, u8 index)
- static const struct clk_ops zynqmp_clk_mux_ops = {
- 	.get_parent = zynqmp_clk_mux_get_parent,
- 	.set_parent = zynqmp_clk_mux_set_parent,
--	.determine_rate = __clk_mux_determine_rate,
-+	.determine_rate = __clk_mux_determine_rate_closest,
- };
+diff --git a/drivers/watchdog/watchdog_dev.c b/drivers/watchdog/watchdog_dev.c
+index c670d13ab3d9..6fb860542c86 100644
+--- a/drivers/watchdog/watchdog_dev.c
++++ b/drivers/watchdog/watchdog_dev.c
+@@ -1007,6 +1007,7 @@ static int watchdog_cdev_register(struct watchdog_device *wdd)
  
- static const struct clk_ops zynqmp_clk_mux_ro_ops = {
+ 	/* Fill in the data structures */
+ 	cdev_init(&wd_data->cdev, &watchdog_fops);
++	wd_data->cdev.owner = wdd->ops->owner;
+ 
+ 	/* Add the device */
+ 	err = cdev_device_add(&wd_data->cdev, &wd_data->dev);
+@@ -1021,8 +1022,6 @@ static int watchdog_cdev_register(struct watchdog_device *wdd)
+ 		return err;
+ 	}
+ 
+-	wd_data->cdev.owner = wdd->ops->owner;
+-
+ 	/* Record time of most recent heartbeat as 'just before now'. */
+ 	wd_data->last_hw_keepalive = ktime_sub(ktime_get(), 1);
+ 	watchdog_set_open_deadline(wd_data);
 -- 
 2.43.0
 
