@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6F46774B;
-	Tue, 23 Jan 2024 01:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D4766B52;
+	Tue, 23 Jan 2024 01:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971696; cv=none; b=ak7w2TwQGPyGTyg6BDAbtgPYDYHGV6e+r/DfY3EWi+rSZLKwqNXbXZ+ZVqufNDoCZV2WMlxeb50bvTxsOfBRYUSmnaEi2NYA+awzTmB4YKxZGB/YcKTL+u8PvxKPMqz1iaurhJbBJ5qNvMvsWv+wlnDhjUPh4jPXGY+CFQ+yJ14=
+	t=1705971698; cv=none; b=XWj5teoWNVhnTQJuHpAC5AmXij2m0mjLWiKjM8yluNMI5bF1yLEFXElkqPHZCKN9bdgQys+GoDpTOzZgWzRRhppneS0FQx9SV/5PO8qSCCCc3SI0whGWI4L0Bt6YZITk86LLZMWU0f+nu2im0UPCqDVy0Hn9ljr7ckVWQTJXmT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971696; c=relaxed/simple;
-	bh=0m0bBbL/f8mqGwnFR2Xz4uSYkeiw2c1NhO1HaY3Rebc=;
+	s=arc-20240116; t=1705971698; c=relaxed/simple;
+	bh=t2r2Lb1uwgL0rNgpIWnWx7Bf7osBVwCe4UO43qn/oew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XrUIRw+9tuWDEo4YDQbuFImbO+mSMa9ol1ixItp/lp7Yz8JDdcQPdYwaOGcceyOPV0+1POUmLsiH2A/OSu5mO4rrYpnAaZq4fe2p9pEUIt0YBpuzeacS5zSfcwjFKapw7IiDlH8y0mEwc/iBMejPcQchdjmE2+qAThvWiwbENOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=id9F4y0i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y/oqGtsYl0s9+vWAXCNpoux2rhYbj5lSg9l3NxYta4TfantiLGDdziHNQ+vpI0h3gbdMTkym/M30IS1WmF9rR75SqYYTXsFHY41KZ6Hu8XVSgn2NZJ+hRCb4fuq4e1hExvXIRuVmfQ03gOZPhpZvskzwPEM3X2ofxxixzJQ7Ujk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G416DMoB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="id9F4y0i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E79C43390;
-	Tue, 23 Jan 2024 01:01:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G416DMoB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38F2C43390;
+	Tue, 23 Jan 2024 01:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971696;
-	bh=0m0bBbL/f8mqGwnFR2Xz4uSYkeiw2c1NhO1HaY3Rebc=;
+	s=korg; t=1705971698;
+	bh=t2r2Lb1uwgL0rNgpIWnWx7Bf7osBVwCe4UO43qn/oew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=id9F4y0ik1xaCGRmOni61tAGsCSSVFe6wZ6gQByCEiwbhzzts7PaxYz09k6YhLDhU
-	 W4Cjnlf5lx/CUSdGU55RC0lb3864JmY3JuSJk9T4g7Tx06NjVhtXoTmwimShRPf7pE
-	 4g9MuR09S1qz6YQcZ89AyfA57qQ3ornDDANpsg88=
+	b=G416DMoB/r4ueY+6x5kDA+ndubThWwBWwneb3PmrCdxwgVkcooJs5Q/LYOnC3G3cC
+	 aGqO4fk0H34bAZTzHZyP1lcuuX7tc/lxJJvy6QdwYrj79/7QVrcgQQD1l8COJgQ66Q
+	 OtL/jKIws+wBYIRqyW6Bk/8JVlWr5cgTzsV36eXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.10 209/286] binder: fix race between mmput() and do_exit()
-Date: Mon, 22 Jan 2024 15:58:35 -0800
-Message-ID: <20240122235740.147072632@linuxfoundation.org>
+	Rob Landley <rob@landley.net>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.1 301/417] rootfs: Fix support for rootfstype= when root= is given
+Date: Mon, 22 Jan 2024 15:57:49 -0800
+Message-ID: <20240122235802.259761221@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,70 +47,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-commit 9a9ab0d963621d9d12199df9817e66982582d5a5 upstream.
+commit 21528c69a0d8483f7c6345b1a0bc8d8975e9a172 upstream.
 
-Task A calls binder_update_page_range() to allocate and insert pages on
-a remote address space from Task B. For this, Task A pins the remote mm
-via mmget_not_zero() first. This can race with Task B do_exit() and the
-final mmput() refcount decrement will come from Task A.
+Documentation/filesystems/ramfs-rootfs-initramfs.rst states:
 
-  Task A            | Task B
-  ------------------+------------------
-  mmget_not_zero()  |
-                    |  do_exit()
-                    |    exit_mm()
-                    |      mmput()
-  mmput()           |
-    exit_mmap()     |
-      remove_vma()  |
-        fput()      |
+  If CONFIG_TMPFS is enabled, rootfs will use tmpfs instead of ramfs by
+  default.  To force ramfs, add "rootfstype=ramfs" to the kernel command
+  line.
 
-In this case, the work of ____fput() from Task B is queued up in Task A
-as TWA_RESUME. So in theory, Task A returns to userspace and the cleanup
-work gets executed. However, Task A instead sleep, waiting for a reply
-from Task B that never comes (it's dead).
+This currently does not work when root= is provided since then
+saved_root_name contains a string and rootfstype= is ignored. Therefore,
+ramfs is currently always chosen when root= is provided.
 
-This means the binder_deferred_release() is blocked until an unrelated
-binder event forces Task A to go back to userspace. All the associated
-death notifications will also be delayed until then.
+The current behavior for rootfs's filesystem is:
 
-In order to fix this use mmput_async() that will schedule the work in
-the corresponding mm->async_put_work WQ instead of Task A.
+   root=       | rootfstype= | chosen rootfs filesystem
+   ------------+-------------+--------------------------
+   unspecified | unspecified | tmpfs
+   unspecified | tmpfs       | tmpfs
+   unspecified | ramfs       | ramfs
+    provided   | ignored     | ramfs
 
-Fixes: 457b9a6f09f0 ("Staging: android: add binder driver")
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20231201172212.1813387-4-cmllamas@google.com
+rootfstype= should be respected regardless whether root= is given,
+as shown below:
+
+   root=       | rootfstype= | chosen rootfs filesystem
+   ------------+-------------+--------------------------
+   unspecified | unspecified | tmpfs  (as before)
+   unspecified | tmpfs       | tmpfs  (as before)
+   unspecified | ramfs       | ramfs  (as before)
+    provided   | unspecified | ramfs  (compatibility with before)
+    provided   | tmpfs       | tmpfs  (new)
+    provided   | ramfs       | ramfs  (new)
+
+This table represents the new behavior.
+
+Fixes: 6e19eded3684 ("initmpfs: use initramfs if rootfstype= or root= specified")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Rob Landley <rob@landley.net>
+Link: https://lore.kernel.org/lkml/8244c75f-445e-b15b-9dbf-266e7ca666e2@landley.net/
+Reviewed-and-Tested-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Link: https://lore.kernel.org/r/20231120011248.396012-1-stefanb@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder_alloc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ init/do_mounts.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -271,7 +271,7 @@ static int binder_update_page_range(stru
- 	}
- 	if (mm) {
- 		mmap_write_unlock(mm);
--		mmput(mm);
-+		mmput_async(mm);
- 	}
- 	return 0;
+--- a/init/do_mounts.c
++++ b/init/do_mounts.c
+@@ -665,7 +665,10 @@ struct file_system_type rootfs_fs_type =
  
-@@ -304,7 +304,7 @@ err_page_ptr_cleared:
- err_no_vma:
- 	if (mm) {
- 		mmap_write_unlock(mm);
--		mmput(mm);
-+		mmput_async(mm);
- 	}
- 	return vma ? -ENOMEM : -ESRCH;
+ void __init init_rootfs(void)
+ {
+-	if (IS_ENABLED(CONFIG_TMPFS) && !saved_root_name[0] &&
+-		(!root_fs_names || strstr(root_fs_names, "tmpfs")))
+-		is_tmpfs = true;
++	if (IS_ENABLED(CONFIG_TMPFS)) {
++		if (!saved_root_name[0] && !root_fs_names)
++			is_tmpfs = true;
++		else if (root_fs_names && !!strstr(root_fs_names, "tmpfs"))
++			is_tmpfs = true;
++	}
  }
 
 
