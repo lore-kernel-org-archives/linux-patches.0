@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03F4133435;
-	Tue, 23 Jan 2024 01:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9BF133435;
+	Tue, 23 Jan 2024 01:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971912; cv=none; b=XFUAj1OltU5TEd1xo4UvE0y5DID4/x5xrO9RdB0AiBL+Aprn3viE0HvsS2Bl46cSnpsHUTpIZgxp0PhDWIV9KxunldKtauMvK5ONRfaqV/0QSXVUd5Qm9kdjrKaOtj9FGPrE5ek/2wGpfyUmYMuwuEO2e+HjZWO5x4269zWWsJ0=
+	t=1705971914; cv=none; b=U3pWcAT8TWdOz1495+Oz0FYpWlpyCa/JsBh3cEWS0vYTG9JbLYpWpNdmUyx5gLVYGRSZs7EA6eyRDlc6gWPGnciT0MmF+ZOPYpGxwNt1BHg2CRU8JIMz0rqx4u526kSy3QDZUXOkNu7XQSU8OSRL6jaRSD+OEpAoHkN9ypnNTZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971912; c=relaxed/simple;
-	bh=hq+um1bShNeq/CAos+r8p4bAdROYd5fczq7BdPSsQ8o=;
+	s=arc-20240116; t=1705971914; c=relaxed/simple;
+	bh=//mPx3NEZtBtuYfMw1gm8HpziCrMEqvhBKLooMBKJOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJP1cCouPPeMeMkc89cPp7jogNQaKzEuxGaM/252r+uaHDEvR5GRbbAIE3MEmav7bj+iaqSo5Eudzpx7DrgP07YZ3UgOyCru7oyhPbJeKELq9Y9+QBvRBniF1+ZBZm6RlEoAn0f1lMZwCvtbXkv3F1pGUG900+xvgYkrF/RpRWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZKFboyb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YdV+4vjmxLnRYj2JmO7XBNHjGj9tDkPypryPaDl4pXwWqUShi3fJx0H9xP+0ObetsRlEpaQJ6AjngHbRyKJYAsRGcwnrqJn0P/fUec9+XmKHneaoj7WT9o2pI669BHuYn/u9LntXJPs4vwqCCKzkjLivnoF8PkF+oxfXNjZtEbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3gnJdYC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZKFboyb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07ED1C433C7;
-	Tue, 23 Jan 2024 01:05:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3gnJdYC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10B0C433F1;
+	Tue, 23 Jan 2024 01:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971912;
-	bh=hq+um1bShNeq/CAos+r8p4bAdROYd5fczq7BdPSsQ8o=;
+	s=korg; t=1705971913;
+	bh=//mPx3NEZtBtuYfMw1gm8HpziCrMEqvhBKLooMBKJOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EZKFboyb+BwxB5vOwZNUENSGpIVVWCx9X1ClODZR2UECcAEezhR/RrQ1L57qAYrCG
-	 0gQhUw9hh+3/AAliaNNA5tRI9tU+fYa+0ReFeYVFZJ06OjRxFzPls+ycO0CvMSusmQ
-	 GKP5XrsNp5GMR8zP650fLVbzrdRmiVx2XWtWLZvE=
+	b=S3gnJdYCJHRdImh35HJrT3I23UOEs8SZk5GEX9LrSl4Ax0IeQJYCvTc9Wc++XWaMT
+	 5PX8WKwlKC1kyDd7sxVAWIGYAkE7W3trzuOQDXhmnm0NgXpgvdmOIjUK9ZrwzRCdQU
+	 SPuYIzS8qPKMZJEA3E2UwPc1a2HJkXE/H/xwXvYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Jan Palus <jpalus@fastmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 349/417] selftests/sgx: Skip non X86_64 platform
-Date: Mon, 22 Jan 2024 15:58:37 -0800
-Message-ID: <20240122235803.879859062@linuxfoundation.org>
+Subject: [PATCH 6.1 336/417] power: supply: cw2015: correct time_to_empty units in sysfs
+Date: Mon, 22 Jan 2024 15:58:24 -0800
+Message-ID: <20240122235803.421239095@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -52,46 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+From: Jan Palus <jpalus@fastmail.com>
 
-[ Upstream commit 981cf568a8644161c2f15c02278ebc2834b51ba6 ]
+[ Upstream commit f37669119423ca852ca855b24732f25c0737aa57 ]
 
-When building whole selftests on arm64, rsync gives an erorr about sgx:
+RRT_ALRT register holds remaining battery time in minutes therefore it
+needs to be scaled accordingly when exposing TIME_TO_EMPTY via sysfs
+expressed in seconds
 
-rsync: [sender] link_stat "/root/linux-next/tools/testing/selftests/sgx/test_encl.elf" failed: No such file or directory (2)
-rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1327) [sender=3.2.5]
-
-The root casue is sgx only used on X86_64, and shall be skipped on other
-platforms.
-
-Fix this by moving TEST_CUSTOM_PROGS and TEST_FILES inside the if check,
-then the build result will be "Skipping non-existent dir: sgx".
-
-Fixes: 2adcba79e69d ("selftests/x86: Add a selftest for SGX")
-Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/all/20231206025605.3965302-1-zhaomzhao%40126.com
+Fixes: b4c7715c10c1 ("power: supply: add CellWise cw2015 fuel gauge driver")
+Signed-off-by: Jan Palus <jpalus@fastmail.com>
+Link: https://lore.kernel.org/r/20231111221704.5579-1-jpalus@fastmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/sgx/Makefile | 2 +-
+ drivers/power/supply/cw2015_battery.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/sgx/Makefile b/tools/testing/selftests/sgx/Makefile
-index 75af864e07b6..04ee17d3d394 100644
---- a/tools/testing/selftests/sgx/Makefile
-+++ b/tools/testing/selftests/sgx/Makefile
-@@ -16,9 +16,9 @@ HOST_CFLAGS := -Wall -Werror -g $(INCLUDES) -fPIC -z noexecstack
- ENCL_CFLAGS := -Wall -Werror -static -nostdlib -nostartfiles -fPIC \
- 	       -fno-stack-protector -mrdrnd $(INCLUDES)
+diff --git a/drivers/power/supply/cw2015_battery.c b/drivers/power/supply/cw2015_battery.c
+index 473522b4326a..9d957cf8edf0 100644
+--- a/drivers/power/supply/cw2015_battery.c
++++ b/drivers/power/supply/cw2015_battery.c
+@@ -491,7 +491,7 @@ static int cw_battery_get_property(struct power_supply *psy,
  
-+ifeq ($(CAN_BUILD_X86_64), 1)
- TEST_CUSTOM_PROGS := $(OUTPUT)/test_sgx
- 
--ifeq ($(CAN_BUILD_X86_64), 1)
- all: $(TEST_CUSTOM_PROGS) $(OUTPUT)/test_encl.elf
- endif
- 
+ 	case POWER_SUPPLY_PROP_TIME_TO_EMPTY_NOW:
+ 		if (cw_battery_valid_time_to_empty(cw_bat))
+-			val->intval = cw_bat->time_to_empty;
++			val->intval = cw_bat->time_to_empty * 60;
+ 		else
+ 			val->intval = 0;
+ 		break;
 -- 
 2.43.0
 
