@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551BE6A03B;
-	Tue, 23 Jan 2024 02:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2266A328;
+	Tue, 23 Jan 2024 02:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975331; cv=none; b=n3TbPeGlufGUYz8qBYTM+mLRvBtj05cW2+G6Ewyy5cTA6gS/O6Qi23O/Xk9+uPCwwVUF9wsf2iLOKuOOBJB2vWtM3pClxCVcefL9r6waXM25le2YtP9bTSh7wMHvrvdF9IAWeGIbWSWmoomfM5Bmlkg3SJJVHV6ndIuHJc9JWBI=
+	t=1705975332; cv=none; b=gQvp/LTw0Xxk4y1xkZ0xLWwbVU4mGH57HKQrOLiqG8yrS5vuGQ1fRnaz59V7eOJJOFe+3ZULHJb+9PlFZosnWWN1gpGHgiezgF091EC+STJ7OlI+RO1HpA1pyhyBw5yeJq2MZ4GRnXoXpP0CEbpffZvaZ3a7y5OAxhq2Oi1NJPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975331; c=relaxed/simple;
-	bh=YR5rpRPsa7zqZMJvazJAfbqyu09rqQI3/vyhSr92dzU=;
+	s=arc-20240116; t=1705975332; c=relaxed/simple;
+	bh=mgMfkIKP7DHR2e/y32ZKo+Qfxla+bRVAgWOvkGAgmJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WePxZfI1SD9goVYAiIzZvdHKmYvvbV4hd9wsxf04hJeBMtngXBDcRaiOSpDnU39Z/7sIXdAmWljq+3QKxR72nEazasFnMWxikIEmOeWlsyfs5OxN+DY4My60FKlJf/5E45N8XHc5DIStli6ovggmP6NMRI59zXk9NdnPQkU8DQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V77X7gFh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e0l7Fz7GYd13BSTXsXzprM5Xoimlda503DVev3gLM0BM8xey9DFdyiDKtMsXuCE0BdbT0+pVPwKEnJpsvgFxGHmpSg9uk6FRtKzZSCfZQXeYidDuDaIpp8Ur1oXztF0WFH2ptUrDO2v086rcUUIokfOLrzFFSzUbLmSfzEW6NEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XI/+tBqm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V77X7gFh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DECC43394;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XI/+tBqm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35B1C43390;
 	Tue, 23 Jan 2024 02:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975331;
-	bh=YR5rpRPsa7zqZMJvazJAfbqyu09rqQI3/vyhSr92dzU=;
+	s=korg; t=1705975332;
+	bh=mgMfkIKP7DHR2e/y32ZKo+Qfxla+bRVAgWOvkGAgmJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V77X7gFh+VWjZQ3NQPad7E1UoO7HEVsgzyltjTe5xehfAIJWQMG4f+hPn5r1n2NYF
-	 CwTAmiFVoUnB2SpDETggBqk7nae6A1QMySQ5hRNcE/MAC53zxgIk5sEG2bM/xOLPm+
-	 9vshumRkM0VFM99VNR3QIRSX87JxXPAijXcgJneo=
+	b=XI/+tBqmk2DWui2PSYouiJ5N03EiX8RyB4upUCiMvszr2het9iLCVnegua+yYuxIH
+	 ESk9/gOgD5WNuwa9cJA8HzNzfzds0MUiazSrwNaxRg+vQbryvMDcJc4Weg9n8sQLaf
+	 6bUHJgDLSX1voq6Xu6Ye8bCAn6g1p++MaK3nAVnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 294/583] dt-bindings: clock: Update the videocc resets for sm8150
-Date: Mon, 22 Jan 2024 15:55:45 -0800
-Message-ID: <20240122235821.010007775@linuxfoundation.org>
+Subject: [PATCH 6.6 295/583] clk: qcom: videocc-sm8150: Update the videocc resets
+Date: Mon, 22 Jan 2024 15:55:46 -0800
+Message-ID: <20240122235821.044344920@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -54,36 +55,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-[ Upstream commit 3185f96968eedd117ec72ee7b87ead44b6d1bbbd ]
+[ Upstream commit 1fd9a939db24d2f66e48f8bca3e3654add3fa205 ]
 
 Add all the available resets for the video clock controller
 on sm8150.
 
+Fixes: 5658e8cf1a8a ("clk: qcom: add video clock controller driver for SM8150")
 Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20231201-videocc-8150-v3-1-56bec3a5e443@quicinc.com
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231201-videocc-8150-v3-2-56bec3a5e443@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 1fd9a939db24 ("clk: qcom: videocc-sm8150: Update the videocc resets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/dt-bindings/clock/qcom,videocc-sm8150.h | 4 ++++
+ drivers/clk/qcom/videocc-sm8150.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/include/dt-bindings/clock/qcom,videocc-sm8150.h b/include/dt-bindings/clock/qcom,videocc-sm8150.h
-index e24ee840cfdb..c557b78dc572 100644
---- a/include/dt-bindings/clock/qcom,videocc-sm8150.h
-+++ b/include/dt-bindings/clock/qcom,videocc-sm8150.h
-@@ -16,6 +16,10 @@
+diff --git a/drivers/clk/qcom/videocc-sm8150.c b/drivers/clk/qcom/videocc-sm8150.c
+index 1afdbe4a249d..6a5f89f53da8 100644
+--- a/drivers/clk/qcom/videocc-sm8150.c
++++ b/drivers/clk/qcom/videocc-sm8150.c
+@@ -214,6 +214,10 @@ static const struct regmap_config video_cc_sm8150_regmap_config = {
  
- /* VIDEO_CC Resets */
- #define VIDEO_CC_MVSC_CORE_CLK_BCR	0
-+#define VIDEO_CC_INTERFACE_BCR		1
-+#define VIDEO_CC_MVS0_BCR		2
-+#define VIDEO_CC_MVS1_BCR		3
-+#define VIDEO_CC_MVSC_BCR		4
+ static const struct qcom_reset_map video_cc_sm8150_resets[] = {
+ 	[VIDEO_CC_MVSC_CORE_CLK_BCR] = { 0x850, 2 },
++	[VIDEO_CC_INTERFACE_BCR] = { 0x8f0 },
++	[VIDEO_CC_MVS0_BCR] = { 0x870 },
++	[VIDEO_CC_MVS1_BCR] = { 0x8b0 },
++	[VIDEO_CC_MVSC_BCR] = { 0x810 },
+ };
  
- /* VIDEO_CC GDSCRs */
- #define VENUS_GDSC			0
+ static const struct qcom_cc_desc video_cc_sm8150_desc = {
 -- 
 2.43.0
 
