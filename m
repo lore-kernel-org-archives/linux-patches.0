@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A45149005;
-	Tue, 23 Jan 2024 01:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B514F14A081;
+	Tue, 23 Jan 2024 01:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972093; cv=none; b=tIrNUvesMo2r61ln8RSO+zv9IsLv7si0mElZOPDnQ4ZWsZEeBhXcCHqABF+QbYJDWHmg/YzZnLkeQVNsAHxuURXziiRdxT4ujHiWvkPmQe1BUjlIeD6DW8SwcROGIvGbiwZlH6vwxcpL60M2J/1tk2+ZB/WXWVQl0tq9pLvLX08=
+	t=1705972094; cv=none; b=Mk4wNgLU0tS6QUT3Z3a5c0Tc7SNWACgWwgnSotDtHYWVppIlgDfELLG7fqbvY3LDOHNzrO2aavafMNL330Z5jZfM14tEHDWdIC3eIMBwQJIdCaqlOQKD86oSw++8+j9VdYYAOlahy5oE42YtSoV/aO4NhN2hXdr0zNHzoDs0Krk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972093; c=relaxed/simple;
-	bh=/KHCViP1NOwRhK4fnWf6h91otcwUrTEQYOYfppkPW6s=;
+	s=arc-20240116; t=1705972094; c=relaxed/simple;
+	bh=vv/9t2JFDqO05oCGvKTkh53DqMzY0dLZOxRU+YukSng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GqP3pd8CCvYbL9mOl3kuYRWe4XrIf0Hkwp921HjrH5Xe3aL6B5EZmW1l8v9shb5EakRgTHrb5Ejsbsjc3c9om+PiZt884igdCNnD2Yizv21qzBR4w2PLjOu3YyLb/sPd/OZa7buP2gnmAG8j0mUUt2n9a8et/2JWogoTLFmBiAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUAfjoTL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iZn7EXE7VZJD/fLM6UC75vvOS+YOVn9+KjffSmqK+Q1l+RQfPZjh4yWCzgVjrsBTwKMUmQuVTr1Xx9ddkiSQ4xpTHfsMkqRt5iwfDMACOaTaL8yylpGAdAvZTJT28K6ZSGwhvP1MjRHMnTbzTvtaAKFQvA0SUuGO9szspAo3pe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZesSJyZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUAfjoTL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3090C433F1;
-	Tue, 23 Jan 2024 01:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZesSJyZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17428C433B1;
+	Tue, 23 Jan 2024 01:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972093;
-	bh=/KHCViP1NOwRhK4fnWf6h91otcwUrTEQYOYfppkPW6s=;
+	s=korg; t=1705972094;
+	bh=vv/9t2JFDqO05oCGvKTkh53DqMzY0dLZOxRU+YukSng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KUAfjoTL+eGx3/HJE/FsRW87H5xky8vxE2PXmTww4eAz5+fnUra/QhMIhHQNTQESo
-	 l5AjaW21l4G0BdZ4M2NqPgb5BMwWgx4JnCuELMwaTmtVNGUS5Hu004cakESmPB4K96
-	 4GEOmNPd9WGirnyW7jPqT2rPG6ZwW2HeHw6pUTU0=
+	b=bZesSJyZ6CK92TB0ZJF5N5xIYyK7pogXL36MgOL0Y5wqvJcVVSQ7+heXrhDeuB638
+	 oU2K49gk23s+V646O2L2TJzJRaRz905NsJvYu17xa0s77tCA4HeoSI6odMHIeoGf+Z
+	 SBbJzPDAMJ+gY/0DaBD5qb7z/WL6QquqrdNo16us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Yanteng Si <siyanteng@loongson.cn>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/374] tracing: Add size check when printing trace_marker output
-Date: Mon, 22 Jan 2024 15:54:48 -0800
-Message-ID: <20240122235745.761418229@linuxfoundation.org>
+Subject: [PATCH 5.15 033/374] stmmac: dwmac-loongson: drop useless check for compatible fallback
+Date: Mon, 22 Jan 2024 15:54:49 -0800
+Message-ID: <20240122235745.798169956@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -53,65 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 60be76eeabb3d83858cc6577fc65c7d0f36ffd42 ]
+[ Upstream commit 31fea092c6f9f8fb2c40a08137907f5fbeae55dd ]
 
-If for some reason the trace_marker write does not have a nul byte for the
-string, it will overflow the print:
+Device binds to proper PCI ID (LOONGSON, 0x7a03), already listed in DTS,
+so checking for some other compatible does not make sense.  It cannot be
+bound to unsupported platform.
 
-  trace_seq_printf(s, ": %s", field->buf);
+Drop useless, incorrect (space in between) and undocumented compatible.
 
-The field->buf could be missing the nul byte. To prevent overflow, add the
-max size that the buf can be by using the event size and the field
-location.
-
-  int max = iter->ent_size - offsetof(struct print_entry, buf);
-
-  trace_seq_printf(s, ": %*.s", max, field->buf);
-
-Link: https://lore.kernel.org/linux-trace-kernel/20231212084444.4619b8ce@gandalf.local.home
-
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Yanteng Si <siyanteng@loongson.cn>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Acked-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_output.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/kernel/trace/trace_output.c b/kernel/trace/trace_output.c
-index 6b4d3f3abdae..4c4b84e507f7 100644
---- a/kernel/trace/trace_output.c
-+++ b/kernel/trace/trace_output.c
-@@ -1446,11 +1446,12 @@ static enum print_line_t trace_print_print(struct trace_iterator *iter,
- {
- 	struct print_entry *field;
- 	struct trace_seq *s = &iter->seq;
-+	int max = iter->ent_size - offsetof(struct print_entry, buf);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
+index cef9734ef259..da7b5d26a589 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
+@@ -59,11 +59,6 @@ static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id
+ 		return -ENODEV;
+ 	}
  
- 	trace_assign_type(field, iter->ent);
- 
- 	seq_print_ip_sym(s, field->ip, flags);
--	trace_seq_printf(s, ": %s", field->buf);
-+	trace_seq_printf(s, ": %.*s", max, field->buf);
- 
- 	return trace_handle_return(s);
- }
-@@ -1459,10 +1460,11 @@ static enum print_line_t trace_print_raw(struct trace_iterator *iter, int flags,
- 					 struct trace_event *event)
- {
- 	struct print_entry *field;
-+	int max = iter->ent_size - offsetof(struct print_entry, buf);
- 
- 	trace_assign_type(field, iter->ent);
- 
--	trace_seq_printf(&iter->seq, "# %lx %s", field->ip, field->buf);
-+	trace_seq_printf(&iter->seq, "# %lx %.*s", field->ip, max, field->buf);
- 
- 	return trace_handle_return(&iter->seq);
- }
+-	if (!of_device_is_compatible(np, "loongson, pci-gmac")) {
+-		pr_info("dwmac_loongson_pci: Incompatible OF node\n");
+-		return -ENODEV;
+-	}
+-
+ 	plat = devm_kzalloc(&pdev->dev, sizeof(*plat), GFP_KERNEL);
+ 	if (!plat)
+ 		return -ENOMEM;
 -- 
 2.43.0
 
