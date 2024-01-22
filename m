@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6137312BF35;
-	Tue, 23 Jan 2024 00:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79AD12BF35;
+	Tue, 23 Jan 2024 00:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968914; cv=none; b=kemI4FSZmaPm2zWXKFN6MCUPvGcaoep1Zzi7xgQb8bH1Xi2nW4wqdZc61Y/qYkdLnJmz/7ACGHLjTCrQB3UWE1IM2bG07wviQ+PNHLLTlo6vqtYRx004IGTrJr4U8L0ZnXRZ4ASHxp2cJQzwB969g0KCYpyhwxkFVnnShr5ZVYI=
+	t=1705968915; cv=none; b=R2w6gp5SNSbXyqFdfcTXJ53Yp40k1c1NGQVYpc/CKlyL8neMnIIo0/wMlAZrziNxit/LQ18RDP385ftHZz1buNuxna6rLwMnfTDtzDXSkU5elV6bzPrPHN4bPir4tOrR4w46guv0VpLd5tGmxS38nDDhzyz2BelYVp5pqKK/cQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968914; c=relaxed/simple;
-	bh=H9uuzJsshk9QMe8DRBwsTudemLqFKF31Iiuru2O/xmU=;
+	s=arc-20240116; t=1705968915; c=relaxed/simple;
+	bh=Nnflbc4xwkYnKuizPwP+F+NeN05TlGGDy5N1NbdeD9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LvQqMo1AoNilnLBuEITWSzoRQ/MugfJTZgFkx6Gfb61aGmArvXNEvq1Yx4GYsJ4V2KCqWyhLj2tj+ipjtEnMCMr1yNsjx0HAs2dnw+q8jH18Qjr+Yr4JYmaK3hiIi6mj6Kgj3TIFZhPr9O88EzGc3kWh5z/gOmbmHBNku/KMyjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tt2cYyV8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I2wPwgG3jcFVgYUU2J+Ci5QtX4D+HRd+bYPIOOM711n0ElBTx41u+ObCirxTnJI9cMOJ64QA97xJLuCJPutocSj4N3mSAyR0l5lo09aPC2NmjIOqUZ/IM77LYKE+11JjY5NUuP75d6qyW+/IhSKu6HdfWP8INi1a33V7MBFOvCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nn4ZIa4E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tt2cYyV8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04B7C433C7;
-	Tue, 23 Jan 2024 00:15:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nn4ZIa4E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57976C433B1;
+	Tue, 23 Jan 2024 00:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968913;
-	bh=H9uuzJsshk9QMe8DRBwsTudemLqFKF31Iiuru2O/xmU=;
+	s=korg; t=1705968915;
+	bh=Nnflbc4xwkYnKuizPwP+F+NeN05TlGGDy5N1NbdeD9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tt2cYyV8V1H2D2K79jXQ+JzBqgghBRh7KohV1E+7XRHjFi03pGvv4s4M6Z/MBhbsn
-	 w1WpfTc6XkOZDu0DNer47AW5dxk2GavpE+aFLsNEonJJBFpeHCpos7fTwMWDO2bvN1
-	 624ol/2q9bUFhQFyKBfgeQh+2x3rAoN6mgpetamk=
+	b=Nn4ZIa4Eb1NNMlGoHlTlMhHnCJU2zqKJDGCEN9DV9tc/na9APblVBn2cKBl4AxI70
+	 3bvjtcX1wMenVOHr6gRSjSk5VAdm3eN6GJVJ9DaEYM2/P4Zrrw1ThjPN2xP8NLiZ5W
+	 ApHrafuJ1JSpMFPnu6QFLvHwCgHNGSTLrYCEMj+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Su Hui <suhui@nfschina.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 095/194] wifi: rtlwifi: add calculate_bit_shift()
-Date: Mon, 22 Jan 2024 15:57:05 -0800
-Message-ID: <20240122235723.306405135@linuxfoundation.org>
+Subject: [PATCH 5.4 096/194] wifi: rtlwifi: rtl8188ee: phy: using calculate_bit_shift()
+Date: Mon, 22 Jan 2024 15:57:06 -0800
+Message-ID: <20240122235723.348546950@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -54,39 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 52221dfddbbfb5b4e029bb2efe9bb7da33ec1e46 ]
+[ Upstream commit 969bc926f04b438676768aeffffffb050e480b62 ]
 
-There are many same functions like _rtl88e_phy_calculate_bit_shift(),
-_rtl92c_phy_calculate_bit_shift() and so on. And these functions can
-cause undefined bitwise shift behavior. Add calculate_bit_shift() to
-replace them and fix undefined behavior in subsequent patches.
+Using calculate_bit_shift() to replace _rtl88e_phy_calculate_bit_shift().
+And fix the undefined bitwise shift behavior problem.
 
+Fixes: f0eb856e0b6c ("rtlwifi: rtl8188ee: Add new driver")
 Signed-off-by: Su Hui <suhui@nfschina.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231219065739.1895666-2-suhui@nfschina.com
-Stable-dep-of: 969bc926f04b ("wifi: rtlwifi: rtl8188ee: phy: using calculate_bit_shift()")
+Link: https://msgid.link/20231219065739.1895666-4-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/wifi.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+ .../net/wireless/realtek/rtlwifi/rtl8188ee/phy.c   | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/wifi.h b/drivers/net/wireless/realtek/rtlwifi/wifi.h
-index 3bdda1c98339..abec9ceabe28 100644
---- a/drivers/net/wireless/realtek/rtlwifi/wifi.h
-+++ b/drivers/net/wireless/realtek/rtlwifi/wifi.h
-@@ -3230,4 +3230,11 @@ static inline struct ieee80211_sta *rtl_find_sta(struct ieee80211_hw *hw,
- 	return ieee80211_find_sta(mac->vif, mac_addr);
- }
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/phy.c
+index 52b0fccc31f8..4b8bdf3885db 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/phy.c
+@@ -16,12 +16,6 @@ static u32 _rtl88e_phy_rf_serial_read(struct ieee80211_hw *hw,
+ static void _rtl88e_phy_rf_serial_write(struct ieee80211_hw *hw,
+ 					enum radio_path rfpath, u32 offset,
+ 					u32 data);
+-static u32 _rtl88e_phy_calculate_bit_shift(u32 bitmask)
+-{
+-	u32 i = ffs(bitmask);
+-
+-	return i ? i - 1 : 32;
+-}
+ static bool _rtl88e_phy_bb8188e_config_parafile(struct ieee80211_hw *hw);
+ static bool _rtl88e_phy_config_mac_with_headerfile(struct ieee80211_hw *hw);
+ static bool phy_config_bb_with_headerfile(struct ieee80211_hw *hw,
+@@ -51,7 +45,7 @@ u32 rtl88e_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
+ 	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
+ 		 "regaddr(%#x), bitmask(%#x)\n", regaddr, bitmask);
+ 	originalvalue = rtl_read_dword(rtlpriv, regaddr);
+-	bitshift = _rtl88e_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	returnvalue = (originalvalue & bitmask) >> bitshift;
  
-+static inline u32 calculate_bit_shift(u32 bitmask)
-+{
-+	if (WARN_ON_ONCE(!bitmask))
-+		return 0;
-+
-+	return __ffs(bitmask);
-+}
- #endif
+ 	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
+@@ -74,7 +68,7 @@ void rtl88e_phy_set_bb_reg(struct ieee80211_hw *hw,
+ 
+ 	if (bitmask != MASKDWORD) {
+ 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
+-		bitshift = _rtl88e_phy_calculate_bit_shift(bitmask);
++		bitshift = calculate_bit_shift(bitmask);
+ 		data = ((originalvalue & (~bitmask)) | (data << bitshift));
+ 	}
+ 
+@@ -100,7 +94,7 @@ u32 rtl88e_phy_query_rf_reg(struct ieee80211_hw *hw,
+ 
+ 
+ 	original_value = _rtl88e_phy_rf_serial_read(hw, rfpath, regaddr);
+-	bitshift = _rtl88e_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
+ 
+ 	spin_unlock_irqrestore(&rtlpriv->locks.rf_lock, flags);
+@@ -129,7 +123,7 @@ void rtl88e_phy_set_rf_reg(struct ieee80211_hw *hw,
+ 			original_value = _rtl88e_phy_rf_serial_read(hw,
+ 								    rfpath,
+ 								    regaddr);
+-			bitshift = _rtl88e_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data =
+ 			    ((original_value & (~bitmask)) |
+ 			     (data << bitshift));
 -- 
 2.43.0
 
