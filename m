@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F016BB55;
-	Tue, 23 Jan 2024 02:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EADE6BB53;
+	Tue, 23 Jan 2024 02:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975369; cv=none; b=JNqMbuVP+vLuM+NW8+K4t/UNYFS89N1z7txEBqdN7ZM5U/DoR6FKpOjCJMVzLA0O9rKd17olgTnD511xpCojAXBJ9fTOk1M3eWbSjJiw6XH269BVt0bga0rCsx2JGVQrIx8/K7b1fIqIYYoTvXa8O3bnj0nu2z18K6emWeDBTo4=
+	t=1705975370; cv=none; b=McvZEKm6b8M3MliGoyBVr91yD1HOrGvPcTXMHW0Dwf5vYVMzGrpNUcaN7hRkFq/3Oec6roJ37zIQjuwPjAVwjcfKw+XYDv5dc8kWs8ow/DVn3ZONZeD3o9Tb6X9Lv/pSCLSM06hULraX6zm9s82R4Vmw4NNYd8A7UjfvV9olx7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975369; c=relaxed/simple;
-	bh=GmBJ25rYbLqTQ0R9pxnaOzhYh2rToaj1S/yid9jQ1pc=;
+	s=arc-20240116; t=1705975370; c=relaxed/simple;
+	bh=XzYVPlnIxSMWnMrq0ItNbYeMurKznfdRY53fuZW4zmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfYhwj+uJOIvoVBapWerad5reTZvkrzTbQo+tSivK077L9wFVI8+VG43sl6PlM64X5DqMueqlA30rOB1/V0WQMfLClH4PuZT5gqbaBG9Y2OHQ7WebYeQglvpfEa4uYQ/ZHPOp7L/4f5JozMPgBQeNLwM2SmaexMO1W/Ntz6FOC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzPIpQBT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ib+pLIBBRxjuTAGMsQTZOXdLBEMTQB0LpFctILgOTEK2WzJVlvtZqY089qqJxOczEkJ5Y+L8U4jPPPHCTCsc9YnCO9XKtS+xOsi8DC9xcdeopI4vMWGtYNFXtwQd9J48t+MUdAicrKPYuXvPz5/eD5/4qgjT0dcv7UlNS2PmsCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdvJSWxz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzPIpQBT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E24C43390;
-	Tue, 23 Jan 2024 02:02:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdvJSWxz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DF6C433A6;
+	Tue, 23 Jan 2024 02:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975369;
-	bh=GmBJ25rYbLqTQ0R9pxnaOzhYh2rToaj1S/yid9jQ1pc=;
+	s=korg; t=1705975370;
+	bh=XzYVPlnIxSMWnMrq0ItNbYeMurKznfdRY53fuZW4zmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzPIpQBTewTxKfyfUKbrZlm6TKEX5poRBi3gjgl8rSLXZL7Z8HmFzwNH7Yx8foM+r
-	 +q5Afeojd6jegBh6MlwafoAbrYtVCwe7B2kdrOKUdpiq0sXO2Rr0r7JxCrHgOxXbsE
-	 nqgtcE+e0v0eyNOiAuTcvZxoe08kgfWm22CblEZw=
+	b=YdvJSWxzztE5EqB//S4lyHQ+SeSfv9oaUgCVmOnmFo8kezNqDsB+FcAqZekFANT2w
+	 fqnhcXxFcIQZOip3ydmRNAMcBoluVv8qnSqaKo6spiL8fAXgRBN3m/8GJ8sGqCIy5P
+	 ZCMbaDGEaIvx2vn8aiWCSFsa+tpGjg0uD37oXE/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Emil Velikov <emil.velikov@collabora.com>,
+	Gergo Koteles <soyer@irl.hu>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 306/583] ASoC: amd: vangogh: Drop conflicting ACPI-based probing
-Date: Mon, 22 Jan 2024 15:55:57 -0800
-Message-ID: <20240122235821.390099116@linuxfoundation.org>
+Subject: [PATCH 6.6 307/583] ASoC: tas2781: add support for FW version 0x0503
+Date: Mon, 22 Jan 2024 15:55:58 -0800
+Message-ID: <20240122235821.422206623@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,110 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Gergo Koteles <soyer@irl.hu>
 
-[ Upstream commit ddd1ee12a8fb6e4d6f86eddeba64c135eee56623 ]
+[ Upstream commit ee00330a5b78e2acf4b3aac32913da43e2c12a26 ]
 
-The Vangogh machine driver variant based on the MAX98388 amplifier, as
-found on Valve's Steam Deck OLED, relies on probing via an ACPI match
-table.  This worked fine until commit 197b1f7f0df1 ("ASoC: amd: Add new
-dmi entries to config entry") enabled SOF support for the target machine
-(i.e. Galileo product), causing the sound card to enter the deferred
-probe state indefinitely:
+Layout of FW version 0x0503 is compatible with 0x0502.
+Already supported by TI's tas2781-linux-driver tree.
+https://git.ti.com/cgit/tas2781-linux-drivers/tas2781-linux-driver/
 
-$ cat /sys/kernel/debug/devices_deferred
-AMDI8821:00	acp5x_mach: Register card (acp5x-max98388) failed
-
-The issue is related to commit e89f45edb747 ("ASoC: amd: vangogh: Add
-check for acp config flags in vangogh platform"), which tries to
-mitigate potential conflicts between SOF and generic ACP Vangogh
-drivers, due to sharing the PCI device IDs.
-
-However, the solution is effective only if the machine driver is
-directly probed by pci-acp5x through platform_device_register_full().
-
-Hence, remove the conflicting ACPI based probing and rely exclusively on
-DMI quirks for sound card setup.
-
-Fixes: dba22efd0d17 ("ASoC: amd: vangogh: Add support for NAU8821/MAX98388 variant")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Reviewed-by: Emil Velikov <emil.velikov@collabora.com>
-Link: https://msgid.link/r/20231209203229.878730-2-cristian.ciocaltea@collabora.com
+Fixes: 915f5eadebd2 ("ASoC: tas2781: firmware lib")
+Signed-off-by: Gergo Koteles <soyer@irl.hu>
+Link: https://msgid.link/r/98d4ee4e01e834af72a1a0bea6736facf43582e0.1702513517.git.soyer@irl.hu
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/vangogh/acp5x-mach.c | 35 +++++++++++-------------------
- 1 file changed, 13 insertions(+), 22 deletions(-)
+ sound/soc/codecs/tas2781-fmwlib.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/amd/vangogh/acp5x-mach.c b/sound/soc/amd/vangogh/acp5x-mach.c
-index eda464545866..2ccc95d57783 100644
---- a/sound/soc/amd/vangogh/acp5x-mach.c
-+++ b/sound/soc/amd/vangogh/acp5x-mach.c
-@@ -439,7 +439,15 @@ static const struct dmi_system_id acp5x_vg_quirk_table[] = {
- 		.matches = {
- 			DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Valve"),
- 			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Jupiter"),
--		}
-+		},
-+		.driver_data = (void *)&acp5x_8821_35l41_card,
-+	},
-+	{
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Valve"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Galileo"),
-+		},
-+		.driver_data = (void *)&acp5x_8821_98388_card,
- 	},
- 	{}
- };
-@@ -452,25 +460,15 @@ static int acp5x_probe(struct platform_device *pdev)
- 	struct snd_soc_card *card;
- 	int ret;
- 
--	card = (struct snd_soc_card *)device_get_match_data(dev);
--	if (!card) {
--		/*
--		 * This is normally the result of directly probing the driver
--		 * in pci-acp5x through platform_device_register_full(), which
--		 * is necessary for the CS35L41 variant, as it doesn't support
--		 * ACPI probing and relies on DMI quirks.
--		 */
--		dmi_id = dmi_first_match(acp5x_vg_quirk_table);
--		if (!dmi_id)
--			return -ENODEV;
--
--		card = &acp5x_8821_35l41_card;
--	}
-+	dmi_id = dmi_first_match(acp5x_vg_quirk_table);
-+	if (!dmi_id || !dmi_id->driver_data)
-+		return -ENODEV;
- 
- 	machine = devm_kzalloc(dev, sizeof(*machine), GFP_KERNEL);
- 	if (!machine)
- 		return -ENOMEM;
- 
-+	card = dmi_id->driver_data;
- 	card->dev = dev;
- 	platform_set_drvdata(pdev, card);
- 	snd_soc_card_set_drvdata(card, machine);
-@@ -482,17 +480,10 @@ static int acp5x_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static const struct acpi_device_id acp5x_acpi_match[] = {
--	{ "AMDI8821", (kernel_ulong_t)&acp5x_8821_98388_card },
--	{},
--};
--MODULE_DEVICE_TABLE(acpi, acp5x_acpi_match);
--
- static struct platform_driver acp5x_mach_driver = {
- 	.driver = {
- 		.name = DRV_NAME,
- 		.pm = &snd_soc_pm_ops,
--		.acpi_match_table = acp5x_acpi_match,
- 	},
- 	.probe = acp5x_probe,
- };
+diff --git a/sound/soc/codecs/tas2781-fmwlib.c b/sound/soc/codecs/tas2781-fmwlib.c
+index 1dfac9b2fca2..61b05629a9a9 100644
+--- a/sound/soc/codecs/tas2781-fmwlib.c
++++ b/sound/soc/codecs/tas2781-fmwlib.c
+@@ -2012,6 +2012,7 @@ static int tasdevice_dspfw_ready(const struct firmware *fmw,
+ 	case 0x301:
+ 	case 0x302:
+ 	case 0x502:
++	case 0x503:
+ 		tas_priv->fw_parse_variable_header =
+ 			fw_parse_variable_header_kernel;
+ 		tas_priv->fw_parse_program_data =
 -- 
 2.43.0
 
