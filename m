@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C846B65BC5;
-	Tue, 23 Jan 2024 01:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52C56518A;
+	Tue, 23 Jan 2024 01:00:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971650; cv=none; b=KTYEvqXHZDz/L667e+xsQeNhlOrsjYSEKBHG1UU+aFlKa3YyMwAxwi11XCp+nwD3gmPLLDpOlj5IEdAy11TQbwYQyTkmdkAJX1XNRWJCivXwRezlYEDrFqaBzBc82FeSU025WO78XSvv5a72Rji2euVHnU/NZKoPYjrT8xSTbHo=
+	t=1705971652; cv=none; b=CE7ukvQ4Kz+B4y+d2pRyvr68MKCDonvG8L0f/QcbvUXFYUUTpUupRGGSfRUdkiFNfF0v60nrira3cTnUDNVUn8LrZ2pU2wjKAfyz1orbVPHi/3vAX40g1I4MwniBVI6iZw5zYLJ0nG4X0NT+IOUbOqhI/XIu6FhgUw0dyU8pG4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971650; c=relaxed/simple;
-	bh=jgzpJFy0D21xmqB1jFlxTbwyJwW+e5FP4e82dQkPQSY=;
+	s=arc-20240116; t=1705971652; c=relaxed/simple;
+	bh=aKIPzVrYLRrd/i1KiGSdpbXLLClowGtm+hO3UHQtSpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dVowDYnt/8SGrGBbwcxhh4UfCsZ2I52SE9vwPOZzajoQXxvfppXAOLTCiSHuS2vLBa1yjtH1MUpofYK943yinMp5iWo3FzOtyEQrHFTYoJWDMPcsDGC+zqLNERHQ/jw5GblTk9b8WOS5nl88VS/08+MxCEATefsJusoWfM60D8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVjew0m9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qZnZQparPdMjHyGDU+aJfuKd9nCSx0H+3wt2pfO+9qT8HwWTS1z0YZo92soNr6/0+aWpR02J+c1xFY3WEKBd3FFfDLOeyoX0qZJuVF7Gr1O+Mz/6vgyRSzJel/0A7Zck4dXZTNMfwsk8EFABBkgzd7DVSrJaGLwygnSNPztMdYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LtyC4YD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVjew0m9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89450C433F1;
-	Tue, 23 Jan 2024 01:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LtyC4YD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9C2C433F1;
+	Tue, 23 Jan 2024 01:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971650;
-	bh=jgzpJFy0D21xmqB1jFlxTbwyJwW+e5FP4e82dQkPQSY=;
+	s=korg; t=1705971652;
+	bh=aKIPzVrYLRrd/i1KiGSdpbXLLClowGtm+hO3UHQtSpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vVjew0m9TTMb4ELKsbceJeF2IRYCTBE/ibe1VsLicIPELlkqpUuHlBmxLBX+WgSLR
-	 W4iaCsPO+YIRsSLnGlW5FoZ21YQW58X8k4BVoSqEMjFyuNqdPVDOfIW8XHOrZALJp+
-	 C17syl+tSygLuomhCaD/N9UhzyAp6FbSsrWhtOSw=
+	b=2LtyC4YD22nU7f7Sx9r5nocUNyJVs06awyIakfgZIIRbr0SKSp0CZXCg593oGGKCn
+	 KRC0ssiYRpdaTZG9tznrz74ZSEIyhRabKAIKs1NGawrLIp+/M/n4vLDGWef64VBzmF
+	 tw/BUruGQIix9bGpMgW4DCM/H1OvqSBEXOL9hTa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Gurtovoy <mgurtovoy@nvidia.com>,
-	Sergey Gorenko <sergeygo@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 194/286] IB/iser: Prevent invalidating wrong MR
-Date: Mon, 22 Jan 2024 15:58:20 -0800
-Message-ID: <20240122235739.595587649@linuxfoundation.org>
+	Nam Cao <namcao@linutronix.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 287/417] fbdev: flush deferred work in fb_deferred_io_fsync()
+Date: Mon, 22 Jan 2024 15:57:35 -0800
+Message-ID: <20240122235801.778716103@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,137 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Gorenko <sergeygo@nvidia.com>
+From: Nam Cao <namcao@linutronix.de>
 
-[ Upstream commit 2f1888281e67205bd80d3e8f54dbd519a9653f26 ]
+commit 15e4c1f462279b4e128f27de48133e0debe9e0df upstream.
 
-The iser_reg_resources structure has two pointers to MR but only one
-mr_valid field. The implementation assumes that we use only *sig_mr when
-pi_enable is true. Otherwise, we use only *mr. However, it is only
-sometimes correct. Read commands without protection information occur even
-when pi_enble is true. For example, the following SCSI commands have a
-Data-In buffer but never have protection information: READ CAPACITY (16),
-INQUIRY, MODE SENSE(6), MAINTENANCE IN. So, we use
-*sig_mr for some SCSI commands and *mr for the other SCSI commands.
+The driver's fsync() is supposed to flush any pending operation to
+hardware. It is implemented in this driver by cancelling the queued
+deferred IO first, then schedule it for "immediate execution" by calling
+schedule_delayed_work() again with delay=0. However, setting delay=0
+only means the work is scheduled immediately, it does not mean the work
+is executed immediately. There is no guarantee that the work is finished
+after schedule_delayed_work() returns. After this driver's fsync()
+returns, there can still be pending work. Furthermore, if close() is
+called by users immediately after fsync(), the pending work gets
+cancelled and fsync() may do nothing.
 
-In most cases, it works fine because the remote invalidation is applied.
-However, there are two cases when the remote invalidation is not
-applicable.
- 1. Small write commands when all data is sent as an immediate.
- 2. The target does not support the remote invalidation feature.
+To ensure that the deferred IO completes, use flush_delayed_work()
+instead. Write operations to this driver either write to the device
+directly, or invoke schedule_delayed_work(); so by flushing the
+workqueue, it can be guaranteed that all previous writes make it to the
+device.
 
-The lazy invalidation is used if the remote invalidation is impossible.
-Since, at the lazy invalidation, we always invalidate the MR we want to
-use, the wrong MR may be invalidated.
-
-To fix the issue, we need a field per MR that indicates the MR needs
-invalidation. Since the ib_mr structure already has such a field, let's
-use ib_mr.need_inval instead of iser_reg_resources.mr_valid.
-
-Fixes: b76a439982f8 ("IB/iser: Use IB_WR_REG_MR_INTEGRITY for PI handover")
-Link: https://lore.kernel.org/r/20231219072311.40989-1-sergeygo@nvidia.com
-Acked-by: Max Gurtovoy <mgurtovoy@nvidia.com>
-Signed-off-by: Sergey Gorenko <sergeygo@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 5e841b88d23d ("fb: fsync() method for deferred I/O flush.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/ulp/iser/iscsi_iser.h     | 2 --
- drivers/infiniband/ulp/iser/iser_initiator.c | 5 ++++-
- drivers/infiniband/ulp/iser/iser_memory.c    | 8 ++++----
- drivers/infiniband/ulp/iser/iser_verbs.c     | 1 -
- 4 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/video/fbdev/core/fb_defio.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/iser/iscsi_iser.h b/drivers/infiniband/ulp/iser/iscsi_iser.h
-index 78ee9445f801..45a2d2b82b09 100644
---- a/drivers/infiniband/ulp/iser/iscsi_iser.h
-+++ b/drivers/infiniband/ulp/iser/iscsi_iser.h
-@@ -322,12 +322,10 @@ struct iser_device {
-  *
-  * @mr:         memory region
-  * @sig_mr:     signature memory region
-- * @mr_valid:   is mr valid indicator
-  */
- struct iser_reg_resources {
- 	struct ib_mr                     *mr;
- 	struct ib_mr                     *sig_mr;
--	u8				  mr_valid:1;
- };
+--- a/drivers/video/fbdev/core/fb_defio.c
++++ b/drivers/video/fbdev/core/fb_defio.c
+@@ -132,11 +132,7 @@ int fb_deferred_io_fsync(struct file *fi
+ 		return 0;
  
- /**
-diff --git a/drivers/infiniband/ulp/iser/iser_initiator.c b/drivers/infiniband/ulp/iser/iser_initiator.c
-index 27a6f75a9912..9ea88dd6a414 100644
---- a/drivers/infiniband/ulp/iser/iser_initiator.c
-+++ b/drivers/infiniband/ulp/iser/iser_initiator.c
-@@ -602,7 +602,10 @@ iser_inv_desc(struct iser_fr_desc *desc, u32 rkey)
- 		return -EINVAL;
- 	}
- 
--	desc->rsc.mr_valid = 0;
-+	if (desc->sig_protected)
-+		desc->rsc.sig_mr->need_inval = false;
-+	else
-+		desc->rsc.mr->need_inval = false;
+ 	inode_lock(inode);
+-	/* Kill off the delayed work */
+-	cancel_delayed_work_sync(&info->deferred_work);
+-
+-	/* Run it immediately */
+-	schedule_delayed_work(&info->deferred_work, 0);
++	flush_delayed_work(&info->deferred_work);
+ 	inode_unlock(inode);
  
  	return 0;
- }
-diff --git a/drivers/infiniband/ulp/iser/iser_memory.c b/drivers/infiniband/ulp/iser/iser_memory.c
-index d4e057fac219..519fea5ec3a1 100644
---- a/drivers/infiniband/ulp/iser/iser_memory.c
-+++ b/drivers/infiniband/ulp/iser/iser_memory.c
-@@ -250,7 +250,7 @@ iser_reg_sig_mr(struct iscsi_iser_task *iser_task,
- 
- 	iser_set_prot_checks(iser_task->sc, &sig_attrs->check_mask);
- 
--	if (rsc->mr_valid)
-+	if (rsc->sig_mr->need_inval)
- 		iser_inv_rkey(&tx_desc->inv_wr, mr, cqe, &wr->wr);
- 
- 	ib_update_fast_reg_key(mr, ib_inc_rkey(mr->rkey));
-@@ -274,7 +274,7 @@ iser_reg_sig_mr(struct iscsi_iser_task *iser_task,
- 	wr->access = IB_ACCESS_LOCAL_WRITE |
- 		     IB_ACCESS_REMOTE_READ |
- 		     IB_ACCESS_REMOTE_WRITE;
--	rsc->mr_valid = 1;
-+	rsc->sig_mr->need_inval = true;
- 
- 	sig_reg->sge.lkey = mr->lkey;
- 	sig_reg->rkey = mr->rkey;
-@@ -299,7 +299,7 @@ static int iser_fast_reg_mr(struct iscsi_iser_task *iser_task,
- 	struct ib_reg_wr *wr = &tx_desc->reg_wr;
- 	int n;
- 
--	if (rsc->mr_valid)
-+	if (rsc->mr->need_inval)
- 		iser_inv_rkey(&tx_desc->inv_wr, mr, cqe, &wr->wr);
- 
- 	ib_update_fast_reg_key(mr, ib_inc_rkey(mr->rkey));
-@@ -322,7 +322,7 @@ static int iser_fast_reg_mr(struct iscsi_iser_task *iser_task,
- 		     IB_ACCESS_REMOTE_WRITE |
- 		     IB_ACCESS_REMOTE_READ;
- 
--	rsc->mr_valid = 1;
-+	rsc->mr->need_inval = true;
- 
- 	reg->sge.lkey = mr->lkey;
- 	reg->rkey = mr->rkey;
-diff --git a/drivers/infiniband/ulp/iser/iser_verbs.c b/drivers/infiniband/ulp/iser/iser_verbs.c
-index 2bd18b006893..b5127479860d 100644
---- a/drivers/infiniband/ulp/iser/iser_verbs.c
-+++ b/drivers/infiniband/ulp/iser/iser_verbs.c
-@@ -136,7 +136,6 @@ iser_create_fastreg_desc(struct iser_device *device,
- 			goto err_alloc_mr_integrity;
- 		}
- 	}
--	desc->rsc.mr_valid = 0;
- 
- 	return desc;
- 
--- 
-2.43.0
-
 
 
