@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490A8132C38;
-	Tue, 23 Jan 2024 00:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6C2132C35;
+	Tue, 23 Jan 2024 00:18:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969124; cv=none; b=prwaUS87Hnul2TgBu3Kzym7JGxTp3JIQiosRohoODzgHXtu6AgoV1tFc8IpwcjFnn7xkKS35oGMJ2/J+95Fswog43ACgHzoBwZBUQ1MAtiPGuiLAFZSvtFgx6E/inDmVhthLcwK8rtmqE6NymEu4FAZhU/Gtw6NJXW49REkIr/0=
+	t=1705969125; cv=none; b=gBdsSPORzazfVC/d/9a2GEfngayI2aUU+/FHHZuZi/L3tkViqSQ0NB+s1Rzct4IHinusuSMh7TRvptflnjsj5kjnhQgFhZ88kdLBekZt2CuxG5MXOC4a9JtzUdy1dgZer2zNBSRCNCpQyJjMUJ5uBIBHVYmTpNKw5+TnBgDul1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969124; c=relaxed/simple;
-	bh=FrqCtne8DPFhSHJe3rAdzQll6XjYw4p1L0EpTp6LxLQ=;
+	s=arc-20240116; t=1705969125; c=relaxed/simple;
+	bh=tvz/2t1FZDK6VLnjZbbs3KHcjsDXFpdlKpvK8bPa92I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N7OZOyUMkX5S4pYkH7Hc+ZxsYHCI2TD8OMyXr00PHjfGVDLpwODrIMTtrk5/9/DgY1q5T8AOY8VQRz7h4qqZCVldbjGGotpvPv25rQB8YOCR/lk1kk6Nme0G6Z5fUtldAjJvXCaWgi/1mzDwBzGTwE042RJphCk8Zg0HPiYtpAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JaLUMlTv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HfJpGTjqJ4uPcNljhaBaBgLWFghaRE7YOeZj2EgtwuUX/E4tKtJn4sILdCZMRt+fgko51jLoaKeImbh+/ZE9m0QmjSkqCKqKFIISy+BTlRlqvpc5wotGreRPfMZDoMkQyRwNCWutY2VkkCeoD98FwSDVxKSeo3ELQS4LXxqkusQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCVkj8j2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JaLUMlTv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBD6C43399;
-	Tue, 23 Jan 2024 00:18:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCVkj8j2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2ACC433C7;
+	Tue, 23 Jan 2024 00:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969124;
-	bh=FrqCtne8DPFhSHJe3rAdzQll6XjYw4p1L0EpTp6LxLQ=;
+	s=korg; t=1705969125;
+	bh=tvz/2t1FZDK6VLnjZbbs3KHcjsDXFpdlKpvK8bPa92I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JaLUMlTvhYc5lROPYKjm8I8VcPooakHnlrLTJT1JHLfoip5+WaNys7QJd8eG3vIVx
-	 67p/YroTX1LopdEAgAhtkoR/2kqUHIVqc0lPtfFy2yX3TygLYu5TgnWIqyRYS+Xvip
-	 KYL8dZ2OPz+dBf1KQRn7QWSAyWxDGhiQlz7YM6Bw=
+	b=UCVkj8j28jkpnM9DQykzda/vx/Z85UyVuhg75yw3fWOaXEQy5bDNiG4VCe6oJnkhC
+	 nDLWiFSPjDrFIeoXfrA4T7Mrb5STInvV7LLiqSosaN+2KwTuRe5asHySpd7JQzwyfp
+	 tiGnzuBGym/HCMx61/yZaYzHmK5+fqELa7fuJ3BM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Rae Moar <rmoar@google.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 036/641] thermal: core: Fix NULL pointer dereference in zone registration error path
-Date: Mon, 22 Jan 2024 15:49:00 -0800
-Message-ID: <20240122235819.210965058@linuxfoundation.org>
+Subject: [PATCH 6.7 037/641] kunit: debugfs: Fix unchecked dereference in debugfs_print_results()
+Date: Mon, 22 Jan 2024 15:49:01 -0800
+Message-ID: <20240122235819.244034250@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,44 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 04e6ccfc93c5a1aa1d75a537cf27e418895e20ea ]
+[ Upstream commit 34dfd5bb2e5507e69d9b6d6c90f546600c7a4977 ]
 
-If device_register() in thermal_zone_device_register_with_trips()
-returns an error, the tz variable is set to NULL and subsequently
-dereferenced in kfree(tz->tzp).
+Move the call to kunit_suite_has_succeeded() after the check that
+the kunit_suite pointer is valid.
 
-Commit adc8749b150c ("thermal/drivers/core: Use put_device() if
-device_register() fails") added the tz = NULL assignment in question to
-avoid a possible double-free after dropping the reference to the zone
-device.  However, after commit 4649620d9404 ("thermal: core: Make
-thermal_zone_device_unregister() return after freeing the zone"), that
-assignment has become redundant, because dropping the reference to the
-zone device does not cause the zone object to be freed any more.
+This was found by smatch:
 
-Drop it to address the NULL pointer dereference.
+ lib/kunit/debugfs.c:66 debugfs_print_results() warn: variable
+ dereferenced before check 'suite' (see line 63)
 
-Fixes: 3d439b1a2ad3 ("thermal/core: Alloc-copy-free the thermal zone parameters structure")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: 38289a26e1b8 ("kunit: fix debugfs code to use enum kunit_status, not bool")
+Reviewed-by: Rae Moar <rmoar@google.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 1 -
- 1 file changed, 1 deletion(-)
+ lib/kunit/debugfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 9c17d35ccbbd..1bc7ba459406 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -1369,7 +1369,6 @@ thermal_zone_device_register_with_trips(const char *type, struct thermal_trip *t
- 	device_del(&tz->device);
- release_device:
- 	put_device(&tz->device);
--	tz = NULL;
- remove_id:
- 	ida_free(&thermal_tz_ida, id);
- free_tzp:
+diff --git a/lib/kunit/debugfs.c b/lib/kunit/debugfs.c
+index 270d185737e6..5bfc18ad5fff 100644
+--- a/lib/kunit/debugfs.c
++++ b/lib/kunit/debugfs.c
+@@ -60,12 +60,14 @@ static void debugfs_print_result(struct seq_file *seq, struct string_stream *log
+ static int debugfs_print_results(struct seq_file *seq, void *v)
+ {
+ 	struct kunit_suite *suite = (struct kunit_suite *)seq->private;
+-	enum kunit_status success = kunit_suite_has_succeeded(suite);
++	enum kunit_status success;
+ 	struct kunit_case *test_case;
+ 
+ 	if (!suite)
+ 		return 0;
+ 
++	success = kunit_suite_has_succeeded(suite);
++
+ 	/* Print KTAP header so the debugfs log can be parsed as valid KTAP. */
+ 	seq_puts(seq, "KTAP version 1\n");
+ 	seq_puts(seq, "1..1\n");
 -- 
 2.43.0
 
