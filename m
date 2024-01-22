@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0A114A4CF;
-	Tue, 23 Jan 2024 00:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41EE114A4CF;
+	Tue, 23 Jan 2024 00:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969220; cv=none; b=FVN0xsij/vTe2By/Wfqr9Usyx1qRBO5Wf/dI9UwWBHutOu5lh08twXZHUuchjliw3GTy+YnThXaXnoUDwZxFLBAbMjo49+5Qs/llu7RpgQY1rne9uLO1f+PrjKj0LaaOsTy0GFfiDfOW0wBALdq86XJmTvXMwsq/8x+JUkp63es=
+	t=1705969222; cv=none; b=ddaSYxbDkjBHY0nxWbO3ShF3N1acWxzfnG141DCtNE89WO3URnSNSUdQ74wcEraPLdVRDdSor6QVEC27eNR1iao0cgDD/4WRugmaGlQeSeMKQZdxwriHKWY+Ew9dxJCyzlMdbFjr49TbxoMtrgqpc3lmWyVN9vy1o01L/TbJvM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969220; c=relaxed/simple;
-	bh=PS8reSd+/Szebk/j5zh93qM0puF9kNC4XX0QJKhPPbs=;
+	s=arc-20240116; t=1705969222; c=relaxed/simple;
+	bh=NA9qtJep9G/UGFeXy5k+Y7H6/HbSUaoXszox+u4iQKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hXu41VcUlAKp6+4F6S+5MRzCBpJFQlN+9TazvADWJugvt9Z3OxyUbQ3ruMP2g/98e/pc8V+4smZQ6WS2GBdOu0kgtmC7+ENf1hFxM/z+ZthFFol/HCpg/osY8P9DrwibYEh/OhZrtHtYzTcmfzAHw67s+QjnRplnUW96Ahk2B8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ffj30w3X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mi3I631K0RkTi67UjbdKxxjqwmuuLekpF4Y6FXnXdvtPNmd3CSrxj7lGsKV6R0ZtY5+HLNyyhSyz/NoCQyYI3swqOf4bfZtnuMEbJX1/snJ24l+DLOd2mk28M0DsnpuGhCMz1/tq7nB987dJw8/jqOtZJB8TFNQJu9E3Q56n+8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xisql163; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ffj30w3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB38C433C7;
-	Tue, 23 Jan 2024 00:20:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xisql163"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D74C433C7;
+	Tue, 23 Jan 2024 00:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969220;
-	bh=PS8reSd+/Szebk/j5zh93qM0puF9kNC4XX0QJKhPPbs=;
+	s=korg; t=1705969222;
+	bh=NA9qtJep9G/UGFeXy5k+Y7H6/HbSUaoXszox+u4iQKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ffj30w3X2H/9dlixav+E5pOVlkoKcSHdH8mBXlUqBO0/Q/CUhJ//R5flpACsWf+WL
-	 STQAhjCJpARzcakCJpp1Fhqovx52cihNJrKdGVr74iLbYIxKyyxJ+ovHQ66ewHpkTs
-	 LKh5/GA8qIcGTstpfyuMirlWf9RVJIE+pbgOqXxc=
+	b=xisql163vlNutTw++5P7+O170sfN+56x1/N7sv7l35jVZwOq9p/8qrI5/BJ4UD3dm
+	 axsXpEQYifmhM0Q6CfNmrKjNK/rYY2zGDsb964Q1+u/Y/qiYz2g7dvGJqeSPvELB6/
+	 Tf5HMJFtDLKBGHYmVin7FPEgBd/LRthHVHXfudZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 084/641] csky: fix arch_jump_label_transform_static override
-Date: Mon, 22 Jan 2024 15:49:48 -0800
-Message-ID: <20240122235820.658932644@linuxfoundation.org>
+Subject: [PATCH 6.7 085/641] blocklayoutdriver: Fix reference leak of pnfs_device_node
+Date: Mon, 22 Jan 2024 15:49:49 -0800
+Message-ID: <20240122235820.689904742@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,43 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit ca8e45c8048a2c9503c74751d25414601f730580 ]
+[ Upstream commit 1530827b90025cdf80c9b0d07a166d045a0a7b81 ]
 
-The arch_jump_label_transform_static() function in csky was originally meant to
-override the generic __weak function, but that got changed to an #ifndef check.
+The error path for blocklayout's device lookup is missing a reference drop
+for the case where a lookup finds the device, but the device is marked with
+NFS_DEVICEID_UNAVAILABLE.
 
-This showed up as a missing-prototype warning:
-arch/csky/kernel/jump_label.c:43:6: error: no previous prototype for 'arch_jump_label_transform_static' [-Werror=missing-prototypes]
-
-Change the method to use the new method of having a #define and a prototype
-for the global function.
-
-Fixes: 7e6b9db27de9 ("jump_label: make initial NOP patching the special case")
-Fixes: 4e8bb4ba5a55 ("csky: Add jump-label implementation")
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: b3dce6a2f060 ("pnfs/blocklayout: handle transient devices")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/csky/include/asm/jump_label.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nfs/blocklayout/blocklayout.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/csky/include/asm/jump_label.h b/arch/csky/include/asm/jump_label.h
-index d488ba6084bc..98a3f4b168bd 100644
---- a/arch/csky/include/asm/jump_label.h
-+++ b/arch/csky/include/asm/jump_label.h
-@@ -43,5 +43,10 @@ static __always_inline bool arch_static_branch_jump(struct static_key *key,
- 	return true;
+diff --git a/fs/nfs/blocklayout/blocklayout.c b/fs/nfs/blocklayout/blocklayout.c
+index 943aeea1eb16..1d1d7abc3205 100644
+--- a/fs/nfs/blocklayout/blocklayout.c
++++ b/fs/nfs/blocklayout/blocklayout.c
+@@ -580,6 +580,8 @@ bl_find_get_deviceid(struct nfs_server *server,
+ 		nfs4_delete_deviceid(node->ld, node->nfs_client, id);
+ 		goto retry;
+ 	}
++
++	nfs4_put_deviceid_node(node);
+ 	return ERR_PTR(-ENODEV);
  }
  
-+enum jump_label_type;
-+void arch_jump_label_transform_static(struct jump_entry *entry,
-+				      enum jump_label_type type);
-+#define arch_jump_label_transform_static arch_jump_label_transform_static
-+
- #endif  /* __ASSEMBLY__ */
- #endif	/* __ASM_CSKY_JUMP_LABEL_H */
 -- 
 2.43.0
 
