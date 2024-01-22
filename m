@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8672133416;
-	Tue, 23 Jan 2024 01:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A115133416;
+	Tue, 23 Jan 2024 01:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971844; cv=none; b=dfQZNU43ljP4z1BgRrII0jT2+o4vjELfh1EMp3db3r7Ua7F4TLMK0o9l844Y1EAYeFYk+Puiz4JxayMwrd0mOc2+0XKngKF2z9IrHSyUCFpZD5Vk33CsVrvNlEXoKs6fsk9pxv9t3Rjh4r5U3E2L9CoFnUrXKc7sxklMEgcJHS4=
+	t=1705971845; cv=none; b=KLsq1f8i09DEFGH3GqB9sr90u5XuYAt/tNGbUpzInpbOz1HZPzhUFgmbQ5QTy2uNBUTCnEctLc76FiPth6pf2Z6s5oFcolMFyB/RZKfax0n66aTiSELL3NmfF3A0uO592GF4R8xM08Db4Mir2jjj3/4WwM0av2WuigQdVb+qP9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971844; c=relaxed/simple;
-	bh=2ShETt64QWZVqMPpdXZLvwMzFKcAcGgeDWueEUJmH7s=;
+	s=arc-20240116; t=1705971845; c=relaxed/simple;
+	bh=lmYW1Ue6sH/H1JEak6IGz96+rwQbDunCQTAM1kvjYis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jocAPnWrVCzbGVp+pNiEYtTYctPW4Gw/lxS0u8Y28kLcTTN9lwk1srHjElk+qyYHRI3jL0ZwhQfFGW/k+Vb4st3Vwtqmg8EO7oLPHnriespBHb7vCVHiPUIyU4K/KzNYuQPUgTc2ZI5tX+9N6fhnWYoYvkK6QJyV02zhZNs0/Rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KaaAL9YE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H0Yp2JKV7HPHFmxIpYVXf4nQoWnk9Fgic6HI8qFHkKserg1hy1GQIpLh83q4jb1MwKdOP4WS8NVzReiNpU+4SZW3kDfbhwxnT3eLyBTC6U8K6MvKbJKy/mJOawkpbuYpr8C4MqL5pirF+yGSy86Gh2YNi0LIaj1tn73UUmD+Xuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEE8OmkP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KaaAL9YE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0734C433C7;
-	Tue, 23 Jan 2024 01:04:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEE8OmkP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371EFC433F1;
+	Tue, 23 Jan 2024 01:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971843;
-	bh=2ShETt64QWZVqMPpdXZLvwMzFKcAcGgeDWueEUJmH7s=;
+	s=korg; t=1705971845;
+	bh=lmYW1Ue6sH/H1JEak6IGz96+rwQbDunCQTAM1kvjYis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KaaAL9YEEvjwri+d14GlhSlnMaVKZkg69/OiQ8cV3XxXU0sMH8jSvPbki4Oc10UAH
-	 XxlwL9FOwjeGGSjYi7OyvSzlOnyEFsc8eqquAfxSJRcxWOEnspUpczDbjNzMyygOua
-	 29yQmLSAF2Q0gGX0491WNP5oYdu+NKJ6sfqmggUo=
+	b=YEE8OmkPSL8FNSGQpb3mdOK99o/T92/wsaSijYZrcEY+mlvVk+nGuO5oALMeXc8zF
+	 tENp3yoqdLN0iWsr0VoaImgQLApsm4wDxc8VqiOh70NxgKZLvsJprIMhmf5Ff+aOrs
+	 +eYaHhP3guR5kIoKJrgEUdCPwkMaZU5ObxHwCcEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 332/417] riscv: Fix set_direct_map_default_noflush() to reset _PAGE_EXEC
-Date: Mon, 22 Jan 2024 15:58:20 -0800
-Message-ID: <20240122235803.290995480@linuxfoundation.org>
+	Rob Landley <rob@landley.net>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 5.10 225/286] rootfs: Fix support for rootfstype= when root= is given
+Date: Mon, 22 Jan 2024 15:58:51 -0800
+Message-ID: <20240122235740.737997831@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +47,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-[ Upstream commit b8b2711336f03ece539de61479d6ffc44fb603d3 ]
+commit 21528c69a0d8483f7c6345b1a0bc8d8975e9a172 upstream.
 
-When resetting the linear mapping permissions, we must make sure that we
-clear the X bit so that do not end up with WX mappings (since we set
-PAGE_KERNEL).
+Documentation/filesystems/ramfs-rootfs-initramfs.rst states:
 
-Fixes: 395a21ff859c ("riscv: add ARCH_HAS_SET_DIRECT_MAP support")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20231213134027.155327-3-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  If CONFIG_TMPFS is enabled, rootfs will use tmpfs instead of ramfs by
+  default.  To force ramfs, add "rootfstype=ramfs" to the kernel command
+  line.
+
+This currently does not work when root= is provided since then
+saved_root_name contains a string and rootfstype= is ignored. Therefore,
+ramfs is currently always chosen when root= is provided.
+
+The current behavior for rootfs's filesystem is:
+
+   root=       | rootfstype= | chosen rootfs filesystem
+   ------------+-------------+--------------------------
+   unspecified | unspecified | tmpfs
+   unspecified | tmpfs       | tmpfs
+   unspecified | ramfs       | ramfs
+    provided   | ignored     | ramfs
+
+rootfstype= should be respected regardless whether root= is given,
+as shown below:
+
+   root=       | rootfstype= | chosen rootfs filesystem
+   ------------+-------------+--------------------------
+   unspecified | unspecified | tmpfs  (as before)
+   unspecified | tmpfs       | tmpfs  (as before)
+   unspecified | ramfs       | ramfs  (as before)
+    provided   | unspecified | ramfs  (compatibility with before)
+    provided   | tmpfs       | tmpfs  (new)
+    provided   | ramfs       | ramfs  (new)
+
+This table represents the new behavior.
+
+Fixes: 6e19eded3684 ("initmpfs: use initramfs if rootfstype= or root= specified")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Rob Landley <rob@landley.net>
+Link: https://lore.kernel.org/lkml/8244c75f-445e-b15b-9dbf-266e7ca666e2@landley.net/
+Reviewed-and-Tested-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Link: https://lore.kernel.org/r/20231120011248.396012-1-stefanb@linux.ibm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/mm/pageattr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ init/do_mounts.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/mm/pageattr.c b/arch/riscv/mm/pageattr.c
-index 62a9219686cd..43a0b6b69579 100644
---- a/arch/riscv/mm/pageattr.c
-+++ b/arch/riscv/mm/pageattr.c
-@@ -377,7 +377,7 @@ int set_direct_map_invalid_noflush(struct page *page)
- int set_direct_map_default_noflush(struct page *page)
- {
- 	return __set_memory((unsigned long)page_address(page), 1,
--			    PAGE_KERNEL, __pgprot(0));
-+			    PAGE_KERNEL, __pgprot(_PAGE_EXEC));
- }
+--- a/init/do_mounts.c
++++ b/init/do_mounts.c
+@@ -649,7 +649,10 @@ struct file_system_type rootfs_fs_type =
  
- #ifdef CONFIG_DEBUG_PAGEALLOC
--- 
-2.43.0
-
+ void __init init_rootfs(void)
+ {
+-	if (IS_ENABLED(CONFIG_TMPFS) && !saved_root_name[0] &&
+-		(!root_fs_names || strstr(root_fs_names, "tmpfs")))
+-		is_tmpfs = true;
++	if (IS_ENABLED(CONFIG_TMPFS)) {
++		if (!saved_root_name[0] && !root_fs_names)
++			is_tmpfs = true;
++		else if (root_fs_names && !!strstr(root_fs_names, "tmpfs"))
++			is_tmpfs = true;
++	}
+ }
 
 
