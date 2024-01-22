@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09F02B9B7;
-	Tue, 23 Jan 2024 00:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB052B9B7;
+	Tue, 23 Jan 2024 00:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970701; cv=none; b=rvTH8aeESXeUMMEPnS6WRNKTkj4B9bRIO8lCOYY2cxgV8+h5yZsT3yhYNIymeUZQ5fMRLQeHbgJ+yQB2N7ne8YXXUsgyu1ttrytvsER8Vb2pow3dg5yOvHRcco4Azs7k3G1WP4HVU8zsBLhv9hhN6j8HuSCVMQaoMio/u8wRj40=
+	t=1705970705; cv=none; b=mg4kp8M5KjYeFknU0FnF4V937I63yYQP0mXEln6VJt8EiTlpm5eslhE96SZJwnSb8dXbJF0q5F+iU3lK0LOlBMUCTYjGSEsgECy89S0sTAnlLauiwDxbvx4lZmYk0OGvorZ41eFzDCSvpU4W3unAT8KqP1Aa83N4uMooBkQN9vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970701; c=relaxed/simple;
-	bh=CGVHA4Ge5vYjmcXBZKXYADpU2mW7R8zJAGQ29FV+lV8=;
+	s=arc-20240116; t=1705970705; c=relaxed/simple;
+	bh=eIha0vcb5o0T3kMLxzGc846GKBP6x3mhZfuahUHx21E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iTHXkx7MKywd4vqDdiDs8HX38w3DBvrNM0vvUWTTZ7H+2FoOyAhaheLQzQ01OMhLp2Pg4y1vpiayoMc5ezyHP2MNLNoVjN8xRtZnbL1lFB2WiqoJkk9ADS8ehqoX5LU/p0/9qURTNQwOjyGjFeziYzTKR6yFOY6r2NhUUzBbmxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVk48pLC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xu0V2Gywc+Oc1V/+Mv1txw5EsJ/df/wRFeahZy+GEgafsw3gzhdK+GgFaDgf7Za0pcoI7v2mLutajYJqP21VycRj88nvU8qBpXn8Xi/7NZGkPiKCMvtC0v2NH+S9K8bJof1BoXnUhS6nLd1YvTT/4POVwpDv4/EFhXhelqaXjgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJtYcbzR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVk48pLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67999C433C7;
-	Tue, 23 Jan 2024 00:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJtYcbzR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B872C433F1;
+	Tue, 23 Jan 2024 00:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970701;
-	bh=CGVHA4Ge5vYjmcXBZKXYADpU2mW7R8zJAGQ29FV+lV8=;
+	s=korg; t=1705970704;
+	bh=eIha0vcb5o0T3kMLxzGc846GKBP6x3mhZfuahUHx21E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WVk48pLCAHpBA3kY1D/MvNYdc8l11YxWOYB3DGpbksSW9JmnQtNcmQ8EiPFFraXhW
-	 ArPITe2e/mOj1+jz3+FEGq6KrUhghu7+5W2z5v94lUFU0wL/PDz8NX0oCtMjXugt++
-	 WSzdmjosqZRq+dNMuDeh4W9wKp6Ld1ugJcDhUnvc=
+	b=gJtYcbzRnoQvvhYYWeMRp0b83hQBpbBp2Xsw/DbqNewZKyPSj+yoOFHVT+SBqNnXV
+	 vp5VvKvBaWSFvdXSX7adE2V6lZTEiAYidzk+9sIcNPRLp1s8X7rm9G9lWxT5DzSWqd
+	 oK4YmJvd/vJV8Fsr6anI7Np9hJmmujhV+BLIZRZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/417] bpf: Add map and need_defer parameters to .map_fd_put_ptr()
-Date: Mon, 22 Jan 2024 15:54:23 -0800
-Message-ID: <20240122235754.980572922@linuxfoundation.org>
+Subject: [PATCH 5.10 003/286] ALSA: hda - Fix speaker and headset mic pin config for CHUWI CoreBook XPro
+Date: Mon, 22 Jan 2024 15:55:09 -0800
+Message-ID: <20240122235732.135624183@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,176 +47,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-[ Upstream commit 20c20bd11a0702ce4dc9300c3da58acf551d9725 ]
+[ Upstream commit 7c9caa299335df94ad1c58f70a22f16a540eab60 ]
 
-map is the pointer of outer map, and need_defer needs some explanation.
-need_defer tells the implementation to defer the reference release of
-the passed element and ensure that the element is still alive before
-the bpf program, which may manipulate it, exits.
+This patch corrected the speaker and headset mic pin config to the more
+appropriate values.
 
-The following three cases will invoke map_fd_put_ptr() and different
-need_defer values will be passed to these callers:
-
-1) release the reference of the old element in the map during map update
-   or map deletion. The release must be deferred, otherwise the bpf
-   program may incur use-after-free problem, so need_defer needs to be
-   true.
-2) release the reference of the to-be-added element in the error path of
-   map update. The to-be-added element is not visible to any bpf
-   program, so it is OK to pass false for need_defer parameter.
-3) release the references of all elements in the map during map release.
-   Any bpf program which has access to the map must have been exited and
-   released, so need_defer=false will be OK.
-
-These two parameters will be used by the following patches to fix the
-potential use-after-free problem for map-in-map.
-
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20231204140425.1480317-3-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 876673364161 ("bpf: Defer the free of inner map when necessary")
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://lore.kernel.org/r/20231117170923.106822-1-kovalev@altlinux.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h     |  6 +++++-
- kernel/bpf/arraymap.c   | 12 +++++++-----
- kernel/bpf/hashtab.c    |  6 +++---
- kernel/bpf/map_in_map.c |  2 +-
- kernel/bpf/map_in_map.h |  2 +-
- 5 files changed, 17 insertions(+), 11 deletions(-)
+ sound/pci/hda/patch_realtek.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 21b192ce018a..47420a973e58 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -102,7 +102,11 @@ struct bpf_map_ops {
- 	/* funcs called by prog_array and perf_event_array map */
- 	void *(*map_fd_get_ptr)(struct bpf_map *map, struct file *map_file,
- 				int fd);
--	void (*map_fd_put_ptr)(void *ptr);
-+	/* If need_defer is true, the implementation should guarantee that
-+	 * the to-be-put element is still alive before the bpf program, which
-+	 * may manipulate it, exists.
-+	 */
-+	void (*map_fd_put_ptr)(struct bpf_map *map, void *ptr, bool need_defer);
- 	int (*map_gen_lookup)(struct bpf_map *map, struct bpf_insn *insn_buf);
- 	u32 (*map_fd_sys_lookup_elem)(void *ptr);
- 	void (*map_seq_show_elem)(struct bpf_map *map, void *key,
-diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
-index 00f23febb9a7..c04e69f34e4d 100644
---- a/kernel/bpf/arraymap.c
-+++ b/kernel/bpf/arraymap.c
-@@ -852,7 +852,7 @@ int bpf_fd_array_map_update_elem(struct bpf_map *map, struct file *map_file,
- 	}
- 
- 	if (old_ptr)
--		map->ops->map_fd_put_ptr(old_ptr);
-+		map->ops->map_fd_put_ptr(map, old_ptr, true);
- 	return 0;
- }
- 
-@@ -875,7 +875,7 @@ static int fd_array_map_delete_elem(struct bpf_map *map, void *key)
- 	}
- 
- 	if (old_ptr) {
--		map->ops->map_fd_put_ptr(old_ptr);
-+		map->ops->map_fd_put_ptr(map, old_ptr, true);
- 		return 0;
- 	} else {
- 		return -ENOENT;
-@@ -898,8 +898,9 @@ static void *prog_fd_array_get_ptr(struct bpf_map *map,
- 	return prog;
- }
- 
--static void prog_fd_array_put_ptr(void *ptr)
-+static void prog_fd_array_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
- {
-+	/* bpf_prog is freed after one RCU or tasks trace grace period */
- 	bpf_prog_put(ptr);
- }
- 
-@@ -1185,8 +1186,9 @@ static void *perf_event_fd_array_get_ptr(struct bpf_map *map,
- 	return ee;
- }
- 
--static void perf_event_fd_array_put_ptr(void *ptr)
-+static void perf_event_fd_array_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
- {
-+	/* bpf_perf_event is freed after one RCU grace period */
- 	bpf_event_entry_free_rcu(ptr);
- }
- 
-@@ -1239,7 +1241,7 @@ static void *cgroup_fd_array_get_ptr(struct bpf_map *map,
- 	return cgroup_get_from_fd(fd);
- }
- 
--static void cgroup_fd_array_put_ptr(void *ptr)
-+static void cgroup_fd_array_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
- {
- 	/* cgroup_put free cgrp after a rcu grace period */
- 	cgroup_put(ptr);
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index ce0051eee746..88c71de0a0a9 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -880,7 +880,7 @@ static void htab_put_fd_value(struct bpf_htab *htab, struct htab_elem *l)
- 
- 	if (map->ops->map_fd_put_ptr) {
- 		ptr = fd_htab_map_get_ptr(map, l);
--		map->ops->map_fd_put_ptr(ptr);
-+		map->ops->map_fd_put_ptr(map, ptr, true);
- 	}
- }
- 
-@@ -2424,7 +2424,7 @@ static void fd_htab_map_free(struct bpf_map *map)
- 		hlist_nulls_for_each_entry_safe(l, n, head, hash_node) {
- 			void *ptr = fd_htab_map_get_ptr(map, l);
- 
--			map->ops->map_fd_put_ptr(ptr);
-+			map->ops->map_fd_put_ptr(map, ptr, false);
- 		}
- 	}
- 
-@@ -2465,7 +2465,7 @@ int bpf_fd_htab_map_update_elem(struct bpf_map *map, struct file *map_file,
- 
- 	ret = htab_map_update_elem(map, key, &ptr, map_flags);
- 	if (ret)
--		map->ops->map_fd_put_ptr(ptr);
-+		map->ops->map_fd_put_ptr(map, ptr, false);
- 
- 	return ret;
- }
-diff --git a/kernel/bpf/map_in_map.c b/kernel/bpf/map_in_map.c
-index 8e87f69aae60..47ecc4818c93 100644
---- a/kernel/bpf/map_in_map.c
-+++ b/kernel/bpf/map_in_map.c
-@@ -115,7 +115,7 @@ void *bpf_map_fd_get_ptr(struct bpf_map *map,
- 	return inner_map;
- }
- 
--void bpf_map_fd_put_ptr(void *ptr)
-+void bpf_map_fd_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
- {
- 	/* ptr->ops->map_free() has to go through one
- 	 * rcu grace period by itself.
-diff --git a/kernel/bpf/map_in_map.h b/kernel/bpf/map_in_map.h
-index bcb7534afb3c..7d61602354de 100644
---- a/kernel/bpf/map_in_map.h
-+++ b/kernel/bpf/map_in_map.h
-@@ -13,7 +13,7 @@ struct bpf_map *bpf_map_meta_alloc(int inner_map_ufd);
- void bpf_map_meta_free(struct bpf_map *map_meta);
- void *bpf_map_fd_get_ptr(struct bpf_map *map, struct file *map_file,
- 			 int ufd);
--void bpf_map_fd_put_ptr(void *ptr);
-+void bpf_map_fd_put_ptr(struct bpf_map *map, void *ptr, bool need_defer);
- u32 bpf_map_fd_sys_lookup_elem(void *ptr);
- 
- #endif
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 99ba89723cd3..c7e76bfad84d 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -6797,6 +6797,7 @@ enum {
+ 	ALC290_FIXUP_SUBWOOFER_HSJACK,
+ 	ALC269_FIXUP_THINKPAD_ACPI,
+ 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
++	ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO,
+ 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
+ 	ALC255_FIXUP_ASUS_MIC_NO_PRESENCE,
+ 	ALC255_FIXUP_DELL1_MIC_NO_PRESENCE,
+@@ -7094,6 +7095,14 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc269_fixup_pincfg_U7x7_headset_mic,
+ 	},
++	[ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x18, 0x03a19020 }, /* headset mic */
++			{ 0x1b, 0x90170150 }, /* speaker */
++			{ }
++		},
++	},
+ 	[ALC269_FIXUP_AMIC] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -9320,6 +9329,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
++	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
+ 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
+ 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
 -- 
 2.43.0
 
