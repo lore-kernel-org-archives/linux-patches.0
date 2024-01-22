@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0968520EE;
-	Tue, 23 Jan 2024 00:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B715243;
+	Tue, 23 Jan 2024 00:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968240; cv=none; b=Xqe4pF7ayHDPwsqBMdSUGZDl/thBRJUgU4J0BUSsnZXHbZOq4oBS7rbbLtZq/niMbIa77DCNO0s26w4pd1iP33vE7OHNYC5qdbY+4utGNZOUNNpSsg4imxhFYokCnoXFcTa7LJwPmmG5aAVkAashBdU642kZskat5p7+qA+emHs=
+	t=1705968242; cv=none; b=MmscR66WsDtWclAcRebC6pWTIqQ9s/xJ7C9zM0VhoJMr1rEGEyNlcGgVjpOCQE+t+Ebe5gCCcDwKuUjeA9U1zoDf+dNz/B7tq4pXX/pnYWnxaydUaBMAd0Fp6kjCy8FAb9HzH2h5ACHdaWLGLH222nH1s5ZpUIbZ/247zJlyIY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968240; c=relaxed/simple;
-	bh=5pKTpgZuUOSh8BKcR0h0LeW/SKIrWC2dD3aBquslxZ0=;
+	s=arc-20240116; t=1705968242; c=relaxed/simple;
+	bh=BSH6X3Rm1UfPLWV5UaWgNOI1vPtPhC5XXZ4T15n+UOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fe1gCZmgmoHcWF5qsu6984fCphKkYtjvpcfxNF1uJ13+Nr/LATT5zxGiXAEc9SjARBSovEsN4lZ3AlmzxJmoUdwbNOtTplz7QCn3H83pSW7qe/sHXo2oHTLLbC6dO9VDzF1hteBjPNsmAKULZMbgjfGkn44be38YslG7IswI7O4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bc5Jhrn/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c9I9P2t3kQGkPQAZVtdgLkPxP7LhgdF4byhdjiYD4w2UGNH7ldfJ0gQ1+XO+tIKuP1KPzSlehDd5L5zdW+Rymglb7Xjxe6ebEjZhiCSJueah0v21kn/nMpdQhKssalvxJZk6nCoksJFK+mboDx99ewwYDscb6k+nenzeDs6slKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztR1ag97; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bc5Jhrn/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C42C43394;
-	Tue, 23 Jan 2024 00:03:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztR1ag97"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4961FC433F1;
+	Tue, 23 Jan 2024 00:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968239;
-	bh=5pKTpgZuUOSh8BKcR0h0LeW/SKIrWC2dD3aBquslxZ0=;
+	s=korg; t=1705968242;
+	bh=BSH6X3Rm1UfPLWV5UaWgNOI1vPtPhC5XXZ4T15n+UOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bc5Jhrn/eAoTyURQ0DgYYEZeVXG9hScW2L+KjeS0G2BsPACEkYGXp1dloTouL6Roi
-	 gkZ+I37HC6tcoVN20HIyFwkYe1PuXKZ6RbBqad7WsBg86EWJpoQ1QJOwZX2LpKJOZe
-	 fFT6gwDogkQ4Ugkwt6QRL7SllmYhQRvtpHx+vHyk=
+	b=ztR1ag97mJ2iW2WMvS2dmCZxLfMaFxfRB2P8QE/ZgeefiUGBOALYZrY+7kaKcdp0B
+	 IT3SBAYLkN/ibK5j9M7mxWdhBtnbUf3mXucvJcGvoMJcMXXNJVIGAovS/hrjCZylMW
+	 QThWLdVa1pwJCULBlcF4vYvTxFTKW9EUmouiwGCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangyangxin <wangyangxin1@huawei.com>,
-	Gonglei <arei.gonglei@huawei.com>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 053/148] crypto: virtio - Wait for tasklet to complete on device remove
-Date: Mon, 22 Jan 2024 15:56:49 -0800
-Message-ID: <20240122235714.566702828@linuxfoundation.org>
+Subject: [PATCH 4.19 054/148] crypto: sahara - fix ahash reqsize
+Date: Mon, 22 Jan 2024 15:56:50 -0800
+Message-ID: <20240122235714.609009451@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -52,40 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangyangxin <wangyangxin1@huawei.com>
+From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit 67cc511e8d436456cc98033e6d4ba83ebfc8e672 ]
+[ Upstream commit efcb50f41740ac55e6ccc4986c1a7740e21c62b4 ]
 
-The scheduled tasklet needs to be executed on device remove.
+Set the reqsize for sha algorithms to sizeof(struct sahara_sha_reqctx), the
+extra space is not needed.
 
-Fixes: fed93fb62e05 ("crypto: virtio - Handle dataq logic with tasklet")
-Signed-off-by: wangyangxin <wangyangxin1@huawei.com>
-Signed-off-by: Gonglei <arei.gonglei@huawei.com>
+Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/virtio/virtio_crypto_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/crypto/sahara.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/virtio/virtio_crypto_core.c b/drivers/crypto/virtio/virtio_crypto_core.c
-index c21770345f5f..2515a141c67b 100644
---- a/drivers/crypto/virtio/virtio_crypto_core.c
-+++ b/drivers/crypto/virtio/virtio_crypto_core.c
-@@ -446,11 +446,14 @@ static void virtcrypto_free_unused_reqs(struct virtio_crypto *vcrypto)
- static void virtcrypto_remove(struct virtio_device *vdev)
+diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
+index 011789df3590..a9359b0ed045 100644
+--- a/drivers/crypto/sahara.c
++++ b/drivers/crypto/sahara.c
+@@ -1182,8 +1182,7 @@ static int sahara_sha_import(struct ahash_request *req, const void *in)
+ static int sahara_sha_cra_init(struct crypto_tfm *tfm)
  {
- 	struct virtio_crypto *vcrypto = vdev->priv;
-+	int i;
+ 	crypto_ahash_set_reqsize(__crypto_ahash_cast(tfm),
+-				 sizeof(struct sahara_sha_reqctx) +
+-				 SHA_BUFFER_LEN + SHA256_BLOCK_SIZE);
++				 sizeof(struct sahara_sha_reqctx));
  
- 	dev_info(&vdev->dev, "Start virtcrypto_remove.\n");
- 
- 	if (virtcrypto_dev_started(vcrypto))
- 		virtcrypto_dev_stop(vcrypto);
-+	for (i = 0; i < vcrypto->max_data_queues; i++)
-+		tasklet_kill(&vcrypto->data_vq[i].done_task);
- 	vdev->config->reset(vdev);
- 	virtcrypto_free_unused_reqs(vcrypto);
- 	virtcrypto_clear_crypto_engines(vcrypto);
+ 	return 0;
+ }
 -- 
 2.43.0
 
