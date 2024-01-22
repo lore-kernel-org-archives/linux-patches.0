@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F6165196;
-	Tue, 23 Jan 2024 01:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A6565193;
+	Tue, 23 Jan 2024 01:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971635; cv=none; b=DQaGoJf6OUEJ7VY6uDRBJZDK8VO92tISgxe2DhWDjX1xRNQYe+9nsbHaEsbrtv6swsb9Gi1LLZc6WNrFttceq2LY2nrIMiqMZpeR8YjMnbj44IoFZVSUi5Sgv1Brrsv+wT7pxNwUYv+PeDGTrF1T4g1dldDTmVeFD5j8ESXOcYM=
+	t=1705971637; cv=none; b=bbw2fVyIv7L2vS1qQo3mO+drvWQD3IbYBDJklPGOcaI242kLyyK8yrh+TfWLow6Fyl8qm5teVK/XywrCaNpUEWIXKwyQmm9kjT8jHUEqPVsTrlFCpJiya3SBAVaZvUxoilJJrpmlsmP/J6Y/6WACQb2b2MNtqKn05Kuh24UvjL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971635; c=relaxed/simple;
-	bh=o7spntYLXdQh+TakOeRE3ihTogUBQHYbL6DxGLHDYhQ=;
+	s=arc-20240116; t=1705971637; c=relaxed/simple;
+	bh=tYIBEByn7LomKA+iDkLl1urdIC8tXmegm1DbGMjDo7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVK+8VdtoC2cT7IG9rOiuZbHqpAnARv7ARHa4jxIE31V9f1S9lvLdyN7PmkytvaD3WrwzQR7luBntuI3QwwNWdfoX9MCBeRHRo/pmk3ORJKem4nTsv18MzNYTsrLkvxgo1Hp+EIK1nzg0TsZ5AjJAsAsSkAXkiVRYfMDuasUEbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z73zokxa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jV/jfwTkJnlfGLpbuMi7TkdJFanenhjtf3PqSbKfjBBqUfypTGgE2PWyd2Myt0I5tcVPFfNVgzwvIAOO0rpe12vBT8gFsq/oBFggTQtJ1UDYAQnjmZuIzaiVgqgVLuy5LN2W+ekPLNb4DmNnB8RmDFHks5C/rg8HhJNAJWAAEzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pY/Oqb9O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z73zokxa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58B3C433F1;
-	Tue, 23 Jan 2024 01:00:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pY/Oqb9O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB29C433F1;
+	Tue, 23 Jan 2024 01:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971635;
-	bh=o7spntYLXdQh+TakOeRE3ihTogUBQHYbL6DxGLHDYhQ=;
+	s=korg; t=1705971636;
+	bh=tYIBEByn7LomKA+iDkLl1urdIC8tXmegm1DbGMjDo7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z73zokxaMI7796Sr2VHuaxFrb00l6W00wZ3D2WYYm1RuM7X1dQb/5Rv9wR03ZV7oI
-	 Qbj/LbtcTQs17UU+/uP0z7jfGiC2rzfMhfv8RBHXWLyIwMEZacRbK72F9BW5WSldPj
-	 ek94eaB2AR1Fz9bdUBnU22BMM/q17onH6qrnWm1M=
+	b=pY/Oqb9OkUc+6wfGc1IPkCHv0/hWcBShPMluNdNirZIXWc2VUfws5e6kMMPG4zsqS
+	 /YbRitj87oik34ue1UhYCk93Uq8DQr9TFHRaDCoAuN7xaDcXm2REX8dV1k/lg57ajY
+	 v5WJxWNDXQoE8Bl4y3nOZPBc1wNrHBml94i8FLPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.1 283/417] ksmbd: validate mech token in session setup
-Date: Mon, 22 Jan 2024 15:57:31 -0800
-Message-ID: <20240122235801.644341066@linuxfoundation.org>
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 191/286] pwm: stm32: Fix enable count for clk in .probe()
+Date: Mon, 22 Jan 2024 15:58:17 -0800
+Message-ID: <20240122235739.470979003@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,110 +47,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Philipp Zabel <p.zabel@pengutronix.de>
 
-commit 92e470163d96df8db6c4fa0f484e4a229edb903d upstream.
+[ Upstream commit 19f1016ea9600ed89bc24247c36ff5934ad94fbb ]
 
-If client send invalid mech token in session setup request, ksmbd
-validate and make the error if it is invalid.
+Make the driver take over hardware state without disabling in .probe()
+and enable the clock for each enabled channel.
 
-Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-22890
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+[ukleinek: split off from a patch that also implemented .get_state()]
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
+Reviewed-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/asn1.c       |    5 +++++
- fs/smb/server/connection.h |    1 +
- fs/smb/server/smb2pdu.c    |   22 +++++++++++++++++-----
- 3 files changed, 23 insertions(+), 5 deletions(-)
+ drivers/pwm/pwm-stm32.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/fs/smb/server/asn1.c
-+++ b/fs/smb/server/asn1.c
-@@ -214,10 +214,15 @@ static int ksmbd_neg_token_alloc(void *c
- {
- 	struct ksmbd_conn *conn = context;
- 
-+	if (!vlen)
-+		return -EINVAL;
-+
- 	conn->mechToken = kmemdup_nul(value, vlen, GFP_KERNEL);
- 	if (!conn->mechToken)
- 		return -ENOMEM;
- 
-+	conn->mechTokenLen = (unsigned int)vlen;
-+
- 	return 0;
+diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
+index 31843cc4ca76..69b7bc604946 100644
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -575,17 +575,21 @@ static void stm32_pwm_detect_complementary(struct stm32_pwm *priv)
+ 	priv->have_complementary_output = (ccer != 0);
  }
  
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -88,6 +88,7 @@ struct ksmbd_conn {
- 	__u16				dialect;
+-static unsigned int stm32_pwm_detect_channels(struct stm32_pwm *priv)
++static unsigned int stm32_pwm_detect_channels(struct stm32_pwm *priv,
++					      unsigned int *num_enabled)
+ {
+-	u32 ccer;
++	u32 ccer, ccer_backup;
  
- 	char				*mechToken;
-+	unsigned int			mechTokenLen;
- 
- 	struct ksmbd_conn_ops	*conn_ops;
- 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1412,7 +1412,10 @@ static struct ksmbd_user *session_user(s
- 	char *name;
- 	unsigned int name_off, name_len, secbuf_len;
- 
--	secbuf_len = le16_to_cpu(req->SecurityBufferLength);
-+	if (conn->use_spnego && conn->mechToken)
-+		secbuf_len = conn->mechTokenLen;
-+	else
-+		secbuf_len = le16_to_cpu(req->SecurityBufferLength);
- 	if (secbuf_len < sizeof(struct authenticate_message)) {
- 		ksmbd_debug(SMB, "blob len %d too small\n", secbuf_len);
- 		return NULL;
-@@ -1503,7 +1506,10 @@ static int ntlm_authenticate(struct ksmb
- 		struct authenticate_message *authblob;
- 
- 		authblob = user_authblob(conn, req);
--		sz = le16_to_cpu(req->SecurityBufferLength);
-+		if (conn->use_spnego && conn->mechToken)
-+			sz = conn->mechTokenLen;
-+		else
-+			sz = le16_to_cpu(req->SecurityBufferLength);
- 		rc = ksmbd_decode_ntlmssp_auth_blob(authblob, sz, conn, sess);
- 		if (rc) {
- 			set_user_flag(sess->user, KSMBD_USER_FLAG_BAD_PASSWORD);
-@@ -1776,8 +1782,7 @@ int smb2_sess_setup(struct ksmbd_work *w
- 
- 	negblob_off = le16_to_cpu(req->SecurityBufferOffset);
- 	negblob_len = le16_to_cpu(req->SecurityBufferLength);
--	if (negblob_off < offsetof(struct smb2_sess_setup_req, Buffer) ||
--	    negblob_len < offsetof(struct negotiate_message, NegotiateFlags)) {
-+	if (negblob_off < offsetof(struct smb2_sess_setup_req, Buffer)) {
- 		rc = -EINVAL;
- 		goto out_err;
- 	}
-@@ -1786,8 +1791,15 @@ int smb2_sess_setup(struct ksmbd_work *w
- 			negblob_off);
- 
- 	if (decode_negotiation_token(conn, negblob, negblob_len) == 0) {
--		if (conn->mechToken)
-+		if (conn->mechToken) {
- 			negblob = (struct negotiate_message *)conn->mechToken;
-+			negblob_len = conn->mechTokenLen;
-+		}
-+	}
+ 	/*
+ 	 * If channels enable bits don't exist writing 1 will have no
+ 	 * effect so we can detect and count them.
+ 	 */
++	regmap_read(priv->regmap, TIM_CCER, &ccer_backup);
+ 	regmap_set_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
+ 	regmap_read(priv->regmap, TIM_CCER, &ccer);
+-	regmap_clear_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
++	regmap_write(priv->regmap, TIM_CCER, ccer_backup);
 +
-+	if (negblob_len < offsetof(struct negotiate_message, NegotiateFlags)) {
-+		rc = -EINVAL;
-+		goto out_err;
- 	}
++	*num_enabled = hweight32(ccer_backup & TIM_CCER_CCXE);
  
- 	if (server_conf.auth_mechs & conn->auth_mechs) {
+ 	return hweight32(ccer & TIM_CCER_CCXE);
+ }
+@@ -596,6 +600,8 @@ static int stm32_pwm_probe(struct platform_device *pdev)
+ 	struct device_node *np = dev->of_node;
+ 	struct stm32_timers *ddata = dev_get_drvdata(pdev->dev.parent);
+ 	struct stm32_pwm *priv;
++	unsigned int num_enabled;
++	unsigned int i;
+ 	int ret;
+ 
+ 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+@@ -621,7 +627,11 @@ static int stm32_pwm_probe(struct platform_device *pdev)
+ 	priv->chip.base = -1;
+ 	priv->chip.dev = dev;
+ 	priv->chip.ops = &stm32pwm_ops;
+-	priv->chip.npwm = stm32_pwm_detect_channels(priv);
++	priv->chip.npwm = stm32_pwm_detect_channels(priv, &num_enabled);
++
++	/* Initialize clock refcount to number of enabled PWM channels. */
++	for (i = 0; i < num_enabled; i++)
++		clk_enable(priv->clk);
+ 
+ 	ret = pwmchip_add(&priv->chip);
+ 	if (ret < 0)
+-- 
+2.43.0
+
 
 
