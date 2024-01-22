@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA54114A4FA;
-	Tue, 23 Jan 2024 00:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571EE14AD1F;
+	Tue, 23 Jan 2024 00:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969250; cv=none; b=YHRIMIyhHCc5iUlaya38+9KaLvmK2Cokrccq8Vexsgxz9r2V3xS854AGFZSApRIbb6DcVhYlCWT1fn73oFOeQfuy3iSvQMjpmObJu2+QIuiBOgmRJdTGZgSkAd6lrEdsckeh8zFPh4BDiF3WYjwWnz19RVkwoyO3IPkeLGL8IWc=
+	t=1705969253; cv=none; b=YzOIesbi9pZrqr4nJgJt1K5Uvh6RSUJl+4XgVZz39vmWrCdCyyHQ9T5sSxDko2bRObw5/5EF25zTn5OuWXZtFXdxUWsQtw5fvpOSOyh7QAlCa/FzFEtigPH8UAFFAg+bN0fhZ2meAuMl/nZxPIvBy1h6cevyzzPPbQNvsIzgWCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969250; c=relaxed/simple;
-	bh=R7xwelLNxbv0rF12r1jDsf02sH6yIFH+5AiX3dsCo1M=;
+	s=arc-20240116; t=1705969253; c=relaxed/simple;
+	bh=Pv3LtTty4SJpRZPWdUHcIBjTuLIO+Zdy4kb3+cjV9Ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KxSxAUjaKtXGPNt2osVtCooE12uPaW7+4v+3d00DSL72zbhHmfZU6oNjiPhVC9gssp9BGUSRHcB41MvQfmcU+OXxKwE5/eD/QLS/RgGGTb04iLScEwGjUNkHRSlhQMNxcAlC6r9F+6hpFpoq1KCG9wCn4STxmraYvvT8XmTOR3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRHjtoEb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AJ1rKhhQEWEhdpziEbeQ1PUrs8ich4NYhJRIe7NZ7c+260we3eiOcq5NWVRwSX08Co2t91hHOabNGNk+9UGkarQCXzRujjzGUwXA2Si/zojL9eaYqHwMAJD3OAPAe+7aC6QRbCYBWq4AG9klYrl/kJUrFEZuWcqR9WGKMc4/LEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWbRP5O/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRHjtoEb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340A0C433F1;
-	Tue, 23 Jan 2024 00:20:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWbRP5O/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B66C433F1;
+	Tue, 23 Jan 2024 00:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969250;
-	bh=R7xwelLNxbv0rF12r1jDsf02sH6yIFH+5AiX3dsCo1M=;
+	s=korg; t=1705969253;
+	bh=Pv3LtTty4SJpRZPWdUHcIBjTuLIO+Zdy4kb3+cjV9Ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRHjtoEbNcDN/wf7TQEtUBVdFZrKP3VK95AGj68hLsciD3z6J5i+adHHIqPJj4I/5
-	 mjgejHa1C4kQvC/a7uef/ldPAyp0NEOkPWkYhj/2WV34LgCqyqzY3Un6wvGCQnx0Os
-	 peDkrZsOoz9IkPglO8aq3jdFSBmJmmbHgfEjYmh4=
+	b=gWbRP5O/CGRb+bU2p3viq0HL2QidnbKBZmoO79OrpJ6PEdc8zLOaEESlY14wlMegw
+	 Oyu1eS4oYH1/9mTTE+hdCguZ2yyatWtdTriZwQQhIrTqRNR5YRIIedlVZQOF6slcX3
+	 BjOAcY2gY5gQ7EEN/YWy9gLVEs+z9pRKK8gOssYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 107/641] scsi: bfa: Use the proper data type for BLIST flags
-Date: Mon, 22 Jan 2024 15:50:11 -0800
-Message-ID: <20240122235821.388609950@linuxfoundation.org>
+Subject: [PATCH 6.7 125/641] arm64: dts: qcom: sdm845: Make watchdog bark interrupt edge triggered
+Date: Mon, 22 Jan 2024 15:50:29 -0800
+Message-ID: <20240122235821.962590325@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,38 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 0349be31e4ffc79723e46e2e373569567b06347b ]
+[ Upstream commit 263b348499454f38d36b9442c3cf9279c571bb54 ]
 
-Fix the following sparse warning:
+As described in the patch ("arm64: dts: qcom: sc7180: Make watchdog
+bark interrupt edge triggered"), the Qualcomm watchdog timer's bark
+interrupt should be configured as edge triggered. Make the change.
 
-drivers/scsi/bfa/bfad_bsg.c:2553:50: sparse: sparse: incorrect type in initializer (different base types)
-
-Fixes: 2e5a6c3baccd ("scsi: bfa: Convert bfad_reset_sdev_bflags() from a macro into a function")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311031255.lmSPisIk-lkp@intel.com/
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20231115193338.2261972-1-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 36c436b03c58 ("arm64: dts: qcom: sdm845: Add watchdog bark interrupt")
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20231106144335.v2.3.I16675ebe5517c68453a1bd7f4334ff885f806c03@changeid
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/bfa/bfad_bsg.c | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/bfa/bfad_bsg.c b/drivers/scsi/bfa/bfad_bsg.c
-index 520f9152f3bf..d4ceca2d435e 100644
---- a/drivers/scsi/bfa/bfad_bsg.c
-+++ b/drivers/scsi/bfa/bfad_bsg.c
-@@ -2550,7 +2550,7 @@ bfad_iocmd_vf_clr_stats(struct bfad_s *bfad, void *cmd)
- static void bfad_reset_sdev_bflags(struct bfad_im_port_s *im_port,
- 				   int lunmask_cfg)
- {
--	const u32 scan_flags = BLIST_NOREPORTLUN | BLIST_SPARSELUN;
-+	const blist_flags_t scan_flags = BLIST_NOREPORTLUN | BLIST_SPARSELUN;
- 	struct bfad_itnim_s *itnim;
- 	struct scsi_device *sdev;
- 	unsigned long flags;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index bf5e6eb9d313..9648505644ff 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -5088,7 +5088,7 @@ watchdog@17980000 {
+ 			compatible = "qcom,apss-wdt-sdm845", "qcom,kpss-wdt";
+ 			reg = <0 0x17980000 0 0x1000>;
+ 			clocks = <&sleep_clk>;
+-			interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
++			interrupts = <GIC_SPI 0 IRQ_TYPE_EDGE_RISING>;
+ 		};
+ 
+ 		apss_shared: mailbox@17990000 {
 -- 
 2.43.0
 
