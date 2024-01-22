@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558782B9B7;
-	Tue, 23 Jan 2024 01:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCEA59B7D;
+	Tue, 23 Jan 2024 01:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974109; cv=none; b=lMBbsMAYG0thaq9j0h2vn1DnWJZ5WiPlnUifZPJ7AxgpaS6dRCMAAzXB1OgKyApfUKcyCSWGD2swUeXXmGueoNu1hI8oEIED68PIc+9bWpdzmaQLNkHXRMiwZ2WAZbmwKsewtZ5vBdv22XqaKfbcgqA00mUAP0vO55SbIyJPbVQ=
+	t=1705974110; cv=none; b=CwKbdkWaYSxtDCPcxzlXg6pEqfOVU5xb8yLH93rS8JSOZLX2WW8tZuQAETFZXO5jyUy+D+1W1JzSAdCCNY2duV3xwcOTpW8zOmehfJAeaeVRQLRgJQzzpxky4v17157tP7NPz5gPFAWKss2fwb4ElmMeuqghaIxwDAgmBo9ZiV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974109; c=relaxed/simple;
-	bh=+p9zbJwduckakHQFo+c1iBqwImAhhsVynLP0xUhcw9k=;
+	s=arc-20240116; t=1705974110; c=relaxed/simple;
+	bh=6igz5nsUDKnFOsILAESoVPTGAR/nsmJQJC9d76SYgS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=du78XxASzHIi1SLY6VkDbjzOFYhtv8NlD09xDp8PqSth36SQH1mt3JysvtBK3dVR6SSKtoBTdq7TF+PCO0aRY4k9hkeCNdaDz9OF7mmIMhb3dxQdsDA9PPJeR/QfhCoum2YwkW9gQfqjWIi6Cw/iAClLvAWSKnKzbASaeQPmlcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrNLlxm4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fHsVFfzGBLRkBq8OEKGE8T//q0uEp/8ZOJRYZY9lF+y2EKbXAU4gPRB+OUVMFKFdWr27N+koDEc+sVhsMKRDd/N0e49QWw3gyE90yuoLbYSPgzVYgSi9Oo+zcWnxs9DkkFcjbwdqXHPiOuIbwR+2OxzeLHsdVzbl8D5WDpVxE1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09Fhu65V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrNLlxm4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16352C433C7;
-	Tue, 23 Jan 2024 01:41:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09Fhu65V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16AE9C433C7;
+	Tue, 23 Jan 2024 01:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974109;
-	bh=+p9zbJwduckakHQFo+c1iBqwImAhhsVynLP0xUhcw9k=;
+	s=korg; t=1705974110;
+	bh=6igz5nsUDKnFOsILAESoVPTGAR/nsmJQJC9d76SYgS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WrNLlxm4/X6UM5A12MlEfKSxhVCey5l33/5t24UvQq4bY+y9KwXWZHKsGpiQDk+Yh
-	 ym5bHdPU19L4pP8EkEHsK2yXCRkbh/ZlvSVhMFnq4Iyf39SPbzMAUcrBHDQK2hThui
-	 GqB+0JRv751+zq3767RI/YSstF7G/53UniXR0IyE=
+	b=09Fhu65V0zwZ/MG9HgtX8xgehmceuTWLeSLlS4WJ2yApFRJlkD1Zfbc/Wo/agI3fj
+	 Vk3k5fDIXqd48hSxvleMt5qULTgXXeTDzhdJsVO4SUQN27IFn9ZcCanYrMDoJ/5Di9
+	 yDo2USLa58VAmUelwIuj/pK55tIVWPXONvMwqn3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 166/374] Bluetooth: Fix bogus check for re-auth no supported with non-ssp
-Date: Mon, 22 Jan 2024 15:57:02 -0800
-Message-ID: <20240122235750.388569754@linuxfoundation.org>
+Subject: [PATCH 6.6 042/583] crypto: rsa - add a check for allocation failure
+Date: Mon, 22 Jan 2024 15:51:33 -0800
+Message-ID: <20240122235813.434189588@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,90 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit d03376c185926098cb4d668d6458801eb785c0a5 ]
+[ Upstream commit d872ca165cb67112f2841ef9c37d51ef7e63d1e4 ]
 
-This reverts 19f8def031bfa50c579149b200bfeeb919727b27
-"Bluetooth: Fix auth_complete_evt for legacy units" which seems to be
-working around a bug on a broken controller rather then any limitation
-imposed by the Bluetooth spec, in fact if there ws not possible to
-re-auth the command shall fail not succeed.
+Static checkers insist that the mpi_alloc() allocation can fail so add
+a check to prevent a NULL dereference.  Small allocations like this
+can't actually fail in current kernels, but adding a check is very
+simple and makes the static checkers happy.
 
-Fixes: 19f8def031bf ("Bluetooth: Fix auth_complete_evt for legacy units")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 6637e11e4ad2 ("crypto: rsa - allow only odd e and restrict value in FIPS mode")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h |  1 -
- net/bluetooth/hci_conn.c         |  8 +++-----
- net/bluetooth/hci_event.c        | 11 ++---------
- 3 files changed, 5 insertions(+), 15 deletions(-)
+ crypto/rsa.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 9a21ccbb5b5c..b6114bc0dd0f 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -852,7 +852,6 @@ void hci_inquiry_cache_flush(struct hci_dev *hdev);
- /* ----- HCI Connections ----- */
- enum {
- 	HCI_CONN_AUTH_PEND,
--	HCI_CONN_REAUTH_PEND,
- 	HCI_CONN_ENCRYPT_PEND,
- 	HCI_CONN_RSWITCH_PEND,
- 	HCI_CONN_MODE_CHANGE_PEND,
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index ce538dbe89d1..700920aea39e 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1436,12 +1436,10 @@ static int hci_conn_auth(struct hci_conn *conn, __u8 sec_level, __u8 auth_type)
- 		hci_send_cmd(conn->hdev, HCI_OP_AUTH_REQUESTED,
- 			     sizeof(cp), &cp);
- 
--		/* If we're already encrypted set the REAUTH_PEND flag,
--		 * otherwise set the ENCRYPT_PEND.
-+		/* Set the ENCRYPT_PEND to trigger encryption after
-+		 * authentication.
- 		 */
--		if (test_bit(HCI_CONN_ENCRYPT, &conn->flags))
--			set_bit(HCI_CONN_REAUTH_PEND, &conn->flags);
--		else
-+		if (!test_bit(HCI_CONN_ENCRYPT, &conn->flags))
- 			set_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags);
+diff --git a/crypto/rsa.c b/crypto/rsa.c
+index c79613cdce6e..b9cd11fb7d36 100644
+--- a/crypto/rsa.c
++++ b/crypto/rsa.c
+@@ -220,6 +220,8 @@ static int rsa_check_exponent_fips(MPI e)
  	}
  
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index edf5132b5dc9..2ad2f4647847 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3017,14 +3017,8 @@ static void hci_auth_complete_evt(struct hci_dev *hdev, struct sk_buff *skb)
+ 	e_max = mpi_alloc(0);
++	if (!e_max)
++		return -ENOMEM;
+ 	mpi_set_bit(e_max, 256);
  
- 	if (!ev->status) {
- 		clear_bit(HCI_CONN_AUTH_FAILURE, &conn->flags);
--
--		if (!hci_conn_ssp_enabled(conn) &&
--		    test_bit(HCI_CONN_REAUTH_PEND, &conn->flags)) {
--			bt_dev_info(hdev, "re-auth of legacy device is not possible.");
--		} else {
--			set_bit(HCI_CONN_AUTH, &conn->flags);
--			conn->sec_level = conn->pending_sec_level;
--		}
-+		set_bit(HCI_CONN_AUTH, &conn->flags);
-+		conn->sec_level = conn->pending_sec_level;
- 	} else {
- 		if (ev->status == HCI_ERROR_PIN_OR_KEY_MISSING)
- 			set_bit(HCI_CONN_AUTH_FAILURE, &conn->flags);
-@@ -3033,7 +3027,6 @@ static void hci_auth_complete_evt(struct hci_dev *hdev, struct sk_buff *skb)
- 	}
- 
- 	clear_bit(HCI_CONN_AUTH_PEND, &conn->flags);
--	clear_bit(HCI_CONN_REAUTH_PEND, &conn->flags);
- 
- 	if (conn->state == BT_CONFIG) {
- 		if (!ev->status && hci_conn_ssp_enabled(conn)) {
+ 	if (mpi_cmp(e, e_max) >= 0) {
 -- 
 2.43.0
 
