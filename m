@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA38A12BF3D;
-	Tue, 23 Jan 2024 00:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB7412BF3D;
+	Tue, 23 Jan 2024 00:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968946; cv=none; b=HTid+12Z9tYZTRjznp+WEvwFNQLV6m/BPzjM+qrdAI+7m2bgLTvE5iOkPuJ+FKOKdMsvRRlBJ0pHCdLqSkERQVc2l82CUBmvJWyTzTYONeq7fBEDLNQCit4rqavSbwluLRIPeeQEvRKJBJdXFlQaW8rwxnmusHYe+4SKqocevbY=
+	t=1705968948; cv=none; b=EkF3blidQ/3ulfoChpQ6SiNo2sJn5yWF1WanghhQbIKC3JqlVDmFvDppGxkuZfdVskacYIr6vP056c/GDxaRkWTVToV04vSuuYCe7ZlYEMN+eo81mJQplW9wPKjJU2OROiJg9v5aMyAjK2meeHmarqHla0EnqjTc6a6rsqk6Sz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968946; c=relaxed/simple;
-	bh=wBmWvs3cVxVI27qJ3ghhygCnHn9+lO2MyLp5VR6uhx4=;
+	s=arc-20240116; t=1705968948; c=relaxed/simple;
+	bh=wMaecmZnTxaeRVJHs83Uy7MW1pHcClbH0tfnTzESMtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pYComVl1ZuTj3V2S9pIWlhA5ynBKVf03xs8BLzXkdJN+tAAs/4zFMBT7W7EPpJk1EiRIY6qw+OzoQll1XQkFA7aizWEuoTHcq2vvIcXY+q/qTv9RVVTlYAEall+nCW8RSIIBHQ+hT8l0uPX/KjWOsptDagvk8lVn3yADVNJIhwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nUCUh0eq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ujDADQPgu2AvP8aEDcwmq80KLlaPJ53bBhqrfl/fQU8nkCuE2aze38DofJ+ex8wlrmwVb/NnpG4j2BXZmom01jBguvBeFUYu6IVs90I70BC72T+g+26UtaoQBCAsNZszYM0VRnOG0H2A6Gdnll6T/td4ihuzyTKHfNleGF0Yk44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDwCfIOh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUCUh0eq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBCEC433F1;
-	Tue, 23 Jan 2024 00:15:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDwCfIOh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A94C433F1;
+	Tue, 23 Jan 2024 00:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968946;
-	bh=wBmWvs3cVxVI27qJ3ghhygCnHn9+lO2MyLp5VR6uhx4=;
+	s=korg; t=1705968948;
+	bh=wMaecmZnTxaeRVJHs83Uy7MW1pHcClbH0tfnTzESMtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nUCUh0eq4tdEjG/Ffi+bXnr0N6GqbcYWz1nBcHguYk7vOxtylQ3ZKs7Pi4+G3zUNn
-	 akdzzwKpS8YFad/IBfJbgfYHgImZ2sqi905zzacUr6ZNuusA0++xMftT0NIFSErIXM
-	 3SZGSkjrVIfZwdCzK/pj+Z87IwnKIQvwAhoaOXpw=
+	b=iDwCfIOh/e3HcPGwwDpXrNIaI3ahN1A67ll0+s8X7mwEc5hQ+yBFdGHxlhRHoeqdf
+	 W3jQ9WNhB7pbDfqB3m/8py55BVw5UfFV+KesFYzg/YiJlZKNxkaonEdfPQoFj/dupZ
+	 2FVueqeumeBM0Kpkhai9VpyfXU+2P25mk7GnUnL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 116/194] ASoC: cs35l33: Fix GPIO name and drop legacy include
-Date: Mon, 22 Jan 2024 15:57:26 -0800
-Message-ID: <20240122235724.209681630@linuxfoundation.org>
+Subject: [PATCH 5.4 117/194] ASoC: cs35l34: Fix GPIO name and drop legacy include
+Date: Mon, 22 Jan 2024 15:57:27 -0800
+Message-ID: <20240122235724.254139017@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 50678d339d670a92658e5538ebee30447c88ccb3 ]
+[ Upstream commit a6122b0b4211d132934ef99e7b737910e6d54d2f ]
 
 This driver includes the legacy GPIO APIs <linux/gpio.h> and
 <linux/of_gpio.h> but does not use any symbols from any of
@@ -71,43 +71,44 @@ The last problem means that the optional RESET GPIO has
 never been properly retrieved and used even if it existed,
 but nobody noticed.
 
-Fixes: 3333cb7187b9 ("ASoC: cs35l33: Initial commit of the cs35l33 CODEC driver.")
+Fixes: c1124c09e103 ("ASoC: cs35l34: Initial commit of the cs35l34 CODEC driver.")
 Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20231201-descriptors-sound-cirrus-v2-2-ee9f9d4655eb@linaro.org
+Link: https://lore.kernel.org/r/20231201-descriptors-sound-cirrus-v2-3-ee9f9d4655eb@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l33.c | 4 +---
+ sound/soc/codecs/cs35l34.c | 4 +---
  1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/cs35l33.c b/sound/soc/codecs/cs35l33.c
-index 8894369e329a..87b299d24bd8 100644
---- a/sound/soc/codecs/cs35l33.c
-+++ b/sound/soc/codecs/cs35l33.c
-@@ -22,13 +22,11 @@
+diff --git a/sound/soc/codecs/cs35l34.c b/sound/soc/codecs/cs35l34.c
+index b792c006e530..d9f975b52b21 100644
+--- a/sound/soc/codecs/cs35l34.c
++++ b/sound/soc/codecs/cs35l34.c
+@@ -20,14 +20,12 @@
+ #include <linux/regulator/machine.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/of_device.h>
+-#include <linux/of_gpio.h>
+ #include <linux/of_irq.h>
+ #include <sound/core.h>
+ #include <sound/pcm.h>
+ #include <sound/pcm_params.h>
+ #include <sound/soc.h>
  #include <sound/soc-dapm.h>
- #include <sound/initval.h>
- #include <sound/tlv.h>
 -#include <linux/gpio.h>
  #include <linux/gpio/consumer.h>
- #include <sound/cs35l33.h>
- #include <linux/pm_runtime.h>
- #include <linux/regulator/consumer.h>
- #include <linux/regulator/machine.h>
--#include <linux/of_gpio.h>
- #include <linux/of.h>
- #include <linux/of_device.h>
- #include <linux/of_irq.h>
-@@ -1168,7 +1166,7 @@ static int cs35l33_i2c_probe(struct i2c_client *i2c_client,
+ #include <sound/initval.h>
+ #include <sound/tlv.h>
+@@ -1058,7 +1056,7 @@ static int cs35l34_i2c_probe(struct i2c_client *i2c_client,
+ 		dev_err(&i2c_client->dev, "Failed to request IRQ: %d\n", ret);
  
- 	/* We could issue !RST or skip it based on AMP topology */
- 	cs35l33->reset_gpio = devm_gpiod_get_optional(&i2c_client->dev,
--			"reset-gpios", GPIOD_OUT_HIGH);
-+			"reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(cs35l33->reset_gpio)) {
- 		dev_err(&i2c_client->dev, "%s ERROR: Can't get reset GPIO\n",
- 			__func__);
+ 	cs35l34->reset_gpio = devm_gpiod_get_optional(&i2c_client->dev,
+-				"reset-gpios", GPIOD_OUT_LOW);
++				"reset", GPIOD_OUT_LOW);
+ 	if (IS_ERR(cs35l34->reset_gpio))
+ 		return PTR_ERR(cs35l34->reset_gpio);
+ 
 -- 
 2.43.0
 
