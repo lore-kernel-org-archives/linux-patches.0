@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3115BAFD;
-	Tue, 23 Jan 2024 01:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E4C5D72F;
+	Tue, 23 Jan 2024 01:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974374; cv=none; b=FZs4HV/8IE6eeHQSHRNcwXmKnu6Te0nf8QSyUPRBhCTVP8r2ydHn6i1REnYGjLCD3cMNxLVZovISa+QaWb+EX099nGixmuR7uy5pq8KpgzUcKYkwVyTcX7maKMIUFhhKcuj0pXEOeLD1QSQL9BzUUA9kvOVbso/FlJf6Ptr7DFU=
+	t=1705974376; cv=none; b=qkw9uOQmGph9w43Y7mf9wGwbTYhHFRMC8cti61xvheGWlxbF2SiMGDyZx32Z91a1SV7PhD8b865+Iwxa5SsFw7aXTVFLfK+DHSDlsvhlsdxM46I3F2n4Kg7V1RQW9Tk2/UfOoswz+vmv7LEyEaFxcW4wD1aKE12L5x5Kle9x1x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974374; c=relaxed/simple;
-	bh=xqBhWhFpgNEugVu7Q1fvNGG6jrJfT2gzDn9evWPbZh4=;
+	s=arc-20240116; t=1705974376; c=relaxed/simple;
+	bh=o+qEUXyWO6sQetSKUoTW5i2Bjtmxxr4gHItNDcViKtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kUd2/3lGPOc8vCGQQXnX7u6Zmr5BjFWj7MUO+wKkzppLFIOGnmO7/z2S56INg6mobYw5X2QsqMxEEsR8p1uy9vpiA6I04rzbbLqxLVUsHnnuFXEZ6XnAwXhnCwUseWk2HpsB+B0ZxV+2kIgjpjK+1l/L/AV4C7/lSoJczsJuj1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BG+CD0mQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t4ztmo3RnB6mSzvP7vAkL7LyckYKUs1JOOqx/+DIO/kDo6Dtu9G/xySzxbpJ8rr+KTypjxRI+Rd38mrabSFJcC2FgdjMQC0bnMk93CbUJQDJwzK8bLdWudFekHOtSXsT8w6SS7MapRzjB/yi6NWcamDh6mvqN6vO3X+cHlYuUcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GQ/gtlZm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BG+CD0mQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15ECFC433C7;
-	Tue, 23 Jan 2024 01:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQ/gtlZm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5032C43390;
+	Tue, 23 Jan 2024 01:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974374;
-	bh=xqBhWhFpgNEugVu7Q1fvNGG6jrJfT2gzDn9evWPbZh4=;
+	s=korg; t=1705974376;
+	bh=o+qEUXyWO6sQetSKUoTW5i2Bjtmxxr4gHItNDcViKtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BG+CD0mQOmvvWlMiYtGQvpLxHolKycQFBFF5rQqKvD9GM6BSotkU2rfrdYZob8jG2
-	 hBTxu5YYIY2jItsvUQ6Av+Sp8DYw7Z5KBJaEbGS5aTqYugaaU/wnRBp9ukq7eC6tUo
-	 TE3XY4HXI39kkmPvIfCoZLkKWmovZCrLYzncrFbQ=
+	b=GQ/gtlZm/8osaqs5PhA6g5h3quyU9lR2toW8/BIcu5NauL45J+IX4LQ7JOzy+Ad4M
+	 XX1tzqVaC9wfUA7mvRYYWSEp/TqDghigwyX62V4rNzuYjrXb95aSrPWK5a4W0fNCv8
+	 aS43BAJRlRdZ4Q5Oh9HVz0ixkh9DlkgLGarUl1Zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ovidiu Panait <ovidiu.panait@windriver.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/583] crypto: sahara - improve error handling in sahara_sha_process()
-Date: Mon, 22 Jan 2024 15:52:02 -0800
-Message-ID: <20240122235814.328227766@linuxfoundation.org>
+Subject: [PATCH 6.6 049/583] crypto: sahara - remove FLAGS_NEW_KEY logic
+Date: Mon, 22 Jan 2024 15:51:40 -0800
+Message-ID: <20240122235813.632940824@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,45 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit 5deff027fca49a1eb3b20359333cf2ae562a2343 ]
+[ Upstream commit 8fd183435728b139248a77978ea3732039341779 ]
 
-sahara_sha_hw_data_descriptor_create() returns negative error codes on
-failure, so make sure the errors are correctly handled / propagated.
+Remove the FLAGS_NEW_KEY logic as it has the following issues:
+- the wrong key may end up being used when there are multiple data streams:
+       t1            t2
+    setkey()
+    encrypt()
+                   setkey()
+                   encrypt()
 
-Fixes: 5a2bb93f5992 ("crypto: sahara - add support for SHA1/256")
+    encrypt() <--- key from t2 is used
+- switching between encryption and decryption with the same key is not
+  possible, as the hdr flags are only updated when a new setkey() is
+  performed
+
+With this change, the key is always sent along with the cryptdata when
+performing encryption/decryption operations.
+
+Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
 Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/crypto/sahara.c | 34 +++++++++++++---------------------
+ 1 file changed, 13 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index 86ff5add2e15..117aa4296c2a 100644
+index 62d93526920f..79708919260a 100644
 --- a/drivers/crypto/sahara.c
 +++ b/drivers/crypto/sahara.c
-@@ -987,7 +987,10 @@ static int sahara_sha_process(struct ahash_request *req)
- 		return ret;
+@@ -43,7 +43,6 @@
+ #define FLAGS_MODE_MASK		0x000f
+ #define FLAGS_ENCRYPT		BIT(0)
+ #define FLAGS_CBC		BIT(1)
+-#define FLAGS_NEW_KEY		BIT(3)
  
- 	if (rctx->first) {
--		sahara_sha_hw_data_descriptor_create(dev, rctx, req, 0);
-+		ret = sahara_sha_hw_data_descriptor_create(dev, rctx, req, 0);
-+		if (ret)
-+			return ret;
-+
- 		dev->hw_desc[0]->next = 0;
- 		rctx->first = 0;
- 	} else {
-@@ -995,7 +998,10 @@ static int sahara_sha_process(struct ahash_request *req)
+ #define SAHARA_HDR_BASE			0x00800000
+ #define SAHARA_HDR_SKHA_ALG_AES	0
+@@ -141,8 +140,6 @@ struct sahara_hw_link {
+ };
  
- 		sahara_sha_hw_context_descriptor_create(dev, rctx, req, 0);
- 		dev->hw_desc[0]->next = dev->hw_phys_desc[1];
--		sahara_sha_hw_data_descriptor_create(dev, rctx, req, 1);
-+		ret = sahara_sha_hw_data_descriptor_create(dev, rctx, req, 1);
-+		if (ret)
-+			return ret;
-+
- 		dev->hw_desc[1]->next = 0;
+ struct sahara_ctx {
+-	unsigned long flags;
+-
+ 	/* AES-specific context */
+ 	int keylen;
+ 	u8 key[AES_KEYSIZE_128];
+@@ -447,26 +444,22 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
+ 	int i, j;
+ 	int idx = 0;
+ 
+-	/* Copy new key if necessary */
+-	if (ctx->flags & FLAGS_NEW_KEY) {
+-		memcpy(dev->key_base, ctx->key, ctx->keylen);
+-		ctx->flags &= ~FLAGS_NEW_KEY;
++	memcpy(dev->key_base, ctx->key, ctx->keylen);
+ 
+-		if (dev->flags & FLAGS_CBC) {
+-			dev->hw_desc[idx]->len1 = AES_BLOCK_SIZE;
+-			dev->hw_desc[idx]->p1 = dev->iv_phys_base;
+-		} else {
+-			dev->hw_desc[idx]->len1 = 0;
+-			dev->hw_desc[idx]->p1 = 0;
+-		}
+-		dev->hw_desc[idx]->len2 = ctx->keylen;
+-		dev->hw_desc[idx]->p2 = dev->key_phys_base;
+-		dev->hw_desc[idx]->next = dev->hw_phys_desc[1];
++	if (dev->flags & FLAGS_CBC) {
++		dev->hw_desc[idx]->len1 = AES_BLOCK_SIZE;
++		dev->hw_desc[idx]->p1 = dev->iv_phys_base;
++	} else {
++		dev->hw_desc[idx]->len1 = 0;
++		dev->hw_desc[idx]->p1 = 0;
++	}
++	dev->hw_desc[idx]->len2 = ctx->keylen;
++	dev->hw_desc[idx]->p2 = dev->key_phys_base;
++	dev->hw_desc[idx]->next = dev->hw_phys_desc[1];
++	dev->hw_desc[idx]->hdr = sahara_aes_key_hdr(dev);
+ 
+-		dev->hw_desc[idx]->hdr = sahara_aes_key_hdr(dev);
++	idx++;
+ 
+-		idx++;
+-	}
+ 
+ 	dev->nb_in_sg = sg_nents_for_len(dev->in_sg, dev->total);
+ 	if (dev->nb_in_sg < 0) {
+@@ -608,7 +601,6 @@ static int sahara_aes_setkey(struct crypto_skcipher *tfm, const u8 *key,
+ 	/* SAHARA only supports 128bit keys */
+ 	if (keylen == AES_KEYSIZE_128) {
+ 		memcpy(ctx->key, key, keylen);
+-		ctx->flags |= FLAGS_NEW_KEY;
+ 		return 0;
  	}
  
 -- 
