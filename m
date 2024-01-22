@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3AC1C3E;
-	Tue, 23 Jan 2024 01:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B3023BC;
+	Tue, 23 Jan 2024 01:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972161; cv=none; b=q2K+9Gu+9rfjgcuecAduGB63235f79AKQEV75kBCDUlaCCT9Bzmgg2z9/tayPSR22591XJefZCKShAxkE53YSgJFOXMw+eHwdztfhSdDtVkNG7WgEgmeuQH4/6SQ0nWGBhbwxk2Pyh9VEck2sONRSdzQpFneh/OGODez80UcR08=
+	t=1705972162; cv=none; b=T7qMCKaa62fomYx5hhFz2jBC02+uT84wbRRfRMUaxALdB5Mof7C3g8Zw133+i0oTKu9BHVOnUGHCQpZj4y3Vn/RN7919tUgck8DBPRQhhjN1E8WeSV8TXjbp7im1lIkddK0KbG/vK/OfN3ZpAHMSCAv5LXDC7UUhuX9W2RKPnOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972161; c=relaxed/simple;
-	bh=KeNmkEz2Ft96mrh9I+zLY0MrxVT2JiSkf1ibrNIVkfM=;
+	s=arc-20240116; t=1705972162; c=relaxed/simple;
+	bh=7X0mcwtiYK+/v9vTXZClEi1RSYZEM9YNydLotktvJ74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rulpTGLaiTPmX1VRAK67Kv+j9q4fpuxVUWrIJA4sNVd5KnyWcg2JHDf6yXlMjCGL2COekbtGsxAOwT2zDUNy6EdZGFCn+953iuCUxY2Hitd12qVT4B459biHufA7R0//57DFJlYiifH/voW66k40RXlxRyhhj1JdvqNYIpvPJJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KuRgU4G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rR8JmKU4rjls2NZPNqx+hsuAswC1OZ3HIjd9XhlnPAeMdcCL0p3VL+Tg6b9plUnYwTTJP5BYbt1/2/lMeo1EV/aIOxtFsTjlv6EywyDyxyAVkFDUd9UvqAKLMh2uDn5NMw1MfkbjIY444KNiTv3qwAwX8+eOuUSINB99TX/EQSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxz3LGH9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KuRgU4G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C9CC43394;
-	Tue, 23 Jan 2024 01:09:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxz3LGH9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1692FC43390;
+	Tue, 23 Jan 2024 01:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972161;
-	bh=KeNmkEz2Ft96mrh9I+zLY0MrxVT2JiSkf1ibrNIVkfM=;
+	s=korg; t=1705972162;
+	bh=7X0mcwtiYK+/v9vTXZClEi1RSYZEM9YNydLotktvJ74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2KuRgU4Gqoz/A0phwjM25QLmqLLU7giTUwJsGdNTdfnw3QuXI06mVLYnmvCuf5IgM
-	 woDvAmM/F1ToVZbATBcHF0NFnBD62ZaFcCJ8kPtsgWlgJFbFmmse/TlbFvvxLuVHZc
-	 Kcv9fpPhv4l3ZFUReeunt3Sl2JNo8XuKLy/CVQW4=
+	b=pxz3LGH9OpKG5H9kZxzNjMrP6GsefTX1Iwrx4kVMjTef+xPbbQ9ZgQ/R/Rat20F7d
+	 vY/t2xbwfGAKYbojodZ1PaQ4VZU/SVd0Vr8TBYkaHzM150EAvfr1iDXmrErSeEPEcQ
+	 aJuSE7VvGGQbqQx125GJMgmrgb7svt/FzFfFep9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 5.15 054/374] Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d"
-Date: Mon, 22 Jan 2024 15:55:10 -0800
-Message-ID: <20240122235746.485418799@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 5.15 055/374] binder: use EPOLLERR from eventpoll.h
+Date: Mon, 22 Jan 2024 15:55:11 -0800
+Message-ID: <20240122235746.522072018@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: <20240122235744.598274724@linuxfoundation.org>
@@ -51,67 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxiao Bi <junxiao.bi@oracle.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit bed9e27baf52a09b7ba2a3714f1e24e17ced386d upstream.
+commit 6ac061db9c58ca5b9270b1b3940d2464fb3ff183 upstream.
 
-This reverts commit 5e2cf333b7bd5d3e62595a44d598a254c697cd74.
+Use EPOLLERR instead of POLLERR to make sure it is cast to the correct
+__poll_t type. This fixes the following sparse issue:
 
-That commit introduced the following race and can cause system hung.
+  drivers/android/binder.c:5030:24: warning: incorrect type in return expression (different base types)
+  drivers/android/binder.c:5030:24:    expected restricted __poll_t
+  drivers/android/binder.c:5030:24:    got int
 
- md_write_start:             raid5d:
- // mddev->in_sync == 1
- set "MD_SB_CHANGE_PENDING"
-                            // running before md_write_start wakeup it
-                             waiting "MD_SB_CHANGE_PENDING" cleared
-                             >>>>>>>>> hung
- wakeup mddev->thread
- ...
- waiting "MD_SB_CHANGE_PENDING" cleared
- >>>> hung, raid5d should clear this flag
- but get hung by same flag.
-
-The issue reverted commit fixing is fixed by last patch in a new way.
-
-Fixes: 5e2cf333b7bd ("md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d")
-Cc: stable@vger.kernel.org # v5.19+
-Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20231108182216.73611-2-junxiao.bi@oracle.com
+Fixes: f88982679f54 ("binder: check for binder_thread allocation failure in binder_poll()")
+Cc: stable@vger.kernel.org
+Cc: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Link: https://lore.kernel.org/r/20231201172212.1813387-2-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid5.c |   12 ------------
- 1 file changed, 12 deletions(-)
+ drivers/android/binder.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -36,7 +36,6 @@
-  */
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -4836,7 +4836,7 @@ static __poll_t binder_poll(struct file
  
- #include <linux/blkdev.h>
--#include <linux/delay.h>
- #include <linux/kthread.h>
- #include <linux/raid/pq.h>
- #include <linux/async_tx.h>
-@@ -6522,18 +6521,7 @@ static void raid5d(struct md_thread *thr
- 			spin_unlock_irq(&conf->device_lock);
- 			md_check_recovery(mddev);
- 			spin_lock_irq(&conf->device_lock);
--
--			/*
--			 * Waiting on MD_SB_CHANGE_PENDING below may deadlock
--			 * seeing md_check_recovery() is needed to clear
--			 * the flag when using mdmon.
--			 */
--			continue;
- 		}
--
--		wait_event_lock_irq(mddev->sb_wait,
--			!test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags),
--			conf->device_lock);
- 	}
- 	pr_debug("%d stripes handled\n", handled);
+ 	thread = binder_get_thread(proc);
+ 	if (!thread)
+-		return POLLERR;
++		return EPOLLERR;
  
+ 	binder_inner_proc_lock(thread->proc);
+ 	thread->looper |= BINDER_LOOPER_STATE_POLL;
 
 
