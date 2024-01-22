@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CC95B5D9;
-	Tue, 23 Jan 2024 01:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF045BAC0;
+	Tue, 23 Jan 2024 01:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974337; cv=none; b=nK7AcZ/TQGoXsYlVn6S+VjGGAVzR7Hr3cDvWyb+H8I0rzYSXaKK2630f63VZqyANjYoSUKoIoxuG0D5YkPaQHKLYKCxwk3qh74TOWuP4OHbCi5beijh3MGbD9/bHO8vaSh5GA7MWXgbGMkOcx8iD84AUViCE3SxK9f/A+gZd1P0=
+	t=1705974338; cv=none; b=baU/dIgs60Yc7vprGcJen1lGVv2XH/JVk1z6ZOc+X/QgwVVuv14vVCCH5Zhhwwpkn5td8IU1tMBjcPCJKRiHcAjLlFZp+RRrFDU83bm6Z3807jFg8oZon8ytbyu9LrWM6wvA6lbuxvEC1O1ra9u5JA8/TEEuOt2UcQcX5nO1Bnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974337; c=relaxed/simple;
-	bh=f9LDGnXbHvXCJY/v0wh7HlN5ZZIseY/uTFtbWY7rKQ0=;
+	s=arc-20240116; t=1705974338; c=relaxed/simple;
+	bh=qQzW/E+MtUOKadp3lYCCEGH0IKvQvXIuhU/JkmauOJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RH8QgjhTuRleLvAST9gLGhKXGja8ouLIYJK/dvsMHrCtfjbK4baEjhRDfBz+SpJGTSoUpOLMMQZFDfvMSdK3K8rOSClRC6mwlCizyGiJJ1CJ1PVS9n+09bURPXoO8paRpjQaTCa7uPAGmYnumvV1Gk+uGursFdo0hEXur//Yf0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ocfq8Xg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rueQjbp1fTrMakjAIGMOXrdmntuKHtNVZWXGX8IU9mEZ4Ab+IVUhXtwAVNGzaS/Px2jKl8wn4cBNj5V3uQQO04a5vSd6fnEsP16afhaaFBi/0BtE3VsQqy4/V3OTKguo7HfF0AXgJJGH8Y689sZMRecK0Vb1FVtxSb20hlZKK5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybGSDggC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ocfq8Xg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF5FC433F1;
-	Tue, 23 Jan 2024 01:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybGSDggC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E35C433C7;
+	Tue, 23 Jan 2024 01:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705974337;
-	bh=f9LDGnXbHvXCJY/v0wh7HlN5ZZIseY/uTFtbWY7rKQ0=;
+	bh=qQzW/E+MtUOKadp3lYCCEGH0IKvQvXIuhU/JkmauOJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Ocfq8Xgn7Xi9JliBwgBr2fSAHXDb0PT1SwI5gtdn2KMFDVPcNE2XZdMcLCPuK3bU
-	 DCRMXNA4YSLQX+uyjTca1oWnr71fWMzBfb9hQmV+6G6m/BgUc6hI+YV89o4EKdNM43
-	 lPS+8CTgY33X5X3vRmBbPiB7vWipj3OLqGgVEmPU=
+	b=ybGSDggCDwmnbimOEXl24/mNyNnfbvBp9es2GDNuH+nkQIGQWjxF422LvK0J/rmy2
+	 QjN/Ahtau0OiEjYboUdR5YUDMRh5TJ2Tsua060pN6Q+7fT4Qxk2rtTBaAiSMxeOunb
+	 Vboi+9UfPAl21rO2T/NRznXna0UuT2PnLmrYxSQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Singh <singhabhinav9051571833@gmail.com>,
-	Danilo Krummrich <dakr@redhat.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 181/374] drm/nouveau/fence:: fix warning directly dereferencing a rcu pointer
-Date: Mon, 22 Jan 2024 15:57:17 -0800
-Message-ID: <20240122235750.934821470@linuxfoundation.org>
+Subject: [PATCH 6.6 055/583] crypto: hisilicon/zip - add zip comp high perf mode configuration
+Date: Mon, 22 Jan 2024 15:51:46 -0800
+Message-ID: <20240122235813.812793800@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +47,127 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abhinav Singh <singhabhinav9051571833@gmail.com>
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-[ Upstream commit 5f35a624c1e30b5bae5023b3c256e94e0ad4f806 ]
+[ Upstream commit a9864bae1806499ebf3757a9e71dddde5b9c48c6 ]
 
-Fix a sparse warning with this message
-"warning:dereference of noderef expression". In this context it means we
-are dereferencing a __rcu tagged pointer directly.
+To meet specific application scenarios, the function of switching between
+the high performance mode and the high compression mode is added.
 
-We should not be directly dereferencing a rcu pointer. To get a normal
-(non __rcu tagged pointer) from a __rcu tagged pointer we are using the
-function unrcu_pointer(...). The non __rcu tagged pointer then can be
-dereferenced just like a normal pointer.
+Use the perf_mode=0/1 configuration to set the compression high perf mode,
+0(default, high compression mode), 1(high performance mode). These two
+modes only apply to the compression direction and are compatible with
+software algorithm in both directions.
 
-I tested with qemu with this command
-qemu-system-x86_64 \
-	-m 2G \
-	-smp 2 \
-	-kernel bzImage \
-	-append "console=ttyS0 root=/dev/sda earlyprintk=serial net.ifnames=0" \
-	-drive file=bullseye.img,format=raw \
-	-net user,host=10.0.2.10,hostfwd=tcp:127.0.0.1:10021-:22 \
-	-net nic,model=e1000 \
-	-enable-kvm \
-	-nographic \
-	-pidfile vm.pid \
-	2>&1 | tee vm.log
-with lockdep enabled.
-
-Fixes: 0ec5f02f0e2c ("drm/nouveau: prevent stale fence->channel pointers, and protect with rcu")
-Signed-off-by: Abhinav Singh <singhabhinav9051571833@gmail.com>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231113191303.3277733-1-singhabhinav9051571833@gmail.com
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: cf8b5156bbc8 ("crypto: hisilicon/hpre - save capability registers in probe process")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nv04_fence.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/hisilicon/zip/zip_main.c | 65 +++++++++++++++++++++++++
+ 1 file changed, 65 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nv04_fence.c b/drivers/gpu/drm/nouveau/nv04_fence.c
-index 5b71a5a5cd85..cdbc75e3d1f6 100644
---- a/drivers/gpu/drm/nouveau/nv04_fence.c
-+++ b/drivers/gpu/drm/nouveau/nv04_fence.c
-@@ -39,7 +39,7 @@ struct nv04_fence_priv {
- static int
- nv04_fence_emit(struct nouveau_fence *fence)
+diff --git a/drivers/crypto/hisilicon/zip/zip_main.c b/drivers/crypto/hisilicon/zip/zip_main.c
+index 84dbaeb07ea8..0dfd6e240e1c 100644
+--- a/drivers/crypto/hisilicon/zip/zip_main.c
++++ b/drivers/crypto/hisilicon/zip/zip_main.c
+@@ -106,6 +106,14 @@
+ #define HZIP_CLOCK_GATED_EN		(HZIP_CORE_GATED_EN | \
+ 					 HZIP_CORE_GATED_OOO_EN)
+ 
++/* zip comp high performance */
++#define HZIP_HIGH_PERF_OFFSET		0x301208
++
++enum {
++	HZIP_HIGH_COMP_RATE,
++	HZIP_HIGH_COMP_PERF,
++};
++
+ static const char hisi_zip_name[] = "hisi_zip";
+ static struct dentry *hzip_debugfs_root;
+ 
+@@ -351,6 +359,37 @@ static int hzip_diff_regs_show(struct seq_file *s, void *unused)
+ 	return 0;
+ }
+ DEFINE_SHOW_ATTRIBUTE(hzip_diff_regs);
++
++static int perf_mode_set(const char *val, const struct kernel_param *kp)
++{
++	int ret;
++	u32 n;
++
++	if (!val)
++		return -EINVAL;
++
++	ret = kstrtou32(val, 10, &n);
++	if (ret != 0 || (n != HZIP_HIGH_COMP_PERF &&
++			 n != HZIP_HIGH_COMP_RATE))
++		return -EINVAL;
++
++	return param_set_int(val, kp);
++}
++
++static const struct kernel_param_ops zip_com_perf_ops = {
++	.set = perf_mode_set,
++	.get = param_get_int,
++};
++
++/*
++ * perf_mode = 0 means enable high compression rate mode,
++ * perf_mode = 1 means enable high compression performance mode.
++ * These two modes only apply to the compression direction.
++ */
++static u32 perf_mode = HZIP_HIGH_COMP_RATE;
++module_param_cb(perf_mode, &zip_com_perf_ops, &perf_mode, 0444);
++MODULE_PARM_DESC(perf_mode, "ZIP high perf mode 0(default), 1(enable)");
++
+ static const struct kernel_param_ops zip_uacce_mode_ops = {
+ 	.set = uacce_mode_set,
+ 	.get = param_get_int,
+@@ -416,6 +455,28 @@ bool hisi_zip_alg_support(struct hisi_qm *qm, u32 alg)
+ 	return false;
+ }
+ 
++static int hisi_zip_set_high_perf(struct hisi_qm *qm)
++{
++	u32 val;
++	int ret;
++
++	val = readl_relaxed(qm->io_base + HZIP_HIGH_PERF_OFFSET);
++	if (perf_mode == HZIP_HIGH_COMP_PERF)
++		val |= HZIP_HIGH_COMP_PERF;
++	else
++		val &= ~HZIP_HIGH_COMP_PERF;
++
++	/* Set perf mode */
++	writel(val, qm->io_base + HZIP_HIGH_PERF_OFFSET);
++	ret = readl_relaxed_poll_timeout(qm->io_base + HZIP_HIGH_PERF_OFFSET,
++					 val, val == perf_mode, HZIP_DELAY_1_US,
++					 HZIP_POLL_TIMEOUT_US);
++	if (ret)
++		pci_err(qm->pdev, "failed to set perf mode\n");
++
++	return ret;
++}
++
+ static int hisi_zip_set_qm_algs(struct hisi_qm *qm)
  {
--	struct nvif_push *push = fence->channel->chan.push;
-+	struct nvif_push *push = unrcu_pointer(fence->channel)->chan.push;
- 	int ret = PUSH_WAIT(push, 2);
- 	if (ret == 0) {
- 		PUSH_NVSQ(push, NV_SW, 0x0150, fence->base.seqno);
+ 	struct device *dev = &qm->pdev->dev;
+@@ -1114,6 +1175,10 @@ static int hisi_zip_pf_probe_init(struct hisi_zip *hisi_zip)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = hisi_zip_set_high_perf(qm);
++	if (ret)
++		return ret;
++
+ 	hisi_zip_open_sva_prefetch(qm);
+ 	hisi_qm_dev_err_init(qm);
+ 	hisi_zip_debug_regs_clear(qm);
 -- 
 2.43.0
 
