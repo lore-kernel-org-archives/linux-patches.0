@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5814500F;
-	Tue, 23 Jan 2024 00:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E3C747A;
+	Tue, 23 Jan 2024 00:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969529; cv=none; b=f7DVIRCxa5xi3eV5emOrSenEPxhGEW83l5Q0IcyklWnJXHXthaTpPmT7kPbHoznXE/QCtYR/cvqO7fVZV/Ej3PLOMXFJ1LGqAGnwioC+yHwY1O1xsGGrFCmc1TZc/GGVkNUqlk//VfEFkPR+A9yQC05TunpPl10SB7TQ35K8JJs=
+	t=1705969531; cv=none; b=TW5gLsqjNXMolcGK8eGOzFXjRTVg+FND2Rql0bU+VnQSm+usEC6Cm8RqLppalWf14gKaroaDZauf+tn2LuvSL4SzzkP3v+WjKxdUWOOKxRTQ+obyd/RBZIlobf/uk74fnu7wPO3MD6VtTVGfS1h9p3PRk49GYB+bmEaT184b26M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969529; c=relaxed/simple;
-	bh=C59Hm4u9B2esjic0HoEBLtI6XcIWWOT9gL9pogO6ee8=;
+	s=arc-20240116; t=1705969531; c=relaxed/simple;
+	bh=opMfgBB5v5wqqf3NNQRJYCjDgAlzX1V4V8wN4YIzJxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XmkMgfXvZWx0vp7gY1dWuaprlX7tBsKDPv85jp8lsMeHEiXRFOwbVIiIVbF+62bbORv67iShdQobp2DYBa/trIPe+PytdTq0ibpGlQlE961Zv/lGB5tF5Am5t7FKH5ESZPJlbmt1ksE9L9zyobwTZPeSrFKg9HVakv9iJS54U2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwRqyAGC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PvPi4J9J9mpFyNrnaYMIqwfyfDlWCL1dWqTR7NSMqimnp/9QDlSbbT2AOgcL7WvoduxBC/OGYe5typXmriiH8FAOepg+qAMd4bYLhvOrXlFayjXc9mjDGXTeIXXw9NWY5ggS/PdPTFFA3u8LOzhxiHfNYx6FCjBcrhN3wdczXN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgoT5f9W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwRqyAGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C38C433B1;
-	Tue, 23 Jan 2024 00:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgoT5f9W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC64BC433A6;
+	Tue, 23 Jan 2024 00:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969529;
-	bh=C59Hm4u9B2esjic0HoEBLtI6XcIWWOT9gL9pogO6ee8=;
+	s=korg; t=1705969530;
+	bh=opMfgBB5v5wqqf3NNQRJYCjDgAlzX1V4V8wN4YIzJxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zwRqyAGClYsWBgIwWPtLQDIbgQMuQGJBQy7OO+nCdVoMEFx6Vpir8K6BIUyEUIcg3
-	 chPOuuAprAbjTYmZkrv32czSiP9LY5NEgP8JZvRqL7D2EAgis9QKzr4s+fG/WSVtg8
-	 LrsepVPtGuXm61wJhMvuT0x9zh1gzbX7YQPeLOic=
+	b=fgoT5f9WVWNqbNp0JiwMUlmEt254BSAwtLnr457/xZ4fxe8mCX5dtEj/8W+ZuqWP5
+	 Feqr6/Eb37B+U4wQS4CN6Q+NhCgahzNjfT3x6zvHmvTwl9Qks63qRXhwccODnHmTe8
+	 Q0ii6rx6Y4Q/XbVlA8s2AuSNYXKPF8XnX95xFsmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Paloma Arellano <quic_parellan@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 307/641] media: imx-mipi-csis: Fix clock handling in remove()
-Date: Mon, 22 Jan 2024 15:53:31 -0800
-Message-ID: <20240122235827.525649517@linuxfoundation.org>
+Subject: [PATCH 6.7 290/641] drm/msm/dpu: correct clk bit for WB2 block
+Date: Mon, 22 Jan 2024 15:53:14 -0800
+Message-ID: <20240122235826.965904616@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,44 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 5705b0e0eb550ff834125a46a4ef99b62093d83d ]
+[ Upstream commit e843ca2f30e630675e2d2a75c96f4844f2854430 ]
 
-The driver always calls mipi_csis_runtime_suspend() and
-mipi_csis_clk_disable() in remove(). This causes multiple WARNs from the
-kernel, as the clocks get disabled too many times.
+On sc7280 there are two clk bits for WB2: vbif_cli and clk_ctrl. While
+programming the VBIF params of WB, the driver should be toggling the
+former bit, while the sc7180_mdp, sc7280_mdp and sm8250_mdp structs
+list the latter one.
 
-Fix the remove() to call mipi_csis_runtime_suspend() and
-mipi_csis_clk_disable() in a way that reverses what is done in probe().
+Correct that to ensure proper programming sequence for WB2 on these
+platforms.
 
-Link: https://lore.kernel.org/r/20231122-imx-csis-v2-1-e44b8dc4cb66@ideasonboard.com
-
-Fixes: 7807063b862b ("media: staging/imx7: add MIPI CSI-2 receiver subdev for i.MX7")
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 255f056181ac ("drm/msm/dpu: sc7180: add missing WB2 clock control")
+Fixes: 3ce166380567 ("drm/msm/dpu: add writeback support for sc7280")
+Fixes: 53324b99bd7b ("drm/msm/dpu: add writeback blocks to the sm8250 DPU catalog")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Tested-by: Paloma Arellano <quic_parellan@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/570185/
+Link: https://lore.kernel.org/r/20231203002437.1291595-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/nxp/imx-mipi-csis.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/nxp/imx-mipi-csis.c b/drivers/media/platform/nxp/imx-mipi-csis.c
-index 6cb20b45e0a1..b39d7aeba750 100644
---- a/drivers/media/platform/nxp/imx-mipi-csis.c
-+++ b/drivers/media/platform/nxp/imx-mipi-csis.c
-@@ -1502,8 +1502,10 @@ static void mipi_csis_remove(struct platform_device *pdev)
- 	v4l2_async_nf_cleanup(&csis->notifier);
- 	v4l2_async_unregister_subdev(&csis->sd);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+index 94278a3e3483..9f8068fa0175 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+@@ -32,7 +32,7 @@ static const struct dpu_mdp_cfg sm8250_mdp = {
+ 		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2bc, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_DMA3] = { .reg_off = 0x2c4, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_REG_DMA] = { .reg_off = 0x2bc, .bit_off = 20 },
+-		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x3b8, .bit_off = 24 },
++		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
+ 	},
+ };
  
-+	if (!pm_runtime_enabled(&pdev->dev))
-+		mipi_csis_runtime_suspend(&pdev->dev);
-+
- 	pm_runtime_disable(&pdev->dev);
--	mipi_csis_runtime_suspend(&pdev->dev);
- 	mipi_csis_clk_disable(csis);
- 	v4l2_subdev_cleanup(&csis->sd);
- 	media_entity_cleanup(&csis->sd.entity);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+index c0d88ddccb28..9bfa15e4e645 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+@@ -25,7 +25,7 @@ static const struct dpu_mdp_cfg sc7180_mdp = {
+ 		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2c4, .bit_off = 8 },
+-		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x3b8, .bit_off = 24 },
++		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
+ 	},
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+index 15942fa5a8e0..b9c296e51e36 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+@@ -25,7 +25,7 @@ static const struct dpu_mdp_cfg sc7280_mdp = {
+ 		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2c4, .bit_off = 8 },
+-		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x3b8, .bit_off = 24 },
++		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
+ 	},
+ };
+ 
 -- 
 2.43.0
 
