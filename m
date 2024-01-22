@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE796A03B;
-	Tue, 23 Jan 2024 02:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57EBD6A03B;
+	Tue, 23 Jan 2024 02:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975338; cv=none; b=qghvLBR0dHxA1fCWQkAe69FcuothPfXLmWAyjbqom4lfe4nkUSIBqEvPt78OXbdDANYmf+2Sypfy/gLfNKNnh/eytTn5jPtFNZ5EThZ7vAEVgiAAptnDa+bQeng2HFhZ2bC+oNnexUMlhp9PtwTIkjT8ASLijBJ3OvgWEKleguY=
+	t=1705975339; cv=none; b=D7hN71dQ+YoBOMliSzuJPYleSspQmYHCYQcq1koWrvMhFzjMN+PkJLNqs6gdhZJ7fwLwFoTW2Fd1pB/ar8ctyqKx2VBKJzE3JiGMo8g79cH5aob6URT1SM/YfFE6IyeV7ixl30yZMqmm5q0Rsr1r/Au8pCHpXzFXN5dkI5oXwkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975338; c=relaxed/simple;
-	bh=lwn6LdBRTKi8k+ei37LrVkzkXqKK17/La9l4R5NXrxA=;
+	s=arc-20240116; t=1705975339; c=relaxed/simple;
+	bh=P9hACG/G3/8Zb4jwbiKKHwB4gCSNycoWHQDYbXnZ1iQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lMERKXp/GOCWyZHx6dmZhDSZgSTKPvEUScbcmX2mlZp3xHKu4fJ+y4UAORRQkWMMBZ0s2LbwEK+qw+9IEfNjL0ozLr/nTKDmVi1lwEG5tPDbid5Z4gsjSZLp7jsPYCjyM1z1kyLUqNANI2KpkfYhNfRE4qKFx1GQCIIqpZOzVt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRAToSMG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZDbXsNIzlt4O30I0OH1W5UX2MUa6Uf08txr4dQpmV40NoWml1GV31VI7F4dOGZde1ndwzrfL6gMx/zNlEyz5WkrosMRaH9wOO9pA3daz4QFOdnRRGOpCKuLNmxDF0v6pwF/UPzyKO6tclx50ajqC8IebyojwtpoWe+o7BkdQXb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0O+6okNA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRAToSMG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12EF6C43390;
-	Tue, 23 Jan 2024 02:02:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0O+6okNA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA38C43394;
+	Tue, 23 Jan 2024 02:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975338;
-	bh=lwn6LdBRTKi8k+ei37LrVkzkXqKK17/La9l4R5NXrxA=;
+	s=korg; t=1705975339;
+	bh=P9hACG/G3/8Zb4jwbiKKHwB4gCSNycoWHQDYbXnZ1iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MRAToSMGstVTydYem3gsmQpbO9eRnWh8CT9CMiBajK8LAQkLAo/6zzIn1hilUSlJ5
-	 RgEEL0JzrsJdYKHDqhv53Nty53cMVPBx1/h5sYzhj7ePSejqNHZgbQeJdoxyX2yl8N
-	 f1Wa9qP6/rhUBIOuwELJw/IOI63cSbz5gtBacGmM=
+	b=0O+6okNA63ojQrrROp+5YOKLGSJecyXt6s3ON/IWUxzkRzxcRe9pP/0TgcdcV1MAF
+	 2y4YhZq/3BPWpMSqco4pbCte7nAHzKZwKNUpx/2f9z3m080IXA83o0b4th+yNBdKGs
+	 Drg7kqlNbO7bTt2A5ZHzWpFFSddC0XUtrQa3YKHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Curtis Klein <curtis.klein@hpe.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 299/583] drivers: clk: zynqmp: update divider round rate logic
-Date: Mon, 22 Jan 2024 15:55:50 -0800
-Message-ID: <20240122235821.166767595@linuxfoundation.org>
+Subject: [PATCH 6.6 300/583] watchdog: set cdev owner before adding
+Date: Mon, 22 Jan 2024 15:55:51 -0800
+Message-ID: <20240122235821.198704241@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,119 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
+From: Curtis Klein <curtis.klein@hpe.com>
 
-[ Upstream commit 1fe15be1fb613534ecbac5f8c3f8744f757d237d ]
+[ Upstream commit 38d75297745f04206db9c29bdd75557f0344c7cc ]
 
-Currently zynqmp divider round rate is considering single parent and
-calculating rate and parent rate accordingly. But if divider clock flag
-is set to SET_RATE_PARENT then its not trying to traverse through all
-parent rate and not selecting best parent rate from that. So use common
-divider_round_rate() which is traversing through all clock parents and
-its rate and calculating proper parent rate.
+When the new watchdog character device is registered, it becomes
+available for opening. This creates a race where userspace may open the
+device before the character device's owner is set. This results in an
+imbalance in module_get calls as the cdev_get in cdev_open will not
+increment the reference count on the watchdog driver module.
 
-Fixes: 3fde0e16d016 ("drivers: clk: Add ZynqMP clock driver")
-Signed-off-by: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
-Link: https://lore.kernel.org/r/20231129112916.23125-3-jay.buddhabhatti@amd.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+This causes problems when the watchdog character device is released as
+the module loader's reference will also be released. This makes it
+impossible to open the watchdog device later on as it now appears that
+the module is being unloaded. The open will fail with -ENXIO from
+chrdev_open.
+
+The legacy watchdog device will fail with -EBUSY from the try_module_get
+in watchdog_open because it's module owner is the watchdog core module
+so it can still be opened but it will fail to get a refcount on the
+underlying watchdog device driver.
+
+Fixes: 72139dfa2464 ("watchdog: Fix the race between the release of watchdog_core_data and cdev")
+Signed-off-by: Curtis Klein <curtis.klein@hpe.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20231205190522.55153-1-curtis.klein@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/zynqmp/divider.c | 66 +++---------------------------------
- 1 file changed, 5 insertions(+), 61 deletions(-)
+ drivers/watchdog/watchdog_dev.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/clk/zynqmp/divider.c b/drivers/clk/zynqmp/divider.c
-index 33a3b2a22659..5a00487ae408 100644
---- a/drivers/clk/zynqmp/divider.c
-+++ b/drivers/clk/zynqmp/divider.c
-@@ -110,52 +110,6 @@ static unsigned long zynqmp_clk_divider_recalc_rate(struct clk_hw *hw,
- 	return DIV_ROUND_UP_ULL(parent_rate, value);
- }
+diff --git a/drivers/watchdog/watchdog_dev.c b/drivers/watchdog/watchdog_dev.c
+index 15df74e11a59..e2bd266b1b5b 100644
+--- a/drivers/watchdog/watchdog_dev.c
++++ b/drivers/watchdog/watchdog_dev.c
+@@ -1073,6 +1073,7 @@ static int watchdog_cdev_register(struct watchdog_device *wdd)
  
--static void zynqmp_get_divider2_val(struct clk_hw *hw,
--				    unsigned long rate,
--				    struct zynqmp_clk_divider *divider,
--				    u32 *bestdiv)
--{
--	int div1;
--	int div2;
--	long error = LONG_MAX;
--	unsigned long div1_prate;
--	struct clk_hw *div1_parent_hw;
--	struct zynqmp_clk_divider *pdivider;
--	struct clk_hw *div2_parent_hw = clk_hw_get_parent(hw);
--
--	if (!div2_parent_hw)
--		return;
--
--	pdivider = to_zynqmp_clk_divider(div2_parent_hw);
--	if (!pdivider)
--		return;
--
--	div1_parent_hw = clk_hw_get_parent(div2_parent_hw);
--	if (!div1_parent_hw)
--		return;
--
--	div1_prate = clk_hw_get_rate(div1_parent_hw);
--	*bestdiv = 1;
--	for (div1 = 1; div1 <= pdivider->max_div;) {
--		for (div2 = 1; div2 <= divider->max_div;) {
--			long new_error = ((div1_prate / div1) / div2) - rate;
--
--			if (abs(new_error) < abs(error)) {
--				*bestdiv = div2;
--				error = new_error;
--			}
--			if (divider->flags & CLK_DIVIDER_POWER_OF_TWO)
--				div2 = div2 << 1;
--			else
--				div2++;
--		}
--		if (pdivider->flags & CLK_DIVIDER_POWER_OF_TWO)
--			div1 = div1 << 1;
--		else
--			div1++;
--	}
--}
--
- /**
-  * zynqmp_clk_divider_round_rate() - Round rate of divider clock
-  * @hw:			handle between common and hardware-specific interfaces
-@@ -174,6 +128,7 @@ static long zynqmp_clk_divider_round_rate(struct clk_hw *hw,
- 	u32 div_type = divider->div_type;
- 	u32 bestdiv;
- 	int ret;
-+	u8 width;
+ 	/* Fill in the data structures */
+ 	cdev_init(&wd_data->cdev, &watchdog_fops);
++	wd_data->cdev.owner = wdd->ops->owner;
  
- 	/* if read only, just return current value */
- 	if (divider->flags & CLK_DIVIDER_READ_ONLY) {
-@@ -193,23 +148,12 @@ static long zynqmp_clk_divider_round_rate(struct clk_hw *hw,
- 		return DIV_ROUND_UP_ULL((u64)*prate, bestdiv);
+ 	/* Add the device */
+ 	err = cdev_device_add(&wd_data->cdev, &wd_data->dev);
+@@ -1087,8 +1088,6 @@ static int watchdog_cdev_register(struct watchdog_device *wdd)
+ 		return err;
  	}
  
--	bestdiv = zynqmp_divider_get_val(*prate, rate, divider->flags);
+-	wd_data->cdev.owner = wdd->ops->owner;
 -
--	/*
--	 * In case of two divisors, compute best divider values and return
--	 * divider2 value based on compute value. div1 will  be automatically
--	 * set to optimum based on required total divider value.
--	 */
--	if (div_type == TYPE_DIV2 &&
--	    (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT)) {
--		zynqmp_get_divider2_val(hw, rate, divider, &bestdiv);
--	}
-+	width = fls(divider->max_div);
- 
--	if ((clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT) && divider->is_frac)
--		bestdiv = rate % *prate ? 1 : bestdiv;
-+	rate = divider_round_rate(hw, rate, prate, NULL, width, divider->flags);
- 
--	bestdiv = min_t(u32, bestdiv, divider->max_div);
--	*prate = rate * bestdiv;
-+	if (divider->is_frac && (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT) && (rate % *prate))
-+		*prate = rate;
- 
- 	return rate;
- }
+ 	/* Record time of most recent heartbeat as 'just before now'. */
+ 	wd_data->last_hw_keepalive = ktime_sub(ktime_get(), 1);
+ 	watchdog_set_open_deadline(wd_data);
 -- 
 2.43.0
 
