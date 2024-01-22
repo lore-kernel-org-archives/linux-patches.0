@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429861350CA;
-	Tue, 23 Jan 2024 01:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C0E1350CA;
+	Tue, 23 Jan 2024 01:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971965; cv=none; b=ILi/vwe8OZYZEPIB9pdBTVkf+7UQvcOE8TCCeWu9p+DqJRXZ8PqDOlCBdCI7kkqx+hCEbrRQpOsGcxrB8zyCZg6sc7uMA783pvJEzbOo+9XmV3MxmV4DGmCMHQxVXOfkm/WrvdjyF8mNh8pgLdUFjc7C/mfxqmhnTOr+8Rz63Cg=
+	t=1705971966; cv=none; b=l+ii64EdWLBWT1DQG0eubvbJqc4ZLmCFBF6TI75zdM/dLkXmKm8p5nn/0Zy4H15giINzGjtzhu0LvC8Egjozx937d5KT87Jn8AjEW3cCmDBN6NWNUnvtZY3Gr/tsEUoImpNfNJF0VoxsszmcDr3JIsq+JrL2AL3t0/Ngs2GlDyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971965; c=relaxed/simple;
-	bh=LW7l1vK+jkH+uViXMkVxG1vglDlSkHKPHy3nanluptY=;
+	s=arc-20240116; t=1705971966; c=relaxed/simple;
+	bh=tGS4t30J65YdQZ1088v0wGOafuAuvu0bg4hPNeLwgtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YMoHIPzZllAxplhFETg/p3/lvWOYBTmhgEciOQHV5/e1uNmNQMxy+0JGlz7M8iGI00Pi8CgDuc4jmGG774ZFVovwk+159ZIZTFnIMO2WJU1Ku58U+7gXh8bFKdqPNSqGZJr+ZiS4/N2H0EJOlkIQDlulxpvZNFPJ9aQqMqtadqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkeMJJ4G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AvWz0whI3ahLjW5dlIVBQihBN0/peSY8yE6Qnl0hqEtq7DDzmBaHQbMLiBdiuL9X0zmEhsp/SQjVlkxWbvIYqfpplbKgReFmVwTNVyQpl7rnVZP8saFh/xXn85Rt2EcP35450PUFx6fqmAMFsbOAT+YnH1UxPgc4dJGC91RBEkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtwh79Vw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkeMJJ4G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B394BC433F1;
-	Tue, 23 Jan 2024 01:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtwh79Vw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32134C433F1;
+	Tue, 23 Jan 2024 01:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971965;
-	bh=LW7l1vK+jkH+uViXMkVxG1vglDlSkHKPHy3nanluptY=;
+	s=korg; t=1705971966;
+	bh=tGS4t30J65YdQZ1088v0wGOafuAuvu0bg4hPNeLwgtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mkeMJJ4G8Z7wDKkS+475gumrc2+o+c4xmbmS9ZA6fFlXMrYO0a04UdlVPKoxWHSPN
-	 wy6ieEkK/ZQHU/qc2BEtCs6AABW1ZlAOwKcTZ3wwZyhI0vXoRCT3CjVS7Q+zd9EehS
-	 +tMkzWXFf6SD+kOBammfBuNGvVTjQvzMyFgdIebU=
+	b=xtwh79VwgYTG4J/J1msNMQsSFqL+mbMe2HMhhsM9bhKyvr+7NRFxtmlGXvyuDkGKs
+	 yLg4y0IYYOuBX6TFSOnqfZ7mPN9DGB7jkpFktGTLRjc/J0bqd5g+Ei17EekDz+FGsz
+	 GyOEvIY9kaeKMHLwGWXak3fBr+eA92zFXCE70lUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 246/286] software node: Let args be NULL in software_node_get_reference_args
-Date: Mon, 22 Jan 2024 15:59:12 -0800
-Message-ID: <20240122235741.534867479@linuxfoundation.org>
+Subject: [PATCH 6.1 361/417] usb: core: Fix crash w/ usb_choose_configuration() if no driver
+Date: Mon, 22 Jan 2024 15:58:49 -0800
+Message-ID: <20240122235804.329671347@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +47,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 1eaea4b3604eb9ca7d9a1e73d88fc121bb4061f5 ]
+[ Upstream commit 44995e6f07028f798efd0c3c11a1efc78330f600 ]
 
-fwnode_get_property_reference_args() may not be called with args argument
-NULL and while OF already supports this. Add the missing NULL check.
+It's possible that usb_choose_configuration() can get called when a
+USB device has no driver. In this case the recent commit a87b8e3be926
+("usb: core: Allow subclassed USB drivers to override
+usb_choose_configuration()") can cause a crash since it dereferenced
+the driver structure without checking for NULL. Let's add a check.
 
-The purpose is to be able to count the references.
+A USB device with no driver is an anomaly, so make
+usb_choose_configuration() return immediately if there is no driver.
 
-Fixes: b06184acf751 ("software node: Add software_node_get_reference_args()")
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20231109101010.1329587-3-sakari.ailus@linux.intel.com
+This was seen in the real world when usbguard got ahold of a r8152
+device at the wrong time. It can also be simulated via this on a
+computer with one r8152-based USB Ethernet adapter:
+  cd /sys/bus/usb/drivers/r8152-cfgselector
+  to_unbind="$(ls -d *-*)"
+  real_dir="$(readlink -f "${to_unbind}")"
+  echo "${to_unbind}" > unbind
+  cd "${real_dir}"
+  echo 0 > authorized
+  echo 1 > authorized
+
+Fixes: a87b8e3be926 ("usb: core: Allow subclassed USB drivers to override usb_choose_configuration()")
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20231211073237.v3.1.If27eb3bf7812f91ab83810f232292f032f4203e0@changeid
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/swnode.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/core/generic.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
-index d2fb3eb5816c..b664c36388e2 100644
---- a/drivers/base/swnode.c
-+++ b/drivers/base/swnode.c
-@@ -531,6 +531,9 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
- 	if (nargs > NR_FWNODE_REFERENCE_ARGS)
- 		return -EINVAL;
- 
-+	if (!args)
-+		return 0;
+diff --git a/drivers/usb/core/generic.c b/drivers/usb/core/generic.c
+index dcb897158228..b134bff5c3fe 100644
+--- a/drivers/usb/core/generic.c
++++ b/drivers/usb/core/generic.c
+@@ -59,7 +59,16 @@ int usb_choose_configuration(struct usb_device *udev)
+ 	int num_configs;
+ 	int insufficient_power = 0;
+ 	struct usb_host_config *c, *best;
+-	struct usb_device_driver *udriver = to_usb_device_driver(udev->dev.driver);
++	struct usb_device_driver *udriver;
 +
- 	args->fwnode = software_node_get(refnode);
- 	args->nargs = nargs;
++	/*
++	 * If a USB device (not an interface) doesn't have a driver then the
++	 * kernel has no business trying to select or install a configuration
++	 * for it.
++	 */
++	if (!udev->dev.driver)
++		return -1;
++	udriver = to_usb_device_driver(udev->dev.driver);
  
+ 	if (usb_device_is_owned(udev))
+ 		return 0;
 -- 
 2.43.0
 
