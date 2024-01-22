@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F6756B70;
-	Tue, 23 Jan 2024 01:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024F651C44;
+	Tue, 23 Jan 2024 01:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974046; cv=none; b=syk5WRDs+O/QAv9Y96CpcoOQjKSBwT7Z0z1TDfKLGMMLeRW6rQpxvJfVzSSBCVH+kPGozPyBYI5pMsklnyzXsCP3VbwUHO/aJCcAZbqzsyZEkZ4NL+62tavS8r3QMWVOuP6mwbZj8s+qkYjfeOPKVyCSq1fYXDEgAxTGa1ejZk8=
+	t=1705974048; cv=none; b=JGej1GhsuGZD7VBxszY/I3cFQgKyZyMtfisTuBSGMXqRvJWb8hEQIvUN63FEo8OiL/TEXdnreh2TiXzDuZyFyIWi6PsCC+vnxrKy4E3+lz0ECQFCBjOMXAvo6djdai9TTy7al6FNEfZ9u0lw3kd7wtG/hg0YeB+oK+JQSXL2bbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974046; c=relaxed/simple;
-	bh=b9gN8bXLu2LJPTU8B/0M9NTPFSGnVHQXmfGLnJgmLL8=;
+	s=arc-20240116; t=1705974048; c=relaxed/simple;
+	bh=bM4K5mqi1kw1sfQK9typFJFGnZv8qjJrMDNVqRTda9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ed4HrFwsRSzGWNS2LHYaTIpze514D+yFpFJ/5kabxWCenzp8a6hu8PKS0CAPmO9FYRPt92yGd293aGsYcsI0QxhAq1TMMl/43Deo/BRRnDqaVnRXpRI0kKWKstgx0ll1IJWymHukpho3MXnurkhyDDZnlX7Q7E4vOg3/1Vjw2bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6HqHi2h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g09CRxFSl+Jh4bvbp45+Iiy0P+MZju+cqnSo8Up0NzzqdLwdOL+DSGOGiyOXIs71MeWQZ6u0zQfzxScwZHRqlOr7sbIZTilWCvOmc/HrosRd8UjzN31VXFvlaU3xB329XHokYqssspf4JPB612jRnX51Lja6i8EL51S1aq0fWhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0ViLd15; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6HqHi2h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91682C43390;
-	Tue, 23 Jan 2024 01:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0ViLd15"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59192C433C7;
+	Tue, 23 Jan 2024 01:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974045;
-	bh=b9gN8bXLu2LJPTU8B/0M9NTPFSGnVHQXmfGLnJgmLL8=;
+	s=korg; t=1705974047;
+	bh=bM4K5mqi1kw1sfQK9typFJFGnZv8qjJrMDNVqRTda9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6HqHi2h0M+x8JyH9Dhm9s90t53Gu8uRLda6XutKJqNElnd9eLXQYGs67j9z871JE
-	 EZx9qDJfq8FOQssheYtGtvSYRzWTE50LPu2LtOdbe6waK3fW9oqR+AjBoNITL/jZ0T
-	 eUUNFk8HhqjpwnDp6mjMSWKwksVzN2lmVqsfmZEs=
+	b=B0ViLd15MrNTVwkxH9bz2jeVFvFnbwlaYpSwtahRXDvvDNt7xBOL/a0tX5SdD2A2x
+	 0ijjgD2UHLm5vCEA++f5lwZjjOevLiCqIYaPdrBcDhVEMQjKSF1HvDmbRmbkuSXYRW
+	 N9oXUWO9AYLW9Eeg08Ha9OFjgIuNiNunh2kxguyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 139/374] arm64: dts: qcom: sc7280: fix usb_2 wakeup interrupt types
-Date: Mon, 22 Jan 2024 15:56:35 -0800
-Message-ID: <20240122235749.468652595@linuxfoundation.org>
+Subject: [PATCH 6.6 016/583] powerpc/powernv: Add a null pointer check to scom_debug_init_one()
+Date: Mon, 22 Jan 2024 15:51:07 -0800
+Message-ID: <20240122235812.715785233@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit 24f8aba9a7c77c7e9d814a5754798e8346c7dd28 ]
+[ Upstream commit 9a260f2dd827bbc82cc60eb4f4d8c22707d80742 ]
 
-The DP/DM wakeup interrupts are edge triggered and which edge to trigger
-on depends on use-case and whether a Low speed or Full/High speed device
-is connected.
+kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure.
+Add a null pointer check, and release 'ent' to avoid memory leaks.
 
-Note that only triggering on rising edges can be used to detect resume
-events but not disconnect events.
-
-Fixes: bb9efa59c665 ("arm64: dts: qcom: sc7280: Add USB related nodes")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231120164331.8116-6-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: bfd2f0d49aef ("powerpc/powernv: Get rid of old scom_controller abstraction")
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231208085937.107210-1-chentao@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/powerpc/platforms/powernv/opal-xscom.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 9971b8763e08..e0c7f72773d6 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -1290,8 +1290,8 @@ usb_2: usb@8cf8800 {
- 			assigned-clock-rates = <19200000>, <200000000>;
+diff --git a/arch/powerpc/platforms/powernv/opal-xscom.c b/arch/powerpc/platforms/powernv/opal-xscom.c
+index 262cd6fac907..748c2b97fa53 100644
+--- a/arch/powerpc/platforms/powernv/opal-xscom.c
++++ b/arch/powerpc/platforms/powernv/opal-xscom.c
+@@ -165,6 +165,11 @@ static int scom_debug_init_one(struct dentry *root, struct device_node *dn,
+ 	ent->chip = chip;
+ 	snprintf(ent->name, 16, "%08x", chip);
+ 	ent->path.data = (void *)kasprintf(GFP_KERNEL, "%pOF", dn);
++	if (!ent->path.data) {
++		kfree(ent);
++		return -ENOMEM;
++	}
++
+ 	ent->path.size = strlen((char *)ent->path.data);
  
- 			interrupts-extended = <&intc GIC_SPI 240 IRQ_TYPE_LEVEL_HIGH>,
--				     <&pdc 13 IRQ_TYPE_EDGE_RISING>,
--				     <&pdc 12 IRQ_TYPE_EDGE_RISING>;
-+					      <&pdc 12 IRQ_TYPE_EDGE_BOTH>,
-+					      <&pdc 13 IRQ_TYPE_EDGE_BOTH>;
- 			interrupt-names = "hs_phy_irq",
- 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
- 
+ 	dir = debugfs_create_dir(ent->name, root);
 -- 
 2.43.0
 
