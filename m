@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD155102B;
-	Tue, 23 Jan 2024 00:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CA253E0F;
+	Tue, 23 Jan 2024 00:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970576; cv=none; b=sxQ+EyT8CiTcLc0AgQd7Co3bOZ0gcKfdbuGzz397QkT1RULJaISZuZA+nVt5hSSZSY0S3XpHQ8im5LYFgUvTSbgyOeQDLVEuok92eyuCBnzUdnlEGWgkVrAT/saLEEA06GlGs36CgijZRAhbUoVprYc72Wvh9Lo2ib70cQBwucQ=
+	t=1705970579; cv=none; b=a+umwzd6kVRAXqaurm8I8fupaDxOiOc1U37NGZHk7+kj7edtzrF0zoEpJJ/UBPzl3fFxAjRbJQroZ++sYICbshVEf6p54aJECrjbE7rFL40Bkqe3Rg2xVYyJlj1H3ho6WUVbejAtfkjT2ld0cOKCPqFptNT2h3dn15SVdQZ4kr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970576; c=relaxed/simple;
-	bh=bYXqQFH6li2betpIstf1yLTiOC+NIjMlrb5OAES5CEg=;
+	s=arc-20240116; t=1705970579; c=relaxed/simple;
+	bh=zML5+mrFNOv+OAljNzn36ivIkA6kjnfS5rKb90s/Li4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I+zONs7WmEH4I9YPm8nFcF6dzdF1lbYuYC8I3j0K07RwwLzawTIyN52p182Ip+3pPYOjrmATGmvnfPP0eb29L43NU1CopmdLsZiE27OPtd/x3nDhgM7rsQWZUU0Z+x2uT8Un9zK4f5rsgx8AGvH+4ouBoOXbctLMaBY1fuB3flU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEZZuw+y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EKlpci8e2Ga9BTNxRFuwRhRdd5rcfjCyXCETHq/vFwLNsiPHtsXEWnQUnM0HZ9SftXWxQqPaL+lzCN4OzDFXTyugXXnU+NWjBCgyKo2+Wl5i5JxUcu1tFZC3cRAO2M2xEUTzHcQ+ezoueOVR+uzzIBPWEWpCXXU+Bq9OkA86x7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyK16HMT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEZZuw+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B7BC433C7;
-	Tue, 23 Jan 2024 00:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyK16HMT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49460C433C7;
+	Tue, 23 Jan 2024 00:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970576;
-	bh=bYXqQFH6li2betpIstf1yLTiOC+NIjMlrb5OAES5CEg=;
+	s=korg; t=1705970579;
+	bh=zML5+mrFNOv+OAljNzn36ivIkA6kjnfS5rKb90s/Li4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UEZZuw+yUJeN5UokcqSYwk6EF1p2vKFV6vEQFC9dLYmwpfs2I2misrht73kH2O3tC
-	 X56TCpT7WtUhLkfR2vm3O3nMy6vKEYNsdJ8WSPuOGRhQIr/QoaY1DlVoFHA+9Ffhwt
-	 6XOoe5lJYotkXHCpzYCLSwZMJMqv87MOFjwtdX5w=
+	b=oyK16HMTLhjBk9PS8Zb0nT8py2MwJQ7LSWx5ziw7VT94aWTw402bxgjgPPn4AlX8W
+	 IoS2TKfSpDwqpx2SHNIFEK1IpRAkQgrt8V91YMsvw3IHBfiBo49D7a2kO3zsvFkve/
+	 yEnYqPEaPvz97d2/yTtqZ5q7tgAFOC8D7OxFoyGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait@windriver.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/417] crypto: sahara - handle zero-length aes requests
-Date: Mon, 22 Jan 2024 15:53:44 -0800
-Message-ID: <20240122235753.633543715@linuxfoundation.org>
+Subject: [PATCH 6.1 027/417] efivarfs: Free s_fs_info on unmount
+Date: Mon, 22 Jan 2024 15:53:15 -0800
+Message-ID: <20240122235752.499221236@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -51,34 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait@windriver.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit d1d6351e37aac14b32a291731d0855996c459d11 ]
+[ Upstream commit 547713d502f7b4b8efccd409cff84d731a23853b ]
 
-In case of a zero-length input, exit gracefully from sahara_aes_crypt().
+Now that we allocate a s_fs_info struct on fs context creation, we
+should ensure that we free it again when the superblock goes away.
 
-Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 5329aa5101f7 ("efivarfs: Add uid/gid mount options")
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sahara.c | 3 +++
+ fs/efivarfs/super.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
-index 89fd54bc0127..4b32e96e197d 100644
---- a/drivers/crypto/sahara.c
-+++ b/drivers/crypto/sahara.c
-@@ -677,6 +677,9 @@ static int sahara_aes_crypt(struct skcipher_request *req, unsigned long mode)
- 	struct sahara_dev *dev = dev_ptr;
- 	int err = 0;
+diff --git a/fs/efivarfs/super.c b/fs/efivarfs/super.c
+index f5966cd95918..77c7615bba5e 100644
+--- a/fs/efivarfs/super.c
++++ b/fs/efivarfs/super.c
+@@ -250,10 +250,13 @@ static int efivarfs_init_fs_context(struct fs_context *fc)
  
-+	if (!req->cryptlen)
-+		return 0;
+ static void efivarfs_kill_sb(struct super_block *sb)
+ {
++	struct efivarfs_fs_info *sfi = sb->s_fs_info;
 +
- 	if (unlikely(ctx->keylen != AES_KEYSIZE_128))
- 		return sahara_aes_fallback(req, mode);
+ 	kill_litter_super(sb);
  
+ 	/* Remove all entries and destroy */
+ 	efivar_entry_iter(efivarfs_destroy, &efivarfs_list, NULL);
++	kfree(sfi);
+ }
+ 
+ static struct file_system_type efivarfs_type = {
 -- 
 2.43.0
 
