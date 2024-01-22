@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E847472;
-	Tue, 23 Jan 2024 00:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CD07472;
+	Tue, 23 Jan 2024 00:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969608; cv=none; b=FBm6beeqPh0orwPFfF7EFRqXuMmjbtX4ZPIuFthihFKUS1yP3FaB4IaRM5sjTuSJeEIFn0OmraOFESubjGSe8ByziIUsbC66oV0Yg0A0Wt7xlTVO3c0ikJllIRQtP0Z4Mh1P6mMPtXng9GUOpJS1xZT802QBRT2a7zFrnU5CqSE=
+	t=1705969609; cv=none; b=r+YkKM7V5Mx59zJvQYAgmMEff6Jyt29OFAIjAZOSFafZfT9m7Emia4b6nt/d8r3txQbqADM3/yDpF4s/JeK5boZBt91sI0V0D6H3s17leuBNl8yNznQh1u3PNjA+lhqb3vWNGBE5g/HuMoEwPObYi6pFQYpsY9RMdVG2D8Qltmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969608; c=relaxed/simple;
-	bh=9aZZbFfP9UVQ1kR59c/RkMWHgMbqBAP0BE9sDXNPCnc=;
+	s=arc-20240116; t=1705969609; c=relaxed/simple;
+	bh=1NhWBYP/E5S90L/4EVIseuVeZy84RuhbLj3RMPrgvfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZaHsCSChxkQ2FhRbmMNzEn+6h4lDldxM+hAqcSzMzjsQPQkwx7PPusuV47soF5tmUOSrJL6V9nkNkiRCS3wCiSsivcJufucwJT21z0ep71oMz8ieKUyEuU3lPPIABXjeVUVgAAyQrzrlJjeDqAHfujsQGZQzdRRdXSsOnm8g1Lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3oEO7l3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nC9t42DAwfSECDsrFjIzG2HSfQ6tKy8Y+ny/wuYR05BvwriiAAh2V9Io69Vh9apLb0Vdt4nbsbBNy/g0Ir6lF6TNUhS5BliFBNgpMpzaFcIxYzdCrvbD7UvgtCnUEmIUDsXYIZXD7LIqg23Z7tinJWj2cSFZGN+jGsfJEufVjyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/933Eab; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3oEO7l3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F7BC433F1;
-	Tue, 23 Jan 2024 00:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/933Eab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 436D8C433C7;
+	Tue, 23 Jan 2024 00:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969608;
-	bh=9aZZbFfP9UVQ1kR59c/RkMWHgMbqBAP0BE9sDXNPCnc=;
+	s=korg; t=1705969609;
+	bh=1NhWBYP/E5S90L/4EVIseuVeZy84RuhbLj3RMPrgvfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z3oEO7l3r0QxlDbC/GIZI3i/XAr3UMOyuSauo+DFtXlv0pLIs7vbC0Hj42z1hUC/2
-	 wbx1FXrAx8oBtYp0ItWCdLp0Nex4l4bwxKkfEEVoyrwX0gCH9o5fE3TC8gZV4ihzd7
-	 dU9xvV1GzdusZrheFEeh9Skf9d4uEdQzcdbZNPEA=
+	b=g/933Eabs8/tGaA5oxWsG6sQqSqP5plzeJCcXUDEzqh9cHurXXvRhL7DzeIjATHIG
+	 J88C3vkbp60bBwSM4NU8bnGX3P101LRmWmzWiS+ghCMBQGzqJEoBmQrA5wyzEITZJi
+	 96rRcQZlEFxjlPrL+1PNbYWirPD+VoQWC+J62mxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
 	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 355/641] pwm: stm32: Use hweight32 in stm32_pwm_detect_channels
-Date: Mon, 22 Jan 2024 15:54:19 -0800
-Message-ID: <20240122235829.043256116@linuxfoundation.org>
+Subject: [PATCH 6.7 356/641] pwm: stm32: Fix enable count for clk in .probe()
+Date: Mon, 22 Jan 2024 15:54:20 -0800
+Message-ID: <20240122235829.073004850@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -56,59 +56,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Philipp Zabel <p.zabel@pengutronix.de>
 
-[ Upstream commit 41fa8f57c0d269243fe3bde2bce71e82c884b9ad ]
+[ Upstream commit 19f1016ea9600ed89bc24247c36ff5934ad94fbb ]
 
-Use hweight32() to count the CCxE bits in stm32_pwm_detect_channels().
-Since the return value is assigned to chip.npwm, change it to unsigned
-int as well.
+Make the driver take over hardware state without disabling in .probe()
+and enable the clock for each enabled channel.
 
 Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+[ukleinek: split off from a patch that also implemented .get_state()]
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
 Reviewed-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Stable-dep-of: 19f1016ea960 ("pwm: stm32: Fix enable count for clk in .probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ drivers/pwm/pwm-stm32.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
-index 3303a754ea02..ffdfd81c0613 100644
+index ffdfd81c0613..58ece15ef6c3 100644
 --- a/drivers/pwm/pwm-stm32.c
 +++ b/drivers/pwm/pwm-stm32.c
-@@ -578,10 +578,9 @@ static void stm32_pwm_detect_complementary(struct stm32_pwm *priv)
+@@ -578,17 +578,21 @@ static void stm32_pwm_detect_complementary(struct stm32_pwm *priv)
  	priv->have_complementary_output = (ccer != 0);
  }
  
--static int stm32_pwm_detect_channels(struct stm32_pwm *priv)
-+static unsigned int stm32_pwm_detect_channels(struct stm32_pwm *priv)
+-static unsigned int stm32_pwm_detect_channels(struct stm32_pwm *priv)
++static unsigned int stm32_pwm_detect_channels(struct stm32_pwm *priv,
++					      unsigned int *num_enabled)
  {
- 	u32 ccer;
--	int npwm = 0;
+-	u32 ccer;
++	u32 ccer, ccer_backup;
  
  	/*
  	 * If channels enable bits don't exist writing 1 will have no
-@@ -591,19 +590,7 @@ static int stm32_pwm_detect_channels(struct stm32_pwm *priv)
+ 	 * effect so we can detect and count them.
+ 	 */
++	regmap_read(priv->regmap, TIM_CCER, &ccer_backup);
+ 	regmap_set_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
  	regmap_read(priv->regmap, TIM_CCER, &ccer);
- 	regmap_clear_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
+-	regmap_clear_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
++	regmap_write(priv->regmap, TIM_CCER, ccer_backup);
++
++	*num_enabled = hweight32(ccer_backup & TIM_CCER_CCXE);
  
--	if (ccer & TIM_CCER_CC1E)
--		npwm++;
--
--	if (ccer & TIM_CCER_CC2E)
--		npwm++;
--
--	if (ccer & TIM_CCER_CC3E)
--		npwm++;
--
--	if (ccer & TIM_CCER_CC4E)
--		npwm++;
--
--	return npwm;
-+	return hweight32(ccer & TIM_CCER_CCXE);
+ 	return hweight32(ccer & TIM_CCER_CCXE);
  }
+@@ -599,6 +603,8 @@ static int stm32_pwm_probe(struct platform_device *pdev)
+ 	struct device_node *np = dev->of_node;
+ 	struct stm32_timers *ddata = dev_get_drvdata(pdev->dev.parent);
+ 	struct stm32_pwm *priv;
++	unsigned int num_enabled;
++	unsigned int i;
+ 	int ret;
  
- static int stm32_pwm_probe(struct platform_device *pdev)
+ 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+@@ -621,7 +627,11 @@ static int stm32_pwm_probe(struct platform_device *pdev)
+ 
+ 	priv->chip.dev = dev;
+ 	priv->chip.ops = &stm32pwm_ops;
+-	priv->chip.npwm = stm32_pwm_detect_channels(priv);
++	priv->chip.npwm = stm32_pwm_detect_channels(priv, &num_enabled);
++
++	/* Initialize clock refcount to number of enabled PWM channels. */
++	for (i = 0; i < num_enabled; i++)
++		clk_enable(priv->clk);
+ 
+ 	ret = devm_pwmchip_add(dev, &priv->chip);
+ 	if (ret < 0)
 -- 
 2.43.0
 
