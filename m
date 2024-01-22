@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87AB133435;
-	Tue, 23 Jan 2024 01:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEE2134721;
+	Tue, 23 Jan 2024 01:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971897; cv=none; b=i3QIHa63tpMLjaV4geJWEPXC0uiJUvChj0z/2d3M6q9r6cnijbQsXvzArYSGy971veka47SoDSLF70rFa2Uyh6k1jxX+rNfKjCtrrpTOyhJEpG3ejxgcFkfkNUXRF6XHRjiRVKlEuIi/1PFy3H7oRnpdXfAuCNexTgQj89J3Aqs=
+	t=1705971899; cv=none; b=TneMcWY94gKvOqt2Lzo/R7jTNUmhVq1KEeocrah6J9+wey50HpjMqced0PpBzK3D7H7IgVJbowItFEtfEUcsxptKyheFj15HFsfjfnRav5pDGcJ767zMKxlO2soGYiqjZa8cPWC5HT+pulLb3Bc1QhwT5lrmxeutqEOUG1V2cwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971897; c=relaxed/simple;
-	bh=hNAmJQTfZZANgKCYQ5hiflbCTEKPNgpqLgd98YnHWXg=;
+	s=arc-20240116; t=1705971899; c=relaxed/simple;
+	bh=sYe+bmP46EovBsZpVFw1V1qxYPna20oxUlc0BlsQsXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pPj+xtEEgWwZdlfD/EJP0iFHjSYOQQDzQVRRSMVw8sjAfhz7kqKpXpx2uqLNX7DzJX3sF9YqbPZA1dWlGfZ8fV8NLJhd2k6KQ8F/w64io5l/+x7wD+Qucw0XCXZ0cB5R0m5bx2S9MY7u48MwRC3QaYTpLbSXg7RWsRr0X0qicks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNcdSpC7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gqp73uU9KIFgXxswq46N/1J0TXSrcZR0ZDfmXTMsaSxMeRtVZvK/Crh4l8EoilK66Q/E1A/502kxNysw5a9G9UiO0dW5TnrG3uusFSf2OndRE1bWh/9OpATW0s8d9LA8aqseW5VPfjB50VJiDjDF5k8BDPTiOEf0SM2qd6WsLCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qD8fzLbo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNcdSpC7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41ADFC433C7;
-	Tue, 23 Jan 2024 01:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qD8fzLbo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46C66C433C7;
+	Tue, 23 Jan 2024 01:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971897;
-	bh=hNAmJQTfZZANgKCYQ5hiflbCTEKPNgpqLgd98YnHWXg=;
+	s=korg; t=1705971899;
+	bh=sYe+bmP46EovBsZpVFw1V1qxYPna20oxUlc0BlsQsXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KNcdSpC7Gqmmtij2PBtLXSddVHjoq7pbpwWcO4Jxylqi/lhJFR4hbciPjSoYWju2A
-	 DqZfX/FBkidfaDKOM7T0fisoqUCJJrQrd8fPJh/GM+HsbkUfSiS8exRbG8qXptXnZU
-	 Xk/FIq0rPHrE6rLZTzpVwjOPBLmMsYxIez9dCQY0=
+	b=qD8fzLbofs5UqMZw9U9Wy085xbaSHzCzEtgcVBlO/L6sHLyV3C1KUv7xO+cAu65Xa
+	 c2Apra9WvvQEs2zmNpIKpJaoe8y2Fzma0STTDdFc6fibaVIGSRWBMgEaVEpTvZ+jXy
+	 XOM3YLc1KdLpEODWBOTJywoHE7Os/1c+jqXlH5Bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	Paul Geurts <paul_geurts@live.nl>,
+	Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
+	Eberhard Stoll <eberhard.stoll@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 257/286] usb: cdc-acm: return correct error code on unsupported break
-Date: Mon, 22 Jan 2024 15:59:23 -0800
-Message-ID: <20240122235741.928414540@linuxfoundation.org>
+Subject: [PATCH 6.1 345/417] serial: imx: fix tx statemachine deadlock
+Date: Mon, 22 Jan 2024 15:58:33 -0800
+Message-ID: <20240122235803.740766623@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,64 +48,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Paul Geurts <paul_geurts@live.nl>
 
-[ Upstream commit 66aad7d8d3ec5a3a8ec2023841bcec2ded5f65c9 ]
+[ Upstream commit 78d60dae9a0c9f09aa3d6477c94047df2fe6f7b0 ]
 
-In ACM support for sending breaks to devices is optional.
-If a device says that it doenot support sending breaks,
-the host must respect that.
-Given the number of optional features providing tty operations
-for each combination is not practical and errors need to be
-returned dynamically if unsupported features are requested.
+When using the serial port as RS485 port, the tx statemachine is used to
+control the RTS pin to drive the RS485 transceiver TX_EN pin. When the
+TTY port is closed in the middle of a transmission (for instance during
+userland application crash), imx_uart_shutdown disables the interface
+and disables the Transmission Complete interrupt. afer that,
+imx_uart_stop_tx bails on an incomplete transmission, to be retriggered
+by the TC interrupt. This interrupt is disabled and therefore the tx
+statemachine never transitions out of SEND. The statemachine is in
+deadlock now, and the TX_EN remains low, making the interface useless.
 
-In case a device does not support break, we want the tty layer
-to treat that like it treats drivers that statically cannot
-support sending a break. It ignores the inability and does nothing.
-This patch uses EOPNOTSUPP to indicate that.
+imx_uart_stop_tx now checks for incomplete transmission AND whether TC
+interrupts are enabled before bailing to be retriggered. This makes sure
+the state machine handling is reached, and is properly set to
+WAIT_AFTER_SEND.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Fixes: 9e98966c7bb94 ("tty: rework break handling")
-Link: https://lore.kernel.org/r/20231207132639.18250-1-oneukum@suse.com
+Fixes: cb1a60923609 ("serial: imx: implement rts delaying for rs485")
+Signed-off-by: Paul Geurts <paul_geurts@live.nl>
+Tested-by: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
+Tested-by: Eberhard Stoll <eberhard.stoll@gmx.de>
+Link: https://lore.kernel.org/r/AM0PR09MB26758F651BC1B742EB45775995B8A@AM0PR09MB2675.eurprd09.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_io.c        | 3 +++
- drivers/usb/class/cdc-acm.c | 3 +++
- 2 files changed, 6 insertions(+)
+ drivers/tty/serial/imx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
-index 1c76e77e2d07..984e3098e631 100644
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -2480,6 +2480,9 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
- 	if (!retval) {
- 		msleep_interruptible(duration);
- 		retval = tty->ops->break_ctl(tty, 0);
-+	} else if (retval == -EOPNOTSUPP) {
-+		/* some drivers can tell only dynamically */
-+		retval = 0;
+diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
+index 48c05fc1064e..c2cc104225ec 100644
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -450,13 +450,13 @@ static void imx_uart_stop_tx(struct uart_port *port)
+ 	ucr1 = imx_uart_readl(sport, UCR1);
+ 	imx_uart_writel(sport, ucr1 & ~UCR1_TRDYEN, UCR1);
+ 
++	ucr4 = imx_uart_readl(sport, UCR4);
+ 	usr2 = imx_uart_readl(sport, USR2);
+-	if (!(usr2 & USR2_TXDC)) {
++	if ((!(usr2 & USR2_TXDC)) && (ucr4 & UCR4_TCEN)) {
+ 		/* The shifter is still busy, so retry once TC triggers */
+ 		return;
  	}
- 	tty_write_unlock(tty);
  
-diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
-index 070b838c7da9..4e4a71307d63 100644
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -896,6 +896,9 @@ static int acm_tty_break_ctl(struct tty_struct *tty, int state)
- 	struct acm *acm = tty->driver_data;
- 	int retval;
+-	ucr4 = imx_uart_readl(sport, UCR4);
+ 	ucr4 &= ~UCR4_TCEN;
+ 	imx_uart_writel(sport, ucr4, UCR4);
  
-+	if (!(acm->ctrl_caps & USB_CDC_CAP_BRK))
-+		return -EOPNOTSUPP;
-+
- 	retval = acm_send_break(acm, state ? 0xffff : 0);
- 	if (retval < 0)
- 		dev_dbg(&acm->control->dev,
 -- 
 2.43.0
 
