@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7D5150980;
-	Tue, 23 Jan 2024 00:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B163714DB4A;
+	Tue, 23 Jan 2024 00:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969364; cv=none; b=Bs+MF+lYAxbH5bhr9TuaJla9zguokX4aorHIGll5vN/jYrqGU42Z2tN0qZ9idqfbbeo0P5nG5Cy5PHLnAIJNPTjlWwrfaeuAbsF1ccbnmyIcgz9cwxPNOc/i8Vhh5lHgBnIUighyoDVhfRZbAxTI24/qehslg1DL2cLElzSnOAA=
+	t=1705969365; cv=none; b=bDQGLRexjTOjpn4cMphUSgHc+TeUDafGY4by+VfjqcnlVwZLppUP0dA+k7iWdcYvhM6rYBLAOid5c/otBMMEUk2n2Y/d39lM4dAovA8zeRbS+dIx9MMH6Wa1SYEcEmf/uevTIm3RBt8DCkAVksJmFfORazI+HdyAsxlygQA4SNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969364; c=relaxed/simple;
-	bh=GJH8d20lVHcRx7xSyWXvYtfQDTtvachZQSfy3fQmhKc=;
+	s=arc-20240116; t=1705969365; c=relaxed/simple;
+	bh=HzM0q1sLMLW+/SAyGxXdsdvN51eH8QX2zHn/WNnydtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PWdA/QNKjsOTF4/b4eqtKsKc5/soJO6m+epkan51tP1pkbqPlFG2NKFlwXUX3cvyriSRcJlQLlj5wgUjcLmYE+MHjJpFZkVq0hVHaSJLMSgguOJ1bKKavFItKiEh1Xotx5452nOSQJ4eDuGnNYIjPUU1wy1zkrsx1Rg9Vsskzt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7KsiYMD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QlveFMsnlNqCa5Gy76cXtgv8dWti/TQa1Y3tjCDK53IoXHiYhO5ktCuZJDimZeU6F4irE9CL+zt50AKbBqNu2jqd+LIYBQT2Q5hPK/ONPX7TGbDB8NC5BVJIx8OTqwodpjt96qv2amQ1FNjMD3x9d+LLle9ngfmHY3yJ/xaDsRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yp5hVTip; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7KsiYMD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C90A9C433F1;
-	Tue, 23 Jan 2024 00:22:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yp5hVTip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C45C433F1;
+	Tue, 23 Jan 2024 00:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969364;
-	bh=GJH8d20lVHcRx7xSyWXvYtfQDTtvachZQSfy3fQmhKc=;
+	s=korg; t=1705969365;
+	bh=HzM0q1sLMLW+/SAyGxXdsdvN51eH8QX2zHn/WNnydtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l7KsiYMDQzCh14Kx8ssXP7nVOM9xQDsortR8JwjliCsVJHOHyZJz3RxtE3BBtvEPw
-	 tS9QEy3dkEyb62xVj6zjstCdsyb48WpDBTiTnTVsD49hZbdlBJxIKSRbqf7UxVUAfb
-	 nYL3e7k6jObocdeQGhJuHkQChjtTl/ueMh8RhkA0=
+	b=yp5hVTipUjVplAfYABEEpYTVGWDggcAQXvhkmyzP13m1JJ96HbxQwAO3FD90BQTqj
+	 1y4vAw+81KJjR4bsKkQ8JohejuPzkVj6wbf9mXltdT+pOt+7PJtP4cwhck5cTsw4+T
+	 v7Gso4eyJAVCRtAsQDhDPCHdWCeg0ZrqmuNG6/Bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 196/641] arm64: dts: qcom: sm8150-hdk: fix SS USB regulators
-Date: Mon, 22 Jan 2024 15:51:40 -0800
-Message-ID: <20240122235824.099366855@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Deepti Jaggi <quic_djaggi@quicinc.com>
+Subject: [PATCH 6.7 197/641] firmware: qcom: qseecom: fix memory leaks in error paths
+Date: Mon, 22 Jan 2024 15:51:41 -0800
+Message-ID: <20240122235824.128478448@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,68 +55,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit a509adf05b2aac31b22781f5aa09e4768a5b6c39 ]
+[ Upstream commit 6c57d7b593c4a4e60db65d5ce0fe1d9f79ccbe9b ]
 
-The SM8150-HDK uses two different regulators to power up SuperSpeed USB
-PHYs. The L5A regulator is used for the second USB host, while the first
-(OTG) USB host uses different regulator, L18A. Fix the regulator for the
-usb_1 QMPPHY and (to remove possible confusion) drop the
-usb_ss_dp_core_1/_2 labels.
+Fix instances of returning error codes directly instead of jumping to
+the relevant labels where memory allocated for the SCM calls would be
+freed.
 
-Fixes: 0ab1b2d10afe ("arm64: dts: qcom: add sm8150 hdk dts")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20231215174152.315403-4-dmitry.baryshkov@linaro.org
+Fixes: 759e7a2b62eb ("firmware: Add support for Qualcomm UEFI Secure Application")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202311270828.k4HGcjiL-lkp@intel.com/
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Maximilian Luz <luzmaximilian@gmail.com>
+Tested-by: Deepti Jaggi <quic_djaggi@quicinc.com> #sa8775p-ride
+Link: https://lore.kernel.org/r/20231127141600.20929-2-brgl@bgdev.pl
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150-hdk.dts | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ .../firmware/qcom/qcom_qseecom_uefisecapp.c   | 20 ++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-index bb161b536da4..f4c6e1309a7e 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-@@ -127,8 +127,6 @@ vdda_qrefs_0p875_5:
- 		vdda_sp_sensor:
- 		vdda_ufs_2ln_core_1:
- 		vdda_ufs_2ln_core_2:
--		vdda_usb_ss_dp_core_1:
--		vdda_usb_ss_dp_core_2:
- 		vdda_qlink_lv:
- 		vdda_qlink_lv_ck:
- 		vreg_l5a_0p875: ldo5 {
-@@ -210,6 +208,12 @@ vreg_l17a_3p0: ldo17 {
- 			regulator-max-microvolt = <3008000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
-+
-+		vreg_l18a_0p8: ldo18 {
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
- 	};
+diff --git a/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c b/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
+index a33acdaf7b78..32188f098ef3 100644
+--- a/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
++++ b/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
+@@ -325,8 +325,10 @@ static efi_status_t qsee_uefi_get_variable(struct qcuefi_client *qcuefi, const e
+ 	req_data->length = req_size;
  
- 	regulators-1 {
-@@ -445,13 +449,13 @@ &usb_2_hsphy {
- &usb_1_qmpphy {
- 	status = "okay";
- 	vdda-phy-supply = <&vreg_l3c_1p2>;
--	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
-+	vdda-pll-supply = <&vreg_l18a_0p8>;
- };
+ 	status = ucs2_strscpy(((void *)req_data) + req_data->name_offset, name, name_length);
+-	if (status < 0)
+-		return EFI_INVALID_PARAMETER;
++	if (status < 0) {
++		efi_status = EFI_INVALID_PARAMETER;
++		goto out_free;
++	}
  
- &usb_2_qmpphy {
- 	status = "okay";
- 	vdda-phy-supply = <&vreg_l3c_1p2>;
--	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
-+	vdda-pll-supply = <&vreg_l5a_0p875>;
- };
+ 	memcpy(((void *)req_data) + req_data->guid_offset, guid, req_data->guid_size);
  
- &usb_1 {
+@@ -471,8 +473,10 @@ static efi_status_t qsee_uefi_set_variable(struct qcuefi_client *qcuefi, const e
+ 	req_data->length = req_size;
+ 
+ 	status = ucs2_strscpy(((void *)req_data) + req_data->name_offset, name, name_length);
+-	if (status < 0)
+-		return EFI_INVALID_PARAMETER;
++	if (status < 0) {
++		efi_status = EFI_INVALID_PARAMETER;
++		goto out_free;
++	}
+ 
+ 	memcpy(((void *)req_data) + req_data->guid_offset, guid, req_data->guid_size);
+ 
+@@ -563,8 +567,10 @@ static efi_status_t qsee_uefi_get_next_variable(struct qcuefi_client *qcuefi,
+ 	memcpy(((void *)req_data) + req_data->guid_offset, guid, req_data->guid_size);
+ 	status = ucs2_strscpy(((void *)req_data) + req_data->name_offset, name,
+ 			      *name_size / sizeof(*name));
+-	if (status < 0)
+-		return EFI_INVALID_PARAMETER;
++	if (status < 0) {
++		efi_status = EFI_INVALID_PARAMETER;
++		goto out_free;
++	}
+ 
+ 	status = qcom_qseecom_app_send(qcuefi->client, req_data, req_size, rsp_data, rsp_size);
+ 	if (status) {
+@@ -635,7 +641,7 @@ static efi_status_t qsee_uefi_get_next_variable(struct qcuefi_client *qcuefi,
+ 		 * have already been validated above, causing this function to
+ 		 * bail with EFI_BUFFER_TOO_SMALL.
+ 		 */
+-		return EFI_DEVICE_ERROR;
++		efi_status = EFI_DEVICE_ERROR;
+ 	}
+ 
+ out_free:
 -- 
 2.43.0
 
