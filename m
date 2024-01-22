@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4275EE9F;
-	Tue, 23 Jan 2024 00:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905E25579C;
+	Tue, 23 Jan 2024 00:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970496; cv=none; b=GieFLwvX6wJoETuIsWnUTeid4pyGm+jaAiTtBYtde7uWiN8hYW1uGwAAwNBXxC6V5CFy40PhS7bvVzqrwQm+fylDiEt70iF0u2/8U653xX+pxR/GKe8OU0wN5g2NqOPw+e5OVp3/6gqusTldiK/co055lg48XcfQQ7RqvprU86A=
+	t=1705970498; cv=none; b=c537xgpaknTEP+XRnCj21Dkenjc0awosiq+kg5Rb19CtHGnARBuOBGDL17+7b8FXp9LeSiQv0BW7jn9AHqEbyNG+YGxLoK0JjVlbdQKfUBHLeoN9ZoM0ypkksxLHkhAvfzenJtESgiYGR09kyuEtUkTFq2BOlY5WisFzlnkxzMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970496; c=relaxed/simple;
-	bh=kHpFF7XuOnjNOm6YWyj7pKq/mos1r+LLvUlOxrbkAys=;
+	s=arc-20240116; t=1705970498; c=relaxed/simple;
+	bh=Yil6hZuKy/n66FFxnb3ZIPkg/NSW8YapRjTpodSNsQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uZiqfApKAPg0lkFKEJ5uK5ssjEZRPd1G7LpUJ9ZVzc6rsgIFoiFaH4gzjwHxeakEZ9d1QDpqFFmYp5MZZypV1FJXIzXFahqXqNrNHrv9ra2QRyGuwd3RtinyTt6kb2wiKqm5gFnxjTF1xwrUgRHls4rY4iKmmPI+qEi6c9gb6Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oM05JoKB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P8e8t5Vyuq2GLrA8qtTGRzXZxwQRooWl4pRxGZYjMSu1SlRBirbwa20Q5tPKF6BLZ97IFrFXDvgQzB7vU0UvjEGAc5jYdNZbvueAYkIFoXgthomiiGHTE6axYrtlO6cuFTt8OS9vUo7dOL4TrX3AMJrg2AQByIXwzEohJnQKth0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLB6GzEg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oM05JoKB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9849EC433F1;
-	Tue, 23 Jan 2024 00:41:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLB6GzEg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15153C433C7;
+	Tue, 23 Jan 2024 00:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970496;
-	bh=kHpFF7XuOnjNOm6YWyj7pKq/mos1r+LLvUlOxrbkAys=;
+	s=korg; t=1705970498;
+	bh=Yil6hZuKy/n66FFxnb3ZIPkg/NSW8YapRjTpodSNsQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oM05JoKBrI7/VU0rENqw8Tf5FxmvNPlTS1tsLGLq4XPnhu0ZpKnwkNNL7jMG5PtM4
-	 P+pII1D7l6GKXXc5gocAdeHE3U1rbv7HK5rslA5hhk18G5qwyFclJvuCX92xeNyfb3
-	 mA/GnyVYHKifBY2cUY+uxAjcOl9pqsR74zJ9V2HI=
+	b=fLB6GzEgkmHj67YCKBOW3AzEMTsVA2+9yh7Gew9TOPYwMYf0mm6EB/g015mz6TKUo
+	 CWHYueTvLwQ3BknNKYiuRLCJ9dnZTBoJzX9E5YAux2XG36lhmstw8vjvLi9u1y3upN
+	 WFDQV+PAvjLQjWOryXjy1vv5IrYLmn1uuQ6pGQ54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
-	wangyangxin <wangyangxin1@huawei.com>,
-	Gonglei <arei.gonglei@huawei.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/417] crypto: virtio - Handle dataq logic with tasklet
-Date: Mon, 22 Jan 2024 15:53:22 -0800
-Message-ID: <20240122235752.787597888@linuxfoundation.org>
+Subject: [PATCH 6.1 035/417] crypto: sa2ul - Return crypto_aead_setkey to transfer the error
+Date: Mon, 22 Jan 2024 15:53:23 -0800
+Message-ID: <20240122235752.825906035@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -53,97 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gonglei (Arei) <arei.gonglei@huawei.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit fed93fb62e05c38152b0fc1dc9609639e63eed76 ]
+[ Upstream commit ce852f1308ac738e61c5b2502517deea593a1554 ]
 
-Doing ipsec produces a spinlock recursion warning.
-This is due to crypto_finalize_request() being called in the upper half.
-Move virtual data queue processing of virtio-crypto driver to tasklet.
+Return crypto_aead_setkey() in order to transfer the error if
+it fails.
 
-Fixes: dbaf0624ffa57 ("crypto: add virtio-crypto driver")
-Reported-by: Halil Pasic <pasic@linux.ibm.com>
-Signed-off-by: wangyangxin <wangyangxin1@huawei.com>
-Signed-off-by: Gonglei <arei.gonglei@huawei.com>
+Fixes: d2c8ac187fc9 ("crypto: sa2ul - Add AEAD algorithm support")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/virtio/virtio_crypto_common.h |  2 ++
- drivers/crypto/virtio/virtio_crypto_core.c   | 23 +++++++++++---------
- 2 files changed, 15 insertions(+), 10 deletions(-)
+ drivers/crypto/sa2ul.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/virtio/virtio_crypto_common.h b/drivers/crypto/virtio/virtio_crypto_common.h
-index 154590e1f764..7059bbe5a2eb 100644
---- a/drivers/crypto/virtio/virtio_crypto_common.h
-+++ b/drivers/crypto/virtio/virtio_crypto_common.h
-@@ -10,6 +10,7 @@
- #include <linux/virtio.h>
- #include <linux/crypto.h>
- #include <linux/spinlock.h>
-+#include <linux/interrupt.h>
- #include <crypto/aead.h>
- #include <crypto/aes.h>
- #include <crypto/engine.h>
-@@ -28,6 +29,7 @@ struct data_queue {
- 	char name[32];
+diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
+index f4bc06c24ad8..e7efebf8127f 100644
+--- a/drivers/crypto/sa2ul.c
++++ b/drivers/crypto/sa2ul.c
+@@ -1868,9 +1868,8 @@ static int sa_aead_setkey(struct crypto_aead *authenc,
+ 	crypto_aead_set_flags(ctx->fallback.aead,
+ 			      crypto_aead_get_flags(authenc) &
+ 			      CRYPTO_TFM_REQ_MASK);
+-	crypto_aead_setkey(ctx->fallback.aead, key, keylen);
  
- 	struct crypto_engine *engine;
-+	struct tasklet_struct done_task;
- };
- 
- struct virtio_crypto {
-diff --git a/drivers/crypto/virtio/virtio_crypto_core.c b/drivers/crypto/virtio/virtio_crypto_core.c
-index 3842915ea743..856daf05341c 100644
---- a/drivers/crypto/virtio/virtio_crypto_core.c
-+++ b/drivers/crypto/virtio/virtio_crypto_core.c
-@@ -72,27 +72,28 @@ int virtio_crypto_ctrl_vq_request(struct virtio_crypto *vcrypto, struct scatterl
- 	return 0;
+-	return 0;
++	return crypto_aead_setkey(ctx->fallback.aead, key, keylen);
  }
  
--static void virtcrypto_dataq_callback(struct virtqueue *vq)
-+static void virtcrypto_done_task(unsigned long data)
- {
--	struct virtio_crypto *vcrypto = vq->vdev->priv;
-+	struct data_queue *data_vq = (struct data_queue *)data;
-+	struct virtqueue *vq = data_vq->vq;
- 	struct virtio_crypto_request *vc_req;
--	unsigned long flags;
- 	unsigned int len;
--	unsigned int qid = vq->index;
- 
--	spin_lock_irqsave(&vcrypto->data_vq[qid].lock, flags);
- 	do {
- 		virtqueue_disable_cb(vq);
- 		while ((vc_req = virtqueue_get_buf(vq, &len)) != NULL) {
--			spin_unlock_irqrestore(
--				&vcrypto->data_vq[qid].lock, flags);
- 			if (vc_req->alg_cb)
- 				vc_req->alg_cb(vc_req, len);
--			spin_lock_irqsave(
--				&vcrypto->data_vq[qid].lock, flags);
- 		}
- 	} while (!virtqueue_enable_cb(vq));
--	spin_unlock_irqrestore(&vcrypto->data_vq[qid].lock, flags);
-+}
-+
-+static void virtcrypto_dataq_callback(struct virtqueue *vq)
-+{
-+	struct virtio_crypto *vcrypto = vq->vdev->priv;
-+	struct data_queue *dq = &vcrypto->data_vq[vq->index];
-+
-+	tasklet_schedule(&dq->done_task);
- }
- 
- static int virtcrypto_find_vqs(struct virtio_crypto *vi)
-@@ -150,6 +151,8 @@ static int virtcrypto_find_vqs(struct virtio_crypto *vi)
- 			ret = -ENOMEM;
- 			goto err_engine;
- 		}
-+		tasklet_init(&vi->data_vq[i].done_task, virtcrypto_done_task,
-+				(unsigned long)&vi->data_vq[i]);
- 	}
- 
- 	kfree(names);
+ static int sa_aead_setauthsize(struct crypto_aead *tfm, unsigned int authsize)
 -- 
 2.43.0
 
