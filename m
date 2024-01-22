@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5FB24A27;
-	Tue, 23 Jan 2024 00:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD6A4C81;
+	Tue, 23 Jan 2024 00:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969597; cv=none; b=efIzwrKAqCsFRqy1+A6RX25UST/5Ic7et2lYxy+9KweI7j47SQQby7i55AaZzL9DySubrCmoxY1fBDCBqALWfvBkCu3NqiME3iiM2jmlgJEGQnaO3N0cIAQ8H2WGcy5bFmRXLR+oCFohKihD5kZzgsrHcnuk2JWnufFCel5aXr8=
+	t=1705969598; cv=none; b=PA5SKrfd9cYv7CMwJXImpqIOyRClM3L4lQZgqR95Ry8tEgPuVfEanoSD4Z37n0xiX+X/0Ww+GIXgDpJDKGR1svWs5ldX3ZG97myHLtm5FJ/pQZIZ7VSiSdDqDI5h5Dn1t7PWrTP0M4FtJTRzPqkhb/d4gRNS6jQZ3adTqFHtCTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969597; c=relaxed/simple;
-	bh=m5S36eezk8hnJlXABOJ2rgXJ9PkjG70gmrltTjme9r8=;
+	s=arc-20240116; t=1705969598; c=relaxed/simple;
+	bh=bJdoElVps5ymh12YNXNenhQqFnUXgh0WuWKtSQrDnXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JJDX2NNNyEji2/NnOcojy6EndRUfCSl/MWOhjGexSHHP6bOFW//nkZklUz2fr9LbNIJ/cp3/bxdbE7H5vFcGVLUuebVbzKp1WxI3MMmWKNlqIMLvik+fJnd93cv6iRyLMzqgXsMxLsu3ac3JJX3rWPHojpj+MpXNWgAtJ+T7OGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXHSWRkw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iwNes+/P7YlrzSBEmkNnQYBLWoekzHU9M5v2r/S1NJvVOVJihjWIJb442rH6SYb4gzfMbHfZMAPYs6kVvIrP7XRWTq6ExiUNJc/QRQc2WSneRFWhJZsW6a1kuuErbh/z2XeWBiGkvjzH3rHx3pkz8hIwRY6uA7gHbILj3m63lnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j29SXRxf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXHSWRkw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C25DC43399;
-	Tue, 23 Jan 2024 00:26:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j29SXRxf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F000C433F1;
+	Tue, 23 Jan 2024 00:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969597;
-	bh=m5S36eezk8hnJlXABOJ2rgXJ9PkjG70gmrltTjme9r8=;
+	s=korg; t=1705969598;
+	bh=bJdoElVps5ymh12YNXNenhQqFnUXgh0WuWKtSQrDnXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TXHSWRkwH7OYeOitI89hATD1sa/irl9EqlHob4MAcFANfiDM7fu2LE3MtkCuVpEms
-	 z6hfc57IV3l4K75QTgEluOQ4G5ga3iLFgWynAvXJIK1BjilIPOMAKxIemBGNleFvI/
-	 ZSPz/F9qLIABGZeTKkBPEGOVr5i4q0NxIoFcxZAE=
+	b=j29SXRxfp8fh8j/QwkvJkY4iiAqKZh7pcHNQhnOJP76DWmv+7YAOKoDGT+ofQCVW0
+	 /opSHgongWcOWZzmq2IrSjzHjN5bxA1dfy5Ut4tZ8v1TLCwx/6MwYViyx7lv9Rr2yd
+	 L05Q4NdQGgvhAU/WHQvKiqVOTZOR06lBOnZCvIsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 314/641] f2fs: fix to wait on block writeback for post_read case
-Date: Mon, 22 Jan 2024 15:53:38 -0800
-Message-ID: <20240122235827.721363030@linuxfoundation.org>
+Subject: [PATCH 6.7 341/641] clk: rs9: Fix DIF OEn bit placement on 9FGV0241
+Date: Mon, 22 Jan 2024 15:54:05 -0800
+Message-ID: <20240122235828.586150394@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,67 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit 55fdc1c24a1d6229fe0ecf31335fb9a2eceaaa00 ]
+[ Upstream commit 29d861b5d29b6c80a887e93ad982cbbf4af2a06b ]
 
-If inode is compressed, but not encrypted, it missed to call
-f2fs_wait_on_block_writeback() to wait for GCed page writeback
-in IPU write path.
+On 9FGV0241, the DIF OE0 is BIT(1) and DIF OE1 is BIT(2), on the other
+chips like 9FGV0441 and 9FGV0841 DIF OE0 is BIT(0) and so on. Increment
+the index in BIT() macro instead of the result of BIT() macro to shift
+the bit correctly on 9FGV0241.
 
-Thread A				GC-Thread
-					- f2fs_gc
-					 - do_garbage_collect
-					  - gc_data_segment
-					   - move_data_block
-					    - f2fs_submit_page_write
-					     migrate normal cluster's block via
-					     meta_inode's page cache
-- f2fs_write_single_data_page
- - f2fs_do_write_data_page
-  - f2fs_inplace_write_data
-   - f2fs_submit_page_bio
-
-IRQ
-- f2fs_read_end_io
-					IRQ
-					old data overrides new data due to
-					out-of-order GC and common IO.
-					- f2fs_read_end_io
-
-Fixes: 4c8ff7095bef ("f2fs: support data compression")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 603df193ec51 ("clk: rs9: Support device specific dif bit calculation")
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Link: https://lore.kernel.org/r/20231105200642.62792-1-marek.vasut+renesas@mailbox.org
+Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/clk/clk-renesas-pcie.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 4e42b5f24deb..bc3f05d43b62 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2566,9 +2566,6 @@ int f2fs_encrypt_one_page(struct f2fs_io_info *fio)
+diff --git a/drivers/clk/clk-renesas-pcie.c b/drivers/clk/clk-renesas-pcie.c
+index 380245f635d6..6606aba253c5 100644
+--- a/drivers/clk/clk-renesas-pcie.c
++++ b/drivers/clk/clk-renesas-pcie.c
+@@ -163,7 +163,7 @@ static u8 rs9_calc_dif(const struct rs9_driver_data *rs9, int idx)
+ 	enum rs9_model model = rs9->chip_info->model;
  
- 	page = fio->compressed_page ? fio->compressed_page : fio->page;
+ 	if (model == RENESAS_9FGV0241)
+-		return BIT(idx) + 1;
++		return BIT(idx + 1);
+ 	else if (model == RENESAS_9FGV0441)
+ 		return BIT(idx);
  
--	/* wait for GCed page writeback via META_MAPPING */
--	f2fs_wait_on_block_writeback(inode, fio->old_blkaddr);
--
- 	if (fscrypt_inode_uses_inline_crypto(inode))
- 		return 0;
- 
-@@ -2755,6 +2752,10 @@ int f2fs_do_write_data_page(struct f2fs_io_info *fio)
- 		goto out_writepage;
- 	}
- 
-+	/* wait for GCed page writeback via META_MAPPING */
-+	if (fio->post_read)
-+		f2fs_wait_on_block_writeback(inode, fio->old_blkaddr);
-+
- 	/*
- 	 * If current allocation needs SSR,
- 	 * it had better in-place writes for updated data.
 -- 
 2.43.0
 
