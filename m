@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1654E1D1;
-	Tue, 23 Jan 2024 00:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DD24E1D2;
+	Tue, 23 Jan 2024 00:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970565; cv=none; b=VNpXb1QJ39TFuxjgEt31a33TsC4s18OulUIaicJGp18yoWyFQk5ggDxC+i53MBLicrZj0+1GzbdUFV2TxVfA/abIoI2pyjBDRzJrrsQ40VBCEFe3PLA5qdNdyRoZTlenVttA3igWRAzos6Hw1IJiIp6IJJ9Tp+BWbm4T7G75o6I=
+	t=1705970569; cv=none; b=GmFQOl6SPdPY3PXKle04q949sfh1aVPYF0IvH5xbx3n2BIQdwOtINZKNZE2/TrPirxufwBK/46fMZ+slZJZHuC2RA02c4XuhDTETAFwSLNCqDD26iCe3I6AnSPvon9H62mflrP+ZG96uVjFR6YeFfuMdNq6OCT2BlVQBWsLibig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970565; c=relaxed/simple;
-	bh=pbzTVdD8QJLXLFuXAnZm6SCP2rNIAPc3TC6iBMHtH1o=;
+	s=arc-20240116; t=1705970569; c=relaxed/simple;
+	bh=4gouKHmTiaB0ZGERAHMo3wcBmx6umnqi+I4ZmJ4Ntl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=imn05/DSRjazXwEoYlMWbAC9Agh+2O8o24rLPg+h+CrpGRwlvnZAXhj99hdXLH2+FM5K+fX8NCa+YQaCq4OnIEq9Y754vpjAz0KJ90mjGCTRWEyFFURPOjcrtfxCt3xfbJPjePnhY1OAbcipD5UJq7We4I1YLpZhihgk6XrQ6nI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZdXVQWh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bSGyR1hukf0yQZ6d/ksS0tkghwyQ+goSACkpyKv8bV7hQwlzwbeqoOEU0CWZOdv/k6kht+nkINKLyXvpDMe60Nz5vHOiWWxXUqqAv3RQRtVSL2sDR83XQMp7begsxAbgKihK4FeG6gMFksHDw0R1dieoixZ6hLQrpGEBFwXnttk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fb3GtBm/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZdXVQWh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980C7C433C7;
-	Tue, 23 Jan 2024 00:42:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fb3GtBm/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37743C433F1;
+	Tue, 23 Jan 2024 00:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970565;
-	bh=pbzTVdD8QJLXLFuXAnZm6SCP2rNIAPc3TC6iBMHtH1o=;
+	s=korg; t=1705970568;
+	bh=4gouKHmTiaB0ZGERAHMo3wcBmx6umnqi+I4ZmJ4Ntl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZdXVQWhRhS8lbq2CAuCVuKFxe09bLfyT38qXaL6K8diOfmk6BcizrVeHt/GlE1la
-	 p0sGMhruhZ6JIXWQLpx3w/Jn4D2th2DEM7gkf/wEBWKnxIyruxpQBRysK3R1lOLLiu
-	 QxwffOudETPzQD5SPJ9wnvvYVzMdoKrrxXMJHsLQ=
+	b=Fb3GtBm/BaoKBRXPn0RddV0RKxyWjqOPO6u2FNvbvsCr9meZsvQrRATM6LPrZx5Hy
+	 IXeFrutattryVfrxa0GMzYMMouoUrisrFvA/35wSH+q1bZ0lamT8hWD3FalZtGsy70
+	 +0klrF1S4g2F7QNXRIkv9wqiq3US0CctL3JUJfCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Muhammad <osmtendev@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+da0fc229cc1ff4bb2e6d@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 053/417] gfs2: Fix kernel NULL pointer dereference in gfs2_rgrp_dump
-Date: Mon, 22 Jan 2024 15:53:41 -0800
-Message-ID: <20240122235753.512825209@linuxfoundation.org>
+	wangyangxin <wangyangxin1@huawei.com>,
+	Gonglei <arei.gonglei@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 054/417] crypto: virtio - Wait for tasklet to complete on device remove
+Date: Mon, 22 Jan 2024 15:53:42 -0800
+Message-ID: <20240122235753.548981054@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -52,38 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Muhammad <osmtendev@gmail.com>
+From: wangyangxin <wangyangxin1@huawei.com>
 
-[ Upstream commit 8877243beafa7c6bfc42022cbfdf9e39b25bd4fa ]
+[ Upstream commit 67cc511e8d436456cc98033e6d4ba83ebfc8e672 ]
 
-Syzkaller has reported a NULL pointer dereference when accessing
-rgd->rd_rgl in gfs2_rgrp_dump().  This can happen when creating
-rgd->rd_gl fails in read_rindex_entry().  Add a NULL pointer check in
-gfs2_rgrp_dump() to prevent that.
+The scheduled tasklet needs to be executed on device remove.
 
-Reported-and-tested-by: syzbot+da0fc229cc1ff4bb2e6d@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=da0fc229cc1ff4bb2e6d
-Fixes: 72244b6bc752 ("gfs2: improve debug information when lvb mismatches are found")
-Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: fed93fb62e05 ("crypto: virtio - Handle dataq logic with tasklet")
+Signed-off-by: wangyangxin <wangyangxin1@huawei.com>
+Signed-off-by: Gonglei <arei.gonglei@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/rgrp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/virtio/virtio_crypto_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/gfs2/rgrp.c b/fs/gfs2/rgrp.c
-index f602fb844951..dcaaa32efc4a 100644
---- a/fs/gfs2/rgrp.c
-+++ b/fs/gfs2/rgrp.c
-@@ -2306,7 +2306,7 @@ void gfs2_rgrp_dump(struct seq_file *seq, struct gfs2_rgrpd *rgd,
- 		       (unsigned long long)rgd->rd_addr, rgd->rd_flags,
- 		       rgd->rd_free, rgd->rd_free_clone, rgd->rd_dinodes,
- 		       rgd->rd_requested, rgd->rd_reserved, rgd->rd_extfail_pt);
--	if (rgd->rd_sbd->sd_args.ar_rgrplvb) {
-+	if (rgd->rd_sbd->sd_args.ar_rgrplvb && rgd->rd_rgl) {
- 		struct gfs2_rgrp_lvb *rgl = rgd->rd_rgl;
+diff --git a/drivers/crypto/virtio/virtio_crypto_core.c b/drivers/crypto/virtio/virtio_crypto_core.c
+index 856daf05341c..56dc0935c774 100644
+--- a/drivers/crypto/virtio/virtio_crypto_core.c
++++ b/drivers/crypto/virtio/virtio_crypto_core.c
+@@ -499,12 +499,15 @@ static void virtcrypto_free_unused_reqs(struct virtio_crypto *vcrypto)
+ static void virtcrypto_remove(struct virtio_device *vdev)
+ {
+ 	struct virtio_crypto *vcrypto = vdev->priv;
++	int i;
  
- 		gfs2_print_dbg(seq, "%s  L: f:%02x b:%u i:%u\n", fs_id_buf,
+ 	dev_info(&vdev->dev, "Start virtcrypto_remove.\n");
+ 
+ 	flush_work(&vcrypto->config_work);
+ 	if (virtcrypto_dev_started(vcrypto))
+ 		virtcrypto_dev_stop(vcrypto);
++	for (i = 0; i < vcrypto->max_data_queues; i++)
++		tasklet_kill(&vcrypto->data_vq[i].done_task);
+ 	virtio_reset_device(vdev);
+ 	virtcrypto_free_unused_reqs(vcrypto);
+ 	virtcrypto_clear_crypto_engines(vcrypto);
 -- 
 2.43.0
 
