@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A0B6169A;
-	Tue, 23 Jan 2024 00:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B192C63124;
+	Tue, 23 Jan 2024 00:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971202; cv=none; b=EkrGQWLagDs7FW5jklzk3F2jPELZ0QSW+6VLjDRIS5CW5/iXDncIprWN4aMlN/o+4QiEcS+g/jzt3vcfBeUZSTNCsfyDtoSjTnusVEUv/es870NPPzyTkPBdohWWstIbx3EUmLt6BT2jHfkF1Jp/jeZY39Hb3cpos1GffGMjXqo=
+	t=1705971203; cv=none; b=OJPq5iwyPvedIwHpf3CV5SdnHiSs2p5wbPSnKT9cIxpl2tBn5L+Vyns10J0Gxo5ctdxmm3ge0P5luWwrPtStq3XwZYK8ycuWAM7fd5MpK7jrRrCLsl+wLv0c0T9i2mDlxF/zvCKcYEjKwbs6sZWpmNbFqWlDpPJ/FlRS9RO7Nok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971202; c=relaxed/simple;
-	bh=9SaZdhMoExEm2Eb/DMitWdIM+hkl9BFDKloySszNfjc=;
+	s=arc-20240116; t=1705971203; c=relaxed/simple;
+	bh=tHEJIARD26GpZWRsiLCHEQweJiU6XdLOeDvnIP3y3wI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cr+GGpk7Qh5yfYqKIZRty7iPRhkyeZXyy7w1yKTj+90LR1XLXq9aOCx9XaydUX8tMC4MoYaxZnrPETl/EU3xqsLUiv8mGHW+PtQCzmAWQZOYhosg7G6VVo4HBfauyugipnYJtA7J/LkgNTn2MC+kEey8TOvJQ4oRPMLCoMDQhUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGaIQc+D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SloBQ1nPGWml1a3R10y0h/GMghdymkkP3weRT6kc2ZGDXM5EABtLfA6ngV+7Ai/QTJcQ5kdswMxr7V9U1xyByfcmCG03ij4d+o0XBfzcW+wJTxnrG/EZ2stYDOvvxQStJEaVZ7W6U1cf4FD+4g2vBPYH2MCV8F9wrtqcO/7rMdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+jPSt+B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGaIQc+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14B5C43394;
-	Tue, 23 Jan 2024 00:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+jPSt+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E683C433F1;
+	Tue, 23 Jan 2024 00:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971202;
-	bh=9SaZdhMoExEm2Eb/DMitWdIM+hkl9BFDKloySszNfjc=;
+	s=korg; t=1705971203;
+	bh=tHEJIARD26GpZWRsiLCHEQweJiU6XdLOeDvnIP3y3wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGaIQc+DzrhnAyLmDqUilupFz+zWmRBqEtHxXrrz278TPH1sD/lXoLJaVAq6af+YX
-	 LRLBDcz0UpSe5BzdRxpOplNCWcw4CQQIeFvnySocnKtSR87CuH0m8yixqKkkY36Qbo
-	 MXnCEAQ435ZA9hPsc9Mw6ZnWQwqGULpF6tNLJguc=
+	b=P+jPSt+BdvhdfV+pDElgm9pTawnpgopskmAuxOXZsvCUu9bmTQA6/mqfjQoZWPcx3
+	 d/SKHcDRfm5NMvhR9uy0qlB3eFDRx1egoEQwWTqK2CQ2+TnFgRhgBKhro05c3sRafh
+	 IPwgonj3MfMPqRFKYlL0rxGoIHosXZhvT+ewv5PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 111/286] wifi: ath11k: Defer on rproc_get failure
-Date: Mon, 22 Jan 2024 15:56:57 -0800
-Message-ID: <20240122235736.369111749@linuxfoundation.org>
+Subject: [PATCH 6.1 204/417] clk: renesas: rzg2l: Check reset monitor registers
+Date: Mon, 22 Jan 2024 15:56:12 -0800
+Message-ID: <20240122235758.997514615@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +47,140 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 2a3ec40b98b46c339adb57313d3b933ee5e7a8e8 ]
+[ Upstream commit da235d2fac212d0add570e755feb1167a830bc99 ]
 
-If we already have gotten the rproc_handle (meaning the "qcom,rproc"
-property is defined in the devicetree), it's a valid state that the
-remoteproc module hasn't probed yet so we should defer probing instead
-of just failing to probe.
+The hardware manual of both RZ/G2L and RZ/G3S specifies that the reset
+monitor registers need to be interrogated when the reset signals are
+toggled (chapters "Procedures for Supplying and Stopping Reset Signals"
+and "Procedure for Activating Modules").  Without this, there is a
+chance that different modules (e.g. Ethernet) are not ready after their
+reset signal is toggled, leading to failures (on probe or resume from
+deep sleep states).
 
-This resolves a race condition when the ath11k driver probes and fails
-before the wpss remoteproc driver has probed, like the following:
+The same indications are available for RZ/V2M for TYPE-B reset controls.
 
-  [    6.232360] ath11k 17a10040.wifi: failed to get rproc
-  [    6.232366] ath11k 17a10040.wifi: failed to get rproc: -22
-  [    6.232478] ath11k: probe of 17a10040.wifi failed with error -22
-       ...
-  [    6.252415] remoteproc remoteproc2: 8a00000.remoteproc is available
-  [    6.252776] remoteproc remoteproc2: powering up 8a00000.remoteproc
-  [    6.252781] remoteproc remoteproc2: Booting fw image qcom/qcm6490/fairphone5/wpss.mdt, size 7188
-
-So, defer the probe if we hit that so we can retry later once the wpss
-remoteproc is available.
-
-Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.1.0.1-01264-QCAMSLSWPLZ-1.37886.3
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20231027-ath11k-rproc-defer-v1-1-f6b6a812cd18@fairphone.com
+Fixes: ef3c613ccd68 ("clk: renesas: Add CPG core wrapper for RZ/G2L SoC")
+Fixes: 8090bea32484 ("clk: renesas: rzg2l: Add support for RZ/V2M reset monitor reg")
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20231207070700.4156557-2-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/ahb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/renesas/rzg2l-cpg.c | 59 ++++++++++++++++++++++++---------
+ 1 file changed, 44 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
-index 190bc5712e96..24006ddfba89 100644
---- a/drivers/net/wireless/ath/ath11k/ahb.c
-+++ b/drivers/net/wireless/ath/ath11k/ahb.c
-@@ -625,8 +625,8 @@ static int ath11k_core_get_rproc(struct ath11k_base *ab)
+diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
+index 93720f319409..473feb36a38f 100644
+--- a/drivers/clk/renesas/rzg2l-cpg.c
++++ b/drivers/clk/renesas/rzg2l-cpg.c
+@@ -1121,12 +1121,27 @@ static int rzg2l_cpg_assert(struct reset_controller_dev *rcdev,
+ 	struct rzg2l_cpg_priv *priv = rcdev_to_priv(rcdev);
+ 	const struct rzg2l_cpg_info *info = priv->info;
+ 	unsigned int reg = info->resets[id].off;
+-	u32 value = BIT(info->resets[id].bit) << 16;
++	u32 mask = BIT(info->resets[id].bit);
++	s8 monbit = info->resets[id].monbit;
++	u32 value = mask << 16;
  
- 	prproc = rproc_get_by_phandle(rproc_phandle);
- 	if (!prproc) {
--		ath11k_err(ab, "failed to get rproc\n");
--		return -EINVAL;
-+		ath11k_dbg(ab, ATH11K_DBG_AHB, "failed to get rproc, deferring\n");
-+		return -EPROBE_DEFER;
+ 	dev_dbg(rcdev->dev, "assert id:%ld offset:0x%x\n", id, CLK_RST_R(reg));
+ 
+ 	writel(value, priv->base + CLK_RST_R(reg));
+-	return 0;
++
++	if (info->has_clk_mon_regs) {
++		reg = CLK_MRST_R(reg);
++	} else if (monbit >= 0) {
++		reg = CPG_RST_MON;
++		mask = BIT(monbit);
++	} else {
++		/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
++		udelay(35);
++		return 0;
++	}
++
++	return readl_poll_timeout_atomic(priv->base + reg, value,
++					 value & mask, 10, 200);
+ }
+ 
+ static int rzg2l_cpg_deassert(struct reset_controller_dev *rcdev,
+@@ -1135,14 +1150,28 @@ static int rzg2l_cpg_deassert(struct reset_controller_dev *rcdev,
+ 	struct rzg2l_cpg_priv *priv = rcdev_to_priv(rcdev);
+ 	const struct rzg2l_cpg_info *info = priv->info;
+ 	unsigned int reg = info->resets[id].off;
+-	u32 dis = BIT(info->resets[id].bit);
+-	u32 value = (dis << 16) | dis;
++	u32 mask = BIT(info->resets[id].bit);
++	s8 monbit = info->resets[id].monbit;
++	u32 value = (mask << 16) | mask;
+ 
+ 	dev_dbg(rcdev->dev, "deassert id:%ld offset:0x%x\n", id,
+ 		CLK_RST_R(reg));
+ 
+ 	writel(value, priv->base + CLK_RST_R(reg));
+-	return 0;
++
++	if (info->has_clk_mon_regs) {
++		reg = CLK_MRST_R(reg);
++	} else if (monbit >= 0) {
++		reg = CPG_RST_MON;
++		mask = BIT(monbit);
++	} else {
++		/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
++		udelay(35);
++		return 0;
++	}
++
++	return readl_poll_timeout_atomic(priv->base + reg, value,
++					 !(value & mask), 10, 200);
+ }
+ 
+ static int rzg2l_cpg_reset(struct reset_controller_dev *rcdev,
+@@ -1154,9 +1183,6 @@ static int rzg2l_cpg_reset(struct reset_controller_dev *rcdev,
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
+-	udelay(35);
+-
+ 	return rzg2l_cpg_deassert(rcdev, id);
+ }
+ 
+@@ -1165,18 +1191,21 @@ static int rzg2l_cpg_status(struct reset_controller_dev *rcdev,
+ {
+ 	struct rzg2l_cpg_priv *priv = rcdev_to_priv(rcdev);
+ 	const struct rzg2l_cpg_info *info = priv->info;
+-	unsigned int reg = info->resets[id].off;
+-	u32 bitmask = BIT(info->resets[id].bit);
+ 	s8 monbit = info->resets[id].monbit;
++	unsigned int reg;
++	u32 bitmask;
+ 
+ 	if (info->has_clk_mon_regs) {
+-		return !!(readl(priv->base + CLK_MRST_R(reg)) & bitmask);
++		reg = CLK_MRST_R(info->resets[id].off);
++		bitmask = BIT(info->resets[id].bit);
+ 	} else if (monbit >= 0) {
+-		u32 monbitmask = BIT(monbit);
+-
+-		return !!(readl(priv->base + CPG_RST_MON) & monbitmask);
++		reg = CPG_RST_MON;
++		bitmask = BIT(monbit);
++	} else {
++		return -ENOTSUPP;
  	}
- 	ab_ahb->tgt_rproc = prproc;
+-	return -ENOTSUPP;
++
++	return !!(readl(priv->base + reg) & bitmask);
+ }
  
+ static const struct reset_control_ops rzg2l_cpg_reset_ops = {
 -- 
 2.43.0
 
