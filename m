@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC65677F2F;
-	Tue, 23 Jan 2024 02:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446F97A706;
+	Tue, 23 Jan 2024 02:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975545; cv=none; b=naKxoOJ/P+JcLz9TfFYc2/cf9IZhM9B+CyK9HKvioLF0lWxIyx73JwfLAsKy4bNNwt9d6KJLNmzdUkmGAzGQ6lJmtonrENfI/CuorGWb8QET1BIOOd1IITSsdkEyIdQ857BnhbCBZ+iCCev0O51cOxgJPXM46S+ek951C7eIyKs=
+	t=1705975547; cv=none; b=MkXYsgsuhyqQgPLIQxZ+foJPYZWKk8dRadN2DQNTCdNqtVgn+OCEYshfcXVwul3AsWn5YVex8jHpb3TR5slmF1X7REGoRnUoSEXqW+io6VP6HvyRU512dh55ySOJrLWLPbBIOAGhdOQx5B6ucRE6xToQrUMtIg5Pl5ftXV2w13Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975545; c=relaxed/simple;
-	bh=YZUYCJ3iC90OBJldgIAVmxMVRH1b6q2phmnvkEf7H78=;
+	s=arc-20240116; t=1705975547; c=relaxed/simple;
+	bh=pD+19n2ZrYi3N06Y/zsHOgIkZZJlrz0wqubDaLzR++o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sDQfo2+LjFDMoMdGhLE6MRIOHNBfk074rhfymKGk1/1G3JpbmSusY9+4z416D2Oh9lgBwEHBEaO2M+muvj+Qmh3qDX/3D4fxWRpgB3IIo6UbRxXDcU1DWseKLpE/bkPbIIK4qVzjWuvfa7mc+abWixww3J+O9U/YicPcpBBaDrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CX68/MGr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r956rtZKBMKhXVLDJcSiJhTMwnDSeo5tBowmE/EZ4BYb1rZzExpcWx7x1jdlem4oNYiccm3V24nV5IQO1APSavM4ASVCb9XA8oPO++tPOyTces/nOA4scE+be2UzOSYpnyOxAGmZFzQ81LguA7r5NJUt9GJZQSC1Uab7nOriFN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wlq8hhaO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CX68/MGr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DA3C43390;
-	Tue, 23 Jan 2024 02:05:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wlq8hhaO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0169FC433F1;
+	Tue, 23 Jan 2024 02:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975545;
-	bh=YZUYCJ3iC90OBJldgIAVmxMVRH1b6q2phmnvkEf7H78=;
+	s=korg; t=1705975547;
+	bh=pD+19n2ZrYi3N06Y/zsHOgIkZZJlrz0wqubDaLzR++o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CX68/MGrV3aTrnDka6PKYlNDOtZBQT5Q80Gi53gu4fR2cEKOQLvHztntJdfBzvxTb
-	 sHmWxFRpFK9fs+NYGdI2TiiJPefG/sG0l3wRYr825qs+1W1OcF/qBiYlObGDhyY2UF
-	 0nTvoiJOeAupAeghK1J/5IH5dYC2SBxIh72hM58Q=
+	b=Wlq8hhaOQl2PvqhTLZYdDJxn/65UQGj5j81fWXYQu4zAUEIUre5LzfVZka+gWe5Ay
+	 GVGoCpstk60RJwJvNQ7jpSA3abImHdJ1X6LRSfmFXsqdtVSPvbSFt5yJqOncrOZo8s
+	 X4OlOucHeOirAZFqlA5QZSekEO3s6unXWkfWsXo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 473/583] software node: Let args be NULL in software_node_get_reference_args
-Date: Mon, 22 Jan 2024 15:58:44 -0800
-Message-ID: <20240122235826.463788614@linuxfoundation.org>
+Subject: [PATCH 6.6 464/583] usb: core: Allow subclassed USB drivers to override usb_choose_configuration()
+Date: Mon, 22 Jan 2024 15:58:35 -0800
+Message-ID: <20240122235826.181781624@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,40 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 1eaea4b3604eb9ca7d9a1e73d88fc121bb4061f5 ]
+[ Upstream commit a87b8e3be926af0fc3b9b1af42b1127bd1ff077c ]
 
-fwnode_get_property_reference_args() may not be called with args argument
-NULL and while OF already supports this. Add the missing NULL check.
+For some USB devices we might want to do something different for
+usb_choose_configuration(). One example here is the r8152 driver where
+we want to end up using the vendor driver with the preferred
+interface.
 
-The purpose is to be able to count the references.
+The r8152 driver tried to make things work by implementing a USB
+generic_subclass driver and then overriding the normal config
+selection after it happened. This is less than ideal and also caused
+breakage if someone deauthorized and re-authorized the USB device
+because the USB core ended up going back to it's default logic for
+choosing the best config. I made an attempt to fix this [1] but it was
+a bit ugly.
 
-Fixes: b06184acf751 ("software node: Add software_node_get_reference_args()")
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20231109101010.1329587-3-sakari.ailus@linux.intel.com
+Let's do this better and allow USB generic_subclass drivers to
+override usb_choose_configuration().
+
+[1] https://lore.kernel.org/r/20231130154337.1.Ie00e07f07f87149c9ce0b27ae4e26991d307e14b@changeid
+
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20231201102946.v2.2.Iade5fa31997f1a0ca3e1dec0591633b02471df12@changeid
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: aa4f2b3e418e ("r8152: Choose our USB config with choose_configuration() rather than probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/swnode.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/core/generic.c | 7 +++++++
+ include/linux/usb.h        | 6 ++++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
-index 1886995a0b3a..079bd14bdedc 100644
---- a/drivers/base/swnode.c
-+++ b/drivers/base/swnode.c
-@@ -541,6 +541,9 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
- 	if (nargs > NR_FWNODE_REFERENCE_ARGS)
- 		return -EINVAL;
+diff --git a/drivers/usb/core/generic.c b/drivers/usb/core/generic.c
+index 740342a2812a..dcb897158228 100644
+--- a/drivers/usb/core/generic.c
++++ b/drivers/usb/core/generic.c
+@@ -59,10 +59,17 @@ int usb_choose_configuration(struct usb_device *udev)
+ 	int num_configs;
+ 	int insufficient_power = 0;
+ 	struct usb_host_config *c, *best;
++	struct usb_device_driver *udriver = to_usb_device_driver(udev->dev.driver);
  
-+	if (!args)
-+		return 0;
+ 	if (usb_device_is_owned(udev))
+ 		return 0;
+ 
++	if (udriver->choose_configuration) {
++		i = udriver->choose_configuration(udev);
++		if (i >= 0)
++			return i;
++	}
 +
- 	args->fwnode = software_node_get(refnode);
- 	args->nargs = nargs;
+ 	best = NULL;
+ 	c = udev->config;
+ 	num_configs = udev->descriptor.bNumConfigurations;
+diff --git a/include/linux/usb.h b/include/linux/usb.h
+index a21074861f91..bfd77ece0643 100644
+--- a/include/linux/usb.h
++++ b/include/linux/usb.h
+@@ -1264,6 +1264,9 @@ struct usb_driver {
+  *	module is being unloaded.
+  * @suspend: Called when the device is going to be suspended by the system.
+  * @resume: Called when the device is being resumed by the system.
++ * @choose_configuration: If non-NULL, called instead of the default
++ *	usb_choose_configuration(). If this returns an error then we'll go
++ *	on to call the normal usb_choose_configuration().
+  * @dev_groups: Attributes attached to the device that will be created once it
+  *	is bound to the driver.
+  * @drvwrap: Driver-model core structure wrapper.
+@@ -1287,6 +1290,9 @@ struct usb_device_driver {
  
+ 	int (*suspend) (struct usb_device *udev, pm_message_t message);
+ 	int (*resume) (struct usb_device *udev, pm_message_t message);
++
++	int (*choose_configuration) (struct usb_device *udev);
++
+ 	const struct attribute_group **dev_groups;
+ 	struct usbdrv_wrap drvwrap;
+ 	const struct usb_device_id *id_table;
 -- 
 2.43.0
 
