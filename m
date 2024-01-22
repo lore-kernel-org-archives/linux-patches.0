@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228155732A;
-	Tue, 23 Jan 2024 00:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D3660BA2;
+	Tue, 23 Jan 2024 00:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970661; cv=none; b=IDdvaMEkT6S7xqZPNhxbmeU7rK3yE9GNpPOWEwZO6ZIFZPMwmI7TTbiwFc4NmZwVIxp75EYSgX3irmmWhBIvmkxqNisrH+00RqmVCtS/6NvlflGmA580QSXIUUTD7VDC5mwhQde1TePDRMq0M30nHdpLq4a1nRYfbQAIXsMcpVk=
+	t=1705970662; cv=none; b=UrFTk4dO20SI3dx/6VaQq5pVtdlXRyAHAomtrcBLSOMlKwHCvbV/REcDvfGYU3k+A7WK/LKRz5dUmcPam5jSip7P1vICTw0jRK6CWI9U8s8eKjmUlqhhWOrMAE9RRZY9sLJBPTS8ewxEh/pl4j6NsMNpOT7b2e3bPTkWHHSbE6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970661; c=relaxed/simple;
-	bh=oFPErOmnTzGFyqg3vSDPVQyEZpX5NEtaE5eXtNpmv8E=;
+	s=arc-20240116; t=1705970662; c=relaxed/simple;
+	bh=bSRAAgiFj7LU7hybZjoJqVjHzN8vFlPvMZruz6caaHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fkv4J6CIf3zi9IBml0Hj63yYmk4q/Nj16TvM/MXzj6KC9oCv/F7PRmjY7SdvsGbKkrMWJBqhpauV/2bl6LkQ1z71GAg8YOLhUDkkCURBEk1AQjz2TIO2GQocWWdxFupceLw2fRb1dm6mD7CD+9qUR6WM1qzMzfUM3EYdE7lZKEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B998zwTE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pzBLbAFAcws+JihF4u51Ff5emKpiUuo4nFM9vww/9n+HN//K5UOjzm8mLWnonlYvbVYa3OMlL//t8UUGVh5KmBuWT3kbIKCWLBQrk/4kPOS1zZHL4ejy3b0Cj7qeCCe6VkPBh+mtoCLnBUArrwQqnC0da5QbRpToWwPyO5UBUuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDWYBdYu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B998zwTE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2868CC433F1;
-	Tue, 23 Jan 2024 00:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDWYBdYu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD34C433C7;
+	Tue, 23 Jan 2024 00:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970661;
-	bh=oFPErOmnTzGFyqg3vSDPVQyEZpX5NEtaE5eXtNpmv8E=;
+	s=korg; t=1705970662;
+	bh=bSRAAgiFj7LU7hybZjoJqVjHzN8vFlPvMZruz6caaHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B998zwTEEOd2YuJNIQNer3OzLa8MyJ+90ePqctz8V9qhKSE5iVvRabw8s29qUNUQU
-	 nTw2ncGIcWlhKb7abFF7SuJN/k7yXXMUA6ZCNfXzmuS/4ElRiIOkI3tyV57AjmprIU
-	 o2QUgzcY+x9fNG+iVzc561tP6uQYPT5Txo2CjRvA=
+	b=NDWYBdYu6WOwNekoS70OXqEkjVsZ69Zw2/Tg3GB33f3FOnSXga4iSpcbH6tLuigv2
+	 +YvxPobLHz+J/BCmrUhEU/WbCo119y9tIduvOLdtj4FTQxHtVBqtKHfe2Z3VXg/ESg
+	 BnTUJ4zyyXgVbLCqrCPN2+Rp6trGEM1GQd4vtdnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeroen van Ingen Schenau <jeroen.vaningenschenau@novoserve.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Minh Le Hoang <minh.lehoang@novoserve.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 081/417] selftests/bpf: Fix erroneous bitmask operation
-Date: Mon, 22 Jan 2024 15:54:09 -0800
-Message-ID: <20240122235754.511663085@linuxfoundation.org>
+Subject: [PATCH 6.1 082/417] md: synchronize flush io with array reconfiguration
+Date: Mon, 22 Jan 2024 15:54:10 -0800
+Message-ID: <20240122235754.548853796@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -52,50 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeroen van Ingen Schenau <jeroen.vaningenschenau@novoserve.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit b6a3451e0847d5d70fb5fa2b2a80ab9f80bf2c7b ]
+[ Upstream commit fa2bbff7b0b4e211fec5e5686ef96350690597b5 ]
 
-xdp_synproxy_kern.c is a BPF program that generates SYN cookies on
-allowed TCP ports and sends SYNACKs to clients, accelerating synproxy
-iptables module.
+Currently rcu is used to protect iterating rdev from submit_flushes():
 
-Fix the bitmask operation when checking the status of an existing
-conntrack entry within tcp_lookup() function. Do not AND with the bit
-position number, but with the bitmask value to check whether the entry
-found has the IPS_CONFIRMED flag set.
+submit_flushes			remove_and_add_spares
+				synchronize_rcu
+				pers->hot_remove_disk()
+ rcu_read_lock()
+ rdev_for_each_rcu
+  if (rdev->raid_disk >= 0)
+				rdev->radi_disk = -1;
+   atomic_inc(&rdev->nr_pending)
+   rcu_read_unlock()
+   bi = bio_alloc_bioset()
+   bi->bi_end_io = md_end_flush
+   bi->private = rdev
+   submit_bio
+   // issue io for removed rdev
 
-Fixes: fb5cd0ce70d4 ("selftests/bpf: Add selftests for raw syncookie helpers")
-Signed-off-by: Jeroen van Ingen Schenau <jeroen.vaningenschenau@novoserve.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Minh Le Hoang <minh.lehoang@novoserve.com>
-Link: https://lore.kernel.org/xdp-newbies/CAAi1gX7owA+Tcxq-titC-h-KPM7Ri-6ZhTNMhrnPq5gmYYwKow@mail.gmail.com/T/#u
-Link: https://lore.kernel.org/bpf/20231130120353.3084-1-jeroen.vaningenschenau@novoserve.com
+Fix this problem by grabbing 'acive_io' before iterating rdev, make sure
+that remove_and_add_spares() won't concurrent with submit_flushes().
+
+Fixes: a2826aa92e2e ("md: support barrier requests on all personalities.")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20231129020234.1586910-1-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/xdp_synproxy_kern.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/md.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/xdp_synproxy_kern.c b/tools/testing/selftests/bpf/progs/xdp_synproxy_kern.c
-index 736686e903f6..26bfbc73d129 100644
---- a/tools/testing/selftests/bpf/progs/xdp_synproxy_kern.c
-+++ b/tools/testing/selftests/bpf/progs/xdp_synproxy_kern.c
-@@ -447,13 +447,13 @@ static __always_inline int tcp_lookup(void *ctx, struct header_pointers *hdr, bo
- 		unsigned long status = ct->status;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 0c2801d77090..6120f26a7969 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -528,6 +528,9 @@ static void md_end_flush(struct bio *bio)
+ 	rdev_dec_pending(rdev, mddev);
  
- 		bpf_ct_release(ct);
--		if (status & IPS_CONFIRMED_BIT)
-+		if (status & IPS_CONFIRMED)
- 			return XDP_PASS;
- 	} else if (ct_lookup_opts.error != -ENOENT) {
- 		return XDP_ABORTED;
+ 	if (atomic_dec_and_test(&mddev->flush_pending)) {
++		/* The pair is percpu_ref_get() from md_flush_request() */
++		percpu_ref_put(&mddev->active_io);
++
+ 		/* The pre-request flush has finished */
+ 		queue_work(md_wq, &mddev->flush_work);
  	}
- 
--	/* error == -ENOENT || !(status & IPS_CONFIRMED_BIT) */
-+	/* error == -ENOENT || !(status & IPS_CONFIRMED) */
- 	return XDP_TX;
- }
- 
+@@ -547,12 +550,8 @@ static void submit_flushes(struct work_struct *ws)
+ 	rdev_for_each_rcu(rdev, mddev)
+ 		if (rdev->raid_disk >= 0 &&
+ 		    !test_bit(Faulty, &rdev->flags)) {
+-			/* Take two references, one is dropped
+-			 * when request finishes, one after
+-			 * we reclaim rcu_read_lock
+-			 */
+ 			struct bio *bi;
+-			atomic_inc(&rdev->nr_pending);
++
+ 			atomic_inc(&rdev->nr_pending);
+ 			rcu_read_unlock();
+ 			bi = bio_alloc_bioset(rdev->bdev, 0,
+@@ -563,7 +562,6 @@ static void submit_flushes(struct work_struct *ws)
+ 			atomic_inc(&mddev->flush_pending);
+ 			submit_bio(bi);
+ 			rcu_read_lock();
+-			rdev_dec_pending(rdev, mddev);
+ 		}
+ 	rcu_read_unlock();
+ 	if (atomic_dec_and_test(&mddev->flush_pending))
+@@ -616,6 +614,18 @@ bool md_flush_request(struct mddev *mddev, struct bio *bio)
+ 	/* new request after previous flush is completed */
+ 	if (ktime_after(req_start, mddev->prev_flush_start)) {
+ 		WARN_ON(mddev->flush_bio);
++		/*
++		 * Grab a reference to make sure mddev_suspend() will wait for
++		 * this flush to be done.
++		 *
++		 * md_flush_reqeust() is called under md_handle_request() and
++		 * 'active_io' is already grabbed, hence percpu_ref_is_zero()
++		 * won't pass, percpu_ref_tryget_live() can't be used because
++		 * percpu_ref_kill() can be called by mddev_suspend()
++		 * concurrently.
++		 */
++		WARN_ON(percpu_ref_is_zero(&mddev->active_io));
++		percpu_ref_get(&mddev->active_io);
+ 		mddev->flush_bio = bio;
+ 		bio = NULL;
+ 	}
 -- 
 2.43.0
 
