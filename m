@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6AFE56B;
-	Tue, 23 Jan 2024 00:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB11E56B;
+	Tue, 23 Jan 2024 00:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968324; cv=none; b=WQQrsC8gSrVH+RsIpAYCSxQ/td/t8BX7948OQKClLuOv3utPzb5fgARmQsBnb4ugY2dL/4jJmcqUz0GcaBrGXpvNNRT6zPWrPepIJEn9JgfIwl6znoXVlWM3QZfHGz5ymUje63b/JXkZAhXDabCg+5jMQSdYWLl7wLwFjhDA2Eg=
+	t=1705968328; cv=none; b=cEynWPzO2vOfUUU5qXButk70zxtUoc7WJXQRDOqhfqP0Gx2vTkRvvTP1zzS4xAOWKiglyfdK4c5hreyeXCqsvOBFC6E8xj0GLAVIx9nxCSki0VAYZfXxoesnTxJr0C1jjDTc8LHsk7f1NF7TtQcwd2vQc42/Arxyx//eiRilm2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968324; c=relaxed/simple;
-	bh=/esWz8hMsPPbU8eJbuoN4uOg1CCeGJAHFSaI+PPtxJ8=;
+	s=arc-20240116; t=1705968328; c=relaxed/simple;
+	bh=4t5K0xcQPrTYZaW0YAxdGNU3thiQRxAnrveTkK5epd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EOHQAH+2P8uSbV9q8DZSWABvUo+aMjxwgPWHG6if/oiv4V/vDZHgzE6DnRmFAvnzEBWWO9MlLbZZSEpZvKBOnkwscubx0hRQeT/ZmY2f2FDPR4jK0qfYSlKxri7vlg7cP0MAlTOt1V9ef9etOwWtQG5c23pm9fTL7zcb8YjFYLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=acqdv3xu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BSy57pE9Yly5bWThqV+QL0BeSZRfuBeGvKDiHyTd0Lni92+YFejKuwYAySeh/HOM0Y1XOn53ksyK6HEP71BslvQ60GVhfKmjw6MXvm4lHoaGvu52ph9L7ZJMf4W4icVhlOX+E06sNBcQitbZlZFKC28vYEubZzBoPfAdBJn85Vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g15XVKr5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="acqdv3xu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F889C43390;
-	Tue, 23 Jan 2024 00:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g15XVKr5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3ECC433F1;
+	Tue, 23 Jan 2024 00:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968323;
-	bh=/esWz8hMsPPbU8eJbuoN4uOg1CCeGJAHFSaI+PPtxJ8=;
+	s=korg; t=1705968328;
+	bh=4t5K0xcQPrTYZaW0YAxdGNU3thiQRxAnrveTkK5epd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=acqdv3xuPR3H7HboCisNKrk+yEQogHnzFBLyJkBvB0sTDh0+F/3JLNnAYrk+T7WJW
-	 anYdg1iteBD5jEnkNvP0FSORXFz/Mqqhp3UecrahyBRNESboseLVt9te0nRuR48OPw
-	 LLW2UT6Q7fnodVxKLI4izuktUZRzTCb05G6gxwww=
+	b=g15XVKr5WVa3N5VRZb0GCZe6DlGSGXEsWiaAgfWb6ngmRkEn0PthWk0+i6HbTMuUU
+	 yWgilhaQ+yY02CLqiBSAg27MrMGjCh4VgAPeh4EkBwsRg14yYUwrOeIvIPKUwU5yKb
+	 gDfRMjz9i5f8yUb6MWISB/gyWSUmEJCMo1XmsRvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.king@canonical.com>,
-	Kalle Valo <kvalo@codeaurora.org>,
+	Su Hui <suhui@nfschina.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 079/148] rtlwifi: rtl8192de: make arrays static const, makes object smaller
-Date: Mon, 22 Jan 2024 15:57:15 -0800
-Message-ID: <20240122235715.606150752@linuxfoundation.org>
+Subject: [PATCH 4.19 080/148] wifi: rtlwifi: rtl8192de: using calculate_bit_shift()
+Date: Mon, 22 Jan 2024 15:57:16 -0800
+Message-ID: <20240122235715.652821506@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235712.442097787@linuxfoundation.org>
 References: <20240122235712.442097787@linuxfoundation.org>
@@ -51,117 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.king@canonical.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit b05897ca8c821a16ac03850c4704fe460b3f21a0 ]
+[ Upstream commit b8b2baad2e652042cf8b6339939ac2f4e6f53de4 ]
 
-Don't populate arrays the stack but instead make them static const. Replace
-array channel_info with channel_all since it contains the same data as
-channel_all. Makes object code smaller by 961 bytes.
+Using calculate_bit_shift() to replace _rtl92d_phy_calculate_bit_shift().
+And fix the undefined bitwise shift behavior problem.
 
-Before:
-   text	   data	    bss	    dec	   hex	filename
- 128147	  44250	   1024	 173421	 2a56d	../realtek/rtlwifi/rtl8192de/phy.o
-
-After
-   text	   data	    bss	    dec	   hex	filename
- 127122	  44314	   1024	 172460	 2a1ac	../realtek/rtlwifi/rtl8192de/phy.o
-
-(gcc version 10.2.0)
-
-Signed-off-by: Colin Ian King <colin.king@canonical.com>
-Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
-Link: https://lore.kernel.org/r/20210803144949.79433-2-colin.king@canonical.com
-Stable-dep-of: b8b2baad2e65 ("wifi: rtlwifi: rtl8192de: using calculate_bit_shift()")
+Fixes: 7274a8c22980 ("rtlwifi: rtl8192de: Merge phy routines")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231219065739.1895666-8-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/realtek/rtlwifi/rtl8192de/phy.c  | 48 ++++++++-----------
- 1 file changed, 20 insertions(+), 28 deletions(-)
+ .../net/wireless/realtek/rtlwifi/rtl8192de/phy.c  | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-index 5ff48b47f6ff..89b473caa5f8 100644
+index 89b473caa5f8..2ee779614269 100644
 --- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
 +++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-@@ -182,6 +182,15 @@ static u32 targetchnl_2g[TARGET_CHNL_NUM_2G] = {
- 	25711, 25658, 25606, 25554, 25502, 25451, 25328
+@@ -191,13 +191,6 @@ static const u8 channel_all[59] = {
+ 	157, 159, 161, 163, 165
  };
  
-+static const u8 channel_all[59] = {
-+	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-+	36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58,
-+	60, 62, 64, 100, 102, 104, 106, 108, 110, 112,
-+	114, 116, 118, 120, 122, 124, 126, 128,	130,
-+	132, 134, 136, 138, 140, 149, 151, 153, 155,
-+	157, 159, 161, 163, 165
-+};
-+
- static u32 _rtl92d_phy_calculate_bit_shift(u32 bitmask)
+-static u32 _rtl92d_phy_calculate_bit_shift(u32 bitmask)
+-{
+-	u32 i = ffs(bitmask);
+-
+-	return i ? i - 1 : 32;
+-}
+-
+ u32 rtl92d_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
  {
- 	u32 i = ffs(bitmask);
-@@ -1378,14 +1387,6 @@ static void _rtl92d_phy_switch_rf_setting(struct ieee80211_hw *hw, u8 channel)
- 
- u8 rtl92d_get_rightchnlplace_for_iqk(u8 chnl)
- {
--	u8 channel_all[59] = {
--		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
--		36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58,
--		60, 62, 64, 100, 102, 104, 106, 108, 110, 112,
--		114, 116, 118, 120, 122, 124, 126, 128,	130,
--		132, 134, 136, 138, 140, 149, 151, 153, 155,
--		157, 159, 161, 163, 165
--	};
- 	u8 place = chnl;
- 
- 	if (chnl > 14) {
-@@ -3240,37 +3241,28 @@ void rtl92d_phy_config_macphymode_info(struct ieee80211_hw *hw)
- u8 rtl92d_get_chnlgroup_fromarray(u8 chnl)
- {
- 	u8 group;
--	u8 channel_info[59] = {
--		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
--		36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56,
--		58, 60, 62, 64, 100, 102, 104, 106, 108,
--		110, 112, 114, 116, 118, 120, 122, 124,
--		126, 128, 130, 132, 134, 136, 138, 140,
--		149, 151, 153, 155, 157, 159, 161, 163,
--		165
--	};
- 
--	if (channel_info[chnl] <= 3)
-+	if (channel_all[chnl] <= 3)
- 		group = 0;
--	else if (channel_info[chnl] <= 9)
-+	else if (channel_all[chnl] <= 9)
- 		group = 1;
--	else if (channel_info[chnl] <= 14)
-+	else if (channel_all[chnl] <= 14)
- 		group = 2;
--	else if (channel_info[chnl] <= 44)
-+	else if (channel_all[chnl] <= 44)
- 		group = 3;
--	else if (channel_info[chnl] <= 54)
-+	else if (channel_all[chnl] <= 54)
- 		group = 4;
--	else if (channel_info[chnl] <= 64)
-+	else if (channel_all[chnl] <= 64)
- 		group = 5;
--	else if (channel_info[chnl] <= 112)
-+	else if (channel_all[chnl] <= 112)
- 		group = 6;
--	else if (channel_info[chnl] <= 126)
-+	else if (channel_all[chnl] <= 126)
- 		group = 7;
--	else if (channel_info[chnl] <= 140)
-+	else if (channel_all[chnl] <= 140)
- 		group = 8;
--	else if (channel_info[chnl] <= 153)
-+	else if (channel_all[chnl] <= 153)
- 		group = 9;
--	else if (channel_info[chnl] <= 159)
-+	else if (channel_all[chnl] <= 159)
- 		group = 10;
- 	else
- 		group = 11;
+ 	struct rtl_priv *rtlpriv = rtl_priv(hw);
+@@ -220,7 +213,7 @@ u32 rtl92d_phy_query_bb_reg(struct ieee80211_hw *hw, u32 regaddr, u32 bitmask)
+ 	} else {
+ 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
+ 	}
+-	bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	returnvalue = (originalvalue & bitmask) >> bitshift;
+ 	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
+ 		 "BBR MASK=0x%x Addr[0x%x]=0x%x\n",
+@@ -252,7 +245,7 @@ void rtl92d_phy_set_bb_reg(struct ieee80211_hw *hw,
+ 					dbi_direct);
+ 		else
+ 			originalvalue = rtl_read_dword(rtlpriv, regaddr);
+-		bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
++		bitshift = calculate_bit_shift(bitmask);
+ 		data = ((originalvalue & (~bitmask)) | (data << bitshift));
+ 	}
+ 	if (rtlhal->during_mac1init_radioa || rtlhal->during_mac0init_radiob)
+@@ -340,7 +333,7 @@ u32 rtl92d_phy_query_rf_reg(struct ieee80211_hw *hw,
+ 		 regaddr, rfpath, bitmask);
+ 	spin_lock_irqsave(&rtlpriv->locks.rf_lock, flags);
+ 	original_value = _rtl92d_phy_rf_serial_read(hw, rfpath, regaddr);
+-	bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
+ 	spin_unlock_irqrestore(&rtlpriv->locks.rf_lock, flags);
+ 	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
+@@ -367,7 +360,7 @@ void rtl92d_phy_set_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
+ 		if (bitmask != RFREG_OFFSET_MASK) {
+ 			original_value = _rtl92d_phy_rf_serial_read(hw,
+ 				rfpath, regaddr);
+-			bitshift = _rtl92d_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data = ((original_value & (~bitmask)) |
+ 				(data << bitshift));
+ 		}
 -- 
 2.43.0
 
