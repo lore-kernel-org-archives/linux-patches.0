@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70E4604CF;
-	Tue, 23 Jan 2024 00:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1521D604D0;
+	Tue, 23 Jan 2024 00:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970827; cv=none; b=M/G4SfpINPbmkd/K6bl7K7BtQXsCbQpu9aEjEZaC8hVzrtpzjGjTERmYgY6vAzJTSjVIXDIDvdOmxp8zkoS0RnjWcgQb6Dd9ZSEEdmbsuBXWjpHQ3y3ptGhwC/Q1x1w9AyfOP+g8QPj3GB00Gj80oa1HlbrJgW6DRaP57XHcq3k=
+	t=1705970830; cv=none; b=hgOShNu/MRKnUlSkHCNxJEAQ7pkcJA6nGzlrkc9PRTFm54KRMu6q59mj6YsyDSWGjZyTpEAmELV0Io1t3xaS7j6EfBKPg6hfu2HXXpYIVCudtsdJLlr0Rau5fHbOenbYWycke99PRewPeRCFiMg1vJ7mZ8Zlbv0M/l+ml4XpED4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970827; c=relaxed/simple;
-	bh=jW7JYoa+gsgmZE0LfONEv/NStTIAUpWKkgr8Iy/JT88=;
+	s=arc-20240116; t=1705970830; c=relaxed/simple;
+	bh=PAth0xL4ErX/+mrzgBEc9TZkTRDYvobqaR8/FWPFujs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PhUJzkMusBSaoV6DHjA28l9eHQHhNpX+szmCAj9oJB9ueUHb80DK4o2d+r2GxZf42H0wsAJhwYUqj9hnh7j+SCsGHhrF+FMPf/nwOo9oDiaY34TglDkwUiePvFeRdy+hOoHUU851C7D3uQ3BelC6kXD96TRLV2TmiZDSPzkVz/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nAVNawZ3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JQ54Y72NgEhdyDI7axVT5mlmPsm8Lgxh5Xo+O96fOYyleV98w3ZGu8us3/g9Erd5oLdC2kyuDljNkjkZficdjDByAvVXRmQ+ztvbK0pz1Qdnubazg+R8CV8E1iAKHUQCd/TGRRMxI2LPpQDLSx0FYkGgTYIX7bZkjBMei7ZvmSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hpEXis5d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nAVNawZ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC91DC433F1;
-	Tue, 23 Jan 2024 00:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hpEXis5d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED27C433C7;
+	Tue, 23 Jan 2024 00:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970827;
-	bh=jW7JYoa+gsgmZE0LfONEv/NStTIAUpWKkgr8Iy/JT88=;
+	s=korg; t=1705970829;
+	bh=PAth0xL4ErX/+mrzgBEc9TZkTRDYvobqaR8/FWPFujs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nAVNawZ30HyQhnhhNrTlkDMcjYbifWG44e6uCXbO0JPKdAYEqWigP0/XOf81ALD0K
-	 EREIXwm8eK/uoQsNZTldwr0G9tSzRq3+oeSJiTHFAlNA2nUbbncWipDNeneJShQtix
-	 TlhjLqGoUYCf4bcAy8lQfKh5m82evs7gA9xQU1ms=
+	b=hpEXis5dENPEw1vs/aNC0P1hCj9xOTkf9dt7EcBLqOIjtMWMzAeMla5I6az7VGr2s
+	 zS0+yR9HDNi6rHJmIpKJaytshdVcfu/IOZCMpLZ8P+7jwrqGRF7dQSv9kEQARe1dDb
+	 HyWg5X/IFTA6sgDmzHI5TyWotud+jI359LvF6DeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/417] selftests/net: fix grep checking for fib_nexthop_multiprefix
-Date: Mon, 22 Jan 2024 15:54:48 -0800
-Message-ID: <20240122235755.940330961@linuxfoundation.org>
+Subject: [PATCH 5.10 026/286] tracing: Have large events show up as [LINE TOO BIG] instead of nothing
+Date: Mon, 22 Jan 2024 15:55:32 -0800
+Message-ID: <20240122235733.028290756@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +49,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit a33e9da3470499e9ff476138f271fb52d6bfe767 ]
+[ Upstream commit b55b0a0d7c4aa2dac3579aa7e6802d1f57445096 ]
 
-When running fib_nexthop_multiprefix test I saw all IPv6 test failed.
-e.g.
+If a large event was added to the ring buffer that is larger than what the
+trace_seq can handle, it just drops the output:
 
- ]# ./fib_nexthop_multiprefix.sh
- TEST: IPv4: host 0 to host 1, mtu 1300                              [ OK ]
- TEST: IPv6: host 0 to host 1, mtu 1300                              [FAIL]
+ ~# cat /sys/kernel/tracing/trace
+ # tracer: nop
+ #
+ # entries-in-buffer/entries-written: 2/2   #P:8
+ #
+ #                                _-----=> irqs-off/BH-disabled
+ #                               / _----=> need-resched
+ #                              | / _---=> hardirq/softirq
+ #                              || / _--=> preempt-depth
+ #                              ||| / _-=> migrate-disable
+ #                              |||| /     delay
+ #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+ #              | |         |   |||||     |         |
+            <...>-859     [001] .....   141.118951: tracing_mark_write           <...>-859     [001] .....   141.148201: tracing_mark_write: 78901234
 
- With -v it shows
+Instead, catch this case and add some context:
 
- COMMAND: ip netns exec h0 /usr/sbin/ping6 -s 1350 -c5 -w5 2001:db8:101::1
- PING 2001:db8:101::1(2001:db8:101::1) 1350 data bytes
- From 2001:db8:100::64 icmp_seq=1 Packet too big: mtu=1300
+ ~# cat /sys/kernel/tracing/trace
+ # tracer: nop
+ #
+ # entries-in-buffer/entries-written: 2/2   #P:8
+ #
+ #                                _-----=> irqs-off/BH-disabled
+ #                               / _----=> need-resched
+ #                              | / _---=> hardirq/softirq
+ #                              || / _--=> preempt-depth
+ #                              ||| / _-=> migrate-disable
+ #                              |||| /     delay
+ #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+ #              | |         |   |||||     |         |
+            <...>-852     [001] .....   121.550551: tracing_mark_write[LINE TOO BIG]
+            <...>-852     [001] .....   121.550581: tracing_mark_write: 78901234
 
- --- 2001:db8:101::1 ping statistics ---
- 1 packets transmitted, 0 received, +1 errors, 100% packet loss, time 0ms
+This now emulates the same output as trace_pipe.
 
- Route get
- 2001:db8:101::1 via 2001:db8:100::64 dev eth0 src 2001:db8:100::1 metric 1024 expires 599sec mtu 1300 pref medium
- Searching for:
-     2001:db8:101::1 from :: via 2001:db8:100::64 dev eth0 src 2001:db8:100::1 .* mtu 1300
+Link: https://lore.kernel.org/linux-trace-kernel/20231209171058.78c1a026@gandalf.local.home
 
-The reason is when CONFIG_IPV6_SUBTREES is not enabled, rt6_fill_node() will
-not put RTA_SRC info. After fix:
-
-]# ./fib_nexthop_multiprefix.sh
-TEST: IPv4: host 0 to host 1, mtu 1300                              [ OK ]
-TEST: IPv6: host 0 to host 1, mtu 1300                              [ OK ]
-
-Fixes: 735ab2f65dce ("selftests: Add test with multiple prefixes using single nexthop")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://lore.kernel.org/r/20231213060856.4030084-7-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/fib_nexthop_multiprefix.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/trace.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/fib_nexthop_multiprefix.sh b/tools/testing/selftests/net/fib_nexthop_multiprefix.sh
-index 51df5e305855..b52d59547fc5 100755
---- a/tools/testing/selftests/net/fib_nexthop_multiprefix.sh
-+++ b/tools/testing/selftests/net/fib_nexthop_multiprefix.sh
-@@ -209,12 +209,12 @@ validate_v6_exception()
- 		echo "Route get"
- 		ip -netns h0 -6 ro get ${dst}
- 		echo "Searching for:"
--		echo "    ${dst} from :: via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
-+		echo "    ${dst}.* via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
- 		echo
- 	fi
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 0cbf833bebcc..548f694fc857 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -4339,7 +4339,11 @@ static int s_show(struct seq_file *m, void *v)
+ 		iter->leftover = ret;
  
- 	ip -netns h0 -6 ro get ${dst} | \
--	grep -q "${dst} from :: via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
-+	grep -q "${dst}.* via ${r1} dev eth0 src ${h0} .* mtu ${mtu}"
- 	rc=$?
- 
- 	log_test $rc 0 "IPv6: host 0 to host ${i}, mtu ${mtu}"
+ 	} else {
+-		print_trace_line(iter);
++		ret = print_trace_line(iter);
++		if (ret == TRACE_TYPE_PARTIAL_LINE) {
++			iter->seq.full = 0;
++			trace_seq_puts(&iter->seq, "[LINE TOO BIG]\n");
++		}
+ 		ret = trace_print_seq(m, &iter->seq);
+ 		/*
+ 		 * If we overflow the seq_file buffer, then it will
 -- 
 2.43.0
 
