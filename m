@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCC56025E;
-	Tue, 23 Jan 2024 01:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40DD6025E;
+	Tue, 23 Jan 2024 01:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974704; cv=none; b=lDfBcnclFAURZBeDTTsrTFdxcJg6B3xD5XFOlPXOC30g5uUwqqifpdke4xwD/igW7yCOrhWH5WOlEsyjj2Hh3JOvb5xJQ6lakMY7zp/k7AizrVpartxjvuzsyyY8WkR+Pw+BBX8sa8De4YywDhd1t4P6j+m9i8TtLWV4PXfSkOE=
+	t=1705974705; cv=none; b=UFYieE81EDhCHmPXzg8b/l/OnOY10uYWEfIx12TWMcDMeLeKmCjPd1FhF/ThbA9CvFrJtvttcoDv3Jcqw+JEvWMk78txixjQE/He7gPZzgu7bRidFE4hJ/Hu7HRxhAylm3C2upE6QGQDfjR9MYJ3xMZAYsbj2V8pj7d1bIbVZ4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974704; c=relaxed/simple;
-	bh=Ws/Vo7W4qnXXI5/6IowO2ZiQRrJ1fdi+xuZZZT/7EIk=;
+	s=arc-20240116; t=1705974705; c=relaxed/simple;
+	bh=TkYLh82MNOueqlgFYD/i1MnfPmAQFLuGFdtRwd8ZNJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iru18dAFJGdt95uRhgb39CvB06MO2FdeMsz+dHbkbq/imk+XFHCe7E8uCLxo9LJ3/NeGn0G86JUnoE7x5NVMrrpHTvTFiD4BYYG0qwmcq+ZAkImu24acpHg4OerK8G3EppYuxw8qAT6zYHtn6C1uWQmP4qnivZ4F/TjnXo3l+HQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLnwqSVm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LBwjL+beK+vvmKQG1dKE9kvr2cIOLMroHGTXyWCCeSTNhlctHf0tdVlYVD9E0db6nBQUScUQJ0Ef03tNuyhFiE4Qz8K7HUE3dc1KsbnDGI/GBHQo0vlF5NREkK1TFiuYbUaL1iPGxmGTnjGcM4O6Xb5rdYkTURDiPuKiFLm5W+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBHvASor; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLnwqSVm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2E0C433C7;
-	Tue, 23 Jan 2024 01:51:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBHvASor"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C019C43394;
+	Tue, 23 Jan 2024 01:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974703;
-	bh=Ws/Vo7W4qnXXI5/6IowO2ZiQRrJ1fdi+xuZZZT/7EIk=;
+	s=korg; t=1705974705;
+	bh=TkYLh82MNOueqlgFYD/i1MnfPmAQFLuGFdtRwd8ZNJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aLnwqSVm6sS1REhkc5Zehvhtg8BsPdLS1QZl8g5NbRjQTJoRFXqKzB+KRUnNHUBxA
-	 7rhVX0OTFIEYFlRyyGivTl1s3IglxWLiaqU2jKH5xzWMlextd0fbyQETKPl0JRewz8
-	 3vEMaKbkasRTjja3ct+aSA7lZxCoLixxFdTV9Sv8=
+	b=eBHvASorMW16Tecobu58z3Wp4xLUpdHOMMIroOeNo9uiEI3L0XImQaSoQrXFwz9S1
+	 xX+jCBKBmc+wwYYsXF+alpXe7Aet3aDnF1Gp+I6ur3GPy4jtzXOhg4GbIUrRAleGvW
+	 x6F7e+WzKpdH4cJiJP8vaTn3rowcy5b+Jkq1z5UE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre TORGUE <alexandre.torgue@foss.st.com>,
-	Yanteng Si <siyanteng@loongson.cn>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Douglas Anderson <dianders@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 106/583] dt-bindings: arm: qcom: Fix html link
-Date: Mon, 22 Jan 2024 15:52:37 -0800
-Message-ID: <20240122235815.408274505@linuxfoundation.org>
+Subject: [PATCH 5.15 227/374] pwm: stm32: Use regmap_clear_bits and regmap_set_bits where applicable
+Date: Mon, 22 Jan 2024 15:58:03 -0800
+Message-ID: <20240122235752.591838278@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,47 +46,151 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 3c3fcac8d3b1b0f242845c3b3c3263bd38b3b92f ]
+[ Upstream commit 632ae5d7eb348b3ef88552ec0999260b6f9d6ab1 ]
 
-This link got broken by commit e790a4ce5290 ("arm: docs: Move Arm
-documentation to Documentation/arch/") when the doc moved from arm/ to
-arch/arm/. Fix the link so that it can continue to be followed.
+Found using coccinelle and the following semantic patch:
 
-Fixes: e790a4ce5290 ("arm: docs: Move Arm documentation to Documentation/arch/")
-Cc: Alexandre TORGUE <alexandre.torgue@foss.st.com>
-Cc: Yanteng Si <siyanteng@loongson.cn>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/20231129030443.2753833-1-swboyd@chromium.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+@@
+expression map, reg, bits;
+@@
+
+- regmap_update_bits(map, reg, bits, bits)
++ regmap_set_bits(map, reg, bits)
+
+@@
+expression map, reg, bits;
+@@
+
+- regmap_update_bits(map, reg, bits, 0)
++ regmap_clear_bits(map, reg, bits)
+
+Tested-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://lore.kernel.org/r/20221115111347.3705732-6-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: 19f1016ea960 ("pwm: stm32: Fix enable count for clk in .probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pwm/pwm-stm32.c | 34 ++++++++++++++++------------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index adbfaea32343..90f31beb80c2 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -136,7 +136,7 @@ description: |
-   There are many devices in the list below that run the standard ChromeOS
-   bootloader setup and use the open source depthcharge bootloader to boot the
-   OS. These devices do not use the scheme described above. For details, see:
--  https://docs.kernel.org/arm/google/chromebook-boot-flow.html
-+  https://docs.kernel.org/arch/arm/google/chromebook-boot-flow.html
+diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
+index 794ca5b02968..21e4a34dfff3 100644
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -115,14 +115,14 @@ static int stm32_pwm_raw_capture(struct stm32_pwm *priv, struct pwm_device *pwm,
+ 	int ret;
  
- properties:
-   $nodename:
+ 	/* Ensure registers have been updated, enable counter and capture */
+-	regmap_update_bits(priv->regmap, TIM_EGR, TIM_EGR_UG, TIM_EGR_UG);
+-	regmap_update_bits(priv->regmap, TIM_CR1, TIM_CR1_CEN, TIM_CR1_CEN);
++	regmap_set_bits(priv->regmap, TIM_EGR, TIM_EGR_UG);
++	regmap_set_bits(priv->regmap, TIM_CR1, TIM_CR1_CEN);
+ 
+ 	/* Use cc1 or cc3 DMA resp for PWM input channels 1 & 2 or 3 & 4 */
+ 	dma_id = pwm->hwpwm < 2 ? STM32_TIMERS_DMA_CH1 : STM32_TIMERS_DMA_CH3;
+ 	ccen = pwm->hwpwm < 2 ? TIM_CCER_CC12E : TIM_CCER_CC34E;
+ 	ccr = pwm->hwpwm < 2 ? TIM_CCR1 : TIM_CCR3;
+-	regmap_update_bits(priv->regmap, TIM_CCER, ccen, ccen);
++	regmap_set_bits(priv->regmap, TIM_CCER, ccen);
+ 
+ 	/*
+ 	 * Timer DMA burst mode. Request 2 registers, 2 bursts, to get both
+@@ -160,8 +160,8 @@ static int stm32_pwm_raw_capture(struct stm32_pwm *priv, struct pwm_device *pwm,
+ 	}
+ 
+ stop:
+-	regmap_update_bits(priv->regmap, TIM_CCER, ccen, 0);
+-	regmap_update_bits(priv->regmap, TIM_CR1, TIM_CR1_CEN, 0);
++	regmap_clear_bits(priv->regmap, TIM_CCER, ccen);
++	regmap_clear_bits(priv->regmap, TIM_CR1, TIM_CR1_CEN);
+ 
+ 	return ret;
+ }
+@@ -359,7 +359,7 @@ static int stm32_pwm_config(struct stm32_pwm *priv, int ch,
+ 
+ 	regmap_write(priv->regmap, TIM_PSC, prescaler);
+ 	regmap_write(priv->regmap, TIM_ARR, prd - 1);
+-	regmap_update_bits(priv->regmap, TIM_CR1, TIM_CR1_ARPE, TIM_CR1_ARPE);
++	regmap_set_bits(priv->regmap, TIM_CR1, TIM_CR1_ARPE);
+ 
+ 	/* Calculate the duty cycles */
+ 	dty = prd * duty_ns;
+@@ -377,7 +377,7 @@ static int stm32_pwm_config(struct stm32_pwm *priv, int ch,
+ 	else
+ 		regmap_update_bits(priv->regmap, TIM_CCMR2, mask, ccmr);
+ 
+-	regmap_update_bits(priv->regmap, TIM_BDTR, TIM_BDTR_MOE, TIM_BDTR_MOE);
++	regmap_set_bits(priv->regmap, TIM_BDTR, TIM_BDTR_MOE);
+ 
+ 	return 0;
+ }
+@@ -411,13 +411,13 @@ static int stm32_pwm_enable(struct stm32_pwm *priv, int ch)
+ 	if (priv->have_complementary_output)
+ 		mask |= TIM_CCER_CC1NE << (ch * 4);
+ 
+-	regmap_update_bits(priv->regmap, TIM_CCER, mask, mask);
++	regmap_set_bits(priv->regmap, TIM_CCER, mask);
+ 
+ 	/* Make sure that registers are updated */
+-	regmap_update_bits(priv->regmap, TIM_EGR, TIM_EGR_UG, TIM_EGR_UG);
++	regmap_set_bits(priv->regmap, TIM_EGR, TIM_EGR_UG);
+ 
+ 	/* Enable controller */
+-	regmap_update_bits(priv->regmap, TIM_CR1, TIM_CR1_CEN, TIM_CR1_CEN);
++	regmap_set_bits(priv->regmap, TIM_CR1, TIM_CR1_CEN);
+ 
+ 	return 0;
+ }
+@@ -431,11 +431,11 @@ static void stm32_pwm_disable(struct stm32_pwm *priv, int ch)
+ 	if (priv->have_complementary_output)
+ 		mask |= TIM_CCER_CC1NE << (ch * 4);
+ 
+-	regmap_update_bits(priv->regmap, TIM_CCER, mask, 0);
++	regmap_clear_bits(priv->regmap, TIM_CCER, mask);
+ 
+ 	/* When all channels are disabled, we can disable the controller */
+ 	if (!active_channels(priv))
+-		regmap_update_bits(priv->regmap, TIM_CR1, TIM_CR1_CEN, 0);
++		regmap_clear_bits(priv->regmap, TIM_CR1, TIM_CR1_CEN);
+ 
+ 	clk_disable(priv->clk);
+ }
+@@ -568,10 +568,9 @@ static void stm32_pwm_detect_complementary(struct stm32_pwm *priv)
+ 	 * If complementary bit doesn't exist writing 1 will have no
+ 	 * effect so we can detect it.
+ 	 */
+-	regmap_update_bits(priv->regmap,
+-			   TIM_CCER, TIM_CCER_CC1NE, TIM_CCER_CC1NE);
++	regmap_set_bits(priv->regmap, TIM_CCER, TIM_CCER_CC1NE);
+ 	regmap_read(priv->regmap, TIM_CCER, &ccer);
+-	regmap_update_bits(priv->regmap, TIM_CCER, TIM_CCER_CC1NE, 0);
++	regmap_clear_bits(priv->regmap, TIM_CCER, TIM_CCER_CC1NE);
+ 
+ 	priv->have_complementary_output = (ccer != 0);
+ }
+@@ -585,10 +584,9 @@ static int stm32_pwm_detect_channels(struct stm32_pwm *priv)
+ 	 * If channels enable bits don't exist writing 1 will have no
+ 	 * effect so we can detect and count them.
+ 	 */
+-	regmap_update_bits(priv->regmap,
+-			   TIM_CCER, TIM_CCER_CCXE, TIM_CCER_CCXE);
++	regmap_set_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
+ 	regmap_read(priv->regmap, TIM_CCER, &ccer);
+-	regmap_update_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE, 0);
++	regmap_clear_bits(priv->regmap, TIM_CCER, TIM_CCER_CCXE);
+ 
+ 	if (ccer & TIM_CCER_CC1E)
+ 		npwm++;
 -- 
 2.43.0
 
