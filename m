@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0CC14831A;
-	Tue, 23 Jan 2024 01:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8783E1419B4;
+	Tue, 23 Jan 2024 01:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972064; cv=none; b=OAeWjq4CNgS7XTUihFCcCLPsYGyYptnXxaEj4DRfOQmwTTViPpqBzCHYDt9laGCPERM+8E7SdZ23ljA2OJkBuyrEw4/frV9xCKq7TCVdqbjgSSwufoh4JIFMOiHGVsW4R1lYhuoFPVtB4unSLqqASY3i00AiOpCsX221iPBuNBc=
+	t=1705972065; cv=none; b=pKZtYXAW9ezXoRNRFQixhF9HFlmsZjlmuFhkR8IJuBn1IM6BnWkMoiiU6F84cS4BS0OJtTz4ryyOI426BcgaivBStiEhGa+tQUZu2JGyR26uMZ/GOKLs1NOoZ7RX/TIkPt7t1TxDUpMXoNMnXlKJjwY7+6BHXyjw0PAu7bkzLh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972064; c=relaxed/simple;
-	bh=5yYpPdpkboP+UloqnFytlOW73PhWAtnw0AlimkRkUkw=;
+	s=arc-20240116; t=1705972065; c=relaxed/simple;
+	bh=IveJ2pMouNksD4/gJSReYhs5QZWUsqAY9CzlmA299hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PmvIFc7pwOhmRuxbsYx1PLhfmidXfmrIXDMghAVf0VsTITW1xr0pkJHL8xXBwCJ/SxP7HxNnTSZr2e2n2GDYeXyIjry/58MWfHJzl0tYdtcu5she3bAzCy4SzeqngM8S7v9/pjuhHgYFCqAKiLI8uX0NMQka1vv1KJJO2NwwDvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLZ7aU9v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cVfKT9zQeDmOJC+TuJ0BwtNcQFELe3qwnzqAsweGPUCEUon4xJun+jgNQMQTxIG63K7L3B7AfvzSb4C9Q4v8rbysdVGBXZtreTksYcspZB0gs0dfeIglfWJPju0Y/7/LY+TGuup4Cth4anCIQEd1BoUsSlwo3z9Fb0iOOUO6f1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDRXGLd9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLZ7aU9v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24043C43390;
-	Tue, 23 Jan 2024 01:07:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDRXGLd9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4478AC433F1;
+	Tue, 23 Jan 2024 01:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972064;
-	bh=5yYpPdpkboP+UloqnFytlOW73PhWAtnw0AlimkRkUkw=;
+	s=korg; t=1705972065;
+	bh=IveJ2pMouNksD4/gJSReYhs5QZWUsqAY9CzlmA299hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CLZ7aU9v2XT3sXPLsreaqHsnvIllxccESXrXSMgRNileQwq5GsmNITyMeZBFlzxk9
-	 YYYZ6HyPc0aTrhDuyvwxjYnB62AWCGYXuhIhE34EDcMhj2jd0dYXjdwi3YqcdOjjqu
-	 fa+hr0KtSgX9iaTv6FlxsxYritMfny2j18NU25Rg=
+	b=aDRXGLd9RLRCAOmkCmg6xweCjFxJ4pyMViefF0DDoY8P73hbqyFxdSXqVd5uVTYLX
+	 bdjuQrz18b/YUL6qd+eQAfM0t71M/WZyhurjRhp+W7kac2Lf2GG7bykxanR4HQu0dW
+	 2Tgs4MRJXx3JfUPjKUR8BAB7nZ0HF3Dc+B5Idd/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+afb726d49f84c8d95ee1@syzkaller.appspotmail.com,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 417/417] riscv: Fix wrong usage of lm_alias() when splitting a huge linear mapping
-Date: Mon, 22 Jan 2024 15:59:45 -0800
-Message-ID: <20240122235806.137097416@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 5.15 001/374] f2fs: explicitly null-terminate the xattr list
+Date: Mon, 22 Jan 2024 15:54:17 -0800
+Message-ID: <20240122235744.658311870@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit c29fc621e1a49949a14c7fa031dd4760087bfb29 upstream.
+commit e26b6d39270f5eab0087453d9b544189a38c8564 upstream.
 
-lm_alias() can only be used on kernel mappings since it explicitly uses
-__pa_symbol(), so simply fix this by checking where the address belongs
-to before.
+When setting an xattr, explicitly null-terminate the xattr list.  This
+eliminates the fragile assumption that the unused xattr space is always
+zeroed.
 
-Fixes: 311cd2f6e253 ("riscv: Fix set_memory_XX() and set_direct_map_XX() by splitting huge linear mappings")
-Reported-by: syzbot+afb726d49f84c8d95ee1@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-riscv/000000000000620dd0060c02c5e1@google.com/
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Link: https://lore.kernel.org/r/20231212195400.128457-1-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/mm/pageattr.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/f2fs/xattr.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/riscv/mm/pageattr.c
-+++ b/arch/riscv/mm/pageattr.c
-@@ -304,8 +304,13 @@ static int __set_memory(unsigned long ad
- 				goto unlock;
- 		}
- 	} else if (is_kernel_mapping(start) || is_linear_mapping(start)) {
--		lm_start = (unsigned long)lm_alias(start);
--		lm_end = (unsigned long)lm_alias(end);
-+		if (is_kernel_mapping(start)) {
-+			lm_start = (unsigned long)lm_alias(start);
-+			lm_end = (unsigned long)lm_alias(end);
-+		} else {
-+			lm_start = start;
-+			lm_end = end;
-+		}
+--- a/fs/f2fs/xattr.c
++++ b/fs/f2fs/xattr.c
+@@ -745,6 +745,12 @@ static int __f2fs_setxattr(struct inode
+ 		memcpy(pval, value, size);
+ 		last->e_value_size = cpu_to_le16(size);
+ 		new_hsize += newsize;
++		/*
++		 * Explicitly add the null terminator.  The unused xattr space
++		 * is supposed to always be zeroed, which would make this
++		 * unnecessary, but don't depend on that.
++		 */
++		*(u32 *)((u8 *)last + newsize) = 0;
+ 	}
  
- 		ret = split_linear_mapping(lm_start, lm_end);
- 		if (ret)
+ 	error = write_all_xattrs(inode, new_hsize, base_addr, ipage);
 
 
