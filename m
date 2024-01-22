@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F8762807;
-	Tue, 23 Jan 2024 00:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A963627F3;
+	Tue, 23 Jan 2024 00:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971213; cv=none; b=VSGotXjcB/bv16ZwJF+tz5ZTUGAJFxB4YcGTs5Op8NVKe4uEz3co8DsWUjD8N8a2AtWl2zi0JzIwCH+bz60I+MaSIsdBn7C3R1lllTRYrTjDXDEHbERpIQcNpUim+z5YK2F6Gsfh1KTav02UzGJXB8RbG4UY9t58dQ+h+AUgm5U=
+	t=1705971218; cv=none; b=fz8Rsr37vIftln69zmqsCkOtKqRQMtx07ECPIENCrx1jFXC4iUa3I+FF+mxVey0H/xcI7nX5z4DyMY5mc0aoeYnuHmQswak51JlwNzW8payWW83ksT/oijpf9ZqHmoH8NGhz+T+vsg2DDqLoymEUgL8gOImuyCGKf5RB4h5z7bM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971213; c=relaxed/simple;
-	bh=YOC1xYfbhCbM2QJsbKk0BU6OP8XBr70VecR5eIqrGdk=;
+	s=arc-20240116; t=1705971218; c=relaxed/simple;
+	bh=woIiynb7kt+ylFZJ2NxalwJmBdy5ldkl0LgcN5pEH2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l+Md4mqsvev7st8p+bwd3orEmKUiXfpuAoSrA5vVhYKuWKp3/JXe7OAqEaQWvW8LYgSU6N/b3Lk8McTqS1DqgiO+kMYIoqsUFFz4n8E6YLm/sTphM4k0ycUgiNfK+ZruAqy9Sr1xZfLWujkpPPgbz65tdg4eCrpuiOEzBrcrdJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfDDhuAo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nxkBVcOW5O0ytb61FoY9vcAjCw/Zsqow5RQg2Fhg3Gp6iYxQZViz/T+Nyj3fl4ZQl6zibXqA+h0xo+NOHeoLzQcBrf/rBtEY9LJiuPlXHcAIZL+ubnIZD53KipcTCS+af6qRoHnW8+Wr+eKjxuUBm7x1rwgr+Nsd7VrUTEcerIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uR7T2z5B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfDDhuAo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C116DC433F1;
-	Tue, 23 Jan 2024 00:53:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uR7T2z5B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E4BC433F1;
+	Tue, 23 Jan 2024 00:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971212;
-	bh=YOC1xYfbhCbM2QJsbKk0BU6OP8XBr70VecR5eIqrGdk=;
+	s=korg; t=1705971218;
+	bh=woIiynb7kt+ylFZJ2NxalwJmBdy5ldkl0LgcN5pEH2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cfDDhuAooJmq0sBHSyc+Cf1wItQrzmV55pThwPrA2M+B/wiKEORB27xMRh1396DOK
-	 Phi7K3dCvu4TRmaA40O0bUsN79kVewzo3w+M4XwpPYbqv8lDad7CfHijMl73ChI/Zy
-	 qnobebNDiuxnIlpUHyEe5TFB0XoSwpEb8RwdFrqo=
+	b=uR7T2z5BIRgOaDxFXr7EHmJmaPYD4pYH9XgpHhX0C2y4bcXhSoQR+d4a53raKrJNj
+	 MkBARdwr74cbUNDV/0elPPAyXVMt9wGAiPjriEwsYgZ7KYN1L8Gtsar8aohZtEVjCC
+	 QI34b0eC8WM6ntvb1/oPOLgc/VqDCNR5J2WXwGCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 192/417] RDMA/hns: Fix memory leak in free_mr_init()
-Date: Mon, 22 Jan 2024 15:56:00 -0800
-Message-ID: <20240122235758.574456568@linuxfoundation.org>
+Subject: [PATCH 5.10 113/286] ARM: dts: qcom: apq8064: correct XOADC register address
+Date: Mon, 22 Jan 2024 15:56:59 -0800
+Message-ID: <20240122235736.455929406@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +49,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 288f535951aa81ed674f5e5477ab11b9d9351b8c ]
+[ Upstream commit 554557542e709e190eff8a598f0cde02647d533a ]
 
-When a reserved QP fails to be created, the memory of the remaining
-created reserved QPs is leaked.
+The XOADC is present at the address 0x197 rather than just 197. It
+doesn't change a lot (since the driver hardcodes all register
+addresses), but the DT should present correct address anyway.
 
-Fixes: 70f92521584f ("RDMA/hns: Use the reserved loopback QPs to free MR before destroying MPT")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20231207114231.2872104-6-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: c4b70883ee33 ("ARM: dts: add XOADC and IIO HWMON to APQ8064")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230928110309.1212221-3-dmitry.baryshkov@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 280a3458bb53..58fbb1d3b7f4 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -2819,6 +2819,10 @@ static int free_mr_alloc_res(struct hns_roce_dev *hr_dev)
- 	return 0;
+diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+index fb25ede1ce9f..3f1002c34446 100644
+--- a/arch/arm/boot/dts/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+@@ -760,7 +760,7 @@ pwrkey@1c {
  
- create_failed_qp:
-+	for (i--; i >= 0; i--) {
-+		hns_roce_v2_destroy_qp(&free_mr->rsv_qp[i]->ibqp, NULL);
-+		kfree(free_mr->rsv_qp[i]);
-+	}
- 	hns_roce_destroy_cq(cq, NULL);
- 	kfree(cq);
- 
+ 				xoadc: xoadc@197 {
+ 					compatible = "qcom,pm8921-adc";
+-					reg = <197>;
++					reg = <0x197>;
+ 					interrupts-extended = <&pmicintc 78 IRQ_TYPE_EDGE_RISING>;
+ 					#address-cells = <2>;
+ 					#size-cells = <0>;
 -- 
 2.43.0
 
