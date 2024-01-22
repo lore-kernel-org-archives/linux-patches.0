@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E1151008;
-	Tue, 23 Jan 2024 00:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D514EB34;
+	Tue, 23 Jan 2024 00:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970138; cv=none; b=dPy+4sPdIuG2C5UuL4QdBUC2UXi/w7M2ouWTKkMOlLZXUJSJvEhNwaHHr3gYag5WbQ2LTRlBPDyXiUw74dtmpp2rmusMqGifyuGphscxxc5J5SixO9lVj9YU9uta+39cae7OlsV4u7RKu9VNdOG+EpP/09l7DgA9KQXEpEkTqFc=
+	t=1705970141; cv=none; b=doRXjD8DcCdSv/isY5VS0zKhrb0TUNNBrGAVYc1v3b+ZqYk6zrqIdOyBFMU8GJ6af/DJg7aMsj6+3zrJNS6Aems1qpZzZfkW8zYeDvCnBBG1N35/ningFJyCG93hErLs1qYVhz/+WOQ/tWzGNaYFK9NuxgZIGiYkdIR8RlRPDaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970138; c=relaxed/simple;
-	bh=ExfK1FQ2wB/uzX1vbHOFj1zFy5t4jII+GINI3DEoKOY=;
+	s=arc-20240116; t=1705970141; c=relaxed/simple;
+	bh=ARitPs1iw8c+2WF9zXMN5RO5C/DolmumGyavqEUxPVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fm7ScgEVJbBiungRSSx90CrpuIWQdPkDXUZpgp6+ICin1uTE2CuJ4HqRr7h7M2QCOU0lwOtO+Dwf9Dc44wDQ5EjN+wl03OJd1FBii25FPtpLb7nNQAHzGaA0UzNFqaSQouUDJKtiFHJuEoEfglhJ191mH/TUgu9kudGIemeiCfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXIL1w7y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m70ywXPOsPUxrk+ESB99FYx+GYkYuBVV3b+g+6cUU+YdjdmDohMKxagHwyCyCQKuSNipq3mhvDi/Pgou+p23XcSUqyb/L8v/zuLOzjmBENpsZy9qifiktMfQuV2QdzlYEQmCP8Did+SFyNny/dQnftzvX+YmqPwBiKJxQ5m9z7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nc5SKITW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXIL1w7y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68CE3C433C7;
-	Tue, 23 Jan 2024 00:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nc5SKITW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E35C433C7;
+	Tue, 23 Jan 2024 00:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970137;
-	bh=ExfK1FQ2wB/uzX1vbHOFj1zFy5t4jII+GINI3DEoKOY=;
+	s=korg; t=1705970141;
+	bh=ARitPs1iw8c+2WF9zXMN5RO5C/DolmumGyavqEUxPVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LXIL1w7yX6ZDmks/ym0+Q8TY3JxkEFdnRale8bV7+62/RLq9utpur1z4jf0Cipemv
-	 ceeFTzAgs1vRSCFbvzgzamF5C3VscnqPxuC2FI2F76SzzBfrGofkSJbq4uy8AT82eb
-	 XxMjSXIojsvlo/jDDCOGFZex2fyutFPX+Npet9AU=
+	b=nc5SKITWSX/WQu6kmb6tK/WA/BTBlHFR04PN4mpTH+ijdufr4qP7x2yrvxmFwYkKB
+	 DHqbbjeu1wb6ESx5ZbBSJhw1dNvjWgGxSii2Ym4WsPw0ngF8KZi3Wzjd1qgxuVLkf2
+	 DqbThb8nVeWwAr/ZyqM33wMDcdx97WtHVnvfvAn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sneh Shah <quic_snehshah@quicinc.com>,
-	Simon Horman <horms@kernel.org>,
+	syzbot+8d482d0e407f665d9d10@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 6.7 597/641] net: stmmac: Fix ethool link settings ops for integrated PCS
-Date: Mon, 22 Jan 2024 15:58:21 -0800
-Message-ID: <20240122235836.886484889@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 598/641] udp: annotate data-races around up->pending
+Date: Mon, 22 Jan 2024 15:58:22 -0800
+Message-ID: <20240122235836.919348143@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,52 +53,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sneh Shah <quic_snehshah@quicinc.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 08300adac3b8dab9e2fd3be0155c7d3093c755f4 ]
+[ Upstream commit 482521d8e0c6520429478aa6866cd44128b33d5d ]
 
-Currently get/set_link_ksettings ethtool ops are dependent on PCS.
-When PCS is integrated, it will not have separate link config.
-Bypass configuring and checking PCS for integrated PCS.
+up->pending can be read without holding the socket lock,
+as pointed out by syzbot [1]
 
-Fixes: aa571b6275fb ("net: stmmac: add new switch to struct plat_stmmacenet_data")
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
-Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Add READ_ONCE() in lockless contexts, and WRITE_ONCE()
+on write side.
+
+[1]
+BUG: KCSAN: data-race in udpv6_sendmsg / udpv6_sendmsg
+
+write to 0xffff88814e5eadf0 of 4 bytes by task 15547 on cpu 1:
+ udpv6_sendmsg+0x1405/0x1530 net/ipv6/udp.c:1596
+ inet6_sendmsg+0x63/0x80 net/ipv6/af_inet6.c:657
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ __sock_sendmsg net/socket.c:745 [inline]
+ __sys_sendto+0x257/0x310 net/socket.c:2192
+ __do_sys_sendto net/socket.c:2204 [inline]
+ __se_sys_sendto net/socket.c:2200 [inline]
+ __x64_sys_sendto+0x78/0x90 net/socket.c:2200
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+read to 0xffff88814e5eadf0 of 4 bytes by task 15551 on cpu 0:
+ udpv6_sendmsg+0x22c/0x1530 net/ipv6/udp.c:1373
+ inet6_sendmsg+0x63/0x80 net/ipv6/af_inet6.c:657
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ __sock_sendmsg net/socket.c:745 [inline]
+ ____sys_sendmsg+0x37c/0x4d0 net/socket.c:2586
+ ___sys_sendmsg net/socket.c:2640 [inline]
+ __sys_sendmmsg+0x269/0x500 net/socket.c:2726
+ __do_sys_sendmmsg net/socket.c:2755 [inline]
+ __se_sys_sendmmsg net/socket.c:2752 [inline]
+ __x64_sys_sendmmsg+0x57/0x60 net/socket.c:2752
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+value changed: 0x00000000 -> 0x0000000a
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 15551 Comm: syz-executor.1 Tainted: G        W          6.7.0-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+8d482d0e407f665d9d10@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/netdev/0000000000009e46c3060ebcdffd@google.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/ipv4/udp.c | 12 ++++++------
+ net/ipv6/udp.c | 16 ++++++++--------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-index 112a36a698f1..bfd146ad6937 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-@@ -311,8 +311,9 @@ static int stmmac_ethtool_get_link_ksettings(struct net_device *dev,
- {
- 	struct stmmac_priv *priv = netdev_priv(dev);
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 89e5a806b82e..5f742d0b9e07 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -805,7 +805,7 @@ void udp_flush_pending_frames(struct sock *sk)
  
--	if (priv->hw->pcs & STMMAC_PCS_RGMII ||
--	    priv->hw->pcs & STMMAC_PCS_SGMII) {
-+	if (!(priv->plat->flags & STMMAC_FLAG_HAS_INTEGRATED_PCS) &&
-+	    (priv->hw->pcs & STMMAC_PCS_RGMII ||
-+	     priv->hw->pcs & STMMAC_PCS_SGMII)) {
- 		struct rgmii_adv adv;
- 		u32 supported, advertising, lp_advertising;
+ 	if (up->pending) {
+ 		up->len = 0;
+-		up->pending = 0;
++		WRITE_ONCE(up->pending, 0);
+ 		ip_flush_pending_frames(sk);
+ 	}
+ }
+@@ -993,7 +993,7 @@ int udp_push_pending_frames(struct sock *sk)
  
-@@ -397,8 +398,9 @@ stmmac_ethtool_set_link_ksettings(struct net_device *dev,
- {
- 	struct stmmac_priv *priv = netdev_priv(dev);
+ out:
+ 	up->len = 0;
+-	up->pending = 0;
++	WRITE_ONCE(up->pending, 0);
+ 	return err;
+ }
+ EXPORT_SYMBOL(udp_push_pending_frames);
+@@ -1070,7 +1070,7 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	getfrag = is_udplite ? udplite_getfrag : ip_generic_getfrag;
  
--	if (priv->hw->pcs & STMMAC_PCS_RGMII ||
--	    priv->hw->pcs & STMMAC_PCS_SGMII) {
-+	if (!(priv->plat->flags & STMMAC_FLAG_HAS_INTEGRATED_PCS) &&
-+	    (priv->hw->pcs & STMMAC_PCS_RGMII ||
-+	     priv->hw->pcs & STMMAC_PCS_SGMII)) {
- 		/* Only support ANE */
- 		if (cmd->base.autoneg != AUTONEG_ENABLE)
+ 	fl4 = &inet->cork.fl.u.ip4;
+-	if (up->pending) {
++	if (READ_ONCE(up->pending)) {
+ 		/*
+ 		 * There are pending frames.
+ 		 * The socket lock must be held while it's corked.
+@@ -1269,7 +1269,7 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	fl4->saddr = saddr;
+ 	fl4->fl4_dport = dport;
+ 	fl4->fl4_sport = inet->inet_sport;
+-	up->pending = AF_INET;
++	WRITE_ONCE(up->pending, AF_INET);
+ 
+ do_append_data:
+ 	up->len += ulen;
+@@ -1281,7 +1281,7 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	else if (!corkreq)
+ 		err = udp_push_pending_frames(sk);
+ 	else if (unlikely(skb_queue_empty(&sk->sk_write_queue)))
+-		up->pending = 0;
++		WRITE_ONCE(up->pending, 0);
+ 	release_sock(sk);
+ 
+ out:
+@@ -1319,7 +1319,7 @@ void udp_splice_eof(struct socket *sock)
+ 	struct sock *sk = sock->sk;
+ 	struct udp_sock *up = udp_sk(sk);
+ 
+-	if (!up->pending || udp_test_bit(CORK, sk))
++	if (!READ_ONCE(up->pending) || udp_test_bit(CORK, sk))
+ 		return;
+ 
+ 	lock_sock(sk);
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 622b10a549f7..a1a79ff46fd9 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -1135,7 +1135,7 @@ static void udp_v6_flush_pending_frames(struct sock *sk)
+ 		udp_flush_pending_frames(sk);
+ 	else if (up->pending) {
+ 		up->len = 0;
+-		up->pending = 0;
++		WRITE_ONCE(up->pending, 0);
+ 		ip6_flush_pending_frames(sk);
+ 	}
+ }
+@@ -1313,7 +1313,7 @@ static int udp_v6_push_pending_frames(struct sock *sk)
+ 			      &inet_sk(sk)->cork.base);
+ out:
+ 	up->len = 0;
+-	up->pending = 0;
++	WRITE_ONCE(up->pending, 0);
+ 	return err;
+ }
+ 
+@@ -1370,7 +1370,7 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 		default:
  			return -EINVAL;
+ 		}
+-	} else if (!up->pending) {
++	} else if (!READ_ONCE(up->pending)) {
+ 		if (sk->sk_state != TCP_ESTABLISHED)
+ 			return -EDESTADDRREQ;
+ 		daddr = &sk->sk_v6_daddr;
+@@ -1401,8 +1401,8 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 		return -EMSGSIZE;
+ 
+ 	getfrag  =  is_udplite ?  udplite_getfrag : ip_generic_getfrag;
+-	if (up->pending) {
+-		if (up->pending == AF_INET)
++	if (READ_ONCE(up->pending)) {
++		if (READ_ONCE(up->pending) == AF_INET)
+ 			return udp_sendmsg(sk, msg, len);
+ 		/*
+ 		 * There are pending frames.
+@@ -1593,7 +1593,7 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 		goto out;
+ 	}
+ 
+-	up->pending = AF_INET6;
++	WRITE_ONCE(up->pending, AF_INET6);
+ 
+ do_append_data:
+ 	if (ipc6.dontfrag < 0)
+@@ -1607,7 +1607,7 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	else if (!corkreq)
+ 		err = udp_v6_push_pending_frames(sk);
+ 	else if (unlikely(skb_queue_empty(&sk->sk_write_queue)))
+-		up->pending = 0;
++		WRITE_ONCE(up->pending, 0);
+ 
+ 	if (err > 0)
+ 		err = inet6_test_bit(RECVERR6, sk) ? net_xmit_errno(err) : 0;
+@@ -1648,7 +1648,7 @@ static void udpv6_splice_eof(struct socket *sock)
+ 	struct sock *sk = sock->sk;
+ 	struct udp_sock *up = udp_sk(sk);
+ 
+-	if (!up->pending || udp_test_bit(CORK, sk))
++	if (!READ_ONCE(up->pending) || udp_test_bit(CORK, sk))
+ 		return;
+ 
+ 	lock_sock(sk);
 -- 
 2.43.0
 
