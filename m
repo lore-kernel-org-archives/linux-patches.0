@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCFD5B5A0;
-	Tue, 23 Jan 2024 01:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CD55B210;
+	Tue, 23 Jan 2024 01:45:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974332; cv=none; b=uUp/wn7IeVUDVYhlh80BKsEQgVCP3Kwb7AnJ0lbq16134E+7AtI8HNBlyu6wpaFIlSOqosC2dF+Jg/4k7SWe/FQqWwmUPZn3yO2XqYSRZlwHc3uzhFvRwuASUIrLsB2ojsLgUaWbLz8ys8tRInU9ujoBnpUg+rFZltZ8VkAcuSs=
+	t=1705974333; cv=none; b=krWXBB0lqHsHqPeBMkTsnzxQ1cTFN4keRKvVL/aLv+m7ag+HT+4ToESFGWbiXWyWOt0gswL0QV8tdBmZL7fGIwQzjC7em67rGR8kIvdAmrGTUBlJ8Pz8Fa72NnIZ4Rxi1V4Rm+623O9uTJEDC0SbQtU2XfGwSQDDFFKwI/km3I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974332; c=relaxed/simple;
-	bh=dooU8+5FhSJVpyTYNGykAl/ZWR6G9uPRZxmdOxGtxIM=;
+	s=arc-20240116; t=1705974333; c=relaxed/simple;
+	bh=WLev17zL128453TDNYv437LgmU3NLTiZrCuc91jlM80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7g3DViHazfpjI5blpMBKn6O7PPf91RCcjtdAWVbFThAsRHk+DxJGUJwvgB74aUFhk/YyRUQC/3peoZc62WfntKlswpW4Wf2WTmb7CMSrosV/8TWX0YlWnOiaBcsuKcOQ1Fqa+ir2KsqrTGLIHBqPmgFm9H2GTLR6xIopnrRiE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHJhpXGI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QAXhzgzLGdhxxHFXEFmmnLPCa2AqA/3eV4XyH59x7rSSQ/r8lWHIHrjWUzYrqTcfr1PC/qm8JRqSt/DZ5md5Bw5s0DvqcE7x99RlkOMLToT55bXH4eBbbuw7zwJ6yx1/h01PPrfcrvMNOuEJFZOjqJYXbtu+BizuW8CxU5H61ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNv4Wqw7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHJhpXGI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769E3C433F1;
-	Tue, 23 Jan 2024 01:45:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNv4Wqw7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7672C433F1;
+	Tue, 23 Jan 2024 01:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974331;
-	bh=dooU8+5FhSJVpyTYNGykAl/ZWR6G9uPRZxmdOxGtxIM=;
+	s=korg; t=1705974332;
+	bh=WLev17zL128453TDNYv437LgmU3NLTiZrCuc91jlM80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AHJhpXGIjRHSY+3CQQN6ffnReTvzFp53OdxGJKx+bBLMCQIaXluCw9zG692GPlFlR
-	 Kws16jLGdrD7JbKWHoA1CjaIwcE/cqKSBrbR+6kY95hTTzvbW/fVrKmFB0cKcMiz+H
-	 Xsme/ZZI0qtnMf3WehwwDdUJfgXJ8koECSPoKt0c=
+	b=nNv4Wqw7TDJq5EFJQ6q3y5tr2a85KqzT1vJ30GPGOpWuY/DQu0QjrIc6qVhJ8uDWu
+	 n1KWHWQSaNVh8SKjXeV2iUN9Aqgj3Rd50D70TwbjoW5jPSlPNrHtN4A2Noa2R1Z/q/
+	 lbGXU0reuMVQYZGSGwH4IgXavvYsEaidyEMUa/e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 178/374] RDMA/usnic: Silence uninitialized symbol smatch warnings
-Date: Mon, 22 Jan 2024 15:57:14 -0800
-Message-ID: <20240122235750.829259926@linuxfoundation.org>
+Subject: [PATCH 6.6 052/583] crypto: sahara - fix processing requests with cryptlen < sg->length
+Date: Mon, 22 Jan 2024 15:51:43 -0800
+Message-ID: <20240122235813.728024566@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,84 +47,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Ovidiu Panait <ovidiu.panait@windriver.com>
 
-[ Upstream commit b9a85e5eec126d6ae6c362f94b447c223e8fe6e4 ]
+[ Upstream commit 5b8668ce3452827d27f8c34ff6ba080a8f983ed0 ]
 
-The patch 1da177e4c3f4: "Linux-2.6.12-rc2" from Apr 16, 2005
-(linux-next), leads to the following Smatch static checker warning:
+It's not always the case that the entire sg entry needs to be processed.
+Currently, when cryptlen is less than sg->legth, "Descriptor length" errors
+are encountered.
 
-        drivers/infiniband/hw/mthca/mthca_cmd.c:644 mthca_SYS_EN()
-        error: uninitialized symbol 'out'.
+The error was noticed when testing xts(sahara-ecb-aes) with arbitrary sized
+input data. To fix this, take the actual request size into account when
+populating the hw links.
 
-drivers/infiniband/hw/mthca/mthca_cmd.c
-    636 int mthca_SYS_EN(struct mthca_dev *dev)
-    637 {
-    638         u64 out;
-    639         int ret;
-    640
-    641         ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
-
-We pass out here and it gets used without being initialized.
-
-        err = mthca_cmd_post(dev, in_param,
-                             out_param ? *out_param : 0,
-                                         ^^^^^^^^^^
-                             in_modifier, op_modifier,
-                             op, context->token, 1);
-
-It's the same in mthca_cmd_wait() and mthca_cmd_poll().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/533bc3df-8078-4397-b93d-d1f6cec9b636@moroto.mountain
-Link: https://lore.kernel.org/r/c559cb7113158c02d75401ac162652072ef1b5f0.1699867650.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 5de8875281e1 ("crypto: sahara - Add driver for SAHARA2 accelerator.")
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mthca/mthca_cmd.c  | 4 ++--
- drivers/infiniband/hw/mthca/mthca_main.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/crypto/sahara.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mthca/mthca_cmd.c b/drivers/infiniband/hw/mthca/mthca_cmd.c
-index bdf5ed38de22..0307c45aa6d3 100644
---- a/drivers/infiniband/hw/mthca/mthca_cmd.c
-+++ b/drivers/infiniband/hw/mthca/mthca_cmd.c
-@@ -635,7 +635,7 @@ void mthca_free_mailbox(struct mthca_dev *dev, struct mthca_mailbox *mailbox)
- 
- int mthca_SYS_EN(struct mthca_dev *dev)
- {
--	u64 out;
-+	u64 out = 0;
+diff --git a/drivers/crypto/sahara.c b/drivers/crypto/sahara.c
+index 2f8c81763bd4..55cfe51575b9 100644
+--- a/drivers/crypto/sahara.c
++++ b/drivers/crypto/sahara.c
+@@ -444,6 +444,7 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
  	int ret;
+ 	int i, j;
+ 	int idx = 0;
++	u32 len;
  
- 	ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
-@@ -1955,7 +1955,7 @@ int mthca_WRITE_MGM(struct mthca_dev *dev, int index,
- int mthca_MGID_HASH(struct mthca_dev *dev, struct mthca_mailbox *mailbox,
- 		    u16 *hash)
- {
--	u64 imm;
-+	u64 imm = 0;
- 	int err;
+ 	memcpy(dev->key_base, ctx->key, ctx->keylen);
  
- 	err = mthca_cmd_imm(dev, mailbox->dma, &imm, 0, 0, CMD_MGID_HASH,
-diff --git a/drivers/infiniband/hw/mthca/mthca_main.c b/drivers/infiniband/hw/mthca/mthca_main.c
-index f507c4cd46d3..f77c48b317f2 100644
---- a/drivers/infiniband/hw/mthca/mthca_main.c
-+++ b/drivers/infiniband/hw/mthca/mthca_main.c
-@@ -382,7 +382,7 @@ static int mthca_init_icm(struct mthca_dev *mdev,
- 			  struct mthca_init_hca_param *init_hca,
- 			  u64 icm_size)
- {
--	u64 aux_pages;
-+	u64 aux_pages = 0;
- 	int err;
- 
- 	err = mthca_SET_ICM_SIZE(mdev, icm_size, &aux_pages);
+@@ -494,12 +495,14 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
+ 	/* Create input links */
+ 	dev->hw_desc[idx]->p1 = dev->hw_phys_link[0];
+ 	sg = dev->in_sg;
++	len = dev->total;
+ 	for (i = 0; i < dev->nb_in_sg; i++) {
+-		dev->hw_link[i]->len = sg->length;
++		dev->hw_link[i]->len = min(len, sg->length);
+ 		dev->hw_link[i]->p = sg->dma_address;
+ 		if (i == (dev->nb_in_sg - 1)) {
+ 			dev->hw_link[i]->next = 0;
+ 		} else {
++			len -= min(len, sg->length);
+ 			dev->hw_link[i]->next = dev->hw_phys_link[i + 1];
+ 			sg = sg_next(sg);
+ 		}
+@@ -508,12 +511,14 @@ static int sahara_hw_descriptor_create(struct sahara_dev *dev)
+ 	/* Create output links */
+ 	dev->hw_desc[idx]->p2 = dev->hw_phys_link[i];
+ 	sg = dev->out_sg;
++	len = dev->total;
+ 	for (j = i; j < dev->nb_out_sg + i; j++) {
+-		dev->hw_link[j]->len = sg->length;
++		dev->hw_link[j]->len = min(len, sg->length);
+ 		dev->hw_link[j]->p = sg->dma_address;
+ 		if (j == (dev->nb_out_sg + i - 1)) {
+ 			dev->hw_link[j]->next = 0;
+ 		} else {
++			len -= min(len, sg->length);
+ 			dev->hw_link[j]->next = dev->hw_phys_link[j + 1];
+ 			sg = sg_next(sg);
+ 		}
 -- 
 2.43.0
 
