@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854D661673;
-	Tue, 23 Jan 2024 01:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5C661673;
+	Tue, 23 Jan 2024 01:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974940; cv=none; b=oqOCY5sOd0K+/WSNaJKmIU/7iQkaZk+ZE68b69V55exrykY0gz5WdT1f2QydBTTRO2IL7YPFqJhPsgmlRJlEqr5f4+RGwT32svKxkS+NYxw+XeSZ8w/Ouic9R/mwT9NRpp2jGnIs1n2IPau+o97ZjIDI7UoDfMkYFKZdZa+2gN4=
+	t=1705974941; cv=none; b=OcuCAYn1HBJPlyDst9tFl97r73nrWtqR5dxGUR28ISnLjnr/NPU4/eCPKhjm5HnSnu/oGvaA9YM8x53xg0J7izlFSlDrBtWrKlE3em8SSlMfBmsZ7Q/GvWa8V0WFP5ssPQb34qwGX3YutpC1G1N7SI+raw8b8A7+fwcYmKNPqWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974940; c=relaxed/simple;
-	bh=2+Bc5hx+4AiDlFIjHgSzuSg4mzpMVW64HTZNxwc+CZY=;
+	s=arc-20240116; t=1705974941; c=relaxed/simple;
+	bh=ze7TUIHzgZiwN/A14NftMzvy5/stjoDNMwDDKFc2R7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s+PfoRrp+Oz5wTawGwvZXb1+mPal33SFARbhN9yoKY7qd8g3TGcn/Pi30/KsiwZiKAtMcVnLAB3AbbHEKugQVqvqc4OEPe2X2EKnRMTbV0xz5jAoj3XaABjCKnRa3ysC9djaCWL+5Qeiss/dXgqEfozZsa3HXVjkdkFcY685JHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqodiOSR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ezBm0m9wgNFpVlapJmP8EbHuDLJce6E5e42GMnR5h/qKb/HEyJsvQ+LEeXgrW6cJ/QAuJP/i30Jd4y2/N+QQjcDNFJOHISebDy0WfheAeDGOBYoAJ5E2SCyR6iNMMeXvvuGZy5bNJNKN6OwEDT/mInLLPYgE4sjgq5usjlwFfvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEaT4oYG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqodiOSR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE155C43399;
-	Tue, 23 Jan 2024 01:55:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEaT4oYG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F79C433C7;
+	Tue, 23 Jan 2024 01:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705974940;
-	bh=2+Bc5hx+4AiDlFIjHgSzuSg4mzpMVW64HTZNxwc+CZY=;
+	bh=ze7TUIHzgZiwN/A14NftMzvy5/stjoDNMwDDKFc2R7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QqodiOSRFrRQtcZg6si5FqPYMrixYxryAZ9ACELy9rBl/zLK9zVnuI1qpjzX8H3oP
-	 RRoE0GPnmY5886rSzwGfBH5DLX86aGjVVW1HWW7R7Ulp1HFY71qDJg4WPsk/4+J1tq
-	 jD1PzGyUeJ1YkdaGocY1Q9hJ9OoOYpe225RGLR1g=
+	b=rEaT4oYGgaePofU7w6zZuPcnZXIR9SV6l3JVsPCjDXZtl7SVheIE8cm541mLcuyD5
+	 mPU18A4g4f662MxA/ISHbGrnL8vwHStSLRnMXd+utpSIr4v2v0SrE4BCXAm/mpcj0y
+	 Jlur/b0nqP5Sm9CACIqRF8sAKx/oIBsyBvtsUYyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 135/583] wifi: mt76: fix typo in mt76_get_of_eeprom_from_nvmem function
-Date: Mon, 22 Jan 2024 15:53:06 -0800
-Message-ID: <20240122235816.245249008@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 5.15 260/374] usb: cdns3: Fix uvc fail when DMA cross 4k boundery since sg enabled
+Date: Mon, 22 Jan 2024 15:58:36 -0800
+Message-ID: <20240122235753.806837018@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +45,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit c33e5f4cbb9f961e66473a9ace077c4d1f29a5bb ]
+commit 40c304109e866a7dc123661a5c8ca72f6b5e14e0 upstream.
 
-Fix typo in mt76_get_of_eeprom_from_nvmem where eeprom was misspelled as
-epprom.
+Supposed DMA cross 4k bounder problem should be fixed at DEV_VER_V2, but
+still met problem when do ISO transfer if sg enabled.
 
-Fixes: 5bef3a406c6e ("wifi: mt76: add support for providing eeprom in nvmem cells")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Data pattern likes below when sg enabled, package size is 1k and mult is 2
+	[UVC Header(8B) ] [data(3k - 8)] ...
+
+The received data at offset 0xd000 will get 0xc000 data, len 0x70. Error
+happen position as below pattern:
+	0xd000: wrong
+	0xe000: wrong
+	0xf000: correct
+	0x10000: wrong
+	0x11000: wrong
+	0x12000: correct
+	...
+
+To avoid DMA cross 4k bounder at ISO transfer, reduce burst len according
+to start DMA address's alignment.
+
+Cc:  <stable@vger.kernel.org>
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20231224153816.1664687-4-Frank.Li@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/eeprom.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/cdns3/cdns3-gadget.c |   32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/eeprom.c b/drivers/net/wireless/mediatek/mt76/eeprom.c
-index 36564930aef1..9220baec2394 100644
---- a/drivers/net/wireless/mediatek/mt76/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/eeprom.c
-@@ -106,7 +106,7 @@ static int mt76_get_of_epprom_from_mtd(struct mt76_dev *dev, void *eep, int offs
- #endif
- }
+--- a/drivers/usb/cdns3/cdns3-gadget.c
++++ b/drivers/usb/cdns3/cdns3-gadget.c
+@@ -1118,6 +1118,7 @@ static int cdns3_ep_run_transfer(struct
+ 	u32 togle_pcs = 1;
+ 	int sg_iter = 0;
+ 	int num_trb_req;
++	int trb_burst;
+ 	int num_trb;
+ 	int address;
+ 	u32 control;
+@@ -1240,7 +1241,36 @@ static int cdns3_ep_run_transfer(struct
+ 			total_tdl += DIV_ROUND_UP(length,
+ 					       priv_ep->endpoint.maxpacket);
  
--static int mt76_get_of_epprom_from_nvmem(struct mt76_dev *dev, void *eep, int len)
-+static int mt76_get_of_eeprom_from_nvmem(struct mt76_dev *dev, void *eep, int len)
- {
- 	struct device_node *np = dev->dev->of_node;
- 	struct nvmem_cell *cell;
-@@ -153,7 +153,7 @@ int mt76_get_of_eeprom(struct mt76_dev *dev, void *eep, int offset, int len)
- 	if (!ret)
- 		return 0;
+-		trb->length |= cpu_to_le32(TRB_BURST_LEN(priv_ep->trb_burst_size) |
++		trb_burst = priv_ep->trb_burst_size;
++
++		/*
++		 * Supposed DMA cross 4k bounder problem should be fixed at DEV_VER_V2, but still
++		 * met problem when do ISO transfer if sg enabled.
++		 *
++		 * Data pattern likes below when sg enabled, package size is 1k and mult is 2
++		 *       [UVC Header(8B) ] [data(3k - 8)] ...
++		 *
++		 * The received data at offset 0xd000 will get 0xc000 data, len 0x70. Error happen
++		 * as below pattern:
++		 *	0xd000: wrong
++		 *	0xe000: wrong
++		 *	0xf000: correct
++		 *	0x10000: wrong
++		 *	0x11000: wrong
++		 *	0x12000: correct
++		 *	...
++		 *
++		 * But it is still unclear about why error have not happen below 0xd000, it should
++		 * cross 4k bounder. But anyway, the below code can fix this problem.
++		 *
++		 * To avoid DMA cross 4k bounder at ISO transfer, reduce burst len according to 16.
++		 */
++		if (priv_ep->type == USB_ENDPOINT_XFER_ISOC && priv_dev->dev_ver <= DEV_VER_V2)
++			if (ALIGN_DOWN(trb->buffer, SZ_4K) !=
++			    ALIGN_DOWN(trb->buffer + length, SZ_4K))
++				trb_burst = 16;
++
++		trb->length |= cpu_to_le32(TRB_BURST_LEN(trb_burst) |
+ 					TRB_LEN(length));
+ 		pcs = priv_ep->pcs ? TRB_CYCLE : 0;
  
--	return mt76_get_of_epprom_from_nvmem(dev, eep, len);
-+	return mt76_get_of_eeprom_from_nvmem(dev, eep, len);
- }
- EXPORT_SYMBOL_GPL(mt76_get_of_eeprom);
- 
--- 
-2.43.0
-
 
 
