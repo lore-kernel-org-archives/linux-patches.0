@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF7A12CDB7;
-	Tue, 23 Jan 2024 00:58:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF45E12CDB7;
+	Tue, 23 Jan 2024 00:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971480; cv=none; b=iVP3WFUXEeE2fW364ka/OnjstvRbyvUFRThG498ryelMWNYgdNR8jaPy7BiroQkmEPUnNdsTR2ygBl6LvEs2bLjbPe+cK5dl6Jv0XuRSLmt2No+myBSnpMTecTABaBU4m77iPO2hp4Mkrr0bH57b5fhjEeJ+ARzjztBEx5pbmBE=
+	t=1705971485; cv=none; b=JnubScalgK/+tbq/KM9gB3k5vGcuXOEssqV5WTzWGEVXiK5ryWD//y14lTbgjQpU5+mrUQZBhSTt3uRuXZe/jmEFr526mRLa5LsF5ZeUi5i7bMTih9KCsK9ZwMxBRNuhvyYk1w+cN15qduWRK86k7J8qLcjpAgl2HJdu7ackCZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971480; c=relaxed/simple;
-	bh=OKdIKxi9zOge00vowgo/2fJ+zkijyWqjPlycb9f5oOQ=;
+	s=arc-20240116; t=1705971485; c=relaxed/simple;
+	bh=IXZat+ICceP8js8QlRcXyIRc5P48P3xXZt9V1q2Sh5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mGbac9bHvIbviqtkqMy7nkTnoEInQT9+vPho1LtTHq+LhOJNozFDAC6aPbZx47h+vESfOvGS1GuFmDSxWVbjygUX/W63sUuIwQ2+VK7tmQ8rF0k7i2meSFkVyuQwngQ4rQ1KLtym+2TlxKPF3R6hdIHQIz63GKdyCswJT5k+3ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+5qV1XD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=an2v9crForUkNGslvIcwxiWukaiOnFbVMv/iiB0V6MXU5oYms6NNN1pZ6jMqSHvUAY/txrZDe8tRXOgreez232Wcc6qtJWMhlfvForqDxO1jOVUnVvKGMGHRWviXkspej3gKxavC0lrFSSrpR26dAr7YQBh8hQJvYzHD+n0mlwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AfA9MD77; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+5qV1XD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D95C433C7;
-	Tue, 23 Jan 2024 00:58:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AfA9MD77"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE59C433C7;
+	Tue, 23 Jan 2024 00:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971480;
-	bh=OKdIKxi9zOge00vowgo/2fJ+zkijyWqjPlycb9f5oOQ=;
+	s=korg; t=1705971484;
+	bh=IXZat+ICceP8js8QlRcXyIRc5P48P3xXZt9V1q2Sh5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+5qV1XDqHvDcuGwwGV2V3DXTt6mzVdmzgDKrGq77ik8+RXMS+rTaOMvq2m78iTD6
-	 SRzqFJTbaoO+imJ50wo1tAMUoLT0+NDW17WTuwSBuUmmmXxygz9rTx5591ngdQVeTF
-	 wSQRo0k6eCZazuFr6iLNhhzFURMfk1K4klQ2Tq3g=
+	b=AfA9MD77ArGqTxkofL0rBAN9WcctFv8pV3523JS4aybT0KXxpY5wF7zc2xvI7HcsD
+	 wPM8sMHSbO3v6qGC+h5r3uh4npneCuLvAcPom2qxqPOtghufCn6GEv44L2mh7/5T0p
+	 UspCWefqJklq6g4wTaZmDLZQhytQmwAszp2LSjTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 158/286] drm/msm/dsi: Use pm_runtime_resume_and_get to prevent refcnt leaks
-Date: Mon, 22 Jan 2024 15:57:44 -0800
-Message-ID: <20240122235738.256550497@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 6.1 250/417] binder: fix async space check for 0-sized buffers
+Date: Mon, 22 Jan 2024 15:56:58 -0800
+Message-ID: <20240122235800.535725245@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +46,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Carlos Llamas <cmllamas@google.com>
 
-[ Upstream commit 3d07a411b4faaf2b498760ccf12888f8de529de0 ]
+commit 3091c21d3e9322428691ce0b7a0cfa9c0b239eeb upstream.
 
-This helper has been introduced to avoid programmer errors (missing
-_put calls leading to dangling refcnt) when using pm_runtime_get, use it.
+Move the padding of 0-sized buffers to an earlier stage to account for
+this round up during the alloc->free_async_space check.
 
-While at it, start checking the return value.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: 5c8290284402 ("drm/msm/dsi: Split PHY drivers to separate files")
-Patchwork: https://patchwork.freedesktop.org/patch/543350/
-Link: https://lore.kernel.org/r/20230620-topic-dsiphy_rpm-v2-1-a11a751f34f0@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 74310e06be4d ("android: binder: Move buffer out of area shared with user space")
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Link: https://lore.kernel.org/r/20231201172212.1813387-5-cmllamas@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/android/binder_alloc.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 2e0be85ec394..10eacfd95fb1 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -558,7 +558,9 @@ static int dsi_phy_enable_resource(struct msm_dsi_phy *phy)
- 	struct device *dev = &phy->pdev->dev;
- 	int ret;
+--- a/drivers/android/binder_alloc.c
++++ b/drivers/android/binder_alloc.c
+@@ -407,6 +407,10 @@ static struct binder_buffer *binder_allo
+ 				alloc->pid, extra_buffers_size);
+ 		return ERR_PTR(-EINVAL);
+ 	}
++
++	/* Pad 0-size buffers so they get assigned unique addresses */
++	size = max(size, sizeof(void *));
++
+ 	if (is_async &&
+ 	    alloc->free_async_space < size + sizeof(struct binder_buffer)) {
+ 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
+@@ -415,9 +419,6 @@ static struct binder_buffer *binder_allo
+ 		return ERR_PTR(-ENOSPC);
+ 	}
  
--	pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret)
-+		return ret;
- 
- 	ret = clk_prepare_enable(phy->ahb_clk);
- 	if (ret) {
--- 
-2.43.0
-
+-	/* Pad 0-size buffers so they get assigned unique addresses */
+-	size = max(size, sizeof(void *));
+-
+ 	while (n) {
+ 		buffer = rb_entry(n, struct binder_buffer, rb_node);
+ 		BUG_ON(!buffer->free);
 
 
