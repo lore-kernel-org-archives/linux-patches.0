@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C2A23DB;
-	Tue, 23 Jan 2024 00:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E5023DB;
+	Tue, 23 Jan 2024 00:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969838; cv=none; b=OjAqZf2UyB7XeCsIKhtbpsDmTrSCZ2UVo3+6iMkD96sOwHCqt0eDBxwv7RL9avAtyzSwhWK1DMZicKd/BGcl8hxCta8QYupdnq3CBGVA9z/qOQvPII50eoXXO9weatuE4oi/DfrDDBxCxhizVmPLoOLxymWSccOVRPkUzPB1dVA=
+	t=1705969840; cv=none; b=UMv4BLut2oSJH6K07znKR7C0GyGpptwZe9SgEWZfnurNVXLfGlSsXumfRqvm44VJ39qX8TceiIMTOzAKDxUxvNlVj/UZOfRKPGY4UMfxOoSiEAT4a8kCaJfLm/zdjMN+0onuDGeAhrsWiMT49t3M9h1InWCQFb2MJcAioUKV7Fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969838; c=relaxed/simple;
-	bh=Ycvu5Ct/pRmDkiV05KZOAogyWydT5Pk+YbG4z8+0HYc=;
+	s=arc-20240116; t=1705969840; c=relaxed/simple;
+	bh=8wipFKPVz2ZVu4TachhBa9fARkSuWo8q8ABGwYIpL54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xe9ClLDBwCd1GwGWlDKm8jwyBtr46vihS386LqchysI2fhFSjwx0ZtGb95R/J/sOH+D6tpg86D+mD4FRDOFQgeGTYd8iNSDHWsBjJzvmrfsA+DngwbFx0FCFyyl8pK58TJLWeO6Ovv2f9aBB3EbVa3AzmcBBJHOp2/0Or6ryaWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qA2Db+sO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VYgI1FVayNKiqiwlVLmBJWBQb1rsvFmT047YH+HH0A6fQmaYPv6l4JFWF4rpOYnpvaLa69/eB5o5UZ+12k5M9Cb9TWBajuutn2JSM1AtgV3hgId3Oy4vsz+O0pDxdv27RUjHBcoUy7HUCqTKGo7mm8T6RkQz5MCRrI+XS27/wcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IoUleSSA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qA2Db+sO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10345C433F1;
-	Tue, 23 Jan 2024 00:30:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IoUleSSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D88C43390;
+	Tue, 23 Jan 2024 00:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969838;
-	bh=Ycvu5Ct/pRmDkiV05KZOAogyWydT5Pk+YbG4z8+0HYc=;
+	s=korg; t=1705969839;
+	bh=8wipFKPVz2ZVu4TachhBa9fARkSuWo8q8ABGwYIpL54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qA2Db+sOIjf7pTj5/wSikLfTU9pc5jLn/jUtxCTlILctrpu50M/S526nsG1TguLIl
-	 vgxELSfOprf5XMMmgC7aQxsy7CcscYPy1FWCW8iF6dM/ChcYcJHzir0m8zpPW0XYyq
-	 yDnNs8LKKpt1rZiU42jADnUEfEeMijhoXTmlopxE=
+	b=IoUleSSAz7bb54X2dOcVWVW25kely6kvQZrzUR+ADdSNcl5w3ZE+BCc24Gt9SR31Y
+	 7WEOyrOp+mHYvy/s6h2jIhNLy/pr93hufWhyxWqzZebamnqYi+wy+QvzjuW8/+xVDN
+	 372iFvxGevhNON/vhyrxyOEjwCAiJkAemBSnHep8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.7 456/641] wifi: rtlwifi: Convert LNKCTL change to PCIe cap RMW accessors
-Date: Mon, 22 Jan 2024 15:56:00 -0800
-Message-ID: <20240122235832.290032774@linuxfoundation.org>
+	Song Liu <song@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	kernel test robot <lkp@intel.com>,
+	Bart Van Assche <bvanassche@acm.org>
+Subject: [PATCH 6.7 447/641] md/raid1: Use blk_opf_t for read and write operations
+Date: Mon, 22 Jan 2024 15:55:51 -0800
+Message-ID: <20240122235832.008200584@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -44,82 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 5894d0089cbc146063dcc0239a78ede0a8142efb upstream.
+commit 7dab24554dedd4e6f408af8eb2d25c89997a6a1f upstream.
 
-The rtlwifi driver comes with custom code to write into PCIe Link
-Control register. RMW access for the Link Control register requires
-locking that is already provided by the standard PCIe capability
-accessors.
+Use the type blk_opf_t for read and write operations instead of int. This
+patch does not affect the generated code but fixes the following sparse
+warning:
 
-Convert the custom RMW code writing into LNKCTL register to standard
-RMW capability accessors. The accesses are changed to cover the full
-LNKCTL register instead of touching just a single byte of the register.
+drivers/md/raid1.c:1993:60: sparse: sparse: incorrect type in argument 5 (different base types)
+     expected restricted blk_opf_t [usertype] opf
+     got int rw
 
-Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231124084725.12738-3-ilpo.jarvinen@linux.intel.com
+Cc: Song Liu <song@kernel.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Fixes: 3c5e514db58f ("md/raid1: Use the new blk_opf_t type")
+Cc: stable@vger.kernel.org # v6.0+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202401080657.UjFnvQgX-lkp@intel.com/
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240108001223.23835-1-bvanassche@acm.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c |   21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/md/raid1.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -164,21 +164,29 @@ static bool _rtl_pci_platform_switch_dev
- 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
- 	struct rtl_hal *rtlhal = rtl_hal(rtl_priv(hw));
- 
-+	value &= PCI_EXP_LNKCTL_ASPMC;
-+
- 	if (rtlhal->hw_type != HARDWARE_TYPE_RTL8192SE)
--		value |= 0x40;
-+		value |= PCI_EXP_LNKCTL_CCC;
- 
--	pci_write_config_byte(rtlpci->pdev, 0x80, value);
-+	pcie_capability_clear_and_set_word(rtlpci->pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_ASPMC | value,
-+					   value);
- 
- 	return false;
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1984,12 +1984,12 @@ static void end_sync_write(struct bio *b
  }
  
--/*When we set 0x01 to enable clk request. Set 0x0 to disable clk req.*/
--static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u8 value)
-+/* @value is PCI_EXP_LNKCTL_CLKREQ_EN or 0 to enable/disable clk request. */
-+static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u16 value)
+ static int r1_sync_page_io(struct md_rdev *rdev, sector_t sector,
+-			   int sectors, struct page *page, int rw)
++			   int sectors, struct page *page, blk_opf_t rw)
  {
- 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
- 	struct rtl_hal *rtlhal = rtl_hal(rtl_priv(hw));
- 
--	pci_write_config_byte(rtlpci->pdev, 0x81, value);
-+	value &= PCI_EXP_LNKCTL_CLKREQ_EN;
-+
-+	pcie_capability_clear_and_set_word(rtlpci->pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_CLKREQ_EN,
-+					   value);
- 
- 	if (rtlhal->hw_type == HARDWARE_TYPE_RTL8192SE)
- 		udelay(100);
-@@ -259,7 +267,8 @@ static void rtl_pci_enable_aspm(struct i
- 
- 	if (ppsc->reg_rfps_level & RT_RF_OFF_LEVL_CLK_REQ) {
- 		_rtl_pci_switch_clk_req(hw, (ppsc->reg_rfps_level &
--					     RT_RF_OFF_LEVL_CLK_REQ) ? 1 : 0);
-+					     RT_RF_OFF_LEVL_CLK_REQ) ?
-+					     PCI_EXP_LNKCTL_CLKREQ_EN : 0);
- 		RT_SET_PS_LEVEL(ppsc, RT_RF_OFF_LEVL_CLK_REQ);
- 	}
- 	udelay(100);
+ 	if (sync_page_io(rdev, sector, sectors << 9, page, rw, false))
+ 		/* success */
+ 		return 1;
+-	if (rw == WRITE) {
++	if (rw == REQ_OP_WRITE) {
+ 		set_bit(WriteErrorSeen, &rdev->flags);
+ 		if (!test_and_set_bit(WantReplacement,
+ 				      &rdev->flags))
+@@ -2106,7 +2106,7 @@ static int fix_sync_read_error(struct r1
+ 			rdev = conf->mirrors[d].rdev;
+ 			if (r1_sync_page_io(rdev, sect, s,
+ 					    pages[idx],
+-					    WRITE) == 0) {
++					    REQ_OP_WRITE) == 0) {
+ 				r1_bio->bios[d]->bi_end_io = NULL;
+ 				rdev_dec_pending(rdev, mddev);
+ 			}
+@@ -2121,7 +2121,7 @@ static int fix_sync_read_error(struct r1
+ 			rdev = conf->mirrors[d].rdev;
+ 			if (r1_sync_page_io(rdev, sect, s,
+ 					    pages[idx],
+-					    READ) != 0)
++					    REQ_OP_READ) != 0)
+ 				atomic_add(s, &rdev->corrected_errors);
+ 		}
+ 		sectors -= s;
+@@ -2333,7 +2333,7 @@ static void fix_read_error(struct r1conf
+ 				atomic_inc(&rdev->nr_pending);
+ 				rcu_read_unlock();
+ 				r1_sync_page_io(rdev, sect, s,
+-						conf->tmppage, WRITE);
++						conf->tmppage, REQ_OP_WRITE);
+ 				rdev_dec_pending(rdev, mddev);
+ 			} else
+ 				rcu_read_unlock();
+@@ -2350,7 +2350,7 @@ static void fix_read_error(struct r1conf
+ 				atomic_inc(&rdev->nr_pending);
+ 				rcu_read_unlock();
+ 				if (r1_sync_page_io(rdev, sect, s,
+-						    conf->tmppage, READ)) {
++						conf->tmppage, REQ_OP_READ)) {
+ 					atomic_add(s, &rdev->corrected_errors);
+ 					pr_info("md/raid1:%s: read error corrected (%d sectors at %llu on %pg)\n",
+ 						mdname(mddev), s,
 
 
