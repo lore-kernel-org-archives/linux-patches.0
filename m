@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D514EB34;
-	Tue, 23 Jan 2024 00:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F595732C;
+	Tue, 23 Jan 2024 00:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970141; cv=none; b=doRXjD8DcCdSv/isY5VS0zKhrb0TUNNBrGAVYc1v3b+ZqYk6zrqIdOyBFMU8GJ6af/DJg7aMsj6+3zrJNS6Aems1qpZzZfkW8zYeDvCnBBG1N35/ningFJyCG93hErLs1qYVhz/+WOQ/tWzGNaYFK9NuxgZIGiYkdIR8RlRPDaQ=
+	t=1705970145; cv=none; b=JGts6lyosFkXuWl7AQYL9LlAPWHIXiGpr9X82+z36hfVadp/nDt5YnPFUbyq77nBRfrYwxb4ORTRyLLYhIqWANePwiYi4dvJNlcnxPbcbJFKKa1z3b7wokPx5rKWNj9xDrKvzkmg1ob15luMM+g9ox6Z5MVp3w2UrTBA4yHzI7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970141; c=relaxed/simple;
-	bh=ARitPs1iw8c+2WF9zXMN5RO5C/DolmumGyavqEUxPVw=;
+	s=arc-20240116; t=1705970145; c=relaxed/simple;
+	bh=N8IdZHxITNZv/CTh7pjYndSCQnqWlLhYzt9S9elaI40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m70ywXPOsPUxrk+ESB99FYx+GYkYuBVV3b+g+6cUU+YdjdmDohMKxagHwyCyCQKuSNipq3mhvDi/Pgou+p23XcSUqyb/L8v/zuLOzjmBENpsZy9qifiktMfQuV2QdzlYEQmCP8Did+SFyNny/dQnftzvX+YmqPwBiKJxQ5m9z7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nc5SKITW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z596ebEJX/84dfpBJHK3cOMUfZr/AzNdDD/j63btb+2f9ahDcHT1+0x9kKDchHIzHknqJoosY8cdTTdD1A4AFzGFDWrooxiot9dW9QvSWvPiLwJ5YJL7DtUC8rGM+YbiFrdw4JT4sKRQ2MMZZnI/W0zwhttSgmvKiy4e3QmFjmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXudrkas; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nc5SKITW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E35C433C7;
-	Tue, 23 Jan 2024 00:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXudrkas"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C227C433F1;
+	Tue, 23 Jan 2024 00:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970141;
-	bh=ARitPs1iw8c+2WF9zXMN5RO5C/DolmumGyavqEUxPVw=;
+	s=korg; t=1705970144;
+	bh=N8IdZHxITNZv/CTh7pjYndSCQnqWlLhYzt9S9elaI40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nc5SKITWSX/WQu6kmb6tK/WA/BTBlHFR04PN4mpTH+ijdufr4qP7x2yrvxmFwYkKB
-	 DHqbbjeu1wb6ESx5ZbBSJhw1dNvjWgGxSii2Ym4WsPw0ngF8KZi3Wzjd1qgxuVLkf2
-	 DqbThb8nVeWwAr/ZyqM33wMDcdx97WtHVnvfvAn8=
+	b=QXudrkasQPqfPcNU/tUhDuIprF3LqFndxfugjw5MdcTWctbTEjqDhB7hPnQHT753l
+	 bsazkA0l67URNYj/pGfe3NC60pNU+t3YCCUSaQ0q+7AZs1Z+TaHDC9lTqUrumwXU4H
+	 6zKcjeBUKdvIHDZjsAB/nQmzBvjJ4NHSKmy89eEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8d482d0e407f665d9d10@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
+	Lin Ma <linma@zju.edu.cn>,
+	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>,
+	Simon Horman <horms@kernel.org>,
 	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 598/641] udp: annotate data-races around up->pending
-Date: Mon, 22 Jan 2024 15:58:22 -0800
-Message-ID: <20240122235836.919348143@linuxfoundation.org>
+Subject: [PATCH 6.7 581/641] net: qualcomm: rmnet: fix global oob in rmnet_policy
+Date: Mon, 22 Jan 2024 15:58:05 -0800
+Message-ID: <20240122235836.368860115@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,192 +54,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 482521d8e0c6520429478aa6866cd44128b33d5d ]
+[ Upstream commit b33fb5b801c6db408b774a68e7c8722796b59ecc ]
 
-up->pending can be read without holding the socket lock,
-as pointed out by syzbot [1]
+The variable rmnet_link_ops assign a *bigger* maxtype which leads to a
+global out-of-bounds read when parsing the netlink attributes. See bug
+trace below:
 
-Add READ_ONCE() in lockless contexts, and WRITE_ONCE()
-on write side.
+==================================================================
+BUG: KASAN: global-out-of-bounds in validate_nla lib/nlattr.c:386 [inline]
+BUG: KASAN: global-out-of-bounds in __nla_validate_parse+0x24af/0x2750 lib/nlattr.c:600
+Read of size 1 at addr ffffffff92c438d0 by task syz-executor.6/84207
 
-[1]
-BUG: KCSAN: data-race in udpv6_sendmsg / udpv6_sendmsg
+CPU: 0 PID: 84207 Comm: syz-executor.6 Tainted: G                 N 6.1.0 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x8b/0xb3 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:284 [inline]
+ print_report+0x172/0x475 mm/kasan/report.c:395
+ kasan_report+0xbb/0x1c0 mm/kasan/report.c:495
+ validate_nla lib/nlattr.c:386 [inline]
+ __nla_validate_parse+0x24af/0x2750 lib/nlattr.c:600
+ __nla_parse+0x3e/0x50 lib/nlattr.c:697
+ nla_parse_nested_deprecated include/net/netlink.h:1248 [inline]
+ __rtnl_newlink+0x50a/0x1880 net/core/rtnetlink.c:3485
+ rtnl_newlink+0x64/0xa0 net/core/rtnetlink.c:3594
+ rtnetlink_rcv_msg+0x43c/0xd70 net/core/rtnetlink.c:6091
+ netlink_rcv_skb+0x14f/0x410 net/netlink/af_netlink.c:2540
+ netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
+ netlink_unicast+0x54e/0x800 net/netlink/af_netlink.c:1345
+ netlink_sendmsg+0x930/0xe50 net/netlink/af_netlink.c:1921
+ sock_sendmsg_nosec net/socket.c:714 [inline]
+ sock_sendmsg+0x154/0x190 net/socket.c:734
+ ____sys_sendmsg+0x6df/0x840 net/socket.c:2482
+ ___sys_sendmsg+0x110/0x1b0 net/socket.c:2536
+ __sys_sendmsg+0xf3/0x1c0 net/socket.c:2565
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7fdcf2072359
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 19 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fdcf13e3168 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00007fdcf219ff80 RCX: 00007fdcf2072359
+RDX: 0000000000000000 RSI: 0000000020000200 RDI: 0000000000000003
+RBP: 00007fdcf20bd493 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007fffbb8d7bdf R14: 00007fdcf13e3300 R15: 0000000000022000
+ </TASK>
 
-write to 0xffff88814e5eadf0 of 4 bytes by task 15547 on cpu 1:
- udpv6_sendmsg+0x1405/0x1530 net/ipv6/udp.c:1596
- inet6_sendmsg+0x63/0x80 net/ipv6/af_inet6.c:657
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- __sys_sendto+0x257/0x310 net/socket.c:2192
- __do_sys_sendto net/socket.c:2204 [inline]
- __se_sys_sendto net/socket.c:2200 [inline]
- __x64_sys_sendto+0x78/0x90 net/socket.c:2200
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+The buggy address belongs to the variable:
+ rmnet_policy+0x30/0xe0
 
-read to 0xffff88814e5eadf0 of 4 bytes by task 15551 on cpu 0:
- udpv6_sendmsg+0x22c/0x1530 net/ipv6/udp.c:1373
- inet6_sendmsg+0x63/0x80 net/ipv6/af_inet6.c:657
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- ____sys_sendmsg+0x37c/0x4d0 net/socket.c:2586
- ___sys_sendmsg net/socket.c:2640 [inline]
- __sys_sendmmsg+0x269/0x500 net/socket.c:2726
- __do_sys_sendmmsg net/socket.c:2755 [inline]
- __se_sys_sendmmsg net/socket.c:2752 [inline]
- __x64_sys_sendmmsg+0x57/0x60 net/socket.c:2752
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+The buggy address belongs to the physical page:
+page:0000000065bdeb3c refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x155243
+flags: 0x200000000001000(reserved|node=0|zone=2)
+raw: 0200000000001000 ffffea00055490c8 ffffea00055490c8 0000000000000000
+raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
 
-value changed: 0x00000000 -> 0x0000000a
+Memory state around the buggy address:
+ ffffffff92c43780: f9 f9 f9 f9 00 00 00 02 f9 f9 f9 f9 00 00 00 07
+ ffffffff92c43800: f9 f9 f9 f9 00 00 00 05 f9 f9 f9 f9 06 f9 f9 f9
+>ffffffff92c43880: f9 f9 f9 f9 00 00 00 00 00 00 f9 f9 f9 f9 f9 f9
+                                                 ^
+ ffffffff92c43900: 00 00 00 00 00 00 00 00 07 f9 f9 f9 f9 f9 f9 f9
+ ffffffff92c43980: 00 00 00 07 f9 f9 f9 f9 00 00 00 05 f9 f9 f9 f9
 
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 15551 Comm: syz-executor.1 Tainted: G        W          6.7.0-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
+According to the comment of `nla_parse_nested_deprecated`, the maxtype
+should be len(destination array) - 1. Hence use `IFLA_RMNET_MAX` here.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+8d482d0e407f665d9d10@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/netdev/0000000000009e46c3060ebcdffd@google.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Fixes: 14452ca3b5ce ("net: qualcomm: rmnet: Export mux_id and flags to netlink")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/20240110061400.3356108-1-linma@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 12 ++++++------
- net/ipv6/udp.c | 16 ++++++++--------
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 89e5a806b82e..5f742d0b9e07 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -805,7 +805,7 @@ void udp_flush_pending_frames(struct sock *sk)
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c
+index 39d24e07f306..5b69b9268c75 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c
+@@ -396,7 +396,7 @@ static int rmnet_fill_info(struct sk_buff *skb, const struct net_device *dev)
  
- 	if (up->pending) {
- 		up->len = 0;
--		up->pending = 0;
-+		WRITE_ONCE(up->pending, 0);
- 		ip_flush_pending_frames(sk);
- 	}
- }
-@@ -993,7 +993,7 @@ int udp_push_pending_frames(struct sock *sk)
- 
- out:
- 	up->len = 0;
--	up->pending = 0;
-+	WRITE_ONCE(up->pending, 0);
- 	return err;
- }
- EXPORT_SYMBOL(udp_push_pending_frames);
-@@ -1070,7 +1070,7 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	getfrag = is_udplite ? udplite_getfrag : ip_generic_getfrag;
- 
- 	fl4 = &inet->cork.fl.u.ip4;
--	if (up->pending) {
-+	if (READ_ONCE(up->pending)) {
- 		/*
- 		 * There are pending frames.
- 		 * The socket lock must be held while it's corked.
-@@ -1269,7 +1269,7 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	fl4->saddr = saddr;
- 	fl4->fl4_dport = dport;
- 	fl4->fl4_sport = inet->inet_sport;
--	up->pending = AF_INET;
-+	WRITE_ONCE(up->pending, AF_INET);
- 
- do_append_data:
- 	up->len += ulen;
-@@ -1281,7 +1281,7 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	else if (!corkreq)
- 		err = udp_push_pending_frames(sk);
- 	else if (unlikely(skb_queue_empty(&sk->sk_write_queue)))
--		up->pending = 0;
-+		WRITE_ONCE(up->pending, 0);
- 	release_sock(sk);
- 
- out:
-@@ -1319,7 +1319,7 @@ void udp_splice_eof(struct socket *sock)
- 	struct sock *sk = sock->sk;
- 	struct udp_sock *up = udp_sk(sk);
- 
--	if (!up->pending || udp_test_bit(CORK, sk))
-+	if (!READ_ONCE(up->pending) || udp_test_bit(CORK, sk))
- 		return;
- 
- 	lock_sock(sk);
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 622b10a549f7..a1a79ff46fd9 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1135,7 +1135,7 @@ static void udp_v6_flush_pending_frames(struct sock *sk)
- 		udp_flush_pending_frames(sk);
- 	else if (up->pending) {
- 		up->len = 0;
--		up->pending = 0;
-+		WRITE_ONCE(up->pending, 0);
- 		ip6_flush_pending_frames(sk);
- 	}
- }
-@@ -1313,7 +1313,7 @@ static int udp_v6_push_pending_frames(struct sock *sk)
- 			      &inet_sk(sk)->cork.base);
- out:
- 	up->len = 0;
--	up->pending = 0;
-+	WRITE_ONCE(up->pending, 0);
- 	return err;
- }
- 
-@@ -1370,7 +1370,7 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 		default:
- 			return -EINVAL;
- 		}
--	} else if (!up->pending) {
-+	} else if (!READ_ONCE(up->pending)) {
- 		if (sk->sk_state != TCP_ESTABLISHED)
- 			return -EDESTADDRREQ;
- 		daddr = &sk->sk_v6_daddr;
-@@ -1401,8 +1401,8 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 		return -EMSGSIZE;
- 
- 	getfrag  =  is_udplite ?  udplite_getfrag : ip_generic_getfrag;
--	if (up->pending) {
--		if (up->pending == AF_INET)
-+	if (READ_ONCE(up->pending)) {
-+		if (READ_ONCE(up->pending) == AF_INET)
- 			return udp_sendmsg(sk, msg, len);
- 		/*
- 		 * There are pending frames.
-@@ -1593,7 +1593,7 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 		goto out;
- 	}
- 
--	up->pending = AF_INET6;
-+	WRITE_ONCE(up->pending, AF_INET6);
- 
- do_append_data:
- 	if (ipc6.dontfrag < 0)
-@@ -1607,7 +1607,7 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	else if (!corkreq)
- 		err = udp_v6_push_pending_frames(sk);
- 	else if (unlikely(skb_queue_empty(&sk->sk_write_queue)))
--		up->pending = 0;
-+		WRITE_ONCE(up->pending, 0);
- 
- 	if (err > 0)
- 		err = inet6_test_bit(RECVERR6, sk) ? net_xmit_errno(err) : 0;
-@@ -1648,7 +1648,7 @@ static void udpv6_splice_eof(struct socket *sock)
- 	struct sock *sk = sock->sk;
- 	struct udp_sock *up = udp_sk(sk);
- 
--	if (!up->pending || udp_test_bit(CORK, sk))
-+	if (!READ_ONCE(up->pending) || udp_test_bit(CORK, sk))
- 		return;
- 
- 	lock_sock(sk);
+ struct rtnl_link_ops rmnet_link_ops __read_mostly = {
+ 	.kind		= "rmnet",
+-	.maxtype	= __IFLA_RMNET_MAX,
++	.maxtype	= IFLA_RMNET_MAX,
+ 	.priv_size	= sizeof(struct rmnet_priv),
+ 	.setup		= rmnet_vnd_setup,
+ 	.validate	= rmnet_rtnl_validate,
 -- 
 2.43.0
 
