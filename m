@@ -1,50 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA277133435;
-	Tue, 23 Jan 2024 01:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471B7133435;
+	Tue, 23 Jan 2024 01:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971878; cv=none; b=TluuxuNUKQ8QOm+dhtDYivlYnsrIbL1ZfnAEOXMaMxRYBZIjrVQ/wgxc2twkuAxpn2JSoEEij7lEDFlr5saajdMhrRRiOi8f+r5U4+v70Qf7R+RqNlCHsk1DAaYPhz7GOtN3nxCgSEkJ7rncWBI/R2zfTX/iRJ7oqQg80jxl8aE=
+	t=1705971880; cv=none; b=EwSX4MuruBSCWa7wmbE76y+HV7N2euaLMA7Z62Smo8NVZ4Ap4p0xtaYOBWb1p67fORCm+TBYJ3kpCug5x0XQNc/D/P3uKZq1G9kuZCKD17lmN8XqwmmCas0LDui5K/PBsOyqdtYavyrtYfv+82Jv4t01wsxNhdojr2f2WwaOMpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971878; c=relaxed/simple;
-	bh=nj0nT/YAqBBze8KYgv+Z8gKrZ+AhZCtnvXAPQnq+26M=;
+	s=arc-20240116; t=1705971880; c=relaxed/simple;
+	bh=oOC1RBp8TRcxF7GrV82qCazfF6olbEhd2lIwhyIb5ZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FqcygKyC7yj8IqhiLIyBz+G9065geVy/KUCxwV4AOF3/NzbNYqwTMI642xEw8HGRuTpj7CAS+RGxj5UpqkYCm3n+CVeXgqyc2UvP4Zg50QL4oProZ60/HLrWOFhcsgqWmf3sV9AcsrOSeC/3Ux58t1PHDjkOIIDRDtq+bWMvrvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkBBuW5u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n+ku0FAW6rCKl0b7OPKpWaNoN85S9Cd+d/swBm8perqzIjOC6xNBf/Tcur3w7LETNRyEu5OpO3UyWKNNvRf7C+/8qZJc+SI+mjGr4QMz/WBc5Y/IS2/Qz7X4ZKgCK86uSNISW610N7LRcSl+niNPnLRfnSkE78e87K8/cBOpWQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qz/vkYLQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkBBuW5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36950C433C7;
-	Tue, 23 Jan 2024 01:04:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qz/vkYLQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23DBC433F1;
+	Tue, 23 Jan 2024 01:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971878;
-	bh=nj0nT/YAqBBze8KYgv+Z8gKrZ+AhZCtnvXAPQnq+26M=;
+	s=korg; t=1705971879;
+	bh=oOC1RBp8TRcxF7GrV82qCazfF6olbEhd2lIwhyIb5ZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkBBuW5u5ucu5uPLSg8/IigUJDpdfIsNutMitTyyid+yMu9KSzPTobwBtyB+orf0B
-	 eUbunrZss7C+W4CFtg3JqY1EkMBSdl5Izj5UxlGsaZCZUAmhOF2RNIrYjuzTOg6wZa
-	 grDzvfkVLiTPfwd0d3T2Ge4ozroSIFvv8zKRNYTc=
+	b=Qz/vkYLQZydHj4ILLRwJxWYGdC494z0IjGRw96HTZ6hbE5g8Z6AzGKZj+PFoMAj3n
+	 vqPdBkpFk9iw0Uy559OsyD+TPVRgaeg+xOLMl/AJXLoAoGknVfmujarCbUQsOQnGES
+	 s+WfFCKS6tiFtgGtvvcRBunOisH37hSsQX6viTW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Fangrui Song <maskray@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Lieven Hey <lieven.hey@kdab.com>,
-	Milian Wolff <milian.wolff@kdab.com>,
-	Pablo Galindo <pablogsal@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 252/286] perf genelf: Set ELF program header addresses properly
-Date: Mon, 22 Jan 2024 15:59:18 -0800
-Message-ID: <20240122235741.754720179@linuxfoundation.org>
+Subject: [PATCH 6.1 340/417] usb: core: Allow subclassed USB drivers to override usb_choose_configuration()
+Date: Mon, 22 Jan 2024 15:58:28 -0800
+Message-ID: <20240122235803.576580466@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -56,52 +47,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 1af478903fc48c1409a8dd6b698383b62387adf1 ]
+[ Upstream commit a87b8e3be926af0fc3b9b1af42b1127bd1ff077c ]
 
-The text section starts after the ELF headers so PHDR.p_vaddr and
-others should have the correct addresses.
+For some USB devices we might want to do something different for
+usb_choose_configuration(). One example here is the r8152 driver where
+we want to end up using the vendor driver with the preferred
+interface.
 
-Fixes: babd04386b1df8c3 ("perf jit: Include program header in ELF files")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Fangrui Song <maskray@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Lieven Hey <lieven.hey@kdab.com>
-Cc: Milian Wolff <milian.wolff@kdab.com>
-Cc: Pablo Galindo <pablogsal@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20231212070547.612536-2-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+The r8152 driver tried to make things work by implementing a USB
+generic_subclass driver and then overriding the normal config
+selection after it happened. This is less than ideal and also caused
+breakage if someone deauthorized and re-authorized the USB device
+because the USB core ended up going back to it's default logic for
+choosing the best config. I made an attempt to fix this [1] but it was
+a bit ugly.
+
+Let's do this better and allow USB generic_subclass drivers to
+override usb_choose_configuration().
+
+[1] https://lore.kernel.org/r/20231130154337.1.Ie00e07f07f87149c9ce0b27ae4e26991d307e14b@changeid
+
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20231201102946.v2.2.Iade5fa31997f1a0ca3e1dec0591633b02471df12@changeid
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: aa4f2b3e418e ("r8152: Choose our USB config with choose_configuration() rather than probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/genelf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/core/generic.c | 7 +++++++
+ include/linux/usb.h        | 6 ++++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/tools/perf/util/genelf.c b/tools/perf/util/genelf.c
-index 02cd9f75e3d2..89a85601485d 100644
---- a/tools/perf/util/genelf.c
-+++ b/tools/perf/util/genelf.c
-@@ -291,9 +291,9 @@ jit_write_elf(int fd, uint64_t load_addr, const char *sym,
- 	 */
- 	phdr = elf_newphdr(e, 1);
- 	phdr[0].p_type = PT_LOAD;
--	phdr[0].p_offset = 0;
--	phdr[0].p_vaddr = 0;
--	phdr[0].p_paddr = 0;
-+	phdr[0].p_offset = GEN_ELF_TEXT_OFFSET;
-+	phdr[0].p_vaddr = GEN_ELF_TEXT_OFFSET;
-+	phdr[0].p_paddr = GEN_ELF_TEXT_OFFSET;
- 	phdr[0].p_filesz = csize;
- 	phdr[0].p_memsz = csize;
- 	phdr[0].p_flags = PF_X | PF_R;
+diff --git a/drivers/usb/core/generic.c b/drivers/usb/core/generic.c
+index 740342a2812a..dcb897158228 100644
+--- a/drivers/usb/core/generic.c
++++ b/drivers/usb/core/generic.c
+@@ -59,10 +59,17 @@ int usb_choose_configuration(struct usb_device *udev)
+ 	int num_configs;
+ 	int insufficient_power = 0;
+ 	struct usb_host_config *c, *best;
++	struct usb_device_driver *udriver = to_usb_device_driver(udev->dev.driver);
+ 
+ 	if (usb_device_is_owned(udev))
+ 		return 0;
+ 
++	if (udriver->choose_configuration) {
++		i = udriver->choose_configuration(udev);
++		if (i >= 0)
++			return i;
++	}
++
+ 	best = NULL;
+ 	c = udev->config;
+ 	num_configs = udev->descriptor.bNumConfigurations;
+diff --git a/include/linux/usb.h b/include/linux/usb.h
+index 3ce7b052a19f..08b1d6fbcd3c 100644
+--- a/include/linux/usb.h
++++ b/include/linux/usb.h
+@@ -1234,6 +1234,9 @@ struct usb_driver {
+  *	module is being unloaded.
+  * @suspend: Called when the device is going to be suspended by the system.
+  * @resume: Called when the device is being resumed by the system.
++ * @choose_configuration: If non-NULL, called instead of the default
++ *	usb_choose_configuration(). If this returns an error then we'll go
++ *	on to call the normal usb_choose_configuration().
+  * @dev_groups: Attributes attached to the device that will be created once it
+  *	is bound to the driver.
+  * @drvwrap: Driver-model core structure wrapper.
+@@ -1257,6 +1260,9 @@ struct usb_device_driver {
+ 
+ 	int (*suspend) (struct usb_device *udev, pm_message_t message);
+ 	int (*resume) (struct usb_device *udev, pm_message_t message);
++
++	int (*choose_configuration) (struct usb_device *udev);
++
+ 	const struct attribute_group **dev_groups;
+ 	struct usbdrv_wrap drvwrap;
+ 	const struct usb_device_id *id_table;
 -- 
 2.43.0
 
