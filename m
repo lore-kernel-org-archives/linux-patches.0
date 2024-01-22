@@ -1,38 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AE851014;
-	Tue, 23 Jan 2024 00:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393AB537F7;
+	Tue, 23 Jan 2024 00:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970075; cv=none; b=NnNooqHbTy+ea/IGgC1xiczY7j+QctsJXe6ZVkfLGNXSG9KwfozbX8PpmbzVe9kF91DshYpZ7WScw3Xhz5tPhvdWJAlY57AOZhmrI/gBNeSB22VEs7Vbqd/DEwE8/64F1BOKOwBjlaIrBkvFVTHkURHXIoJLDCeRUppc1yIpIRU=
+	t=1705970078; cv=none; b=asncP1+lfd39ZK0MuatGoHAOJ8CetywGmw+gMQ3a9py49KfLhuA3NkTvVe62zWLRjx/ZkZ7PJSHVZyy4gzZxkAAaiQuD18zU3hJWDCM2l+xIhHwX3JIihJ87GDJeuWLzbjF6eUF5rE7TSbbTWm5J6xaZSLOVjziGF/Td13UFsM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970075; c=relaxed/simple;
-	bh=nnV+sKR/7HGxbfai+Y64ZU6EhUsMQjTsyy8n23zDZDo=;
+	s=arc-20240116; t=1705970078; c=relaxed/simple;
+	bh=aD1DrxhInhPj0v8n4KTG11ubV2szxPbuSVIwkrEDDyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tshtWCNnoFQZI4ch8g5tc8iHh1f6kPMD9L2P4ljWdHWW3tyXHb8/TUX5JAPUQ4tfDN5LSZU6fEKeQw+Vy8n7s1HCw5lkQTz1LUh4RgbIYEGPdBTby5urctHSxWTnFiGLVFAHAGZna0+Mr/RgY1wUmQsVM4KfDOTZktAf6Rxk1XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4zq0NDD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uQAyZl3gNL9+460fPQRRQtBQHkl2rt+1RhjlxZN6Ta81tfm6+rKLFksVxH+dH6LikZhhbCgB+ry62+9WqAJD/XaZIQNPcuyjv3ZWYPZp1WAN0PLWeT19pzCYfUI90bt53ulahsSlBYiuaWJGL6Av79XZPPAJmGskMchyB+FEbMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Inq3tqis; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4zq0NDD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B8CC433F1;
-	Tue, 23 Jan 2024 00:34:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Inq3tqis"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9FAC433F1;
+	Tue, 23 Jan 2024 00:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970074;
-	bh=nnV+sKR/7HGxbfai+Y64ZU6EhUsMQjTsyy8n23zDZDo=;
+	s=korg; t=1705970078;
+	bh=aD1DrxhInhPj0v8n4KTG11ubV2szxPbuSVIwkrEDDyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H4zq0NDDevOAojoprlyQeE0PpNuGaN8RqJ+a9iQTfw4OylrBuItE65E7e3mXVjnSh
-	 IFY213g9w664X72iK7b9Y7d9VDtam0oho5genYTO2RBgHsdTQRBJ+PlsuX/2cEofph
-	 I9jmycGfkKAp8wTd2EgL6J2lpH5SZ71BgjL5WJHw=
+	b=Inq3tqisXqYYdRxir3tntKEjJMVkoFpj1uyZOV1uGxCM5ipzICB2Q8KIKm6ZMjBQG
+	 TUX9O4yKPYQwKBjgQYUo0VU7UwnY5sR7KkEclF3eqbi9AjUenGZGOKGaUKaBjdQI/t
+	 OuFa76dKf98ZJsDvJrxnSZXqpZ8AqIUpuGFSt8Gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	John Johansen <john.johansen@canonical.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Song Liu <song@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Ming Wang <wangming01@loongson.cn>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 556/641] apparmor: free the allocated pdb objects
-Date: Mon, 22 Jan 2024 15:57:40 -0800
-Message-ID: <20240122235835.545930628@linuxfoundation.org>
+Subject: [PATCH 6.7 557/641] perf env: Avoid recursively taking env->bpf_progs.lock
+Date: Mon, 22 Jan 2024 15:57:41 -0800
+Message-ID: <20240122235835.576274386@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -51,71 +64,273 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 1af5aa82c976753e93eb52b72784e586a7d2844b ]
+[ Upstream commit 9c51f8788b5d4e9f46afbcf563255cfd355690b3 ]
 
-policy_db objects are allocated with kzalloc() inside aa_alloc_pdb() and
-are not cleared in the corresponding aa_free_pdb() function causing leak:
+Add variants of perf_env__insert_bpf_prog_info(), perf_env__insert_btf()
+and perf_env__find_btf prefixed with __ to indicate the
+env->bpf_progs.lock is assumed held.
 
-unreferenced object 0xffff88801f0a1400 (size 192):
-  comm "apparmor_parser", pid 1247, jiffies 4295122827 (age 2306.399s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff81ddc612>] __kmem_cache_alloc_node+0x1e2/0x2d0
-    [<ffffffff81c47c55>] kmalloc_trace+0x25/0xc0
-    [<ffffffff83eb9a12>] aa_alloc_pdb+0x82/0x140
-    [<ffffffff83ec4077>] unpack_pdb+0xc7/0x2700
-    [<ffffffff83ec6b10>] unpack_profile+0x450/0x4960
-    [<ffffffff83ecc129>] aa_unpack+0x309/0x15e0
-    [<ffffffff83ebdb23>] aa_replace_profiles+0x213/0x33c0
-    [<ffffffff83e8d341>] policy_update+0x261/0x370
-    [<ffffffff83e8d66e>] profile_replace+0x20e/0x2a0
-    [<ffffffff81eadfaf>] vfs_write+0x2af/0xe00
-    [<ffffffff81eaf4c6>] ksys_write+0x126/0x250
-    [<ffffffff890fa0b6>] do_syscall_64+0x46/0xf0
-    [<ffffffff892000ea>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
+Call these variants when the lock is held to avoid recursively taking it
+and potentially having a thread deadlock with itself.
 
-Free the pdbs inside aa_free_pdb(). While at it, rename the variable
-representing an aa_policydb object to make the function more unified with
-aa_pdb_free_kref() and aa_alloc_pdb().
-
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 98b824ff8984 ("apparmor: refcount the pdb")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: f8dfeae009effc0b ("perf bpf: Show more BPF program info in print_bpf_prog_info()")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Song Liu <song@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Ming Wang <wangming01@loongson.cn>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Link: https://lore.kernel.org/r/20231207014655.1252484-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ tools/perf/util/bpf-event.c |  8 +++---
+ tools/perf/util/bpf-event.h | 12 ++++-----
+ tools/perf/util/env.c       | 50 ++++++++++++++++++++++++-------------
+ tools/perf/util/env.h       |  4 +++
+ tools/perf/util/header.c    |  8 +++---
+ 5 files changed, 50 insertions(+), 32 deletions(-)
 
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index ed4c9803c8fa..957654d253dd 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -99,13 +99,14 @@ const char *const aa_profile_mode_names[] = {
- };
- 
- 
--static void aa_free_pdb(struct aa_policydb *policy)
-+static void aa_free_pdb(struct aa_policydb *pdb)
- {
--	if (policy) {
--		aa_put_dfa(policy->dfa);
--		if (policy->perms)
--			kvfree(policy->perms);
--		aa_free_str_table(&policy->trans);
-+	if (pdb) {
-+		aa_put_dfa(pdb->dfa);
-+		if (pdb->perms)
-+			kvfree(pdb->perms);
-+		aa_free_str_table(&pdb->trans);
-+		kfree(pdb);
- 	}
+diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
+index 38fcf3ba5749..b00b5a2634c3 100644
+--- a/tools/perf/util/bpf-event.c
++++ b/tools/perf/util/bpf-event.c
+@@ -542,9 +542,9 @@ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env)
+ 	return evlist__add_sb_event(evlist, &attr, bpf_event__sb_cb, env);
  }
+ 
+-void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
+-				    struct perf_env *env,
+-				    FILE *fp)
++void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
++				      struct perf_env *env,
++				      FILE *fp)
+ {
+ 	__u32 *prog_lens = (__u32 *)(uintptr_t)(info->jited_func_lens);
+ 	__u64 *prog_addrs = (__u64 *)(uintptr_t)(info->jited_ksyms);
+@@ -560,7 +560,7 @@ void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
+ 	if (info->btf_id) {
+ 		struct btf_node *node;
+ 
+-		node = perf_env__find_btf(env, info->btf_id);
++		node = __perf_env__find_btf(env, info->btf_id);
+ 		if (node)
+ 			btf = btf__new((__u8 *)(node->data),
+ 				       node->data_size);
+diff --git a/tools/perf/util/bpf-event.h b/tools/perf/util/bpf-event.h
+index 1bcbd4fb6c66..e2f0420905f5 100644
+--- a/tools/perf/util/bpf-event.h
++++ b/tools/perf/util/bpf-event.h
+@@ -33,9 +33,9 @@ struct btf_node {
+ int machine__process_bpf(struct machine *machine, union perf_event *event,
+ 			 struct perf_sample *sample);
+ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env);
+-void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
+-				    struct perf_env *env,
+-				    FILE *fp);
++void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
++				      struct perf_env *env,
++				      FILE *fp);
+ #else
+ static inline int machine__process_bpf(struct machine *machine __maybe_unused,
+ 				       union perf_event *event __maybe_unused,
+@@ -50,9 +50,9 @@ static inline int evlist__add_bpf_sb_event(struct evlist *evlist __maybe_unused,
+ 	return 0;
+ }
+ 
+-static inline void bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
+-						  struct perf_env *env __maybe_unused,
+-						  FILE *fp __maybe_unused)
++static inline void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
++						    struct perf_env *env __maybe_unused,
++						    FILE *fp __maybe_unused)
+ {
+ 
+ }
+diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
+index 44140b7f596a..8da0e2c763e2 100644
+--- a/tools/perf/util/env.c
++++ b/tools/perf/util/env.c
+@@ -22,13 +22,19 @@ struct perf_env perf_env;
+ 
+ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 				    struct bpf_prog_info_node *info_node)
++{
++	down_write(&env->bpf_progs.lock);
++	__perf_env__insert_bpf_prog_info(env, info_node);
++	up_write(&env->bpf_progs.lock);
++}
++
++void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
+ {
+ 	__u32 prog_id = info_node->info_linear->info.id;
+ 	struct bpf_prog_info_node *node;
+ 	struct rb_node *parent = NULL;
+ 	struct rb_node **p;
+ 
+-	down_write(&env->bpf_progs.lock);
+ 	p = &env->bpf_progs.infos.rb_node;
+ 
+ 	while (*p != NULL) {
+@@ -40,15 +46,13 @@ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 			p = &(*p)->rb_right;
+ 		} else {
+ 			pr_debug("duplicated bpf prog info %u\n", prog_id);
+-			goto out;
++			return;
+ 		}
+ 	}
+ 
+ 	rb_link_node(&info_node->rb_node, parent, p);
+ 	rb_insert_color(&info_node->rb_node, &env->bpf_progs.infos);
+ 	env->bpf_progs.infos_cnt++;
+-out:
+-	up_write(&env->bpf_progs.lock);
+ }
+ 
+ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+@@ -77,14 +81,22 @@ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+ }
+ 
+ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
++{
++	bool ret;
++
++	down_write(&env->bpf_progs.lock);
++	ret = __perf_env__insert_btf(env, btf_node);
++	up_write(&env->bpf_progs.lock);
++	return ret;
++}
++
++bool __perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
+ {
+ 	struct rb_node *parent = NULL;
+ 	__u32 btf_id = btf_node->id;
+ 	struct btf_node *node;
+ 	struct rb_node **p;
+-	bool ret = true;
+ 
+-	down_write(&env->bpf_progs.lock);
+ 	p = &env->bpf_progs.btfs.rb_node;
+ 
+ 	while (*p != NULL) {
+@@ -96,25 +108,31 @@ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node)
+ 			p = &(*p)->rb_right;
+ 		} else {
+ 			pr_debug("duplicated btf %u\n", btf_id);
+-			ret = false;
+-			goto out;
++			return false;
+ 		}
+ 	}
+ 
+ 	rb_link_node(&btf_node->rb_node, parent, p);
+ 	rb_insert_color(&btf_node->rb_node, &env->bpf_progs.btfs);
+ 	env->bpf_progs.btfs_cnt++;
+-out:
+-	up_write(&env->bpf_progs.lock);
+-	return ret;
++	return true;
+ }
+ 
+ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id)
++{
++	struct btf_node *res;
++
++	down_read(&env->bpf_progs.lock);
++	res = __perf_env__find_btf(env, btf_id);
++	up_read(&env->bpf_progs.lock);
++	return res;
++}
++
++struct btf_node *__perf_env__find_btf(struct perf_env *env, __u32 btf_id)
+ {
+ 	struct btf_node *node = NULL;
+ 	struct rb_node *n;
+ 
+-	down_read(&env->bpf_progs.lock);
+ 	n = env->bpf_progs.btfs.rb_node;
+ 
+ 	while (n) {
+@@ -124,13 +142,9 @@ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id)
+ 		else if (btf_id > node->id)
+ 			n = n->rb_right;
+ 		else
+-			goto out;
++			return node;
+ 	}
+-	node = NULL;
+-
+-out:
+-	up_read(&env->bpf_progs.lock);
+-	return node;
++	return NULL;
+ }
+ 
+ /* purge data in bpf_progs.infos tree */
+diff --git a/tools/perf/util/env.h b/tools/perf/util/env.h
+index 4566c51f2fd9..359eff51cb85 100644
+--- a/tools/perf/util/env.h
++++ b/tools/perf/util/env.h
+@@ -164,12 +164,16 @@ const char *perf_env__raw_arch(struct perf_env *env);
+ int perf_env__nr_cpus_avail(struct perf_env *env);
+ 
+ void perf_env__init(struct perf_env *env);
++void __perf_env__insert_bpf_prog_info(struct perf_env *env,
++				      struct bpf_prog_info_node *info_node);
+ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 				    struct bpf_prog_info_node *info_node);
+ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+ 							__u32 prog_id);
+ bool perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node);
++bool __perf_env__insert_btf(struct perf_env *env, struct btf_node *btf_node);
+ struct btf_node *perf_env__find_btf(struct perf_env *env, __u32 btf_id);
++struct btf_node *__perf_env__find_btf(struct perf_env *env, __u32 btf_id);
+ 
+ int perf_env__numa_node(struct perf_env *env, struct perf_cpu cpu);
+ char *perf_env__find_pmu_cap(struct perf_env *env, const char *pmu_name,
+diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
+index b39b3e4cec8a..8b274ccab7a9 100644
+--- a/tools/perf/util/header.c
++++ b/tools/perf/util/header.c
+@@ -1849,8 +1849,8 @@ static void print_bpf_prog_info(struct feat_fd *ff, FILE *fp)
+ 		node = rb_entry(next, struct bpf_prog_info_node, rb_node);
+ 		next = rb_next(&node->rb_node);
+ 
+-		bpf_event__print_bpf_prog_info(&node->info_linear->info,
+-					       env, fp);
++		__bpf_event__print_bpf_prog_info(&node->info_linear->info,
++						 env, fp);
+ 	}
+ 
+ 	up_read(&env->bpf_progs.lock);
+@@ -3180,7 +3180,7 @@ static int process_bpf_prog_info(struct feat_fd *ff, void *data __maybe_unused)
+ 		/* after reading from file, translate offset to address */
+ 		bpil_offs_to_addr(info_linear);
+ 		info_node->info_linear = info_linear;
+-		perf_env__insert_bpf_prog_info(env, info_node);
++		__perf_env__insert_bpf_prog_info(env, info_node);
+ 	}
+ 
+ 	up_write(&env->bpf_progs.lock);
+@@ -3227,7 +3227,7 @@ static int process_bpf_btf(struct feat_fd *ff, void *data __maybe_unused)
+ 		if (__do_read(ff, node->data, data_size))
+ 			goto out;
+ 
+-		perf_env__insert_btf(env, node);
++		__perf_env__insert_btf(env, node);
+ 		node = NULL;
+ 	}
  
 -- 
 2.43.0
