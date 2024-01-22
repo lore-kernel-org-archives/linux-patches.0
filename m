@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E2C745D6;
-	Tue, 23 Jan 2024 02:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D12745E1;
+	Tue, 23 Jan 2024 02:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975451; cv=none; b=Zmt9WgNK5pnPt6oz6FCxCpnmrbG0Xwl8Yrso6TwBuci7XJY5pW14B8pM5pvFHwOu7riVEd8nvzUx1vZInmDYx7f4hAMwUUDQRZ1Hl5mAbjgB+/a5a2ZTnIn6oWHgpkYu8QM2HkYVKpKfiQBPCffZJrRmIxsZ+oVe42NaMCsdAa0=
+	t=1705975452; cv=none; b=d3K8yGVO0HivvyXvz8jfyP4p4Zl/ludPOzBr168bggM0WYfx410oErTJaUmpKfQiY/lzgO+xfoag4J5vSK+k6cVffe8Vj5A5fAcD1UQ2p5xr8gCS9UqTAHXb3VZ0uAxQqeW5vDlNK01NFlSzR0Mmr4SF9dRGIVHiMqleQZvo7oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975451; c=relaxed/simple;
-	bh=HG4d6VYL8mboTzAD3d7PfRGJ5csbWhf5wuyaWUVtD0k=;
+	s=arc-20240116; t=1705975452; c=relaxed/simple;
+	bh=5gQamw7OGDgIeb9q6gGIxMO0lKW8YVi1D9OT5xuWdCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQDmldxsJjC5bT6Eve0WzpGBlu67SkLne0w9x1m6qd3dbXmgvEqid0tQ2vKwuHxX1uiozFuIU6UcM4VLSBDSrvFdbvQTA2LJ1CfSBUx00cBkI35mp86wU0KDEkhfttaAZcQGAwDgepGQ6UUgsnady2rBfrxUUnivk8fB45ywUts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNmUhfL5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o1rSRVkvNStNbAg3pHvD3cPWSaH4xlezp3tVh4OyoDHSNq7tMykOv4YY1zc9HDfe1W7IxUVbvZPmPtO7FH74w3ba6SX/RbypygbuxIzfbBhFY64NH1aiKQ+Gk/DPhzw+6HK0LEX1qSjPERtIZCQcGhHXOb1xpVyFWYDcZsfiLhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ct/dcrkR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNmUhfL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE27C433F1;
-	Tue, 23 Jan 2024 02:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ct/dcrkR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB55BC43399;
+	Tue, 23 Jan 2024 02:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705975451;
-	bh=HG4d6VYL8mboTzAD3d7PfRGJ5csbWhf5wuyaWUVtD0k=;
+	bh=5gQamw7OGDgIeb9q6gGIxMO0lKW8YVi1D9OT5xuWdCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hNmUhfL5TWPlF3eexanbvJ29zRg8AAUxr5BqrGus5dKw6hfF3iVYgdL/UQzeZHtrV
-	 RVg4/SjF6gMR+7GjNn8WpPD0P55nlytNr8Gvm7SrEcwke/OSCBhZbWXePGhyy7JK5h
-	 iGnUxL7sZZKEJMCYtqDPV5StpGzoeNQV6BZNeox4=
+	b=Ct/dcrkRJCdi+P649Ijl/W474oxsxU5Oxjqlet7mzF4hST6SFKxAEufF52RuLTsjH
+	 imWLgGBuEiNeGRm3j6Q5BvUNB3EXD1Vf+fxNOw0Bu7Pm2CJihR3n9rfcEihdnwnBOf
+	 H6Lx2FoJ9KfaZvPcycNwRKK9jZAYw1YjkmCH6urM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	kernel test robot <lkp@intel.com>,
-	Bart Van Assche <bvanassche@acm.org>
-Subject: [PATCH 6.6 407/583] md/raid1: Use blk_opf_t for read and write operations
-Date: Mon, 22 Jan 2024 15:57:38 -0800
-Message-ID: <20240122235824.432440352@linuxfoundation.org>
+	Rob Landley <rob@landley.net>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.6 408/583] rootfs: Fix support for rootfstype= when root= is given
+Date: Mon, 22 Jan 2024 15:57:39 -0800
+Message-ID: <20240122235824.461404511@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,84 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-commit 7dab24554dedd4e6f408af8eb2d25c89997a6a1f upstream.
+commit 21528c69a0d8483f7c6345b1a0bc8d8975e9a172 upstream.
 
-Use the type blk_opf_t for read and write operations instead of int. This
-patch does not affect the generated code but fixes the following sparse
-warning:
+Documentation/filesystems/ramfs-rootfs-initramfs.rst states:
 
-drivers/md/raid1.c:1993:60: sparse: sparse: incorrect type in argument 5 (different base types)
-     expected restricted blk_opf_t [usertype] opf
-     got int rw
+  If CONFIG_TMPFS is enabled, rootfs will use tmpfs instead of ramfs by
+  default.  To force ramfs, add "rootfstype=ramfs" to the kernel command
+  line.
 
-Cc: Song Liu <song@kernel.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Fixes: 3c5e514db58f ("md/raid1: Use the new blk_opf_t type")
-Cc: stable@vger.kernel.org # v6.0+
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202401080657.UjFnvQgX-lkp@intel.com/
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240108001223.23835-1-bvanassche@acm.org
+This currently does not work when root= is provided since then
+saved_root_name contains a string and rootfstype= is ignored. Therefore,
+ramfs is currently always chosen when root= is provided.
+
+The current behavior for rootfs's filesystem is:
+
+   root=       | rootfstype= | chosen rootfs filesystem
+   ------------+-------------+--------------------------
+   unspecified | unspecified | tmpfs
+   unspecified | tmpfs       | tmpfs
+   unspecified | ramfs       | ramfs
+    provided   | ignored     | ramfs
+
+rootfstype= should be respected regardless whether root= is given,
+as shown below:
+
+   root=       | rootfstype= | chosen rootfs filesystem
+   ------------+-------------+--------------------------
+   unspecified | unspecified | tmpfs  (as before)
+   unspecified | tmpfs       | tmpfs  (as before)
+   unspecified | ramfs       | ramfs  (as before)
+    provided   | unspecified | ramfs  (compatibility with before)
+    provided   | tmpfs       | tmpfs  (new)
+    provided   | ramfs       | ramfs  (new)
+
+This table represents the new behavior.
+
+Fixes: 6e19eded3684 ("initmpfs: use initramfs if rootfstype= or root= specified")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Rob Landley <rob@landley.net>
+Link: https://lore.kernel.org/lkml/8244c75f-445e-b15b-9dbf-266e7ca666e2@landley.net/
+Reviewed-and-Tested-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Link: https://lore.kernel.org/r/20231120011248.396012-1-stefanb@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid1.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ init/do_mounts.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1983,12 +1983,12 @@ static void end_sync_write(struct bio *b
- }
+--- a/init/do_mounts.c
++++ b/init/do_mounts.c
+@@ -510,7 +510,10 @@ struct file_system_type rootfs_fs_type =
  
- static int r1_sync_page_io(struct md_rdev *rdev, sector_t sector,
--			   int sectors, struct page *page, int rw)
-+			   int sectors, struct page *page, blk_opf_t rw)
+ void __init init_rootfs(void)
  {
- 	if (sync_page_io(rdev, sector, sectors << 9, page, rw, false))
- 		/* success */
- 		return 1;
--	if (rw == WRITE) {
-+	if (rw == REQ_OP_WRITE) {
- 		set_bit(WriteErrorSeen, &rdev->flags);
- 		if (!test_and_set_bit(WantReplacement,
- 				      &rdev->flags))
-@@ -2105,7 +2105,7 @@ static int fix_sync_read_error(struct r1
- 			rdev = conf->mirrors[d].rdev;
- 			if (r1_sync_page_io(rdev, sect, s,
- 					    pages[idx],
--					    WRITE) == 0) {
-+					    REQ_OP_WRITE) == 0) {
- 				r1_bio->bios[d]->bi_end_io = NULL;
- 				rdev_dec_pending(rdev, mddev);
- 			}
-@@ -2120,7 +2120,7 @@ static int fix_sync_read_error(struct r1
- 			rdev = conf->mirrors[d].rdev;
- 			if (r1_sync_page_io(rdev, sect, s,
- 					    pages[idx],
--					    READ) != 0)
-+					    REQ_OP_READ) != 0)
- 				atomic_add(s, &rdev->corrected_errors);
- 		}
- 		sectors -= s;
-@@ -2332,7 +2332,7 @@ static void fix_read_error(struct r1conf
- 				atomic_inc(&rdev->nr_pending);
- 				rcu_read_unlock();
- 				r1_sync_page_io(rdev, sect, s,
--						conf->tmppage, WRITE);
-+						conf->tmppage, REQ_OP_WRITE);
- 				rdev_dec_pending(rdev, mddev);
- 			} else
- 				rcu_read_unlock();
-@@ -2349,7 +2349,7 @@ static void fix_read_error(struct r1conf
- 				atomic_inc(&rdev->nr_pending);
- 				rcu_read_unlock();
- 				if (r1_sync_page_io(rdev, sect, s,
--						    conf->tmppage, READ)) {
-+						conf->tmppage, REQ_OP_READ)) {
- 					atomic_add(s, &rdev->corrected_errors);
- 					pr_info("md/raid1:%s: read error corrected (%d sectors at %llu on %pg)\n",
- 						mdname(mddev), s,
+-	if (IS_ENABLED(CONFIG_TMPFS) && !saved_root_name[0] &&
+-		(!root_fs_names || strstr(root_fs_names, "tmpfs")))
+-		is_tmpfs = true;
++	if (IS_ENABLED(CONFIG_TMPFS)) {
++		if (!saved_root_name[0] && !root_fs_names)
++			is_tmpfs = true;
++		else if (root_fs_names && !!strstr(root_fs_names, "tmpfs"))
++			is_tmpfs = true;
++	}
+ }
 
 
