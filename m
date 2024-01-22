@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D114F8B0;
-	Tue, 23 Jan 2024 01:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2492D4F8B0;
+	Tue, 23 Jan 2024 01:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974644; cv=none; b=F9krwv+X7PCbPjG0ZhKosUjTnF7Fx3QdLtc3ziOr0hNjs6NBWvmmcmdheType8JOm9JM1ZrwP+oIznoSllhySFvuJ8bTAddZslpqGi4wr7m8Rm/MaSLvY9RggxX89b1Z2HxoD+vbKWt3vE84BLoA6eJOtrdHRRdZ2K4mPUN/+0A=
+	t=1705974646; cv=none; b=KAn5xznfQZRoAfR3Bms5Irx22JsmLHEk3SD7JVY5Un4JAKJ9G9BBFrXKL0uIPLWFXFpD9wPaQDZXgTQspqNyOfGxKe8Jx9ueem1ELJrM5JRnCG/ahtLK4dZBOA3ZCL2yBhGPVDdhqdBJfYFOO9U+A/1FYSgLwjaVhsGfy2R+z40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974644; c=relaxed/simple;
-	bh=vTmtdlu8d+vyVWoxsY2W0FVSwwtBuEZxzpVslbcU3fQ=;
+	s=arc-20240116; t=1705974646; c=relaxed/simple;
+	bh=NOkA7fBsd+JxJxR1Bc4/8RKdXvBkbtIlIt9qqWP8ey0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3nEd45/rSehZiGQFkAsxHozjpbWwiMTfGliJo/WeNG3HD8RL+HdtDsMvcZUalyJ/nZ6re9kUp8T/2uX+feu5uwSoLa4OMwMPBXVvrxjkwwZMuUYijNgaohGaerJj3G+lTHKaERnvWA80SfbUCDMQP85QyRDgSNliDoUsJNphkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeBqMtIG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WXwGQwO9DGNY0j0/R28Yp1hvlHgzu3rCZdm7/mMYh5WjoQZXwrfmFH32YQqzSYi0u0DpUZECEvsBbhFFq4hepR2sFur9wmnS3oo0TTqFFw1duOoHQPoYw/pbgmrFfUr2Hvv9XAwfuDYuE6EFzUv4x1sOMZg1fNvqztaG2N/ruGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Je/ytrso; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeBqMtIG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED78C433F1;
-	Tue, 23 Jan 2024 01:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Je/ytrso"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B3BC433F1;
+	Tue, 23 Jan 2024 01:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974644;
-	bh=vTmtdlu8d+vyVWoxsY2W0FVSwwtBuEZxzpVslbcU3fQ=;
+	s=korg; t=1705974646;
+	bh=NOkA7fBsd+JxJxR1Bc4/8RKdXvBkbtIlIt9qqWP8ey0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LeBqMtIGAyduE+xHzCCPgBCzfGak5GneBImi4yMQYyyFkNdPl7HgF+C2i5uxVoZ98
-	 eVj47oGr7B850AzefhJVIKR8v1Rfx5w4B3WAe/OVWg5yU9egD6qGL70lFyQMKGp9Vt
-	 gl1rpwznAoVcbmmF7gmWnE/C016ze80Hh7MvbOBs=
+	b=Je/ytrso36xfG0l0NVVeIIqCEdUO8Fl+a0ZpOLvwsyYRH1HgS5vYHNfU6zOz8H0kD
+	 OIl85M45OP9sveimfalfFG4IAkXvIi688/aTAXwLToBg4nu7ZIgXCKb7jaXd3vDW95
+	 Cfg9HS8eDlP+NzCDbFR18n5nOUsmeFV8fOfG5cmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Mayhew <smayhew@redhat.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Dafna Hirschfeld <dafna@fastmail.com>,
+	Paul Elder <paul.elder@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/583] NFS: Use parents objective cred in nfs_access_login_time()
-Date: Mon, 22 Jan 2024 15:52:08 -0800
-Message-ID: <20240122235814.517096813@linuxfoundation.org>
+Subject: [PATCH 5.15 202/374] media: rkisp1: Disable runtime PM in probe error path
+Date: Mon, 22 Jan 2024 15:57:38 -0800
+Message-ID: <20240122235751.635683985@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +49,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Scott Mayhew <smayhew@redhat.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit a10a9233073d984b239e22358ba21825e27e2e88 ]
+[ Upstream commit 13c9810281f8b24af9b7712cd84a1fce61843e93 ]
 
-The subjective cred (task->cred) can potentially be overridden and
-subsquently freed in non-RCU context, which could lead to a panic if we
-try to use it in cred_fscmp().  Use __task_cred(), which returns the
-objective cred (task->real_cred) instead.
+If the v4l2_device_register() call fails, runtime PM is left enabled.
+Fix it.
 
-Fixes: 0eb43812c027 ("NFS: Clear the file access cache upon login")
-Fixes: 5e9a7b9c2ea1 ("NFS: Fix up a sparse warning")
-
-Signed-off-by: Scott Mayhew <smayhew@redhat.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Dafna Hirschfeld <dafna@fastmail.com>
+Reviewed-by: Paul Elder <paul.elder@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Stable-dep-of: 452f604a4683 ("media: rkisp1: Fix media device memory leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index e6a51fd94fea..9fc5061d51b2 100644
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -2968,7 +2968,7 @@ static u64 nfs_access_login_time(const struct task_struct *task,
- 	rcu_read_lock();
- 	for (;;) {
- 		parent = rcu_dereference(task->real_parent);
--		pcred = rcu_dereference(parent->cred);
-+		pcred = __task_cred(parent);
- 		if (parent == task || cred_fscmp(pcred, cred) != 0)
- 			break;
- 		task = parent;
+diff --git a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
+index 560f928c3752..79cfa99f2a64 100644
+--- a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
++++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
+@@ -514,7 +514,7 @@ static int rkisp1_probe(struct platform_device *pdev)
+ 
+ 	ret = v4l2_device_register(rkisp1->dev, &rkisp1->v4l2_dev);
+ 	if (ret)
+-		return ret;
++		goto err_pm_runtime_disable;
+ 
+ 	ret = media_device_register(&rkisp1->media_dev);
+ 	if (ret) {
+@@ -534,6 +534,7 @@ static int rkisp1_probe(struct platform_device *pdev)
+ 	media_device_unregister(&rkisp1->media_dev);
+ err_unreg_v4l2_dev:
+ 	v4l2_device_unregister(&rkisp1->v4l2_dev);
++err_pm_runtime_disable:
+ 	pm_runtime_disable(&pdev->dev);
+ 	return ret;
+ }
 -- 
 2.43.0
 
