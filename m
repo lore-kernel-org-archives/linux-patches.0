@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEA04EB4A;
-	Tue, 23 Jan 2024 00:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F0855C09;
+	Tue, 23 Jan 2024 00:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969792; cv=none; b=n2Ud5/ZpWMuOGNfGS67Zsa/NgnohRu44rUh70qpp2b3lVF3Z6i8VNfHmsqdkScNOlplQC+GomksPdlbOM++y6+5UaaE2cnn5xZKbCc6ge4p9X09M79q1oCtLncxMxqJNmdnUHbOW3/6kEDFBW1WHMLIGSEECmvh/Rq7XO9CISBE=
+	t=1705969793; cv=none; b=Mg9LSs7AjTE59AEWEd/4uSyDuAdHZ0JeKZTNVsL6i3MuGimxobXCdWyhajdcu+Jd+AfyI18lugDv9pU8lDr0rS4esM8j3sYdACMgViLw2cb4adrp6H0kwjfwHpTsErV3y4SXFH7lT4ZfZgV1F3oQBmBrbEPzuy1pMZNTaA2M6gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969792; c=relaxed/simple;
-	bh=QMWh+gNDBqIIp9foCwYbwiVG+Me9HGLkrBLgrOiZeAU=;
+	s=arc-20240116; t=1705969793; c=relaxed/simple;
+	bh=ehuUdVFZUNUzyGUhlAxSUe/btKUoehXcQm5XJX/K/5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H5FpEYj8UBVhqHGjt7/HbWkvNZwjUGj5hgi1R+yuqDPyuVyTZyawhXS9N6x1P1wjTFdS0/qktN6gefXURHWyhrg+4ihTHrc1icWJUV1fplBvXKi3rK+Td/NDsLWHWCuRqwvnLB2yrpKRfI6vkaSXLMTrjtxGQ7SzXz+imecedK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZjGvQuj4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=okXpt9PkzYc2QmR6vkkzTvYjYFjRcS4abHNbtdP6YqulPE6JMTPjKGdeOijvZhOZpLds1Hh5p+jG2c2HQPuPp4qusBUp+KfoQVhx2XZvckcfR/sNSmFnwL7TARzCgOci9K/BcpbL3ebRE+9kbQrL0+5RCPZAeF4TkM8oNhZ21Hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lfUR3z+7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjGvQuj4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AA9C43390;
-	Tue, 23 Jan 2024 00:29:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfUR3z+7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6371AC433F1;
+	Tue, 23 Jan 2024 00:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969792;
-	bh=QMWh+gNDBqIIp9foCwYbwiVG+Me9HGLkrBLgrOiZeAU=;
+	s=korg; t=1705969793;
+	bh=ehuUdVFZUNUzyGUhlAxSUe/btKUoehXcQm5XJX/K/5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZjGvQuj4yVPq0v5NEPfzMh4b1s2zKDroS8fzwyEix/bIpTzXRGQZzpg5LvQ4iTcbk
-	 PLJ1XkstatpsbMH0DxD44esdG7sea5TOslD3A8EiOc03GRroghzGFEdk+NFYNNGMPW
-	 vmrLsuJvC1AGoLfaKb48HyI9n+t9zpmLLSAnFvoU=
+	b=lfUR3z+7sD7XHtP82/Yngt9Xhsc7IjRy/wwwI2RNcA7PcEnijcFVsIrgqCCohTjra
+	 CBdqPpJiGfFbbxk92TBaFCN1M/jvfj+r9ktHy6EI95bRaQgRmTTdNUQYzymwXf8la9
+	 lJnyhzGiOX87S0miNcVicbT0sM51QqebK+LDa42E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xingwei lee <xrivendell7@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.7 428/641] io_uring/rw: ensure io->bytes_done is always initialized
-Date: Mon, 22 Jan 2024 15:55:32 -0800
-Message-ID: <20240122235831.386174757@linuxfoundation.org>
+Subject: [PATCH 6.7 429/641] io_uring: ensure local task_work is run on wait timeout
+Date: Mon, 22 Jan 2024 15:55:33 -0800
+Message-ID: <20240122235831.418091993@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,48 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-commit 0a535eddbe0dc1de4386046ab849f08aeb2f8faf upstream.
+commit 6ff1407e24e6fdfa4a16ba9ba551e3d253a26391 upstream.
 
-If IOSQE_ASYNC is set and we fail importing an iovec for a readv or
-writev request, then we leave ->bytes_done uninitialized and hence the
-eventual failure CQE posted can potentially have a random res value
-rather than the expected -EINVAL.
+A previous commit added an earlier break condition here, which is fine if
+we're using non-local task_work as it'll be run on return to userspace.
+However, if DEFER_TASKRUN is used, then we could be leaving local
+task_work that is ready to process in the ctx list until next time that
+we enter the kernel to wait for events.
 
-Setup ->bytes_done before potentially failing, so we have a consistent
-value if we fail the request early.
+Move the break condition to _after_ we have run task_work.
 
 Cc: stable@vger.kernel.org
-Reported-by: xingwei lee <xrivendell7@gmail.com>
+Fixes: 846072f16eed ("io_uring: mimimise io_cqring_wait_schedule")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rw.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ io_uring/io_uring.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -589,15 +589,19 @@ static inline int io_rw_prep_async(struc
- 	struct iovec *iov;
- 	int ret;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2637,8 +2637,6 @@ static int io_cqring_wait(struct io_ring
+ 		__set_current_state(TASK_RUNNING);
+ 		atomic_set(&ctx->cq_wait_nr, 0);
  
-+	iorw->bytes_done = 0;
-+	iorw->free_iovec = NULL;
+-		if (ret < 0)
+-			break;
+ 		/*
+ 		 * Run task_work after scheduling and before io_should_wake().
+ 		 * If we got woken because of task_work being processed, run it
+@@ -2648,6 +2646,18 @@ static int io_cqring_wait(struct io_ring
+ 		if (!llist_empty(&ctx->work_llist))
+ 			io_run_local_work(ctx);
+ 
++		/*
++		 * Non-local task_work will be run on exit to userspace, but
++		 * if we're using DEFER_TASKRUN, then we could have waited
++		 * with a timeout for a number of requests. If the timeout
++		 * hits, we could have some requests ready to process. Ensure
++		 * this break is _after_ we have run task_work, to avoid
++		 * deferring running potentially pending requests until the
++		 * next time we wait for events.
++		 */
++		if (ret < 0)
++			break;
 +
- 	/* submission path, ->uring_lock should already be taken */
- 	ret = io_import_iovec(rw, req, &iov, &iorw->s, 0);
- 	if (unlikely(ret < 0))
- 		return ret;
- 
--	iorw->bytes_done = 0;
--	iorw->free_iovec = iov;
--	if (iov)
-+	if (iov) {
-+		iorw->free_iovec = iov;
- 		req->flags |= REQ_F_NEED_CLEANUP;
-+	}
-+
- 	return 0;
- }
- 
+ 		check_cq = READ_ONCE(ctx->check_cq);
+ 		if (unlikely(check_cq)) {
+ 			/* let the caller flush overflows, retry */
 
 
