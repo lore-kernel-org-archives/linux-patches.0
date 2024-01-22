@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB41F77636;
-	Tue, 23 Jan 2024 02:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8021D77636;
+	Tue, 23 Jan 2024 02:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975526; cv=none; b=Ui6ejkPo0Vy5bZ4MoPROS+7bHA9fRjUOO3xSb8klFWsDG+uh1eaJq1jMVzRWkllimrteAg3HbNwIKansc+hvj4xNiVOAuqnVaQai3ozYBdHb1/PM1cb8MGZFELmgQyRPzDCEsiZUUunuWzENVyfNq5udluyZr9cDPCbClFD2mdY=
+	t=1705975527; cv=none; b=A1J4YXeiF+zpEh7z5fK5oAalRU2edMTVoGVlaQ/ZyNpG4bTkM4Nh0ajLLUS6jgMYd6oG7DxERNaV2gwtHG/Ag+30dasj1oYrZp48rm9ZOFyuywXce0c1xQJzAZOTq113iLi9IIugML4ClRVOrMEhAdnyqQexcP5JjSl5mwpw+ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975526; c=relaxed/simple;
-	bh=3e/wfUcumMP2qZycfp268BBb3oe5G4ieBQEx17XU9b4=;
+	s=arc-20240116; t=1705975527; c=relaxed/simple;
+	bh=n95/7V5xNhi8VHqLv/yuEQfvegv3Da00SVrIpI+Ucbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=draUmbsVMX6TF2xFZbkUJfKGunAczU1tpjEWTnS3YuBeVUdKfzgffVp96NayQqqxsb3lxVv54cLsUaign1hIeiugR3yanvHTi3PRNSn/boAoKFUglEFVPualuCD10Ve2EJ18yxjOQqreIgDimKClMwUVFm+6sDMY66G0GL3Zluo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B5tTMMHW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g7HWH350vvET09N8q/qMeR6B0TfFNs+7fFX9430cgTJ368vtPa012IhrzTc/FpuoZ6K0PvQxF9CbqLh/AWnUb0c+IsmzcYQgzvQ/r6mE4VgTaswd9p4vIhQsDunKuq69rnSUrGWOxP+dyZ2AQmTimBNetTJ01Mj9y+fdOGFyn2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAJkFmtw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5tTMMHW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D34C43399;
-	Tue, 23 Jan 2024 02:05:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAJkFmtw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422A4C433F1;
+	Tue, 23 Jan 2024 02:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975526;
-	bh=3e/wfUcumMP2qZycfp268BBb3oe5G4ieBQEx17XU9b4=;
+	s=korg; t=1705975527;
+	bh=n95/7V5xNhi8VHqLv/yuEQfvegv3Da00SVrIpI+Ucbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B5tTMMHW6emTwi65seSFHe+a12FL7yt6f29DCYdvf1jo4Xb3aR8zsmjlwXW7CMcYO
-	 DdyMEz9gLjnKLak/qBGKpDZDRC55nqhxblWqzyAaPxYyqUDQZKuC+FMt0us2UlhHem
-	 783UP4uG3KvgbJFT9AWqynxkDkQlBkKb/CnaVTUU=
+	b=AAJkFmtwbF+Wu9GOxbqED2wULGQaoK/cdI/hPehegC8DaQFrg1C+yVyXaDcEgd0MJ
+	 UsleS5IPqF0T2RM2Asp6G2QyJjZjBA8hMy9tXHufSsFc2qoGHnehcK9cP4qm4TuFaF
+	 BtNtLHpe+qGUodFvEQYf8KdyjtPcZLJcFLjxAAAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nuno Sa <nuno.sa@analog.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 479/583] iio: adc: ad9467: fix reset gpio handling
-Date: Mon, 22 Jan 2024 15:58:50 -0800
-Message-ID: <20240122235826.639564006@linuxfoundation.org>
+Subject: [PATCH 6.6 480/583] iio: adc: ad9467: dont ignore error codes
+Date: Mon, 22 Jan 2024 15:58:51 -0800
+Message-ID: <20240122235826.678049500@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -54,87 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit 76f028539cf360f750efd8cde560edda298e4c6b ]
+[ Upstream commit e072e149cfb827e0ab4cafb0547e9658e35393cd ]
 
-The reset gpio was being handled with inverted polarity. This means that
-as far as gpiolib is concerned we were actually leaving the pin asserted
-(in theory, this would mean reset). However, inverting the polarity in
-devicetree made things work. Fix it by doing it the proper way and how
-gpiolib expects it to be done.
-
-While at it, moved the handling to it's own function and dropped
-'reset_gpio' from the 'struct ad9467_state' as we only need it during
-probe. On top of that, refactored things so that we now request the gpio
-asserted (i.e in reset) and then de-assert it. Also note that we now use
-gpiod_set_value_cansleep() instead of gpiod_direction_output() as we
-already request the pin as output.
+Make sure functions that return errors are not ignored.
 
 Fixes: ad6797120238 ("iio: adc: ad9467: add support AD9467 ADC")
 Reviewed-by: David Lechner <dlechner@baylibre.com>
 Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20231207-iio-backend-prep-v2-1-a4a33bc4d70e@analog.com
+Link: https://lore.kernel.org/r/20231207-iio-backend-prep-v2-2-a4a33bc4d70e@analog.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad9467.c | 31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ drivers/iio/adc/ad9467.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/iio/adc/ad9467.c b/drivers/iio/adc/ad9467.c
-index 39eccc28debe..4fb9e48dc782 100644
+index 4fb9e48dc782..d3c98c4eccd3 100644
 --- a/drivers/iio/adc/ad9467.c
 +++ b/drivers/iio/adc/ad9467.c
-@@ -121,7 +121,6 @@ struct ad9467_state {
- 	unsigned int			output_mode;
+@@ -162,9 +162,10 @@ static int ad9467_reg_access(struct adi_axi_adc_conv *conv, unsigned int reg,
  
- 	struct gpio_desc		*pwrdown_gpio;
--	struct gpio_desc		*reset_gpio;
- };
+ 	if (readval == NULL) {
+ 		ret = ad9467_spi_write(spi, reg, writeval);
+-		ad9467_spi_write(spi, AN877_ADC_REG_TRANSFER,
+-				 AN877_ADC_TRANSFER_SYNC);
+-		return ret;
++		if (ret)
++			return ret;
++		return ad9467_spi_write(spi, AN877_ADC_REG_TRANSFER,
++					AN877_ADC_TRANSFER_SYNC);
+ 	}
  
- static int ad9467_spi_read(struct spi_device *spi, unsigned int reg)
-@@ -378,6 +377,21 @@ static int ad9467_preenable_setup(struct adi_axi_adc_conv *conv)
- 	return ad9467_outputmode_set(st->spi, st->output_mode);
- }
+ 	ret = ad9467_spi_read(spi, reg);
+@@ -272,10 +273,13 @@ static int ad9467_get_scale(struct adi_axi_adc_conv *conv, int *val, int *val2)
+ 	const struct ad9467_chip_info *info1 = to_ad9467_chip_info(info);
+ 	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
+ 	unsigned int i, vref_val;
++	int ret;
  
-+static int ad9467_reset(struct device *dev)
-+{
-+	struct gpio_desc *gpio;
-+
-+	gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
-+	if (IS_ERR_OR_NULL(gpio))
-+		return PTR_ERR_OR_ZERO(gpio);
-+
-+	fsleep(1);
-+	gpiod_set_value_cansleep(gpio, 0);
-+	fsleep(10 * USEC_PER_MSEC);
-+
-+	return 0;
-+}
-+
- static int ad9467_probe(struct spi_device *spi)
- {
- 	const struct ad9467_chip_info *info;
-@@ -408,18 +422,9 @@ static int ad9467_probe(struct spi_device *spi)
- 	if (IS_ERR(st->pwrdown_gpio))
- 		return PTR_ERR(st->pwrdown_gpio);
- 
--	st->reset_gpio = devm_gpiod_get_optional(&spi->dev, "reset",
--						 GPIOD_OUT_LOW);
--	if (IS_ERR(st->reset_gpio))
--		return PTR_ERR(st->reset_gpio);
--
--	if (st->reset_gpio) {
--		udelay(1);
--		ret = gpiod_direction_output(st->reset_gpio, 1);
--		if (ret)
--			return ret;
--		mdelay(10);
--	}
-+	ret = ad9467_reset(&spi->dev);
-+	if (ret)
+-	vref_val = ad9467_spi_read(st->spi, AN877_ADC_REG_VREF);
++	ret = ad9467_spi_read(st->spi, AN877_ADC_REG_VREF);
++	if (ret < 0)
 +		return ret;
  
- 	conv->chip_info = &info->axi_adc_info;
+-	vref_val &= info1->vref_mask;
++	vref_val = ret & info1->vref_mask;
  
+ 	for (i = 0; i < info->num_scales; i++) {
+ 		if (vref_val == info->scale_table[i][1])
+@@ -296,6 +300,7 @@ static int ad9467_set_scale(struct adi_axi_adc_conv *conv, int val, int val2)
+ 	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
+ 	unsigned int scale_val[2];
+ 	unsigned int i;
++	int ret;
+ 
+ 	if (val != 0)
+ 		return -EINVAL;
+@@ -305,11 +310,13 @@ static int ad9467_set_scale(struct adi_axi_adc_conv *conv, int val, int val2)
+ 		if (scale_val[0] != val || scale_val[1] != val2)
+ 			continue;
+ 
+-		ad9467_spi_write(st->spi, AN877_ADC_REG_VREF,
+-				 info->scale_table[i][1]);
+-		ad9467_spi_write(st->spi, AN877_ADC_REG_TRANSFER,
+-				 AN877_ADC_TRANSFER_SYNC);
+-		return 0;
++		ret = ad9467_spi_write(st->spi, AN877_ADC_REG_VREF,
++				       info->scale_table[i][1]);
++		if (ret < 0)
++			return ret;
++
++		return ad9467_spi_write(st->spi, AN877_ADC_REG_TRANSFER,
++					AN877_ADC_TRANSFER_SYNC);
+ 	}
+ 
+ 	return -EINVAL;
 -- 
 2.43.0
 
