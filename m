@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253233984D;
-	Tue, 23 Jan 2024 01:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1922B56B73;
+	Tue, 23 Jan 2024 01:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974039; cv=none; b=D+c4momeqks5Mkxh53pyFY3+hsn1WjptCDM0R1lbkAnLWSy47BLjbhjZMU4q8WN61FWuEh7R4VJAuvx3xl4KflPXurgBc3OYXNB7tflc5wGKH/lwcxnoL1A+YGPQkPiHmQTbDloyD08KpyIXouzToujm211IdJO55ekFcEmmXP8=
+	t=1705974040; cv=none; b=Vw3i4KnH66drKXBBGimzzYfPSBhVat6X8sBo9rMfanQZixn/sPHAbTb6FQ+dRFzQaqFsvDHKr7dhPOVcgL56Pt7SdwI7IxBle0sAJDtPsqvfbVdlrp80OLxV2n1BFTgZNTRh9i4Vhy8Qj0w13FCy+xpF9I6m8SiF//p0zQnlLs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974039; c=relaxed/simple;
-	bh=YzPTa1W9Tyn49Ia5t5aoDa3nT5zIa1EzSKMU+psOVKE=;
+	s=arc-20240116; t=1705974040; c=relaxed/simple;
+	bh=6QiGSxQh68Lvz4NFOiUb1esldvEnxTBvj1V5fW1UfI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ys3mMX2/VJ8NhSK+0CPBoc6s0EcwR8Uk6tTzK1xSYixK7zM3z8W/wgzo7pjrFOjMRUVFjeuETID15NfZrCYV2uL4Rg9Jgvj4t2h7h0+aNzcLbyalt1LUDJR1v09tX3LluxuieiNnUFdo2ldafMxnTWT9XiHX9itcsuMuOqmsENg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1U9jArV9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u6r0a4g9j0NjpkHSFzZ3dz7eqfIz3DOX/wJbCTn7VX36Lqd9oX6cWFiHFJxkbIrQvD7x+g2p4QgMJyjUl/a9nnsN2eDZchCpYya1uilu52elBzrPa+8QtSWXSvIWZjhmH4dCNdbMh1HUQSZg+Bms8PnFjUcAfXq3X6XecvhOqc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYTdUUAC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1U9jArV9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90550C43390;
-	Tue, 23 Jan 2024 01:40:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYTdUUAC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B1EC43390;
+	Tue, 23 Jan 2024 01:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974038;
-	bh=YzPTa1W9Tyn49Ia5t5aoDa3nT5zIa1EzSKMU+psOVKE=;
+	s=korg; t=1705974039;
+	bh=6QiGSxQh68Lvz4NFOiUb1esldvEnxTBvj1V5fW1UfI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1U9jArV9G8EZzf+vvyAXlKWK+Yhg8aCcSRkod2KltAsF5vvCwRe5lCOgap61ei7oI
-	 Yc/irD8LbSW94XMWkOEkDWXKVxC61iXDMKu7EDt5VUIlSCiJPMOpYX/nKkAPtH+xpl
-	 q7IVEneH7QPaTvrSaMOqkGJxcH4IP5JKSkT8TOuk=
+	b=GYTdUUACjcQ3t7kHcwN998KugBcq5DakByE/UPXhK41nyHUUstAU4FXGA5Sv+5UtW
+	 vrixuo4OsNkn+B4OdRFAJm/xH79aUBRkuPoE26lcEeL9Rkkjiuh5YvFzckxpPxIr/Y
+	 nIjd6Bymm/RyQq5gV1UGoNixUdTwxf8cFUQoGZAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	Karan Tilak Kumar <kartilak@cisco.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 136/374] scsi: fnic: Return error if vmalloc() failed
-Date: Mon, 22 Jan 2024 15:56:32 -0800
-Message-ID: <20240122235749.373479989@linuxfoundation.org>
+Subject: [PATCH 6.6 013/583] selftests/powerpc: Fix error handling in FPU/VMX preemption tests
+Date: Mon, 22 Jan 2024 15:51:04 -0800
+Message-ID: <20240122235812.637100484@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
+References: <20240122235812.238724226@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +46,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit f5f27a332a14f43463aa0075efa3a0c662c0f4a8 ]
+[ Upstream commit 9dbd5927408c4a0707de73ae9dd9306b184e8fee ]
 
-In fnic_init_module() exists redundant check for return value from
-fnic_debugfs_init(), because at moment it only can return zero. It make
-sense to process theoretical vmalloc() failure.
+The FPU & VMX preemption tests do not check for errors returned by the
+low-level asm routines, preempt_fpu() / preempt_vsx() respectively.
+That means any register corruption detected by the asm routines does not
+result in a test failure.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fix it by returning the return value of the asm routines from the
+pthread child routines.
 
-Fixes: 9730ddfb123d ("scsi: fnic: remove redundant assignment of variable rc")
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Link: https://lore.kernel.org/r/20231128111008.2280507-1-artem.chernyshev@red-soft.ru
-Reviewed-by: Karan Tilak Kumar <kartilak@cisco.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: e5ab8be68e44 ("selftests/powerpc: Test preservation of FPU and VMX regs across preemption")
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231128132748.1990179-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/fnic/fnic_debugfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/powerpc/math/fpu_preempt.c |  9 +++++----
+ tools/testing/selftests/powerpc/math/vmx_preempt.c | 10 ++++++----
+ 2 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/scsi/fnic/fnic_debugfs.c b/drivers/scsi/fnic/fnic_debugfs.c
-index e7326505cabb..f611e9f00a9d 100644
---- a/drivers/scsi/fnic/fnic_debugfs.c
-+++ b/drivers/scsi/fnic/fnic_debugfs.c
-@@ -66,9 +66,10 @@ int fnic_debugfs_init(void)
- 		fc_trc_flag->fnic_trace = 2;
- 		fc_trc_flag->fc_trace = 3;
- 		fc_trc_flag->fc_clear = 4;
-+		return 0;
- 	}
+diff --git a/tools/testing/selftests/powerpc/math/fpu_preempt.c b/tools/testing/selftests/powerpc/math/fpu_preempt.c
+index 5235bdc8c0b1..3e5b5663d244 100644
+--- a/tools/testing/selftests/powerpc/math/fpu_preempt.c
++++ b/tools/testing/selftests/powerpc/math/fpu_preempt.c
+@@ -37,19 +37,20 @@ __thread double darray[] = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,
+ int threads_starting;
+ int running;
  
--	return 0;
-+	return -ENOMEM;
+-extern void preempt_fpu(double *darray, int *threads_starting, int *running);
++extern int preempt_fpu(double *darray, int *threads_starting, int *running);
+ 
+ void *preempt_fpu_c(void *p)
+ {
++	long rc;
+ 	int i;
++
+ 	srand(pthread_self());
+ 	for (i = 0; i < 21; i++)
+ 		darray[i] = rand();
+ 
+-	/* Test failed if it ever returns */
+-	preempt_fpu(darray, &threads_starting, &running);
++	rc = preempt_fpu(darray, &threads_starting, &running);
+ 
+-	return p;
++	return (void *)rc;
  }
  
- /*
+ int test_preempt_fpu(void)
+diff --git a/tools/testing/selftests/powerpc/math/vmx_preempt.c b/tools/testing/selftests/powerpc/math/vmx_preempt.c
+index 6761d6ce30ec..6f7cf400c687 100644
+--- a/tools/testing/selftests/powerpc/math/vmx_preempt.c
++++ b/tools/testing/selftests/powerpc/math/vmx_preempt.c
+@@ -37,19 +37,21 @@ __thread vector int varray[] = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10,11,12},
+ int threads_starting;
+ int running;
+ 
+-extern void preempt_vmx(vector int *varray, int *threads_starting, int *running);
++extern int preempt_vmx(vector int *varray, int *threads_starting, int *running);
+ 
+ void *preempt_vmx_c(void *p)
+ {
+ 	int i, j;
++	long rc;
++
+ 	srand(pthread_self());
+ 	for (i = 0; i < 12; i++)
+ 		for (j = 0; j < 4; j++)
+ 			varray[i][j] = rand();
+ 
+-	/* Test fails if it ever returns */
+-	preempt_vmx(varray, &threads_starting, &running);
+-	return p;
++	rc = preempt_vmx(varray, &threads_starting, &running);
++
++	return (void *)rc;
+ }
+ 
+ int test_preempt_vmx(void)
 -- 
 2.43.0
 
