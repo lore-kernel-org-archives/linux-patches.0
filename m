@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9A412A17F;
-	Tue, 23 Jan 2024 00:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692DE12A17F;
+	Tue, 23 Jan 2024 00:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705968809; cv=none; b=TbW2OJSVys7zsoONECeTgVnpsBhsofXzGlnsR/32zeEntrowR8D9f6e36SMXG2PpilIVMVQrcogPQmd34JeyXML03f12kEhHZXi8ZJIvB1WhE29xQriaL1O4skQyVZt1qSOy4kCio7t4G7lvAIS8smwFKqtW6VqljN5mPG0+zE0=
+	t=1705968812; cv=none; b=IzqlnDtByFS4h1/QCtpDXFFNylPvVnViCru5YbB6CYXZAtvlcE30jh/k1sswzTH9nS8bYQ9zHflmx4YvIPHXix/fuSqgtcmXH6V7asNVn/bi47KqW6ICLT/nlk6ffkxDc4ofAZuLnTCHgG8CFa7lQ1id5XQi0RTxYY3pZbKPOas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705968809; c=relaxed/simple;
-	bh=VAdiwpNE2RKfuTUQ5+mUignes6MHI0OaSEYjedqAsR8=;
+	s=arc-20240116; t=1705968812; c=relaxed/simple;
+	bh=r5c5mSmYD9S3nF6jnK0qViHsSbjyDT2oNoadyT7SBDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UeG1UMHWWQtwMuAQumna3rMX5Q/N8wzxFZkDsNrJyIU++CtZ73z+oVjzts8tYfkKTI1K0LeNsBJvJWVRJYwkYzwYH8FxGabmgGws9T3Tqk8HjQ7L5+zRBrB7IAWrlaXsakhGdGOCRMKqOadSJgcDd/jA+c/Gt+xAgGiTaolm9bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/VDgDlc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MbNEQe6gR+y/8+T7uoB3Q8On1mzOpAs31co/918lwn3GsKF7nW6Fw0OiXNwdlZO79MboFeYTfX9iW8V3frzPWSZD1HqEtL3dV5ru9mwkMyJRLM5e/lhEHDSXRs4rKXWT3aeJgc3m6I7a8wXcaTcOoHPL22Wq0b81jyOvcv0molg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZvS025N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/VDgDlc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E458C433F1;
-	Tue, 23 Jan 2024 00:13:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZvS025N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E2DC433C7;
+	Tue, 23 Jan 2024 00:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705968808;
-	bh=VAdiwpNE2RKfuTUQ5+mUignes6MHI0OaSEYjedqAsR8=;
+	s=korg; t=1705968812;
+	bh=r5c5mSmYD9S3nF6jnK0qViHsSbjyDT2oNoadyT7SBDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N/VDgDlc9om2W4SsLJiv+RcHMNfhjo4bTwXib2B3PEbA0H6Ph83LRxPZIrF3S0+uP
-	 TrMeKvd66NsIkbuUffNP0MrDdMCyEreQGOIvq0FpfglQb0cTqco6pWeeFpJPeeWsSH
-	 ZCNy3kiF0ZP+Tge/boypEsrAcDB613lX2uc0/mcU=
+	b=yZvS025NdpqK70jYeOz3sP5x+cE5arIzt7ySqlrl+TbSyBeFLwXkV17/KEFOux7dZ
+	 L04n27B30QSnCfHuFDZQur3P8S6jaj4Xt7JVvz/RMOrSG1O42MRu29eGS3J8DW69eo
+	 JvpWBCsVJEUOsC+EiaoAEDjNFAFC8/aqTQHqZMIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	ZhaoLong Wang <wangzhaolong1@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 057/194] spi: sh-msiof: Enforce fixed DTDL for R-Car H3
-Date: Mon, 22 Jan 2024 15:56:27 -0800
-Message-ID: <20240122235721.645407043@linuxfoundation.org>
+Subject: [PATCH 5.4 058/194] mtd: Fix gluebi NULL pointer dereference caused by ftl notifier
+Date: Mon, 22 Jan 2024 15:56:28 -0800
+Message-ID: <20240122235721.687806578@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235719.206965081@linuxfoundation.org>
 References: <20240122235719.206965081@linuxfoundation.org>
@@ -47,84 +47,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: ZhaoLong Wang <wangzhaolong1@huawei.com>
 
-[ Upstream commit e5c7bcb499840551cfbe85c6df177ebc50432bf0 ]
+[ Upstream commit a43bdc376deab5fff1ceb93dca55bcab8dbdc1d6 ]
 
-Documentation says only DTDL of 200 is allowed for this SoC.
+If both ftl.ko and gluebi.ko are loaded, the notifier of ftl
+triggers NULL pointer dereference when trying to access
+‘gluebi->desc’ in gluebi_read().
 
-Fixes: 4286db8456f4 ("spi: sh-msiof: Add R-Car Gen 2 and 3 fallback bindings")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://msgid.link/r/20231212081239.14254-1-wsa+renesas@sang-engineering.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+ubi_gluebi_init
+  ubi_register_volume_notifier
+    ubi_enumerate_volumes
+      ubi_notify_all
+        gluebi_notify    nb->notifier_call()
+          gluebi_create
+            mtd_device_register
+              mtd_device_parse_register
+                add_mtd_device
+                  blktrans_notify_add   not->add()
+                    ftl_add_mtd         tr->add_mtd()
+                      scan_header
+                        mtd_read
+                          mtd_read_oob
+                            mtd_read_oob_std
+                              gluebi_read   mtd->read()
+                                gluebi->desc - NULL
+
+Detailed reproduction information available at the Link [1],
+
+In the normal case, obtain gluebi->desc in the gluebi_get_device(),
+and access gluebi->desc in the gluebi_read(). However,
+gluebi_get_device() is not executed in advance in the
+ftl_add_mtd() process, which leads to NULL pointer dereference.
+
+The solution for the gluebi module is to run jffs2 on the UBI
+volume without considering working with ftl or mtdblock [2].
+Therefore, this problem can be avoided by preventing gluebi from
+creating the mtdblock device after creating mtd partition of the
+type MTD_UBIVOLUME.
+
+Fixes: 2ba3d76a1e29 ("UBI: make gluebi a separate module")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217992 [1]
+Link: https://lore.kernel.org/lkml/441107100.23734.1697904580252.JavaMail.zimbra@nod.at/ [2]
+Signed-off-by: ZhaoLong Wang <wangzhaolong1@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Acked-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20231220024619.2138625-1-wangzhaolong1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sh-msiof.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/mtd/mtd_blkdevs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
-index 8f134735291f..edb26b085706 100644
---- a/drivers/spi/spi-sh-msiof.c
-+++ b/drivers/spi/spi-sh-msiof.c
-@@ -32,12 +32,15 @@
+diff --git a/drivers/mtd/mtd_blkdevs.c b/drivers/mtd/mtd_blkdevs.c
+index 0c05f77f9b21..dd0d0bf5f57f 100644
+--- a/drivers/mtd/mtd_blkdevs.c
++++ b/drivers/mtd/mtd_blkdevs.c
+@@ -533,7 +533,7 @@ static void blktrans_notify_add(struct mtd_info *mtd)
+ {
+ 	struct mtd_blktrans_ops *tr;
  
- #include <asm/unaligned.h>
+-	if (mtd->type == MTD_ABSENT)
++	if (mtd->type == MTD_ABSENT || mtd->type == MTD_UBIVOLUME)
+ 		return;
  
-+#define SH_MSIOF_FLAG_FIXED_DTDL_200	BIT(0)
-+
- struct sh_msiof_chipdata {
- 	u32 bits_per_word_mask;
- 	u16 tx_fifo_size;
- 	u16 rx_fifo_size;
- 	u16 ctlr_flags;
- 	u16 min_div_pow;
-+	u32 flags;
- };
+ 	list_for_each_entry(tr, &blktrans_majors, list)
+@@ -576,7 +576,7 @@ int register_mtd_blktrans(struct mtd_blktrans_ops *tr)
+ 	list_add(&tr->list, &blktrans_majors);
  
- struct sh_msiof_spi_priv {
-@@ -1072,6 +1075,16 @@ static const struct sh_msiof_chipdata rcar_gen3_data = {
- 	.min_div_pow = 1,
- };
+ 	mtd_for_each_device(mtd)
+-		if (mtd->type != MTD_ABSENT)
++		if (mtd->type != MTD_ABSENT && mtd->type != MTD_UBIVOLUME)
+ 			tr->add_mtd(tr, mtd);
  
-+static const struct sh_msiof_chipdata rcar_r8a7795_data = {
-+	.bits_per_word_mask = SPI_BPW_MASK(8) | SPI_BPW_MASK(16) |
-+			      SPI_BPW_MASK(24) | SPI_BPW_MASK(32),
-+	.tx_fifo_size = 64,
-+	.rx_fifo_size = 64,
-+	.ctlr_flags = SPI_CONTROLLER_MUST_TX,
-+	.min_div_pow = 1,
-+	.flags = SH_MSIOF_FLAG_FIXED_DTDL_200,
-+};
-+
- static const struct of_device_id sh_msiof_match[] = {
- 	{ .compatible = "renesas,sh-mobile-msiof", .data = &sh_data },
- 	{ .compatible = "renesas,msiof-r8a7743",   .data = &rcar_gen2_data },
-@@ -1082,6 +1095,7 @@ static const struct of_device_id sh_msiof_match[] = {
- 	{ .compatible = "renesas,msiof-r8a7793",   .data = &rcar_gen2_data },
- 	{ .compatible = "renesas,msiof-r8a7794",   .data = &rcar_gen2_data },
- 	{ .compatible = "renesas,rcar-gen2-msiof", .data = &rcar_gen2_data },
-+	{ .compatible = "renesas,msiof-r8a7795",   .data = &rcar_r8a7795_data },
- 	{ .compatible = "renesas,msiof-r8a7796",   .data = &rcar_gen3_data },
- 	{ .compatible = "renesas,rcar-gen3-msiof", .data = &rcar_gen3_data },
- 	{ .compatible = "renesas,sh-msiof",        .data = &sh_data }, /* Deprecated */
-@@ -1317,6 +1331,9 @@ static int sh_msiof_spi_probe(struct platform_device *pdev)
- 		return -ENXIO;
- 	}
- 
-+	if (chipdata->flags & SH_MSIOF_FLAG_FIXED_DTDL_200)
-+		info->dtdl = 200;
-+
- 	if (info->mode == MSIOF_SPI_SLAVE)
- 		ctlr = spi_alloc_slave(&pdev->dev,
- 				       sizeof(struct sh_msiof_spi_priv));
+ 	mutex_unlock(&mtd_table_mutex);
 -- 
 2.43.0
 
