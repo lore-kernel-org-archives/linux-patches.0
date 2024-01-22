@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E3115B31D;
-	Tue, 23 Jan 2024 00:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E4815CD58;
+	Tue, 23 Jan 2024 00:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969756; cv=none; b=c15qPexIVFuoLl/fDgQ416UrsimjGQeeayoJkwZQKPjOYMvUyfbsFhNIXWRy4SVxMMgO6ZhBIaEflh/6m3kV6KdoHu4btcBBtR1vsbTI6mjUauGp/ES+gqmPEIAYcY6ONyU/lQ9E8yjD5dp2DJlysIePhFzGAGAFflaC1Z5y9qk=
+	t=1705969757; cv=none; b=QXSEh0TnUSO8naLMUDv1+2JE5nwEz4jJmY+g9cT5blIyRNQ8d8IL/TVSHNSGbzDvEjdPs6QMQ9E92bzaEuNrvDCj5Wkdwx8efGrtDXjpEvnk1jPWNyFRFeWEbW756+x+Psi4Hc9ibYE6SwPpv8LNvb7CLomXuEjUb9Lzf5iWKJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969756; c=relaxed/simple;
-	bh=bmd1k1GbqvXjO13pTeTWeYqkYBKlK3qNsde4vwY2kAU=;
+	s=arc-20240116; t=1705969757; c=relaxed/simple;
+	bh=kDJx2ZUcPWmdx9yJ8HVzpKHo3i85HQmfuykPuC9rBo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I8OD2yVhdq6IJkdXN821uxFDy6j1dPnseBwg1NohTApGKUyhXpaLiRuE0jtTCf6ii3qEBHXMiMlyUYTdefqFMoFgrzlXfFEQu3l9Q2woOGFThmM+M7aNmzo5iy1tVBYNfWZENlo8EV4aSDCq2U2BnFX4J9+UEsYFv+5x66lImm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxObmVcu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S745jJ3PlFV5THv1ARW6NzwlQ9X0nKTqDUY+zK43F2ILPI5GS47J3Bp3NwHCZxsSBFw+Cn1qBgXgnw3gZBHQuSUJIqkIsSRb4iQwW8QqymjDIk7m6eQXiuhwegtH0tmLm7zhbu6a4o6DDWm9sbDelJ6ZyruYILb+VKg1KbjnVt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYrXbuQT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxObmVcu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5555DC43390;
-	Tue, 23 Jan 2024 00:29:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYrXbuQT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2AAC43390;
+	Tue, 23 Jan 2024 00:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969756;
-	bh=bmd1k1GbqvXjO13pTeTWeYqkYBKlK3qNsde4vwY2kAU=;
+	s=korg; t=1705969757;
+	bh=kDJx2ZUcPWmdx9yJ8HVzpKHo3i85HQmfuykPuC9rBo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxObmVcuiSHHa/FVAcR/W3mLUyyke2uI9vGfaAxuoNCMepGaX1akW5Q5R89rtioYr
-	 YHJmDb1koPamzYj5RiBkzrK8zOdub0GsIN/1qiblupwtG5pLbtuLIOALtIzq78DWsl
-	 OuOGiJr2buFT0Cfp7G3Jhk+PMx1Wi+tt5vR1cbe8=
+	b=nYrXbuQTFOAJbaEgUisTIbuCU0JkEAYtDovPG6AJ7iYkcU7pZ/hKbm8xqku2+EsUT
+	 m4CSXgPVhvJSTVcklfeQQjnqeDwrEwdk2LbfhxBsz97I2XL9bXm/Z/Ffq/GANj9jkH
+	 z0uL6N+y1k+OWHngw5xevLvOA6LykFe5ntrkWjmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nam Cao <namcao@linutronix.de>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.7 431/641] fbdev: flush deferred work in fb_deferred_io_fsync()
-Date: Mon, 22 Jan 2024 15:55:35 -0800
-Message-ID: <20240122235831.475935107@linuxfoundation.org>
+Subject: [PATCH 6.7 432/641] fbdev: flush deferred IO before closing
+Date: Mon, 22 Jan 2024 15:55:36 -0800
+Message-ID: <20240122235831.508323854@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -53,49 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Nam Cao <namcao@linutronix.de>
 
-commit 15e4c1f462279b4e128f27de48133e0debe9e0df upstream.
+commit 33cd6ea9c0673517cdb06ad5c915c6f22e9615fc upstream.
 
-The driver's fsync() is supposed to flush any pending operation to
-hardware. It is implemented in this driver by cancelling the queued
-deferred IO first, then schedule it for "immediate execution" by calling
-schedule_delayed_work() again with delay=0. However, setting delay=0
-only means the work is scheduled immediately, it does not mean the work
-is executed immediately. There is no guarantee that the work is finished
-after schedule_delayed_work() returns. After this driver's fsync()
-returns, there can still be pending work. Furthermore, if close() is
-called by users immediately after fsync(), the pending work gets
-cancelled and fsync() may do nothing.
+When framebuffer gets closed, the queued deferred IO gets cancelled. This
+can cause some last display data to vanish. This is problematic for users
+who send a still image to the framebuffer, then close the file: the image
+may never appear.
 
-To ensure that the deferred IO completes, use flush_delayed_work()
-instead. Write operations to this driver either write to the device
-directly, or invoke schedule_delayed_work(); so by flushing the
-workqueue, it can be guaranteed that all previous writes make it to the
-device.
+To ensure none of display data get lost, flush the queued deferred IO
+first before closing.
 
-Fixes: 5e841b88d23d ("fb: fsync() method for deferred I/O flush.")
+Another possible solution is to delete the cancel_delayed_work_sync()
+instead. The difference is that the display may appear some time after
+closing. However, the clearing of page mapping after this needs to be
+removed too, because the page mapping is used by the deferred work. It is
+not completely obvious whether it is okay to not clear the page mapping.
+For a patch intended for stable trees, go with the simple and obvious
+solution.
+
+Fixes: 60b59beafba8 ("fbdev: mm: Deferred IO support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Nam Cao <namcao@linutronix.de>
 Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fb_defio.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/video/fbdev/core/fb_defio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/video/fbdev/core/fb_defio.c
 +++ b/drivers/video/fbdev/core/fb_defio.c
-@@ -132,11 +132,7 @@ int fb_deferred_io_fsync(struct file *fi
- 		return 0;
+@@ -313,7 +313,7 @@ static void fb_deferred_io_lastclose(str
+ 	struct page *page;
+ 	int i;
  
- 	inode_lock(inode);
--	/* Kill off the delayed work */
 -	cancel_delayed_work_sync(&info->deferred_work);
--
--	/* Run it immediately */
--	schedule_delayed_work(&info->deferred_work, 0);
 +	flush_delayed_work(&info->deferred_work);
- 	inode_unlock(inode);
  
- 	return 0;
+ 	/* clear out the mapping that we setup */
+ 	for (i = 0 ; i < info->fix.smem_len; i += PAGE_SIZE) {
 
 
