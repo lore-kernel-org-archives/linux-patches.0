@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC595371;
-	Tue, 23 Jan 2024 00:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEADF371;
+	Tue, 23 Jan 2024 00:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969474; cv=none; b=t//CogQFBKiXVzv7Ixlv9cikXKEhwlEWjdFXn20pVjivXwXGpA/mpW+Hz2PheMvosaVtadAezavDzF17pkk4kzJKClqNAg5C2Z+JxEKt1jZvSc/FTeNqHUfN5fCsJPmOGbzD1pBIy/KCaZSZ+x19gfNRIDIdTvmu1nF6QisxVFw=
+	t=1705969476; cv=none; b=eUBv2ti8bhVzJLmqFoogCf17hOvg0jrFBuaMBUrPuGPc0U9uGi7gnMO6UFfkvTBukUYeCAD1/7Ha7D5lkRWv4LVq38xPiFMedmUEu5UI078CAmtYiSNQeCrEHXdEgwvQAGg5ewleBbxPEigwXYl0asokFKUTeXKsL2WfW1AHP2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969474; c=relaxed/simple;
-	bh=Kt33JVBzf0jnDIe2ns+BV6U24SAcP9NeS9Zleu3ZxOc=;
+	s=arc-20240116; t=1705969476; c=relaxed/simple;
+	bh=hdqFfnwNpNQbQIx3B1GxdPl6U0ZwHfmyKIUMKkqwb5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dz4GixJ4alGknlLRMUOOcEwsxzntY0gLpmCwlVpBFsVlXP6MNWnPWLepc2s/0ADOrMcNXfjb6JVyEek4PHxJES/0CzAyGiPhRylxWTju+O0iQcza6z+O+K+8gQo3G08QbqYO3hODOl40WLJHEdwVCm2DSw4F3SIb5OXu35vHBaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnwkIKsa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eysRe/wTVWmiVftQzHdRQPMXjGh4qoYmypl9miWDXTeMmihbBENVC6b8+VOrwt5PF2sK646LuSweiBCGOnDDiRD/tRjs2XPXgLaRKEYd3P7FhXtlv4Qwiwv/AJgUh8oMO0ET5zmQ1ElI+yU1mXPCOzq9xEY+Lq9KfyY4S8PLGfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsYd/B5x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnwkIKsa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A395C43390;
-	Tue, 23 Jan 2024 00:24:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsYd/B5x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE6AC433F1;
+	Tue, 23 Jan 2024 00:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969474;
-	bh=Kt33JVBzf0jnDIe2ns+BV6U24SAcP9NeS9Zleu3ZxOc=;
+	s=korg; t=1705969475;
+	bh=hdqFfnwNpNQbQIx3B1GxdPl6U0ZwHfmyKIUMKkqwb5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rnwkIKsasYxtxQRlrFHXWKeLaPWNYqZxM7iiLUsSu2GNNxuAEu7RaxWrlg8EkDoxy
-	 zbC1REndFBvsTTencl/oGCN5l4uAmqUUCrJRsdQuNm29BQPuSDeMi/U6qmnLenNzzW
-	 hPPVYBpGbCIGC9pPgb8d6JLYBWPuVo4xJSf7qrYQ=
+	b=EsYd/B5xsQVjBTe4ilgwE7qoVu6zczPxyPAnQDOWxD3Ex9s5tEEa2ft0yY9X+tzCp
+	 AhRMZNkvo8m2RBJf13KkGsvZI5z9D/VEgVYbC+Im9SH53DaoCniOIz0j9AArqqXYjX
+	 scN8bLzZiRrFmD9ex2kL7iLfNkbulX1Jl6aPkuuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manasi Navare <manasi.d.navare@intel.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	David Francis <David.Francis@amd.com>,
-	Mikita Lipski <mikita.lipski@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Imre Deak <imre.deak@intel.com>,
+	Tao Liu <taoliu828@163.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 245/641] drm/dp_mst: Fix fractional DSC bpp handling
-Date: Mon, 22 Jan 2024 15:52:29 -0800
-Message-ID: <20240122235825.593192096@linuxfoundation.org>
+Subject: [PATCH 6.7 236/641] net/sched: act_ct: fix skb leak and crash on ooo frags
+Date: Mon, 22 Jan 2024 15:52:20 -0800
+Message-ID: <20240122235825.313001329@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,205 +45,153 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Tao Liu <taoliu828@163.com>
 
-[ Upstream commit 7707dd6022593f3edd8e182e7935870cf326f874 ]
+[ Upstream commit 3f14b377d01d8357eba032b4cabc8c1149b458b6 ]
 
-The current code does '(bpp << 4) / 16' in the MST PBN
-calculation, but that is just the same as 'bpp' so the
-DSC codepath achieves absolutely nothing. Fix it up so that
-the fractional part of the bpp value is actually used instead
-of truncated away. 64*1006 has enough zero lsbs that we can
-just shift that down in the dividend and thus still manage
-to stick to a 32bit divisor.
+act_ct adds skb->users before defragmentation. If frags arrive in order,
+the last frag's reference is reset in:
 
-And while touching this, let's just make the whole thing more
-straightforward by making the passed in bpp value .4 binary
-fixed point always, instead of having to pass in different
-things based on whether DSC is enabled or not.
+  inet_frag_reasm_prepare
+    skb_morph
 
-v2:
-- Fix DSC kunit test cases.
+which is not straightforward.
 
-Cc: Manasi Navare <manasi.d.navare@intel.com>
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: David Francis <David.Francis@amd.com>
-Cc: Mikita Lipski <mikita.lipski@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Fixes: dc48529fb14e ("drm/dp_mst: Add PBN calculation for DSC modes")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-[Imre: Fix kunit test cases]
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Acked-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231030155843.2251023-3-imre.deak@intel.com
+However when frags arrive out of order, nobody unref the last frag, and
+all frags are leaked. The situation is even worse, as initiating packet
+capture can lead to a crash[0] when skb has been cloned and shared at the
+same time.
+
+Fix the issue by removing skb_get() before defragmentation. act_ct
+returns TC_ACT_CONSUMED when defrag failed or in progress.
+
+[0]:
+[  843.804823] ------------[ cut here ]------------
+[  843.809659] kernel BUG at net/core/skbuff.c:2091!
+[  843.814516] invalid opcode: 0000 [#1] PREEMPT SMP
+[  843.819296] CPU: 7 PID: 0 Comm: swapper/7 Kdump: loaded Tainted: G S 6.7.0-rc3 #2
+[  843.824107] Hardware name: XFUSION 1288H V6/BC13MBSBD, BIOS 1.29 11/25/2022
+[  843.828953] RIP: 0010:pskb_expand_head+0x2ac/0x300
+[  843.833805] Code: 8b 70 28 48 85 f6 74 82 48 83 c6 08 bf 01 00 00 00 e8 38 bd ff ff 8b 83 c0 00 00 00 48 03 83 c8 00 00 00 e9 62 ff ff ff 0f 0b <0f> 0b e8 8d d0 ff ff e9 b3 fd ff ff 81 7c 24 14 40 01 00 00 4c 89
+[  843.843698] RSP: 0018:ffffc9000cce07c0 EFLAGS: 00010202
+[  843.848524] RAX: 0000000000000002 RBX: ffff88811a211d00 RCX: 0000000000000820
+[  843.853299] RDX: 0000000000000640 RSI: 0000000000000000 RDI: ffff88811a211d00
+[  843.857974] RBP: ffff888127d39518 R08: 00000000bee97314 R09: 0000000000000000
+[  843.862584] R10: 0000000000000000 R11: ffff8881109f0000 R12: 0000000000000880
+[  843.867147] R13: ffff888127d39580 R14: 0000000000000640 R15: ffff888170f7b900
+[  843.871680] FS:  0000000000000000(0000) GS:ffff889ffffc0000(0000) knlGS:0000000000000000
+[  843.876242] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  843.880778] CR2: 00007fa42affcfb8 CR3: 000000011433a002 CR4: 0000000000770ef0
+[  843.885336] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  843.889809] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  843.894229] PKRU: 55555554
+[  843.898539] Call Trace:
+[  843.902772]  <IRQ>
+[  843.906922]  ? __die_body+0x1e/0x60
+[  843.911032]  ? die+0x3c/0x60
+[  843.915037]  ? do_trap+0xe2/0x110
+[  843.918911]  ? pskb_expand_head+0x2ac/0x300
+[  843.922687]  ? do_error_trap+0x65/0x80
+[  843.926342]  ? pskb_expand_head+0x2ac/0x300
+[  843.929905]  ? exc_invalid_op+0x50/0x60
+[  843.933398]  ? pskb_expand_head+0x2ac/0x300
+[  843.936835]  ? asm_exc_invalid_op+0x1a/0x20
+[  843.940226]  ? pskb_expand_head+0x2ac/0x300
+[  843.943580]  inet_frag_reasm_prepare+0xd1/0x240
+[  843.946904]  ip_defrag+0x5d4/0x870
+[  843.950132]  nf_ct_handle_fragments+0xec/0x130 [nf_conntrack]
+[  843.953334]  tcf_ct_act+0x252/0xd90 [act_ct]
+[  843.956473]  ? tcf_mirred_act+0x516/0x5a0 [act_mirred]
+[  843.959657]  tcf_action_exec+0xa1/0x160
+[  843.962823]  fl_classify+0x1db/0x1f0 [cls_flower]
+[  843.966010]  ? skb_clone+0x53/0xc0
+[  843.969173]  tcf_classify+0x24d/0x420
+[  843.972333]  tc_run+0x8f/0xf0
+[  843.975465]  __netif_receive_skb_core+0x67a/0x1080
+[  843.978634]  ? dev_gro_receive+0x249/0x730
+[  843.981759]  __netif_receive_skb_list_core+0x12d/0x260
+[  843.984869]  netif_receive_skb_list_internal+0x1cb/0x2f0
+[  843.987957]  ? mlx5e_handle_rx_cqe_mpwrq_rep+0xfa/0x1a0 [mlx5_core]
+[  843.991170]  napi_complete_done+0x72/0x1a0
+[  843.994305]  mlx5e_napi_poll+0x28c/0x6d0 [mlx5_core]
+[  843.997501]  __napi_poll+0x25/0x1b0
+[  844.000627]  net_rx_action+0x256/0x330
+[  844.003705]  __do_softirq+0xb3/0x29b
+[  844.006718]  irq_exit_rcu+0x9e/0xc0
+[  844.009672]  common_interrupt+0x86/0xa0
+[  844.012537]  </IRQ>
+[  844.015285]  <TASK>
+[  844.017937]  asm_common_interrupt+0x26/0x40
+[  844.020591] RIP: 0010:acpi_safe_halt+0x1b/0x20
+[  844.023247] Code: ff 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 65 48 8b 04 25 00 18 03 00 48 8b 00 a8 08 75 0c 66 90 0f 00 2d 81 d0 44 00 fb f4 <fa> c3 0f 1f 00 89 fa ec 48 8b 05 ee 88 ed 00 a9 00 00 00 80 75 11
+[  844.028900] RSP: 0018:ffffc90000533e70 EFLAGS: 00000246
+[  844.031725] RAX: 0000000000004000 RBX: 0000000000000001 RCX: 0000000000000000
+[  844.034553] RDX: ffff889ffffc0000 RSI: ffffffff828b7f20 RDI: ffff88a090f45c64
+[  844.037368] RBP: ffff88a0901a2800 R08: ffff88a090f45c00 R09: 00000000000317c0
+[  844.040155] R10: 00ec812281150475 R11: ffff889fffff0e04 R12: ffffffff828b7fa0
+[  844.042962] R13: ffffffff828b7f20 R14: 0000000000000001 R15: 0000000000000000
+[  844.045819]  acpi_idle_enter+0x7b/0xc0
+[  844.048621]  cpuidle_enter_state+0x7f/0x430
+[  844.051451]  cpuidle_enter+0x2d/0x40
+[  844.054279]  do_idle+0x1d4/0x240
+[  844.057096]  cpu_startup_entry+0x2a/0x30
+[  844.059934]  start_secondary+0x104/0x130
+[  844.062787]  secondary_startup_64_no_verify+0x16b/0x16b
+[  844.065674]  </TASK>
+
+Fixes: b57dc7c13ea9 ("net/sched: Introduce action ct")
+Signed-off-by: Tao Liu <taoliu828@163.com>
+Link: https://lore.kernel.org/r/20231228081457.936732-1-taoliu828@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  2 +-
- .../display/amdgpu_dm/amdgpu_dm_mst_types.c   |  2 +-
- drivers/gpu/drm/display/drm_dp_mst_topology.c | 20 +++++--------------
- drivers/gpu/drm/i915/display/intel_dp_mst.c   |  5 ++---
- drivers/gpu/drm/nouveau/dispnv50/disp.c       |  3 +--
- .../gpu/drm/tests/drm_dp_mst_helper_test.c    |  6 +++---
- include/drm/display/drm_dp_mst_helper.h       |  2 +-
- 7 files changed, 14 insertions(+), 26 deletions(-)
+ net/sched/act_ct.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 4e82ee4d74ac..d8c967cee498 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -6928,7 +6928,7 @@ static int dm_encoder_helper_atomic_check(struct drm_encoder *encoder,
- 								    max_bpc);
- 		bpp = convert_dc_color_depth_into_bpc(color_depth) * 3;
- 		clock = adjusted_mode->clock;
--		dm_new_connector_state->pbn = drm_dp_calc_pbn_mode(clock, bpp, false);
-+		dm_new_connector_state->pbn = drm_dp_calc_pbn_mode(clock, bpp << 4);
- 	}
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index f69c47945175..3d50215985d5 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -850,7 +850,6 @@ static int tcf_ct_handle_fragments(struct net *net, struct sk_buff *skb,
+ 	if (err || !frag)
+ 		return err;
  
- 	dm_new_connector_state->vcpi_slots =
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index 11da0eebee6c..9b71643d8a89 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -1642,7 +1642,7 @@ enum dc_status dm_dp_mst_is_port_support_mode(
- 	} else {
- 		/* check if mode could be supported within full_pbn */
- 		bpp = convert_dc_color_depth_into_bpc(stream->timing.display_color_depth) * 3;
--		pbn = drm_dp_calc_pbn_mode(stream->timing.pix_clk_100hz / 10, bpp, false);
-+		pbn = drm_dp_calc_pbn_mode(stream->timing.pix_clk_100hz / 10, bpp << 4);
- 		if (pbn > full_pbn)
- 			return DC_FAIL_BANDWIDTH_VALIDATE;
- 	}
-diff --git a/drivers/gpu/drm/display/drm_dp_mst_topology.c b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-index 0e0d0e76de06..772b00ebd57b 100644
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -4718,13 +4718,12 @@ EXPORT_SYMBOL(drm_dp_check_act_status);
+-	skb_get(skb);
+ 	err = nf_ct_handle_fragments(net, skb, zone, family, &proto, &mru);
+ 	if (err)
+ 		return err;
+@@ -999,12 +998,8 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct sk_buff *skb, const struct tc_action *a,
+ 	nh_ofs = skb_network_offset(skb);
+ 	skb_pull_rcsum(skb, nh_ofs);
+ 	err = tcf_ct_handle_fragments(net, skb, family, p->zone, &defrag);
+-	if (err == -EINPROGRESS) {
+-		retval = TC_ACT_STOLEN;
+-		goto out_clear;
+-	}
+ 	if (err)
+-		goto drop;
++		goto out_frag;
  
- /**
-  * drm_dp_calc_pbn_mode() - Calculate the PBN for a mode.
-- * @clock: dot clock for the mode
-- * @bpp: bpp for the mode.
-- * @dsc: DSC mode. If true, bpp has units of 1/16 of a bit per pixel
-+ * @clock: dot clock
-+ * @bpp: bpp as .4 binary fixed point
-  *
-  * This uses the formula in the spec to calculate the PBN value for a mode.
-  */
--int drm_dp_calc_pbn_mode(int clock, int bpp, bool dsc)
-+int drm_dp_calc_pbn_mode(int clock, int bpp)
- {
- 	/*
- 	 * margin 5300ppm + 300ppm ~ 0.6% as per spec, factor is 1.006
-@@ -4735,18 +4734,9 @@ int drm_dp_calc_pbn_mode(int clock, int bpp, bool dsc)
- 	 * peak_kbps *= (1006/1000)
- 	 * peak_kbps *= (64/54)
- 	 * peak_kbps *= 8    convert to bytes
--	 *
--	 * If the bpp is in units of 1/16, further divide by 16. Put this
--	 * factor in the numerator rather than the denominator to avoid
--	 * integer overflow
- 	 */
--
--	if (dsc)
--		return DIV_ROUND_UP_ULL(mul_u32_u32(clock * (bpp / 16), 64 * 1006),
--					8 * 54 * 1000 * 1000);
--
--	return DIV_ROUND_UP_ULL(mul_u32_u32(clock * bpp, 64 * 1006),
--				8 * 54 * 1000 * 1000);
-+	return DIV_ROUND_UP_ULL(mul_u32_u32(clock * bpp, 64 * 1006 >> 4),
-+				1000 * 8 * 54 * 1000);
- }
- EXPORT_SYMBOL(drm_dp_calc_pbn_mode);
+ 	err = nf_ct_skb_network_trim(skb, family);
+ 	if (err)
+@@ -1091,6 +1086,11 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct sk_buff *skb, const struct tc_action *a,
+ 		qdisc_skb_cb(skb)->pkt_len = skb->len;
+ 	return retval;
  
-diff --git a/drivers/gpu/drm/i915/display/intel_dp_mst.c b/drivers/gpu/drm/i915/display/intel_dp_mst.c
-index aa1061262613..03ac2817664e 100644
---- a/drivers/gpu/drm/i915/display/intel_dp_mst.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_mst.c
-@@ -106,8 +106,7 @@ static int intel_dp_mst_find_vcpi_slots_for_bpp(struct intel_encoder *encoder,
- 			continue;
- 
- 		crtc_state->pbn = drm_dp_calc_pbn_mode(adjusted_mode->crtc_clock,
--						       dsc ? bpp << 4 : bpp,
--						       dsc);
-+						       bpp << 4);
- 
- 		slots = drm_dp_atomic_find_time_slots(state, &intel_dp->mst_mgr,
- 						      connector->port,
-@@ -979,7 +978,7 @@ intel_dp_mst_mode_valid_ctx(struct drm_connector *connector,
- 		return ret;
- 
- 	if (mode_rate > max_rate || mode->clock > max_dotclk ||
--	    drm_dp_calc_pbn_mode(mode->clock, min_bpp, false) > port->full_pbn) {
-+	    drm_dp_calc_pbn_mode(mode->clock, min_bpp << 4) > port->full_pbn) {
- 		*status = MODE_CLOCK_HIGH;
- 		return 0;
- 	}
-diff --git a/drivers/gpu/drm/nouveau/dispnv50/disp.c b/drivers/gpu/drm/nouveau/dispnv50/disp.c
-index 118807e38422..d093549f6eb7 100644
---- a/drivers/gpu/drm/nouveau/dispnv50/disp.c
-+++ b/drivers/gpu/drm/nouveau/dispnv50/disp.c
-@@ -982,8 +982,7 @@ nv50_msto_atomic_check(struct drm_encoder *encoder,
- 		const int clock = crtc_state->adjusted_mode.clock;
- 
- 		asyh->or.bpc = connector->display_info.bpc;
--		asyh->dp.pbn = drm_dp_calc_pbn_mode(clock, asyh->or.bpc * 3,
--						    false);
-+		asyh->dp.pbn = drm_dp_calc_pbn_mode(clock, asyh->or.bpc * 3 << 4);
- 	}
- 
- 	mst_state = drm_atomic_get_mst_topology_state(state, &mstm->mgr);
-diff --git a/drivers/gpu/drm/tests/drm_dp_mst_helper_test.c b/drivers/gpu/drm/tests/drm_dp_mst_helper_test.c
-index 545beea33e8c..e3c818dfc0e6 100644
---- a/drivers/gpu/drm/tests/drm_dp_mst_helper_test.c
-+++ b/drivers/gpu/drm/tests/drm_dp_mst_helper_test.c
-@@ -42,13 +42,13 @@ static const struct drm_dp_mst_calc_pbn_mode_test drm_dp_mst_calc_pbn_mode_cases
- 		.clock = 332880,
- 		.bpp = 24,
- 		.dsc = true,
--		.expected = 50
-+		.expected = 1191
- 	},
- 	{
- 		.clock = 324540,
- 		.bpp = 24,
- 		.dsc = true,
--		.expected = 49
-+		.expected = 1161
- 	},
- };
- 
-@@ -56,7 +56,7 @@ static void drm_test_dp_mst_calc_pbn_mode(struct kunit *test)
- {
- 	const struct drm_dp_mst_calc_pbn_mode_test *params = test->param_value;
- 
--	KUNIT_EXPECT_EQ(test, drm_dp_calc_pbn_mode(params->clock, params->bpp, params->dsc),
-+	KUNIT_EXPECT_EQ(test, drm_dp_calc_pbn_mode(params->clock, params->bpp << 4),
- 			params->expected);
- }
- 
-diff --git a/include/drm/display/drm_dp_mst_helper.h b/include/drm/display/drm_dp_mst_helper.h
-index 4429d3b1745b..655862b3d2a4 100644
---- a/include/drm/display/drm_dp_mst_helper.h
-+++ b/include/drm/display/drm_dp_mst_helper.h
-@@ -842,7 +842,7 @@ struct edid *drm_dp_mst_get_edid(struct drm_connector *connector,
- int drm_dp_get_vc_payload_bw(const struct drm_dp_mst_topology_mgr *mgr,
- 			     int link_rate, int link_lane_count);
- 
--int drm_dp_calc_pbn_mode(int clock, int bpp, bool dsc);
-+int drm_dp_calc_pbn_mode(int clock, int bpp);
- 
- void drm_dp_mst_update_slots(struct drm_dp_mst_topology_state *mst_state, uint8_t link_encoding_cap);
- 
++out_frag:
++	if (err != -EINPROGRESS)
++		tcf_action_inc_drop_qstats(&c->common);
++	return TC_ACT_CONSUMED;
++
+ drop:
+ 	tcf_action_inc_drop_qstats(&c->common);
+ 	return TC_ACT_SHOT;
 -- 
 2.43.0
 
