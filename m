@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D20262A1F;
-	Tue, 23 Jan 2024 01:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B86962A1F;
+	Tue, 23 Jan 2024 01:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974988; cv=none; b=ob3KHfi31yCQXR9s9WLYzokzdln6CsWGwNiapVYAMOTPERECeJsUaSxF5h2HgMvW4J43I3hz0/x9G9w+DIRKljKv8y/nBr611byFbH27TAXE7xE7450mFscyKLl7IhNbeeQRogaINCUtzFOkJTRQjhR7/rJx5UyAq9LbbkqMsA4=
+	t=1705974989; cv=none; b=AWdFQ3x8fAJVaocnYKbB8VsVhXuHgCu75oz8hBFyRNBzGwhoBHLobYWTvPGfo8S2m66iEbVXZsT6WerMIgZvUjkjhgJkFVq8PIHlx8AifbPquVR6/Ptol9FzIkOty8nUHrC9FlNXFRPBo29Rl7sinPCz8+XyJgElzJ6YNXUiu7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974988; c=relaxed/simple;
-	bh=GwcU2pSIbydwbJiU6IuHormamlt/mT09dfYLqMj4oWw=;
+	s=arc-20240116; t=1705974989; c=relaxed/simple;
+	bh=cv0KTf1DjTwyIKNIExnH3TSwIGDhacdTilrAiluiasc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=prwQ/jIg5XdHMPo7DQWoZMjZbQ3mJ8ErHhpXk/m5wx9c/mReNCpWjn0m0fs2MJ92gDLhB7FGE2s9jBZnBuw8oqeF7SywzpQcuD0Igp9GJ47nspwikyy1l0b8is2+aZ0+03ocdVwAo9KnxSGKY4WEoRtNMXE73hHuTwdD/EmlTxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiNPfmDw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ccyUAUQPWS/sFAKJ6PKgIZyFRk1iQIiKIlB5WMeNF1RHehzuSTMD/FjFvTG08YSFvF6Fe/AzH5nStAUvxZwFvQpqj3ZNvoxZNFChpO+76HT5GBnN30VGPb/UP5uW2nWqPK0u4lxUC3UPanO83JV53UnBlZ6h6MGT8bpHfY0tTtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g3PQgVZZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiNPfmDw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5DDC433F1;
-	Tue, 23 Jan 2024 01:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g3PQgVZZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547CDC43390;
+	Tue, 23 Jan 2024 01:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974987;
-	bh=GwcU2pSIbydwbJiU6IuHormamlt/mT09dfYLqMj4oWw=;
+	s=korg; t=1705974989;
+	bh=cv0KTf1DjTwyIKNIExnH3TSwIGDhacdTilrAiluiasc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HiNPfmDw7U6uNQsYu3vi43mcVCMYZ/nhTYgPIgPo9sb4NudIB8+juueCfQvQoU1G7
-	 tJIkWXJuWZrMFSX6HBTP00HQ3Wz8HDFz2Wvqt2887nzijFeT26iH8vHHeN7t6dG3PO
-	 P4VDJuWHz/MXPgf4uwE8LYqCD9u1B4giFZ8wBo+0=
+	b=g3PQgVZZ0CO1BwQC688Hewz57rp9rFbFbhXuvSI5//UYEB6YEVKQjkF1UWGPbRDhn
+	 k7WZYMt7kUR8TEB6eNdEFFDItf2NBxHIRLfuWTkCZQ/0JhtBuidNTxZxPDdPcHSXsV
+	 sRssv+1z8jrk/1y2Gt80ihMjU1Dn+bRMDIekHLdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 182/583] arm64: dts: qcom: ipq6018: fix clock rates for GCC_USB0_MOCK_UTMI_CLK
-Date: Mon, 22 Jan 2024 15:53:53 -0800
-Message-ID: <20240122235817.579636443@linuxfoundation.org>
+Subject: [PATCH 5.15 310/374] selftests/sgx: Skip non X86_64 platform
+Date: Mon, 22 Jan 2024 15:59:26 -0800
+Message-ID: <20240122235755.654658632@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chukun Pan <amadeus@jmu.edu.cn>
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-[ Upstream commit 5c0dbe8b058436ad5daecb19c60869f832607ea3 ]
+[ Upstream commit 981cf568a8644161c2f15c02278ebc2834b51ba6 ]
 
-The downstream QSDK kernel [1] and GCC_USB1_MOCK_UTMI_CLK are both 24MHz.
-Adjust GCC_USB0_MOCK_UTMI_CLK to 24MHz to avoid the following error:
+When building whole selftests on arm64, rsync gives an erorr about sgx:
 
-clk: couldn't set gcc_usb0_mock_utmi_clk clk rate to 20000000 (-22), current rate: 24000000
+rsync: [sender] link_stat "/root/linux-next/tools/testing/selftests/sgx/test_encl.elf" failed: No such file or directory (2)
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1327) [sender=3.2.5]
 
-1. https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/commit/486c8485f59
+The root casue is sgx only used on X86_64, and shall be skipped on other
+platforms.
 
-Fixes: 5726079cd486 ("arm64: dts: ipq6018: Use reference clock to set dwc3 period")
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-Link: https://lore.kernel.org/r/20231218150805.1228160-1-amadeus@jmu.edu.cn
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix this by moving TEST_CUSTOM_PROGS and TEST_FILES inside the if check,
+then the build result will be "Skipping non-existent dir: sgx".
+
+Fixes: 2adcba79e69d ("selftests/x86: Add a selftest for SGX")
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/all/20231206025605.3965302-1-zhaomzhao%40126.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 2 +-
+ tools/testing/selftests/sgx/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 264845cecf92..fc907afe5174 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -565,7 +565,7 @@ usb3: usb@8af8800 {
- 					  <&gcc GCC_USB0_MOCK_UTMI_CLK>;
- 			assigned-clock-rates = <133330000>,
- 					       <133330000>,
--					       <20000000>;
-+					       <24000000>;
+diff --git a/tools/testing/selftests/sgx/Makefile b/tools/testing/selftests/sgx/Makefile
+index 472b27ccd7dc..394d0dde479b 100644
+--- a/tools/testing/selftests/sgx/Makefile
++++ b/tools/testing/selftests/sgx/Makefile
+@@ -16,9 +16,9 @@ HOST_CFLAGS := -Wall -Werror -g $(INCLUDES) -fPIC -z noexecstack
+ ENCL_CFLAGS := -Wall -Werror -static -nostdlib -nostartfiles -fPIC \
+ 	       -fno-stack-protector -mrdrnd $(INCLUDES)
  
- 			resets = <&gcc GCC_USB0_BCR>;
- 			status = "disabled";
++ifeq ($(CAN_BUILD_X86_64), 1)
+ TEST_CUSTOM_PROGS := $(OUTPUT)/test_sgx
+ 
+-ifeq ($(CAN_BUILD_X86_64), 1)
+ all: $(TEST_CUSTOM_PROGS) $(OUTPUT)/test_encl.elf
+ endif
+ 
 -- 
 2.43.0
 
