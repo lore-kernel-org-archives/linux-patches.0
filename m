@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A34513398C;
-	Tue, 23 Jan 2024 00:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404B5134723;
+	Tue, 23 Jan 2024 00:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969306; cv=none; b=Cm2DMMu0lDDAB1v5SD8Q5z5hiURkM8IJsoSygj34JApWBAPMhdGMFtfBDJ2oXQ5krMwzHwy3ihi5/BpnBYgzj94P37evFivcDm8/rHQQLuZjoH2qTeI9apw+x9NCbSyXAVW11gZir61nhrhYPK4+oC0mSqGHCXyAS5oURgW3DpU=
+	t=1705969307; cv=none; b=M1Gy3oMxguvBV/s7K3GEmUsu7iv7Dum2+RRZ1F839qc5ROcqTq9LJgRXMlnVCdTDYkang3sWmRh9/a5u60F6lTLOHCVCwlwxCgwlyr7VKnZT1NQZ8xaDOesQciR7tn1dilOpQmeUHOZxx3jYFZUOFGCS734lk7k7qzyeg4OT40o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969306; c=relaxed/simple;
-	bh=H7o0X3s3N6aR+dKY7MNWtqivKJHN9RXc2bBqEPX0ugM=;
+	s=arc-20240116; t=1705969307; c=relaxed/simple;
+	bh=mHxFZ27n8iKel0M9f0UgxonulI+nlHs8wQN5zyhNTGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ez0/7eRjaOVzBZOtNHNfh3eDykE8mIDFjtEFXL2Tu049VV7FczO2f1vDboxT1rnfbbQ3SW5GOmwLGuCnk6xKT2rL8kCnzBs7tbxwQNFTaAv8TX+86QNqbBpKN0u+0ijuH2CybAI9+GYz7KYYVqDRvBb9xhh4LDA9xviZyzweKnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d9PwlpQJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j2kDGRz6MlIlsiR0NyEKO5ccdZpdwbYyiO1nTdxVxKsAbVItBTozTdQ9Asw13yAtJ438MQD36M1XFGKoGAHqUKJNgc0VsOUyNTpVRxRroSBeVaeA5ddK8x5RqTjqyuoCoPTV1DRw97n2m/SyFXTzF2oHBPUBKoR1lE3rMzp5bBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTEx72fg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9PwlpQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC669C43399;
-	Tue, 23 Jan 2024 00:21:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTEx72fg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F97C43394;
+	Tue, 23 Jan 2024 00:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705969305;
-	bh=H7o0X3s3N6aR+dKY7MNWtqivKJHN9RXc2bBqEPX0ugM=;
+	s=korg; t=1705969307;
+	bh=mHxFZ27n8iKel0M9f0UgxonulI+nlHs8wQN5zyhNTGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d9PwlpQJt97dmCuHKE9ow/yVGcSxb7lRMpNRP4eb2g80meSG/R5zKLpYkM+7PS/K0
-	 Ff1juyAsLc7NgT1a9rBfqcRLl0ubNoH5No5LIeRAbvhTIrl7b0DfUOqprC1fg9Mqvl
-	 DAjdd1xa1V0mi3sMMbSuNwMPvW19LPQTzW6RNPJ0=
+	b=xTEx72fg/tjlaU/8ph2Lpdf2BU3qeqL5wC9j+bU0tpWVuTx35I9TiL27/sfr1pVXe
+	 llO4q+T1TRWMxy3rp5Qx6Dsl1dsSnIYmJ1Sr8GaQyKzmm4ICRfXkAjWToX2PshRLz8
+	 VTD8JXfjcj0gEKSRPhSWPEaoTopBjn2L+rEm49wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 138/641] arm64: dts: qcom: sdm845-db845c: correct LED panic indicator
-Date: Mon, 22 Jan 2024 15:50:42 -0800
-Message-ID: <20240122235822.372354933@linuxfoundation.org>
+Subject: [PATCH 6.7 139/641] arm64: dts: qcom: sm6125: add interrupts to DWC3 USB controller
+Date: Mon, 22 Jan 2024 15:50:43 -0800
+Message-ID: <20240122235822.403430168@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -54,37 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 0c90c75e663246203a2b7f6dd9e08a110f4c3c43 ]
+[ Upstream commit 67e4656f4487b95a39e45884c99235f62ebfaa47 ]
 
-There is no "panic-indicator" default trigger but a property with that
-name:
+Add interrupts to SM6125 DWC3 USB controller, based on downstream/vendor
+code of Trinket DTSI from Xiaomi Laurel device, to fix dtbs_check
+warnings:
 
-  sdm845-db845c.dtb: leds: led-0: Unevaluated properties are not allowed ('linux,default-trigger' was unexpected)
+  sm6125-xiaomi-laurel-sprout.dtb: usb@4ef8800: 'interrupt-names' is a required property
+  sm6125-xiaomi-laurel-sprout.dtb: usb@4ef8800: 'oneOf' conditional failed, one must be fixed:
+    'interrupts' is a required property
+    'interrupts-extended' is a required property
 
-Fixes: 3f72e2d3e682 ("arm64: dts: qcom: Add Dragonboard 845c")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20231111095617.16496-1-krzysztof.kozlowski@linaro.org
+Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Link: https://lore.kernel.org/r/20231111164229.63803-5-krzysztof.kozlowski@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm6125.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index c7eba6c491be..7e7bf3fb3be6 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -67,8 +67,8 @@ led-0 {
- 			function = LED_FUNCTION_INDICATOR;
- 			color = <LED_COLOR_ID_GREEN>;
- 			gpios = <&pm8998_gpios 13 GPIO_ACTIVE_HIGH>;
--			linux,default-trigger = "panic-indicator";
- 			default-state = "off";
-+			panic-indicator;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+index eb07eca3a48d..1dd3a4056e26 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+@@ -1185,6 +1185,10 @@ usb3: usb@4ef8800 {
+ 					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+ 			assigned-clock-rates = <19200000>, <66666667>;
  
- 		led-1 {
++			interrupts = <GIC_SPI 260 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hs_phy_irq", "ss_phy_irq";
++
+ 			power-domains = <&gcc USB30_PRIM_GDSC>;
+ 			qcom,select-utmi-as-pipe-clk;
+ 			status = "disabled";
 -- 
 2.43.0
 
