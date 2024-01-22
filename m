@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F7F6775D;
-	Tue, 23 Jan 2024 02:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5048B6775D;
+	Tue, 23 Jan 2024 02:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975301; cv=none; b=kt8SNrW8cPdQQqMj6luPDrc+r91ytiqyBnwjM4ifI+vqn+aN0Tkwb44w6IKyQEx5xDEqFonSU1/8UweIJ7U8nW3+bRqix/gRqcPowTPaLr8NPj9C8tFBj82hTggQZ9kDWLRk7gBeVPicwT2w3LGIH6LfwiQ4u55MWaQjBTz0trs=
+	t=1705975302; cv=none; b=f26UKLTfZhSgi5S6y3S6jVIaiUaFP3NJyMc/Mo12bN0tnjlMxsvoaMzZyysYvZNKof6ZbfmW4LsChlAYq6NMZ8ulcmNapdP3ZQsc7BISLvZVHeXkY4rw7zHyhXiT5KY0cQuOYEv/cHMFragIT0r7QIxFg6DJVV60dbhE+spv1V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975301; c=relaxed/simple;
-	bh=VTkywE93UERfk17CmE+ihLfexeVOcqIgWtgrBq3YSC4=;
+	s=arc-20240116; t=1705975302; c=relaxed/simple;
+	bh=e9UAed4bJarMeRhC9hkIBm3gkw9GhCdY69S3twQAVMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pUK+C9JuqKqYcCglLbSexxpdZ8tMQA74eTUHJTZWgdVJz/6fybM9d2UYWFTZE5G69/Wwg9llaAFeE6u6qUNQCrluqBzzLxmbGYk/L68vc505ib4qfdL1qmDUfWFXIPxhzhY1pvwO+FeWuDeJ8LY9aFsGgjagGrrN11PGayNY/5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7EYq6gt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kS+ydB8K83b1PeL01uQ8P5KTdXfx/tbh1uobrhAnzTvvIZK0o0QbyYspj6M+asQ0THBoi0JssBPcgunhtAaPPS74p0V42rUW/pWhnUnFtuOqy6oGH5N8HypOBPl2etq49jFTKj77thV/M5pu1Q++HZazTTOmkiXh+tP8RMP1kEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtsVAkAU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7EYq6gt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25AA4C433B1;
-	Tue, 23 Jan 2024 02:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtsVAkAU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0E6C43394;
+	Tue, 23 Jan 2024 02:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975301;
-	bh=VTkywE93UERfk17CmE+ihLfexeVOcqIgWtgrBq3YSC4=;
+	s=korg; t=1705975302;
+	bh=e9UAed4bJarMeRhC9hkIBm3gkw9GhCdY69S3twQAVMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7EYq6gtCEZqEe+EtzEvzGVITPNCxpHnAxOXEVF+O/Pz2rxzhm7X4g8uU98kiWhkF
-	 0fx8sh3s8uXOuQ5JzYsJ+FCXO5gZWkUfyMCHg/M6hIcziBmMyKP6h9vvYwrrja1VgJ
-	 pSn7ytUEY3OXLgVsGRO8Mmmmzijo95YgijT/QufY=
+	b=CtsVAkAU2zCU331PrDc7+sUZe/NrAU80tNNiCHWeqVmBRO7PUWTJTlCpmyNWAQNZq
+	 cn9IwLJe6kyEKc2C/69qQQWvLmaHDakc2uG1vlkKTa7XK+nX0sh1JpK1YhdYb3EDe8
+	 1xvpOwQOpJ45fvSgVmb0AePX2u6up3v08Toa+urY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 266/583] RDMA/hns: Fix memory leak in free_mr_init()
-Date: Mon, 22 Jan 2024 15:55:17 -0800
-Message-ID: <20240122235820.144952754@linuxfoundation.org>
+Subject: [PATCH 6.6 267/583] clk: qcom: gpucc-sm8150: Update the gpu_cc_pll1 config
+Date: Mon, 22 Jan 2024 15:55:18 -0800
+Message-ID: <20240122235820.172396405@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,38 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-[ Upstream commit 288f535951aa81ed674f5e5477ab11b9d9351b8c ]
+[ Upstream commit 6ebd9a4f8b8d2b35cf965a04849c4ba763722f13 ]
 
-When a reserved QP fails to be created, the memory of the remaining
-created reserved QPs is leaked.
+Update the test_ctl_hi_val and test_ctl_hi1_val of gpu_cc_pll1
+as per latest HW recommendation.
 
-Fixes: 70f92521584f ("RDMA/hns: Use the reserved loopback QPs to free MR before destroying MPT")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20231207114231.2872104-6-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 0cef71f2ccc8 ("clk: qcom: Add graphics clock controller driver for SM8150")
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231122042814.4158076-1-quic_skakitap@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/qcom/gpucc-sm8150.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 84c18996517c..3c62a0042da4 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -2693,6 +2693,10 @@ static int free_mr_alloc_res(struct hns_roce_dev *hr_dev)
- 	return 0;
- 
- create_failed_qp:
-+	for (i--; i >= 0; i--) {
-+		hns_roce_v2_destroy_qp(&free_mr->rsv_qp[i]->ibqp, NULL);
-+		kfree(free_mr->rsv_qp[i]);
-+	}
- 	hns_roce_destroy_cq(cq, NULL);
- 	kfree(cq);
- 
+diff --git a/drivers/clk/qcom/gpucc-sm8150.c b/drivers/clk/qcom/gpucc-sm8150.c
+index 8422fd047493..c89a5b59ddb7 100644
+--- a/drivers/clk/qcom/gpucc-sm8150.c
++++ b/drivers/clk/qcom/gpucc-sm8150.c
+@@ -37,8 +37,8 @@ static struct alpha_pll_config gpu_cc_pll1_config = {
+ 	.config_ctl_hi_val = 0x00002267,
+ 	.config_ctl_hi1_val = 0x00000024,
+ 	.test_ctl_val = 0x00000000,
+-	.test_ctl_hi_val = 0x00000002,
+-	.test_ctl_hi1_val = 0x00000000,
++	.test_ctl_hi_val = 0x00000000,
++	.test_ctl_hi1_val = 0x00000020,
+ 	.user_ctl_val = 0x00000000,
+ 	.user_ctl_hi_val = 0x00000805,
+ 	.user_ctl_hi1_val = 0x000000d0,
 -- 
 2.43.0
 
