@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D846A352;
-	Tue, 23 Jan 2024 02:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AF46A354;
+	Tue, 23 Jan 2024 02:02:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975349; cv=none; b=Ndt1a8fJI35mvQfdQ4LlPXzuD5ItzQvO3u9pC1XTlcWUH3uCKBTekKUTaglkA/3aDgGm/StSIA6nttZZhYyoDhRYTDKXT7k3AL/ODxVIJUceuNe7OPn2dGtZwYrd+zDqsJ6vEKuyODmPBU9bozKTX9P3WdochABfJFjPv9xR5Kc=
+	t=1705975350; cv=none; b=tTt09PKwEiOKMN8zJeoB2EsI/LhE0d33RcM8iWLgyMW0cZxxMYlThbPhffxUmPh7lKIOl0L16D5sEArVlHOAxdYRcdH1tEoUwlVgQNiQ3Y509qNpAopsF4tkxt3gHu83cjbtCksq2TDNWajN+KkT+hr1D+EDTPtdjTNYL3p0Bl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975349; c=relaxed/simple;
-	bh=4qnwlnDeCK0OV7dURB1HcKoV8eGmhjXCmKFyjzcFpUc=;
+	s=arc-20240116; t=1705975350; c=relaxed/simple;
+	bh=fjYN60atLbsyutMG5sOWPs99csFJGyHrXneY7lpUkTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oN+srHHdajTamhLw0iZah6s0or7PvlYZeEAySgTXhBgymmt28TVFDsm4S2IwecSXwz8Tc/Ba0VS6Af1+3gGrcCPmrc5a5jHwyIUjtdPeD5C1xpzdFaY6maLqOrIMrMp4ASBFZET2JAFgu+s7c4FcVmxxHVqiFTQO8yvCWtJBGqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpvdT79E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qzq7YxumHa+ssuy3BzDLBYTfs0D1NTce3P40Ike5agcja6+kTVz1zzaTCUrevqi5vMw8kyH+BOyVbIDmsVw4PwQQfYUnYq7RwthucfusOeG0MxztQVnj9pMxc3AoFiHd5kyVxpGXmS0hM5HtyStnNSeyZGu4DDtD9MGf+T5FbnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zp5Zt9gG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpvdT79E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B5DAC43390;
-	Tue, 23 Jan 2024 02:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zp5Zt9gG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 320E1C433C7;
+	Tue, 23 Jan 2024 02:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975348;
-	bh=4qnwlnDeCK0OV7dURB1HcKoV8eGmhjXCmKFyjzcFpUc=;
+	s=korg; t=1705975350;
+	bh=fjYN60atLbsyutMG5sOWPs99csFJGyHrXneY7lpUkTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpvdT79E1tenz7tHuUqqRSOmxdVBN6xAdLONZUcG82su9/rHLpXc4ufhfBCVUQ+0A
-	 uJJTTLOR6qY8nYDm5TyhZqONq1d1q45Mf6HhB7ZIYiTLa24T5BsmItBpcV+n2uKBHb
-	 uECh35wNfmcMrhyJ9FXHcBbhGCVNv9XBNUD+HSx4=
+	b=Zp5Zt9gG4+wSdzGWqFMugg15W9pVuVZZ9jJ/WeEB8nqBX6sMJOm2CuWgJhFZ3/gck
+	 Xjw0UngM1O6ASswJdFiSpd8R6yskZzPLTkcozzpCFjmzIG+9n1j1ZC4+Mr7uip/B7l
+	 NyTulOe4xX68jJO6i2ts612q1aXP/P5EqjGnf63M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 311/583] clk: qcom: gcc-sm8550: Mark the PCIe GDSCs votable
-Date: Mon, 22 Jan 2024 15:56:02 -0800
-Message-ID: <20240122235821.544128713@linuxfoundation.org>
+Subject: [PATCH 6.6 312/583] clk: qcom: gcc-sm8550: use collapse-voting for PCIe GDSCs
+Date: Mon, 22 Jan 2024 15:56:03 -0800
+Message-ID: <20240122235821.573464826@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,63 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit e7fe73fc6b68ee97b1e8f124a66a5ee50d8d5e5b ]
+[ Upstream commit 7e77a39265293ea4f05e20fff180755503c49918 ]
 
-The PCIe GDSCs on most Qualcomm platforms expect the OS to always
-consider collapse requests as successful. This also concerns SM8550.
+The PCIe GDSCs can be shared with other masters and should use the APCS
+collapse-vote register when updating the power state.
 
-Add the VOTABLE flag to the GDSCs in question to comply with these
-expectations.
+This is specifically also needed to be able to disable power domains
+that have been enabled by boot firmware using the vote register.
+
+Following other recent Qualcomm platforms, describe this register and
+the corresponding mask for the PCIe (and _phy) GDSCs.
 
 Fixes: 955f2ea3b9e9 ("clk: qcom: Add GCC driver for SM8550")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20231218-topic-8550_fixes-v1-4-ce1272d77540@linaro.org
+Link: https://lore.kernel.org/r/20231218-topic-8550_fixes-v1-5-ce1272d77540@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm8550.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/gcc-sm8550.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
-index 1c3d78500392..a16d07426b71 100644
+index a16d07426b71..73bda0d03aa7 100644
 --- a/drivers/clk/qcom/gcc-sm8550.c
 +++ b/drivers/clk/qcom/gcc-sm8550.c
-@@ -3002,7 +3002,7 @@ static struct gdsc pcie_0_gdsc = {
+@@ -2998,6 +2998,8 @@ static struct clk_branch gcc_video_axi1_clk = {
+ 
+ static struct gdsc pcie_0_gdsc = {
+ 	.gdscr = 0x6b004,
++	.collapse_ctrl = 0x52020,
++	.collapse_mask = BIT(0),
+ 	.pd = {
  		.name = "pcie_0_gdsc",
  	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-+	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
+@@ -3007,6 +3009,8 @@ static struct gdsc pcie_0_gdsc = {
  
  static struct gdsc pcie_0_phy_gdsc = {
-@@ -3011,7 +3011,7 @@ static struct gdsc pcie_0_phy_gdsc = {
+ 	.gdscr = 0x6c000,
++	.collapse_ctrl = 0x52020,
++	.collapse_mask = BIT(3),
+ 	.pd = {
  		.name = "pcie_0_phy_gdsc",
  	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-+	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
+@@ -3016,6 +3020,8 @@ static struct gdsc pcie_0_phy_gdsc = {
  
  static struct gdsc pcie_1_gdsc = {
-@@ -3020,7 +3020,7 @@ static struct gdsc pcie_1_gdsc = {
+ 	.gdscr = 0x8d004,
++	.collapse_ctrl = 0x52020,
++	.collapse_mask = BIT(1),
+ 	.pd = {
  		.name = "pcie_1_gdsc",
  	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-+	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
+@@ -3025,6 +3031,8 @@ static struct gdsc pcie_1_gdsc = {
  
  static struct gdsc pcie_1_phy_gdsc = {
-@@ -3029,7 +3029,7 @@ static struct gdsc pcie_1_phy_gdsc = {
+ 	.gdscr = 0x8e000,
++	.collapse_ctrl = 0x52020,
++	.collapse_mask = BIT(4),
+ 	.pd = {
  		.name = "pcie_1_phy_gdsc",
  	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-+	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
- static struct gdsc ufs_phy_gdsc = {
 -- 
 2.43.0
 
