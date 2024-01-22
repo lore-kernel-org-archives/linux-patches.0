@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F2D7CF21;
-	Tue, 23 Jan 2024 02:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66537CF21;
+	Tue, 23 Jan 2024 02:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975733; cv=none; b=QN+q14h8MoOGoRU/Dm13RttM2KPtek8u5vObE1E9fqskv9VB6oNDk0DfBN9iagTxPf5h57R6gZchIu0XYJsW1MdKXyeNEDfIxWO2Jp4owQ+mdnGLpkhcUNtlStahbLNdkPtcPtRfq6DRCwf4pb8DPOP5Jvkcah3L53NwRWqfdMc=
+	t=1705975733; cv=none; b=uQtWHPO8Voo+AhUGGdvB1OWtoWcO1ySLYL1qPcJMXwhsijJ2VLYUt3triGi/i/Wb4cnqS8VF2xQWkoIjaJGAxn8tNd6HOS0vRvYWsBwB3QA5xvDaM7BRx67BVXTdVii5kUeo5w5F9PlzKO+PP1ZX8BLFmiqBLZcyvBq12ws811k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975733; c=relaxed/simple;
-	bh=7EVPGNX/bHS82MgR9xbFpzJFrDd0a5QaTOghO5nzSdI=;
+	bh=WNmPayOZVp7vMy5g9BFKt3TRx8Baw3X4cYoUkmgbcY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n3ybOBM8xpnR21dCo825FfSfswMVXUa5Epcf4mcnxo1xRLhRNE01nool+xC+wwqMh90tGY/fBYv0dPYJObMhwOmQmldddOXMWraoeIhHjQifVyxM58iMZLLdUCAGOStu1L77qtvTu/yK/TcYN7zCjHB79P8J4zsr/WM8FL921VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrVRQ9HA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OZFo1WxxzOY4sDaCDuKmqMJkCDgNhFzZbe+TV5yf9JkEJL4vw/Zko4A5RWTK4Iibusn9cblAiryP7ee/Cpw2hlQMrzglwGdbN2KT3u1LTanLmd9R6087534ExUWpxIxTWDNikqGUmIZxUDVfGBUQv3BsF9ZFjSREshXygLwWoVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHnDJ1N5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrVRQ9HA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F66C433F1;
-	Tue, 23 Jan 2024 02:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHnDJ1N5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975A0C43390;
+	Tue, 23 Jan 2024 02:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975732;
-	bh=7EVPGNX/bHS82MgR9xbFpzJFrDd0a5QaTOghO5nzSdI=;
+	s=korg; t=1705975733;
+	bh=WNmPayOZVp7vMy5g9BFKt3TRx8Baw3X4cYoUkmgbcY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JrVRQ9HA3iCfH8/XJdOJS3t+iCqUjO4vaOUBeIu/2DzttXNJJLLLYz/7RA7/FOpWo
-	 dyd/vklo4aMdMcTX9DpCmt6NgUKYwNRRUlvuZgQuwquWj6bj37cS4fvEkMZWxkcfUG
-	 ycoxCIcwnywquzfkece99H0zehEb8AHspcDr118Y=
+	b=NHnDJ1N5bh+cLzYtCPIyNrmkBKjNV9ZOnp1RBqOJ2lopTgwdd6WNk4ler5+YSjc5I
+	 +KfoV4AOc0SgJKLv7u2kbMTnH5X9BB3GaiImfcVxbyIn7V+Wg1GSsUqmx/nqq8TYcm
+	 cSOpARuH3j3xMBQgw2Upas2wWwf+XfMrCkB0WRi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 494/583] tty: use if in send_break() instead of goto
-Date: Mon, 22 Jan 2024 15:59:05 -0800
-Message-ID: <20240122235827.130587912@linuxfoundation.org>
+Subject: [PATCH 6.6 495/583] usb: cdc-acm: return correct error code on unsupported break
+Date: Mon, 22 Jan 2024 15:59:06 -0800
+Message-ID: <20240122235827.162559175@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -50,42 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 24f2cd019946fc2e88e632d2e24a34c2cc3f2be4 ]
+[ Upstream commit 66aad7d8d3ec5a3a8ec2023841bcec2ded5f65c9 ]
 
-Now, the "jumped-over" code is simple enough to be put inside an 'if'.
-Do so to make it 'goto'-less.
+In ACM support for sending breaks to devices is optional.
+If a device says that it doenot support sending breaks,
+the host must respect that.
+Given the number of optional features providing tty operations
+for each combination is not practical and errors need to be
+returned dynamically if unsupported features are requested.
 
-Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20230919085156.1578-16-jirislaby@kernel.org
+In case a device does not support break, we want the tty layer
+to treat that like it treats drivers that statically cannot
+support sending a break. It ignores the inability and does nothing.
+This patch uses EOPNOTSUPP to indicate that.
+
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Fixes: 9e98966c7bb94 ("tty: rework break handling")
+Link: https://lore.kernel.org/r/20231207132639.18250-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 66aad7d8d3ec ("usb: cdc-acm: return correct error code on unsupported break")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_io.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/tty/tty_io.c        | 3 +++
+ drivers/usb/class/cdc-acm.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
 diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
-index ddcaf967f64b..724ebf82f2cd 100644
+index 724ebf82f2cd..493fc4742895 100644
 --- a/drivers/tty/tty_io.c
 +++ b/drivers/tty/tty_io.c
-@@ -2482,11 +2482,10 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
- 		return -EINTR;
- 
- 	retval = tty->ops->break_ctl(tty, -1);
--	if (retval)
--		goto out;
--	msleep_interruptible(duration);
--	retval = tty->ops->break_ctl(tty, 0);
--out:
-+	if (!retval) {
-+		msleep_interruptible(duration);
-+		retval = tty->ops->break_ctl(tty, 0);
-+	}
+@@ -2485,6 +2485,9 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
+ 	if (!retval) {
+ 		msleep_interruptible(duration);
+ 		retval = tty->ops->break_ctl(tty, 0);
++	} else if (retval == -EOPNOTSUPP) {
++		/* some drivers can tell only dynamically */
++		retval = 0;
+ 	}
  	tty_write_unlock(tty);
  
- 	if (signal_pending(current))
+diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
+index a1f4e1ead97f..0e7439dba8fe 100644
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -916,6 +916,9 @@ static int acm_tty_break_ctl(struct tty_struct *tty, int state)
+ 	struct acm *acm = tty->driver_data;
+ 	int retval;
+ 
++	if (!(acm->ctrl_caps & USB_CDC_CAP_BRK))
++		return -EOPNOTSUPP;
++
+ 	retval = acm_send_break(acm, state ? 0xffff : 0);
+ 	if (retval < 0)
+ 		dev_dbg(&acm->control->dev,
 -- 
 2.43.0
 
