@@ -1,41 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B39377636;
-	Tue, 23 Jan 2024 02:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3363277F23;
+	Tue, 23 Jan 2024 02:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975533; cv=none; b=OWEzTi9G9hVdTlm2L52OLhnRCsWvrCtmXl+czlehMU8lsZRppBVnyM/fxXlJD2wCizvK4xuObuOLMuIH58opKe67QO0VemijlAjkHbijXpCnywX955PuwsTrVvBQDsB3flxyd7A84PcLswpxm7F5Uc/QLgzaES/u+apDwQAaQDY=
+	t=1705975534; cv=none; b=ZZrxYX1NagpNHFjUK676hUCXFL/hmeGEKBQNjvy0nn3xqKLTNPwiAAaqDIMVof3vxJV1sx3XZuxHWu0jATocaJgUpq6RGFx/3KJCaGPBAKrwcKg2wEG1XUMAtqeBV07+Ci3FpV9H2u/dEsadz2VOEa4wdHidQ7p64GZOuyjx6Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975533; c=relaxed/simple;
-	bh=LlMxxlXdPbAT2WUKUPWYDzVw9xjoihs9RvYjp393tRE=;
+	s=arc-20240116; t=1705975534; c=relaxed/simple;
+	bh=k8SrcaUi8yz025xytcjJu2TNcXoc5JEBpyl985XPKJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+Pc8+8SrwbhvvE4wUcyUjxu2AkLvFRbMk4XSu41ZUXaLT3qDqI804jP4Z0KmLVB6tyqdONsHOltyH5TJR755wIm/SMrrAqo4IfHfi1CV/D67A6TOoCMQulStW9xmytTzcOOzaeudqqeRvbpvGxVNwbhqUGCs+z1PyMAY28YP0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mCrc/nM0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p3izmusBdOdVZE30FEhZgWy1k1szPrKYxiUVOj4iZC0MFmP7FH76sHbwwTS1KS8oCy3dsdTl3/4gxLMsl6R+6bBJ7o4tEV4mauuV1Q7kfwbpfTfKdeliapN9PxT7AX3RsKmw3mp5TJdMsRk/hPZXTDv9hgT1cnpPuhRDBgobnG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEQuAHF3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCrc/nM0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F187AC43390;
-	Tue, 23 Jan 2024 02:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEQuAHF3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8098C43399;
+	Tue, 23 Jan 2024 02:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975533;
-	bh=LlMxxlXdPbAT2WUKUPWYDzVw9xjoihs9RvYjp393tRE=;
+	s=korg; t=1705975534;
+	bh=k8SrcaUi8yz025xytcjJu2TNcXoc5JEBpyl985XPKJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mCrc/nM0TNgfuXW997jueuFLyVUMoluRNzi1417uhlVPaAVq15cM6bMHneu/hulGV
-	 zRsImYqqXnkHarDaXXgb7OShcnT4c3rEWxVMC2tUb1GHTDwqHXwL/jU77ePM8F5j0Z
-	 JuVMxpINcMoQzqfCO6Ig940KkubIYjduTIJvgQRk=
+	b=QEQuAHF3uRMxhl/vaRvhpKy5E7RdCOBMtPVrNs/8PQyBz1hDz99xTW3+aH1+6rwT6
+	 pS/tWPYreTv9Ktj0EwgZdDumfb9Ym26EsELB+qNYsIvbgR/kMsw6xsVaL1AjODjfW4
+	 vPnnRariop/A1lJvyLG2fj7e/2tGqW/4pXJQs5G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@linaro.org>,
-	Veronika Molnarova <vmolnaro@redhat.com>,
-	James Clark <james.clark@arm.com>,
-	Michael Petlan <mpetlan@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Namhyung Kim <Namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Junhao He <hejunhao3@huawei.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Qi Liu <liuqi115@huawei.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 466/583] perf test record user-regs: Fix mask for vg register
-Date: Mon, 22 Jan 2024 15:58:37 -0800
-Message-ID: <20240122235826.252874630@linuxfoundation.org>
+Subject: [PATCH 6.6 484/583] perf hisi-ptt: Fix one memory leakage in hisi_ptt_process_auxtrace_event()
+Date: Mon, 22 Jan 2024 15:58:55 -0800
+Message-ID: <20240122235826.816023919@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -54,66 +62,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Veronika Molnarova <vmolnaro@redhat.com>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-[ Upstream commit 28b01743ca752cea5ab182297d8b912b22f2a2d1 ]
+[ Upstream commit 1bc479d665bc25a9a4e8168d5b400a47491511f9 ]
 
-The 'vg' register for arm64 shows up in --user_regs as available when
-masking the variable AT_HWCAP with 1 << 22 returns '1' as done in
-perf_regs.c.
+ASan complains a memory leakage in hisi_ptt_process_auxtrace_event()
+that the data buffer is not freed. Since currently we only support the
+raw dump trace mode, the data buffer is used only within this function.
+So fix this by freeing the data buffer before going out.
 
-However, in subtests for support of SVE, the check for the 'vg' register
-is done by masking the variable AT_HWCAP with the value 0x200000 which
-is equals to 1 << 21 instead of 1 << 22.
-
-This results in inconsistencies on certain systems where the test
-expects that the 'vg' register is not operational when it is, and
-vice-versa.
-
-During the testing on a machine that the test expected not to have the
-'vg' register available, 'perf record' with the option --user-regs
-showed records for the 'vg' register together with all of the others,
-which means that the mask for the subtest of perf_event_attr is off by
-one.
-
-Change the value of the mask from 0x200000 to 0x400000 to correct it.
-
-Fixes: 9440ebdc333dd12e ("perf test arm64: Add attr tests for new VG register")
-Reviewed-by: Leo Yan <leo.yan@linaro.org>
-Signed-off-by: Veronika Molnarova <vmolnaro@redhat.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Michael Petlan <mpetlan@redhat.com>
-Link: https://lore.kernel.org/r/20231201194617.13012-1-vmolnaro@redhat.com
+Fixes: 5e91e57e68090c0e ("perf auxtrace arm64: Add support for parsing HiSilicon PCIe Trace packet")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+Acked-by: Namhyung Kim <Namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: Junhao He <hejunhao3@huawei.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Qi Liu <liuqi115@huawei.com>
+Link: https://lore.kernel.org/r/20231207081635.8427-3-yangyicong@huawei.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64 | 2 +-
- tools/perf/tests/attr/test-record-user-regs-sve-aarch64    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/hisi-ptt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64 b/tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64
-index fbb065842880..bed765450ca9 100644
---- a/tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64
-+++ b/tools/perf/tests/attr/test-record-user-regs-no-sve-aarch64
-@@ -6,4 +6,4 @@ args    = --no-bpf-event --user-regs=vg kill >/dev/null 2>&1
- ret     = 129
- test_ret = true
- arch    = aarch64
--auxv    = auxv["AT_HWCAP"] & 0x200000 == 0
-+auxv    = auxv["AT_HWCAP"] & 0x400000 == 0
-diff --git a/tools/perf/tests/attr/test-record-user-regs-sve-aarch64 b/tools/perf/tests/attr/test-record-user-regs-sve-aarch64
-index c598c803221d..a65113cd7311 100644
---- a/tools/perf/tests/attr/test-record-user-regs-sve-aarch64
-+++ b/tools/perf/tests/attr/test-record-user-regs-sve-aarch64
-@@ -6,7 +6,7 @@ args    = --no-bpf-event --user-regs=vg kill >/dev/null 2>&1
- ret     = 1
- test_ret = true
- arch    = aarch64
--auxv    = auxv["AT_HWCAP"] & 0x200000 == 0x200000
-+auxv    = auxv["AT_HWCAP"] & 0x400000 == 0x400000
- kernel_since = 6.1
+diff --git a/tools/perf/util/hisi-ptt.c b/tools/perf/util/hisi-ptt.c
+index 45b614bb73bf..764d660d30e2 100644
+--- a/tools/perf/util/hisi-ptt.c
++++ b/tools/perf/util/hisi-ptt.c
+@@ -121,6 +121,7 @@ static int hisi_ptt_process_auxtrace_event(struct perf_session *session,
+ 	if (dump_trace)
+ 		hisi_ptt_dump_event(ptt, data, size);
  
- [event:base-record]
++	free(data);
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
