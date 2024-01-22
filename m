@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8726812A16B;
-	Tue, 23 Jan 2024 00:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E952712A16D;
+	Tue, 23 Jan 2024 00:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971031; cv=none; b=VqUWKJvFaeGG/R6xvD63Cc0De/1MDvilOyGNKGanUieXy6NaDYS+z0WGSKoxp+2vX40eNBhSDv9hZ28dLjmbvx1B51mCJeaXtJlfefw9PnfLmyopTVDpCIoGu8lPNZLl4gnzXwsjLGaAHjFbuCYT2mQPSfogUjRFkRob43MVAxg=
+	t=1705971034; cv=none; b=M2h9WY8yaZB9cJnD1xfrcWHlggQQ676oFeQrP9R6dTaF/yrnQ8NWipQtYCwRujjFnQ1fZn91Upg4mRGo3LkFqMcLcgwQDuTjSSG5hGN0U3XyOEnSbLXLQ+r1V6sEXiXULW27xwD0o/mBdaUMAUDvTw/Xd1Ah23T1/e4oH6MFxd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971031; c=relaxed/simple;
-	bh=ei0hcGbZ/gZ9bww2Jndg/TR9VjiOOnAInqJRBu02md4=;
+	s=arc-20240116; t=1705971034; c=relaxed/simple;
+	bh=rBTGz7WDcc4qwZOywEh+VLNqlgQ2FK4yyAKJskIjv6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FE5p78/JhnyKRfB0vt4LDefqYOzeRwRABRN1d3qyFVfeQSpYcAhh9jqOuCxsD1cRnv2Mhl+ka0nwswQk26ed4OS2ODSgRdSBQfV0g9jyeVdrA5W3tMZOy15XmQa1q3prhxWIXgN99m0YYDeaNaAdSOLCgtXxUuB3naeSHwfOUBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHWh9xl9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R6qGR0KD8EwqI68EIi0IODuk9issC2EEGRKn5Zi8Gyyc7jD2zZ6B1i1CqWRuWPsdLnv7CwiO617sdox5BooQRydl6dVlJMlz3uPajkB5rRuSToFChHnPX0oa8xEfaVQEyKm3Yge7IUjSTLQAH6wDKs4Y4biWOW2H2SH7rICwgmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igEyQzGx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHWh9xl9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C29EC43394;
-	Tue, 23 Jan 2024 00:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igEyQzGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370D8C43390;
+	Tue, 23 Jan 2024 00:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971031;
-	bh=ei0hcGbZ/gZ9bww2Jndg/TR9VjiOOnAInqJRBu02md4=;
+	s=korg; t=1705971033;
+	bh=rBTGz7WDcc4qwZOywEh+VLNqlgQ2FK4yyAKJskIjv6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AHWh9xl9V5CiZQrf52Hq4KfqM9T65qmyuvPKi3IctuToiqrUSZSHHH/Ji/4T6NgXt
-	 FtQjws0tt0a9BDZHIZ7babLJ2YYsbRnK8MkyDDI8jj9grCGCjHrx54Kw5AMdEsMUoP
-	 VU+5j9lbqggG1c2le6mkfsXkZiJlGCU78BG18yc0=
+	b=igEyQzGxAkLbHcIyWOFMbSAFMobHc+J9DTcobCfdk4kloQS0OnUeFd6xO6Gx31C2p
+	 DeaqAQSm/St6ikIRtmWCApOsLxhOKTs2Pd4sEGj69GUaoC2uvbpZYCKUMgWbXkCNHI
+	 gWaF/p6TE6ji0gQ17Mt85uCSEPhjNR8T+VhZff2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ricardo B. Marliere" <ricardo@marliere.net>,
-	Mike Isely <isely@pobox.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+621409285c4156a009b3@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 165/417] media: pvrusb2: fix use after free on context disconnection
-Date: Mon, 22 Jan 2024 15:55:33 -0800
-Message-ID: <20240122235757.559348158@linuxfoundation.org>
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 073/286] spi: sh-msiof: Enforce fixed DTDL for R-Car H3
+Date: Mon, 22 Jan 2024 15:56:19 -0800
+Message-ID: <20240122235734.834242698@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,48 +49,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo B. Marliere <ricardo@marliere.net>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit ded85b0c0edd8f45fec88783d7555a5b982449c1 ]
+[ Upstream commit e5c7bcb499840551cfbe85c6df177ebc50432bf0 ]
 
-Upon module load, a kthread is created targeting the
-pvr2_context_thread_func function, which may call pvr2_context_destroy
-and thus call kfree() on the context object. However, that might happen
-before the usb hub_event handler is able to notify the driver. This
-patch adds a sanity check before the invalid read reported by syzbot,
-within the context disconnection call stack.
+Documentation says only DTDL of 200 is allowed for this SoC.
 
-Reported-and-tested-by: syzbot+621409285c4156a009b3@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000a02a4205fff8eb92@google.com/
-
-Fixes: e5be15c63804 ("V4L/DVB (7711): pvrusb2: Fix race on module unload")
-Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
-Acked-by: Mike Isely <isely@pobox.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 4286db8456f4 ("spi: sh-msiof: Add R-Car Gen 2 and 3 fallback bindings")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://msgid.link/r/20231212081239.14254-1-wsa+renesas@sang-engineering.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/pvrusb2/pvrusb2-context.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-sh-msiof.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/media/usb/pvrusb2/pvrusb2-context.c b/drivers/media/usb/pvrusb2/pvrusb2-context.c
-index 14170a5d72b3..1764674de98b 100644
---- a/drivers/media/usb/pvrusb2/pvrusb2-context.c
-+++ b/drivers/media/usb/pvrusb2/pvrusb2-context.c
-@@ -268,7 +268,8 @@ void pvr2_context_disconnect(struct pvr2_context *mp)
- {
- 	pvr2_hdw_disconnect(mp->hdw);
- 	mp->disconnect_flag = !0;
--	pvr2_context_notify(mp);
-+	if (!pvr2_context_shutok())
-+		pvr2_context_notify(mp);
- }
+diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
+index b2579af0e3eb..35d30378256f 100644
+--- a/drivers/spi/spi-sh-msiof.c
++++ b/drivers/spi/spi-sh-msiof.c
+@@ -30,12 +30,15 @@
  
+ #include <asm/unaligned.h>
  
++#define SH_MSIOF_FLAG_FIXED_DTDL_200	BIT(0)
++
+ struct sh_msiof_chipdata {
+ 	u32 bits_per_word_mask;
+ 	u16 tx_fifo_size;
+ 	u16 rx_fifo_size;
+ 	u16 ctlr_flags;
+ 	u16 min_div_pow;
++	u32 flags;
+ };
+ 
+ struct sh_msiof_spi_priv {
+@@ -1069,6 +1072,16 @@ static const struct sh_msiof_chipdata rcar_gen3_data = {
+ 	.min_div_pow = 1,
+ };
+ 
++static const struct sh_msiof_chipdata rcar_r8a7795_data = {
++	.bits_per_word_mask = SPI_BPW_MASK(8) | SPI_BPW_MASK(16) |
++			      SPI_BPW_MASK(24) | SPI_BPW_MASK(32),
++	.tx_fifo_size = 64,
++	.rx_fifo_size = 64,
++	.ctlr_flags = SPI_CONTROLLER_MUST_TX,
++	.min_div_pow = 1,
++	.flags = SH_MSIOF_FLAG_FIXED_DTDL_200,
++};
++
+ static const struct of_device_id sh_msiof_match[] = {
+ 	{ .compatible = "renesas,sh-mobile-msiof", .data = &sh_data },
+ 	{ .compatible = "renesas,msiof-r8a7743",   .data = &rcar_gen2_data },
+@@ -1079,6 +1092,7 @@ static const struct of_device_id sh_msiof_match[] = {
+ 	{ .compatible = "renesas,msiof-r8a7793",   .data = &rcar_gen2_data },
+ 	{ .compatible = "renesas,msiof-r8a7794",   .data = &rcar_gen2_data },
+ 	{ .compatible = "renesas,rcar-gen2-msiof", .data = &rcar_gen2_data },
++	{ .compatible = "renesas,msiof-r8a7795",   .data = &rcar_r8a7795_data },
+ 	{ .compatible = "renesas,msiof-r8a7796",   .data = &rcar_gen3_data },
+ 	{ .compatible = "renesas,rcar-gen3-msiof", .data = &rcar_gen3_data },
+ 	{ .compatible = "renesas,sh-msiof",        .data = &sh_data }, /* Deprecated */
+@@ -1274,6 +1288,9 @@ static int sh_msiof_spi_probe(struct platform_device *pdev)
+ 		return -ENXIO;
+ 	}
+ 
++	if (chipdata->flags & SH_MSIOF_FLAG_FIXED_DTDL_200)
++		info->dtdl = 200;
++
+ 	if (info->mode == MSIOF_SPI_SLAVE)
+ 		ctlr = spi_alloc_slave(&pdev->dev,
+ 				       sizeof(struct sh_msiof_spi_priv));
 -- 
 2.43.0
 
