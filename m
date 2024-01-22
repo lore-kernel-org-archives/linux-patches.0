@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C99E1350CA;
-	Tue, 23 Jan 2024 01:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D594013DB90;
+	Tue, 23 Jan 2024 01:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705971974; cv=none; b=IVprM/Xy8BkxGzi1mzQrfQKrlKJPrkZpLHuQsOtiwAGXr3AZ0u+1bb9lttr3H7/aOtkuOY3FvDVMruQyXprpKAsZFQ8DammVdPM3/fZsDJFa0UcmgMf723VlMhOLZMcKcis1yPx3LDo8P7rG6dwWm2YtYsvffzJA4AkzybQ49V0=
+	t=1705971975; cv=none; b=TLiZ4IIoogCxPLcfcbetMZEyJx8ksWr2/eCLjz9UKRbOZbWHGwIy0/S5shvlUDO7Vz5AB/AwYOG50FDgtyEnupHteNi2YfFEqQ+2qe3J7XrVpyLyWIKmfxjIW5jz/YemVfYHnKgL5YX2gCbguWhzNARMsS4GhfOM/p+OEL41lAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705971974; c=relaxed/simple;
-	bh=97+UPaHkSLn8uoJ42UVBHpkq7Vz4QW0v1JKQGyjuDus=;
+	s=arc-20240116; t=1705971975; c=relaxed/simple;
+	bh=0m8aTbyLaPQ1BgOS4I2QFAwA0umQvCK0XdzswC59DXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U1gaQ1+d3QTZ9mfLeW6MwxSahkOHLbXMCv91htYxebZRsLd2AO7d8T0wE/Gb+pptrYDorGGag3b3chtBvA1F/zkxbvKzeH0axJG7doaLYG2n+8TfW00rxAJD3sdYAsptg13yiQisqBMVXlWFIKed0gkvrfNJyEyJUpa/d7XerTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=garpBQVI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pk0d+soiuXYWkhNeBog1tNrVycPE4vdg0dbv7o3mKM6Iv3nyn5hcsGoE3Eaybe4iJ+mJdFphXQk9cSKgT87GRZ5L6fgbGj/g+l5NRzhdnmSSMyjus4m+mLROp1J2BNLC/Z0dAF8kMOQC2bwdEi0Z5pSRPL1K34MjTPzmZ2NZ//8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/p38qcn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="garpBQVI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C60C433C7;
-	Tue, 23 Jan 2024 01:06:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/p38qcn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E667C433C7;
+	Tue, 23 Jan 2024 01:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705971974;
-	bh=97+UPaHkSLn8uoJ42UVBHpkq7Vz4QW0v1JKQGyjuDus=;
+	s=korg; t=1705971975;
+	bh=0m8aTbyLaPQ1BgOS4I2QFAwA0umQvCK0XdzswC59DXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=garpBQVIHE/rUUKxgP/IY11UMewSbiAJck0r6S4pcHVx41ieX2pXVFIPJWwVTA4gP
-	 5F5JbMnPsLuoxL00yEmjA2v5tSVC9ic7pI1FMCXYSOz5WjYXiUOu9X2+nMZmBoN9Ym
-	 0cB02uX/vzL2HCzAbfkVJ/ha3AgKvmyN5F1xFB5g=
+	b=M/p38qcnJfEqLuNn5Plmz5F6bifUnUkxYet+vWyYioCgqJZkJ9abGdAWvTRPdutvu
+	 fkXaqykBXNInQkkFmBDCO32Wk2waOt9JnKmBQIi/n2v6wRV1X2TQKFQV/lYpHwyn3v
+	 suTMEwZUa4uLHgFqCYfGoPZTf+OBWQKCEKrHsA3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Ido Schimmel <idosch@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 278/286] mlxsw: spectrum: Use bitmap_zalloc() when applicable
-Date: Mon, 22 Jan 2024 15:59:44 -0800
-Message-ID: <20240122235742.774208507@linuxfoundation.org>
+Subject: [PATCH 6.1 368/417] apparmor: avoid crash when parsed profile name is empty
+Date: Mon, 22 Jan 2024 15:58:56 -0800
+Message-ID: <20240122235804.564653454@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
-References: <20240122235732.009174833@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
+References: <20240122235751.480367507@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,207 +47,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 2c087dfcc9d5e7e8557d217f01f58ba42d1ddbf1 ]
+[ Upstream commit 55a8210c9e7d21ff2644809699765796d4bfb200 ]
 
-Use 'bitmap_zalloc()' to simplify code, improve the semantic and avoid
-some open-coded arithmetic in allocator arguments.
+When processing a packed profile in unpack_profile() described like
 
-Also change the corresponding 'kfree()' into 'bitmap_free()' to keep
-consistency.
+ "profile :ns::samba-dcerpcd /usr/lib*/samba/{,samba/}samba-dcerpcd {...}"
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 483ae90d8f97 ("mlxsw: spectrum_acl_tcam: Fix stack corruption")
+a string ":samba-dcerpcd" is unpacked as a fully-qualified name and then
+passed to aa_splitn_fqname().
+
+aa_splitn_fqname() treats ":samba-dcerpcd" as only containing a namespace.
+Thus it returns NULL for tmpname, meanwhile tmpns is non-NULL. Later
+aa_alloc_profile() crashes as the new profile name is NULL now.
+
+general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 6 PID: 1657 Comm: apparmor_parser Not tainted 6.7.0-rc2-dirty #16
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
+RIP: 0010:strlen+0x1e/0xa0
+Call Trace:
+ <TASK>
+ ? strlen+0x1e/0xa0
+ aa_policy_init+0x1bb/0x230
+ aa_alloc_profile+0xb1/0x480
+ unpack_profile+0x3bc/0x4960
+ aa_unpack+0x309/0x15e0
+ aa_replace_profiles+0x213/0x33c0
+ policy_update+0x261/0x370
+ profile_replace+0x20e/0x2a0
+ vfs_write+0x2af/0xe00
+ ksys_write+0x126/0x250
+ do_syscall_64+0x46/0xf0
+ entry_SYSCALL_64_after_hwframe+0x6e/0x76
+ </TASK>
+---[ end trace 0000000000000000 ]---
+RIP: 0010:strlen+0x1e/0xa0
+
+It seems such behaviour of aa_splitn_fqname() is expected and checked in
+other places where it is called (e.g. aa_remove_profiles). Well, there
+is an explicit comment "a ns name without a following profile is allowed"
+inside.
+
+AFAICS, nothing can prevent unpacked "name" to be in form like
+":samba-dcerpcd" - it is passed from userspace.
+
+Deny the whole profile set replacement in such case and inform user with
+EPROTO and an explaining message.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: 04dc715e24d0 ("apparmor: audit policy ns specified in policy load")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlxsw/spectrum_acl_atcam.c  |  8 +++-----
- .../ethernet/mellanox/mlxsw/spectrum_acl_tcam.c   | 15 ++++++---------
- .../net/ethernet/mellanox/mlxsw/spectrum_cnt.c    |  9 +++------
- .../ethernet/mellanox/mlxsw/spectrum_switchdev.c  | 11 ++++-------
- 4 files changed, 16 insertions(+), 27 deletions(-)
+ security/apparmor/policy_unpack.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_atcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_atcam.c
-index ded4cf658680..4b713832fdd5 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_atcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_atcam.c
-@@ -119,7 +119,6 @@ mlxsw_sp_acl_atcam_region_12kb_init(struct mlxsw_sp_acl_atcam_region *aregion)
- {
- 	struct mlxsw_sp *mlxsw_sp = aregion->region->mlxsw_sp;
- 	struct mlxsw_sp_acl_atcam_region_12kb *region_12kb;
--	size_t alloc_size;
- 	u64 max_lkey_id;
- 	int err;
+diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
+index 7012fd82f1bb..633e778ec369 100644
+--- a/security/apparmor/policy_unpack.c
++++ b/security/apparmor/policy_unpack.c
+@@ -674,6 +674,10 @@ static struct aa_profile *unpack_profile(struct aa_ext *e, char **ns_name)
  
-@@ -131,8 +130,7 @@ mlxsw_sp_acl_atcam_region_12kb_init(struct mlxsw_sp_acl_atcam_region *aregion)
- 	if (!region_12kb)
- 		return -ENOMEM;
- 
--	alloc_size = BITS_TO_LONGS(max_lkey_id) * sizeof(unsigned long);
--	region_12kb->used_lkey_id = kzalloc(alloc_size, GFP_KERNEL);
-+	region_12kb->used_lkey_id = bitmap_zalloc(max_lkey_id, GFP_KERNEL);
- 	if (!region_12kb->used_lkey_id) {
- 		err = -ENOMEM;
- 		goto err_used_lkey_id_alloc;
-@@ -149,7 +147,7 @@ mlxsw_sp_acl_atcam_region_12kb_init(struct mlxsw_sp_acl_atcam_region *aregion)
- 	return 0;
- 
- err_rhashtable_init:
--	kfree(region_12kb->used_lkey_id);
-+	bitmap_free(region_12kb->used_lkey_id);
- err_used_lkey_id_alloc:
- 	kfree(region_12kb);
- 	return err;
-@@ -161,7 +159,7 @@ mlxsw_sp_acl_atcam_region_12kb_fini(struct mlxsw_sp_acl_atcam_region *aregion)
- 	struct mlxsw_sp_acl_atcam_region_12kb *region_12kb = aregion->priv;
- 
- 	rhashtable_destroy(&region_12kb->lkey_ht);
--	kfree(region_12kb->used_lkey_id);
-+	bitmap_free(region_12kb->used_lkey_id);
- 	kfree(region_12kb);
- }
- 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index 7cccc41dd69c..31f7f4c3acc3 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -36,7 +36,6 @@ int mlxsw_sp_acl_tcam_init(struct mlxsw_sp *mlxsw_sp,
- 	u64 max_tcam_regions;
- 	u64 max_regions;
- 	u64 max_groups;
--	size_t alloc_size;
- 	int err;
- 
- 	mutex_init(&tcam->lock);
-@@ -52,15 +51,13 @@ int mlxsw_sp_acl_tcam_init(struct mlxsw_sp *mlxsw_sp,
- 	if (max_tcam_regions < max_regions)
- 		max_regions = max_tcam_regions;
- 
--	alloc_size = sizeof(tcam->used_regions[0]) * BITS_TO_LONGS(max_regions);
--	tcam->used_regions = kzalloc(alloc_size, GFP_KERNEL);
-+	tcam->used_regions = bitmap_zalloc(max_regions, GFP_KERNEL);
- 	if (!tcam->used_regions)
- 		return -ENOMEM;
- 	tcam->max_regions = max_regions;
- 
- 	max_groups = MLXSW_CORE_RES_GET(mlxsw_sp->core, ACL_MAX_GROUPS);
--	alloc_size = sizeof(tcam->used_groups[0]) * BITS_TO_LONGS(max_groups);
--	tcam->used_groups = kzalloc(alloc_size, GFP_KERNEL);
-+	tcam->used_groups = bitmap_zalloc(max_groups, GFP_KERNEL);
- 	if (!tcam->used_groups) {
- 		err = -ENOMEM;
- 		goto err_alloc_used_groups;
-@@ -76,9 +73,9 @@ int mlxsw_sp_acl_tcam_init(struct mlxsw_sp *mlxsw_sp,
- 	return 0;
- 
- err_tcam_init:
--	kfree(tcam->used_groups);
-+	bitmap_free(tcam->used_groups);
- err_alloc_used_groups:
--	kfree(tcam->used_regions);
-+	bitmap_free(tcam->used_regions);
- 	return err;
- }
- 
-@@ -89,8 +86,8 @@ void mlxsw_sp_acl_tcam_fini(struct mlxsw_sp *mlxsw_sp,
- 
- 	mutex_destroy(&tcam->lock);
- 	ops->fini(mlxsw_sp, tcam->priv);
--	kfree(tcam->used_groups);
--	kfree(tcam->used_regions);
-+	bitmap_free(tcam->used_groups);
-+	bitmap_free(tcam->used_regions);
- }
- 
- int mlxsw_sp_acl_tcam_priority_get(struct mlxsw_sp *mlxsw_sp,
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_cnt.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_cnt.c
-index b65b93a2b9bc..fc2257753b9b 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_cnt.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_cnt.c
-@@ -122,7 +122,6 @@ int mlxsw_sp_counter_pool_init(struct mlxsw_sp *mlxsw_sp)
- 	unsigned int sub_pools_count = ARRAY_SIZE(mlxsw_sp_counter_sub_pools);
- 	struct devlink *devlink = priv_to_devlink(mlxsw_sp->core);
- 	struct mlxsw_sp_counter_pool *pool;
--	unsigned int map_size;
- 	int err;
- 
- 	pool = kzalloc(struct_size(pool, sub_pools, sub_pools_count),
-@@ -143,9 +142,7 @@ int mlxsw_sp_counter_pool_init(struct mlxsw_sp *mlxsw_sp)
- 	devlink_resource_occ_get_register(devlink, MLXSW_SP_RESOURCE_COUNTERS,
- 					  mlxsw_sp_counter_pool_occ_get, pool);
- 
--	map_size = BITS_TO_LONGS(pool->pool_size) * sizeof(unsigned long);
--
--	pool->usage = kzalloc(map_size, GFP_KERNEL);
-+	pool->usage = bitmap_zalloc(pool->pool_size, GFP_KERNEL);
- 	if (!pool->usage) {
- 		err = -ENOMEM;
- 		goto err_usage_alloc;
-@@ -158,7 +155,7 @@ int mlxsw_sp_counter_pool_init(struct mlxsw_sp *mlxsw_sp)
- 	return 0;
- 
- err_sub_pools_init:
--	kfree(pool->usage);
-+	bitmap_free(pool->usage);
- err_usage_alloc:
- 	devlink_resource_occ_get_unregister(devlink,
- 					    MLXSW_SP_RESOURCE_COUNTERS);
-@@ -176,7 +173,7 @@ void mlxsw_sp_counter_pool_fini(struct mlxsw_sp *mlxsw_sp)
- 	WARN_ON(find_first_bit(pool->usage, pool->pool_size) !=
- 			       pool->pool_size);
- 	WARN_ON(atomic_read(&pool->active_entries_count));
--	kfree(pool->usage);
-+	bitmap_free(pool->usage);
- 	devlink_resource_occ_get_unregister(devlink,
- 					    MLXSW_SP_RESOURCE_COUNTERS);
- 	kfree(pool);
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_switchdev.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_switchdev.c
-index 368fa0e5ad31..ea37f5000caa 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_switchdev.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_switchdev.c
-@@ -1631,16 +1631,13 @@ mlxsw_sp_mid *__mlxsw_sp_mc_alloc(struct mlxsw_sp *mlxsw_sp,
- 				  u16 fid)
- {
- 	struct mlxsw_sp_mid *mid;
--	size_t alloc_size;
- 
- 	mid = kzalloc(sizeof(*mid), GFP_KERNEL);
- 	if (!mid)
- 		return NULL;
- 
--	alloc_size = sizeof(unsigned long) *
--		     BITS_TO_LONGS(mlxsw_core_max_ports(mlxsw_sp->core));
--
--	mid->ports_in_mid = kzalloc(alloc_size, GFP_KERNEL);
-+	mid->ports_in_mid = bitmap_zalloc(mlxsw_core_max_ports(mlxsw_sp->core),
-+					  GFP_KERNEL);
- 	if (!mid->ports_in_mid)
- 		goto err_ports_in_mid_alloc;
- 
-@@ -1659,7 +1656,7 @@ mlxsw_sp_mid *__mlxsw_sp_mc_alloc(struct mlxsw_sp *mlxsw_sp,
- 	return mid;
- 
- err_write_mdb_entry:
--	kfree(mid->ports_in_mid);
-+	bitmap_free(mid->ports_in_mid);
- err_ports_in_mid_alloc:
- 	kfree(mid);
- 	return NULL;
-@@ -1676,7 +1673,7 @@ static int mlxsw_sp_port_remove_from_mid(struct mlxsw_sp_port *mlxsw_sp_port,
- 			 mlxsw_core_max_ports(mlxsw_sp->core))) {
- 		err = mlxsw_sp_mc_remove_mdb_entry(mlxsw_sp, mid);
- 		list_del(&mid->list);
--		kfree(mid->ports_in_mid);
-+		bitmap_free(mid->ports_in_mid);
- 		kfree(mid);
- 	}
- 	return err;
+ 	tmpname = aa_splitn_fqname(name, strlen(name), &tmpns, &ns_len);
+ 	if (tmpns) {
++		if (!tmpname) {
++			info = "empty profile name";
++			goto fail;
++		}
+ 		*ns_name = kstrndup(tmpns, ns_len, GFP_KERNEL);
+ 		if (!*ns_name) {
+ 			info = "out of memory";
 -- 
 2.43.0
 
