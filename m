@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792F760253;
-	Tue, 23 Jan 2024 00:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D7E60252;
+	Tue, 23 Jan 2024 00:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970845; cv=none; b=MQnWfyEwEpN6e4ugD3uzIo21gFrPCU6Q1GvpbsXyTHBIReaH2Xf3hi6kOrfwCDIzzAL6qCmiCQM66YeNeok7JbP2MvqAyxbpjyMITVpt+J2c77NU+seMHp/gIMSuq0YPItODT4SSI9I+hujgQru35hvXMVOQSrFmEOYfqQULG7Y=
+	t=1705970848; cv=none; b=RacqrLCCoEs5775JFcht1TcebElLfDBfqeUBE4u02HPFHGyRTyAdrYNmLxGyFwLlh4RudZkBnxSMuWX1KPnIu+U6gHN+r6uHrUWg6ITJZKzmyVL8Gci31t/1JIpskGK+RjY1GnW85zfi5vSiJ0OtJMm4b+q9uVAft8pJyZC895k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970845; c=relaxed/simple;
-	bh=nXsRDvxALK9l8icRHc09fMJ28GeEm6VlmPNJTWgiY7A=;
+	s=arc-20240116; t=1705970848; c=relaxed/simple;
+	bh=SZs9jTofHpo/V6V4sd2omHS36xnuTz/szzBF3sjyocg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GH2Os7MOUmH4dq+lfIeogAnozQylES4NzwGc9f9fY1ofiM4nGYLvbTspo56fuct29Uolwo5qfZIZdK8vAAo8REVE8UVSd8tUpmxejRzM10cPf2dCmhY9rVcr+JADfAjXZvSnjk/7F6HRyW+7U+IBgemCobKkQmvmWCIaSw8pFVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pz5sWF2K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bTcqmsnslnHln/jdSLyEVhd2SDW1JaT3u28ZBu2zPBf1Ng7rydVuZK9pj3gXafg69kDzmUzeuaJM4R42DI/5XECmlgfApvS3r5Y/d7sGbkPO5n7f+lx1vqqfrgpDdvpVpP4hBBK0Y/ao9q5fCqFLDy116/K246UI7J61HAXTBd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JgeUoPL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pz5sWF2K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A6FC433C7;
-	Tue, 23 Jan 2024 00:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JgeUoPL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC74C43390;
+	Tue, 23 Jan 2024 00:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970845;
-	bh=nXsRDvxALK9l8icRHc09fMJ28GeEm6VlmPNJTWgiY7A=;
+	s=korg; t=1705970848;
+	bh=SZs9jTofHpo/V6V4sd2omHS36xnuTz/szzBF3sjyocg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pz5sWF2KYfBcpKg0HC6kmTwCXbIcpiT0ha5ZTY45TTjHhDJyYgjX7RuWdx/kiuVL4
-	 MvwSYx1cXgvyuN2uO8SBKNIVeiZnrzmoB0SmGoITVaCBNT2LnSzvFG866jyhGcfxt1
-	 Vvjai5LWWNItsqXIqeM52NAwCMnixuNXL2EmJX1Q=
+	b=2JgeUoPLLc29Bu6spcDVYcjDuOBwf1eTtisY2fjkZZL/Al1WM0RztEiFH6OPYa/E4
+	 b/kveAaqc+1D+CsRUs8MY3+ZspDUj2IKewVKqKKP8lCB9xUsuXlpimFcQyYF+FizPv
+	 VdK2+h7pcSIRD/P0vDhTwWjhzam39lXhyxZSWTtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Atul Dhudase <quic_adhudase@quicinc.com>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Shang Ye <yesh25@mail2.sysu.edu.cn>,
+	gurevitch <mail@gurevit.ch>,
+	Egor Ignatov <egori@altlinux.org>,
+	Anton Zhilyaev <anton@cpp.in>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/417] soc: qcom: llcc: Fix dis_cap_alloc and retain_on_pc configuration
-Date: Mon, 22 Jan 2024 15:54:52 -0800
-Message-ID: <20240122235756.103230348@linuxfoundation.org>
+Subject: [PATCH 5.10 030/286] Input: atkbd - skip ATKBD_CMD_GETID in translated mode
+Date: Mon, 22 Jan 2024 15:55:36 -0800
+Message-ID: <20240122235733.186857062@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
+In-Reply-To: <20240122235732.009174833@linuxfoundation.org>
+References: <20240122235732.009174833@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,71 +51,128 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Atul Dhudase <quic_adhudase@quicinc.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit eed6e57e9f3e2beac37563eb6a0129549daa330e ]
+[ Upstream commit 936e4d49ecbc8c404790504386e1422b599dec39 ]
 
-Commit c14e64b46944 ("soc: qcom: llcc: Support chipsets that can
- write to llcc") add the support for chipset where capacity based
-allocation and retention through power collapse can be programmed
-based on content of SCT table mentioned in the llcc driver where
-the target like sdm845 where the entire programming related to it
-is controlled in firmware. However, the commit introduces a bug
-where capacity/retention register get overwritten each time it
-gets programmed for each slice and that results in misconfiguration
-of the register based on SCT table and that is not expected
-behaviour instead it should be read modify write to retain the
-configuration of other slices.
+There have been multiple reports of keyboard issues on recent laptop models
+which can be worked around by setting i8042.dumbkbd, with the downside
+being this breaks the capslock LED.
 
-This issue is totally caught from code review and programming test
-and not through any power/perf numbers so, it is not known what
-impact this could make if we don't have this change however,
-this feature are for these targets and they should have been
-programmed accordingly as per their configuration mentioned in
-SCT table like others bits information.
+It seems that these issues are caused by recent laptops getting confused by
+ATKBD_CMD_GETID. Rather then adding and endless growing list of quirks for
+this, just skip ATKBD_CMD_GETID alltogether on laptops in translated mode.
 
-This change brings one difference where it keeps capacity/retention
-bits of the slices that are not mentioned in SCT table in unknown
-state where as earlier it was initialized to zero.
+The main goal of sending ATKBD_CMD_GETID is to skip binding to ps/2
+mice/touchpads and those are never used in translated mode.
 
-Fixes: c14e64b46944 ("soc: qcom: llcc: Support chipsets that can write to llcc")
-Signed-off-by: Atul Dhudase <quic_adhudase@quicinc.com>
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/1701876771-10695-1-git-send-email-quic_mojha@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Examples of laptop models which benefit from skipping ATKBD_CMD_GETID:
+
+* "HP Laptop 15s-fq2xxx", "HP laptop 15s-fq4xxx" and "HP Laptop 15-dy2xxx"
+  models the kbd stops working for the first 2 - 5 minutes after boot
+  (waiting for EC watchdog reset?)
+
+* On "HP Spectre x360 13-aw2xxx" atkbd fails to probe the keyboard
+
+* At least 9 different Lenovo models have issues with ATKBD_CMD_GETID, see:
+  https://github.com/yescallop/atkbd-nogetid
+
+This has been tested on:
+
+1. A MSI B550M PRO-VDH WIFI desktop, where the i8042 controller is not
+   in translated mode when no keyboard is plugged in and with a ps/2 kbd
+   a "AT Translated Set 2 keyboard" /dev/input/event# node shows up
+
+2. A Lenovo ThinkPad X1 Yoga gen 8 (always has a translated set 2 keyboard)
+
+Reported-by: Shang Ye <yesh25@mail2.sysu.edu.cn>
+Closes: https://lore.kernel.org/linux-input/886D6167733841AE+20231017135318.11142-1-yesh25@mail2.sysu.edu.cn/
+Closes: https://github.com/yescallop/atkbd-nogetid
+Reported-by: gurevitch <mail@gurevit.ch>
+Closes: https://lore.kernel.org/linux-input/2iAJTwqZV6lQs26cTb38RNYqxvsink6SRmrZ5h0cBUSuf9NT0tZTsf9fEAbbto2maavHJEOP8GA1evlKa6xjKOsaskDhtJWxjcnrgPigzVo=@gurevit.ch/
+Reported-by: Egor Ignatov <egori@altlinux.org>
+Closes: https://lore.kernel.org/all/20210609073333.8425-1-egori@altlinux.org/
+Reported-by: Anton Zhilyaev <anton@cpp.in>
+Closes: https://lore.kernel.org/linux-input/20210201160336.16008-1-anton@cpp.in/
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2086156
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20231115174625.7462-1-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/input/keyboard/atkbd.c | 46 +++++++++++++++++++++++++++++++---
+ 1 file changed, 42 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index bc400669ee02..16a05143d0d6 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -680,14 +680,14 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config,
- 		u32 disable_cap_alloc, retain_pc;
+diff --git a/drivers/input/keyboard/atkbd.c b/drivers/input/keyboard/atkbd.c
+index edc613efc158..90dd3caa4612 100644
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -756,6 +756,44 @@ static void atkbd_deactivate(struct atkbd *atkbd)
+ 			ps2dev->serio->phys);
+ }
  
- 		disable_cap_alloc = config->dis_cap_alloc << config->slice_id;
--		ret = regmap_write(drv_data->bcast_regmap,
--				LLCC_TRP_SCID_DIS_CAP_ALLOC, disable_cap_alloc);
-+		ret = regmap_update_bits(drv_data->bcast_regmap, LLCC_TRP_SCID_DIS_CAP_ALLOC,
-+					 BIT(config->slice_id), disable_cap_alloc);
- 		if (ret)
- 			return ret;
++#ifdef CONFIG_X86
++static bool atkbd_is_portable_device(void)
++{
++	static const char * const chassis_types[] = {
++		"8",	/* Portable */
++		"9",	/* Laptop */
++		"10",	/* Notebook */
++		"14",	/* Sub-Notebook */
++		"31",	/* Convertible */
++		"32",	/* Detachable */
++	};
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(chassis_types); i++)
++		if (dmi_match(DMI_CHASSIS_TYPE, chassis_types[i]))
++			return true;
++
++	return false;
++}
++
++/*
++ * On many modern laptops ATKBD_CMD_GETID may cause problems, on these laptops
++ * the controller is always in translated mode. In this mode mice/touchpads will
++ * not work. So in this case simply assume a keyboard is connected to avoid
++ * confusing some laptop keyboards.
++ *
++ * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using a fake id is
++ * ok in translated mode, only atkbd_select_set() checks atkbd->id and in
++ * translated mode that is a no-op.
++ */
++static bool atkbd_skip_getid(struct atkbd *atkbd)
++{
++	return atkbd->translated && atkbd_is_portable_device();
++}
++#else
++static inline bool atkbd_skip_getid(struct atkbd *atkbd) { return false; }
++#endif
++
+ /*
+  * atkbd_probe() probes for an AT keyboard on a serio port.
+  */
+@@ -785,12 +823,12 @@ static int atkbd_probe(struct atkbd *atkbd)
+  */
  
- 		retain_pc = config->retain_on_pc << config->slice_id;
--		ret = regmap_write(drv_data->bcast_regmap,
--				LLCC_TRP_PCB_ACT, retain_pc);
-+		ret = regmap_update_bits(drv_data->bcast_regmap, LLCC_TRP_PCB_ACT,
-+					 BIT(config->slice_id), retain_pc);
- 		if (ret)
- 			return ret;
- 	}
+ 	param[0] = param[1] = 0xa5;	/* initialize with invalid values */
+-	if (ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
++	if (atkbd_skip_getid(atkbd) || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
+ 
+ /*
+- * If the get ID command failed, we check if we can at least set the LEDs on
+- * the keyboard. This should work on every keyboard out there. It also turns
+- * the LEDs off, which we want anyway.
++ * If the get ID command was skipped or failed, we check if we can at least set
++ * the LEDs on the keyboard. This should work on every keyboard out there.
++ * It also turns the LEDs off, which we want anyway.
+  */
+ 		param[0] = 0;
+ 		if (ps2_command(ps2dev, param, ATKBD_CMD_SETLEDS))
 -- 
 2.43.0
 
