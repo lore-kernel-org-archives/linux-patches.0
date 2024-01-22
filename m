@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1A54EB34;
-	Tue, 23 Jan 2024 00:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E1151008;
+	Tue, 23 Jan 2024 00:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705970135; cv=none; b=fYQ8BXKJCdnPb25FMRVahMeWXnEbA2WYjbiLpjHdFgXev9+2mJEee6n+jo71q/avonR5AHUNGT2PIkWzdbeHVcOFaI3ePBzxq2PvtSVNMIls0+aCdDa0CQQ+ZwwmVwe6l45NdaGDKJsPdp9MvMopBCcFHIl6vbAvD272Ep6fE+s=
+	t=1705970138; cv=none; b=dPy+4sPdIuG2C5UuL4QdBUC2UXi/w7M2ouWTKkMOlLZXUJSJvEhNwaHHr3gYag5WbQ2LTRlBPDyXiUw74dtmpp2rmusMqGifyuGphscxxc5J5SixO9lVj9YU9uta+39cae7OlsV4u7RKu9VNdOG+EpP/09l7DgA9KQXEpEkTqFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705970135; c=relaxed/simple;
-	bh=kvSGtuKTBNBBqjHEYhr3LxWcyH7Etq/lRMmu/OiklC4=;
+	s=arc-20240116; t=1705970138; c=relaxed/simple;
+	bh=ExfK1FQ2wB/uzX1vbHOFj1zFy5t4jII+GINI3DEoKOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g6/IQg5LoDlD0ILsEmZXXHgtPxAzY2i+EJbWbBKASfq6kS+Ot6ai8CA9oDYfb9o2Cl9PaFRonS/FVUXhNQeO+6ZNfY3nhNvBC8PbZgONLhl8LmOchRbglqRb4YI0lbWWmE8Wamy08oKdcK9zzoEjP81YgN1w1gvf3bN4dzS/yqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxeY9Bzc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fm7ScgEVJbBiungRSSx90CrpuIWQdPkDXUZpgp6+ICin1uTE2CuJ4HqRr7h7M2QCOU0lwOtO+Dwf9Dc44wDQ5EjN+wl03OJd1FBii25FPtpLb7nNQAHzGaA0UzNFqaSQouUDJKtiFHJuEoEfglhJ191mH/TUgu9kudGIemeiCfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXIL1w7y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxeY9Bzc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694DFC433C7;
-	Tue, 23 Jan 2024 00:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXIL1w7y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68CE3C433C7;
+	Tue, 23 Jan 2024 00:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705970134;
-	bh=kvSGtuKTBNBBqjHEYhr3LxWcyH7Etq/lRMmu/OiklC4=;
+	s=korg; t=1705970137;
+	bh=ExfK1FQ2wB/uzX1vbHOFj1zFy5t4jII+GINI3DEoKOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wxeY9BzcTE67/HxtVDyowBwNlO6WB+cDeS08DfiCbXXNKrYOguzaF7lntRnFpbjlI
-	 nUzykjjQ1A6tkkPVBd9Y8/0rJtIYlP1I4CM0lU/OBVQs4HR185N3APaYbZ8ppbm70v
-	 ZJbvV4I6U+NrGBRgy/k9BrXbqgiXVuujGOj3Fo+s=
+	b=LXIL1w7yX6ZDmks/ym0+Q8TY3JxkEFdnRale8bV7+62/RLq9utpur1z4jf0Cipemv
+	 ceeFTzAgs1vRSCFbvzgzamF5C3VscnqPxuC2FI2F76SzzBfrGofkSJbq4uy8AT82eb
+	 XxMjSXIojsvlo/jDDCOGFZex2fyutFPX+Npet9AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 596/641] block: ensure we hold a queue reference when using queue limits
-Date: Mon, 22 Jan 2024 15:58:20 -0800
-Message-ID: <20240122235836.859517585@linuxfoundation.org>
+	Sneh Shah <quic_snehshah@quicinc.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 6.7 597/641] net: stmmac: Fix ethool link settings ops for integrated PCS
+Date: Mon, 22 Jan 2024 15:58:21 -0800
+Message-ID: <20240122235836.886484889@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
 References: <20240122235818.091081209@linuxfoundation.org>
@@ -52,69 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Sneh Shah <quic_snehshah@quicinc.com>
 
-[ Upstream commit 7b4f36cd22a65b750b4cb6ac14804fb7d6e6c67d ]
+[ Upstream commit 08300adac3b8dab9e2fd3be0155c7d3093c755f4 ]
 
-q_usage_counter is the only thing preventing us from the limits changing
-under us in __bio_split_to_limits, but blk_mq_submit_bio doesn't hold
-it while calling into it.
+Currently get/set_link_ksettings ethtool ops are dependent on PCS.
+When PCS is integrated, it will not have separate link config.
+Bypass configuring and checking PCS for integrated PCS.
 
-Move the splitting inside the region where we know we've got a queue
-reference. Ideally this could still remain a shared section of code, but
-let's keep the fix simple and defer any refactoring here to later.
-
-Reported-by: Christoph Hellwig <hch@lst.de>
-Fixes: 900e08075202 ("block: move queue enter logic into blk_mq_submit_bio()")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: aa571b6275fb ("net: stmmac: add new switch to struct plat_stmmacenet_data")
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
+Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index ac18f802c027..7e743ac58c31 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -2951,12 +2951,6 @@ void blk_mq_submit_bio(struct bio *bio)
- 	blk_status_t ret;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+index 112a36a698f1..bfd146ad6937 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+@@ -311,8 +311,9 @@ static int stmmac_ethtool_get_link_ksettings(struct net_device *dev,
+ {
+ 	struct stmmac_priv *priv = netdev_priv(dev);
  
- 	bio = blk_queue_bounce(bio, q);
--	if (bio_may_exceed_limits(bio, &q->limits)) {
--		bio = __bio_split_to_limits(bio, &q->limits, &nr_segs);
--		if (!bio)
--			return;
--	}
--
- 	bio_set_ioprio(bio);
+-	if (priv->hw->pcs & STMMAC_PCS_RGMII ||
+-	    priv->hw->pcs & STMMAC_PCS_SGMII) {
++	if (!(priv->plat->flags & STMMAC_FLAG_HAS_INTEGRATED_PCS) &&
++	    (priv->hw->pcs & STMMAC_PCS_RGMII ||
++	     priv->hw->pcs & STMMAC_PCS_SGMII)) {
+ 		struct rgmii_adv adv;
+ 		u32 supported, advertising, lp_advertising;
  
- 	if (plug) {
-@@ -2965,6 +2959,11 @@ void blk_mq_submit_bio(struct bio *bio)
- 			rq = NULL;
- 	}
- 	if (rq) {
-+		if (unlikely(bio_may_exceed_limits(bio, &q->limits))) {
-+			bio = __bio_split_to_limits(bio, &q->limits, &nr_segs);
-+			if (!bio)
-+				return;
-+		}
- 		if (!bio_integrity_prep(bio))
- 			return;
- 		if (blk_mq_attempt_bio_merge(q, bio, nr_segs))
-@@ -2975,6 +2974,11 @@ void blk_mq_submit_bio(struct bio *bio)
- 	} else {
- 		if (unlikely(bio_queue_enter(bio)))
- 			return;
-+		if (unlikely(bio_may_exceed_limits(bio, &q->limits))) {
-+			bio = __bio_split_to_limits(bio, &q->limits, &nr_segs);
-+			if (!bio)
-+				goto fail;
-+		}
- 		if (!bio_integrity_prep(bio))
- 			goto fail;
- 	}
+@@ -397,8 +398,9 @@ stmmac_ethtool_set_link_ksettings(struct net_device *dev,
+ {
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+ 
+-	if (priv->hw->pcs & STMMAC_PCS_RGMII ||
+-	    priv->hw->pcs & STMMAC_PCS_SGMII) {
++	if (!(priv->plat->flags & STMMAC_FLAG_HAS_INTEGRATED_PCS) &&
++	    (priv->hw->pcs & STMMAC_PCS_RGMII ||
++	     priv->hw->pcs & STMMAC_PCS_SGMII)) {
+ 		/* Only support ANE */
+ 		if (cmd->base.autoneg != AUTONEG_ENABLE)
+ 			return -EINVAL;
 -- 
 2.43.0
 
