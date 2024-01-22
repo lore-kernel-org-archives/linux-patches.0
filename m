@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA22140796;
-	Tue, 23 Jan 2024 01:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6E6140796;
+	Tue, 23 Jan 2024 01:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705972038; cv=none; b=s1sBjSv77iRPf3e+JVp9ybWU0o+DrPPALpjTubFdRXOKg3aph614wPzFbgl6OlBshL+ZtcWzWO6+QQk9tqjQ30Lmf+JC+bBcnHQDDWGICYFoEIqBWUi6PkvJh7fDrW5ceVCS0MdSnFBOonG3ljdLHoBLoXmqyYE+0tq8T5Idoh0=
+	t=1705972039; cv=none; b=Pvb5jsB7R6bsfVvObx9tC4RetjXOOGLlHDryXMpax5O9s9u5OGGNwVdy6+nk92E+yJZ7FvINNyWC1G39GhM9EYsxAT7heHAdWbTKFse2IuD193cibXJvqbDk7IOXw38nbAxG++zHneZQY1Spj4a5ktx4XKfQlqj1v3WOOPvqnHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705972038; c=relaxed/simple;
-	bh=oSzuZ0vcEhBeSiN8Xr7CIjIqij8At7XXE2VtK/iHjg0=;
+	s=arc-20240116; t=1705972039; c=relaxed/simple;
+	bh=hakS+i9Wb1f7Jxx73fA1/Cskn2vJYfbu/C1MnXSPfhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KR1gBvyBm0WgKYfujHyi9jSDfyPRKEf7fkD7WVra61KkqWcEj7HmQOV+7Bw2XDcKuj96PHifsyQfMsm4iEJsjsvSYJA+ByvJ27neebpRj0+oSZf9byjOD4BRv8KcjJ3gdJ0dm6AI6XqadQKhAbYS2dmIjjUbucDSWnwTc0iiTr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VcGSmB9z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YT0KYdlefZdhxdHzN91COXrLkP9AYNdbX75GWmJXF7d/M8bfg6qkBgvjsv1yy5biKyD9Xz5mkRkJ/Ih3BRMUo/lM3Vd+4Lb5Nf0bjJ8X4SaDNVzGwbzihy5c+eiQ1qk5v+NBfpIpcWsHAPtQqkiFqDIiv4YWp03eol1nBeaNcxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIezNz+Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcGSmB9z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B192CC433C7;
-	Tue, 23 Jan 2024 01:07:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIezNz+Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE79C433F1;
+	Tue, 23 Jan 2024 01:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705972037;
-	bh=oSzuZ0vcEhBeSiN8Xr7CIjIqij8At7XXE2VtK/iHjg0=;
+	s=korg; t=1705972039;
+	bh=hakS+i9Wb1f7Jxx73fA1/Cskn2vJYfbu/C1MnXSPfhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VcGSmB9zHd8v3rSNJ/YGYT6XyAXWdgy2qhVqlHJEFhnDkRsElobyuVPWlNrItg5t6
-	 AcidRcuXVq5CGxcNyO3kj0S9BIwLQVVt9273n3n2tCPRLR4D0ci4FkAmU8SR1BUgIa
-	 zoUqqI4a9HubKMzXWWSRW2ImnIM3EzI+8DtFNjrQ=
+	b=xIezNz+Y8FejcWfbNCuyMaQgPMEv6F9FsQo8n2j0REahBF+fKI9cL3VRi4qCXdRLs
+	 pevMWo/1DnmylqyxkQwPRzFlC2o/7FBnuUeta6jD08WN2BD3Tz+9xpmLJrp2MiiaU/
+	 fHm1X/0uDlwvuOZpsXXUbP0MR36fbQZzR5Zy5L2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Julian Anastasov <ja@ssi.bg>,
+	Simon Horman <horms@kernel.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 406/417] netfilter: nf_tables: reject NFT_SET_CONCAT with not field length description
-Date: Mon, 22 Jan 2024 15:59:34 -0800
-Message-ID: <20240122235805.776994559@linuxfoundation.org>
+Subject: [PATCH 6.1 407/417] ipvs: avoid stat macros calls from preemptible context
+Date: Mon, 22 Jan 2024 15:59:35 -0800
+Message-ID: <20240122235805.804335461@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: <20240122235751.480367507@linuxfoundation.org>
@@ -50,38 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 113661e07460a6604aacc8ae1b23695a89e7d4b3 ]
+[ Upstream commit d6938c1c76c64f42363d0d1f051e1b4641c2ad40 ]
 
-It is still possible to set on the NFT_SET_CONCAT flag by specifying a
-set size and no field description, report EINVAL in such case.
+Inside decrement_ttl() upon discovering that the packet ttl has exceeded,
+__IP_INC_STATS and __IP6_INC_STATS macros can be called from preemptible
+context having the following backtrace:
 
-Fixes: 1b6345d4160e ("netfilter: nf_tables: check NFT_SET_CONCAT flag if field_count is specified")
+check_preemption_disabled: 48 callbacks suppressed
+BUG: using __this_cpu_add() in preemptible [00000000] code: curl/1177
+caller is decrement_ttl+0x217/0x830
+CPU: 5 PID: 1177 Comm: curl Not tainted 6.7.0+ #34
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xbd/0xe0
+ check_preemption_disabled+0xd1/0xe0
+ decrement_ttl+0x217/0x830
+ __ip_vs_get_out_rt+0x4e0/0x1ef0
+ ip_vs_nat_xmit+0x205/0xcd0
+ ip_vs_in_hook+0x9b1/0x26a0
+ nf_hook_slow+0xc2/0x210
+ nf_hook+0x1fb/0x770
+ __ip_local_out+0x33b/0x640
+ ip_local_out+0x2a/0x490
+ __ip_queue_xmit+0x990/0x1d10
+ __tcp_transmit_skb+0x288b/0x3d10
+ tcp_connect+0x3466/0x5180
+ tcp_v4_connect+0x1535/0x1bb0
+ __inet_stream_connect+0x40d/0x1040
+ inet_stream_connect+0x57/0xa0
+ __sys_connect_file+0x162/0x1a0
+ __sys_connect+0x137/0x160
+ __x64_sys_connect+0x72/0xb0
+ do_syscall_64+0x6f/0x140
+ entry_SYSCALL_64_after_hwframe+0x6e/0x76
+RIP: 0033:0x7fe6dbbc34e0
+
+Use the corresponding preemption-aware variants: IP_INC_STATS and
+IP6_INC_STATS.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: 8d8e20e2d7bb ("ipvs: Decrement ttl")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Acked-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_xmit.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index a4e5d877956f..2702294ac46c 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4773,8 +4773,12 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 		if (err < 0)
- 			return err;
+diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
+index b452eb3ddcec..d40a4ca2b27f 100644
+--- a/net/netfilter/ipvs/ip_vs_xmit.c
++++ b/net/netfilter/ipvs/ip_vs_xmit.c
+@@ -271,7 +271,7 @@ static inline bool decrement_ttl(struct netns_ipvs *ipvs,
+ 			skb->dev = dst->dev;
+ 			icmpv6_send(skb, ICMPV6_TIME_EXCEED,
+ 				    ICMPV6_EXC_HOPLIMIT, 0);
+-			__IP6_INC_STATS(net, idev, IPSTATS_MIB_INHDRERRORS);
++			IP6_INC_STATS(net, idev, IPSTATS_MIB_INHDRERRORS);
  
--		if (desc.field_count > 1 && !(flags & NFT_SET_CONCAT))
-+		if (desc.field_count > 1) {
-+			if (!(flags & NFT_SET_CONCAT))
-+				return -EINVAL;
-+		} else if (flags & NFT_SET_CONCAT) {
- 			return -EINVAL;
-+		}
- 	} else if (flags & NFT_SET_CONCAT) {
- 		return -EINVAL;
- 	}
+ 			return false;
+ 		}
+@@ -286,7 +286,7 @@ static inline bool decrement_ttl(struct netns_ipvs *ipvs,
+ 	{
+ 		if (ip_hdr(skb)->ttl <= 1) {
+ 			/* Tell the sender its packet died... */
+-			__IP_INC_STATS(net, IPSTATS_MIB_INHDRERRORS);
++			IP_INC_STATS(net, IPSTATS_MIB_INHDRERRORS);
+ 			icmp_send(skb, ICMP_TIME_EXCEEDED, ICMP_EXC_TTL, 0);
+ 			return false;
+ 		}
 -- 
 2.43.0
 
