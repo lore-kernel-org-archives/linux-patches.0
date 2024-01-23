@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB0E2114;
-	Tue, 23 Jan 2024 02:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E26D1FBF;
+	Tue, 23 Jan 2024 02:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975801; cv=none; b=ru1AzjN3BaZezias3sK7j1qDcH94jmb9QzU0M3zyk3MLPlgRUThtIp8uprkm/BCJyzCN18JNxD4pG5fZwxiq5qUV4lUcYAkeQpnFvj0r0IMFM25gY5oMJ8BQmaxA68tZeJ/bLJ0YKzm9l5ahtVAPIY4lIdGuiFlhVUqJa/yw9/0=
+	t=1705975803; cv=none; b=abI72/B6jCAPpZO37384+sho7m1lGvdPGFc1bausM36rR0ut/hN8WEfJgm8cqAK18ltkhO/OSQUk1z1Lukie5rUCUh0cWC3l3+N3GclLJaJpVmEAWL3K9P5WhVlVwHqrLNifdDVlbHLMw5khqC9GZTA+b2beEksuT8yR6CpylJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975801; c=relaxed/simple;
-	bh=LJAfSZjEuriNuJhpYqFDtRQgaieivjR2nic9tA+nxIg=;
+	s=arc-20240116; t=1705975803; c=relaxed/simple;
+	bh=zXeh48iVDtpx3L5KguVJiCPxgQ5RFK/VwJiAdcrvSAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jlbvX1c+oQ8dwOqrIXsiLwD+K5bo1dcYv40Mxv3piZfZyWFAnOFzdt7Co0Gt/d/zNEOgUDXYZEHdLiP6aFye/yDpfyiSxtoGJecDpbhsM4O1/qd4J5k66k1y4Hny0wdAnylDJrYC4HGZPJcLGqMNp2x2D1EKK0GMFRAVG8kroIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9vfdN19; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=suH7QEBK3VJSA6p6mA+w8TR2Y3jBGUDNY/TI0pmVtBPcnYsaLxqa9nFkFwbKHHudK6LbsWVfCsxBx9SgKZ4aBmgB01u2XGVU7b+HkqTFQFZoSHWkSZLKfKiPoOxX1UZmm5UN50MjRh4WHAfpWAzqevUqK+eOJ5c9dgoDmjM+C30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMO47cGu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9vfdN19"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5712CC433F1;
-	Tue, 23 Jan 2024 02:10:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMO47cGu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3B0C433C7;
+	Tue, 23 Jan 2024 02:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975801;
-	bh=LJAfSZjEuriNuJhpYqFDtRQgaieivjR2nic9tA+nxIg=;
+	s=korg; t=1705975802;
+	bh=zXeh48iVDtpx3L5KguVJiCPxgQ5RFK/VwJiAdcrvSAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g9vfdN19Oy5xS0ddqxpUGeWsasSd9wb7MTe7Q+wm3VCxbHqWoa/vbaoGBWto/Qef1
-	 CFlMhQcsbQP5kOg9wlGpa9nU0CqqXwT9RdtVm2Wlej60EADTjD0ECZM5c7M4Or+at4
-	 BsMVVuZzUTxhMXnZqzmsteZHtby6DnoNrs111xKc=
+	b=gMO47cGu+hIJhp08kXyqpi5SO5s6mXejMacdVfThfWCV8VAkZMt2YbSjwRbxJjTL6
+	 f+hBojC5kSWzFEf89F5u0rP7lvrw5jc99Sk2ea3SO57yTOcqj/UvhPi3gqAHKaB9X9
+	 zk/PVaYhNVEKs5VHMYa4546JQL9mvLGI2JzMe6bY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+afb726d49f84c8d95ee1@syzkaller.appspotmail.com,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.6 583/583] riscv: Fix wrong usage of lm_alias() when splitting a huge linear mapping
-Date: Mon, 22 Jan 2024 16:00:34 -0800
-Message-ID: <20240122235830.065122899@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Douglas Anderson <dianders@chromium.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 571/583] kdb: Fix a potential buffer overflow in kdb_local()
+Date: Mon, 22 Jan 2024 16:00:22 -0800
+Message-ID: <20240122235829.650908603@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,43 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit c29fc621e1a49949a14c7fa031dd4760087bfb29 upstream.
+[ Upstream commit 4f41d30cd6dc865c3cbc1a852372321eba6d4e4c ]
 
-lm_alias() can only be used on kernel mappings since it explicitly uses
-__pa_symbol(), so simply fix this by checking where the address belongs
-to before.
+When appending "[defcmd]" to 'kdb_prompt_str', the size of the string
+already in the buffer should be taken into account.
 
-Fixes: 311cd2f6e253 ("riscv: Fix set_memory_XX() and set_direct_map_XX() by splitting huge linear mappings")
-Reported-by: syzbot+afb726d49f84c8d95ee1@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-riscv/000000000000620dd0060c02c5e1@google.com/
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Link: https://lore.kernel.org/r/20231212195400.128457-1-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+An option could be to switch from strncat() to strlcat() which does the
+correct test to avoid such an overflow.
+
+However, this actually looks as dead code, because 'defcmd_in_progress'
+can't be true here.
+See a more detailed explanation at [1].
+
+[1]: https://lore.kernel.org/all/CAD=FV=WSh7wKN7Yp-3wWiDgX4E3isQ8uh0LCzTmd1v9Cg9j+nQ@mail.gmail.com/
+
+Fixes: 5d5314d6795f ("kdb: core for kgdb back end (1 of 2)")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/mm/pageattr.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ kernel/debug/kdb/kdb_main.c | 2 --
+ 1 file changed, 2 deletions(-)
 
---- a/arch/riscv/mm/pageattr.c
-+++ b/arch/riscv/mm/pageattr.c
-@@ -305,8 +305,13 @@ static int __set_memory(unsigned long ad
- 				goto unlock;
- 		}
- 	} else if (is_kernel_mapping(start) || is_linear_mapping(start)) {
--		lm_start = (unsigned long)lm_alias(start);
--		lm_end = (unsigned long)lm_alias(end);
-+		if (is_kernel_mapping(start)) {
-+			lm_start = (unsigned long)lm_alias(start);
-+			lm_end = (unsigned long)lm_alias(end);
-+		} else {
-+			lm_start = start;
-+			lm_end = end;
-+		}
+diff --git a/kernel/debug/kdb/kdb_main.c b/kernel/debug/kdb/kdb_main.c
+index 438b868cbfa9..35aa2e98a92a 100644
+--- a/kernel/debug/kdb/kdb_main.c
++++ b/kernel/debug/kdb/kdb_main.c
+@@ -1349,8 +1349,6 @@ static int kdb_local(kdb_reason_t reason, int error, struct pt_regs *regs,
+ 		/* PROMPT can only be set if we have MEM_READ permission. */
+ 		snprintf(kdb_prompt_str, CMD_BUFLEN, kdbgetenv("PROMPT"),
+ 			 raw_smp_processor_id());
+-		if (defcmd_in_progress)
+-			strncat(kdb_prompt_str, "[defcmd]", CMD_BUFLEN);
  
- 		ret = split_linear_mapping(lm_start, lm_end);
- 		if (ret)
+ 		/*
+ 		 * Fetch command from keyboard
+-- 
+2.43.0
+
 
 
