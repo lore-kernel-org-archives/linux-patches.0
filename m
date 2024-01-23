@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC0D67734;
-	Tue, 23 Jan 2024 02:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CA167734;
+	Tue, 23 Jan 2024 02:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975291; cv=none; b=klWI/orC61KevXjxAKpsE4BKiVjwi/DhlgtLu6tQhlR9Re738tIa+xueJItb48k93WOraAQHfLtpxWq99gFyb+RJgJTsr5LX5OtehniQsIbfsZvb+aVJdeGqeG4OENmcDY3OA0PA3M/9QLV6cdn4SRizAWZ6hk6VtrIN240ZEZU=
+	t=1705975292; cv=none; b=rg0/lQtFHobDGCpCHLe8aYmCLdPzVRjVYJytY90LicT/VqwHrEaj3JaUn/DS1pE4cVYNwBUyQBPwip4TusxfZsKBnxPZqcGzL6fb/HI1yNTU2YxOVQMr7CR/aGMIvWg9iEnIETJjUTrnf6e+5xVBs1etX1yTXH9F4uHEs/O4770=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975291; c=relaxed/simple;
-	bh=fqgU4+8ooqteAdiXC8/5qwSO2Ue0xZq7QJss1/zWYXY=;
+	s=arc-20240116; t=1705975292; c=relaxed/simple;
+	bh=MI13I/r4tcj83ynYUMe+B14zxG0+IfQWaD8e/Rk/r9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YpIsMGON3JGcLRqjGz0Dv7hA3VIchvZtAxHQv15O/UMgLgq4SX62xcxxrMtIEcu/X26BK5d4uiGbnBH3EIm4ZPDoWmWCcDp37Ddej8PgerIV+gQv1sDqz7aUmfWjCqExzvktdCKzuptqCtgoKZ+3xvQLq5iGVErpteT43O7UB+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdQPwcWC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ggtLvGhk6xHP5msM0rS65GcUqOQbzGG+PHxB8MzZNB6qgARjWXzL9K6+MhuaUjAD7ubHk3gVwaCY9/81qFXyaCjH2cIy0SLpsVcJoWOwyRAF5PygpaNsuOCARTY290Vl5hVz+Zv9hjB/tlq0Yer2alUR6p1YWiOSVPnMRIfoUb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRVQeKyk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdQPwcWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB46C43390;
-	Tue, 23 Jan 2024 02:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRVQeKyk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A5FC433C7;
+	Tue, 23 Jan 2024 02:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975291;
-	bh=fqgU4+8ooqteAdiXC8/5qwSO2Ue0xZq7QJss1/zWYXY=;
+	s=korg; t=1705975292;
+	bh=MI13I/r4tcj83ynYUMe+B14zxG0+IfQWaD8e/Rk/r9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gdQPwcWCw6Zeu0dZLI58VruvDTQLVeOvHioliNeXR160mtHoHki+sCZ7lSdYWbqmv
-	 gvoqSu39kCIGWRl53/L7yYfG/pMmNM2fLBB0QoY0UslGK3me53UvDq052UQkdLUlxH
-	 d03mC6Tc+EIhsdKWOTpZguCn4iswfyTGdTbeSgwU=
+	b=BRVQeKyk3cO8zcoZhHbkX6ER4mR4Z/I75E/qWhMqInkaV83NWWmeWmynbmwLFx/4H
+	 5ZE4t8qPUtObEY6ccWuexU1WsfiH05i6cTPhNePUgqS3ACIoIigo7ai1fp154agGYH
+	 yJLuJJ67NST4fXleN+FWHBABLXjEu/o1DPmzjv2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 222/583] Revert "drm/tidss: Annotate dma-fence critical section in commit path"
-Date: Mon, 22 Jan 2024 15:54:33 -0800
-Message-ID: <20240122235818.794134154@linuxfoundation.org>
+Subject: [PATCH 5.15 345/374] netfilter: nft_connlimit: move stateful fields out of expression data
+Date: Mon, 22 Jan 2024 16:00:01 -0800
+Message-ID: <20240122235756.923226102@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,177 +46,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit ca34d816558c3e4c3f8fe037b5a6b16c944693de ]
+[ Upstream commit 37f319f37d9005693dff085bb72852eeebc803ef ]
 
-This reverts commit 4d56a4f08391857ba93465de489707b66adad114.
+In preparation for the rule blob representation.
 
-The DMA-fence annotations cause a lockdep warning (see below). As per
-https://patchwork.freedesktop.org/patch/462170/ it sounds like the
-annotations don't work correctly.
-
-======================================================
-WARNING: possible circular locking dependency detected
-6.6.0-rc2+ #1 Not tainted
-------------------------------------------------------
-kmstest/733 is trying to acquire lock:
-ffff8000819377f0 (fs_reclaim){+.+.}-{0:0}, at: __kmem_cache_alloc_node+0x58/0x2d4
-
-but task is already holding lock:
-ffff800081a06aa0 (dma_fence_map){++++}-{0:0}, at: tidss_atomic_commit_tail+0x20/0xc0 [tidss]
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #2 (dma_fence_map){++++}-{0:0}:
-       __dma_fence_might_wait+0x5c/0xd0
-       dma_resv_lockdep+0x1a4/0x32c
-       do_one_initcall+0x84/0x2fc
-       kernel_init_freeable+0x28c/0x4c4
-       kernel_init+0x24/0x1dc
-       ret_from_fork+0x10/0x20
-
--> #1 (mmu_notifier_invalidate_range_start){+.+.}-{0:0}:
-       fs_reclaim_acquire+0x70/0xe4
-       __kmem_cache_alloc_node+0x58/0x2d4
-       kmalloc_trace+0x38/0x78
-       __kthread_create_worker+0x3c/0x150
-       kthread_create_worker+0x64/0x8c
-       workqueue_init+0x1e8/0x2f0
-       kernel_init_freeable+0x11c/0x4c4
-       kernel_init+0x24/0x1dc
-       ret_from_fork+0x10/0x20
-
--> #0 (fs_reclaim){+.+.}-{0:0}:
-       __lock_acquire+0x1370/0x20d8
-       lock_acquire+0x1e8/0x308
-       fs_reclaim_acquire+0xd0/0xe4
-       __kmem_cache_alloc_node+0x58/0x2d4
-       __kmalloc_node_track_caller+0x58/0xf0
-       kmemdup+0x34/0x60
-       regmap_bulk_write+0x64/0x2c0
-       tc358768_bridge_pre_enable+0x8c/0x12d0 [tc358768]
-       drm_atomic_bridge_call_pre_enable+0x68/0x80 [drm]
-       drm_atomic_bridge_chain_pre_enable+0x50/0x158 [drm]
-       drm_atomic_helper_commit_modeset_enables+0x164/0x264 [drm_kms_helper]
-       tidss_atomic_commit_tail+0x58/0xc0 [tidss]
-       commit_tail+0xa0/0x188 [drm_kms_helper]
-       drm_atomic_helper_commit+0x1a8/0x1c0 [drm_kms_helper]
-       drm_atomic_commit+0xa8/0xe0 [drm]
-       drm_mode_atomic_ioctl+0x9ec/0xc80 [drm]
-       drm_ioctl_kernel+0xc4/0x170 [drm]
-       drm_ioctl+0x234/0x4b0 [drm]
-       drm_compat_ioctl+0x110/0x12c [drm]
-       __arm64_compat_sys_ioctl+0x128/0x150
-       invoke_syscall+0x48/0x110
-       el0_svc_common.constprop.0+0x40/0xe0
-       do_el0_svc_compat+0x1c/0x38
-       el0_svc_compat+0x48/0xb4
-       el0t_32_sync_handler+0xb0/0x138
-       el0t_32_sync+0x194/0x198
-
-other info that might help us debug this:
-
-Chain exists of:
-  fs_reclaim --> mmu_notifier_invalidate_range_start --> dma_fence_map
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  rlock(dma_fence_map);
-                               lock(mmu_notifier_invalidate_range_start);
-                               lock(dma_fence_map);
-  lock(fs_reclaim);
-
- *** DEADLOCK ***
-
-3 locks held by kmstest/733:
- #0: ffff800082e5bba0 (crtc_ww_class_acquire){+.+.}-{0:0}, at: drm_mode_atomic_ioctl+0x118/0xc80 [drm]
- #1: ffff000004224c88 (crtc_ww_class_mutex){+.+.}-{3:3}, at: modeset_lock+0xdc/0x1a0 [drm]
- #2: ffff800081a06aa0 (dma_fence_map){++++}-{0:0}, at: tidss_atomic_commit_tail+0x20/0xc0 [tidss]
-
-stack backtrace:
-CPU: 0 PID: 733 Comm: kmstest Not tainted 6.6.0-rc2+ #1
-Hardware name: Toradex Verdin AM62 on Verdin Development Board (DT)
-Call trace:
- dump_backtrace+0x98/0x118
- show_stack+0x18/0x24
- dump_stack_lvl+0x60/0xac
- dump_stack+0x18/0x24
- print_circular_bug+0x288/0x368
- check_noncircular+0x168/0x17c
- __lock_acquire+0x1370/0x20d8
- lock_acquire+0x1e8/0x308
- fs_reclaim_acquire+0xd0/0xe4
- __kmem_cache_alloc_node+0x58/0x2d4
- __kmalloc_node_track_caller+0x58/0xf0
- kmemdup+0x34/0x60
- regmap_bulk_write+0x64/0x2c0
- tc358768_bridge_pre_enable+0x8c/0x12d0 [tc358768]
- drm_atomic_bridge_call_pre_enable+0x68/0x80 [drm]
- drm_atomic_bridge_chain_pre_enable+0x50/0x158 [drm]
- drm_atomic_helper_commit_modeset_enables+0x164/0x264 [drm_kms_helper]
- tidss_atomic_commit_tail+0x58/0xc0 [tidss]
- commit_tail+0xa0/0x188 [drm_kms_helper]
- drm_atomic_helper_commit+0x1a8/0x1c0 [drm_kms_helper]
- drm_atomic_commit+0xa8/0xe0 [drm]
- drm_mode_atomic_ioctl+0x9ec/0xc80 [drm]
- drm_ioctl_kernel+0xc4/0x170 [drm]
- drm_ioctl+0x234/0x4b0 [drm]
- drm_compat_ioctl+0x110/0x12c [drm]
- __arm64_compat_sys_ioctl+0x128/0x150
- invoke_syscall+0x48/0x110
- el0_svc_common.constprop.0+0x40/0xe0
- do_el0_svc_compat+0x1c/0x38
- el0_svc_compat+0x48/0xb4
- el0t_32_sync_handler+0xb0/0x138
- el0t_32_sync+0x194/0x198
-
-Fixes: 4d56a4f08391 ("drm/tidss: Annotate dma-fence critical section in commit path")
-Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230920-dma-fence-annotation-revert-v1-1-7ebf6f7f5bf6@ideasonboard.com
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 91a139cee120 ("netfilter: nft_limit: do not ignore unsupported flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tidss/tidss_kms.c | 4 ----
- 1 file changed, 4 deletions(-)
+ net/netfilter/nft_connlimit.c | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/tidss/tidss_kms.c b/drivers/gpu/drm/tidss/tidss_kms.c
-index c979ad1af236..d096d8d2bc8f 100644
---- a/drivers/gpu/drm/tidss/tidss_kms.c
-+++ b/drivers/gpu/drm/tidss/tidss_kms.c
-@@ -4,8 +4,6 @@
-  * Author: Tomi Valkeinen <tomi.valkeinen@ti.com>
-  */
+diff --git a/net/netfilter/nft_connlimit.c b/net/netfilter/nft_connlimit.c
+index 7d0761fad37e..58dcafe8bf79 100644
+--- a/net/netfilter/nft_connlimit.c
++++ b/net/netfilter/nft_connlimit.c
+@@ -14,7 +14,7 @@
+ #include <net/netfilter/nf_conntrack_zones.h>
  
--#include <linux/dma-fence.h>
--
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_bridge.h>
-@@ -25,7 +23,6 @@ static void tidss_atomic_commit_tail(struct drm_atomic_state *old_state)
+ struct nft_connlimit {
+-	struct nf_conncount_list	list;
++	struct nf_conncount_list	*list;
+ 	u32				limit;
+ 	bool				invert;
+ };
+@@ -43,12 +43,12 @@ static inline void nft_connlimit_do_eval(struct nft_connlimit *priv,
+ 		return;
+ 	}
+ 
+-	if (nf_conncount_add(nft_net(pkt), &priv->list, tuple_ptr, zone)) {
++	if (nf_conncount_add(nft_net(pkt), priv->list, tuple_ptr, zone)) {
+ 		regs->verdict.code = NF_DROP;
+ 		return;
+ 	}
+ 
+-	count = priv->list.count;
++	count = priv->list->count;
+ 
+ 	if ((count > priv->limit) ^ priv->invert) {
+ 		regs->verdict.code = NFT_BREAK;
+@@ -76,7 +76,11 @@ static int nft_connlimit_do_init(const struct nft_ctx *ctx,
+ 			invert = true;
+ 	}
+ 
+-	nf_conncount_list_init(&priv->list);
++	priv->list = kmalloc(sizeof(*priv->list), GFP_KERNEL);
++	if (!priv->list)
++		return -ENOMEM;
++
++	nf_conncount_list_init(priv->list);
+ 	priv->limit	= limit;
+ 	priv->invert	= invert;
+ 
+@@ -87,7 +91,8 @@ static void nft_connlimit_do_destroy(const struct nft_ctx *ctx,
+ 				     struct nft_connlimit *priv)
  {
- 	struct drm_device *ddev = old_state->dev;
- 	struct tidss_device *tidss = to_tidss(ddev);
--	bool fence_cookie = dma_fence_begin_signalling();
+ 	nf_ct_netns_put(ctx->net, ctx->family);
+-	nf_conncount_cache_free(&priv->list);
++	nf_conncount_cache_free(priv->list);
++	kfree(priv->list);
+ }
  
- 	dev_dbg(ddev->dev, "%s\n", __func__);
+ static int nft_connlimit_do_dump(struct sk_buff *skb,
+@@ -200,7 +205,11 @@ static int nft_connlimit_clone(struct nft_expr *dst, const struct nft_expr *src)
+ 	struct nft_connlimit *priv_dst = nft_expr_priv(dst);
+ 	struct nft_connlimit *priv_src = nft_expr_priv(src);
  
-@@ -36,7 +33,6 @@ static void tidss_atomic_commit_tail(struct drm_atomic_state *old_state)
- 	drm_atomic_helper_commit_modeset_enables(ddev, old_state);
+-	nf_conncount_list_init(&priv_dst->list);
++	priv_dst->list = kmalloc(sizeof(*priv_dst->list), GFP_ATOMIC);
++	if (priv_dst->list)
++		return -ENOMEM;
++
++	nf_conncount_list_init(priv_dst->list);
+ 	priv_dst->limit	 = priv_src->limit;
+ 	priv_dst->invert = priv_src->invert;
  
- 	drm_atomic_helper_commit_hw_done(old_state);
--	dma_fence_end_signalling(fence_cookie);
- 	drm_atomic_helper_wait_for_flip_done(ddev, old_state);
+@@ -212,7 +221,8 @@ static void nft_connlimit_destroy_clone(const struct nft_ctx *ctx,
+ {
+ 	struct nft_connlimit *priv = nft_expr_priv(expr);
  
- 	drm_atomic_helper_cleanup_planes(ddev, old_state);
+-	nf_conncount_cache_free(&priv->list);
++	nf_conncount_cache_free(priv->list);
++	kfree(priv->list);
+ }
+ 
+ static bool nft_connlimit_gc(struct net *net, const struct nft_expr *expr)
+@@ -221,7 +231,7 @@ static bool nft_connlimit_gc(struct net *net, const struct nft_expr *expr)
+ 	bool ret;
+ 
+ 	local_bh_disable();
+-	ret = nf_conncount_gc_list(net, &priv->list);
++	ret = nf_conncount_gc_list(net, priv->list);
+ 	local_bh_enable();
+ 
+ 	return ret;
 -- 
 2.43.0
 
