@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B521FBF;
-	Tue, 23 Jan 2024 02:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A6160EEB;
+	Tue, 23 Jan 2024 02:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975798; cv=none; b=lr04obHsrgdtOyGivfuWjgyjdEgBJ20emysE1gV6B72JMCRO2vaKNAjqoAo9QHpp3s4R329EyQoqdIMVfWurdVclIXzHaQmyZvgPg6JL9Pi4fIMCADjzVgqFkRSIBXi/umD4BX/gNWTW854sC5ZtHEYoSbuilWYwzRbJg+3/kq8=
+	t=1705975800; cv=none; b=IKcfPfd4BkGkYhFUDSp/0k+XzA3lPXVKYV4CqYdfifC51Ut2Ly3EIHeg8zVorDN8AmaIwIfaQ/Act6dqOwFQNPXwQbaFOKiAvsFlZb8bbvb5jZiA968Tc+FOtsqpo4jXL/bHFUYYuZdoB0/D1gwcC2BlMxBnMTiZ33at6bfo/xA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975798; c=relaxed/simple;
-	bh=TMNA2o1lt6KTW4OZ8PSbpTRLIOSvG4eNBAsQifXBlyw=;
+	s=arc-20240116; t=1705975800; c=relaxed/simple;
+	bh=WJ1AWo6HFstjA55pThFlZHJ2a74OqV0wdKq79MzFLMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VG3a8RlH/vsniiyYM6UMuHTcg4I//2z0r06F9i9dtvlqc4DczW/KZaz6T9E562wo1XUDZCPTbR0bQzmSCC097+YRecuu301w/RVz9S8rlv9ALkC6l3Mh3hiwQtBZBIZjYRCDDJkgiwS+STPjeX1yO+NpGCR+ZkQHnKpM9SPJmSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5nIMZvR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RBw5U8jebZF4KzQlCqEceYwu/mcvI3IAmWPArjXebA1MK13cnliuKB9ICBtA70cgGyyTPkmEWKAVyhgpQ8iVTHSPNHABbgS28pTFzcgha3wE3b+siGLfVuqgPQo9EGpOtIT+rWCqsup91Qrpi7pDZ4jJ8Bd+KpPSkGrd7yb+YgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofJG5OJn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5nIMZvR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40B8C433C7;
-	Tue, 23 Jan 2024 02:09:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofJG5OJn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF5D6C433F1;
+	Tue, 23 Jan 2024 02:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975798;
-	bh=TMNA2o1lt6KTW4OZ8PSbpTRLIOSvG4eNBAsQifXBlyw=;
+	s=korg; t=1705975799;
+	bh=WJ1AWo6HFstjA55pThFlZHJ2a74OqV0wdKq79MzFLMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E5nIMZvRgFS/xFtwYBFKd0L6Y3g0gkaUs7e1ydxgaoUWCq2/TSI7OihO97dAxE9Vf
-	 QApBBLA1rWM1ZiXVn/tTXQOFlkXoxxgOzwAfl27+DIiw+YeaVzn0HTw7NUqsCpd8l0
-	 cV/c/Y7tWiLJI/z/jGm4ZE/yZY71Qim7o3y0yyCM=
+	b=ofJG5OJn2Zxxzoi7AvP1KndD4+IwMxF5HJPM6D/q/80P1bDPHlQ4bE9b/jbF1OszB
+	 s9DuZF17dRt7f1TnFS73vXuQH076fMjKLZQoT7QraiMrBw3+aR4ndBkPEnXZFPS+3m
+	 LJm3YEwIVTVuikIzLma+UJs2Dhzjf3lZgDPp1KQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Chanho Park <chanho61.park@samsung.com>,
 	Andi Shyti <andi.shyti@kernel.org>,
 	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 581/583] i2c: s3c24xx: fix read transfers in polling mode
-Date: Mon, 22 Jan 2024 16:00:32 -0800
-Message-ID: <20240122235829.998519668@linuxfoundation.org>
+Subject: [PATCH 6.6 582/583] i2c: s3c24xx: fix transferring more than one message in polling mode
+Date: Mon, 22 Jan 2024 16:00:33 -0800
+Message-ID: <20240122235830.031386676@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -55,46 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 0d9cf23ed55d7ba3ab26d617a3ae507863674c8f ]
+[ Upstream commit 990489e1042c6c5d6bccf56deca68f8dbeed8180 ]
 
-To properly handle read transfers in polling mode, no waiting for the ACK
-state is needed as it will never come. Just wait a bit to ensure start
-state is on the bus and continue processing next bytes.
+To properly handle ACK on the bus when transferring more than one
+message in polling mode, move the polling handling loop from
+s3c24xx_i2c_message_start() to s3c24xx_i2c_doxfer(). This way
+i2c_s3c_irq_nextbyte() is always executed till the end, properly
+acknowledging the IRQ bits and no recursive calls to
+i2c_s3c_irq_nextbyte() are made.
+
+While touching this, also fix finishing transfers in polling mode by
+using common code path and always waiting for the bus to become idle
+and disabled.
 
 Fixes: 117053f77a5a ("i2c: s3c2410: Add polling mode support")
 Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Chanho Park <chanho61.park@samsung.com>
 Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-s3c2410.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-s3c2410.c | 27 ++++++++++-----------------
+ 1 file changed, 10 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-s3c2410.c b/drivers/i2c/busses/i2c-s3c2410.c
-index 127eb3805fac..fdd7a4259d2c 100644
+index fdd7a4259d2c..c324cb3c97e2 100644
 --- a/drivers/i2c/busses/i2c-s3c2410.c
 +++ b/drivers/i2c/busses/i2c-s3c2410.c
-@@ -216,8 +216,17 @@ static bool is_ack(struct s3c24xx_i2c *i2c)
- 	int tries;
+@@ -279,16 +279,6 @@ static void s3c24xx_i2c_message_start(struct s3c24xx_i2c *i2c,
  
- 	for (tries = 50; tries; --tries) {
--		if (readl(i2c->regs + S3C2410_IICCON)
--			& S3C2410_IICCON_IRQPEND) {
-+		unsigned long tmp = readl(i2c->regs + S3C2410_IICCON);
-+
-+		if (!(tmp & S3C2410_IICCON_ACKEN)) {
-+			/*
-+			 * Wait a bit for the bus to stabilize,
-+			 * delay estimated experimentally.
-+			 */
-+			usleep_range(100, 200);
-+			return true;
+ 	stat |= S3C2410_IICSTAT_START;
+ 	writel(stat, i2c->regs + S3C2410_IICSTAT);
+-
+-	if (i2c->quirks & QUIRK_POLL) {
+-		while ((i2c->msg_num != 0) && is_ack(i2c)) {
+-			i2c_s3c_irq_nextbyte(i2c, stat);
+-			stat = readl(i2c->regs + S3C2410_IICSTAT);
+-
+-			if (stat & S3C2410_IICSTAT_ARBITR)
+-				dev_err(i2c->dev, "deal with arbitration loss\n");
+-		}
+-	}
+ }
+ 
+ static inline void s3c24xx_i2c_stop(struct s3c24xx_i2c *i2c, int ret)
+@@ -695,7 +685,7 @@ static void s3c24xx_i2c_wait_idle(struct s3c24xx_i2c *i2c)
+ static int s3c24xx_i2c_doxfer(struct s3c24xx_i2c *i2c,
+ 			      struct i2c_msg *msgs, int num)
+ {
+-	unsigned long timeout;
++	unsigned long timeout = 0;
+ 	int ret;
+ 
+ 	ret = s3c24xx_i2c_set_master(i2c);
+@@ -715,16 +705,19 @@ static int s3c24xx_i2c_doxfer(struct s3c24xx_i2c *i2c,
+ 	s3c24xx_i2c_message_start(i2c, msgs);
+ 
+ 	if (i2c->quirks & QUIRK_POLL) {
+-		ret = i2c->msg_idx;
++		while ((i2c->msg_num != 0) && is_ack(i2c)) {
++			unsigned long stat = readl(i2c->regs + S3C2410_IICSTAT);
+ 
+-		if (ret != num)
+-			dev_dbg(i2c->dev, "incomplete xfer (%d)\n", ret);
++			i2c_s3c_irq_nextbyte(i2c, stat);
+ 
+-		goto out;
++			stat = readl(i2c->regs + S3C2410_IICSTAT);
++			if (stat & S3C2410_IICSTAT_ARBITR)
++				dev_err(i2c->dev, "deal with arbitration loss\n");
 +		}
-+		if (tmp & S3C2410_IICCON_IRQPEND) {
- 			if (!(readl(i2c->regs + S3C2410_IICSTAT)
- 				& S3C2410_IICSTAT_LASTBIT))
- 				return true;
++	} else {
++		timeout = wait_event_timeout(i2c->wait, i2c->msg_num == 0, HZ * 5);
+ 	}
+ 
+-	timeout = wait_event_timeout(i2c->wait, i2c->msg_num == 0, HZ * 5);
+-
+ 	ret = i2c->msg_idx;
+ 
+ 	/*
 -- 
 2.43.0
 
