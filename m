@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF78F63400;
-	Tue, 23 Jan 2024 01:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D543D64CF0;
+	Tue, 23 Jan 2024 01:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975073; cv=none; b=mZrypUP70yknT7v8Hh6tpNVCeDlQJR+P/x4cq8e3OMhz1KHkkfQBOQaDepYG4JOCsHjj+IZuh2LozF45gcsM77h1l9YsviwZ9GzGu5PXN/IeRKukKNCawq9GBeV+gs3uClAjuxE8moXX8aNPuroTEoKuYs8/ftg8UxJnQNW+oLw=
+	t=1705975073; cv=none; b=prUfJNla3ZUCmSRHdr+2U54QXv68VydKB3HJb9XmCZ7Yr1dO+WnZUIMTzkXB4AjVOMj6463sKOvgxOv8fm10q3Kj4Ac0nnY4KpaT4ZBeRs2F5aVwr7/TUEvV0WUAxr04MXxVh/hPrTt119mVcfhVSk9GdOmVbG2v6sAV5tJYH3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975073; c=relaxed/simple;
-	bh=na4F7ZzWklNgq2621xmUJ/l626rkR01p+44BT35vloM=;
+	bh=e+sgVka6kUs0mHxJJMoAhfATTeuTZQxrD8z/vZxiu/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PnI3IjMBOvZED6N7lIl40AFeNpuz4tMXM41uG8FKcNulDThPMo74jvntpQDdtpcSpnkNILupMfwyxzs2TEPSQRFAAKD0kaCPKN6ZaiwM2eYEjxXOTgo5cdEH6wwKACednVgP0s9GxsSvXAcJnuuR3OpEpGamAumakDJjgz74RQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgWZBinD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nXqgMK+R+ADDJmROEYv6nkahLSK0hYGwVTRB9NJJm4z5Br8hOgYBQODzSb884xKTKJI/le15R0KLSbuEvbPh25jnhxc6P1qlFgcSvjcox+pMjzXQW5RJAXSq63MOTMg8/I+jrwkKp6gk7LO9/o3MHT2USXz19Cgt+js8enwz8xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FkHWCQU2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgWZBinD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4746C433F1;
-	Tue, 23 Jan 2024 01:57:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FkHWCQU2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996D5C433C7;
+	Tue, 23 Jan 2024 01:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975072;
-	bh=na4F7ZzWklNgq2621xmUJ/l626rkR01p+44BT35vloM=;
+	s=korg; t=1705975073;
+	bh=e+sgVka6kUs0mHxJJMoAhfATTeuTZQxrD8z/vZxiu/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lgWZBinD/eTOIeQxvfEGK5F1bbXh4aF/lGQ3AaT2gYvxK3XFHCmW3AqPB5s62is7e
-	 ROoCcO90EQHF6mDRThB4Zd7s7PeaOnqVFNoI0zac+iicpRw8PedR5gJiXrCaEkd+rN
-	 K1kOFz+rlzgK/DEJCBZrli134/ft8rjWnMo5ahhM=
+	b=FkHWCQU2yqwRLY+CeN45oNKsjGFT4uQrHsz1TwyJIOWUNjBG9jTyvdrQVd7up8E3E
+	 TxZ8uodLhfFDr9jM50FAvxaM3RXCu6Q9h/J6hpcgK1Yl/SjsQzeM6KrAFHvNy/QzmJ
+	 YnkFSOvMjRo2Wr2uoOdAi86ApjpA+PeqRSqEwtIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 226/583] RDMA/usnic: Silence uninitialized symbol smatch warnings
-Date: Mon, 22 Jan 2024 15:54:37 -0800
-Message-ID: <20240122235818.918738366@linuxfoundation.org>
+Subject: [PATCH 5.15 354/374] netfilter: nf_tables: reject NFT_SET_CONCAT with not field length description
+Date: Mon, 22 Jan 2024 16:00:10 -0800
+Message-ID: <20240122235757.253342281@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,84 +46,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit b9a85e5eec126d6ae6c362f94b447c223e8fe6e4 ]
+[ Upstream commit 113661e07460a6604aacc8ae1b23695a89e7d4b3 ]
 
-The patch 1da177e4c3f4: "Linux-2.6.12-rc2" from Apr 16, 2005
-(linux-next), leads to the following Smatch static checker warning:
+It is still possible to set on the NFT_SET_CONCAT flag by specifying a
+set size and no field description, report EINVAL in such case.
 
-        drivers/infiniband/hw/mthca/mthca_cmd.c:644 mthca_SYS_EN()
-        error: uninitialized symbol 'out'.
-
-drivers/infiniband/hw/mthca/mthca_cmd.c
-    636 int mthca_SYS_EN(struct mthca_dev *dev)
-    637 {
-    638         u64 out;
-    639         int ret;
-    640
-    641         ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
-
-We pass out here and it gets used without being initialized.
-
-        err = mthca_cmd_post(dev, in_param,
-                             out_param ? *out_param : 0,
-                                         ^^^^^^^^^^
-                             in_modifier, op_modifier,
-                             op, context->token, 1);
-
-It's the same in mthca_cmd_wait() and mthca_cmd_poll().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/533bc3df-8078-4397-b93d-d1f6cec9b636@moroto.mountain
-Link: https://lore.kernel.org/r/c559cb7113158c02d75401ac162652072ef1b5f0.1699867650.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 1b6345d4160e ("netfilter: nf_tables: check NFT_SET_CONCAT flag if field_count is specified")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mthca/mthca_cmd.c  | 4 ++--
- drivers/infiniband/hw/mthca/mthca_main.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ net/netfilter/nf_tables_api.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mthca/mthca_cmd.c b/drivers/infiniband/hw/mthca/mthca_cmd.c
-index f330ce895d88..8fe0cef7e2be 100644
---- a/drivers/infiniband/hw/mthca/mthca_cmd.c
-+++ b/drivers/infiniband/hw/mthca/mthca_cmd.c
-@@ -635,7 +635,7 @@ void mthca_free_mailbox(struct mthca_dev *dev, struct mthca_mailbox *mailbox)
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 967ad439e6b3..e2e3ccbb635f 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4703,8 +4703,12 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 		if (err < 0)
+ 			return err;
  
- int mthca_SYS_EN(struct mthca_dev *dev)
- {
--	u64 out;
-+	u64 out = 0;
- 	int ret;
- 
- 	ret = mthca_cmd_imm(dev, 0, &out, 0, 0, CMD_SYS_EN, CMD_TIME_CLASS_D);
-@@ -1955,7 +1955,7 @@ int mthca_WRITE_MGM(struct mthca_dev *dev, int index,
- int mthca_MGID_HASH(struct mthca_dev *dev, struct mthca_mailbox *mailbox,
- 		    u16 *hash)
- {
--	u64 imm;
-+	u64 imm = 0;
- 	int err;
- 
- 	err = mthca_cmd_imm(dev, mailbox->dma, &imm, 0, 0, CMD_MGID_HASH,
-diff --git a/drivers/infiniband/hw/mthca/mthca_main.c b/drivers/infiniband/hw/mthca/mthca_main.c
-index b54bc8865dae..1ab268b77096 100644
---- a/drivers/infiniband/hw/mthca/mthca_main.c
-+++ b/drivers/infiniband/hw/mthca/mthca_main.c
-@@ -382,7 +382,7 @@ static int mthca_init_icm(struct mthca_dev *mdev,
- 			  struct mthca_init_hca_param *init_hca,
- 			  u64 icm_size)
- {
--	u64 aux_pages;
-+	u64 aux_pages = 0;
- 	int err;
- 
- 	err = mthca_SET_ICM_SIZE(mdev, icm_size, &aux_pages);
+-		if (desc.field_count > 1 && !(flags & NFT_SET_CONCAT))
++		if (desc.field_count > 1) {
++			if (!(flags & NFT_SET_CONCAT))
++				return -EINVAL;
++		} else if (flags & NFT_SET_CONCAT) {
+ 			return -EINVAL;
++		}
+ 	} else if (flags & NFT_SET_CONCAT) {
+ 		return -EINVAL;
+ 	}
 -- 
 2.43.0
 
