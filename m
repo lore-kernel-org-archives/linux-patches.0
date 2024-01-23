@@ -1,149 +1,169 @@
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2075.outbound.protection.outlook.com [40.107.102.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2023463105
-	for <patches@lists.linux.dev>; Tue, 23 Jan 2024 15:42:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.102.75
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706024526; cv=fail; b=jdv2caeHw+/kVCJ4HrfmQatBvZZjE8r8slvknjWuDANDg7tdlVaMQQl9OeiwgHD05HVCIvKViNeNdcziXjd5o9IuWSvBDk3/c65eqp3UcVUPn4YbwY8kDWEuOVpYY8ZW165aaldPO9nsSYxRZP8bA9iqQfhAlskz5TGlbvSGOA0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706024526; c=relaxed/simple;
-	bh=fSD+SNinuwVks/RjDR9MSRUNC8MstnBHoGwY5bz9v1w=;
-	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID:Date; b=hlkDZDr2lM2aGac+mkodtXMuXd5WjCKIF3+zVxyVxG0yTRGZTtkf/yyDhqtE3IpvL8nujXrFj6PYrvtCSmOHepl5HeHxY7ihElcoh2IWFAao6RPR0aCW2iesqgpI4CEnS/+2rwxtIZpZTWHsSFvFd6bvSJh3fHRt0JYzZ22b8p8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Q9NnCN6w; arc=fail smtp.client-ip=40.107.102.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4A3612E3
+	for <patches@lists.linux.dev>; Tue, 23 Jan 2024 16:05:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1706025949; cv=none; b=ZTjPXt4M9vfcPxCqzUY04VPVPNc5nfrZhIkzOEQ4PA0+zK4Jsc7LYJabnz186u1j9Uz392Ho1z3Re1vth1inimAljrCNBVShlrbolMRCi/wyafO/1/BXyt8K4Tp5yy8EHGa618euImkRkH/Pqudaq4QyrCgPx7bcT02ybXD8Pts=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1706025949; c=relaxed/simple;
+	bh=lsDSqsAB17EL30f44k+DI5upW3nRQRPV/d/y8J+nIoo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GZst3txuFInWX5lrlU6Iw4S3amdyGMg6E0Oh69yF31imQI5csFxrbvgWHc9uXuEJnrkwr3cPUkgHmQYBEt8uObT9ed5OcnIWU2QOpiNlGacyU7jVKbhaSlT85G5JfmySn2q7JREtIXSwibSLDdeBGj79WEicaJqBRf6hWi1lnOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=RDWG7VCQ; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=p+IopjMY; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=RDWG7VCQ; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=p+IopjMY; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Q9NnCN6w"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BV61A1+LSLxNfYFKhjEtWtBuJ6OG6YY/6/mPKA1OrGyULTu74EhnlJpjygRMbSnpwiOhoD4Z187F9iHrYAZXeZGdxukNtu5HaXFGpYcijSwswhcu1IcufNCqASqpaKdqZEwGb/R3M+ldVVfCY3R0+EVOc79QI7TGny9vKnWDqmzMTod40QgY0itB376KGFC+eEBoE9GldbZQBszuUJ7S/bDkkhz4asXPUZJYL9tFlzJYyOwIqd/bcYjW/Qf19/rCZmT3Dhc0oL4WfHN9g7V2FgSRZ1eYyQ5Y4zIax9WEZDi7kIzkc4oA8SrS+SDrvNnKQRzGIKcpoWF9QvFAbOT95g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WQVB24dC1oDP4A/woKDEeq38Z3U+lJT22jdzWBVtRuo=;
- b=HJtd5wDuFWj+0fMDn9omfiQTClL/kaL4Ma/kDlGhGw+q+3JGeU1T9IGYrt2pPhL3z9I6ncR0EN4feSGI23t7ur3AoDxLQ2ocgKnxHyHkW2tAKCUnmho37z/6YXhWHpPGEGp+fnpMkwtLxK5jocGuN4p7yI5XhfS6JMZk2QlwRycRUEpJ07LghbIx0kUYSTuFmsVnUQSYHtW+MrLe1TK4wlnN3y/zDqAJCFbtn+/Hbt6Mg2NKL6t5lyn/ItKI8wUV0lRDNkUV5pHgjP5Yytq+mS6ACWW+Fjj/9J/IDBnEMt/ZzHA5K5osy5zNpiU515HgTFBzTUJEOKUVyeqUMWnFEQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WQVB24dC1oDP4A/woKDEeq38Z3U+lJT22jdzWBVtRuo=;
- b=Q9NnCN6wVoBh/xL5pYKZYTs07BBe/6apYN1u01/mJ1H4n85u8sd0LULoTw2v+e8ebiDxDi6u7gHvlYa7E7RfnqucqWrQ7UyduNxqUAQP7EYK7263S4ohbzxZe7CyIie9JStCt3bIqy9H+/G8Opz0NFDmmzs4LkrAXKiPqx8OeoQtXcRod8a4yYHjcui0TNuU/gGHUR2/cOHegv3SRpGSsgI3iqzg28NIDlB81Zue8xzskHJUS/P8JwuTl16ZT3UsyZSb0u18/83+jAHi7CgrdQYsDDDxhyAmR9uBr0yHLgt9sDAdXpSmlhkGXmsBLfX9WJsNAefG4xW7zofMe/xLGw==
-Received: from DM6PR11CA0046.namprd11.prod.outlook.com (2603:10b6:5:14c::23)
- by CY8PR12MB7436.namprd12.prod.outlook.com (2603:10b6:930:50::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7202.34; Tue, 23 Jan
- 2024 15:41:59 +0000
-Received: from DS3PEPF000099DF.namprd04.prod.outlook.com
- (2603:10b6:5:14c:cafe::7b) by DM6PR11CA0046.outlook.office365.com
- (2603:10b6:5:14c::23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7202.34 via Frontend
- Transport; Tue, 23 Jan 2024 15:41:59 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- DS3PEPF000099DF.mail.protection.outlook.com (10.167.17.202) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7202.16 via Frontend Transport; Tue, 23 Jan 2024 15:41:59 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 23 Jan
- 2024 07:41:44 -0800
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 23 Jan
- 2024 07:41:44 -0800
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41 via Frontend
- Transport; Tue, 23 Jan 2024 07:41:43 -0800
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
-	<linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
-Subject: Re: [PATCH 6.1 000/417] 6.1.75-rc1 review
-In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
-References: <20240122235751.480367507@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="RDWG7VCQ";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="p+IopjMY";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="RDWG7VCQ";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="p+IopjMY"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id BCDC922369;
+	Tue, 23 Jan 2024 16:05:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1706025939; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=J3PyYxRzifv0gmjvWYqW6SYPLIFuI67r85b+qsNKau0=;
+	b=RDWG7VCQ5AEYatHDlTF9/pRuzfnctw89o1mkeG02uWOoIQAbeXCfjHMtnrY/ZwbBUg1iEW
+	d0gEnr4mPLWhmwFe41eQP+nbBUkkziSdTwM1AOnSx702XUelKEq4G6TveyI28hjeXojz9Q
+	tAo7i7JtzgEbkSF9hsNKEbUGNXLkrB0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1706025939;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=J3PyYxRzifv0gmjvWYqW6SYPLIFuI67r85b+qsNKau0=;
+	b=p+IopjMYQqS7AJmYfU5OhPFVJvdSdYTnabN1MvQ4OJcNJzO4khHvFrLX31UXfytUiAU5vZ
+	kO4rERMnvNZ3DsDQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1706025939; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=J3PyYxRzifv0gmjvWYqW6SYPLIFuI67r85b+qsNKau0=;
+	b=RDWG7VCQ5AEYatHDlTF9/pRuzfnctw89o1mkeG02uWOoIQAbeXCfjHMtnrY/ZwbBUg1iEW
+	d0gEnr4mPLWhmwFe41eQP+nbBUkkziSdTwM1AOnSx702XUelKEq4G6TveyI28hjeXojz9Q
+	tAo7i7JtzgEbkSF9hsNKEbUGNXLkrB0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1706025939;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=J3PyYxRzifv0gmjvWYqW6SYPLIFuI67r85b+qsNKau0=;
+	b=p+IopjMYQqS7AJmYfU5OhPFVJvdSdYTnabN1MvQ4OJcNJzO4khHvFrLX31UXfytUiAU5vZ
+	kO4rERMnvNZ3DsDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 86A93139B1;
+	Tue, 23 Jan 2024 16:05:39 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id UlU0H9Pjr2UGBAAAD6G6ig
+	(envelope-from <vbabka@suse.cz>); Tue, 23 Jan 2024 16:05:39 +0000
+From: Vlastimil Babka <vbabka@suse.cz>
+To: Mike Marshall <hubcap@omnibond.com>
+Cc: Martin Brandenburg <martin@omnibond.com>,
+	devel@lists.orangefs.org,
+	patches@lists.linux.dev,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH] fs/orangefs: remove ORANGEFS_CACHE_CREATE_FLAGS
+Date: Tue, 23 Jan 2024 17:05:35 +0100
+Message-ID: <20240123160534.6493-2-vbabka@suse.cz>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <137ef2ea-1c75-427b-a81d-fa62977a915e@rnnvmail204.nvidia.com>
-Date: Tue, 23 Jan 2024 07:41:43 -0800
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF000099DF:EE_|CY8PR12MB7436:EE_
-X-MS-Office365-Filtering-Correlation-Id: afcc9a32-e26d-46b6-35af-08dc1c29d684
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	WZ+jxCrOTA8K/wxUh6ULCZvrueI74e8BiONtckzYhfuCabNrFVR+snYr5VslHED/k2NdTxKUbkMlQ09a7pL8KHiFTxdhKpt2PZVQupnqu+0Zu8dQQ5hTxZP4TukSd1+dJXRYZsc/Hs/jywzXCAxqljFrXcvQ6rf+dnz/flCFFdPjhqM/NX2O1e/lmo20+uidMG3hUXVoYh5JdqaPPXzS7DuCAxxfnz+PagQkDSAcTc1cWuJaj4kjUtUhOkcd02Blf4i0ffmLkKCx1qF8vZNtaco227zk8weP/YQfgSTFVNNFVIpPw4mBNVRGu1PXSpjDYFM6imrknAgt94TPlgBHjXySDCl6C/1VgTMYWWkkTesu9NOdPJBg71LvK9hHPatLyO5hs8a2DjfvMO4vwuRcZLnY/p43RSy80ph3jFuGL/OsUJQbQu/qTUCUVHwPB5PnLhSf5My0uXqd1IkrHdtVItwdVfPo7pdX1k4pVWXEPnLKpLdqkQn/2pQ8syKaOBNIDI+lQkKo8o09OvUJ3F56pYwRtHtWt/Dkpd/iVOzWxJjjpBoTjFWLPWH6ihuGsbGLRe3WwDuUjdozT61er8hQYbTej1X8DQCQQXhRCAL9BvtzmKjqjisiRCZf74V6rkjSQRlHpssL4pb/8d06TkwmHMhHXnKv/iOqE+XJcapidtZaRim9IXE9U5P0PG09dO/sPQtakGgu4MRks70/bRryglo3cog4lC5Bs+FtBuNUgqmY3c2AES57wU8/Cm2OgGViW7QGM87d+LmZy/cPLV9ZRKf8kSW9LQLUcETU0/obMfQ=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(396003)(39860400002)(136003)(346002)(376002)(230922051799003)(451199024)(186009)(1800799012)(82310400011)(64100799003)(36840700001)(40470700004)(46966006)(8936002)(70586007)(70206006)(8676002)(2906002)(36860700001)(7416002)(54906003)(47076005)(6916009)(5660300002)(316002)(41300700001)(356005)(31686004)(83380400001)(4326008)(82740400003)(966005)(7636003)(426003)(478600001)(336012)(26005)(40460700003)(40480700001)(31696002)(86362001);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jan 2024 15:41:59.6587
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: afcc9a32-e26d-46b6-35af-08dc1c29d684
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DS3PEPF000099DF.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7436
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp-out1.suse.de;
+	none
+X-Spam-Level: 
+X-Spam-Score: 0.71
+X-Spamd-Result: default: False [0.71 / 50.00];
+	 ARC_NA(0.00)[];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 R_MISSING_CHARSET(2.50)[];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 MIME_GOOD(-0.10)[text/plain];
+	 BROKEN_CONTENT_TYPE(1.50)[];
+	 RCPT_COUNT_FIVE(0.00)[5];
+	 NEURAL_HAM_LONG(-0.99)[-0.994];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	 NEURAL_HAM_SHORT(-0.20)[-1.000];
+	 MID_CONTAINS_FROM(1.00)[];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 RCVD_TLS_ALL(0.00)[];
+	 BAYES_HAM(-3.00)[100.00%]
+X-Spam-Flag: NO
 
-On Mon, 22 Jan 2024 15:52:48 -0800, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.75 release.
-> There are 417 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 24 Jan 2024 23:56:49 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.75-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+The flags were set to SLAB_RED_ZONE when CONFIG_DEBUG_SLAB was enabled.
+With SLAB gone, this is now dead code so remove it. With SLUB, debugging
+options including red zoning can be set for orangefs caches by the
+slab_debug boot parameter.
 
-Failures detected for Tegra ...
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+---
+ fs/orangefs/orangefs-cache.c  |  2 +-
+ fs/orangefs/orangefs-kernel.h | 10 ----------
+ fs/orangefs/super.c           |  2 +-
+ 3 files changed, 2 insertions(+), 12 deletions(-)
 
-Test results for stable-v6.1:
-    10 builds:	10 pass, 0 fail
-    28 boots:	26 pass, 2 fail
-    96 tests:	96 pass, 0 fail
+diff --git a/fs/orangefs/orangefs-cache.c b/fs/orangefs/orangefs-cache.c
+index 3b6982bf6bcf..e75e173a9186 100644
+--- a/fs/orangefs/orangefs-cache.c
++++ b/fs/orangefs/orangefs-cache.c
+@@ -22,7 +22,7 @@ int op_cache_initialize(void)
+ 	op_cache = kmem_cache_create("orangefs_op_cache",
+ 				     sizeof(struct orangefs_kernel_op_s),
+ 				     0,
+-				     ORANGEFS_CACHE_CREATE_FLAGS,
++				     0,
+ 				     NULL);
+ 
+ 	if (!op_cache) {
+diff --git a/fs/orangefs/orangefs-kernel.h b/fs/orangefs/orangefs-kernel.h
+index 926d9c0a428a..e2df7eeadc7a 100644
+--- a/fs/orangefs/orangefs-kernel.h
++++ b/fs/orangefs/orangefs-kernel.h
+@@ -93,16 +93,6 @@ enum orangefs_vfs_op_states {
+ 	OP_VFS_STATE_GIVEN_UP = 16,
+ };
+ 
+-/*
+- * orangefs kernel memory related flags
+- */
+-
+-#if (defined CONFIG_DEBUG_SLAB)
+-#define ORANGEFS_CACHE_CREATE_FLAGS SLAB_RED_ZONE
+-#else
+-#define ORANGEFS_CACHE_CREATE_FLAGS 0
+-#endif
+-
+ extern const struct xattr_handler * const orangefs_xattr_handlers[];
+ 
+ extern struct posix_acl *orangefs_get_acl(struct inode *inode, int type, bool rcu);
+diff --git a/fs/orangefs/super.c b/fs/orangefs/super.c
+index 5254256a224d..d5a71df63d4e 100644
+--- a/fs/orangefs/super.c
++++ b/fs/orangefs/super.c
+@@ -644,7 +644,7 @@ int orangefs_inode_cache_initialize(void)
+ 					"orangefs_inode_cache",
+ 					sizeof(struct orangefs_inode_s),
+ 					0,
+-					ORANGEFS_CACHE_CREATE_FLAGS,
++					0,
+ 					offsetof(struct orangefs_inode_s,
+ 						link_target),
+ 					sizeof_field(struct orangefs_inode_s,
+-- 
+2.43.0
 
-Linux version:	6.1.75-rc1-gb74a57f4a549
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
-
-Boot failures:	tegra210-p2371-2180
-
-Jon
