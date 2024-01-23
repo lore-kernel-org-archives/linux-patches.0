@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234DD657AE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA3A657AE;
 	Tue, 23 Jan 2024 01:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975083; cv=none; b=Dwc12waX7b10rof7yTxu55ZUg/xWChPfV6YB1+RA2dR8H29jvlNOXy+oukxm5sxRIXnFoYNmGav4NBeIGduTB8H8olSurXkvONEEIUKbgBC/Q+YCuFstd3fYgzCJCBILHJkG7oHzQrs20X4nmOwAlKIiNOkot5Qt0sOvNQbOvxU=
+	t=1705975084; cv=none; b=TY7BCIz4WxBSPK2F/UJIos3k1+hw2Zk4+JDoHOikSvbR3ZHqzM3IrizvG8bKZ+HN6n/n2//3BOlH56jRWrZIAz2lo1+tJLcWmibo1mP80O4pQC/NMP83oEZY6YoSnia0ZdMERpAtVKgh/GSVUyeKuIv2wl3Mq0hc4+4xePx5JKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975083; c=relaxed/simple;
-	bh=Z75RowVjMb5RPe+9UqGMCl7uYb0x2GGd/KE/+RWKZYk=;
+	s=arc-20240116; t=1705975084; c=relaxed/simple;
+	bh=sT69mOo0txU4XMtFu0UsGwuZXnm6mjX4JK4GWmoc4bg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ru0KTyF9n0nkAr+YzncpyhD7+CwbaKMaKDfI1WH+XzpAfsHXBwF2amBW7PQXjBxFhDXoE105X0rNH+c8UOQfY1zHkWrUqH1HB1+lxh8dhTghmVhaJHFFXw0fetizNd6DcoHQMd1se3bkEl8Z0sTlK9BugGLh+rDD1vUbAz6eckA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UG/y9Dzj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YR35792rgXA9Jtn077T7tUdeYNxOdHDWuIfNfTB8vi0+XFwGlAOMABxlanBq69lowfhSIhst67IcoUBR/kSOAvyKZeKyFXckJ/f8thr6ewY3SvgMEnrFl9DoZQgMOS1hzke7WNQJIYw1LQFbFYvI9On32uQT8w/5BvSNR5zcTZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0rIWRzh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UG/y9Dzj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93FCC433A6;
-	Tue, 23 Jan 2024 01:58:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0rIWRzh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57FEC433F1;
+	Tue, 23 Jan 2024 01:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705975083;
-	bh=Z75RowVjMb5RPe+9UqGMCl7uYb0x2GGd/KE/+RWKZYk=;
+	bh=sT69mOo0txU4XMtFu0UsGwuZXnm6mjX4JK4GWmoc4bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UG/y9DzjnU0ZAnKMCd4T4f6k1/xBr3035RsJLJddBIJB1KI89RGhXzySt1Ng2CM4C
-	 Uq+Gp4WC5uZvlSff8sdygLFxP9WKINv+vwYkB5kh/FLGvFxyg5XY6udNjqsFeSK+mA
-	 haJBv0N8h5X4ndwttGhKRewbFNd1cjD+cXa/pt3A=
+	b=Y0rIWRzhem+EOVQS4VuRnYxF7fs6nb8LlWFP1YMltsO81QPq1lO2ND18kBE1gl15B
+	 IrgHEoJ4Tr7I9wwqv5g0CKEOZkY6kBngTp1BvO1/C5Ik/CUyea0qQfRC2bplE7Vz/p
+	 C0+Ei5Cjp7jUsv1eov179ieKudP1cujgW01V1558=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Singh <singhabhinav9051571833@gmail.com>,
-	Danilo Krummrich <dakr@redhat.com>,
+	Amit Cohen <amcohen@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 230/583] drm/nouveau/fence:: fix warning directly dereferencing a rcu pointer
-Date: Mon, 22 Jan 2024 15:54:41 -0800
-Message-ID: <20240122235819.033039898@linuxfoundation.org>
+Subject: [PATCH 5.15 358/374] mlxsw: spectrum_acl_erp: Fix error flow of pool allocation failure
+Date: Mon, 22 Jan 2024 16:00:14 -0800
+Message-ID: <20240122235757.405675101@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +50,187 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abhinav Singh <singhabhinav9051571833@gmail.com>
+From: Amit Cohen <amcohen@nvidia.com>
 
-[ Upstream commit 5f35a624c1e30b5bae5023b3c256e94e0ad4f806 ]
+[ Upstream commit 6d6eeabcfaba2fcadf5443b575789ea606f9de83 ]
 
-Fix a sparse warning with this message
-"warning:dereference of noderef expression". In this context it means we
-are dereferencing a __rcu tagged pointer directly.
+Lately, a bug was found when many TC filters are added - at some point,
+several bugs are printed to dmesg [1] and the switch is crashed with
+segmentation fault.
 
-We should not be directly dereferencing a rcu pointer. To get a normal
-(non __rcu tagged pointer) from a __rcu tagged pointer we are using the
-function unrcu_pointer(...). The non __rcu tagged pointer then can be
-dereferenced just like a normal pointer.
+The issue starts when gen_pool_free() fails because of unexpected
+behavior - a try to free memory which is already freed, this leads to BUG()
+call which crashes the switch and makes many other bugs.
 
-I tested with qemu with this command
-qemu-system-x86_64 \
-	-m 2G \
-	-smp 2 \
-	-kernel bzImage \
-	-append "console=ttyS0 root=/dev/sda earlyprintk=serial net.ifnames=0" \
-	-drive file=bullseye.img,format=raw \
-	-net user,host=10.0.2.10,hostfwd=tcp:127.0.0.1:10021-:22 \
-	-net nic,model=e1000 \
-	-enable-kvm \
-	-nographic \
-	-pidfile vm.pid \
-	2>&1 | tee vm.log
-with lockdep enabled.
+Trying to track down the unexpected behavior led to a bug in eRP code. The
+function mlxsw_sp_acl_erp_table_alloc() gets a pointer to the allocated
+index, sets the value and returns an error code. When gen_pool_alloc()
+fails it returns address 0, we track it and return -ENOBUFS outside, BUT
+the call for gen_pool_alloc() already override the index in erp_table
+structure. This is a problem when such allocation is done as part of
+table expansion. This is not a new table, which will not be used in case
+of allocation failure. We try to expand eRP table and override the
+current index (non-zero) with zero. Then, it leads to an unexpected
+behavior when address 0 is freed twice. Note that address 0 is valid in
+erp_table->base_index and indeed other tables use it.
 
-Fixes: 0ec5f02f0e2c ("drm/nouveau: prevent stale fence->channel pointers, and protect with rcu")
-Signed-off-by: Abhinav Singh <singhabhinav9051571833@gmail.com>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231113191303.3277733-1-singhabhinav9051571833@gmail.com
+gen_pool_alloc() fails in case that there is no space left in the
+pre-allocated pool, in our case, the pool is limited to
+ACL_MAX_ERPT_BANK_SIZE, which is read from hardware. When more than max
+erp entries are required, we exceed the limit and return an error, this
+error leads to "Failed to migrate vregion" print.
+
+Fix this by changing erp_table->base_index only in case of a successful
+allocation.
+
+Add a test case for such a scenario. Without this fix it causes
+segmentation fault:
+
+$ TESTS="max_erp_entries_test" ./tc_flower.sh
+./tc_flower.sh: line 988:  1560 Segmentation fault      tc filter del dev $h2 ingress chain $i protocol ip pref $i handle $j flower &>/dev/null
+
+[1]:
+kernel BUG at lib/genalloc.c:508!
+invalid opcode: 0000 [#1] PREEMPT SMP
+CPU: 6 PID: 3531 Comm: tc Not tainted 6.7.0-rc5-custom-ga6893f479f5e #1
+Hardware name: Mellanox Technologies Ltd. MSN4700/VMOD0010, BIOS 5.11 07/12/2021
+RIP: 0010:gen_pool_free_owner+0xc9/0xe0
+...
+Call Trace:
+ <TASK>
+ __mlxsw_sp_acl_erp_table_other_dec+0x70/0xa0 [mlxsw_spectrum]
+ mlxsw_sp_acl_erp_mask_destroy+0xf5/0x110 [mlxsw_spectrum]
+ objagg_obj_root_destroy+0x18/0x80 [objagg]
+ objagg_obj_destroy+0x12c/0x130 [objagg]
+ mlxsw_sp_acl_erp_mask_put+0x37/0x50 [mlxsw_spectrum]
+ mlxsw_sp_acl_ctcam_region_entry_remove+0x74/0xa0 [mlxsw_spectrum]
+ mlxsw_sp_acl_ctcam_entry_del+0x1e/0x40 [mlxsw_spectrum]
+ mlxsw_sp_acl_tcam_ventry_del+0x78/0xd0 [mlxsw_spectrum]
+ mlxsw_sp_flower_destroy+0x4d/0x70 [mlxsw_spectrum]
+ mlxsw_sp_flow_block_cb+0x73/0xb0 [mlxsw_spectrum]
+ tc_setup_cb_destroy+0xc1/0x180
+ fl_hw_destroy_filter+0x94/0xc0 [cls_flower]
+ __fl_delete+0x1ac/0x1c0 [cls_flower]
+ fl_destroy+0xc2/0x150 [cls_flower]
+ tcf_proto_destroy+0x1a/0xa0
+...
+mlxsw_spectrum3 0000:07:00.0: Failed to migrate vregion
+mlxsw_spectrum3 0000:07:00.0: Failed to migrate vregion
+
+Fixes: f465261aa105 ("mlxsw: spectrum_acl: Implement common eRP core")
+Signed-off-by: Amit Cohen <amcohen@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/4cfca254dfc0e5d283974801a24371c7b6db5989.1705502064.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nv04_fence.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../mellanox/mlxsw/spectrum_acl_erp.c         |  8 +--
+ .../drivers/net/mlxsw/spectrum-2/tc_flower.sh | 52 ++++++++++++++++++-
+ 2 files changed, 56 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nv04_fence.c b/drivers/gpu/drm/nouveau/nv04_fence.c
-index 5b71a5a5cd85..cdbc75e3d1f6 100644
---- a/drivers/gpu/drm/nouveau/nv04_fence.c
-+++ b/drivers/gpu/drm/nouveau/nv04_fence.c
-@@ -39,7 +39,7 @@ struct nv04_fence_priv {
- static int
- nv04_fence_emit(struct nouveau_fence *fence)
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_erp.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_erp.c
+index 4c98950380d5..d231f4d2888b 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_erp.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_erp.c
+@@ -301,6 +301,7 @@ mlxsw_sp_acl_erp_table_alloc(struct mlxsw_sp_acl_erp_core *erp_core,
+ 			     unsigned long *p_index)
  {
--	struct nvif_push *push = fence->channel->chan.push;
-+	struct nvif_push *push = unrcu_pointer(fence->channel)->chan.push;
- 	int ret = PUSH_WAIT(push, 2);
- 	if (ret == 0) {
- 		PUSH_NVSQ(push, NV_SW, 0x0150, fence->base.seqno);
+ 	unsigned int num_rows, entry_size;
++	unsigned long index;
+ 
+ 	/* We only allow allocations of entire rows */
+ 	if (num_erps % erp_core->num_erp_banks != 0)
+@@ -309,10 +310,11 @@ mlxsw_sp_acl_erp_table_alloc(struct mlxsw_sp_acl_erp_core *erp_core,
+ 	entry_size = erp_core->erpt_entries_size[region_type];
+ 	num_rows = num_erps / erp_core->num_erp_banks;
+ 
+-	*p_index = gen_pool_alloc(erp_core->erp_tables, num_rows * entry_size);
+-	if (*p_index == 0)
++	index = gen_pool_alloc(erp_core->erp_tables, num_rows * entry_size);
++	if (!index)
+ 		return -ENOBUFS;
+-	*p_index -= MLXSW_SP_ACL_ERP_GENALLOC_OFFSET;
++
++	*p_index = index - MLXSW_SP_ACL_ERP_GENALLOC_OFFSET;
+ 
+ 	return 0;
+ }
+diff --git a/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh b/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh
+index fb850e0ec837..7bf56ea161e3 100755
+--- a/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh
++++ b/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh
+@@ -10,7 +10,8 @@ lib_dir=$(dirname $0)/../../../../net/forwarding
+ ALL_TESTS="single_mask_test identical_filters_test two_masks_test \
+ 	multiple_masks_test ctcam_edge_cases_test delta_simple_test \
+ 	delta_two_masks_one_key_test delta_simple_rehash_test \
+-	bloom_simple_test bloom_complex_test bloom_delta_test"
++	bloom_simple_test bloom_complex_test bloom_delta_test \
++	max_erp_entries_test"
+ NUM_NETIFS=2
+ source $lib_dir/lib.sh
+ source $lib_dir/tc_common.sh
+@@ -983,6 +984,55 @@ bloom_delta_test()
+ 	log_test "bloom delta test ($tcflags)"
+ }
+ 
++max_erp_entries_test()
++{
++	# The number of eRP entries is limited. Once the maximum number of eRPs
++	# has been reached, filters cannot be added. This test verifies that
++	# when this limit is reached, inserstion fails without crashing.
++
++	RET=0
++
++	local num_masks=32
++	local num_regions=15
++	local chain_failed
++	local mask_failed
++	local ret
++
++	if [[ "$tcflags" != "skip_sw" ]]; then
++		return 0;
++	fi
++
++	for ((i=1; i < $num_regions; i++)); do
++		for ((j=$num_masks; j >= 0; j--)); do
++			tc filter add dev $h2 ingress chain $i protocol ip \
++				pref $i	handle $j flower $tcflags \
++				dst_ip 192.1.0.0/$j &> /dev/null
++			ret=$?
++
++			if [ $ret -ne 0 ]; then
++				chain_failed=$i
++				mask_failed=$j
++				break 2
++			fi
++		done
++	done
++
++	# We expect to exceed the maximum number of eRP entries, so that
++	# insertion eventually fails. Otherwise, the test should be adjusted to
++	# add more filters.
++	check_fail $ret "expected to exceed number of eRP entries"
++
++	for ((; i >= 1; i--)); do
++		for ((j=0; j <= $num_masks; j++)); do
++			tc filter del dev $h2 ingress chain $i protocol ip \
++				pref $i handle $j flower &> /dev/null
++		done
++	done
++
++	log_test "max eRP entries test ($tcflags). " \
++		"max chain $chain_failed, mask $mask_failed"
++}
++
+ setup_prepare()
+ {
+ 	h1=${NETIFS[p1]}
 -- 
 2.43.0
 
