@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A6160EEB;
-	Tue, 23 Jan 2024 02:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB0E2114;
+	Tue, 23 Jan 2024 02:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975800; cv=none; b=IKcfPfd4BkGkYhFUDSp/0k+XzA3lPXVKYV4CqYdfifC51Ut2Ly3EIHeg8zVorDN8AmaIwIfaQ/Act6dqOwFQNPXwQbaFOKiAvsFlZb8bbvb5jZiA968Tc+FOtsqpo4jXL/bHFUYYuZdoB0/D1gwcC2BlMxBnMTiZ33at6bfo/xA=
+	t=1705975801; cv=none; b=ru1AzjN3BaZezias3sK7j1qDcH94jmb9QzU0M3zyk3MLPlgRUThtIp8uprkm/BCJyzCN18JNxD4pG5fZwxiq5qUV4lUcYAkeQpnFvj0r0IMFM25gY5oMJ8BQmaxA68tZeJ/bLJ0YKzm9l5ahtVAPIY4lIdGuiFlhVUqJa/yw9/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975800; c=relaxed/simple;
-	bh=WJ1AWo6HFstjA55pThFlZHJ2a74OqV0wdKq79MzFLMs=;
+	s=arc-20240116; t=1705975801; c=relaxed/simple;
+	bh=LJAfSZjEuriNuJhpYqFDtRQgaieivjR2nic9tA+nxIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RBw5U8jebZF4KzQlCqEceYwu/mcvI3IAmWPArjXebA1MK13cnliuKB9ICBtA70cgGyyTPkmEWKAVyhgpQ8iVTHSPNHABbgS28pTFzcgha3wE3b+siGLfVuqgPQo9EGpOtIT+rWCqsup91Qrpi7pDZ4jJ8Bd+KpPSkGrd7yb+YgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofJG5OJn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jlbvX1c+oQ8dwOqrIXsiLwD+K5bo1dcYv40Mxv3piZfZyWFAnOFzdt7Co0Gt/d/zNEOgUDXYZEHdLiP6aFye/yDpfyiSxtoGJecDpbhsM4O1/qd4J5k66k1y4Hny0wdAnylDJrYC4HGZPJcLGqMNp2x2D1EKK0GMFRAVG8kroIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9vfdN19; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofJG5OJn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF5D6C433F1;
-	Tue, 23 Jan 2024 02:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9vfdN19"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5712CC433F1;
+	Tue, 23 Jan 2024 02:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975799;
-	bh=WJ1AWo6HFstjA55pThFlZHJ2a74OqV0wdKq79MzFLMs=;
+	s=korg; t=1705975801;
+	bh=LJAfSZjEuriNuJhpYqFDtRQgaieivjR2nic9tA+nxIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ofJG5OJn2Zxxzoi7AvP1KndD4+IwMxF5HJPM6D/q/80P1bDPHlQ4bE9b/jbF1OszB
-	 s9DuZF17dRt7f1TnFS73vXuQH076fMjKLZQoT7QraiMrBw3+aR4ndBkPEnXZFPS+3m
-	 LJm3YEwIVTVuikIzLma+UJs2Dhzjf3lZgDPp1KQE=
+	b=g9vfdN19Oy5xS0ddqxpUGeWsasSd9wb7MTe7Q+wm3VCxbHqWoa/vbaoGBWto/Qef1
+	 CFlMhQcsbQP5kOg9wlGpa9nU0CqqXwT9RdtVm2Wlej60EADTjD0ECZM5c7M4Or+at4
+	 BsMVVuZzUTxhMXnZqzmsteZHtby6DnoNrs111xKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 582/583] i2c: s3c24xx: fix transferring more than one message in polling mode
-Date: Mon, 22 Jan 2024 16:00:33 -0800
-Message-ID: <20240122235830.031386676@linuxfoundation.org>
+	syzbot+afb726d49f84c8d95ee1@syzkaller.appspotmail.com,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.6 583/583] riscv: Fix wrong usage of lm_alias() when splitting a huge linear mapping
+Date: Mon, 22 Jan 2024 16:00:34 -0800
+Message-ID: <20240122235830.065122899@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,88 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 990489e1042c6c5d6bccf56deca68f8dbeed8180 ]
+commit c29fc621e1a49949a14c7fa031dd4760087bfb29 upstream.
 
-To properly handle ACK on the bus when transferring more than one
-message in polling mode, move the polling handling loop from
-s3c24xx_i2c_message_start() to s3c24xx_i2c_doxfer(). This way
-i2c_s3c_irq_nextbyte() is always executed till the end, properly
-acknowledging the IRQ bits and no recursive calls to
-i2c_s3c_irq_nextbyte() are made.
+lm_alias() can only be used on kernel mappings since it explicitly uses
+__pa_symbol(), so simply fix this by checking where the address belongs
+to before.
 
-While touching this, also fix finishing transfers in polling mode by
-using common code path and always waiting for the bus to become idle
-and disabled.
-
-Fixes: 117053f77a5a ("i2c: s3c2410: Add polling mode support")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 311cd2f6e253 ("riscv: Fix set_memory_XX() and set_direct_map_XX() by splitting huge linear mappings")
+Reported-by: syzbot+afb726d49f84c8d95ee1@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-riscv/000000000000620dd0060c02c5e1@google.com/
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Link: https://lore.kernel.org/r/20231212195400.128457-1-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-s3c2410.c | 27 ++++++++++-----------------
- 1 file changed, 10 insertions(+), 17 deletions(-)
+ arch/riscv/mm/pageattr.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-s3c2410.c b/drivers/i2c/busses/i2c-s3c2410.c
-index fdd7a4259d2c..c324cb3c97e2 100644
---- a/drivers/i2c/busses/i2c-s3c2410.c
-+++ b/drivers/i2c/busses/i2c-s3c2410.c
-@@ -279,16 +279,6 @@ static void s3c24xx_i2c_message_start(struct s3c24xx_i2c *i2c,
- 
- 	stat |= S3C2410_IICSTAT_START;
- 	writel(stat, i2c->regs + S3C2410_IICSTAT);
--
--	if (i2c->quirks & QUIRK_POLL) {
--		while ((i2c->msg_num != 0) && is_ack(i2c)) {
--			i2c_s3c_irq_nextbyte(i2c, stat);
--			stat = readl(i2c->regs + S3C2410_IICSTAT);
--
--			if (stat & S3C2410_IICSTAT_ARBITR)
--				dev_err(i2c->dev, "deal with arbitration loss\n");
--		}
--	}
- }
- 
- static inline void s3c24xx_i2c_stop(struct s3c24xx_i2c *i2c, int ret)
-@@ -695,7 +685,7 @@ static void s3c24xx_i2c_wait_idle(struct s3c24xx_i2c *i2c)
- static int s3c24xx_i2c_doxfer(struct s3c24xx_i2c *i2c,
- 			      struct i2c_msg *msgs, int num)
- {
--	unsigned long timeout;
-+	unsigned long timeout = 0;
- 	int ret;
- 
- 	ret = s3c24xx_i2c_set_master(i2c);
-@@ -715,16 +705,19 @@ static int s3c24xx_i2c_doxfer(struct s3c24xx_i2c *i2c,
- 	s3c24xx_i2c_message_start(i2c, msgs);
- 
- 	if (i2c->quirks & QUIRK_POLL) {
--		ret = i2c->msg_idx;
-+		while ((i2c->msg_num != 0) && is_ack(i2c)) {
-+			unsigned long stat = readl(i2c->regs + S3C2410_IICSTAT);
- 
--		if (ret != num)
--			dev_dbg(i2c->dev, "incomplete xfer (%d)\n", ret);
-+			i2c_s3c_irq_nextbyte(i2c, stat);
- 
--		goto out;
-+			stat = readl(i2c->regs + S3C2410_IICSTAT);
-+			if (stat & S3C2410_IICSTAT_ARBITR)
-+				dev_err(i2c->dev, "deal with arbitration loss\n");
+--- a/arch/riscv/mm/pageattr.c
++++ b/arch/riscv/mm/pageattr.c
+@@ -305,8 +305,13 @@ static int __set_memory(unsigned long ad
+ 				goto unlock;
+ 		}
+ 	} else if (is_kernel_mapping(start) || is_linear_mapping(start)) {
+-		lm_start = (unsigned long)lm_alias(start);
+-		lm_end = (unsigned long)lm_alias(end);
++		if (is_kernel_mapping(start)) {
++			lm_start = (unsigned long)lm_alias(start);
++			lm_end = (unsigned long)lm_alias(end);
++		} else {
++			lm_start = start;
++			lm_end = end;
 +		}
-+	} else {
-+		timeout = wait_event_timeout(i2c->wait, i2c->msg_num == 0, HZ * 5);
- 	}
  
--	timeout = wait_event_timeout(i2c->wait, i2c->msg_num == 0, HZ * 5);
--
- 	ret = i2c->msg_idx;
- 
- 	/*
--- 
-2.43.0
-
+ 		ret = split_linear_mapping(lm_start, lm_end);
+ 		if (ret)
 
 
