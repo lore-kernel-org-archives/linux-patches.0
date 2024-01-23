@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B275B4E1AD;
-	Tue, 23 Jan 2024 01:58:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9A863400;
+	Tue, 23 Jan 2024 01:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975080; cv=none; b=VS303BtAQVZY3iTT1tc3iMpbq7DbEn//zhLScHPbVs0+6Y9XIxnyR1W1hrfNJBCZfUSAOkyHjwM3h63KWc52KUj+38ReA8d6thQbmWtHWOrmwBNWrirvEBhPna821YyoW+AIuD5UBw+mWylw12EFYepDRP+WSbDehhwVKK9ccr0=
+	t=1705975082; cv=none; b=O7KwFqBLd0d2PvAcWGGhfvYg+dfp2EUMH218H/lKh1dV1r/2qXDv+ydSMf5Q41ZpQeR2qDWwOXcjUX6dTFXu4JTCQ76ryILhfgphGE10MMYsFPSl3Nr4TGce/shRgXiSlFZFaAs0pk2ahITLwQHIvsx+iDkDMLYCyzR/5fDBBGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975080; c=relaxed/simple;
-	bh=Nskk63iczY4wphG6jYoTrzd4wnOMvjI45TaybaKrrAg=;
+	s=arc-20240116; t=1705975082; c=relaxed/simple;
+	bh=A4qta6Q9iaSe5lYq3ilwUOYYfFbCJWDcwF1lcVTh37E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dceXJtbUeK+aeZTvCAf0EM7iP1TXKP1ciXEX/Fg4j9ddz8z6OksQv8EMpDHVPxFLQaCccdR2NrvgA9bQo1OIvSC2fVkqjwa3x04FquHtOnTdePK25uZmm3t/g9soCfzg93hjhbjpgvlrYdGxtHvtOfnHN5p9mUaBQV4T9BpDvfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MP1lqL1o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tIi+ANWicmVddihrS5pNXV2qCvRasES+5JxhnPfP2GRPHKXmGCoAgOnloR9Tp99dyApiwj3Fob6V1FcCHULD+YJvqwHcLtu69sJjSgAD53s/CAXYJHowEyLe4tTmDrZdgZg2jswe+5QpWquc48m51dNE8OUTX4MT4IwAiXyCLwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUyeLxec; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MP1lqL1o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD6AC433C7;
-	Tue, 23 Jan 2024 01:58:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUyeLxec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C48C433C7;
+	Tue, 23 Jan 2024 01:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975080;
-	bh=Nskk63iczY4wphG6jYoTrzd4wnOMvjI45TaybaKrrAg=;
+	s=korg; t=1705975082;
+	bh=A4qta6Q9iaSe5lYq3ilwUOYYfFbCJWDcwF1lcVTh37E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MP1lqL1oMHYvDFJKoXo0P3DZ5YgKeksUbvk3hDH4R3lOvTH86USy11dx0P3VmNYym
-	 lTei/IEoe40LltUppn72mKaC+QY2Ga+ic6yqzwiuSBKXvftg9ds8Y57T7qSZwg/9N4
-	 Ik35td8T+9bfth1gMnARFRIGQf9Cbn7Hh9vQnqbA=
+	b=YUyeLxec+2P/XOJOrOtKu9bU6nb09vUCkgAvSrUjgFylDPI7B3ryFrFp9beY1RPdN
+	 poitwrBBcyKdkgYZ7XjfDAf0gtxdpeB8GjPVbmdh7SGX4RRt8btKOUziJoDbaXrUSR
+	 dsMhMoNM0rOHB1/s5iANW1aFkTeUKtDrnl21SovM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	=?UTF-8?q?Ludvig=20P=C3=A4rsson?= <ludvig.parsson@axis.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 229/583] drm/panel-elida-kd35t133: hold panel in reset for unprepare
-Date: Mon, 22 Jan 2024 15:54:40 -0800
-Message-ID: <20240122235819.002321503@linuxfoundation.org>
+Subject: [PATCH 5.15 357/374] ethtool: netlink: Add missing ethnl_ops_begin/complete
+Date: Mon, 22 Jan 2024 16:00:13 -0800
+Message-ID: <20240122235757.366546902@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,46 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Ludvig Pärsson <ludvig.parsson@axis.com>
 
-[ Upstream commit 03c5b2a5f6c39fe4e090346536cf1c14ee18b61e ]
+[ Upstream commit f1172f3ee3a98754d95b968968920a7d03fdebcc ]
 
-For devices like the Anbernic RG351M and RG351P the panel is wired to
-an always on regulator. When the device suspends and wakes up, there
-are some slight artifacts on the screen that go away over time. If
-instead we hold the panel in reset status after it is unprepared,
-this does not happen.
+Accessing an ethernet device that is powered off or clock gated might
+cause the CPU to hang. Add ethnl_ops_begin/complete in
+ethnl_set_features() to protect against this.
 
-Fixes: 5b6603360c12 ("drm/panel: add panel driver for Elida KD35T133 panels")
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Link: https://lore.kernel.org/r/20231117194405.1386265-3-macroalpha82@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231117194405.1386265-3-macroalpha82@gmail.com
+Fixes: 0980bfcd6954 ("ethtool: set netdev features with FEATURES_SET request")
+Signed-off-by: Ludvig Pärsson <ludvig.parsson@axis.com>
+Link: https://lore.kernel.org/r/20240117-etht2-v2-1-1a96b6e8c650@axis.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-elida-kd35t133.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ethtool/features.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-elida-kd35t133.c b/drivers/gpu/drm/panel/panel-elida-kd35t133.c
-index e7be15b68102..6de117232346 100644
---- a/drivers/gpu/drm/panel/panel-elida-kd35t133.c
-+++ b/drivers/gpu/drm/panel/panel-elida-kd35t133.c
-@@ -104,6 +104,8 @@ static int kd35t133_unprepare(struct drm_panel *panel)
- 		return ret;
+diff --git a/net/ethtool/features.c b/net/ethtool/features.c
+index 1c9f4df273bd..faccab84d865 100644
+--- a/net/ethtool/features.c
++++ b/net/ethtool/features.c
+@@ -235,17 +235,20 @@ int ethnl_set_features(struct sk_buff *skb, struct genl_info *info)
+ 	dev = req_info.dev;
+ 
+ 	rtnl_lock();
++	ret = ethnl_ops_begin(dev);
++	if (ret < 0)
++		goto out_rtnl;
+ 	ethnl_features_to_bitmap(old_active, dev->features);
+ 	ethnl_features_to_bitmap(old_wanted, dev->wanted_features);
+ 	ret = ethnl_parse_bitset(req_wanted, req_mask, NETDEV_FEATURE_COUNT,
+ 				 tb[ETHTOOL_A_FEATURES_WANTED],
+ 				 netdev_features_strings, info->extack);
+ 	if (ret < 0)
+-		goto out_rtnl;
++		goto out_ops;
+ 	if (ethnl_bitmap_to_features(req_mask) & ~NETIF_F_ETHTOOL_BITS) {
+ 		GENL_SET_ERR_MSG(info, "attempt to change non-ethtool features");
+ 		ret = -EINVAL;
+-		goto out_rtnl;
++		goto out_ops;
  	}
  
-+	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-+
- 	regulator_disable(ctx->iovcc);
- 	regulator_disable(ctx->vdd);
+ 	/* set req_wanted bits not in req_mask from old_wanted */
+@@ -282,6 +285,8 @@ int ethnl_set_features(struct sk_buff *skb, struct genl_info *info)
+ 	if (mod)
+ 		netdev_features_change(dev);
  
++out_ops:
++	ethnl_ops_complete(dev);
+ out_rtnl:
+ 	rtnl_unlock();
+ 	dev_put(dev);
 -- 
 2.43.0
 
