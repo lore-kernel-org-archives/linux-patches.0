@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104FF64CF0;
-	Tue, 23 Jan 2024 01:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB72964CF0;
+	Tue, 23 Jan 2024 01:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975075; cv=none; b=UqvFhyeV7GL/rJtKCsKDQbHnyEwnYRAoBYy1i1M/wXFFwg8w/L8xUFpykiDoifIAwcwkPh8PfXtkewCrVbRERtxBMgy0oWgdFJmD+6xKGDba/UDEK10fJBRJG6NJGO0wJtfx52zrL1c1z2psXd0iKxQcwIkU1BkOF6QnjBsO7fY=
+	t=1705975075; cv=none; b=SzP/Xn6sTTm7w8Ts/CF6gMRe7yQIDos7/3reS51nEpPXIWm7yVBggD8mkrwOE7JxCk8Q7j5Fpf7tXnLhkJduP6zTymgNe5SZ5z8MAcFHn5AdAG3cqyeU2KQFhE5S+DScgBuCnhdoiZWvqLC61Wa/Sw3TSjm4GTKVOIavU9HS9e4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975075; c=relaxed/simple;
-	bh=DbzXNpG4I9eyUQhk+0u0AvoHrEdGamo0l+WL/gaIdkI=;
+	bh=uARX7/DlCit3J6jgAKo/zISns3caSqT7BXyFpVqDUHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ExMNdmfq8EMEX/4JinmYY+4U2qItiIR7TmWz/tAveQQj446UQhmCmV9pZO5IJ8cTstrpiYB5lapPVLVPuw4r2Tkq/cXMHjcdKypZRVz0za2XrzaBHz/3wNWasnHA9dP+BHERUYHLuPTz263ar95o0gQ5CQ62RyHNKvRvvEjRKfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/slD6SZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ObvDn4Qym6n9UMKt+1GwqWTyZi0jcxlo6MGXgn+DvPFSnnQ2biU5n1U4jdPJ2QeAS1iqYJCo24L3HGFpS/VSyFLU/nZA+xgm9gtqry5aqre/M4C33nJl0B/jFkFDEKqcd1fS2TESlb6C9e0dYJHo08ulen3HsL9HNuLM9Vn2vhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omhVdTyt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/slD6SZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85410C433F1;
-	Tue, 23 Jan 2024 01:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omhVdTyt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70211C433C7;
+	Tue, 23 Jan 2024 01:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975074;
-	bh=DbzXNpG4I9eyUQhk+0u0AvoHrEdGamo0l+WL/gaIdkI=;
+	s=korg; t=1705975075;
+	bh=uARX7/DlCit3J6jgAKo/zISns3caSqT7BXyFpVqDUHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/slD6SZENoihL5ZRHw8M5vvNCTRePb6HFkGyulnFTC2cFLCkSZzGb+9C2CGYF4cw
-	 H7ZpWNGy7Ozj7Lp7wFTbPI6IxzwIqa9DIrClIOIpfCmdjcP3UEHZIYjcYSIptDElS4
-	 sNbSfiy8bW1xLFp6e5lLWYjy46kXtBFc8C9k4c28=
+	b=omhVdTytyDbGWpx0cIGnlHDWJHM2q+6rUQc53QeTuzAbo40lSF/T6yVTrnBVkP/UO
+	 3mQwdRuUiG/3DT1wC8FgD6ZJLpBqRLAGz7Me2dyqsLNAOVZXkH7lprpyvqgYgHuWV/
+	 6ZK03JtB7abPs7rMNnzEwG3/4hAULhfTMpMljZOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 227/583] RDMA/hns: Fix inappropriate err code for unsupported operations
-Date: Mon, 22 Jan 2024 15:54:38 -0800
-Message-ID: <20240122235818.947435452@linuxfoundation.org>
+Subject: [PATCH 5.15 346/374] netfilter: nft_last: move stateful fields out of expression data
+Date: Mon, 22 Jan 2024 16:00:02 -0800
+Message-ID: <20240122235756.957356741@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +46,148 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit f45b83ad39f8033e717b1eee57e81811113d5a84 ]
+[ Upstream commit 33a24de37e814572491bcb35f42c0de74ad67586 ]
 
-EOPNOTSUPP is more situable than EINVAL for allocating XRCD while XRC
-is not supported and unsupported resizing SRQ.
+In preparation for the rule blob representation.
 
-Fixes: 32548870d438 ("RDMA/hns: Add support for XRC on HIP09")
-Fixes: 221109e64316 ("RDMA/hns: Add interception for resizing SRQs")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20231114123449.1106162-2-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 91a139cee120 ("netfilter: nft_limit: do not ignore unsupported flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 +-
- drivers/infiniband/hw/hns/hns_roce_pd.c    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nft_last.c | 69 +++++++++++++++++++++++++++++-----------
+ 1 file changed, 51 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 486d635b6e3a..84c18996517c 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -5634,7 +5634,7 @@ static int hns_roce_v2_modify_srq(struct ib_srq *ibsrq,
+diff --git a/net/netfilter/nft_last.c b/net/netfilter/nft_last.c
+index 304e33cbed9b..5ee33d0ccd4e 100644
+--- a/net/netfilter/nft_last.c
++++ b/net/netfilter/nft_last.c
+@@ -8,9 +8,13 @@
+ #include <net/netfilter/nf_tables_core.h>
+ #include <net/netfilter/nf_tables.h>
  
- 	/* Resizing SRQs is not supported yet */
- 	if (srq_attr_mask & IB_SRQ_MAX_WR)
--		return -EINVAL;
-+		return -EOPNOTSUPP;
++struct nft_last {
++	unsigned long	jiffies;
++	unsigned int	set;
++};
++
+ struct nft_last_priv {
+-	unsigned long	last_jiffies;
+-	unsigned int	last_set;
++	struct nft_last	*last;
+ };
  
- 	if (srq_attr_mask & IB_SRQ_LIMIT) {
- 		if (srq_attr->srq_limit > srq->wqe_cnt)
-diff --git a/drivers/infiniband/hw/hns/hns_roce_pd.c b/drivers/infiniband/hw/hns/hns_roce_pd.c
-index 783e71852c50..bd1fe89ca205 100644
---- a/drivers/infiniband/hw/hns/hns_roce_pd.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_pd.c
-@@ -150,7 +150,7 @@ int hns_roce_alloc_xrcd(struct ib_xrcd *ib_xrcd, struct ib_udata *udata)
- 	int ret;
+ static const struct nla_policy nft_last_policy[NFTA_LAST_MAX + 1] = {
+@@ -22,47 +26,55 @@ static int nft_last_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
+ 			 const struct nlattr * const tb[])
+ {
+ 	struct nft_last_priv *priv = nft_expr_priv(expr);
++	struct nft_last *last;
+ 	u64 last_jiffies;
+-	u32 last_set = 0;
+ 	int err;
  
- 	if (!(hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_XRC))
--		return -EINVAL;
-+		return -EOPNOTSUPP;
+-	if (tb[NFTA_LAST_SET]) {
+-		last_set = ntohl(nla_get_be32(tb[NFTA_LAST_SET]));
+-		if (last_set == 1)
+-			priv->last_set = 1;
+-	}
++	last = kzalloc(sizeof(*last), GFP_KERNEL);
++	if (!last)
++		return -ENOMEM;
++
++	if (tb[NFTA_LAST_SET])
++		last->set = ntohl(nla_get_be32(tb[NFTA_LAST_SET]));
  
- 	ret = hns_roce_xrcd_alloc(hr_dev, &xrcd->xrcdn);
- 	if (ret)
+-	if (last_set && tb[NFTA_LAST_MSECS]) {
++	if (last->set && tb[NFTA_LAST_MSECS]) {
+ 		err = nf_msecs_to_jiffies64(tb[NFTA_LAST_MSECS], &last_jiffies);
+ 		if (err < 0)
+-			return err;
++			goto err;
+ 
+-		priv->last_jiffies = jiffies - (unsigned long)last_jiffies;
++		last->jiffies = jiffies - (unsigned long)last_jiffies;
+ 	}
++	priv->last = last;
+ 
+ 	return 0;
++err:
++	kfree(last);
++
++	return err;
+ }
+ 
+ static void nft_last_eval(const struct nft_expr *expr,
+ 			  struct nft_regs *regs, const struct nft_pktinfo *pkt)
+ {
+ 	struct nft_last_priv *priv = nft_expr_priv(expr);
++	struct nft_last *last = priv->last;
+ 
+-	if (READ_ONCE(priv->last_jiffies) != jiffies)
+-		WRITE_ONCE(priv->last_jiffies, jiffies);
+-	if (READ_ONCE(priv->last_set) == 0)
+-		WRITE_ONCE(priv->last_set, 1);
++	if (READ_ONCE(last->jiffies) != jiffies)
++		WRITE_ONCE(last->jiffies, jiffies);
++	if (READ_ONCE(last->set) == 0)
++		WRITE_ONCE(last->set, 1);
+ }
+ 
+ static int nft_last_dump(struct sk_buff *skb, const struct nft_expr *expr)
+ {
+ 	struct nft_last_priv *priv = nft_expr_priv(expr);
+-	unsigned long last_jiffies = READ_ONCE(priv->last_jiffies);
+-	u32 last_set = READ_ONCE(priv->last_set);
++	struct nft_last *last = priv->last;
++	unsigned long last_jiffies = READ_ONCE(last->jiffies);
++	u32 last_set = READ_ONCE(last->set);
+ 	__be64 msecs;
+ 
+ 	if (time_before(jiffies, last_jiffies)) {
+-		WRITE_ONCE(priv->last_set, 0);
++		WRITE_ONCE(last->set, 0);
+ 		last_set = 0;
+ 	}
+ 
+@@ -81,11 +93,32 @@ static int nft_last_dump(struct sk_buff *skb, const struct nft_expr *expr)
+ 	return -1;
+ }
+ 
++static void nft_last_destroy(const struct nft_ctx *ctx,
++			     const struct nft_expr *expr)
++{
++	struct nft_last_priv *priv = nft_expr_priv(expr);
++
++	kfree(priv->last);
++}
++
++static int nft_last_clone(struct nft_expr *dst, const struct nft_expr *src)
++{
++	struct nft_last_priv *priv_dst = nft_expr_priv(dst);
++
++	priv_dst->last = kzalloc(sizeof(*priv_dst->last), GFP_ATOMIC);
++	if (priv_dst->last)
++		return -ENOMEM;
++
++	return 0;
++}
++
+ static const struct nft_expr_ops nft_last_ops = {
+ 	.type		= &nft_last_type,
+ 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_last_priv)),
+ 	.eval		= nft_last_eval,
+ 	.init		= nft_last_init,
++	.destroy	= nft_last_destroy,
++	.clone		= nft_last_clone,
+ 	.dump		= nft_last_dump,
+ };
+ 
 -- 
 2.43.0
 
