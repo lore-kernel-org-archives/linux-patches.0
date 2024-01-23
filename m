@@ -1,103 +1,95 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFDA537E4
-	for <patches@lists.linux.dev>; Tue, 23 Jan 2024 22:50:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36514120C;
+	Tue, 23 Jan 2024 23:00:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706050227; cv=none; b=fKZ/ql1cSUZyuR4eh5P7+mBtZ/BNxMZlFuHd3fq3451mnHXfPGBeO+heYAugoxjM8O8f0XtmeCjA8GvNvvDsWv6/mrV6NbDmtoERygtDe2hkyeSHWfgqKUaCXAIYODNAUSpCxh94XyzVVokWbZxBEQADmV6KSXG8ek4/3vfTDgc=
+	t=1706050809; cv=none; b=QWoxtgYm8vA3rq9n7V0DNMcJC3Ccjk5c1xVrEVhbbiDX6Z+GZePyPrHHDr/ADbHiKqGhBk1X24KfXQaQ5RTLIvBfRWV1R9oitTxhijv+yMdwpx+A7BOGbh//Tj0UKRR+WvESjxZGJAbwAeiQbOjEuysannOAMqNl8RZVSsghr0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706050227; c=relaxed/simple;
-	bh=zA8h2hgvGIm7xCc7pkw2uK7so5TYfseQahtnnzFpgFg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X58hGNVOFYdcHob8YCZ3NyII0ncZcH4rjAuiChyoRfbVFdgaSUjBOwlIZ3wbX8/K+4Fsb5Le8wSKF7eLYcSkSfSLbo14NFY0jgEfJ8upjYBskyHw2KqpFyMzqUB6vjxWpVYMwpsJY83+wjdbwL2sn+jV2D/uypNM2i/0nVV/PRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XPmB67Xh; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706050809; c=relaxed/simple;
+	bh=67FZIBdOOMCQ00N5ExH/7I5y2V442bu28UsHFtb9aa8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hEPS1nMgvsdkkPC9+1b0jLtCig7Eoyi0UDmRf9/nNKxg4pEdpUMd3DgEvHkFXhp6+LTqgVgMPcPj+DZ5ETh90L8tUExk+NpkheD1/86lwWV7vx+BPQ62HCfPgmnXwuAe8ROsJGLhXcLB1lMXyAKTeVyuZwXBRcbBUO/gjR9IwYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JaNthWnX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XPmB67Xh"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-42a49d42d17so10051071cf.1
-        for <patches@lists.linux.dev>; Tue, 23 Jan 2024 14:50:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706050225; x=1706655025; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=70lzYBb2kXF1e/6clrMDT/m2Y9gDx8gUW5Ok8l0+bHs=;
-        b=XPmB67Xhh6Gc1G8QKas/IE9Mh4qYco/aVI00v7ODE3ePG+v8vWpRfY9Mm2uRwFWVFS
-         /A6GeqtRny4wozRbsrMRlaVZOWXhxf6B8JxU5mRVsGkrZ3onAf1ISybWr7W0b1yJDAPe
-         pSKPthmkepnqIy96Ug7ek9FKDQiX/isoRoUjD4JPPb5llI4MdeDC9ityKrLGklDISnLe
-         pbLYXu2vZ8OMKVzShEVhSzf8McYLgd3bMJu+4lEZ/5A2//DxIkqfgnlobcaeaanIeWUL
-         rMnPj5tlrY7HZ5nqOEepfwmooISQYG9hactYZrTA0wZn2en9kcF0G9akuH6mssyavBAA
-         iMCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706050225; x=1706655025;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=70lzYBb2kXF1e/6clrMDT/m2Y9gDx8gUW5Ok8l0+bHs=;
-        b=KCh72qJHOCCx71+aOgRQYf2Gc9MBbAOVucrQowmFT4zfMeroYSrWrIxpQXjw2P8gKz
-         AaUClcHKVsb9TvVtoKknZgEZyY9dG02EnuE+Y+aSpC6BtZ0vv4L38Q/pAfkvYCPQExed
-         T9qwnQ0jYdiHYPvyhw0k0k14pX7X0CVdKjDz8EzMsaa0PaUBwKs5Ze+asFF+7DmCjWsa
-         FizKl1uGXfur6mE0c5DkwJbCTN6ddbOW33UYkitlzz+tHOlNSBuCZxId6sZWSI3g+6eZ
-         ukx1Z/FO4sciCsY08vaq7y9mK8TBVfs41Pyco696Y29Zhg6OORRIxJaDmiOumBUx87nM
-         203g==
-X-Gm-Message-State: AOJu0YzBsIf2kSCH5F71KbwBTHBVRcUuz6JLaYvGe00NouKZUHpadAtJ
-	+i0i3k4/nkW9y8oYOQgUR40sqxYgJEHJ1q/xwiZGALP+06BKVG8E
-X-Google-Smtp-Source: AGHT+IHsqpQPGlTs+KXEhp1WVTBfD8OW9Rc1aNAYsdwz/JyF964LUi/EdJcqSpaYwrgcNJ/UU8e1nw==
-X-Received: by 2002:ac8:7e8d:0:b0:429:bfca:bed0 with SMTP id w13-20020ac87e8d000000b00429bfcabed0mr1489145qtj.137.1706050224679;
-        Tue, 23 Jan 2024 14:50:24 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id bp44-20020a05622a1bac00b004299f09e3aesm3863091qtb.51.2024.01.23.14.50.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jan 2024 14:50:24 -0800 (PST)
-Message-ID: <840d1ee4-6ee2-4fb3-a604-cf25ab83d9fe@gmail.com>
-Date: Tue, 23 Jan 2024 14:50:21 -0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JaNthWnX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938A2C433F1;
+	Tue, 23 Jan 2024 23:00:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706050808;
+	bh=67FZIBdOOMCQ00N5ExH/7I5y2V442bu28UsHFtb9aa8=;
+	h=From:Subject:Date:To:Cc:From;
+	b=JaNthWnXcGwKpArT4gZBJLpz0LIWEXmCpSDD0+/8ZuNXyS2CWAwvKCmYXJq+DYD4U
+	 LnS7oKY33pmSxtlKQoD/rgTNf/egd/gKNvmrpb+Z66FnOzMbrjifw6SKak4nuUgHIK
+	 XeVstqf0j6Twv0YiV5mFl4qmC2qH+65woTdelyT8MRxzyKz556XrVBJ85kQnFCY5UW
+	 fV/y/mU4sbDiC0wyBzP3zlFa0TIMOv509gqAmj4oiSlyrj/8RXiqKhcM7SZQAxXFTv
+	 DXityBgBNutwWEv804J54v8W6jsnhgTJvGQmX/ReSmeF2qhjopSEsZZ3VkhWnkDm9o
+	 Y6WWicXzEF+8Q==
+From: Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 0/2] Fix UML build with clang-18 and newer
+Date: Tue, 23 Jan 2024 15:59:53 -0700
+Message-Id: <20240123-fix-uml-clang-18-v1-0-efc095519cf9@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 000/414] 6.1.75-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com
-References: <20240123174510.372863442@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240123174510.372863442@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOlEsGUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDQ0ML3bTMCt3S3Bzd5BygrC5QINXYzDTJwNTAONHIUgmoraAoFagGbGR
+ 0bG0tAKpI5MxiAAAA
+To: richard@nod.at, anton.ivanov@cambridgegreys.com, 
+ johannes@sipsolutions.net, masahiroy@kernel.org
+Cc: nathan@kernel.org, nicolas@fjasle.eu, ndesaulniers@google.com, 
+ morbo@google.com, justinstitt@google.com, linux-um@lists.infradead.org, 
+ linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ stable@vger.kernel.org
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1383; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=67FZIBdOOMCQ00N5ExH/7I5y2V442bu28UsHFtb9aa8=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKkbXL4LvJZlsGizYPisv8E0OzhMcnZHkoH7u5p9BR9rO
+ BLff/nfUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACai/JmRYab++ijpXc8kine8
+ mrJv8+RIo90Zk+8s836w1e9xjcgR/kMMfwXuGnXtO7tSPqfhUY306w0zZ+X5Pjzf+H7GlX1+Ud7
+ c3UwA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 1/23/24 09:47, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.75 release.
-> There are 414 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 25 Jan 2024 17:44:16 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.75-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Hi all,
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+This series resolves two independent but related issues that were
+recently exposed by two LLVM changes.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+https://github.com/llvm/llvm-project/commit/ec92d74a0ef89b9dd46aee6ec8aca6bfd3c66a54
+exposes that '-no-pie' is not getting added to the linker flags with
+clang, resulting in building objects with '-fno-PIE' that are linked
+with '-pie', to which the linker rightfully errors with:
+
+  /usr/sbin/ld: init/main.o: relocation R_X86_64_32 against symbol `saved_command_line' can not be used when making a PIE object; recompile with -fPIE
+  /usr/sbin/ld: failed to set dynamic section sizes: bad value
+
+https://github.com/llvm/llvm-project/commit/4bf8a688956a759b7b6b8d94f42d25c13c7af130
+adds '.ltext' (and '.ltext.*' with '-ffunction-sections') when using
+'-mcmodel=large' (which UML does), which causes a segmentation fault
+with modpost.
+
+I have tested these patches with all supported versions of clang,
+noticing no regressions.
+
+---
+Nathan Chancellor (2):
+      um: Fix adding '-no-pie' for clang
+      modpost: Add '.ltext' and '.ltext.*' to TEXT_SECTIONS
+
+ arch/um/Makefile      | 4 +++-
+ scripts/mod/modpost.c | 3 ++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+---
+base-commit: 0dd3ee31125508cd67f7e7172247f05b7fd1753a
+change-id: 20240118-fix-uml-clang-18-e365b0503a29
+
+Best regards,
 -- 
-Florian
+Nathan Chancellor <nathan@kernel.org>
 
