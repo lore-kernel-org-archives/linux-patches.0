@@ -1,115 +1,75 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578F95D753
-	for <patches@lists.linux.dev>; Tue, 23 Jan 2024 11:46:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B23445DF2F
+	for <patches@lists.linux.dev>; Tue, 23 Jan 2024 12:12:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706010381; cv=none; b=qsbD/53obyzm3zXj3Mi3yWTq90nrGhTBGMKhE3xSGZTzGB0Grq/QvXKpp6FlEE4xeG6u3XJ5oqsq4E675XPYMyQQghH+TSKaEO1V6NwsVrSZ7WJlyC9EnZhahCTVo8Op1n/ey7TLHwhPFhdoZAUui2+HoKyxjwmIvUj62FT+lLs=
+	t=1706011961; cv=none; b=noHHqlC5+3GiKbWcgQJeWD38FMAEC6C7GclReUooKY5RvVFj6Oly3wrvyUM6kHuu5SpEKd40AO7x0Dyx4evaWOfo2wvx+yT5ITlu8nWOagGCFNhyIEHyEnYRbWQQ6qNcDoe0YgNFn73aLG32IlhM+Hu8Y/vtscxsbeiQVvFNKoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706010381; c=relaxed/simple;
-	bh=u+vnMh0bDwsz8C9HM93KCNUrx9aKpW+7M6cJvDcuWDI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hVWjt9CRpTogWwj0B7pLrUdYP5anaalAyeALYts5BNi6hl/HO+aHM6V4tLWiSOfP7CAwF51VB9cZ4Y5j4fQ6IdNpPCNBB7oOFMeV4QUAoJ90NAXOitGCSND2YtkOaPEEjdB8Pc9Zg8ZV/TWWHvtGpjSzlVrxv6p5DvSeAPzOjWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=nYV8X6mT; arc=none smtp.client-ip=209.85.215.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="nYV8X6mT"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-5cf1f4f6c3dso2018558a12.2
-        for <patches@lists.linux.dev>; Tue, 23 Jan 2024 03:46:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1706010379; x=1706615179; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LwSEZTvPmPib/iq3ufXx/1zhqV62G5jcQEWDJ/1dtko=;
-        b=nYV8X6mTrCHLSrLr/7r5o2m7adr9rqsGh7yeBMOJm56oS9xwQEYtZrKVc5EMXBD5pq
-         4RNCIrNm4vQ7E3x2IlqYd1YVDpoemh2e0OV7zz7AxG51sQ9Q6gfRxJF/DgT+gClYraki
-         Qsd94/gt14UIuU56OYsCKeY4PaV9uS0IfKZnyZSdq2aqWEwzFq2E9WeyoPKRaXP0W89f
-         e2F7RfSzvS5cqmS0eV9G3eF9EKXkh3oSzZEi5qwjuw48c3Llsooc6uT44/TrEvaY4wj9
-         xygp2kw9DegS+XK6mYBrvHyewCCI9ZyS6QJjviJs8Aw5iMYR1NzSwwlf+hPXf4HGhCMr
-         rwOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706010379; x=1706615179;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LwSEZTvPmPib/iq3ufXx/1zhqV62G5jcQEWDJ/1dtko=;
-        b=M7T4Vlm4UO8d0VTuIsbgsb4t4Uuhkrj9GiG3yycUF82jz5Xkfto1nQ9EEVnvXznl59
-         a4to+6smLQJc9+JD/DI2qnloWDsoxiLeZekyR6RioGPatoGiJ/svIi3iKGGIenF8zGaM
-         3MJGWGvDJAJi6RSX56DdKYeC0EW9fCvjmmh/2PgC2cRsurNmH+LMgqoRDC3ryNgD0SU8
-         0wcXxWtFsKIJoJAfOMMNxbSO9QBVVAJ2t1EYqdylCcHOHhyWQ3DPoQojR+2wF5I/uL+B
-         tEmNZLq03tXS7TgSiRfFino1d4478tW52CtS/jRwBs8B/8ghf3KOacXnYBypwDFaRrOQ
-         oiRQ==
-X-Gm-Message-State: AOJu0YwpxW9NENqo40MN7GeuAmFvqo8U908/QMxA1PZZRwehdu8zOuYf
-	CuPcT7Vrv1QyrnrO4p1kUB3oujfSoXTtj5s8VVTmD3W+olvWvEgNtloVZpKqzQk7uUKuWhGJ3Kt
-	DyAHjpNQQhX+MP8uKocivq/BYN9wEa3Zc5Di16A==
-X-Google-Smtp-Source: AGHT+IEACBp9H8QI1TqOIOZDLZgpEkwSJrj7m5dkRr4i9ZL9tXNUnb1GT+Fl2iLJmxsq+b68QpV00sU4bXL7cu2SlKk=
-X-Received: by 2002:a17:90b:10f:b0:28d:f182:b85 with SMTP id
- p15-20020a17090b010f00b0028df1820b85mr2536584pjz.87.1706010379397; Tue, 23
- Jan 2024 03:46:19 -0800 (PST)
+	s=arc-20240116; t=1706011961; c=relaxed/simple;
+	bh=83IcMC1FsbBJjNOk5uCGsdfZh2KxQTkHW2rC9MV6fsU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=i7jFq7FDbVE/PIWExNgvMLReQ5NyvnF6QzAPGs6s2z07u7Eavw2BFUKS+DVbWbz4+9tUuk2GyHPnJ4m5EwMNmX3XZcvcOkDCVKKxxItZQ06YAJJVDWLvw0/2eSSmZf5HQxyGf5UzT2WGgnlyRhIKKbnp2eAPozYi/26QwY5kBxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 846D01FB;
+	Tue, 23 Jan 2024 04:13:24 -0800 (PST)
+Received: from [10.1.197.60] (eglon.cambridge.arm.com [10.1.197.60])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8A11F3F762;
+	Tue, 23 Jan 2024 04:12:37 -0800 (PST)
+Message-ID: <b6ce3e79-aa4a-57e9-8b43-b5be45f75462@arm.com>
+Date: Tue, 23 Jan 2024 12:12:36 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240122235812.238724226@linuxfoundation.org>
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Tue, 23 Jan 2024 20:46:08 +0900
-Message-ID: <CAKL4bV55aK_qpQ-ubYKGrZ+=2tnr5zLqTgdaGuMUEVvNEe2w4Q@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/583] 6.6.14-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2] x86/resctrl: Implement new mba_MBps throttling
+ heuristic
+Content-Language: en-GB
+To: "Luck, Tony" <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>,
+ "Chatre, Reinette" <reinette.chatre@intel.com>
+Cc: "Yu, Fenghua" <fenghua.yu@intel.com>,
+ Peter Newman <peternewman@google.com>, "x86@kernel.org" <x86@kernel.org>,
+ Jamie Iles <quic_jiles@quicinc.com>, Babu Moger <babu.moger@amd.com>,
+ "Shen, Xiaochen" <xiaochen.shen@intel.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>
+References: <20231201214737.104444-1-tony.luck@intel.com>
+ <20240118214213.59596-1-tony.luck@intel.com>
+ <45d2891e-989a-45c9-a527-8b14ff5f8748@intel.com>
+ <SJ1PR11MB60837D4884419BDC2DCAA2D2FC752@SJ1PR11MB6083.namprd11.prod.outlook.com>
+ <bfa5104f-b887-4cc4-a24c-0497b86d9dde@intel.com>
+ <20240122182121.GBZa6yIYPtHQx44EU9@fat_crate.local>
+ <11fc82e0-961f-4c8d-844f-ad4b99067eb3@intel.com>
+ <20240122184755.GCZa64W02KXyeaVXJg@fat_crate.local>
+ <SJ1PR11MB6083A27C628E17FB8BBC4922FC752@SJ1PR11MB6083.namprd11.prod.outlook.com>
+From: James Morse <james.morse@arm.com>
+In-Reply-To: <SJ1PR11MB6083A27C628E17FB8BBC4922FC752@SJ1PR11MB6083.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Greg
+Hi Tony,
 
-On Tue, Jan 23, 2024 at 11:17=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.6.14 release.
-> There are 583 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 24 Jan 2024 23:56:49 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.6.14-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On 22/01/2024 20:58, Luck, Tony wrote:
+>>> There is also one pending resctrl feature, the SNC work [1], that Tony
+>>> plans to rebase on these fixes.
+>>
+>> Ack.
+> 
+> It looks like there is just one change in part 0004/0008 that doesn't apply automatically from git am.
+> Super easy to resolve.
+> 
+> I need to grab an SNC system to re-check that everything still works when re-based.
+> But right now, this looks like adding the SNC series will be easy (famous last words!).
 
-6.6.14-rc1 tested.
+Once you're ready - can you point me at something I can use as a stable branch to rebase onto?
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+Thanks,
 
-[    0.000000] Linux version 6.6.14-rc1rv
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 13.2.1 20230801, GNU ld (GNU
-Binutils) 2.41.0) #1 SMP PREEMPT_DYNAMIC Tue Jan 23 20:11:26 JST 2024
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+James
