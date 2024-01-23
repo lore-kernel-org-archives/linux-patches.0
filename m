@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4137465BB4;
-	Tue, 23 Jan 2024 01:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A1765BB9;
+	Tue, 23 Jan 2024 01:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975099; cv=none; b=UhXBBgWYbbQdeT+ClmGsRxs9UeuTvrW9PjPDeq9gOh7g1AY03pOfABxXLL46J+gRARQ7dKBLM3NU9knKNlzlEd5/xda5IHZJCKso7iW4rOIYLcrJorQkO0Lu/KNHCsFGGEyHKse/zhpZhKyWfw79zUc+1gbSkD7QSwgurX3htoc=
+	t=1705975099; cv=none; b=Il3o7ZTEShynku4YHBtRwgH19MsjmciU6zj33pBzH+qSJIU2bavOQY4y5i3jLvyxKWeGN/uhS3ehXhwxcLxLMrEaF0407figt/fr0zmm6nYm1VH2/0dOdjOxSQkWSRch0f/UmL9r/wqN9cvv6huxvbRWlyKcKPP4vquxZvqrzXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975099; c=relaxed/simple;
-	bh=Ygyrgc1hR8X4hvXURxBovbnOzFguLAOGaE8j2QEBeT8=;
+	bh=TucIF5faZD3XjtBOwC6XJr7Sq/Mr3FVc0y3eBnaXSAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g+CKHiwuUHmF/vrRQSWYoskurxRYD7jJI7Mzp1KRcjQteKgkrBaN4mKE5/xYHHRDO6XWAm2ng7kObewkP9XdyYRfgMoH6GV1FaojQlT372BNlVX2/X3e3Zk6jaVQ69Mg8efEl2tUiefuCOKkemoXymwSGBjQT47C/+i67XS5eV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KoIfAayx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M33ktp0lSz03zBsq4E3nN9HMtpdCRdIBxxU8XN0tIhF2zXl65euMcRvaH91GneI4zkPTu1yNfsvpbVeolzsKdH10XH6TnGlryiIQf+6kXXBECWiXEXDQP2+5n79fLxQchZgILBfOOgkMA54lgWbrZy916b/UuULtdlgrNG79xaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=diuclUDj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KoIfAayx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E16DC433C7;
-	Tue, 23 Jan 2024 01:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="diuclUDj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F914C43394;
+	Tue, 23 Jan 2024 01:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975098;
-	bh=Ygyrgc1hR8X4hvXURxBovbnOzFguLAOGaE8j2QEBeT8=;
+	s=korg; t=1705975099;
+	bh=TucIF5faZD3XjtBOwC6XJr7Sq/Mr3FVc0y3eBnaXSAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KoIfAayxyktc9XjL/0usRt82TzwBShhTgII0Q2flyibdRdP7vpMNw4Er6u+b++Twt
-	 jdgpJ3yuhLHUcxMC0HZkV2soNNvDcN8Rvvj20BuXZNuwFYgE83bFRKHhL6dGXu7kHq
-	 3mHncHdoGS03XoI/fmDn+CWKy1qEJId3rwUhtrNg=
+	b=diuclUDjsJ5PffHH8OA43VXOKoXho4nRo/aeM49O/sQognGV0Zyi3vALrPbCiuzY2
+	 6AJtJuT36TWQr0K2FoKslE40hzlFSGTrNp6Qy1IpE7WGQN7NJI+iA8/6Sq7rxDvy3S
+	 vv4d2GeezleA3crII71DDAiaumekvBK52oXvp/2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-	Daniel Almeida <daniel.almeida@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 237/583] media: rkvdec: Hook the (TRY_)DECODER_CMD stateless ioctls
-Date: Mon, 22 Jan 2024 15:54:48 -0800
-Message-ID: <20240122235819.241962117@linuxfoundation.org>
+Subject: [PATCH 5.15 347/374] netfilter: nft_quota: move stateful fields out of expression data
+Date: Mon, 22 Jan 2024 16:00:03 -0800
+Message-ID: <20240122235756.993868390@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+References: <20240122235744.598274724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,44 +46,143 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 1fb7b5ab62113b29ce331464048d8c39e58fd08a ]
+[ Upstream commit ed0a0c60f0e50fa52853620672af97edde3d3a03 ]
 
-The (TRY_)DECODER_CMD ioctls are used to support flushing when holding
-capture buffers is supported. This is the case of this driver but the
-ioctls were never hooked to the ioctl ops.
+In preparation for the rule blob representation.
 
-Add them to correctly support flushing.
-
-Fixes: ed7bb87d3d03 ("media: rkvdec: Enable capture buffer holding for H264")
-Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 91a139cee120 ("netfilter: nft_limit: do not ignore unsupported flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/rkvdec/rkvdec.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/netfilter/nft_quota.c | 52 +++++++++++++++++++++++++++++++++++----
+ 1 file changed, 47 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/staging/media/rkvdec/rkvdec.c b/drivers/staging/media/rkvdec/rkvdec.c
-index 84a41792cb4b..ac398b5a9736 100644
---- a/drivers/staging/media/rkvdec/rkvdec.c
-+++ b/drivers/staging/media/rkvdec/rkvdec.c
-@@ -461,6 +461,9 @@ static const struct v4l2_ioctl_ops rkvdec_ioctl_ops = {
- 
- 	.vidioc_streamon = v4l2_m2m_ioctl_streamon,
- 	.vidioc_streamoff = v4l2_m2m_ioctl_streamoff,
-+
-+	.vidioc_decoder_cmd = v4l2_m2m_ioctl_stateless_decoder_cmd,
-+	.vidioc_try_decoder_cmd = v4l2_m2m_ioctl_stateless_try_decoder_cmd,
+diff --git a/net/netfilter/nft_quota.c b/net/netfilter/nft_quota.c
+index c4d1389f7185..0484aef74273 100644
+--- a/net/netfilter/nft_quota.c
++++ b/net/netfilter/nft_quota.c
+@@ -15,13 +15,13 @@
+ struct nft_quota {
+ 	atomic64_t	quota;
+ 	unsigned long	flags;
+-	atomic64_t	consumed;
++	atomic64_t	*consumed;
  };
  
- static int rkvdec_queue_setup(struct vb2_queue *vq, unsigned int *num_buffers,
+ static inline bool nft_overquota(struct nft_quota *priv,
+ 				 const struct sk_buff *skb)
+ {
+-	return atomic64_add_return(skb->len, &priv->consumed) >=
++	return atomic64_add_return(skb->len, priv->consumed) >=
+ 	       atomic64_read(&priv->quota);
+ }
+ 
+@@ -90,13 +90,23 @@ static int nft_quota_do_init(const struct nlattr * const tb[],
+ 			return -EOPNOTSUPP;
+ 	}
+ 
++	priv->consumed = kmalloc(sizeof(*priv->consumed), GFP_KERNEL);
++	if (!priv->consumed)
++		return -ENOMEM;
++
+ 	atomic64_set(&priv->quota, quota);
+ 	priv->flags = flags;
+-	atomic64_set(&priv->consumed, consumed);
++	atomic64_set(priv->consumed, consumed);
+ 
+ 	return 0;
+ }
+ 
++static void nft_quota_do_destroy(const struct nft_ctx *ctx,
++				 struct nft_quota *priv)
++{
++	kfree(priv->consumed);
++}
++
+ static int nft_quota_obj_init(const struct nft_ctx *ctx,
+ 			      const struct nlattr * const tb[],
+ 			      struct nft_object *obj)
+@@ -128,7 +138,7 @@ static int nft_quota_do_dump(struct sk_buff *skb, struct nft_quota *priv,
+ 	 * that we see, don't go over the quota boundary in what we send to
+ 	 * userspace.
+ 	 */
+-	consumed = atomic64_read(&priv->consumed);
++	consumed = atomic64_read(priv->consumed);
+ 	quota = atomic64_read(&priv->quota);
+ 	if (consumed >= quota) {
+ 		consumed_cap = quota;
+@@ -145,7 +155,7 @@ static int nft_quota_do_dump(struct sk_buff *skb, struct nft_quota *priv,
+ 		goto nla_put_failure;
+ 
+ 	if (reset) {
+-		atomic64_sub(consumed, &priv->consumed);
++		atomic64_sub(consumed, priv->consumed);
+ 		clear_bit(NFT_QUOTA_DEPLETED_BIT, &priv->flags);
+ 	}
+ 	return 0;
+@@ -162,11 +172,20 @@ static int nft_quota_obj_dump(struct sk_buff *skb, struct nft_object *obj,
+ 	return nft_quota_do_dump(skb, priv, reset);
+ }
+ 
++static void nft_quota_obj_destroy(const struct nft_ctx *ctx,
++				  struct nft_object *obj)
++{
++	struct nft_quota *priv = nft_obj_data(obj);
++
++	return nft_quota_do_destroy(ctx, priv);
++}
++
+ static struct nft_object_type nft_quota_obj_type;
+ static const struct nft_object_ops nft_quota_obj_ops = {
+ 	.type		= &nft_quota_obj_type,
+ 	.size		= sizeof(struct nft_quota),
+ 	.init		= nft_quota_obj_init,
++	.destroy	= nft_quota_obj_destroy,
+ 	.eval		= nft_quota_obj_eval,
+ 	.dump		= nft_quota_obj_dump,
+ 	.update		= nft_quota_obj_update,
+@@ -205,12 +224,35 @@ static int nft_quota_dump(struct sk_buff *skb, const struct nft_expr *expr)
+ 	return nft_quota_do_dump(skb, priv, false);
+ }
+ 
++static void nft_quota_destroy(const struct nft_ctx *ctx,
++			      const struct nft_expr *expr)
++{
++	struct nft_quota *priv = nft_expr_priv(expr);
++
++	return nft_quota_do_destroy(ctx, priv);
++}
++
++static int nft_quota_clone(struct nft_expr *dst, const struct nft_expr *src)
++{
++	struct nft_quota *priv_dst = nft_expr_priv(dst);
++
++	priv_dst->consumed = kmalloc(sizeof(*priv_dst->consumed), GFP_ATOMIC);
++	if (priv_dst->consumed)
++		return -ENOMEM;
++
++	atomic64_set(priv_dst->consumed, 0);
++
++	return 0;
++}
++
+ static struct nft_expr_type nft_quota_type;
+ static const struct nft_expr_ops nft_quota_ops = {
+ 	.type		= &nft_quota_type,
+ 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_quota)),
+ 	.eval		= nft_quota_eval,
+ 	.init		= nft_quota_init,
++	.destroy	= nft_quota_destroy,
++	.clone		= nft_quota_clone,
+ 	.dump		= nft_quota_dump,
+ };
+ 
 -- 
 2.43.0
 
