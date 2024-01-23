@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B67A3D69;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AD83D69;
 	Tue, 23 Jan 2024 02:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975792; cv=none; b=ULmxMEYqOoN5ab9IrV5iSKTkcFh6Kew6R7edUabyLu4COYqNPXvA42DbeWuN2iP13yzDrABCEDp+feCLxBexEd636wuvQypH3DOqyV3wqPNCWlHPud8tiFcGRJKj87yWpGkHZbkExx36LQ+36yV9NlEFzFUOo3LQT47wtNHq0Uk=
+	t=1705975792; cv=none; b=q5iniAvX/UUMGYn+O+FLnk/FEsxQkcCkd4TrWU/0mtMmn9qh9R9enqRtJPRjte50+dd+snFeOo8OKbIeuCyHVfcE4wdQK8SRMjvhYEDVJy8UkTt0SqDkm1zBFL/DTZToQlw+tcWfXLy2/yDXtb/29NV9mXrU1QyLbjO8PNMc+rA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975792; c=relaxed/simple;
-	bh=4Tm5IOmZm8KtqbXDgK0a8Bend+R5G2OCFqlG6AR+ceQ=;
+	bh=cAqsoXe6r0Jo8H3UD2xHqLnQ4x6hRPsCzwlqWjpvmJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3yi5aCOCHAiwk2Z4345sQRiQYxEEVNWs8qs5xSTiEFHonehgpeQYOjLudzuJuUiTAc0AsWZMMDF3FY9R2UEhUsC5Cxoy3hAaSsX6fJM91XI8V3gCed3gT4PJMhUfx986kBv8/21nA2lc4B2Faq9u50ZMYiGMPS84Wprbjob+UE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E+tPotCb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fNl3fn4ypamaEnQ1klCNvScS7H7hInALFtQTsoYHJyhsLQiXtP1yM9iVddhhJgX6oXQonPmFEdalsVcAM8fGN6i4vCCREZn+Mowh2bNegEfMTcvhOLSCX0v2TXHCfoQb5ARQElRatV9J94YefYyboJnvJfh34EkDMWZvQLadsqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLfU+iHI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+tPotCb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C735CC43394;
-	Tue, 23 Jan 2024 02:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLfU+iHI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F8DC433C7;
+	Tue, 23 Jan 2024 02:09:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975791;
-	bh=4Tm5IOmZm8KtqbXDgK0a8Bend+R5G2OCFqlG6AR+ceQ=;
+	s=korg; t=1705975792;
+	bh=cAqsoXe6r0Jo8H3UD2xHqLnQ4x6hRPsCzwlqWjpvmJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E+tPotCbLPUVSeiFw+wbsevNnAgNxZ78UwxTerun6Fkk1K4h81BD5udU+EwzDRI9x
-	 PNPL5r9H/6jqAcaenYg6EsYf4TgGtNS8laWx67ASIHFdevWBGh5bROht2Vf7RoWG3H
-	 yKxx7owtmMm2DjWY8oJHevij5RBg6Scq2vEPhRzI=
+	b=kLfU+iHIZB+mzsea9Ul0WDuYC9FngirD38PuPdFqqlZ1o7D0Qk2/51kaSsbsNa6IV
+	 04vFrQK3v2aw8GKOUZD31SeJzn7HBC3pNxmIkTkMowi2tBYcCJ6IOLd0eLWMMey3T9
+	 KFqEoJR+5/STdzo3rD6czIQNLx8QMyVcKsEc4pD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 549/583] gpio: mlxbf3: add an error code check in mlxbf3_gpio_probe
-Date: Mon, 22 Jan 2024 16:00:00 -0800
-Message-ID: <20240122235828.943758160@linuxfoundation.org>
+Subject: [PATCH 6.6 550/583] ASoC: SOF: ipc4-loader: remove the CPC check warnings
+Date: Mon, 22 Jan 2024 16:00:01 -0800
+Message-ID: <20240122235828.976300110@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -45,42 +48,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-[ Upstream commit d460e9c2075164e9b1fa9c4c95f8c05517bd8752 ]
+[ Upstream commit ab09fb9c629ed3aaea6a82467f08595dbc549726 ]
 
-Clang static checker warning: Value stored to 'ret' is never read.
-bgpio_init() returns error code if failed, it's better to add this
-check.
+Warnings related to missing data in firmware manifest have
+proven to be too verbose. This relates to description of
+DSP module cost expressed in cycles per chunk (CPC). If
+a matching value is not found in the manifest, kernel will
+pass a zero value and DSP firmware will use a conservative
+value in its place.
 
-Fixes: cd33f216d241 ("gpio: mlxbf3: Add gpio driver support")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-[Bartosz: add the Fixes: tag]
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Downgrade the warnings to dev_dbg().
+
+Fixes: d8a2c9879349 ("ASoC: SOF: ipc4-loader/topology: Query the CPC value from manifest")
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://msgid.link/r/20240115092209.7184-3-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-mlxbf3.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/sof/ipc4-loader.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpio/gpio-mlxbf3.c b/drivers/gpio/gpio-mlxbf3.c
-index 7a3e1760fc5b..d5906d419b0a 100644
---- a/drivers/gpio/gpio-mlxbf3.c
-+++ b/drivers/gpio/gpio-mlxbf3.c
-@@ -215,6 +215,8 @@ static int mlxbf3_gpio_probe(struct platform_device *pdev)
- 			gs->gpio_clr_io + MLXBF_GPIO_FW_DATA_OUT_CLEAR,
- 			gs->gpio_set_io + MLXBF_GPIO_FW_OUTPUT_ENABLE_SET,
- 			gs->gpio_clr_io + MLXBF_GPIO_FW_OUTPUT_ENABLE_CLEAR, 0);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "%s: bgpio_init() failed", __func__);
+diff --git a/sound/soc/sof/ipc4-loader.c b/sound/soc/sof/ipc4-loader.c
+index eaa04762eb11..4d37e89b592a 100644
+--- a/sound/soc/sof/ipc4-loader.c
++++ b/sound/soc/sof/ipc4-loader.c
+@@ -479,13 +479,10 @@ void sof_ipc4_update_cpc_from_manifest(struct snd_sof_dev *sdev,
+ 		msg = "No CPC match in the firmware file's manifest";
  
- 	gc->request = gpiochip_generic_request;
- 	gc->free = gpiochip_generic_free;
+ no_cpc:
+-	dev_warn(sdev->dev, "%s (UUID: %pUL): %s (ibs/obs: %u/%u)\n",
+-		 fw_module->man4_module_entry.name,
+-		 &fw_module->man4_module_entry.uuid, msg, basecfg->ibs,
+-		 basecfg->obs);
+-	dev_warn_once(sdev->dev, "Please try to update the firmware.\n");
+-	dev_warn_once(sdev->dev, "If the issue persists, file a bug at\n");
+-	dev_warn_once(sdev->dev, "https://github.com/thesofproject/sof/issues/\n");
++	dev_dbg(sdev->dev, "%s (UUID: %pUL): %s (ibs/obs: %u/%u)\n",
++		fw_module->man4_module_entry.name,
++		&fw_module->man4_module_entry.uuid, msg, basecfg->ibs,
++		basecfg->obs);
+ }
+ 
+ const struct sof_ipc_fw_loader_ops ipc4_loader_ops = {
 -- 
 2.43.0
 
