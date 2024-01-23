@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376A61FB4;
-	Tue, 23 Jan 2024 02:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC371FB4;
+	Tue, 23 Jan 2024 02:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975809; cv=none; b=OHnHsKyDUCUjIcIw4QsONz2nQ5x9WyzmuNFAlcD3RCc6vxPOF3XiO8T/oCPKQhnY2GBxOBm1fyp5LgtriCElQm0AkH6WT8wDGe+Vkk+8/uVS3PEGPculVqZx7u+VpnKw6b49JCOwTg4++6AT5eOFRz06wvvXfFO4Y4XV3PZNm6Y=
+	t=1705975810; cv=none; b=ZXT9DLVP5nXGzh/9M4L1DM5kSNrWlAJ6lBNZLkwKJmXgn7L1CwGcdLOywOjQaprvw09EwtRGQsgwtEIyDtW4m8+cHNCbCEaIFjYOAoIgvaXADE/Pwz5KgMyyzwb9ESHhxj/BPjST+gkEnFV9KszFNQBNh+pzoBhF4GO0C8MVnc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975809; c=relaxed/simple;
-	bh=yVYCv0ziVSxgmf1wD1KSHvZ4AXsTxtrh6TiKc7gmHr4=;
+	s=arc-20240116; t=1705975810; c=relaxed/simple;
+	bh=+D+XakJWCTUcoE4HUaQoMJ9k996bjSu/0FEd0JqZOq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b23NZqldOBYhLj5SHIDHKlNYWa8nUp7yYJ36hApmVxtRDrcwjRAEO6ggY0WRJxWFAN5VrWuSDmOxxX17Gkm1inBudVAhBzIlQbSq0Mu3tjyQZhK+UbuYEiTaRxQE+maDLmEasZXr3oInWdpRKXfJ3ZPvR7drCZ2oYECwij8mCMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+uCnG10; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dqCMts0X637GwhfMpiJZIN4+CdJCTHs+wx3lH08rjqX6MQeEEvvTZ3daoBErX+4E9aBZk5HBx6t2lVR4WyxlvdZFjeUlRA4qW+SuEAYCdgu+dDQsKoUPiowlW5G1v/59df+BPE5v7AaWMMO/GJyPi1r7r4fbr3WrSBAz9QZ0mDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dN/Wgfq6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+uCnG10"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1639C433F1;
-	Tue, 23 Jan 2024 02:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dN/Wgfq6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4264C433C7;
+	Tue, 23 Jan 2024 02:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1705975809;
-	bh=yVYCv0ziVSxgmf1wD1KSHvZ4AXsTxtrh6TiKc7gmHr4=;
+	bh=+D+XakJWCTUcoE4HUaQoMJ9k996bjSu/0FEd0JqZOq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+uCnG10HPbIX80TQtgZAyL/zu/TkqWhpVRSSE+O/FifkyFJujg81JBEDc6K23X4f
-	 s0/oHTkDB4omHX+1Ul32i+jKb1gl1sYUeR3M1+fcyolFxZt/8rFEWc6aRL2ekd4vlt
-	 O3e1BZl4QMPFHSoj71vzYM++Hvy6yC8O/HSlN8xo=
+	b=dN/Wgfq6yssjFgJYvUcD9gx/L9pTf3lJ21ixLPW6rrntfy4yvmBivjvP5H9EzttDw
+	 Rb6ZA7IdZQi5aLRe0jIZ7w61SwJylTaAhaoA+E4FUozxkc2oqaCD0qZgdEkoD+FdzJ
+	 /lm+dJiY1Xt8pNSglrOXeTvvldYHmx84IGgGW6ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maksym Yaremchuk <maksymy@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Julian Anastasov <ja@ssi.bg>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 578/583] mlxsw: spectrum_router: Register netdevice notifier before nexthop
-Date: Mon, 22 Jan 2024 16:00:29 -0800
-Message-ID: <20240122235829.897980289@linuxfoundation.org>
+Subject: [PATCH 6.6 569/583] ipvs: avoid stat macros calls from preemptible context
+Date: Mon, 22 Jan 2024 16:00:20 -0800
+Message-ID: <20240122235829.579837184@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -54,112 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 62bef63646c194e0f82b40304a0f2d060b28687b ]
+[ Upstream commit d6938c1c76c64f42363d0d1f051e1b4641c2ad40 ]
 
-If there are IPIP nexthops at the time when the driver is loaded (or the
-devlink instance reloaded), the driver looks up the corresponding IPIP
-entry. But IPIP entries are only created as a result of netdevice
-notifications. Since the netdevice notifier is registered after the nexthop
-notifier, mlxsw_sp_nexthop_type_init() never finds the IPIP entry,
-registers the nexthop MLXSW_SP_NEXTHOP_TYPE_ETH, and fails to assign a CRIF
-to the nexthop. Later on when the CRIF is necessary, the WARN_ON in
-mlxsw_sp_nexthop_rif() triggers, causing the splat [1].
+Inside decrement_ttl() upon discovering that the packet ttl has exceeded,
+__IP_INC_STATS and __IP6_INC_STATS macros can be called from preemptible
+context having the following backtrace:
 
-In order to fix the issue, reorder the netdevice notifier to be registered
-before the nexthop one.
+check_preemption_disabled: 48 callbacks suppressed
+BUG: using __this_cpu_add() in preemptible [00000000] code: curl/1177
+caller is decrement_ttl+0x217/0x830
+CPU: 5 PID: 1177 Comm: curl Not tainted 6.7.0+ #34
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xbd/0xe0
+ check_preemption_disabled+0xd1/0xe0
+ decrement_ttl+0x217/0x830
+ __ip_vs_get_out_rt+0x4e0/0x1ef0
+ ip_vs_nat_xmit+0x205/0xcd0
+ ip_vs_in_hook+0x9b1/0x26a0
+ nf_hook_slow+0xc2/0x210
+ nf_hook+0x1fb/0x770
+ __ip_local_out+0x33b/0x640
+ ip_local_out+0x2a/0x490
+ __ip_queue_xmit+0x990/0x1d10
+ __tcp_transmit_skb+0x288b/0x3d10
+ tcp_connect+0x3466/0x5180
+ tcp_v4_connect+0x1535/0x1bb0
+ __inet_stream_connect+0x40d/0x1040
+ inet_stream_connect+0x57/0xa0
+ __sys_connect_file+0x162/0x1a0
+ __sys_connect+0x137/0x160
+ __x64_sys_connect+0x72/0xb0
+ do_syscall_64+0x6f/0x140
+ entry_SYSCALL_64_after_hwframe+0x6e/0x76
+RIP: 0033:0x7fe6dbbc34e0
 
-[1] (edited for clarity):
+Use the corresponding preemption-aware variants: IP_INC_STATS and
+IP6_INC_STATS.
 
-    WARNING: CPU: 1 PID: 1364 at drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:3245 mlxsw_sp_nexthop_rif (drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:3246 (discriminator 1)) mlxsw_spectrum
-    Hardware name: Mellanox Technologies Ltd. MSN4410/VMOD0010, BIOS 5.11 01/06/2019
-    Call Trace:
-    ? mlxsw_sp_nexthop_rif (drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:3246 (discriminator 1)) mlxsw_spectrum
-    __mlxsw_sp_nexthop_eth_update (drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:3637) mlxsw_spectrum
-    mlxsw_sp_nexthop_update (drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:3679 drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:3727) mlxsw_spectrum
-    mlxsw_sp_nexthop_group_update (drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:3757) mlxsw_spectrum
-    mlxsw_sp_nexthop_group_refresh (drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:4112) mlxsw_spectrum
-    mlxsw_sp_nexthop_obj_event (drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:5118 drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:5191 drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:5315 drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:5500) mlxsw_spectrum
-    nexthops_dump (net/ipv4/nexthop.c:217 net/ipv4/nexthop.c:440 net/ipv4/nexthop.c:3609)
-    register_nexthop_notifier (net/ipv4/nexthop.c:3624)
-    mlxsw_sp_router_init (drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:11486) mlxsw_spectrum
-    mlxsw_sp_init (drivers/net/ethernet/mellanox/mlxsw/spectrum.c:3267) mlxsw_spectrum
-    __mlxsw_core_bus_device_register (drivers/net/ethernet/mellanox/mlxsw/core.c:2202) mlxsw_core
-    mlxsw_devlink_core_bus_device_reload_up (drivers/net/ethernet/mellanox/mlxsw/core.c:2265 drivers/net/ethernet/mellanox/mlxsw/core.c:1603) mlxsw_core
-    devlink_reload (net/devlink/dev.c:314 net/devlink/dev.c:475)
-    [...]
+Found by Linux Verification Center (linuxtesting.org).
 
-Fixes: 9464a3d68ea9 ("mlxsw: spectrum_router: Track next hops at CRIFs")
-Reported-by: Maksym Yaremchuk <maksymy@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/74edb8d45d004e8d8f5318eede6ccc3d786d8ba9.1705502064.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8d8e20e2d7bb ("ipvs: Decrement ttl")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Acked-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlxsw/spectrum_router.c | 24 +++++++++----------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ net/netfilter/ipvs/ip_vs_xmit.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-index debd2c466f11..ae2fb9efbc50 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-@@ -11458,6 +11458,13 @@ int mlxsw_sp_router_init(struct mlxsw_sp *mlxsw_sp,
- 	if (err)
- 		goto err_register_netevent_notifier;
+diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
+index 9193e109e6b3..65e0259178da 100644
+--- a/net/netfilter/ipvs/ip_vs_xmit.c
++++ b/net/netfilter/ipvs/ip_vs_xmit.c
+@@ -271,7 +271,7 @@ static inline bool decrement_ttl(struct netns_ipvs *ipvs,
+ 			skb->dev = dst->dev;
+ 			icmpv6_send(skb, ICMPV6_TIME_EXCEED,
+ 				    ICMPV6_EXC_HOPLIMIT, 0);
+-			__IP6_INC_STATS(net, idev, IPSTATS_MIB_INHDRERRORS);
++			IP6_INC_STATS(net, idev, IPSTATS_MIB_INHDRERRORS);
  
-+	mlxsw_sp->router->netdevice_nb.notifier_call =
-+		mlxsw_sp_router_netdevice_event;
-+	err = register_netdevice_notifier_net(mlxsw_sp_net(mlxsw_sp),
-+					      &mlxsw_sp->router->netdevice_nb);
-+	if (err)
-+		goto err_register_netdev_notifier;
-+
- 	mlxsw_sp->router->nexthop_nb.notifier_call =
- 		mlxsw_sp_nexthop_obj_event;
- 	err = register_nexthop_notifier(mlxsw_sp_net(mlxsw_sp),
-@@ -11473,22 +11480,15 @@ int mlxsw_sp_router_init(struct mlxsw_sp *mlxsw_sp,
- 	if (err)
- 		goto err_register_fib_notifier;
- 
--	mlxsw_sp->router->netdevice_nb.notifier_call =
--		mlxsw_sp_router_netdevice_event;
--	err = register_netdevice_notifier_net(mlxsw_sp_net(mlxsw_sp),
--					      &mlxsw_sp->router->netdevice_nb);
--	if (err)
--		goto err_register_netdev_notifier;
--
- 	return 0;
- 
--err_register_netdev_notifier:
--	unregister_fib_notifier(mlxsw_sp_net(mlxsw_sp),
--				&mlxsw_sp->router->fib_nb);
- err_register_fib_notifier:
- 	unregister_nexthop_notifier(mlxsw_sp_net(mlxsw_sp),
- 				    &mlxsw_sp->router->nexthop_nb);
- err_register_nexthop_notifier:
-+	unregister_netdevice_notifier_net(mlxsw_sp_net(mlxsw_sp),
-+					  &router->netdevice_nb);
-+err_register_netdev_notifier:
- 	unregister_netevent_notifier(&mlxsw_sp->router->netevent_nb);
- err_register_netevent_notifier:
- 	unregister_inet6addr_validator_notifier(&router->inet6addr_valid_nb);
-@@ -11536,11 +11536,11 @@ void mlxsw_sp_router_fini(struct mlxsw_sp *mlxsw_sp)
- {
- 	struct mlxsw_sp_router *router = mlxsw_sp->router;
- 
--	unregister_netdevice_notifier_net(mlxsw_sp_net(mlxsw_sp),
--					  &router->netdevice_nb);
- 	unregister_fib_notifier(mlxsw_sp_net(mlxsw_sp), &router->fib_nb);
- 	unregister_nexthop_notifier(mlxsw_sp_net(mlxsw_sp),
- 				    &router->nexthop_nb);
-+	unregister_netdevice_notifier_net(mlxsw_sp_net(mlxsw_sp),
-+					  &router->netdevice_nb);
- 	unregister_netevent_notifier(&router->netevent_nb);
- 	unregister_inet6addr_validator_notifier(&router->inet6addr_valid_nb);
- 	unregister_inetaddr_validator_notifier(&router->inetaddr_valid_nb);
+ 			return false;
+ 		}
+@@ -286,7 +286,7 @@ static inline bool decrement_ttl(struct netns_ipvs *ipvs,
+ 	{
+ 		if (ip_hdr(skb)->ttl <= 1) {
+ 			/* Tell the sender its packet died... */
+-			__IP_INC_STATS(net, IPSTATS_MIB_INHDRERRORS);
++			IP_INC_STATS(net, IPSTATS_MIB_INHDRERRORS);
+ 			icmp_send(skb, ICMP_TIME_EXCEEDED, ICMP_EXC_TTL, 0);
+ 			return false;
+ 		}
 -- 
 2.43.0
 
