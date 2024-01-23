@@ -1,47 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448F75FBA4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CFB5FBA8;
 	Tue, 23 Jan 2024 01:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974639; cv=none; b=JlMYbNYrfaclQ8nXeZHlleLdJTG5L63S7DlSjbsTaqARdnvQpvDx9XtQcQpXEHhbIrixFXgDr6gN82cMkMK3QMPLIeM4p2qgB3bYacVR0s2spa6bSyeOCvGGaRdyyvJcujzK55syZkSi+C4fsKVWMX9rGYKXofx72FI2uyMzkNE=
+	t=1705974639; cv=none; b=iSxr2qdpglPDBk/HGqEuH/TqCyYuFOx1xQNzEzAv9UyWu+H24lP/OFhq4hi+a/ObQUo/9CGjCpan8Vuz5omI4u8nzc+l/IxVgQP7nt6Bvm/4pbCP3DgPNfjRIVoe9x0R2YdqVe4caUErOuWxW/mMIc7dofvTDyLzZkzwxZmgZUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705974639; c=relaxed/simple;
-	bh=su8HHnhplTb68sKyeisS9sVU0vikvo1TZs2cAUGBDsE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nmIheffBftkyvVo9ISEM1FVcCBKEfXNrXvSxsFqExCKzIvegmYnl+7CoZ9YIaF789pH3vjNiP6bKut0ALCq92hld6jr4PVzEwX2v+SGBXDKYEDyLF1tTrkfHC8Ayb0IhrubyByee3DqtAPfEb4ZMZ53pCFfgHWywaXMkfSpCxwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FrwQBv7S; arc=none smtp.client-ip=10.30.226.201
+	bh=2HjXezvYI1CqF/0WtU4wIKOIXylNgaNAyhQ5kNTQs98=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=DmssQmkligyCmaHl7m9DhuXahZYKULClpOcGgIbScTCGjIQxubquqDMceGnPzuhOMIcAiqVLRSoK6xM4y4wb8h4nvjC+G6VP9kaTQOD1xgSJEM7QFz9vPWkWAyNVhLNva/VeYoQYX1jvG/tJb6Q6aeoFuMDtA9v9018Pu5PuzwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H71nqtsc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrwQBv7S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0762AC433A6;
-	Tue, 23 Jan 2024 01:50:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974639;
-	bh=su8HHnhplTb68sKyeisS9sVU0vikvo1TZs2cAUGBDsE=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H71nqtsc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECBDC433F1;
+	Tue, 23 Jan 2024 01:50:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1705974639;
+	bh=2HjXezvYI1CqF/0WtU4wIKOIXylNgaNAyhQ5kNTQs98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FrwQBv7SJpma3AyollNtQv1s8dxxeWtv3ZeljMrr6wONdMeOwbn6KWus2sUjcg/ff
-	 Vcnck7Y9ZBp4YaH0UhBG7ehi/M54C45sErlOlD31BAHqfPyVBlENh3J/fPMzkkssXX
-	 JSn6T+T5nAzACwWzftWovxOdxniR66mFhfclL8aU=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	b=H71nqtsc0Ink2mEoAf/cGsny89ehMI7nY91Mo11nMq2/lPMTMRllKco54uo6SdSpx
+	 HAiM57NIyaOY0N/rM89X/urKl72lVrNbl5X5V/ZsDP3YcpziVHOfGNs6SSwt84FtWm
+	 7eASKPOXjNILgaC0DvwtYUW7qJFrtRXE/cgBDrAnB0NlwdPrB8Uux7FubntTNMeE4z
+	 rnWfUlsa0eoNcXOPUEDOfaRI66LD+yGpo7hJk0NECZSHDavxHl1dKXJ91WGbggT3p+
+	 gIKSH8zOzA39MCAW5y2qMEAQDidUmx/ZcnTsbMDupye6kJYPbYV/RqKqOFlfz61Mvj
+	 +gLTEF/4Yhjag==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	"Lukas F. Hartmann" <lukas@mntre.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 100/583] wifi: rtw88: sdio: Honor the host max_req_size in the RX path
-Date: Mon, 22 Jan 2024 15:52:31 -0800
-Message-ID: <20240122235815.239584415@linuxfoundation.org>
-X-Mailer: git-send-email 2.43.0
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.6 000/583] 6.6.14-rc1 review
+Date: Mon, 22 Jan 2024 17:50:36 -0800
+Message-Id: <20240123015036.86096-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
-References: <20240122235812.238724226@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,123 +61,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+Hello,
 
-------------------
+On Mon, 22 Jan 2024 15:50:51 -0800 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+> This is the start of the stable review cycle for the 6.6.14 release.
+> There are 583 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 24 Jan 2024 23:56:49 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.14-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
 
-[ Upstream commit 00384f565a91c08c4bedae167f749b093d10e3fe ]
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-Lukas reports skb_over_panic errors on his Banana Pi BPI-CM4 which comes
-with an Amlogic A311D (G12B) SoC and a RTL8822CS SDIO wifi/Bluetooth
-combo card. The error he observed is identical to what has been fixed
-in commit e967229ead0e ("wifi: rtw88: sdio: Check the HISR RX_REQUEST
-bit in rtw_sdio_rx_isr()") but that commit didn't fix Lukas' problem.
+Tested-by: SeongJae Park <sj@kernel.org>
 
-Lukas found that disabling or limiting RX aggregation works around the
-problem for some time (but does not fully fix it). In the following
-discussion a few key topics have been discussed which have an impact on
-this problem:
-- The Amlogic A311D (G12B) SoC has a hardware bug in the SDIO controller
-  which prevents DMA transfers. Instead all transfers need to go through
-  the controller SRAM which limits transfers to 1536 bytes
-- rtw88 chips don't split incoming (RX) packets, so if a big packet is
-  received this is forwarded to the host in it's original form
-- rtw88 chips can do RX aggregation, meaning more multiple incoming
-  packets can be pulled by the host from the card with one MMC/SDIO
-  transfer. This Depends on settings in the REG_RXDMA_AGG_PG_TH
-  register (BIT_RXDMA_AGG_PG_TH limits the number of packets that will
-  be aggregated, BIT_DMA_AGG_TO_V1 configures a timeout for aggregation
-  and BIT_EN_PRE_CALC makes the chip honor the limits more effectively)
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 8f8e522b6a7a ("Linux 6.6.14-rc1")
 
-Use multiple consecutive reads in rtw_sdio_read_port() and limit the
-number of bytes which are copied by the host from the card in one
-MMC/SDIO transfer. This allows receiving a buffer that's larger than
-the hosts max_req_size (number of bytes which can be transferred in
-one MMC/SDIO transfer). As a result of this the skb_over_panic error
-is gone as the rtw88 driver is now able to receive more than 1536 bytes
-from the card (either because the incoming packet is larger than that
-or because multiple packets have been aggregated).
+Thanks,
+SJ
 
-In case of an receive errors (-EILSEQ has been observed by Lukas) we
-need to drain the remaining data from the card's buffer, otherwise the
-card will return corrupt data for the next rtw_sdio_read_port() call.
+[...]
 
-Fixes: 65371a3f14e7 ("wifi: rtw88: sdio: Add HCI implementation for SDIO based chipsets")
-Reported-by: Lukas F. Hartmann <lukas@mntre.com>
-Closes: https://lore.kernel.org/linux-wireless/CAFBinCBaXtebixKbjkWKW_WXc5k=NdGNaGUjVE8NCPNxOhsb2g@mail.gmail.com/
-Suggested-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Tested-by: Lukas F. Hartmann <lukas@mntre.com>
-Reported-by: Lukas F. Hartmann <lukas@mntre.com>
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Tested-by: Lukas F. Hartmann <lukas@mntre.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231120115726.1569323-1-martin.blumenstingl@googlemail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/sdio.c | 35 ++++++++++++++++++-----
- 1 file changed, 28 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
-index 2c1fb2dabd40..0cae5746f540 100644
---- a/drivers/net/wireless/realtek/rtw88/sdio.c
-+++ b/drivers/net/wireless/realtek/rtw88/sdio.c
-@@ -500,19 +500,40 @@ static u32 rtw_sdio_get_tx_addr(struct rtw_dev *rtwdev, size_t size,
- static int rtw_sdio_read_port(struct rtw_dev *rtwdev, u8 *buf, size_t count)
- {
- 	struct rtw_sdio *rtwsdio = (struct rtw_sdio *)rtwdev->priv;
-+	struct mmc_host *host = rtwsdio->sdio_func->card->host;
- 	bool bus_claim = rtw_sdio_bus_claim_needed(rtwsdio);
- 	u32 rxaddr = rtwsdio->rx_addr++;
--	int ret;
-+	int ret = 0, err;
-+	size_t bytes;
- 
- 	if (bus_claim)
- 		sdio_claim_host(rtwsdio->sdio_func);
- 
--	ret = sdio_memcpy_fromio(rtwsdio->sdio_func, buf,
--				 RTW_SDIO_ADDR_RX_RX0FF_GEN(rxaddr), count);
--	if (ret)
--		rtw_warn(rtwdev,
--			 "Failed to read %zu byte(s) from SDIO port 0x%08x",
--			 count, rxaddr);
-+	while (count > 0) {
-+		bytes = min_t(size_t, host->max_req_size, count);
-+
-+		err = sdio_memcpy_fromio(rtwsdio->sdio_func, buf,
-+					 RTW_SDIO_ADDR_RX_RX0FF_GEN(rxaddr),
-+					 bytes);
-+		if (err) {
-+			rtw_warn(rtwdev,
-+				 "Failed to read %zu byte(s) from SDIO port 0x%08x: %d",
-+				 bytes, rxaddr, err);
-+
-+			 /* Signal to the caller that reading did not work and
-+			  * that the data in the buffer is short/corrupted.
-+			  */
-+			ret = err;
-+
-+			/* Don't stop here - instead drain the remaining data
-+			 * from the card's buffer, else the card will return
-+			 * corrupt data for the next rtw_sdio_read_port() call.
-+			 */
-+		}
-+
-+		count -= bytes;
-+		buf += bytes;
-+	}
- 
- 	if (bus_claim)
- 		sdio_release_host(rtwsdio->sdio_func);
--- 
-2.43.0
-
-
-
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: reclaim.sh
+ok 11 selftests: damon: lru_sort.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
