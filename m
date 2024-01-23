@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1CD1FC4;
-	Tue, 23 Jan 2024 02:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9914B1FC4;
+	Tue, 23 Jan 2024 02:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975772; cv=none; b=cbgx1xyQWszy4W0futSTOAyto/juaOpMKnFVzueM7EzuxM15oAmkGmuRth31OS66OximAdECtts1bh4QgzqHB1jIeQaXjkIhpASB9tPG/kwb02HYPqyYxWU9b7Eyeajzq+qIFbdTS+nZprlxk6no+BfLYqnxr1yMzNs/xv8zv68=
+	t=1705975773; cv=none; b=o7AwOu4LDvdVvwiWU2dvBbGR8e9MWAtmyi3kcDvBEmbnxvUPjAlFJr7iTLO07PLDX65snXLdKCNqY+C4NYuJb4MfUOfUeJApT8zygBlyR22pviXInxnWLKCcMD3BaKOpXwypidUL56wPNGb+okiAZM6AY4CfrY3/AK2RSJ53Ft4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975772; c=relaxed/simple;
-	bh=Y9PA/2PWQgVFGvXbl1MdgDdUGTZBfTnzJXCztelShdM=;
+	s=arc-20240116; t=1705975773; c=relaxed/simple;
+	bh=FXqnlaYO4vO2kEOK8emK31Zf2astjsV73igkzwEecEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LY/08s4iCdgZ16waMUUT3Vg2cQiE7ximAa2uaAReb4qPO/qGdg1QBf/6+rOKqDz4xzi7AEkrap4tBKZFU0XpYq5NlFrFMhQexo76rV0cXX3L7S2D29pW8QHO20iAFCFUyjBu7UYF2nAjlajW8sSGU0aMdH4Qxtr/jhqLP0npnMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meKiYwbV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=APzIOMNEqrLUuYRgPLDwDKI99g8uGPFRVN73fz66qXs6VLkTA8kOE5Tar/LrZOcTH3lA6ZPOkLEws3hNvGPRZLNLAONsiwi8X3gyX62yF/s3xQ2GSfyJ3PcuHFM/BtNm/3O/jClbG8XyPSVrFwvN1VTkmeUF7A5PwNwG2pGEn/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=joQ/PV6j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meKiYwbV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61414C433C7;
-	Tue, 23 Jan 2024 02:09:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="joQ/PV6j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A667C433C7;
+	Tue, 23 Jan 2024 02:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975772;
-	bh=Y9PA/2PWQgVFGvXbl1MdgDdUGTZBfTnzJXCztelShdM=;
+	s=korg; t=1705975773;
+	bh=FXqnlaYO4vO2kEOK8emK31Zf2astjsV73igkzwEecEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=meKiYwbVpXZ55ohnptWzNI6TLvTyg0n/341RZTTMOK4E45Dl49AlNVQRcGkM7GFv7
-	 KLkV9enlFaoGpx8GGCE2hkU6Ol7QNoNSJOEG+/ulu1b7rTzNQOyUMFxgiNQWWRHW06
-	 SYIytPYj1uGJkq7+rCVV15NEA0c8wapVo/BVolr8=
+	b=joQ/PV6j8EEDEFgVwc51lLCgQye0NvOJruDmMywVoi2H/G+zr/3bXopr+OwYoJvth
+	 SxVfVfxWb+Qp6OYXOVubGcpmX8RHNmnni3MW8staJysJzCuzBp2SjUc2FYFX7hV6wp
+	 JLTGihXMOLXJyOUdOVTfMIyi4N9TTQXGKuEpYyLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Sun <sunhao.th@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yonghong.song@linux.dev>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <horms@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 555/583] bpf: Reject variable offset alu on PTR_TO_FLOW_KEYS
-Date: Mon, 22 Jan 2024 16:00:06 -0800
-Message-ID: <20240122235829.134810349@linuxfoundation.org>
+Subject: [PATCH 6.6 556/583] net: dsa: vsc73xx: Add null pointer check to vsc73xx_gpio_probe
+Date: Mon, 22 Jan 2024 16:00:07 -0800
+Message-ID: <20240122235829.162926137@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -52,86 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Sun <sunhao.th@gmail.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit 22c7fa171a02d310e3a3f6ed46a698ca8a0060ed ]
+[ Upstream commit 776dac5a662774f07a876b650ba578d0a62d20db ]
 
-For PTR_TO_FLOW_KEYS, check_flow_keys_access() only uses fixed off
-for validation. However, variable offset ptr alu is not prohibited
-for this ptr kind. So the variable offset is not checked.
+devm_kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure.
 
-The following prog is accepted:
-
-  func#0 @0
-  0: R1=ctx() R10=fp0
-  0: (bf) r6 = r1                       ; R1=ctx() R6_w=ctx()
-  1: (79) r7 = *(u64 *)(r6 +144)        ; R6_w=ctx() R7_w=flow_keys()
-  2: (b7) r8 = 1024                     ; R8_w=1024
-  3: (37) r8 /= 1                       ; R8_w=scalar()
-  4: (57) r8 &= 1024                    ; R8_w=scalar(smin=smin32=0,
-  smax=umax=smax32=umax32=1024,var_off=(0x0; 0x400))
-  5: (0f) r7 += r8
-  mark_precise: frame0: last_idx 5 first_idx 0 subseq_idx -1
-  mark_precise: frame0: regs=r8 stack= before 4: (57) r8 &= 1024
-  mark_precise: frame0: regs=r8 stack= before 3: (37) r8 /= 1
-  mark_precise: frame0: regs=r8 stack= before 2: (b7) r8 = 1024
-  6: R7_w=flow_keys(smin=smin32=0,smax=umax=smax32=umax32=1024,var_off
-  =(0x0; 0x400)) R8_w=scalar(smin=smin32=0,smax=umax=smax32=umax32=1024,
-  var_off=(0x0; 0x400))
-  6: (79) r0 = *(u64 *)(r7 +0)          ; R0_w=scalar()
-  7: (95) exit
-
-This prog loads flow_keys to r7, and adds the variable offset r8
-to r7, and finally causes out-of-bounds access:
-
-  BUG: unable to handle page fault for address: ffffc90014c80038
-  [...]
-  Call Trace:
-   <TASK>
-   bpf_dispatcher_nop_func include/linux/bpf.h:1231 [inline]
-   __bpf_prog_run include/linux/filter.h:651 [inline]
-   bpf_prog_run include/linux/filter.h:658 [inline]
-   bpf_prog_run_pin_on_cpu include/linux/filter.h:675 [inline]
-   bpf_flow_dissect+0x15f/0x350 net/core/flow_dissector.c:991
-   bpf_prog_test_run_flow_dissector+0x39d/0x620 net/bpf/test_run.c:1359
-   bpf_prog_test_run kernel/bpf/syscall.c:4107 [inline]
-   __sys_bpf+0xf8f/0x4560 kernel/bpf/syscall.c:5475
-   __do_sys_bpf kernel/bpf/syscall.c:5561 [inline]
-   __se_sys_bpf kernel/bpf/syscall.c:5559 [inline]
-   __x64_sys_bpf+0x73/0xb0 kernel/bpf/syscall.c:5559
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0x3f/0x110 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-Fix this by rejecting ptr alu with variable offset on flow_keys.
-Applying the patch rejects the program with "R7 pointer arithmetic
-on flow_keys prohibited".
-
-Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
-Signed-off-by: Hao Sun <sunhao.th@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/bpf/20240115082028.9992-1-sunhao.th@gmail.com
+Fixes: 05bd97fc559d ("net: dsa: Add Vitesse VSC73xx DSA router driver")
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240111072018.75971-1-chentao@kylinos.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/dsa/vitesse-vsc73xx-core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index ed24ad2e5bd2..97fd1766818b 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -12087,6 +12087,10 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 	}
+diff --git a/drivers/net/dsa/vitesse-vsc73xx-core.c b/drivers/net/dsa/vitesse-vsc73xx-core.c
+index 4f09e7438f3b..c99fb1bd4c25 100644
+--- a/drivers/net/dsa/vitesse-vsc73xx-core.c
++++ b/drivers/net/dsa/vitesse-vsc73xx-core.c
+@@ -1118,6 +1118,8 @@ static int vsc73xx_gpio_probe(struct vsc73xx *vsc)
  
- 	switch (base_type(ptr_reg->type)) {
-+	case PTR_TO_FLOW_KEYS:
-+		if (known)
-+			break;
-+		fallthrough;
- 	case CONST_PTR_TO_MAP:
- 		/* smin_val represents the known value */
- 		if (known && smin_val == 0 && opcode == BPF_ADD)
+ 	vsc->gc.label = devm_kasprintf(vsc->dev, GFP_KERNEL, "VSC%04x",
+ 				       vsc->chipid);
++	if (!vsc->gc.label)
++		return -ENOMEM;
+ 	vsc->gc.ngpio = 4;
+ 	vsc->gc.owner = THIS_MODULE;
+ 	vsc->gc.parent = vsc->dev;
 -- 
 2.43.0
 
