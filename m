@@ -1,82 +1,92 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEB3823A6;
-	Tue, 23 Jan 2024 17:50:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E2612BEAE;
+	Tue, 23 Jan 2024 18:54:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706032231; cv=none; b=ohepEsI3Yg4MLYgYsynllung5VboXhxf1tmlB6dXXpRJ1Csk4ghehg2gMTZYTgk+XRGp72+Gzi8ZhoPWCIk10ItyI8tuyU48k5XDnjSoJ3+eBSoSHTOLwtl4RxKXSzqhYMSTtGk3dlTmtK2EsU2DwWTbmq1ptsva0JhPu6vGY0w=
+	t=1706036098; cv=none; b=JPq5jULn6cl2krHXtiDn1wJZ1iDHgUyGO11AmnVOwdxnqRehCcvLDwv4SvnMtrQ1MksOsdlEBGNkoHyqWf20t4XlnBAVjp9hRJ7NCiHidJo7llh646FtT0rNP3KvLQ22r8yWtE/7WUx3A5Jb/nLLPnqc57xYbkhQhMcR+ZPCbJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706032231; c=relaxed/simple;
-	bh=x1Ni5BlIAZGl/I/K/Xm762bnUAtUEwlvGnjM0NI6qOY=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=t1phqpZnwKvG2PP3KNFRqzNEoDE6h4Rin8XlLeK5DkDM/um+2BpE/nj9MeF8xNrXkScBF656gJtYQzmeR/e0a/vbB7eZpERtc1zdlQLB5v9TI37a20X8V+qGtfn7po64qmxGuOS4ENSSX3xLP3Ammen2zE4Fv9g/JmwJgb2aR4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=prslJmCS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706036098; c=relaxed/simple;
+	bh=Zq83BY/6gby8jx+0PqbiYFZI9HfPYSVZXXbRmBjHK0U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hNtjO68jo2A4iNFbs41o7ULYGM/Xfd1gifSoCrVXBEPnXdihpPA/G/xDez4HMKh/Ydy2q4VLsCPX2vMXTH3CcygKK6wjJOCyYw/DfdP6ctKyWEko4fNf48eTrUlMSBti8YUuKc9D0QFkgcRJXtCTduYsfEb+1f12lPgCmA+MkDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=svenjoac@gmx.de header.b=q7jY+PFq; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="prslJmCS"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 18D2DC43330;
-	Tue, 23 Jan 2024 17:50:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706032230;
-	bh=x1Ni5BlIAZGl/I/K/Xm762bnUAtUEwlvGnjM0NI6qOY=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=prslJmCSrnlLTLgLzDJtl7IO1Ao4Ndrq+/cV/Wx3ja0KU0pL41OdzS3P8PqpwKTG/
-	 IKjr3ZVKUNuNDFkglbXEYxgbrTNDTDiBQy6NYIPTywMH474wR1E0oJyi148IeL+CeO
-	 6ODf80y5fGgXK9BMVnzT2/qnD4t11a9BuF7a1eQ7uUp0fZ59bWmyvceBeAPzHAERmz
-	 6pVzjV86Vs6xrAGAx3Rmj5v0h2F7XpetzOZ0UwjjNwwiBzBJ9zZENJDpf3I7tGgSgN
-	 26GakvNB5lm70K2TfF0fGmgOyb2UyuFFW8LEqgwYa4erGZ8w/2GfOxqZw5yinETiG1
-	 CxOcSl6Y22nlw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 010D8DFF763;
-	Tue, 23 Jan 2024 17:50:30 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=svenjoac@gmx.de header.b="q7jY+PFq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+	t=1706036070; x=1706640870; i=svenjoac@gmx.de;
+	bh=Zq83BY/6gby8jx+0PqbiYFZI9HfPYSVZXXbRmBjHK0U=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:In-Reply-To:References:
+	 Date;
+	b=q7jY+PFqc27lMwwc9IChsZoxlq/bXZuI3jygYu6iPCeN53rVSbd8ZWBz0K6W5E3X
+	 UBYLLMLN0Vlh6hKF6tUM7N1cQvz5zOoS3UmEfFGZEppMISphHDQogyDGChsvuXB57
+	 9Hzr53WbZ4w1CEQZB+C7O70XDdzOA0cQcnkpCu8swmx/02vSjEYLOENuaSzqjfzft
+	 EUGitjxy1RooT4N68vjWCNCCfO/ez71aMnx+Li9pymXMdQ5fPjHNARLBeKaUm9kER
+	 FiM/TDIHecWvzE4N9EaSvla8T0YJep6y1tvFmjCLz58r3bUwZ1fy66q0u4qaRUqQ2
+	 /ioA8Lq2JWFqRPnBcQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from localhost.localdomain ([79.203.86.131]) by mail.gmx.net
+ (mrgmx004 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1MDysg-1rKgvy0Ylw-009zLT; Tue, 23 Jan 2024 19:54:30 +0100
+Received: by localhost.localdomain (Postfix, from userid 1000)
+	id 65B7380110; Tue, 23 Jan 2024 19:54:27 +0100 (CET)
+From: Sven Joachim <svenjoac@gmx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,  patches@lists.linux.dev,
+  linux-kernel@vger.kernel.org,  torvalds@linux-foundation.org,
+  akpm@linux-foundation.org,  linux@roeck-us.net,  shuah@kernel.org,
+  patches@kernelci.org,  lkft-triage@lists.linaro.org,  pavel@denx.de,
+  jonathanh@nvidia.com,  f.fainelli@gmail.com,  sudipm.mukherjee@gmail.com,
+  srw@sladewatkins.net,  rwarsow@gmx.de,  conor@kernel.org,
+  allen.lkml@gmail.com
+Subject: Re: [PATCH 6.1 000/417] 6.1.75-rc1 review
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org> (Greg
+	Kroah-Hartman's message of "Mon, 22 Jan 2024 15:52:48 -0800")
+References: <20240122235751.480367507@linuxfoundation.org>
+Date: Tue, 23 Jan 2024 19:54:27 +0100
+Message-ID: <874jf3hod8.fsf@turtle.gmx.de>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v4] RISC-V: build: Allow LTO to be selected
-From: patchwork-bot+linux-riscv@kernel.org
-Message-Id: 
- <170603222999.30461.9105047550962692358.git-patchwork-notify@kernel.org>
-Date: Tue, 23 Jan 2024 17:50:29 +0000
-References: <20231017-riscv-lto-v4-1-e7810b24e805@kernel.org>
-In-Reply-To: <20231017-riscv-lto-v4-1-e7810b24e805@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: linux-riscv@lists.infradead.org, paul.walmsley@sifive.com,
- palmer@dabbelt.com, aou@eecs.berkeley.edu, conor@kernel.org,
- ndesaulniers@google.com, trix@redhat.com, samitolvanen@google.com,
- twd2.me@gmail.com, llvm@lists.linux.dev, patches@lists.linux.dev
+Content-Type: text/plain
+X-Provags-ID: V03:K1:doAmV5KqM2/Cz0caglCAVH8AQTXpevCKwLUyqEu0d176D4SdO4B
+ L3h5BhP84x8cP9EpIog+FuN2w8WBJlGKkoQCoV5FolAsgFiBKeHse7qZ33ly0kso4JvEXD5
+ uMHQqOtWjlNXe9EvOs1R4y5+Xzc99hfd1bjkvsJnRhQQSDh3+NgxRQ5chzdr0Tptp2PO74I
+ coc2EWDr2kQmhfOMrHnbA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:DklUbd5GSsE=;JoZZEj5+xUKVIKh4T+CyjC3NgTx
+ MtePDiA67uA8+xEUPDzMyP2siJ37OnpY2W9WCgc/R7cePVqPCsR7aE68/5zHQP2MR3hCxgyUH
+ LbjwAThxswzz9gCE5Nm9HqN8jpWodp8CyEWryk0zlK3o2CV+Bv8H9coNDnFqhPLjpBL7Kvzqz
+ OSzy+M+grQipkKo0FwXt0o5tRA6T/S1Wxoid8/w1I4Ij0brXTsZ2+BO/MqNKWa3vmQVgrA/Jt
+ d23V7xtzJnCs/PPtS/M7awbezgWXJfS+Hqh3y+rEVIDmb6yLmlyODNZ/AanGs47vNtrMpTRfK
+ Pnjf5zzgd9xbPASHTJq1jQzEsvli79sOkTzQjdE+YYu5DmF+ZIxi1LdTo+Alhynpt6hnMN2xX
+ M9j0FSw4+x3bCy8PaH94Lk1Gh7c+lnrlZAKPi1jT2sg1O9VdHaKD9kp8yYwGKbdNq1xNhX2cP
+ ZFbOTrniqHfCXWVFTTpalmNtvBLMnoQFCBbp58Q4RCaREfmGi+080NFmhZ3uj69Ifspg//GfV
+ jjbEyWjyQWm5kaWRJ5iiB/KAJARLudZqe/yTW1Xo7tzUdfkhKP8CPG9eyHkrprCrW5+7ce5vN
+ e9NDfS3s9OlGU5EvdIWiG6MxXVNkQrAbooXhQndXKGPOH7YhY5JdEntQBNBoIxXtaxe+rPI21
+ Pf5ciuAvXkxu04Ba45So2bkTzFzZEUDlRC+yM2+090TDPjlfIxz/h1AXXUYe9eJoQgqObju5W
+ PjJxl7pW+uq8rraYKz5PL7K6jekNJqUuC5uDYG/oKkolLLkxgTWfLa6r+p7i21U1oMewFUlbT
+ Lq4sA+cJ71a5vf0JavBMUYSEpToBTcaXdKblN/XTjXl2Ep2KE7q2+nFz6c5rupSFJ94jZnZuD
+ T+UNehTLpjeemF4JsdrL+emS8p2fEhquNragajMV39I6GirFtYipefbzaB7C7+vQ9t5YiUWlb
+ T7vFiw==
 
-Hello:
+On 2024-01-22 15:52 -0800, Greg Kroah-Hartman wrote:
 
-This patch was applied to riscv/linux.git (for-next)
-by Palmer Dabbelt <palmer@rivosinc.com>:
+> This is the start of the stable review cycle for the 6.1.75 release.
+> There are 417 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-On Tue, 17 Oct 2023 15:21:04 -0700 you wrote:
-> From: Wende Tan <twd2.me@gmail.com>
-> 
-> Allow LTO to be selected for RISC-V, only when LLD >= 14, since there is
-> an issue [1] in prior LLD versions that prevents LLD to generate proper
-> machine code for RISC-V when writing `nop`s.
-> 
-> To avoid boot failures in QEMU [2], '-mattr=+c' and '-mattr=+relax'
-> need to be passed via '-mllvm' to ld.lld, as there appears to be an
-> issue with LLVM's target-features and LTO [3], which can result in
-> incorrect relocations to branch targets [4]. Once this is fixed in LLVM,
-> it can be made conditional on affected ld.lld versions.
-> 
-> [...]
+Works fine for me on x86_64.
 
-Here is the summary with links:
-  - [v4] RISC-V: build: Allow LTO to be selected
-    https://git.kernel.org/riscv/c/021d23428bdb
+Tested-by: Sven Joachim <svenjoac@gmx.de>
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Cheers,
+       Sven
