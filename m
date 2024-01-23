@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F427E595;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D865823CA;
 	Tue, 23 Jan 2024 02:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975779; cv=none; b=Khnx8J8gQeGZ660mh+Y7AMvBWaDaRclaz2YaA9/jgmLsm1tCe1orlLqcak9UeYU0EtjiQKDwhRkVKqRYatOvvHhYOaCQtWTWpnwCDLq8+M82v516qJxZ9Zygxq6tnY7JDmMKCkvuoGkTEEqN3dpqap0JJyi8jVevQg605rTJdZk=
+	t=1705975779; cv=none; b=QnkgQ+tTPDYWqeX1fGUdk7Wmk0yLRYHKuqpQbhJWKPcIEcUYr2bTClYu1p2l7zuCLYGvW+93kDxcejg5AKxxohD1EZwHMr4ENaZ4LIcE9oWAWU9bDH2POyvhswL19psjD8WbpI6gY9UejwaNxfJqY5gWvr4nMyJeHkJ0ANJE6iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705975779; c=relaxed/simple;
-	bh=8QH6o8OweQlRdvpkEUaKek3+h8AbVSgcg0mZGt7jHa8=;
+	bh=nKUh8jelO/JGTdISYsgqzYsWrFdV8NYNysDn2y2Uwyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0kGHn8BySeqgIlXqgAzHeJDkp5eMohjr0oNMUSF+b1/Jv/9Owd6n09e16WttgMe29RCctMlqRQ3rFsX560rl5E7DtXK7bDh9irYl+PLp9iES9xDa7eRS/HBN4WN2PN0ygQM2MyPl/hs1AIZ0yIM8wW5dT07WHjCFU0XCQy+N58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5o9bALM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KfDL5M1avNIsrPzS0H0bWSsbxynyQenzgoinQ2v9N/mfhBPBHiRvYklG2TnAlB3FJAEh2FBS2+s/EfjscxqdeRuRL4fgGVFgrqKcWYWLx3tKs61IdniupY4F7jdwy0QVHtN5HhSipbHn9phipRzg+BSoRCg5MDCTo9YXt4kHMmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQvWNu71; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5o9bALM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB268C43390;
-	Tue, 23 Jan 2024 02:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQvWNu71"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF14C433F1;
+	Tue, 23 Jan 2024 02:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975778;
-	bh=8QH6o8OweQlRdvpkEUaKek3+h8AbVSgcg0mZGt7jHa8=;
+	s=korg; t=1705975779;
+	bh=nKUh8jelO/JGTdISYsgqzYsWrFdV8NYNysDn2y2Uwyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b5o9bALMmuJRmJXxuwXYYTsPajG9TvcWNqk9n1MfFKCE4K8vm02f8y0qOIRfbnGlx
-	 14vMLC4YcxraQSROI5lEQad+96uZpouxLm9spVJeKl5AUxDV7X5EMm41MJqnL5buDM
-	 O/0c3p+CaFL+cWNv8lwvv849tm6gdhYKU47O/F7g=
+	b=gQvWNu71wVh11IR+S1400WVMcyfDHJyYjJ7Yjlf4ZIpHazgRicLcb2tdvkQCg6h5C
+	 +YmO/scvZoKXxnu/YkAKslAuMlnrM14k14+/s+FW2HhkF/YdXpO/hPc9bUoJqP16yn
+	 UStstE+YIv+h/QHvYCpCzgcUMVh5J+NI4jaB8avI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditi Ghag <aditi.ghag@isovalent.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 544/583] bpf: iter_udp: Retry with a larger batch size without going back to the previous bucket
-Date: Mon, 22 Jan 2024 15:59:55 -0800
-Message-ID: <20240122235828.777066961@linuxfoundation.org>
+Subject: [PATCH 6.6 562/583] netfilter: nfnetlink_log: use proper helper for fetching physinif
+Date: Mon, 22 Jan 2024 16:00:13 -0800
+Message-ID: <20240122235829.366210865@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -53,46 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
 
-[ Upstream commit 19ca0823f6eaad01d18f664a00550abe912c034c ]
+[ Upstream commit c3f9fd54cd87233f53bdf0e191a86b3a5e960e02 ]
 
-The current logic is to use a default size 16 to batch the whole bucket.
-If it is too small, it will retry with a larger batch size.
+We don't use physindev in __build_packet_message except for getting
+physinif from it. So let's switch to nf_bridge_get_physinif to get what
+we want directly.
 
-The current code accidentally does a state->bucket-- before retrying.
-This goes back to retry with the previous bucket which has already
-been done. This patch fixed it.
-
-It is hard to create a selftest. I added a WARN_ON(state->bucket < 0),
-forced a particular port to be hashed to the first bucket,
-created >16 sockets, and observed the for-loop went back
-to the "-1" bucket.
-
-Cc: Aditi Ghag <aditi.ghag@isovalent.com>
-Fixes: c96dac8d369f ("bpf: udp: Implement batching for sockets iterator")
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: Aditi Ghag <aditi.ghag@isovalent.com>
-Link: https://lore.kernel.org/r/20240112190530.3751661-2-martin.lau@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 9874808878d9 ("netfilter: bridge: replace physindev with physinif in nf_bridge_info")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/netfilter/nfnetlink_log.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index bd12a7658213..a4857c85a020 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -3192,7 +3192,6 @@ static struct sock *bpf_iter_udp_batch(struct seq_file *seq)
- 		/* After allocating a larger batch, retry one more time to grab
- 		 * the whole bucket.
- 		 */
--		state->bucket--;
- 		goto again;
- 	}
- done:
+diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
+index f03f4d4d7d88..134e05d31061 100644
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -508,7 +508,7 @@ __build_packet_message(struct nfnl_log_net *log,
+ 					 htonl(br_port_get_rcu(indev)->br->dev->ifindex)))
+ 				goto nla_put_failure;
+ 		} else {
+-			struct net_device *physindev;
++			int physinif;
+ 
+ 			/* Case 2: indev is bridge group, we need to look for
+ 			 * physical device (when called from ipv4) */
+@@ -516,10 +516,10 @@ __build_packet_message(struct nfnl_log_net *log,
+ 					 htonl(indev->ifindex)))
+ 				goto nla_put_failure;
+ 
+-			physindev = nf_bridge_get_physindev(skb);
+-			if (physindev &&
++			physinif = nf_bridge_get_physinif(skb);
++			if (physinif &&
+ 			    nla_put_be32(inst->skb, NFULA_IFINDEX_PHYSINDEV,
+-					 htonl(physindev->ifindex)))
++					 htonl(physinif)))
+ 				goto nla_put_failure;
+ 		}
+ #endif
 -- 
 2.43.0
 
