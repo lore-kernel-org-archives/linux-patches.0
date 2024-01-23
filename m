@@ -1,123 +1,125 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C9460278;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F56604C8;
 	Tue, 23 Jan 2024 01:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974680; cv=none; b=NxW0Il23RjXVcCwtZRVVtA/XH3vwNhDGKS3uTTY+diNDgH9Hp72stlr6Nr8sQwYosIydh+wwnLICfelln7hDjlLdiyfJdQCvucNX18fayx1rjXUh6w8xFFLy7lqhiwOBVNROdYHqQ56fr5d2rn1aHysUxOWfsqaauakiWB1yuCA=
+	t=1705974681; cv=none; b=DWzIy/Mn776d6evBL3X661huChambW/Yci2c25VdYX61/6KmV3T1E/vEDUNBp1E3GW3dHRoWzNfdbk9hP7n0oLoG7AeFlzKR0HrQiRxxGUMM3ocZKoMGf5BRun0r6M+VUh3j/fwPdlbbYgujae7nG95XPGWx7KSOo8E9UKpcDMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974680; c=relaxed/simple;
-	bh=82x0pqa7Y3msoM4GpIIkg1fEDaQow85oJl5hgYu/j8M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lbxct3dUY3oSHP229QcLhehw1p6tl+XX2Feqco4bCjLOAzxgQAwa9u8dj3TCH6L8mJC+z4/e9s5GuOxWZCui2qtTzwAjV+i1yYvpYNBub4UxYGOqHyuvWnWLMCQBqYypxgpZDSVmcrXXwTkz8Suac49EoSOdiOsFEavigvthr+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mvicddjm; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1705974681; c=relaxed/simple;
+	bh=yA2iL76hl8rgK1nibRnpqkKec6o2X7SEeiCiwxLsju4=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=NXk/o+aotVTCq0NaEb4rtBhQ7HjhvWsJVR4ZtGa1sg+0XogqubwK11i9YxRWxFiyEK/R/S5zfBdDkWyEWlKb7z+zQlKfLAaSh+UfoChOxbD8Ebr8IC0OSCTxiXXYJUDDRvn9uU6RxNQxz8yCjYJUZbZIU2/PaHnJBh5fOuSBQG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FIt0/a1T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mvicddjm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57476C433C7;
-	Tue, 23 Jan 2024 01:51:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705974680;
-	bh=82x0pqa7Y3msoM4GpIIkg1fEDaQow85oJl5hgYu/j8M=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FIt0/a1T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C012C433F1;
+	Tue, 23 Jan 2024 01:51:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1705974680;
+	bh=yA2iL76hl8rgK1nibRnpqkKec6o2X7SEeiCiwxLsju4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MvicddjmUC6QJlRKIrUIb5avigsjQjGwdP6ysxXUby3wq3mKbQ9MfvGkTmG0f4Tej
-	 N3uJ8ScsZQ2h/tDEOpDEBAGESKrwIOhffn7RqR7xtAcKaG4o1YG2nweg5W24TJMa14
-	 RVptyTmlOCCiStsLw8r/GwdTLnKs7SV2z9Ym9+B4=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	b=FIt0/a1TPSyl9JpwUCbsOLZFrW8Td7lzUE+atTkEXEiCwb7NY2ktqeBQaQvMuNiLn
+	 U/i7r5Z36oqGtv2qdoDypona7czv7woyx9esXGNUHjwKW09ugbPIXSEhg8wISAdTqI
+	 /ngixO2ocbpePNnaVU3CYekdbX2AMkT0KLPjw8bmCGGDFyJjquMitlpnthQiV8ribC
+	 JuGzVVMcQCs3luQytgrNsClH2cVIHK32Pa4awLwNdz4gEZNacqLTqmCeZP2ZrWrB/h
+	 c+iPlMYPnVN12wNqlmJ+ihJhXVFwJusuh2QJb268zBhr1m+n9QF7aEcnwc3uBhO87A
+	 WruOpu6vQ35WQ==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 247/374] Input: atkbd - use ab83 as id when skipping the getid command
-Date: Mon, 22 Jan 2024 15:58:23 -0800
-Message-ID: <20240122235753.353589075@linuxfoundation.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
-References: <20240122235744.598274724@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.7 000/641] 6.7.2-rc1 review
+Date: Mon, 22 Jan 2024 17:51:17 -0800
+Message-Id: <20240123015117.86116-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240122235818.091081209@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+Hello,
 
-------------------
+On Mon, 22 Jan 2024 15:48:24 -0800 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-From: Hans de Goede <hdegoede@redhat.com>
+> This is the start of the stable review cycle for the 6.7.2 release.
+> There are 641 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 24 Jan 2024 23:56:49 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.2-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
+> and the diffstat can be found below.
 
-commit 58f65f9db7e0de366a5a115c2e2c0703858bba69 upstream.
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-Barnabás reported that the change to skip the getid command
-when the controller is in translated mode on laptops caused
-the Version field of his "AT Translated Set 2 keyboard"
-input device to change from ab83 to abba, breaking a custom
-hwdb entry for this keyboard.
+Tested-by: SeongJae Park <sj@kernel.org>
 
-Use the standard ab83 id for keyboards when getid is skipped
-(rather then that getid fails) to avoid reporting a different
-Version to userspace then before skipping the getid.
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 8538581d9e8e ("Linux 6.7.2-rc1")
 
-Fixes: 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in translated mode")
-Reported-by: Barnabás Pőcze <pobrn@protonmail.com>
-Closes: https://lore.kernel.org/linux-input/W1ydwoG2fYv85Z3C3yfDOJcVpilEvGge6UGa9kZh8zI2-qkHXp7WLnl2hSkFz63j-c7WupUWI5TLL6n7Lt8DjRuU-yJBwLYWrreb1hbnd6A=@protonmail.com/
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240116204325.7719-1-hdegoede@redhat.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Thanks,
+SJ
+
+[...]
+
 ---
- drivers/input/keyboard/atkbd.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -782,9 +782,9 @@ static bool atkbd_is_portable_device(voi
-  * not work. So in this case simply assume a keyboard is connected to avoid
-  * confusing some laptop keyboards.
-  *
-- * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using a fake id is
-- * ok in translated mode, only atkbd_select_set() checks atkbd->id and in
-- * translated mode that is a no-op.
-+ * Skipping ATKBD_CMD_GETID ends up using a fake keyboard id. Using the standard
-+ * 0xab83 id is ok in translated mode, only atkbd_select_set() checks atkbd->id
-+ * and in translated mode that is a no-op.
-  */
- static bool atkbd_skip_getid(struct atkbd *atkbd)
- {
-@@ -802,6 +802,7 @@ static int atkbd_probe(struct atkbd *atk
- {
- 	struct ps2dev *ps2dev = &atkbd->ps2dev;
- 	unsigned char param[2];
-+	bool skip_getid;
- 
- /*
-  * Some systems, where the bit-twiddling when testing the io-lines of the
-@@ -823,7 +824,8 @@ static int atkbd_probe(struct atkbd *atk
-  */
- 
- 	param[0] = param[1] = 0xa5;	/* initialize with invalid values */
--	if (atkbd_skip_getid(atkbd) || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
-+	skip_getid = atkbd_skip_getid(atkbd);
-+	if (skip_getid || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
- 
- /*
-  * If the get ID command was skipped or failed, we check if we can at least set
-@@ -833,7 +835,7 @@ static int atkbd_probe(struct atkbd *atk
- 		param[0] = 0;
- 		if (ps2_command(ps2dev, param, ATKBD_CMD_SETLEDS))
- 			return -1;
--		atkbd->id = 0xabba;
-+		atkbd->id = skip_getid ? 0xab83 : 0xabba;
- 		return 0;
- 	}
- 
-
-
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: reclaim.sh
+ok 11 selftests: damon: lru_sort.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
