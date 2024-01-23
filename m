@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E40C110A;
-	Tue, 23 Jan 2024 02:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D737B110A;
+	Tue, 23 Jan 2024 02:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705975768; cv=none; b=tIKc4wKLrL7FsTVr4+ldQJ83MLmkafAI5K7zaaNJlSTeXv+tx2RM6VdRrh8mG3JbMrntQ3gjyKU6PiwmlmTrhn4VOh9bSthqZJmBSNukZr7BlpGfF2FNuwIFmY2YW41HKdSEdm+Qz2Ulgxv1oDChPFxHXbTsQNC++JeEC5iv2Vw=
+	t=1705975769; cv=none; b=PbzKbsA6WdvV1jUYNZU280Kyji9a7jyepXsw9rT2DflZTVB9vsvnnmWoRczod/SgRkSLuhcfckiES0JGHK6UsAOTMvM+BQDkBk9dH1kzCbreRdlCemA99ro3Cux2xAObrCWIAicdqZXxsQ5uVmKM0Kr8o8kZ/oC+A9lTefzr6vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705975768; c=relaxed/simple;
-	bh=bKnbIOexUhN6L6inpDUZGw6dIQlpDheyLwTrqGXWL7I=;
+	s=arc-20240116; t=1705975769; c=relaxed/simple;
+	bh=xXKfRFOVnODuREsB59BHNHDCYybwnFMxfnrjdtOx44g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EPXgafXJ3pmQFgxHYQ7wICiHBeM5EvMe/+biKUaA4AjN4GF/hNB2gp+1e2zr+MM/0Kv78cZKOAnyTBFuyTve8fccKMkJZCJsYfG4E4w2Nuy3fkzg+1FlxlPrclYbnnMo4T9yLLK7lFDBxkclPfdAK5L0uLCrV3I7b96NsDhG2u8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TdItdwc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=chBkISd8ZswCpmKLWlV0ongjrgq2UjNY8scb/zdeOXlzsgvtlHaCF0E0li9S6Tr3yOmf4vvIC9IjyYNykpM0ss507mH6DUnZ51thrtBg7PY7HeRvxn2XOrtkXM7gBaL8CA86Bn18lsD3gSvm3LtDyQ3HXNLgQDpyJNbXuI1/fpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r9kpHSnt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TdItdwc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE248C43390;
-	Tue, 23 Jan 2024 02:09:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r9kpHSnt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63610C433C7;
+	Tue, 23 Jan 2024 02:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1705975768;
-	bh=bKnbIOexUhN6L6inpDUZGw6dIQlpDheyLwTrqGXWL7I=;
+	s=korg; t=1705975769;
+	bh=xXKfRFOVnODuREsB59BHNHDCYybwnFMxfnrjdtOx44g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2TdItdwclTsrxpQiaGSNOLzMhkmEB1oC3g9iGyhRwnCyFWk9R6zrlQ2PrIXTaGix9
-	 n7msZszE00CIxammTxvXsDdLp5581xekyieefWzj2+gdsK6po7K5eWyOVwY6beOg8d
-	 UtnyG0deB2nUNWtCmRhn6KzWr+6+yz/RP5xm4fd8=
+	b=r9kpHSntHmD1XEhugil46lyOTxoPhd8Rd5SQw3jZtgQ04oiJMsp/FR1XSaPtOqM1w
+	 p9gC4i211rvXgM3as/kE6F3oKDEM3YlHmZF1Ap+nGuyQUHAZGtDcC8cmnb+P9YDNg1
+	 vWqppihZbAiOV9Dp7QM9AH/14OXcCL1YySTd7NLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Benjamin Poirier <bpoirier@nvidia.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 552/583] drm/amdgpu: fall back to INPUT power for AVG power via INFO IOCTL
-Date: Mon, 22 Jan 2024 16:00:03 -0800
-Message-ID: <20240122235829.037301426@linuxfoundation.org>
+Subject: [PATCH 6.6 553/583] selftests: bonding: Change script interpreter
+Date: Mon, 22 Jan 2024 16:00:04 -0800
+Message-ID: <20240122235829.071426949@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122235812.238724226@linuxfoundation.org>
 References: <20240122235812.238724226@linuxfoundation.org>
@@ -51,39 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Benjamin Poirier <bpoirier@nvidia.com>
 
-[ Upstream commit d02069850fc102b07ae923535d5e212f2c8a34e9 ]
+[ Upstream commit c2518da8e6b0e248cfff1d4b6682e14020bd4d3f ]
 
-For backwards compatibility with userspace.
+The tests changed by this patch, as well as the scripts they source, use
+features which are not part of POSIX sh (ex. 'source' and 'local'). As a
+result, these tests fail when /bin/sh is dash such as on Debian. Change the
+interpreter to bash so that these tests can run successfully.
 
-Fixes: 47f1724db4fe ("drm/amd: Introduce `AMDGPU_PP_SENSOR_GPU_INPUT_POWER`")
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2897
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: d43eff0b85ae ("selftests: bonding: up/down delay w/ slave link flapping")
+Tested-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Benjamin Poirier <bpoirier@nvidia.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ .../selftests/drivers/net/bonding/mode-1-recovery-updelay.sh    | 2 +-
+ .../selftests/drivers/net/bonding/mode-2-recovery-updelay.sh    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-index d30dc0b718c7..58dab4f73a9a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-@@ -1026,7 +1026,12 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 			if (amdgpu_dpm_read_sensor(adev,
- 						   AMDGPU_PP_SENSOR_GPU_AVG_POWER,
- 						   (void *)&ui32, &ui32_size)) {
--				return -EINVAL;
-+				/* fall back to input power for backwards compat */
-+				if (amdgpu_dpm_read_sensor(adev,
-+							   AMDGPU_PP_SENSOR_GPU_INPUT_POWER,
-+							   (void *)&ui32, &ui32_size)) {
-+					return -EINVAL;
-+				}
- 			}
- 			ui32 >>= 8;
- 			break;
+diff --git a/tools/testing/selftests/drivers/net/bonding/mode-1-recovery-updelay.sh b/tools/testing/selftests/drivers/net/bonding/mode-1-recovery-updelay.sh
+index ad4c845a4ac7..b76bf5030952 100755
+--- a/tools/testing/selftests/drivers/net/bonding/mode-1-recovery-updelay.sh
++++ b/tools/testing/selftests/drivers/net/bonding/mode-1-recovery-updelay.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
+ 
+ # Regression Test:
+diff --git a/tools/testing/selftests/drivers/net/bonding/mode-2-recovery-updelay.sh b/tools/testing/selftests/drivers/net/bonding/mode-2-recovery-updelay.sh
+index 2330d37453f9..8c2619002147 100755
+--- a/tools/testing/selftests/drivers/net/bonding/mode-2-recovery-updelay.sh
++++ b/tools/testing/selftests/drivers/net/bonding/mode-2-recovery-updelay.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
+ 
+ # Regression Test:
 -- 
 2.43.0
 
