@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9435251;
-	Tue, 23 Jan 2024 01:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C8E2B9C7;
+	Tue, 23 Jan 2024 01:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705974541; cv=none; b=PQ8HeWdMrmOfIgPLG4UKPGvjkJt/OJVy1oLuybbFBKagTQesSR/3uRMTNN98rfB6iyy8pPpPj5XBKRYqbLNWey/GiKTsC8LwvjUk1DBRuE8r0FkZfMAhyCMCgo8KH1w391CHgFPVnjlUAYBy8bmTkVseP/JV6FxdBgEG3zGLsvo=
+	t=1705974588; cv=none; b=qR63kwCws2weaGeevgNwDvqFeKtXt8Eswe/tffWiRkTwJj+vmbdM/skn2TLUEdAJe/zHO9FXQTDS1cmAfOI93Rj54Z0oCl15brLWsh7TjovO8PnBAr5Bx6LhZGf1dGBC7W20YmRcwQP/H2Lrs6mSL6Lcs3Fc9rJl7zVIFy2Ytds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705974541; c=relaxed/simple;
-	bh=sTtD1ZLcUap9Qupl1UpXWxMXp6FKjjRtC3E3L5/bdyE=;
+	s=arc-20240116; t=1705974588; c=relaxed/simple;
+	bh=sLWuNVpVOcAxllqOLHduNAyE/ya0tJXpWnsLROvwI34=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=B9pScSQ4LfM5p+dm9aN/R5PN/gRguL5hMS5PLO8h5ZVOWt9KvEkbres+PFWejLrFrALdWhjrUl+ziILYgwYIgZFMpd/iEAdIocS4qKyDyyvE7xahl49wbsER2DpF6KaiSY5lLnw47aMbLi/+B7JSuc3dLegoUt06pqHxGUKAVvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HDcLw5bD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FL34vhczvyJWGfI5LTSbduh7BKIfNYrbzXOUGDAnEmDqmyIgxEuc7ZpN1VtMOTdJMjIzy1YCKv26Mi/wA1XYrz4Rd5+u6HGkh2BXyP4169CuYZ1jbQ3sEB089AC4VPyYIaUXDdPzlzzHnOS1tSexrrRsxb89eAWOHwfqPVgEvjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K8BHWW1i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HDcLw5bD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C148BC433C7;
-	Tue, 23 Jan 2024 01:48:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K8BHWW1i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F27BC433C7;
+	Tue, 23 Jan 2024 01:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705974541;
-	bh=sTtD1ZLcUap9Qupl1UpXWxMXp6FKjjRtC3E3L5/bdyE=;
+	s=k20201202; t=1705974587;
+	bh=sLWuNVpVOcAxllqOLHduNAyE/ya0tJXpWnsLROvwI34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HDcLw5bDby5RiXcUbIh+7OvEuosokttsU7ZF1y6Xp5RsTc6g2dl/Bvv0HwjHrsZUy
-	 tXGfll6fwN5hi1FxDe8hHMv+CflpbwlCCS5sQwKu/RAbQFMWwqOf5USNGIPFBmmRaY
-	 ShpZw7dr1e/i53Lusn+7UsCWtkrvQ9y+Tir0rZJhCE83ZPoVJ8cMeNyS/cqpJCdp2P
-	 52IrpDeKbBfeFLEMbPzkPY1q63/V59tTBmKTn+xl8U02I9AEzwzV56ME3QlFWqktvZ
-	 hYWWo1IsHke65H7wrbtmPzoarNamQG+O0BRd2u0UZwULhPGzFdW48YI55eEbdkex1H
-	 Xue8QNCcjQXsQ==
+	b=K8BHWW1iHfKDI4qTMxwXHEfZI/UTi2M9NhQAG2wywXMHhHcCwyLpEdbG9TItCGoRR
+	 T4Jo8DAPCYytEZRApLN/egoBOkyqWsoH67E0CXWxICbL2f8ARKvcCdDgUv/CQyOei+
+	 FCoWMdBHecKvDzGXIYjNQv2rkrzzJ1XMrOfXxfkH4tvxYjGCu4zvtmjhCQtfba6UYQ
+	 lysYYZpO3Qrcgq4Z86bL8RAOtJ3zN9F3ukbW5Bi2sjVKHoYV1YFbNZE5LFzmuix0u3
+	 up2+Ded96aw7VsxeEX6ZzSosmbLpSqg3OsDqa5a8/xARzLWluKBXCN4keCuPcScW2C
+	 VUGmGA9AlLAVw==
 From: SeongJae Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org,
@@ -47,11 +47,11 @@ Cc: stable@vger.kernel.org,
 	allen.lkml@gmail.com,
 	damon@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 5.15 000/374] 5.15.148-rc1 review
-Date: Mon, 22 Jan 2024 17:48:58 -0800
-Message-Id: <20240123014858.85820-1-sj@kernel.org>
+Subject: Re: [PATCH 6.1 000/417] 6.1.75-rc1 review
+Date: Mon, 22 Jan 2024 17:49:44 -0800
+Message-Id: <20240123014944.85840-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
+In-Reply-To: <20240122235751.480367507@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -63,10 +63,10 @@ Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On Mon, 22 Jan 2024 15:54:16 -0800 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Mon, 22 Jan 2024 15:52:48 -0800 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> This is the start of the stable review cycle for the 5.15.148 release.
-> There are 374 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.1.75 release.
+> There are 417 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -74,9 +74,9 @@ On Mon, 22 Jan 2024 15:54:16 -0800 Greg Kroah-Hartman <gregkh@linuxfoundation.or
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.148-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.75-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
 
 This rc kernel passes DAMON functionality test[1] on my test machine.
@@ -86,7 +86,7 @@ kernel from linux-stable-rc tree[2].
 Tested-by: SeongJae Park <sj@kernel.org>
 
 [1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 59db9667b9d1 ("Linux 5.15.148-rc1")
+[2] b74a57f4a549 ("Linux 6.1.75-rc1")
 
 Thanks,
 SJ
@@ -96,6 +96,12 @@ SJ
 ---
 
 ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: sysfs.sh
 ok 1 selftests: damon-tests: kunit.sh
 ok 2 selftests: damon-tests: huge_count_read_write.sh
 ok 3 selftests: damon-tests: buffer_overflow.sh
