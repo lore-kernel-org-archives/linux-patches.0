@@ -1,67 +1,69 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C436E627
-	for <patches@lists.linux.dev>; Wed, 24 Jan 2024 00:22:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBA7EA9
+	for <patches@lists.linux.dev>; Wed, 24 Jan 2024 00:29:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=134.134.136.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706055760; cv=none; b=ndzNdQB6dgc4J64jP8TG369Ri2OLr6p7y+hRv2kO0t+DBHiksmDFSsc6AdzafRzxUxo97zftHbCISBKj+bod/TpDZElKKHo4gbg49AolNnWAHfz+GwlpM3Gg9VWLmDvVBycdg5ftZT8mG1Vfw2xg0clP7aZak2xYPfXqNM47eDE=
+	t=1706056190; cv=none; b=aF1dKnVd/VLjOy618UyghHn2Ar8NwQ5mlBPyr3fBnuIaU0zVcH2orInyBvd7hldacJoQyVSM9V4Z5dYnA6sJZ236hsMoBR6Ttppb49WOMaSY5SKLp1aebAMthV3I90SnN8iytqOtJ4W0y2InLpjpEkEdSHHJEHq8dQMYsHYpxqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706055760; c=relaxed/simple;
-	bh=DJlfZwy5oG+ddPT+BAfbUa5jvLqlfyghhFKps3SyvX8=;
+	s=arc-20240116; t=1706056190; c=relaxed/simple;
+	bh=4o+fyGzGk91J+jkgzxCNpwmSjuJ5oWL5n8Pzy3g80KQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rkuVNi2zSP16TWPgvOt//tCZypWLPTGj3pH6l71PEXCaYKDEmHiv5YhrFljGH+Y9+UBENNxFsDv9U53xvS69xPn/8akXsx2KXAbsDMDxbCxZdCSJtwth+FM5mLmJkCdQxEJ09ERJGnhVMe1zVDg+wgxiSUxFkxHt7VO4AVOCUfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=HPB0FpAl; arc=none smtp.client-ip=209.85.160.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=AUpf7Wf5hAVjctvP75nVdmd48mLggqI+X0INuxdVjZ6xQkpiulwpkxEe5AlG9FFOhWxZDYMm9hx9l/e7nSaEJkVxhUWIFK57wBfzWtPSEwHK/pbOPhbYcnrguyIDlw5466ZcgTZRG+Irvzzs8Wyrgb1vKUHIhMj4ZdAcH72F21E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Iiy6N1HD; arc=none smtp.client-ip=134.134.136.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="HPB0FpAl"
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-214917ed35aso564945fac.2
-        for <patches@lists.linux.dev>; Tue, 23 Jan 2024 16:22:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1706055758; x=1706660558; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AsC4IZkrsCzp48Uq4gQMFalS4lpCTPnckc984N/Nfdk=;
-        b=HPB0FpAl5sYnQJyGeIPtQW1Y4OdDU9elyFFObYGP61Vm/fZpMuozggLre8DE7MJFVE
-         pbEFBGumaxeAKOao1KGrq47arH7t3ults2NcHgeTjxksRsT15/BsmzgNtioP83nAkYBZ
-         dk6yYMWJ4ZQNTT3KMOAKZSA/cswIAvn3HgQME=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706055758; x=1706660558;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AsC4IZkrsCzp48Uq4gQMFalS4lpCTPnckc984N/Nfdk=;
-        b=Rqc/KsDe5to+fmLPxREHG50BXg+ZSLqJmLk30jVc7vO3JbrGkxYqnTxqFgIJbste0z
-         Jw0Nszt6EBjVG1S/mosrcrU3L7esVWc4X25CcD19YTPAm4wBBkS26jFVnkIThENKUn8e
-         rGjDUuCgmaptmilbqneUxB1+H2l5RsRJ/Vb4OO7G4HO1YUQNGvPBKrSukHkr8PEiN7VM
-         Age0HGhnPiKN5DKv1LkbHR/oIiDi3JMKwqk652fDybREBGlsIZjhVSZ3vrsASIiL/+rW
-         H4X233YAig9R/5Y4jMuihVze9/plLgJxNlSYFJhzelx//e1tpw+LrdLKb7msEBC0+RAz
-         +0PQ==
-X-Gm-Message-State: AOJu0YwYnaPqPX4QmTVbDVu/GB8s29Z958AeK3+Q1XjW2GoZHoShXRkc
-	IvOLwnP5ohHYmUiuVzRDahTkHiN/aUP6pVRRiHBqXWvYj/oTikG2ezUtUya1BA==
-X-Google-Smtp-Source: AGHT+IF5j2CrNJpmt4xbjt5uNDLoyO8MNIxaA3XcNYGjI8dCmk2XJBy094kJqAM2+8lwjkq4d0k3bQ==
-X-Received: by 2002:a05:6870:9693:b0:210:8c13:dbff with SMTP id o19-20020a056870969300b002108c13dbffmr2722563oaq.84.1706055757837;
-        Tue, 23 Jan 2024 16:22:37 -0800 (PST)
-Received: from fedora64.linuxtx.org ([99.47.93.78])
-        by smtp.gmail.com with ESMTPSA id cp8-20020a056808358800b003bbe0c5195csm2404902oib.26.2024.01.23.16.22.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jan 2024 16:22:37 -0800 (PST)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Tue, 23 Jan 2024 18:22:35 -0600
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.7 000/638] 6.7.2-rc2 review
-Message-ID: <ZbBYS-i0uR08aEcL@fedora64.linuxtx.org>
-References: <20240123174544.648088948@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Iiy6N1HD"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1706056184; x=1737592184;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=4o+fyGzGk91J+jkgzxCNpwmSjuJ5oWL5n8Pzy3g80KQ=;
+  b=Iiy6N1HDX3WiI1Uw3dg8pBmn3PR1nlFin/saRjpjYdiK5vISMg9T4QvO
+   GqGBpX3VXzf1T5Lz7/ZvsBCKbfW4gPMnD1KfjOW4IAmhPBzTi3APKr1cH
+   oGG4Abr39LTVp4Hi7DN94NgL0sKNs1C9XLYsZ0S6FTocVTT/GmZuaZhPO
+   eCGf7EDlmSFbSjqJIScTk6hU3x54R7WRgpOpVb4eU5U9Yoy0HvV28EScg
+   yYZYr1etxq3ZrO1B3geNDv3gvnRsaBc8OtOv2ykQMHsboXrDWqScJoYmh
+   14Nht5t9eTtYfIJvKRhQxJrSW4jBRiWDikSXoD3J4BdK7MGtZM6YNGg0H
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="405449803"
+X-IronPort-AV: E=Sophos;i="6.05,215,1701158400"; 
+   d="scan'208";a="405449803"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2024 16:29:43 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,215,1701158400"; 
+   d="scan'208";a="1729124"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2024 16:29:43 -0800
+Date: Tue, 23 Jan 2024 16:29:42 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: James Morse <james.morse@arm.com>, Borislav Petkov <bp@alien8.de>,
+	"Chatre, Reinette" <reinette.chatre@intel.com>
+Cc: "Yu, Fenghua" <fenghua.yu@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	"x86@kernel.org" <x86@kernel.org>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	"Shen, Xiaochen" <xiaochen.shen@intel.com>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH v2] x86/resctrl: Implement new mba_MBps throttling
+ heuristic
+Message-ID: <ZbBZ9pk2ha99H2Jd@agluck-desk3>
+References: <20240118214213.59596-1-tony.luck@intel.com>
+ <45d2891e-989a-45c9-a527-8b14ff5f8748@intel.com>
+ <SJ1PR11MB60837D4884419BDC2DCAA2D2FC752@SJ1PR11MB6083.namprd11.prod.outlook.com>
+ <bfa5104f-b887-4cc4-a24c-0497b86d9dde@intel.com>
+ <20240122182121.GBZa6yIYPtHQx44EU9@fat_crate.local>
+ <11fc82e0-961f-4c8d-844f-ad4b99067eb3@intel.com>
+ <20240122184755.GCZa64W02KXyeaVXJg@fat_crate.local>
+ <SJ1PR11MB6083A27C628E17FB8BBC4922FC752@SJ1PR11MB6083.namprd11.prod.outlook.com>
+ <b6ce3e79-aa4a-57e9-8b43-b5be45f75462@arm.com>
+ <SJ1PR11MB60830483DCBE64EB726CF7E6FC742@SJ1PR11MB6083.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -70,28 +72,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240123174544.648088948@linuxfoundation.org>
+In-Reply-To: <SJ1PR11MB60830483DCBE64EB726CF7E6FC742@SJ1PR11MB6083.namprd11.prod.outlook.com>
 
-On Tue, Jan 23, 2024 at 09:47:30AM -0800, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.7.2 release.
-> There are 638 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Jan 23, 2024 at 05:07:50PM +0000, Luck, Tony wrote:
+> >> I need to grab an SNC system to re-check that everything still works when re-based.
+> >> But right now, this looks like adding the SNC series will be easy (famous last words!).
+> >
+> > Once you're ready - can you point me at something I can use as a stable branch to rebase onto?
 > 
-> Responses should be made by Thu, 25 Jan 2024 17:44:25 +0000.
-> Anything received after that time might be too late.
+> I'll be running the tests this afternoon. But I'm somewhat confident that they will pass.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.2-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
-> and the diffstat can be found below.
+> Tree is here: git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git branch "hopeful_snc"
 > 
-> thanks,
+> Commits are:
 > 
-> greg k-h
+> 793635f10aeb x86/resctrl: Update documentation with Sub-NUMA cluster changes
+> dca7ba785d6f x86/resctrl: Sub NUMA Cluster detection and enable
+> e41bd88101c8 x86/resctrl: Introduce snc_nodes_per_l3_cache
+> ccbab7875197 x86/resctrl: Add node-scope to the options for feature scope
+> 2f0db8c7072b x86/resctrl: Split the rdt_domain and rdt_hw_domain structures
+> 22697627cc5f x86/resctrl: Prepare for different scope for control/monitor operations
+> f3ff831a9042 x86/resctrl: Prepare to split rdt_domain structure
+> c0679868ee78 x86/resctrl: Prepare for new domain scope
+> 327b4394f309 x86/resctrl: Implement new mba_MBps throttling heuristic
+> 5b14817cf87e x86/resctrl: Read supported bandwidth sources using CPUID command
+> 5699cd082e1f x86/resctrl: Remove hard-coded memory bandwidth limit
+> 1b908debf53f x86/resctrl: Fix unused variable warning in cache_alloc_hsw_probe()
+> 
+> Only the last of these (1b908debf53f) had been accepted by Boris into TIP x86/cache
+> when I cut this tree yesterday.
+> 
+> Two more applied by Boris today without any changes from what is in my tree, but the
+> commit IDs in TIP are obviously different from in my tree.
+> 
+> 54e35eb8611c x86/resctrl: Read supported bandwidth sources from CPUID
+> 0976783bb123 x86/resctrl: Remove hard-coded memory bandwidth limit
+> 
+> All the others have the normal risk that Boris will find some way to make them better.
 
-Tested rc2 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
+All my SNC tests pass. So this tree is as good as I can make it.
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Boris: After you take/reject "x86/resctrl: Implement new mba_MBps throttling heuristic"
+in TIP x86/cache I will post v14 of the SNC series rebased to that TIP
+branch.
+
+-Tony
