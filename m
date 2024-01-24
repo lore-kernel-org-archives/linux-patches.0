@@ -1,130 +1,80 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34D06A004;
-	Wed, 24 Jan 2024 19:17:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0CB13398E
+	for <patches@lists.linux.dev>; Wed, 24 Jan 2024 20:18:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706123834; cv=none; b=aYmzp7wt6GN7NJ9P4fYyR9RZfQLMr6CxgxKwSk98pB9/l83rg3yetCXpqmz1gK80o9qjugJosSd6M43/SWDsdfsBaT9d+bLmmKUfDLXEcMEx1AU6PcUuIUa/FScnJno0wf+LDMYofTYfVwsSmFTEx+4jH0BYT54GViJSQq201cM=
+	t=1706127533; cv=none; b=YiCu43ZKoMHT2AMnc9h15OtFKAxaM+oJfiJZxE7qQWJV823KsxdT3DR4IadwGZ7w0xEoczpClfRH7wI+KaLbJNDey+9b0ybHCfXYeu3Ijov6/SP2HRdCJnZ/oS/3/tD2VZSMA6mn7j4QC0U4zXry9t5g90GoGs1ZRDWvrl6w+BE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706123834; c=relaxed/simple;
-	bh=bg7wUFqsk+k5WbHc1jDP2DkdrtUqr4EBfv8qvjFurWw=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:Mime-Version; b=NPzCGX94di4uJZiT3l8ysZucD5fqRAwmUFV2G8dLi2i6XyKYU4+ipPjxPNOHE3cyA3VqD3la8pr42d8JxstimcxFR/oyZuCGuA5vAfoi3N3XPtAJND154lQz0ZgVDqjukhqoJCriF97S5QmZWc05Q7hpx2ZJp5m2YvqdUKMiik0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=CvwkQ2mf; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="CvwkQ2mf"
-Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 40OIiCmt014502;
-	Wed, 24 Jan 2024 19:17:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- mime-version : content-transfer-encoding; s=pp1;
- bh=COQryiS/sEg0OSdfRKOL8KXB0EJx3OXUhJRJvyUgqOw=;
- b=CvwkQ2mfd/T9gu3gPPT3Rt1HONZu4WYqWpgy4Dzdnkx7X3q/zKQ6OwUQvQY+/1cdFFN2
- ns0f6FjhuH5hHW5hbXNUOcOAyp4xHFqH2Xu+DFaR4XPHfP1EP3WQo2/NNnpdEtu1+zbM
- 07uR8KJzxe5zgmeNUMQs7tuD1niDcNOYMS8WyoCR1RlUNhqTfEkCY+Hja/zsAGqJWxdE
- TGvNz8KAmtC3RclW7SNABhplfFesTLunhztUiL8W+nUqCMjAqI/SKbGJYkyvRWURzQYJ
- 07VrGWP4Q4lHjD5uHXOrIAaeIBsLzLRSk568IO+V3sb6qUU/oWZPu1IYDcc9yS0ihVkE yQ== 
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vu7uchkw9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jan 2024 19:17:06 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 40OHMN19022438;
-	Wed, 24 Jan 2024 19:17:05 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vrt0m7p43-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jan 2024 19:17:05 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com [10.39.53.230])
-	by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 40OJH4BK4850556
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 24 Jan 2024 19:17:04 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4C5425805F;
-	Wed, 24 Jan 2024 19:17:04 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 589245805A;
-	Wed, 24 Jan 2024 19:17:03 +0000 (GMT)
-Received: from li-f45666cc-3089-11b2-a85c-c57d1a57929f.watson.ibm.com (unknown [9.31.99.90])
-	by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 24 Jan 2024 19:17:03 +0000 (GMT)
-Message-ID: <53ff60d7a3691a8a2d3e15cdf9d5dd8bdec6a8e0.camel@linux.ibm.com>
-Subject: Re: [PATCH 6.7 026/641] KEYS: encrypted: Add check for strsep
-From: Mimi Zohar <zohar@linux.ibm.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Chen Ni <nichen@iscas.ac.cn>,
-        Sasha Levin
-	 <sashal@kernel.org>
-Date: Wed, 24 Jan 2024 14:17:02 -0500
-In-Reply-To: <20240122235818.914706597@linuxfoundation.org>
-References: <20240122235818.091081209@linuxfoundation.org>
-	 <20240122235818.914706597@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-22.el8) 
+	s=arc-20240116; t=1706127533; c=relaxed/simple;
+	bh=5nUZgTl3b8nFrSckwwhEsc6G85YotXQiLLUQSFoGIG8=;
+	h=From:In-Reply-To:Content-Type:References:Date:Cc:To:MIME-Version:
+	 Message-ID:Subject; b=hAb0nyhJMV+xcFJkFRiaYWbSl7fdoe16H3p3IOby+jwZdWEwJUCU39fBYJqJxDH6m0HsXr4eEubDWpV3faOZTGMktz5JCw6L+wOvOYE2isxuYKwanzfwG/9ZN6O12pI4CTnfi9H7hgtL20LGoUi7WYPQ74RNGlc14KGrUjTJWNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+Received: from hamburger.collabora.co.uk (hamburger.collabora.co.uk [IPv6:2a01:4f8:1c1b:c794::1])
+	by madrid.collaboradmins.com (Postfix) with ESMTP id 901A937813E9;
+	Wed, 24 Jan 2024 20:18:47 +0000 (UTC)
+From: "Shreeya Patel" <shreeya.patel@collabora.com>
+In-Reply-To: <20240123174533.427864181@linuxfoundation.org>
+Content-Type: text/plain; charset="utf-8"
+X-Forward: 127.0.0.1
+References: <20240123174533.427864181@linuxfoundation.org>
+Date: Wed, 24 Jan 2024 20:18:47 +0000
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, "Gustavo Padovan" <gustavo.padovan@collabora.com>, "kernelci-regressions mailing list" <kernelci-regressions@lists.collabora.co.uk>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: dNylzflsCX3HJNx3y7jvajCAXYKMqecm
-X-Proofpoint-ORIG-GUID: dNylzflsCX3HJNx3y7jvajCAXYKMqecm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-24_08,2024-01-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 mlxscore=0
- bulkscore=0 adultscore=0 malwarescore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1011 priorityscore=1501 phishscore=0 spamscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2401240139
+MIME-Version: 1.0
+Message-ID: <7abf-65b17080-28b-71572780@19089974>
+Subject: =?utf-8?q?Re=3A?= [PATCH =?utf-8?q?6=2E6?= 000/580] 
+ =?utf-8?q?6=2E6=2E14-rc2?= review
+User-Agent: SOGoMail 5.9.1
+Content-Transfer-Encoding: quoted-printable
 
-Hi Greg,
+On Tuesday, January 23, 2024 23:17 IST, Greg Kroah-Hartman <gregkh@linu=
+xfoundation.org> wrote:
 
-On Mon, 2024-01-22 at 15:48 -0800, Greg Kroah-Hartman wrote:
-> 6.7-stable review patch.  If anyone has any objections, please let me know.
+> This is the start of the stable review cycle for the 6.6.14 release.
+> There are 580 patches in this series, all will be posted as a respons=
+e
+> to this one.  If anyone has any issues with these being applied, plea=
+se
+> let me know.
+>=20
+> Responses should be made by Thu, 25 Jan 2024 17:44:18 +0000.
+> Anything received after that time might be too late.
+>=20
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6=
+.14-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
+.git linux-6.6.y
+> and the diffstat can be found below.
+>=20
 
-The upstream patch needs to be reverted.  Please don't backport it.
+KernelCI report for stable-rc/linux-6.6.y for this week :-
+
+## stable-rc HEAD for linux-6.6.y:
+Date: 2024-01-24
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.=
+git/log/?h=3D86b2b02ae53b684a71d629c5ae2511c2e0d0f675
+
+## Build failures:
+No build failures seen for the stable-rc/linux-6.6.y commit head \o/
+
+## Boot failures:
+No **new** boot failures seen for the stable-rc/linux-6.6.y commit head=
+ \o/
+
+Tested-by: kernelci.org bot <bot@kernelci.org>
 
 Thanks,
-
-Mimi
-
-> 
-> ------------------
-> 
-> From: Chen Ni <nichen@iscas.ac.cn>
-> 
-> [ Upstream commit b4af096b5df5dd131ab796c79cedc7069d8f4882 ]
-> 
-> Add check for strsep() in order to transfer the error.
-> 
-> Fixes: cd3bc044af48 ("KEYS: encrypted: Instantiate key with user-provided decrypted data")
-> Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-> Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  security/keys/encrypted-keys/encrypted.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/security/keys/encrypted-keys/encrypted.c b/security/keys/encrypted-keys/encrypted.c
-> index 8af2136069d2..76f55dd13cb8 100644
-> --- a/security/keys/encrypted-keys/encrypted.c
-> +++ b/security/keys/encrypted-keys/encrypted.c
-> @@ -237,6 +237,10 @@ static int datablob_parse(char *datablob, const char **format,
->  			break;
->  		}
->  		*decrypted_data = strsep(&datablob, " \t");
-> +		if (!*decrypted_data) {
-> +			pr_info("encrypted_key: decrypted_data is missing\n");
-> +			break;
-> +		}
->  		ret = 0;
->  		break;
->  	case Opt_load:
+Shreeya Patel
 
