@@ -1,118 +1,79 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420A079C7;
-	Thu, 25 Jan 2024 17:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50AF13AA3B;
+	Thu, 25 Jan 2024 21:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706203939; cv=none; b=tTnw+43V5A9UEB8X27gkEHiT0aHobtthuHJ+xFrLl+B4GWmhAOi2gLW5kzD5jBjzi9faSXnMGLgEt1aVR+WpWjYx/jxjirh18yplJQV9iYfmQUOgkLA6HU2FKP1gYsw8Aar4/NCQd+FxTT2HuaJIR9IwGeSzVPOWs0zlJxG1sVA=
+	t=1706219882; cv=none; b=SnUIS94EDT3TajskR2spSF0v0nuGgY1Z9W6h4J9EN4+GiQO80yIHEBm769tivDN32xJIHX2gV6Wxy9b3jDQA/y7obssKPbULHXhitJxdK3zuBoOUXmbjHguRqYL7TitB8xEuaomea62qFDIa/JUtZBzayS/1qj1OltMoX7Nb5Eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706203939; c=relaxed/simple;
-	bh=lICtxkQ3NvVShAwZIuLeByavdbgR2qlvf8P4owRHXS0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qgVJA8YdVcxSkMTaH/Ln7CHAx9rJ/ft58QmtWq0nlPQtxlVv73wB6ytfVhJAXQk6AiYfLgWIm4ZjyXao1UBltbY4QY7wEcDvE4OcxQIkPYUVGdWEr4YAXSUlkvoGnm2k1eN3x1su7fdwPez7rjqsYIoLtl+5WIaIAQQkoA+Ltyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W6W/YgzM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706219882; c=relaxed/simple;
+	bh=dJA8ukUqcFOmBQNm6u0gYzMGn+AjhiGhJRmPJwi3E3c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iim5rD43c6OKM47SFR6mplZr8CdUey/BuB9ExKY5Q+TriLcx1K+io20zUJl/FwYjDAYtPLMwI89iGy0KDwmi3knKgUvqnnwTZcsHQK34IgIS/gNpgifEthrVUADmw8AhHdvKAAub3lBGhf/AB+5EQv+LYC5xPH56QpIefnctYaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgHYFBpg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W6W/YgzM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128E4C43399;
-	Thu, 25 Jan 2024 17:32:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706203938;
-	bh=lICtxkQ3NvVShAwZIuLeByavdbgR2qlvf8P4owRHXS0=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=W6W/YgzMa+vfIWb5fX28wPCUuhezAVgqad/dW1hojJysx+W3zkJX2JeLMuTN1Czdw
-	 XYIVjy3QPgiNiEEPG45JgquTNPbEuET9cRyjDlSBUjX5Cb2fXoGJJ/MPsG2VCYPGNN
-	 ct+R1QRzVTmlvTNUj5FzmzMQUa4Gl8JpUZli4axBg0lolr38mgqahfUMkf9J8RnLjf
-	 kFTJiLqFD2HFiaW6S+3Q+lLJtjaSv08qHf/qTj6CYeVL+U4HZCMNFegfhGyP/ndg3J
-	 WJT95mKdfiUVF3wLoGMQJj4HjbSByQMlf3m6ikTWHr9oo5RRNFmyL2cYwDbiAsHi+E
-	 PLKymFEVtVD7Q==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 25 Jan 2024 10:32:12 -0700
-Subject: [PATCH 2/2] RISC-V: Drop invalid test from
- CONFIG_AS_HAS_OPTION_ARCH
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgHYFBpg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AC8C433F1;
+	Thu, 25 Jan 2024 21:58:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1706219881;
+	bh=dJA8ukUqcFOmBQNm6u0gYzMGn+AjhiGhJRmPJwi3E3c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EgHYFBpg7DKZ2+HpDIdm3/fD0JqC5CqqCYYCuD2ip5rblWMZhf8f1attHwdF2F2le
+	 7nOSzgX9lLP9aIHYNb7fJe1ROByKOauOIOVhNe7cl4P90V0922ya7hfTV80E9luxy0
+	 AgtTKE84VKjIOV9WX0Iws4BcX7z7Heven/L6LOAw=
+Date: Thu, 25 Jan 2024 10:48:47 -0800
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Song Liu <song@kernel.org>
+Cc: Dan Moulding <dan@danm.net>, junxiao.bi@oracle.com, logang@deltatee.com,
+	patches@lists.linux.dev, stable@vger.kernel.org, yukuai3@huawei.com
+Subject: Re: [PATCH 6.7 438/641] md: bypass block throttle for superblock
+ update
+Message-ID: <2024012551-rebound-unworn-e467@gregkh>
+References: <2024012316-phonebook-shrewdly-31f2@gregkh>
+ <20240125003452.30195-1-dan@danm.net>
+ <CAPhsuW66nd118Mxdvpia+NUq9kX8x5+e=ER+t7ubUBiSUBrX9w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240125-fix-riscv-option-arch-llvm-18-v1-2-390ac9cc3cd0@kernel.org>
-References: <20240125-fix-riscv-option-arch-llvm-18-v1-0-390ac9cc3cd0@kernel.org>
-In-Reply-To: <20240125-fix-riscv-option-arch-llvm-18-v1-0-390ac9cc3cd0@kernel.org>
-To: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
- masahiroy@kernel.org
-Cc: nicolas@fjasle.eu, andy.chiu@sifive.com, conor.dooley@microchip.com, 
- linux-riscv@lists.infradead.org, linux-kbuild@vger.kernel.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org, 
- Eric Biggers <ebiggers@kernel.org>, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2365; i=nathan@kernel.org;
- h=from:subject:message-id; bh=lICtxkQ3NvVShAwZIuLeByavdbgR2qlvf8P4owRHXS0=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKmbZissneNvc+U8g8IkiV2P1y8V+vnuj1eFVfVy31c+S
- sc4V1/d31HKwiDGxSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAmsi6L4X9Wx9n0S4s2cUzV
- q/lYfnDKWrdt3qvWLPzFHJgzVbXZdIcYI8P/j63TYrYsVLNiNKmSnDiZx/TBt7jCBDb+hNe6wUx
- mFUwA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPhsuW66nd118Mxdvpia+NUq9kX8x5+e=ER+t7ubUBiSUBrX9w@mail.gmail.com>
 
-Commit e4bb020f3dbb ("riscv: detect assembler support for .option arch")
-added two tests, one for a valid value to '.option arch' that should
-succeed and one for an invalid value that is expected to fail to make
-sure that support for '.option arch' is properly detected because Clang
-does not error when '.option arch' is not supported:
+On Wed, Jan 24, 2024 at 04:53:12PM -0800, Song Liu wrote:
+> On Wed, Jan 24, 2024 at 4:34 PM Dan Moulding <dan@danm.net> wrote:
+> >
+> > > For now, I'm going to keep both commits in the stable trees, as that
+> > > matches what is in Linus's tree
+> >
+> > Please consider reverting bed9e27baf52 in both Linus' tree and the
+> > stable trees. That would keep them in sync while keeping this new
+> > regression out of the kernel.
+> >
+> > > as this seems to be hard to reproduce
+> > > and I haven't seen any other reports of issues.
+> >
+> > The change that caused the regression itself purports to fix a
+> > two-year old regression. But since that alleged regression has been in
+> > the kernel for two years, seemingly without much (if any) public
+> > complaint, I'd say that the new regression caused by bed9e27baf52 is
+> > definitely the easier one to reproduce (I hit it within hours after
+> > upgrading to 6.7.1).
+> 
+> Agreed. I am thinking about reverting bed9e27baf52.
 
-  $ clang --target=riscv64-linux-gnu -Werror -x assembler -c -o /dev/null <(echo '.option arch, +m')
-  /dev/fd/63:1:9: warning: unknown option, expected 'push', 'pop', 'rvc', 'norvc', 'relax' or 'norelax'
-  .option arch, +m
-          ^
-  $ echo $?
-  0
+Ok, I've dropped d6e035aad6c0 ("md: bypass block throttle for superblock
+update") from the stable queues right now, and I'll queue up the revert
+posted as well.
 
-Unfortunately, the invalid test started being accepted by Clang after
-the linked llvm-project change, which causes CONFIG_AS_HAS_OPTION_ARCH
-and configurations that depend on it to be silently disabled, even
-though those versions do support '.option arch'.
+If this gets straightened out in Linus's tree, and we need to take
+anything into the stable trees, please let me know.
 
-The invalid test can be avoided altogether by using
-'-Wa,--fatal-warnings', which will turn all assembler warnings into
-errors, like '-Werror' does for the compiler:
+thanks,
 
-  $ clang --target=riscv64-linux-gnu -Werror -Wa,--fatal-warnings -x assembler -c -o /dev/null <(echo '.option arch, +m')
-  /dev/fd/63:1:9: error: unknown option, expected 'push', 'pop', 'rvc', 'norvc', 'relax' or 'norelax'
-  .option arch, +m
-          ^
-  $ echo $?
-  1
-
-The as-instr macros have been updated to make use of this flag, so
-remove the invalid test, which allows CONFIG_AS_HAS_OPTION_ARCH to work
-for all compiler versions.
-
-Cc: stable@vger.kernel.org
-Fixes: e4bb020f3dbb ("riscv: detect assembler support for .option arch")
-Link: https://github.com/llvm/llvm-project/commit/3ac9fe69f70a2b3541266daedbaaa7dc9c007a2a
-Reported-by: Eric Biggers <ebiggers@kernel.org>
-Closes: https://lore.kernel.org/r/20240121011341.GA97368@sol.localdomain/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/riscv/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-index bffbd869a068..e3142ce531a0 100644
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -315,7 +315,6 @@ config AS_HAS_OPTION_ARCH
- 	# https://reviews.llvm.org/D123515
- 	def_bool y
- 	depends on $(as-instr, .option arch$(comma) +m)
--	depends on !$(as-instr, .option arch$(comma) -i)
- 
- source "arch/riscv/Kconfig.socs"
- source "arch/riscv/Kconfig.errata"
-
--- 
-2.43.0
-
+greg k-h
