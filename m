@@ -1,118 +1,114 @@
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8287517BB9
-	for <patches@lists.linux.dev>; Thu, 25 Jan 2024 08:24:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDB155E40
+	for <patches@lists.linux.dev>; Thu, 25 Jan 2024 13:04:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706171075; cv=none; b=lMKNykjsQNHqsUvaPJrZdQr/0tzMAW8Y/L7RAiF9WLbMLWAY14awMrWcEHI+/xkwR57kOyua3ez/yD+gOMwk+YUGCalDZFamv+84GysVjVmU4Y+9wZRtxXGhoCcQVbvdYDzkkOtxqPKGqxYf4Bvcde8btpjn/zvUvtGL6bZgheg=
+	t=1706187852; cv=none; b=G9i095HafeXjIqIdMYpUWGtvjjKl8A4ctkJBUeAkicZr3Oh2HEv8KFN/+0qsfoQTadNDwlOR2/Nwq+RZizOW8Xof3LNHHLOr4mvcNialEo6Epfp5an/Y6ZgTXWl8SEvv+NEv7+I28t0vB0eNI6YLXA7nIfM0Fdc54HnPwvJQ2Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706171075; c=relaxed/simple;
-	bh=gbrB9NLIlYC5NTig3kJYB7G3uvykx2Hby2/m3ZKMIl0=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=GFTm2ACz3XwKTGM9bGJ9wZL4NTph4hE3EIM5lWK5RLN55UbrCzv9v5to9w4+0abLkUGHLkj8TnA7I5xWmBqfsjMdUuKYB/QKHExxzwolYcaTrJ32Or3LU2p3NZbHz4WQ/SkVZrHRTIiCdqZq8eL4/qIpHcQlKlFhTW3FtyFdJzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=JzxGzMM9; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1706187852; c=relaxed/simple;
+	bh=ePyxDj8Fgb0LhEvz2Xaiwmjx/NG6Xh1p1RcMQYkEFyA=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=ZUFoDMSwIpxY18uxcwYLD8bN/drG2GqZHCUp0Z/XjoVc6ntbMavsbKyP5Ft+gETo8FQZI+AqgxF0VRGB9jP3VRuDs4PNVVgwkwnTYX3nXMpVkBRza79Oxo5n2FwXIeYPwg824NqnW7mykpsjG4+0qBtzchz9HU1FxXsFLcE8Azg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ddX/Kt1/; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="JzxGzMM9"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1706171071;
-	bh=gbrB9NLIlYC5NTig3kJYB7G3uvykx2Hby2/m3ZKMIl0=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-	b=JzxGzMM9+n63kEOSgtEZk9qEnHHJE6pBOEO4viPJpTfscJCimVlcbqtRrFh7EFqcs
-	 PETbJoY+BRIum/geSL9u/VmtIFWttEvkem3bcoi2wxXYfR+/WbzST9/M4D2a0XBJ9j
-	 YZrMqA41TdKpw1PdFc0pjzW30d/AkiZmJUH/e1qCTTwBkCmUfNXkvA8mMa09QxTJbZ
-	 zS37vweEa870FXLF5USYGAmaB2r0tmvBFwLjRxA/2WKpmDGQewzCUHn6XZmqt+Ovao
-	 zGdz8ezNh1ZUWnB4MxkkcrITERWwr3JCL/XOhDoou1alu5ZnRkCeugXukWpW8r1jqH
-	 0F5nSHwrcGbMg==
-Received: from beast.luon.net (cola.collaboradmins.com [IPv6:2a01:4f8:1c1c:5717::1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: sjoerd)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id CC37A37820BC;
-	Thu, 25 Jan 2024 08:24:31 +0000 (UTC)
-Received: by beast.luon.net (Postfix, from userid 1000)
-	id 819BDAAFD424; Thu, 25 Jan 2024 09:24:31 +0100 (CET)
-Message-ID: <d0e3c99793d981c5ee90aa7457e480d83fe9e8de.camel@collabora.com>
-Subject: Re: [PATCH 6.6 132/150] bus: moxtet: Mark the irq as shared
-From: Sjoerd Simons <sjoerd@collabora.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Marek =?ISO-8859-1?Q?Beh=FAn?=
- <kabel@kernel.org>,  Gregory CLEMENT <gregory.clement@bootlin.com>
-Date: Thu, 25 Jan 2024 09:24:31 +0100
-In-Reply-To: <20240118104326.164425257@linuxfoundation.org>
-References: <20240118104320.029537060@linuxfoundation.org>
-	 <20240118104326.164425257@linuxfoundation.org>
-Organization: Collabora Ltd.
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.3-1 
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ddX/Kt1/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1706187850; x=1737723850;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=ePyxDj8Fgb0LhEvz2Xaiwmjx/NG6Xh1p1RcMQYkEFyA=;
+  b=ddX/Kt1/KoOuRvJG+YUmAGN3sOzCecdmgpgfeAdnDxYTKahb+AKHgaPK
+   m0EpJPdXkgn9/PiV6cTwXO59rn/cW0tX6vk10/srAkqaxGvtFDNoOwZ86
+   392CaQ3wgTRPCCEt8Y61KeFfFWhlbzIzHYocwELrfkueTtruKLH8YGtIJ
+   upZ2thtYXOUoojcTX5DbfN57lAKujYSzmVd7HYekOH7CCf5VkyXoxKM9D
+   SvJetRrN9pyNIx8CnwygHIy5V2X8dH4YLGci0Z1SwACHHibxfzP7+ifva
+   2aoTT3FPESP2HMmH96CsvAqcwfj7uVKHjEUv3pHGxFsAyWQQTdrRU4PEW
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="23616003"
+X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
+   d="scan'208";a="23616003"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2024 05:04:09 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="905958179"
+X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
+   d="scan'208";a="905958179"
+Received: from ijarvine-desk1.ger.corp.intel.com (HELO localhost) ([10.94.252.55])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2024 05:04:05 -0800
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Thu, 25 Jan 2024 15:04:01 +0200 (EET)
+To: Ashok Raj <ashok.raj@intel.com>
+cc: Hans de Goede <hdegoede@redhat.com>, markgross@kernel.org, 
+    Jithu Joseph <jithu.joseph@intel.com>, rostedt@goodmis.org, 
+    tony.luck@intel.com, LKML <linux-kernel@vger.kernel.org>, 
+    platform-driver-x86@vger.kernel.org, patches@lists.linux.dev, 
+    pengfei.xu@intel.com
+Subject: Re: [PATCH 1/5] platform/x86/intel/ifs: Call release_firmware() when
+ handling errors.
+In-Reply-To: <20240125082254.424859-2-ashok.raj@intel.com>
+Message-ID: <497dbb51-e583-374f-b31a-e14f1253c93f@linux.intel.com>
+References: <20240125082254.424859-1-ashok.raj@intel.com> <20240125082254.424859-2-ashok.raj@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-1915214704-1706187841=:1444"
 
-Hey,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 2024-01-18 at 11:49 +0100, Greg Kroah-Hartman wrote:
-> 6.6-stable review patch.=C2=A0 If anyone has any objections, please let m=
-e
-> know.
+--8323328-1915214704-1706187841=:1444
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Thanks for picking this up! To complete this fix the following is also
-needed:
+On Thu, 25 Jan 2024, Ashok Raj wrote:
 
-fca8a117c1c9 ("arm64: dts: armada-3720-turris-mox: set irq type for
-RTC")
-
-Not sure if i missed something causing this one to not be picked up,
-while the others in the series were.
-
-
+> From: Jithu Joseph <jithu.joseph@intel.com>
 >=20
-> ------------------
+> Missing release_firmware() due to error handling blocked any future image
+> loading.
 >=20
-> From: Sjoerd Simons <sjoerd@collabora.com>
+> Fix the return code and release_fiwmare() to release the bad image.
 >=20
-> commit e7830f5a83e96d8cb8efc0412902a03008f8fbe3 upstream.
->=20
-> The Turris Mox shares the moxtet IRQ with various devices on the
-> board,
-> so mark the IRQ as shared in the driver as well.
->=20
-> Without this loading the module will fail with:
-> =C2=A0 genirq: Flags mismatch irq 40. 00002002 (moxtet) vs. 00002080
-> (mcp7940x)
->=20
-> Signed-off-by: Sjoerd Simons <sjoerd@collabora.com>
-> Cc:=C2=A0 <stable@vger.kernel.org> # v6.2+
-> Reviewed-by: Marek Beh=C3=BAn <kabel@kernel.org>
-> Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Fixes: 25a76dbb36dd ("platform/x86/intel/ifs: Validate image size")
+> Reported-by: Pengfei Xu <pengfei.xu@intel.com>
+> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+> Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+> Tested-by: Pengfei Xu <pengfei.xu@intel.com>
+> Reviewed-by: Tony Luck <tony.luck@intel.com>
 > ---
-> =C2=A0drivers/bus/moxtet.c |=C2=A0=C2=A0=C2=A0 2 +-
-> =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/platform/x86/intel/ifs/load.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >=20
-> --- a/drivers/bus/moxtet.c
-> +++ b/drivers/bus/moxtet.c
-> @@ -755,7 +755,7 @@ static int moxtet_irq_setup(struct moxte
-> =C2=A0	moxtet->irq.masked =3D ~0;
-> =C2=A0
-> =C2=A0	ret =3D request_threaded_irq(moxtet->dev_irq, NULL,
-> moxtet_irq_thread_fn,
-> -				=C2=A0=C2=A0 IRQF_ONESHOT, "moxtet", moxtet);
-> +				=C2=A0=C2=A0 IRQF_SHARED | IRQF_ONESHOT,
-> "moxtet", moxtet);
-> =C2=A0	if (ret < 0)
-> =C2=A0		goto err_free;
-> =C2=A0
+> diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86=
+/intel/ifs/load.c
+> index a1ee1a74fc3c..2cf3b4a8813f 100644
+> --- a/drivers/platform/x86/intel/ifs/load.c
+> +++ b/drivers/platform/x86/intel/ifs/load.c
+> @@ -399,7 +399,8 @@ int ifs_load_firmware(struct device *dev)
+>  =09if (fw->size !=3D expected_size) {
+>  =09=09dev_err(dev, "File size mismatch (expected %u, actual %zu). Corrup=
+ted IFS image.\n",
+>  =09=09=09expected_size, fw->size);
+> -=09=09return -EINVAL;
+> +=09=09ret =3D -EINVAL;
+> +=09=09goto release;
+>  =09}
+> =20
+>  =09ret =3D image_sanity_check(dev, (struct microcode_header_intel *)fw->=
+data);
 >=20
->=20
+
+Reviewed-by: Ilpo J=E4rvinen <ilpo.jarvinen@linux.intel.com>
 
 --=20
-Sjoerd Simons
-Collabora Ltd.
+ i.
+
+--8323328-1915214704-1706187841=:1444--
