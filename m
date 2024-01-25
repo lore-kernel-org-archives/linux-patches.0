@@ -1,61 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mr85p00im-zteg06021501.me.com (mr85p00im-zteg06021501.me.com [17.58.23.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A5012BE96;
-	Wed, 24 Jan 2024 21:30:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C5E7FB
+	for <patches@lists.linux.dev>; Thu, 25 Jan 2024 00:34:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=17.58.23.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706131808; cv=none; b=ptM1enFccQJGiwW6j5ewYdsVrIdqsMSWn0GWmwjsARCwl/i1KUMpMrHSAeq1VQamU9hkWnGjTqtohid8VPOOSyoLZq3IyNzw9zP1yseSICkpU3fbuoDER2PDWq6/yvz7HNwnfUe8t2AZeouKQF5V+TLBgWVUf/8W3HtZLoP+F/g=
+	t=1706142902; cv=none; b=i56XsqYuoRV3WgfmL96H8SZD5JGqJsKY/lNc0QXLAcsWUbrFAuVPEOfvvoy8W2dQXGRbGXhHqOexsTXWnLEtWc9ouE1ObHUdH013lF0gV3D+ATG5h/c6Q+p/udk2R+VVAmEt8sMbAdiXFI/I9ku1DA/YdTzV3vi9ZPDLX+xzZzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706131808; c=relaxed/simple;
-	bh=1ZwCh/u+J+L77BnFSFFWJSMxVLku6vhyCI+ViJDOP8I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kU45H0Eo4L6lE8xWNo+adLBc6ZeugGS5bU4Ibxs09gVjAT4N1oqVraCf3fdnc0u2GTbvtq1XpJ0e3NCHWKvF6p862oHewfo/zicCJQeVaphXt7E8+kG+spldJfpYdHPyg7FRWCrtzhhPIGj0PDPm3W5KTFQjeq2J2CWecTq2RHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P3jms9n8; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706142902; c=relaxed/simple;
+	bh=uK5d0QqKEQpjPUkioYL54rqGud9tpMYVeFJG+VmEPFw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Ipcy/F0x9LCGv5wDRnd4XlmdlBAi6ldHoAIbKRsZNKz+ButO6GYJWzLgK7zyd58xBt8cmLZLThQvjkiM1WaL///r/byPHHm9pmq4zwbhVpYwq2pPiT9Dolk7vkBzK4MRAJtI+nNVqy82I4i9Uw5tPdj9CWbzZjV+NDANVL1MjOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=danm.net; spf=pass smtp.mailfrom=danm.net; dkim=pass (2048-bit key) header.d=danm.net header.i=@danm.net header.b=gBgoMBzy; arc=none smtp.client-ip=17.58.23.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=danm.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=danm.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P3jms9n8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F950C433C7;
-	Wed, 24 Jan 2024 21:30:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706131808;
-	bh=1ZwCh/u+J+L77BnFSFFWJSMxVLku6vhyCI+ViJDOP8I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=P3jms9n8rbmKkCEV/1APHIVLd4zeoJiOzZFGg5viDipfeyX7nNV8n+1WumP19Z1EF
-	 zaEj2cS7lgTOFb8wqjJ+G6d147u5qdm/ze+OSNcsy6XpFvDg/vEnEQAHjTikO3QKU0
-	 SWZWqP7x/3dxGzkt78msgz2hWoLdxP1Q2c2xNxQuSuBXO/0yTKgkoWQU6WPAL9Pkyi
-	 1dzxV47fOu4QM1WhilfZsKKzloCMvpDUfPbTLwv4tpURDvnONoazhaRkKFHbRf3oe1
-	 hEiMMeJjl5hkon3hk4qJKmBbfz2aFNQld2fRG4Hg0h7+ka9+b3HPZj4NMXHsf5cgOr
-	 cAQyJluUsZXtQ==
-Date: Wed, 24 Jan 2024 21:30:03 +0000
-From: Simon Horman <horms@kernel.org>
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: netdev@vger.kernel.org, patches@lists.linux.dev,
-	Jon Maloy <jmaloy@redhat.com>, Ying Xue <ying.xue@windriver.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Jonathan Corbet <corbet@lwn.net>
-Subject: Re: [PATCH resend] tipc: node: remove Excess struct member
- kernel-doc warnings
-Message-ID: <20240124213003.GA349089@kernel.org>
-References: <20240123051152.23684-1-rdunlap@infradead.org>
+	dkim=pass (2048-bit key) header.d=danm.net header.i=@danm.net header.b="gBgoMBzy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=danm.net; s=sig1;
+	t=1706142895; bh=uK5d0QqKEQpjPUkioYL54rqGud9tpMYVeFJG+VmEPFw=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=gBgoMBzy1pt6B7bl1GRs6MF/KzAMfIRHSU1CSZq94i6zi8K9xi4XH1aLbPHYG457n
+	 XtIIxG2rFprCz5TykaydetEc+yt6M7hCSSEDBJY/NYeADS1q0jPgL4DZ1nY7TJ5uNs
+	 SjNyBQzV72yqq7aUOqEfnZ0qbGYCwCNc2cA4GdLGOQFxfxQTeJA8AZo0Q7ZQPcHPnJ
+	 IuZ86/QadwUAPcazhjxbu2RziZVoy54wX1tLfR9A+Utcm1XeX5cQx7pCdxSYTgrqgn
+	 jueziF0a9REodLpI0TOYPCLDWOvIHzynnBMF3Ju1kZwsAygmcvouS7bsAGnfP6GNXd
+	 N0ad59WHcKpsw==
+Received: from hitch.danm.net (mr38p00im-dlb-asmtp-mailmevip.me.com [17.57.152.18])
+	by mr85p00im-zteg06021501.me.com (Postfix) with ESMTPSA id A4EFB2794200;
+	Thu, 25 Jan 2024 00:34:54 +0000 (UTC)
+From: Dan Moulding <dan@danm.net>
+To: gregkh@linuxfoundation.org
+Cc: dan@danm.net,
+	junxiao.bi@oracle.com,
+	logang@deltatee.com,
+	patches@lists.linux.dev,
+	song@kernel.org,
+	stable@vger.kernel.org,
+	yukuai3@huawei.com
+Subject: Re: [PATCH 6.7 438/641] md: bypass block throttle for superblock update
+Date: Wed, 24 Jan 2024 17:34:52 -0700
+Message-ID: <20240125003452.30195-1-dan@danm.net>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <2024012316-phonebook-shrewdly-31f2@gregkh>
+References: <2024012316-phonebook-shrewdly-31f2@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240123051152.23684-1-rdunlap@infradead.org>
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: M6BKiHeJDEAD7Y2ETKw267AeNMdiAauR
+X-Proofpoint-GUID: M6BKiHeJDEAD7Y2ETKw267AeNMdiAauR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-24_12,2024-01-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 mlxlogscore=573
+ adultscore=0 suspectscore=0 mlxscore=0 clxscore=1030 bulkscore=0
+ spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2308100000 definitions=main-2401250002
 
-On Mon, Jan 22, 2024 at 09:11:52PM -0800, Randy Dunlap wrote:
-> Remove 2 kernel-doc descriptions to squelch warnings:
-> 
-> node.c:150: warning: Excess struct member 'inputq' description in 'tipc_node'
-> node.c:150: warning: Excess struct member 'namedq' description in 'tipc_node'
-> 
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> For now, I'm going to keep both commits in the stable trees, as that
+> matches what is in Linus's tree
 
-Reviewed-by: Simon Horman <horms@kernel.org>
+Please consider reverting bed9e27baf52 in both Linus' tree and the
+stable trees. That would keep them in sync while keeping this new
+regression out of the kernel.
 
+> as this seems to be hard to reproduce
+> and I haven't seen any other reports of issues.
+
+The change that caused the regression itself purports to fix a
+two-year old regression. But since that alleged regression has been in
+the kernel for two years, seemingly without much (if any) public
+complaint, I'd say that the new regression caused by bed9e27baf52 is
+definitely the easier one to reproduce (I hit it within hours after
+upgrading to 6.7.1).
+
+I've also reproduced this regression in a fresh Fedora 39 VM that I
+just spun up to try to reproduce it in a different environment. I can
+reproduce it both with the vanilla stable v6.6.13 sources as well as
+with the distribution kernel (6.6.13-200-fc39.x86_64). Song, I'm happy
+to provide the details of how I built this VM, or even the VM's
+libvirt XML and disk images, if that would help with your efforts to
+reproduce the problem.
+
+-- Dan
