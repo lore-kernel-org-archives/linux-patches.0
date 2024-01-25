@@ -1,45 +1,45 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6408617753
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FB417731
 	for <patches@lists.linux.dev>; Thu, 25 Jan 2024 08:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706171006; cv=none; b=PHIeHK3qgH5mc+KJKi7PBLxPMJ73A9MgRyY224louFfijX0NPfnOxTNqDtiOcN33P6FXPNJrHcoO/ocOv/AT2bLDIEBtSrF0JX7WLeyAXXzNE7uDTuX/KXXEN6vjoTF36/cW2vstIADK+fnh8uC3c4lY6CyA1qf3a2cim8l6U5Q=
+	t=1706171006; cv=none; b=VSDeVdxbPqd2hgOjBc8YI8qRnF3NqcU2N6+2wn+bT+hDjZ7cwqWmmSWMw108Uwbgqr43ZSH9DszhhO9GSLC35R4JcFvmLq27cn73SWa7sEB77kzICtA9itiCh0e04iJKx2/wwr6kiVTHbKEp9mz8kQamT/YNeccaOMrRztVgnuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706171006; c=relaxed/simple;
-	bh=tDVjAd0aOw9tS20OeAHfcgi7HCiP4MDtxaMa6rF0AB4=;
+	bh=33Nygko1fox8iV52wVuBrn97aPDqalW86iUYduaw+zg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=lr1M2aq+j8rBhxSfwgFIFmlzS/Zlwf4ih6XAMdnnmEdmSfS+KXEKYOCNJM78t/SnuAgnitGnTkRzZKuflN3TF6jIVNHyiZAY0P+6sJvJIfkt8kxNJZ1GWIkTnLRrTKsRJQHMRvc/wowLw+M5fpTxGPy+t/V0pTzf3JYjeDtRvCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QFObJbco; arc=none smtp.client-ip=198.175.65.14
+	 MIME-Version; b=e8T0guhTi2Qm8Jf3EjRLT4SdHeWmsBlcNvAZWIl7S65vhcngyZ35IfWV2e9c0pwM/ZZlrlZsL56ZMVq9wZdJj0spjfxKDCHR2CSoUKBFpC0VbOCQ59tzuIVhg5IKuRZc5d43rGILOwUi/iBWttBCFu+UnfZ7SF5XYspNBxAUfxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=m4swk/Qy; arc=none smtp.client-ip=198.175.65.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QFObJbco"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="m4swk/Qy"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706171005; x=1737707005;
+  t=1706171006; x=1737707006;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=tDVjAd0aOw9tS20OeAHfcgi7HCiP4MDtxaMa6rF0AB4=;
-  b=QFObJbco1u9KkAbb/DJDLmjXbf4GhIQ1l1BKHvdSdGhHzAFGmpdsyiNM
-   I7k3f8vpK9hGSj2X65ue76+RFTvZsUgpSoDHXre2AJ7W/QqKuM3/rPeDy
-   /ktK0t9Zb/VeUr/bxmO2/H1S2RJbB6GNTTW/bf9oPfVmJHxYz4Dju27Dy
-   uLyEnnilJXH09zxefhdnqDIeUMcnqs+9baFWpdL6d8kH3NRFHxuMYqxAm
-   V1fe9H5XDY5WwfwujiuyGUXFiBrliHBkOQOEqQ4tX1L1DY33DnZED0ory
-   Z38iFsSn42lH9ghoOkby6TAIPQuvJtspbTNVKOl+t+TCpHnnrwwxkyT47
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="1987172"
+  bh=33Nygko1fox8iV52wVuBrn97aPDqalW86iUYduaw+zg=;
+  b=m4swk/QyswG6OJZzdpQHvtqnJSDsn/+jM8LDJLcLTwnaQUSbSt9qqr+j
+   r6o/VZAvabX7CldQhzu7PYwfls5nHwov6YIXEIqmC5QmsGB/jqqckwv9/
+   xESNgeBHrIJm0DPhPa0skS+0xqU4P7/Bk9XSH+vhYmh5iyGUiTVKkjP9b
+   5WVu8EetH7aYX3qnO19UJ6bXue4tYSnSc+0b+/eC7IqR6c+xJD0hhiJzp
+   +mmm2KlCADWJTY0hqLg0GEBJbosKytlUQcDWPsLouPegCMo8LEiigRWtM
+   x5q3Iu6lq7UVdvoCKiI03iPw0wY4PfkOA+rvYz2EzlOO+VsJd5O7leJ5Y
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="1987177"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="1987172"
+   d="scan'208";a="1987177"
 Received: from fmsmga003.fm.intel.com ([10.253.24.29])
   by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2024 00:23:24 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="876975926"
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="876975929"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="876975926"
+   d="scan'208";a="876975929"
 Received: from araj-ucode.jf.intel.com ([10.23.0.11])
-  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2024 00:23:22 -0800
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2024 00:23:23 -0800
 From: Ashok Raj <ashok.raj@intel.com>
 To: Hans de Goede <hdegoede@redhat.com>,
 	Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
@@ -52,9 +52,9 @@ Cc: Jithu Joseph <jithu.joseph@intel.com>,
 	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
 	pengfei.xu@intel.com
-Subject: [PATCH 2/5] platform/x86/intel/ifs: Trace on all HT threads when executing a test
-Date: Thu, 25 Jan 2024 00:22:51 -0800
-Message-Id: <20240125082254.424859-3-ashok.raj@intel.com>
+Subject: [PATCH 3/5] platform/x86/intel/ifs: Add current batch number to trace output
+Date: Thu, 25 Jan 2024 00:22:52 -0800
+Message-Id: <20240125082254.424859-4-ashok.raj@intel.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240125082254.424859-1-ashok.raj@intel.com>
 References: <20240125082254.424859-1-ashok.raj@intel.com>
@@ -66,157 +66,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Enable the trace function on all HT threads.  Currently, the trace is
-called from some arbitrary CPU where the test was invoked.
-
-This change gives visibility to the exact errors as seen by each
-participating HT threads, and not just what was seen from the primary
-thread.
-
-Sample output below.
+Add the current batch number in the trace output. When there are failures,
+it's important to know which test content resulted in failure.
 
 #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
 #              | |         |   |||||     |         |
-     migration/0-18      [000] d..1. 527287.084668: start: 0000, stop: 007f, status: 0000000000007f80
-   migration/128-785     [128] d..1. 527287.084669: start: 0000, stop: 007f, status: 0000000000007f80
+     migration/0-18      [000] d..1. 527287.084668: ifs_status: batch: 02, start: 0000, stop: 007f, status: 0000000000007f80
+   migration/128-785     [128] d..1. 527287.084669: ifs_status: batch: 02, start: 0000, stop: 007f, status: 0000000000007f80
 
 Signed-off-by: Ashok Raj <ashok.raj@intel.com>
 Reviewed-by: Tony Luck <tony.luck@intel.com>
 ---
- include/trace/events/intel_ifs.h         |  9 ++---
- drivers/platform/x86/intel/ifs/runtest.c | 46 +++++++++++++++++-------
- 2 files changed, 36 insertions(+), 19 deletions(-)
+ include/trace/events/intel_ifs.h         | 9 ++++++---
+ drivers/platform/x86/intel/ifs/runtest.c | 2 +-
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/include/trace/events/intel_ifs.h b/include/trace/events/intel_ifs.h
-index af0af3f1d9b7..8462dfb7a020 100644
+index 8462dfb7a020..8ce2de120f2d 100644
 --- a/include/trace/events/intel_ifs.h
 +++ b/include/trace/events/intel_ifs.h
-@@ -10,26 +10,23 @@
+@@ -10,23 +10,26 @@
  
  TRACE_EVENT(ifs_status,
  
--	TP_PROTO(int cpu, int start, int stop, u64 status),
-+	TP_PROTO(int start, int stop, u64 status),
+-	TP_PROTO(int start, int stop, u64 status),
++	TP_PROTO(int batch, int start, int stop, u64 status),
  
--	TP_ARGS(cpu, start, stop, status),
-+	TP_ARGS(start, stop, status),
+-	TP_ARGS(start, stop, status),
++	TP_ARGS(batch, start, stop, status),
  
  	TP_STRUCT__entry(
++		__field(	int,	batch	)
  		__field(	u64,	status	)
--		__field(	int,	cpu	)
  		__field(	u16,	start	)
  		__field(	u16,	stop	)
  	),
  
  	TP_fast_assign(
--		__entry->cpu	= cpu;
++		__entry->batch	= batch;
  		__entry->start	= start;
  		__entry->stop	= stop;
  		__entry->status	= status;
  	),
  
--	TP_printk("cpu: %d, start: %.4x, stop: %.4x, status: %.16llx",
--		__entry->cpu,
-+	TP_printk("start: %.4x, stop: %.4x, status: %.16llx",
+-	TP_printk("start: %.4x, stop: %.4x, status: %.16llx",
++	TP_printk("batch: %.2d, start: %.4x, stop: %.4x, status: %.16llx",
++		__entry->batch,
  		__entry->start,
  		__entry->stop,
  		__entry->status)
 diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
-index 13ecd55c6668..c8352ffb9195 100644
+index c8352ffb9195..21dc0046fd9b 100644
 --- a/drivers/platform/x86/intel/ifs/runtest.c
 +++ b/drivers/platform/x86/intel/ifs/runtest.c
-@@ -23,6 +23,12 @@
- /* Max retries on the same chunk */
- #define MAX_IFS_RETRIES  5
+@@ -176,7 +176,7 @@ static int doscan(void *data)
+ 	wrmsrl(MSR_ACTIVATE_SCAN, params->activate->data);
+ 	rdmsrl(MSR_SCAN_STATUS, status.data);
  
-+struct run_params {
-+	struct ifs_data *ifsd;
-+	union ifs_scan *activate;
-+	union ifs_status status;
-+};
-+
- /*
-  * Number of TSC cycles that a logical CPU will wait for the other
-  * logical CPU on the core in the WRMSR(ACTIVATE_SCAN).
-@@ -140,10 +146,22 @@ static bool can_restart(union ifs_status status)
-  */
- static int doscan(void *data)
- {
--	int cpu = smp_processor_id();
--	u64 *msrs = data;
-+	int cpu = smp_processor_id(), start, stop;
-+	struct run_params *params = data;
-+	union ifs_status status;
-+	struct ifs_data *ifsd;
- 	int first;
+-	trace_ifs_status(start, stop, status.data);
++	trace_ifs_status(ifsd->cur_batch, start, stop, status.data);
  
-+	ifsd = params->ifsd;
-+
-+	if (ifsd->generation) {
-+		start = params->activate->gen2.start;
-+		stop = params->activate->gen2.stop;
-+	} else {
-+		start = params->activate->gen0.start;
-+		stop = params->activate->gen0.stop;
-+	}
-+
- 	/* Only the first logical CPU on a core reports result */
- 	first = cpumask_first(cpu_smt_mask(cpu));
- 
-@@ -155,12 +173,14 @@ static int doscan(void *data)
- 	 * take up to 200 milliseconds (in the case where all chunks
- 	 * are processed in a single pass) before it retires.
- 	 */
--	wrmsrl(MSR_ACTIVATE_SCAN, msrs[0]);
-+	wrmsrl(MSR_ACTIVATE_SCAN, params->activate->data);
-+	rdmsrl(MSR_SCAN_STATUS, status.data);
- 
--	if (cpu == first) {
--		/* Pass back the result of the scan */
--		rdmsrl(MSR_SCAN_STATUS, msrs[1]);
--	}
-+	trace_ifs_status(start, stop, status.data);
-+
-+	/* Pass back the result of the scan */
-+	if (cpu == first)
-+		params->status = status;
- 
- 	return 0;
- }
-@@ -179,7 +199,7 @@ static void ifs_test_core(int cpu, struct device *dev)
- 	struct ifs_data *ifsd;
- 	int to_start, to_stop;
- 	int status_chunk;
--	u64 msrvals[2];
-+	struct run_params params;
- 	int retries;
- 
- 	ifsd = ifs_get_data(dev);
-@@ -190,6 +210,8 @@ static void ifs_test_core(int cpu, struct device *dev)
- 	to_start = 0;
- 	to_stop = ifsd->valid_chunks - 1;
- 
-+	params.ifsd = ifs_get_data(dev);
-+
- 	if (ifsd->generation) {
- 		activate.gen2.start = to_start;
- 		activate.gen2.stop = to_stop;
-@@ -207,12 +229,10 @@ static void ifs_test_core(int cpu, struct device *dev)
- 			break;
- 		}
- 
--		msrvals[0] = activate.data;
--		stop_core_cpuslocked(cpu, doscan, msrvals);
--
--		status.data = msrvals[1];
-+		params.activate = &activate;
-+		stop_core_cpuslocked(cpu, doscan, &params);
- 
--		trace_ifs_status(cpu, to_start, to_stop, status.data);
-+		status = params.status;
- 
- 		/* Some cases can be retried, give up for others */
- 		if (!can_restart(status))
+ 	/* Pass back the result of the scan */
+ 	if (cpu == first)
 -- 
 2.39.2
 
