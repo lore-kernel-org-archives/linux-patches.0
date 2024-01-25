@@ -1,88 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B5717BBB;
-	Thu, 25 Jan 2024 22:56:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1FC12B9A
+	for <patches@lists.linux.dev>; Thu, 25 Jan 2024 23:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706223369; cv=none; b=ls4xXHXtEn3eKHYb6LnE7UYx6ioTOqUguhhQMDSXsbaSDS8/C3NYkWYK51MMdA9b0DK5HeWa1iZ3wAo92+mZaN5qeWsy+h5F7tTV2GKPUxcLThAMv160hmq4C6WCSbwqLi2FQhJii10/EW+S43UFZQbjE+g10ANKOQEpCq6l0O8=
+	t=1706224175; cv=none; b=oeVHM++z0pHFyGaOGjenb8BDo633EkgH4/pL3Jh/5N4QWVsmC9sIlIqrVR7HhOoavG2ujP8cW7gVXToY4nJu6ZCTNSEr+JvTA/ckrkEf/lysSOek/+M3a90pjKgVNdaxjoiLCJXhn9THs1VygoLaUTui6psPhusZBOBDecoIFrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706223369; c=relaxed/simple;
-	bh=UeJFFhP5K5DQQoi+dtNguzI64CEeLgb3Zsu8VdMJzbI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WK7DKcUpJF+EaRjXjxX1NyJxClRTLVzMldic+67IU6C679hE1hTq0rk/7V7Nn16yLRMRW1xvqAKd3z06r06VvPHvxNMczYQxcvz0Z3QhzL/6sMBWNb1G2p1Xa44Xn/3wTZB8tBYJfnfuQuFvAold5lz7ILj+ucXSpEHt7z4URUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IKpJlDgk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706224175; c=relaxed/simple;
+	bh=ePte//PcvI+POPvm5pOf9eY2yfLLJls6I8UsfkKqq8I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EELr76yZlyf0j5ZNMEdNRXZmL4X5/U4bhREzblQnTsUGI1AY1WIh1x57VAjGnXTbpvrGpv+EFvdtNUrfhtcoiIrj41e0FSbuQMj2aPHzbpxVYH8HpHi8H1rpu20G0JFr5TTKmKxhfZCrfgMuTDOmL/t6Nq4ipZ4R51ivooOUp84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=UoWpm/qZ; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IKpJlDgk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674C0C43399;
-	Thu, 25 Jan 2024 22:56:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706223368;
-	bh=UeJFFhP5K5DQQoi+dtNguzI64CEeLgb3Zsu8VdMJzbI=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=IKpJlDgkl/iKbA65PPiAZAJWgcrumBdsCpKqhd1yawQ1gNcfQoofLNdMCRkzBQ/CX
-	 2SOE06iU/CAKpkmvpYJWss1opIxrGLaUn52/wmHPAQ9gNImZ6L21nq20EKgueS8jMW
-	 88fV9fWPJAO94Vf256jt2TBkn3w9+vQAZ59WwGMcHQ18HccEorP8m+9KxWe8Xqx54V
-	 uJQ+fCcrdA6CeC6hBZ2hy+15ar4HFAa/yEVhpzxrqm9FkIlhkSwpL93p47wvbl93pM
-	 DN9+P7rzwQ0eMFJdLcinrXhnVQWpzerXJJh+lGB6vMlKnyNublIgHP7Oztu8TGYBXY
-	 7eexNUfCsRmvg==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 25 Jan 2024 15:55:17 -0700
-Subject: [PATCH 11/11] compiler-clang.h: Update __diag_clang() macros for
- minimum version bump
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="UoWpm/qZ"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-517ab9a4a13so5565475a12.1
+        for <patches@lists.linux.dev>; Thu, 25 Jan 2024 15:09:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1706224173; x=1706828973; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NNidztSseW3f6ox0VaVwn+MmYmXjLmRwN6RuC1S6ZnI=;
+        b=UoWpm/qZ3kh7N4S7Y9lw6Tj2qBMX4IC3wmKdtdGsY3VxJ9emT4L19c7sg6E+SnESld
+         3aBDAXmsBVsMRfFz1lzr6Gh6tXysKg/JPqHFW4rT++3pLh3CGb6poCzjXqLQq44klsav
+         N3hUVBYDWiwQWTFRjHwHRo/gPqc/4TWeDe8j8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706224173; x=1706828973;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NNidztSseW3f6ox0VaVwn+MmYmXjLmRwN6RuC1S6ZnI=;
+        b=MLkDPb9u2JsZYRzV3VTKbYaXPIUWxMR0MOTFjpPXt1qw5PsuUGZjTsVh6FyyoAwIRi
+         GIWFg5WAmZRgtMi8gi5HpBopGps5WKXHUIdjW46LrnO2DqSbLt+XiNAQ8u48dFp9+ISZ
+         8ND2gqiedNw1BH0S0iXJA3XU+dYMAV2UgSR/M50vMnbYzxEZuw6kgXU57lH5h1lsWiWF
+         WG4lEdCZI4if+XeRNmTIv1NPoz20pXm51bpsWyR7ovPs8nPyfzgiOz61vB+NSPE9zbnh
+         ElHElF4JJhZWZMcaeOVgn9r+J/HgvXf+1cbI/NvitB263oEtX+uDQq6XflgZ/nKtxjb9
+         WrOA==
+X-Gm-Message-State: AOJu0YywLw+GZqWx+KKFve8gZ8J7NqWxjtfdt9q5SRynVIzqBuI0z2dt
+	nDbUm92XFIct/bHSuZXmBNibEGoRVIcOx71sf5SjAIMWi0K2SimxSGqqgao1eg==
+X-Google-Smtp-Source: AGHT+IH4wMIY5onoDuNtmQW2qW/oiyEguJjb8r1Cdunh6LBtNU0O2EKFQ/LepjR7KIf8EtqHsgZMQA==
+X-Received: by 2002:a05:6a20:1616:b0:19b:5cf9:45ac with SMTP id l22-20020a056a20161600b0019b5cf945acmr452465pzj.81.1706224173278;
+        Thu, 25 Jan 2024 15:09:33 -0800 (PST)
+Received: from www.outflux.net ([198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id m66-20020a633f45000000b005cdfb0a11e1sm27205pga.88.2024.01.25.15.09.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Jan 2024 15:09:32 -0800 (PST)
+Date: Thu, 25 Jan 2024 15:09:20 -0800
+From: Kees Cook <keescook@chromium.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: akpm@linux-foundation.org, masahiroy@kernel.org, nicolas@fjasle.eu,
+	linux-kbuild@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org
+Subject: Re: [PATCH 09/11] fortify: Drop Clang version check for 12.0.1 or
+ newer
+Message-ID: <202401251509.70789B5D@keescook>
+References: <20240125-bump-min-llvm-ver-to-13-0-1-v1-0-f5ff9bda41c5@kernel.org>
+ <20240125-bump-min-llvm-ver-to-13-0-1-v1-9-f5ff9bda41c5@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240125-bump-min-llvm-ver-to-13-0-1-v1-11-f5ff9bda41c5@kernel.org>
-References: <20240125-bump-min-llvm-ver-to-13-0-1-v1-0-f5ff9bda41c5@kernel.org>
-In-Reply-To: <20240125-bump-min-llvm-ver-to-13-0-1-v1-0-f5ff9bda41c5@kernel.org>
-To: akpm@linux-foundation.org, masahiroy@kernel.org
-Cc: nicolas@fjasle.eu, linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=918; i=nathan@kernel.org;
- h=from:subject:message-id; bh=UeJFFhP5K5DQQoi+dtNguzI64CEeLgb3Zsu8VdMJzbI=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKmbnv274uD7sqTfcJrv1oY5EQ2Jn1iuaARsDb7702pzy
- AG/T3NMOkpZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEPoQy/BX/Efs1wid5zX5D
- iXdJwW67+OPV7t/0vxglYmRs2uB/1IeRYeeL5T8/fzUv/ztZxMmKXWiN8FPZn9tcpSZunbXC/Ld
- fBicA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240125-bump-min-llvm-ver-to-13-0-1-v1-9-f5ff9bda41c5@kernel.org>
 
-The minimum supported version of LLVM for building the kernel
-has been bumped to 13.0.1. Update the __diag_clang() macros for this
-bump.
+On Thu, Jan 25, 2024 at 03:55:15PM -0700, Nathan Chancellor wrote:
+> Now that the minimum supported version of LLVM for building the kernel
+> has been bumped to 13.0.1, this condition is always true, as the build
+> will fail during the configuration stage for older LLVM versions. Remove
+> it.
+> 
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- include/linux/compiler-clang.h | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
-
-diff --git a/include/linux/compiler-clang.h b/include/linux/compiler-clang.h
-index f0a47afef125..49feac0162a5 100644
---- a/include/linux/compiler-clang.h
-+++ b/include/linux/compiler-clang.h
-@@ -114,11 +114,7 @@
- #define __diag_str(s)		__diag_str1(s)
- #define __diag(s)		_Pragma(__diag_str(clang diagnostic s))
- 
--#if CONFIG_CLANG_VERSION >= 110000
--#define __diag_clang_11(s)	__diag(s)
--#else
--#define __diag_clang_11(s)
--#endif
-+#define __diag_clang_13(s)	__diag(s)
- 
- #define __diag_ignore_all(option, comment) \
--	__diag_clang(11, ignore, option)
-+	__diag_clang(13, ignore, option)
+Acked-by: Kees Cook <keescook@chromium.org>
 
 -- 
-2.43.0
-
+Kees Cook
