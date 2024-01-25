@@ -1,167 +1,118 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BBB17BBB
-	for <patches@lists.linux.dev>; Thu, 25 Jan 2024 08:23:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8287517BB9
+	for <patches@lists.linux.dev>; Thu, 25 Jan 2024 08:24:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706171007; cv=none; b=mni/GN4O/B/PkfvBEOmg3RvgCpjKA0wlSjKnw4Kwfahj22kucQIAS7sVqT/OGhzClxZLpnW1BzHJeHBFwL0/cDS9srypbRgT99uqNV4RSYVhgMqFZ67HZX3IliSS6Wqnc66+yzTj9q/55I75YIpV/mjlXug9cDxwI92B0ilYF2Y=
+	t=1706171075; cv=none; b=lMKNykjsQNHqsUvaPJrZdQr/0tzMAW8Y/L7RAiF9WLbMLWAY14awMrWcEHI+/xkwR57kOyua3ez/yD+gOMwk+YUGCalDZFamv+84GysVjVmU4Y+9wZRtxXGhoCcQVbvdYDzkkOtxqPKGqxYf4Bvcde8btpjn/zvUvtGL6bZgheg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706171007; c=relaxed/simple;
-	bh=DgRKwx7erCsCqZ7Amarz6wtLdWuV8+Tw6mXgX2EWNu4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IJgqAfChSyPcfEO4odf/Ywj+SGIfaqwTuoIenjXPKbm38J/WwGI+gwOwmKdJ84To5hkuNL/bTxKdgWd8P6q7lY1pugcJN0xWK2kCQAMbAdJms3Q3B4cz6ZwWYqofnKWQvnriGUdFUrjU0XccM8RqsGW0uTepLWnW+z0T3sF1zRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jhNnIw+V; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1706171075; c=relaxed/simple;
+	bh=gbrB9NLIlYC5NTig3kJYB7G3uvykx2Hby2/m3ZKMIl0=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=GFTm2ACz3XwKTGM9bGJ9wZL4NTph4hE3EIM5lWK5RLN55UbrCzv9v5to9w4+0abLkUGHLkj8TnA7I5xWmBqfsjMdUuKYB/QKHExxzwolYcaTrJ32Or3LU2p3NZbHz4WQ/SkVZrHRTIiCdqZq8eL4/qIpHcQlKlFhTW3FtyFdJzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=JzxGzMM9; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jhNnIw+V"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706171007; x=1737707007;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=DgRKwx7erCsCqZ7Amarz6wtLdWuV8+Tw6mXgX2EWNu4=;
-  b=jhNnIw+V8OJ5vI/Tp39R6RF+o/PWUDUWlUA1IA11E4QfxgZcB/tth/Ki
-   bq5aoxotzgAgP6SzarSypt1+bczH4eXvIlf0+m+VRIR8wlug/YOaCpUK/
-   RE7m8rHDdAMc9OVKN+89rOLsYAoNYZRqnOOF7wsEpBMjnhfdEqvUvElex
-   tHJDKLPMJxF8W5Qn5RgVr8g29IIOSg/jyGTapgPe7duW2dt411cHyGFOf
-   TZv9ARe8Hvlc7CVP4uQYD8GxO608lIzmVGj0mRPwCRufgmHmMrbAg7CPE
-   t/Gil2v4/IfPDWbgEn2a+ItFDHnYDr11uyCGFZB6LomRy2ja2/RZ0a5W6
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="1987189"
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="1987189"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2024 00:23:26 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="876975935"
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="876975935"
-Received: from araj-ucode.jf.intel.com ([10.23.0.11])
-  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2024 00:23:24 -0800
-From: Ashok Raj <ashok.raj@intel.com>
-To: Hans de Goede <hdegoede@redhat.com>,
-	Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
-	markgross@kernel.org
-Cc: Jithu Joseph <jithu.joseph@intel.com>,
-	rostedt@goodmis.org,
-	ashok.raj@intel.com,
-	tony.luck@intel.com,
-	LKML <linux-kernel@vger.kernel.org>,
-	platform-driver-x86@vger.kernel.org,
-	patches@lists.linux.dev,
-	pengfei.xu@intel.com
-Subject: [PATCH 5/5] platform/x86/intel/ifs: Add an entry rendezvous for SAF
-Date: Thu, 25 Jan 2024 00:22:54 -0800
-Message-Id: <20240125082254.424859-6-ashok.raj@intel.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240125082254.424859-1-ashok.raj@intel.com>
-References: <20240125082254.424859-1-ashok.raj@intel.com>
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="JzxGzMM9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1706171071;
+	bh=gbrB9NLIlYC5NTig3kJYB7G3uvykx2Hby2/m3ZKMIl0=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+	b=JzxGzMM9+n63kEOSgtEZk9qEnHHJE6pBOEO4viPJpTfscJCimVlcbqtRrFh7EFqcs
+	 PETbJoY+BRIum/geSL9u/VmtIFWttEvkem3bcoi2wxXYfR+/WbzST9/M4D2a0XBJ9j
+	 YZrMqA41TdKpw1PdFc0pjzW30d/AkiZmJUH/e1qCTTwBkCmUfNXkvA8mMa09QxTJbZ
+	 zS37vweEa870FXLF5USYGAmaB2r0tmvBFwLjRxA/2WKpmDGQewzCUHn6XZmqt+Ovao
+	 zGdz8ezNh1ZUWnB4MxkkcrITERWwr3JCL/XOhDoou1alu5ZnRkCeugXukWpW8r1jqH
+	 0F5nSHwrcGbMg==
+Received: from beast.luon.net (cola.collaboradmins.com [IPv6:2a01:4f8:1c1c:5717::1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: sjoerd)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id CC37A37820BC;
+	Thu, 25 Jan 2024 08:24:31 +0000 (UTC)
+Received: by beast.luon.net (Postfix, from userid 1000)
+	id 819BDAAFD424; Thu, 25 Jan 2024 09:24:31 +0100 (CET)
+Message-ID: <d0e3c99793d981c5ee90aa7457e480d83fe9e8de.camel@collabora.com>
+Subject: Re: [PATCH 6.6 132/150] bus: moxtet: Mark the irq as shared
+From: Sjoerd Simons <sjoerd@collabora.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Marek =?ISO-8859-1?Q?Beh=FAn?=
+ <kabel@kernel.org>,  Gregory CLEMENT <gregory.clement@bootlin.com>
+Date: Thu, 25 Jan 2024 09:24:31 +0100
+In-Reply-To: <20240118104326.164425257@linuxfoundation.org>
+References: <20240118104320.029537060@linuxfoundation.org>
+	 <20240118104326.164425257@linuxfoundation.org>
+Organization: Collabora Ltd.
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.3-1 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-The activation for SAF includes a parameter to make microcode wait for both
-threads to join. It's preferable to perform an entry rendezvous before
-the activation to ensure that they start the `wrmsr` close enough to each
-other. In some cases it has been observed that one of the threads might be
-just a bit late to arrive. An entry rendezvous reduces the likelihood of
-these cases occurring.
+Hey,
 
-Add an entry rendezvous to ensure the activation on both threads happen
-close enough to each other.
+On Thu, 2024-01-18 at 11:49 +0100, Greg Kroah-Hartman wrote:
+> 6.6-stable review patch.=C2=A0 If anyone has any objections, please let m=
+e
+> know.
 
-Signed-off-by: Ashok Raj <ashok.raj@intel.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
----
- drivers/platform/x86/intel/ifs/runtest.c | 48 +++++++++++++-----------
- 1 file changed, 26 insertions(+), 22 deletions(-)
+Thanks for picking this up! To complete this fix the following is also
+needed:
 
-diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
-index e3307dd8e3c4..95b4b71fab53 100644
---- a/drivers/platform/x86/intel/ifs/runtest.c
-+++ b/drivers/platform/x86/intel/ifs/runtest.c
-@@ -140,6 +140,29 @@ static bool can_restart(union ifs_status status)
- 	return false;
- }
- 
-+#define SPINUNIT 100 /* 100 nsec */
-+static atomic_t array_cpus_in;
-+static atomic_t scan_cpus_in;
-+
-+/*
-+ * Simplified cpu sibling rendezvous loop based on microcode loader __wait_for_cpus()
-+ */
-+static void wait_for_sibling_cpu(atomic_t *t, long long timeout)
-+{
-+	int cpu = smp_processor_id();
-+	const struct cpumask *smt_mask = cpu_smt_mask(cpu);
-+	int all_cpus = cpumask_weight(smt_mask);
-+
-+	atomic_inc(t);
-+	while (atomic_read(t) < all_cpus) {
-+		if (timeout < SPINUNIT)
-+			return;
-+		ndelay(SPINUNIT);
-+		timeout -= SPINUNIT;
-+		touch_nmi_watchdog();
-+	}
-+}
-+
- /*
-  * Execute the scan. Called "simultaneously" on all threads of a core
-  * at high priority using the stop_cpus mechanism.
-@@ -165,6 +188,8 @@ static int doscan(void *data)
- 	/* Only the first logical CPU on a core reports result */
- 	first = cpumask_first(cpu_smt_mask(cpu));
- 
-+	wait_for_sibling_cpu(&scan_cpus_in, NSEC_PER_SEC);
-+
- 	/*
- 	 * This WRMSR will wait for other HT threads to also write
- 	 * to this MSR (at most for activate.delay cycles). Then it
-@@ -230,6 +255,7 @@ static void ifs_test_core(int cpu, struct device *dev)
- 		}
- 
- 		params.activate = &activate;
-+		atomic_set(&scan_cpus_in, 0);
- 		stop_core_cpuslocked(cpu, doscan, &params);
- 
- 		status = params.status;
-@@ -270,28 +296,6 @@ static void ifs_test_core(int cpu, struct device *dev)
- 	}
- }
- 
--#define SPINUNIT 100 /* 100 nsec */
--static atomic_t array_cpus_in;
--
--/*
-- * Simplified cpu sibling rendezvous loop based on microcode loader __wait_for_cpus()
-- */
--static void wait_for_sibling_cpu(atomic_t *t, long long timeout)
--{
--	int cpu = smp_processor_id();
--	const struct cpumask *smt_mask = cpu_smt_mask(cpu);
--	int all_cpus = cpumask_weight(smt_mask);
--
--	atomic_inc(t);
--	while (atomic_read(t) < all_cpus) {
--		if (timeout < SPINUNIT)
--			return;
--		ndelay(SPINUNIT);
--		timeout -= SPINUNIT;
--		touch_nmi_watchdog();
--	}
--}
--
- static int do_array_test(void *data)
- {
- 	union ifs_array *command = data;
--- 
-2.39.2
+fca8a117c1c9 ("arm64: dts: armada-3720-turris-mox: set irq type for
+RTC")
 
+Not sure if i missed something causing this one to not be picked up,
+while the others in the series were.
+
+
+>=20
+> ------------------
+>=20
+> From: Sjoerd Simons <sjoerd@collabora.com>
+>=20
+> commit e7830f5a83e96d8cb8efc0412902a03008f8fbe3 upstream.
+>=20
+> The Turris Mox shares the moxtet IRQ with various devices on the
+> board,
+> so mark the IRQ as shared in the driver as well.
+>=20
+> Without this loading the module will fail with:
+> =C2=A0 genirq: Flags mismatch irq 40. 00002002 (moxtet) vs. 00002080
+> (mcp7940x)
+>=20
+> Signed-off-by: Sjoerd Simons <sjoerd@collabora.com>
+> Cc:=C2=A0 <stable@vger.kernel.org> # v6.2+
+> Reviewed-by: Marek Beh=C3=BAn <kabel@kernel.org>
+> Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+> =C2=A0drivers/bus/moxtet.c |=C2=A0=C2=A0=C2=A0 2 +-
+> =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> --- a/drivers/bus/moxtet.c
+> +++ b/drivers/bus/moxtet.c
+> @@ -755,7 +755,7 @@ static int moxtet_irq_setup(struct moxte
+> =C2=A0	moxtet->irq.masked =3D ~0;
+> =C2=A0
+> =C2=A0	ret =3D request_threaded_irq(moxtet->dev_irq, NULL,
+> moxtet_irq_thread_fn,
+> -				=C2=A0=C2=A0 IRQF_ONESHOT, "moxtet", moxtet);
+> +				=C2=A0=C2=A0 IRQF_SHARED | IRQF_ONESHOT,
+> "moxtet", moxtet);
+> =C2=A0	if (ret < 0)
+> =C2=A0		goto err_free;
+> =C2=A0
+>=20
+>=20
+
+--=20
+Sjoerd Simons
+Collabora Ltd.
