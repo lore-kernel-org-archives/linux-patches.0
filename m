@@ -1,133 +1,99 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9551D130E33
-	for <patches@lists.linux.dev>; Thu, 25 Jan 2024 17:29:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E1B79C7;
+	Thu, 25 Jan 2024 17:32:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706203790; cv=none; b=WMGvO5W3Os4itrI9mowj9sHUHz9adTGUkg4LjusuvY+G7Reb0iYwBsTcpDNQkbXkrnEPOMFtNev+Sa+SWYZx2G3uTmSVI2eX9bQYWiD7lNjSCqG6fW1e33Rnpt0eef8DloytM4/+Bx9MnjCBKuDs5ZsM+dLPzTptRtzOlzBrvfQ=
+	t=1706203937; cv=none; b=lWxgtmt3EBsiif94lSsNifvJpf+WvJ+b4irwE+DmkOKojFZGm8uqymKtT25yhnKBZ8XOUdiHqU61jc6jcYpgm96axqrS7bUuRFiPi6PAKPQDctfU6ity69zkioety+gsBEhalAlSdoBMGHKfFdwG4of/6vvjdu07TR+Djtap8SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706203790; c=relaxed/simple;
-	bh=rg8k8DSz99hlQQsXagfNAy+1dYhgiafR464X4FhdLDE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DPEP5Z8PfuXsD6ZTQmu95nQ6FcNYNbC+UOUPNONXFbYTm71Nrb7t403YCq4yiZBgwtdA9ysjxoR+XiDaHGK+7eNIdDzitE3IHTVWgNyQAX0hiDGTGy3ecuKxHND4w7MC5oTfcLTxWKodfigGrVwuuBg07TONcn0fyJahadIDPY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QtsGlLRx; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1706203937; c=relaxed/simple;
+	bh=3PvCiAQrtJD/zuf2t8VwlvCpBAFoHiP16hfmstASs9E=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XiTxViLzi1W6dj1wwDMYuoMNwHIEJ1eBXjnk4QTxXWbyrrq+RI/QT6ROZHR5DdQjduDeRM1BR5Y5JNoNnP+NCqX977dSZudheMtXcj87UAVg4GfdpYwUSlC3Bz0+ALUPTq0XnCEkDepaaPGCt/tF1ICe7okwOO9/IkLcLBCff3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CWxf9fgh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QtsGlLRx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706203787; x=1737739787;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=rg8k8DSz99hlQQsXagfNAy+1dYhgiafR464X4FhdLDE=;
-  b=QtsGlLRxEO77KUILpnmUbUPEBo9fuYajusHFn2O4MFZSKpATWhbUGSiD
-   ScQZlqn0SQx6l2ies8kpiPCRCBLANlP5+iClQJEgu0tXUD51s8jXPYaPb
-   COta2gZl2EGuBmPWA9SceaVnI4aWSAXV+mhA40uz1xMvjaEXDgK6xEMbf
-   7IDD8sS5n2i4wABfXQsZdkDbc6XwZewOTRqtloC8T8Fa35DCuD73pPJK0
-   aXOAflryp1PvUBtO61kVKj8Atwix60tl2OTPENchco++Jixb28qDwtP+a
-   bDM02qBswi5ByqK/fHp2iSM/lb9HwGC3+eAyFRtUclensmYPl8ibWz/OY
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10964"; a="9613310"
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9613310"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2024 09:29:41 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2303822"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2024 09:29:40 -0800
-Date: Thu, 25 Jan 2024 09:29:39 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: James Morse <james.morse@arm.com>, Borislav Petkov <bp@alien8.de>,
-	"Chatre, Reinette" <reinette.chatre@intel.com>
-Cc: "Yu, Fenghua" <fenghua.yu@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	"x86@kernel.org" <x86@kernel.org>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	"Shen, Xiaochen" <xiaochen.shen@intel.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v2] x86/resctrl: Implement new mba_MBps throttling
- heuristic
-Message-ID: <ZbKag2eJcgR_ro34@agluck-desk3>
-References: <45d2891e-989a-45c9-a527-8b14ff5f8748@intel.com>
- <SJ1PR11MB60837D4884419BDC2DCAA2D2FC752@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <bfa5104f-b887-4cc4-a24c-0497b86d9dde@intel.com>
- <20240122182121.GBZa6yIYPtHQx44EU9@fat_crate.local>
- <11fc82e0-961f-4c8d-844f-ad4b99067eb3@intel.com>
- <20240122184755.GCZa64W02KXyeaVXJg@fat_crate.local>
- <SJ1PR11MB6083A27C628E17FB8BBC4922FC752@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <b6ce3e79-aa4a-57e9-8b43-b5be45f75462@arm.com>
- <SJ1PR11MB60830483DCBE64EB726CF7E6FC742@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <ZbBZ9pk2ha99H2Jd@agluck-desk3>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CWxf9fgh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D85C433F1;
+	Thu, 25 Jan 2024 17:32:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706203937;
+	bh=3PvCiAQrtJD/zuf2t8VwlvCpBAFoHiP16hfmstASs9E=;
+	h=From:Subject:Date:To:Cc:From;
+	b=CWxf9fgh7SWQbUv+w60Q5mT7c9OYxjTpVll1i2bNNiKg/wlwZujGzhs6cb7vgRveQ
+	 JIbAMjVa0NuS6kCH5gSwTCOSdZJbgSsvyE1jlYQgtc3122EOKqhYbNyq/HUJEAQcCe
+	 AE67+vBF68+wDM0d/uqKkmi7ddKkTU/iGyYZ/iRxhGwICCehWPNvirHw2VprPJJKCp
+	 qt3DoTAajdBm5iVbw6m1bKg0sKzk1cKsHNVCok1/vJFBTxdFBYZG9gcl6D8rgWa5mT
+	 LMMs1euY2mE26V3uO1k002IEp4fjCyZe3l9YU6JaJXjEz9JSshp/uSnlDr86s44SSW
+	 DDLQQNqSgC02A==
+From: Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 0/2] RISC-V: Fix CONFIG_AS_HAS_OPTION_ARCH with tip of tree
+ LLVM
+Date: Thu, 25 Jan 2024 10:32:10 -0700
+Message-Id: <20240125-fix-riscv-option-arch-llvm-18-v1-0-390ac9cc3cd0@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZbBZ9pk2ha99H2Jd@agluck-desk3>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABqbsmUC/x2MSwqFMAwAryJZv0Bbxd9VxEWtUQP+SKUI4t0Nb
+ zkwMw9EEqYIbfaAUOLIx65gfxmExe8zIY/K4IwrjHUFTnyjcAwJj/NSGb2EBdc1bWhrzMNA1WA
+ a72wJ+jiFNPj/u/59P/u0YW9vAAAA
+To: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+ masahiroy@kernel.org
+Cc: nicolas@fjasle.eu, andy.chiu@sifive.com, conor.dooley@microchip.com, 
+ linux-riscv@lists.infradead.org, linux-kbuild@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org, 
+ Eric Biggers <ebiggers@kernel.org>, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1526; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=3PvCiAQrtJD/zuf2t8VwlvCpBAFoHiP16hfmstASs9E=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKmbZsszSfLFTrfQc+X5/21XXcmGTcwG/6/tad9ZEOjzz
+ 2TXzOU1HaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAi8ucZGdY+zVm9yNNafwG3
+ gMmPxYyCm7Y09Pt2flr47PSRXtbDvosY/gd7PHZ1uLt4qpwAw501soe+ZT6qnpr06I+v7vSlXL5
+ SQYwA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Tue, Jan 23, 2024 at 04:29:42PM -0800, Tony Luck wrote:
-> On Tue, Jan 23, 2024 at 05:07:50PM +0000, Luck, Tony wrote:
-> > >> I need to grab an SNC system to re-check that everything still works when re-based.
-> > >> But right now, this looks like adding the SNC series will be easy (famous last words!).
-> > >
-> > > Once you're ready - can you point me at something I can use as a stable branch to rebase onto?
-> > 
-> > I'll be running the tests this afternoon. But I'm somewhat confident that they will pass.
-> > 
-> > Tree is here: git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git branch "hopeful_snc"
-> > 
-> > Commits are:
-> > 
-> > 793635f10aeb x86/resctrl: Update documentation with Sub-NUMA cluster changes
-> > dca7ba785d6f x86/resctrl: Sub NUMA Cluster detection and enable
-> > e41bd88101c8 x86/resctrl: Introduce snc_nodes_per_l3_cache
-> > ccbab7875197 x86/resctrl: Add node-scope to the options for feature scope
-> > 2f0db8c7072b x86/resctrl: Split the rdt_domain and rdt_hw_domain structures
-> > 22697627cc5f x86/resctrl: Prepare for different scope for control/monitor operations
-> > f3ff831a9042 x86/resctrl: Prepare to split rdt_domain structure
-> > c0679868ee78 x86/resctrl: Prepare for new domain scope
-> > 327b4394f309 x86/resctrl: Implement new mba_MBps throttling heuristic
-> > 5b14817cf87e x86/resctrl: Read supported bandwidth sources using CPUID command
-> > 5699cd082e1f x86/resctrl: Remove hard-coded memory bandwidth limit
-> > 1b908debf53f x86/resctrl: Fix unused variable warning in cache_alloc_hsw_probe()
-> > 
-> > Only the last of these (1b908debf53f) had been accepted by Boris into TIP x86/cache
-> > when I cut this tree yesterday.
-> > 
-> > Two more applied by Boris today without any changes from what is in my tree, but the
-> > commit IDs in TIP are obviously different from in my tree.
-> > 
-> > 54e35eb8611c x86/resctrl: Read supported bandwidth sources from CPUID
-> > 0976783bb123 x86/resctrl: Remove hard-coded memory bandwidth limit
-> > 
-> > All the others have the normal risk that Boris will find some way to make them better.
-> 
-> All my SNC tests pass. So this tree is as good as I can make it.
-> 
-> Boris: After you take/reject "x86/resctrl: Implement new mba_MBps throttling heuristic"
-> in TIP x86/cache I will post v14 of the SNC series rebased to that TIP
-> branch.
+Hi all,
 
-Boris,
+Eric reported that builds of LLVM with [1] (close to tip of tree) have
+CONFIG_AS_HAS_OPTION_ARCH=n because the test for expected failure on
+invalid input has started succeeding.
 
-I got the tip bot message that you have applied:
+This Kconfig test was added because '.option arch' only causes an
+assembler warning when it is unsupported, rather than a hard error,
+which is what users of as-instr expect when something is unsupported.
 
-  c2427e70c163 ("x86/resctrl: Implement new mba_MBps throttling heuristic")
+This can be resolved by turning assembler warnings into errors with
+'-Wa,--fatal-warnings' like we do with the compiler with '-Werror',
+which is what the first patch does. The second patch removes the invalid
+test, as the valid test is good enough with fatal warnings.
 
-I see that you also applied:
+I have diffed several configurations for the different architectures
+that use as-instr and I have found no issues.
 
-  fc747eebef73 ("x86/resctrl: Remove redundant variable in mbm_config_write_domain()")
+I think this could go in through either the kbuild or RISC-V tree with
+sufficient acks but I will let them fight over who takes it :)
 
-Does that empty your resctrl queue except for the SNC series? If it
-does, then I'll rebase SNC patches onto TIP x86/cache.
+[1]: https://github.com/llvm/llvm-project/commit/3ac9fe69f70a2b3541266daedbaaa7dc9c007a2a
 
--Tony
+---
+Nathan Chancellor (2):
+      kbuild: Add -Wa,--fatal-warnings to as-instr invocation
+      RISC-V: Drop invalid test from CONFIG_AS_HAS_OPTION_ARCH
+
+ arch/riscv/Kconfig        | 1 -
+ scripts/Kconfig.include   | 2 +-
+ scripts/Makefile.compiler | 2 +-
+ 3 files changed, 2 insertions(+), 3 deletions(-)
+---
+base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
+change-id: 20240124-fix-riscv-option-arch-llvm-18-3cbe7b09a216
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
