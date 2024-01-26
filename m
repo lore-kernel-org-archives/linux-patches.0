@@ -1,268 +1,313 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460555467D
-	for <patches@lists.linux.dev>; Fri, 26 Jan 2024 22:38:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BC02557A;
+	Fri, 26 Jan 2024 23:55:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706308737; cv=none; b=lsIglmKxWQ2a1QI3Y5tSTjP6J0FqWPAxeV7xYVLyvk9NsnSILcceGVDdHqrC7Nh3th5HOBXXthDYiv6FZuO1byHYX1hOzllsJRh+IxERV93XMk3Uft3vR9NaMRThzd8+ohzg/3E09Xp/gR72r8v42RZTmxCC0BjM9fy7UgnP4dg=
+	t=1706313308; cv=none; b=YV8YUa9Fim/QxBtvnPhs4UvskCf5KZVg2i5lxgYPCIWTtxeQXKWmORQFwaqzr/4gCfmqZw48Oxvao2dfBaiRdmS5ZMNudhfSJ9KJamLqAS/nyjRiDO/6VhYeiSujXH18tkBFW49d1umFBbhB7CgYRNyRFOtEpjuF04+8KhSeeUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706308737; c=relaxed/simple;
-	bh=g5fK/Ez0C7WuAF84A3obbHr1UN8+GoQDufGKIOx6iSA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rBZbilPLXL8JLcqsDvj/YTFucb0tzsdNWCjB+Ss+N2GbLauhW2tYXGU1qc2uceV19pTGvBOEf9s7Gdwt98Oh6NjtqMgz+HtjrXV7TtSd+9TNjy5w3nNiH4OMmeCTj1MHADHELxZJAVXF0Lj4xzzt1kgckkihBH2RQjBDfUn5BgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=j68V37ls; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1706313308; c=relaxed/simple;
+	bh=AOgcdxEuRH5OchEmeFNBfHa989J6WfMHU+g9a+jBSjs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XgEqXRZE/QnaYGiDKVGUnW66OalglemOtjhR0SphLf6vHiVYO05Pi9Vs/4rClvqna77ASS1p/l9RXF8nhH8pjSXTziiDkvrMHBd60RLYzqQR4dz9RA5SLTahHrGyuwtAoeL50GWCJ4YG+FlZqFv9r0tLtev2AFS2nWPtIOoL1zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ngC+VECa; arc=none smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="j68V37ls"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706308735; x=1737844735;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=g5fK/Ez0C7WuAF84A3obbHr1UN8+GoQDufGKIOx6iSA=;
-  b=j68V37ls7nR4tIX01Tq1NkdUe4LWGZyS0VQ2q4qepfKsZV/MqFVqD/AU
-   ftEPhK5smn4xWdltgsX4ByMxEw+ggHewd6tCMozhDF04s03p+UaY093in
-   ZtDPl8xL1g3JctDjNYG8m78It6VWDm3/d28/srlt+q/elmmCOnCFBHlo+
-   AbZjPQFpzn9rcUXqozRrbrp7oVANse2aeJYlyOS60nU2wHvu/CcTsAMCR
-   rxu48AfS+CCMjg4Fpl6/qNJw+mrjCvN11nYAnZyeZkTR5tRW0u/1okeZN
-   ovPTgLfeFwXiIQgYQDhC1WoBE/4oQhUe/xTZa/tg5huLR0TabtuMaha0R
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10964"; a="9707728"
-X-IronPort-AV: E=Sophos;i="6.05,220,1701158400"; 
-   d="scan'208";a="9707728"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2024 14:38:49 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,220,1701158400"; 
-   d="scan'208";a="35560267"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2024 14:38:49 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	x86@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>,
-	Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
-Subject: [PATCH v14 7/8] x86/resctrl: Sub NUMA Cluster detection and enable
-Date: Fri, 26 Jan 2024 14:38:36 -0800
-Message-ID: <20240126223837.21835-8-tony.luck@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240126223837.21835-1-tony.luck@intel.com>
-References: <20231204185357.120501-1-tony.luck@intel.com>
- <20240126223837.21835-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ngC+VECa"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-53fa455cd94so670035a12.2;
+        Fri, 26 Jan 2024 15:55:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706313306; x=1706918106; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=K5lBl4i+8P8sGKHl15bs5ZRUFHZxDH2d02stVF63r7s=;
+        b=ngC+VECaT3lpaIajDkhjKhkOPiUnIAc2RCFwu9tQGYWpmdeyn3n7xg3jdDbeXq6hpM
+         pKj56/nNWXcyH4xlTWjEIwe9h5YtIed2B+Y5NxnoPHAq659mrkJD933n3wbe3MO7Z0cg
+         eueyFBiz7uEWuVt6nIO9LsJNulcyKr/TvZPCxIb052WCPonkDTQuG2SNNaz8nVO1M7a0
+         FPwwpV7hC2f6QMBJtUddfmxYBwsR9U0r42aWPplOnYn2PqBgkTCwDcFyekgV8bUOH25y
+         SMk1pt1pX7py01pm+r541ZSfrIUTRdHl1dOqVjiVzSDoOeXGQ4TzF52/Xdg4k/E3ZgGK
+         qpLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706313306; x=1706918106;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=K5lBl4i+8P8sGKHl15bs5ZRUFHZxDH2d02stVF63r7s=;
+        b=aOcgNv1dNPAv2dq17Iw4aMFNbVns2vhp6efQagfgn0JCa9EBarpXFsSWEyo75rPERF
+         jofpY6wK2xcgvLPvR3WjqShgNflmFX5Ivm/zdRvC+7/rcQRjCQsH2zicI0QjiAvcOYIM
+         3pBH3778l2hQMsy5ywtPgpuqwfAHaODkups2GstRhZL71KIV/OWhdph7SUPjXyqD0+U1
+         NnCxdYt8YdFHoDQjI5dGYgoMN9G6ADbHUkxWeAcfofj+MONwYmZWimOQ7Pkt/FVQFs7Q
+         3Za6+zbdcyiQu64E1QpSY7PyafFUtwwoJVK9Iu1Vx+suMBJNSmNu79Lryed8E2i1EROQ
+         jPQg==
+X-Gm-Message-State: AOJu0YyJaFBwr6bk1lECKQN1nhvu/VjbmRhnCIIN1SRNXQscIul6F8nk
+	f14hmNqLbGE4VULeX38W8ARECwuuCvgrW6E8M9/Hmcj1p61CJL0e
+X-Google-Smtp-Source: AGHT+IEn5YN9vXx4X/okeGWxRs695EvAAQoe6/z6qkoNNLbqvyhAxW3/sp1SL8UVQNtDqV60syDE4g==
+X-Received: by 2002:a17:902:ceca:b0:1d5:7425:12d6 with SMTP id d10-20020a170902ceca00b001d5742512d6mr1075703plg.112.1706313305562;
+        Fri, 26 Jan 2024 15:55:05 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id g16-20020a170902f75000b001d74504fc3asm1459299plw.257.2024.01.26.15.55.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Jan 2024 15:55:04 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <bef7737e-4b8e-4a89-b538-cd8e75874fd2@roeck-us.net>
+Date: Fri, 26 Jan 2024 15:55:02 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 000/286] 5.10.209-rc1 review
+Content-Language: en-US
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, llvm@lists.linux.dev, keescook@chromium.org,
+ arei.gonglei@huawei.com, mst@redhat.com, jasowang@redhat.com,
+ virtualization@lists.linux.dev, linux-crypto@vger.kernel.org
+References: <20240122235732.009174833@linuxfoundation.org>
+ <6b563537-b62f-428e-96d1-2a228da99077@roeck-us.net>
+ <2024012636-clubbed-radial-1997@gregkh>
+ <2f342268-8517-4c06-8785-96a588d20c63@roeck-us.net>
+ <20240126203436.GA913905@dev-arch.thelio-3990X>
+ <0a194a79-e3a3-45e7-be98-83abd3e1cb7e@roeck-us.net>
+ <20240126223554.GA1320833@dev-arch.thelio-3990X>
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
+ RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
+ nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
+ 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
+ gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
+ IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
+ kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
+ VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
+ jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
+ BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
+ ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
+ CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAlVcphcFCRmg06EACgkQyx8mb86fmYFg0RAA
+ nzXJzuPkLJaOmSIzPAqqnutACchT/meCOgMEpS5oLf6xn5ySZkl23OxuhpMZTVX+49c9pvBx
+ hpvl5bCWFu5qC1jC2eWRYU+aZZE4sxMaAGeWenQJsiG9lP8wkfCJP3ockNu0ZXXAXwIbY1O1
+ c+l11zQkZw89zNgWgKobKzrDMBFOYtAh0pAInZ9TSn7oA4Ctejouo5wUugmk8MrDtUVXmEA9
+ 7f9fgKYSwl/H7dfKKsS1bDOpyJlqhEAH94BHJdK/b1tzwJCFAXFhMlmlbYEk8kWjcxQgDWMu
+ GAthQzSuAyhqyZwFcOlMCNbAcTSQawSo3B9yM9mHJne5RrAbVz4TWLnEaX8gA5xK3uCNCeyI
+ sqYuzA4OzcMwnnTASvzsGZoYHTFP3DQwf2nzxD6yBGCfwNGIYfS0i8YN8XcBgEcDFMWpOQhT
+ Pu3HeztMnF3HXrc0t7e5rDW9zCh3k2PA6D2NV4fews9KDFhLlTfCVzf0PS1dRVVWM+4jVl6l
+ HRIAgWp+2/f8dx5vPc4Ycp4IsZN0l1h9uT7qm1KTwz+sSl1zOqKD/BpfGNZfLRRxrXthvvY8
+ BltcuZ4+PGFTcRkMytUbMDFMF9Cjd2W9dXD35PEtvj8wnEyzIos8bbgtLrGTv/SYhmPpahJA
+ l8hPhYvmAvpOmusUUyB30StsHIU2LLccUPPOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
+ 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
+ pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
+ J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
+ pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
+ 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
+ ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
+ I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
+ nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
+ HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
+ JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAlVcpi8FCRmg08MACgkQyx8mb86fmYHNRQ/+
+ J0OZsBYP4leJvQF8lx9zif+v4ZY/6C9tTcUv/KNAE5leyrD4IKbnV4PnbrVhjq861it/zRQW
+ cFpWQszZyWRwNPWUUz7ejmm9lAwPbr8xWT4qMSA43VKQ7ZCeTQJ4TC8kjqtcbw41SjkjrcTG
+ wF52zFO4bOWyovVAPncvV9eGA/vtnd3xEZXQiSt91kBSqK28yjxAqK/c3G6i7IX2rg6pzgqh
+ hiH3/1qM2M/LSuqAv0Rwrt/k+pZXE+B4Ud42hwmMr0TfhNxG+X7YKvjKC+SjPjqp0CaztQ0H
+ nsDLSLElVROxCd9m8CAUuHplgmR3seYCOrT4jriMFBtKNPtj2EE4DNV4s7k0Zy+6iRQ8G8ng
+ QjsSqYJx8iAR8JRB7Gm2rQOMv8lSRdjva++GT0VLXtHULdlzg8VjDnFZ3lfz5PWEOeIMk7Rj
+ trjv82EZtrhLuLjHRCaG50OOm0hwPSk1J64R8O3HjSLdertmw7eyAYOo4RuWJguYMg5DRnBk
+ WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
+ HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <20240126223554.GA1320833@dev-arch.thelio-3990X>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-There isn't a simple hardware bit that indicates whether a CPU is
-running in Sub NUMA Cluster (SNC) mode. Infer the state by comparing
-the ratio of NUMA nodes to L3 cache instances.
+On 1/26/24 14:35, Nathan Chancellor wrote:
+> (slimming up the CC list, I don't think this is too relevant to the
+> wider stable community)
+> 
+> On Fri, Jan 26, 2024 at 01:01:15PM -0800, Guenter Roeck wrote:
+>> On 1/26/24 12:34, Nathan Chancellor wrote:
+>>> On Fri, Jan 26, 2024 at 10:17:23AM -0800, Guenter Roeck wrote:
+>>>> On 1/26/24 09:51, Greg Kroah-Hartman wrote:
+>>>>> On Fri, Jan 26, 2024 at 08:46:42AM -0800, Guenter Roeck wrote:
+>>>>>> On 1/22/24 15:55, Greg Kroah-Hartman wrote:
+>>>>>>> This is the start of the stable review cycle for the 5.10.209 release.
+>>>>>>> There are 286 patches in this series, all will be posted as a response
+>>>>>>> to this one.  If anyone has any issues with these being applied, please
+>>>>>>> let me know.
+>>>>>>>
+>>>>>>> Responses should be made by Wed, 24 Jan 2024 23:56:49 +0000.
+>>>>>>> Anything received after that time might be too late.
+>>>>>>>
+>>>>>> [ ... ]
+>>>>>>
+>>>>>>> zhenwei pi <pizhenwei@bytedance.com>
+>>>>>>>         virtio-crypto: implement RSA algorithm
+>>>>>>>
+>>>>>>
+>>>>>> Curious: Why was this (and its subsequent fixes) backported to v5.10.y ?
+>>>>>> It is quite beyond a bug fix. Also, unless I am really missing something,
+>>>>>> the series (or at least this patch) was not applied to v5.15.y, so we now
+>>>>>> have functionality in v5.10.y which is not in v5.15.y.
+>>>>>
+>>>>> See the commit text, it was a dependency of a later fix and documented
+>>>>> as such.
+>>>>>
+>>>>> Having it in 5.10 and not 5.15 is a bit odd, I agree, so patches are
+>>>>> gladly accepted :)
+>>>>>
+>>>>
+>>>> We reverted the entire series from the merge because it results in a build
+>>>> failure for us.
+>>>>
+>>>> In file included from /home/groeck/src/linux-chromeos/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c:10:
+>>>> In file included from /home/groeck/src/linux-chromeos/include/linux/mpi.h:21:
+>>>> In file included from /home/groeck/src/linux-chromeos/include/linux/scatterlist.h:5:
+>>>> In file included from /home/groeck/src/linux-chromeos/include/linux/string.h:293:
+>>>> /home/groeck/src/linux-chromeos/include/linux/fortify-string.h:512:4: error: call to __read_overflow2_field declared with 'warning' attribute: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+>>>>                           __read_overflow2_field(q_size_field, size);
+>>>
+>>> For what it's worth, this is likely self inflicted for chromeos-5.10,
+>>> which carries a revert of commit eaafc590053b ("fortify: Explicitly
+>>> disable Clang support") as commit c19861d34c003 ("CHROMIUM: Revert
+>>> "fortify: Explicitly disable Clang support""). I don't see the series
+>>> that added proper support for clang to fortify in 5.18 that ended with
+>>> commit 281d0c962752 ("fortify: Add Clang support") in that ChromeOS
+>>> branch, so this seems somewhat expected.
+>>>
+>>
+>> That explains that ;-). I don't mind if the patches stay in v5.10.y,
+>> we have them reverted anyway.
+>>
+>> The revert was a pure process issue, as you may see when looking into
+>> commit c19861d34c003, so, yes, I agree that it is self-inflicted damage.
+>> Still, that doesn't explain why the problem exists in 5.18+.
+>>
+>>>> I also see that upstream (starting with 6.1) when trying to build it with clang,
+>>>> so I guess it is one of those bug-for-bug compatibility things. I really have
+>>>> no idea what causes it, or why we don't see the problem when building
+>>>> chromeos-6.1 or chromeos-6.6, but (so far) only with chromeos-5.10 after
+>>>> merging 5.10.209 into it. Making things worse, the problem isn't _always_
+>>>> seen. Sometimes I can compile the file in 6.1.y without error, sometimes not.
+>>>> I have no idea what triggers the problem.
+>>>
+>>> Have a .config that reproduces it on upstream? I have not personally
+>>> seen this warning in my build matrix nor has our continuous-integration
+>>> matrix (I don't see it in the warning output at the bottom but that
+>>> could have missed something for some reason) in 6.1:
+>>>
+>>
+>> The following command sequence reproduces the problem for me with all stable
+>> branches starting with 5.18.y (plus mainline).
+>>
+>> rm -rf /tmp/crypto-build
+>> mkdir /tmp/crypto-build
+>> make -j CC=clang-15 mrproper >/dev/null 2>&1
+>> make -j O=/tmp/crypto-build CC=clang-15 allmodconfig >/dev/null 2>&1
+>> make -j O=/tmp/crypto-build W=1 CC=clang-15 drivers/crypto/virtio/virtio_crypto_akcipher_algs.o
+>>
+>> I tried clang versions 14, 15, and 16. This is with my home system running
+>> Ubuntu 22.04, no ChromeOS or Google specifics/internals involved. For clang-15,
+>> the version is
+>>
+>> Ubuntu clang version 15.0.7
+>> Target: x86_64-pc-linux-gnu
+>> Thread model: posix
+>> InstalledDir: /usr/bin
+> 
+> Okay interesting, this warning is hidden behind W=1, which our CI does
+> not test with. Looks like it has been that way since the introduction of
+> these checks in f68f2ff91512 ("fortify: Detect struct member overflows
+> in memcpy() at compile-time").
+> 
 
-When SNC mode is detected, reconfigure the RMID counters by updating
-the MSR_RMID_SNC_CONFIG MSR on each socket as CPUs are seen.
+Interestingly the warning is seen in chromeos-5.10, without this patch,
+and without W=1. I guess that must have to do with the revert which is
+finally biting us.
 
-Clearing bit zero of the MSR divides the RMIDs and renumbers the ones
-on the second SNC node to start from zero.
+> I think this is a legitimate warning though. It is complaining about the
+> second memcpy() in virtio_crypto_alg_akcipher_init_session():
+> 
+>    memcpy(&ctrl->u, para, sizeof(ctrl->u));
+> 
+> where ctrl is:
+> 
+>    struct virtio_crypto_op_ctrl_req {
+>            struct virtio_crypto_ctrl_header header;         /*     0    16 */
+>            union {
+>                    struct virtio_crypto_sym_create_session_req sym_create_session; /*    16    56 */
+>                    struct virtio_crypto_hash_create_session_req hash_create_session; /*    16    56 */
+>                    struct virtio_crypto_mac_create_session_req mac_create_session; /*    16    56 */
+>                    struct virtio_crypto_aead_create_session_req aead_create_session; /*    16    56 */
+>                    struct virtio_crypto_akcipher_create_session_req akcipher_create_session; /*    16    56 */
+>                    struct virtio_crypto_destroy_session_req destroy_session; /*    16    56 */
+>                    __u8               padding[56];          /*    16    56 */
+>            } u;                                             /*    16    56 */
+>            union {
+>                    struct virtio_crypto_sym_create_session_req sym_create_session; /*     0    56 */
+>                    struct virtio_crypto_hash_create_session_req hash_create_session; /*     0    56 */
+>                    struct virtio_crypto_mac_create_session_req mac_create_session; /*     0    56 */
+>                    struct virtio_crypto_aead_create_session_req aead_create_session; /*     0    56 */
+>                    struct virtio_crypto_akcipher_create_session_req akcipher_create_session; /*     0    56 */
+>                    struct virtio_crypto_destroy_session_req destroy_session; /*     0    56 */
+>                    __u8                       padding[56];          /*     0    56 */
+>            };
+> 
+> 
+>            /* size: 72, cachelines: 2, members: 2 */
+>            /* last cacheline: 8 bytes */
+>    };
+> 
+> (so size and p_size_field should be 56) and the type of the para
+> parameter in virtio_crypto_alg_akcipher_init_session() is 'void *' but
+> the para passed by reference to
+> virtio_crypto_alg_akcipher_init_session() in virtio_crypto_rsa_set_key()
+> has a type of 'struct virtio_crypto_akcipher_session_para':
+> 
+>    struct virtio_crypto_akcipher_session_para {
+>            __le32                     algo;                 /*     0     4 */
+>            __le32                     keytype;              /*     4     4 */
+>            __le32                     keylen;               /*     8     4 */
+>            union {
+>                    struct virtio_crypto_rsa_session_para rsa; /*    12     8 */
+>                    struct virtio_crypto_ecdsa_session_para ecdsa; /*    12     8 */
+>            } u;                                             /*    12     8 */
+>            union {
+>                    struct virtio_crypto_rsa_session_para rsa;       /*     0     8 */
+>                    struct virtio_crypto_ecdsa_session_para ecdsa;   /*     0     8 */
+>            };
+> 
+> 
+>            /* size: 20, cachelines: 1, members: 4 */
+>            /* last cacheline: 20 bytes */
+>    };
+> 
+> (so q_size_field would be 20 if clang were able to do inlining to see
+> through the 'void *'...?), which would result in the
+> 
+>    __compiletime_lessthan(q_size_field, size)
+> 
+> check succeeding and triggering the warning because 20 < 56, so it does
+> seem like there is an overread of the source buffer here? Adding the
 
-Tested-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
-Reviewed-by: Peter Newman <peternewman@google.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
-Reviewed-by: Babu Moger <babu.moger@amd.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- arch/x86/include/asm/msr-index.h   |   1 +
- arch/x86/kernel/cpu/resctrl/core.c | 118 +++++++++++++++++++++++++++++
- 2 files changed, 119 insertions(+)
+Looks like it; I think either the passed 'para' should be of type
+virtio_crypto_akcipher_create_session_req() or it should only copy
+sizeof(struct virtio_crypto_akcipher_session_para) bytes.
 
-diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
-index f1bd7b91b3c6..f6ba7d0397b8 100644
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -1119,6 +1119,7 @@
- #define MSR_IA32_QM_CTR			0xc8e
- #define MSR_IA32_PQR_ASSOC		0xc8f
- #define MSR_IA32_L3_CBM_BASE		0xc90
-+#define MSR_RMID_SNC_CONFIG		0xca0
- #define MSR_IA32_L2_CBM_BASE		0xd10
- #define MSR_IA32_MBA_THRTL_BASE		0xd50
- 
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index fcfc0b117ff7..ad8e68ed5ec9 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -16,11 +16,14 @@
- 
- #define pr_fmt(fmt)	"resctrl: " fmt
- 
-+#include <linux/cpu.h>
- #include <linux/slab.h>
- #include <linux/err.h>
- #include <linux/cacheinfo.h>
- #include <linux/cpuhotplug.h>
-+#include <linux/mod_devicetable.h>
- 
-+#include <asm/cpu_device_id.h>
- #include <asm/intel-family.h>
- #include <asm/resctrl.h>
- #include "internal.h"
-@@ -738,11 +741,42 @@ static void clear_closid_rmid(int cpu)
- 	wrmsr(MSR_IA32_PQR_ASSOC, 0, 0);
- }
- 
-+/*
-+ * The power-on reset value of MSR_RMID_SNC_CONFIG is 0x1
-+ * which indicates that RMIDs are configured in legacy mode.
-+ * This mode is incompatible with Linux resctrl semantics
-+ * as RMIDs are partitioned between SNC nodes, which requires
-+ * a user to know which RMID is allocated to a task.
-+ * Clearing bit 0 reconfigures the RMID counters for use
-+ * in Sub NUMA Cluster mode. This mode is better for Linux.
-+ * The RMID space is divided between all SNC nodes with the
-+ * RMIDs renumbered to start from zero in each node when
-+ * couning operations from tasks. Code to read the counters
-+ * must adjust RMID counter numbers based on SNC node. See
-+ * __rmid_read() for code that does this.
-+ */
-+static void snc_remap_rmids(int cpu)
-+{
-+	u64 val;
-+
-+	/* Only need to enable once per package. */
-+	if (cpumask_first(topology_core_cpumask(cpu)) != cpu)
-+		return;
-+
-+	rdmsrl(MSR_RMID_SNC_CONFIG, val);
-+	val &= ~BIT_ULL(0);
-+	wrmsrl(MSR_RMID_SNC_CONFIG, val);
-+}
-+
- static int resctrl_online_cpu(unsigned int cpu)
- {
- 	struct rdt_resource *r;
- 
- 	mutex_lock(&rdtgroup_mutex);
-+
-+	if (snc_nodes_per_l3_cache > 1)
-+		snc_remap_rmids(cpu);
-+
- 	for_each_capable_rdt_resource(r)
- 		domain_add_cpu(cpu, r);
- 	/* The cpu is set in default rdtgroup after online. */
-@@ -997,11 +1031,95 @@ static __init bool get_rdt_resources(void)
- 	return (rdt_mon_capable || rdt_alloc_capable);
- }
- 
-+/* CPU models that support MSR_RMID_SNC_CONFIG */
-+static const struct x86_cpu_id snc_cpu_ids[] __initconst = {
-+	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_X, 0),
-+	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X, 0),
-+	X86_MATCH_INTEL_FAM6_MODEL(EMERALDRAPIDS_X, 0),
-+	X86_MATCH_INTEL_FAM6_MODEL(GRANITERAPIDS_X, 0),
-+	{}
-+};
-+
-+/*
-+ * There isn't a simple hardware bit that indicates whether a CPU is running
-+ * in Sub NUMA Cluster (SNC) mode. Infer the state by comparing the
-+ * ratio of NUMA nodes to L3 cache instances.
-+ * It is not possible to accurately determine SNC state if the system is
-+ * booted with a maxcpus=N parameter. That distorts the ratio of SNC nodes
-+ * to L3 caches. It will be OK if system is booted with hyperthreading
-+ * disabled (since this doesn't affect the ratio).
-+ */
-+static __init int snc_get_config(void)
-+{
-+	unsigned long *node_caches;
-+	int mem_only_nodes = 0;
-+	int cpu, node, ret;
-+	int num_l3_caches;
-+	int cache_id;
-+
-+	if (!x86_match_cpu(snc_cpu_ids))
-+		return 1;
-+
-+	node_caches = bitmap_zalloc(num_possible_cpus(), GFP_KERNEL);
-+	if (!node_caches)
-+		return 1;
-+
-+	cpus_read_lock();
-+
-+	if (num_online_cpus() != num_present_cpus())
-+		pr_warn("Some CPUs offline, SNC detection may be incorrect\n");
-+
-+	for_each_node(node) {
-+		cpu = cpumask_first(cpumask_of_node(node));
-+		if (cpu < nr_cpu_ids) {
-+			cache_id = get_cpu_cacheinfo_id(cpu, 3);
-+			if (cache_id != -1)
-+				set_bit(cache_id, node_caches);
-+		} else {
-+			mem_only_nodes++;
-+		}
-+	}
-+	cpus_read_unlock();
-+
-+	num_l3_caches = bitmap_weight(node_caches, num_possible_cpus());
-+	kfree(node_caches);
-+
-+	if (!num_l3_caches)
-+		goto insane;
-+
-+	/* sanity check #1: Number of CPU nodes must be multiple of num_l3_caches */
-+	if ((nr_node_ids - mem_only_nodes) % num_l3_caches)
-+		goto insane;
-+
-+	ret = (nr_node_ids - mem_only_nodes) / num_l3_caches;
-+
-+	/* sanity check #2: Only valid results are 1, 2, 3, 4 */
-+	switch (ret) {
-+	case 1:
-+		break;
-+	case 2:
-+	case 3:
-+	case 4:
-+		rdt_resources_all[RDT_RESOURCE_L3].r_resctrl.mon_scope = RESCTRL_NODE;
-+		break;
-+	default:
-+		goto insane;
-+	}
-+
-+	return ret;
-+insane:
-+	pr_warn("SNC insanity: CPU nodes = %d num_l3_caches = %d\n",
-+		(nr_node_ids - mem_only_nodes), num_l3_caches);
-+	return 1;
-+}
-+
- static __init void rdt_init_res_defs_intel(void)
- {
- 	struct rdt_hw_resource *hw_res;
- 	struct rdt_resource *r;
- 
-+	snc_nodes_per_l3_cache = snc_get_config();
-+
- 	for_each_rdt_resource(r) {
- 		hw_res = resctrl_to_arch_res(r);
- 
--- 
-2.43.0
+Anyway, how did you find that ? Is there a magic trick to find the
+actual code causing the warning ? I am asking because we had seen
+similar warnings before, and it would help to know how to find the
+problematic code.
+
+Thanks,
+Guenter
+
+> maintainers of the driver and subsystem in question.
+> 
+> Cheers,
+> Nathan
 
