@@ -1,38 +1,42 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98C491DDC9;
-	Fri, 26 Jan 2024 17:00:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C748B200A6;
+	Fri, 26 Jan 2024 17:51:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706288432; cv=none; b=aJItcEwhNkcs+tkIlk/Q5AmCWDh2MtxxhKoLmgTKA8Pr1v5kY8/qFHso8Rt38g7pNiKkycUgSWdTbuKjxOnMBGBBaNwv6caXjp7XNvZPZgLY3gzq0nKXtwe2safsvEV51Xmj6pDJa3WDvcmcVQvEUJO1jx7TCfTLwpf2rhCAj5M=
+	t=1706291496; cv=none; b=nd0df51tMxmwo1FCaohOtTx/xBuruOwb9l0XmXrmvE2yql1RTgFFn8JYz3iY6BYinaTxcC/Q1ze04Kdek3OOqzuN2Sx8Yf21LhX6hblzN12sxxcH4dnpOBP4P+826oxU68essS1vkGddxb+yz6UM5+/Ja+FoYau5L7aNbOkdNwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706288432; c=relaxed/simple;
-	bh=IKSWKIZsjMZWZWERh7avT8L31KXo0Zec9oXMsAJHcmw=;
+	s=arc-20240116; t=1706291496; c=relaxed/simple;
+	bh=LYvMUputdwdvP/aIsl4R2ghGE0eEPA6qkCmbDEfZC68=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PxdcGEbZLkMdOLOlNWlFNY8FydkYwMgQ0npuYxaPVHDG3du3JMielz0OKQ4dwcTM2iF5bFuPYbjbzkEd914+UBRl+En20YDrCpJ/wxIRV6QPn1UOIHFxSHZChzB+fyd88yJDDuuS3TC3GBmseGOWsCIu+tIovlbdaIUKDN/17QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 16DBF1FB;
-	Fri, 26 Jan 2024 09:01:12 -0800 (PST)
-Received: from FVFF77S0Q05N (unknown [10.57.47.163])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 14E733F762;
-	Fri, 26 Jan 2024 09:00:24 -0800 (PST)
-Date: Fri, 26 Jan 2024 17:00:15 +0000
-From: Mark Rutland <mark.rutland@arm.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: akpm@linux-foundation.org, masahiroy@kernel.org, nicolas@fjasle.eu,
-	linux-kbuild@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	catalin.marinas@arm.com, will@kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 05/11] arm64: Kconfig: Clean up tautological LLVM version
- checks
-Message-ID: <ZbPlFGHjJg9X_pHt@FVFF77S0Q05N>
-References: <20240125-bump-min-llvm-ver-to-13-0-1-v1-0-f5ff9bda41c5@kernel.org>
- <20240125-bump-min-llvm-ver-to-13-0-1-v1-5-f5ff9bda41c5@kernel.org>
- <ZbOsvhDB-6LMVACP@FVFF77S0Q05N>
- <20240126161025.GA3265550@dev-arch.thelio-3990X>
+	 Content-Type:Content-Disposition:In-Reply-To; b=j8VdHMVU5S9ENxwf+QlQod6ZmsHLJ+hRnjCMDOBcCdCDHIB4FINmbV6fX2G5j9SpD8cRuuEmrs8VKgBCYdhJETX2bYCCIMhyH9xviLthrEhez60WOlQSJOKNjm5hQTfMhOvHgzTN1UMOSzX3lkznMX8QCzg8pJJFgZLNmpn042Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ph9WnwmX; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ph9WnwmX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DDF7C433C7;
+	Fri, 26 Jan 2024 17:51:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1706291495;
+	bh=LYvMUputdwdvP/aIsl4R2ghGE0eEPA6qkCmbDEfZC68=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Ph9WnwmXolCDd5LJFKynGbbuCHGspzhxwGRaY1Tif8kom1Mgt+WcTlyAnT6xkEpup
+	 D2/XJF7j1fOHip0mvVC9CcfJSEq5P1jbdNWdg4ksbB9NSy7P3r1gArYpYwyAI1ZonB
+	 kGbwGILGFGDHMW2FAoYf8xV0gX1ZGitDphrgeJv0=
+Date: Fri, 26 Jan 2024 09:51:34 -0800
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: Re: [PATCH 5.10 000/286] 5.10.209-rc1 review
+Message-ID: <2024012636-clubbed-radial-1997@gregkh>
+References: <20240122235732.009174833@linuxfoundation.org>
+ <6b563537-b62f-428e-96d1-2a228da99077@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -41,28 +45,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240126161025.GA3265550@dev-arch.thelio-3990X>
+In-Reply-To: <6b563537-b62f-428e-96d1-2a228da99077@roeck-us.net>
 
-On Fri, Jan 26, 2024 at 09:10:25AM -0700, Nathan Chancellor wrote:
-> On Fri, Jan 26, 2024 at 12:59:55PM +0000, Mark Rutland wrote:
-> > On Thu, Jan 25, 2024 at 03:55:11PM -0700, Nathan Chancellor wrote:
-> > >  config CPU_BIG_ENDIAN
-> > >  	bool "Build big-endian kernel"
-> > > -	depends on !LD_IS_LLD || LLD_VERSION >= 130000
-> > >  	# https://github.com/llvm/llvm-project/commit/1379b150991f70a5782e9a143c2ba5308da1161c
+On Fri, Jan 26, 2024 at 08:46:42AM -0800, Guenter Roeck wrote:
+> On 1/22/24 15:55, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.10.209 release.
+> > There are 286 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > We can delete the URL here, since that was just to describe why this depended
-> > upon LLVM 13+; it's weird for it to sit here on its own.
+> > Responses should be made by Wed, 24 Jan 2024 23:56:49 +0000.
+> > Anything received after that time might be too late.
+> > 
+> [ ... ]
 > 
-> I think this is the URL for the fix for the problem brought up by
-> commit 146a15b87335 ("arm64: Restrict CPU_BIG_ENDIAN to GNU as or LLVM
-> IAS 15.x or newer"), so I think it should stay? It does not look like I
-> ever added a link or context for the LLD line, I definitely should have.
+> > zhenwei pi <pizhenwei@bytedance.com>
+> >      virtio-crypto: implement RSA algorithm
+> > 
+> 
+> Curious: Why was this (and its subsequent fixes) backported to v5.10.y ?
+> It is quite beyond a bug fix. Also, unless I am really missing something,
+> the series (or at least this patch) was not applied to v5.15.y, so we now
+> have functionality in v5.10.y which is not in v5.15.y.
 
-Whoops; I clearly misread that, and yes it should stay.
+See the commit text, it was a dependency of a later fix and documented
+as such.
 
-Sorry about that; for the patch as-is:
+Having it in 5.10 and not 5.15 is a bit odd, I agree, so patches are
+gladly accepted :)
 
-Acked-by: Mark Rutland <mark.rutland@arm.com>
+thanks,
 
-Mark.
+greg k-h
