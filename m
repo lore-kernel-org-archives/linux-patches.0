@@ -1,94 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4757017FD;
-	Sat, 27 Jan 2024 09:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E993F200A8;
+	Sat, 27 Jan 2024 15:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706346193; cv=none; b=gzs1FM2Kvayhb7T4fBUfCZcbg/WR2MGjFwGV8T9LKndxiN/VA0HeE5azzRwvUeNqvsF5MSS5XUYM8yWNDFCgy2TDWRzHDZMf8TpNRbXhwQdZLbPPLqqP0oDPrQDiF/Emk9SqP9SJscNdoCfQMz0jg9Yn8of6kHA22tBktNSji4Y=
+	t=1706370277; cv=none; b=ifQ2VfcozPfhhqPEpqwobLIvy+YsoULe7Tz+wKBcKNkOYoOkZVp2w2BIDOJRYsK4aXu9K9V3NspCRSfheRCju8Iiu9hVV65LoPOUmL3nK2Bl0xtpZmbmOn86Dx8s8xyyYwjfdXyTV9qFjEDGq2SN5OP26ZZ8/C8Gy330qnbgzA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706346193; c=relaxed/simple;
-	bh=3CEC9+s/RgV3W453q4JCCo7clahZ+kguMoxyN5D2wY4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UrGfopSfgC+94ZOP82gwnyZxjUay4UG3Vebo/J3BD9p17hjSccKgQYb5dGdCH2Wt9dlnPNKZoZcTWeUKkqpqb+i9UO8BqklcmqxSNaY5qODnHLI89+wUzB4Ke5pXO72M8UukzGuoS7RAq7LNQ71mununreW/Rf95uYyOJLyB2/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mVHa/WHN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706370277; c=relaxed/simple;
+	bh=EELGZfz9lAK1loDeD8w+xVM+cCGtcqj7CLX+2eCWnjA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RiuEdf7b+iGuvFujrOe4xRS21OIZ9ps2IChVHr/70RmmVIySKMIumKyENs7FDm2CYzLS+9jb05D2PM5ZBCG7kthmUVajG9Go3N1G4V/STt+dKdsGu1TPT2C21HgeRGitk7D7jg9sZruo/nnlE/RjdFYT7dlTDjhNDcTmFEH1vv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LeEO5kZ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mVHa/WHN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BD3C433C7;
-	Sat, 27 Jan 2024 09:03:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LeEO5kZ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74F48C43601;
+	Sat, 27 Jan 2024 15:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706346192;
-	bh=3CEC9+s/RgV3W453q4JCCo7clahZ+kguMoxyN5D2wY4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mVHa/WHNCuTpM+sFtsfuqn5gAIFVBhVSGCWQh0dAYjNRAKKYFiWAck8Phpf1076cx
-	 +FY+5nM+daqdHFi39v9JU6iAKmKKPheUYi/YPOP1NLRGTUJVV1+R25ZYZgOdSeYvly
-	 snfv46B3E69rNby/TgxZNxhcc4w+cC+nCii/gUGB/AReNjw6niP1tU88VU6B2ZUKR/
-	 MI2+XIk4JMWw4Eav7Lct+D+FEEVBMffYhSUmuy7GSiBDcRAfAimiUiWUpUuvMDdzsV
-	 emOLwwqOOa4vcyUbaG2AH5WWp1okWyeSVhqHlSlque+bHV2xLknpNLllSzkUsvwbe3
-	 jixcBqLEcYxfw==
-Date: Sat, 27 Jan 2024 01:03:10 -0800
-From: Eric Biggers <ebiggers@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	masahiroy@kernel.org, nicolas@fjasle.eu, andy.chiu@sifive.com,
-	conor.dooley@microchip.com, linux-riscv@lists.infradead.org,
-	linux-kbuild@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev, stable@vger.kernel.org
-Subject: Re: [PATCH 0/2] RISC-V: Fix CONFIG_AS_HAS_OPTION_ARCH with tip of
- tree LLVM
-Message-ID: <20240127090310.GF11935@sol.localdomain>
-References: <20240125-fix-riscv-option-arch-llvm-18-v1-0-390ac9cc3cd0@kernel.org>
+	s=k20201202; t=1706370276;
+	bh=EELGZfz9lAK1loDeD8w+xVM+cCGtcqj7CLX+2eCWnjA=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=LeEO5kZ96OPVbvsuqrFBY5t8/3El+/M6PFnfIKMwYu3QQubqPuJck1PyNFQ+mDkLn
+	 cXuT+OAiMpWPc2E6BmL0PoKc4Wop1BgdwWd1PAu7XdHsS2cnYb5b6AT0ieUC5YMreg
+	 Yb/B0XWNT2Uc0gwv+K3ZdNs+mpYbYob+VoYLH7X5KsTEjTjNpQL3VKWZDDsOBueIiZ
+	 v6JgTgQS9Eiiq60v7QeL2Fd3vuyWC2/Anrc0LCZwV95zSIeuhBpU0u/CO9U1zQ0ow3
+	 vUrglhgVu0IkPrZ3v5lz5jvfyGuFC87O5FP11tNPgP2JsTU5FCIPz6wjOagpSpIZPR
+	 W+DbkHjXFT7Rg==
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-2142ef4a7feso1045289fac.0;
+        Sat, 27 Jan 2024 07:44:36 -0800 (PST)
+X-Gm-Message-State: AOJu0YwwE2nkDXNdHYbSLQXbTQclMwBhNCaI4kws1YYwBv9sgEmPa/ED
+	YtRniI00sXmOr24XkNhRgeJk/k6Y86dBesX3haJRnHCH//kXsmBZ852JamDFg4wnf3MgA+zCjFT
+	pergmQ9rJw8kaV2Y9MnObei2l0E4=
+X-Google-Smtp-Source: AGHT+IHKu7J4sPa55OVECUcHBRCyx9ZzSiCi17gfOvi7AHAWXZs8rsCFKBZguK0vE3/J1lnVbJu5h3QeBTUduqR8Jpo=
+X-Received: by 2002:a05:6871:5287:b0:214:7ef2:e8c with SMTP id
+ hu7-20020a056871528700b002147ef20e8cmr1060638oac.0.1706370275802; Sat, 27 Jan
+ 2024 07:44:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240125-fix-riscv-option-arch-llvm-18-v1-0-390ac9cc3cd0@kernel.org>
+References: <20240123-fix-uml-clang-18-v1-0-efc095519cf9@kernel.org>
+In-Reply-To: <20240123-fix-uml-clang-18-v1-0-efc095519cf9@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Sun, 28 Jan 2024 00:43:59 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAQ7VauHgJK+939QjtOLtOPDOyGsYfwj+9f+1-jkFdtWnQ@mail.gmail.com>
+Message-ID: <CAK7LNAQ7VauHgJK+939QjtOLtOPDOyGsYfwj+9f+1-jkFdtWnQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Fix UML build with clang-18 and newer
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: richard@nod.at, anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net, 
+	nicolas@fjasle.eu, ndesaulniers@google.com, morbo@google.com, 
+	justinstitt@google.com, linux-um@lists.infradead.org, 
+	linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+	stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 25, 2024 at 10:32:10AM -0700, Nathan Chancellor wrote:
+On Wed, Jan 24, 2024 at 8:00=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
+g> wrote:
+>
 > Hi all,
-> 
-> Eric reported that builds of LLVM with [1] (close to tip of tree) have
-> CONFIG_AS_HAS_OPTION_ARCH=n because the test for expected failure on
-> invalid input has started succeeding.
-> 
-> This Kconfig test was added because '.option arch' only causes an
-> assembler warning when it is unsupported, rather than a hard error,
-> which is what users of as-instr expect when something is unsupported.
-> 
-> This can be resolved by turning assembler warnings into errors with
-> '-Wa,--fatal-warnings' like we do with the compiler with '-Werror',
-> which is what the first patch does. The second patch removes the invalid
-> test, as the valid test is good enough with fatal warnings.
-> 
-> I have diffed several configurations for the different architectures
-> that use as-instr and I have found no issues.
-> 
-> I think this could go in through either the kbuild or RISC-V tree with
-> sufficient acks but I will let them fight over who takes it :)
-> 
-> [1]: https://github.com/llvm/llvm-project/commit/3ac9fe69f70a2b3541266daedbaaa7dc9c007a2a
-> 
+>
+> This series resolves two independent but related issues that were
+> recently exposed by two LLVM changes.
+>
+> https://github.com/llvm/llvm-project/commit/ec92d74a0ef89b9dd46aee6ec8aca=
+6bfd3c66a54
+> exposes that '-no-pie' is not getting added to the linker flags with
+> clang, resulting in building objects with '-fno-PIE' that are linked
+> with '-pie', to which the linker rightfully errors with:
+>
+>   /usr/sbin/ld: init/main.o: relocation R_X86_64_32 against symbol `saved=
+_command_line' can not be used when making a PIE object; recompile with -fP=
+IE
+>   /usr/sbin/ld: failed to set dynamic section sizes: bad value
+>
+> https://github.com/llvm/llvm-project/commit/4bf8a688956a759b7b6b8d94f42d2=
+5c13c7af130
+> adds '.ltext' (and '.ltext.*' with '-ffunction-sections') when using
+> '-mcmodel=3Dlarge' (which UML does), which causes a segmentation fault
+> with modpost.
+>
+> I have tested these patches with all supported versions of clang,
+> noticing no regressions.
+
+
+Both applied to linux-kbuild/fixes.
+
+Thanks.
+
+
+
+
 > ---
 > Nathan Chancellor (2):
->       kbuild: Add -Wa,--fatal-warnings to as-instr invocation
->       RISC-V: Drop invalid test from CONFIG_AS_HAS_OPTION_ARCH
-> 
->  arch/riscv/Kconfig        | 1 -
->  scripts/Kconfig.include   | 2 +-
->  scripts/Makefile.compiler | 2 +-
->  3 files changed, 2 insertions(+), 3 deletions(-)
+>       um: Fix adding '-no-pie' for clang
+>       modpost: Add '.ltext' and '.ltext.*' to TEXT_SECTIONS
+>
+>  arch/um/Makefile      | 4 +++-
+>  scripts/mod/modpost.c | 3 ++-
+>  2 files changed, 5 insertions(+), 2 deletions(-)
+> ---
+> base-commit: 0dd3ee31125508cd67f7e7172247f05b7fd1753a
+> change-id: 20240118-fix-uml-clang-18-e365b0503a29
+>
+> Best regards,
+> --
+> Nathan Chancellor <nathan@kernel.org>
+>
 
-Looks good,
 
-Tested-by: Eric Biggers <ebiggers@google.com>
-
-Unfortunately another LLVM commit just broke TOOLCHAIN_HAS_VECTOR_CRYPTO, so
-I've sent out a patch to fix that too...
-
-But with all the fixes applied it works again.
-
-- Eric
+--=20
+Best Regards
+Masahiro Yamada
