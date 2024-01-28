@@ -1,131 +1,285 @@
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C13E3D71
-	for <patches@lists.linux.dev>; Sun, 28 Jan 2024 02:57:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5321EB27
+	for <patches@lists.linux.dev>; Sun, 28 Jan 2024 11:13:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706410660; cv=none; b=cvlR6coH+g2ipFhJY1vzBtZaTBwzFOMJvroAxVjwagalIdjKkZcXAXvVCVhq4ko91lBPU+z5gacqqrt310QasSRYMaJJblKpXMoyl9LfgaLEN+JDHBd0zGaUn1scCLTbhoo1rNvrzBWF8xHHXqzVV7ZB/VB+q+6UHqX7jRQxrBw=
+	t=1706440391; cv=none; b=uIyN2FOgfCU6YYn+OR1M3/YEpKE7fuF8FDSnKWqm+JYhlG4BMAeJccokgPw1vXmUAma0BVz3Y9kFqf/k33P2ddpZrY+C6rw2FyncUB2nkVz7jplpJZSipbcylPngf6+t1SBOOm1PMao1yIGXFeB2sOQWXDjhdjVYD4Lew+w+JXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706410660; c=relaxed/simple;
-	bh=0Ljyz9aN5fI8hdU4LP4IKaxXlOnZcbkEh0t788GhUf8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cfRxWVu+mWDsLxM34sCRkY4YANZipXmWTyhlzr5kHmgVoUDjKgODlclEtzgQC0GoM0v9h331FKWXk6H/LUemHTdz33ZgwQDnDIf5/s060jY6GNl1GUq7JiSYgTjuef1a3iMCTLF9lyHOrX+yFY6izLxTzosV0QhItNbtpRc9+bE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com; spf=pass smtp.mailfrom=sifive.com; dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b=ChbLGzS2; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sifive.com
+	s=arc-20240116; t=1706440391; c=relaxed/simple;
+	bh=YjsxHOt4tWyCdJTuimtgU/jG1rOZovQCMQl3k6T1wpw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 In-Reply-To:Content-Type:Content-Disposition; b=a4jEt69igHstFa2cOB+p8z1h2chgixCgr28v0D0whIKbY9VBQdz3F6fpxA2lyJbNC8Ns8SNjcekp3dQkk6im6jFQ1/5UtocwtwNnTKAKl4GWiPGKIvE7swIdGq8yOeKPEehF4F8X3B4kYmWaPK939gP038oj72Tvr64c3EObtC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=X6wYcDyk; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="ChbLGzS2"
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-51030ce36fbso877496e87.3
-        for <patches@lists.linux.dev>; Sat, 27 Jan 2024 18:57:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sifive.com; s=google; t=1706410656; x=1707015456; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tUPe8kS/dYQxcvPbyImR2zb7xWJbztZ0Yj4HdTeCp4I=;
-        b=ChbLGzS26oj6YQWUpD3i8vvYHcguVvN/nupldtFF8Gfhh5FdzwHdW3wTImcpCRtYE5
-         kTKwKmSS2hxP1Zts+EhsjvkvXnqjSRDKyjoDeYVUVn1ecQj6e1J874Lk6wGbphMDfgjK
-         HqoxCrNnbdteptLAMXYcXEIpSz27498Td4rfinV1z9WuGu5PcnHL7K4orD5ng6bhN41+
-         BqLGWWAI9pD3WvoX0Q6Nzf0VxJOw33yP0Yn4k2edKF44D/SbOmuJ76ed3yrKBzQydHkj
-         0zVD33t6crGa5ntuq90ulwLeqdien1GsjPPjzANwYPcyWcKghGcy5kh6DPofM16c3eKR
-         Ew+g==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="X6wYcDyk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1706440388;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=CSNy3hGfgBOZXh5HJ7aSuvkcMf5sEzqK7aR6BtJy+rs=;
+	b=X6wYcDykcdAcifsXf3iX/4i81C0GmWEljO9pnKuRjHQZmWEyMNyx7xKV7EqnO5MMdXQD3F
+	vqMgRNTqjkW3WkxZ0uvPctPriUtAV8TERd62HK85kSrnzuBkHSDHCYNyG63mBOKoYyHiCp
+	WyZ0yePWxVMjdotXOdJAkYmIet27Xwg=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-3-4mMVVDl0OjyfRHidJYD8PQ-1; Sun, 28 Jan 2024 06:13:07 -0500
+X-MC-Unique: 4mMVVDl0OjyfRHidJYD8PQ-1
+Received: by mail-ed1-f70.google.com with SMTP id 4fb4d7f45d1cf-558b84a7eeeso702210a12.0
+        for <patches@lists.linux.dev>; Sun, 28 Jan 2024 03:13:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706410656; x=1707015456;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tUPe8kS/dYQxcvPbyImR2zb7xWJbztZ0Yj4HdTeCp4I=;
-        b=A1JaZjpxNdftvFmCeAICqnGqxCYjXdyYF8knVeuGRTgkIbKTZLv+feJazKssoSD7pk
-         00vcI9llC86R5I/ZoRV2r/b4ZMkaCSTjcOQ1WNcS2mwNbHAp69jmyZ2XCpwKAFXdjpmL
-         H8ID6tL8Ede8r0u02IiVhES6uVFAbui+VAGZtZE3QwiDWCZgzYPiQHgXlqlPT/DuFF9c
-         bBBtzQmz2VvpNGdaOHH9vlGr8psziyTb62NLaxMIl/3X/oVV88XcPA93qgN34oeJx/QC
-         TW+qsWSOBlC7yE59ghyyvNYZPel8YKNfMukgj8OEwj/uh5wiHTP9QkkFMVildoOWo9mP
-         9SlA==
-X-Gm-Message-State: AOJu0YwpcnUlDkR+saUVwIRCddnqyf33xvFeQlGg/ePhaFmGQT5WVVYZ
-	f5UziC7C4p/o6fTZsuC5oARMiTUg/kycS7Ehl2Utzcib33E732p/1P6GRV5MyxJ/yH502OGR0q5
-	lEAhh2VRKZ7A3Vi3eaasArssZuukGOwLkPLXY1w==
-X-Google-Smtp-Source: AGHT+IH9hs8nV3EIySrlhWIGxmnGMq22449h+fsNcRpbxaYZsJKDaLHJx2IgCnzvK9tg/L1sdXMDyhVz1NejyYUort8=
-X-Received: by 2002:ac2:4893:0:b0:50e:630d:7364 with SMTP id
- x19-20020ac24893000000b0050e630d7364mr1500830lfc.28.1706410655622; Sat, 27
- Jan 2024 18:57:35 -0800 (PST)
+        d=1e100.net; s=20230601; t=1706440386; x=1707045186;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CSNy3hGfgBOZXh5HJ7aSuvkcMf5sEzqK7aR6BtJy+rs=;
+        b=evPshgnuKQUpUx4EfUpxKuxzB/rfCqH3A4Nfhy3hyPYmWVAJ9JgbCcqnZN9BTS+zGo
+         M6ktLZ1I9pg4LGfCj1PvGvLuhMGxxc6KQoTa9jDIBl7YvCLpkZRgYdMWH54S2ao8rOpO
+         4ZH3MMH7k+fsIq71bnRdHrA5V571iue0gOIyoPMI/pb9A1kIjzlhzSX2v68vE0ltOuYj
+         giy37KzyYQAUNhnUwM2Hri0ClHFWLFZOVWFFhkAxjvz9zAJIAP/CgATpnsq5WSKEL8os
+         WhUqf+56M7WvJF4yVRGv3nf187GyFCWAx0QL2q1DJqnckFE2Mjh3vWoPTDPi2trZGL9j
+         k/TQ==
+X-Gm-Message-State: AOJu0YxtaGMvmg3iyht9x4GzW4cdszGeixO29nLe3ghBT3LSkJPejcaj
+	7ScM14Uj8lx59/6EybrxJJ+S51QXPVXnZqrXnMu4TpMrSCP/iRdGbyyIf/Y2mLAuv5BHqZPU9UW
+	U11S6Ji3U0T2WRdW5UFIZsg61AQWApsZWcxjGf0J+hfYcF668D4hcNAU=
+X-Received: by 2002:a05:6402:35c4:b0:559:3583:bb6d with SMTP id z4-20020a05640235c400b005593583bb6dmr2513815edc.32.1706440386128;
+        Sun, 28 Jan 2024 03:13:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHO4+zS2ikKQXpXzKl7d9R8QWe1EjS5JACKDAyMhVe/Pnh4ZYWUTbIpgJtOc0lzL8TXZByeUw==
+X-Received: by 2002:a05:6402:35c4:b0:559:3583:bb6d with SMTP id z4-20020a05640235c400b005593583bb6dmr2513797edc.32.1706440385706;
+        Sun, 28 Jan 2024 03:13:05 -0800 (PST)
+Received: from redhat.com ([2a02:14f:17b:70ae:658f:adde:5091:c5dd])
+        by smtp.gmail.com with ESMTPSA id x6-20020a056402414600b0055d36e6f1a7sm2393638eda.82.2024.01.28.03.13.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Jan 2024 03:13:04 -0800 (PST)
+Date: Sun, 28 Jan 2024 06:13:00 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Nathan Chancellor <nathan@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	llvm@lists.linux.dev, keescook@chromium.org,
+	arei.gonglei@huawei.com, jasowang@redhat.com,
+	virtualization@lists.linux.dev, linux-crypto@vger.kernel.org,
+	Wei Yongjun <weiyongjun1@huawei.com>
+Subject: Re: [PATCH 5.10 000/286] 5.10.209-rc1 review
+Message-ID: <20240128055533-mutt-send-email-mst@kernel.org>
+References: <20240122235732.009174833@linuxfoundation.org>
+ <6b563537-b62f-428e-96d1-2a228da99077@roeck-us.net>
+ <2024012636-clubbed-radial-1997@gregkh>
+ <2f342268-8517-4c06-8785-96a588d20c63@roeck-us.net>
+ <20240126203436.GA913905@dev-arch.thelio-3990X>
+ <0a194a79-e3a3-45e7-be98-83abd3e1cb7e@roeck-us.net>
+ <20240126223554.GA1320833@dev-arch.thelio-3990X>
+ <bef7737e-4b8e-4a89-b538-cd8e75874fd2@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240125-fix-riscv-option-arch-llvm-18-v1-0-390ac9cc3cd0@kernel.org>
- <20240127090310.GF11935@sol.localdomain>
-In-Reply-To: <20240127090310.GF11935@sol.localdomain>
-From: Andy Chiu <andy.chiu@sifive.com>
-Date: Sun, 28 Jan 2024 10:57:24 +0800
-Message-ID: <CABgGipVMv-+AJkGMPzFhimaPCUVATk3gjUDG0P4btRJWtXcMxw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] RISC-V: Fix CONFIG_AS_HAS_OPTION_ARCH with tip of
- tree LLVM
-To: Eric Biggers <ebiggers@kernel.org>, Nathan Chancellor <nathan@kernel.org>
-Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	masahiroy@kernel.org, nicolas@fjasle.eu, conor.dooley@microchip.com, 
-	linux-riscv@lists.infradead.org, linux-kbuild@vger.kernel.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <bef7737e-4b8e-4a89-b538-cd8e75874fd2@roeck-us.net>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Sat, Jan 27, 2024 at 5:03=E2=80=AFPM Eric Biggers <ebiggers@kernel.org> =
-wrote:
->
-> On Thu, Jan 25, 2024 at 10:32:10AM -0700, Nathan Chancellor wrote:
-> > Hi all,
-> >
-> > Eric reported that builds of LLVM with [1] (close to tip of tree) have
-> > CONFIG_AS_HAS_OPTION_ARCH=3Dn because the test for expected failure on
-> > invalid input has started succeeding.
-> >
-> > This Kconfig test was added because '.option arch' only causes an
-> > assembler warning when it is unsupported, rather than a hard error,
-> > which is what users of as-instr expect when something is unsupported.
-> >
-> > This can be resolved by turning assembler warnings into errors with
-> > '-Wa,--fatal-warnings' like we do with the compiler with '-Werror',
-> > which is what the first patch does. The second patch removes the invali=
-d
-> > test, as the valid test is good enough with fatal warnings.
-> >
-> > I have diffed several configurations for the different architectures
-> > that use as-instr and I have found no issues.
-> >
-> > I think this could go in through either the kbuild or RISC-V tree with
-> > sufficient acks but I will let them fight over who takes it :)
-> >
-> > [1]: https://github.com/llvm/llvm-project/commit/3ac9fe69f70a2b3541266d=
-aedbaaa7dc9c007a2a
-> >
-> > ---
-> > Nathan Chancellor (2):
-> >       kbuild: Add -Wa,--fatal-warnings to as-instr invocation
-> >       RISC-V: Drop invalid test from CONFIG_AS_HAS_OPTION_ARCH
-> >
-> >  arch/riscv/Kconfig        | 1 -
-> >  scripts/Kconfig.include   | 2 +-
-> >  scripts/Makefile.compiler | 2 +-
-> >  3 files changed, 2 insertions(+), 3 deletions(-)
->
-> Looks good,
->
-> Tested-by: Eric Biggers <ebiggers@google.com>
->
-> Unfortunately another LLVM commit just broke TOOLCHAIN_HAS_VECTOR_CRYPTO,=
- so
-> I've sent out a patch to fix that too...
->
-> But with all the fixes applied it works again.
->
-> - Eric
+On Fri, Jan 26, 2024 at 03:55:02PM -0800, Guenter Roeck wrote:
+> On 1/26/24 14:35, Nathan Chancellor wrote:
+> > (slimming up the CC list, I don't think this is too relevant to the
+> > wider stable community)
+> > 
+> > On Fri, Jan 26, 2024 at 01:01:15PM -0800, Guenter Roeck wrote:
+> > > On 1/26/24 12:34, Nathan Chancellor wrote:
+> > > > On Fri, Jan 26, 2024 at 10:17:23AM -0800, Guenter Roeck wrote:
+> > > > > On 1/26/24 09:51, Greg Kroah-Hartman wrote:
+> > > > > > On Fri, Jan 26, 2024 at 08:46:42AM -0800, Guenter Roeck wrote:
+> > > > > > > On 1/22/24 15:55, Greg Kroah-Hartman wrote:
+> > > > > > > > This is the start of the stable review cycle for the 5.10.209 release.
+> > > > > > > > There are 286 patches in this series, all will be posted as a response
+> > > > > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > > > > let me know.
+> > > > > > > > 
+> > > > > > > > Responses should be made by Wed, 24 Jan 2024 23:56:49 +0000.
+> > > > > > > > Anything received after that time might be too late.
+> > > > > > > > 
+> > > > > > > [ ... ]
+> > > > > > > 
+> > > > > > > > zhenwei pi <pizhenwei@bytedance.com>
+> > > > > > > >         virtio-crypto: implement RSA algorithm
+> > > > > > > > 
+> > > > > > > 
+> > > > > > > Curious: Why was this (and its subsequent fixes) backported to v5.10.y ?
+> > > > > > > It is quite beyond a bug fix. Also, unless I am really missing something,
+> > > > > > > the series (or at least this patch) was not applied to v5.15.y, so we now
+> > > > > > > have functionality in v5.10.y which is not in v5.15.y.
+> > > > > > 
+> > > > > > See the commit text, it was a dependency of a later fix and documented
+> > > > > > as such.
+> > > > > > 
+> > > > > > Having it in 5.10 and not 5.15 is a bit odd, I agree, so patches are
+> > > > > > gladly accepted :)
+> > > > > > 
+> > > > > 
+> > > > > We reverted the entire series from the merge because it results in a build
+> > > > > failure for us.
+> > > > > 
+> > > > > In file included from /home/groeck/src/linux-chromeos/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c:10:
+> > > > > In file included from /home/groeck/src/linux-chromeos/include/linux/mpi.h:21:
+> > > > > In file included from /home/groeck/src/linux-chromeos/include/linux/scatterlist.h:5:
+> > > > > In file included from /home/groeck/src/linux-chromeos/include/linux/string.h:293:
+> > > > > /home/groeck/src/linux-chromeos/include/linux/fortify-string.h:512:4: error: call to __read_overflow2_field declared with 'warning' attribute: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+> > > > >                           __read_overflow2_field(q_size_field, size);
+> > > > 
+> > > > For what it's worth, this is likely self inflicted for chromeos-5.10,
+> > > > which carries a revert of commit eaafc590053b ("fortify: Explicitly
+> > > > disable Clang support") as commit c19861d34c003 ("CHROMIUM: Revert
+> > > > "fortify: Explicitly disable Clang support""). I don't see the series
+> > > > that added proper support for clang to fortify in 5.18 that ended with
+> > > > commit 281d0c962752 ("fortify: Add Clang support") in that ChromeOS
+> > > > branch, so this seems somewhat expected.
+> > > > 
+> > > 
+> > > That explains that ;-). I don't mind if the patches stay in v5.10.y,
+> > > we have them reverted anyway.
+> > > 
+> > > The revert was a pure process issue, as you may see when looking into
+> > > commit c19861d34c003, so, yes, I agree that it is self-inflicted damage.
+> > > Still, that doesn't explain why the problem exists in 5.18+.
+> > > 
+> > > > > I also see that upstream (starting with 6.1) when trying to build it with clang,
+> > > > > so I guess it is one of those bug-for-bug compatibility things. I really have
+> > > > > no idea what causes it, or why we don't see the problem when building
+> > > > > chromeos-6.1 or chromeos-6.6, but (so far) only with chromeos-5.10 after
+> > > > > merging 5.10.209 into it. Making things worse, the problem isn't _always_
+> > > > > seen. Sometimes I can compile the file in 6.1.y without error, sometimes not.
+> > > > > I have no idea what triggers the problem.
+> > > > 
+> > > > Have a .config that reproduces it on upstream? I have not personally
+> > > > seen this warning in my build matrix nor has our continuous-integration
+> > > > matrix (I don't see it in the warning output at the bottom but that
+> > > > could have missed something for some reason) in 6.1:
+> > > > 
+> > > 
+> > > The following command sequence reproduces the problem for me with all stable
+> > > branches starting with 5.18.y (plus mainline).
+> > > 
+> > > rm -rf /tmp/crypto-build
+> > > mkdir /tmp/crypto-build
+> > > make -j CC=clang-15 mrproper >/dev/null 2>&1
+> > > make -j O=/tmp/crypto-build CC=clang-15 allmodconfig >/dev/null 2>&1
+> > > make -j O=/tmp/crypto-build W=1 CC=clang-15 drivers/crypto/virtio/virtio_crypto_akcipher_algs.o
+> > > 
+> > > I tried clang versions 14, 15, and 16. This is with my home system running
+> > > Ubuntu 22.04, no ChromeOS or Google specifics/internals involved. For clang-15,
+> > > the version is
+> > > 
+> > > Ubuntu clang version 15.0.7
+> > > Target: x86_64-pc-linux-gnu
+> > > Thread model: posix
+> > > InstalledDir: /usr/bin
+> > 
+> > Okay interesting, this warning is hidden behind W=1, which our CI does
+> > not test with. Looks like it has been that way since the introduction of
+> > these checks in f68f2ff91512 ("fortify: Detect struct member overflows
+> > in memcpy() at compile-time").
+> > 
+> 
+> Interestingly the warning is seen in chromeos-5.10, without this patch,
+> and without W=1. I guess that must have to do with the revert which is
+> finally biting us.
+> 
+> > I think this is a legitimate warning though. It is complaining about the
+> > second memcpy() in virtio_crypto_alg_akcipher_init_session():
+> > 
+> >    memcpy(&ctrl->u, para, sizeof(ctrl->u));
+> > 
+> > where ctrl is:
+> > 
+> >    struct virtio_crypto_op_ctrl_req {
+> >            struct virtio_crypto_ctrl_header header;         /*     0    16 */
+> >            union {
+> >                    struct virtio_crypto_sym_create_session_req sym_create_session; /*    16    56 */
+> >                    struct virtio_crypto_hash_create_session_req hash_create_session; /*    16    56 */
+> >                    struct virtio_crypto_mac_create_session_req mac_create_session; /*    16    56 */
+> >                    struct virtio_crypto_aead_create_session_req aead_create_session; /*    16    56 */
+> >                    struct virtio_crypto_akcipher_create_session_req akcipher_create_session; /*    16    56 */
+> >                    struct virtio_crypto_destroy_session_req destroy_session; /*    16    56 */
+> >                    __u8               padding[56];          /*    16    56 */
+> >            } u;                                             /*    16    56 */
+> >            union {
+> >                    struct virtio_crypto_sym_create_session_req sym_create_session; /*     0    56 */
+> >                    struct virtio_crypto_hash_create_session_req hash_create_session; /*     0    56 */
+> >                    struct virtio_crypto_mac_create_session_req mac_create_session; /*     0    56 */
+> >                    struct virtio_crypto_aead_create_session_req aead_create_session; /*     0    56 */
+> >                    struct virtio_crypto_akcipher_create_session_req akcipher_create_session; /*     0    56 */
+> >                    struct virtio_crypto_destroy_session_req destroy_session; /*     0    56 */
+> >                    __u8                       padding[56];          /*     0    56 */
+> >            };
+> > 
+> > 
+> >            /* size: 72, cachelines: 2, members: 2 */
+> >            /* last cacheline: 8 bytes */
+> >    };
+> > 
+> > (so size and p_size_field should be 56) and the type of the para
+> > parameter in virtio_crypto_alg_akcipher_init_session() is 'void *' but
+> > the para passed by reference to
+> > virtio_crypto_alg_akcipher_init_session() in virtio_crypto_rsa_set_key()
+> > has a type of 'struct virtio_crypto_akcipher_session_para':
+> > 
+> >    struct virtio_crypto_akcipher_session_para {
+> >            __le32                     algo;                 /*     0     4 */
+> >            __le32                     keytype;              /*     4     4 */
+> >            __le32                     keylen;               /*     8     4 */
+> >            union {
+> >                    struct virtio_crypto_rsa_session_para rsa; /*    12     8 */
+> >                    struct virtio_crypto_ecdsa_session_para ecdsa; /*    12     8 */
+> >            } u;                                             /*    12     8 */
+> >            union {
+> >                    struct virtio_crypto_rsa_session_para rsa;       /*     0     8 */
+> >                    struct virtio_crypto_ecdsa_session_para ecdsa;   /*     0     8 */
+> >            };
+> > 
+> > 
+> >            /* size: 20, cachelines: 1, members: 4 */
+> >            /* last cacheline: 20 bytes */
+> >    };
+> > 
+> > (so q_size_field would be 20 if clang were able to do inlining to see
+> > through the 'void *'...?), which would result in the
+> > 
+> >    __compiletime_lessthan(q_size_field, size)
+> > 
+> > check succeeding and triggering the warning because 20 < 56, so it does
+> > seem like there is an overread of the source buffer here? Adding the
+> 
+> Looks like it; I think either the passed 'para' should be of type
+> virtio_crypto_akcipher_create_session_req() or it should only copy
+> sizeof(struct virtio_crypto_akcipher_session_para) bytes.
+> 
+> Anyway, how did you find that ? Is there a magic trick to find the
+> actual code causing the warning ? I am asking because we had seen
+> similar warnings before, and it would help to know how to find the
+> problematic code.
+> 
+> Thanks,
+> Guenter
+> 
+> > maintainers of the driver and subsystem in question.
+> > 
+> > Cheers,
+> > Nathan
 
-For this series
 
-Tested-by: Andy Chiu <andybnac@gmail.com>
-Reviewed-by: Andy Chiu <andybnac@gmail.com>
+CC patch contributor before I revert the whole thing.
 
-Thanks,
-Andy
+
+-- 
+MST
+
