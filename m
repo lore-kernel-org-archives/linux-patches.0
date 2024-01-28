@@ -1,100 +1,131 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0CA829429;
-	Sat, 27 Jan 2024 18:07:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C13E3D71
+	for <patches@lists.linux.dev>; Sun, 28 Jan 2024 02:57:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706378869; cv=none; b=nA2ECl+oX2dN91BcZahTSjrS0gqICujIghKy/k0RFoHPzVu8+a890tH56deq8SlHvM1/t/12IP+7mDIH7usDWSkkJxuufqGx3PZWkmEqfq9j4vUmAP9PBQL41Oczztqd4EUPmj9GbaHQDEi4CmOgqOFFS+bRfVJzP5DR+dCHaC8=
+	t=1706410660; cv=none; b=cvlR6coH+g2ipFhJY1vzBtZaTBwzFOMJvroAxVjwagalIdjKkZcXAXvVCVhq4ko91lBPU+z5gacqqrt310QasSRYMaJJblKpXMoyl9LfgaLEN+JDHBd0zGaUn1scCLTbhoo1rNvrzBWF8xHHXqzVV7ZB/VB+q+6UHqX7jRQxrBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706378869; c=relaxed/simple;
-	bh=qtNyFxcBkmUTCmrI3w7d91OiAWcSyJmp5wFzXkJnfgU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=mzpxmDGDGil08d1aQ7bxVFMj86qKczBWn5ZM13Tymv/sS9qnRlNdL2gB6I/Zyn3xmznQCqU+0cQfq05W674OBcvxpfz8MCGLpKxNR3yw+ZxqmSTjw/d2Jx6CbusTVZB94eB2b1gY4Cn++nE+YLUWJaOP+uHa56/XIlHVf/fSUl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d57GkvdT; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706410660; c=relaxed/simple;
+	bh=0Ljyz9aN5fI8hdU4LP4IKaxXlOnZcbkEh0t788GhUf8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cfRxWVu+mWDsLxM34sCRkY4YANZipXmWTyhlzr5kHmgVoUDjKgODlclEtzgQC0GoM0v9h331FKWXk6H/LUemHTdz33ZgwQDnDIf5/s060jY6GNl1GUq7JiSYgTjuef1a3iMCTLF9lyHOrX+yFY6izLxTzosV0QhItNbtpRc9+bE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com; spf=pass smtp.mailfrom=sifive.com; dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b=ChbLGzS2; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sifive.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d57GkvdT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74D9C433F1;
-	Sat, 27 Jan 2024 18:07:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706378868;
-	bh=qtNyFxcBkmUTCmrI3w7d91OiAWcSyJmp5wFzXkJnfgU=;
-	h=From:Date:Subject:To:Cc:From;
-	b=d57GkvdTT9GzIuvTC7jRsYQ+SvmHJ52/jRZXK/P+rCS43j+eyxu4wVgwp4dgAfxL4
-	 yQmoj/kWH6qed1J5imgzEhN86fwDZhMdEXyRgfHMza9QaH3G7LYzouri7I9v1W2IAr
-	 N2vuE335kezdqO/WNlTsV0QlLf0DMDnLkdjo5p+2EoMBL6Fs7ZxcLRzOOAOM6PKOa9
-	 QlFXE6HQRiopY5Hxn/mnghXRunvudA4dDMgO228A90S9f8S7vmlbiJbW/R/JQyNKHB
-	 W27MLiv508K5dmU5F3Q296hYqMhH5Kmw3UEcvgxCii6W3XILZLnoFYvTkXm+pwlIcc
-	 s/AJQ26MNlG9Q==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Sat, 27 Jan 2024 11:07:43 -0700
-Subject: [PATCH] powerpc: xor_vmx: Add '-mhard-float' to CFLAGS
+	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="ChbLGzS2"
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-51030ce36fbso877496e87.3
+        for <patches@lists.linux.dev>; Sat, 27 Jan 2024 18:57:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sifive.com; s=google; t=1706410656; x=1707015456; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tUPe8kS/dYQxcvPbyImR2zb7xWJbztZ0Yj4HdTeCp4I=;
+        b=ChbLGzS26oj6YQWUpD3i8vvYHcguVvN/nupldtFF8Gfhh5FdzwHdW3wTImcpCRtYE5
+         kTKwKmSS2hxP1Zts+EhsjvkvXnqjSRDKyjoDeYVUVn1ecQj6e1J874Lk6wGbphMDfgjK
+         HqoxCrNnbdteptLAMXYcXEIpSz27498Td4rfinV1z9WuGu5PcnHL7K4orD5ng6bhN41+
+         BqLGWWAI9pD3WvoX0Q6Nzf0VxJOw33yP0Yn4k2edKF44D/SbOmuJ76ed3yrKBzQydHkj
+         0zVD33t6crGa5ntuq90ulwLeqdien1GsjPPjzANwYPcyWcKghGcy5kh6DPofM16c3eKR
+         Ew+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706410656; x=1707015456;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tUPe8kS/dYQxcvPbyImR2zb7xWJbztZ0Yj4HdTeCp4I=;
+        b=A1JaZjpxNdftvFmCeAICqnGqxCYjXdyYF8knVeuGRTgkIbKTZLv+feJazKssoSD7pk
+         00vcI9llC86R5I/ZoRV2r/b4ZMkaCSTjcOQ1WNcS2mwNbHAp69jmyZ2XCpwKAFXdjpmL
+         H8ID6tL8Ede8r0u02IiVhES6uVFAbui+VAGZtZE3QwiDWCZgzYPiQHgXlqlPT/DuFF9c
+         bBBtzQmz2VvpNGdaOHH9vlGr8psziyTb62NLaxMIl/3X/oVV88XcPA93qgN34oeJx/QC
+         TW+qsWSOBlC7yE59ghyyvNYZPel8YKNfMukgj8OEwj/uh5wiHTP9QkkFMVildoOWo9mP
+         9SlA==
+X-Gm-Message-State: AOJu0YwpcnUlDkR+saUVwIRCddnqyf33xvFeQlGg/ePhaFmGQT5WVVYZ
+	f5UziC7C4p/o6fTZsuC5oARMiTUg/kycS7Ehl2Utzcib33E732p/1P6GRV5MyxJ/yH502OGR0q5
+	lEAhh2VRKZ7A3Vi3eaasArssZuukGOwLkPLXY1w==
+X-Google-Smtp-Source: AGHT+IH9hs8nV3EIySrlhWIGxmnGMq22449h+fsNcRpbxaYZsJKDaLHJx2IgCnzvK9tg/L1sdXMDyhVz1NejyYUort8=
+X-Received: by 2002:ac2:4893:0:b0:50e:630d:7364 with SMTP id
+ x19-20020ac24893000000b0050e630d7364mr1500830lfc.28.1706410655622; Sat, 27
+ Jan 2024 18:57:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240127-ppc-xor_vmx-drop-msoft-float-v1-1-f24140e81376@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAG5GtWUC/x3MUQqDMAwA0KtIvhfQTlS8ioxR23QG1JRUpCDe3
- bLP9/MuSKRMCcbqAqWTE8te0LwqcIvdf4Tsi8HUpq0b02OMDrPo99wyepWIW5JwYFjFHmh9N8z
- tuw9D56AUUSlw/vfT574fW3QHpW4AAAA=
-To: mpe@ellerman.id.au
-Cc: npiggin@gmail.com, christophe.leroy@csgroup.eu, aneesh.kumar@kernel.org, 
- naveen.n.rao@linux.ibm.com, morbo@google.com, justinstitt@google.com, 
- linuxppc-dev@lists.ozlabs.org, patches@lists.linux.dev, 
- llvm@lists.linux.dev, stable@vger.kernel.org, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1691; i=nathan@kernel.org;
- h=from:subject:message-id; bh=qtNyFxcBkmUTCmrI3w7d91OiAWcSyJmp5wFzXkJnfgU=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKlb3YqnZ6/+dz2C5YNv4empdqc5Cq5OfGkX+pf7Wc2mB
- NXvbCumdJSyMIhxMciKKbJUP1Y9bmg45yzjjVOTYOawMoEMYeDiFICJvGxi+O/i6GD82yvIZuIf
- 1Xu/dq6Y/2SD/bO/f//+s8t7kLfsk3ECI8PKA4zulfevxsQ3h909xy8fuCHzMUPihb7EvVcfb7w
- bNJcHAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20240125-fix-riscv-option-arch-llvm-18-v1-0-390ac9cc3cd0@kernel.org>
+ <20240127090310.GF11935@sol.localdomain>
+In-Reply-To: <20240127090310.GF11935@sol.localdomain>
+From: Andy Chiu <andy.chiu@sifive.com>
+Date: Sun, 28 Jan 2024 10:57:24 +0800
+Message-ID: <CABgGipVMv-+AJkGMPzFhimaPCUVATk3gjUDG0P4btRJWtXcMxw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] RISC-V: Fix CONFIG_AS_HAS_OPTION_ARCH with tip of
+ tree LLVM
+To: Eric Biggers <ebiggers@kernel.org>, Nathan Chancellor <nathan@kernel.org>
+Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	masahiroy@kernel.org, nicolas@fjasle.eu, conor.dooley@microchip.com, 
+	linux-riscv@lists.infradead.org, linux-kbuild@vger.kernel.org, 
+	llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-arch/powerpc/lib/xor_vmx.o is built with '-msoft-float' (from the main
-powerpc Makefile) and '-maltivec' (from its CFLAGS), which causes an
-error when building with clang after a recent change in main:
+On Sat, Jan 27, 2024 at 5:03=E2=80=AFPM Eric Biggers <ebiggers@kernel.org> =
+wrote:
+>
+> On Thu, Jan 25, 2024 at 10:32:10AM -0700, Nathan Chancellor wrote:
+> > Hi all,
+> >
+> > Eric reported that builds of LLVM with [1] (close to tip of tree) have
+> > CONFIG_AS_HAS_OPTION_ARCH=3Dn because the test for expected failure on
+> > invalid input has started succeeding.
+> >
+> > This Kconfig test was added because '.option arch' only causes an
+> > assembler warning when it is unsupported, rather than a hard error,
+> > which is what users of as-instr expect when something is unsupported.
+> >
+> > This can be resolved by turning assembler warnings into errors with
+> > '-Wa,--fatal-warnings' like we do with the compiler with '-Werror',
+> > which is what the first patch does. The second patch removes the invali=
+d
+> > test, as the valid test is good enough with fatal warnings.
+> >
+> > I have diffed several configurations for the different architectures
+> > that use as-instr and I have found no issues.
+> >
+> > I think this could go in through either the kbuild or RISC-V tree with
+> > sufficient acks but I will let them fight over who takes it :)
+> >
+> > [1]: https://github.com/llvm/llvm-project/commit/3ac9fe69f70a2b3541266d=
+aedbaaa7dc9c007a2a
+> >
+> > ---
+> > Nathan Chancellor (2):
+> >       kbuild: Add -Wa,--fatal-warnings to as-instr invocation
+> >       RISC-V: Drop invalid test from CONFIG_AS_HAS_OPTION_ARCH
+> >
+> >  arch/riscv/Kconfig        | 1 -
+> >  scripts/Kconfig.include   | 2 +-
+> >  scripts/Makefile.compiler | 2 +-
+> >  3 files changed, 2 insertions(+), 3 deletions(-)
+>
+> Looks good,
+>
+> Tested-by: Eric Biggers <ebiggers@google.com>
+>
+> Unfortunately another LLVM commit just broke TOOLCHAIN_HAS_VECTOR_CRYPTO,=
+ so
+> I've sent out a patch to fix that too...
+>
+> But with all the fixes applied it works again.
+>
+> - Eric
 
-  error: option '-msoft-float' cannot be specified with '-maltivec'
-  make[6]: *** [scripts/Makefile.build:243: arch/powerpc/lib/xor_vmx.o] Error 1
+For this series
 
-Explicitly add '-mhard-float' before '-maltivec' in xor_vmx.o's CFLAGS
-to override the previous inclusion of '-msoft-float' (as the last option
-wins), which matches how other areas of the kernel use '-maltivec', such
-as AMDGPU.
+Tested-by: Andy Chiu <andybnac@gmail.com>
+Reviewed-by: Andy Chiu <andybnac@gmail.com>
 
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1986
-Link: https://github.com/llvm/llvm-project/commit/4792f912b232141ecba4cbae538873be3c28556c
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/powerpc/lib/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/powerpc/lib/Makefile b/arch/powerpc/lib/Makefile
-index 6eac63e79a89..0ab65eeb93ee 100644
---- a/arch/powerpc/lib/Makefile
-+++ b/arch/powerpc/lib/Makefile
-@@ -76,7 +76,7 @@ obj-$(CONFIG_PPC_LIB_RHEAP) += rheap.o
- obj-$(CONFIG_FTR_FIXUP_SELFTEST) += feature-fixups-test.o
- 
- obj-$(CONFIG_ALTIVEC)	+= xor_vmx.o xor_vmx_glue.o
--CFLAGS_xor_vmx.o += -maltivec $(call cc-option,-mabi=altivec)
-+CFLAGS_xor_vmx.o += -mhard-float -maltivec $(call cc-option,-mabi=altivec)
- # Enable <altivec.h>
- CFLAGS_xor_vmx.o += -isystem $(shell $(CC) -print-file-name=include)
- 
-
----
-base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
-change-id: 20240127-ppc-xor_vmx-drop-msoft-float-ad68b437f86c
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Thanks,
+Andy
