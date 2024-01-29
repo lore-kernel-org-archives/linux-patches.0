@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6425B15703F;
-	Mon, 29 Jan 2024 17:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3328A15703F;
+	Mon, 29 Jan 2024 17:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548144; cv=none; b=By0RzfBjj+Qbd5gZzTBp630klI30J9id+CG+oc1Kl1MU7Artl8w41Qeax9WwIOITz4hjHgzJuSZGMY165XL7Zq+oaDWxaG/8qlYnKk5Asgf/QdhXi+fIw5Z6edkxoDghKp54Of/TTkQejJi2g9XgM0qjj16yV/o+sVxAa7QzR50=
+	t=1706548145; cv=none; b=heVe7QvBsWpMZmUGNxOz6nXsTsNDOlTqjmsMrrEA7J/vyFEPoDH8iMpRCXOoeGqkcng32xVqkPo7ZsU1NzzI9FZfEo1fZxi541uPmpE312M5vpkwohZUZvOrZborGxnDq0uvClXZRlssRU2/3nk8UMsyDWLDOeTirseokFFz8X0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548144; c=relaxed/simple;
-	bh=qPK9Ei02pTIg+Kb62C4r3OaargjWrv/nPgbJL1mcCkM=;
+	s=arc-20240116; t=1706548145; c=relaxed/simple;
+	bh=bnbsVjxoSkMP4evzVChNkyoisFZbLtb0U8CDkFGDq2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mMmgb/GGQ0UVpAAi988Rg2lnDR6rSiXLZniL69eVsiP1i07QQMyuFeo0LpJDnW02Tzcr7vf7TCjr/wsSxjj4gKqb3zWwazPOUkraG6ZaIVpeVrPwbftjtnXBT8CtF2VlEtSeK0tDLBR0Zc9ahmv73E6S9H+2sBOepj54qiuZkGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZEsOnSZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uevex6XSnnujpaz/TlKsy99CCMNsOaiZVtu3ati6CDzt7kpfC8c7yqekFiqX8V1aMMcyN+JcQ3ety7gQHWDVozbOTnWU7tb+S70QSdDvt3qKeUcmvrQjVgtiCA1s3Ylg6uOeZdP5RAa36hkYekNP3Aoq094ltgxPhan3Z0O01hM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPDgg2AK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZEsOnSZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA17C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPDgg2AK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1AAC43390;
 	Mon, 29 Jan 2024 17:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548144;
-	bh=qPK9Ei02pTIg+Kb62C4r3OaargjWrv/nPgbJL1mcCkM=;
+	s=korg; t=1706548145;
+	bh=bnbsVjxoSkMP4evzVChNkyoisFZbLtb0U8CDkFGDq2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YZEsOnSZWkuQPD/bKQR7Z9+zE+0tx/f/zWS4dFmTYpKCKqGZbWYsXa44h2DfXY+K/
-	 vQb7OJ2LWRcbPpHvcve4JK/Pz1qQOW2AvFEHjquFGF/ZbuXhbl9YW8/rN4nsE79iLZ
-	 TQ67xJAPv/OF59+QsL31ggYw6txv+UfpVki9NjC0=
+	b=IPDgg2AK0S9ga/4afnDUDr6EsPhTqfmZzq6Xt4ZyenkYT+5dHzqE+Aq/xhk5F7C0q
+	 1OKHP/jA4L1m/ZvrxeDUdsvotrdR9HJu4sB10HnaN3eOxgGOfwu4f5S7XDqvs13sVv
+	 4VDLVjZVhb91nAM5fEU+fDqqtQdlxgCsvQsQxoMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.7 139/346] wifi: ath11k: rely on mac80211 debugfs handling for vif
-Date: Mon, 29 Jan 2024 09:02:50 -0800
-Message-ID: <20240129170020.481869622@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 172/346] afs: Turn the afs_addr_list address array into an array of structs
+Date: Mon, 29 Jan 2024 09:03:23 -0800
+Message-ID: <20240129170021.456318061@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,159 +52,269 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 556857aa1d0855aba02b1c63bc52b91ec63fc2cc upstream.
+[ Upstream commit 07f3502b33a260f873e35708d2fa693eb52225cb ]
 
-mac80211 started to delete debugfs entries in certain cases, causing a
-ath11k to crash when it tried to delete the entries later. Fix this by
-relying on mac80211 to delete the entries when appropriate and adding
-them from the vif_add_debugfs handler.
+Turn the afs_addr_list address array into an array of structs, thereby
+allowing per-address (such as RTT) info to be added.
 
-Fixes: 0a3d898ee9a8 ("wifi: mac80211: add/remove driver debugfs entries as appropriate")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218364
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20240115101805.1277949-1-benjamin@sipsolutions.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Stable-dep-of: 17ba6f0bd14f ("afs: Fix error handling with lookup via FS.InlineBulkStatus")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/core.h    |    4 ----
- drivers/net/wireless/ath/ath11k/debugfs.c |   25 ++++++++++---------------
- drivers/net/wireless/ath/ath11k/debugfs.h |   12 ++----------
- drivers/net/wireless/ath/ath11k/mac.c     |   12 +-----------
- 4 files changed, 13 insertions(+), 40 deletions(-)
+ fs/afs/addr_list.c | 10 +++++-----
+ fs/afs/fs_probe.c  |  6 +++---
+ fs/afs/internal.h  |  6 +++++-
+ fs/afs/proc.c      |  4 ++--
+ fs/afs/rotate.c    |  2 +-
+ fs/afs/rxrpc.c     |  4 ++--
+ fs/afs/server.c    |  4 ++--
+ fs/afs/vl_alias.c  |  4 ++--
+ fs/afs/vl_probe.c  |  6 +++---
+ fs/afs/vl_rotate.c |  2 +-
+ 10 files changed, 26 insertions(+), 22 deletions(-)
 
---- a/drivers/net/wireless/ath/ath11k/core.h
-+++ b/drivers/net/wireless/ath/ath11k/core.h
-@@ -368,10 +368,6 @@ struct ath11k_vif {
- 	struct ieee80211_chanctx_conf chanctx;
- 	struct ath11k_arp_ns_offload arp_ns_offload;
- 	struct ath11k_rekey_data rekey_data;
--
--#ifdef CONFIG_ATH11K_DEBUGFS
--	struct dentry *debugfs_twt;
--#endif /* CONFIG_ATH11K_DEBUGFS */
- };
+diff --git a/fs/afs/addr_list.c b/fs/afs/addr_list.c
+index de1ae0bead3b..ac05a59e9d46 100644
+--- a/fs/afs/addr_list.c
++++ b/fs/afs/addr_list.c
+@@ -45,7 +45,7 @@ struct afs_addr_list *afs_alloc_addrlist(unsigned int nr,
+ 	alist->max_addrs = nr;
  
- struct ath11k_vif_iter {
---- a/drivers/net/wireless/ath/ath11k/debugfs.c
-+++ b/drivers/net/wireless/ath/ath11k/debugfs.c
-@@ -1893,35 +1893,30 @@ static const struct file_operations ath1
- 	.open = simple_open
- };
- 
--void ath11k_debugfs_add_interface(struct ath11k_vif *arvif)
-+void ath11k_debugfs_op_vif_add(struct ieee80211_hw *hw,
-+			       struct ieee80211_vif *vif)
- {
-+	struct ath11k_vif *arvif = ath11k_vif_to_arvif(vif);
- 	struct ath11k_base *ab = arvif->ar->ab;
-+	struct dentry *debugfs_twt;
- 
- 	if (arvif->vif->type != NL80211_IFTYPE_AP &&
- 	    !(arvif->vif->type == NL80211_IFTYPE_STATION &&
- 	      test_bit(WMI_TLV_SERVICE_STA_TWT, ab->wmi_ab.svc_map)))
+ 	for (i = 0; i < nr; i++) {
+-		struct sockaddr_rxrpc *srx = &alist->addrs[i];
++		struct sockaddr_rxrpc *srx = &alist->addrs[i].srx;
+ 		srx->srx_family			= AF_RXRPC;
+ 		srx->srx_service		= service;
+ 		srx->transport_type		= SOCK_DGRAM;
+@@ -281,7 +281,7 @@ void afs_merge_fs_addr4(struct afs_addr_list *alist, __be32 xdr, u16 port)
  		return;
  
--	arvif->debugfs_twt = debugfs_create_dir("twt",
--						arvif->vif->debugfs_dir);
--	debugfs_create_file("add_dialog", 0200, arvif->debugfs_twt,
-+	debugfs_twt = debugfs_create_dir("twt",
-+					 arvif->vif->debugfs_dir);
-+	debugfs_create_file("add_dialog", 0200, debugfs_twt,
- 			    arvif, &ath11k_fops_twt_add_dialog);
+ 	for (i = 0; i < alist->nr_ipv4; i++) {
+-		struct sockaddr_in *a = &alist->addrs[i].transport.sin;
++		struct sockaddr_in *a = &alist->addrs[i].srx.transport.sin;
+ 		u32 a_addr = ntohl(a->sin_addr.s_addr);
+ 		u16 a_port = ntohs(a->sin_port);
  
--	debugfs_create_file("del_dialog", 0200, arvif->debugfs_twt,
-+	debugfs_create_file("del_dialog", 0200, debugfs_twt,
- 			    arvif, &ath11k_fops_twt_del_dialog);
+@@ -298,7 +298,7 @@ void afs_merge_fs_addr4(struct afs_addr_list *alist, __be32 xdr, u16 port)
+ 			alist->addrs + i,
+ 			sizeof(alist->addrs[0]) * (alist->nr_addrs - i));
  
--	debugfs_create_file("pause_dialog", 0200, arvif->debugfs_twt,
-+	debugfs_create_file("pause_dialog", 0200, debugfs_twt,
- 			    arvif, &ath11k_fops_twt_pause_dialog);
+-	srx = &alist->addrs[i];
++	srx = &alist->addrs[i].srx;
+ 	srx->srx_family = AF_RXRPC;
+ 	srx->transport_type = SOCK_DGRAM;
+ 	srx->transport_len = sizeof(srx->transport.sin);
+@@ -321,7 +321,7 @@ void afs_merge_fs_addr6(struct afs_addr_list *alist, __be32 *xdr, u16 port)
+ 		return;
  
--	debugfs_create_file("resume_dialog", 0200, arvif->debugfs_twt,
-+	debugfs_create_file("resume_dialog", 0200, debugfs_twt,
- 			    arvif, &ath11k_fops_twt_resume_dialog);
- }
+ 	for (i = alist->nr_ipv4; i < alist->nr_addrs; i++) {
+-		struct sockaddr_in6 *a = &alist->addrs[i].transport.sin6;
++		struct sockaddr_in6 *a = &alist->addrs[i].srx.transport.sin6;
+ 		u16 a_port = ntohs(a->sin6_port);
  
--void ath11k_debugfs_remove_interface(struct ath11k_vif *arvif)
--{
--	if (!arvif->debugfs_twt)
--		return;
--
--	debugfs_remove_recursive(arvif->debugfs_twt);
--	arvif->debugfs_twt = NULL;
--}
---- a/drivers/net/wireless/ath/ath11k/debugfs.h
-+++ b/drivers/net/wireless/ath/ath11k/debugfs.h
-@@ -306,8 +306,8 @@ static inline int ath11k_debugfs_rx_filt
- 	return ar->debug.rx_filter;
- }
+ 		diff = memcmp(xdr, &a->sin6_addr, 16);
+@@ -338,7 +338,7 @@ void afs_merge_fs_addr6(struct afs_addr_list *alist, __be32 *xdr, u16 port)
+ 			alist->addrs + i,
+ 			sizeof(alist->addrs[0]) * (alist->nr_addrs - i));
  
--void ath11k_debugfs_add_interface(struct ath11k_vif *arvif);
--void ath11k_debugfs_remove_interface(struct ath11k_vif *arvif);
-+void ath11k_debugfs_op_vif_add(struct ieee80211_hw *hw,
-+			       struct ieee80211_vif *vif);
- void ath11k_debugfs_add_dbring_entry(struct ath11k *ar,
- 				     enum wmi_direct_buffer_module id,
- 				     enum ath11k_dbg_dbr_event event,
-@@ -386,14 +386,6 @@ static inline int ath11k_debugfs_get_fw_
+-	srx = &alist->addrs[i];
++	srx = &alist->addrs[i].srx;
+ 	srx->srx_family = AF_RXRPC;
+ 	srx->transport_type = SOCK_DGRAM;
+ 	srx->transport_len = sizeof(srx->transport.sin6);
+diff --git a/fs/afs/fs_probe.c b/fs/afs/fs_probe.c
+index daaf3810cc92..3dd24842f277 100644
+--- a/fs/afs/fs_probe.c
++++ b/fs/afs/fs_probe.c
+@@ -153,12 +153,12 @@ void afs_fileserver_probe_result(struct afs_call *call)
+ 	if (call->service_id == YFS_FS_SERVICE) {
+ 		server->probe.is_yfs = true;
+ 		set_bit(AFS_SERVER_FL_IS_YFS, &server->flags);
+-		alist->addrs[index].srx_service = call->service_id;
++		alist->addrs[index].srx.srx_service = call->service_id;
+ 	} else {
+ 		server->probe.not_yfs = true;
+ 		if (!server->probe.is_yfs) {
+ 			clear_bit(AFS_SERVER_FL_IS_YFS, &server->flags);
+-			alist->addrs[index].srx_service = call->service_id;
++			alist->addrs[index].srx.srx_service = call->service_id;
+ 		}
+ 		cap0 = ntohl(call->tmp);
+ 		if (cap0 & AFS3_VICED_CAPABILITY_64BITFILES)
+@@ -182,7 +182,7 @@ void afs_fileserver_probe_result(struct afs_call *call)
+ 	spin_unlock(&server->probe_lock);
+ 
+ 	_debug("probe %pU [%u] %pISpc rtt=%u ret=%d",
+-	       &server->uuid, index, &alist->addrs[index].transport,
++	       &server->uuid, index, &alist->addrs[index].srx.transport,
+ 	       rtt_us, ret);
+ 
+ 	return afs_done_one_fs_probe(call->net, server);
+diff --git a/fs/afs/internal.h b/fs/afs/internal.h
+index 7385d62c8cf5..e2adb314ab6a 100644
+--- a/fs/afs/internal.h
++++ b/fs/afs/internal.h
+@@ -87,7 +87,9 @@ struct afs_addr_list {
+ 	enum dns_lookup_status	status:8;
+ 	unsigned long		failed;		/* Mask of addrs that failed locally/ICMP */
+ 	unsigned long		responded;	/* Mask of addrs that responded */
+-	struct sockaddr_rxrpc	addrs[] __counted_by(max_addrs);
++	struct {
++		struct sockaddr_rxrpc	srx;
++	} addrs[] __counted_by(max_addrs);
+ #define AFS_MAX_ADDRESSES ((unsigned int)(sizeof(unsigned long) * 8))
+ };
+ 
+@@ -969,6 +971,8 @@ extern void afs_put_addrlist(struct afs_addr_list *);
+ extern struct afs_vlserver_list *afs_parse_text_addrs(struct afs_net *,
+ 						      const char *, size_t, char,
+ 						      unsigned short, unsigned short);
++bool afs_addr_list_same(const struct afs_addr_list *a,
++			const struct afs_addr_list *b);
+ extern struct afs_vlserver_list *afs_dns_query(struct afs_cell *, time64_t *);
+ extern bool afs_iterate_addresses(struct afs_addr_cursor *);
+ extern int afs_end_cursor(struct afs_addr_cursor *);
+diff --git a/fs/afs/proc.c b/fs/afs/proc.c
+index 2a0c83d71565..ab9cd986cfd9 100644
+--- a/fs/afs/proc.c
++++ b/fs/afs/proc.c
+@@ -307,7 +307,7 @@ static int afs_proc_cell_vlservers_show(struct seq_file *m, void *v)
+ 		for (i = 0; i < alist->nr_addrs; i++)
+ 			seq_printf(m, " %c %pISpc\n",
+ 				   alist->preferred == i ? '>' : '-',
+-				   &alist->addrs[i].transport);
++				   &alist->addrs[i].srx.transport);
+ 	}
+ 	seq_printf(m, " info: fl=%lx rtt=%d\n", vlserver->flags, vlserver->rtt);
+ 	seq_printf(m, " probe: fl=%x e=%d ac=%d out=%d\n",
+@@ -399,7 +399,7 @@ static int afs_proc_servers_show(struct seq_file *m, void *v)
+ 		   alist->version, alist->responded, alist->failed);
+ 	for (i = 0; i < alist->nr_addrs; i++)
+ 		seq_printf(m, "    [%x] %pISpc%s\n",
+-			   i, &alist->addrs[i].transport,
++			   i, &alist->addrs[i].srx.transport,
+ 			   alist->preferred == i ? "*" : "");
  	return 0;
  }
+diff --git a/fs/afs/rotate.c b/fs/afs/rotate.c
+index a3d127953ac6..46081e5da6f5 100644
+--- a/fs/afs/rotate.c
++++ b/fs/afs/rotate.c
+@@ -488,7 +488,7 @@ bool afs_select_fileserver(struct afs_operation *op)
  
--static inline void ath11k_debugfs_add_interface(struct ath11k_vif *arvif)
--{
--}
--
--static inline void ath11k_debugfs_remove_interface(struct ath11k_vif *arvif)
--{
--}
--
- static inline void
- ath11k_debugfs_add_dbring_entry(struct ath11k *ar,
- 				enum wmi_direct_buffer_module id,
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -6750,13 +6750,6 @@ static int ath11k_mac_op_add_interface(s
- 		goto err;
+ 	_debug("address [%u] %u/%u %pISp",
+ 	       op->index, op->ac.index, op->ac.alist->nr_addrs,
+-	       &op->ac.alist->addrs[op->ac.index].transport);
++	       &op->ac.alist->addrs[op->ac.index].srx.transport);
+ 
+ 	_leave(" = t");
+ 	return true;
+diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
+index d642d06a453b..181317126e43 100644
+--- a/fs/afs/rxrpc.c
++++ b/fs/afs/rxrpc.c
+@@ -296,7 +296,7 @@ static void afs_notify_end_request_tx(struct sock *sock,
+  */
+ void afs_make_call(struct afs_addr_cursor *ac, struct afs_call *call, gfp_t gfp)
+ {
+-	struct sockaddr_rxrpc *srx = &ac->alist->addrs[ac->index];
++	struct sockaddr_rxrpc *srx = &ac->alist->addrs[ac->index].srx;
+ 	struct rxrpc_call *rxcall;
+ 	struct msghdr msg;
+ 	struct kvec iov[1];
+@@ -461,7 +461,7 @@ static void afs_log_error(struct afs_call *call, s32 remote_abort)
+ 		max = m + 1;
+ 		pr_notice("kAFS: Peer reported %s failure on %s [%pISp]\n",
+ 			  msg, call->type->name,
+-			  &call->alist->addrs[call->addr_ix].transport);
++			  &call->alist->addrs[call->addr_ix].srx.transport);
+ 	}
+ }
+ 
+diff --git a/fs/afs/server.c b/fs/afs/server.c
+index 0bd2f5ba6900..b8e2d211d4a1 100644
+--- a/fs/afs/server.c
++++ b/fs/afs/server.c
+@@ -43,7 +43,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
+ 			hlist_for_each_entry_rcu(server, &net->fs_addresses6, addr6_link) {
+ 				alist = rcu_dereference(server->addresses);
+ 				for (i = alist->nr_ipv4; i < alist->nr_addrs; i++) {
+-					b = &alist->addrs[i].transport.sin6;
++					b = &alist->addrs[i].srx.transport.sin6;
+ 					diff = ((u16 __force)a->sin6_port -
+ 						(u16 __force)b->sin6_port);
+ 					if (diff == 0)
+@@ -59,7 +59,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
+ 			hlist_for_each_entry_rcu(server, &net->fs_addresses4, addr4_link) {
+ 				alist = rcu_dereference(server->addresses);
+ 				for (i = 0; i < alist->nr_ipv4; i++) {
+-					b = &alist->addrs[i].transport.sin;
++					b = &alist->addrs[i].srx.transport.sin;
+ 					diff = ((u16 __force)a->sin_port -
+ 						(u16 __force)b->sin_port);
+ 					if (diff == 0)
+diff --git a/fs/afs/vl_alias.c b/fs/afs/vl_alias.c
+index f04a80e4f5c3..d3c0df70a1a5 100644
+--- a/fs/afs/vl_alias.c
++++ b/fs/afs/vl_alias.c
+@@ -94,8 +94,8 @@ static int afs_compare_fs_alists(const struct afs_server *server_a,
+ 	lb = rcu_dereference(server_b->addresses);
+ 
+ 	while (a < la->nr_addrs && b < lb->nr_addrs) {
+-		const struct sockaddr_rxrpc *srx_a = &la->addrs[a];
+-		const struct sockaddr_rxrpc *srx_b = &lb->addrs[b];
++		const struct sockaddr_rxrpc *srx_a = &la->addrs[a].srx;
++		const struct sockaddr_rxrpc *srx_b = &lb->addrs[b].srx;
+ 		int diff = afs_compare_addrs(srx_a, srx_b);
+ 
+ 		if (diff < 0) {
+diff --git a/fs/afs/vl_probe.c b/fs/afs/vl_probe.c
+index 58452b86e672..bdd9372e3fb2 100644
+--- a/fs/afs/vl_probe.c
++++ b/fs/afs/vl_probe.c
+@@ -106,12 +106,12 @@ void afs_vlserver_probe_result(struct afs_call *call)
+ 	if (call->service_id == YFS_VL_SERVICE) {
+ 		server->probe.flags |= AFS_VLSERVER_PROBE_IS_YFS;
+ 		set_bit(AFS_VLSERVER_FL_IS_YFS, &server->flags);
+-		alist->addrs[index].srx_service = call->service_id;
++		alist->addrs[index].srx.srx_service = call->service_id;
+ 	} else {
+ 		server->probe.flags |= AFS_VLSERVER_PROBE_NOT_YFS;
+ 		if (!(server->probe.flags & AFS_VLSERVER_PROBE_IS_YFS)) {
+ 			clear_bit(AFS_VLSERVER_FL_IS_YFS, &server->flags);
+-			alist->addrs[index].srx_service = call->service_id;
++			alist->addrs[index].srx.srx_service = call->service_id;
+ 		}
  	}
  
--	/* In the case of hardware recovery, debugfs files are
--	 * not deleted since ieee80211_ops.remove_interface() is
--	 * not invoked. In such cases, try to delete the files.
--	 * These will be re-created later.
--	 */
--	ath11k_debugfs_remove_interface(arvif);
--
- 	memset(arvif, 0, sizeof(*arvif));
+@@ -131,7 +131,7 @@ void afs_vlserver_probe_result(struct afs_call *call)
+ 	spin_unlock(&server->probe_lock);
  
- 	arvif->ar = ar;
-@@ -6933,8 +6926,6 @@ static int ath11k_mac_op_add_interface(s
+ 	_debug("probe [%u][%u] %pISpc rtt=%u ret=%d",
+-	       server_index, index, &alist->addrs[index].transport, rtt_us, ret);
++	       server_index, index, &alist->addrs[index].srx.transport, rtt_us, ret);
  
- 	ath11k_dp_vdev_tx_attach(ar, arvif);
+ 	afs_done_one_vl_probe(server, have_result);
+ }
+diff --git a/fs/afs/vl_rotate.c b/fs/afs/vl_rotate.c
+index eb415ce56360..e52b9d4c8a0a 100644
+--- a/fs/afs/vl_rotate.c
++++ b/fs/afs/vl_rotate.c
+@@ -249,7 +249,7 @@ bool afs_select_vlserver(struct afs_vl_cursor *vc)
  
--	ath11k_debugfs_add_interface(arvif);
--
- 	if (vif->type != NL80211_IFTYPE_MONITOR &&
- 	    test_bit(ATH11K_FLAG_MONITOR_CONF_ENABLED, &ar->monitor_flags)) {
- 		ret = ath11k_mac_monitor_vdev_create(ar);
-@@ -7050,8 +7041,6 @@ err_vdev_del:
- 	/* Recalc txpower for remaining vdev */
- 	ath11k_mac_txpower_recalc(ar);
+ 	_debug("VL address %d/%d", vc->ac.index, vc->ac.alist->nr_addrs);
  
--	ath11k_debugfs_remove_interface(arvif);
--
- 	/* TODO: recal traffic pause state based on the available vdevs */
+-	_leave(" = t %pISpc", &vc->ac.alist->addrs[vc->ac.index].transport);
++	_leave(" = t %pISpc", &vc->ac.alist->addrs[vc->ac.index].srx.transport);
+ 	return true;
  
- 	mutex_unlock(&ar->conf_mutex);
-@@ -9149,6 +9138,7 @@ static const struct ieee80211_ops ath11k
- #endif
- 
- #ifdef CONFIG_ATH11K_DEBUGFS
-+	.vif_add_debugfs		= ath11k_debugfs_op_vif_add,
- 	.sta_add_debugfs		= ath11k_debugfs_sta_op_add,
- #endif
- 
+ next_server:
+-- 
+2.43.0
+
 
 
