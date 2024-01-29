@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76CB1586CF;
-	Mon, 29 Jan 2024 17:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DB61586CF;
+	Mon, 29 Jan 2024 17:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548243; cv=none; b=bC9Ae6UswZg+31qiWwsUJthI+Kbzb7N7vgo7UxQhogC0NPInBaYWlEcg3NcxuplUcZPFa5oTF5DJSJPv89C8rY+AJEqB9RcCurtPW1Fog8XmwmN7fgjuMipTJek566AU3Djns0Or/7UArum+guMjR2mi7EqJjbWfxA4U02qHlOk=
+	t=1706548244; cv=none; b=EVTJQsqJFAsHNHzQOjzvuE2sOTv85WwfEUHyRqe4KxQITs0e/xW2LnSzf4nQDtdmQsEg3hKTA6ycIxlupX6eh/n/fC68lA5OSw0v1lQCqZaDym4Ug4stG3cSWb8+FT4gxTjGlDEQ7cu1VhMP8+Qp4/nLaxgarW3/oJJmzgws/5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548243; c=relaxed/simple;
-	bh=2q22MhMgUBje1FXvBCmzs69AkgI3GDVoHj8l/cVH4HQ=;
+	s=arc-20240116; t=1706548244; c=relaxed/simple;
+	bh=3oV0z0oT38cjQMXrhAmnkuMo5dlOCSTLWwkweuXDbRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2DdliciS6N4wu6RYIym8Z2IdyWjJG1sHunBQmzh5Bh6BiroL2S1pqMjpDukhO4q6kdUTRujCdXXT68ZxvKsq1e1h9V5u0/blS45w0vfpqEkpo3tsdPq33ARl5Qs9l7XWwMTgI+I3jFotszSygvkJtBZdCXHcC4+N2ZLunPp4xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sB8JwBBd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0MUZ9tpyLwhIIfGhiWcVjLxcUlCoYQvfcXWXKS0L37+3zfLph4SzFNhqFe+cW291Ol6hJFSkvozcQN0Cy2dHssYpf7bxLlXRbnOyQRYGb5BnYsAxToJxQtmTni8yNIDF8Kh040EWy0RA98mWzrglaA1YDSa8+4pU7OTEuSTY6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8yCckd9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sB8JwBBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F841C433C7;
-	Mon, 29 Jan 2024 17:10:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8yCckd9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4E4C43394;
+	Mon, 29 Jan 2024 17:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548243;
-	bh=2q22MhMgUBje1FXvBCmzs69AkgI3GDVoHj8l/cVH4HQ=;
+	s=korg; t=1706548244;
+	bh=3oV0z0oT38cjQMXrhAmnkuMo5dlOCSTLWwkweuXDbRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sB8JwBBdZPZ5qt+ifbLS+FUX4oVfzmhP4OLL8890XssQJPonS0zSE308VBkawehOP
-	 d6U8X8Sc2UdWwEBDBPYqEJolgEFRrehzRfXJRLgGP1EXd0LqNL7oVe8E7so47u2SOD
-	 F5ZBTs5lfN1g+JkJ9wAwL2QobRh+gg/n9OwhFjc8=
+	b=H8yCckd9TScvArvVPy71joJaBbY1SFK8tnSRw1q6Fy3yKpRmPh5rLk28fGSJwtLRz
+	 hroRg0hKo/25uJZi2Z36Ft8OzP+TIV0jrnkm2VHC7K3e5xydzjWBTv5zrGdJm82Tew
+	 ivixclMjbFlda2Mus4T40Q3Muj9e2CLGnnT0KX3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Ovidiu Bunea <ovidiu.bunea@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.7 268/346] drm/amd/display: Fix DML2 watermark calculation
-Date: Mon, 29 Jan 2024 09:04:59 -0800
-Message-ID: <20240129170024.270362919@linuxfoundation.org>
+	Jani Nikula <jani.nikula@intel.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Jonathan Corbet <corbet@lwn.net>
+Subject: [PATCH 6.1 042/185] scripts/get_abi: fix source path leak
+Date: Mon, 29 Jan 2024 09:04:02 -0800
+Message-ID: <20240129165959.935363057@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,56 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ovidiu Bunea <ovidiu.bunea@amd.com>
+From: Vegard Nossum <vegard.nossum@oracle.com>
 
-commit d3579f5df0536c2f0fabaa3ea80bb2d179884195 upstream.
+commit 5889d6ede53bc17252f79c142387e007224aa554 upstream.
 
-[Why]
-core_mode_programming in DML2 should output watermark calculations
-to locals, but it incorrectly uses mode_lib
+The code currently leaks the absolute path of the ABI files into the
+rendered documentation.
 
-[How]
-update code to match HW DML2
+There exists code to prevent this, but it is not effective when an
+absolute path is passed, which it is when $srctree is used.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+I consider this to be a minimal, stop-gap fix; a better fix would strip
+off the actual prefix instead of hacking it off with a regex.
+
+Link: https://mastodon.social/@vegard/111677490643495163
+Cc: Jani Nikula <jani.nikula@intel.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Ovidiu Bunea <ovidiu.bunea@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/r/20231231235959.3342928-1-vegard.nossum@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ scripts/get_abi.pl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-@@ -9446,13 +9446,13 @@ void dml_core_mode_programming(struct di
- 		CalculateWatermarks_params->CompressedBufferSizeInkByte = locals->CompressedBufferSizeInkByte;
+--- a/scripts/get_abi.pl
++++ b/scripts/get_abi.pl
+@@ -98,7 +98,7 @@ sub parse_abi {
+ 	$name =~ s,.*/,,;
  
- 		// Output
--		CalculateWatermarks_params->Watermark = &s->dummy_watermark; // Watermarks *Watermark
--		CalculateWatermarks_params->DRAMClockChangeSupport = &mode_lib->ms.support.DRAMClockChangeSupport[0];
--		CalculateWatermarks_params->MaxActiveDRAMClockChangeLatencySupported = &s->dummy_single_array[0][0]; // dml_float_t *MaxActiveDRAMClockChangeLatencySupported[]
--		CalculateWatermarks_params->SubViewportLinesNeededInMALL = &mode_lib->ms.SubViewportLinesNeededInMALL[j]; // dml_uint_t SubViewportLinesNeededInMALL[]
--		CalculateWatermarks_params->FCLKChangeSupport = &mode_lib->ms.support.FCLKChangeSupport[0];
--		CalculateWatermarks_params->MaxActiveFCLKChangeLatencySupported = &s->dummy_single[0]; // dml_float_t *MaxActiveFCLKChangeLatencySupported
--		CalculateWatermarks_params->USRRetrainingSupport = &mode_lib->ms.support.USRRetrainingSupport[0];
-+		CalculateWatermarks_params->Watermark = &locals->Watermark; // Watermarks *Watermark
-+		CalculateWatermarks_params->DRAMClockChangeSupport = &locals->DRAMClockChangeSupport;
-+		CalculateWatermarks_params->MaxActiveDRAMClockChangeLatencySupported = locals->MaxActiveDRAMClockChangeLatencySupported; // dml_float_t *MaxActiveDRAMClockChangeLatencySupported[]
-+		CalculateWatermarks_params->SubViewportLinesNeededInMALL = locals->SubViewportLinesNeededInMALL; // dml_uint_t SubViewportLinesNeededInMALL[]
-+		CalculateWatermarks_params->FCLKChangeSupport = &locals->FCLKChangeSupport;
-+		CalculateWatermarks_params->MaxActiveFCLKChangeLatencySupported = &locals->MaxActiveFCLKChangeLatencySupported; // dml_float_t *MaxActiveFCLKChangeLatencySupported
-+		CalculateWatermarks_params->USRRetrainingSupport = &locals->USRRetrainingSupport;
+ 	my $fn = $file;
+-	$fn =~ s,Documentation/ABI/,,;
++	$fn =~ s,.*Documentation/ABI/,,;
  
- 		CalculateWatermarksMALLUseAndDRAMSpeedChangeSupport(
- 			&mode_lib->scratch,
+ 	my $nametag = "File $fn";
+ 	$data{$nametag}->{what} = "File $name";
 
 
