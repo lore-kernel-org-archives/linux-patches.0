@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A0815B972;
-	Mon, 29 Jan 2024 17:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1586D15B993;
+	Mon, 29 Jan 2024 17:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548300; cv=none; b=gDnPwdBJLbcNRlNj2M/x8lv89fjpatZcJSV62hHroxOHbpMkokjfNKf8jStfySZV9KadyzOxrgL7jcJaCFdbnmG2Wvqd5c1COugE320qZ0b8GDu71sMOzIra162fBRUhl/aixlufyyLAgxnxOiu/7DQ6r0OijNRdnsAaXomdB5Q=
+	t=1706548301; cv=none; b=oFq+C0GeKAfGs5wT2uUBh82rDdlRJVd2PRzlN+t0CeVefV3I8n6BFIC4RzZQdnfjcc1xw6PiRk83e7IZ8iNKPN1bGfavD2Jzqh5YFYeLwzX1ZEAKq6d1cEg6p2PDWeAlk9LA6U4UGy0rkBhno3g5FPmyWDik65wX4QuSIkoVUno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548300; c=relaxed/simple;
-	bh=6AFnBTd4+ZE0EiydpQHYiEq1QzwTinJhforlaBahY6k=;
+	s=arc-20240116; t=1706548301; c=relaxed/simple;
+	bh=/x4RDYgmmAye1GFErQHNH0EqztLm2YAMP0DU4DRa6/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gc0dclgoYk0zBHCCRNoVhMGf++YUu92vOlNuG+w8kShu+3VYzWlM2Oigcu0qUFCEguboQzrTgsvUzVEU60+gCZzNe5OMdQiRy6an5IAg2GmKpfqpkI2PZR5Uo9CzKLDbqEGY5AAUaCHmTakahm6PAEHdgZg4/gmJRSVlJZD05EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPv06/GA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uBrqRIxhLYikk4Bdlv/DP0RBOtKZo+iS6DDJThXx0CIZGNQt8fzOEpXP7QkHQLa0jaJ5aSCVZXoegnLpafU8UfTGKLUX2AGunANCbtfeH0t0GPIU5zveSwIzpQySiLk95yFLQBU77k0VM8VdSFc9DPJUvKwzqOz9ywcR4DolSkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KbOKXlhU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPv06/GA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB3AC433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KbOKXlhU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFDFC433F1;
 	Mon, 29 Jan 2024 17:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548300;
-	bh=6AFnBTd4+ZE0EiydpQHYiEq1QzwTinJhforlaBahY6k=;
+	bh=/x4RDYgmmAye1GFErQHNH0EqztLm2YAMP0DU4DRa6/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPv06/GAxCx/epfuMYQkocIDsZAIWlYCg+82pzbzyf5E0a03o1U6/B9d5WlxK1vtg
-	 iAuC2BnAvwq3VHjwW6eTAts7gzELZFf+ds95GPb8H/AseeoJyIOz+r9+Cot1kfoD0h
-	 31Z9djZE0EJcN/ZM3oXGPnojV7/h7jMmrjxhL9Ic=
+	b=KbOKXlhUQmLFfF00Nqc0GzcvrMeIP1Ya2kPJuPVUWpFY00HAZ1y1BpOoaQYn6SSSh
+	 d8nC4ILpxQLh/EocQbTYniATUh+z/wPqPwSc+Ke8l0OfpupBzmT/tEJGC4r1vHOV2b
+	 XsaXqxxMEnkhQdGjXzPFu2jOYRWexss3ZVMpaemE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Markus Niebel <Markus.Niebel@ew.tq-group.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/185] bnxt_en: Wait for FLR to complete during probe
-Date: Mon, 29 Jan 2024 09:04:39 -0800
-Message-ID: <20240129170001.140299094@linuxfoundation.org>
+Subject: [PATCH 6.7 307/346] drm: panel-simple: add missing bus flags for Tianma tm070jvhg[30/33]
+Date: Mon, 29 Jan 2024 09:05:38 -0800
+Message-ID: <20240129170025.495048177@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +49,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Markus Niebel <Markus.Niebel@ew.tq-group.com>
 
-[ Upstream commit 3c1069fa42872f95cf3c6fedf80723d391e12d57 ]
+[ Upstream commit 45dd7df26cee741b31c25ffdd44fb8794eb45ccd ]
 
-The first message to firmware may fail if the device is undergoing FLR.
-The driver has some recovery logic for this failure scenario but we must
-wait 100 msec for FLR to complete before proceeding.  Otherwise the
-recovery will always fail.
+The DE signal is active high on this display, fill in the missing
+bus_flags. This aligns panel_desc with its display_timing.
 
-Fixes: ba02629ff6cb ("bnxt_en: log firmware status on firmware init failure")
-Reviewed-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://lore.kernel.org/r/20240117234515.226944-2-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9a2654c0f62a ("drm/panel: Add and fill drm_panel type field")
+Fixes: b3bfcdf8a3b6 ("drm/panel: simple: add Tianma TM070JVHG33")
+
+Signed-off-by: Markus Niebel <Markus.Niebel@ew.tq-group.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Link: https://lore.kernel.org/r/20231012084208.2731650-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231012084208.2731650-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/panel/panel-simple.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index df4d88d35701..f810b5dc25f0 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -12269,6 +12269,11 @@ static int bnxt_fw_init_one_p1(struct bnxt *bp)
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 9367a4572dcf..1ba633fd5696 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -3861,6 +3861,7 @@ static const struct panel_desc tianma_tm070jdhg30 = {
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
+ 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
+ };
  
- 	bp->fw_cap = 0;
- 	rc = bnxt_hwrm_ver_get(bp);
-+	/* FW may be unresponsive after FLR. FLR must complete within 100 msec
-+	 * so wait before continuing with recovery.
-+	 */
-+	if (rc)
-+		msleep(100);
- 	bnxt_try_map_fw_health_reg(bp);
- 	if (rc) {
- 		rc = bnxt_try_recover_fw(bp);
+ static const struct panel_desc tianma_tm070jvhg33 = {
+@@ -3873,6 +3874,7 @@ static const struct panel_desc tianma_tm070jvhg33 = {
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
+ 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
+ };
+ 
+ static const struct display_timing tianma_tm070rvhg71_timing = {
 -- 
 2.43.0
 
