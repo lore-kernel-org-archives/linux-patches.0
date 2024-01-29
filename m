@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C8815EAA8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE184157E62;
 	Mon, 29 Jan 2024 17:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548250; cv=none; b=i/0giDPnQcVhetrV5OvANQG/cKoXsH86b+AEccpaQvV8Nt4Uo/+XIHtFguDMd1B9ZO4kR0R0s+RajZ6geBGYacIalQW/IkHvp7f/AnKfS/MlXakgraByUWVJb3iGjw6MpfFDiN+7+rYKu/sv23ZUjsguf6JRSO5Gq+a0LQiBQ3I=
+	t=1706548251; cv=none; b=esemAJtbkEdE+lHLzUB6sD4ezV8Vd1kdAC86ylE3XH3j791cimjZEDFzIcJL/lkTA4fDfNZqeIaTvJk2W5jf25GBpAVmoU7hJH29u+6kbqH9tQAJDJiTSbMVhku4VkIpNOxvK5SZAf4BxpWRJZTk7qE6CxqpyzAwY0Jz/eaCssI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548250; c=relaxed/simple;
-	bh=xiXIT7IOwOGH5YIZ+5QB4OyvPFDYi2HGrrqZU3aVs/Y=;
+	s=arc-20240116; t=1706548251; c=relaxed/simple;
+	bh=Yn7ChgCOZLvUnf7bETd7/5Fd6gnbxnMRJy/nLyz8L0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NS9RxThIN2rKFr8haOhO87svM5XPVbbgffdPtu2tMVFt3evEFko1BwB8qnbAGH8GidGqClt2R1/Sb4LtPxidZS5o/n/E2NQvavH98vAPGovp50pM+3Ameyvm/3/dLV7bLVj8cthd43XgTjGrn4NdbsvWH2NnhQqyDi8Ya9gBiOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQha1ACe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CeBh//t6nfMqp7xwZAmzFDLHtOk7cy4/KTqg7kC/vcS+sh5GSh8gu3gGFh2DJBvWQa5k0oH+J/8yEhGY5oomLMjHam0wTnHQQ2i0ki/guH9JuWloTik6IqM8uus4eIYZx93Z9t3JZR0Lzt4POCtGflLehmopTt+0TTI1ER2aMKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/tnNlIY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQha1ACe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD75C43390;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/tnNlIY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CA5C43394;
 	Mon, 29 Jan 2024 17:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548250;
-	bh=xiXIT7IOwOGH5YIZ+5QB4OyvPFDYi2HGrrqZU3aVs/Y=;
+	bh=Yn7ChgCOZLvUnf7bETd7/5Fd6gnbxnMRJy/nLyz8L0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kQha1ACeVW1sbrV5i38yW6U+3j8sM1IRXrYj0GVSuV9ndThszUWuhj2MkVusShmhT
-	 oqgW6Gu40V8Ax43daIojUs0zsOL6EB5TvAixTIYD/MLXlQbGnuJOD3G7WbfrHdfERy
-	 iRWMMCDs3Y6Si97qjK32nnGtZMg/q6vPiaL2cYmQ=
+	b=W/tnNlIYOjIHrMDL00iJHH3iQD0StPmWfbL5ig7R5IBiOMYQPC50tywtBiyRprBqr
+	 X3o5BhxWvUHqGVLGIMX5+ADE5rrJYf68nXcpx2MhZO05Db5GtvGaHHoSwwuKLU5YK3
+	 A3w2iCzi/COUn1kJxXPsqdHRJXGGaOCD+lKLMa8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Robert Foss <rfoss@kernel.org>
-Subject: [PATCH 6.7 259/346] drm/bridge: nxp-ptn3460: simplify some error checking
-Date: Mon, 29 Jan 2024 09:04:50 -0800
-Message-ID: <20240129170024.010040313@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 6.1 046/185] media: mtk-jpeg: Fix use after free bug due to error path handling in mtk_jpeg_dec_device_run
+Date: Mon, 29 Jan 2024 09:04:06 -0800
+Message-ID: <20240129170000.064916330@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,66 +48,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-commit 28d3d0696688154cc04983f343011d07bf0508e4 upstream.
+commit 206c857dd17d4d026de85866f1b5f0969f2a109e upstream.
 
-The i2c_master_send/recv() functions return negative error codes or
-they return "len" on success.  So the error handling here can be written
-as just normal checks for "if (ret < 0) return ret;".  No need to
-complicate things.
+In mtk_jpeg_probe, &jpeg->job_timeout_work is bound with
+mtk_jpeg_job_timeout_work.
 
-Btw, in this code the "len" parameter can never be zero, but even if
-it were, then I feel like this would still be the best way to write it.
+In mtk_jpeg_dec_device_run, if error happens in
+mtk_jpeg_set_dec_dst, it will finally start the worker while
+mark the job as finished by invoking v4l2_m2m_job_finish.
 
-Fixes: 914437992876 ("drm/bridge: nxp-ptn3460: fix i2c_master_send() error checking")
-Suggested-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/04242630-42d8-4920-8c67-24ac9db6b3c9@moroto.mountain
+There are two methods to trigger the bug. If we remove the
+module, it which will call mtk_jpeg_remove to make cleanup.
+The possible sequence is as follows, which will cause a
+use-after-free bug.
+
+CPU0                  CPU1
+mtk_jpeg_dec_...    |
+  start worker	    |
+                    |mtk_jpeg_job_timeout_work
+mtk_jpeg_remove     |
+  v4l2_m2m_release  |
+    kfree(m2m_dev); |
+                    |
+                    | v4l2_m2m_get_curr_priv
+                    |   m2m_dev->curr_ctx //use
+
+If we close the file descriptor, which will call mtk_jpeg_release,
+it will have a similar sequence.
+
+Fix this bug by starting timeout worker only if started jpegdec worker
+successfully. Then v4l2_m2m_job_finish will only be called in
+either mtk_jpeg_job_timeout_work or mtk_jpeg_dec_device_run.
+
+Fixes: b2f0d2724ba4 ("[media] vcodec: mediatek: Add Mediatek JPEG Decoder Driver")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/nxp-ptn3460.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/bridge/nxp-ptn3460.c
-+++ b/drivers/gpu/drm/bridge/nxp-ptn3460.c
-@@ -54,15 +54,15 @@ static int ptn3460_read_bytes(struct ptn
- 	int ret;
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+@@ -974,13 +974,13 @@ static void mtk_jpeg_dec_device_run(void
+ 	if (ret < 0)
+ 		goto dec_end;
  
- 	ret = i2c_master_send(ptn_bridge->client, &addr, 1);
--	if (ret <= 0) {
-+	if (ret < 0) {
- 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
--		return ret ?: -EIO;
-+		return ret;
- 	}
+-	schedule_delayed_work(&jpeg->job_timeout_work,
+-			      msecs_to_jiffies(MTK_JPEG_HW_TIMEOUT_MSEC));
+-
+ 	mtk_jpeg_set_dec_src(ctx, &src_buf->vb2_buf, &bs);
+ 	if (mtk_jpeg_set_dec_dst(ctx, &jpeg_src_buf->dec_param, &dst_buf->vb2_buf, &fb))
+ 		goto dec_end;
  
- 	ret = i2c_master_recv(ptn_bridge->client, buf, len);
--	if (ret != len) {
-+	if (ret < 0) {
- 		DRM_ERROR("Failed to recv i2c data, ret=%d\n", ret);
--		return ret < 0 ? ret : -EIO;
-+		return ret;
- 	}
- 
- 	return 0;
-@@ -78,9 +78,9 @@ static int ptn3460_write_byte(struct ptn
- 	buf[1] = val;
- 
- 	ret = i2c_master_send(ptn_bridge->client, buf, ARRAY_SIZE(buf));
--	if (ret != ARRAY_SIZE(buf)) {
-+	if (ret < 0) {
- 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
--		return ret < 0 ? ret : -EIO;
-+		return ret;
- 	}
- 
- 	return 0;
++	schedule_delayed_work(&jpeg->job_timeout_work,
++			      msecs_to_jiffies(MTK_JPEG_HW_TIMEOUT_MSEC));
++
+ 	spin_lock_irqsave(&jpeg->hw_lock, flags);
+ 	mtk_jpeg_dec_reset(jpeg->reg_base);
+ 	mtk_jpeg_dec_set_config(jpeg->reg_base,
 
 
