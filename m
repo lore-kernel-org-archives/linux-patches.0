@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17922157E92;
-	Mon, 29 Jan 2024 17:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1770157E92;
+	Mon, 29 Jan 2024 17:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548090; cv=none; b=Qwei4SuO3nQ4pALkGSsl/zzVON+IvrlFLNbpt2K5JHP+PWmvbr8Qcfo6InGGUS8ErIZZzvnxVjm56XDZVe2xcuhMugjuGquBaGoR5wD4K3SHenPqG1VLt9AEPiHBv7aF2HXRezKPep+8cye29oCk1PG1B4oohBvRX6iiTM1Ta38=
+	t=1706548090; cv=none; b=RxFtCZjPBhRyMlYFDcK+sca73hOd9hUF+K1u8WMJiaiJA9VndcYH1ubB7Bb6qDO/R9Yiqhyyu33N2Oo8KxEp5e9Z/1EzWXSEwtkT9u3GBAmRobqQGY1T0rsI1WtpRweO4MfVG4qGEYMIXfrBC784S71C1hmN9B55Awtw0QOsRWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548090; c=relaxed/simple;
-	bh=RUUpKAi2oT8FJ9Y0r+OB/IKukxtp3jKAqrP+a0pA3KA=;
+	bh=op3jJcxnLdXn1Q5t7kEpqjSpq9XOja41c2yjO5BGHlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/pEexO646qtOtIyM6mpnmw2NSd2P+AyTQtdMmQZo7CUdjJh0WlYkSEoFCnDpHY6ZdeI2FOICZ3fmuLRbtfVINCfWnM8rNHb+gYbPqim3JOXE5rAMdEwd3k9Z2HuOhgUOYDY764r1NuBaSXLRz3j38C3bMrLUwHagMjWfcrqKj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNcRxRFt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KMEdhbBS1lT7GaOfJx15WPSm6mmCXEIRlavpniWGFEZ0V7gneAPpYyxX1LQYvpxuUzuX8yfNIAfRH7f2kZb5TdiMOD5Ntjy5c8G7nUHU4hGFkAZ+vy5ZPSf48CZDBe4Cy9gsFF93AH+nIZRfss4musMJjqShuIYG4bCiRkirCDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5hW4R/W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNcRxRFt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA96C433C7;
-	Mon, 29 Jan 2024 17:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5hW4R/W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 446A5C433B1;
+	Mon, 29 Jan 2024 17:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548089;
-	bh=RUUpKAi2oT8FJ9Y0r+OB/IKukxtp3jKAqrP+a0pA3KA=;
+	s=korg; t=1706548090;
+	bh=op3jJcxnLdXn1Q5t7kEpqjSpq9XOja41c2yjO5BGHlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rNcRxRFtK0Pm3GKKbPxseBBSu3fKLIDba8X0yPN8yDLQw+9kDEHhDjPfrOZ7M9a8Q
-	 mE9nAUGXnxkNWTHZHrL8i1tfwGQDa9JHb+/24PgJZ0siEjtGscOz4Mo0zupQGqdimR
-	 tGKsDg77LESIkReJ6EYFDzCkiDmIuGbpL4dVnRiM=
+	b=V5hW4R/Wt26bova6cEIkenntBFbGnECaWWblk9UUMEW873cLzcHlYQ0UaPNElEAtZ
+	 K5uKlXvGsDsTQ6n9sIOTE9b0lYwjidXGVoVED6H43oKMrw1AElvSDbBiWN9GaOquuW
+	 2/K0Fv8nNLVv9T75bHiu1u/P7MZi0l9I3DVf2Ssg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunhui Cui <cuiyunhui@bytedance.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.7 104/346] RISC-V: selftests: cbo: Ensure asm operands match constraints
-Date: Mon, 29 Jan 2024 09:02:15 -0800
-Message-ID: <20240129170019.463345676@linuxfoundation.org>
+	Rob Herring <robh@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.7 105/346] arm64: Rename ARM64_WORKAROUND_2966298
+Date: Mon, 29 Jan 2024 09:02:16 -0800
+Message-ID: <20240129170019.486033946@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,55 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Jones <ajones@ventanamicro.com>
+From: Rob Herring <robh@kernel.org>
 
-commit 0de65288d75ff96c30e216557d979fb9342c4323 upstream.
+commit 546b7cde9b1dd36089649101b75266564600ffe5 upstream.
 
-The 'i' constraint expects a constant operand, which fn and its
-constant derivative MK_CBO(fn) are, but passing fn through a function
-as a parameter and using a local variable for MK_CBO(fn) allow the
-compiler to lose sight of that when no optimization is done. Use
-a macro instead of a function and skip the local variable to ensure
-the compiler uses constants, matching the asm constraints.
+In preparation to apply ARM64_WORKAROUND_2966298 for multiple errata,
+rename the kconfig and capability. No functional change.
 
-Reported-by: Yunhui Cui <cuiyunhui@bytedance.com>
-Closes: https://lore.kernel.org/all/20240117082514.42967-1-cuiyunhui@bytedance.com
-Fixes: a29e2a48afe3 ("RISC-V: selftests: Add CBO tests")
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/20240117130933.57514-2-ajones@ventanamicro.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20240110-arm-errata-a510-v1-1-d02bc51aeeee@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/riscv/hwprobe/cbo.c |   18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ arch/arm64/Kconfig             |    4 ++++
+ arch/arm64/kernel/cpu_errata.c |    4 ++--
+ arch/arm64/kernel/entry.S      |    2 +-
+ arch/arm64/tools/cpucaps       |    2 +-
+ 4 files changed, 8 insertions(+), 4 deletions(-)
 
---- a/tools/testing/selftests/riscv/hwprobe/cbo.c
-+++ b/tools/testing/selftests/riscv/hwprobe/cbo.c
-@@ -36,16 +36,14 @@ static void sigill_handler(int sig, sigi
- 	regs[0] += 4;
- }
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -1037,8 +1037,12 @@ config ARM64_ERRATUM_2645198
  
--static void cbo_insn(char *base, int fn)
--{
--	uint32_t insn = MK_CBO(fn);
--
--	asm volatile(
--	"mv	a0, %0\n"
--	"li	a1, %1\n"
--	".4byte	%2\n"
--	: : "r" (base), "i" (fn), "i" (insn) : "a0", "a1", "memory");
--}
-+#define cbo_insn(base, fn)							\
-+({										\
-+	asm volatile(								\
-+	"mv	a0, %0\n"							\
-+	"li	a1, %1\n"							\
-+	".4byte	%2\n"								\
-+	: : "r" (base), "i" (fn), "i" (MK_CBO(fn)) : "a0", "a1", "memory");	\
-+})
+ 	  If unsure, say Y.
  
- static void cbo_inval(char *base) { cbo_insn(base, 0); }
- static void cbo_clean(char *base) { cbo_insn(base, 1); }
++config ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
++	bool
++
+ config ARM64_ERRATUM_2966298
+ 	bool "Cortex-A520: 2966298: workaround for speculatively executed unprivileged load"
++	select ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
+ 	default y
+ 	help
+ 	  This option adds the workaround for ARM Cortex-A520 erratum 2966298.
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -713,10 +713,10 @@ const struct arm64_cpu_capabilities arm6
+ 		MIDR_FIXED(MIDR_CPU_VAR_REV(1,1), BIT(25)),
+ 	},
+ #endif
+-#ifdef CONFIG_ARM64_ERRATUM_2966298
++#ifdef CONFIG_ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
+ 	{
+ 		.desc = "ARM erratum 2966298",
+-		.capability = ARM64_WORKAROUND_2966298,
++		.capability = ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD,
+ 		/* Cortex-A520 r0p0 - r0p1 */
+ 		ERRATA_MIDR_REV_RANGE(MIDR_CORTEX_A520, 0, 0, 1),
+ 	},
+--- a/arch/arm64/kernel/entry.S
++++ b/arch/arm64/kernel/entry.S
+@@ -428,7 +428,7 @@ alternative_else_nop_endif
+ 	ldp	x28, x29, [sp, #16 * 14]
+ 
+ 	.if	\el == 0
+-alternative_if ARM64_WORKAROUND_2966298
++alternative_if ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
+ 	tlbi	vale1, xzr
+ 	dsb	nsh
+ alternative_else_nop_endif
+--- a/arch/arm64/tools/cpucaps
++++ b/arch/arm64/tools/cpucaps
+@@ -84,7 +84,6 @@ WORKAROUND_2077057
+ WORKAROUND_2457168
+ WORKAROUND_2645198
+ WORKAROUND_2658417
+-WORKAROUND_2966298
+ WORKAROUND_AMPERE_AC03_CPU_38
+ WORKAROUND_TRBE_OVERWRITE_FILL_MODE
+ WORKAROUND_TSB_FLUSH_FAILURE
+@@ -100,3 +99,4 @@ WORKAROUND_NVIDIA_CARMEL_CNP
+ WORKAROUND_QCOM_FALKOR_E1003
+ WORKAROUND_REPEAT_TLBI
+ WORKAROUND_SPECULATIVE_AT
++WORKAROUND_SPECULATIVE_UNPRIV_LOAD
 
 
