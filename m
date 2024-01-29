@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33FD815FB21;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC049157E6B;
 	Mon, 29 Jan 2024 17:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548309; cv=none; b=GKhYFx90JFBKdFWxY/Qasc0rxjb0ModB6q/UVp5KmzWmXc4UyymjLTeA6sHGF56UmAy/2m5Pn2RpJmMYVQ7647YQ7SmsaPvofJIC02oR/Ru7YlHsV+byItVd9jNnalbktNLD2S9CbZQ7qUWG5MeBN2Ex9qQFn3NejNlAfPQZzKo=
+	t=1706548309; cv=none; b=TdqDPnbnZ9sqEeNZ64Rw4xiXftjfKdyAhFUCmXbT7n8drTAf2FdrrMK5YcWa2fLzXfRlSf0KAKLfz3KWIIiOI+Nbe4dEHgCpazjHYmiHSNN/QJqU2Yhte7MvhW6L14RSlMQsANMse7e/e3WqEOjuixDoieOby40AG90l5s81xbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548309; c=relaxed/simple;
-	bh=Kw345+PTE0wUUEuSO08Y4GjYIp8WDKqYfPb9xpZIyn8=;
+	bh=FAlrh/NBA5ZRcanWXujfZ4Q2CIpNvUiYZJ8OeSG9Q6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XVxS/BB2Fd3bf5PIHjvmB8X9x+3thw+sx/4LzrfM/jOGkAjw37/RHywTZynj1Nw0m9pqkki/TrZzYPu7t8CrGqxMBliBms+xsLyr1xOggDAHUcWpFVBV28kFBwPQsBthJ1DS2Qpb7fUpbmiO7pNwU0/aAwrf1w9j9lZ5pxcrb/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9SjQFXJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DoPK0lPukLG0yq9E1dz8eIptK+GDtE0LM7kFiiv9NrqHb00QFEHr8WbCbD18eLJiU8VWmBCtiiS8Gaa4ZAGJmRFW18mkSfPajPY8W7vRtQKDFmZ9QXb+iy9k2DPa2vpPwufCgKCTLrWC205pEhynYVQucEX+tSfUHSZZJQWZSWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONp5KJST; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9SjQFXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDAF9C43394;
-	Mon, 29 Jan 2024 17:11:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONp5KJST"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38F1C433C7;
+	Mon, 29 Jan 2024 17:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548309;
-	bh=Kw345+PTE0wUUEuSO08Y4GjYIp8WDKqYfPb9xpZIyn8=;
+	bh=FAlrh/NBA5ZRcanWXujfZ4Q2CIpNvUiYZJ8OeSG9Q6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N9SjQFXJZN8OGTgJ6yWoRug+DAKjNLmDyqvR5goVAMmyaxOgLyl3EjCg/SlKeeT6j
-	 r51dSScDshuOPeDhz6MsJPD4Ve07L58Ea6ahG5fnt2m3c8xYBW0n0cQkqe5I0W7ySY
-	 LKpXYM2KQZuaIzJASUUe0mpOcOZZo+3ZvOMwop4I=
+	b=ONp5KJSTbEIvS7iUPiTr7c4WG3nPZHPWmJhnqU+MEsv+4V+1/DPE+XrYDQIIa+Qw/
+	 TxLSZelK6CWZz6ZuaMNfRH2Y5NnvNbclKqm3K3F4W7kcHnQEDaIGVk/i9lIaC/m98w
+	 wf/1I9KQGLh47z6z3SIaN1nCFVFb6b7emCYs89dM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.1 059/185] serial: sc16is7xx: remove wasteful static buffer in sc16is7xx_regmap_name()
-Date: Mon, 29 Jan 2024 09:04:19 -0800
-Message-ID: <20240129170000.503450377@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 287/346] btrfs: zoned: factor out prepare_allocation_zoned()
+Date: Mon, 29 Jan 2024 09:05:18 -0800
+Message-ID: <20240129170024.828366911@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,57 +48,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-commit 6bcab3c8acc88e265c570dea969fd04f137c8a4c upstream.
+[ Upstream commit b271fee9a41ca1474d30639fd6cc912c9901d0f8 ]
 
-Using a static buffer inside sc16is7xx_regmap_name() was a convenient and
-simple way to set the regmap name without having to allocate and free a
-buffer each time it is called. The drawback is that the static buffer
-wastes memory for nothing once regmap is fully initialized.
+Factor out prepare_allocation_zoned() for further extension. While at
+it, optimize the if-branch a bit.
 
-Remove static buffer and use constant strings instead.
-
-This also avoids a truncation warning when using "%d" or "%u" in snprintf
-which was flagged by kernel test robot.
-
-Fixes: 3837a0379533 ("serial: sc16is7xx: improve regmap debugfs by using one regmap per port")
-Cc:  <stable@vger.kernel.org> # 6.1.x: 3837a03 serial: sc16is7xx: improve regmap debugfs by using one regmap per port
-Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20231211171353.2901416-2-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 02444f2ac26e ("btrfs: zoned: optimize hint byte for zoned allocator")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ fs/btrfs/extent-tree.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -1698,13 +1698,15 @@ static struct regmap_config regcfg = {
- 	.max_register = SC16IS7XX_EFCR_REG,
- };
- 
--static const char *sc16is7xx_regmap_name(unsigned int port_id)
-+static const char *sc16is7xx_regmap_name(u8 port_id)
- {
--	static char buf[6];
--
--	snprintf(buf, sizeof(buf), "port%d", port_id);
--
--	return buf;
-+	switch (port_id) {
-+	case 0:	return "port0";
-+	case 1:	return "port1";
-+	default:
-+		WARN_ON(true);
-+		return NULL;
-+	}
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 9c8b00a917bd..9307891b4a85 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -4301,6 +4301,24 @@ static int prepare_allocation_clustered(struct btrfs_fs_info *fs_info,
+ 	return 0;
  }
  
- static unsigned int sc16is7xx_regmap_port_mask(unsigned int port_id)
++static int prepare_allocation_zoned(struct btrfs_fs_info *fs_info,
++				    struct find_free_extent_ctl *ffe_ctl)
++{
++	if (ffe_ctl->for_treelog) {
++		spin_lock(&fs_info->treelog_bg_lock);
++		if (fs_info->treelog_bg)
++			ffe_ctl->hint_byte = fs_info->treelog_bg;
++		spin_unlock(&fs_info->treelog_bg_lock);
++	} else if (ffe_ctl->for_data_reloc) {
++		spin_lock(&fs_info->relocation_bg_lock);
++		if (fs_info->data_reloc_bg)
++			ffe_ctl->hint_byte = fs_info->data_reloc_bg;
++		spin_unlock(&fs_info->relocation_bg_lock);
++	}
++
++	return 0;
++}
++
+ static int prepare_allocation(struct btrfs_fs_info *fs_info,
+ 			      struct find_free_extent_ctl *ffe_ctl,
+ 			      struct btrfs_space_info *space_info,
+@@ -4311,19 +4329,7 @@ static int prepare_allocation(struct btrfs_fs_info *fs_info,
+ 		return prepare_allocation_clustered(fs_info, ffe_ctl,
+ 						    space_info, ins);
+ 	case BTRFS_EXTENT_ALLOC_ZONED:
+-		if (ffe_ctl->for_treelog) {
+-			spin_lock(&fs_info->treelog_bg_lock);
+-			if (fs_info->treelog_bg)
+-				ffe_ctl->hint_byte = fs_info->treelog_bg;
+-			spin_unlock(&fs_info->treelog_bg_lock);
+-		}
+-		if (ffe_ctl->for_data_reloc) {
+-			spin_lock(&fs_info->relocation_bg_lock);
+-			if (fs_info->data_reloc_bg)
+-				ffe_ctl->hint_byte = fs_info->data_reloc_bg;
+-			spin_unlock(&fs_info->relocation_bg_lock);
+-		}
+-		return 0;
++		return prepare_allocation_zoned(fs_info, ffe_ctl);
+ 	default:
+ 		BUG();
+ 	}
+-- 
+2.43.0
+
 
 
