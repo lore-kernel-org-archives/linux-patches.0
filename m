@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B8815CD54;
-	Mon, 29 Jan 2024 17:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0E3157048;
+	Mon, 29 Jan 2024 17:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548140; cv=none; b=gV4IMU0JbwYe9uDIur+3wUBOWWoWzCWSmi7WsdyaAsikLTpVjnY4F4Oq9+yObSlujlXaRpcv3GwQo3rRM7O4ikSUxa0v7v+5A00scbp2j21q7UuQtCs4usWuVPqwImLg5p4szQ6snAu4/Rf73WSEVzu933gY+xJiCHLVMwonTzA=
+	t=1706548141; cv=none; b=sBPhvFbK3sflGy6DOeP1N6UmZXjvKAgzy8v/eVJFX2Amw1URhupjn+4tLiLmcjs0szaelIs23gpx31K0zE+IQvZkMOVnNAKZGyLjuE1PiHrYpbnuKz7lbqvE72Yt7j3oR9qV7kPr5NxVL6lpybFN+HPLliRFxzRSwExkEcS8Vbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548140; c=relaxed/simple;
-	bh=i+yqHgGtxIET4rIfYydDJlh/5Ig+O+kREomvuj/xOe8=;
+	s=arc-20240116; t=1706548141; c=relaxed/simple;
+	bh=K8CB5S4M1xeSkRwo0++LAH3pxfFAtXhxrsDH0f+tD9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xk4bz+0BVoxg1ncue7y9MiWSFMr2A+PBGd9TUj2fZz/X2scuUpEwe9bzq9Fm+5Hebj6siavepN0Caw86MFqt3aBwkJByJMRcC+rpp65lyhM3+wX/tzy4BQNhEIrB8E7ckzQG6GgcgqPnUhMIfoIQL/pVsIlxcngtII8FFYZfNDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LAC9gs1Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=deDX6mSsxCTzZdPlSV7lV7C4pZ/vXJXCAsakH7Uk40dtu4IcmT6Wh4umdH4sZQz67UnECJ95WWlmfs33oaqDv0FWsZNkv3ltZR61YUM5SL6yFXdqWS+gNnsDI/d3Itqn0TMUgKIeBe91GmdXRQPa0H6ja5qT2Ke8AFjLMUCfXAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WnFCMOUv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LAC9gs1Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A75C43394;
-	Mon, 29 Jan 2024 17:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WnFCMOUv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B76C433A6;
+	Mon, 29 Jan 2024 17:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548140;
-	bh=i+yqHgGtxIET4rIfYydDJlh/5Ig+O+kREomvuj/xOe8=;
+	s=korg; t=1706548141;
+	bh=K8CB5S4M1xeSkRwo0++LAH3pxfFAtXhxrsDH0f+tD9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LAC9gs1QjCkPoNlqjpcxXzO55wvG2L9kHgLRhIjjxn9QdLRaDGlsNPpWaEk5Ykh8J
-	 8b2LwRJnXM1aHnT+Uw28FlTgebyBgrrVlm3vzc35QfrMuiG5hDCYgh8v16ooA4vJUK
-	 kvHYj7xRJDLgMu5zG/1pDQ2b+Yw1SeJ8qibvPIL8=
+	b=WnFCMOUvTR6PPGixAWZ3ameVuDjDO9pdL8NevSHlb7If8zLUzJep8PDpCNefFSocb
+	 ZMoPMfzW9ttB8ppq78MBMP4oRdjIYPu/Qv3LBZr9yWRVaIu/75aby/cr9ec8VpUzNn
+	 sS2N657O8jcaZ04kC0WCSz7x7vVIHLMZF36MJ2s8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <haokexin@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.7 144/346] ksmbd: Add missing set_freezable() for freezable kthread
-Date: Mon, 29 Jan 2024 09:02:55 -0800
-Message-ID: <20240129170020.642339841@linuxfoundation.org>
+	Lucas Stach <l.stach@pengutronix.de>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 145/346] SUNRPC: use request size to initialize bio_vec in svc_udp_sendto()
+Date: Mon, 29 Jan 2024 09:02:56 -0800
+Message-ID: <20240129170020.673077074@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,34 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-From: Kevin Hao <haokexin@gmail.com>
+[ Upstream commit 1d9cabe2817edd215779dc9c2fe5e7ab9aac0704 ]
 
-[ Upstream commit 8fb7b723924cc9306bc161f45496497aec733904 ]
+Use the proper size when setting up the bio_vec, as otherwise only
+zero-length UDP packets will be sent.
 
-The kernel thread function ksmbd_conn_handler_loop() invokes
-the try_to_freeze() in its loop. But all the kernel threads are
-non-freezable by default. So if we want to make a kernel thread to be
-freezable, we have to invoke set_freezable() explicitly.
-
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: baabf59c2414 ("SUNRPC: Convert svc_udp_sendto() to use the per-socket bio_vec array")
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/sunrpc/svcsock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -284,6 +284,7 @@ int ksmbd_conn_handler_loop(void *p)
- 		goto out;
+diff --git a/net/sunrpc/svcsock.c b/net/sunrpc/svcsock.c
+index 998687421fa6..e0ce4276274b 100644
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -717,12 +717,12 @@ static int svc_udp_sendto(struct svc_rqst *rqstp)
+ 				ARRAY_SIZE(rqstp->rq_bvec), xdr);
  
- 	conn->last_active = jiffies;
-+	set_freezable();
- 	while (ksmbd_conn_alive(conn)) {
- 		if (try_to_freeze())
- 			continue;
+ 	iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, rqstp->rq_bvec,
+-		      count, 0);
++		      count, rqstp->rq_res.len);
+ 	err = sock_sendmsg(svsk->sk_sock, &msg);
+ 	if (err == -ECONNREFUSED) {
+ 		/* ICMP error on earlier request. */
+ 		iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, rqstp->rq_bvec,
+-			      count, 0);
++			      count, rqstp->rq_res.len);
+ 		err = sock_sendmsg(svsk->sk_sock, &msg);
+ 	}
+ 
+-- 
+2.43.0
+
 
 
