@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB6376032;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D907C76032;
 	Mon, 29 Jan 2024 17:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548628; cv=none; b=YDdIJIO4kSLUt1ZFLlxfSPzy1sS8vj64XVGj9VcxuJr5wEI9ljDjZDkxV3LIx9wPqDeRAnbKpQz4lxOE9xxmJi2zBazc+vbko6tgshaQhBvaxOqm6bEXnNdt1LR8qPjD93BK6MxASOSM+U/uVdDJHruUs6+JzIcWL8WBmzgsQfU=
+	t=1706548628; cv=none; b=HkHPwC/D19gAoaWJonbXBkTqNwyuHyJoc28v5vhQ4S5pAUTzXw+yzSyqWrgaZLJPoWsBSOwPgiQsebZw0tmLUaAqvpEI1QvnrpDpFyu1/BlZERM13c3tYzLxFkAMMX70OXJ96p3IGAVsNa3TkGuTGQjG4yQ1CxhTKL6hzjURR4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548628; c=relaxed/simple;
-	bh=/DZ2+VXq7fosvpfYFzkPwxHWNYriDmBYUd3KOxA3JgE=;
+	bh=A3SxKA+upng5DytG2L34UC/Zmvebju8E0Evm1avDGpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ddIJhCEs3GJUveBVwuAbkIRYTbGox9jtHD0w8SSndxC3UdCjPCwOMKg6EpVvyNET9VhGgum5cBFGjpNXcbgTeyM0+GW+/KfOZUx3vyB2WO7mBVfn6C6QFdMMbNlbEHLgFRoVwzFdpT7JJaSOOscdu1APL4dI+dS8R2B9yp+mcPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yw1gCmZS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h+AUyni2Jj/1dBZQ6gFLDOp7Wobam3+21oc4Jsmz/CCQinBMhT8cdcqdRM06aR1ggBeEIb8QBbCi13lt694Kzl1GAzdGzNJMElohx1714LtC5qLlcQExDi81myo+/7aag83WhE0v4BGo7ZCkDikk7R/6l9ZWuRfZQCrg/gugHCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ujkPyaY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yw1gCmZS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32E4C433F1;
-	Mon, 29 Jan 2024 17:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ujkPyaY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CECCC43390;
+	Mon, 29 Jan 2024 17:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548627;
-	bh=/DZ2+VXq7fosvpfYFzkPwxHWNYriDmBYUd3KOxA3JgE=;
+	s=korg; t=1706548628;
+	bh=A3SxKA+upng5DytG2L34UC/Zmvebju8E0Evm1avDGpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yw1gCmZSzsNLRN5DxJK3LJjj/y1SyQBojPwocxrNtb9n30l3MeuXFW3P+RISFqvnG
-	 1990HDPARoBb2LjxCqXOpUJNQq6nHx9eyhIAdRcq5qsmdhI8QJCUrq4MhvQ7Iy3FJv
-	 Hd941ZFKw1ASNLlPHgLqQm14i6dP5es0SZk4ad+A=
+	b=1ujkPyaYU0XiwAHJyLjBG67lgAs6kwBMlDofYkBJ3Ow0w/yFItIm2HC8KBWPdU7lp
+	 4ZiMHFi2z803gTbZGDctIqJ3agHefi8e7vUnup7GZDVOymOj68ohq/C36F+PCC0/8B
+	 +hBAaT4oC4o90bynd9FLTbJLet9hSyroBSR2OmRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	David Howells <dhowells@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 276/331] thermal: intel: hfi: Add syscore callbacks for system-wide PM
-Date: Mon, 29 Jan 2024 09:05:40 -0800
-Message-ID: <20240129170022.939657023@linuxfoundation.org>
+Subject: [PATCH 6.6 277/331] fs/pipe: move check to pipe_has_watch_queue()
+Date: Mon, 29 Jan 2024 09:05:41 -0800
+Message-ID: <20240129170022.969266791@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -51,99 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit 97566d09fd02d2ab329774bb89a2cdf2267e86d9 ]
+[ Upstream commit b4bd6b4bac8edd61eb8f7b836969d12c0c6af165 ]
 
-The kernel allocates a memory buffer and provides its location to the
-hardware, which uses it to update the HFI table. This allocation occurs
-during boot and remains constant throughout runtime.
+This declutters the code by reducing the number of #ifdefs and makes
+the watch_queue checks simpler.  This has no runtime effect; the
+machine code is identical.
 
-When resuming from hibernation, the restore kernel allocates a second
-memory buffer and reprograms the HFI hardware with the new location as
-part of a normal boot. The location of the second memory buffer may
-differ from the one allocated by the image kernel.
-
-When the restore kernel transfers control to the image kernel, its HFI
-buffer becomes invalid, potentially leading to memory corruption if the
-hardware writes to it (the hardware continues to use the buffer from the
-restore kernel).
-
-It is also possible that the hardware "forgets" the address of the memory
-buffer when resuming from "deep" suspend. Memory corruption may also occur
-in such a scenario.
-
-To prevent the described memory corruption, disable HFI when preparing to
-suspend or hibernate. Enable it when resuming.
-
-Add syscore callbacks to handle the package of the boot CPU (packages of
-non-boot CPUs are handled via CPU offline). Syscore ops always run on the
-boot CPU. Additionally, HFI only needs to be disabled during "deep" suspend
-and hibernation. Syscore ops only run in these cases.
-
-Cc: 6.1+ <stable@vger.kernel.org> # 6.1+
-Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-[ rjw: Comment adjustment, subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Message-Id: <20230921075755.1378787-2-max.kellermann@ionos.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: e95aada4cb93 ("pipe: wakeup wr_wait after setting max_usage")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/intel_hfi.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ fs/pipe.c                 | 12 +++---------
+ include/linux/pipe_fs_i.h | 16 ++++++++++++++++
+ 2 files changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/thermal/intel/intel_hfi.c b/drivers/thermal/intel/intel_hfi.c
-index bb25c75acd45..1c5a429b2e3e 100644
---- a/drivers/thermal/intel/intel_hfi.c
-+++ b/drivers/thermal/intel/intel_hfi.c
-@@ -35,7 +35,9 @@
- #include <linux/processor.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
-+#include <linux/suspend.h>
- #include <linux/string.h>
-+#include <linux/syscore_ops.h>
- #include <linux/topology.h>
- #include <linux/workqueue.h>
+diff --git a/fs/pipe.c b/fs/pipe.c
+index 139190165a1c..603ab19b0861 100644
+--- a/fs/pipe.c
++++ b/fs/pipe.c
+@@ -437,12 +437,10 @@ pipe_write(struct kiocb *iocb, struct iov_iter *from)
+ 		goto out;
+ 	}
  
-@@ -568,6 +570,30 @@ static __init int hfi_parse_features(void)
- 	return 0;
+-#ifdef CONFIG_WATCH_QUEUE
+-	if (pipe->watch_queue) {
++	if (pipe_has_watch_queue(pipe)) {
+ 		ret = -EXDEV;
+ 		goto out;
+ 	}
+-#endif
+ 
+ 	/*
+ 	 * If it wasn't empty we try to merge new data into
+@@ -1324,10 +1322,8 @@ static long pipe_set_size(struct pipe_inode_info *pipe, unsigned int arg)
+ 	unsigned int nr_slots, size;
+ 	long ret = 0;
+ 
+-#ifdef CONFIG_WATCH_QUEUE
+-	if (pipe->watch_queue)
++	if (pipe_has_watch_queue(pipe))
+ 		return -EBUSY;
+-#endif
+ 
+ 	size = round_pipe_size(arg);
+ 	nr_slots = size >> PAGE_SHIFT;
+@@ -1379,10 +1375,8 @@ struct pipe_inode_info *get_pipe_info(struct file *file, bool for_splice)
+ 
+ 	if (file->f_op != &pipefifo_fops || !pipe)
+ 		return NULL;
+-#ifdef CONFIG_WATCH_QUEUE
+-	if (for_splice && pipe->watch_queue)
++	if (for_splice && pipe_has_watch_queue(pipe))
+ 		return NULL;
+-#endif
+ 	return pipe;
  }
  
-+static void hfi_do_enable(void)
+diff --git a/include/linux/pipe_fs_i.h b/include/linux/pipe_fs_i.h
+index 608a9eb86bff..288a8081a9db 100644
+--- a/include/linux/pipe_fs_i.h
++++ b/include/linux/pipe_fs_i.h
+@@ -124,6 +124,22 @@ struct pipe_buf_operations {
+ 	bool (*get)(struct pipe_inode_info *, struct pipe_buffer *);
+ };
+ 
++/**
++ * pipe_has_watch_queue - Check whether the pipe is a watch_queue,
++ * i.e. it was created with O_NOTIFICATION_PIPE
++ * @pipe: The pipe to check
++ *
++ * Return: true if pipe is a watch queue, false otherwise.
++ */
++static inline bool pipe_has_watch_queue(const struct pipe_inode_info *pipe)
 +{
-+	/* This code runs only on the boot CPU. */
-+	struct hfi_cpu_info *info = &per_cpu(hfi_cpu_info, 0);
-+	struct hfi_instance *hfi_instance = info->hfi_instance;
-+
-+	/* No locking needed. There is no concurrency with CPU online. */
-+	hfi_set_hw_table(hfi_instance);
-+	hfi_enable();
++#ifdef CONFIG_WATCH_QUEUE
++	return pipe->watch_queue != NULL;
++#else
++	return false;
++#endif
 +}
 +
-+static int hfi_do_disable(void)
-+{
-+	/* No locking needed. There is no concurrency with CPU offline. */
-+	hfi_disable();
-+
-+	return 0;
-+}
-+
-+static struct syscore_ops hfi_pm_ops = {
-+	.resume = hfi_do_enable,
-+	.suspend = hfi_do_disable,
-+};
-+
- void __init intel_hfi_init(void)
- {
- 	struct hfi_instance *hfi_instance;
-@@ -599,6 +625,8 @@ void __init intel_hfi_init(void)
- 	if (!hfi_updates_wq)
- 		goto err_nomem;
- 
-+	register_syscore_ops(&hfi_pm_ops);
-+
- 	return;
- 
- err_nomem:
+ /**
+  * pipe_empty - Return true if the pipe is empty
+  * @head: The pipe ring head pointer
 -- 
 2.43.0
 
