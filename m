@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5BD15705F;
-	Mon, 29 Jan 2024 17:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A9615705F;
+	Mon, 29 Jan 2024 17:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548606; cv=none; b=bOMroCCpKxQvgZiu99733ChwNrdAyqRNr1ms75JJZXDFM0nMehi/QtDccqpX2FzuLaqqOLrz3R3sDtEngiDJFsn0ISrNej3Zpje4mh/Y8gQux7XAEAwzpVwU1OiTfVPRPKEC3ghYo/O4eZ8hy7PoMov6H5tAe6MkKokb4TZke8U=
+	t=1706548607; cv=none; b=tj4Ya2hMMmt166dKxxCzB4SaOd8KvnVkmFSmCWCgM0t4YXD2MCkA2hsN+/1hmBN9k19OXnWnWi/+8gEPzr29KH2iaWemSZr0NcI9Y9iOtqgovUGMzWyioK7AWtyZx+PzNdt5GqWOZmVNjfjyhCEAQVI8DbMLHuJvm7LURxNlwY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548606; c=relaxed/simple;
-	bh=jzIT87BCIs9xoDeqihXtHO08XK998n+wyYkRWVsgcwY=;
+	s=arc-20240116; t=1706548607; c=relaxed/simple;
+	bh=NO9d6f55VDaN/5Bw1nRwVnfvejlCIRxgthemD7J7QiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RD+Jj+9aZyrYEz3l+lQan28/jTfvQ1mx1dLX0i3dORZveR5w64a/PzYa23f61deQni4YjgA11rKan4qAPS4GQH+Yce5UG5ArHOhFEggcru+DDFP3IUrm+xvzBGrBYNkbOX6HlhfK31Am0Y1+5b7P45fnnkWIgCGsgbP126plZXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xm3ho1VH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XEMwd/CrNc6qmI1N6ysdMCtuEBi10Sj7cQ/StpHn/MZdtV5SeFovgl2wIIkUiNFoDXVBTzmDmbnn2JtHvJqZDJvxlwo4Ks8x1O1Ams4hJby1s1K4FyPPamgzoOrRgod/lnKpeOgdAQ4HxIyPQ9Qa00r4nQZ0SWn5GFKQz9lJ+P0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMITEE5N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xm3ho1VH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F62C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMITEE5N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF946C433C7;
 	Mon, 29 Jan 2024 17:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548606;
-	bh=jzIT87BCIs9xoDeqihXtHO08XK998n+wyYkRWVsgcwY=;
+	bh=NO9d6f55VDaN/5Bw1nRwVnfvejlCIRxgthemD7J7QiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xm3ho1VHuaivxoYvDvaYNHRItwvLUktHB6crDPUWssH05LyC7z+14zoWrJKSm04hV
-	 DiG6v8FZP+livJGG5vPTprwJ3LDf1hlGKmBp9tmmZIxbQoDhVueF0oLqkzgWLeDHek
-	 4HluQquSF5yXVQkqFwiRMV9Om9el7TkMjisAorrk=
+	b=kMITEE5NJOOBVg4OGMdvn86PWeEA5u0jrPZJcHKRSKPKwtLKCYQdHByVdqL7sbMdG
+	 zCL2NvECtO/0oX/PgovcdrpShUHxGmwiVeopDc0dzD/2EYGfBCBMiHnXXSHUN3MBtH
+	 iL9JReRnAiSlyddH5W3o3hDWhT6Cw9fZHxJ+mT6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.6 269/331] drm/amd/display: Align the returned error code with legacy DP
-Date: Mon, 29 Jan 2024 09:05:33 -0800
-Message-ID: <20240129170022.738993286@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 270/331] drm/amd/display: Fix late derefrence dsc check in link_set_dsc_pps_packet()
+Date: Mon, 29 Jan 2024 09:05:34 -0800
+Message-ID: <20240129170022.767755506@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -53,44 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit bfe79f5fff1300d96203383582b078c7b0aec80a upstream.
+commit 3bb9b1f958c3d986ed90a3ff009f1e77e9553207 upstream.
 
-[Why]
-For usb4 connector, AUX transaction is handled by dmub utilizing a differnt
-code path comparing to legacy DP connector. If the usb4 DP connector is
-disconnected, AUX access will report EBUSY and cause igt@kms_dp_aux_dev
-fail.
+In link_set_dsc_pps_packet(), 'struct display_stream_compressor *dsc'
+was dereferenced in a DC_LOGGER_INIT(dsc->ctx->logger); before the 'dsc'
+NULL pointer check.
 
-[How]
-Align the error code with the one reported by legacy DP as EIO.
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_dpms.c:905 link_set_dsc_pps_packet() warn: variable dereferenced before check 'dsc' (see line 903)
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Cc: Wenjing Liu <wenjing.liu@amd.com>
+Cc: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/display/dc/link/link_dpms.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-@@ -956,6 +956,11 @@ int dm_helper_dmub_aux_transfer_sync(
- 		struct aux_payload *payload,
- 		enum aux_return_code_type *operation_result)
+--- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+@@ -873,11 +873,15 @@ bool link_set_dsc_pps_packet(struct pipe
  {
-+	if (!link->hpd_status) {
-+		*operation_result = AUX_RET_ERROR_HPD_DISCON;
-+		return -1;
-+	}
+ 	struct display_stream_compressor *dsc = pipe_ctx->stream_res.dsc;
+ 	struct dc_stream_state *stream = pipe_ctx->stream;
+-	DC_LOGGER_INIT(dsc->ctx->logger);
+ 
+-	if (!pipe_ctx->stream->timing.flags.DSC || !dsc)
++	if (!pipe_ctx->stream->timing.flags.DSC)
++		return false;
 +
- 	return amdgpu_dm_process_dmub_aux_transfer_sync(ctx, link->link_index, payload,
- 			operation_result);
- }
++	if (!dsc)
+ 		return false;
+ 
++	DC_LOGGER_INIT(dsc->ctx->logger);
++
+ 	if (enable) {
+ 		struct dsc_config dsc_cfg;
+ 		uint8_t dsc_packed_pps[128];
 
 
