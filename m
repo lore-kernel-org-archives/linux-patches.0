@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B0A755F2;
-	Mon, 29 Jan 2024 17:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A17C755F2;
+	Mon, 29 Jan 2024 17:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548592; cv=none; b=JXsKr7NG/oRLfCPb0S2ZGm59KoC/czzmEV9zevxws68GkmjH//536VsEgBX/GnZoMyYkkqOfxtrsFPFdkfM2CHW0Sk2g8emdspJUc6Hhb0GCTYWkGuzH+WOUMIN7Jsc4venSbcX2j45M1xYJ3cPIAcN6eHZoJtJRuSMyNAP5bxw=
+	t=1706548593; cv=none; b=k6lZhxvYd+pQDh1R6vxwPIic5Egoc54d7+lmYLvQ4xAw36YWrfH4wsIjuac8Bx+59hJaYuTf7OkRmsKwIqRQ5EcbXArq6n3Fm648EVP+NkXUf7lIO1hy2gpztjqswE9ujoZ+ixQXfKUO//hCRKr8CpBCGaL4FIEenUeq43VGSHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548592; c=relaxed/simple;
-	bh=5lw1bceprDtNgPw4q7rZUTNh4kM/eQs1x47QEh2KvWE=;
+	s=arc-20240116; t=1706548593; c=relaxed/simple;
+	bh=zOUBBvus21liFz2zCEPI/oW789vUnQA6zj8XZE+EqBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UuB4YRqzeaN2IAGBShDFHdVnKkl9eBOWsrM32b4xyZ220TH9Z2DtjjL3t21ssybQVCcVgw0B37mnr0iBUG8qgoEhJF8PZ6FlH8jyAoFVy6+Tnmgc/JyQrJXIpZUvdf4+Qc9eTnfdYxLbo7vjaePKi8B+tvznoBOcgFU5ZpMLtks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vLvZHqZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pvxMCGztzhgfVeEDe2rQc5qdNqwdB4htlr9fuJOqaIzDe9/SDb2vMYpne9/vncKHNvEOS4K0T+ZrQwQlQ5SobTPWNx1KMUtnuZcDbwn87EsuGwd2lvWBAKf67NxSy7SqwSyBljnw4W2tzpzKGVeSUcbLCKwtxK9zOLFvDVm5wBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuLAMiv2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vLvZHqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA3CC433C7;
-	Mon, 29 Jan 2024 17:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuLAMiv2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205F7C433C7;
+	Mon, 29 Jan 2024 17:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548592;
-	bh=5lw1bceprDtNgPw4q7rZUTNh4kM/eQs1x47QEh2KvWE=;
+	s=korg; t=1706548593;
+	bh=zOUBBvus21liFz2zCEPI/oW789vUnQA6zj8XZE+EqBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1vLvZHqZXACUNw23smEVLMxSfgJJ4lSEo+qYeePlwtDJMFalbgbC6baN6yMfMVJO9
-	 NRZYvhhG8pzuu5XwY/bMIRhjL9Zv/X69vxmC/Xue+Heojfkcplo6yWAJ3i6X2L4VqQ
-	 YA61A/m6iG1Xm1Vp5H/v5/W2AmQHDXOw2CvKvsAY=
+	b=tuLAMiv2+xmPCg3Cn4ubgJouoduzqPBZVKmQdeBgqkqC0ILcQ3ZMF/OrHh8aBQAVv
+	 hwV2BzUtWCUJXZP/hxk3c/8ekWvlSxQgFft8lF8rrS0Mf97fURdEtMRAfwQXgF59On
+	 +KPxRKMZdvKm6ccGzOpwPSEhC4t2BAUSe7DagMa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Vosburgh <jay.vosburgh@canonical.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 226/331] selftests: bonding: do not test arp/ns target with mode balance-alb/tlb
-Date: Mon, 29 Jan 2024 09:04:50 -0800
-Message-ID: <20240129170021.485548372@linuxfoundation.org>
+Subject: [PATCH 6.6 227/331] net: fec: fix the unhandled context fault from smmu
+Date: Mon, 29 Jan 2024 09:04:51 -0800
+Message-ID: <20240129170021.520062337@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,60 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Shenwei Wang <shenwei.wang@nxp.com>
 
-[ Upstream commit a2933a8759a62269754e54733d993b19de870e84 ]
+[ Upstream commit 5e344807735023cd3a67c37a1852b849caa42620 ]
 
-The prio_arp/ns tests hard code the mode to active-backup. At the same
-time, The balance-alb/tlb modes do not support arp/ns target. So remove
-the prio_arp/ns tests from the loop and only test active-backup mode.
+When repeatedly changing the interface link speed using the command below:
 
-Fixes: 481b56e0391e ("selftests: bonding: re-format bond option tests")
-Reported-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Closes: https://lore.kernel.org/netdev/17415.1705965957@famine/
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Link: https://lore.kernel.org/r/20240123075917.1576360-1-liuhangbin@gmail.com
+ethtool -s eth0 speed 100 duplex full
+ethtool -s eth0 speed 1000 duplex full
+
+The following errors may sometimes be reported by the ARM SMMU driver:
+
+[ 5395.035364] fec 5b040000.ethernet eth0: Link is Down
+[ 5395.039255] arm-smmu 51400000.iommu: Unhandled context fault:
+fsr=0x402, iova=0x00000000, fsynr=0x100001, cbfrsynra=0x852, cb=2
+[ 5398.108460] fec 5b040000.ethernet eth0: Link is Up - 100Mbps/Full -
+flow control off
+
+It is identified that the FEC driver does not properly stop the TX queue
+during the link speed transitions, and this results in the invalid virtual
+I/O address translations from the SMMU and causes the context faults.
+
+Fixes: dbc64a8ea231 ("net: fec: move calls to quiesce/resume packet processing out of fec_restart()")
+Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
+Link: https://lore.kernel.org/r/20240123165141.2008104-1-shenwei.wang@nxp.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/drivers/net/bonding/bond_options.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/drivers/net/bonding/bond_options.sh b/tools/testing/selftests/drivers/net/bonding/bond_options.sh
-index c54d1697f439..d508486cc0bd 100755
---- a/tools/testing/selftests/drivers/net/bonding/bond_options.sh
-+++ b/tools/testing/selftests/drivers/net/bonding/bond_options.sh
-@@ -162,7 +162,7 @@ prio_arp()
- 	local mode=$1
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 35c95f07fd6d..54da59286df4 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -2011,6 +2011,7 @@ static void fec_enet_adjust_link(struct net_device *ndev)
  
- 	for primary_reselect in 0 1 2; do
--		prio_test "mode active-backup arp_interval 100 arp_ip_target ${g_ip4} primary eth1 primary_reselect $primary_reselect"
-+		prio_test "mode $mode arp_interval 100 arp_ip_target ${g_ip4} primary eth1 primary_reselect $primary_reselect"
- 		log_test "prio" "$mode arp_ip_target primary_reselect $primary_reselect"
- 	done
- }
-@@ -178,7 +178,7 @@ prio_ns()
- 	fi
- 
- 	for primary_reselect in 0 1 2; do
--		prio_test "mode active-backup arp_interval 100 ns_ip6_target ${g_ip6} primary eth1 primary_reselect $primary_reselect"
-+		prio_test "mode $mode arp_interval 100 ns_ip6_target ${g_ip6} primary eth1 primary_reselect $primary_reselect"
- 		log_test "prio" "$mode ns_ip6_target primary_reselect $primary_reselect"
- 	done
- }
-@@ -194,9 +194,9 @@ prio()
- 
- 	for mode in $modes; do
- 		prio_miimon $mode
--		prio_arp $mode
--		prio_ns $mode
- 	done
-+	prio_arp "active-backup"
-+	prio_ns "active-backup"
- }
- 
- arp_validate_test()
+ 		/* if any of the above changed restart the FEC */
+ 		if (status_change) {
++			netif_stop_queue(ndev);
+ 			napi_disable(&fep->napi);
+ 			netif_tx_lock_bh(ndev);
+ 			fec_restart(ndev);
+@@ -2020,6 +2021,7 @@ static void fec_enet_adjust_link(struct net_device *ndev)
+ 		}
+ 	} else {
+ 		if (fep->link) {
++			netif_stop_queue(ndev);
+ 			napi_disable(&fep->napi);
+ 			netif_tx_lock_bh(ndev);
+ 			fec_stop(ndev);
 -- 
 2.43.0
 
