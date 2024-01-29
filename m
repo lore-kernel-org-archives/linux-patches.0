@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4BC15A4A3;
-	Mon, 29 Jan 2024 17:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A65157E6B;
+	Mon, 29 Jan 2024 17:08:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548134; cv=none; b=jmwb3oYM9oxeAm5bNzXiiXfH6aSwaoaRGaACZr89o9yTt5m5Nihg5e69Gj+9yP0coAs//plaIa4Xukgj07aU35SXDfMKNgjzKBXmI1NONzDqlUQosrvWrrUCOjxuMGh0yTiIUbW1u/xE1Zln+ZO/4eHe3NPexChWCT/D70Wuz/A=
+	t=1706548135; cv=none; b=KWrPm22T68gfbIQM41dVeSBTdaCmzsWHclq7/S/tewrJEoRjMzRIctnK9VgZJJQ+vJbo+dJStpRWgaIro8QW2GQeqzBxrFgxU4wfBgLHv5g7on2wacDsBz2xA/ObFEmb0/kiNCRG/wqXzPi67eIf6pwwLiKGqlx0OwZR3raiVKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548134; c=relaxed/simple;
-	bh=VWnFCHyNs3OLx7gn5lkjxpn07F7a+hMk8PR9xBPIxM8=;
+	s=arc-20240116; t=1706548135; c=relaxed/simple;
+	bh=rHipMsr760gF8jbZM/Q/0J3mBI6YHndIWwGwuNgZ1wU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J8Yh9C/twn3hW2VDoriWX03uXgwCahbrea5/meQ2x8ARPtHfb3D85V3ry8bLQtWPrLSpmsmM3sLZnVT0ixnP3dFhGuzcAf+rGWTb6YBB+exjTpEvTbEt/iAb/+j555FZO4EMm+M8Wz2Y2gK7EMHncvKE1lR+VAWqApZolW+M/NE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1aFuCovP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SZEhu9jTwJ1JHC3gxZHcEKomPKklIp9mwYfgncrmMKkMtE75TB7f7iJ+d8+YspowszNeieJpqO33SnSVTh1vmPpCiwxWNCdA4yD9ScCUg+5VXppWm+8g2trRtGBcAAnNzLjw1Fe9+8zdWfqSeCCxfXQ1Reueu10yyTlibCxDOW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqkTygCz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1aFuCovP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66900C433C7;
-	Mon, 29 Jan 2024 17:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqkTygCz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2151EC433F1;
+	Mon, 29 Jan 2024 17:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548134;
-	bh=VWnFCHyNs3OLx7gn5lkjxpn07F7a+hMk8PR9xBPIxM8=;
+	s=korg; t=1706548135;
+	bh=rHipMsr760gF8jbZM/Q/0J3mBI6YHndIWwGwuNgZ1wU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1aFuCovPXsKSSC+t5b1GxFmbrdfAV7wSqMYzTAviFuoJmg55rMv0zx0cOdcbGzMH6
-	 SO8Ks10WH/nqStIcOY5/jDxRC1GTtTmg37Hz11h+j8DyFnqpyCDFpejylL61T8WfMg
-	 Cq9gQWfqpHBWvLhavApPEFQ4kKfVUl+zQNehHZIc=
+	b=lqkTygCzh0SXMSUMIjgKidIjddFqh/wT3eeZ09YdSqmJpB1naafPpiYp/+f49UJXD
+	 nmevi3F15zdJCMALq2gIY0Hp28Qzxv2SPUYCMW4ridPjdsJOz6CQ4PuuB6Q7WcfHdb
+	 X8oQg/P/BBN3+P2gVBOWABMnL+6DkkHoyst8WN9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Divya Koppera <divya.koppera@microchip.com>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
+	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 165/346] net: micrel: Fix PTP frame parsing for lan8814
-Date: Mon, 29 Jan 2024 09:03:16 -0800
-Message-ID: <20240129170021.252385544@linuxfoundation.org>
+Subject: [PATCH 6.7 166/346] net/rds: Fix UBSAN: array-index-out-of-bounds in rds_cmsg_recv
+Date: Mon, 29 Jan 2024 09:03:17 -0800
+Message-ID: <20240129170021.284676654@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -53,59 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Sharath Srinivasan <sharath.srinivasan@oracle.com>
 
-[ Upstream commit aaf632f7ab6dec57bc9329a438f94504fe8034b9 ]
+[ Upstream commit 13e788deb7348cc88df34bed736c3b3b9927ea52 ]
 
-The HW has the capability to check each frame if it is a PTP frame,
-which domain it is, which ptp frame type it is, different ip address in
-the frame. And if one of these checks fail then the frame is not
-timestamp. Most of these checks were disabled except checking the field
-minorVersionPTP inside the PTP header. Meaning that once a partner sends
-a frame compliant to 8021AS which has minorVersionPTP set to 1, then the
-frame was not timestamp because the HW expected by default a value of 0
-in minorVersionPTP. This is exactly the same issue as on lan8841.
-Fix this issue by removing this check so the userspace can decide on this.
+Syzcaller UBSAN crash occurs in rds_cmsg_recv(),
+which reads inc->i_rx_lat_trace[j + 1] with index 4 (3 + 1),
+but with array size of 4 (RDS_RX_MAX_TRACES).
+Here 'j' is assigned from rs->rs_rx_trace[i] and in-turn from
+trace.rx_trace_pos[i] in rds_recv_track_latency(),
+with both arrays sized 3 (RDS_MSG_RX_DGRAM_TRACE_MAX). So fix the
+off-by-one bounds check in rds_recv_track_latency() to prevent
+a potential crash in rds_cmsg_recv().
 
-Fixes: ece19502834d ("net: phy: micrel: 1588 support for LAN8814 phy")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Divya Koppera <divya.koppera@microchip.com>
+Found by syzcaller:
+=================================================================
+UBSAN: array-index-out-of-bounds in net/rds/recv.c:585:39
+index 4 is out of range for type 'u64 [4]'
+CPU: 1 PID: 8058 Comm: syz-executor228 Not tainted 6.6.0-gd2f51b3516da #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x136/0x150 lib/dump_stack.c:106
+ ubsan_epilogue lib/ubsan.c:217 [inline]
+ __ubsan_handle_out_of_bounds+0xd5/0x130 lib/ubsan.c:348
+ rds_cmsg_recv+0x60d/0x700 net/rds/recv.c:585
+ rds_recvmsg+0x3fb/0x1610 net/rds/recv.c:716
+ sock_recvmsg_nosec net/socket.c:1044 [inline]
+ sock_recvmsg+0xe2/0x160 net/socket.c:1066
+ __sys_recvfrom+0x1b6/0x2f0 net/socket.c:2246
+ __do_sys_recvfrom net/socket.c:2264 [inline]
+ __se_sys_recvfrom net/socket.c:2260 [inline]
+ __x64_sys_recvfrom+0xe0/0x1b0 net/socket.c:2260
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x40/0x110 arch/x86/entry/common.c:82
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
+==================================================================
+
+Fixes: 3289025aedc0 ("RDS: add receive message trace used by application")
+Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Closes: https://lore.kernel.org/linux-rdma/CALGdzuoVdq-wtQ4Az9iottBqC5cv9ZhcE5q8N7LfYFvkRsOVcw@mail.gmail.com/
+Signed-off-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/rds/af_rds.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index ce5ad4a82481..858175ca58cd 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -120,6 +120,11 @@
-  */
- #define LAN8814_1PPM_FORMAT			17179
+diff --git a/net/rds/af_rds.c b/net/rds/af_rds.c
+index 01c4cdfef45d..8435a20968ef 100644
+--- a/net/rds/af_rds.c
++++ b/net/rds/af_rds.c
+@@ -419,7 +419,7 @@ static int rds_recv_track_latency(struct rds_sock *rs, sockptr_t optval,
  
-+#define PTP_RX_VERSION				0x0248
-+#define PTP_TX_VERSION				0x0288
-+#define PTP_MAX_VERSION(x)			(((x) & GENMASK(7, 0)) << 8)
-+#define PTP_MIN_VERSION(x)			((x) & GENMASK(7, 0))
-+
- #define PTP_RX_MOD				0x024F
- #define PTP_RX_MOD_BAD_UDPV4_CHKSUM_FORCE_FCS_DIS_ BIT(3)
- #define PTP_RX_TIMESTAMP_EN			0x024D
-@@ -3147,6 +3152,12 @@ static void lan8814_ptp_init(struct phy_device *phydev)
- 	lanphy_write_page_reg(phydev, 5, PTP_TX_PARSE_IP_ADDR_EN, 0);
- 	lanphy_write_page_reg(phydev, 5, PTP_RX_PARSE_IP_ADDR_EN, 0);
- 
-+	/* Disable checking for minorVersionPTP field */
-+	lanphy_write_page_reg(phydev, 5, PTP_RX_VERSION,
-+			      PTP_MAX_VERSION(0xff) | PTP_MIN_VERSION(0x0));
-+	lanphy_write_page_reg(phydev, 5, PTP_TX_VERSION,
-+			      PTP_MAX_VERSION(0xff) | PTP_MIN_VERSION(0x0));
-+
- 	skb_queue_head_init(&ptp_priv->tx_queue);
- 	skb_queue_head_init(&ptp_priv->rx_queue);
- 	INIT_LIST_HEAD(&ptp_priv->rx_ts_list);
+ 	rs->rs_rx_traces = trace.rx_traces;
+ 	for (i = 0; i < rs->rs_rx_traces; i++) {
+-		if (trace.rx_trace_pos[i] > RDS_MSG_RX_DGRAM_TRACE_MAX) {
++		if (trace.rx_trace_pos[i] >= RDS_MSG_RX_DGRAM_TRACE_MAX) {
+ 			rs->rs_rx_traces = 0;
+ 			return -EFAULT;
+ 		}
 -- 
 2.43.0
 
