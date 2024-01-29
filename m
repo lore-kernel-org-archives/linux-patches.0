@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E029315D5C1;
-	Mon, 29 Jan 2024 17:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B338F1586C1;
+	Mon, 29 Jan 2024 17:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548401; cv=none; b=mJTMkGZ3KmKnD1hbJ8KeE1eshYdEshs8soN7071DYtPwgDuGg9tI3WjVN7WZ9PRfGEmLE4reWSFBss1QPdZbX1ZG8WPMxwBCfhVJBAuhqP+Rg06/MNwcnx8R2UUN4yTxarkWYe+VqAN7DVNWlC7zJQwWYsc8pGG6NHnRBV5/p2Q=
+	t=1706548401; cv=none; b=K72Dvz+i1O2TfxsXh6ejxacBJt0h9215B1A9UCfLHjgwvBXvDZ1kSFw6abXpkX8kkQoooD2eql54XWp1vcy6hKrHP0Ao9AE/Uws7oJTcRozaRO5Fx4gCGc0BNLcR++my1zc97hq9ByZ7MlBmJv9texo1hoQxAV8XoycKQHyyvL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548401; c=relaxed/simple;
-	bh=v1WQJkUf+O+sJ525P+we064tSRGyNWwBzmi44FHJyjM=;
+	bh=3u/k5uUI9t/95mRk0IlL8VG3rOOHHYRmCPJgGxM2dKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WoYUGAZCABW67Wzus352g7jLB/8mdHvkfVlWlR3SZH38IsTuDju8kU/EA3LOvzqkLm4aeJC91Y4eQyu1gpITpqRiJR4gzU5xOaHBfVN6J/HNJ8GffFySCPsvJeRrI6C3i636qU53S9zWWIh4ZpaET+sT9yFYIjxpLXHiNNg3+N8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IA5luMPf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yus2Fb1uVRfjtz/9LVw/3vNS0cd4aHGnYO1Bx3F60mFgQCrYXPYfyYDn6ST/1OXX+hr3llHMpCl8xG5skZ2LsJLGcyR/Yce7IN8pg0Ne2y+dJsAttmgPUyMbLkow98URyYlMwjSCJFo1rLl+Lq9QbHnhA9NXMtm+Gl7imGGk5Go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08hzMePq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IA5luMPf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB0AC43390;
-	Mon, 29 Jan 2024 17:13:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08hzMePq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 761EFC433F1;
+	Mon, 29 Jan 2024 17:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548400;
-	bh=v1WQJkUf+O+sJ525P+we064tSRGyNWwBzmi44FHJyjM=;
+	s=korg; t=1706548401;
+	bh=3u/k5uUI9t/95mRk0IlL8VG3rOOHHYRmCPJgGxM2dKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IA5luMPfyJ4yri/Yc9uXsnCkXA9ry0S76DvSdRbkS6hHnrijmnjNGJO5SIDD4mlsD
-	 zduIAD7V7GFrXZ/kU478AF8lgJSxJGvdNN7BVRH9l0eBwt+T16eUXcmOB9Oq9O7YQI
-	 zGjDiukPJ2YJ28BC7/s+q/uIP2mT0FNpLuicG1OI=
+	b=08hzMePq64HuJMVuVmDB6WnsvNtKrMVrPnoLRQPGbR1P8RW7K5tN5BCzcBbXlNFhz
+	 l4ZkdNOp52B/Jw72srkX/1hCTaxQN28ZW8CBJb0I31BF5DhonHtkQT77hfbqfW3t+m
+	 u26kJ3m4C+4EmSs/UksvGVyi5TrjZmjVVWPKyCWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 179/185] spi: fix finalize message on error return
-Date: Mon, 29 Jan 2024 09:06:19 -0800
-Message-ID: <20240129170004.343415047@linuxfoundation.org>
+Subject: [PATCH 6.1 180/185] MIPS: lantiq: register smp_ops on non-smp platforms
+Date: Mon, 29 Jan 2024 09:06:20 -0800
+Message-ID: <20240129170004.375315380@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -51,41 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit 8c2ae772fe08e33f3d7a83849e85539320701abd ]
+[ Upstream commit 4bf2a626dc4bb46f0754d8ac02ec8584ff114ad5 ]
 
-In __spi_pump_transfer_message(), the message was not finalized in the
-first error return as it is in the other error return paths. Not
-finalizing the message could cause anything waiting on the message to
-complete to hang forever.
+Lantiq uses a common kernel config for devices with 24Kc and 34Kc cores.
+The changes made previously to add support for interrupts on all cores
+work on 24Kc platforms with SMP disabled and 34Kc platforms with SMP
+enabled. This patch fixes boot issues on Danube (single core 24Kc) with
+SMP enabled.
 
-This adds the missing call to spi_finalize_current_message().
-
-Fixes: ae7d2346dc89 ("spi: Don't use the message queue if possible in spi_sync")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://msgid.link/r/20240125205312.3458541-2-dlechner@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 730320fd770d ("MIPS: lantiq: enable all hardware interrupts on second VPE")
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/mips/lantiq/prom.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 22d227878bc4..19688f333e0b 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -1636,6 +1636,10 @@ static int __spi_pump_transfer_message(struct spi_controller *ctlr,
- 			pm_runtime_put_noidle(ctlr->dev.parent);
- 			dev_err(&ctlr->dev, "Failed to power device: %d\n",
- 				ret);
-+
-+			msg->status = ret;
-+			spi_finalize_current_message(ctlr);
-+
- 			return ret;
- 		}
- 	}
+diff --git a/arch/mips/lantiq/prom.c b/arch/mips/lantiq/prom.c
+index be4829cc7a3a..28da4e720d17 100644
+--- a/arch/mips/lantiq/prom.c
++++ b/arch/mips/lantiq/prom.c
+@@ -114,10 +114,9 @@ void __init prom_init(void)
+ 	prom_init_cmdline();
+ 
+ #if defined(CONFIG_MIPS_MT_SMP)
+-	if (cpu_has_mipsmt) {
+-		lantiq_smp_ops = vsmp_smp_ops;
++	lantiq_smp_ops = vsmp_smp_ops;
++	if (cpu_has_mipsmt)
+ 		lantiq_smp_ops.init_secondary = lantiq_init_secondary;
+-		register_smp_ops(&lantiq_smp_ops);
+-	}
++	register_smp_ops(&lantiq_smp_ops);
+ #endif
+ }
 -- 
 2.43.0
 
