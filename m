@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECDC15AADC;
-	Mon, 29 Jan 2024 17:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE9C15AADC;
+	Mon, 29 Jan 2024 17:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548195; cv=none; b=dHMEzeZPvnn4PMbo6n+LYJ5tfmEy/LFyCvv7R61pRRhkZ7Etc3s4Hj22VKuslIvSuayu1PNmr2K8oMB4+dlAH5L2Xa9ZyvOYV6qVwPJshhrdoGxJEeVSg4yH+RLDq+hRkpMbEk/VX7moh2hG8zaN4IR4rVkDxAGS/15Jr02OKEA=
+	t=1706548196; cv=none; b=SXTIXblyAro759K33IIe/2MZlRnVrmrX71KDGEfoe9vAv+1+SlrRcBe8JiIh1AUrKoxykr9dsc8i/ZKjN2HI/ghc3JGdOhHOlF8gqZG4sUrwq+jVdRCPviCXAklWJ+CFYGT2uEAdffDqWFKsAUMfTbV178mUmELbGYPcpp++cdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548195; c=relaxed/simple;
-	bh=qW5jqrvR6MrYlY6rusYFKxlXwdAa3+zBPmFnmYerIB8=;
+	s=arc-20240116; t=1706548196; c=relaxed/simple;
+	bh=eWOQ3s+7Bfzi1AcvugxTVrTPmuRDZWYEVxU/9FnfzMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GUZbYPVs1GRyXygB3Msmi/eHTXwUA7v5aUMtdwGsyfGoRhpVwfayz1a/Pwgk5o/Tcnu3/2bLF+eQIrWkCKu0rWQom0Jr5zYn8yhmnDKCZKg5wIDizHzS5uSOhS2J/jvJl8eDbQliJ3yfw8KWUSaoVbvB+w2DVx5iHsYXvo4OdXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fK5HHgvm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rljqv1P6qGI2X1Rn6lud6i8wbAuiohlKI/4nSvuxpFx97KCI3k11f7XJCvHUaA+Vw6tDWpAE4AWI99+R1EvL5MrbMWeZtEp3UdVvy8ta1BRVZOh6RoGVNSv6zHLaCQmeQQd1JyH5/4yWLkRb2Jxq8pZ1V4UdhpzYQDiD3T8X6zI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1ZLNw34; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fK5HHgvm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97000C43390;
-	Mon, 29 Jan 2024 17:09:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1ZLNw34"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652AFC43394;
+	Mon, 29 Jan 2024 17:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548195;
-	bh=qW5jqrvR6MrYlY6rusYFKxlXwdAa3+zBPmFnmYerIB8=;
+	s=korg; t=1706548196;
+	bh=eWOQ3s+7Bfzi1AcvugxTVrTPmuRDZWYEVxU/9FnfzMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fK5HHgvm4ps6IMi8Luo7EZ5hXNeJigNw5Mf6HCm9BZdMmemeY/Vc+lgxSou2C+04d
-	 Id9yeln6kQJqie44z14jUb79hXFOXOTH57sODWijymcvAVQsNyAdHD9k5mQ5hIZBI1
-	 m2Ce+V8L2N/q/pmKJoIVpzXqqs/57BLlMPEyLTok=
+	b=s1ZLNw34RXLBGzdGxOkQ7h/x5dhkoa3CvJKLSvrtHwoNa2xdilnfF7Sfv/y8TN5Fk
+	 KGazEqyQ+/UkFFNZ4DAdtm6kxZQ7thAsvd+GjM2gLRUSipdGNG5/1TULmS9WFV3mNg
+	 I7GB57YqGcaSqhh5+fWkdl6k1UoMD5WwQMPxtK1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.7 237/346] platform/x86: intel-uncore-freq: Fix types in sysfs callbacks
-Date: Mon, 29 Jan 2024 09:04:28 -0800
-Message-ID: <20240129170023.372793933@linuxfoundation.org>
+	Hongchen Zhang <zhanghongchen@loongson.cn>,
+	Weihao Li <liweihao@loongson.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 012/185] PM: hibernate: Enforce ordering during image compression/decompression
+Date: Mon, 29 Jan 2024 09:03:32 -0800
+Message-ID: <20240129165958.987279732@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,270 +45,208 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Hongchen Zhang <zhanghongchen@loongson.cn>
 
-commit 416de0246f35f43d871a57939671fe814f4455ee upstream.
+commit 71cd7e80cfde548959952eac7063aeaea1f2e1c6 upstream.
 
-When booting a kernel with CONFIG_CFI_CLANG, there is a CFI failure when
-accessing any of the values under
-/sys/devices/system/cpu/intel_uncore_frequency/package_00_die_00:
+An S4 (suspend to disk) test on the LoongArch 3A6000 platform sometimes
+fails with the following error messaged in the dmesg log:
 
-  $ cat /sys/devices/system/cpu/intel_uncore_frequency/package_00_die_00/max_freq_khz
-  fish: Job 1, 'cat /sys/devices/system/cpu/int…' terminated by signal SIGSEGV (Address boundary error)
+	Invalid LZO compressed length
 
-  $ sudo dmesg &| grep 'CFI failure'
-  [  170.953925] CFI failure at kobj_attr_show+0x19/0x30 (target: show_max_freq_khz+0x0/0xc0 [intel_uncore_frequency_common]; expected type: 0xd34078c5
+That happens because when compressing/decompressing the image, the
+synchronization between the control thread and the compress/decompress/crc
+thread is based on a relaxed ordering interface, which is unreliable, and the
+following situation may occur:
 
-The sysfs callback functions such as show_domain_id() are written as if
-they are going to be called by dev_attr_show() but as the above message
-shows, they are instead called by kobj_attr_show(). kCFI checks that the
-destination of an indirect jump has the exact same type as the prototype
-of the function pointer it is called through and fails when they do not.
+CPU 0					CPU 1
+save_image_lzo				lzo_compress_threadfn
+					  atomic_set(&d->stop, 1);
+  atomic_read(&data[thr].stop)
+  data[thr].cmp = data[thr].cmp_len;
+	  				  WRITE data[thr].cmp_len
 
-These callbacks are called through kobj_attr_show() because
-uncore_root_kobj was initialized with kobject_create_and_add(), which
-means uncore_root_kobj has a ->sysfs_ops of kobj_sysfs_ops from
-kobject_create(), which uses kobj_attr_show() as its ->show() value.
+Then CPU0 gets a stale cmp_len and writes it to disk. During resume from S4,
+wrong cmp_len is loaded.
 
-The only reason there has not been a more noticeable problem until this
-point is that 'struct kobj_attribute' and 'struct device_attribute' have
-the same layout, so getting the callback from container_of() works the
-same with either value.
+To maintain data consistency between the two threads, use the acquire/release
+variants of atomic set and read operations.
 
-Change all the callbacks and their uses to be compatible with
-kobj_attr_show() and kobj_attr_store(), which resolves the kCFI failure
-and allows the sysfs files to work properly.
-
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1974
-Fixes: ae7b2ce57851 ("platform/x86/intel/uncore-freq: Use sysfs API to create attributes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://lore.kernel.org/r/20240104-intel-uncore-freq-kcfi-fix-v1-1-bf1e8939af40@kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 081a9d043c98 ("PM / Hibernate: Improve performance of LZO/plain hibernation, checksum image")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Hongchen Zhang <zhanghongchen@loongson.cn>
+Co-developed-by: Weihao Li <liweihao@loongson.cn>
+Signed-off-by: Weihao Li <liweihao@loongson.cn>
+[ rjw: Subject rewrite and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c |   82 +++++-----
- drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.h |   32 +--
- 2 files changed, 57 insertions(+), 57 deletions(-)
+ kernel/power/swap.c |   38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
---- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c
-+++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c
-@@ -23,23 +23,23 @@ static int (*uncore_read)(struct uncore_
- static int (*uncore_write)(struct uncore_data *data, unsigned int input, unsigned int min_max);
- static int (*uncore_read_freq)(struct uncore_data *data, unsigned int *freq);
+--- a/kernel/power/swap.c
++++ b/kernel/power/swap.c
+@@ -605,11 +605,11 @@ static int crc32_threadfn(void *data)
+ 	unsigned i;
  
--static ssize_t show_domain_id(struct device *dev, struct device_attribute *attr, char *buf)
-+static ssize_t show_domain_id(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
- {
--	struct uncore_data *data = container_of(attr, struct uncore_data, domain_id_dev_attr);
-+	struct uncore_data *data = container_of(attr, struct uncore_data, domain_id_kobj_attr);
+ 	while (1) {
+-		wait_event(d->go, atomic_read(&d->ready) ||
++		wait_event(d->go, atomic_read_acquire(&d->ready) ||
+ 		                  kthread_should_stop());
+ 		if (kthread_should_stop()) {
+ 			d->thr = NULL;
+-			atomic_set(&d->stop, 1);
++			atomic_set_release(&d->stop, 1);
+ 			wake_up(&d->done);
+ 			break;
+ 		}
+@@ -618,7 +618,7 @@ static int crc32_threadfn(void *data)
+ 		for (i = 0; i < d->run_threads; i++)
+ 			*d->crc32 = crc32_le(*d->crc32,
+ 			                     d->unc[i], *d->unc_len[i]);
+-		atomic_set(&d->stop, 1);
++		atomic_set_release(&d->stop, 1);
+ 		wake_up(&d->done);
+ 	}
+ 	return 0;
+@@ -648,12 +648,12 @@ static int lzo_compress_threadfn(void *d
+ 	struct cmp_data *d = data;
  
- 	return sprintf(buf, "%u\n", data->domain_id);
- }
+ 	while (1) {
+-		wait_event(d->go, atomic_read(&d->ready) ||
++		wait_event(d->go, atomic_read_acquire(&d->ready) ||
+ 		                  kthread_should_stop());
+ 		if (kthread_should_stop()) {
+ 			d->thr = NULL;
+ 			d->ret = -1;
+-			atomic_set(&d->stop, 1);
++			atomic_set_release(&d->stop, 1);
+ 			wake_up(&d->done);
+ 			break;
+ 		}
+@@ -662,7 +662,7 @@ static int lzo_compress_threadfn(void *d
+ 		d->ret = lzo1x_1_compress(d->unc, d->unc_len,
+ 		                          d->cmp + LZO_HEADER, &d->cmp_len,
+ 		                          d->wrk);
+-		atomic_set(&d->stop, 1);
++		atomic_set_release(&d->stop, 1);
+ 		wake_up(&d->done);
+ 	}
+ 	return 0;
+@@ -797,7 +797,7 @@ static int save_image_lzo(struct swap_ma
  
--static ssize_t show_fabric_cluster_id(struct device *dev, struct device_attribute *attr, char *buf)
-+static ssize_t show_fabric_cluster_id(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
- {
--	struct uncore_data *data = container_of(attr, struct uncore_data, fabric_cluster_id_dev_attr);
-+	struct uncore_data *data = container_of(attr, struct uncore_data, fabric_cluster_id_kobj_attr);
+ 			data[thr].unc_len = off;
  
- 	return sprintf(buf, "%u\n", data->cluster_id);
- }
+-			atomic_set(&data[thr].ready, 1);
++			atomic_set_release(&data[thr].ready, 1);
+ 			wake_up(&data[thr].go);
+ 		}
  
--static ssize_t show_package_id(struct device *dev, struct device_attribute *attr, char *buf)
-+static ssize_t show_package_id(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
- {
--	struct uncore_data *data = container_of(attr, struct uncore_data, package_id_dev_attr);
-+	struct uncore_data *data = container_of(attr, struct uncore_data, package_id_kobj_attr);
+@@ -805,12 +805,12 @@ static int save_image_lzo(struct swap_ma
+ 			break;
  
- 	return sprintf(buf, "%u\n", data->package_id);
- }
-@@ -97,30 +97,30 @@ static ssize_t show_perf_status_freq_khz
- }
+ 		crc->run_threads = thr;
+-		atomic_set(&crc->ready, 1);
++		atomic_set_release(&crc->ready, 1);
+ 		wake_up(&crc->go);
  
- #define store_uncore_min_max(name, min_max)				\
--	static ssize_t store_##name(struct device *dev,		\
--				     struct device_attribute *attr,	\
-+	static ssize_t store_##name(struct kobject *kobj,		\
-+				     struct kobj_attribute *attr,	\
- 				     const char *buf, size_t count)	\
- 	{								\
--		struct uncore_data *data = container_of(attr, struct uncore_data, name##_dev_attr);\
-+		struct uncore_data *data = container_of(attr, struct uncore_data, name##_kobj_attr);\
- 									\
- 		return store_min_max_freq_khz(data, buf, count,	\
- 					      min_max);		\
+ 		for (run_threads = thr, thr = 0; thr < run_threads; thr++) {
+ 			wait_event(data[thr].done,
+-			           atomic_read(&data[thr].stop));
++				atomic_read_acquire(&data[thr].stop));
+ 			atomic_set(&data[thr].stop, 0);
+ 
+ 			ret = data[thr].ret;
+@@ -849,7 +849,7 @@ static int save_image_lzo(struct swap_ma
+ 			}
+ 		}
+ 
+-		wait_event(crc->done, atomic_read(&crc->stop));
++		wait_event(crc->done, atomic_read_acquire(&crc->stop));
+ 		atomic_set(&crc->stop, 0);
  	}
  
- #define show_uncore_min_max(name, min_max)				\
--	static ssize_t show_##name(struct device *dev,		\
--				    struct device_attribute *attr, char *buf)\
-+	static ssize_t show_##name(struct kobject *kobj,		\
-+				    struct kobj_attribute *attr, char *buf)\
- 	{                                                               \
--		struct uncore_data *data = container_of(attr, struct uncore_data, name##_dev_attr);\
-+		struct uncore_data *data = container_of(attr, struct uncore_data, name##_kobj_attr);\
- 									\
- 		return show_min_max_freq_khz(data, buf, min_max);	\
+@@ -1131,12 +1131,12 @@ static int lzo_decompress_threadfn(void
+ 	struct dec_data *d = data;
+ 
+ 	while (1) {
+-		wait_event(d->go, atomic_read(&d->ready) ||
++		wait_event(d->go, atomic_read_acquire(&d->ready) ||
+ 		                  kthread_should_stop());
+ 		if (kthread_should_stop()) {
+ 			d->thr = NULL;
+ 			d->ret = -1;
+-			atomic_set(&d->stop, 1);
++			atomic_set_release(&d->stop, 1);
+ 			wake_up(&d->done);
+ 			break;
+ 		}
+@@ -1149,7 +1149,7 @@ static int lzo_decompress_threadfn(void
+ 			flush_icache_range((unsigned long)d->unc,
+ 					   (unsigned long)d->unc + d->unc_len);
+ 
+-		atomic_set(&d->stop, 1);
++		atomic_set_release(&d->stop, 1);
+ 		wake_up(&d->done);
+ 	}
+ 	return 0;
+@@ -1334,7 +1334,7 @@ static int load_image_lzo(struct swap_ma
+ 		}
+ 
+ 		if (crc->run_threads) {
+-			wait_event(crc->done, atomic_read(&crc->stop));
++			wait_event(crc->done, atomic_read_acquire(&crc->stop));
+ 			atomic_set(&crc->stop, 0);
+ 			crc->run_threads = 0;
+ 		}
+@@ -1370,7 +1370,7 @@ static int load_image_lzo(struct swap_ma
+ 					pg = 0;
+ 			}
+ 
+-			atomic_set(&data[thr].ready, 1);
++			atomic_set_release(&data[thr].ready, 1);
+ 			wake_up(&data[thr].go);
+ 		}
+ 
+@@ -1389,7 +1389,7 @@ static int load_image_lzo(struct swap_ma
+ 
+ 		for (run_threads = thr, thr = 0; thr < run_threads; thr++) {
+ 			wait_event(data[thr].done,
+-			           atomic_read(&data[thr].stop));
++				atomic_read_acquire(&data[thr].stop));
+ 			atomic_set(&data[thr].stop, 0);
+ 
+ 			ret = data[thr].ret;
+@@ -1420,7 +1420,7 @@ static int load_image_lzo(struct swap_ma
+ 				ret = snapshot_write_next(snapshot);
+ 				if (ret <= 0) {
+ 					crc->run_threads = thr + 1;
+-					atomic_set(&crc->ready, 1);
++					atomic_set_release(&crc->ready, 1);
+ 					wake_up(&crc->go);
+ 					goto out_finish;
+ 				}
+@@ -1428,13 +1428,13 @@ static int load_image_lzo(struct swap_ma
+ 		}
+ 
+ 		crc->run_threads = thr;
+-		atomic_set(&crc->ready, 1);
++		atomic_set_release(&crc->ready, 1);
+ 		wake_up(&crc->go);
  	}
  
- #define show_uncore_perf_status(name)					\
--	static ssize_t show_##name(struct device *dev,		\
--				   struct device_attribute *attr, char *buf)\
-+	static ssize_t show_##name(struct kobject *kobj,		\
-+				   struct kobj_attribute *attr, char *buf)\
- 	{                                                               \
--		struct uncore_data *data = container_of(attr, struct uncore_data, name##_dev_attr);\
-+		struct uncore_data *data = container_of(attr, struct uncore_data, name##_kobj_attr);\
- 									\
- 		return show_perf_status_freq_khz(data, buf); \
+ out_finish:
+ 	if (crc->run_threads) {
+-		wait_event(crc->done, atomic_read(&crc->stop));
++		wait_event(crc->done, atomic_read_acquire(&crc->stop));
+ 		atomic_set(&crc->stop, 0);
  	}
-@@ -134,11 +134,11 @@ show_uncore_min_max(max_freq_khz, 1);
- show_uncore_perf_status(current_freq_khz);
- 
- #define show_uncore_data(member_name)					\
--	static ssize_t show_##member_name(struct device *dev,	\
--					   struct device_attribute *attr, char *buf)\
-+	static ssize_t show_##member_name(struct kobject *kobj,	\
-+					   struct kobj_attribute *attr, char *buf)\
- 	{                                                               \
- 		struct uncore_data *data = container_of(attr, struct uncore_data,\
--							  member_name##_dev_attr);\
-+							  member_name##_kobj_attr);\
- 									\
- 		return sysfs_emit(buf, "%u\n",				\
- 				 data->member_name);			\
-@@ -149,29 +149,29 @@ show_uncore_data(initial_max_freq_khz);
- 
- #define init_attribute_rw(_name)					\
- 	do {								\
--		sysfs_attr_init(&data->_name##_dev_attr.attr);	\
--		data->_name##_dev_attr.show = show_##_name;		\
--		data->_name##_dev_attr.store = store_##_name;		\
--		data->_name##_dev_attr.attr.name = #_name;		\
--		data->_name##_dev_attr.attr.mode = 0644;		\
-+		sysfs_attr_init(&data->_name##_kobj_attr.attr);	\
-+		data->_name##_kobj_attr.show = show_##_name;		\
-+		data->_name##_kobj_attr.store = store_##_name;		\
-+		data->_name##_kobj_attr.attr.name = #_name;		\
-+		data->_name##_kobj_attr.attr.mode = 0644;		\
- 	} while (0)
- 
- #define init_attribute_ro(_name)					\
- 	do {								\
--		sysfs_attr_init(&data->_name##_dev_attr.attr);	\
--		data->_name##_dev_attr.show = show_##_name;		\
--		data->_name##_dev_attr.store = NULL;			\
--		data->_name##_dev_attr.attr.name = #_name;		\
--		data->_name##_dev_attr.attr.mode = 0444;		\
-+		sysfs_attr_init(&data->_name##_kobj_attr.attr);	\
-+		data->_name##_kobj_attr.show = show_##_name;		\
-+		data->_name##_kobj_attr.store = NULL;			\
-+		data->_name##_kobj_attr.attr.name = #_name;		\
-+		data->_name##_kobj_attr.attr.mode = 0444;		\
- 	} while (0)
- 
- #define init_attribute_root_ro(_name)					\
- 	do {								\
--		sysfs_attr_init(&data->_name##_dev_attr.attr);	\
--		data->_name##_dev_attr.show = show_##_name;		\
--		data->_name##_dev_attr.store = NULL;			\
--		data->_name##_dev_attr.attr.name = #_name;		\
--		data->_name##_dev_attr.attr.mode = 0400;		\
-+		sysfs_attr_init(&data->_name##_kobj_attr.attr);	\
-+		data->_name##_kobj_attr.show = show_##_name;		\
-+		data->_name##_kobj_attr.store = NULL;			\
-+		data->_name##_kobj_attr.attr.name = #_name;		\
-+		data->_name##_kobj_attr.attr.mode = 0400;		\
- 	} while (0)
- 
- static int create_attr_group(struct uncore_data *data, char *name)
-@@ -186,21 +186,21 @@ static int create_attr_group(struct unco
- 
- 	if (data->domain_id != UNCORE_DOMAIN_ID_INVALID) {
- 		init_attribute_root_ro(domain_id);
--		data->uncore_attrs[index++] = &data->domain_id_dev_attr.attr;
-+		data->uncore_attrs[index++] = &data->domain_id_kobj_attr.attr;
- 		init_attribute_root_ro(fabric_cluster_id);
--		data->uncore_attrs[index++] = &data->fabric_cluster_id_dev_attr.attr;
-+		data->uncore_attrs[index++] = &data->fabric_cluster_id_kobj_attr.attr;
- 		init_attribute_root_ro(package_id);
--		data->uncore_attrs[index++] = &data->package_id_dev_attr.attr;
-+		data->uncore_attrs[index++] = &data->package_id_kobj_attr.attr;
- 	}
- 
--	data->uncore_attrs[index++] = &data->max_freq_khz_dev_attr.attr;
--	data->uncore_attrs[index++] = &data->min_freq_khz_dev_attr.attr;
--	data->uncore_attrs[index++] = &data->initial_min_freq_khz_dev_attr.attr;
--	data->uncore_attrs[index++] = &data->initial_max_freq_khz_dev_attr.attr;
-+	data->uncore_attrs[index++] = &data->max_freq_khz_kobj_attr.attr;
-+	data->uncore_attrs[index++] = &data->min_freq_khz_kobj_attr.attr;
-+	data->uncore_attrs[index++] = &data->initial_min_freq_khz_kobj_attr.attr;
-+	data->uncore_attrs[index++] = &data->initial_max_freq_khz_kobj_attr.attr;
- 
- 	ret = uncore_read_freq(data, &freq);
- 	if (!ret)
--		data->uncore_attrs[index++] = &data->current_freq_khz_dev_attr.attr;
-+		data->uncore_attrs[index++] = &data->current_freq_khz_kobj_attr.attr;
- 
- 	data->uncore_attrs[index] = NULL;
- 
---- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.h
-+++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.h
-@@ -26,14 +26,14 @@
-  * @instance_id:	Unique instance id to append to directory name
-  * @name:		Sysfs entry name for this instance
-  * @uncore_attr_group:	Attribute group storage
-- * @max_freq_khz_dev_attr: Storage for device attribute max_freq_khz
-- * @mix_freq_khz_dev_attr: Storage for device attribute min_freq_khz
-- * @initial_max_freq_khz_dev_attr: Storage for device attribute initial_max_freq_khz
-- * @initial_min_freq_khz_dev_attr: Storage for device attribute initial_min_freq_khz
-- * @current_freq_khz_dev_attr: Storage for device attribute current_freq_khz
-- * @domain_id_dev_attr: Storage for device attribute domain_id
-- * @fabric_cluster_id_dev_attr: Storage for device attribute fabric_cluster_id
-- * @package_id_dev_attr: Storage for device attribute package_id
-+ * @max_freq_khz_kobj_attr: Storage for kobject attribute max_freq_khz
-+ * @mix_freq_khz_kobj_attr: Storage for kobject attribute min_freq_khz
-+ * @initial_max_freq_khz_kobj_attr: Storage for kobject attribute initial_max_freq_khz
-+ * @initial_min_freq_khz_kobj_attr: Storage for kobject attribute initial_min_freq_khz
-+ * @current_freq_khz_kobj_attr: Storage for kobject attribute current_freq_khz
-+ * @domain_id_kobj_attr: Storage for kobject attribute domain_id
-+ * @fabric_cluster_id_kobj_attr: Storage for kobject attribute fabric_cluster_id
-+ * @package_id_kobj_attr: Storage for kobject attribute package_id
-  * @uncore_attrs:	Attribute storage for group creation
-  *
-  * This structure is used to encapsulate all data related to uncore sysfs
-@@ -53,14 +53,14 @@ struct uncore_data {
- 	char name[32];
- 
- 	struct attribute_group uncore_attr_group;
--	struct device_attribute max_freq_khz_dev_attr;
--	struct device_attribute min_freq_khz_dev_attr;
--	struct device_attribute initial_max_freq_khz_dev_attr;
--	struct device_attribute initial_min_freq_khz_dev_attr;
--	struct device_attribute current_freq_khz_dev_attr;
--	struct device_attribute domain_id_dev_attr;
--	struct device_attribute fabric_cluster_id_dev_attr;
--	struct device_attribute package_id_dev_attr;
-+	struct kobj_attribute max_freq_khz_kobj_attr;
-+	struct kobj_attribute min_freq_khz_kobj_attr;
-+	struct kobj_attribute initial_max_freq_khz_kobj_attr;
-+	struct kobj_attribute initial_min_freq_khz_kobj_attr;
-+	struct kobj_attribute current_freq_khz_kobj_attr;
-+	struct kobj_attribute domain_id_kobj_attr;
-+	struct kobj_attribute fabric_cluster_id_kobj_attr;
-+	struct kobj_attribute package_id_kobj_attr;
- 	struct attribute *uncore_attrs[9];
- };
- 
+ 	stop = ktime_get();
 
 
