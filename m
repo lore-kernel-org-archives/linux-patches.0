@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B47515956B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E543B15956B;
 	Mon, 29 Jan 2024 17:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548427; cv=none; b=OnMVZlb6tc8tf3Q4ieV5SKE+fFlFSaFzYzACzJhzHhBDhyZ/uM/NWIaHqkuRiFGyGkSNEu+7B3F7cMBYJn16lOVmOb+AZ4CvyKwQNs2MNDLVI/QioOKcRPzRP2YmWfVhUPtzQ/Jh3mvcLydfQZ+AfTzrP+SBe8LT2TXIlqThaJs=
+	t=1706548428; cv=none; b=Au6Jjz0P390PSU7wC/waTCQN1ErKAQMBex+1/Hj6snMpgsVQOETepbvXYCTYVnNlHnJTIDCdpMMvvVRJhUsyU4UWZtiXtUsGsAlYTvAWoH1GOoOg3JZ0XRGvTo1tvm0u0qj5hHnmdDvKebHyAAYj3/a0wug39P2ONfTnTmSp4+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548427; c=relaxed/simple;
-	bh=2IKtRSb8S1xpicig3AtGLudMCNrt0EfuochPviUyl00=;
+	s=arc-20240116; t=1706548428; c=relaxed/simple;
+	bh=IKiOZy/pUox9L8A29Bx/vGSQ4D+bppvvVvk4qYOPdic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cq6dQr1O8xZS0dqN+JMaJm+N3UEWHfQq05RrxdjXernRBGG6tJNIoptpBVNhHu0k4Eoxzq/tJKvN/Br69z6qnqsWY1V35F/brPGjhPBsdpvH1WIsjbVxv6vSYS+Xj0bXH0f06He4fmnP7Gh9QTvmL2qmv1+wXqFxvxD2NVSfITI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X054Oyw3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b+Runw1FRJ1eAYWR8+wuK/ZdTI9zrA84zHz1Ew/uYvCNx5Ezu22oUHa59wXE3JfkEpKO4tPFAvUPUJbbjKqWr7g1/Znr3coQ7yy+QrVVHmYcI7pb2OCMKU02ibL4JkramZAZ0/Lx356B5SertemJf5REQH2m4O1+KY6ejQVf5Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WLUhBtR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X054Oyw3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3222C433C7;
-	Mon, 29 Jan 2024 17:13:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WLUhBtR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAC5C43394;
+	Mon, 29 Jan 2024 17:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548427;
-	bh=2IKtRSb8S1xpicig3AtGLudMCNrt0EfuochPviUyl00=;
+	bh=IKiOZy/pUox9L8A29Bx/vGSQ4D+bppvvVvk4qYOPdic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X054Oyw3Gd52GektU0Kdj4SlxJrOYzUK/gMm/amSsaVkflbmRRtuIvzIKjkVMyvSh
-	 eUgf4hV0WzOH15PtTGyuOFawQgVt3dav0P0CX8o38iYXoy7qYayJU7k0Mv7CElYa4o
-	 N44PgIX30IlMn9DM+yqq9AXMPYJcDYkAVxfed4m4=
+	b=0WLUhBtRnJKirMdrCmKxFUcsFU3EM4LNMv6aqIBpkgUjSK3SYYq2aw5C7+xRY/Xv2
+	 hoJ3IOZKx58gVD92qPcM5yRcHfZ4Jf6n8GbT8MZj2aIlUZ+/6gnhtHLbpCm9qGpKDl
+	 CDw9325Afw96eQQ9tQXpUbwKoUQetZNUbVwwKwPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/331] serial: core: Simplify uart_get_rs485_mode()
-Date: Mon, 29 Jan 2024 09:01:08 -0800
-Message-ID: <20240129170015.093132204@linuxfoundation.org>
+Subject: [PATCH 6.6 005/331] serial: core: set missing supported flag for RX during TX GPIO
+Date: Mon, 29 Jan 2024 09:01:09 -0800
+Message-ID: <20240129170015.118932597@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -44,79 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-[ Upstream commit 7cda0b9eb6eb9e761f452e2ef4e81eca20b19938 ]
+[ Upstream commit 1a33e33ca0e80d485458410f149265cdc0178cfa ]
 
-Simplify uart_get_rs485_mode() by using temporary variable for
-the GPIO descriptor. With that, use proper type for the flags
-of the GPIO descriptor.
+If the RS485 feature RX-during-TX is supported by means of a GPIO set the
+according supported flag. Otherwise setting this feature from userspace may
+not be possible, since in uart_sanitize_serial_rs485() the passed RS485
+configuration is matched against the supported features and unsupported
+settings are thereby removed and thus take no effect.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20231003142346.3072929-1-andriy.shevchenko@linux.intel.com
+Cc:  <stable@vger.kernel.org>
+Fixes: 163f080eb717 ("serial: core: Add option to output RS485 RX_DURING_TX state via GPIO")
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Link: https://lore.kernel.org/r/20240103061818.564-3-l.sanfilippo@kunbus.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 1a33e33ca0e8 ("serial: core: set missing supported flag for RX during TX GPIO")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial_core.c | 30 ++++++++++++------------------
- 1 file changed, 12 insertions(+), 18 deletions(-)
+ drivers/tty/serial/serial_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
-index 18b49b1439a5..021e096bc4ed 100644
+index 021e096bc4ed..bde5b6015305 100644
 --- a/drivers/tty/serial/serial_core.c
 +++ b/drivers/tty/serial/serial_core.c
-@@ -3572,9 +3572,10 @@ int uart_get_rs485_mode(struct uart_port *port)
- {
- 	struct serial_rs485 *rs485conf = &port->rs485;
- 	struct device *dev = port->dev;
-+	enum gpiod_flags dflags;
-+	struct gpio_desc *desc;
- 	u32 rs485_delay[2];
- 	int ret;
--	int rx_during_tx_gpio_flag;
- 
- 	if (!(port->rs485_supported.flags & SER_RS485_ENABLED))
- 		return 0;
-@@ -3616,26 +3617,19 @@ int uart_get_rs485_mode(struct uart_port *port)
- 	 * bus participants enable it, no communication is possible at all.
- 	 * Works fine for short cables and users may enable for longer cables.
- 	 */
--	port->rs485_term_gpio = devm_gpiod_get_optional(dev, "rs485-term",
--							GPIOD_OUT_LOW);
--	if (IS_ERR(port->rs485_term_gpio)) {
--		ret = PTR_ERR(port->rs485_term_gpio);
--		port->rs485_term_gpio = NULL;
--		return dev_err_probe(dev, ret, "Cannot get rs485-term-gpios\n");
--	}
-+	desc = devm_gpiod_get_optional(dev, "rs485-term", GPIOD_OUT_LOW);
-+	if (IS_ERR(desc))
-+		return dev_err_probe(dev, PTR_ERR(desc), "Cannot get rs485-term-gpios\n");
-+	port->rs485_term_gpio = desc;
- 	if (port->rs485_term_gpio)
- 		port->rs485_supported.flags |= SER_RS485_TERMINATE_BUS;
- 
--	rx_during_tx_gpio_flag = (rs485conf->flags & SER_RS485_RX_DURING_TX) ?
--				 GPIOD_OUT_HIGH : GPIOD_OUT_LOW;
--	port->rs485_rx_during_tx_gpio = devm_gpiod_get_optional(dev,
--								"rs485-rx-during-tx",
--								rx_during_tx_gpio_flag);
--	if (IS_ERR(port->rs485_rx_during_tx_gpio)) {
--		ret = PTR_ERR(port->rs485_rx_during_tx_gpio);
--		port->rs485_rx_during_tx_gpio = NULL;
--		return dev_err_probe(dev, ret, "Cannot get rs485-rx-during-tx-gpios\n");
--	}
-+	dflags = (rs485conf->flags & SER_RS485_RX_DURING_TX) ?
-+		 GPIOD_OUT_HIGH : GPIOD_OUT_LOW;
-+	desc = devm_gpiod_get_optional(dev, "rs485-rx-during-tx", dflags);
-+	if (IS_ERR(desc))
-+		return dev_err_probe(dev, PTR_ERR(desc), "Cannot get rs485-rx-during-tx-gpios\n");
-+	port->rs485_rx_during_tx_gpio = desc;
+@@ -3630,6 +3630,8 @@ int uart_get_rs485_mode(struct uart_port *port)
+ 	if (IS_ERR(desc))
+ 		return dev_err_probe(dev, PTR_ERR(desc), "Cannot get rs485-rx-during-tx-gpios\n");
+ 	port->rs485_rx_during_tx_gpio = desc;
++	if (port->rs485_rx_during_tx_gpio)
++		port->rs485_supported.flags |= SER_RS485_RX_DURING_TX;
  
  	return 0;
  }
