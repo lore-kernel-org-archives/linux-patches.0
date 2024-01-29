@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC2915AAA8;
-	Mon, 29 Jan 2024 17:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A693115AAA8;
+	Mon, 29 Jan 2024 17:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548159; cv=none; b=X0w4l6KNQrYRp0X8FHdDQ3uKDGKZL9kNQhbvgg9ygJ5TH67WhZQAb1VAMY1Ax9Ga0LkxD2mybqpwJIC1f1usJf6szruEtGwK/bWgGPGfDf6c4Uey+d/fU3nO3DOrDyyDgvkMaSay0eklTmZnlQTVCTg0ndFymuOHyvBHg0VyeUM=
+	t=1706548160; cv=none; b=syktQkajsDULBivRd6Y82PiEx6rw9Z2KBTVjQo0PnuCGwWELoGjHsgi2kQ9OwSMzxE+5EBRo30vSzKmiy+eKAuvE20nbZVbWaXEhc7udPn4OBBdv7XK21kGDzTewNcXcuyeb8qXAjULdDaHqvhZAS1TOX7MKq0Gx/LNmxWaQPYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548159; c=relaxed/simple;
-	bh=9dLS3l6JyYwur2YW7u4ICBNsURxX79X2iGOVAg92b4Q=;
+	s=arc-20240116; t=1706548160; c=relaxed/simple;
+	bh=AyK80NAhJZ1ONJaH8PiWbiwEiD1uGo8+wYHJJUNh4fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GdgSAY/FBhPAwi23XbQudKhfP9GLo10q1OmNzx0iguAvS2yNBMfWgD8XqUGC1lbntjcbjoy/PNubEBYVUUMOsM9hSxn8jLmatRqF/Q2iaDs/fuoT0KnQOsS23jEklV4BDpQBLKCJUtUnbOSCjTbOux7/3ZkM1pG82a0+AqZtB5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecom0Uw0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gth7ne5tNH7eStt9zjg/rSJjr2Fd3RGP2/Qz30HCwp6eEC3J5CXSg+uBWpN63J0U5oaJzq1SXVh1h2ovhH7U/6ir0yfPuXMVVvBLhkC/QA113bbgNFu5kPsiIFeogcQ5AsvBhvLTxg6PPyfMvPD+4PI6v8X9Cm8k/+FHcJIuOug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mt7cIZea; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecom0Uw0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FDDC43394;
-	Mon, 29 Jan 2024 17:09:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mt7cIZea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7D5C433C7;
+	Mon, 29 Jan 2024 17:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548159;
-	bh=9dLS3l6JyYwur2YW7u4ICBNsURxX79X2iGOVAg92b4Q=;
+	s=korg; t=1706548160;
+	bh=AyK80NAhJZ1ONJaH8PiWbiwEiD1uGo8+wYHJJUNh4fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ecom0Uw0HJbqpvNy0tRlGZBctB3jd5HgjvVK795rcDfaV8K0/VHryaUj1ztsM1bm7
-	 U8RWfflG7WAuZjDBerAQT7m6wlpwOS13DKOBvMdxKyQK3MjiCLUUl964wYF5KNfQYH
-	 YoSt0rRA6l4FLNozdoXfXR3tHNfkWMDwmlOAB1I4=
+	b=Mt7cIZeahBVpatjqQ0rPKKMfC39VmgfALYdXPAHq+ANSv394ua3/SVU3R/zVHRwIl
+	 3Xd6e/ITCa7gEJLKkvZjjWnFBC8Ghkd1oXhhENTZVRK2+QjpeTSidpA7sBshRKnvwc
+	 yiqAceQQcWg5O2njzAMpNht+jD7S7S5Actr+nPIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 174/346] afs: Handle the VIO and UAEIO aborts explicitly
-Date: Mon, 29 Jan 2024 09:03:25 -0800
-Message-ID: <20240129170021.512927735@linuxfoundation.org>
+Subject: [PATCH 6.7 175/346] afs: Use op->nr_iterations=-1 to indicate to begin fileserver iteration
+Date: Mon, 29 Jan 2024 09:03:26 -0800
+Message-ID: <20240129170021.544860751@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -54,12 +54,11 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit eb8eae65f0c713bcef84b082aa919f72c3d83268 ]
+[ Upstream commit 075171fd22be33acf4ab354814bfa6de1c3412ce ]
 
-When processing the result of a call, handle the VIO and UAEIO abort
-specifically rather than leaving it to a default case.  Rather than
-erroring out unconditionally, see if there's another server if the volume
-has more than one server available, otherwise return -EREMOTEIO.
+Set op->nr_iterations to -1 to indicate that we need to begin fileserver
+iteration rather than setting error to SHRT_MAX.  This makes it easier to
+eliminate the address cursor.
 
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
@@ -67,27 +66,69 @@ cc: linux-afs@lists.infradead.org
 Stable-dep-of: 17ba6f0bd14f ("afs: Fix error handling with lookup via FS.InlineBulkStatus")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/rotate.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/afs/fs_operation.c |  2 +-
+ fs/afs/internal.h     |  2 +-
+ fs/afs/rotate.c       | 11 ++++++-----
+ 3 files changed, 8 insertions(+), 7 deletions(-)
 
+diff --git a/fs/afs/fs_operation.c b/fs/afs/fs_operation.c
+index 7a3803ce3a22..3e31fae9a149 100644
+--- a/fs/afs/fs_operation.c
++++ b/fs/afs/fs_operation.c
+@@ -41,7 +41,7 @@ struct afs_operation *afs_alloc_operation(struct key *key, struct afs_volume *vo
+ 	op->cb_v_break	= volume->cb_v_break;
+ 	op->debug_id	= atomic_inc_return(&afs_operation_debug_counter);
+ 	op->error	= -EDESTADDRREQ;
+-	op->ac.error	= SHRT_MAX;
++	op->nr_iterations = -1;
+ 
+ 	_leave(" = [op=%08x]", op->debug_id);
+ 	return op;
+diff --git a/fs/afs/internal.h b/fs/afs/internal.h
+index ec08b4a7e499..88381935bd66 100644
+--- a/fs/afs/internal.h
++++ b/fs/afs/internal.h
+@@ -859,7 +859,7 @@ struct afs_operation {
+ 	struct afs_call		*call;
+ 	unsigned long		untried;	/* Bitmask of untried servers */
+ 	short			index;		/* Current server */
+-	unsigned short		nr_iterations;	/* Number of server iterations */
++	short			nr_iterations;	/* Number of server iterations */
+ 
+ 	unsigned int		flags;
+ #define AFS_OPERATION_STOP		0x0001	/* Set to cease iteration */
 diff --git a/fs/afs/rotate.c b/fs/afs/rotate.c
-index 59aed7a6dd11..a108cd55bb4e 100644
+index a108cd55bb4e..4084e023ff43 100644
 --- a/fs/afs/rotate.c
 +++ b/fs/afs/rotate.c
-@@ -330,6 +330,13 @@ bool afs_select_fileserver(struct afs_operation *op)
+@@ -116,7 +116,10 @@ bool afs_select_fileserver(struct afs_operation *op)
+ 	unsigned int rtt;
+ 	int error = op->ac.error, i;
  
- 			goto restart_from_beginning;
- 
-+		case UAEIO:
-+		case VIO:
-+			op->error = -EREMOTEIO;
-+			if (op->volume->type != AFSVL_RWVOL)
-+				goto next_server;
-+			goto failed;
+-	_enter("%lx[%d],%lx[%d],%d,%d",
++	op->nr_iterations++;
 +
- 		case VDISKFULL:
- 		case UAENOSPC:
- 			/* The partition is full.  Only applies to RWVOLs.
++	_enter("OP=%x+%x,%llx,%lx[%d],%lx[%d],%d,%d",
++	       op->debug_id, op->nr_iterations, op->volume->vid,
+ 	       op->untried, op->index,
+ 	       op->ac.tried, op->ac.index,
+ 	       error, op->ac.abort_code);
+@@ -126,13 +129,11 @@ bool afs_select_fileserver(struct afs_operation *op)
+ 		return false;
+ 	}
+ 
+-	op->nr_iterations++;
++	if (op->nr_iterations == 0)
++		goto start;
+ 
+ 	/* Evaluate the result of the previous operation, if there was one. */
+ 	switch (error) {
+-	case SHRT_MAX:
+-		goto start;
+-
+ 	case 0:
+ 	default:
+ 		/* Success or local failure.  Stop. */
 -- 
 2.43.0
 
