@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06DF6FDE1;
-	Mon, 29 Jan 2024 17:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723AF6FDE1;
+	Mon, 29 Jan 2024 17:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548488; cv=none; b=VtPrrpv2KQm9VsAOzfjkJaDKAvOTB5LAQhrWTZr/lfCL+nQu+OBNIzm2gxwIEWE/VRuoJNdDQ17hE9V35tGYeA5nyhJOdaOdPlsEcNyIKQTEUfBX15MiZIeAr2aczLYdmD7GWNS+jPlRCs+82NH36CdQeJq06y52m6qyr+k1pe0=
+	t=1706548488; cv=none; b=gDk6tHwoVpe2F2S9FQ4Vgsa3TLJfkiumaK3i6F0NEMFJF6COrmH+OJgqyNrXL7K1JopNIoIx+127zHFbHXGmDfgS+RcrlAYIrtlp535XA1escf0JGYx4bJQ4mmFNa4aZfHcbzw6WmrAjRN6ImQW0FPcUt/dOcHeecdzPsRyicAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548488; c=relaxed/simple;
-	bh=UAEljXYAKIUGv92ea0PV6H2s8jUCJ8TG6X5fY1kBwHY=;
+	bh=JFnhE8cQTn+HCtyCYO6/cG4GYc7LOZgCcWN3/bZdLV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IBhK0NqmLEUhUdxe2sd7zxwxhNJi9t/cDFk+9ySoGmOgTiFu8xzfkj+lltWf7eGcJqNN7lhdt03SOGi1l1AP1BR3HVkyr7IqGlPT+++qH6uauA0XvUClepa8CjYvxsJODinNYhx2s33lVj3EYOTj14nmLOTRDA9c/l9cNVR8DHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UR7Xk7xI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D2gQzT6MVGbILx9XgOs9hAhiUMfm3TlWDVkQEjnhxZYwDHzAOiQReBCCem4ShjP3fb6OiDZsTMrMQ4bPTKhN4AGOnZbIQyLx1Qg/2P4MxYcEKO+EFmu2N0xg1xCdSr7TOM4fSMDxfEEDM30dKTr5p/AGEktC7X/vpT+6Z/J+GSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8/159KG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UR7Xk7xI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6189EC433C7;
-	Mon, 29 Jan 2024 17:14:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8/159KG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DE9C433F1;
+	Mon, 29 Jan 2024 17:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548487;
-	bh=UAEljXYAKIUGv92ea0PV6H2s8jUCJ8TG6X5fY1kBwHY=;
+	s=korg; t=1706548488;
+	bh=JFnhE8cQTn+HCtyCYO6/cG4GYc7LOZgCcWN3/bZdLV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UR7Xk7xIwpD4Wi6g592AFAIrPANIdR4ygdIGjREk8g7/rVx/okgX3jESr7KYUY6Th
-	 FJNh92jp0W6G8pKZggrcJC0zZMA49FhF2rL1gDrvQiSgnyq0KaGISpPQNtmTXso5/3
-	 oel9iiW6iSDHEJkYltlpAO5yi197pgsKaaGp/0YU=
+	b=w8/159KGRTMZJaqeW54WIUi1a8ogPcZ2fGQ+ZAHvbTxTODnMlsQF1SsqsMIuCsZkb
+	 H6ybsTlBQj/FBBusEkKbUWfz/Tf7/nEMn5tR/ZDjbwcyKrKmZPa/N6JEFGf5WKMVTy
+	 NjwJioQKeE8Finbg6WuUPjEj+sDV06b3aJl37tWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Richard Acayan <mailingradian@gmail.com>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 083/331] arm64: dts: qcom: sdm845: fix USB wakeup interrupt types
-Date: Mon, 29 Jan 2024 09:02:27 -0800
-Message-ID: <20240129170017.359380919@linuxfoundation.org>
+Subject: [PATCH 6.6 084/331] arm64: dts: qcom: sdm670: fix USB wakeup interrupt types
+Date: Mon, 29 Jan 2024 09:02:28 -0800
+Message-ID: <20240129170017.395245190@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,25 +53,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 84ad9ac8d9ca29033d589e79a991866b38e23b85 upstream.
+commit de3b3de30999106549da4df88a7963d0ac02b91e upstream.
 
 The DP/DM wakeup interrupts are edge triggered and which edge to trigger
 on depends on use-case and whether a Low speed or Full/High speed device
 is connected.
 
-Fixes: ca4db2b538a1 ("arm64: dts: qcom: sdm845: Add USB-related nodes")
-Cc: stable@vger.kernel.org      # 4.20
+Fixes: 07c8ded6e373 ("arm64: dts: qcom: add sdm670 and pixel 3a device trees")
+Cc: stable@vger.kernel.org      # 6.2
+Cc: Richard Acayan <mailingradian@gmail.com>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231120164331.8116-9-johan+linaro@kernel.org
+Acked-by: Richard Acayan <mailingradian@gmail.com>
+Link: https://lore.kernel.org/r/20231120164331.8116-8-johan+linaro@kernel.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm670.dtsi |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4086,8 +4086,8 @@
+--- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+@@ -1297,8 +1297,8 @@
  
  			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
  				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
@@ -78,17 +81,6 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 -				     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
 +				     <GIC_SPI 488 IRQ_TYPE_EDGE_BOTH>,
 +				     <GIC_SPI 489 IRQ_TYPE_EDGE_BOTH>;
- 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
- 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
- 
-@@ -4137,8 +4137,8 @@
- 
- 			interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 487 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 490 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 491 IRQ_TYPE_LEVEL_HIGH>;
-+				     <GIC_SPI 490 IRQ_TYPE_EDGE_BOTH>,
-+				     <GIC_SPI 491 IRQ_TYPE_EDGE_BOTH>;
  			interrupt-names = "hs_phy_irq", "ss_phy_irq",
  					  "dm_hs_phy_irq", "dp_hs_phy_irq";
  
