@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB20159574;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E029315D5C1;
 	Mon, 29 Jan 2024 17:13:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548400; cv=none; b=JHtMrKmNt2oXlIkIIYuR7OuJ7FjTC7tqeN95fhnHfjdvypAoorUGk/iWHJYcC/G/4tjxvfvGQ5jPr1AW4MdsjgbsKgp2R/QLFnW17AUD5rNtFrzKYVI181r/V77VIJhBubEO3PUaeDYcN8UGfnKSFlfekKyGotuTeedsbuZ33jQ=
+	t=1706548401; cv=none; b=mJTMkGZ3KmKnD1hbJ8KeE1eshYdEshs8soN7071DYtPwgDuGg9tI3WjVN7WZ9PRfGEmLE4reWSFBss1QPdZbX1ZG8WPMxwBCfhVJBAuhqP+Rg06/MNwcnx8R2UUN4yTxarkWYe+VqAN7DVNWlC7zJQwWYsc8pGG6NHnRBV5/p2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548400; c=relaxed/simple;
-	bh=DzqBuEWXOFov1BIa19rhjFUFKm2VplSrj/8zBOQsxlE=;
+	s=arc-20240116; t=1706548401; c=relaxed/simple;
+	bh=v1WQJkUf+O+sJ525P+we064tSRGyNWwBzmi44FHJyjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nPv80zsmSnixEQd0FJRVgYrl94wFlt6TXWT5HnfelrZlETlxW9NbAlRXRKEYaORfKFrCIrUXqmoNE5g/heibOvtDSmIHbgZKp/B1AidKyTzNCDcQw0o6wFJFhAlsUCDMB62gjjCNCsTsWy/p+v46zdwMYIKERc+OCkVZRxMNWcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gq31Br67; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WoYUGAZCABW67Wzus352g7jLB/8mdHvkfVlWlR3SZH38IsTuDju8kU/EA3LOvzqkLm4aeJC91Y4eQyu1gpITpqRiJR4gzU5xOaHBfVN6J/HNJ8GffFySCPsvJeRrI6C3i636qU53S9zWWIh4ZpaET+sT9yFYIjxpLXHiNNg3+N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IA5luMPf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gq31Br67"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D997FC433B1;
-	Mon, 29 Jan 2024 17:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IA5luMPf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB0AC43390;
+	Mon, 29 Jan 2024 17:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548399;
-	bh=DzqBuEWXOFov1BIa19rhjFUFKm2VplSrj/8zBOQsxlE=;
+	s=korg; t=1706548400;
+	bh=v1WQJkUf+O+sJ525P+we064tSRGyNWwBzmi44FHJyjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gq31Br67OrN4SfyfDfBaa7ZprUJ1ViuzwUpUSpW/DQHb6tQVgWrUci9P5ZL0tLgpp
-	 KdricugLyOm3XJCnV6E6GxZOZF2cadVmN+/na/1xt2MfyqnVJB0mrepch+SVis7gNj
-	 spu9Ehq+7o+21VVuTEh+vaeVi6bx3r2A+4R0Cc94=
+	b=IA5luMPfyJ4yri/Yc9uXsnCkXA9ry0S76DvSdRbkS6hHnrijmnjNGJO5SIDD4mlsD
+	 zduIAD7V7GFrXZ/kU478AF8lgJSxJGvdNN7BVRH9l0eBwt+T16eUXcmOB9Oq9O7YQI
+	 zGjDiukPJ2YJ28BC7/s+q/uIP2mT0FNpLuicG1OI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	David Lechner <dlechner@baylibre.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 178/185] spi: bcm-qspi: fix SFDP BFPT read by usig mspi read
-Date: Mon, 29 Jan 2024 09:06:18 -0800
-Message-ID: <20240129170004.311647386@linuxfoundation.org>
+Subject: [PATCH 6.1 179/185] spi: fix finalize message on error return
+Date: Mon, 29 Jan 2024 09:06:19 -0800
+Message-ID: <20240129170004.343415047@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -52,47 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamal Dasu <kamal.dasu@broadcom.com>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 574bf7bbe83794a902679846770f75a9b7f28176 ]
+[ Upstream commit 8c2ae772fe08e33f3d7a83849e85539320701abd ]
 
-SFDP read shall use the mspi reads when using the bcm_qspi_exec_mem_op()
-call. This fixes SFDP parameter page read failures seen with parts that
-now use SFDP protocol to read the basic flash parameter table.
+In __spi_pump_transfer_message(), the message was not finalized in the
+first error return as it is in the other error return paths. Not
+finalizing the message could cause anything waiting on the message to
+complete to hang forever.
 
-Fixes: 5f195ee7d830 ("spi: bcm-qspi: Implement the spi_mem interface")
-Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://msgid.link/r/20240109210033.43249-1-kamal.dasu@broadcom.com
+This adds the missing call to spi_finalize_current_message().
+
+Fixes: ae7d2346dc89 ("spi: Don't use the message queue if possible in spi_sync")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://msgid.link/r/20240125205312.3458541-2-dlechner@baylibre.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm-qspi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
-index 137e7315a3cf..b24955910147 100644
---- a/drivers/spi/spi-bcm-qspi.c
-+++ b/drivers/spi/spi-bcm-qspi.c
-@@ -19,7 +19,7 @@
- #include <linux/platform_device.h>
- #include <linux/slab.h>
- #include <linux/spi/spi.h>
--#include <linux/spi/spi-mem.h>
-+#include <linux/mtd/spi-nor.h>
- #include <linux/sysfs.h>
- #include <linux/types.h>
- #include "spi-bcm-qspi.h"
-@@ -1221,7 +1221,7 @@ static int bcm_qspi_exec_mem_op(struct spi_mem *mem,
- 
- 	/* non-aligned and very short transfers are handled by MSPI */
- 	if (!IS_ALIGNED((uintptr_t)addr, 4) || !IS_ALIGNED((uintptr_t)buf, 4) ||
--	    len < 4)
-+	    len < 4 || op->cmd.opcode == SPINOR_OP_RDSFDP)
- 		mspi_read = true;
- 
- 	if (!has_bspi(qspi) || mspi_read)
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 22d227878bc4..19688f333e0b 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -1636,6 +1636,10 @@ static int __spi_pump_transfer_message(struct spi_controller *ctlr,
+ 			pm_runtime_put_noidle(ctlr->dev.parent);
+ 			dev_err(&ctlr->dev, "Failed to power device: %d\n",
+ 				ret);
++
++			msg->status = ret;
++			spi_finalize_current_message(ctlr);
++
+ 			return ret;
+ 		}
+ 	}
 -- 
 2.43.0
 
