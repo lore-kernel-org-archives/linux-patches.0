@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3257515B313;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A8415B313;
 	Mon, 29 Jan 2024 17:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548263; cv=none; b=Ed+6joIkUHTh1bu3OjhitaYlagLLGieGG3JqPdphORmB9FEmR5GvsC+U7yK5Pnwwv05jIEa6OBFmR3tw7YwXPVA3JJx4O1nmkqYWwVv1+IWz71rCTkrUeAn1qKdw7eHweEHoRewFXqYotn4aVNLqOkhMuHOG+cUzjZdFIsf3tM4=
+	t=1706548264; cv=none; b=Hv3Xj4X/ADh8vjdN48AWoWqFwCd2mKVlUjPiYJSBBEMua2J5tR5tZ/2juF3HLI7Cu4bZe2lvRMD5wLCLp198WnYuPr9f1kiqrbqQ2QeIkqH8pyHaWG+WoEs7tVqoTLyKpi2MpiRSBROHATpHoxEuIFmGgMlpLh33UbRJOOksc6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548263; c=relaxed/simple;
-	bh=cPp9vWuKaqEfixUC5wo/H99866uCU2hrQnYeQasaTTM=;
+	s=arc-20240116; t=1706548264; c=relaxed/simple;
+	bh=soTI/TfVbsA34OUhn0ktYBAKkgQRcB6lzcS10rhRlb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z58jPE1Pqm/r35onJuFp3sySfWpt8gxfQbTX9zMyWzttC/zcEVunpB5kwjPvtgEKdpbncxEt+Db5Bb+WkV3jKLAp4k543sdIVHGIZdvckjCy9I8Q77sIo3aE/87WUN/oFjsrwlbDHmL9+j2GspIim43sA9Rcjdz07Ommccgak3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fa2wmpid; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RoChiFt6UMaY2tm6gAeRpbWMtGxNvBAbe70LR5Lp/yO3yTWUSi8tFM2G04S49Ms7xhYLlZO7M/shqRa9Muqfkk1g0s0bG5sq0h6nGMQNL0eydwUk3+v1bgPOZ+rCwRwAzu+GHPwyHN3j0eKUy1P0fU/kaS39P37jODn1lfZsWp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6yXDd/Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fa2wmpid"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00F0C43399;
-	Mon, 29 Jan 2024 17:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6yXDd/Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8677C433A6;
+	Mon, 29 Jan 2024 17:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548263;
-	bh=cPp9vWuKaqEfixUC5wo/H99866uCU2hrQnYeQasaTTM=;
+	bh=soTI/TfVbsA34OUhn0ktYBAKkgQRcB6lzcS10rhRlb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fa2wmpid9PJBTg0MH5J0DmEy46XSYlntlUmwDCHq5SnPWNR2ZPBvTQ3FC/xg62/8Q
-	 KQu5OItkd6YcVMz+Ssa8lEZIzauNHSkLZJJb9YL32kQYJbDloixrqxFEArPwVgWBtZ
-	 lCwVP/RqH3S9drG0Y+Dyl+bjt+JYyL+c00rKlCfU=
+	b=E6yXDd/ZOTYlHBfchNh9ZZzgAvM/3tv53xw3aZXH0aHas+CbUejqBS69swpb+g7uR
+	 lba9xTBb87yZ/pbH+XmnUMvpAI4CtYJ4ELuE9JYWi68N5hZstmPUEgjHYyTSu+UfcG
+	 kPMCQYX99WwPRkLHbOJiEqD+vucG3fVHhWCnALxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Eric Biggers <ebiggers@google.com>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 6.1 054/185] ubifs: ubifs_symlink: Fix memleak of inode->i_link in error path
-Date: Mon, 29 Jan 2024 09:04:14 -0800
-Message-ID: <20240129170000.329138944@linuxfoundation.org>
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 281/346] thermal: intel: hfi: Disable an HFI instance when all its CPUs go offline
+Date: Mon, 29 Jan 2024 09:05:12 -0800
+Message-ID: <20240129170024.641904657@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +47,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 
-commit 1e022216dcd248326a5bb95609d12a6815bca4e2 upstream.
+[ Upstream commit 1c53081d773c2cb4461636559b0d55b46559ceec ]
 
-For error handling path in ubifs_symlink(), inode will be marked as
-bad first, then iput() is invoked. If inode->i_link is initialized by
-fscrypt_encrypt_symlink() in encryption scenario, inode->i_link won't
-be freed by callchain ubifs_free_inode -> fscrypt_free_inode in error
-handling path, because make_bad_inode() has changed 'inode->i_mode' as
-'S_IFREG'.
-Following kmemleak is easy to be reproduced by injecting error in
-ubifs_jnl_update() when doing symlink in encryption scenario:
- unreferenced object 0xffff888103da3d98 (size 8):
-  comm "ln", pid 1692, jiffies 4294914701 (age 12.045s)
-  backtrace:
-   kmemdup+0x32/0x70
-   __fscrypt_encrypt_symlink+0xed/0x1c0
-   ubifs_symlink+0x210/0x300 [ubifs]
-   vfs_symlink+0x216/0x360
-   do_symlinkat+0x11a/0x190
-   do_syscall_64+0x3b/0xe0
-There are two ways fixing it:
- 1. Remove make_bad_inode() in error handling path. We can do that
-    because ubifs_evict_inode() will do same processes for good
-    symlink inode and bad symlink inode, for inode->i_nlink checking
-    is before is_bad_inode().
- 2. Free inode->i_link before marking inode bad.
-Method 2 is picked, it has less influence, personally, I think.
+In preparation to support hibernation, add functionality to disable an HFI
+instance during CPU offline. The last CPU of an instance that goes offline
+will disable such instance.
 
-Cc: stable@vger.kernel.org
-Fixes: 2c58d548f570 ("fscrypt: cache decrypted symlink target in ->i_link")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Suggested-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The Intel Software Development Manual states that the operating system must
+wait for the hardware to set MSR_IA32_PACKAGE_THERM_STATUS[26] after
+disabling an HFI instance to ensure that it will no longer write on the HFI
+memory. Some processors, however, do not ever set such bit. Wait a minimum
+of 2ms to give time hardware to complete any pending memory writes.
+
+Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 97566d09fd02 ("thermal: intel: hfi: Add syscore callbacks for system-wide PM")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/dir.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/thermal/intel/intel_hfi.c | 35 +++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
---- a/fs/ubifs/dir.c
-+++ b/fs/ubifs/dir.c
-@@ -1226,6 +1226,8 @@ out_cancel:
- 	dir_ui->ui_size = dir->i_size;
- 	mutex_unlock(&dir_ui->ui_mutex);
- out_inode:
-+	/* Free inode->i_link before inode is marked as bad. */
-+	fscrypt_free_inode(inode);
- 	make_bad_inode(inode);
- 	iput(inode);
- out_fname:
+diff --git a/drivers/thermal/intel/intel_hfi.c b/drivers/thermal/intel/intel_hfi.c
+index 820613e293cd..bb25c75acd45 100644
+--- a/drivers/thermal/intel/intel_hfi.c
++++ b/drivers/thermal/intel/intel_hfi.c
+@@ -24,6 +24,7 @@
+ #include <linux/bitops.h>
+ #include <linux/cpufeature.h>
+ #include <linux/cpumask.h>
++#include <linux/delay.h>
+ #include <linux/gfp.h>
+ #include <linux/io.h>
+ #include <linux/kernel.h>
+@@ -367,6 +368,32 @@ static void hfi_set_hw_table(struct hfi_instance *hfi_instance)
+ 	wrmsrl(MSR_IA32_HW_FEEDBACK_PTR, msr_val);
+ }
+ 
++/* Caller must hold hfi_instance_lock. */
++static void hfi_disable(void)
++{
++	u64 msr_val;
++	int i;
++
++	rdmsrl(MSR_IA32_HW_FEEDBACK_CONFIG, msr_val);
++	msr_val &= ~HW_FEEDBACK_CONFIG_HFI_ENABLE_BIT;
++	wrmsrl(MSR_IA32_HW_FEEDBACK_CONFIG, msr_val);
++
++	/*
++	 * Wait for hardware to acknowledge the disabling of HFI. Some
++	 * processors may not do it. Wait for ~2ms. This is a reasonable
++	 * time for hardware to complete any pending actions on the HFI
++	 * memory.
++	 */
++	for (i = 0; i < 2000; i++) {
++		rdmsrl(MSR_IA32_PACKAGE_THERM_STATUS, msr_val);
++		if (msr_val & PACKAGE_THERM_STATUS_HFI_UPDATED)
++			break;
++
++		udelay(1);
++		cpu_relax();
++	}
++}
++
+ /**
+  * intel_hfi_online() - Enable HFI on @cpu
+  * @cpu:	CPU in which the HFI will be enabled
+@@ -421,6 +448,10 @@ void intel_hfi_online(unsigned int cpu)
+ 	/*
+ 	 * Hardware is programmed with the physical address of the first page
+ 	 * frame of the table. Hence, the allocated memory must be page-aligned.
++	 *
++	 * Some processors do not forget the initial address of the HFI table
++	 * even after having been reprogrammed. Keep using the same pages. Do
++	 * not free them.
+ 	 */
+ 	hfi_instance->hw_table = alloc_pages_exact(hfi_features.nr_table_pages,
+ 						   GFP_KERNEL | __GFP_ZERO);
+@@ -485,6 +516,10 @@ void intel_hfi_offline(unsigned int cpu)
+ 
+ 	mutex_lock(&hfi_instance_lock);
+ 	cpumask_clear_cpu(cpu, hfi_instance->cpus);
++
++	if (!cpumask_weight(hfi_instance->cpus))
++		hfi_disable();
++
+ 	mutex_unlock(&hfi_instance_lock);
+ }
+ 
+-- 
+2.43.0
+
 
 
