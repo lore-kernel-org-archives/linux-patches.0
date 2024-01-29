@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F17B15A4A3;
-	Mon, 29 Jan 2024 17:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE151586E8;
+	Mon, 29 Jan 2024 17:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548058; cv=none; b=NsHO5mP3DdzO3/xm5XTNeX49mi/KXTQjdYcnqfbGI9vn/i+tnpXXKkaFbFX12MuDIQUIKoeklSreT718c2lcX7oy25Xvgqq3C9aISao5lkLYvFV5XHa4/JJEt15PTP97UIxDpH1/RiDxPFGT26FMzc+O6EouaNukvgn4ew2usZU=
+	t=1706548058; cv=none; b=YyjAE4Ll3f4R1z9+LI6C4v3wmsTtgp5jH5lgBH/oTQpumGl7dc2RTJ4LwTfFLGgubzt824hv1stc3JODBPE3XuuGmEkqc0mC7T8EhT0lCVNs1bdmQ4b8WV6IFaVuEMRTD90PnMSvEsl7lCvWm/0bHUd3X1u7KkCy+jGiajf5vxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548058; c=relaxed/simple;
-	bh=WmtHhPx4MVzLreOqMslc/qGXOlPvtDeVJ6HKfNQXRFQ=;
+	bh=n25XYIqoYxLRjA9cfrftf4JloTM+KqSAnK6dYuABwq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AG9o37n6C4wxnNAc+Iv0cttyS0Mqlwv1lN1+yXGWinVHgDzT1jgFpRbEA4ExCarOKbNLxiFEm3NU9QoYYkFkh2ZWanE0WOwW8QUaCD4PETWwTeAy2CDV1X8fSkQdN1wbCBjNQRLW2Cy5y+gd9i4IR1NWzyBj8jso9McCt+AiEnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sv4DqdpK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZaYPWBrsOXOaWiUclGAv+HJH+Dkh/+FcANW6UTIFth0nTVGxwcYsc8NsqBPyxoxXtQwqGwsJC/VE+nfBM12qpI7mz4gJydgezeYlqMTg92zoAcakQrCh4VhCUUI57iDa4k8Ac+4Z8hMg1sdFne+8e63MDRjNxOuxdKIockPfkEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0M5kdcd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sv4DqdpK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6BDC43399;
-	Mon, 29 Jan 2024 17:07:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0M5kdcd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506A2C43399;
+	Mon, 29 Jan 2024 17:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548057;
-	bh=WmtHhPx4MVzLreOqMslc/qGXOlPvtDeVJ6HKfNQXRFQ=;
+	s=korg; t=1706548058;
+	bh=n25XYIqoYxLRjA9cfrftf4JloTM+KqSAnK6dYuABwq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sv4DqdpKAageDZ5+stULUccjzZrjC0JamUKA0GrfWs+axHq1vJLgHw4KIztBcCZ3/
-	 HWVE71LtGl18zye+RHhvITh94nmfetmSwFl8QHCikv4yUEE+GpHGPHslL92vsXBMgv
-	 wZBeS0jK10PIUAL0C7Rb4cBu3pO7FTeVE6VZO/5o=
+	b=N0M5kdcdmCURw9zO2jwKw2Dsl1ak0aOsPYvSg5qFp72xFcNrHlPIAwrYJeaOnXfyA
+	 2XeI4jOycfZK8sxi4I2TeH2mE4oiBTozfaaJdBbFYTTyWhbw1YQ9aDed6XnHLXsSem
+	 slubRclyz/Oggp1MQHedk1vZ3LHBuDVWCu1yjQvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Krowiak <akrowiak@linux.ibm.com>,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.7 037/346] s390/vfio-ap: loop over the shadow APCB when filtering guests AP configuration
-Date: Mon, 29 Jan 2024 09:01:08 -0800
-Message-ID: <20240129170017.477748271@linuxfoundation.org>
+	Bingbu Cao <bingbu.cao@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.7 028/346] media: imx355: Enable runtime PM before registering async sub-device
+Date: Mon, 29 Jan 2024 09:00:59 -0800
+Message-ID: <20240129170017.209719859@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,56 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Krowiak <akrowiak@linux.ibm.com>
+From: Bingbu Cao <bingbu.cao@intel.com>
 
-commit 16fb78cbf56e42b8efb2682a4444ab59e32e7959 upstream.
+commit efa5fe19c0a9199f49e36e1f5242ed5c88da617d upstream.
 
-While filtering the mdev matrix, it doesn't make sense - and will have
-unexpected results - to filter an APID from the matrix if the APID or one
-of the associated APQIs is not in the host's AP configuration. There are
-two reasons for this:
+As the sensor device maybe accessible right after its async sub-device is
+registered, such as ipu-bridge will try to power up sensor by sensor's
+client device's runtime PM from the async notifier callback, if runtime PM
+is not enabled, it will fail.
 
-1. An adapter or domain that is not in the host's AP configuration can be
-   assigned to the matrix; this is known as over-provisioning. Queue
-   devices, however, are only created for adapters and domains in the
-   host's AP configuration, so there will be no queues associated with an
-   over-provisioned adapter or domain to filter.
+So runtime PM should be ready before its async sub-device is registered
+and accessible by others.
 
-2. The adapter or domain may have been externally removed from the host's
-   configuration via an SE or HMC attached to a DPM enabled LPAR. In this
-   case, the vfio_ap device driver would have been notified by the AP bus
-   via the on_config_changed callback and the adapter or domain would
-   have already been filtered.
-
-Since the matrix_mdev->shadow_apcb.apm and matrix_mdev->shadow_apcb.aqm are
-copied from the mdev matrix sans the APIDs and APQIs not in the host's AP
-configuration, let's loop over those bitmaps instead of those assigned to
-the matrix.
-
-Signed-off-by: Tony Krowiak <akrowiak@linux.ibm.com>
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
-Fixes: 48cae940c31d ("s390/vfio-ap: refresh guest's APCB by filtering AP resources assigned to mdev")
+Fixes: df0b5c4a7ddd ("media: add imx355 camera sensor driver")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240115185441.31526-3-akrowiak@linux.ibm.com
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/i2c/imx355.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/s390/crypto/vfio_ap_ops.c
-+++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -692,8 +692,9 @@ static bool vfio_ap_mdev_filter_matrix(s
- 	bitmap_and(matrix_mdev->shadow_apcb.aqm, matrix_mdev->matrix.aqm,
- 		   (unsigned long *)matrix_dev->info.aqm, AP_DOMAINS);
+--- a/drivers/media/i2c/imx355.c
++++ b/drivers/media/i2c/imx355.c
+@@ -1748,10 +1748,6 @@ static int imx355_probe(struct i2c_clien
+ 		goto error_handler_free;
+ 	}
  
--	for_each_set_bit_inv(apid, matrix_mdev->matrix.apm, AP_DEVICES) {
--		for_each_set_bit_inv(apqi, matrix_mdev->matrix.aqm, AP_DOMAINS) {
-+	for_each_set_bit_inv(apid, matrix_mdev->shadow_apcb.apm, AP_DEVICES) {
-+		for_each_set_bit_inv(apqi, matrix_mdev->shadow_apcb.aqm,
-+				     AP_DOMAINS) {
- 			/*
- 			 * If the APQN is not bound to the vfio_ap device
- 			 * driver, then we can't assign it to the guest's
+-	ret = v4l2_async_register_subdev_sensor(&imx355->sd);
+-	if (ret < 0)
+-		goto error_media_entity;
+-
+ 	/*
+ 	 * Device is already turned on by i2c-core with ACPI domain PM.
+ 	 * Enable runtime PM and turn off the device.
+@@ -1760,9 +1756,15 @@ static int imx355_probe(struct i2c_clien
+ 	pm_runtime_enable(&client->dev);
+ 	pm_runtime_idle(&client->dev);
+ 
++	ret = v4l2_async_register_subdev_sensor(&imx355->sd);
++	if (ret < 0)
++		goto error_media_entity_runtime_pm;
++
+ 	return 0;
+ 
+-error_media_entity:
++error_media_entity_runtime_pm:
++	pm_runtime_disable(&client->dev);
++	pm_runtime_set_suspended(&client->dev);
+ 	media_entity_cleanup(&imx355->sd.entity);
+ 
+ error_handler_free:
 
 
