@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B399673748;
-	Mon, 29 Jan 2024 17:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9D473722;
+	Mon, 29 Jan 2024 17:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548539; cv=none; b=RFeYKbQy7sZZgCISXXNtZVPeIZYD5PYVQum/Dw3uV8J0YCXrxP0jGiAXAh1AAC3RtfGajRkR6twiXtICl2KDTe+wdUNYmfiwGeJASupdCSES37Fas5NzgBs6xNaJgfwCqrYfx1BwbA97V13+K0fxTHA2b7DVIfFT8oHiIZgiqoM=
+	t=1706548540; cv=none; b=XU6hAFw7s480QQDAv+Fs5Uu+G0WhG+aIG7hoqCIZnePJ+9ZBF8VCtjtzw47RhWVS8nBtoMWpOCRBSzS8sT6WWhWShf0O9I5RBcJl/Ckl2LUMOqMjkOzwY9WP2DnfS97WOLUYjc7OFaiKIlIOPgLTlzbcvw2LPSabst9sRBeMA9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548539; c=relaxed/simple;
-	bh=yIsfTkso4vuNqt+h1Eh7AYhI+4hTyX5ErHaKF+pqVnk=;
+	s=arc-20240116; t=1706548540; c=relaxed/simple;
+	bh=RbGb1vLYZKe071E6Qiu/1NM4eUggNxHloA1YwZsTddU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u6NmI6LxqdwL79UkwprYMRnN4pmztdVeDtbXjIyuofvxiDW1fIHpcY2F6VFNTABtaSLWi4av2jH/68rIK5AxU78ZxnJdeKYqxdWNBRR6eOGxTnDlggM80Qiz6b8nRx3YhB68+8akS8yeQduUEFvyhFoZ8E2cfgf+OfZohOBYnL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adPjDH0Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PDlErc1RhqDp0TfDWwZN4C8iBRfh7j5HO6NJak51rdHfaxDqHF5rottwBLpdKjeo6Nk66QEtXzfVqDM0cVrxgSgSWVcXwwczOCuEV2F9YBHUZVmmLPKb5kM7cd4Iz+j+opsGdg1S8Gr9MKxlI4Yc0qvULy7fZRlB+aVRv8fMqic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfxLNXL9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adPjDH0Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD12C433C7;
-	Mon, 29 Jan 2024 17:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfxLNXL9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43EB4C43394;
+	Mon, 29 Jan 2024 17:15:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548539;
-	bh=yIsfTkso4vuNqt+h1Eh7AYhI+4hTyX5ErHaKF+pqVnk=;
+	s=korg; t=1706548540;
+	bh=RbGb1vLYZKe071E6Qiu/1NM4eUggNxHloA1YwZsTddU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=adPjDH0ZVMfEKxlQkinl+iVbTzBsa63Ize8rD6w58iVgfShoPMgOZ7Z8OZ+yZDQPa
-	 TCmtaJPbJh0YOILkZfa4M2Utw8I7DquAIqtXR6Qx0BlW4OaMIzqLhtKStesQ5FLB5b
-	 6yOxefn7Q9ErEMKt90eZnSKnnoD55BNloQhDF4O8=
+	b=CfxLNXL9GqDh+Xbj/xlzqQnM0sAkuX+FFZQIMq6ogpTatjpQiv4YKN5BNlCnMRoD5
+	 fymxKh1DjyZmYQgMvq2zO4wdGHPXVr6vKNNfENiJbHqYRajDdW8jjUthEJILuaGpeO
+	 fsdXxtZzbkewhI8XlotPeFNrKpyb93sAwLKsdZdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jason Wang <jasowang@redhat.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 179/331] tun: fix missing dropped counter in tun_xdp_act
-Date: Mon, 29 Jan 2024 09:04:03 -0800
-Message-ID: <20240129170020.140209493@linuxfoundation.org>
+Subject: [PATCH 6.6 180/331] tun: add missing rx stats accounting in tun_xdp_act
+Date: Mon, 29 Jan 2024 09:04:04 -0800
+Message-ID: <20240129170020.170437129@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -55,45 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Yunjian Wang <wangyunjian@huawei.com>
 
-[ Upstream commit 5744ba05e7c4bff8fec133dd0f9e51ddffba92f5 ]
+[ Upstream commit f1084c427f55d573fcd5688d9ba7b31b78019716 ]
 
-The commit 8ae1aff0b331 ("tuntap: split out XDP logic") includes
-dropped counter for XDP_DROP, XDP_ABORTED, and invalid XDP actions.
-Unfortunately, that commit missed the dropped counter when error
-occurs during XDP_TX and XDP_REDIRECT actions. This patch fixes
-this issue.
+The TUN can be used as vhost-net backend, and it is necessary to
+count the packets transmitted from TUN to vhost-net/virtio-net.
+However, there are some places in the receive path that were not
+taken into account when using XDP. It would be beneficial to also
+include new accounting for successfully received bytes using
+dev_sw_netstats_rx_add.
 
-Fixes: 8ae1aff0b331 ("tuntap: split out XDP logic")
+Fixes: 761876c857cb ("tap: XDP support")
 Signed-off-by: Yunjian Wang <wangyunjian@huawei.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/tun.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index afa5497f7c35..237fef557ba5 100644
+index 237fef557ba5..4a4f8c8e79fa 100644
 --- a/drivers/net/tun.c
 +++ b/drivers/net/tun.c
-@@ -1630,13 +1630,17 @@ static int tun_xdp_act(struct tun_struct *tun, struct bpf_prog *xdp_prog,
- 	switch (act) {
- 	case XDP_REDIRECT:
- 		err = xdp_do_redirect(tun->dev, xdp, xdp_prog);
--		if (err)
-+		if (err) {
-+			dev_core_stats_rx_dropped_inc(tun->dev);
+@@ -1634,6 +1634,7 @@ static int tun_xdp_act(struct tun_struct *tun, struct bpf_prog *xdp_prog,
+ 			dev_core_stats_rx_dropped_inc(tun->dev);
  			return err;
-+		}
+ 		}
++		dev_sw_netstats_rx_add(tun->dev, xdp->data_end - xdp->data);
  		break;
  	case XDP_TX:
  		err = tun_xdp_tx(tun->dev, xdp);
--		if (err < 0)
-+		if (err < 0) {
-+			dev_core_stats_rx_dropped_inc(tun->dev);
+@@ -1641,6 +1642,7 @@ static int tun_xdp_act(struct tun_struct *tun, struct bpf_prog *xdp_prog,
+ 			dev_core_stats_rx_dropped_inc(tun->dev);
  			return err;
-+		}
+ 		}
++		dev_sw_netstats_rx_add(tun->dev, xdp->data_end - xdp->data);
  		break;
  	case XDP_PASS:
  		break;
