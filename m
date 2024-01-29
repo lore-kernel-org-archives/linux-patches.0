@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20B115A48F;
-	Mon, 29 Jan 2024 17:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F0515A48F;
+	Mon, 29 Jan 2024 17:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548265; cv=none; b=G/xw2sQfOHorKU2Yzbxa+TU8A/4P/XrivOuO9X6OrYtAY8e7A//pc9hOHl8dZJyTMa1gC5H8Wg5mBzuVdXoQ61EgYQ5xb+yK+tpBDjrKoNt+0wEtAsWV8rrErjrQZHrcKQIVymdlajNAJQut2WKfb+N4m7jBcFA5osiT/bt9JzA=
+	t=1706548266; cv=none; b=XR1rw14Sn50XlMP76dliJ0n9Ubc15hZwBHpX1F0YzixvXFLjfgTXODmIMp7jKpICa6q3y+ljBiQyWQNVr91DNVaCiqxgCy5D3hCTRKoJx1OriYKJEhpdEurTfQS9Li4SMffoXNdMU2vAHHhA/vi2EvTG953Omc/dfMRMI2djRfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548265; c=relaxed/simple;
-	bh=JbwWTJ4Ss2g+cCd7W1cFy9+KvSl5U5gGDwWFK7loOKg=;
+	s=arc-20240116; t=1706548266; c=relaxed/simple;
+	bh=9mUctPfTMI7KNnDCHXWdzLFR8DlJP0W6Gs44Xqp9cH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cSOMEAypTWzsjhzk6eO/dK1mOr2S94VIRdOFL+7ZONTOUqFWyLfVfiXuvFy7aUDacGLhby15iXclSj26vSQtWvmOP+ROxd/93ijSYqNrQfT6zwGwgdgaJfT7//tjzje/NMFsCjxb4eyYNXA3XQ7NicvNxdJdey8mcvjXjvfGwRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TeSxthGj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K9V0QFRlgJJOFxqxYaeCWRI2h53txLsLSBxrqtJVJSKF9QeTtkfTsRf6rLDA1huCd3KHhlC03N/yV87QSYbjmCajdsCmP9cCMlPZ/eL/y+39wDgLqcRn/sgHoz1HQL2ByHEPjmOrG4GCllzsosYE2Uz30cqnPfqVx8uWRBybPc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSBOWmhO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TeSxthGj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F98C43399;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSBOWmhO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0DE0C433C7;
 	Mon, 29 Jan 2024 17:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548265;
-	bh=JbwWTJ4Ss2g+cCd7W1cFy9+KvSl5U5gGDwWFK7loOKg=;
+	s=korg; t=1706548266;
+	bh=9mUctPfTMI7KNnDCHXWdzLFR8DlJP0W6Gs44Xqp9cH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TeSxthGjZH/d3Ve3I0fW2TTHW/B++z9lO9olNcgiJta78GCyD1FLn0TIG90J1ityy
-	 9H0fFnoVG11mU34clVhtseElheoNCySAbsgPZ1jLMfVsqeFRtKC+yAHMnFVdX0N03W
-	 jSVnpINWTHwoD2mIj0N863gxbfTgLjxjLkDZekb4=
+	b=jSBOWmhORh1hFexCHR8LD4+ToOA5LGPEhWG5hzBRm228LH0XPBP0VHQHeo3PYZ0eQ
+	 fBPlgecypLdaAVxOw4YPouycGV7PgWhlM3UgQo8AV4yBEMkwYa7nVJKWsgd7sHw3CU
+	 70UHduO1GyFUiWbnmZhVVkPdWwjsSll+GEkjwkYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 282/346] thermal: intel: hfi: Add syscore callbacks for system-wide PM
-Date: Mon, 29 Jan 2024 09:05:13 -0800
-Message-ID: <20240129170024.672167742@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.7 260/346] drm/amd/display: Fix a debugfs null pointer error
+Date: Mon, 29 Jan 2024 09:04:51 -0800
+Message-ID: <20240129170024.044151445@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,101 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-[ Upstream commit 97566d09fd02d2ab329774bb89a2cdf2267e86d9 ]
+commit efb91fea652a42fcc037d2a9ef4ecd1ffc5ff4b7 upstream.
 
-The kernel allocates a memory buffer and provides its location to the
-hardware, which uses it to update the HFI table. This allocation occurs
-during boot and remains constant throughout runtime.
+[WHY & HOW]
+Check whether get_subvp_en() callback exists before calling it.
 
-When resuming from hibernation, the restore kernel allocates a second
-memory buffer and reprograms the HFI hardware with the new location as
-part of a normal boot. The location of the second memory buffer may
-differ from the one allocated by the image kernel.
-
-When the restore kernel transfers control to the image kernel, its HFI
-buffer becomes invalid, potentially leading to memory corruption if the
-hardware writes to it (the hardware continues to use the buffer from the
-restore kernel).
-
-It is also possible that the hardware "forgets" the address of the memory
-buffer when resuming from "deep" suspend. Memory corruption may also occur
-in such a scenario.
-
-To prevent the described memory corruption, disable HFI when preparing to
-suspend or hibernate. Enable it when resuming.
-
-Add syscore callbacks to handle the package of the boot CPU (packages of
-non-boot CPUs are handled via CPU offline). Syscore ops always run on the
-boot CPU. Additionally, HFI only needs to be disabled during "deep" suspend
-and hibernation. Syscore ops only run in these cases.
-
-Cc: 6.1+ <stable@vger.kernel.org> # 6.1+
-Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-[ rjw: Comment adjustment, subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/intel/intel_hfi.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/intel/intel_hfi.c b/drivers/thermal/intel/intel_hfi.c
-index bb25c75acd45..1c5a429b2e3e 100644
---- a/drivers/thermal/intel/intel_hfi.c
-+++ b/drivers/thermal/intel/intel_hfi.c
-@@ -35,7 +35,9 @@
- #include <linux/processor.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
-+#include <linux/suspend.h>
- #include <linux/string.h>
-+#include <linux/syscore_ops.h>
- #include <linux/topology.h>
- #include <linux/workqueue.h>
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+@@ -3647,12 +3647,16 @@ static int capabilities_show(struct seq_
+ 	bool mall_supported = dc->caps.mall_size_total;
+ 	bool subvp_supported = dc->caps.subvp_fw_processing_delay_us;
+ 	unsigned int mall_in_use = false;
+-	unsigned int subvp_in_use = dc->cap_funcs.get_subvp_en(dc, dc->current_state);
++	unsigned int subvp_in_use = false;
++
+ 	struct hubbub *hubbub = dc->res_pool->hubbub;
  
-@@ -568,6 +570,30 @@ static __init int hfi_parse_features(void)
- 	return 0;
- }
+ 	if (hubbub->funcs->get_mall_en)
+ 		hubbub->funcs->get_mall_en(hubbub, &mall_in_use);
  
-+static void hfi_do_enable(void)
-+{
-+	/* This code runs only on the boot CPU. */
-+	struct hfi_cpu_info *info = &per_cpu(hfi_cpu_info, 0);
-+	struct hfi_instance *hfi_instance = info->hfi_instance;
++	if (dc->cap_funcs.get_subvp_en)
++		subvp_in_use = dc->cap_funcs.get_subvp_en(dc, dc->current_state);
 +
-+	/* No locking needed. There is no concurrency with CPU online. */
-+	hfi_set_hw_table(hfi_instance);
-+	hfi_enable();
-+}
-+
-+static int hfi_do_disable(void)
-+{
-+	/* No locking needed. There is no concurrency with CPU offline. */
-+	hfi_disable();
-+
-+	return 0;
-+}
-+
-+static struct syscore_ops hfi_pm_ops = {
-+	.resume = hfi_do_enable,
-+	.suspend = hfi_do_disable,
-+};
-+
- void __init intel_hfi_init(void)
- {
- 	struct hfi_instance *hfi_instance;
-@@ -599,6 +625,8 @@ void __init intel_hfi_init(void)
- 	if (!hfi_updates_wq)
- 		goto err_nomem;
- 
-+	register_syscore_ops(&hfi_pm_ops);
-+
- 	return;
- 
- err_nomem:
--- 
-2.43.0
-
+ 	seq_printf(m, "mall supported: %s, enabled: %s\n",
+ 			   mall_supported ? "yes" : "no", mall_in_use ? "yes" : "no");
+ 	seq_printf(m, "sub-viewport supported: %s, enabled: %s\n",
 
 
