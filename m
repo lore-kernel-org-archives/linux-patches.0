@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3800615B309;
-	Mon, 29 Jan 2024 17:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036F2159591;
+	Mon, 29 Jan 2024 17:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548260; cv=none; b=P2kTRgF32OpP3ptIGygcp9jH0v/d5Aec006EO67N4KDFAdguJw1Nulq1Zyti5fxYnikeyvbzDhWRUef3c28yotptlhL6oVeqBwNm1Ka3Vjr5Zk6hyEDdTJSHzr6XnzMU/4FFp2AN4+ndsdjayqbFSeNTBnEzPRjfYwhDORJJ5G0=
+	t=1706548261; cv=none; b=iyrb2/Kc9E0XHkyp/5sVmdmn7rx3TXyQZ5Hcl7bREbdD0V4Wirt5rvFK3Kf4BqXXipJtWJO1RsRzt5JdKBhWKjAiXclBnuFlpH/iAc7eQEYULuT2/hb83yfCN0dVQqq7hWYgmwlQHQfHBJI4xac+1qz1/VqqK9cQhiuXbAl51cU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548260; c=relaxed/simple;
-	bh=tseVDt+xTny6DMchfJnzwTCvQkxEmWervI1qiQUoXgw=;
+	s=arc-20240116; t=1706548261; c=relaxed/simple;
+	bh=liap3NySlBRnj9zaJcXbCXnL2sNNjht6CzYicosHUqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M4bp2upoTlYTAxhcH+JlvUwzfTQXKLAGNLdTPx5KY6zIEYkWrIs3BPz0qWj3AHbFWpSLmmDjzDUZ25xDGnUGXaSxiHBD794QWkEKU3lyQ5byFtid4e/jFi5Ls2zdQzX23cIQt9UubdQn/py8DDU0VMON4IQlcWCaEbUVT6mj+LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nO1HK4Jm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tuILwpIWERMFVBevmPLZens60YkwvzY0H+ZY7tZKwxXGxKH1Uf7fwTSuscYpwZVArYCzY0hrFUvAlExIfEEI9pn7Kg4/gxhbvPASRUFd02OG8o2WbShD0QOIujYzeB+hlmuao3FPn1Vi+UjooeG1cerz0IoPr9bSAA5ghtdx3UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCoeu8tY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nO1HK4Jm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00074C43394;
-	Mon, 29 Jan 2024 17:10:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCoeu8tY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C253BC433C7;
+	Mon, 29 Jan 2024 17:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548260;
-	bh=tseVDt+xTny6DMchfJnzwTCvQkxEmWervI1qiQUoXgw=;
+	bh=liap3NySlBRnj9zaJcXbCXnL2sNNjht6CzYicosHUqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nO1HK4JmQxT//m7JujBAEoOnUgp//vzzhG4QN1Y4d5I1/FW8xtEC07rJAbMR9DMlR
-	 3FmiPCITofPI/Zh8T7o3MVnbzh66fxcJ7CTeQWEnSCoaG+LjZHjcfVeN/OkKNsVChW
-	 Lcs8bcyFIx6eHebYnK3WD7Z9JlrRfZs5+1aLrNSE=
+	b=HCoeu8tYspV1t3asUnjApLHE7/kyfknt8cd5RV0gKCmguriEL3TMDTh+krMIHRc5h
+	 3YZ6eu/FKgO5uh9J4/6a2yQSEIwpgRpqoow7C9PCedXvGy6baINVXYCrI0F4UP/NOZ
+	 NDTmHfD1C4K6/0T6kodewH2opI2iVF2dO2hCZpBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carsten Hatger <xmb8dsv4@gmail.com>,
-	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 052/185] rtc: Extend timeout for waiting for UIP to clear to 1s
-Date: Mon, 29 Jan 2024 09:04:12 -0800
-Message-ID: <20240129170000.267363391@linuxfoundation.org>
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Jun Lei <Jun.Lei@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.7 279/346] drm/amd/display: Fix uninitialized variable usage in core_link_ read_dpcd() & write_dpcd() functions
+Date: Mon, 29 Jan 2024 09:05:10 -0800
+Message-ID: <20240129170024.583108937@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,100 +50,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit cef9ecc8e938dd48a560f7dd9be1246359248d20 upstream.
+commit a58371d632ebab9ea63f10893a6b6731196b6f8d upstream.
 
-Specs don't say anything about UIP being cleared within 10ms. They
-only say that UIP won't occur for another 244uS. If a long NMI occurs
-while UIP is still updating it might not be possible to get valid
-data in 10ms.
+The 'status' variable in 'core_link_read_dpcd()' &
+'core_link_write_dpcd()' was uninitialized.
 
-This has been observed in the wild that around s2idle some calls can
-take up to 480ms before UIP is clear.
+Thus, initializing 'status' variable to 'DC_ERROR_UNEXPECTED' by default.
 
-Adjust callers from outside an interrupt context to wait for up to a
-1s instead of 10ms.
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dpcd.c:226 core_link_read_dpcd() error: uninitialized symbol 'status'.
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dpcd.c:248 core_link_write_dpcd() error: uninitialized symbol 'status'.
 
-Cc:  <stable@vger.kernel.org> # 6.1.y
-Fixes: ec5895c0f2d8 ("rtc: mc146818-lib: extract mc146818_avoid_UIP")
-Reported-by: Carsten Hatger <xmb8dsv4@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217626
-Tested-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
-Reviewed-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
-Acked-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20231128053653.101798-5-mario.limonciello@amd.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: stable@vger.kernel.org
+Cc: Jerry Zuo <jerry.zuo@amd.com>
+Cc: Jun Lei <Jun.Lei@amd.com>
+Cc: Wayne Lin <Wayne.Lin@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/rtc.c          | 2 +-
- drivers/base/power/trace.c     | 2 +-
- drivers/rtc/rtc-cmos.c         | 2 +-
- drivers/rtc/rtc-mc146818-lib.c | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/link/protocols/link_dpcd.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/rtc.c b/arch/x86/kernel/rtc.c
-index 961ebc7f1872..2e7066980f3e 100644
---- a/arch/x86/kernel/rtc.c
-+++ b/arch/x86/kernel/rtc.c
-@@ -67,7 +67,7 @@ void mach_get_cmos_time(struct timespec64 *now)
- 		return;
- 	}
- 
--	if (mc146818_get_time(&tm, 10)) {
-+	if (mc146818_get_time(&tm, 1000)) {
- 		pr_err("Unable to read current time from RTC\n");
- 		now->tv_sec = now->tv_nsec = 0;
- 		return;
-diff --git a/drivers/base/power/trace.c b/drivers/base/power/trace.c
-index c2e925357474..cd6e559648b2 100644
---- a/drivers/base/power/trace.c
-+++ b/drivers/base/power/trace.c
-@@ -120,7 +120,7 @@ static unsigned int read_magic_time(void)
- 	struct rtc_time time;
- 	unsigned int val;
- 
--	if (mc146818_get_time(&time, 10) < 0) {
-+	if (mc146818_get_time(&time, 1000) < 0) {
- 		pr_err("Unable to read current time from RTC\n");
- 		return 0;
- 	}
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 468ccd99f218..7d99cd2c37a0 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -231,7 +231,7 @@ static int cmos_read_time(struct device *dev, struct rtc_time *t)
- 	if (!pm_trace_rtc_valid())
- 		return -EIO;
- 
--	ret = mc146818_get_time(t, 10);
-+	ret = mc146818_get_time(t, 1000);
- 	if (ret < 0) {
- 		dev_err_ratelimited(dev, "unable to read current time\n");
- 		return ret;
-diff --git a/drivers/rtc/rtc-mc146818-lib.c b/drivers/rtc/rtc-mc146818-lib.c
-index 4c17b3cef11e..651bf3c279c7 100644
---- a/drivers/rtc/rtc-mc146818-lib.c
-+++ b/drivers/rtc/rtc-mc146818-lib.c
-@@ -93,7 +93,7 @@ EXPORT_SYMBOL_GPL(mc146818_avoid_UIP);
-  */
- bool mc146818_does_rtc_work(void)
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dpcd.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dpcd.c
+@@ -205,7 +205,7 @@ enum dc_status core_link_read_dpcd(
+ 	uint32_t extended_size;
+ 	/* size of the remaining partitioned address space */
+ 	uint32_t size_left_to_read;
+-	enum dc_status status;
++	enum dc_status status = DC_ERROR_UNEXPECTED;
+ 	/* size of the next partition to be read from */
+ 	uint32_t partition_size;
+ 	uint32_t data_index = 0;
+@@ -234,7 +234,7 @@ enum dc_status core_link_write_dpcd(
  {
--	return mc146818_avoid_UIP(NULL, 10, NULL);
-+	return mc146818_avoid_UIP(NULL, 1000, NULL);
- }
- EXPORT_SYMBOL_GPL(mc146818_does_rtc_work);
+ 	uint32_t partition_size;
+ 	uint32_t data_index = 0;
+-	enum dc_status status;
++	enum dc_status status = DC_ERROR_UNEXPECTED;
  
--- 
-2.43.0
-
+ 	while (size) {
+ 		partition_size = dpcd_get_next_partition_size(address, size);
 
 
