@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCADA15703C;
-	Mon, 29 Jan 2024 17:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA6715703C;
+	Mon, 29 Jan 2024 17:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548017; cv=none; b=EALgHQJl1SVh7Lsc7VnubaPlGXHOylbB9XLdjQkvcMiudh/Eb64/tbMenEv6BaSaesBYqWXJbPGicIf8D+uQhvYYUlupDR69rmtdjoWLzfg4m7beVYc+3U13qTm/xzbhrDnNfmOyUqYlCNauHgZyZj2O4Lhsm60G4qoIaaS2qpA=
+	t=1706548018; cv=none; b=a1y9RmeX35e3HouBPXzRK8mGO0bPA2CRXFR16RzQ+YjCFddRBIizTkd+XChEwaEiszuxgiAaEG46jT8OAHgjxsN9UmquojeS/47FGYzp+0gSIzqrU1TrCpyFzAGkM9vs2HTusJK+WnDwpTZsJV9uub3al62zGwbuhZL7lhyjOUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548017; c=relaxed/simple;
-	bh=EqBEn/SWq9K8p2ImqcV9BerZy0oTzSinLCUfEOXDQU4=;
+	s=arc-20240116; t=1706548018; c=relaxed/simple;
+	bh=eUdvl6n469hsis/Fk4pzkf2GpsKv8Fq0v7ngBLUWrdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sSFK7nJtLk/ceQTFibDleUaU0M5Q3SRzlGoCNVBDotSroPLlEqYojK/tqummPZnpilF31y+ioZsIpRl6FCi42ihaRVUEq35EIweB4Mde3SnR0o/tJVdVpH84e6DO5bCCQU+Vp4LmFCaEMpwxwWFtxULS2pDpWRXWg5JPfCkYQT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/BKlFb9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SKKLY6DaUmkLC/Knj93Aoc0A4l2gyCOEQtSdigAii9JD25IaEEJ/NB/s20fuylOJxKQQ79a7+ZXvg87vieMU68TjD1ChEf3+uo5mJ004EeGpOm1tUieV6CZD8xa3bVIaclMnf1dqvod2XWcp84g1C42noOkWnABKobEpRTMVcCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ruowdKZX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/BKlFb9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC98C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ruowdKZX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB7BC43390;
 	Mon, 29 Jan 2024 17:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548017;
-	bh=EqBEn/SWq9K8p2ImqcV9BerZy0oTzSinLCUfEOXDQU4=;
+	s=korg; t=1706548018;
+	bh=eUdvl6n469hsis/Fk4pzkf2GpsKv8Fq0v7ngBLUWrdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/BKlFb9BTmrMYQjq2VFhb/Y70zxuU/1x0P0W7fmt3HpFQWFLe0I9trJZPrHEbFte
-	 sZoUEvd9n8nt2rj6bw95dmyWLZl4V9Urw6XOjRhvXZqgSH5BCBDqddu7hxquyXSAgJ
-	 Dw2j8S3QB6SMdutNX6wr2U/wSyFI7xYX6xNqCnr0=
+	b=ruowdKZXTrE1fREOg//QYTSqBFdBQNvSq59gyRRwaLK1kedLNMcbCvPA8CmNHEv9h
+	 TeQmAxDSWBj5hu1r0eqYPqvQQrHPbHIdVqNa0HmLyriyqFO4nBZWNXu1jTopaAm6Bd
+	 wrCfQU0l5x5cSoMoWlund5Xt6Eg7ZxFMW0vaGqmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 001/346] soundwire: bus: introduce controller_id
-Date: Mon, 29 Jan 2024 09:00:32 -0800
-Message-ID: <20240129170016.397787793@linuxfoundation.org>
+	Youngmin Nam <youngmin.nam@samsung.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.7 010/346] PM: sleep: Fix possible deadlocks in core system-wide PM code
+Date: Mon, 29 Jan 2024 09:00:41 -0800
+Message-ID: <20240129170016.656236133@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -55,162 +52,324 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 6543ac13c623f906200dfd3f1c407d8d333b6995 ]
+commit 7839d0078e0d5e6cc2fa0b0dfbee71de74f1e557 upstream.
 
-The existing SoundWire support misses a clear Controller/Manager
-hiearchical definition to deal with all variants across SOC vendors.
+It is reported that in low-memory situations the system-wide resume core
+code deadlocks, because async_schedule_dev() executes its argument
+function synchronously if it cannot allocate memory (and not only in
+that case) and that function attempts to acquire a mutex that is already
+held.  Executing the argument function synchronously from within
+dpm_async_fn() may also be problematic for ordering reasons (it may
+cause a consumer device's resume callback to be invoked before a
+requisite supplier device's one, for example).
 
-a) Intel platforms have one controller with 4 or more Managers.
-b) AMD platforms have two controllers with one Manager each, but due
-to BIOS issues use two different link_id values within the scope of a
-single controller.
-c) QCOM platforms have one or more controller with one Manager each.
+Address this by changing the code in question to use
+async_schedule_dev_nocall() for scheduling the asynchronous
+execution of device suspend and resume functions and to directly
+run them synchronously if async_schedule_dev_nocall() returns false.
 
-This patch adds a 'controller_id' which can be set by higher
-levels. If assigned to -1, the controller_id will be set to the
-system-unique IDA-assigned bus->id.
-
-The main change is that the bus->id is no longer used for any device
-name, which makes the definition completely predictable and not
-dependent on any enumeration order. The bus->id is only used to insert
-the Managers in the stream rt context.
-
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/stable/20231017160933.12624-2-pierre-louis.bossart%40linux.intel.com
-Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20231017160933.12624-2-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 8a8a9ac8a497 ("soundwire: fix initializing sysfs for same devices on different buses")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/linux-pm/ZYvjiqX6EsL15moe@perf/
+Reported-by: Youngmin Nam <youngmin.nam@samsung.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Tested-by: Youngmin Nam <youngmin.nam@samsung.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: 5.7+ <stable@vger.kernel.org> # 5.7+: 6aa09a5bccd8 async: Split async_schedule_node_domain()
+Cc: 5.7+ <stable@vger.kernel.org> # 5.7+: 7d4b5d7a37bd async: Introduce async_schedule_dev_nocall()
+Cc: 5.7+ <stable@vger.kernel.org> # 5.7+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soundwire/amd_manager.c     | 8 ++++++++
- drivers/soundwire/bus.c             | 4 ++++
- drivers/soundwire/debugfs.c         | 2 +-
- drivers/soundwire/intel_auxdevice.c | 3 +++
- drivers/soundwire/master.c          | 2 +-
- drivers/soundwire/qcom.c            | 3 +++
- include/linux/soundwire/sdw.h       | 4 +++-
- 7 files changed, 23 insertions(+), 3 deletions(-)
+ drivers/base/power/main.c |  148 +++++++++++++++++++++-------------------------
+ 1 file changed, 68 insertions(+), 80 deletions(-)
 
-diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
-index 3a99f6dcdfaf..a3b1f4e6f0f9 100644
---- a/drivers/soundwire/amd_manager.c
-+++ b/drivers/soundwire/amd_manager.c
-@@ -927,6 +927,14 @@ static int amd_sdw_manager_probe(struct platform_device *pdev)
- 	amd_manager->bus.clk_stop_timeout = 200;
- 	amd_manager->bus.link_id = amd_manager->instance;
- 
-+	/*
-+	 * Due to BIOS compatibility, the two links are exposed within
-+	 * the scope of a single controller. If this changes, the
-+	 * controller_id will have to be updated with drv_data
-+	 * information.
-+	 */
-+	amd_manager->bus.controller_id = 0;
-+
- 	switch (amd_manager->instance) {
- 	case ACP_SDW0:
- 		amd_manager->num_dout_ports = AMD_SDW0_MAX_TX_PORTS;
-diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
-index 41b0d9adf68e..f3fec15c3112 100644
---- a/drivers/soundwire/bus.c
-+++ b/drivers/soundwire/bus.c
-@@ -22,6 +22,10 @@ static int sdw_get_id(struct sdw_bus *bus)
- 		return rc;
- 
- 	bus->id = rc;
-+
-+	if (bus->controller_id == -1)
-+		bus->controller_id = rc;
-+
- 	return 0;
+--- a/drivers/base/power/main.c
++++ b/drivers/base/power/main.c
+@@ -579,7 +579,7 @@ bool dev_pm_skip_resume(struct device *d
  }
  
-diff --git a/drivers/soundwire/debugfs.c b/drivers/soundwire/debugfs.c
-index d1553cb77187..67abd7e52f09 100644
---- a/drivers/soundwire/debugfs.c
-+++ b/drivers/soundwire/debugfs.c
-@@ -20,7 +20,7 @@ void sdw_bus_debugfs_init(struct sdw_bus *bus)
- 		return;
- 
- 	/* create the debugfs master-N */
--	snprintf(name, sizeof(name), "master-%d-%d", bus->id, bus->link_id);
-+	snprintf(name, sizeof(name), "master-%d-%d", bus->controller_id, bus->link_id);
- 	bus->debugfs = debugfs_create_dir(name, sdw_debugfs_root);
+ /**
+- * device_resume_noirq - Execute a "noirq resume" callback for given device.
++ * __device_resume_noirq - Execute a "noirq resume" callback for given device.
+  * @dev: Device to handle.
+  * @state: PM transition of the system being carried out.
+  * @async: If true, the device is being resumed asynchronously.
+@@ -587,7 +587,7 @@ bool dev_pm_skip_resume(struct device *d
+  * The driver of @dev will not receive interrupts while this function is being
+  * executed.
+  */
+-static int device_resume_noirq(struct device *dev, pm_message_t state, bool async)
++static void __device_resume_noirq(struct device *dev, pm_message_t state, bool async)
+ {
+ 	pm_callback_t callback = NULL;
+ 	const char *info = NULL;
+@@ -655,7 +655,13 @@ Skip:
+ Out:
+ 	complete_all(&dev->power.completion);
+ 	TRACE_RESUME(error);
+-	return error;
++
++	if (error) {
++		suspend_stats.failed_resume_noirq++;
++		dpm_save_failed_step(SUSPEND_RESUME_NOIRQ);
++		dpm_save_failed_dev(dev_name(dev));
++		pm_dev_err(dev, state, async ? " async noirq" : " noirq", error);
++	}
  }
  
-diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
-index 7f15e3549e53..93698532deac 100644
---- a/drivers/soundwire/intel_auxdevice.c
-+++ b/drivers/soundwire/intel_auxdevice.c
-@@ -234,6 +234,9 @@ static int intel_link_probe(struct auxiliary_device *auxdev,
- 	cdns->instance = sdw->instance;
- 	cdns->msg_count = 0;
+ static bool is_async(struct device *dev)
+@@ -668,11 +674,15 @@ static bool dpm_async_fn(struct device *
+ {
+ 	reinit_completion(&dev->power.completion);
  
-+	/* single controller for all SoundWire links */
-+	bus->controller_id = 0;
+-	if (is_async(dev)) {
+-		get_device(dev);
+-		async_schedule_dev(func, dev);
++	if (!is_async(dev))
++		return false;
 +
- 	bus->link_id = auxdev->id;
- 	bus->clk_stop_timeout = 1;
- 
-diff --git a/drivers/soundwire/master.c b/drivers/soundwire/master.c
-index 9b05c9e25ebe..51abedbbaa66 100644
---- a/drivers/soundwire/master.c
-+++ b/drivers/soundwire/master.c
-@@ -145,7 +145,7 @@ int sdw_master_device_add(struct sdw_bus *bus, struct device *parent,
- 	md->dev.fwnode = fwnode;
- 	md->dev.dma_mask = parent->dma_mask;
- 
--	dev_set_name(&md->dev, "sdw-master-%d", bus->id);
-+	dev_set_name(&md->dev, "sdw-master-%d-%d", bus->controller_id, bus->link_id);
- 
- 	ret = device_register(&md->dev);
- 	if (ret) {
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index a1e2d6c98186..8e027eee8b73 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -1624,6 +1624,9 @@ static int qcom_swrm_probe(struct platform_device *pdev)
- 		}
- 	}
- 
-+	/* FIXME: is there a DT-defined value to use ? */
-+	ctrl->bus.controller_id = -1;
++	get_device(dev);
 +
- 	ret = sdw_bus_master_add(&ctrl->bus, dev, dev->fwnode);
- 	if (ret) {
- 		dev_err(dev, "Failed to register Soundwire controller (%d)\n",
-diff --git a/include/linux/soundwire/sdw.h b/include/linux/soundwire/sdw.h
-index 4f3d14bb1538..c383579a008b 100644
---- a/include/linux/soundwire/sdw.h
-+++ b/include/linux/soundwire/sdw.h
-@@ -886,7 +886,8 @@ struct sdw_master_ops {
-  * struct sdw_bus - SoundWire bus
-  * @dev: Shortcut to &bus->md->dev to avoid changing the entire code.
-  * @md: Master device
-- * @link_id: Link id number, can be 0 to N, unique for each Master
-+ * @controller_id: system-unique controller ID. If set to -1, the bus @id will be used.
-+ * @link_id: Link id number, can be 0 to N, unique for each Controller
-  * @id: bus system-wide unique id
-  * @slaves: list of Slaves on this bus
-  * @assigned: Bitmap for Slave device numbers.
-@@ -918,6 +919,7 @@ struct sdw_master_ops {
- struct sdw_bus {
++	if (async_schedule_dev_nocall(func, dev))
+ 		return true;
+-	}
++
++	put_device(dev);
+ 
+ 	return false;
+ }
+@@ -680,15 +690,19 @@ static bool dpm_async_fn(struct device *
+ static void async_resume_noirq(void *data, async_cookie_t cookie)
+ {
+ 	struct device *dev = data;
+-	int error;
+-
+-	error = device_resume_noirq(dev, pm_transition, true);
+-	if (error)
+-		pm_dev_err(dev, pm_transition, " async", error);
+ 
++	__device_resume_noirq(dev, pm_transition, true);
+ 	put_device(dev);
+ }
+ 
++static void device_resume_noirq(struct device *dev)
++{
++	if (dpm_async_fn(dev, async_resume_noirq))
++		return;
++
++	__device_resume_noirq(dev, pm_transition, false);
++}
++
+ static void dpm_noirq_resume_devices(pm_message_t state)
+ {
  	struct device *dev;
- 	struct sdw_master_device *md;
-+	int controller_id;
- 	unsigned int link_id;
- 	int id;
- 	struct list_head slaves;
--- 
-2.43.0
-
+@@ -698,14 +712,6 @@ static void dpm_noirq_resume_devices(pm_
+ 	mutex_lock(&dpm_list_mtx);
+ 	pm_transition = state;
+ 
+-	/*
+-	 * Advanced the async threads upfront,
+-	 * in case the starting of async threads is
+-	 * delayed by non-async resuming devices.
+-	 */
+-	list_for_each_entry(dev, &dpm_noirq_list, power.entry)
+-		dpm_async_fn(dev, async_resume_noirq);
+-
+ 	while (!list_empty(&dpm_noirq_list)) {
+ 		dev = to_device(dpm_noirq_list.next);
+ 		get_device(dev);
+@@ -713,17 +719,7 @@ static void dpm_noirq_resume_devices(pm_
+ 
+ 		mutex_unlock(&dpm_list_mtx);
+ 
+-		if (!is_async(dev)) {
+-			int error;
+-
+-			error = device_resume_noirq(dev, state, false);
+-			if (error) {
+-				suspend_stats.failed_resume_noirq++;
+-				dpm_save_failed_step(SUSPEND_RESUME_NOIRQ);
+-				dpm_save_failed_dev(dev_name(dev));
+-				pm_dev_err(dev, state, " noirq", error);
+-			}
+-		}
++		device_resume_noirq(dev);
+ 
+ 		put_device(dev);
+ 
+@@ -751,14 +747,14 @@ void dpm_resume_noirq(pm_message_t state
+ }
+ 
+ /**
+- * device_resume_early - Execute an "early resume" callback for given device.
++ * __device_resume_early - Execute an "early resume" callback for given device.
+  * @dev: Device to handle.
+  * @state: PM transition of the system being carried out.
+  * @async: If true, the device is being resumed asynchronously.
+  *
+  * Runtime PM is disabled for @dev while this function is being executed.
+  */
+-static int device_resume_early(struct device *dev, pm_message_t state, bool async)
++static void __device_resume_early(struct device *dev, pm_message_t state, bool async)
+ {
+ 	pm_callback_t callback = NULL;
+ 	const char *info = NULL;
+@@ -811,21 +807,31 @@ Out:
+ 
+ 	pm_runtime_enable(dev);
+ 	complete_all(&dev->power.completion);
+-	return error;
++
++	if (error) {
++		suspend_stats.failed_resume_early++;
++		dpm_save_failed_step(SUSPEND_RESUME_EARLY);
++		dpm_save_failed_dev(dev_name(dev));
++		pm_dev_err(dev, state, async ? " async early" : " early", error);
++	}
+ }
+ 
+ static void async_resume_early(void *data, async_cookie_t cookie)
+ {
+ 	struct device *dev = data;
+-	int error;
+-
+-	error = device_resume_early(dev, pm_transition, true);
+-	if (error)
+-		pm_dev_err(dev, pm_transition, " async", error);
+ 
++	__device_resume_early(dev, pm_transition, true);
+ 	put_device(dev);
+ }
+ 
++static void device_resume_early(struct device *dev)
++{
++	if (dpm_async_fn(dev, async_resume_early))
++		return;
++
++	__device_resume_early(dev, pm_transition, false);
++}
++
+ /**
+  * dpm_resume_early - Execute "early resume" callbacks for all devices.
+  * @state: PM transition of the system being carried out.
+@@ -839,14 +845,6 @@ void dpm_resume_early(pm_message_t state
+ 	mutex_lock(&dpm_list_mtx);
+ 	pm_transition = state;
+ 
+-	/*
+-	 * Advanced the async threads upfront,
+-	 * in case the starting of async threads is
+-	 * delayed by non-async resuming devices.
+-	 */
+-	list_for_each_entry(dev, &dpm_late_early_list, power.entry)
+-		dpm_async_fn(dev, async_resume_early);
+-
+ 	while (!list_empty(&dpm_late_early_list)) {
+ 		dev = to_device(dpm_late_early_list.next);
+ 		get_device(dev);
+@@ -854,17 +852,7 @@ void dpm_resume_early(pm_message_t state
+ 
+ 		mutex_unlock(&dpm_list_mtx);
+ 
+-		if (!is_async(dev)) {
+-			int error;
+-
+-			error = device_resume_early(dev, state, false);
+-			if (error) {
+-				suspend_stats.failed_resume_early++;
+-				dpm_save_failed_step(SUSPEND_RESUME_EARLY);
+-				dpm_save_failed_dev(dev_name(dev));
+-				pm_dev_err(dev, state, " early", error);
+-			}
+-		}
++		device_resume_early(dev);
+ 
+ 		put_device(dev);
+ 
+@@ -888,12 +876,12 @@ void dpm_resume_start(pm_message_t state
+ EXPORT_SYMBOL_GPL(dpm_resume_start);
+ 
+ /**
+- * device_resume - Execute "resume" callbacks for given device.
++ * __device_resume - Execute "resume" callbacks for given device.
+  * @dev: Device to handle.
+  * @state: PM transition of the system being carried out.
+  * @async: If true, the device is being resumed asynchronously.
+  */
+-static int device_resume(struct device *dev, pm_message_t state, bool async)
++static void __device_resume(struct device *dev, pm_message_t state, bool async)
+ {
+ 	pm_callback_t callback = NULL;
+ 	const char *info = NULL;
+@@ -975,20 +963,30 @@ static int device_resume(struct device *
+ 
+ 	TRACE_RESUME(error);
+ 
+-	return error;
++	if (error) {
++		suspend_stats.failed_resume++;
++		dpm_save_failed_step(SUSPEND_RESUME);
++		dpm_save_failed_dev(dev_name(dev));
++		pm_dev_err(dev, state, async ? " async" : "", error);
++	}
+ }
+ 
+ static void async_resume(void *data, async_cookie_t cookie)
+ {
+ 	struct device *dev = data;
+-	int error;
+ 
+-	error = device_resume(dev, pm_transition, true);
+-	if (error)
+-		pm_dev_err(dev, pm_transition, " async", error);
++	__device_resume(dev, pm_transition, true);
+ 	put_device(dev);
+ }
+ 
++static void device_resume(struct device *dev)
++{
++	if (dpm_async_fn(dev, async_resume))
++		return;
++
++	__device_resume(dev, pm_transition, false);
++}
++
+ /**
+  * dpm_resume - Execute "resume" callbacks for non-sysdev devices.
+  * @state: PM transition of the system being carried out.
+@@ -1008,27 +1006,17 @@ void dpm_resume(pm_message_t state)
+ 	pm_transition = state;
+ 	async_error = 0;
+ 
+-	list_for_each_entry(dev, &dpm_suspended_list, power.entry)
+-		dpm_async_fn(dev, async_resume);
+-
+ 	while (!list_empty(&dpm_suspended_list)) {
+ 		dev = to_device(dpm_suspended_list.next);
++
+ 		get_device(dev);
+-		if (!is_async(dev)) {
+-			int error;
+ 
+-			mutex_unlock(&dpm_list_mtx);
++		mutex_unlock(&dpm_list_mtx);
+ 
+-			error = device_resume(dev, state, false);
+-			if (error) {
+-				suspend_stats.failed_resume++;
+-				dpm_save_failed_step(SUSPEND_RESUME);
+-				dpm_save_failed_dev(dev_name(dev));
+-				pm_dev_err(dev, state, "", error);
+-			}
++		device_resume(dev);
++
++		mutex_lock(&dpm_list_mtx);
+ 
+-			mutex_lock(&dpm_list_mtx);
+-		}
+ 		if (!list_empty(&dev->power.entry))
+ 			list_move_tail(&dev->power.entry, &dpm_prepared_list);
+ 
 
 
