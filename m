@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861FF15D5DF;
-	Mon, 29 Jan 2024 17:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4632F15D5D8;
+	Mon, 29 Jan 2024 17:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548420; cv=none; b=RA8H+NXAWqWTLVQisArp37Vp5McIfAK2snwkyKsJdxrnz5YfjynTC6NE1CpTCXWwnB85c06PvUTR0VzDNFj6tyHnOXTllUtIN8Eu5xREBXHaIi/ycbuZUvNuxVqlQq3rdZZr5lpOu5Gukda0VdO7Jmend5u8w24u8/SiJdNjlVc=
+	t=1706548421; cv=none; b=GAQHXmX31MkjW/vJSvXcWE7We7hIXNfKx7RbFOrESvCpSprV1Z5kMaGMhpGJjfQFsr9CGs9NXR48AlXn3+YqFdkpShs49OwkSeqn1zPcyXUhyXGl9eHnnBBz1UTy6MSOqC4tocrfXqaquSy1pQJa1Gh+JmRlzAl8NgW9p4H1yYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548420; c=relaxed/simple;
-	bh=nzQpkC5CmssvHEQ/6IbIQ/gJFtPyBOJEohBloBRB7F8=;
+	s=arc-20240116; t=1706548421; c=relaxed/simple;
+	bh=vFko/+BTPMMhlTgjqzntZvxqnf2hPxD/8ZPIixqsLNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HC+9fItsBBHgjkHtGT7ZvP+ew9zDss7K2a9YnWJ3lG6zN9mxhgjen5SbM04C1wmts9JSwq4QbT/tq+MUCRPIvjCAnCEY4tR4fyJPr9+ZjDSxv6gc55HuXvRL175o/E8RDKO1gCRbf5vh8GvwdpQmiqECILaUKeBfzUFjPFAwINQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neuiwtw+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Q7RwntYmXGUKFjcNnVZJFiAwMFa9JVJ1z+qIS3TWaYmSSnOY9khqt3oQdrowINiavdk7mQ3ukykbx14B7ULkIVy7BzrH6+rZ/QzKe4KyrYMG3UMN6Y6Zzw59f5ZSn0kjaM0CeTyc1WXdeEiWf45to1aotKA8zNXV+xZxOF6f2+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsoJKrPW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neuiwtw+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B253C43390;
-	Mon, 29 Jan 2024 17:13:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsoJKrPW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2CCC433F1;
+	Mon, 29 Jan 2024 17:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548420;
-	bh=nzQpkC5CmssvHEQ/6IbIQ/gJFtPyBOJEohBloBRB7F8=;
+	s=korg; t=1706548421;
+	bh=vFko/+BTPMMhlTgjqzntZvxqnf2hPxD/8ZPIixqsLNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=neuiwtw+1iwndMXhgCvBZb4hkrTTflf6U7Fisvt58HjbKkahC+f5FqKLSLFXXbAE2
-	 KxAvb8H26kc3mQa1l07tMqMkPID/Fv7ryZy8klRdcu+noUx1poReEWdpC5icq/9Pil
-	 iQbnIj1t4Xw4Bw9+C5J88q6Y+j2OuEz/7t8E/SNs=
+	b=SsoJKrPWE3YkMS0iYWZxh1kpk1ri2T+WNuJqWzD27ABy9X03iE65GeaDx4OM9o04A
+	 3xT24ZvX+rQkfMsHayjG46zFscOcCdjVktKadsp5clFqTiDJCfRvpH4+RWnTLDqSaT
+	 QvH//3OVxqGxVwRcR1A7i3KhIY7QLIjhpk0eULrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Min-Hua Chen <minhuadotchen@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/331] sh: ecovec24: Rename missed backlight field from fbdev to dev
-Date: Mon, 29 Jan 2024 09:01:23 -0800
-Message-ID: <20240129170015.526132429@linuxfoundation.org>
+Subject: [PATCH 6.6 002/331] docs: sparse: add sparse.rst to toctree
+Date: Mon, 29 Jan 2024 09:01:06 -0800
+Message-ID: <20240129170015.035200270@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -54,47 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Min-Hua Chen <minhuadotchen@gmail.com>
 
-[ Upstream commit d87123aa9a7920e88633ffc5c5a0a22ab08bdc06 ]
+[ Upstream commit c9ad95adc096f25004d4192258863806a68a9bc8 ]
 
-One instance of gpio_backlight_platform_data.fbdev was renamed, but the
-second instance was forgotten, causing a build failure:
+Add sparst.rst to toctree, so it can be part of the docs build.
 
-    arch/sh/boards/mach-ecovec24/setup.c: In function ‘arch_setup’:
-    arch/sh/boards/mach-ecovec24/setup.c:1223:37: error: ‘struct gpio_backlight_platform_data’ has no member named ‘fbdev’; did you mean ‘dev’?
-     1223 |                 gpio_backlight_data.fbdev = NULL;
-	  |                                     ^~~~~
-	  |                                     dev
-
-Fix this by updating the second instance.
-
-Fixes: ed369def91c1579a ("backlight/gpio_backlight: Rename field 'fbdev' to 'dev'")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202309231601.Uu6qcRnU-lkp@intel.com/
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230925111022.3626362-1-geert+renesas@glider.be
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Suggested-by: Jonathan Corbet <corbet@lwn.net>
+Signed-off-by: Min-Hua Chen <minhuadotchen@gmail.com>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/r/20230902052512.12184-4-minhuadotchen@gmail.com
+Stable-dep-of: c48a7c44a1d0 ("docs: kernel_feat.py: fix potential command injection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/boards/mach-ecovec24/setup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../translations/zh_TW/dev-tools/index.rst    | 40 +++++++++++++++++++
+ Documentation/translations/zh_TW/index.rst    |  2 +-
+ 2 files changed, 41 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/translations/zh_TW/dev-tools/index.rst
 
-diff --git a/arch/sh/boards/mach-ecovec24/setup.c b/arch/sh/boards/mach-ecovec24/setup.c
-index 3be293335de5..7a788d44cc73 100644
---- a/arch/sh/boards/mach-ecovec24/setup.c
-+++ b/arch/sh/boards/mach-ecovec24/setup.c
-@@ -1220,7 +1220,7 @@ static int __init arch_setup(void)
- 		lcdc_info.ch[0].num_modes		= ARRAY_SIZE(ecovec_dvi_modes);
+diff --git a/Documentation/translations/zh_TW/dev-tools/index.rst b/Documentation/translations/zh_TW/dev-tools/index.rst
+new file mode 100644
+index 000000000000..8f101db5a07f
+--- /dev/null
++++ b/Documentation/translations/zh_TW/dev-tools/index.rst
+@@ -0,0 +1,40 @@
++.. include:: ../disclaimer-zh_TW.rst
++
++:Original: Documentation/dev-tools/index.rst
++:Translator: Min-Hua Chen <minhuadotchen@gmail.com>
++
++============
++內核開發工具
++============
++
++本文檔是有關內核開發工具文檔的合集。
++目前這些文檔已經整理在一起，不需要再花費額外的精力。
++歡迎任何補丁。
++
++有關測試專用工具的簡要概述，參見
++Documentation/dev-tools/testing-overview.rst
++
++.. class:: toc-title
++
++	   目錄
++
++.. toctree::
++   :maxdepth: 2
++
++   sparse
++
++Todolist:
++
++ - coccinelle
++ - kcov
++ - ubsan
++ - kmemleak
++ - kcsan
++ - kfence
++ - kgdb
++ - kselftest
++ - kunit/index
++ - testing-overview
++ - gcov
++ - kasan
++ - gdb-kernel-debugging
+diff --git a/Documentation/translations/zh_TW/index.rst b/Documentation/translations/zh_TW/index.rst
+index d1cf0b4d8e46..ffcaf3272fe7 100644
+--- a/Documentation/translations/zh_TW/index.rst
++++ b/Documentation/translations/zh_TW/index.rst
+@@ -55,11 +55,11 @@ TODOList:
+    :maxdepth: 1
  
- 		/* No backlight */
--		gpio_backlight_data.fbdev = NULL;
-+		gpio_backlight_data.dev = NULL;
+    process/license-rules
++   dev-tools/index
  
- 		gpio_set_value(GPIO_PTA2, 1);
- 		gpio_set_value(GPIO_PTU1, 1);
+ TODOList:
+ 
+ * doc-guide/index
+-* dev-tools/index
+ * dev-tools/testing-overview
+ * kernel-hacking/index
+ * rust/index
 -- 
 2.43.0
 
