@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775B315B96D;
-	Mon, 29 Jan 2024 17:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2806015A4B8;
+	Mon, 29 Jan 2024 17:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548323; cv=none; b=GBqra2l+ylVfL6Uxf6yBarMkTcg6CKxgF+L6dVqiWhyzPSq4QZ0wkB5LH5ssEM+qSlKg9dzoaXGKn8zWnQwfnFNmRgUs+FhNFN0UFAe7umLbt5KCKAQs+sxsFLqfAMiCl7ZGlS+6ZTYYeeGzQeZRf4dxKIZLdCbBLIF552ACov8=
+	t=1706548324; cv=none; b=ZPGeB8pUNuKqwrtg3rAqiD/Cb9IREUO8azsTWxV7ddyS5nx9MwM1ZXCUAr5dyDRZnrH3OTY1emxkCQS0hqCy5RihYnT/GKs5BuV4Vqnz+7MAKPuJ9b01UGn8tUQNZN6LfBN094KY6JeLMOwpYuna931J/eWbhRblW6tV07H68/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548323; c=relaxed/simple;
-	bh=pi2BSln4bHKm6BUp5NwOaG43rQD3FfgR0vwBY7Dz10E=;
+	s=arc-20240116; t=1706548324; c=relaxed/simple;
+	bh=j61RwMz6vhjSUft18ss6smUAtOXV3whT1cB5EYPIsSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pSD3G991jM0usJOXw7bU4RlNJXQsOImlVxHy7zBVcu5VCmRjGVtzjlQSOKneAGt22qoeptZgsQrZaFDBZQ1JUyI1EoToMZ6qxwkTKxOYy6dHNvK+9/2D4efQOu0IY81SZSi+UIuOYaI19+yc6sg8ZZu8Bz+U7Sn5Tg+08ONrLL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AzQJxrve; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lv6pQVA+5MrnFp7zkEczKA54aTvl/aLPjaAANQzHnx8B+zRMqa+2L31VgqOH2OmN1cHgYTM3nB1YELavkqf4dA5Ls4jAfpOpZEjjrc/65mANWcqTApk22Xl7GtYMazkEocy84/HqWJlyRc90mkEpm5isFHnpEkp5fFjcSceG+7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vdYz1rgp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AzQJxrve"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34477C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vdYz1rgp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F6CC43390;
 	Mon, 29 Jan 2024 17:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548323;
-	bh=pi2BSln4bHKm6BUp5NwOaG43rQD3FfgR0vwBY7Dz10E=;
+	s=korg; t=1706548324;
+	bh=j61RwMz6vhjSUft18ss6smUAtOXV3whT1cB5EYPIsSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AzQJxrveUF8yMpx5rYqyOLN1daPsUUIkh5PPK1B3uSRPZhHLbddvqIfKicZ00+Ojr
-	 K4Mcx7ZOPdPAGelicCfDSWSCA+0JWw6JT/5QLAa7ZztAQm2YtdK6k+/DCxpgxpA0Ar
-	 ftwsv1LfjnjypmXkvvbMnAlV/v24T/3jy0c+tyBI=
+	b=vdYz1rgpwFKkKk86MQM3NNT0ppaqgXtUNrXJCaugwqkVxxdrJD34Neui21CdSGbv/
+	 U/5rDlVTbCu9l5QUMckJWHCOJpVeFYdx4btfgILhRYDXlL4MEUBwPzibABwBdwR0+G
+	 l5TS68lTaAj9rzR3ut3e6G32VK4WLTnBlIBbshHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 324/346] platform/x86: wmi: Fix error handling in legacy WMI notify handler functions
-Date: Mon, 29 Jan 2024 09:05:55 -0800
-Message-ID: <20240129170026.008559055@linuxfoundation.org>
+Subject: [PATCH 6.1 095/185] net/mlx5: DR, Use the right GVMI number for drop action
+Date: Mon, 29 Jan 2024 09:04:55 -0800
+Message-ID: <20240129170001.642148318@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,79 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Yevgeny Kliteynik <kliteyn@nvidia.com>
 
-[ Upstream commit 6ba7843b59b77360812617d071313c7f35f3757a ]
+[ Upstream commit 5665954293f13642f9c052ead83c1e9d8cff186f ]
 
-When wmi_install_notify_handler()/wmi_remove_notify_handler() are
-unable to enable/disable the WMI device, they unconditionally return
-an error to the caller.
-When registering legacy WMI notify handlers, this means that the
-callback remains registered despite wmi_install_notify_handler()
-having returned an error.
-When removing legacy WMI notify handlers, this means that the
-callback is removed despite wmi_remove_notify_handler() having
-returned an error.
+When FW provides ICM addresses for drop RX/TX, the provided capability
+is 64 bits that contain its GVMI as well as the ICM address itself.
+In case of TX DROP this GVMI is different from the GVMI that the
+domain is operating on.
 
-Fix this by only warning when the WMI device could not be enabled.
-This behaviour matches the bus-based WMI interface.
+This patch fixes the action to use these GVMI IDs, as provided by FW.
 
-Tested on a Dell Inspiron 3505 and a Acer Aspire E1-731.
-
-Fixes: 58f6425eb92f ("WMI: Cater for multiple events with same GUID")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240103192707.115512-2-W_Armin@gmx.de
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 9db810ed2d37 ("net/mlx5: DR, Expose steering action functionality")
+Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/wmi.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/steering/dr_action.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
-index 5dd22258cb3b..bd017478e61b 100644
---- a/drivers/platform/x86/wmi.c
-+++ b/drivers/platform/x86/wmi.c
-@@ -686,9 +686,10 @@ acpi_status wmi_install_notify_handler(const char *guid,
- 			block->handler_data = data;
- 
- 			wmi_status = wmi_method_enable(block, true);
--			if ((wmi_status != AE_OK) ||
--			    ((wmi_status == AE_OK) && (status == AE_NOT_EXIST)))
--				status = wmi_status;
-+			if (ACPI_FAILURE(wmi_status))
-+				dev_warn(&block->dev.dev, "Failed to enable device\n");
-+
-+			status = AE_OK;
- 		}
- 	}
- 
-@@ -729,12 +730,13 @@ acpi_status wmi_remove_notify_handler(const char *guid)
- 				status = AE_OK;
- 			} else {
- 				wmi_status = wmi_method_enable(block, false);
-+				if (ACPI_FAILURE(wmi_status))
-+					dev_warn(&block->dev.dev, "Failed to disable device\n");
-+
- 				block->handler = NULL;
- 				block->handler_data = NULL;
--				if ((wmi_status != AE_OK) ||
--				    ((wmi_status == AE_OK) &&
--				     (status == AE_NOT_EXIST)))
--					status = wmi_status;
-+
-+				status = AE_OK;
- 			}
- 		}
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_action.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_action.c
+index a3e7602b044e..8c265250bbaf 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_action.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_action.c
+@@ -673,6 +673,7 @@ int mlx5dr_actions_build_ste_arr(struct mlx5dr_matcher *matcher,
+ 		switch (action_type) {
+ 		case DR_ACTION_TYP_DROP:
+ 			attr.final_icm_addr = nic_dmn->drop_icm_addr;
++			attr.hit_gvmi = nic_dmn->drop_icm_addr >> 48;
+ 			break;
+ 		case DR_ACTION_TYP_FT:
+ 			dest_action = action;
 -- 
 2.43.0
 
