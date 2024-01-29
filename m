@@ -1,49 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123A015A492;
-	Mon, 29 Jan 2024 17:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A594F15A492;
+	Mon, 29 Jan 2024 17:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548283; cv=none; b=UvAyi2UbZ7UyGnhZMqINRquORrHHJ2sY2kADlMg6KfjszZVkdye/7DiHY7Ty2IfIGpQUM9ALgHO70XZgp+RNaq1W9uVJyPl7oJJtP7TarMMonkxmjU2hpG16bF3Uk1yra9ZMyQrDOYsbJRQyhopsOYSFdo+JkGRDTRo5aL3NM/M=
+	t=1706548283; cv=none; b=ny5nRFc/vTI3R/QE6YjS1E/q4chZ7imPM0ggySEGVpeN4jGgaPvFxn0xu0LM+BlfQh2rVaSpIwsxod+ZSaJNAWDUXbrdmNlh+14oH/uI6PI1NQPdx5OwQ9r1z59kofj6Wy8A9MoDXQiZDMckKcmYS4wHqUxQgGP1dRdZrGmhPTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548283; c=relaxed/simple;
-	bh=ps4f5jR+aUIFTHsUmH9jEPE1rYgjyajuqADOwxdf7Ew=;
+	bh=V988f7AC7PElDecn8iKzuPqEPcL6HHkXzR1GImjWy+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G8dkWCGQc1tRuDsn4bfr34feZ/hVf1AtgdO7E3vgqwMZ+nCFOOendieAqlgW2gYaqx0BK9Tov6gTKwEKV/HKnmSVY1XuxbUMRd2Fask7gfAeRFyjMjmfjh8iYsk3Y/aXxOkk+Boannz5bHsnlCWJaN60D5YTPVk1ZwciDkRLYn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yk5LBinc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kXY3ZuasAekv1C7Ur3ThvOrdjVIojf2bFguUlXdcoQeL9wSIVbXGaC7iyZ3pPx9esoCp4ez3AWOdX8oSDz7IL/v4Rv9cUnju3R+1yZKCpybXk1f7pQgplJQCyem+V3mcFUqFJfIPHL1QqtI9KSM71Bhl+9tmG95n/p3Hq48KVME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+7L7uTZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yk5LBinc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9287AC43399;
-	Mon, 29 Jan 2024 17:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+7L7uTZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BCC0C433C7;
+	Mon, 29 Jan 2024 17:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548282;
-	bh=ps4f5jR+aUIFTHsUmH9jEPE1rYgjyajuqADOwxdf7Ew=;
+	s=korg; t=1706548283;
+	bh=V988f7AC7PElDecn8iKzuPqEPcL6HHkXzR1GImjWy+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yk5LBincckusPYEQ8a6BNG/BHXjwYJycqn9BXAjbfDxHSdznRmbrCRuFuMpPVoNft
-	 CitKEmBVD0r/DvqhQE/Gty1YvgjcF+jaezxZxsofzDzAjv1CFkCLfEXK3JFeGP7Jzs
-	 5tf6qCY0IFXiVfH9jPOfiqJCDYkisjUgqZprvRsw=
+	b=b+7L7uTZOH1iQAQWhbsUdhMi9YUF1UD0rnQ7QuUb4oIbdHpjhOaNE95iB/5pm6AQT
+	 vNC8bHGNx/euUeWnd3gGb/H7gwykF6ubdmXebF7NB53qo2S45d1LojZEvqEowBrUIt
+	 +cqbgjsvMLS5182znaPeFTs84A9QlbcN1u7dqT40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	Chris Goldsworthy <quic_cgoldswo@quicinc.com>,
-	Michal Hocko <mhocko@suse.com>,
-	David Rientjes <rientjes@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Joakim Tjernlund <Joakim.Tjernlund@infinera.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 068/185] mm: page_alloc: unreserve highatomic page blocks before oom
-Date: Mon, 29 Jan 2024 09:04:28 -0800
-Message-ID: <20240129170000.784939889@linuxfoundation.org>
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 296/346] drm/panel-edp: drm/panel-edp: Fix AUO B116XTN02 name
+Date: Mon, 29 Jan 2024 09:05:27 -0800
+Message-ID: <20240129170025.119424467@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -55,108 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charan Teja Kalla <quic_charante@quicinc.com>
+From: Hsin-Yi Wang <hsinyi@chromium.org>
 
-commit ac3f3b0a55518056bc80ed32a41931c99e1f7d81 upstream.
+[ Upstream commit 962845c090c4f85fa4f6872a5b6c89ee61f53cc0 ]
 
-__alloc_pages_direct_reclaim() is called from slowpath allocation where
-high atomic reserves can be unreserved after there is a progress in
-reclaim and yet no suitable page is found.  Later should_reclaim_retry()
-gets called from slow path allocation to decide if the reclaim needs to be
-retried before OOM kill path is taken.
+Rename AUO 0x235c B116XTN02 to B116XTN02.3 according to decoding edid.
 
-should_reclaim_retry() checks the available(reclaimable + free pages)
-memory against the min wmark levels of a zone and returns:
-
-a) true, if it is above the min wmark so that slow path allocation will
-   do the reclaim retries.
-
-b) false, thus slowpath allocation takes oom kill path.
-
-should_reclaim_retry() can also unreserves the high atomic reserves **but
-only after all the reclaim retries are exhausted.**
-
-In a case where there are almost none reclaimable memory and free pages
-contains mostly the high atomic reserves but allocation context can't use
-these high atomic reserves, makes the available memory below min wmark
-levels hence false is returned from should_reclaim_retry() leading the
-allocation request to take OOM kill path.  This can turn into a early oom
-kill if high atomic reserves are holding lot of free memory and
-unreserving of them is not attempted.
-
-(early)OOM is encountered on a VM with the below state:
-[  295.998653] Normal free:7728kB boost:0kB min:804kB low:1004kB
-high:1204kB reserved_highatomic:8192KB active_anon:4kB inactive_anon:0kB
-active_file:24kB inactive_file:24kB unevictable:1220kB writepending:0kB
-present:70732kB managed:49224kB mlocked:0kB bounce:0kB free_pcp:688kB
-local_pcp:492kB free_cma:0kB
-[  295.998656] lowmem_reserve[]: 0 32
-[  295.998659] Normal: 508*4kB (UMEH) 241*8kB (UMEH) 143*16kB (UMEH)
-33*32kB (UH) 7*64kB (UH) 0*128kB 0*256kB 0*512kB 0*1024kB 0*2048kB
-0*4096kB = 7752kB
-
-Per above log, the free memory of ~7MB exist in the high atomic reserves
-is not freed up before falling back to oom kill path.
-
-Fix it by trying to unreserve the high atomic reserves in
-should_reclaim_retry() before __alloc_pages_direct_reclaim() can fallback
-to oom kill path.
-
-Link: https://lkml.kernel.org/r/1700823445-27531-1-git-send-email-quic_charante@quicinc.com
-Fixes: 0aaa29a56e4f ("mm, page_alloc: reserve pageblocks for high-order atomic allocations on demand")
-Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Reported-by: Chris Goldsworthy <quic_cgoldswo@quicinc.com>
-Suggested-by: Michal Hocko <mhocko@suse.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Acked-by: David Rientjes <rientjes@google.com>
-Cc: Chris Goldsworthy <quic_cgoldswo@quicinc.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3db2420422a5 ("drm/panel-edp: Add AUO B116XTN02, BOE NT116WHM-N21,836X2, NV116WHM-N49 V8.0")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231107204611.3082200-3-hsinyi@chromium.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/panel/panel-edp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4921,14 +4921,9 @@ should_reclaim_retry(gfp_t gfp_mask, uns
- 	else
- 		(*no_progress_loops)++;
- 
--	/*
--	 * Make sure we converge to OOM if we cannot make any progress
--	 * several times in the row.
--	 */
--	if (*no_progress_loops > MAX_RECLAIM_RETRIES) {
--		/* Before OOM, exhaust highatomic_reserve */
--		return unreserve_highatomic_pageblock(ac, true);
--	}
-+	if (*no_progress_loops > MAX_RECLAIM_RETRIES)
-+		goto out;
-+
- 
- 	/*
- 	 * Keep reclaiming pages while there is a chance this will lead
-@@ -4971,6 +4966,11 @@ should_reclaim_retry(gfp_t gfp_mask, uns
- 		schedule_timeout_uninterruptible(1);
- 	else
- 		cond_resched();
-+out:
-+	/* Before OOM, exhaust highatomic_reserve */
-+	if (!ret)
-+		return unreserve_highatomic_pageblock(ac, true);
-+
- 	return ret;
- }
- 
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index e93e54a98260..7dc6fb7308ce 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1842,7 +1842,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x145c, &delay_200_500_e50, "B116XAB01.4"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1e9b, &delay_200_500_e50, "B133UAN02.1"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1ea5, &delay_200_500_e50, "B116XAK01.6"),
+-	EDP_PANEL_ENTRY('A', 'U', 'O', 0x235c, &delay_200_500_e50, "B116XTN02"),
++	EDP_PANEL_ENTRY('A', 'U', 'O', 0x235c, &delay_200_500_e50, "B116XTN02.3"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x405c, &auo_b116xak01.delay, "B116XAK01.0"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x582d, &delay_200_500_e50, "B133UAN01.0"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x615c, &delay_200_500_e50, "B116XAN06.1"),
+-- 
+2.43.0
+
 
 
