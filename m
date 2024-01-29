@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B709B15B0E2;
-	Mon, 29 Jan 2024 17:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3AC15B0E2;
+	Mon, 29 Jan 2024 17:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548422; cv=none; b=T2XCUFW+xC/7N4m58zQqU4GDCE0140kNceb87mawdD1krHqBJfiXJbDdzaFgBEN40xI9NZu0tl3shbBFsdV8ey627SMcDikQ275qXEi+2uE6llrnj1jVYbdqVisWvbX+9uok5VsRoAI0XHzuiYScxQss8OxYAQVXMACFoJp9Ce0=
+	t=1706548423; cv=none; b=I+Tfk777rV9LOLA/cZ1oLby6FBGt7U0bOXm2PE0PVRHxXq5aYD0okbTnDV+YGq559xNvhgNVza4Q8VelaHFpblE/d0i1L2pg3rPmPGNHq5eBwI3mGJI3otrFb3GLMLjHcKvZ+cS3SZBcEkoHUSDuSzmcwSTcsl6ZEdPL9fTQSXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548422; c=relaxed/simple;
-	bh=Z1mFOraK2oTas6pepDNWJtegPgKJRk6KJEEEMDrbrv0=;
+	s=arc-20240116; t=1706548423; c=relaxed/simple;
+	bh=rvuqNt+MugQYTKnWyR2Uv/ZxzKMJo9jy4efE0BmDDpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SgYMJNVE7/27T1Bi4Sqp9c3dV+FiAIAV8dybpbyJ9hBlt08mQGnT1cnRH6K7e/PkTyr+N+EC6jhW20BsHgv8f1UxQYmra2wEhwEa9Q3+S/uutC24ZBqWReaqOJ1oz/soDCcT99oEFCkDxp7GYSXxIotyP13Qly45pqWe4oqc3Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqOJTU4r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ch1ty6AOxLBqSGSr0rqlxxNYFYuzYdHo9s4CUhzAiCFf5qdWHz2nZ79UmN6lCtnSXyxFt/6Qfj/fSVwqd0EK/6nUCCBpXjEi7Niegl53O0trA8bgdcDKR0kmJBNxNJLcAoYhelFHtJ1/mbTzJ37txfkKvzQT1H37jvI+CyF9YxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPMO3jEK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqOJTU4r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DEEC433C7;
-	Mon, 29 Jan 2024 17:13:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPMO3jEK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F84EC43390;
+	Mon, 29 Jan 2024 17:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548422;
-	bh=Z1mFOraK2oTas6pepDNWJtegPgKJRk6KJEEEMDrbrv0=;
+	s=korg; t=1706548423;
+	bh=rvuqNt+MugQYTKnWyR2Uv/ZxzKMJo9jy4efE0BmDDpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqOJTU4rOYU04C5/m2N8LY+MVQKaY7OixFdggPatrRXTGaHbAoxaUau2rLjZtdD4A
-	 VKHtHAU1L+fFzC0znKfrpZvMlhT8toOPmawoEmx8fMMx9k8lhRv5Q+rCm8cZ7g97Ux
-	 VI4ogiBcc2CnEXlaeqfZKAgbdtmeU2pWw37Z103A=
+	b=bPMO3jEK95vIYuT3sq82dE1A+vF+BkK5BplyY5yhFB1Tlq8qXIWjAvq4MMpME+cSe
+	 MgpzHMUgiqyWTLiImJKEeWX70sxfkqOqzXaEfbdFOecBkdXtXhfI8UVyEbV3f6wVxP
+	 bVVc1fITBWRBQwTGEJSOlvV5v8JnSjhIgpeIlIqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shyam Prasad N <sprasad@microsoft.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/331] cifs: handle cases where a channel is closed
-Date: Mon, 29 Jan 2024 09:01:25 -0800
-Message-ID: <20240129170015.576380631@linuxfoundation.org>
+Subject: [PATCH 6.6 022/331] cifs: reconnect work should have reference on server struct
+Date: Mon, 29 Jan 2024 09:01:26 -0800
+Message-ID: <20240129170015.606409392@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -53,217 +53,142 @@ Content-Transfer-Encoding: 8bit
 
 From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 0c51cc6f2cb0108e7d49805f6e089cd85caab279 ]
+[ Upstream commit 19a4b9d6c372cab6a3b2c9a061a236136fe95274 ]
 
-So far, SMB multichannel could only scale up, but not
-scale down the number of channels. In this series of
-patch, we now allow the client to deal with the case
-of multichannel disabled on the server when the share
-is mounted. With that change, we now need the ability
-to scale down the channels.
+The delayed work for reconnect takes server struct
+as a parameter. But it does so without holding a ref
+to it. Normally, this may not show a problem as
+the reconnect work is only cancelled on umount.
 
-This change allows the client to deal with cases of
-missing channels more gracefully.
+However, since we now plan to support scaling down of
+channels, and the scale down can happen from reconnect
+work itself, we need to fix it.
+
+This change takes a reference on the server struct
+before it is passed to the delayed work. And drops
+the reference in the delayed work itself. Or if
+the delayed work is successfully cancelled, by the
+process that cancels it.
 
 Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Stable-dep-of: 78e727e58e54 ("cifs: update iface_last_update on each query-and-update")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifs_debug.c    |  5 +++++
- fs/smb/client/cifsglob.h      |  1 +
- fs/smb/client/cifsproto.h     |  2 +-
- fs/smb/client/connect.c       |  6 +++++-
- fs/smb/client/sess.c          | 28 ++++++++++++++++++++++++----
- fs/smb/client/smb2transport.c |  8 +++++++-
- 6 files changed, 43 insertions(+), 7 deletions(-)
+ fs/smb/client/connect.c | 27 +++++++++++++++++++++------
+ fs/smb/client/smb2pdu.c | 23 +++++++++++++----------
+ 2 files changed, 34 insertions(+), 16 deletions(-)
 
-diff --git a/fs/smb/client/cifs_debug.c b/fs/smb/client/cifs_debug.c
-index a2584ad8808a..3230ed7eadde 100644
---- a/fs/smb/client/cifs_debug.c
-+++ b/fs/smb/client/cifs_debug.c
-@@ -138,6 +138,11 @@ cifs_dump_channel(struct seq_file *m, int i, struct cifs_chan *chan)
- {
- 	struct TCP_Server_Info *server = chan->server;
- 
-+	if (!server) {
-+		seq_printf(m, "\n\n\t\tChannel: %d DISABLED", i+1);
-+		return;
-+	}
-+
- 	seq_printf(m, "\n\n\t\tChannel: %d ConnectionId: 0x%llx"
- 		   "\n\t\tNumber of credits: %d,%d,%d Dialect 0x%x"
- 		   "\n\t\tTCP status: %d Instance: %d"
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index ec1e5e20a36b..e3ef8eee68d1 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -1060,6 +1060,7 @@ struct cifs_ses {
- 	spinlock_t chan_lock;
- 	/* ========= begin: protected by chan_lock ======== */
- #define CIFS_MAX_CHANNELS 16
-+#define CIFS_INVAL_CHAN_INDEX (-1)
- #define CIFS_ALL_CHANNELS_SET(ses)	\
- 	((1UL << (ses)->chan_count) - 1)
- #define CIFS_ALL_CHANS_GOOD(ses)		\
-diff --git a/fs/smb/client/cifsproto.h b/fs/smb/client/cifsproto.h
-index c858feaf4f92..0eb62ccd476f 100644
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -622,7 +622,7 @@ bool is_server_using_iface(struct TCP_Server_Info *server,
- bool is_ses_using_iface(struct cifs_ses *ses, struct cifs_server_iface *iface);
- void cifs_ses_mark_for_reconnect(struct cifs_ses *ses);
- 
--unsigned int
-+int
- cifs_ses_get_chan_index(struct cifs_ses *ses,
- 			struct TCP_Server_Info *server);
- void
 diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index b82f60d6f47e..a482afa3fa42 100644
+index a482afa3fa42..2f5be7dcd1f9 100644
 --- a/fs/smb/client/connect.c
 +++ b/fs/smb/client/connect.c
-@@ -169,8 +169,12 @@ cifs_signal_cifsd_for_reconnect(struct TCP_Server_Info *server,
- 	list_for_each_entry(ses, &pserver->smb_ses_list, smb_ses_list) {
- 		spin_lock(&ses->chan_lock);
- 		for (i = 0; i < ses->chan_count; i++) {
-+			if (!ses->chans[i].server)
-+				continue;
+@@ -388,7 +388,13 @@ static int __cifs_reconnect(struct TCP_Server_Info *server,
+ 			spin_unlock(&server->srv_lock);
+ 			cifs_swn_reset_server_dstaddr(server);
+ 			cifs_server_unlock(server);
+-			mod_delayed_work(cifsiod_wq, &server->reconnect, 0);
 +
- 			spin_lock(&ses->chans[i].server->srv_lock);
--			ses->chans[i].server->tcpStatus = CifsNeedReconnect;
-+			if (ses->chans[i].server->tcpStatus != CifsExiting)
-+				ses->chans[i].server->tcpStatus = CifsNeedReconnect;
- 			spin_unlock(&ses->chans[i].server->srv_lock);
++			/* increase ref count which reconnect work will drop */
++			spin_lock(&cifs_tcp_ses_lock);
++			server->srv_count++;
++			spin_unlock(&cifs_tcp_ses_lock);
++			if (mod_delayed_work(cifsiod_wq, &server->reconnect, 0))
++				cifs_put_tcp_session(server, false);
+ 		}
+ 	} while (server->tcpStatus == CifsNeedReconnect);
+ 
+@@ -518,7 +524,13 @@ static int reconnect_dfs_server(struct TCP_Server_Info *server)
+ 		spin_unlock(&server->srv_lock);
+ 		cifs_swn_reset_server_dstaddr(server);
+ 		cifs_server_unlock(server);
+-		mod_delayed_work(cifsiod_wq, &server->reconnect, 0);
++
++		/* increase ref count which reconnect work will drop */
++		spin_lock(&cifs_tcp_ses_lock);
++		server->srv_count++;
++		spin_unlock(&cifs_tcp_ses_lock);
++		if (mod_delayed_work(cifsiod_wq, &server->reconnect, 0))
++			cifs_put_tcp_session(server, false);
+ 	} while (server->tcpStatus == CifsNeedReconnect);
+ 
+ 	mutex_lock(&server->refpath_lock);
+@@ -1605,16 +1617,19 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
+ 
+ 	cancel_delayed_work_sync(&server->echo);
+ 
+-	if (from_reconnect)
++	if (from_reconnect) {
+ 		/*
+ 		 * Avoid deadlock here: reconnect work calls
+ 		 * cifs_put_tcp_session() at its end. Need to be sure
+ 		 * that reconnect work does nothing with server pointer after
+ 		 * that step.
+ 		 */
+-		cancel_delayed_work(&server->reconnect);
+-	else
+-		cancel_delayed_work_sync(&server->reconnect);
++		if (cancel_delayed_work(&server->reconnect))
++			cifs_put_tcp_session(server, from_reconnect);
++	} else {
++		if (cancel_delayed_work_sync(&server->reconnect))
++			cifs_put_tcp_session(server, from_reconnect);
++	}
+ 
+ 	spin_lock(&server->srv_lock);
+ 	server->tcpStatus = CifsExiting;
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 888eb59ad86f..0274ef67457b 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -3879,12 +3879,6 @@ void smb2_reconnect_server(struct work_struct *work)
  		}
  		spin_unlock(&ses->chan_lock);
-diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
-index 80050e36f045..650a3ec9e6e5 100644
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -69,7 +69,7 @@ bool is_ses_using_iface(struct cifs_ses *ses, struct cifs_server_iface *iface)
- 
- /* channel helper functions. assumed that chan_lock is held by caller. */
- 
--unsigned int
-+int
- cifs_ses_get_chan_index(struct cifs_ses *ses,
- 			struct TCP_Server_Info *server)
- {
-@@ -85,14 +85,17 @@ cifs_ses_get_chan_index(struct cifs_ses *ses,
- 		cifs_dbg(VFS, "unable to get chan index for server: 0x%llx",
- 			 server->conn_id);
- 	WARN_ON(1);
--	return 0;
-+	return CIFS_INVAL_CHAN_INDEX;
- }
- 
- void
- cifs_chan_set_in_reconnect(struct cifs_ses *ses,
- 			     struct TCP_Server_Info *server)
- {
--	unsigned int chan_index = cifs_ses_get_chan_index(ses, server);
-+	int chan_index = cifs_ses_get_chan_index(ses, server);
-+
-+	if (chan_index == CIFS_INVAL_CHAN_INDEX)
-+		return;
- 
- 	ses->chans[chan_index].in_reconnect = true;
- }
-@@ -102,6 +105,8 @@ cifs_chan_clear_in_reconnect(struct cifs_ses *ses,
- 			     struct TCP_Server_Info *server)
- {
- 	unsigned int chan_index = cifs_ses_get_chan_index(ses, server);
-+	if (chan_index == CIFS_INVAL_CHAN_INDEX)
-+		return;
- 
- 	ses->chans[chan_index].in_reconnect = false;
- }
-@@ -111,6 +116,8 @@ cifs_chan_in_reconnect(struct cifs_ses *ses,
- 			  struct TCP_Server_Info *server)
- {
- 	unsigned int chan_index = cifs_ses_get_chan_index(ses, server);
-+	if (chan_index == CIFS_INVAL_CHAN_INDEX)
-+		return true;	/* err on the safer side */
- 
- 	return CIFS_CHAN_IN_RECONNECT(ses, chan_index);
- }
-@@ -120,6 +127,8 @@ cifs_chan_set_need_reconnect(struct cifs_ses *ses,
- 			     struct TCP_Server_Info *server)
- {
- 	unsigned int chan_index = cifs_ses_get_chan_index(ses, server);
-+	if (chan_index == CIFS_INVAL_CHAN_INDEX)
-+		return;
- 
- 	set_bit(chan_index, &ses->chans_need_reconnect);
- 	cifs_dbg(FYI, "Set reconnect bitmask for chan %u; now 0x%lx\n",
-@@ -131,6 +140,8 @@ cifs_chan_clear_need_reconnect(struct cifs_ses *ses,
- 			       struct TCP_Server_Info *server)
- {
- 	unsigned int chan_index = cifs_ses_get_chan_index(ses, server);
-+	if (chan_index == CIFS_INVAL_CHAN_INDEX)
-+		return;
- 
- 	clear_bit(chan_index, &ses->chans_need_reconnect);
- 	cifs_dbg(FYI, "Cleared reconnect bitmask for chan %u; now 0x%lx\n",
-@@ -142,6 +153,8 @@ cifs_chan_needs_reconnect(struct cifs_ses *ses,
- 			  struct TCP_Server_Info *server)
- {
- 	unsigned int chan_index = cifs_ses_get_chan_index(ses, server);
-+	if (chan_index == CIFS_INVAL_CHAN_INDEX)
-+		return true;	/* err on the safer side */
- 
- 	return CIFS_CHAN_NEEDS_RECONNECT(ses, chan_index);
- }
-@@ -151,6 +164,8 @@ cifs_chan_is_iface_active(struct cifs_ses *ses,
- 			  struct TCP_Server_Info *server)
- {
- 	unsigned int chan_index = cifs_ses_get_chan_index(ses, server);
-+	if (chan_index == CIFS_INVAL_CHAN_INDEX)
-+		return true;	/* err on the safer side */
- 
- 	return ses->chans[chan_index].iface &&
- 		ses->chans[chan_index].iface->is_active;
-@@ -293,7 +308,7 @@ cifs_chan_update_iface(struct cifs_ses *ses, struct TCP_Server_Info *server)
- 
- 	spin_lock(&ses->chan_lock);
- 	chan_index = cifs_ses_get_chan_index(ses, server);
--	if (!chan_index) {
-+	if (chan_index == CIFS_INVAL_CHAN_INDEX) {
- 		spin_unlock(&ses->chan_lock);
- 		return 0;
  	}
-@@ -403,6 +418,11 @@ cifs_chan_update_iface(struct cifs_ses *ses, struct TCP_Server_Info *server)
+-	/*
+-	 * Get the reference to server struct to be sure that the last call of
+-	 * cifs_put_tcon() in the loop below won't release the server pointer.
+-	 */
+-	if (tcon_exist || ses_exist)
+-		server->srv_count++;
  
- 	spin_lock(&ses->chan_lock);
- 	chan_index = cifs_ses_get_chan_index(ses, server);
-+	if (chan_index == CIFS_INVAL_CHAN_INDEX) {
-+		spin_unlock(&ses->chan_lock);
-+		return 0;
+ 	spin_unlock(&cifs_tcp_ses_lock);
+ 
+@@ -3932,13 +3926,17 @@ void smb2_reconnect_server(struct work_struct *work)
+ 
+ done:
+ 	cifs_dbg(FYI, "Reconnecting tcons and channels finished\n");
+-	if (resched)
++	if (resched) {
+ 		queue_delayed_work(cifsiod_wq, &server->reconnect, 2 * HZ);
++		mutex_unlock(&pserver->reconnect_mutex);
++
++		/* no need to put tcp session as we're retrying */
++		return;
 +	}
-+
- 	ses->chans[chan_index].iface = iface;
+ 	mutex_unlock(&pserver->reconnect_mutex);
  
- 	/* No iface is found. if secondary chan, drop connection */
-diff --git a/fs/smb/client/smb2transport.c b/fs/smb/client/smb2transport.c
-index a136fc4cc2b5..5a3ca62d2f07 100644
---- a/fs/smb/client/smb2transport.c
-+++ b/fs/smb/client/smb2transport.c
-@@ -413,7 +413,13 @@ generate_smb3signingkey(struct cifs_ses *ses,
- 		      ses->ses_status == SES_GOOD);
+ 	/* now we can safely release srv struct */
+-	if (tcon_exist || ses_exist)
+-		cifs_put_tcp_session(server, 1);
++	cifs_put_tcp_session(server, true);
+ }
  
- 	chan_index = cifs_ses_get_chan_index(ses, server);
--	/* TODO: introduce ref counting for channels when the can be freed */
-+	if (chan_index == CIFS_INVAL_CHAN_INDEX) {
-+		spin_unlock(&ses->chan_lock);
-+		spin_unlock(&ses->ses_lock);
+ int
+@@ -3958,7 +3956,12 @@ SMB2_echo(struct TCP_Server_Info *server)
+ 	    server->ops->need_neg(server)) {
+ 		spin_unlock(&server->srv_lock);
+ 		/* No need to send echo on newly established connections */
+-		mod_delayed_work(cifsiod_wq, &server->reconnect, 0);
++		spin_lock(&cifs_tcp_ses_lock);
++		server->srv_count++;
++		spin_unlock(&cifs_tcp_ses_lock);
++		if (mod_delayed_work(cifsiod_wq, &server->reconnect, 0))
++			cifs_put_tcp_session(server, false);
 +
-+		return -EINVAL;
-+	}
-+
- 	spin_unlock(&ses->chan_lock);
- 	spin_unlock(&ses->ses_lock);
- 
+ 		return rc;
+ 	}
+ 	spin_unlock(&server->srv_lock);
 -- 
 2.43.0
 
