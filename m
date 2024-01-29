@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674CA15AAD6;
-	Mon, 29 Jan 2024 17:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31814159572;
+	Mon, 29 Jan 2024 17:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548079; cv=none; b=dsH12K8n/br+Edwbif5CqeZsu4aNJCj68N+46BtxZ+E/LH2qU13KgJEFkroUReCd0iUHIQkDDyA3nj9yp8D2dkEKAXeZHOIbiP0DqLgj0jnlBLGl3mg3WOo2Bx+VYpytyuCNb1core0XDPeOaA7fJIIHGALAIu0RVnDBvpGmePg=
+	t=1706548080; cv=none; b=R9EBzElHpb9F/v+FXGramizEaHNUkFxIgiVbPesh60iJnPhcNynjwC6gIuAZfcV2lFshf2ZCcPei5HhSNVyvS3JlN8ZV8ydbNZivQ2E7ktHC8CysRElj1MmOQA2Cna5BQC/ElWid/PlF4KyXKhMWSXjXtmkokoXgFCJBd6iId4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548079; c=relaxed/simple;
-	bh=MODSumGFSo9dle0LnkCdo4LGve5JL4N55R/YmyldTwA=;
+	s=arc-20240116; t=1706548080; c=relaxed/simple;
+	bh=MKjHVy4T1t5WxNC/SpfCFKi8oKZtxSVaENuj+cXCp1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hDrU8dx0nYoJ9tYGuxSkloVz7gVLo1kIEgRRoEBO2UWaWN2gir8qPbORFn2VT02SDwU2IOdK1AOYlFFkYCbxkd9HNh0OXYBoIeLaxdwUFMSK+y9fDLAOJR4OuPkqjgRsFAW1Jxx+6nQE1/iZJN8YrqeO6odX2CIOB+muNVD6WGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+t5pj+P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bv/cL2xcilfE6QGBCyEK7flcrtHwdj49k/+5oYTT8buc6cHxknLSBp9F/Tczd6oXRTlNk4DMi5woOxZt183S9j09hqOju3n3xQmHICMO0gj1zxeWVgOXA1xRERNAT03595UJ/n+/kRMW2h03NRQC7R4J0Y7P3LANHnU6vv+IN18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BwYglFpv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+t5pj+P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307D6C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwYglFpv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE802C43390;
 	Mon, 29 Jan 2024 17:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548079;
-	bh=MODSumGFSo9dle0LnkCdo4LGve5JL4N55R/YmyldTwA=;
+	s=korg; t=1706548080;
+	bh=MKjHVy4T1t5WxNC/SpfCFKi8oKZtxSVaENuj+cXCp1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+t5pj+Ps84kVzGtVyTsb3GQy+DQbwBpyWfS5IeDAefnVWdnCiM755RfvYBurMlrQ
-	 zMQnq6V379Ej0e9chzEyGx5d9/K3ZoRXQp2wN3FPim9qZDRjXEdaCsUGTP15HHEyti
-	 hTyr0Ia1aJKnk0reGcbNbWB7+AL8Gcl+4h1TYsPs=
+	b=BwYglFpvsKm0cl785wJdFu0miVdmkTnq8CdjMTkTWP/U2yc9l6g5V24k5P7hH4aY8
+	 stmfwvf+/Bo9KDAYDA6cH677GTILz9UfCMXUoY487eUWlFD8V2csPE+L1B8usmNFPo
+	 D9AKyo3wmDzalk4QEO5U821FSqeAUQNq+Sk7nSZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>,
+	Daniel Mentz <danielmentz@google.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Can Guo <quic_cang@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 064/346] cifs: update iface_last_update on each query-and-update
-Date: Mon, 29 Jan 2024 09:01:35 -0800
-Message-ID: <20240129170018.275230372@linuxfoundation.org>
+Subject: [PATCH 6.7 055/346] scsi: ufs: core: Remove the ufshcd_hba_exit() call from ufshcd_async_scan()
+Date: Mon, 29 Jan 2024 09:01:26 -0800
+Message-ID: <20240129170018.015958648@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,60 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 78e727e58e54efca4c23863fbd9e16e9d2d83f81 ]
+[ Upstream commit ee36710912b2075c417100a8acc642c9c6496501 ]
 
-iface_last_update was an unused field when it was introduced.
-Later, when we had periodic update of server interface list,
-this field was used regularly to decide when to update next.
+Calling ufshcd_hba_exit() from a function that is called asynchronously
+from ufshcd_init() is wrong because this triggers multiple race
+conditions. Instead of calling ufshcd_hba_exit(), log an error message.
 
-However, with the new logic of updating the interfaces, it
-becomes crucial that this field be updated whenever
-parse_server_interfaces runs successfully.
-
-This change updates this field when either the server does
-not support query of interfaces; so that we do not query
-the interfaces repeatedly. It also updates the field when
-the function reaches the end.
-
-Fixes: aa45dadd34e4 ("cifs: change iface_list from array to sorted linked list")
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Daniel Mentz <danielmentz@google.com>
+Fixes: 1d337ec2f35e ("ufs: improve init sequence")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20231218225229.2542156-3-bvanassche@acm.org
+Reviewed-by: Can Guo <quic_cang@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 17310f3a9d89..beb81fa00cff 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -615,6 +615,7 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
- 				 "Empty network interface list returned by server %s\n",
- 				 ses->server->hostname);
- 		rc = -EOPNOTSUPP;
-+		ses->iface_last_update = jiffies;
- 		goto out;
- 	}
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index ce2f76769fb0..1f8d86b9c4fa 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -8916,12 +8916,9 @@ static void ufshcd_async_scan(void *data, async_cookie_t cookie)
  
-@@ -712,7 +713,6 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
- 
- 		ses->iface_count++;
- 		spin_unlock(&ses->iface_lock);
--		ses->iface_last_update = jiffies;
- next_iface:
- 		nb_iface++;
- 		next = le32_to_cpu(p->Next);
-@@ -734,6 +734,8 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
- 	if ((bytes_left > 8) || p->Next)
- 		cifs_dbg(VFS, "%s: incomplete interface info\n", __func__);
- 
-+	ses->iface_last_update = jiffies;
-+
  out:
- 	/*
- 	 * Go through the list again and put the inactive entries
+ 	pm_runtime_put_sync(hba->dev);
+-	/*
+-	 * If we failed to initialize the device or the device is not
+-	 * present, turn off the power/clocks etc.
+-	 */
++
+ 	if (ret)
+-		ufshcd_hba_exit(hba);
++		dev_err(hba->dev, "%s failed: %d\n", __func__, ret);
+ }
+ 
+ static enum scsi_timeout_action ufshcd_eh_timed_out(struct scsi_cmnd *scmd)
 -- 
 2.43.0
 
