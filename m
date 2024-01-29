@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6439157050;
-	Mon, 29 Jan 2024 17:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32E2157050;
+	Mon, 29 Jan 2024 17:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548327; cv=none; b=j5lQ1/jb/w6U+LNGAmxkpGVzbCOrHHDOx0xSxqLVv+MkkW/Du6Mv0B7Lc7xBCHeK2uXniHK5NiHKKDD5lCayqrzTOd54yBJcremm6LmCzhD3SYAprHgk2BSbvM5QsopmnKrbWILYo36BgEM2iF7nQmAvMGmoTCIZDpxw8bynq9s=
+	t=1706548327; cv=none; b=A5egl1LjacLjSYZArafwlGskOQ/oiK63JcyLJSO6F417jjTiQlNQXrm71x1djAYjz54fxEq4oV6dBPLDF5bR2eUPqWFcWOThKRGnaNfyuXPVUOgIki8yLvUNX+adf25btdhjrx8OMgna6BwCMpqFM7uL192K1wQP9tVuoBMu+FM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548327; c=relaxed/simple;
-	bh=n52wBGp3Qeoc5sCG/yH6DhCYT0Faib9p1cd2uoolju8=;
+	bh=Qh9rWMqoTt8AUEKp994S1ezu1S/kjr788/4kt1WRoAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iP8YQeAgIs1sfd/G0U9U1MTIMaXDWyVNug/zJYPkQka5J1Bq8UJzTa+2C9DDyrmfcgsljbsw14p4TJqXq0VDntNzFFDyIsi/1vtB6FZR9FOBlmMKSpkCn5t8D6d/vm+y2YIMEqAMvLxox4EjrzQT3i+tfzTaEmTDHqilDU9XpCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKL1kiSy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KHnyL6HeRVzd/ub/S5ClSjvM5MGfOIB1eJ57JSm4TRKBEdw2oMMbr9vgoY5Y5UoIecDxKDBNTOSs7DPbUj3oBDn/UXHwVtgjR7DRRHAu1v2+5bCwXwowcHdrNp0Goec0P4zmI9cH8fMlFAZis/f1xLKjUPYDMs9ue9G09Vj6UZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBED6ni4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKL1kiSy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD79CC433C7;
-	Mon, 29 Jan 2024 17:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBED6ni4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A24AC43390;
+	Mon, 29 Jan 2024 17:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548326;
-	bh=n52wBGp3Qeoc5sCG/yH6DhCYT0Faib9p1cd2uoolju8=;
+	s=korg; t=1706548327;
+	bh=Qh9rWMqoTt8AUEKp994S1ezu1S/kjr788/4kt1WRoAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKL1kiSyvd07BkJPqe9nUouEukCP+pM7A51m3WwiDpFRsf4uSjYlA9XX3oQ0ehje3
-	 6+0tn1giFpRLBsw3de133MZczvYzdmv1ReY2O6U7PCNP7v++diPT4l8arJwkh+0WoT
-	 wVPSEzJ1K/vS2NZSTf2ML6n3+21td0IQAGIZG6WY=
+	b=nBED6ni401bs0BtGRgHF02PZP4A+wGPoxYxLxtIBPmHjyXhnUufdUDET2gZqCvcOc
+	 yyXwycccW0xWmGTzt+cIzL/ogBYlCcnD5AHGtOodJ0ASsqQQe/6hIgSmqogR9poiQP
+	 mlxLVE7ib3phUxNsmoKTPB76ozga6ne54Le01FYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Shravan Kumar Ramani <shravankr@nvidia.com>,
+	David Thompson <davthompson@nvidia.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/185] net/mlx5: Use mlx5 device constant for selecting CQ period mode for ASO
-Date: Mon, 29 Jan 2024 09:04:57 -0800
-Message-ID: <20240129170001.712692265@linuxfoundation.org>
+Subject: [PATCH 6.7 327/346] platform/mellanox: mlxbf-pmc: Fix offset calculation for crspace events
+Date: Mon, 29 Jan 2024 09:05:58 -0800
+Message-ID: <20240129170026.094233353@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,40 +49,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Shravan Kumar Ramani <shravankr@nvidia.com>
 
-[ Upstream commit 20cbf8cbb827094197f3b17db60d71449415db1e ]
+[ Upstream commit 732c35ce6d4892f7b07cc9aca61a6ad0fd400a26 ]
 
-mlx5 devices have specific constants for choosing the CQ period mode. These
-constants do not have to match the constants used by the kernel software
-API for DIM period mode selection.
+The event selector fields for 2 counters are contained in one
+32-bit register and the current logic does not account for this.
 
-Fixes: cdd04f4d4d71 ("net/mlx5: Add support to create SQ and CQ for ASO")
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 423c3361855c ("platform/mellanox: mlxbf-pmc: Add support for BlueField-3")
+Signed-off-by: Shravan Kumar Ramani <shravankr@nvidia.com>
+Reviewed-by: David Thompson <davthompson@nvidia.com>
+Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
+Link: https://lore.kernel.org/r/8834cfa496c97c7c2fcebcfca5a2aa007e20ae96.1705485095.git.shravankr@nvidia.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/mellanox/mlxbf-pmc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c
-index c971ff04dd04..c215252f2f53 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c
-@@ -98,7 +98,7 @@ static int create_aso_cq(struct mlx5_aso_cq *cq, void *cqc_data)
- 	mlx5_fill_page_frag_array(&cq->wq_ctrl.buf,
- 				  (__be64 *)MLX5_ADDR_OF(create_cq_in, in, pas));
+diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
+index 1dd84c7a79de..b1995ac268d7 100644
+--- a/drivers/platform/mellanox/mlxbf-pmc.c
++++ b/drivers/platform/mellanox/mlxbf-pmc.c
+@@ -1170,7 +1170,7 @@ static int mlxbf_pmc_program_crspace_counter(int blk_num, uint32_t cnt_num,
+ 	int ret;
  
--	MLX5_SET(cqc,   cqc, cq_period_mode, DIM_CQ_PERIOD_MODE_START_FROM_EQE);
-+	MLX5_SET(cqc,   cqc, cq_period_mode, MLX5_CQ_PERIOD_MODE_START_FROM_EQE);
- 	MLX5_SET(cqc,   cqc, c_eqn_or_apu_element, eqn);
- 	MLX5_SET(cqc,   cqc, uar_page,      mdev->priv.uar->index);
- 	MLX5_SET(cqc,   cqc, log_page_size, cq->wq_ctrl.buf.page_shift -
+ 	addr = pmc->block[blk_num].mmio_base +
+-		(rounddown(cnt_num, 2) * MLXBF_PMC_CRSPACE_PERFSEL_SZ);
++		((cnt_num / 2) * MLXBF_PMC_CRSPACE_PERFSEL_SZ);
+ 	ret = mlxbf_pmc_readl(addr, &word);
+ 	if (ret)
+ 		return ret;
+@@ -1413,7 +1413,7 @@ static int mlxbf_pmc_read_crspace_event(int blk_num, uint32_t cnt_num,
+ 	int ret;
+ 
+ 	addr = pmc->block[blk_num].mmio_base +
+-		(rounddown(cnt_num, 2) * MLXBF_PMC_CRSPACE_PERFSEL_SZ);
++		((cnt_num / 2) * MLXBF_PMC_CRSPACE_PERFSEL_SZ);
+ 	ret = mlxbf_pmc_readl(addr, &word);
+ 	if (ret)
+ 		return ret;
 -- 
 2.43.0
 
