@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CECE15956D;
-	Mon, 29 Jan 2024 17:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C76015956D;
+	Mon, 29 Jan 2024 17:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548393; cv=none; b=mo9UoQ4xOCBBm8ksBpHwAYfaG9pdBpBE0/nKogIYWxD092ndhME/aMZNIuTtXIhynzJlXB3H2NbBmuw8iLuQV19jSTWXdwTvxi+FnVLoVozq/NiEW3HWw7WsyECq0USr+Rfw4OOCNItx2FhSBY7pCibeAXE2XMMd9T5gZKx47mU=
+	t=1706548394; cv=none; b=se1vkX2NNz6DAsIKOflHiyYzH09btedDcPUUFnHJXTnwe4ZuxDObqXr8UTJ+jtrNdVr+PEILbfzEfm3zly9NMadNg99/LqNKhOScb4styEq2tQNqythpR4/7TJLM3z0q3ALlZJigs1SiskmBPS+IHvGC/dtOpwGmD8sjexBFJ1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548393; c=relaxed/simple;
-	bh=kAmGcrJJARJ5MfOWKV7UJy0WlVsn2cHCbZu8mzNFdew=;
+	s=arc-20240116; t=1706548394; c=relaxed/simple;
+	bh=c+ceS5WwQfohiufiToqDdokE5xUCX94L4hTIEQDXXY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J2HGhjodHVRiEkqIHIHOmuMUfZ9VnaBylnwCpumBaSwvYdyzdGsV8OWrj/M+3zPnqyEmlcjunNRpQ0/6YZZwbtVPRjs1nCmexXmy5JxK/orvTT8d1KaJMw3ZokNbyRfyhLC9CnjP8QGjiHfN/qm81GTOl2Igqg1s1/7Q+6RrW9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyXj/KWy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cxiqN9NnEm0htsGFO8DK1w+6QqmS97ea5VfB385ZqgQMIZEJXfl+PvKFBlRfv8tSNIpF3rX/zrvTS08oO1LDssrZNi5/Alc+necFKoAdOXmuDk4oFT8/v0q58uYPaHiLdrsLQiV6fmYPE8UrDv/l3MFIIGycpvPXjF/SLE0gSWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7/p72Qr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyXj/KWy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB35C433A6;
-	Mon, 29 Jan 2024 17:13:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7/p72Qr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14649C433F1;
+	Mon, 29 Jan 2024 17:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548393;
-	bh=kAmGcrJJARJ5MfOWKV7UJy0WlVsn2cHCbZu8mzNFdew=;
+	s=korg; t=1706548394;
+	bh=c+ceS5WwQfohiufiToqDdokE5xUCX94L4hTIEQDXXY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oyXj/KWyKPkGwSds+bFK4IM38Fr9QXX81G0BRNzC4BXAM2Sow2RatdL4Rl4KNG4v7
-	 8s9EMwvvYPSY/ObRjilasuyiZLM7Ms1uMw925thM/a8amn6cwPCOK2Ly5wM49t4Kmv
-	 Vsd14MPIMtEUZm+nGPaY/6VOem8GVJb5ze7ifJxk=
+	b=Y7/p72QrCtjrXpoEajC5ei7HE+WiLMtvIMvKN9YCKjIJDldJlfU/3s+BxzfzgDNEl
+	 Nn5IAnLH4izrBo7GApMZxWU32qZpIQhKijuqbR5uiSTn66dGnQuA507KkKeVAzWtRr
+	 vb30iqyQmewM0QwF2bk7Zg/034RpAcoax7/4ljm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bingbu Cao <bingbu.cao@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/185] media: ov13b10: Enable runtime PM before registering async sub-device
-Date: Mon, 29 Jan 2024 09:05:44 -0800
-Message-ID: <20240129170003.213698233@linuxfoundation.org>
+Subject: [PATCH 6.1 145/185] bus: mhi: ep: Do not allocate event ring element on stack
+Date: Mon, 29 Jan 2024 09:05:45 -0800
+Message-ID: <20240129170003.245087417@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -52,73 +50,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bingbu Cao <bingbu.cao@intel.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 7b0454cfd8edb3509619407c3b9f78a6d0dee1a5 ]
+[ Upstream commit 987fdb5a43a66764808371b54e6047834170d565 ]
 
-As the sensor device maybe accessible right after its async sub-device is
-registered, such as ipu-bridge will try to power up sensor by sensor's
-client device's runtime PM from the async notifier callback, if runtime PM
-is not enabled, it will fail.
+It is possible that the host controller driver would use DMA framework to
+write the event ring element. So avoid allocating event ring element on the
+stack as DMA cannot work on vmalloc memory.
 
-So runtime PM should be ready before its async sub-device is registered
-and accessible by others.
-
-Fixes: 7ee850546822 ("media: Add sensor driver support for the ov13b10 camera.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 961aeb689224 ("bus: mhi: ep: Add support for sending events to the host")
+Link: https://lore.kernel.org/r/20230901073502.69385-1-manivannan.sadhasivam@linaro.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov13b10.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/bus/mhi/ep/main.c | 68 ++++++++++++++++++++++++++++-----------
+ 1 file changed, 50 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/media/i2c/ov13b10.c b/drivers/media/i2c/ov13b10.c
-index 722f490f9db4..368a3c2bfe34 100644
---- a/drivers/media/i2c/ov13b10.c
-+++ b/drivers/media/i2c/ov13b10.c
-@@ -1439,24 +1439,27 @@ static int ov13b10_probe(struct i2c_client *client)
- 		goto error_handler_free;
- 	}
- 
--	ret = v4l2_async_register_subdev_sensor(&ov13b->sd);
--	if (ret < 0)
--		goto error_media_entity;
- 
- 	/*
- 	 * Device is already turned on by i2c-core with ACPI domain PM.
- 	 * Enable runtime PM and turn off the device.
- 	 */
--
- 	/* Set the device's state to active if it's in D0 state. */
- 	if (full_power)
- 		pm_runtime_set_active(&client->dev);
- 	pm_runtime_enable(&client->dev);
- 	pm_runtime_idle(&client->dev);
- 
-+	ret = v4l2_async_register_subdev_sensor(&ov13b->sd);
-+	if (ret < 0)
-+		goto error_media_entity_runtime_pm;
+diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+index edd153dda40c..34e0ba6f52d0 100644
+--- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -71,45 +71,77 @@ static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
+ static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_ring *ring,
+ 					struct mhi_ring_element *tre, u32 len, enum mhi_ev_ccs code)
+ {
+-	struct mhi_ring_element event = {};
++	struct mhi_ring_element *event;
++	int ret;
 +
- 	return 0;
++	event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
++	if (!event)
++		return -ENOMEM;
  
--error_media_entity:
-+error_media_entity_runtime_pm:
-+	pm_runtime_disable(&client->dev);
-+	if (full_power)
-+		pm_runtime_set_suspended(&client->dev);
- 	media_entity_cleanup(&ov13b->sd.entity);
+-	event.ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(*tre));
+-	event.dword[0] = MHI_TRE_EV_DWORD0(code, len);
+-	event.dword[1] = MHI_TRE_EV_DWORD1(ring->ch_id, MHI_PKT_TYPE_TX_EVENT);
++	event->ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(*tre));
++	event->dword[0] = MHI_TRE_EV_DWORD0(code, len);
++	event->dword[1] = MHI_TRE_EV_DWORD1(ring->ch_id, MHI_PKT_TYPE_TX_EVENT);
  
- error_handler_free:
-@@ -1476,6 +1479,7 @@ static void ov13b10_remove(struct i2c_client *client)
- 	ov13b10_free_controls(ov13b);
- 
- 	pm_runtime_disable(&client->dev);
-+	pm_runtime_set_suspended(&client->dev);
+-	return mhi_ep_send_event(mhi_cntrl, ring->er_index, &event, MHI_TRE_DATA_GET_BEI(tre));
++	ret = mhi_ep_send_event(mhi_cntrl, ring->er_index, event, MHI_TRE_DATA_GET_BEI(tre));
++	kfree(event);
++
++	return ret;
  }
  
- static const struct dev_pm_ops ov13b10_pm_ops = {
+ int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state state)
+ {
+-	struct mhi_ring_element event = {};
++	struct mhi_ring_element *event;
++	int ret;
++
++	event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
++	if (!event)
++		return -ENOMEM;
+ 
+-	event.dword[0] = MHI_SC_EV_DWORD0(state);
+-	event.dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_STATE_CHANGE_EVENT);
++	event->dword[0] = MHI_SC_EV_DWORD0(state);
++	event->dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_STATE_CHANGE_EVENT);
+ 
+-	return mhi_ep_send_event(mhi_cntrl, 0, &event, 0);
++	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
++	kfree(event);
++
++	return ret;
+ }
+ 
+ int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ee_type exec_env)
+ {
+-	struct mhi_ring_element event = {};
++	struct mhi_ring_element *event;
++	int ret;
++
++	event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
++	if (!event)
++		return -ENOMEM;
+ 
+-	event.dword[0] = MHI_EE_EV_DWORD0(exec_env);
+-	event.dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_EE_EVENT);
++	event->dword[0] = MHI_EE_EV_DWORD0(exec_env);
++	event->dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_EE_EVENT);
+ 
+-	return mhi_ep_send_event(mhi_cntrl, 0, &event, 0);
++	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
++	kfree(event);
++
++	return ret;
+ }
+ 
+ static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ev_ccs code)
+ {
+ 	struct mhi_ep_ring *ring = &mhi_cntrl->mhi_cmd->ring;
+-	struct mhi_ring_element event = {};
++	struct mhi_ring_element *event;
++	int ret;
++
++	event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
++	if (!event)
++		return -ENOMEM;
+ 
+-	event.ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(struct mhi_ring_element));
+-	event.dword[0] = MHI_CC_EV_DWORD0(code);
+-	event.dword[1] = MHI_CC_EV_DWORD1(MHI_PKT_TYPE_CMD_COMPLETION_EVENT);
++	event->ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(struct mhi_ring_element));
++	event->dword[0] = MHI_CC_EV_DWORD0(code);
++	event->dword[1] = MHI_CC_EV_DWORD1(MHI_PKT_TYPE_CMD_COMPLETION_EVENT);
+ 
+-	return mhi_ep_send_event(mhi_cntrl, 0, &event, 0);
++	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
++	kfree(event);
++
++	return ret;
+ }
+ 
+ static int mhi_ep_process_cmd_ring(struct mhi_ep_ring *ring, struct mhi_ring_element *el)
 -- 
 2.43.0
 
