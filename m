@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E5F15CD49;
-	Mon, 29 Jan 2024 17:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397B315703F;
+	Mon, 29 Jan 2024 17:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548331; cv=none; b=X2Syx8e2kpOV1xWEQ3YvJ3rcnSFN95hRmZRurjg/sz3j/DgV0yBKJNTgQ0Cft3vhAo7SBh/+g5R0PGAUYREC3N100EPbqHDKdEGOgdeUAs2LUD/vr14EctGFCgsH5lxqzlHCV9owrXNbTM3F9s27Xqx5SNdM6Wxx6Duj/IlzDMM=
+	t=1706548332; cv=none; b=fD+j8xHTPWdODLOpuhH4O4TtSRrFVHMxsVOg6L4jkp3ZxAvesIPWQU+NR+DMdslMbd1w6dPww87fsD8XYz+3IoG3AuTgNqIq4v7G637xQ2FD5W/XRgpuzeHV1F1lSVFzgme4B2rV2NU9WVjRiUhz3CILAN+dfkGoJjZet31gRY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548331; c=relaxed/simple;
-	bh=TmsxVF/uYqxsg8V8ckbVnBt0alSsBkpJvYdNMCa7Brc=;
+	s=arc-20240116; t=1706548332; c=relaxed/simple;
+	bh=unU0ZrwOjfnfy/X1s9piMgJVNyctT2pgYL7x7sphewQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e7aLoHhju2i5fX7sbUUhj+7SYgYMuoLbAxgnPr1HytSoq0cdArHJ/YIRCbr0MOyvfd6AtO8BhtAS4qp7HBrcfubzQ+d15gNDOuxm/BlbO2k2SrVCbxIfLItwmsths9h6AxIQmanTFFRs0OqT++HMPF9MoBHA3ejv8NX7jadfC/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mo7rxV3G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P1XvOKyAfWgfAXlXRzqsskM3I6Ykn2+eAxcweF+M0GshjZeIP1Frh0fpT++EFL2ID3sM14kFhxW87FCZyqtrLJ9fNhBvHJplTDP0sUjGmt06cuhj4MLj4kOUpxJm4nxYLRVd+tXWpwxzLPnbmsjT3pb2JdzQTPofYjbI+BV4PmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9Id/zIf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mo7rxV3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B89C43394;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9Id/zIf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35B2C433C7;
 	Mon, 29 Jan 2024 17:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548331;
-	bh=TmsxVF/uYqxsg8V8ckbVnBt0alSsBkpJvYdNMCa7Brc=;
+	s=korg; t=1706548332;
+	bh=unU0ZrwOjfnfy/X1s9piMgJVNyctT2pgYL7x7sphewQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mo7rxV3GAVq+hWIwTeaoONLqSvGxKN/wLcg9QyutMqokfAhDKVlaNcZ/n1CL1nntr
-	 +xiK7jdTV2FFZcUhHCzzlHiAdVBIJ+3jAfyBMT9mD7L1U77flWj4+n0lQkrXBwZFro
-	 4dfSi0/lBXa5ig9Fo0b5aSUXZiPwOOIl2a0YWCGw=
+	b=f9Id/zIfJVfeBwpHhdWDvJCHQOUevvsi61xU8Qf/40Q0E8Wf0O9WANvB/LXHEud2s
+	 Ne1ugiiTCRxdPXagHGrVCOl+giFSdua7tlCcm6iug8SS9ehW7/VkIp0j8lwvdTWBYw
+	 3YjBOS0CFlhJkQ/AqH3L4QhF8FEUMryCG+r7oaKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Karlitskaya <allison.karlitskaya@redhat.com>,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 329/346] block: Move checking GENHD_FL_NO_PART to bdev_add_partition()
-Date: Mon, 29 Jan 2024 09:06:00 -0800
-Message-ID: <20240129170026.158425808@linuxfoundation.org>
+Subject: [PATCH 6.1 100/185] net/mlx5e: fix a potential double-free in fs_any_create_groups
+Date: Mon, 29 Jan 2024 09:05:00 -0800
+Message-ID: <20240129170001.807948141@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,62 +49,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit 7777f47f2ea64efd1016262e7b59fab34adfb869 ]
+[ Upstream commit aef855df7e1bbd5aa4484851561211500b22707e ]
 
-Commit 1a721de8489f ("block: don't add or resize partition on the disk
-with GENHD_FL_NO_PART") prevented all operations about partitions on disks
-with GENHD_FL_NO_PART in blkpg_do_ioctl() since they are meaningless.
-However, it changed error code in some scenarios. So move checking
-GENHD_FL_NO_PART to bdev_add_partition() to eliminate impact.
+When kcalloc() for ft->g succeeds but kvzalloc() for in fails,
+fs_any_create_groups() will free ft->g. However, its caller
+fs_any_create_table() will free ft->g again through calling
+mlx5e_destroy_flow_table(), which will lead to a double-free.
+Fix this by setting ft->g to NULL in fs_any_create_groups().
 
-Fixes: 1a721de8489f ("block: don't add or resize partition on the disk with GENHD_FL_NO_PART")
-Reported-by: Allison Karlitskaya <allison.karlitskaya@redhat.com>
-Closes: https://lore.kernel.org/all/CAOYeF9VsmqKMcQjo1k6YkGNujwN-nzfxY17N3F-CMikE1tYp+w@mail.gmail.com/
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240118130401.792757-1-lilingfeng@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 0f575c20bf06 ("net/mlx5e: Introduce Flow Steering ANY API")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/ioctl.c           | 2 --
- block/partitions/core.c | 5 +++++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/ioctl.c b/block/ioctl.c
-index 9c73a763ef88..438f79c564cf 100644
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -20,8 +20,6 @@ static int blkpg_do_ioctl(struct block_device *bdev,
- 	struct blkpg_partition p;
- 	sector_t start, length;
- 
--	if (disk->flags & GENHD_FL_NO_PART)
--		return -EINVAL;
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EACCES;
- 	if (copy_from_user(&p, upart, sizeof(struct blkpg_partition)))
-diff --git a/block/partitions/core.c b/block/partitions/core.c
-index f47ffcfdfcec..f14602022c5e 100644
---- a/block/partitions/core.c
-+++ b/block/partitions/core.c
-@@ -447,6 +447,11 @@ int bdev_add_partition(struct gendisk *disk, int partno, sector_t start,
- 		goto out;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c b/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
+index e1283531e0b8..671adbad0a40 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
+@@ -436,6 +436,7 @@ static int fs_any_create_groups(struct mlx5e_flow_table *ft)
+ 	in = kvzalloc(inlen, GFP_KERNEL);
+ 	if  (!in || !ft->g) {
+ 		kfree(ft->g);
++		ft->g = NULL;
+ 		kvfree(in);
+ 		return -ENOMEM;
  	}
- 
-+	if (disk->flags & GENHD_FL_NO_PART) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
-+
- 	if (partition_overlaps(disk, start, length, -1)) {
- 		ret = -EBUSY;
- 		goto out;
 -- 
 2.43.0
 
