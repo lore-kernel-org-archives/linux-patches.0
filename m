@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037E515B31C;
-	Mon, 29 Jan 2024 17:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECD815F31B;
+	Mon, 29 Jan 2024 17:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548273; cv=none; b=j5huu82yucqt0/JPi0hrEVrF8IQ9M0OGynrePEZ0bSBd1eEZIQA9bjyJcAHIBPfg8X0UyFK6dX7PrMjNgKjr97z7bZfg1joHkr5qFq9XDR7nDlxl7BrS6lBrUUxTjfzuY+uJf/gPQ0+nw9sBmiS4JP09ocb3tFnKPnMm3SNCJ5M=
+	t=1706548273; cv=none; b=Rgsk8Uz0YKoDl7ziR1UcJZ4POuKz6mfd/yGCVoxWB4g5w6z3CslF/aqyynMJczYPrOtBqldAdeFF2NnlSJmRY8oynRKnUydoLK3vg3AZ0hRyVFYLolqaaAjtVrJbxR1pTbuW43DrMKUxpPp6jPgXhZCWS4ndKAN+rqMt652SW1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548273; c=relaxed/simple;
-	bh=DXbuAgNcOQdQ7lQ1USTmnsOtQCTXQ1gljOnmEgsc0bM=;
+	bh=hysasaRASePX2hiTWdjxGjVAO4ulK2bfGL9p10J2Qbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=grKqFmUkL6srGdmSbvNBBTW0HSn24pcrEg9Gng62C4LgU/iURol8tSrKYQtkpqWj09V9VQxOLOASS4Fda8VvYU4cEcpiaDN0QIYma1sqpLPMbrUxzz2ifsxTBkJ8slfxc8S3YhXuUui4xtta0249H7an1tz8VWDtEQOtklY4/xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkQAhlRg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XUst4cYxyZowOUMBAzsMJ+W3uktnltosayizT/vpEoexmnOgpXyzqdfm6zh8l/jqoiOZjeFIKmc+NNwIFn1bTrLRuy1EVzG0jNG6UJ5DWF76VhGDN/CMH34RMqpF8vgB8rDrK6urVH420u6xQ31mXpKb1/Opb5AyONfaLjkdDO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8cpCfnD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkQAhlRg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66037C43390;
-	Mon, 29 Jan 2024 17:11:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8cpCfnD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3503CC433C7;
+	Mon, 29 Jan 2024 17:11:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548272;
-	bh=DXbuAgNcOQdQ7lQ1USTmnsOtQCTXQ1gljOnmEgsc0bM=;
+	s=korg; t=1706548273;
+	bh=hysasaRASePX2hiTWdjxGjVAO4ulK2bfGL9p10J2Qbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HkQAhlRgkUhr4/lx2qdy6fl9Pw4VG8WCu4RMashdzy78KB6icJ6TBKy8ALQZpnoFP
-	 lpvYaiUPKQ7pYGOhy2qP32uLz7TmHEL4Yxl6Ja8nuv7BpbjX1lQAk02M3kO7XAXU2k
-	 QW9Tr9U/kI9UWGNOZMEKAB0kys9fYKb2gkZGQHuA=
+	b=N8cpCfnDvZop1/vJ8GdvYsSm6m4v4R571Cn5TSWpl0Lsd4Ntzj2AIBjL7VxvIx3uv
+	 7GWS31n/WPBFrem5askhpzIBikX4d/JUleoyF4IP6ivEqEIhTyH/WSJQHbtBPHc/4O
+	 N6+Vsbshn89nBAiXmKhrSz+3i+un2tBvOn5a+JZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Samson Tam <samson.tam@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 289/346] drm/amd/display: do not send commands to DMUB if DMUB is inactive from S3
-Date: Mon, 29 Jan 2024 09:05:20 -0800
-Message-ID: <20240129170024.890106673@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Subject: [PATCH 6.1 062/185] serial: sc16is7xx: change EFR lock to operate on each channels
+Date: Mon, 29 Jan 2024 09:04:22 -0800
+Message-ID: <20240129170000.597465167@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,191 +45,210 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samson Tam <samson.tam@amd.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 0f657938e4345a77be871d906f3e0de3c58a7a49 ]
+commit 4409df5866b7ff7686ba27e449ca97a92ee063c9 upstream.
 
-[Why]
-On resume from S3, may get apply_idle_optimizations call while DMUB
-is inactive which will just time out.
+Now that the driver has been converted to use one regmap per port, change
+efr locking to operate on a channel basis instead of on the whole IC.
 
-[How]
-Set and track power state in dmub_srv and check power state before
-sending commands to DMUB.  Add interface in both dmub_srv and
-dc_dmub_srv
-
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Samson Tam <samson.tam@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 8892780834ae ("drm/amd/display: Wake DMCUB before sending a command")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3837a0379533 ("serial: sc16is7xx: improve regmap debugfs by using one regmap per port")
+Cc:  <stable@vger.kernel.org> # 6.1.x: 3837a03 serial: sc16is7xx: improve regmap debugfs by using one regmap per port
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20231211171353.2901416-5-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  3 +++
- drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c  | 14 +++++++++++++
- drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h  |  2 ++
- drivers/gpu/drm/amd/display/dmub/dmub_srv.h   | 21 +++++++++++++++++++
- .../gpu/drm/amd/display/dmub/src/dmub_srv.c   | 15 +++++++++++++
- 5 files changed, 55 insertions(+)
+ drivers/tty/serial/sc16is7xx.c |   49 +++++++++++++++++++++--------------------
+ 1 file changed, 26 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index a9bd020b165a..4d534ac18356 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2656,6 +2656,7 @@ static int dm_suspend(void *handle)
- 	hpd_rx_irq_work_suspend(dm);
- 
- 	dc_set_power_state(dm->dc, DC_ACPI_CM_POWER_STATE_D3);
-+	dc_dmub_srv_set_power_state(dm->dc->ctx->dmub_srv, DC_ACPI_CM_POWER_STATE_D3);
- 
- 	return 0;
- }
-@@ -2851,6 +2852,7 @@ static int dm_resume(void *handle)
- 		if (r)
- 			DRM_ERROR("DMUB interface failed to initialize: status=%d\n", r);
- 
-+		dc_dmub_srv_set_power_state(dm->dc->ctx->dmub_srv, DC_ACPI_CM_POWER_STATE_D0);
- 		dc_set_power_state(dm->dc, DC_ACPI_CM_POWER_STATE_D0);
- 
- 		dc_resume(dm->dc);
-@@ -2901,6 +2903,7 @@ static int dm_resume(void *handle)
- 	}
- 
- 	/* power on hardware */
-+	dc_dmub_srv_set_power_state(dm->dc->ctx->dmub_srv, DC_ACPI_CM_POWER_STATE_D0);
- 	dc_set_power_state(dm->dc, DC_ACPI_CM_POWER_STATE_D0);
- 
- 	/* program HPD filter */
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-index 0e07699c1e83..0c963dfd6061 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-@@ -1251,3 +1251,17 @@ void dc_dmub_srv_exit_low_power_state(const struct dc *dc)
- 		ASSERT(0);
- }
- 
-+void dc_dmub_srv_set_power_state(struct dc_dmub_srv *dc_dmub_srv, enum dc_acpi_cm_power_state powerState)
-+{
-+	struct dmub_srv *dmub;
-+
-+	if (!dc_dmub_srv)
-+		return;
-+
-+	dmub = dc_dmub_srv->dmub;
-+
-+	if (powerState == DC_ACPI_CM_POWER_STATE_D0)
-+		dmub_srv_set_power_state(dmub, DMUB_POWER_STATE_D0);
-+	else
-+		dmub_srv_set_power_state(dmub, DMUB_POWER_STATE_D3);
-+}
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
-index d4a60f53faab..c25ce7546f71 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
-@@ -102,4 +102,6 @@ void dc_dmub_srv_subvp_save_surf_addr(const struct dc_dmub_srv *dc_dmub_srv, con
- bool dc_dmub_srv_is_hw_pwr_up(struct dc_dmub_srv *dc_dmub_srv, bool wait);
- void dc_dmub_srv_notify_idle(const struct dc *dc, bool allow_idle);
- void dc_dmub_srv_exit_low_power_state(const struct dc *dc);
-+
-+void dc_dmub_srv_set_power_state(struct dc_dmub_srv *dc_dmub_srv, enum dc_acpi_cm_power_state powerState);
- #endif /* _DMUB_DC_SRV_H_ */
-diff --git a/drivers/gpu/drm/amd/display/dmub/dmub_srv.h b/drivers/gpu/drm/amd/display/dmub/dmub_srv.h
-index df63aa8f01e9..d1a4ed6f5916 100644
---- a/drivers/gpu/drm/amd/display/dmub/dmub_srv.h
-+++ b/drivers/gpu/drm/amd/display/dmub/dmub_srv.h
-@@ -150,6 +150,13 @@ enum dmub_memory_access_type {
- 	DMUB_MEMORY_ACCESS_DMA
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -324,6 +324,7 @@ struct sc16is7xx_one_config {
+ struct sc16is7xx_one {
+ 	struct uart_port		port;
+ 	struct regmap			*regmap;
++	struct mutex			efr_lock; /* EFR registers access */
+ 	struct kthread_work		tx_work;
+ 	struct kthread_work		reg_work;
+ 	struct kthread_delayed_work	ms_work;
+@@ -343,7 +344,6 @@ struct sc16is7xx_port {
+ 	unsigned char			buf[SC16IS7XX_FIFO_SIZE];
+ 	struct kthread_worker		kworker;
+ 	struct task_struct		*kworker_task;
+-	struct mutex			efr_lock;
+ 	struct sc16is7xx_one		p[];
  };
  
-+/* enum dmub_power_state type - to track DC power state in dmub_srv */
-+enum dmub_srv_power_state_type {
-+	DMUB_POWER_STATE_UNDEFINED = 0,
-+	DMUB_POWER_STATE_D0 = 1,
-+	DMUB_POWER_STATE_D3 = 8
-+};
-+
- /**
-  * struct dmub_region - dmub hw memory region
-  * @base: base address for region, must be 256 byte aligned
-@@ -485,6 +492,8 @@ struct dmub_srv {
- 	/* Feature capabilities reported by fw */
- 	struct dmub_feature_caps feature_caps;
- 	struct dmub_visual_confirm_color visual_confirm_color;
-+
-+	enum dmub_srv_power_state_type power_state;
- };
+@@ -496,7 +496,6 @@ static bool sc16is7xx_regmap_precious(st
  
- /**
-@@ -889,6 +898,18 @@ enum dmub_status dmub_srv_clear_inbox0_ack(struct dmub_srv *dmub);
-  */
- void dmub_srv_subvp_save_surf_addr(struct dmub_srv *dmub, const struct dc_plane_address *addr, uint8_t subvp_index);
+ static int sc16is7xx_set_baud(struct uart_port *port, int baud)
+ {
+-	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+ 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 	u8 lcr;
+ 	u8 prescaler = 0;
+@@ -520,7 +519,7 @@ static int sc16is7xx_set_baud(struct uar
+ 	 * because the bulk of the interrupt processing is run as a workqueue
+ 	 * job in thread context.
+ 	 */
+-	mutex_lock(&s->efr_lock);
++	mutex_lock(&one->efr_lock);
  
-+/**
-+ * dmub_srv_set_power_state() - Track DC power state in dmub_srv
-+ * @dmub: The dmub service
-+ * @power_state: DC power state setting
-+ *
-+ * Store DC power state in dmub_srv.  If dmub_srv is in D3, then don't send messages to DMUB
-+ *
-+ * Return:
-+ *   void
-+ */
-+void dmub_srv_set_power_state(struct dmub_srv *dmub, enum dmub_srv_power_state_type dmub_srv_power_state);
+ 	lcr = sc16is7xx_port_read(port, SC16IS7XX_LCR_REG);
+ 
+@@ -539,7 +538,7 @@ static int sc16is7xx_set_baud(struct uar
+ 	/* Put LCR back to the normal mode */
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, lcr);
+ 
+-	mutex_unlock(&s->efr_lock);
++	mutex_unlock(&one->efr_lock);
+ 
+ 	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG,
+ 			      SC16IS7XX_MCR_CLKSEL_BIT,
+@@ -709,11 +708,10 @@ static unsigned int sc16is7xx_get_hwmctr
+ static void sc16is7xx_update_mlines(struct sc16is7xx_one *one)
+ {
+ 	struct uart_port *port = &one->port;
+-	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+ 	unsigned long flags;
+ 	unsigned int status, changed;
+ 
+-	lockdep_assert_held_once(&s->efr_lock);
++	lockdep_assert_held_once(&one->efr_lock);
+ 
+ 	status = sc16is7xx_get_hwmctrl(port);
+ 	changed = status ^ one->old_mctrl;
+@@ -739,15 +737,20 @@ static void sc16is7xx_update_mlines(stru
+ 
+ static bool sc16is7xx_port_irq(struct sc16is7xx_port *s, int portno)
+ {
++	bool rc = true;
+ 	struct uart_port *port = &s->p[portno].port;
++	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
 +
- #if defined(__cplusplus)
++	mutex_lock(&one->efr_lock);
+ 
+ 	do {
+ 		unsigned int iir, rxlen;
+-		struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 
+ 		iir = sc16is7xx_port_read(port, SC16IS7XX_IIR_REG);
+-		if (iir & SC16IS7XX_IIR_NO_INT_BIT)
+-			return false;
++		if (iir & SC16IS7XX_IIR_NO_INT_BIT) {
++			rc = false;
++			goto out_port_irq;
++		}
+ 
+ 		iir &= SC16IS7XX_IIR_ID_MASK;
+ 
+@@ -787,15 +790,17 @@ static bool sc16is7xx_port_irq(struct sc
+ 			break;
+ 		}
+ 	} while (0);
+-	return true;
++
++out_port_irq:
++	mutex_unlock(&one->efr_lock);
++
++	return rc;
  }
- #endif
-diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c b/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
-index 38360adc53d9..59d4e64845ca 100644
---- a/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
-+++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
-@@ -713,6 +713,7 @@ enum dmub_status dmub_srv_hw_init(struct dmub_srv *dmub,
- 		dmub->hw_funcs.reset_release(dmub);
  
- 	dmub->hw_init = true;
-+	dmub->power_state = DMUB_POWER_STATE_D0;
+ static irqreturn_t sc16is7xx_irq(int irq, void *dev_id)
+ {
+ 	struct sc16is7xx_port *s = (struct sc16is7xx_port *)dev_id;
  
- 	return DMUB_STATUS_OK;
- }
-@@ -766,6 +767,9 @@ enum dmub_status dmub_srv_cmd_queue(struct dmub_srv *dmub,
- 	if (!dmub->hw_init)
- 		return DMUB_STATUS_INVALID;
- 
-+	if (dmub->power_state != DMUB_POWER_STATE_D0)
-+		return DMUB_STATUS_INVALID;
-+
- 	if (dmub->inbox1_rb.rptr > dmub->inbox1_rb.capacity ||
- 	    dmub->inbox1_rb.wrpt > dmub->inbox1_rb.capacity) {
- 		return DMUB_STATUS_HW_FAILURE;
-@@ -784,6 +788,9 @@ enum dmub_status dmub_srv_cmd_execute(struct dmub_srv *dmub)
- 	if (!dmub->hw_init)
- 		return DMUB_STATUS_INVALID;
- 
-+	if (dmub->power_state != DMUB_POWER_STATE_D0)
-+		return DMUB_STATUS_INVALID;
-+
- 	/**
- 	 * Read back all the queued commands to ensure that they've
- 	 * been flushed to framebuffer memory. Otherwise DMCUB might
-@@ -1100,3 +1107,11 @@ void dmub_srv_subvp_save_surf_addr(struct dmub_srv *dmub, const struct dc_plane_
- 				subvp_index);
+-	mutex_lock(&s->efr_lock);
+-
+ 	while (1) {
+ 		bool keep_polling = false;
+ 		int i;
+@@ -806,24 +811,22 @@ static irqreturn_t sc16is7xx_irq(int irq
+ 			break;
  	}
+ 
+-	mutex_unlock(&s->efr_lock);
+-
+ 	return IRQ_HANDLED;
  }
+ 
+ static void sc16is7xx_tx_proc(struct kthread_work *ws)
+ {
+ 	struct uart_port *port = &(to_sc16is7xx_one(ws, tx_work)->port);
+-	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
++	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 	unsigned long flags;
+ 
+ 	if ((port->rs485.flags & SER_RS485_ENABLED) &&
+ 	    (port->rs485.delay_rts_before_send > 0))
+ 		msleep(port->rs485.delay_rts_before_send);
+ 
+-	mutex_lock(&s->efr_lock);
++	mutex_lock(&one->efr_lock);
+ 	sc16is7xx_handle_tx(port);
+-	mutex_unlock(&s->efr_lock);
++	mutex_unlock(&one->efr_lock);
+ 
+ 	spin_lock_irqsave(&port->lock, flags);
+ 	sc16is7xx_ier_set(port, SC16IS7XX_IER_THRI_BIT);
+@@ -930,9 +933,9 @@ static void sc16is7xx_ms_proc(struct kth
+ 	struct sc16is7xx_port *s = dev_get_drvdata(one->port.dev);
+ 
+ 	if (one->port.state) {
+-		mutex_lock(&s->efr_lock);
++		mutex_lock(&one->efr_lock);
+ 		sc16is7xx_update_mlines(one);
+-		mutex_unlock(&s->efr_lock);
++		mutex_unlock(&one->efr_lock);
+ 
+ 		kthread_queue_delayed_work(&s->kworker, &one->ms_work, HZ);
+ 	}
+@@ -1016,7 +1019,6 @@ static void sc16is7xx_set_termios(struct
+ 				  struct ktermios *termios,
+ 				  const struct ktermios *old)
+ {
+-	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+ 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 	unsigned int lcr, flow = 0;
+ 	int baud;
+@@ -1075,7 +1077,7 @@ static void sc16is7xx_set_termios(struct
+ 		port->ignore_status_mask |= SC16IS7XX_LSR_BRK_ERROR_MASK;
+ 
+ 	/* As above, claim the mutex while accessing the EFR. */
+-	mutex_lock(&s->efr_lock);
++	mutex_lock(&one->efr_lock);
+ 
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG,
+ 			     SC16IS7XX_LCR_CONF_MODE_B);
+@@ -1105,7 +1107,7 @@ static void sc16is7xx_set_termios(struct
+ 	/* Update LCR register */
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, lcr);
+ 
+-	mutex_unlock(&s->efr_lock);
++	mutex_unlock(&one->efr_lock);
+ 
+ 	/* Get baud rate generator configuration */
+ 	baud = uart_get_baud_rate(port, termios, old,
+@@ -1516,7 +1518,6 @@ static int sc16is7xx_probe(struct device
+ 
+ 	s->devtype = devtype;
+ 	dev_set_drvdata(dev, s);
+-	mutex_init(&s->efr_lock);
+ 
+ 	kthread_init_worker(&s->kworker);
+ 	s->kworker_task = kthread_run(kthread_worker_fn, &s->kworker,
+@@ -1559,6 +1560,8 @@ static int sc16is7xx_probe(struct device
+ 			goto out_ports;
+ 		}
+ 
++		mutex_init(&s->p[i].efr_lock);
 +
-+void dmub_srv_set_power_state(struct dmub_srv *dmub, enum dmub_srv_power_state_type dmub_srv_power_state)
-+{
-+	if (!dmub || !dmub->hw_init)
-+		return;
-+
-+	dmub->power_state = dmub_srv_power_state;
-+}
--- 
-2.43.0
-
+ 		ret = uart_get_rs485_mode(&s->p[i].port);
+ 		if (ret)
+ 			goto out_ports;
 
 
