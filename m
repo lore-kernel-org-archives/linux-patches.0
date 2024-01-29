@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B496159578;
-	Mon, 29 Jan 2024 17:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDC0159578;
+	Mon, 29 Jan 2024 17:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548227; cv=none; b=ClbrMR8kJ6zlSSdR9p2+6vahn57oiTRn+j7Ugu7dMAcQpNkxRbGPGPovHjGGiInCoBV+yec81Gs6BmPmRbbt9htpEI2ld55LK0vWXmRVfjMKLTJOrCLd7jWBwS3UPi2dRIbEX7Rebq3Eggl78vXfUvcZFI223ZjZtFnK7eYe610=
+	t=1706548228; cv=none; b=VDfjle3iyO0ME4qdddIMEc1u3uDCBKDLK+XblSnml2ULo9lcERvsd4Z65anf8atsCEEQZ8kcgh8Cf1rKvoWZJS06RW0y28cleNG99rpiCUs7u+0zSWH6jJgDzbnEll9HpHRenpQXzekNJ9z3C0M7OXlBnahmrLxR3U8eFnGGCN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548227; c=relaxed/simple;
-	bh=P9thSmgN9eDfhQf16KphLi+0uACJVaQ193M1BlRXOO8=;
+	s=arc-20240116; t=1706548228; c=relaxed/simple;
+	bh=tQZK2+RMOawaCWJWkSSGXTGnCYdSFw90JKdOtWWBRVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hDPmxVTzyxeE5vWxfMZ6S5Xh4I6i3HgxKpAzBbG4Wyud6VNyzOhEVgEIW0GMSyWQIVc4wevpEDEdjKm7HKruGtMi329CEZFPRKbP34Chpr4TVizOepvmzZLETprH/uIso9ztVJBZSnxJGObX7aOEyYpG1bKFUwggtwzv2BeD/2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+0KwGKQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ccX+sspNcy21RzZ4gZxbPfJoe8coACAXzlGyp/T9UGHNNohbLtNEXJGkt8/nlt/grH1lE4tG/jeB306mRKrhqH/4fj6gjE1emL90VKA4dM5yTag9W8mUMlUYVHkklJXBNLQoI03X9/ihRZMFAaAkJG85PFfbZ+s9J+6Q7t1PcKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvrEwkMw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+0KwGKQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B7BC433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvrEwkMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC507C433F1;
 	Mon, 29 Jan 2024 17:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548227;
-	bh=P9thSmgN9eDfhQf16KphLi+0uACJVaQ193M1BlRXOO8=;
+	s=korg; t=1706548228;
+	bh=tQZK2+RMOawaCWJWkSSGXTGnCYdSFw90JKdOtWWBRVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K+0KwGKQuodhyhwDz29jlhxS18BUtrPL7PhSsQzlNU0AjGpVe24SfXnGra3KAt2Eb
-	 +gdFTyeLYhR306iMoMFX9kwwHlDaOvr9VTbJf3pYmnE8zaNHBfgBttQ2J8jKjPCqAB
-	 ewtV3kwVPL+zPB+gYXwZ843ZP6O931feU3GaFOHI=
+	b=GvrEwkMw/iv/xWUCi2dI/uHQF6Mo++qB9iKJzYdORWXjE95EuhNgIOdgmELu6NTSP
+	 fgVpQcL6a+0NLqCfP7Og8IKrI+PAC7GfMU5hHhxrfjJosskwx1stUODM9LKR6JVS3f
+	 3baDWfobz1U0mWwpnWhT3bM9PK/7CTSMOe0vp9Dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Larsson <alexl@redhat.com>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.7 233/346] ovl: mark xwhiteouts directory with overlay.opaque=x
-Date: Mon, 29 Jan 2024 09:04:24 -0800
-Message-ID: <20240129170023.258737026@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Youngmin Nam <youngmin.nam@samsung.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Subject: [PATCH 6.1 030/185] async: Introduce async_schedule_dev_nocall()
+Date: Mon, 29 Jan 2024 09:03:50 -0800
+Message-ID: <20240129165959.565390530@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,463 +48,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 420332b94119cdc7db4477cc88484691cb92ae71 upstream.
+commit 7d4b5d7a37bdd63a5a3371b988744b060d5bb86f upstream.
 
-An opaque directory cannot have xwhiteouts, so instead of marking an
-xwhiteouts directory with a new xattr, overload overlay.opaque xattr
-for marking both opaque dir ('y') and xwhiteouts dir ('x').
+In preparation for subsequent changes, introduce a specialized variant
+of async_schedule_dev() that will not invoke the argument function
+synchronously when it cannot be scheduled for asynchronous execution.
 
-This is more efficient as the overlay.opaque xattr is checked during
-lookup of directory anyway.
+The new function, async_schedule_dev_nocall(), will be used for fixing
+possible deadlocks in the system-wide power management core code.
 
-This also prevents unnecessary checking the xattr when reading a
-directory without xwhiteouts, i.e. most of the time.
-
-Note that the xwhiteouts marker is not checked on the upper layer and
-on the last layer in lowerstack, where xwhiteouts are not expected.
-
-Fixes: bc8df7a3dc03 ("ovl: Add an alternative type of whiteout")
-Cc: <stable@vger.kernel.org> # v6.7
-Reviewed-by: Alexander Larsson <alexl@redhat.com>
-Tested-by: Alexander Larsson <alexl@redhat.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com> for the series.
+Tested-by: Youngmin Nam <youngmin.nam@samsung.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/filesystems/overlayfs.rst |   16 +++++++--
- fs/overlayfs/namei.c                    |   43 ++++++++++++++++---------
- fs/overlayfs/overlayfs.h                |   23 ++++++++++---
- fs/overlayfs/ovl_entry.h                |    4 +-
- fs/overlayfs/readdir.c                  |    7 ++--
- fs/overlayfs/super.c                    |   15 +++++++++
- fs/overlayfs/util.c                     |   53 ++++++++++++++++++--------------
- 7 files changed, 110 insertions(+), 51 deletions(-)
+ include/linux/async.h |    2 ++
+ kernel/async.c        |   29 +++++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
 
---- a/Documentation/filesystems/overlayfs.rst
-+++ b/Documentation/filesystems/overlayfs.rst
-@@ -145,7 +145,9 @@ filesystem, an overlay filesystem needs
- that files have been removed.  This is done using whiteouts and opaque
- directories (non-directories are always opaque).
- 
--A whiteout is created as a character device with 0/0 device number.
-+A whiteout is created as a character device with 0/0 device number or
-+as a zero-size regular file with the xattr "trusted.overlay.whiteout".
-+
- When a whiteout is found in the upper level of a merged directory, any
- matching name in the lower level is ignored, and the whiteout itself
- is also hidden.
-@@ -154,6 +156,13 @@ A directory is made opaque by setting th
- to "y".  Where the upper filesystem contains an opaque directory, any
- directory in the lower filesystem with the same name is ignored.
- 
-+An opaque directory should not conntain any whiteouts, because they do not
-+serve any purpose.  A merge directory containing regular files with the xattr
-+"trusted.overlay.whiteout", should be additionally marked by setting the xattr
-+"trusted.overlay.opaque" to "x" on the merge directory itself.
-+This is needed to avoid the overhead of checking the "trusted.overlay.whiteout"
-+on all entries during readdir in the common case.
-+
- readdir
- -------
- 
-@@ -534,8 +543,9 @@ A lower dir with a regular whiteout will
- mount, so to support storing an effective whiteout file in an overlayfs mount an
- alternative form of whiteout is supported. This form is a regular, zero-size
- file with the "overlay.whiteout" xattr set, inside a directory with the
--"overlay.whiteouts" xattr set. Such whiteouts are never created by overlayfs,
--but can be used by userspace tools (like containers) that generate lower layers.
-+"overlay.opaque" xattr set to "x" (see `whiteouts and opaque directories`_).
-+These alternative whiteouts are never created by overlayfs, but can be used by
-+userspace tools (like containers) that generate lower layers.
- These alternative whiteouts can be escaped using the standard xattr escape
- mechanism in order to properly nest to any depth.
- 
---- a/fs/overlayfs/namei.c
-+++ b/fs/overlayfs/namei.c
-@@ -18,10 +18,11 @@
- 
- struct ovl_lookup_data {
- 	struct super_block *sb;
--	struct vfsmount *mnt;
-+	const struct ovl_layer *layer;
- 	struct qstr name;
- 	bool is_dir;
- 	bool opaque;
-+	bool xwhiteouts;
- 	bool stop;
- 	bool last;
- 	char *redirect;
-@@ -201,17 +202,13 @@ struct dentry *ovl_decode_real_fh(struct
- 	return real;
+--- a/include/linux/async.h
++++ b/include/linux/async.h
+@@ -90,6 +90,8 @@ async_schedule_dev(async_func_t func, st
+ 	return async_schedule_node(func, dev, dev_to_node(dev));
  }
  
--static bool ovl_is_opaquedir(struct ovl_fs *ofs, const struct path *path)
--{
--	return ovl_path_check_dir_xattr(ofs, path, OVL_XATTR_OPAQUE);
--}
--
- static struct dentry *ovl_lookup_positive_unlocked(struct ovl_lookup_data *d,
- 						   const char *name,
- 						   struct dentry *base, int len,
- 						   bool drop_negative)
- {
--	struct dentry *ret = lookup_one_unlocked(mnt_idmap(d->mnt), name, base, len);
-+	struct dentry *ret = lookup_one_unlocked(mnt_idmap(d->layer->mnt), name,
-+						 base, len);
- 
- 	if (!IS_ERR(ret) && d_flags_negative(smp_load_acquire(&ret->d_flags))) {
- 		if (drop_negative && ret->d_lockref.count == 1) {
-@@ -232,10 +229,13 @@ static int ovl_lookup_single(struct dent
- 			     size_t prelen, const char *post,
- 			     struct dentry **ret, bool drop_negative)
- {
-+	struct ovl_fs *ofs = OVL_FS(d->sb);
- 	struct dentry *this;
- 	struct path path;
- 	int err;
- 	bool last_element = !post[0];
-+	bool is_upper = d->layer->idx == 0;
-+	char val;
- 
- 	this = ovl_lookup_positive_unlocked(d, name, base, namelen, drop_negative);
- 	if (IS_ERR(this)) {
-@@ -253,8 +253,8 @@ static int ovl_lookup_single(struct dent
- 	}
- 
- 	path.dentry = this;
--	path.mnt = d->mnt;
--	if (ovl_path_is_whiteout(OVL_FS(d->sb), &path)) {
-+	path.mnt = d->layer->mnt;
-+	if (ovl_path_is_whiteout(ofs, &path)) {
- 		d->stop = d->opaque = true;
- 		goto put_and_out;
- 	}
-@@ -272,7 +272,7 @@ static int ovl_lookup_single(struct dent
- 			d->stop = true;
- 			goto put_and_out;
- 		}
--		err = ovl_check_metacopy_xattr(OVL_FS(d->sb), &path, NULL);
-+		err = ovl_check_metacopy_xattr(ofs, &path, NULL);
- 		if (err < 0)
- 			goto out_err;
- 
-@@ -292,7 +292,12 @@ static int ovl_lookup_single(struct dent
- 		if (d->last)
- 			goto out;
- 
--		if (ovl_is_opaquedir(OVL_FS(d->sb), &path)) {
-+		/* overlay.opaque=x means xwhiteouts directory */
-+		val = ovl_get_opaquedir_val(ofs, &path);
-+		if (last_element && !is_upper && val == 'x') {
-+			d->xwhiteouts = true;
-+			ovl_layer_set_xwhiteouts(ofs, d->layer);
-+		} else if (val == 'y') {
- 			d->stop = true;
- 			if (last_element)
- 				d->opaque = true;
-@@ -863,7 +868,8 @@ fail:
-  * Returns next layer in stack starting from top.
-  * Returns -1 if this is the last layer.
-  */
--int ovl_path_next(int idx, struct dentry *dentry, struct path *path)
-+int ovl_path_next(int idx, struct dentry *dentry, struct path *path,
-+		  const struct ovl_layer **layer)
- {
- 	struct ovl_entry *oe = OVL_E(dentry);
- 	struct ovl_path *lowerstack = ovl_lowerstack(oe);
-@@ -871,13 +877,16 @@ int ovl_path_next(int idx, struct dentry
- 	BUG_ON(idx < 0);
- 	if (idx == 0) {
- 		ovl_path_upper(dentry, path);
--		if (path->dentry)
-+		if (path->dentry) {
-+			*layer = &OVL_FS(dentry->d_sb)->layers[0];
- 			return ovl_numlower(oe) ? 1 : -1;
-+		}
- 		idx++;
- 	}
- 	BUG_ON(idx > ovl_numlower(oe));
- 	path->dentry = lowerstack[idx - 1].dentry;
--	path->mnt = lowerstack[idx - 1].layer->mnt;
-+	*layer = lowerstack[idx - 1].layer;
-+	path->mnt = (*layer)->mnt;
- 
- 	return (idx < ovl_numlower(oe)) ? idx + 1 : -1;
- }
-@@ -1055,7 +1064,7 @@ struct dentry *ovl_lookup(struct inode *
- 	old_cred = ovl_override_creds(dentry->d_sb);
- 	upperdir = ovl_dentry_upper(dentry->d_parent);
- 	if (upperdir) {
--		d.mnt = ovl_upper_mnt(ofs);
-+		d.layer = &ofs->layers[0];
- 		err = ovl_lookup_layer(upperdir, &d, &upperdentry, true);
- 		if (err)
- 			goto out;
-@@ -1111,7 +1120,7 @@ struct dentry *ovl_lookup(struct inode *
- 		else if (d.is_dir || !ofs->numdatalayer)
- 			d.last = lower.layer->idx == ovl_numlower(roe);
- 
--		d.mnt = lower.layer->mnt;
-+		d.layer = lower.layer;
- 		err = ovl_lookup_layer(lower.dentry, &d, &this, false);
- 		if (err)
- 			goto out_put;
-@@ -1278,6 +1287,8 @@ struct dentry *ovl_lookup(struct inode *
- 
- 	if (upperopaque)
- 		ovl_dentry_set_opaque(dentry);
-+	if (d.xwhiteouts)
-+		ovl_dentry_set_xwhiteouts(dentry);
- 
- 	if (upperdentry)
- 		ovl_dentry_set_upper_alias(dentry);
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -50,7 +50,6 @@ enum ovl_xattr {
- 	OVL_XATTR_METACOPY,
- 	OVL_XATTR_PROTATTR,
- 	OVL_XATTR_XWHITEOUT,
--	OVL_XATTR_XWHITEOUTS,
- };
- 
- enum ovl_inode_flag {
-@@ -70,6 +69,8 @@ enum ovl_entry_flag {
- 	OVL_E_UPPER_ALIAS,
- 	OVL_E_OPAQUE,
- 	OVL_E_CONNECTED,
-+	/* Lower stack may contain xwhiteout entries */
-+	OVL_E_XWHITEOUTS,
- };
- 
- enum {
-@@ -471,6 +472,10 @@ bool ovl_dentry_test_flag(unsigned long
- bool ovl_dentry_is_opaque(struct dentry *dentry);
- bool ovl_dentry_is_whiteout(struct dentry *dentry);
- void ovl_dentry_set_opaque(struct dentry *dentry);
-+bool ovl_dentry_has_xwhiteouts(struct dentry *dentry);
-+void ovl_dentry_set_xwhiteouts(struct dentry *dentry);
-+void ovl_layer_set_xwhiteouts(struct ovl_fs *ofs,
-+			      const struct ovl_layer *layer);
- bool ovl_dentry_has_upper_alias(struct dentry *dentry);
- void ovl_dentry_set_upper_alias(struct dentry *dentry);
- bool ovl_dentry_needs_data_copy_up(struct dentry *dentry, int flags);
-@@ -488,11 +493,10 @@ struct file *ovl_path_open(const struct
- int ovl_copy_up_start(struct dentry *dentry, int flags);
- void ovl_copy_up_end(struct dentry *dentry);
- bool ovl_already_copied_up(struct dentry *dentry, int flags);
--bool ovl_path_check_dir_xattr(struct ovl_fs *ofs, const struct path *path,
--			      enum ovl_xattr ox);
-+char ovl_get_dir_xattr_val(struct ovl_fs *ofs, const struct path *path,
-+			   enum ovl_xattr ox);
- bool ovl_path_check_origin_xattr(struct ovl_fs *ofs, const struct path *path);
- bool ovl_path_check_xwhiteout_xattr(struct ovl_fs *ofs, const struct path *path);
--bool ovl_path_check_xwhiteouts_xattr(struct ovl_fs *ofs, const struct path *path);
- bool ovl_init_uuid_xattr(struct super_block *sb, struct ovl_fs *ofs,
- 			 const struct path *upperpath);
- 
-@@ -567,7 +571,13 @@ static inline bool ovl_is_impuredir(stru
- 		.mnt = ovl_upper_mnt(ofs),
- 	};
- 
--	return ovl_path_check_dir_xattr(ofs, &upperpath, OVL_XATTR_IMPURE);
-+	return ovl_get_dir_xattr_val(ofs, &upperpath, OVL_XATTR_IMPURE) == 'y';
-+}
++bool async_schedule_dev_nocall(async_func_t func, struct device *dev);
 +
-+static inline char ovl_get_opaquedir_val(struct ovl_fs *ofs,
-+					 const struct path *path)
+ /**
+  * async_schedule_dev_domain - A device specific version of async_schedule_domain
+  * @func: function to execute asynchronously
+--- a/kernel/async.c
++++ b/kernel/async.c
+@@ -244,6 +244,35 @@ async_cookie_t async_schedule_node(async
+ EXPORT_SYMBOL_GPL(async_schedule_node);
+ 
+ /**
++ * async_schedule_dev_nocall - A simplified variant of async_schedule_dev()
++ * @func: function to execute asynchronously
++ * @dev: device argument to be passed to function
++ *
++ * @dev is used as both the argument for the function and to provide NUMA
++ * context for where to run the function.
++ *
++ * If the asynchronous execution of @func is scheduled successfully, return
++ * true. Otherwise, do nothing and return false, unlike async_schedule_dev()
++ * that will run the function synchronously then.
++ */
++bool async_schedule_dev_nocall(async_func_t func, struct device *dev)
 +{
-+	return ovl_get_dir_xattr_val(ofs, path, OVL_XATTR_OPAQUE);
- }
- 
- static inline bool ovl_redirect_follow(struct ovl_fs *ofs)
-@@ -674,7 +684,8 @@ int ovl_get_index_name(struct ovl_fs *of
- struct dentry *ovl_get_index_fh(struct ovl_fs *ofs, struct ovl_fh *fh);
- struct dentry *ovl_lookup_index(struct ovl_fs *ofs, struct dentry *upper,
- 				struct dentry *origin, bool verify);
--int ovl_path_next(int idx, struct dentry *dentry, struct path *path);
-+int ovl_path_next(int idx, struct dentry *dentry, struct path *path,
-+		  const struct ovl_layer **layer);
- int ovl_verify_lowerdata(struct dentry *dentry);
- struct dentry *ovl_lookup(struct inode *dir, struct dentry *dentry,
- 			  unsigned int flags);
---- a/fs/overlayfs/ovl_entry.h
-+++ b/fs/overlayfs/ovl_entry.h
-@@ -40,6 +40,8 @@ struct ovl_layer {
- 	int idx;
- 	/* One fsid per unique underlying sb (upper fsid == 0) */
- 	int fsid;
-+	/* xwhiteouts were found on this layer */
-+	bool has_xwhiteouts;
- };
- 
- struct ovl_path {
-@@ -59,7 +61,7 @@ struct ovl_fs {
- 	unsigned int numfs;
- 	/* Number of data-only lower layers */
- 	unsigned int numdatalayer;
--	const struct ovl_layer *layers;
-+	struct ovl_layer *layers;
- 	struct ovl_sb *fs;
- 	/* workbasedir is the path at workdir= mount option */
- 	struct dentry *workbasedir;
---- a/fs/overlayfs/readdir.c
-+++ b/fs/overlayfs/readdir.c
-@@ -305,8 +305,6 @@ static inline int ovl_dir_read(const str
- 	if (IS_ERR(realfile))
- 		return PTR_ERR(realfile);
- 
--	rdd->in_xwhiteouts_dir = rdd->dentry &&
--		ovl_path_check_xwhiteouts_xattr(OVL_FS(rdd->dentry->d_sb), realpath);
- 	rdd->first_maybe_whiteout = NULL;
- 	rdd->ctx.pos = 0;
- 	do {
-@@ -359,10 +357,13 @@ static int ovl_dir_read_merged(struct de
- 		.is_lowest = false,
- 	};
- 	int idx, next;
-+	const struct ovl_layer *layer;
- 
- 	for (idx = 0; idx != -1; idx = next) {
--		next = ovl_path_next(idx, dentry, &realpath);
-+		next = ovl_path_next(idx, dentry, &realpath, &layer);
- 		rdd.is_upper = ovl_dentry_upper(dentry) == realpath.dentry;
-+		rdd.in_xwhiteouts_dir = layer->has_xwhiteouts &&
-+					ovl_dentry_has_xwhiteouts(dentry);
- 
- 		if (next != -1) {
- 			err = ovl_dir_read(&realpath, &rdd);
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -1250,6 +1250,7 @@ static struct dentry *ovl_get_root(struc
- 				   struct ovl_entry *oe)
- {
- 	struct dentry *root;
-+	struct ovl_fs *ofs = OVL_FS(sb);
- 	struct ovl_path *lowerpath = ovl_lowerstack(oe);
- 	unsigned long ino = d_inode(lowerpath->dentry)->i_ino;
- 	int fsid = lowerpath->layer->fsid;
-@@ -1271,6 +1272,20 @@ static struct dentry *ovl_get_root(struc
- 			ovl_set_flag(OVL_IMPURE, d_inode(root));
- 	}
- 
-+	/* Look for xwhiteouts marker except in the lowermost layer */
-+	for (int i = 0; i < ovl_numlower(oe) - 1; i++, lowerpath++) {
-+		struct path path = {
-+			.mnt = lowerpath->layer->mnt,
-+			.dentry = lowerpath->dentry,
-+		};
++	struct async_entry *entry;
 +
-+		/* overlay.opaque=x means xwhiteouts directory */
-+		if (ovl_get_opaquedir_val(ofs, &path) == 'x') {
-+			ovl_layer_set_xwhiteouts(ofs, lowerpath->layer);
-+			ovl_dentry_set_xwhiteouts(root);
-+		}
++	entry = kzalloc(sizeof(struct async_entry), GFP_KERNEL);
++
++	/* Give up if there is no memory or too much work. */
++	if (!entry || atomic_read(&entry_count) > MAX_WORK) {
++		kfree(entry);
++		return false;
 +	}
 +
- 	/* Root is always merge -> can have whiteouts */
- 	ovl_set_flag(OVL_WHITEOUTS, d_inode(root));
- 	ovl_dentry_set_flag(OVL_E_CONNECTED, root);
---- a/fs/overlayfs/util.c
-+++ b/fs/overlayfs/util.c
-@@ -461,6 +461,33 @@ void ovl_dentry_set_opaque(struct dentry
- 	ovl_dentry_set_flag(OVL_E_OPAQUE, dentry);
- }
- 
-+bool ovl_dentry_has_xwhiteouts(struct dentry *dentry)
-+{
-+	return ovl_dentry_test_flag(OVL_E_XWHITEOUTS, dentry);
++	__async_schedule_node_domain(func, dev, dev_to_node(dev),
++				     &async_dfl_domain, entry);
++	return true;
 +}
 +
-+void ovl_dentry_set_xwhiteouts(struct dentry *dentry)
-+{
-+	ovl_dentry_set_flag(OVL_E_XWHITEOUTS, dentry);
-+}
-+
-+/*
-+ * ovl_layer_set_xwhiteouts() is called before adding the overlay dir
-+ * dentry to dcache, while readdir of that same directory happens after
-+ * the overlay dir dentry is in dcache, so if some cpu observes that
-+ * ovl_dentry_is_xwhiteouts(), it will also observe layer->has_xwhiteouts
-+ * for the layers where xwhiteouts marker was found in that merge dir.
-+ */
-+void ovl_layer_set_xwhiteouts(struct ovl_fs *ofs,
-+			      const struct ovl_layer *layer)
-+{
-+	if (layer->has_xwhiteouts)
-+		return;
-+
-+	/* Write once to read-mostly layer properties */
-+	ofs->layers[layer->idx].has_xwhiteouts = true;
-+}
-+
- /*
-  * For hard links and decoded file handles, it's possible for ovl_dentry_upper()
-  * to return positive, while there's no actual upper alias for the inode.
-@@ -739,19 +766,6 @@ bool ovl_path_check_xwhiteout_xattr(stru
- 	return res >= 0;
- }
- 
--bool ovl_path_check_xwhiteouts_xattr(struct ovl_fs *ofs, const struct path *path)
--{
--	struct dentry *dentry = path->dentry;
--	int res;
--
--	/* xattr.whiteouts must be a directory */
--	if (!d_is_dir(dentry))
--		return false;
--
--	res = ovl_path_getxattr(ofs, path, OVL_XATTR_XWHITEOUTS, NULL, 0);
--	return res >= 0;
--}
--
- /*
-  * Load persistent uuid from xattr into s_uuid if found, or store a new
-  * random generated value in s_uuid and in xattr.
-@@ -811,20 +825,17 @@ fail:
- 	return false;
- }
- 
--bool ovl_path_check_dir_xattr(struct ovl_fs *ofs, const struct path *path,
--			       enum ovl_xattr ox)
-+char ovl_get_dir_xattr_val(struct ovl_fs *ofs, const struct path *path,
-+			   enum ovl_xattr ox)
- {
- 	int res;
- 	char val;
- 
- 	if (!d_is_dir(path->dentry))
--		return false;
-+		return 0;
- 
- 	res = ovl_path_getxattr(ofs, path, ox, &val, 1);
--	if (res == 1 && val == 'y')
--		return true;
--
--	return false;
-+	return res == 1 ? val : 0;
- }
- 
- #define OVL_XATTR_OPAQUE_POSTFIX	"opaque"
-@@ -837,7 +848,6 @@ bool ovl_path_check_dir_xattr(struct ovl
- #define OVL_XATTR_METACOPY_POSTFIX	"metacopy"
- #define OVL_XATTR_PROTATTR_POSTFIX	"protattr"
- #define OVL_XATTR_XWHITEOUT_POSTFIX	"whiteout"
--#define OVL_XATTR_XWHITEOUTS_POSTFIX	"whiteouts"
- 
- #define OVL_XATTR_TAB_ENTRY(x) \
- 	[x] = { [false] = OVL_XATTR_TRUSTED_PREFIX x ## _POSTFIX, \
-@@ -854,7 +864,6 @@ const char *const ovl_xattr_table[][2] =
- 	OVL_XATTR_TAB_ENTRY(OVL_XATTR_METACOPY),
- 	OVL_XATTR_TAB_ENTRY(OVL_XATTR_PROTATTR),
- 	OVL_XATTR_TAB_ENTRY(OVL_XATTR_XWHITEOUT),
--	OVL_XATTR_TAB_ENTRY(OVL_XATTR_XWHITEOUTS),
- };
- 
- int ovl_check_setxattr(struct ovl_fs *ofs, struct dentry *upperdentry,
++/**
+  * async_synchronize_full - synchronize all asynchronous function calls
+  *
+  * This function waits until all asynchronous function calls have been done.
 
 
