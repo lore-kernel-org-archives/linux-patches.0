@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084F915B0EC;
-	Mon, 29 Jan 2024 17:10:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3310C1586DA;
+	Mon, 29 Jan 2024 17:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548212; cv=none; b=dMN7CRVsMrVN8KOGP7C+oui+UFbvy2+4an/pANMBsdieZ5LxAtc5pm+BnPE8EPmWE56y+A3IbAD5CltEK4PYGK+3G9lIUe3HU9teWpy2e/oDbKWtmBXCsFUM6AuUG6OlNBqx/zeudAjG1CF0vKu0MgZOKgLj7vkZF/Li01I0OZY=
+	t=1706548213; cv=none; b=JblXg+eJ8VgwxiHWkBg5nEmynGDcyf4doKogQStnVeD9CMTD5VtidvnrHe/XI7V2BrT86sSAxpTjyZXyX+liQK9Kdh/++AZPyLUe8mTiTHozRPtxmoKnM3BH4UFMoofdj2/xCbwejSB+Zi5RzlDU4w9Y/Yi5sr0YgNhx4KbjbnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548212; c=relaxed/simple;
-	bh=WPo+op3tnvst4nxsMelMFfkXXFYYMLGNydbCK/WNqkU=;
+	s=arc-20240116; t=1706548213; c=relaxed/simple;
+	bh=eVjTZK6nyMx+tm4COefGwV8KRhmauCHKICP/HaFE4Js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kj+gSwDg9Sd8ljF6Tom51fKIsQ0vjzYscgPHnoZ4Om+sTnWKZXsIMrCBStee+VDR4OGmS99FlOkpKHqZudct4YEuTiJyumpjY0fSJr1kNG6nV3JlUHok++FF4k63Jh9tg9y6SaVW3/jcS/+iXMcGX7x/DGuedcrVrv4ckEgWWAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hd2P9Fwo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JdDDSyyjkxnu8xasy+gNdFo+iR55ANUeBDdGjZCCCWFIOuy58LcTe7c1ud8+RmFZ2PMsKga+0uAcHQ38ZuO5NCE4T/tNVHdjhlKw/oDXxfBgW+RMsVTbeUmoBOxfdpRIQKsPFduePQ5a/l01+mOUCHL3BEkLpYy1cd/koZNiTUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUrU+Pmv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hd2P9Fwo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A490C433A6;
-	Mon, 29 Jan 2024 17:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUrU+Pmv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953BCC43390;
+	Mon, 29 Jan 2024 17:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548211;
-	bh=WPo+op3tnvst4nxsMelMFfkXXFYYMLGNydbCK/WNqkU=;
+	s=korg; t=1706548212;
+	bh=eVjTZK6nyMx+tm4COefGwV8KRhmauCHKICP/HaFE4Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hd2P9Fwod0cpN9F63Q0ZaSXOJlwEQSoLDftLQnqYwzBNSHZJBFLA1jzZBsllY2igl
-	 c8DRfPcPTnKSdduNW25Zp2mID9PY822znwJYV2lp9ncHUId5E29pJj2SqK2eaGeAGb
-	 75Mg6jdfkI5as4y/UUGRet9DLue4MFzKeVkbylY4=
+	b=xUrU+PmvYYet8fQCTpESWbZrqkb8v3XOnHI5NQW7ashJxzU6ME582uix1JhR8fVHI
+	 wCVMtN3LyO+tUyd2VXvzf+taKVCu5i/UkKZ2A0BL+OCRZx9v7sRYOQY/ZB+RcCtNhk
+	 /DD55EnNVTsAkwK/D0e2Z/bRw3T6HFbB3i3ua6pU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Krowiak <akrowiak@linux.ibm.com>,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.1 021/185] s390/vfio-ap: loop over the shadow APCB when filtering guests AP configuration
-Date: Mon, 29 Jan 2024 09:03:41 -0800
-Message-ID: <20240129165959.286016022@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.7 247/346] Revert "drm/i915/dsi: Do display on sequence later on icl+"
+Date: Mon, 29 Jan 2024 09:04:38 -0800
+Message-ID: <20240129170023.684415074@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,62 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tony Krowiak <akrowiak@linux.ibm.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 16fb78cbf56e42b8efb2682a4444ab59e32e7959 upstream.
+commit 6992eb815d087858f8d7e4020529c2fe800456b3 upstream.
 
-While filtering the mdev matrix, it doesn't make sense - and will have
-unexpected results - to filter an APID from the matrix if the APID or one
-of the associated APQIs is not in the host's AP configuration. There are
-two reasons for this:
+This reverts commit 88b065943cb583e890324d618e8d4b23460d51a3.
 
-1. An adapter or domain that is not in the host's AP configuration can be
-   assigned to the matrix; this is known as over-provisioning. Queue
-   devices, however, are only created for adapters and domains in the
-   host's AP configuration, so there will be no queues associated with an
-   over-provisioned adapter or domain to filter.
+Lenovo 82TQ is unhappy if we do the display on sequence this
+late. The display output shows severe corruption.
 
-2. The adapter or domain may have been externally removed from the host's
-   configuration via an SE or HMC attached to a DPM enabled LPAR. In this
-   case, the vfio_ap device driver would have been notified by the AP bus
-   via the on_config_changed callback and the adapter or domain would
-   have already been filtered.
+It's unclear if this is a failure on our part (perhaps
+something to do with sending commands in LP mode after HS
+/video mode transmission has been started? Though the backlight
+on command at least seems to work) or simply that there are
+some commands in the sequence that are needed to be done
+earlier (eg. could be some DSC init stuff?). If the latter
+then I don't think the current Windows code would work
+either, but maybe this was originally tested with an older
+driver, who knows.
 
-Since the matrix_mdev->shadow_apcb.apm and matrix_mdev->shadow_apcb.aqm are
-copied from the mdev matrix sans the APIDs and APQIs not in the host's AP
-configuration, let's loop over those bitmaps instead of those assigned to
-the matrix.
+Root causing this fully would likely require a lot of
+experimentation which isn't really feasible without direct
+access to the machine, so let's just accept failure and
+go back to the original sequence.
 
-Signed-off-by: Tony Krowiak <akrowiak@linux.ibm.com>
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
-Fixes: 48cae940c31d ("s390/vfio-ap: refresh guest's APCB by filtering AP resources assigned to mdev")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240115185441.31526-3-akrowiak@linux.ibm.com
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10071
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240116210821.30194-1-ville.syrjala@linux.intel.com
+Acked-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit dc524d05974f615b145404191fcf91b478950499)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/icl_dsi.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/s390/crypto/vfio_ap_ops.c
-+++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -660,8 +660,9 @@ static bool vfio_ap_mdev_filter_matrix(s
- 	bitmap_and(matrix_mdev->shadow_apcb.aqm, matrix_mdev->matrix.aqm,
- 		   (unsigned long *)matrix_dev->info.aqm, AP_DOMAINS);
+--- a/drivers/gpu/drm/i915/display/icl_dsi.c
++++ b/drivers/gpu/drm/i915/display/icl_dsi.c
+@@ -1155,6 +1155,7 @@ static void gen11_dsi_powerup_panel(stru
+ 	}
  
--	for_each_set_bit_inv(apid, matrix_mdev->matrix.apm, AP_DEVICES) {
--		for_each_set_bit_inv(apqi, matrix_mdev->matrix.aqm, AP_DOMAINS) {
-+	for_each_set_bit_inv(apid, matrix_mdev->shadow_apcb.apm, AP_DEVICES) {
-+		for_each_set_bit_inv(apqi, matrix_mdev->shadow_apcb.aqm,
-+				     AP_DOMAINS) {
- 			/*
- 			 * If the APQN is not bound to the vfio_ap device
- 			 * driver, then we can't assign it to the guest's
+ 	intel_dsi_vbt_exec_sequence(intel_dsi, MIPI_SEQ_INIT_OTP);
++	intel_dsi_vbt_exec_sequence(intel_dsi, MIPI_SEQ_DISPLAY_ON);
+ 
+ 	/* ensure all panel commands dispatched before enabling transcoder */
+ 	wait_for_cmds_dispatched_to_panel(encoder);
+@@ -1255,8 +1256,6 @@ static void gen11_dsi_enable(struct inte
+ 	/* step6d: enable dsi transcoder */
+ 	gen11_dsi_enable_transcoder(encoder);
+ 
+-	intel_dsi_vbt_exec_sequence(intel_dsi, MIPI_SEQ_DISPLAY_ON);
+-
+ 	/* step7: enable backlight */
+ 	intel_backlight_enable(crtc_state, conn_state);
+ 	intel_dsi_vbt_exec_sequence(intel_dsi, MIPI_SEQ_BACKLIGHT_ON);
 
 
