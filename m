@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7817C15AAB0;
-	Mon, 29 Jan 2024 17:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24988161B65;
+	Mon, 29 Jan 2024 17:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548356; cv=none; b=I9zuq4kuyPRMXNbhFxiZ7qyMxb3sHMBYMtFNUPWCMu65wGpjMwKxnM8E+oYiVdlIYaBOE8Vi5P6j9GVOEoM0S3oIM79Lvb/BeMQQ0plqP42VkWyIN31A1QMDBQKWTZJkCCYqv3M7JaGsP2vduSNuqDoSpUUeTGe6Lp1v8Q4ysEg=
+	t=1706548357; cv=none; b=b++M6qMwOaCyrdObq9+LM7YVWv0aNsv6btPZArHal8iHppueG6bbOG0OSRuoqND3VrWLdOZVzbn2jw0xe5P4DvHDue+Dl+6Yca3VSt7Nkem1KJHHmoagY+Du7Mo4t9c9hmAJrXQpEigKSnnqEWVG6uSiJ/K/GRzT4D9FkwQp//U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548356; c=relaxed/simple;
-	bh=DwqmDAiRQkErtXhGHO4WkjJmGZpANnHBQ8cqDwwWcTQ=;
+	s=arc-20240116; t=1706548357; c=relaxed/simple;
+	bh=GEWEQAZGwtdUEpe3umJfVPJNz+SZa+7l0zDc8a1/v+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZ/FbmHGrYVtN7LkFf5ElJDOq58KHhIOjqiVMIelHRKjthbRyKUlk0D3gjJK5bggWDkF1FezYoc6kJV/Sh7ocbpIDq48aDRdMTmLq7WABPkOk5BUg5ox6EHA6Zc+hH1/kSI6Q1TN/SfRuqI49rt8qBCRTAyDDTRo3R/zvJCtJjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Cblnt2U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QpN7901Tg+bnNVHEqdrvntY/B99PHn7No+MApfZbR8EzvOpeSuwFEYd0ZzjxQM+HoiQLdUaSRUoyfyGDsO5+1xcLR9SiG+icXSKhwmi59Kd5AQWO+V/1qCbH9NYbdbHx0msCr08lrtrW8lrSqxIxPY3AIBbFOurRNiFey8mfhos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/qortU5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Cblnt2U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425E9C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/qortU5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E376DC433F1;
 	Mon, 29 Jan 2024 17:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548356;
-	bh=DwqmDAiRQkErtXhGHO4WkjJmGZpANnHBQ8cqDwwWcTQ=;
+	s=korg; t=1706548357;
+	bh=GEWEQAZGwtdUEpe3umJfVPJNz+SZa+7l0zDc8a1/v+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Cblnt2UnyARTfXoeZaGFDJJeTYtiMFjYrmvUvAgdFbdv4EB0ySYBJfPQ9rqTAz4C
-	 /sHZCUdMBZCrl/dm7qLiCbcapQPkoObISPRo2Fhc7r21CFFL0Xx3iw56R33EaJzYuu
-	 snIBhd7slq5srOzoZ7OyZ1EQEiuxNZFkya/BmU9E=
+	b=O/qortU5ciwN9yRiOhywGdI7lX32Z8FQ+Eomix9Nchot020LUC0WlfbzBuH9mty6X
+	 A2lk568GJq1KfuLaWkANmgEs07MAeABy5UHQABQlcrYDLKdzOaDP+8K7S3sKIz8Mgx
+	 I6a27jiQEI6o5P478qWtQScQMNeZTEKwRWODVzP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4a4f1eba14eb5c3417d1@syzkaller.appspotmail.com,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Anand Jain <anand.jain@oracle.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 118/185] btrfs: dont warn if discard range is not aligned to sector
-Date: Mon, 29 Jan 2024 09:05:18 -0800
-Message-ID: <20240129170002.387127904@linuxfoundation.org>
+Subject: [PATCH 6.1 119/185] btrfs: defrag: reject unknown flags of btrfs_ioctl_defrag_range_args
+Date: Mon, 29 Jan 2024 09:05:19 -0800
+Message-ID: <20240129170002.417682118@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -52,37 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit a208b3f132b48e1f94f620024e66fea635925877 upstream.
+commit 173431b274a9a54fc10b273b46e67f46bcf62d2e upstream.
 
-There's a warning in btrfs_issue_discard() when the range is not aligned
-to 512 bytes, originally added in 4d89d377bbb0 ("btrfs:
-btrfs_issue_discard ensure offset/length are aligned to sector
-boundaries"). We can't do sub-sector writes anyway so the adjustment is
-the only thing that we can do and the warning is unnecessary.
+Add extra sanity check for btrfs_ioctl_defrag_range_args::flags.
 
-CC: stable@vger.kernel.org # 4.19+
-Reported-by: syzbot+4a4f1eba14eb5c3417d1@syzkaller.appspotmail.com
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
+This is not really to enhance fuzzing tests, but as a preparation for
+future expansion on btrfs_ioctl_defrag_range_args.
+
+In the future we're going to add new members, allowing more fine tuning
+for btrfs defrag.  Without the -ENONOTSUPP error, there would be no way
+to detect if the kernel supports those new defrag features.
+
+CC: stable@vger.kernel.org # 4.14+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent-tree.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/ioctl.c           |    4 ++++
+ include/uapi/linux/btrfs.h |    3 +++
+ 2 files changed, 7 insertions(+)
 
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -1209,7 +1209,8 @@ static int btrfs_issue_discard(struct bl
- 	u64 bytes_left, end;
- 	u64 aligned_start = ALIGN(start, 1 << 9);
- 
--	if (WARN_ON(start != aligned_start)) {
-+	/* Adjust the range to be aligned to 512B sectors if necessary. */
-+	if (start != aligned_start) {
- 		len -= aligned_start - start;
- 		len = round_down(len, 1 << 9);
- 		start = aligned_start;
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3500,6 +3500,10 @@ static int btrfs_ioctl_defrag(struct fil
+ 				ret = -EFAULT;
+ 				goto out;
+ 			}
++			if (range.flags & ~BTRFS_DEFRAG_RANGE_FLAGS_SUPP) {
++				ret = -EOPNOTSUPP;
++				goto out;
++			}
+ 			/* compression requires us to start the IO */
+ 			if ((range.flags & BTRFS_DEFRAG_RANGE_COMPRESS)) {
+ 				range.flags |= BTRFS_DEFRAG_RANGE_START_IO;
+--- a/include/uapi/linux/btrfs.h
++++ b/include/uapi/linux/btrfs.h
+@@ -585,6 +585,9 @@ struct btrfs_ioctl_clone_range_args {
+  */
+ #define BTRFS_DEFRAG_RANGE_COMPRESS 1
+ #define BTRFS_DEFRAG_RANGE_START_IO 2
++#define BTRFS_DEFRAG_RANGE_FLAGS_SUPP	(BTRFS_DEFRAG_RANGE_COMPRESS |		\
++					 BTRFS_DEFRAG_RANGE_START_IO)
++
+ struct btrfs_ioctl_defrag_range_args {
+ 	/* start of the defrag operation */
+ 	__u64 start;
 
 
