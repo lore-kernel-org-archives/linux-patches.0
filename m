@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19211586C5;
-	Mon, 29 Jan 2024 17:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F23F1586C5;
+	Mon, 29 Jan 2024 17:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548371; cv=none; b=f5lqOzvInOtLXgGM79l926srHLGkSvsE01yDw9brBa1uT60+ywxwxD2B1Im6OsPUKHyFTxPTvRpnsqG66/i5Qd2Xh35F4XOTcgijml7YYarQs/d3L7RQ4cKCnbfCDsBwVwGnoU0fHnmwKJ5URg+fZQwV1TkbLKwNkMmNl4vo4hw=
+	t=1706548372; cv=none; b=adFxYp1DwMuH/QR/ksiSwEy2Qq2Kx4IQhCqXsghkbDjda5ko5NtMeRP07HoCEih4NGS58SfiAnhGF8VZR2wGC3v/NanfY9JDKN7NmD3Ud5G3MYWCBoWZkx6/lVDKZBzmh/2uMmvwh6DmOwy4umE3XNOuE9f/fuSdq//rXjhVics=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548371; c=relaxed/simple;
-	bh=1x13DOhsRroRI6LdNMtTlje40D21xzbdXGp++Fgdsyg=;
+	s=arc-20240116; t=1706548372; c=relaxed/simple;
+	bh=QxD2dubYuhKOayhcLO9bhuJASSEwi02nQ9ZMg5fFrnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EB2pUFcfhbS794HPkIJV5UUZUHQKOu+Ww4ztwBPJOX3SsVRZsCQat6Oq4D4xTYWNK8YHH70V7FqfgLAOkYGOvy1wgR538TFaUo1gD3ifHuM20xwYw6BAtAqiOHFnAQ4C8Y4hEUR8b6fgRH8GDsMBj9VLVhQOq4NKP9kkLQ9vdcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O597OLxq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JlmZiCzIrRJVqMXvwG3eJ5dsuc5+sg62zIvTKTHLMeOTSSg0mZEgyWWaatlZdo/Rexl3SZhSDNzd9bX3oXeQfUqxtloHNVsIx3W6gtibh7DDzqNSL+ZQttU2IAf3jSkjN74sszG8kHAGJotfMsN5WgXG8BQRRPnSAI2DtMuGUkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XA++uq/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O597OLxq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857F5C433F1;
-	Mon, 29 Jan 2024 17:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XA++uq/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D11C43390;
+	Mon, 29 Jan 2024 17:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548371;
-	bh=1x13DOhsRroRI6LdNMtTlje40D21xzbdXGp++Fgdsyg=;
+	s=korg; t=1706548372;
+	bh=QxD2dubYuhKOayhcLO9bhuJASSEwi02nQ9ZMg5fFrnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O597OLxq5sP8wzSxtUOkon+dwO8OpQ42HosdTT4vQrUf9wJ72ZnjdVlH19Rn1UoKE
-	 Gje/ahVgVmQxaj8bNtypr4W3qo+qc8NBnBBMTYhMAnrPDq9HtCvef2/XFD4lm7fUmT
-	 kyNzBjkADUYoJOwAoIeNe6BmsGoNXlObibU/p/FQ=
+	b=XA++uq/ArcQ8pmy0FOQWxr9KruVzo3cXDUqZAjNayrN0B9xUcY/3KOATZdohL7Rs5
+	 va1PEMa4g6h2EfXwN0JGUI1z1BT/eaHUsUdwlv8uviQ8bmAmCj1uzL6LYgc1BQCHrl
+	 9UDNnzJ4hOiBVFvne/4eq15ZF0g54oAzerVMzQdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Chen <tim.c.chen@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.7 345/346] tick/sched: Preserve number of idle sleeps across CPU hotplug events
-Date: Mon, 29 Jan 2024 09:06:16 -0800
-Message-ID: <20240129170026.667951432@linuxfoundation.org>
+	Shenwei Wang <shenwei.wang@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 113/185] net: fec: fix the unhandled context fault from smmu
+Date: Mon, 29 Jan 2024 09:05:13 -0800
+Message-ID: <20240129170002.221730368@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,56 +47,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tim Chen <tim.c.chen@linux.intel.com>
+From: Shenwei Wang <shenwei.wang@nxp.com>
 
-commit 9a574ea9069be30b835a3da772c039993c43369b upstream.
+[ Upstream commit 5e344807735023cd3a67c37a1852b849caa42620 ]
 
-Commit 71fee48f ("tick-sched: Fix idle and iowait sleeptime accounting vs
-CPU hotplug") preserved total idle sleep time and iowait sleeptime across
-CPU hotplug events.
+When repeatedly changing the interface link speed using the command below:
 
-Similar reasoning applies to the number of idle calls and idle sleeps to
-get the proper average of sleep time per idle invocation.
+ethtool -s eth0 speed 100 duplex full
+ethtool -s eth0 speed 1000 duplex full
 
-Preserve those fields too.
+The following errors may sometimes be reported by the ARM SMMU driver:
 
-Fixes: 71fee48f ("tick-sched: Fix idle and iowait sleeptime accounting vs CPU hotplug")
-Signed-off-by: Tim Chen <tim.c.chen@linux.intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240122233534.3094238-1-tim.c.chen@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ 5395.035364] fec 5b040000.ethernet eth0: Link is Down
+[ 5395.039255] arm-smmu 51400000.iommu: Unhandled context fault:
+fsr=0x402, iova=0x00000000, fsynr=0x100001, cbfrsynra=0x852, cb=2
+[ 5398.108460] fec 5b040000.ethernet eth0: Link is Up - 100Mbps/Full -
+flow control off
+
+It is identified that the FEC driver does not properly stop the TX queue
+during the link speed transitions, and this results in the invalid virtual
+I/O address translations from the SMMU and causes the context faults.
+
+Fixes: dbc64a8ea231 ("net: fec: move calls to quiesce/resume packet processing out of fec_restart()")
+Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
+Link: https://lore.kernel.org/r/20240123165141.2008104-1-shenwei.wang@nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-sched.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/freescale/fec_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -1574,6 +1574,7 @@ void tick_cancel_sched_timer(int cpu)
- {
- 	struct tick_sched *ts = &per_cpu(tick_cpu_sched, cpu);
- 	ktime_t idle_sleeptime, iowait_sleeptime;
-+	unsigned long idle_calls, idle_sleeps;
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 6d1b76002282..97d12c7eea77 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -1917,6 +1917,7 @@ static void fec_enet_adjust_link(struct net_device *ndev)
  
- # ifdef CONFIG_HIGH_RES_TIMERS
- 	if (ts->sched_timer.base)
-@@ -1582,9 +1583,13 @@ void tick_cancel_sched_timer(int cpu)
- 
- 	idle_sleeptime = ts->idle_sleeptime;
- 	iowait_sleeptime = ts->iowait_sleeptime;
-+	idle_calls = ts->idle_calls;
-+	idle_sleeps = ts->idle_sleeps;
- 	memset(ts, 0, sizeof(*ts));
- 	ts->idle_sleeptime = idle_sleeptime;
- 	ts->iowait_sleeptime = iowait_sleeptime;
-+	ts->idle_calls = idle_calls;
-+	ts->idle_sleeps = idle_sleeps;
- }
- #endif
- 
+ 		/* if any of the above changed restart the FEC */
+ 		if (status_change) {
++			netif_stop_queue(ndev);
+ 			napi_disable(&fep->napi);
+ 			netif_tx_lock_bh(ndev);
+ 			fec_restart(ndev);
+@@ -1926,6 +1927,7 @@ static void fec_enet_adjust_link(struct net_device *ndev)
+ 		}
+ 	} else {
+ 		if (fep->link) {
++			netif_stop_queue(ndev);
+ 			napi_disable(&fep->napi);
+ 			netif_tx_lock_bh(ndev);
+ 			fec_stop(ndev);
+-- 
+2.43.0
+
 
 
