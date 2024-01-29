@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FEC6FE01;
-	Mon, 29 Jan 2024 17:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06DF6FDE1;
+	Mon, 29 Jan 2024 17:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548486; cv=none; b=GHFvIXRpWzMEPnga7oFVQrzL1+uWBAXMpSlZGDt7Ee/uRHFtGgsu6Z/jOcwjNtyUI5Yx8ZJLg1HsSpbdyZ4IWNjxMPaozrqxu4dNJF3M6k/Dkaa9mq83se2fOjpBikEYP8CKp4HgXrekRX/VcN9BmscMI+G7SRSSfEvoJ49JA7c=
+	t=1706548488; cv=none; b=VtPrrpv2KQm9VsAOzfjkJaDKAvOTB5LAQhrWTZr/lfCL+nQu+OBNIzm2gxwIEWE/VRuoJNdDQ17hE9V35tGYeA5nyhJOdaOdPlsEcNyIKQTEUfBX15MiZIeAr2aczLYdmD7GWNS+jPlRCs+82NH36CdQeJq06y52m6qyr+k1pe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548486; c=relaxed/simple;
-	bh=qK8gZYjUjNvg0qSItyJnL9eOmJpQK0cEsgq5wnjiozA=;
+	s=arc-20240116; t=1706548488; c=relaxed/simple;
+	bh=UAEljXYAKIUGv92ea0PV6H2s8jUCJ8TG6X5fY1kBwHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s4d3EPIoxDyuFx/sXUPsZVkopXpIK+teThj7J7MsgSbSsGq0qxKQERtRKAen/G+2brh2OkdJjomVsTBE4uwNMnqgqWvQi9VxJ2wtMRdy9QcuGKx1EWtRvRdtsX+dUdis3AB5ylQIG2EhVJd6tJmn/1ITowwZaoHVxzAj23lu4l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXx9FAWs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IBhK0NqmLEUhUdxe2sd7zxwxhNJi9t/cDFk+9ySoGmOgTiFu8xzfkj+lltWf7eGcJqNN7lhdt03SOGi1l1AP1BR3HVkyr7IqGlPT+++qH6uauA0XvUClepa8CjYvxsJODinNYhx2s33lVj3EYOTj14nmLOTRDA9c/l9cNVR8DHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UR7Xk7xI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXx9FAWs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F288C43390;
-	Mon, 29 Jan 2024 17:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UR7Xk7xI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6189EC433C7;
+	Mon, 29 Jan 2024 17:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548486;
-	bh=qK8gZYjUjNvg0qSItyJnL9eOmJpQK0cEsgq5wnjiozA=;
+	s=korg; t=1706548487;
+	bh=UAEljXYAKIUGv92ea0PV6H2s8jUCJ8TG6X5fY1kBwHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TXx9FAWsukvOwe6Fy1RWoJ1EFE7jKMp8uA7ZHvayzx7qyn3Of0NwdP0Z4rRE6ELBT
-	 qYAwUYUAw1Uuy6Eku96qEyLBTt4i0srh1lc0xGWheRXTCdpwk8vl5fEHZb1SJEUdbN
-	 fu3555Z/nhHpCguw463j+Xgf9rvfWAhiR3cBw2Xw=
+	b=UR7Xk7xIwpD4Wi6g592AFAIrPANIdR4ygdIGjREk8g7/rVx/okgX3jESr7KYUY6Th
+	 FJNh92jp0W6G8pKZggrcJC0zZMA49FhF2rL1gDrvQiSgnyq0KaGISpPQNtmTXso5/3
+	 oel9iiW6iSDHEJkYltlpAO5yi197pgsKaaGp/0YU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 6.6 108/331] media: mtk-jpeg: Fix use after free bug due to error path handling in mtk_jpeg_dec_device_run
-Date: Mon, 29 Jan 2024 09:02:52 -0800
-Message-ID: <20240129170018.089384719@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 083/331] arm64: dts: qcom: sdm845: fix USB wakeup interrupt types
+Date: Mon, 29 Jan 2024 09:02:27 -0800
+Message-ID: <20240129170017.359380919@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,69 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 206c857dd17d4d026de85866f1b5f0969f2a109e upstream.
+commit 84ad9ac8d9ca29033d589e79a991866b38e23b85 upstream.
 
-In mtk_jpeg_probe, &jpeg->job_timeout_work is bound with
-mtk_jpeg_job_timeout_work.
+The DP/DM wakeup interrupts are edge triggered and which edge to trigger
+on depends on use-case and whether a Low speed or Full/High speed device
+is connected.
 
-In mtk_jpeg_dec_device_run, if error happens in
-mtk_jpeg_set_dec_dst, it will finally start the worker while
-mark the job as finished by invoking v4l2_m2m_job_finish.
-
-There are two methods to trigger the bug. If we remove the
-module, it which will call mtk_jpeg_remove to make cleanup.
-The possible sequence is as follows, which will cause a
-use-after-free bug.
-
-CPU0                  CPU1
-mtk_jpeg_dec_...    |
-  start worker	    |
-                    |mtk_jpeg_job_timeout_work
-mtk_jpeg_remove     |
-  v4l2_m2m_release  |
-    kfree(m2m_dev); |
-                    |
-                    | v4l2_m2m_get_curr_priv
-                    |   m2m_dev->curr_ctx //use
-
-If we close the file descriptor, which will call mtk_jpeg_release,
-it will have a similar sequence.
-
-Fix this bug by starting timeout worker only if started jpegdec worker
-successfully. Then v4l2_m2m_job_finish will only be called in
-either mtk_jpeg_job_timeout_work or mtk_jpeg_dec_device_run.
-
-Fixes: b2f0d2724ba4 ("[media] vcodec: mediatek: Add Mediatek JPEG Decoder Driver")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: ca4db2b538a1 ("arm64: dts: qcom: sdm845: Add USB-related nodes")
+Cc: stable@vger.kernel.org      # 4.20
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20231120164331.8116-9-johan+linaro@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-@@ -1021,13 +1021,13 @@ static void mtk_jpeg_dec_device_run(void
- 	if (ret < 0)
- 		goto dec_end;
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -4086,8 +4086,8 @@
  
--	schedule_delayed_work(&jpeg->job_timeout_work,
--			      msecs_to_jiffies(MTK_JPEG_HW_TIMEOUT_MSEC));
--
- 	mtk_jpeg_set_dec_src(ctx, &src_buf->vb2_buf, &bs);
- 	if (mtk_jpeg_set_dec_dst(ctx, &jpeg_src_buf->dec_param, &dst_buf->vb2_buf, &fb))
- 		goto dec_end;
+ 			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
++				     <GIC_SPI 488 IRQ_TYPE_EDGE_BOTH>,
++				     <GIC_SPI 489 IRQ_TYPE_EDGE_BOTH>;
+ 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+ 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
  
-+	schedule_delayed_work(&jpeg->job_timeout_work,
-+			      msecs_to_jiffies(MTK_JPEG_HW_TIMEOUT_MSEC));
-+
- 	spin_lock_irqsave(&jpeg->hw_lock, flags);
- 	mtk_jpeg_dec_reset(jpeg->reg_base);
- 	mtk_jpeg_dec_set_config(jpeg->reg_base,
+@@ -4137,8 +4137,8 @@
+ 
+ 			interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 487 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 490 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 491 IRQ_TYPE_LEVEL_HIGH>;
++				     <GIC_SPI 490 IRQ_TYPE_EDGE_BOTH>,
++				     <GIC_SPI 491 IRQ_TYPE_EDGE_BOTH>;
+ 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+ 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
+ 
 
 
