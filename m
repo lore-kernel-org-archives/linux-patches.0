@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EE415703F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D728115703F;
 	Mon, 29 Jan 2024 17:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548338; cv=none; b=Qb158DVWsa7dhD6GmBB0kOMCXQaaJEhBnBRW4QFsXhGIEJEUrMqjLtNapEl0QFh1A2gAAYqrqXgR/qbuYeBl32iuYNVFiGtxqxZdkx6nTjZ432+NkBV4EXf1XRsZgMwT8i3sMpeyEehqBuBGX/OTC8JX8+MvoY774KEBeycR1+4=
+	t=1706548339; cv=none; b=Dib6YpJKI8hUcNYgAxOBM8PiPJ+zWKJyxxjbV4LtgLl6hlIgd0GXlGeNmHHvqk22MNpFGbRE+nsVUaSNyoQguyAX2nzQjRUgduAUFxWY1OfuIE2LMdNV8qgB5MLj85QWgbT8c01f/uBfSjBbVF2TX8Ptq1bN30rra/Y2s3AZUWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548338; c=relaxed/simple;
-	bh=4qakkSwdREWnHRl4WY9hGljDPC3mUkBOJsuqHPAMV2o=;
+	s=arc-20240116; t=1706548339; c=relaxed/simple;
+	bh=EDZzqiUwWxx9kAeKt5Ob0yqoj6SyPBOyVlBIgbX+nus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PCUlucSrI2Nll/AwisQwiN53wCrrMUegTnnf1IaqxscBgM+pDnqBbVzmyZ75tdHDaFYo/Lrt/+wbDAXrhC1rgavR+FHzWIN6lqnRWHrvEC+fEdWyLhv8MHQFgMRX6HTyPNZAfDWJTY30DtyrXewfdEOzzcgBcj/k8V6kRmxjGHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIizRtiv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oiHovT4OIPKRR/Hk3NjlSSdMKk5ym7HBVFbwRwvkzD8cF556jyMxSf3yaepBFVQFHGotlua3nW5WeqUuuqlGkfvZ03mQ8vHja9bnQjpIO2l3mzVQVU8gPVCBMefj48SHfuK6roWtbcHpMBPwo5A6FooL1GkBitoqnduAEJl8ju8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5mEIV3I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIizRtiv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC69DC43390;
-	Mon, 29 Jan 2024 17:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5mEIV3I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECBEC433C7;
+	Mon, 29 Jan 2024 17:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548338;
-	bh=4qakkSwdREWnHRl4WY9hGljDPC3mUkBOJsuqHPAMV2o=;
+	bh=EDZzqiUwWxx9kAeKt5Ob0yqoj6SyPBOyVlBIgbX+nus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uIizRtivr+DI6W0yjx7e2sfgPA9zt1EMXj2cm2I/t8+MXR4sLSVmAqtuD3nlS2Rk/
-	 13pZA7ZPgNpFUI+/v0NK7pF+uUepTacORWbg/i6yHZhvqKrWCCyohR/jk+XBz+fSxG
-	 U+fM+coQXkJahtLqn/5pbn3K42PvdSqEQRXNedVM=
+	b=M5mEIV3IG8QWRF0KaRr8qGd5iolqKD78HE7SKobQBaEXSiaBtVy9mwL420f0ue0Lg
+	 +Q2uolYKMZARhtVhz7ZtQzth7VIoTbHbHpe/Pmbb50cEg36CrHE12wWUsEXUFe5XWp
+	 6J91Di7h77MeOb3LZsG1ZBAIFSYZ3YvziXc2iMU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	linux-btrfs@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 333/346] spi: spi-cadence: Reverse the order of interleaved write and read operations
-Date: Mon, 29 Jan 2024 09:06:04 -0800
-Message-ID: <20240129170026.270374311@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 104/185] btrfs: set last dir index to the current last index when opening dir
+Date: Mon, 29 Jan 2024 09:05:04 -0800
+Message-ID: <20240129170001.933489913@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +47,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 633cd6fe6e1993ba80e0954c2db127a0b1a3e66f ]
+commit 357950361cbc6d54fb68ed878265c647384684ae upstream.
 
-In the existing implementation, when executing interleaved write and read
-operations in the ISR for a transfer length greater than the FIFO size,
-the TXFIFO write precedes the RXFIFO read. Consequently, the initially
-received data in the RXFIFO is pushed out and lost, leading to a failure
-in data integrity. To address this issue, reverse the order of interleaved
-operations and conduct the RXFIFO read followed by the TXFIFO write.
+When opening a directory for reading it, we set the last index where we
+stop iteration to the value in struct btrfs_inode::index_cnt. That value
+does not match the index of the most recently added directory entry but
+it's instead the index number that will be assigned the next directory
+entry.
 
-Fixes: 6afe2ae8dc48 ("spi: spi-cadence: Interleave write of TX and read of RX FIFO")
-Signed-off-by: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
-Link: https://msgid.link/r/20231218090652.18403-1-amit.kumar-mahapatra@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This means that if after the call to opendir(3) new directory entries are
+added, a readdir(3) call will return the first new directory entry. This
+is fine because POSIX says the following [1]:
+
+  "If a file is removed from or added to the directory after the most
+   recent call to opendir() or rewinddir(), whether a subsequent call to
+   readdir() returns an entry for that file is unspecified."
+
+For example for the test script from commit 9b378f6ad48c ("btrfs: fix
+infinite directory reads"), where we have 2000 files in a directory, ext4
+doesn't return any new directory entry after opendir(3), while xfs returns
+the first 13 new directory entries added after the opendir(3) call.
+
+If we move to a shorter example with an empty directory when opendir(3) is
+called, and 2 files added to the directory after the opendir(3) call, then
+readdir(3) on btrfs will return the first file, ext4 and xfs return the 2
+files (but in a different order). A test program for this, reported by
+Ian Johnson, is the following:
+
+   #include <dirent.h>
+   #include <stdio.h>
+
+   int main(void) {
+     DIR *dir = opendir("test");
+
+     FILE *file;
+     file = fopen("test/1", "w");
+     fwrite("1", 1, 1, file);
+     fclose(file);
+
+     file = fopen("test/2", "w");
+     fwrite("2", 1, 1, file);
+     fclose(file);
+
+     struct dirent *entry;
+     while ((entry = readdir(dir))) {
+        printf("%s\n", entry->d_name);
+     }
+     closedir(dir);
+     return 0;
+   }
+
+To make this less odd, change the behaviour to never return new entries
+that were added after the opendir(3) call. This is done by setting the
+last_index field of the struct btrfs_file_private attached to the
+directory's file handle with a value matching btrfs_inode::index_cnt
+minus 1, since that value always matches the index of the next new
+directory entry and not the index of the most recently added entry.
+
+[1] https://pubs.opengroup.org/onlinepubs/007904875/functions/readdir_r.html
+
+Link: https://lore.kernel.org/linux-btrfs/YR1P0S.NGASEG570GJ8@ianjohnson.dev/
+CC: stable@vger.kernel.org # 6.5+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ fs/btrfs/inode.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-cadence.c b/drivers/spi/spi-cadence.c
-index a50eb4db79de..e5140532071d 100644
---- a/drivers/spi/spi-cadence.c
-+++ b/drivers/spi/spi-cadence.c
-@@ -317,6 +317,15 @@ static void cdns_spi_process_fifo(struct cdns_spi *xspi, int ntx, int nrx)
- 	xspi->rx_bytes -= nrx;
- 
- 	while (ntx || nrx) {
-+		if (nrx) {
-+			u8 data = cdns_spi_read(xspi, CDNS_SPI_RXD);
-+
-+			if (xspi->rxbuf)
-+				*xspi->rxbuf++ = data;
-+
-+			nrx--;
-+		}
-+
- 		if (ntx) {
- 			if (xspi->txbuf)
- 				cdns_spi_write(xspi, CDNS_SPI_TXD, *xspi->txbuf++);
-@@ -326,14 +335,6 @@ static void cdns_spi_process_fifo(struct cdns_spi *xspi, int ntx, int nrx)
- 			ntx--;
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -6011,7 +6011,8 @@ static int btrfs_get_dir_last_index(stru
  		}
- 
--		if (nrx) {
--			u8 data = cdns_spi_read(xspi, CDNS_SPI_RXD);
--
--			if (xspi->rxbuf)
--				*xspi->rxbuf++ = data;
--
--			nrx--;
--		}
  	}
- }
  
--- 
-2.43.0
-
+-	*index = dir->index_cnt;
++	/* index_cnt is the index number of next new entry, so decrement it. */
++	*index = dir->index_cnt - 1;
+ 
+ 	return 0;
+ }
 
 
