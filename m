@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3201415CD51;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1DCD157053;
 	Mon, 29 Jan 2024 17:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548335; cv=none; b=ne2Nj5qUHxDKLpCFlh2w8QhxoA7Y9fSjsShvoa4hvg5ooZ/EwGtB+BKckKzcR9TrQPxeVwtRH0e69onx/57dXd875LlkSXdLojKd1ELuIrdfqadZfxNX08Dj9NldodDwz6kYCdWqJMq5i1Giak3FuL25XbKj4md1C4VtwK1j2HE=
+	t=1706548336; cv=none; b=G2NY5YucSTMhme6Lq9w2c2MFlqE+gj7wmkB00oRXj0aPXqj3U8zzJg0Le+Rp2ysRZzLsxruff83A+P8e6rT0WNFCK4uAQe5T8KSAUQ+hPH67fGaB4ObHCKSUJKIgh8Nzza6BBPojtoBHk3kybornByvZytCfFVLNY4xssdhG7es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548335; c=relaxed/simple;
-	bh=sU4auR5kxT9OYoJCxq35FEliNhTPiJtJwMYWo+QG36U=;
+	s=arc-20240116; t=1706548336; c=relaxed/simple;
+	bh=0iwIHB0f2rc+w7oyboJfa59V0on82SRquNv5Bkhjeh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5isMqq8OMP6njEXGF3f9r3KbCXUUQ/MIBsdkdAoce3Q/2pDfhWVlQhtohkrnKFaH/ziuQJ4NQ8V5XPw0L1Pv2PXJRDDnDnHk15xpTLqrKjKiMlCXmnrnveQjTeY4VDCloLd0UR7okK7E7FIEupbl6JZTgtLlG2nGqDH2fX0Qd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXk1Bwa9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ed3EX8r4zpQuR0aOEs0q4BT4sJg7qddzA4SRyZrNX79jFOMycKf5U3kM3nsCX6GPGWIsLHws6aKh2+Dy0x1fL4uvnWwEYYig9nQbLsY0Ys5pgPuu6oCfxVIXCa8wtGiqgxq98DhHhKyuQX4mxExKOQqYENMFuXRotDVWXk524Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgRasUGb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXk1Bwa9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB89FC433C7;
-	Mon, 29 Jan 2024 17:12:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgRasUGb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A865FC43390;
+	Mon, 29 Jan 2024 17:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548335;
-	bh=sU4auR5kxT9OYoJCxq35FEliNhTPiJtJwMYWo+QG36U=;
+	bh=0iwIHB0f2rc+w7oyboJfa59V0on82SRquNv5Bkhjeh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXk1Bwa970OrkeiDXTxpTQZ5Ts4ur5USsPT0qaCUpnnbg8y6bH8jfWn02ipZA4OEx
-	 FTZBvqoJu1lY+7BhGsMnXQXSuuJ6nKSWteCF3dkZkzjl5eCnVwkAh6A1auHLrkXeVW
-	 Q4mLfyj/0JE0xYk7UtsFYomRCjBWrETvwE0FV5h0=
+	b=RgRasUGbLSyTIUesZFOF6Lr2oBM0eLXxc0/CRM7RIccY3k7zBHhJJK8wha41d89sF
+	 HXdEGqM7yxeGqz1zEaX9hRjYTgNZCP6+aaMJjPlS8J3PMIWwyntK135BlXGXlMyiYx
+	 nZxZiBNDkbal/TqbIoNA0sDugYJcv6cr19kxC8L4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/185] netfilter: nft_limit: reject configurations that cause integer overflow
-Date: Mon, 29 Jan 2024 09:05:02 -0800
-Message-ID: <20240129170001.869146318@linuxfoundation.org>
+Subject: [PATCH 6.7 332/346] spi: bcm-qspi: fix SFDP BFPT read by usig mspi read
+Date: Mon, 29 Jan 2024 09:06:03 -0800
+Message-ID: <20240129170026.242997547@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,84 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Kamal Dasu <kamal.dasu@broadcom.com>
 
-[ Upstream commit c9d9eb9c53d37cdebbad56b91e40baf42d5a97aa ]
+[ Upstream commit 574bf7bbe83794a902679846770f75a9b7f28176 ]
 
-Reject bogus configs where internal token counter wraps around.
-This only occurs with very very large requests, such as 17gbyte/s.
+SFDP read shall use the mspi reads when using the bcm_qspi_exec_mem_op()
+call. This fixes SFDP parameter page read failures seen with parts that
+now use SFDP protocol to read the basic flash parameter table.
 
-Its better to reject this rather than having incorrect ratelimit.
-
-Fixes: d2168e849ebf ("netfilter: nft_limit: add per-byte limiting")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 5f195ee7d830 ("spi: bcm-qspi: Implement the spi_mem interface")
+Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://msgid.link/r/20240109210033.43249-1-kamal.dasu@broadcom.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_limit.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ drivers/spi/spi-bcm-qspi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_limit.c b/net/netfilter/nft_limit.c
-index 75c05ef885a9..36ded7d43262 100644
---- a/net/netfilter/nft_limit.c
-+++ b/net/netfilter/nft_limit.c
-@@ -58,17 +58,19 @@ static inline bool nft_limit_eval(struct nft_limit_priv *priv, u64 cost)
- static int nft_limit_init(struct nft_limit_priv *priv,
- 			  const struct nlattr * const tb[], bool pkts)
- {
-+	u64 unit, tokens, rate_with_burst;
- 	bool invert = false;
--	u64 unit, tokens;
+diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
+index ef08fcac2f6d..0407b91183ca 100644
+--- a/drivers/spi/spi-bcm-qspi.c
++++ b/drivers/spi/spi-bcm-qspi.c
+@@ -19,7 +19,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
+ #include <linux/spi/spi.h>
+-#include <linux/spi/spi-mem.h>
++#include <linux/mtd/spi-nor.h>
+ #include <linux/sysfs.h>
+ #include <linux/types.h>
+ #include "spi-bcm-qspi.h"
+@@ -1221,7 +1221,7 @@ static int bcm_qspi_exec_mem_op(struct spi_mem *mem,
  
- 	if (tb[NFTA_LIMIT_RATE] == NULL ||
- 	    tb[NFTA_LIMIT_UNIT] == NULL)
- 		return -EINVAL;
+ 	/* non-aligned and very short transfers are handled by MSPI */
+ 	if (!IS_ALIGNED((uintptr_t)addr, 4) || !IS_ALIGNED((uintptr_t)buf, 4) ||
+-	    len < 4)
++	    len < 4 || op->cmd.opcode == SPINOR_OP_RDSFDP)
+ 		mspi_read = true;
  
- 	priv->rate = be64_to_cpu(nla_get_be64(tb[NFTA_LIMIT_RATE]));
-+	if (priv->rate == 0)
-+		return -EINVAL;
-+
- 	unit = be64_to_cpu(nla_get_be64(tb[NFTA_LIMIT_UNIT]));
--	priv->nsecs = unit * NSEC_PER_SEC;
--	if (priv->rate == 0 || priv->nsecs < unit)
-+	if (check_mul_overflow(unit, NSEC_PER_SEC, &priv->nsecs))
- 		return -EOVERFLOW;
- 
- 	if (tb[NFTA_LIMIT_BURST])
-@@ -77,18 +79,25 @@ static int nft_limit_init(struct nft_limit_priv *priv,
- 	if (pkts && priv->burst == 0)
- 		priv->burst = NFT_LIMIT_PKT_BURST_DEFAULT;
- 
--	if (priv->rate + priv->burst < priv->rate)
-+	if (check_add_overflow(priv->rate, priv->burst, &rate_with_burst))
- 		return -EOVERFLOW;
- 
- 	if (pkts) {
--		tokens = div64_u64(priv->nsecs, priv->rate) * priv->burst;
-+		u64 tmp = div64_u64(priv->nsecs, priv->rate);
-+
-+		if (check_mul_overflow(tmp, priv->burst, &tokens))
-+			return -EOVERFLOW;
- 	} else {
-+		u64 tmp;
-+
- 		/* The token bucket size limits the number of tokens can be
- 		 * accumulated. tokens_max specifies the bucket size.
- 		 * tokens_max = unit * (rate + burst) / rate.
- 		 */
--		tokens = div64_u64(priv->nsecs * (priv->rate + priv->burst),
--				 priv->rate);
-+		if (check_mul_overflow(priv->nsecs, rate_with_burst, &tmp))
-+			return -EOVERFLOW;
-+
-+		tokens = div64_u64(tmp, priv->rate);
- 	}
- 
- 	if (tb[NFTA_LIMIT_FLAGS]) {
+ 	if (!has_bspi(qspi) || mspi_read)
 -- 
 2.43.0
 
