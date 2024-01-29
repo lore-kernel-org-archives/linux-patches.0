@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB9215F31A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B6715F31E;
 	Mon, 29 Jan 2024 17:11:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548274; cv=none; b=B9YIuOscI7RGII9kqdrqUjNiJjaQLdgO6GwInigJPOtHb0peijHHPXayPXbJpAMD1i+72tsilm94xadSXm0B4sqzw6vhQMwZv5Z2ZamF3IsZqZQWj/WwiNApB2gOKeXkN7TLZb4SoE6DegVxs2fC8o9eSq51IoY2240eGdoSDp4=
+	t=1706548275; cv=none; b=V/7jqMnuJN86tDxYmtpDWEebDI5zb5c/hgdk1PiQtK2sCI9pks9ilTRFJJjnRA1mZSpFWqGrMy0D8stumJz3EVw4ngIMoTXhTgAECIVVWiIgrMfsqQKtAikSvGq8godOOVxd67gcnXsyPGZoeB4QvcfSNyhjAMHcMbDi6UdLQH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548274; c=relaxed/simple;
-	bh=L3rCEwuc1YELclHacUWA5iznzqCYOnbxCtxpe0KGaaM=;
+	s=arc-20240116; t=1706548275; c=relaxed/simple;
+	bh=dKBcx8hoEyuvd+/QX7NcDhBbuPpyhYCT2dpMdPRFRXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ORiDUv0BjNoYXs2Mef9472mr3u/GpvbWil7Pvv6HZPSdTmLjFQEU5MjuMyTUGIvsSe8QUDaKCL1evLbNQB3EgLbxOCKSA62Mn0Vt2g/15LWOSDGzgGny96NqELMglTcXSzJGJt9Kt/Ykyv7DYf1VLVoxnb95OzDLPQqEiuso60w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzMo1Csw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BXgavRdrfnNo7du3Wk1NsK0+MuMST0HMCo2047j88bs88onxo0I+bvAnS6MRoBcgekbIPXilO3aSIyq5ulAH6CNm6HM82jnSi9C2Qk/pqh5AoOXPAXbCmONF9RZWDbyyPJyMG46LIMqz5AFD7UZ/63dPRagsWOjisIbe4w1PMOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXFv8SOj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzMo1Csw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E858CC433F1;
-	Mon, 29 Jan 2024 17:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXFv8SOj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFD9C433C7;
+	Mon, 29 Jan 2024 17:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548274;
-	bh=L3rCEwuc1YELclHacUWA5iznzqCYOnbxCtxpe0KGaaM=;
+	bh=dKBcx8hoEyuvd+/QX7NcDhBbuPpyhYCT2dpMdPRFRXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TzMo1Csw9xY2Cid4zTXIfZG/QkzDozagxHhJ2BVko6eYmImgWd7Cq1xLiAWu7iySB
-	 beu78Oxcf/wc5V6z6vKjg7GI1ZpS52ilMX1uOy9Nog8fErZ9L6Yc2V0a3pHtZLUnYa
-	 FuHThv76xZpon6J4qOjAv+P9Duj9hoA+X64TYFow=
+	b=CXFv8SOjakdc4VgiS0ph9ckU14Vp+hJS23j19TsnxaNq18Bji/RIeewUHv60RlDmR
+	 yTbYVQoM7f9qMv7RZIb+fgHKHhgbshnVxMFRZzZY9D3oKMOgiGQi3luWj13Loq5sa3
+	 Srv1yZXNVcG6AULcx0T3Q1Dq+QWbl8/d2bl3UtVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Hansen Dsouza <hansen.dsouza@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 290/346] drm/amd/display: Refactor DMCUB enter/exit idle interface
-Date: Mon, 29 Jan 2024 09:05:21 -0800
-Message-ID: <20240129170024.922623444@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Subject: [PATCH 6.1 063/185] serial: sc16is7xx: convert from _raw_ to _noinc_ regmap functions for FIFO
+Date: Mon, 29 Jan 2024 09:04:23 -0800
+Message-ID: <20240129170000.626644562@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,209 +45,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 8e57c06bf4b0f51a4d6958e15e1a99c9520d00fa ]
+commit dbf4ab821804df071c8b566d9813083125e6d97b upstream.
 
-[Why]
-We can hang in place trying to send commands when the DMCUB isn't
-powered on.
+The SC16IS7XX IC supports a burst mode to access the FIFOs where the
+initial register address is sent ($00), followed by all the FIFO data
+without having to resend the register address each time. In this mode, the
+IC doesn't increment the register address for each R/W byte.
 
-[How]
-We need to exit out of the idle state prior to sending a command,
-but the process that performs the exit also invokes a command itself.
+The regmap_raw_read() and regmap_raw_write() are functions which can
+perform IO over multiple registers. They are currently used to read/write
+from/to the FIFO, and although they operate correctly in this burst mode on
+the SPI bus, they would corrupt the regmap cache if it was not disabled
+manually. The reason is that when the R/W size is more than 1 byte, these
+functions assume that the register address is incremented and handle the
+cache accordingly.
 
-Fixing this issue involves the following:
+Convert FIFO R/W functions to use the regmap _noinc_ versions in order to
+remove the manual cache control which was a workaround when using the
+_raw_ versions. FIFO registers are properly declared as volatile so
+cache will not be used/updated for FIFO accesses.
 
-1. Using a software state to track whether or not we need to start
-   the process to exit idle or notify idle.
-
-It's possible for the hardware to have exited an idle state without
-driver knowledge, but entering one is always restricted to a driver
-allow - which makes the SW state vs HW state mismatch issue purely one
-of optimization, which should seldomly be hit, if at all.
-
-2. Refactor any instances of exit/notify idle to use a single wrapper
-   that maintains this SW state.
-
-This works simialr to dc_allow_idle_optimizations, but works at the
-DMCUB level and makes sure the state is marked prior to any notify/exit
-idle so we don't enter an infinite loop.
-
-3. Make sure we exit out of idle prior to sending any commands or
-   waiting for DMCUB idle.
-
-This patch takes care of 1/2. A future patch will take care of wrapping
-DMCUB command submission with calls to this new interface.
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Hansen Dsouza <hansen.dsouza@amd.com>
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 8892780834ae ("drm/amd/display: Wake DMCUB before sending a command")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: dfeae619d781 ("serial: sc16is7xx")
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20231211171353.2901416-6-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  4 +-
- drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c  | 37 ++++++++++++++++++-
- drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h  |  6 ++-
- .../amd/display/dc/hwss/dcn35/dcn35_hwseq.c   |  8 +---
- 4 files changed, 43 insertions(+), 12 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 4d534ac18356..292335b7145c 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2825,7 +2825,7 @@ static int dm_resume(void *handle)
- 	bool need_hotplug = false;
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -383,9 +383,7 @@ static void sc16is7xx_fifo_read(struct u
+ 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+ 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
  
- 	if (dm->dc->caps.ips_support) {
--		dc_dmub_srv_exit_low_power_state(dm->dc);
-+		dc_dmub_srv_apply_idle_power_optimizations(dm->dc, false);
- 	}
- 
- 	if (amdgpu_in_reset(adev)) {
-@@ -8771,7 +8771,7 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
- 			if (new_con_state->crtc &&
- 				new_con_state->crtc->state->active &&
- 				drm_atomic_crtc_needs_modeset(new_con_state->crtc->state)) {
--				dc_dmub_srv_exit_low_power_state(dm->dc);
-+				dc_dmub_srv_apply_idle_power_optimizations(dm->dc, false);
- 				break;
- 			}
- 		}
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-index 0c963dfd6061..9488f739737e 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-@@ -1143,6 +1143,9 @@ bool dc_dmub_srv_is_hw_pwr_up(struct dc_dmub_srv *dc_dmub_srv, bool wait)
- 	struct dc_context *dc_ctx = dc_dmub_srv->ctx;
- 	enum dmub_status status;
- 
-+	if (!dc_dmub_srv || !dc_dmub_srv->dmub)
-+		return true;
-+
- 	if (dc_dmub_srv->ctx->dc->debug.dmcub_emulation)
- 		return true;
- 
-@@ -1158,7 +1161,7 @@ bool dc_dmub_srv_is_hw_pwr_up(struct dc_dmub_srv *dc_dmub_srv, bool wait)
- 	return true;
+-	regcache_cache_bypass(one->regmap, true);
+-	regmap_raw_read(one->regmap, SC16IS7XX_RHR_REG, s->buf, rxlen);
+-	regcache_cache_bypass(one->regmap, false);
++	regmap_noinc_read(one->regmap, SC16IS7XX_RHR_REG, s->buf, rxlen);
  }
  
--void dc_dmub_srv_notify_idle(const struct dc *dc, bool allow_idle)
-+static void dc_dmub_srv_notify_idle(const struct dc *dc, bool allow_idle)
- {
- 	union dmub_rb_cmd cmd = {0};
- 
-@@ -1182,7 +1185,7 @@ void dc_dmub_srv_notify_idle(const struct dc *dc, bool allow_idle)
- 	dm_execute_dmub_cmd(dc->ctx, &cmd, DM_DMUB_WAIT_TYPE_WAIT);
- }
- 
--void dc_dmub_srv_exit_low_power_state(const struct dc *dc)
-+static void dc_dmub_srv_exit_low_power_state(const struct dc *dc)
- {
- 	const uint32_t max_num_polls = 10000;
- 	uint32_t allow_state = 0;
-@@ -1195,6 +1198,9 @@ void dc_dmub_srv_exit_low_power_state(const struct dc *dc)
- 	if (!dc->idle_optimizations_allowed)
+ static void sc16is7xx_fifo_write(struct uart_port *port, u8 to_send)
+@@ -400,9 +398,7 @@ static void sc16is7xx_fifo_write(struct
+ 	if (unlikely(!to_send))
  		return;
  
-+	if (!dc->ctx->dmub_srv || !dc->ctx->dmub_srv->dmub)
-+		return;
-+
- 	if (dc->hwss.get_idle_state &&
- 		dc->hwss.set_idle_state &&
- 		dc->clk_mgr->funcs->exit_low_power_state) {
-@@ -1265,3 +1271,30 @@ void dc_dmub_srv_set_power_state(struct dc_dmub_srv *dc_dmub_srv, enum dc_acpi_c
- 	else
- 		dmub_srv_set_power_state(dmub, DMUB_POWER_STATE_D3);
+-	regcache_cache_bypass(one->regmap, true);
+-	regmap_raw_write(one->regmap, SC16IS7XX_THR_REG, s->buf, to_send);
+-	regcache_cache_bypass(one->regmap, false);
++	regmap_noinc_write(one->regmap, SC16IS7XX_THR_REG, s->buf, to_send);
  }
-+
-+void dc_dmub_srv_apply_idle_power_optimizations(const struct dc *dc, bool allow_idle)
-+{
-+	struct dc_dmub_srv *dc_dmub_srv = dc->ctx->dmub_srv;
-+
-+	if (!dc_dmub_srv || !dc_dmub_srv->dmub)
-+		return;
-+
-+	if (dc_dmub_srv->idle_allowed == allow_idle)
-+		return;
-+
-+	/*
-+	 * Entering a low power state requires a driver notification.
-+	 * Powering up the hardware requires notifying PMFW and DMCUB.
-+	 * Clearing the driver idle allow requires a DMCUB command.
-+	 * DMCUB commands requires the DMCUB to be powered up and restored.
-+	 *
-+	 * Exit out early to prevent an infinite loop of DMCUB commands
-+	 * triggering exit low power - use software state to track this.
-+	 */
-+	dc_dmub_srv->idle_allowed = allow_idle;
-+
-+	if (!allow_idle)
-+		dc_dmub_srv_exit_low_power_state(dc);
-+	else
-+		dc_dmub_srv_notify_idle(dc, allow_idle);
-+}
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
-index c25ce7546f71..b63cba6235fc 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
-@@ -50,6 +50,8 @@ struct dc_dmub_srv {
  
- 	struct dc_context *ctx;
- 	void *dm;
+ static void sc16is7xx_port_update(struct uart_port *port, u8 reg,
+@@ -494,6 +490,11 @@ static bool sc16is7xx_regmap_precious(st
+ 	return false;
+ }
+ 
++static bool sc16is7xx_regmap_noinc(struct device *dev, unsigned int reg)
++{
++	return reg == SC16IS7XX_RHR_REG;
++}
 +
-+	bool idle_allowed;
+ static int sc16is7xx_set_baud(struct uart_port *port, int baud)
+ {
+ 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+@@ -1699,6 +1700,10 @@ static struct regmap_config regcfg = {
+ 	.cache_type = REGCACHE_RBTREE,
+ 	.volatile_reg = sc16is7xx_regmap_volatile,
+ 	.precious_reg = sc16is7xx_regmap_precious,
++	.writeable_noinc_reg = sc16is7xx_regmap_noinc,
++	.readable_noinc_reg = sc16is7xx_regmap_noinc,
++	.max_raw_read = SC16IS7XX_FIFO_SIZE,
++	.max_raw_write = SC16IS7XX_FIFO_SIZE,
+ 	.max_register = SC16IS7XX_EFCR_REG,
  };
  
- void dc_dmub_srv_wait_idle(struct dc_dmub_srv *dc_dmub_srv);
-@@ -100,8 +102,8 @@ void dc_dmub_srv_enable_dpia_trace(const struct dc *dc);
- void dc_dmub_srv_subvp_save_surf_addr(const struct dc_dmub_srv *dc_dmub_srv, const struct dc_plane_address *addr, uint8_t subvp_index);
- 
- bool dc_dmub_srv_is_hw_pwr_up(struct dc_dmub_srv *dc_dmub_srv, bool wait);
--void dc_dmub_srv_notify_idle(const struct dc *dc, bool allow_idle);
--void dc_dmub_srv_exit_low_power_state(const struct dc *dc);
-+
-+void dc_dmub_srv_apply_idle_power_optimizations(const struct dc *dc, bool allow_idle);
- 
- void dc_dmub_srv_set_power_state(struct dc_dmub_srv *dc_dmub_srv, enum dc_acpi_cm_power_state powerState);
- #endif /* _DMUB_DC_SRV_H_ */
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-index 5a8258287438..cf26d2ad4008 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-@@ -671,11 +671,7 @@ bool dcn35_apply_idle_power_optimizations(struct dc *dc, bool enable)
- 	}
- 
- 	// TODO: review other cases when idle optimization is allowed
--
--	if (!enable)
--		dc_dmub_srv_exit_low_power_state(dc);
--	else
--		dc_dmub_srv_notify_idle(dc, enable);
-+	dc_dmub_srv_apply_idle_power_optimizations(dc, enable);
- 
- 	return true;
- }
-@@ -685,7 +681,7 @@ void dcn35_z10_restore(const struct dc *dc)
- 	if (dc->debug.disable_z10)
- 		return;
- 
--	dc_dmub_srv_exit_low_power_state(dc);
-+	dc_dmub_srv_apply_idle_power_optimizations(dc, false);
- 
- 	dcn31_z10_restore(dc);
- }
--- 
-2.43.0
-
 
 
