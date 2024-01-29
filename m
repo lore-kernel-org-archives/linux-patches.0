@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C242115703D;
-	Mon, 29 Jan 2024 17:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4CE15A4A4;
+	Mon, 29 Jan 2024 17:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548301; cv=none; b=rO1zF7QPWP1R1jiZ8DGCIOmZSgKt9XY2wStkBPa0QNTXataqHTYyt9a/urL2piUtzE1bUmLunLpu1F1oJnPSb+HRBIa8sdHFN6RTXtqJwRX91rf84I+h/B3cSomsohmNL1BeBZejBPFR6PFMwhE/nte3dWIKdZ/FgpIyKDqpKvs=
+	t=1706548302; cv=none; b=AbemaOjK2fqZavihZ0ImWjpmC2sJ4O6iIGG9UO/9CvhmHKaT6/nQjM21ioyzq8PzJnLxK6AxHTJ9/P+dVz44sX1hDWtjZZjfmx3A22bTp/W7BkMLARgZc5jkF6pAHkijCySTOho/zJ1nSD/xDM+r1eCwW48+XalYKYilJ4eiGHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548301; c=relaxed/simple;
-	bh=n3nj6rtqocCFwlA/OObieaYy7b+sHbdw4dM7u7OicwY=;
+	s=arc-20240116; t=1706548302; c=relaxed/simple;
+	bh=A7jJcdJvmrbzCyeM4ZHlGj3DTy0pZM8ti1weh8uq4mI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rg+jchZuxo64LwwvdEywznp/xAHiLZ8loLN9hDgiOciNW8nbBFrFIyO0Aie38smj4wwB1rXZUAD1wg4Ncotf2ET8HJflNxJuFLhtjPeyaSV1qEaK+VIqMgkuAwQ2QFBIA+h4C1gvyTGZFXtlJvNmQhCZATso/sJWM2Q7EpVFSII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gAEmn9l/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oRYQopnkDPUF4CFS/N1RK5yBbudQGR2SQYthBugzv77tHzsMUUx4YIybJVYiADIgQc4AqyKZKiAnxPT6Jzw2s+giuflhkvAuflAJWRWyGuQfiuGbGWnwUW4ivJPulZorrs3mnEjH8FiDrIOvvq+0pIdBZLQr2CgG26RfdixYs4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcn+QpRP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAEmn9l/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0DBC43390;
-	Mon, 29 Jan 2024 17:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcn+QpRP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467EBC433F1;
+	Mon, 29 Jan 2024 17:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548301;
-	bh=n3nj6rtqocCFwlA/OObieaYy7b+sHbdw4dM7u7OicwY=;
+	s=korg; t=1706548302;
+	bh=A7jJcdJvmrbzCyeM4ZHlGj3DTy0pZM8ti1weh8uq4mI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gAEmn9l/eVw6OF60qf+87oFwBVQq67KD8gm3NEpsQNVZ1NBGCBWaYEqC1cFz3jDhl
-	 rT1vTVyeQEHDBJMlIJyU1utmrC3O/yRi/A2jzmc2feT+0ne2xXd7hVv96/cdlSxvsI
-	 ljEpNlKBTGfSidbypvtOTVdA7N6Cf4QurfFeZEq0=
+	b=kcn+QpRPAClDO4Z52t/PV3urYK5AsZMhDNBSoB7G1eJZyi8zYlDf9ORHHqW2zCfmH
+	 BwyHPMmDjSICxPH1mop1fqB6tUd7PVEeTLlO2jam3WqIeEvSeyct4jCyDSwYOOs5/h
+	 AjGV3wsrLsFTuv7eLrNQot+edYPDX1Z/HgVF1xWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Artur Weber <aweber.kernel@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/185] vlan: skip nested type that is not IFLA_VLAN_QOS_MAPPING
-Date: Mon, 29 Jan 2024 09:04:40 -0800
-Message-ID: <20240129170001.168577139@linuxfoundation.org>
+Subject: [PATCH 6.7 308/346] drm/panel: samsung-s6d7aa0: drop DRM_BUS_FLAG_DE_HIGH for lsl080al02
+Date: Mon, 29 Jan 2024 09:05:39 -0800
+Message-ID: <20240129170025.529068501@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Artur Weber <aweber.kernel@gmail.com>
 
-[ Upstream commit 6c21660fe221a15c789dee2bc2fd95516bc5aeaf ]
+[ Upstream commit 62b143b5ec4a14e1ae0dede5aabaf1832e3b0073 ]
 
-In the vlan_changelink function, a loop is used to parse the nested
-attributes IFLA_VLAN_EGRESS_QOS and IFLA_VLAN_INGRESS_QOS in order to
-obtain the struct ifla_vlan_qos_mapping. These two nested attributes are
-checked in the vlan_validate_qos_map function, which calls
-nla_validate_nested_deprecated with the vlan_map_policy.
+It turns out that I had misconfigured the device I was using the panel
+with; the bus data polarity is not high for this panel, I had to change
+the config on the display controller's side.
 
-However, this deprecated validator applies a LIBERAL strictness, allowing
-the presence of an attribute with the type IFLA_VLAN_QOS_UNSPEC.
-Consequently, the loop in vlan_changelink may parse an attribute of type
-IFLA_VLAN_QOS_UNSPEC and believe it carries a payload of
-struct ifla_vlan_qos_mapping, which is not necessarily true.
+Fix the panel config to properly reflect its accurate settings.
 
-To address this issue and ensure compatibility, this patch introduces two
-type checks that skip attributes whose type is not IFLA_VLAN_QOS_MAPPING.
-
-Fixes: 07b5b17e157b ("[VLAN]: Use rtnl_link API")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240118130306.1644001-1-linma@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6810bb390282 ("drm/panel: Add Samsung S6D7AA0 panel controller driver")
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
+Link: https://lore.kernel.org/r/20240105-tab3-display-fixes-v2-2-904d1207bf6f@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240105-tab3-display-fixes-v2-2-904d1207bf6f@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan_netlink.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/panel/panel-samsung-s6d7aa0.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/8021q/vlan_netlink.c b/net/8021q/vlan_netlink.c
-index 214532173536..a3b68243fd4b 100644
---- a/net/8021q/vlan_netlink.c
-+++ b/net/8021q/vlan_netlink.c
-@@ -118,12 +118,16 @@ static int vlan_changelink(struct net_device *dev, struct nlattr *tb[],
- 	}
- 	if (data[IFLA_VLAN_INGRESS_QOS]) {
- 		nla_for_each_nested(attr, data[IFLA_VLAN_INGRESS_QOS], rem) {
-+			if (nla_type(attr) != IFLA_VLAN_QOS_MAPPING)
-+				continue;
- 			m = nla_data(attr);
- 			vlan_dev_set_ingress_priority(dev, m->to, m->from);
- 		}
- 	}
- 	if (data[IFLA_VLAN_EGRESS_QOS]) {
- 		nla_for_each_nested(attr, data[IFLA_VLAN_EGRESS_QOS], rem) {
-+			if (nla_type(attr) != IFLA_VLAN_QOS_MAPPING)
-+				continue;
- 			m = nla_data(attr);
- 			err = vlan_dev_set_egress_priority(dev, m->from, m->to);
- 			if (err)
+diff --git a/drivers/gpu/drm/panel/panel-samsung-s6d7aa0.c b/drivers/gpu/drm/panel/panel-samsung-s6d7aa0.c
+index ea5a85779382..f23d8832a1ad 100644
+--- a/drivers/gpu/drm/panel/panel-samsung-s6d7aa0.c
++++ b/drivers/gpu/drm/panel/panel-samsung-s6d7aa0.c
+@@ -309,7 +309,7 @@ static const struct s6d7aa0_panel_desc s6d7aa0_lsl080al02_desc = {
+ 	.off_func = s6d7aa0_lsl080al02_off,
+ 	.drm_mode = &s6d7aa0_lsl080al02_mode,
+ 	.mode_flags = MIPI_DSI_MODE_VSYNC_FLUSH | MIPI_DSI_MODE_VIDEO_NO_HFP,
+-	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
++	.bus_flags = 0,
+ 
+ 	.has_backlight = false,
+ 	.use_passwd3 = false,
 -- 
 2.43.0
 
