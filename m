@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3328A15703F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C8C15A4B9;
 	Mon, 29 Jan 2024 17:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548145; cv=none; b=heVe7QvBsWpMZmUGNxOz6nXsTsNDOlTqjmsMrrEA7J/vyFEPoDH8iMpRCXOoeGqkcng32xVqkPo7ZsU1NzzI9FZfEo1fZxi541uPmpE312M5vpkwohZUZvOrZborGxnDq0uvClXZRlssRU2/3nk8UMsyDWLDOeTirseokFFz8X0=
+	t=1706548146; cv=none; b=lzQhwG396xQ8hqABejWNtvMs7nDn6PWsUCk7nDC2fw1Mz1MvjyXWpBMKUo68W/VMN0oiOxWzOkjUocx7tfwYTxjDd9eMSIfoKf8ZGEwlYOnCAfvKD/ihKFNBFhgwYU91LN35W1yTCLpXgs1CnZV1ZBejWRveuyWMQrgSlA7M03g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548145; c=relaxed/simple;
-	bh=bnbsVjxoSkMP4evzVChNkyoisFZbLtb0U8CDkFGDq2o=;
+	s=arc-20240116; t=1706548146; c=relaxed/simple;
+	bh=k2NZX2q+6f0ywMU+LhI/6/GT7i76Wf2TkDKHQr5jLLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uevex6XSnnujpaz/TlKsy99CCMNsOaiZVtu3ati6CDzt7kpfC8c7yqekFiqX8V1aMMcyN+JcQ3ety7gQHWDVozbOTnWU7tb+S70QSdDvt3qKeUcmvrQjVgtiCA1s3Ylg6uOeZdP5RAa36hkYekNP3Aoq094ltgxPhan3Z0O01hM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPDgg2AK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j/y5n+WEq7JIrdXRxWlqIzBJ33YLIlF5uQqoYPrq24tfEo4PVIFNoK80cR3af4O8SRAnVquZ4jpKNd+0RnZQGsZyPJASqEdxW/BQrO0m9mIBrtYU+ZeAqVBudA/fMwKROM/NxwMDgEFe94YFy864GKn0Qyxmaa5TOxpdQ1FMzk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJ/xi8wl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPDgg2AK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1AAC43390;
-	Mon, 29 Jan 2024 17:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJ/xi8wl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A13C433F1;
+	Mon, 29 Jan 2024 17:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548145;
-	bh=bnbsVjxoSkMP4evzVChNkyoisFZbLtb0U8CDkFGDq2o=;
+	bh=k2NZX2q+6f0ywMU+LhI/6/GT7i76Wf2TkDKHQr5jLLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IPDgg2AK0S9ga/4afnDUDr6EsPhTqfmZzq6Xt4ZyenkYT+5dHzqE+Aq/xhk5F7C0q
-	 1OKHP/jA4L1m/ZvrxeDUdsvotrdR9HJu4sB10HnaN3eOxgGOfwu4f5S7XDqvs13sVv
-	 4VDLVjZVhb91nAM5fEU+fDqqtQdlxgCsvQsQxoMQ=
+	b=kJ/xi8wlI3en4gliSgs0c5h5lSECqHUjVkzvdT0/bwBiwNJF/agS0cnNdA0/Cox6F
+	 JZgxDSbZTiAfsJONhpBWDLe4Dzq5J4uUeLATLsEaRe7tlDdsilTPihX4Sg0MdTzLPX
+	 SCrACzbil014CY/sWDe0RffCYFcMwSva4q6ME3qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
+	Jakub Kicinski <kuba@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 172/346] afs: Turn the afs_addr_list address array into an array of structs
-Date: Mon, 29 Jan 2024 09:03:23 -0800
-Message-ID: <20240129170021.456318061@linuxfoundation.org>
+Subject: [PATCH 6.7 181/346] selftest: Dont reuse port for SO_INCOMING_CPU test.
+Date: Mon, 29 Jan 2024 09:03:32 -0800
+Message-ID: <20240129170021.717034075@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -52,267 +52,229 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 07f3502b33a260f873e35708d2fa693eb52225cb ]
+[ Upstream commit 97de5a15edf2d22184f5ff588656030bbb7fa358 ]
 
-Turn the afs_addr_list address array into an array of structs, thereby
-allowing per-address (such as RTT) info to be added.
+Jakub reported that ASSERT_EQ(cpu, i) in so_incoming_cpu.c seems to
+fire somewhat randomly.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Stable-dep-of: 17ba6f0bd14f ("afs: Fix error handling with lookup via FS.InlineBulkStatus")
+  # #  RUN           so_incoming_cpu.before_reuseport.test3 ...
+  # # so_incoming_cpu.c:191:test3:Expected cpu (32) == i (0)
+  # # test3: Test terminated by assertion
+  # #          FAIL  so_incoming_cpu.before_reuseport.test3
+  # not ok 3 so_incoming_cpu.before_reuseport.test3
+
+When the test failed, not-yet-accepted CLOSE_WAIT sockets received
+SYN with a "challenging" SEQ number, which was sent from an unexpected
+CPU that did not create the receiver.
+
+The test basically does:
+
+  1. for each cpu:
+    1-1. create a server
+    1-2. set SO_INCOMING_CPU
+
+  2. for each cpu:
+    2-1. set cpu affinity
+    2-2. create some clients
+    2-3. let clients connect() to the server on the same cpu
+    2-4. close() clients
+
+  3. for each server:
+    3-1. accept() all child sockets
+    3-2. check if all children have the same SO_INCOMING_CPU with the server
+
+The root cause was the close() in 2-4. and net.ipv4.tcp_tw_reuse.
+
+In a loop of 2., close() changed the client state to FIN_WAIT_2, and
+the peer transitioned to CLOSE_WAIT.
+
+In another loop of 2., connect() happened to select the same port of
+the FIN_WAIT_2 socket, and it was reused as the default value of
+net.ipv4.tcp_tw_reuse is 2.
+
+As a result, the new client sent SYN to the CLOSE_WAIT socket from
+a different CPU, and the receiver's sk_incoming_cpu was overwritten
+with unexpected CPU ID.
+
+Also, the SYN had a different SEQ number, so the CLOSE_WAIT socket
+responded with Challenge ACK.  The new client properly returned RST
+and effectively killed the CLOSE_WAIT socket.
+
+This way, all clients were created successfully, but the error was
+detected later by 3-2., ASSERT_EQ(cpu, i).
+
+To avoid the failure, let's make sure that (i) the number of clients
+is less than the number of available ports and (ii) such reuse never
+happens.
+
+Fixes: 6df96146b202 ("selftest: Add test for SO_INCOMING_CPU.")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Tested-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20240120031642.67014-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/addr_list.c | 10 +++++-----
- fs/afs/fs_probe.c  |  6 +++---
- fs/afs/internal.h  |  6 +++++-
- fs/afs/proc.c      |  4 ++--
- fs/afs/rotate.c    |  2 +-
- fs/afs/rxrpc.c     |  4 ++--
- fs/afs/server.c    |  4 ++--
- fs/afs/vl_alias.c  |  4 ++--
- fs/afs/vl_probe.c  |  6 +++---
- fs/afs/vl_rotate.c |  2 +-
- 10 files changed, 26 insertions(+), 22 deletions(-)
+ tools/testing/selftests/net/so_incoming_cpu.c | 68 ++++++++++++++-----
+ 1 file changed, 50 insertions(+), 18 deletions(-)
 
-diff --git a/fs/afs/addr_list.c b/fs/afs/addr_list.c
-index de1ae0bead3b..ac05a59e9d46 100644
---- a/fs/afs/addr_list.c
-+++ b/fs/afs/addr_list.c
-@@ -45,7 +45,7 @@ struct afs_addr_list *afs_alloc_addrlist(unsigned int nr,
- 	alist->max_addrs = nr;
+diff --git a/tools/testing/selftests/net/so_incoming_cpu.c b/tools/testing/selftests/net/so_incoming_cpu.c
+index a14818164102..e9fa14e10732 100644
+--- a/tools/testing/selftests/net/so_incoming_cpu.c
++++ b/tools/testing/selftests/net/so_incoming_cpu.c
+@@ -3,19 +3,16 @@
+ #define _GNU_SOURCE
+ #include <sched.h>
  
- 	for (i = 0; i < nr; i++) {
--		struct sockaddr_rxrpc *srx = &alist->addrs[i];
-+		struct sockaddr_rxrpc *srx = &alist->addrs[i].srx;
- 		srx->srx_family			= AF_RXRPC;
- 		srx->srx_service		= service;
- 		srx->transport_type		= SOCK_DGRAM;
-@@ -281,7 +281,7 @@ void afs_merge_fs_addr4(struct afs_addr_list *alist, __be32 xdr, u16 port)
- 		return;
++#include <fcntl.h>
++
+ #include <netinet/in.h>
+ #include <sys/socket.h>
+ #include <sys/sysinfo.h>
  
- 	for (i = 0; i < alist->nr_ipv4; i++) {
--		struct sockaddr_in *a = &alist->addrs[i].transport.sin;
-+		struct sockaddr_in *a = &alist->addrs[i].srx.transport.sin;
- 		u32 a_addr = ntohl(a->sin_addr.s_addr);
- 		u16 a_port = ntohs(a->sin_port);
+ #include "../kselftest_harness.h"
  
-@@ -298,7 +298,7 @@ void afs_merge_fs_addr4(struct afs_addr_list *alist, __be32 xdr, u16 port)
- 			alist->addrs + i,
- 			sizeof(alist->addrs[0]) * (alist->nr_addrs - i));
- 
--	srx = &alist->addrs[i];
-+	srx = &alist->addrs[i].srx;
- 	srx->srx_family = AF_RXRPC;
- 	srx->transport_type = SOCK_DGRAM;
- 	srx->transport_len = sizeof(srx->transport.sin);
-@@ -321,7 +321,7 @@ void afs_merge_fs_addr6(struct afs_addr_list *alist, __be32 *xdr, u16 port)
- 		return;
- 
- 	for (i = alist->nr_ipv4; i < alist->nr_addrs; i++) {
--		struct sockaddr_in6 *a = &alist->addrs[i].transport.sin6;
-+		struct sockaddr_in6 *a = &alist->addrs[i].srx.transport.sin6;
- 		u16 a_port = ntohs(a->sin6_port);
- 
- 		diff = memcmp(xdr, &a->sin6_addr, 16);
-@@ -338,7 +338,7 @@ void afs_merge_fs_addr6(struct afs_addr_list *alist, __be32 *xdr, u16 port)
- 			alist->addrs + i,
- 			sizeof(alist->addrs[0]) * (alist->nr_addrs - i));
- 
--	srx = &alist->addrs[i];
-+	srx = &alist->addrs[i].srx;
- 	srx->srx_family = AF_RXRPC;
- 	srx->transport_type = SOCK_DGRAM;
- 	srx->transport_len = sizeof(srx->transport.sin6);
-diff --git a/fs/afs/fs_probe.c b/fs/afs/fs_probe.c
-index daaf3810cc92..3dd24842f277 100644
---- a/fs/afs/fs_probe.c
-+++ b/fs/afs/fs_probe.c
-@@ -153,12 +153,12 @@ void afs_fileserver_probe_result(struct afs_call *call)
- 	if (call->service_id == YFS_FS_SERVICE) {
- 		server->probe.is_yfs = true;
- 		set_bit(AFS_SERVER_FL_IS_YFS, &server->flags);
--		alist->addrs[index].srx_service = call->service_id;
-+		alist->addrs[index].srx.srx_service = call->service_id;
- 	} else {
- 		server->probe.not_yfs = true;
- 		if (!server->probe.is_yfs) {
- 			clear_bit(AFS_SERVER_FL_IS_YFS, &server->flags);
--			alist->addrs[index].srx_service = call->service_id;
-+			alist->addrs[index].srx.srx_service = call->service_id;
- 		}
- 		cap0 = ntohl(call->tmp);
- 		if (cap0 & AFS3_VICED_CAPABILITY_64BITFILES)
-@@ -182,7 +182,7 @@ void afs_fileserver_probe_result(struct afs_call *call)
- 	spin_unlock(&server->probe_lock);
- 
- 	_debug("probe %pU [%u] %pISpc rtt=%u ret=%d",
--	       &server->uuid, index, &alist->addrs[index].transport,
-+	       &server->uuid, index, &alist->addrs[index].srx.transport,
- 	       rtt_us, ret);
- 
- 	return afs_done_one_fs_probe(call->net, server);
-diff --git a/fs/afs/internal.h b/fs/afs/internal.h
-index 7385d62c8cf5..e2adb314ab6a 100644
---- a/fs/afs/internal.h
-+++ b/fs/afs/internal.h
-@@ -87,7 +87,9 @@ struct afs_addr_list {
- 	enum dns_lookup_status	status:8;
- 	unsigned long		failed;		/* Mask of addrs that failed locally/ICMP */
- 	unsigned long		responded;	/* Mask of addrs that responded */
--	struct sockaddr_rxrpc	addrs[] __counted_by(max_addrs);
-+	struct {
-+		struct sockaddr_rxrpc	srx;
-+	} addrs[] __counted_by(max_addrs);
- #define AFS_MAX_ADDRESSES ((unsigned int)(sizeof(unsigned long) * 8))
+-#define CLIENT_PER_SERVER	32 /* More sockets, more reliable */
+-#define NR_SERVER		self->nproc
+-#define NR_CLIENT		(CLIENT_PER_SERVER * NR_SERVER)
+-
+ FIXTURE(so_incoming_cpu)
+ {
+-	int nproc;
+ 	int *servers;
+ 	union {
+ 		struct sockaddr addr;
+@@ -56,12 +53,47 @@ FIXTURE_VARIANT_ADD(so_incoming_cpu, after_all_listen)
+ 	.when_to_set = AFTER_ALL_LISTEN,
  };
  
-@@ -969,6 +971,8 @@ extern void afs_put_addrlist(struct afs_addr_list *);
- extern struct afs_vlserver_list *afs_parse_text_addrs(struct afs_net *,
- 						      const char *, size_t, char,
- 						      unsigned short, unsigned short);
-+bool afs_addr_list_same(const struct afs_addr_list *a,
-+			const struct afs_addr_list *b);
- extern struct afs_vlserver_list *afs_dns_query(struct afs_cell *, time64_t *);
- extern bool afs_iterate_addresses(struct afs_addr_cursor *);
- extern int afs_end_cursor(struct afs_addr_cursor *);
-diff --git a/fs/afs/proc.c b/fs/afs/proc.c
-index 2a0c83d71565..ab9cd986cfd9 100644
---- a/fs/afs/proc.c
-+++ b/fs/afs/proc.c
-@@ -307,7 +307,7 @@ static int afs_proc_cell_vlservers_show(struct seq_file *m, void *v)
- 		for (i = 0; i < alist->nr_addrs; i++)
- 			seq_printf(m, " %c %pISpc\n",
- 				   alist->preferred == i ? '>' : '-',
--				   &alist->addrs[i].transport);
-+				   &alist->addrs[i].srx.transport);
- 	}
- 	seq_printf(m, " info: fl=%lx rtt=%d\n", vlserver->flags, vlserver->rtt);
- 	seq_printf(m, " probe: fl=%x e=%d ac=%d out=%d\n",
-@@ -399,7 +399,7 @@ static int afs_proc_servers_show(struct seq_file *m, void *v)
- 		   alist->version, alist->responded, alist->failed);
- 	for (i = 0; i < alist->nr_addrs; i++)
- 		seq_printf(m, "    [%x] %pISpc%s\n",
--			   i, &alist->addrs[i].transport,
-+			   i, &alist->addrs[i].srx.transport,
- 			   alist->preferred == i ? "*" : "");
- 	return 0;
- }
-diff --git a/fs/afs/rotate.c b/fs/afs/rotate.c
-index a3d127953ac6..46081e5da6f5 100644
---- a/fs/afs/rotate.c
-+++ b/fs/afs/rotate.c
-@@ -488,7 +488,7 @@ bool afs_select_fileserver(struct afs_operation *op)
- 
- 	_debug("address [%u] %u/%u %pISp",
- 	       op->index, op->ac.index, op->ac.alist->nr_addrs,
--	       &op->ac.alist->addrs[op->ac.index].transport);
-+	       &op->ac.alist->addrs[op->ac.index].srx.transport);
- 
- 	_leave(" = t");
- 	return true;
-diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
-index d642d06a453b..181317126e43 100644
---- a/fs/afs/rxrpc.c
-+++ b/fs/afs/rxrpc.c
-@@ -296,7 +296,7 @@ static void afs_notify_end_request_tx(struct sock *sock,
-  */
- void afs_make_call(struct afs_addr_cursor *ac, struct afs_call *call, gfp_t gfp)
++static void write_sysctl(struct __test_metadata *_metadata,
++			 char *filename, char *string)
++{
++	int fd, len, ret;
++
++	fd = open(filename, O_WRONLY);
++	ASSERT_NE(fd, -1);
++
++	len = strlen(string);
++	ret = write(fd, string, len);
++	ASSERT_EQ(ret, len);
++}
++
++static void setup_netns(struct __test_metadata *_metadata)
++{
++	ASSERT_EQ(unshare(CLONE_NEWNET), 0);
++	ASSERT_EQ(system("ip link set lo up"), 0);
++
++	write_sysctl(_metadata, "/proc/sys/net/ipv4/ip_local_port_range", "10000 60001");
++	write_sysctl(_metadata, "/proc/sys/net/ipv4/tcp_tw_reuse", "0");
++}
++
++#define NR_PORT				(60001 - 10000 - 1)
++#define NR_CLIENT_PER_SERVER_DEFAULT	32
++static int nr_client_per_server, nr_server, nr_client;
++
+ FIXTURE_SETUP(so_incoming_cpu)
  {
--	struct sockaddr_rxrpc *srx = &ac->alist->addrs[ac->index];
-+	struct sockaddr_rxrpc *srx = &ac->alist->addrs[ac->index].srx;
- 	struct rxrpc_call *rxcall;
- 	struct msghdr msg;
- 	struct kvec iov[1];
-@@ -461,7 +461,7 @@ static void afs_log_error(struct afs_call *call, s32 remote_abort)
- 		max = m + 1;
- 		pr_notice("kAFS: Peer reported %s failure on %s [%pISp]\n",
- 			  msg, call->type->name,
--			  &call->alist->addrs[call->addr_ix].transport);
-+			  &call->alist->addrs[call->addr_ix].srx.transport);
+-	self->nproc = get_nprocs();
+-	ASSERT_LE(2, self->nproc);
++	setup_netns(_metadata);
++
++	nr_server = get_nprocs();
++	ASSERT_LE(2, nr_server);
++
++	if (NR_CLIENT_PER_SERVER_DEFAULT * nr_server < NR_PORT)
++		nr_client_per_server = NR_CLIENT_PER_SERVER_DEFAULT;
++	else
++		nr_client_per_server = NR_PORT / nr_server;
++
++	nr_client = nr_client_per_server * nr_server;
+ 
+-	self->servers = malloc(sizeof(int) * NR_SERVER);
++	self->servers = malloc(sizeof(int) * nr_server);
+ 	ASSERT_NE(self->servers, NULL);
+ 
+ 	self->in_addr.sin_family = AF_INET;
+@@ -74,7 +106,7 @@ FIXTURE_TEARDOWN(so_incoming_cpu)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < NR_SERVER; i++)
++	for (i = 0; i < nr_server; i++)
+ 		close(self->servers[i]);
+ 
+ 	free(self->servers);
+@@ -110,10 +142,10 @@ int create_server(struct __test_metadata *_metadata,
+ 	if (variant->when_to_set == BEFORE_LISTEN)
+ 		set_so_incoming_cpu(_metadata, fd, cpu);
+ 
+-	/* We don't use CLIENT_PER_SERVER here not to block
++	/* We don't use nr_client_per_server here not to block
+ 	 * this test at connect() if SO_INCOMING_CPU is broken.
+ 	 */
+-	ret = listen(fd, NR_CLIENT);
++	ret = listen(fd, nr_client);
+ 	ASSERT_EQ(ret, 0);
+ 
+ 	if (variant->when_to_set == AFTER_LISTEN)
+@@ -128,7 +160,7 @@ void create_servers(struct __test_metadata *_metadata,
+ {
+ 	int i, ret;
+ 
+-	for (i = 0; i < NR_SERVER; i++) {
++	for (i = 0; i < nr_server; i++) {
+ 		self->servers[i] = create_server(_metadata, self, variant, i);
+ 
+ 		if (i == 0) {
+@@ -138,7 +170,7 @@ void create_servers(struct __test_metadata *_metadata,
+ 	}
+ 
+ 	if (variant->when_to_set == AFTER_ALL_LISTEN) {
+-		for (i = 0; i < NR_SERVER; i++)
++		for (i = 0; i < nr_server; i++)
+ 			set_so_incoming_cpu(_metadata, self->servers[i], i);
  	}
  }
+@@ -149,7 +181,7 @@ void create_clients(struct __test_metadata *_metadata,
+ 	cpu_set_t cpu_set;
+ 	int i, j, fd, ret;
  
-diff --git a/fs/afs/server.c b/fs/afs/server.c
-index 0bd2f5ba6900..b8e2d211d4a1 100644
---- a/fs/afs/server.c
-+++ b/fs/afs/server.c
-@@ -43,7 +43,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
- 			hlist_for_each_entry_rcu(server, &net->fs_addresses6, addr6_link) {
- 				alist = rcu_dereference(server->addresses);
- 				for (i = alist->nr_ipv4; i < alist->nr_addrs; i++) {
--					b = &alist->addrs[i].transport.sin6;
-+					b = &alist->addrs[i].srx.transport.sin6;
- 					diff = ((u16 __force)a->sin6_port -
- 						(u16 __force)b->sin6_port);
- 					if (diff == 0)
-@@ -59,7 +59,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
- 			hlist_for_each_entry_rcu(server, &net->fs_addresses4, addr4_link) {
- 				alist = rcu_dereference(server->addresses);
- 				for (i = 0; i < alist->nr_ipv4; i++) {
--					b = &alist->addrs[i].transport.sin;
-+					b = &alist->addrs[i].srx.transport.sin;
- 					diff = ((u16 __force)a->sin_port -
- 						(u16 __force)b->sin_port);
- 					if (diff == 0)
-diff --git a/fs/afs/vl_alias.c b/fs/afs/vl_alias.c
-index f04a80e4f5c3..d3c0df70a1a5 100644
---- a/fs/afs/vl_alias.c
-+++ b/fs/afs/vl_alias.c
-@@ -94,8 +94,8 @@ static int afs_compare_fs_alists(const struct afs_server *server_a,
- 	lb = rcu_dereference(server_b->addresses);
+-	for (i = 0; i < NR_SERVER; i++) {
++	for (i = 0; i < nr_server; i++) {
+ 		CPU_ZERO(&cpu_set);
  
- 	while (a < la->nr_addrs && b < lb->nr_addrs) {
--		const struct sockaddr_rxrpc *srx_a = &la->addrs[a];
--		const struct sockaddr_rxrpc *srx_b = &lb->addrs[b];
-+		const struct sockaddr_rxrpc *srx_a = &la->addrs[a].srx;
-+		const struct sockaddr_rxrpc *srx_b = &lb->addrs[b].srx;
- 		int diff = afs_compare_addrs(srx_a, srx_b);
+ 		CPU_SET(i, &cpu_set);
+@@ -162,7 +194,7 @@ void create_clients(struct __test_metadata *_metadata,
+ 		ret = sched_setaffinity(0, sizeof(cpu_set), &cpu_set);
+ 		ASSERT_EQ(ret, 0);
  
- 		if (diff < 0) {
-diff --git a/fs/afs/vl_probe.c b/fs/afs/vl_probe.c
-index 58452b86e672..bdd9372e3fb2 100644
---- a/fs/afs/vl_probe.c
-+++ b/fs/afs/vl_probe.c
-@@ -106,12 +106,12 @@ void afs_vlserver_probe_result(struct afs_call *call)
- 	if (call->service_id == YFS_VL_SERVICE) {
- 		server->probe.flags |= AFS_VLSERVER_PROBE_IS_YFS;
- 		set_bit(AFS_VLSERVER_FL_IS_YFS, &server->flags);
--		alist->addrs[index].srx_service = call->service_id;
-+		alist->addrs[index].srx.srx_service = call->service_id;
- 	} else {
- 		server->probe.flags |= AFS_VLSERVER_PROBE_NOT_YFS;
- 		if (!(server->probe.flags & AFS_VLSERVER_PROBE_IS_YFS)) {
- 			clear_bit(AFS_VLSERVER_FL_IS_YFS, &server->flags);
--			alist->addrs[index].srx_service = call->service_id;
-+			alist->addrs[index].srx.srx_service = call->service_id;
+-		for (j = 0; j < CLIENT_PER_SERVER; j++) {
++		for (j = 0; j < nr_client_per_server; j++) {
+ 			fd  = socket(AF_INET, SOCK_STREAM, 0);
+ 			ASSERT_NE(fd, -1);
+ 
+@@ -180,8 +212,8 @@ void verify_incoming_cpu(struct __test_metadata *_metadata,
+ 	int i, j, fd, cpu, ret, total = 0;
+ 	socklen_t len = sizeof(int);
+ 
+-	for (i = 0; i < NR_SERVER; i++) {
+-		for (j = 0; j < CLIENT_PER_SERVER; j++) {
++	for (i = 0; i < nr_server; i++) {
++		for (j = 0; j < nr_client_per_server; j++) {
+ 			/* If we see -EAGAIN here, SO_INCOMING_CPU is broken */
+ 			fd = accept(self->servers[i], &self->addr, &self->addrlen);
+ 			ASSERT_NE(fd, -1);
+@@ -195,7 +227,7 @@ void verify_incoming_cpu(struct __test_metadata *_metadata,
  		}
  	}
  
-@@ -131,7 +131,7 @@ void afs_vlserver_probe_result(struct afs_call *call)
- 	spin_unlock(&server->probe_lock);
- 
- 	_debug("probe [%u][%u] %pISpc rtt=%u ret=%d",
--	       server_index, index, &alist->addrs[index].transport, rtt_us, ret);
-+	       server_index, index, &alist->addrs[index].srx.transport, rtt_us, ret);
- 
- 	afs_done_one_vl_probe(server, have_result);
+-	ASSERT_EQ(total, NR_CLIENT);
++	ASSERT_EQ(total, nr_client);
+ 	TH_LOG("SO_INCOMING_CPU is very likely to be "
+ 	       "working correctly with %d sockets.", total);
  }
-diff --git a/fs/afs/vl_rotate.c b/fs/afs/vl_rotate.c
-index eb415ce56360..e52b9d4c8a0a 100644
---- a/fs/afs/vl_rotate.c
-+++ b/fs/afs/vl_rotate.c
-@@ -249,7 +249,7 @@ bool afs_select_vlserver(struct afs_vl_cursor *vc)
- 
- 	_debug("VL address %d/%d", vc->ac.index, vc->ac.alist->nr_addrs);
- 
--	_leave(" = t %pISpc", &vc->ac.alist->addrs[vc->ac.index].transport);
-+	_leave(" = t %pISpc", &vc->ac.alist->addrs[vc->ac.index].srx.transport);
- 	return true;
- 
- next_server:
 -- 
 2.43.0
 
