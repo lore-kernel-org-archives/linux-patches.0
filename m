@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDC0159578;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC2D159578;
 	Mon, 29 Jan 2024 17:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548228; cv=none; b=VDfjle3iyO0ME4qdddIMEc1u3uDCBKDLK+XblSnml2ULo9lcERvsd4Z65anf8atsCEEQZ8kcgh8Cf1rKvoWZJS06RW0y28cleNG99rpiCUs7u+0zSWH6jJgDzbnEll9HpHRenpQXzekNJ9z3C0M7OXlBnahmrLxR3U8eFnGGCN0=
+	t=1706548228; cv=none; b=NygmXTdInZMhfKwnqC/CQVC3FqH4C7Dxzyc8cKEHCw9VY1v38BGEeT5sCNuXCSx7HF18fwMRmTttUuavsGA2E6LzkKjuppYk1+sNgocAjD4FNR4Ta94liH9Y8LXcpQS9vuFObfECm01pVbxqU5Q+ZYRSOmWJN7P7UayMyq1/rOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548228; c=relaxed/simple;
-	bh=tQZK2+RMOawaCWJWkSSGXTGnCYdSFw90JKdOtWWBRVM=;
+	bh=/k2dAEFEi1m9U6XRKMKnqf8Gkarm5Xy00V0jWUAtOms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ccX+sspNcy21RzZ4gZxbPfJoe8coACAXzlGyp/T9UGHNNohbLtNEXJGkt8/nlt/grH1lE4tG/jeB306mRKrhqH/4fj6gjE1emL90VKA4dM5yTag9W8mUMlUYVHkklJXBNLQoI03X9/ihRZMFAaAkJG85PFfbZ+s9J+6Q7t1PcKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvrEwkMw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W+z+Z+9/HqUk1v7IKcjsFODejj3ivGjy5qCnrw/zA/mgpQo57ff52KE2NK/68guW75ZVZqxHBYhLR3AfZBRt5/8YgVb1uyYsvYgwv6YAF5dKzA494gjRAxh7GdqHrPkrvKujGLcdLDXudFq04nt4cCqKlcuZxGz8dNtrEHaWc8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLUrHx+/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvrEwkMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC507C433F1;
-	Mon, 29 Jan 2024 17:10:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLUrHx+/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94195C43390;
+	Mon, 29 Jan 2024 17:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548228;
-	bh=tQZK2+RMOawaCWJWkSSGXTGnCYdSFw90JKdOtWWBRVM=;
+	bh=/k2dAEFEi1m9U6XRKMKnqf8Gkarm5Xy00V0jWUAtOms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GvrEwkMw/iv/xWUCi2dI/uHQF6Mo++qB9iKJzYdORWXjE95EuhNgIOdgmELu6NTSP
-	 fgVpQcL6a+0NLqCfP7Og8IKrI+PAC7GfMU5hHhxrfjJosskwx1stUODM9LKR6JVS3f
-	 3baDWfobz1U0mWwpnWhT3bM9PK/7CTSMOe0vp9Dw=
+	b=TLUrHx+/cBpvvuVPB/3ERIHuF1W5/tCnmMdljsbIRpthVypUSlNQHgrnEvwcmeooN
+	 F30nP22IeljPPhav7ELtJjni7bXxtQKWDe3ZI0kUqyv2KVwDyGtraPCvrhkCKbJpEF
+	 D337cITWY5gaGWgQ7y1DCm1btbU+5+/vvs/1ki/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Youngmin Nam <youngmin.nam@samsung.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Subject: [PATCH 6.1 030/185] async: Introduce async_schedule_dev_nocall()
-Date: Mon, 29 Jan 2024 09:03:50 -0800
-Message-ID: <20240129165959.565390530@linuxfoundation.org>
+	Melissa Wen <mwen@igalia.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.7 256/346] drm/amd/display: fix bandwidth validation failure on DCN 2.1
+Date: Mon, 29 Jan 2024 09:04:47 -0800
+Message-ID: <20240129170023.927555704@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,79 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Melissa Wen <mwen@igalia.com>
 
-commit 7d4b5d7a37bdd63a5a3371b988744b060d5bb86f upstream.
+commit 3a0fa3bc245ef92838a8296e0055569b8dff94c4 upstream.
 
-In preparation for subsequent changes, introduce a specialized variant
-of async_schedule_dev() that will not invoke the argument function
-synchronously when it cannot be scheduled for asynchronous execution.
+IGT `amdgpu/amd_color/crtc-lut-accuracy` fails right at the beginning of
+the test execution, during atomic check, because DC rejects the
+bandwidth state for a fb sizing 64x64. The test was previously working
+with the deprecated dc_commit_state(). Now using
+dc_validate_with_context() approach, the atomic check needs to perform a
+full state validation. Therefore, set fast_validation to false in the
+dc_validate_global_state call for atomic check.
 
-The new function, async_schedule_dev_nocall(), will be used for fixing
-possible deadlocks in the system-wide power management core code.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com> for the series.
-Tested-by: Youngmin Nam <youngmin.nam@samsung.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: stable@vger.kernel.org
+Fixes: b8272241ff9d ("drm/amd/display: Drop dc_commit_state in favor of dc_commit_streams")
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/async.h |    2 ++
- kernel/async.c        |   29 +++++++++++++++++++++++++++++
- 2 files changed, 31 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/async.h
-+++ b/include/linux/async.h
-@@ -90,6 +90,8 @@ async_schedule_dev(async_func_t func, st
- 	return async_schedule_node(func, dev, dev_to_node(dev));
- }
- 
-+bool async_schedule_dev_nocall(async_func_t func, struct device *dev);
-+
- /**
-  * async_schedule_dev_domain - A device specific version of async_schedule_domain
-  * @func: function to execute asynchronously
---- a/kernel/async.c
-+++ b/kernel/async.c
-@@ -244,6 +244,35 @@ async_cookie_t async_schedule_node(async
- EXPORT_SYMBOL_GPL(async_schedule_node);
- 
- /**
-+ * async_schedule_dev_nocall - A simplified variant of async_schedule_dev()
-+ * @func: function to execute asynchronously
-+ * @dev: device argument to be passed to function
-+ *
-+ * @dev is used as both the argument for the function and to provide NUMA
-+ * context for where to run the function.
-+ *
-+ * If the asynchronous execution of @func is scheduled successfully, return
-+ * true. Otherwise, do nothing and return false, unlike async_schedule_dev()
-+ * that will run the function synchronously then.
-+ */
-+bool async_schedule_dev_nocall(async_func_t func, struct device *dev)
-+{
-+	struct async_entry *entry;
-+
-+	entry = kzalloc(sizeof(struct async_entry), GFP_KERNEL);
-+
-+	/* Give up if there is no memory or too much work. */
-+	if (!entry || atomic_read(&entry_count) > MAX_WORK) {
-+		kfree(entry);
-+		return false;
-+	}
-+
-+	__async_schedule_node_domain(func, dev, dev_to_node(dev),
-+				     &async_dfl_domain, entry);
-+	return true;
-+}
-+
-+/**
-  * async_synchronize_full - synchronize all asynchronous function calls
-  *
-  * This function waits until all asynchronous function calls have been done.
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10479,7 +10479,7 @@ static int amdgpu_dm_atomic_check(struct
+ 			DRM_DEBUG_DRIVER("drm_dp_mst_atomic_check() failed\n");
+ 			goto fail;
+ 		}
+-		status = dc_validate_global_state(dc, dm_state->context, true);
++		status = dc_validate_global_state(dc, dm_state->context, false);
+ 		if (status != DC_OK) {
+ 			DRM_DEBUG_DRIVER("DC global validation failure: %s (%d)",
+ 				       dc_status_to_str(status), status);
 
 
