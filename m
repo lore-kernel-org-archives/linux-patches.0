@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1DCD157053;
-	Mon, 29 Jan 2024 17:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3EAF15703F;
+	Mon, 29 Jan 2024 17:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548336; cv=none; b=G2NY5YucSTMhme6Lq9w2c2MFlqE+gj7wmkB00oRXj0aPXqj3U8zzJg0Le+Rp2ysRZzLsxruff83A+P8e6rT0WNFCK4uAQe5T8KSAUQ+hPH67fGaB4ObHCKSUJKIgh8Nzza6BBPojtoBHk3kybornByvZytCfFVLNY4xssdhG7es=
+	t=1706548336; cv=none; b=TRt32vNkEnqGr8GB15KqhOlU2RLkTCspkpcWtSy4msm373L/U3KkKBHJlriGmA2JjON3X1SM70VIQz35w8xTE39O8N38jja44Gg5V3p/WpDCoXTBedxOGE3EALxWfNpPAGlX0wtO1IHgSQ5btJ8D502fM4MpnBtFoJnflYicyhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548336; c=relaxed/simple;
-	bh=0iwIHB0f2rc+w7oyboJfa59V0on82SRquNv5Bkhjeh8=;
+	bh=afEXdpU9k3DGcEYvjg23QpJXsWLOwZF1uXsq9JPHsy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ed3EX8r4zpQuR0aOEs0q4BT4sJg7qddzA4SRyZrNX79jFOMycKf5U3kM3nsCX6GPGWIsLHws6aKh2+Dy0x1fL4uvnWwEYYig9nQbLsY0Ys5pgPuu6oCfxVIXCa8wtGiqgxq98DhHhKyuQX4mxExKOQqYENMFuXRotDVWXk524Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgRasUGb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VNlVIed2ElN+MbIIX7viVtyCspfiQliwLQJ2K+bcG9WW4yw+47o4NWhZrsS/mPVboae1Ju3yoMUhoujp0HIzILUceLJrWtkKCD5Bx/HiotHG0JdLiemnWWOQEz2PGauveqFXRPVVNpx/LakJpTsTRuVLmvB+3OAvc3o0ki+GLt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKIEh64h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgRasUGb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A865FC43390;
-	Mon, 29 Jan 2024 17:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKIEh64h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789A5C433C7;
+	Mon, 29 Jan 2024 17:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548335;
-	bh=0iwIHB0f2rc+w7oyboJfa59V0on82SRquNv5Bkhjeh8=;
+	s=korg; t=1706548336;
+	bh=afEXdpU9k3DGcEYvjg23QpJXsWLOwZF1uXsq9JPHsy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RgRasUGbLSyTIUesZFOF6Lr2oBM0eLXxc0/CRM7RIccY3k7zBHhJJK8wha41d89sF
-	 HXdEGqM7yxeGqz1zEaX9hRjYTgNZCP6+aaMJjPlS8J3PMIWwyntK135BlXGXlMyiYx
-	 nZxZiBNDkbal/TqbIoNA0sDugYJcv6cr19kxC8L4=
+	b=uKIEh64hallXZNr7ZLshF8GnNAjiAfcCtxOXPPqD6sZ99E3rnrwBIrmxkJdP0S+RR
+	 qY/pP/QWxvQa7l0zpFJ+OSR6kSzkjuoqqv+S3WpmO9Cu1GLo5oRdzAYu8WbSUEaxtu
+	 aKpfs84ys7st142dYR7QQy7CaX67T8ydhvvbQE4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	linux-btrfs@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 332/346] spi: bcm-qspi: fix SFDP BFPT read by usig mspi read
-Date: Mon, 29 Jan 2024 09:06:03 -0800
-Message-ID: <20240129170026.242997547@linuxfoundation.org>
+	Rob Landley <rob@landley.net>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 103/185] btrfs: fix infinite directory reads
+Date: Mon, 29 Jan 2024 09:05:03 -0800
+Message-ID: <20240129170001.901904811@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +48,311 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kamal Dasu <kamal.dasu@broadcom.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 574bf7bbe83794a902679846770f75a9b7f28176 ]
+commit 9b378f6ad48cfa195ed868db9123c09ee7ec5ea2 upstream.
 
-SFDP read shall use the mspi reads when using the bcm_qspi_exec_mem_op()
-call. This fixes SFDP parameter page read failures seen with parts that
-now use SFDP protocol to read the basic flash parameter table.
+The readdir implementation currently processes always up to the last index
+it finds. This however can result in an infinite loop if the directory has
+a large number of entries such that they won't all fit in the given buffer
+passed to the readdir callback, that is, dir_emit() returns a non-zero
+value. Because in that case readdir() will be called again and if in the
+meanwhile new directory entries were added and we still can't put all the
+remaining entries in the buffer, we keep repeating this over and over.
 
-Fixes: 5f195ee7d830 ("spi: bcm-qspi: Implement the spi_mem interface")
-Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://msgid.link/r/20240109210033.43249-1-kamal.dasu@broadcom.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The following C program and test script reproduce the problem:
+
+  $ cat /mnt/readdir_prog.c
+  #include <sys/types.h>
+  #include <dirent.h>
+  #include <stdio.h>
+
+  int main(int argc, char *argv[])
+  {
+    DIR *dir = opendir(".");
+    struct dirent *dd;
+
+    while ((dd = readdir(dir))) {
+      printf("%s\n", dd->d_name);
+      rename(dd->d_name, "TEMPFILE");
+      rename("TEMPFILE", dd->d_name);
+    }
+    closedir(dir);
+  }
+
+  $ gcc -o /mnt/readdir_prog /mnt/readdir_prog.c
+
+  $ cat test.sh
+  #!/bin/bash
+
+  DEV=/dev/sdi
+  MNT=/mnt/sdi
+
+  mkfs.btrfs -f $DEV &> /dev/null
+  #mkfs.xfs -f $DEV &> /dev/null
+  #mkfs.ext4 -F $DEV &> /dev/null
+
+  mount $DEV $MNT
+
+  mkdir $MNT/testdir
+  for ((i = 1; i <= 2000; i++)); do
+      echo -n > $MNT/testdir/file_$i
+  done
+
+  cd $MNT/testdir
+  /mnt/readdir_prog
+
+  cd /mnt
+
+  umount $MNT
+
+This behaviour is surprising to applications and it's unlike ext4, xfs,
+tmpfs, vfat and other filesystems, which always finish. In this case where
+new entries were added due to renames, some file names may be reported
+more than once, but this varies according to each filesystem - for example
+ext4 never reported the same file more than once while xfs reports the
+first 13 file names twice.
+
+So change our readdir implementation to track the last index number when
+opendir() is called and then make readdir() never process beyond that
+index number. This gives the same behaviour as ext4.
+
+Reported-by: Rob Landley <rob@landley.net>
+Link: https://lore.kernel.org/linux-btrfs/2c8c55ec-04c6-e0dc-9c5c-8c7924778c35@landley.net/
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217681
+CC: stable@vger.kernel.org # 5.15
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-bcm-qspi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/ctree.h         |    1 
+ fs/btrfs/delayed-inode.c |    5 +
+ fs/btrfs/delayed-inode.h |    1 
+ fs/btrfs/inode.c         |  131 ++++++++++++++++++++++++++++-------------------
+ 4 files changed, 84 insertions(+), 54 deletions(-)
 
-diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
-index ef08fcac2f6d..0407b91183ca 100644
---- a/drivers/spi/spi-bcm-qspi.c
-+++ b/drivers/spi/spi-bcm-qspi.c
-@@ -19,7 +19,7 @@
- #include <linux/platform_device.h>
- #include <linux/slab.h>
- #include <linux/spi/spi.h>
--#include <linux/spi/spi-mem.h>
-+#include <linux/mtd/spi-nor.h>
- #include <linux/sysfs.h>
- #include <linux/types.h>
- #include "spi-bcm-qspi.h"
-@@ -1221,7 +1221,7 @@ static int bcm_qspi_exec_mem_op(struct spi_mem *mem,
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -1552,6 +1552,7 @@ struct btrfs_drop_extents_args {
  
- 	/* non-aligned and very short transfers are handled by MSPI */
- 	if (!IS_ALIGNED((uintptr_t)addr, 4) || !IS_ALIGNED((uintptr_t)buf, 4) ||
--	    len < 4)
-+	    len < 4 || op->cmd.opcode == SPINOR_OP_RDSFDP)
- 		mspi_read = true;
+ struct btrfs_file_private {
+ 	void *filldir_buf;
++	u64 last_index;
+ };
  
- 	if (!has_bspi(qspi) || mspi_read)
--- 
-2.43.0
-
+ 
+--- a/fs/btrfs/delayed-inode.c
++++ b/fs/btrfs/delayed-inode.c
+@@ -1665,6 +1665,7 @@ int btrfs_inode_delayed_dir_index_count(
+ }
+ 
+ bool btrfs_readdir_get_delayed_items(struct inode *inode,
++				     u64 last_index,
+ 				     struct list_head *ins_list,
+ 				     struct list_head *del_list)
+ {
+@@ -1684,14 +1685,14 @@ bool btrfs_readdir_get_delayed_items(str
+ 
+ 	mutex_lock(&delayed_node->mutex);
+ 	item = __btrfs_first_delayed_insertion_item(delayed_node);
+-	while (item) {
++	while (item && item->index <= last_index) {
+ 		refcount_inc(&item->refs);
+ 		list_add_tail(&item->readdir_list, ins_list);
+ 		item = __btrfs_next_delayed_item(item);
+ 	}
+ 
+ 	item = __btrfs_first_delayed_deletion_item(delayed_node);
+-	while (item) {
++	while (item && item->index <= last_index) {
+ 		refcount_inc(&item->refs);
+ 		list_add_tail(&item->readdir_list, del_list);
+ 		item = __btrfs_next_delayed_item(item);
+--- a/fs/btrfs/delayed-inode.h
++++ b/fs/btrfs/delayed-inode.h
+@@ -148,6 +148,7 @@ void btrfs_destroy_delayed_inodes(struct
+ 
+ /* Used for readdir() */
+ bool btrfs_readdir_get_delayed_items(struct inode *inode,
++				     u64 last_index,
+ 				     struct list_head *ins_list,
+ 				     struct list_head *del_list);
+ void btrfs_readdir_put_delayed_items(struct inode *inode,
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -5949,6 +5949,74 @@ static struct dentry *btrfs_lookup(struc
+ }
+ 
+ /*
++ * Find the highest existing sequence number in a directory and then set the
++ * in-memory index_cnt variable to the first free sequence number.
++ */
++static int btrfs_set_inode_index_count(struct btrfs_inode *inode)
++{
++	struct btrfs_root *root = inode->root;
++	struct btrfs_key key, found_key;
++	struct btrfs_path *path;
++	struct extent_buffer *leaf;
++	int ret;
++
++	key.objectid = btrfs_ino(inode);
++	key.type = BTRFS_DIR_INDEX_KEY;
++	key.offset = (u64)-1;
++
++	path = btrfs_alloc_path();
++	if (!path)
++		return -ENOMEM;
++
++	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
++	if (ret < 0)
++		goto out;
++	/* FIXME: we should be able to handle this */
++	if (ret == 0)
++		goto out;
++	ret = 0;
++
++	if (path->slots[0] == 0) {
++		inode->index_cnt = BTRFS_DIR_START_INDEX;
++		goto out;
++	}
++
++	path->slots[0]--;
++
++	leaf = path->nodes[0];
++	btrfs_item_key_to_cpu(leaf, &found_key, path->slots[0]);
++
++	if (found_key.objectid != btrfs_ino(inode) ||
++	    found_key.type != BTRFS_DIR_INDEX_KEY) {
++		inode->index_cnt = BTRFS_DIR_START_INDEX;
++		goto out;
++	}
++
++	inode->index_cnt = found_key.offset + 1;
++out:
++	btrfs_free_path(path);
++	return ret;
++}
++
++static int btrfs_get_dir_last_index(struct btrfs_inode *dir, u64 *index)
++{
++	if (dir->index_cnt == (u64)-1) {
++		int ret;
++
++		ret = btrfs_inode_delayed_dir_index_count(dir);
++		if (ret) {
++			ret = btrfs_set_inode_index_count(dir);
++			if (ret)
++				return ret;
++		}
++	}
++
++	*index = dir->index_cnt;
++
++	return 0;
++}
++
++/*
+  * All this infrastructure exists because dir_emit can fault, and we are holding
+  * the tree lock when doing readdir.  For now just allocate a buffer and copy
+  * our information into that, and then dir_emit from the buffer.  This is
+@@ -5960,10 +6028,17 @@ static struct dentry *btrfs_lookup(struc
+ static int btrfs_opendir(struct inode *inode, struct file *file)
+ {
+ 	struct btrfs_file_private *private;
++	u64 last_index;
++	int ret;
++
++	ret = btrfs_get_dir_last_index(BTRFS_I(inode), &last_index);
++	if (ret)
++		return ret;
+ 
+ 	private = kzalloc(sizeof(struct btrfs_file_private), GFP_KERNEL);
+ 	if (!private)
+ 		return -ENOMEM;
++	private->last_index = last_index;
+ 	private->filldir_buf = kzalloc(PAGE_SIZE, GFP_KERNEL);
+ 	if (!private->filldir_buf) {
+ 		kfree(private);
+@@ -6030,7 +6105,8 @@ static int btrfs_real_readdir(struct fil
+ 
+ 	INIT_LIST_HEAD(&ins_list);
+ 	INIT_LIST_HEAD(&del_list);
+-	put = btrfs_readdir_get_delayed_items(inode, &ins_list, &del_list);
++	put = btrfs_readdir_get_delayed_items(inode, private->last_index,
++					      &ins_list, &del_list);
+ 
+ again:
+ 	key.type = BTRFS_DIR_INDEX_KEY;
+@@ -6047,6 +6123,8 @@ again:
+ 			break;
+ 		if (found_key.offset < ctx->pos)
+ 			continue;
++		if (found_key.offset > private->last_index)
++			break;
+ 		if (btrfs_should_delete_dir_index(&del_list, found_key.offset))
+ 			continue;
+ 		di = btrfs_item_ptr(leaf, path->slots[0], struct btrfs_dir_item);
+@@ -6183,57 +6261,6 @@ static int btrfs_update_time(struct inod
+ }
+ 
+ /*
+- * find the highest existing sequence number in a directory
+- * and then set the in-memory index_cnt variable to reflect
+- * free sequence numbers
+- */
+-static int btrfs_set_inode_index_count(struct btrfs_inode *inode)
+-{
+-	struct btrfs_root *root = inode->root;
+-	struct btrfs_key key, found_key;
+-	struct btrfs_path *path;
+-	struct extent_buffer *leaf;
+-	int ret;
+-
+-	key.objectid = btrfs_ino(inode);
+-	key.type = BTRFS_DIR_INDEX_KEY;
+-	key.offset = (u64)-1;
+-
+-	path = btrfs_alloc_path();
+-	if (!path)
+-		return -ENOMEM;
+-
+-	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
+-	if (ret < 0)
+-		goto out;
+-	/* FIXME: we should be able to handle this */
+-	if (ret == 0)
+-		goto out;
+-	ret = 0;
+-
+-	if (path->slots[0] == 0) {
+-		inode->index_cnt = BTRFS_DIR_START_INDEX;
+-		goto out;
+-	}
+-
+-	path->slots[0]--;
+-
+-	leaf = path->nodes[0];
+-	btrfs_item_key_to_cpu(leaf, &found_key, path->slots[0]);
+-
+-	if (found_key.objectid != btrfs_ino(inode) ||
+-	    found_key.type != BTRFS_DIR_INDEX_KEY) {
+-		inode->index_cnt = BTRFS_DIR_START_INDEX;
+-		goto out;
+-	}
+-
+-	inode->index_cnt = found_key.offset + 1;
+-out:
+-	btrfs_free_path(path);
+-	return ret;
+-}
+-
+-/*
+  * helper to find a free sequence number in a given directory.  This current
+  * code is very simple, later versions will do smarter things in the btree
+  */
 
 
