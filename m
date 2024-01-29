@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277B3157048;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF9B15A49D;
 	Mon, 29 Jan 2024 17:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548139; cv=none; b=FLw0Ak0t+qsCsYb/n3R0XeRKoV5Y8FR+O9QEv5aUgS+21+CB7KNcZFBX6pxtvG8SJfawiX6GtvDdaPgyaf35ZMh5M5RMZYGnIVGQr4+EH8WBx+h4SAvUevk2rhWWHC8QHjnCTyqxYKeGxI2cWNZolbbRZImZZGB4QEF5lgISd2Q=
+	t=1706548140; cv=none; b=idgjptAEFYYjNktP75lXEtBKmwuojWu0LkgMXCcLE50rzjzjywUliYkEBEr/hD/yJFpFanSJeti1hq44QsZZ248qEovEvEo7Nbnind3F3IBaNyHEQ6gtADL7Ksx2Lskcqb4Z8fDvjtWoVhL3HzNLQ8h3tGJQ1fGY4pDbHGF/qww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548139; c=relaxed/simple;
-	bh=AyEcydziGueM3qS3hftJr/1VEEBeT8f5KeEEbNCUe+c=;
+	s=arc-20240116; t=1706548140; c=relaxed/simple;
+	bh=mF16jjaHWiOUopknw9nP5lC4W2leOF3vn7pnr0+Bs+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tZDh54qtoJ+xd6UM9DkyBYiMBx1YO4N0m/tQdjuvD2GGDvTD6piccVbog2YrKM/pe+D4VjTjdq9V8V6J+3MXq0n/RYR1qaGquZbn60tgOcfbMYb2kbleQD1LyZf097edpJ0JlEoX2QnrbCDonGWH76uV1P67lnRlRx4IDbXPsJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIKlmXZF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZVhWSgYDqNXoAVDdSvHEnQKXFREkUl7jClnDjSPMTNjKqffsH5hsOKdBG3lPGnub7SuGUggDFLebBrxYE9OTwlNlkNfNUuVI6/R6BAfzEDPLXh2oRNX158dHNFtFyZY2rxWym5sSSEXXIjrLZI0GIGzgp82Mebocl3d5gN7xLS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=joYFqf/x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIKlmXZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE02BC433F1;
-	Mon, 29 Jan 2024 17:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="joYFqf/x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF34C43394;
+	Mon, 29 Jan 2024 17:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548138;
-	bh=AyEcydziGueM3qS3hftJr/1VEEBeT8f5KeEEbNCUe+c=;
+	s=korg; t=1706548139;
+	bh=mF16jjaHWiOUopknw9nP5lC4W2leOF3vn7pnr0+Bs+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SIKlmXZF+rTWV7m2BbFpp+w/LxtBL2I2/qnenGSUscvxnFd/JVDUAmZuz+0vy2HoX
-	 TyFlTg0Fe3P98TMFAlLkk6TwDU390Oyp0o2ABn8lDEqYhOBeXnw1ciZWZ+rXnjFn/+
-	 5rJeZTJ31Ur+y39lpSuInQfJis1/XJQCltbnIVg0=
+	b=joYFqf/xDY1EOjgbqA374R1TL4nL2bFLiqKAGhyloigPKxm1piYBJ12scVwUG2T0x
+	 hpgvwo16AsAoUtQtHmI4UaibHPXHnnTBo7rNlVO8MHxgwQ7+cBTbCZMEEJ9EJK7go/
+	 mvctNB+fZcccuXb8/C3Zw4HNESSOfyeejxQEfZVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 170/346] afs: fix the usage of read_seqbegin_or_lock() in afs_find_server*()
-Date: Mon, 29 Jan 2024 09:03:21 -0800
-Message-ID: <20240129170021.398247570@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.7 143/346] ksmbd: send lease break notification on FILE_RENAME_INFORMATION
+Date: Mon, 29 Jan 2024 09:02:54 -0800
+Message-ID: <20240129170020.607492867@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -53,90 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1702e0654ca9a7bcd7c7619c8a5004db58945b71 ]
+[ Upstream commit 3fc74c65b367476874da5fe6f633398674b78e5a ]
 
-David Howells says:
+Send lease break notification on FILE_RENAME_INFORMATION request.
+This patch fix smb2.lease.v2_epoch2 test failure.
 
- (5) afs_find_server().
-
-     There could be a lot of servers in the list and each server can have
-     multiple addresses, so I think this would be better with an exclusive
-     second pass.
-
-     The server list isn't likely to change all that often, but when it does
-     change, there's a good chance several servers are going to be
-     added/removed one after the other.  Further, this is only going to be
-     used for incoming cache management/callback requests from the server,
-     which hopefully aren't going to happen too often - but it is remotely
-     drivable.
-
- (6) afs_find_server_by_uuid().
-
-     Similarly to (5), there could be a lot of servers to search through, but
-     they are in a tree not a flat list, so it should be faster to process.
-     Again, it's not likely to change that often and, again, when it does
-     change it's likely to involve multiple changes.  This can be driven
-     remotely by an incoming cache management request but is mostly going to
-     be driven by setting up or reconfiguring a volume's server list -
-     something that also isn't likely to happen often.
-
-Make the "seq" counter odd on the 2nd pass, otherwise read_seqbegin_or_lock()
-never takes the lock.
-
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Link: https://lore.kernel.org/r/20231130115614.GA21581@redhat.com/
-Stable-dep-of: 17ba6f0bd14f ("afs: Fix error handling with lookup via FS.InlineBulkStatus")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/server.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/smb/server/oplock.c  |   12 +++++++-----
+ fs/smb/server/smb2pdu.c |    1 +
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/fs/afs/server.c b/fs/afs/server.c
-index b5237206eac3..0bd2f5ba6900 100644
---- a/fs/afs/server.c
-+++ b/fs/afs/server.c
-@@ -27,7 +27,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
- 	const struct afs_addr_list *alist;
- 	struct afs_server *server = NULL;
- 	unsigned int i;
--	int seq = 0, diff;
-+	int seq = 1, diff;
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -541,14 +541,12 @@ static struct oplock_info *same_client_h
+ 				continue;
+ 			}
  
- 	rcu_read_lock();
- 
-@@ -35,6 +35,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
- 		if (server)
- 			afs_unuse_server_notime(net, server, afs_server_trace_put_find_rsq);
- 		server = NULL;
-+		seq++; /* 2 on the 1st/lockless path, otherwise odd */
- 		read_seqbegin_or_lock(&net->fs_addr_lock, &seq);
- 
- 		if (srx->transport.family == AF_INET6) {
-@@ -90,7 +91,7 @@ struct afs_server *afs_find_server_by_uuid(struct afs_net *net, const uuid_t *uu
- {
- 	struct afs_server *server = NULL;
- 	struct rb_node *p;
--	int diff, seq = 0;
-+	int diff, seq = 1;
- 
- 	_enter("%pU", uuid);
- 
-@@ -102,7 +103,7 @@ struct afs_server *afs_find_server_by_uuid(struct afs_net *net, const uuid_t *uu
- 		if (server)
- 			afs_unuse_server(net, server, afs_server_trace_put_uuid_rsq);
- 		server = NULL;
+-			if (lctx->req_state != lease->state)
+-				lease->epoch++;
 -
-+		seq++; /* 2 on the 1st/lockless path, otherwise odd */
- 		read_seqbegin_or_lock(&net->fs_lock, &seq);
+ 			/* upgrading lease */
+ 			if ((atomic_read(&ci->op_count) +
+ 			     atomic_read(&ci->sop_count)) == 1) {
+ 				if (lease->state != SMB2_LEASE_NONE_LE &&
+ 				    lease->state == (lctx->req_state & lease->state)) {
++					lease->epoch++;
+ 					lease->state |= lctx->req_state;
+ 					if (lctx->req_state &
+ 						SMB2_LEASE_WRITE_CACHING_LE)
+@@ -559,13 +557,17 @@ static struct oplock_info *same_client_h
+ 				    atomic_read(&ci->sop_count)) > 1) {
+ 				if (lctx->req_state ==
+ 				    (SMB2_LEASE_READ_CACHING_LE |
+-				     SMB2_LEASE_HANDLE_CACHING_LE))
++				     SMB2_LEASE_HANDLE_CACHING_LE)) {
++					lease->epoch++;
+ 					lease->state = lctx->req_state;
++				}
+ 			}
  
- 		p = net->fs_servers.rb_node;
--- 
-2.43.0
-
+ 			if (lctx->req_state && lease->state ==
+-			    SMB2_LEASE_NONE_LE)
++			    SMB2_LEASE_NONE_LE) {
++				lease->epoch++;
+ 				lease_none_upgrade(opinfo, lctx->req_state);
++			}
+ 		}
+ 		read_lock(&ci->m_lock);
+ 	}
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5581,6 +5581,7 @@ static int smb2_rename(struct ksmbd_work
+ 	if (!file_info->ReplaceIfExists)
+ 		flags = RENAME_NOREPLACE;
+ 
++	smb_break_all_levII_oplock(work, fp, 0);
+ 	rc = ksmbd_vfs_rename(work, &fp->filp->f_path, new_name, flags);
+ out:
+ 	kfree(new_name);
 
 
