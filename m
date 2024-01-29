@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476A215958B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53A0159578;
 	Mon, 29 Jan 2024 17:10:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548225; cv=none; b=RwKWJCtfd0eA44Qwhv8dAunnyxwIvGP3XsB8zv4vWHnBjQP0eTy9esFzbBi92iFLZqTDZj5tlI2AslaR+hAfwn7hFFKoIK1x2+tUU/Yrtq/zqtMal6CDC+hmOMhGGETQlDyVmtNMt7OH/cpQVxKdCArTAHIRqXT5db7on4oBEL4=
+	t=1706548226; cv=none; b=ElaAnUEnjRxjrH3jxirE9+7H3Tp6MY7Zl/2tECzkd4pIYCBnwn3O/O9i9kJjauhvD/WeFP1VRDuUZTYguUq3dtXOiznjLT8kCt7cm6gC4/cmapQ3JMphjk12ZnkbOlyiyPSHBkYPu6jIUqudHdZ2JL/XsIppP/XgFROrP/nZ0jQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548225; c=relaxed/simple;
-	bh=U6o4GeNTq92S6/US8We+m4WfkA0VVzDdHz+iQPHoEf8=;
+	s=arc-20240116; t=1706548226; c=relaxed/simple;
+	bh=wRVDemsoApG7QF5yzwun5BnUJQUe/io6C+dk70U8XlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1KqWRX3GomnX9HzAvq6u3e2d5NcpdylFH26+zq4x875HG4zy8Z4UlBh/VHMytKncfcQ+2zAI+nZQ1jlM+HFI11U0LIRHqXd2dW3HRtNdliEmxdBV38+sdnJl2OPOAYw3tJcFoSkhR4j2vhAwW/IUCXTcEaGhr6R6+o9ZACmRDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7VO84dd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rCpFqmx5UePbE7/9LuwuZmKtPTzG/NKdmsKO93fClnE6n8m5MP3MlP28ICfASWwAtNc2L1Pdum4nV6237JowVDLvqUUF9vSOcDEaLwhC+1rnFRu7wFhH90lKL/EpZV38j3m+Fg2HSQxBwD78f6MFppSz+61N+GjD3k+H3rS98dA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDpqS75J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7VO84dd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C98DC433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDpqS75J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA69C433C7;
 	Mon, 29 Jan 2024 17:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548225;
-	bh=U6o4GeNTq92S6/US8We+m4WfkA0VVzDdHz+iQPHoEf8=;
+	bh=wRVDemsoApG7QF5yzwun5BnUJQUe/io6C+dk70U8XlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O7VO84ddYDoDDParvznk1S8Sxdppi9FjHcnQuqEpfCYuNCUB/9iqmPGALL8/gF6iq
-	 H/NQEqI/xDbuilyMHq9ctPuQ5SRtmvIlsf3Iy74COfQagceGT8dN2U3/C1EGzy1zuT
-	 JaKDgkMtaiBpUYv+pVSThdurChi6gYpRX73svBMM=
+	b=ZDpqS75JNRgc8qCFF71NZl8bx+RGj252ujbh7ObWO/sujrdAmXB91LF2JjVne9a0B
+	 bPmcLhReCneTnk4fD5jo0tw2LCdJeHd7MkL/e8uS1RdP8E9rHdOwCMeaxzIkH8sK1P
+	 57rb7HmtDD/xjKUVVFDe0Oa9yBkbwKVHRTez2x5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	nerdopolis <bluescreen_avenger@verizon.net>,
-	Sima Vetter <daniel.vetter@ffwll.ch>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Zack Rusin <zackr@vmware.com>
-Subject: [PATCH 6.7 254/346] drm/virtio: Disable damage clipping if FB changed since last page-flip
-Date: Mon, 29 Jan 2024 09:04:45 -0800
-Message-ID: <20240129170023.876417834@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Youngmin Nam <youngmin.nam@samsung.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 029/185] async: Split async_schedule_node_domain()
+Date: Mon, 29 Jan 2024 09:03:49 -0800
+Message-ID: <20240129165959.537359687@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,57 +48,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Javier Martinez Canillas <javierm@redhat.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 0240db231dfe5ee5b7a3a03cba96f0844b7a673d upstream.
+commit 6aa09a5bccd8e224d917afdb4c278fc66aacde4d upstream.
 
-The driver does per-buffer uploads and needs to force a full plane update
-if the plane's attached framebuffer has change since the last page-flip.
+In preparation for subsequent changes, split async_schedule_node_domain()
+in two pieces so as to allow the bottom part of it to be called from a
+somewhat different code path.
 
-Fixes: 01f05940a9a7 ("drm/virtio: Enable fb damage clips property for the primary plane")
-Cc: <stable@vger.kernel.org> # v6.4+
-Reported-by: nerdopolis <bluescreen_avenger@verizon.net>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218115
-Suggested-by: Sima Vetter <daniel.vetter@ffwll.ch>
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Zack Rusin <zackr@vmware.com>
-Acked-by: Sima Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231123221315.3579454-3-javierm@redhat.com
+No functional impact.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Tested-by: Youngmin Nam <youngmin.nam@samsung.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_plane.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ kernel/async.c |   56 ++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 34 insertions(+), 22 deletions(-)
 
---- a/drivers/gpu/drm/virtio/virtgpu_plane.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_plane.c
-@@ -79,6 +79,8 @@ static int virtio_gpu_plane_atomic_check
- {
- 	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
- 										 plane);
-+	struct drm_plane_state *old_plane_state = drm_atomic_get_old_plane_state(state,
-+										 plane);
- 	bool is_cursor = plane->type == DRM_PLANE_TYPE_CURSOR;
- 	struct drm_crtc_state *crtc_state;
- 	int ret;
-@@ -86,6 +88,14 @@ static int virtio_gpu_plane_atomic_check
- 	if (!new_plane_state->fb || WARN_ON(!new_plane_state->crtc))
- 		return 0;
+--- a/kernel/async.c
++++ b/kernel/async.c
+@@ -145,6 +145,39 @@ static void async_run_entry_fn(struct wo
+ 	wake_up(&async_done);
+ }
  
-+	/*
-+	 * Ignore damage clips if the framebuffer attached to the plane's state
-+	 * has changed since the last plane update (page-flip). In this case, a
-+	 * full plane update should happen because uploads are done per-buffer.
-+	 */
-+	if (old_plane_state->fb != new_plane_state->fb)
-+		new_plane_state->ignore_damage_clips = true;
++static async_cookie_t __async_schedule_node_domain(async_func_t func,
++						   void *data, int node,
++						   struct async_domain *domain,
++						   struct async_entry *entry)
++{
++	async_cookie_t newcookie;
++	unsigned long flags;
 +
- 	crtc_state = drm_atomic_get_crtc_state(state,
- 					       new_plane_state->crtc);
- 	if (IS_ERR(crtc_state))
++	INIT_LIST_HEAD(&entry->domain_list);
++	INIT_LIST_HEAD(&entry->global_list);
++	INIT_WORK(&entry->work, async_run_entry_fn);
++	entry->func = func;
++	entry->data = data;
++	entry->domain = domain;
++
++	spin_lock_irqsave(&async_lock, flags);
++
++	/* allocate cookie and queue */
++	newcookie = entry->cookie = next_cookie++;
++
++	list_add_tail(&entry->domain_list, &domain->pending);
++	if (domain->registered)
++		list_add_tail(&entry->global_list, &async_global_pending);
++
++	atomic_inc(&entry_count);
++	spin_unlock_irqrestore(&async_lock, flags);
++
++	/* schedule for execution */
++	queue_work_node(node, system_unbound_wq, &entry->work);
++
++	return newcookie;
++}
++
+ /**
+  * async_schedule_node_domain - NUMA specific version of async_schedule_domain
+  * @func: function to execute asynchronously
+@@ -186,29 +219,8 @@ async_cookie_t async_schedule_node_domai
+ 		func(data, newcookie);
+ 		return newcookie;
+ 	}
+-	INIT_LIST_HEAD(&entry->domain_list);
+-	INIT_LIST_HEAD(&entry->global_list);
+-	INIT_WORK(&entry->work, async_run_entry_fn);
+-	entry->func = func;
+-	entry->data = data;
+-	entry->domain = domain;
+-
+-	spin_lock_irqsave(&async_lock, flags);
+ 
+-	/* allocate cookie and queue */
+-	newcookie = entry->cookie = next_cookie++;
+-
+-	list_add_tail(&entry->domain_list, &domain->pending);
+-	if (domain->registered)
+-		list_add_tail(&entry->global_list, &async_global_pending);
+-
+-	atomic_inc(&entry_count);
+-	spin_unlock_irqrestore(&async_lock, flags);
+-
+-	/* schedule for execution */
+-	queue_work_node(node, system_unbound_wq, &entry->work);
+-
+-	return newcookie;
++	return __async_schedule_node_domain(func, data, node, domain, entry);
+ }
+ EXPORT_SYMBOL_GPL(async_schedule_node_domain);
+ 
 
 
